@@ -307,7 +307,10 @@ Respond with ONLY valid JSON in this exact format, no other text:
 
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:photoType,data:photoData}},{type:"text",text:prompt}]}]})});
+    if(!r.ok){const errText=await r.text();throw new Error("Function error "+r.status+": "+errText)}
     const d=await r.json();
+    if(d.error){throw new Error("API error: "+JSON.stringify(d.error))}
+    if(!d.content){throw new Error("No content in response: "+JSON.stringify(d))}
     const raw=d.content.map(c=>c.text||'').join('');
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
@@ -323,7 +326,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
   }catch(e){
     show('s-photo-res');
     document.getElementById('prn').textContent="Outfit analysis";
-    document.getElementById('prp').textContent="We weren't able to analyze this photo right now. This feature works best inside the Style Star app. Please try again, or take the style quiz instead for your personalized portrait.";
+    document.getElementById('prp').textContent="Error details: "+e.message;
     document.getElementById('pft').innerHTML='';
     document.getElementById('pChart').innerHTML='';
   }
