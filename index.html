@@ -162,7 +162,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <div class="photo-placeholder" id="photoPlaceholder">
         <div class="photo-icon">📷</div>
         <div class="photo-cta">Tap to upload a photo</div>
-        <div class="photo-hint">Full-body outfit photo works best</div>
+        <div class="photo-hint">Tip: a full-length photo showing your<br>complete outfit gives the best results!</div>
       </div>
       <img id="photoPreview" class="photo-preview" style="display:none">
     </div>
@@ -287,9 +287,12 @@ async function retryPhoto(){
   await runPhotoAnalysis();
 }
 async function runPhotoAnalysis(){
-  const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. A woman named ${userName} has uploaded a photo of her outfit for style analysis.
+  const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. A woman named ${userName} has uploaded a photo for style analysis.
 
-Analyze the outfit in this photo across these 12 style sliders (each on a 1-11 scale where 6 is the center):
+FIRST: Check if you can see enough of the outfit to analyze. If the photo only shows a face, headshot, or you cannot see most of the outfit, respond with this exact JSON:
+{"partial":true,"portrait":"You look absolutely radiant! To give you a complete style analysis, I'd love to see your full outfit — head to toe if possible. Try uploading a photo that shows what you're wearing and I'll break down your style across all 12 sliders."}
+
+If you CAN see enough of the outfit, analyze it across these 12 style sliders (each on a 1-11 scale where 6 is the center):
 1. Style direction (1=Classic, 11=Trendy)
 2. Overall vibe (1=Natural, 11=Glam)
 3. Style flavor (1=Preppy, 11=Edgy)
@@ -302,6 +305,8 @@ Analyze the outfit in this photo across these 12 style sliders (each on a 1-11 s
 10. Style priority (1=Comfort, 11=Style)
 11. Modesty level (1=Modest, 11=Alluring)
 12. Presence (1=Understated, 11=Statement)
+
+If there are multiple people in the photo, analyze only the woman who appears to be the main subject.
 
 CRITICAL RULES:
 - NEVER imply one end is better than the other. Both ends are equally wonderful.
@@ -317,10 +322,18 @@ Respond with ONLY valid JSON in this exact format, no other text:
     if(!r.ok){const errText=await r.text();throw new Error("Function error "+r.status+": "+errText)}
     const d=await r.json();
     if(d.error){throw new Error("API error: "+JSON.stringify(d.error))}
-    if(!d.content){throw new Error("No content in response: "+JSON.stringify(d))}
+    if(!d.content){throw new Error("No content in response")}
     const raw=d.content.map(c=>c.text||'').join('');
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
+    if(parsed.partial){
+      show('s-photo-res');
+      document.getElementById('prn').textContent=userName!=="You"?userName+", let's see more!":"Let's see more!";
+      document.getElementById('prp').textContent=parsed.portrait;
+      document.getElementById('pft').innerHTML='';
+      document.getElementById('pChart').innerHTML='<div style="text-align:center;margin-top:1rem"><button class="btn-pink" onclick="showPhoto()" style="max-width:260px">Upload a full outfit photo</button></div>';
+      return;
+    }
     const vals=parsed.sliders;
     const portrait=parsed.portrait;
     const top3=getPhotoArch(vals);
