@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style Star — Your Personal Style Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;background:#f5f3ef;font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.75rem 3rem;min-height:100vh}
+.ss{width:100%;max-width:480px;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 4px 40px rgba(0,0,0,0.08)}
+
+.hdr{text-align:center;padding:1rem 2rem 0.75rem;border-bottom:1px solid #f0f0f0}
+.logo-star{display:block;margin:0 auto 4px}
+.logo-block{display:flex;flex-direction:column;align-items:center;line-height:0.92}
+.logo-line{font-family:'Archivo Black',sans-serif;font-size:44px;font-weight:400;color:#1a1a1a;letter-spacing:0.06em;text-transform:uppercase;line-height:1}
+.tag{font-size:14px;color:#777;letter-spacing:0.16em;text-transform:uppercase;margin-top:4px;font-weight:400}
+
+.inner{padding:1rem 1.75rem 1.5rem}
+.prog-wrap{margin-bottom:1.5rem;display:none}
+.prog-bar{width:100%;height:2px;background:#f0f0f0;border-radius:2px;margin-bottom:4px}
+.prog-fill{height:100%;background:#C8A060;border-radius:2px;transition:width 0.4s ease;width:0%}
+.prog-lbl{font-size:13px;color:#999;text-align:right}
+
+.scr{display:none}.scr.act{display:block}
+
+.wel{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.6rem;padding:0.5rem 1rem}
+.wel-t{font-size:30px;font-weight:700;color:#1a1a1a;line-height:1.2}
+.wel-s{font-size:20px;color:#444;line-height:1.6;max-width:380px;font-family:'DM Sans',sans-serif;font-weight:400}
+.name-in input{border:1.5px solid #e8e8e8;border-radius:40px;padding:14px 20px;font-size:18px;width:280px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif;font-weight:500;transition:border-color 0.2s}
+.name-in input:focus{outline:none;border-color:#C8A060}
+.name-in input::placeholder{color:#999}
+
+.qcat{font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#B08830;font-weight:700;margin-bottom:8px}
+.qtit{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:600;color:#1a1a1a;line-height:1.4;margin-bottom:1.5rem}
+.scard{background:#fafafa;border:1px solid #ebebeb;border-radius:20px;padding:1.5rem 1.25rem;margin-bottom:1.5rem}
+.slbls{display:flex;justify-content:space-between;margin-bottom:1.25rem}
+.slbl{font-size:13px;font-weight:700;color:#1a1a1a;text-transform:uppercase;letter-spacing:0.06em;max-width:42%}
+.slbl.r{text-align:right}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:3px;background:#ddd;border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#1a1a1a;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1.5px #C8A060}
+input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;background:#1a1a1a;cursor:pointer;border:3px solid #fff}
+.shint{text-align:center;font-family:'DM Sans',sans-serif;font-size:16px;color:#8B7030;font-style:italic;margin-top:1rem;min-height:24px;font-weight:500}
+
+.btn-p{width:100%;padding:16px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#1a1a1a;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif}
+.btn-p:hover{opacity:0.82}
+.btn-p:active{transform:scale(0.98)}
+.btn-o{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:#999;border:1px solid #e8e8e8;margin-top:8px}
+.btn-o:hover{background:#fafafa;color:#888}
+.btn-pink{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#E91E8C;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
+.btn-pink:hover{opacity:0.88}
+.btn-pink:active{transform:scale(0.98)}
+
+.load-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;padding:4rem 1rem;text-align:center}
+.load-spin{width:56px;height:56px;animation:spin 2s linear infinite}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.load-t{font-family:'Cormorant Garamond',serif;font-size:18px;color:#777;font-style:italic}
+
+.res-hdr{text-align:center;margin-bottom:1.5rem}
+.res-name{font-size:24px;font-weight:700;color:#B08830;margin:0.75rem 0 0.25rem}
+.res-para{font-size:17px;color:#555;line-height:1.8;max-width:420px;margin:0 auto 1.75rem;text-align:center;font-family:'Cormorant Garamond',serif}
+.flav{margin-bottom:1.75rem;text-align:center}
+.flav-lbl{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:8px}
+.flav-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.flav-tag{font-size:14px;font-weight:500;padding:6px 18px;border-radius:20px;border:1.5px solid #B08830;color:#B08830;background:#fff}
+.fp{margin-bottom:1.75rem}
+.fp-lbl{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:14px;text-align:center}
+.fp-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.fp-name{font-size:11px;color:#777;width:85px;text-align:right;flex-shrink:0;text-transform:uppercase;letter-spacing:0.04em}
+.fp-track{flex:1;height:3px;background:#ebebeb;border-radius:2px;position:relative}
+.fp-dot{width:11px;height:11px;border-radius:50%;background:#B08830;position:absolute;top:-4px}
+.fp-left,.fp-right{font-size:9px;color:#aaa;letter-spacing:0.04em;text-transform:uppercase;position:absolute;top:12px}
+.fp-left{left:0}.fp-right{right:0}
+.retake{display:block;width:100%;text-align:center;font-size:13px;color:#999;text-decoration:underline;letter-spacing:0.06em;text-transform:uppercase;margin-top:1rem;cursor:pointer;border:none;background:none}
+.quiz-footer{text-align:center;padding:1.25rem;font-size:11px;color:#ddd;letter-spacing:0.08em;border-top:1px solid #f5f5f5}
+.photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;border:2px dashed #ddd;border-radius:20px;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s;background:#fafafa}
+.photo-upload-area:hover{border-color:#C8A060}
+.photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem}
+.photo-icon{font-size:40px}
+.photo-cta{font-size:16px;font-weight:600;color:#1a1a1a}
+.photo-hint{font-size:13px;color:#999}
+.photo-preview{width:100%;height:100%;object-fit:cover;border-radius:18px}
+</style>
+</head>
+<body>
+<div class="ss">
+<div class="hdr">
+  <svg class="logo-star" width="60" height="60" viewBox="0 0 76 76" fill="none">
+    <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#C8A060"/>
+    <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+  </svg>
+  <div class="logo-block">
+    <span class="logo-line">STYLE</span>
+    <span class="logo-line">STAR</span>
+  </div>
+  <div class="tag">Your personal style profile</div>
+</div>
+<div class="inner">
+<div class="prog-wrap" id="pw"><div class="prog-bar"><div class="prog-fill" id="pf"></div></div><div class="prog-lbl" id="pl"></div></div>
+
+<div class="scr act" id="s-wel">
+  <div class="wel">
+    <svg width="65" height="65" viewBox="0 0 110 110" fill="none">
+      <polygon points="55,6 67,33 97,33 73,52 82,82 55,65 28,82 37,52 13,33 43,33" fill="#C8A060"/>
+      <polygon points="55,24 61.5,39 78,39 65,48 70,63 55,54 40,63 45,48 32,39 48.5,39" fill="#fff"/>
+    </svg>
+    <div class="wel-t">Discover your<br>signature style</div>
+    <div class="wel-s">12 simple questions. No right or wrong answers — just you. Your result will be a one-of-a-kind style portrait as unique as you are.</div>
+    <div class="name-in"><input type="text" id="nameIn" placeholder="Enter your first name" maxlength="20"></div>
+    <button class="btn-p" style="max-width:300px" onclick="startQ()">Begin your style quiz</button>
+    <button class="btn-pink" style="max-width:300px" onclick="startPhoto()">Or upload a photo for analysis</button>
+  </div>
+</div>
+
+<div class="scr" id="s-quiz">
+  <div class="qcat" id="qc"></div>
+  <div class="qtit" id="qt"></div>
+  <div class="scard">
+    <div class="slbls"><span class="slbl" id="ll"></span><span class="slbl r" id="lr"></span></div>
+    <input type="range" id="sl" min="1" max="11" step="1" value="6" oninput="onSl(this.value)">
+    <div class="shint" id="sh"></div>
+  </div>
+  <button class="btn-p" id="nb" onclick="nextQ()">Continue</button>
+  <button class="btn-o" onclick="prevQ()">Back</button>
+</div>
+
+<div class="scr" id="s-load">
+  <div class="load-wrap">
+    <svg class="load-spin" width="56" height="56" viewBox="0 0 76 76" fill="none">
+      <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#C8A060"/>
+      <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+    </svg>
+    <div class="load-t">Creating your personal style portrait...</div>
+  </div>
+</div>
+
+<div class="scr" id="s-res">
+  <div class="res-hdr">
+    <svg style="width:48px;height:48px;display:block;margin:0 auto" viewBox="0 0 76 76" fill="none">
+      <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#C8A060"/>
+      <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+    </svg>
+    <div class="res-name" id="rn"></div>
+  </div>
+  <div class="res-para" id="rp"></div>
+  <div class="flav"><div class="flav-lbl">Your style has notes of</div><div class="flav-tags" id="ft"></div></div>
+  <div class="fp"><div class="fp-lbl">Your style fingerprint</div><div id="fpChart"></div></div>
+  <button class="btn-p" onclick="location.reload()">Retake the quiz</button>
+  <button class="btn-pink" onclick="showPhoto()">Upload a photo for style analysis</button>
+</div>
+
+<div class="scr" id="s-photo">
+  <div class="wel">
+    <svg width="48" height="48" viewBox="0 0 76 76" fill="none">
+      <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#C8A060"/>
+      <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+    </svg>
+    <div class="wel-t">Style analysis<br>from a photo</div>
+    <div class="wel-s">Upload an outfit photo and we'll analyze your style across all 12 sliders — just like having a personal stylist look at your outfit.</div>
+    <div class="photo-upload-area" id="photoArea" onclick="document.getElementById('photoIn').click()">
+      <div class="photo-placeholder" id="photoPlaceholder">
+        <div class="photo-icon">📷</div>
+        <div class="photo-cta">Tap to upload a photo</div>
+        <div class="photo-hint">Full-body outfit photo works best</div>
+      </div>
+      <img id="photoPreview" class="photo-preview" style="display:none">
+    </div>
+    <input type="file" id="photoIn" accept="image/*" style="display:none" onchange="onPhotoSelect(this)">
+    <button class="btn-pink" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my style</button>
+    <button class="btn-o" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
+  </div>
+</div>
+
+<div class="scr" id="s-photo-load">
+  <div class="load-wrap">
+    <svg class="load-spin" width="56" height="56" viewBox="0 0 76 76" fill="none">
+      <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#C8A060"/>
+      <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+    </svg>
+    <div class="load-t">Analyzing your outfit...</div>
+  </div>
+</div>
+
+<div class="scr" id="s-photo-res">
+  <div class="res-hdr">
+    <svg style="width:48px;height:48px;display:block;margin:0 auto" viewBox="0 0 76 76" fill="none">
+      <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#C8A060"/>
+      <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+    </svg>
+    <div class="res-name" id="prn"></div>
+  </div>
+  <div class="res-para" id="prp"></div>
+  <div class="flav"><div class="flav-lbl">This outfit has notes of</div><div class="flav-tags" id="pft"></div></div>
+  <div class="fp"><div class="fp-lbl">Outfit style fingerprint</div><div id="pChart"></div></div>
+  <button class="btn-pink" onclick="showPhoto()">Analyze another photo</button>
+  <button class="btn-o" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
+  <button class="retake" onclick="location.reload()">Start over</button>
+</div>
+</div>
+<div class="quiz-footer">Style Star</div>
+</div>
+
+<script>
+const questions=[
+{cat:"Style direction",title:"How would you describe your overall style direction?",left:"Classic",right:"Trendy",hints:["Deeply classic","Very classic","Mostly classic","Leaning classic","Slightly classic","A blend of both","Slightly trendy","Leaning trendy","Mostly trendy","Very trendy","Fully trend-forward"]},
+{cat:"Overall vibe",title:"Where does your everyday look fall?",left:"Natural",right:"Glam",hints:["Completely natural","Very natural","Mostly natural","Leaning natural","Slightly natural","Natural with glam touches","Slightly glam","Leaning glam","Mostly glam","Very glam","Full glam"]},
+{cat:"Style flavor",title:"Which end of this spectrum feels most like you?",left:"Preppy",right:"Edgy",hints:["Very preppy","Mostly preppy","Leaning preppy","Somewhat preppy","Slightly preppy","A mix of both","Slightly edgy","Somewhat edgy","Leaning edgy","Mostly edgy","Fully edgy"]},
+{cat:"Outfit complexity",title:"How do you like to put your outfits together?",left:"Simple",right:"Detailed",hints:["Ultra minimal","Very simple","Mostly simple","Leaning simple","Slightly simple","Some detail","Slightly detailed","Leaning detailed","Mostly detailed","Very detailed","Every detail counts"]},
+{cat:"Dress level",title:"How do you typically dress day to day?",left:"Casual",right:"Dressy",hints:["Very relaxed","Mostly casual","Leaning casual","Slightly casual","Casual with polish","Elevated casual","Slightly dressy","Leaning dressy","Mostly dressy","Very dressy","Always polished"]},
+{cat:"Lifestyle",title:"Which feels more like your daily life?",left:"Sporty",right:"Professional",hints:["Very active","Mostly sporty","Leaning sporty","Somewhat sporty","Slightly sporty","A blend of both","Slightly professional","Somewhat professional","Leaning professional","Mostly professional","Very professional"]},
+{cat:"Color preference",title:"What's your relationship with color?",left:"Neutral",right:"Colorful",hints:["All neutrals","Mostly neutrals","Leaning neutral","Slightly neutral","Neutral base","Neutral with color pops","Slightly colorful","Leaning colorful","Mostly colorful","Very colorful","Bold and vibrant"]},
+{cat:"Pattern preference",title:"How do patterns show up in your wardrobe?",left:"Solids",right:"Prints",hints:["Solids only","Mostly solids","Leaning solids","Slightly solids","Occasional pattern","Some patterns","Slightly print-forward","Leaning prints","Mostly prints","Very print-heavy","Love all prints"]},
+{cat:"Fit preference",title:"How do you like your clothes to fit?",left:"Relaxed",right:"Fitted",hints:["Very loose","Mostly relaxed","Leaning relaxed","Slightly relaxed","Easy fit","In between","Slightly fitted","Leaning fitted","Mostly fitted","Very fitted","Perfectly tailored"]},
+{cat:"Style priority",title:"When getting dressed, what comes first?",left:"Comfort",right:"Style",hints:["Comfort always","Mostly comfort","Leaning comfort","Slightly comfort","Comfort-forward","Both equally","Slightly style","Leaning style","Mostly style","Very style-driven","Style always"]},
+{cat:"Modesty level",title:"How would you describe your modesty preference?",left:"Modest",right:"Alluring",hints:["Very covered","Mostly modest","Leaning modest","Slightly modest","Modestly balanced","Tastefully balanced","Slightly alluring","Leaning alluring","Mostly alluring","Very alluring","Confidently alluring"]},
+{cat:"Presence",title:"How do you like to show up in a room?",left:"Understated",right:"Statement",hints:["Blending in","Very understated","Mostly understated","Slightly understated","Quietly present","Noticed but quiet","Slightly noticed","Leaning statement","Strong presence","Very statement","Unforgettable"]}
+];
+const archetypes=[
+{n:"The Classic Refined",p:[2,3,2,3,5,5,3,2,7,6,3,3]},{n:"The Natural Chic",p:[4,2,4,3,3,4,4,3,5,4,4,4]},{n:"The Elevated Casual",p:[5,3,5,4,4,4,5,4,5,5,5,5]},{n:"The Polished Professional",p:[3,5,3,6,9,10,3,3,8,8,3,6]},{n:"The Bold Expressionist",p:[7,6,6,8,6,5,10,9,6,9,6,9]},{n:"The Romantic Feminine",p:[3,5,2,6,6,5,6,6,6,6,3,4]},{n:"The Modern Trendsetter",p:[10,7,7,7,7,6,7,6,7,10,6,9]},{n:"The Easy Elegant",p:[3,3,3,3,5,5,3,2,6,5,3,3]},{n:"The Fit & Styled",p:[5,3,5,4,3,2,5,3,8,6,5,4]},{n:"The Creative Original",p:[7,5,7,9,5,4,9,8,5,7,6,7]},{n:"The Understated Luxury",p:[3,3,3,5,6,7,2,2,8,7,3,3]},{n:"The Glamorous Maximalist",p:[7,11,5,11,10,6,9,8,9,11,8,11]},{n:"The Silhouette Savvy",p:[6,5,5,5,6,6,5,3,10,8,5,5]},{n:"The Fresh Start Style",p:[6,6,6,6,6,6,6,6,6,6,6,6]},{n:"The Country Club Classic",p:[2,4,2,6,7,7,4,4,7,7,2,5]},{n:"The Luxe Collector",p:[5,7,4,7,7,7,4,4,9,9,5,7]},{n:"The Career Launcher",p:[6,4,4,5,8,9,4,3,7,7,3,5]},{n:"The Edgy Confident",p:[8,5,11,6,5,4,4,4,7,9,7,9]},{n:"The Alluring",p:[6,7,6,6,7,5,5,4,9,8,10,7]},{n:"The Coastal Casual",p:[4,2,3,2,2,3,5,4,3,3,5,3]},{n:"The Clean Minimalist",p:[4,2,3,1,4,5,2,1,7,5,3,3]}
+];
+let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false;
+function startQ(){userName=document.getElementById('nameIn').value.trim()||"You";show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
+function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act')}
+function loadQ(i){const q=questions[i];document.getElementById('qc').textContent=q.cat;document.getElementById('qt').textContent=q.title;document.getElementById('ll').textContent=q.left;document.getElementById('lr').textContent=q.right;document.getElementById('sl').value=answers[i];updHint(answers[i],i);document.getElementById('pf').style.width=Math.round((i/12)*100)+'%';document.getElementById('pl').textContent=(i+1)+' of 12';document.getElementById('nb').textContent=i===11?'See my style portrait':'Continue'}
+function onSl(v){answers[cur]=parseInt(v);updHint(v,cur)}
+function updHint(v,i){document.getElementById('sh').textContent=questions[i].hints[parseInt(v)-1]}
+function nextQ(){answers[cur]=parseInt(document.getElementById('sl').value);if(cur<11){cur++;loadQ(cur)}else{genResult()}}
+function prevQ(){if(cur>0){cur--;loadQ(cur)}else{show('s-wel');document.getElementById('pw').style.display='none'}}
+function dist(a,b){return Math.sqrt(a.reduce((s,v,i)=>s+(v-b[i])**2,0))}
+function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)}));scored.sort((a,b)=>a.d-b.d);return scored.slice(0,3)}
+function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`})}
+async function genResult(){show('s-load');document.getElementById('pf').style.width='100%';document.getElementById('pl').textContent='Complete';const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. A woman named ${userName} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you" and use her name once naturally.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
+function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
+function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('rn').textContent=userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart()}
+
+let photoData=null,photoType="image/jpeg";
+function startPhoto(){userName=document.getElementById('nameIn').value.trim()||"You";showPhoto()}
+function showPhoto(){show('s-photo');document.getElementById('photoPreview').style.display='none';document.getElementById('photoPlaceholder').style.display='flex';document.getElementById('analyzeBtn').style.display='none';photoData=null}
+function onPhotoSelect(input){
+  if(!input.files||!input.files[0])return;
+  const file=input.files[0];
+  const img=new Image();
+  const url=URL.createObjectURL(file);
+  img.onload=function(){
+    const maxSize=1024;
+    let w=img.width,h=img.height;
+    if(w>maxSize||h>maxSize){
+      if(w>h){h=Math.round(h*(maxSize/w));w=maxSize}
+      else{w=Math.round(w*(maxSize/h));h=maxSize}
+    }
+    const canvas=document.createElement('canvas');
+    canvas.width=w;canvas.height=h;
+    const ctx=canvas.getContext('2d');
+    ctx.drawImage(img,0,0,w,h);
+    const dataUrl=canvas.toDataURL('image/jpeg',0.85);
+    photoData=dataUrl.split(',')[1];
+    photoType='image/jpeg';
+    const prev=document.getElementById('photoPreview');
+    prev.src=dataUrl;
+    prev.style.display='block';
+    document.getElementById('photoPlaceholder').style.display='none';
+    document.getElementById('analyzeBtn').style.display='block';
+    URL.revokeObjectURL(url);
+  };
+  img.src=url;
+}
+function buildPhotoChart(vals){
+  const c=document.getElementById('pChart');c.innerHTML='';
+  questions.forEach((q,i)=>{
+    const pct=((vals[i]-1)/10)*100;
+    c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`;
+  });
+}
+function getPhotoArch(vals){
+  let scored=archetypes.map(a=>({n:a.n,d:dist(vals,a.p)}));
+  scored.sort((a,b)=>a.d-b.d);
+  return scored.slice(0,3);
+}
+async function analyzePhoto(){
+  if(!photoData)return;
+  show('s-photo-load');
+  const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. A woman named ${userName} has uploaded a photo of her outfit for style analysis.
+
+Analyze the outfit in this photo across these 12 style sliders (each on a 1-11 scale where 6 is the center):
+1. Style direction (1=Classic, 11=Trendy)
+2. Overall vibe (1=Natural, 11=Glam)
+3. Style flavor (1=Preppy, 11=Edgy)
+4. Outfit complexity (1=Simple, 11=Detailed)
+5. Dress level (1=Casual, 11=Dressy)
+6. Lifestyle (1=Sporty, 11=Professional)
+7. Color preference (1=Neutral, 11=Colorful)
+8. Pattern preference (1=Solids, 11=Prints)
+9. Fit preference (1=Relaxed, 11=Fitted)
+10. Style priority (1=Comfort, 11=Style)
+11. Modesty level (1=Modest, 11=Alluring)
+12. Presence (1=Understated, 11=Statement)
+
+CRITICAL RULES:
+- NEVER imply one end is better than the other. Both ends are equally wonderful.
+- Describe WHERE the outfit lands, not how it scores.
+- Be warm, specific, and celebrating.
+- Never suggest she needs to change anything.
+
+Respond with ONLY valid JSON in this exact format, no other text:
+{"sliders":[5,5,5,5,5,5,5,5,5,5,5,5],"portrait":"Your 3-4 sentence personalized style portrait here."}`;
+
+  try{
+    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:photoType,data:photoData}},{type:"text",text:prompt}]}]})});
+    const d=await r.json();
+    const raw=d.content.map(c=>c.text||'').join('');
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const parsed=JSON.parse(clean);
+    const vals=parsed.sliders;
+    const portrait=parsed.portrait;
+    const top3=getPhotoArch(vals);
+    show('s-photo-res');
+    document.getElementById('prn').textContent=userName!=="You"?userName+"'s outfit analysis":"Your outfit analysis";
+    document.getElementById('prp').textContent=portrait;
+    const pft=document.getElementById('pft');pft.innerHTML='';
+    top3.forEach(a=>{pft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});
+    buildPhotoChart(vals);
+  }catch(e){
+    show('s-photo-res');
+    document.getElementById('prn').textContent="Outfit analysis";
+    document.getElementById('prp').textContent="We weren't able to analyze this photo right now. This feature works best inside the Style Star app. Please try again, or take the style quiz instead for your personalized portrait.";
+    document.getElementById('pft').innerHTML='';
+    document.getElementById('pChart').innerHTML='';
+  }
+}
+</script>
+</body>
+</html>
