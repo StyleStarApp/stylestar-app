@@ -243,7 +243,7 @@ function onPhotoSelect(input){
   const img=new Image();
   const url=URL.createObjectURL(file);
   img.onload=function(){
-    const maxSize=1024;
+    const maxSize=768;
     let w=img.width,h=img.height;
     if(w>maxSize||h>maxSize){
       if(w>h){h=Math.round(h*(maxSize/w));w=maxSize}
@@ -253,7 +253,7 @@ function onPhotoSelect(input){
     canvas.width=w;canvas.height=h;
     const ctx=canvas.getContext('2d');
     ctx.drawImage(img,0,0,w,h);
-    const dataUrl=canvas.toDataURL('image/jpeg',0.85);
+    const dataUrl=canvas.toDataURL('image/jpeg',0.7);
     photoData=dataUrl.split(',')[1];
     photoType='image/jpeg';
     const prev=document.getElementById('photoPreview');
@@ -280,6 +280,13 @@ function getPhotoArch(vals){
 async function analyzePhoto(){
   if(!photoData)return;
   show('s-photo-load');
+  await runPhotoAnalysis();
+}
+async function retryPhoto(){
+  show('s-photo-load');
+  await runPhotoAnalysis();
+}
+async function runPhotoAnalysis(){
   const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. A woman named ${userName} has uploaded a photo of her outfit for style analysis.
 
 Analyze the outfit in this photo across these 12 style sliders (each on a 1-11 scale where 6 is the center):
@@ -325,10 +332,10 @@ Respond with ONLY valid JSON in this exact format, no other text:
     buildPhotoChart(vals);
   }catch(e){
     show('s-photo-res');
-    document.getElementById('prn').textContent="Outfit analysis";
-    document.getElementById('prp').textContent="Error details: "+e.message;
+    document.getElementById('prn').textContent="Let's try that again";
+    document.getElementById('prp').textContent="The analysis took a little too long this time. This happens occasionally — just tap the button below to try again with the same photo.";
     document.getElementById('pft').innerHTML='';
-    document.getElementById('pChart').innerHTML='';
+    document.getElementById('pChart').innerHTML='<div style="text-align:center;margin-top:1rem"><button class="btn-pink" onclick="retryPhoto()" style="max-width:260px">Try again</button></div>';
   }
 }
 </script>
