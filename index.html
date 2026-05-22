@@ -170,7 +170,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="email-divider"></div>
     <div class="email-star">⭐</div>
     <div class="email-title">Want weekly shopping suggestions selected for your unique style?</div>
-    <div class="email-sub">We'll send you a personalized Style Star pick each week — curated to your unique sliders. No spam, just style.</div>
+    <div class="email-sub">We'll send you personalized shopping suggestions curated to your unique preferences. No spam, just style.</div>
     <div class="email-form" id="emailForm">
       <input type="email" class="email-input" id="emailInput" placeholder="Enter your email">
       <button class="btn-pink" style="margin-top:0" onclick="submitEmail()">Send me personalized style inspo</button>
@@ -230,6 +230,24 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <div class="res-para" id="prp"></div>
   <div class="flav"><div class="flav-lbl">This outfit has notes of</div><div class="flav-tags" id="pft"></div></div>
   <div class="fp"><div class="fp-lbl">Outfit style fingerprint</div><div id="pChart"></div></div>
+
+  <div class="email-section" id="emailSectionPhoto">
+    <div class="email-divider"></div>
+    <div class="email-star">⭐</div>
+    <div class="email-title">Want weekly shopping suggestions selected for your unique style?</div>
+    <div class="email-sub">We'll send you personalized shopping suggestions curated to your unique preferences. No spam, just style.</div>
+    <div class="email-form" id="emailFormPhoto">
+      <input type="email" class="email-input" id="emailInputPhoto" placeholder="Enter your email">
+      <button class="btn-pink" style="margin-top:0" onclick="submitEmailPhoto()">Send me personalized style inspo</button>
+    </div>
+    <div class="email-success" id="emailSuccessPhoto" style="display:none">
+      <div class="email-check">✨</div>
+      <div class="email-confirm">You're in! Watch for your first Style Star pick soon.</div>
+    </div>
+    <div class="email-skip" onclick="document.getElementById('emailSectionPhoto').style.display='none'">No thanks, maybe later</div>
+    <div class="email-divider"></div>
+  </div>
+
   <button class="btn-pink" onclick="showPhoto()">Analyze another photo</button>
   <button class="btn-o" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
   <button class="retake" onclick="location.reload()">Start over</button>
@@ -256,7 +274,7 @@ const questions=[
 const archetypes=[
 {n:"The Classic Refined",p:[2,3,2,3,5,5,3,2,7,6,3,3]},{n:"The Natural Chic",p:[4,2,4,3,3,4,4,3,5,4,4,4]},{n:"The Elevated Casual",p:[5,3,5,4,4,4,5,4,5,5,5,5]},{n:"The Polished Professional",p:[3,5,3,6,9,10,3,3,8,8,3,6]},{n:"The Bold Expressionist",p:[7,6,6,8,6,5,10,9,6,9,6,9]},{n:"The Romantic Feminine",p:[3,5,2,6,6,5,6,6,6,6,3,4]},{n:"The Modern Trendsetter",p:[10,7,7,7,7,6,7,6,7,10,6,9]},{n:"The Easy Elegant",p:[3,3,3,3,5,5,3,2,6,5,3,3]},{n:"The Fit & Styled",p:[5,3,5,4,3,2,5,3,8,6,5,4]},{n:"The Creative Original",p:[7,5,7,9,5,4,9,8,5,7,6,7]},{n:"The Understated Luxury",p:[3,3,3,5,6,7,2,2,8,7,3,3]},{n:"The Glamorous Maximalist",p:[7,11,5,11,10,6,9,8,9,11,8,11]},{n:"The Silhouette Savvy",p:[6,5,5,5,6,6,5,3,10,8,5,5]},{n:"The Fresh Start Style",p:[6,6,6,6,6,6,6,6,6,6,6,6]},{n:"The Country Club Classic",p:[2,4,2,6,7,7,4,4,7,7,2,5]},{n:"The Luxe Collector",p:[5,7,4,7,7,7,4,4,9,9,5,7]},{n:"The Career Launcher",p:[6,4,4,5,8,9,4,3,7,7,3,5]},{n:"The Edgy Confident",p:[8,5,11,6,5,4,4,4,7,9,7,9]},{n:"The Alluring",p:[6,7,6,6,7,5,5,4,9,8,10,7]},{n:"The Coastal Casual",p:[4,2,3,2,2,3,5,4,3,3,5,3]},{n:"The Clean Minimalist",p:[4,2,3,1,4,5,2,1,7,5,3,3]}
 ];
-let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false;
+let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false,emailCaptured=false;
 function startQ(){userName=document.getElementById('nameIn').value.trim()||"You";show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
 function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act')}
 function loadQ(i){const q=questions[i];document.getElementById('qc').textContent=q.cat;document.getElementById('qt').textContent=q.title;document.getElementById('ll').textContent=q.left;document.getElementById('lr').textContent=q.right;document.getElementById('sl').value=answers[i];updHint(answers[i],i);document.getElementById('pf').style.width=Math.round((i/12)*100)+'%';document.getElementById('pl').textContent=(i+1)+' of 12';document.getElementById('nb').textContent=i===11?'See my style portrait':'Continue'}
@@ -269,7 +287,7 @@ function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)})
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`})}
 async function genResult(){show('s-load');document.getElementById('pf').style.width='100%';document.getElementById('pl').textContent='Complete';const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. A woman named ${userName} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you" and use her name once naturally.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
-function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('rn').textContent=userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart()}
+function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('rn').textContent=userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailCaptured){document.getElementById('emailSection').style.display='none'}}
 
 let photoData=null,photoType="image/jpeg";
 function startPhoto(){userName=document.getElementById('nameIn').value.trim()||"You";showPhoto()}
@@ -380,6 +398,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     const pft=document.getElementById('pft');pft.innerHTML='';
     top3.forEach(a=>{pft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});
     buildPhotoChart(vals);
+    if(emailCaptured){document.getElementById('emailSectionPhoto').style.display='none'}
   }catch(e){
     show('s-photo-res');
     document.getElementById('prn').textContent="Let's try that again";
@@ -402,14 +421,33 @@ async function submitEmail(){
     formData.append('name',userName||'');
     formData.append('style-notes',styleNotes);
     await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:formData.toString()});
-    document.getElementById('emailForm').style.display='none';
-    document.getElementById('emailSuccess').style.display='flex';
-    document.querySelector('.email-skip').style.display='none';
-  }catch(e){
-    document.getElementById('emailForm').style.display='none';
-    document.getElementById('emailSuccess').style.display='flex';
-    document.querySelector('.email-skip').style.display='none';
+  }catch(e){}
+  emailCaptured=true;
+  document.getElementById('emailForm').style.display='none';
+  document.getElementById('emailSuccess').style.display='flex';
+  document.querySelector('#emailSection .email-skip').style.display='none';
+  document.getElementById('emailSectionPhoto').style.display='none';
+}
+async function submitEmailPhoto(){
+  const emailVal=document.getElementById('emailInputPhoto').value.trim();
+  if(!emailVal||!emailVal.includes('@')){
+    document.getElementById('emailInputPhoto').style.borderColor='#e74c3c';
+    return;
   }
+  const styleNotes=topArchNames.length?topArchNames.join(', '):'';
+  try{
+    const formData=new URLSearchParams();
+    formData.append('form-name','style-star-emails');
+    formData.append('email',emailVal);
+    formData.append('name',userName||'');
+    formData.append('style-notes',styleNotes);
+    await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:formData.toString()});
+  }catch(e){}
+  emailCaptured=true;
+  document.getElementById('emailFormPhoto').style.display='none';
+  document.getElementById('emailSuccessPhoto').style.display='flex';
+  document.querySelector('#emailSectionPhoto .email-skip').style.display='none';
+  document.getElementById('emailSection').style.display='none';
 }
 </script>
 </body>
