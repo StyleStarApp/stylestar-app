@@ -74,6 +74,18 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .fp-left{left:0}.fp-right{right:0}
 .retake{display:block;width:100%;text-align:center;font-size:13px;color:#999;text-decoration:underline;letter-spacing:0.06em;text-transform:uppercase;margin-top:1rem;cursor:pointer;border:none;background:none}
 .email-section{margin:1.5rem 0;text-align:center}
+.shop-section{margin:1.5rem 0;text-align:center}
+.shop-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:'DM Sans',sans-serif}
+.shop-sub{font-size:14px;color:#999;margin-bottom:1rem}
+.outfit-card{background:#fafafa;border:1px solid #ebebeb;border-radius:16px;padding:1.25rem;margin-bottom:12px;text-align:left}
+.outfit-name{font-size:16px;font-weight:700;color:#1a1a1a;margin-bottom:6px}
+.outfit-desc{font-size:14px;color:#666;line-height:1.7;margin-bottom:10px}
+.outfit-pieces{font-size:13px;color:#888;line-height:1.6}
+.outfit-piece{margin-bottom:4px}
+.outfit-stores{font-size:12px;color:#B08830;margin-top:8px;font-weight:500}
+.shop-loading{text-align:center;padding:2rem 0;color:#999;font-style:italic;font-size:14px}
+.shop-refresh{text-align:center;margin-top:12px}
+.shop-refresh-btn{font-size:12px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.04em}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .email-star{font-size:24px;margin-bottom:8px}
 .email-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:6px;font-family:'DM Sans',sans-serif}
@@ -166,20 +178,29 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <div class="flav"><div class="flav-lbl">Your style has notes of</div><div class="flav-tags" id="ft"></div></div>
   <div class="fp"><div class="fp-lbl">Your style fingerprint</div><div id="fpChart"></div></div>
   
+  <div class="shop-section" id="shopSection">
+    <div class="email-divider"></div>
+    <div class="shop-title">Shop your style</div>
+    <div class="shop-sub">Outfit ideas curated to your unique style vibe</div>
+    <div id="shopContent">
+      <button class="btn-pink" onclick="genOutfits('quiz')" id="shopBtn">Show me outfit ideas</button>
+    </div>
+  </div>
+
   <div class="email-section" id="emailSection">
     <div class="email-divider"></div>
     <div class="email-star">⭐</div>
-    <div class="email-title">Want weekly shopping suggestions selected for your unique style?</div>
-    <div class="email-sub">We'll send you personalized shopping suggestions curated to your unique preferences. No spam, just style.</div>
+    <div class="email-title">Save your style portrait</div>
+    <div class="email-sub">Send your results to yourself so you can revisit your unique style vibe anytime.</div>
     <div class="email-form" id="emailForm">
       <input type="email" class="email-input" id="emailInput" placeholder="Enter your email">
-      <button class="btn-pink" style="margin-top:0" onclick="submitEmail()">Send me personalized style inspo</button>
+      <button class="btn-pink" style="margin-top:0" onclick="submitEmail()">Send me my results</button>
     </div>
     <div class="email-success" id="emailSuccess" style="display:none">
       <div class="email-check">✨</div>
-      <div class="email-confirm">You're in! Watch for your first Style Star pick soon.</div>
+      <div class="email-confirm">Sent! Check your inbox for your style portrait.</div>
     </div>
-    <div class="email-skip" onclick="document.getElementById('emailSection').style.display='none'">No thanks, maybe later</div>
+    <div class="email-skip" onclick="document.getElementById('emailSection').style.display='none'">Skip for now</div>
     <div class="email-divider"></div>
   </div>
 
@@ -231,20 +252,29 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <div class="flav"><div class="flav-lbl">This outfit has notes of</div><div class="flav-tags" id="pft"></div></div>
   <div class="fp"><div class="fp-lbl">Outfit style fingerprint</div><div id="pChart"></div></div>
 
+  <div class="shop-section" id="shopSectionPhoto">
+    <div class="email-divider"></div>
+    <div class="shop-title">Shop this style</div>
+    <div class="shop-sub">Shopping suggestions inspired by this outfit</div>
+    <div id="shopContentPhoto">
+      <button class="btn-pink" onclick="genOutfits('photo')" id="shopBtnPhoto">Show me shopping ideas</button>
+    </div>
+  </div>
+
   <div class="email-section" id="emailSectionPhoto">
     <div class="email-divider"></div>
     <div class="email-star">⭐</div>
-    <div class="email-title">Want weekly shopping suggestions selected for your unique style?</div>
-    <div class="email-sub">We'll send you personalized shopping suggestions curated to your unique preferences. No spam, just style.</div>
+    <div class="email-title">Save your style portrait</div>
+    <div class="email-sub">Send your results to yourself so you can revisit your unique style vibe anytime.</div>
     <div class="email-form" id="emailFormPhoto">
       <input type="email" class="email-input" id="emailInputPhoto" placeholder="Enter your email">
-      <button class="btn-pink" style="margin-top:0" onclick="submitEmailPhoto()">Send me personalized style inspo</button>
+      <button class="btn-pink" style="margin-top:0" onclick="submitEmailPhoto()">Send me my results</button>
     </div>
     <div class="email-success" id="emailSuccessPhoto" style="display:none">
       <div class="email-check">✨</div>
-      <div class="email-confirm">You're in! Watch for your first Style Star pick soon.</div>
+      <div class="email-confirm">Sent! Check your inbox for your style portrait.</div>
     </div>
-    <div class="email-skip" onclick="document.getElementById('emailSectionPhoto').style.display='none'">No thanks, maybe later</div>
+    <div class="email-skip" onclick="document.getElementById('emailSectionPhoto').style.display='none'">Skip for now</div>
     <div class="email-divider"></div>
   </div>
 
@@ -392,6 +422,8 @@ Respond with ONLY valid JSON in this exact format, no other text:
     const vals=parsed.sliders;
     const portrait=parsed.portrait;
     const top3=getPhotoArch(vals);
+    lastPhotoSliders=vals;
+    lastPhotoArchNames=top3.map(a=>a.n);
     show('s-photo-res');
     document.getElementById('prn').textContent=userName!=="You"?userName+"'s outfit analysis":"Your outfit analysis";
     document.getElementById('prp').textContent=portrait;
@@ -407,6 +439,58 @@ Respond with ONLY valid JSON in this exact format, no other text:
     document.getElementById('pChart').innerHTML='<div style="text-align:center;margin-top:1rem"><button class="btn-pink" onclick="retryPhoto()" style="max-width:260px">Try again</button></div>';
   }
 }
+async function genOutfits(source){
+  const container=source==='quiz'?'shopContent':'shopContentPhoto';
+  document.getElementById(container).innerHTML='<div class="shop-loading">Styling your personalized picks...</div>';
+  const sliderVals=source==='quiz'?answers:lastPhotoSliders;
+  const archNames=source==='quiz'?topArchNames:lastPhotoArchNames;
+  const sliderDesc=questions.map((q,i)=>`${q.cat}: ${(sliderVals||answers)[i]}/11 (1=${q.left}, 6=center, 11=${q.right})`).join('\n');
+  const prompt=`You are Catherine, a warm personal stylist with 20 years of experience. Based on this woman's Style Star quiz results, suggest 3 complete outfit ideas perfectly matched to her unique style.
+
+Her style profile:
+${sliderDesc}
+Style notes: ${(archNames||topArchNames).join(', ')}
+
+For each outfit, provide:
+- A catchy outfit name (2-4 words)
+- A 1-2 sentence description of the overall look and why it works for her
+- 4-5 specific pieces to look for (be specific about colors, fabrics, and styles that match her sliders)
+- 2-3 store suggestions where she could find these pieces (use real stores like Nordstrom, J.Crew, Zara, Anthropologie, Target, Express, Mango, Revolve, etc.)
+
+CRITICAL RULES:
+- Match every suggestion to her specific slider positions
+- Never suggest anything that contradicts her sliders
+- Include a mix of price points
+- Be specific about colors, fabrics, and silhouettes
+- Keep it warm, exciting, and confidence-building
+
+Respond with ONLY valid JSON in this exact format, no other text:
+{"outfits":[{"name":"Outfit Name","desc":"Description","pieces":["piece 1","piece 2","piece 3","piece 4"],"stores":"Store 1, Store 2, Store 3"}]}`;
+
+  try{
+    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:800,messages:[{role:"user",content:prompt}]})});
+    if(!r.ok)throw new Error("Request failed");
+    const d=await r.json();
+    if(!d.content)throw new Error("No content");
+    const raw=d.content.map(c=>c.text||'').join('');
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const parsed=JSON.parse(clean);
+    let html='';
+    parsed.outfits.forEach(o=>{
+      html+=`<div class="outfit-card">
+        <div class="outfit-name">${o.name}</div>
+        <div class="outfit-desc">${o.desc}</div>
+        <div class="outfit-pieces">${o.pieces.map(p=>'<div class="outfit-piece">• '+p+'</div>').join('')}</div>
+        <div class="outfit-stores">Shop at: ${o.stores}</div>
+      </div>`;
+    });
+    html+='<div class="shop-refresh"><button class="shop-refresh-btn" onclick="genOutfits(\''+source+'\')">↻ Show me different outfits</button></div>';
+    document.getElementById(container).innerHTML=html;
+  }catch(e){
+    document.getElementById(container).innerHTML='<div class="shop-loading">Couldn\'t load suggestions right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="genOutfits(\''+source+'\')" style="max-width:200px">Try again</button></div>';
+  }
+}
+let lastPhotoSliders=null,lastPhotoArchNames=[];
 async function submitEmail(){
   const emailVal=document.getElementById('emailInput').value.trim();
   if(!emailVal||!emailVal.includes('@')){
