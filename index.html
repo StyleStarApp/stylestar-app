@@ -77,27 +77,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .shop-section{margin:1.5rem 0;text-align:center}
 .shop-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:'DM Sans',sans-serif}
 .shop-sub{font-size:14px;color:#999;margin-bottom:1rem}
-.outfit-card{background:#fafafa;border:1px solid #ebebeb;border-radius:16px;padding:1.25rem;margin-bottom:12px;text-align:left}
-.outfit-name{font-size:16px;font-weight:700;color:#1a1a1a;margin-bottom:6px}
-.outfit-desc{font-size:14px;color:#666;line-height:1.7;margin-bottom:10px}
-.outfit-pieces{font-size:13px;color:#888;line-height:1.6}
-.outfit-piece{margin-bottom:4px}
-.outfit-stores{font-size:12px;color:#B08830;margin-top:8px;font-weight:500}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shop-card{background:#fafafa;border:1px solid #ebebeb;border-radius:14px;padding:1rem;text-align:center;display:flex;flex-direction:column;justify-content:space-between;min-height:130px}
+.shop-item-name{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:4px;line-height:1.3}
+.shop-item-store{font-size:11px;color:#999;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em}
+.shop-link{display:inline-block;font-size:11px;font-weight:600;color:#fff;background:#E91E8C;padding:8px 20px;border-radius:20px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:opacity 0.2s}
+.shop-link:hover{opacity:0.85}
 .shop-loading{text-align:center;padding:2rem 0;color:#999;font-style:italic;font-size:14px}
 .shop-refresh{text-align:center;margin-top:12px}
 .shop-refresh-btn{font-size:12px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.04em}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
-.email-star{font-size:24px;margin-bottom:8px}
-.email-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:6px;font-family:'DM Sans',sans-serif}
-.email-sub{font-size:14px;color:#777;line-height:1.6;margin-bottom:1rem;max-width:340px;margin-left:auto;margin-right:auto}
-.email-form{display:flex;flex-direction:column;align-items:center;gap:10px}
-.email-input{border:1.5px solid #e8e8e8;border-radius:40px;padding:14px 20px;font-size:16px;width:100%;max-width:300px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif;transition:border-color 0.2s}
-.email-input:focus{outline:none;border-color:#C8A060}
-.email-input::placeholder{color:#bbb}
-.email-success{display:flex;flex-direction:column;align-items:center;gap:6px}
-.email-check{font-size:32px}
-.email-confirm{font-size:15px;color:#B08830;font-weight:500}
-.email-skip{font-size:12px;color:#ccc;cursor:pointer;margin-top:10px;text-decoration:underline}
 .quiz-footer{text-align:center;padding:1.25rem;font-size:11px;color:#ddd;letter-spacing:0.08em;border-top:1px solid #f5f5f5}
 .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;border:2px dashed #ddd;border-radius:20px;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s;background:#fafafa}
 .photo-upload-area:hover{border-color:#C8A060}
@@ -109,12 +98,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </style>
 </head>
 <body>
-<form name="style-star-emails" netlify netlify-honeypot="bot-field" hidden>
-  <input type="text" name="bot-field">
-  <input type="email" name="email">
-  <input type="text" name="name">
-  <input type="text" name="style-notes">
-</form>
 <div class="ss">
 <div class="hdr">
   <svg class="logo-star" width="60" height="60" viewBox="0 0 76 76" fill="none">
@@ -187,23 +170,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </div>
   </div>
 
-  <div class="email-section" id="emailSection">
-    <div class="email-divider"></div>
-    <div class="email-star">⭐</div>
-    <div class="email-title">Save your style portrait</div>
-    <div class="email-sub">Send your results to yourself so you can revisit your unique style vibe anytime.</div>
-    <div class="email-form" id="emailForm">
-      <input type="email" class="email-input" id="emailInput" placeholder="Enter your email">
-      <button class="btn-pink" style="margin-top:0" onclick="submitEmail()">Send me my results</button>
-    </div>
-    <div class="email-success" id="emailSuccess" style="display:none">
-      <div class="email-check">✨</div>
-      <div class="email-confirm">Sent! Check your inbox for your style portrait.</div>
-    </div>
-    <div class="email-skip" onclick="document.getElementById('emailSection').style.display='none'">Skip for now</div>
-    <div class="email-divider"></div>
-  </div>
-
   <button class="btn-p" onclick="location.reload()">Retake the quiz</button>
   <button class="btn-pink" onclick="showPhoto()">Upload a photo for style analysis</button>
 </div>
@@ -261,23 +227,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </div>
   </div>
 
-  <div class="email-section" id="emailSectionPhoto">
-    <div class="email-divider"></div>
-    <div class="email-star">⭐</div>
-    <div class="email-title">Save your style portrait</div>
-    <div class="email-sub">Send your results to yourself so you can revisit your unique style vibe anytime.</div>
-    <div class="email-form" id="emailFormPhoto">
-      <input type="email" class="email-input" id="emailInputPhoto" placeholder="Enter your email">
-      <button class="btn-pink" style="margin-top:0" onclick="submitEmailPhoto()">Send me my results</button>
-    </div>
-    <div class="email-success" id="emailSuccessPhoto" style="display:none">
-      <div class="email-check">✨</div>
-      <div class="email-confirm">Sent! Check your inbox for your style portrait.</div>
-    </div>
-    <div class="email-skip" onclick="document.getElementById('emailSectionPhoto').style.display='none'">Skip for now</div>
-    <div class="email-divider"></div>
-  </div>
-
   <button class="btn-pink" onclick="showPhoto()">Analyze another photo</button>
   <button class="btn-o" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
   <button class="retake" onclick="location.reload()">Start over</button>
@@ -304,7 +253,7 @@ const questions=[
 const archetypes=[
 {n:"The Classic Refined",p:[2,3,2,3,5,5,3,2,7,6,3,3]},{n:"The Natural Chic",p:[4,2,4,3,3,4,4,3,5,4,4,4]},{n:"The Elevated Casual",p:[5,3,5,4,4,4,5,4,5,5,5,5]},{n:"The Polished Professional",p:[3,5,3,6,9,10,3,3,8,8,3,6]},{n:"The Bold Expressionist",p:[7,6,6,8,6,5,10,9,6,9,6,9]},{n:"The Romantic Feminine",p:[3,5,2,6,6,5,6,6,6,6,3,4]},{n:"The Modern Trendsetter",p:[10,7,7,7,7,6,7,6,7,10,6,9]},{n:"The Easy Elegant",p:[3,3,3,3,5,5,3,2,6,5,3,3]},{n:"The Fit & Styled",p:[5,3,5,4,3,2,5,3,8,6,5,4]},{n:"The Creative Original",p:[7,5,7,9,5,4,9,8,5,7,6,7]},{n:"The Understated Luxury",p:[3,3,3,5,6,7,2,2,8,7,3,3]},{n:"The Glamorous Maximalist",p:[7,11,5,11,10,6,9,8,9,11,8,11]},{n:"The Silhouette Savvy",p:[6,5,5,5,6,6,5,3,10,8,5,5]},{n:"The Fresh Start Style",p:[6,6,6,6,6,6,6,6,6,6,6,6]},{n:"The Country Club Classic",p:[2,4,2,6,7,7,4,4,7,7,2,5]},{n:"The Luxe Collector",p:[5,7,4,7,7,7,4,4,9,9,5,7]},{n:"The Career Launcher",p:[6,4,4,5,8,9,4,3,7,7,3,5]},{n:"The Edgy Confident",p:[8,5,11,6,5,4,4,4,7,9,7,9]},{n:"The Alluring",p:[6,7,6,6,7,5,5,4,9,8,10,7]},{n:"The Coastal Casual",p:[4,2,3,2,2,3,5,4,3,3,5,3]},{n:"The Clean Minimalist",p:[4,2,3,1,4,5,2,1,7,5,3,3]}
 ];
-let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false,emailCaptured=false;
+let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false;
 function startQ(){userName=document.getElementById('nameIn').value.trim()||"You";show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
 function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act')}
 function loadQ(i){const q=questions[i];document.getElementById('qc').textContent=q.cat;document.getElementById('qt').textContent=q.title;document.getElementById('ll').textContent=q.left;document.getElementById('lr').textContent=q.right;document.getElementById('sl').value=answers[i];updHint(answers[i],i);document.getElementById('pf').style.width=Math.round((i/12)*100)+'%';document.getElementById('pl').textContent=(i+1)+' of 12';document.getElementById('nb').textContent=i===11?'See my style portrait':'Continue'}
@@ -317,7 +266,7 @@ function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)})
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`})}
 async function genResult(){show('s-load');document.getElementById('pf').style.width='100%';document.getElementById('pl').textContent='Complete';const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. A woman named ${userName} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you" and use her name once naturally.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
-function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('rn').textContent=userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailCaptured){document.getElementById('emailSection').style.display='none'}}
+function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('rn').textContent=userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart()}
 
 let photoData=null,photoType="image/jpeg";
 function startPhoto(){userName=document.getElementById('nameIn').value.trim()||"You";showPhoto()}
@@ -430,7 +379,6 @@ Respond with ONLY valid JSON in this exact format, no other text:
     const pft=document.getElementById('pft');pft.innerHTML='';
     top3.forEach(a=>{pft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});
     buildPhotoChart(vals);
-    if(emailCaptured){document.getElementById('emailSectionPhoto').style.display='none'}
   }catch(e){
     show('s-photo-res');
     document.getElementById('prn').textContent="Let's try that again";
@@ -439,100 +387,85 @@ Respond with ONLY valid JSON in this exact format, no other text:
     document.getElementById('pChart').innerHTML='<div style="text-align:center;margin-top:1rem"><button class="btn-pink" onclick="retryPhoto()" style="max-width:260px">Try again</button></div>';
   }
 }
+const storeUrls={
+  'Nordstrom':'https://www.nordstrom.com/sr?keyword=',
+  'J.Crew':'https://www.jcrew.com/r/search/?N=0&Nloc=en&Ntrm=',
+  'Zara':'https://www.zara.com/us/en/search?searchTerm=',
+  'Target':'https://www.target.com/s?searchTerm=',
+  'Amazon':'https://www.amazon.com/s?k=',
+  'Anthropologie':'https://www.anthropologie.com/search?q=',
+  'Express':'https://www.express.com/exp/search?q=',
+  'Mango':'https://shop.mango.com/us/search?kw=',
+  'Revolve':'https://www.revolve.com/r/search?query=',
+  'Abercrombie':'https://www.abercrombie.com/shop/us/search?searchTerm=',
+  'H&M':'https://www2.hm.com/en_us/search-results.html?q=',
+  'Banana Republic':'https://bananarepublic.gap.com/browse/search.do?searchText=',
+  'Madewell':'https://www.madewell.com/search?q=',
+  'Everlane':'https://www.everlane.com/search?q=',
+  'Saks':'https://www.saksfifthavenue.com/search?q=',
+  'Bloomingdales':'https://www.bloomingdales.com/shop/search?keyword=',
+  'Lululemon':'https://shop.lululemon.com/search?Ntt=',
+  'Athleta':'https://athleta.gap.com/browse/search.do?searchText=',
+  'Old Navy':'https://oldnavy.gap.com/browse/search.do?searchText=',
+  'Aritzia':'https://www.aritzia.com/us/en/search?q='
+};
+function getStoreUrl(store,item){
+  const searchTerm=encodeURIComponent(item);
+  if(storeUrls[store])return storeUrls[store]+searchTerm;
+  return'https://www.google.com/search?q='+encodeURIComponent(item+' '+store);
+}
 async function genOutfits(source){
   const container=source==='quiz'?'shopContent':'shopContentPhoto';
-  document.getElementById(container).innerHTML='<div class="shop-loading">Styling your personalized picks...</div>';
-  const sliderVals=source==='quiz'?answers:lastPhotoSliders;
-  const archNames=source==='quiz'?topArchNames:lastPhotoArchNames;
-  const sliderDesc=questions.map((q,i)=>`${q.cat}: ${(sliderVals||answers)[i]}/11 (1=${q.left}, 6=center, 11=${q.right})`).join('\n');
-  const prompt=`You are Catherine, a warm personal stylist with 20 years of experience. Based on this woman's Style Star quiz results, suggest 3 complete outfit ideas perfectly matched to her unique style.
+  document.getElementById(container).innerHTML='<div class="shop-loading">Finding your perfect pieces...</div>';
+  const sliderVals=source==='quiz'?answers:(lastPhotoSliders||answers);
+  const archNames=source==='quiz'?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
+  const sliderDesc=questions.map((q,i)=>`${q.cat}: ${sliderVals[i]}/11 (1=${q.left}, 6=center, 11=${q.right})`).join('\n');
+  const prompt=`You are Catherine, a personal stylist. Based on this woman's style profile, suggest 6 specific shoppable items she would love.
 
 Her style profile:
 ${sliderDesc}
-Style notes: ${(archNames||topArchNames).join(', ')}
+Style notes: ${archNames.join(', ')}
 
-For each outfit, provide:
-- A catchy outfit name (2-4 words)
-- A 1-2 sentence description of the overall look and why it works for her
-- 4-5 specific pieces to look for (be specific about colors, fabrics, and styles that match her sliders)
-- 2-3 store suggestions where she could find these pieces (use real stores like Nordstrom, J.Crew, Zara, Anthropologie, Target, Express, Mango, Revolve, etc.)
+For each item provide:
+- A specific item name (e.g. "Fitted Navy Blazer" or "Gold Hoop Earrings" — be specific about color, style, fabric)
+- ONE store where she should look for it (pick from: Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia)
 
-CRITICAL RULES:
+RULES:
 - Match every suggestion to her specific slider positions
-- Never suggest anything that contradicts her sliders
-- Include a mix of price points
-- Be specific about colors, fabrics, and silhouettes
-- Keep it warm, exciting, and confidence-building
+- Mix categories: tops, bottoms, dresses, shoes, accessories
+- Include a range of price points across the 6 items
+- Be specific — not "a nice top" but "Ribbed Cream Mock-Neck Tank"
+- Use stores that match her style level
 
-Respond with ONLY valid JSON in this exact format, no other text:
-{"outfits":[{"name":"Outfit Name","desc":"Description","pieces":["piece 1","piece 2","piece 3","piece 4"],"stores":"Store 1, Store 2, Store 3"}]}`;
+Respond with ONLY valid JSON:
+{"items":[{"name":"Item Name","store":"Store Name"}]}`;
 
   try{
-    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:800,messages:[{role:"user",content:prompt}]})});
-    if(!r.ok)throw new Error("Request failed");
+    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:400,messages:[{role:"user",content:prompt}]})});
+    if(!r.ok)throw new Error("fail");
     const d=await r.json();
-    if(!d.content)throw new Error("No content");
+    if(!d.content)throw new Error("no content");
     const raw=d.content.map(c=>c.text||'').join('');
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
-    let html='';
-    parsed.outfits.forEach(o=>{
-      html+=`<div class="outfit-card">
-        <div class="outfit-name">${o.name}</div>
-        <div class="outfit-desc">${o.desc}</div>
-        <div class="outfit-pieces">${o.pieces.map(p=>'<div class="outfit-piece">• '+p+'</div>').join('')}</div>
-        <div class="outfit-stores">Shop at: ${o.stores}</div>
+    let html='<div class="shop-grid">';
+    parsed.items.forEach(item=>{
+      const url=getStoreUrl(item.store,item.name);
+      html+=`<div class="shop-card">
+        <div><div class="shop-item-name">${item.name}</div>
+        <div class="shop-item-store">${item.store}</div></div>
+        <a href="${url}" target="_blank" rel="noopener" class="shop-link">Shop →</a>
       </div>`;
     });
-    html+='<div class="shop-refresh"><button class="shop-refresh-btn" onclick="genOutfits(\''+source+'\')">↻ Show me different outfits</button></div>';
+    html+='</div>';
+    html+='<div class="shop-refresh"><button class="shop-refresh-btn" onclick="genOutfits(\''+source+'\')">↻ Show me different picks</button></div>';
     document.getElementById(container).innerHTML=html;
   }catch(e){
-    document.getElementById(container).innerHTML='<div class="shop-loading">Couldn\'t load suggestions right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="genOutfits(\''+source+'\')" style="max-width:200px">Try again</button></div>';
+    document.getElementById(container).innerHTML='<div class="shop-loading">Couldn\'t load picks right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="genOutfits(\''+source+'\')" style="max-width:200px">Try again</button></div>';
   }
 }
 let lastPhotoSliders=null,lastPhotoArchNames=[];
-async function submitEmail(){
-  const emailVal=document.getElementById('emailInput').value.trim();
-  if(!emailVal||!emailVal.includes('@')){
-    document.getElementById('emailInput').style.borderColor='#e74c3c';
-    return;
-  }
-  const styleNotes=topArchNames.length?topArchNames.join(', '):'';
-  try{
-    const formData=new URLSearchParams();
-    formData.append('form-name','style-star-emails');
-    formData.append('email',emailVal);
-    formData.append('name',userName||'');
-    formData.append('style-notes',styleNotes);
-    await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:formData.toString()});
-  }catch(e){}
-  emailCaptured=true;
-  document.getElementById('emailForm').style.display='none';
-  document.getElementById('emailSuccess').style.display='flex';
-  document.querySelector('#emailSection .email-skip').style.display='none';
-  document.getElementById('emailSectionPhoto').style.display='none';
-}
-async function submitEmailPhoto(){
-  const emailVal=document.getElementById('emailInputPhoto').value.trim();
-  if(!emailVal||!emailVal.includes('@')){
-    document.getElementById('emailInputPhoto').style.borderColor='#e74c3c';
-    return;
-  }
-  const styleNotes=topArchNames.length?topArchNames.join(', '):'';
-  try{
-    const formData=new URLSearchParams();
-    formData.append('form-name','style-star-emails');
-    formData.append('email',emailVal);
-    formData.append('name',userName||'');
-    formData.append('style-notes',styleNotes);
-    await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:formData.toString()});
-  }catch(e){}
-  emailCaptured=true;
-  document.getElementById('emailFormPhoto').style.display='none';
-  document.getElementById('emailSuccessPhoto').style.display='flex';
-  document.querySelector('#emailSectionPhoto .email-skip').style.display='none';
-  document.getElementById('emailSection').style.display='none';
-}
+
 </script>
 </body>
 </html>
