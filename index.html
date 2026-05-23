@@ -623,15 +623,12 @@ function saveStyleCard(source){
     overlay.id='cardPreview';
     overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
     overlay.innerHTML=`
-      <img src="${imgUrl}" style="max-width:75%;max-height:68vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
-      <button onclick="doSaveToPhotos()" style="display:flex;align-items:center;gap:6px;padding:14px 28px;border-radius:12px;border:none;background:#00B4D8;color:#fff;font-family:DM Sans,sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Save to photos
-      </button>
-      <button onclick="closeCardPreview()" style="margin-top:12px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+      <div style="color:#fff;font-size:16px;font-weight:600;font-family:DM Sans,sans-serif;margin-bottom:10px">Your Style Card</div>
+      <img src="${imgUrl}" style="max-width:75%;max-height:65vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
+      <div style="color:#ccc;font-size:15px;font-family:DM Sans,sans-serif;margin-top:14px;font-weight:500">Press and hold the image to save</div>
+      <button onclick="closeCardPreview()" style="margin-top:14px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
     `;
     document.body.appendChild(overlay);
-    window._cardBlob=blob;
     window._cardImgUrl=imgUrl;
   });
 }
@@ -659,20 +656,6 @@ function shareStyleCard(source){
 function closeCardPreview(){
   const el=document.getElementById('cardPreview');
   if(el){el.remove();if(window._cardImgUrl)URL.revokeObjectURL(window._cardImgUrl)}
-}
-
-async function doSaveToPhotos(){
-  const blob=window._cardBlob;
-  if(!blob)return;
-  const file=new File([blob],'my-style-star.png',{type:'image/png'});
-  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-    try{await navigator.share({files:[file]})}catch(e){}
-  }else{
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');a.href=url;a.download='my-style-star.png';a.click();
-    URL.revokeObjectURL(url);
-  }
-  closeCardPreview();
 }
 
 async function doShareCard(){
