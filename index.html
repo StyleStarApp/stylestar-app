@@ -765,14 +765,21 @@ function saveStyleCard(source){
   ctx.font='400 24px Arial, sans-serif';
   ctx.fillText('StyleStar.app',w/2,h-30);
 
-  // Save
-  canvas.toBlob(function(blob){
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;
-    a.download='my-style-star-results.png';
-    a.click();
-    URL.revokeObjectURL(url);
+  // Share or display
+  canvas.toBlob(async function(blob){
+    const file=new File([blob],'my-style-star.png',{type:'image/png'});
+    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+      try{
+        await navigator.share({files:[file],title:'My Style Star Results',text:'My Style Star style card ⭐'});
+      }catch(e){}
+    }else{
+      const url=URL.createObjectURL(blob);
+      const overlay=document.createElement('div');
+      overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;cursor:pointer';
+      overlay.innerHTML='<div style="color:#fff;font-size:15px;margin-bottom:12px;font-family:DM Sans,sans-serif;font-weight:600">Press and hold the image to save</div><img src="'+url+'" style="max-width:90%;max-height:80%;border-radius:12px;box-shadow:0 4px 30px rgba(0,0,0,0.3)"><div style="color:#999;font-size:13px;margin-top:12px;font-family:DM Sans,sans-serif">Tap anywhere to close</div>';
+      overlay.onclick=function(){overlay.remove();URL.revokeObjectURL(url)};
+      document.body.appendChild(overlay);
+    }
   },'image/png');
 }
 
