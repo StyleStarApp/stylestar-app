@@ -631,7 +631,7 @@ function saveStyleCard(source){
   const grad=ctx.createLinearGradient(0,0,w,0);
   grad.addColorStop(0,'#F0D060');grad.addColorStop(0.5,'#D4AF37');grad.addColorStop(1,'#C8A060');
   ctx.fillStyle=grad;
-  ctx.fillRect(0,0,w,8);
+  ctx.fillRect(0,0,w,6);
 
   // Draw star
   function drawStar(cx,cy,r,fill){
@@ -650,70 +650,68 @@ function saveStyleCard(source){
     ctx.fillStyle=fill;ctx.fill();
   }
 
-  // Star with gradient
-  const starGrad=ctx.createLinearGradient(w/2-60,120,w/2+60,240);
+  // Compact star
+  const starGrad=ctx.createLinearGradient(w/2-30,50,w/2+30,110);
   starGrad.addColorStop(0,'#F0D060');starGrad.addColorStop(0.5,'#D4AF37');starGrad.addColorStop(1,'#C8A060');
-  drawStar(w/2,200,80,starGrad);
-  drawStar(w/2,200,35,'#ffffff');
+  drawStar(w/2,85,45,starGrad);
+  drawStar(w/2,85,20,'#ffffff');
 
-  // STYLE STAR text
+  // STYLE STAR text - smaller
   ctx.fillStyle='#1a1a1a';
-  ctx.font='900 72px Arial, sans-serif';
+  ctx.font='900 42px Arial, sans-serif';
   ctx.textAlign='center';
-  ctx.fillText('STYLE',w/2,340);
-  ctx.fillText('STAR',w/2,415);
+  ctx.fillText('STYLE STAR',w/2,160);
 
   // Tagline
-  ctx.fillStyle='#777777';
-  ctx.font='400 24px Arial, sans-serif';
-  ctx.fillText('YOUR PERSONAL STYLE VIBE',w/2,470);
+  ctx.fillStyle='#999999';
+  ctx.font='400 18px Arial, sans-serif';
+  ctx.fillText('YOUR PERSONAL STYLE VIBE',w/2,190);
 
   // Divider
-  ctx.strokeStyle='#ebebeb';ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(200,520);ctx.lineTo(w-200,520);ctx.stroke();
+  ctx.strokeStyle='#ebebeb';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(250,220);ctx.lineTo(w-250,220);ctx.stroke();
 
   // Name
   const displayName=userName&&userName!=='You'?userName:'You';
   const isQuiz=source==='quiz';
   const title=isQuiz?(userName&&userName!=='You'?'This is '+displayName:'Your style portrait'):(userName&&userName!=='You'?displayName+'\'s outfit analysis':'Your outfit analysis');
   ctx.fillStyle='#D4AF37';
-  ctx.font='700 48px Arial, sans-serif';
-  ctx.fillText(title,w/2,600);
+  ctx.font='700 44px Arial, sans-serif';
+  ctx.fillText(title,w/2,275);
 
   // Portrait text - word wrap
   const portrait=isQuiz?document.getElementById('rp').textContent:document.getElementById('prp').textContent;
   ctx.fillStyle='#333333';
-  ctx.font='500 30px Arial, sans-serif';
+  ctx.font='500 28px Arial, sans-serif';
   const words=portrait.split(' ');
   let line='';
-  let y=680;
-  const maxW=w-160;
+  let y=330;
+  const maxW=w-140;
   words.forEach(word=>{
     const test=line+word+' ';
     if(ctx.measureText(test).width>maxW&&line!==''){
       ctx.fillText(line.trim(),w/2,y);
-      line=word+' ';y+=44;
+      line=word+' ';y+=40;
     }else{line=test}
   });
   if(line)ctx.fillText(line.trim(),w/2,y);
 
   // Flavor notes label
-  y+=80;
+  y+=65;
   ctx.fillStyle='#555555';
-  ctx.font='600 22px Arial, sans-serif';
-  ctx.letterSpacing='4px';
+  ctx.font='600 20px Arial, sans-serif';
   ctx.fillText(isQuiz?'YOUR STYLE HAS NOTES OF':'THIS OUTFIT HAS NOTES OF',w/2,y);
 
   // Flavor tags
   const archNames=isQuiz?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
-  y+=50;
-  ctx.font='700 28px Arial, sans-serif';
+  y+=40;
+  ctx.font='700 26px Arial, sans-serif';
   archNames.forEach((name,i)=>{
-    const tagY=y+i*55;
-    const tw=ctx.measureText(name).width+50;
+    const tagY=y+i*48;
+    const tw=ctx.measureText(name).width+44;
     ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
     ctx.beginPath();
-    const rx=w/2-tw/2,ry=tagY-25,rw=tw,rh=42,rad=21;
+    const rx=w/2-tw/2,ry=tagY-22,rw=tw,rh=38,rad=19;
     ctx.moveTo(rx+rad,ry);ctx.lineTo(rx+rw-rad,ry);ctx.quadraticCurveTo(rx+rw,ry,rx+rw,ry+rad);
     ctx.lineTo(rx+rw,ry+rh-rad);ctx.quadraticCurveTo(rx+rw,ry+rh,rx+rw-rad,ry+rh);
     ctx.lineTo(rx+rad,ry+rh);ctx.quadraticCurveTo(rx,ry+rh,rx,ry+rh-rad);
@@ -724,42 +722,48 @@ function saveStyleCard(source){
   });
 
   // Style fingerprint
-  y+=archNames.length*55+60;
+  y+=archNames.length*48+50;
   ctx.fillStyle='#555555';
-  ctx.font='600 22px Arial, sans-serif';
+  ctx.font='600 20px Arial, sans-serif';
   ctx.fillText(isQuiz?'YOUR STYLE FINGERPRINT':'OUTFIT STYLE FINGERPRINT',w/2,y);
-  y+=30;
+  y+=28;
 
   const sliderVals=isQuiz?answers:(lastPhotoSliders||answers);
-  ctx.font='600 16px Arial, sans-serif';
-  ctx.textAlign='right';
+  const rowH=Math.min(32, (h-y-80)/12);
   questions.forEach((q,i)=>{
-    const rowY=y+i*36;
+    const rowY=y+i*rowH;
+    ctx.font='600 14px Arial, sans-serif';
+    ctx.textAlign='right';
     ctx.fillStyle='#333';
-    ctx.fillText(q.cat.toUpperCase(),280,rowY+4);
-    ctx.textAlign='left';
+    ctx.fillText(q.cat.toUpperCase(),270,rowY+4);
     // Track
     ctx.fillStyle='#ebebeb';
-    ctx.fillRect(300,rowY,480,3);
+    ctx.fillRect(290,rowY,500,3);
     // Dot
     const pct=(sliderVals[i]-1)/10;
-    const dotX=300+pct*480;
-    ctx.beginPath();ctx.arc(dotX,rowY+1,7,0,Math.PI*2);
+    const dotX=290+pct*500;
+    ctx.beginPath();ctx.arc(dotX,rowY+1,6,0,Math.PI*2);
     ctx.fillStyle='#D4AF37';ctx.fill();
+    // Labels
+    ctx.font='500 11px Arial, sans-serif';
+    ctx.textAlign='left';
+    ctx.fillStyle='#999';
+    ctx.fillText(q.left.toUpperCase(),290,rowY+18);
     ctx.textAlign='right';
+    ctx.fillText(q.right.toUpperCase(),790,rowY+18);
   });
 
   // Bottom bar
   ctx.textAlign='center';
-  const botGrad=ctx.createLinearGradient(0,h-8,w,h-8);
+  const botGrad=ctx.createLinearGradient(0,h-6,w,h-6);
   botGrad.addColorStop(0,'#F0D060');botGrad.addColorStop(0.5,'#D4AF37');botGrad.addColorStop(1,'#C8A060');
   ctx.fillStyle=botGrad;
-  ctx.fillRect(0,h-8,w,8);
+  ctx.fillRect(0,h-6,w,6);
 
   // URL at bottom
   ctx.fillStyle='#999';
-  ctx.font='400 26px Arial, sans-serif';
-  ctx.fillText('StyleStar.app',w/2,h-40);
+  ctx.font='400 24px Arial, sans-serif';
+  ctx.fillText('StyleStar.app',w/2,h-30);
 
   // Save
   canvas.toBlob(function(blob){
