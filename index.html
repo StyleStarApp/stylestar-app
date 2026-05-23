@@ -141,7 +141,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="wb-name" id="wbName">Welcome back!</div>
     <div class="wb-msg">Your style portrait is saved. Pick up right where you left off.</div>
     <button class="btn-p" style="max-width:300px" onclick="loadSaved()">See my style portrait</button>
-    <button class="btn-pink" style="max-width:300px" onclick="savedPhoto()">Snap your outfit for a style analysis</button>
+    <button class="btn-pink" style="max-width:300px" onclick="savedPhoto()">Snap a photo of your outfit for a style analysis</button>
     <button class="btn-o" style="max-width:300px" onclick="clearSaved()">Retake the quiz</button>
   </div>
 </div>
@@ -216,7 +216,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   </div>
 
   <button class="btn-p" onclick="location.reload()">Retake the quiz</button>
-  <button class="btn-pink" onclick="showPhoto()">Snap your outfit for a style analysis</button>
+  <button class="btn-pink" onclick="showPhoto()">Snap a photo of your outfit for a style analysis</button>
 </div>
 
 <div class="scr" id="s-photo">
@@ -225,18 +225,18 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#C8A060"/>
       <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
     </svg>
-    <div class="wel-t">What's your outfit<br>saying about you?</div>
-    <div class="wel-s">Upload a photo of yourself in an outfit you love and we'll analyze your style across all 12 sliders — like having a personal stylist look at your look.</div>
+    <div class="wel-t">Let's see your unique<br>personal style vibe</div>
+    <div class="wel-s">Upload a photo of yourself in an outfit and we'll analyze your style — like having a personal stylist look at your look.</div>
     <div class="photo-upload-area" id="photoArea" onclick="document.getElementById('photoIn').click()">
       <div class="photo-placeholder" id="photoPlaceholder">
         <div class="photo-icon">📷</div>
         <div class="photo-cta">Tap to upload a photo of your outfit</div>
-        <div class="photo-hint">Tip: a full-length photo of what you're<br>wearing today gives the best results!</div>
+        <div class="photo-hint">Tip: a full-length photo of just you<br>in your outfit gives the best results!</div>
       </div>
       <img id="photoPreview" class="photo-preview" style="display:none">
     </div>
     <input type="file" id="photoIn" accept="image/*" style="display:none" onchange="onPhotoSelect(this)">
-    <button class="btn-pink" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my outfit</button>
+    <button class="btn-pink" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my style vibes</button>
     <button class="btn-o" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
   </div>
 </div>
@@ -381,7 +381,7 @@ async function runPhotoAnalysis(){
   const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. A woman named ${userName} has uploaded a photo for style analysis.
 
 FIRST: Check if you can see enough of the outfit to analyze. If the photo only shows a face, headshot, or you cannot see most of the outfit, respond with this exact JSON:
-{"partial":true,"portrait":"You look absolutely radiant! To give you a complete style analysis, I'd love to see your full outfit — head to toe if possible. Try uploading a photo that shows what you're wearing and I'll break down your style across all 12 sliders."}
+{"partial":true,"portrait":"You look radiant! To give you a complete style analysis, I'd love to see your full outfit — head to toe if possible. Try uploading a photo that shows what you're wearing and I'll break down your style."}
 
 If you CAN see enough of the outfit, analyze it across these 12 style sliders (each on a 1-11 scale where 6 is the center):
 1. Style direction (1=Classic, 11=Trendy)
