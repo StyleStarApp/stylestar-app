@@ -51,6 +51,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .btn-pink{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#E91E8C;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
 .btn-pink:hover{opacity:0.88}
 .btn-pink:active{transform:scale(0.98)}
+.btn-teal{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#00B4A6;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
+.btn-teal:hover{opacity:0.88}
+.btn-teal:active{transform:scale(0.98)}
+.btn-gold{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:#B08830;border:1.5px solid #C8A060;margin-top:8px;font-family:'DM Sans',sans-serif;transition:background 0.2s}
+.btn-gold:hover{background:#fdf8f0}
 
 .load-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;padding:4rem 1rem;text-align:center}
 .load-spin{width:56px;height:56px;animation:spin 2s linear infinite}
@@ -140,9 +145,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </svg>
     <div class="wb-name" id="wbName">Welcome back!</div>
     <div class="wb-msg">Your style portrait is saved. Pick up right where you left off.</div>
-    <button class="btn-p" style="max-width:300px" onclick="loadSaved()">See my style portrait</button>
-    <button class="btn-pink" style="max-width:300px" onclick="savedPhoto()">Snap a photo of your outfit for a style analysis</button>
-    <button class="btn-o" style="max-width:300px" onclick="clearSaved()">Retake the quiz</button>
+    <button class="btn-pink" style="max-width:300px" onclick="loadSaved()">See my style portrait</button>
+    <button class="btn-teal" style="max-width:300px" onclick="savedPhoto()">Snap a photo of your outfit for a style analysis</button>
+    <button class="btn-gold" style="max-width:300px" onclick="clearSaved()">Retake the quiz</button>
   </div>
 </div>
 
@@ -155,8 +160,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="wel-t">Discover your<br>signature style</div>
     <div class="wel-s">12 simple questions. No right or wrong answers — just you. Your result will be a one-of-a-kind style portrait as unique as you are.</div>
     <div class="name-in"><input type="text" id="nameIn" placeholder="Enter your first name" maxlength="20"></div>
-    <button class="btn-p" style="max-width:300px" onclick="startQ()">Begin your style quiz</button>
-    <button class="btn-pink" style="max-width:300px" onclick="startPhoto()">Or snap your outfit for a style analysis</button>
+    <button class="btn-pink" style="max-width:300px" onclick="startQ()">Begin your style quiz</button>
+    <button class="btn-teal" style="max-width:300px" onclick="startPhoto()">Or snap your outfit for a style analysis</button>
   </div>
 </div>
 
@@ -215,8 +220,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="stay-skip" onclick="document.getElementById('staySection').style.display='none'">Skip</div>
   </div>
 
-  <button class="btn-p" onclick="location.reload()">Retake the quiz</button>
-  <button class="btn-pink" onclick="showPhoto()">Snap a photo of your outfit for a style analysis</button>
+  <button class="btn-gold" onclick="location.reload()">Retake the quiz</button>
+  <button class="btn-teal" onclick="showPhoto()">Snap a photo of your outfit for a style analysis</button>
 </div>
 
 <div class="scr" id="s-photo">
@@ -236,8 +241,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <img id="photoPreview" class="photo-preview" style="display:none">
     </div>
     <input type="file" id="photoIn" accept="image/*" style="display:none" onchange="onPhotoSelect(this)">
-    <button class="btn-pink" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my style vibes</button>
-    <button class="btn-o" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
+    <button class="btn-teal" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my style vibes</button>
+    <button class="btn-gold" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
   </div>
 </div>
 
@@ -284,8 +289,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="stay-skip" onclick="document.getElementById('staySectionPhoto').style.display='none'">Skip</div>
   </div>
 
-  <button class="btn-pink" onclick="showPhoto()">Analyze another outfit</button>
-  <button class="btn-o" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
+  <button class="btn-teal" onclick="showPhoto()">Analyze another outfit</button>
+  <button class="btn-gold" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
   <button class="retake" onclick="location.reload()">Start over</button>
 </div>
 </div>
