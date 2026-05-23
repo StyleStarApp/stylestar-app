@@ -208,8 +208,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="email-divider"></div>
     <div class="share-title">Share your style vibe</div>
     <div class="share-btns">
-      <button class="share-btn" onclick="shareResults()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
-      <button class="share-btn" onclick="saveStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><line x1="12" y1="2" x2="12" y2="4"/></svg>Save card</button>
+      <button class="share-btn" onclick="shareStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
+      <button class="share-btn" onclick="saveStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Save card</button>
     </div>
   </div>
 
@@ -283,8 +283,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="email-divider"></div>
     <div class="share-title">Share your style vibe</div>
     <div class="share-btns">
-      <button class="share-btn" onclick="sharePhotoResults()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
-      <button class="share-btn" onclick="saveStyleCard('photo')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><line x1="12" y1="2" x2="12" y2="4"/></svg>Save card</button>
+      <button class="share-btn" onclick="shareStyleCard('photo')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
+      <button class="share-btn" onclick="saveStyleCard('photo')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Save card</button>
     </div>
   </div>
 
@@ -618,6 +618,76 @@ function sharePhotoResults(){
   }
 }
 function saveStyleCard(source){
+  buildCardBlob(source,function(blob,imgUrl){
+    const overlay=document.createElement('div');
+    overlay.id='cardPreview';
+    overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
+    overlay.innerHTML=`
+      <img src="${imgUrl}" style="max-width:75%;max-height:68vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
+      <button onclick="doSaveToPhotos()" style="display:flex;align-items:center;gap:6px;padding:14px 28px;border-radius:12px;border:none;background:#00B4D8;color:#fff;font-family:DM Sans,sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save to photos
+      </button>
+      <button onclick="closeCardPreview()" style="margin-top:12px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+    `;
+    document.body.appendChild(overlay);
+    window._cardBlob=blob;
+    window._cardImgUrl=imgUrl;
+  });
+}
+
+function shareStyleCard(source){
+  buildCardBlob(source,function(blob,imgUrl){
+    const overlay=document.createElement('div');
+    overlay.id='cardPreview';
+    overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
+    overlay.innerHTML=`
+      <div style="color:#fff;font-size:16px;font-weight:600;font-family:DM Sans,sans-serif;margin-bottom:10px">Share your style card</div>
+      <img src="${imgUrl}" style="max-width:75%;max-height:60vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
+      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:6px;padding:14px 28px;border-radius:12px;border:none;background:#E91E8C;color:#fff;font-family:DM Sans,sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        Share
+      </button>
+      <button onclick="closeCardPreview()" style="margin-top:12px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+    `;
+    document.body.appendChild(overlay);
+    window._cardBlob=blob;
+    window._cardImgUrl=imgUrl;
+  });
+}
+
+function closeCardPreview(){
+  const el=document.getElementById('cardPreview');
+  if(el){el.remove();if(window._cardImgUrl)URL.revokeObjectURL(window._cardImgUrl)}
+}
+
+async function doSaveToPhotos(){
+  const blob=window._cardBlob;
+  if(!blob)return;
+  const file=new File([blob],'my-style-star.png',{type:'image/png'});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file]})}catch(e){}
+  }else{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='my-style-star.png';a.click();
+    URL.revokeObjectURL(url);
+  }
+  closeCardPreview();
+}
+
+async function doShareCard(){
+  const blob=window._cardBlob;
+  if(!blob)return;
+  const file=new File([blob],'my-style-star.png',{type:'image/png'});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],title:'My Style Star Results',text:'Check out my Style Star results! ⭐ Take the quiz → https://www.stylestar.app'})}catch(e){}
+  }else{
+    navigator.clipboard.writeText('Check out my Style Star results! ⭐ Take the quiz → https://www.stylestar.app').then(()=>{alert('Link copied!')}).catch(()=>{});
+  }
+  closeCardPreview();
+}
+
+function buildCardBlob(source,callback){
   const canvas=document.createElement('canvas');
   const w=1080,h=1920;
   canvas.width=w;canvas.height=h;
@@ -746,68 +816,12 @@ function saveStyleCard(source){
 
   ctx.fillStyle='#999';
   ctx.font='400 24px Arial, sans-serif';
-  ctx.fillText('StyleStar.app',w/2,h-30);
+  ctx.fillText('www.StyleStar.app',w/2,h-30);
 
-  // Show preview modal
   canvas.toBlob(function(blob){
     const imgUrl=URL.createObjectURL(blob);
-    const overlay=document.createElement('div');
-    overlay.id='cardPreview';
-    overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
-    
-    overlay.innerHTML=`
-      <div style="color:#fff;font-size:16px;font-weight:600;font-family:DM Sans,sans-serif;margin-bottom:10px">Your Style Card</div>
-      <img src="${imgUrl}" style="max-width:75%;max-height:60vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
-      <div style="display:flex;gap:12px;margin-top:16px">
-        <button onclick="shareCardImage()" style="display:flex;align-items:center;gap:6px;padding:12px 24px;border-radius:12px;border:none;background:#E91E8C;color:#fff;font-family:DM Sans,sans-serif;font-size:14px;font-weight:600;cursor:pointer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-          Share
-        </button>
-        <button onclick="saveCardToPhotos()" style="display:flex;align-items:center;gap:6px;padding:12px 24px;border-radius:12px;border:none;background:#00B4D8;color:#fff;font-family:DM Sans,sans-serif;font-size:14px;font-weight:600;cursor:pointer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Save to photos
-        </button>
-      </div>
-      <button onclick="closeCardPreview()" style="margin-top:14px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
-    `;
-    document.body.appendChild(overlay);
-    
-    window._cardBlob=blob;
-    window._cardImgUrl=imgUrl;
+    callback(blob,imgUrl);
   },'image/png');
-}
-
-function closeCardPreview(){
-  const el=document.getElementById('cardPreview');
-  if(el){el.remove();if(window._cardImgUrl)URL.revokeObjectURL(window._cardImgUrl)}
-}
-
-async function shareCardImage(){
-  const blob=window._cardBlob;
-  if(!blob)return;
-  const file=new File([blob],'my-style-star.png',{type:'image/png'});
-  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-    try{await navigator.share({files:[file],title:'My Style Star Results',text:'Check out my Style Star results! ⭐ Take the quiz → StyleStar.app'})}catch(e){}
-  }else{
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');a.href=url;a.download='my-style-star.png';a.click();
-    URL.revokeObjectURL(url);
-  }
-  closeCardPreview();
-}
-
-async function saveCardToPhotos(){
-  const blob=window._cardBlob;
-  if(!blob)return;
-  const file=new File([blob],'my-style-star.png',{type:'image/png'});
-  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-    try{await navigator.share({files:[file]})}catch(e){}
-  }else{
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');a.href=url;a.download='my-style-star.png';a.click();
-    URL.revokeObjectURL(url);
-  }
-  closeCardPreview();
 }
 
 </script>
