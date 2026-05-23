@@ -623,17 +623,14 @@ function saveStyleCard(source){
   canvas.width=w;canvas.height=h;
   const ctx=canvas.getContext('2d');
 
-  // Background
   ctx.fillStyle='#ffffff';
   ctx.fillRect(0,0,w,h);
 
-  // Gold accent bar at top
   const grad=ctx.createLinearGradient(0,0,w,0);
   grad.addColorStop(0,'#F0D060');grad.addColorStop(0.5,'#D4AF37');grad.addColorStop(1,'#C8A060');
   ctx.fillStyle=grad;
   ctx.fillRect(0,0,w,6);
 
-  // Draw star
   function drawStar(cx,cy,r,fill){
     ctx.beginPath();
     for(let i=0;i<5;i++){
@@ -650,28 +647,23 @@ function saveStyleCard(source){
     ctx.fillStyle=fill;ctx.fill();
   }
 
-  // Compact star
   const starGrad=ctx.createLinearGradient(w/2-30,50,w/2+30,110);
   starGrad.addColorStop(0,'#F0D060');starGrad.addColorStop(0.5,'#D4AF37');starGrad.addColorStop(1,'#C8A060');
   drawStar(w/2,85,45,starGrad);
   drawStar(w/2,85,20,'#ffffff');
 
-  // STYLE STAR text - smaller
   ctx.fillStyle='#1a1a1a';
   ctx.font='900 42px Arial, sans-serif';
   ctx.textAlign='center';
   ctx.fillText('STYLE STAR',w/2,160);
 
-  // Tagline
   ctx.fillStyle='#999999';
   ctx.font='400 18px Arial, sans-serif';
   ctx.fillText('YOUR PERSONAL STYLE VIBE',w/2,190);
 
-  // Divider
   ctx.strokeStyle='#ebebeb';ctx.lineWidth=1;
   ctx.beginPath();ctx.moveTo(250,220);ctx.lineTo(w-250,220);ctx.stroke();
 
-  // Name
   const displayName=userName&&userName!=='You'?userName:'You';
   const isQuiz=source==='quiz';
   const title=isQuiz?(userName&&userName!=='You'?'This is '+displayName:'Your style portrait'):(userName&&userName!=='You'?displayName+'\'s outfit analysis':'Your outfit analysis');
@@ -679,7 +671,6 @@ function saveStyleCard(source){
   ctx.font='700 44px Arial, sans-serif';
   ctx.fillText(title,w/2,275);
 
-  // Portrait text - word wrap
   const portrait=isQuiz?document.getElementById('rp').textContent:document.getElementById('prp').textContent;
   ctx.fillStyle='#333333';
   ctx.font='500 28px Arial, sans-serif';
@@ -696,13 +687,11 @@ function saveStyleCard(source){
   });
   if(line)ctx.fillText(line.trim(),w/2,y);
 
-  // Flavor notes label
   y+=65;
   ctx.fillStyle='#555555';
   ctx.font='600 20px Arial, sans-serif';
   ctx.fillText(isQuiz?'YOUR STYLE HAS NOTES OF':'THIS OUTFIT HAS NOTES OF',w/2,y);
 
-  // Flavor tags
   const archNames=isQuiz?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
   y+=40;
   ctx.font='700 26px Arial, sans-serif';
@@ -721,7 +710,6 @@ function saveStyleCard(source){
     ctx.fillText(name,w/2,tagY);
   });
 
-  // Style fingerprint
   y+=archNames.length*48+50;
   ctx.fillStyle='#555555';
   ctx.font='600 20px Arial, sans-serif';
@@ -729,22 +717,19 @@ function saveStyleCard(source){
   y+=28;
 
   const sliderVals=isQuiz?answers:(lastPhotoSliders||answers);
-  const rowH=Math.min(32, (h-y-80)/12);
+  const rowH=Math.min(32,(h-y-80)/12);
   questions.forEach((q,i)=>{
     const rowY=y+i*rowH;
     ctx.font='600 14px Arial, sans-serif';
     ctx.textAlign='right';
     ctx.fillStyle='#333';
     ctx.fillText(q.cat.toUpperCase(),270,rowY+4);
-    // Track
     ctx.fillStyle='#ebebeb';
     ctx.fillRect(290,rowY,500,3);
-    // Dot
     const pct=(sliderVals[i]-1)/10;
     const dotX=290+pct*500;
     ctx.beginPath();ctx.arc(dotX,rowY+1,6,0,Math.PI*2);
     ctx.fillStyle='#D4AF37';ctx.fill();
-    // Labels
     ctx.font='500 11px Arial, sans-serif';
     ctx.textAlign='left';
     ctx.fillStyle='#999';
@@ -753,34 +738,76 @@ function saveStyleCard(source){
     ctx.fillText(q.right.toUpperCase(),790,rowY+18);
   });
 
-  // Bottom bar
   ctx.textAlign='center';
   const botGrad=ctx.createLinearGradient(0,h-6,w,h-6);
   botGrad.addColorStop(0,'#F0D060');botGrad.addColorStop(0.5,'#D4AF37');botGrad.addColorStop(1,'#C8A060');
   ctx.fillStyle=botGrad;
   ctx.fillRect(0,h-6,w,6);
 
-  // URL at bottom
   ctx.fillStyle='#999';
   ctx.font='400 24px Arial, sans-serif';
   ctx.fillText('StyleStar.app',w/2,h-30);
 
-  // Share or display
-  canvas.toBlob(async function(blob){
-    const file=new File([blob],'my-style-star.png',{type:'image/png'});
-    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-      try{
-        await navigator.share({files:[file],title:'My Style Star Results',text:'My Style Star style card ⭐'});
-      }catch(e){}
-    }else{
-      const url=URL.createObjectURL(blob);
-      const overlay=document.createElement('div');
-      overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;cursor:pointer';
-      overlay.innerHTML='<div style="color:#fff;font-size:15px;margin-bottom:12px;font-family:DM Sans,sans-serif;font-weight:600">Press and hold the image to save</div><img src="'+url+'" style="max-width:90%;max-height:80%;border-radius:12px;box-shadow:0 4px 30px rgba(0,0,0,0.3)"><div style="color:#999;font-size:13px;margin-top:12px;font-family:DM Sans,sans-serif">Tap anywhere to close</div>';
-      overlay.onclick=function(){overlay.remove();URL.revokeObjectURL(url)};
-      document.body.appendChild(overlay);
-    }
+  // Show preview modal
+  canvas.toBlob(function(blob){
+    const imgUrl=URL.createObjectURL(blob);
+    const overlay=document.createElement('div');
+    overlay.id='cardPreview';
+    overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
+    
+    overlay.innerHTML=`
+      <div style="color:#fff;font-size:16px;font-weight:600;font-family:DM Sans,sans-serif;margin-bottom:10px">Your Style Card</div>
+      <img src="${imgUrl}" style="max-width:75%;max-height:60vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button onclick="shareCardImage()" style="display:flex;align-items:center;gap:6px;padding:12px 24px;border-radius:12px;border:none;background:#E91E8C;color:#fff;font-family:DM Sans,sans-serif;font-size:14px;font-weight:600;cursor:pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share
+        </button>
+        <button onclick="saveCardToPhotos()" style="display:flex;align-items:center;gap:6px;padding:12px 24px;border-radius:12px;border:none;background:#00B4D8;color:#fff;font-family:DM Sans,sans-serif;font-size:14px;font-weight:600;cursor:pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Save to photos
+        </button>
+      </div>
+      <button onclick="closeCardPreview()" style="margin-top:14px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+    `;
+    document.body.appendChild(overlay);
+    
+    window._cardBlob=blob;
+    window._cardImgUrl=imgUrl;
   },'image/png');
+}
+
+function closeCardPreview(){
+  const el=document.getElementById('cardPreview');
+  if(el){el.remove();if(window._cardImgUrl)URL.revokeObjectURL(window._cardImgUrl)}
+}
+
+async function shareCardImage(){
+  const blob=window._cardBlob;
+  if(!blob)return;
+  const file=new File([blob],'my-style-star.png',{type:'image/png'});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],title:'My Style Star Results',text:'Check out my Style Star results! ⭐ Take the quiz → StyleStar.app'})}catch(e){}
+  }else{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='my-style-star.png';a.click();
+    URL.revokeObjectURL(url);
+  }
+  closeCardPreview();
+}
+
+async function saveCardToPhotos(){
+  const blob=window._cardBlob;
+  if(!blob)return;
+  const file=new File([blob],'my-style-star.png',{type:'image/png'});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file]})}catch(e){}
+  }else{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='my-style-star.png';a.click();
+    URL.revokeObjectURL(url);
+  }
+  closeCardPreview();
 }
 
 </script>
