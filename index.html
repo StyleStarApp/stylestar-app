@@ -105,6 +105,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .shop-refresh{text-align:center;margin-top:12px}
 .shop-refresh-btn{font-size:12px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.04em}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
+.share-section{margin:1.5rem 0;text-align:center}
+.share-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:10px}
+.share-btns{display:flex;flex-direction:column;align-items:center;gap:6px}
 .quiz-footer{text-align:center;padding:1.25rem;font-size:11px;color:#ddd;letter-spacing:0.08em;border-top:1px solid #f5f5f5}
 .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;border:2px dashed #ddd;border-radius:20px;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s;background:#fafafa}
 .photo-upload-area:hover{border-color:#C8A060}
@@ -198,6 +201,15 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </div>
   </div>
 
+  <div class="share-section">
+    <div class="email-divider"></div>
+    <div class="share-title">Share your style vibe</div>
+    <div class="share-btns">
+      <button class="btn-pink" onclick="shareResults()" style="max-width:280px">Share my results</button>
+      <button class="btn-teal" onclick="saveStyleCard('quiz')" style="max-width:280px">Save my style card</button>
+    </div>
+  </div>
+
   <div class="stay-section" id="staySection">
     <div class="email-divider"></div>
     <div class="stay-title">Stay connected</div>
@@ -261,6 +273,15 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="shop-sub">Shopping suggestions inspired by this outfit</div>
     <div id="shopContentPhoto">
       <button class="btn-pink" onclick="genOutfits('photo')" id="shopBtnPhoto">Show me shopping ideas</button>
+    </div>
+  </div>
+
+  <div class="share-section">
+    <div class="email-divider"></div>
+    <div class="share-title">Share your style vibe</div>
+    <div class="share-btns">
+      <button class="btn-pink" onclick="sharePhotoResults()" style="max-width:280px">Share my results</button>
+      <button class="btn-teal" onclick="saveStyleCard('photo')" style="max-width:280px">Save my style card</button>
     </div>
   </div>
 
@@ -572,6 +593,181 @@ function submitStayPhoto(){doStay(document.getElementById('stayInputPhoto').valu
     }
   }catch(e){}
 })();
+
+function shareResults(){
+  const name=userName&&userName!=='You'?userName+'\'s':'My';
+  const notes=topArchNames.join(', ');
+  const text=`${name} Style Star results ⭐\n\nMy style has notes of ${notes}.\n\nDiscover your personal style vibe → StyleStar.app`;
+  if(navigator.share){
+    navigator.share({title:'My Style Star Results',text:text,url:'https://stylestar.app'}).catch(()=>{});
+  }else{
+    navigator.clipboard.writeText(text+'\nhttps://stylestar.app').then(()=>{alert('Copied to clipboard!')}).catch(()=>{});
+  }
+}
+function sharePhotoResults(){
+  const name=userName&&userName!=='You'?userName+'\'s':'My';
+  const notes=lastPhotoArchNames.length?lastPhotoArchNames.join(', '):topArchNames.join(', ');
+  const text=`${name} outfit analysis from Style Star ⭐\n\nThis outfit has notes of ${notes}.\n\nGet your style analyzed → StyleStar.app`;
+  if(navigator.share){
+    navigator.share({title:'My Style Star Analysis',text:text,url:'https://stylestar.app'}).catch(()=>{});
+  }else{
+    navigator.clipboard.writeText(text+'\nhttps://stylestar.app').then(()=>{alert('Copied to clipboard!')}).catch(()=>{});
+  }
+}
+function saveStyleCard(source){
+  const canvas=document.createElement('canvas');
+  const w=1080,h=1920;
+  canvas.width=w;canvas.height=h;
+  const ctx=canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle='#ffffff';
+  ctx.fillRect(0,0,w,h);
+
+  // Gold accent bar at top
+  const grad=ctx.createLinearGradient(0,0,w,0);
+  grad.addColorStop(0,'#F0D060');grad.addColorStop(0.5,'#D4AF37');grad.addColorStop(1,'#C8A060');
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,0,w,8);
+
+  // Draw star
+  function drawStar(cx,cy,r,fill){
+    ctx.beginPath();
+    for(let i=0;i<5;i++){
+      const angle=Math.PI/2+i*Math.PI*2/5;
+      const x=cx+Math.cos(angle)*r;
+      const y=cy-Math.sin(angle)*r;
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      const angle2=angle+Math.PI/5;
+      const x2=cx+Math.cos(angle2)*r*0.4;
+      const y2=cy-Math.sin(angle2)*r*0.4;
+      ctx.lineTo(x2,y2);
+    }
+    ctx.closePath();
+    ctx.fillStyle=fill;ctx.fill();
+  }
+
+  // Star with gradient
+  const starGrad=ctx.createLinearGradient(w/2-60,120,w/2+60,240);
+  starGrad.addColorStop(0,'#F0D060');starGrad.addColorStop(0.5,'#D4AF37');starGrad.addColorStop(1,'#C8A060');
+  drawStar(w/2,200,80,starGrad);
+  drawStar(w/2,200,35,'#ffffff');
+
+  // STYLE STAR text
+  ctx.fillStyle='#1a1a1a';
+  ctx.font='900 72px Arial, sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('STYLE',w/2,340);
+  ctx.fillText('STAR',w/2,415);
+
+  // Tagline
+  ctx.fillStyle='#777777';
+  ctx.font='400 24px Arial, sans-serif';
+  ctx.fillText('YOUR PERSONAL STYLE VIBE',w/2,470);
+
+  // Divider
+  ctx.strokeStyle='#ebebeb';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(200,520);ctx.lineTo(w-200,520);ctx.stroke();
+
+  // Name
+  const displayName=userName&&userName!=='You'?userName:'You';
+  const isQuiz=source==='quiz';
+  const title=isQuiz?(userName&&userName!=='You'?'This is '+displayName:'Your style portrait'):(userName&&userName!=='You'?displayName+'\'s outfit analysis':'Your outfit analysis');
+  ctx.fillStyle='#D4AF37';
+  ctx.font='700 48px Arial, sans-serif';
+  ctx.fillText(title,w/2,600);
+
+  // Portrait text - word wrap
+  const portrait=isQuiz?document.getElementById('rp').textContent:document.getElementById('prp').textContent;
+  ctx.fillStyle='#333333';
+  ctx.font='500 30px Arial, sans-serif';
+  const words=portrait.split(' ');
+  let line='';
+  let y=680;
+  const maxW=w-160;
+  words.forEach(word=>{
+    const test=line+word+' ';
+    if(ctx.measureText(test).width>maxW&&line!==''){
+      ctx.fillText(line.trim(),w/2,y);
+      line=word+' ';y+=44;
+    }else{line=test}
+  });
+  if(line)ctx.fillText(line.trim(),w/2,y);
+
+  // Flavor notes label
+  y+=80;
+  ctx.fillStyle='#555555';
+  ctx.font='600 22px Arial, sans-serif';
+  ctx.letterSpacing='4px';
+  ctx.fillText(isQuiz?'YOUR STYLE HAS NOTES OF':'THIS OUTFIT HAS NOTES OF',w/2,y);
+
+  // Flavor tags
+  const archNames=isQuiz?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
+  y+=50;
+  ctx.font='700 28px Arial, sans-serif';
+  archNames.forEach((name,i)=>{
+    const tagY=y+i*55;
+    const tw=ctx.measureText(name).width+50;
+    ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
+    ctx.beginPath();
+    const rx=w/2-tw/2,ry=tagY-25,rw=tw,rh=42,rad=21;
+    ctx.moveTo(rx+rad,ry);ctx.lineTo(rx+rw-rad,ry);ctx.quadraticCurveTo(rx+rw,ry,rx+rw,ry+rad);
+    ctx.lineTo(rx+rw,ry+rh-rad);ctx.quadraticCurveTo(rx+rw,ry+rh,rx+rw-rad,ry+rh);
+    ctx.lineTo(rx+rad,ry+rh);ctx.quadraticCurveTo(rx,ry+rh,rx,ry+rh-rad);
+    ctx.lineTo(rx,ry+rad);ctx.quadraticCurveTo(rx,ry,rx+rad,ry);
+    ctx.stroke();
+    ctx.fillStyle='#1a1a1a';
+    ctx.fillText(name,w/2,tagY);
+  });
+
+  // Style fingerprint
+  y+=archNames.length*55+60;
+  ctx.fillStyle='#555555';
+  ctx.font='600 22px Arial, sans-serif';
+  ctx.fillText(isQuiz?'YOUR STYLE FINGERPRINT':'OUTFIT STYLE FINGERPRINT',w/2,y);
+  y+=30;
+
+  const sliderVals=isQuiz?answers:(lastPhotoSliders||answers);
+  ctx.font='600 16px Arial, sans-serif';
+  ctx.textAlign='right';
+  questions.forEach((q,i)=>{
+    const rowY=y+i*36;
+    ctx.fillStyle='#333';
+    ctx.fillText(q.cat.toUpperCase(),280,rowY+4);
+    ctx.textAlign='left';
+    // Track
+    ctx.fillStyle='#ebebeb';
+    ctx.fillRect(300,rowY,480,3);
+    // Dot
+    const pct=(sliderVals[i]-1)/10;
+    const dotX=300+pct*480;
+    ctx.beginPath();ctx.arc(dotX,rowY+1,7,0,Math.PI*2);
+    ctx.fillStyle='#D4AF37';ctx.fill();
+    ctx.textAlign='right';
+  });
+
+  // Bottom bar
+  ctx.textAlign='center';
+  const botGrad=ctx.createLinearGradient(0,h-8,w,h-8);
+  botGrad.addColorStop(0,'#F0D060');botGrad.addColorStop(0.5,'#D4AF37');botGrad.addColorStop(1,'#C8A060');
+  ctx.fillStyle=botGrad;
+  ctx.fillRect(0,h-8,w,8);
+
+  // URL at bottom
+  ctx.fillStyle='#999';
+  ctx.font='400 26px Arial, sans-serif';
+  ctx.fillText('StyleStar.app',w/2,h-40);
+
+  // Save
+  canvas.toBlob(function(blob){
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='my-style-star-results.png';
+    a.click();
+    URL.revokeObjectURL(url);
+  },'image/png');
+}
 
 </script>
 </body>
