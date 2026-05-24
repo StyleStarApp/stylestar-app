@@ -115,6 +115,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .chat-photo-btn:hover{background:#ebebeb}
 .chat-photo-preview{display:flex;align-items:center;gap:10px;padding:8px 0;margin-top:4px}
 .chat-msg-img{max-width:180px;border-radius:12px;margin-bottom:6px}
+.chat-suggestions{padding:8px 0}
+.chat-sug-label{font-size:11px;color:#999;margin-bottom:6px;font-weight:500}
+.chat-sug-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chat-chip{padding:8px 14px;border-radius:20px;border:1.5px solid #ebebeb;background:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#666;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.chat-chip:hover{border-color:#E91E8C;color:#E91E8C}
+.chat-privacy{font-size:10px;color:#ccc;text-align:center;padding:4px 0}
 .btn-chat{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.06em;cursor:pointer;border:2px solid #E91E8C;background:#fff;color:#E91E8C;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
 .btn-chat:hover{background:#fdf0f7}
 .email-section{margin:1.5rem 0;text-align:center}
@@ -355,6 +361,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="chat-close" onclick="closeChat()">Done</button>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-suggestions" id="chatSuggestions">
+      <div class="chat-sug-label">Try asking:</div>
+      <div class="chat-sug-chips">
+        <button class="chat-chip" onclick="quickChat('What should I wear to a casual brunch?')">Brunch outfit</button>
+        <button class="chat-chip" onclick="quickChat('Help me shift my style one notch more polished')">Shift one notch</button>
+        <button class="chat-chip" onclick="quickChat('Help me build a capsule wardrobe for this season')">Capsule wardrobe</button>
+        <button class="chat-chip" onclick="quickChat('What are wardrobe essentials I should have based on my style?')">My essentials</button>
+      </div>
+    </div>
+    <div class="chat-privacy">Photos are processed by AI and never stored</div>
     <div class="chat-input-wrap">
       <button class="chat-photo-btn" onclick="document.getElementById('chatPhotoIn').click()">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M3 16l4-4 4 4"/></svg>
@@ -678,6 +694,7 @@ function openChat(){
     if(saved.length>0){
       chatHistory=saved;
       msgContainer.innerHTML='';
+      document.getElementById('chatSuggestions').style.display='none';
       chatHistory.forEach(m=>{
         const div=document.createElement('div');
         div.className='chat-msg '+(m.role==='assistant'?'bot':'user');
@@ -710,9 +727,17 @@ function wbChat(){
 function closeChat(){show(chatPrevScreen)}
 
 function linkStores(text){
-  return text.replace(/\b(Nordstrom|J\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia)\b/g,function(store){
-    const baseUrl=storeUrls[store];
-    if(baseUrl)return'<a href="'+baseUrl+'" target="_blank" rel="noopener">'+store+'</a>';
+  const storeNames='Nordstrom|J\\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia';
+  return text.replace(new RegExp('([\\w\\s,"-]{3,40})(?:\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,store){
+    const cleanItem=item.replace(/^[\s,a-z]+/i,'').trim();
+    const cleanStore=Object.keys(storeUrls).find(s=>s.toLowerCase()===store.toLowerCase())||store;
+    const url=getStoreUrl(cleanStore,cleanItem);
+    return cleanItem+' from <a href="'+url+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
+  }).replace(new RegExp('\\b('+storeNames+')\\b','g'),function(store){
+    if(text.indexOf('>'+store+'</a>')!==-1)return store;
+    const cleanStore=Object.keys(storeUrls).find(s=>s.toLowerCase()===store.toLowerCase())||store;
+    const baseUrl=storeUrls[cleanStore];
+    if(baseUrl)return'<a href="'+baseUrl+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
     return store;
   });
 }
@@ -761,6 +786,12 @@ function clearChatPhoto(){
   document.getElementById('chatPhotoIn').value='';
 }
 
+function quickChat(msg){
+  document.getElementById('chatInput').value=msg;
+  document.getElementById('chatSuggestions').style.display='none';
+  sendChat();
+}
+
 async function sendChat(){
   const input=document.getElementById('chatInput');
   const msg=input.value.trim()||'What do you think of this outfit?';
@@ -769,6 +800,8 @@ async function sendChat(){
 
   const thumbSrc=chatPhotoData?document.getElementById('chatPhotoThumb').src:null;
   addChatMsg(msg,'user',thumbSrc);
+  const sugEl=document.getElementById('chatSuggestions');
+  if(sugEl)sugEl.style.display='none';
 
   const sendBtn=document.getElementById('chatSend');
   sendBtn.disabled=true;
@@ -790,17 +823,31 @@ YOUR PERSONALITY:
 - Warm, encouraging, specific, and confident
 - Talk like a stylish best friend who happens to be a professional stylist
 - Use her name naturally (not every message)
-- Be specific with suggestions — name colors, fabrics, silhouettes, and specific stores
-- When suggesting items, mention real stores like Nordstrom, J.Crew, Zara, Anthropologie, Revolve, Madewell, etc.
 - Keep responses concise — 2-4 short paragraphs max. This is a chat, not an essay.
-- If she sends a photo, analyze the outfit and give specific styling advice based on what you see AND her style profile.
+
+SHOPPING SUGGESTIONS:
+- When suggesting items, ALWAYS format as "item name from StoreName" (e.g. "a fitted navy blazer from Nordstrom" or "high-waisted wide-leg trousers from Mango")
+- Use real stores: Nordstrom, J.Crew, Zara, Anthropologie, Revolve, Madewell, Everlane, Saks, Target, Amazon, Express, Mango, Abercrombie, H&M, Banana Republic, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia
+- Be very specific about colors, fabrics, and silhouettes
+- Include a mix of price points
+
+SHIFT ONE NOTCH (Catherine's signature styling technique):
+- If she asks to "shift" her style in any direction, you know exactly where she currently sits on each slider
+- Suggest specific changes that move her just ONE position on the relevant slider — subtle but impactful
+- Frame it as exploring, not fixing: "To shift one notch more polished, try swapping your sneakers for a pointed-toe flat — same comfort, slightly more intention"
+
+PHOTO ANALYSIS:
+- If she sends a photo, analyze the outfit and give specific styling advice based on what you see AND her style profile
+- Comment on what works well FIRST, then suggest additions or alternatives
+- Be specific: "That blazer is doing great work for you — the cropped length is modern and the red is bold without being loud"
+
+STAY ON TOPIC:
+- You are ONLY a style and fashion advisor. If asked about non-style topics (politics, health, cooking, etc.), respond warmly: "Ha, I wish I could help with that! But I'm really only good at style. Got any fashion questions I can help with? ✨"
 
 CRITICAL RULES:
 - NEVER imply one end of any style slider is better than the other
 - ALWAYS match suggestions to her specific slider positions
-- Never suggest she needs to change her style — help her be MORE of who she already is
-- If she sends a photo, comment on what works well before suggesting additions or changes
-- Keep it conversational and fun`;
+- Never suggest she needs to change her style — help her be MORE of who she already is`;
 
   // Build message content
   let userContent;
