@@ -90,6 +90,29 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .stay-input::placeholder{color:#bbb}
 .stay-success{font-size:14px;color:#B08830;font-weight:500}
 .stay-skip{font-size:11px;color:#ccc;cursor:pointer;margin-top:4px;text-decoration:underline}
+.chat-wrap{display:flex;flex-direction:column;height:70vh;max-height:600px}
+.chat-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #ebebeb;margin-bottom:10px}
+.chat-hdr-left{display:flex;align-items:center;gap:8px}
+.chat-hdr-star{width:28px;height:28px}
+.chat-hdr-title{font-size:15px;font-weight:700;color:#1a1a1a}
+.chat-hdr-sub{font-size:10px;color:#999;letter-spacing:0.04em}
+.chat-close{font-size:13px;color:#999;cursor:pointer;text-decoration:underline;background:none;border:none;font-family:'DM Sans',sans-serif}
+.chat-messages{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:10px}
+.chat-msg{max-width:85%;padding:12px 16px;border-radius:16px;font-size:15px;line-height:1.6;font-family:'DM Sans',sans-serif}
+.chat-msg.bot{background:#f5f3ef;color:#1a1a1a;align-self:flex-start;border-bottom-left-radius:4px}
+.chat-msg.user{background:#E91E8C;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-msg a{color:#D4AF37;font-weight:600;text-decoration:underline}
+.chat-msg.bot a{color:#B08830}
+.chat-typing{align-self:flex-start;padding:12px 16px;background:#f5f3ef;border-radius:16px;border-bottom-left-radius:4px;font-size:14px;color:#999;font-style:italic}
+.chat-input-wrap{display:flex;gap:8px;padding-top:10px;border-top:1px solid #ebebeb;margin-top:auto}
+.chat-input{flex:1;border:1.5px solid #e8e8e8;border-radius:24px;padding:12px 18px;font-size:15px;font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;outline:none}
+.chat-input:focus{border-color:#E91E8C}
+.chat-input::placeholder{color:#bbb}
+.chat-send{width:44px;height:44px;border-radius:50%;background:#E91E8C;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.2s}
+.chat-send:hover{opacity:0.85}
+.chat-send:disabled{opacity:0.4;cursor:default}
+.btn-chat{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.06em;cursor:pointer;border:2px solid #E91E8C;background:#fff;color:#E91E8C;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
+.btn-chat:hover{background:#fdf0f7}
 .email-section{margin:1.5rem 0;text-align:center}
 .shop-section{margin:1.5rem 0;text-align:center}
 .shop-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:'DM Sans',sans-serif}
@@ -151,6 +174,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <button class="btn-pink" style="max-width:300px" onclick="loadSaved()">See my style portrait</button>
     <button class="btn-teal" style="max-width:300px" onclick="savedPhoto()">Snap a photo of your outfit for a style analysis</button>
     <button class="btn-gold" style="max-width:300px" onclick="clearSaved()">Retake the quiz</button>
+    <button class="btn-chat" style="max-width:300px" onclick="wbChat()">💬 Chat with your stylist</button>
   </div>
 </div>
 
@@ -203,6 +227,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="btn-pink" onclick="genOutfits('quiz')" id="shopBtn">Show me outfit ideas</button>
     </div>
   </div>
+
+  <div class="email-divider"></div>
+  <button class="btn-chat" onclick="openChat()">💬 Chat with your Style Star stylist</button>
 
   <div class="share-section">
     <div class="email-divider"></div>
@@ -279,6 +306,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </div>
   </div>
 
+  <div class="email-divider"></div>
+  <button class="btn-chat" onclick="openChat()">💬 Chat with your Style Star stylist</button>
+
   <div class="share-section">
     <div class="email-divider"></div>
     <div class="share-title">View & Share your style card</div>
@@ -304,6 +334,32 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <button class="btn-gold" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
   <button class="retake" onclick="location.reload()">Start over</button>
 </div>
+<div class="scr" id="s-chat">
+  <div class="chat-wrap">
+    <div class="chat-hdr">
+      <div class="chat-hdr-left">
+        <svg class="chat-hdr-star" viewBox="0 0 76 76" fill="none">
+          <defs><linearGradient id="chatStarGrad" x1="0" y1="0" x2="76" y2="76"><stop offset="0%" stop-color="#F0D060"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#C8A060"/></linearGradient></defs>
+          <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="url(#chatStarGrad)"/>
+          <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+        </svg>
+        <div>
+          <div class="chat-hdr-title">Style Star Stylist</div>
+          <div class="chat-hdr-sub">AI-powered • Trained on 20 years of styling expertise</div>
+        </div>
+      </div>
+      <button class="chat-close" onclick="closeChat()">Done</button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-wrap">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything about style..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="chat-send" id="chatSend" onclick="sendChat()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
 </div>
 <div class="quiz-footer">Style Star</div>
 </div>
@@ -584,6 +640,106 @@ async function doStay(emailVal,formId,successId,sectionId){
 }
 function submitStay(){doStay(document.getElementById('stayInput').value.trim(),'stayForm','staySuccess','staySection')}
 function submitStayPhoto(){doStay(document.getElementById('stayInputPhoto').value.trim(),'stayFormPhoto','staySuccessPhoto','staySectionPhoto')}
+
+let chatHistory=[];
+let chatPrevScreen='s-res';
+
+function openChat(){
+  chatPrevScreen=document.querySelector('.scr.act')?.id||'s-res';
+  show('s-chat');
+  if(chatHistory.length===0){
+    const name=userName&&userName!=='You'?userName:'there';
+    const welcome=`Hi ${name}! ✨ I'm your Style Star stylist. I know your style profile and I'm here to help with anything — outfit ideas, what to wear to an event, shopping suggestions, packing for a trip, or just figuring out your next wardrobe move. What can I help you with?`;
+    addChatMsg(welcome,'bot');
+  }
+  setTimeout(()=>document.getElementById('chatInput').focus(),300);
+}
+
+function wbChat(){
+  try{
+    const d=JSON.parse(localStorage.getItem('ss_data'));
+    if(d){userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;quizTaken=true;}
+  }catch(e){}
+  chatPrevScreen='s-wb';
+  openChat();
+}
+
+function closeChat(){show(chatPrevScreen)}
+
+function addChatMsg(text,type){
+  const div=document.createElement('div');
+  div.className='chat-msg '+type;
+  // Convert store names to links
+  const linked=text.replace(/\b(Nordstrom|J\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia)\b/g,function(store){
+    const baseUrl=storeUrls[store];
+    if(baseUrl)return'<a href="'+baseUrl+'" target="_blank" rel="noopener">'+store+'</a>';
+    return store;
+  });
+  div.innerHTML=linked;
+  document.getElementById('chatMessages').appendChild(div);
+  document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;
+  if(type==='bot')chatHistory.push({role:'assistant',content:text});
+  if(type==='user')chatHistory.push({role:'user',content:text});
+}
+
+async function sendChat(){
+  const input=document.getElementById('chatInput');
+  const msg=input.value.trim();
+  if(!msg)return;
+  input.value='';
+  addChatMsg(msg,'user');
+
+  const sendBtn=document.getElementById('chatSend');
+  sendBtn.disabled=true;
+
+  const typing=document.createElement('div');
+  typing.className='chat-typing';
+  typing.textContent='Styling your answer...';
+  document.getElementById('chatMessages').appendChild(typing);
+  document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;
+
+  const sliderContext=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (1=${q.left}, 6=center, 11=${q.right})`).join(', ');
+
+  const systemPrompt=`You are a warm, intuitive personal stylist powered by AI, trained on Catherine's 20 years of styling expertise. You are chatting with ${userName&&userName!=='You'?userName:'a woman'} who has taken the Style Star quiz.
+
+Her style profile:
+${sliderContext}
+Her style flavor notes: ${topArchNames.join(', ')}
+
+YOUR PERSONALITY:
+- Warm, encouraging, specific, and confident
+- Talk like a stylish best friend who happens to be a professional stylist
+- Use her name naturally (not every message)
+- Be specific with suggestions — name colors, fabrics, silhouettes, and specific stores
+- When suggesting items, mention real stores like Nordstrom, J.Crew, Zara, Anthropologie, Revolve, Madewell, etc.
+- Keep responses concise — 2-4 short paragraphs max. This is a chat, not an essay.
+
+CRITICAL RULES:
+- NEVER imply one end of any style slider is better than the other
+- ALWAYS match suggestions to her specific slider positions
+- Never suggest she needs to change her style — help her be MORE of who she already is
+- Celebrate her unique combination
+- If she asks about shifting her style, support it warmly
+
+Keep it conversational and fun. You're texting with a friend, not writing an article.`;
+
+  const messages=[{role:'user',content:systemPrompt},...chatHistory.slice(-20)];
+
+  try{
+    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:messages})});
+    typing.remove();
+    if(!r.ok)throw new Error('fail');
+    const d=await r.json();
+    if(!d.content)throw new Error('no content');
+    const reply=d.content.map(c=>c.text||'').join('');
+    addChatMsg(reply,'bot');
+  }catch(e){
+    typing.remove();
+    addChatMsg("I'm having a moment — could you try asking that again? ✨",'bot');
+  }
+  sendBtn.disabled=false;
+  input.focus();
+}
 
 // Check for saved results on page load
 (function(){
