@@ -111,6 +111,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .chat-send{width:44px;height:44px;border-radius:50%;background:#E91E8C;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.2s}
 .chat-send:hover{opacity:0.85}
 .chat-send:disabled{opacity:0.4;cursor:default}
+.chat-photo-btn{width:44px;height:44px;border-radius:50%;background:#f5f3ef;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s}
+.chat-photo-btn:hover{background:#ebebeb}
+.chat-photo-preview{display:flex;align-items:center;gap:10px;padding:8px 0;margin-top:4px}
+.chat-msg-img{max-width:180px;border-radius:12px;margin-bottom:6px}
 .btn-chat{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.06em;cursor:pointer;border:2px solid #E91E8C;background:#fff;color:#E91E8C;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
 .btn-chat:hover{background:#fdf0f7}
 .email-section{margin:1.5rem 0;text-align:center}
@@ -352,10 +356,19 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input-wrap">
+      <button class="chat-photo-btn" onclick="document.getElementById('chatPhotoIn').click()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M3 16l4-4 4 4"/></svg>
+      </button>
+      <input type="file" id="chatPhotoIn" accept="image/*" style="display:none" onchange="onChatPhoto(this)">
       <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything about style..." onkeydown="if(event.key==='Enter')sendChat()">
       <button class="chat-send" id="chatSend" onclick="sendChat()">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
+    </div>
+    <div class="chat-photo-preview" id="chatPhotoPreview" style="display:none">
+      <img id="chatPhotoThumb" style="width:60px;height:60px;object-fit:cover;border-radius:8px">
+      <span style="font-size:13px;color:#666">Photo attached</span>
+      <button onclick="clearChatPhoto()" style="background:none;border:none;color:#E91E8C;font-size:13px;cursor:pointer;font-weight:600">Remove</button>
     </div>
   </div>
 </div>
@@ -643,15 +656,45 @@ function submitStayPhoto(){doStay(document.getElementById('stayInputPhoto').valu
 
 let chatHistory=[];
 let chatPrevScreen='s-res';
+let chatPhotoData=null;
+
+function saveChatHistory(){
+  try{localStorage.setItem('ss_chat',JSON.stringify(chatHistory.slice(-40)))}catch(e){}
+}
+function loadChatHistory(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('ss_chat'));
+    if(saved&&saved.length)return saved;
+  }catch(e){}
+  return[];
+}
 
 function openChat(){
   chatPrevScreen=document.querySelector('.scr.act')?.id||'s-res';
   show('s-chat');
+  const msgContainer=document.getElementById('chatMessages');
   if(chatHistory.length===0){
-    const name=userName&&userName!=='You'?userName:'there';
-    const welcome=`Hi ${name}! ✨ I'm your Style Star stylist. I know your style profile and I'm here to help with anything — outfit ideas, what to wear to an event, shopping suggestions, packing for a trip, or just figuring out your next wardrobe move. What can I help you with?`;
-    addChatMsg(welcome,'bot');
+    const saved=loadChatHistory();
+    if(saved.length>0){
+      chatHistory=saved;
+      msgContainer.innerHTML='';
+      chatHistory.forEach(m=>{
+        const div=document.createElement('div');
+        div.className='chat-msg '+(m.role==='assistant'?'bot':'user');
+        if(m.hasPhoto){
+          div.innerHTML='<img class="chat-msg-img" src="'+m.photoThumb+'"><br>'+linkStores(m.displayText||m.content);
+        }else{
+          div.innerHTML=linkStores(m.role==='assistant'?m.content:(m.displayText||m.content));
+        }
+        msgContainer.appendChild(div);
+      });
+    }else{
+      const name=userName&&userName!=='You'?userName:'there';
+      const welcome=`Hi ${name}! ✨ I'm your Style Star stylist. I know your style profile and I'm here to help with anything — outfit ideas, what to wear to an event, shopping suggestions, packing for a trip, or just figuring out your next wardrobe move. What can I help you with?`;
+      addChatMsg(welcome,'bot');
+    }
   }
+  msgContainer.scrollTop=msgContainer.scrollHeight;
   setTimeout(()=>document.getElementById('chatInput').focus(),300);
 }
 
@@ -666,28 +709,66 @@ function wbChat(){
 
 function closeChat(){show(chatPrevScreen)}
 
-function addChatMsg(text,type){
-  const div=document.createElement('div');
-  div.className='chat-msg '+type;
-  // Convert store names to links
-  const linked=text.replace(/\b(Nordstrom|J\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia)\b/g,function(store){
+function linkStores(text){
+  return text.replace(/\b(Nordstrom|J\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia)\b/g,function(store){
     const baseUrl=storeUrls[store];
     if(baseUrl)return'<a href="'+baseUrl+'" target="_blank" rel="noopener">'+store+'</a>';
     return store;
   });
-  div.innerHTML=linked;
+}
+
+function addChatMsg(text,type,photoThumb){
+  const div=document.createElement('div');
+  div.className='chat-msg '+type;
+  if(photoThumb&&type==='user'){
+    div.innerHTML='<img class="chat-msg-img" src="'+photoThumb+'"><br>'+linkStores(text);
+  }else{
+    div.innerHTML=linkStores(text);
+  }
   document.getElementById('chatMessages').appendChild(div);
   document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;
-  if(type==='bot')chatHistory.push({role:'assistant',content:text});
-  if(type==='user')chatHistory.push({role:'user',content:text});
+  const entry={role:type==='bot'?'assistant':'user',content:text};
+  if(photoThumb){entry.hasPhoto=true;entry.photoThumb=photoThumb;entry.displayText=text;}
+  chatHistory.push(entry);
+  saveChatHistory();
+}
+
+function onChatPhoto(input){
+  if(!input.files||!input.files[0])return;
+  const img=new Image();
+  const url=URL.createObjectURL(input.files[0]);
+  img.onload=function(){
+    const maxSize=768;
+    let w=img.width,h=img.height;
+    if(w>maxSize||h>maxSize){
+      if(w>h){h=Math.round(h*(maxSize/w));w=maxSize}
+      else{w=Math.round(w*(maxSize/h));h=maxSize}
+    }
+    const canvas=document.createElement('canvas');
+    canvas.width=w;canvas.height=h;
+    canvas.getContext('2d').drawImage(img,0,0,w,h);
+    chatPhotoData=canvas.toDataURL('image/jpeg',0.7).split(',')[1];
+    document.getElementById('chatPhotoThumb').src=canvas.toDataURL('image/jpeg',0.5);
+    document.getElementById('chatPhotoPreview').style.display='flex';
+    URL.revokeObjectURL(url);
+  };
+  img.src=url;
+}
+
+function clearChatPhoto(){
+  chatPhotoData=null;
+  document.getElementById('chatPhotoPreview').style.display='none';
+  document.getElementById('chatPhotoIn').value='';
 }
 
 async function sendChat(){
   const input=document.getElementById('chatInput');
-  const msg=input.value.trim();
-  if(!msg)return;
+  const msg=input.value.trim()||'What do you think of this outfit?';
+  if(!msg&&!chatPhotoData)return;
   input.value='';
-  addChatMsg(msg,'user');
+
+  const thumbSrc=chatPhotoData?document.getElementById('chatPhotoThumb').src:null;
+  addChatMsg(msg,'user',thumbSrc);
 
   const sendBtn=document.getElementById('chatSend');
   sendBtn.disabled=true;
@@ -702,8 +783,7 @@ async function sendChat(){
 
   const systemPrompt=`You are a warm, intuitive personal stylist powered by AI, trained on Catherine's 20 years of styling expertise. You are chatting with ${userName&&userName!=='You'?userName:'a woman'} who has taken the Style Star quiz.
 
-Her style profile:
-${sliderContext}
+Her style profile: ${sliderContext}
 Her style flavor notes: ${topArchNames.join(', ')}
 
 YOUR PERSONALITY:
@@ -713,17 +793,39 @@ YOUR PERSONALITY:
 - Be specific with suggestions — name colors, fabrics, silhouettes, and specific stores
 - When suggesting items, mention real stores like Nordstrom, J.Crew, Zara, Anthropologie, Revolve, Madewell, etc.
 - Keep responses concise — 2-4 short paragraphs max. This is a chat, not an essay.
+- If she sends a photo, analyze the outfit and give specific styling advice based on what you see AND her style profile.
 
 CRITICAL RULES:
 - NEVER imply one end of any style slider is better than the other
 - ALWAYS match suggestions to her specific slider positions
 - Never suggest she needs to change her style — help her be MORE of who she already is
-- Celebrate her unique combination
-- If she asks about shifting her style, support it warmly
+- If she sends a photo, comment on what works well before suggesting additions or changes
+- Keep it conversational and fun`;
 
-Keep it conversational and fun. You're texting with a friend, not writing an article.`;
+  // Build message content
+  let userContent;
+  if(chatPhotoData){
+    userContent=[
+      {type:'image',source:{type:'base64',media_type:'image/jpeg',data:chatPhotoData}},
+      {type:'text',text:msg}
+    ];
+  }else{
+    userContent=msg;
+  }
 
-  const messages=[{role:'user',content:systemPrompt},...chatHistory.slice(-20)];
+  // Build messages array - system as first user msg, then recent history
+  const recentHistory=chatHistory.slice(-20).map(m=>{
+    if(m.hasPhoto){
+      return{role:m.role,content:m.displayText||m.content};
+    }
+    return{role:m.role,content:m.content};
+  });
+  // Remove the last entry (we just added it)
+  recentHistory.pop();
+  const messages=[{role:'user',content:systemPrompt},{role:'assistant',content:'Understood. I am the Style Star stylist ready to help.'},...recentHistory,{role:'user',content:userContent}];
+
+  const photoWasSent=!!chatPhotoData;
+  clearChatPhoto();
 
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:messages})});
