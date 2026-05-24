@@ -137,6 +137,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .shop-loading{text-align:center;padding:2rem 0;color:#444;font-style:italic;font-size:15px;font-weight:500}
 .shop-refresh{text-align:center;margin-top:12px}
 .shop-refresh-btn{font-size:12px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.04em}
+.shop-disclosure{font-size:11px;color:#bbb;line-height:1.5;margin-top:12px;font-style:italic;max-width:320px;margin-left:auto;margin-right:auto}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
 .share-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:12px}
@@ -144,7 +145,15 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .share-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:12px;border:2px solid #ddd;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#1a1a1a;transition:all 0.2s;flex:1;max-width:170px}
 .share-btn:hover{border-color:#bbb;background:#fafafa}
 .share-btn svg{flex-shrink:0}
-.quiz-footer{text-align:center;padding:1.25rem;font-size:11px;color:#ddd;letter-spacing:0.08em;border-top:1px solid #f5f5f5}
+.quiz-footer{text-align:center;padding:1.25rem;font-size:11px;color:#bbb;letter-spacing:0.08em;border-top:1px solid #f5f5f5}
+.our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#999;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
+.our-story-link:hover{color:#666}
+.story-wrap{padding:1.5rem 0.5rem;text-align:center}
+.story-star{margin-bottom:12px}
+.story-title{font-size:24px;font-weight:700;color:#1a1a1a;margin-bottom:1.25rem;font-family:'DM Sans',sans-serif}
+.story-text{font-size:16px;color:#444;line-height:1.75;margin-bottom:1rem;text-align:left;font-family:'DM Sans',sans-serif}
+.story-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:#D4AF37;font-weight:500;padding:1rem 0;text-align:center}
+.story-heart{font-size:28px;text-align:center;margin:1rem 0}
 .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;border:2px dashed #ddd;border-radius:20px;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s;background:#fafafa}
 .photo-upload-area:hover{border-color:#C8A060}
 .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem}
@@ -195,6 +204,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="name-in"><input type="text" id="nameIn" placeholder="Enter your first name" maxlength="20"></div>
     <button class="btn-pink" style="max-width:300px" onclick="startQ()">Begin your style quiz</button>
     <button class="btn-teal" style="max-width:300px" onclick="startPhoto()">Snap a photo of your outfit for a style analysis</button>
+    <button class="our-story-link" onclick="showStory()">Our Story</button>
   </div>
 </div>
 
@@ -344,6 +354,39 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <button class="btn-gold" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
   <button class="retake" onclick="location.reload()">Start over</button>
 </div>
+<div class="scr" id="s-story">
+  <div class="story-wrap">
+    <div class="story-star">
+      <svg width="50" height="50" viewBox="0 0 76 76" fill="none">
+        <defs><linearGradient id="storyStarGrad" x1="0" y1="0" x2="76" y2="76"><stop offset="0%" stop-color="#F0D060"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#C8A060"/></linearGradient></defs>
+        <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="url(#storyStarGrad)"/>
+        <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+      </svg>
+    </div>
+    <div class="story-title">Our Story</div>
+    <div class="story-text">
+      Style Star was created by a certified image consultant who has spent nearly 20 years helping women feel confident in what they wear.
+    </div>
+    <div class="story-text">
+      After thousands of closet consultations and personal shopping sessions, one thing became clear: every woman has her own style fingerprint — there's no right or wrong, just what feels like you.
+    </div>
+    <div class="story-text">
+      Most style advice tells you what you should wear. We believe in celebrating what you already gravitate toward — and helping you feel even more like yourself.
+    </div>
+    <div class="story-text">
+      Style Star was built to bring that personal styling experience to every woman, everywhere. The quiz, the photo analysis, the stylist chat — it's all powered by AI trained on two decades of real styling expertise and one core belief:
+    </div>
+    <div class="story-quote">
+      "New clothes are like fresh flowers — enjoy them now."
+    </div>
+    <div class="story-text" style="margin-top:1.5rem">
+      Whether you're rediscovering your style, evolving it, or just need help figuring out what to wear Saturday night — we're here for you.
+    </div>
+    <div class="story-heart">⭐</div>
+    <button class="btn-pink" onclick="show('s-wel')" style="max-width:260px;margin:0 auto;display:block">Discover your style</button>
+  </div>
+</div>
+
 <div class="scr" id="s-chat">
   <div class="chat-wrap">
     <div class="chat-hdr">
@@ -390,7 +433,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </div>
 
 </div>
-<div class="quiz-footer">Style Star</div>
+<div class="quiz-footer"><span onclick="showStory()" style="cursor:pointer;text-decoration:underline">Our Story</span> · Style Star</div>
 </div>
 
 <script>
@@ -673,6 +716,14 @@ function submitStayPhoto(){doStay(document.getElementById('stayInputPhoto').valu
 let chatHistory=[];
 let chatPrevScreen='s-res';
 let chatPhotoData=null;
+let storyPrevScreen='s-wel';
+
+function showStory(){
+  const cur=document.querySelector('.scr.act');
+  storyPrevScreen=cur?cur.id:'s-wel';
+  show('s-story');
+}
+function closeStory(){show(storyPrevScreen)}
 
 function saveChatHistory(){
   try{localStorage.setItem('ss_chat',JSON.stringify(chatHistory.slice(-40)))}catch(e){}
