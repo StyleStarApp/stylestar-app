@@ -123,6 +123,31 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .chat-privacy{font-size:10px;color:#ccc;text-align:center;padding:4px 0}
 .btn-chat{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.06em;cursor:pointer;border:2px solid #E91E8C;background:#fff;color:#E91E8C;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
 .btn-chat:hover{background:#fdf0f7}
+.pref-title{font-size:22px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.pref-sub{font-size:14px;color:#666;margin-bottom:1.25rem;line-height:1.5}
+.pref-label{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em}
+.pref-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem}
+.pref-chip{padding:10px 16px;border-radius:24px;border:1.5px solid #ddd;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#555;cursor:pointer;transition:all 0.15s;user-select:none}
+.pref-chip.sel{border-color:#D4AF37;background:#fdf8ef;color:#1a1a1a;font-weight:600}
+.pref-chip.skip{border-color:#e74c3c;background:#fef5f5;color:#999;text-decoration:line-through}
+.color-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem;justify-content:center}
+.color-dot{width:44px;height:44px;border-radius:50%;border:2px solid #eee;cursor:pointer;transition:all 0.15s;position:relative}
+.color-dot.love{border:3px solid #D4AF37;box-shadow:0 0 0 2px #D4AF37}
+.color-dot.hate{opacity:0.3}
+.color-dot.hate::after{content:"✕";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:18px;font-weight:700;text-shadow:0 0 3px rgba(0,0,0,0.5)}
+.color-name{font-size:9px;text-align:center;color:#999;margin-top:2px}
+.color-item{display:flex;flex-direction:column;align-items:center;gap:2px}
+.pref-progress{display:flex;gap:6px;justify-content:center;margin-bottom:1.25rem}
+.pref-pip{width:10px;height:10px;border-radius:50%;background:#e8e8e8}
+.pref-pip.active{background:#D4AF37}
+.pref-pip.done{background:#4CAF50}
+.pref-other{width:100%;border:1.5px solid #e8e8e8;border-radius:12px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a1a;min-height:60px;resize:none;margin-bottom:1rem}
+.pref-other:focus{outline:none;border-color:#D4AF37}
+.pref-other::placeholder{color:#bbb}
+.pref-done{text-align:center;padding:2rem 1rem}
+.pref-done-star{font-size:48px;margin-bottom:12px}
+.pref-done-title{font-size:20px;font-weight:700;color:#D4AF37;margin-bottom:6px}
+.pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem}
 .email-section{margin:1.5rem 0;text-align:center}
 .shop-section{margin:1.5rem 0;text-align:center}
 .shop-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:'DM Sans',sans-serif}
@@ -195,6 +220,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <button class="btn-teal" style="max-width:300px" onclick="savedPhoto()">Snap a photo of your outfit for a style analysis</button>
     <button class="btn-gold" style="max-width:300px" onclick="clearSaved()">Retake the quiz</button>
     <button class="btn-chat" style="max-width:300px" onclick="wbChat()">💬 Chat with your stylist</button>
+    <button class="btn-gold" style="max-width:300px" onclick="openPrefs()">✨ Refine your style preferences</button>
   </div>
 </div>
 
@@ -274,6 +300,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 
   <button class="btn-gold" onclick="location.reload()">Retake the quiz</button>
   <button class="btn-teal" onclick="showPhoto()">Snap a photo of your outfit for a style analysis</button>
+  <button class="btn-gold" onclick="openPrefs()" id="prefBtnQuiz">✨ Refine your style preferences</button>
 </div>
 
 <div class="scr" id="s-photo">
@@ -354,6 +381,25 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <button class="btn-gold" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
   <button class="retake" onclick="location.reload()">Start over</button>
 </div>
+<div class="scr" id="s-pref">
+  <div class="pref-progress" id="prefPips"></div>
+  <div id="prefContent"></div>
+  <div style="margin-top:1rem">
+    <button class="btn-pink" id="prefNext" onclick="nextPref()">Next</button>
+    <button class="btn-o" id="prefBack" onclick="prevPref()">Back</button>
+    <button class="retake" onclick="skipPrefs()">Skip for now</button>
+  </div>
+</div>
+
+<div class="scr" id="s-pref-done">
+  <div class="pref-done">
+    <div class="pref-done-star">⭐</div>
+    <div class="pref-done-title">Your stylist just got a lot smarter</div>
+    <div class="pref-done-sub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
+    <button class="btn-pink" onclick="show(prefReturnScreen)" style="max-width:280px">Continue</button>
+  </div>
+</div>
+
 <div class="scr" id="s-story">
   <div class="story-wrap">
     <div class="story-title">Our Story</div>
@@ -630,7 +676,7 @@ async function genOutfits(source){
 
 Her style profile:
 ${sliderDesc}
-Style notes: ${archNames.join(', ')}
+Style notes: ${archNames.join(', ')}${getPrefsForPrompt()}
 
 For each item provide:
 - category: one of "top", "bottom", "dress", "jacket", "shoes", "bag", "jewelry", "activewear"
@@ -639,6 +685,9 @@ For each item provide:
 
 RULES:
 - Match every suggestion to her specific slider positions
+- NEVER suggest items on her never-wear list or in colors she skips
+- If she has color preferences, prioritize those colors
+- If she has size info, suggest items that come in her size range
 - Include a mix of categories across the 6 items
 - Include a range of price points
 - Be very specific — not "a nice top" but "Ribbed Cream Mock-Neck Tank"
@@ -721,6 +770,220 @@ let chatHistory=[];
 let chatPrevScreen='s-res';
 let chatPhotoData=null;
 let storyPrevScreen='s-wel';
+let prefStep=0;
+let prefReturnScreen='s-res';
+let prefs={sizes:{},colorsLove:[],colorsSkip:[],neverWear:[],neverPatterns:[],neverOther:'',jewelry:'',dailyShoes:'',bagStyle:'',dailyWear:'',dressCode:'',climate:'',otherNotes:''};
+
+const prefColors=[
+{n:'Black',c:'#1a1a1a'},{n:'White',c:'#ffffff'},{n:'Cream',c:'#FFFDD0'},{n:'Gray',c:'#999999'},{n:'Navy',c:'#1B2A4A'},{n:'Tan',c:'#D2B48C'},{n:'Brown',c:'#6B4226'},{n:'Olive',c:'#6B7B3A'},
+{n:'Red',c:'#CC2936'},{n:'Coral',c:'#FF6F61'},{n:'Orange',c:'#E87631'},{n:'Blush',c:'#F4C2C2'},{n:'Hot Pink',c:'#E91E8C'},{n:'Burgundy',c:'#722F37'},{n:'Rust',c:'#B7410E'},{n:'Mustard',c:'#D4A017'},
+{n:'Royal Blue',c:'#2B5EA7'},{n:'Light Blue',c:'#89CFF0'},{n:'Turquoise',c:'#00B4D8'},{n:'Lavender',c:'#B57EDC'},{n:'Purple',c:'#6A0DAD'},{n:'Emerald',c:'#046A38'},{n:'Sage',c:'#9CAF88'},{n:'Forest',c:'#254D32'},
+{n:'Yellow',c:'#F5C518'},{n:'Fuchsia',c:'#C8429B'},{n:'Cobalt',c:'#0047AB'},
+{n:'Metallic Gold',c:'linear-gradient(135deg,#D4AF37,#F0D060,#B8972A)'},{n:'Metallic Silver',c:'linear-gradient(135deg,#C0C0C0,#E8E8E8,#A8A8A8)'},{n:'Rose Gold',c:'linear-gradient(135deg,#B76E79,#EACDD2,#C9917A)'}
+];
+
+const prefNeverItems=['Turtlenecks','Crop tops','Low-rise anything','Ruffles','Puff sleeves','Strapless tops/dresses','Mini skirts','Oversized/boxy fits','Bodycon/tight dresses','Short shorts','Jumpsuits/rompers'];
+const prefNeverPatterns=['Animal print','Florals','Stripes','Polka dots','Plaid','Bold graphic prints'];
+
+function loadPrefs(){
+  try{const s=JSON.parse(localStorage.getItem('ss_prefs'));if(s)prefs=s}catch(e){}
+}
+function savePrefs(){
+  try{localStorage.setItem('ss_prefs',JSON.stringify(prefs))}catch(e){}
+}
+loadPrefs();
+
+function openPrefs(){
+  const cur=document.querySelector('.scr.act');
+  prefReturnScreen=cur?cur.id:'s-res';
+  prefStep=0;
+  show('s-pref');
+  renderPref();
+}
+function skipPrefs(){show(prefReturnScreen)}
+
+function renderPrefPips(){
+  const el=document.getElementById('prefPips');
+  let h='';
+  for(let i=0;i<5;i++){
+    const cls=i<prefStep?'pref-pip done':i===prefStep?'pref-pip active':'pref-pip';
+    h+=`<div class="${cls}"></div>`;
+  }
+  el.innerHTML=h;
+}
+
+function renderPref(){
+  renderPrefPips();
+  const c=document.getElementById('prefContent');
+  const backBtn=document.getElementById('prefBack');
+  const nextBtn=document.getElementById('prefNext');
+  backBtn.style.display=prefStep===0?'none':'block';
+  nextBtn.textContent=prefStep===4?'Done':'Next';
+
+  if(prefStep===0) renderPrefSizes(c);
+  else if(prefStep===1) renderPrefColors(c);
+  else if(prefStep===2) renderPrefNever(c);
+  else if(prefStep===3) renderPrefQuick(c);
+  else if(prefStep===4) renderPrefOther(c);
+}
+
+function nextPref(){
+  savePrefStep();
+  if(prefStep<4){prefStep++;renderPref()}
+  else{savePrefs();show('s-pref-done')}
+}
+function prevPref(){
+  savePrefStep();
+  if(prefStep>0){prefStep--;renderPref()}
+}
+
+function savePrefStep(){
+  if(prefStep===0){
+    const fields=['tops','bottoms','dresses','shoes'];
+    fields.forEach(f=>{
+      const chips=document.querySelectorAll(`.pref-size-${f}.sel`);
+      prefs.sizes[f]=Array.from(chips).map(c=>c.textContent);
+    });
+    const heightChips=document.querySelectorAll('.pref-size-height.sel');
+    prefs.sizes.height=Array.from(heightChips).map(c=>c.textContent);
+  }else if(prefStep===1){
+    prefs.colorsLove=[];prefs.colorsSkip=[];
+    document.querySelectorAll('.color-dot.love').forEach(d=>prefs.colorsLove.push(d.dataset.name));
+    document.querySelectorAll('.color-dot.hate').forEach(d=>prefs.colorsSkip.push(d.dataset.name));
+  }else if(prefStep===2){
+    prefs.neverWear=[];prefs.neverPatterns=[];
+    document.querySelectorAll('.pref-never-style.sel').forEach(c=>prefs.neverWear.push(c.textContent));
+    document.querySelectorAll('.pref-never-pattern.sel').forEach(c=>prefs.neverPatterns.push(c.textContent));
+    const oth=document.getElementById('prefNeverOther');
+    if(oth)prefs.neverOther=oth.value.trim();
+  }else if(prefStep===3){
+    ['jewelry','dailyShoes','bagStyle','dailyWear','dressCode','climate'].forEach(f=>{
+      const sel=document.querySelector(`.pref-qp-${f}.sel`);
+      prefs[f]=sel?sel.textContent:'';
+    });
+  }else if(prefStep===4){
+    const ta=document.getElementById('prefOtherNotes');
+    if(ta)prefs.otherNotes=ta.value.trim();
+  }
+  savePrefs();
+}
+
+function renderPrefSizes(c){
+  const tops=['XS','S','M','L','XL','XXL','1X','2X','3X'];
+  const bottoms=['00','0','2','4','6','8','10','12','14','16','18','20','22','24'];
+  const shoes=['5','5.5','6','6.5','7','7.5','8','8.5','9','9.5','10','10.5','11','12'];
+  const heights=['Petite','Regular','Tall'];
+  function chips(arr,cls,saved){
+    return arr.map(s=>`<div class="pref-chip ${cls} ${(saved||[]).includes(s)?'sel':''}" onclick="this.classList.toggle('sel')">${s}</div>`).join('');
+  }
+  c.innerHTML=`
+    <div class="pref-title">My Sizes</div>
+    <div class="pref-sub">Share as much or as little as you'd like. The more we know, the smarter we shop for you.</div>
+    <div class="pref-label">Tops</div>
+    <div class="pref-grid">${chips(tops,'pref-size-tops',prefs.sizes.tops)}</div>
+    <div class="pref-label">Bottoms</div>
+    <div class="pref-grid">${chips(bottoms,'pref-size-bottoms',prefs.sizes.bottoms)}</div>
+    <div class="pref-label">Dresses</div>
+    <div class="pref-grid">${chips(bottoms,'pref-size-dresses',prefs.sizes.dresses)}</div>
+    <div class="pref-label">Shoes</div>
+    <div class="pref-grid">${chips(shoes,'pref-size-shoes',prefs.sizes.shoes)}</div>
+    <div class="pref-label">Height</div>
+    <div class="pref-grid">${chips(heights,'pref-size-height',prefs.sizes.height)}</div>
+  `;
+}
+
+function renderPrefColors(c){
+  let loveH='',skipH='';
+  prefColors.forEach(col=>{
+    const isGrad=col.c.includes('gradient');
+    const style=isGrad?`background:${col.c}`:`background:${col.c}`;
+    const border=col.n==='White'?'border-color:#ddd':'';
+    const loveClass=prefs.colorsLove.includes(col.n)?'love':'';
+    const hateClass=prefs.colorsSkip.includes(col.n)?'hate':'';
+    loveH+=`<div class="color-item"><div class="color-dot ${loveClass}" data-name="${col.n}" style="${style};${border}" onclick="toggleColor(this,'love')"></div><div class="color-name">${col.n}</div></div>`;
+    skipH+=`<div class="color-item"><div class="color-dot ${hateClass}" data-name="${col.n}" style="${style};${border}" onclick="toggleColor(this,'hate')"></div><div class="color-name">${col.n}</div></div>`;
+  });
+  c.innerHTML=`
+    <div class="pref-title">My Colors</div>
+    <div class="pref-sub">Tap the colors you love, then scroll down to mark any you skip.</div>
+    <div class="pref-label">Colors I love</div>
+    <div class="color-grid">${loveH}</div>
+    <div class="pref-label">Colors I tend to skip</div>
+    <div class="color-grid">${skipH}</div>
+  `;
+}
+
+function toggleColor(el,type){
+  el.classList.toggle(type);
+}
+
+function renderPrefNever(c){
+  function chips(arr,cls,saved){
+    return arr.map(s=>`<div class="pref-chip ${cls} ${(saved||[]).includes(s)?'sel':''}" onclick="this.classList.toggle('sel')">${s}</div>`).join('');
+  }
+  c.innerHTML=`
+    <div class="pref-title">My Never-Wear List</div>
+    <div class="pref-sub">Your stylist will never suggest these. Tap your hard no's.</div>
+    <div class="pref-label">Styles I skip</div>
+    <div class="pref-grid">${chips(prefNeverItems,'pref-never-style',prefs.neverWear)}</div>
+    <div class="pref-label">Patterns I skip</div>
+    <div class="pref-grid">${chips(prefNeverPatterns,'pref-never-pattern',prefs.neverPatterns)}</div>
+    <div class="pref-label">Other</div>
+    <textarea class="pref-other" id="prefNeverOther" placeholder="Anything else you never want to see suggested...">${prefs.neverOther||''}</textarea>
+  `;
+}
+
+function renderPrefQuick(c){
+  function qpGroup(label,field,options){
+    return `<div class="pref-label">${label}</div><div class="pref-grid">${options.map(o=>`<div class="pref-chip pref-qp-${field} ${prefs[field]===o?'sel':''}" onclick="qpSelect(this,'${field}')">${o}</div>`).join('')}</div>`;
+  }
+  c.innerHTML=`
+    <div class="pref-title">Quick Picks</div>
+    <div class="pref-sub">A few more details to help us style you perfectly.</div>
+    ${qpGroup('Jewelry','jewelry',['Gold','Silver','Rose Gold','Mixed','No preference'])}
+    ${qpGroup('Daily shoes','dailyShoes',['Heels','Flats','Sneakers','Boots','Mix of everything'])}
+    ${qpGroup('Bag style','bagStyle',['Big tote','Small crossbody','Both','No preference'])}
+    ${qpGroup('Most days I wear','dailyWear',['Pants','Dresses & skirts','Both equally'])}
+    ${qpGroup('Work dress code','dressCode',['Corporate','Business casual','Creative','No dress code','Work from home'])}
+    ${qpGroup('My climate','climate',['Warm year-round','Four seasons','Cold most of the year'])}
+  `;
+}
+
+function qpSelect(el,field){
+  document.querySelectorAll(`.pref-qp-${field}`).forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function renderPrefOther(c){
+  c.innerHTML=`
+    <div class="pref-title">Anything else your stylist should know?</div>
+    <div class="pref-sub">Tell us anything that helps us style you better. Your lifestyle, your budget, your body, your goals. No detail is too small.</div>
+    <textarea class="pref-other" id="prefOtherNotes" placeholder="For example: I'm a busy mom and need machine-washable everything... I have a long torso... I only shop sustainable brands... Nothing over $75 please..." style="min-height:120px">${prefs.otherNotes||''}</textarea>
+  `;
+}
+
+function getPrefsForPrompt(){
+  const p=prefs;
+  let lines=[];
+  if(p.sizes.tops&&p.sizes.tops.length)lines.push('Tops size: '+p.sizes.tops.join('/'));
+  if(p.sizes.bottoms&&p.sizes.bottoms.length)lines.push('Bottoms size: '+p.sizes.bottoms.join('/'));
+  if(p.sizes.dresses&&p.sizes.dresses.length)lines.push('Dress size: '+p.sizes.dresses.join('/'));
+  if(p.sizes.shoes&&p.sizes.shoes.length)lines.push('Shoe size: '+p.sizes.shoes.join('/'));
+  if(p.sizes.height&&p.sizes.height.length)lines.push('Height: '+p.sizes.height.join(', '));
+  if(p.colorsLove.length)lines.push('Colors she loves: '+p.colorsLove.join(', '));
+  if(p.colorsSkip.length)lines.push('Colors to avoid: '+p.colorsSkip.join(', '));
+  if(p.neverWear.length)lines.push('Never wear: '+p.neverWear.join(', '));
+  if(p.neverPatterns.length)lines.push('Patterns to avoid: '+p.neverPatterns.join(', '));
+  if(p.neverOther)lines.push('Also avoids: '+p.neverOther);
+  if(p.jewelry)lines.push('Jewelry preference: '+p.jewelry);
+  if(p.dailyShoes)lines.push('Daily shoes: '+p.dailyShoes);
+  if(p.bagStyle)lines.push('Bag preference: '+p.bagStyle);
+  if(p.dailyWear)lines.push('Usually wears: '+p.dailyWear);
+  if(p.dressCode)lines.push('Work dress code: '+p.dressCode);
+  if(p.climate)lines.push('Climate: '+p.climate);
+  if(p.otherNotes)lines.push('Other notes: '+p.otherNotes);
+  return lines.length?'\n\nHer style preferences:\n'+lines.join('\n'):'';
+}
 
 function showStory(){
   const cur=document.querySelector('.scr.act');
@@ -763,7 +1026,7 @@ function openChat(){
       });
     }else{
       const name=userName&&userName!=='You'?userName:'there';
-      const welcome=`Hi ${name}! ✨ I'm your Style Star stylist. I know your style profile and I'm here to help with anything — outfit ideas, what to wear to an event, shopping suggestions, packing for a trip, or just figuring out your next wardrobe move. What can I help you with?`;
+      const welcome=`Hi ${name}! I'm your Style Star stylist. Need outfit ideas? Help getting dressed for something? Shopping advice? What can I help you with?`;
       addChatMsg(welcome,'bot');
     }
   }
@@ -870,40 +1133,44 @@ async function sendChat(){
 
   const sliderContext=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (1=${q.left}, 6=center, 11=${q.right})`).join(', ');
 
-  const systemPrompt=`You are a warm, intuitive personal stylist powered by AI, trained on Catherine's 20 years of styling expertise. You are chatting with ${userName&&userName!=='You'?userName:'a woman'} who has taken the Style Star quiz.
+  const systemPrompt=`You are a warm, confident personal stylist powered by AI, trained on real styling expertise. You are chatting with ${userName&&userName!=='You'?userName:'a woman'} who has taken the Style Star quiz.
 
 Her style profile: ${sliderContext}
-Her style flavor notes: ${topArchNames.join(', ')}
+Her style flavor notes: ${topArchNames.join(', ')}${getPrefsForPrompt()}
 
-YOUR PERSONALITY:
-- Warm, encouraging, specific, and confident
-- Talk like a stylish best friend who happens to be a professional stylist
-- Use her name naturally (not every message)
-- Keep responses concise — 2-4 short paragraphs max. This is a chat, not an essay.
+YOUR VOICE:
+- Concise. 1-2 short paragraphs max. This is texting, not an essay.
+- Confident and direct. Say what you mean without excessive filler.
+- Warm but not over-the-top. Skip the constant compliments. Be real.
+- Specific. Name exact colors, fabrics, silhouettes, and stores.
 
-SHOPPING SUGGESTIONS:
-- When suggesting items, ALWAYS format as "item name from StoreName" (e.g. "a fitted navy blazer from Nordstrom" or "high-waisted wide-leg trousers from Mango")
+CONSTRUCTIVE FEEDBACK:
+- Women are here because they want to improve their style. Don't just compliment everything.
+- When she asks for advice or sends a photo, tell her what's working AND what could be elevated.
+- Frame suggestions as possibilities, never criticism: "To take this up a notch, try..." or "Have you considered..." or "This would be even stronger with..."
+- Never say "that doesn't work" or "you shouldn't wear that." Instead: "I'd swap the shoes for a pointed-toe flat, it'll clean up the whole line."
+- Be honest. A real stylist who only says "you look amazing" isn't helpful.
+
+SHOPPING:
+- Format items as "item name from StoreName" (e.g. "a fitted navy blazer from Nordstrom")
 - Use real stores: Nordstrom, J.Crew, Zara, Anthropologie, Revolve, Madewell, Everlane, Saks, Target, Amazon, Express, Mango, Abercrombie, H&M, Banana Republic, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia
-- Be very specific about colors, fabrics, and silhouettes
-- Include a mix of price points
+- Mix price points
 
-SHIFT ONE NOTCH (Catherine's signature styling technique):
-- If she asks to "shift" her style in any direction, you know exactly where she currently sits on each slider
-- Suggest specific changes that move her just ONE position on the relevant slider — subtle but impactful
-- Frame it as exploring, not fixing: "To shift one notch more polished, try swapping your sneakers for a pointed-toe flat — same comfort, slightly more intention"
+SHIFT ONE NOTCH:
+- If she asks to shift her style, suggest specific small changes that move her one position on the relevant slider
+- Frame as exploring: "To shift one notch more polished, try swapping your sneakers for a pointed-toe flat"
 
 PHOTO ANALYSIS:
-- If she sends a photo, analyze the outfit and give specific styling advice based on what you see AND her style profile
-- Comment on what works well FIRST, then suggest additions or alternatives
-- Be specific: "That blazer is doing great work for you — the cropped length is modern and the red is bold without being loud"
+- Lead with what's working, then suggest what could be elevated
+- Be specific about the outfit, not generic
 
 STAY ON TOPIC:
-- You are ONLY a style and fashion advisor. If asked about non-style topics (politics, health, cooking, etc.), respond warmly: "Ha, I wish I could help with that! But I'm really only good at style. Got any fashion questions I can help with? ✨"
+- Style and fashion only. For anything else: "Ha, I wish I could help with that! But I'm really only good at style. Got any fashion questions? ✨"
 
-CRITICAL RULES:
+RULES:
 - NEVER imply one end of any style slider is better than the other
-- ALWAYS match suggestions to her specific slider positions
-- Never suggest she needs to change her style — help her be MORE of who she already is`;
+- Match suggestions to her slider positions
+- Never insult or make her feel bad about her choices`;
 
   // Build message content
   let userContent;
