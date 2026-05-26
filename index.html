@@ -145,7 +145,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .share-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:12px;border:2px solid #ddd;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#1a1a1a;transition:all 0.2s;flex:1;max-width:170px}
 .share-btn:hover{border-color:#bbb;background:#fafafa}
 .share-btn svg{flex-shrink:0}
-.quiz-footer{text-align:center;padding:1.25rem;font-size:11px;color:#bbb;letter-spacing:0.08em;border-top:1px solid #f5f5f5}
+.quiz-footer{text-align:center;padding:1.25rem;font-size:14px;color:#999;letter-spacing:0.06em;border-top:1px solid #f0f0f0}
+.quiz-footer span{cursor:pointer;text-decoration:underline;font-weight:600}
 .our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#999;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
 .our-story-link:hover{color:#666}
 .story-wrap{padding:1.5rem 0.5rem;text-align:center}
@@ -153,6 +154,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .story-title{font-size:24px;font-weight:700;color:#1a1a1a;margin-bottom:1.25rem;font-family:'DM Sans',sans-serif}
 .story-text{font-size:16px;color:#444;line-height:1.75;margin-bottom:1rem;text-align:left;font-family:'DM Sans',sans-serif}
 .story-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:#D4AF37;font-weight:500;padding:1rem 0;text-align:center}
+.story-manifesto{font-size:18px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.6;margin-top:0.5rem}
 .story-heart{font-size:28px;text-align:center;margin:1rem 0}
 .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;border:2px dashed #ddd;border-radius:20px;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s;background:#fafafa}
 .photo-upload-area:hover{border-color:#C8A060}
@@ -365,25 +367,45 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </div>
     <div class="story-title">Our Story</div>
     <div class="story-text">
-      Style Star was created by a certified image consultant who has spent nearly 20 years helping women feel confident in what they wear.
+      Style Star was created by a certified image consultant with over 20 years of hands-on styling — closet consultations, shopping trips, and custom boutique try-on sessions with real women.
     </div>
     <div class="story-text">
-      After thousands of closet consultations and personal shopping sessions, one thing became clear: every woman has her own style fingerprint — there's no right or wrong, just what feels like you.
+      Most women aren't looking for a makeover. They just want to feel more confident, more pulled together, and more like themselves.
     </div>
     <div class="story-text">
-      Most style advice tells you what you should wear. We believe in celebrating what you already gravitate toward — and helping you feel even more like yourself.
+      But shopping has become overwhelming. Too many choices, too many trends, too much pressure to follow someone else's rules.
     </div>
     <div class="story-text">
-      Style Star was built to bring that personal styling experience to every woman, everywhere. The quiz, the photo analysis, the stylist chat — it's all powered by AI trained on two decades of real styling expertise and one core belief:
+      Style Star was built to change that — to help women find their alignment and actually build a wardrobe with the guidance of a pro shopper.
+    </div>
+    <div class="story-text">
+      The approach is rooted in the idea that style lives on a spectrum. Some women lean classic, others trendy. Some feel best in effortless simplicity, others come alive in glamour and boldness. There's never one right answer.
+    </div>
+    <div class="story-text">
+      Your style is a melody — a beautiful combination of notes that make you you.
+    </div>
+    <div class="story-text">
+      That's what Style Star is — a personal stylist in your pocket. One that knows your style, answers your questions, and helps you shop with confidence.
+    </div>
+    <div class="story-text">
+      Sometimes the smallest adjustment changes everything. One notch more polished. One notch more relaxed. One notch more bold.
+    </div>
+    <div class="story-text">
+      The goal is never perfection. The goal is alignment.
+    </div>
+    <div class="story-text">
+      Style Star combines decades of real styling expertise with modern AI to create something personal, inspiring, and built for real women living real lives. Not impossible trends. Not judgment. Just thoughtful guidance designed to help you shine a little brighter.
+    </div>
+    <div class="story-manifesto">
+      Because fashion is the industry.<br>But style is the woman.
     </div>
     <div class="story-quote">
       "New clothes are like fresh flowers — enjoy them now."
     </div>
-    <div class="story-text" style="margin-top:1.5rem">
-      Whether you're rediscovering your style, evolving it, or just need help figuring out what to wear Saturday night — we're here for you.
+    <div class="story-text" style="text-align:center;color:#999;margin-top:0.5rem">
+      We're glad you're here. ⭐
     </div>
-    <div class="story-heart">⭐</div>
-    <button class="btn-pink" onclick="show('s-wel')" style="max-width:260px;margin:0 auto;display:block">Discover your style</button>
+    <button class="btn-pink" onclick="show('s-wel')" style="max-width:260px;margin:1rem auto 0;display:block">Discover your style</button>
   </div>
 </div>
 
@@ -433,7 +455,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </div>
 
 </div>
-<div class="quiz-footer"><span onclick="showStory()" style="cursor:pointer;text-decoration:underline">Our Story</span> · Style Star</div>
+<div class="quiz-footer"><span onclick="showStory()">Our Story</span></div>
 </div>
 
 <script>
@@ -1028,14 +1050,46 @@ async function doShareCard(){
 }
 
 function buildCardBlob(source,callback){
+  // First pass: measure content height
+  const measureCanvas=document.createElement('canvas');
+  measureCanvas.width=1080;measureCanvas.height=3000;
+  const mc=measureCanvas.getContext('2d');
+  const w=1080;
+  
+  const portrait=source==='quiz'?document.getElementById('rp').textContent:document.getElementById('prp').textContent;
+  const archNames=source==='quiz'?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
+  const sliderVals=source==='quiz'?answers:(lastPhotoSliders||answers);
+  const displayName=userName&&userName!=='You'?userName:'You';
+  const isQuiz=source==='quiz';
+  const title=isQuiz?(userName&&userName!=='You'?'This is '+displayName:'Your style portrait'):(userName&&userName!=='You'?displayName+'\'s outfit analysis':'Your outfit analysis');
+
+  // Measure portrait text height
+  mc.font='500 28px Arial, sans-serif';
+  mc.textAlign='center';
+  const words=portrait.split(' ');
+  let line='';let textLines=0;const maxW=w-140;
+  words.forEach(word=>{
+    const test=line+word+' ';
+    if(mc.measureText(test).width>maxW&&line!==''){textLines++;line=word+' ';}else{line=test}
+  });
+  if(line)textLines++;
+
+  const portraitHeight=textLines*40;
+  const archHeight=archNames.length*48;
+  const fpHeight=12*32;
+  
+  // Calculate total height
+  const totalContent=6+85+45+30+30+25+portraitHeight+65+20+archHeight+50+20+fpHeight+60+30+60;
+  const h=Math.max(totalContent,1080);
+
   const canvas=document.createElement('canvas');
-  const w=1080,h=1920;
   canvas.width=w;canvas.height=h;
   const ctx=canvas.getContext('2d');
 
   ctx.fillStyle='#ffffff';
   ctx.fillRect(0,0,w,h);
 
+  // Gold bar top
   const grad=ctx.createLinearGradient(0,0,w,0);
   grad.addColorStop(0,'#F0D060');grad.addColorStop(0.5,'#D4AF37');grad.addColorStop(1,'#C8A060');
   ctx.fillStyle=grad;
@@ -1074,20 +1128,14 @@ function buildCardBlob(source,callback){
   ctx.strokeStyle='#ebebeb';ctx.lineWidth=1;
   ctx.beginPath();ctx.moveTo(250,220);ctx.lineTo(w-250,220);ctx.stroke();
 
-  const displayName=userName&&userName!=='You'?userName:'You';
-  const isQuiz=source==='quiz';
-  const title=isQuiz?(userName&&userName!=='You'?'This is '+displayName:'Your style portrait'):(userName&&userName!=='You'?displayName+'\'s outfit analysis':'Your outfit analysis');
   ctx.fillStyle='#D4AF37';
   ctx.font='700 44px Arial, sans-serif';
   ctx.fillText(title,w/2,275);
 
-  const portrait=isQuiz?document.getElementById('rp').textContent:document.getElementById('prp').textContent;
   ctx.fillStyle='#333333';
   ctx.font='500 28px Arial, sans-serif';
-  const words=portrait.split(' ');
-  let line='';
+  line='';
   let y=330;
-  const maxW=w-140;
   words.forEach(word=>{
     const test=line+word+' ';
     if(ctx.measureText(test).width>maxW&&line!==''){
@@ -1102,7 +1150,6 @@ function buildCardBlob(source,callback){
   ctx.font='600 20px Arial, sans-serif';
   ctx.fillText(isQuiz?'YOUR STYLE HAS NOTES OF':'THIS OUTFIT HAS NOTES OF',w/2,y);
 
-  const archNames=isQuiz?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
   y+=40;
   ctx.font='700 26px Arial, sans-serif';
   archNames.forEach((name,i)=>{
@@ -1126,10 +1173,8 @@ function buildCardBlob(source,callback){
   ctx.fillText(isQuiz?'YOUR STYLE FINGERPRINT':'OUTFIT STYLE FINGERPRINT',w/2,y);
   y+=28;
 
-  const sliderVals=isQuiz?answers:(lastPhotoSliders||answers);
-  const rowH=Math.min(32,(h-y-80)/12);
   questions.forEach((q,i)=>{
-    const rowY=y+i*rowH;
+    const rowY=y+i*32;
     ctx.font='600 14px Arial, sans-serif';
     ctx.textAlign='right';
     ctx.fillStyle='#333';
@@ -1148,17 +1193,26 @@ function buildCardBlob(source,callback){
     ctx.fillText(q.right.toUpperCase(),790,rowY+18);
   });
 
+  // Bottom section
+  const bottomY=y+12*32+40;
+  
   ctx.textAlign='center';
-  const botGrad=ctx.createLinearGradient(0,h-6,w,h-6);
-  botGrad.addColorStop(0,'#F0D060');botGrad.addColorStop(0.5,'#D4AF37');botGrad.addColorStop(1,'#C8A060');
-  ctx.fillStyle=botGrad;
-  ctx.fillRect(0,h-6,w,6);
-
   ctx.fillStyle='#999';
   ctx.font='400 24px Arial, sans-serif';
-  ctx.fillText('www.StyleStar.app',w/2,h-30);
+  ctx.fillText('www.StyleStar.app',w/2,bottomY);
 
-  canvas.toBlob(function(blob){
+  const botGrad=ctx.createLinearGradient(0,bottomY+20,w,bottomY+20);
+  botGrad.addColorStop(0,'#F0D060');botGrad.addColorStop(0.5,'#D4AF37');botGrad.addColorStop(1,'#C8A060');
+  ctx.fillStyle=botGrad;
+  ctx.fillRect(0,bottomY+24,w,6);
+
+  // Trim canvas to actual content
+  const finalH=bottomY+30;
+  const finalCanvas=document.createElement('canvas');
+  finalCanvas.width=w;finalCanvas.height=finalH;
+  finalCanvas.getContext('2d').drawImage(canvas,0,0);
+
+  finalCanvas.toBlob(function(blob){
     const imgUrl=URL.createObjectURL(blob);
     callback(blob,imgUrl);
   },'image/png');
