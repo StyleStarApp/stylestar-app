@@ -433,7 +433,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="story-text" style="text-align:center;color:#777;margin-top:0.5rem">
       We're glad you're here. ⭐
     </div>
-    <button class="btn-pink" onclick="show('s-wel')" style="max-width:260px;margin:1rem auto 0;display:block">Discover your style</button>
+    <button class="btn-pink" onclick="closeStory()" style="max-width:260px;margin:1rem auto 0;display:block" id="storyBtn">Discover your style</button>
   </div>
 </div>
 
@@ -989,6 +989,9 @@ function showStory(){
   const cur=document.querySelector('.scr.act');
   storyPrevScreen=cur?cur.id:'s-wel';
   show('s-story');
+  const btn=document.getElementById('storyBtn');
+  if(storyPrevScreen==='s-wel'){btn.textContent='Discover your style'}
+  else{btn.textContent='Back'}
 }
 function closeStory(){show(storyPrevScreen)}
 
