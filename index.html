@@ -783,11 +783,6 @@ async function doStay(emailVal,formId,successId,sectionId){
   if(titleEl)titleEl.style.display='none';
   const subEl=section.querySelector('.stay-sub');
   if(subEl)subEl.style.display='none';
-  setTimeout(function(){
-    section.style.transition='opacity 0.8s ease';
-    section.style.opacity='0';
-    setTimeout(function(){section.style.display='none'},800);
-  },2000);
   const otherSection=sectionId==='staySection'?'staySectionPhoto':'staySection';
   const el=document.getElementById(otherSection);
   if(el)el.style.display='none';
@@ -853,8 +848,8 @@ function renderPref(){
 
   if(prefStep===0) renderPrefSizes(c);
   else if(prefStep===1) renderPrefColors(c);
-  else if(prefStep===2) renderPrefNever(c);
-  else if(prefStep===3) renderPrefQuick(c);
+  else if(prefStep===2) renderPrefQuick(c);
+  else if(prefStep===3) renderPrefNever(c);
   else if(prefStep===4) renderPrefOther(c);
 }
 
@@ -881,12 +876,6 @@ function savePrefStep(){
     prefs.colorsLove=[];
     document.querySelectorAll('.color-dot.love').forEach(d=>prefs.colorsLove.push(d.dataset.name));
   }else if(prefStep===2){
-    prefs.neverWear=[];prefs.neverPatterns=[];
-    document.querySelectorAll('.pref-never-style.sel').forEach(c=>prefs.neverWear.push(c.textContent));
-    document.querySelectorAll('.pref-never-pattern.sel').forEach(c=>prefs.neverPatterns.push(c.textContent));
-    const oth=document.getElementById('prefNeverOther');
-    if(oth)prefs.neverOther=oth.value.trim();
-  }else if(prefStep===3){
     ['jewelry'].forEach(f=>{
       const sel=document.querySelector(`.pref-qp-${f}.sel`);
       prefs[f]=sel?sel.textContent:'';
@@ -895,6 +884,12 @@ function savePrefStep(){
     prefs.dailyShoes=Array.from(shoeChips).map(c=>c.textContent).join(', ');
     const bagChips=document.querySelectorAll('.pref-qp-bagStyle.sel');
     prefs.bagStyle=Array.from(bagChips).map(c=>c.textContent).join(', ');
+  }else if(prefStep===3){
+    prefs.neverWear=[];prefs.neverPatterns=[];
+    document.querySelectorAll('.pref-never-style.sel').forEach(c=>prefs.neverWear.push(c.textContent));
+    document.querySelectorAll('.pref-never-pattern.sel').forEach(c=>prefs.neverPatterns.push(c.textContent));
+    const oth=document.getElementById('prefNeverOther');
+    if(oth)prefs.neverOther=oth.value.trim();
   }else if(prefStep===4){
     const ta=document.getElementById('prefOtherNotes');
     if(ta)prefs.otherNotes=ta.value.trim();
