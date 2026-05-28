@@ -171,6 +171,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .shop-disclosure{font-size:11px;color:#bbb;line-height:1.5;margin-top:12px;font-style:italic;max-width:320px;margin-left:auto;margin-right:auto}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
+.whatsnext{margin:1.5rem 0;text-align:center}
+.whatsnext-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.whatsnext-sub{font-size:13px;color:#888;margin-bottom:14px}
+.whatsnext-grid{display:flex;flex-direction:column;gap:8px}
 .share-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:12px}
 .share-btns{display:flex;justify-content:center;gap:10px}
 .share-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:12px;border:2px solid #ddd;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#1a1a1a;transition:all 0.2s;flex:1;max-width:170px}
@@ -270,18 +274,24 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <div class="res-para" id="rp"></div>
   <div class="flav"><div class="flav-lbl">Your style has notes of</div><div class="flav-tags" id="ft"></div></div>
   <div class="fp"><div class="fp-lbl">Your style fingerprint</div><div id="fpChart"></div></div>
-  
-  <div class="shop-section" id="shopSection">
+
+  <div class="whatsnext">
     <div class="email-divider"></div>
-    <div class="shop-title">Shop your style</div>
-    <div class="shop-sub">Outfit ideas curated to your unique style vibe</div>
-    <div id="shopContent">
-      <button class="btn-pink" onclick="genOutfits('quiz')" id="shopBtn">Show me outfit ideas</button>
+    <div class="whatsnext-title">What would you like to do?</div>
+    <div class="whatsnext-grid">
+      <button class="btn-pink" onclick="genOutfits('quiz')" id="shopBtn">🛍️ Shop your style</button>
+      <button class="btn-chat" onclick="openChat()">💬 Chat with your stylist</button>
+      <button class="btn-teal" onclick="showPhoto()">📸 Snap a photo for style analysis</button>
+      <button class="btn-yellow" onclick="openPrefs()" id="prefBtnQuiz">✨ Refine your style preferences</button>
     </div>
+    <div style="font-size:12px;color:#999;margin-top:8px;font-style:italic">The more we know about you, the better your shopping suggestions get.</div>
   </div>
 
-  <div class="email-divider"></div>
-  <button class="btn-chat" onclick="openChat()">💬 Chat with your Style Star stylist</button>
+  <div class="shop-section" id="shopSection" style="display:none">
+    <div class="shop-title">Shop your style</div>
+    <div class="shop-sub">Outfit ideas curated to your unique style vibe</div>
+    <div id="shopContent"></div>
+  </div>
 
   <div class="share-section">
     <div class="email-divider"></div>
@@ -305,8 +315,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   </div>
 
   <button class="btn-outline" onclick="location.reload()">Retake the quiz</button>
-  <button class="btn-teal" onclick="showPhoto()">Snap a photo of your outfit for a style analysis</button>
-  <button class="btn-yellow" onclick="openPrefs()" id="prefBtnQuiz">✨ Refine your style preferences</button>
 </div>
 
 <div class="scr" id="s-photo">
@@ -511,6 +519,7 @@ const archetypes=[
 {n:"The Classic Refined",p:[2,3,2,3,5,5,3,2,7,6,3,3]},{n:"The Natural Chic",p:[4,2,4,3,3,4,4,3,5,4,4,4]},{n:"The Elevated Casual",p:[5,3,5,4,4,4,5,4,5,5,5,5]},{n:"The Polished Professional",p:[3,5,3,6,9,10,3,3,8,8,3,6]},{n:"The Bold Expressionist",p:[7,6,6,8,6,5,10,9,6,9,6,9]},{n:"The Romantic Feminine",p:[3,5,2,6,6,5,6,6,6,6,3,4]},{n:"The Modern Trendsetter",p:[10,7,7,7,7,6,7,6,7,10,6,9]},{n:"The Easy Elegant",p:[3,3,3,3,5,5,3,2,6,5,3,3]},{n:"The Fit & Styled",p:[5,3,5,4,3,2,5,3,8,6,5,4]},{n:"The Creative Original",p:[7,5,7,9,5,4,9,8,5,7,6,7]},{n:"The Understated Luxury",p:[3,3,3,5,6,7,2,2,8,7,3,3]},{n:"The Glamorous Maximalist",p:[7,11,5,11,10,6,9,8,9,11,8,11]},{n:"The Silhouette Savvy",p:[6,5,5,5,6,6,5,3,10,8,5,5]},{n:"The Fresh Start Style",p:[6,6,6,6,6,6,6,6,6,6,6,6]},{n:"The Country Club Classic",p:[2,4,2,6,7,7,4,4,7,7,2,5]},{n:"The Luxe Collector",p:[5,7,4,7,7,7,4,4,9,9,5,7]},{n:"The Career Launcher",p:[6,4,4,5,8,9,4,3,7,7,3,5]},{n:"The Edgy Confident",p:[8,5,11,6,5,4,4,4,7,9,7,9]},{n:"The Alluring",p:[6,7,6,6,7,5,5,4,9,8,10,7]},{n:"The Coastal Casual",p:[4,2,3,2,2,3,5,4,3,3,5,3]},{n:"The Clean Minimalist",p:[4,2,3,1,4,5,2,1,7,5,3,3]}
 ];
 let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false,emailDone=false;
+try{if(localStorage.getItem('ss_emailDone')==='true')emailDone=true}catch(e){}
 function startQ(){userName=document.getElementById('nameIn').value.trim()||"You";show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
 function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act')}
 function loadQ(i){const q=questions[i];document.getElementById('qc').textContent=q.cat;document.getElementById('qt').textContent=q.title;document.getElementById('ll').textContent=q.left;document.getElementById('lr').textContent=q.right;document.getElementById('sl').value=answers[i];updHint(answers[i],i);document.getElementById('pf').style.width=Math.round((i/12)*100)+'%';document.getElementById('pl').textContent=(i+1)+' of 12';document.getElementById('nb').textContent=i===11?'See my style portrait':'Continue'}
@@ -673,6 +682,9 @@ function getStoreUrl(store,item){
   return'https://www.google.com/search?q='+encodeURIComponent(item+' '+store);
 }
 async function genOutfits(source){
+  const sectionId=source==='quiz'?'shopSection':'shopSectionPhoto';
+  document.getElementById(sectionId).style.display='';
+  document.getElementById(sectionId).scrollIntoView({behavior:'smooth',block:'start'});
   const container=source==='quiz'?'shopContent':'shopContentPhoto';
   document.getElementById(container).innerHTML='<div class="shop-loading">Finding your perfect pieces...</div>';
   const sliderVals=source==='quiz'?answers:(lastPhotoSliders||answers);
@@ -761,10 +773,21 @@ async function doStay(emailVal,formId,successId,sectionId){
     await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});
   }catch(e){}
   emailDone=true;
+  try{localStorage.setItem('ss_emailDone','true')}catch(e){}
   document.getElementById(formId).style.display='none';
   document.getElementById(successId).style.display='block';
-  const skipEl=document.querySelector('#'+sectionId+' .stay-skip');
+  const section=document.getElementById(sectionId);
+  const skipEl=section.querySelector('.stay-skip');
   if(skipEl)skipEl.style.display='none';
+  const titleEl=section.querySelector('.stay-title');
+  if(titleEl)titleEl.style.display='none';
+  const subEl=section.querySelector('.stay-sub');
+  if(subEl)subEl.style.display='none';
+  setTimeout(function(){
+    section.style.transition='opacity 0.8s ease';
+    section.style.opacity='0';
+    setTimeout(function(){section.style.display='none'},800);
+  },2000);
   const otherSection=sectionId==='staySection'?'staySectionPhoto':'staySection';
   const el=document.getElementById(otherSection);
   if(el)el.style.display='none';
