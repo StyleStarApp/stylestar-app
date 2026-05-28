@@ -277,7 +277,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <div class="flav"><div class="flav-lbl">Your style has notes of</div><div class="flav-tags" id="ft"></div></div>
   <div class="fp"><div class="fp-lbl">Your style fingerprint</div><div id="fpChart"></div></div>
 
-  <div class="whatsnext">
+  <div class="whatsnext" id="whatsnext">
     <div class="email-divider"></div>
     <div class="whatsnext-title">What would you like to do?</div>
     <div class="whatsnext-grid">
@@ -412,7 +412,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="pref-done-star">⭐</div>
     <div class="pref-done-title">Your stylist just got a lot smarter</div>
     <div class="pref-done-sub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
-    <button class="btn-pink" onclick="show(prefReturnScreen)" style="max-width:280px">Continue</button>
+    <button class="btn-pink" onclick="prefDone()" style="max-width:280px">Continue</button>
   </div>
 </div>
 
@@ -829,6 +829,13 @@ function openPrefs(){
   renderPref();
 }
 function skipPrefs(){show(prefReturnScreen)}
+function prefDone(){
+  show(prefReturnScreen);
+  setTimeout(function(){
+    const el=document.getElementById('whatsnext');
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
 
 function renderPrefPips(){
   const el=document.getElementById('prefPips');
