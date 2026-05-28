@@ -774,7 +774,7 @@ let chatPhotoData=null;
 let storyPrevScreen='s-wel';
 let prefStep=0;
 let prefReturnScreen='s-res';
-let prefs={sizes:{},colorsLove:[],colorsSkip:[],neverWear:[],neverPatterns:[],neverOther:'',jewelry:'',dailyShoes:'',bagStyle:'',dailyWear:'',dressCode:'',climate:'',otherNotes:''};
+let prefs={sizes:{},colorsLove:[],colorsSkip:[],neverWear:[],neverPatterns:[],neverOther:'',jewelry:'',dailyShoes:'',bagStyle:'',otherNotes:''};
 
 const prefColors=[
 {n:'White',c:'#ffffff'},{n:'Ivory',c:'#FFFFF0'},{n:'Tan',c:'#D2B48C'},{n:'Khaki',c:'#BDB291'},{n:'Brown',c:'#6B4226'},{n:'Black',c:'#1a1a1a'},{n:'Charcoal',c:'#5C5C5C'},{n:'Gray',c:'#B8B8B8'},
@@ -860,12 +860,14 @@ function savePrefStep(){
     const oth=document.getElementById('prefNeverOther');
     if(oth)prefs.neverOther=oth.value.trim();
   }else if(prefStep===3){
-    ['jewelry','bagStyle','dailyWear','dressCode','climate'].forEach(f=>{
+    ['jewelry'].forEach(f=>{
       const sel=document.querySelector(`.pref-qp-${f}.sel`);
       prefs[f]=sel?sel.textContent:'';
     });
     const shoeChips=document.querySelectorAll('.pref-qp-dailyShoes.sel');
     prefs.dailyShoes=Array.from(shoeChips).map(c=>c.textContent).join(', ');
+    const bagChips=document.querySelectorAll('.pref-qp-bagStyle.sel');
+    prefs.bagStyle=Array.from(bagChips).map(c=>c.textContent).join(', ');
   }else if(prefStep===4){
     const ta=document.getElementById('prefOtherNotes');
     if(ta)prefs.otherNotes=ta.value.trim();
@@ -940,16 +942,17 @@ function renderPrefQuick(c){
   const shoeOptions=['Heels','Flats','Wedges','Sandals','Loafers','Slides','Sneakers','Boots','Mix of everything'];
   const savedShoes=(prefs.dailyShoes||'').split(', ');
   const shoeChips=shoeOptions.map(o=>`<div class="pref-chip pref-qp-dailyShoes ${savedShoes.includes(o)?'sel':''}" onclick="this.classList.toggle('sel')">${o}</div>`).join('');
+  const bagOptions=['Large tote','Shoulder bag','Crossbody','Top handle bag','Clutch','Backpack','Belt bag','Work/laptop bag','Gym bag'];
+  const savedBags=(prefs.bagStyle||'').split(', ');
+  const bagChips=bagOptions.map(o=>`<div class="pref-chip pref-qp-bagStyle ${savedBags.includes(o)?'sel':''}" onclick="this.classList.toggle('sel')">${o}</div>`).join('');
   c.innerHTML=`
     <div class="pref-title">Quick Picks</div>
-    <div class="pref-sub">A few more details to help us style you perfectly.</div>
+    <div class="pref-sub">A few more details to help us align your unique style.</div>
     ${qpGroup('Jewelry','jewelry',['Gold','Silver','Rose Gold','Mixed','No preference'])}
     <div class="pref-label">Daily shoes (select all that apply)</div>
     <div class="pref-grid">${shoeChips}</div>
-    ${qpGroup('Bag style','bagStyle',['Big tote','Small crossbody','Both','No preference'])}
-    ${qpGroup('Most days I wear','dailyWear',['Pants','Dresses & skirts','Both equally'])}
-    ${qpGroup('Work dress code','dressCode',['Corporate','Business casual','Creative','No dress code','Work from home'])}
-    ${qpGroup('My climate','climate',['Warm year-round','Four seasons','Cold most of the year'])}
+    <div class="pref-label">Bag style (select all that apply)</div>
+    <div class="pref-grid">${bagChips}</div>
   `;
 }
 
@@ -961,7 +964,7 @@ function qpSelect(el,field){
 function renderPrefOther(c){
   c.innerHTML=`
     <div class="pref-title">Anything else your stylist should know?</div>
-    <div class="pref-sub">Tell us anything that helps us style you better. Your lifestyle, your budget, your body, your goals. No detail is too small.</div>
+    <div class="pref-sub">Tell us anything that helps us style you better. Favorite brands, lifestyle details, fit preferences, or anything that makes you uniquely you.</div>
     <textarea class="pref-other" id="prefOtherNotes" placeholder="For example: I love belted dresses…I need comfortable shoes, 3 inches or lower…I prefer natural fabrics…Nothing over $100 unless it's a special piece" style="min-height:120px">${prefs.otherNotes||''}</textarea>
   `;
 }
@@ -982,9 +985,6 @@ function getPrefsForPrompt(){
   if(p.jewelry)lines.push('Jewelry preference: '+p.jewelry);
   if(p.dailyShoes)lines.push('Daily shoes: '+p.dailyShoes);
   if(p.bagStyle)lines.push('Bag preference: '+p.bagStyle);
-  if(p.dailyWear)lines.push('Usually wears: '+p.dailyWear);
-  if(p.dressCode)lines.push('Work dress code: '+p.dressCode);
-  if(p.climate)lines.push('Climate: '+p.climate);
   if(p.otherNotes)lines.push('Other notes: '+p.otherNotes);
   return lines.length?'\n\nHer style preferences:\n'+lines.join('\n'):'';
 }
