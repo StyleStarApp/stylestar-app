@@ -473,13 +473,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="chat-suggestions" id="chatSuggestions">
       <div class="chat-sug-label">Try asking:</div>
       <div class="chat-sug-chips">
-        <button class="chat-chip" onclick="quickChat('What should I wear to a casual brunch?')">Brunch outfit</button>
         <button class="chat-chip" onclick="quickChat('Help me shift my style one notch more polished')">Shift one notch</button>
-        <button class="chat-chip" onclick="quickChat('Help me build a capsule wardrobe for this season')">Capsule wardrobe</button>
         <button class="chat-chip" onclick="quickChat('What are wardrobe essentials I should have based on my style?')">My essentials</button>
+        <button class="chat-chip" onclick="document.getElementById('chatPhotoIn').click()">📸 Send a photo for advice</button>
       </div>
     </div>
     <div class="chat-privacy">Photos are processed by AI and never stored</div>
+    <div id="chatRefineHint" style="text-align:center;margin-top:6px"></div>
+    <div style="text-align:center;margin-top:8px">
+      <button class="btn-outline" onclick="chatDone()" style="padding:10px 24px;font-size:12px;max-width:200px;margin:0 auto">Done</button>
+    </div>
     <div class="chat-input-wrap">
       <button class="chat-photo-btn" onclick="document.getElementById('chatPhotoIn').click()">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M3 16l4-4 4 4"/></svg>
@@ -1068,11 +1071,19 @@ function openChat(){
       });
     }else{
       const name=userName&&userName!=='You'?userName:'there';
-      const welcome=`Hi ${name}! I'm your Style Star stylist. Need outfit ideas? Help getting dressed for something? Shopping advice? What can I help you with?`;
+      const welcome=`Hi there! I'm your Style Star stylist. Need outfit ideas? Shopping advice? What can I help you with?`;
       addChatMsg(welcome,'bot');
     }
   }
   msgContainer.scrollTop=msgContainer.scrollHeight;
+  // Show refine hint if preferences not filled
+  const hint=document.getElementById('chatRefineHint');
+  if(hint){
+    const hasPrefs=prefs.colorsLove.length>0||prefs.neverWear.length>0||(prefs.sizes.tops&&prefs.sizes.tops.length>0);
+    if(!hasPrefs){
+      hint.innerHTML='<button class="btn-yellow" onclick="openPrefs()" style="padding:10px 24px;font-size:12px;max-width:280px;margin:0 auto">✨ Refine your style preferences for better suggestions</button>';
+    }else{hint.innerHTML=''}
+  }
   setTimeout(()=>document.getElementById('chatInput').focus(),300);
 }
 
@@ -1086,6 +1097,13 @@ function wbChat(){
 }
 
 function closeChat(){show(chatPrevScreen)}
+function chatDone(){
+  show(chatPrevScreen);
+  setTimeout(function(){
+    const el=document.getElementById('whatsnext');
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
 
 function linkStores(text){
   const storeNames='Nordstrom|J\\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia';
