@@ -854,10 +854,9 @@ function savePrefStep(){
     prefs.colorsLove=[];
     document.querySelectorAll('.color-dot.love').forEach(d=>prefs.colorsLove.push(d.dataset.name));
   }else if(prefStep===2){
-    prefs.neverWear=[];prefs.neverPatterns=[];prefs.colorsSkip=[];
+    prefs.neverWear=[];prefs.neverPatterns=[];
     document.querySelectorAll('.pref-never-style.sel').forEach(c=>prefs.neverWear.push(c.textContent));
     document.querySelectorAll('.pref-never-pattern.sel').forEach(c=>prefs.neverPatterns.push(c.textContent));
-    document.querySelectorAll('.color-dot.hate').forEach(d=>prefs.colorsSkip.push(d.dataset.name));
     const oth=document.getElementById('prefNeverOther');
     if(oth)prefs.neverOther=oth.value.trim();
   }else if(prefStep===3){
@@ -922,14 +921,6 @@ function renderPrefNever(c){
   function chips(arr,cls,saved){
     return arr.map(s=>`<div class="pref-chip ${cls} ${(saved||[]).includes(s)?'sel':''}" onclick="this.classList.toggle('sel')">${s}</div>`).join('');
   }
-  let skipColorH='';
-  prefColors.forEach(col=>{
-    const isGrad=col.c.includes('gradient');
-    const style=isGrad?`background:${col.c}`:`background:${col.c}`;
-    const border=(col.n==='White'||col.n==='Ivory'||col.n==='Pale Yellow'||col.n==='Khaki'||col.n==='Mint')?'border-color:#ddd':'';
-    const hateClass=prefs.colorsSkip.includes(col.n)?'hate':'';
-    skipColorH+=`<div class="color-item"><div class="color-dot ${hateClass}" data-name="${col.n}" style="${style};${border}" onclick="toggleColor(this,'hate')"></div><div class="color-name">${col.n}</div></div>`;
-  });
   c.innerHTML=`
     <div class="pref-title">My Never-Wear List</div>
     <div class="pref-sub">Your stylist will never suggest these. Tap your hard no's.</div>
@@ -937,10 +928,8 @@ function renderPrefNever(c){
     <div class="pref-grid">${chips(prefNeverItems,'pref-never-style',prefs.neverWear)}</div>
     <div class="pref-label">Patterns I skip</div>
     <div class="pref-grid">${chips(prefNeverPatterns,'pref-never-pattern',prefs.neverPatterns)}</div>
-    <div class="pref-label">Colors I skip</div>
-    <div class="color-grid">${skipColorH}</div>
-    <div class="pref-label">Other</div>
-    <textarea class="pref-other" id="prefNeverOther" placeholder="Anything else you never want to see suggested...">${prefs.neverOther||''}</textarea>
+    <div class="pref-label">Anything else?</div>
+    <textarea class="pref-other" id="prefNeverOther" placeholder="Any colors, styles, or anything else you never want to see suggested...">${prefs.neverOther||''}</textarea>
   `;
 }
 
