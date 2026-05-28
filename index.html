@@ -786,7 +786,7 @@ const prefColors=[
 {n:'Metallics',c:'conic-gradient(from 45deg,#D4AF37 0deg,#F0D060 45deg,#E0E0E0 90deg,#C0C0C0 135deg,#D4AF37 180deg,#F0D060 225deg,#E0E0E0 270deg,#C0C0C0 315deg,#D4AF37 360deg)'}
 ];
 
-const prefNeverItems=['Crop tops','Short shorts','Low-rise anything','Bodycon/tight dresses','Puff sleeves','Ruffles','Strapless tops/dresses','Jumpsuits/rompers','Oversized/boxy fits','Mini skirts','Turtlenecks'];
+const prefNeverItems=['Puff sleeves','Ruffles','Sequins','Turtlenecks','Oversized/boxy fits','Jumpsuits/rompers','Crop tops','Low-rise anything','Bodycon/tight dresses','Strapless tops/dresses','Short shorts','Mini skirts'];
 const prefNeverPatterns=['Animal print','Florals','Stripes','Polka dots','Plaid','Bold graphic prints'];
 
 function loadPrefs(){
@@ -923,7 +923,7 @@ function renderPrefNever(c){
   }
   c.innerHTML=`
     <div class="pref-title">My Never-Wear List</div>
-    <div class="pref-sub">Your stylist will never suggest these. Tap your hard no's.</div>
+    <div class="pref-sub">Your Style Star stylist will avoid these. Tap your hard no's.</div>
     <div class="pref-label">Styles I skip</div>
     <div class="pref-grid">${chips(prefNeverItems,'pref-never-style',prefs.neverWear)}</div>
     <div class="pref-label">Patterns I skip</div>
