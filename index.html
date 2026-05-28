@@ -134,6 +134,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .pref-chip{padding:10px 16px;border-radius:24px;border:1.5px solid #ddd;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#555;cursor:pointer;transition:all 0.15s;user-select:none}
 .pref-chip.sel{border-color:#D4AF37;background:#fdf8ef;color:#1a1a1a;font-weight:600}
 .pref-chip.skip{border-color:#e74c3c;background:#fef5f5;color:#999;text-decoration:line-through}
+.pref-never-style.sel,.pref-never-pattern.sel{border-color:#D4AF37;background:#fdf8ef;color:#1a1a1a;font-weight:600;text-decoration:line-through;position:relative;padding-left:28px}
+.pref-never-style.sel::before,.pref-never-pattern.sel::before{content:"✕";position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:#D4AF37}
 .color-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem;justify-content:center}
 .color-dot{width:44px;height:44px;border-radius:50%;border:2px solid #eee;cursor:pointer;transition:all 0.2s;position:relative}
 .color-dot.love{width:54px;height:54px;border:2px solid #eee}
