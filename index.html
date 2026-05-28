@@ -239,7 +239,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 <div class="scr act" id="s-wel">
   <div class="wel">
     <div class="wel-t">Discover your<br>signature style</div>
-    <div class="wel-s">12 simple questions. No right or wrong answers — just you. Your result will be a one-of-a-kind style portrait as unique as you are.</div>
+    <div class="wel-s">A personal stylist in your pocket. Take our 2-minute style quiz — 12 simple questions, no right or wrong answers — and get a one-of-a-kind style portrait as unique as you are.</div>
     <div class="name-in"><input type="text" id="nameIn" placeholder="Enter your first name" maxlength="20"></div>
     <button class="btn-pink" style="max-width:300px" onclick="startQ()">Begin your style quiz</button>
     <button class="btn-teal" style="max-width:300px" onclick="startPhoto()">Snap a photo of your outfit for a style analysis</button>
@@ -287,21 +287,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="btn-yellow" onclick="openPrefs()" id="prefBtnQuiz">✨ Refine your style preferences</button>
     </div>
     <div style="font-size:12px;color:#999;margin-top:8px;font-style:italic">The more we know about you, the better your shopping suggestions get.</div>
+    <div class="share-btns" style="margin-top:12px">
+      <button class="share-btn" onclick="saveStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M3 16l4-4 4 4"/></svg>View Card</button>
+      <button class="share-btn" onclick="shareStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
+    </div>
   </div>
 
   <div class="shop-section" id="shopSection" style="display:none">
     <div class="shop-title">Shop your style</div>
     <div class="shop-sub">Outfit ideas curated to your unique style vibe</div>
     <div id="shopContent"></div>
-  </div>
-
-  <div class="share-section">
-    <div class="email-divider"></div>
-    <div class="share-title">View & Share your style card</div>
-    <div class="share-btns">
-      <button class="share-btn" onclick="saveStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M3 16l4-4 4 4"/></svg>View Card</button>
-      <button class="share-btn" onclick="shareStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
-    </div>
   </div>
 
   <div class="stay-section" id="staySection">
@@ -360,17 +355,22 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <div class="flav"><div class="flav-lbl">This outfit has notes of</div><div class="flav-tags" id="pft"></div></div>
   <div class="fp"><div class="fp-lbl">Outfit style fingerprint</div><div id="pChart"></div></div>
 
-  <div class="shop-section" id="shopSectionPhoto">
+  <div class="whatsnext">
     <div class="email-divider"></div>
-    <div class="shop-title">Shop this style</div>
-    <div class="shop-sub">Shopping suggestions inspired by this outfit</div>
-    <div id="shopContentPhoto">
-      <button class="btn-pink" onclick="genOutfits('photo')" id="shopBtnPhoto">Show me shopping ideas</button>
+    <div class="whatsnext-title">What would you like to do?</div>
+    <div class="whatsnext-grid">
+      <button class="btn-pink" onclick="genOutfits('photo')" id="shopBtnPhoto">🛍️ Shop this style</button>
+      <button class="btn-chat" onclick="openChat()">💬 Chat with your stylist</button>
+      <button class="btn-teal" onclick="showPhoto()">📸 Analyze another outfit</button>
+      <button class="btn-yellow" onclick="openPrefs()">✨ Refine your style preferences</button>
     </div>
   </div>
 
-  <div class="email-divider"></div>
-  <button class="btn-chat" onclick="openChat()">💬 Chat with your Style Star stylist</button>
+  <div class="shop-section" id="shopSectionPhoto" style="display:none">
+    <div class="shop-title">Shop this style</div>
+    <div class="shop-sub">Shopping suggestions inspired by this outfit</div>
+    <div id="shopContentPhoto"></div>
+  </div>
 
   <div class="share-section">
     <div class="email-divider"></div>
@@ -393,9 +393,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="stay-skip" onclick="document.getElementById('staySectionPhoto').style.display='none'">Skip</div>
   </div>
 
-  <button class="btn-teal" onclick="showPhoto()">Analyze another outfit</button>
-  <button class="btn-outline" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
-  <button class="retake" onclick="location.reload()">Start over</button>
+  <button class="btn-outline" onclick="show(quizTaken?'s-res':'s-wel')">Back to results</button>
 </div>
 <div class="scr" id="s-pref">
   <div class="pref-progress" id="prefPips"></div>
@@ -479,10 +477,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       </div>
     </div>
     <div class="chat-privacy">Photos are processed by AI and never stored</div>
-    <div id="chatRefineHint" style="text-align:center;margin-top:6px"></div>
-    <div style="text-align:center;margin-top:8px">
-      <button class="btn-outline" onclick="chatDone()" style="padding:10px 24px;font-size:12px;max-width:200px;margin:0 auto">Done</button>
-    </div>
     <div class="chat-input-wrap">
       <button class="chat-photo-btn" onclick="document.getElementById('chatPhotoIn').click()">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M3 16l4-4 4 4"/></svg>
@@ -497,6 +491,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <img id="chatPhotoThumb" style="width:60px;height:60px;object-fit:cover;border-radius:8px">
       <span style="font-size:13px;color:#666">Photo attached</span>
       <button onclick="clearChatPhoto()" style="background:none;border:none;color:#E91E8C;font-size:13px;cursor:pointer;font-weight:600">Remove</button>
+    </div>
+    <div id="chatRefineHint" style="text-align:center;margin-top:8px"></div>
+    <div style="text-align:center;margin-top:6px">
+      <button onclick="chatDone()" style="background:none;border:none;color:#999;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline;font-weight:600">Done</button>
     </div>
   </div>
 </div>
@@ -537,7 +535,7 @@ function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)})
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`})}
 async function genResult(){show('s-load');document.getElementById('pf').style.width='100%';document.getElementById('pl').textContent='Complete';const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. A woman named ${userName} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you" and use her name once naturally.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
-function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none'}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}}
+function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('pw').style.display='none';document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none'}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}}
 
 let photoData=null,photoType="image/jpeg";
 function startPhoto(){userName=document.getElementById('nameIn').value.trim()||"You";showPhoto()}
@@ -1081,7 +1079,7 @@ function openChat(){
   if(hint){
     const hasPrefs=prefs.colorsLove.length>0||prefs.neverWear.length>0||(prefs.sizes.tops&&prefs.sizes.tops.length>0);
     if(!hasPrefs){
-      hint.innerHTML='<button class="btn-yellow" onclick="openPrefs()" style="padding:10px 24px;font-size:12px;max-width:280px;margin:0 auto">✨ Refine your style preferences for better suggestions</button>';
+      hint.innerHTML='<button class="chat-chip" onclick="openPrefs()" style="border-color:#D4AF37;color:#D4AF37">✨ Refine your preferences for better suggestions</button>';
     }else{hint.innerHTML=''}
   }
   setTimeout(()=>document.getElementById('chatInput').focus(),300);
@@ -1348,6 +1346,7 @@ RULES:
     if(d&&d.userName&&d.answers){
       document.getElementById('s-wel').classList.remove('act');
       document.getElementById('s-wb').classList.add('act');
+      document.getElementById('pw').style.display='none';
       document.getElementById('wbName').textContent=d.userName&&d.userName!=='You'?'Welcome back, '+d.userName+'!':'Welcome back!';
     }
   }catch(e){}
