@@ -993,11 +993,15 @@ function showStory(){
   const cur=document.querySelector('.scr.act');
   storyPrevScreen=cur?cur.id:'s-wel';
   show('s-story');
+  document.querySelector('.quiz-footer').style.display='none';
   const btn=document.getElementById('storyBtn');
   if(storyPrevScreen==='s-wel'){btn.textContent='Discover your style'}
   else{btn.textContent='Back'}
 }
-function closeStory(){show(storyPrevScreen)}
+function closeStory(){
+  document.querySelector('.quiz-footer').style.display='';
+  show(storyPrevScreen);
+}
 
 function saveChatHistory(){
   try{localStorage.setItem('ss_chat',JSON.stringify(chatHistory.slice(-40)))}catch(e){}
