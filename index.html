@@ -138,8 +138,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .color-dot.hate::after{content:"✕";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:18px;font-weight:700;text-shadow:0 0 3px rgba(0,0,0,0.5)}
 .color-name{font-size:9px;text-align:center;color:#999;margin-top:2px}
 .color-item{display:flex;flex-direction:column;align-items:center;gap:2px}
-.color-dot[data-name="Metallics"]{background-size:200% 200%;animation:shimmer 2.5s ease-in-out infinite}
-@keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.color-dot[data-name="Metallics"]{background-size:300% 100%;animation:shimmer 3s ease-in-out infinite}
+@keyframes shimmer{0%{background-position:100% 0}50%{background-position:-100% 0}100%{background-position:100% 0}}
 .pref-progress{display:flex;gap:6px;justify-content:center;margin-bottom:1.25rem}
 .pref-pip{width:10px;height:10px;border-radius:50%;background:#e8e8e8}
 .pref-pip.active{background:#D4AF37}
@@ -781,10 +781,10 @@ const prefColors=[
 {n:'White',c:'#ffffff'},{n:'Ivory',c:'#FFFFF0'},{n:'Tan',c:'#D2B48C'},{n:'Khaki',c:'#BDB291'},{n:'Brown',c:'#6B4226'},{n:'Black',c:'#1a1a1a'},{n:'Charcoal',c:'#5C5C5C'},{n:'Gray',c:'#B8B8B8'},
 {n:'Blush',c:'#F4C2C2'},{n:'Rosé',c:'#C48B8A'},{n:'Hot Pink',c:'#E91E8C'},{n:'Raspberry',c:'#C2185B'},{n:'Lavender',c:'#DFC5F7'},{n:'Purple',c:'#6A0DAD'},
 {n:'Red',c:'#E41B23'},{n:'Burgundy',c:'#800020'},
-{n:'Peach',c:'#FFCBA4'},{n:'Coral',c:'#FF6F61'},{n:'Orange',c:'#FF7518'},{n:'Rust',c:'#B7410E'},{n:'Mustard',c:'#D4A017'},{n:'Yellow',c:'#FFD700'},{n:'Pale Yellow',c:'#FFED8A'},
+{n:'Peach',c:'#FFCBA4'},{n:'Coral',c:'#FF6F61'},{n:'Orange',c:'#FF7518'},{n:'Rust',c:'#B7410E'},{n:'Mustard',c:'#D4A017'},{n:'Yellow',c:'#FFD700'},{n:'Pale Yellow',c:'#FFF3AA'},
 {n:'Mint',c:'#AAF0D1'},{n:'Sage',c:'#9CAF88'},{n:'Olive',c:'#6B7B3A'},{n:'Grass Green',c:'#4CAF50'},{n:'Forest',c:'#254D32'},{n:'Teal',c:'#008080'},
 {n:'Light Blue',c:'#B0D8F0'},{n:'Denim Blue',c:'#5B7FAD'},{n:'Turquoise',c:'#00B4D8'},{n:'Royal Blue',c:'#2B5EA7'},{n:'Navy',c:'#1B2A4A'},
-{n:'Metallics',c:'linear-gradient(135deg,#D4AF37 0%,#F0D060 20%,#FFFACD 35%,#D4AF37 50%,#C0C0C0 65%,#F0D060 80%,#D4AF37 100%)'}
+{n:'Metallics',c:'linear-gradient(110deg,#D4AF37 0%,#F0D060 25%,#FFFDE0 45%,#F0D060 55%,#D4AF37 75%,#F0D060 100%)'}
 ];
 
 const prefNeverItems=['Crop tops','Short shorts','Low-rise anything','Bodycon/tight dresses','Puff sleeves','Ruffles','Strapless tops/dresses','Jumpsuits/rompers','Oversized/boxy fits','Mini skirts','Turtlenecks'];
