@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Style Star — Your Personal Style Vibe</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<title>Style Star | Your Personal Style Vibe</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Archivo+Black&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100%;background:#f5f3ef;font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antialiased}
@@ -12,9 +12,13 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.7
 .ss{width:100%;max-width:480px;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 4px 40px rgba(0,0,0,0.08)}
 
 .hdr{text-align:center;padding:1.25rem 2rem 0.75rem;border-bottom:1px solid #f0f0f0}
-.logo-star{display:block;margin:0 auto 6px}
-.logo-block{display:flex;flex-direction:column;align-items:center;line-height:0.92}
-.logo-line{font-family:'Archivo Black',sans-serif;font-size:44px;font-weight:400;color:#1a1a1a;letter-spacing:0.06em;text-transform:uppercase;line-height:1}
+.logo-star{display:block;margin:0 auto 2px}
+.logo-block{display:flex;flex-direction:column;align-items:center;line-height:0.95}
+.logo-line-style{font-family:'Playfair Display',serif;font-size:38px;font-weight:400;color:#1a1a1a;letter-spacing:0.02em;line-height:1;text-transform:lowercase}
+.logo-line-star{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:#1a1a1a;letter-spacing:0.02em;line-height:1}
+.logo-slider{width:160px;height:6px;position:relative;margin:8px auto 4px}
+.logo-slider-line{position:absolute;top:50%;left:0;right:0;height:2px;background:#D4AF37;transform:translateY(-50%)}
+.logo-slider-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#D4AF37;left:62%}
 .tag{font-size:14px;color:#777;letter-spacing:0.16em;text-transform:uppercase;margin-top:4px;font-weight:400}
 
 .inner{padding:0.5rem 1.75rem 1.5rem}
@@ -210,15 +214,14 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </form>
 <div class="ss">
 <div class="hdr">
-  <svg class="logo-star" width="80" height="80" viewBox="0 0 76 76" fill="none">
-    <defs><linearGradient id="starGrad" x1="0" y1="0" x2="76" y2="76"><stop offset="0%" stop-color="#F0D060"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#C8A060"/></linearGradient></defs>
-    <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="url(#starGrad)"/>
-    <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+  <svg class="logo-star" width="50" height="50" viewBox="0 0 76 76" fill="none">
+    <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="none" stroke="#D4AF37" stroke-width="4"/>
   </svg>
   <div class="logo-block">
-    <span class="logo-line">STYLE</span>
-    <span class="logo-line">STAR</span>
+    <span class="logo-line-style">style</span>
+    <span class="logo-line-star">Star</span>
   </div>
+  <div class="logo-slider"><div class="logo-slider-line"></div><div class="logo-slider-dot"></div></div>
   <div class="tag">Your personal style vibe</div>
 </div>
 <div class="inner">
@@ -240,7 +243,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 <div class="scr act" id="s-wel">
   <div class="wel">
     <div class="wel-t">Discover your<br>signature style</div>
-    <div class="wel-s">A personal stylist in your pocket. Take our 2-minute style quiz — 12 simple questions, no right or wrong answers — and get a one-of-a-kind style portrait as unique as you are.</div>
+    <div class="wel-s">A personal stylist in your pocket. Take our 2-minute style quiz. 12 simple questions, no right or wrong answers. Your result is a one-of-a-kind style portrait as unique as you are.</div>
     <div class="name-in"><input type="text" id="nameIn" placeholder="Enter your first name" maxlength="20"></div>
     <button class="btn-pink" style="max-width:300px" onclick="startQ()">Begin your style quiz</button>
     <button class="btn-teal" style="max-width:300px" onclick="startPhoto()">Snap a photo of your outfit for a style analysis</button>
@@ -318,11 +321,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 <div class="scr" id="s-photo">
   <div class="wel">
     <svg width="48" height="48" viewBox="0 0 76 76" fill="none">
-      <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#C8A060"/>
-      <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+      <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="none" stroke="#D4AF37" stroke-width="4"/>
     </svg>
     <div class="wel-t">Let's see your unique<br>personal style vibe</div>
-    <div class="wel-s">Upload a photo of yourself in an outfit and we'll analyze your style — like having a personal stylist look at your look.</div>
+    <div class="wel-s">Upload a photo of yourself in an outfit and we'll analyze your style. Like having a personal stylist look at your look.</div>
     <div class="photo-upload-area" id="photoArea" onclick="document.getElementById('photoIn').click()">
       <div class="photo-placeholder" id="photoPlaceholder">
         <div class="photo-icon">📷</div>
@@ -453,9 +455,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="chat-hdr">
       <div class="chat-hdr-left">
         <svg class="chat-hdr-star" viewBox="0 0 76 76" fill="none">
-          <defs><linearGradient id="chatStarGrad" x1="0" y1="0" x2="76" y2="76"><stop offset="0%" stop-color="#F0D060"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#C8A060"/></linearGradient></defs>
-          <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="url(#chatStarGrad)"/>
-          <polygon points="38,17 42.5,28.5 55,28.5 45,35 48.5,46 38,39.5 27.5,46 31,35 21,28.5 33.5,28.5" fill="#fff"/>
+          <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="none" stroke="#D4AF37" stroke-width="4"/>
         </svg>
         <div>
           <div class="chat-hdr-title">Style Star Stylist</div>
@@ -649,7 +649,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
   }catch(e){
     show('s-photo-res');
     document.getElementById('prn').textContent="Let's try that again";
-    document.getElementById('prp').textContent="The analysis took a little too long this time. This happens occasionally — just tap the button below to try again with the same photo.";
+    document.getElementById('prp').textContent="The analysis took a little too long this time. This happens occasionally. Just tap the button below to try again with the same photo.";
     document.getElementById('pft').innerHTML='';
     document.getElementById('pChart').innerHTML='<div style="text-align:center;margin-top:1rem"><button class="btn-pink" onclick="retryPhoto()" style="max-width:260px">Try again</button></div>';
   }
@@ -1215,6 +1215,7 @@ HOW TO RESPOND:
 - NEVER use more than one emoji per response. Zero is fine.
 - No filler phrases like "Great question!" or "I love that you asked!" Just answer.
 - Never use markdown formatting like **bold** or *italic*. Plain text only.
+- Never use em dashes (—). Use periods or commas instead.
 
 CONSTRUCTIVE FEEDBACK:
 - Be helpful, not just nice. If something could be better, say so.
@@ -1287,6 +1288,7 @@ EXAMPLES OF BAD RESPONSES:
 SHOPPING:
 - Use real stores: Nordstrom, J.Crew, Zara, Anthropologie, Revolve, Madewell, Everlane, Saks, Target, Amazon, Express, Mango, Abercrombie, H&M, Banana Republic, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia
 - Mix price points
+- When suggesting multiple items, try to group from the same store when possible so she can shop in one place. But never compromise the best pick just to match stores. The right item always wins.
 
 SHIFT ONE NOTCH:
 - Suggest one specific small swap that shifts her style subtly
@@ -1340,7 +1342,7 @@ RULES:
     addChatMsg(reply,'bot');
   }catch(e){
     typing.remove();
-    addChatMsg("I'm having a moment — could you try asking that again? ✨",'bot');
+    addChatMsg("I'm having a moment. Could you try asking that again? ✨",'bot');
   }
   sendBtn.disabled=false;
   input.focus();
@@ -1494,31 +1496,44 @@ function buildCardBlob(source,callback){
     ctx.fillStyle=fill;ctx.fill();
   }
 
-  const starGrad=ctx.createLinearGradient(w/2-30,50,w/2+30,110);
-  starGrad.addColorStop(0,'#F0D060');starGrad.addColorStop(0.5,'#D4AF37');starGrad.addColorStop(1,'#C8A060');
-  drawStar(w/2,85,45,starGrad);
-  drawStar(w/2,85,20,'#ffffff');
+  ctx.strokeStyle='#D4AF37';ctx.lineWidth=4;
+  const starPoints=[];
+  for(let i=0;i<10;i++){
+    const angle=Math.PI/2+i*Math.PI/5;
+    const r=i%2===0?45:18;
+    starPoints.push([w/2+Math.cos(angle)*r,85-Math.sin(angle)*r]);
+  }
+  ctx.beginPath();
+  starPoints.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]));
+  ctx.closePath();ctx.stroke();
 
   ctx.fillStyle='#1a1a1a';
-  ctx.font='900 42px Arial, sans-serif';
+  ctx.font='400 32px Playfair Display, serif';
   ctx.textAlign='center';
-  ctx.fillText('STYLE STAR',w/2,160);
+  ctx.fillText('style',w/2,155);
+  ctx.font='900 40px Playfair Display, serif';
+  ctx.fillText('Star',w/2,195);
+
+  ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(w/2-80,215);ctx.lineTo(w/2+80,215);ctx.stroke();
+  ctx.fillStyle='#D4AF37';
+  ctx.beginPath();ctx.arc(w/2+30,215,5,0,Math.PI*2);ctx.fill();
 
   ctx.fillStyle='#999999';
-  ctx.font='400 18px Arial, sans-serif';
-  ctx.fillText('YOUR PERSONAL STYLE VIBE',w/2,190);
+  ctx.font='400 14px DM Sans, sans-serif';
+  ctx.fillText('YOUR PERSONAL STYLE VIBE',w/2,240);
 
   ctx.strokeStyle='#ebebeb';ctx.lineWidth=1;
-  ctx.beginPath();ctx.moveTo(250,220);ctx.lineTo(w-250,220);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(250,260);ctx.lineTo(w-250,260);ctx.stroke();
 
   ctx.fillStyle='#D4AF37';
   ctx.font='700 44px Arial, sans-serif';
-  ctx.fillText(title,w/2,275);
+  ctx.fillText(title,w/2,295);
 
   ctx.fillStyle='#333333';
   ctx.font='500 28px Arial, sans-serif';
   line='';
-  let y=330;
+  let y=350;
   words.forEach(word=>{
     const test=line+word+' ';
     if(ctx.measureText(test).width>maxW&&line!==''){
