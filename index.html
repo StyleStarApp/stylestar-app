@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Style Star | Your Personal Style Vibe</title>
+<title>Style Star | Align Your Style. Shine Your Light.</title>
+<meta name="description" content="A personal stylist in your pocket. Take our free style quiz to discover your personal style portrait and learn how a few small shifts can help you shop smarter, dress with confidence, and feel more like yourself.">
+<meta property="og:title" content="Style Star | Discover Your Signature Style">
+<meta property="og:description" content="A personal stylist in your pocket. Take the free quiz to discover your unique style portrait. Built by a stylist with 20+ years of experience.">
+<meta property="og:url" content="https://www.stylestar.app">
+<meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Archivo+Black&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -13,7 +18,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.7
 
 .hdr{text-align:center;padding:1.25rem 2rem 0.75rem;border-bottom:1px solid #f0f0f0}
 .logo-img{display:block;margin:0 auto;width:200px;height:auto}
-.tag{font-size:13px;color:#999;letter-spacing:0.08em;margin-top:6px;font-weight:400;font-style:italic}
+.tag{font-size:15px;color:#666;letter-spacing:0.08em;margin-top:6px;font-weight:500}
 
 .inner{padding:0.5rem 1.75rem 1.5rem}
 .prog-wrap{margin-bottom:1.5rem;display:none}
@@ -230,9 +235,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 <div class="scr act" id="s-wel">
   <div class="wel">
     <div class="wel-t">Discover your<br>signature style</div>
-    <div class="wel-s">A personal stylist in your pocket. Take our free style quiz to discover your personal style portrait and learn how a few small shifts can help you shop smarter, dress with confidence, and feel more like yourself.</div>
-    <div class="wel-sub" style="font-size:13px;color:#999;margin-top:8px;font-style:italic">12 simple questions. No right or wrong answers. Built by a stylist with 20+ years of experience.</div>
-    <div class="name-in"><input type="text" id="nameIn" placeholder="Enter your first name" maxlength="20"></div>
+    <div class="wel-s">A personal stylist in your pocket. Take our free quiz to discover your unique style portrait and learn how small shifts can help you shop smarter, dress with confidence, and feel more like yourself.</div>
+    <div class="wel-sub" style="font-size:14px;color:#777;margin-top:8px;font-style:italic">12 simple questions. No right or wrong answers. Built by a stylist with 20+ years of experience.</div>
+    <div class="name-in"><input type="text" id="nameIn" placeholder="Enter your first name (optional)" maxlength="20"></div>
     <button class="btn-pink" style="max-width:300px" onclick="startQ()">Begin your style quiz</button>
     <button class="btn-teal" style="max-width:300px" onclick="startPhoto()">Snap a photo of your outfit for a style analysis</button>
   </div>
@@ -881,10 +886,9 @@ function savePrefStep(){
     prefs.colorsLove=[];
     document.querySelectorAll('.color-dot.love').forEach(d=>prefs.colorsLove.push(d.dataset.name));
   }else if(prefStep===2){
-    ['jewelry'].forEach(f=>{
-      const sel=document.querySelector(`.pref-qp-${f}.sel`);
-      prefs[f]=sel?sel.textContent:'';
-    });
+    [''].forEach(f=>{});
+    const jewelryChips=document.querySelectorAll('.pref-qp-jewelry.sel');
+    prefs.jewelry=Array.from(jewelryChips).map(c=>c.textContent).join(', ');
     const shoeChips=document.querySelectorAll('.pref-qp-dailyShoes.sel');
     prefs.dailyShoes=Array.from(shoeChips).map(c=>c.textContent).join(', ');
     const bagChips=document.querySelectorAll('.pref-qp-bagStyle.sel');
@@ -943,6 +947,8 @@ function renderPrefColors(c){
 }
 
 function toggleColor(el,type){
+  if(type==='love'){el.classList.remove('hate')}
+  if(type==='hate'){el.classList.remove('love')}
   el.classList.toggle(type);
 }
 
@@ -972,10 +978,14 @@ function renderPrefQuick(c){
   const bagOptions=['Large tote','Shoulder bag','Crossbody','Top handle bag','Clutch','Backpack','Belt bag','Work/laptop bag','Gym bag'];
   const savedBags=(prefs.bagStyle||'').split(', ');
   const bagChips=bagOptions.map(o=>`<div class="pref-chip pref-qp-bagStyle ${savedBags.includes(o)?'sel':''}" onclick="this.classList.toggle('sel')">${o}</div>`).join('');
+  const jewelryOptions=['Gold','Silver','Rose Gold','Mixed metals','No preference'];
+  const savedJewelry=(prefs.jewelry||'').split(', ');
+  const jewelryChips=jewelryOptions.map(o=>`<div class="pref-chip pref-qp-jewelry ${savedJewelry.includes(o)?'sel':''}" onclick="this.classList.toggle('sel')">${o}</div>`).join('');
   c.innerHTML=`
     <div class="pref-title">Quick Picks</div>
     <div class="pref-sub">A few more details to help us align your unique style.</div>
-    ${qpGroup('Jewelry','jewelry',['Gold','Silver','Rose Gold','Mixed','No preference'])}
+    <div class="pref-label">Jewelry (select all that apply)</div>
+    <div class="pref-grid">${jewelryChips}</div>
     <div class="pref-label">Daily shoes (select all that apply)</div>
     <div class="pref-grid">${shoeChips}</div>
     <div class="pref-label">Bag style (select all that apply)</div>
