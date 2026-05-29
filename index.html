@@ -314,8 +314,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <svg width="48" height="48" viewBox="0 0 76 76" fill="none">
       <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="none" stroke="#D4AF37" stroke-width="4"/>
     </svg>
-    <div class="wel-t">Let's see your unique<br>personal style vibe</div>
-    <div class="wel-s">Upload a photo of yourself in an outfit and we'll analyze your style. Like having a personal stylist look at your look.</div>
+    <div class="wel-t">Show us what<br>you're wearing</div>
+    <div class="wel-s">Share a photo of your outfit and get personalized styling tips and shopping ideas.</div>
     <div class="photo-upload-area" id="photoArea" onclick="document.getElementById('photoIn').click()">
       <div class="photo-placeholder" id="photoPlaceholder">
         <div class="photo-icon">📷</div>
@@ -325,7 +325,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <img id="photoPreview" class="photo-preview" style="display:none">
     </div>
     <input type="file" id="photoIn" accept="image/*" style="display:none" onchange="onPhotoSelect(this)">
-    <button class="btn-teal" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my style vibes</button>
+    <button class="btn-teal" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my outfit</button>
     <button class="btn-outline" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
   </div>
 </div>
