@@ -229,6 +229,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="wb-name" id="wbName">Welcome back!</div>
     <div class="wb-msg">Your style portrait is saved. Pick up right where you left off.</div>
     <button class="btn-pink" style="max-width:300px" onclick="loadSaved()">See my style portrait</button>
+    <button class="btn-pink" style="max-width:300px" onclick="loadSavedAndShop()">🛍️ Shop your style</button>
     <button class="btn-chat" style="max-width:300px" onclick="wbChat()">💬 Chat with your stylist</button>
     <button class="btn-teal" style="max-width:300px" onclick="savedPhoto()">Snap a photo of your outfit for a style analysis</button>
     <button class="btn-yellow" style="max-width:300px" onclick="openPrefs()">✨ Refine your style preferences</button>
@@ -748,6 +749,16 @@ function loadSaved(){
     userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;
     const top3=topArchNames.map(n=>({n:n}));
     showResult(d.portrait,top3);
+  }catch(e){show('s-wel')}
+}
+function loadSavedAndShop(){
+  try{
+    const d=JSON.parse(localStorage.getItem('ss_data'));
+    if(!d)return;
+    userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;
+    const top3=topArchNames.map(n=>({n:n}));
+    showResult(d.portrait,top3);
+    genOutfits('quiz');
   }catch(e){show('s-wel')}
 }
 function savedPhoto(){
