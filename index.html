@@ -1544,7 +1544,6 @@ async function doShareCard(){
 }
 
 function buildCardBlob(source,callback){
-  // First pass: measure content height
   const measureCanvas=document.createElement('canvas');
   measureCanvas.width=1080;measureCanvas.height=3000;
   const mc=measureCanvas.getContext('2d');
@@ -1557,13 +1556,11 @@ function buildCardBlob(source,callback){
   const isQuiz=source==='quiz';
   const title=isQuiz?(userName&&userName!=='You'?displayName+"'s Style Card":'Your Style Card'):(userName&&userName!=='You'?displayName+"'s Outfit Analysis":'Your Outfit Analysis');
 
-  // Get short quote (last sentence of portrait)
   const sentences=portrait.replace(/\*/g,'').replace(/—/g,',').split(/\.\s+/);
   let quote=sentences[sentences.length-1]||sentences[sentences.length-2]||'';
   quote=quote.replace(/\.$/,'').trim();
-  if(quote&&!quote.endsWith('.')){quote+='.'}
+  if(quote&&!quote.endsWith('.')){quote+='.';}
   
-  // Measure quote height
   mc.font='italic 500 30px Georgia, serif';
   mc.textAlign='center';
   const quoteWords=('"'+quote+'"').split(' ');
@@ -1575,39 +1572,36 @@ function buildCardBlob(source,callback){
   if(line)textLines++;
 
   const quoteHeight=textLines*44;
-  const archHeight=archNames.length*52;
-  const fpHeight=12*32;
+  const archHeight=archNames.length*48;
+  const fpHeight=12*30;
   
-  // Calculate total height with frame padding
-  const frameP=40;
-  const totalContent=frameP+80+45+30+20+60+20+quoteHeight+50+20+archHeight+50+20+fpHeight+60+50+40+frameP;
-  const h=Math.max(totalContent,1200);
+  const frameW=32;
+  const pad=50;
+  const totalContent=frameW+pad+80+90+20+60+20+quoteHeight+40+20+archHeight+30+20+fpHeight+60+50+40+pad+frameW;
+  const h=Math.max(totalContent,1300);
 
   const canvas=document.createElement('canvas');
   canvas.width=w;canvas.height=h;
   const ctx=canvas.getContext('2d');
 
-  // Gold frame background
+  // Single thick gold frame
   const frameGrad=ctx.createLinearGradient(0,0,w,h);
-  frameGrad.addColorStop(0,'#D4AF37');
-  frameGrad.addColorStop(0.3,'#F0D060');
-  frameGrad.addColorStop(0.5,'#D4AF37');
-  frameGrad.addColorStop(0.7,'#F0D060');
-  frameGrad.addColorStop(1,'#D4AF37');
+  frameGrad.addColorStop(0,'#C8A060');
+  frameGrad.addColorStop(0.15,'#F0D060');
+  frameGrad.addColorStop(0.3,'#D4AF37');
+  frameGrad.addColorStop(0.5,'#F0D060');
+  frameGrad.addColorStop(0.7,'#D4AF37');
+  frameGrad.addColorStop(0.85,'#F0D060');
+  frameGrad.addColorStop(1,'#C8A060');
   ctx.fillStyle=frameGrad;
   ctx.fillRect(0,0,w,h);
 
-  // White inner area
-  const inset=28;
+  // White inner area - no second border
   ctx.fillStyle='#ffffff';
-  ctx.fillRect(inset,inset,w-inset*2,h-inset*2);
+  ctx.fillRect(frameW,frameW,w-frameW*2,h-frameW*2);
 
-  // Inner gold border line
-  ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
-  ctx.strokeRect(inset+12,inset+12,w-inset*2-24,h-inset*2-24);
-
-  // Star outline
-  let cy0=frameP+70;
+  // Star outline - gold outline only
+  let cy0=frameW+pad+50;
   ctx.strokeStyle='#D4AF37';ctx.lineWidth=3;
   const starPoints=[];
   for(let i=0;i<10;i++){
@@ -1619,33 +1613,32 @@ function buildCardBlob(source,callback){
   starPoints.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]));
   ctx.closePath();ctx.stroke();
 
-  // style Star text
-  ctx.fillStyle='#D4AF37';
-  ctx.font='400 22px Georgia, serif';
+  // style Star text - BLACK like our logo
+  ctx.fillStyle='#1a1a1a';
+  ctx.font='400 24px Georgia, serif';
   ctx.textAlign='center';
-  ctx.fillText('style',w/2,cy0+30);
-  ctx.font='700 28px Georgia, serif';
-  ctx.fillText('Star',w/2,cy0+58);
+  ctx.fillText('style',w/2,cy0+32);
+  ctx.font='700 32px Georgia, serif';
+  ctx.fillText('Star',w/2,cy0+64);
 
   // Slider line
   ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(w/2-60,cy0+72);ctx.lineTo(w/2+60,cy0+72);ctx.stroke();
-  ctx.beginPath();ctx.arc(w/2+25,cy0+72,4,0,Math.PI*2);ctx.fillStyle='#D4AF37';ctx.fill();
+  ctx.beginPath();ctx.moveTo(w/2-65,cy0+80);ctx.lineTo(w/2+65,cy0+80);ctx.stroke();
+  ctx.beginPath();ctx.arc(w/2+25,cy0+80,4,0,Math.PI*2);ctx.fillStyle='#D4AF37';ctx.fill();
 
   // Tagline
   ctx.fillStyle='#999';
-  ctx.font='400 13px Arial, sans-serif';
-  ctx.letterSpacing='2px';
-  ctx.fillText('ALIGN YOUR STYLE. SHINE YOUR LIGHT.',w/2,cy0+95);
+  ctx.font='400 14px Arial, sans-serif';
+  ctx.fillText('ALIGN YOUR STYLE. SHINE YOUR LIGHT.',w/2,cy0+102);
 
   // Title
-  let yPos=cy0+140;
+  let yPos=cy0+150;
   ctx.fillStyle='#D4AF37';
   ctx.font='700 48px Georgia, serif';
   ctx.fillText(title,w/2,yPos);
 
-  // Quote in italics
-  yPos+=35;
+  // Quote
+  yPos+=38;
   ctx.fillStyle='#333';
   ctx.font='italic 500 30px Georgia, serif';
   line='';
@@ -1659,19 +1652,19 @@ function buildCardBlob(source,callback){
   if(line)ctx.fillText(line.trim(),w/2,yPos);
 
   // Notes section
-  yPos+=55;
+  yPos+=50;
   ctx.fillStyle='#555';
   ctx.font='700 18px Arial, sans-serif';
   ctx.fillText(isQuiz?'YOUR STYLE HAS NOTES OF':'THIS OUTFIT HAS NOTES OF',w/2,yPos);
 
-  yPos+=40;
+  yPos+=38;
   ctx.font='700 24px Georgia, serif';
   archNames.forEach((name,i)=>{
-    const tagY=yPos+i*52;
+    const tagY=yPos+i*48;
     const tw=ctx.measureText(name).width+60;
     ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
     ctx.beginPath();
-    const rx=w/2-tw/2,ry=tagY-24,rw=tw,rh=42,rad=21;
+    const rx=w/2-tw/2,ry=tagY-22,rw=tw,rh=40,rad=20;
     ctx.moveTo(rx+rad,ry);ctx.lineTo(rx+rw-rad,ry);ctx.quadraticCurveTo(rx+rw,ry,rx+rw,ry+rad);
     ctx.lineTo(rx+rw,ry+rh-rad);ctx.quadraticCurveTo(rx+rw,ry+rh,rx+rw-rad,ry+rh);
     ctx.lineTo(rx+rad,ry+rh);ctx.quadraticCurveTo(rx,ry+rh,rx,ry+rh-rad);
@@ -1681,45 +1674,62 @@ function buildCardBlob(source,callback){
     ctx.fillText(name,w/2,tagY);
   });
 
-  // Fingerprint section
-  yPos+=archNames.length*52+50;
+  // Fingerprint - tighter spacing, centered
+  yPos+=archNames.length*48+30;
   ctx.fillStyle='#555';
   ctx.font='700 18px Arial, sans-serif';
   ctx.textAlign='center';
   ctx.fillText(isQuiz?'YOUR STYLE FINGERPRINT':'OUTFIT STYLE FINGERPRINT',w/2,yPos);
-  yPos+=28;
+  yPos+=26;
+
+  const fpLeft=200;
+  const fpRight=880;
+  const fpLineW=fpRight-fpLeft;
+  const labelLeft=fpLeft-10;
 
   questions.forEach((q,i)=>{
-    const rowY=yPos+i*32;
-    ctx.font='600 13px Arial, sans-serif';
+    const rowY=yPos+i*30;
+    ctx.font='600 12px Arial, sans-serif';
     ctx.textAlign='right';
     ctx.fillStyle='#333';
-    ctx.fillText(q.cat.toUpperCase(),280,rowY+4);
+    ctx.fillText(q.cat.toUpperCase(),labelLeft,rowY+4);
     ctx.fillStyle='#ebebeb';
-    ctx.fillRect(300,rowY,480,3);
+    ctx.fillRect(fpLeft,rowY,fpLineW,2);
     const pct=(sliderVals[i]-1)/10;
-    const dotX=300+pct*480;
-    ctx.beginPath();ctx.arc(dotX,rowY+1,6,0,Math.PI*2);
+    const dotX=fpLeft+pct*fpLineW;
+    ctx.beginPath();ctx.arc(dotX,rowY+1,5,0,Math.PI*2);
     ctx.fillStyle='#D4AF37';ctx.fill();
-    ctx.font='500 11px Arial, sans-serif';
+    ctx.font='500 10px Arial, sans-serif';
     ctx.textAlign='left';
-    ctx.fillStyle='#999';
-    ctx.fillText(q.left.toUpperCase(),300,rowY+18);
+    ctx.fillStyle='#aaa';
+    ctx.fillText(q.left.toUpperCase(),fpLeft,rowY+16);
     ctx.textAlign='right';
-    ctx.fillText(q.right.toUpperCase(),780,rowY+18);
+    ctx.fillText(q.right.toUpperCase(),fpRight,rowY+16);
   });
 
-  // Bottom section
-  const bottomY=yPos+12*32+50;
+  // Bottom - Shine your light with drawn heart
+  const bottomY=yPos+12*30+55;
   
   ctx.textAlign='center';
   ctx.fillStyle='#D4AF37';
-  ctx.font='italic 700 32px Georgia, serif';
-  ctx.fillText('Shine your light. ♡',w/2,bottomY);
+  ctx.font='italic 700 36px Georgia, serif';
+  ctx.fillText('Shine your light',w/2-20,bottomY);
   
-  ctx.fillStyle='#999';
-  ctx.font='400 20px Arial, sans-serif';
-  ctx.fillText('StyleStar.app',w/2,bottomY+35);
+  // Draw a pretty heart
+  const hx=w/2+120;
+  const hy=bottomY-10;
+  ctx.beginPath();
+  ctx.moveTo(hx,hy+6);
+  ctx.bezierCurveTo(hx,hy-2,hx-12,hy-10,hx-12,hy-2);
+  ctx.bezierCurveTo(hx-12,hy+4,hx,hy+14,hx,hy+18);
+  ctx.bezierCurveTo(hx,hy+14,hx+12,hy+4,hx+12,hy-2);
+  ctx.bezierCurveTo(hx+12,hy-10,hx,hy-2,hx,hy+6);
+  ctx.closePath();
+  ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;ctx.stroke();
+  
+  ctx.fillStyle='#bbb';
+  ctx.font='400 22px Arial, sans-serif';
+  ctx.fillText('StyleStar.app',w/2,bottomY+45);
 
   const botGrad=ctx.createLinearGradient(0,bottomY+20,w,bottomY+20);
   botGrad.addColorStop(0,'#F0D060');botGrad.addColorStop(0.5,'#D4AF37');botGrad.addColorStop(1,'#C8A060');
