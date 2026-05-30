@@ -579,7 +579,7 @@ async function runPhotoAnalysis(){
   const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. A woman named ${userName} has uploaded a photo for style analysis.
 
 FIRST: Check if you can see enough of the outfit to analyze. If the photo only shows a face, headshot, or you cannot see most of the outfit, respond with this exact JSON:
-{"partial":true,"portrait":"You look radiant! To give you a complete style analysis, I'd love to see your full outfit — head to toe if possible. Try uploading a photo that shows what you're wearing and I'll break down your style."}
+{"partial":true,"portrait":"You look radiant! To give you a complete style analysis, I'd love to see your full outfit. Head to toe if possible. Try sharing a photo that shows what you're wearing and I'll break down your style."}
 
 If you CAN see enough of the outfit, analyze it across these 12 style sliders (each on a 1-11 scale where 6 is the center):
 1. Style direction (1=Classic, 11=Trendy)
@@ -620,7 +620,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
       document.getElementById('prn').textContent=userName&&userName!=="You"?userName+", let's see more!":"Let's see more!";
       document.getElementById('prp').textContent=parsed.portrait;
       document.getElementById('pft').innerHTML='';
-      document.getElementById('pChart').innerHTML='<div style="text-align:center;margin-top:1rem"><button class="btn-pink" onclick="showPhoto()" style="max-width:260px">Upload a full outfit photo</button></div>';
+      document.getElementById('pChart').innerHTML='<div style="text-align:center;margin-top:1rem"><button class="btn-pink" onclick="showPhoto()" style="max-width:260px">Share a full outfit photo</button></div>';
       return;
     }
     const vals=parsed.sliders;
