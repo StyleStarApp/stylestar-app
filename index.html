@@ -1561,110 +1561,113 @@ function buildCardBlob(source,callback){
   quote=quote.replace(/\.$/,'').trim();
   if(quote&&!quote.endsWith('.')){quote+='.';}
   
-  mc.font='italic 500 30px Georgia, serif';
+  mc.font='italic 500 28px Georgia, serif';
   mc.textAlign='center';
   const quoteWords=('"'+quote+'"').split(' ');
-  let line='';let textLines=0;const maxW=w-200;
+  let line='';let textLines=0;const maxW=w-220;
   quoteWords.forEach(word=>{
     const test=line+word+' ';
     if(mc.measureText(test).width>maxW&&line!==''){textLines++;line=word+' ';}else{line=test}
   });
   if(line)textLines++;
 
-  const quoteHeight=textLines*44;
-  const archHeight=archNames.length*48;
-  const fpHeight=12*30;
+  const quoteHeight=textLines*42;
+  const archHeight=archNames.length*46;
+  const fpHeight=12*28;
   
-  const frameW=32;
-  const pad=50;
-  const totalContent=frameW+pad+80+90+20+60+20+quoteHeight+40+20+archHeight+30+20+fpHeight+60+50+40+pad+frameW;
-  const h=Math.max(totalContent,1300);
+  const frameW=30;
+  const totalContent=frameW+60+50+28+36+14+20+55+10+quoteHeight+45+22+archHeight+25+22+fpHeight+55+50+35+50+frameW;
+  const h=Math.max(totalContent,1350);
 
   const canvas=document.createElement('canvas');
   canvas.width=w;canvas.height=h;
   const ctx=canvas.getContext('2d');
 
-  // Single thick gold frame
-  const frameGrad=ctx.createLinearGradient(0,0,w,h);
-  frameGrad.addColorStop(0,'#C8A060');
-  frameGrad.addColorStop(0.15,'#F0D060');
-  frameGrad.addColorStop(0.3,'#D4AF37');
-  frameGrad.addColorStop(0.5,'#F0D060');
-  frameGrad.addColorStop(0.7,'#D4AF37');
-  frameGrad.addColorStop(0.85,'#F0D060');
-  frameGrad.addColorStop(1,'#C8A060');
+  // Shiny gold frame with more gradient stops
+  const frameGrad=ctx.createLinearGradient(0,0,w*0.7,h);
+  frameGrad.addColorStop(0,'#B8972A');
+  frameGrad.addColorStop(0.1,'#F5E17D');
+  frameGrad.addColorStop(0.2,'#D4AF37');
+  frameGrad.addColorStop(0.35,'#F5E17D');
+  frameGrad.addColorStop(0.5,'#C8A060');
+  frameGrad.addColorStop(0.65,'#F5E17D');
+  frameGrad.addColorStop(0.8,'#D4AF37');
+  frameGrad.addColorStop(0.9,'#F5E17D');
+  frameGrad.addColorStop(1,'#B8972A');
   ctx.fillStyle=frameGrad;
   ctx.fillRect(0,0,w,h);
 
-  // White inner area - no second border
+  // White inner area
   ctx.fillStyle='#ffffff';
   ctx.fillRect(frameW,frameW,w-frameW*2,h-frameW*2);
 
-  // Star outline - gold outline only
-  let cy0=frameW+pad+50;
+  // Logo - star with proper spacing
+  let cy0=frameW+60+40;
   ctx.strokeStyle='#D4AF37';ctx.lineWidth=3;
   const starPoints=[];
   for(let i=0;i<10;i++){
     const angle=Math.PI/2+i*Math.PI/5;
-    const r=i%2===0?38:15;
+    const r=i%2===0?35:14;
     starPoints.push([w/2+Math.cos(angle)*r,cy0-Math.sin(angle)*r]);
   }
   ctx.beginPath();
   starPoints.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]));
   ctx.closePath();ctx.stroke();
 
-  // style Star text - BLACK like our logo
+  // style - more space below star
   ctx.fillStyle='#1a1a1a';
-  ctx.font='400 24px Georgia, serif';
+  ctx.font='400 26px Georgia, serif';
   ctx.textAlign='center';
-  ctx.fillText('style',w/2,cy0+32);
-  ctx.font='700 32px Georgia, serif';
-  ctx.fillText('Star',w/2,cy0+64);
+  ctx.fillText('style',w/2,cy0+40);
+  
+  // Star - more space below style
+  ctx.font='700 34px Georgia, serif';
+  ctx.fillText('Star',w/2,cy0+74);
 
-  // Slider line
+  // Slider line with space
   ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(w/2-65,cy0+80);ctx.lineTo(w/2+65,cy0+80);ctx.stroke();
-  ctx.beginPath();ctx.arc(w/2+25,cy0+80,4,0,Math.PI*2);ctx.fillStyle='#D4AF37';ctx.fill();
+  ctx.beginPath();ctx.moveTo(w/2-65,cy0+90);ctx.lineTo(w/2+65,cy0+90);ctx.stroke();
+  ctx.beginPath();ctx.arc(w/2+25,cy0+90,4,0,Math.PI*2);ctx.fillStyle='#D4AF37';ctx.fill();
 
   // Tagline
   ctx.fillStyle='#999';
   ctx.font='400 14px Arial, sans-serif';
-  ctx.fillText('ALIGN YOUR STYLE. SHINE YOUR LIGHT.',w/2,cy0+102);
+  ctx.fillText('ALIGN YOUR STYLE. SHINE YOUR LIGHT.',w/2,cy0+115);
 
   // Title
-  let yPos=cy0+150;
+  let yPos=cy0+165;
   ctx.fillStyle='#D4AF37';
-  ctx.font='700 48px Georgia, serif';
+  ctx.font='700 46px Georgia, serif';
   ctx.fillText(title,w/2,yPos);
 
   // Quote
   yPos+=38;
   ctx.fillStyle='#333';
-  ctx.font='italic 500 30px Georgia, serif';
+  ctx.font='italic 500 28px Georgia, serif';
   line='';
   quoteWords.forEach(word=>{
     const test=line+word+' ';
     if(ctx.measureText(test).width>maxW&&line!==''){
       ctx.fillText(line.trim(),w/2,yPos);
-      line=word+' ';yPos+=44;
+      line=word+' ';yPos+=42;
     }else{line=test}
   });
   if(line)ctx.fillText(line.trim(),w/2,yPos);
 
-  // Notes section
+  // Notes
   yPos+=50;
   ctx.fillStyle='#555';
-  ctx.font='700 18px Arial, sans-serif';
+  ctx.font='700 17px Arial, sans-serif';
   ctx.fillText(isQuiz?'YOUR STYLE HAS NOTES OF':'THIS OUTFIT HAS NOTES OF',w/2,yPos);
 
-  yPos+=38;
-  ctx.font='700 24px Georgia, serif';
+  yPos+=36;
+  ctx.font='700 22px Georgia, serif';
   archNames.forEach((name,i)=>{
-    const tagY=yPos+i*48;
-    const tw=ctx.measureText(name).width+60;
+    const tagY=yPos+i*46;
+    const tw=ctx.measureText(name).width+50;
     ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
     ctx.beginPath();
-    const rx=w/2-tw/2,ry=tagY-22,rw=tw,rh=40,rad=20;
+    const rx=w/2-tw/2,ry=tagY-20,rw=tw,rh=38,rad=19;
     ctx.moveTo(rx+rad,ry);ctx.lineTo(rx+rw-rad,ry);ctx.quadraticCurveTo(rx+rw,ry,rx+rw,ry+rad);
     ctx.lineTo(rx+rw,ry+rh-rad);ctx.quadraticCurveTo(rx+rw,ry+rh,rx+rw-rad,ry+rh);
     ctx.lineTo(rx+rad,ry+rh);ctx.quadraticCurveTo(rx,ry+rh,rx,ry+rh-rad);
@@ -1674,62 +1677,64 @@ function buildCardBlob(source,callback){
     ctx.fillText(name,w/2,tagY);
   });
 
-  // Fingerprint - tighter spacing, centered
-  yPos+=archNames.length*48+30;
+  // Fingerprint - tighter, narrower, centered
+  yPos+=archNames.length*46+28;
   ctx.fillStyle='#555';
-  ctx.font='700 18px Arial, sans-serif';
+  ctx.font='700 17px Arial, sans-serif';
   ctx.textAlign='center';
   ctx.fillText(isQuiz?'YOUR STYLE FINGERPRINT':'OUTFIT STYLE FINGERPRINT',w/2,yPos);
-  yPos+=26;
+  yPos+=24;
 
-  const fpLeft=200;
-  const fpRight=880;
+  const fpLeft=280;
+  const fpRight=800;
   const fpLineW=fpRight-fpLeft;
-  const labelLeft=fpLeft-10;
+  const labelRight=fpLeft-12;
 
   questions.forEach((q,i)=>{
-    const rowY=yPos+i*30;
-    ctx.font='600 12px Arial, sans-serif';
+    const rowY=yPos+i*28;
+    ctx.font='600 11px Arial, sans-serif';
     ctx.textAlign='right';
     ctx.fillStyle='#333';
-    ctx.fillText(q.cat.toUpperCase(),labelLeft,rowY+4);
+    ctx.fillText(q.cat.toUpperCase(),labelRight,rowY+4);
     ctx.fillStyle='#ebebeb';
     ctx.fillRect(fpLeft,rowY,fpLineW,2);
     const pct=(sliderVals[i]-1)/10;
     const dotX=fpLeft+pct*fpLineW;
     ctx.beginPath();ctx.arc(dotX,rowY+1,5,0,Math.PI*2);
     ctx.fillStyle='#D4AF37';ctx.fill();
-    ctx.font='500 10px Arial, sans-serif';
+    ctx.font='500 9px Arial, sans-serif';
     ctx.textAlign='left';
     ctx.fillStyle='#aaa';
-    ctx.fillText(q.left.toUpperCase(),fpLeft,rowY+16);
+    ctx.fillText(q.left.toUpperCase(),fpLeft,rowY+15);
     ctx.textAlign='right';
-    ctx.fillText(q.right.toUpperCase(),fpRight,rowY+16);
+    ctx.fillText(q.right.toUpperCase(),fpRight,rowY+15);
   });
 
-  // Bottom - Shine your light with drawn heart
-  const bottomY=yPos+12*30+55;
-  
+  // Shine your light - cursive style italic
+  const bottomY=yPos+12*28+50;
   ctx.textAlign='center';
   ctx.fillStyle='#D4AF37';
-  ctx.font='italic 700 36px Georgia, serif';
-  ctx.fillText('Shine your light',w/2-20,bottomY);
+  ctx.font='italic 700 38px Georgia, serif';
+  ctx.fillText('Shine your light',w/2,bottomY);
   
-  // Draw a pretty heart
-  const hx=w/2+120;
-  const hy=bottomY-10;
+  // Heart - separate, spaced to the right
+  const hx=w/2+165;
+  const hy=bottomY-14;
+  const hs=1.4;
   ctx.beginPath();
-  ctx.moveTo(hx,hy+6);
-  ctx.bezierCurveTo(hx,hy-2,hx-12,hy-10,hx-12,hy-2);
-  ctx.bezierCurveTo(hx-12,hy+4,hx,hy+14,hx,hy+18);
-  ctx.bezierCurveTo(hx,hy+14,hx+12,hy+4,hx+12,hy-2);
-  ctx.bezierCurveTo(hx+12,hy-10,hx,hy-2,hx,hy+6);
+  ctx.moveTo(hx,hy+8*hs);
+  ctx.bezierCurveTo(hx-2*hs,hy-2*hs,hx-14*hs,hy-4*hs,hx-14*hs,hy+4*hs);
+  ctx.bezierCurveTo(hx-14*hs,hy+12*hs,hx,hy+18*hs,hx,hy+22*hs);
+  ctx.bezierCurveTo(hx,hy+18*hs,hx+14*hs,hy+12*hs,hx+14*hs,hy+4*hs);
+  ctx.bezierCurveTo(hx+14*hs,hy-4*hs,hx+2*hs,hy-2*hs,hx,hy+8*hs);
   ctx.closePath();
-  ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;ctx.stroke();
+  ctx.strokeStyle='#D4AF37';ctx.lineWidth=2.5;ctx.stroke();
   
+  // StyleStar.app with plenty of room
   ctx.fillStyle='#bbb';
   ctx.font='400 22px Arial, sans-serif';
-  ctx.fillText('StyleStar.app',w/2,bottomY+45);
+  ctx.textAlign='center';
+  ctx.fillText('StyleStar.app',w/2,bottomY+55);
 
   const botGrad=ctx.createLinearGradient(0,bottomY+20,w,bottomY+20);
   botGrad.addColorStop(0,'#F0D060');botGrad.addColorStop(0.5,'#D4AF37');botGrad.addColorStop(1,'#C8A060');
