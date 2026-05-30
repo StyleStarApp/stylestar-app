@@ -1573,12 +1573,12 @@ function buildCardBlob(source,callback){
 
   const quoteHeight=textLines*38;
   const archHeight=archNames.length*48;
-  const fpHeight=12*38;
+  const fpHeight=12*42;
   
   const frameW=30;
   // Calculate content then add generous padding
   const contentH=120+100+60+quoteHeight+50+archHeight+45+fpHeight+140;
-  const h=Math.max(contentH+frameW*2+140,1400);
+  const h=Math.max(contentH+frameW*2+160,1500);
 
   const canvas=document.createElement('canvas');
   canvas.width=w;canvas.height=h;
@@ -1644,13 +1644,13 @@ function buildCardBlob(source,callback){
   // === TITLE ===
   y+=55;
   ctx.fillStyle='#D4AF37';
-  ctx.font='700 44px Georgia, serif';
+  ctx.font='700 50px Georgia, serif';
   ctx.fillText(title,w/2,y);
 
   // === QUOTE ===
-  y+=38;
+  y+=42;
   ctx.fillStyle='#333';
-  ctx.font='italic 500 26px Georgia, serif';
+  ctx.font='italic 500 30px Georgia, serif';
   line='';
   quoteWords.forEach(word=>{
     const test=line+word+' ';
@@ -1663,12 +1663,12 @@ function buildCardBlob(source,callback){
 
   // === NOTES ===
   y+=48;
-  ctx.fillStyle='#444';
-  ctx.font='700 18px Arial, sans-serif';
+  ctx.fillStyle='#333';
+  ctx.font='700 20px Arial, sans-serif';
   ctx.fillText(isQuiz?'YOUR STYLE HAS NOTES OF':'THIS OUTFIT HAS NOTES OF',w/2,y);
 
-  y+=38;
-  ctx.font='700 24px Georgia, serif';
+  y+=40;
+  ctx.font='700 26px Georgia, serif';
   archNames.forEach((name,i)=>{
     const tagY=y+i*48;
     const tw=ctx.measureText(name).width+56;
@@ -1684,51 +1684,51 @@ function buildCardBlob(source,callback){
     ctx.fillText(name,w/2,tagY);
   });
 
-  // === FINGERPRINT - readable and polished ===
+  // === FINGERPRINT - large and readable ===
   y+=archNames.length*48+35;
   ctx.fillStyle='#333';
-  ctx.font='700 20px Arial, sans-serif';
+  ctx.font='700 24px Arial, sans-serif';
   ctx.textAlign='center';
   ctx.fillText(isQuiz?'YOUR UNIQUE STYLE':'YOUR UNIQUE STYLE',w/2,y);
-  y+=35;
+  y+=40;
 
-  const fpLeft=270;
-  const fpRight=810;
+  const fpLeft=340;
+  const fpRight=740;
   const fpLineW=fpRight-fpLeft;
 
   questions.forEach((q,i)=>{
-    const rowY=y+i*38;
+    const rowY=y+i*42;
     // Left label
-    ctx.font='600 13px Arial, sans-serif';
+    ctx.font='700 16px Arial, sans-serif';
     ctx.textAlign='right';
-    ctx.fillStyle='#555';
-    ctx.fillText(q.left.toUpperCase(),fpLeft-14,rowY+5);
+    ctx.fillStyle='#444';
+    ctx.fillText(q.left.toUpperCase(),fpLeft-16,rowY+6);
     // Slider line
-    ctx.fillStyle='#d0d0d0';
-    ctx.fillRect(fpLeft,rowY,fpLineW,3);
+    ctx.fillStyle='#ccc';
+    ctx.fillRect(fpLeft,rowY,fpLineW,4);
     // Dot
     const pct=(sliderVals[i]-1)/10;
     const dotX=fpLeft+pct*fpLineW;
-    ctx.beginPath();ctx.arc(dotX,rowY+1,7,0,Math.PI*2);
+    ctx.beginPath();ctx.arc(dotX,rowY+2,8,0,Math.PI*2);
     ctx.fillStyle='#D4AF37';ctx.fill();
     // Right label
-    ctx.font='600 13px Arial, sans-serif';
+    ctx.font='700 16px Arial, sans-serif';
     ctx.textAlign='left';
-    ctx.fillStyle='#555';
-    ctx.fillText(q.right.toUpperCase(),fpRight+14,rowY+5);
+    ctx.fillStyle='#444';
+    ctx.fillText(q.right.toUpperCase(),fpRight+16,rowY+6);
   });
 
   // === BOTTOM ===
-  y+=12*38+50;
+  y+=12*42+50;
   ctx.textAlign='center';
   ctx.fillStyle='#1a1a1a';
   ctx.font='italic 300 28px Georgia, serif';
   ctx.fillText('Shine your light  ⭐',w/2,y);
   
-  ctx.fillStyle='#999';
-  ctx.font='500 22px Arial, sans-serif';
+  ctx.fillStyle='#888';
+  ctx.font='500 24px Arial, sans-serif';
   ctx.textAlign='center';
-  ctx.fillText('StyleStar.app',w/2,y+40);
+  ctx.fillText('StyleStar.app',w/2,y+42);
 
   canvas.toBlob(function(blob){
     const imgUrl=URL.createObjectURL(blob);
