@@ -1578,7 +1578,7 @@ function buildCardBlob(source,callback){
   const frameW=30;
   // Calculate content then add generous padding
   const contentH=120+100+60+quoteHeight+50+archHeight+45+fpHeight+140;
-  const h=Math.max(contentH+frameW*2+160,1500);
+  const h=contentH+frameW*2+80;
 
   const canvas=document.createElement('canvas');
   canvas.width=w;canvas.height=h;
@@ -1638,7 +1638,7 @@ function buildCardBlob(source,callback){
 
   y+=70;
   ctx.fillStyle='#D4AF37';
-  ctx.font='700 50px Arial, sans-serif';
+  ctx.font='700 50px Georgia, serif';
   ctx.fillText(title,w/2,y);
 
   y+=44;
