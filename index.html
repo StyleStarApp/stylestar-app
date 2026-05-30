@@ -614,7 +614,31 @@ const archetypes=[
 let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false,emailDone=false;
 try{if(localStorage.getItem('ss_emailDone')==='true')emailDone=true}catch(e){}
 function startQ(){userName=document.getElementById('nameIn').value.trim()||"You";show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
-function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act')}
+function show(id,skipHistory){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
+  document.getElementById(id).classList.add('act');
+  if(!skipHistory){
+    history.pushState({screen:id},null,'');
+  }
+  window.scrollTo(0,0);
+}
+
+window.addEventListener('popstate',function(e){
+  if(e.state&&e.state.screen){
+    show(e.state.screen,true);
+  }else{
+    // If no state, show welcome or welcome back
+    const hasData=localStorage.getItem('ss_data');
+    if(hasData){
+      show('s-wb',true);
+    }else{
+      show('s-wel',true);
+    }
+  }
+});
+
+// Set initial state
+history.replaceState({screen:document.querySelector('.scr.act')?document.querySelector('.scr.act').id:'s-wel'},null,'');
 function loadQ(i){const q=questions[i];document.getElementById('qc').textContent=q.cat;document.getElementById('qt').textContent=q.title;document.getElementById('ll').textContent=q.left;document.getElementById('lr').textContent=q.right;document.getElementById('sl').value=answers[i];updHint(answers[i],i);document.getElementById('pf').style.width=Math.round((i/12)*100)+'%';document.getElementById('pl').textContent=(i+1)+' of 12';document.getElementById('nb').textContent=i===11?'See my style portrait':'Continue'}
 function onSl(v){answers[cur]=parseInt(v);updHint(v,cur)}
 function updHint(v,i){document.getElementById('sh').textContent=questions[i].hints[parseInt(v)-1]}
