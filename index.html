@@ -1637,8 +1637,8 @@ function buildCardBlob(source,callback){
 
   // Tagline
   y+=22;
-  ctx.fillStyle='#999';
-  ctx.font='400 13px Arial, sans-serif';
+  ctx.fillStyle='#666';
+  ctx.font='600 18px Arial, sans-serif';
   ctx.fillText('ALIGN YOUR STYLE. SHINE YOUR LIGHT.',w/2,y);
 
   // === TITLE ===
@@ -1689,7 +1689,7 @@ function buildCardBlob(source,callback){
   ctx.fillStyle='#333';
   ctx.font='700 24px Arial, sans-serif';
   ctx.textAlign='center';
-  ctx.fillText(isQuiz?'YOUR UNIQUE STYLE':'YOUR UNIQUE STYLE',w/2,y);
+  ctx.fillText(isQuiz?'YOUR STYLE FINGERPRINT':'YOUR STYLE FINGERPRINT',w/2,y);
   y+=40;
 
   const fpLeft=340;
@@ -1699,9 +1699,9 @@ function buildCardBlob(source,callback){
   questions.forEach((q,i)=>{
     const rowY=y+i*42;
     // Left label
-    ctx.font='700 16px Arial, sans-serif';
+    ctx.font='700 18px Arial, sans-serif';
     ctx.textAlign='right';
-    ctx.fillStyle='#444';
+    ctx.fillStyle='#333';
     ctx.fillText(q.left.toUpperCase(),fpLeft-16,rowY+6);
     // Slider line
     ctx.fillStyle='#ccc';
@@ -1712,23 +1712,21 @@ function buildCardBlob(source,callback){
     ctx.beginPath();ctx.arc(dotX,rowY+2,8,0,Math.PI*2);
     ctx.fillStyle='#D4AF37';ctx.fill();
     // Right label
-    ctx.font='700 16px Arial, sans-serif';
+    ctx.font='700 18px Arial, sans-serif';
     ctx.textAlign='left';
-    ctx.fillStyle='#444';
+    ctx.fillStyle='#333';
     ctx.fillText(q.right.toUpperCase(),fpRight+16,rowY+6);
   });
 
   // === BOTTOM ===
   y+=12*42+50;
   ctx.textAlign='center';
-  ctx.fillStyle='#1a1a1a';
-  ctx.font='italic 300 28px Georgia, serif';
-  ctx.fillText('Shine your light  ⭐',w/2,y);
-  
-  ctx.fillStyle='#888';
-  ctx.font='500 24px Arial, sans-serif';
-  ctx.textAlign='center';
-  ctx.fillText('StyleStar.app',w/2,y+42);
+  ctx.fillStyle='#D4AF37';
+  ctx.font='500 28px Arial, sans-serif';
+  ctx.fillText('⭐',w/2,y);
+  ctx.fillStyle='#777';
+  ctx.font='500 26px Arial, sans-serif';
+  ctx.fillText('StyleStar.app',w/2,y+38);
 
   canvas.toBlob(function(blob){
     const imgUrl=URL.createObjectURL(blob);
