@@ -187,6 +187,18 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .share-btn svg{flex-shrink:0}
 .quiz-footer{text-align:center;padding:1.25rem;font-size:14px;color:#555;letter-spacing:0.06em;border-top:1px solid #f0f0f0}
 .quiz-footer span{cursor:pointer;text-decoration:underline;font-weight:700}
+.quiz-footer-links{display:flex;justify-content:center;gap:20px}
+.dc-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
+.dc-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.dc-subtitle{font-size:14px;color:#777;line-height:1.6;margin-bottom:1.5rem;font-style:italic;padding:0 0.5rem}
+.dc-item{background:#fff;border:1px solid #f0f0f0;border-radius:16px;padding:1.25rem;margin-bottom:1rem;text-align:left;position:relative;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.dc-item-star{color:#D4AF37;font-size:18px;position:absolute;top:14px;right:14px}
+.dc-item-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:4px;padding-right:30px}
+.dc-item-meta{font-size:13px;color:#999;margin-bottom:8px}
+.dc-item-note{font-size:15px;color:#555;font-style:italic;line-height:1.6;margin-bottom:12px;font-weight:500}
+.dc-item-btn{display:inline-block;padding:10px 24px;border-radius:40px;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:#E91E8C;color:#fff;border:none;font-family:'DM Sans',sans-serif;text-decoration:none;transition:opacity 0.2s}
+.dc-item-btn:hover{opacity:0.88}
+.dc-disclosure{font-size:11px;color:#bbb;margin-top:1.5rem;line-height:1.6;font-style:italic}
 .our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#999;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
 .our-story-link:hover{color:#666}
 .story-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
@@ -225,6 +237,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="wb-msg">Your style portrait is saved. Pick up right where you left off.</div>
     <button style="max-width:300px;width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:#fff;color:#E91E8C;border:2px solid #E91E8C;margin-top:8px;font-family:'DM Sans',sans-serif" onclick="loadSaved()">See my style portrait</button>
     <button class="btn-pink" style="max-width:300px" onclick="loadSavedAndShop()">🛍️ Shop your style</button>
+    <button class="btn-pink" style="max-width:300px;background:#fff;color:#E91E8C;border:2px solid #E91E8C" onclick="showDream()">✨ Browse Founder's Favorites</button>
     <button class="btn-chat" style="max-width:300px" onclick="wbChat()">💬 Chat with your stylist</button>
     <button class="btn-teal" style="max-width:300px" onclick="savedPhoto()">Share a photo for style analysis & tips</button>
     <button class="btn-yellow" style="max-width:300px" onclick="openPrefs()">✨ Refine your style preferences</button>
@@ -282,6 +295,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="btn-yellow" onclick="openPrefs()" id="prefBtnQuiz">✨ Refine your style preferences</button>
     </div>
     <div style="font-size:12px;color:#999;margin-top:8px;font-style:italic">The more we know about you, the better your shopping suggestions get.</div>
+    <div style="margin-top:10px"><span onclick="showDream()" style="font-size:13px;color:#D4AF37;cursor:pointer;font-weight:600;text-decoration:underline">Browse Founder's Favorites — our founder's personal picks</span></div>
     <div class="share-btns" style="margin-top:12px">
       <button class="share-btn" onclick="saveStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M3 16l4-4 4 4"/></svg>View Card</button>
       <button class="share-btn" onclick="shareStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
@@ -357,6 +371,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="btn-yellow" onclick="openPrefs()">✨ Refine your style preferences</button>
     </div>
     <div style="font-size:12px;color:#999;margin-top:8px;font-style:italic">The more we know about you, the better your shopping suggestions get.</div>
+    <div style="margin-top:10px"><span onclick="showDream()" style="font-size:13px;color:#D4AF37;cursor:pointer;font-weight:600;text-decoration:underline">Browse Founder's Favorites — our founder's personal picks</span></div>
     <div class="share-btns" style="margin-top:12px">
       <button class="share-btn" onclick="saveStyleCard('photo')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M3 16l4-4 4 4"/></svg>View Card</button>
       <button class="share-btn" onclick="shareStyleCard('photo')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
@@ -485,8 +500,99 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   </div>
 </div>
 
+<div class="scr" id="s-dream">
+  <div class="dc-wrap">
+    <div class="dc-title">Founder's Favorites</div>
+    <div class="dc-subtitle">Every piece personally hand-selected by the founder of Style Star, items she recommends to her own clients and wears herself.</div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">Gold Stretchy Stacking Bangles</div>
+      <div class="dc-item-meta">Badu | Amazon | $16.99</div>
+      <div class="dc-item-note">"These are stretchy, easy to wear, and fit beautifully. Not too big like most bangles. I like to stack 6 of them!"</div>
+      <a class="dc-item-btn" href="https://a.co/d/0h2VcwJc" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">J. Reneé Soncino Strappy Sandal — Nude Leather</div>
+      <div class="dc-item-meta">Nordstrom | $129.95</div>
+      <div class="dc-item-note">"This shoe is the perfect height to be stylish, but comfy enough to dance all night. This nude color goes with anything. The perfect neutral chic sandal!"</div>
+      <a class="dc-item-btn" href="https://www.nordstrom.com/s/6770605" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">MZ Wallace Large Metro Tote Deluxe II</div>
+      <div class="dc-item-meta">Bloomingdale's | ~$295</div>
+      <div class="dc-item-note">"This is the best carry-on travel bag ever. Stylish, lightweight, holds so much stuff and fits under the seat on planes."</div>
+      <a class="dc-item-btn" href="https://www.bloomingdales.com/shop/product/mz-wallace-large-metro-tote-deluxe-ii?ID=5956591" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">Gucci 53mm Small Oval Sunglasses</div>
+      <div class="dc-item-meta">Nordstrom | $295</div>
+      <div class="dc-item-note">"These look current, but also 90's at the same time. Sunnies can be worn every day, so a great category to splurge for luxury!"</div>
+      <a class="dc-item-btn" href="https://www.nordstrom.com/s/7651301" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">Express Editor High Waisted Flare Trouser — Pitch Black</div>
+      <div class="dc-item-meta">Express | ~$90</div>
+      <div class="dc-item-note">"These are ultra flattering high waisted pants. A fantastic basic piece to round out a wardrobe, perfect for work or evenings out."</div>
+      <a class="dc-item-btn" href="https://www.express.com/clothing/women/editor-studio-stretch-twill-high-waisted-flare-trouser/pro/07442348/color/Pitch%20Black/e/regular/" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">Miss Bunny Robe — White</div>
+      <div class="dc-item-meta">Sexy Little Robe | $109</div>
+      <div class="dc-item-note">"This is the most comfortable and flattering bathrobe ever. The sleeves are fitted and the soft fabric and fit are perfection. Feels like a 5 star hotel experience!"</div>
+      <a class="dc-item-btn" href="https://sexylittlerobe.com/products/miss-bunny-robe" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">14K Gold Signature Name Necklace</div>
+      <div class="dc-item-meta">Baby Gold | $510</div>
+      <div class="dc-item-note">"This 14K gold piece is the perfect thing to wear when meeting new people. They can see your name tag right on your necklace!"</div>
+      <a class="dc-item-btn" href="https://www.babygold.com/products/14k-gold-signature-name-necklace" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">Retreat Linen High Rise Wide Leg Pant — White</div>
+      <div class="dc-item-meta">Athleta | ~$100</div>
+      <div class="dc-item-note">"100% linen gives high vibes! These pants come in petite, regular and tall sizes. Perfect for hot weather and an alternative to wearing shorts."</div>
+      <a class="dc-item-btn" href="https://athleta.gap.com/browse/product.do?pid=851038112" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">L'AGENCE Dani Silk Charmeuse Blouse</div>
+      <div class="dc-item-meta">Nordstrom | ~$350</div>
+      <div class="dc-item-note">"100% silk, beautiful and elegant. Nothing else feels like a silk blouse."</div>
+      <a class="dc-item-btn" href="https://www.nordstrom.com/s/5371746" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-item">
+      <div class="dc-item-star">⭐</div>
+      <div class="dc-item-name">PRETTYGARDEN Flowy Maxi Dress — White</div>
+      <div class="dc-item-meta">Amazon | $46.99</div>
+      <div class="dc-item-note">"This can be worn with or without a belt. Day or night. Great affordable dress. Comes in lots of colors."</div>
+      <a class="dc-item-btn" href="https://a.co/d/04ATQcWA" target="_blank">Shop this item</a>
+    </div>
+
+    <div class="dc-disclosure">Some items include affiliate links that support Style Star at no extra cost to you. Every piece is selected solely because our founder loves it.</div>
+
+    <button class="btn-pink" onclick="closeDream()" style="max-width:260px;margin:1rem auto 0;display:block" id="dreamBtn">Back</button>
+  </div>
 </div>
-<div class="quiz-footer"><span onclick="showStory()">Our Story</span></div>
+
+</div>
+<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showDream()">Founder's Favorites</span><span onclick="showStory()">Our Story</span></div></div>
 </div>
 
 <script>
@@ -1034,6 +1140,17 @@ function showStory(){
 function closeStory(){
   document.querySelector('.quiz-footer').style.display='';
   show(storyPrevScreen);
+}
+let dreamPrevScreen='s-wel';
+function showDream(){
+  const cur=document.querySelector('.scr.act');
+  dreamPrevScreen=cur?cur.id:'s-wel';
+  show('s-dream');
+  document.querySelector('.quiz-footer').style.display='none';
+}
+function closeDream(){
+  document.querySelector('.quiz-footer').style.display='';
+  show(dreamPrevScreen);
 }
 
 function saveChatHistory(){
