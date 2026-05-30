@@ -1560,7 +1560,8 @@ function buildCardBlob(source,callback){
   // Measure portrait text height
   mc.font='500 28px Arial, sans-serif';
   mc.textAlign='center';
-  const words=portrait.split(' ');
+  const rawPortrait=portrait.replace(/\*/g,'').replace(/—/g,',').replace(/  /g,' ');
+  const words=rawPortrait.split(' ');
   let line='';let textLines=0;const maxW=w-140;
   words.forEach(word=>{
     const test=line+word+' ';
@@ -1573,7 +1574,7 @@ function buildCardBlob(source,callback){
   const fpHeight=12*32;
   
   // Calculate total height
-  const totalContent=6+85+45+30+30+25+portraitHeight+65+20+archHeight+50+20+fpHeight+60+30+60;
+  const totalContent=6+85+45+30+30+25+portraitHeight+65+20+archHeight+50+20+fpHeight+80+30+80;
   const h=Math.max(totalContent,1080);
 
   const canvas=document.createElement('canvas');
@@ -1630,7 +1631,7 @@ function buildCardBlob(source,callback){
 
   ctx.fillStyle='#999999';
   ctx.font='400 14px DM Sans, sans-serif';
-  ctx.fillText('YOUR PERSONAL STYLE VIBE',w/2,240);
+  ctx.fillText('ALIGN YOUR STYLE. SHINE YOUR LIGHT.',w/2,240);
 
   ctx.strokeStyle='#ebebeb';ctx.lineWidth=1;
   ctx.beginPath();ctx.moveTo(250,260);ctx.lineTo(w-250,260);ctx.stroke();
@@ -1639,11 +1640,14 @@ function buildCardBlob(source,callback){
   ctx.font='700 44px Arial, sans-serif';
   ctx.fillText(title,w/2,295);
 
+  // Strip markdown asterisks and em dashes from portrait text
+  const cleanPortrait=portrait.replace(/\*/g,'').replace(/—/g,',').replace(/  /g,' ');
+  const cleanWords=cleanPortrait.split(' ');
   ctx.fillStyle='#333333';
   ctx.font='500 28px Arial, sans-serif';
   line='';
   let y=350;
-  words.forEach(word=>{
+  cleanWords.forEach(word=>{
     const test=line+word+' ';
     if(ctx.measureText(test).width>maxW&&line!==''){
       ctx.fillText(line.trim(),w/2,y);
@@ -1682,26 +1686,26 @@ function buildCardBlob(source,callback){
 
   questions.forEach((q,i)=>{
     const rowY=y+i*32;
-    ctx.font='600 14px Arial, sans-serif';
+    ctx.font='600 13px Arial, sans-serif';
     ctx.textAlign='right';
     ctx.fillStyle='#333';
-    ctx.fillText(q.cat.toUpperCase(),270,rowY+4);
+    ctx.fillText(q.cat.toUpperCase(),280,rowY+4);
     ctx.fillStyle='#ebebeb';
-    ctx.fillRect(290,rowY,500,3);
+    ctx.fillRect(300,rowY,480,3);
     const pct=(sliderVals[i]-1)/10;
-    const dotX=290+pct*500;
+    const dotX=300+pct*480;
     ctx.beginPath();ctx.arc(dotX,rowY+1,6,0,Math.PI*2);
     ctx.fillStyle='#D4AF37';ctx.fill();
     ctx.font='500 11px Arial, sans-serif';
     ctx.textAlign='left';
     ctx.fillStyle='#999';
-    ctx.fillText(q.left.toUpperCase(),290,rowY+18);
+    ctx.fillText(q.left.toUpperCase(),300,rowY+18);
     ctx.textAlign='right';
-    ctx.fillText(q.right.toUpperCase(),790,rowY+18);
+    ctx.fillText(q.right.toUpperCase(),780,rowY+18);
   });
 
   // Bottom section
-  const bottomY=y+12*32+40;
+  const bottomY=y+12*32+50;
   
   ctx.textAlign='center';
   ctx.fillStyle='#999';
