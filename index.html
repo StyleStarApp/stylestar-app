@@ -1602,53 +1602,46 @@ function buildCardBlob(source,callback){
   ctx.fillStyle='#ffffff';
   ctx.fillRect(frameW,frameW,w-frameW*2,h-frameW*2);
 
-  // === LOGO with generous spacing ===
-  let y=frameW+65;
+  // === LOGO - bigger with breathing room ===
+  let y=frameW+80;
   
-  // Star
   ctx.strokeStyle='#D4AF37';ctx.lineWidth=3;
   const starPoints=[];
   for(let i=0;i<10;i++){
     const angle=Math.PI/2+i*Math.PI/5;
-    const r=i%2===0?32:13;
+    const r=i%2===0?42:17;
     starPoints.push([w/2+Math.cos(angle)*r,y-Math.sin(angle)*r]);
   }
   ctx.beginPath();
   starPoints.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]));
   ctx.closePath();ctx.stroke();
 
-  // "style" - good gap below star
-  y+=48;
+  y+=55;
   ctx.fillStyle='#1a1a1a';
-  ctx.font='400 26px Georgia, serif';
+  ctx.font='400 30px Georgia, serif';
   ctx.textAlign='center';
   ctx.fillText('style',w/2,y);
   
-  // "Star" - good gap below style
-  y+=38;
-  ctx.font='700 34px Georgia, serif';
+  y+=42;
+  ctx.font='700 38px Georgia, serif';
   ctx.fillText('Star',w/2,y);
 
-  // Slider line
-  y+=22;
+  y+=26;
   ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(w/2-60,y);ctx.lineTo(w/2+60,y);ctx.stroke();
-  ctx.beginPath();ctx.arc(w/2+22,y,4,0,Math.PI*2);ctx.fillStyle='#D4AF37';ctx.fill();
+  ctx.beginPath();ctx.moveTo(w/2-70,y);ctx.lineTo(w/2+70,y);ctx.stroke();
+  ctx.beginPath();ctx.arc(w/2+28,y,5,0,Math.PI*2);ctx.fillStyle='#D4AF37';ctx.fill();
 
-  // Tagline
-  y+=22;
-  ctx.fillStyle='#666';
-  ctx.font='600 18px Arial, sans-serif';
+  y+=30;
+  ctx.fillStyle='#555';
+  ctx.font='600 20px Arial, sans-serif';
   ctx.fillText('ALIGN YOUR STYLE. SHINE YOUR LIGHT.',w/2,y);
 
-  // === TITLE ===
-  y+=55;
+  y+=70;
   ctx.fillStyle='#D4AF37';
-  ctx.font='700 50px Georgia, serif';
+  ctx.font='700 50px Arial, sans-serif';
   ctx.fillText(title,w/2,y);
 
-  // === QUOTE ===
-  y+=42;
+  y+=44;
   ctx.fillStyle='#333';
   ctx.font='italic 500 30px Georgia, serif';
   line='';
@@ -1656,18 +1649,17 @@ function buildCardBlob(source,callback){
     const test=line+word+' ';
     if(ctx.measureText(test).width>maxW&&line!==''){
       ctx.fillText(line.trim(),w/2,y);
-      line=word+' ';y+=38;
+      line=word+' ';y+=40;
     }else{line=test}
   });
   if(line)ctx.fillText(line.trim(),w/2,y);
 
-  // === NOTES ===
-  y+=48;
+  y+=50;
   ctx.fillStyle='#333';
-  ctx.font='700 20px Arial, sans-serif';
+  ctx.font='700 22px Arial, sans-serif';
   ctx.fillText(isQuiz?'YOUR STYLE HAS NOTES OF':'THIS OUTFIT HAS NOTES OF',w/2,y);
 
-  y+=40;
+  y+=42;
   ctx.font='700 26px Georgia, serif';
   archNames.forEach((name,i)=>{
     const tagY=y+i*48;
@@ -1684,13 +1676,12 @@ function buildCardBlob(source,callback){
     ctx.fillText(name,w/2,tagY);
   });
 
-  // === FINGERPRINT - large and readable ===
   y+=archNames.length*48+35;
   ctx.fillStyle='#333';
-  ctx.font='700 24px Arial, sans-serif';
+  ctx.font='700 22px Arial, sans-serif';
   ctx.textAlign='center';
-  ctx.fillText(isQuiz?'YOUR STYLE FINGERPRINT':'YOUR STYLE FINGERPRINT',w/2,y);
-  y+=40;
+  ctx.fillText('YOUR STYLE FINGERPRINT',w/2,y);
+  y+=38;
 
   const fpLeft=340;
   const fpRight=740;
@@ -1698,35 +1689,39 @@ function buildCardBlob(source,callback){
 
   questions.forEach((q,i)=>{
     const rowY=y+i*42;
-    // Left label
     ctx.font='700 18px Arial, sans-serif';
     ctx.textAlign='right';
     ctx.fillStyle='#333';
     ctx.fillText(q.left.toUpperCase(),fpLeft-16,rowY+6);
-    // Slider line
     ctx.fillStyle='#ccc';
     ctx.fillRect(fpLeft,rowY,fpLineW,4);
-    // Dot
     const pct=(sliderVals[i]-1)/10;
     const dotX=fpLeft+pct*fpLineW;
     ctx.beginPath();ctx.arc(dotX,rowY+2,8,0,Math.PI*2);
     ctx.fillStyle='#D4AF37';ctx.fill();
-    // Right label
     ctx.font='700 18px Arial, sans-serif';
     ctx.textAlign='left';
     ctx.fillStyle='#333';
     ctx.fillText(q.right.toUpperCase(),fpRight+16,rowY+6);
   });
 
-  // === BOTTOM ===
-  y+=12*42+50;
+  y+=12*42+30;
+  
+  ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
+  const bStarPoints=[];
+  for(let i=0;i<10;i++){
+    const angle=Math.PI/2+i*Math.PI/5;
+    const r=i%2===0?18:7;
+    bStarPoints.push([w/2+Math.cos(angle)*r,y-Math.sin(angle)*r]);
+  }
+  ctx.beginPath();
+  bStarPoints.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]));
+  ctx.closePath();ctx.stroke();
+
   ctx.textAlign='center';
-  ctx.fillStyle='#D4AF37';
-  ctx.font='500 28px Arial, sans-serif';
-  ctx.fillText('⭐',w/2,y);
-  ctx.fillStyle='#777';
-  ctx.font='500 26px Arial, sans-serif';
-  ctx.fillText('StyleStar.app',w/2,y+38);
+  ctx.fillStyle='#666';
+  ctx.font='600 28px Arial, sans-serif';
+  ctx.fillText('StyleStar.app',w/2,y+32);
 
   canvas.toBlob(function(blob){
     const imgUrl=URL.createObjectURL(blob);
