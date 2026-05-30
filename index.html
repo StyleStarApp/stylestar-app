@@ -1556,7 +1556,7 @@ function buildCardBlob(source,callback){
   const isQuiz=source==='quiz';
   const title=isQuiz?(userName&&userName!=='You'?displayName+"'s Style Card":'Your Style Card'):(userName&&userName!=='You'?displayName+"'s Outfit Analysis":'Your Outfit Analysis');
 
-  const sentences=portrait.replace(/\*/g,'').replace(/—/g,',').split(/\.\s+/);
+  const sentences=portrait.replace(/\*/g,'').replace(/\s*—\s*/g,', ').replace(/\s+,/g,',').replace(/\s{2,}/g,' ').split(/\.\s+/);
   let quote=sentences[sentences.length-1]||sentences[sentences.length-2]||'';
   quote=quote.replace(/\.$/,'').trim();
   if(quote&&!quote.endsWith('.')){quote+='.';}
@@ -1573,7 +1573,7 @@ function buildCardBlob(source,callback){
 
   const quoteHeight=textLines*38;
   const archHeight=archNames.length*48;
-  const fpHeight=12*42;
+  const fpHeight=12*36;
   
   const frameW=30;
   // Calculate content then add generous padding
@@ -1643,13 +1643,13 @@ function buildCardBlob(source,callback){
 
   y+=44;
   ctx.fillStyle='#333';
-  ctx.font='italic 500 30px Georgia, serif';
+  ctx.font='italic 500 26px Georgia, serif';
   line='';
   quoteWords.forEach(word=>{
     const test=line+word+' ';
     if(ctx.measureText(test).width>maxW&&line!==''){
       ctx.fillText(line.trim(),w/2,y);
-      line=word+' ';y+=40;
+      line=word+' ';y+=36;
     }else{line=test}
   });
   if(line)ctx.fillText(line.trim(),w/2,y);
@@ -1688,7 +1688,7 @@ function buildCardBlob(source,callback){
   const fpLineW=fpRight-fpLeft;
 
   questions.forEach((q,i)=>{
-    const rowY=y+i*42;
+    const rowY=y+i*36;
     ctx.font='700 18px Arial, sans-serif';
     ctx.textAlign='right';
     ctx.fillStyle='#333';
@@ -1705,7 +1705,7 @@ function buildCardBlob(source,callback){
     ctx.fillText(q.right.toUpperCase(),fpRight+16,rowY+6);
   });
 
-  y+=12*42+30;
+  y+=12*36+35;
   
   ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
   const bStarPoints=[];
@@ -1720,8 +1720,8 @@ function buildCardBlob(source,callback){
 
   ctx.textAlign='center';
   ctx.fillStyle='#666';
-  ctx.font='600 28px Arial, sans-serif';
-  ctx.fillText('StyleStar.app',w/2,y+32);
+  ctx.font='600 28px Georgia, serif';
+  ctx.fillText('StyleStar.app',w/2,y+40);
 
   canvas.toBlob(function(blob){
     const imgUrl=URL.createObjectURL(blob);
