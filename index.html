@@ -1741,18 +1741,7 @@ function buildCardBlob(source,callback){
   ctx.textAlign='center';
   ctx.fillText('StyleStar.app',w/2,y+45);
 
-  const botGrad=ctx.createLinearGradient(0,bottomY+20,w,bottomY+20);
-  botGrad.addColorStop(0,'#F0D060');botGrad.addColorStop(0.5,'#D4AF37');botGrad.addColorStop(1,'#C8A060');
-  ctx.fillStyle=botGrad;
-  ctx.fillRect(0,bottomY+24,w,6);
-
-  // Trim canvas to actual content
-  const finalH=bottomY+30;
-  const finalCanvas=document.createElement('canvas');
-  finalCanvas.width=w;finalCanvas.height=finalH;
-  finalCanvas.getContext('2d').drawImage(canvas,0,0);
-
-  finalCanvas.toBlob(function(blob){
+  canvas.toBlob(function(blob){
     const imgUrl=URL.createObjectURL(blob);
     callback(blob,imgUrl);
   },'image/png');
