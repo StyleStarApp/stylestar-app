@@ -613,8 +613,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <div style="padding:1rem 1.25rem 2rem;max-width:600px;margin:0 auto">
     <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;text-align:center;margin-bottom:1rem">Privacy Policy</div>
     <div style="font-size:14px;color:#555;line-height:1.8">
-      <p style="margin-bottom:12px"><strong>Last updated: May 31, 2026</strong></p>
-      <p style="margin-bottom:12px">Style Star ("we," "our," "us") respects your privacy. This policy explains what information we collect, how we use it, and your choices.</p>
+      <p style="margin-bottom:12px">Your privacy matters to us. This policy explains what information Style Star collects, how we use it, and your choices.</p>
       <p style="margin-bottom:12px"><strong>What we collect</strong></p>
       <p style="margin-bottom:12px">When you save your results, we collect your email address, quiz answers, style portrait, and any preferences you share (sizes, colors, etc.). Photos shared for style analysis are processed by AI in real time and are never stored.</p>
       <p style="margin-bottom:12px"><strong>How we use it</strong></p>
@@ -625,6 +624,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <p style="margin-bottom:12px">You can use Style Star without saving your results or providing an email. If you have saved your results and would like your data deleted, email us and we will remove it promptly.</p>
       <p style="margin-bottom:12px"><strong>Contact</strong></p>
       <p style="margin-bottom:12px">Questions about your privacy? Reach us at hello@stylestar.app</p>
+      <p style="margin-top:20px;font-size:11px;color:#bbb">Last updated May 31, 2026</p>
     </div>
     <button class="btn-outline" onclick="closePrivacy()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
   </div>
@@ -1273,9 +1273,11 @@ function showPrivacy(){
   privacyPrevScreen=cur?cur.id:'s-wel';
   show('s-privacy');
   document.querySelector('.quiz-footer').style.display='none';
+  document.querySelector('.hdr').style.display='none';
 }
 function closePrivacy(){
   document.querySelector('.quiz-footer').style.display='';
+  document.querySelector('.hdr').style.display='';
   show(privacyPrevScreen);
 }
 
