@@ -611,6 +611,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 
 <div class="scr" id="s-privacy">
   <div style="padding:1rem 1.25rem 2rem;max-width:600px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:0.5rem"><img src="logo.png" alt="Style Star" style="width:120px;height:auto"></div>
     <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;text-align:center;margin-bottom:1rem">Privacy Policy</div>
     <div style="font-size:14px;color:#555;line-height:1.8">
       <p style="margin-bottom:12px">Your privacy matters to us. This policy explains what information Style Star collects, how we use it, and your choices.</p>
@@ -1274,10 +1275,14 @@ function showPrivacy(){
   show('s-privacy');
   document.querySelector('.quiz-footer').style.display='none';
   document.querySelector('.hdr').style.display='none';
+  document.querySelector('.ss').style.boxShadow='none';
+  document.querySelector('.ss').style.borderRadius='0';
 }
 function closePrivacy(){
   document.querySelector('.quiz-footer').style.display='';
   document.querySelector('.hdr').style.display='';
+  document.querySelector('.ss').style.boxShadow='';
+  document.querySelector('.ss').style.borderRadius='';
   show(privacyPrevScreen);
 }
 
