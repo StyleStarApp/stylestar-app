@@ -259,6 +259,14 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="name-in"><input type="text" id="nameIn" placeholder="Your first name (optional)" maxlength="20"></div>
     <button class="btn-pink" style="max-width:300px" onclick="startQ()">Begin your style quiz</button>
     <button class="btn-teal" style="max-width:300px" onclick="startPhoto()">Share a photo for style analysis & tips</button>
+    <div id="restoreSection" style="margin-top:8px;text-align:center">
+      <span onclick="showRestore()" style="font-size:13px;color:#999;cursor:pointer;text-decoration:underline">Already taken the quiz? Restore my results</span>
+    </div>
+    <div id="restoreForm" style="display:none;text-align:center;margin-top:8px">
+      <input type="email" id="restoreEmail" placeholder="Enter the email you used" style="border:1.5px solid #e8e8e8;border-radius:40px;padding:12px 18px;font-size:15px;width:260px;text-align:center;font-family:'DM Sans',sans-serif;outline:none">
+      <button class="btn-pink" style="max-width:260px;margin-top:6px;padding:10px" onclick="restoreResults()">Restore my results</button>
+      <div id="restoreMsg" style="font-size:13px;color:#999;margin-top:6px"></div>
+    </div>
   </div>
 </div>
 
@@ -315,13 +323,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 
   <div class="stay-section" id="staySection">
     <div class="email-divider"></div>
-    <div class="stay-title">Stay connected</div>
-    <div class="stay-sub">Be the first to know when we add new features and style tools</div>
+    <div class="stay-title">Save your results</div>
+    <div class="stay-sub">Enter your email to save your style portrait, preferences, and get styling updates</div>
     <div class="stay-form" id="stayForm">
       <input type="email" class="stay-input" id="stayInput" placeholder="Enter your email">
-      <button class="btn-p" style="margin-top:0;max-width:280px" onclick="submitStay()">Keep me in the loop</button>
+      <button class="btn-p" style="margin-top:0;max-width:280px" onclick="saveUserData()">Save my results</button>
     </div>
-    <div class="stay-success" id="staySuccess" style="display:none">✨ You're in!</div>
+    <div class="stay-success" id="staySuccess" style="display:none">✨ Your results are saved! Access them anytime with your email.</div>
     <div class="stay-skip" onclick="document.getElementById('staySection').style.display='none'">Skip</div>
   </div>
 
@@ -390,13 +398,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 
   <div class="stay-section" id="staySectionPhoto">
     <div class="email-divider"></div>
-    <div class="stay-title">Stay connected</div>
-    <div class="stay-sub">Be the first to know when we add new features and style tools</div>
+    <div class="stay-title">Save your results</div>
+    <div class="stay-sub">Enter your email to save your style portrait, preferences, and get styling updates</div>
     <div class="stay-form" id="stayFormPhoto">
       <input type="email" class="stay-input" id="stayInputPhoto" placeholder="Enter your email">
-      <button class="btn-p" style="margin-top:0;max-width:280px" onclick="submitStayPhoto()">Keep me in the loop</button>
+      <button class="btn-p" style="margin-top:0;max-width:280px" onclick="saveUserDataPhoto()">Save my results</button>
     </div>
-    <div class="stay-success" id="staySuccessPhoto" style="display:none">✨ You're in!</div>
+    <div class="stay-success" id="staySuccessPhoto" style="display:none">✨ Your results are saved! Access them anytime with your email.</div>
     <div class="stay-skip" onclick="document.getElementById('staySectionPhoto').style.display='none'">Skip</div>
   </div>
 
@@ -897,6 +905,7 @@ function clearSaved(){
 }
 async function doStay(emailVal,formId,successId,sectionId){
   if(!emailVal||!emailVal.includes('@'))return;
+  // Save to Netlify forms for email list
   try{
     const fd=new URLSearchParams();
     fd.append('form-name','style-star-emails');
@@ -904,6 +913,17 @@ async function doStay(emailVal,formId,successId,sectionId){
     fd.append('name',userName||'');
     fd.append('style-notes',topArchNames.join(', '));
     await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});
+  }catch(e){}
+  // Save user data to server
+  try{
+    const portrait=document.getElementById('rp')?document.getElementById('rp').textContent:'';
+    const data={userName,answers,topArchNames,portrait,prefs};
+    await fetch('/.netlify/functions/user-data',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:emailVal,data})
+    });
+    try{localStorage.setItem('ss_email',emailVal)}catch(e){}
   }catch(e){}
   emailDone=true;
   try{localStorage.setItem('ss_emailDone','true')}catch(e){}
@@ -920,8 +940,45 @@ async function doStay(emailVal,formId,successId,sectionId){
   const el=document.getElementById(otherSection);
   if(el)el.style.display='none';
 }
-function submitStay(){doStay(document.getElementById('stayInput').value.trim(),'stayForm','staySuccess','staySection')}
-function submitStayPhoto(){doStay(document.getElementById('stayInputPhoto').value.trim(),'stayFormPhoto','staySuccessPhoto','staySectionPhoto')}
+function saveUserData(){doStay(document.getElementById('stayInput').value.trim(),'stayForm','staySuccess','staySection')}
+function saveUserDataPhoto(){doStay(document.getElementById('stayInputPhoto').value.trim(),'stayFormPhoto','staySuccessPhoto','staySectionPhoto')}
+
+function showRestore(){
+  document.getElementById('restoreSection').style.display='none';
+  document.getElementById('restoreForm').style.display='block';
+  document.getElementById('restoreEmail').focus();
+}
+
+async function restoreResults(){
+  const email=document.getElementById('restoreEmail').value.trim();
+  if(!email||!email.includes('@')){
+    document.getElementById('restoreMsg').textContent='Please enter a valid email.';
+    return;
+  }
+  document.getElementById('restoreMsg').textContent='Loading your results...';
+  try{
+    const res=await fetch('/.netlify/functions/user-data?email='+encodeURIComponent(email));
+    const json=await res.json();
+    if(json.success&&json.data){
+      const d=json.data;
+      userName=d.userName||'You';
+      answers=d.answers||new Array(12).fill(6);
+      topArchNames=d.topArchNames||[];
+      if(d.prefs)prefs=d.prefs;
+      try{
+        localStorage.setItem('ss_data',JSON.stringify({userName,answers,topArchNames,portrait:d.portrait}));
+        localStorage.setItem('ss_prefs',JSON.stringify(prefs));
+        localStorage.setItem('ss_email',email);
+      }catch(e){}
+      const top3=topArchNames.map(n=>({n:n}));
+      showResult(d.portrait,top3);
+    }else{
+      document.getElementById('restoreMsg').innerHTML="We didn't find results for that email. Want to <span onclick=\"document.getElementById('restoreForm').style.display='none';document.getElementById('restoreSection').style.display='block'\" style=\"text-decoration:underline;cursor:pointer\">take the quiz</span>? It only takes 2 minutes!";
+    }
+  }catch(e){
+    document.getElementById('restoreMsg').textContent='Something went wrong. Please try again.';
+  }
+}
 
 let chatHistory=[];
 let chatPrevScreen='s-res';
