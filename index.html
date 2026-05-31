@@ -970,10 +970,12 @@ async function restoreResults(){
       answers=d.answers||new Array(12).fill(6);
       topArchNames=d.topArchNames||[];
       if(d.prefs)prefs=d.prefs;
+      emailDone=true;
       try{
         localStorage.setItem('ss_data',JSON.stringify({userName,answers,topArchNames,portrait:d.portrait}));
         localStorage.setItem('ss_prefs',JSON.stringify(prefs));
         localStorage.setItem('ss_email',email);
+        localStorage.setItem('ss_emailDone','true');
       }catch(e){}
       const top3=topArchNames.map(n=>({n:n}));
       showResult(d.portrait,top3);
