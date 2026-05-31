@@ -958,7 +958,12 @@ async function restoreResults(){
   document.getElementById('restoreMsg').textContent='Loading your results...';
   try{
     const res=await fetch('/.netlify/functions/user-data?email='+encodeURIComponent(email));
-    const json=await res.json();
+    const text=await res.text();
+    let json;
+    try{json=JSON.parse(text)}catch(e){
+      document.getElementById('restoreMsg').textContent='Debug: Status '+res.status+' Response: '+text.substring(0,200);
+      return;
+    }
     if(json.success&&json.data){
       const d=json.data;
       userName=d.userName||'You';
@@ -973,10 +978,10 @@ async function restoreResults(){
       const top3=topArchNames.map(n=>({n:n}));
       showResult(d.portrait,top3);
     }else{
-      document.getElementById('restoreMsg').innerHTML="We didn't find results for that email. Want to <span onclick=\"document.getElementById('restoreForm').style.display='none';document.getElementById('restoreSection').style.display='block'\" style=\"text-decoration:underline;cursor:pointer\">take the quiz</span>? It only takes 2 minutes!";
+      document.getElementById('restoreMsg').textContent='Debug: '+JSON.stringify(json);
     }
   }catch(e){
-    document.getElementById('restoreMsg').textContent='Something went wrong. Please try again.';
+    document.getElementById('restoreMsg').textContent='Debug error: '+e.message;
   }
 }
 
