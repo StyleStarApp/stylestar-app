@@ -330,6 +330,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="btn-p" style="margin-top:0;max-width:280px" onclick="saveUserData()">Save my results</button>
     </div>
     <div class="stay-success" id="staySuccess" style="display:none">✨ Your results are saved! Access them anytime with your email.</div>
+    <div style="font-size:11px;color:#bbb;margin-top:4px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
     <div class="stay-skip" onclick="document.getElementById('staySection').style.display='none'">Skip</div>
   </div>
 
@@ -405,6 +406,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="btn-p" style="margin-top:0;max-width:280px" onclick="saveUserDataPhoto()">Save my results</button>
     </div>
     <div class="stay-success" id="staySuccessPhoto" style="display:none">✨ Your results are saved! Access them anytime with your email.</div>
+    <div style="font-size:11px;color:#bbb;margin-top:4px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
     <div class="stay-skip" onclick="document.getElementById('staySectionPhoto').style.display='none'">Skip</div>
   </div>
 
@@ -604,7 +606,28 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </div>
 
 </div>
-<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showDream()">Founder's Favorites</span><span onclick="showStory()">Our Story</span></div></div>
+<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showDream()">Founder's Favorites</span><span onclick="showStory()">Our Story</span><span onclick="showPrivacy()">Privacy</span></div></div>
+</div>
+
+<div class="scr" id="s-privacy">
+  <div style="padding:1rem 1.25rem 2rem;max-width:600px;margin:0 auto">
+    <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;text-align:center;margin-bottom:1rem">Privacy Policy</div>
+    <div style="font-size:14px;color:#555;line-height:1.8">
+      <p style="margin-bottom:12px"><strong>Last updated: May 31, 2026</strong></p>
+      <p style="margin-bottom:12px">Style Star ("we," "our," "us") respects your privacy. This policy explains what information we collect, how we use it, and your choices.</p>
+      <p style="margin-bottom:12px"><strong>What we collect</strong></p>
+      <p style="margin-bottom:12px">When you save your results, we collect your email address, quiz answers, style portrait, and any preferences you share (sizes, colors, etc.). Photos shared for style analysis are processed by AI in real time and are never stored.</p>
+      <p style="margin-bottom:12px"><strong>How we use it</strong></p>
+      <p style="margin-bottom:12px">We use your information to save your style profile so you can access it across devices, to personalize your shopping suggestions, and to send you occasional styling updates. We never sell or share your personal information with third parties.</p>
+      <p style="margin-bottom:12px"><strong>Affiliate links</strong></p>
+      <p style="margin-bottom:12px">Some product links on Style Star are affiliate links. When you make a purchase through these links, we may earn a small commission at no extra cost to you. This never influences which items we recommend.</p>
+      <p style="margin-bottom:12px"><strong>Your choices</strong></p>
+      <p style="margin-bottom:12px">You can use Style Star without saving your results or providing an email. If you have saved your results and would like your data deleted, email us and we will remove it promptly.</p>
+      <p style="margin-bottom:12px"><strong>Contact</strong></p>
+      <p style="margin-bottom:12px">Questions about your privacy? Reach us at hello@stylestar.app</p>
+    </div>
+    <button class="btn-outline" onclick="closePrivacy()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
+  </div>
 </div>
 
 <script>
@@ -1243,6 +1266,17 @@ function showDream(){
 function closeDream(){
   document.querySelector('.quiz-footer').style.display='';
   show(dreamPrevScreen);
+}
+let privacyPrevScreen='s-wel';
+function showPrivacy(){
+  const cur=document.querySelector('.scr.act');
+  privacyPrevScreen=cur?cur.id:'s-wel';
+  show('s-privacy');
+  document.querySelector('.quiz-footer').style.display='none';
+}
+function closePrivacy(){
+  document.querySelector('.quiz-footer').style.display='';
+  show(privacyPrevScreen);
 }
 
 function saveChatHistory(){
