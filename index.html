@@ -984,7 +984,7 @@ async function restoreResults(){
     const text=await res.text();
     let json;
     try{json=JSON.parse(text)}catch(e){
-      document.getElementById('restoreMsg').textContent='Debug: Status '+res.status+' Response: '+text.substring(0,200);
+      document.getElementById('restoreMsg').textContent='Something went wrong. Please try again.';
       return;
     }
     if(json.success&&json.data){
@@ -1003,7 +1003,7 @@ async function restoreResults(){
       const top3=topArchNames.map(n=>({n:n}));
       showResult(d.portrait,top3);
     }else{
-      document.getElementById('restoreMsg').textContent='Debug: '+JSON.stringify(json);
+      document.getElementById('restoreMsg').innerHTML="We didn't find results for that email. Want to <span onclick=\"document.getElementById('restoreForm').style.display='none';document.getElementById('restoreSection').style.display='block'\" style=\"text-decoration:underline;cursor:pointer\">take the quiz</span>? It only takes 2 minutes!";
     }
   }catch(e){
     document.getElementById('restoreMsg').textContent='Debug error: '+e.message;
