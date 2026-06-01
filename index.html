@@ -40,7 +40,8 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.7
 .wel-s{font-size:15px;color:#555;line-height:1.65;max-width:380px;font-family:'DM Sans',sans-serif;font-weight:400}
 .wel-icons{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin:4px 0;width:100%;max-width:340px}
 .wel-icon-item{text-align:center;font-size:10px;color:#555;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
-.wel-icon-item svg,.wel-icon-item img{display:block;margin:0 auto 4px}
+.wel-icon-glyph{height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.wel-icon-item svg,.wel-icon-item img{display:block;margin:0}
 .wel-icon-desc{font-size:8px;color:#bbb;margin-top:1px;font-weight:400}
 .wel-label{font-size:10px;color:#bbb;letter-spacing:1.5px;font-weight:600;margin:4px 0 2px}
 .action-card{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid #e8e8e8;border-radius:14px;cursor:pointer;text-align:left;transition:border-color 0.2s;width:100%;max-width:340px;box-sizing:border-box}
@@ -270,35 +271,43 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="wel-label">WHAT YOU'LL RECEIVE</div>
     <div class="wel-icons">
       <div class="wel-icon-item">
+        <div class="wel-icon-glyph">
         <svg width="38" height="38" viewBox="0 0 44 44">
           <rect x="9" y="6" width="26" height="32" rx="1" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
           <rect x="12" y="9" width="20" height="26" rx="1" fill="none" stroke="#1a1a1a" stroke-width="1"/>
           <polygon points="22,15 24,21 30,21 25,25 27,31 22,27 17,31 19,25 14,21 20,21" fill="#D4AF37" stroke="none"/>
         </svg>
+        </div>
         Style Portrait
         <div class="wel-icon-desc">Your signature style</div>
       </div>
       <div class="wel-icon-item">
-        <img src="fingerprint-icon.png" width="34" height="34" style="margin:2px auto 4px" alt="Fingerprint">
+        <div class="wel-icon-glyph">
+        <img src="fingerprint-icon.png" width="34" height="34" alt="Fingerprint">
+        </div>
         Style Fingerprint
         <div class="wel-icon-desc">Your unique mix</div>
       </div>
       <div class="wel-icon-item">
+        <div class="wel-icon-glyph">
         <svg width="38" height="38" viewBox="0 0 44 44">
           <rect x="10" y="16" width="24" height="22" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
           <path d="M16 16 C16 10 18 7 22 7 C26 7 28 10 28 16" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
           <path d="M22 30 C22 30 16 25 16 22 C16 20 17.5 19 19 19 C20.5 19 22 21 22 21 C22 21 23.5 19 25 19 C26.5 19 28 20 28 22 C28 25 22 30 22 30Z" fill="#D4AF37" stroke="none"/>
         </svg>
+        </div>
         Shopping Ideas
         <div class="wel-icon-desc">Picked for you</div>
       </div>
       <div class="wel-icon-item">
+        <div class="wel-icon-glyph">
         <svg width="38" height="38" viewBox="0 0 44 44">
           <path d="M8 10 h28 a3 3 0 0 1 3 3 v14 a3 3 0 0 1 -3 3 h-18 l-6 5 v-5 h-4 a3 3 0 0 1 -3 -3 v-14 a3 3 0 0 1 3 -3z" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
           <circle cx="17" cy="20" r="2" fill="#D4AF37"/>
           <circle cx="22" cy="20" r="2" fill="#D4AF37"/>
           <circle cx="27" cy="20" r="2" fill="#D4AF37"/>
         </svg>
+        </div>
         Ask your Stylist
         <div class="wel-icon-desc">Expert advice</div>
       </div>
@@ -410,10 +419,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 
 <div class="scr" id="s-photo">
   <div class="wel">
-    <svg width="48" height="48" viewBox="0 0 76 76" fill="none">
-      <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="none" stroke="#D4AF37" stroke-width="4"/>
-    </svg>
-    <div class="wel-t">Show us what<br>you're wearing</div>
     <div class="wel-s">Share a photo of your outfit and get personalized styling tips and shopping ideas.</div>
     <div class="photo-upload-area" id="photoArea" onclick="document.getElementById('photoIn').click()">
       <div class="photo-placeholder" id="photoPlaceholder">
