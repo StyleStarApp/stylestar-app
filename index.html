@@ -415,6 +415,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="stay-title">Save your results</div>
     <div class="stay-sub">Enter your email to save your style portrait, preferences, and get styling updates</div>
     <div class="stay-form" id="stayForm">
+      <input type="text" class="stay-input" id="stayName" placeholder="Your first name (optional)">
       <input type="email" class="stay-input" id="stayInput" placeholder="Enter your email">
       <button class="btn-p" style="margin-top:0;max-width:280px" onclick="saveUserData()">Save my results</button>
     </div>
@@ -487,6 +488,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="stay-title">Save your results</div>
     <div class="stay-sub">Enter your email to save your style portrait, preferences, and get styling updates</div>
     <div class="stay-form" id="stayFormPhoto">
+      <input type="text" class="stay-input" id="stayNamePhoto" placeholder="Your first name (optional)">
       <input type="email" class="stay-input" id="stayInputPhoto" placeholder="Enter your email">
       <button class="btn-p" style="margin-top:0;max-width:280px" onclick="saveUserDataPhoto()">Save my results</button>
     </div>
@@ -769,7 +771,7 @@ function prevQ(){if(cur>0){cur--;loadQ(cur)}else{show('s-wel');document.getEleme
 function dist(a,b){return Math.sqrt(a.reduce((s,v,i)=>s+(v-b[i])**2,0))}
 function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)}));scored.sort((a,b)=>a.d-b.d);return scored.slice(0,3)}
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`})}
-async function genResult(){show('s-load');document.getElementById('pf').style.width='100%';document.getElementById('pl').textContent='Complete';const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. A woman named ${userName} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you" and use her name once naturally.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
+async function genResult(){show('s-load');document.getElementById('pf').style.width='100%';document.getElementById('pl').textContent='Complete';const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('pw').style.display='none';document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none'}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}}
 
@@ -826,7 +828,7 @@ async function retryPhoto(){
   await runPhotoAnalysis();
 }
 async function runPhotoAnalysis(){
-  const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. A woman named ${userName} has uploaded a photo for style analysis.
+  const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} has uploaded a photo for style analysis.
 
 FIRST: Check if you can see enough of the outfit to analyze. If the photo only shows a face, headshot, or you cannot see most of the outfit, respond with this exact JSON:
 {"partial":true,"portrait":"You look radiant! To give you a complete style analysis, I'd love to see your full outfit. Head to toe if possible. Try sharing a photo that shows what you're wearing and I'll break down your style."}
@@ -1011,8 +1013,13 @@ function clearSaved(){
   try{localStorage.removeItem('ss_data')}catch(e){}
   location.reload();
 }
-async function doStay(emailVal,formId,successId,sectionId){
+async function doStay(emailVal,nameVal,formId,successId,sectionId){
   if(!emailVal||!emailVal.includes('@'))return;
+  if(nameVal){
+    userName=nameVal.charAt(0).toUpperCase()+nameVal.slice(1);
+    try{var _d=JSON.parse(localStorage.getItem('ss_data'))||{};_d.userName=userName;localStorage.setItem('ss_data',JSON.stringify(_d));}catch(e){}
+    var _rn=document.getElementById('rn');if(_rn)_rn.textContent='This is '+userName;
+  }
   // Save to Netlify forms for email list
   try{
     const fd=new URLSearchParams();
@@ -1048,8 +1055,8 @@ async function doStay(emailVal,formId,successId,sectionId){
   const el=document.getElementById(otherSection);
   if(el)el.style.display='none';
 }
-function saveUserData(){doStay(document.getElementById('stayInput').value.trim(),'stayForm','staySuccess','staySection')}
-function saveUserDataPhoto(){doStay(document.getElementById('stayInputPhoto').value.trim(),'stayFormPhoto','staySuccessPhoto','staySectionPhoto')}
+function saveUserData(){doStay(document.getElementById('stayInput').value.trim(),document.getElementById('stayName').value.trim(),'stayForm','staySuccess','staySection')}
+function saveUserDataPhoto(){doStay(document.getElementById('stayInputPhoto').value.trim(),document.getElementById('stayNamePhoto').value.trim(),'stayFormPhoto','staySuccessPhoto','staySectionPhoto')}
 
 function showRestore(){
   document.getElementById('restoreSection').style.display='none';
