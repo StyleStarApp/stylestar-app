@@ -606,8 +606,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </div>
 
 </div>
-<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showDream()">Founder's Favorites</span><span onclick="showStory()">Our Story</span><span onclick="showPrivacy()">Privacy</span></div></div>
-</div>
 
 <div class="scr" id="s-privacy">
   <div style="padding:1.5rem 1.5rem 2rem;max-width:480px;margin:0 auto;text-align:center">
@@ -629,6 +627,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </div>
     <button class="btn-outline" onclick="closePrivacy()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
   </div>
+</div>
+
+</div>
+<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showDream()">Founder's Favorites</span><span onclick="showStory()">Our Story</span><span onclick="showPrivacy()">Privacy</span></div></div>
 </div>
 
 <script>
@@ -1274,16 +1276,17 @@ function showPrivacy(){
   privacyPrevScreen=cur?cur.id:'s-wel';
   show('s-privacy');
   document.querySelector('.quiz-footer').style.display='none';
-  document.querySelector('.hdr').style.display='none';
+  document.querySelector('.hdr').style.cssText='display:none !important';
   document.querySelector('.ss').style.boxShadow='none';
   document.querySelector('.ss').style.borderRadius='0';
-  document.getElementById('pw').style.display='none';
+  document.getElementById('pw').style.cssText='display:none !important';
 }
 function closePrivacy(){
   document.querySelector('.quiz-footer').style.display='';
-  document.querySelector('.hdr').style.display='';
+  document.querySelector('.hdr').style.cssText='';
   document.querySelector('.ss').style.boxShadow='';
   document.querySelector('.ss').style.borderRadius='';
+  document.getElementById('pw').style.cssText='';
   show(privacyPrevScreen);
 }
 
