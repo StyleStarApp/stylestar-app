@@ -324,6 +324,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 
     <button style="width:100%;max-width:340px;padding:15px;border-radius:40px;font-size:13px;font-weight:600;letter-spacing:0.06em;cursor:pointer;text-transform:uppercase;text-align:center;font-family:'DM Sans',sans-serif;background:#1a1a1a;color:#fff;border:none;margin-top:4px" onclick="startQ()">START MY STYLE QUIZ</button>
 
+    <div id="restoreSection" style="width:100%;max-width:340px;text-align:center;margin-top:6px">
+      <span style="font-size:13px;color:#777">Already taken the quiz? </span><span onclick="showRestore()" style="font-size:13px;color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer">Restore your results</span>
+    </div>
+    <div id="restoreForm" style="display:none;width:100%;max-width:340px;text-align:center;margin-top:10px">
+      <div style="font-size:13px;color:#777;margin-bottom:8px">Enter the email you saved with and we'll bring your style portrait back.</div>
+      <input type="email" class="stay-input" id="restoreEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')restoreResults()">
+      <button class="btn-p" style="margin-top:8px;max-width:280px" onclick="restoreResults()">Find my results</button>
+      <div id="restoreMsg" style="font-size:13px;color:#777;margin-top:8px"></div>
+    </div>
+
     <div style="display:flex;align-items:center;gap:10px;width:100%;max-width:340px;margin:4px 0">
       <hr style="flex:1;border:none;border-top:1px solid #eee"><span style="font-size:10px;color:#ccc;font-weight:500">OR</span><hr style="flex:1;border:none;border-top:1px solid #eee">
     </div>
@@ -1095,10 +1105,10 @@ async function restoreResults(){
       const top3=topArchNames.map(n=>({n:n}));
       showResult(d.portrait,top3);
     }else{
-      document.getElementById('restoreMsg').innerHTML="We didn't find results for that email. Want to <span onclick=\"document.getElementById('restoreForm').style.display='none';document.getElementById('restoreSection').style.display='block'\" style=\"text-decoration:underline;cursor:pointer\">take the quiz</span>? It only takes 2 minutes!";
+      document.getElementById('restoreMsg').innerHTML="We couldn't find results for that email. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take the quiz</span>? It only takes 2 minutes!";
     }
   }catch(e){
-    document.getElementById('restoreMsg').textContent='Debug error: '+e.message;
+    document.getElementById('restoreMsg').textContent='Something went wrong. Please try again.';
   }
 }
 
