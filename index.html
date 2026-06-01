@@ -605,8 +605,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   </div>
 </div>
 
-</div>
-
 <div class="scr" id="s-privacy">
   <div style="padding:1.5rem 1.5rem 2rem;max-width:480px;margin:0 auto;text-align:center">
     <div style="margin-bottom:0.5rem"><img src="logo.png" alt="Style Star" style="width:120px;height:auto"></div>
@@ -1276,17 +1274,9 @@ function showPrivacy(){
   privacyPrevScreen=cur?cur.id:'s-wel';
   show('s-privacy');
   document.querySelector('.quiz-footer').style.display='none';
-  document.querySelector('.hdr').style.cssText='display:none !important';
-  document.querySelector('.ss').style.boxShadow='none';
-  document.querySelector('.ss').style.borderRadius='0';
-  document.getElementById('pw').style.cssText='display:none !important';
 }
 function closePrivacy(){
   document.querySelector('.quiz-footer').style.display='';
-  document.querySelector('.hdr').style.cssText='';
-  document.querySelector('.ss').style.boxShadow='';
-  document.querySelector('.ss').style.borderRadius='';
-  document.getElementById('pw').style.cssText='';
   show(privacyPrevScreen);
 }
 
