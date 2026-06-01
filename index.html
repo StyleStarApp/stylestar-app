@@ -233,6 +233,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem}
 .photo-icon{font-size:40px}
 .photo-cta{font-size:17px;font-weight:700;color:#1a1a1a}
+.photo-sub{font-size:14px;color:#555;font-weight:500;line-height:1.4}
 .photo-hint{font-size:14px;color:#444;font-weight:500}
 .photo-preview{width:100%;height:100%;object-fit:cover;border-radius:18px}
 </style>
@@ -422,11 +423,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 
 <div class="scr" id="s-photo">
   <div class="wel">
-    <div class="wel-s">Share a photo of your outfit and get personalized styling tips and shopping ideas.</div>
     <div class="photo-upload-area" id="photoArea" onclick="document.getElementById('photoIn').click()">
       <div class="photo-placeholder" id="photoPlaceholder">
         <div class="photo-icon" style="font-size:42px">📸🪄⭐</div>
         <div class="photo-cta">Tap to share a photo of your outfit</div>
+        <div class="photo-sub">Receive personalized styling tips and shopping ideas</div>
         <div class="photo-hint">Tip: a full-length photo of just you<br>in your outfit gives the best results!</div>
       </div>
       <img id="photoPreview" class="photo-preview" style="display:none">
