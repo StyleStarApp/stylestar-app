@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Style Star | Align Your Style. Shine Your Light.</title>
-<meta name="description" content="A personal stylist in your pocket. Take our free quiz to reveal what brings out the best in you. Personalized guidance to help you shop with clarity and confidence.">
+<meta name="description" content="A personal stylist in your pocket. Take our free quiz to reveal what brings out the best in you. Gain clarity and receive expert guidance to shop with confidence and bring your style to the next level.">
 <meta property="og:title" content="Style Star | Discover Your Signature Style">
-<meta property="og:description" content="A personal stylist in your pocket. Take our free quiz to reveal what brings out the best in you. Personalized guidance to help you shop with clarity and confidence.">
+<meta property="og:description" content="A personal stylist in your pocket. Take our free quiz to reveal what brings out the best in you. Gain clarity and receive expert guidance to shop with confidence and bring your style to the next level.">
 <meta property="og:url" content="https://www.stylestar.app">
 <meta property="og:type" content="website">
 <link rel="manifest" href="manifest.json">
@@ -36,10 +36,10 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.7
 
 .wel{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.3rem;padding:0.25rem 1rem}
 .wel-t{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#1a1a1a;line-height:1.25;margin-bottom:2px}
-.wel-t .accent{font-style:italic;color:#D4AF37}
+.wel-t .accent{color:#D4AF37}
 .wel-s{font-size:15px;color:#555;line-height:1.65;max-width:380px;font-family:'DM Sans',sans-serif;font-weight:400}
 .wel-icons{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin:4px 0;width:100%;max-width:340px}
-.wel-icon-item{text-align:center;font-size:10px;color:#555;font-weight:600}
+.wel-icon-item{text-align:center;font-size:10px;color:#555;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 .wel-icon-item svg,.wel-icon-item img{display:block;margin:0 auto 4px}
 .wel-icon-desc{font-size:8px;color:#bbb;margin-top:1px;font-weight:400}
 .wel-label{font-size:10px;color:#bbb;letter-spacing:1.5px;font-weight:600;margin:4px 0 2px}
@@ -265,7 +265,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 <div class="scr act" id="s-wel">
   <div class="wel">
     <div class="wel-t">Personal style,<br>beautifully <span class="accent">simplified.</span></div>
-    <div class="wel-s">A personal stylist in your pocket. Take our free quiz to reveal what brings out the best in you. Personalized guidance to help you shop with clarity and confidence.</div>
+    <div class="wel-s">A personal stylist in your pocket. Take our free quiz to reveal what brings out the best in you. Gain clarity and receive expert guidance to shop with confidence and bring your style to the next level.</div>
     
     <div class="wel-label">WHAT YOU'LL RECEIVE</div>
     <div class="wel-icons">
@@ -319,7 +319,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       </svg>
       <div style="flex:1">
         <div class="card-title">Already have an outfit?</div>
-        <div class="card-sub">Upload a photo for style feedback</div>
+        <div class="card-sub">Upload a photo for style analysis</div>
       </div>
       <div class="card-arrow">→</div>
     </div>
@@ -698,7 +698,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </div>
 
 </div>
-<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showDream()">Founder's Favorites</span><span onclick="showStory()">Our Story</span><span onclick="showPrivacy()">Privacy</span></div></div>
+<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showDream()">Favorites</span><span onclick="showStory()">Our Story</span><span onclick="showPrivacy()">Privacy</span></div></div>
 </div>
 
 <script>
@@ -760,7 +760,7 @@ function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" styl
 function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('pw').style.display='none';document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none'}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}}
 
 let photoData=null,photoType="image/jpeg";
-function startPhoto(){userName=document.getElementById('nameIn').value.trim()||"You";showPhoto()}
+function startPhoto(){if(!userName||userName==='You'){userName='You'}showPhoto()}
 function showPhoto(){show('s-photo');document.getElementById('photoPreview').style.display='none';document.getElementById('photoPlaceholder').style.display='flex';document.getElementById('analyzeBtn').style.display='none';photoData=null}
 function onPhotoSelect(input){
   if(!input.files||!input.files[0])return;
