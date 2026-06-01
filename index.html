@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Style Star | Align Your Style. Shine Your Light.</title>
-<meta name="description" content="A personal stylist in your pocket. Take our free quiz to see your personal style portrait. Thoughtful guidance to help you shop with confidence and let your true style shine. Built by a stylist with 20+ years experience.">
+<meta name="description" content="A personal stylist in your pocket. Take our free quiz to reveal what brings out the best in you. Personalized guidance to help you shop with clarity and confidence.">
 <meta property="og:title" content="Style Star | Discover Your Signature Style">
-<meta property="og:description" content="A personal stylist in your pocket. Take our free quiz to see your personal style portrait. Thoughtful guidance to help you shop with confidence and let your true style shine. Built by a stylist with 20+ years experience.">
+<meta property="og:description" content="A personal stylist in your pocket. Take our free quiz to reveal what brings out the best in you. Personalized guidance to help you shop with clarity and confidence.">
 <meta property="og:url" content="https://www.stylestar.app">
 <meta property="og:type" content="website">
 <link rel="manifest" href="manifest.json">
@@ -34,9 +34,20 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.7
 
 .scr{display:none}.scr.act{display:block}
 
-.wel{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.4rem;padding:0.25rem 1rem}
-.wel-t{font-size:24px;font-weight:700;color:#1a1a1a;line-height:1.15;margin-bottom:-4px}
-.wel-s{font-size:18px;color:#1a1a1a;line-height:1.5;max-width:380px;font-family:'DM Sans',sans-serif;font-weight:500}
+.wel{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.3rem;padding:0.25rem 1rem}
+.wel-t{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#1a1a1a;line-height:1.25;margin-bottom:2px}
+.wel-t .accent{font-style:italic;color:#D4AF37}
+.wel-s{font-size:15px;color:#555;line-height:1.65;max-width:380px;font-family:'DM Sans',sans-serif;font-weight:400}
+.wel-icons{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin:4px 0;width:100%;max-width:340px}
+.wel-icon-item{text-align:center;font-size:10px;color:#555;font-weight:600}
+.wel-icon-item svg,.wel-icon-item img{display:block;margin:0 auto 4px}
+.wel-icon-desc{font-size:8px;color:#bbb;margin-top:1px;font-weight:400}
+.wel-label{font-size:10px;color:#bbb;letter-spacing:1.5px;font-weight:600;margin:4px 0 2px}
+.action-card{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid #e8e8e8;border-radius:14px;cursor:pointer;text-align:left;transition:border-color 0.2s;width:100%;max-width:340px;box-sizing:border-box}
+.action-card:hover{border-color:#ccc}
+.card-title{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:1px}
+.card-sub{font-size:13px;color:#666}
+.card-arrow{font-size:16px;color:#ccc;flex-shrink:0}
 .name-in input{border:1.5px solid #e8e8e8;border-radius:40px;padding:14px 20px;font-size:18px;width:280px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif;font-weight:500;transition:border-color 0.2s}
 .name-in input:focus{outline:none;border-color:#C8A060}
 .name-in input::placeholder{color:#999}
@@ -253,20 +264,80 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 
 <div class="scr act" id="s-wel">
   <div class="wel">
-    <div class="wel-t">Discover your<br>signature style</div>
-    <div class="wel-s">A personal stylist in your pocket. Take our free quiz to see your personal style portrait designed to give you clarity on what brings out the best in you. Thoughtful guidance to help you shop with confidence and let your true style shine.</div>
-    <div class="wel-sub" style="font-size:14px;color:#777;margin-top:4px;font-style:italic">12 simple questions. No right or wrong answers. Built by a stylist with 20+ years experience.</div>
-    <div class="name-in"><input type="text" id="nameIn" placeholder="Your first name (optional)" maxlength="20"></div>
-    <button class="btn-pink" style="max-width:300px" onclick="startQ()">Begin your style quiz</button>
-    <button class="btn-teal" style="max-width:300px" onclick="startPhoto()">Share a photo for style analysis & tips</button>
-    <div id="restoreSection" style="margin-top:8px;text-align:center">
-      <span onclick="showRestore()" style="font-size:13px;color:#999;cursor:pointer;text-decoration:underline">Already taken the quiz? Restore my results</span>
+    <div class="wel-t">Personal style,<br>beautifully <span class="accent">simplified.</span></div>
+    <div class="wel-s">A personal stylist in your pocket. Take our free quiz to reveal what brings out the best in you. Personalized guidance to help you shop with clarity and confidence.</div>
+    
+    <div class="wel-label">WHAT YOU'LL RECEIVE</div>
+    <div class="wel-icons">
+      <div class="wel-icon-item">
+        <svg width="38" height="38" viewBox="0 0 44 44">
+          <rect x="9" y="6" width="26" height="32" rx="1" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+          <rect x="12" y="9" width="20" height="26" rx="1" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+          <polygon points="22,15 24,21 30,21 25,25 27,31 22,27 17,31 19,25 14,21 20,21" fill="#D4AF37" stroke="none"/>
+        </svg>
+        Style Portrait
+        <div class="wel-icon-desc">Your signature style</div>
+      </div>
+      <div class="wel-icon-item">
+        <img src="fingerprint-icon.png" width="34" height="34" style="margin:2px auto 4px" alt="Fingerprint">
+        Style Fingerprint
+        <div class="wel-icon-desc">Your unique mix</div>
+      </div>
+      <div class="wel-icon-item">
+        <svg width="38" height="38" viewBox="0 0 44 44">
+          <rect x="10" y="16" width="24" height="22" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+          <path d="M16 16 C16 10 18 7 22 7 C26 7 28 10 28 16" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M22 30 C22 30 16 25 16 22 C16 20 17.5 19 19 19 C20.5 19 22 21 22 21 C22 21 23.5 19 25 19 C26.5 19 28 20 28 22 C28 25 22 30 22 30Z" fill="#D4AF37" stroke="none"/>
+        </svg>
+        Shopping Ideas
+        <div class="wel-icon-desc">Picked for you</div>
+      </div>
+      <div class="wel-icon-item">
+        <svg width="38" height="38" viewBox="0 0 44 44">
+          <path d="M8 10 h28 a3 3 0 0 1 3 3 v14 a3 3 0 0 1 -3 3 h-18 l-6 5 v-5 h-4 a3 3 0 0 1 -3 -3 v-14 a3 3 0 0 1 3 -3z" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+          <circle cx="17" cy="20" r="2" fill="#D4AF37"/>
+          <circle cx="22" cy="20" r="2" fill="#D4AF37"/>
+          <circle cx="27" cy="20" r="2" fill="#D4AF37"/>
+        </svg>
+        Ask your Stylist
+        <div class="wel-icon-desc">Expert advice</div>
+      </div>
     </div>
-    <div id="restoreForm" style="display:none;text-align:center;margin-top:8px">
-      <input type="email" id="restoreEmail" placeholder="Enter the email you used" style="border:1.5px solid #e8e8e8;border-radius:40px;padding:12px 18px;font-size:15px;width:260px;text-align:center;font-family:'DM Sans',sans-serif;outline:none">
-      <button class="btn-pink" style="max-width:260px;margin-top:6px;padding:10px" onclick="restoreResults()">Restore my results</button>
-      <div id="restoreMsg" style="font-size:13px;color:#999;margin-top:6px"></div>
+
+    <button style="width:100%;max-width:340px;padding:15px;border-radius:40px;font-size:13px;font-weight:600;letter-spacing:0.06em;cursor:pointer;text-transform:uppercase;text-align:center;font-family:'DM Sans',sans-serif;background:#1a1a1a;color:#fff;border:none;margin-top:4px" onclick="startQ()">START MY STYLE QUIZ</button>
+
+    <div style="display:flex;align-items:center;gap:10px;width:100%;max-width:340px;margin:4px 0">
+      <hr style="flex:1;border:none;border-top:1px solid #eee"><span style="font-size:10px;color:#ccc;font-weight:500">OR</span><hr style="flex:1;border:none;border-top:1px solid #eee">
     </div>
+
+    <div class="action-card" onclick="startPhoto()">
+      <svg width="36" height="36" viewBox="0 0 36 36" style="flex-shrink:0">
+        <rect x="4" y="8" width="28" height="22" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <circle cx="18" cy="19" r="5" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <circle cx="18" cy="19" r="2" fill="#D4AF37"/>
+        <circle cx="26" cy="13" r="1.5" fill="#D4AF37"/>
+      </svg>
+      <div style="flex:1">
+        <div class="card-title">Already have an outfit?</div>
+        <div class="card-sub">Upload a photo for style feedback</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </div>
+
+    <div class="action-card" onclick="openChat()">
+      <svg width="36" height="36" viewBox="0 0 36 36" style="flex-shrink:0">
+        <path d="M6 8 h24 a2.5 2.5 0 0 1 2.5 2.5 v13 a2.5 2.5 0 0 1 -2.5 2.5 h-16 l-5 4 v-4 h-3 a2.5 2.5 0 0 1 -2.5 -2.5 v-13 a2.5 2.5 0 0 1 2.5 -2.5z" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <circle cx="14" cy="17" r="1.5" fill="#D4AF37"/>
+        <circle cx="18" cy="17" r="1.5" fill="#D4AF37"/>
+        <circle cx="22" cy="17" r="1.5" fill="#D4AF37"/>
+      </svg>
+      <div style="flex:1">
+        <div class="card-title">Just browsing?</div>
+        <div class="card-sub">Ask your Stylist a quick question</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </div>
+
   </div>
 </div>
 
@@ -650,7 +721,7 @@ const archetypes=[
 ];
 let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false,emailDone=false;
 try{if(localStorage.getItem('ss_emailDone')==='true')emailDone=true}catch(e){}
-function startQ(){userName=document.getElementById('nameIn').value.trim()||"You";show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
+function startQ(){userName="You";show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
 function show(id,skipHistory){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
   document.getElementById(id).classList.add('act');
