@@ -95,7 +95,10 @@ Quick reference:
   font being used is kept in the Google Fonts link. Easy to swap anytime.
 - Redesigned the home-screen action buttons into a horizontal row of three
   editorial cards (`.erow`/`.ecard`), titles in Playfair Display (PR #7), then
-  updated the card copy.
+  updated the card copy and trimmed their vertical padding.
+- Founder's Favorites (`s-dream`) `.dc-title` and the Privacy Policy header now
+  use **Lora** (matching the welcome headline). Added a small top-right Back
+  button on the Founder's Favorites page (calls `closeDream()`).
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
 ### Ideas / next time
