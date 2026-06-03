@@ -103,12 +103,14 @@ Quick reference:
 - Restyled the three home-screen `.ecard`s as square (no rounded corners)
   metallic gold gradient frames matching the shareable style card frame
   (`border-image` gold gradient on white).
-- The welcome-screen "what you'll receive" block: tried a soft card (looked like
-  a button), then a checkmarked list, now a divider-flanked gold label
-  ("WHAT YOU'LL RECEIVE") above an airy inline row of the three items separated by
-  gold dots (Style Portrait · Style Fingerprint · Personalized Shopping Guidance).
+- The welcome-screen "what you'll receive" block: a divider-flanked gold label
+  ("WHAT YOU'LL RECEIVE") above a gold-checkmark list (Style Portrait / Style
+  Fingerprint / Personalized Shopping Guidance). (Tried an airy inline gold-dot
+  row but reverted to the checkmarks.)
 - Gave the gold-framed `.ecard`s more horizontal padding and tighter letter-
   spacing so titles (esp. "Shop Curated Favorites") aren't tight to the frame.
+- Restyled the "START MY STYLE QUIZ" button: square (no rounded corners), black
+  fill, metallic gold gradient frame (matching the cards), with a gold arrow.
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
 ### Ideas / next time
