@@ -89,15 +89,16 @@ Quick reference:
 - Removed stale duplicate files: `index (19/21/27/31).html` and outdated
   root-level `style-ai.js` / `user-data.js` (PR #1).
 - Added this `CLAUDE.md` (PR #2).
-- Iterated on the welcome headline font (`.wel-t`, "Discover how your style brings
-  out the best in you."): DM Sans → Fraunces (PR #2) → Playfair Display (PR #5,
-  felt too formal) → Poppins → **Lora** (warm friendly serif, current). Only the
-  font being used is kept in the Google Fonts link. Easy to swap anytime.
+- Welcome headline copy is now "Discover your signature style" (no period).
+- Iterated on the welcome headline font (`.wel-t`): DM Sans → Fraunces → Playfair
+  Display (too formal) → Poppins → Lora → Marcellus → Cormorant Garamond →
+  **Georgia** (warm system serif, current — no web-font load needed). The
+  headers below now match it; Lora/Playfair were removed from the font link.
 - Redesigned the home-screen action buttons into a horizontal row of three
-  editorial cards (`.erow`/`.ecard`), titles in Playfair Display (PR #7), then
-  updated the card copy and trimmed their vertical padding.
+  editorial cards (`.erow`/`.ecard`); card titles (`.et`) are now **Georgia**
+  (were Playfair Display).
 - Founder's Favorites (`s-dream`) `.dc-title`, the Privacy Policy header, and the
-  Our Story title (`.story-title`) now use **Lora** (matching the welcome headline).
+  Our Story title (`.story-title`) now use **Georgia** (matching the welcome headline).
 - Added small top-right Back buttons on Founder's Favorites (`closeDream()`),
   Our Story (`closeStory()`), and Privacy Policy (`closePrivacy()`).
 - Restyled the three home-screen `.ecard`s as square (no rounded corners)
