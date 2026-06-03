@@ -90,8 +90,10 @@ Quick reference:
   root-level `style-ai.js` / `user-data.js` (PR #1).
 - Added this `CLAUDE.md` (PR #2).
 - Changed the welcome headline (`.wel-t`, "Discover how your style brings out the
-  best in you.") from DM Sans to **Fraunces** (PR #2). Cath can swap to another
-  loaded font (Cormorant Garamond, Noto Serif) anytime if she prefers.
+  best in you.") from DM Sans to **Fraunces** (PR #2), then to **Playfair Display**
+  (added to the Google Fonts link). Cath can swap to another font
+  (Cormorant Garamond, Noto Serif, Fraunces) anytime if she prefers.
+- Tweaked the opening-page Curated Favorites card copy (PR #4).
 
 ### Ideas / next time
 _(running list — add to this as ideas come up)_
