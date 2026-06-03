@@ -100,10 +100,13 @@ Quick reference:
   Our Story title (`.story-title`) now use **Lora** (matching the welcome headline).
 - Added small top-right Back buttons on Founder's Favorites (`closeDream()`),
   Our Story (`closeStory()`), and Privacy Policy (`closePrivacy()`).
-- Trimmed the editorial card heights further. The welcome-screen "what you'll
-  receive" block: briefly tried a soft card (looked too much like a button), then
-  switched to a divider-flanked gold section label ("WHAT YOU'LL RECEIVE") over
-  the list (Style Portrait · Style Fingerprint · Personalized Shopping Guidance).
+- Restyled the three home-screen `.ecard`s as square (no rounded corners)
+  metallic gold gradient frames matching the shareable style card frame
+  (`border-image` gold gradient on white).
+- The welcome-screen "what you'll receive" block: briefly tried a soft card
+  (looked too much like a button), then switched to a divider-flanked gold
+  section label ("WHAT YOU'LL RECEIVE") above a checkmarked list (Style Portrait /
+  Style Fingerprint / Personalized Shopping Guidance).
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
 ### Ideas / next time
