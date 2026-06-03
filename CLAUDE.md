@@ -55,3 +55,44 @@ setup needed since they're already loaded.
   "Files changed" tab, then merge. Merging to `main` is what makes a change go live.
 - For tiny/safe tweaks, merging directly to `main` is also fine.
 - Everything is tracked in git history, so prior versions are always recoverable.
+
+---
+
+## For Cath — how to come back and work on this
+
+You don't need a folder on your computer. Your whole project lives on **GitHub**
+(`StyleStarApp/stylestar-app`), and this file is the shared memory between sessions.
+
+To pick up where you left off:
+
+1. Go to **claude.ai/code** (or open the Claude app and choose **Code**).
+2. Open the project / repo: **`stylestar-app`**.
+3. Start a session and just say what you want to change. Claude reads this file
+   automatically, so you never have to re-explain the project.
+
+How things "save":
+- **Merging a Pull Request = saving + going live.** That's it.
+- Anything merged (or pushed to a branch) is on GitHub forever and recoverable.
+- The temporary chat workspace disappears between sessions — that's fine, because
+  the real project is always safe on GitHub.
+
+Quick reference:
+- **Code & history:** github.com/StyleStarApp/stylestar-app
+- **Live site:** served by Netlify (auto-deploys from `main`)
+- **Emails / user data:** Supabase
+
+## Project log
+
+**2026-06-03 (first Claude Code session)**
+- Set up the Claude GitHub App with read/write access (replaced the old
+  download → upload workflow).
+- Removed stale duplicate files: `index (19/21/27/31).html` and outdated
+  root-level `style-ai.js` / `user-data.js` (PR #1).
+- Added this `CLAUDE.md` (PR #2).
+- Changed the welcome headline (`.wel-t`, "Discover how your style brings out the
+  best in you.") from DM Sans to **Fraunces** (PR #2). Cath can swap to another
+  loaded font (Cormorant Garamond, Noto Serif) anytime if she prefers.
+
+### Ideas / next time
+_(running list — add to this as ideas come up)_
+- (nothing yet — add your ideas here)
