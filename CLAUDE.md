@@ -89,10 +89,10 @@ Quick reference:
 - Removed stale duplicate files: `index (19/21/27/31).html` and outdated
   root-level `style-ai.js` / `user-data.js` (PR #1).
 - Added this `CLAUDE.md` (PR #2).
-- Changed the welcome headline (`.wel-t`, "Discover how your style brings out the
-  best in you.") from DM Sans to **Fraunces** (PR #2), then to **Playfair Display**
-  (added to the Google Fonts link). Cath can swap to another font
-  (Cormorant Garamond, Noto Serif, Fraunces) anytime if she prefers.
+- Iterated on the welcome headline font (`.wel-t`, "Discover how your style brings
+  out the best in you."): DM Sans → Fraunces (PR #2) → Playfair Display (PR #5,
+  felt too formal) → **Poppins** (friendly modern sans-serif, current). Only the
+  font being used is kept in the Google Fonts link. Easy to swap anytime.
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
 ### Ideas / next time
