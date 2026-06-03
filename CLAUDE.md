@@ -91,8 +91,11 @@ Quick reference:
 - Added this `CLAUDE.md` (PR #2).
 - Iterated on the welcome headline font (`.wel-t`, "Discover how your style brings
   out the best in you."): DM Sans → Fraunces (PR #2) → Playfair Display (PR #5,
-  felt too formal) → **Poppins** (friendly modern sans-serif, current). Only the
+  felt too formal) → Poppins → **Lora** (warm friendly serif, current). Only the
   font being used is kept in the Google Fonts link. Easy to swap anytime.
+- Redesigned the home-screen action buttons into a horizontal row of three
+  editorial cards (`.erow`/`.ecard`), titles in Playfair Display (PR #7), then
+  updated the card copy.
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
 ### Ideas / next time
