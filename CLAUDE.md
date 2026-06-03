@@ -96,9 +96,12 @@ Quick reference:
 - Redesigned the home-screen action buttons into a horizontal row of three
   editorial cards (`.erow`/`.ecard`), titles in Playfair Display (PR #7), then
   updated the card copy and trimmed their vertical padding.
-- Founder's Favorites (`s-dream`) `.dc-title` and the Privacy Policy header now
-  use **Lora** (matching the welcome headline). Added a small top-right Back
-  button on the Founder's Favorites page (calls `closeDream()`).
+- Founder's Favorites (`s-dream`) `.dc-title`, the Privacy Policy header, and the
+  Our Story title (`.story-title`) now use **Lora** (matching the welcome headline).
+- Added small top-right Back buttons on Founder's Favorites (`closeDream()`),
+  Our Story (`closeStory()`), and Privacy Policy (`closePrivacy()`).
+- Wrapped the welcome-screen "WHAT YOU'LL GET" block in a soft card and darkened
+  its text for readability. Trimmed the editorial card heights further.
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
 ### Ideas / next time
