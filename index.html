@@ -1749,11 +1749,28 @@ async function doShareCard(){
   const blob=window._cardBlob;
   if(!blob)return;
   const file=new File([blob],'my-style-star.png',{type:'image/png'});
-  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-    try{await navigator.share({files:[file],title:'My Style Star Results',text:'Here are my Style Star results! ⭐ Take the free quiz → https://www.stylestar.app'})}catch(e){}
-  }else{
-    navigator.clipboard.writeText('Here are my Style Star results! ⭐ Take the free quiz → https://www.stylestar.app').then(()=>{alert('Link copied!')}).catch(()=>{});
+  const linkText='Here are my Style Star results! ⭐ Take the free quiz → https://www.stylestar.app';
+  // Preferred: share the actual card image. No URL in the text — on iOS a URL makes
+  // the share switch to a link preview and drop the image. The card already shows StyleStar.app.
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{
+      await navigator.share({files:[file],title:'My Style Star Results',text:'Here are my Style Star results! ⭐'});
+      closeCardPreview();
+      return;
+    }catch(e){
+      if(e&&e.name==='AbortError'){return;} // user cancelled the share sheet
+    }
   }
+  // Fallback (desktop / browsers without image sharing): save the card image and copy the link
+  try{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='my-style-star.png';
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  }catch(e){}
+  try{await navigator.clipboard.writeText(linkText);}catch(e){}
+  alert('Your style card was saved as an image, and the link was copied. Attach the saved card when you share it! ✨');
   closeCardPreview();
 }
 
