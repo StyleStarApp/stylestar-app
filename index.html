@@ -1713,9 +1713,14 @@ function saveStyleCard(source){
       <div style="color:#fff;font-size:16px;font-weight:600;font-family:DM Sans,sans-serif;margin-bottom:10px">Your Style Card</div>
       <img src="${imgUrl}" style="max-width:75%;max-height:65vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
       <div style="color:#ccc;font-size:15px;font-family:DM Sans,sans-serif;margin-top:14px;font-weight:500">Press and hold the image to save</div>
-      <button onclick="closeCardPreview()" style="margin-top:14px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:6px;padding:14px 28px;border-radius:12px;border:none;background:#1a1a1a;color:#fff;font-family:DM Sans,sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        Share with a friend
+      </button>
+      <button onclick="closeCardPreview()" style="margin-top:12px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
     `;
     document.body.appendChild(overlay);
+    window._cardBlob=blob;
     window._cardImgUrl=imgUrl;
   });
 }
