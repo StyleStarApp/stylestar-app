@@ -1710,15 +1710,15 @@ function saveStyleCard(source){
     overlay.id='cardPreview';
     overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
     overlay.innerHTML=`
-      <div style="color:#fff;font-size:16px;font-weight:600;font-family:DM Sans,sans-serif;margin-bottom:10px">Your Style Card</div>
+      <div style="color:#fff;font-size:18px;font-weight:600;font-family:DM Sans,sans-serif;margin-bottom:10px">Your Style Card</div>
       <img src="${imgUrl}" style="max-width:75%;max-height:65vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
-      <div style="color:#ccc;font-size:15px;font-family:DM Sans,sans-serif;margin-top:14px;font-weight:500">Press and hold the image to save</div>
-      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:6px;padding:14px 28px;border-radius:12px;border:none;background:#1a1a1a;color:#fff;font-family:DM Sans,sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      <div style="color:#ddd;font-size:17px;font-family:DM Sans,sans-serif;margin-top:14px;font-weight:500">Press and hold the image to save</div>
+      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:7px;padding:15px 30px;border-radius:12px;border:none;background:#1a1a1a;color:#fff;font-family:DM Sans,sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:18px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         Share with a friend
       </button>
-      <div style="color:#999;font-size:12px;font-family:DM Sans,sans-serif;margin-top:8px">Text it, or post it to Instagram &amp; more ✨</div>
-      <button onclick="closeCardPreview()" style="margin-top:12px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+      <div style="color:#bbb;font-size:14px;font-family:DM Sans,sans-serif;margin-top:6px">Text it, or post it to Instagram &amp; more ✨</div>
+      <button onclick="closeCardPreview()" style="margin-top:16px;background:none;border:none;color:#aaa;font-size:16px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
     `;
     document.body.appendChild(overlay);
     window._cardBlob=blob;
@@ -1732,13 +1732,14 @@ function shareStyleCard(source){
     overlay.id='cardPreview';
     overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
     overlay.innerHTML=`
-      <div style="color:#fff;font-size:16px;font-weight:600;font-family:DM Sans,sans-serif;margin-bottom:10px">Share your style card</div>
+      <div style="color:#fff;font-size:18px;font-weight:600;font-family:DM Sans,sans-serif;margin-bottom:10px">Share your style card</div>
       <img src="${imgUrl}" style="max-width:75%;max-height:60vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
-      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:6px;padding:14px 28px;border-radius:12px;border:none;background:#1a1a1a;color:#fff;font-family:DM Sans,sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        Share
+      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:7px;padding:15px 30px;border-radius:12px;border:none;background:#1a1a1a;color:#fff;font-family:DM Sans,sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:18px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        Share with a friend
       </button>
-      <button onclick="closeCardPreview()" style="margin-top:12px;background:none;border:none;color:#888;font-size:14px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+      <div style="color:#bbb;font-size:14px;font-family:DM Sans,sans-serif;margin-top:6px">Text it, or post it to Instagram &amp; more ✨</div>
+      <button onclick="closeCardPreview()" style="margin-top:16px;background:none;border:none;color:#aaa;font-size:16px;font-family:DM Sans,sans-serif;cursor:pointer;text-decoration:underline">Close</button>
     `;
     document.body.appendChild(overlay);
     window._cardBlob=blob;
