@@ -1749,12 +1749,12 @@ async function doShareCard(){
   const blob=window._cardBlob;
   if(!blob)return;
   const file=new File([blob],'my-style-star.png',{type:'image/png'});
-  const linkText='Here are my Style Star results! ⭐ Take the free quiz → https://www.stylestar.app';
+  const linkText='Here are my Style Star results! ⭐ Take this fun quiz → https://www.stylestar.app';
   // Preferred: share the actual card image. No URL in the text — on iOS a URL makes
   // the share switch to a link preview and drop the image. The card already shows StyleStar.app.
   if(navigator.canShare&&navigator.canShare({files:[file]})){
     try{
-      await navigator.share({files:[file],title:'My Style Star Results',text:'Here are my Style Star results! ⭐'});
+      await navigator.share({files:[file],title:'My Style Star Results',text:'Here are my Style Star results! ⭐ Take this fun quiz →'});
       closeCardPreview();
       return;
     }catch(e){
