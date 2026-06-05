@@ -1,5 +1,23 @@
 # Style Star — Project Notes
 
+> ## ⏭️ WHEN CATH RETURNS — REMIND HER FIRST THING (added 2026-06-05)
+> Cath stepped away mid-session and asked to be reminded, the moment she's back,
+> to finish these two things. **Bring this up immediately when she returns.**
+>
+> **1. Turn on Plausible analytics.** The tracking script is already live in
+> `index.html`. She just needs to: go to **plausible.io** → create account →
+> "Add a website" → enter the domain exactly as `stylestar.app`. Data flows
+> immediately — no code change needed.
+>
+> **2. Wire up email so signups can be emailed (recommended tool: MailerLite).**
+> Steps for Cath: create a free **mailerlite.com** account → make an audience/group
+> (e.g. "Style Star Signups") → get the **Group ID** + an **API key** → add the key
+> in **Netlify → Site settings → Environment variables** as `MAILERLITE_API_KEY`
+> (do NOT paste the key in chat) → tell Claude the **Group ID**. Then Claude updates
+> `netlify/functions/user-data.js` so every new signup is added to the list.
+>
+> _Once both are done, delete this reminder block._
+
 Style Star is a personal style-quiz web app ("Align your style. Shine your light.").
 A user takes a quiz (and/or uploads a photo), gets an AI-generated personal style
 write-up, can chat with an AI stylist, see outfit/shopping ideas, and save results
