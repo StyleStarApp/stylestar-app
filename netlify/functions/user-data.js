@@ -86,6 +86,21 @@ async function mlDiagnostic() {
       out.steps.assign = { status: r.status, body: (await r.text()).slice(0, 200) };
     }
   } catch (e) { out.steps.assign = { error: e.message }; }
+  // Supabase write test — confirms whether the real signup's DB step works
+  try {
+    const SUPABASE_URL = process.env.SUPABASE_URL;
+    const SUPABASE_KEY = process.env.SUPABASE_KEY;
+    if (SUPABASE_URL && SUPABASE_KEY) {
+      const r = await fetch(SUPABASE_URL + '/rest/v1/users', {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ email: 'diag-' + Date.now() + '@stylestar.app', data: JSON.stringify({ test: true }) })
+      });
+      out.steps.supabaseWrite = { status: r.status, body: (await r.text()).slice(0, 200) };
+    } else {
+      out.steps.supabaseWrite = { error: 'no supabase env' };
+    }
+  } catch (e) { out.steps.supabaseWrite = { error: e.message }; }
   return out;
 }
 
@@ -124,34 +139,37 @@ exports.handler = async function(event) {
       const key = email.toLowerCase().trim();
       const saveData = { ...data, updatedAt: new Date().toISOString() };
 
-      const res = await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
-        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-      });
-      const existing = await res.json();
+      // Save to Supabase (isolated — a DB hiccup must NOT block the MailerLite signup)
+      try {
+        const res = await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+        });
+        const existing = await res.json();
 
-      if (existing && existing.length > 0) {
-        await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
-          method: 'PATCH',
-          headers: {
-            'apikey': SUPABASE_KEY,
-            'Authorization': 'Bearer ' + SUPABASE_KEY,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=minimal'
-          },
-          body: JSON.stringify({ data: JSON.stringify(saveData) })
-        });
-      } else {
-        await fetch(baseUrl, {
-          method: 'POST',
-          headers: {
-            'apikey': SUPABASE_KEY,
-            'Authorization': 'Bearer ' + SUPABASE_KEY,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=minimal'
-          },
-          body: JSON.stringify({ email: key, data: JSON.stringify(saveData) })
-        });
-      }
+        if (existing && existing.length > 0) {
+          await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
+            method: 'PATCH',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': 'Bearer ' + SUPABASE_KEY,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({ data: JSON.stringify(saveData) })
+          });
+        } else {
+          await fetch(baseUrl, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': 'Bearer ' + SUPABASE_KEY,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({ email: key, data: JSON.stringify(saveData) })
+          });
+        }
+      } catch (e) {}
 
       // Also add the signup to the MailerLite email list (never block the save if it fails)
       try { await addToMailerLite(key, (data && (data.userName || data.name)) || ''); } catch (e) {}
