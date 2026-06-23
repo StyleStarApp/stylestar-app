@@ -1,38 +1,57 @@
 const MAILERLITE_GROUP_NAME = 'Style Star Signups';
+const ML_BASE = 'https://connect.mailerlite.com/api';
 let mlGroupIdCache = null;
 
-// Look up the MailerLite group id by name (cached across warm invocations)
+function mlHeaders(apiKey) {
+  return {
+    'Authorization': 'Bearer ' + apiKey,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
+}
+
+// Look up the MailerLite group id by name (lists groups and matches; cached)
 async function mlGetGroupId(apiKey) {
   if (mlGroupIdCache) return mlGroupIdCache;
-  const url = 'https://connect.mailerlite.com/api/groups?filter[name]=' + encodeURIComponent(MAILERLITE_GROUP_NAME);
-  const res = await fetch(url, {
-    headers: { 'Authorization': 'Bearer ' + apiKey, 'Accept': 'application/json' }
-  });
+  const res = await fetch(ML_BASE + '/groups?limit=100', { headers: mlHeaders(apiKey) });
   if (!res.ok) return null;
   const json = await res.json();
   const list = json.data || [];
-  const group = list.find(g => g.name === MAILERLITE_GROUP_NAME) || list[0];
+  const wanted = MAILERLITE_GROUP_NAME.trim().toLowerCase();
+  const group = list.find(g => g.name && g.name.trim().toLowerCase() === wanted);
   if (group && group.id) { mlGroupIdCache = group.id; return group.id; }
   return null;
 }
 
-// Add (or update) a subscriber in MailerLite and put them in the signups group
+// Add (or update) a subscriber in MailerLite and explicitly assign them to the group
 async function addToMailerLite(email, name) {
   const apiKey = process.env.MAILERLITE_API_KEY;
   if (!apiKey) return; // not configured — skip quietly
   const groupId = await mlGetGroupId(apiKey);
+
+  // 1) Create/update the subscriber
   const body = { email: email };
   if (name) body.fields = { name: name };
-  if (groupId) body.groups = [groupId];
-  await fetch('https://connect.mailerlite.com/api/subscribers', {
+  if (groupId) body.groups = [groupId]; // works on create; explicit assign below is the reliable path
+  const res = await fetch(ML_BASE + '/subscribers', {
     method: 'POST',
-    headers: {
-      'Authorization': 'Bearer ' + apiKey,
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
+    headers: mlHeaders(apiKey),
     body: JSON.stringify(body)
   });
+
+  // 2) Explicitly assign the subscriber to the group (MailerLite's reliable method)
+  if (groupId && res.ok) {
+    try {
+      const json = await res.json();
+      const subId = json && json.data && json.data.id;
+      if (subId) {
+        await fetch(ML_BASE + '/subscribers/' + subId + '/groups/' + groupId, {
+          method: 'POST',
+          headers: mlHeaders(apiKey)
+        });
+      }
+    } catch (e) {}
+  }
 }
 
 exports.handler = async function(event) {
