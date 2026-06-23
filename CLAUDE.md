@@ -129,4 +129,19 @@ _(running list — add to this as ideas come up)_
   no re-entering email, even across devices. Mind privacy: use an opaque token, not
   a raw email, in the URL. (Email/automation now run through MailerLite; the link
   could carry a per-subscriber field/variable.)
+- **Swap the welcome-email footer address (privacy).** The MailerLite welcome email
+  currently shows Cath's home address in the footer (legally required physical
+  address). Replace it with a PO Box / business address once she has one — update it
+  in MailerLite (company/footer settings); it changes everywhere at once. Note:
+  MailerLite locks the legal address's font size on send, so it can't be shrunk —
+  the footer was made uniform instead.
 - (add more ideas here)
+
+**2026-06-23 (email setup session)**
+- Set up **Plausible** analytics (script in `index.html`, verified).
+- Wired signups into **MailerLite** (`user-data.js` adds them to the
+  "Style Star Signups" group via `MAILERLITE_API_KEY`). Debugged a paused-Supabase
+  outage along the way (Supabase now on the paid plan).
+- Built a **welcome-email automation** in MailerLite (logo, Georgia/brand styling,
+  copy, photo-upload bullet, Instagram link, gold "Explore Style Star" button →
+  `stylestar.app`). **Activated** — sends automatically to new signups only.
