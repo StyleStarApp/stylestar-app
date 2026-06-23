@@ -1,3 +1,40 @@
+const MAILERLITE_GROUP_NAME = 'Style Star Signups';
+let mlGroupIdCache = null;
+
+// Look up the MailerLite group id by name (cached across warm invocations)
+async function mlGetGroupId(apiKey) {
+  if (mlGroupIdCache) return mlGroupIdCache;
+  const url = 'https://connect.mailerlite.com/api/groups?filter[name]=' + encodeURIComponent(MAILERLITE_GROUP_NAME);
+  const res = await fetch(url, {
+    headers: { 'Authorization': 'Bearer ' + apiKey, 'Accept': 'application/json' }
+  });
+  if (!res.ok) return null;
+  const json = await res.json();
+  const list = json.data || [];
+  const group = list.find(g => g.name === MAILERLITE_GROUP_NAME) || list[0];
+  if (group && group.id) { mlGroupIdCache = group.id; return group.id; }
+  return null;
+}
+
+// Add (or update) a subscriber in MailerLite and put them in the signups group
+async function addToMailerLite(email, name) {
+  const apiKey = process.env.MAILERLITE_API_KEY;
+  if (!apiKey) return; // not configured — skip quietly
+  const groupId = await mlGetGroupId(apiKey);
+  const body = { email: email };
+  if (name) body.fields = { name: name };
+  if (groupId) body.groups = [groupId];
+  await fetch('https://connect.mailerlite.com/api/subscribers', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + apiKey,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+}
+
 exports.handler = async function(event) {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -55,6 +92,9 @@ exports.handler = async function(event) {
           body: JSON.stringify({ email: key, data: JSON.stringify(saveData) })
         });
       }
+
+      // Also add the signup to the MailerLite email list (never block the save if it fails)
+      try { await addToMailerLite(key, (data && (data.userName || data.name)) || ''); } catch (e) {}
 
       return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
     }
