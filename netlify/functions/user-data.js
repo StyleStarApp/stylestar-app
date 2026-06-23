@@ -55,55 +55,6 @@ async function addToMailerLite(email, name) {
   } catch (e) {}
 }
 
-// Temporary diagnostic — returns exactly what MailerLite says back, for debugging.
-async function mlDiagnostic() {
-  const out = { steps: {} };
-  const apiKey = process.env.MAILERLITE_API_KEY;
-  out.hasKey = !!apiKey;
-  if (!apiKey) return out;
-  try {
-    const r = await fetch(ML_BASE + '/groups?limit=100', { headers: mlHeaders(apiKey) });
-    const t = await r.text();
-    let names = null;
-    try { names = (JSON.parse(t).data || []).map(g => g.name); } catch (e) {}
-    out.steps.groups = { status: r.status, names: names, raw: names ? undefined : t.slice(0, 300) };
-  } catch (e) { out.steps.groups = { error: e.message }; }
-  let subId = null;
-  try {
-    const r = await fetch(ML_BASE + '/subscribers', {
-      method: 'POST', headers: mlHeaders(apiKey),
-      body: JSON.stringify({ email: 'diag-' + Date.now() + '@stylestar.app', fields: { name: 'Diagnostic' } })
-    });
-    const t = await r.text();
-    out.steps.create = { status: r.status, body: t.slice(0, 400) };
-    try { subId = JSON.parse(t).data.id; } catch (e) {}
-  } catch (e) { out.steps.create = { error: e.message }; }
-  try {
-    const gid = await mlGetGroupId(apiKey);
-    out.steps.groupId = gid;
-    if (subId && gid) {
-      const r = await fetch(ML_BASE + '/subscribers/' + subId + '/groups/' + gid, { method: 'POST', headers: mlHeaders(apiKey) });
-      out.steps.assign = { status: r.status, body: (await r.text()).slice(0, 200) };
-    }
-  } catch (e) { out.steps.assign = { error: e.message }; }
-  // Supabase write test — confirms whether the real signup's DB step works
-  try {
-    const SUPABASE_URL = process.env.SUPABASE_URL;
-    const SUPABASE_KEY = process.env.SUPABASE_KEY;
-    if (SUPABASE_URL && SUPABASE_KEY) {
-      const r = await fetch(SUPABASE_URL + '/rest/v1/users', {
-        method: 'POST',
-        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ email: 'diag-' + Date.now() + '@stylestar.app', data: JSON.stringify({ test: true }) })
-      });
-      out.steps.supabaseWrite = { status: r.status, body: (await r.text()).slice(0, 200) };
-    } else {
-      out.steps.supabaseWrite = { error: 'no supabase env' };
-    }
-  } catch (e) { out.steps.supabaseWrite = { error: e.message }; }
-  return out;
-}
-
 exports.handler = async function(event) {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -113,12 +64,6 @@ exports.handler = async function(event) {
 
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
-  }
-
-  // Temporary MailerLite diagnostic: /.netlify/functions/user-data?mltest=1
-  if (event.httpMethod === 'GET' && event.queryStringParameters && event.queryStringParameters.mltest) {
-    const diag = await mlDiagnostic();
-    return { statusCode: 200, headers, body: JSON.stringify(diag, null, 2) };
   }
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
