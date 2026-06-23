@@ -1,24 +1,5 @@
 # Style Star — Project Notes
 
-> ## ⏭️ WHEN CATH RETURNS — REMIND HER FIRST THING (updated 2026-06-22)
-> Cath stepped away (battery dying) mid-task and asked to be reminded the moment
-> she's back. **Bring this up immediately when she returns.**
->
-> **✅ DONE: Plausible analytics** — set up and verified live (the `pa-*.js`
-> snippet is in `index.html`). Nothing left here.
->
-> **⏳ IN PROGRESS: Wire up email (MailerLite) so signups can be emailed.**
-> We just decided on MailerLite and she was on **Step 1: create the account**.
-> Pick up here — walk her one step at a time:
-> 1. Sign up at **mailerlite.com** (free; up to 1,000 subscribers).
-> 2. Create an audience/group (e.g. "Style Star Signups") → get the **Group ID**.
-> 3. Get an **API key**; add it in **Netlify → Site settings → Environment
->    variables** as `MAILERLITE_API_KEY` (do NOT paste the key in chat).
-> 4. She tells Claude the **Group ID** (not secret). Then Claude updates
->    `netlify/functions/user-data.js` so every new signup is added to the list.
->
-> _Once the email wiring is done, delete this reminder block._
-
 Style Star is a personal style-quiz web app ("Align your style. Shine your light.").
 A user takes a quiz (and/or uploads a photo), gets an AI-generated personal style
 write-up, can chat with an AI stylist, see outfit/shopping ideas, and save results
@@ -52,7 +33,10 @@ Two serverless functions in `netlify/functions/`:
   `fetch("/.netlify/functions/style-ai", ...)`.
 - **`user-data.js`** — email capture + saving/loading a user's results. Backed by
   **Supabase** (a `users` table). Requires env vars `SUPABASE_URL` and
-  `SUPABASE_KEY`. Called via `/.netlify/functions/user-data`.
+  `SUPABASE_KEY`. Called via `/.netlify/functions/user-data`. On each save it also
+  adds the signup to **MailerLite** (group "Style Star Signups", looked up by name)
+  so the list can be emailed — requires env var `MAILERLITE_API_KEY`. The MailerLite
+  call is wrapped so a failure never blocks the Supabase save.
 
 There is also a hidden Netlify Forms form (`name="style-star-emails"`) in
 `index.html` as a backup email-capture mechanism.
