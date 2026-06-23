@@ -119,4 +119,14 @@ Quick reference:
 
 ### Ideas / next time
 _(running list — add to this as ideas come up)_
-- (nothing yet — add your ideas here)
+- **Frictionless "remember me" link for the welcome email (Cath's priority).**
+  Today the welcome email's "Explore Style Star" button just opens `stylestar.app`.
+  If a subscriber opens it on a *different* device/browser than they took the quiz
+  on, the app doesn't auto-recognize them (their data is safe in Supabase, but they
+  must use "Restore your results" and re-enter their email). Cath wants ZERO friction.
+  Idea: include a personalized token/identifier in the welcome-email link so the app
+  reads it on load and auto-restores the subscriber's saved results from Supabase —
+  no re-entering email, even across devices. Mind privacy: use an opaque token, not
+  a raw email, in the URL. (Email/automation now run through MailerLite; the link
+  could carry a per-subscriber field/variable.)
+- (add more ideas here)
