@@ -32,7 +32,8 @@ async function addToMailerLite(email, name) {
   // 1) Create/update the subscriber
   const body = { email: email };
   if (name) body.fields = { name: name };
-  if (groupId) body.groups = [groupId]; // works on create; explicit assign below is the reliable path
+  // Note: do NOT pass groups on create — including them here can 422 and drop the
+  // whole subscriber. Create the subscriber first, then assign to the group below.
   const res = await fetch(ML_BASE + '/subscribers', {
     method: 'POST',
     headers: mlHeaders(apiKey),
