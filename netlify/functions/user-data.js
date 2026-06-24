@@ -117,9 +117,10 @@ exports.handler = async function(event) {
       } catch (e) {}
 
       // Also add the signup to the MailerLite email list (never block the save if it fails)
-      // Treat the app's "You" placeholder as no name, so the email can fall back to "there".
-      const rawName = (data && (data.userName || data.name)) || '';
-      const mlName = String(rawName).trim().toLowerCase() === 'you' ? '' : rawName;
+      // Use "there" when no real name was given (the quiz uses "You" as a placeholder),
+      // so the welcome email reads "Hi there," instead of "Hi ,".
+      const rawName = String((data && (data.userName || data.name)) || '').trim();
+      const mlName = (!rawName || rawName.toLowerCase() === 'you') ? 'there' : rawName;
       try { await addToMailerLite(key, mlName); } catch (e) {}
 
       return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
