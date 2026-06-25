@@ -135,6 +135,16 @@ _(running list — add to this as ideas come up)_
   in MailerLite (company/footer settings); it changes everywhere at once. Note:
   MailerLite locks the legal address's font size on send, so it can't be shrunk —
   the footer was made uniform instead.
+- **Apply for affiliate programs (Cath's TOP money priority).** She does NOT need the
+  LLC, trademark, or EIN finalized to START — most affiliate programs accept an
+  individual / sole proprietor with an SSN on the W-9. (An EIN is free from IRS.gov in
+  minutes if she'd rather not put her SSN on forms — not legal/tax advice; confirm with
+  her attorney/accountant.) Likely fits for a styling app: **Amazon Associates** (easiest
+  to start), **ShopStyle Collective**, **LTK**, and networks like **Rakuten / CJ /
+  ShareASale / Impact** (Nordstrom, Revolve, Anthropologie, etc.). App to-do once she has
+  links: wire affiliate URLs into the "Shop Curated Favorites" / shopping sections of
+  `index.html`, and add an **FTC affiliate-disclosure** line (e.g. "As an affiliate I may
+  earn from qualifying purchases") to the app + Privacy Policy.
 - (add more ideas here)
 
 **2026-06-23 (email setup session)**
@@ -146,7 +156,7 @@ _(running list — add to this as ideas come up)_
   copy, photo-upload bullet, Instagram link, gold "Explore Style Star" button →
   `stylestar.app`). **Activated** — sends automatically to new signups only.
 
-**2026-06-24 (sender-domain authentication — IN PROGRESS, revisit)**
+**2026-06-24 → 06-25 (sender-domain authentication — ✅ COMPLETE, see 06-25 entry)**
 - Problem being solved: welcome emails landed in spam / were delayed because they
   were sent "from" Cath's `cath.ellspermann@icloud.com`. You **cannot authenticate
   icloud.com** (Apple owns it) → DMARC fails → poor deliverability. Fix is to
@@ -178,4 +188,52 @@ _(running list — add to this as ideas come up)_
   **iCloud+ Custom Email Domain** (adds MX records in Netlify; mail then arrives in
   Apple Mail on iPhone + Mac, and she can reply *from* hello@stylestar.app). Simpler
   free alternative: an email-forwarding service (ImprovMX / Forward Email) that
-  forwards hello@stylestar.app → her existing inbox. Not done yet — revisit.
+  forwards hello@stylestar.app → her existing inbox. → DONE 06-25 via iCloud+ (below).
+
+**2026-06-25 (email auth FINISHED + inbox + welcome-email rewrite + share CTA)**
+- ✅ **`stylestar.app` sender domain authenticated** in MailerLite (Account settings →
+  Domains shows green "Authenticated"). The spam/deliverability problem is solved.
+- ✅ **Welcome email now sends from `hello@stylestar.app`**, sender NAME **"Style Star"**
+  (was Cath's iCloud address). Reply-to left unchecked so it equals the sender → replies
+  go to hello@stylestar.app. Automation **re-activated**. Confirmed working by a fresh
+  signup test.
+  - ⚠️ Testing gotcha: the welcome automation only fires on a **first-time** join of the
+    "Style Star Signups" group. To re-test, use a brand-new email — the Gmail `+alias`
+    trick (`you+test1@gmail.com`, `+test2`, …) gives unlimited fresh addresses that all
+    land in one inbox. Deleting a subscriber in MailerLite alone may NOT reliably
+    re-trigger.
+  - A scary "Something went wrong authenticating your domain stylestar.app" email arrived
+    *during* DNS propagation (right after we merged SPF / added iCloud records). It
+    resolved itself once DNS settled. Trust the **Domains page status**, not that email.
+- ✅ **RECEIVING set up via iCloud+ Custom Email Domain.** Added Apple's records in
+  Netlify DNS:
+  - CNAME `sig1._domainkey` → `sig1.dkim.stylestar.app.at.icloudmailadmin.com` (DKIM)
+  - MX `@` → `mx01.mail.icloud.com` & `mx02.mail.icloud.com` (both priority 10)
+  - TXT `@` → `apple-domain=sZ8XqhWTR8KKPB1G` (verification)
+  - **SPF MERGED** (a domain may only have ONE spf1 record): the single TXT is now
+    `v=spf1 a mx include:_spf.mlsend.com include:icloud.com ~all` — keeps BOTH MailerLite
+    (sending) and iCloud authorized. Netlify can't "edit" a TXT → delete + re-add. Enter
+    values WITHOUT trailing dots/quotes in Netlify.
+  - `hello@stylestar.app` now arrives in **Apple Mail on iPhone + Mac**, and she can reply
+    *from* it (compose → tap "From" → pick hello@stylestar.app). Catch-all left **OFF**.
+- ✅ **"Style Star" folder + iCloud Mail rule.** Made on **icloud.com (web)**, gear ⚙️ →
+  Rules — NOT the Mac Mail app (server-side rules apply on every device). Rule: *"if a
+  message is addressed to hello@stylestar.app → move to folder Style Star."* Separates
+  business mail from personal.
+  - Note: iCloud uses the Apple ID name as the sender name (no easy per-address sender
+    name). That's fine: customer-facing mail is branded "Style Star" via MailerLite;
+    personal replies come from "Catherine," which suits a founder-led brand. (If she ever
+    wants a fully separate, branded business inbox, that means switching the receiving
+    provider — e.g. Google Workspace / Zoho — and swapping the MX records.)
+- ✅ **Rewrote / tightened the welcome-email copy.** Opening now matches the homepage
+  voice: *"I'm so happy you're here. Thank you for taking our quiz. Style Star is a
+  personal stylist at your fingertips, here to make shopping feel clear, easy, and fun."*
+  Kept the 4 bullets + the "feel more **confident**…" closing ("confident" lives in the
+  close now, removed from the opening to avoid repeating it). Framing rule Cath cares
+  about: **never imply she lacked style before** — celebrate/elevate, don't "fix."
+- ✅ **Link-share headline → call-to-action** (PR #45, merged → live). `<title>`,
+  `og:title`, and `twitter:title` are now **"Style Star | Discover your signature
+  style"** (Apple strips the "Style Star |" prefix in iMessage, showing just the CTA,
+  matching the homepage headline). The share **image** (`og-image.png` — logo + "Align
+  your style. Shine your light." tagline) was left UNTOUCHED. Note: messaging apps cache
+  link previews, so already-sent links may show the old text for a while.
