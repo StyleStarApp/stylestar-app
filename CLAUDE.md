@@ -117,6 +117,31 @@ Quick reference:
   fill, metallic gold gradient frame (matching the cards), with a gold arrow.
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
+### Roadmap — ordered next steps (as of 2026-06-25)
+**Phase 1 — Legal/business foundation (in motion):**
+1. Wait for Indie Law (Almira) reply → review fee total, Class 045 clearance, extra
+   service fees, and EIN answer **before paying**.
+2. Pay USPTO fees + $130 FL LLC fee once confirmed.
+3. LLC forms (~5 biz days); both marks filed in the LLC's name.
+4. Get **EIN** (free at IRS.gov, or via Indie Law) once the LLC is approved.
+5. Open a **business bank account** (Truist or a no-fee online bank) with LLC docs + EIN;
+   route all business income/expenses through it.
+
+**Phase 2 — Affiliates (money priority; cleanest right after the EIN, Amazon anytime):**
+6. Apply to affiliate programs — **Amazon Associates** first, then ShopStyle Collective,
+   LTK, and networks (Rakuten / CJ / ShareASale / Impact).
+7. [Claude] Wire affiliate links into the app + add the FTC disclosure.
+
+**Phase 3 — Brand & app polish:**
+8. [Claude] **App design glow-up** (define the vibe first, then elevate screen by screen;
+   keep the logo + functionality intact).
+9. Rebrand the `floridapersonalstylist` Instagram toward Style Star over time.
+
+**Phase 4 — Cleanup (after the LLC exists):**
+10. Dissolve "Your Fashion Friend" sole prop (confirm timing/taxes with accountant).
+11. [Claude] Swap home address → PO Box in the email footer (when she has one).
+12. [Claude] (Future) "Remember me" auto-restore link in the welcome email.
+
 ### Ideas / next time
 _(running list — add to this as ideas come up)_
 - **Frictionless "remember me" link for the welcome email (Cath's priority).**
@@ -175,6 +200,21 @@ _(running list — add to this as ideas come up)_
   motion — WITHOUT changing the bones/functionality or the **logo** (logo stays the
   anchor; it's being trademarked as-is). Approach: define the aesthetic direction first
   (reference brands / mood / feeling), then apply it consistently screen by screen.
+- **Open shopping "mall" page (à la Phia).** A new in-app page/directory that lists many
+  curated stores, each "wired in" with Cath's affiliate links, so users browse an "open
+  mall" and *any* purchase earns affiliate commission. Organize by category; include the
+  FTC disclosure. Depends on affiliate approvals (Phase 2). Build as a new `s-...` screen
+  in `index.html` with store cards linking out via affiliate URLs.
+- **Rework the email-capture placement/UX (Cath priority — wants emails, hates friction).**
+  Current capture is hard to find. Surface it at a natural, low-friction moment — e.g.
+  right after the quiz, or after the "refine my preferences" (`s-pref`) step — as a gentle,
+  non-annoying prompt. Decide the exact trigger; keep it elegant. (There's existing capture
+  + a hidden Netlify form; find the current spot and improve prominence/timing. Cath wants
+  to think on the placement.)
+- **Persist the user's info so she never re-enters it.** Save name / quiz answers / email
+  locally (localStorage) and via Supabase so returning visitors aren't asked again —
+  reduces friction. Ties into the cross-device "remember me" auto-restore idea above. Cath
+  considers this important.
 - (add more ideas here)
 
 **2026-06-23 (email setup session)**
