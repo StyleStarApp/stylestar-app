@@ -145,3 +145,37 @@ _(running list — add to this as ideas come up)_
 - Built a **welcome-email automation** in MailerLite (logo, Georgia/brand styling,
   copy, photo-upload bullet, Instagram link, gold "Explore Style Star" button →
   `stylestar.app`). **Activated** — sends automatically to new signups only.
+
+**2026-06-24 (sender-domain authentication — IN PROGRESS, revisit)**
+- Problem being solved: welcome emails landed in spam / were delayed because they
+  were sent "from" Cath's `cath.ellspermann@icloud.com`. You **cannot authenticate
+  icloud.com** (Apple owns it) → DMARC fails → poor deliverability. Fix is to
+  authenticate a domain Cath owns (`stylestar.app`) and send from
+  **`hello@stylestar.app`** instead.
+- DNS for `stylestar.app` is managed by **Netlify DNS** (NS1 nameservers), NOT
+  GoDaddy — records must be added in Netlify (Team → DNS → stylestar.app).
+- **Added MailerLite's 3 authentication records in Netlify DNS** (confirmed live in
+  the records list):
+  1. CNAME — Name `litesrv._domainkey` → Value `litesrv._domainkey.mlsend.com` (DKIM)
+  2. TXT — Name `@` → Value `v=spf1 a mx include:_spf.mlsend.com ?all` (SPF; verified
+     it's the ONLY spf1 record — no duplicates)
+  3. TXT — Name `@` → Value `mailerlite-domain-verification=319d8d44c1e7893383f0abcae4521e7737968e79`
+- Status when we paused: MailerLite "Check records" still showed **red ✕ (not
+  detected yet)** — normal, DNS propagation takes minutes-to-hours. Waiting on it.
+- Mid-setup, MailerLite **auto-disabled the "Simple welcome email" automation**
+  because the sending domain (icloud.com) "is not authenticated anymore." Their
+  email says to "click authenticate next to icloud.com" — **IGNORE that** (dead end,
+  we don't control Apple's DNS). The correct path is the `stylestar.app` auth above.
+- **TODO when stylestar.app verifies (green ✓):**
+  1. Change the welcome email's **sender address** from the iCloud address to
+     **`hello@stylestar.app`** (MailerLite → automation → sender settings).
+  2. **Re-enable** the "Simple welcome email" automation.
+  3. Send a test signup and confirm it lands in the inbox (not spam).
+- **Separate open item — RECEIVING mail at `hello@stylestar.app`.** The Privacy
+  Policy in `index.html` lists `hello@stylestar.app` as the contact address, but
+  right now that's only set up for **sending** — there is **no mailbox**, so inbound
+  mail to it would bounce. Need to set up receiving. Best fit for an Apple user:
+  **iCloud+ Custom Email Domain** (adds MX records in Netlify; mail then arrives in
+  Apple Mail on iPhone + Mac, and she can reply *from* hello@stylestar.app). Simpler
+  free alternative: an email-forwarding service (ImprovMX / Forward Email) that
+  forwards hello@stylestar.app → her existing inbox. Not done yet — revisit.
