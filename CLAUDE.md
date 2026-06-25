@@ -162,6 +162,14 @@ _(running list — add to this as ideas come up)_
   formed — Cath will run ALL styling services under Style Star now. (Confirm timing/taxes
   with her accountant.) Also gradually rebrand the `floridapersonalstylist` Instagram
   toward Style Star to consolidate the brand.
+- **Business banking + EIN.** After the LLC is approved: get an **EIN** (federal tax ID —
+  free at IRS.gov in ~10 min; or confirm whether Indie Law's TM Max plan includes it) and
+  open a **dedicated business checking account in the LLC's name**. Keeping business +
+  personal money separate protects the LLC's liability shield and keeps taxes clean. No
+  need for a *different* bank — Cath banks at **Truist** (Orlando, FL) and a Truist
+  *business* account is convenient (instant transfers, one app); a no-fee online business
+  bank (Bluevine / Mercury / Novo / Relay) is an option to minimize fees. Sequence:
+  **LLC → EIN → business account →** route all affiliate/business income through it.
 - **App design "glow-up" (Cath wants this next).** Make the app look more upscale /
   artistic / editorial — elevate typography, color, spacing, texture, layout, subtle
   motion — WITHOUT changing the bones/functionality or the **logo** (logo stays the
