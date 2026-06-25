@@ -145,6 +145,28 @@ _(running list — add to this as ideas come up)_
   links: wire affiliate URLs into the "Shop Curated Favorites" / shopping sections of
   `index.html`, and add an **FTC affiliate-disclosure** line (e.g. "As an affiliate I may
   earn from qualifying purchases") to the app + Privacy Policy.
+- **Trademark + LLC (Indie Law — "TM Max" plan, $3,999 service fee already paid).**
+  Decided scope (pending Almira's confirmation + exact fee total): file the **STYLE
+  STAR word mark + the logo** (clean logo with star + line element, **no tagline**) in
+  **Class 035** (promoting retailers / affiliate links), **Class 042** (the app / SaaS:
+  style analysis + recommendations), **and Class 045** (personal stylist / fashion
+  consultancy — Cath is an active stylist operating under Style Star). Form a **Florida
+  LLC FIRST** (~5 biz days, $130 state fee) and file both marks **in the LLC's name** to
+  avoid a later ownership transfer. Government USPTO fees (~$350/class) are **separate**
+  from the $3,999 and could reach ~$2,100 for both marks × 3 classes — emailed Almira for
+  the exact total + whether added classes cost extra service fees. Registration takes
+  **months**; filing is quick. The earlier "$1,400 surprise" was just a **mislabeled**
+  USPTO line (4 classes × 2 marks), not an extra LLC charge — resolved. Tagline ("Align
+  your style. Shine your light.") reserved as a possible **separate slogan filing** later.
+- **Dissolve "Your Fashion Friend" sole proprietorship** once the Style Star LLC is
+  formed — Cath will run ALL styling services under Style Star now. (Confirm timing/taxes
+  with her accountant.) Also gradually rebrand the `floridapersonalstylist` Instagram
+  toward Style Star to consolidate the brand.
+- **App design "glow-up" (Cath wants this next).** Make the app look more upscale /
+  artistic / editorial — elevate typography, color, spacing, texture, layout, subtle
+  motion — WITHOUT changing the bones/functionality or the **logo** (logo stays the
+  anchor; it's being trademarked as-is). Approach: define the aesthetic direction first
+  (reference brands / mood / feeling), then apply it consistently screen by screen.
 - (add more ideas here)
 
 **2026-06-23 (email setup session)**
