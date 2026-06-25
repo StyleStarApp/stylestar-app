@@ -118,6 +118,12 @@ Quick reference:
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
 ### Roadmap — ordered next steps (as of 2026-06-25)
+> **▶ NEXT SESSION — START HERE:** (1) rework the **email-capture placement/UX** (see
+> Ideas), then (2) the **full app design glow-up**. These are app work and don't depend on
+> the lawyer/affiliates, so they can proceed anytime. _Cath also asked me to gently keep
+> her **on track / focused** each session — surface this roadmap and nudge toward the next
+> step._
+
 **Phase 1 — Legal/business foundation (in motion):**
 1. Wait for Indie Law (Almira) reply → review fee total, Class 045 clearance, extra
    service fees, and EIN answer **before paying**.
