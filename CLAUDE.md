@@ -133,9 +133,11 @@ because it's saved on GitHub.
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
 ### Roadmap — ordered next steps (as of 2026-06-25)
-> **▶ NEXT SESSION — START HERE:** (1) rework the **email-capture placement/UX** (see
-> Ideas), then (2) the **full app design glow-up**. These are app work and don't depend on
-> the lawyer/affiliates, so they can proceed anytime. _Cath also asked me to gently keep
+> **▶ NEXT SESSION — START HERE:** the **full app design glow-up** (button/color/font
+> consolidation — see the 2026-06-26 review). ✅ Email-capture rework is DONE (2026-06-26,
+> PR #50). The other big app lever is the **affiliate-link architecture** once programs
+> approve. These are app work and don't depend on the lawyer/affiliates, so they can
+> proceed anytime. _Cath also asked me to gently keep
 > her **on track / focused** each session — surface this roadmap and nudge toward the next
 > step._
 
@@ -335,3 +337,45 @@ _(running list — add to this as ideas come up)_
   matching the homepage headline). The share **image** (`og-image.png` — logo + "Align
   your style. Shine your light." tagline) was left UNTOUCHED. Note: messaging apps cache
   link previews, so already-sent links may show the old text for a while.
+
+**2026-06-26 (full app review + security hardening + email-capture rework)**
+- Did a **full critical review** of the live app (read all of `index.html` + both
+  functions, rendered the home screen). Key takeaways for the roadmap:
+  - **Profitability is the #1 gap:** the "Shop your style" AI picks link to store
+    *search* URLs (e.g. `nordstrom.com/sr?keyword=...`), not products, and carry **no
+    affiliate tags**. Even Founder's Favorites links aren't tagged. So the app currently
+    earns ~$0 even from motivated buyers. Affiliate *approval* (Phase 2) is only half the
+    job — the link-building in `index.html` must change so every outbound link carries
+    her tag (and ideally deep-links to the actual product, not a search).
+  - **Design glow-up target:** the results screen reads as "a pile of buttons" — 8 button
+    styles, hot pink (`#E91E8C`) clashing with the gold/black brand, lots of emoji, and 5
+    fonts loaded but used inconsistently. Consolidating to black + gold + one accent, one
+    display serif, and reusing the thin-line SVG icons would elevate it a lot.
+  - Smaller notes: 12 identical sliders (drop-off risk); restore-by-email has no
+    verification.
+- ✅ **Security: hardened the `style-ai` function** (PR #49, merged → live). It was an
+  open proxy (`Access-Control-Allow-Origin: *`, no caller check, no token cap) — anyone
+  could use it as free Claude on Cath's `ANTHROPIC_API_KEY`. Now: rejects requests not
+  from stylestar.app (Origin/Referer check → 403), CORS locked to the domain, and
+  `max_tokens` capped at 1024 + messages-array validation. Real app behavior unchanged
+  (it only ever asks for 300–500 tokens). NOTE: a determined attacker forging headers
+  isn't stopped — true rate-limiting (needs an external store like Upstash) is a possible
+  later step, but this stops ~99% of drive-by abuse for free.
+- ✅ **Email-capture rework** (PR #50, merged → live). Decided design (Cath's calls):
+  keep the gentle, skippable "Save your results" ask after results; add a **stronger
+  "Save my style profile" prompt after preferences** (the high-intent moment — she's just
+  entered sizes/colors/never-wear, so "don't make me re-enter this" works for us).
+  **No name asked before the quiz** (value/fun first — Cath was firm on this). New
+  `s-pref-done` save block (optional first name + email, "Maybe later" skip). Safety:
+  `buildFullUserData()` rebuilds the COMPLETE record (portrait + answers + prefs) from
+  saved storage before any save, so updating preferences can never overwrite a returning
+  visitor's portrait with empty data; already-saved users get silently re-synced.
+- ✅ **Headline robustness** (same session). `.wel-t` ("Discover your signature style")
+  now uses `text-wrap:balance` + `overflow-wrap:break-word` and a smaller size on
+  ≤374px phones, so it always wraps cleanly. (The "cut off on iPhone" I first reported
+  turned out to be largely a headless-screenshot artifact — the test browser clamps to a
+  500px viewport — but the wrapping is genuinely more polished now. Worth a real-device
+  glance.)
+- **▶ NEXT (still app-side, no external blockers):** the **design glow-up** (button/color/
+  font consolidation above) and, once affiliate programs approve, the **affiliate-link
+  architecture** (the real revenue unlock).
