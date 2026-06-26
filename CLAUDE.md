@@ -175,6 +175,13 @@ _(running list — add to this as ideas come up)_
   no re-entering email, even across devices. Mind privacy: use an opaque token, not
   a raw email, in the URL. (Email/automation now run through MailerLite; the link
   could carry a per-subscriber field/variable.)
+  _Confirmed live 2026-06-26:_ Cath signed up in incognito, clicked the welcome email's
+  "Explore Style Star" button, and the app made her take the quiz **again** — it didn't
+  remember her even though she'd just entered her email. Exactly the problem to fix: the
+  button should carry an **opaque token** (not the raw email) that the app reads on load to
+  auto-restore her saved results (name + quiz answers) from Supabase and skip the quiz. Her
+  data is safe in Supabase; the app just isn't auto-recognizing her from that click yet.
+  (Cluster this with the email-capture rework + "persist user info" — all the friction items.)
 - **Swap the welcome-email footer address (privacy).** The MailerLite welcome email
   currently shows Cath's home address in the footer (legally required physical
   address). Replace it with a PO Box / business address once she has one — update it
