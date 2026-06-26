@@ -63,26 +63,41 @@ setup needed since they're already loaded.
 
 ## For Cath — how to come back and work on this
 
-You don't need a folder on your computer. Your whole project lives on **GitHub**
-(`StyleStarApp/stylestar-app`), and this file is the shared memory between sessions.
+**You can never lose your work.** Everything real lives in **two permanent places on
+GitHub** (`StyleStarApp/stylestar-app`): your **code** (the whole app) and **this
+`CLAUDE.md`** (our shared memory — roadmap, decisions, where we left off). The chat is
+just the conversation, like a phone call; GitHub is the filing cabinet, and it's
+permanent. Even if a chat window disappears, the work does **not**.
 
-To pick up where you left off:
+### ▶ Each time you come back — do this:
+1. Open the Claude app → **Code** tab (or go to **claude.ai/code**).
+2. Click **"New session"** — start a *new* one each time. (A new session is also what
+   activates the upgraded **network access** we set up 2026-06-25, so Claude can see the
+   live site.) Our sessions show under **Recents** (e.g. "Claude code identification").
+3. Choose the **stylestar-app** repo/project.
+4. Paste this **restart phrase**:
 
-1. Go to **claude.ai/code** (or open the Claude app and choose **Code**).
-2. Open the project / repo: **`stylestar-app`**.
-3. Start a session and just say what you want to change. Claude reads this file
-   automatically, so you never have to re-explain the project.
+   > _Continue my Style Star project. Read CLAUDE.md and tell me where we left off.
+   > We're working on branch `claude/festive-ptolemy-U8Xlb`._
 
-How things "save":
+5. Claude reads this file automatically, resurfaces the roadmap, and you pick up exactly
+   where you stopped.
+
+### 🧭 If you ever feel lost
+Just say: **"Read CLAUDE.md and tell me where we left off."** Claude can always do this,
+because it's saved on GitHub.
+
+### How things "save"
 - **Merging a Pull Request = saving + going live.** That's it.
 - Anything merged (or pushed to a branch) is on GitHub forever and recoverable.
-- The temporary chat workspace disappears between sessions — that's fine, because
-  the real project is always safe on GitHub.
+- The temporary chat workspace disappears between sessions — that's fine; the real
+  project is always safe on GitHub.
 
-Quick reference:
+### Quick reference
 - **Code & history:** github.com/StyleStarApp/stylestar-app
+- **Working branch:** `claude/festive-ptolemy-U8Xlb`
 - **Live site:** served by Netlify (auto-deploys from `main`)
-- **Emails / user data:** Supabase
+- **Emails / user data:** Supabase (stores data) + MailerLite (sends email)
 
 ## Project log
 
