@@ -507,7 +507,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <div class="stay-form" id="prefSaveForm">
         <input type="text" class="stay-input" id="prefSaveName" placeholder="Your first name (optional)">
         <input type="email" class="stay-input" id="prefSaveEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')savePrefProfile()">
-        <button class="btn-p" style="margin-top:0;max-width:280px" onclick="savePrefProfile()">Save my style profile</button>
+        <button class="btn-p" id="prefSaveBtn" style="margin-top:0;max-width:280px" onclick="savePrefProfile()">Save my style profile</button>
       </div>
       <div id="prefSaveMsg" style="font-size:13px;color:#777;margin-top:8px"></div>
       <div style="font-size:11px;color:#7a7a7a;margin-top:6px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
@@ -1201,18 +1201,39 @@ async function syncPrefsToServer(){
 }
 
 // Strong "save all this" capture after preferences.
+function prefSaveComplete(email){
+  emailDone=true;
+  try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
+  // Don't ask again on the results screens
+  var s1=document.getElementById('staySection');if(s1)s1.style.display='none';
+  var s2=document.getElementById('staySectionPhoto');if(s2)s2.style.display='none';
+  // Swap to the saved/success state
+  document.getElementById('prefSaveBlock').style.display='none';
+  var savedBlock=document.getElementById('prefSavedBlock');
+  savedBlock.style.display='block';
+  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is saved! You can come back anytime, on any device, just by entering your email.';
+  window.scrollTo(0,0);
+}
 async function savePrefProfile(){
   const email=document.getElementById('prefSaveEmail').value.trim();
   const nameVal=document.getElementById('prefSaveName').value.trim();
   const msg=document.getElementById('prefSaveMsg');
-  if(!email||!email.includes('@')){msg.textContent='Please enter a valid email so we can save your profile.';return}
-  msg.textContent='Saving...';
+  const btn=document.getElementById('prefSaveBtn');
+  if(!email||!email.includes('@')){
+    if(msg){msg.style.color='#c0392b';msg.textContent='Please enter a valid email so we can save your profile.'}
+    return;
+  }
+  // Immediate, unmistakable feedback that the tap registered
+  if(msg){msg.style.color='#777';msg.textContent='Saving your style profile…'}
+  if(btn){btn.disabled=true;btn.style.opacity='0.6';btn.textContent='Saving…'}
   if(nameVal){
     userName=nameVal.charAt(0).toUpperCase()+nameVal.slice(1);
     try{var _d=JSON.parse(localStorage.getItem('ss_data'))||{};_d.userName=userName;localStorage.setItem('ss_data',JSON.stringify(_d));}catch(e){}
     var _rn=document.getElementById('rn');if(_rn)_rn.textContent='This is '+userName;
   }
   const fullData=buildFullUserData();
+  // Never let a slow/stalled network leave the user stuck on "Saving…"
+  function withTimeout(p,ms){return Promise.race([p,new Promise(function(res){setTimeout(res,ms)})])}
   // Backup to the Netlify email list form
   try{
     const fd=new URLSearchParams();
@@ -1220,27 +1241,17 @@ async function savePrefProfile(){
     fd.append('email',email);
     fd.append('name',userName||'');
     fd.append('style-notes',(fullData.topArchNames||[]).join(', '));
-    await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});
+    await withTimeout(fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}),6000);
   }catch(e){}
   // Save the full profile (portrait + answers + preferences) to the server
   try{
-    await fetch('/.netlify/functions/user-data',{
+    await withTimeout(fetch('/.netlify/functions/user-data',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({email:email,data:fullData})
-    });
-    try{localStorage.setItem('ss_email',email)}catch(e){}
+    }),8000);
   }catch(e){}
-  emailDone=true;
-  try{localStorage.setItem('ss_emailDone','true')}catch(e){}
-  // Don't ask again on the results screens
-  var s1=document.getElementById('staySection');if(s1)s1.style.display='none';
-  var s2=document.getElementById('staySectionPhoto');if(s2)s2.style.display='none';
-  // Swap to the saved/success state
-  document.getElementById('prefSaveBlock').style.display='none';
-  const savedBlock=document.getElementById('prefSavedBlock');
-  savedBlock.style.display='block';
-  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is saved! You can come back anytime, on any device, just by entering your email.';
+  prefSaveComplete(email);
 }
 
 function renderPrefPips(){
