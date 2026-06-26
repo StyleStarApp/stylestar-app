@@ -63,26 +63,41 @@ setup needed since they're already loaded.
 
 ## For Cath — how to come back and work on this
 
-You don't need a folder on your computer. Your whole project lives on **GitHub**
-(`StyleStarApp/stylestar-app`), and this file is the shared memory between sessions.
+**You can never lose your work.** Everything real lives in **two permanent places on
+GitHub** (`StyleStarApp/stylestar-app`): your **code** (the whole app) and **this
+`CLAUDE.md`** (our shared memory — roadmap, decisions, where we left off). The chat is
+just the conversation, like a phone call; GitHub is the filing cabinet, and it's
+permanent. Even if a chat window disappears, the work does **not**.
 
-To pick up where you left off:
+### ▶ Each time you come back — do this:
+1. Open the Claude app → **Code** tab (or go to **claude.ai/code**).
+2. Click **"New session"** — start a *new* one each time. (A new session is also what
+   activates the upgraded **network access** we set up 2026-06-25, so Claude can see the
+   live site.) Our sessions show under **Recents** (e.g. "Claude code identification").
+3. Choose the **stylestar-app** repo/project.
+4. Paste this **restart phrase**:
 
-1. Go to **claude.ai/code** (or open the Claude app and choose **Code**).
-2. Open the project / repo: **`stylestar-app`**.
-3. Start a session and just say what you want to change. Claude reads this file
-   automatically, so you never have to re-explain the project.
+   > _Continue my Style Star project. Read CLAUDE.md and tell me where we left off.
+   > We're working on branch `claude/festive-ptolemy-U8Xlb`._
 
-How things "save":
+5. Claude reads this file automatically, resurfaces the roadmap, and you pick up exactly
+   where you stopped.
+
+### 🧭 If you ever feel lost
+Just say: **"Read CLAUDE.md and tell me where we left off."** Claude can always do this,
+because it's saved on GitHub.
+
+### How things "save"
 - **Merging a Pull Request = saving + going live.** That's it.
 - Anything merged (or pushed to a branch) is on GitHub forever and recoverable.
-- The temporary chat workspace disappears between sessions — that's fine, because
-  the real project is always safe on GitHub.
+- The temporary chat workspace disappears between sessions — that's fine; the real
+  project is always safe on GitHub.
 
-Quick reference:
+### Quick reference
 - **Code & history:** github.com/StyleStarApp/stylestar-app
+- **Working branch:** `claude/festive-ptolemy-U8Xlb`
 - **Live site:** served by Netlify (auto-deploys from `main`)
-- **Emails / user data:** Supabase
+- **Emails / user data:** Supabase (stores data) + MailerLite (sends email)
 
 ## Project log
 
@@ -117,6 +132,37 @@ Quick reference:
   fill, metallic gold gradient frame (matching the cards), with a gold arrow.
 - Tweaked the opening-page Curated Favorites card copy (PR #4).
 
+### Roadmap — ordered next steps (as of 2026-06-25)
+> **▶ NEXT SESSION — START HERE:** (1) rework the **email-capture placement/UX** (see
+> Ideas), then (2) the **full app design glow-up**. These are app work and don't depend on
+> the lawyer/affiliates, so they can proceed anytime. _Cath also asked me to gently keep
+> her **on track / focused** each session — surface this roadmap and nudge toward the next
+> step._
+
+**Phase 1 — Legal/business foundation (in motion):**
+1. Wait for Indie Law (Almira) reply → review fee total, Class 045 clearance, extra
+   service fees, and EIN answer **before paying**.
+2. Pay USPTO fees + $130 FL LLC fee once confirmed.
+3. LLC forms (~5 biz days); both marks filed in the LLC's name.
+4. Get **EIN** (free at IRS.gov, or via Indie Law) once the LLC is approved.
+5. Open a **business bank account** (Truist or a no-fee online bank) with LLC docs + EIN;
+   route all business income/expenses through it.
+
+**Phase 2 — Affiliates (money priority; cleanest right after the EIN, Amazon anytime):**
+6. Apply to affiliate programs — **Amazon Associates** first, then ShopStyle Collective,
+   LTK, and networks (Rakuten / CJ / ShareASale / Impact).
+7. [Claude] Wire affiliate links into the app + add the FTC disclosure.
+
+**Phase 3 — Brand & app polish:**
+8. [Claude] **App design glow-up** (define the vibe first, then elevate screen by screen;
+   keep the logo + functionality intact).
+9. Rebrand the `floridapersonalstylist` Instagram toward Style Star over time.
+
+**Phase 4 — Cleanup (after the LLC exists):**
+10. Dissolve "Your Fashion Friend" sole prop (confirm timing/taxes with accountant).
+11. [Claude] Swap home address → PO Box in the email footer (when she has one).
+12. [Claude] (Future) "Remember me" auto-restore link in the welcome email.
+
 ### Ideas / next time
 _(running list — add to this as ideas come up)_
 - **Frictionless "remember me" link for the welcome email (Cath's priority).**
@@ -129,6 +175,13 @@ _(running list — add to this as ideas come up)_
   no re-entering email, even across devices. Mind privacy: use an opaque token, not
   a raw email, in the URL. (Email/automation now run through MailerLite; the link
   could carry a per-subscriber field/variable.)
+  _Confirmed live 2026-06-26:_ Cath signed up in incognito, clicked the welcome email's
+  "Explore Style Star" button, and the app made her take the quiz **again** — it didn't
+  remember her even though she'd just entered her email. Exactly the problem to fix: the
+  button should carry an **opaque token** (not the raw email) that the app reads on load to
+  auto-restore her saved results (name + quiz answers) from Supabase and skip the quiz. Her
+  data is safe in Supabase; the app just isn't auto-recognizing her from that click yet.
+  (Cluster this with the email-capture rework + "persist user info" — all the friction items.)
 - **Swap the welcome-email footer address (privacy).** The MailerLite welcome email
   currently shows Cath's home address in the footer (legally required physical
   address). Replace it with a PO Box / business address once she has one — update it
@@ -145,6 +198,51 @@ _(running list — add to this as ideas come up)_
   links: wire affiliate URLs into the "Shop Curated Favorites" / shopping sections of
   `index.html`, and add an **FTC affiliate-disclosure** line (e.g. "As an affiliate I may
   earn from qualifying purchases") to the app + Privacy Policy.
+- **Trademark + LLC (Indie Law — "TM Max" plan, $3,999 service fee already paid).**
+  Decided scope (pending Almira's confirmation + exact fee total): file the **STYLE
+  STAR word mark + the logo** (clean logo with star + line element, **no tagline**) in
+  **Class 035** (promoting retailers / affiliate links), **Class 042** (the app / SaaS:
+  style analysis + recommendations), **and Class 045** (personal stylist / fashion
+  consultancy — Cath is an active stylist operating under Style Star). Form a **Florida
+  LLC FIRST** (~5 biz days, $130 state fee) and file both marks **in the LLC's name** to
+  avoid a later ownership transfer. Government USPTO fees (~$350/class) are **separate**
+  from the $3,999 and could reach ~$2,100 for both marks × 3 classes — emailed Almira for
+  the exact total + whether added classes cost extra service fees. Registration takes
+  **months**; filing is quick. The earlier "$1,400 surprise" was just a **mislabeled**
+  USPTO line (4 classes × 2 marks), not an extra LLC charge — resolved. Tagline ("Align
+  your style. Shine your light.") reserved as a possible **separate slogan filing** later.
+- **Dissolve "Your Fashion Friend" sole proprietorship** once the Style Star LLC is
+  formed — Cath will run ALL styling services under Style Star now. (Confirm timing/taxes
+  with her accountant.) Also gradually rebrand the `floridapersonalstylist` Instagram
+  toward Style Star to consolidate the brand.
+- **Business banking + EIN.** After the LLC is approved: get an **EIN** (federal tax ID —
+  free at IRS.gov in ~10 min; or confirm whether Indie Law's TM Max plan includes it) and
+  open a **dedicated business checking account in the LLC's name**. Keeping business +
+  personal money separate protects the LLC's liability shield and keeps taxes clean. No
+  need for a *different* bank — Cath banks at **Truist** (Orlando, FL) and a Truist
+  *business* account is convenient (instant transfers, one app); a no-fee online business
+  bank (Bluevine / Mercury / Novo / Relay) is an option to minimize fees. Sequence:
+  **LLC → EIN → business account →** route all affiliate/business income through it.
+- **App design "glow-up" (Cath wants this next).** Make the app look more upscale /
+  artistic / editorial — elevate typography, color, spacing, texture, layout, subtle
+  motion — WITHOUT changing the bones/functionality or the **logo** (logo stays the
+  anchor; it's being trademarked as-is). Approach: define the aesthetic direction first
+  (reference brands / mood / feeling), then apply it consistently screen by screen.
+- **Open shopping "mall" page (à la Phia).** A new in-app page/directory that lists many
+  curated stores, each "wired in" with Cath's affiliate links, so users browse an "open
+  mall" and *any* purchase earns affiliate commission. Organize by category; include the
+  FTC disclosure. Depends on affiliate approvals (Phase 2). Build as a new `s-...` screen
+  in `index.html` with store cards linking out via affiliate URLs.
+- **Rework the email-capture placement/UX (Cath priority — wants emails, hates friction).**
+  Current capture is hard to find. Surface it at a natural, low-friction moment — e.g.
+  right after the quiz, or after the "refine my preferences" (`s-pref`) step — as a gentle,
+  non-annoying prompt. Decide the exact trigger; keep it elegant. (There's existing capture
+  + a hidden Netlify form; find the current spot and improve prominence/timing. Cath wants
+  to think on the placement.)
+- **Persist the user's info so she never re-enters it.** Save name / quiz answers / email
+  locally (localStorage) and via Supabase so returning visitors aren't asked again —
+  reduces friction. Ties into the cross-device "remember me" auto-restore idea above. Cath
+  considers this important.
 - (add more ideas here)
 
 **2026-06-23 (email setup session)**
