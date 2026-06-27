@@ -266,7 +266,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .sheet-x:hover{background:#e9e5dd;color:#666}
 .sheet-title{font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:600;color:#1a1a1a;margin-bottom:6px}
 .sheet-sub{font-size:14px;color:#555;line-height:1.5;margin-bottom:14px;max-width:320px;margin-left:auto;margin-right:auto}
-.save-toast{position:fixed;right:0;bottom:18px;z-index:9997;width:min(330px,calc(100% - 16px));background:#fff;border-radius:16px 0 0 16px;box-shadow:0 10px 34px rgba(20,16,8,0.24);border-left:3px solid #D4AF37;padding:16px 18px 18px;transform:translateX(110%);transition:transform .42s cubic-bezier(.2,.85,.25,1);display:none;text-align:left}
+.save-toast{position:fixed;right:0;bottom:18px;z-index:9997;width:min(330px,calc(100% - 16px));background:#fff;border-radius:16px 0 0 16px;box-shadow:0 10px 34px rgba(20,16,8,0.24);border-left:3px solid #D4AF37;padding:16px 18px 18px;transform:translateX(110%);transition:transform .72s cubic-bezier(.22,.7,.25,1);display:none;text-align:left}
 .save-toast.show{transform:translateX(0)}
 .save-toast-title{font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:5px;padding-right:18px}
 .save-toast-sub{font-size:13px;color:#555;line-height:1.45;margin-bottom:10px}
@@ -1298,28 +1298,32 @@ async function savePrefProfile(){
 }
 
 // --- After-results save asks: a bottom sheet, then a gentler side toast ---
-// Stage 1: once she's read a good chunk of her results (scrolled ~halfway,
-//          or a 10s backup), a bottom sheet slides up.
-// Stage 2: ONLY if she dismissed stage 1 and keeps scrolling, a softer card
-//          slides in from the side and asks once more. Either can save.
-let saveSheetShown=false,saveSheetDismissed=false,saveSheetDismissAtY=0,_sheetTimer=null;
+// Stage 1: only once she's scrolled to the BOTTOM (she's read it all), then a
+//          ~2s beat to enjoy it, the bottom sheet rises. A long 22s backup
+//          covers a slow reader who never scrolls — never rushing her.
+// Stage 2: ONLY if she dismissed stage 1, a softer card slides in slowly from
+//          the side a few seconds later. Either can save. Neither ever pops
+//          over a different screen.
+let saveSheetShown=false,saveSheetDismissed=false,_sheetTimer=null,_stage1Beat=null,_stage2Timer=null;
 let sideToastShown=false,sideToastDismissed=false;
-function _scrollFrac(){var se=document.documentElement.scrollHeight-window.innerHeight;return se>0?window.scrollY/se:0}
+function _onResults(){var a=document.querySelector('.scr.act');return !!a&&(a.id==='s-res'||a.id==='s-photo-res')}
+function _nearBottom(){return (document.documentElement.scrollHeight-window.innerHeight-window.scrollY)<70}
 function _resultsScroll(){
-  if(emailDone){_clearSheetTriggers();return}
-  var y=window.scrollY,frac=_scrollFrac();
-  if(!saveSheetShown&&!saveSheetDismissed){
-    if(frac>0.5||y>500)showSaveSheet();
-    return;
-  }
-  if(saveSheetDismissed&&!sideToastShown&&!sideToastDismissed){
-    if(y>saveSheetDismissAtY+180)showSideToast();
+  if(emailDone||saveSheetShown||saveSheetDismissed)return;
+  // She's reached the bottom — give her a beat to enjoy it, then rise.
+  if(_nearBottom()&&!_stage1Beat){
+    _stage1Beat=setTimeout(showSaveSheet,2000);
   }
 }
-function _clearSheetTriggers(){if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null}window.removeEventListener('scroll',_resultsScroll)}
+function _clearSheetTriggers(){
+  if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null}
+  if(_stage1Beat){clearTimeout(_stage1Beat);_stage1Beat=null}
+  if(_stage2Timer){clearTimeout(_stage2Timer);_stage2Timer=null}
+  window.removeEventListener('scroll',_resultsScroll);
+}
 function scheduleSaveSheet(){
   if(emailDone||saveSheetShown||saveSheetDismissed||_sheetTimer)return;
-  _sheetTimer=setTimeout(showSaveSheet,10000); // backup for readers who never scroll
+  _sheetTimer=setTimeout(showSaveSheet,22000); // long backup for a slow reader who never scrolls
   window.addEventListener('scroll',_resultsScroll,{passive:true});
 }
 // Shared, hardened save core used by every save entry point.
@@ -1353,7 +1357,9 @@ async function _persistSave(email,nameVal){
 // Stage 1: bottom sheet
 function showSaveSheet(){
   if(emailDone||saveSheetShown||saveSheetDismissed)return;
-  if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null} // keep scroll listener alive for stage 2
+  if(!_onResults()){_stage1Beat=null;return} // never pop over another screen; allow a later re-arm
+  if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null}
+  window.removeEventListener('scroll',_resultsScroll);
   saveSheetShown=true;
   if(userName&&userName!=='You'){var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName}
   var el=document.getElementById('saveSheet');
@@ -1363,8 +1369,11 @@ function showSaveSheet(){
 }
 function dismissSaveSheet(){
   saveSheetDismissed=true;
-  saveSheetDismissAtY=window.scrollY; // stage 2 fires only if she scrolls further
   if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null}
+  if(_stage1Beat){clearTimeout(_stage1Beat);_stage1Beat=null}
+  window.removeEventListener('scroll',_resultsScroll);
+  // Arm the gentle, slower side ask a few seconds later (no rush).
+  _stage2Timer=setTimeout(showSideToast,6000);
   var el=document.getElementById('saveSheet');
   el.classList.remove('show');
   setTimeout(function(){el.style.display='none'},320);
@@ -1388,6 +1397,7 @@ async function saveFromSheet(){
 // Stage 2: gentle side toast
 function showSideToast(){
   if(emailDone||sideToastShown||sideToastDismissed)return;
+  if(!_onResults())return; // only on the results screen, never over chat/shop/etc.
   sideToastShown=true;
   if(userName&&userName!=='You'){var n=document.getElementById('toastName');if(n&&!n.value)n.value=userName}
   var el=document.getElementById('saveToast');
