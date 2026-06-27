@@ -1,6 +1,41 @@
+const crypto = require('crypto');
+
 const MAILERLITE_GROUP_NAME = 'Style Star Signups';
 const ML_BASE = 'https://connect.mailerlite.com/api';
 let mlGroupIdCache = null;
+
+// --- Opaque restore token ---------------------------------------------------
+// The welcome email's button link carries an opaque token (never the raw
+// email). The app sends it back on load; we decrypt it to the email and return
+// the saved results. Encrypted with RESTORE_SECRET so only this function can
+// read it. If RESTORE_SECRET is unset, tokens are simply disabled (no breakage).
+function _restoreKey() {
+  const s = process.env.RESTORE_SECRET;
+  if (!s) return null;
+  return crypto.createHash('sha256').update(String(s)).digest(); // 32 bytes
+}
+function makeToken(email) {
+  const key = _restoreKey();
+  if (!key || !email) return '';
+  try {
+    const iv = crypto.randomBytes(12);
+    const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+    const enc = Buffer.concat([cipher.update(String(email), 'utf8'), cipher.final()]);
+    const tag = cipher.getAuthTag();
+    return Buffer.concat([iv, tag, enc]).toString('base64url');
+  } catch (e) { return ''; }
+}
+function readToken(token) {
+  const key = _restoreKey();
+  if (!key || !token) return null;
+  try {
+    const buf = Buffer.from(String(token), 'base64url');
+    const iv = buf.subarray(0, 12), tag = buf.subarray(12, 28), enc = buf.subarray(28);
+    const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
+    decipher.setAuthTag(tag);
+    return Buffer.concat([decipher.update(enc), decipher.final()]).toString('utf8');
+  } catch (e) { return null; }
+}
 
 function mlHeaders(apiKey) {
   return {
@@ -25,14 +60,17 @@ async function mlGetGroupId(apiKey) {
 
 // Add (or update) a subscriber in MailerLite, then assign to the signups group.
 // Create is done first and isolated so the group logic can never block a signup.
-async function addToMailerLite(email, name) {
+async function addToMailerLite(email, name, token) {
   const apiKey = process.env.MAILERLITE_API_KEY;
   if (!apiKey) return; // not configured — skip quietly
   let subId = null;
   // 1) Create/update the subscriber (most important step)
   try {
     const body = { email: email };
-    if (name) body.fields = { name: name };
+    const fields = {};
+    if (name) fields.name = name;
+    if (token) fields.restore_token = token; // populates the welcome-email link
+    if (Object.keys(fields).length) body.fields = fields;
     const res = await fetch(ML_BASE + '/subscribers', {
       method: 'POST',
       headers: mlHeaders(apiKey),
@@ -121,15 +159,22 @@ exports.handler = async function(event) {
       // so the welcome email reads "Hi there," instead of "Hi ,".
       const rawName = String((data && (data.userName || data.name)) || '').trim();
       const mlName = (!rawName || rawName.toLowerCase() === 'you') ? 'there' : rawName;
-      try { await addToMailerLite(key, mlName); } catch (e) {}
+      const restoreToken = makeToken(key);
+      try { await addToMailerLite(key, mlName, restoreToken); } catch (e) {}
 
       return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
     }
 
     if (event.httpMethod === 'GET') {
-      const email = event.queryStringParameters?.email;
+      const q = event.queryStringParameters || {};
+      // Look up by opaque token (from the welcome-email link) or by email.
+      let email = q.email;
+      if (!email && q.token) {
+        const decoded = readToken(q.token);
+        if (decoded) email = decoded;
+      }
       if (!email) {
-        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Email required' }) };
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Email or token required' }) };
       }
       const key = email.toLowerCase().trim();
 
