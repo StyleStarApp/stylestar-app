@@ -272,6 +272,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .save-toast-sub{font-size:13px;color:#555;line-height:1.45;margin-bottom:10px}
 .save-toast .stay-input{max-width:100%;width:100%;text-align:left;padding:11px 14px;font-size:14px}
 .save-toast .btn-p{margin-top:10px;max-width:100%;padding:13px}
+.save-pin-wrap{text-align:center;margin:-0.4rem 0 1.25rem}
+.save-pin{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#B08830;cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;letter-spacing:0.02em;padding:4px 8px}
+.save-pin:hover{color:#8a6d20}
+.save-pin span{text-decoration:underline;text-underline-offset:3px}
 </style>
 </head>
 <body>
@@ -391,6 +395,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <div class="flav"><div class="flav-lbl">Your style has notes of</div><div class="flav-tags" id="ft"></div></div>
   <div class="fp"><div class="fp-lbl">Your style fingerprint</div><div id="fpChart"></div></div>
 
+  <div class="save-pin-wrap"><button class="save-pin" onclick="openSaveSheetManual()">♡ <span>Save my results</span></button></div>
+
   <div class="whatsnext" id="whatsnext">
     <div class="email-divider"></div>
     <div class="whatsnext-title">What would you like to do?</div>
@@ -463,6 +469,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   <div class="res-para" id="prp"></div>
   <div class="flav"><div class="flav-lbl">This outfit has notes of</div><div class="flav-tags" id="pft"></div></div>
   <div class="fp"><div class="fp-lbl">Outfit style fingerprint</div><div id="pChart"></div></div>
+
+  <div class="save-pin-wrap"><button class="save-pin" onclick="openSaveSheetManual()">♡ <span>Save my results</span></button></div>
 
   <div class="whatsnext">
     <div class="email-divider"></div>
@@ -743,7 +751,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <button class="sheet-x" onclick="dismissSaveSheet()" aria-label="Close">&times;</button>
     <div class="sheet-grab"></div>
     <div class="sheet-title">Don't lose your style profile ✨</div>
-    <div class="sheet-sub">Save your results so you can come back anytime, on any device.</div>
+    <div class="sheet-sub" id="sheetSub">Save your results so you can come back anytime, on any device.</div>
     <div class="stay-form">
       <input type="text" class="stay-input" id="sheetName" placeholder="Your first name (optional)">
       <input type="email" class="stay-input" id="sheetEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')saveFromSheet()">
@@ -757,7 +765,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 
 <div class="save-toast" id="saveToast">
   <button class="sheet-x" onclick="dismissSideToast()" aria-label="Close" style="top:8px;right:10px">&times;</button>
-  <div class="save-toast-title">One more thing ✨</div>
+  <div class="save-toast-title" id="toastTitle">One more thing ✨</div>
   <div class="save-toast-sub">Want me to save your results? Pop in your email and you can pick up right here anytime.</div>
   <input type="text" class="stay-input" id="toastName" placeholder="First name (optional)">
   <input type="email" class="stay-input" id="toastEmail" placeholder="Enter your email" style="margin-top:8px" onkeydown="if(event.key==='Enter')saveFromSideToast()">
@@ -821,7 +829,7 @@ function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)})
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`})}
 async function genResult(){show('s-load');document.getElementById('pf').style.width='100%';document.getElementById('pl').textContent='Complete';const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
-function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('pw').style.display='none';document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none'}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}scheduleSaveSheet()}
+function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('pw').style.display='none';document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none';hideSavePins()}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}scheduleSaveSheet()}
 
 let photoData=null,photoType="image/jpeg";
 function startPhoto(){if(!userName||userName==='You'){userName='You'}showPhoto()}
@@ -934,7 +942,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     const pft=document.getElementById('pft');pft.innerHTML='';
     top3.forEach(a=>{pft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});
     buildPhotoChart(vals);
-    if(emailDone){document.getElementById('staySectionPhoto').style.display='none'}
+    if(emailDone){document.getElementById('staySectionPhoto').style.display='none';hideSavePins()}
     scheduleSaveSheet();
   }catch(e){
     show('s-photo-res');
@@ -1352,6 +1360,7 @@ async function _persistSave(email,nameVal){
   try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
   var s1=document.getElementById('staySection');if(s1)s1.style.display='none';
   var s2=document.getElementById('staySectionPhoto');if(s2)s2.style.display='none';
+  hideSavePins();
   _clearSheetTriggers();
 }
 // Stage 1: bottom sheet
@@ -1361,7 +1370,10 @@ function showSaveSheet(){
   if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null}
   window.removeEventListener('scroll',_resultsScroll);
   saveSheetShown=true;
-  if(userName&&userName!=='You'){var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName}
+  if(userName&&userName!=='You'){
+    var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName;
+    var sub=document.getElementById('sheetSub');if(sub)sub.textContent='Save your results, '+userName+', so you can come back anytime, on any device.';
+  }
   var el=document.getElementById('saveSheet');
   el.style.display='flex';
   void el.offsetWidth;
@@ -1372,11 +1384,29 @@ function dismissSaveSheet(){
   if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null}
   if(_stage1Beat){clearTimeout(_stage1Beat);_stage1Beat=null}
   window.removeEventListener('scroll',_resultsScroll);
-  // Arm the gentle, slower side ask a few seconds later (no rush).
-  _stage2Timer=setTimeout(showSideToast,6000);
+  // Arm the gentle, slower side ask well later (no rush at all).
+  _stage2Timer=setTimeout(showSideToast,12000);
   var el=document.getElementById('saveSheet');
   el.classList.remove('show');
   setTimeout(function(){el.style.display='none'},320);
+}
+// Hide every "Save my results" pin (once saved, or for returning savers).
+function hideSavePins(){var p=document.querySelectorAll('.save-pin');for(var i=0;i<p.length;i++)p[i].style.display='none'}
+// The discreet pinned link — she chooses to save, on her own terms. Opens the
+// bottom sheet on demand, even if she earlier dismissed the automatic one.
+function openSaveSheetManual(){
+  if(emailDone)return;
+  saveSheetShown=true;        // stop the automatic trigger from also firing
+  saveSheetDismissed=false;
+  sideToastDismissed=true;     // she found it herself — don't also slide the side ask
+  _clearSheetTriggers();
+  var sub=document.getElementById('sheetSub');
+  if(sub&&userName&&userName!=='You')sub.textContent='Save your results, '+userName+', so you can come back anytime, on any device.';
+  if(userName&&userName!=='You'){var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName}
+  var el=document.getElementById('saveSheet');
+  el.style.display='flex';
+  void el.offsetWidth;
+  el.classList.add('show');
 }
 async function saveFromSheet(){
   const email=document.getElementById('sheetEmail').value.trim();
@@ -1399,7 +1429,10 @@ function showSideToast(){
   if(emailDone||sideToastShown||sideToastDismissed)return;
   if(!_onResults())return; // only on the results screen, never over chat/shop/etc.
   sideToastShown=true;
-  if(userName&&userName!=='You'){var n=document.getElementById('toastName');if(n&&!n.value)n.value=userName}
+  if(userName&&userName!=='You'){
+    var n=document.getElementById('toastName');if(n&&!n.value)n.value=userName;
+    var tt=document.getElementById('toastTitle');if(tt)tt.textContent='One more thing, '+userName+' ✨';
+  }
   var el=document.getElementById('saveToast');
   el.style.display='block';
   void el.offsetWidth;
