@@ -266,6 +266,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .sheet-x:hover{background:#e9e5dd;color:#666}
 .sheet-title{font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:600;color:#1a1a1a;margin-bottom:6px}
 .sheet-sub{font-size:14px;color:#555;line-height:1.5;margin-bottom:14px;max-width:320px;margin-left:auto;margin-right:auto}
+.save-toast{position:fixed;right:0;bottom:18px;z-index:9997;width:min(330px,calc(100% - 16px));background:#fff;border-radius:16px 0 0 16px;box-shadow:0 10px 34px rgba(20,16,8,0.24);border-left:3px solid #D4AF37;padding:16px 18px 18px;transform:translateX(110%);transition:transform .42s cubic-bezier(.2,.85,.25,1);display:none;text-align:left}
+.save-toast.show{transform:translateX(0)}
+.save-toast-title{font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:5px;padding-right:18px}
+.save-toast-sub{font-size:13px;color:#555;line-height:1.45;margin-bottom:10px}
+.save-toast .stay-input{max-width:100%;width:100%;text-align:left;padding:11px 14px;font-size:14px}
+.save-toast .btn-p{margin-top:10px;max-width:100%;padding:13px}
 </style>
 </head>
 <body>
@@ -747,6 +753,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div style="font-size:11px;color:#7a7a7a;margin-top:6px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
     <button class="retake" onclick="dismissSaveSheet()" style="margin-top:10px">Maybe later</button>
   </div>
+</div>
+
+<div class="save-toast" id="saveToast">
+  <button class="sheet-x" onclick="dismissSideToast()" aria-label="Close" style="top:8px;right:10px">&times;</button>
+  <div class="save-toast-title">One more thing ✨</div>
+  <div class="save-toast-sub">Want me to save your results? Pop in your email and you can pick up right here anytime.</div>
+  <input type="text" class="stay-input" id="toastName" placeholder="First name (optional)">
+  <input type="email" class="stay-input" id="toastEmail" placeholder="Enter your email" style="margin-top:8px" onkeydown="if(event.key==='Enter')saveFromSideToast()">
+  <button class="btn-p" id="toastSaveBtn" onclick="saveFromSideToast()">Save my results</button>
+  <div id="toastMsg" style="font-size:12px;color:#777;margin-top:6px"></div>
 </div>
 
 <script>
@@ -1281,28 +1297,74 @@ async function savePrefProfile(){
   prefSaveComplete(email);
 }
 
-// --- After-results save sheet (gentle bottom sheet; scroll-first, 5s backup) ---
-let saveSheetShown=false,saveSheetDismissed=false,_sheetTimer=null;
-function _sheetScrollHandler(){if(window.scrollY>80)showSaveSheet()}
-function _clearSheetTriggers(){if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null}window.removeEventListener('scroll',_sheetScrollHandler)}
+// --- After-results save asks: a bottom sheet, then a gentler side toast ---
+// Stage 1: once she's read a good chunk of her results (scrolled ~halfway,
+//          or a 10s backup), a bottom sheet slides up.
+// Stage 2: ONLY if she dismissed stage 1 and keeps scrolling, a softer card
+//          slides in from the side and asks once more. Either can save.
+let saveSheetShown=false,saveSheetDismissed=false,saveSheetDismissAtY=0,_sheetTimer=null;
+let sideToastShown=false,sideToastDismissed=false;
+function _scrollFrac(){var se=document.documentElement.scrollHeight-window.innerHeight;return se>0?window.scrollY/se:0}
+function _resultsScroll(){
+  if(emailDone){_clearSheetTriggers();return}
+  var y=window.scrollY,frac=_scrollFrac();
+  if(!saveSheetShown&&!saveSheetDismissed){
+    if(frac>0.5||y>500)showSaveSheet();
+    return;
+  }
+  if(saveSheetDismissed&&!sideToastShown&&!sideToastDismissed){
+    if(y>saveSheetDismissAtY+180)showSideToast();
+  }
+}
+function _clearSheetTriggers(){if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null}window.removeEventListener('scroll',_resultsScroll)}
 function scheduleSaveSheet(){
   if(emailDone||saveSheetShown||saveSheetDismissed||_sheetTimer)return;
-  _sheetTimer=setTimeout(showSaveSheet,5000);
-  window.addEventListener('scroll',_sheetScrollHandler,{passive:true});
+  _sheetTimer=setTimeout(showSaveSheet,10000); // backup for readers who never scroll
+  window.addEventListener('scroll',_resultsScroll,{passive:true});
 }
-function showSaveSheet(){
-  if(emailDone||saveSheetShown||saveSheetDismissed){_clearSheetTriggers();return}
+// Shared, hardened save core used by every save entry point.
+async function _persistSave(email,nameVal){
+  if(nameVal){
+    userName=nameVal.charAt(0).toUpperCase()+nameVal.slice(1);
+    try{var _d=JSON.parse(localStorage.getItem('ss_data'))||{};_d.userName=userName;localStorage.setItem('ss_data',JSON.stringify(_d));}catch(e){}
+    var _rn=document.getElementById('rn');if(_rn)_rn.textContent='This is '+userName;
+  }
+  const fullData=buildFullUserData();
+  function withTimeout(p,ms){return Promise.race([p,new Promise(function(res){setTimeout(res,ms)})])}
+  try{
+    const fd=new URLSearchParams();
+    fd.append('form-name','style-star-emails');
+    fd.append('email',email);fd.append('name',userName||'');
+    fd.append('style-notes',(fullData.topArchNames||[]).join(', '));
+    await withTimeout(fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}),6000);
+  }catch(e){}
+  try{
+    await withTimeout(fetch('/.netlify/functions/user-data',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,data:fullData})
+    }),8000);
+  }catch(e){}
+  emailDone=true;
+  try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
+  var s1=document.getElementById('staySection');if(s1)s1.style.display='none';
+  var s2=document.getElementById('staySectionPhoto');if(s2)s2.style.display='none';
   _clearSheetTriggers();
+}
+// Stage 1: bottom sheet
+function showSaveSheet(){
+  if(emailDone||saveSheetShown||saveSheetDismissed)return;
+  if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null} // keep scroll listener alive for stage 2
   saveSheetShown=true;
   if(userName&&userName!=='You'){var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName}
   var el=document.getElementById('saveSheet');
   el.style.display='flex';
-  void el.offsetWidth; // reflow so the slide-up transition runs
+  void el.offsetWidth;
   el.classList.add('show');
 }
 function dismissSaveSheet(){
   saveSheetDismissed=true;
-  _clearSheetTriggers();
+  saveSheetDismissAtY=window.scrollY; // stage 2 fires only if she scrolls further
+  if(_sheetTimer){clearTimeout(_sheetTimer);_sheetTimer=null}
   var el=document.getElementById('saveSheet');
   el.classList.remove('show');
   setTimeout(function(){el.style.display='none'},320);
@@ -1318,35 +1380,43 @@ async function saveFromSheet(){
   }
   if(msg){msg.style.color='#777';msg.textContent='Saving your results…'}
   if(btn){btn.disabled=true;btn.style.opacity='0.6';btn.textContent='Saving…'}
-  if(nameVal){
-    userName=nameVal.charAt(0).toUpperCase()+nameVal.slice(1);
-    try{var _d=JSON.parse(localStorage.getItem('ss_data'))||{};_d.userName=userName;localStorage.setItem('ss_data',JSON.stringify(_d));}catch(e){}
-    var _rn=document.getElementById('rn');if(_rn)_rn.textContent='This is '+userName;
-  }
-  const fullData=buildFullUserData();
-  function withTimeout(p,ms){return Promise.race([p,new Promise(function(res){setTimeout(res,ms)})])}
-  try{
-    const fd=new URLSearchParams();
-    fd.append('form-name','style-star-emails');
-    fd.append('email',email);
-    fd.append('name',userName||'');
-    fd.append('style-notes',(fullData.topArchNames||[]).join(', '));
-    await withTimeout(fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}),6000);
-  }catch(e){}
-  try{
-    await withTimeout(fetch('/.netlify/functions/user-data',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:email,data:fullData})
-    }),8000);
-  }catch(e){}
-  emailDone=true;
-  try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
-  // Don't ask again anywhere else
-  var s1=document.getElementById('staySection');if(s1)s1.style.display='none';
-  var s2=document.getElementById('staySectionPhoto');if(s2)s2.style.display='none';
+  await _persistSave(email,nameVal);
   if(msg){msg.style.color='#B08830';msg.textContent='✨ Saved! Come back anytime with your email.'}
   if(btn){btn.textContent='Saved ✓';btn.style.opacity='1'}
   setTimeout(dismissSaveSheet,1500);
+}
+// Stage 2: gentle side toast
+function showSideToast(){
+  if(emailDone||sideToastShown||sideToastDismissed)return;
+  sideToastShown=true;
+  if(userName&&userName!=='You'){var n=document.getElementById('toastName');if(n&&!n.value)n.value=userName}
+  var el=document.getElementById('saveToast');
+  el.style.display='block';
+  void el.offsetWidth;
+  el.classList.add('show');
+}
+function dismissSideToast(){
+  sideToastDismissed=true;
+  _clearSheetTriggers();
+  var el=document.getElementById('saveToast');
+  el.classList.remove('show');
+  setTimeout(function(){el.style.display='none'},340);
+}
+async function saveFromSideToast(){
+  const email=document.getElementById('toastEmail').value.trim();
+  const nameVal=document.getElementById('toastName').value.trim();
+  const msg=document.getElementById('toastMsg');
+  const btn=document.getElementById('toastSaveBtn');
+  if(!email||!email.includes('@')){
+    if(msg){msg.style.color='#c0392b';msg.textContent='Please enter a valid email.'}
+    return;
+  }
+  if(msg){msg.style.color='#777';msg.textContent='Saving…'}
+  if(btn){btn.disabled=true;btn.style.opacity='0.6';btn.textContent='Saving…'}
+  await _persistSave(email,nameVal);
+  if(msg){msg.style.color='#B08830';msg.textContent='✨ Saved! See you soon.'}
+  if(btn){btn.textContent='Saved ✓';btn.style.opacity='1'}
+  setTimeout(dismissSideToast,1500);
 }
 
 function renderPrefPips(){
