@@ -793,7 +793,7 @@ const archetypes=[
 ];
 let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false,emailDone=false;
 try{if(localStorage.getItem('ss_emailDone')==='true')emailDone=true}catch(e){}
-function startQ(){userName="You";show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
+function startQ(){userName=(userName&&userName!=='You')?userName:'You';show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
 // Retake the quiz: jump straight to question 1 with a fresh set of sliders.
 // Keeps her saved name (warmth) and leaves her saved data untouched until she
 // finishes — so abandoning mid-retake never loses her existing results.
@@ -2043,18 +2043,27 @@ async function autoRestoreFromLink(){
     if(json&&json.success&&json.data){
       var d=json.data;
       userName=d.userName||'You';
-      answers=(d.answers&&d.answers.length===12)?d.answers:new Array(12).fill(6);
-      topArchNames=d.topArchNames||[];
       if(d.prefs)prefs=d.prefs;
       emailDone=true;
       try{
-        localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:d.portrait}));
-        if(d.prefs)localStorage.setItem('ss_prefs',JSON.stringify(d.prefs));
         localStorage.setItem('ss_emailDone','true');
+        if(d.prefs)localStorage.setItem('ss_prefs',JSON.stringify(d.prefs));
       }catch(e){}
-      try{history.replaceState({screen:'s-res'},'',location.pathname)}catch(e){} // drop the token from the URL
-      var top3=topArchNames.map(function(n){return {n:n}});
-      showResult(d.portrait||'',top3);
+      try{history.replaceState({},'',location.pathname)}catch(e){} // drop the token from the URL
+      var hasPortrait=!!(d.portrait&&String(d.portrait).trim());
+      if(hasPortrait){
+        answers=(d.answers&&d.answers.length===12)?d.answers:new Array(12).fill(6);
+        topArchNames=d.topArchNames||[];
+        try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:d.portrait}));}catch(e){}
+        var top3=topArchNames.map(function(n){return {n:n}});
+        showResult(d.portrait,top3);
+      }else{
+        // Known saver who hasn't taken the quiz yet — welcome her in to take it.
+        // Her name + preferences are loaded, so the quiz result will be personal
+        // and her saved preferences already apply. (No ss_data written, so a later
+        // visit won't land her on an empty "Welcome Back".)
+        show('s-wel',true);
+      }
       return true;
     }
   }catch(e){}
