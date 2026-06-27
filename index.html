@@ -2014,17 +2014,64 @@ RULES:
   input.focus();
 }
 
-// Check for saved results on page load
-(function(){
+// Normal first-screen logic: returning visitor (saved on THIS device) sees
+// Welcome Back; everyone else sees the welcome screen.
+function fallbackInitialScreen(){
+  var d=null;
+  try{d=JSON.parse(localStorage.getItem('ss_data'))}catch(e){}
+  var hasData=!!(d&&d.userName&&d.answers);
+  document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('act')});
+  if(hasData){
+    document.getElementById('s-wb').classList.add('act');
+    document.getElementById('pw').style.display='none';
+    document.getElementById('wbName').textContent=d.userName&&d.userName!=='You'?'Welcome back, '+d.userName+'!':'Welcome back!';
+  }else{
+    document.getElementById('s-wel').classList.add('act');
+  }
+}
+
+// Auto-restore from the welcome-email link. The link carries an opaque token
+// (?r=...); we exchange it for the subscriber's saved results and drop her
+// straight into her Style Portrait — even on a brand-new device.
+async function autoRestoreFromLink(){
+  var token='';
+  try{token=new URLSearchParams(location.search).get('r')||''}catch(e){}
+  if(!token)return false;
   try{
-    const d=JSON.parse(localStorage.getItem('ss_data'));
-    if(d&&d.userName&&d.answers){
-      document.getElementById('s-wel').classList.remove('act');
-      document.getElementById('s-wb').classList.add('act');
-      document.getElementById('pw').style.display='none';
-      document.getElementById('wbName').textContent=d.userName&&d.userName!=='You'?'Welcome back, '+d.userName+'!':'Welcome back!';
+    var res=await fetch('/.netlify/functions/user-data?token='+encodeURIComponent(token));
+    var json=await res.json();
+    if(json&&json.success&&json.data){
+      var d=json.data;
+      userName=d.userName||'You';
+      answers=(d.answers&&d.answers.length===12)?d.answers:new Array(12).fill(6);
+      topArchNames=d.topArchNames||[];
+      if(d.prefs)prefs=d.prefs;
+      emailDone=true;
+      try{
+        localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:d.portrait}));
+        if(d.prefs)localStorage.setItem('ss_prefs',JSON.stringify(d.prefs));
+        localStorage.setItem('ss_emailDone','true');
+      }catch(e){}
+      try{history.replaceState({screen:'s-res'},'',location.pathname)}catch(e){} // drop the token from the URL
+      var top3=topArchNames.map(function(n){return {n:n}});
+      showResult(d.portrait||'',top3);
+      return true;
     }
   }catch(e){}
+  return false;
+}
+
+// On page load: try the email link first, otherwise normal first-screen logic.
+(function(){
+  var hasToken=false;
+  try{hasToken=!!new URLSearchParams(location.search).get('r')}catch(e){}
+  if(hasToken){
+    var lt=document.querySelector('#s-load .load-t');if(lt)lt.textContent='Welcome back! Loading your style…';
+    show('s-load',true);
+    autoRestoreFromLink().then(function(ok){if(!ok)fallbackInitialScreen()});
+  }else{
+    fallbackInitialScreen();
+  }
 })();
 
 function shareResults(){
