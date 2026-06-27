@@ -379,3 +379,33 @@ _(running list — add to this as ideas come up)_
 - **▶ NEXT (still app-side, no external blockers):** the **design glow-up** (button/color/
   font consolidation above) and, once affiliate programs approve, the **affiliate-link
   architecture** (the real revenue unlock).
+
+**2026-06-27 (friction-busting session: email capture, retake, welcome email, auto-restore)**
+- ✅ **After-results email capture, heavily iterated** (PRs #53–#56). A gentle bottom
+  "save sheet" rises only once she's scrolled to the BOTTOM of her results + a ~2s beat
+  (never rushes her reading; 22s no-scroll backup). If she dismisses it and lingers, a
+  softer card slides in from the SIDE ~12s later (slower animation). Plus a discreet
+  **"♡ Save my results" pin** under the fingerprint so she can save on her own terms
+  anytime (choosing it suppresses the side ask). Asks greet her by name when known and
+  pre-fill it. All save paths share one hardened `_persistSave()` (instant feedback,
+  network timeouts, full-record rebuild). Never shown to already-saved users.
+- ✅ **"Retake the quiz" now jumps straight to question 1** (PR #57) instead of bouncing
+  through Welcome Back → welcome → start. Resets sliders, keeps her name, leaves saved
+  data intact until she finishes.
+- ✅ **Welcome email rewrite (Cath, in MailerLite).** Headline changed "Welcome to Style
+  Star" → **"Your Personal Stylist Is Here ✨"** (benefit-first beats brand-first; brand
+  lives in the logo + sender). Body now opens "Welcome to Style Star!" so it flows without
+  repeating "here"/"personal stylist." Button stays "Explore Style Star" (clean text, no
+  logo — buttons are for action; logo images are fragile in email). Once auto-restore is
+  live, revisit button → "See My Style Portrait".
+- 🔧 **Cross-device auto-restore ("remember me") — BUILT, being activated** (PR #58, code
+  live but dormant until config done). The welcome-email button carries an **opaque,
+  encrypted token** (`?r={$restore_token}`, AES-256-GCM of the email via `RESTORE_SECRET`,
+  never the raw email). On load the app exchanges it for her saved results and drops her
+  straight into her Style Portrait — even on a new device. `user-data.js`: makeToken/
+  readToken, stores token in a MailerLite `restore_token` field on save, GET accepts
+  `?token=`. Dormant if `RESTORE_SECRET` unset. **Config status:** ✅ MailerLite field
+  `restore_token` created (tag `{$restore_token}`); ✅ `RESTORE_SECRET` added in Netlify
+  env. **Remaining:** Step 3 — set the welcome-email button URL to
+  `https://stylestar.app/?r={$restore_token}`, then test with a fresh +alias signup on a
+  different device/incognito.
