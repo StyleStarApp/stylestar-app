@@ -398,14 +398,16 @@ _(running list — add to this as ideas come up)_
   repeating "here"/"personal stylist." Button stays "Explore Style Star" (clean text, no
   logo — buttons are for action; logo images are fragile in email). Once auto-restore is
   live, revisit button → "See My Style Portrait".
-- 🔧 **Cross-device auto-restore ("remember me") — BUILT, being activated** (PR #58, code
-  live but dormant until config done). The welcome-email button carries an **opaque,
-  encrypted token** (`?r={$restore_token}`, AES-256-GCM of the email via `RESTORE_SECRET`,
-  never the raw email). On load the app exchanges it for her saved results and drops her
-  straight into her Style Portrait — even on a new device. `user-data.js`: makeToken/
-  readToken, stores token in a MailerLite `restore_token` field on save, GET accepts
-  `?token=`. Dormant if `RESTORE_SECRET` unset. **Config status:** ✅ MailerLite field
-  `restore_token` created (tag `{$restore_token}`); ✅ `RESTORE_SECRET` added in Netlify
-  env. **Remaining:** Step 3 — set the welcome-email button URL to
-  `https://stylestar.app/?r={$restore_token}`, then test with a fresh +alias signup on a
-  different device/incognito.
+- ✅ **Cross-device auto-restore ("remember me") — LIVE & confirmed working** (PRs #58,
+  #60). The welcome-email button carries an **opaque, encrypted token**
+  (`?r={$restore_token}`, AES-256-GCM of the email via `RESTORE_SECRET`, never the raw
+  email). On load the app exchanges it for her saved results and drops her straight into
+  her Style Portrait — even on a new device. `user-data.js`: makeToken/readToken, stores
+  token in a MailerLite `restore_token` field on save, GET accepts `?token=`. Dormant if
+  `RESTORE_SECRET` unset. **Config (all done):** MailerLite field `restore_token` (tag
+  `{$restore_token}`); `RESTORE_SECRET` in Netlify env; welcome-email button URL set to
+  `https://stylestar.app/?r={$restore_token}` with label **"Open My Style Star"**.
+  Tested cross-device — works perfectly. **Edge case handled** (PR #60): a saver with no
+  quiz/portrait (browse/shop-only, or preferences-only) lands on the welcome screen with
+  her name + prefs preloaded, NOT an empty portrait; `startQ()` keeps a known name so her
+  eventual quiz result greets her.
