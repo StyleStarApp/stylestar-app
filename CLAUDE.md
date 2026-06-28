@@ -411,3 +411,39 @@ _(running list — add to this as ideas come up)_
   quiz/portrait (browse/shop-only, or preferences-only) lands on the welcome screen with
   her name + prefs preloaded, NOT an empty portrait; `startQ()` keeps a known name so her
   eventual quiz result greets her.
+
+**2026-06-28 (app design GLOW-UP — typography, buttons, color, contrast)**
+- Did a fresh critical pass of the live screens, then locked a **design system** and
+  rolled it out screen by screen (welcome screen = the north star). PRs #62–#65.
+- **Typography consolidated to TWO fonts:** **Fraunces** (display serif — chosen because
+  it harmonizes with the logo's high-contrast serif; compared head-to-head vs Georgia and
+  vs Playfair/Didone, Fraunces won on logo-match + robustness across sizes) for all
+  headings ("This is Sarah", page titles, Founder's Favorites + item names, Our Story,
+  popup titles, home-card titles, welcome headline); **DM Sans** for all body/UI. Removed
+  Cormorant Garamond + Noto Serif; Georgia kept only as a silent fallback. Normalized all
+  font-family quoting. (Did NOT touch the logo — it's an image, being trademarked.)
+- **Color/buttons:** retired hot pink (#E91E8C) brand buttons → **black primary + gold
+  accents**. New `.act-btn` system: one filled-black PRIMARY per screen + uniform light
+  SECONDARY buttons. (The "Hot Pink" color *swatch* in preferences stays — it's a real
+  color choice.)
+- **Icons + hierarchy:** replaced emoji on action buttons with refined thin-line SVG icons
+  (bag/chat/camera/sliders/star/sparkle); shortened labels ("Analyze a photo"). Applied to
+  results, photo-results, and Welcome Back menus. **Photo-upload screen KEEPS its 📸🪄💫
+  emojis — Cath likes them there.**
+- **Readability:** bumped too-light grays (#999/#bbb/#ccc) on real content (store/price
+  meta, disclosure, links, secondary buttons) to accessible levels; left placeholders/
+  arrows soft.
+- **Glow-up REMAINING:** (1) elevate the Style Fingerprint (dense chart → keepsake),
+  (2) refine ALL the line-art icons to be more custom/elegant (Cath: current ones are a bit
+  plain), (3) a more elegant custom treatment for the photo-screen icon later.
+- Email-fonts question: decided to **leave the welcome email as-is** (email clients mostly
+  ignore custom fonts; logo image carries the brand; not worth the fuss).
+
+### ▶ DECISION (2026-06-28): affiliate applications ON HOLD until LLC + EIN + business bank
+Cath decided to **wait** on applying to affiliate programs until the **LLC, EIN, and
+business bank account** are set up — so all affiliate income flows through the business
+from day one (clean books / proper separation). This supersedes the earlier "Amazon
+anytime" framing. So the new sequence is: **legal chain first (Almira → LLC → EIN → bank)
+→ THEN apply to affiliates → THEN [Claude] wire affiliate links + product images + FTC
+disclosure.** (Confirm tax-timing with her accountant; she'll also ask Almira.) None of
+this blocks app work; the glow-up continues meanwhile.
