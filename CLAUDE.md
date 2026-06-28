@@ -245,6 +245,19 @@ _(running list — add to this as ideas come up)_
   locally (localStorage) and via Supabase so returning visitors aren't asked again —
   reduces friction. Ties into the cross-device "remember me" auto-restore idea above. Cath
   considers this important.
+- **Archetype names — refine + add descriptions (Danielle feedback, 2026-06-28).** Danielle
+  took the quiz, loved it (esp. the nuance of the sliding scales). Two takeaways:
+  (1) ✅ DONE — moved the archetype "notes of" tags to the TOP of the results screen (right
+  under "This is <Name>", above the portrait paragraph) so the naming lands first, like a
+  fun horoscope reveal. Mirrored on photo-results.
+  (2) TODO next session — **rework the 21 archetype names.** Most are great; a few are
+  clunky/off-pattern: "The Fit & Styled" (vague), "The Fresh Start Style" (awkward; it's the
+  all-center neutral result), "The Alluring" (no noun, breaks the "The [Adj] [Noun]"
+  pattern), "The Career Launcher" (sounds like a job site), "The Silhouette Savvy" (gimmicky).
+  Tighten those + write a short evocative 1-line description per archetype (horoscope voice).
+  **ASK CATH when we start:** should the descriptions SHOW in the app (tap an archetype to
+  reveal) or just ENRICH the AI write-up behind the scenes? (She wasn't sure yet.) The
+  portrait paragraph itself is good length — leave it; this is about the names/descriptions.
 - (add more ideas here)
 
 **2026-06-23 (email setup session)**
