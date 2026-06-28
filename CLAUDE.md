@@ -258,6 +258,26 @@ _(running list — add to this as ideas come up)_
   **ASK CATH when we start:** should the descriptions SHOW in the app (tap an archetype to
   reveal) or just ENRICH the AI write-up behind the scenes? (She wasn't sure yet.) The
   portrait paragraph itself is good length — leave it; this is about the names/descriptions.
+- **Premium paid product — personalized "vision board" / Style Guide (Cath idea, 2026-06-28).**
+  Brainstorming paid offerings beyond affiliate. Risk Cath flagged: a paid product with
+  specific shopping links can go out of stock → frustrated paying customer. RECOMMENDATION:
+  sell the EVERGREEN part, keep live shopping free. The paid item = timeless personalized
+  guidance that never expires — a beautiful **Style Guide / lookbook** (PDF or in-app): her
+  archetypes + descriptions, color palette, flattering silhouettes, capsule-wardrobe
+  framework, outfit formulas, shopping do's & don'ts. A mood/vision board works too IF
+  framed as inspiration (no SKUs to go stale). Live affiliate shopping stays FREE + current
+  in the app. Fulfillment later: emailed PDF or in-app premium unlock (e.g., Stripe). Ties
+  nicely to the archetype-descriptions work (that content could feed the guide).
+- **Substack / content income stream (Cath idea, 2026-06-28).** Newsletter/publishing
+  platform with optional PAID subscriptions (recurring revenue); also builds audience that
+  funnels to the app and can carry affiliate links. Good fit IF Cath enjoys writing
+  regularly (content commitment); overlaps somewhat with the MailerLite list. Park for later.
+- **▶ Monetization menu (do a dedicated strategy session when ready):** (1) affiliate
+  commissions [primary, in progress, gated on LLC/EIN/bank], (2) premium personalized
+  digital product (Style Guide/lookbook/vision board), (3) content subscription (Substack),
+  (4) **paid 1:1 virtual styling sessions** — Cath is a certified stylist, likely the
+  highest-value premium tier (book a real session through the app). Don't let monetization
+  exploration derail current app work; schedule it deliberately.
 - (add more ideas here)
 
 **2026-06-23 (email setup session)**
