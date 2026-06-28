@@ -438,6 +438,22 @@ _(running list — add to this as ideas come up)_
   plain), (3) a more elegant custom treatment for the photo-screen icon later.
 - Email-fonts question: decided to **leave the welcome email as-is** (email clients mostly
   ignore custom fonts; logo image carries the brand; not worth the fuss).
+- ✅ **Shop Style Star Mall** (PR #67) — NEW curated store directory (`s-shop` screen):
+  ~23 stores in 5 categories from a data-driven `mallStores` array, Fraunces/gold styling,
+  FTC disclosure. Footer gained a persistent **"Shop"** link. **LIVE now with plain store
+  homepage links** (no real users yet besides Cath's mom/sister). **TO MONETIZE: swap each
+  store's `u` to its affiliate URL once approved (one spot per store), and add product
+  images then.** The "browse freely, still earn" play; complements (never overshadows) the
+  personal styling.
+- ✅ **Button system refinements** (PRs #68–#70). The two awkward underlined links on the
+  results screen (Founder's Favorites + the mall) became a tidy **icon-on-top tile pair**
+  (kept full "Founder's Favorites" wording — "Favorites" alone reads like the user's OWN
+  saved items). Welcome Back reordered to mirror results (styling tools grouped; browse
+  pair as tiles). **Welcome Back primary CTA changed "See my style portrait" → "Shop your
+  style"** (a returning user already saw her portrait; shopping is the higher-value,
+  revenue-aligned forward action; portrait demoted to an easy secondary). Framing Cath
+  endorsed: the app is free/affiliate-supported, so a warm nudge toward shopping is fair
+  and on-brand — as long as tone stays stylist-warm, never pushy/urgent.
 
 ### ▶ DECISION (2026-06-28): affiliate applications ON HOLD until LLC + EIN + business bank
 Cath decided to **wait** on applying to affiliate programs until the **LLC, EIN, and
