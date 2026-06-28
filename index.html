@@ -179,6 +179,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .act-primary:active{transform:scale(.99)}
 .act-2{background:#fff;color:#1a1a1a;border:1px solid #e2ddd2}
 .act-2:hover{border-color:#c2b48f}
+.act-pair{display:flex;gap:10px;justify-content:center;width:100%;max-width:340px;margin:8px auto 0}
+.act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
+.act-pair .act-btn svg{width:19px;height:19px}
 .pref-title{font-size:22px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
 .pref-sub{font-size:14px;color:#666;margin-bottom:1.25rem;line-height:1.5}
 .pref-label{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em}
@@ -317,7 +320,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <button class="act-btn act-2" onclick="wbChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>Ask your stylist</button>
     <button class="act-btn act-2" onclick="savedPhoto()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3.2"/></svg>Analyze a photo</button>
     <button class="act-btn act-2" onclick="openPrefs()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.4" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="2.4" fill="currentColor" stroke="none"/></svg>Refine your preferences</button>
-    <div style="margin-top:4px"><span onclick="showShop()" style="font-size:14px;color:#6e6e6e;cursor:pointer;font-weight:500;text-decoration:underline">Shop your favorite stores</span></div>
+    <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
     <button class="btn-outline" style="max-width:300px" onclick="retakeQuiz()">Retake the quiz</button>
   </div>
 </div>
@@ -421,8 +424,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="act-btn act-2" onclick="showPhoto()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3.2"/></svg>Analyze a photo</button>
       <button class="act-btn act-2" onclick="openPrefs()" id="prefBtnQuiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.4" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="2.4" fill="currentColor" stroke="none"/></svg>Refine your preferences</button>
     </div>
-    <div style="margin-top:10px"><span onclick="showDream()" style="font-size:15px;color:#1a1a1a;cursor:pointer;font-weight:600;text-decoration:underline">Browse our Founder's Favorites, her personal selections</span></div>
-    <div style="margin-top:8px"><span onclick="showShop()" style="font-size:14px;color:#6e6e6e;cursor:pointer;font-weight:500;text-decoration:underline">Or shop all your favorite stores</span></div>
+    <div class="act-pair">
+      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Founder's Favorites</button>
+      <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
+    </div>
     <div class="share-btns" style="margin-top:12px">
       <button class="share-btn" onclick="saveStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M3 16l4-4 4 4"/></svg>View Style Card</button>
       <button class="share-btn" onclick="shareStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
@@ -497,8 +502,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="act-btn act-2" onclick="showPhoto()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3.2"/></svg>Analyze another outfit</button>
       <button class="act-btn act-2" onclick="openPrefs()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.4" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="2.4" fill="currentColor" stroke="none"/></svg>Refine your preferences</button>
     </div>
-    <div style="margin-top:10px"><span onclick="showDream()" style="font-size:15px;color:#1a1a1a;cursor:pointer;font-weight:600;text-decoration:underline">Browse our Founder's Favorites, her personal selections</span></div>
-    <div style="margin-top:8px"><span onclick="showShop()" style="font-size:14px;color:#6e6e6e;cursor:pointer;font-weight:500;text-decoration:underline">Or shop all your favorite stores</span></div>
+    <div class="act-pair">
+      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Founder's Favorites</button>
+      <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
+    </div>
     <div class="share-btns" style="margin-top:12px">
       <button class="share-btn" onclick="saveStyleCard('photo')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M3 16l4-4 4 4"/></svg>View Style Card</button>
       <button class="share-btn" onclick="shareStyleCard('photo')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
