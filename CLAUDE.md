@@ -537,3 +537,50 @@ this blocks app work; the glow-up continues meanwhile.
   "Add to Home Screen" is the right call now (no $99/yr Apple acct, no review, instant
   updates, iOS+Android, native-feel icon). Can wrap native later if it takes off — nothing
   now blocks that.
+
+**2026-06-29 (cont. — share-link fix, home glow-up, readability, FAQ share Q, DESIGN explore)**
+- ✅ **Share Style Card now carries a tappable link** (PRs #82–#83). The card-share caption
+  was image-only with a dangling "Take this fun quiz →" and no URL (iOS drops the image if a
+  `url:` field is passed). Fix: put `https://stylestar.app` IN the caption text (not a
+  separate url field). On-device: the personalized card image AND the link both come through.
+  The `https://` prefix is REQUIRED — iOS won't auto-link a bare `.app` domain. iMessage
+  renders it as a tappable rich-preview card (3 bubbles total: card + caption + preview);
+  Cath chose to keep that ("more info but inviting to tap"). NOTE the multi-bubble look is
+  just how iOS shows image+caption; not a double-send.
+- ✅ **New FAQ #6 "Can I share my results?"** (PR #84) after "What is my Style Portrait?" —
+  explains the shareable Style Card + warmly invites texting/Instagram (growth lever).
+  FAQ is now 17 Qs.
+- ✅ **Home-screen glow-up** (PRs #85–#87): the three welcome `.ecard`s went from tall,
+  cramped, heavy gold-framed columns → clean **horizontal rows** (icon → title + one-line
+  desc → arrow, thin gold border). Added a quiet **"Prefer to shop first? Browse the Mall →"**
+  link under the Restore line (opens `showShop()`; deliberately a quiet link, NOT a competing
+  button — keeps one loud CTA). **Readability pass**: bumped home fonts (card titles 16px,
+  desc 14px, links 14.5px, checklist 15px) — Cath flagged text was too small to read without
+  glasses (real concern for the audience; do the same pass on results/FAQ later if asked).
+- ✅ **Results action area** earlier same day (PR #81): "View Style Card / Share" were the old
+  `.share-btn` style (square, heavy black border, Title Case, gold-filled icons) — rebuilt as
+  matching `.act-pair` tiles → clean 2×2 grid; "What would you like to do?" set in Fraunces.
+
+### ▶ OPEN DECISION (2026-06-29): home-screen "prettier" redesign — Cath is THINKING on it
+Cath wants the opening page to look "much prettier" and noted text was too small (readability
+fixed). She made a **Canva mock** (dark, full-bleed photo hero, white serif over imagery, solid
+GOLD button, photo-led cards) — striking but "not exactly what I want." I flagged honest
+tradeoffs: (1) dark bg + text-over-photo FIGHTS readability; (2) it lives on PHOTO sourcing
+(she said she has "no idea how to get photos" — reassured: free Unsplash/Pexels flat-lays, I'd
+source; she prefers **no faces** → flat-lays/objects/textures); (3) big brand shift (logo needs
+white version on dark). NOTE: this env's proxy BLOCKS fetching stock images, so photo mockups
+use placeholder blocks; real photos must be added another way (Cath downloads a few free ones &
+sends them, or add later). Showed mockups (in scratchpad, not shipped):
+  - **Example 1 — "Prettier, no photos"**: warm cream-gold card tiles, italic *signature* in
+    headline, gold ✦ flourish. Real & shippable today, zero photo upkeep.
+  - **Example 1 + ONE hero image** (my recommendation): the elevated design + a single hero
+    photo (one image to source, not seven).
+  - **Example 2 — full photo-led**: hero band + a photo on every card, bright/readable version
+    of her Canva. Prettiest, but full photo commitment.
+  Also explored earlier: 3 directions (Warm Editorial / Luxe Boutique / Clean Minimal) + an
+  italic-"signature" headline touch. **Cath is sleeping on it — resurface these next session
+  when she says "let's look at the home design examples again."** No code shipped for this;
+  the app already works & reads clearly, so this is purely about how elevated + how much
+  photo-upkeep she wants.
+- Reminder still open: light **FAQ wording polish**; revisit "Is Style Star free?" when a paid
+  tier launches; verify the small-shifts idea lives in the stylist-chat prompt.
