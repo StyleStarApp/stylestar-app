@@ -122,8 +122,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .fp-dot{width:11px;height:11px;border-radius:50%;background:#D4AF37;position:absolute;top:-4px}
 .fp-left,.fp-right{font-size:9px;color:#666;letter-spacing:0.04em;text-transform:uppercase;position:absolute;top:12px;font-weight:600}
 .fp-left{left:0}.fp-right{right:0}
-.retake{display:block;width:100%;text-align:center;font-size:13px;color:#7a7a7a;text-decoration:underline;letter-spacing:0.06em;text-transform:uppercase;margin-top:1rem;cursor:pointer;border:none;background:none}
-.wb{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem;padding:0.5rem 1rem 1.5rem}
+.retake{display:block;width:100%;text-align:center;font-size:13px;color:#555;font-weight:500;text-decoration:underline;letter-spacing:0.06em;text-transform:uppercase;margin-top:1rem;cursor:pointer;border:none;background:none}
+.wb{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.85rem;padding:0.5rem 1rem 0.5rem}
 .wb-name{font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:600;color:#D4AF37}
 .wb-msg{font-size:17px;color:#333;line-height:1.6;font-weight:500}
 .stay-section{margin:1.5rem 0;text-align:center}
@@ -323,7 +323,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Founder's Favorites</button>
       <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
     </div>
-    <button class="btn-outline" style="max-width:300px" onclick="retakeQuiz()">Retake the quiz</button>
+    <button class="retake" onclick="retakeQuiz()">Retake the quiz</button>
   </div>
 </div>
 
@@ -456,7 +456,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="stay-skip" onclick="document.getElementById('staySection').style.display='none'">Skip</div>
   </div>
 
-  <button class="btn-outline" onclick="retakeQuiz()">Retake the quiz</button>
+  <button class="retake" onclick="retakeQuiz()">Retake the quiz</button>
 </div>
 
 <div class="scr" id="s-photo">
