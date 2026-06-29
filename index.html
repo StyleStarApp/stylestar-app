@@ -265,6 +265,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .faq-q{font-family:'Fraunces',Georgia,serif;font-size:17px;font-weight:600;color:#1a1a1a;margin-bottom:6px;line-height:1.3}
 .faq-a{font-size:15px;color:#555;line-height:1.65}
 .faq-a a,.faq-a span.lnk{color:#B08830;text-decoration:underline;cursor:pointer}
+.faq-sub{font-weight:600;color:#1a1a1a;margin-top:10px;margin-bottom:2px}
+.faq-steps{margin:2px 0 4px;padding-left:1.25rem}
+.faq-steps li{margin:4px 0}
 .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;border:2px dashed #ddd;border-radius:20px;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s;background:#fafafa}
 .photo-upload-area:hover{border-color:#C8A060}
 .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem}
@@ -766,18 +769,28 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 <div class="scr" id="s-faq">
   <div class="story-wrap">
     <div style="text-align:right;margin-bottom:2px"><button onclick="closeFAQ()" style="background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#777;cursor:pointer;padding:4px 2px">&larr; Back</button></div>
-    <div class="story-title">Frequently Asked Questions</div>
+    <div class="story-title">Questions We Hear Often</div>
     <div class="faq-list">
-      <div class="faq-item"><div class="faq-q">Is Style Star free?</div><div class="faq-a">Yes! Style Star is completely free to use. When you shop through some of our links, we may earn a small commission at no extra cost to you, and that's what lets us keep the styling free.</div></div>
-      <div class="faq-item"><div class="faq-q">Is this a real stylist or AI?</div><div class="faq-a">A little of both. Style Star was created by a certified image consultant with 20+ years of styling experience, and your AI stylist is built on her approach, so you get thoughtful, professional guidance anytime.</div></div>
-      <div class="faq-item"><div class="faq-q">Do you store my photos?</div><div class="faq-a">Never. Any photo you share for style analysis is processed in real time and is never saved.</div></div>
-      <div class="faq-item"><div class="faq-q">What do you do with my information?</div><div class="faq-a">We use your email only to save your style profile and send occasional styling updates. We never sell or share your information. You can read the details in our <span class="lnk" onclick="showPrivacy()">Privacy Policy</span>.</div></div>
-      <div class="faq-item"><div class="faq-q">Do I have to take the quiz?</div><div class="faq-a">Not at all. You're welcome to chat with your stylist, analyze a photo, or browse and shop anytime, no quiz required.</div></div>
-      <div class="faq-item"><div class="faq-q">Can I retake the quiz or change my results?</div><div class="faq-a">Anytime! Just tap "Retake the quiz." Your style can evolve, and your results can evolve right along with it.</div></div>
-      <div class="faq-item"><div class="faq-q">How do I get my results back on another device?</div><div class="faq-a">Save your results with your email, and you can pick up right where you left off, on any device.</div></div>
-      <div class="faq-item"><div class="faq-q">Do you sell the clothes?</div><div class="faq-a">No, we point you to the stores and pieces we love. The Founder's Edit is a hand-picked selection of pieces our founder loves, and some links are affiliate links that support Style Star at no cost to you.</div></div>
-      <div class="faq-item"><div class="faq-q">Is Style Star for every body, age, and budget?</div><div class="faq-a">Absolutely. Style is personal, and Style Star is here to celebrate yours, whatever your size, age, or budget.</div></div>
-      <div class="faq-item"><div class="faq-q">How do I get in touch?</div><div class="faq-a">We'd love to hear from you. Reach us anytime at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a>.</div></div>
+      <div class="faq-item"><div class="faq-q">What is Style Star?</div><div class="faq-a">Style Star combines the insight of a personal stylist with the convenience of modern technology. Through your Style Portrait, styling advice whenever you need it, photo feedback, and curated shopping, we help you make style choices you feel great about.</div></div>
+      <div class="faq-item"><div class="faq-q">What if I don't know what my style is?</div><div class="faq-a">That's exactly why Style Star exists. You don't have to have it all figured out. That's our job. We help you discover what suits your personality, lifestyle, and preferences, so shopping feels easier, getting dressed feels faster, and every piece you bring home brings out the best in you. Your discernment, combined with our expertise, is where the magic happens.</div></div>
+      <div class="faq-item"><div class="faq-q">What makes Style Star different?</div><div class="faq-a">Most style advice tells everyone to wear the same trends or invest in certain brands. Style Star starts with you. Instead of asking "What's fashionable?" we ask "What feels most like you?" We're not here to tell you what's beautiful. We help you recognize what feels beautiful to you, and shine a light on exactly that.</div></div>
+      <div class="faq-item"><div class="faq-q">Do I have to take the quiz?</div><div class="faq-a">Not at all. You're welcome to chat with your stylist, analyze a photo, or browse and shop anytime. The quiz just helps us understand the nuances of your style so everything feels more personal, but it's completely optional.</div></div>
+      <div class="faq-item"><div class="faq-q">What is my Style Portrait?</div><div class="faq-a">Your Style Portrait is a snapshot of your personal style from the quiz. It highlights your natural preferences and becomes the foundation for the guidance, shopping ideas, and advice you'll get throughout the app.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I upload a photo for style advice?</div><div class="faq-a">Yes. Share an outfit or a piece you're considering, and your stylist will give you thoughtful feedback to elevate the look while keeping it true to you. Your photo is processed in real time and never saved.</div></div>
+      <div class="faq-item"><div class="faq-q">Is this a real stylist or AI?</div><div class="faq-a">Both. Style Star was created by a certified image consultant with 20+ years of styling experience, and your AI stylist is trained on her approach and philosophy, so you get thoughtful, professional guidance anytime.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I retake the quiz or change my results?</div><div class="faq-a">Anytime. Your style can evolve, and your results can evolve right along with it.</div></div>
+      <div class="faq-item"><div class="faq-q">How do I get my results back on another device?</div><div class="faq-a">Just your email, no password to create or remember. Save your results and you can pick up right where you left off, on any device.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I add Style Star to my phone like an app?</div><div class="faq-a">Yes! You can add Style Star to your home screen so it opens full-screen with its own icon, just like an app. No app store needed.
+        <div class="faq-sub">On an iPhone (using Safari):</div>
+        <ol class="faq-steps"><li>Open stylestar.app in Safari.</li><li>Tap the Share icon at the bottom of the screen (the square with an arrow pointing up).</li><li>Scroll down and tap "Add to Home Screen."</li><li>Tap "Add" in the top right.</li></ol>
+        <div class="faq-sub">On an Android phone (using Chrome):</div>
+        <ol class="faq-steps"><li>Open stylestar.app in Chrome.</li><li>Tap the menu (the three dots in the top right).</li><li>Tap "Add to Home screen," then "Add."</li></ol></div></div>
+      <div class="faq-item"><div class="faq-q">Is Style Star free?</div><div class="faq-a">Yes, Style Star is free to use. If you shop through some of our links, we may earn a small commission at no extra cost to you, and that's what helps keep it free.</div></div>
+      <div class="faq-item"><div class="faq-q">Is my information private?</div><div class="faq-a">Yes. We use your information only to personalize your styling experience and save your results. We never sell your information. You can read the details in our <span class="lnk" onclick="showPrivacy()">Privacy Policy</span>.</div></div>
+      <div class="faq-item"><div class="faq-q">Do you sell the clothes?</div><div class="faq-a">No, we don't sell anything ourselves. We point you to the stores and pieces that suit your style. In the Founder's Edit, you'll find pieces personally hand-selected by our founder, the ones she wears herself and recommends to her clients.</div></div>
+      <div class="faq-item"><div class="faq-q">Is Style Star for every body, age, and budget?</div><div class="faq-a">Absolutely. Style is personal, and Style Star is here to celebrate yours, whatever your size, age, or budget. Beautiful style exists at every price point, and you don't need to be a fashion expert. We meet you exactly where you are.</div></div>
+      <div class="faq-item"><div class="faq-q">How do I get in touch?</div><div class="faq-a">We'd love to hear from you. Reach us at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a>.</div></div>
+      <div class="faq-item"><div class="faq-q">What's the heart behind Style Star?</div><div class="faq-a">We believe style has the power to help you shine your light, and when you feel confident in yourself, that light naturally reaches the people around you.</div></div>
     </div>
     <button class="btn-outline" onclick="closeFAQ()" style="max-width:260px;margin:1.5rem auto 0;display:block">Back</button>
   </div>
