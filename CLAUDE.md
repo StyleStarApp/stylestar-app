@@ -499,3 +499,41 @@ anytime" framing. So the new sequence is: **legal chain first (Almira → LLC �
 → THEN apply to affiliates → THEN [Claude] wire affiliate links + product images + FTC
 disclosure.** (Confirm tax-timing with her accountant; she'll also ask Almira.) None of
 this blocks app work; the glow-up continues meanwhile.
+
+**2026-06-29 (naming fixes + full FAQ rewrite)**
+- ✅ **Renamed two features for clarity** (PRs #76–#77, merged → live):
+  - **"Founder's Favorites" → "The Founder's Edit"** everywhere (home card, the 3 buttons,
+    the `s-dream` page title, FAQ prose; footer link uses the tighter "Founder's Edit").
+    Reason: "Favorites" (esp. the truncated footer link) read like the *user's own* saved
+    items, which we don't have. "Edit" is editorial and clearly *hers*.
+  - **"Style Fingerprint" → "Style Signature"** (welcome receive-list, results + photo-results
+    `fp-lbl` labels, the shareable style-card canvas text). Ties to the homepage headline
+    "Discover your signature style." NOTE: the old glow-up TODO "elevate the Style
+    Fingerprint into a keepsake" is now the **Style Signature** (same task, new name).
+- ✅ **Full FAQ rewrite** (PR #78, merged → live). Went from 10 → **16 questions**, edited
+  with Cath line-by-line over a long session. The `s-faq` screen:
+  - **Page retitled "Questions We Hear Often"**; footer link stays the short "FAQ" (recognizable).
+  - Order: brand/philosophy first (What is Style Star / What if I don't know my style /
+    What makes us different), then how-it-works, then trust/practical, closing on the
+    **mission** ("What's the heart behind Style Star?" — "style has the power to help you
+    shine your light…").
+  - NEW **"Can I add Style Star to my phone like an app?"** with numbered Add-to-Home-Screen
+    steps for iPhone (Safari) + Android (Chrome), incl. visual cues ("the square with an
+    arrow pointing up") — Cath's family struggled to find the Share icon. Added `.faq-sub`
+    + `.faq-steps` CSS.
+  - Whole FAQ is **dash-free** (brand voice). Merged duplicate privacy Qs. Affiliate
+    mentions kept **soft/forward-looking** (links aren't actually tagged yet).
+  - Cath's voice calls honored: "discernment + our expertise is where the magic happens";
+    "we're not here to tell you what's beautiful…shine a light on exactly that"; no-password
+    low-friction brag; "every body, age, budget" reassurance kept (insecurity-easing).
+- **📌 OPEN REMINDERS from this session (resurface next time):**
+  1. **Refine FAQ wording slightly** — Cath wants a light polish pass later ("remind me").
+  2. **When the paid tier launches** (vision board / Style Guide), revisit the "Is Style
+     Star free?" FAQ answer so it stays accurate (it says "free to use," future-proofed).
+  3. **Small-shifts / "one change makes a difference" idea** — dropped from the FAQ; Cath
+     thinks it may already live in the stylist-chat advice. Verify in the chat prompt; add
+     somewhere if wanted.
+- Brainstorm note: Cath weighed **web app vs native app**. Conclusion (reassured): a PWA +
+  "Add to Home Screen" is the right call now (no $99/yr Apple acct, no review, instant
+  updates, iOS+Android, native-feel icon). Can wrap native later if it takes off — nothing
+  now blocks that.
