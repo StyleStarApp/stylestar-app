@@ -2303,10 +2303,11 @@ async function doShareCard(){
   const blob=window._cardBlob;
   if(!blob)return;
   const file=new File([blob],'my-style-star.png',{type:'image/png'});
-  const linkText='Here are my Style Star results! ⭐ Take this fun quiz → stylestar.app';
+  const linkText='Here are my Style Star results! ⭐ Take this fun quiz → https://stylestar.app';
   // Share the card image WITH the link in the caption text (not as a separate `url:`
-  // field — that's what makes iOS swap to a link preview and drop the image). The bare
-  // domain auto-links in Messages, so friends get the card AND a tappable link.
+  // field — that's what makes iOS swap to a link preview and drop the image). The
+  // https:// prefix is needed so iOS's link detector reliably linkifies the newer
+  // .app domain (a bare "stylestar.app" renders as plain, non-tappable text).
   if(navigator.canShare&&navigator.canShare({files:[file]})){
     try{
       await navigator.share({files:[file],title:'My Style Star Results',text:linkText});
