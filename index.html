@@ -326,7 +326,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <button class="act-btn act-2" onclick="savedPhoto()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3.2"/></svg>Analyze a photo</button>
     <button class="act-btn act-2" onclick="openPrefs()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.4" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="2.4" fill="currentColor" stroke="none"/></svg>Refine your preferences</button>
     <div class="act-pair">
-      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Founder's Favorites</button>
+      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>The Founder's Edit</button>
       <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
     </div>
     <button class="retake" onclick="retakeQuiz()">Retake the quiz</button>
@@ -370,8 +370,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       </div>
       <div class="ecard" onclick="showDream()">
         <svg class="eicn" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <div class="et">Shop Curated Favorites</div>
-        <div class="ed">A hand-picked edit of pieces you'll love</div>
+        <div class="et">The Founder's Edit</div>
+        <div class="ed">A hand-picked selection of pieces you'll love</div>
         <svg class="ear" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
       </div>
     </div>
@@ -384,7 +384,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       </div>
       <div style="font-size:13px;color:#444;line-height:1.6;font-family:'DM Sans',sans-serif;display:inline-block;text-align:left">
         <div style="margin:4px 0"><span style="color:#B8901E;font-weight:700;margin-right:8px">&#10003;</span>Style Portrait</div>
-        <div style="margin:4px 0"><span style="color:#B8901E;font-weight:700;margin-right:8px">&#10003;</span>Style Fingerprint</div>
+        <div style="margin:4px 0"><span style="color:#B8901E;font-weight:700;margin-right:8px">&#10003;</span>Style Signature</div>
         <div style="margin:4px 0"><span style="color:#B8901E;font-weight:700;margin-right:8px">&#10003;</span>Personalized Shopping Guidance</div>
       </div>
     </div>
@@ -419,7 +419,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   </div>
   <div class="flav" style="margin-top:0.5rem"><div class="flav-lbl">Your style has notes of</div><div class="flav-tags" id="ft"></div></div>
   <div class="res-para" id="rp"></div>
-  <div class="fp"><div class="fp-lbl">Your style fingerprint</div><div id="fpChart"></div></div>
+  <div class="fp"><div class="fp-lbl">Your style signature</div><div id="fpChart"></div></div>
 
   <div class="save-pin-wrap"><button class="save-pin" onclick="openSaveSheetManual()">♡ <span>Save my results</span></button></div>
 
@@ -433,7 +433,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="act-btn act-2" onclick="openPrefs()" id="prefBtnQuiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.4" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="2.4" fill="currentColor" stroke="none"/></svg>Refine your preferences</button>
     </div>
     <div class="act-pair">
-      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Founder's Favorites</button>
+      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>The Founder's Edit</button>
       <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
     </div>
     <div class="share-btns" style="margin-top:12px">
@@ -497,7 +497,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   </div>
   <div class="flav" style="margin-top:0.5rem"><div class="flav-lbl">This outfit has notes of</div><div class="flav-tags" id="pft"></div></div>
   <div class="res-para" id="prp"></div>
-  <div class="fp"><div class="fp-lbl">Outfit style fingerprint</div><div id="pChart"></div></div>
+  <div class="fp"><div class="fp-lbl">Outfit style signature</div><div id="pChart"></div></div>
 
   <div class="save-pin-wrap"><button class="save-pin" onclick="openSaveSheetManual()">♡ <span>Save my results</span></button></div>
 
@@ -511,7 +511,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="act-btn act-2" onclick="openPrefs()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.4" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="2.4" fill="currentColor" stroke="none"/></svg>Refine your preferences</button>
     </div>
     <div class="act-pair">
-      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Founder's Favorites</button>
+      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>The Founder's Edit</button>
       <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
     </div>
     <div class="share-btns" style="margin-top:12px">
@@ -663,7 +663,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 <div class="scr" id="s-dream">
   <div class="dc-wrap">
     <div style="text-align:right;margin-bottom:2px"><button onclick="closeDream()" style="background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#777;cursor:pointer;padding:4px 2px">&larr; Back</button></div>
-    <div class="dc-title">Founder's Favorites</div>
+    <div class="dc-title">The Founder's Edit</div>
     <div class="dc-subtitle">Every piece personally hand-selected by the founder of Style Star, items she recommends to her own clients and wears&nbsp;herself.</div>
 
     <div class="dc-item">
@@ -775,7 +775,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <div class="faq-item"><div class="faq-q">Do I have to take the quiz?</div><div class="faq-a">Not at all. You're welcome to chat with your stylist, analyze a photo, or browse and shop anytime, no quiz required.</div></div>
       <div class="faq-item"><div class="faq-q">Can I retake the quiz or change my results?</div><div class="faq-a">Anytime! Just tap "Retake the quiz." Your style can evolve, and your results can evolve right along with it.</div></div>
       <div class="faq-item"><div class="faq-q">How do I get my results back on another device?</div><div class="faq-a">Save your results with your email, and you can pick up right where you left off, on any device.</div></div>
-      <div class="faq-item"><div class="faq-q">Do you sell the clothes?</div><div class="faq-a">No, we point you to the stores and pieces we love. Founder's Favorites are hand-picked by our founder, and some links are affiliate links that support Style Star at no cost to you.</div></div>
+      <div class="faq-item"><div class="faq-q">Do you sell the clothes?</div><div class="faq-a">No, we point you to the stores and pieces we love. The Founder's Edit is a hand-picked selection of pieces our founder loves, and some links are affiliate links that support Style Star at no cost to you.</div></div>
       <div class="faq-item"><div class="faq-q">Is Style Star for every body, age, and budget?</div><div class="faq-a">Absolutely. Style is personal, and Style Star is here to celebrate yours, whatever your size, age, or budget.</div></div>
       <div class="faq-item"><div class="faq-q">How do I get in touch?</div><div class="faq-a">We'd love to hear from you. Reach us anytime at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a>.</div></div>
     </div>
@@ -806,7 +806,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </div>
 
 </div>
-<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showShop()">Shop</span><span onclick="showDream()">Favorites</span><span onclick="showStory()">Our Story</span><span onclick="showFAQ()">FAQ</span><span onclick="showPrivacy()">Privacy</span></div></div>
+<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showShop()">Shop</span><span onclick="showDream()">Founder's Edit</span><span onclick="showStory()">Our Story</span><span onclick="showFAQ()">FAQ</span><span onclick="showPrivacy()">Privacy</span></div></div>
 </div>
 
 <div class="sheet-backdrop" id="saveSheet" onclick="if(event.target===this)dismissSaveSheet()">
@@ -2456,7 +2456,7 @@ function buildCardBlob(source,callback){
   ctx.fillStyle='#333';
   ctx.font='700 22px Arial, sans-serif';
   ctx.textAlign='center';
-  ctx.fillText('YOUR STYLE FINGERPRINT',w/2,y);
+  ctx.fillText('YOUR STYLE SIGNATURE',w/2,y);
   y+=38;
 
   const fpLeft=340;
