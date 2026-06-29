@@ -2303,12 +2303,13 @@ async function doShareCard(){
   const blob=window._cardBlob;
   if(!blob)return;
   const file=new File([blob],'my-style-star.png',{type:'image/png'});
-  const linkText='Here are my Style Star results! ⭐ Take this fun quiz → https://www.stylestar.app';
-  // Preferred: share the actual card image. No URL in the text — on iOS a URL makes
-  // the share switch to a link preview and drop the image. The card already shows StyleStar.app.
+  const linkText='Here are my Style Star results! ⭐ Take this fun quiz → stylestar.app';
+  // Share the card image WITH the link in the caption text (not as a separate `url:`
+  // field — that's what makes iOS swap to a link preview and drop the image). The bare
+  // domain auto-links in Messages, so friends get the card AND a tappable link.
   if(navigator.canShare&&navigator.canShare({files:[file]})){
     try{
-      await navigator.share({files:[file],title:'My Style Star Results',text:'Here are my Style Star results! ⭐ Take this fun quiz →'});
+      await navigator.share({files:[file],title:'My Style Star Results',text:linkText});
       closeCardPreview();
       return;
     }catch(e){
