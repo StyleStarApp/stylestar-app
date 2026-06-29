@@ -229,14 +229,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
 .whatsnext{margin:1.5rem 0;text-align:center}
-.whatsnext-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.whatsnext-title{font-family:'Fraunces',Georgia,serif;font-size:20px;font-weight:600;color:#1a1a1a;margin-bottom:6px}
 .whatsnext-sub{font-size:13px;color:#888;margin-bottom:14px}
 .whatsnext-grid{display:flex;flex-direction:column;align-items:center;gap:8px}
 .share-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:12px}
-.share-btns{display:flex;justify-content:center;gap:10px}
-.share-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:12px;border:2px solid #1a1a1a;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;color:#1a1a1a;transition:all 0.2s;flex:1;max-width:180px}
-.share-btn:hover{border-color:#555;background:#fafafa}
-.share-btn svg{flex-shrink:0}
 .quiz-footer{text-align:center;padding:1.25rem;font-size:14px;color:#555;letter-spacing:0.06em;border-top:1px solid #f0f0f0}
 .quiz-footer span{cursor:pointer;text-decoration:underline;font-weight:700}
 .quiz-footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px}
@@ -439,9 +435,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>The Founder's Edit</button>
       <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
     </div>
-    <div class="share-btns" style="margin-top:12px">
-      <button class="share-btn" onclick="saveStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M3 16l4-4 4 4"/></svg>View Style Card</button>
-      <button class="share-btn" onclick="shareStyleCard('quiz')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
+    <div class="act-pair" style="margin-top:10px">
+      <button class="act-btn act-2" onclick="saveStyleCard('quiz')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3.5" width="18" height="17" rx="2.5"/><circle cx="12" cy="13" r="3.4"/><path d="M3 16.5l4-3.8 3 2.8"/></svg>View Style Card</button>
+      <button class="act-btn act-2" onclick="shareStyleCard('quiz')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><polyline points="16 7 12 3 8 7"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Share</button>
     </div>
   </div>
 
@@ -517,9 +513,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>The Founder's Edit</button>
       <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
     </div>
-    <div class="share-btns" style="margin-top:12px">
-      <button class="share-btn" onclick="saveStyleCard('photo')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M3 16l4-4 4 4"/></svg>View Style Card</button>
-      <button class="share-btn" onclick="shareStyleCard('photo')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share</button>
+    <div class="act-pair" style="margin-top:10px">
+      <button class="act-btn act-2" onclick="saveStyleCard('photo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3.5" width="18" height="17" rx="2.5"/><circle cx="12" cy="13" r="3.4"/><path d="M3 16.5l4-3.8 3 2.8"/></svg>View Style Card</button>
+      <button class="act-btn act-2" onclick="shareStyleCard('photo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><polyline points="16 7 12 3 8 7"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Share</button>
     </div>
   </div>
 
