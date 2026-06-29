@@ -65,14 +65,14 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.7
 .card-title{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:1px}
 .card-sub{font-size:13px;color:#666}
 .card-arrow{font-size:16px;color:#ccc;flex-shrink:0}
-.erow{display:flex;gap:10px;width:100%;max-width:360px;margin:4px auto 0}
-.ecard{flex:1;min-width:0;background:#fff;border:3px solid transparent;border-image:linear-gradient(135deg,#B8972A,#F5E17D,#D4AF37,#F5E17D,#C8A060,#F5E17D,#D4AF37,#B8972A) 1;border-radius:0;padding:11px 14px 11px;cursor:pointer;box-shadow:0 4px 16px rgba(40,30,10,0.08);transition:transform .25s ease,box-shadow .25s ease;display:flex;flex-direction:column;align-items:center;text-align:center}
-.ecard:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(40,30,10,0.16)}
-.eicn{width:26px;height:26px;margin:0 auto 6px;display:block}
-.et{font-family:'Fraunces',Georgia,serif;font-size:13px;font-weight:600;letter-spacing:0.02em;text-transform:uppercase;color:#1a1a1a;line-height:1.45;margin-bottom:6px;min-height:34px;display:flex;align-items:center;justify-content:center}
-.ed{font-size:11px;color:#6b665d;line-height:1.45;margin-bottom:7px;flex:1}
-.ear{width:20px;height:20px;margin:0 auto;display:block}
-@media(max-width:360px){.erow{flex-direction:column}.et{min-height:0}}
+.erow{display:flex;flex-direction:column;gap:9px;width:100%;max-width:360px;margin:6px auto 0}
+.ecard{background:#fff;border:1px solid #E3C987;border-radius:0;padding:14px 16px;cursor:pointer;box-shadow:0 2px 10px rgba(40,30,10,0.06);transition:transform .2s ease,box-shadow .2s ease;display:flex;flex-direction:row;align-items:center;text-align:left;gap:13px}
+.ecard:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(40,30,10,0.13)}
+.eicn{width:24px;height:24px;margin:0;flex-shrink:0;display:block}
+.etext{flex:1;min-width:0}
+.et{font-family:'Fraunces',Georgia,serif;font-size:14px;font-weight:600;letter-spacing:0;color:#1a1a1a;line-height:1.25;margin:0 0 2px}
+.ed{font-size:12px;color:#6b665d;line-height:1.4;margin:0}
+.ear{width:18px;height:18px;margin:0;flex-shrink:0;display:block}
 .name-in input{border:1.5px solid #e8e8e8;border-radius:40px;padding:14px 20px;font-size:18px;width:280px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif;font-weight:500;transition:border-color 0.2s}
 .name-in input:focus{outline:none;border-color:#C8A060}
 .name-in input::placeholder{color:#999}
@@ -343,6 +343,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div id="restoreSection" style="width:100%;max-width:340px;text-align:center;margin-top:6px">
       <span style="font-size:13px;color:#777">Already taken the quiz? </span><span onclick="showRestore()" style="font-size:13px;color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer">Restore your results</span>
     </div>
+    <div id="browseShop" style="width:100%;max-width:340px;text-align:center;margin-top:5px">
+      <span style="font-size:13px;color:#777">Prefer to shop first? </span><span onclick="showShop()" style="font-size:13px;color:#B08830;font-weight:600;text-decoration:underline;cursor:pointer">Browse the Style Star Mall &rarr;</span>
+    </div>
     <div id="restoreForm" style="display:none;width:100%;max-width:340px;text-align:center;margin-top:10px">
       <div style="font-size:13px;color:#777;margin-bottom:8px">Enter the email you saved with and we'll bring your style portrait back.</div>
       <input type="email" class="stay-input" id="restoreEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')restoreResults()">
@@ -357,20 +360,17 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="erow">
       <div class="ecard" onclick="startPhoto()">
         <svg class="eicn" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3.2"/></svg>
-        <div class="et">Analyze an outfit</div>
-        <div class="ed">Upload a photo and get styling feedback instantly</div>
+        <div class="etext"><div class="et">Analyze an outfit</div><div class="ed">Upload a photo and get styling feedback instantly</div></div>
         <svg class="ear" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
       </div>
       <div class="ecard" onclick="openChat()">
         <svg class="eicn" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>
-        <div class="et">Ask your stylist</div>
-        <div class="ed">Thoughtful guidance and expert advice</div>
+        <div class="etext"><div class="et">Ask your stylist</div><div class="ed">Thoughtful guidance and expert advice</div></div>
         <svg class="ear" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
       </div>
       <div class="ecard" onclick="showDream()">
         <svg class="eicn" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <div class="et">The Founder's Edit</div>
-        <div class="ed">A hand-picked selection of pieces you'll love</div>
+        <div class="etext"><div class="et">The Founder's Edit</div><div class="ed">A hand-picked selection of pieces you'll love</div></div>
         <svg class="ear" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
       </div>
     </div>
