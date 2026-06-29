@@ -468,7 +468,10 @@ _(running list — add to this as ideas come up)_
   arrows soft.
 - **Glow-up REMAINING:** (1) elevate the Style Fingerprint (dense chart → keepsake),
   (2) refine ALL the line-art icons to be more custom/elegant (Cath: current ones are a bit
-  plain), (3) a more elegant custom treatment for the photo-screen icon later.
+  plain), (3) a more elegant custom treatment for the photo-screen icon later, (4) add a
+  small line-art icon to the "Retake the quiz" link (Cath wants one there, with the icon
+  pass). Also retired the heavy black outline on Retake → it's now a quiet underlined link
+  (#555).
 - Email-fonts question: decided to **leave the welcome email as-is** (email clients mostly
   ignore custom fonts; logo image carries the brand; not worth the fuss).
 - ✅ **Shop Style Star Mall** (PR #67) — NEW curated store directory (`s-shop` screen):
