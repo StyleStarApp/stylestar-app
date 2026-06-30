@@ -609,7 +609,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="story-text" style="text-align:center;color:#777;margin-top:0.5rem">
       We're glad you're here. ⭐
     </div>
-    <button class="btn-pink" onclick="closeStory()" style="max-width:260px;margin:1rem auto 0;display:block" id="storyBtn">Discover your style</button>
+    <button class="btn-outline" onclick="closeStory()" style="max-width:260px;margin:1rem auto 0;display:block" id="storyBtn">Back</button>
   </div>
 </div>
 
@@ -794,7 +794,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </div>
 
 <div class="scr" id="s-privacy">
-  <div style="padding:1.5rem 1.5rem 2rem;max-width:480px;margin:0 auto;text-align:center">
+  <div class="story-wrap">
     <div style="text-align:right;margin-bottom:2px"><button onclick="closePrivacy()" style="background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#777;cursor:pointer;padding:4px 2px">&larr; Back</button></div>
     <div style="font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:600;margin-bottom:1rem">Privacy Policy</div>
     <div style="font-size:14px;color:#555;line-height:1.8;text-align:left">
@@ -1748,9 +1748,6 @@ function showStory(){
   storyPrevScreen=cur?cur.id:'s-wel';
   show('s-story');
   document.querySelector('.quiz-footer').style.display='none';
-  const btn=document.getElementById('storyBtn');
-  if(storyPrevScreen==='s-wel'){btn.textContent='Discover your style'}
-  else{btn.textContent='Back'}
 }
 function closeStory(){
   document.querySelector('.quiz-footer').style.display='';
