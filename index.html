@@ -477,7 +477,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </div>
     <input type="file" id="photoIn" accept="image/*" style="display:none" onchange="onPhotoSelect(this)">
     <button class="btn-teal" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my outfit</button>
-    <button class="btn-outline" onclick="show(photoPrevScreen)">Back</button>
+    <button class="btn-outline" onclick="showBack(photoPrevScreen)">Back</button>
   </div>
 </div>
 
@@ -539,7 +539,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="stay-skip" onclick="document.getElementById('staySectionPhoto').style.display='none'">Skip</div>
   </div>
 
-  <button class="btn-outline" onclick="show(photoPrevScreen)">Back</button>
+  <button class="btn-outline" onclick="showBack(photoPrevScreen)">Back</button>
 </div>
 <div class="scr" id="s-pref">
   <div class="pref-progress" id="prefPips"></div>
@@ -886,6 +886,19 @@ function show(id,skipHistory){
     history.pushState({screen:id},null,'');
   }
   window.scrollTo(0,0);
+}
+
+// Return to a screen from a sub-action. If it's a results screen, land on the
+// "What would you like to do?" actions (not the top) so she's back where she
+// was — the portrait is just a scroll up. Fresh portrait views (quiz finish,
+// "See my style portrait") use show() and still land at the top.
+function showBack(id){
+  show(id);
+  if(id==='s-res'||id==='s-photo-res'){
+    var scr=document.getElementById(id);
+    var t=scr&&scr.querySelector('.whatsnext-title');
+    if(t)t.scrollIntoView({block:'start'});
+  }
 }
 
 window.addEventListener('popstate',function(e){
@@ -1281,14 +1294,8 @@ function openPrefs(){
   show('s-pref');
   renderPref();
 }
-function skipPrefs(){show(prefReturnScreen)}
-function prefDone(){
-  show(prefReturnScreen);
-  setTimeout(function(){
-    const el=document.getElementById('whatsnext');
-    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
-  },100);
-}
+function skipPrefs(){showBack(prefReturnScreen)}
+function prefDone(){showBack(prefReturnScreen)}
 
 // Build the FULL user record for saving. We read the saved portrait/answers
 // from localStorage as the base so updating preferences (e.g. a returning
@@ -1747,7 +1754,7 @@ function showStory(){
 }
 function closeStory(){
   document.querySelector('.quiz-footer').style.display='';
-  show(storyPrevScreen);
+  showBack(storyPrevScreen);
 }
 let faqPrevScreen='s-wel';
 function showFAQ(){
@@ -1758,7 +1765,7 @@ function showFAQ(){
 }
 function closeFAQ(){
   document.querySelector('.quiz-footer').style.display='';
-  show(faqPrevScreen);
+  showBack(faqPrevScreen);
 }
 let dreamPrevScreen='s-wel';
 function showDream(){
@@ -1769,7 +1776,7 @@ function showDream(){
 }
 function closeDream(){
   document.querySelector('.quiz-footer').style.display='';
-  show(dreamPrevScreen);
+  showBack(dreamPrevScreen);
 }
 
 // --- Shop Style Star Mall ---------------------------------------------------
@@ -1834,7 +1841,7 @@ function showShop(){
 }
 function closeShop(){
   document.querySelector('.quiz-footer').style.display='';
-  show(shopPrevScreen);
+  showBack(shopPrevScreen);
 }
 let privacyPrevScreen='s-wel';
 function showPrivacy(){
@@ -1845,7 +1852,7 @@ function showPrivacy(){
 }
 function closePrivacy(){
   document.querySelector('.quiz-footer').style.display='';
-  show(privacyPrevScreen);
+  showBack(privacyPrevScreen);
 }
 
 function saveChatHistory(){
@@ -1907,14 +1914,8 @@ function wbChat(){
   openChat();
 }
 
-function closeChat(){show(chatPrevScreen)}
-function chatDone(){
-  show(chatPrevScreen);
-  setTimeout(function(){
-    const el=document.getElementById('whatsnext');
-    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
-  },100);
-}
+function closeChat(){showBack(chatPrevScreen)}
+function chatDone(){showBack(chatPrevScreen)}
 
 function linkStores(text){
   const storeNames='Nordstrom|J\\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia';
