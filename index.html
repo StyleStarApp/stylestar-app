@@ -610,6 +610,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       We're glad you're here. ⭐
     </div>
     <button class="btn-outline" onclick="closeStory()" style="max-width:260px;margin:1rem auto 0;display:block" id="storyBtn">Back</button>
+    <div id="storyQuiz" style="display:none;margin-top:14px"><span style="font-size:14.5px;color:#777">Ready to discover your style? </span><span onclick="storyStartQuiz()" style="font-size:14.5px;color:#B08830;font-weight:600;text-decoration:underline;cursor:pointer">Take the quiz &rarr;</span></div>
   </div>
 </div>
 
@@ -1748,6 +1749,15 @@ function showStory(){
   storyPrevScreen=cur?cur.id:'s-wel';
   show('s-story');
   document.querySelector('.quiz-footer').style.display='none';
+  // Only invite a from-the-home-page visitor to take the quiz.
+  document.getElementById('storyQuiz').style.display=(storyPrevScreen==='s-wel')?'block':'none';
+}
+// "Take the quiz" from Our Story: start the quiz and return to the welcome
+// page (not back to the story) if she backs out of question 1.
+function storyStartQuiz(){
+  document.querySelector('.quiz-footer').style.display='';
+  startQ();
+  quizOrigin='s-wel';
 }
 function closeStory(){
   document.querySelector('.quiz-footer').style.display='';
