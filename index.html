@@ -477,7 +477,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     </div>
     <input type="file" id="photoIn" accept="image/*" style="display:none" onchange="onPhotoSelect(this)">
     <button class="btn-teal" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my outfit</button>
-    <button class="btn-outline" onclick="show(quizTaken?'s-res':'s-wel')">Back</button>
+    <button class="btn-outline" onclick="show(photoPrevScreen)">Back</button>
   </div>
 </div>
 
@@ -917,8 +917,9 @@ function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" styl
 function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('pw').style.display='none';document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none';hideSavePins()}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}scheduleSaveSheet()}
 
 let photoData=null,photoType="image/jpeg";
+let photoPrevScreen='s-wel';
 function startPhoto(){if(!userName||userName==='You'){userName='You'}showPhoto()}
-function showPhoto(){show('s-photo');document.getElementById('photoPreview').style.display='none';document.getElementById('photoPlaceholder').style.display='flex';document.getElementById('analyzeBtn').style.display='none';photoData=null}
+function showPhoto(){var a=document.querySelector('.scr.act');if(a&&a.id&&a.id!=='s-photo'){photoPrevScreen=a.id}show('s-photo');document.getElementById('photoPreview').style.display='none';document.getElementById('photoPlaceholder').style.display='flex';document.getElementById('analyzeBtn').style.display='none';photoData=null}
 function onPhotoSelect(input){
   if(!input.files||!input.files[0])return;
   const file=input.files[0];
