@@ -584,3 +584,68 @@ sends them, or add later). Showed mockups (in scratchpad, not shipped):
   photo-upkeep she wants.
 - Reminder still open: light **FAQ wording polish**; revisit "Is Style Star free?" when a paid
   tier launches; verify the small-shifts idea lives in the stylist-chat prompt.
+
+**2026-06-30 (Tuesday — navigation/friction fixes, Style Signature, page consistency)**
+- Cath did careful real-device testing and found several friction bugs; all fixed & live:
+  - ✅ **Quiz "Back" at Q1** (#89): was hardcoded to s-wel; now returns to origin (Welcome
+    Back / Results) via a new `quizOrigin` var set in startQ()/retakeQuiz().
+  - ✅ **Photo upload "Back"** (#90) and **photo-results "Back"** (#91): same origin-forgetting
+    bug (used `quizTaken?'s-res':'s-wel'`; a returning user landed on Discover). Now both use
+    `photoPrevScreen` (set in showPhoto). Photo-results button renamed "Back to results"→"Back".
+  - ✅ **Consistent back-scroll** (#92): returning to results from a sub-action now lands on the
+    "What would you like to do?" actions (not the top) via a shared `showBack()` helper; routed
+    all close/back paths through it. Fresh portrait views (quiz finish, "See my style portrait")
+    still land at the top.
+  - Full back-button audit done: Story/FAQ/Founder's Edit/Mall/Privacy/Chat/Prefs all already
+    remembered origin; prefs Back hidden on step 0; no dead ends. Bonus: confirmed the
+    **small-shifts idea IS live** in the stylist chat (the "Shift one notch" chip).
+- ✅ **Style Signature**: redesigned it (readable keepsake) but **Cath preferred the ORIGINAL**
+  (category left-column, endpoints under each track, no boxed card) → **reverted** (#95, byte-
+  identical to original). Then tightened the gap between the spectrum words and their line
+  (top:12px→7px, #96). LESSON: the original read fine on her real phone; my "too small" worry
+  was partly a headless-render artifact (test browser clamps to 500px). Trust her device over
+  test renders. (Other readability bumps kept: home screen, email note, Mall descriptions.)
+  Cath dislikes **browns/tans of any kind** — keep palette to clean gold + neutral gray + white.
+- ✅ **Five footer pages standardized** (#97–#98): Shop/Founder's Edit/Our Story/FAQ/Privacy now
+  share identical top spacing (Privacy was using a 1.5rem-pad wrapper → switched to .story-wrap)
+  and the same white-outline "Back" button (Our Story's was a solid-black btn-pink). Re-added the
+  lost conversion nudge as a quiet **"Ready to discover your style? Take the quiz →"** link on
+  Our Story, shown ONLY when arrived from the home page (`storyStartQuiz()` sets quizOrigin=s-wel).
+- Feedback: **Ellen (Cath's sister) loves the Mall**, calls it a great idea, reminds Cath to
+  monetize. Barb & Almira: still no reply.
+- ✅ **FAQ is DONE** per Cath — removed from the open list (no more wording-polish pending).
+
+### ▶ MASTER TO-DO LIST (saved 2026-06-30 — resurface whenever Cath asks "what's left")
+**⏳ Waiting on others (no action needed from Cath):**
+- Almira/Indie Law reply (fees, Class 045, extra-class fees, EIN) BEFORE paying.
+- Barb's app feedback.
+
+**💰 The money path (ordered — all affiliate income to flow through the business from day one):**
+1. Almira replies → confirm fees. 2. [Cath] Pay USPTO + $130 FL LLC fee. 3. LLC forms (~5 biz
+days; both marks in LLC's name). 4. [Cath] Get EIN (free, IRS.gov). 5. [Cath] Open business bank
+account. 6. [Cath] Apply to affiliate programs (Amazon first, then ShopStyle/LTK/Rakuten/CJ/
+ShareASale/Impact). 7. **[Claude] Wire affiliate links into the app** — swap each Mall store +
+Founder's Edit `u` to the tagged affiliate URL, add product images, add FTC disclosure. (The Mall
+earns $0 until step 7.)
+
+**🎨 App & design (no blockers — do anytime):**
+- **Home "prettier" redesign** — Cath mulling: Example 1 (prettier no-photos) / Example 1 + one
+  hero image (Claude's rec) / Example 2 (full photo-led). Mockups in scratchpad/CLAUDE notes.
+- **Refine line-art icons** — more custom/elegant; incl. a small icon on the "Retake the quiz" link.
+- **Archetype names refresh + 1-line descriptions** (Danielle's feedback). ASK Cath: show in-app
+  vs enrich the AI write-up.
+
+**💡 Monetization beyond affiliates (do a dedicated strategy session):**
+- Affiliate commissions (primary, above) • Premium digital product (Style Guide/lookbook/vision
+  board, evergreen) • Paid 1:1 virtual styling sessions (Cath is certified — likely highest value)
+  • Substack/content subscription.
+
+**📣 Marketing plan (NEW — Cath wants to think on this):** needs a dedicated session. Levers to
+explore: the share-the-Style-Card growth loop (already built), Instagram (floridapersonalstylist
+→ Style Star), referrals/word-of-mouth, the Substack/content angle, email list (MailerLite).
+
+**🧹 Later cleanup (after the LLC exists):**
+- Dissolve "Your Fashion Friend" sole prop (confirm timing w/ accountant). • Rebrand the
+  floridapersonalstylist IG toward Style Star. • [Claude] Swap home address → PO Box in the
+  welcome-email footer (once she has one). • [Claude] Revisit "Is Style Star free?" FAQ when a
+  paid tier launches.
