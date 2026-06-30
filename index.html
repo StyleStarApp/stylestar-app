@@ -114,14 +114,14 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .flav-lbl{font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#555;margin-bottom:8px;font-weight:600}
 .flav-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
 .flav-tag{font-size:14px;font-weight:700;padding:6px 18px;border-radius:20px;border:1.5px solid #D4AF37;color:#1a1a1a;background:#fff}
-.fp{margin-bottom:1.75rem}
-.fp-lbl{font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#555;margin-bottom:14px;text-align:center;font-weight:600}
-.fp-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.fp-name{font-size:11px;color:#333;width:85px;text-align:right;flex-shrink:0;text-transform:uppercase;letter-spacing:0.04em;font-weight:600}
-.fp-track{flex:1;height:3px;background:#ebebeb;border-radius:2px;position:relative}
-.fp-dot{width:11px;height:11px;border-radius:50%;background:#D4AF37;position:absolute;top:-4px}
-.fp-left,.fp-right{font-size:9px;color:#666;letter-spacing:0.04em;text-transform:uppercase;position:absolute;top:12px;font-weight:600}
-.fp-left{left:0}.fp-right{right:0}
+.fp{margin-bottom:1.75rem;background:#fff;border:1px solid #ececec;border-radius:14px;padding:20px 18px 12px}
+.fp-lbl{font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#C8A24B;margin-bottom:18px;text-align:center;font-weight:700}
+.fp-row{margin-bottom:20px}
+.fp-cat{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#6a6a6a;font-weight:700;margin-bottom:6px}
+.fp-ends{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:9px}
+.fp-end{font-size:13.5px;letter-spacing:0.02em;text-transform:uppercase;font-weight:600;color:#3f3f3f}
+.fp-track{height:4px;background:#ededed;border-radius:3px;position:relative}
+.fp-dot{width:15px;height:15px;border-radius:50%;background:#D4AF37;position:absolute;top:-5.5px;border:2px solid #fff;box-shadow:0 1px 5px rgba(184,144,30,0.45)}
 .retake{display:block;width:100%;text-align:center;font-size:13px;color:#555;font-weight:500;text-decoration:underline;letter-spacing:0.06em;text-transform:uppercase;margin-top:1rem;cursor:pointer;border:none;background:none}
 .wb{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.85rem;padding:0.5rem 1rem 0.5rem}
 .wb-name{font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:600;color:#D4AF37}
@@ -924,7 +924,16 @@ function nextQ(){answers[cur]=parseInt(document.getElementById('sl').value);if(c
 function prevQ(){if(cur>0){cur--;loadQ(cur)}else{show(quizOrigin);document.getElementById('pw').style.display='none'}}
 function dist(a,b){return Math.sqrt(a.reduce((s,v,i)=>s+(v-b[i])**2,0))}
 function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)}));scored.sort((a,b)=>a.d-b.d);return scored.slice(0,3)}
-function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`})}
+function buildChart(){renderSignature('fpChart',answers)}
+// Render the Style Signature: one spectrum per dimension, the side she leans
+// toward emphasized, a gold marker showing where she lands.
+function renderSignature(elId,vals){
+  const c=document.getElementById(elId);if(!c)return;c.innerHTML='';
+  questions.forEach((q,i)=>{
+    const pct=((vals[i]-1)/10)*100;
+    c.innerHTML+=`<div class="fp-row"><div class="fp-cat">${q.cat}</div><div class="fp-ends"><span class="fp-end">${q.left}</span><span class="fp-end">${q.right}</span></div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 7px)"></div></div></div>`;
+  });
+}
 async function genResult(){show('s-load');document.getElementById('pf').style.width='100%';document.getElementById('pl').textContent='Complete';const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('pw').style.display='none';document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none';hideSavePins()}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}scheduleSaveSheet()}
@@ -961,13 +970,7 @@ function onPhotoSelect(input){
   };
   img.src=url;
 }
-function buildPhotoChart(vals){
-  const c=document.getElementById('pChart');c.innerHTML='';
-  questions.forEach((q,i)=>{
-    const pct=((vals[i]-1)/10)*100;
-    c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`;
-  });
-}
+function buildPhotoChart(vals){renderSignature('pChart',vals)}
 function getPhotoArch(vals){
   let scored=archetypes.map(a=>({n:a.n,d:dist(vals,a.p)}));
   scored.sort((a,b)=>a.d-b.d);
