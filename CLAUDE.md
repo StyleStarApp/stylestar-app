@@ -649,3 +649,27 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   floridapersonalstylist IG toward Style Star. • [Claude] Swap home address → PO Box in the
   welcome-email footer (once she has one). • [Claude] Revisit "Is Style Star free?" FAQ when a
   paid tier launches.
+
+**2026-06-30 (LATER — ▶ MAJOR LEGAL MILESTONE: Almira replied, Cath paid, LLC + TM filing in motion)**
+- **Almira (Indie Law) sent the long-awaited reply.** Key facts:
+  - **TM Max package INCLUDES** LLC formation, **EIN** (federal tax ID), and an Operating
+    Agreement. (Resolves the old open question — EIN is included, Cath does NOT do it herself.)
+    Business bank account is NOT included (Cath opens it herself once LLC + EIN are ready).
+  - **Class 045 added** with no extra service fee; caution level unchanged.
+  - **Government filing fees = $2,100 total**, confirmed = 2 marks (word + logo) × 3 classes
+    (035/042/045) × $350. (Fully resolves the old "$1,400 surprise" — math is clean.)
+  - **Approved class descriptions** (USPTO pre-approved wording, must stay verbatim): 035 =
+    promoting retailers via hyperlinks (affiliate/Mall); 042 = SaaS style-analysis app; 045 =
+    personal stylist + fashion consulting. All three accurately fit Style Star. Almira only
+    needed Cath to CONFIRM accuracy (not rephrase).
+  - Timeline: filing is quick (gives an "applied-for" priority date); **USPTO registration takes
+    12–24 months** — does NOT block LLC/EIN/bank/affiliates.
+- ✅ **Cath PAID BOTH fees** (the $130 FL LLC filing + the $2,100 USPTO filing) and **emailed
+  Almira** confirming the 3 class descriptions as written + LLC-first, both marks in the LLC's
+  name. (Claude drafted the reply.) So filing is now fully in Indie Law's hands.
+- ▶ **UPDATED MONEY-PATH STATUS** (supersedes steps 1–2 of the master list): steps 1 (Almira
+  replies) & 2 (pay USPTO + LLC fee) are ✅ DONE. **Next:** LLC forms (~5 biz days) → EIN issued
+  (included) → **[Cath] open business bank account** (Truist or no-fee online, with LLC docs +
+  EIN) → **[Cath] apply to affiliate programs** (Amazon first) → **[Claude] wire affiliate links
+  + product images + FTC disclosure** (the revenue switch; Mall earns $0 until then). The legal
+  chain is no longer a blocker — it's just processing time now.
