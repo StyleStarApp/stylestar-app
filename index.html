@@ -21,7 +21,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Style Star">
 <meta name="theme-color" content="#D4AF37">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Great+Vibes&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-2isRUQ0QeYxjy54Mf0lSe.js"></script>
 <script>
@@ -299,6 +299,75 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .save-pin:hover{color:#8a6d20}
 .save-pin span{text-decoration:underline;text-underline-offset:3px}
 </style>
+<style>
+/* ===== Home (welcome) screen — "jewelry / dressing-room" design (Design handoff) ===== */
+#s-wel{padding:16px;margin:-0.5rem -1.75rem -1.5rem;font-family:'Jost',sans-serif;background-color:#F2EFE8;
+  background-image:
+    radial-gradient(130% 72% at 50% 30%, rgba(255,244,222,.34) 0%, rgba(255,244,222,0) 58%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0, rgba(0,0,0,.045) 2px, transparent 2px, transparent 7px),
+    repeating-linear-gradient(0deg,#F2EFE8 0,#F2EFE8 28px,#28251F 28px,#28251F 80px,#F2EFE8 80px,#F2EFE8 104px);
+  box-shadow:inset 0 0 80px rgba(0,0,0,.24)}
+.hm-mirror{position:relative;display:flex;flex-direction:column;text-align:center;max-width:400px;margin:0 auto;
+  border-radius:2px;border:10px solid transparent;
+  border-image:linear-gradient(135deg,#FFFFFF 0%,#C6CACE 18%,#8C9298 38%,#F2F4F6 52%,#9AA0A6 70%,#DFE2E5 84%,#FFFFFF 100%) 1;
+  box-shadow:0 32px 42px -12px rgba(0,0,0,.5),0 26px 50px -18px rgba(0,0,0,.7),0 0 0 1px rgba(90,92,98,.6),inset 0 0 0 1.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5);
+  padding:18px 20px 24px;background-color:#FBFAF7;
+  background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
+.hm-glare{position:absolute;inset:0;pointer-events:none;z-index:6;border-radius:2px;background:linear-gradient(118deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
+.hm-pendant{position:relative;align-self:center;width:100%;max-width:230px;height:150px;margin:-4px auto 30px;animation:ssRise .6s ease both}
+.hm-post{position:absolute;top:0;width:6px;height:26px;border-radius:3px;background:linear-gradient(90deg,#6F757B,#B4BABF 22%,#FFFFFF 50%,#CDD2D7 60%,#7C8288);box-shadow:0 2px 3px -1px rgba(0,0,0,.35)}
+.hm-post.l{left:0}.hm-post.r{right:0}
+.hm-rail{position:absolute;top:20px;left:-9px;right:-9px;height:8px;border-radius:4px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 4px 7px -2px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.8)}
+.hm-hook{position:absolute;top:15px;left:50%;transform:translateX(-50%)}
+.hm-star-wrap{position:absolute;top:36px;left:50%;width:150px;margin-left:-75px}
+.hm-star-inner{position:relative;width:130px;height:130px;margin:-12px auto 0;display:flex;align-items:center;justify-content:center;transform:scale(1.24);transform-origin:top center}
+.hm-star-inner>svg{position:absolute;filter:drop-shadow(0 2px 7px rgba(200,151,30,.28)) drop-shadow(0 9px 7px rgba(28,20,6,.22))}
+.hm-star-inner img{height:54px;width:auto;position:relative;z-index:1}
+.hm-h1{font:400 28px/1.12 'DM Serif Display',serif;color:#211E1A;margin:2px 0 0;animation:ssRise .6s ease .16s both}
+.hm-h1 i{font-style:italic;color:#1A1814}
+.hm-sub{font:600 15px/1.4 'Jost',sans-serif;color:#26231F;margin:9px 0 0;animation:ssRise .6s ease .24s both}
+.hm-body{font:400 12.5px/1.5 'Jost',sans-serif;color:#6b655a;margin:5px 4px 0;text-wrap:balance;animation:ssRise .6s ease .28s both}
+.hm-cta{position:relative;display:block;width:100%;margin-top:14px;border:5px solid transparent;border-radius:4px;cursor:pointer;
+  background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A 0%,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519 100%) border-box;
+  color:#F1DDA0;text-align:center;font:700 14px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:15px 16px;
+  box-shadow:0 14px 26px -12px rgba(0,0,0,.6),0 0 12px -3px rgba(233,196,110,.4);animation:ssRise .6s ease .32s both}
+.hm-cta .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(125deg,transparent 16%,rgba(255,249,228,.65) 38%,rgba(255,255,255,.95) 50%,rgba(255,249,228,.65) 62%,transparent 84%) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssShimmer 5s ease-in-out infinite 1s;pointer-events:none}
+.hm-cta .lbl{position:relative;white-space:nowrap}
+.hm-help{font:400 11.5px/1.55 'Jost',sans-serif;color:#6b655a;margin-top:5px}
+.hm-help.first{margin-top:10px}
+.hm-help b{color:#1A1814;font-weight:700;cursor:pointer}
+.hm-divwrap{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 12px}
+.hm-hair{height:1px;width:34px}
+.hm-hair.l{background:linear-gradient(90deg,transparent,#C9A24E)}
+.hm-hair.r{background:linear-gradient(270deg,transparent,#C9A24E)}
+.hm-divlbl{font:600 11px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#BC9022;white-space:nowrap}
+.hm-shelves{display:flex;flex-direction:column;gap:22px;max-width:230px;margin:2px auto 0}
+.hm-card{cursor:pointer}
+.hm-cardrow{display:flex;align-items:flex-end;gap:12px;padding:0 4px 3px}
+.hm-ic{flex:0 0 auto;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.hm-ic svg{width:23px;height:23px}
+.hm-ctext{flex:1;min-width:0;text-align:left}
+.hm-ctitle{display:flex;align-items:center;gap:7px}
+.hm-ctitle>span{font:600 16px/1.1 'Jost',sans-serif;color:#211E1A}
+.hm-arr{font-size:13px}
+.hm-csub{font:400 12px/1.4 'Jost',sans-serif;color:#453f37;margin-top:3px}
+.hm-shelf{height:6px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 7px 11px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
+.hm-brackets{display:flex;justify-content:space-between;padding:0 7px}
+.hm-brk{width:12px;height:9px}
+.hm-brk.l{clip-path:polygon(0 0,100% 0,0 100%);background:linear-gradient(135deg,#eef1f3,#90979d);box-shadow:-1px 1px 2px rgba(0,0,0,.28)}
+.hm-brk.r{clip-path:polygon(0 0,100% 0,100% 100%);background:linear-gradient(225deg,#eef1f3,#90979d);box-shadow:1px 1px 2px rgba(0,0,0,.28)}
+.hm-foot{margin-top:22px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid rgba(33,30,26,.12)}
+.hm-foot span.lnk{font:600 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b655e;cursor:pointer}
+.hm-foot span.dia{color:#b8a878;font-size:7px}
+#s-wel #restoreForm{max-width:300px;margin:8px auto 0}
+@keyframes ssRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes ssShimmer{0%,100%{opacity:.18}50%{opacity:.85}}
+#s-wel [data-press]{transition:transform .13s ease,box-shadow .13s ease}
+#s-wel [data-press]:active{transform:scale(.97)}
+#s-wel [data-shelf]{transition:transform .18s ease,filter .18s ease}
+#s-wel [data-shelf]:hover{transform:translateY(-3px);filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
+#s-wel [data-shelf]:active{transform:translateY(-1px) scale(.99)}
+</style>
 </head>
 <body>
 <form name="style-star-emails" netlify netlify-honeypot="bot-field" hidden>
@@ -333,61 +402,70 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </div>
 
 <div class="scr act" id="s-wel">
-  <div class="wel">
-    <div class="wel-t">Discover your signature style</div>
-    <div class="wel-s">Your personal stylist is ready!</div>
-    
+  <div class="hm-mirror">
+    <span class="hm-glare"></span>
 
-    <button style="width:100%;max-width:340px;padding:15px;border-radius:0;font-size:13px;font-weight:600;letter-spacing:0.06em;cursor:pointer;text-transform:uppercase;font-family:'DM Sans',sans-serif;background:#1a1a1a;color:#fff;border:3px solid transparent;border-image:linear-gradient(135deg,#B8972A,#F5E17D,#D4AF37,#F5E17D,#C8A060,#F5E17D,#D4AF37,#B8972A) 1;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:10px" onclick="startQ()">START MY STYLE QUIZ<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EBC85A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+    <div class="hm-pendant">
+      <div class="hm-post l"></div>
+      <div class="hm-post r"></div>
+      <div class="hm-rail"></div>
+      <svg class="hm-hook" width="22" height="30" viewBox="0 0 24 24"><path d="M12 1 C5.5 1 5.5 12 12 12 C18 12 18 22 12 22" fill="none" stroke="#565C62" stroke-width="1.9" stroke-linecap="round"/></svg>
+      <div class="hm-star-wrap">
+        <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
+        <div class="hm-star-inner">
+          <svg width="130" height="130" viewBox="0 0 24 24"><defs><linearGradient id="starHaloHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloHome)" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg>
+          <img src="logo.png" alt="Style Star">
+        </div>
+      </div>
+    </div>
 
-    <div id="restoreSection" style="width:100%;max-width:340px;text-align:center;margin-top:6px">
-      <span style="font-size:14.5px;color:#777">Already taken the quiz? </span><span onclick="showRestore()" style="font-size:14.5px;color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer">Restore your results</span>
+    <h1 class="hm-h1">Discover your <i>signature</i> style</h1>
+    <p class="hm-sub">Your personal stylist is ready!</p>
+    <p class="hm-body">Expert style guidance and personalized shopping, all in one place.</p>
+
+    <a class="hm-cta" data-press onclick="startQ()"><span class="shim"></span><span class="lbl">Start my style quiz&nbsp;&rarr;</span></a>
+
+    <div id="restoreSection">
+      <div class="hm-help first">Already taken the quiz? <b onclick="showRestore()">Restore your results</b></div>
+      <div class="hm-help">Prefer to shop first? <b onclick="showShop()">Browse the Mall &rarr;</b></div>
     </div>
-    <div id="browseShop" style="width:100%;max-width:340px;text-align:center;margin-top:7px">
-      <span style="font-size:14.5px;color:#777">Prefer to shop first? </span><span onclick="showShop()" style="font-size:14.5px;color:#B08830;font-weight:600;text-decoration:underline;cursor:pointer">Browse the Mall &rarr;</span>
-    </div>
-    <div id="restoreForm" style="display:none;width:100%;max-width:340px;text-align:center;margin-top:10px">
-      <div style="font-size:13px;color:#777;margin-bottom:8px">Enter the email you saved with and we'll bring your style portrait back.</div>
+    <div id="restoreForm" style="display:none">
+      <div style="font:400 11.5px/1.5 'Jost',sans-serif;color:#6b655a;margin-bottom:8px">Enter the email you saved with and we'll bring your style portrait back.</div>
       <input type="email" class="stay-input" id="restoreEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')restoreResults()">
       <button class="btn-p" style="margin-top:8px;max-width:280px" onclick="restoreResults()">Find my results</button>
-      <div id="restoreMsg" style="font-size:13px;color:#777;margin-top:8px"></div>
+      <div id="restoreMsg" style="font-size:12px;color:#777;margin-top:8px"></div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:10px;width:100%;max-width:340px;margin:4px 0">
-      <hr style="flex:1;border:none;border-top:1px solid #eee"><span style="font-size:11px;color:#999;font-weight:500">OR</span><hr style="flex:1;border:none;border-top:1px solid #eee">
-    </div>
+    <div class="hm-divwrap"><span class="hm-hair l"></span><span class="hm-divlbl">Or Explore</span><span class="hm-hair r"></span></div>
 
-    <div class="erow">
-      <div class="ecard" onclick="startPhoto()">
-        <svg class="eicn" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3.2"/></svg>
-        <div class="etext"><div class="et">Analyze an outfit</div><div class="ed">Upload a photo and get styling feedback instantly</div></div>
-        <svg class="ear" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+    <div class="hm-shelves">
+      <div class="hm-card" data-press data-shelf onclick="startPhoto()">
+        <div class="hm-cardrow">
+          <span class="hm-ic" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.4" width="18" height="12.4" rx="2.6"/><path d="M8.4 7.4l1.05-1.95a1.05 1.05 0 0 1 .93-.55h3.24a1.05 1.05 0 0 1 .93.55L15.6 7.4"/><circle cx="12" cy="13.4" r="3.5"/></svg></span>
+          <div class="hm-ctext"><div class="hm-ctitle"><span>Analyze an outfit</span><span class="hm-arr" style="color:#E01B1B">&rarr;</span></div><div class="hm-csub">Upload a photo for feedback</div></div>
+        </div>
+        <div class="hm-shelf"></div>
+        <div class="hm-brackets"><span class="hm-brk l"></span><span class="hm-brk r"></span></div>
       </div>
-      <div class="ecard" onclick="openChat()">
-        <svg class="eicn" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>
-        <div class="etext"><div class="et">Ask your stylist</div><div class="ed">Thoughtful guidance and expert advice</div></div>
-        <svg class="ear" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+      <div class="hm-card" data-press data-shelf onclick="openChat()">
+        <div class="hm-cardrow">
+          <span class="hm-ic" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span>
+          <div class="hm-ctext"><div class="hm-ctitle"><span>Ask your stylist</span><span class="hm-arr" style="color:#EC4899">&rarr;</span></div><div class="hm-csub">Expert guidance anytime</div></div>
+        </div>
+        <div class="hm-shelf"></div>
+        <div class="hm-brackets"><span class="hm-brk l"></span><span class="hm-brk r"></span></div>
       </div>
-      <div class="ecard" onclick="showDream()">
-        <svg class="eicn" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <div class="etext"><div class="et">Style Star Edit</div><div class="ed">A hand-picked selection of pieces you'll love</div></div>
-        <svg class="ear" viewBox="0 0 24 24" fill="none" stroke="#B8901E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
-      </div>
-    </div>
-
-    <div style="width:100%;max-width:340px;margin-top:18px;text-align:center">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <span style="flex:1;height:1px;background:#e3d9c2"></span>
-        <span style="font-size:12.5px;letter-spacing:2px;color:#B8901E;font-weight:700;font-family:'DM Sans',sans-serif">WHAT YOU'LL RECEIVE</span>
-        <span style="flex:1;height:1px;background:#e3d9c2"></span>
-      </div>
-      <div style="font-size:15px;color:#444;line-height:1.7;font-family:'DM Sans',sans-serif;display:inline-block;text-align:left">
-        <div style="margin:4px 0"><span style="color:#B8901E;font-weight:700;margin-right:8px">&#10003;</span>Style Portrait</div>
-        <div style="margin:4px 0"><span style="color:#B8901E;font-weight:700;margin-right:8px">&#10003;</span>Style Signature</div>
-        <div style="margin:4px 0"><span style="color:#B8901E;font-weight:700;margin-right:8px">&#10003;</span>Personalized Shopping Guidance</div>
+      <div class="hm-card" data-press data-shelf onclick="showDream()">
+        <div class="hm-cardrow">
+          <span class="hm-ic" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.5 L12.63 13.2 L14.45 13.25 L13.0 14.4 L13.5 16.15 L12 15.1 L10.5 16.15 L11.0 14.4 L9.55 13.25 L11.37 13.2 Z" fill="#FFFFFF" stroke="none"/></svg></span>
+          <div class="hm-ctext"><div class="hm-ctitle"><span>Style Star Edit</span><span class="hm-arr" style="color:#0FA6B6">&rarr;</span></div><div class="hm-csub">Hand-picked pieces you'll love</div></div>
+        </div>
+        <div class="hm-shelf"></div>
+        <div class="hm-brackets"><span class="hm-brk l"></span><span class="hm-brk r"></span></div>
       </div>
     </div>
 
+    <div class="hm-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="dia">&#9670;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="dia">&#9670;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
   </div>
 </div>
 
@@ -889,6 +967,11 @@ function show(id,skipHistory){
   if(fp)fp.style.display=onWel?'none':'';
   var fe=document.getElementById('footEdit');
   if(fe)fe.style.display=onWel?'none':'';
+  // The welcome screen has its own built-in footer + logo (in the star), so hide the shared global header/footer there.
+  var gf=document.querySelector('.quiz-footer');
+  if(gf)gf.style.display=onWel?'none':'';
+  var hd=document.querySelector('.hdr');
+  if(hd)hd.style.display=onWel?'none':'';
   if(!skipHistory){
     history.pushState({screen:id},null,'');
   }
@@ -2193,6 +2276,12 @@ function fallbackInitialScreen(){
   }else{
     document.getElementById('s-wel').classList.add('act');
   }
+  // s-wel has its own footer + logo; hide the shared global header/footer when it's the first screen.
+  var onW=document.getElementById('s-wel').classList.contains('act');
+  var gf=document.querySelector('.quiz-footer');
+  if(gf)gf.style.display=onW?'none':'';
+  var hd=document.querySelector('.hdr');
+  if(hd)hd.style.display=onW?'none':'';
 }
 
 // Auto-restore from the welcome-email link. The link carries an opaque token
