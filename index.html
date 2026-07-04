@@ -301,11 +301,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </style>
 <style>
 /* ===== Home (welcome) screen — "jewelry / dressing-room" design (Design handoff) ===== */
-#s-wel{padding:16px;margin:-0.5rem -1.75rem -1.5rem;font-family:'Jost',sans-serif;background-color:#F2EFE8;
+#s-wel{padding:16px;margin:-0.5rem -1.75rem -1.5rem;font-family:'Jost',sans-serif;background-color:#28251F;
   background-image:
+    linear-gradient(#28251F,#28251F),
+    linear-gradient(#28251F,#28251F),
     radial-gradient(130% 72% at 50% 30%, rgba(255,244,222,.34) 0%, rgba(255,244,222,0) 58%),
     repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0, rgba(0,0,0,.045) 2px, transparent 2px, transparent 7px),
-    repeating-linear-gradient(0deg,#F2EFE8 0,#F2EFE8 42px,#28251F 42px,#28251F 84px);
+    repeating-linear-gradient(0deg,#28251F 0,#28251F 60px,#F2EFE8 60px,#F2EFE8 120px);
+  background-repeat:no-repeat,no-repeat,no-repeat,repeat,repeat;
+  background-position:top,bottom,center,center,top;
+  background-size:100% 64px,100% 64px,auto,auto,auto;
   box-shadow:inset 0 0 80px rgba(0,0,0,.24)}
 .hm-mirror{position:relative;display:flex;flex-direction:column;text-align:center;max-width:400px;margin:0 auto;
   border-radius:2px;border:10px solid transparent;
@@ -322,7 +327,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-star-wrap{position:absolute;top:36px;left:50%;width:150px;margin-left:-75px}
 .hm-star-inner{position:relative;width:130px;height:130px;margin:-12px auto 0;display:flex;align-items:center;justify-content:center;transform:scale(1.24);transform-origin:top center}
 .hm-star-inner>svg{position:absolute;filter:drop-shadow(0 2px 7px rgba(200,151,30,.28)) drop-shadow(0 9px 7px rgba(28,20,6,.22))}
-.hm-star-inner img{height:43px;width:auto;position:relative;z-index:1;transform:translateY(7px)}
+.hm-star-inner img{height:100px;width:auto;position:relative;z-index:1}
 .hm-h1{font:400 28px/1.12 'DM Serif Display',serif;color:#211E1A;margin:2px 0 0;animation:ssRise .6s ease .16s both}
 .hm-h1 i{font-style:italic;color:#1A1814}
 .hm-sub{font:600 15px/1.4 'Jost',sans-serif;color:#26231F;margin:9px 0 0;animation:ssRise .6s ease .24s both}
@@ -357,8 +362,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-brk.l{clip-path:polygon(0 0,100% 0,0 100%);background:linear-gradient(135deg,#eef1f3,#90979d);box-shadow:-1px 1px 2px rgba(0,0,0,.28)}
 .hm-brk.r{clip-path:polygon(0 0,100% 0,100% 100%);background:linear-gradient(225deg,#eef1f3,#90979d);box-shadow:1px 1px 2px rgba(0,0,0,.28)}
 .hm-foot{margin-top:22px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid rgba(33,30,26,.12)}
-.hm-foot span.lnk{font:600 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b655e;cursor:pointer}
-.hm-foot span.dia{color:#b8a878;font-size:7px}
+.hm-foot span.lnk{font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#2A2724;cursor:pointer}
+.hm-foot span.star{color:#C8971E;font-size:11px;line-height:1}
 #s-wel #restoreForm{max-width:300px;margin:8px auto 0}
 @keyframes ssRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes ssShimmer{0%,100%{opacity:.18}50%{opacity:.85}}
@@ -414,7 +419,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
         <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
         <div class="hm-star-inner">
           <svg width="130" height="130" viewBox="0 0 24 24"><defs><linearGradient id="starHaloHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloHome)" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg>
-          <img src="logo.png" alt="Style Star">
+          <img src="logo-star.png" alt="Style Star">
         </div>
       </div>
     </div>
@@ -465,7 +470,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       </div>
     </div>
 
-    <div class="hm-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="dia">&#9670;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="dia">&#9670;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+    <div class="hm-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
   </div>
 </div>
 
