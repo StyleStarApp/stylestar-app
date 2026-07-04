@@ -817,7 +817,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 </div>
 
 </div>
-<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showShop()">Shop</span><span onclick="showDream()">Style Star Edit</span><span onclick="showStory()">Our Story</span><span onclick="showFAQ()">FAQ</span><span id="footPrivacy" onclick="showPrivacy()" style="display:none">Privacy</span></div></div>
+<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showShop()">Shop</span><span id="footEdit" onclick="showDream()" style="display:none">Style Star Edit</span><span onclick="showStory()">Our Story</span><span onclick="showFAQ()">FAQ</span><span id="footPrivacy" onclick="showPrivacy()" style="display:none">Privacy</span></div></div>
 </div>
 
 <div class="sheet-backdrop" id="saveSheet" onclick="if(event.target===this)dismissSaveSheet()">
@@ -883,9 +883,12 @@ function retakeQuiz(){
 function show(id,skipHistory){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
   document.getElementById(id).classList.add('act');
-  // Hide the "Privacy" footer link on the entry (welcome) screen only; keep it on all other pages.
+  // Hide the "Privacy" and "Style Star Edit" footer links on the entry (welcome) screen only; keep them on all other pages.
+  var onWel=(id==='s-wel');
   var fp=document.getElementById('footPrivacy');
-  if(fp)fp.style.display=(id==='s-wel')?'none':'';
+  if(fp)fp.style.display=onWel?'none':'';
+  var fe=document.getElementById('footEdit');
+  if(fe)fe.style.display=onWel?'none':'';
   if(!skipHistory){
     history.pushState({screen:id},null,'');
   }
