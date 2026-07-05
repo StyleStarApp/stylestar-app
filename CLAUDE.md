@@ -711,3 +711,42 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   gold/chrome palette — kept per "option A"; could unify to one accent later if she wants.
 - Being explored next: a **subtle in-place "glamorous" shimmer on the chrome mirror frame** (Cath's
   idea) — must stay slower/softer than the CTA shimmer so they don't compete.
+
+**2026-07-05 (cont. — ▶ HOME ENTRANCE REVEAL shipped: closet doors + permanent gold rail)**
+- Cath worked with the external "Design" helper again and sent a handoff (`StyleStar-Entrance`:
+  a spec `.md` + a self-contained `.bundle.html` reference). Instruction: "Match this reference
+  exactly — copy the inline values verbatim, and make sure the gold rail stays on the home page,
+  not just during the animation." Built it onto the live `s-wel` welcome screen and **merged → live**.
+- **What it is:** a first-open reveal. Brushed **closet doors** (dark wood `linear-gradient(105deg,#242019…)`,
+  solid `#C79A34` gold frame — NOT a filled gold panel, gold handles) sit closed with **two gold
+  door-stars** near the seam; the stars twinkle (sparkle), the doors **swing open** (3D rotateY,
+  hinged on the OUTER edges, tiny unlatch + settle overshoot), a **warm glow** sweeps the center seam,
+  the two stars **fly up and merge into the logo star** with a gold **bloom**, and the content
+  (headline → subhead → CTA → explore) **rises in** behind them. Faint **motes** drift in the beam.
+- **Permanent gold rail:** the thin gold bar across the top (`linear-gradient(180deg,#FBF1C2…#8a6a17)`)
+  lives in the home markup (child of `#s-wel`), NOT the overlay — so the hanging rack reads as mounted
+  to it and it stays after the reveal. This was the design helper's #1 emphasis.
+- **Implementation notes (for whoever picks this up):**
+  - All scoped to `#s-wel` with `.hm-*` classes (matches the existing home namespace). The home content
+    is wrapped in a new `.hm-room` (scales .95→1 during the reveal); the reveal overlay `.hm-entrance`
+    is a separate `position:fixed` full-viewport layer (doors/veil/glow/motes/flying-stars/burst).
+  - Reveal is driven by classes on `#s-wel`: `ss-anim` (armed) → `ss-play` (full) or `ss-play ss-fast`
+    (compressed ~0.7s return) → `ss-done` (stable terminal state; overlay torn down to `display:none`).
+    `maybePlayEntrance()` fires only when `s-wel` is the FIRST screen shown; **full on first open,
+    fast thereafter**, gated by `localStorage 'ss_entrance_seen'`.
+  - **Flying-star merge is computed in JS** (`getBoundingClientRect` of the logo → CSS vars `--mx/--my`)
+    so the stars land dead-centre on the logo at any screen size — the reference's fixed phone-frame
+    pixel coords wouldn't line up on the responsive web app.
+  - **Honors `prefers-reduced-motion`** (skips straight to the settled home) and always removes the
+    fixed overlay afterward so it never blocks taps (verified `elementFromPoint` on the CTA).
+  - Returning users with saved data land on **Welcome Back (`s-wb`)**, so they don't see the doors —
+    the reveal is a first-impression thing tied to `s-wel`.
+  - Verified in Chromium at multiple beats (closed / mid-swing / merge / open / settled) for first-open,
+    fast-return, and reduced-motion; gold rail persists in all.
+- **Desktop note:** on a phone (the PWA, the real audience) the doors fill the screen perfectly; on a
+  desktop browser they cover the whole window (wider than the 480px app column) — dramatic, acceptable.
+- **▶ PARKED for later (Cath wants to discuss): the entrance SOUND.** The spec asked for a soft wardrobe
+  **whoosh** on the door swing (~0.55s) + a gentle sparkle **chime** on the star-merge (~1.6s), first
+  open only, honoring the mute switch. **Left OUT for now** — phone browsers block auto-playing audio on
+  a page that opens itself (no user tap yet), so it wouldn't fire on first open anyway. Revisit: maybe
+  tie a chime to a tap, or accept it only plays from the second (tap-initiated) interaction onward.
