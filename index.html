@@ -373,10 +373,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Gold rail: a permanent part of the home page; the hanging rack reads as mounted to it. NOT an animation-only element. */
 .hm-room{position:relative}
 .hm-goldrail{position:absolute;top:8px;left:0;right:0;height:6px;z-index:5;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 3px 8px -3px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+/* Welcome Back reuses the hanging-star pendant (the flying-star merge target) without the mirror frame. */
+#s-wb .hm-room{position:relative;padding-top:8px}
+#s-wb .hm-pendant{margin:6px auto 30px}
 /* the reveal overlay: hidden until armed */
 .hm-entrance{display:none;position:fixed;inset:0;z-index:9998;pointer-events:none;overflow:hidden;perspective:1500px}
-#s-wel.ss-anim .hm-entrance{display:block}
-#s-wel.ss-done .hm-entrance{display:none}
+body.ss-anim .hm-entrance{display:block}
+body.ss-done .hm-entrance{display:none}
 .hm-veil{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 50%,rgba(12,10,8,.4),rgba(6,5,4,.78))}
 .hm-glow{position:absolute;top:0;bottom:0;left:50%;width:66%;transform:translateX(-50%) scaleX(.14);transform-origin:center;background:linear-gradient(90deg,transparent,rgba(255,243,212,.8) 44%,rgba(255,235,188,.98) 50%,rgba(255,243,212,.8) 56%,transparent);filter:blur(7px);mix-blend-mode:screen;z-index:1;opacity:0}
 .hm-motes{position:absolute;inset:0;z-index:1;pointer-events:none}
@@ -396,45 +399,46 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-fly.r .spark{top:2px;left:2px}
 
 /* armed initial states (only while a reveal is in progress) */
-#s-wel.ss-anim .hm-room{transform:scale(.95);transform-origin:center 42%}
-#s-wel.ss-anim .hm-h1,#s-wel.ss-anim .hm-sub,#s-wel.ss-anim .hm-body,#s-wel.ss-anim .hm-cta,#s-wel.ss-anim #restoreSection,#s-wel.ss-anim .hm-divwrap,#s-wel.ss-anim .hm-shelves,#s-wel.ss-anim .hm-foot{opacity:0}
+body.ss-anim .hm-room{transform:scale(.95);transform-origin:center 42%}
+body.ss-anim .hm-h1,body.ss-anim .hm-sub,body.ss-anim .hm-body,body.ss-anim .hm-cta,body.ss-anim #restoreSection,body.ss-anim .hm-divwrap,body.ss-anim .hm-shelves,body.ss-anim .hm-foot,body.ss-anim #s-wb .wb{opacity:0}
 
 /* ===== full reveal (first open) ===== */
-#s-wel.ss-play .hm-veil{animation:ssVeilOut .9s ease .2s forwards}
-#s-wel.ss-play .hm-room{animation:ssHomeIn 1.6s cubic-bezier(.34,0,.2,1) .55s forwards}
-#s-wel.ss-play .hm-glow{animation:ssGlow 1.5s cubic-bezier(.4,0,.3,1) .55s forwards}
-#s-wel.ss-play .hm-door.l{animation:ssDoorL 1.65s cubic-bezier(.52,0,.16,1) .55s forwards}
-#s-wel.ss-play .hm-door.r{animation:ssDoorR 1.65s cubic-bezier(.52,0,.16,1) .63s forwards}
-#s-wel.ss-play .hm-fly{animation:ssFly 1.55s cubic-bezier(.5,0,.2,1) .2s forwards}
-#s-wel.ss-play .hm-fly .spark{animation:ssSpark 1.1s ease .3s forwards}
-#s-wel.ss-play .hm-burst{animation:ssBurst .8s cubic-bezier(.3,0,.3,1) 1.4s forwards}
-#s-wel.ss-play .hm-mote{animation:ssMote 1.7s ease-out .75s forwards}
-#s-wel.ss-play .hm-mote:nth-child(2){animation-delay:.98s}
-#s-wel.ss-play .hm-mote:nth-child(3){animation-delay:1.18s}
-#s-wel.ss-play .hm-mote:nth-child(4){animation-delay:.86s}
-#s-wel.ss-play .hm-mote:nth-child(5){animation-delay:1.32s}
-#s-wel.ss-play .hm-h1{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.15s forwards}
-#s-wel.ss-play .hm-sub{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.28s forwards}
-#s-wel.ss-play .hm-body{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.28s forwards}
-#s-wel.ss-play .hm-cta{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.4s forwards}
-#s-wel.ss-play #restoreSection{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.55s forwards}
-#s-wel.ss-play .hm-divwrap,#s-wel.ss-play .hm-shelves,#s-wel.ss-play .hm-foot{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.72s forwards}
+body.ss-play .hm-veil{animation:ssVeilOut .9s ease .2s forwards}
+body.ss-play .hm-room{animation:ssHomeIn 1.6s cubic-bezier(.34,0,.2,1) .55s forwards}
+body.ss-play .hm-glow{animation:ssGlow 1.5s cubic-bezier(.4,0,.3,1) .55s forwards}
+body.ss-play .hm-door.l{animation:ssDoorL 1.65s cubic-bezier(.52,0,.16,1) .55s forwards}
+body.ss-play .hm-door.r{animation:ssDoorR 1.65s cubic-bezier(.52,0,.16,1) .63s forwards}
+body.ss-play .hm-fly{animation:ssFly 1.55s cubic-bezier(.5,0,.2,1) .2s forwards}
+body.ss-play .hm-fly .spark{animation:ssSpark 1.1s ease .3s forwards}
+body.ss-play .hm-burst{animation:ssBurst .8s cubic-bezier(.3,0,.3,1) 1.4s forwards}
+body.ss-play .hm-mote{animation:ssMote 1.7s ease-out .75s forwards}
+body.ss-play .hm-mote:nth-child(2){animation-delay:.98s}
+body.ss-play .hm-mote:nth-child(3){animation-delay:1.18s}
+body.ss-play .hm-mote:nth-child(4){animation-delay:.86s}
+body.ss-play .hm-mote:nth-child(5){animation-delay:1.32s}
+body.ss-play .hm-h1{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.15s forwards}
+body.ss-play .hm-sub{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.28s forwards}
+body.ss-play .hm-body{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.28s forwards}
+body.ss-play .hm-cta{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.4s forwards}
+body.ss-play #restoreSection{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.55s forwards}
+body.ss-play .hm-divwrap,body.ss-play .hm-shelves,body.ss-play .hm-foot{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.72s forwards}
+body.ss-play #s-wb .wb{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.4s forwards}
 
 /* ===== shortened reveal (return visit) — overrides the above ===== */
-#s-wel.ss-fast .hm-veil{animation:ssVeilOut .45s ease .04s forwards}
-#s-wel.ss-fast .hm-room{animation:ssHomeIn .62s cubic-bezier(.34,0,.2,1) .1s forwards}
-#s-wel.ss-fast .hm-glow{animation:ssGlow .6s ease .1s forwards}
-#s-wel.ss-fast .hm-door.l{animation:ssDoorL .62s cubic-bezier(.5,0,.16,1) .08s forwards}
-#s-wel.ss-fast .hm-door.r{animation:ssDoorR .62s cubic-bezier(.5,0,.16,1) .13s forwards}
-#s-wel.ss-fast .hm-fly{animation:ssFlyFast .4s ease .05s forwards}
-#s-wel.ss-fast .hm-fly .spark{animation:none;opacity:0}
-#s-wel.ss-fast .hm-burst{animation:none;opacity:0}
-#s-wel.ss-fast .hm-mote{animation:none;opacity:0}
-#s-wel.ss-fast .hm-h1,#s-wel.ss-fast .hm-sub,#s-wel.ss-fast .hm-body,#s-wel.ss-fast .hm-cta,#s-wel.ss-fast #restoreSection,#s-wel.ss-fast .hm-divwrap,#s-wel.ss-fast .hm-shelves,#s-wel.ss-fast .hm-foot{animation:ssRiseIn .35s ease .18s forwards}
+body.ss-fast .hm-veil{animation:ssVeilOut .45s ease .04s forwards}
+body.ss-fast .hm-room{animation:ssHomeIn .62s cubic-bezier(.34,0,.2,1) .1s forwards}
+body.ss-fast .hm-glow{animation:ssGlow .6s ease .1s forwards}
+body.ss-fast .hm-door.l{animation:ssDoorL .62s cubic-bezier(.5,0,.16,1) .08s forwards}
+body.ss-fast .hm-door.r{animation:ssDoorR .62s cubic-bezier(.5,0,.16,1) .13s forwards}
+body.ss-fast .hm-fly{animation:ssFlyFast .4s ease .05s forwards}
+body.ss-fast .hm-fly .spark{animation:none;opacity:0}
+body.ss-fast .hm-burst{animation:none;opacity:0}
+body.ss-fast .hm-mote{animation:none;opacity:0}
+body.ss-fast .hm-h1,body.ss-fast .hm-sub,body.ss-fast .hm-body,body.ss-fast .hm-cta,body.ss-fast #restoreSection,body.ss-fast .hm-divwrap,body.ss-fast .hm-shelves,body.ss-fast .hm-foot{animation:ssRiseIn .35s ease .18s forwards}
 
 /* terminal state after the reveal — stable, no restart flicker */
-#s-wel.ss-done .hm-room{transform:none}
-#s-wel.ss-done .hm-h1,#s-wel.ss-done .hm-sub,#s-wel.ss-done .hm-body,#s-wel.ss-done .hm-cta,#s-wel.ss-done #restoreSection,#s-wel.ss-done .hm-divwrap,#s-wel.ss-done .hm-shelves,#s-wel.ss-done .hm-foot{opacity:1;transform:none;animation:none}
+body.ss-done .hm-room{transform:none}
+body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-cta,body.ss-done #restoreSection,body.ss-done .hm-divwrap,body.ss-done .hm-shelves,body.ss-done .hm-foot,body.ss-done #s-wb .wb{opacity:1;transform:none;animation:none}
 
 @keyframes ssVeilOut{to{opacity:0}}
 @keyframes ssHomeIn{to{transform:scale(1)}}
@@ -448,9 +452,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 @keyframes ssRiseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @keyframes ssMote{0%{opacity:0;transform:translateY(14px) scale(.5)}28%{opacity:.9}68%{opacity:.65}100%{opacity:0;transform:translateY(-46px) scale(1)}}
 @media (prefers-reduced-motion: reduce){
-  #s-wel.ss-anim .hm-entrance,#s-wel.ss-play .hm-entrance,#s-wel.ss-fast .hm-entrance{display:none}
-  #s-wel.ss-anim .hm-room,#s-wel.ss-play .hm-room,#s-wel.ss-fast .hm-room{transform:none;animation:none}
-  #s-wel.ss-anim .hm-h1,#s-wel.ss-anim .hm-sub,#s-wel.ss-anim .hm-body,#s-wel.ss-anim .hm-cta,#s-wel.ss-anim #restoreSection,#s-wel.ss-anim .hm-divwrap,#s-wel.ss-anim .hm-shelves,#s-wel.ss-anim .hm-foot{opacity:1;animation:none}
+  body.ss-anim .hm-entrance,body.ss-play .hm-entrance,body.ss-fast .hm-entrance{display:none}
+  body.ss-anim .hm-room,body.ss-play .hm-room,body.ss-fast .hm-room{transform:none;animation:none}
+  body.ss-anim .hm-h1,body.ss-anim .hm-sub,body.ss-anim .hm-body,body.ss-anim .hm-cta,body.ss-anim #restoreSection,body.ss-anim .hm-divwrap,body.ss-anim .hm-shelves,body.ss-anim .hm-foot,body.ss-anim #s-wb .wb{opacity:1;animation:none}
 }
 </style>
 </head>
@@ -470,6 +474,20 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 <div class="prog-wrap" id="pw"><div class="prog-bar"><div class="prog-fill" id="pf"></div></div><div class="prog-lbl" id="pl"></div></div>
 
 <div class="scr" id="s-wb">
+  <div class="hm-room">
+    <div class="hm-pendant">
+      <div class="hm-post l"></div>
+      <div class="hm-post r"></div>
+      <div class="hm-rail"></div>
+      <svg class="hm-hook" width="22" height="30" viewBox="0 0 24 24"><path d="M12 1 C5.5 1 5.5 12 12 12 C18 12 18 22 12 22" fill="none" stroke="#565C62" stroke-width="1.9" stroke-linecap="round"/></svg>
+      <div class="hm-star-wrap">
+        <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
+        <div class="hm-star-inner">
+          <svg width="130" height="130" viewBox="0 0 24 24"><defs><linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg>
+          <img src="logo-star.png" alt="Style Star">
+        </div>
+      </div>
+    </div>
   <div class="wb">
     <div class="wb-name" id="wbName">Welcome back!</div>
     <div class="wb-msg">Your style portrait is saved. Pick up right where you left off.</div>
@@ -483,6 +501,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
       <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
     </div>
     <button class="retake" onclick="retakeQuiz()">Retake the quiz</button>
+  </div>
   </div>
 </div>
 
@@ -554,7 +573,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="hm-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
   </div>
   </div>
-  <div class="hm-entrance" id="ssEntrance" aria-hidden="true">
+</div>
+<!-- Shared entrance-reveal overlay (closet doors + flying stars). A sibling of the
+     screens so it renders over whichever screen plays the reveal (s-wel or s-wb). -->
+<div class="hm-entrance" id="ssEntrance" aria-hidden="true">
     <div class="hm-veil"></div>
     <div class="hm-glow"></div>
     <div class="hm-motes"><span class="hm-mote" style="left:46%;top:62%;width:6px;height:6px"></span><span class="hm-mote" style="left:53%;top:44%;width:4px;height:4px"></span><span class="hm-mote" style="left:49%;top:74%;width:5px;height:5px"></span><span class="hm-mote" style="left:51%;top:30%;width:3px;height:3px"></span><span class="hm-mote" style="left:47%;top:52%;width:4px;height:4px"></span></div>
@@ -564,7 +586,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     <div class="hm-fly l" id="ssFlyL"><svg width="66" height="66" viewBox="0 0 24 24"><defs><linearGradient id="flyStarL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#flyStarL)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg><span class="spark"></span></div>
     <div class="hm-fly r" id="ssFlyR"><svg width="66" height="66" viewBox="0 0 24 24"><defs><linearGradient id="flyStarR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#flyStarR)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg><span class="spark"></span></div>
   </div>
-</div>
 
 <div class="scr" id="s-quiz">
   <div class="qcat" id="qc"></div>
@@ -1064,11 +1085,12 @@ function show(id,skipHistory){
   if(fp)fp.style.display=onWel?'none':'';
   var fe=document.getElementById('footEdit');
   if(fe)fe.style.display=onWel?'none':'';
-  // The welcome screen has its own built-in footer + logo (in the star), so hide the shared global header/footer there.
+  // The welcome screen has its own built-in footer + logo (in the star), so hide the shared global footer there.
   var gf=document.querySelector('.quiz-footer');
   if(gf)gf.style.display=onWel?'none':'';
+  // Hide the shared global header logo on both the welcome screen and Welcome Back — each shows its own hanging star instead.
   var hd=document.querySelector('.hdr');
-  if(hd)hd.style.display=onWel?'none':'';
+  if(hd)hd.style.display=(onWel||id==='s-wb')?'none':'';
   if(!skipHistory){
     history.pushState({screen:id},null,'');
   }
@@ -2384,12 +2406,14 @@ function fallbackInitialScreen(){
   }else{
     document.getElementById('s-wel').classList.add('act');
   }
-  // s-wel has its own footer + logo; hide the shared global header/footer when it's the first screen.
+  // s-wel has its own footer + logo; hide the shared global footer when it's the first screen.
   var onW=document.getElementById('s-wel').classList.contains('act');
+  var onWB=document.getElementById('s-wb').classList.contains('act');
   var gf=document.querySelector('.quiz-footer');
   if(gf)gf.style.display=onW?'none':'';
+  // Both s-wel and Welcome Back show their own hanging star, so hide the shared global header logo on either.
   var hd=document.querySelector('.hdr');
-  if(hd)hd.style.display=onW?'none':'';
+  if(hd)hd.style.display=(onW||onWB)?'none':'';
 }
 
 // Auto-restore from the welcome-email link. The link carries an opaque token
@@ -2433,20 +2457,25 @@ async function autoRestoreFromLink(){
 }
 
 // Home entrance reveal — closet doors swing open onto the home screen. The full
-// long reveal plays every time the app opens, for all visitors. Only plays when
-// the welcome screen is the first thing shown; honors prefers-reduced-motion, and
-// always tears the overlay down afterward.
+// long reveal plays every time the app opens, for all visitors — on the welcome
+// screen (s-wel) AND on Welcome Back (s-wb), which now carries its own hanging star
+// for the flying stars to merge into. The reveal is driven by classes on <body> and
+// a single shared overlay, so it plays over whichever of those two screens is the
+// first thing shown. Honors prefers-reduced-motion, and always tears the overlay
+// down afterward.
 function maybePlayEntrance(){
   var wel=document.getElementById('s-wel');
-  if(!wel||!wel.classList.contains('act'))return;
-  if(wel.classList.contains('ss-anim')||wel.classList.contains('ss-play')||wel.classList.contains('ss-done'))return;
+  var wb=document.getElementById('s-wb');
+  var scr=(wel&&wel.classList.contains('act'))?wel:((wb&&wb.classList.contains('act'))?wb:null);
+  if(!scr)return;
+  if(document.body.classList.contains('ss-anim')||document.body.classList.contains('ss-play')||document.body.classList.contains('ss-done'))return;
   var reduce=false;
   try{reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
   if(reduce)return;
   requestAnimationFrame(function(){
     // Aim the two flying door-stars + the burst at the real logo so they merge
     // dead-centre on it, whatever the screen size.
-    var logo=wel.querySelector('.hm-star-inner img')||wel.querySelector('.hm-star-inner');
+    var logo=scr.querySelector('.hm-star-inner img')||scr.querySelector('.hm-star-inner');
     var flyL=document.getElementById('ssFlyL'),flyR=document.getElementById('ssFlyR'),burst=document.getElementById('ssBurst');
     if(logo&&flyL&&flyR&&burst){
       var r=logo.getBoundingClientRect();
@@ -2461,12 +2490,12 @@ function maybePlayEntrance(){
       flyR.style.setProperty('--mx',(cx-rC)+'px'); flyR.style.setProperty('--my',(cy-restY)+'px');
       burst.style.left=(cx-50)+'px'; burst.style.top=(cy-50)+'px';
     }
-    wel.classList.add('ss-anim');
-    void wel.offsetWidth;
-    wel.classList.add('ss-play');
+    document.body.classList.add('ss-anim');
+    void document.body.offsetWidth;
+    document.body.classList.add('ss-play');
     setTimeout(function(){
-      wel.classList.add('ss-done');
-      wel.classList.remove('ss-anim','ss-play','ss-fast');
+      document.body.classList.add('ss-done');
+      document.body.classList.remove('ss-anim','ss-play','ss-fast');
     },3300);
   });
 }
