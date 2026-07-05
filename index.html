@@ -335,7 +335,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A 0%,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519 100%) border-box;
   color:#F1DDA0;text-align:center;font:700 14px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:15px 16px;
   box-shadow:0 14px 26px -12px rgba(0,0,0,.6),0 0 12px -3px rgba(233,196,110,.4);animation:ssRise .6s ease .32s both}
-.hm-cta .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(115deg,transparent 34%,rgba(255,251,235,.85) 45%,#ffffff 50%,rgba(255,251,235,.85) 55%,transparent 66%) border-box;background-size:280% 100%;background-repeat:no-repeat;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssSheen 3.2s linear infinite;pointer-events:none}
+.hm-cta .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25) 0%,rgba(255,253,245,.65) 34%,#ffffff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25) 100%) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssShimmer 2.6s ease-in-out infinite;pointer-events:none}
 .hm-cta .lbl{position:relative;white-space:nowrap}
 .hm-help{font:400 11.5px/1.55 'Jost',sans-serif;color:#6b655a;margin-top:5px}
 .hm-help.first{margin-top:10px}
@@ -365,12 +365,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-foot span.star{color:#C8971E;font-size:11px;line-height:1}
 #s-wel #restoreForm{max-width:300px;margin:8px auto 0}
 @keyframes ssRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes ssSheen{from{background-position:200% 0}to{background-position:-120% 0}}
+@keyframes ssShimmer{0%,100%{opacity:.2}50%{opacity:.95}}
 #s-wel [data-press]{transition:transform .13s ease,box-shadow .13s ease;-webkit-tap-highlight-color:transparent}
-#s-wel [data-press]:active{transform:scale(.96)}
-#s-wel [data-shelf]{transition:transform .16s ease,filter .16s ease;-webkit-tap-highlight-color:transparent}
+#s-wel [data-press]:active{transform:scale(.955)}
+#s-wel [data-shelf]{transition:transform .2s cubic-bezier(.34,1.56,.64,1),filter .18s ease;-webkit-tap-highlight-color:transparent}
 #s-wel [data-shelf]:hover{transform:translateY(-3px);filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
-#s-wel [data-shelf]:active{transform:scale(.955);filter:brightness(.94)}
+#s-wel [data-shelf].hm-tapped,#s-wel [data-shelf]:active{transform:scale(.9);filter:brightness(.88)}
 </style>
 </head>
 <body>
@@ -1011,6 +1011,17 @@ window.addEventListener('popstate',function(e){
 
 // Set initial state
 history.replaceState({screen:document.querySelector('.scr.act')?document.querySelector('.scr.act').id:'s-wel'},null,'');
+// Tactile press feedback for the home explore cards (reliable on iOS, where :active is flaky).
+(function(){
+  try{document.addEventListener('touchstart',function(){},{passive:true});}catch(e){}
+  document.querySelectorAll('#s-wel [data-shelf]').forEach(function(el){
+    var on=function(){el.classList.add('hm-tapped')};
+    var off=function(){el.classList.remove('hm-tapped')};
+    el.addEventListener('touchstart',on,{passive:true});
+    el.addEventListener('touchend',off);
+    el.addEventListener('touchcancel',off);
+  });
+})();
 function loadQ(i){const q=questions[i];document.getElementById('qc').textContent=q.cat;document.getElementById('qt').textContent=q.title;document.getElementById('ll').textContent=q.left;document.getElementById('lr').textContent=q.right;document.getElementById('sl').value=answers[i];updHint(answers[i],i);document.getElementById('pf').style.width=Math.round((i/12)*100)+'%';document.getElementById('pl').textContent=(i+1)+' of 12';document.getElementById('nb').textContent=i===11?'See my style portrait':'Continue'}
 function onSl(v){answers[cur]=parseInt(v);updHint(v,cur)}
 function updHint(v,i){document.getElementById('sh').textContent=questions[i].hints[parseInt(v)-1]}
