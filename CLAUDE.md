@@ -750,3 +750,27 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   open only, honoring the mute switch. **Left OUT for now** — phone browsers block auto-playing audio on
   a page that opens itself (no user tap yet), so it wouldn't fire on first open anyway. Revisit: maybe
   tie a chime to a tap, or accept it only plays from the second (tap-initiated) interaction onward.
+
+**2026-07-05 (cont. — entrance reveal: always full + now plays for Welcome Back too)**
+- **Entrance now plays the FULL long reveal on EVERY open, for all visitors.** Removed the
+  shortened "fast" return-visit variant and its `localStorage 'ss_entrance_seen'` gate; the
+  `ss-fast` class is never added anymore (the CSS rules for it are now dead/unused). The
+  `prefers-reduced-motion` skip is unchanged.
+- **Entrance now also plays over Welcome Back (`s-wb`)**, not just the welcome screen — reversing the
+  old "returning users don't see the doors" behavior above (that note is now superseded). Cath's call:
+  give returning users the same first-impression moment. Implementation:
+  - The reveal is now driven by classes on **`document.body`** (was `#s-wel`), and the closet-door
+    **overlay is a single shared element** moved out of `#s-wel` to sit as a sibling of the screens
+    (child of `.inner`), so it renders over whichever of `s-wel`/`s-wb` is the first screen. All the
+    reveal CSS was rekeyed `#s-wel.ss-*` → `body.ss-*`.
+  - **Welcome Back gained the same hanging-star pendant** (clothing-rack rail + hook + gold star with
+    the `logo-star.png`) at the top, wrapped in `.hm-room`, so the two flying stars have a real star to
+    merge into (the star-merge finale needs an on-screen target; `s-wb` had none). Its halo gradient id
+    is `starHaloWB` (distinct from the home's `starHaloHome`).
+  - To avoid a double logo, the shared global `.hdr` header logo is now **hidden on `s-wb`** too (it was
+    already hidden on `s-wel`); both screens show their own hanging star instead. Updated in both
+    `show()` and `fallbackInitialScreen()`. The global `.quiz-footer` still shows on `s-wb` (unchanged).
+  - `maybePlayEntrance()` now targets whichever of `s-wel`/`s-wb` is active, finds that screen's star as
+    the merge target, and adds/removes the `ss-*` classes on `<body>`.
+  - Verified in Chromium at closed / doors-open / star-merge / settled beats for BOTH s-wel (no
+    regression) and s-wb (new), plus reduced-motion (skips the reveal, content fully visible) on s-wb.
