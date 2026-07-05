@@ -2432,10 +2432,10 @@ async function autoRestoreFromLink(){
   return false;
 }
 
-// Home entrance reveal — closet doors swing open onto the home screen. Full on
-// first-ever open, shortened ("fast") on return (gated by localStorage
-// ss_entrance_seen). Only plays when the welcome screen is the first thing shown;
-// honors prefers-reduced-motion, and always tears the overlay down afterward.
+// Home entrance reveal — closet doors swing open onto the home screen. The full
+// long reveal plays every time the app opens, for all visitors. Only plays when
+// the welcome screen is the first thing shown; honors prefers-reduced-motion, and
+// always tears the overlay down afterward.
 function maybePlayEntrance(){
   var wel=document.getElementById('s-wel');
   if(!wel||!wel.classList.contains('act'))return;
@@ -2443,8 +2443,6 @@ function maybePlayEntrance(){
   var reduce=false;
   try{reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
   if(reduce)return;
-  var seen=false;try{seen=localStorage.getItem('ss_entrance_seen')==='1'}catch(e){}
-  try{localStorage.setItem('ss_entrance_seen','1')}catch(e){}
   requestAnimationFrame(function(){
     // Aim the two flying door-stars + the burst at the real logo so they merge
     // dead-centre on it, whatever the screen size.
@@ -2464,14 +2462,12 @@ function maybePlayEntrance(){
       burst.style.left=(cx-50)+'px'; burst.style.top=(cy-50)+'px';
     }
     wel.classList.add('ss-anim');
-    if(seen)wel.classList.add('ss-fast');
     void wel.offsetWidth;
     wel.classList.add('ss-play');
-    var total=seen?1300:3300;
     setTimeout(function(){
       wel.classList.add('ss-done');
       wel.classList.remove('ss-anim','ss-play','ss-fast');
-    },total);
+    },3300);
   });
 }
 
