@@ -673,3 +673,41 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   EIN) → **[Cath] apply to affiliate programs** (Amazon first) → **[Claude] wire affiliate links
   + product images + FTC disclosure** (the revenue switch; Mall earns $0 until then). The legal
   chain is no longer a blocker — it's just processing time now.
+
+**2026-07-05 (▶ HOME SCREEN REDESIGN — "jewelry / dressing-room" concept SHIPPED LIVE)**
+- Cath worked with an external "Design" helper on several home-screen directions (fitting-room/
+  mirror, hanger, color-worlds — all explored in mockups, most parked). She landed on a **Design
+  handoff** (`design_handoff_home_screen`: README spec + a `.dc.html` prototype) and asked to build
+  it **exactly as specced ("option A")** — just the home/landing screen (`s-wel`).
+- ✅ **Rebuilt the welcome screen to the Design spec** and shipped it live (PRs #105–#112). The look:
+  a **gold star "pendant"** hanging from a **chrome clothing-rack rail** (S-hook + gold earring loop),
+  inside a **brushed-chrome "mirror" frame**, on a **black/cream "curtain-stripe" backdrop**; a dark
+  **gold-framed CTA** with an **in-place shimmer**; three **"chrome-shelf" explore cards** (Analyze an
+  outfit / Ask your stylist / Style Star Edit) with tap-press feedback; footer **SHOP ★ OUR STORY ★ FAQ**.
+- **Implementation notes (for whoever picks this up):**
+  - All scoped to `#s-wel` with an `.hm-*` class namespace + a dedicated `<style>` block; the rest of
+    the app is untouched. Adds fonts **DM Serif Display + Jost** (scoped to this screen only).
+  - Every button stays wired to the existing functions: `startQ`, `showRestore`/`restoreResults`,
+    `showShop`, `startPhoto`, `openChat`, `showDream`, footer `showShop/showStory/showFAQ`.
+  - The screen has its **own footer + logo**, so the shared global `.hdr` header and `.quiz-footer`
+    are **hidden on `s-wel`** (in `show()` + `fallbackInitialScreen()`) and return on every other screen.
+  - Logo: `logo.png` is a solid **white-background** square (the old "white box" bug). Made a
+    **transparent** version **`logo-star.png`** (white→alpha, cropped to content) — used inside the star.
+  - Tap feedback on the cards uses JS touch handlers (`.hm-tapped` class) because iOS Safari
+    suppresses `:active`; also a global empty `touchstart` listener as a fallback.
+- **Long real-device polish loop with Cath** (all live): logo sized to fit inside the star (settled
+  ~60px, "as large as possible but not bumping the gold edges"); curtain stripes made **even + wider**,
+  **black at top and bottom** (58→66px bands); **clothing rack widened + raised** so posts touch the
+  black up top; footer text **larger/darker with gold ★ separators**; CTA shimmer changed from a
+  traveling sweep to an **in-place glimmer** (her call).
+- Cath **loves it** ("looks really good"). My honest overall review (she agreed): concept is strong &
+  ownable, craft is high, warm-not-cold — a real leap for the first impression.
+- ▶ **NEXT DESIGN STEP (flagged, not started): carry the new look INWARD.** Right now only the home
+  screen has the chrome/gold/pendant world + DM Serif Display/Jost fonts; the inner pages (quiz,
+  results, chat, Mall, footer pages) still use the older Fraunces/DM Sans look → a visible "wow → oh"
+  gap after the first tap. Eventually bring a few cues (chrome/gold accents, display font, CTA style)
+  into the inner screens so the whole app feels like one place. Also still open (Cath's call): the
+  three bright **icon-tile colors** (red/pink/teal) are the one element that sits apart from the
+  gold/chrome palette — kept per "option A"; could unify to one accent later if she wants.
+- Being explored next: a **subtle in-place "glamorous" shimmer on the chrome mirror frame** (Cath's
+  idea) — must stay slower/softer than the CTA shimmer so they don't compete.
