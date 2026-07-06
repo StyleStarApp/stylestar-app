@@ -815,5 +815,11 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   lower curl **threads through the gold jump-ring** on the star; and **deleted the black recess bar**
   that sat between the greeting mirror and the actions mirror. All scoped to `#s-wb` (Home's pendant is
   a separate structure inside its mirror — left untouched; offer to match it if she wants).
+  - Follow-ups (all merged): S-hook now curls **onto** the rod (was floating above) and threads the
+    **top** gold ring (star hangs from the lower ring); shelf-action labels bumped 14→16→**18px** and
+    bottom-aligned so they **sit down on the shelves**; footer links 9.5→**12px** (Cath: "perfect");
+    greeting mirror — the two lines are now **one sentence per line** (13px, sat a little lower) and
+    **"Welcome back, {name}!" dropped down** to give the star breathing room; the vanity **bulbs now
+    twinkle** (per-bulb opacity pulse, staggered/out-of-sync) instead of a single whole-column breathe.
 - ▶ Still open from the earlier design step: carry the chrome/gold/DM-Serif look further INWARD (quiz,
   results, chat, Mall, footer pages) so there's no "wow → oh" after the first inner tap.
