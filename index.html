@@ -410,12 +410,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* shelf actions */
 #s-wb .wb-list{display:flex;flex-direction:column;gap:7px;margin-top:3px}
 #s-wb .wb-item{position:relative;cursor:pointer}
-#s-wb .wb-row{display:flex;align-items:center;gap:11px;padding:0 5px 5px}
+#s-wb .wb-row{display:flex;align-items:flex-end;gap:11px;padding:0 5px 2px}
 #s-wb .wb-chip{position:relative;width:32px;height:32px;flex:0 0 auto;border-radius:9px;display:flex;align-items:center;justify-content:center}
 #s-wb .wb-chip svg{width:17px;height:17px}
 #s-wb .wb-chip.dark{background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.45);box-shadow:0 3px 7px -4px rgba(0,0,0,.6),inset 0 1px 0 rgba(233,196,110,.15)}
 #s-wb .wb-lbl{flex:1;text-align:left;display:flex;align-items:center;gap:6px;min-width:0}
-#s-wb .wb-lbl b{font:500 14px/1.1 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
+#s-wb .wb-lbl b{font:600 16px/1.05 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
 #s-wb .wb-arr{font-size:13px}
 #s-wb .wb-shadow{position:relative;height:0}
 #s-wb .wb-shadow i{position:absolute;left:6px;bottom:1px;width:33px;height:6px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(20,15,5,.34),rgba(20,15,5,0) 72%);filter:blur(1.5px)}
@@ -435,8 +435,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-retake svg{width:12px;height:12px}
 /* footer — black text, gold-star separators (reuses .hm-foot layout); sits on the mirror's cream */
 #s-wb .wb-foot{margin-top:12px;padding-top:11px;border-top:1px solid rgba(33,30,26,.10);gap:8px}
-#s-wb .wb-foot span.lnk{font:600 9.5px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1c1a17}
-#s-wb .wb-foot span.star{color:#C9A24E;font-size:9px}
+#s-wb .wb-foot span.lnk{font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1c1a17}
+#s-wb .wb-foot span.star{color:#C9A24E;font-size:11px}
 /* press / lift feedback (iOS-safe via JS .wb-tapped as well) */
 #s-wb [wb-press]{transition:transform .13s ease;-webkit-tap-highlight-color:transparent}
 #s-wb [wb-press]:active{transform:scale(.98)}
