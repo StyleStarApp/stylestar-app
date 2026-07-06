@@ -236,9 +236,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .whatsnext-sub{font-size:13px;color:#888;margin-bottom:14px}
 .whatsnext-grid{display:flex;flex-direction:column;align-items:center;gap:8px}
 .share-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:12px}
-.quiz-footer{text-align:center;padding:1.25rem;font-size:14px;color:#555;letter-spacing:0.06em;border-top:1px solid #f0f0f0}
-.quiz-footer span{cursor:pointer;text-decoration:underline;font-weight:700}
-.quiz-footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px}
+.quiz-footer{text-align:center;padding:1.25rem;border-top:1px solid #f0f0f0}
+.quiz-footer span.lnk{cursor:pointer;font:700 12px/1 'Jost',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#2A2724}
+.quiz-footer span.star{color:#C8971E;font-size:11px;line-height:1}
+.quiz-footer-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
 .dc-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
 .dc-title{font-family:'Fraunces',Georgia,serif;font-size:28px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
 .dc-subtitle{font-size:14px;color:#777;line-height:1.6;margin-bottom:1.5rem;font-style:italic;padding:0 0.5rem}
@@ -1135,7 +1136,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </div>
 
 </div>
-<div class="quiz-footer"><div class="quiz-footer-links"><span onclick="showShop()">Shop</span><span onclick="showStory()">Our Story</span><span onclick="showFAQ()">FAQ</span></div></div>
+<div class="quiz-footer"><div class="quiz-footer-links"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
 </div>
 
 <div class="sheet-backdrop" id="saveSheet" onclick="if(event.target===this)dismissSaveSheet()">
