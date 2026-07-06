@@ -821,5 +821,21 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
     greeting mirror — the two lines are now **one sentence per line** (13px, sat a little lower) and
     **"Welcome back, {name}!" dropped down** to give the star breathing room; the vanity **bulbs now
     twinkle** (per-bulb opacity pulse, staggered/out-of-sync) instead of a single whole-column breathe.
+- ✅ **Navigation pass — top-right "← Back" on every sub-screen** (Cath: easy, non-frustrating nav is a
+  priority). Style Portrait (`s-res`) + Preferences (`s-pref`) got a top-right Back returning to the
+  origin (portrait's only shows when arrived from a menu via `loadSaved`, not on a fresh quiz result;
+  prefs returns to `prefReturnScreen`). Analyze-an-outfit upload (`s-photo`) + photo results
+  (`s-photo-res`) got the same (return via `photoPrevScreen`). Everything else already had one:
+  Story/FAQ/Privacy/Style Star Edit/Mall have "← Back", the stylist chat has "Done". Reusable `.top-back`
+  style. The quiz keeps its per-question Back (deliberately no one-tap "exit quiz" — protects completion);
+  the after-prefs save prompt needs none. No dead ends anywhere now.
+- ✅ **Footers consolidated to `Shop · Our Story · FAQ` on EVERY screen** (Cath's call). Removed
+  **Style Star Edit** from all footers and removed **Privacy** from the footer nav. Rationale (Cath
+  agreed): a footer link is an invite to explore; Privacy is a legal/trust link people only seek at the
+  email moment — and it's already surfaced there (every email-capture form: "We'll never share your
+  email · Privacy Policy") **and** in the FAQ ("Is my information private?" links the full policy). So
+  Privacy stays fully reachable without cluttering the editorial footer. "Shop" stays in every footer
+  (Cath always wants the Mall findable). Home/WB have their own gold-star footers; inner pages use the
+  shared `.quiz-footer`; all three now match. Dropped the dead `footEdit`/`footPrivacy` toggle code.
 - ▶ Still open from the earlier design step: carry the chrome/gold/DM-Serif look further INWARD (quiz,
   results, chat, Mall, footer pages) so there's no "wow → oh" after the first inner tap.
