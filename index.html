@@ -378,8 +378,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background-repeat:no-repeat,repeat,repeat;background-position:center,center,top;
   box-shadow:inset 0 0 80px rgba(0,0,0,.24)}
 #s-wb .hm-room{position:relative;padding-top:6px;max-width:400px;margin:0 auto}
-/* the star pendant hangs in front of the greeting mirror; it is the reveal-star merge target */
-#s-wb .wb-pend{position:relative;width:100%;height:52px;z-index:3}
+/* the star pendant hangs in front of the greeting mirror; it is the reveal-star merge target.
+   Lifted up so the chrome bracket posts meet the gold rail (no dark gap). */
+#s-wb .wb-pend{position:relative;width:100%;height:52px;z-index:3;margin-top:-13px}
 #s-wb .hm-star-inner{transform:none}
 /* silver mirror frames (greeting on top, actions below) */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid transparent;
@@ -402,8 +403,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* greeting copy */
 #s-wb .wb-h1{position:relative;z-index:8;font:400 24px/1.14 'DM Serif Display',serif;color:#211E1A;margin-top:4px}
 #s-wb .wb-msg2{position:relative;z-index:8;font:400 12px/1.5 'Jost',sans-serif;color:#6b655a;margin:10px 2px 0;text-wrap:balance}
-/* recessed shelf edge between the two mirrors */
-#s-wb .wb-recess{height:4px;margin:4px 3px 0;border-radius:3px;background:linear-gradient(180deg,#1e1b15 0%,#3a352c 100%);box-shadow:0 1px 0 rgba(255,255,255,.5),inset 0 1px 2px rgba(0,0,0,.6)}
 /* primary CTA reuses .hm-cta (black/gold + shimmer); block width inside the actions mirror.
    The .wbx wrapper drives the reveal fade-in, so keep the CTA itself always visible
    (immune to the shared .hm-cta reveal opacity rules) — otherwise it can stay hidden. */
@@ -555,10 +554,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="hm-room">
     <!-- Hanging rod + S-hook + crowning star. The star is the reveal's flying-star merge target. -->
     <div class="wb-pend">
-      <div style="position:absolute;top:0;left:0;width:6px;height:20px;border-radius:3px;background:linear-gradient(90deg,#6F757B,#B4BABF 22%,#FFFFFF 50%,#CDD2D7 60%,#7C8288);box-shadow:0 2px 3px -1px rgba(0,0,0,.35)"></div>
-      <div style="position:absolute;top:0;right:0;width:6px;height:20px;border-radius:3px;background:linear-gradient(90deg,#6F757B,#B4BABF 22%,#FFFFFF 50%,#CDD2D7 60%,#7C8288);box-shadow:0 2px 3px -1px rgba(0,0,0,.35)"></div>
-      <div style="position:absolute;top:14px;left:-9px;right:-9px;height:8px;border-radius:4px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 4px 7px -2px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.8)"></div>
-      <svg width="22" height="30" viewBox="0 0 24 24" style="position:absolute;top:11px;left:50%;transform:translateX(-50%)"><path d="M12 1 C5.5 1 5.5 12 12 12 C18 12 18 22 12 22" fill="none" stroke="#565C62" stroke-width="1.9" stroke-linecap="round"/></svg>
+      <div style="position:absolute;top:0;left:0;width:6px;height:22px;border-radius:1px;background:linear-gradient(90deg,#6F757B,#B4BABF 22%,#FFFFFF 50%,#CDD2D7 60%,#7C8288);box-shadow:0 2px 3px -1px rgba(0,0,0,.35)"></div>
+      <div style="position:absolute;top:0;right:0;width:6px;height:22px;border-radius:1px;background:linear-gradient(90deg,#6F757B,#B4BABF 22%,#FFFFFF 50%,#CDD2D7 60%,#7C8288);box-shadow:0 2px 3px -1px rgba(0,0,0,.35)"></div>
+      <div style="position:absolute;top:16px;left:-9px;right:-9px;height:8px;border-radius:0;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 4px 7px -2px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.8)"></div>
+      <svg width="24" height="42" viewBox="0 0 24 30" style="position:absolute;top:4px;left:50%;transform:translateX(-50%)"><path d="M12 2 C4.5 2 4.5 15 12 15 C19 15 19 28 12 28" fill="none" stroke="#565C62" stroke-width="2" stroke-linecap="round"/></svg>
       <div style="position:absolute;top:30px;left:50%;width:150px;margin-left:-75px;z-index:3">
         <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
         <div class="hm-star-inner" style="position:relative;width:124px;height:124px;margin:-9px auto 0;display:flex;align-items:center;justify-content:center">
@@ -578,8 +577,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="wb-h1" id="wbGreet">Welcome back!</div>
       <p class="wb-msg2">Your style portrait is saved. Pick up right where you left off.</p>
     </div>
-    <!-- Recessed shelf edge -->
-    <div class="wb-recess"></div>
     <!-- Actions mirror -->
     <div class="wb-mirror wb-acts">
       <span class="wb-sweep"></span>

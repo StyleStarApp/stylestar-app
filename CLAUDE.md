@@ -809,5 +809,11 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
 - **Home (handoff §4):** the two asks — gold rail + black-text/gold-star footer — were **already in
   place** from the entrance-reveal work, so Home needed no change; confirmed by screenshot. The two
   screens now read as one product.
+- ✅ **Pendant polish pass** (Cath's real-device notes, same day): lifted the clothing-rack up so the
+  chrome **bracket posts touch the gold rail** (closed the dark gap); **squared the rod's side tips**
+  (were rounded); reworked the **S-hook** so its upper curl **hooks securely over the rod** and the
+  lower curl **threads through the gold jump-ring** on the star; and **deleted the black recess bar**
+  that sat between the greeting mirror and the actions mirror. All scoped to `#s-wb` (Home's pendant is
+  a separate structure inside its mirror — left untouched; offer to match it if she wants).
 - ▶ Still open from the earlier design step: carry the chrome/gold/DM-Serif look further INWARD (quiz,
   results, chat, Mall, footer pages) so there's no "wow → oh" after the first inner tap.
