@@ -774,3 +774,40 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
     the merge target, and adds/removes the `ss-*` classes on `<body>`.
   - Verified in Chromium at closed / doors-open / star-merge / settled beats for BOTH s-wel (no
     regression) and s-wb (new), plus reduced-motion (skips the reveal, content fully visible) on s-wb.
+
+**2026-07-06 (▶ WELCOME BACK redesign — "lit vanity" mirror, from Design handoff)**
+- Design sent a handoff (`StyleStar-WelcomeBack-EXACT.html` + `HANDOFF - Welcome Back.md`, in the
+  scratchpad). Rebuilt the Welcome Back screen (`s-wb`) to match it exactly, keeping the reveal +
+  functions we already had (reconcile, not wipe).
+- **The look:** same dressing-room curtain background + gold rail as Home, the hanging gold star
+  pendant, then a silver-framed **"lit vanity" greeting mirror** (warm bulbs flickering + breathing
+  down each inner edge, one-time light sweep) with **"Welcome back, {firstName}!"** in DM Serif
+  Display; a recessed shelf edge; then an **actions mirror** — the black/gold **"Shop your style"**
+  CTA (gold shimmer, same as Home's) over **six Home-style silver shelves**: Analyze an Outfit (red),
+  Ask Your Stylist (pink), Shop Style Star Edit (teal), See my Style Portrait / Refine your
+  Preferences / Shop the Mall (black chips, gold line-art); a compact black/gold **Retake the Quiz**;
+  and the **SHOP ★ OUR STORY ★ FAQ ★ PRIVACY** footer (black text, gold-star separators).
+- **Two live badges (data-driven, hide when empty — handoff §3):**
+  - *Shop Style Star Edit → "NEW"* — real & working. Signature = the number of `.dc-item`s in the
+    Edit; if it's grown since her last visit (or she's never opened it) the gold NEW pill shows, and
+    it clears the moment she opens the Edit (`markEditSeen` stamps `ss_edit_seen`). So when you add
+    items to the Edit, returning users automatically see NEW — no manual flag needed.
+  - *Ask Your Stylist → unread count* — wired to a real `ss_unread_replies` counter (caps at `9+`,
+    cleared when she opens the chat via `markStylistRead`). BUT the stylist chat is instant/synchronous
+    today, so nothing increments it yet → the badge correctly stays hidden. It's real plumbing ready
+    for a future async/notification-reply feature; **until that exists it will never light up.**
+    (Flagged for Cath — decide later what a "reply" is, or leave dormant.)
+  - First name binds from her saved data (`ss_data.userName`, first token); unknown name collapses to
+    a clean "Welcome back!".
+- **Implementation notes:** all scoped to `#s-wb` with a `.wb-*` namespace; dropped the mock's phone
+  bezel/status bar. Entrance reveal still plays over WB — the pendant star is the flying-star merge
+  target; the rise-in content wrapper is `.wbx` (reveal rules repointed `#s-wb .wb` → `.wbx`). The
+  global `.quiz-footer` is now **hidden on `s-wb` too** (WB has its own footer) — supersedes the old
+  "quiz-footer still shows on s-wb" note. Footer placed on the mirror's cream (not free on the curtain)
+  so black text stays readable — Cath's readability priority. Verified in Chromium: named + no-name
+  greeting, badges on/off + `9+` cap, reveal doors→star-merge, CTA always present, no double footer.
+- **Home (handoff §4):** the two asks — gold rail + black-text/gold-star footer — were **already in
+  place** from the entrance-reveal work, so Home needed no change; confirmed by screenshot. The two
+  screens now read as one product.
+- ▶ Still open from the earlier design step: carry the chrome/gold/DM-Serif look further INWARD (quiz,
+  results, chat, Mall, footer pages) so there's no "wow → oh" after the first inner tap.

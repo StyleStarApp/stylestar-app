@@ -369,13 +369,90 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wel [data-shelf]:hover{transform:translateY(-3px);filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
 #s-wel [data-shelf].hm-tapped,#s-wel [data-shelf]:active{transform:scale(.9);filter:brightness(.88)}
 
+/* ===== Welcome Back — "lit vanity" mirror design (Design handoff) ===== */
+#s-wb{position:relative;padding:16px;margin:-0.5rem -1.75rem -1.5rem;font-family:'Jost',sans-serif;background-color:#28251F;
+  background-image:
+    radial-gradient(130% 72% at 50% 30%, rgba(255,244,222,.34) 0%, rgba(255,244,222,0) 58%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0, rgba(0,0,0,.045) 2px, transparent 2px, transparent 7px),
+    repeating-linear-gradient(to bottom,#28251F 0 54px,#F2EFE8 54px 108px);
+  background-repeat:no-repeat,repeat,repeat;background-position:center,center,top;
+  box-shadow:inset 0 0 80px rgba(0,0,0,.24)}
+#s-wb .hm-room{position:relative;padding-top:6px;max-width:400px;margin:0 auto}
+/* the star pendant hangs in front of the greeting mirror; it is the reveal-star merge target */
+#s-wb .wb-pend{position:relative;width:100%;height:52px;z-index:3}
+#s-wb .hm-star-inner{transform:none}
+/* silver mirror frames (greeting on top, actions below) */
+#s-wb .wb-mirror{position:relative;text-align:center;border:8px solid transparent;
+  border-image:linear-gradient(135deg,#FFFFFF 0%,#C6CACE 18%,#8C9298 38%,#F2F4F6 52%,#9AA0A6 70%,#DFE2E5 84%,#FFFFFF 100%) 1;
+  background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
+#s-wb .wb-greet{z-index:1;margin-top:-16px;padding:100px 44px 14px;
+  box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px rgba(90,92,98,.55),inset 0 0 0 1.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
+#s-wb .wb-acts{border-width:7px;margin-top:3px;padding:5px 12px 13px;
+  box-shadow:0 16px 26px -16px rgba(0,0,0,.42),0 0 0 1px rgba(90,92,98,.45),inset 0 0 0 1.5px rgba(255,255,255,.7)}
+#s-wb .wb-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
+#s-wb .wb-sweep{position:absolute;top:0;bottom:0;left:0;width:46%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);pointer-events:none;z-index:9}
+#s-wb .wb-greet .wb-sweep{animation:wbSweep 1.7s ease-out .3s both}
+#s-wb .wb-acts .wb-sweep{animation:wbSweep 1.7s ease-out .45s both}
+#s-wb .wb-starcast{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:112px;height:30px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(38,26,6,.24),rgba(38,26,6,0) 68%);filter:blur(5px);pointer-events:none}
+/* vanity bulbs down each inner edge */
+#s-wb .wb-bulbs{position:absolute;top:16px;bottom:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;z-index:7}
+#s-wb .wb-bulbs.l{left:11px;animation:wbBulbOn 1.2s ease-out .15s both,wbBreathe 4.6s ease-in-out 1.6s infinite}
+#s-wb .wb-bulbs.r{right:11px;animation:wbBulbOn 1.2s ease-out .3s both,wbBreathe 5.3s ease-in-out 1.9s infinite}
+#s-wb .wb-bulb{width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#FFFDF4,#FFEBB4 46%,#F0CB77 78%,#CF9F3C);box-shadow:0 0 10px 2px rgba(255,222,140,.75),0 0 3px rgba(255,236,182,.9),inset 0 -1px 2px rgba(150,110,30,.35)}
+/* greeting copy */
+#s-wb .wb-h1{position:relative;z-index:8;font:400 24px/1.14 'DM Serif Display',serif;color:#211E1A;margin-top:4px}
+#s-wb .wb-msg2{position:relative;z-index:8;font:400 12px/1.5 'Jost',sans-serif;color:#6b655a;margin:10px 2px 0;text-wrap:balance}
+/* recessed shelf edge between the two mirrors */
+#s-wb .wb-recess{height:4px;margin:4px 3px 0;border-radius:3px;background:linear-gradient(180deg,#1e1b15 0%,#3a352c 100%);box-shadow:0 1px 0 rgba(255,255,255,.5),inset 0 1px 2px rgba(0,0,0,.6)}
+/* primary CTA reuses .hm-cta (black/gold + shimmer); block width inside the actions mirror.
+   The .wbx wrapper drives the reveal fade-in, so keep the CTA itself always visible
+   (immune to the shared .hm-cta reveal opacity rules) — otherwise it can stay hidden. */
+#s-wb .wb-cta{display:block;width:100%;margin:2px 2px 11px;opacity:1!important;animation:none!important}
+/* shelf actions */
+#s-wb .wb-list{display:flex;flex-direction:column;gap:7px;margin-top:3px}
+#s-wb .wb-item{position:relative;cursor:pointer}
+#s-wb .wb-row{display:flex;align-items:center;gap:11px;padding:0 5px 5px}
+#s-wb .wb-chip{position:relative;width:32px;height:32px;flex:0 0 auto;border-radius:9px;display:flex;align-items:center;justify-content:center}
+#s-wb .wb-chip svg{width:17px;height:17px}
+#s-wb .wb-chip.dark{background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.45);box-shadow:0 3px 7px -4px rgba(0,0,0,.6),inset 0 1px 0 rgba(233,196,110,.15)}
+#s-wb .wb-lbl{flex:1;text-align:left;display:flex;align-items:center;gap:6px;min-width:0}
+#s-wb .wb-lbl b{font:500 14px/1.1 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
+#s-wb .wb-arr{font-size:13px}
+#s-wb .wb-shadow{position:relative;height:0}
+#s-wb .wb-shadow i{position:absolute;left:6px;bottom:1px;width:33px;height:6px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(20,15,5,.34),rgba(20,15,5,0) 72%);filter:blur(1.5px)}
+#s-wb .wb-bar{height:5px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 6px 10px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
+#s-wb .wb-brks{display:flex;justify-content:space-between;padding:0 8px}
+#s-wb .wb-brk{width:11px;height:8px}
+#s-wb .wb-brk.l{clip-path:polygon(0 0,100% 0,0 100%);background:linear-gradient(135deg,#eef1f3,#90979d);box-shadow:-1px 1px 2px rgba(0,0,0,.28)}
+#s-wb .wb-brk.r{clip-path:polygon(0 0,100% 0,100% 100%);background:linear-gradient(225deg,#eef1f3,#90979d);box-shadow:1px 1px 2px rgba(0,0,0,.28)}
+/* gold notification badges — hidden until JS turns them on (empty state = no badge) */
+#s-wb .wb-badge{position:absolute;display:none;align-items:center;justify-content:center;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font-family:'Jost',sans-serif;font-weight:700;animation:wbNew 2.4s ease-in-out infinite;z-index:2}
+#s-wb .wb-badge.on{display:flex}
+#s-wb .wb-badge.count{top:-5px;right:-5px;min-width:15px;height:15px;padding:0 3px;border-radius:8px;font-size:9px;line-height:1}
+#s-wb .wb-badge.tag{top:-7px;right:-9px;padding:2px 5px;border-radius:7px;font-size:7px;line-height:1;letter-spacing:.05em;text-transform:uppercase}
+/* retake — compact black/gold square button */
+#s-wb .wb-retake-wrap{text-align:center;margin-top:11px}
+#s-wb .wb-retake{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 16px;background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.5);box-shadow:0 5px 12px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(233,196,110,.16);font:600 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:#E9C46A;cursor:pointer}
+#s-wb .wb-retake svg{width:12px;height:12px}
+/* footer — black text, gold-star separators (reuses .hm-foot layout); sits on the mirror's cream */
+#s-wb .wb-foot{margin-top:12px;padding-top:11px;border-top:1px solid rgba(33,30,26,.10);gap:8px}
+#s-wb .wb-foot span.lnk{font:600 9.5px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1c1a17}
+#s-wb .wb-foot span.star{color:#C9A24E;font-size:9px}
+/* press / lift feedback (iOS-safe via JS .wb-tapped as well) */
+#s-wb [wb-press]{transition:transform .13s ease;-webkit-tap-highlight-color:transparent}
+#s-wb [wb-press]:active{transform:scale(.98)}
+#s-wb [wb-lift]{transition:transform .15s cubic-bezier(.2,.7,.2,1);-webkit-tap-highlight-color:transparent}
+#s-wb [wb-lift]:active,#s-wb [wb-lift].wb-tapped{transform:translateY(-4px)}
+@keyframes wbSweep{0%{transform:translateX(-150%) skewX(-16deg);opacity:0}12%{opacity:.85}60%{opacity:.45}100%{transform:translateX(250%) skewX(-16deg);opacity:0}}
+@keyframes wbBulbOn{0%{opacity:0}30%{opacity:.5}42%{opacity:.9}52%{opacity:.35}64%{opacity:.95}100%{opacity:1}}
+@keyframes wbBreathe{0%,100%{opacity:1}50%{opacity:.76}}
+@keyframes wbNew{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.18);opacity:1}}
+
 /* ===== Home entrance reveal — closet doors swing open (Design handoff) ===== */
 /* Gold rail: a permanent part of the home page; the hanging rack reads as mounted to it. NOT an animation-only element. */
 .hm-room{position:relative}
 .hm-goldrail{position:absolute;top:8px;left:0;right:0;height:6px;z-index:5;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 3px 8px -3px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.6)}
-/* Welcome Back reuses the hanging-star pendant (the flying-star merge target) without the mirror frame. */
-#s-wb .hm-room{position:relative;padding-top:8px}
-#s-wb .hm-pendant{margin:6px auto 30px}
+/* Welcome Back's pendant + mirror styles live in the "lit vanity" block above. */
 /* the reveal overlay: hidden until armed */
 .hm-entrance{display:none;position:fixed;inset:0;z-index:9998;pointer-events:none;overflow:hidden;perspective:1500px}
 body.ss-anim .hm-entrance{display:block}
@@ -400,7 +477,7 @@ body.ss-done .hm-entrance{display:none}
 
 /* armed initial states (only while a reveal is in progress) */
 body.ss-anim .hm-room{transform:scale(.95);transform-origin:center 42%}
-body.ss-anim .hm-h1,body.ss-anim .hm-sub,body.ss-anim .hm-body,body.ss-anim .hm-cta,body.ss-anim #restoreSection,body.ss-anim .hm-divwrap,body.ss-anim .hm-shelves,body.ss-anim .hm-foot,body.ss-anim #s-wb .wb{opacity:0}
+body.ss-anim .hm-h1,body.ss-anim .hm-sub,body.ss-anim .hm-body,body.ss-anim .hm-cta,body.ss-anim #restoreSection,body.ss-anim .hm-divwrap,body.ss-anim .hm-shelves,body.ss-anim .hm-foot,body.ss-anim #s-wb .wbx{opacity:0}
 
 /* ===== full reveal (first open) ===== */
 body.ss-play .hm-veil{animation:ssVeilOut .9s ease .2s forwards}
@@ -422,7 +499,7 @@ body.ss-play .hm-body{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.28s forw
 body.ss-play .hm-cta{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.4s forwards}
 body.ss-play #restoreSection{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.55s forwards}
 body.ss-play .hm-divwrap,body.ss-play .hm-shelves,body.ss-play .hm-foot{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.72s forwards}
-body.ss-play #s-wb .wb{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.4s forwards}
+body.ss-play #s-wb .wbx{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.4s forwards}
 
 /* ===== shortened reveal (return visit) — overrides the above ===== */
 body.ss-fast .hm-veil{animation:ssVeilOut .45s ease .04s forwards}
@@ -438,7 +515,7 @@ body.ss-fast .hm-h1,body.ss-fast .hm-sub,body.ss-fast .hm-body,body.ss-fast .hm-
 
 /* terminal state after the reveal — stable, no restart flicker */
 body.ss-done .hm-room{transform:none}
-body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-cta,body.ss-done #restoreSection,body.ss-done .hm-divwrap,body.ss-done .hm-shelves,body.ss-done .hm-foot,body.ss-done #s-wb .wb{opacity:1;transform:none;animation:none}
+body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-cta,body.ss-done #restoreSection,body.ss-done .hm-divwrap,body.ss-done .hm-shelves,body.ss-done .hm-foot,body.ss-done #s-wb .wbx{opacity:1;transform:none;animation:none}
 
 @keyframes ssVeilOut{to{opacity:0}}
 @keyframes ssHomeIn{to{transform:scale(1)}}
@@ -454,7 +531,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 @media (prefers-reduced-motion: reduce){
   body.ss-anim .hm-entrance,body.ss-play .hm-entrance,body.ss-fast .hm-entrance{display:none}
   body.ss-anim .hm-room,body.ss-play .hm-room,body.ss-fast .hm-room{transform:none;animation:none}
-  body.ss-anim .hm-h1,body.ss-anim .hm-sub,body.ss-anim .hm-body,body.ss-anim .hm-cta,body.ss-anim #restoreSection,body.ss-anim .hm-divwrap,body.ss-anim .hm-shelves,body.ss-anim .hm-foot,body.ss-anim #s-wb .wb{opacity:1;animation:none}
+  body.ss-anim .hm-h1,body.ss-anim .hm-sub,body.ss-anim .hm-body,body.ss-anim .hm-cta,body.ss-anim #restoreSection,body.ss-anim .hm-divwrap,body.ss-anim .hm-shelves,body.ss-anim .hm-foot,body.ss-anim #s-wb .wbx{opacity:1;animation:none}
 }
 </style>
 </head>
@@ -474,33 +551,74 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="prog-wrap" id="pw"><div class="prog-bar"><div class="prog-fill" id="pf"></div></div><div class="prog-lbl" id="pl"></div></div>
 
 <div class="scr" id="s-wb">
+  <div class="hm-goldrail"></div>
   <div class="hm-room">
-    <div class="hm-pendant">
-      <div class="hm-post l"></div>
-      <div class="hm-post r"></div>
-      <div class="hm-rail"></div>
-      <svg class="hm-hook" width="22" height="30" viewBox="0 0 24 24"><path d="M12 1 C5.5 1 5.5 12 12 12 C18 12 18 22 12 22" fill="none" stroke="#565C62" stroke-width="1.9" stroke-linecap="round"/></svg>
-      <div class="hm-star-wrap">
+    <!-- Hanging rod + S-hook + crowning star. The star is the reveal's flying-star merge target. -->
+    <div class="wb-pend">
+      <div style="position:absolute;top:0;left:0;width:6px;height:20px;border-radius:3px;background:linear-gradient(90deg,#6F757B,#B4BABF 22%,#FFFFFF 50%,#CDD2D7 60%,#7C8288);box-shadow:0 2px 3px -1px rgba(0,0,0,.35)"></div>
+      <div style="position:absolute;top:0;right:0;width:6px;height:20px;border-radius:3px;background:linear-gradient(90deg,#6F757B,#B4BABF 22%,#FFFFFF 50%,#CDD2D7 60%,#7C8288);box-shadow:0 2px 3px -1px rgba(0,0,0,.35)"></div>
+      <div style="position:absolute;top:14px;left:-9px;right:-9px;height:8px;border-radius:4px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 4px 7px -2px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.8)"></div>
+      <svg width="22" height="30" viewBox="0 0 24 24" style="position:absolute;top:11px;left:50%;transform:translateX(-50%)"><path d="M12 1 C5.5 1 5.5 12 12 12 C18 12 18 22 12 22" fill="none" stroke="#565C62" stroke-width="1.9" stroke-linecap="round"/></svg>
+      <div style="position:absolute;top:30px;left:50%;width:150px;margin-left:-75px;z-index:3">
         <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
-        <div class="hm-star-inner">
-          <svg width="130" height="130" viewBox="0 0 24 24"><defs><linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg>
+        <div class="hm-star-inner" style="position:relative;width:124px;height:124px;margin:-9px auto 0;display:flex;align-items:center;justify-content:center">
+          <svg width="124" height="124" viewBox="0 0 24 24" style="position:absolute"><defs><linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg>
           <img src="logo-star.png" alt="Style Star">
         </div>
       </div>
     </div>
-  <div class="wb">
-    <div class="wb-name" id="wbName">Welcome back!</div>
-    <div class="wb-msg">Your style portrait is saved. Pick up right where you left off.</div>
-    <button class="act-btn act-primary" onclick="loadSavedAndShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 8h13l-1 11.5h-11z"/><path d="M9 8V6.2a3 3 0 0 1 6 0V8"/></svg>Shop your style</button>
-    <button class="act-btn act-2" onclick="loadSaved()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9z"/></svg>See my style portrait</button>
-    <button class="act-btn act-2" onclick="wbChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>Ask your stylist</button>
-    <button class="act-btn act-2" onclick="savedPhoto()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3.2"/></svg>Analyze an outfit</button>
-    <button class="act-btn act-2" onclick="openPrefs()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.4" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="2.4" fill="currentColor" stroke="none"/></svg>Refine your preferences</button>
-    <div class="act-pair">
-      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Style Star Edit</button>
-      <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
+  <div class="wbx">
+    <!-- Greeting "lit vanity" mirror -->
+    <div class="wb-mirror wb-greet">
+      <span class="wb-glass"></span>
+      <span class="wb-sweep"></span>
+      <div class="wb-starcast"></div>
+      <div class="wb-bulbs l"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
+      <div class="wb-bulbs r"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
+      <div class="wb-h1" id="wbGreet">Welcome back!</div>
+      <p class="wb-msg2">Your style portrait is saved. Pick up right where you left off.</p>
     </div>
-    <button class="retake" onclick="retakeQuiz()">Retake the quiz</button>
+    <!-- Recessed shelf edge -->
+    <div class="wb-recess"></div>
+    <!-- Actions mirror -->
+    <div class="wb-mirror wb-acts">
+      <span class="wb-sweep"></span>
+      <a class="hm-cta wb-cta" wb-press onclick="loadSavedAndShop()"><span class="shim"></span><span class="lbl">Shop your style&nbsp;&rarr;</span></a>
+      <div class="wb-list">
+        <div class="wb-item" wb-lift onclick="savedPhoto()">
+          <div class="wb-row"><span class="wb-chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px #E01B1B99"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.4" width="18" height="12.4" rx="2.6"/><path d="M8.4 7.4l1.05-1.95a1.05 1.05 0 0 1 .93-.55h3.24a1.05 1.05 0 0 1 .93.55L15.6 7.4"/><circle cx="12" cy="13.4" r="3.5"/></svg></span><span class="wb-lbl"><b>Analyze an Outfit</b><span class="wb-arr" style="color:#E01B1B">&rarr;</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
+        <div class="wb-item" wb-lift onclick="wbChat()">
+          <div class="wb-row"><span class="wb-chip" style="background:#EC4899;box-shadow:0 3px 7px -3px #EC489999"><span class="wb-badge count" id="wbAskBadge">0</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span class="wb-lbl"><b>Ask Your Stylist</b><span class="wb-arr" style="color:#EC4899">&rarr;</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
+        <div class="wb-item" wb-lift onclick="showDream()">
+          <div class="wb-row"><span class="wb-chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px #0FA6B699"><span class="wb-badge tag" id="wbEditBadge">New</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.5 L12.63 13.2 L14.45 13.25 L13.0 14.4 L13.5 16.15 L12 15.1 L10.5 16.15 L11.0 14.4 L9.55 13.25 L11.37 13.2 Z" fill="#fff" stroke="none"/></svg></span><span class="wb-lbl"><b>Shop Style Star Edit</b><span class="wb-arr" style="color:#0FA6B6">&rarr;</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
+        <div class="wb-item" wb-lift onclick="loadSaved()">
+          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg></span><span class="wb-lbl"><b>See my Style Portrait</b><span class="wb-arr" style="color:#C89A2C">&rarr;</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
+        <div class="wb-item" wb-lift onclick="openPrefs()">
+          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8"/><path d="M16 8h4"/><circle cx="14" cy="8" r="2"/><path d="M4 16h4"/><path d="M12 16h8"/><circle cx="8" cy="16" r="2"/></svg></span><span class="wb-lbl"><b>Refine your Preferences</b><span class="wb-arr" style="color:#C89A2C">&rarr;</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
+        <div class="wb-item" wb-lift onclick="showShop()">
+          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 9.5l1.1-4.5h12.6l1.1 4.5"/><path d="M5.6 9.5v9h12.8v-9"/><path d="M9.6 18.5v-4.3h4.8v4.3"/><path d="M4.6 9.5a2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0"/></svg></span><span class="wb-lbl"><b>Shop the Mall</b><span class="wb-arr" style="color:#C89A2C">&rarr;</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
+      </div>
+      <div class="wb-retake-wrap"><a class="wb-retake" wb-press onclick="retakeQuiz()"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8 8 0 1 0 18.5 15.8"/><path d="M20 5v5h-5"/></svg>Retake the Quiz</a></div>
+      <!-- Footer — black text + gold-star separators, kept on the mirror's cream so it stays readable -->
+      <div class="hm-foot wb-foot">
+        <span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span>
+        <span class="lnk" onclick="showStory()">Our Story</span><span class="star">&#9733;</span>
+        <span class="lnk" onclick="showFAQ()">FAQ</span><span class="star">&#9733;</span>
+        <span class="lnk" onclick="showPrivacy()">Privacy</span>
+      </div>
+    </div>
   </div>
   </div>
 </div>
@@ -1085,9 +1203,10 @@ function show(id,skipHistory){
   if(fp)fp.style.display=onWel?'none':'';
   var fe=document.getElementById('footEdit');
   if(fe)fe.style.display=onWel?'none':'';
-  // The welcome screen has its own built-in footer + logo (in the star), so hide the shared global footer there.
+  // The welcome screen and Welcome Back each have their own built-in footer + logo, so hide the shared global footer there.
   var gf=document.querySelector('.quiz-footer');
-  if(gf)gf.style.display=onWel?'none':'';
+  if(gf)gf.style.display=(onWel||id==='s-wb')?'none':'';
+  if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on both the welcome screen and Welcome Back — each shows its own hanging star instead.
   var hd=document.querySelector('.hdr');
   if(hd)hd.style.display=(onWel||id==='s-wb')?'none':'';
@@ -1999,6 +2118,7 @@ function showDream(){
   dreamPrevScreen=cur?cur.id:'s-wel';
   show('s-dream');
   document.querySelector('.quiz-footer').style.display='none';
+  markEditSeen();
 }
 function closeDream(){
   document.querySelector('.quiz-footer').style.display='';
@@ -2094,6 +2214,7 @@ function loadChatHistory(){
 
 function openChat(){
   chatPrevScreen=document.querySelector('.scr.act')?.id||'s-res';
+  markStylistRead();
   show('s-chat');
   const sugEl=document.getElementById('chatSuggestions');
   if(sugEl)sugEl.style.display='block';
@@ -2392,6 +2513,64 @@ RULES:
   input.focus();
 }
 
+// ---- Welcome Back: first-name binding + live badges (Design handoff §3) ----
+function wbEsc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+// Her first name, from saved data (fallback to the in-memory name). '' when unknown.
+function wbFirstName(){
+  var n='';
+  try{var d=JSON.parse(localStorage.getItem('ss_data'));if(d&&d.userName)n=d.userName;}catch(e){}
+  if(!n&&userName)n=userName;
+  n=(n||'').trim();
+  if(!n||n==='You')return '';
+  return n.split(/\s+/)[0];
+}
+// Unread stylist replies. Backed by a real counter in localStorage. The stylist
+// chat is currently instant/synchronous, so nothing increments this yet and the
+// badge stays hidden (0 = the empty state); it's ready for a future async-reply
+// feature. Cleared whenever she opens the chat.
+function wbUnreadReplies(){
+  var n=0;try{n=parseInt(localStorage.getItem('ss_unread_replies')||'0',10);}catch(e){}
+  return (isNaN(n)||n<0)?0:n;
+}
+function markStylistRead(){
+  try{localStorage.setItem('ss_unread_replies','0');}catch(e){}
+  refreshWbBadges();
+}
+// "New items in the Style Star Edit since her last visit." Signature = the number
+// of items currently in the Edit; when it grows, she hasn't seen the new ones.
+function wbEditSig(){return document.querySelectorAll('#s-dream .dc-item').length;}
+function wbEditHasNew(){
+  var sig=wbEditSig();if(!sig)return false;
+  var seen=null;try{seen=localStorage.getItem('ss_edit_seen');}catch(e){}
+  return seen===null||Number(seen)<sig;
+}
+function markEditSeen(){
+  try{localStorage.setItem('ss_edit_seen',String(wbEditSig()));}catch(e){}
+  refreshWbBadges();
+}
+function refreshWbBadges(){
+  var ask=document.getElementById('wbAskBadge');
+  if(ask){var n=wbUnreadReplies();if(n>0){ask.textContent=n>9?'9+':String(n);ask.classList.add('on');}else{ask.classList.remove('on');}}
+  var ed=document.getElementById('wbEditBadge');
+  if(ed){if(wbEditHasNew())ed.classList.add('on');else ed.classList.remove('on');}
+}
+function updateWbScreen(){
+  var g=document.getElementById('wbGreet');
+  if(g){var fn=wbFirstName();g.innerHTML=fn?('Welcome back,<br>'+wbEsc(fn)+'!'):'Welcome back!';}
+  refreshWbBadges();
+}
+// Near-real-time refresh so a new reply/drop appears without a manual reload.
+setInterval(function(){var wb=document.getElementById('s-wb');if(wb&&wb.classList.contains('act'))refreshWbBadges();},45000);
+// Tactile lift feedback for the Welcome Back shelf items (iOS suppresses :active).
+(function(){
+  document.querySelectorAll('#s-wb [wb-lift]').forEach(function(el){
+    var on=function(){el.classList.add('wb-tapped')};
+    var off=function(){el.classList.remove('wb-tapped')};
+    el.addEventListener('touchstart',on,{passive:true});
+    el.addEventListener('touchend',off);el.addEventListener('touchcancel',off);
+  });
+})();
+
 // Normal first-screen logic: returning visitor (saved on THIS device) sees
 // Welcome Back; everyone else sees the welcome screen.
 function fallbackInitialScreen(){
@@ -2402,15 +2581,15 @@ function fallbackInitialScreen(){
   if(hasData){
     document.getElementById('s-wb').classList.add('act');
     document.getElementById('pw').style.display='none';
-    document.getElementById('wbName').textContent=d.userName&&d.userName!=='You'?'Welcome back, '+d.userName+'!':'Welcome back!';
+    updateWbScreen();
   }else{
     document.getElementById('s-wel').classList.add('act');
   }
-  // s-wel has its own footer + logo; hide the shared global footer when it's the first screen.
+  // s-wel and Welcome Back both carry their own footer + logo; hide the shared global footer on either.
   var onW=document.getElementById('s-wel').classList.contains('act');
   var onWB=document.getElementById('s-wb').classList.contains('act');
   var gf=document.querySelector('.quiz-footer');
-  if(gf)gf.style.display=onW?'none':'';
+  if(gf)gf.style.display=(onW||onWB)?'none':'';
   // Both s-wel and Welcome Back show their own hanging star, so hide the shared global header logo on either.
   var hd=document.querySelector('.hdr');
   if(hd)hd.style.display=(onW||onWB)?'none':'';
