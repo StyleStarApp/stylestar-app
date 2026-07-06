@@ -539,151 +539,154 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 }
 </style>
 <style>
-/* ===== Results screen (#s-res) redesign — "reveal moment" boards (Design handoff) ===== */
+/* ===== Results screen (.res-screen) redesign — "reveal moment" boards (Design handoff) ===== */
 /* Dark, spotlit panel that breaks out of the .inner padding to fill the card. */
-#s-res{position:relative;margin:-0.5rem -1.75rem -1.5rem;padding:8px 0 26px;min-height:100vh;overflow:hidden;color:#efe9dd;font-family:'Jost',sans-serif;background-color:#141009;background-image:radial-gradient(120% 44% at 50% 3%, rgba(255,233,188,.30) 0%, rgba(255,233,188,0) 52%),linear-gradient(180deg,#1c1710 0%,#141009 60%,#0f0c07 100%);box-shadow:inset 0 0 90px rgba(0,0,0,.5)}
-#s-res .top-back-wrap{position:relative;z-index:5;text-align:right;margin:0;padding:2px 24px 2px}
-#s-res .top-back{background:none;border:none;font:500 13px/1 'Jost',sans-serif;color:#cbb98f;cursor:pointer;padding:4px 2px;letter-spacing:.02em}
-#s-res .top-back:hover{color:#efe4c8}
+.res-screen{position:relative;margin:-0.5rem -1.75rem -1.5rem;padding:8px 0 26px;min-height:100vh;overflow:hidden;color:#efe9dd;font-family:'Jost',sans-serif;background-color:#141009;background-image:radial-gradient(120% 44% at 50% 3%, rgba(255,233,188,.30) 0%, rgba(255,233,188,0) 52%),linear-gradient(180deg,#1c1710 0%,#141009 60%,#0f0c07 100%);box-shadow:inset 0 0 90px rgba(0,0,0,.5)}
+.res-screen .top-back-wrap{position:relative;z-index:5;text-align:right;margin:0;padding:2px 24px 2px}
+.res-screen .top-back{background:none;border:none;font:500 13px/1 'Jost',sans-serif;color:#cbb98f;cursor:pointer;padding:4px 2px;letter-spacing:.02em}
+.res-screen .top-back:hover{color:#efe4c8}
 
-#s-res .rv-dust i{position:absolute;border-radius:50%;background:radial-gradient(circle,#fff4d6,rgba(255,244,214,0) 70%);animation:rvTwk 3.4s ease-in-out infinite;z-index:1}
-#s-res .du1{top:70px;left:34px;width:5px;height:5px;animation-delay:.2s}
-#s-res .du2{top:130px;right:30px;width:4px;height:4px;animation-delay:1.1s}
-#s-res .du3{top:210px;left:24px;width:3px;height:3px;animation-delay:.7s}
-#s-res .spot{position:absolute;top:0;left:0;right:0;height:360px;z-index:0;pointer-events:none;opacity:0;background:radial-gradient(120% 72% at 50% -6%,rgba(255,238,200,.55),rgba(255,238,200,0) 62%)}
-#s-res .stack{position:relative;z-index:3;padding:16px 0 8px}
+.res-screen .rv-dust i{position:absolute;border-radius:50%;background:radial-gradient(circle,#fff4d6,rgba(255,244,214,0) 70%);animation:rvTwk 3.4s ease-in-out infinite;z-index:1}
+.res-screen .du1{top:70px;left:34px;width:5px;height:5px;animation-delay:.2s}
+.res-screen .du2{top:130px;right:30px;width:4px;height:4px;animation-delay:1.1s}
+.res-screen .du3{top:210px;left:24px;width:3px;height:3px;animation-delay:.7s}
+.res-screen .spot{position:absolute;top:0;left:0;right:0;height:360px;z-index:0;pointer-events:none;opacity:0;background:radial-gradient(120% 72% at 50% -6%,rgba(255,238,200,.55),rgba(255,238,200,0) 62%)}
+.res-screen .stack{position:relative;z-index:3;padding:16px 0 8px}
 
 /* shared board bits */
-#s-res .lacq{position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;background:linear-gradient(122deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.05) 18%,transparent 36%,transparent 100%)}
-#s-res .sweep{position:absolute;top:0;bottom:0;left:0;width:44%;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);animation:rvSweep 6s ease-in-out 2s infinite}
-#s-res .board{position:relative;border-radius:2px;padding:13px;background:linear-gradient(158deg,#3d382f 0%,#221d17 46%,#130f0b 100%);box-shadow:0 20px 30px -14px rgba(0,0,0,.66),inset 0 0 0 1px rgba(201,162,78,.4),inset 0 1px 0 rgba(255,255,255,.16)}
-#s-res .page{position:relative;background:#FCFCFB;border-radius:1px;padding:22px 17px 22px;text-align:center;box-shadow:0 3px 9px rgba(0,0,0,.28)}
+.res-screen .lacq{position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;background:linear-gradient(122deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.05) 18%,transparent 36%,transparent 100%)}
+.res-screen .sweep{position:absolute;top:0;bottom:0;left:0;width:44%;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);animation:rvSweep 6s ease-in-out 2s infinite}
+.res-screen .board{position:relative;border-radius:2px;padding:13px;background:linear-gradient(158deg,#3d382f 0%,#221d17 46%,#130f0b 100%);box-shadow:0 20px 30px -14px rgba(0,0,0,.66),inset 0 0 0 1px rgba(201,162,78,.4),inset 0 1px 0 rgba(255,255,255,.16)}
+.res-screen .page{position:relative;background:#FCFCFB;border-radius:1px;padding:22px 17px 22px;text-align:center;box-shadow:0 3px 9px rgba(0,0,0,.28)}
 
 /* piece 1: portrait clipboard with clamp */
-#s-res .p1{width:280px;max-width:88%;margin:0 auto;position:relative;opacity:0}
-#s-res .p1cshadow{position:absolute;left:8%;right:8%;bottom:-20px;height:20px;background:radial-gradient(ellipse at center,rgba(0,0,0,.5),rgba(0,0,0,0) 70%);filter:blur(2px)}
-#s-res .clamp{position:absolute;top:-7px;left:50%;transform:translateX(-50%);z-index:7;width:56%;height:28px;border-radius:3px;background:linear-gradient(180deg,#F6E4A6,#E3BB54 42%,#CFA236 60%,#A67E22);box-shadow:0 8px 14px -6px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 3px rgba(120,90,20,.4)}
-#s-res .clamp .brush{position:absolute;inset:0;border-radius:3px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.14) 0 1px,transparent 1px 4px);opacity:.5}
-#s-res .clamp .press{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42%;height:8px;border-radius:5px;background:linear-gradient(180deg,#FBEDBE,#D9AE44)}
-#s-res .clamp .rivet{position:absolute;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff6d6,#a8811f)}
-#s-res .clamp .rivet.l{left:12px}
-#s-res .clamp .rivet.r{right:12px}
-#s-res .clamp .lip{position:absolute;bottom:-3px;left:6%;right:6%;height:4px;border-radius:0 0 3px 3px;background:linear-gradient(180deg,#A67E22,#7c5c17)}
-#s-res .p1 .page{padding-top:26px}
-#s-res .logo{display:block;margin:0 auto;width:74px;height:auto}
-#s-res .eng{margin-top:13px}
-#s-res .eng.si{margin-bottom:18px}
-#s-res .eng-row{display:flex;align-items:center;justify-content:center;gap:11px}
-#s-res .eng-rule{height:1px;width:34px}
-#s-res .eng-rule.l{background:linear-gradient(90deg,transparent,#C9A24E)}
-#s-res .eng-rule.r{background:linear-gradient(90deg,#C9A24E,transparent)}
-#s-res .eng-lbl{font:600 12px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#B8891E;white-space:nowrap}
-#s-res .nm{font:400 28px/1.1 'DM Serif Display',serif;color:#1f1d19;margin:8px 0 0;overflow-wrap:break-word;text-wrap:balance}
-#s-res .nm i{font-style:italic}
-#s-res .noteslbl{font:500 11px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8f8a80;margin:13px 0 6px}
-#s-res .notes{font:500 13px/1.55 'Fraunces',serif;color:#33312c;padding:0 2px;overflow-wrap:break-word;text-wrap:pretty}
-#s-res .notes b{color:#C8971E;margin:0 5px;font-weight:600}
-#s-res .para{font:400 13.5px/1.7 'Jost',sans-serif;color:#4b4843;margin:15px 4px 0;text-wrap:pretty;overflow-wrap:break-word}
+.res-screen .p1{width:280px;max-width:88%;margin:0 auto;position:relative;opacity:0}
+.res-screen .p1cshadow{position:absolute;left:8%;right:8%;bottom:-20px;height:20px;background:radial-gradient(ellipse at center,rgba(0,0,0,.5),rgba(0,0,0,0) 70%);filter:blur(2px)}
+.res-screen .clamp{position:absolute;top:-7px;left:50%;transform:translateX(-50%);z-index:7;width:56%;height:28px;border-radius:3px;background:linear-gradient(180deg,#F6E4A6,#E3BB54 42%,#CFA236 60%,#A67E22);box-shadow:0 8px 14px -6px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 3px rgba(120,90,20,.4)}
+.res-screen .clamp .brush{position:absolute;inset:0;border-radius:3px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.14) 0 1px,transparent 1px 4px);opacity:.5}
+.res-screen .clamp .press{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42%;height:8px;border-radius:5px;background:linear-gradient(180deg,#FBEDBE,#D9AE44)}
+.res-screen .clamp .rivet{position:absolute;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff6d6,#a8811f)}
+.res-screen .clamp .rivet.l{left:12px}
+.res-screen .clamp .rivet.r{right:12px}
+.res-screen .clamp .lip{position:absolute;bottom:-3px;left:6%;right:6%;height:4px;border-radius:0 0 3px 3px;background:linear-gradient(180deg,#A67E22,#7c5c17)}
+.res-screen .p1 .page{padding-top:26px}
+.res-screen .logo{display:block;margin:0 auto;width:74px;height:auto}
+.res-screen .eng{margin-top:13px}
+.res-screen .eng.si{margin-bottom:18px}
+.res-screen .eng-row{display:flex;align-items:center;justify-content:center;gap:11px}
+.res-screen .eng-rule{height:1px;width:34px}
+.res-screen .eng-rule.l{background:linear-gradient(90deg,transparent,#C9A24E)}
+.res-screen .eng-rule.r{background:linear-gradient(90deg,#C9A24E,transparent)}
+.res-screen .eng-lbl{font:600 12px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#B8891E;white-space:nowrap}
+.res-screen .nm{font:400 28px/1.1 'DM Serif Display',serif;color:#1f1d19;margin:8px 0 0;overflow-wrap:break-word;text-wrap:balance}
+.res-screen .nm i{font-style:italic}
+.res-screen .noteslbl{font:500 11px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8f8a80;margin:13px 0 6px}
+.res-screen .notes{font:500 13px/1.55 'Fraunces',serif;color:#33312c;padding:0 2px;overflow-wrap:break-word;text-wrap:pretty}
+.res-screen .notes b{color:#C8971E;margin:0 5px;font-weight:600}
+.res-screen .para{font:400 13.5px/1.7 'Jost',sans-serif;color:#4b4843;margin:15px 4px 0;text-wrap:pretty;overflow-wrap:break-word}
+.res-screen .p-alt{margin:16px 2px 0}
+.res-screen .p-alt:empty{display:none}
+.res-screen .p-alt button{width:100%;border:none;border-radius:3px;padding:13px;cursor:pointer;background:linear-gradient(180deg,#33302A,#201D19);color:#F1DDA0;font:700 12px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase}
 
 /* piece 2: style signature card (wider, studs) */
-#s-res .p2{width:312px;max-width:94%;margin:16px auto 0;position:relative;opacity:0}
-#s-res .p2 .page{padding:26px 20px 24px}
-#s-res .stud{position:absolute;width:17px;height:17px;z-index:6;background:radial-gradient(circle at 40% 34%,#FFF3C4,#E6C255 48%,#9A7418);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:drop-shadow(0 1px 1px rgba(0,0,0,.45))}
-#s-res .stud.tl{top:6px;left:6px}
-#s-res .stud.tr{top:6px;right:6px}
-#s-res .stud.bl{bottom:6px;left:6px}
-#s-res .stud.br{bottom:6px;right:6px}
-#s-res .sig-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
-#s-res .sig-row:last-child{margin-bottom:2px}
-#s-res .sig-cat{font:600 9.5px/1.2 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#3a352c;width:64px;text-align:right;flex:0 0 auto;padding-top:1px}
-#s-res .sig-track{position:relative;flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(201,162,78,.3),rgba(201,162,78,.5))}
-#s-res .sig-dot{position:absolute;top:-5px;left:calc(var(--x) - 6px);width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F7E7B0,#D8A93E 55%,#B8831F);box-shadow:0 1px 3px rgba(150,110,20,.5),0 0 0 2px #FCFCFB}
-#s-res .sig-end{position:absolute;top:8px;font:500 8px/1 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#9a9484}
-#s-res .sig-end.l{left:0}
-#s-res .sig-end.r{right:0}
+.res-screen .p2{width:312px;max-width:94%;margin:16px auto 0;position:relative;opacity:0}
+.res-screen .p2 .page{padding:26px 20px 24px}
+.res-screen .stud{position:absolute;width:17px;height:17px;z-index:6;background:radial-gradient(circle at 40% 34%,#FFF3C4,#E6C255 48%,#9A7418);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:drop-shadow(0 1px 1px rgba(0,0,0,.45))}
+.res-screen .stud.tl{top:6px;left:6px}
+.res-screen .stud.tr{top:6px;right:6px}
+.res-screen .stud.bl{bottom:6px;left:6px}
+.res-screen .stud.br{bottom:6px;right:6px}
+.res-screen .sig-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
+.res-screen .sig-row:last-child{margin-bottom:2px}
+.res-screen .sig-cat{font:600 9.5px/1.2 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#3a352c;width:64px;text-align:right;flex:0 0 auto;padding-top:1px}
+.res-screen .sig-track{position:relative;flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(201,162,78,.3),rgba(201,162,78,.5))}
+.res-screen .sig-dot{position:absolute;top:-5px;left:calc(var(--x) - 6px);width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F7E7B0,#D8A93E 55%,#B8831F);box-shadow:0 1px 3px rgba(150,110,20,.5),0 0 0 2px #FCFCFB}
+.res-screen .sig-end{position:absolute;top:8px;font:500 8px/1 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#9a9484}
+.res-screen .sig-end.l{left:0}
+.res-screen .sig-end.r{right:0}
 
 /* piece 3: actions (light card) */
-#s-res .p3{width:300px;max-width:94%;margin:16px auto 0;opacity:0;background:#FCFCFB;border-radius:2px;box-shadow:0 12px 24px -14px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.35);padding:18px 16px 18px}
-#s-res .p3-lead{text-align:center;margin:2px 0 17px}
-#s-res .p3-lead h3{font:400 20px/1.2 'DM Serif Display',serif;color:#211E1A;margin:0 0 9px}
-#s-res .p3-lead .rule{display:block;width:42px;height:1px;margin:0 auto;background:linear-gradient(90deg,transparent,#C9A24E,transparent)}
-#s-res .savebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:3px;cursor:pointer;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;color:#1f1d19;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
-#s-res .savebtn svg{width:16px;height:16px;transform-origin:center}
-#s-res .pair{display:flex;gap:9px;margin-top:9px}
-#s-res .pair .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border:3px solid transparent;border-radius:3px;cursor:pointer;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#F3E3A6,#C89A2C) border-box;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px #9aa1a7}
-#s-res .pair .t svg{width:22px;height:22px;stroke:#8a6d20;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-#s-res .pair .t span{font:600 13px/1 'Jost',sans-serif;color:#2f2a22}
-#s-res .act{cursor:pointer;margin-top:18px}
-#s-res .actrow{display:flex;align-items:flex-end;gap:12px;padding:0 4px 3px;text-align:left}
-#s-res .chip{width:44px;height:44px;border-radius:10px;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
-#s-res .chip svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-#s-res .chip.dark{background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.45);box-shadow:0 3px 7px -4px rgba(0,0,0,.6),inset 0 1px 0 rgba(233,196,110,.15)}
-#s-res .chip.dark svg{stroke:#E9C46A}
-#s-res .act .tx{flex:1;min-width:0}
-#s-res .act .tt-row{display:flex;align-items:center;gap:7px}
-#s-res .act .tt{font:600 16px/1.1 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
-#s-res .act .ar{font-size:13px}
-#s-res .act .ss{font:400 12px/1.4 'Jost',sans-serif;color:#453f37;margin-top:3px}
-#s-res .shelf{height:6px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 7px 11px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
-#s-res .brk-row{display:flex;justify-content:space-between;padding:0 7px}
-#s-res .brk{width:12px;height:9px}
-#s-res .brk.l{clip-path:polygon(0 0,100% 0,0 100%);background:linear-gradient(135deg,#eef1f3,#90979d);box-shadow:-1px 1px 2px rgba(0,0,0,.28)}
-#s-res .brk.r{clip-path:polygon(0 0,100% 0,100% 100%);background:linear-gradient(225deg,#eef1f3,#90979d);box-shadow:1px 1px 2px rgba(0,0,0,.28)}
-#s-res [data-shelf]{transition:transform .2s cubic-bezier(.34,1.56,.64,1),filter .18s ease;-webkit-tap-highlight-color:transparent}
-#s-res [data-shelf]:hover{transform:translateY(-3px);filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
-#s-res [data-shelf]:active{transform:scale(.94);filter:brightness(.9)}
-#s-res .hero{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin:14px 0;border:5px solid transparent;border-radius:4px;cursor:pointer;background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519) border-box;color:#F1DDA0;font:700 14px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:15px 16px;box-shadow:0 14px 26px -12px rgba(0,0,0,.55)}
-#s-res .hero .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rvShim 3s ease-in-out infinite;pointer-events:none}
-#s-res .hero svg{width:18px;height:18px;position:relative;stroke:#F1DDA0;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-#s-res .hero .lbl{position:relative;white-space:nowrap;display:flex;align-items:center}
-#s-res .keep{margin-top:16px;padding:18px 15px 16px;text-align:center;border:1px solid rgba(201,162,78,.5);border-radius:3px;background:#fff}
-#s-res .keep h4{font:400 20px/1.15 'DM Serif Display',serif;color:#1f1d19;margin:0 0 5px}
-#s-res .keep p{font:400 11px/1.5 'Jost',sans-serif;color:#6b655a;margin:0 auto 12px}
-#s-res .kin{display:block;width:100%;margin:0 auto 8px;border:1.5px solid #e4dcc6;border-radius:3px;padding:11px 14px;font:400 14px/1 'Jost',sans-serif;color:#211E1A;background:#fff;text-align:center}
-#s-res .kin:focus{outline:none;border-color:#C8A060}
-#s-res .kin::placeholder{color:#a49e8f}
-#s-res .kbtn{width:100%;border:none;border-radius:3px;padding:12px;cursor:pointer;background:linear-gradient(180deg,#33302A,#201D19);color:#F1DDA0;font:700 12px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
-#s-res .keep-msg{font:500 12px/1.4 'Jost',sans-serif;color:#B08830;margin-top:9px;min-height:0}
-#s-res .priv{font:400 11px/1.4 'Jost',sans-serif;color:#8a8578;margin-top:9px}
-#s-res .priv u{cursor:pointer}
-#s-res .retake-wrap{text-align:center;margin-top:16px}
-#s-res .retake{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;padding:9px 16px;background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.5);box-shadow:0 5px 12px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(233,196,110,.16);border-radius:2px;font:600 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:#E9C46A;cursor:pointer;text-decoration:none;margin:0}
-#s-res .retake svg{width:12px;height:12px;stroke:#E9C46A;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-#s-res .foot{margin-top:16px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid #efece4}
-#s-res .foot span.lnk{font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2A2724;cursor:pointer}
-#s-res .foot .st{color:#C8971E;font-size:12px;line-height:1}
+.res-screen .p3{width:300px;max-width:94%;margin:16px auto 0;opacity:0;background:#FCFCFB;border-radius:2px;box-shadow:0 12px 24px -14px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.35);padding:18px 16px 18px}
+.res-screen .p3-lead{text-align:center;margin:2px 0 17px}
+.res-screen .p3-lead h3{font:400 20px/1.2 'DM Serif Display',serif;color:#211E1A;margin:0 0 9px}
+.res-screen .p3-lead .rule{display:block;width:42px;height:1px;margin:0 auto;background:linear-gradient(90deg,transparent,#C9A24E,transparent)}
+.res-screen .savebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:3px;cursor:pointer;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;color:#1f1d19;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.res-screen .savebtn svg{width:16px;height:16px;transform-origin:center}
+.res-screen .pair{display:flex;gap:9px;margin-top:9px}
+.res-screen .pair .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border:3px solid transparent;border-radius:3px;cursor:pointer;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#F3E3A6,#C89A2C) border-box;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px #9aa1a7}
+.res-screen .pair .t svg{width:22px;height:22px;stroke:#8a6d20;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.res-screen .pair .t span{font:600 13px/1 'Jost',sans-serif;color:#2f2a22}
+.res-screen .act{cursor:pointer;margin-top:18px}
+.res-screen .actrow{display:flex;align-items:flex-end;gap:12px;padding:0 4px 3px;text-align:left}
+.res-screen .chip{width:44px;height:44px;border-radius:10px;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+.res-screen .chip svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.res-screen .chip.dark{background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.45);box-shadow:0 3px 7px -4px rgba(0,0,0,.6),inset 0 1px 0 rgba(233,196,110,.15)}
+.res-screen .chip.dark svg{stroke:#E9C46A}
+.res-screen .act .tx{flex:1;min-width:0}
+.res-screen .act .tt-row{display:flex;align-items:center;gap:7px}
+.res-screen .act .tt{font:600 16px/1.1 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
+.res-screen .act .ar{font-size:13px}
+.res-screen .act .ss{font:400 12px/1.4 'Jost',sans-serif;color:#453f37;margin-top:3px}
+.res-screen .shelf{height:6px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 7px 11px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
+.res-screen .brk-row{display:flex;justify-content:space-between;padding:0 7px}
+.res-screen .brk{width:12px;height:9px}
+.res-screen .brk.l{clip-path:polygon(0 0,100% 0,0 100%);background:linear-gradient(135deg,#eef1f3,#90979d);box-shadow:-1px 1px 2px rgba(0,0,0,.28)}
+.res-screen .brk.r{clip-path:polygon(0 0,100% 0,100% 100%);background:linear-gradient(225deg,#eef1f3,#90979d);box-shadow:1px 1px 2px rgba(0,0,0,.28)}
+.res-screen [data-shelf]{transition:transform .2s cubic-bezier(.34,1.56,.64,1),filter .18s ease;-webkit-tap-highlight-color:transparent}
+.res-screen [data-shelf]:hover{transform:translateY(-3px);filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
+.res-screen [data-shelf]:active{transform:scale(.94);filter:brightness(.9)}
+.res-screen .hero{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin:14px 0;border:5px solid transparent;border-radius:4px;cursor:pointer;background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519) border-box;color:#F1DDA0;font:700 14px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:15px 16px;box-shadow:0 14px 26px -12px rgba(0,0,0,.55)}
+.res-screen .hero .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rvShim 3s ease-in-out infinite;pointer-events:none}
+.res-screen .hero svg{width:18px;height:18px;position:relative;stroke:#F1DDA0;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.res-screen .hero .lbl{position:relative;white-space:nowrap;display:flex;align-items:center}
+.res-screen .keep{margin-top:16px;padding:18px 15px 16px;text-align:center;border:1px solid rgba(201,162,78,.5);border-radius:3px;background:#fff}
+.res-screen .keep h4{font:400 20px/1.15 'DM Serif Display',serif;color:#1f1d19;margin:0 0 5px}
+.res-screen .keep p{font:400 11px/1.5 'Jost',sans-serif;color:#6b655a;margin:0 auto 12px}
+.res-screen .kin{display:block;width:100%;margin:0 auto 8px;border:1.5px solid #e4dcc6;border-radius:3px;padding:11px 14px;font:400 14px/1 'Jost',sans-serif;color:#211E1A;background:#fff;text-align:center}
+.res-screen .kin:focus{outline:none;border-color:#C8A060}
+.res-screen .kin::placeholder{color:#a49e8f}
+.res-screen .kbtn{width:100%;border:none;border-radius:3px;padding:12px;cursor:pointer;background:linear-gradient(180deg,#33302A,#201D19);color:#F1DDA0;font:700 12px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.res-screen .keep-msg{font:500 12px/1.4 'Jost',sans-serif;color:#B08830;margin-top:9px;min-height:0}
+.res-screen .priv{font:400 11px/1.4 'Jost',sans-serif;color:#8a8578;margin-top:9px}
+.res-screen .priv u{cursor:pointer}
+.res-screen .retake-wrap{text-align:center;margin-top:16px}
+.res-screen .retake{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;padding:9px 16px;background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.5);box-shadow:0 5px 12px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(233,196,110,.16);border-radius:2px;font:600 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:#E9C46A;cursor:pointer;text-decoration:none;margin:0}
+.res-screen .retake svg{width:12px;height:12px;stroke:#E9C46A;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.res-screen .foot{margin-top:16px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid #efece4}
+.res-screen .foot span.lnk{font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2A2724;cursor:pointer}
+.res-screen .foot .st{color:#C8971E;font-size:12px;line-height:1}
 
 /* the inline "Shop your style" results keep the existing .shop-* look on a light card */
-#s-res .shop-section{width:300px;max-width:94%;margin:16px auto 0;background:#FCFCFB;border-radius:2px;box-shadow:0 12px 24px -14px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.35);padding:18px 16px}
+.res-screen .shop-section{width:300px;max-width:94%;margin:16px auto 0;background:#FCFCFB;border-radius:2px;box-shadow:0 12px 24px -14px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.35);padding:18px 16px}
 
 /* beveled chrome mirror doors (reveal overlay) */
-#s-res .doors{position:fixed;inset:0;overflow:hidden;z-index:60;perspective:1400px;pointer-events:none}
-#s-res .door{position:absolute;top:0;bottom:0;width:50%;backface-visibility:hidden;background:linear-gradient(125deg,#e4eaee 0%,#f6f9fa 18%,#cdd6db 38%,#eef3f5 52%,#c2ccd2 70%,#e0e6ea 100%);box-shadow:inset 0 0 0 4px #cdd2d6,inset 0 0 0 6px rgba(110,116,122,.5),inset 0 0 0 7px rgba(201,162,78,.3)}
-#s-res .door.l{left:0;transform-origin:left center}
-#s-res .door.r{right:0;transform-origin:right center}
-#s-res .door .gl{position:absolute;inset:0;background:linear-gradient(122deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%)}
-#s-res .door .dstar{position:absolute;top:50%;transform:translateY(-50%);width:58px;height:58px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3));z-index:4}
-#s-res .door.l .dstar{right:12px}
-#s-res .door.r .dstar{left:12px}
-#s-res .door .dstar svg{transform-origin:50% 50%}
+.res-screen .doors{position:fixed;inset:0;overflow:hidden;z-index:60;perspective:1400px;pointer-events:none}
+.res-screen .door{position:absolute;top:0;bottom:0;width:50%;backface-visibility:hidden;background:linear-gradient(125deg,#e4eaee 0%,#f6f9fa 18%,#cdd6db 38%,#eef3f5 52%,#c2ccd2 70%,#e0e6ea 100%);box-shadow:inset 0 0 0 4px #cdd2d6,inset 0 0 0 6px rgba(110,116,122,.5),inset 0 0 0 7px rgba(201,162,78,.3)}
+.res-screen .door.l{left:0;transform-origin:left center}
+.res-screen .door.r{right:0;transform-origin:right center}
+.res-screen .door .gl{position:absolute;inset:0;background:linear-gradient(122deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%)}
+.res-screen .door .dstar{position:absolute;top:50%;transform:translateY(-50%);width:58px;height:58px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3));z-index:4}
+.res-screen .door.l .dstar{right:12px}
+.res-screen .door.r .dstar{left:12px}
+.res-screen .door .dstar svg{transform-origin:50% 50%}
 
 /* reveal state machine (classes toggled in JS) */
-#s-res.rv-compose .dstar svg,#s-res.rv-open .dstar svg{animation:rvStarLoop 1.15s linear infinite}
-#s-res.rv-compose .door.l .dstar svg,#s-res.rv-open .door.l .dstar svg{animation-name:rvStarLoopL}
-#s-res.rv-open .door.l{animation:rvDoorL 1.5s cubic-bezier(.5,.04,.23,1) .12s both}
-#s-res.rv-open .door.r{animation:rvDoorR 1.5s cubic-bezier(.5,.04,.23,1) .12s both}
-#s-res.rv-open .doors{animation:rvFade 1.9s ease .12s both}
-#s-res.rv-open .spot{animation:rvSpot 2.1s ease .2s both}
-#s-res.rv-open .p1{animation:rvRise .7s ease 1.15s both}
-#s-res.rv-open .p2{animation:rvRise .7s ease 1.32s both}
-#s-res.rv-open .p3{animation:rvRise .7s ease 1.5s both}
-#s-res.rv-open .shop-section{animation:rvRise .7s ease 1.6s both}
-#s-res.rv-open .sig-dot{animation:sigPlot .75s cubic-bezier(.34,1.28,.5,1) both}
-#s-res.rv-open .savebtn svg{animation:heartBeat 1s ease 2.5s 1 both}
+.res-screen.rv-compose .dstar svg,.res-screen.rv-open .dstar svg{animation:rvStarLoop 1.15s linear infinite}
+.res-screen.rv-compose .door.l .dstar svg,.res-screen.rv-open .door.l .dstar svg{animation-name:rvStarLoopL}
+.res-screen.rv-open .door.l{animation:rvDoorL 1.5s cubic-bezier(.5,.04,.23,1) .12s both}
+.res-screen.rv-open .door.r{animation:rvDoorR 1.5s cubic-bezier(.5,.04,.23,1) .12s both}
+.res-screen.rv-open .doors{animation:rvFade 1.9s ease .12s both}
+.res-screen.rv-open .spot{animation:rvSpot 2.1s ease .2s both}
+.res-screen.rv-open .p1{animation:rvRise .7s ease 1.15s both}
+.res-screen.rv-open .p2{animation:rvRise .7s ease 1.32s both}
+.res-screen.rv-open .p3{animation:rvRise .7s ease 1.5s both}
+.res-screen.rv-open .shop-section{animation:rvRise .7s ease 1.6s both}
+.res-screen.rv-open .sig-dot{animation:sigPlot .75s cubic-bezier(.34,1.28,.5,1) both}
+.res-screen.rv-open .savebtn svg{animation:heartBeat 1s ease 2.5s 1 both}
 /* terminal static state — no animations, so returning to the screen never replays */
-#s-res.rv-done .doors{display:none}
-#s-res.rv-done .p1,#s-res.rv-done .p2,#s-res.rv-done .p3,#s-res.rv-done .shop-section{opacity:1}
-#s-res.rv-done .spot{opacity:.62}
+.res-screen.rv-done .doors{display:none}
+.res-screen.rv-done .p1,.res-screen.rv-done .p2,.res-screen.rv-done .p3,.res-screen.rv-done .shop-section{opacity:1}
+.res-screen.rv-done .spot{opacity:.62}
 
 @keyframes rvRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes rvSweep{0%{transform:translateX(-170%) skewX(-15deg);opacity:0}18%{opacity:.5}70%{opacity:.2}100%{transform:translateX(320%) skewX(-15deg);opacity:0}}
@@ -699,11 +702,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 @keyframes heartBeat{0%,100%{transform:scale(1)}28%{transform:scale(1.28)}45%{transform:scale(.94)}62%{transform:scale(1.14)}80%{transform:scale(1)}}
 
 @media (prefers-reduced-motion: reduce){
-  #s-res .doors{display:none!important}
-  #s-res .p1,#s-res .p2,#s-res .p3,#s-res .shop-section{opacity:1!important;animation:none!important;transform:none!important}
-  #s-res .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
-  #s-res .spot{animation:none!important;opacity:.62}
-  #s-res .sweep,#s-res .rv-dust i,#s-res .hero .shim,#s-res .savebtn svg,#s-res .dstar svg{animation:none!important}
+  .res-screen .doors{display:none!important}
+  .res-screen .p1,.res-screen .p2,.res-screen .p3,.res-screen .shop-section{opacity:1!important;animation:none!important;transform:none!important}
+  .res-screen .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
+  .res-screen .spot{animation:none!important;opacity:.62}
+  .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
 }
 </style>
 </head>
@@ -895,7 +898,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   </div>
 </div>
 
-<div class="scr" id="s-res">
+<div class="scr res-screen" id="s-res">
   <div class="top-back-wrap" id="resBackWrap" style="display:none"><button class="top-back" onclick="resBack()">&larr; Back</button></div>
   <span class="rv-dust"><i class="du1"></i><i class="du2"></i><i class="du3"></i></span>
   <span class="spot"></span>
@@ -1024,57 +1027,107 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   </div>
 </div>
 
-<div class="scr" id="s-photo-res">
+<div class="scr res-screen" id="s-photo-res">
   <div class="top-back-wrap"><button class="top-back" onclick="showBack(photoPrevScreen)">&larr; Back</button></div>
-  <div class="res-hdr">
-    <div class="res-name" id="prn"></div>
-  </div>
-  <div class="flav" style="margin-top:0.5rem"><div class="flav-lbl">This outfit has notes of</div><div class="flav-tags" id="pft"></div></div>
-  <div class="res-para" id="prp"></div>
-  <div class="fp"><div class="fp-lbl">Outfit style signature</div><div id="pChart"></div></div>
+  <span class="rv-dust"><i class="du1"></i><i class="du2"></i><i class="du3"></i></span>
+  <span class="spot"></span>
 
-  <div class="save-pin-wrap"><button class="save-pin" onclick="openSaveSheetManual()">♡ <span>Save my results</span></button></div>
+  <div class="stack">
 
-  <div class="whatsnext">
-    <div class="email-divider"></div>
-    <div class="whatsnext-title">What would you like to do?</div>
-    <div class="whatsnext-grid">
-      <button class="act-btn act-primary" onclick="genOutfits('photo')" id="shopBtnPhoto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 8h13l-1 11.5h-11z"/><path d="M9 8V6.2a3 3 0 0 1 6 0V8"/></svg>Shop this style</button>
-      <button class="act-btn act-2" onclick="openChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>Ask your stylist</button>
-      <button class="act-btn act-2" onclick="showPhoto()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3.2"/></svg>Analyze another outfit</button>
-      <button class="act-btn act-2" onclick="openPrefs()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.4" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="2.4" fill="currentColor" stroke="none"/></svg>Refine your preferences</button>
+    <!-- PIECE 1: outfit analysis clipboard -->
+    <div class="p1"><div class="p1cshadow"></div>
+      <div class="board"><span class="lacq"></span><span class="sweep"></span>
+        <div class="clamp"><span class="brush"></span><span class="press"></span><span class="rivet l"></span><span class="rivet r"></span><span class="lip"></span></div>
+        <div class="page">
+          <img class="logo" src="logo.png" alt="Style Star"/>
+          <div class="eng pr">
+            <div class="eng-row"><span class="eng-rule l"></span><span class="eng-lbl">Your Outfit Analysis</span><span class="eng-rule r"></span></div>
+          </div>
+          <!-- DYNAMIC: title → #prn -->
+          <div class="nm" id="prn"></div>
+          <div class="noteslbl">This outfit has notes of</div>
+          <!-- DYNAMIC: notes → #pft (inline gold-dot separators) -->
+          <div class="notes" id="pft"></div>
+          <!-- DYNAMIC: paragraph → #prp -->
+          <p class="para" id="prp"></p>
+          <!-- Fallback action (e.g. "Share a full outfit photo" / "Try again") when there's no signature -->
+          <div class="p-alt" id="pAltAction"></div>
+        </div>
+      </div>
     </div>
-    <div class="act-pair">
-      <button class="act-btn act-2" onclick="showDream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Style Star Edit</button>
-      <button class="act-btn act-2" onclick="showShop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg>Shop the Mall</button>
+
+    <!-- PIECE 2: outfit style signature (12 spectra) → #pChart built by buildPhotoChart() -->
+    <div class="p2" id="pSigBoard">
+      <div class="board"><span class="lacq"></span><span class="sweep"></span>
+        <div class="page">
+          <span class="stud tl"></span><span class="stud tr"></span><span class="stud bl"></span><span class="stud br"></span>
+          <div class="eng si">
+            <div class="eng-row"><span class="eng-rule l"></span><span class="eng-lbl">Outfit Style Signature</span><span class="eng-rule r"></span></div>
+          </div>
+          <div id="pChart"></div>
+        </div>
+      </div>
     </div>
-    <div class="act-pair" style="margin-top:10px">
-      <button class="act-btn act-2" onclick="saveStyleCard('photo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3.5" width="18" height="17" rx="2.5"/><circle cx="12" cy="13" r="3.4"/><path d="M3 16.5l4-3.8 3 2.8"/></svg>View Style Card</button>
-      <button class="act-btn act-2" onclick="shareStyleCard('photo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><polyline points="16 7 12 3 8 7"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Share</button>
+
+    <!-- PIECE 3: actions -->
+    <div class="p3">
+      <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
+      <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
+        <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my results</button>
+      <div class="pair">
+        <div class="t" onclick="saveStyleCard('photo')"><svg viewBox="0 0 24 24"><rect x="3" y="3.5" width="18" height="17" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M3 16.5l4-3.6 3 2.6"/></svg><span>View Style Card</span></div>
+        <div class="t" onclick="shareStyleCard('photo')"><svg viewBox="0 0 24 24"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><polyline points="16 7 12 3 8 7"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span>Share</span></div>
+      </div>
+      <div class="act" data-shelf onclick="openPrefs()">
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <button class="hero" onclick="genOutfits('photo')"><span class="shim"></span><span class="lbl">Shop this style&nbsp;<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;margin-left:1px"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></button>
+      <div class="act" data-shelf onclick="showPhoto()">
+        <div class="actrow"><span class="chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><span class="ar" style="color:#E01B1B">&rarr;</span></div><div class="ss">Upload a photo for feedback</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <div class="act" data-shelf onclick="openChat()">
+        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><span class="ar" style="color:#EC4899">&rarr;</span></div><div class="ss">Expert guidance, anytime</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <div class="act" data-shelf onclick="showDream()">
+        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Style Star Edit</span><span class="ar" style="color:#0FA6B6">&rarr;</span></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <div class="act" data-shelf onclick="showShop()">
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Browse curated stores</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+
+      <!-- Inline "Shop this style" AI picks render here (genOutfits) -->
+      <div class="shop-section" id="shopSectionPhoto" style="display:none">
+        <div class="shop-title">Shop this style</div>
+        <div class="shop-sub">Shopping ideas inspired by this outfit</div>
+        <div id="shopContentPhoto"></div>
+      </div>
+
+      <!-- Keep-your-portrait save block → existing save flow (_persistSave) -->
+      <div class="keep" id="resKeepPhoto">
+        <h4>Keep your results</h4>
+        <p>Save it so it's waiting for you on any device.</p>
+        <input class="kin" id="keepNamePhoto" type="text" placeholder="Your first name (optional)"/>
+        <input class="kin" id="keepEmailPhoto" type="email" placeholder="Enter your email"/>
+        <button class="kbtn" onclick="saveResKeep('keepNamePhoto','keepEmailPhoto','keepMsgPhoto')">Save my results</button>
+        <div class="keep-msg" id="keepMsgPhoto"></div>
+        <div class="priv">We'll never share your email. <u onclick="showPrivacy()">Privacy Policy</u></div>
+      </div>
+
+      <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><svg viewBox="0 0 24 24"><path d="M20 11A8 8 0 1 0 18.5 15.8"/><path d="M20 5v5h-5"/></svg>Retake the Quiz</button></div>
+      <div class="foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
     </div>
   </div>
 
-  <div class="shop-section" id="shopSectionPhoto" style="display:none">
-    <div class="shop-title">Shop this style</div>
-    <div class="shop-sub">Shopping ideas inspired by this outfit</div>
-    <div id="shopContentPhoto"></div>
+  <!-- REVEAL OVERLAY — beveled chrome mirror doors that swing open on the reveal -->
+  <div class="doors">
+    <div class="door l"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarLp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarLp)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg></span></div>
+    <div class="door r"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarRp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarRp)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg></span></div>
   </div>
-
-  <div class="stay-section" id="staySectionPhoto">
-    <div class="email-divider"></div>
-    <div class="stay-title">Save your results</div>
-    <div class="stay-sub">Enter your email to save your style portrait, preferences, and get styling updates</div>
-    <div class="stay-form" id="stayFormPhoto">
-      <input type="text" class="stay-input" id="stayNamePhoto" placeholder="Your first name (optional)">
-      <input type="email" class="stay-input" id="stayInputPhoto" placeholder="Enter your email">
-      <button class="btn-p" style="margin-top:0;max-width:280px" onclick="saveUserDataPhoto()">Save my results</button>
-    </div>
-    <div class="stay-success" id="staySuccessPhoto" style="display:none">✨ Your results are saved! Access them anytime with your email.</div>
-    <div style="font-size:12.5px;color:#6e6e6e;margin-top:4px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
-    <div class="stay-skip" onclick="document.getElementById('staySectionPhoto').style.display='none'">Skip</div>
-  </div>
-
-  <button class="btn-outline" onclick="showBack(photoPrevScreen)">Back</button>
 </div>
 <div class="scr" id="s-pref">
   <div class="top-back-wrap"><button class="top-back" onclick="showBack(prefReturnScreen)">&larr; Back</button></div>
@@ -1422,7 +1475,7 @@ function show(id,skipHistory){
   var onWel=(id==='s-wel');
   // Screens with their own built-in footer + logo hide the shared global chrome:
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
-  var ownChrome=(onWel||id==='s-wb'||id==='s-res');
+  var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res');
   var gf=document.querySelector('.quiz-footer');
   if(gf)gf.style.display=ownChrome?'none':'';
   if(id==='s-wb')updateWbScreen();
@@ -1486,21 +1539,22 @@ function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';
 async function genResult(){_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-// Put the results screen into its "loading" state: closed mirror doors with the
+// Put a results screen into its "loading" state: closed mirror doors with the
 // two gold stars spinning, boards hidden. Used while the /style-ai request is in flight.
-function _resShowCompose(){
-  var s=document.getElementById('s-res');
+function _resShowCompose(id){
+  id=id||'s-res';
+  var s=document.getElementById(id);
   s.classList.remove('rv-open','rv-done');
-  show('s-res');
+  show(id);
   document.getElementById('pw').style.display='none';
   void s.offsetWidth;
   s.classList.add('rv-compose');
 }
 // Play the reveal: doors swing open, boards rise. `fromCompose` means the closed
-// doors were already showing (quiz path) so we open immediately; otherwise (instant
+// doors were already showing (loading path) so we open immediately; otherwise (instant
 // callers like Welcome Back / restore) hold the closed doors a short beat first.
-function _playResReveal(fromCompose){
-  var s=document.getElementById('s-res');
+function _playResReveal(fromCompose,id){
+  var s=document.getElementById(id||'s-res');
   function open(){
     s.classList.remove('rv-compose');
     void s.offsetWidth;
@@ -1531,10 +1585,11 @@ function showResult(txt,top3){
   scheduleSaveSheet();
 }
 // "Keep your portrait" inline save block → shared hardened save core.
-async function saveResKeep(){
-  var email=document.getElementById('keepEmail').value.trim();
-  var nameVal=document.getElementById('keepName').value.trim();
-  var msg=document.getElementById('keepMsg');
+async function saveResKeep(nameId,emailId,msgId){
+  nameId=nameId||'keepName';emailId=emailId||'keepEmail';msgId=msgId||'keepMsg';
+  var email=(document.getElementById(emailId).value||'').trim();
+  var nameVal=(document.getElementById(nameId).value||'').trim();
+  var msg=document.getElementById(msgId);
   if(!email||!email.includes('@')){if(msg){msg.style.color='#c0392b';msg.textContent='Please enter a valid email so we can save your results.'}return}
   if(msg){msg.style.color='#777';msg.textContent='Saving your results…'}
   await _persistSave(email,nameVal);
@@ -1576,8 +1631,8 @@ function onPhotoSelect(input){
 function buildPhotoChart(vals){
   const c=document.getElementById('pChart');c.innerHTML='';
   questions.forEach((q,i)=>{
-    const pct=((vals[i]-1)/10)*100;
-    c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`;
+    const pct=((vals[i]-1)/10)*100;const delay=(1.7+i*0.05).toFixed(2);
+    c.innerHTML+=`<div class="sig-row"><div class="sig-cat">${q.cat}</div><div class="sig-track"><span class="sig-dot" style="--x:${pct}%;animation-delay:${delay}s"></span><span class="sig-end l">${q.left}</span><span class="sig-end r">${q.right}</span></div></div>`;
   });
 }
 function getPhotoArch(vals){
@@ -1587,12 +1642,18 @@ function getPhotoArch(vals){
 }
 async function analyzePhoto(){
   if(!photoData)return;
-  show('s-photo-load');
+  _resShowCompose('s-photo-res');
   await runPhotoAnalysis();
 }
 async function retryPhoto(){
-  show('s-photo-load');
+  _resShowCompose('s-photo-res');
   await runPhotoAnalysis();
+}
+// Toggle the outfit signature board (hidden when there's no analysis to show).
+function _photoSig(on){
+  var b=document.getElementById('pSigBoard');if(b)b.style.display=on?'':'none';
+  // The "notes of" label only makes sense when there are archetype notes.
+  var nl=document.querySelector('#s-photo-res .noteslbl');if(nl)nl.style.display=on?'':'none';
 }
 async function runPhotoAnalysis(){
   const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} has uploaded a photo for style analysis.
@@ -1635,11 +1696,13 @@ Respond with ONLY valid JSON in this exact format, no other text:
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
     if(parsed.partial){
-      show('s-photo-res');
       document.getElementById('prn').textContent=userName&&userName!=="You"?userName+", let's see more!":"Let's see more!";
       document.getElementById('prp').textContent=parsed.portrait;
       document.getElementById('pft').innerHTML='';
-      document.getElementById('pChart').innerHTML='<div style="text-align:center;margin-top:1rem"><button class="btn-pink" onclick="showPhoto()" style="max-width:260px">Share a full outfit photo</button></div>';
+      _photoSig(false);
+      document.getElementById('pChart').innerHTML='';
+      document.getElementById('pAltAction').innerHTML='<button onclick="showPhoto()">Share a full outfit photo</button>';
+      _playResReveal(true,'s-photo-res');
       return;
     }
     const vals=parsed.sliders;
@@ -1647,20 +1710,24 @@ Respond with ONLY valid JSON in this exact format, no other text:
     const top3=getPhotoArch(vals);
     lastPhotoSliders=vals;
     lastPhotoArchNames=top3.map(a=>a.n);
-    show('s-photo-res');
     document.getElementById('prn').textContent=userName&&userName!=="You"?userName+"'s outfit analysis":"Your outfit analysis";
     document.getElementById('prp').textContent=portrait;
-    const pft=document.getElementById('pft');pft.innerHTML='';
-    top3.forEach(a=>{pft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});
+    document.getElementById('pft').innerHTML=top3.map(a=>_esc(a.n)).join(' <b>&middot;</b> ');
+    document.getElementById('pAltAction').innerHTML='';
+    _photoSig(true);
     buildPhotoChart(vals);
-    if(emailDone){document.getElementById('staySectionPhoto').style.display='none';hideSavePins()}
+    if(emailDone){['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display='none'});hideSavePins()}
+    else{['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display=''});var km=document.getElementById('keepMsgPhoto');if(km)km.textContent=''}
+    _playResReveal(true,'s-photo-res');
     scheduleSaveSheet();
   }catch(e){
-    show('s-photo-res');
     document.getElementById('prn').textContent="Let's try that again";
     document.getElementById('prp').textContent="The analysis took a little too long this time. This happens occasionally. Just tap the button below to try again with the same photo.";
     document.getElementById('pft').innerHTML='';
-    document.getElementById('pChart').innerHTML='<div style="text-align:center;margin-top:1rem"><button class="btn-pink" onclick="retryPhoto()" style="max-width:260px">Try again</button></div>';
+    _photoSig(false);
+    document.getElementById('pChart').innerHTML='';
+    document.getElementById('pAltAction').innerHTML='<button onclick="retryPhoto()">Try again</button>';
+    _playResReveal(true,'s-photo-res');
   }
 }
 const storeUrls={
@@ -2073,8 +2140,7 @@ async function _persistSave(email,nameVal){
   try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
   var s1=document.getElementById('staySection');if(s1)s1.style.display='none';
   var s2=document.getElementById('staySectionPhoto');if(s2)s2.style.display='none';
-  var rk=document.getElementById('resKeep');if(rk)rk.style.display='none';
-  var rb=document.getElementById('resSaveBtn');if(rb)rb.style.display='none';
+  ['resKeep','resSaveBtn','resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display='none'});
   hideSavePins();
   _clearSheetTriggers();
 }
