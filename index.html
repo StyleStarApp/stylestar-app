@@ -381,7 +381,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* the star pendant hangs in front of the greeting mirror; it is the reveal-star merge target.
    Lifted up so the chrome bracket posts meet the gold rail (no dark gap). */
 #s-wb .wb-pend{position:relative;width:100%;height:52px;z-index:3;margin-top:-13px}
-#s-wb .hm-star-inner{transform:none}
+#s-wb .hm-star-inner{transform:scale(1.22);transform-origin:top center}
 /* silver mirror frames (greeting on top, actions below) */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid transparent;
   border-image:linear-gradient(135deg,#FFFFFF 0%,#C6CACE 18%,#8C9298 38%,#F2F4F6 52%,#9AA0A6 70%,#DFE2E5 84%,#FFFFFF 100%) 1;
@@ -399,7 +399,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-bulbs{position:absolute;top:16px;bottom:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;z-index:7}
 #s-wb .wb-bulbs.l{left:11px;animation:wbBulbOn 1.2s ease-out .15s both}
 #s-wb .wb-bulbs.r{right:11px;animation:wbBulbOn 1.2s ease-out .3s both}
-#s-wb .wb-bulb{width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#FFFDF4,#FFEBB4 46%,#F0CB77 78%,#CF9F3C);box-shadow:0 0 10px 2px rgba(255,222,140,.75),0 0 3px rgba(255,236,182,.9),inset 0 -1px 2px rgba(150,110,30,.35);animation:wbTwinkle 3s ease-in-out infinite}
+#s-wb .wb-bulb{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFF4C6,#FFD264 40%,#EDA52B 70%,#B4741A);box-shadow:0 0 12px 3px rgba(240,180,60,.9),0 0 4px rgba(255,220,140,.95),0 0 0 1px rgba(150,100,20,.45),inset 0 -1.5px 2px rgba(135,88,12,.55);animation:wbTwinkle 2.8s ease-in-out infinite}
 /* each bulb twinkles a little out of sync for a soft, lively vanity glow */
 #s-wb .wb-bulb:nth-child(2){animation-delay:.6s}
 #s-wb .wb-bulb:nth-child(3){animation-delay:1.4s}
@@ -425,7 +425,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-chip.dark{background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.45);box-shadow:0 3px 7px -4px rgba(0,0,0,.6),inset 0 1px 0 rgba(233,196,110,.15)}
 #s-wb .wb-lbl{flex:1;text-align:left;display:flex;align-items:center;gap:6px;min-width:0}
 #s-wb .wb-lbl b{font:600 18px/1.05 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
-#s-wb .wb-arr{font-size:18px;font-weight:500}
+#s-wb .wb-arr{width:20px;height:20px;flex:0 0 auto}
 #s-wb .wb-shadow{position:relative;height:0}
 #s-wb .wb-shadow i{position:absolute;left:6px;bottom:1px;width:33px;height:6px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(20,15,5,.34),rgba(20,15,5,0) 72%);filter:blur(1.5px)}
 #s-wb .wb-bar{height:5px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 6px 10px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
@@ -453,7 +453,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb [wb-lift]:active,#s-wb [wb-lift].wb-tapped{transform:translateY(-4px)}
 @keyframes wbSweep{0%{transform:translateX(-150%) skewX(-16deg);opacity:0}12%{opacity:.85}60%{opacity:.45}100%{transform:translateX(250%) skewX(-16deg);opacity:0}}
 @keyframes wbBulbOn{0%{opacity:0}30%{opacity:.5}42%{opacity:.9}52%{opacity:.35}64%{opacity:.95}100%{opacity:1}}
-@keyframes wbTwinkle{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes wbTwinkle{0%,100%{opacity:1}50%{opacity:.32}}
 @keyframes wbNew{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.18);opacity:1}}
 
 /* ===== Home entrance reveal — closet doors swing open (Design handoff) ===== */
@@ -592,27 +592,27 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <a class="hm-cta wb-cta" wb-press onclick="loadSavedAndShop()"><span class="shim"></span><span class="lbl">Shop your style&nbsp;&rarr;</span></a>
       <div class="wb-list">
         <div class="wb-item" wb-lift onclick="savedPhoto()">
-          <div class="wb-row"><span class="wb-chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px #E01B1B99"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.4" width="18" height="12.4" rx="2.6"/><path d="M8.4 7.4l1.05-1.95a1.05 1.05 0 0 1 .93-.55h3.24a1.05 1.05 0 0 1 .93.55L15.6 7.4"/><circle cx="12" cy="13.4" r="3.5"/></svg></span><span class="wb-lbl"><b>Analyze an Outfit</b><span class="wb-arr" style="color:#E01B1B">&rarr;</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px #E01B1B99"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.4" width="18" height="12.4" rx="2.6"/><path d="M8.4 7.4l1.05-1.95a1.05 1.05 0 0 1 .93-.55h3.24a1.05 1.05 0 0 1 .93.55L15.6 7.4"/><circle cx="12" cy="13.4" r="3.5"/></svg></span><span class="wb-lbl"><b>Analyze an Outfit</b><svg class="wb-arr" style="color:#E01B1B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="wbChat()">
-          <div class="wb-row"><span class="wb-chip" style="background:#EC4899;box-shadow:0 3px 7px -3px #EC489999"><span class="wb-badge count" id="wbAskBadge">0</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span class="wb-lbl"><b>Ask Your Stylist</b><span class="wb-arr" style="color:#EC4899">&rarr;</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:#EC4899;box-shadow:0 3px 7px -3px #EC489999"><span class="wb-badge count" id="wbAskBadge">0</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span class="wb-lbl"><b>Ask Your Stylist</b><svg class="wb-arr" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="showDream()">
-          <div class="wb-row"><span class="wb-chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px #0FA6B699"><span class="wb-badge tag" id="wbEditBadge">New</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.5 L12.63 13.2 L14.45 13.25 L13.0 14.4 L13.5 16.15 L12 15.1 L10.5 16.15 L11.0 14.4 L9.55 13.25 L11.37 13.2 Z" fill="#fff" stroke="none"/></svg></span><span class="wb-lbl"><b>Shop Style Star Edit</b><span class="wb-arr" style="color:#0FA6B6">&rarr;</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px #0FA6B699"><span class="wb-badge tag" id="wbEditBadge">New</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.5 L12.63 13.2 L14.45 13.25 L13.0 14.4 L13.5 16.15 L12 15.1 L10.5 16.15 L11.0 14.4 L9.55 13.25 L11.37 13.2 Z" fill="#fff" stroke="none"/></svg></span><span class="wb-lbl"><b>Shop Style Star Edit</b><svg class="wb-arr" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="loadSaved()">
-          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg></span><span class="wb-lbl"><b>See my Style Portrait</b><span class="wb-arr" style="color:#C89A2C">&rarr;</span></span></div>
+          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg></span><span class="wb-lbl"><b>See my Style Portrait</b><svg class="wb-arr" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="openPrefs()">
-          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8"/><path d="M16 8h4"/><circle cx="14" cy="8" r="2"/><path d="M4 16h4"/><path d="M12 16h8"/><circle cx="8" cy="16" r="2"/></svg></span><span class="wb-lbl"><b>Refine your Preferences</b><span class="wb-arr" style="color:#C89A2C">&rarr;</span></span></div>
+          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8"/><path d="M16 8h4"/><circle cx="14" cy="8" r="2"/><path d="M4 16h4"/><path d="M12 16h8"/><circle cx="8" cy="16" r="2"/></svg></span><span class="wb-lbl"><b>Refine your Preferences</b><svg class="wb-arr" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="showShop()">
-          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 9.5l1.1-4.5h12.6l1.1 4.5"/><path d="M5.6 9.5v9h12.8v-9"/><path d="M9.6 18.5v-4.3h4.8v4.3"/><path d="M4.6 9.5a2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0"/></svg></span><span class="wb-lbl"><b>Shop the Mall</b><span class="wb-arr" style="color:#C89A2C">&rarr;</span></span></div>
+          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 9.5l1.1-4.5h12.6l1.1 4.5"/><path d="M5.6 9.5v9h12.8v-9"/><path d="M9.6 18.5v-4.3h4.8v4.3"/><path d="M4.6 9.5a2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0"/></svg></span><span class="wb-lbl"><b>Shop the Mall</b><svg class="wb-arr" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
       </div>
