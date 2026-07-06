@@ -123,6 +123,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .fp-left,.fp-right{font-size:9px;color:#666;letter-spacing:0.04em;text-transform:uppercase;position:absolute;top:7px;font-weight:600}
 .fp-left{left:0}.fp-right{right:0}
 .retake{display:block;width:100%;text-align:center;font-size:13px;color:#555;font-weight:500;text-decoration:underline;letter-spacing:0.06em;text-transform:uppercase;margin-top:1rem;cursor:pointer;border:none;background:none}
+.top-back-wrap{text-align:right;margin:-0.25rem 0 0.35rem}
+.top-back{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:#666;cursor:pointer;padding:4px 2px;letter-spacing:0.02em}
+.top-back:hover{color:#1a1a1a}
 .wb{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.85rem;padding:0.5rem 1rem 0.5rem}
 .wb-name{font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:600;color:#D4AF37}
 .wb-msg{font-size:17px;color:#333;line-height:1.6;font-weight:500}
@@ -725,6 +728,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </div>
 
 <div class="scr" id="s-res">
+  <div class="top-back-wrap" id="resBackWrap" style="display:none"><button class="top-back" onclick="resBack()">&larr; Back</button></div>
   <div class="res-hdr">
     <div class="res-name" id="rn"></div>
   </div>
@@ -854,6 +858,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <button class="btn-outline" onclick="showBack(photoPrevScreen)">Back</button>
 </div>
 <div class="scr" id="s-pref">
+  <div class="top-back-wrap"><button class="top-back" onclick="showBack(prefReturnScreen)">&larr; Back</button></div>
   <div class="pref-progress" id="prefPips"></div>
   <div id="prefContent"></div>
   <div style="margin-top:1rem">
@@ -1264,7 +1269,7 @@ function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)})
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;c.innerHTML+=`<div class="fp-row"><div class="fp-name">${q.cat}</div><div class="fp-track"><div class="fp-dot" style="left:calc(${pct}% - 5px)"></div><div class="fp-left">${q.left}</div><div class="fp-right">${q.right}</div></div></div>`})}
 async function genResult(){show('s-load');document.getElementById('pf').style.width='100%';document.getElementById('pl').textContent='Complete';const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
-function showResult(txt,top3){quizTaken=true;show('s-res');document.getElementById('pw').style.display='none';document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none';hideSavePins()}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}scheduleSaveSheet()}
+function showResult(txt,top3){quizTaken=true;resBackScreen='';var _rbw=document.getElementById('resBackWrap');if(_rbw)_rbw.style.display='none';show('s-res');document.getElementById('pw').style.display='none';document.getElementById('rn').textContent=userName&&userName!=="You"?"This is "+userName:"Your style portrait";document.getElementById('rp').textContent=txt;const ft=document.getElementById('ft');ft.innerHTML='';top3.forEach(a=>{ft.innerHTML+=`<span class="flav-tag">${a.n}</span>`});buildChart();if(emailDone){document.getElementById('staySection').style.display='none';hideSavePins()}try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}scheduleSaveSheet()}
 
 let photoData=null,photoType="image/jpeg";
 let photoPrevScreen='s-wel';
@@ -1478,11 +1483,15 @@ let lastPhotoSliders=null,lastPhotoArchNames=[];
 
 function loadSaved(){
   try{
+    var a=document.querySelector('.scr.act');var origin=(a&&a.id)||'s-wb';
     const d=JSON.parse(localStorage.getItem('ss_data'));
     if(!d)return;
     userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;
     const top3=topArchNames.map(n=>({n:n}));
     showResult(d.portrait,top3);
+    // Offer a top-right "Back" to the menu she came from (e.g. Welcome Back).
+    resBackScreen=origin;
+    var rbw=document.getElementById('resBackWrap');if(rbw)rbw.style.display='';
   }catch(e){show('s-wel')}
 }
 function loadSavedAndShop(){
@@ -1601,6 +1610,10 @@ let chatPhotoData=null;
 let storyPrevScreen='s-wel';
 let prefStep=0;
 let prefReturnScreen='s-res';
+// Where the top-right "Back" on the Style Portrait returns to (set when she
+// opens the portrait from Welcome Back). Empty = no back button (e.g. fresh quiz).
+let resBackScreen='';
+function resBack(){showBack(resBackScreen||'s-wb')}
 let prefs={sizes:{},colorsLove:[],colorsSkip:[],neverWear:[],neverPatterns:[],neverOther:'',jewelry:'',dailyShoes:'',bagStyle:'',otherNotes:''};
 
 const prefColors=[
