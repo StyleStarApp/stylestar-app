@@ -839,3 +839,67 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   shared `.quiz-footer`; all three now match. Dropped the dead `footEdit`/`footPrivacy` toggle code.
 - ▶ Still open from the earlier design step: carry the chrome/gold/DM-Serif look further INWARD (quiz,
   results, chat, Mall, footer pages) so there's no "wow → oh" after the first inner tap.
+
+**2026-07-06 (cont. — ▶ RESULTS + PHOTO-RESULTS redesign: "reveal moment" boards — SHIPPED LIVE)**
+- Design sent a handoff (`results-handoff/`: `HANDOFF - Results.md` + `StyleStar-Results-EXACT.html`)
+  for the **Style Portrait screen (`#s-res`)** — the third screen in the app-wide glow-up after Home and
+  Welcome Back. Built it to match exactly, then carried the SAME look to the **photo/outfit results
+  (`#s-photo-res`)** so the whole results experience reads as one screen. Merged → live (PR #154).
+- **The look:** a dark, spotlit "reveal moment." The screen opens as a **closed beveled chrome mirror**
+  with two gold stars; while the portrait is composed the **stars spin** (this IS the loading state — it
+  replaced the old spinner screen on both the quiz and photo paths), then the **doors swing open** onto
+  three "boards" floating in a warm pool of light:
+  1. **Portrait clipboard** (`.p1`) — black-lacquer board held by a gold clamp; logo, engraved "YOUR
+     STYLE PORTRAIT" / "YOUR OUTFIT ANALYSIS" label, the name (italic), the archetype "notes of…"
+     (now inline, gold-dot `·` separators — was `.flav-tag` chips), and the portrait paragraph.
+  2. **Style Signature card** (`.p2`) — wider board with gold corner studs; the 12 spectra plot their
+     gold dots in (re-skinned `buildChart()`/`buildPhotoChart()` from `.fp-row` → `.sig-row`, **same 12
+     values**).
+  3. **Actions card** (`.p3`) — light card: "What would you like to do?", a gold-framed heart **Save my
+     results**, a View Style Card / Share pair, the "chrome-shelf" action rows (Refine prefs, the gold
+     **Shop your style / Shop this style** hero w/ shimmer, Analyze an outfit, Ask your stylist, Style
+     Star Edit, Shop the Mall), a **"Keep your portrait"** email save block, Retake, and the
+     Shop ★ Our Story ★ FAQ footer.
+- **Implementation notes (for whoever picks this up):**
+  - The board + reveal CSS is shared via a **`.res-screen` class** (NOT scoped to `#s-res`), and BOTH
+    `#s-res` and `#s-photo-res` carry it — so the two screens are guaranteed identical and there's one
+    copy of the CSS. Fonts (DM Serif Display / Fraunces / Jost) were already loaded.
+  - Each results screen is a **dark full-bleed panel** that breaks out of the `.inner` padding
+    (negative margins). The shared global `.hdr` header + `.quiz-footer` are **hidden on `s-res` and
+    `s-photo-res`** (each has its own logo + footer), same as Home/WB — done in `show()`.
+  - **Reveal state machine** = classes toggled in JS on the screen element: `.rv-compose` (closed doors,
+    stars looping, boards hidden — the loading state) → `.rv-open` (doors swing + fade, boards rise, sig
+    dots plot) → `.rv-done` (static terminal state; doors `display:none`). Dropping to `.rv-done` after
+    ~3.4s is what stops the reveal **replaying when you return via Back** (re-showing a screen with
+    lingering `.rv-open` animations would otherwise restart them). Honors `prefers-reduced-motion`.
+  - Helpers are generalized to a screen id: `_resShowCompose(id)` (shows the closed/loading doors),
+    `_playResReveal(fromCompose,id)` (opens), and `saveResKeep(nameId,emailId,msgId)`. The quiz path:
+    `genResult()` now calls `_resShowCompose('s-res')` instead of `show('s-load')`, then `showResult()`
+    opens. Photo path: `analyzePhoto()`/`retryPhoto()` call `_resShowCompose('s-photo-res')`, then
+    `runPhotoAnalysis()` opens. `s-load` is KEPT (still used by the `?r=` restore-token page-load path).
+  - The reveal **doors are `position:fixed; inset:0`** children of each screen (so only the active
+    screen's render), `pointer-events:none` (never block taps), distinct SVG gradient ids per screen.
+    On desktop they fill the whole window (wider than the 480px app column) — same accepted behavior as
+    the Home entrance; on a phone it's perfect.
+  - **Photo edge cases handled:** the "show me your full outfit" (`partial`) and error/timeout branches
+    **hide the signature board + the "notes of" label** (`_photoSig(false)`) and drop their button
+    ("Share a full outfit photo" / "Try again") onto the clipboard via a `#pAltAction` slot — so there's
+    never an empty signature card. Success shows the full three boards.
+  - **Save flow fully preserved.** The heart opens the existing bottom **save sheet**
+    (`openSaveSheetManual`); the "Keep your portrait/results" block reuses the hardened `_persistSave()`
+    core via `saveResKeep()`; the gentle auto-rise save sheet (`scheduleSaveSheet`) still fires; the old
+    `staySection`/`staySectionPhoto` + `save-pin` blocks were removed from these two screens (their now-
+    orphaned `saveUserData`/`saveUserDataPhoto` funcs are harmless dead code). `emailDone` hides the heart
+    + keep block.
+  - Every button re-pointed to its EXISTING handler — no functionality changed; this was design-only.
+    Top-right Back (`resBack` on `s-res`, `showBack(photoPrevScreen)` on `s-photo-res`) preserved;
+    `showBack` now scrolls to `.p3-lead` (was `.whatsnext-title`) when returning to a results screen.
+  - Verified in Chromium for BOTH screens: closed → stars spinning → doors open → boards rise → settled
+    (`rv-done`); shelves navigate; taps pass through after the reveal; Back doesn't replay; keep-save
+    validation; photo success + partial (signature hidden, button on clipboard) all correct; no JS errors.
+- **This closes most of the "▶ carry the look INWARD" TODO** — Home, Welcome Back, Style Portrait, and
+  Outfit results now all share the chrome/gold/DM-Serif world. **Still inner-page work left:** the
+  **quiz** screens, the **stylist chat**, the **Mall**, and the **footer pages** (Story/FAQ/Privacy/Edit)
+  still use the older Fraunces/DM-Sans look — bring the cues there next for full consistency.
+- The shareable **Style Card canvas** was left untouched (it's drawn separately); worth a real-device
+  glance that it still looks right after this.
