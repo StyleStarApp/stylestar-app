@@ -982,3 +982,77 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   conspicuous, NEXT TO the links** (this board qualifies; FAQ-alone would not). The **Mall** (`s-shop`) still
   has its own older disclosure — fine as-is. When affiliate links actually go live (money-path step 7),
   confirm final disclosure wording/placement with Almira/Indie Law.
+
+**2026-07-07 (cont. — ▶ SHAREABLE CARD REBORN as the "Style Constellation" + a reveal + a keepsake panel)**
+- A long, happy iteration session with Cath on the **shareable Style Card** (the image `buildCardBlob()`
+  draws on a `<canvas>`, opened from the results screen). Built from a Design handoff, then polished live on
+  her phone over many rounds. All merged → live (PRs #157–#164). This closes the old glow-up TODO "elevate
+  the Style Signature into a keepsake" — the signature now lives inside this card as a star map.
+- ✅ **Redesigned the card into the "Style Constellation"** (PR #157, from `HANDOFF - Style Card.md` /
+  `StyleStar-StyleCard-EXACT.html`). Rewrote ONLY the artwork inside `buildCardBlob()` (save/share plumbing
+  untouched). The new card is **1080×1350 (4:5)**: a **flush silver-outside / gold-inside metal frame**, a
+  **dark spotlight face**, the **style Star wordmark**, a **"{Name}'s Style Constellation"** headline
+  (falls back to "Your Style Constellation"), a gold archetype line, the first sentence of her portrait,
+  and — the centrepiece — a **diverging constellation star map**: each of the 12 spectra is a full diameter
+  through the centre with **both poles labelled**, her star plotted where she falls (1=hard left pole,
+  11=hard right pole, 6=centre), the 12 stars connected into a polygon. Airy `stylestar.app` sign-off.
+  Renamed the action **"View Style Card" → "View your Style Constellation."**
+- ✅ **Polish + device-feedback rounds** (PRs #158–#160):
+  - **Real logo** at the top via **`logo-card.png`** — a NEW committed asset: a dark-mode recolor of
+    `logo-star.png` (black wordmark → warm-white `#f1ece2`, gold star + slider preserved) so the real brand
+    mark reads on the dark face. `buildCardBlob` waits for BOTH `document.fonts.ready` AND the logo image to
+    load before drawing (has a text `style Star` fallback if the image fails).
+  - **The descriptive line**: portraits are essentially ONE long run-on sentence (em-dashes, not periods),
+    so the "first sentence" was enormous and collided with the star map. Now excerpted to the first clause
+    and **capped (~182 chars at a clause boundary) to ≤3 lines** with an ellipsis — a tidy pull-quote.
+  - **Archetype line**: dropped the "notes of" prefix; the names are separated by **gold ★ stars** (names in
+    soft gold, stars brighter gold), shrink-to-fit.
+  - **Guide lines**: the constellation's rings + spokes are now **silver and clearly visible** (were faint
+    gold); her signature polygon + dots stay gold.
+  - **Top colour**: the spotlight glow filled a short band that ended in a hard horizontal edge — now fills
+    the whole face so it **fades smoothly**.
+  - **Layout**: tightened logo→headline, **raised the whole stack** so `stylestar.app` isn't cramped by the
+    bottom labels; smaller logo to give the map room.
+- ✅ **The share/save preview screen** (`_openCardOverlay`, used by both `saveStyleCard` + `shareStyleCard` —
+  folded the two near-identical overlays into one helper): removed the awkward **"Your Style Card" title**;
+  **warm near-black backdrop with a blur** (app no longer shows through); refined **Share button** (black +
+  gold border + gold icon); added an **Instagram glyph** to the "Text it or share to Instagram" line;
+  **squared the preview corners** (border-radius 0) to match the metal frame.
+- ✅ **A reveal animation when the card opens** (Cath loved this — PRs #161–#163). Iterated:
+  foil-sweep → **she disliked the side-to-side motion** → changed to a **symmetric burst that opens from the
+  centre** → then **pure soft light (no drawn ring/circle) + 5-point sparkle stars (★, was ✦)**. Final:
+  dark card → a warm gold bloom bursts outward from the centre → the artwork blooms in → **5-point gold
+  stars twinkle** → controls fade in (~1.3s). CSS keyframes injected once (`#scRevealCss`), driven by
+  classes on `#cardPreview`; honors `prefers-reduced-motion` (skips to the finished card). **Cath adores
+  the twinkling stars — keep them.**
+- ✅ **Results screen: the card became its own keepsake panel** (PR #164 + this session's final push).
+  Replaced the old **"View your Style Constellation" / "Share"** tile pair with a single **featured entry**,
+  then, per Cath, split it into its **own business-card-shaped panel**:
+  - New **`.pcard`** board sits between the Signature (`.p2`) and the actions (`.p3`) in the results reveal.
+    It's a **clean white, softly-elevated, rounded CARD (not a gold-framed panel)** — deliberately styled to
+    look like a keepsake card — a touch **wider** than the portrait board. Holds a gold **"YOUR STYLE CARD"**
+    label, a **live thumbnail of the actual generated card**, the Fraunces title, the subtitle "A shareable
+    keepsake of your signature style", and an arrow.
+  - The **"What would you like to do?"** panel (`.p3`) got a clearer **gold frame** so it reads as a defined
+    section (deliberate contrast: card = unframed/floating, actions = framed).
+  - **Dropped the separate "Share" tile** — opening the card already leads into sharing (with the burst
+    reveal). `shareStyleCard()` is now unused/dead but harmless.
+  - The thumbnail is drawn from the REAL card via a new **`_renderCardThumb()`** called from `showResult`
+    (covers fresh quiz + returning-user via `loadSaved` + restore-token paths). Reveal wired for `.pcard`
+    (`rvRise` ~1.46s; added to `rv-done` + reduced-motion opacity:1 lists).
+- **Confirmed for Cath:** on the results screen, **"Save my results" + the email-keep prompts auto-hide once
+  she's already given her email** (`emailDone` branch in `showResult`) — already-saved visitors see no save
+  asks.
+- **Testing note (for whoever picks this up):** the app's own startup does an early `history.replaceState`
+  + reload that races Playwright `evaluate`, and `file://` canvas loads taint `toBlob`. To verify the card
+  reliably: serve the repo over **http** (localhost), extract the real `buildCardBlob`/`_openCardOverlay`
+  from the loaded page, and render in a tiny isolated harness. Same-origin http → no taint. Verified every
+  stage (frame, logo, quote, constellation, reveal frames, results panel) in Chromium with no JS errors.
+- **Card artwork data reminder:** the archetype names shown on the card are still the clunky ones
+  (**"The Alluring," "The Fresh Start Style,"** etc.) — the **archetype-names rewrite** (Danielle's feedback)
+  is still open and would visibly improve the card. Also still open: carry the chrome/gold/DM-Serif look into
+  the **quiz, chat, Mall, footer pages**; a **marketing** and a **monetization** strategy session.
+- ▶ **RE-FLAGGED to the master to-do (Cath asked to make sure it's captured): "✉️ Email me these tips &
+  links"** on the OUTFIT results (see the #4 parked item just above) — email her the celebrate + finishing
+  touches + shop links. Needs a **MailerLite transactional/automation** email wired up; its own dedicated
+  session. The real "save" for the ephemeral photo results + honest email-capture + conversion lever.
