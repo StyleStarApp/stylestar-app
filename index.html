@@ -3159,15 +3159,13 @@ function _openCardOverlay(blob,imgUrl){
     #cardPreview .scLayer{position:absolute;inset:0;pointer-events:none}
     #cardPreview .scCover{background:radial-gradient(130% 120% at 50% 28%,#2a2318,#0b0906);animation:scCoverOut .55s ease-out .36s forwards}
     #cardPreview .scClip{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-    #cardPreview .scBurst{position:absolute;inset:0;mix-blend-mode:screen;background:radial-gradient(circle at 50% 50%,rgba(255,249,224,.95) 0%,rgba(247,216,124,.6) 20%,rgba(212,175,55,0) 56%);transform:scale(.08);opacity:0;animation:scBurst .82s ease-out .1s forwards}
-    #cardPreview .scRing{position:absolute;left:50%;top:50%;width:42%;aspect-ratio:1;margin:-21% 0 0 -21%;border:2.5px solid rgba(247,224,140,.9);border-radius:50%;transform:scale(.12);opacity:0;animation:scRing .8s cubic-bezier(.2,.7,.3,1) .12s forwards}
+    #cardPreview .scBurst{position:absolute;inset:0;mix-blend-mode:screen;background:radial-gradient(circle at 50% 50%,rgba(255,250,228,.97) 0%,rgba(248,218,128,.5) 16%,rgba(212,175,55,0) 42%);transform:scale(.1);opacity:0;animation:scBurst .85s ease-out .1s forwards}
     #cardPreview .scSpark{position:absolute;color:#f7e690;opacity:0;text-shadow:0 0 9px rgba(245,225,120,.85);animation:scSpark .8s ease-out forwards}
     #cardPreview .scCtrls{display:flex;flex-direction:column;align-items:center;opacity:0;animation:scCtrlIn .5s ease-out 1.15s forwards}
     @keyframes scRise{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
     @keyframes scCardIn{to{opacity:1}}
     @keyframes scCoverOut{to{opacity:0}}
-    @keyframes scBurst{0%{transform:scale(.08);opacity:0}28%{opacity:1}60%{transform:scale(1.5);opacity:.85}100%{transform:scale(1.9);opacity:0}}
-    @keyframes scRing{0%{transform:scale(.12);opacity:0}22%{opacity:.9}100%{transform:scale(2.3);opacity:0}}
+    @keyframes scBurst{0%{transform:scale(.1);opacity:0}30%{opacity:1}62%{transform:scale(1.25);opacity:.8}100%{transform:scale(1.45);opacity:0}}
     @keyframes scSpark{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}45%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(.55)}}
     @keyframes scCtrlIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
     @media (prefers-reduced-motion:reduce){
@@ -3181,7 +3179,7 @@ function _openCardOverlay(blob,imgUrl){
   const pos=[[26,28],[71,22],[83,56],[49,13],[32,73],[64,82],[15,57],[88,40],[45,45]];
   for(let i=0;i<pos.length;i++){
     const sz=11+Math.round(Math.random()*15),dl=(620+Math.random()*360)|0;
-    sparks+=`<div class="scSpark" style="left:${pos[i][0]}%;top:${pos[i][1]}%;font-size:${sz}px;animation-delay:${dl}ms">✦</div>`;
+    sparks+=`<div class="scSpark" style="left:${pos[i][0]}%;top:${pos[i][1]}%;font-size:${sz}px;animation-delay:${dl}ms">★</div>`;
   }
 
   const overlay=document.createElement('div');
@@ -3191,7 +3189,7 @@ function _openCardOverlay(blob,imgUrl){
       <div class="scReveal">
         <img class="scCard" src="${imgUrl}">
         <div class="scLayer scCover"></div>
-        <div class="scClip"><div class="scBurst"></div><div class="scRing"></div></div>
+        <div class="scClip"><div class="scBurst"></div></div>
         ${sparks}
       </div>
       <div class="scCtrls">
