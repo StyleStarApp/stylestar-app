@@ -984,7 +984,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <button class="savebtn" id="resSaveBtn" onclick="openSaveSheetManual()">
         <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my results</button>
       <div class="pair">
-        <div class="t" onclick="saveStyleCard('quiz')"><svg viewBox="0 0 24 24"><rect x="3" y="3.5" width="18" height="17" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M3 16.5l4-3.6 3 2.6"/></svg><span>View Style Card</span></div>
+        <div class="t" onclick="saveStyleCard('quiz')"><svg viewBox="0 0 24 24"><rect x="3" y="3.5" width="18" height="17" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M3 16.5l4-3.6 3 2.6"/></svg><span>View your Style Constellation</span></div>
         <div class="t" onclick="shareStyleCard('quiz')"><svg viewBox="0 0 24 24"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><polyline points="16 7 12 3 8 7"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span>Share</span></div>
       </div>
       <!-- Action shelves — each bound to its existing handler -->
@@ -3229,189 +3229,158 @@ async function doShareCard(){
 }
 
 function buildCardBlob(source,callback){
-  const measureCanvas=document.createElement('canvas');
-  measureCanvas.width=1080;measureCanvas.height=3000;
-  const mc=measureCanvas.getContext('2d');
-  const w=1080;
-  
   const portrait=source==='quiz'?document.getElementById('rp').textContent:document.getElementById('prp').textContent;
   const archNames=source==='quiz'?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
   const sliderVals=source==='quiz'?answers:(lastPhotoSliders||answers);
-  const displayName=userName&&userName!=='You'?userName:'You';
-  const isQuiz=source==='quiz';
-  const title=isQuiz?(userName&&userName!=='You'?displayName+"'s Style Card":'Your Style Card'):(userName&&userName!=='You'?displayName+"'s Outfit Analysis":'Your Outfit Analysis');
+  const named=userName&&userName!=='You';
+  const headline=named?(userName+"'s Style Constellation"):'Your Style Constellation';
+  const notes=(archNames&&archNames.length)?('notes of '+archNames.join(' · ')):'';
 
-  const sentences=portrait.replace(/\*/g,'').replace(/\s*—\s*/g,', ').replace(/\s+,/g,',').replace(/\s{2,}/g,' ').split(/\.\s+/);
-  let quote=sentences[sentences.length-1]||sentences[sentences.length-2]||'';
+  // first sentence of the portrait (graceful if absent)
+  let quote=(portrait||'').replace(/\*/g,'').replace(/\s{2,}/g,' ').trim();
+  const dot=quote.indexOf('. ');
+  if(dot>-1)quote=quote.slice(0,dot);
   quote=quote.replace(/\.$/,'').trim();
-  if(quote&&!quote.endsWith('.')){quote+='.';}
-  
-  mc.font='italic 500 26px Georgia, serif';
-  mc.textAlign='center';
-  const quoteWords=('"'+quote+'"').split(' ');
-  let line='';let textLines=0;const maxW=w-240;
-  quoteWords.forEach(word=>{
-    const test=line+word+' ';
-    if(mc.measureText(test).width>maxW&&line!==''){textLines++;line=word+' ';}else{line=test}
-  });
-  if(line)textLines++;
-
-  const quoteHeight=textLines*38;
-  const archHeight=archNames.length*48;
-  const fpHeight=12*36;
-  
-  const frameW=30;
-  // Calculate content then add generous padding
-  const contentH=120+100+60+quoteHeight+50+archHeight+45+fpHeight+140;
-  const h=contentH+frameW*2+80;
 
   const canvas=document.createElement('canvas');
-  canvas.width=w;canvas.height=h;
+  canvas.width=1080;canvas.height=1350;
   const ctx=canvas.getContext('2d');
 
-  // Shiny gold frame
-  const frameGrad=ctx.createLinearGradient(0,0,w*0.7,h);
-  frameGrad.addColorStop(0,'#B8972A');
-  frameGrad.addColorStop(0.08,'#F5E17D');
-  frameGrad.addColorStop(0.18,'#D4AF37');
-  frameGrad.addColorStop(0.3,'#F5E17D');
-  frameGrad.addColorStop(0.42,'#C8A060');
-  frameGrad.addColorStop(0.55,'#F5E17D');
-  frameGrad.addColorStop(0.68,'#D4AF37');
-  frameGrad.addColorStop(0.8,'#F5E17D');
-  frameGrad.addColorStop(0.92,'#D4AF37');
-  frameGrad.addColorStop(1,'#B8972A');
-  ctx.fillStyle=frameGrad;
-  ctx.fillRect(0,0,w,h);
-
-  ctx.fillStyle='#ffffff';
-  ctx.fillRect(frameW,frameW,w-frameW*2,h-frameW*2);
-
-  // === LOGO - bigger with breathing room ===
-  let y=frameW+80;
-  
-  ctx.strokeStyle='#D4AF37';ctx.lineWidth=3;
-  const starPoints=[];
-  for(let i=0;i<10;i++){
-    const angle=Math.PI/2+i*Math.PI/5;
-    const r=i%2===0?42:17;
-    starPoints.push([w/2+Math.cos(angle)*r,y-Math.sin(angle)*r]);
+  function render(){
+    drawCard(ctx,{name:headline,answers:sliderVals,notes:notes,quote:quote,questions:questions});
+    canvas.toBlob(function(blob){
+      const imgUrl=URL.createObjectURL(blob);
+      callback(blob,imgUrl);
+    },'image/png');
   }
-  ctx.beginPath();
-  starPoints.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]));
-  ctx.closePath();ctx.stroke();
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(render).catch(render);}
+  else{render();}
 
-  y+=55;
-  ctx.fillStyle='#1a1a1a';
-  ctx.font='400 30px Georgia, serif';
-  ctx.textAlign='center';
-  ctx.fillText('style',w/2,y);
-  
-  y+=42;
-  ctx.font='700 38px Georgia, serif';
-  ctx.fillText('Star',w/2,y);
+  // ---- drawing (ported from the Style Card design handoff) ----
+  function drawCard(ctx,d){
+    const W=1080,H=1350;
 
-  y+=26;
-  ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(w/2-70,y);ctx.lineTo(w/2+70,y);ctx.stroke();
-  ctx.beginPath();ctx.arc(w/2+28,y,5,0,Math.PI*2);ctx.fillStyle='#D4AF37';ctx.fill();
+    // frame: silver outside, gold inside, flush + equal thickness
+    const T=20;
+    const silver=diag(ctx,0,0,W,H,['#FFFFFF','#C6CACE','#8C9298','#F2F4F6','#9AA0A6','#DFE2E5','#FFFFFF']);
+    ctx.fillStyle=silver;ctx.fillRect(0,0,W,H);
+    const gold=diag(ctx,T,T,W-T,H-T,['#EED89A','#D8A93E','#B8831F','#F3E3A6','#C89A2C','#9C7519']);
+    ctx.fillStyle=gold;ctx.fillRect(T,T,W-2*T,H-2*T);
 
-  y+=30;
-  ctx.fillStyle='#555';
-  ctx.font='600 20px Arial, sans-serif';
-  ctx.fillText('ALIGN YOUR STYLE. SHINE YOUR LIGHT.',w/2,y);
+    // card face: dark spotlight
+    const face=ctx.createRadialGradient(W/2,130,120,W/2,560,1050);
+    face.addColorStop(0,'#413a2c');face.addColorStop(.44,'#241f19');face.addColorStop(1,'#120f0b');
+    ctx.fillStyle=face;ctx.fillRect(2*T,2*T,W-4*T,H-4*T);
 
-  y+=70;
-  ctx.fillStyle='#D4AF37';
-  ctx.font='700 50px Georgia, serif';
-  ctx.fillText(title,w/2,y);
+    // spotlight glow near the top
+    const glow=ctx.createRadialGradient(W/2,120,40,W/2,120,460);
+    glow.addColorStop(0,'rgba(212,175,55,0.28)');glow.addColorStop(1,'rgba(212,175,55,0)');
+    ctx.fillStyle=glow;ctx.fillRect(2*T,2*T,W-4*T,220);
 
-  y+=44;
-  ctx.fillStyle='#333';
-  ctx.font='italic 500 26px Georgia, serif';
-  line='';
-  quoteWords.forEach(word=>{
-    const test=line+word+' ';
-    if(ctx.measureText(test).width>maxW&&line!==''){
-      ctx.fillText(line.trim(),w/2,y);
-      line=word+' ';y+=36;
-    }else{line=test}
-  });
-  if(line)ctx.fillText(line.trim(),w/2,y);
+    ctx.textAlign='center';ctx.textBaseline='alphabetic';
 
-  y+=50;
-  ctx.fillStyle='#333';
-  ctx.font='700 22px Arial, sans-serif';
-  ctx.fillText(isQuiz?'YOUR STYLE HAS NOTES OF':'THIS OUTFIT HAS NOTES OF',w/2,y);
+    // wordmark
+    ctx.fillStyle='#E9C46E';
+    ctx.font='56px "DM Serif Display", serif';
+    ctx.fillText('✦',W/2,150);
+    ctx.fillStyle='#f1ece2';
+    ctx.font='86px "DM Serif Display", serif';
+    ctx.fillText('style',W/2,250);
+    ctx.fillText('Star',W/2,336);
 
-  y+=42;
-  ctx.font='700 26px Georgia, serif';
-  archNames.forEach((name,i)=>{
-    const tagY=y+i*48;
-    const tw=ctx.measureText(name).width+56;
-    ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
-    ctx.beginPath();
-    const rx=w/2-tw/2,ry=tagY-22,rw=tw,rh=40,rad=20;
-    ctx.moveTo(rx+rad,ry);ctx.lineTo(rx+rw-rad,ry);ctx.quadraticCurveTo(rx+rw,ry,rx+rw,ry+rad);
-    ctx.lineTo(rx+rw,ry+rh-rad);ctx.quadraticCurveTo(rx+rw,ry+rh,rx+rw-rad,ry+rh);
-    ctx.lineTo(rx+rad,ry+rh);ctx.quadraticCurveTo(rx,ry+rh,rx,ry+rh-rad);
-    ctx.lineTo(rx,ry+rad);ctx.quadraticCurveTo(rx,ry,rx+rad,ry);
-    ctx.stroke();
-    ctx.fillStyle='#1a1a1a';
-    ctx.fillText(name,w/2,tagY);
-  });
+    // headline
+    ctx.fillStyle='#f1ece2';
+    ctx.font='52px "DM Serif Display", serif';
+    ctx.fillText(d.name,W/2,452);
 
-  y+=archNames.length*48+35;
-  ctx.fillStyle='#333';
-  ctx.font='700 22px Arial, sans-serif';
-  ctx.textAlign='center';
-  ctx.fillText('YOUR STYLE SIGNATURE',w/2,y);
-  y+=38;
+    // notes-of line
+    if(d.notes){
+      ctx.fillStyle='#cba85a';
+      ctx.font='600 24px "Jost", sans-serif';
+      ctx.fillText(d.notes,W/2,512);
+    }
 
-  const fpLeft=340;
-  const fpRight=740;
-  const fpLineW=fpRight-fpLeft;
+    // first sentence (wrapped)
+    if(d.quote){
+      ctx.fillStyle='#cbc2b3';
+      ctx.font='italic 31px "Fraunces", serif';
+      wrap(ctx,'“'+d.quote+'”',W/2,572,840,44);
+    }
 
-  questions.forEach((q,i)=>{
-    const rowY=y+i*36;
-    ctx.font='700 18px Arial, sans-serif';
-    ctx.textAlign='right';
-    ctx.fillStyle='#333';
-    ctx.fillText(q.left.toUpperCase(),fpLeft-16,rowY+6);
-    ctx.fillStyle='#ccc';
-    ctx.fillRect(fpLeft,rowY,fpLineW,4);
-    const pct=(sliderVals[i]-1)/10;
-    const dotX=fpLeft+pct*fpLineW;
-    ctx.beginPath();ctx.arc(dotX,rowY+2,8,0,Math.PI*2);
-    ctx.fillStyle='#D4AF37';ctx.fill();
-    ctx.font='700 18px Arial, sans-serif';
-    ctx.textAlign='left';
-    ctx.fillStyle='#333';
-    ctx.fillText(q.right.toUpperCase(),fpRight+16,rowY+6);
-  });
+    // constellation
+    drawConstellation(ctx,W/2,950,268,d.answers,d.questions);
 
-  y+=12*36+35;
-  
-  ctx.strokeStyle='#D4AF37';ctx.lineWidth=2;
-  const bStarPoints=[];
-  for(let i=0;i<10;i++){
-    const angle=Math.PI/2+i*Math.PI/5;
-    const r=i%2===0?18:7;
-    bStarPoints.push([w/2+Math.cos(angle)*r,y-Math.sin(angle)*r]);
+    // sign-off
+    ctx.fillStyle='#f1ece2';
+    ctx.font='40px "DM Serif Display", serif';
+    ctx.textAlign='center';
+    ctx.fillText('stylestar.app',W/2,1292);
   }
-  ctx.beginPath();
-  bStarPoints.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]));
-  ctx.closePath();ctx.stroke();
 
-  ctx.textAlign='center';
-  ctx.fillStyle='#666';
-  ctx.font='600 28px Georgia, serif';
-  ctx.fillText('StyleStar.app',w/2,y+40);
+  // the diverging star map
+  function drawConstellation(ctx,cx,cy,R,vals,questions){
+    const N=12,LR=R+34;
+    ctx.save();
+    ctx.textAlign='center';ctx.textBaseline='middle';
 
-  canvas.toBlob(function(blob){
-    const imgUrl=URL.createObjectURL(blob);
-    callback(blob,imgUrl);
-  },'image/png');
+    // guide rings
+    ring(cx,cy,R,'rgba(205,180,106,0.30)',1.5);
+    ring(cx,cy,R*0.5,'rgba(205,180,106,0.20)',1.2);
+
+    // spokes = full diameters through the centre
+    ctx.strokeStyle='rgba(205,180,106,0.18)';ctx.lineWidth=1;
+    for(let i=0;i<N;i++){const a=ang(i);const dx=R*Math.cos(a),dy=R*Math.sin(a);
+      line(cx-dx,cy-dy,cx+dx,cy+dy);}
+
+    // star points: signed position along each axis (center = balanced)
+    const pts=[];
+    for(let i=0;i<N;i++){const a=ang(i);
+      const signed=((vals[i]-1)/10)*2-1;          // 1 -> -1 (left pole), 11 -> +1 (right pole)
+      pts.push({x:cx+signed*R*Math.cos(a),y:cy+signed*R*Math.sin(a)});
+    }
+
+    // connect them (ordered around the centre) into the constellation
+    const ord=pts.slice().sort((p,q)=>Math.atan2(p.y-cy,p.x-cx)-Math.atan2(q.y-cy,q.x-cx));
+    ctx.beginPath();ord.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();
+    ctx.fillStyle='rgba(212,175,55,0.15)';ctx.fill();
+    ctx.strokeStyle='#d4af37';ctx.lineWidth=2.2;ctx.stroke();
+
+    // star dots + centre
+    ctx.fillStyle='#f5e17d';
+    pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,5,0,7);ctx.fill();});
+    ctx.fillStyle='#8a7a3a';ctx.beginPath();ctx.arc(cx,cy,3,0,7);ctx.fill();
+
+    // BOTH pole labels, at the two ends of every axis
+    ctx.fillStyle='#cdb46a';ctx.font='600 21px "Jost", sans-serif';
+    for(let i=0;i<N;i++){const a=ang(i);
+      label(questions[i].right,a);
+      label(questions[i].left,a+Math.PI);
+    }
+    ctx.restore();
+
+    function ang(i){return (-90+i*15)*Math.PI/180;}
+    function ring(x,y,r,st,w){ctx.strokeStyle=st;ctx.lineWidth=w;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.stroke();}
+    function line(x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+    function label(text,a){
+      const c=Math.cos(a),s=Math.sin(a);
+      ctx.textAlign=c>0.25?'left':(c<-0.25?'right':'center');
+      ctx.fillText(text.toUpperCase(),cx+LR*c,cy+LR*s);
+    }
+  }
+
+  // helpers
+  function diag(ctx,x0,y0,x1,y1,stops){
+    const g=ctx.createLinearGradient(x0,y0,x1,y1);
+    stops.forEach((c,i)=>g.addColorStop(i/(stops.length-1),c));
+    return g;
+  }
+  function wrap(ctx,text,cx,y,maxW,lh){
+    const words=text.split(' ');let line='';const lines=[];
+    for(const w of words){const t=line?line+' '+w:w;
+      if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=w;}else line=t;}
+    if(line)lines.push(line);
+    lines.forEach((ln,i)=>ctx.fillText(ln,cx,y+i*lh));
+  }
 }
 
 </script>
