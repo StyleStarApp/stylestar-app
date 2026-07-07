@@ -1097,7 +1097,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
       <span class="occ-skip" id="occSkip" onclick="skipOccasion()">Skip &mdash; just style it</span>
     </div>
-    <button id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my outfit &rarr;</button>
+    <button id="analyzeBtn" onclick="ctaAnalyze()">Analyze my outfit &rarr;</button>
     <div class="ph-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
   </div>
 </div>
@@ -1705,7 +1705,7 @@ let photoData=null,photoType="image/jpeg";
 let photoPrevScreen='s-wel';
 let photoOccasion='';
 function startPhoto(){if(!userName||userName==='You'){userName='You'}showPhoto()}
-function showPhoto(){var a=document.querySelector('.scr.act');if(a&&a.id&&a.id!=='s-photo'){photoPrevScreen=a.id}show('s-photo');document.getElementById('photoPreview').style.display='none';document.getElementById('photoPlaceholder').style.display='flex';document.getElementById('analyzeBtn').style.display='none';photoData=null;resetOccasion()}
+function showPhoto(){var a=document.querySelector('.scr.act');if(a&&a.id&&a.id!=='s-photo'){photoPrevScreen=a.id}show('s-photo');document.getElementById('photoPreview').style.display='none';document.getElementById('photoPlaceholder').style.display='flex';document.getElementById('analyzeBtn').style.display='block';photoData=null;resetOccasion()}
 // Optional "where are you headed?" picker — tailors the tips + shopping to the moment.
 function resetOccasion(){photoOccasion='';document.querySelectorAll('#occChips .occ-chip').forEach(function(c){c.classList.remove('sel')});var sk=document.getElementById('occSkip');if(sk)sk.classList.remove('done')}
 function pickOccasion(btn,name){
@@ -1752,6 +1752,11 @@ async function analyzePhoto(){
   if(!photoData)return;
   _resShowCompose('s-photo-res');
   await runPhotoAnalysis();
+}
+// The always-visible CTA: analyze if a photo is picked, otherwise open the picker.
+function ctaAnalyze(){
+  if(photoData){analyzePhoto();}
+  else{document.getElementById('photoIn').click();}
 }
 async function retryPhoto(){
   _resShowCompose('s-photo-res');
