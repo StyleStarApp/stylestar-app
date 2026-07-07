@@ -903,3 +903,43 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   still use the older Fraunces/DM-Sans look — bring the cues there next for full consistency.
 - The shareable **Style Card canvas** was left untouched (it's drawn separately); worth a real-device
   glance that it still looks right after this.
+
+**2026-07-07 (▶ "Analyze an outfit" REIMAGINED — from a 2nd portrait → a styling session)**
+- Cath's insight (spot-on): the photo feature *promised* feedback + styling tips + shopping ideas, but
+  actually produced **another Style Portrait + 12-slider signature** from one photo — duplicating (and
+  cheapening) the quiz's big identity reveal, and never delivering real tips or shoppable ideas. Reframe
+  we agreed on: **the quiz = identity ("who you are"); the photo = action ("help me with what I'm wearing
+  right now")**. Showed her a tap-through concept mockup (in scratchpad `photo-redesign.html`); she loved
+  it and approved every piece.
+- ✅ **Rebuilt the outfit result as a warm, ADDITIVE styling session** (same reveal-moment boards; new job):
+  1. **What's Working** (clipboard `.p1`) — a genuine, specific celebration. Greeting "Styling your look,
+     {name}", an optional **occasion pill**, then "✦ What's working" + the celebrate paragraph.
+  2. **Finishing Touches** (`.p2` `#pTipsBoard`) — 2-3 numbered ADDITIVE tips (add a third piece / elevate
+     the shoe / define the waist). Framed as *elevate*, never *fix* — nothing to feel bad about (Cath's
+     safety priority).
+  3. **Complete the Look** (`.p2.p2b` `#pShopBoard`) — 3-4 specific shoppable pieces that PAIR with what
+     she's wearing (the jacket/shoes/belt/jewelry the tips call for), each a `getStoreUrl` search link +
+     FTC disclosure. Her highest-intent buying moment.
+- ✅ **Optional "Where are you headed?" occasion picker** on the upload screen (`s-photo`): chips
+  Work / Date night / Weekend / Event / Just for fun + a "Skip — just style it" link. Stored in
+  `photoOccasion`, passed into the prompt so tips + shopping tailor to the moment; fully skippable (zero
+  friction). New fns `pickOccasion`/`skipOccasion`/`resetOccasion` (reset on every `showPhoto()`).
+- **Under the hood:** `runPhotoAnalysis()` prompt fully rewritten → returns
+  `{celebrate, tips[], shop[]}` (+ the `partial` "show me your full outfit" branch, now keyed on
+  `celebrate`). New render helpers `_renderTips`/`_renderShop`; `_photoSig`→**`_photoBoards(on)`** shows/
+  hides the tips+shop boards + "what's working" label together (hidden on partial/error). `max_tokens`
+  300→**800** for the richer JSON. **Retired** the 12-slider chart on the photo path (`buildPhotoChart`/
+  `getPhotoArch`/`#pChart`/`#pSigBoard`/`#pft` removed) — that identity belongs to the quiz.
+- **Removed from the photo actions** (`.p3`): the **"View Style Card / Share" pair** (the photo card drew
+  the now-gone signature/archetype identity — it would've fallen back to the *quiz's* data, which is
+  wrong) and the **"Shop this style" hero** (redundant now that "Complete the Look" is the shopping).
+  Kept: Save, Ask about this look, Refine preferences, Analyze another outfit, Style Star Edit, Shop the
+  Mall. (Orphaned `saveStyleCard('photo')`/`sharePhotoResults`/`genOutfits('photo')` fns are now unused
+  dead code but harmless.) **NOTE for Cath:** this drops the *share-your-outfit-card* growth loop on the
+  photo path — flag if she wants a redesigned share for outfits later.
+- **KEPT the current button name "Analyze an outfit"** per Cath (revisit later if a warmer name is wanted).
+  Shop links are still untagged search URLs (same as the Mall) → become real revenue when affiliates
+  approve.
+- Verified in Chromium (stubbed AI): upload screen with occasion chips + selected/skip states; results
+  render all three boards + actions correctly in the settled reveal state; no JS errors. **Worth a real-
+  device glance + a live end-to-end test** (real photo through the Netlify function) before/after merge.
