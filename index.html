@@ -3156,7 +3156,7 @@ function saveStyleCard(source){
     overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
     overlay.innerHTML=`
       <div style="color:#fff;font-size:18px;font-weight:600;font-family:'DM Sans',sans-serif;margin-bottom:10px">Your Style Card</div>
-      <img src="${imgUrl}" style="max-width:75%;max-height:65vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
+      <img src="${imgUrl}" style="max-width:75%;max-height:65vh;border-radius:0;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
       <div style="color:#ddd;font-size:17px;font-family:'DM Sans',sans-serif;margin-top:14px;font-weight:500">Press and hold the image to save</div>
       <button onclick="doShareCard()" style="display:flex;align-items:center;gap:7px;padding:15px 30px;border-radius:12px;border:none;background:#1a1a1a;color:#fff;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:18px">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
@@ -3178,7 +3178,7 @@ function shareStyleCard(source){
     overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
     overlay.innerHTML=`
       <div style="color:#fff;font-size:18px;font-weight:600;font-family:'DM Sans',sans-serif;margin-bottom:10px">Share your style card</div>
-      <img src="${imgUrl}" style="max-width:75%;max-height:60vh;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
+      <img src="${imgUrl}" style="max-width:75%;max-height:60vh;border-radius:0;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
       <button onclick="doShareCard()" style="display:flex;align-items:center;gap:7px;padding:15px 30px;border-radius:12px;border:none;background:#1a1a1a;color:#fff;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:18px">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         Share with a friend
@@ -3234,14 +3234,21 @@ function buildCardBlob(source,callback){
   const sliderVals=source==='quiz'?answers:(lastPhotoSliders||answers);
   const named=userName&&userName!=='You';
   const headline=named?(userName+"'s Style Constellation"):'Your Style Constellation';
-  const notes=(archNames&&archNames.length)?('notes of '+archNames.join(' · ')):'';
+  const noteNames=(archNames&&archNames.length)?archNames:[];
 
-  // a short pull-quote from the portrait (first clause; capped so it never crowds the star map)
+  // an evocative pull-quote from the portrait (first sentence; excerpted cleanly if it runs long)
   let quote=(portrait||'').replace(/\*/g,'').replace(/\s+/g,' ').trim();
-  const cut=quote.match(/[.!?](\s|$)|\s[—–]\s/);
-  if(cut)quote=quote.slice(0,cut.index).trim();
-  if(quote.length>108){quote=quote.slice(0,108);quote=quote.slice(0,quote.lastIndexOf(' ')).trim();}
-  quote=quote.replace(/[,;:—–\-]+$/,'').trim();
+  const end=quote.search(/[.!?](\s|$)/);
+  if(end>-1)quote=quote.slice(0,end).trim();
+  let truncated=false;const CAP=182;
+  if(quote.length>CAP){
+    let c=quote.slice(0,CAP);
+    const b=Math.max(c.lastIndexOf(', '),c.lastIndexOf(' — '),c.lastIndexOf(' – '),c.lastIndexOf('; '));
+    c=(b>70)?c.slice(0,b):c.slice(0,c.lastIndexOf(' '));
+    quote=c;truncated=true;
+  }
+  quote=quote.replace(/[\s,;:—–-]+$/,'').trim();
+  if(truncated)quote+='…';
 
   const canvas=document.createElement('canvas');
   canvas.width=1080;canvas.height=1350;
@@ -3251,7 +3258,7 @@ function buildCardBlob(source,callback){
   logo.src='logo-card.png';
 
   function render(){
-    drawCard(ctx,{name:headline,answers:sliderVals,notes:notes,quote:quote,questions:questions});
+    drawCard(ctx,{name:headline,answers:sliderVals,notes:noteNames,quote:quote,questions:questions});
     canvas.toBlob(function(blob){
       const imgUrl=URL.createObjectURL(blob);
       callback(blob,imgUrl);
@@ -3288,33 +3295,28 @@ function buildCardBlob(source,callback){
 
     ctx.textAlign='center';ctx.textBaseline='alphabetic';
 
-    // logo — the real brand mark (star + wordmark + slider), dark-mode recolor
+    // logo — the real brand mark (star + wordmark + slider); kept compact so the star map has room
     if(logo&&logo.complete&&logo.naturalWidth){
-      const lw=280,lh=lw*logo.naturalHeight/logo.naturalWidth;
-      ctx.drawImage(logo,W/2-lw/2,66,lw,lh);
+      const lw=232,lh=lw*logo.naturalHeight/logo.naturalWidth;
+      ctx.drawImage(logo,W/2-lw/2,60,lw,lh);
     }else{
-      ctx.fillStyle='#E9C46E';ctx.font='56px "DM Serif Display", serif';ctx.fillText('✦',W/2,150);
-      ctx.fillStyle='#f1ece2';ctx.font='86px "DM Serif Display", serif';ctx.fillText('style',W/2,250);ctx.fillText('Star',W/2,336);
+      ctx.fillStyle='#E9C46E';ctx.font='48px "DM Serif Display", serif';ctx.fillText('✦',W/2,128);
+      ctx.fillStyle='#f1ece2';ctx.font='74px "DM Serif Display", serif';ctx.fillText('style',W/2,210);ctx.fillText('Star',W/2,284);
     }
 
-    // headline
+    // headline — sits close under the logo
     ctx.fillStyle='#f1ece2';
     ctx.font='52px "DM Serif Display", serif';
-    ctx.fillText(d.name,W/2,452);
+    ctx.fillText(d.name,W/2,388);
 
-    // notes-of line (shrinks to stay within the card if the archetype names run long)
-    if(d.notes){
-      ctx.fillStyle='#cba85a';
-      let ns=24;ctx.font='600 '+ns+'px "Jost", sans-serif';
-      while(ctx.measureText(d.notes).width>W-150&&ns>15){ns--;ctx.font='600 '+ns+'px "Jost", sans-serif';}
-      ctx.fillText(d.notes,W/2,512);
-    }
+    // archetype line — gold-star bullets between the names (shrinks to fit)
+    if(d.notes&&d.notes.length){drawNotes(ctx,d.notes,444);}
 
-    // pull-quote (wrapped, max 2 lines so it never reaches the star map)
+    // descriptive pull-quote — up to 3 lines, kept clear of the star map
     if(d.quote){
       ctx.fillStyle='#cbc2b3';
       ctx.font='italic 31px "Fraunces", serif';
-      wrap(ctx,'“'+d.quote+'”',W/2,572,840,44,2);
+      wrap(ctx,'“'+d.quote+'”',W/2,502,860,44,3);
     }
 
     // constellation
@@ -3325,6 +3327,31 @@ function buildCardBlob(source,callback){
     ctx.font='40px "DM Serif Display", serif';
     ctx.textAlign='center';
     ctx.fillText('stylestar.app',W/2,1292);
+
+    // archetype names with gold-star separators, centred + shrink-to-fit
+    function drawNotes(ctx,names,y){
+      const cx=W/2,gap=16;
+      const wordFont=s=>'600 '+s+'px "Jost", sans-serif';
+      const starFont=s=>(s+3)+'px "DM Serif Display", serif';
+      function total(s){
+        let w=0;
+        names.forEach((n,i)=>{ctx.font=wordFont(s);w+=ctx.measureText(n).width;
+          if(i<names.length-1){ctx.font=starFont(s);w+=gap*2+ctx.measureText('★').width;}});
+        return w;
+      }
+      let fs=25;while(total(fs)>W-130&&fs>15)fs--;
+      let x=cx-total(fs)/2;
+      ctx.textAlign='left';ctx.textBaseline='alphabetic';
+      names.forEach((n,i)=>{
+        ctx.font=wordFont(fs);ctx.fillStyle='#dcc487';
+        ctx.fillText(n,x,y);x+=ctx.measureText(n).width;
+        if(i<names.length-1){
+          x+=gap;ctx.font=starFont(fs);ctx.fillStyle='#E9C46E';
+          ctx.fillText('★',x,y-2);x+=ctx.measureText('★').width+gap;
+        }
+      });
+      ctx.textAlign='center';
+    }
   }
 
   // the diverging star map
@@ -3333,12 +3360,12 @@ function buildCardBlob(source,callback){
     ctx.save();
     ctx.textAlign='center';ctx.textBaseline='middle';
 
-    // guide rings
-    ring(cx,cy,R,'rgba(205,180,106,0.30)',1.5);
-    ring(cx,cy,R*0.5,'rgba(205,180,106,0.20)',1.2);
+    // guide rings (silver, clearly visible)
+    ring(cx,cy,R,'rgba(214,219,224,0.55)',1.6);
+    ring(cx,cy,R*0.5,'rgba(214,219,224,0.40)',1.3);
 
-    // spokes = full diameters through the centre
-    ctx.strokeStyle='rgba(205,180,106,0.18)';ctx.lineWidth=1;
+    // spokes = full diameters through the centre (silver)
+    ctx.strokeStyle='rgba(214,219,224,0.30)';ctx.lineWidth=1.1;
     for(let i=0;i<N;i++){const a=ang(i);const dx=R*Math.cos(a),dy=R*Math.sin(a);
       line(cx-dx,cy-dy,cx+dx,cy+dy);}
 
