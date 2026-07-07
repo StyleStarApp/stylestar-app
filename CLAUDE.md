@@ -903,3 +903,82 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   still use the older Fraunces/DM-Sans look — bring the cues there next for full consistency.
 - The shareable **Style Card canvas** was left untouched (it's drawn separately); worth a real-device
   glance that it still looks right after this.
+
+**2026-07-07 (▶ "Analyze an outfit" REIMAGINED — from a 2nd portrait → a styling session)**
+- Cath's insight (spot-on): the photo feature *promised* feedback + styling tips + shopping ideas, but
+  actually produced **another Style Portrait + 12-slider signature** from one photo — duplicating (and
+  cheapening) the quiz's big identity reveal, and never delivering real tips or shoppable ideas. Reframe
+  we agreed on: **the quiz = identity ("who you are"); the photo = action ("help me with what I'm wearing
+  right now")**. Showed her a tap-through concept mockup (in scratchpad `photo-redesign.html`); she loved
+  it and approved every piece.
+- ✅ **Rebuilt the outfit result as a warm, ADDITIVE styling session** (same reveal-moment boards; new job):
+  1. **What's Working** (clipboard `.p1`) — a genuine, specific celebration. Greeting "Styling your look,
+     {name}", an optional **occasion pill**, then "✦ What's working" + the celebrate paragraph.
+  2. **Finishing Touches** (`.p2` `#pTipsBoard`) — 2-3 numbered ADDITIVE tips (add a third piece / elevate
+     the shoe / define the waist). Framed as *elevate*, never *fix* — nothing to feel bad about (Cath's
+     safety priority).
+  3. **Complete the Look** (`.p2.p2b` `#pShopBoard`) — 3-4 specific shoppable pieces that PAIR with what
+     she's wearing (the jacket/shoes/belt/jewelry the tips call for), each a `getStoreUrl` search link +
+     FTC disclosure. Her highest-intent buying moment.
+- ✅ **Optional "Where are you headed?" occasion picker** on the upload screen (`s-photo`): chips
+  Work / Date night / Weekend / Event / Just for fun + a "Skip — just style it" link. Stored in
+  `photoOccasion`, passed into the prompt so tips + shopping tailor to the moment; fully skippable (zero
+  friction). New fns `pickOccasion`/`skipOccasion`/`resetOccasion` (reset on every `showPhoto()`).
+- **Under the hood:** `runPhotoAnalysis()` prompt fully rewritten → returns
+  `{celebrate, tips[], shop[]}` (+ the `partial` "show me your full outfit" branch, now keyed on
+  `celebrate`). New render helpers `_renderTips`/`_renderShop`; `_photoSig`→**`_photoBoards(on)`** shows/
+  hides the tips+shop boards + "what's working" label together (hidden on partial/error). `max_tokens`
+  300→**800** for the richer JSON. **Retired** the 12-slider chart on the photo path (`buildPhotoChart`/
+  `getPhotoArch`/`#pChart`/`#pSigBoard`/`#pft` removed) — that identity belongs to the quiz.
+- **Removed from the photo actions** (`.p3`): the **"View Style Card / Share" pair** (the photo card drew
+  the now-gone signature/archetype identity — it would've fallen back to the *quiz's* data, which is
+  wrong) and the **"Shop this style" hero** (redundant now that "Complete the Look" is the shopping).
+  Kept: Save, Ask about this look, Refine preferences, Analyze another outfit, Style Star Edit, Shop the
+  Mall. (Orphaned `saveStyleCard('photo')`/`sharePhotoResults`/`genOutfits('photo')` fns are now unused
+  dead code but harmless.) **NOTE for Cath:** this drops the *share-your-outfit-card* growth loop on the
+  photo path — flag if she wants a redesigned share for outfits later.
+- **KEPT the current button name "Analyze an outfit"** per Cath (revisit later if a warmer name is wanted).
+  Shop links are still untagged search URLs (same as the Mall) → become real revenue when affiliates
+  approve.
+- Verified in Chromium (stubbed AI): upload screen with occasion chips + selected/skip states; results
+  render all three boards + actions correctly in the settled reveal state; no JS errors. **Worth a real-
+  device glance + a live end-to-end test** (real photo through the Netlify function) before/after merge.
+
+**2026-07-07 (cont. — honest "save" on the outfit screen + quiz-aware chat)**
+- Cath spotted that "Save my results" on the outfit screen was a hollow promise: the save flow
+  (`buildFullUserData`) only persists the QUIZ profile (name/answers/archetypes/portrait/prefs) + email —
+  it does NOT save the photo's celebrate/tips/shop (those are ephemeral, generated live). So a quiz-SKIPPER
+  who goes straight to photo analysis had nothing real to "save." Also flagged: the "Complete the Look"
+  links open in a new tab (`target="_blank"`), so the analysis page stays intact while she shops link by
+  link — it only disappears if she fully closes/reloads the app (that cross-visit gap is what a future
+  "email me these tips" feature would fill). Agreed plan = ship the honest fixes (1-3) now; park the
+  email-the-tips feature (#4) for a dedicated MailerLite/transactional-email session.
+- ✅ **1-3 shipped (all quiz-awareness driven by the existing `quizTaken` flag + `topArchNames`):**
+  1. **Honest save on the outfit results** (`_photoSaveArea()`): if she's taken the quiz → show the
+     profile save with truthful copy — heart button "Save my style profile", keep block retitled
+     "Come back anytime / Save your details so Style Star remembers you on any device / Save & remember me".
+     If she has NOT taken the quiz → hide the save entirely and show a gold-framed **quiz-nudge card**
+     (`#photoQuizNudge`: "Want everything styled to you? Take our fun style quiz →" → `startQ()`). "Retake
+     the Quiz" is also hidden for skippers (they never took it). Partial/error hides the whole save area.
+  2. **Removed the auto-rising save sheet on the photo path** (dropped `scheduleSaveSheet()` from
+     `runPhotoAnalysis`) — it over-promised "save your results" for a page that doesn't save the outfit.
+  3. **Stylist chat is now quiz-aware** (`sendChat` system prompt): it no longer hardcodes "who has taken
+     the Style Star quiz." Quiz-takers → their real slider/archetype/prefs profile (as before). Skippers →
+     told she hasn't taken it, give great general advice, and may ONCE gently invite her to our fun quiz
+     when natural (never pushy, never repeated, never blocks the answer).
+- Verified both states in Chromium (stubbed): skipper sees the quiz-nudge card + no save + no retake;
+  quiz-taker sees the honest profile save; no JS errors.
+- ▶ **STILL TO DO (#4, parked — needs backend): "✉️ Email me these tips & links."** Send the celebrate +
+  finishing touches + shop links to her inbox — the real "save," a genuine conversion lever (shoppable
+  links waiting in her inbox), and honest email capture. Needs a MailerLite transactional/automation email
+  wired up (dedicated session). Framing stays: shopping in-app is the hero; email is the "keep these for
+  later" safety net, not a competing CTA.
+- **FTC disclosure on the "Complete the Look" board — softened, then kept.** First removed the stiff "As an
+  affiliate, Style Star may earn from qualifying purchases." (Cath: cringy; also premature since no
+  affiliate programs are approved yet). Then Cath chose to **put it back with warmer wording** to "manifest"
+  the approvals + keep the page revenue-ready: now reads **"Some links may earn us a small commission, at no
+  extra cost to you."** (`.shopdisc`). NOTE: it's slightly aspirational today (links are still untagged
+  search URLs earning $0) — Cath's deliberate call. ✅ Correct placement for later: FTC wants it **clear +
+  conspicuous, NEXT TO the links** (this board qualifies; FAQ-alone would not). The **Mall** (`s-shop`) still
+  has its own older disclosure — fine as-is. When affiliate links actually go live (money-path step 7),
+  confirm final disclosure wording/placement with Almira/Indie Law.
