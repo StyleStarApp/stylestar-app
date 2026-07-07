@@ -3150,21 +3150,60 @@ function sharePhotoResults(){
   }
 }
 function _openCardOverlay(blob,imgUrl){
+  // one-time reveal styles (foil star-card: dark card -> gold foil sweep -> artwork shines in -> sparkle burst)
+  if(!document.getElementById('scRevealCss')){
+    const st=document.createElement('style');st.id='scRevealCss';
+    st.textContent=`
+    #cardPreview .scReveal{position:relative;display:inline-block;line-height:0;animation:scRise .42s ease-out both}
+    #cardPreview .scCard{display:block;width:auto;max-width:80vw;max-height:64vh;aspect-ratio:1080/1350;border-radius:0;box-shadow:0 12px 44px rgba(0,0,0,.55);opacity:0;animation:scCardIn .58s ease-out .64s forwards}
+    #cardPreview .scLayer{position:absolute;inset:0;pointer-events:none}
+    #cardPreview .scCover{background:radial-gradient(130% 120% at 50% 28%,#2a2318,#0b0906);animation:scCoverOut .58s ease-out .66s forwards}
+    #cardPreview .scFoil{overflow:hidden}
+    #cardPreview .scFoil::before{content:"";position:absolute;inset:-12%;mix-blend-mode:screen;background:linear-gradient(115deg,rgba(245,225,150,0) 37%,rgba(246,226,150,.6) 45%,rgba(255,250,226,1) 50%,rgba(246,226,150,.6) 55%,rgba(245,225,150,0) 63%);transform:translateX(-135%);animation:scFoil 1.1s cubic-bezier(.45,0,.25,1) .12s forwards}
+    #cardPreview .scSpark{position:absolute;color:#f7e690;opacity:0;text-shadow:0 0 9px rgba(245,225,120,.85);animation:scSpark .8s ease-out forwards}
+    #cardPreview .scCtrls{display:flex;flex-direction:column;align-items:center;opacity:0;animation:scCtrlIn .5s ease-out 1.2s forwards}
+    @keyframes scRise{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+    @keyframes scCardIn{to{opacity:1}}
+    @keyframes scCoverOut{to{opacity:0}}
+    @keyframes scFoil{to{transform:translateX(135%)}}
+    @keyframes scSpark{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}45%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(.55)}}
+    @keyframes scCtrlIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    @media (prefers-reduced-motion:reduce){
+      #cardPreview .scReveal,#cardPreview .scCard,#cardPreview .scCtrls{animation:none!important;opacity:1!important;transform:none!important}
+      #cardPreview .scCover,#cardPreview .scFoil,#cardPreview .scSpark{display:none!important}
+    }`;
+    document.head.appendChild(st);
+  }
+  // sparkle burst positions (spread over the card)
+  let sparks='';
+  const pos=[[26,28],[71,22],[83,56],[49,13],[32,73],[64,82],[15,57],[88,40],[45,45]];
+  for(let i=0;i<pos.length;i++){
+    const sz=11+Math.round(Math.random()*15),dl=(880+Math.random()*380)|0;
+    sparks+=`<div class="scSpark" style="left:${pos[i][0]}%;top:${pos[i][1]}%;font-size:${sz}px;animation-delay:${dl}ms">✦</div>`;
+  }
+
   const overlay=document.createElement('div');
   overlay.id='cardPreview';
   overlay.style.cssText='position:fixed;inset:0;background:rgba(14,11,8,0.94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.2rem;overflow:auto';
   overlay.innerHTML=`
-      <img src="${imgUrl}" style="max-width:80%;max-height:64vh;border-radius:0;box-shadow:0 12px 44px rgba(0,0,0,0.55)">
-      <div style="color:#cbb892;font-size:14px;letter-spacing:.02em;font-family:'Jost',sans-serif;margin-top:16px">Press and hold the image to save</div>
-      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:9px;padding:15px 34px;border:1.5px solid #C79A34;border-radius:0;background:#141210;color:#f4efe6;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:20px">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E9C46E" stroke-width="2.2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        Share with a friend
-      </button>
-      <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:#bcb097;font-size:14.5px;font-family:'DM Sans',sans-serif;margin-top:13px;text-align:center">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#cbb892" stroke-width="1.9"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.15" fill="#cbb892" stroke="none"/></svg>
-        Text it or share to Instagram
+      <div class="scReveal">
+        <img class="scCard" src="${imgUrl}">
+        <div class="scLayer scCover"></div>
+        <div class="scLayer scFoil"></div>
+        ${sparks}
       </div>
-      <button onclick="closeCardPreview()" style="margin-top:20px;background:none;border:none;color:#8f8676;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+      <div class="scCtrls">
+        <div style="color:#cbb892;font-size:14px;letter-spacing:.02em;font-family:'Jost',sans-serif;margin-top:16px">Press and hold the image to save</div>
+        <button onclick="doShareCard()" style="display:flex;align-items:center;gap:9px;padding:15px 34px;border:1.5px solid #C79A34;border-radius:0;background:#141210;color:#f4efe6;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:20px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E9C46E" stroke-width="2.2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share with a friend
+        </button>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:#bcb097;font-size:14.5px;font-family:'DM Sans',sans-serif;margin-top:13px;text-align:center">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#cbb892" stroke-width="1.9"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.15" fill="#cbb892" stroke="none"/></svg>
+          Text it or share to Instagram
+        </div>
+        <button onclick="closeCardPreview()" style="margin-top:20px;background:none;border:none;color:#8f8676;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+      </div>
     `;
   document.body.appendChild(overlay);
   window._cardBlob=blob;
