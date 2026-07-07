@@ -626,11 +626,12 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .pair .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border:3px solid transparent;border-radius:3px;cursor:pointer;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#F3E3A6,#C89A2C) border-box;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px #9aa1a7}
 .res-screen .pair .t svg{width:22px;height:22px;stroke:#8a6d20;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .pair .t span{font:600 13px/1 'Jost',sans-serif;color:#2f2a22}
-.res-screen .sc-lead{display:flex;align-items:center;justify-content:center;gap:11px;margin:20px 0 12px;color:#C8971E;font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase}
+.res-screen .pcard{width:330px;max-width:96%;margin:16px auto 0;opacity:0;background:#FCFCFB;border-radius:2px;box-shadow:0 12px 24px -14px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.35);padding:13px 17px 15px}
+.res-screen .sc-lead{display:flex;align-items:center;justify-content:center;gap:11px;margin:2px 0 12px;color:#C8971E;font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase}
 .res-screen .sc-lead i{height:1px;width:32px;display:block}
 .res-screen .sc-lead i.l{background:linear-gradient(90deg,transparent,#C8971E)}
 .res-screen .sc-lead i.r{background:linear-gradient(90deg,#C8971E,transparent)}
-.res-screen .sc-row{align-items:center}
+.res-screen .sc-row{display:flex;align-items:center;gap:13px;padding:2px 2px 3px;cursor:pointer;text-align:left}
 .res-screen .sc-thumb{width:60px;flex:0 0 auto;aspect-ratio:1080/1350;border-radius:2px;overflow:hidden;background:#141210;box-shadow:0 3px 9px -3px rgba(0,0,0,.6),inset 0 0 0 1px rgba(214,169,70,.5)}
 .res-screen .sc-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .res-screen .sc-tt{font-family:'Fraunces',Georgia,serif;font-size:18px;font-weight:600;line-height:1.14;color:#211E1A}
@@ -729,13 +730,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen.rv-open .spot{animation:rvSpot 2.1s ease .2s both}
 .res-screen.rv-open .p1{animation:rvRise .7s ease 1.15s both}
 .res-screen.rv-open .p2{animation:rvRise .7s ease 1.32s both}
-.res-screen.rv-open .p3{animation:rvRise .7s ease 1.5s both}
+.res-screen.rv-open .pcard{animation:rvRise .7s ease 1.46s both}
+.res-screen.rv-open .p3{animation:rvRise .7s ease 1.6s both}
 .res-screen.rv-open .shop-section{animation:rvRise .7s ease 1.6s both}
 .res-screen.rv-open .sig-dot{animation:sigPlot .75s cubic-bezier(.34,1.28,.5,1) both}
 .res-screen.rv-open .savebtn svg{animation:heartBeat 1s ease 2.5s 1 both}
 /* terminal static state — no animations, so returning to the screen never replays */
 .res-screen.rv-done .doors{display:none}
-.res-screen.rv-done .p1,.res-screen.rv-done .p2,.res-screen.rv-done .p3,.res-screen.rv-done .shop-section{opacity:1}
+.res-screen.rv-done .p1,.res-screen.rv-done .p2,.res-screen.rv-done .pcard,.res-screen.rv-done .p3,.res-screen.rv-done .shop-section{opacity:1}
 .res-screen.rv-done .spot{opacity:.62}
 
 @keyframes rvRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -753,7 +755,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 @media (prefers-reduced-motion: reduce){
   .res-screen .doors{display:none!important}
-  .res-screen .p1,.res-screen .p2,.res-screen .p3,.res-screen .shop-section{opacity:1!important;animation:none!important;transform:none!important}
+  .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section{opacity:1!important;animation:none!important;transform:none!important}
   .res-screen .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
   .res-screen .spot{animation:none!important;opacity:.62}
   .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
@@ -988,16 +990,21 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
     </div>
 
+    <!-- PIECE 2.5: Style Card — its own keepsake (business-card) panel -->
+    <div class="pcard">
+      <div class="sc-lead"><i class="l"></i>Your Style Card<i class="r"></i></div>
+      <div class="sc-row" data-shelf onclick="saveStyleCard('quiz')">
+        <span class="sc-thumb"><img id="scThumb" alt="Your Style Constellation preview"></span>
+        <div class="tx"><div class="sc-tt">View your Style Constellation</div><div class="sc-ss">A shareable keepsake of your signature style</div></div>
+        <span class="sc-ar" style="color:#C8971E">&rarr;</span>
+      </div>
+    </div>
+
     <!-- PIECE 3: actions -->
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
       <button class="savebtn" id="resSaveBtn" onclick="openSaveSheetManual()">
         <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my results</button>
-      <div class="sc-lead"><i class="l"></i>Your Style Card<i class="r"></i></div>
-      <div class="act" data-shelf onclick="saveStyleCard('quiz')">
-        <div class="actrow sc-row"><span class="sc-thumb"><img id="scThumb" alt="Your Style Constellation preview"></span><div class="tx"><div class="sc-tt">View your Style Constellation</div><div class="sc-ss">A shareable keepsake of your signature style</div></div><span class="sc-ar" style="color:#C8971E">&rarr;</span></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
-      </div>
       <!-- Action shelves — each bound to its existing handler -->
       <div class="act" data-shelf onclick="openPrefs()">
         <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
