@@ -973,12 +973,12 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   links waiting in her inbox), and honest email capture. Needs a MailerLite transactional/automation email
   wired up (dedicated session). Framing stays: shopping in-app is the hero; email is the "keep these for
   later" safety net, not a competing CTA.
-- ✅ **Removed the FTC disclosure from the "Complete the Look" board** (Cath's call — read as cringy). It
-  was also *premature/inaccurate*: no affiliate programs are approved yet, so the links earn $0 and there's
-  no affiliate relationship to disclose. ⚠️ **MUST RETURN when affiliate links go live** — fold into
-  money-path step 7 ("[Claude] wire affiliate links + FTC disclosure"). FTC wants the disclosure **clear +
-  conspicuous, NEXT TO the links** — the FAQ mention alone is NOT sufficient once links are tagged. When it
-  returns, use a softer, on-brand line (e.g. "Some links may earn us a small commission, at no cost to
-  you.") not the stiff "As an affiliate…" phrasing. Same disclosure still sits in the **Mall** (`s-shop`) —
-  left as-is for now; same "premature now, must return when tagged" logic applies there too. (Confirm
-  disclosure placement with Almira/Indie Law when applying to programs.)
+- **FTC disclosure on the "Complete the Look" board — softened, then kept.** First removed the stiff "As an
+  affiliate, Style Star may earn from qualifying purchases." (Cath: cringy; also premature since no
+  affiliate programs are approved yet). Then Cath chose to **put it back with warmer wording** to "manifest"
+  the approvals + keep the page revenue-ready: now reads **"Some links may earn us a small commission, at no
+  extra cost to you."** (`.shopdisc`). NOTE: it's slightly aspirational today (links are still untagged
+  search URLs earning $0) — Cath's deliberate call. ✅ Correct placement for later: FTC wants it **clear +
+  conspicuous, NEXT TO the links** (this board qualifies; FAQ-alone would not). The **Mall** (`s-shop`) still
+  has its own older disclosure — fine as-is. When affiliate links actually go live (money-path step 7),
+  confirm final disclosure wording/placement with Almira/Indie Law.
