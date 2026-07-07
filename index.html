@@ -268,24 +268,41 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .faq-sub{font-weight:600;color:#1a1a1a;margin-top:10px;margin-bottom:2px}
 .faq-steps{margin:2px 0 4px;padding-left:1.25rem}
 .faq-steps li{margin:4px 0}
-.photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;border:2px dashed #ddd;border-radius:20px;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s;background:#fafafa}
-.photo-upload-area:hover{border-color:#C8A060}
-.photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem}
-.photo-icon{font-size:40px}
-.photo-cta{font-size:17px;font-weight:700;color:#1a1a1a}
-.photo-sub{font-size:14px;color:#555;font-weight:500;line-height:1.4}
-.photo-hint{font-size:14px;color:#444;font-weight:500}
-.photo-preview{width:100%;height:100%;object-fit:cover;border-radius:18px}
-/* Optional "where are you headed?" occasion picker on the upload screen */
-#s-photo .occ-block{width:100%;max-width:330px;margin:14px auto 2px;text-align:center}
-#s-photo .occ-lbl{font:600 10px/1 'DM Sans',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#C8971E;margin-bottom:5px}
-#s-photo .occ-q{font:400 18px/1.2 'Fraunces',serif;color:#2a2620;margin-bottom:11px}
+/* ===== Analyze-an-outfit upload screen — dark "photo studio" glow-up ===== */
+#s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:10px 20px 22px;min-height:100vh;position:relative;overflow:hidden;color:#efe9dd;font-family:'Jost',sans-serif;background-color:#141009;background-image:radial-gradient(120% 42% at 50% 2%,rgba(255,233,188,.28),rgba(255,233,188,0) 54%),linear-gradient(180deg,#1c1710 0%,#141009 60%,#0f0c07 100%);box-shadow:inset 0 0 90px rgba(0,0,0,.5)}
+#s-photo .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:340px;margin:0 auto}
+#s-photo .ph-back{position:absolute;top:12px;right:18px;z-index:5;background:none;border:none;font:500 13px/1 'Jost',sans-serif;color:#cbb98f;cursor:pointer;padding:4px 2px;letter-spacing:.02em}
+#s-photo .ph-back:hover{color:#efe4c8}
+#s-photo .ph-logo{display:block;width:96px;height:auto;margin:8px auto 2px}
+#s-photo .ph-title{font:400 25px/1.15 'DM Serif Display',serif;color:#f4ecd8;margin:6px 0 8px}
+#s-photo .ph-rule{width:46px;height:1px;background:linear-gradient(90deg,transparent,#C9A24E,transparent);margin:0 auto 16px}
+#s-photo .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:radial-gradient(120% 90% at 50% 28%,#241d12,#14100a 76%);box-shadow:inset 0 0 0 1px rgba(201,162,78,.22),0 16px 34px -18px rgba(0,0,0,.75);transition:box-shadow .2s}
+#s-photo .photo-upload-area:hover{box-shadow:inset 0 0 0 1px rgba(214,169,70,.5),0 16px 34px -16px rgba(0,0,0,.8)}
+#s-photo .photo-upload-area::before,#s-photo .photo-upload-area::after{content:"";position:absolute;left:11px;right:11px;height:26px;pointer-events:none;z-index:3}
+#s-photo .photo-upload-area::before{top:11px;background:linear-gradient(#E9C46A,#E9C46A) left top/26px 2px no-repeat,linear-gradient(#E9C46A,#E9C46A) left top/2px 26px no-repeat,linear-gradient(#E9C46A,#E9C46A) right top/26px 2px no-repeat,linear-gradient(#E9C46A,#E9C46A) right top/2px 26px no-repeat}
+#s-photo .photo-upload-area::after{bottom:11px;background:linear-gradient(#E9C46A,#E9C46A) left bottom/26px 2px no-repeat,linear-gradient(#E9C46A,#E9C46A) left bottom/2px 26px no-repeat,linear-gradient(#E9C46A,#E9C46A) right bottom/26px 2px no-repeat,linear-gradient(#E9C46A,#E9C46A) right bottom/2px 26px no-repeat}
+#s-photo .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:9px;padding:1.4rem}
+#s-photo .photo-icon{font-size:42px}
+#s-photo .photo-cta{font:600 19px/1.25 'DM Serif Display',serif;color:#f4ecd8}
+#s-photo .photo-sub{font-size:13.5px;color:#c9bfa8;font-weight:400;line-height:1.45}
+#s-photo .photo-hint{font-size:12.5px;color:#a99f86;font-weight:400;line-height:1.5}
+#s-photo .photo-preview{width:100%;height:100%;object-fit:cover;border-radius:0}
+/* Optional "where are you headed?" occasion picker */
+#s-photo .occ-block{width:100%;max-width:330px;margin:18px auto 2px;text-align:center}
+#s-photo .occ-lbl{font:700 10px/1 'Jost',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#E9C46A;margin-bottom:6px}
+#s-photo .occ-q{font:400 20px/1.2 'DM Serif Display',serif;color:#f4ecd8;margin-bottom:12px}
 #s-photo .occ-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-#s-photo .occ-chip{border:1px solid rgba(201,162,78,.55);background:#fff;color:#4a453c;font:500 13px/1 'DM Sans',sans-serif;padding:9px 15px;border-radius:999px;cursor:pointer;transition:background .18s,color .18s,border-color .18s}
-#s-photo .occ-chip:hover{border-color:#C8971E}
+#s-photo .occ-chip{border:1px solid rgba(214,169,70,.5);background:rgba(255,247,225,.05);color:#e6dcc4;font:500 13px/1 'Jost',sans-serif;padding:9px 15px;border-radius:999px;cursor:pointer;transition:background .18s,color .18s,border-color .18s}
+#s-photo .occ-chip:hover{border-color:#E9C46A;color:#f4ecd8}
 #s-photo .occ-chip.sel{background:linear-gradient(180deg,#F6E4A6,#D8A93E);color:#3a2c08;border-color:#C89A2C;font-weight:600}
-#s-photo .occ-skip{margin-top:11px;font:400 12px/1 'DM Sans',sans-serif;color:#8a8578;text-decoration:underline;cursor:pointer;display:inline-block}
-#s-photo .occ-skip.done{color:#C8971E;text-decoration:none;font-weight:600}
+#s-photo .occ-skip{margin-top:12px;font:400 12px/1 'Jost',sans-serif;color:#b7ad95;text-decoration:underline;cursor:pointer;display:inline-block}
+#s-photo .occ-skip.done{color:#E9C46A;text-decoration:none;font-weight:600}
+#s-photo #analyzeBtn{width:100%;max-width:300px;margin:18px auto 0;padding:15px;border-radius:0;border:1.5px solid #C79A34;background:linear-gradient(180deg,#2a251c,#1a160f);color:#f4ecd8;font:600 13px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:filter .2s}
+#s-photo #analyzeBtn:hover{filter:brightness(1.12)}
+#s-photo .ph-foot{margin-top:22px;padding-top:15px;width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:11px;border-top:1px solid rgba(201,162,78,.2)}
+#s-photo .ph-foot .lnk{font:700 12px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#d8cead;cursor:pointer}
+#s-photo .ph-foot .lnk:hover{color:#f4ecd8}
+#s-photo .ph-foot .st{color:#C8971E;font-size:12px;line-height:1}
 .sheet-backdrop{position:fixed;inset:0;background:rgba(20,16,8,0.32);z-index:9998;display:none;align-items:flex-end;justify-content:center;opacity:0;transition:opacity .3s ease}
 .sheet-backdrop.show{opacity:1}
 .sheet-card{width:100%;max-width:480px;background:#fff;border-top-left-radius:24px;border-top-right-radius:24px;box-shadow:0 -8px 40px rgba(0,0,0,0.2);padding:1.25rem 1.5rem 1.75rem;transform:translateY(102%);transition:transform .38s cubic-bezier(.2,.85,.25,1);position:relative;text-align:center}
@@ -1059,11 +1076,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </div>
 
 <div class="scr" id="s-photo">
-  <div class="wel">
-    <div class="top-back-wrap" style="align-self:stretch;width:100%"><button class="top-back" onclick="showBack(photoPrevScreen)">&larr; Back</button></div>
+  <button class="ph-back" onclick="showBack(photoPrevScreen)">&larr; Back</button>
+  <div class="ph-wrap">
+    <img class="ph-logo" src="logo-card.png" alt="Style Star">
+    <div class="ph-title">Analyze an outfit</div>
+    <div class="ph-rule"></div>
     <div class="photo-upload-area" id="photoArea" onclick="document.getElementById('photoIn').click()">
       <div class="photo-placeholder" id="photoPlaceholder">
-        <div class="photo-icon" style="font-size:42px">📸🪄💫</div>
+        <div class="photo-icon">📸🪄💫</div>
         <div class="photo-cta">Tap to share a photo of your outfit</div>
         <div class="photo-sub">Receive personalized styling tips and shopping ideas</div>
         <div class="photo-hint">Tip: a full-length photo of just you<br>in your outfit gives the best results!</div>
@@ -1084,7 +1104,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <span class="occ-skip" id="occSkip" onclick="skipOccasion()">Skip &mdash; just style it</span>
     </div>
     <button class="btn-teal" id="analyzeBtn" style="display:none" onclick="analyzePhoto()">Analyze my outfit</button>
-    <button class="btn-outline" onclick="showBack(photoPrevScreen)">Back</button>
+    <div class="ph-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
   </div>
 </div>
 
@@ -1556,7 +1576,7 @@ function show(id,skipHistory){
   var onWel=(id==='s-wel');
   // Screens with their own built-in footer + logo hide the shared global chrome:
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
-  var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res');
+  var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo');
   var gf=document.querySelector('.quiz-footer');
   if(gf)gf.style.display=ownChrome?'none':'';
   if(id==='s-wb')updateWbScreen();
