@@ -943,3 +943,33 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
 - Verified in Chromium (stubbed AI): upload screen with occasion chips + selected/skip states; results
   render all three boards + actions correctly in the settled reveal state; no JS errors. **Worth a real-
   device glance + a live end-to-end test** (real photo through the Netlify function) before/after merge.
+
+**2026-07-07 (cont. — honest "save" on the outfit screen + quiz-aware chat)**
+- Cath spotted that "Save my results" on the outfit screen was a hollow promise: the save flow
+  (`buildFullUserData`) only persists the QUIZ profile (name/answers/archetypes/portrait/prefs) + email —
+  it does NOT save the photo's celebrate/tips/shop (those are ephemeral, generated live). So a quiz-SKIPPER
+  who goes straight to photo analysis had nothing real to "save." Also flagged: the "Complete the Look"
+  links open in a new tab (`target="_blank"`), so the analysis page stays intact while she shops link by
+  link — it only disappears if she fully closes/reloads the app (that cross-visit gap is what a future
+  "email me these tips" feature would fill). Agreed plan = ship the honest fixes (1-3) now; park the
+  email-the-tips feature (#4) for a dedicated MailerLite/transactional-email session.
+- ✅ **1-3 shipped (all quiz-awareness driven by the existing `quizTaken` flag + `topArchNames`):**
+  1. **Honest save on the outfit results** (`_photoSaveArea()`): if she's taken the quiz → show the
+     profile save with truthful copy — heart button "Save my style profile", keep block retitled
+     "Come back anytime / Save your details so Style Star remembers you on any device / Save & remember me".
+     If she has NOT taken the quiz → hide the save entirely and show a gold-framed **quiz-nudge card**
+     (`#photoQuizNudge`: "Want everything styled to you? Take the 2-minute quiz →" → `startQ()`). "Retake
+     the Quiz" is also hidden for skippers (they never took it). Partial/error hides the whole save area.
+  2. **Removed the auto-rising save sheet on the photo path** (dropped `scheduleSaveSheet()` from
+     `runPhotoAnalysis`) — it over-promised "save your results" for a page that doesn't save the outfit.
+  3. **Stylist chat is now quiz-aware** (`sendChat` system prompt): it no longer hardcodes "who has taken
+     the Style Star quiz." Quiz-takers → their real slider/archetype/prefs profile (as before). Skippers →
+     told she hasn't taken it, give great general advice, and may ONCE gently invite her to the 2-min quiz
+     when natural (never pushy, never repeated, never blocks the answer).
+- Verified both states in Chromium (stubbed): skipper sees the quiz-nudge card + no save + no retake;
+  quiz-taker sees the honest profile save; no JS errors.
+- ▶ **STILL TO DO (#4, parked — needs backend): "✉️ Email me these tips & links."** Send the celebrate +
+  finishing touches + shop links to her inbox — the real "save," a genuine conversion lever (shoppable
+  links waiting in her inbox), and honest email capture. Needs a MailerLite transactional/automation email
+  wired up (dedicated session). Framing stays: shopping in-app is the hero; email is the "keep these for
+  later" safety net, not a competing CTA.

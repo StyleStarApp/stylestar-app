@@ -692,6 +692,12 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* third styling board rises just after the finishing-touches board */
 .res-screen.rv-open .p2.p2b{animation:rvRise .7s ease 1.42s both}
 .res-screen.rv-done .p2.p2b{opacity:1}
+/* quiz-skipper nudge card (shown in place of the profile save) */
+.res-screen .quiznudge{margin:2px 0 4px;padding:18px 16px 17px;text-align:center;border-radius:3px;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 10px 22px -14px rgba(0,0,0,.5)}
+.res-screen .quiznudge .qn-star{font-size:19px;color:#C8971E;line-height:1}
+.res-screen .quiznudge h4{font:400 20px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:6px 0 5px}
+.res-screen .quiznudge p{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 13px;max-width:34ch}
+.res-screen .quiznudge .qn-btn{width:100%;border:none;border-radius:3px;padding:13px;cursor:pointer;background:linear-gradient(180deg,#33302A,#201D19);color:#F1DDA0;font:700 12px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase}
 
 /* beveled chrome mirror doors (reveal overlay) */
 .res-screen .doors{position:fixed;inset:0;overflow:hidden;z-index:60;perspective:1400px;pointer-events:none}
@@ -1133,8 +1139,16 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <!-- PIECE 4: actions -->
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
+      <!-- Quiz-skipper nudge: shown only when she hasn't taken the quiz (no profile to save) -->
+      <div class="quiznudge" id="photoQuizNudge" style="display:none">
+        <div class="qn-star">&#10022;</div>
+        <h4>Want everything styled to you?</h4>
+        <p>Take the 2-minute style quiz and I'll tailor your portrait, tips, and shopping to your taste.</p>
+        <button class="qn-btn" onclick="startQ()">Take the 2-minute quiz &rarr;</button>
+      </div>
+      <!-- Honest profile save: only meaningful once she's taken the quiz -->
       <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
-        <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my results</button>
+        <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my style profile</button>
       <div class="act" data-shelf onclick="openChat()">
         <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask about this look</span><span class="ar" style="color:#EC4899">&rarr;</span></div><div class="ss">Chat with your stylist, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -1156,13 +1170,13 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
 
-      <!-- Keep-your-portrait save block → existing save flow (_persistSave) -->
+      <!-- Profile save block (quiz-takers only) → existing save flow (_persistSave) -->
       <div class="keep" id="resKeepPhoto">
-        <h4>Keep your results</h4>
-        <p>Save it so it's waiting for you on any device.</p>
+        <h4>Come back anytime</h4>
+        <p>Save your details so Style Star remembers you on any device.</p>
         <input class="kin" id="keepNamePhoto" type="text" placeholder="Your first name (optional)"/>
         <input class="kin" id="keepEmailPhoto" type="email" placeholder="Enter your email"/>
-        <button class="kbtn" onclick="saveResKeep('keepNamePhoto','keepEmailPhoto','keepMsgPhoto')">Save my results</button>
+        <button class="kbtn" onclick="saveResKeep('keepNamePhoto','keepEmailPhoto','keepMsgPhoto')">Save &amp; remember me</button>
         <div class="keep-msg" id="keepMsgPhoto"></div>
         <div class="priv">We'll never share your email. <u onclick="showPrivacy()">Privacy Policy</u></div>
       </div>
@@ -1706,6 +1720,19 @@ async function retryPhoto(){
 function _photoBoards(on){
   ['pTipsBoard','pShopBoard','pWorkLbl'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=on?'':'none'});
 }
+// Decide the save area on the outfit screen. A profile save only makes sense once
+// she's taken the quiz; a quiz-skipper sees the "take the quiz" nudge instead.
+// Pass false (partial/error) to hide the whole area — nothing to save.
+function _photoSaveArea(on){
+  // "Retake the Quiz" only makes sense if she's actually taken it.
+  var rt=document.querySelector('#s-photo-res .retake-wrap');if(rt)rt.style.display=quizTaken?'':'none';
+  if(on===false){['resKeepPhoto','resSaveBtnPhoto','photoQuizNudge'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display='none'});return}
+  var showSave=quizTaken&&!emailDone;
+  ['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display=showSave?'':'none'});
+  var qn=document.getElementById('photoQuizNudge');if(qn)qn.style.display=quizTaken?'none':'';
+  if(showSave){var km=document.getElementById('keepMsgPhoto');if(km)km.textContent=''}
+  if(emailDone)hideSavePins();
+}
 const photoShopEmoji={top:'👚',bottom:'👖',dress:'👗',jacket:'🧥',shoes:'👠',bag:'👜',jewelry:'💎',belt:'🎀',accessory:'✨'};
 function _renderTips(tips){
   const c=document.getElementById('pTips');
@@ -1758,6 +1785,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
       document.getElementById('pOcc').textContent='';
       document.getElementById('prp').textContent=parsed.celebrate||parsed.portrait||'';
       _photoBoards(false);
+      _photoSaveArea(false);
       document.getElementById('pAltAction').innerHTML='<button onclick="showPhoto()">Share a full outfit photo</button>';
       _playResReveal(true,'s-photo-res');
       return;
@@ -1769,15 +1797,14 @@ Respond with ONLY valid JSON in this exact format, no other text:
     _renderShop(parsed.shop);
     document.getElementById('pAltAction').innerHTML='';
     _photoBoards(true);
-    if(emailDone){['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display='none'});hideSavePins()}
-    else{['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display=''});var km=document.getElementById('keepMsgPhoto');if(km)km.textContent=''}
+    _photoSaveArea();
     _playResReveal(true,'s-photo-res');
-    scheduleSaveSheet();
   }catch(e){
     document.getElementById('prn').textContent="Let's try that again";
     document.getElementById('pOcc').textContent='';
     document.getElementById('prp').textContent="The analysis took a little too long this time. This happens occasionally. Just tap the button below to try again with the same photo.";
     _photoBoards(false);
+    _photoSaveArea(false);
     document.getElementById('pAltAction').innerHTML='<button onclick="retryPhoto()">Try again</button>';
     _playResReveal(true,'s-photo-res');
   }
@@ -2753,10 +2780,18 @@ async function sendChat(){
 
   const sliderContext=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (1=${q.left}, 6=center, 11=${q.right})`).join(', ');
 
-  const systemPrompt=`You are a personal stylist powered by AI. You are chatting with ${userName&&userName!=='You'?userName:'a woman'} who has taken the Style Star quiz.
+  const _tookQuiz=quizTaken&&topArchNames.length>0;
+  const _who=userName&&userName!=='You'?userName:'a woman';
+  const _profileBlock=_tookQuiz
+    ? `You are chatting with ${_who}, who has taken the Style Star quiz, so you know her style well.
 
 Her style: ${sliderContext}
-Her style notes: ${topArchNames.join(', ')}${getPrefsForPrompt()}
+Her style notes: ${topArchNames.join(', ')}${getPrefsForPrompt()}`
+    : `You are chatting with ${_who}, who has NOT taken the Style Star quiz yet, so you don't know her detailed style profile.${getPrefsForPrompt()}
+
+Give genuinely helpful, specific advice based on what she tells you and what you can see. If it comes up naturally that knowing her taste would help, you may ONCE gently note that the quick 2-minute Style Star quiz lets you tailor everything to her. Never push it, never repeat it, and never let it get in the way of answering her question.`;
+
+  const systemPrompt=`You are a personal stylist powered by AI. ${_profileBlock}
 
 HOW TO RESPOND:
 - Get to the point. Lead with the specific suggestion or answer.
