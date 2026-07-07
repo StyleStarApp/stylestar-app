@@ -3149,47 +3149,34 @@ function sharePhotoResults(){
     navigator.clipboard.writeText(text+'\nhttps://stylestar.app').then(()=>{alert('Copied to clipboard!')}).catch(()=>{});
   }
 }
-function saveStyleCard(source){
-  buildCardBlob(source,function(blob,imgUrl){
-    const overlay=document.createElement('div');
-    overlay.id='cardPreview';
-    overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
-    overlay.innerHTML=`
-      <div style="color:#fff;font-size:18px;font-weight:600;font-family:'DM Sans',sans-serif;margin-bottom:10px">Your Style Card</div>
-      <img src="${imgUrl}" style="max-width:75%;max-height:65vh;border-radius:0;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
-      <div style="color:#ddd;font-size:17px;font-family:'DM Sans',sans-serif;margin-top:14px;font-weight:500">Press and hold the image to save</div>
-      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:7px;padding:15px 30px;border-radius:12px;border:none;background:#1a1a1a;color:#fff;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:18px">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+function _openCardOverlay(blob,imgUrl){
+  const overlay=document.createElement('div');
+  overlay.id='cardPreview';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(14,11,8,0.94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.2rem;overflow:auto';
+  overlay.innerHTML=`
+      <img src="${imgUrl}" style="max-width:80%;max-height:64vh;border-radius:0;box-shadow:0 12px 44px rgba(0,0,0,0.55)">
+      <div style="color:#cbb892;font-size:14px;letter-spacing:.02em;font-family:'Jost',sans-serif;margin-top:16px">Press and hold the image to save</div>
+      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:9px;padding:15px 34px;border:1.5px solid #C79A34;border-radius:0;background:#141210;color:#f4efe6;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:20px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E9C46E" stroke-width="2.2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         Share with a friend
       </button>
-      <div style="color:#bbb;font-size:14px;font-family:'DM Sans',sans-serif;margin-top:-2px;line-height:1.1">Text it, or post it to Instagram &amp; more ✨</div>
-      <button onclick="closeCardPreview()" style="margin-top:16px;background:none;border:none;color:#aaa;font-size:16px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline">Close</button>
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:#bcb097;font-size:14.5px;font-family:'DM Sans',sans-serif;margin-top:13px;text-align:center">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#cbb892" stroke-width="1.9"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.15" fill="#cbb892" stroke="none"/></svg>
+        Text it or share to Instagram
+      </div>
+      <button onclick="closeCardPreview()" style="margin-top:20px;background:none;border:none;color:#8f8676;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline">Close</button>
     `;
-    document.body.appendChild(overlay);
-    window._cardBlob=blob;
-    window._cardImgUrl=imgUrl;
-  });
+  document.body.appendChild(overlay);
+  window._cardBlob=blob;
+  window._cardImgUrl=imgUrl;
+}
+
+function saveStyleCard(source){
+  buildCardBlob(source,function(blob,imgUrl){_openCardOverlay(blob,imgUrl);});
 }
 
 function shareStyleCard(source){
-  buildCardBlob(source,function(blob,imgUrl){
-    const overlay=document.createElement('div');
-    overlay.id='cardPreview';
-    overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem';
-    overlay.innerHTML=`
-      <div style="color:#fff;font-size:18px;font-weight:600;font-family:'DM Sans',sans-serif;margin-bottom:10px">Share your style card</div>
-      <img src="${imgUrl}" style="max-width:75%;max-height:60vh;border-radius:0;box-shadow:0 4px 30px rgba(0,0,0,0.4)">
-      <button onclick="doShareCard()" style="display:flex;align-items:center;gap:7px;padding:15px 30px;border-radius:12px;border:none;background:#1a1a1a;color:#fff;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:18px">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        Share with a friend
-      </button>
-      <div style="color:#bbb;font-size:14px;font-family:'DM Sans',sans-serif;margin-top:-2px;line-height:1.1">Text it, or post it to Instagram &amp; more ✨</div>
-      <button onclick="closeCardPreview()" style="margin-top:16px;background:none;border:none;color:#aaa;font-size:16px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline">Close</button>
-    `;
-    document.body.appendChild(overlay);
-    window._cardBlob=blob;
-    window._cardImgUrl=imgUrl;
-  });
+  buildCardBlob(source,function(blob,imgUrl){_openCardOverlay(blob,imgUrl);});
 }
 
 function closeCardPreview(){
@@ -3298,29 +3285,29 @@ function buildCardBlob(source,callback){
     // logo — the real brand mark (star + wordmark + slider); kept compact so the star map has room
     if(logo&&logo.complete&&logo.naturalWidth){
       const lw=232,lh=lw*logo.naturalHeight/logo.naturalWidth;
-      ctx.drawImage(logo,W/2-lw/2,60,lw,lh);
+      ctx.drawImage(logo,W/2-lw/2,58,lw,lh);
     }else{
-      ctx.fillStyle='#E9C46E';ctx.font='48px "DM Serif Display", serif';ctx.fillText('✦',W/2,128);
-      ctx.fillStyle='#f1ece2';ctx.font='74px "DM Serif Display", serif';ctx.fillText('style',W/2,210);ctx.fillText('Star',W/2,284);
+      ctx.fillStyle='#E9C46E';ctx.font='48px "DM Serif Display", serif';ctx.fillText('✦',W/2,126);
+      ctx.fillStyle='#f1ece2';ctx.font='74px "DM Serif Display", serif';ctx.fillText('style',W/2,208);ctx.fillText('Star',W/2,282);
     }
 
     // headline — sits close under the logo
     ctx.fillStyle='#f1ece2';
     ctx.font='52px "DM Serif Display", serif';
-    ctx.fillText(d.name,W/2,388);
+    ctx.fillText(d.name,W/2,356);
 
     // archetype line — gold-star bullets between the names (shrinks to fit)
-    if(d.notes&&d.notes.length){drawNotes(ctx,d.notes,444);}
+    if(d.notes&&d.notes.length){drawNotes(ctx,d.notes,412);}
 
     // descriptive pull-quote — up to 3 lines, kept clear of the star map
     if(d.quote){
       ctx.fillStyle='#cbc2b3';
       ctx.font='italic 31px "Fraunces", serif';
-      wrap(ctx,'“'+d.quote+'”',W/2,502,860,44,3);
+      wrap(ctx,'“'+d.quote+'”',W/2,468,860,44,3);
     }
 
-    // constellation
-    drawConstellation(ctx,W/2,950,268,d.answers,d.questions);
+    // constellation — raised so the sign-off below isn't cramped
+    drawConstellation(ctx,W/2,912,268,d.answers,d.questions);
 
     // sign-off
     ctx.fillStyle='#f1ece2';
