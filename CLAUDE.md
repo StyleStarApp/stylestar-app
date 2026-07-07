@@ -958,13 +958,13 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
      profile save with truthful copy — heart button "Save my style profile", keep block retitled
      "Come back anytime / Save your details so Style Star remembers you on any device / Save & remember me".
      If she has NOT taken the quiz → hide the save entirely and show a gold-framed **quiz-nudge card**
-     (`#photoQuizNudge`: "Want everything styled to you? Take the 2-minute quiz →" → `startQ()`). "Retake
+     (`#photoQuizNudge`: "Want everything styled to you? Take our fun style quiz →" → `startQ()`). "Retake
      the Quiz" is also hidden for skippers (they never took it). Partial/error hides the whole save area.
   2. **Removed the auto-rising save sheet on the photo path** (dropped `scheduleSaveSheet()` from
      `runPhotoAnalysis`) — it over-promised "save your results" for a page that doesn't save the outfit.
   3. **Stylist chat is now quiz-aware** (`sendChat` system prompt): it no longer hardcodes "who has taken
      the Style Star quiz." Quiz-takers → their real slider/archetype/prefs profile (as before). Skippers →
-     told she hasn't taken it, give great general advice, and may ONCE gently invite her to the 2-min quiz
+     told she hasn't taken it, give great general advice, and may ONCE gently invite her to our fun quiz
      when natural (never pushy, never repeated, never blocks the answer).
 - Verified both states in Chromium (stubbed): skipper sees the quiz-nudge card + no save + no retake;
   quiz-taker sees the honest profile save; no JS errors.

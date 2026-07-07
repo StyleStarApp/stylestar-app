@@ -1143,8 +1143,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="quiznudge" id="photoQuizNudge" style="display:none">
         <div class="qn-star">&#10022;</div>
         <h4>Want everything styled to you?</h4>
-        <p>Take the 2-minute style quiz and I'll tailor your portrait, tips, and shopping to your taste.</p>
-        <button class="qn-btn" onclick="startQ()">Take the 2-minute quiz &rarr;</button>
+        <p>Take our fun style quiz and I'll tailor your portrait, tips, and shopping to your taste.</p>
+        <button class="qn-btn" onclick="startQ()">Take our fun style quiz &rarr;</button>
       </div>
       <!-- Honest profile save: only meaningful once she's taken the quiz -->
       <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
@@ -2013,7 +2013,7 @@ async function restoreResults(){
       const top3=topArchNames.map(n=>({n:n}));
       showResult(d.portrait,top3);
     }else{
-      document.getElementById('restoreMsg').innerHTML="We couldn't find results for that email. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take the quiz</span>? It only takes 2 minutes!";
+      document.getElementById('restoreMsg').innerHTML="We couldn't find results for that email. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take our fun style quiz</span>?";
     }
   }catch(e){
     document.getElementById('restoreMsg').textContent='Something went wrong. Please try again.';
@@ -2789,7 +2789,7 @@ Her style: ${sliderContext}
 Her style notes: ${topArchNames.join(', ')}${getPrefsForPrompt()}`
     : `You are chatting with ${_who}, who has NOT taken the Style Star quiz yet, so you don't know her detailed style profile.${getPrefsForPrompt()}
 
-Give genuinely helpful, specific advice based on what she tells you and what you can see. If it comes up naturally that knowing her taste would help, you may ONCE gently note that the quick 2-minute Style Star quiz lets you tailor everything to her. Never push it, never repeat it, and never let it get in the way of answering her question.`;
+Give genuinely helpful, specific advice based on what she tells you and what you can see. If it comes up naturally that knowing her taste would help, you may ONCE gently note that our fun Style Star style quiz lets you tailor everything to her. Never push it, never repeat it, and never let it get in the way of answering her question.`;
 
   const systemPrompt=`You are a personal stylist powered by AI. ${_profileBlock}
 
