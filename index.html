@@ -1475,7 +1475,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <div class="chat-hdr-sub">AI-powered • Trained by a professional stylist</div>
         </div>
       </div>
-      <button class="chat-close" onclick="chatDone()">Done</button>
+      <button class="chat-close" onclick="chatBack()">&larr; Back</button>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-suggestions" id="chatSuggestions">
@@ -3075,7 +3075,7 @@ function openChatAboutLook(){
   if(!_lookGreeted){
     _lookGreeted=true;
     // Post the outfit as HER message (like she just texted it), then a warm greeting.
-    addChatMsg("Here's the outfit I just shared. I'd love your help taking it further.","user",'data:image/jpeg;base64,'+photoData);
+    addChatMsg("Here's the photo I just shared.","user",'data:image/jpeg;base64,'+photoData);
     addChatMsg("Got it, I can see your outfit here. What would you like to explore: a finishing touch, something to add, or where to shop it?","bot");
     var sug=document.getElementById('chatSuggestions');if(sug)sug.style.display='none';
   }
@@ -3094,7 +3094,10 @@ function wbChat(){
 }
 
 function closeChat(){chatLookPhoto=null;showBack(chatPrevScreen)}
+// Done → land on the "What would you like to do?" menu; Back → top of the origin
+// (e.g. re-read the outfit analysis and scroll to the shopping links).
 function chatDone(){chatLookPhoto=null;showBack(chatPrevScreen)}
+function chatBack(){chatLookPhoto=null;show(chatPrevScreen)}
 
 function linkStores(text){
   const storeNames='Nordstrom|J\\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia';
