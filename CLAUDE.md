@@ -1308,3 +1308,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   so the outfit posts as HER photo message bubble and the stylist replies to it (the image goes to the AI
   with that turn). `_lookGreeted` still guards one seed per analysis. Verified: first msg is a user bubble
   with `img.chat-msg-img` + caption, `chatPhotoData` clears after send, no JS errors.
+
+**2026-07-08 (cont. — FIX outfit→chat glitch: photo lost after first turn + no scroll)**
+- Real-device bug (Cath's screenshots): from outfit results → "Ask about this look", the seeded auto-send
+  errored ("I'm having a moment"), and because the photo was cleared after that one send, her next
+  question had no image so the stylist said "the photo didn't come through." Also the chat landed at the
+  TOP (had to scroll to find the photo). Fixes (all in the chat path):
+  - **`chatLookPhoto` persists the outfit for the whole conversation.** `sendChat` now attaches
+    `chatPhotoData || chatLookPhoto`, so EVERY question re-sends the look image → the stylist keeps seeing
+    the outfit; a single hiccup can't lose it. Cleared on leaving chat (`closeChat`/`chatDone`), when she
+    attaches a different photo (`onChatPhoto`), and on a new analysis (`runPhotoAnalysis`).
+  - **Dropped the fragile auto-send on open.** `openChatAboutLook` now posts her photo as a message bubble
+    (like she texted it) + a reliable canned greeting ("Got it, I can see your outfit here…") — no API call
+    that can fail at the transition. Her first real question is what carries the image to the AI.
+  - **Scroll fix:** after seeding, scroll `#chatMessages` to the bottom once the (tall) image has laid out
+    (img.onload + rAF + timeout) so it lands on the photo/greeting instead of the top.
+  - Verified in Chromium with a stubbed API: photo bubble + greeting posted, lands at bottom, and a
+    follow-up question's request body includes the image block (`chatLookPhoto`); persists across turns.
