@@ -282,8 +282,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-wires circle{fill:none;stroke:#C79A34;stroke-width:1.7}
 #s-photo .ph-logo-frame{width:188px;padding:3px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
 #s-photo .ph-logo-frame img{display:block;width:66px;height:auto}
-#s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.55);transition:transform .15s;touch-action:none;user-select:none;-webkit-user-select:none}
-#s-photo .photo-upload-area.editing{cursor:grab}
+#s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
+/* Only capture touch gestures once a photo is loaded; before that the frame
+   scrolls the page like everything else. */
+#s-photo .photo-upload-area.editing{cursor:grab;touch-action:none}
 #s-photo .photo-upload-area.editing:active{cursor:grabbing}
 #s-photo .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem;cursor:pointer}
 #s-photo .photo-icon{font-size:40px}
@@ -295,11 +297,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-edit{position:absolute;inset:0;pointer-events:none}
 #s-photo .ph-hint{position:absolute;bottom:57px;left:50%;transform:translateX(-50%);background:rgba(20,18,14,.62);color:#fff;font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.05em;padding:6px 11px;border-radius:999px;white-space:nowrap;transition:opacity .55s}
 #s-photo .ph-change{position:absolute;top:9px;left:9px;pointer-events:auto;background:rgba(20,18,14,.6);color:#fff;border:none;font:700 10px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;padding:7px 10px;border-radius:999px;cursor:pointer}
-#s-photo .ph-zoom{position:absolute;left:11px;right:11px;bottom:10px;display:flex;align-items:center;gap:10px;pointer-events:auto;background:rgba(20,18,14,.5);padding:7px 11px;border-radius:999px}
-#s-photo .ph-zoom button{flex:0 0 auto;width:27px;height:27px;border-radius:50%;border:none;background:rgba(255,255,255,.94);color:#1a1a1a;font:700 18px/1 'Jost',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
-#s-photo .ph-zoom input[type=range]{flex:1 1 auto;width:auto;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:rgba(255,255,255,.55);margin:0;padding:0}
-#s-photo .ph-zoom input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#F1DDA0;border:1px solid #C79A34;cursor:pointer}
-#s-photo .ph-zoom input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#F1DDA0;border:1px solid #C79A34;cursor:pointer}
 #s-photo .ph-crop-btn{left:auto;right:9px}
 #s-photo .photo-upload-area.cropmode .ph-crop-btn{background:#C79A34;color:#1a1a1a}
 /* Adjustable crop box — pull the corners in to frame what to keep, then Done applies it */
@@ -311,9 +308,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-crop .ch-tr{top:-11px;right:-11px}#s-photo .ph-crop .ch-tr::after{top:13px;right:13px;border-left:none;border-bottom:none}
 #s-photo .ph-crop .ch-bl{bottom:-11px;left:-11px}#s-photo .ph-crop .ch-bl::after{bottom:13px;left:13px;border-right:none;border-top:none}
 #s-photo .ph-crop .ch-br{bottom:-11px;right:-11px}#s-photo .ph-crop .ch-br::after{bottom:13px;right:13px;border-left:none;border-top:none}
-/* Crop mode declutters: hide Change + zoom bar, move Done to bottom-center */
+/* Crop mode declutters: hide the Change button, move Done to bottom-center */
 #s-photo .photo-upload-area.cropmode .ph-change:not(.ph-crop-btn){display:none}
-#s-photo .photo-upload-area.cropmode .ph-zoom{display:none}
 #s-photo .photo-upload-area.cropmode .ph-crop-btn{top:auto;bottom:13px;left:50%;right:auto;transform:translateX(-50%);padding:9px 24px;font-size:11px}
 /* Optional "where are you headed?" occasion picker */
 #s-photo .occ-block{width:100%;max-width:330px;margin:12px auto 2px;text-align:center}
@@ -1137,11 +1133,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="ph-hint" id="phHint">Drag to reposition &middot; pinch to zoom</div>
         <button type="button" class="ph-change" onclick="document.getElementById('photoIn').click()">Change</button>
         <button type="button" class="ph-change ph-crop-btn" id="phCropBtn" onclick="toggleCrop()">Crop</button>
-        <div class="ph-zoom">
-          <button type="button" onclick="phZoomStep(-1)" aria-label="Zoom out">&minus;</button>
-          <input type="range" id="phZoomRange" min="0" max="1" step="0.001" value="0" oninput="phZoomSet(this.value)" aria-label="Zoom">
-          <button type="button" onclick="phZoomStep(1)" aria-label="Zoom in">+</button>
-        </div>
       </div>
     </div>
     <input type="file" id="photoIn" accept="image/*" style="display:none" onchange="onPhotoSelect(this)">
@@ -1802,8 +1793,6 @@ function _cropApply(){
   if(dH<=_cropH){_cTy=(_cropH-dH)/2}else{_cTy=Math.min(0,Math.max(_cropH-dH,_cTy))}
   var img=document.getElementById('photoPreview');
   img.style.transform='translate('+_cTx+'px,'+_cTy+'px) scale('+_cScale+')';
-  var r=document.getElementById('phZoomRange');
-  if(r&&_cMax>_cMin)r.value=((_cScale-_cMin)/(_cMax-_cMin)).toFixed(3);
 }
 function _cropInit(){
   _cropFrame();
@@ -1823,8 +1812,6 @@ function _zoomAround(ns,cx,cy){
   _cScale=ns;_cTx=cx-ix*_cScale;_cTy=cy-iy*_cScale;_cropApply();
 }
 function _fadeHint(){var h=document.getElementById('phHint');if(h)h.style.opacity='0'}
-function phZoomSet(v){_zoomAround(_cMin+(_cMax-_cMin)*parseFloat(v),_cropW/2,_cropH/2);_fadeHint()}
-function phZoomStep(dir){_zoomAround(_cScale*(dir>0?1.25:0.8),_cropW/2,_cropH/2);_fadeHint()}
 function _mid(a,b){return{x:(a.x+b.x)/2,y:(a.y+b.y)/2}}
 function _dist(a,b){var dx=a.x-b.x,dy=a.y-b.y;return Math.sqrt(dx*dx+dy*dy)}
 function _initCropHandlers(){
@@ -1832,7 +1819,7 @@ function _initCropHandlers(){
   if(!a||a._ch)return;a._ch=1;
   a.addEventListener('pointerdown',function(e){
     if(!photoImg||_cropMode)return;
-    if(e.target.closest('.ph-zoom')||e.target.closest('.ph-change'))return;
+    if(e.target.closest('.ph-change'))return;
     try{a.setPointerCapture(e.pointerId)}catch(x){}
     _cPts[e.pointerId]={x:e.clientX,y:e.clientY};e.preventDefault();
   });
