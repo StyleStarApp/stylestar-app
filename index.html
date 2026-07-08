@@ -275,31 +275,46 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
 #s-photo .ph-back{position:absolute;top:24px;right:18px;z-index:5;background:none;border:none;font:700 12px/1 'Jost',sans-serif;color:#5a5348;cursor:pointer;padding:4px 2px;letter-spacing:.1em;text-transform:uppercase}
 #s-photo .ph-back:hover{color:#1a1a1a}
-#s-photo .ph-logo-frame{width:172px;margin:2px auto 10px;padding:4px 0;background:#fff;border:4px solid #1a1a1a;box-shadow:0 6px 14px -8px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center}
+/* Logo plaque hanging from the gold rod on two wires */
+#s-photo .ph-hang{position:relative;width:188px;margin:-16px auto 12px;padding-top:36px}
+#s-photo .ph-wires{position:absolute;top:0;left:0;width:188px;height:36px;overflow:visible}
+#s-photo .ph-wires line{stroke:#C79A34;stroke-width:1.6}
+#s-photo .ph-wires circle{fill:none;stroke:#C79A34;stroke-width:1.7}
+#s-photo .ph-logo-frame{width:188px;padding:8px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
 #s-photo .ph-logo-frame img{display:block;width:66px;height:auto}
-#s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.55);transition:transform .15s}
-#s-photo .photo-upload-area:active{transform:scale(.99)}
-#s-photo .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem}
+#s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.55);transition:transform .15s;touch-action:none;user-select:none;-webkit-user-select:none}
+#s-photo .photo-upload-area.editing{cursor:grab}
+#s-photo .photo-upload-area.editing:active{cursor:grabbing}
+#s-photo .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem;cursor:pointer}
 #s-photo .photo-icon{font-size:40px}
 #s-photo .photo-cta{font:600 20px/1.2 'DM Serif Display',serif;color:#1a1a1a}
 #s-photo .photo-sub{font:italic 400 16.5px/1.35 'Fraunces',serif;color:#C8971E}
 #s-photo .photo-hint{font:700 11.5px/1.5 'Jost',sans-serif;letter-spacing:.11em;text-transform:uppercase;color:#C8971E;max-width:230px}
-#s-photo .photo-preview{width:100%;height:100%;object-fit:contain;border-radius:0;background:#fff}
+#s-photo .photo-preview{position:absolute;top:0;left:0;transform-origin:0 0;max-width:none;will-change:transform;pointer-events:none;-webkit-user-drag:none}
+/* In-frame crop / zoom editor */
+#s-photo .ph-edit{position:absolute;inset:0;pointer-events:none}
+#s-photo .ph-hint{position:absolute;bottom:57px;left:50%;transform:translateX(-50%);background:rgba(20,18,14,.62);color:#fff;font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.05em;padding:6px 11px;border-radius:999px;white-space:nowrap;transition:opacity .55s}
+#s-photo .ph-change{position:absolute;top:9px;left:9px;pointer-events:auto;background:rgba(20,18,14,.6);color:#fff;border:none;font:700 10px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;padding:7px 10px;border-radius:999px;cursor:pointer}
+#s-photo .ph-zoom{position:absolute;left:11px;right:11px;bottom:10px;display:flex;align-items:center;gap:10px;pointer-events:auto;background:rgba(20,18,14,.5);padding:7px 11px;border-radius:999px}
+#s-photo .ph-zoom button{flex:0 0 auto;width:27px;height:27px;border-radius:50%;border:none;background:rgba(255,255,255,.94);color:#1a1a1a;font:700 18px/1 'Jost',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+#s-photo .ph-zoom input[type=range]{flex:1 1 auto;width:auto;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:rgba(255,255,255,.55);margin:0;padding:0}
+#s-photo .ph-zoom input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#F1DDA0;border:1px solid #C79A34;cursor:pointer}
+#s-photo .ph-zoom input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#F1DDA0;border:1px solid #C79A34;cursor:pointer}
 /* Optional "where are you headed?" occasion picker */
-#s-photo .occ-block{width:100%;max-width:320px;margin:6px auto 2px;text-align:center}
-#s-photo .occ-q{display:flex;align-items:baseline;justify-content:center;gap:9px;font:400 20px/1.2 'DM Serif Display',serif;color:#1a1a1a;margin-bottom:8px}
+#s-photo .occ-block{width:100%;max-width:330px;margin:12px auto 2px;text-align:center}
+#s-photo .occ-q{display:flex;align-items:baseline;justify-content:center;gap:9px;font:400 20px/1.2 'DM Serif Display',serif;color:#1a1a1a;margin-bottom:9px}
 #s-photo .occ-opt{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#C8971E}
-#s-photo .occ-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-#s-photo .occ-chip{border:1px solid #c9b487;background:#fff;color:#3a352c;font:600 14px/1 'Jost',sans-serif;padding:10px 15px;border-radius:3px;cursor:pointer;transition:all .18s}
+#s-photo .occ-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:318px;margin:0 auto}
+#s-photo .occ-chip{border:1px solid #c9b487;background:#fff;color:#3a352c;font:600 13.5px/1 'Jost',sans-serif;padding:11px 6px;border-radius:3px;cursor:pointer;transition:all .18s;text-align:center;white-space:nowrap}
 #s-photo .occ-chip:hover{border-color:#1a1a1a}
 #s-photo .occ-chip.sel{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
-#s-photo .occ-skip{margin-top:13px;font:italic 400 16.5px/1 'Fraunces',serif;color:#6a6355;text-decoration:underline;cursor:pointer;display:inline-block}
-#s-photo .occ-skip.done{color:#C8971E;text-decoration:none;font-style:normal;font-weight:600}
-#s-photo #analyzeBtn{position:relative;display:block;text-align:center;width:100%;max-width:344px;margin:12px auto 0;padding:15px;border:5px solid transparent;border-radius:4px;cursor:pointer;background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519) border-box;color:#F1DDA0;font:700 13px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 14px 26px -12px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7;transition:filter .2s}
+#s-photo .occ-chip.occ-skip-chip{font-style:italic;color:#6a6355}
+#s-photo .occ-chip.occ-skip-chip.sel{color:#fff;font-style:normal}
+#s-photo #analyzeBtn{position:relative;display:block;text-align:center;width:100%;max-width:344px;margin:12px auto 0;padding:16px;border:5px solid transparent;border-radius:4px;cursor:pointer;background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519) border-box;color:#F1DDA0;font:700 15.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 14px 26px -12px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7;transition:filter .2s}
 #s-photo #analyzeBtn:hover{filter:brightness(1.1)}
 #s-photo #analyzeBtn .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssShimmer 2.8s ease-in-out infinite;pointer-events:none}
 #s-photo #analyzeBtn .lbl{position:relative;display:inline-flex;align-items:center;vertical-align:middle;gap:9px;white-space:nowrap}
-#s-photo #analyzeBtn svg{width:18px;height:18px;stroke:#F1DDA0;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#s-photo #analyzeBtn svg{width:23px;height:23px;stroke:#F1DDA0;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #s-photo .ph-foot{margin-top:16px;padding-top:13px;width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:11px;border-top:1px solid rgba(201,162,78,.3)}
 #s-photo .ph-foot .lnk{font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a453c;cursor:pointer}
 #s-photo .ph-foot .lnk:hover{color:#1a1a1a}
@@ -1080,15 +1095,31 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="ph-rod"></div>
   <button class="ph-back" onclick="showBack(photoPrevScreen)">&larr; Back</button>
   <div class="ph-wrap">
-    <div class="ph-logo-frame"><img src="logo-tight.png" alt="Style Star"></div>
-    <div class="photo-upload-area" id="photoArea" onclick="document.getElementById('photoIn').click()">
-      <div class="photo-placeholder" id="photoPlaceholder">
+    <div class="ph-hang">
+      <svg class="ph-wires" viewBox="0 0 188 36" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="94" y1="5" x2="14" y2="35"/>
+        <line x1="94" y1="5" x2="174" y2="35"/>
+        <circle cx="94" cy="5" r="3.4"/>
+      </svg>
+      <div class="ph-logo-frame"><img src="logo-tight.png" alt="Style Star"></div>
+    </div>
+    <div class="photo-upload-area" id="photoArea">
+      <div class="photo-placeholder" id="photoPlaceholder" onclick="document.getElementById('photoIn').click()">
         <div class="photo-icon">📸</div>
         <div class="photo-cta">Tap to share your photo</div>
         <div class="photo-sub">I'll style it, just for you</div>
         <div class="photo-hint">✦ Full-length photo of just you works best</div>
       </div>
-      <img id="photoPreview" class="photo-preview" style="display:none">
+      <img id="photoPreview" class="photo-preview" style="display:none" alt="Your photo">
+      <div class="ph-edit" id="phEdit" style="display:none">
+        <div class="ph-hint" id="phHint">Drag to reposition &middot; pinch to zoom</div>
+        <button type="button" class="ph-change" onclick="document.getElementById('photoIn').click()">Change</button>
+        <div class="ph-zoom">
+          <button type="button" onclick="phZoomStep(-1)" aria-label="Zoom out">&minus;</button>
+          <input type="range" id="phZoomRange" min="0" max="1" step="0.001" value="0" oninput="phZoomSet(this.value)" aria-label="Zoom">
+          <button type="button" onclick="phZoomStep(1)" aria-label="Zoom in">+</button>
+        </div>
+      </div>
     </div>
     <input type="file" id="photoIn" accept="image/*" style="display:none" onchange="onPhotoSelect(this)">
     <div class="occ-block">
@@ -1098,9 +1129,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button type="button" class="occ-chip" onclick="pickOccasion(this,'Date night')">Date night</button>
         <button type="button" class="occ-chip" onclick="pickOccasion(this,'Weekend')">Weekend</button>
         <button type="button" class="occ-chip" onclick="pickOccasion(this,'Event')">Event</button>
-        <button type="button" class="occ-chip" onclick="pickOccasion(this,'Just for fun')">Just for fun</button>
+        <button type="button" class="occ-chip" onclick="pickOccasion(this,'Casual Fun')">Casual Fun</button>
+        <button type="button" class="occ-chip occ-skip-chip" onclick="skipOccasion(this)">Skip</button>
       </div>
-      <span class="occ-skip" id="occSkip" onclick="skipOccasion()">Skip &mdash; just style it</span>
     </div>
     <button id="analyzeBtn" onclick="ctaAnalyze()"><span class="shim"></span><span class="lbl">Analyze my outfit <svg viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></button>
     <div class="ph-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
@@ -1712,58 +1743,147 @@ async function saveResKeep(nameId,emailId,msgId){
 let photoData=null,photoType="image/jpeg";
 let photoPrevScreen='s-wel';
 let photoOccasion='';
+// Crop/zoom editor state — she can reposition + zoom the photo (e.g. crop out other
+// people in a group shot) inside the fixed portrait frame before submitting.
+let photoImg=null,photoImgW=0,photoImgH=0;
+let _cropW=0,_cropH=0,_cScale=1,_cMin=1,_cMax=4,_cTx=0,_cTy=0;
+let _cPts={};
 function startPhoto(){if(!userName||userName==='You'){userName='You'}showPhoto()}
-function showPhoto(){var a=document.querySelector('.scr.act');if(a&&a.id&&a.id!=='s-photo'){photoPrevScreen=a.id}show('s-photo');document.getElementById('photoPreview').style.display='none';document.getElementById('photoPlaceholder').style.display='flex';document.getElementById('analyzeBtn').style.display='block';photoData=null;resetOccasion()}
+function showPhoto(){var a=document.querySelector('.scr.act');if(a&&a.id&&a.id!=='s-photo'){photoPrevScreen=a.id}show('s-photo');
+  var pv=document.getElementById('photoPreview');pv.style.display='none';pv.style.transform='';pv.removeAttribute('src');
+  document.getElementById('photoPlaceholder').style.display='flex';
+  document.getElementById('photoArea').classList.remove('editing');
+  var ed=document.getElementById('phEdit');if(ed)ed.style.display='none';
+  document.getElementById('analyzeBtn').style.display='block';
+  photoData=null;photoImg=null;_cPts={};resetOccasion()}
 // Optional "where are you headed?" picker — tailors the tips + shopping to the moment.
-function resetOccasion(){photoOccasion='';document.querySelectorAll('#occChips .occ-chip').forEach(function(c){c.classList.remove('sel')});var sk=document.getElementById('occSkip');if(sk)sk.classList.remove('done')}
+function resetOccasion(){photoOccasion='';document.querySelectorAll('#occChips .occ-chip').forEach(function(c){c.classList.remove('sel')})}
 function pickOccasion(btn,name){
   var already=btn.classList.contains('sel');
   document.querySelectorAll('#occChips .occ-chip').forEach(function(c){c.classList.remove('sel')});
-  var sk=document.getElementById('occSkip');if(sk)sk.classList.remove('done');
   if(already){photoOccasion='';return}
   btn.classList.add('sel');photoOccasion=name;
 }
-function skipOccasion(){
+function skipOccasion(btn){
   photoOccasion='';
   document.querySelectorAll('#occChips .occ-chip').forEach(function(c){c.classList.remove('sel')});
-  var sk=document.getElementById('occSkip');if(sk)sk.classList.add('done');
+  if(btn)btn.classList.add('sel');
+}
+// ---- Crop / zoom editor ----------------------------------------------------
+function _cropFrame(){var a=document.getElementById('photoArea');_cropW=a.clientWidth;_cropH=a.clientHeight}
+function _cropApply(){
+  var dW=photoImgW*_cScale,dH=photoImgH*_cScale;
+  if(dW<=_cropW){_cTx=(_cropW-dW)/2}else{_cTx=Math.min(0,Math.max(_cropW-dW,_cTx))}
+  if(dH<=_cropH){_cTy=(_cropH-dH)/2}else{_cTy=Math.min(0,Math.max(_cropH-dH,_cTy))}
+  var img=document.getElementById('photoPreview');
+  img.style.transform='translate('+_cTx+'px,'+_cTy+'px) scale('+_cScale+')';
+  var r=document.getElementById('phZoomRange');
+  if(r&&_cMax>_cMin)r.value=((_cScale-_cMin)/(_cMax-_cMin)).toFixed(3);
+}
+function _cropInit(){
+  _cropFrame();
+  _cMin=Math.min(_cropW/photoImgW,_cropH/photoImgH);  // "fit" — whole photo visible
+  _cMax=_cMin*4;
+  _cScale=_cMin;_cTx=(_cropW-photoImgW*_cScale)/2;_cTy=(_cropH-photoImgH*_cScale)/2;
+  var img=document.getElementById('photoPreview');
+  img.style.width=photoImgW+'px';img.style.height=photoImgH+'px';
+  _cropApply();
+}
+function _zoomAround(ns,cx,cy){
+  ns=Math.min(_cMax,Math.max(_cMin,ns));
+  var ix=(cx-_cTx)/_cScale,iy=(cy-_cTy)/_cScale;
+  _cScale=ns;_cTx=cx-ix*_cScale;_cTy=cy-iy*_cScale;_cropApply();
+}
+function _fadeHint(){var h=document.getElementById('phHint');if(h)h.style.opacity='0'}
+function phZoomSet(v){_zoomAround(_cMin+(_cMax-_cMin)*parseFloat(v),_cropW/2,_cropH/2);_fadeHint()}
+function phZoomStep(dir){_zoomAround(_cScale*(dir>0?1.25:0.8),_cropW/2,_cropH/2);_fadeHint()}
+function _mid(a,b){return{x:(a.x+b.x)/2,y:(a.y+b.y)/2}}
+function _dist(a,b){var dx=a.x-b.x,dy=a.y-b.y;return Math.sqrt(dx*dx+dy*dy)}
+function _initCropHandlers(){
+  var a=document.getElementById('photoArea');
+  if(!a||a._ch)return;a._ch=1;
+  a.addEventListener('pointerdown',function(e){
+    if(!photoImg)return;
+    if(e.target.closest('.ph-zoom')||e.target.closest('.ph-change'))return;
+    try{a.setPointerCapture(e.pointerId)}catch(x){}
+    _cPts[e.pointerId]={x:e.clientX,y:e.clientY};e.preventDefault();
+  });
+  a.addEventListener('pointermove',function(e){
+    if(!photoImg||!_cPts[e.pointerId])return;
+    var ids=Object.keys(_cPts);
+    if(ids.length>=2){
+      var p0=_cPts[ids[0]],p1=_cPts[ids[1]];
+      var oldMid=_mid(p0,p1),oldDist=_dist(p0,p1);
+      _cPts[e.pointerId]={x:e.clientX,y:e.clientY};
+      var q0=_cPts[ids[0]],q1=_cPts[ids[1]];
+      var newMid=_mid(q0,q1),newDist=_dist(q0,q1);
+      var rect=a.getBoundingClientRect();
+      _cTx+=(newMid.x-oldMid.x);_cTy+=(newMid.y-oldMid.y);
+      if(oldDist>0)_zoomAround(_cScale*(newDist/oldDist),newMid.x-rect.left-12,newMid.y-rect.top-12);
+      else _cropApply();
+    }else{
+      var pr=_cPts[e.pointerId];
+      _cTx+=(e.clientX-pr.x);_cTy+=(e.clientY-pr.y);
+      _cPts[e.pointerId]={x:e.clientX,y:e.clientY};
+      _cropApply();
+    }
+    _fadeHint();e.preventDefault();
+  });
+  function up(e){delete _cPts[e.pointerId]}
+  a.addEventListener('pointerup',up);a.addEventListener('pointercancel',up);
 }
 function onPhotoSelect(input){
   if(!input.files||!input.files[0])return;
-  const file=input.files[0];
-  const img=new Image();
-  const url=URL.createObjectURL(file);
+  var file=input.files[0];
+  var img=new Image();
+  var url=URL.createObjectURL(file);
   img.onload=function(){
-    const maxSize=768;
-    let w=img.width,h=img.height;
-    if(w>maxSize||h>maxSize){
-      if(w>h){h=Math.round(h*(maxSize/w));w=maxSize}
-      else{w=Math.round(w*(maxSize/h));h=maxSize}
-    }
-    const canvas=document.createElement('canvas');
-    canvas.width=w;canvas.height=h;
-    const ctx=canvas.getContext('2d');
-    ctx.drawImage(img,0,0,w,h);
-    const dataUrl=canvas.toDataURL('image/jpeg',0.7);
-    photoData=dataUrl.split(',')[1];
-    photoType='image/jpeg';
-    const prev=document.getElementById('photoPreview');
-    prev.src=dataUrl;
-    prev.style.display='block';
-    document.getElementById('photoPlaceholder').style.display='none';
-    document.getElementById('analyzeBtn').style.display='block';
+    var maxSize=1600,w=img.width,h=img.height;
+    if(w>maxSize||h>maxSize){if(w>h){h=Math.round(h*(maxSize/w));w=maxSize}else{w=Math.round(w*(maxSize/h));h=maxSize}}
+    var canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+    canvas.getContext('2d').drawImage(img,0,0,w,h);
     URL.revokeObjectURL(url);
+    var durl=canvas.toDataURL('image/jpeg',0.85);
+    var pv=document.getElementById('photoPreview');
+    pv.onload=function(){
+      photoImg=pv;photoImgW=w;photoImgH=h;
+      _initCropHandlers();_cropInit();
+      pv.style.display='block';
+      document.getElementById('photoPlaceholder').style.display='none';
+      document.getElementById('photoArea').classList.add('editing');
+      var ed=document.getElementById('phEdit');if(ed)ed.style.display='block';
+      var hint=document.getElementById('phHint');if(hint){hint.style.opacity='1';setTimeout(function(){hint.style.opacity='0'},3400)}
+      document.getElementById('analyzeBtn').style.display='block';
+    };
+    pv.src=durl;
+    photoData='1';photoType='image/jpeg'; // sentinel; real crop is exported at submit
   };
+  img.onerror=function(){URL.revokeObjectURL(url)};
   img.src=url;
 }
+// Export exactly what's framed (WYSIWYG): reproduce the on-screen transform onto a
+// canvas, clipped to the frame, so a repositioned/zoomed crop is what gets analyzed.
+function _commitPhoto(){
+  if(!photoImg)return false;
+  _cropFrame();
+  var outH=1024,outW=Math.round(outH*_cropW/_cropH);
+  var c=document.createElement('canvas');c.width=outW;c.height=outH;
+  var ctx=c.getContext('2d');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,outW,outH);
+  var k=outW/_cropW;
+  ctx.save();ctx.scale(k,k);ctx.beginPath();ctx.rect(0,0,_cropW,_cropH);ctx.clip();
+  ctx.translate(_cTx,_cTy);ctx.scale(_cScale,_cScale);ctx.drawImage(photoImg,0,0);ctx.restore();
+  photoData=c.toDataURL('image/jpeg',0.72).split(',')[1];photoType='image/jpeg';
+  return true;
+}
 async function analyzePhoto(){
-  if(!photoData)return;
+  if(!_commitPhoto())return;
   _resShowCompose('s-photo-res');
   await runPhotoAnalysis();
 }
 // The always-visible CTA: analyze if a photo is picked, otherwise open the picker.
 function ctaAnalyze(){
-  if(photoData){analyzePhoto();}
+  if(photoImg){analyzePhoto();}
   else{document.getElementById('photoIn').click();}
 }
 async function retryPhoto(){
