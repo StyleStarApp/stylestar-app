@@ -1241,3 +1241,17 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     the confirm); the crop **Done** stays (it's what bakes the crop). So exactly one Done, only in crop.
   - Verified in Chromium: placeholder `touch-action:auto`, editing `none`, no zoom bar, pinch(_zoomAround)
     +commit still valid, no JS errors.
+
+**2026-07-08 (cont. — outfit frame scrolls the page even with a photo loaded)**
+- Cath: she wants to scroll the page down (to reach the ANALYZE MY OUTFIT button) even when a
+  photo is loaded. Changed `#s-photo .photo-upload-area.editing` from `touch-action:none` →
+  **`touch-action:pan-y`**: a one-finger **up/down drag now scrolls the page**, while pinch
+  (2-finger) zoom and the crop handles still capture their own gestures.
+  - Pointer handlers reworked: single finger is **no longer captured / preventDefault'd** (so vertical
+    scroll passes to the browser) and now repositions **horizontally only** (`_cTx`), leaving vertical
+    for the page scroll. A pinch (2 pointers) captures both pointers + `preventDefault`s to block scroll
+    during zoom. Crop box/handles keep `touch-action:none`. Placeholder stays `touch-action:auto`.
+  - Trade-off (accepted): one-finger **vertical** repositioning of the photo is gone (it scrolls the
+    page); vertical nudging is still available via a two-finger drag, and the crop tool handles framing.
+  - Verified in Chromium: editing `touch-action:pan-y`, crop box `none`, placeholder `auto`; pinch-zoom,
+    crop bake, and commit all still valid; no JS errors. Real-device gesture check still worth doing.

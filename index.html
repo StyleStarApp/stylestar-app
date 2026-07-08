@@ -283,9 +283,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-logo-frame{width:188px;padding:3px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
 #s-photo .ph-logo-frame img{display:block;width:66px;height:auto}
 #s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
-/* Only capture touch gestures once a photo is loaded; before that the frame
-   scrolls the page like everything else. */
-#s-photo .photo-upload-area.editing{cursor:grab;touch-action:none}
+/* Before a photo loads the frame scrolls the page like everything else. Once a
+   photo is loaded we allow vertical page scroll (pan-y) — a one-finger up/down
+   drag scrolls to the Analyze button — while pinch (2-finger) zoom and the crop
+   handles still capture their own gestures. */
+#s-photo .photo-upload-area.editing{cursor:grab;touch-action:pan-y}
 #s-photo .photo-upload-area.editing:active{cursor:grabbing}
 #s-photo .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem;cursor:pointer}
 #s-photo .photo-icon{font-size:40px}
@@ -1820,8 +1822,10 @@ function _initCropHandlers(){
   a.addEventListener('pointerdown',function(e){
     if(!photoImg||_cropMode)return;
     if(e.target.closest('.ph-change'))return;
-    try{a.setPointerCapture(e.pointerId)}catch(x){}
-    _cPts[e.pointerId]={x:e.clientX,y:e.clientY};e.preventDefault();
+    _cPts[e.pointerId]={x:e.clientX,y:e.clientY};
+    // Two fingers = pinch: capture both so the browser doesn't steal the gesture.
+    // One finger is left uncaptured so a vertical drag can scroll the page.
+    if(Object.keys(_cPts).length>=2){Object.keys(_cPts).forEach(function(id){try{a.setPointerCapture(+id)}catch(x){}})}
   });
   a.addEventListener('pointermove',function(e){
     if(!photoImg||_cropMode||!_cPts[e.pointerId])return;
@@ -1836,13 +1840,15 @@ function _initCropHandlers(){
       _cTx+=(newMid.x-oldMid.x);_cTy+=(newMid.y-oldMid.y);
       if(oldDist>0)_zoomAround(_cScale*(newDist/oldDist),newMid.x-rect.left-12,newMid.y-rect.top-12);
       else _cropApply();
+      _fadeHint();e.preventDefault();   // block page scroll only during a pinch
     }else{
+      // One finger: reposition horizontally; leave vertical to the browser so an
+      // up/down drag scrolls the page (to reach the Analyze button).
       var pr=_cPts[e.pointerId];
-      _cTx+=(e.clientX-pr.x);_cTy+=(e.clientY-pr.y);
+      _cTx+=(e.clientX-pr.x);
       _cPts[e.pointerId]={x:e.clientX,y:e.clientY};
-      _cropApply();
+      _cropApply();_fadeHint();
     }
-    _fadeHint();e.preventDefault();
   });
   function up(e){delete _cPts[e.pointerId]}
   a.addEventListener('pointerup',up);a.addEventListener('pointercancel',up);
