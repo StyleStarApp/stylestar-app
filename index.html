@@ -2149,7 +2149,7 @@ function _renderShop(items){
   }).join('');
 }
 async function runPhotoAnalysis(){
-  _lookGreeted=false;chatLookPhoto=null;_resetAskNudge();  // a fresh analysis → chat greets this look once; nudge re-arms
+  _lookGreeted=false;chatLookPhoto=null;_lookCtx=null;_resetAskNudge();  // a fresh analysis → chat greets this look once; nudge re-arms
   var _ls0=document.getElementById('lookShot');if(_ls0)_ls0.style.display='none';
   const occ=photoOccasion;
   const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
@@ -2202,6 +2202,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     _photoBoards(true);
     _photoSaveArea();
     var _ls=document.getElementById('lookShot');if(_ls&&photoData){document.getElementById('lookShotImg').src='data:image/jpeg;base64,'+photoData;_ls.style.display='block'}
+    _lookCtx={celebrate:parsed.celebrate,tips:parsed.tips||[],shop:parsed.shop||[],occ:occ};  // so the chat remembers this advice
     _playResReveal(true,'s-photo-res');
     setTimeout(_showAskNudge,3800);   // gentle nudge once the reveal has settled
   }catch(e){
@@ -2430,7 +2431,36 @@ let chatPrevScreen='s-res';
 let chatPhotoData=null;
 // The analyzed outfit photo carried into the chat. chatLookPhoto persists for the
 // whole styling conversation so the stylist keeps seeing the outfit on every turn.
-let _lookGreeted=false,chatLookPhoto=null,_askNudgeOff=false;
+let _lookGreeted=false,chatLookPhoto=null,_askNudgeOff=false,_lookCtx=null,_defaultSug=null;
+// Feed the just-generated analysis into the look chat so the stylist "remembers" her own advice.
+function _lookAnalysisBlock(){
+  if(!chatLookPhoto||!_lookCtx)return '';
+  var t=(_lookCtx.tips||[]).map(function(x){return (x.title?x.title+': ':'')+(x.text||'')}).join(' | ');
+  var s=(_lookCtx.shop||[]).map(function(x){return (x.name||'')+(x.store?' ('+x.store+')':'')}).join(', ');
+  return '\n\nCONTEXT — you JUST analyzed THIS exact outfit'+(_lookCtx.occ?' for '+_lookCtx.occ.toLowerCase():'')+' and already told her:\n'
+    +'- What is working: '+(_lookCtx.celebrate||'')+'\n'
+    +'- Finishing touches you suggested: '+(t||'(none)')+'\n'
+    +'- Pieces you recommended to complete the look: '+(s||'(none)')+'\n'
+    +'Continue from THIS advice. If she refers to "the belt/jacket/shoes you mentioned," you know exactly which piece. Build on it; do not repeat it verbatim.';
+}
+// Swap the suggestion chips to look-specific prompts while chatting about a photo.
+function _setLookSuggestions(occ){
+  var lbl=document.querySelector('#chatSuggestions .chat-sug-label'),c=document.querySelector('#chatSuggestions .chat-sug-chips');
+  if(!c)return;
+  if(_defaultSug===null)_defaultSug={label:lbl?lbl.textContent:'Try asking:',chips:c.innerHTML};
+  if(lbl)lbl.textContent='Ask about your look:';
+  var h='<button class="chat-chip" onclick="quickChat(\'What shoes would work best with this outfit?\')">What shoes?</button>'
+    +'<button class="chat-chip" onclick="quickChat(\'How could I dress this look up?\')">Dress it up</button>'
+    +'<button class="chat-chip" onclick="quickChat(\'How could I make this look more casual?\')">More casual</button>';
+  if(occ){var o=occ.toLowerCase().replace(/[^a-z ]/g,'');h+='<button class="chat-chip" onclick="quickChat(\'Is this outfit right for '+o+'?\')">Right for '+o+'?</button>';}
+  else{h+='<button class="chat-chip" onclick="quickChat(\'What could I add to complete this look?\')">Add a piece?</button>';}
+  c.innerHTML=h;
+}
+function _restoreSuggestions(){
+  if(_defaultSug===null)return;
+  var lbl=document.querySelector('#chatSuggestions .chat-sug-label'),c=document.querySelector('#chatSuggestions .chat-sug-chips');
+  if(lbl)lbl.textContent=_defaultSug.label;if(c)c.innerHTML=_defaultSug.chips;
+}
 // One-time "stylist nudge" bubble above the Ask hero on the outfit results.
 function _showAskNudge(){var n=document.getElementById('askNudge');if(!n||_askNudgeOff)return;var a=document.querySelector('.scr.act');if(!a||a.id!=='s-photo-res')return;n.classList.add('on')}
 function dismissAskNudge(e){if(e)e.stopPropagation();_askNudgeOff=true;var n=document.getElementById('askNudge');if(n)n.classList.remove('on')}
@@ -3058,6 +3088,7 @@ function openChat(fromLook){
   show('s-chat');
   const sugEl=document.getElementById('chatSuggestions');
   if(sugEl)sugEl.style.display='block';
+  if(!fromLook)_restoreSuggestions();   // general chat → default prompt chips
   const msgContainer=document.getElementById('chatMessages');
   if(chatHistory.length===0){
     const saved=loadChatHistory();
@@ -3099,14 +3130,15 @@ function openChatAboutLook(){
   openChat(hasLook);
   if(!hasLook)return;
   chatLookPhoto=photoData;   // stays attached all conversation so the stylist keeps seeing it
+  _setLookSuggestions(_lookCtx&&_lookCtx.occ);
+  var _sg=document.getElementById('chatSuggestions');if(_sg)_sg.style.display='block';
   var mc=document.getElementById('chatMessages');
   function toBottom(){mc.scrollTop=mc.scrollHeight;}
   if(!_lookGreeted){
     _lookGreeted=true;
     // Post the outfit as HER message (like she just texted it), then a warm greeting.
     addChatMsg("Here's the photo I just shared.","user",'data:image/jpeg;base64,'+photoData);
-    addChatMsg("Got it, I can see your outfit here. What would you like to explore: a finishing touch, something to add, or where to shop it?","bot");
-    var sug=document.getElementById('chatSuggestions');if(sug)sug.style.display='none';
+    addChatMsg("Got it, I can see your outfit here. What would you like to explore?","bot");
   }
   // Land on the photo/greeting — scroll once the (tall) image has laid out.
   var imgs=mc.querySelectorAll('.chat-msg-img');var last=imgs[imgs.length-1];
@@ -3368,7 +3400,7 @@ RULES:
   });
   // Remove the last entry (we just added it)
   recentHistory.pop();
-  const messages=[{role:'user',content:systemPrompt},{role:'assistant',content:'Understood. I am the Style Star stylist ready to help.'},...recentHistory,{role:'user',content:userContent}];
+  const messages=[{role:'user',content:systemPrompt+_lookAnalysisBlock()},{role:'assistant',content:'Understood. I am the Style Star stylist ready to help.'},...recentHistory,{role:'user',content:userContent}];
 
   const photoWasSent=!!chatPhotoData;
   clearChatPhoto();
