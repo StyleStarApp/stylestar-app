@@ -1349,3 +1349,16 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   **bright metallic-gold FILL** (dark text + chat icon) with a soft **gold glow that gently pulses**
   (`.hero.ask-cta` + `askPulse`), so it stands apart from the dark/outline buttons and reads as THE action.
   Pulse disabled under `prefers-reduced-motion`. Shopping placement unchanged.
+
+**2026-07-08 (cont. — stylist "nudge" bubble + pink chat path; hero back to black/gold)**
+- Chose Option A (a gentle stylist nudge). On the outfit results (`#s-photo-res` `.p3`):
+  - **`.ask-nudge`** speech bubble ("Have a question about your look? I'm right here, ask me anything.")
+    pops in ONCE ~3.8s after the reveal settles, with a downward tail pointing at the Ask hero + a
+    dismiss ×. Bobs gently. JS: `_showAskNudge()` (scheduled from `runPhotoAnalysis` success),
+    `dismissAskNudge()` (× and on opening chat), `_resetAskNudge()` (re-arms on each analysis / `showPhoto`);
+    `_askNudgeOff` guards "once per look." Honors `prefers-reduced-motion` (shows statically, no anim).
+  - **Hero reverted to the consistent black+gold `.hero` CTA** (dropped the bright-gold `ask-cta` fill/pulse) —
+    Cath's call now that the nudge draws the eye.
+  - **Re-added the familiar pink "Ask your stylist" shelf** ("Chat about your look, anytime") in the menu as
+    a second, familiar path to the same look chat (`openChatAboutLook`). So three coherent routes: the nudge,
+    the black/gold hero, and the pink shelf.

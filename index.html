@@ -707,11 +707,16 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .hero .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rvShim 3s ease-in-out infinite;pointer-events:none}
 .res-screen .hero svg{width:18px;height:18px;position:relative;stroke:#F1DDA0;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .hero .lbl{position:relative;white-space:nowrap;display:flex;align-items:center}
-/* "Ask about this look" — made to POP: bright metallic-gold fill + a soft gold glow that pulses */
-.res-screen .hero.ask-cta{padding:18px 16px;font-size:15px;color:#2b2013;background:linear-gradient(135deg,#FBEEBE,#ECC85E 34%,#DBAA3F 56%,#F4E4A8 74%,#D3A438) padding-box,linear-gradient(135deg,#9C7519,#7d5e17) border-box;box-shadow:0 12px 26px -8px rgba(205,155,45,.7),0 2px 6px rgba(150,110,20,.4);animation:askPulse 2.8s ease-in-out infinite}
-.res-screen .hero.ask-cta .lbl{color:#2b2013}
-.res-screen .hero.ask-cta svg{stroke:#2b2013;width:19px;height:19px}
-@keyframes askPulse{0%,100%{box-shadow:0 12px 24px -8px rgba(205,155,45,.5),0 2px 6px rgba(150,110,20,.35)}50%{box-shadow:0 16px 34px -6px rgba(226,182,72,.95),0 0 0 3px rgba(226,182,72,.24)}}
+/* Gentle one-time "stylist nudge" that pops above the Ask hero after the results settle */
+.res-screen .ask-nudge{position:relative;margin:0 8px -2px;background:#F2EFE8;border:1px solid rgba(201,162,78,.6);border-radius:14px;padding:11px 30px 11px 13px;display:flex;gap:9px;align-items:flex-start;box-shadow:0 12px 22px -10px rgba(30,20,5,.5);opacity:0;transform:translateY(8px) scale(.7);transform-origin:50% 130%;pointer-events:none}
+.res-screen .ask-nudge:after{content:"";position:absolute;left:50%;bottom:-8px;width:15px;height:15px;background:#F2EFE8;border-right:1px solid rgba(201,162,78,.6);border-bottom:1px solid rgba(201,162,78,.6);transform:translateX(-50%) rotate(45deg)}
+.res-screen .ask-nudge.on{pointer-events:auto;animation:nudgePop .55s cubic-bezier(.34,1.56,.64,1) both,nudgeBob 2.9s ease-in-out .7s infinite}
+.res-screen .ask-nudge .nstar{flex:0 0 auto;color:#C79A34;font-size:15px;line-height:1.35}
+.res-screen .ask-nudge .ntx{font:500 12.5px/1.42 'Jost',sans-serif;color:#3a352c}
+.res-screen .ask-nudge .ntx b{font-weight:700;color:#211E1A}
+.res-screen .ask-nudge .nx{position:absolute;top:4px;right:9px;font:700 15px/1 'Jost',sans-serif;color:#b3a988;cursor:pointer;padding:2px}
+@keyframes nudgePop{from{opacity:0;transform:translateY(8px) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes nudgeBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 .res-screen .keep{margin-top:16px;padding:18px 15px 16px;text-align:center;border:1px solid rgba(201,162,78,.5);border-radius:3px;background:#fff}
 .res-screen .keep h4{font:400 20px/1.15 'DM Serif Display',serif;color:#1f1d19;margin:0 0 5px}
 .res-screen .keep p{font:400 11px/1.5 'Jost',sans-serif;color:#6b655a;margin:0 auto 12px}
@@ -897,7 +902,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section{opacity:1!important;animation:none!important;transform:none!important}
   .res-screen .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
   .res-screen .spot{animation:none!important;opacity:.62}
-  .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .hero.ask-cta,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
+  .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
+  .res-screen .ask-nudge.on{animation:none!important;opacity:1;transform:none}
 }
 </style>
 </head>
@@ -1315,8 +1321,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <!-- PIECE 4: actions -->
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
-      <!-- Chat is the high-intent next step right after sharing a photo → promoted to the hero CTA -->
-      <button class="hero ask-cta" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
+      <!-- Chat is the high-intent next step right after sharing a photo → hero CTA + a one-time stylist nudge -->
+      <div class="ask-nudge" id="askNudge"><span class="nstar">&#10022;</span><span class="ntx"><b>Have a question about your look?</b> I'm right here, ask me anything.</span><span class="nx" onclick="dismissAskNudge(event)">&times;</span></div>
+      <button class="hero" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
       <!-- Quiz-skipper nudge: shown only when she hasn't taken the quiz (no profile to save) -->
       <div class="quiznudge" id="photoQuizNudge" style="display:none">
         <div class="qn-star">&#10022;</div>
@@ -1327,6 +1334,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- Honest profile save: only meaningful once she's taken the quiz -->
       <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
         <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my style profile</button>
+      <!-- Familiar pink chat path (second route to the same look chat) -->
+      <div class="act" data-shelf onclick="openChatAboutLook()">
+        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><span class="ar" style="color:#EC4899">&rarr;</span></div><div class="ss">Chat about your look, anytime</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
       <div class="act" data-shelf onclick="openPrefs()">
         <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -1889,7 +1901,7 @@ function showPhoto(){var a=document.querySelector('.scr.act');if(a&&a.id&&a.id!=
   document.getElementById('photoArea').classList.remove('editing','cropmode','cropped');
   var ed=document.getElementById('phEdit');if(ed)ed.style.display='none';
   document.getElementById('analyzeBtn').style.display='block';
-  photoData=null;photoImg=null;_cPts={};_cropMode=false;_boxDrag=null;resetOccasion()}
+  photoData=null;photoImg=null;_cPts={};_cropMode=false;_boxDrag=null;_resetAskNudge();resetOccasion()}
 // Optional "where are you headed?" picker — tailors the tips + shopping to the moment.
 function resetOccasion(){photoOccasion='';document.querySelectorAll('#occChips .occ-chip').forEach(function(c){c.classList.remove('sel')})}
 function pickOccasion(btn,name){
@@ -2131,7 +2143,7 @@ function _renderShop(items){
   }).join('');
 }
 async function runPhotoAnalysis(){
-  _lookGreeted=false;chatLookPhoto=null;  // a fresh analysis → the chat greets this new look once
+  _lookGreeted=false;chatLookPhoto=null;_resetAskNudge();  // a fresh analysis → chat greets this look once; nudge re-arms
   const occ=photoOccasion;
   const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
   const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} has uploaded a photo of an outfit she is wearing${occ?' for '+occ:''} and wants your styling help — real feedback, finishing touches, and shopping ideas.
@@ -2183,6 +2195,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     _photoBoards(true);
     _photoSaveArea();
     _playResReveal(true,'s-photo-res');
+    setTimeout(_showAskNudge,3800);   // gentle nudge once the reveal has settled
   }catch(e){
     document.getElementById('prn').textContent="Let's try that again";
     document.getElementById('pOcc').textContent='';
@@ -2409,7 +2422,11 @@ let chatPrevScreen='s-res';
 let chatPhotoData=null;
 // The analyzed outfit photo carried into the chat. chatLookPhoto persists for the
 // whole styling conversation so the stylist keeps seeing the outfit on every turn.
-let _lookGreeted=false,chatLookPhoto=null;
+let _lookGreeted=false,chatLookPhoto=null,_askNudgeOff=false;
+// One-time "stylist nudge" bubble above the Ask hero on the outfit results.
+function _showAskNudge(){var n=document.getElementById('askNudge');if(!n||_askNudgeOff)return;var a=document.querySelector('.scr.act');if(!a||a.id!=='s-photo-res')return;n.classList.add('on')}
+function dismissAskNudge(e){if(e)e.stopPropagation();_askNudgeOff=true;var n=document.getElementById('askNudge');if(n)n.classList.remove('on')}
+function _resetAskNudge(){_askNudgeOff=false;var n=document.getElementById('askNudge');if(n)n.classList.remove('on')}
 let storyPrevScreen='s-wel';
 let prefStep=0;
 let prefReturnScreen='s-res';
@@ -3069,6 +3086,7 @@ function openChat(fromLook){
 // Opened from the outfit results — carry the just-analyzed photo into the chat so the
 // stylist "has" the look and can keep styling it. Her first question sends the image.
 function openChatAboutLook(){
+  dismissAskNudge();   // she's heading into chat — tuck the nudge away
   var hasLook=photoData&&photoData!=='1';
   openChat(hasLook);
   if(!hasLook)return;
