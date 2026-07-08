@@ -1192,3 +1192,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     the overlay + handle visibility; reset on `showPhoto`/`_cropInit`/new photo.
   - Verified in Chromium (empty / crop-editing / applied-Done states; commit base64 valid; no JS errors).
     **Real-device test still worth doing** (real pinch + real photo through the Netlify function).
+
+**2026-07-08 (cont. — crop REWORKED so it actually applies + re-fits)**
+- Cath's feedback: the first crop tool only drew a box (dimmed the outside) but never *removed*
+  the cropped-off part, so she couldn't crop then re-center/zoom — "hard to work with." Reworked
+  it into a real crop that BAKES:
+  - Tap **Crop** → the box now opens at the **full frame** with grabbable gold corners (handles moved
+    INSIDE the corners so they're reachable; MIN box 72px). Pull the corners in to frame what to keep
+    (outside dims). Hint: "Pull the corners to crop".
+  - Tap **Done** → new **`_applyCrop()`** renders the box region (mapped through the current
+    pan/zoom transform) into a fresh working image at native detail (capped 1600px), **replaces
+    `photoImg`**, and calls `_cropInit()` to **re-fit the cropped image to the frame** — so the
+    cropped-off part is truly gone and she can immediately zoom/reposition the result (or crop again).
+  - Removed the old persistent `.cropped`/"Recrop"/`_isCropped()` dimmed-but-not-applied state (that
+    was the confusing part). Pan/zoom is disabled only while the box is open (`_cropMode`).
+  - `_commitPhoto()` still exports the current frame view (box defaults to full after an apply), so a
+    mid-crop Analyze also works. Verified in Chromium: crop-open box == full frame → pull to a tall
+    narrow region → Done bakes a 432×1501 image → re-fit → zoom works → commit valid. No JS errors.
