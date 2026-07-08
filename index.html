@@ -718,9 +718,22 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 @keyframes nudgePop{from{opacity:0;transform:translateY(8px) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes nudgeBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 /* Her outfit photo, kept on the results as an anchor (tap to chat about it) */
-.res-screen .lookshot{display:none;margin:4px auto 16px;width:190px;cursor:pointer;text-align:center}
+.res-screen .lookshot{display:none;position:relative;margin:4px auto 16px;width:190px;cursor:pointer;text-align:center}
 .res-screen .lookshot img{display:block;width:190px;height:252px;object-fit:contain;background:#fff;border:5px solid #fff;border-radius:2px;box-shadow:0 10px 24px -9px rgba(0,0,0,.55),0 0 0 1px rgba(201,162,78,.55)}
 .res-screen .lookshot .lscap{margin-top:9px;font:700 11px/1.3 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a6d20}
+.res-screen .lookshot .ls-occ{display:none;margin:6px auto 0;font:700 9.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a6d20;background:rgba(201,162,78,.14);border:1px solid rgba(201,162,78,.42);border-radius:999px;padding:5px 11px}
+.res-screen .lookshot .ls-occ.on{display:inline-block}
+.res-screen .ls-expand{position:absolute;top:9px;right:9px;width:29px;height:29px;border-radius:50%;background:rgba(20,16,8,.6);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.res-screen .ls-expand svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+/* Full-size photo viewer */
+.plight{position:fixed;inset:0;z-index:200;background:rgba(14,11,6,.93);display:none;align-items:center;justify-content:center;padding:22px}
+.plight.on{display:flex}
+.plight img{max-width:100%;max-height:86vh;object-fit:contain;border-radius:3px;box-shadow:0 22px 54px -10px rgba(0,0,0,.75)}
+.plight .plight-x{position:absolute;top:14px;right:18px;color:#fff;font:300 36px/1 'Jost',sans-serif;cursor:pointer;opacity:.85}
+/* Her photo clipped to the clipboard — a small, tilted snapshot the stylist is working from */
+.res-screen .clipphoto{position:absolute;top:-14px;left:9px;z-index:8;width:76px;transform:rotate(-6deg);cursor:pointer}
+.res-screen .clipphoto img{display:block;width:76px;height:96px;object-fit:cover;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 9px 17px -6px rgba(0,0,0,.6)}
+.res-screen .clipphoto .clip-pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(6deg);width:24px;height:11px;border-radius:3px;background:linear-gradient(180deg,#F6E4A6,#E3BB54 45%,#CFA236 66%,#9A7418);box-shadow:0 2px 4px -1px rgba(90,60,10,.55),inset 0 1px 0 rgba(255,255,255,.65)}
 .res-screen .keep{margin-top:16px;padding:18px 15px 16px;text-align:center;border:1px solid rgba(201,162,78,.5);border-radius:3px;background:#fff}
 .res-screen .keep h4{font:400 20px/1.15 'DM Serif Display',serif;color:#1f1d19;margin:0 0 5px}
 .res-screen .keep p{font:400 11px/1.5 'Jost',sans-serif;color:#6b655a;margin:0 auto 12px}
@@ -1276,6 +1289,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="p1"><div class="p1cshadow"></div>
       <div class="board"><span class="lacq"></span><span class="sweep"></span>
         <div class="clamp"><span class="brush"></span><span class="press"></span><span class="rivet l"></span><span class="rivet r"></span><span class="lip"></span></div>
+        <!-- Her shared photo, clipped to the clipboard like the stylist pinned it up -->
+        <div class="clipphoto" id="clipPhoto" onclick="openLightbox(event)"><span class="clip-pin"></span><img id="clipPhotoImg" alt="The outfit you shared"/></div>
         <div class="page">
           <img class="logo" src="logo.png" alt="Style Star"/>
           <div class="eng pr">
@@ -1326,7 +1341,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
       <!-- Her outfit photo, right here so it's not lost on Back — tap it to chat about the look -->
-      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><div class="lscap">The look you shared</div></div>
+      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><div class="lscap">The look you shared</div><span class="ls-occ" id="lookOcc"></span></div>
       <!-- Chat is the high-intent next step right after sharing a photo → hero CTA + a one-time stylist nudge -->
       <div class="ask-nudge" id="askNudge"><span class="nstar">&#9733;</span><span class="ntx"><b>Have a question about your look?</b> I'm right here, ask me anything.</span><span class="nx" onclick="dismissAskNudge(event)">&times;</span></div>
       <button class="hero" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
@@ -1410,6 +1425,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
   </div>
 </div>
+<!-- Tap-to-zoom lightbox for the shared outfit photo (used on the outfit results) -->
+<div class="plight" id="photoLightbox" onclick="closeLightbox()"><span class="plight-x">&times;</span><img id="plightImg" alt="Your outfit"/></div>
 <div class="scr" id="s-pref">
   <div class="top-back-wrap"><button class="top-back" onclick="showBack(prefReturnScreen)">&larr; Back</button></div>
   <div class="pref-progress" id="prefPips"></div>
@@ -2151,6 +2168,7 @@ function _renderShop(items){
 async function runPhotoAnalysis(){
   _lookGreeted=false;chatLookPhoto=null;_lookCtx=null;_resetAskNudge();  // a fresh analysis → chat greets this look once; nudge re-arms
   var _ls0=document.getElementById('lookShot');if(_ls0)_ls0.style.display='none';
+  var _cp0=document.getElementById('clipPhoto');if(_cp0)_cp0.style.display='none';
   const occ=photoOccasion;
   const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
   const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} has uploaded a photo of an outfit she is wearing${occ?' for '+occ:''} and wants your styling help — real feedback, finishing touches, and shopping ideas.
@@ -2201,7 +2219,12 @@ Respond with ONLY valid JSON in this exact format, no other text:
     document.getElementById('pAltAction').innerHTML='';
     _photoBoards(true);
     _photoSaveArea();
-    var _ls=document.getElementById('lookShot');if(_ls&&photoData){document.getElementById('lookShotImg').src='data:image/jpeg;base64,'+photoData;_ls.style.display='block'}
+    if(photoData){
+      var _src='data:image/jpeg;base64,'+photoData;
+      var _ls=document.getElementById('lookShot');if(_ls){document.getElementById('lookShotImg').src=_src;_ls.style.display='block'}
+      var _lo=document.getElementById('lookOcc');if(_lo){if(occ){_lo.textContent=occ;_lo.classList.add('on')}else{_lo.textContent='';_lo.classList.remove('on')}}
+      var _cp=document.getElementById('clipPhoto');if(_cp){document.getElementById('clipPhotoImg').src=_src;_cp.style.display='block'}
+    }
     _lookCtx={celebrate:parsed.celebrate,tips:parsed.tips||[],shop:parsed.shop||[],occ:occ};  // so the chat remembers this advice
     _playResReveal(true,'s-photo-res');
     setTimeout(_showAskNudge,3800);   // gentle nudge once the reveal has settled
@@ -2465,6 +2488,9 @@ function _restoreSuggestions(){
 function _showAskNudge(){var n=document.getElementById('askNudge');if(!n||_askNudgeOff)return;var a=document.querySelector('.scr.act');if(!a||a.id!=='s-photo-res')return;n.classList.add('on')}
 function dismissAskNudge(e){if(e)e.stopPropagation();_askNudgeOff=true;var n=document.getElementById('askNudge');if(n)n.classList.remove('on')}
 function _resetAskNudge(){_askNudgeOff=false;var n=document.getElementById('askNudge');if(n)n.classList.remove('on')}
+// Tap the shared photo (thumbnail or the clipboard clip) to see it full-size
+function openLightbox(e){if(e){e.stopPropagation();}var lb=document.getElementById('photoLightbox');if(!lb||!photoData)return;document.getElementById('plightImg').src='data:image/jpeg;base64,'+photoData;lb.classList.add('on')}
+function closeLightbox(){var lb=document.getElementById('photoLightbox');if(lb)lb.classList.remove('on')}
 let storyPrevScreen='s-wel';
 let prefStep=0;
 let prefReturnScreen='s-res';

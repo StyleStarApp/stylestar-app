@@ -1393,3 +1393,22 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   `display:none` by default and `display:flex` only under `.on` (still pops with the spring when it
   appears; collapses the gap when hidden/dismissed). Enlarged the thumbnail (`.lookshot`) 136×180 → 190×252
   and tightened margins. Verified: gap gone, photo larger, nudge still pops (display none→flex, opacity→1).
+
+**2026-07-08 (cont. — clipped "Polaroid" on the clipboard + tap-to-zoom lightbox + occasion tag)**
+- Three small additions to the OUTFIT results (`#s-photo-res`), all scoped/`index.html`:
+  - ✅ **Clipped photo on the clipboard.** Her shared photo now also appears as a small, slightly
+    tilted (`rotate(-6deg)`) framed thumbnail (`.clipphoto`, 76px) pinned to the **top-left of the
+    Outfit Analysis clipboard (`.p1 .board`)** with a little gold pin (`.clip-pin`) — reads like the
+    stylist clipped her snapshot to the board. Modern white frame, not literally a Polaroid (Cath's
+    call). `.board` is `position:relative` (already), so it sits absolutely at `top:-14px;left:9px`,
+    poking slightly above the board top; `z-index:8`, clear of the centered clamp.
+  - ✅ **Tap-to-zoom lightbox.** Added a small expand icon (`.ls-expand`, top-right) on the "THE LOOK
+    YOU SHARED" thumbnail; both it and the clipboard clip open the full photo in a full-screen
+    `.plight` overlay (`openLightbox`/`closeLightbox`, dark 0.93 backdrop + × close). The lightbox
+    `<div id="photoLightbox">` lives just after the `#s-photo-res` screen. Guards on `photoData`.
+  - ✅ **Occasion tag** shown as a small gold pill (`.ls-occ#lookOcc`, `.on`) under the thumbnail when
+    an occasion was picked (e.g. "DATE NIGHT"); hidden when she skipped.
+  - Wiring: in `runPhotoAnalysis` success, the base64 `photoData` fills `lookShotImg` + `clipPhotoImg`
+    and sets `lookOcc` from `occ`; at analysis start both `lookShot` and `clipPhoto` are hidden (reset).
+  - Verified in Chromium (http-harness): clip pinned+tilted on the clipboard, expand icon opens the
+    lightbox with × close, occasion pill renders, thumbnail unchanged; no JS errors.
