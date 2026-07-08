@@ -1372,3 +1372,17 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     SHARED") right under "What would you like to do?", above the Ask hero. Persists on the screen (so it's
     not lost when she Backs out of chat), and tapping it opens the look chat (`openChatAboutLook`). Set from
     `photoData` in `runPhotoAnalysis` success; hidden on partial/error and reset each analysis.
+
+**2026-07-08 (cont. — outfit→chat: stylist now remembers the analysis + look-specific chips)**
+- Two upgrades so "Ask about this look" feels seamless:
+  1. **The stylist now knows her own analysis.** On success `runPhotoAnalysis` stashes `_lookCtx`
+     ({celebrate, tips, shop, occ}); `sendChat` appends `_lookAnalysisBlock()` to the system message
+     WHENEVER `chatLookPhoto` is set — a "you JUST analyzed this outfit and told her: what's working /
+     finishing touches / pieces to complete the look; build on it, don't repeat it" block. So follow-ups
+     like "where do I find that belt you mentioned?" now work. Reset on each new analysis.
+  2. **Look-specific suggestion chips.** `openChatAboutLook` swaps the chat's default chips for
+     "What shoes? · Dress it up · More casual · Right for {occasion}?/Add a piece?" (occasion-aware via
+     `_lookCtx.occ`) and shows them under the greeting; `openChat` (general) restores the defaults
+     (`_defaultSug` snapshot). Removed the leftover line that hid the suggestions in the look chat.
+  - Verified in Chromium (stubbed API): chips render + occasion-aware; the chat request's system message
+    contains the analysis context (tips + shop items) and the look image is attached each turn.
