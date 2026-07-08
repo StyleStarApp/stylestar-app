@@ -1362,3 +1362,13 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   - **Re-added the familiar pink "Ask your stylist" shelf** ("Chat about your look, anytime") in the menu as
     a second, familiar path to the same look chat (`openChatAboutLook`). So three coherent routes: the nudge,
     the black/gold hero, and the pink shelf.
+
+**2026-07-08 (cont. — her photo on the outfit results + star tweaks)**
+- Cath's polish on the outfit-results actions:
+  - ✅ **Nudge star → pink 5-point ★** (`#EC4899`, matching the pink "Ask your stylist" chip; was the gold
+    4-point ✦ she called "brown").
+  - ✅ **"Want everything styled to you?" (`.qn-star`) → 5-point ★** (kept gold).
+  - ✅ **Her outfit photo now lives on the results** — a framed thumbnail (`.lookshot`, "THE LOOK YOU
+    SHARED") right under "What would you like to do?", above the Ask hero. Persists on the screen (so it's
+    not lost when she Backs out of chat), and tapping it opens the look chat (`openChatAboutLook`). Set from
+    `photoData` in `runPhotoAnalysis` success; hidden on partial/error and reset each analysis.
