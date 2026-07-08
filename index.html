@@ -2128,7 +2128,7 @@ function _renderShop(items){
   }).join('');
 }
 async function runPhotoAnalysis(){
-  _lookGreeted=false;  // a fresh analysis → the chat can greet this new look once
+  _lookGreeted=false;chatLookPhoto=null;  // a fresh analysis → the chat greets this new look once
   const occ=photoOccasion;
   const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
   const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} has uploaded a photo of an outfit she is wearing${occ?' for '+occ:''} and wants your styling help — real feedback, finishing touches, and shopping ideas.
@@ -2404,8 +2404,9 @@ async function restoreResults(){
 let chatHistory=[];
 let chatPrevScreen='s-res';
 let chatPhotoData=null;
-// The analyzed outfit photo can be carried straight into the stylist chat.
-let _lookGreeted=false;
+// The analyzed outfit photo carried into the chat. chatLookPhoto persists for the
+// whole styling conversation so the stylist keeps seeing the outfit on every turn.
+let _lookGreeted=false,chatLookPhoto=null;
 let storyPrevScreen='s-wel';
 let prefStep=0;
 let prefReturnScreen='s-res';
@@ -3067,14 +3068,21 @@ function openChat(fromLook){
 function openChatAboutLook(){
   var hasLook=photoData&&photoData!=='1';
   openChat(hasLook);
-  if(!hasLook||_lookGreeted)return;
-  _lookGreeted=true;
-  // Post the outfit as HER message — as if she just texted it — then the stylist replies
-  // (the image goes to the AI with this turn). Routed through sendChat so it's a real bubble.
-  chatPhotoData=photoData;
-  var thumb=document.getElementById('chatPhotoThumb');if(thumb)thumb.src='data:image/jpeg;base64,'+photoData;
-  var input=document.getElementById('chatInput');if(input)input.value="Here's the outfit I just shared. I'd love your help taking it further.";
-  sendChat();
+  if(!hasLook)return;
+  chatLookPhoto=photoData;   // stays attached all conversation so the stylist keeps seeing it
+  var mc=document.getElementById('chatMessages');
+  function toBottom(){mc.scrollTop=mc.scrollHeight;}
+  if(!_lookGreeted){
+    _lookGreeted=true;
+    // Post the outfit as HER message (like she just texted it), then a warm greeting.
+    addChatMsg("Here's the outfit I just shared. I'd love your help taking it further.","user",'data:image/jpeg;base64,'+photoData);
+    addChatMsg("Got it, I can see your outfit here. What would you like to explore: a finishing touch, something to add, or where to shop it?","bot");
+    var sug=document.getElementById('chatSuggestions');if(sug)sug.style.display='none';
+  }
+  // Land on the photo/greeting — scroll once the (tall) image has laid out.
+  var imgs=mc.querySelectorAll('.chat-msg-img');var last=imgs[imgs.length-1];
+  if(last&&!last.complete)last.onload=toBottom;
+  toBottom();requestAnimationFrame(toBottom);setTimeout(toBottom,150);
 }
 function wbChat(){
   try{
@@ -3085,8 +3093,8 @@ function wbChat(){
   openChat();
 }
 
-function closeChat(){showBack(chatPrevScreen)}
-function chatDone(){showBack(chatPrevScreen)}
+function closeChat(){chatLookPhoto=null;showBack(chatPrevScreen)}
+function chatDone(){chatLookPhoto=null;showBack(chatPrevScreen)}
 
 function linkStores(text){
   const storeNames='Nordstrom|J\\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia';
@@ -3135,6 +3143,7 @@ function onChatPhoto(input){
     canvas.width=w;canvas.height=h;
     canvas.getContext('2d').drawImage(img,0,0,w,h);
     chatPhotoData=canvas.toDataURL('image/jpeg',0.7).split(',')[1];
+    chatLookPhoto=null;   // a freshly attached photo becomes the subject
     document.getElementById('chatPhotoThumb').src=canvas.toDataURL('image/jpeg',0.5);
     document.getElementById('chatPhotoPreview').style.display='flex';
     URL.revokeObjectURL(url);
@@ -3305,10 +3314,13 @@ RULES:
 - When she asks for shopping recommendations, give specific items immediately. Don't explain why first.`;
 
   // Build message content
+  // Attach the manually-picked photo, or the outfit she's styling (kept for the whole
+  // conversation) so the stylist keeps seeing the look on every question.
+  const imgData=chatPhotoData||chatLookPhoto;
   let userContent;
-  if(chatPhotoData){
+  if(imgData){
     userContent=[
-      {type:'image',source:{type:'base64',media_type:'image/jpeg',data:chatPhotoData}},
+      {type:'image',source:{type:'base64',media_type:'image/jpeg',data:imgData}},
       {type:'text',text:msg}
     ];
   }else{
