@@ -1101,3 +1101,38 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - **Testing note:** the isolated-harness pattern (serve over http, wait ~5.5s for the home entrance reveal
   to tear down, then `show('s-photo')` / force `rv-compose` for the doors) reliably screenshots these
   screens past the startup nav race. Scripts live in the session scratchpad.
+
+**2026-07-08 (Analyze-an-outfit reframed to a warm "framed gallery" + fit/logo/photo refinements)**
+> ⚠️ **PENDING MERGE — READ FIRST.** The GitHub connector disconnected mid-session, so the LAST THREE
+> commits on branch **`claude/style-star-r6nemc`** are **pushed but NOT merged / NOT live yet**:
+> `17d1312` (tight logo + portrait frame + show-full-photo + bigger fonts), `023d4ec` (short-wide logo
+> plaque + elongated 3/4 photo frame), `894da0d` (inline "Optional" + bigger Skip). **First thing next
+> session: reconnect GitHub, open a PR from `claude/style-star-r6nemc` → `main`, and merge it** to make
+> these live. Everything through PR #173 is already merged/live; only those 3 commits are waiting.
+- Cath swapped the **dark "photo studio"** outfit-upload look (2026-07-07) for a warm **"framed gallery"**
+  design from her reference (variant "10a · No rod — framed"), then refined it live over many rounds.
+  Merged so far: PRs **#170** (framed gallery), **#172** (elevate: rod/curtain/frames), **#173** (fit on
+  one iPhone view). Plus the 3 unmerged commits above.
+- **The look** (`#s-photo`, still in the `ownChrome` list): a warm **ivory "curtain" background** (subtle
+  vertical fold-stripes via `repeating-linear-gradient`), a **gold curtain rod** across the very top
+  (full-width, no finials; the card's top corners are squared on this screen via a `.sqtop` class toggled
+  in `show()` so the rod reads as a straight bar), the **style Star logo** in a black picture **plaque**
+  (short/wide; uses the NEW **`logo-tight.png`** — `logo.png` cropped to its art to kill the internal
+  white margin), a black **gallery-frame dropzone** (white mat + thin gold inset line), the copy **"Tap to
+  share your photo"** / *"I'll style it, just for you"* (gold, not brown) / **"✦ Full-length photo of just
+  you works best"**, an **occasion picker** ("Where are you headed?" with **"Optional" inline** beside it;
+  rectangular chips, selected = black), and the **gold+silver metallic "Analyze my outfit →" CTA** matching
+  the app's other main CTAs (dark fill + gold gradient frame + `inset 0 0 0 2px #9aa1a7` silver ring +
+  shimmer + arrow; centered via `text-align:center` + inline-flex label). Back button top-right; gold-star
+  `Shop ★ Our Story ★ FAQ` footer.
+- **CTA behaviour:** `#analyzeBtn` is now **always visible** (was hidden until a photo was picked); new
+  `ctaAnalyze()` opens the photo picker if no photo yet, else runs `analyzePhoto()`.
+- **Photo preview = `object-fit:contain`** (was `cover`) so the **whole uploaded photo always shows,
+  never cropped** — Cath's fix for "it cut off my full-length photo and I couldn't resize it." The frame
+  is now **portrait 3/4** to suit full-length outfit photos. (The AI always received the full photo
+  regardless; this fixes the visible preview.)
+- **Fit note:** getting the whole page onto one iPhone screen (no scroll) fought with the portrait frame +
+  bigger fonts. Current state: Cath chose the **elongated portrait frame and accepts a little scroll**.
+  Verify fit with the scratchpad harness at a ~390×700 viewport (`.ph-foot` bottom ≤ viewport = fits).
+- **Still Cath's dials if she wants:** logo plaque wider/shorter; photo frame taller; trim to fully fit.
+  And the older-look inner pages still to convert: **quiz, chat, Mall, footer pages**.
