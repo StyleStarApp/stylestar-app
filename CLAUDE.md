@@ -1334,3 +1334,12 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   and scroll to the shopping links), **Done (bottom) → the "What would you like to do?" menu** (via
   `showBack()`, which scrolls to `.p3-lead`). Both stay inside the outfit results — no dead ends. Both
   clear `chatLookPhoto`. Works from any chat origin (quiz results, home, Welcome Back) too.
+
+**2026-07-08 (cont. — promote "Ask about this look" to the hero CTA on outfit results)**
+- Cath: right after sharing a photo, "Ask about this look" is the high-intent next step but it was a plain
+  shelf row lost among the others. Promoted it to the app's **`.hero` primary CTA** (dark fill + gold
+  metallic frame + shimmer + chat icon, uppercase "ASK ABOUT THIS LOOK"), placed at the **top of the
+  `#s-photo-res` actions** (right under "What would you like to do?", above Save). Removed the old pink
+  `.act` shelf version. Shopping is untouched — the "Complete the Look" links sit in their own board ABOVE
+  the actions, and Style Star Edit + Shop the Mall shelves remain below. Nice intent contrast: quiz results
+  lead with the "Shop your style" hero; outfit results now lead with "Ask about this look."

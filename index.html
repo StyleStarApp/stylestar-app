@@ -1310,6 +1310,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <!-- PIECE 4: actions -->
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
+      <!-- Chat is the high-intent next step right after sharing a photo → promoted to the hero CTA -->
+      <button class="hero" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
       <!-- Quiz-skipper nudge: shown only when she hasn't taken the quiz (no profile to save) -->
       <div class="quiznudge" id="photoQuizNudge" style="display:none">
         <div class="qn-star">&#10022;</div>
@@ -1320,10 +1322,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- Honest profile save: only meaningful once she's taken the quiz -->
       <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
         <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my style profile</button>
-      <div class="act" data-shelf onclick="openChatAboutLook()">
-        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask about this look</span><span class="ar" style="color:#EC4899">&rarr;</span></div><div class="ss">Chat with your stylist, anytime</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
-      </div>
       <div class="act" data-shelf onclick="openPrefs()">
         <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
