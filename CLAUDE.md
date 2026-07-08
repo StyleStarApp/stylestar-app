@@ -1325,3 +1325,12 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     (img.onload + rAF + timeout) so it lands on the photo/greeting instead of the top.
   - Verified in Chromium with a stubbed API: photo bubble + greeting posted, lands at bottom, and a
     follow-up question's request body includes the image block (`chatLookPhoto`); persists across turns.
+
+**2026-07-08 (cont. — outfit→chat: shorter caption + Back/Done nav split)**
+- Shortened the seeded photo caption to **"Here's the photo I just shared."** (was the longer
+  "…I'd love your help taking it further."); the stylist's greeting starts the chat from there.
+- Chat top-right button relabeled **"Done" → "← Back"** (`chatBack()`) for consistency with every other
+  page. Nav split (Cath's call): **Back → top of the origin** (via `show()` — re-read the outfit analysis
+  and scroll to the shopping links), **Done (bottom) → the "What would you like to do?" menu** (via
+  `showBack()`, which scrolls to `.p3-lead`). Both stay inside the outfit results — no dead ends. Both
+  clear `chatLookPhoto`. Works from any chat origin (quiz results, home, Welcome Back) too.
