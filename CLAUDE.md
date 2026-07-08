@@ -1168,3 +1168,27 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   - Verified all states in Chromium via the scratchpad http-harness (empty / editor / zoomed+panned);
     commit produces valid base64; no JS errors. Worth a **real-device end-to-end test** (real photo
     through the Netlify function + a real pinch gesture) to confirm on iPhone.
+
+**2026-07-08 (cont. — outfit-screen polish: tighter/higher hanging logo, 2-line Skip, TRUE CROP)**
+- More live fine-tuning of `#s-photo` (all scoped, `index.html`):
+  - ✅ **Logo plaque tightened + raised.** Vertical padding 8px→3px (less white space above/below the logo,
+    width unchanged); wire shortened (hang `padding-top`/SVG 36→23px) and the whole plaque pulled up
+    (`margin-top` −16→−24px) so it hangs higher and closer to the rod.
+  - ✅ **"Skip" chip is now "Skip — just style it" on 2 lines** inside the chip. All occasion chips got a
+    uniform `min-height:46px` + flex-center so the wrapped Skip stays even with the single-line chips
+    (tidy 3×2 grid).
+  - ✅ **TRUE CROP added (in addition to zoom/pan)** — Cath's ask: crop out another person while keeping
+    HERSELF full-length, which zoom-alone can't do on a fixed frame. New **"Crop"** button (top-right,
+    next to Change) toggles an **adjustable crop box**: drag the interior to move, **pull the gold corner
+    handles** to resize (free aspect); everything outside dims (box-shadow mask). Exiting (button →
+    **"Done"**) keeps a reduced box **applied** (surround stays dimmed, handles hidden, image-pan locked,
+    button → **"Recrop"**) so it's WYSIWYG; full-size box = no crop. `_commitPhoto()` now exports the
+    **crop-box region** (mapped through the on-screen transform) at up to 1024px on the long side, so a
+    tall/narrow selection yields a tall/narrow image (verified 342×1024 for a full-height side-trim).
+  - Implementation: `_box{x,y,w,h}` in frame-content coords (default = full frame); new
+    `toggleCrop/_positionBox/_boxMove/_isCropped`; crop-box pointer handlers added in
+    `_initCropHandlers` (capture on `#phCrop`, `data-h` corner ids); the image pan/pinch handlers now
+    early-return while `_cropMode||_isCropped()`; classes `.cropmode`/`.cropped` on `#photoArea` drive
+    the overlay + handle visibility; reset on `showPhoto`/`_cropInit`/new photo.
+  - Verified in Chromium (empty / crop-editing / applied-Done states; commit base64 valid; no JS errors).
+    **Real-device test still worth doing** (real pinch + real photo through the Netlify function).

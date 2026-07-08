@@ -276,11 +276,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-back{position:absolute;top:24px;right:18px;z-index:5;background:none;border:none;font:700 12px/1 'Jost',sans-serif;color:#5a5348;cursor:pointer;padding:4px 2px;letter-spacing:.1em;text-transform:uppercase}
 #s-photo .ph-back:hover{color:#1a1a1a}
 /* Logo plaque hanging from the gold rod on two wires */
-#s-photo .ph-hang{position:relative;width:188px;margin:-16px auto 12px;padding-top:36px}
-#s-photo .ph-wires{position:absolute;top:0;left:0;width:188px;height:36px;overflow:visible}
+#s-photo .ph-hang{position:relative;width:188px;margin:-24px auto 10px;padding-top:23px}
+#s-photo .ph-wires{position:absolute;top:0;left:0;width:188px;height:23px;overflow:visible}
 #s-photo .ph-wires line{stroke:#C79A34;stroke-width:1.6}
 #s-photo .ph-wires circle{fill:none;stroke:#C79A34;stroke-width:1.7}
-#s-photo .ph-logo-frame{width:188px;padding:8px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+#s-photo .ph-logo-frame{width:188px;padding:3px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
 #s-photo .ph-logo-frame img{display:block;width:66px;height:auto}
 #s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.55);transition:transform .15s;touch-action:none;user-select:none;-webkit-user-select:none}
 #s-photo .photo-upload-area.editing{cursor:grab}
@@ -300,12 +300,26 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-zoom input[type=range]{flex:1 1 auto;width:auto;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:rgba(255,255,255,.55);margin:0;padding:0}
 #s-photo .ph-zoom input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#F1DDA0;border:1px solid #C79A34;cursor:pointer}
 #s-photo .ph-zoom input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#F1DDA0;border:1px solid #C79A34;cursor:pointer}
+#s-photo .ph-crop-btn{left:auto;right:9px}
+#s-photo .photo-upload-area.cropmode .ph-crop-btn{background:#C79A34;color:#1a1a1a}
+/* Adjustable crop box (drag to move, corner handles to resize) */
+#s-photo .ph-crop{position:absolute;display:none;border:1.5px solid rgba(255,255,255,.95);box-shadow:0 0 0 9999px rgba(14,11,7,.5);cursor:move;touch-action:none}
+#s-photo .photo-upload-area.cropmode .ph-crop,#s-photo .photo-upload-area.cropped .ph-crop{display:block}
+#s-photo .photo-upload-area:not(.cropmode) .ph-crop{cursor:default}
+#s-photo .photo-upload-area:not(.cropmode) .ph-crop .ch{display:none}
+#s-photo .ph-crop .ch{position:absolute;width:28px;height:28px;pointer-events:auto;touch-action:none}
+#s-photo .ph-crop .ch::after{content:'';position:absolute;width:15px;height:15px;border:3px solid #F1DDA0}
+#s-photo .ph-crop .ch-tl{top:-14px;left:-14px}#s-photo .ph-crop .ch-tl::after{top:7px;left:7px;border-right:none;border-bottom:none}
+#s-photo .ph-crop .ch-tr{top:-14px;right:-14px}#s-photo .ph-crop .ch-tr::after{top:7px;right:7px;border-left:none;border-bottom:none}
+#s-photo .ph-crop .ch-bl{bottom:-14px;left:-14px}#s-photo .ph-crop .ch-bl::after{bottom:7px;left:7px;border-right:none;border-top:none}
+#s-photo .ph-crop .ch-br{bottom:-14px;right:-14px}#s-photo .ph-crop .ch-br::after{bottom:7px;right:7px;border-left:none;border-top:none}
 /* Optional "where are you headed?" occasion picker */
 #s-photo .occ-block{width:100%;max-width:330px;margin:12px auto 2px;text-align:center}
 #s-photo .occ-q{display:flex;align-items:baseline;justify-content:center;gap:9px;font:400 20px/1.2 'DM Serif Display',serif;color:#1a1a1a;margin-bottom:9px}
 #s-photo .occ-opt{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#C8971E}
 #s-photo .occ-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:318px;margin:0 auto}
-#s-photo .occ-chip{border:1px solid #c9b487;background:#fff;color:#3a352c;font:600 13.5px/1 'Jost',sans-serif;padding:11px 6px;border-radius:3px;cursor:pointer;transition:all .18s;text-align:center;white-space:nowrap}
+#s-photo .occ-chip{display:flex;align-items:center;justify-content:center;min-height:46px;border:1px solid #c9b487;background:#fff;color:#3a352c;font:600 13.5px/1.15 'Jost',sans-serif;padding:6px 6px;border-radius:3px;cursor:pointer;transition:all .18s;text-align:center;white-space:nowrap}
+#s-photo .occ-chip.occ-skip-chip{white-space:normal;font-size:12.5px}
 #s-photo .occ-chip:hover{border-color:#1a1a1a}
 #s-photo .occ-chip.sel{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
 #s-photo .occ-chip.occ-skip-chip{font-style:italic;color:#6a6355}
@@ -1096,10 +1110,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <button class="ph-back" onclick="showBack(photoPrevScreen)">&larr; Back</button>
   <div class="ph-wrap">
     <div class="ph-hang">
-      <svg class="ph-wires" viewBox="0 0 188 36" preserveAspectRatio="none" aria-hidden="true">
-        <line x1="94" y1="5" x2="14" y2="35"/>
-        <line x1="94" y1="5" x2="174" y2="35"/>
-        <circle cx="94" cy="5" r="3.4"/>
+      <svg class="ph-wires" viewBox="0 0 188 23" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="94" y1="4" x2="15" y2="22"/>
+        <line x1="94" y1="4" x2="173" y2="22"/>
+        <circle cx="94" cy="4" r="3.2"/>
       </svg>
       <div class="ph-logo-frame"><img src="logo-tight.png" alt="Style Star"></div>
     </div>
@@ -1111,9 +1125,16 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="photo-hint">✦ Full-length photo of just you works best</div>
       </div>
       <img id="photoPreview" class="photo-preview" style="display:none" alt="Your photo">
+      <div class="ph-crop" id="phCrop">
+        <span class="ch ch-tl" data-h="tl"></span>
+        <span class="ch ch-tr" data-h="tr"></span>
+        <span class="ch ch-bl" data-h="bl"></span>
+        <span class="ch ch-br" data-h="br"></span>
+      </div>
       <div class="ph-edit" id="phEdit" style="display:none">
         <div class="ph-hint" id="phHint">Drag to reposition &middot; pinch to zoom</div>
         <button type="button" class="ph-change" onclick="document.getElementById('photoIn').click()">Change</button>
+        <button type="button" class="ph-change ph-crop-btn" id="phCropBtn" onclick="toggleCrop()">Crop</button>
         <div class="ph-zoom">
           <button type="button" onclick="phZoomStep(-1)" aria-label="Zoom out">&minus;</button>
           <input type="range" id="phZoomRange" min="0" max="1" step="0.001" value="0" oninput="phZoomSet(this.value)" aria-label="Zoom">
@@ -1130,7 +1151,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button type="button" class="occ-chip" onclick="pickOccasion(this,'Weekend')">Weekend</button>
         <button type="button" class="occ-chip" onclick="pickOccasion(this,'Event')">Event</button>
         <button type="button" class="occ-chip" onclick="pickOccasion(this,'Casual Fun')">Casual Fun</button>
-        <button type="button" class="occ-chip occ-skip-chip" onclick="skipOccasion(this)">Skip</button>
+        <button type="button" class="occ-chip occ-skip-chip" onclick="skipOccasion(this)">Skip &mdash; just style it</button>
       </div>
     </div>
     <button id="analyzeBtn" onclick="ctaAnalyze()"><span class="shim"></span><span class="lbl">Analyze my outfit <svg viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></button>
@@ -1748,14 +1769,16 @@ let photoOccasion='';
 let photoImg=null,photoImgW=0,photoImgH=0;
 let _cropW=0,_cropH=0,_cScale=1,_cMin=1,_cMax=4,_cTx=0,_cTy=0;
 let _cPts={};
+// Adjustable crop box (frame content coords). Defaults to the full frame (no crop).
+let _cropMode=false,_box={x:0,y:0,w:0,h:0},_boxDrag=null;
 function startPhoto(){if(!userName||userName==='You'){userName='You'}showPhoto()}
 function showPhoto(){var a=document.querySelector('.scr.act');if(a&&a.id&&a.id!=='s-photo'){photoPrevScreen=a.id}show('s-photo');
   var pv=document.getElementById('photoPreview');pv.style.display='none';pv.style.transform='';pv.removeAttribute('src');
   document.getElementById('photoPlaceholder').style.display='flex';
-  document.getElementById('photoArea').classList.remove('editing');
+  document.getElementById('photoArea').classList.remove('editing','cropmode','cropped');
   var ed=document.getElementById('phEdit');if(ed)ed.style.display='none';
   document.getElementById('analyzeBtn').style.display='block';
-  photoData=null;photoImg=null;_cPts={};resetOccasion()}
+  photoData=null;photoImg=null;_cPts={};_cropMode=false;_boxDrag=null;resetOccasion()}
 // Optional "where are you headed?" picker — tailors the tips + shopping to the moment.
 function resetOccasion(){photoOccasion='';document.querySelectorAll('#occChips .occ-chip').forEach(function(c){c.classList.remove('sel')})}
 function pickOccasion(btn,name){
@@ -1785,6 +1808,9 @@ function _cropInit(){
   _cMin=Math.min(_cropW/photoImgW,_cropH/photoImgH);  // "fit" — whole photo visible
   _cMax=_cMin*4;
   _cScale=_cMin;_cTx=(_cropW-photoImgW*_cScale)/2;_cTy=(_cropH-photoImgH*_cScale)/2;
+  _box={x:0,y:0,w:_cropW,h:_cropH};_cropMode=false;
+  document.getElementById('photoArea').classList.remove('cropmode','cropped');
+  var cb=document.getElementById('phCropBtn');if(cb)cb.textContent='Crop';
   var img=document.getElementById('photoPreview');
   img.style.width=photoImgW+'px';img.style.height=photoImgH+'px';
   _cropApply();
@@ -1803,13 +1829,13 @@ function _initCropHandlers(){
   var a=document.getElementById('photoArea');
   if(!a||a._ch)return;a._ch=1;
   a.addEventListener('pointerdown',function(e){
-    if(!photoImg)return;
+    if(!photoImg||_cropMode||_isCropped())return;
     if(e.target.closest('.ph-zoom')||e.target.closest('.ph-change'))return;
     try{a.setPointerCapture(e.pointerId)}catch(x){}
     _cPts[e.pointerId]={x:e.clientX,y:e.clientY};e.preventDefault();
   });
   a.addEventListener('pointermove',function(e){
-    if(!photoImg||!_cPts[e.pointerId])return;
+    if(!photoImg||_cropMode||_isCropped()||!_cPts[e.pointerId])return;
     var ids=Object.keys(_cPts);
     if(ids.length>=2){
       var p0=_cPts[ids[0]],p1=_cPts[ids[1]];
@@ -1831,6 +1857,60 @@ function _initCropHandlers(){
   });
   function up(e){delete _cPts[e.pointerId]}
   a.addEventListener('pointerup',up);a.addEventListener('pointercancel',up);
+  // Crop-box: drag interior to move, corner handles to resize (free aspect).
+  var box=document.getElementById('phCrop');if(box){
+    box.addEventListener('pointerdown',function(e){
+      var h=e.target.getAttribute('data-h');
+      _boxDrag={mode:h||'move',px:e.clientX,py:e.clientY,b:{x:_box.x,y:_box.y,w:_box.w,h:_box.h}};
+      try{box.setPointerCapture(e.pointerId)}catch(x){}
+      e.stopPropagation();e.preventDefault();
+    });
+    box.addEventListener('pointermove',_boxMove);
+    box.addEventListener('pointerup',function(){_boxDrag=null});
+    box.addEventListener('pointercancel',function(){_boxDrag=null});
+  }
+}
+function _positionBox(){
+  var el=document.getElementById('phCrop');if(!el)return;
+  el.style.left=_box.x+'px';el.style.top=_box.y+'px';el.style.width=_box.w+'px';el.style.height=_box.h+'px';
+}
+function _boxMove(e){
+  if(!_boxDrag)return;e.preventDefault();
+  var dx=e.clientX-_boxDrag.px,dy=e.clientY-_boxDrag.py,b=_boxDrag.b,m=_boxDrag.mode,MIN=54;
+  if(m==='move'){
+    var nx=Math.max(0,Math.min(_cropW-b.w,b.x+dx)),ny=Math.max(0,Math.min(_cropH-b.h,b.y+dy));
+    _box={x:nx,y:ny,w:b.w,h:b.h};
+  }else{
+    var l=b.x,t=b.y,r=b.x+b.w,bot=b.y+b.h;
+    if(m.indexOf('t')>=0)t=Math.min(bot-MIN,Math.max(0,b.y+dy));
+    if(m.indexOf('b')>=0)bot=Math.max(t+MIN,Math.min(_cropH,b.y+b.h+dy));
+    if(m.indexOf('l')>=0)l=Math.min(r-MIN,Math.max(0,b.x+dx));
+    if(m.indexOf('r')>=0)r=Math.max(l+MIN,Math.min(_cropW,b.x+b.w+dx));
+    _box={x:l,y:t,w:r-l,h:bot-t};
+  }
+  _positionBox();
+}
+function _isCropped(){return !!photoImg&&(_box.w<_cropW-2||_box.h<_cropH-2)}
+// Toggle the adjustable crop box on/off. First open seeds a centered inset box;
+// exiting keeps a reduced box "applied" (dimmed surround, pan locked) — WYSIWYG.
+function toggleCrop(){
+  if(!photoImg)return;
+  _cropMode=!_cropMode;
+  var a=document.getElementById('photoArea');a.classList.toggle('cropmode',_cropMode);
+  var btn=document.getElementById('phCropBtn');
+  if(_cropMode){
+    a.classList.remove('cropped');
+    if(_box.w>=_cropW-1&&_box.h>=_cropH-1){
+      var iw=Math.round(_cropW*0.66),ih=Math.round(_cropH*0.9);
+      _box={x:Math.round((_cropW-iw)/2),y:Math.round((_cropH-ih)/2),w:iw,h:ih};
+    }
+    _positionBox();
+    if(btn)btn.textContent='Done';
+    var h=document.getElementById('phHint');if(h){h.textContent='Drag the box · pull the corners';h.style.opacity='1';setTimeout(function(){h.style.opacity='0'},3200)}
+  }else{
+    a.classList.toggle('cropped',_isCropped());
+    if(btn)btn.textContent=_isCropped()?'Recrop':'Crop';
+  }
 }
 function onPhotoSelect(input){
   if(!input.files||!input.files[0])return;
@@ -1862,16 +1942,20 @@ function onPhotoSelect(input){
   img.src=url;
 }
 // Export exactly what's framed (WYSIWYG): reproduce the on-screen transform onto a
-// canvas, clipped to the frame, so a repositioned/zoomed crop is what gets analyzed.
+// canvas, clipped to the crop box, so her zoom + reposition + crop is what gets analyzed.
 function _commitPhoto(){
   if(!photoImg)return false;
   _cropFrame();
-  var outH=1024,outW=Math.round(outH*_cropW/_cropH);
+  var bx=_box.x,by=_box.y,bw=_box.w,bh=_box.h;
+  if(bw<10||bh<10){bx=0;by=0;bw=_cropW;bh=_cropH;}   // guard: fall back to full frame
+  var LONG=1024,outW,outH;
+  if(bw>=bh){outW=LONG;outH=Math.round(LONG*bh/bw);}else{outH=LONG;outW=Math.round(LONG*bw/bh);}
   var c=document.createElement('canvas');c.width=outW;c.height=outH;
   var ctx=c.getContext('2d');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,outW,outH);
-  var k=outW/_cropW;
-  ctx.save();ctx.scale(k,k);ctx.beginPath();ctx.rect(0,0,_cropW,_cropH);ctx.clip();
+  var k=outW/bw;
+  ctx.save();ctx.scale(k,k);ctx.beginPath();ctx.rect(0,0,bw,bh);ctx.clip();
+  ctx.translate(-bx,-by);
   ctx.translate(_cTx,_cTy);ctx.scale(_cScale,_cScale);ctx.drawImage(photoImg,0,0);ctx.restore();
   photoData=c.toDataURL('image/jpeg',0.72).split(',')[1];photoType='image/jpeg';
   return true;
