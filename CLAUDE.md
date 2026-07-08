@@ -1224,3 +1224,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     older audience); it's just hidden during cropping now. Easy to drop for pinch-only if she prefers.
   - Verified geometry in Chromium: handles clear the bottom-center Done by ~10px and the (hidden)
     top controls; Change/zoom display:none in crop mode; no JS errors.
+
+**2026-07-08 (cont. — outfit screen: zoom bar removed, frame scrolls the page when empty)**
+- Cath's calls, all `#s-photo`:
+  - ✅ **Removed the − / + zoom bar** — pinch-to-zoom is intuitive enough. Kept pinch (two-finger via the
+    pointer handlers → `_zoomAround`) + one-finger drag-to-reposition. Deleted the `.ph-zoom` markup/CSS
+    and the now-unused `phZoomSet`/`phZoomStep` fns; the hint stays "Drag to reposition · pinch to zoom".
+  - ✅ **The empty photo frame now scrolls the page.** It used to have `touch-action:none` always, so a
+    drag starting on the frame couldn't scroll the page (to see the rod/footer). Now the base frame is
+    `touch-action:auto` (scrolls like the rest of the page); `touch-action:none` is added **only via the
+    `.editing` class** (once a photo is loaded) so pan/pinch/crop still capture gestures then. So: before
+    a photo, the frame scrolls; while editing a photo it's the gesture zone (scroll via the area around
+    it). NOTE (flagged to Cath): scroll-on-frame is not enabled *while a photo is loaded* — can revisit
+    with a `touch-action:pan-y` approach if she wants it, but that trades away one-finger vertical repos.
+  - **"Done" button decision (Cath asked):** no Done for zoom/position (the "Analyze my outfit" button is
+    the confirm); the crop **Done** stays (it's what bakes the crop). So exactly one Done, only in crop.
+  - Verified in Chromium: placeholder `touch-action:auto`, editing `none`, no zoom bar, pinch(_zoomAround)
+    +commit still valid, no JS errors.
