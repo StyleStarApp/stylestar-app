@@ -1386,3 +1386,10 @@ More live polish with Cath, all merged → live (PRs #166–#170).
      (`_defaultSug` snapshot). Removed the leftover line that hid the suggestions in the look chat.
   - Verified in Chromium (stubbed API): chips render + occasion-aware; the chat request's system message
     contains the analysis context (tips + shop items) and the look image is attached each turn.
+
+**2026-07-08 (cont. — outfit results: bigger "look you shared" photo + fix the empty gap)**
+- Cath: big empty gap under the "THE LOOK YOU SHARED" thumbnail. Cause: the hidden `.ask-nudge` was
+  `display:flex;opacity:0` so it RESERVED layout space even when not showing. Fix: `.ask-nudge` is now
+  `display:none` by default and `display:flex` only under `.on` (still pops with the spring when it
+  appears; collapses the gap when hidden/dismissed). Enlarged the thumbnail (`.lookshot`) 136×180 → 190×252
+  and tightened margins. Verified: gap gone, photo larger, nudge still pops (display none→flex, opacity→1).
