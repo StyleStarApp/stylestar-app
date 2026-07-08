@@ -1283,3 +1283,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     it (reads as curtains opening onto a spotlit stage). Worth a real-device end-to-end glance (real photo
     through the Netlify function). The curtains FADE out after opening (they don't persist as side framing)
     — chosen to keep the results screen's clean dark look; easy to make them stay as framing drapes if Cath wants.
+
+**2026-07-08 (cont. — carry the analyzed outfit photo into the stylist chat)**
+- Cath's ask: from the outfit results, tapping "Ask about this look" should bring the just-analyzed photo
+  into the stylist chat so the stylist can see it and keep styling that outfit.
+- The chat already supported an attached photo (`chatPhotoData` → sent as an image block to the AI, shown
+  as a thumbnail). Wired the outfit-results "Ask about this look" button to a new **`openChatAboutLook()`**
+  (was `openChat()`): it opens the chat with the analyzed `photoData` pre-attached (`chatPhotoData=photoData`,
+  preview shown) and a one-time stylist greeting ("I've got the outfit you just shared right here…"). Her
+  first message then carries the image to the AI (so it actually sees the look); she can "Remove" it.
+  - `openChat(fromLook)` now takes a flag; when opened about a look it **skips the generic welcome** so there's
+    no duplicate greeting. `_lookGreeted` guards against repeat greetings and resets at the start of each
+    `runPhotoAnalysis()` (a new analysis = a new look to greet once).
+  - Quiz "Ask your stylist" is unchanged (still plain `openChat()`); only the outfit path carries the photo.
+  - Verified in Chromium: photo attaches (`chatPhotoData` set), single tailored greeting, no dup welcome, no
+    JS errors. NOTE: the photo appears as a pending "Photo attached" (matching the existing attach→send flow),
+    not a transcript bubble — clean and the AI reliably gets it on the first question. Could instead post it
+    as a message bubble if Cath prefers; flagged.

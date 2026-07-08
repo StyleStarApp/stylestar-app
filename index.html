@@ -1320,7 +1320,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- Honest profile save: only meaningful once she's taken the quiz -->
       <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
         <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my style profile</button>
-      <div class="act" data-shelf onclick="openChat()">
+      <div class="act" data-shelf onclick="openChatAboutLook()">
         <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask about this look</span><span class="ar" style="color:#EC4899">&rarr;</span></div><div class="ss">Chat with your stylist, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
@@ -2128,6 +2128,7 @@ function _renderShop(items){
   }).join('');
 }
 async function runPhotoAnalysis(){
+  _lookGreeted=false;  // a fresh analysis → the chat can greet this new look once
   const occ=photoOccasion;
   const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
   const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} has uploaded a photo of an outfit she is wearing${occ?' for '+occ:''} and wants your styling help — real feedback, finishing touches, and shopping ideas.
@@ -2403,6 +2404,8 @@ async function restoreResults(){
 let chatHistory=[];
 let chatPrevScreen='s-res';
 let chatPhotoData=null;
+// The analyzed outfit photo can be carried straight into the stylist chat.
+let _lookGreeted=false;
 let storyPrevScreen='s-wel';
 let prefStep=0;
 let prefReturnScreen='s-res';
@@ -3020,7 +3023,7 @@ function loadChatHistory(){
   return[];
 }
 
-function openChat(){
+function openChat(fromLook){
   chatPrevScreen=document.querySelector('.scr.act')?.id||'s-res';
   markStylistRead();
   show('s-chat');
@@ -3042,8 +3045,7 @@ function openChat(){
         }
         msgContainer.appendChild(div);
       });
-    }else{
-      const name=userName&&userName!=='You'?userName:'there';
+    }else if(!fromLook){
       const welcome=`Hi there! I'm your Style Star stylist. Need outfit ideas? Shopping advice? What can I help you with?`;
       addChatMsg(welcome,'bot');
     }
@@ -3060,6 +3062,23 @@ function openChat(){
   setTimeout(()=>document.getElementById('chatInput').focus(),300);
 }
 
+// Opened from the outfit results — carry the just-analyzed photo into the chat so the
+// stylist "has" the look and can keep styling it. Her first question sends the image.
+function openChatAboutLook(){
+  var hasLook=photoData&&photoData!=='1';
+  openChat(hasLook);
+  if(!hasLook)return;
+  var durl='data:image/jpeg;base64,'+photoData;
+  chatPhotoData=photoData;
+  var thumb=document.getElementById('chatPhotoThumb');if(thumb)thumb.src=durl;
+  var prev=document.getElementById('chatPhotoPreview');if(prev)prev.style.display='flex';
+  var sug=document.getElementById('chatSuggestions');if(sug)sug.style.display='none';
+  if(!_lookGreeted){
+    addChatMsg("I've got the outfit you just shared right here. Ask me anything about it, a finishing touch, something to add, or where to shop it.","bot");
+    _lookGreeted=true;
+  }
+  document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;
+}
 function wbChat(){
   try{
     const d=JSON.parse(localStorage.getItem('ss_data'));
