@@ -1255,3 +1255,31 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     page); vertical nudging is still available via a two-finger drag, and the crop tool handles framing.
   - Verified in Chromium: editing `touch-action:pan-y`, crop box `none`, placeholder `auto`; pinch-zoom,
     crop bake, and commit all still valid; no JS errors. Real-device gesture check still worth doing.
+
+**2026-07-08 (cont. — ▶ "The Fitting Room" reveal built into the OUTFIT analysis, replacing the mirror doors there)**
+- Prototyped (Artifact) and iterated with Cath on a NEW loading+reveal for the photo/outfit path, distinct
+  from the quiz's mirror-doors (quiz = identity/mirror; outfit = a styling appointment). Chosen design:
+  **The Fitting Room** — ivory pleated **drapery** on a gold rod, with "Styling your look…" **hung in a
+  black frame from the rod on gold wires (exactly like the logo plaque; linen `#F2EFE8` interior, hung
+  high, still/no swing)**, **twinkling gold stars**, **drifting light motes**, a **symmetric center-seam
+  glow**; then the curtains **gather to the sides like real drapery** (not stiff doors) on a **warm burst
+  of light**, **gold tasseled tie-backs** catch them, **sparkles settle** as the results rise.
+- Built into the app **scoped to `#s-photo-res` only** (the quiz `#s-res` keeps its mirror doors, untouched):
+  - Added a `.cr` curtain overlay (`.cr-rod/-panel/-glow/-seam/-stars(.cr-tw)/-motes(.cr-mote)/-sign(+cr-wires
+    +cr-plate)/-burst/-tie/-spk/-dust`) in the `#s-photo-res` markup, replacing that screen's `<div class="doors">`.
+    Hid the doors there via `#s-photo-res .doors{display:none}`.
+  - Reuses the EXISTING reveal state machine (`_resShowCompose`/`_playResReveal`, classes `rv-compose`→
+    `rv-open`→`rv-done` on the screen). `rv-compose` = curtains closed with the sign/stars/motes/glow
+    **looping** (persists for the real AI think-time); `rv-open` = sign+motes+stars+glow fade, curtains
+    gather (`crGatherL/R`), burst, tie-backs, spk + dust settle, then the `.cr` overlay fades (`crFade`);
+    `rv-done` = `.cr` display:none, leaving the normal dark spotlit boards (which rise via the shared
+    `.rv-open .p1/.p2/.pcard/.p3` rules — unchanged). Honors `prefers-reduced-motion` (hides `.cr`).
+  - Fonts: plate uses **DM Serif Display** (the logo-matching brand serif) — real font in-app, not the
+    prototype's stand-in. Curtain fabric = irregular-width folds + satin sheen, mirrored L/R (not the old
+    uniform "blinds" pleats).
+  - Verified in Chromium via the http-harness: compose (thinking) → reveal (gather+burst+tie-backs+sparkle)
+    → done (curtains gone, dark boards shown); no JS errors; quiz `#s-res` still has its doors overlay.
+    NOTE: the warm ivory curtains part to reveal the existing DARK results stage — the warm burst bridges
+    it (reads as curtains opening onto a spotlit stage). Worth a real-device end-to-end glance (real photo
+    through the Netlify function). The curtains FADE out after opening (they don't persist as side framing)
+    — chosen to keep the results screen's clean dark look; easy to make them stay as framing drapes if Cath wants.
