@@ -305,12 +305,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Adjustable crop box — pull the corners in to frame what to keep, then Done applies it */
 #s-photo .ph-crop{position:absolute;display:none;border:1.5px solid rgba(255,255,255,.95);box-shadow:0 0 0 9999px rgba(14,11,7,.5);cursor:move;touch-action:none}
 #s-photo .photo-upload-area.cropmode .ph-crop{display:block}
-#s-photo .ph-crop .ch{position:absolute;width:34px;height:34px;pointer-events:auto;touch-action:none}
-#s-photo .ph-crop .ch::after{content:'';position:absolute;width:18px;height:18px;border:3px solid #F1DDA0}
-#s-photo .ph-crop .ch-tl{top:0;left:0}#s-photo .ph-crop .ch-tl::after{top:4px;left:4px;border-right:none;border-bottom:none}
-#s-photo .ph-crop .ch-tr{top:0;right:0}#s-photo .ph-crop .ch-tr::after{top:4px;right:4px;border-left:none;border-bottom:none}
-#s-photo .ph-crop .ch-bl{bottom:0;left:0}#s-photo .ph-crop .ch-bl::after{bottom:4px;left:4px;border-right:none;border-top:none}
-#s-photo .ph-crop .ch-br{bottom:0;right:0}#s-photo .ph-crop .ch-br::after{bottom:4px;right:4px;border-left:none;border-top:none}
+#s-photo .ph-crop .ch{position:absolute;width:46px;height:46px;pointer-events:auto;touch-action:none}
+#s-photo .ph-crop .ch::after{content:'';position:absolute;width:21px;height:21px;border:3px solid #F1DDA0}
+#s-photo .ph-crop .ch-tl{top:-11px;left:-11px}#s-photo .ph-crop .ch-tl::after{top:13px;left:13px;border-right:none;border-bottom:none}
+#s-photo .ph-crop .ch-tr{top:-11px;right:-11px}#s-photo .ph-crop .ch-tr::after{top:13px;right:13px;border-left:none;border-bottom:none}
+#s-photo .ph-crop .ch-bl{bottom:-11px;left:-11px}#s-photo .ph-crop .ch-bl::after{bottom:13px;left:13px;border-right:none;border-top:none}
+#s-photo .ph-crop .ch-br{bottom:-11px;right:-11px}#s-photo .ph-crop .ch-br::after{bottom:13px;right:13px;border-left:none;border-top:none}
+/* Crop mode declutters: hide Change + zoom bar, move Done to bottom-center */
+#s-photo .photo-upload-area.cropmode .ph-change:not(.ph-crop-btn){display:none}
+#s-photo .photo-upload-area.cropmode .ph-zoom{display:none}
+#s-photo .photo-upload-area.cropmode .ph-crop-btn{top:auto;bottom:13px;left:50%;right:auto;transform:translateX(-50%);padding:9px 24px;font-size:11px}
 /* Optional "where are you headed?" occasion picker */
 #s-photo .occ-block{width:100%;max-width:330px;margin:12px auto 2px;text-align:center}
 #s-photo .occ-q{display:flex;align-items:baseline;justify-content:center;gap:9px;font:400 20px/1.2 'DM Serif Display',serif;color:#1a1a1a;margin-bottom:9px}
@@ -1896,7 +1900,9 @@ function toggleCrop(){
   var a=document.getElementById('photoArea'),btn=document.getElementById('phCropBtn');
   if(!_cropMode){
     _cropMode=true;a.classList.add('cropmode');
-    _box={x:0,y:0,w:_cropW,h:_cropH};_positionBox();
+    // Start inset from the edges so the corners are easy to grab (clear of the controls).
+    var mx=Math.round(_cropW*0.11),mt=Math.round(_cropH*0.10),mb=Math.round(_cropH*0.15);
+    _box={x:mx,y:mt,w:_cropW-2*mx,h:_cropH-mt-mb};_positionBox();
     if(btn)btn.textContent='Done';
     var h=document.getElementById('phHint');if(h){h.textContent='Pull the corners to crop';h.style.opacity='1';setTimeout(function(){h.style.opacity='0'},3600)}
   }else{

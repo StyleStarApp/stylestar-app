@@ -1209,3 +1209,18 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   - `_commitPhoto()` still exports the current frame view (box defaults to full after an apply), so a
     mid-crop Analyze also works. Verified in Chromium: crop-open box == full frame → pull to a tall
     narrow region → Done bakes a 432×1501 image → re-fit → zoom works → commit valid. No JS errors.
+
+**2026-07-08 (cont. — crop handles easier to grab; controls cleared during crop)**
+- Cath: the crop corners sat at the frame's edges, right under the Change/Done/zoom buttons — too
+  hard to grab; also questioned whether the − / + zoom bar is needed (leaning pinch-is-intuitive).
+  Fixes (all `#s-photo`):
+  - **Crop box now starts INSET** from the edges (~11% sides, 10% top, 15% bottom) so the four
+    corners open in clear space, easy for fingers. **Corner handles enlarged** to 46px touch targets
+    (straddle the corner, −11px offset; gold bracket 21px).
+  - **Crop mode declutters:** the **Change** button and the **zoom − / + bar are hidden** while
+    cropping, and the **Done** button relocates to a **bottom-center gold pill** — so nothing overlaps
+    the corners. Exiting crop restores everything (zoom bar + Crop button top-right).
+  - **Kept the − / + zoom bar** (for non-crop mode) for accessibility (pinch can be fiddly for the
+    older audience); it's just hidden during cropping now. Easy to drop for pinch-only if she prefers.
+  - Verified geometry in Chromium: handles clear the bottom-center Done by ~10px and the (hidden)
+    top controls; Change/zoom display:none in crop mode; no JS errors.
