@@ -1300,3 +1300,11 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     JS errors. NOTE: the photo appears as a pending "Photo attached" (matching the existing attach→send flow),
     not a transcript bubble — clean and the AI reliably gets it on the first question. Could instead post it
     as a message bubble if Cath prefers; flagged.
+
+**2026-07-08 (cont. — outfit→chat: photo now posts as her own "texted" message)**
+- Cath preferred the carried-over photo to appear as if she texted it, not as a pending attachment.
+  `openChatAboutLook()` now routes through **`sendChat()`**: it sets `chatPhotoData=photoData`, seeds the
+  input with "Here's the outfit I just shared. I'd love your help taking it further.", and calls sendChat —
+  so the outfit posts as HER photo message bubble and the stylist replies to it (the image goes to the AI
+  with that turn). `_lookGreeted` still guards one seed per analysis. Verified: first msg is a user bubble
+  with `img.chat-msg-img` + caption, `chatPhotoData` clears after send, no JS errors.

@@ -3067,17 +3067,14 @@ function openChat(fromLook){
 function openChatAboutLook(){
   var hasLook=photoData&&photoData!=='1';
   openChat(hasLook);
-  if(!hasLook)return;
-  var durl='data:image/jpeg;base64,'+photoData;
+  if(!hasLook||_lookGreeted)return;
+  _lookGreeted=true;
+  // Post the outfit as HER message — as if she just texted it — then the stylist replies
+  // (the image goes to the AI with this turn). Routed through sendChat so it's a real bubble.
   chatPhotoData=photoData;
-  var thumb=document.getElementById('chatPhotoThumb');if(thumb)thumb.src=durl;
-  var prev=document.getElementById('chatPhotoPreview');if(prev)prev.style.display='flex';
-  var sug=document.getElementById('chatSuggestions');if(sug)sug.style.display='none';
-  if(!_lookGreeted){
-    addChatMsg("I've got the outfit you just shared right here. Ask me anything about it, a finishing touch, something to add, or where to shop it.","bot");
-    _lookGreeted=true;
-  }
-  document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;
+  var thumb=document.getElementById('chatPhotoThumb');if(thumb)thumb.src='data:image/jpeg;base64,'+photoData;
+  var input=document.getElementById('chatInput');if(input)input.value="Here's the outfit I just shared. I'd love your help taking it further.";
+  sendChat();
 }
 function wbChat(){
   try{
