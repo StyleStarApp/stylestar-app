@@ -711,12 +711,16 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .ask-nudge{position:relative;margin:0 8px -2px;background:#F2EFE8;border:1px solid rgba(201,162,78,.6);border-radius:14px;padding:11px 30px 11px 13px;display:flex;gap:9px;align-items:flex-start;box-shadow:0 12px 22px -10px rgba(30,20,5,.5);opacity:0;transform:translateY(8px) scale(.7);transform-origin:50% 130%;pointer-events:none}
 .res-screen .ask-nudge:after{content:"";position:absolute;left:50%;bottom:-8px;width:15px;height:15px;background:#F2EFE8;border-right:1px solid rgba(201,162,78,.6);border-bottom:1px solid rgba(201,162,78,.6);transform:translateX(-50%) rotate(45deg)}
 .res-screen .ask-nudge.on{pointer-events:auto;animation:nudgePop .55s cubic-bezier(.34,1.56,.64,1) both,nudgeBob 2.9s ease-in-out .7s infinite}
-.res-screen .ask-nudge .nstar{flex:0 0 auto;color:#C79A34;font-size:15px;line-height:1.35}
+.res-screen .ask-nudge .nstar{flex:0 0 auto;color:#EC4899;font-size:16px;line-height:1.3}
 .res-screen .ask-nudge .ntx{font:500 12.5px/1.42 'Jost',sans-serif;color:#3a352c}
 .res-screen .ask-nudge .ntx b{font-weight:700;color:#211E1A}
 .res-screen .ask-nudge .nx{position:absolute;top:4px;right:9px;font:700 15px/1 'Jost',sans-serif;color:#b3a988;cursor:pointer;padding:2px}
 @keyframes nudgePop{from{opacity:0;transform:translateY(8px) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes nudgeBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+/* Her outfit photo, kept on the results as an anchor (tap to chat about it) */
+.res-screen .lookshot{display:none;margin:2px auto 14px;width:136px;cursor:pointer;text-align:center}
+.res-screen .lookshot img{display:block;width:136px;height:180px;object-fit:contain;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 9px 20px -9px rgba(0,0,0,.55),0 0 0 1px rgba(201,162,78,.55)}
+.res-screen .lookshot .lscap{margin-top:8px;font:700 10.5px/1.3 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a6d20}
 .res-screen .keep{margin-top:16px;padding:18px 15px 16px;text-align:center;border:1px solid rgba(201,162,78,.5);border-radius:3px;background:#fff}
 .res-screen .keep h4{font:400 20px/1.15 'DM Serif Display',serif;color:#1f1d19;margin:0 0 5px}
 .res-screen .keep p{font:400 11px/1.5 'Jost',sans-serif;color:#6b655a;margin:0 auto 12px}
@@ -1321,12 +1325,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <!-- PIECE 4: actions -->
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
+      <!-- Her outfit photo, right here so it's not lost on Back — tap it to chat about the look -->
+      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><div class="lscap">The look you shared</div></div>
       <!-- Chat is the high-intent next step right after sharing a photo → hero CTA + a one-time stylist nudge -->
-      <div class="ask-nudge" id="askNudge"><span class="nstar">&#10022;</span><span class="ntx"><b>Have a question about your look?</b> I'm right here, ask me anything.</span><span class="nx" onclick="dismissAskNudge(event)">&times;</span></div>
+      <div class="ask-nudge" id="askNudge"><span class="nstar">&#9733;</span><span class="ntx"><b>Have a question about your look?</b> I'm right here, ask me anything.</span><span class="nx" onclick="dismissAskNudge(event)">&times;</span></div>
       <button class="hero" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
       <!-- Quiz-skipper nudge: shown only when she hasn't taken the quiz (no profile to save) -->
       <div class="quiznudge" id="photoQuizNudge" style="display:none">
-        <div class="qn-star">&#10022;</div>
+        <div class="qn-star">&#9733;</div>
         <h4>Want everything styled to you?</h4>
         <p>Take our fun style quiz and I'll tailor your portrait, tips, and shopping to your taste.</p>
         <button class="qn-btn" onclick="startQ()">Take our fun style quiz &rarr;</button>
@@ -2144,6 +2150,7 @@ function _renderShop(items){
 }
 async function runPhotoAnalysis(){
   _lookGreeted=false;chatLookPhoto=null;_resetAskNudge();  // a fresh analysis → chat greets this look once; nudge re-arms
+  var _ls0=document.getElementById('lookShot');if(_ls0)_ls0.style.display='none';
   const occ=photoOccasion;
   const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
   const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} has uploaded a photo of an outfit she is wearing${occ?' for '+occ:''} and wants your styling help — real feedback, finishing touches, and shopping ideas.
@@ -2194,6 +2201,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     document.getElementById('pAltAction').innerHTML='';
     _photoBoards(true);
     _photoSaveArea();
+    var _ls=document.getElementById('lookShot');if(_ls&&photoData){document.getElementById('lookShotImg').src='data:image/jpeg;base64,'+photoData;_ls.style.display='block'}
     _playResReveal(true,'s-photo-res');
     setTimeout(_showAskNudge,3800);   // gentle nudge once the reveal has settled
   }catch(e){
