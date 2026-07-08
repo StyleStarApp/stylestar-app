@@ -1136,3 +1136,35 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   Verify fit with the scratchpad harness at a ~390×700 viewport (`.ph-foot` bottom ≤ viewport = fits).
 - **Still Cath's dials if she wants:** logo plaque wider/shorter; photo frame taller; trim to fully fit.
   And the older-look inner pages still to convert: **quiz, chat, Mall, footer pages**.
+
+**2026-07-08 (▶ Analyze-an-outfit fine-tuning: in-frame crop/zoom, hanging logo, occasion grid)**
+- First merged the 3 dangling `claude/style-star-r6nemc` commits (framed-gallery refinements: portrait
+  photo frame w/ `object-fit:contain`, short-wide logo plaque, inline "Optional", bigger fonts, new
+  `logo-tight.png`) → **PR #174**, squash-merged to main / live. That closed the pending-merge flag.
+- Then a live fine-tuning pass on `#s-photo` (all in `index.html`, scoped to `#s-photo`):
+  - ✅ **In-frame crop / zoom / reposition BEFORE submit** (Cath's ask — e.g. crop other people out of a
+    group photo). Once she picks a photo it becomes a **pannable/zoomable image inside the fixed portrait
+    frame**: **drag to reposition, pinch OR a gold zoom slider (− / +) to zoom**, a **"Change"** chip to
+    re-pick, and a fading hint pill. Starts at **"fit"** (whole photo visible — preserves the #172
+    "show full photos" default), zoom range fit→4×. **WYSIWYG export:** on submit, `_commitPhoto()`
+    reproduces the on-screen transform onto a 768×1024 canvas clipped to the frame, so exactly what's
+    framed is what the AI analyzes. Implementation: Pointer-Events handlers on `#photoArea`
+    (`touch-action:none`; guards clicks on the zoom bar/Change), transform-on-`<img>` for smooth GPU
+    interaction, per-axis clamp (centers when smaller than frame, no-gap when larger). Working image
+    downscaled to max 1600px on load for memory. New state `photoImg/_cScale/_cTx/_cTy/_cMin/_cMax`;
+    new fns `_cropInit/_cropApply/_zoomAround/phZoomSet/phZoomStep/_initCropHandlers/_commitPhoto`;
+    `onPhotoSelect` rewritten; `photoData` holds a `'1'` sentinel until commit (never sent early —
+    only `analyzePhoto`→`_commitPhoto` and `retryPhoto`-after-commit reach the API). `ctaAnalyze` now
+    gates on `photoImg`.
+  - ✅ **Logo plaque now hangs from the rod like a framed picture on wire.** Added `.ph-hang` wrapper
+    with an inline SVG (`.ph-wires`): two gold wires in an inverted-V from a small hook ring on the rod
+    down to the plaque's top corners. Plaque border **thickened 4px→6px** (slightly bigger, 188px).
+  - ✅ **Occasion picker reorganized to a tidy 3-col grid** (was flex-wrap → ~3 lines). Now 2 rows:
+    Work / Date night / Weekend • Event / **Casual Fun** / **Skip**. **"Just for fun" → "Casual Fun"**
+    (Cath's call; flagged the mild Weekend overlap — kept both, they read distinct enough). **"Skip"
+    is now a chip like the others** (italic, opt-out) sitting on the second row — no more separate
+    underlined link. `skipOccasion(btn)` now selects the Skip chip; removed the old `#occSkip`/`.done`.
+  - ✅ **"ANALYZE MY OUTFIT" font + arrow enlarged** (13→15.5px label, 18→23px arrow).
+  - Verified all states in Chromium via the scratchpad http-harness (empty / editor / zoomed+panned);
+    commit produces valid base64; no JS errors. Worth a **real-device end-to-end test** (real photo
+    through the Netlify function + a real pinch gesture) to confirm on iPhone.
