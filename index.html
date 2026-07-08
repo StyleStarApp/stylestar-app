@@ -707,6 +707,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .hero .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rvShim 3s ease-in-out infinite;pointer-events:none}
 .res-screen .hero svg{width:18px;height:18px;position:relative;stroke:#F1DDA0;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .hero .lbl{position:relative;white-space:nowrap;display:flex;align-items:center}
+/* "Ask about this look" — made to POP: bright metallic-gold fill + a soft gold glow that pulses */
+.res-screen .hero.ask-cta{padding:18px 16px;font-size:15px;color:#2b2013;background:linear-gradient(135deg,#FBEEBE,#ECC85E 34%,#DBAA3F 56%,#F4E4A8 74%,#D3A438) padding-box,linear-gradient(135deg,#9C7519,#7d5e17) border-box;box-shadow:0 12px 26px -8px rgba(205,155,45,.7),0 2px 6px rgba(150,110,20,.4);animation:askPulse 2.8s ease-in-out infinite}
+.res-screen .hero.ask-cta .lbl{color:#2b2013}
+.res-screen .hero.ask-cta svg{stroke:#2b2013;width:19px;height:19px}
+@keyframes askPulse{0%,100%{box-shadow:0 12px 24px -8px rgba(205,155,45,.5),0 2px 6px rgba(150,110,20,.35)}50%{box-shadow:0 16px 34px -6px rgba(226,182,72,.95),0 0 0 3px rgba(226,182,72,.24)}}
 .res-screen .keep{margin-top:16px;padding:18px 15px 16px;text-align:center;border:1px solid rgba(201,162,78,.5);border-radius:3px;background:#fff}
 .res-screen .keep h4{font:400 20px/1.15 'DM Serif Display',serif;color:#1f1d19;margin:0 0 5px}
 .res-screen .keep p{font:400 11px/1.5 'Jost',sans-serif;color:#6b655a;margin:0 auto 12px}
@@ -892,7 +897,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section{opacity:1!important;animation:none!important;transform:none!important}
   .res-screen .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
   .res-screen .spot{animation:none!important;opacity:.62}
-  .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
+  .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .hero.ask-cta,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
 }
 </style>
 </head>
@@ -1311,7 +1316,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
       <!-- Chat is the high-intent next step right after sharing a photo → promoted to the hero CTA -->
-      <button class="hero" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
+      <button class="hero ask-cta" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
       <!-- Quiz-skipper nudge: shown only when she hasn't taken the quiz (no profile to save) -->
       <div class="quiznudge" id="photoQuizNudge" style="display:none">
         <div class="qn-star">&#10022;</div>

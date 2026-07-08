@@ -1343,3 +1343,9 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   `.act` shelf version. Shopping is untouched — the "Complete the Look" links sit in their own board ABOVE
   the actions, and Style Star Edit + Shop the Mall shelves remain below. Nice intent contrast: quiz results
   lead with the "Shop your style" hero; outfit results now lead with "Ask about this look."
+
+**2026-07-08 (cont. — make "Ask about this look" actually POP)**
+- Cath: the promoted hero didn't pop — it looked like every other dark+gold CTA. Gave it a distinct
+  **bright metallic-gold FILL** (dark text + chat icon) with a soft **gold glow that gently pulses**
+  (`.hero.ask-cta` + `askPulse`), so it stands apart from the dark/outline buttons and reads as THE action.
+  Pulse disabled under `prefers-reduced-motion`. Shopping placement unchanged.
