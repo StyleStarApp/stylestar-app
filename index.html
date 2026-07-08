@@ -302,17 +302,15 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-zoom input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#F1DDA0;border:1px solid #C79A34;cursor:pointer}
 #s-photo .ph-crop-btn{left:auto;right:9px}
 #s-photo .photo-upload-area.cropmode .ph-crop-btn{background:#C79A34;color:#1a1a1a}
-/* Adjustable crop box (drag to move, corner handles to resize) */
+/* Adjustable crop box — pull the corners in to frame what to keep, then Done applies it */
 #s-photo .ph-crop{position:absolute;display:none;border:1.5px solid rgba(255,255,255,.95);box-shadow:0 0 0 9999px rgba(14,11,7,.5);cursor:move;touch-action:none}
-#s-photo .photo-upload-area.cropmode .ph-crop,#s-photo .photo-upload-area.cropped .ph-crop{display:block}
-#s-photo .photo-upload-area:not(.cropmode) .ph-crop{cursor:default}
-#s-photo .photo-upload-area:not(.cropmode) .ph-crop .ch{display:none}
-#s-photo .ph-crop .ch{position:absolute;width:28px;height:28px;pointer-events:auto;touch-action:none}
-#s-photo .ph-crop .ch::after{content:'';position:absolute;width:15px;height:15px;border:3px solid #F1DDA0}
-#s-photo .ph-crop .ch-tl{top:-14px;left:-14px}#s-photo .ph-crop .ch-tl::after{top:7px;left:7px;border-right:none;border-bottom:none}
-#s-photo .ph-crop .ch-tr{top:-14px;right:-14px}#s-photo .ph-crop .ch-tr::after{top:7px;right:7px;border-left:none;border-bottom:none}
-#s-photo .ph-crop .ch-bl{bottom:-14px;left:-14px}#s-photo .ph-crop .ch-bl::after{bottom:7px;left:7px;border-right:none;border-top:none}
-#s-photo .ph-crop .ch-br{bottom:-14px;right:-14px}#s-photo .ph-crop .ch-br::after{bottom:7px;right:7px;border-left:none;border-top:none}
+#s-photo .photo-upload-area.cropmode .ph-crop{display:block}
+#s-photo .ph-crop .ch{position:absolute;width:34px;height:34px;pointer-events:auto;touch-action:none}
+#s-photo .ph-crop .ch::after{content:'';position:absolute;width:18px;height:18px;border:3px solid #F1DDA0}
+#s-photo .ph-crop .ch-tl{top:0;left:0}#s-photo .ph-crop .ch-tl::after{top:4px;left:4px;border-right:none;border-bottom:none}
+#s-photo .ph-crop .ch-tr{top:0;right:0}#s-photo .ph-crop .ch-tr::after{top:4px;right:4px;border-left:none;border-bottom:none}
+#s-photo .ph-crop .ch-bl{bottom:0;left:0}#s-photo .ph-crop .ch-bl::after{bottom:4px;left:4px;border-right:none;border-top:none}
+#s-photo .ph-crop .ch-br{bottom:0;right:0}#s-photo .ph-crop .ch-br::after{bottom:4px;right:4px;border-left:none;border-top:none}
 /* Optional "where are you headed?" occasion picker */
 #s-photo .occ-block{width:100%;max-width:330px;margin:12px auto 2px;text-align:center}
 #s-photo .occ-q{display:flex;align-items:baseline;justify-content:center;gap:9px;font:400 20px/1.2 'DM Serif Display',serif;color:#1a1a1a;margin-bottom:9px}
@@ -1829,13 +1827,13 @@ function _initCropHandlers(){
   var a=document.getElementById('photoArea');
   if(!a||a._ch)return;a._ch=1;
   a.addEventListener('pointerdown',function(e){
-    if(!photoImg||_cropMode||_isCropped())return;
+    if(!photoImg||_cropMode)return;
     if(e.target.closest('.ph-zoom')||e.target.closest('.ph-change'))return;
     try{a.setPointerCapture(e.pointerId)}catch(x){}
     _cPts[e.pointerId]={x:e.clientX,y:e.clientY};e.preventDefault();
   });
   a.addEventListener('pointermove',function(e){
-    if(!photoImg||_cropMode||_isCropped()||!_cPts[e.pointerId])return;
+    if(!photoImg||_cropMode||!_cPts[e.pointerId])return;
     var ids=Object.keys(_cPts);
     if(ids.length>=2){
       var p0=_cPts[ids[0]],p1=_cPts[ids[1]];
@@ -1876,7 +1874,7 @@ function _positionBox(){
 }
 function _boxMove(e){
   if(!_boxDrag)return;e.preventDefault();
-  var dx=e.clientX-_boxDrag.px,dy=e.clientY-_boxDrag.py,b=_boxDrag.b,m=_boxDrag.mode,MIN=54;
+  var dx=e.clientX-_boxDrag.px,dy=e.clientY-_boxDrag.py,b=_boxDrag.b,m=_boxDrag.mode,MIN=72;
   if(m==='move'){
     var nx=Math.max(0,Math.min(_cropW-b.w,b.x+dx)),ny=Math.max(0,Math.min(_cropH-b.h,b.y+dy));
     _box={x:nx,y:ny,w:b.w,h:b.h};
@@ -1890,27 +1888,38 @@ function _boxMove(e){
   }
   _positionBox();
 }
-function _isCropped(){return !!photoImg&&(_box.w<_cropW-2||_box.h<_cropH-2)}
-// Toggle the adjustable crop box on/off. First open seeds a centered inset box;
-// exiting keeps a reduced box "applied" (dimmed surround, pan locked) — WYSIWYG.
+// Crop tool: tap Crop → the box fills the frame with grabbable corners; pull the
+// corners in to frame what to keep; tap Done → the crop is BAKED into the working
+// image (the rest is cut away) and re-fit to the frame, so she can then zoom/reposition.
 function toggleCrop(){
   if(!photoImg)return;
-  _cropMode=!_cropMode;
-  var a=document.getElementById('photoArea');a.classList.toggle('cropmode',_cropMode);
-  var btn=document.getElementById('phCropBtn');
-  if(_cropMode){
-    a.classList.remove('cropped');
-    if(_box.w>=_cropW-1&&_box.h>=_cropH-1){
-      var iw=Math.round(_cropW*0.66),ih=Math.round(_cropH*0.9);
-      _box={x:Math.round((_cropW-iw)/2),y:Math.round((_cropH-ih)/2),w:iw,h:ih};
-    }
-    _positionBox();
+  var a=document.getElementById('photoArea'),btn=document.getElementById('phCropBtn');
+  if(!_cropMode){
+    _cropMode=true;a.classList.add('cropmode');
+    _box={x:0,y:0,w:_cropW,h:_cropH};_positionBox();
     if(btn)btn.textContent='Done';
-    var h=document.getElementById('phHint');if(h){h.textContent='Drag the box · pull the corners';h.style.opacity='1';setTimeout(function(){h.style.opacity='0'},3200)}
+    var h=document.getElementById('phHint');if(h){h.textContent='Pull the corners to crop';h.style.opacity='1';setTimeout(function(){h.style.opacity='0'},3600)}
   }else{
-    a.classList.toggle('cropped',_isCropped());
-    if(btn)btn.textContent=_isCropped()?'Recrop':'Crop';
+    _cropMode=false;a.classList.remove('cropmode');
+    if(btn)btn.textContent='Crop';
+    _applyCrop();
   }
+}
+// Bake the current crop box into a new working image, then re-fit it to the frame.
+function _applyCrop(){
+  var bx=_box.x,by=_box.y,bw=_box.w,bh=_box.h;
+  if(bw>=_cropW-2&&bh>=_cropH-2)return;            // box == full frame → nothing to crop
+  var scale=Math.min(1,1600/(Math.max(bw,bh)/_cScale));   // keep native detail, cap 1600
+  var outW=Math.max(1,Math.round(bw/_cScale*scale)),outH=Math.max(1,Math.round(bh/_cScale*scale));
+  var c=document.createElement('canvas');c.width=outW;c.height=outH;
+  var ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,outW,outH);
+  var k=outW/bw;
+  ctx.save();ctx.scale(k,k);ctx.beginPath();ctx.rect(0,0,bw,bh);ctx.clip();
+  ctx.translate(-bx,-by);ctx.translate(_cTx,_cTy);ctx.scale(_cScale,_cScale);ctx.drawImage(photoImg,0,0);ctx.restore();
+  var durl=c.toDataURL('image/jpeg',0.9);
+  var pv=document.getElementById('photoPreview');
+  pv.onload=function(){photoImg=pv;photoImgW=outW;photoImgH=outH;_cropInit()};  // re-fit cropped image
+  pv.src=durl;
 }
 function onPhotoSelect(input){
   if(!input.files||!input.files[0])return;
