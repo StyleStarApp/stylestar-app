@@ -1056,3 +1056,48 @@ explore: the share-the-Style-Card growth loop (already built), Instagram (florid
   links"** on the OUTFIT results (see the #4 parked item just above) — email her the celebrate + finishing
   touches + shop links. Needs a **MailerLite transactional/automation** email wired up; its own dedicated
   session. The real "save" for the ephemeral photo results + honest email-capture + conversion lever.
+
+**2026-07-07 → 07-08 (cont. — results-panel polish, mirror-door reveal fixes, ANALYZE-AN-OUTFIT reframed)**
+More live polish with Cath, all merged → live (PRs #166–#170).
+- ✅ **Results panels squared + portrait widened** (#166): squared the corners on the "What would you like
+  to do?" actions frame, the Style Card `.pcard`, and the card thumbnail (were rounded); widened the Style
+  Portrait board (`.p1` 280px→312px, matching the Signature) — it read too narrow on her phone.
+- ✅ **Mirror-door reveal fixes** (#168–#169). Cath watched the reveal closely on-device:
+  - **Spinning stars were slightly misshapen** — the shared brand star path
+    (`M12 1.6l2.98 7.04 7.52.6…`) is a *slightly irregular* 5-point star; subtle when static but obvious
+    while the door stars spin during the loading state. Replaced the **four spinning door stars**
+    (`dStarL/dStarR` on `s-res`, `dStarLp/dStarRp` on `s-photo-res`) with a **mathematically perfect,
+    centroid-centered 5-point star** (`M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89
+    20.41L8.01 13.3L2.11 8.79L9.53 8.6Z`, Ro=10.4/Ri=4.2, vertex centroid = 12,12 so it spins cleanly).
+    Left the **static** pendant stars (home/WB `starHaloHome/WB`) and the **flying** stars (`flyStarL/R`)
+    on the old path — only the spinning ones needed it.
+  - **Removed the gold line off the mirror doors, then removed the chrome bevel entirely** (Cath: "just
+    plain"). `.res-screen .door` dropped its `box-shadow` inset rings — now a plain silver mirror gradient.
+  - **Enlarged the door stars** 58px→72px (added `width/height:100%` to `.dstar svg` so the SVG fills the
+    bigger container). Scoped to the door stars only.
+- ✅ **ANALYZE-AN-OUTFIT screen glow-up — TWO passes.** First (#167) brought `#s-photo` into the **dark
+  "photo studio"** world (dark spotlit full-bleed, own logo + gold-star footer, gold "viewfinder" dropzone,
+  DM-Serif copy). Cath shipped it, then sent a **new Design reference (variant "10a · No rod — framed")** and
+  asked to match it → **replaced the dark studio with a warm "framed gallery" look** (#170, now LIVE):
+  - **Warm ivory "curtain" background** — subtle vertical fold-stripes via
+    `repeating-linear-gradient(90deg,#f8f3ea 0,#ece5d5 26px,#f8f3ea 52px)` over cream (Cath's ask: "curtain
+    with very subtle stripes, ivory").
+  - The **style Star logo in a black picture frame** (`.ph-logo-frame`, uses `logo.png`).
+  - The dropzone is a **black gallery frame** (`border:11px solid #1a1a1a`) with a white mat + thin gold
+    inset line, holding a **single 📸** (Cath switched from 📸🪄💫 to one camera), **"Tap to share your
+    photo"** (DM Serif), *"I'll style it, just for you"* (gold Fraunces italic), and **"✦ Full-length photo
+    of just you works best"** (gold caps).
+  - **Rectangular occasion chips** (white + thin gold border; selected = solid black).
+  - **"Analyze my outfit →" CTA is now always visible** (was hidden until a photo was picked). New
+    `ctaAnalyze()` wrapper: opens the photo picker if no photo yet, else runs `analyzePhoto()`. Styled to
+    **match the app's main CTAs** (home "Start my style quiz" / results "Shop your style"): dark fill + gold
+    metallic gradient frame + **silver inner ring** (`inset 0 0 0 2px #9aa1a7` = the "gold and silver"
+    outline Cath wanted) + shimmer + arrow chevron.
+  - **Back button top-right** (matches every other page); gold-star `Shop ★ Our Story ★ FAQ` footer.
+  - `s-photo` stays in the `ownChrome` list in `show()` (hides the shared header/footer; it has its own).
+    `logo-card.png` is no longer used here (still used on the Style Card); the dark-studio CSS was fully
+    replaced. NOTE: the old-look inner pages left to convert are now just the **quiz, chat, Mall, footer
+    pages**.
+- **Testing note:** the isolated-harness pattern (serve over http, wait ~5.5s for the home entrance reveal
+  to tear down, then `show('s-photo')` / force `rv-compose` for the doors) reliably screenshots these
+  screens past the startup nav race. Scripts live in the session scratchpad.
