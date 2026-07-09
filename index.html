@@ -2252,7 +2252,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
     if(parsed.partial){
-      document.getElementById('prn').textContent=userName&&userName!=="You"?userName+", let's see more!":"Let's see more!";
+      document.getElementById('prn').textContent=userName&&userName!=="You"?userName+", let's see the full look!":"Let's see the full look!";
       document.getElementById('pOcc').textContent='';
       document.getElementById('prp').textContent=parsed.celebrate||parsed.portrait||'';
       _photoBoards(false);
