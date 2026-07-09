@@ -3589,6 +3589,16 @@ function fallbackInitialScreen(){
   var d=null;
   try{d=JSON.parse(localStorage.getItem('ss_data'))}catch(e){}
   var hasData=!!(d&&d.userName&&d.answers);
+  // Restore her quiz identity into memory so the whole app (photo analysis, chat,
+  // "Shop your style") treats a RETURNING quiz-taker correctly — not as a newcomer.
+  // A completed quiz = 12 answers + a saved portrait. Without this, quizTaken stayed
+  // false after a reopen, so photo analysis wrongly showed the "take the quiz" nudge.
+  if(d&&d.answers&&d.answers.length===12&&d.portrait&&String(d.portrait).trim()){
+    userName=d.userName||userName;
+    answers=d.answers;
+    topArchNames=d.topArchNames||[];
+    quizTaken=true;
+  }
   document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('act')});
   if(hasData){
     document.getElementById('s-wb').classList.add('act');
