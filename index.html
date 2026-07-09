@@ -658,7 +658,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .sig-cat{font:600 9.5px/1.2 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#3a352c;width:64px;text-align:right;flex:0 0 auto;padding-top:1px}
 .res-screen .sig-track{position:relative;flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(201,162,78,.3),rgba(201,162,78,.5))}
 .res-screen .sig-dot{position:absolute;top:-5px;left:calc(var(--x) - 6px);width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F7E7B0,#D8A93E 55%,#B8831F);box-shadow:0 1px 3px rgba(150,110,20,.5),0 0 0 2px #FCFCFB}
-.res-screen .sig-end{position:absolute;top:8px;font:500 8px/1 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#9a9484}
+.res-screen .sig-end{position:absolute;top:8px;font:600 9px/1 'Jost',sans-serif;letter-spacing:.03em;text-transform:uppercase;color:#6b6456}
 .res-screen .sig-end.l{left:0}
 .res-screen .sig-end.r{right:0}
 
@@ -673,7 +673,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .pair .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border:3px solid transparent;border-radius:3px;cursor:pointer;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#F3E3A6,#C89A2C) border-box;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px #9aa1a7}
 .res-screen .pair .t svg{width:22px;height:22px;stroke:#8a6d20;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .pair .t span{font:600 13px/1 'Jost',sans-serif;color:#2f2a22}
-.res-screen .pcard{width:346px;max-width:97%;margin:18px auto 0;opacity:0;background:#fff;border-radius:0;box-shadow:0 16px 30px -14px rgba(0,0,0,.6),0 2px 5px rgba(0,0,0,.16);padding:15px 18px 17px}
+.res-screen .pcard{width:346px;max-width:97%;margin:18px auto 0;opacity:0;background:#fff;border-radius:0;box-shadow:0 16px 30px -14px rgba(0,0,0,.6),0 2px 5px rgba(0,0,0,.16);padding:15px 18px 17px;position:relative}
+/* Gold-foil corner brackets — makes the Style Card read like a keepsake business card */
+.res-screen .pcard::after{content:"";position:absolute;inset:7px;pointer-events:none;background:linear-gradient(120deg,#EAD08A,#C49A3A 55%,#A87F22) top left/18px 2px no-repeat,linear-gradient(120deg,#EAD08A,#C49A3A 55%,#A87F22) top left/2px 18px no-repeat,linear-gradient(120deg,#EAD08A,#C49A3A 55%,#A87F22) top right/18px 2px no-repeat,linear-gradient(120deg,#EAD08A,#C49A3A 55%,#A87F22) top right/2px 18px no-repeat,linear-gradient(120deg,#EAD08A,#C49A3A 55%,#A87F22) bottom left/18px 2px no-repeat,linear-gradient(120deg,#EAD08A,#C49A3A 55%,#A87F22) bottom left/2px 18px no-repeat,linear-gradient(120deg,#EAD08A,#C49A3A 55%,#A87F22) bottom right/18px 2px no-repeat,linear-gradient(120deg,#EAD08A,#C49A3A 55%,#A87F22) bottom right/2px 18px no-repeat}
 .res-screen .sc-lead{display:flex;align-items:center;justify-content:center;gap:11px;margin:2px 0 12px;color:#C8971E;font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase}
 .res-screen .sc-lead i{height:1px;width:32px;display:block}
 .res-screen .sc-lead i.l{background:linear-gradient(90deg,transparent,#C8971E)}
