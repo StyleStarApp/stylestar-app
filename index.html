@@ -2551,8 +2551,8 @@ function _setLookSuggestions(occ){
   if(_defaultSug===null)_defaultSug={label:lbl?lbl.textContent:'Try asking:',chips:c.innerHTML};
   if(lbl)lbl.textContent='Ask about your look:';
   var h='<button class="chat-chip" onclick="quickChat(\'What shoes would work best with this outfit?\')">What shoes?</button>'
+    +'<button class="chat-chip" onclick="quickChat(\'What accessories would finish this look?\')">What accessories?</button>'
     +'<button class="chat-chip" onclick="quickChat(\'How could I dress this look up?\')">Dress it up</button>'
-    +'<button class="chat-chip" onclick="quickChat(\'What jewelry would finish this look?\')">What jewelry?</button>'
     +'<button class="chat-chip" onclick="quickChat(\'What could I add to complete this look?\')">Add a piece?</button>';
   c.innerHTML=h;
 }
