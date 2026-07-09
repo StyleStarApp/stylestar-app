@@ -1441,3 +1441,26 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   (`.clip-cap`/`#clipCap` + its JS setter) from the clipboard clip — back to just the photo + gold pin
   (the tap-wiggle + lift shadow stay). Also **narrowed the clipboard's main gold clamp** (`.clamp`
   width 56%→42%) so the clipped photo (top-left) has clear room and no longer crowds the clamp.
+
+**2026-07-09 (cont. — ▶ OUTFIT-RESULTS actions redesign: one clear 3-beat flow)**
+- Cath flagged the `#s-photo-res` `.p3` actions area as muddled: it said "ask" three times (a floating
+  `.ask-nudge` bubble + the `.hero` + a pink "Ask your stylist" shelf), "What would you like to do?" sat
+  ABOVE the photo (heading a photo, not a menu), and the "Take the quiz" card stole prominence mid-list
+  (it's gated on `quizTaken`, so it only appeared because that session had no quiz loaded — but placement
+  was wrong). Rebuilt the whole section into a clear **3-beat story**:
+  1. **Your look** — the `.lookshot` photo recap (THE LOOK YOU SHARED + occasion) moved to the TOP.
+  2. **I'm here to help** — ONE chat invitation: a warm `.ask-invite` line (pink ★ + "Have a question
+     about your look? I'm right here — ask me anything.") above the black+gold **Ask about this look**
+     hero. **Removed the redundant `.ask-nudge` bubble AND the duplicate pink "Ask your stylist" shelf**
+     (and the `setTimeout(_showAskNudge,…)` call; the nudge fns are now dead no-ops, guarded on the
+     missing element).
+  3. **What next** — retitled **"What would you like to do next?"** heading a tidy menu, **shopping first**
+     (Style Star Edit, Shop the Mall), then Analyze another outfit, Refine your preferences.
+  - **Save/quiz gating unchanged but repositioned:** quiz-takers get "Save my style profile" + the keep
+    block (with a comment marking where the future **"Email me these tips & links"** slots in); the
+    "Want everything styled to you?" quiz card now shows ONLY to non-quiz-takers and sits at the **bottom**
+    as their conversion CTA. Verified both states (taker: save, no quiz card, retake; skipper: quiz card,
+    no save, no retake) in Chromium — no JS errors.
+- ▶ **STILL PARKED (Cath re-confirmed she wants it): "✉️ Email me these tips & links"** — email the
+  celebrate + finishing touches + shop links; slots into the save area above. Needs a MailerLite
+  transactional/automation email (its own session).
