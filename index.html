@@ -765,6 +765,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 /* the inline "Shop your style" results keep the existing .shop-* look on a light card */
 .res-screen .shop-section{width:300px;max-width:94%;margin:16px auto 0;background:#FCFCFB;border-radius:2px;box-shadow:0 12px 24px -14px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.35);padding:18px 16px}
+/* When the AI picks render INSIDE an action frame, fill it edge-to-edge — no cramped
+   box-in-a-box. Full width + a quiet gold divider instead of its own nested frame. */
+.res-screen .p3 .shop-section{width:auto;max-width:none;margin:16px 0 2px;padding:16px 0 0;background:none;box-shadow:none;border:0;border-top:1px solid rgba(201,162,78,.35);border-radius:0}
 
 /* ---- Outfit styling-session boards (celebrate / finishing touches / complete the look) ---- */
 .res-screen .occ-pill{display:inline-block;margin:10px auto 0;font:600 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a6d20;border:1px solid rgba(201,162,78,.55);border-radius:999px;padding:5px 12px}
