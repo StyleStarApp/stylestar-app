@@ -710,7 +710,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* Stand-out chat invite BUBBLE button, sitting above the photo (tail points down at it) */
 .res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:linear-gradient(#F6F2E9,#F1ECE0) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
 .res-screen .ask-bubble b{font-weight:700;color:#201E1A}
-.res-screen .ask-bubble .nstar{color:#EC4899;font-size:18px;line-height:1.25;flex:none}
+.res-screen .ask-bubble .nstar{flex:none;line-height:0;margin-top:1px}
+.res-screen .ask-bubble .nstar svg{width:22px;height:22px;display:block}
 .res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#F1ECE0;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
 .res-screen .ask-bubble:active{transform:scale(.985);filter:brightness(.98)}
 /* Gentle one-time "stylist nudge" that pops above the Ask hero after the results settle */
@@ -1344,7 +1345,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
             <div class="eng-row"><span class="eng-rule l"></span><span class="eng-lbl">Complete the Look</span><span class="eng-rule r"></span></div>
           </div>
           <div class="shoplist" id="pShopList"></div>
-          <div class="shopdisc">Some links may earn us a small commission, at no extra cost to you.</div>
+          <div class="shopdisc">Some links may earn us a small commission,<br>at no extra cost to you.</div>
         </div>
       </div>
     </div>
@@ -1352,7 +1353,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <!-- PIECE 4: actions -->
     <div class="p3">
       <!-- BEAT 1 — a stand-out chat invite bubble, ABOVE the photo -->
-      <button class="ask-bubble" onclick="openChatAboutLook()"><span class="nstar">&#9733;</span><span class="abx"><b>Have a question about your look?</b> I'm right here. Ask me anything.</span></button>
+      <button class="ask-bubble" onclick="openChatAboutLook()"><span class="nstar"><svg viewBox="0 0 24 24" fill="#EC4899"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="abx"><b>Have a question about your look?</b> I'm right here. Ask me anything.</span></button>
 
       <!-- BEAT 2 — your look: a keepsake recap she can tap to revisit or chat about -->
       <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><div class="lscap">The look you shared</div><span class="ls-occ" id="lookOcc"></span></div>
@@ -1360,28 +1361,42 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- Primary chat CTA, right under the look -->
       <button class="hero" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
 
-      <!-- BEAT 3 — what next: a tidy menu, shopping first -->
-      <div class="p3-lead"><h3>What would you like to do next?</h3><span class="rule"></span></div>
-      <div class="act" data-shelf onclick="showDream()">
-        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Style Star Edit</span><span class="ar" style="color:#0FA6B6">&rarr;</span></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
-      </div>
-      <div class="act" data-shelf onclick="showShop()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Browse more curated stores</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
-      </div>
+      <!-- BEAT 3 — what next: a tidy menu -->
+      <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
+      <!-- Shop your style — broad picks that vibe with her (quiz profile, or her look) -->
+      <button class="hero" onclick="shopMyStyle()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;vertical-align:-4px"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/></svg>&nbsp;Shop your style</span></button>
       <div class="act" data-shelf onclick="showPhoto()">
         <div class="actrow"><span class="chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><span class="ar" style="color:#E01B1B">&rarr;</span></div><div class="ss">Upload a photo for feedback</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
-      </div>
-      <div class="act" data-shelf onclick="openPrefs()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <!-- Familiar pink chat path (a second, recognizable route to the same look chat) -->
       <div class="act" data-shelf onclick="openChatAboutLook()">
         <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><span class="ar" style="color:#EC4899">&rarr;</span></div><div class="ss">Chat about your look, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <div class="act" data-shelf onclick="showDream()">
+        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Style Star Edit</span><span class="ar" style="color:#0FA6B6">&rarr;</span></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <!-- See my Style Portrait — quiz-takers only (gated in _photoSaveArea) -->
+      <div class="act" id="photoPortraitBtn" data-shelf onclick="loadSaved()" style="display:none">
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">See my Style Portrait</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Your signature style, from the quiz</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <div class="act" data-shelf onclick="openPrefs()">
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <div class="act" data-shelf onclick="showShop()">
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Browse more curated stores</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <!-- Inline "Shop your style" AI picks render here (shopMyStyle) -->
+      <div class="shop-section" id="shopSectionPhoto" style="display:none">
+        <div class="shop-title">Shop your style</div>
+        <div class="shop-sub" id="shopSubPhoto">Shopping ideas picked for you</div>
+        <div id="shopContentPhoto"></div>
+        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn us a small commission,<br>at no extra cost to you.</div>
       </div>
 
       <!-- Save profile (quiz-takers only). FUTURE: "Email me these tips & links" slots in right here. -->
@@ -2162,6 +2177,8 @@ function _photoBoards(on){
 function _photoSaveArea(on){
   // "Retake the Quiz" only makes sense if she's actually taken it.
   var rt=document.querySelector('#s-photo-res .retake-wrap');if(rt)rt.style.display=quizTaken?'':'none';
+  // "See my Style Portrait" only exists for quiz-takers (needs a saved portrait).
+  var pp=document.getElementById('photoPortraitBtn');if(pp)pp.style.display=quizTaken?'':'none';
   if(on===false){['resKeepPhoto','resSaveBtnPhoto','photoQuizNudge'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display='none'});return}
   var showSave=quizTaken&&!emailDone;
   ['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display=showSave?'':'none'});
@@ -2342,6 +2359,48 @@ Respond with ONLY valid JSON:
   }
 }
 let lastPhotoSliders=null,lastPhotoArchNames=[];
+
+// "Shop your style" on the OUTFIT results. Quiz-takers → picks matched to their quiz
+// profile (their signature style); skippers → picks in the vibe of the look they just
+// shared (from the live analysis context). Renders inline so she never leaves her analysis.
+async function shopMyStyle(){
+  var sec=document.getElementById('shopSectionPhoto'),cont=document.getElementById('shopContentPhoto');
+  if(!sec||!cont)return;
+  sec.style.display='';
+  sec.scrollIntoView({behavior:'smooth',block:'start'});
+  cont.innerHTML='<div class="shop-loading">Finding pieces you\'ll love...</div>';
+  var basis,sub;
+  if(quizTaken&&topArchNames.length){
+    var sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (1=${q.left}, 6=center, 11=${q.right})`).join('\n');
+    basis=`Her style profile from the Style Star quiz:\n${sliderDesc}\nStyle notes: ${topArchNames.join(', ')}${getPrefsForPrompt()}`;
+    sub='Ideas matched to your signature style';
+  }else{
+    var t=((_lookCtx&&_lookCtx.tips)||[]).map(function(x){return (x.title?x.title+': ':'')+(x.text||'')}).join(' | ');
+    basis=`She just shared an outfit photo${_lookCtx&&_lookCtx.occ?' for '+_lookCtx.occ.toLowerCase():''}. What is working about her look: ${(_lookCtx&&_lookCtx.celebrate)||'her personal style'}. Finishing touches suggested: ${t||'elevating the look a notch'}.${getPrefsForPrompt()}`;
+    sub='Ideas in the vibe of the look you shared';
+  }
+  var subEl=document.getElementById('shopSubPhoto');if(subEl)subEl.textContent=sub;
+  var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n- name: A specific item name (be specific about color, style, fabric)\n- store: ONE store (pick from: Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia)\n\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest items on her never-wear list or in colors she skips\n- Prioritize her color preferences and size range if given\n- Mix categories and price points across the 6 items\n- Be very specific, not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","store":"Store Name"}]}`;
+  var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
+  try{
+    var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:400,messages:[{role:"user",content:prompt}]})});
+    if(!r.ok)throw 0;
+    var d=await r.json();
+    if(!d.content)throw 0;
+    var raw=d.content.map(c=>c.text||'').join('');
+    var parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    var html='<div class="shop-grid">';
+    parsed.items.forEach(function(item){
+      var url=getStoreUrl(item.store,item.name);
+      var emoji=catEmoji[item.category]||'✨';
+      html+='<div class="shop-card"><div><div class="shop-emoji">'+emoji+'</div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
+    });
+    html+='</div><div class="shop-refresh"><button class="shop-refresh-btn" onclick="shopMyStyle()">&#8635; Show me different picks</button></div>';
+    cont.innerHTML=html;
+  }catch(e){
+    cont.innerHTML='<div class="shop-loading">Couldn\'t load picks right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="shopMyStyle()" style="max-width:200px">Try again</button></div>';
+  }
+}
 
 function loadSaved(){
   try{
