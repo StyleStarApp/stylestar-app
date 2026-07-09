@@ -646,6 +646,25 @@ earns $0 until step 7.)
   (identity reveal, no right/wrong on sliders) — deliberately untouched. **TODO:** Cath has
   SPECIFIC shopping tips/rules to fold into the stylist-chat training (a dedicated pass) — get her
   list and encode it. Save "radiant" wordplay for genuinely great looks (earned, not reflex).
+  **UPDATE 2026-07-09 (later):** testing went great (correctly flagged swimwear as not
+  office-appropriate, warmly, with the fix) → dialed the tone UP from ~6-7 to **~8** (more
+  direct: open with a genuine positive, then name occasion/goal mismatches plainly; guardrails
+  re body/age unchanged). **ASK CATH later:** after more real photo/chat testing, does 8 feel
+  right or should we ease back to 7? She feels good about 8 for now.
+- **Shareable "Style Vision Board" (Cath idea, 2026-07-09) — brainstorming.** A SECOND shareable
+  (distinct from the dark Style Constellation card): a gorgeous, COLORFUL, mood-board-style
+  keepsake she'd screenshot / pin up / post ("this is so ME!"). Built from her quiz results
+  (+ optionally her refining answers — her loved colors make it visually rich; must degrade
+  gracefully quiz-only). ENV CONSTRAINT: proxy blocks stock-image fetch + canvas taint, so it must
+  be DESIGNED/ILLUSTRATED (color, type, gradients, line-art motifs, gold/celestial accents) — NOT a
+  photo collage (which is also a licensing/staleness headache). Leading concept: a "pinned mood
+  board" using our established keepsake language (washi tape, gold pins, photo-corners) — tiles for
+  her color palette, big typographic archetype name(s), 5-8 evocative "vibe" words mapped from her
+  sliders, elegant fashion line-art (heel/blazer/bag/jewelry) in her palette, a one-line style
+  mantra, the Star. Could be a FREE viral shareable (growth loop, like the card) OR seed the earlier
+  **premium "vision board / Style Guide" product** idea. NEXT: mock 2-3 art directions (static, in
+  scratchpad) for Cath to react to, like we did for the home screen. Decisions pending: data source
+  (quiz vs quiz+refining), free-share vs premium, aesthetic direction.
 
 **💡 Monetization beyond affiliates (do a dedicated strategy session):**
 - Affiliate commissions (primary, above) • Premium digital product (Style Guide/lookbook/vision
