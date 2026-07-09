@@ -655,16 +655,29 @@ earns $0 until step 7.)
   (distinct from the dark Style Constellation card): a gorgeous, COLORFUL, mood-board-style
   keepsake she'd screenshot / pin up / post ("this is so ME!"). Built from her quiz results
   (+ optionally her refining answers — her loved colors make it visually rich; must degrade
-  gracefully quiz-only). ENV CONSTRAINT: proxy blocks stock-image fetch + canvas taint, so it must
-  be DESIGNED/ILLUSTRATED (color, type, gradients, line-art motifs, gold/celestial accents) — NOT a
-  photo collage (which is also a licensing/staleness headache). Leading concept: a "pinned mood
-  board" using our established keepsake language (washi tape, gold pins, photo-corners) — tiles for
-  her color palette, big typographic archetype name(s), 5-8 evocative "vibe" words mapped from her
-  sliders, elegant fashion line-art (heel/blazer/bag/jewelry) in her palette, a one-line style
-  mantra, the Star. Could be a FREE viral shareable (growth loop, like the card) OR seed the earlier
-  **premium "vision board / Style Guide" product** idea. NEXT: mock 2-3 art directions (static, in
-  scratchpad) for Cath to react to, like we did for the home screen. Decisions pending: data source
-  (quiz vs quiz+refining), free-share vs premium, aesthetic direction.
+  gracefully quiz-only).
+  DECISIONS (2026-07-09): data source = generate INSTANTLY from the quiz, auto-enrich if she has
+  refined (loved colors etc.); ONE board, not two. Business = FREE now (growth loop) designed so a
+  deluxe PAID version can follow. Format = a "pinned mood board" keepsake (washi tape, gold pins,
+  photo-corners) with her archetype name(s), ~5-8 evocative "vibe" words from her sliders, a one-line
+  mantra, and the Star.
+  ▶ PIVOT (important): Cath REJECTED the first illustrated mockups (Boards A/B, in
+  scratchpad/vision-board). Two reasons: (1) the cartoon clothing line-art looked cheap; (2) the
+  "Your Palette" swatches read like seasonal COLOR ANALYSIS — which Cath does NOT do and is against
+  her "wear what you love, no color rules" brand. So DROP prescriptive color/palette and DROP
+  illustrated clothes. Go with REAL PHOTOGRAPHY — a rich, dreamy blend: faceless/cropped outfits,
+  luxurious interiors, nature/golden-hour, fabric textures, flat-lays. Aspirational + beautiful.
+  IMAGE SOURCING = path 1: a curated, COMMERCIALLY-LICENSED library WE HOST ourselves (NOT live
+  per-user web fetch — licensing + link-rot). Sources: Pexels/Unsplash (free, commercial-OK) or paid
+  stock (Adobe/Shutterstock). LEGAL: identifiable PEOPLE need model releases → prefer FACELESS
+  imagery (neck-down, backs, flat-lays, textures, interiors, nature); confirm with Almira before
+  ship. Canvas export needs same-origin (hosted) images so toBlob() doesn't taint.
+  ▶ NETWORK ACCESS: Cath set the cloud environment's Network access to FULL (applies to NEW sessions
+  only) so Claude can fetch/curate reference images. The 2026-07-09 session that discussed this was
+  pre-change (still blocked). NEXT SESSION (fresh, Full access): FIRST verify image fetch works
+  (e.g. curl an images.pexels.com / images.unsplash.com URL), THEN pull candidate photos and build a
+  REAL photo mood-board mockup for Cath to react to. (Old illustrated mockups in
+  scratchpad/vision-board are SUPERSEDED — reference only.)
 
 **💡 Monetization beyond affiliates (do a dedicated strategy session):**
 - Affiliate commissions (primary, above) • Premium digital product (Style Guide/lookbook/vision
