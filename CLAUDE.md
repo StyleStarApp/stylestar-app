@@ -1412,3 +1412,9 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     and sets `lookOcc` from `occ`; at analysis start both `lookShot` and `clipPhoto` are hidden (reset).
   - Verified in Chromium (http-harness): clip pinned+tilted on the clipboard, expand icon opens the
     lightbox with × close, occasion pill renders, thumbnail unchanged; no JS errors.
+
+**2026-07-09 (clipboard clip photo — proportions polish)**
+- Cath loves the photo clipped to the outfit-analysis clipboard ("one of my favorite things").
+  Tuned the proportions per her eye: **narrowed the gold pin** (`.clip-pin` 24px→15px) so the little
+  photo has room to sit, **enlarged the photo** (`.clipphoto` 76→90px; img 76×96→90×114), and **tilted
+  it a touch more** (rotate −6deg→−9deg, pin rotation matched). Verified in Chromium.
