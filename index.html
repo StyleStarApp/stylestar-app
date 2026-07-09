@@ -792,7 +792,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* quiz-skipper nudge card (shown in place of the profile save) */
 .res-screen .quiznudge{margin:2px 0 4px;padding:18px 16px 17px;text-align:center;border-radius:3px;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 10px 22px -14px rgba(0,0,0,.5)}
 .res-screen .quiznudge .qn-star{font-size:19px;color:#C8971E;line-height:1}
-.res-screen .quiznudge h4{font:400 20px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:6px 0 5px}
+.res-screen .quiznudge h4{font:400 20px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:6px 0 5px;text-wrap:balance}
 .res-screen .quiznudge p{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 13px;max-width:34ch}
 .res-screen .quiznudge .qn-btn{width:100%;border:none;border-radius:3px;padding:13px;cursor:pointer;background:linear-gradient(180deg,#33302A,#201D19);color:#F1DDA0;font:700 12px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase}
 
@@ -1418,7 +1418,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- Quiz invite — shown ONLY to non-quiz-takers (their conversion CTA); sits at the bottom -->
       <div class="quiznudge" id="photoQuizNudge" style="display:none">
         <div class="qn-star">&#9733;</div>
-        <h4>Want everything styled to you?</h4>
+        <h4>Want everything personally styled for you?</h4>
         <p>Take our fun style quiz and I'll tailor your portrait, tips, and shopping to your taste.</p>
         <button class="qn-btn" onclick="startQ()">Take our fun style quiz &rarr;</button>
       </div>
@@ -2552,9 +2552,8 @@ function _setLookSuggestions(occ){
   if(lbl)lbl.textContent='Ask about your look:';
   var h='<button class="chat-chip" onclick="quickChat(\'What shoes would work best with this outfit?\')">What shoes?</button>'
     +'<button class="chat-chip" onclick="quickChat(\'How could I dress this look up?\')">Dress it up</button>'
-    +'<button class="chat-chip" onclick="quickChat(\'How could I make this look more casual?\')">More casual</button>';
-  if(occ){var o=occ.toLowerCase().replace(/[^a-z ]/g,'');h+='<button class="chat-chip" onclick="quickChat(\'Is this outfit right for '+o+'?\')">Right for '+o+'?</button>';}
-  else{h+='<button class="chat-chip" onclick="quickChat(\'What could I add to complete this look?\')">Add a piece?</button>';}
+    +'<button class="chat-chip" onclick="quickChat(\'What jewelry would finish this look?\')">What jewelry?</button>'
+    +'<button class="chat-chip" onclick="quickChat(\'What could I add to complete this look?\')">Add a piece?</button>';
   c.innerHTML=h;
 }
 function _restoreSuggestions(){
