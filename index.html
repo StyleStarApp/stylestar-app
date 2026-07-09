@@ -2219,7 +2219,7 @@ async function runPhotoAnalysis(){
   const prompt=`You are Catherine, a warm, honest personal stylist with 20 years of experience. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} has uploaded a photo of an outfit she is wearing${occ?' for '+occ:''} and wants your real styling help: honest feedback, the finishing touches that elevate it, and specific pieces to complete it. She came for your expert eye, not just compliments. Make her look genuinely better and leave her with something she did not walk in with.
 
 FIRST: If the photo only shows a face/headshot, or you cannot see most of the outfit, respond with EXACTLY this JSON:
-{"partial":true,"celebrate":"I'd love to style this for you, but I can only see part of your look right now. Share a full-length photo in good light and I'll give you honest feedback and ideas to take it up a notch."}
+{"partial":true,"celebrate":"I'd love to style this for you, but I can only see part of your look. Share a full-length photo of just you in your outfit in good light, and I'll give you feedback and ideas to take it up a notch."}
 
 If you CAN see the outfit, give her a real styling session with three parts:
 1. "celebrate": 1-2 sentences naming what is SPECIFICALLY working and why, a genuine earned observation (a color pairing, a proportion, a smart styling choice). Be specific and real; skip generic praise like "you look amazing." If little stands out, honestly credit a good instinct rather than gushing.
@@ -2252,7 +2252,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
     if(parsed.partial){
-      document.getElementById('prn').textContent=userName&&userName!=="You"?userName+", let's see the full look!":"Let's see the full look!";
+      document.getElementById('prn').textContent=userName&&userName!=="You"?userName+", let's try another photo!":"Let's try another photo!";
       document.getElementById('pOcc').textContent='';
       document.getElementById('prp').textContent=parsed.celebrate||parsed.portrait||'';
       _photoBoards(false);
