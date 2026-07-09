@@ -708,10 +708,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .hero svg{width:18px;height:18px;position:relative;stroke:#F1DDA0;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .hero .lbl{position:relative;white-space:nowrap;display:flex;align-items:center}
 /* Stand-out chat invite BUBBLE button, sitting above the photo (tail points down at it) */
-.res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:linear-gradient(#F6F2E9,#F1ECE0) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
+.res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:repeating-linear-gradient(90deg,#e2d7bf 0px,#f9f4ea 21px,#e2d7bf 42px) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
 .res-screen .ask-bubble b{font-weight:700;color:#201E1A}
 .res-screen .ask-bubble .chip{margin-top:1px}
-.res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#F1ECE0;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
+.res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#ede2ca;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
 .res-screen .ask-bubble:active{transform:scale(.985);filter:brightness(.98)}
 /* Gentle one-time "stylist nudge" that pops above the Ask hero after the results settle */
 .res-screen .ask-nudge{position:relative;margin:0 8px 8px;background:#F2EFE8;border:1px solid rgba(201,162,78,.6);border-radius:14px;padding:11px 30px 11px 13px;display:none;gap:9px;align-items:flex-start;box-shadow:0 12px 22px -10px rgba(30,20,5,.5);opacity:0;transform:translateY(8px) scale(.7);transform-origin:50% 130%;pointer-events:none}
@@ -1313,7 +1313,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <!-- DYNAMIC: occasion tag → #pOcc (empty when none chosen) -->
           <div class="occ-pill" id="pOcc"></div>
           <!-- "What's working" celebration label (hidden on partial/error) -->
-          <div class="worklbl" id="pWorkLbl">&#10022; What&rsquo;s working</div>
+          <div class="worklbl" id="pWorkLbl">&#9733; What&rsquo;s working</div>
           <!-- DYNAMIC: celebration paragraph → #prp -->
           <p class="para" id="prp"></p>
           <!-- Fallback action (e.g. "Share a full outfit photo" / "Try again") when there's no analysis -->
@@ -1359,7 +1359,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
       <!-- Primary chat CTA, right under the look -->
       <button class="hero" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
+    </div>
 
+    <!-- PIECE 4b: the "what next" menu — its own frame -->
+    <div class="p3">
       <!-- BEAT 3 — what next: a tidy menu -->
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
       <!-- Shop your style — broad picks that vibe with her (quiz profile, or her look) -->
