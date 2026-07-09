@@ -1418,3 +1418,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   Tuned the proportions per her eye: **narrowed the gold pin** (`.clip-pin` 24px→15px) so the little
   photo has room to sit, **enlarged the photo** (`.clipphoto` 76→90px; img 76×96→90×114), and **tilted
   it a touch more** (rotate −6deg→−9deg, pin rotation matched). Verified in Chromium.
+
+**2026-07-09 (cont. — clipboard clip photo: 4 delight touches)**
+- Cath loved the clipped photo and asked for all four ideas I floated. All scoped to `.clipphoto` on
+  the outfit-analysis clipboard (`#s-photo-res .p1`), `index.html`:
+  1. **Washi tape** — a translucent gold `.clip-tape` strip holding the bottom-right corner (dashed
+     edges), layered with the existing gold pin at top (kept — her favorite) for a scrapbook feel.
+  2. **Handwritten caption** — a faint **Great Vibes** script `.clip-cap#clipCap` under the photo
+     showing her first name (falls back to "you") + a small gold ✦; tilts with the photo. Great Vibes
+     was already loaded in the head; set in `runPhotoAnalysis` success (`_esc(firstName)`).
+  3. **Tap-wiggle** — tapping the clip (or the "look you shared" thumbnail) now plays a quick tilt-
+     jiggle (`clipJig`/`lookJig` keyframes, `.jig` class) then opens the lightbox ~210ms later;
+     `openLightbox(e)` adds `.jig` to `e.currentTarget`. Honors `prefers-reduced-motion` (no anim,
+     opens instantly).
+  4. **Lift shadow** — the clip's `img` box-shadow is now a tight contact shadow + a soft cast shadow
+     so it reads as lifting off the board.
+  - Verified in Chromium (http-harness): tape + script caption + pin render together; mid-jiggle frame
+    tilts; no JS errors.

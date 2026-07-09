@@ -732,8 +732,19 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .plight .plight-x{position:absolute;top:14px;right:18px;color:#fff;font:300 36px/1 'Jost',sans-serif;cursor:pointer;opacity:.85}
 /* Her photo clipped to the clipboard — a small, tilted snapshot the stylist is working from */
 .res-screen .clipphoto{position:absolute;top:-15px;left:8px;z-index:8;width:90px;transform:rotate(-9deg);cursor:pointer}
-.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:cover;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 9px 17px -6px rgba(0,0,0,.6)}
-.res-screen .clipphoto .clip-pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(9deg);width:15px;height:11px;border-radius:3px;background:linear-gradient(180deg,#F6E4A6,#E3BB54 45%,#CFA236 66%,#9A7418);box-shadow:0 2px 4px -1px rgba(90,60,10,.55),inset 0 1px 0 rgba(255,255,255,.65)}
+/* Tight contact shadow + soft cast shadow → reads like it's lifting off the board */
+.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:cover;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.28),0 13px 21px -7px rgba(0,0,0,.62)}
+.res-screen .clipphoto .clip-pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(9deg);width:15px;height:11px;border-radius:3px;background:linear-gradient(180deg,#F6E4A6,#E3BB54 45%,#CFA236 66%,#9A7418);box-shadow:0 2px 4px -1px rgba(90,60,10,.55),inset 0 1px 0 rgba(255,255,255,.65);z-index:2}
+/* Translucent gold "washi tape" holding the bottom-right corner */
+.res-screen .clipphoto .clip-tape{position:absolute;bottom:15px;right:-13px;width:42px;height:15px;transform:rotate(-42deg);background:linear-gradient(180deg,rgba(240,214,140,.5),rgba(201,162,78,.4));box-shadow:0 1px 2px rgba(0,0,0,.14);border-left:1px dashed rgba(255,255,255,.35);border-right:1px dashed rgba(255,255,255,.35);z-index:2}
+/* Faint handwritten caption, tilted with the photo */
+.res-screen .clipphoto .clip-cap{position:absolute;top:114px;left:-4px;right:-4px;text-align:center;font-family:'Great Vibes',cursive;font-size:21px;line-height:1;color:#B8912F;opacity:.82;text-shadow:0 1px 1px rgba(255,255,255,.5);pointer-events:none}
+.res-screen .clipphoto .clip-cap .spk{font-family:'Jost',sans-serif;font-size:11px;color:#C9A24E;vertical-align:middle;margin-left:2px}
+@keyframes clipJig{0%{transform:rotate(-9deg)}25%{transform:rotate(-13deg)}55%{transform:rotate(-5.5deg)}80%{transform:rotate(-10.5deg)}100%{transform:rotate(-9deg)}}
+.res-screen .clipphoto.jig{animation:clipJig .5s ease}
+@keyframes lookJig{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-1.8deg) scale(1.02)}55%{transform:rotate(1.8deg) scale(1.02)}100%{transform:rotate(0) scale(1)}}
+.res-screen .lookshot.jig{animation:lookJig .5s ease}
+@media (prefers-reduced-motion: reduce){.res-screen .clipphoto.jig,.res-screen .lookshot.jig{animation:none}}
 .res-screen .keep{margin-top:16px;padding:18px 15px 16px;text-align:center;border:1px solid rgba(201,162,78,.5);border-radius:3px;background:#fff}
 .res-screen .keep h4{font:400 20px/1.15 'DM Serif Display',serif;color:#1f1d19;margin:0 0 5px}
 .res-screen .keep p{font:400 11px/1.5 'Jost',sans-serif;color:#6b655a;margin:0 auto 12px}
@@ -1290,7 +1301,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="board"><span class="lacq"></span><span class="sweep"></span>
         <div class="clamp"><span class="brush"></span><span class="press"></span><span class="rivet l"></span><span class="rivet r"></span><span class="lip"></span></div>
         <!-- Her shared photo, clipped to the clipboard like the stylist pinned it up -->
-        <div class="clipphoto" id="clipPhoto" onclick="openLightbox(event)"><span class="clip-pin"></span><img id="clipPhotoImg" alt="The outfit you shared"/></div>
+        <div class="clipphoto" id="clipPhoto" onclick="openLightbox(event)"><img id="clipPhotoImg" alt="The outfit you shared"/><span class="clip-tape"></span><span class="clip-pin"></span><span class="clip-cap" id="clipCap"></span></div>
         <div class="page">
           <img class="logo" src="logo.png" alt="Style Star"/>
           <div class="eng pr">
@@ -2223,7 +2234,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
       var _src='data:image/jpeg;base64,'+photoData;
       var _ls=document.getElementById('lookShot');if(_ls){document.getElementById('lookShotImg').src=_src;_ls.style.display='block'}
       var _lo=document.getElementById('lookOcc');if(_lo){if(occ){_lo.textContent=occ;_lo.classList.add('on')}else{_lo.textContent='';_lo.classList.remove('on')}}
-      var _cp=document.getElementById('clipPhoto');if(_cp){document.getElementById('clipPhotoImg').src=_src;_cp.style.display='block'}
+      var _cp=document.getElementById('clipPhoto');if(_cp){document.getElementById('clipPhotoImg').src=_src;_cp.style.display='block';var _fn=(userName&&userName!=='You')?userName.trim().split(/\s+/)[0]:'you';var _cc=document.getElementById('clipCap');if(_cc)_cc.innerHTML=_esc(_fn)+' <span class="spk">&#10022;</span>'}
     }
     _lookCtx={celebrate:parsed.celebrate,tips:parsed.tips||[],shop:parsed.shop||[],occ:occ};  // so the chat remembers this advice
     _playResReveal(true,'s-photo-res');
@@ -2489,7 +2500,7 @@ function _showAskNudge(){var n=document.getElementById('askNudge');if(!n||_askNu
 function dismissAskNudge(e){if(e)e.stopPropagation();_askNudgeOff=true;var n=document.getElementById('askNudge');if(n)n.classList.remove('on')}
 function _resetAskNudge(){_askNudgeOff=false;var n=document.getElementById('askNudge');if(n)n.classList.remove('on')}
 // Tap the shared photo (thumbnail or the clipboard clip) to see it full-size
-function openLightbox(e){if(e){e.stopPropagation();}var lb=document.getElementById('photoLightbox');if(!lb||!photoData)return;document.getElementById('plightImg').src='data:image/jpeg;base64,'+photoData;lb.classList.add('on')}
+function openLightbox(e){var src=e&&e.currentTarget;if(e){e.stopPropagation();}var lb=document.getElementById('photoLightbox');if(!lb||!photoData)return;document.getElementById('plightImg').src='data:image/jpeg;base64,'+photoData;var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(src&&src.classList&&!reduce){src.classList.remove('jig');void src.offsetWidth;src.classList.add('jig');setTimeout(function(){lb.classList.add('on')},210)}else{lb.classList.add('on')}}
 function closeLightbox(){var lb=document.getElementById('photoLightbox');if(lb)lb.classList.remove('on')}
 let storyPrevScreen='s-wel';
 let prefStep=0;
