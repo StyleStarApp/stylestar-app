@@ -707,9 +707,12 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .hero .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rvShim 3s ease-in-out infinite;pointer-events:none}
 .res-screen .hero svg{width:18px;height:18px;position:relative;stroke:#F1DDA0;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .hero .lbl{position:relative;white-space:nowrap;display:flex;align-items:center}
-/* One warm line inviting her to chat about the look, sitting just above the Ask hero */
-.res-screen .ask-invite{text-align:center;font:400 13.5px/1.55 'Jost',sans-serif;color:#54504a;margin:4px auto 2px;max-width:33ch}
-.res-screen .ask-invite .nstar{color:#EC4899;font-size:15px;margin-right:4px;vertical-align:-1px}
+/* Stand-out chat invite BUBBLE button, sitting above the photo (tail points down at it) */
+.res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:linear-gradient(#F6F2E9,#F1ECE0) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
+.res-screen .ask-bubble b{font-weight:700;color:#201E1A}
+.res-screen .ask-bubble .nstar{color:#EC4899;font-size:18px;line-height:1.25;flex:none}
+.res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#F1ECE0;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
+.res-screen .ask-bubble:active{transform:scale(.985);filter:brightness(.98)}
 /* Gentle one-time "stylist nudge" that pops above the Ask hero after the results settle */
 .res-screen .ask-nudge{position:relative;margin:0 8px 8px;background:#F2EFE8;border:1px solid rgba(201,162,78,.6);border-radius:14px;padding:11px 30px 11px 13px;display:none;gap:9px;align-items:flex-start;box-shadow:0 12px 22px -10px rgba(30,20,5,.5);opacity:0;transform:translateY(8px) scale(.7);transform-origin:50% 130%;pointer-events:none}
 .res-screen .ask-nudge:after{content:"";position:absolute;left:50%;bottom:-8px;width:15px;height:15px;background:#F2EFE8;border-right:1px solid rgba(201,162,78,.6);border-bottom:1px solid rgba(201,162,78,.6);transform:translateX(-50%) rotate(45deg)}
@@ -1348,12 +1351,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
     <!-- PIECE 4: actions -->
     <div class="p3">
-      <!-- BEAT 1 — your look: a keepsake recap she can tap to revisit or chat about -->
-      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><div class="lscap">The look you shared</div><span class="ls-occ" id="lookOcc"></span></div>
+      <!-- BEAT 1 — a stand-out chat invite bubble, ABOVE the photo -->
+      <button class="ask-bubble" onclick="openChatAboutLook()"><span class="nstar">&#9733;</span><span class="abx"><b>Have a question about your look?</b> I'm right here. Ask me anything.</span></button>
 
-      <!-- BEAT 2 — I'm here to help: ONE clear chat invitation (warm line + hero) -->
-      <p class="ask-invite"><span class="nstar">&#9733;</span>Have a question about your look? I'm right here &mdash; ask me anything.</p>
-      <button class="hero" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
+      <!-- BEAT 2 — your look: a keepsake recap she can tap to revisit or chat about -->
+      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><div class="lscap">The look you shared</div><span class="ls-occ" id="lookOcc"></span></div>
 
       <!-- BEAT 3 — what next: a tidy menu, shopping first -->
       <div class="p3-lead"><h3>What would you like to do next?</h3><span class="rule"></span></div>
@@ -1371,6 +1373,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
       <div class="act" data-shelf onclick="openPrefs()">
         <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <!-- Familiar pink chat path (a second, recognizable route to the same look chat) -->
+      <div class="act" data-shelf onclick="openChatAboutLook()">
+        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><span class="ar" style="color:#EC4899">&rarr;</span></div><div class="ss">Chat about your look, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
 
