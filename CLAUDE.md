@@ -1435,3 +1435,9 @@ More live polish with Cath, all merged → live (PRs #166–#170).
      so it reads as lifting off the board.
   - Verified in Chromium (http-harness): tape + script caption + pin render together; mid-jiggle frame
     tilts; no JS errors.
+
+**2026-07-09 (cont. — clipboard clip: removed tape + caption, narrowed the clamp)**
+- Cath's call: **removed the washi tape** (`.clip-tape`) and the **cursive handwritten caption**
+  (`.clip-cap`/`#clipCap` + its JS setter) from the clipboard clip — back to just the photo + gold pin
+  (the tap-wiggle + lift shadow stay). Also **narrowed the clipboard's main gold clamp** (`.clamp`
+  width 56%→42%) so the clipped photo (top-left) has clear room and no longer crowds the clamp.
