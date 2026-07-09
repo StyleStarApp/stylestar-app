@@ -634,6 +634,18 @@ earns $0 until step 7.)
 - **Refine line-art icons** — more custom/elegant; incl. a small icon on the "Retake the quiz" link.
 - **Archetype names refresh + 1-line descriptions** (Danielle's feedback). ASK Cath: show in-app
   vs enrich the AI write-up.
+- **Stylist-chat training — deeper pass (Cath, 2026-07-09).** We shifted the whole app to
+  "generous honesty" (Maryanne's feedback: too nice / too complimentary; users want REAL style
+  advice, not fluff — that's the differentiation). ✅ DONE this session: rewrote the PHOTO-ANALYSIS
+  prompt (drop the "never correct / everything is additive" handcuff → lead with what's genuinely
+  working, then real prioritized upgrades framed as elevation; keep body/age guardrails; no
+  gushing), lightly reinforced the CHAT prompt (same philosophy), and swapped the "You look
+  radiant!" partial-photo fallback → "I'd love to style this for you, but I can only see part of
+  your look right now. Share a full-length photo in good light and I'll give you honest feedback
+  and ideas to take it up a notch." Dial ~6-7 (was ~2). Quiz PORTRAIT stays fully celebratory
+  (identity reveal, no right/wrong on sliders) — deliberately untouched. **TODO:** Cath has
+  SPECIFIC shopping tips/rules to fold into the stylist-chat training (a dedicated pass) — get her
+  list and encode it. Save "radiant" wordplay for genuinely great looks (earned, not reflex).
 
 **💡 Monetization beyond affiliates (do a dedicated strategy session):**
 - Affiliate commissions (primary, above) • Premium digital product (Style Guide/lookbook/vision
