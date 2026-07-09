@@ -1464,3 +1464,13 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - ▶ **STILL PARKED (Cath re-confirmed she wants it): "✉️ Email me these tips & links"** — email the
   celebrate + finishing touches + shop links; slots into the save area above. Needs a MailerLite
   transactional/automation email (its own session).
+
+**2026-07-09 (cont. — outfit results: chat invite → bubble button above the photo + pink path back)**
+- Cath's refinement on the `.p3` redesign: turn the plain `.ask-invite` line into a **stand-out speech-
+  bubble BUTTON above the photo** (`.ask-bubble`, cream fill + gold gradient border + soft shadow, pink
+  ★, bold lead, a downward tail pointing at the photo; opens `openChatAboutLook`). Copy de-dashed:
+  "Have a question about your look? I'm right here. Ask me anything." (periods, no em-dash). **Removed
+  the black/gold "Ask about this look" hero** (the bubble now carries the prominent ask, above the photo
+  as she wanted — avoids duplicating). **Re-added the familiar pink "Ask your stylist" shelf** as a
+  second recognizable route in the menu (after Refine). So two clean chat paths: the bubble up top + the
+  pink shelf. Verified taker/skipper in Chromium; no JS errors.
