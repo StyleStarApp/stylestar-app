@@ -271,17 +271,63 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqtop{border-top-left-radius:0;border-top-right-radius:0}
 #s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:28px 20px 18px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f1ebdd;background-image:linear-gradient(180deg,rgba(52,46,34,.12) 0,rgba(52,46,34,0) 30px),repeating-linear-gradient(90deg,#e2d7bf 0px,#f9f4ea 21px,#e2d7bf 42px),linear-gradient(180deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 16%,rgba(202,180,132,.16) 100%)}
-#s-photo .ph-rod{position:absolute;top:0;left:0;right:0;height:11px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC85F 24%,#C79A34 56%,#9A7420 82%,#7d5e17 100%);box-shadow:0 5px 9px -3px rgba(90,60,10,.45)}
-#s-photo .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
+#s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:11px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC85F 24%,#C79A34 56%,#9A7420 82%,#7d5e17 100%);box-shadow:0 5px 9px -3px rgba(90,60,10,.45)}
+#s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
 #s-photo .ph-back{position:absolute;top:24px;right:18px;z-index:5;background:none;border:none;font:700 12px/1 'Jost',sans-serif;color:#5a5348;cursor:pointer;padding:4px 2px;letter-spacing:.1em;text-transform:uppercase}
 #s-photo .ph-back:hover{color:#1a1a1a}
 /* Logo plaque hanging from the gold rod on two wires */
-#s-photo .ph-hang{position:relative;width:188px;margin:-24px auto 10px;padding-top:23px}
-#s-photo .ph-wires{position:absolute;top:0;left:0;width:188px;height:23px;overflow:visible}
-#s-photo .ph-wires line{stroke:#C79A34;stroke-width:1.6}
-#s-photo .ph-wires circle{fill:none;stroke:#C79A34;stroke-width:1.7}
-#s-photo .ph-logo-frame{width:188px;padding:3px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
-#s-photo .ph-logo-frame img{display:block;width:66px;height:auto}
+#s-photo .ph-hang,#s-photo-load .ph-hang{position:relative;width:188px;margin:-24px auto 10px;padding-top:23px}
+#s-photo .ph-wires,#s-photo-load .ph-wires{position:absolute;top:0;left:0;width:188px;height:23px;overflow:visible}
+#s-photo .ph-wires line,#s-photo-load .ph-wires line{stroke:#C79A34;stroke-width:1.6}
+#s-photo .ph-wires circle,#s-photo-load .ph-wires circle{fill:none;stroke:#C79A34;stroke-width:1.7}
+#s-photo .ph-logo-frame,#s-photo-load .ph-logo-frame{width:188px;padding:3px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+#s-photo .ph-logo-frame img,#s-photo-load .ph-logo-frame img{display:block;width:66px;height:auto}
+/* ===== "Analyzing your outfit" screen — the lit "dressing-room studio" (#s-photo-load) ===== */
+/* Analyzing screen shares the Studio background + gold rod + hanging logo of #s-photo */
+#s-photo-load.studio{margin:-0.5rem -1.75rem -1.5rem;padding:0 18px 22px;min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:'Jost',sans-serif;
+  background-color:#f1ebdd;
+  background-image:linear-gradient(180deg,rgba(52,46,34,.12) 0,rgba(52,46,34,0) 30px),repeating-linear-gradient(90deg,#e2d7bf 0px,#f9f4ea 21px,#e2d7bf 42px),linear-gradient(180deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 16%,rgba(202,180,132,.16) 100%)}
+/* keep the screen hidden until it's the active screen (studio sets display:flex) */
+#s-photo-load:not(.act){display:none}
+/* reuse existing #s-photo .ph-rod / .ph-hang / .ph-wires / .ph-logo-frame for the top */
+
+/* the lit reading frame */
+.al-frame{position:relative;flex:1;margin-top:28px;border:11px solid #191510;overflow:hidden;
+  box-shadow:0 30px 40px -14px rgba(0,0,0,.55),0 0 0 1px rgba(0,0,0,.3);
+  background:radial-gradient(120% 90% at 50% 22%,#2a2521,#100d0b)}
+.al-frame .al-hair{position:absolute;inset:0;border:1.5px solid rgba(201,162,78,.5);pointer-events:none;z-index:6}
+/* bulbs */
+.al-bulbs{position:absolute;z-index:7;display:flex}
+.al-bulbs.top{top:-6px;left:0;right:0;justify-content:space-between;padding:0 8px}
+.al-bulbs.bot{bottom:-6px;left:0;right:0;justify-content:space-between;padding:0 8px}
+.al-bulbs.left{top:22px;bottom:22px;left:-6px;flex-direction:column;justify-content:space-between}
+.al-bulbs.right{top:22px;bottom:22px;right:-6px;flex-direction:column;justify-content:space-between}
+.al-bulb{width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#f4d488);animation:alBulb 2.4s ease-in-out infinite}
+/* photo */
+.al-photo{position:absolute;inset:22px;border-radius:2px;overflow:hidden;filter:grayscale(.3) brightness(.72)}
+.al-photo img{width:100%;height:100%;object-fit:cover;display:block}
+/* scanning beam */
+.al-beam{position:absolute;left:0;right:0;top:-8%;height:78px;pointer-events:none;animation:alScan 3.4s ease-in-out infinite}
+.al-beam .glow{position:absolute;inset:0;background:linear-gradient(180deg,rgba(246,231,180,0) 0%,rgba(246,231,180,.06) 45%,rgba(246,231,180,.30) 100%)}
+.al-beam .line{position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,rgba(248,235,190,0),#FBEFC2 50%,rgba(248,235,190,0));box-shadow:0 0 12px 3px rgba(248,235,190,.7)}
+/* captions */
+.al-caps{position:absolute;left:0;right:0;top:20px;text-align:center;z-index:8}
+.al-caps .row{position:relative;height:20px}
+.al-caps span{position:absolute;left:0;right:0;font-size:12.5px;letter-spacing:.16em;color:#F2E4BE;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.al-caps .a{animation:alCapA 5s ease-in-out infinite}
+.al-caps .b{animation:alCapB 5s ease-in-out infinite}
+
+@keyframes alBulb{0%,100%{opacity:.2;box-shadow:0 0 3px rgba(255,224,150,.35)}50%{opacity:1;box-shadow:0 0 13px 3px rgba(255,214,120,.95)}}
+@keyframes alScan{0%{top:-8%}50%{top:86%}100%{top:-8%}}
+@keyframes alCapA{0%{opacity:0}4%{opacity:1}44%{opacity:1}50%{opacity:0}100%{opacity:0}}
+@keyframes alCapB{0%{opacity:0}50%{opacity:0}54%{opacity:1}94%{opacity:1}100%{opacity:0}}
+/* reduced motion: hold a static, dimmed reading frame (no beam sweep / pulsing) */
+@media (prefers-reduced-motion: reduce){
+  .al-bulb{animation:none;opacity:.9}
+  .al-beam{animation:none;display:none}
+  .al-caps .a{animation:none;opacity:1}
+  .al-caps .b{animation:none;opacity:0}
+}
 #s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
 /* Before a photo loads the frame scrolls the page like everything else. Once a
    photo is loaded we allow vertical page scroll (pan-y) — a one-finger up/down
@@ -1302,12 +1348,36 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   </div>
 </div>
 
-<div class="scr" id="s-photo-load">
-  <div class="load-wrap">
-    <svg class="load-spin" width="100" height="100" viewBox="0 0 76 76" fill="none">
-      <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="none" stroke="#D4AF37" stroke-width="4"/>
-    </svg>
-    <div class="load-t">Analyzing your outfit...</div>
+<div class="scr studio" id="s-photo-load">
+  <div class="ph-rod"></div>
+  <div class="ph-wrap">
+    <div class="ph-hang">
+      <svg class="ph-wires" viewBox="0 0 188 23" preserveAspectRatio="none" aria-hidden="true">
+        <circle cx="94" cy="4" r="3"></circle>
+        <line x1="94" y1="5" x2="24" y2="23"></line>
+        <line x1="94" y1="5" x2="164" y2="23"></line>
+      </svg>
+      <div class="ph-logo-frame"><img src="logo-tight.png" alt="Style Star"></div>
+    </div>
+  </div>
+
+  <div class="al-frame">
+    <div class="al-hair"></div>
+    <div class="al-bulbs top"><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i></div>
+    <div class="al-bulbs bot"><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i></div>
+    <div class="al-bulbs left"><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i></div>
+    <div class="al-bulbs right"><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i><i class="al-bulb"></i></div>
+
+    <div class="al-photo"><img id="alPhoto" src="" alt=""></div>
+
+    <div class="al-beam"><div class="glow"></div><div class="line"></div></div>
+
+    <div class="al-caps">
+      <div class="row">
+        <span class="a">READING YOUR LOOK</span>
+        <span class="b">COMPOSING STYLE TIPS</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1829,7 +1899,7 @@ function show(id,skipHistory){
   var onWel=(id==='s-wel');
   // Screens with their own built-in footer + logo hide the shared global chrome:
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
-  var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo');
+  var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load');
   var gf=document.querySelector('.quiz-footer');
   if(gf)gf.style.display=ownChrome?'none':'';
   if(id==='s-wb')updateWbScreen();
@@ -2177,7 +2247,7 @@ function _commitPhoto(){
 }
 async function analyzePhoto(){
   if(!_commitPhoto())return;
-  _resShowCompose('s-photo-res');
+  _showPhotoLoad();
   await runPhotoAnalysis();
 }
 // The always-visible CTA: analyze if a photo is picked, otherwise open the picker.
@@ -2186,8 +2256,25 @@ function ctaAnalyze(){
   else{document.getElementById('photoIn').click();}
 }
 async function retryPhoto(){
-  _resShowCompose('s-photo-res');
+  _showPhotoLoad();
   await runPhotoAnalysis();
+}
+// The "reading your look" studio loader (#s-photo-load): show the user's uploaded
+// photo dimmed inside the lit frame while runPhotoAnalysis() calls the AI. Falls back
+// to the dark gradient placeholder if no photo is available.
+function _showPhotoLoad(){
+  var img=document.getElementById('alPhoto');
+  if(img){
+    if(photoData&&photoData!=='1'){img.src='data:'+photoType+';base64,'+photoData;img.style.display='';}
+    else{img.removeAttribute('src');img.style.display='none';}
+  }
+  show('s-photo-load');
+}
+// When the analysis resolves, bring up the outfit-results screen and play its
+// "Fitting Room" reveal (curtains open → boards rise).
+function _revealPhotoRes(){
+  _resShowCompose('s-photo-res');
+  _playResReveal(true,'s-photo-res');
 }
 // Show/hide the finishing-touches + complete-the-look boards and the "what's working"
 // label together (all hidden when there's no full analysis to show — partial/error).
@@ -2272,7 +2359,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
       _photoBoards(false);
       _photoSaveArea(false);
       document.getElementById('pAltAction').innerHTML='<button onclick="showPhoto()">Share a full outfit photo</button>';
-      _playResReveal(true,'s-photo-res');
+      _revealPhotoRes();
       return;
     }
     document.getElementById('prn').textContent=userName&&userName!=="You"?'Styling your look, '+userName:'Styling your look';
@@ -2290,7 +2377,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
       var _cp=document.getElementById('clipPhoto');if(_cp){document.getElementById('clipPhotoImg').src=_src;_cp.style.display='block'}
     }
     _lookCtx={celebrate:parsed.celebrate,tips:parsed.tips||[],shop:parsed.shop||[],occ:occ};  // so the chat remembers this advice
-    _playResReveal(true,'s-photo-res');
+    _revealPhotoRes();
   }catch(e){
     document.getElementById('prn').textContent="Let's try that again";
     document.getElementById('pOcc').textContent='';
@@ -2298,7 +2385,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     _photoBoards(false);
     _photoSaveArea(false);
     document.getElementById('pAltAction').innerHTML='<button onclick="retryPhoto()">Try again</button>';
-    _playResReveal(true,'s-photo-res');
+    _revealPhotoRes();
   }
 }
 const storeUrls={

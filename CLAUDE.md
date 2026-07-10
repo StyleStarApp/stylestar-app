@@ -1518,3 +1518,36 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   as she wanted — avoids duplicating). **Re-added the familiar pink "Ask your stylist" shelf** as a
   second recognizable route in the menu (after Refine). So two clean chat paths: the bubble up top + the
   pink shelf. Verified taker/skipper in Chromium; no JS errors.
+
+**2026-07-10 (▶ "Analyzing your outfit" loader — the lit "dressing-room studio", from Design handoff)**
+- Design sent a handoff (`design_handoff_analyzing_screen/`: `README.md` + `analyzing-screen.html` +
+  `logo-tight.png`, option **13b "Dimming Studio"**) for the loading beat between tapping **Analyze my
+  outfit** and the outfit results. Replaced the old spinning-star `#s-photo-load` screen with an on-brand
+  "reading your look" moment and opened a PR against main.
+- **The look:** the top is identical to the Analyze-an-Outfit page (`#s-photo`) — gold rod + `logo-tight.png`
+  plaque hanging on two gold wires (reuses the existing `.ph-rod/.ph-hang/.ph-wires/.ph-logo-frame`
+  classes). Below, a large black-bordered "mirror" frame goes dark; **vanity bulbs** (top 6 / bottom 6 /
+  12 per side = 36) pulse in unison; the user's uploaded photo sits **dimmed** inside
+  (`grayscale(.3) brightness(.72)`); a soft **gold beam** scans up & down; two captions cycle
+  **READING YOUR LOOK ⇄ COMPOSING STYLE TIPS**. No Back button (analysis is running). Pure CSS animation,
+  no JS driving the motion; honors `prefers-reduced-motion` (static dimmed frame).
+- **Implementation notes (for whoever picks this up):**
+  - Used the README's drop-in CSS/HTML verbatim (`#s-photo-load.studio` + `.al-*` classes + keyframes
+    `alBulb/alScan/alCapA/alCapB`). Two app-integration tweaks: (1) **extended** the existing
+    `#s-photo .ph-*` selectors to also match `#s-photo-load` (so the shared rod/plaque render there,
+    exactly as they are — single source of truth); (2) added `#s-photo-load:not(.act){display:none}` so
+    the screen's own `display:flex` doesn't defeat the `.scr`/`.act` show-hide (the studio rule outranks
+    `.scr.act` on specificity). Added `s-photo-load` to the `ownChrome` list in `show()` so the shared
+    header + `.quiz-footer` hide (it's full-bleed with its own logo).
+  - **Wiring:** `analyzePhoto()`/`retryPhoto()` now call `_showPhotoLoad()` (sets `#alPhoto` to
+    `data:<photoType>;base64,<photoData>` and `show('s-photo-load')`) instead of composing the results
+    screen directly. When `runPhotoAnalysis()` resolves (success / partial / error), the new
+    `_revealPhotoRes()` brings up `#s-photo-res` and plays its existing "Fitting Room" curtain reveal
+    (`_resShowCompose` + `_playResReveal`). So the flow is now: studio loader (during the AI wait) →
+    curtain reveal → results boards. Falls back to the dark gradient placeholder if no photo.
+  - No new state; reuses `photoData`/`photoType` + existing screen routing. `logo-tight.png` already in repo root.
+  - Verified in Chromium (http-harness, real photo through the file input, `fetch` stubbed to hold the
+    loader): studio renders (36 bulbs, dimmed photo, rod/plaque via the extended selectors, header/footer
+    hidden), captions cycle, beam sweeps, screen hides when inactive, and the success/error paths reveal
+    `#s-photo-res` correctly. No JS errors. Handoff bundle saved in the session scratchpad
+    (`handoff_analyzing/`). Worth a real-device end-to-end glance (real photo through the Netlify function).
