@@ -284,7 +284,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-logo-frame img,#s-photo-load .ph-logo-frame img{display:block;width:66px;height:auto}
 /* ===== "Analyzing your outfit" screen — the lit "dressing-room studio" (#s-photo-load) ===== */
 /* Analyzing screen shares the Studio background + gold rod + hanging logo of #s-photo */
-#s-photo-load.studio{margin:-0.5rem -1.75rem -1.5rem;padding:0 18px 22px;min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:'Jost',sans-serif;
+#s-photo-load.studio{margin:-0.5rem -1.75rem -1.5rem;padding:28px 18px 22px;min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:'Jost',sans-serif;
   background-color:#f1ebdd;
   background-image:linear-gradient(180deg,rgba(52,46,34,.12) 0,rgba(52,46,34,0) 30px),repeating-linear-gradient(90deg,#e2d7bf 0px,#f9f4ea 21px,#e2d7bf 42px),linear-gradient(180deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 16%,rgba(202,180,132,.16) 100%)}
 /* keep the screen hidden until it's the active screen (studio sets display:flex) */
@@ -292,7 +292,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* reuse existing #s-photo .ph-rod / .ph-hang / .ph-wires / .ph-logo-frame for the top */
 
 /* the lit reading frame */
-.al-frame{position:relative;flex:1;margin-top:28px;border:11px solid #191510;overflow:hidden;
+.al-frame{position:relative;width:100%;max-width:330px;aspect-ratio:3/4;margin:22px auto 0;border:12px solid #191510;overflow:hidden;
   box-shadow:0 30px 40px -14px rgba(0,0,0,.55),0 0 0 1px rgba(0,0,0,.3);
   background:radial-gradient(120% 90% at 50% 22%,#2a2521,#100d0b)}
 .al-frame .al-hair{position:absolute;inset:0;border:1.5px solid rgba(201,162,78,.5);pointer-events:none;z-index:6}
@@ -312,8 +312,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .al-beam .line{position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,rgba(248,235,190,0),#FBEFC2 50%,rgba(248,235,190,0));box-shadow:0 0 12px 3px rgba(248,235,190,.7)}
 /* captions */
 .al-caps{position:absolute;left:0;right:0;top:20px;text-align:center;z-index:8}
-.al-caps .row{position:relative;height:20px}
-.al-caps span{position:absolute;left:0;right:0;font-size:12.5px;letter-spacing:.16em;color:#F2E4BE;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.al-caps .row{position:relative;height:26px}
+.al-caps span{position:absolute;left:0;right:0;font-size:16.5px;letter-spacing:.13em;color:#F2E4BE;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .al-caps .a{animation:alCapA 5s ease-in-out infinite}
 .al-caps .b{animation:alCapB 5s ease-in-out infinite}
 
@@ -1353,9 +1353,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="ph-wrap">
     <div class="ph-hang">
       <svg class="ph-wires" viewBox="0 0 188 23" preserveAspectRatio="none" aria-hidden="true">
-        <circle cx="94" cy="4" r="3"></circle>
-        <line x1="94" y1="5" x2="24" y2="23"></line>
-        <line x1="94" y1="5" x2="164" y2="23"></line>
+        <line x1="94" y1="4" x2="15" y2="22"></line>
+        <line x1="94" y1="4" x2="173" y2="22"></line>
+        <circle cx="94" cy="4" r="3.2"></circle>
       </svg>
       <div class="ph-logo-frame"><img src="logo-tight.png" alt="Style Star"></div>
     </div>
@@ -1537,8 +1537,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <span class="cr-mote m1"></span><span class="cr-mote m2"></span><span class="cr-mote m3"></span><span class="cr-mote m4"></span>
       <span class="cr-mote m5"></span><span class="cr-mote m6"></span><span class="cr-mote m7"></span><span class="cr-mote m8"></span>
     </div>
-    <div class="cr-tie l"><div class="cord"></div><div class="tassel"><div class="knot"></div><div class="body"></div></div></div>
-    <div class="cr-tie r"><div class="cord"></div><div class="tassel"><div class="knot"></div><div class="body"></div></div></div>
     <span class="cr-spk k0">★</span><span class="cr-spk k1">★</span><span class="cr-spk k2">★</span><span class="cr-spk k3">★</span><span class="cr-spk k4">★</span>
     <span class="cr-dust x1">★</span><span class="cr-dust x2">★</span><span class="cr-dust x3">★</span><span class="cr-dust x4">★</span><span class="cr-dust x5">★</span>
     <div class="cr-sign">
