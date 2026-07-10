@@ -1182,6 +1182,15 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
     </div>
 
+    <div class="pcard">
+      <div class="sc-lead"><i class="l"></i>Your Style Vision Board<i class="r"></i></div>
+      <div class="sc-row" data-shelf onclick="openVisionBoard()">
+        <span class="sc-thumb" style="display:flex;align-items:center;justify-content:center;background:#28251F"><svg viewBox="0 0 24 24" width="30" height="30" fill="#E9C46A"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span>
+        <div class="tx"><div class="sc-tt">See your Style Vision Board</div><div class="sc-ss">A shareable mood board of your style</div></div>
+        <span class="sc-ar" style="color:#C8971E">&rarr;</span>
+      </div>
+    </div>
+
     <!-- PIECE 3: actions -->
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
@@ -4053,6 +4062,154 @@ function buildCardBlob(source,callback){
     lines.forEach((ln,i)=>ctx.fillText(ln,cx,y+i*lh));
   }
 }
+
+/* ===================== Style Vision Board (shareable mood-board keepsake) ===================== */
+const VISION_IMGS=[];
+(function(){for(let i=1;i<=32;i++)VISION_IMGS.push('vision/v'+String(i).padStart(2,'0')+'.jpg');})();
+
+// small deterministic RNG (mulberry32) seeded from a string, so a given name lays out consistently
+function _visRng(seedStr){
+  let h=1779033703^seedStr.length;
+  for(let i=0;i<seedStr.length;i++){h=Math.imul(h^seedStr.charCodeAt(i),3432918353);h=h<<13|h>>>19;}
+  let a=h>>>0;
+  return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+}
+// cover-fit an image into a destination rect (center-crop)
+function _visCover(ctx,img,dx,dy,dw,dh){
+  const iw=img.naturalWidth,ih=img.naturalHeight,ir=iw/ih,tr=dw/dh;let sx,sy,sw,sh;
+  if(ir>tr){sh=ih;sw=sh*tr;sx=(iw-sw)/2;sy=0;}else{sw=iw;sh=sw/tr;sx=0;sy=(ih-sh)/2;}
+  ctx.drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh);
+}
+// 5-point star
+function _visStar(ctx,cx,cy,r,rot,fill){
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot||0);ctx.beginPath();
+  for(let i=0;i<10;i++){const rr=i%2?r*0.42:r;const a=-Math.PI/2+i*Math.PI/5;i?ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr);}
+  ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.restore();
+}
+// centered text with manual letter-spacing
+function _visSpaced(ctx,text,cx,y,sp){
+  const chars=[...text];let total=0;for(const c of chars)total+=ctx.measureText(c).width+sp;total-=sp;
+  let x=cx-total/2;const prev=ctx.textAlign;ctx.textAlign='left';
+  for(const c of chars){ctx.fillText(c,x,y);x+=ctx.measureText(c).width+sp;}
+  ctx.textAlign=prev;
+}
+function _visArchWidth(ctx,archs,fs){
+  ctx.font=fs+'px "Fraunces",Georgia,serif';let t=0;
+  archs.forEach((a,i)=>{t+=ctx.measureText(a).width;if(i<archs.length-1)t+=ctx.measureText('   ★   ').width;});return t;
+}
+function _visDrawArch(ctx,archs,cx,y,fs){
+  ctx.font=fs+'px "Fraunces",Georgia,serif';const total=_visArchWidth(ctx,archs,fs);
+  let x=cx-total/2;const prev=ctx.textAlign;ctx.textAlign='left';
+  archs.forEach((a,i)=>{ctx.fillStyle='#4a3f2c';ctx.fillText(a,x,y);x+=ctx.measureText(a).width;
+    if(i<archs.length-1){const s='   ★   ';ctx.fillStyle='#c8a44d';ctx.fillText(s,x,y);x+=ctx.measureText(s).width;}});
+  ctx.textAlign=prev;
+}
+
+function buildVisionBlob(callback){
+  const ud=(typeof buildFullUserData==='function')?buildFullUserData():{userName:userName,topArchNames:topArchNames};
+  const rawName=(ud.userName&&ud.userName!=='You')?ud.userName:'';
+  const first=rawName?rawName.trim().split(/\s+/)[0]:'';
+  const title=first?(first+'’s Style Vibe'):'Your Style Vibe';
+  const archs=(ud.topArchNames||[]).slice(0,3).map(n=>String(n).replace(/^The\s+/i,''));
+  const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;
+  const ctx=canvas.getContext('2d');
+  const rng=_visRng((first||'star')+archs.join('|'));
+  const imgs=VISION_IMGS.slice();
+  for(let i=imgs.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));const t=imgs[i];imgs[i]=imgs[j];imgs[j]=t;}
+  const loaded=imgs.map(src=>{const im=new Image();im.src=src;return im;});
+  const waits=[document.fonts.ready];
+  loaded.forEach(im=>{if(!(im.complete&&im.naturalWidth))waits.push(new Promise(r=>{im.onload=r;im.onerror=r;}));});
+  Promise.all(waits).then(draw).catch(draw);
+
+  function draw(){
+    const W=1080,H=1350;
+    // striped "curtain" background (matches home screen)
+    ctx.fillStyle='#28251F';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#F2EFE8';for(let y=88;y<H;y+=176)ctx.fillRect(0,y,W,88);
+    const g=ctx.createRadialGradient(W/2,H*0.3,60,W/2,H*0.3,W*0.9);
+    g.addColorStop(0,'rgba(255,244,222,.16)');g.addColorStop(1,'rgba(255,244,222,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    const PX=50,PY=50,PW=980,PH=1250;
+    ctx.fillStyle='#1f1c17';ctx.fillRect(PX,PY,PW,PH);
+    // ---- collage (clipped to panel) ----
+    ctx.save();ctx.beginPath();ctx.rect(PX,PY,PW,PH);ctx.clip();
+    const COLS=5,ROWS=7,cw=PW/COLS,ch=PH/ROWS;let k=0;
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+      const im=loaded[k%loaded.length];k++;
+      const cx=PX+c*cw+cw/2+(rng()-0.5)*64, cy=PY+r*ch+ch/2+(rng()-0.5)*54;
+      const base=cw*(1.3+rng()*0.24), aspect=[0.74,0.8,1.0,1.0,1.32][Math.floor(rng()*5)];
+      let tw=base,th=Math.max(150,Math.min(base/aspect,330));
+      ctx.save();ctx.translate(cx,cy);ctx.rotate((rng()-0.5)*0.24);
+      ctx.shadowColor='rgba(0,0,0,.42)';ctx.shadowBlur=13;ctx.shadowOffsetY=5;
+      ctx.fillStyle='#fff';ctx.fillRect(-tw/2-5,-th/2-5,tw+10,th+10);ctx.shadowColor='transparent';
+      if(im&&im.naturalWidth)_visCover(ctx,im,-tw/2,-th/2,tw,th);
+      ctx.restore();
+    }
+    for(let i=0;i<4;i++)_visStar(ctx,PX+60+rng()*(PW-120),PY+220+rng()*(PH-320),13+rng()*7,(rng()-0.5)*0.6,'#e9c765');
+    ctx.restore();
+    ctx.strokeStyle='#c8a44d';ctx.lineWidth=3;ctx.strokeRect(PX+1.5,PY+1.5,PW-3,PH-3);
+    // ---- linen name card ----
+    const cardW=596,cardX=(W-cardW)/2,cardY=78,cardH=172,midX=W/2;
+    ctx.save();ctx.shadowColor='rgba(15,10,4,.5)';ctx.shadowBlur=30;ctx.shadowOffsetY=12;
+    ctx.fillStyle='#fdfbf6';ctx.fillRect(cardX,cardY,cardW,cardH);ctx.restore();
+    ctx.lineWidth=3;ctx.strokeStyle='#fff';ctx.strokeRect(cardX+1.5,cardY+1.5,cardW-3,cardH-3);
+    ctx.lineWidth=1;ctx.strokeStyle='#d9c896';ctx.strokeRect(cardX+0.5,cardY+0.5,cardW-1,cardH-1);
+    ctx.textBaseline='alphabetic';
+    ctx.fillStyle='#b78f34';ctx.font='600 14px "Jost",sans-serif';ctx.textAlign='center';
+    _visSpaced(ctx,'STYLE ★ STAR',midX,cardY+34,5);
+    ctx.fillStyle='#241f18';ctx.textAlign='center';
+    let nf=48;ctx.font=nf+'px "DM Serif Display",serif';
+    while(ctx.measureText(title).width>cardW-56&&nf>28){nf-=2;ctx.font=nf+'px "DM Serif Display",serif';}
+    ctx.fillText(title,midX,cardY+88);
+    ctx.strokeStyle='#c8a44d';ctx.lineWidth=1;ctx.beginPath();
+    ctx.moveTo(midX-30,cardY+104);ctx.lineTo(midX-9,cardY+104);ctx.moveTo(midX+9,cardY+104);ctx.lineTo(midX+30,cardY+104);ctx.stroke();
+    ctx.fillStyle='#c8a44d';ctx.font='12px "Jost",sans-serif';ctx.textBaseline='middle';ctx.fillText('★',midX,cardY+104);ctx.textBaseline='alphabetic';
+    if(archs.length){let af=20;while(_visArchWidth(ctx,archs,af)>cardW-44&&af>12)af-=1;_visDrawArch(ctx,archs,midX,cardY+142,af);}
+    // ---- footer linen tag ----
+    ctx.font='600 15px "Jost",sans-serif';
+    const label='★  STYLESTAR.APP  ★';
+    let lw=0;for(const c of [...label])lw+=ctx.measureText(c).width+3;
+    const tagW=lw+40,tagH=34,tagX=(W-tagW)/2,tagY=H-52-tagH;
+    ctx.save();ctx.shadowColor='rgba(15,10,4,.4)';ctx.shadowBlur=16;ctx.shadowOffsetY=6;
+    ctx.fillStyle='#fdfbf6';ctx.fillRect(tagX,tagY,tagW,tagH);ctx.restore();
+    ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.strokeRect(tagX+1,tagY+1,tagW-2,tagH-2);
+    ctx.lineWidth=1;ctx.strokeStyle='#d9c896';ctx.strokeRect(tagX+0.5,tagY+0.5,tagW-1,tagH-1);
+    ctx.fillStyle='#3a3226';ctx.textAlign='center';ctx.textBaseline='middle';
+    _visSpaced(ctx,label,W/2,tagY+tagH/2+1,3);ctx.textBaseline='alphabetic';
+    canvas.toBlob(function(blob){if(!blob){callback(null,null);return;}callback(blob,URL.createObjectURL(blob));},'image/png');
+  }
+}
+
+function _openVisionOverlay(blob,imgUrl){
+  const overlay=document.createElement('div');overlay.id='visionPreview';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(14,11,8,0.94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.2rem;overflow:auto';
+  overlay.innerHTML=`
+    <img src="${imgUrl}" style="width:auto;max-width:82vw;max-height:66vh;box-shadow:0 12px 44px rgba(0,0,0,.55);opacity:0;transition:opacity .55s ease">
+    <div style="color:#cbb892;font-size:14px;font-family:'Jost',sans-serif;margin-top:16px">Press and hold the image to save</div>
+    <button onclick="doShareVision()" style="display:flex;align-items:center;gap:9px;padding:15px 34px;border:1.5px solid #C79A34;background:#141210;color:#f4efe6;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:20px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E9C46E" stroke-width="2.2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      Share my vibe
+    </button>
+    <button onclick="closeVisionPreview()" style="margin-top:18px;background:none;border:none;color:#8f8676;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline">Close</button>`;
+  document.body.appendChild(overlay);
+  requestAnimationFrame(()=>{const im=overlay.querySelector('img');if(im)im.style.opacity=1;});
+  window._visBlob=blob;window._visImgUrl=imgUrl;
+}
+function closeVisionPreview(){const el=document.getElementById('visionPreview');if(el){el.remove();if(window._visImgUrl)URL.revokeObjectURL(window._visImgUrl);}}
+async function doShareVision(){
+  const blob=window._visBlob;if(!blob)return;
+  const file=new File([blob],'my-style-vibe.png',{type:'image/png'});
+  const linkText='This is my Style Vibe ✨ Discover yours → https://stylestar.app';
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],title:'My Style Vibe',text:linkText});closeVisionPreview();return;}
+    catch(e){if(e&&e.name==='AbortError')return;}
+  }
+  try{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='my-style-vibe.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}catch(e){}
+  try{await navigator.clipboard.writeText(linkText);}catch(e){}
+  alert('Your Style Vibe board was saved as an image, and the link was copied. Attach it when you share! ✨');
+  closeVisionPreview();
+}
+function openVisionBoard(){buildVisionBlob(function(blob,imgUrl){if(blob)_openVisionOverlay(blob,imgUrl);});}
 
 </script>
 </body>
