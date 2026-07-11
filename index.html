@@ -693,6 +693,16 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .noteslbl{font:500 12.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8f8a80;margin:13px 0 6px}
 .res-screen .notes{font:500 13px/1.55 'Fraunces',serif;color:#33312c;padding:0 2px;overflow-wrap:break-word;text-wrap:pretty}
 .res-screen .notes b{color:#C8971E;margin:0 5px;font-weight:600}
+.res-screen .arch-pri{display:inline-block;background:none;border:none;cursor:pointer;font:600 21px/1.3 'Fraunces',serif;color:#1a1a1a;padding:0 2px 2px;border-bottom:2px solid rgba(200,151,30,.4)}
+.res-screen .arch-pri.on{border-bottom-color:#C8971E}
+.res-screen .arch-und{font:500 13.5px/1.7 'Jost',sans-serif;color:#6b6353;margin-top:7px}
+.res-screen .arch-und .amp{color:#C8971E;font-style:normal;margin:0 2px}
+.res-screen .arch-und button{background:none;border:none;cursor:pointer;font:600 13.5px/1.4 'Jost',sans-serif;color:#B08830;padding:0 1px 1px;border-bottom:1px solid rgba(176,136,48,.35)}
+.res-screen .arch-und button.on{color:#8a6a17;border-bottom-color:#8a6a17}
+.res-screen .arch-whisper{min-height:42px;display:flex;align-items:center;justify-content:center;padding:9px 4px 0}
+.res-screen .arch-whisper span{font:italic 500 14.5px/1.55 'Fraunces',serif;color:#4a4438;max-width:270px;opacity:0;transform:translateY(3px);transition:opacity .4s ease,transform .4s ease}
+.res-screen .arch-whisper span.show{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.res-screen .arch-whisper span{transition:none;transform:none}}
 .res-screen .para{font:400 15px/1.65 'Jost',sans-serif;color:#4b4843;margin:15px 4px 0;text-wrap:pretty;overflow-wrap:break-word}
 .res-screen .p-alt{margin:16px 2px 0}
 .res-screen .p-alt:empty{display:none}
@@ -1130,7 +1140,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           </div>
           <!-- DYNAMIC: name → #rn (showResult sets "This is {userName}" or "Your style portrait") -->
           <div class="nm" id="rn"></div>
-          <div class="noteslbl">Your style has notes of</div>
+          <div class="noteslbl">You are</div>
           <!-- DYNAMIC: archetype notes → #ft (showResult fills from top3, joined by gold dots) -->
           <div class="notes" id="ft"></div>
           <!-- DYNAMIC: portrait paragraph → #rp (showResult sets AI text) -->
@@ -1777,8 +1787,72 @@ const questions=[
 {cat:"Presence",title:"How do you like to show up in a room?",left:"Understated",right:"Statement",hints:["Blending in","Very understated","Mostly understated","Slightly understated","Quietly present","Noticed but quiet","Slightly noticed","Leaning statement","Strong presence","Very statement","Unforgettable"]}
 ];
 const archetypes=[
-{n:"The Classic Refined",p:[2,3,2,3,5,5,3,2,7,6,3,3]},{n:"The Natural Chic",p:[4,2,4,3,3,4,4,3,5,4,4,4]},{n:"The Elevated Casual",p:[5,3,5,4,4,4,5,4,5,5,5,5]},{n:"The Polished Professional",p:[3,5,3,6,9,10,3,3,8,8,3,6]},{n:"The Bold Expressionist",p:[7,6,6,8,6,5,10,9,6,9,6,9]},{n:"The Romantic Feminine",p:[3,5,2,6,6,5,6,6,6,6,3,4]},{n:"The Modern Trendsetter",p:[10,7,7,7,7,6,7,6,7,10,6,9]},{n:"The Easy Elegant",p:[3,3,3,3,5,5,3,2,6,5,3,3]},{n:"The Fit & Styled",p:[5,3,5,4,3,2,5,3,8,6,5,4]},{n:"The Creative Original",p:[7,5,7,9,5,4,9,8,5,7,6,7]},{n:"The Understated Luxury",p:[3,3,3,5,6,7,2,2,8,7,3,3]},{n:"The Glamorous Maximalist",p:[7,11,5,11,10,6,9,8,9,11,8,11]},{n:"The Silhouette Savvy",p:[6,5,5,5,6,6,5,3,10,8,5,5]},{n:"The Fresh Start Style",p:[6,6,6,6,6,6,6,6,6,6,6,6]},{n:"The Country Club Classic",p:[2,4,2,6,7,7,4,4,7,7,2,5]},{n:"The Luxe Collector",p:[5,7,4,7,7,7,4,4,9,9,5,7]},{n:"The Career Launcher",p:[6,4,4,5,8,9,4,3,7,7,3,5]},{n:"The Edgy Confident",p:[8,5,11,6,5,4,4,4,7,9,7,9]},{n:"The Alluring",p:[6,7,6,6,7,5,5,4,9,8,10,7]},{n:"The Coastal Casual",p:[4,2,3,2,2,3,5,4,3,3,5,3]},{n:"The Clean Minimalist",p:[4,2,3,1,4,5,2,1,7,5,3,3]}
+// Archetype Map v2 (2026-07-11, decided with Cath): 28 landmarks, tuned by
+// simulation so no name hogs the stage and none starves. Slider order:
+// 1 Classic-Trendy, 2 Natural-Glam, 3 Preppy-Edgy, 4 Simple-Detailed,
+// 5 Casual-Dressy, 6 Sporty-Professional, 7 Neutral-Colorful, 8 Solids-Prints,
+// 9 Relaxed-Fitted, 10 Comfort-Style, 11 Modest-Alluring, 12 Understated-Statement.
+{n:"The Timeless Classic",p:[3,3,3,4,5,5,3,3,7,6,3,4]},
+{n:"The Understated Luxury",p:[4,4,4,5,7,8,2,2,9,8,3,3]},
+{n:"The Clean Minimalist",p:[4,3,4,2,4,5,2,2,7,5,3,3]},
+{n:"The Natural Chic",p:[4,2,4,3,3,4,5,4,4,3,4,4]},
+{n:"The Elevated Casual",p:[5,3,5,4,4,4,5,4,5,5,5,5]},
+{n:"The Easygoing Natural",p:[4,3,3,2,2,3,6,5,3,3,5,3]},
+{n:"The Sporty Luxe",p:[5,3,5,4,3,2,5,3,8,6,5,4]},
+{n:"The Polished Professional",p:[4,5,4,6,9,9,3,3,8,8,3,6]},
+{n:"The Rising Star",p:[6,4,4,5,8,9,4,3,7,7,3,5]},
+{n:"The Polished Sophisticate",p:[2,4,2,6,7,7,4,4,7,7,2,5]},
+{n:"The Magnetic Muse",p:[6,7,6,6,7,5,5,4,9,8,10,7]},
+{n:"The Luxe Icon",p:[5,7,4,7,7,7,4,4,9,9,5,7]},
+{n:"The Glamorous Maximalist",p:[7,10,5,10,9,6,9,8,8,10,8,10]},
+{n:"The Romantic Feminine",p:[3,5,2,6,6,5,6,6,6,6,3,4]},
+{n:"The Sculpted Chic",p:[6,5,5,5,6,6,5,3,10,8,5,5]},
+{n:"The Soft Glam",p:[6,8,5,6,7,6,5,5,7,7,6,6]},
+{n:"The Bold Expressionist",p:[7,6,6,8,6,5,10,9,6,9,6,9]},
+{n:"The Creative Original",p:[7,5,7,9,5,4,9,8,5,7,6,7]},
+{n:"The Modern Trendsetter",p:[10,7,7,7,7,6,7,6,7,10,6,9]},
+{n:"The Edgy Confident",p:[8,5,11,6,5,4,4,4,7,9,7,9]},
+{n:"The Bold Siren",p:[8,9,9,7,8,5,4,3,9,10,9,10]},
+{n:"The Playful Palette",p:[6,6,6,7,6,6,8,8,6,6,6,7]},
+{n:"The Free Spirit",p:[6,3,6,7,3,4,9,9,3,4,5,6]},
+{n:"The Sunny Classic",p:[3,4,1,6,6,6,9,8,6,7,3,6]},
+{n:"The Vibrant Athlete",p:[6,3,4,4,2,1,9,7,5,3,4,6]},
+{n:"The Beautifully Balanced",p:[6,6,6,6,6,6,6,6,6,6,6,6]},
+{n:"The Modern Classic",p:[4,5,5,5,6,6,5,4,7,7,4,5]},
+{n:"The Serene Grace",p:[5,5,5,5,6,6,5,5,6,6,3,3]}
 ];
+// One-line "horoscope" essence per archetype ("she" voice, Cath-approved).
+// Shown on results via tap-to-reveal, and fed to the AI portrait + stylist chat.
+const archLines={
+"The Timeless Classic":"Trends come asking for her approval; she smiles and reaches for what always works.",
+"The Understated Luxury":"If you know, you know. She never needs to say it.",
+"The Clean Minimalist":"She edited everything away until only the essential beauty remained.",
+"The Natural Chic":"Fresh air in human form. Her ease is the whole look.",
+"The Elevated Casual":"She makes comfortable look intentional, every single day.",
+"The Easygoing Natural":"Nothing about her is forced, and everything about her works.",
+"The Sporty Luxe":"Movement is her natural state; polish comes along for the ride.",
+"The Polished Professional":"She dresses like the decision has already been made in her favor.",
+"The Rising Star":"Polished, purposeful, and already dressed for the life she's building.",
+"The Polished Sophisticate":"Gracious, polished, and always dressed for the invitation.",
+"The Magnetic Muse":"She never chases the spotlight; it has a way of finding her.",
+"The Luxe Icon":"Every piece she keeps is chosen; her closet reads like a gallery.",
+"The Glamorous Maximalist":"More is more, and on her, more is magnificent.",
+"The Romantic Feminine":"Softness is her strength; she makes gentle look unforgettable.",
+"The Sculpted Chic":"She knows the most powerful thing a garment can do is fit like it was made for her.",
+"The Soft Glam":"A little shimmer, softly spoken. Her glow does the talking.",
+"The Bold Expressionist":"Color follows her home. Pattern asks for a seat at her table.",
+"The Creative Original":"Her closet is a studio, and every outfit leaves a little art behind.",
+"The Modern Trendsetter":"By the time it's everywhere, she's already somewhere new.",
+"The Edgy Confident":"Rules were a lovely idea. She had a better one.",
+"The Bold Siren":"Leather and shimmer, midnight and gold. You will remember her.",
+"The Playful Palette":"Her happiest memories all have a color, and she wears every one.",
+"The Free Spirit":"Sun-washed, wind-styled, and answerable to no dress code on earth.",
+"The Sunny Classic":"Classic manners, joyful colors, permanently ready for the garden party.",
+"The Vibrant Athlete":"Built for motion, dressed in joy.",
+"The Beautifully Balanced":"Fluent in every style language, she answers to no single one.",
+"The Modern Classic":"Timeless at heart, current by instinct.",
+"The Serene Grace":"Calm is her signature; grace is how she wears it."
+};
 let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false,emailDone=false,quizOrigin='s-wel';
 try{if(localStorage.getItem('ss_emailDone')==='true')emailDone=true}catch(e){}
 function startQ(){var a=document.querySelector('.scr.act');quizOrigin=(a&&a.id&&a.id!=='s-quiz')?a.id:'s-wel';userName=(userName&&userName!=='You')?userName:'You';show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
@@ -1864,7 +1938,7 @@ function prevQ(){if(cur>0){cur--;loadQ(cur)}else{show(quizOrigin);document.getEl
 function dist(a,b){return Math.sqrt(a.reduce((s,v,i)=>s+(v-b[i])**2,0))}
 function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)}));scored.sort((a,b)=>a.d-b.d);return scored.slice(0,3)}
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;const delay=(1.7+i*0.05).toFixed(2);c.innerHTML+=`<div class="sig-row"><div class="sig-cat">${q.cat}</div><div class="sig-track"><span class="sig-dot" style="--x:${pct}%;animation-delay:${delay}s"></span><span class="sig-end l">${q.left}</span><span class="sig-end r">${q.right}</span></div></div>`})}
-async function genResult(){_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer closest style reference points: ${topArchNames.join(', ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
+async function genResult(){_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with undertones of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 // Put a results screen into its "loading" state: closed mirror doors with the
@@ -1904,7 +1978,7 @@ function showResult(txt,top3){
   document.getElementById('pw').style.display='none';
   document.getElementById('rn').innerHTML=userName&&userName!=="You"?'This is <i>'+_esc(userName)+'</i>':'Your style portrait';
   document.getElementById('rp').textContent=txt;
-  document.getElementById('ft').innerHTML=(top3||[]).map(a=>_esc(a.n)).join(' <b>&middot;</b> ');
+  _renderArchNames((top3||[]).map(a=>a.n));
   buildChart();
   if(emailDone){var ss=document.getElementById('staySection');if(ss)ss.style.display='none';var rk=document.getElementById('resKeep');if(rk)rk.style.display='none';var rb=document.getElementById('resSaveBtn');if(rb)rb.style.display='none';hideSavePins()}
   else{var rk2=document.getElementById('resKeep');if(rk2)rk2.style.display='';var rb2=document.getElementById('resSaveBtn');if(rb2)rb2.style.display='';var km=document.getElementById('keepMsg');if(km)km.textContent=''}
@@ -1913,6 +1987,31 @@ function showResult(txt,top3){
   _renderVisionThumb();
   _playResReveal(fromCompose);
   scheduleSaveSheet();
+}
+// Primary + undertones archetype block on the quiz results. Each name is tappable:
+// its one-line horoscope essence unfolds beneath, like turning over a card.
+function _renderArchNames(names){
+  var ft=document.getElementById('ft');if(!ft)return;
+  names=(names||[]).filter(Boolean).slice(0,3);
+  if(!names.length){ft.innerHTML='';return}
+  var h='<button type="button" class="arch-pri on" data-a="'+_esc(names[0])+'">'+_esc(names[0])+'</button>';
+  if(names.length>1){
+    h+='<div class="arch-und">with undertones of '+names.slice(1).map(function(n){
+      return '<button type="button" data-a="'+_esc(n)+'">'+_esc(String(n).replace(/^The\s+/i,''))+'</button>';
+    }).join(' <i class="amp">&amp;</i> ')+'</div>';
+  }
+  h+='<div class="arch-whisper"><span id="archWhisper" class="show">'+_esc(archLines[names[0]]||'')+'</span></div>';
+  ft.innerHTML=h;
+  ft.querySelectorAll('button[data-a]').forEach(function(b){b.addEventListener('click',function(){_pickArch(ft,b)})});
+}
+function _pickArch(ft,b){
+  ft.querySelectorAll('button[data-a]').forEach(function(x){x.classList.remove('on')});
+  b.classList.add('on');
+  var w=document.getElementById('archWhisper');if(!w)return;
+  var line=archLines[b.getAttribute('data-a')]||'';
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){w.textContent=line;return}
+  w.classList.remove('show');
+  setTimeout(function(){w.textContent=line;w.classList.add('show')},170);
 }
 // Draw a small preview of the actual Style Constellation card into the results entry.
 function _renderCardThumb(){
@@ -2436,6 +2535,7 @@ function loadSaved(){
     const d=JSON.parse(localStorage.getItem('ss_data'));
     if(!d)return;
     userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;
+    if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
     const top3=topArchNames.map(n=>({n:n}));
     showResult(d.portrait,top3);
     // Offer a top-right "Back" to the menu she came from (e.g. Welcome Back).
@@ -2448,6 +2548,7 @@ function loadSavedAndShop(){
     const d=JSON.parse(localStorage.getItem('ss_data'));
     if(!d)return;
     userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;
+    if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
     const top3=topArchNames.map(n=>({n:n}));
     showResult(d.portrait,top3);
     genOutfits('quiz');
@@ -2535,6 +2636,7 @@ async function restoreResults(){
       userName=d.userName||'You';
       answers=d.answers||new Array(12).fill(6);
       topArchNames=d.topArchNames||[];
+      if(d.answers&&d.answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
       if(d.prefs)prefs=d.prefs;
       emailDone=true;
       try{
@@ -3277,7 +3379,7 @@ function openChatAboutLook(){
 function wbChat(){
   try{
     const d=JSON.parse(localStorage.getItem('ss_data'));
-    if(d){userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;quizTaken=true;}
+    if(d){userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});quizTaken=true;}
   }catch(e){}
   chatPrevScreen='s-wb';
   openChat();
@@ -3384,7 +3486,7 @@ async function sendChat(){
     ? `You are chatting with ${_who}, who has taken the Style Star quiz, so you know her style well.
 
 Her style: ${sliderContext}
-Her style notes: ${topArchNames.join(', ')}${getPrefsForPrompt()}`
+Her style archetype: ${topArchNames[0]}${topArchNames.length>1?', with undertones of '+topArchNames.slice(1).join(' and '):''}\nArchetype essences: ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}${getPrefsForPrompt()}`
     : `You are chatting with ${_who}, who has NOT taken the Style Star quiz yet, so you don't know her detailed style profile.${getPrefsForPrompt()}
 
 Give genuinely helpful, specific advice based on what she tells you and what you can see. If it comes up naturally that knowing her taste would help, you may ONCE gently note that our fun Style Star style quiz lets you tailor everything to her. Never push it, never repeat it, and never let it get in the way of answering her question.`;
@@ -3624,7 +3726,7 @@ function fallbackInitialScreen(){
   if(d&&d.answers&&d.answers.length===12&&d.portrait&&String(d.portrait).trim()){
     userName=d.userName||userName;
     answers=d.answers;
-    topArchNames=d.topArchNames||[];
+    topArchNames=getTopArch().map(function(a){return a.n});
     quizTaken=true;
   }
   document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('act')});
@@ -3669,6 +3771,7 @@ async function autoRestoreFromLink(){
       if(hasPortrait){
         answers=(d.answers&&d.answers.length===12)?d.answers:new Array(12).fill(6);
         topArchNames=d.topArchNames||[];
+        if(d.answers&&d.answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
         try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:d.portrait}));}catch(e){}
         var top3=topArchNames.map(function(n){return {n:n}});
         showResult(d.portrait,top3);
