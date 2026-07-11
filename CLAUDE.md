@@ -1579,3 +1579,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   Bonus: the collage layout is seeded (name + archetypes), so the preview matches exactly what opens.
   Verified in Chromium (http-harness, stubbed quiz result): colorful collage in the 60px thumb, no JS
   errors.
+
+**2026-07-11 (cont. — shelf buttons unified across Home / Welcome Back / results)**
+- Cath (3 screenshots): make the shelf-button font + arrows consistent, matching Welcome Back (the
+  best of the three). Done, all screens now read as one system:
+  - **Titles 18px/600 Jost everywhere** (home `.hm-ctitle>span` was 16px; results `.res-screen .act
+    .tt` was 17px; WB already 18px). Subtitles bumped for readability (home 12→13.5px, results
+    13.5→14px).
+  - **All 16 thin text `&rarr;` arrows replaced with WB's bold 20px SVG arrow** (stroke 2.6, per-row
+    color kept): 3 home explore cards, 11 results action rows (both `s-res` + `s-photo-res`), and the
+    2 keepsake-panel arrows (Style Card + Vision Board `.sc-ar`).
+  - Home `.hm-shelves` max-width 230→276px + title nowrap — 18px titles wrapped mid-word at 230px.
+  - Verified in Chromium at 390px: home cards + results actions + keepsake panels all single-line,
+    bold arrows, no JS errors.
+- Flagged to Cath (her call, not yet done): capitalization is inconsistent BETWEEN screens (home/
+  results = sentence case "Analyze an outfit"; WB = Title Case "Analyze an Outfit"); "Style Star
+  Edit" (home) vs "Shop Style Star Edit" (WB); the Vision Board panel title wraps with "Board" alone
+  on line 2.
