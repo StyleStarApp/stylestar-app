@@ -1766,3 +1766,16 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   `.wb-mirror` recipe (6px chrome border-image gradient, #FBFAF7 base with the fine crosshatch
   **linen-weave texture**, chrome edge ring + inner white highlight shadows). The perfume-label
   interior (name 20px / engraved WITH NOTES OF / notes 17px) is unchanged.
+
+**2026-07-11 (cont. — notes stacked, mirror light sweep, Welcome Back subtitles)**
+- ✅ **Notes now stack one per line inside the mirror card, no separator** (Cath: the dot looked out
+  of place; stacked names never squeeze). Join is '<br>'; the `.st` dot CSS removed.
+- ✅ **One-time light sweep across the mirror card on reveal** — the exact WB `wbSweep` recipe: an
+  `.ac-sweep` overlay inside `.arch-card` (card got position:relative + overflow:hidden), fires once
+  at 2.35s into the s-res reveal ceremony. Doesn't replay on Back (rv-done has no animation).
+- ✅ **Welcome Back rows now carry subtitles** like every other screen (`.wb-sub` 14px under each
+  18px title; `.wb-lbl` restructured to `.tt` row + sub): Analyze an outfit/Upload a photo for
+  feedback · Ask your stylist/Expert guidance, anytime · Shop Style Star Edit/Hand-picked pieces
+  you'll love · See my Style Portrait/Your signature style, from the quiz · Refine your
+  preferences/Sizes, colors & the styles you love · Shop the Mall/Browse curated stores.
+- Cath decided AGAINST the "archetype whisper under the WB greeting" idea — just her name there.
