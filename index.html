@@ -455,16 +455,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-hair.l{background:linear-gradient(90deg,transparent,#C9A24E)}
 .hm-hair.r{background:linear-gradient(270deg,transparent,#C9A24E)}
 .hm-divlbl{font:600 11px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#BC9022;white-space:nowrap}
-.hm-shelves{display:flex;flex-direction:column;gap:22px;max-width:230px;margin:2px auto 0}
+.hm-shelves{display:flex;flex-direction:column;gap:22px;max-width:276px;margin:2px auto 0}
 .hm-card{cursor:pointer}
 .hm-cardrow{display:flex;align-items:flex-end;gap:12px;padding:0 4px 3px}
 .hm-ic{flex:0 0 auto;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center}
 .hm-ic svg{width:23px;height:23px}
 .hm-ctext{flex:1;min-width:0;text-align:left}
 .hm-ctitle{display:flex;align-items:center;gap:7px}
-.hm-ctitle>span{font:600 16px/1.1 'Jost',sans-serif;color:#211E1A}
-.hm-arr{font-size:13px}
-.hm-csub{font:400 12px/1.4 'Jost',sans-serif;color:#453f37;margin-top:3px}
+.hm-ctitle>span{font:600 18px/1.1 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
+.hm-arr{width:20px;height:20px;flex:0 0 auto}
+.hm-csub{font:400 13.5px/1.4 'Jost',sans-serif;color:#453f37;margin-top:3px}
 .hm-shelf{height:6px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 7px 11px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
 .hm-brackets{display:flex;justify-content:space-between;padding:0 7px}
 .hm-brk{width:12px;height:9px}
@@ -744,7 +744,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .sc-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .res-screen .sc-tt{font-family:'Fraunces',Georgia,serif;font-size:18px;font-weight:600;line-height:1.14;color:#211E1A}
 .res-screen .sc-ss{font:400 14px/1.4 'Jost',sans-serif;color:#453f37;margin-top:4px}
-.res-screen .sc-ar{font-size:20px;margin-left:8px;flex:0 0 auto}
+.res-screen .sc-ar{width:20px;height:20px;margin-left:8px;flex:0 0 auto}
 .res-screen .act{cursor:pointer;margin-top:18px}
 .res-screen .actrow{display:flex;align-items:flex-end;gap:12px;padding:0 4px 3px;text-align:left}
 .res-screen .chip{width:44px;height:44px;border-radius:10px;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
@@ -753,9 +753,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .chip.dark svg{stroke:#E9C46A}
 .res-screen .act .tx{flex:1;min-width:0}
 .res-screen .act .tt-row{display:flex;align-items:center;gap:7px}
-.res-screen .act .tt{font:600 17px/1.1 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
-.res-screen .act .ar{font-size:13px}
-.res-screen .act .ss{font:400 13.5px/1.4 'Jost',sans-serif;color:#453f37;margin-top:3px}
+.res-screen .act .tt{font:600 18px/1.1 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
+.res-screen .act .ar{width:20px;height:20px;flex:0 0 auto}
+.res-screen .act .ss{font:400 14px/1.4 'Jost',sans-serif;color:#453f37;margin-top:3px}
 .res-screen .shelf{height:6px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 7px 11px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
 .res-screen .brk-row{display:flex;justify-content:space-between;padding:0 7px}
 .res-screen .brk{width:12px;height:9px}
@@ -1051,7 +1051,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="hm-card" data-press data-shelf onclick="startPhoto()">
         <div class="hm-cardrow">
           <span class="hm-ic" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.4" width="18" height="12.4" rx="2.6"/><path d="M8.4 7.4l1.05-1.95a1.05 1.05 0 0 1 .93-.55h3.24a1.05 1.05 0 0 1 .93.55L15.6 7.4"/><circle cx="12" cy="13.4" r="3.5"/></svg></span>
-          <div class="hm-ctext"><div class="hm-ctitle"><span>Analyze an outfit</span><span class="hm-arr" style="color:#E01B1B">&rarr;</span></div><div class="hm-csub">Upload a photo for feedback</div></div>
+          <div class="hm-ctext"><div class="hm-ctitle"><span>Analyze an outfit</span><svg class="hm-arr" style="color:#E01B1B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="hm-csub">Upload a photo for feedback</div></div>
         </div>
         <div class="hm-shelf"></div>
         <div class="hm-brackets"><span class="hm-brk l"></span><span class="hm-brk r"></span></div>
@@ -1059,7 +1059,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="hm-card" data-press data-shelf onclick="openChat()">
         <div class="hm-cardrow">
           <span class="hm-ic" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span>
-          <div class="hm-ctext"><div class="hm-ctitle"><span>Ask your stylist</span><span class="hm-arr" style="color:#EC4899">&rarr;</span></div><div class="hm-csub">Expert guidance anytime</div></div>
+          <div class="hm-ctext"><div class="hm-ctitle"><span>Ask your stylist</span><svg class="hm-arr" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="hm-csub">Expert guidance anytime</div></div>
         </div>
         <div class="hm-shelf"></div>
         <div class="hm-brackets"><span class="hm-brk l"></span><span class="hm-brk r"></span></div>
@@ -1067,7 +1067,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="hm-card" data-press data-shelf onclick="showDream()">
         <div class="hm-cardrow">
           <span class="hm-ic" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.5 L12.63 13.2 L14.45 13.25 L13.0 14.4 L13.5 16.15 L12 15.1 L10.5 16.15 L11.0 14.4 L9.55 13.25 L11.37 13.2 Z" fill="#FFFFFF" stroke="none"/></svg></span>
-          <div class="hm-ctext"><div class="hm-ctitle"><span>Style Star Edit</span><span class="hm-arr" style="color:#0FA6B6">&rarr;</span></div><div class="hm-csub">Hand-picked pieces you'll love</div></div>
+          <div class="hm-ctext"><div class="hm-ctitle"><span>Style Star Edit</span><svg class="hm-arr" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="hm-csub">Hand-picked pieces you'll love</div></div>
         </div>
         <div class="hm-shelf"></div>
         <div class="hm-brackets"><span class="hm-brk l"></span><span class="hm-brk r"></span></div>
@@ -1158,7 +1158,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="sc-row" data-shelf onclick="saveStyleCard('quiz')">
         <span class="sc-thumb"><img id="scThumb" alt="Your Style Constellation preview"></span>
         <div class="tx"><div class="sc-tt">View your Style Constellation</div><div class="sc-ss">A shareable keepsake of your signature style</div></div>
-        <span class="sc-ar" style="color:#C8971E">&rarr;</span>
+        <svg class="sc-ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
       </div>
     </div>
 
@@ -1167,7 +1167,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="sc-row" data-shelf onclick="openVisionBoard()">
         <span class="sc-thumb" style="display:flex;align-items:center;justify-content:center;background:#28251F;position:relative"><svg viewBox="0 0 24 24" width="30" height="30" fill="#E9C46A"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg><img id="vbThumb" alt="Your Style Vision Board preview" style="position:absolute;inset:0;display:none"></span>
         <div class="tx"><div class="sc-tt">See your Style Vision Board</div><div class="sc-ss">A shareable mood board of your style</div></div>
-        <span class="sc-ar" style="color:#C8971E">&rarr;</span>
+        <svg class="sc-ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
       </div>
     </div>
 
@@ -1178,24 +1178,24 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my results</button>
       <!-- Action shelves — each bound to its existing handler -->
       <div class="act" data-shelf onclick="openPrefs()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <button class="hero" onclick="genOutfits('quiz')"><span class="shim"></span><span class="lbl">Shop your style&nbsp;<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;margin-left:1px"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></button>
       <div class="act" data-shelf onclick="showPhoto()">
-        <div class="actrow"><span class="chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze an outfit</span><span class="ar" style="color:#E01B1B">&rarr;</span></div><div class="ss">Upload a photo for feedback</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze an outfit</span><svg class="ar" style="color:#E01B1B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="openChat()">
-        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><span class="ar" style="color:#EC4899">&rarr;</span></div><div class="ss">Expert guidance, anytime</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><svg class="ar" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Expert guidance, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showDream()">
-        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Style Star Edit</span><span class="ar" style="color:#0FA6B6">&rarr;</span></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Style Star Edit</span><svg class="ar" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showShop()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Browse curated stores</div></div></div>
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse curated stores</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
 
@@ -1391,29 +1391,29 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- Shop your style — broad picks that vibe with her (quiz profile, or her look) -->
       <button class="hero" onclick="shopMyStyle()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;vertical-align:-4px"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/></svg>&nbsp;Shop your style</span></button>
       <div class="act" data-shelf onclick="showPhoto()">
-        <div class="actrow"><span class="chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><span class="ar" style="color:#E01B1B">&rarr;</span></div><div class="ss">Upload a photo for feedback</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><svg class="ar" style="color:#E01B1B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <!-- Familiar pink chat path (a second, recognizable route to the same look chat) -->
       <div class="act" data-shelf onclick="openChatAboutLook()">
-        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><span class="ar" style="color:#EC4899">&rarr;</span></div><div class="ss">Chat about your look, anytime</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><svg class="ar" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Chat about your look, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showDream()">
-        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Style Star Edit</span><span class="ar" style="color:#0FA6B6">&rarr;</span></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Style Star Edit</span><svg class="ar" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <!-- See my Style Portrait — quiz-takers only (gated in _photoSaveArea) -->
       <div class="act" id="photoPortraitBtn" data-shelf onclick="loadSaved()" style="display:none">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">See my Style Portrait</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Your signature style, from the quiz</div></div></div>
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">See my Style Portrait</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Your signature style, from the quiz</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="openPrefs()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showShop()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><span class="ar" style="color:#C8971E">&rarr;</span></div><div class="ss">Browse more curated stores</div></div></div>
+        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse more curated stores</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <!-- Inline "Shop your style" AI picks render here (shopMyStyle) -->
