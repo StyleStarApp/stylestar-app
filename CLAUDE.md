@@ -1789,3 +1789,8 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - Renames are trivial by design: the name lives only in the `archetypes` array + `archLines` map, and
   saved users recompute their archetypes from answers on load (verified: a saved "Magnetic Muse"
   profile self-heals to The Golden Hour with the new fallback line). Vectors unchanged.
+
+**2026-07-11 (cont. — one more rename: The Bold Siren → The Velvet Glam, Cath's own coinage)**
+- ✅ Cath renamed the edgy-glam world **The Velvet Glam** (line unchanged: "Leather and shimmer,
+  midnight and gold. You will remember her."). Deliberate pairing with The Soft Glam: two glamours
+  in different fabrics (daylight vs night); they sit d≈8 apart in slider space, no match confusion.
