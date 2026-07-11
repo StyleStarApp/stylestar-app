@@ -1569,3 +1569,13 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   (`_resShowCompose`/`_playResReveal`/rv-classes) is unchanged and still shared; the QUIZ results
   (`#s-res`) keep their mirror-door reveal, untouched. Verified in Chromium (http-harness): loader →
   boards rise with no curtain flash, settled state correct, no JS errors.
+
+**2026-07-11 (cont. — Vision Board results entry: live collage thumbnail)**
+- Cath: the Vision Board row on the results screen showed a flat black rectangle with a gold star —
+  no hint of the colorful board behind it. Now it renders a **live mini-preview of her actual Vision
+  Board** (new `_renderVisionThumb()`, called from `showResult` right after `_renderCardThumb()` —
+  same pattern as the Style Card thumb: `buildVisionBlob` → object URL → `#vbThumb`). The gold star
+  stays underneath as the fallback until the collage finishes rendering (also covers a blob failure).
+  Bonus: the collage layout is seeded (name + archetypes), so the preview matches exactly what opens.
+  Verified in Chromium (http-harness, stubbed quiz result): colorful collage in the 60px thumb, no JS
+  errors.
