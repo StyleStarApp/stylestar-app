@@ -94,7 +94,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .btn-o{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:#6e6e6e;border:1px solid #e8e8e8;margin-top:8px}
 .btn-o:hover{background:#fafafa;color:#888}
 /* ===== Quiz glow-up — chrome vanity mirror framing the WHOLE app column (during the quiz) ===== */
-.ss.quiz-mirror{position:relative;border-radius:0;border:13px solid transparent;
+.ss.quiz-mirror,.ss.chat-mirror{position:relative;border-radius:0;border:13px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
   box-shadow:0 6px 44px rgba(0,0,0,.14),inset 0 0 0 2px rgba(201,161,78,.6)}
 .ss.quiz-mirror .tag{display:none}
@@ -168,37 +168,39 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .stay-input::placeholder{color:#9a9a9a}
 .stay-success{font-size:14px;color:#B08830;font-weight:500}
 .stay-skip{font-size:11px;color:#999;cursor:pointer;margin-top:4px;text-decoration:underline}
-.chat-wrap{display:flex;flex-direction:column;height:70vh;max-height:600px}
+.chat-wrap{display:flex;flex-direction:column;height:78vh;max-height:660px}
 .chat-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #ebebeb;margin-bottom:10px}
 .chat-hdr-left{display:flex;align-items:center;gap:8px}
 .chat-hdr-star{width:28px;height:28px}
-.chat-hdr-title{font-size:15px;font-weight:700;color:#1a1a1a}
-.chat-hdr-sub{font-size:10px;color:#777;letter-spacing:0.04em}
+.chat-hdr-title{font:700 16px/1.15 'Jost',sans-serif;color:#1a1a1a}
+.chat-hdr-sub{font:500 11px/1.3 'Jost',sans-serif;color:#8a6a17;letter-spacing:.02em;margin-top:2px}
 .chat-close{font-size:13px;color:#777;cursor:pointer;text-decoration:underline;background:none;border:none;font-family:'DM Sans',sans-serif}
 .chat-messages{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:10px}
 .chat-msg{max-width:85%;padding:12px 16px;border-radius:16px;font-size:15px;line-height:1.6;font-family:'DM Sans',sans-serif}
 .chat-msg.bot{background:#f5f3ef;color:#1a1a1a;align-self:flex-start;border-bottom-left-radius:4px}
-.chat-msg.user{background:#1a1a1a;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-msg.user{background:#242019;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
 .chat-msg a{color:#D4AF37;font-weight:600;text-decoration:underline}
 .chat-msg.bot a{color:#B08830}
 .chat-typing{align-self:flex-start;padding:12px 16px;background:#f5f3ef;border-radius:16px;border-bottom-left-radius:4px;font-size:14px;color:#999;font-style:italic}
 .chat-input-wrap{display:flex;gap:6px;padding:10px 4px 0;border-top:1px solid #ebebeb;margin-top:auto;max-width:100%;box-sizing:border-box}
-.chat-input{flex:1;min-width:0;border:1.5px solid #e8e8e8;border-radius:24px;padding:12px 16px;font-size:15px;font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;outline:none}
+.chat-input{flex:1;min-width:0;border:1.5px solid #cfd3d8;border-radius:4px;padding:12px 14px;font-size:15px;font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;outline:none}
+.chat-input:focus{border-color:#C8A060}
 .chat-input:focus{border-color:#C8A060}
 .chat-input::placeholder{color:#9a9a9a}
-.chat-send{width:44px;height:44px;border-radius:50%;background:#1a1a1a;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.2s}
-.chat-send:hover{opacity:0.85}
+.chat-send{width:46px;height:46px;border-radius:4px;background:linear-gradient(180deg,#F3E3A6,#DBB84E);border:1px solid #C99A2E;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:filter 0.2s}
+.chat-send:hover{filter:brightness(1.06)}
 .chat-send:disabled{opacity:0.4;cursor:default}
-.chat-photo-btn{width:44px;height:44px;border-radius:50%;background:#f5f3ef;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s}
+.chat-photo-btn{width:46px;height:46px;border-radius:4px;background:#f3f1ec;border:1.5px solid #d7d3cb;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s}
 .chat-photo-btn:hover{background:#ebebeb}
 .chat-photo-preview{display:flex;align-items:center;gap:10px;padding:8px 0;margin-top:4px}
-.chat-msg-img{max-width:180px;border-radius:12px;margin-bottom:6px}
+.chat-msg-img{max-width:230px;border-radius:10px;margin-bottom:6px}
 .chat-suggestions{padding:8px 0}
 .chat-sug-label{font-size:11px;color:#777;margin-bottom:6px;font-weight:500}
 .chat-sug-chips{display:flex;flex-wrap:wrap;gap:6px}
 .chat-chip{padding:8px 14px;border-radius:20px;border:1.5px solid #ebebeb;background:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#666;cursor:pointer;transition:all 0.2s;white-space:nowrap}
 .chat-chip:hover{border-color:#1a1a1a;color:#1a1a1a}
 .chat-privacy{font-size:11px;color:#8a8a8a;text-align:center;padding:4px 0}
+#chatRefineHint button{border-radius:4px!important}
 .btn-chat{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.06em;cursor:pointer;border:1.5px solid #1a1a1a;background:#fff;color:#1a1a1a;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px;text-transform:uppercase}
 .btn-chat:hover{opacity:0.88}
 .btn-yellow{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:#fff;color:#1a1a1a;border:1.5px solid #1a1a1a;margin-top:8px;font-family:'DM Sans',sans-serif;transition:opacity 0.2s}
@@ -1584,8 +1586,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="none" stroke="#D4AF37" stroke-width="4"/>
         </svg>
         <div>
-          <div class="chat-hdr-title">Style Star Stylist</div>
-          <div class="chat-hdr-sub">AI-powered • Trained by a professional stylist</div>
+          <div class="chat-hdr-title">Your Style Star Stylist</div>
+          <div class="chat-hdr-sub">Created with heart by a real stylist</div>
         </div>
       </div>
       <button class="chat-close" onclick="chatBack()">&larr; Back</button>
@@ -1607,7 +1609,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <input type="file" id="chatPhotoIn" accept="image/*" style="display:none" onchange="onChatPhoto(this)">
       <input type="text" class="chat-input" id="chatInput" placeholder="Ask me about style..." onkeydown="if(event.key==='Enter')sendChat()">
       <button class="chat-send" id="chatSend" onclick="sendChat()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#211803" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
     <div class="chat-photo-preview" id="chatPhotoPreview" style="display:none">
@@ -1912,7 +1914,7 @@ function show(id,skipHistory){
   var onWel=(id==='s-wel');
   // Screens with their own built-in footer + logo hide the shared global chrome:
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
-  var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load');
+  var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-chat');
   var gf=document.querySelector('.quiz-footer');
   if(gf)gf.style.display=ownChrome?'none':'';
   if(id==='s-wb')updateWbScreen();
@@ -1924,6 +1926,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('sqtop',id==='s-photo');
   // Frame the whole app column in the chrome vanity mirror while she takes the quiz.
   if(card)card.classList.toggle('quiz-mirror',id==='s-quiz');
+  // Same chrome frame around the stylist chat.
+  if(card)card.classList.toggle('chat-mirror',id==='s-chat');
   if(!skipHistory){
     history.pushState({screen:id},null,'');
   }
@@ -3377,7 +3381,7 @@ function openChat(fromLook){
         msgContainer.appendChild(div);
       });
     }else if(!fromLook){
-      const welcome=`Hi there! I'm your Style Star stylist. Need outfit ideas? Shopping advice? What can I help you with?`;
+      const welcome=`Hi there! I'm your Style Star stylist. I was created by a real personal stylist who loves helping women discover their signature style and make shopping feel easy and fun. Ask me anything, or send a photo and I'll give you honest feedback.`;
       addChatMsg(welcome,'bot');
     }
   }
