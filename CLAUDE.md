@@ -1794,3 +1794,9 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - ✅ Cath renamed the edgy-glam world **The Velvet Glam** (line unchanged: "Leather and shimmer,
   midnight and gold. You will remember her."). Deliberate pairing with The Soft Glam: two glamours
   in different fabrics (daylight vs night); they sit d≈8 apart in slider space, no match confusion.
+
+**2026-07-11 (cont. — rename: The Playful Palette → The Pop of Color)**
+- ✅ Cath renamed the balanced-leaning-colorful center archetype **The Pop of Color** (from fashion's
+  own vocabulary; also avoids "palette," which brushed against the seasonal color-analysis language
+  the brand deliberately avoids). Line unchanged: "Her happiest memories all have a color, and she
+  wears every one." Vector unchanged; saved users self-heal as with all renames.
