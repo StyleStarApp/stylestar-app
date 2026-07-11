@@ -1997,3 +1997,11 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 **2026-07-11 (cont. — quiz progress bar: gold label + squared edges)**
 - ✅ "N of 12" label color tan `#B08830` → brand gold **`#C8971E`** (Cath: gold not tan).
 - ✅ Progress bar + fill **squared** (`.prog-bar`/`.prog-fill` border-radius 3px→0).
+
+**2026-07-11 (cont. — quiz slider descriptor font)**
+- ✅ Slider live descriptor (`.q-hint`: "Very classic", "A blend of both"…) switched from **Fraunces
+  italic** → **DM Sans upright** 18px/600, charcoal #1c1a16 (Cath: the italic serif looked
+  gothic/hard to read; this is a super-important part of the quiz). Now instantly legible.
+- NOTE on deploys: today's ~35 small merges each triggered a Netlify build and exhausted the free
+  build-minute allowance around PR #233, stalling deploys; Cath bought $10 of credits and is happy to
+  see deploys as we go. (Batching is optional now, not required.)
