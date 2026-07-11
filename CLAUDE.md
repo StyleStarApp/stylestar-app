@@ -1677,3 +1677,37 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   Supabase/localStorage hold OLD names — map old→new on load (renames + merged twins → Timeless
   Classic) or recompute from saved `answers` (preferred: answers are stored). Once real quiz data
   accumulates in Supabase, re-tune the map against reality instead of simulation.
+
+**2026-07-11 (cont. — ▶ ARCHETYPE MAP v2 FINALIZED + BUILT, SHIPPED LIVE)**
+- Cath finished the naming session. FINAL name changes beyond the earlier five: Country Club Classic →
+  **The Polished Sophisticate** · Coastal Casual → **The Easygoing Natural** · Sunny Preppy → **The
+  Sunny Classic** (Cath: no "preppy," no place/lifestyle names the sliders can't detect) · Luxe
+  Collector → **The Luxe Icon** · Quiet Grace → **The Serene Grace** (Cath: not "quiet"; loves
+  "grace"; picked serene). Center-split names blessed: Soft Glam / Modern Classic / Playful Palette;
+  merge name blessed: The Timeless Classic. "She" voice approved for the 28 horoscope lines.
+  Word-family repeats flagged & accepted: Classic ×3 (Timeless/Modern/Sunny), Polished ×2, Natural ×2,
+  Bold ×2, Luxe ×2, Modern ×2.
+- ✅ **BUILT & MERGED → LIVE:** the 28-archetype v2 map (final vectors in the `archetypes` array with a
+  slider-order comment), `archLines` (the 28 one-liners), and:
+  - **Results presentation = primary + undertones.** `.noteslbl` now "You are"; `_renderArchNames()`
+    fills `#ft` with the primary name (big Fraunces, gold underline) + "with undertones of X & Y"
+    (undertones shown without "The") + an italic whisper line below.
+  - **Tap-to-reveal:** all three names are tappable buttons (`data-a` → `_pickArch`); the tapped
+    archetype's line fades into `#archWhisper` (like turning over a card; honors reduced-motion).
+    Primary preselected so a line shows immediately.
+  - **AI enrichment:** `genResult` prompt now sends "Her style archetype: X, with undertones of…"
+    plus all three essences ("flavor only, never quote verbatim"); `sendChat` profile block same.
+  - **Saved-user migration:** every load path (loadSaved, loadSavedAndShop, restore-by-email,
+    restore-token, page-reopen identity, chat identity) now **recomputes `topArchNames` from saved
+    `answers` via `getTopArch()`** when 12 answers exist — so returning users automatically get
+    current v2 names (old saved names like "The Alluring" are ignored/replaced; portrait TEXT stays
+    as saved). Constellation card + Vision Board inherit new names via `topArchNames` automatically.
+  - Verified in Chromium (http-harness): Magnetic-Muse-profile restore → primary "The Magnetic Muse",
+    undertones "Soft Glam & Bold Siren", whisper line correct, tap swaps the line; deeply-classic
+    profile with OLD saved names → "The Timeless Classic"; no JS errors.
+- The finalized brainstorm doc (map, lines, simulation): artifact "The Archetype Map, v2"
+  (claude.ai/code/artifact/acbfc17f-5acd-4641-85a7-3c6654911035). Supersedes the "still needs
+  blessing" items in the earlier v2 log entry — everything is now decided and live.
+- **LATER:** re-tune landmark positions against real Supabase quiz data once volume accumulates;
+  consider showing the primary bigger on the Style Constellation card; the horoscope lines could feed
+  the future paid Style Guide.
