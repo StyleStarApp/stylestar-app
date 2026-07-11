@@ -1901,3 +1901,18 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     errors. `input[type=range]` is quiz-only so restyling it is safe.
 - ▶ Flagged to Cath (not done): the OLD pill buttons `.btn-p/.btn-o` still appear on save/restore
   prompts + the preferences save; offer to square those app-wide next for full consistency.
+
+**2026-07-11 (cont. — quiz slider refinements: hint above rail, chrome mirror frame, no brown)**
+- Cath's on-device notes on the quiz glow-up:
+  - ✅ **Live descriptor moved ABOVE the rail** (q-lbls → q-hint → slider) so her finger doesn't
+    cover "A blend of both / Very classic" while dragging.
+  - ✅ **Rail thicker** (8→12px gold; thumb 34→36px). Full-width so fine on small phones (verified 375).
+  - ✅ **Killed the brown** — the tan card base (#F7F1E5) + taupe linen texture read as brown to Cath.
+    Card is now **clean white** (#FCFBF9) with a neutral cool-gray crosshatch; page background switched
+    from a warm-tan radial to **white (#FBFAF8) + a soft gold halo** at the top (no tan).
+  - ✅ **Framed the card** with the app's **chrome vanity-mirror border** (same `.wb-mirror` /
+    archetype-card recipe: 6px chrome border-image, edge ring + inner white highlight) — reads like a
+    fitting-room mirror holding the slider, consistent with Welcome Back + the archetype card. Dropped
+    the gold corner brackets (the chrome frame is the frame now).
+  - Verified in Chromium at 375px: hint above rail + updates live, thicker rail, chrome frame, no
+    brown, no JS errors.
