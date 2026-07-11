@@ -4361,9 +4361,13 @@ function _openVisionOverlay(blob,imgUrl){
     <div style="color:#cbb892;font-size:14px;font-family:'Jost',sans-serif;margin-top:16px">Press and hold the image to save</div>
     <button onclick="doShareVision()" style="display:flex;align-items:center;gap:9px;padding:15px 34px;border:1.5px solid #C79A34;background:#141210;color:#f4efe6;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:20px">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E9C46E" stroke-width="2.2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-      Share my vibe
+      Share with a friend
     </button>
-    <button onclick="closeVisionPreview()" style="margin-top:18px;background:none;border:none;color:#8f8676;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline">Close</button>`;
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:#bcb097;font-size:14.5px;font-family:'DM Sans',sans-serif;margin-top:13px;text-align:center">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#cbb892" stroke-width="1.9"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.15" fill="#cbb892" stroke="none"/></svg>
+      Text it or share to Instagram
+    </div>
+    <button onclick="closeVisionPreview()" style="margin-top:20px;background:none;border:none;color:#8f8676;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline">Close</button>`;
   document.body.appendChild(overlay);
   requestAnimationFrame(()=>{const im=overlay.querySelector('img');if(im)im.style.opacity=1;});
   window._visBlob=blob;window._visImgUrl=imgUrl;
