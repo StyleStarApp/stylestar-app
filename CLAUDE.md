@@ -1739,3 +1739,14 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - **Ideas floated for later:** put the personal motto on the Style Constellation card (friends
   sharing get different mottos = better share moment); Welcome Back could whisper her archetype under
   the greeting; the Vision Board mantra slot could use the motto.
+
+**2026-07-11 (cont. — portrait board layout, Cath's final spec)**
+- Reworked the portrait block per Cath: **"You are" label DELETED** (markup + CSS + reveal rule),
+  **★s beside the archetype DELETED**. The archetype now lives in a **framed linen card**
+  (`.arch-card`, same linen treatment as the Vision Board name card: #fdfbf6, 1px #d9c896 outline,
+  3px white inner border): main archetype LARGE (23px Fraunces) on top, **"with notes of X & Y"
+  smaller (14px Jost) underneath, inside the card**. BELOW the card: the personal motto in **bold
+  italic** (600 Fraunces, curly quotes), then the portrait paragraph. Reveal ceremony retimed:
+  linen card 1.85s → motto 2.5s → paragraph 2.95s. Reduced-motion list updated. Verified in
+  Chromium via the restore path (motto persisted + rendered); no JS errors. NOTE: in the headless
+  test the notes line wraps to 2 lines (fallback font); with real Jost short pairs fit one line.
