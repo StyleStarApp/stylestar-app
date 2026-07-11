@@ -1596,3 +1596,13 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   results = sentence case "Analyze an outfit"; WB = Title Case "Analyze an Outfit"); "Style Star
   Edit" (home) vs "Shop Style Star Edit" (WB); the Vision Board panel title wraps with "Board" alone
   on line 2.
+
+**2026-07-11 (cont. — button wording unified, Cath's 3 calls)**
+- ✅ **Sentence case everywhere**: Welcome Back's Title-Case labels → "Analyze an outfit", "Ask your
+  stylist", "Refine your preferences" (matching home/results). Feature/brand names keep caps (Style
+  Star Edit, Style Portrait, the Mall).
+- ✅ **"Shop Style Star Edit" everywhere** (Cath: keep the "Shop") — home explore card + both results
+  screens' rows renamed from the bare "Style Star Edit". The Edit PAGE title (`.dc-title`) stays
+  "Style Star Edit". Fits one line at 375px (verified).
+- ✅ **Vision Board panel row title → "See your Vision Board"** (was "See your Style Vision Board",
+  which wrapped with "Board" stranded; the gold panel header above already says STYLE VISION BOARD).
