@@ -2005,3 +2005,24 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - NOTE on deploys: today's ~35 small merges each triggered a Netlify build and exhausted the free
   build-minute allowance around PR #233, stalling deploys; Cath bought $10 of credits and is happy to
   see deploys as we go. (Batching is optional now, not required.)
+
+**2026-07-11 (▶ ASK YOUR STYLIST glow-up — reclaim the top + human story + chrome frame)**
+- Cath (+ friend Sally's insight: "the more people know a real person is behind this, the better —
+  it's what can't be duplicated"): the chat page had **two stacked headers** (the shared big logo +
+  tagline AND the chat's own header) eating the top third; wanted more room for photos/reading, the
+  human story surfaced, a premium frame, and pill buttons squared (KEEP the "Shift one notch" chips).
+- ✅ **s-chat added to `ownChrome`** → the big shared `.hdr` logo + tagline and the `.quiz-footer`
+  are hidden on the chat, reclaiming ~180px. The compact `.chat-hdr` (gold star + title + sub) is now
+  the only header.
+- ✅ **Human story, two places:** header sub "AI-powered • Trained by a professional stylist" →
+  **"Created with heart by a real stylist"** (gold); title → "Your Style Star Stylist". And the
+  **opening greeting rewritten**: "Hi there! I'm your Style Star stylist. I was created by a real
+  personal stylist who loves helping women discover their signature style and make shopping feel easy
+  and fun. Ask me anything, or send a photo and I'll give you honest feedback."
+- ✅ **Chrome vanity-mirror frame** around the whole chat (`.ss.chat-mirror`, shares the quiz-mirror
+  recipe — added to the selector; toggled in `show()`).
+- ✅ **Pills squared** (radius 4px): chat input, the round black send button → **squared GOLD**
+  (dark arrow), the round photo button → squared, the "Refine for better suggestions" button
+  (`#chatRefineHint button`). **Chips kept** (Cath likes them). User bubble → warm charcoal #242019.
+- ✅ **More room:** `.chat-wrap` 70vh→78vh (max 660); submitted photos `.chat-msg-img` 180→230px.
+- Verified in Chromium (no JS errors). v1 — Cath to react to header copy + palette.
