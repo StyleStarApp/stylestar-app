@@ -1916,3 +1916,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     the gold corner brackets (the chrome frame is the frame now).
   - Verified in Chromium at 375px: hint above rail + updates live, thicker rail, chrome frame, no
     brown, no JS errors.
+
+**2026-07-11 (cont. — quiz: full-page chrome frame, both back buttons, wider rail, brown eliminated)**
+- Cath's next round on the quiz:
+  - ✅ **Whole quiz panel framed in the chrome vanity mirror** (moved the 6-7px chrome border-image
+    from the inner slider card to `#s-quiz` itself; removed the full-width breakout so it's an inset
+    framed panel). The category/question/slider/buttons all live inside one chrome frame now — reads
+    like a fitting-room mirror. The inner `.q-card` is now frameless (just spacing).
+  - ✅ **Brown eliminated** (she still saw brown): interior is **pure white**; the amber/bronze golds
+    were the culprit → rail lightened to **champagne gold** (`#F3E6B8→#DFC271→#F3E6B8`, no dark
+    bronze), the descriptor hint switched **dark-gold → charcoal #26221c** (crisp, elegant, not
+    brown), category eyebrow brightened to `#C8971E`. No warm/tan bg anywhere.
+  - ✅ **Slider wider + thicker**: frameless inner card lets the rail span the full framed width;
+    height 12→**14px**, thumb 36→**38px**.
+  - ✅ **Top-right `← Back`** added (calls `prevQ` — previous question, exits to origin on Q1), like
+    every other page. **Kept the bottom `Back` too** — Cath explicitly wants BOTH back buttons.
+  - Verified in Chromium at 375px: both backs present + working (top-back Q2→Q1), chrome frame,
+    white interior, wider champagne rail, no JS errors.
