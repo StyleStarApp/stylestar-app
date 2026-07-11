@@ -1861,3 +1861,15 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - Remaining intentional/accepted repeats: Classic ×3, Natural ×2, Chic ×2 (Natural/Sculpted — far
   apart, rarely co-occur), Polished ×2, Modern ×2. Only glam-root left is Soft Glam vs Glamorous
   Maximalist (far apart in slider space, rarely paired — Cath OK with it).
+
+**2026-07-11 (cont. — vision board: wider stripes both places + real logo)**
+- ✅ **Wider "curtain" stripes** on the Vision Board canvas (bands 88→128px) AND on the results-page
+  `.pcard-vb` striped frame (`::before` gradient 18→28px). Both read chunkier/bolder now.
+- ✅ **Real logo on the Vision Board** (brand consistency w/ the Constellation card + share
+  recognition): `logo-star.png` — the TRANSPARENT black-wordmark version (right for the LIGHT linen
+  name card; the dark Constellation card uses the warm-white `logo-card.png`). Replaces the little
+  "STYLE ★ STAR" text at the top of the linen name card; loaded + awaited like the card's logo, with
+  the text as a fallback. Name card grew (206→220 / 172→186) and headline/archetype/notes shifted
+  down to make room. The thumbnail on the results page inherits it automatically (same buildVisionBlob).
+- The Enchantress + Refined Elegance renames (this session) verified live via direct distance math:
+  edgy-glam vector → The Enchantress primary; investor → The Refined Elegance; no JS errors.

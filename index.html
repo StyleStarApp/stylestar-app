@@ -752,7 +752,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* Style Vision Board card — striped "curtain" frame instead of the gold photo-corners (so it reads as its own thing, matching the board's black/cream stripe border) */
 .res-screen .pcard.pcard-vb::after{display:none}
 .res-screen .pcard.pcard-vb{box-shadow:0 16px 30px -14px rgba(0,0,0,.6),0 0 0 1.5px #c8a44d}
-.res-screen .pcard.pcard-vb::before{content:"";position:absolute;inset:-15px;z-index:-1;background:repeating-linear-gradient(to bottom,#1c1a15 0 18px,#f2efe8 18px 36px)}
+.res-screen .pcard.pcard-vb::before{content:"";position:absolute;inset:-15px;z-index:-1;background:repeating-linear-gradient(to bottom,#1c1a15 0 28px,#f2efe8 28px 56px)}
 .res-screen .sc-lead{display:flex;align-items:center;justify-content:center;gap:11px;margin:2px 0 12px;color:#C8971E;font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase}
 .res-screen .sc-lead i{height:1px;width:32px;display:block}
 .res-screen .sc-lead i.l{background:linear-gradient(90deg,transparent,#C8971E)}
@@ -4241,7 +4241,9 @@ function buildVisionBlob(callback){
   const imgs=VISION_IMGS.slice();
   for(let i=imgs.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));const t=imgs[i];imgs[i]=imgs[j];imgs[j]=t;}
   const loaded=imgs.map(src=>{const im=new Image();im.src=src;return im;});
+  const vlogo=new Image();vlogo.src='logo-star.png';
   const waits=[document.fonts.ready];
+  if(!(vlogo.complete&&vlogo.naturalWidth))waits.push(new Promise(r=>{vlogo.onload=r;vlogo.onerror=r;}));
   loaded.forEach(im=>{if(!(im.complete&&im.naturalWidth))waits.push(new Promise(r=>{im.onload=r;im.onerror=r;}));});
   Promise.all(waits).then(draw).catch(draw);
 
@@ -4249,7 +4251,7 @@ function buildVisionBlob(callback){
     const W=1080,H=1350;
     // striped "curtain" background (matches home screen)
     ctx.fillStyle='#28251F';ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='#F2EFE8';for(let y=88;y<H;y+=176)ctx.fillRect(0,y,W,88);
+    ctx.fillStyle='#F2EFE8';for(let y=128;y<H;y+=256)ctx.fillRect(0,y,W,128);
     const g=ctx.createRadialGradient(W/2,H*0.3,60,W/2,H*0.3,W*0.9);
     g.addColorStop(0,'rgba(255,244,222,.16)');g.addColorStop(1,'rgba(255,244,222,0)');
     ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
@@ -4273,26 +4275,32 @@ function buildVisionBlob(callback){
     ctx.restore();
     ctx.strokeStyle='#c8a44d';ctx.lineWidth=3;ctx.strokeRect(PX+1.5,PY+1.5,PW-3,PH-3);
     // ---- linen name card ----
-    const cardW=596,cardX=(W-cardW)/2,cardY=78,cardH=archsFull.length>1?206:172,midX=W/2;
+    const cardW=596,cardX=(W-cardW)/2,cardY=78,cardH=archsFull.length>1?220:186,midX=W/2;
     ctx.save();ctx.shadowColor='rgba(15,10,4,.5)';ctx.shadowBlur=30;ctx.shadowOffsetY=12;
     ctx.fillStyle='#fdfbf6';ctx.fillRect(cardX,cardY,cardW,cardH);ctx.restore();
     ctx.lineWidth=3;ctx.strokeStyle='#fff';ctx.strokeRect(cardX+1.5,cardY+1.5,cardW-3,cardH-3);
     ctx.lineWidth=1;ctx.strokeStyle='#d9c896';ctx.strokeRect(cardX+0.5,cardY+0.5,cardW-1,cardH-1);
     ctx.textBaseline='alphabetic';
-    ctx.fillStyle='#b78f34';ctx.font='600 14px "Jost",sans-serif';ctx.textAlign='center';
-    _visSpaced(ctx,'STYLE ★ STAR',midX,cardY+34,5);
+    ctx.textAlign='center';
+    if(vlogo&&vlogo.complete&&vlogo.naturalWidth){
+      const lh=60,lw=lh*vlogo.naturalWidth/vlogo.naturalHeight;
+      ctx.drawImage(vlogo,midX-lw/2,cardY+12,lw,lh);
+    }else{
+      ctx.fillStyle='#b78f34';ctx.font='600 14px "Jost",sans-serif';
+      _visSpaced(ctx,'STYLE ★ STAR',midX,cardY+44,5);
+    }
     ctx.fillStyle='#241f18';ctx.textAlign='center';
-    let nf=48;ctx.font=nf+'px "DM Serif Display",serif';
-    while(ctx.measureText(title).width>cardW-56&&nf>28){nf-=2;ctx.font=nf+'px "DM Serif Display",serif';}
-    ctx.fillText(title,midX,cardY+88);
+    let nf=44;ctx.font=nf+'px "DM Serif Display",serif';
+    while(ctx.measureText(title).width>cardW-56&&nf>26){nf-=2;ctx.font=nf+'px "DM Serif Display",serif';}
+    ctx.fillText(title,midX,cardY+116);
     ctx.strokeStyle='#c8a44d';ctx.lineWidth=1;ctx.beginPath();
-    ctx.moveTo(midX-30,cardY+104);ctx.lineTo(midX-9,cardY+104);ctx.moveTo(midX+9,cardY+104);ctx.lineTo(midX+30,cardY+104);ctx.stroke();
-    ctx.fillStyle='#c8a44d';ctx.font='12px "Jost",sans-serif';ctx.textBaseline='middle';ctx.fillText('★',midX,cardY+104);ctx.textBaseline='alphabetic';
+    ctx.moveTo(midX-30,cardY+132);ctx.lineTo(midX-9,cardY+132);ctx.moveTo(midX+9,cardY+132);ctx.lineTo(midX+30,cardY+132);ctx.stroke();
+    ctx.fillStyle='#c8a44d';ctx.font='12px "Jost",sans-serif';ctx.textBaseline='middle';ctx.fillText('★',midX,cardY+132);ctx.textBaseline='alphabetic';
     if(archsFull.length){
       let pf=27;ctx.font='600 '+pf+'px "Fraunces",Georgia,serif';
       while(ctx.measureText(archsFull[0]).width>cardW-56&&pf>16){pf--;ctx.font='600 '+pf+'px "Fraunces",Georgia,serif';}
       ctx.fillStyle='#241f18';ctx.textAlign='center';
-      ctx.fillText(archsFull[0],midX,cardY+142);
+      ctx.fillText(archsFull[0],midX,cardY+170);
       if(archs.length>1){
         const rest=archs.slice(1),gap=10;
         function tw(sz){
@@ -4302,7 +4310,7 @@ function buildVisionBlob(callback){
           return w;
         }
         let nf2=21;while(tw(nf2)>cardW-52&&nf2>13)nf2--;
-        let x=midX-tw(nf2)/2;const ny=cardY+176;
+        let x=midX-tw(nf2)/2;const ny=cardY+202;
         ctx.textAlign='left';
         rest.forEach(function(n,i){
           ctx.font='600 '+nf2+'px "Fraunces",Georgia,serif';ctx.fillStyle='#4a3f2c';
