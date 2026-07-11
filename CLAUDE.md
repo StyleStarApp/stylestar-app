@@ -1750,3 +1750,11 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   linen card 1.85s → motto 2.5s → paragraph 2.95s. Reduced-motion list updated. Verified in
   Chromium via the restore path (motto persisted + rendered); no JS errors. NOTE: in the headless
   test the notes line wraps to 2 lines (fallback font); with real Jost short pairs fit one line.
+
+**2026-07-11 (cont. — linen card interior: "perfume label" design)**
+- Cath: main archetype too big, notes too small; wanted the card interior to wow AND read clearly.
+  Redesigned as a **fine perfume label** (the language we already borrowed): main archetype 23→20px
+  Fraunces; an engraved gold divider row (hairline — WITH NOTES OF — hairline, matching the app's
+  `.eng` treatment); then the two notes LARGE (17px Fraunces, dark) separated by a small gold
+  **5-point ★** instead of "&". New classes `.ac-div`/`.ac-notes` in `_renderArchNames`; the old
+  `.arch-notes` styles replaced. Hierarchy now: name 20px > notes 17px, close and both readable.
