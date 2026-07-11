@@ -1165,7 +1165,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="pcard pcard-vb">
       <div class="sc-lead"><i class="l"></i>Your Style Vision Board<i class="r"></i></div>
       <div class="sc-row" data-shelf onclick="openVisionBoard()">
-        <span class="sc-thumb" style="display:flex;align-items:center;justify-content:center;background:#28251F"><svg viewBox="0 0 24 24" width="30" height="30" fill="#E9C46A"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span>
+        <span class="sc-thumb" style="display:flex;align-items:center;justify-content:center;background:#28251F;position:relative"><svg viewBox="0 0 24 24" width="30" height="30" fill="#E9C46A"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg><img id="vbThumb" alt="Your Style Vision Board preview" style="position:absolute;inset:0;display:none"></span>
         <div class="tx"><div class="sc-tt">See your Style Vision Board</div><div class="sc-ss">A shareable mood board of your style</div></div>
         <span class="sc-ar" style="color:#C8971E">&rarr;</span>
       </div>
@@ -1910,6 +1910,7 @@ function showResult(txt,top3){
   else{var rk2=document.getElementById('resKeep');if(rk2)rk2.style.display='';var rb2=document.getElementById('resSaveBtn');if(rb2)rb2.style.display='';var km=document.getElementById('keepMsg');if(km)km.textContent=''}
   try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}
   _renderCardThumb();
+  _renderVisionThumb();
   _playResReveal(fromCompose);
   scheduleSaveSheet();
 }
@@ -1920,6 +1921,16 @@ function _renderCardThumb(){
     if(!img)return;
     var old=img.getAttribute('data-u');if(old){try{URL.revokeObjectURL(old)}catch(e){}}
     img.src=url;img.setAttribute('data-u',url);
+  });}catch(e){}
+}
+// Draw a small preview of the actual Vision Board into its results entry (the gold
+// star stays underneath as the fallback until the collage is ready).
+function _renderVisionThumb(){
+  var img=document.getElementById('vbThumb');if(!img)return;
+  try{buildVisionBlob(function(blob,url){
+    if(!blob||!img)return;
+    var old=img.getAttribute('data-u');if(old){try{URL.revokeObjectURL(old)}catch(e){}}
+    img.src=url;img.setAttribute('data-u',url);img.style.display='block';
   });}catch(e){}
 }
 // "Keep your portrait" inline save block → shared hardened save core.
