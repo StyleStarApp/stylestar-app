@@ -693,16 +693,21 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .noteslbl{font:500 12.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8f8a80;margin:13px 0 6px}
 .res-screen .notes{font:500 13px/1.55 'Fraunces',serif;color:#33312c;padding:0 2px;overflow-wrap:break-word;text-wrap:pretty}
 .res-screen .notes b{color:#C8971E;margin:0 5px;font-weight:600}
-.res-screen .arch-pri{display:inline-block;background:none;border:none;cursor:pointer;font:600 21px/1.3 'Fraunces',serif;color:#1a1a1a;padding:0 2px 2px;border-bottom:2px solid rgba(200,151,30,.4)}
-.res-screen .arch-pri.on{border-bottom-color:#C8971E}
-.res-screen .arch-und{font:500 13.5px/1.7 'Jost',sans-serif;color:#6b6353;margin-top:7px}
-.res-screen .arch-und .amp{color:#C8971E;font-style:normal;margin:0 2px}
-.res-screen .arch-und button{background:none;border:none;cursor:pointer;font:600 13.5px/1.4 'Jost',sans-serif;color:#B08830;padding:0 1px 1px;border-bottom:1px solid rgba(176,136,48,.35)}
-.res-screen .arch-und button.on{color:#8a6a17;border-bottom-color:#8a6a17}
-.res-screen .arch-whisper{min-height:42px;display:flex;align-items:center;justify-content:center;padding:9px 4px 0}
-.res-screen .arch-whisper span{font:italic 500 14.5px/1.55 'Fraunces',serif;color:#4a4438;max-width:270px;opacity:0;transform:translateY(3px);transition:opacity .4s ease,transform .4s ease}
-.res-screen .arch-whisper span.show{opacity:1;transform:none}
-@media (prefers-reduced-motion: reduce){.res-screen .arch-whisper span{transition:none;transform:none}}
+.res-screen .arch-name{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:2px}
+.res-screen .arch-name .anm{font:600 23px/1.25 'Fraunces',serif;color:#1a1a1a;text-wrap:balance}
+.res-screen .arch-name .fl{color:#C8971E;font-size:13px;flex:0 0 auto}
+.res-screen .arch-motto{font:italic 500 15px/1.55 'Fraunces',serif;color:#4a4438;max-width:280px;margin:11px auto 0}
+.res-screen .arch-notes{font:500 15px/1.6 'Jost',sans-serif;color:#5d564a;margin-top:11px}
+.res-screen .arch-notes b{color:#B08830;font-weight:600}
+.res-screen .arch-notes .amp{color:#C8971E;margin:0 2px}
+/* staged ceremony after the doors open: You are -> name -> motto -> notes -> portrait */
+#s-res.rv-open .noteslbl{animation:rvRise .55s ease 1.75s both}
+#s-res.rv-open .arch-name{animation:rvRise .6s ease 1.95s both}
+#s-res.rv-open .arch-name .fl{animation:archTwinkle 1s ease 2.45s both}
+#s-res.rv-open .arch-motto{animation:rvRise .6s ease 2.5s both}
+#s-res.rv-open .arch-notes{animation:rvRise .6s ease 2.85s both}
+#s-res.rv-open .para{animation:rvRise .65s ease 3.15s both}
+@keyframes archTwinkle{0%,100%{transform:scale(1)}45%{transform:scale(1.45);text-shadow:0 0 8px rgba(233,196,110,.9)}}
 .res-screen .para{font:400 15px/1.65 'Jost',sans-serif;color:#4b4843;margin:15px 4px 0;text-wrap:pretty;overflow-wrap:break-word}
 .res-screen .p-alt{margin:16px 2px 0}
 .res-screen .p-alt:empty{display:none}
@@ -926,7 +931,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 @media (prefers-reduced-motion: reduce){
   .res-screen .doors{display:none!important}
-  .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section{opacity:1!important;animation:none!important;transform:none!important}
+  .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section,.res-screen .noteslbl,.res-screen .arch-name,.res-screen .arch-name .fl,.res-screen .arch-motto,.res-screen .arch-notes,.res-screen .para{opacity:1!important;animation:none!important;transform:none!important}
   .res-screen .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
   .res-screen .spot{animation:none!important;opacity:.62}
   .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
@@ -1256,7 +1261,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="photo-icon">📸</div>
         <div class="photo-cta">Tap to share your photo</div>
         <div class="photo-sub">I'll style it, just for you</div>
-        <div class="photo-hint">✦ Full-length photo of just you works best</div>
+        <div class="photo-hint">★ Full-length photo of just you works best</div>
       </div>
       <img id="photoPreview" class="photo-preview" style="display:none" alt="Your photo">
       <div class="ph-crop" id="phCrop">
@@ -1853,7 +1858,7 @@ const archLines={
 "The Modern Classic":"Timeless at heart, current by instinct.",
 "The Serene Grace":"Calm is her signature; grace is how she wears it."
 };
-let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],quizTaken=false,emailDone=false,quizOrigin='s-wel';
+let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],userMotto='',quizTaken=false,emailDone=false,quizOrigin='s-wel';
 try{if(localStorage.getItem('ss_emailDone')==='true')emailDone=true}catch(e){}
 function startQ(){var a=document.querySelector('.scr.act');quizOrigin=(a&&a.id&&a.id!=='s-quiz')?a.id:'s-wel';userName=(userName&&userName!=='You')?userName:'You';show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
 // Retake the quiz: jump straight to question 1 with a fresh set of sliders.
@@ -1938,8 +1943,8 @@ function prevQ(){if(cur>0){cur--;loadQ(cur)}else{show(quizOrigin);document.getEl
 function dist(a,b){return Math.sqrt(a.reduce((s,v,i)=>s+(v-b[i])**2,0))}
 function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)}));scored.sort((a,b)=>a.d-b.d);return scored.slice(0,3)}
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;const delay=(1.7+i*0.05).toFixed(2);c.innerHTML+=`<div class="sig-row"><div class="sig-cat">${q.cat}</div><div class="sig-track"><span class="sig-dot" style="--x:${pct}%;animation-delay:${delay}s"></span><span class="sig-end l">${q.left}</span><span class="sig-end r">${q.right}</span></div></div>`})}
-async function genResult(){_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Keep it to exactly 3-4 sentences.\n- Respond with ONLY the paragraph, nothing else.\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with undertones of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');showResult(txt,top3)}catch(e){showResult(genFallback(),top3)}}
-function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment — and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
+async function genResult(){_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=JSON.parse(txt.replace(/^```json?\s*/i,'').replace(/\s*```\s*$/,''));if(j&&j.portrait){ptxt=j.portrait;motto=j.motto||''}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
+function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment, and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 // Put a results screen into its "loading" state: closed mirror doors with the
 // two gold stars spinning, boards hidden. Used while the /style-ai request is in flight.
@@ -1964,12 +1969,12 @@ function _playResReveal(fromCompose,id){
     // After the sequence finishes, drop to a static terminal state so returning to
     // the screen (e.g. via Back) never replays the doors.
     if(s._rvDone)clearTimeout(s._rvDone);
-    s._rvDone=setTimeout(function(){s.classList.remove('rv-open');s.classList.add('rv-done')},3400);
+    s._rvDone=setTimeout(function(){s.classList.remove('rv-open');s.classList.add('rv-done')},s.id==='s-res'?4100:3400);
   }
   if(fromCompose){open()}
   else{s.classList.remove('rv-open','rv-done');void s.offsetWidth;s.classList.add('rv-compose');setTimeout(open,650)}
 }
-function showResult(txt,top3){
+function showResult(txt,top3,motto){
   quizTaken=true;resBackScreen='';
   var _rbw=document.getElementById('resBackWrap');if(_rbw)_rbw.style.display='none';
   var s=document.getElementById('s-res');
@@ -1978,40 +1983,34 @@ function showResult(txt,top3){
   document.getElementById('pw').style.display='none';
   document.getElementById('rn').innerHTML=userName&&userName!=="You"?'This is <i>'+_esc(userName)+'</i>':'Your style portrait';
   document.getElementById('rp').textContent=txt;
-  _renderArchNames((top3||[]).map(a=>a.n));
+  _renderArchNames((top3||[]).map(a=>a.n),motto);
   buildChart();
   if(emailDone){var ss=document.getElementById('staySection');if(ss)ss.style.display='none';var rk=document.getElementById('resKeep');if(rk)rk.style.display='none';var rb=document.getElementById('resSaveBtn');if(rb)rb.style.display='none';hideSavePins()}
   else{var rk2=document.getElementById('resKeep');if(rk2)rk2.style.display='';var rb2=document.getElementById('resSaveBtn');if(rb2)rb2.style.display='';var km=document.getElementById('keepMsg');if(km)km.textContent=''}
-  try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt}));}catch(e){}
+  userMotto=(motto&&String(motto).trim())||'';
+  try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt,motto:userMotto}));}catch(e){}
   _renderCardThumb();
   _renderVisionThumb();
   _playResReveal(fromCompose);
   scheduleSaveSheet();
 }
-// Primary + undertones archetype block on the quiz results. Each name is tappable:
-// its one-line horoscope essence unfolds beneath, like turning over a card.
-function _renderArchNames(names){
+// The archetype presentation on the quiz results: her primary archetype (never
+// larger than her name), a personal motto written by the AI just for her (falls
+// back to the archetype's fixed line), and her two notes right beneath. Pure
+// reading, nothing to tap.
+function _renderArchNames(names,motto){
   var ft=document.getElementById('ft');if(!ft)return;
   names=(names||[]).filter(Boolean).slice(0,3);
   if(!names.length){ft.innerHTML='';return}
-  var h='<button type="button" class="arch-pri on" data-a="'+_esc(names[0])+'">'+_esc(names[0])+'</button>';
+  var h='<div class="arch-name"><span class="fl">★</span><span class="anm">'+_esc(names[0])+'</span><span class="fl">★</span></div>';
+  var m=(motto&&String(motto).trim())||archLines[names[0]]||'';
+  if(m)h+='<div class="arch-motto">&ldquo;'+_esc(m)+'&rdquo;</div>';
   if(names.length>1){
-    h+='<div class="arch-und">with undertones of '+names.slice(1).map(function(n){
-      return '<button type="button" data-a="'+_esc(n)+'">'+_esc(String(n).replace(/^The\s+/i,''))+'</button>';
-    }).join(' <i class="amp">&amp;</i> ')+'</div>';
+    h+='<div class="arch-notes">with notes of '+names.slice(1).map(function(n){
+      return '<b>'+_esc(String(n).replace(/^The\s+/i,''))+'</b>';
+    }).join(' <span class="amp">&amp;</span> ')+'</div>';
   }
-  h+='<div class="arch-whisper"><span id="archWhisper" class="show">'+_esc(archLines[names[0]]||'')+'</span></div>';
   ft.innerHTML=h;
-  ft.querySelectorAll('button[data-a]').forEach(function(b){b.addEventListener('click',function(){_pickArch(ft,b)})});
-}
-function _pickArch(ft,b){
-  ft.querySelectorAll('button[data-a]').forEach(function(x){x.classList.remove('on')});
-  b.classList.add('on');
-  var w=document.getElementById('archWhisper');if(!w)return;
-  var line=archLines[b.getAttribute('data-a')]||'';
-  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){w.textContent=line;return}
-  w.classList.remove('show');
-  setTimeout(function(){w.textContent=line;w.classList.add('show')},170);
 }
 // Draw a small preview of the actual Style Constellation card into the results entry.
 function _renderCardThumb(){
@@ -2537,7 +2536,8 @@ function loadSaved(){
     userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;
     if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
     const top3=topArchNames.map(n=>({n:n}));
-    showResult(d.portrait,top3);
+    userMotto=d.motto||'';
+    showResult(d.portrait,top3,d.motto);
     // Offer a top-right "Back" to the menu she came from (e.g. Welcome Back).
     resBackScreen=origin;
     var rbw=document.getElementById('resBackWrap');if(rbw)rbw.style.display='';
@@ -2550,7 +2550,8 @@ function loadSavedAndShop(){
     userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;
     if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
     const top3=topArchNames.map(n=>({n:n}));
-    showResult(d.portrait,top3);
+    userMotto=d.motto||'';
+    showResult(d.portrait,top3,d.motto);
     genOutfits('quiz');
   }catch(e){show('s-wel')}
 }
@@ -2646,7 +2647,8 @@ async function restoreResults(){
         localStorage.setItem('ss_emailDone','true');
       }catch(e){}
       const top3=topArchNames.map(n=>({n:n}));
-      showResult(d.portrait,top3);
+      userMotto=d.motto||'';
+      showResult(d.portrait,top3,d.motto);
     }else{
       document.getElementById('restoreMsg').innerHTML="We couldn't find results for that email. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take our fun style quiz</span>?";
     }
@@ -2746,9 +2748,10 @@ function buildFullUserData(){
   const name=(userName&&userName!=='You')?userName:(base.userName||'You');
   const ans=(Array.isArray(answers)&&answers.some(a=>a!==6))?answers:(base.answers||answers);
   const arch=(topArchNames&&topArchNames.length)?topArchNames:(base.topArchNames||[]);
+  const savedMotto=userMotto||base.motto||'';
   let portrait=base.portrait||'';
   if(!portrait){const rp=document.getElementById('rp');if(rp)portrait=rp.textContent}
-  return{userName:name,answers:ans,topArchNames:arch,portrait:portrait,prefs:prefs};
+  return{motto:savedMotto,userName:name,answers:ans,topArchNames:arch,portrait:portrait,prefs:prefs};
 }
 
 // Decide which version of the after-preferences screen to show.
@@ -3486,14 +3489,14 @@ async function sendChat(){
     ? `You are chatting with ${_who}, who has taken the Style Star quiz, so you know her style well.
 
 Her style: ${sliderContext}
-Her style archetype: ${topArchNames[0]}${topArchNames.length>1?', with undertones of '+topArchNames.slice(1).join(' and '):''}\nArchetype essences: ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}${getPrefsForPrompt()}`
+Her style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}\nArchetype essences: ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}${getPrefsForPrompt()}`
     : `You are chatting with ${_who}, who has NOT taken the Style Star quiz yet, so you don't know her detailed style profile.${getPrefsForPrompt()}
 
 Give genuinely helpful, specific advice based on what she tells you and what you can see. If it comes up naturally that knowing her taste would help, you may ONCE gently note that our fun Style Star style quiz lets you tailor everything to her. Never push it, never repeat it, and never let it get in the way of answering her question.`;
 
   const systemPrompt=`You are a personal stylist powered by AI. ${_profileBlock}
 
-HOW TO RESPOND:
+HOW TO RESPOND:\n- Never use any dashes or hyphens as punctuation. Use commas or periods instead.
 - Get to the point. Lead with the specific suggestion or answer.
 - 1-3 sentences for simple questions. One short paragraph max for complex styling advice.
 - Be specific. Name exact items, colors, and stores. "A white linen button-down from Madewell" not "maybe try a nice top."
@@ -3774,7 +3777,8 @@ async function autoRestoreFromLink(){
         if(d.answers&&d.answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
         try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:d.portrait}));}catch(e){}
         var top3=topArchNames.map(function(n){return {n:n}});
-        showResult(d.portrait,top3);
+        userMotto=d.motto||'';
+        showResult(d.portrait,top3,d.motto);
       }else{
         // Known saver who hasn't taken the quiz yet — welcome her in to take it.
         // Her name + preferences are loaded, so the quiz result will be personal
@@ -4043,7 +4047,7 @@ function buildCardBlob(source,callback){
       const lw=232,lh=lw*logo.naturalHeight/logo.naturalWidth;
       ctx.drawImage(logo,W/2-lw/2,58,lw,lh);
     }else{
-      ctx.fillStyle='#E9C46E';ctx.font='48px "DM Serif Display", serif';ctx.fillText('✦',W/2,126);
+      ctx.fillStyle='#E9C46E';ctx.font='48px "DM Serif Display", serif';ctx.fillText('★',W/2,126);
       ctx.fillStyle='#f1ece2';ctx.font='74px "DM Serif Display", serif';ctx.fillText('style',W/2,208);ctx.fillText('Star',W/2,282);
     }
 
