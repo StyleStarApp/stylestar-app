@@ -1837,3 +1837,13 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   the portrait excerpt for old saves without a motto.
 - Verified in Chromium over http: both canvases render (Golden Hour + notes + motto on the card;
   linen card on the board), overlay fit on 375×667; no JS errors.
+
+**2026-07-11 (cont. — keepsake notes bigger + star bullet; motto ribbon on the Vision Board)**
+- ✅ On BOTH keepsakes the two secondary archetypes are now **larger, with "with notes of" deleted**,
+  the pair separated by a **gold 5-point ★ bullet**: Constellation card notes 23→29px Jost gold;
+  Vision Board name-card notes 16→21px Fraunces dark w/ gold ★. Both shrink-to-fit.
+- ✅ **Her personal motto now sits at the bottom of the Vision Board** as a linen ribbon (same linen
+  treatment as the name card/footer tag), just above the ★ STYLESTAR.APP ★ tag; italic Fraunces,
+  shrink-to-fit, only drawn when a motto exists (old saves skip it gracefully).
+- Also noted from Cath: vision-board PHOTO CURATION is the big to-do (dedicated session; tailor
+  imagery per archetype); NO highlighting of her strongest constellation poles (loses nuance).
