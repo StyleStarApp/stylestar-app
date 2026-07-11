@@ -1820,3 +1820,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   piece she keeps is chosen; her closet reads like a gallery." Vector unchanged; saved users
   self-heal. Glamour-family now: Soft Glam, Velvet Glam, Refined Glamour, Glamorous Maximalist —
   four distinct glamours, all far apart in slider space.
+
+**2026-07-11 (cont. — keepsakes sized up + primary/notes + motto on the card)**
+- ✅ **Bigger previews**: both keepsake overlays (`.scCard` + the Vision Board overlay img) went from
+  80-82vw / 64-66vh → **92vw / calc(100vh - 230px)** — noticeably larger on every phone, and verified
+  on an iPhone-SE-size viewport that the full image AND the Share button stay on screen. The shared
+  files were already Instagram-ideal (1080×1350, 4:5 post ratio; Stories show it with margins) — no
+  canvas resolution change needed.
+- ✅ **Primary + notes on BOTH keepsakes** (mirroring the results board): the Constellation card now
+  draws the primary archetype large in bright gold with "with notes of X · Y" smaller beneath
+  (replaced the three-equal-names ★-separated line; `drawNotes` rewritten, shrink-to-fit kept). The
+  Vision Board's linen name card same treatment (primary 27px Fraunces dark + notes line; card grows
+  172→206 tall when notes exist; rng seed unchanged so collages don't reshuffle).
+- ✅ **Her personal motto is now the Constellation card's pull-quote** (was the portrait's first
+  sentence). Unique per woman = the share differentiator (friends' cards never match). Falls back to
+  the portrait excerpt for old saves without a motto.
+- Verified in Chromium over http: both canvases render (Golden Hour + notes + motto on the card;
+  linen card on the board), overlay fit on 375×667; no JS errors.
