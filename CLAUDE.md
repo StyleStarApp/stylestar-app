@@ -1993,3 +1993,7 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   with a **2px silver ring** (`#9aa0a6`) and **no white border** (removed the `3px solid #fff`). Ties
   to the bright-gold Continue button; silver ring keeps it defined on the chrome rail. Tactile
   grow-on-press (34→42px) unchanged.
+
+**2026-07-11 (cont. — quiz progress bar: gold label + squared edges)**
+- ✅ "N of 12" label color tan `#B08830` → brand gold **`#C8971E`** (Cath: gold not tan).
+- ✅ Progress bar + fill **squared** (`.prog-bar`/`.prog-fill` border-radius 3px→0).
