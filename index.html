@@ -690,24 +690,18 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .eng-lbl{font:600 12px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#B8891E;white-space:nowrap}
 .res-screen .nm{font:400 28px/1.1 'DM Serif Display',serif;color:#1f1d19;margin:8px 0 0;overflow-wrap:break-word;text-wrap:balance}
 .res-screen .nm i{font-style:italic}
-.res-screen .noteslbl{font:500 12.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8f8a80;margin:13px 0 6px}
 .res-screen .notes{font:500 13px/1.55 'Fraunces',serif;color:#33312c;padding:0 2px;overflow-wrap:break-word;text-wrap:pretty}
 .res-screen .notes b{color:#C8971E;margin:0 5px;font-weight:600}
-.res-screen .arch-name{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:2px}
-.res-screen .arch-name .anm{font:600 23px/1.25 'Fraunces',serif;color:#1a1a1a;text-wrap:balance}
-.res-screen .arch-name .fl{color:#C8971E;font-size:13px;flex:0 0 auto}
-.res-screen .arch-motto{font:italic 500 15px/1.55 'Fraunces',serif;color:#4a4438;max-width:280px;margin:11px auto 0}
-.res-screen .arch-notes{font:500 15px/1.6 'Jost',sans-serif;color:#5d564a;margin-top:11px}
+.res-screen .arch-card{background:#fdfbf6;border:1px solid #d9c896;box-shadow:inset 0 0 0 3px #fff,0 4px 12px -7px rgba(90,70,20,.35);max-width:302px;margin:15px auto 0;padding:15px 13px 13px}
+.res-screen .arch-card .anm{font:600 23px/1.25 'Fraunces',serif;color:#1a1a1a;text-wrap:balance}
+.res-screen .arch-notes{font:500 14px/1.6 'Jost',sans-serif;color:#5d564a;margin-top:7px}
 .res-screen .arch-notes b{color:#B08830;font-weight:600}
 .res-screen .arch-notes .amp{color:#C8971E;margin:0 2px}
-/* staged ceremony after the doors open: You are -> name -> motto -> notes -> portrait */
-#s-res.rv-open .noteslbl{animation:rvRise .55s ease 1.75s both}
-#s-res.rv-open .arch-name{animation:rvRise .6s ease 1.95s both}
-#s-res.rv-open .arch-name .fl{animation:archTwinkle 1s ease 2.45s both}
+.res-screen .arch-motto{font:italic 600 15px/1.55 'Fraunces',serif;color:#3c3628;max-width:280px;margin:14px auto 0}
+/* staged ceremony after the doors open: linen card -> motto -> portrait */
+#s-res.rv-open .arch-card{animation:rvRise .6s ease 1.85s both}
 #s-res.rv-open .arch-motto{animation:rvRise .6s ease 2.5s both}
-#s-res.rv-open .arch-notes{animation:rvRise .6s ease 2.85s both}
-#s-res.rv-open .para{animation:rvRise .65s ease 3.15s both}
-@keyframes archTwinkle{0%,100%{transform:scale(1)}45%{transform:scale(1.45);text-shadow:0 0 8px rgba(233,196,110,.9)}}
+#s-res.rv-open .para{animation:rvRise .65s ease 2.95s both}
 .res-screen .para{font:400 15px/1.65 'Jost',sans-serif;color:#4b4843;margin:15px 4px 0;text-wrap:pretty;overflow-wrap:break-word}
 .res-screen .p-alt{margin:16px 2px 0}
 .res-screen .p-alt:empty{display:none}
@@ -931,7 +925,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 @media (prefers-reduced-motion: reduce){
   .res-screen .doors{display:none!important}
-  .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section,.res-screen .noteslbl,.res-screen .arch-name,.res-screen .arch-name .fl,.res-screen .arch-motto,.res-screen .arch-notes,.res-screen .para{opacity:1!important;animation:none!important;transform:none!important}
+  .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section,.res-screen .arch-card,.res-screen .arch-motto,.res-screen .para{opacity:1!important;animation:none!important;transform:none!important}
   .res-screen .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
   .res-screen .spot{animation:none!important;opacity:.62}
   .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
@@ -1145,7 +1139,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           </div>
           <!-- DYNAMIC: name → #rn (showResult sets "This is {userName}" or "Your style portrait") -->
           <div class="nm" id="rn"></div>
-          <div class="noteslbl">You are</div>
           <!-- DYNAMIC: archetype notes → #ft (showResult fills from top3, joined by gold dots) -->
           <div class="notes" id="ft"></div>
           <!-- DYNAMIC: portrait paragraph → #rp (showResult sets AI text) -->
@@ -2002,14 +1995,15 @@ function _renderArchNames(names,motto){
   var ft=document.getElementById('ft');if(!ft)return;
   names=(names||[]).filter(Boolean).slice(0,3);
   if(!names.length){ft.innerHTML='';return}
-  var h='<div class="arch-name"><span class="fl">★</span><span class="anm">'+_esc(names[0])+'</span><span class="fl">★</span></div>';
-  var m=(motto&&String(motto).trim())||archLines[names[0]]||'';
-  if(m)h+='<div class="arch-motto">&ldquo;'+_esc(m)+'&rdquo;</div>';
+  var h='<div class="arch-card"><div class="anm">'+_esc(names[0])+'</div>';
   if(names.length>1){
     h+='<div class="arch-notes">with notes of '+names.slice(1).map(function(n){
       return '<b>'+_esc(String(n).replace(/^The\s+/i,''))+'</b>';
     }).join(' <span class="amp">&amp;</span> ')+'</div>';
   }
+  h+='</div>';
+  var m=(motto&&String(motto).trim())||archLines[names[0]]||'';
+  if(m)h+='<div class="arch-motto">&ldquo;'+_esc(m)+'&rdquo;</div>';
   ft.innerHTML=h;
 }
 // Draw a small preview of the actual Style Constellation card into the results entry.
