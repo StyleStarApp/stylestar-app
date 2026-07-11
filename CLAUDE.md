@@ -1800,3 +1800,16 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   own vocabulary; also avoids "palette," which brushed against the seasonal color-analysis language
   the brand deliberately avoids). Line unchanged: "Her happiest memories all have a color, and she
   wears every one." Vector unchanged; saved users self-heal as with all renames.
+
+**2026-07-11 (cont. — keepsake panel wording unified: "See & share")**
+- ✅ Both keepsake rows on the Style Portrait now read **"See & share your Style Constellation"** and
+  **"See & share your Vision Board"** (was inconsistent "View your…" / "See your…"). Cath asked which
+  verb; chose "See" (warmer than "View") + "& share" (names the payoff). Vision Board subtitle now
+  **"A shareable mood board of your style vibe"** (Cath added "vibe" — matches the board's "My Style
+  Vibe" share text).
+- Q&A logged: **28 archetypes confirmed as the right count** (sim-backed: full coverage, no starving,
+  no monopoly; revisit only against real Supabase data). **Proud-share audit**: all 28 pass the
+  "would she happily text this?" test; the one to watch is **The Luxe Icon** ("icon" self-crowns;
+  bench option if testers wince: "The Refined Glamour"). **Romantic Feminine explained**: driven by
+  the soft/sweet end of Preppy↔Edgy + classic-leaning + modest, everything else near center with a
+  whisper of glam and print-friendliness.
