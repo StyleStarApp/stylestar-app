@@ -1847,3 +1847,29 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   shrink-to-fit, only drawn when a motto exists (old saves skip it gracefully).
 - Also noted from Cath: vision-board PHOTO CURATION is the big to-do (dedicated session; tailor
   imagery per archetype); NO highlighting of her strongest constellation poles (loses nuance).
+
+**2026-07-11 (cont. — glam-word declutter: two more renames)**
+- Cath disliked seeing **Soft Glam + Velvet Glam** together (repeated word), and flagged Soft Glam +
+  Refined Glamour would co-occur too (they're close neighbors). Fix: keep ONE glam name (The Soft
+  Glam, high-traffic + real vocabulary), rename the other two.
+  - ✅ **The Velvet Glam → The Enchantress** (rejected Showstopper=braggy like Luxe Icon, Velvet
+    Edge=rock-band; Enchantress reads her allure as magic, not status). Line kept: "Leather and
+    shimmer, midnight and gold. You will remember her."
+  - ✅ **The Refined Glamour → The Refined Elegance** ("Elegance" is fresh — used nowhere else;
+    "Refined" only lived on this one). Line kept: "Every piece she keeps is chosen; her closet reads
+    like a gallery."
+- Remaining intentional/accepted repeats: Classic ×3, Natural ×2, Chic ×2 (Natural/Sculpted — far
+  apart, rarely co-occur), Polished ×2, Modern ×2. Only glam-root left is Soft Glam vs Glamorous
+  Maximalist (far apart in slider space, rarely paired — Cath OK with it).
+
+**2026-07-11 (cont. — vision board: wider stripes both places + real logo)**
+- ✅ **Wider "curtain" stripes** on the Vision Board canvas (bands 88→128px) AND on the results-page
+  `.pcard-vb` striped frame (`::before` gradient 18→28px). Both read chunkier/bolder now.
+- ✅ **Real logo on the Vision Board** (brand consistency w/ the Constellation card + share
+  recognition): `logo-star.png` — the TRANSPARENT black-wordmark version (right for the LIGHT linen
+  name card; the dark Constellation card uses the warm-white `logo-card.png`). Replaces the little
+  "STYLE ★ STAR" text at the top of the linen name card; loaded + awaited like the card's logo, with
+  the text as a fallback. Name card grew (206→220 / 172→186) and headline/archetype/notes shifted
+  down to make room. The thumbnail on the results page inherits it automatically (same buildVisionBlob).
+- The Enchantress + Refined Elegance renames (this session) verified live via direct distance math:
+  edgy-glam vector → The Enchantress primary; investor → The Refined Elegance; no JS errors.
