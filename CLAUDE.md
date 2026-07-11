@@ -1758,3 +1758,11 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   `.eng` treatment); then the two notes LARGE (17px Fraunces, dark) separated by a small gold
   **5-point ★** instead of "&". New classes `.ac-div`/`.ac-notes` in `_renderArchNames`; the old
   `.arch-notes` styles replaced. Hierarchy now: name 20px > notes 17px, close and both readable.
+
+**2026-07-11 (cont. — archetype card: WB mirror frame + linen weave, pulled up, gold dot)**
+- Cath's calls, all shipped: **card moved up** closer to "This is Catherine" (margin 15→8px);
+  the **★ between the notes → a quiet gold middot** (the star read as out of place); and the card
+  now wears the **Welcome Back vanity-mirror finish** for cross-app consistency + wow: the exact
+  `.wb-mirror` recipe (6px chrome border-image gradient, #FBFAF7 base with the fine crosshatch
+  **linen-weave texture**, chrome edge ring + inner white highlight shadows). The perfume-label
+  interior (name 20px / engraved WITH NOTES OF / notes 17px) is unchanged.
