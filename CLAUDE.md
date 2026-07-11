@@ -1873,3 +1873,9 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   down to make room. The thumbnail on the results page inherits it automatically (same buildVisionBlob).
 - The Enchantress + Refined Elegance renames (this session) verified live via direct distance math:
   edgy-glam vector → The Enchantress primary; investor → The Refined Elegance; no JS errors.
+
+**2026-07-11 (cont. — share overlays made consistent)**
+- ✅ Vision Board share overlay now matches the Style Constellation exactly: button **"Share with a
+  friend"** (was "Share my vibe") + the **"Text it or share to Instagram"** helper line (was missing).
+  Chose "Share with a friend" for both = the growth framing (invites sending to a person who then
+  discovers Style Star). Both keepsakes' overlays are now identical in structure and wording.
