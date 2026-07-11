@@ -93,20 +93,19 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .btn-p:active{transform:scale(0.98)}
 .btn-o{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:#6e6e6e;border:1px solid #e8e8e8;margin-top:8px}
 .btn-o:hover{background:#fafafa;color:#888}
-/* ===== Quiz glow-up — boutique fitting-room card (scoped to #s-quiz) ===== */
-/* whole quiz panel framed in the chrome vanity mirror; clean white interior */
-#s-quiz{position:relative;margin:6px 0 4px;padding:14px 18px 20px;border:7px solid transparent;
-  border-image:linear-gradient(135deg,#FFFFFF 0%,#C6CACE 16%,#8C9298 36%,#F2F4F6 52%,#9AA0A6 68%,#DFE2E5 84%,#FFFFFF 100%) 1;
-  background:#ffffff;
-  box-shadow:0 16px 36px -18px rgba(0,0,0,.36),0 0 0 1px rgba(90,92,98,.4),inset 0 0 0 1.5px rgba(255,255,255,.8)}
-#s-quiz .top-back-wrap{text-align:right;margin:-2px 0 2px}
+/* ===== Quiz glow-up — chrome vanity mirror framing the WHOLE app column (during the quiz) ===== */
+.ss.quiz-mirror{position:relative;border:9px solid transparent;
+  background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
+  box-shadow:0 6px 44px rgba(0,0,0,.12),inset 0 0 0 2px rgba(201,161,78,.6)}
+#s-quiz{position:relative}
+#s-quiz .top-back-wrap{text-align:right;margin:-12px 0 4px}
 #s-quiz .top-back{background:none;border:none;font:600 13px/1 'Jost',sans-serif;letter-spacing:.04em;color:#8a8578;cursor:pointer;padding:4px 2px}
 #s-quiz .top-back:hover{color:#4a4640}
 #s-quiz .q-cat{display:flex;align-items:center;gap:11px;font:700 12px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#C8971E;margin:0 0 11px}
 #s-quiz .q-cat::before{content:"\2605";color:#C8971E;font-size:11px}
 #s-quiz .q-cat::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,#E0C36E,rgba(224,195,110,0))}
 #s-quiz .q-tit{font-family:'DM Sans',sans-serif;font-size:21px;font-weight:600;color:#1c1a16;line-height:1.38;margin-bottom:1.4rem;text-wrap:pretty}
-#s-quiz .q-card{position:relative;padding:4px 2px 2px;margin-bottom:1.5rem}
+#s-quiz .q-card{position:relative;padding:4px 2px 2px;margin-bottom:2.6rem}
 #s-quiz .q-lbls{display:flex;justify-content:space-between;gap:12px;margin-bottom:.85rem}
 #s-quiz .q-lbl{font:700 15px/1.2 'Jost',sans-serif;color:#26221c;text-transform:uppercase;letter-spacing:.05em;max-width:44%}
 #s-quiz .q-lbl.r{text-align:right}
@@ -1924,6 +1923,8 @@ function show(id,skipHistory){
   // Square the card's top corners only on the framed outfit screen (straight rod).
   var card=document.querySelector('.ss');
   if(card)card.classList.toggle('sqtop',id==='s-photo');
+  // Frame the whole app column in the chrome vanity mirror while she takes the quiz.
+  if(card)card.classList.toggle('quiz-mirror',id==='s-quiz');
   if(!skipHistory){
     history.pushState({screen:id},null,'');
   }
