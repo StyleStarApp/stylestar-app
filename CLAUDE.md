@@ -1555,7 +1555,9 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 **2026-07-11 (analyze-outfit loader polish + curtain reveal removed)**
 - Cath's on-device feedback on the "Analyzing your outfit" studio loader (screenshot-guided):
   - ✅ **"READING YOUR LOOK" caption larger + darker** (`.al-caps span` 16.5px/600/#9a7a2a →
-    21px/700/#7d5e17; row height 26→32px so the bigger type doesn't clip).
+    21px/700; row height 26→32px so the bigger type doesn't clip). Color went gold → darker gold →
+    **BLACK #1a1a1a**: Cath compared side-by-side renders and chose black (crisper on the ivory,
+    matches the black gallery frame; dark gold risked reading brown). The dots stay gold.
   - ✅ **The three pulsing dots larger + darker** (`.al-dots i` 7→11px, #C79A34→#9A7420, base
     opacity up; `alDot` dim phase .3→.4). She likes this beat — keep it prominent.
 - ✅ **REMOVED the "Fitting Room" curtain reveal from the outfit results (`#s-photo-res`).**
