@@ -1974,3 +1974,16 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   (`.hdr::after`, 72% width, gradient fading at the edges). Reads as a premium letterhead.
 - ✅ **More gap** slider→Continue (`.q-card` margin-bottom 3.3→3.9rem).
 - Verified in Chromium: chrome rail, transparent smaller logo, gold hairline, no JS errors.
+
+**2026-07-11 (cont. — quiz: gold CTA, no shimmer/hairline, tactile thumb-grow)**
+- ✅ **Removed the header hairline** (`.hdr::after` gold line — Cath: "not deliberate enough"). Header
+  is now just the transparent logo (the gold slider-line under "Star" is part of the logo art, not a
+  rule). Border-bottom stays none.
+- ✅ **Deleted the sweeping shimmer** on the Continue button (`.q-cta::after` qShim + keyframes) —
+  Cath found the traveling light distracting.
+- ✅ **Continue button → BRIGHT GOLD** (was black+gold): `linear-gradient(180deg,#F7EBC2,#EAD07A
+  44%,#DBB84E)` fill, near-black `#211803` text, thin `#C99A2E` gold border, squared. Hover brightens.
+- ✅ **More gap** slider→Continue (`.q-card` margin-bottom 3.9→4.6rem).
+- ✅ **Tactile thumb-grow**: the slider thumb enlarges 34→42px on `:active` (press/drag) and springs
+  back on release, via width/height transitions on the thumb pseudo-elements (webkit + moz); honors
+  reduced-motion (no transition). Verified in Chromium (grows on mousedown).
