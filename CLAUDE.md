@@ -1987,3 +1987,9 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - ✅ **Tactile thumb-grow**: the slider thumb enlarges 34→42px on `:active` (press/drag) and springs
   back on release, via width/height transitions on the thumb pseudo-elements (webkit + moz); honors
   reduced-motion (no transition). Verified in Chromium (grows on mousedown).
+
+**2026-07-11 (cont. — quiz slider knob → gold with silver outline)**
+- ✅ Cath's call: the slider thumb is now **gold** (`radial-gradient(#F6E9B4,#DFB955 50%,#C0932C)`)
+  with a **2px silver ring** (`#9aa0a6`) and **no white border** (removed the `3px solid #fff`). Ties
+  to the bright-gold Continue button; silver ring keeps it defined on the chrome rail. Tactile
+  grow-on-press (34→42px) unchanged.
