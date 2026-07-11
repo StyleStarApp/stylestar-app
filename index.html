@@ -34,8 +34,9 @@ html,body{min-height:100%;background:#f5f3ef;font-family:'DM Sans',sans-serif;co
 body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.75rem 3rem;min-height:100vh}
 .ss{width:100%;max-width:480px;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 4px 40px rgba(0,0,0,0.08)}
 
-.hdr{text-align:center;padding:0.6rem 2rem 0.35rem;border-bottom:1px solid #f0f0f0}
-.logo-img{display:block;margin:0 auto -14px;width:122px;height:auto}
+.hdr{text-align:center;padding:0.6rem 2rem 0.5rem;border-bottom:none;position:relative}
+.hdr::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:72%;height:1px;background:linear-gradient(90deg,transparent,#D9B65E,transparent)}
+.logo-img{display:block;margin:2px auto 2px;width:104px;height:auto}
 .tag{font-size:16px;color:#666;letter-spacing:0.08em;margin-top:0;font-weight:500}
 
 
@@ -103,13 +104,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-quiz .q-cat::before{content:"\2605";color:#C8971E;font-size:11px}
 #s-quiz .q-cat::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,#E0C36E,rgba(224,195,110,0))}
 #s-quiz .q-tit{font-family:'DM Sans',sans-serif;font-size:21px;font-weight:600;color:#1c1a16;line-height:1.38;margin-bottom:1.4rem;text-wrap:pretty}
-#s-quiz .q-card{position:relative;padding:4px 2px 2px;margin-bottom:3.3rem}
+#s-quiz .q-card{position:relative;padding:4px 2px 2px;margin-bottom:3.9rem}
 #s-quiz .q-lbls{display:flex;justify-content:space-between;gap:12px;margin-bottom:.85rem}
 #s-quiz .q-lbl{font:700 15px/1.2 'Jost',sans-serif;color:#26221c;text-transform:uppercase;letter-spacing:.05em;max-width:44%}
 #s-quiz .q-lbl.r{text-align:right}
 #s-quiz .q-hint{text-align:center;font-family:'Fraunces',Georgia,serif;font-size:19px;font-style:italic;font-weight:600;color:#26221c;margin-bottom:1rem;min-height:26px}
-#s-quiz input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:5px;border-radius:1px;outline:none;cursor:pointer;
-  background:linear-gradient(180deg,#48433b,#26221c);box-shadow:inset 0 1px 1px rgba(0,0,0,.35)}
+#s-quiz input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:2px;outline:none;cursor:pointer;
+  background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 4px 9px -5px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.9)}
 #s-quiz input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 38% 30%,#33302b,#141210);cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1.5px #9a958c,0 4px 10px -3px rgba(0,0,0,.5)}
 #s-quiz input[type=range]::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:#181510;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1.5px #9a958c,0 4px 10px -3px rgba(0,0,0,.5)}
 #s-quiz .q-back{width:100%;padding:14px;border-radius:3px;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;background:#fff;color:#3a352e;border:1.5px solid #8f8a80;margin-top:9px}
@@ -980,7 +981,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </form>
 <div class="ss">
 <div class="hdr">
-  <img src="logo.png" alt="Style Star" class="logo-img">
+  <img src="logo-star.png" alt="Style Star" class="logo-img">
   <div class="tag">Align your style. <span style="color:#D4AF37">Shine your light.</span></div>
 </div>
 <div class="inner">
