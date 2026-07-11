@@ -1949,3 +1949,18 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   - Verified in Chromium: frame class on s-quiz only (off on s-wel), whole column framed, no JS errors.
 - ▶ Premium-touch menu offered to Cath (not yet built): gold corner ornaments on the mirror, a
   one-time light-sweep on entry, an elegant serif question, a soft vanity spotlight glow.
+
+**2026-07-11 (cont. — quiz simplified-elegant pass: charcoal rail, squared thick frame, cleaner header)**
+- Cath (leaning "simplified but elegant"), all on the quiz:
+  - ✅ **Deleted the top-right Back** (kept only the bottom Back).
+  - ✅ **Slider → thin CHARCOAL squared rail** (5px, `#48433b→#26221c`, radius 1px — like the shelf
+    bars elsewhere), NOT gold; thumb 38→34px round black with a **silver ring** (gold ring dropped).
+  - ✅ **More gap** slider→Continue (`.q-card` margin-bottom 2.6→3.3rem).
+  - ✅ **Bottom Back outline darker** (border #dfe2e5 → #8f8a80, text #3a352e).
+  - ✅ **Frame squared + thicker** (`.ss.quiz-mirror` border-radius 0, 9→13px chrome; gold keyline kept).
+  - ✅ **Tagline hidden on the quiz** ("Align your style. Shine your light." via `.ss.quiz-mirror .tag
+    {display:none}`) — cleaner logo-only header. (Scoped to quiz; other .hdr screens keep the tagline.)
+  - Declined (Cath): spotlights, vanity bulbs, corner ornaments, light sweep — wants it simple.
+  - Verified in Chromium: no top back, tag hidden, frame radius 0, charcoal rail, no JS errors.
+- ▶ OPEN (Cath unsure): whether to rework the logo section at the top further / drop the tagline
+  app-wide. Left the tagline live everywhere except the quiz for now.
