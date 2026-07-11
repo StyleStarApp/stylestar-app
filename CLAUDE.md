@@ -1551,3 +1551,19 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     hidden), captions cycle, beam sweeps, screen hides when inactive, and the success/error paths reveal
     `#s-photo-res` correctly. No JS errors. Handoff bundle saved in the session scratchpad
     (`handoff_analyzing/`). Worth a real-device end-to-end glance (real photo through the Netlify function).
+
+**2026-07-11 (analyze-outfit loader polish + curtain reveal removed)**
+- Cath's on-device feedback on the "Analyzing your outfit" studio loader (screenshot-guided):
+  - ✅ **"READING YOUR LOOK" caption larger + darker** (`.al-caps span` 16.5px/600/#9a7a2a →
+    21px/700/#7d5e17; row height 26→32px so the bigger type doesn't clip).
+  - ✅ **The three pulsing dots larger + darker** (`.al-dots i` 7→11px, #C79A34→#9A7420, base
+    opacity up; `alDot` dim phase .3→.4). She likes this beat — keep it prominent.
+- ✅ **REMOVED the "Fitting Room" curtain reveal from the outfit results (`#s-photo-res`).**
+  Cath's call (I agreed): now that the studio loader carries the anticipation, the curtains were a
+  second, redundant "opening" adding ~1.5s before results. Deleted the whole `.cr` overlay (markup +
+  all `cr*` CSS/keyframes). The boards now **rise in immediately** — added `#s-photo-res.rv-open`
+  animation-delay overrides (.p1 .05s → .p3 .55s; heartBeat 1.4s) since the shared `.res-screen`
+  delays (1.15s+) were timed to follow the curtains. The reveal state machine
+  (`_resShowCompose`/`_playResReveal`/rv-classes) is unchanged and still shared; the QUIZ results
+  (`#s-res`) keep their mirror-door reveal, untouched. Verified in Chromium (http-harness): loader →
+  boards rise with no curtain flash, settled state correct, no JS errors.
