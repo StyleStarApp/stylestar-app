@@ -1606,3 +1606,74 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   "Style Star Edit". Fits one line at 375px (verified).
 - ✅ **Vision Board panel row title → "See your Vision Board"** (was "See your Style Vision Board",
   which wrapped with "Board" stranded; the gold panel header above already says STYLE VISION BOARD).
+
+**2026-07-11 (cont. — ▶ ARCHETYPE MAP v2: the big brainstorm — DECIDED, not yet built)**
+- Cath wanted the archetype rework BEFORE going deeper on vision boards. Ran a full data-driven
+  brainstorm (artifact doc "The Archetype Map, v2"). KEY FINDING (300k-quiz simulation): "The Fresh
+  Start Style" sat alone at the center of the 12-slider space → headlined **61%** of results / appeared
+  in 91%; six archetypes essentially never appeared (Classic Refined + Easy Elegant were near-identical
+  twins d=2.0); whole worlds (boho, bright-preppy, edgy-glam, sporty-color) had no landmark.
+- **CATH'S DECISIONS (all locked):**
+  - Renames: Fit & Styled → **The Sporty Luxe** · Fresh Start Style → **The Beautifully Balanced** ·
+    Silhouette Savvy → **The Sculpted Chic** · Career Launcher → **The Rising Star** · The Alluring →
+    **The Magnetic Muse**.
+  - **Full map rebalance** approved (merge twins, split center, add missing worlds; ~28 landmarks).
+  - New worlds approved: **The Free Spirit** (boho) · **The Sunny Preppy** (Palm Beach classic+color) ·
+    **The Bold Siren** (edgy-glam; name chosen by Cath over "Midnight Glamour") · **The Vibrant Athlete**.
+  - **Presentation: primary + undertones** — "You are The ___, with undertones of ___ & ___" (one
+    proud shareable headline instead of 3 equal "notes of").
+  - **Tap-to-reveal horoscope moment: YES** — archetype names on results become tappable; a one-line
+    description unfolds like turning over a card. Descriptions ALSO feed the AI portrait + stylist chat
+    ("both"). Cath loves the card-turn feel.
+- **STILL NEEDS CATH'S BLESSING (next session):** 5 proposed names — **The Timeless Classic** (the
+  Classic Refined + Easy Elegant merge), and the center-split leans **The Soft Glam / The Modern
+  Classic / The Playful Palette / The Quiet Grace** — plus her edit pass on the 28 one-line horoscope
+  descriptions (drafted in "she" voice, dash-free, in the artifact + reproduced below).
+- **Draft v2.2 vectors** (12 sliders, tuned via simulation; center split 5 ways; corner pulled inward;
+  every archetype now wins >0 in all 3 audience models; worst-case center share 36%, realistic 12-20%):
+  TimelessClassic*[3,3,3,4,5,5,3,3,7,6,3,4] NaturalChic[4,2,4,3,3,4,5,4,4,3,4,4]
+  ElevatedCasual[5,3,5,4,4,4,5,4,5,5,5,5] PolishedProfessional[4,5,4,6,9,9,3,3,8,8,3,6]
+  BoldExpressionist[7,6,6,8,6,5,10,9,6,9,6,9] RomanticFeminine[3,5,2,6,6,5,6,6,6,6,3,4]
+  ModernTrendsetter[10,7,7,7,7,6,7,6,7,10,6,9] CreativeOriginal[7,5,7,9,5,4,9,8,5,7,6,7]
+  UnderstatedLuxury[4,4,4,5,7,8,2,2,9,8,3,3] GlamorousMaximalist[7,10,5,10,9,6,9,8,8,10,8,10]
+  CountryClubClassic[2,4,2,6,7,7,4,4,7,7,2,5] LuxeCollector[5,7,4,7,7,7,4,4,9,9,5,7]
+  EdgyConfident[8,5,11,6,5,4,4,4,7,9,7,9] CoastalCasual[4,3,3,2,2,3,6,5,3,3,5,3]
+  CleanMinimalist[4,3,4,2,4,5,2,2,7,5,3,3] SportyLuxe[5,3,5,4,3,2,5,3,8,6,5,4]
+  SculptedChic[6,5,5,5,6,6,5,3,10,8,5,5] RisingStar[6,4,4,5,8,9,4,3,7,7,3,5]
+  MagneticMuse[6,7,6,6,7,5,5,4,9,8,10,7] BeautifullyBalanced[6,6,6,6,6,6,6,6,6,6,6,6]
+  SoftGlam*[6,8,5,6,7,6,5,5,7,7,6,6] ModernClassic*[4,5,5,5,6,6,5,4,7,7,4,5]
+  PlayfulPalette*[6,6,6,7,6,6,8,8,6,6,6,7] QuietGrace*[5,5,5,5,6,6,5,5,6,6,4,4]
+  FreeSpirit[6,3,6,7,3,4,9,9,3,4,5,6] SunnyPreppy[3,4,1,6,6,6,9,8,6,7,3,6]
+  BoldSiren[8,9,9,7,8,5,4,3,9,10,9,10] VibrantAthlete[6,3,4,4,2,1,9,7,5,3,4,6]
+  (*=name not yet blessed. Tuning note: nudge QuietGrace further from ModernClassic, d=2.2.)
+- **Draft horoscope lines (28, "she" voice)** — Timeless Classic: "Trends come asking for her approval;
+  she smiles and reaches for what always works." · Natural Chic: "Fresh air in human form. Her ease is
+  the whole look." · Elevated Casual: "She makes comfortable look intentional, every single day." ·
+  Polished Professional: "She dresses like the decision has already been made in her favor." · Bold
+  Expressionist: "Color follows her home. Pattern asks for a seat at her table." · Romantic Feminine:
+  "Softness is her strength; she makes gentle look unforgettable." · Modern Trendsetter: "By the time
+  it's everywhere, she's already somewhere new." · Creative Original: "Her closet is a studio, and every
+  outfit leaves a little art behind." · Understated Luxury: "If you know, you know. She never needs to
+  say it." · Glamorous Maximalist: "More is more, and on her, more is magnificent." · Country Club
+  Classic: "Gracious, polished, and always dressed for the invitation." · Luxe Collector: "Every piece
+  she keeps is chosen; her closet reads like a gallery." · Edgy Confident: "Rules were a lovely idea.
+  She had a better one." · Coastal Casual: "She carries the beach with her, salt air, ease, and all." ·
+  Clean Minimalist: "She edited everything away until only the essential beauty remained." · Sporty
+  Luxe: "Movement is her natural state; polish comes along for the ride." · Sculpted Chic: "She knows
+  the most powerful thing a garment can do is fit like it was made for her." · Rising Star: "Polished,
+  purposeful, and already dressed for the life she's building." · Magnetic Muse: "She never chases the
+  spotlight; it has a way of finding her." · Beautifully Balanced: "Fluent in every style language, she
+  answers to no single one." · Soft Glam: "A little shimmer, softly spoken. Her glow does the talking."
+  · Modern Classic: "Timeless at heart, current by instinct." · Playful Palette: "Her happiest memories
+  all have a color, and she wears every one." · Quiet Grace: "She enters gently and somehow the room
+  feels finer for it." · Free Spirit: "Sun-washed, wind-styled, and answerable to no dress code on
+  earth." · Sunny Preppy: "Classic manners, joyful colors, permanently ready for the garden party." ·
+  Bold Siren: "Leather and shimmer, midnight and gold. You will remember her." · Vibrant Athlete:
+  "Built for motion, dressed in joy."
+- **IMPLEMENTATION PLAN (after her blessing):** swap the `archetypes` array to v2.2; add a descriptions
+  map; results = primary + undertones (update `showResult`/`ft`, Style Constellation card + Vision Board
+  title use `topArchNames` so they inherit); build the tap-to-reveal; feed descriptions into the
+  `genResult` portrait prompt + `sendChat` system prompt. NOTE: saved users' `topArchNames` in
+  Supabase/localStorage hold OLD names — map old→new on load (renames + merged twins → Timeless
+  Classic) or recompute from saved `answers` (preferred: answers are stored). Once real quiz data
+  accumulates in Supabase, re-tune the map against reality instead of simulation.
