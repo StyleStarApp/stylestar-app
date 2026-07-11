@@ -1964,3 +1964,13 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   - Verified in Chromium: no top back, tag hidden, frame radius 0, charcoal rail, no JS errors.
 - ▶ OPEN (Cath unsure): whether to rework the logo section at the top further / drop the tagline
   app-wide. Left the tagline live everywhere except the quiz for now.
+
+**2026-07-11 (cont. — quiz: chrome rail, letterhead header, more gap)**
+- ✅ **Slider rail now CHROME** (metallic silver `.hm-shelf` gradient, 6px, squared radius 2px) —
+  matches the shelf rails elsewhere; was the plain charcoal line. Thumb unchanged (black + silver ring).
+- ✅ **Header = clean letterhead** (GLOBAL, affects every `.hdr` screen — quiz, prefs, etc.):
+  logo swapped `logo.png` → **`logo-star.png`** (transparent, no white box), sized 122→**104px**;
+  the faint gray header border replaced with an **intentional centered gold hairline**
+  (`.hdr::after`, 72% width, gradient fading at the edges). Reads as a premium letterhead.
+- ✅ **More gap** slider→Continue (`.q-card` margin-bottom 3.3→3.9rem).
+- Verified in Chromium: chrome rail, transparent smaller logo, gold hairline, no JS errors.
