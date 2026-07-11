@@ -1813,3 +1813,10 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   bench option if testers wince: "The Refined Glamour"). **Romantic Feminine explained**: driven by
   the soft/sweet end of Preppy↔Edgy + classic-leaning + modest, everything else near center with a
   whisper of glam and print-friendliness.
+
+**2026-07-11 (cont. — rename: The Luxe Icon → The Refined Glamour)**
+- ✅ After the proud-share audit flagged "icon" as the one self-crowning word in the set, Cath took
+  the bench option: **The Refined Glamour** (polish first, shimmer second). Line unchanged: "Every
+  piece she keeps is chosen; her closet reads like a gallery." Vector unchanged; saved users
+  self-heal. Glamour-family now: Soft Glam, Velvet Glam, Refined Glamour, Glamorous Maximalist —
+  four distinct glamours, all far apart in slider space.
