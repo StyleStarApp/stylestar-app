@@ -41,9 +41,9 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.7
 
 .inner{padding:0.5rem 1.75rem 1.5rem}
 .prog-wrap{margin-bottom:1.5rem;display:none}
-.prog-bar{width:100%;height:2px;background:#f0f0f0;border-radius:2px;margin-bottom:4px}
-.prog-fill{height:100%;background:#C8A060;border-radius:2px;transition:width 0.4s ease;width:0%}
-.prog-lbl{font-size:13px;color:#555;text-align:right;font-weight:500}
+.prog-bar{width:100%;height:5px;background:#efe6d2;border-radius:3px;margin-bottom:5px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#E7C978,#C79A34);border-radius:3px;transition:width 0.4s ease;width:0%}
+.prog-lbl{font:700 12px/1 'Jost',sans-serif;letter-spacing:.08em;color:#B08830;text-align:right}
 
 .scr{display:none}.scr.act{display:block}
 
@@ -93,6 +93,36 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .btn-p:active{transform:scale(0.98)}
 .btn-o{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:#6e6e6e;border:1px solid #e8e8e8;margin-top:8px}
 .btn-o:hover{background:#fafafa;color:#888}
+/* ===== Quiz glow-up — boutique fitting-room card (scoped to #s-quiz) ===== */
+#s-quiz{margin:0 -1.75rem;padding:8px 1.75rem 2px;background:radial-gradient(135% 72% at 50% 5%,#FCF5E6 0%,#FAF6EE 42%,#F7F2E9 100%)}
+#s-quiz .q-cat{display:flex;align-items:center;gap:11px;font:700 12px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#B08830;margin:2px 0 11px}
+#s-quiz .q-cat::before{content:"\2605";color:#C8971E;font-size:11px}
+#s-quiz .q-cat::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,#D9B65E,rgba(217,182,94,0))}
+#s-quiz .q-tit{font-family:'DM Sans',sans-serif;font-size:21px;font-weight:600;color:#211d18;line-height:1.38;margin-bottom:1.3rem;text-wrap:pretty}
+#s-quiz .q-card{position:relative;border:1px solid #E4D8BE;border-radius:2px;padding:23px 20px 21px;margin-bottom:1.3rem;
+  background:repeating-linear-gradient(90deg,rgba(150,138,110,.05) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,138,110,.045) 0 .5px,transparent .5px 3px),linear-gradient(180deg,#FEFCF7,#F7F1E5);
+  box-shadow:0 12px 30px -16px rgba(120,90,30,.32),inset 0 1px 0 rgba(255,255,255,.75)}
+#s-quiz .q-card::before,#s-quiz .q-card::after{content:"";position:absolute;width:15px;height:15px;border:1.5px solid #D9B65E;pointer-events:none}
+#s-quiz .q-card::before{top:7px;left:7px;border-right:0;border-bottom:0}
+#s-quiz .q-card::after{bottom:7px;right:7px;border-left:0;border-top:0}
+#s-quiz .q-lbls{display:flex;justify-content:space-between;gap:12px;margin-bottom:1.35rem}
+#s-quiz .q-lbl{font:700 15px/1.2 'Jost',sans-serif;color:#2a2620;text-transform:uppercase;letter-spacing:.05em;max-width:44%}
+#s-quiz .q-lbl.r{text-align:right}
+#s-quiz input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:8px;border-radius:5px;outline:none;cursor:pointer;
+  background:linear-gradient(90deg,#EAD9A8,#D9B65E 25%,#C79A34 50%,#D9B65E 75%,#EAD9A8);box-shadow:inset 0 1px 2px rgba(120,90,30,.28)}
+#s-quiz input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 38% 30%,#33302b,#141210);cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 2px #C8A060,0 5px 11px -3px rgba(0,0,0,.55)}
+#s-quiz input[type=range]::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:#181510;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 2px #C8A060,0 5px 11px -3px rgba(0,0,0,.55)}
+#s-quiz .q-hint{text-align:center;font-family:'Fraunces',Georgia,serif;font-size:19px;font-style:italic;font-weight:600;color:#8a6a17;margin-top:1.1rem;min-height:26px}
+#s-quiz .q-cta{position:relative;overflow:hidden;display:block;width:100%;border:4px solid transparent;border-radius:3px;cursor:pointer;margin-top:4px;
+  background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519) border-box;
+  color:#F1DDA0;text-align:center;font:700 14px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;padding:17px 16px;
+  box-shadow:0 12px 24px -12px rgba(0,0,0,.55),0 0 12px -3px rgba(233,196,110,.4)}
+#s-quiz .q-cta::after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;background:linear-gradient(100deg,transparent,rgba(255,248,225,.5),transparent);transform:translateX(-170%) skewX(-16deg);animation:qShim 3.4s ease-in-out infinite;pointer-events:none}
+#s-quiz .q-cta:active{transform:scale(.99)}
+@keyframes qShim{0%{transform:translateX(-170%) skewX(-16deg)}48%,100%{transform:translateX(330%) skewX(-16deg)}}
+#s-quiz .q-back{width:100%;padding:14px;border-radius:3px;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;background:#fff;color:#6b6357;border:1.5px solid #e3d9c4;margin-top:9px}
+#s-quiz .q-back:hover{background:#fbf8f1;color:#4a4238}
+@media (prefers-reduced-motion:reduce){#s-quiz .q-cta::after{animation:none;opacity:0}}
 .btn-pink{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#1a1a1a;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
 .btn-pink:hover{opacity:0.88}
 .btn-pink:active{transform:scale(0.98)}
@@ -1110,15 +1140,15 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   </div>
 
 <div class="scr" id="s-quiz">
-  <div class="qcat" id="qc"></div>
-  <div class="qtit" id="qt"></div>
-  <div class="scard">
-    <div class="slbls"><span class="slbl" id="ll"></span><span class="slbl r" id="lr"></span></div>
+  <div class="q-cat" id="qc"></div>
+  <div class="q-tit" id="qt"></div>
+  <div class="q-card">
+    <div class="q-lbls"><span class="q-lbl" id="ll"></span><span class="q-lbl r" id="lr"></span></div>
     <input type="range" id="sl" min="1" max="11" step="1" value="6" oninput="onSl(this.value)">
-    <div class="shint" id="sh"></div>
+    <div class="q-hint" id="sh"></div>
   </div>
-  <button class="btn-p" id="nb" onclick="nextQ()">Continue</button>
-  <button class="btn-o" onclick="prevQ()">Back</button>
+  <button class="q-cta" id="nb" onclick="nextQ()">Continue</button>
+  <button class="q-back" onclick="prevQ()">Back</button>
 </div>
 
 <div class="scr" id="s-load">

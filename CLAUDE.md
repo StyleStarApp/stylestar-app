@@ -1879,3 +1879,25 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   friend"** (was "Share my vibe") + the **"Text it or share to Instagram"** helper line (was missing).
   Chose "Share with a friend" for both = the growth framing (invites sending to a person who then
   discovers Style Star). Both keepsakes' overlays are now identical in structure and wording.
+
+**2026-07-11 (cont. — ▶ QUIZ GLOW-UP: boutique fitting-room card)**
+- Cath: quiz pages too plain/white; wanted squared buttons (hates pills, like she hates brown), an
+  easy-to-maneuver slider with clear labels, and a more upscale/boutique/premium feel. Kept the
+  simplicity she likes; elevated materials/color. All scoped to `#s-quiz` (+ shared progress bar).
+  Renamed quiz classes `.qcat/.qtit/.scard/.slbls/.slbl/.shint/.btn-p/.btn-o` → `.q-cat/.q-tit/
+  .q-card/.q-lbls/.q-lbl/.q-hint/.q-cta/.q-back` so the shared `.btn-p/.btn-o` (used by 15 other
+  save/restore buttons) are untouched.
+  - **Warm gold-lit background** (radial cream, `#s-quiz` breaks out full-width via `margin:0 -1.75rem`)
+    — no more stark white.
+  - **Boutique slider card**: warm cream + faint linen-weave texture, thin gold frame, soft shadow,
+    little gold **corner brackets** (::before/::after), squared (radius 2px).
+  - **Slider**: thick 8px **gold rail** (easy to see), big 34px black knob w/ gold ring + white edge
+    (easy to grab); endpoint labels bumped 13→15px darker; hint now **Fraunces gold italic 19px**.
+  - **Squared black+gold CTA** matching the app's hero buttons (gradient border + light shimmer sweep
+    via `::after`, so `nb.textContent` still works for the "See my style portrait" swap); squared
+    warm-outline BACK.
+  - **Progress bar** elevated: 2→5px, **gold gradient fill**, gold-caps "N of 12" label.
+  - Verified in Chromium: renders, slider moves + hint updates, last-question CTA label swaps, no JS
+    errors. `input[type=range]` is quiz-only so restyling it is safe.
+- ▶ Flagged to Cath (not done): the OLD pill buttons `.btn-p/.btn-o` still appear on save/restore
+  prompts + the preferences save; offer to square those app-wide next for full consistency.
