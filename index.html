@@ -4069,7 +4069,7 @@ function buildCardBlob(source,callback){
     if(d.quote){
       ctx.fillStyle='#cbc2b3';
       ctx.font='italic 30px "Fraunces", serif';
-      wrap(ctx,'“'+d.quote+'”',W/2,506,860,42,3);
+      wrap(ctx,'“'+d.quote+'”',W/2,514,860,42,3);
     }
 
     // constellation — raised so the sign-off below isn't cramped
@@ -4090,11 +4090,26 @@ function buildCardBlob(source,callback){
       ctx.fillStyle='#E9C46E';
       ctx.fillText(names[0],cx,y);
       if(names.length>1){
-        const line='with notes of '+names.slice(1).map(n=>String(n).replace(/^The\s+/i,'')).join(' · ');
-        let ns=23;ctx.font='500 '+ns+'px "Jost", sans-serif';
-        while(ctx.measureText(line).width>W-170&&ns>15){ns--;ctx.font='500 '+ns+'px "Jost", sans-serif';}
-        ctx.fillStyle='#cbb475';
-        ctx.fillText(line,cx,y+42);
+        const rest=names.slice(1).map(n=>String(n).replace(/^The\s+/i,''));
+        const gap=15;
+        function tw(sz){
+          ctx.font='600 '+sz+'px "Jost", sans-serif';
+          let w=rest.reduce((a,n)=>a+ctx.measureText(n).width,0);
+          if(rest.length>1){ctx.font=(sz-6)+'px "DM Serif Display", serif';w+=gap*2+ctx.measureText('★').width;}
+          return w;
+        }
+        let ns=29;while(tw(ns)>W-170&&ns>16)ns--;
+        let x=cx-tw(ns)/2;const ny=y+48;
+        ctx.textAlign='left';
+        rest.forEach(function(n,i){
+          ctx.font='600 '+ns+'px "Jost", sans-serif';ctx.fillStyle='#dcc487';
+          ctx.fillText(n,x,ny);x+=ctx.measureText(n).width;
+          if(i<rest.length-1){
+            x+=gap;ctx.font=(ns-6)+'px "DM Serif Display", serif';ctx.fillStyle='#E9C46E';
+            ctx.fillText('★',x,ny-2);x+=ctx.measureText('★').width+gap;
+          }
+        });
+        ctx.textAlign='center';
       }
     }
   }
@@ -4279,12 +4294,41 @@ function buildVisionBlob(callback){
       ctx.fillStyle='#241f18';ctx.textAlign='center';
       ctx.fillText(archsFull[0],midX,cardY+142);
       if(archs.length>1){
-        const nline='with notes of '+archs.slice(1).join(' · ');
-        let nf2=16;ctx.font='500 '+nf2+'px "Jost",sans-serif';
-        while(ctx.measureText(nline).width>cardW-52&&nf2>11){nf2--;ctx.font='500 '+nf2+'px "Jost",sans-serif';}
-        ctx.fillStyle='#8a7a54';
-        ctx.fillText(nline,midX,cardY+174);
+        const rest=archs.slice(1),gap=10;
+        function tw(sz){
+          ctx.font='600 '+sz+'px "Fraunces",Georgia,serif';
+          let w=rest.reduce((a,n)=>a+ctx.measureText(n).width,0);
+          if(rest.length>1){ctx.font=(sz-5)+'px "Jost",sans-serif';w+=gap*2+ctx.measureText('★').width;}
+          return w;
+        }
+        let nf2=21;while(tw(nf2)>cardW-52&&nf2>13)nf2--;
+        let x=midX-tw(nf2)/2;const ny=cardY+176;
+        ctx.textAlign='left';
+        rest.forEach(function(n,i){
+          ctx.font='600 '+nf2+'px "Fraunces",Georgia,serif';ctx.fillStyle='#4a3f2c';
+          ctx.fillText(n,x,ny);x+=ctx.measureText(n).width;
+          if(i<rest.length-1){
+            x+=gap;ctx.font=(nf2-5)+'px "Jost",sans-serif';ctx.fillStyle='#c8a44d';
+            ctx.fillText('★',x,ny-1);x+=ctx.measureText('★').width+gap;
+          }
+        });
+        ctx.textAlign='center';
       }
+    }
+    // ---- her personal motto, a linen ribbon above the footer tag ----
+    const vbMotto=(ud.motto&&String(ud.motto).trim())?String(ud.motto).trim():'';
+    if(vbMotto){
+      const mq='\u201C'+vbMotto+'\u201D';
+      let mf=26;ctx.font='italic 600 '+mf+'px "Fraunces",Georgia,serif';
+      while(ctx.measureText(mq).width>PW-140&&mf>15){mf--;ctx.font='italic 600 '+mf+'px "Fraunces",Georgia,serif';}
+      const mw=ctx.measureText(mq).width+56,mh=56,mx=(W-mw)/2,my=H-52-34-18-mh;
+      ctx.save();ctx.shadowColor='rgba(15,10,4,.4)';ctx.shadowBlur=16;ctx.shadowOffsetY=6;
+      ctx.fillStyle='#fdfbf6';ctx.fillRect(mx,my,mw,mh);ctx.restore();
+      ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.strokeRect(mx+1,my+1,mw-2,mh-2);
+      ctx.lineWidth=1;ctx.strokeStyle='#d9c896';ctx.strokeRect(mx+0.5,my+0.5,mw-1,mh-1);
+      ctx.fillStyle='#3c3628';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.font='italic 600 '+mf+'px "Fraunces",Georgia,serif';
+      ctx.fillText(mq,W/2,my+mh/2+1);ctx.textBaseline='alphabetic';
     }
     // ---- footer linen tag ----
     ctx.font='600 15px "Jost",sans-serif';
