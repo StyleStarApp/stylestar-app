@@ -1711,3 +1711,31 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - **LATER:** re-tune landmark positions against real Supabase quiz data once volume accumulates;
   consider showing the primary bigger on the Style Constellation card; the horoscope lines could feed
   the future paid Style Guide.
+
+**2026-07-11 (cont. — ▶ PORTRAIT WOW-MOMENT v2: tap-to-reveal OUT, personal AI motto IN — SHIPPED)**
+- Cath tested the tap-to-reveal live and killed it (right call): no tap affordance on the real board,
+  and the reward (one swapped line) competed with the portrait paragraph. Her calls, all built:
+  - **"with notes of"** (not "undertones"), shown PROMINENTLY (15px Jost) right under the archetype.
+    Nothing on the block is tappable anymore; `_renderArchNames(names,motto)` is pure presentation.
+  - **Archetype name must NOT outsize her name** ("Catherine's style is about Catherine, not the
+    label"): `.anm` 23px Fraunces vs `.nm` 28px, flanked by two gold **5-point ★** (she banned
+    4-point ✦ app-wide — swapped the photo-hint ✦ and the Constellation-card canvas ✦ to ★).
+  - **The motto: AI-written per woman** (her answer to "friends both get Magnetic Muse see the same
+    sentence"). `genResult` now asks for JSON `{motto, portrait}` (max_tokens 450): one <95-char
+    sentence speaking directly to her, unique to her sliders. Parsed with fence-stripping; any parse
+    failure falls back to whole-text portrait + the archetype's fixed `archLines` line as motto (the
+    28 lines are now the AI's flavor guide + fallback, not the display).
+  - **Motto persists**: new `userMotto` global; saved in ss_data + `buildFullUserData()` (→ Supabase);
+    all 4 restore paths pass `d.motto` into `showResult(txt,top3,motto)`. Old saves without a motto
+    gracefully show the archetype line until she retakes the quiz.
+  - **NO DASHES anywhere (Cath: reads as AI)**: explicit no-dash rule added to the portrait prompt,
+    motto spec, and stylist-chat prompt; fixed the em-dash in `genFallback()`.
+  - **Staged reveal ceremony** on `#s-res` only: after the mirror doors open → "You are" (1.75s) →
+    archetype name rises + the two ★ twinkle once → motto → notes → portrait paragraph (3.15s).
+    `_playResReveal` rv-done timeout 3400→4100ms for s-res (photo screen unchanged); all new children
+    added to the reduced-motion static list.
+  - Verified in Chromium end-to-end through the REAL quiz UI (12 sliders driven, AI stubbed to the new
+    JSON): name/motto/notes render with curly quotes + ★★, motto saved to ss_data, no JS errors.
+- **Ideas floated for later:** put the personal motto on the Style Constellation card (friends
+  sharing get different mottos = better share moment); Welcome Back could whisper her archetype under
+  the greeting; the Vision Board mantra slot could use the motto.
