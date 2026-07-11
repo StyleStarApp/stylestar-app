@@ -1779,3 +1779,13 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   you'll love · See my Style Portrait/Your signature style, from the quiz · Refine your
   preferences/Sizes, colors & the styles you love · Shop the Mall/Browse curated stores.
 - Cath decided AGAINST the "archetype whisper under the WB greeting" idea — just her name there.
+
+**2026-07-11 (cont. — two more archetype renames, Cath's final polish)**
+- ✅ **The Magnetic Muse → The Golden Hour** (Cath: "Muse" didn't translate; chose the poetic option,
+  gold = brand). New line: "Some women wear the light; she is the light."
+- ✅ **The Edgy Confident → The Statement Maker** (Cath: Edgy Confident risked sounding grumpy or
+  arrogant; also rejected "The Effortless Cool" over the word effortless). New line: "She never
+  follows the conversation; she starts it."
+- Renames are trivial by design: the name lives only in the `archetypes` array + `archLines` map, and
+  saved users recompute their archetypes from answers on load (verified: a saved "Magnetic Muse"
+  profile self-heals to The Golden Hour with the new fallback line). Vectors unchanged.
