@@ -1933,3 +1933,19 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     every other page. **Kept the bottom `Back` too** — Cath explicitly wants BOTH back buttons.
   - Verified in Chromium at 375px: both backs present + working (top-back Q2→Q1), chrome frame,
     white interior, wider champagne rail, no JS errors.
+
+**2026-07-11 (cont. — quiz: chrome frame around the WHOLE app column + spacing/back fixes)**
+- Cath's round 3 on the quiz:
+  - ✅ **Chrome vanity-mirror frame now wraps the ENTIRE app column** (logo + quiz + footer), not just
+    the quiz card — "a frame for the whole phone," like the curtain frames Home. Done via a
+    `.ss.quiz-mirror` class toggled in `show()` (`id==='s-quiz'`), using the rounded gradient-border
+    technique (`linear-gradient(#fff,#fff) padding-box, chrome-gradient border-box`) so `.ss`'s
+    border-radius:28px is preserved, plus a **thin gold keyline inside the silver**
+    (`inset 0 0 0 2px rgba(201,161,78,.6)` = the gold-and-silver combo). The inner `#s-quiz` frame was
+    removed (single frame now); `#s-quiz` is plain white content.
+  - ✅ **Bigger gap slider→Continue** (`.q-card` margin-bottom 1.5→2.6rem) so she can't accidentally
+    hit Continue while dragging.
+  - ✅ **Top-right Back raised** (`.top-back-wrap` margin-top -12px) up beside the "1 of 12" progress.
+  - Verified in Chromium: frame class on s-quiz only (off on s-wel), whole column framed, no JS errors.
+- ▶ Premium-touch menu offered to Cath (not yet built): gold corner ornaments on the mirror, a
+  one-time light-sweep on entry, an elegant serif question, a soft vanity spotlight glow.
