@@ -2026,3 +2026,24 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   (`#chatRefineHint button`). **Chips kept** (Cath likes them). User bubble → warm charcoal #242019.
 - ✅ **More room:** `.chat-wrap` 70vh→78vh (max 660); submitted photos `.chat-msg-img` 180→230px.
 - Verified in Chromium (no JS errors). v1 — Cath to react to header copy + palette.
+
+**2026-07-11 (cont. — Ask Your Stylist v2: title, AI transparency, named greeting, taller area, 📷)**
+- Cath's v1 reactions, all shipped:
+  - ✅ **Header title "Your Style Star Stylist" → "Style Star Stylist"** (dropped "Your").
+  - ✅ **AI transparency in the subtitle** (she asked whether to add it, for honesty). Kept the human
+    story FIRST (Sally's differentiator) and appended a plain AI note in the same line:
+    **"Created with heart by a real stylist, powered by AI"** (comma, no dash per brand voice).
+  - ✅ **Opening greeting rewritten to Cath's verbatim copy + first-name personalization.** Now:
+    "Hi {first}! I'm your Style Star Stylist. I was created by a real personal stylist who loves
+    helping women discover their signature style and make shopping easy and fun. Ask me anything, or
+    send a photo and I'll give you feedback and all the style help you want." Greets by her first name
+    when known (`userName&&userName!=='You'` → first token), else "Hi there!". (Verified both: named
+    path via seeded `ss_data` → "Hi Catherine!"; anonymous → "Hi there!".)
+  - ✅ **Chat area taller** — `.chat-wrap` 78vh→**86vh**, max 660→**800px** (uses the empty space Cath
+    saw at the bottom of the phone; more of the conversation visible).
+  - ✅ **Photo button stands out** — replaced the line-art camera SVG with an actual **📷 emoji**, and
+    gave the button a soft **gold tint** (linear `#FCF6E4→#F6EAC4`, gold border `#E4C86B`) so it reads
+    as a real action beside the gold send button (was a pale gray line-art button that hid).
+  - Verified in Chromium (390-wide): title/subtitle/greeting/📷/taller wrap all correct, no JS errors.
+- ▶ "Prettier?" — Cath invited more elevation ideas; offered a few for her to pick (softer greeting
+  bubble, a gold accent hairline under the header, a subtle boutique tint) — none forced yet, her call.
