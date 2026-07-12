@@ -2104,3 +2104,16 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   pink-lined card; user bubble stays solid dark for contrast. (Cath weighed full-outline vs
   thinner-left; picked full outline. Easy revert to a left line if she changes her mind.)
 - Verified in Chromium (390px), no JS errors.
+
+**2026-07-11 (cont. — chat: Refine button outline darkened + camera emoji matched to photo page)**
+- ✅ **"Refine for better suggestions" button** (the `#chatRefineHint` `.act-btn.act-2`, only shown
+  when prefs are empty) outline was light gray `#e2ddd2` → **charcoal `#1a1a1a`** via the scoped
+  `#chatRefineHint button` rule (`border:1.5px solid #1a1a1a!important`, text `#1a1a1a`).
+- ✅ **Chat photo button emoji 📷 → 📸** (camera-with-flash) to match the Analyze-an-Outfit photo
+  page (`#s-photo .photo-icon` uses 📸).
+- Verified in Chromium (390px), no JS errors.
+- ▶ OPEN (Cath deciding): whether to let her CLEAR the chat / delete a specific photo or message.
+  Context for the decision: the chat DOES persist locally — `saveChatHistory()` writes the last 40
+  turns (incl. base64 photo thumbnails) to `localStorage 'ss_chat'`; `loadChatHistory()` restores on
+  open. So "Photos are processed by AI and never stored" is true SERVER-side (the Netlify function /
+  Anthropic don't retain them) but the thumbnail persists on HER device until cleared.
