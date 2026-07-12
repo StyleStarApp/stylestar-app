@@ -244,7 +244,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-pref .top-back-wrap{margin-right:-16px}
 #s-dream .top-back-wrap{margin-right:-20px;margin-top:-0.7rem}
 #s-chat{position:relative}
-#s-chat .chat-close{position:absolute;top:2px;right:-6px;z-index:6}
+#s-chat .chat-close{position:absolute;top:2px;right:-11px;z-index:6}
 #s-pref .pref-hdr{text-align:center;margin:8px 0 16px}
 #s-pref .pref-philo{position:relative;display:inline-block;font:italic 500 17px/1.45 'Lora',serif;color:#35302a;max-width:300px;padding-bottom:14px;min-height:40px;text-wrap:balance}
 #s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
@@ -254,7 +254,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .pref-label{font-size:12px;font-weight:700;color:#8a6d1e;margin-bottom:9px;text-transform:uppercase;letter-spacing:0.11em}
 .pref-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem}
 .pref-chip{padding:10px 16px;border-radius:2px;border:1px solid #cfc8b8;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#3a352c;cursor:pointer;transition:all 0.15s;user-select:none}
-.pref-chip.sel{border-color:#D4AF37;background:#fdf8ef;color:#1a1a1a;font-weight:600}
+.pref-chip.sel{border-color:#a3a7ab;background:#f0f0ef;color:#3a352c;font-weight:600}
 .pref-chip.skip{border-color:#e74c3c;background:#fef5f5;color:#999;text-decoration:line-through}
 .pref-never-style.sel,.pref-never-pattern.sel{border-color:#a3a7ab;background:#f0f0ef;color:#3a352c;font-weight:600;text-decoration:line-through;position:relative;padding-left:28px}
 .pref-never-style.sel::before,.pref-never-pattern.sel::before{content:"✕";position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:#8a8e92}
@@ -1005,6 +1005,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen.rv-open .p3{animation:rvRise .7s ease 1.6s both}
 .res-screen.rv-open .shop-section{animation:rvRise .7s ease 1.6s both}
 .res-screen.rv-open .sig-dot{animation:sigPlot .75s cubic-bezier(.34,1.28,.5,1) both}
+/* revisit (rv-quick): the whole portrait is already there — doors just open to reveal it, no cascade */
+.res-screen.rv-quick.rv-open .p1,.res-screen.rv-quick.rv-open .p2,.res-screen.rv-quick.rv-open .pcard,.res-screen.rv-quick.rv-open .p3,.res-screen.rv-quick.rv-open .shop-section,.res-screen.rv-quick.rv-open .sig-dot,.res-screen.rv-quick.rv-open .savebtn svg,#s-res.rv-quick.rv-open .arch-card,#s-res.rv-quick.rv-open .arch-motto,#s-res.rv-quick.rv-open .para{animation:none!important;opacity:1!important;transform:none!important}
+#s-res.rv-quick.rv-open .ac-sweep{animation:none!important;opacity:0!important}
 .res-screen.rv-open .savebtn svg{animation:heartBeat 1s ease 1.4s 1 both}
 /* terminal static state — no animations, so returning to the screen never replays */
 .res-screen.rv-done .doors{display:none}
