@@ -514,13 +514,25 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .save-toast-sub{font-size:13px;color:#555;line-height:1.45;margin-bottom:10px}
 .save-toast .stay-input{max-width:100%;width:100%;text-align:left;padding:11px 14px;font-size:14px}
 .save-toast .btn-p{margin-top:10px;max-width:100%;padding:13px}
-.mall-cat{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#B8901E;font-weight:700;margin:1.6rem 0 0.8rem;text-align:center}
-.mall-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mall-card{display:flex;flex-direction:column;justify-content:space-between;background:#fff;border:1px solid #ece8df;border-radius:14px;padding:14px;text-decoration:none;transition:border-color .2s,transform .2s;min-height:104px}
-.mall-card:hover{border-color:#c2b48f;transform:translateY(-2px)}
+.mall-cat{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1a1a1a;font-weight:700;margin:1.7rem 0 0.85rem;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.mall-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mall-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(180deg,#ffffff,#fbfaf7);border:2.5px solid #161616;border-radius:0;padding:13px 13px 12px;text-decoration:none;transition:transform .2s,box-shadow .2s;min-height:112px;box-shadow:0 8px 18px -11px rgba(20,15,5,.5)}
+.mall-card::before{content:"";position:absolute;left:4px;right:4px;top:4px;bottom:4px;border:1px solid rgba(22,22,22,.13);pointer-events:none}
+.mall-card:hover{transform:translateY(-2px);box-shadow:0 12px 22px -11px rgba(20,15,5,.55)}
 .mall-store{font-family:'Fraunces',Georgia,serif;font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:3px;line-height:1.2}
-.mall-desc{font-size:13px;color:#615c52;line-height:1.4}
+.mall-desc{font-size:13px;color:#5c574d;line-height:1.4}
 .mall-go{font-size:11.5px;letter-spacing:0.06em;text-transform:uppercase;color:#B8901E;font-weight:700;margin-top:10px;display:flex;align-items:center;gap:5px}
+/* Full-bleed painted white-brick wall + black-trimmed marquee sign */
+#s-shop .mall-brick{position:relative;margin:-0.5rem -1.75rem -1.5rem;min-height:100vh;overflow:hidden}
+#s-shop .mall-brick-bg{position:absolute;inset:0;z-index:0;width:100%;height:100%}
+#s-shop .mall-inner{position:relative;z-index:1;padding:12px 18px 34px}
+#s-shop .top-back-wrap{margin:0 -2px 4px 0}
+#s-shop .dc-disclosure{color:#6b6459}
+.mall-sign{background:#fff;border:3px solid #161616;padding:15px 16px 17px;margin:8px 0 6px;text-align:center;box-shadow:0 11px 26px -15px rgba(20,15,5,.6)}
+.mall-sign-logo{font-family:'DM Serif Display',Georgia,serif;font-size:29px;color:#1a1a1a;-webkit-text-stroke:.6px #1a1a1a;display:inline-block;position:relative;padding-bottom:12px;letter-spacing:.01em}
+.mall-sign-logo::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:3px;background:#E0B84C}
+.mall-sign-logo::before{content:"";position:absolute;bottom:1.5px;left:63%;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
+.mall-sign-sub{font-size:13.5px;color:#5c574d;line-height:1.55;font-style:italic;margin-top:9px}
 .save-pin-wrap{text-align:center;margin:-0.4rem 0 1.25rem}
 .save-pin{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#B08830;cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;letter-spacing:0.02em;padding:4px 8px}
 .save-pin:hover{color:#8a6d20}
@@ -1833,13 +1845,18 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </div>
 
 <div class="scr" id="s-shop">
-  <div class="dc-wrap">
-    <div class="top-back-wrap"><button class="top-back" onclick="closeShop()">&larr; Back</button></div>
-    <div class="dc-title">Shop Style Star Mall</div>
-    <div class="dc-subtitle">Shop your favorite stores through Style Star, a curated edit of the places we love, all in one&nbsp;spot.</div>
-    <div id="mallContent"></div>
-    <div class="dc-disclosure">Style Star may earn a small commission from some links, at no extra cost to you. We only feature stores we genuinely love.</div>
-    <button class="btn-outline" onclick="closeShop()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
+  <div class="mall-brick">
+    <svg class="mall-brick-bg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 390 780"><defs><linearGradient id="mallBf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FEFDFB"/><stop offset="0.5" stop-color="#F8F6F1"/><stop offset="1" stop-color="#EFEBE2"/></linearGradient><pattern id="mallBrick" width="132" height="76" patternUnits="userSpaceOnUse"><rect width="132" height="76" fill="#E6E1D6"/><rect x="1.5" y="1.5" width="62" height="34" rx="3.5" fill="url(#mallBf)"/><rect x="68.5" y="1.5" width="62" height="34" rx="3.5" fill="url(#mallBf)"/><rect x="-31" y="40.5" width="62" height="34" rx="3.5" fill="url(#mallBf)"/><rect x="35" y="40.5" width="62" height="34" rx="3.5" fill="url(#mallBf)"/><rect x="101" y="40.5" width="62" height="34" rx="3.5" fill="url(#mallBf)"/></pattern></defs><rect width="100%" height="100%" fill="url(#mallBrick)"/></svg>
+    <div class="mall-inner">
+      <div class="top-back-wrap"><button class="top-back" onclick="closeShop()">&larr; Back</button></div>
+      <div class="mall-sign">
+        <div class="mall-sign-logo">style Star Mall</div>
+        <div class="mall-sign-sub">Shop your favorite stores through Style Star, a curated edit of the places we love, all in one&nbsp;spot.</div>
+      </div>
+      <div id="mallContent"></div>
+      <div class="dc-disclosure">Style Star may earn a small commission from some links, at no extra cost to you. We only feature stores we genuinely love.</div>
+      <button class="btn-outline" onclick="closeShop()" style="max-width:260px;margin:1.2rem auto 0;display:block">Back</button>
+    </div>
   </div>
 </div>
 
@@ -2032,12 +2049,12 @@ function show(id,skipHistory){
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
   var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-chat');
   var gf=document.querySelector('.quiz-footer');
-  if(gf)gf.style.display=ownChrome?'none':'';
+  if(gf)gf.style.display=(ownChrome||id==='s-shop')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-shopstyle')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-shopstyle'||id==='s-shop')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
