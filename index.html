@@ -344,7 +344,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .faq-steps{margin:2px 0 4px;padding-left:1.25rem}
 .faq-steps li{margin:4px 0}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
-.ss.sqtop{border-top-left-radius:0;border-top-right-radius:0}
 .ss.sqall{border-radius:0}
 #s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f6f7f8;background-image:linear-gradient(180deg,rgba(38,42,48,.10) 0,rgba(38,42,48,0) 30px),repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(150,158,166,.10) 100%)}
 #s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:10px;z-index:6;background:linear-gradient(180deg,#fbfcfd 0%,#cbd0d4 22%,#868d93 46%,#eef0f2 52%,#a1a7ad 62%,#5e646a 86%,#868c92 100%);box-shadow:0 5px 9px -3px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
@@ -1967,12 +1966,11 @@ function show(id,skipHistory){
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
   if(hd)hd.style.display=(ownChrome||id==='s-dream')?'none':'';
-  // Square the card's top corners only on the framed outfit screen (straight rod).
   var card=document.querySelector('.ss');
-  if(card)card.classList.toggle('sqtop',id==='s-photo');
-  // Square the full card on the curtain/dark full-bleed screens so their
-  // backgrounds match the squared framed pages (no rounded corners).
-  if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res');
+  // Square the full card on the curtain/dark full-bleed screens and the
+  // framed outfit-upload screen so their backgrounds match the squared
+  // framed pages (no rounded corners).
+  if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo');
   // Frame the whole app column in the chrome vanity mirror while she takes the quiz.
   if(card)card.classList.toggle('quiz-mirror',id==='s-quiz');
   // Same chrome frame around the stylist chat.
