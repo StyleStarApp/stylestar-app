@@ -3384,11 +3384,15 @@ function loadChatHistory(){
   }catch(e){}
   return[];
 }
-function _chatGreeting(){
+function _chatGreetLines(){
   const first=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';
   const hi=first?('Hi '+first+'!'):'Hi there!';
-  return hi+` I'm your Style Star Stylist. I was created by a real personal stylist who loves helping women discover their signature style and make shopping easy and fun. Ask me anything, or send a photo and I'll give you feedback and all the style help you want. 💫`;
+  return [
+    hi+` I'm your Style Star Stylist. 💫`,
+    `I was created by a real personal stylist who loves helping women discover their signature style and make shopping easy and fun. Ask me anything, or send a photo and I'll give you feedback and all the style help you want.`
+  ];
 }
+function _addGreeting(){var L=_chatGreetLines();addChatMsg(L[0],'bot');addChatMsg(L[1],'bot');}
 // "Start a fresh conversation" — quiet inline confirm, then wipe local history + photos
 function askClearChat(){
   const el=document.getElementById('chatFresh');if(!el)return;
@@ -3410,7 +3414,7 @@ function doClearChat(){
   const sugEl=document.getElementById('chatSuggestions');
   try{_restoreSuggestions()}catch(e){}
   if(sugEl)sugEl.style.display='block';
-  addChatMsg(_chatGreeting(),'bot');
+  _addGreeting();
   resetFreshLink();
 }
 
@@ -3447,7 +3451,7 @@ function openChat(fromLook){
         if(!fromLook)_setReturnSuggestions();
       }
     }else if(!fromLook){
-      addChatMsg(_chatGreeting(),'bot');
+      _addGreeting();
     }
   }
   msgContainer.scrollTop=msgContainer.scrollHeight;
