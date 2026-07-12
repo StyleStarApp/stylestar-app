@@ -104,7 +104,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Refine Preferences: the Quiz's silver+gold-keyline chrome frame at the unified 8px width */
 .ss.pref-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
-  box-shadow:0 7px 40px rgba(0,0,0,.16),inset 0 0 0 8px #AEB4BA,inset 0 0 0 9px rgba(201,161,78,.5)}
+  box-shadow:0 7px 40px rgba(0,0,0,.16),inset 0 0 0 8px #AEB4BA,inset 0 0 0 10px #C9A14E}
 .ss.quiz-mirror .tag{display:none}
 .ss.chat-mirror{background:
   repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px) padding-box,
@@ -131,11 +131,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 @media (prefers-reduced-motion:reduce){#s-quiz input[type=range]::-webkit-slider-thumb,#s-quiz input[type=range]::-moz-range-thumb{transition:none}}
 #s-quiz .q-back{width:100%;padding:14px;border-radius:3px;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;background:#fff;color:#3a352e;border:1.5px solid #8f8a80;margin-top:9px}
 #s-quiz .q-back:hover{background:#f7f6f3;color:#1c1a16;border-color:#5a554c}
-#s-quiz .q-cta{display:block;width:100%;border:1.5px solid #C99A2E;border-radius:3px;cursor:pointer;margin-top:4px;
-  background:linear-gradient(180deg,#F7EBC2 0%,#EAD07A 44%,#DBB84E 100%);
-  color:#211803;text-align:center;font:700 14px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:18px 16px;
-  box-shadow:0 12px 22px -12px rgba(170,130,35,.6),inset 0 1px 0 rgba(255,255,255,.75)}
-#s-quiz .q-cta:hover{background:linear-gradient(180deg,#FBF0CC 0%,#EFD684 44%,#E0BE54 100%)}
+#s-quiz .q-cta{display:block;width:100%;border:4px solid transparent;border-radius:3px;cursor:pointer;margin-top:4px;
+  background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;
+  color:#fff;text-align:center;font:700 14px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:16px;
+  box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
+#s-quiz .q-cta:hover{filter:brightness(1.08)}
 #s-quiz .q-cta:active{transform:scale(.99)}
 .btn-pink{width:100%;padding:15px;border-radius:2px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#1a1a1a;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
 .btn-pink:hover{opacity:0.88}
@@ -177,7 +177,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .stay-title{font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
 .stay-sub{font-size:14px;color:#444;margin-bottom:10px;font-weight:500}
 .stay-form{display:flex;flex-direction:column;align-items:center;gap:8px}
-.stay-input{border:1.5px solid #e8e8e8;border-radius:40px;padding:12px 18px;font-size:15px;width:100%;max-width:280px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif}
+.stay-input{border:1.5px solid #e8e8e8;border-radius:2px;padding:12px 18px;font-size:15px;width:100%;max-width:280px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif}
 .stay-input:focus{outline:none;border-color:#C8A060}
 .stay-input::placeholder{color:#9a9a9a}
 .stay-success{font-size:14px;color:#B08830;font-weight:500}
@@ -243,10 +243,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .act-pair{display:flex;gap:10px;justify-content:center;width:100%;max-width:340px;margin:8px auto 0}
 .act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
 .act-pair .act-btn svg{width:19px;height:19px}
-#s-pref .pref-hdr{text-align:center;margin:0 0 16px}
-#s-pref .pref-hdr-t{position:relative;display:inline-block;font:400 24px/1.15 'DM Serif Display',serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;padding-bottom:10px}
-#s-pref .pref-hdr-t::after{content:"";position:absolute;left:7%;right:7%;bottom:2px;height:2.5px;background:#E0B84C}
-#s-pref .pref-hdr-t::before{content:"";position:absolute;bottom:.5px;left:63%;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#F6E9B4,#DFB955 55%,#C0932C)}
+#s-pref .pref-hdr{text-align:center;margin:2px 0 16px}
+#s-pref .pref-eyebrow{font:700 11px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#8a6d1e;margin-bottom:10px}
+#s-pref .pref-philo{position:relative;display:inline-block;font:italic 400 17px/1.42 'Fraunces',serif;color:#3a352c;max-width:296px;padding-bottom:14px}
+#s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
+#s-pref .pref-philo::before{content:"";position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#F6E9B4,#DFB955 55%,#C0932C);z-index:1}
 .pref-title{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#1a1a1a;margin-bottom:5px;letter-spacing:.01em}
 .pref-sub{font-size:14px;color:#666;margin-bottom:1.25rem;line-height:1.5}
 .pref-label{font-size:12px;font-weight:700;color:#8a6d1e;margin-bottom:9px;text-transform:uppercase;letter-spacing:0.11em}
@@ -268,19 +269,21 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .pref-progress{display:flex;gap:6px;justify-content:center;margin-bottom:1.25rem}
 .pref-pip{width:9px;height:9px;border-radius:50%;background:#e4ddcd;transition:background .2s}
 .pref-pip.active{background:#C8971E}
-.pref-pip.done{background:#DFB94E}
+.pref-pip.done{background:#4CAF50}
 .pref-other{width:100%;border:1px solid #cfc8b8;border-radius:2px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a1a;min-height:60px;resize:none;margin-bottom:1rem}
 .pref-other:focus{outline:none;border-color:#D4AF37}
 .pref-other::placeholder{color:#9a9a9a}
 /* Prefs buttons match the Quiz (its twin): warm gold Next, soft outline Back — softer than solid black */
-#s-pref #prefNext{background:linear-gradient(180deg,#F7EBC2 0%,#EAD07A 44%,#DBB84E 100%);color:#211803;border:1.5px solid #C99A2E;box-shadow:0 10px 20px -12px rgba(170,130,35,.6),inset 0 1px 0 rgba(255,255,255,.7)}
-#s-pref #prefNext:hover{opacity:1;background:linear-gradient(180deg,#FBF0CC 0%,#EFD684 44%,#E0BE54 100%)}
+#s-pref #prefNext{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
+#s-pref #prefNext:hover{opacity:1;filter:brightness(1.08)}
 #s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
 #s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
 .pref-done{text-align:center;padding:2rem 1rem}
-.pref-done-star{font-size:48px;margin-bottom:12px}
-.pref-done-title{font-size:20px;font-weight:700;color:#D4AF37;margin-bottom:6px}
-.pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem}
+.pref-done-star{font-size:34px;color:#DFB94E;margin-bottom:12px;line-height:1}
+.pref-done-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
+.pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem;line-height:1.5}
+#s-pref-done .btn-p,#s-pref-done .btn-pink{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
+#s-pref-done .btn-p:hover,#s-pref-done .btn-pink:hover{opacity:1;filter:brightness(1.08)}
 .email-section{margin:1.5rem 0;text-align:center}
 .shop-section{margin:1.5rem 0;text-align:center}
 .shop-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:'DM Sans',sans-serif}
@@ -1562,7 +1565,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="plight" id="photoLightbox" onclick="closeLightbox()"><span class="plight-x">&times;</span><img id="plightImg" alt="Your outfit"/></div>
 <div class="scr" id="s-pref">
   <div class="top-back-wrap"><button class="top-back" onclick="showBack(prefReturnScreen)">&larr; Back</button></div>
-  <div class="pref-hdr"><span class="pref-hdr-t">Refine Your Preferences</span></div>
+  <div class="pref-hdr">
+    <div class="pref-eyebrow">Refine Your Preferences</div>
+    <div class="pref-philo">The more we refine our preferences, the more beauty comes into our lives.</div>
+  </div>
   <div class="pref-progress" id="prefPips"></div>
   <div id="prefContent"></div>
   <div style="margin-top:1rem">
@@ -1574,7 +1580,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="scr" id="s-pref-done">
   <div class="pref-done">
-    <div class="pref-done-star">⭐</div>
+    <div class="pref-done-star">★</div>
     <div class="pref-done-title">Your stylist just got a lot smarter</div>
 
     <div id="prefSaveBlock">
@@ -1979,7 +1985,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -1991,8 +1997,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('chat-mirror',id==='s-chat');
   // And around the boutique Style Star Edit.
   if(card)card.classList.toggle('dream-mirror',id==='s-dream');
-  // Silver+gold chrome mirror around Refine Preferences (the Quiz's sibling flow).
-  if(card)card.classList.toggle('pref-mirror',id==='s-pref');
+  // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
+  if(card)card.classList.toggle('pref-mirror',id==='s-pref'||id==='s-pref-done');
   if(!skipHistory){
     history.pushState({screen:id},null,'');
   }
@@ -3243,9 +3249,9 @@ function renderPrefNever(c){
     <div class="pref-grid">${chips(prefNeverItems,'pref-never-style',prefs.neverWear)}</div>
     <div class="pref-label">Patterns I skip</div>
     <div class="pref-grid">${chips(prefNeverPatterns,'pref-never-pattern',prefs.neverPatterns)}</div>
-    <div class="pref-label" style="text-transform:none;letter-spacing:0;font-size:16px;line-height:1.5">Anything you'd rather skip?</div>
-    <div style="font-size:13.5px;color:#6e6e6e;line-height:1.5;margin:-2px 0 8px">Say it in your own words and we'll leave it out of your picks.</div>
-    <textarea class="pref-other" id="prefNeverOther" placeholder="e.g. no denim jackets">${prefs.neverOther||''}</textarea>
+    <div class="pref-label" style="text-transform:none;letter-spacing:0;font-size:16px;line-height:1.5">Items or styles you never want suggested?</div>
+    <div style="font-size:13.5px;color:#6e6e6e;line-height:1.5;margin:-2px 0 8px">e.g. no orange, no denim jackets, can be anything you just don't like.</div>
+    <textarea class="pref-other" id="prefNeverOther" placeholder="Type it here...">${prefs.neverOther||''}</textarea>
   `;
 }
 
