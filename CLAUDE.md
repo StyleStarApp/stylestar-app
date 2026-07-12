@@ -2265,13 +2265,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
    transactional/automation** email wired up — its own focused backend session. Real "save" for the
    ephemeral photo results + honest email capture + conversion lever. Do AFTER the visual glow-ups.
 
+5. **[Claude] Fix the Vision Board photo situation** (Cath added 2026-07-12) — the shareable Style Vision
+   Board still needs its real imagery. Full network access is ON now: verify image fetch, curate a
+   COMMERCIALLY-LICENSED, FACELESS photo library WE HOST (same-origin so canvas export isn't tainted),
+   and wire it into `buildVisionBlob`. DROP prescriptive color/palette + illustrated clothes (per Cath).
+   Its own creative session; confirm the model-release/faceless approach with Almira before ship. (Full
+   context in the 2026-07-09 Vision Board entry.)
+
 **B. Legal/business (Cath actions; some gated on Almira):**
-5. Almira reply → LLC + EIN issued (ask her about the ToS too).
-6. Cath opens the **business bank account** (LLC docs + EIN).
-7. Cath applies to **affiliate programs** (Amazon first, then ShopStyle/LTK/Rakuten/CJ/ShareASale/Impact).
+6. Almira reply → LLC + EIN issued (ask her about the ToS too).
+7. Cath opens the **business bank account** (LLC docs + EIN).
+8. Cath applies to **affiliate programs** (Amazon first, then ShopStyle/LTK/Rakuten/CJ/ShareASale/Impact).
 
 **C. The revenue switch (after affiliates approve):**
-8. **[Claude] Wire affiliate links + product images + FTC disclosures across the whole app** — swap each
+9. **[Claude] Wire affiliate links + product images + FTC disclosures across the whole app** — swap each
    Mall store `u`, each Style Star Edit item link, and the outfit "Complete the Look" links to tagged
    affiliate URLs; add product images (Edit + Mall become true lookbooks); confirm final FTC
    disclosure wording/placement with Almira. The Mall/Edit earn $0 until this step.
@@ -2283,3 +2290,27 @@ nudge; MailerLite list); re-tune the 28 archetypes against **real Supabase data*
 **Vision Board photo curation** (Full network access is on now — verify image fetch, build a real photo
 mood-board). Still-open small refinements: refine the line-art icons; a small icon on the "Retake the
 quiz" link.
+
+### ▶ FOUNDER & PRODUCT TRUTHS (from Cath, 2026-07-12 — north star + monetization + audience)
+- **Audience = literally any woman, 18 to 80+.** No age or income bracket; every woman can use it, enjoy
+  it, and gain value. Her hunch: women ~50s (her age) may use it most, but it's for EVERYONE, and for
+  anyone who will share it. → Keep the tone warm/inclusive and the design highly READABLE (older users
+  matter); never gate by sophistication or budget.
+- **Monetization priority = AFFILIATE, and she loves it BECAUSE it's passive and quiet.** She is NOT
+  looking to add more paid 1:1 styling (she has plenty already) — the app is NOT a funnel to her 1:1
+  business. Substack: she doesn't know it, parked (offer a plain-English explainer if she's curious). A
+  future in-app PAID TIER is possible *eventually*, but see the principle below.
+- **▶ PRODUCT PRINCIPLE (Cath, strong conviction): VALUE FIRST, never pay-to-try.** She's frustrated by
+  apps that demand payment before you get any value or even know if you like it. So: the core Style Star
+  experience stays FREE; affiliate is the quiet income; ANY future paid tier must come only AFTER the
+  user has already received real value (e.g., an OPTIONAL premium upgrade like a deluxe Style Guide /
+  Vision Board), never a paywall up front. Bake this into every monetization decision.
+- **North star:** a **lifestyle business she loves and is passionate about — her gift to the world.**
+  Dream outcome: it would be amazing to make **a million dollars** from it. It is NOT lead-gen for her
+  1:1 work; the app itself IS the business.
+- **Origin / heart (use to keep copy + brand true):** 20+ years styling women; everyone kept telling her
+  she's gifted at this and should help more people, but she couldn't figure out HOW to scale it — until
+  **AI**. She took AI classes, got curious, and realized she could combine her craft with AI and offer it
+  to the world as a way of **shining her own light and sharing her God-given gifts** and her creativity.
+  It has been a **delightful** project for her. (Emotional core: the expansion of her gift + "shine your
+  light" — protect it in every design and copy choice.)
