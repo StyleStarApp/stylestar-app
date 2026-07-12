@@ -285,6 +285,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .pref-done-star{font-size:42px;margin-bottom:12px;line-height:1}
 .pref-done-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
 .pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem;line-height:1.5}
+.pref-done-acts{display:flex;gap:10px;max-width:280px;margin:12px auto 0}
+.pref-done-acts .pda{flex:1;padding:12px 6px;border-radius:2px;font:600 12px/1.3 'DM Sans',sans-serif;letter-spacing:.02em;cursor:pointer;background:#fff;border:1.5px solid #cfc8b8;color:#3a352c;transition:background .15s}
+.pref-done-acts .pda:hover{background:#faf9f6}
+.pref-done-acts .pda-pink{border-color:#EC4899;color:#EC4899}
+.pref-done-acts .pda-pink:hover{background:#fdf2f8}
 #s-pref-done .btn-p,#s-pref-done .btn-pink{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
 #s-pref-done .btn-p:hover,#s-pref-done .btn-pink:hover{opacity:1;filter:brightness(1.08)}
 .email-section{margin:1.5rem 0;text-align:center}
@@ -1614,8 +1619,12 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
     <div id="prefSavedBlock" style="display:none">
       <div class="pref-done-sub" id="prefSavedSub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
-      <button class="btn-pink" onclick="loadSavedAndShop()" style="max-width:280px">Shop your style &rarr;</button>
-      <div style="font-size:13.5px;color:#6e6e6e;margin-top:13px;line-height:1.7">Or <span onclick="openChat()" style="text-decoration:underline;cursor:pointer">ask your stylist</span> &middot; <span onclick="loadSaved()" style="text-decoration:underline;cursor:pointer">see your portrait</span></div>
+      <button class="btn-pink" onclick="prefShopNow()" style="max-width:280px">Let's go shopping &rarr;</button>
+      <div class="pref-done-acts">
+        <button class="pda pda-pink" onclick="openChat()">Ask your stylist</button>
+        <button class="pda" onclick="loadSaved()">See my Style Portrait</button>
+      </div>
+      <button class="retake" onclick="prefNotNow()" style="margin-top:12px">Not right now</button>
     </div>
   </div>
 </div>
@@ -2076,6 +2085,7 @@ function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" styl
 function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 // Put a results screen into its "loading" state: closed mirror doors with the
 // two gold stars spinning, boards hidden. Used while the /style-ai request is in flight.
+var _resNoReveal=false;
 function _resShowCompose(id){
   id=id||'s-res';
   var s=document.getElementById(id);
@@ -2119,7 +2129,8 @@ function showResult(txt,top3,motto){
   try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt,motto:userMotto}));}catch(e){}
   _renderCardThumb();
   _renderVisionThumb();
-  _playResReveal(fromCompose);
+  if(_resNoReveal){_resNoReveal=false;s.classList.remove('rv-compose','rv-open','rv-quick');if(s._rvDone)clearTimeout(s._rvDone);s.classList.add('rv-done');}
+  else{_playResReveal(fromCompose);}
   scheduleSaveSheet();
 }
 // The archetype presentation on the quiz results: her primary archetype (never
@@ -2881,6 +2892,21 @@ function openPrefs(){
 }
 function skipPrefs(){showBack(prefReturnScreen)}
 function prefDone(){showBack(prefReturnScreen)}
+// After refining preferences: drop her straight into her personalized "Shop your
+// style" picks, no portrait reveal (genOutfits scrolls to the picks section).
+function prefShopNow(){
+  _resNoReveal=true;loadSavedAndShop();
+  // land the "Shop your style" section at the top (genOutfits scrolls while the
+  // picks are still loading, so re-anchor once the layout settles).
+  var ss=document.getElementById('shopSection');
+  if(ss){setTimeout(function(){ss.scrollIntoView({block:'start'})},650);setTimeout(function(){ss.scrollIntoView({block:'start'})},1400);}
+}
+// "Not right now": land on the portrait's "What would you like to do?" menu, no reveal.
+function prefNotNow(){
+  _resNoReveal=true;loadSaved();
+  var s=document.getElementById('s-res');var t=s&&(s.querySelector('.p3-lead')||s.querySelector('.whatsnext-title'));
+  if(t)setTimeout(function(){t.scrollIntoView({block:'start'})},60);
+}
 
 // Build the FULL user record for saving. We read the saved portrait/answers
 // from localStorage as the base so updating preferences (e.g. a returning
