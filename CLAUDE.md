@@ -2117,3 +2117,22 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   turns (incl. base64 photo thumbnails) to `localStorage 'ss_chat'`; `loadChatHistory()` restores on
   open. So "Photos are processed by AI and never stored" is true SERVER-side (the Netlify function /
   Anthropic don't retain them) but the thumbnail persists on HER device until cleared.
+
+**2026-07-11 (cont. — chat: "Start a fresh conversation" clear + clearer privacy line)**
+- Decided (Cath + my rec): KEEP chat history by default (the stylist reads recent turns → smarter,
+  warmer replies), but give her a quiet way to wipe it. Shipped Option 1 (a discreet clear); held
+  the per-message/photo delete as unnecessary for now.
+- ✅ **Privacy line reworded** "Photos are processed by AI and never stored" → **"Photos are private
+  to you and never stored on our servers"** (Cath's call — accurately reflects that the chat persists
+  in HER localStorage but nothing is kept server-side).
+- ✅ **"Start a fresh conversation"** quiet underlined link (`.chat-fresh`, gray → pink on hover) sits
+  right under the privacy line so the two trust messages group together. Tap → **inline confirm**
+  (no jarring browser dialog): "Clear this conversation? **Yes, start fresh** (pink) · Cancel".
+  `doClearChat()` empties `chatHistory`, removes `localStorage 'ss_chat'`, nulls
+  `chatPhotoData`/`chatLookPhoto`, clears the message list + pending photo, restores the default
+  suggestion chips, and re-shows the greeting. `askClearChat`/`resetFreshLink`/`doClearChat`;
+  `resetFreshLink()` also called on `openChat` so it never opens mid-confirm.
+- ✅ **Greeting factored into `_chatGreeting()`** (first-name aware) and reused by both `openChat`
+  and the clear flow (no copy drift).
+- Verified in Chromium (390px): seeded 2-msg history → open shows both → clear → inline confirm →
+  Yes wipes to just the greeting, `ss_chat` reset, link resets; no JS errors.
