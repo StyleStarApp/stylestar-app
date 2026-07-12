@@ -529,11 +529,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-shop .top-back-wrap{margin:0 -2px 4px 0}
 #s-shop .dc-disclosure{color:#6b6459}
 .mall-sign{position:relative;background:#fff;border:3px solid #161616;padding:15px 16px 17px;margin:8px 0 6px;text-align:center;box-shadow:0 11px 26px -15px rgba(20,15,5,.6)}
-/* Plain gold star "light fixture" stuck onto the top-left corner of the sign (absolute, no layout shift) */
-.mall-fixture{position:absolute;top:-38px;left:-13px;width:66px;height:96px;z-index:6;pointer-events:none}
-.mall-fixture .mf-glow{position:absolute;left:50%;top:56px;width:118px;height:118px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,214,120,.55),rgba(255,214,120,.15) 46%,rgba(255,214,120,0) 72%)}
-.mall-fixture .mf-hook{position:absolute;top:0;left:50%;transform:translateX(-50%);width:15px;height:20px;z-index:2}
-.mall-fixture .mf-star{position:absolute;top:15px;left:50%;transform:translateX(-50%);width:58px;height:58px;z-index:2;filter:drop-shadow(0 3px 5px rgba(120,90,20,.4))}
+/* White+gold-outline star "light fixture", tilted, stuck onto the top-left corner of the sign (absolute, no layout shift) */
+.mall-fixture{position:absolute;top:-42px;left:-24px;width:88px;height:88px;z-index:6;pointer-events:none}
+.mall-fixture .mf-glow{position:absolute;left:50%;top:50%;width:140px;height:140px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,214,120,.5),rgba(255,214,120,.14) 46%,rgba(255,214,120,0) 72%)}
+.mall-fixture .mf-star{position:absolute;top:6px;left:6px;width:78px;height:78px;z-index:2;transform:rotate(-17deg);filter:drop-shadow(0 3px 6px rgba(90,70,20,.32))}
 .mall-sign-logo{font-family:'DM Serif Display',Georgia,serif;font-size:29px;color:#1a1a1a;-webkit-text-stroke:.6px #1a1a1a;display:inline-block;position:relative;padding-bottom:5px;letter-spacing:.01em}
 .mall-sign-logo::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:3px;background:#E0B84C}
 .mall-sign-logo::before{content:"";position:absolute;bottom:-1.5px;left:66%;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
@@ -1851,14 +1850,13 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="scr" id="s-shop">
   <div class="mall-brick">
-    <svg class="mall-brick-bg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 390 780"><defs><linearGradient id="mallBf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FEFDFB"/><stop offset="0.5" stop-color="#F8F6F1"/><stop offset="1" stop-color="#EFEBE2"/></linearGradient><pattern id="mallBrick" width="50" height="30" patternUnits="userSpaceOnUse"><rect width="50" height="30" fill="#E6E1D6"/><rect x="1" y="1" width="23" height="12" rx="1.6" fill="url(#mallBf)"/><rect x="26" y="1" width="23" height="12" rx="1.6" fill="url(#mallBf)"/><rect x="-12" y="16" width="23" height="12" rx="1.6" fill="url(#mallBf)"/><rect x="13" y="16" width="23" height="12" rx="1.6" fill="url(#mallBf)"/><rect x="38" y="16" width="23" height="12" rx="1.6" fill="url(#mallBf)"/></pattern></defs><rect width="100%" height="100%" fill="url(#mallBrick)"/></svg>
+    <svg class="mall-brick-bg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 390 780"><defs><linearGradient id="mallBf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FEFDFB"/><stop offset="0.5" stop-color="#F8F6F1"/><stop offset="1" stop-color="#EFEBE2"/></linearGradient><pattern id="mallBrick" width="40" height="24" patternUnits="userSpaceOnUse"><rect width="40" height="24" fill="#E6E1D6"/><rect x="1" y="1" width="18" height="10" rx="1.4" fill="url(#mallBf)"/><rect x="21" y="1" width="18" height="10" rx="1.4" fill="url(#mallBf)"/><rect x="-10" y="13" width="18" height="10" rx="1.4" fill="url(#mallBf)"/><rect x="10" y="13" width="18" height="10" rx="1.4" fill="url(#mallBf)"/><rect x="30" y="13" width="18" height="10" rx="1.4" fill="url(#mallBf)"/></pattern></defs><rect width="100%" height="100%" fill="url(#mallBrick)"/></svg>
     <div class="mall-inner">
       <div class="top-back-wrap"><button class="top-back" onclick="closeShop()">&larr; Back</button></div>
       <div class="mall-sign">
         <div class="mall-fixture">
           <span class="mf-glow"></span>
-          <svg class="mf-hook" viewBox="0 0 24 22"><path d="M12 2.5 C4.3 2.5 4.3 12 12 12 C18 12 18 19.5 12 19.5" fill="none" stroke="#565C62" stroke-width="2" stroke-linecap="round"/></svg>
-          <svg class="mf-star" viewBox="0 0 24 24"><defs><radialGradient id="mallStarG" cx="42%" cy="35%" r="72%"><stop offset="0" stop-color="#FFF4C8"/><stop offset=".45" stop-color="#EFC65A"/><stop offset="1" stop-color="#C89A2C"/></radialGradient></defs><path fill="url(#mallStarG)" stroke="#8a6a17" stroke-width="0.5" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg>
+          <svg class="mf-star" viewBox="0 0 24 24"><defs><linearGradient id="mallStarG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#mallStarG)" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg>
         </div>
         <div class="mall-sign-logo">style Star Mall</div>
         <div class="mall-sign-sub">Enjoy shopping our favorite stores. These are the places we love, all in one&nbsp;spot.</div>
