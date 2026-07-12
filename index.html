@@ -178,7 +178,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .chat-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #ebebeb;margin-bottom:10px}
 .chat-hdr-left{display:flex;align-items:center;gap:8px}
 .chat-hdr-star{width:44px;height:44px}
-.chat-hdr-title{font:700 16px/1.15 'Jost',sans-serif;color:#1a1a1a}
+.chat-hdr-title{font:400 19px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a}
 .chat-hdr-sub{font:500 11px/1.3 'Jost',sans-serif;color:#8a6a17;letter-spacing:.02em;margin-top:2px}
 .chat-close{font-size:13px;color:#777;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;padding:0;line-height:1}
 .chat-close .cb-ar{text-decoration:none;font-size:15px}
@@ -2745,6 +2745,18 @@ function _restoreSuggestions(){
   var lbl=document.querySelector('#chatSuggestions .chat-sug-label'),c=document.querySelector('#chatSuggestions .chat-sug-chips');
   if(lbl)lbl.textContent=_defaultSug.label;if(c)c.innerHTML=_defaultSug.chips;
 }
+// Returning to a real conversation → forward-friendly "continue" chips (she usually wants
+// something new, so lead with fresh starts and keep one gentle "pick up our chat").
+function _setReturnSuggestions(){
+  var lbl=document.querySelector('#chatSuggestions .chat-sug-label'),c=document.querySelector('#chatSuggestions .chat-sug-chips');
+  if(!c)return;
+  if(_defaultSug===null)_defaultSug={label:lbl?lbl.textContent:'Try asking:',chips:c.innerHTML};
+  if(lbl)lbl.textContent='Where to next?';
+  c.innerHTML='<button class="chat-chip" onclick="quickChat(\'Help me style something new.\')">Style something new</button>'
+    +'<button class="chat-chip" onclick="quickChat(\'Help me shop for something new.\')">Help me shop</button>'
+    +'<button class="chat-chip" onclick="quickChat(\'What should I wear this week?\')">What should I wear?</button>'
+    +'<button class="chat-chip" onclick="quickChat(\'Continue where we left off.\')">Pick up our chat</button>';
+}
 // One-time "stylist nudge" bubble above the Ask hero on the outfit results.
 function _showAskNudge(){var n=document.getElementById('askNudge');if(!n||_askNudgeOff)return;var a=document.querySelector('.scr.act');if(!a||a.id!=='s-photo-res')return;n.classList.add('on')}
 function dismissAskNudge(e){if(e)e.stopPropagation();_askNudgeOff=true;var n=document.getElementById('askNudge');if(n)n.classList.remove('on')}
@@ -3373,7 +3385,7 @@ function loadChatHistory(){
 function _chatGreeting(){
   const first=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';
   const hi=first?('Hi '+first+'!'):'Hi there!';
-  return hi+` I'm your Style Star Stylist. I was created by a real personal stylist who loves helping women discover their signature style and make shopping easy and fun. Ask me anything, or send a photo and I'll give you feedback and all the style help you want.`;
+  return hi+` I'm your Style Star Stylist. I was created by a real personal stylist who loves helping women discover their signature style and make shopping easy and fun. Ask me anything, or send a photo and I'll give you feedback and all the style help you want. 🌠`;
 }
 // "Start a fresh conversation" — quiet inline confirm, then wipe local history + photos
 function askClearChat(){
@@ -3424,11 +3436,13 @@ function openChat(fromLook){
         }
         msgContainer.appendChild(div);
       });
-      // returning to a real conversation → a soft marker between history and new replies
+      // returning to a real conversation → a soft marker between history and new replies,
+      // plus forward-friendly "continue" chips
       if(chatHistory.some(m=>m.role==='user')){
         const rz=document.createElement('div');rz.className='chat-resume';
         rz.innerHTML='<span>Picking up where you left off</span>';
         msgContainer.appendChild(rz);
+        if(!fromLook)_setReturnSuggestions();
       }
     }else if(!fromLook){
       addChatMsg(_chatGreeting(),'bot');
