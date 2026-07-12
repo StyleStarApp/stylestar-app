@@ -409,7 +409,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   .al-caps .b{animation:none;opacity:0}
   .al-dots i{animation:none;opacity:.7}
 }
-#s-photo .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(224,27,27,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
+#s-photo .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px),#FBFAF7;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(224,27,27,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
 /* Before a photo loads the frame scrolls the page like everything else. Once a
    photo is loaded we allow vertical page scroll (pan-y) — a one-finger up/down
    drag scrolls to the Analyze button — while pinch (2-finger) zoom and the crop
@@ -3894,6 +3894,10 @@ function fallbackInitialScreen(){
   // Both s-wel and Welcome Back show their own hanging star, so hide the shared global header logo on either.
   var hd=document.querySelector('.hdr');
   if(hd)hd.style.display=(onW||onWB)?'none':'';
+  // Square the card on the curtain screens on first load too (this path adds
+  // .act directly instead of going through show(), which is where sqall lives).
+  var card=document.querySelector('.ss');
+  if(card)card.classList.toggle('sqall',onW||onWB);
 }
 
 // Auto-restore from the welcome-email link. The link carries an opaque token
