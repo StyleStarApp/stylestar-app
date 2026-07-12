@@ -201,7 +201,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .chat-photo-btn{width:46px;height:46px;border-radius:4px;background:#fff;border:1.5px solid #1a1a1a;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s;font-size:22px;line-height:1;padding:0}
 .chat-photo-btn:hover{background:#f3f1ec}
 .chat-photo-preview{display:flex;align-items:center;gap:10px;padding:8px 0;margin-top:4px}
-.chat-msg-img{max-width:230px;border-radius:10px;margin-bottom:6px}
+.chat-msg-img{max-width:230px;border-radius:10px;margin-bottom:6px;cursor:zoom-in}
+.chat-resume{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 2px 4px}
+.chat-resume span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#a9a293;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.chat-resume::before,.chat-resume::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,#e0dccf)}
+.chat-resume::after{background:linear-gradient(270deg,transparent,#e0dccf)}
 .chat-suggestions{padding:8px 0}
 .chat-sug-label{font-size:11px;color:#777;margin-bottom:6px;font-weight:500}
 .chat-sug-chips{display:flex;flex-wrap:wrap;gap:6px}
@@ -2748,6 +2752,7 @@ function _resetAskNudge(){_askNudgeOff=false;var n=document.getElementById('askN
 // Tap the shared photo (thumbnail or the clipboard clip) to see it full-size
 function openLightbox(e){var src=e&&e.currentTarget;if(e){e.stopPropagation();}var lb=document.getElementById('photoLightbox');if(!lb||!photoData)return;document.getElementById('plightImg').src='data:image/jpeg;base64,'+photoData;var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(src&&src.classList&&!reduce){src.classList.remove('jig');void src.offsetWidth;src.classList.add('jig');setTimeout(function(){lb.classList.add('on')},210)}else{lb.classList.add('on')}}
 function closeLightbox(){var lb=document.getElementById('photoLightbox');if(lb)lb.classList.remove('on')}
+function openChatLightbox(img){var lb=document.getElementById('photoLightbox');if(!lb||!img||!img.src)return;document.getElementById('plightImg').src=img.src;lb.classList.add('on')}
 let storyPrevScreen='s-wel';
 let prefStep=0;
 let prefReturnScreen='s-res';
@@ -3413,12 +3418,18 @@ function openChat(fromLook){
         const div=document.createElement('div');
         div.className='chat-msg '+(m.role==='assistant'?'bot':'user');
         if(m.hasPhoto){
-          div.innerHTML='<img class="chat-msg-img" src="'+m.photoThumb+'"><br>'+linkStores(m.displayText||m.content);
+          div.innerHTML='<img class="chat-msg-img" src="'+m.photoThumb+'" onclick="openChatLightbox(this)"><br>'+linkStores(m.displayText||m.content);
         }else{
           div.innerHTML=linkStores(m.role==='assistant'?m.content:(m.displayText||m.content));
         }
         msgContainer.appendChild(div);
       });
+      // returning to a real conversation → a soft marker between history and new replies
+      if(chatHistory.some(m=>m.role==='user')){
+        const rz=document.createElement('div');rz.className='chat-resume';
+        rz.innerHTML='<span>Picking up where you left off</span>';
+        msgContainer.appendChild(rz);
+      }
     }else if(!fromLook){
       addChatMsg(_chatGreeting(),'bot');
     }
@@ -3493,7 +3504,7 @@ function addChatMsg(text,type,photoThumb){
   const div=document.createElement('div');
   div.className='chat-msg '+type;
   if(photoThumb&&type==='user'){
-    div.innerHTML='<img class="chat-msg-img" src="'+photoThumb+'"><br>'+linkStores(text);
+    div.innerHTML='<img class="chat-msg-img" src="'+photoThumb+'" onclick="openChatLightbox(this)"><br>'+linkStores(text);
   }else{
     div.innerHTML=linkStores(text);
   }
