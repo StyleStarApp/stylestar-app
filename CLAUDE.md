@@ -2136,3 +2136,18 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   and the clear flow (no copy drift).
 - Verified in Chromium (390px): seeded 2-msg history → open shows both → clear → inline confirm →
   Yes wipes to just the greeting, `ss_chat` reset, link resets; no JS errors.
+
+**2026-07-11 (cont. — chat: tap-to-zoom photos + "picking up where you left off" divider)**
+- ✅ **Tap-to-zoom on chat photos** — reuses the shared `#photoLightbox` overlay. New generic
+  `openChatLightbox(img)` (takes the clicked `<img>`'s src directly, unlike the outfit-results
+  `openLightbox` which is bound to `photoData`); wired via `onclick="openChatLightbox(this)"` on the
+  `.chat-msg-img` in BOTH render paths (openChat restore loop + `addChatMsg`). `.chat-msg-img` got
+  `cursor:zoom-in`. `closeLightbox` unchanged (tap backdrop / ×).
+- ✅ **"Picking up where you left off" divider** — a soft engraved `.chat-resume` (uppercase 10px
+  gray label flanked by hairline gradients) appended AFTER the restored history (so it sits between
+  the old conversation and where new replies land). Only shown when the restored history contains a
+  real user turn (`chatHistory.some(m=>m.role==='user')`) — so a greeting-only state (e.g. right
+  after "Start a fresh conversation") does NOT show it. Not part of `chatHistory`, so it never
+  persists/duplicates.
+- Verified in Chromium (390px): returning convo → divider + zoomable photo (lightbox opens with the
+  img src); after clear → greeting only, no divider; no JS errors.
