@@ -2094,3 +2094,13 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   - Result: cohesive **black + pink + ivory-linen** scheme (pink star, pink bubble edge, pink send
     icon) tying the page to its pink "Ask your stylist" entry buttons. Subtitle left gold. Verified in
     Chromium (390px), no JS errors.
+
+**2026-07-11 (cont. — Ask Your Stylist v6: white/outlined buttons, full pink bubble outline, bigger star)**
+- ✅ **Camera + send buttons → white inside, black outline** (`background:#fff;border:1.5px solid
+  #1a1a1a`); send icon stays pink `#EC4899`, camera 📷 shows on white.
+- ✅ **Header star bigger** (36→44px, still filled pink).
+- ✅ **Stylist bubble now fully outlined in a thin pink line** (was a left-only 2px stripe) —
+  `.chat-msg.bot border:1.5px solid #EC4899` with the bottom-left chat tail kept. Reads as an elegant
+  pink-lined card; user bubble stays solid dark for contrast. (Cath weighed full-outline vs
+  thinner-left; picked full outline. Easy revert to a left line if she changes her mind.)
+- Verified in Chromium (390px), no JS errors.
