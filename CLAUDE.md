@@ -2202,3 +2202,84 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   - ✅ Polish (Cath): **squared the gold line ends** (`::after` border-radius 2px→0); **connected the
     knob to the line** (removed the `::before` white ring `box-shadow` that made a gap); **pink header
     star a touch bigger** (44→48px).
+
+**2026-07-12 (▶ STYLE STAR EDIT glow-up — boutique "display case"; SHIPPED LIVE, PRs #258–#263)**
+- Brought the **Style Star Edit** (`#s-dream`, the founder's curated product list) into the app's
+  chrome/gold/DM-Serif world, iterated live with Cath over several rounds. All merged → live. The
+  `.dc-*` item classes are Edit-only (the Mall uses `.mall-*` + shares only `.dc-wrap/.dc-title/
+  .dc-subtitle/.dc-disclosure`), so item styling was elevated freely; shared bits scoped to `#s-dream`.
+- **The look now:**
+  - Own **"style Star Edit" elongated-logo title** (DM Serif Display, `-webkit-text-stroke:1px`, gold
+    slider underline `::after` + knob `::before`) REPLACING the shared logo+tagline on this screen
+    (`s-dream` added to the header-hide in `show()`; NOT in `ownChrome`, so the footer still shows).
+  - Turquoise **"★ Curated by Catherine ★"** tagline (`#0FA6B6` = the exact teal of the entry tile that
+    opens this page; stars 14px). Subtitle: "Every item here is personally selected by the founder of
+    Style Star. These are things she wears herself and recommends to clients. Hand-selected with love."
+  - **Bold two-band frame** `.ss.dream-mirror` (its OWN rule, separate from quiz/chat): metallic-gold
+    border-image (8px) + silver inset ring (`inset 0 0 0 8px #9AA0A6`) = gold + silver, equal thickness,
+    wraps the whole column (title→cards→footer). Toggled in `show()` (`id==='s-dream'`).
+  - Cards: clean white, **thin equal border all around** (`1px #EFE7D2`; the earlier left gold spine
+    `.dc-item::before` was REMOVED), gold ⭐ emoji top-right, refined store / gold-price meta, Fraunces
+    **pull-quote note with a big gold opening `::before` “ AND a matching-size closing `::after` ”**
+    (both 34px `#DFC271`; closing raised to `vertical-align:-0.28em` so it reads as a quote, not commas),
+    squared **black + gold "Shop this item →"** button with a **turquoise shopping-bag+star icon**
+    (`.dc-bag`, `#0FA6B6`, matches the entry tile) + gold arrow.
+  - Slider line under the title = **consistent solid gold `#E0B84C`** (not a gradient; a darker gold read
+    brown); dot at `left:67%` (in the "Star"/"Edit" space, toward the r).
+  - **"With love, Catherine"** signature in **Dancing Script** (added to the font link; replaced Great
+    Vibes here because its capital C was too curly).
+  - Disclosure: "Some items include affiliate links that support Style Star at no extra cost to you.
+    **Nothing in the Style Star Edit is chosen by AI.** Every piece is personally selected by our founder
+    because she truly loves it." (Named the feature so it doesn't seem to contradict the app's
+    intentional AI elsewhere; "chosen by AI" since these are real products selected by hand.)
+- **Also this session — Stylist chat title (`.chat-hdr-title`):** slider line switched gradient →
+  **consistent gold `#E0B84C`**; knob moved to sit between the "r" and "S" (`left:58%`). Subtitle
+  **"Created with heart..." → "Created with love by a real stylist, powered by AI"** (Cath: "heart"
+  read like a missing emoji; "love" is more sincere — agreed).
+- ⚠️ **LESSON (tooling):** a `perl -0pi -e` substitution to swap the card stars **re-encoded the whole
+  file and corrupted every multibyte char** (é, —, ✓ etc. → mojibake). Caught it in a render, did
+  `git checkout -- index.html`, and redid the edits with the **Edit tool** (UTF-8 safe). RULE: never use
+  `perl`/`sed` byte-substitution on `index.html` (it's full of curly quotes, em-dashes, emoji, ★). Use
+  the Edit tool.
+- ⚠️ **Merge note:** because PRs are **squash-merged**, the feature branch diverges from `main` after each
+  merge. Flow that worked each round: commit → `git fetch origin main` → `git rebase --onto origin/main
+  <prev-head> claude/style-star-edit-redesign-suij48` → force-with-lease push → open PR → squash-merge.
+
+### ▶ ROADMAP / BEST ORDER (saved 2026-07-12 — Cath taking a break; resurface next session)
+**A. App polish (no external blockers — do these now while waiting on Almira):**
+1. **[Claude] Square the post-quiz email-capture pop-up buttons** (pill `.btn-p`/`.btn-o` → squared) for
+   consistency — Cath's explicit ask. Quick win. NOTE: `.btn-p`/`.btn-o` are shared by ~15 save/restore
+   prompts + the prefs save, so squaring them squares those too (intended = full app consistency); verify
+   no odd cases. (This dovetails with the Refine Preferences glow-up.)
+2. **[Claude] Glow up the remaining inner pages** to the chrome/gold/DM-Serif world, in this order
+   (core-flow + revenue first): **Refine Preferences (`s-pref`) → Shop the Mall (`s-shop`) → Our Story →
+   FAQ → Privacy Policy**. Reuse the established kit: dark full-bleed or framed panel, DM-Serif page
+   title (elongated-logo treatment где fits), gold slider/★ accents, gold-star footer, squared buttons.
+3. **[Claude] Terms of Service page** — YES, recommended (email capture + AI advice liability + affiliate
+   disclosures + LLC/brand IP + FL governing law). Build the PAGE + draft starter copy, but have **Almira
+   review the legal wording** (bundle into the next Almira conversation; Indie Law may include/relate it).
+   Build it as a sibling of Privacy (same `.story-wrap` layout); link it where Privacy is surfaced
+   (email-capture forms + FAQ). Keep it low-friction, not in the main footer (like Privacy).
+4. **[Claude] Email after photo analysis** (the long-parked "✉️ Email me these tips & links"): email the
+   celebrate + finishing touches + shop links from an outfit analysis. Needs a **MailerLite
+   transactional/automation** email wired up — its own focused backend session. Real "save" for the
+   ephemeral photo results + honest email capture + conversion lever. Do AFTER the visual glow-ups.
+
+**B. Legal/business (Cath actions; some gated on Almira):**
+5. Almira reply → LLC + EIN issued (ask her about the ToS too).
+6. Cath opens the **business bank account** (LLC docs + EIN).
+7. Cath applies to **affiliate programs** (Amazon first, then ShopStyle/LTK/Rakuten/CJ/ShareASale/Impact).
+
+**C. The revenue switch (after affiliates approve):**
+8. **[Claude] Wire affiliate links + product images + FTC disclosures across the whole app** — swap each
+   Mall store `u`, each Style Star Edit item link, and the outfit "Complete the Look" links to tagged
+   affiliate URLs; add product images (Edit + Mall become true lookbooks); confirm final FTC
+   disclosure wording/placement with Almira. The Mall/Edit earn $0 until this step.
+
+**Big-picture threads to schedule (own sessions):** monetization strategy (affiliate is primary but
+low-margin; her **paid 1:1 styling** — she's certified — and an **evergreen premium Style Guide/lookbook**
+are the higher-value levers); a **marketing** session (share-card loop is built; IG rebrand; referral
+nudge; MailerLite list); re-tune the 28 archetypes against **real Supabase data** once volume accrues;
+**Vision Board photo curation** (Full network access is on now — verify image fetch, build a real photo
+mood-board). Still-open small refinements: refine the line-art icons; a small icon on the "Retake the
+quiz" link.
