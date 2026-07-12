@@ -2181,6 +2181,10 @@ More live polish with Cath, all merged → live (PRs #166–#170).
 - Kept the old thin line-art camera icon on the "Send a photo for advice" suggestion chip (Cath's call).
 - Verified in Chromium (390px): send opacity .4 empty → 1 typed; typing color `#6f6f6f`; greeting ends
     💫; no JS errors.
-- ▶ OPEN (Cath asked my suggestion): whether to shorten/split the long one-bubble greeting. My rec:
-    split into two shorter bubbles (a quick warm hello, then the human-story + how-to line) so it reads
-    like a real person texting. Not changed yet — it's her authored copy; awaiting her pick.
+- ✅ **Greeting split into TWO bubbles** (Cath approved my rec): bubble 1 = warm hello + 💫
+    ("Hi {first}! I'm your Style Star Stylist. 💫"), bubble 2 = the human-story + how-to line. Reads
+    like a real person texting; same words, easier on a phone. Kept just the ONE 💫 (Cath: one emoji).
+    `_chatGreeting()` → `_chatGreetLines()` (returns [hello, details]) + `_addGreeting()` (adds both
+    bot bubbles); both openChat + doClearChat call `_addGreeting()`. Both bubbles persist to `ss_chat`
+    (two assistant entries) — the resume divider still keys off a real USER turn, so greeting-only
+    stays divider-free. Verified in Chromium (2 bot bubbles, 💫 on #1 only), no JS errors.
