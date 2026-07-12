@@ -2082,3 +2082,15 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     one small, deliberate pink accent tying the page to its entry buttons. (Kept everything else
     gold; the gold left-edge on the stylist bubbles stays.)
   - Verified in Chromium (390px), no JS errors. Both live for Cath's on-device reaction.
+
+**2026-07-11 (cont. — Ask Your Stylist v5: black + pink control scheme, filled pink star)**
+- Cath loves the frame; leaned further into pink + monochrome controls:
+  - ✅ **Header star bigger + FILLED pink** (`.chat-hdr-star` 28→36px; polygon `fill:#EC4899`).
+  - ✅ **Stylist-bubble left edge gold → thinner PINK** (`border-left` 3px `#D4AF37` → 2px `#EC4899`).
+  - ✅ **All gold removed from the input row → BLACK.** Camera button + send button backgrounds
+    gold-gradient → solid `#1a1a1a`; input focus border gold `#C8A060` → `#1a1a1a`. The **send icon
+    is PINK** `#EC4899` (the one pop on the black send button). Camera 📷 emoji unchanged (shows on
+    black).
+  - Result: cohesive **black + pink + ivory-linen** scheme (pink star, pink bubble edge, pink send
+    icon) tying the page to its pink "Ask your stylist" entry buttons. Subtitle left gold. Verified in
+    Chromium (390px), no JS errors.
