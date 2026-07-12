@@ -2069,3 +2069,16 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     against the linen. Verified at 390px it isn't clipped.
   - All four scoped to the chat; verified in Chromium (no JS errors). Linen + black-trim shipped as
     live proposals for Cath to keep-or-revert on-device (both trivially reversible).
+
+**2026-07-11 (cont. — Ask Your Stylist v4: equal black+silver frame, pink header star)**
+- Cath's calls on the chat frame + a pink idea:
+  - ✅ **Frame reworked** — removed the gold inner keyline; made the black and silver bands the SAME
+    width. Chat-mirror `border-width` 13px→**7px** silver (chrome gradient) + a matching **7px black
+    outer ring** (`box-shadow:0 0 0 7px #1a1a1a`) → reads as a bold two-band gallery frame (black
+    outside, silver inside). Fits within the body's 12px side gutter (no clip). Scoped to
+    `.ss.chat-mirror` (quiz mirror unchanged).
+  - ✅ **A touch of PINK** (Cath's idea: the buttons that lead here are pink `#EC4899`, so echo it).
+    Recolored the small 5-point header star beside "Style Star Stylist" gold → **pink `#EC4899`** —
+    one small, deliberate pink accent tying the page to its entry buttons. (Kept everything else
+    gold; the gold left-edge on the stylist bubbles stays.)
+  - Verified in Chromium (390px), no JS errors. Both live for Cath's on-device reaction.
