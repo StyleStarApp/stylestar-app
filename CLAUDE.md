@@ -2047,3 +2047,25 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   - Verified in Chromium (390-wide): title/subtitle/greeting/📷/taller wrap all correct, no JS errors.
 - ▶ "Prettier?" — Cath invited more elevation ideas; offered a few for her to pick (softer greeting
   bubble, a gold accent hairline under the header, a subtle boutique tint) — none forced yet, her call.
+
+**2026-07-11 (cont. — Ask Your Stylist v3: back-button fix, gold-edge bubbles, linen bg + black-trim frame)**
+- Cath's picks from the "prettier" menu: NO cream tint (brown worry) but YES a gold left edge on the
+  stylist bubbles; NO header hairline; NO vanity glow. Plus a back-button bug + two frame/bg questions.
+  - ✅ **Back button fixed** — the top-right "← Back" (`.chat-close`) was fully underlined and wrapped,
+    so the arrow sat on its own underlined line above "Back" (the "extra line on top"). Rebuilt as an
+    inline-flex, `white-space:nowrap` button with two spans: `.cb-ar` (arrow, no underline, 15px) +
+    `.cb-tx` (underlined "Back"); `align-items:center` puts the arrow on the same line as Back.
+  - ✅ **Gold left edge on the stylist (bot) bubbles** — kept the existing light `#f5f3ef` bubble (no
+    brown), added `border-left:3px solid #D4AF37` + squared the two left corners (4px) so the gold
+    reads as a crisp accent stripe. User bubbles unchanged.
+  - ✅ **Interior background → neutral LINEN** (Cath asked "make the white our linen?"). Used the exact
+    cool near-white crosshatch already on the Welcome Back mirror + archetype card
+    (`#FBFAF7` + two faint `rgba(150,140,120,.05-.06)` repeating-gradients) — reads as fine ivory
+    linen, NOT brown/tan. Applied via a chat-only `.ss.chat-mirror` override (padding-box layers) so
+    the quiz mirror stays plain white.
+  - ✅ **Thin BLACK trim around the chrome frame** (Cath asked "add a black trim / make the frame
+    different?"). Added an outer `0 0 0 2px #1a1a1a` ring to the chat-mirror box-shadow (kept the
+    inner gold keyline + soft drop shadow) → a crisp black keyline hugging the silver, defining it
+    against the linen. Verified at 390px it isn't clipped.
+  - All four scoped to the chat; verified in Chromium (no JS errors). Linen + black-trim shipped as
+    live proposals for Cath to keep-or-revert on-device (both trivially reversible).
