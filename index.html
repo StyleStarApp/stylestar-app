@@ -21,7 +21,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Style Star">
 <meta name="theme-color" content="#D4AF37">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Great+Vibes&family=Dancing+Script:wght@500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Great+Vibes&family=Dancing+Script:wght@500;600;700&family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-2isRUQ0QeYxjy54Mf0lSe.js"></script>
 <script>
@@ -243,9 +243,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .act-pair{display:flex;gap:10px;justify-content:center;width:100%;max-width:340px;margin:8px auto 0}
 .act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
 .act-pair .act-btn svg{width:19px;height:19px}
-#s-pref .top-back-wrap{margin-right:-11px}
+#s-pref .top-back-wrap{margin-right:-16px}
 #s-pref .pref-hdr{text-align:center;margin:8px 0 16px}
-#s-pref .pref-philo{position:relative;display:inline-block;font:italic 400 17px/1.42 'Fraunces',serif;color:#3a352c;max-width:300px;padding-bottom:14px;min-height:38px;text-wrap:balance}
+#s-pref .pref-philo{position:relative;display:inline-block;font:italic 500 20.5px/1.4 'Cormorant Garamond',serif;color:#35302a;max-width:300px;padding-bottom:14px;min-height:40px;text-wrap:balance}
 #s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
 #s-pref .pref-philo::before{content:"";position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#F6E9B4,#DFB955 55%,#C0932C);z-index:1}
 .pref-title{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#1a1a1a;margin-bottom:5px;letter-spacing:.01em}
@@ -255,8 +255,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .pref-chip{padding:10px 16px;border-radius:2px;border:1px solid #cfc8b8;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#3a352c;cursor:pointer;transition:all 0.15s;user-select:none}
 .pref-chip.sel{border-color:#D4AF37;background:#fdf8ef;color:#1a1a1a;font-weight:600}
 .pref-chip.skip{border-color:#e74c3c;background:#fef5f5;color:#999;text-decoration:line-through}
-.pref-never-style.sel,.pref-never-pattern.sel{border-color:#D4AF37;background:#fdf8ef;color:#1a1a1a;font-weight:600;text-decoration:line-through;position:relative;padding-left:28px}
-.pref-never-style.sel::before,.pref-never-pattern.sel::before{content:"✕";position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:#D4AF37}
+.pref-never-style.sel,.pref-never-pattern.sel{border-color:#a3a7ab;background:#f0f0ef;color:#3a352c;font-weight:600;text-decoration:line-through;position:relative;padding-left:28px}
+.pref-never-style.sel::before,.pref-never-pattern.sel::before{content:"✕";position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:#8a8e92}
 .color-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem;justify-content:center}
 .color-dot{width:44px;height:44px;border-radius:50%;border:2px solid #eee;cursor:pointer;transition:all 0.2s;position:relative}
 .color-dot.love{width:54px;height:54px;border:2px solid #eee}
@@ -2888,8 +2888,8 @@ function showPrefDone(){
   if(emailDone){
     saveBlock.style.display='none';
     savedBlock.style.display='block';
-    if(dt)dt.textContent='Your stylist just got a lot smarter';
-    document.getElementById('prefSavedSub').textContent='Your style profile is updated and saved. Your shopping suggestions and chat advice just got even more personalized.';
+    if(dt)dt.textContent='Your style, in alignment';
+    document.getElementById('prefSavedSub').textContent='Your style profile is updated and saved. Your shopping suggestions and chat advice are now more personalized just for you.';
     syncPrefsToServer();
   }else{
     saveBlock.style.display='block';
@@ -2925,8 +2925,8 @@ function prefSaveComplete(email){
   document.getElementById('prefSaveBlock').style.display='none';
   var savedBlock=document.getElementById('prefSavedBlock');
   savedBlock.style.display='block';
-  var dt2=document.getElementById('prefDoneTitle');if(dt2)dt2.textContent='Your stylist just got a lot smarter';
-  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is saved! Your shopping suggestions and chat advice just got even more personalized.';
+  var dt2=document.getElementById('prefDoneTitle');if(dt2)dt2.textContent='Your style, in alignment';
+  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is updated and saved. Your shopping suggestions and chat advice are now more personalized just for you.';
   window.scrollTo(0,0);
 }
 async function savePrefProfile(){
@@ -3301,7 +3301,7 @@ function renderPrefOther(c){
   c.innerHTML=`
     <div class="pref-title">Anything else your stylist should know?</div>
     <div class="pref-sub">Tell us anything that helps us style you better. Favorite brands, lifestyle details, fit preferences, or anything that makes you uniquely you.</div>
-    <textarea class="pref-other" id="prefOtherNotes" placeholder="For example: I love belted dresses…I need comfortable shoes, 3 inches or lower…I prefer natural fabrics…Nothing over $100 unless it's a special piece" style="min-height:120px">${prefs.otherNotes||''}</textarea>
+    <textarea class="pref-other" id="prefOtherNotes" placeholder="For example: I love belted dresses…I need comfortable shoes, 3 inches or lower…I prefer natural fabrics…my ideal price range" style="min-height:120px">${prefs.otherNotes||''}</textarea>
   `;
 }
 
