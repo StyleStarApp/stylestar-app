@@ -104,7 +104,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Shop your style: its own DM-Serif title (twin to the Edit) */
 #s-shopstyle .ss-shop-logo{font:400 30px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.7px #1a1a1a;display:inline-block;position:relative;padding-bottom:11px;margin:6px 0 2px;letter-spacing:.01em}
 #s-shopstyle .ss-shop-logo::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3px;background:#E0B84C}
-#s-shopstyle .ss-shop-logo::before{content:"";position:absolute;bottom:0.5px;left:67%;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
+#s-shopstyle .ss-shop-logo::before{content:"";position:absolute;bottom:0.5px;left:65%;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
 /* Refine Preferences: the Quiz's silver+gold-keyline chrome frame at the unified 8px width */
 .ss.pref-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
@@ -316,9 +316,15 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .shop-link{display:inline-block;font-size:11px;font-weight:600;color:#fff;background:#1a1a1a;padding:8px 20px;border-radius:20px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:opacity 0.2s}
 .shop-link:hover{opacity:0.85}
 .shop-loading{text-align:center;padding:2rem 0;color:#444;font-style:italic;font-size:15px;font-weight:500}
-.shop-star-spin{width:44px;height:44px;display:block;margin:0 auto 14px;animation:spin 2.2s linear infinite,shopTwinkle 1.9s ease-in-out infinite}
-@keyframes shopTwinkle{0%,100%{filter:drop-shadow(0 0 1px rgba(223,185,78,.25))}50%{filter:drop-shadow(0 0 5px rgba(223,185,78,.7))}}
-@media(prefers-reduced-motion:reduce){.shop-star-spin{animation:none}}
+.shop-star-wrap{position:relative;width:66px;height:66px;margin:6px auto 18px}
+.shop-star-spin{width:66px;height:66px;display:block;animation:spin 3s linear infinite,shopGlow 2.2s ease-in-out infinite}
+@keyframes shopGlow{0%,100%{filter:drop-shadow(0 0 2px rgba(245,209,120,.45))}50%{filter:drop-shadow(0 0 11px rgba(245,209,120,.9))}}
+.shop-spk{position:absolute;border-radius:50%;background:radial-gradient(circle,#FFFBEA,#F3D06A 70%);opacity:0;box-shadow:0 0 4px rgba(245,209,120,.8)}
+.shop-spk.a{width:8px;height:8px;top:-3px;right:3px;animation:shopSpk 1.9s ease-in-out infinite}
+.shop-spk.b{width:6px;height:6px;bottom:3px;left:-1px;animation:shopSpk 1.9s ease-in-out .63s infinite}
+.shop-spk.c{width:5px;height:5px;top:46%;right:-5px;animation:shopSpk 1.9s ease-in-out 1.15s infinite}
+@keyframes shopSpk{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.shop-star-spin,.shop-spk{animation:none}.shop-spk{opacity:.6}}
 .shop-refresh{text-align:center;margin-top:14px}
 .shop-refresh-btn{font-size:15.5px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.03em}
 .shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;font-style:italic;max-width:320px;margin-left:auto;margin-right:auto}
@@ -1650,7 +1656,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="ss-shop-logo">Shop your style</div>
     <div class="ss-shop-sub">Ideas matched to your style and preferences.</div>
   </div>
-  <div id="shopStyleContent"><div class="shop-loading"><svg class="shop-star-spin" viewBox="0 0 24 24"><defs><linearGradient id="shopStarG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#shopStarG)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>Finding your perfect pieces&hellip;</div></div>
+  <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-spin" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#FFF6D2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span class="shop-spk a"></span><span class="shop-spk b"></span><span class="shop-spk c"></span></div>Finding your perfect pieces&hellip;</div></div>
   <div class="ss-shop-talk">Want to talk it through? <span onclick="openChat()">Ask your stylist &rarr;</span></div>
 </div>
 
@@ -2938,7 +2944,7 @@ function openShopStyle(mode){
 }
 async function _shopStyleGen(){
   var cont=document.getElementById('shopStyleContent');
-  cont.innerHTML='<div class="shop-loading"><svg class="shop-star-spin" viewBox="0 0 24 24"><defs><linearGradient id="shopStarG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#shopStarG)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>Finding your perfect pieces&hellip;</div>';
+  cont.innerHTML='<div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-spin" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#FFF6D2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span class="shop-spk a"></span><span class="shop-spk b"></span><span class="shop-spk c"></span></div>Finding your perfect pieces&hellip;</div>';
   var basis;
   if(_shopStyleMode==='look'){
     var t=((_lookCtx&&_lookCtx.tips)||[]).map(function(x){return (x.title?x.title+': ':'')+(x.text||'')}).join(' | ');
