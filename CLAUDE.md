@@ -2168,3 +2168,19 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   you want. 🌠"), in `_chatGreeting()` so both open + clear paths get it.
 - Verified in Chromium (390px): title computed font = DM Serif Display; return label "Where to next?"
   + 4 chips; a chip tap fires quickChat with no JS error; greeting ends with 🌠; no JS errors.
+
+**2026-07-11 (cont. — chat micro-polish: 💫 greeting, darker typing text, send dims until typed)**
+- ✅ **Greeting emoji 🌠 → 💫** (Cath meant the "swooshing star," not the shooting star).
+- ✅ **Typing indicator "Styling your answer…" a touch darker** (`.chat-typing` color `#999`→`#6f6f6f`;
+    stays gray + italic, just more legible; Cath: the stylist replies so fast it's barely seen).
+- ✅ **Send button dims until she types** — pure CSS `.chat-input:placeholder-shown~.chat-send{opacity:.4}`
+    (the send button follows `#chatInput`, so it brightens to full the moment the placeholder clears);
+    added an opacity transition. No JS.
+- ✅ **Header title "Style Star Stylist" → "style Star Stylist"** (lowercase first "style" to mirror
+    the logo wordmark; in DM Serif Display it reads as a brand stylization, not a typo — Cath's idea).
+- Kept the old thin line-art camera icon on the "Send a photo for advice" suggestion chip (Cath's call).
+- Verified in Chromium (390px): send opacity .4 empty → 1 typed; typing color `#6f6f6f`; greeting ends
+    💫; no JS errors.
+- ▶ OPEN (Cath asked my suggestion): whether to shorten/split the long one-bubble greeting. My rec:
+    split into two shorter bubbles (a quick warm hello, then the human-story + how-to line) so it reads
+    like a real person texting. Not changed yet — it's her authored copy; awaiting her pick.
