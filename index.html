@@ -94,7 +94,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .btn-o{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:#6e6e6e;border:1px solid #e8e8e8;margin-top:8px}
 .btn-o:hover{background:#fafafa;color:#888}
 /* ===== Quiz glow-up — chrome vanity mirror framing the WHOLE app column (during the quiz) ===== */
-.ss.quiz-mirror,.ss.chat-mirror{position:relative;border-radius:0;border:13px solid transparent;
+.ss.quiz-mirror,.ss.chat-mirror,.ss.dream-mirror{position:relative;border-radius:0;border:13px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
   box-shadow:0 6px 44px rgba(0,0,0,.14),inset 0 0 0 2px rgba(201,161,78,.6)}
 .ss.quiz-mirror .tag{display:none}
@@ -295,8 +295,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .dc-subtitle{font-size:14px;color:#777;line-height:1.6;margin-bottom:1.5rem;font-style:italic;padding:0 0.5rem}
 .dc-item{background:#fff;border:1px solid #EFE7D2;border-radius:2px;padding:1.35rem 1.4rem 1.4rem;margin-bottom:1.05rem;text-align:left;position:relative;box-shadow:0 4px 20px rgba(60,50,20,0.055);overflow:hidden}
 .dc-item::before{content:"";position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#F3E6B8,#DFB94E 50%,#C0932C)}
-.dc-num{position:absolute;top:13px;right:16px;font-family:'DM Serif Display',Georgia,serif;font-size:25px;color:#E4CE8E;line-height:1;letter-spacing:.02em}
-.dc-item-name{font-family:'Fraunces',Georgia,serif;font-size:20px;font-weight:600;color:#1a1a1a;line-height:1.28;margin:0 0 9px;padding-right:40px}
+.dc-item-star{position:absolute;top:14px;right:16px;color:#D4AF37;font-size:16px;line-height:1}
+.dc-item-name{font-family:'Fraunces',Georgia,serif;font-size:20px;font-weight:600;color:#1a1a1a;line-height:1.28;margin:0 0 9px;padding-right:32px}
 .dc-item-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 9px;margin-bottom:13px}
 .dc-store{font:700 11px/1.3 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a8172}
 .dc-price{font:700 13px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E}
@@ -308,15 +308,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .dc-item-btn:hover .dc-arr{transform:translateX(3px)}
 .dc-disclosure{font-size:11px;color:#888;margin-top:1.5rem;line-height:1.6;font-style:italic}
 /* ===== Style Star Edit — boutique editorial glow-up (scoped to #s-dream) ===== */
-#s-dream{background:radial-gradient(120% 62% at 50% 0%,#FBF3D9 0%,#FCFBF8 44%,#FCFBF8 100%)}
+#s-dream{background:radial-gradient(120% 58% at 50% 0%,#FBF3D9 0%,#FCFBF8 46%,#FCFBF8 100%)}
 #s-dream .dc-wrap{padding:0.5rem 0.5rem 2rem}
-.dc-eyebrow{display:flex;align-items:center;justify-content:center;gap:11px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#C8971E;margin:2px 0 11px}
-.dc-eyebrow::before,.dc-eyebrow::after{content:"\2605";font-size:9px;color:#C8971E}
-#s-dream .dc-title{font-family:'DM Serif Display',Georgia,serif;font-size:34px;font-weight:400;color:#1a1a1a;letter-spacing:.01em;margin-bottom:13px;-webkit-text-stroke:.35px #1a1a1a}
-.dc-rule{width:118px;height:12px;margin:0 auto 15px;position:relative}
-.dc-rule::before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#DCBB63 22%,#C8971E 50%,#DCBB63 78%,transparent)}
-.dc-rule::after{content:"\2605";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#C8971E;font-size:11px;background:#FBF6E4;padding:0 8px}
-#s-dream .dc-subtitle{font-family:'Fraunces',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin-bottom:1.8rem;font-style:italic;font-weight:400;padding:0 0.5rem}
+/* the page's own "elongated logo" title (mirrors the stylist-chat title treatment) */
+.dc-logo{font:400 33px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.5px #1a1a1a;display:inline-block;position:relative;padding-bottom:12px;margin:8px 0 0;letter-spacing:.01em}
+.dc-logo::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3px;background:linear-gradient(90deg,#F3E6B8,#DFB94E 50%,#B8891F)}
+.dc-logo::before{content:"";position:absolute;bottom:1px;left:63%;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
+/* a touch of the entry button's turquoise, and the "not AI" promise */
+.dc-tagline{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
+.dc-tagline::before,.dc-tagline::after{content:"\2605";font-size:9px;color:#0FA6B6}
+#s-dream .dc-subtitle{font-family:'Fraunces',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:1rem 0 1.9rem;font-style:italic;font-weight:400;padding:0 0.5rem}
 #s-dream .dc-disclosure{font-family:'Fraunces',Georgia,serif;font-size:11.5px;color:#8a8172;margin-top:1.5rem;line-height:1.65;font-style:italic}
 .dc-sign{font-family:'Great Vibes',cursive;font-size:31px;color:#C8A24B;line-height:1.1;margin:1.7rem 0 0}
 #s-dream .btn-outline{border-radius:2px;border-width:1.5px;max-width:260px;margin:1.3rem auto 0}
@@ -1663,13 +1664,12 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="scr" id="s-dream">
   <div class="dc-wrap">
     <div style="text-align:right;margin-bottom:2px"><button onclick="closeDream()" style="background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#777;cursor:pointer;padding:4px 2px">&larr; Back</button></div>
-    <div class="dc-eyebrow">The Founder's Edit</div>
-    <div class="dc-title">Style Star Edit</div>
-    <div class="dc-rule"></div>
-    <div class="dc-subtitle">Every piece personally hand-selected by the founder of Style Star, the ones she recommends to her own clients and wears&nbsp;herself.</div>
+    <div class="dc-logo">style Star Edit</div>
+    <div class="dc-tagline">Curated by Cath</div>
+    <div class="dc-subtitle">Every piece here is personally hand-selected by the founder of Style Star, the ones she recommends to her own clients and wears herself. Hand-picked with love, never chosen by an&nbsp;algorithm.</div>
 
     <div class="dc-item">
-      <span class="dc-num">01</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">Gold Stretchy Stacking Bangles</div>
       <div class="dc-item-meta"><span class="dc-store">Badu &middot; Amazon</span><span class="dc-price">$16.99</span></div>
       <div class="dc-item-note">These are stretchy, easy to wear, and fit beautifully. Not too big like most bangles. I like to stack 6 of them!</div>
@@ -1677,7 +1677,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-item">
-      <span class="dc-num">02</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">J. Reneé Soncino Strappy Sandal</div>
       <div class="dc-item-meta"><span class="dc-store">Nordstrom</span><span class="dc-price">$129.95</span></div>
       <div class="dc-item-note">This shoe is the perfect height to be stylish, but comfy enough to dance all night. Comes in beautiful colors that go with anything. The most versatile and chic sandal!</div>
@@ -1685,7 +1685,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-item">
-      <span class="dc-num">03</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">MZ Wallace Large Metro Tote Deluxe II</div>
       <div class="dc-item-meta"><span class="dc-store">Bloomingdale's</span><span class="dc-price">~$295</span></div>
       <div class="dc-item-note">This is the best carry-on travel bag ever. Stylish, lightweight, holds so much stuff and fits under the seat on planes.</div>
@@ -1693,7 +1693,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-item">
-      <span class="dc-num">04</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">Gucci 53mm Small Oval Sunglasses</div>
       <div class="dc-item-meta"><span class="dc-store">Nordstrom</span><span class="dc-price">$295</span></div>
       <div class="dc-item-note">These look current, but also 90's at the same time. Sunnies can be worn every day, so a great category to splurge for luxury!</div>
@@ -1701,7 +1701,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-item">
-      <span class="dc-num">05</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">Express Editor High Waisted Flare Trouser — Pitch Black</div>
       <div class="dc-item-meta"><span class="dc-store">Express</span><span class="dc-price">~$90</span></div>
       <div class="dc-item-note">These are ultra flattering high waisted pants. A fantastic basic piece to round out a wardrobe, perfect for work or evenings out.</div>
@@ -1709,7 +1709,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-item">
-      <span class="dc-num">06</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">Miss Bunny Robe — White</div>
       <div class="dc-item-meta"><span class="dc-store">Sexy Little Robe</span><span class="dc-price">$109</span></div>
       <div class="dc-item-note">This is the most comfortable and flattering bathrobe ever. The sleeves are fitted and the soft fabric and fit are perfection. Feels like a 5 star hotel experience!</div>
@@ -1717,7 +1717,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-item">
-      <span class="dc-num">07</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">14K Gold Signature Name Necklace</div>
       <div class="dc-item-meta"><span class="dc-store">Baby Gold</span><span class="dc-price">$510</span></div>
       <div class="dc-item-note">This 14K gold piece is the perfect thing to wear when meeting new people. They can see your name tag right on your necklace!</div>
@@ -1725,7 +1725,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-item">
-      <span class="dc-num">08</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">Retreat Linen High Rise Wide Leg Pant — White</div>
       <div class="dc-item-meta"><span class="dc-store">Athleta</span><span class="dc-price">~$100</span></div>
       <div class="dc-item-note">100% linen gives high vibes! These pants come in petite, regular and tall sizes. Perfect for hot weather and an alternative to wearing shorts.</div>
@@ -1733,7 +1733,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-item">
-      <span class="dc-num">09</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">L'AGENCE Dani Silk Charmeuse Blouse</div>
       <div class="dc-item-meta"><span class="dc-store">Nordstrom</span><span class="dc-price">~$350</span></div>
       <div class="dc-item-note">100% silk, beautiful and elegant. Nothing else feels like a silk blouse.</div>
@@ -1741,7 +1741,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-item">
-      <span class="dc-num">10</span>
+      <span class="dc-item-star">&#9733;</span>
       <div class="dc-item-name">PRETTYGARDEN Flowy Maxi Dress — White</div>
       <div class="dc-item-meta"><span class="dc-store">Amazon</span><span class="dc-price">$46.99</span></div>
       <div class="dc-item-note">This can be worn with or without a belt. Day or night. Great affordable dress. Comes in lots of colors.</div>
@@ -1749,7 +1749,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="dc-sign">With love, Cath</div>
-    <div class="dc-disclosure">Some items include affiliate links that support Style Star at no extra cost to you. Every piece is selected solely because our founder loves it.</div>
+    <div class="dc-disclosure">Some items include affiliate links that support Style Star at no extra cost to you. Nothing here is AI-generated. Every piece is personally chosen because our founder truly loves it.</div>
 
     <button class="btn-outline" onclick="closeDream()" style="max-width:260px;margin:1rem auto 0;display:block" id="dreamBtn">Back</button>
   </div>
@@ -1959,7 +1959,8 @@ function show(id,skipHistory){
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
-  if(hd)hd.style.display=ownChrome?'none':'';
+  // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
+  if(hd)hd.style.display=(ownChrome||id==='s-dream')?'none':'';
   // Square the card's top corners only on the framed outfit screen (straight rod).
   var card=document.querySelector('.ss');
   if(card)card.classList.toggle('sqtop',id==='s-photo');
@@ -1967,6 +1968,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('quiz-mirror',id==='s-quiz');
   // Same chrome frame around the stylist chat.
   if(card)card.classList.toggle('chat-mirror',id==='s-chat');
+  // And around the boutique Style Star Edit.
+  if(card)card.classList.toggle('dream-mirror',id==='s-dream');
   if(!skipHistory){
     history.pushState({screen:id},null,'');
   }
