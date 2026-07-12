@@ -320,23 +320,23 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .faq-steps li{margin:4px 0}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqtop{border-top-left-radius:0;border-top-right-radius:0}
-#s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:28px 20px 18px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f1ebdd;background-image:linear-gradient(180deg,rgba(52,46,34,.12) 0,rgba(52,46,34,0) 30px),repeating-linear-gradient(90deg,#e2d7bf 0px,#f9f4ea 21px,#e2d7bf 42px),linear-gradient(180deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 16%,rgba(202,180,132,.16) 100%)}
-#s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:11px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC85F 24%,#C79A34 56%,#9A7420 82%,#7d5e17 100%);box-shadow:0 5px 9px -3px rgba(90,60,10,.45)}
+#s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:28px 20px 18px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f6f7f8;background-image:linear-gradient(180deg,rgba(38,42,48,.10) 0,rgba(38,42,48,0) 30px),repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(150,158,166,.10) 100%)}
+#s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:11px;z-index:6;background:linear-gradient(180deg,#f4f6f7 0%,#e0e4e6 2px,#ccd1d4 3px,#c7ccd0 96%,#b0b5ba 100%);box-shadow:0 3px 6px -3px rgba(40,44,50,.32)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
 #s-photo .ph-back{position:absolute;top:24px;right:18px;z-index:5;background:none;border:none;font:700 12px/1 'Jost',sans-serif;color:#5a5348;cursor:pointer;padding:4px 2px;letter-spacing:.1em;text-transform:uppercase}
 #s-photo .ph-back:hover{color:#1a1a1a}
 /* Logo plaque hanging from the gold rod on two wires */
 #s-photo .ph-hang,#s-photo-load .ph-hang{position:relative;width:188px;margin:-24px auto 10px;padding-top:23px}
 #s-photo .ph-wires,#s-photo-load .ph-wires{position:absolute;top:0;left:0;width:188px;height:23px;overflow:visible}
-#s-photo .ph-wires line,#s-photo-load .ph-wires line{stroke:#C79A34;stroke-width:1.6}
-#s-photo .ph-wires circle,#s-photo-load .ph-wires circle{fill:none;stroke:#C79A34;stroke-width:1.7}
+#s-photo .ph-wires line,#s-photo-load .ph-wires line{stroke:#8b9299;stroke-width:1.6}
+#s-photo .ph-wires circle,#s-photo-load .ph-wires circle{fill:none;stroke:#8b9299;stroke-width:1.7}
 #s-photo .ph-logo-frame,#s-photo-load .ph-logo-frame{width:188px;padding:3px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
 #s-photo .ph-logo-frame img,#s-photo-load .ph-logo-frame img{display:block;width:66px;height:auto}
 /* ===== "Analyzing your outfit" screen — the lit "dressing-room studio" (#s-photo-load) ===== */
 /* Analyzing screen shares the Studio background + gold rod + hanging logo of #s-photo */
 #s-photo-load.studio{margin:-0.5rem -1.75rem -1.5rem;padding:28px 18px 22px;min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:'Jost',sans-serif;
-  background-color:#f1ebdd;
-  background-image:linear-gradient(180deg,rgba(52,46,34,.12) 0,rgba(52,46,34,0) 30px),repeating-linear-gradient(90deg,#e2d7bf 0px,#f9f4ea 21px,#e2d7bf 42px),linear-gradient(180deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 16%,rgba(202,180,132,.16) 100%)}
+  background-color:#f6f7f8;
+  background-image:linear-gradient(180deg,rgba(38,42,48,.10) 0,rgba(38,42,48,0) 30px),repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(150,158,166,.10) 100%)}
 /* keep the screen hidden until it's the active screen (studio sets display:flex) */
 #s-photo-load:not(.act){display:none}
 /* reuse existing #s-photo .ph-rod / .ph-hang / .ph-wires / .ph-logo-frame for the top */
@@ -384,7 +384,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   .al-caps .b{animation:none;opacity:0}
   .al-dots i{animation:none;opacity:.7}
 }
-#s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
+#s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(224,27,27,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
 /* Before a photo loads the frame scrolls the page like everything else. Once a
    photo is loaded we allow vertical page scroll (pan-y) — a one-finger up/down
    drag scrolls to the Analyze button — while pinch (2-finger) zoom and the crop
@@ -394,8 +394,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem;cursor:pointer}
 #s-photo .photo-icon{font-size:40px}
 #s-photo .photo-cta{font:600 20px/1.2 'DM Serif Display',serif;color:#1a1a1a}
-#s-photo .photo-sub{font:italic 400 16.5px/1.35 'Fraunces',serif;color:#C8971E}
-#s-photo .photo-hint{font:700 11.5px/1.5 'Jost',sans-serif;letter-spacing:.11em;text-transform:uppercase;color:#C8971E;max-width:230px}
+#s-photo .photo-sub{font:italic 400 16.5px/1.35 'Fraunces',serif;color:#E01B1B}
+#s-photo .photo-hint{font:700 11.5px/1.5 'Jost',sans-serif;letter-spacing:.11em;text-transform:uppercase;color:#E01B1B;max-width:230px}
 #s-photo .photo-preview{position:absolute;top:0;left:0;transform-origin:0 0;max-width:none;will-change:transform;pointer-events:none;-webkit-user-drag:none}
 /* In-frame crop / zoom editor */
 #s-photo .ph-edit{position:absolute;inset:0;pointer-events:none}
@@ -420,17 +420,17 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .occ-q{display:flex;align-items:baseline;justify-content:center;gap:9px;font:400 20px/1.2 'DM Serif Display',serif;color:#1a1a1a;margin-bottom:9px}
 #s-photo .occ-opt{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#C8971E}
 #s-photo .occ-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:318px;margin:0 auto}
-#s-photo .occ-chip{display:flex;align-items:center;justify-content:center;min-height:46px;border:1px solid #c9b487;background:#fff;color:#3a352c;font:600 13.5px/1.15 'Jost',sans-serif;padding:6px 6px;border-radius:3px;cursor:pointer;transition:all .18s;text-align:center;white-space:nowrap}
+#s-photo .occ-chip{display:flex;align-items:center;justify-content:center;min-height:46px;border:1px solid #c9b487;background:#fff;color:#3a352c;font:600 13.5px/1.15 'Jost',sans-serif;padding:6px 6px;border-radius:0;cursor:pointer;transition:all .18s;text-align:center;white-space:nowrap}
 #s-photo .occ-chip.occ-skip-chip{white-space:normal;font-size:12.5px}
 #s-photo .occ-chip:hover{border-color:#1a1a1a}
 #s-photo .occ-chip.sel{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
 #s-photo .occ-chip.occ-skip-chip{font-style:italic;color:#6a6355}
 #s-photo .occ-chip.occ-skip-chip.sel{color:#fff;font-style:normal}
-#s-photo #analyzeBtn{position:relative;display:block;text-align:center;width:100%;max-width:344px;margin:12px auto 0;padding:16px;border:5px solid transparent;border-radius:4px;cursor:pointer;background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519) border-box;color:#F1DDA0;font:700 15.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 14px 26px -12px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7;transition:filter .2s}
+#s-photo #analyzeBtn{position:relative;display:block;text-align:center;width:100%;max-width:344px;margin:12px auto 0;padding:16px;border:5px solid transparent;border-radius:0;cursor:pointer;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F59B9B,#E01B1B 22%,#B01414 42%,#F7ADAD 55%,#D01818 72%,#8f1010) border-box;color:#FCE4E1;font:700 15.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 14px 26px -12px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7;transition:filter .2s}
 #s-photo #analyzeBtn:hover{filter:brightness(1.1)}
-#s-photo #analyzeBtn .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssShimmer 2.8s ease-in-out infinite;pointer-events:none}
+#s-photo #analyzeBtn .shim{position:absolute;inset:0;border-radius:0;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssShimmer 2.8s ease-in-out infinite;pointer-events:none}
 #s-photo #analyzeBtn .lbl{position:relative;display:inline-flex;align-items:center;vertical-align:middle;gap:9px;white-space:nowrap}
-#s-photo #analyzeBtn svg{width:23px;height:23px;stroke:#F1DDA0;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#s-photo #analyzeBtn svg{width:23px;height:23px;stroke:#F4A9A9;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #s-photo .ph-foot{margin-top:16px;padding-top:13px;width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:11px;border-top:1px solid rgba(201,162,78,.3)}
 #s-photo .ph-foot .lnk{font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a453c;cursor:pointer}
 #s-photo .ph-foot .lnk:hover{color:#1a1a1a}
