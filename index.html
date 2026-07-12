@@ -104,7 +104,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Refine Preferences: the Quiz's silver+gold-keyline chrome frame at the unified 8px width */
 .ss.pref-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
-  box-shadow:0 7px 40px rgba(0,0,0,.16),inset 0 0 0 8px #C9A14E}
+  box-shadow:0 7px 40px rgba(0,0,0,.16),inset 0 0 0 8px #AEB4BA,inset 0 0 0 9px rgba(201,161,78,.5)}
 .ss.quiz-mirror .tag{display:none}
 .ss.chat-mirror{background:
   repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px) padding-box,
@@ -272,6 +272,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .pref-other{width:100%;border:1px solid #cfc8b8;border-radius:2px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a1a;min-height:60px;resize:none;margin-bottom:1rem}
 .pref-other:focus{outline:none;border-color:#D4AF37}
 .pref-other::placeholder{color:#9a9a9a}
+/* Prefs buttons match the Quiz (its twin): warm gold Next, soft outline Back — softer than solid black */
+#s-pref #prefNext{background:linear-gradient(180deg,#F7EBC2 0%,#EAD07A 44%,#DBB84E 100%);color:#211803;border:1.5px solid #C99A2E;box-shadow:0 10px 20px -12px rgba(170,130,35,.6),inset 0 1px 0 rgba(255,255,255,.7)}
+#s-pref #prefNext:hover{opacity:1;background:linear-gradient(180deg,#FBF0CC 0%,#EFD684 44%,#E0BE54 100%)}
+#s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
+#s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
 .pref-done{text-align:center;padding:2rem 1rem}
 .pref-done-star{font-size:48px;margin-bottom:12px}
 .pref-done-title{font-size:20px;font-weight:700;color:#D4AF37;margin-bottom:6px}
@@ -3238,9 +3243,9 @@ function renderPrefNever(c){
     <div class="pref-grid">${chips(prefNeverItems,'pref-never-style',prefs.neverWear)}</div>
     <div class="pref-label">Patterns I skip</div>
     <div class="pref-grid">${chips(prefNeverPatterns,'pref-never-pattern',prefs.neverPatterns)}</div>
-    <div class="pref-label" style="text-transform:none;letter-spacing:0;font-size:16px;line-height:1.5">Items or styles you <em>never</em> want suggested</div>
-    <div style="font-size:13.5px;color:#6e6e6e;line-height:1.5;margin:-2px 0 8px">In your own words. Your stylist, the shopping picks, and photo tips will all avoid these. For example: no denim jackets, nothing cropped, no bright orange.</div>
-    <textarea class="pref-other" id="prefNeverOther" placeholder="e.g. No denim jackets, no ponchos, no peplum tops">${prefs.neverOther||''}</textarea>
+    <div class="pref-label" style="text-transform:none;letter-spacing:0;font-size:16px;line-height:1.5">Anything you'd rather skip?</div>
+    <div style="font-size:13.5px;color:#6e6e6e;line-height:1.5;margin:-2px 0 8px">Say it in your own words and we'll leave it out of your picks.</div>
+    <textarea class="pref-other" id="prefNeverOther" placeholder="e.g. no denim jackets">${prefs.neverOther||''}</textarea>
   `;
 }
 
