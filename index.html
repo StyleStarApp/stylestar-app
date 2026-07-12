@@ -88,10 +88,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;heigh
 input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;background:#1a1a1a;cursor:pointer;border:3px solid #fff}
 .shint{text-align:center;font-family:'DM Sans',sans-serif;font-size:17px;color:#1a1a1a;font-style:italic;margin-top:1rem;min-height:24px;font-weight:600}
 
-.btn-p{width:100%;padding:16px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#1a1a1a;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif}
+.btn-p{width:100%;padding:16px;border-radius:2px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#1a1a1a;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif}
 .btn-p:hover{opacity:0.82}
 .btn-p:active{transform:scale(0.98)}
-.btn-o{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:#6e6e6e;border:1px solid #e8e8e8;margin-top:8px}
+.btn-o{width:100%;padding:14px;border-radius:2px;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:#6e6e6e;border:1px solid #e8e8e8;margin-top:8px}
 .btn-o:hover{background:#fafafa;color:#888}
 /* ===== Quiz glow-up — chrome vanity mirror framing the WHOLE app column (during the quiz) ===== */
 .ss.quiz-mirror,.ss.chat-mirror{position:relative;border-radius:0;border:13px solid transparent;
@@ -106,8 +106,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px) padding-box,
   repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px) padding-box,
   linear-gradient(#FBFAF7,#FBFAF7) padding-box,
-  linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
-  border-width:7px;box-shadow:0 0 0 7px #1a1a1a,0 8px 44px rgba(0,0,0,.16)}
+  linear-gradient(#1a1a1a,#1a1a1a) border-box;
+  border-width:8px;box-shadow:inset 0 0 0 8px #9AA0A6,0 8px 44px rgba(0,0,0,.16)}
 #s-quiz{position:relative}
 #s-quiz .q-cat{display:flex;align-items:center;gap:11px;font:700 12px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#C8971E;margin:0 0 11px}
 #s-quiz .q-cat::before{content:"\2605";color:#C8971E;font-size:11px}
@@ -133,7 +133,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   box-shadow:0 12px 22px -12px rgba(170,130,35,.6),inset 0 1px 0 rgba(255,255,255,.75)}
 #s-quiz .q-cta:hover{background:linear-gradient(180deg,#FBF0CC 0%,#EFD684 44%,#E0BE54 100%)}
 #s-quiz .q-cta:active{transform:scale(.99)}
-.btn-pink{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#1a1a1a;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
+.btn-pink{width:100%;padding:15px;border-radius:2px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#1a1a1a;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
 .btn-pink:hover{opacity:0.88}
 .btn-pink:active{transform:scale(0.98)}
 .btn-teal{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid #1a1a1a;background:#fff;color:#1a1a1a;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
@@ -227,9 +227,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .btn-chat:hover{opacity:0.88}
 .btn-yellow{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:#fff;color:#1a1a1a;border:1.5px solid #1a1a1a;margin-top:8px;font-family:'DM Sans',sans-serif;transition:opacity 0.2s}
 .btn-yellow:hover{opacity:0.88}
-.btn-outline{width:100%;padding:14px;border-radius:40px;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:none;color:#1a1a1a;border:2px solid #1a1a1a;margin-top:8px;font-family:'DM Sans',sans-serif;transition:opacity 0.2s}
+.btn-outline{width:100%;padding:14px;border-radius:2px;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:none;color:#1a1a1a;border:2px solid #1a1a1a;margin-top:8px;font-family:'DM Sans',sans-serif;transition:opacity 0.2s}
 .btn-outline:hover{opacity:0.7}
-.act-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;max-width:340px;margin:0;padding:15px;border-radius:40px;font-size:13px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s,border-color .2s}
+.act-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;max-width:340px;margin:0;padding:15px;border-radius:2px;font-size:13px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s,border-color .2s}
 .act-btn svg{width:18px;height:18px;flex-shrink:0}
 .act-primary{background:#1a1a1a;color:#fff;border:none}
 .act-primary:hover{opacity:.85}
@@ -344,7 +344,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .faq-steps{margin:2px 0 4px;padding-left:1.25rem}
 .faq-steps li{margin:4px 0}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
-.ss.sqtop{border-top-left-radius:0;border-top-right-radius:0}
+.ss.sqall{border-radius:0}
 #s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f6f7f8;background-image:linear-gradient(180deg,rgba(38,42,48,.10) 0,rgba(38,42,48,0) 30px),repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(150,158,166,.10) 100%)}
 #s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:10px;z-index:6;background:linear-gradient(180deg,#fbfcfd 0%,#cbd0d4 22%,#868d93 46%,#eef0f2 52%,#a1a7ad 62%,#5e646a 86%,#868c92 100%);box-shadow:0 5px 9px -3px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
@@ -1966,9 +1966,11 @@ function show(id,skipHistory){
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
   if(hd)hd.style.display=(ownChrome||id==='s-dream')?'none':'';
-  // Square the card's top corners only on the framed outfit screen (straight rod).
   var card=document.querySelector('.ss');
-  if(card)card.classList.toggle('sqtop',id==='s-photo');
+  // Square the full card on the curtain/dark full-bleed screens and the
+  // framed outfit-upload screen so their backgrounds match the squared
+  // framed pages (no rounded corners).
+  if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo');
   // Frame the whole app column in the chrome vanity mirror while she takes the quiz.
   if(card)card.classList.toggle('quiz-mirror',id==='s-quiz');
   // Same chrome frame around the stylist chat.
@@ -2431,11 +2433,12 @@ VOICE, generous honesty (be direct):
 - Be direct and confident. When something genuinely is not working for her goal or the occasion (for example a look that is not right for the setting she named), say so plainly and warmly, then immediately give the fix. Being clear is kinder than being vague.
 - Frame growth as elevation and never insult her or imply she needs "fixing" as a person, but do name what would truly make the look better, specifically and without hedging.
 - Warm, confident, and specific. No gushing, no fluff, no filler.
+- Calibration: you are a 9 out of 10 on honest directness. Lead with genuine warmth and a specific real positive, then give your true expert verdict and the single highest-impact change with full conviction, never softened or hedged. Still never harsh, never about her body or age.
 
 GUARDRAILS, never break these:
 - Never comment negatively on her body or her age, and never reference her size or age. Never use "hide," "conceal," "disguise," or "camouflage." Use "flatter," "balance," "lengthen," "highlight."
 - Make each shop "name" specific enough to search for.
-- Match suggestions to her preferences, and NEVER suggest items on her never-wear list or in colors she avoids.
+- Match suggestions to her preferences, and NEVER suggest anything on her never-wear list, in colors she avoids, or that she listed as a hard no. Honor her exact words. This rule is absolute.
 - If there are multiple people, style only the main woman.
 
 Respond with ONLY valid JSON in this exact format, no other text:
@@ -2594,7 +2597,7 @@ async function shopMyStyle(){
     sub='Ideas in the vibe of the look you shared';
   }
   var subEl=document.getElementById('shopSubPhoto');if(subEl)subEl.textContent=sub;
-  var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n- name: A specific item name (be specific about color, style, fabric)\n- store: ONE store (pick from: Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia)\n\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest items on her never-wear list or in colors she skips\n- Prioritize her color preferences and size range if given\n- Mix categories and price points across the 6 items\n- Be very specific, not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","store":"Store Name"}]}`;
+  var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n- name: A specific item name (be specific about color, style, fabric)\n- store: ONE store (pick from: Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia)\n\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute and overrides every other suggestion.\n- Prioritize her color preferences and size range if given\n- Mix categories and price points across the 6 items\n- Be very specific, not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","store":"Store Name"}]}`;
   var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
     var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:400,messages:[{role:"user",content:prompt}]})});
@@ -3224,8 +3227,9 @@ function renderPrefNever(c){
     <div class="pref-grid">${chips(prefNeverItems,'pref-never-style',prefs.neverWear)}</div>
     <div class="pref-label">Patterns I skip</div>
     <div class="pref-grid">${chips(prefNeverPatterns,'pref-never-pattern',prefs.neverPatterns)}</div>
-    <div class="pref-label" style="text-transform:none;letter-spacing:0;font-size:16px;line-height:1.5">Any colors, styles or specifics you <em>don't</em> like in your wardrobe?</div>
-    <textarea class="pref-other" id="prefNeverOther" placeholder="Tell us here...">${prefs.neverOther||''}</textarea>
+    <div class="pref-label" style="text-transform:none;letter-spacing:0;font-size:16px;line-height:1.5">Items or styles you <em>never</em> want suggested</div>
+    <div style="font-size:13.5px;color:#6e6e6e;line-height:1.5;margin:-2px 0 8px">In your own words. Your stylist, the shopping picks, and photo tips will all avoid these. For example: no denim jackets, nothing cropped, no bright orange.</div>
+    <textarea class="pref-other" id="prefNeverOther" placeholder="e.g. No denim jackets, no ponchos, no peplum tops">${prefs.neverOther||''}</textarea>
   `;
 }
 
@@ -3279,7 +3283,7 @@ function getPrefsForPrompt(){
   if(p.colorsSkip.length)lines.push('Colors to avoid: '+p.colorsSkip.join(', '));
   if(p.neverWear.length)lines.push('Never wear: '+p.neverWear.join(', '));
   if(p.neverPatterns.length)lines.push('Patterns to avoid: '+p.neverPatterns.join(', '));
-  if(p.neverOther)lines.push('Also avoids: '+p.neverOther);
+  if(p.neverOther)lines.push('HARD NO, never suggest these (her exact words): '+p.neverOther);
   if(p.jewelry)lines.push('Jewelry preference: '+p.jewelry);
   if(p.dailyShoes)lines.push('Daily shoes: '+p.dailyShoes);
   if(p.bagStyle)lines.push('Bag preference: '+p.bagStyle);
@@ -3641,6 +3645,7 @@ HOW TO RESPOND:\n- Never use any dashes or hyphens as punctuation. Use commas or
 - 1-3 sentences for simple questions. One short paragraph max for complex styling advice.
 - Be specific. Name exact items, colors, and stores. "A white linen button-down from Madewell" not "maybe try a nice top."
 - Format shopping suggestions as "item from StoreName" so they become clickable links.
+- NEVER recommend anything she listed as a never-wear, a color she avoids, or a hard no she never wants suggested. Honor her exact words. This is absolute.
 - Upbeat and confident, but not over-the-top. No gushing.
 - Use her name sparingly.
 - NEVER use the word "profile."
@@ -3658,6 +3663,7 @@ CONSTRUCTIVE FEEDBACK (generous honesty, be direct):
 - Frame as upgrades: "I'd swap the shoes for..." or "To take this up a notch..." or "Have you considered..."
 - Never insult her, and never make it about her body or age. Tell her the truth about the clothes and offer the better option.
 - Lead with a quick genuine positive, then the real suggestion.
+- Calibration: you are a 9 out of 10 on honest directness. Warm first, then your true expert opinion and the most impactful change stated plainly and confidently, never watered down. Still never harsh, never about her body or age.
 
 BODY SENSITIVITY:
 - Never agree something is wrong with her body. Never use words like "hide," "conceal," "disguise," or "camouflage."
