@@ -208,6 +208,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .chat-chip{padding:8px 14px;border-radius:20px;border:1.5px solid #ebebeb;background:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#666;cursor:pointer;transition:all 0.2s;white-space:nowrap}
 .chat-chip:hover{border-color:#1a1a1a;color:#1a1a1a}
 .chat-privacy{font-size:11px;color:#8a8a8a;text-align:center;padding:4px 0}
+.chat-fresh{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:11.5px;color:#8a8a8a;text-decoration:underline;cursor:pointer;padding:2px 4px;transition:color .2s}
+.chat-fresh:hover{color:#EC4899}
 #chatRefineHint button{border-radius:4px!important;border:1.5px solid #1a1a1a!important;color:#1a1a1a!important}
 .btn-chat{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.06em;cursor:pointer;border:1.5px solid #1a1a1a;background:#fff;color:#1a1a1a;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px;text-transform:uppercase}
 .btn-chat:hover{opacity:0.88}
@@ -1609,7 +1611,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button class="chat-chip" onclick="document.getElementById('chatPhotoIn').click()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><circle cx="12" cy="13.3" r="3.2"/></svg>Send a photo for advice</button>
       </div>
     </div>
-    <div class="chat-privacy">Photos are processed by AI and never stored</div>
+    <div class="chat-privacy">Photos are private to you and never stored on our servers</div>
+    <div id="chatFresh" style="text-align:center;margin:-2px 0 4px"><button class="chat-fresh" onclick="askClearChat()">Start a fresh conversation</button></div>
     <div class="chat-input-wrap">
       <button class="chat-photo-btn" onclick="document.getElementById('chatPhotoIn').click()" aria-label="Send a photo">📸</button>
       <input type="file" id="chatPhotoIn" accept="image/*" style="display:none" onchange="onChatPhoto(this)">
@@ -3362,11 +3365,41 @@ function loadChatHistory(){
   }catch(e){}
   return[];
 }
+function _chatGreeting(){
+  const first=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';
+  const hi=first?('Hi '+first+'!'):'Hi there!';
+  return hi+` I'm your Style Star Stylist. I was created by a real personal stylist who loves helping women discover their signature style and make shopping easy and fun. Ask me anything, or send a photo and I'll give you feedback and all the style help you want.`;
+}
+// "Start a fresh conversation" — quiet inline confirm, then wipe local history + photos
+function askClearChat(){
+  const el=document.getElementById('chatFresh');if(!el)return;
+  el.innerHTML='<span style="font-size:11.5px;color:#8a8a8a">Clear this conversation? </span>'+
+    '<button class="chat-fresh" style="color:#EC4899" onclick="doClearChat()">Yes, start fresh</button>'+
+    '<span style="color:#ccc"> &middot; </span>'+
+    '<button class="chat-fresh" onclick="resetFreshLink()">Cancel</button>';
+}
+function resetFreshLink(){
+  const el=document.getElementById('chatFresh');if(!el)return;
+  el.innerHTML='<button class="chat-fresh" onclick="askClearChat()">Start a fresh conversation</button>';
+}
+function doClearChat(){
+  chatHistory=[];
+  try{localStorage.removeItem('ss_chat')}catch(e){}
+  chatPhotoData=null;chatLookPhoto=null;
+  try{clearChatPhoto()}catch(e){}
+  const mc=document.getElementById('chatMessages');if(mc)mc.innerHTML='';
+  const sugEl=document.getElementById('chatSuggestions');
+  try{_restoreSuggestions()}catch(e){}
+  if(sugEl)sugEl.style.display='block';
+  addChatMsg(_chatGreeting(),'bot');
+  resetFreshLink();
+}
 
 function openChat(fromLook){
   chatPrevScreen=document.querySelector('.scr.act')?.id||'s-res';
   markStylistRead();
   show('s-chat');
+  resetFreshLink();
   const sugEl=document.getElementById('chatSuggestions');
   if(sugEl)sugEl.style.display='block';
   if(!fromLook)_restoreSuggestions();   // general chat → default prompt chips
@@ -3387,10 +3420,7 @@ function openChat(fromLook){
         msgContainer.appendChild(div);
       });
     }else if(!fromLook){
-      const first=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';
-      const hi=first?('Hi '+first+'!'):'Hi there!';
-      const welcome=hi+` I'm your Style Star Stylist. I was created by a real personal stylist who loves helping women discover their signature style and make shopping easy and fun. Ask me anything, or send a photo and I'll give you feedback and all the style help you want.`;
-      addChatMsg(welcome,'bot');
+      addChatMsg(_chatGreeting(),'bot');
     }
   }
   msgContainer.scrollTop=msgContainer.scrollHeight;
