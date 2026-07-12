@@ -243,9 +243,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .act-pair{display:flex;gap:10px;justify-content:center;width:100%;max-width:340px;margin:8px auto 0}
 .act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
 .act-pair .act-btn svg{width:19px;height:19px}
-#s-pref .pref-hdr{text-align:center;margin:2px 0 16px}
-#s-pref .pref-eyebrow{font:700 11px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#8a6d1e;margin-bottom:10px}
-#s-pref .pref-philo{position:relative;display:inline-block;font:italic 400 17px/1.42 'Fraunces',serif;color:#3a352c;max-width:296px;padding-bottom:14px}
+#s-pref .pref-hdr{text-align:center;margin:8px 0 16px}
+#s-pref .pref-philo{position:relative;display:inline-block;font:italic 400 17px/1.42 'Fraunces',serif;color:#3a352c;max-width:300px;padding-bottom:14px;min-height:38px}
 #s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
 #s-pref .pref-philo::before{content:"";position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#F6E9B4,#DFB955 55%,#C0932C);z-index:1}
 .pref-title{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#1a1a1a;margin-bottom:5px;letter-spacing:.01em}
@@ -279,7 +278,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
 #s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
 .pref-done{text-align:center;padding:2rem 1rem}
-.pref-done-star{font-size:34px;color:#DFB94E;margin-bottom:12px;line-height:1}
+.pref-done-star{font-size:42px;margin-bottom:12px;line-height:1}
 .pref-done-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
 .pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem;line-height:1.5}
 #s-pref-done .btn-p,#s-pref-done .btn-pink{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
@@ -1566,8 +1565,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="scr" id="s-pref">
   <div class="top-back-wrap"><button class="top-back" onclick="showBack(prefReturnScreen)">&larr; Back</button></div>
   <div class="pref-hdr">
-    <div class="pref-eyebrow">Refine Your Preferences</div>
-    <div class="pref-philo">The more we refine our preferences, the more beauty comes into our lives.</div>
+    <div class="pref-philo" id="prefPhilo">The more we refine our preferences, the more beauty comes into our lives.</div>
   </div>
   <div class="pref-progress" id="prefPips"></div>
   <div id="prefContent"></div>
@@ -1580,7 +1578,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="scr" id="s-pref-done">
   <div class="pref-done">
-    <div class="pref-done-star">★</div>
+    <div class="pref-done-star">⭐</div>
     <div class="pref-done-title">Your stylist just got a lot smarter</div>
 
     <div id="prefSaveBlock">
@@ -1985,7 +1983,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -3134,8 +3132,17 @@ function renderPrefPips(){
   el.innerHTML=h;
 }
 
+const prefPhilos=[
+  "The more we refine our preferences, the more beauty comes into our lives.",
+  "Knowing what you love is where style begins.",
+  "Clarity is its own kind of elegance.",
+  "What you leave out shapes your style as much as what you keep.",
+  "The more we refine what we love, the more beauty finds its way in."
+];
 function renderPref(){
   renderPrefPips();
+  const philo=document.getElementById('prefPhilo');
+  if(philo)philo.textContent=prefPhilos[prefStep]||prefPhilos[0];
   const c=document.getElementById('prefContent');
   const backBtn=document.getElementById('prefBack');
   const nextBtn=document.getElementById('prefNext');
