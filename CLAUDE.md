@@ -2188,3 +2188,14 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     bot bubbles); both openChat + doClearChat call `_addGreeting()`. Both bubbles persist to `ss_chat`
     (two assistant entries) — the resume divider still keys off a real USER turn, so greeting-only
     stays divider-free. Verified in Chromium (2 bot bubbles, 💫 on #1 only), no JS errors.
+
+**2026-07-11 (cont. — chat: "flattened logo" title — thicker + gold slider underline)**
+- Cath's idea: make the DM-Serif title read more like the logo. Built it as a subtle "flattened logo":
+  - **Thicker** — DM Serif Display ships in ONE weight (no true bold), so used `-webkit-text-stroke:.4px
+    #1a1a1a` to fatten the strokes crisply (a synthetic 700 looked blurry/heavy).
+  - **Gold slider underline** — `.chat-hdr-title` is now `display:inline-block;position:relative` with a
+    `::after` gold gradient line (`#F3E6B8→#DFB94E→#B8891F`, 2.5px, spans the text width) and a `::before`
+    round gold **knob** (8px radial-gradient, white ring) sitting on the line at ~64% — echoing the logo's
+    slider. `padding-bottom:8px` makes room above the subtitle.
+  - Verified in Chromium (390px), no JS errors. Delicate + premium; easy to dial (knob position/line
+    thickness) or remove if Cath finds it too much.
