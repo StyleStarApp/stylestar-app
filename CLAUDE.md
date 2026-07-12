@@ -2199,3 +2199,6 @@ More live polish with Cath, all merged → live (PRs #166–#170).
     slider. `padding-bottom:8px` makes room above the subtitle.
   - Verified in Chromium (390px), no JS errors. Delicate + premium; easy to dial (knob position/line
     thickness) or remove if Cath finds it too much.
+  - ✅ Polish (Cath): **squared the gold line ends** (`::after` border-radius 2px→0); **connected the
+    knob to the line** (removed the `::before` white ring `box-shadow` that made a gap); **pink header
+    star a touch bigger** (44→48px).
