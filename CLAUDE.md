@@ -2314,3 +2314,47 @@ quiz" link.
   to the world as a way of **shining her own light and sharing her God-given gifts** and her creativity.
   It has been a **delightful** project for her. (Emotional core: the expansion of her gift + "shine your
   light" — protect it in every design and copy choice.)
+
+**2026-07-12 (cont. — Shop your style page polish + MALL "brick wall" glow-up SHIPPED LIVE)**
+- Long live-polish session with Cath on the clean **Shop your style** page (`s-shop`style`) and a big
+  **Mall glow-up** (`s-shop`). All merged → live (PRs #281–#288).
+- **Shop your style page** (the unified clean personalized-picks page, one per entry point):
+  - Beautified the post-prefs action buttons ("Ask your stylist" / "See my Style Portrait") → gold-framed
+    cards with a square colored icon tile inside (pink chat tile, black/gold portrait tile), side by side.
+  - Photo path: outfit-results "Shop your style" now opens this clean page in **look mode**
+    (`openShopStyle('look')` → look-based picks via `_shopStyleGen`), returns to `s-photo-res` without losing it.
+  - **Framed like Style Star Edit** (gold+silver display-case, squared, `.ss.shop-mirror`); own DM-Serif
+    "Shop your style" title w/ gold slider underline (shared header hidden on `s-shopstyle`).
+  - Subtitle reworded to the honest **"Ideas matched to your style and preferences."** (these picks are
+    AI-generated; "Handpicked" stays reserved for the founder-curated Edit). Look mode: "In the vibe of the
+    look you just shared, and your style."
+  - **Loading star** iterated a lot; FINAL = a **bigger gold star with a silver outline, clean spin only**
+    (centroid-centered path so it spins without wobble; `.shop-star-main` + `@keyframes spin`). Rejected
+    along the way: breathing/pulse, round-dot sparkles (looked like bubbles), fuzzy glow, 4-point twinkles.
+    Loader text "Finding your perfect pieces…" enlarged (17.5px) + de-italicized; "Show me different
+    options" bumped to 15.5px; Back nudged off the frame.
+- **▶ MALL glow-up — "painted white brick wall + black-trimmed store windows"** (Cath's concept, she loves it):
+  - `#s-shop` is now a **full-bleed painted white-brick wall** (pure CSS/SVG `<pattern id="mallBrick">`, no
+    image files) covering the whole column; break-out via `.mall-brick{margin:-0.5rem -1.75rem -1.5rem}`.
+    Bricks are SMALL/fine (tile 64×38, brick 30×16) — an earlier bigger brick (132×76) read too large on
+    her phone. Brick color `#E6E1D6` mortar + `url(#mallBf)` white-gradient faces (Cath: loves the color).
+  - Store cards → **black-trimmed squared "store windows"**: `.mall-card` border 2.5px `#161616`,
+    border-radius 0, lit-glass gradient, `::before` thin inner mullion line, soft shadow. `.mall-cat` labels
+    black-on-brick.
+  - **Merged marquee sign** (`.mall-sign`, black-trimmed white): the title is the logo itself —
+    **"style Star Mall"** in DM Serif Display with the gold slider line + dot INSIDE the sign
+    (`.mall-sign-logo::after/::before`); slider line pulled tight to the words, dot at 71% (toward the "M").
+    Dropped the word "Shop" (subtitle below already starts "Enjoy shopping…") and removed the separate shared
+    logo header (hidden on `s-shop` in `show()`). Subtitle (`.mall-sign-sub`, non-italic) reworded to
+    **"Enjoy shopping our favorite stores. These are the places we love, all in one spot."**
+  - Shared `.hdr` header AND `.quiz-footer` are **hidden on `s-shop`** (sign carries the brand; page has its
+    own top-right Back + a bottom Back button). All scoped to `#s-shop` / `.mall-*` (Edit uses `.dc-*`, untouched).
+- ▶ **PARKED (Cath agreed to hold): a Mall search/filter.** Not needed at ~23 stores (tidy categories, quick
+  scroll). Revisit when the list grows (50+) or gains product images — then prefer a **category filter chip
+  row** (tap Designer/Activewear/… to jump) over a text search for a curated list. Logged for later.
+- ▶ Still-open Mall refinements Cath may want (offered): brick brightness/warmth, window-trim thickness,
+  keep/drop the mullion line, category labels on their own sign strips, restyle the bottom Back as a marquee.
+- **Inner-page glow-up progress:** Home, Welcome Back, Style Portrait, Outfit results, Analyze-outfit,
+  Analyzing loader, Quiz, Stylist chat, Style Star Edit, Shop your style, and now the **Mall** are all in the
+  chrome/gold world. Remaining old-look: **Refine Preferences was reskinned earlier**; the **footer pages
+  (Our Story / FAQ / Privacy)** are the main ones left (+ a future Contact page + Terms of Service).
