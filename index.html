@@ -242,9 +242,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
 .act-pair .act-btn svg{width:19px;height:19px}
 #s-pref .top-back-wrap{margin-right:-16px}
-#s-dream .top-back-wrap{margin-right:-16px}
+#s-dream .top-back-wrap{margin-right:-20px;margin-top:-0.7rem}
 #s-chat{position:relative}
-#s-chat .chat-close{position:absolute;top:6px;right:4px;z-index:6}
+#s-chat .chat-close{position:absolute;top:6px;right:1px;z-index:6}
 #s-pref .pref-hdr{text-align:center;margin:8px 0 16px}
 #s-pref .pref-philo{position:relative;display:inline-block;font:italic 500 17px/1.45 'Lora',serif;color:#35302a;max-width:300px;padding-bottom:14px;min-height:40px;text-wrap:balance}
 #s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
@@ -365,7 +365,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f6f7f8;background-image:linear-gradient(180deg,rgba(38,42,48,.10) 0,rgba(38,42,48,0) 30px),repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(150,158,166,.10) 100%)}
 #s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:10px;z-index:6;background:linear-gradient(180deg,#fbfcfd 0%,#cbd0d4 22%,#868d93 46%,#eef0f2 52%,#a1a7ad 62%,#5e646a 86%,#868c92 100%);box-shadow:0 5px 9px -3px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
-#s-photo .ph-back{position:absolute;top:22px;right:6px;z-index:5;background:none;border:none;font:500 12.5px/1 'DM Sans',sans-serif;color:#666;cursor:pointer;padding:4px 2px;letter-spacing:.02em}
+#s-photo .ph-back{position:absolute;top:13px;right:6px;z-index:5;background:none;border:none;font:500 12.5px/1 'DM Sans',sans-serif;color:#666;cursor:pointer;padding:4px 2px;letter-spacing:.02em}
 #s-photo .ph-back:hover{color:#1a1a1a}
 /* Logo plaque hanging from the gold rod on two wires */
 #s-photo .ph-hang,#s-photo-load .ph-hang{position:relative;width:188px;margin:-24px auto 7px;padding-top:23px}
@@ -991,7 +991,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .door .dstar svg{width:100%;height:100%;transform-origin:50% 50%}
 
 /* reveal state machine (classes toggled in JS) */
-.res-screen.rv-compose .dstar svg,.res-screen.rv-open .dstar svg{animation:rvStarLoop .55s linear infinite}
+.res-screen.rv-compose .dstar svg,.res-screen.rv-open .dstar svg{animation:rvStarLoop 1.05s linear infinite}
 .res-screen.rv-compose .door.l .dstar svg,.res-screen.rv-open .door.l .dstar svg{animation-name:rvStarLoopL}
 .res-screen.rv-open .door.l{animation:rvDoorL .85s cubic-bezier(.5,.04,.23,1) .05s both}
 .res-screen.rv-open .door.r{animation:rvDoorR .85s cubic-bezier(.5,.04,.23,1) .05s both}
