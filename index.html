@@ -320,16 +320,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .faq-steps li{margin:4px 0}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqtop{border-top-left-radius:0;border-top-right-radius:0}
-#s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:28px 20px 18px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f6f7f8;background-image:linear-gradient(180deg,rgba(38,42,48,.10) 0,rgba(38,42,48,0) 30px),repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(150,158,166,.10) 100%)}
-#s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:11px;z-index:6;background:linear-gradient(180deg,#f4f6f7 0%,#e0e4e6 2px,#ccd1d4 3px,#c7ccd0 96%,#b0b5ba 100%);box-shadow:0 3px 6px -3px rgba(40,44,50,.32)}
+#s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f6f7f8;background-image:linear-gradient(180deg,rgba(38,42,48,.10) 0,rgba(38,42,48,0) 30px),repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(150,158,166,.10) 100%)}
+#s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:11px;z-index:6;background:linear-gradient(180deg,#dfe3e6 0%,#b2b8bd 2px,#969ca2 3px,#8f959b 96%,#767c82 100%);box-shadow:0 3px 7px -3px rgba(40,44,50,.4)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
-#s-photo .ph-back{position:absolute;top:24px;right:18px;z-index:5;background:none;border:none;font:700 12px/1 'Jost',sans-serif;color:#5a5348;cursor:pointer;padding:4px 2px;letter-spacing:.1em;text-transform:uppercase}
+#s-photo .ph-back{position:absolute;top:34px;right:11px;z-index:5;background:none;border:none;font:700 10.5px/1 'Jost',sans-serif;color:#5a5348;cursor:pointer;padding:3px 2px;letter-spacing:.1em;text-transform:uppercase}
 #s-photo .ph-back:hover{color:#1a1a1a}
 /* Logo plaque hanging from the gold rod on two wires */
-#s-photo .ph-hang,#s-photo-load .ph-hang{position:relative;width:188px;margin:-24px auto 10px;padding-top:23px}
+#s-photo .ph-hang,#s-photo-load .ph-hang{position:relative;width:188px;margin:-24px auto 7px;padding-top:23px}
 #s-photo .ph-wires,#s-photo-load .ph-wires{position:absolute;top:0;left:0;width:188px;height:23px;overflow:visible}
-#s-photo .ph-wires line,#s-photo-load .ph-wires line{stroke:#8b9299;stroke-width:1.6}
-#s-photo .ph-wires circle,#s-photo-load .ph-wires circle{fill:none;stroke:#8b9299;stroke-width:1.7}
+#s-photo .ph-wires line,#s-photo-load .ph-wires line{stroke:#8b9299;stroke-width:1.15}
+#s-photo .ph-wires circle,#s-photo-load .ph-wires circle{fill:none;stroke:#8b9299;stroke-width:1.3}
 #s-photo .ph-logo-frame,#s-photo-load .ph-logo-frame{width:188px;padding:3px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
 #s-photo .ph-logo-frame img,#s-photo-load .ph-logo-frame img{display:block;width:66px;height:auto}
 /* ===== "Analyzing your outfit" screen — the lit "dressing-room studio" (#s-photo-load) ===== */
@@ -384,7 +384,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   .al-caps .b{animation:none;opacity:0}
   .al-dots i{animation:none;opacity:.7}
 }
-#s-photo .photo-upload-area{width:100%;max-width:330px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(224,27,27,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
+#s-photo .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:#fff;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(224,27,27,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
 /* Before a photo loads the frame scrolls the page like everything else. Once a
    photo is loaded we allow vertical page scroll (pan-y) — a one-finger up/down
    drag scrolls to the Analyze button — while pinch (2-finger) zoom and the crop
@@ -416,22 +416,22 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .photo-upload-area.cropmode .ph-change:not(.ph-crop-btn){display:none}
 #s-photo .photo-upload-area.cropmode .ph-crop-btn{top:auto;bottom:13px;left:50%;right:auto;transform:translateX(-50%);padding:9px 24px;font-size:11px}
 /* Optional "where are you headed?" occasion picker */
-#s-photo .occ-block{width:100%;max-width:330px;margin:12px auto 2px;text-align:center}
+#s-photo .occ-block{width:100%;max-width:300px;margin:9px auto 2px;text-align:center}
 #s-photo .occ-q{display:flex;align-items:baseline;justify-content:center;gap:9px;font:400 20px/1.2 'DM Serif Display',serif;color:#1a1a1a;margin-bottom:9px}
 #s-photo .occ-opt{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#C8971E}
 #s-photo .occ-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:318px;margin:0 auto}
-#s-photo .occ-chip{display:flex;align-items:center;justify-content:center;min-height:46px;border:1px solid #c9b487;background:#fff;color:#3a352c;font:600 13.5px/1.15 'Jost',sans-serif;padding:6px 6px;border-radius:0;cursor:pointer;transition:all .18s;text-align:center;white-space:nowrap}
+#s-photo .occ-chip{display:flex;align-items:center;justify-content:center;min-height:42px;border:1px solid #c9b487;background:#fff;color:#3a352c;font:600 13.5px/1.15 'Jost',sans-serif;padding:6px 6px;border-radius:0;cursor:pointer;transition:all .18s;text-align:center;white-space:nowrap}
 #s-photo .occ-chip.occ-skip-chip{white-space:normal;font-size:12.5px}
 #s-photo .occ-chip:hover{border-color:#1a1a1a}
 #s-photo .occ-chip.sel{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
 #s-photo .occ-chip.occ-skip-chip{font-style:italic;color:#6a6355}
 #s-photo .occ-chip.occ-skip-chip.sel{color:#fff;font-style:normal}
-#s-photo #analyzeBtn{position:relative;display:block;text-align:center;width:100%;max-width:344px;margin:12px auto 0;padding:16px;border:5px solid transparent;border-radius:0;cursor:pointer;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F59B9B,#E01B1B 22%,#B01414 42%,#F7ADAD 55%,#D01818 72%,#8f1010) border-box;color:#FCE4E1;font:700 15.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 14px 26px -12px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7;transition:filter .2s}
+#s-photo #analyzeBtn{position:relative;display:block;text-align:center;width:100%;max-width:344px;margin:9px auto 0;padding:14px;border:5px solid transparent;border-radius:0;cursor:pointer;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F59B9B,#E01B1B 22%,#B01414 42%,#F7ADAD 55%,#D01818 72%,#8f1010) border-box;color:#fff;font:700 15.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 14px 26px -12px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7;transition:filter .2s}
 #s-photo #analyzeBtn:hover{filter:brightness(1.1)}
 #s-photo #analyzeBtn .shim{position:absolute;inset:0;border-radius:0;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssShimmer 2.8s ease-in-out infinite;pointer-events:none}
 #s-photo #analyzeBtn .lbl{position:relative;display:inline-flex;align-items:center;vertical-align:middle;gap:9px;white-space:nowrap}
 #s-photo #analyzeBtn svg{width:23px;height:23px;stroke:#F4A9A9;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#s-photo .ph-foot{margin-top:16px;padding-top:13px;width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:11px;border-top:1px solid rgba(201,162,78,.3)}
+#s-photo .ph-foot{margin-top:12px;padding-top:11px;width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:11px;border-top:1px solid rgba(201,162,78,.3)}
 #s-photo .ph-foot .lnk{font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a453c;cursor:pointer}
 #s-photo .ph-foot .lnk:hover{color:#1a1a1a}
 #s-photo .ph-foot .st{color:#C8971E;font-size:12px;line-height:1}
@@ -837,10 +837,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .hero svg{width:18px;height:18px;position:relative;stroke:#F1DDA0;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .hero .lbl{position:relative;white-space:nowrap;display:flex;align-items:center}
 /* Stand-out chat invite BUBBLE button, sitting above the photo (tail points down at it) */
-.res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:repeating-linear-gradient(90deg,#e2d7bf 0px,#f9f4ea 21px,#e2d7bf 42px) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
+.res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
 .res-screen .ask-bubble b{font-weight:700;color:#201E1A}
 .res-screen .ask-bubble .chip{margin-top:1px}
-.res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#ede2ca;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
+.res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#eef0f1;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
 .res-screen .ask-bubble:active{transform:scale(.985);filter:brightness(.98)}
 /* Gentle one-time "stylist nudge" that pops above the Ask hero after the results settle */
 .res-screen .ask-nudge{position:relative;margin:0 8px 8px;background:#F2EFE8;border:1px solid rgba(201,162,78,.6);border-radius:14px;padding:11px 30px 11px 13px;display:none;gap:9px;align-items:flex-start;box-shadow:0 12px 22px -10px rgba(30,20,5,.5);opacity:0;transform:translateY(8px) scale(.7);transform-origin:50% 130%;pointer-events:none}
@@ -1303,8 +1303,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="ph-wrap">
     <div class="ph-hang">
       <svg class="ph-wires" viewBox="0 0 188 23" preserveAspectRatio="none" aria-hidden="true">
-        <line x1="94" y1="4" x2="15" y2="22"/>
-        <line x1="94" y1="4" x2="173" y2="22"/>
+        <line x1="94" y1="4" x2="15" y2="25"/>
+        <line x1="94" y1="4" x2="173" y2="25"/>
         <circle cx="94" cy="4" r="3.2"/>
       </svg>
       <div class="ph-logo-frame"><img src="logo-tight.png" alt="Style Star"></div>
