@@ -316,15 +316,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .shop-link{display:inline-block;font-size:11px;font-weight:600;color:#fff;background:#1a1a1a;padding:8px 20px;border-radius:20px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:opacity 0.2s}
 .shop-link:hover{opacity:0.85}
 .shop-loading{text-align:center;padding:2rem 0;color:#444;font-style:italic;font-size:15px;font-weight:500}
-.shop-star-wrap{position:relative;width:70px;height:70px;margin:8px auto 20px}
-.shop-star-main{position:absolute;top:9px;left:9px;width:52px;height:52px;filter:drop-shadow(0 2px 5px rgba(224,174,70,.35));animation:shopPulse 1.9s ease-in-out infinite;transform-origin:50% 50%}
-@keyframes shopPulse{0%,100%{transform:scale(.92)}50%{transform:scale(1.07)}}
-.shop-spk{position:absolute;opacity:0;transform-origin:50% 50%;filter:drop-shadow(0 0 2px rgba(246,216,117,.7))}
-.shop-spk.a{width:16px;height:16px;top:-3px;right:-1px;animation:shopTw 1.9s ease-in-out infinite}
-.shop-spk.b{width:12px;height:12px;bottom:0;left:-2px;animation:shopTw 1.9s ease-in-out .64s infinite}
-.shop-spk.c{width:10px;height:10px;top:52%;right:-6px;animation:shopTw 1.9s ease-in-out 1.2s infinite}
-@keyframes shopTw{0%,100%{opacity:0;transform:scale(.25) rotate(-18deg)}45%{opacity:1;transform:scale(1) rotate(14deg)}}
-@media(prefers-reduced-motion:reduce){.shop-star-main,.shop-spk{animation:none}.shop-spk{opacity:.7}}
+.shop-star-wrap{position:relative;width:72px;height:72px;margin:10px auto 22px}
+.shop-star-main{width:72px;height:72px;display:block;filter:drop-shadow(0 2px 5px rgba(224,174,70,.3));animation:spin 1.7s linear infinite;transform-origin:50% 50%}
+@media(prefers-reduced-motion:reduce){.shop-star-main{animation:none}}
 .shop-refresh{text-align:center;margin-top:14px}
 .shop-refresh-btn{font-size:15.5px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.03em}
 .shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;font-style:italic;max-width:320px;margin-left:auto;margin-right:auto}
@@ -1656,7 +1650,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="ss-shop-logo">Shop your style</div>
     <div class="ss-shop-sub">Ideas matched to your style and preferences.</div>
   </div>
-  <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#FFF6D2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg class="shop-spk a" viewBox="0 0 24 24"><path fill="#F4D26B" d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/></svg><svg class="shop-spk b" viewBox="0 0 24 24"><path fill="#F4D26B" d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/></svg><svg class="shop-spk c" viewBox="0 0 24 24"><path fill="#F4D26B" d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
+  <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
   <div class="ss-shop-talk">Want to talk it through? <span onclick="openChat()">Ask your stylist &rarr;</span></div>
 </div>
 
@@ -2944,7 +2938,7 @@ function openShopStyle(mode){
 }
 async function _shopStyleGen(){
   var cont=document.getElementById('shopStyleContent');
-  cont.innerHTML='<div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#FFF6D2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg class="shop-spk a" viewBox="0 0 24 24"><path fill="#F4D26B" d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/></svg><svg class="shop-spk b" viewBox="0 0 24 24"><path fill="#F4D26B" d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/></svg><svg class="shop-spk c" viewBox="0 0 24 24"><path fill="#F4D26B" d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/></svg></div>Finding your perfect pieces&hellip;</div>';
+  cont.innerHTML='<div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div>';
   var basis;
   if(_shopStyleMode==='look'){
     var t=((_lookCtx&&_lookCtx.tips)||[]).map(function(x){return (x.title?x.title+': ':'')+(x.text||'')}).join(' | ');
