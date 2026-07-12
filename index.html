@@ -286,10 +286,14 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .pref-done-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
 .pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem;line-height:1.5}
 .pref-done-acts{display:flex;gap:10px;max-width:280px;margin:12px auto 0}
-.pref-done-acts .pda{flex:1;padding:12px 6px;border-radius:2px;font:600 12px/1.3 'DM Sans',sans-serif;letter-spacing:.02em;cursor:pointer;background:#fff;border:1.5px solid #cfc8b8;color:#3a352c;transition:background .15s}
+.pref-done-acts .pda{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border-radius:2px;font:600 12px/1.25 'DM Sans',sans-serif;letter-spacing:.02em;cursor:pointer;background:#fff;border:1.5px solid #cfc8b8;color:#3a352c;transition:background .15s}
+.pref-done-acts .pda .pda-ic{width:23px;height:23px;flex:0 0 auto}
 .pref-done-acts .pda:hover{background:#faf9f6}
 .pref-done-acts .pda-pink{border-color:#EC4899;color:#EC4899}
 .pref-done-acts .pda-pink:hover{background:#fdf2f8}
+#s-shopstyle .ss-shop-hdr{text-align:center;margin:6px 0 18px}
+#s-shopstyle .ss-shop-title{font-family:'Fraunces',serif;font-size:25px;font-weight:600;color:#1a1a1a}
+#s-shopstyle .ss-shop-sub{font-size:13.5px;color:#6e6e6e;margin:5px auto 0;line-height:1.5;max-width:300px}
 #s-pref-done .btn-p,#s-pref-done .btn-pink{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
 #s-pref-done .btn-p:hover,#s-pref-done .btn-pink:hover{opacity:1;filter:brightness(1.08)}
 .email-section{margin:1.5rem 0;text-align:center}
@@ -1621,12 +1625,21 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="pref-done-sub" id="prefSavedSub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
       <button class="btn-pink" onclick="prefShopNow()" style="max-width:280px">Let's go shopping &rarr;</button>
       <div class="pref-done-acts">
-        <button class="pda pda-pink" onclick="openChat()">Ask your stylist</button>
-        <button class="pda" onclick="loadSaved()">See my Style Portrait</button>
+        <button class="pda pda-pink" onclick="openChat()"><svg class="pda-ic" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg><span>Ask your stylist</span></button>
+        <button class="pda" onclick="loadSaved()"><svg class="pda-ic" viewBox="0 0 24 24" fill="none" stroke="#C89A2C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg><span>See my Style Portrait</span></button>
       </div>
       <button class="retake" onclick="prefNotNow()" style="margin-top:12px">Not right now</button>
     </div>
   </div>
+</div>
+
+<div class="scr" id="s-shopstyle">
+  <div class="top-back-wrap"><button class="top-back" onclick="shopStyleBack()">&larr; Back</button></div>
+  <div class="ss-shop-hdr">
+    <div class="ss-shop-title">Shop your style</div>
+    <div class="ss-shop-sub">Handpicked to match your style and preferences.</div>
+  </div>
+  <div id="shopStyleContent"><div class="shop-loading">Finding your perfect pieces&hellip;</div></div>
 </div>
 
 <div class="scr" id="s-story">
@@ -2568,13 +2581,15 @@ function getStoreUrl(store,item){
   return'https://www.google.com/search?q='+encodeURIComponent(item+' '+store);
 }
 async function genOutfits(source){
-  const sectionId=source==='quiz'?'shopSection':'shopSectionPhoto';
-  document.getElementById(sectionId).style.display='';
-  document.getElementById(sectionId).scrollIntoView({behavior:'smooth',block:'start'});
-  const container=source==='quiz'?'shopContent':'shopContentPhoto';
+  const sectionId=source==='quiz'?'shopSection':(source==='page'?null:'shopSectionPhoto');
+  if(sectionId){
+    document.getElementById(sectionId).style.display='';
+    document.getElementById(sectionId).scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  const container=source==='quiz'?'shopContent':(source==='page'?'shopStyleContent':'shopContentPhoto');
   document.getElementById(container).innerHTML='<div class="shop-loading">Finding your perfect pieces...</div>';
-  const sliderVals=source==='quiz'?answers:(lastPhotoSliders||answers);
-  const archNames=source==='quiz'?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
+  const sliderVals=(source==='quiz'||source==='page')?answers:(lastPhotoSliders||answers);
+  const archNames=(source==='quiz'||source==='page')?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
   const sliderDesc=questions.map((q,i)=>`${q.cat}: ${sliderVals[i]}/11 (1=${q.left}, 6=center, 11=${q.right})`).join('\n');
   const prompt=`You are Catherine, a personal stylist. Based on this woman's style profile, suggest 6 specific shoppable items she would love.
 
@@ -2620,7 +2635,7 @@ Respond with ONLY valid JSON:
       </div>`;
     });
     html+='</div>';
-    html+='<div class="shop-refresh"><button class="shop-refresh-btn" onclick="genOutfits(\''+source+'\')">↻ Show me different picks</button></div>';
+    html+='<div class="shop-refresh"><button class="shop-refresh-btn" onclick="genOutfits(\''+source+'\')">↻ Show me different options</button></div>';
     document.getElementById(container).innerHTML=html;
   }catch(e){
     document.getElementById(container).innerHTML='<div class="shop-loading">Couldn\'t load picks right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="genOutfits(\''+source+'\')" style="max-width:200px">Try again</button></div>';
@@ -2894,13 +2909,15 @@ function skipPrefs(){showBack(prefReturnScreen)}
 function prefDone(){showBack(prefReturnScreen)}
 // After refining preferences: drop her straight into her personalized "Shop your
 // style" picks, no portrait reveal (genOutfits scrolls to the picks section).
-function prefShopNow(){
-  _resNoReveal=true;loadSavedAndShop();
-  // land the "Shop your style" section at the top (genOutfits scrolls while the
-  // picks are still loading, so re-anchor once the layout settles).
-  var ss=document.getElementById('shopSection');
-  if(ss){setTimeout(function(){ss.scrollIntoView({block:'start'})},650);setTimeout(function(){ss.scrollIntoView({block:'start'})},1400);}
+function prefShopNow(){openShopStyle();}
+// Clean standalone "Shop your style" page — nothing but her personalized picks.
+function openShopStyle(){
+  try{var d=JSON.parse(localStorage.getItem('ss_data'));if(d){userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});}}catch(e){}
+  show('s-shopstyle');
+  document.getElementById('shopStyleContent').innerHTML='<div class="shop-loading">Finding your perfect pieces&hellip;</div>';
+  genOutfits('page');
 }
+function shopStyleBack(){show('s-wb');}
 // "Not right now": land on the portrait's "What would you like to do?" menu, no reveal.
 function prefNotNow(){
   _resNoReveal=true;loadSaved();
