@@ -2151,3 +2151,20 @@ More live polish with Cath, all merged → live (PRs #166–#170).
   persists/duplicates.
 - Verified in Chromium (390px): returning convo → divider + zoomable photo (lightbox opens with the
   img src); after clear → greeting only, no divider; no JS errors.
+
+**2026-07-11 (cont. — chat: return "continue" chips, logo-font title, shooting-star greeting)**
+- ✅ **Return "continue" chips** — when she reopens a real conversation, the suggestion chips swap
+  from the default ("Shift one notch / My essentials / Send a photo") to a forward-friendly set
+  labelled **"Where to next?"**: *Style something new · Help me shop · What should I wear? · Pick up
+  our chat*. Leads with fresh starts (Cath: on return she usually wants something NEW, not to rehash),
+  keeps one gentle continue. New `_setReturnSuggestions()` (mirrors `_setLookSuggestions`; snapshots
+  `_defaultSug` first); called from the openChat restore branch under the same
+  `chatHistory.some(m=>m.role==='user')` guard as the divider, and only when `!fromLook`. Chip prompts
+  are apostrophe-free (the innerHTML is single-quote delimited — apostrophes would break the quoting).
+- ✅ **Header title in the LOGO font** — `.chat-hdr-title` "Style Star Stylist" switched Jost →
+  **DM Serif Display** (400, 19px; the logo-matching display serif already loaded). Cath's idea: since
+  this page has no logo image, the serif title carries the brand.
+- ✅ **Shooting-star emoji** 🌠 appended to the end of the stylist's greeting ("…all the style help
+  you want. 🌠"), in `_chatGreeting()` so both open + clear paths get it.
+- Verified in Chromium (390px): title computed font = DM Serif Display; return label "Where to next?"
+  + 4 chips; a chip tap fires quickChat with no JS error; greeting ends with 🌠; no JS errors.
