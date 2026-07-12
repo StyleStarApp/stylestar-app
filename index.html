@@ -243,8 +243,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .act-pair{display:flex;gap:10px;justify-content:center;width:100%;max-width:340px;margin:8px auto 0}
 .act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
 .act-pair .act-btn svg{width:19px;height:19px}
+#s-pref .top-back-wrap{margin-right:-11px}
 #s-pref .pref-hdr{text-align:center;margin:8px 0 16px}
-#s-pref .pref-philo{position:relative;display:inline-block;font:italic 400 17px/1.42 'Fraunces',serif;color:#3a352c;max-width:300px;padding-bottom:14px;min-height:38px}
+#s-pref .pref-philo{position:relative;display:inline-block;font:italic 400 17px/1.42 'Fraunces',serif;color:#3a352c;max-width:300px;padding-bottom:14px;min-height:38px;text-wrap:balance}
 #s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
 #s-pref .pref-philo::before{content:"";position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#F6E9B4,#DFB955 55%,#C0932C);z-index:1}
 .pref-title{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#1a1a1a;margin-bottom:5px;letter-spacing:.01em}
@@ -1579,7 +1580,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="scr" id="s-pref-done">
   <div class="pref-done">
     <div class="pref-done-star">⭐</div>
-    <div class="pref-done-title">Your style, beautifully clear</div>
+    <div class="pref-done-title" id="prefDoneTitle">Bringing out your best!</div>
 
     <div id="prefSaveBlock">
       <div class="pref-done-sub">You've named your preferences, and that clarity is the secret to a wardrobe that brings out the best in you. From here, shopping only gets easier and more fun. Save your profile so it's always ready for you, on any device.</div>
@@ -2883,14 +2884,17 @@ function showPrefDone(){
   savePrefs();
   const saveBlock=document.getElementById('prefSaveBlock');
   const savedBlock=document.getElementById('prefSavedBlock');
+  const dt=document.getElementById('prefDoneTitle');
   if(emailDone){
     saveBlock.style.display='none';
     savedBlock.style.display='block';
+    if(dt)dt.textContent='Your stylist just got a lot smarter';
     document.getElementById('prefSavedSub').textContent='Your style profile is updated and saved. Your shopping suggestions and chat advice just got even more personalized.';
     syncPrefsToServer();
   }else{
     saveBlock.style.display='block';
     savedBlock.style.display='none';
+    if(dt)dt.textContent='Bringing out your best!';
     const msg=document.getElementById('prefSaveMsg');if(msg)msg.textContent='';
   }
   show('s-pref-done');
@@ -2921,6 +2925,7 @@ function prefSaveComplete(email){
   document.getElementById('prefSaveBlock').style.display='none';
   var savedBlock=document.getElementById('prefSavedBlock');
   savedBlock.style.display='block';
+  var dt2=document.getElementById('prefDoneTitle');if(dt2)dt2.textContent='Your stylist just got a lot smarter';
   document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is saved! Your shopping suggestions and chat advice just got even more personalized.';
   window.scrollTo(0,0);
 }
@@ -3158,12 +3163,12 @@ function renderPref(){
 
 function nextPref(){
   savePrefStep();
-  if(prefStep<4){prefStep++;renderPref()}
+  if(prefStep<4){prefStep++;renderPref();window.scrollTo(0,0)}
   else{savePrefs();showPrefDone()}
 }
 function prevPref(){
   savePrefStep();
-  if(prefStep>0){prefStep--;renderPref()}
+  if(prefStep>0){prefStep--;renderPref();window.scrollTo(0,0)}
 }
 
 function savePrefStep(){
