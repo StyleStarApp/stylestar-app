@@ -185,11 +185,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .chat-wrap{display:flex;flex-direction:column;height:86vh;max-height:800px}
 .chat-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #ebebeb;margin-bottom:10px}
 .chat-hdr-left{display:flex;align-items:center;gap:8px}
-.chat-hdr-star{width:48px;height:48px}
+.chat-hdr-star{width:42px;height:42px}
 .chat-hdr-title{font:400 19px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.4px #1a1a1a;display:inline-block;position:relative;padding-bottom:8px}
 .chat-hdr-title::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2.5px;border-radius:0;background:#E0B84C}
 .chat-hdr-title::before{content:"";position:absolute;bottom:-1px;left:58%;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
-.chat-hdr-sub{font:500 11px/1.3 'Jost',sans-serif;color:#8a6a17;letter-spacing:.02em;margin-top:2px}
+.chat-hdr-sub{font:500 10px/1.3 'Jost',sans-serif;color:#8a6a17;letter-spacing:0;margin-top:2px;white-space:nowrap}
 .chat-close{font:500 12.5px/1 'DM Sans',sans-serif;color:#666;cursor:pointer;background:none;border:none;white-space:nowrap;padding:4px 2px;letter-spacing:.02em}
 .chat-messages{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:10px}
 .chat-msg{max-width:85%;padding:12px 16px;border-radius:16px;font-size:15px;line-height:1.6;font-family:'DM Sans',sans-serif}
@@ -244,7 +244,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-pref .top-back-wrap{margin-right:-16px}
 #s-dream .top-back-wrap{margin-right:-20px;margin-top:-0.7rem}
 #s-chat{position:relative}
-#s-chat .chat-close{position:absolute;top:6px;right:1px;z-index:6}
+#s-chat .chat-close{position:absolute;top:2px;right:-6px;z-index:6}
 #s-pref .pref-hdr{text-align:center;margin:8px 0 16px}
 #s-pref .pref-philo{position:relative;display:inline-block;font:italic 500 17px/1.45 'Lora',serif;color:#35302a;max-width:300px;padding-bottom:14px;min-height:40px;text-wrap:balance}
 #s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
@@ -993,6 +993,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* reveal state machine (classes toggled in JS) */
 .res-screen.rv-compose .dstar svg,.res-screen.rv-open .dstar svg{animation:rvStarLoop 1.05s linear infinite}
 .res-screen.rv-compose .door.l .dstar svg,.res-screen.rv-open .door.l .dstar svg{animation-name:rvStarLoopL}
+/* revisit ("See my style portrait" for a saved user): no spin, a single elegant glint as the doors open */
+.res-screen.rv-quick .dstar svg{animation:rvGlint .8s ease both!important}
 .res-screen.rv-open .door.l{animation:rvDoorL .85s cubic-bezier(.5,.04,.23,1) .05s both}
 .res-screen.rv-open .door.r{animation:rvDoorR .85s cubic-bezier(.5,.04,.23,1) .05s both}
 .res-screen.rv-open .doors{animation:rvFade 1.0s ease .05s both}
@@ -1019,6 +1021,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 @keyframes rvFade{0%,42%{opacity:1}100%{opacity:0;visibility:hidden}}
 @keyframes rvStarLoop{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 @keyframes rvStarLoopL{from{transform:rotate(0)}to{transform:rotate(-360deg)}}
+@keyframes rvGlint{0%{opacity:.8;transform:scale(1)}45%{opacity:1;transform:scale(1.22)}100%{opacity:.9;transform:scale(1)}}
 @keyframes sigPlot{from{left:calc(50% - 6px)}to{left:calc(var(--x) - 6px)}}
 @keyframes heartBeat{0%,100%{transform:scale(1)}28%{transform:scale(1.28)}45%{transform:scale(.94)}62%{transform:scale(1.14)}80%{transform:scale(1)}}
 
@@ -2070,7 +2073,7 @@ function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp
 function _resShowCompose(id){
   id=id||'s-res';
   var s=document.getElementById(id);
-  s.classList.remove('rv-open','rv-done');
+  s.classList.remove('rv-open','rv-done','rv-quick');
   show(id);
   document.getElementById('pw').style.display='none';
   void s.offsetWidth;
@@ -2088,10 +2091,10 @@ function _playResReveal(fromCompose,id){
     // After the sequence finishes, drop to a static terminal state so returning to
     // the screen (e.g. via Back) never replays the doors.
     if(s._rvDone)clearTimeout(s._rvDone);
-    s._rvDone=setTimeout(function(){s.classList.remove('rv-open');s.classList.add('rv-done')},s.id==='s-res'?2400:3400);
+    s._rvDone=setTimeout(function(){s.classList.remove('rv-open','rv-quick');s.classList.add('rv-done')},s.id==='s-res'?2400:3400);
   }
-  if(fromCompose){open()}
-  else{s.classList.remove('rv-open','rv-done');void s.offsetWidth;s.classList.add('rv-compose');setTimeout(open,650)}
+  if(fromCompose){s.classList.remove('rv-quick');open()}
+  else{s.classList.remove('rv-open','rv-done');s.classList.add('rv-quick');void s.offsetWidth;s.classList.add('rv-compose');setTimeout(open,300)}
 }
 function showResult(txt,top3,motto){
   quizTaken=true;resBackScreen='';
