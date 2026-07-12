@@ -101,6 +101,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .ss.dream-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#F3E6B8 0%,#DFB94E 32%,#B8891F 62%,#E8CE7E 100%) border-box;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
+/* Refine Preferences: the Quiz's silver+gold-keyline chrome frame at the unified 8px width */
+.ss.pref-mirror{position:relative;border-radius:0;border:8px solid transparent;
+  background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
+  box-shadow:0 7px 40px rgba(0,0,0,.16),inset 0 0 0 8px #AEB4BA,inset 0 0 0 10px #C9A14E}
 .ss.quiz-mirror .tag{display:none}
 .ss.chat-mirror{background:
   repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px) padding-box,
@@ -127,11 +131,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 @media (prefers-reduced-motion:reduce){#s-quiz input[type=range]::-webkit-slider-thumb,#s-quiz input[type=range]::-moz-range-thumb{transition:none}}
 #s-quiz .q-back{width:100%;padding:14px;border-radius:3px;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;background:#fff;color:#3a352e;border:1.5px solid #8f8a80;margin-top:9px}
 #s-quiz .q-back:hover{background:#f7f6f3;color:#1c1a16;border-color:#5a554c}
-#s-quiz .q-cta{display:block;width:100%;border:1.5px solid #C99A2E;border-radius:3px;cursor:pointer;margin-top:4px;
-  background:linear-gradient(180deg,#F7EBC2 0%,#EAD07A 44%,#DBB84E 100%);
-  color:#211803;text-align:center;font:700 14px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:18px 16px;
-  box-shadow:0 12px 22px -12px rgba(170,130,35,.6),inset 0 1px 0 rgba(255,255,255,.75)}
-#s-quiz .q-cta:hover{background:linear-gradient(180deg,#FBF0CC 0%,#EFD684 44%,#E0BE54 100%)}
+#s-quiz .q-cta{display:block;width:100%;border:4px solid transparent;border-radius:3px;cursor:pointer;margin-top:4px;
+  background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;
+  color:#fff;text-align:center;font:700 14px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:16px;
+  box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
+#s-quiz .q-cta:hover{filter:brightness(1.08)}
 #s-quiz .q-cta:active{transform:scale(.99)}
 .btn-pink{width:100%;padding:15px;border-radius:2px;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;background:#1a1a1a;color:#fff;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px}
 .btn-pink:hover{opacity:0.88}
@@ -173,7 +177,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .stay-title{font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
 .stay-sub{font-size:14px;color:#444;margin-bottom:10px;font-weight:500}
 .stay-form{display:flex;flex-direction:column;align-items:center;gap:8px}
-.stay-input{border:1.5px solid #e8e8e8;border-radius:40px;padding:12px 18px;font-size:15px;width:100%;max-width:280px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif}
+.stay-input{border:1.5px solid #e8e8e8;border-radius:2px;padding:12px 18px;font-size:15px;width:100%;max-width:280px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif}
 .stay-input:focus{outline:none;border-color:#C8A060}
 .stay-input::placeholder{color:#9a9a9a}
 .stay-success{font-size:14px;color:#B08830;font-weight:500}
@@ -239,11 +243,15 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .act-pair{display:flex;gap:10px;justify-content:center;width:100%;max-width:340px;margin:8px auto 0}
 .act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
 .act-pair .act-btn svg{width:19px;height:19px}
-.pref-title{font-size:22px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+#s-pref .pref-hdr{text-align:center;margin:8px 0 16px}
+#s-pref .pref-philo{position:relative;display:inline-block;font:italic 400 17px/1.42 'Fraunces',serif;color:#3a352c;max-width:300px;padding-bottom:14px;min-height:38px}
+#s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
+#s-pref .pref-philo::before{content:"";position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#F6E9B4,#DFB955 55%,#C0932C);z-index:1}
+.pref-title{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#1a1a1a;margin-bottom:5px;letter-spacing:.01em}
 .pref-sub{font-size:14px;color:#666;margin-bottom:1.25rem;line-height:1.5}
-.pref-label{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em}
+.pref-label{font-size:12px;font-weight:700;color:#8a6d1e;margin-bottom:9px;text-transform:uppercase;letter-spacing:0.11em}
 .pref-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem}
-.pref-chip{padding:10px 16px;border-radius:24px;border:1.5px solid #ddd;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#555;cursor:pointer;transition:all 0.15s;user-select:none}
+.pref-chip{padding:10px 16px;border-radius:2px;border:1px solid #cfc8b8;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#3a352c;cursor:pointer;transition:all 0.15s;user-select:none}
 .pref-chip.sel{border-color:#D4AF37;background:#fdf8ef;color:#1a1a1a;font-weight:600}
 .pref-chip.skip{border-color:#e74c3c;background:#fef5f5;color:#999;text-decoration:line-through}
 .pref-never-style.sel,.pref-never-pattern.sel{border-color:#D4AF37;background:#fdf8ef;color:#1a1a1a;font-weight:600;text-decoration:line-through;position:relative;padding-left:28px}
@@ -258,16 +266,23 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .color-item{display:flex;flex-direction:column;align-items:center;gap:2px}
 .color-dot[data-name="Metallics"]{}
 .pref-progress{display:flex;gap:6px;justify-content:center;margin-bottom:1.25rem}
-.pref-pip{width:10px;height:10px;border-radius:50%;background:#e8e8e8}
-.pref-pip.active{background:#D4AF37}
+.pref-pip{width:9px;height:9px;border-radius:50%;background:#e4ddcd;transition:background .2s}
+.pref-pip.active{background:#C8971E}
 .pref-pip.done{background:#4CAF50}
-.pref-other{width:100%;border:1.5px solid #e8e8e8;border-radius:12px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a1a;min-height:60px;resize:none;margin-bottom:1rem}
+.pref-other{width:100%;border:1px solid #cfc8b8;border-radius:2px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a1a;min-height:60px;resize:none;margin-bottom:1rem}
 .pref-other:focus{outline:none;border-color:#D4AF37}
 .pref-other::placeholder{color:#9a9a9a}
+/* Prefs buttons match the Quiz (its twin): warm gold Next, soft outline Back — softer than solid black */
+#s-pref #prefNext{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
+#s-pref #prefNext:hover{opacity:1;filter:brightness(1.08)}
+#s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
+#s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
 .pref-done{text-align:center;padding:2rem 1rem}
-.pref-done-star{font-size:48px;margin-bottom:12px}
-.pref-done-title{font-size:20px;font-weight:700;color:#D4AF37;margin-bottom:6px}
-.pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem}
+.pref-done-star{font-size:42px;margin-bottom:12px;line-height:1}
+.pref-done-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
+.pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem;line-height:1.5}
+#s-pref-done .btn-p,#s-pref-done .btn-pink{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
+#s-pref-done .btn-p:hover,#s-pref-done .btn-pink:hover{opacity:1;filter:brightness(1.08)}
 .email-section{margin:1.5rem 0;text-align:center}
 .shop-section{margin:1.5rem 0;text-align:center}
 .shop-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:'DM Sans',sans-serif}
@@ -1549,6 +1564,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="plight" id="photoLightbox" onclick="closeLightbox()"><span class="plight-x">&times;</span><img id="plightImg" alt="Your outfit"/></div>
 <div class="scr" id="s-pref">
   <div class="top-back-wrap"><button class="top-back" onclick="showBack(prefReturnScreen)">&larr; Back</button></div>
+  <div class="pref-hdr">
+    <div class="pref-philo" id="prefPhilo">The more we refine our preferences, the more beauty comes into our lives.</div>
+  </div>
   <div class="pref-progress" id="prefPips"></div>
   <div id="prefContent"></div>
   <div style="margin-top:1rem">
@@ -1561,10 +1579,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="scr" id="s-pref-done">
   <div class="pref-done">
     <div class="pref-done-star">⭐</div>
-    <div class="pref-done-title">Your stylist just got a lot smarter</div>
+    <div class="pref-done-title">Your style, beautifully clear</div>
 
     <div id="prefSaveBlock">
-      <div class="pref-done-sub">You've just shared your sizes, colors, and the styles you love. Save your style profile so you never have to enter it again, on any device.</div>
+      <div class="pref-done-sub">You've named your preferences, and that clarity is the secret to a wardrobe that brings out the best in you. From here, shopping only gets easier and more fun. Save your profile so it's always ready for you, on any device.</div>
       <div class="stay-form" id="prefSaveForm">
         <input type="text" class="stay-input" id="prefSaveName" placeholder="Your first name (optional)">
         <input type="email" class="stay-input" id="prefSaveEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')savePrefProfile()">
@@ -1965,7 +1983,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -1977,6 +1995,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('chat-mirror',id==='s-chat');
   // And around the boutique Style Star Edit.
   if(card)card.classList.toggle('dream-mirror',id==='s-dream');
+  // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
+  if(card)card.classList.toggle('pref-mirror',id==='s-pref'||id==='s-pref-done');
   if(!skipHistory){
     history.pushState({screen:id},null,'');
   }
@@ -2901,7 +2921,7 @@ function prefSaveComplete(email){
   document.getElementById('prefSaveBlock').style.display='none';
   var savedBlock=document.getElementById('prefSavedBlock');
   savedBlock.style.display='block';
-  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is saved! You can come back anytime, on any device, just by entering your email.';
+  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is saved! Your shopping suggestions and chat advice just got even more personalized.';
   window.scrollTo(0,0);
 }
 async function savePrefProfile(){
@@ -3112,8 +3132,17 @@ function renderPrefPips(){
   el.innerHTML=h;
 }
 
+const prefPhilos=[
+  "The more we refine our preferences, the more beauty comes into our lives.",
+  "Knowing what you love is where style begins.",
+  "Clarity is its own kind of elegance.",
+  "What you leave out shapes your style as much as what you keep.",
+  "The more we refine what we love, the more beauty finds its way in."
+];
 function renderPref(){
   renderPrefPips();
+  const philo=document.getElementById('prefPhilo');
+  if(philo)philo.textContent=prefPhilos[prefStep]||prefPhilos[0];
   const c=document.getElementById('prefContent');
   const backBtn=document.getElementById('prefBack');
   const nextBtn=document.getElementById('prefNext');
@@ -3227,9 +3256,9 @@ function renderPrefNever(c){
     <div class="pref-grid">${chips(prefNeverItems,'pref-never-style',prefs.neverWear)}</div>
     <div class="pref-label">Patterns I skip</div>
     <div class="pref-grid">${chips(prefNeverPatterns,'pref-never-pattern',prefs.neverPatterns)}</div>
-    <div class="pref-label" style="text-transform:none;letter-spacing:0;font-size:16px;line-height:1.5">Items or styles you <em>never</em> want suggested</div>
-    <div style="font-size:13.5px;color:#6e6e6e;line-height:1.5;margin:-2px 0 8px">In your own words. Your stylist, the shopping picks, and photo tips will all avoid these. For example: no denim jackets, nothing cropped, no bright orange.</div>
-    <textarea class="pref-other" id="prefNeverOther" placeholder="e.g. No denim jackets, no ponchos, no peplum tops">${prefs.neverOther||''}</textarea>
+    <div class="pref-label" style="text-transform:none;letter-spacing:0;font-size:16px;line-height:1.5">Items or styles you never want suggested?</div>
+    <div style="font-size:13.5px;color:#6e6e6e;line-height:1.5;margin:-2px 0 8px">e.g. no orange, no denim jackets, can be anything you just don't like.</div>
+    <textarea class="pref-other" id="prefNeverOther" placeholder="Type it here...">${prefs.neverOther||''}</textarea>
   `;
 }
 
