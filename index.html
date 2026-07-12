@@ -763,7 +763,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 /* shared board bits */
 .res-screen .lacq{position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;background:linear-gradient(122deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.05) 18%,transparent 36%,transparent 100%)}
-.res-screen .sweep{position:absolute;top:0;bottom:0;left:0;width:44%;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);animation:rvSweep 6s ease-in-out 2s infinite}
+.res-screen .sweep{display:none}
 .res-screen .board{position:relative;border-radius:2px;padding:13px;background:linear-gradient(158deg,#3d382f 0%,#221d17 46%,#130f0b 100%);box-shadow:0 20px 30px -14px rgba(0,0,0,.66),inset 0 0 0 1px rgba(201,162,78,.4),inset 0 1px 0 rgba(255,255,255,.16)}
 .res-screen .page{position:relative;background:#FCFCFB;border-radius:1px;padding:22px 17px 22px;text-align:center;box-shadow:0 3px 9px rgba(0,0,0,.28)}
 
@@ -1614,8 +1614,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
     <div id="prefSavedBlock" style="display:none">
       <div class="pref-done-sub" id="prefSavedSub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
-      <button class="btn-pink" onclick="showShop()" style="max-width:280px">Let's go shopping &rarr;</button>
-      <button class="retake" onclick="prefDone()" style="margin-top:10px">Not right now</button>
+      <button class="btn-pink" onclick="loadSavedAndShop()" style="max-width:280px">Shop your style &rarr;</button>
+      <div style="font-size:13.5px;color:#6e6e6e;margin-top:13px;line-height:1.7">Or <span onclick="openChat()" style="text-decoration:underline;cursor:pointer">ask your stylist</span> &middot; <span onclick="loadSaved()" style="text-decoration:underline;cursor:pointer">see your portrait</span></div>
     </div>
   </div>
 </div>
