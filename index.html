@@ -246,15 +246,17 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-chat{position:relative}
 #s-chat .chat-close{position:absolute;top:2px;right:-11px;z-index:6}
 #s-pref .pref-hdr{text-align:center;margin:8px 0 16px}
-#s-pref .pref-philo{position:relative;display:inline-block;font:italic 500 17px/1.45 'Lora',serif;color:#35302a;max-width:300px;padding-bottom:14px;min-height:40px;text-wrap:balance}
+#s-pref .pref-philo{position:relative;display:inline-block;font:italic 600 17px/1.45 'Lora',serif;color:#35302a;max-width:300px;padding-bottom:14px;min-height:40px;text-wrap:balance}
 #s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
 #s-pref .pref-philo::before{content:"";position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#F6E9B4,#DFB955 55%,#C0932C);z-index:1}
 .pref-title{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#1a1a1a;margin-bottom:5px;letter-spacing:.01em}
 .pref-sub{font-size:14px;color:#666;margin-bottom:1.25rem;line-height:1.5}
 .pref-label{font-size:12px;font-weight:700;color:#8a6d1e;margin-bottom:9px;text-transform:uppercase;letter-spacing:0.11em}
 .pref-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem}
+#s-pref .sizegrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1.25rem}
+#s-pref .sizegrid .pref-chip{padding:11px 2px;text-align:center}
 .pref-chip{padding:10px 16px;border-radius:2px;border:1px solid #cfc8b8;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#3a352c;cursor:pointer;transition:all 0.15s;user-select:none}
-.pref-chip.sel{border-color:#a3a7ab;background:#f0f0ef;color:#3a352c;font-weight:600}
+.pref-chip.sel{border-color:#4CAF50;background:#f0f0ef;color:#3a352c;font-weight:600}
 .pref-chip.skip{border-color:#e74c3c;background:#fef5f5;color:#999;text-decoration:line-through}
 .pref-never-style.sel,.pref-never-pattern.sel{border-color:#a3a7ab;background:#f0f0ef;color:#3a352c;font-weight:600;text-decoration:line-through;position:relative;padding-left:28px}
 .pref-never-style.sel::before,.pref-never-pattern.sel::before{content:"✕";position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:#8a8e92}
@@ -333,13 +335,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-dream{background:#fff}
 #s-dream .dc-wrap{padding:0.5rem 0.5rem 2rem}
 /* the page's own "elongated logo" title (mirrors the stylist-chat title treatment) */
-.dc-logo{font:400 39px/1.03 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:1px #1a1a1a;display:inline-block;position:relative;padding-bottom:13px;margin:8px 0 0;letter-spacing:.01em}
-.dc-logo::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3.5px;background:#E0B84C}
-.dc-logo::before{content:"";position:absolute;bottom:0;left:67%;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
+.dc-logo{font:400 30px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.7px #1a1a1a;display:inline-block;position:relative;padding-bottom:11px;margin:8px 0 0;letter-spacing:.01em}
+.dc-logo::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3px;background:#E0B84C}
+.dc-logo::before{content:"";position:absolute;bottom:0.5px;left:67%;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
 /* a touch of the entry button's turquoise, and the "not AI" promise */
 .dc-tagline{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
 .dc-tagline::before,.dc-tagline::after{content:"\2605";font-size:14px;color:#0FA6B6}
-#s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:1rem 0 1.9rem;font-style:italic;font-weight:400;padding:0 0.5rem}
+#s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:1rem 0 1.9rem;font-style:italic;font-weight:600;padding:0 0.5rem}
 #s-dream .dc-disclosure{font-family:'Fraunces',Georgia,serif;font-size:11.5px;color:#8a8172;margin-top:1.5rem;line-height:1.65;font-style:italic}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 #s-dream .btn-outline{border-radius:2px;border-width:1.5px;max-width:260px;margin:1.3rem auto 0}
@@ -800,7 +802,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .ac-div span{font:600 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:#B08830;text-transform:uppercase;white-space:nowrap}
 .res-screen .ac-notes{font:500 17px/1.5 'Fraunces',serif;color:#3c3628;text-wrap:balance}
 .res-screen .arch-motto{font:italic 600 15px/1.55 'Fraunces',serif;color:#3c3628;max-width:280px;margin:14px auto 0}
-.res-screen .ac-sweep{position:absolute;top:0;bottom:0;left:0;width:46%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);pointer-events:none;opacity:0;z-index:2}
+.res-screen .ac-sweep{display:none}
 #s-res.rv-open .ac-sweep{animation:wbSweep 1.4s ease-out 1.2s both}
 /* clipboard + boards rise behind the opening doors so there's no black gap */
 #s-res.rv-open .p1{animation-delay:.1s}
@@ -1612,7 +1614,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
     <div id="prefSavedBlock" style="display:none">
       <div class="pref-done-sub" id="prefSavedSub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
-      <button class="btn-pink" onclick="prefDone()" style="max-width:280px">Continue</button>
+      <button class="btn-pink" onclick="showShop()" style="max-width:280px">Let's go shopping &rarr;</button>
+      <button class="retake" onclick="prefDone()" style="margin-top:10px">Not right now</button>
     </div>
   </div>
 </div>
@@ -3232,13 +3235,13 @@ function renderPrefSizes(c){
     <div class="pref-title">My Sizes</div>
     <div class="pref-sub">Share as much or as little as you'd like. Your preferences help us style you better.</div>
     <div class="pref-label">Tops</div>
-    <div class="pref-grid">${chips(tops,'pref-size-tops',prefs.sizes.tops)}</div>
+    <div class="pref-grid sizegrid">${chips(tops,'pref-size-tops',prefs.sizes.tops)}</div>
     <div class="pref-label">Bottoms</div>
-    <div class="pref-grid">${chips(bottoms,'pref-size-bottoms',prefs.sizes.bottoms)}</div>
+    <div class="pref-grid sizegrid">${chips(bottoms,'pref-size-bottoms',prefs.sizes.bottoms)}</div>
     <div class="pref-label">Dresses</div>
-    <div class="pref-grid">${chips(bottoms,'pref-size-dresses',prefs.sizes.dresses)}</div>
+    <div class="pref-grid sizegrid">${chips(bottoms,'pref-size-dresses',prefs.sizes.dresses)}</div>
     <div class="pref-label">Shoes</div>
-    <div class="pref-grid">${chips(shoes,'pref-size-shoes',prefs.sizes.shoes)}</div>
+    <div class="pref-grid sizegrid">${chips(shoes,'pref-size-shoes',prefs.sizes.shoes)}</div>
     <div class="pref-label">Pants fit</div>
     <div class="pref-grid">${chips(pantsFit,'pref-size-pantsfit',prefs.sizes.pantsfit)}</div>
   `;
