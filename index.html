@@ -1645,7 +1645,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="top-back-wrap"><button class="top-back" onclick="shopStyleBack()">&larr; Back</button></div>
   <div class="ss-shop-hdr">
     <div class="ss-shop-logo">Shop your style</div>
-    <div class="ss-shop-sub">Handpicked to match your style and preferences.</div>
+    <div class="ss-shop-sub">Ideas matched to your style and preferences.</div>
   </div>
   <div id="shopStyleContent"><div class="shop-loading">Finding your perfect pieces&hellip;</div></div>
   <div class="ss-shop-talk">Want to talk it through? <span onclick="openChat()">Ask your stylist &rarr;</span></div>
@@ -2929,7 +2929,7 @@ function openShopStyle(mode){
   if(cur&&cur!=='s-shopstyle'&&cur!=='s-pref-done')shopStyleFrom=cur;else if(!shopStyleFrom)shopStyleFrom='s-wb';
   try{var d=JSON.parse(localStorage.getItem('ss_data'));if(d){userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});}}catch(e){}
   var subEl=document.querySelector('#s-shopstyle .ss-shop-sub');
-  if(subEl)subEl.textContent=(_shopStyleMode==='look')?'In the vibe of the look you just shared, and your style.':'Handpicked to match your style and preferences.';
+  if(subEl)subEl.textContent=(_shopStyleMode==='look')?'In the vibe of the look you just shared, and your style.':'Ideas matched to your style and preferences.';
   show('s-shopstyle');
   _shopStyleGen();
 }
