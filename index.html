@@ -1579,10 +1579,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="scr" id="s-pref-done">
   <div class="pref-done">
     <div class="pref-done-star">⭐</div>
-    <div class="pref-done-title">Your stylist just got a lot smarter</div>
+    <div class="pref-done-title">Now the fun part begins</div>
 
     <div id="prefSaveBlock">
-      <div class="pref-done-sub">You've just shared your sizes, colors, and the styles you love. Save your style profile so you never have to enter it again, on any device.</div>
+      <div class="pref-done-sub">You've named the styles you love, and that clarity is the secret to a wardrobe that truly works. From here, shopping only gets easier and more fun. Save your profile so it's always ready for you, on any device.</div>
       <div class="stay-form" id="prefSaveForm">
         <input type="text" class="stay-input" id="prefSaveName" placeholder="Your first name (optional)">
         <input type="email" class="stay-input" id="prefSaveEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')savePrefProfile()">
@@ -2921,7 +2921,7 @@ function prefSaveComplete(email){
   document.getElementById('prefSaveBlock').style.display='none';
   var savedBlock=document.getElementById('prefSavedBlock');
   savedBlock.style.display='block';
-  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is saved! You can come back anytime, on any device, just by entering your email.';
+  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is saved! Your shopping suggestions and chat advice just got even more personalized.';
   window.scrollTo(0,0);
 }
 async function savePrefProfile(){
