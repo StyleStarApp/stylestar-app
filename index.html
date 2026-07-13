@@ -287,7 +287,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-pref #prefNext:hover{opacity:1;filter:brightness(1.08)}
 #s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
 #s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
-.pref-done{text-align:center;padding:2rem 1rem}
+.pref-done{text-align:center;padding:0.75rem 1rem 2rem}
 .pref-done-star{font-size:42px;margin-bottom:12px;line-height:1}
 .pref-done-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
 .pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem;line-height:1.5}
@@ -2061,7 +2061,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-shopstyle'||id==='s-shop')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
