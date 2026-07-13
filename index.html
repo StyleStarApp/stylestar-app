@@ -632,9 +632,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #D8DDE2;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
 #s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-27px;padding:150px 34px 16px;
-  box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px rgba(90,92,98,.55),inset 0 0 0 1.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
+  box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
 #s-wb .wb-acts{border-width:7px;margin-top:3px;padding:5px 12px 13px;
-  box-shadow:0 16px 26px -16px rgba(0,0,0,.42),0 0 0 1px rgba(90,92,98,.45),inset 0 0 0 1.5px rgba(255,255,255,.7)}
+  box-shadow:0 16px 26px -16px rgba(0,0,0,.42),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
 #s-wb .wb-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
 #s-wb .wb-sweep{position:absolute;top:0;bottom:0;left:0;width:100%;background:radial-gradient(ellipse 62% 130% at 50% 50%,rgba(255,255,255,.42),rgba(255,255,255,0) 70%);pointer-events:none;z-index:9;opacity:0}
 #s-wb .wb-greet .wb-sweep{animation:wbBloom 2s ease .3s both}
@@ -648,7 +648,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-bulb{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 12px 3px rgba(244,214,120,.8),0 0 4px rgba(255,238,180,.95),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45);animation:wbTwinkle 3.4s ease-in-out infinite}
 /* greeting copy */
 #s-wb .wb-h1{position:relative;z-index:8;font:400 27px/1.14 'DM Serif Display',serif;color:#211E1A;margin-top:4px}
-#s-wb .wb-msg2{position:relative;z-index:8;font:400 14.5px/1.5 'Jost',sans-serif;color:#6b655a;margin:8px 2px 0;white-space:nowrap}
+#s-wb .wb-msg2{position:relative;z-index:8;font:400 14.5px/1.5 'Jost',sans-serif;color:#6b655a;margin:8px 2px 0}
 /* primary CTA reuses .hm-cta (black/gold + shimmer); block width inside the actions mirror.
    The .wbx wrapper drives the reveal fade-in, so keep the CTA itself always visible
    (immune to the shared .hm-cta reveal opacity rules) — otherwise it can stay hidden. */
@@ -1127,7 +1127,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="wb-bulbs l"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-bulbs r"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-h1" id="wbGreet">Welcome back!</div>
-      <p class="wb-msg2">Your style portrait is saved.<br>Pick up right where you left off.</p>
+      <p class="wb-msg2" id="wbMsg2">Your own personal stylist, anytime you like.<br>Here to make style feel clear, easy, and fun.</p>
     </div>
     <!-- Actions mirror -->
     <div class="wb-mirror wb-acts">
@@ -4022,9 +4022,15 @@ function refreshWbBadges(){
   var ed=document.getElementById('wbEditBadge');
   if(ed){if(wbEditHasNew())ed.classList.add('on');else ed.classList.remove('on');}
 }
+var WB_MSGS=['Your own personal stylist, anytime you like.<br>Here to make style feel clear, easy, and fun.','Style is one of the most beautiful ways<br>to shine your light. So glad you’re back.','Here to help you feel confident,<br>put-together, and completely yourself.','So glad you’re back.<br>Let’s find something wonderful together.'];
 function updateWbScreen(){
   var g=document.getElementById('wbGreet');
   if(g){var fn=wbFirstName();g.innerHTML=fn?('Welcome back,<br>'+wbEsc(fn)+'!'):'Welcome back!';}
+  var m=document.getElementById('wbMsg2');
+  if(m){var last=parseInt(localStorage.getItem('ss_wb_msg')||'-1',10),i;
+    do{i=Math.floor(Math.random()*WB_MSGS.length);}while(WB_MSGS.length>1&&i===last);
+    try{localStorage.setItem('ss_wb_msg',String(i));}catch(e){}
+    m.innerHTML=WB_MSGS[i];}
   refreshWbBadges();
 }
 // Near-real-time refresh so a new reply/drop appears without a manual reload.
