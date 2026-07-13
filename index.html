@@ -628,10 +628,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Lighter star shadow on Welcome Back (the 1.4x scale was amplifying it) */
 #s-wb .hm-star-inner>svg{filter:drop-shadow(0 2px 6px rgba(200,151,30,.20)) drop-shadow(0 4px 5px rgba(28,20,6,.10))}
 /* silver mirror frames (greeting on top, actions below) */
-#s-wb .wb-mirror{position:relative;text-align:center;border:8px solid transparent;
-  border-image:linear-gradient(135deg,#FFFFFF 0%,#C6CACE 18%,#8C9298 38%,#F2F4F6 52%,#9AA0A6 70%,#DFE2E5 84%,#FFFFFF 100%) 1;
+#s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #BFC4C8;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
-#s-wb .wb-greet{z-index:1;margin-top:-16px;padding:150px 34px 16px;
+#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-16px;padding:150px 34px 16px;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px rgba(90,92,98,.55),inset 0 0 0 1.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
 #s-wb .wb-acts{border-width:7px;margin-top:3px;padding:5px 12px 13px;
   box-shadow:0 16px 26px -16px rgba(0,0,0,.42),0 0 0 1px rgba(90,92,98,.45),inset 0 0 0 1.5px rgba(255,255,255,.7)}
@@ -1326,10 +1325,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     </div>
 
     <div class="pcard pcard-vb">
-      <div class="sc-lead"><i class="l"></i>Your Style Vision Board<i class="r"></i></div>
+      <div class="sc-lead"><i class="l"></i>Your Style Mood Board<i class="r"></i></div>
       <div class="sc-row" data-shelf onclick="openVisionBoard()">
-        <span class="sc-thumb" style="display:flex;align-items:center;justify-content:center;background:#28251F;position:relative"><svg viewBox="0 0 24 24" width="30" height="30" fill="#E9C46A"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg><img id="vbThumb" alt="Your Style Vision Board preview" style="position:absolute;inset:0;display:none"></span>
-        <div class="tx"><div class="sc-tt">See &amp; share your Vision Board</div><div class="sc-ss">A shareable mood board of your style vibe</div></div>
+        <span class="sc-thumb" style="display:flex;align-items:center;justify-content:center;background:#28251F;position:relative"><svg viewBox="0 0 24 24" width="30" height="30" fill="#E9C46A"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg><img id="vbThumb" alt="Your Style Mood Board preview" style="position:absolute;inset:0;display:none"></span>
+        <div class="tx"><div class="sc-tt">See &amp; share your Mood Board</div><div class="sc-ss">A shareable keepsake of your style vibe</div></div>
         <svg class="sc-ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
       </div>
     </div>
