@@ -496,11 +496,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .occ-chip.sel{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
 #s-photo .occ-chip.occ-skip-chip{font-style:italic;color:#6a6355}
 #s-photo .occ-chip.occ-skip-chip.sel{color:#fff;font-style:normal}
-#s-photo #analyzeBtn{position:relative;display:block;text-align:center;width:100%;max-width:344px;margin:9px auto 0;padding:14px;border:5px solid transparent;border-radius:0;cursor:pointer;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F59B9B,#E01B1B 22%,#B01414 42%,#F7ADAD 55%,#D01818 72%,#8f1010) border-box;color:#fff;font:700 15.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 14px 26px -12px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7;transition:filter .2s}
-#s-photo #analyzeBtn:hover{filter:brightness(1.1)}
-#s-photo #analyzeBtn .shim{position:absolute;inset:0;border-radius:0;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssShimmer 2.8s ease-in-out infinite;pointer-events:none}
-#s-photo #analyzeBtn .lbl{position:relative;display:inline-flex;align-items:center;vertical-align:middle;gap:9px;white-space:nowrap}
-#s-photo #analyzeBtn svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#s-photo #analyzeBtn{position:relative;display:flex;align-items:center;gap:12px;width:100%;max-width:344px;margin:9px auto 0;padding:11px 15px;border:4px solid transparent;border-radius:0;cursor:pointer;background:#FCFAF4 padding-box,linear-gradient(135deg,#EED89A,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519) border-box;box-shadow:0 11px 22px -12px rgba(120,90,20,.5);transition:filter .2s}
+#s-photo #analyzeBtn:hover{filter:brightness(1.02)}
+#s-photo #analyzeBtn .ph-tile{flex:0 0 auto;width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:#E01B1B;box-shadow:0 2px 5px -2px rgba(224,27,27,.6)}
+#s-photo #analyzeBtn .ph-tile svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+#s-photo #analyzeBtn .lbl{flex:1;text-align:center;font:700 14.5px/1 'Jost',sans-serif;letter-spacing:.03em;text-transform:uppercase;color:#241d0c;white-space:nowrap}
+#s-photo #analyzeBtn .ph-arr{flex:0 0 auto;width:20px;height:20px;stroke:#B8831F;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 #s-photo .ph-foot{margin-top:12px;padding-top:11px;width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:11px;border-top:1px solid rgba(201,162,78,.3)}
 #s-photo .ph-foot .lnk{font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a453c;cursor:pointer}
 #s-photo .ph-foot .lnk:hover{color:#1a1a1a}
@@ -1471,7 +1472,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button type="button" class="occ-chip occ-skip-chip" onclick="skipOccasion(this)">Skip &mdash; just style it</button>
       </div>
     </div>
-    <button id="analyzeBtn" onclick="ctaAnalyze()"><span class="shim"></span><span class="lbl">Analyze my outfit <svg viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></button>
+    <button id="analyzeBtn" onclick="ctaAnalyze()"><span class="ph-tile"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><span class="lbl">Analyze my outfit</span><svg class="ph-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
     <div class="ph-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
   </div>
 </div>
