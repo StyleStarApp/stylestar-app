@@ -827,16 +827,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .nm i{font-style:normal}
 .res-screen .notes{font:400 13px/1.55 'DM Serif Display',serif;color:#33312c;padding:0 2px;overflow-wrap:break-word;text-wrap:pretty}
 .res-screen .notes b{color:#C8971E;margin:0 5px;font-weight:600}
-.res-screen .arch-card{position:relative;overflow:hidden;max-width:302px;margin:8px auto 0;padding:14px 13px 12px;border:6px solid transparent;
-  border-image:linear-gradient(135deg,#FFFFFF 0%,#C6CACE 18%,#8C9298 38%,#F2F4F6 52%,#9AA0A6 70%,#DFE2E5 84%,#FFFFFF 100%) 1;
-  background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);
-  box-shadow:0 10px 18px -10px rgba(0,0,0,.4),0 0 0 1px rgba(90,92,98,.45),inset 0 0 0 1.5px rgba(255,255,255,.7)}
-.res-screen .arch-card .anm{font:400 21px/1.25 'DM Serif Display',serif;color:#1a1a1a;text-wrap:balance}
-.res-screen .ac-div{display:flex;align-items:center;gap:9px;justify-content:center;margin:3px 6px 3px}
-.res-screen .ac-div i{flex:1;max-width:52px;height:1px;background:linear-gradient(90deg,transparent,#C8971E)}
-.res-screen .ac-div i.r{background:linear-gradient(270deg,transparent,#C8971E)}
-.res-screen .ac-div span{font:600 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:#B08830;text-transform:uppercase;white-space:nowrap}
-.res-screen .ac-notes{font:400 18px/1.2 'DM Serif Display',serif;color:#4a453d;text-wrap:balance}
+.res-screen .arch-card{position:relative;overflow:visible;max-width:300px;margin:16px auto 0;padding:15px;border-radius:3px;background:linear-gradient(150deg,#221d16,#100d09);box-shadow:0 10px 22px -12px rgba(20,15,5,.6)}
+.res-screen .ac-studs{position:absolute;inset:0;pointer-events:none;border-radius:3px;background:radial-gradient(5px 5px at 50% 42%,#FCEFB8 0%,#E7C560 40%,#B98A24 82%,rgba(185,138,36,0) 92%) center top/22px 15px repeat-x,radial-gradient(5px 5px at 50% 42%,#FCEFB8 0%,#E7C560 40%,#B98A24 82%,rgba(185,138,36,0) 92%) center bottom/22px 15px repeat-x,radial-gradient(5px 5px at 50% 42%,#FCEFB8 0%,#E7C560 40%,#B98A24 82%,rgba(185,138,36,0) 92%) left center/15px 22px repeat-y,radial-gradient(5px 5px at 50% 42%,#FCEFB8 0%,#E7C560 40%,#B98A24 82%,rgba(185,138,36,0) 92%) right center/15px 22px repeat-y}
+.res-screen .ac-inner{position:relative;overflow:hidden;padding:16px 15px 14px;text-align:center;background:linear-gradient(158deg,#f1f3f5 0%,#e2e5e8 28%,#f5f6f8 47%,#dcdfe2 68%,#edeff1 100%)}
+.res-screen .ac-inner::before{content:"";position:absolute;inset:0;background:linear-gradient(118deg,transparent 40%,rgba(255,255,255,.5) 49%,transparent 57%);pointer-events:none}
+.res-screen .ac-seal{position:absolute;top:-34px;right:-26px;width:94px;height:94px;z-index:6;transform:rotate(-20deg);filter:drop-shadow(0 4px 6px rgba(120,90,20,.4));pointer-events:none}
+.res-screen .arch-card .anm{position:relative;font:400 21px/1.25 'DM Serif Display',serif;color:#1a1a1a;text-wrap:balance}
+.res-screen .ac-lbl{position:relative;font:600 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:#9a7420;text-transform:uppercase;margin:6px 0 6px}
+.res-screen .ac-notes{position:relative;font:400 18px/1.2 'DM Serif Display',serif;color:#33302a;text-wrap:balance}
 .res-screen .arch-motto{font:italic 600 15px/1.55 'Lora',serif;color:#3c3628;max-width:280px;margin:14px auto 0}
 .res-screen .ac-sweep{display:none}
 #s-res.rv-open .ac-sweep{animation:wbSweep 1.4s ease-out 1.2s both}
@@ -2193,14 +2191,15 @@ function _renderArchNames(names,motto){
   var ft=document.getElementById('ft');if(!ft)return;
   names=(names||[]).filter(Boolean).slice(0,3);
   if(!names.length){ft.innerHTML='';return}
-  var h='<div class="arch-card"><span class="ac-sweep"></span><div class="anm">'+_esc(names[0])+'</div>';
+  var star='<svg class="ac-seal" viewBox="0 0 24 24"><defs><radialGradient id="acSealG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#acSealG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>';
+  var h='<div class="arch-card">'+star+'<span class="ac-studs"></span><div class="ac-inner"><div class="anm">'+_esc(names[0])+'</div>';
   if(names.length>1){
-    h+='<div class="ac-div"><i></i><span>With notes of</span><i class="r"></i></div>';
+    h+='<div class="ac-lbl">With notes of</div>';
     h+='<div class="ac-notes">'+names.slice(1).map(function(n){
       return _esc(String(n).replace(/^The\s+/i,''));
     }).join('<br>')+'</div>';
   }
-  h+='</div>';
+  h+='</div></div>';
   var m=(motto&&String(motto).trim())||archLines[names[0]]||'';
   if(m)h+='<div class="arch-motto">&ldquo;'+_esc(m)+'&rdquo;</div>';
   ft.innerHTML=h;
