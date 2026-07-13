@@ -302,13 +302,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .pref-done-acts .pda-tile{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
 .pref-done-acts .pda-tile svg{width:23px;height:23px}
 .pref-done-acts .pda-pink-tile{background:#EC4899;box-shadow:0 3px 8px -3px rgba(236,72,153,.6)}
-.pref-done-acts .pda-dark-tile{background:#1a1a1a}
+.pref-done-acts .pda-dark-tile{background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
 #s-shopstyle .ss-shop-hdr{text-align:center;margin:6px 0 18px}
 #s-shopstyle .ss-shop-title{font-family:'DM Serif Display',serif;font-size:25px;font-weight:400;color:#1a1a1a}
 #s-shopstyle .ss-shop-sub{font-size:13.5px;color:#6e6e6e;margin:5px auto 0;line-height:1.5;max-width:300px}
 #s-shopstyle .ss-shop-talk{text-align:center;font-size:14px;color:#6e6e6e;margin:22px auto 4px;line-height:1.6}
 #s-shopstyle .ss-shop-talk span{color:#EC4899;font-weight:600;cursor:pointer;text-decoration:underline}
-#s-pref-done .btn-p,#s-pref-done .btn-pink{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
+#s-pref-done .btn-p,#s-pref-done .btn-pink{border:none;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#2a1f05;box-shadow:0 10px 20px -12px rgba(150,110,20,.55)}
 #s-pref-done .btn-p:hover,#s-pref-done .btn-pink:hover{opacity:1;filter:brightness(1.08)}
 .email-section{margin:1.5rem 0;text-align:center}
 .shop-section{margin:1.5rem 0;text-align:center}
@@ -496,11 +496,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .occ-chip.sel{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
 #s-photo .occ-chip.occ-skip-chip{font-style:italic;color:#6a6355}
 #s-photo .occ-chip.occ-skip-chip.sel{color:#fff;font-style:normal}
-#s-photo #analyzeBtn{position:relative;display:block;text-align:center;width:100%;max-width:344px;margin:9px auto 0;padding:14px;border:5px solid transparent;border-radius:0;cursor:pointer;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F59B9B,#E01B1B 22%,#B01414 42%,#F7ADAD 55%,#D01818 72%,#8f1010) border-box;color:#fff;font:700 15.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 14px 26px -12px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7;transition:filter .2s}
-#s-photo #analyzeBtn:hover{filter:brightness(1.1)}
-#s-photo #analyzeBtn .shim{position:absolute;inset:0;border-radius:0;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssShimmer 2.8s ease-in-out infinite;pointer-events:none}
-#s-photo #analyzeBtn .lbl{position:relative;display:inline-flex;align-items:center;vertical-align:middle;gap:9px;white-space:nowrap}
-#s-photo #analyzeBtn svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#s-photo #analyzeBtn{position:relative;display:flex;align-items:center;gap:12px;width:100%;max-width:344px;margin:9px auto 0;padding:11px 15px;border:5px solid #1a1a1a;border-radius:0;cursor:pointer;background:#fff;box-shadow:0 12px 24px -12px rgba(0,0,0,.45),inset 0 0 0 2px #D8B24E;transition:filter .2s}
+#s-photo #analyzeBtn:hover{filter:brightness(1.02)}
+#s-photo #analyzeBtn .ph-tile{flex:0 0 auto;width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:#E01B1B;box-shadow:0 2px 5px -2px rgba(224,27,27,.6)}
+#s-photo #analyzeBtn .ph-tile svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+#s-photo #analyzeBtn .lbl{flex:1;text-align:center;font:700 15px/1 'Jost',sans-serif;letter-spacing:.01em;color:#1a1a1a;white-space:nowrap}
+#s-photo #analyzeBtn .ph-arr{flex:0 0 auto;width:20px;height:20px;stroke:#B8831F;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 #s-photo .ph-foot{margin-top:12px;padding-top:11px;width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:11px;border-top:1px solid rgba(201,162,78,.3)}
 #s-photo .ph-foot .lnk{font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a453c;cursor:pointer}
 #s-photo .ph-foot .lnk:hover{color:#1a1a1a}
@@ -576,12 +577,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-h1 i{font-style:italic;color:#1A1814}
 .hm-sub{font:600 15.5px/1.4 'Jost',sans-serif;color:#26231F;margin:9px 0 0;animation:ssRise .6s ease .24s both}
 .hm-body{font:400 13.5px/1.5 'Jost',sans-serif;color:#4a463e;margin:5px 4px 0;text-wrap:balance;animation:ssRise .6s ease .28s both}
-.hm-cta{position:relative;display:block;width:100%;margin-top:14px;border:5px solid transparent;border-radius:4px;cursor:pointer;
-  background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A 0%,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519 100%) border-box;
-  color:#F1DDA0;text-align:center;font:700 14px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:15px 16px;
-  box-shadow:0 14px 26px -12px rgba(0,0,0,.6),0 0 12px -3px rgba(233,196,110,.4);animation:ssRise .6s ease .32s both}
-.hm-cta .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25) 0%,rgba(255,253,245,.65) 34%,#ffffff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25) 100%) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ssShimmer 2.6s ease-in-out infinite;pointer-events:none}
-.hm-cta .lbl{position:relative;white-space:nowrap}
+.hm-cta{position:relative;display:flex;align-items:center;gap:12px;width:100%;margin-top:16px;border:4px solid transparent;border-radius:4px;cursor:pointer;
+  background:#FCFAF4 padding-box,linear-gradient(135deg,#EED89A 0%,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519 100%) border-box;
+  padding:11px 14px;box-shadow:0 11px 22px -12px rgba(120,90,20,.5);animation:ssRise .6s ease .32s both}
+.hm-cta .hm-cta-tile{flex:0 0 auto;width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#F3E1A0,#D8A93E 55%,#B07E1C);box-shadow:0 2px 5px -2px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.5)}
+.hm-cta .hm-cta-tile svg{width:22px;height:22px}
+.hm-cta .lbl{position:relative;flex:1;text-align:center;font:700 14.5px/1 'Jost',sans-serif;letter-spacing:.03em;text-transform:uppercase;color:#241d0c;white-space:nowrap}
+.hm-cta .hm-cta-arr{flex:0 0 auto;width:20px;height:20px;color:#B8831F}
+.hm-cta-seal{position:absolute;top:-15px;right:-13px;width:46px;height:46px;transform:rotate(-18deg);filter:drop-shadow(0 3px 4px rgba(120,90,20,.4));z-index:3;transform-origin:center;animation:ssSealPop 1.1s cubic-bezier(.34,1.56,.64,1) 1s 1 both}
+@keyframes ssSealPop{0%{transform:rotate(-18deg) scale(0);opacity:0}55%{transform:rotate(-8deg) scale(1.22);opacity:1}78%{transform:rotate(-24deg) scale(.94)}100%{transform:rotate(-18deg) scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.hm-cta-seal{animation:none}}
 .hm-help{font:400 12.5px/1.55 'Jost',sans-serif;color:#4a463e;margin-top:5px}
 .hm-help.first{margin-top:10px}
 .hm-help b{color:#1A1814;font-weight:700;cursor:pointer}
@@ -656,7 +661,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* primary CTA reuses .hm-cta (black/gold + shimmer); block width inside the actions mirror.
    The .wbx wrapper drives the reveal fade-in, so keep the CTA itself always visible
    (immune to the shared .hm-cta reveal opacity rules) — otherwise it can stay hidden. */
-#s-wb .wb-cta{display:block;width:100%;margin:2px 2px 11px;opacity:1!important;animation:none!important}
 /* shelf actions */
 #s-wb .wb-list{display:flex;flex-direction:column;gap:7px;margin-top:3px}
 #s-wb .wb-item{position:relative;cursor:pointer}
@@ -681,10 +685,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-badge.on{display:flex}
 #s-wb .wb-badge.count{top:-5px;right:-5px;min-width:15px;height:15px;padding:0 3px;border-radius:8px;font-size:9px;line-height:1}
 #s-wb .wb-badge.tag{top:-7px;right:-9px;padding:2px 5px;border-radius:7px;font-size:7px;line-height:1;letter-spacing:.05em;text-transform:uppercase}
-/* retake — compact black/gold square button */
+/* retake — compact flat mirror-gray button (2-slider icon) */
 #s-wb .wb-retake-wrap{text-align:center;margin-top:11px}
-#s-wb .wb-retake{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 16px;background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.5);box-shadow:0 5px 12px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(233,196,110,.16);font:600 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:#E9C46A;cursor:pointer}
-#s-wb .wb-retake svg{width:12px;height:12px}
+#s-wb .wb-retake{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:3px;border:2px solid transparent;
+  background:linear-gradient(180deg,#eef1f4,#d3d8dd 55%,#c2c8ce) padding-box,linear-gradient(150deg,#e8ebee,#a9b0b6 55%,#8a9096) border-box;
+  box-shadow:0 6px 13px -9px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.8);font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:#3a352c;cursor:pointer}
+#s-wb .wb-retake svg{width:15px;height:15px;color:#6b6459}
 /* footer — black text, gold-star separators (reuses .hm-foot layout); sits on the mirror's cream */
 #s-wb .wb-foot{margin-top:12px;padding-top:11px;border-top:1px solid rgba(33,30,26,.10);gap:8px}
 #s-wb .wb-foot span.lnk{font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1c1a17}
@@ -923,9 +929,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen [data-shelf]{transition:transform .2s cubic-bezier(.34,1.56,.64,1),filter .18s ease;-webkit-tap-highlight-color:transparent}
 .res-screen [data-shelf]:hover{transform:translateY(-3px);filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
 .res-screen [data-shelf]:active{transform:scale(.94);filter:brightness(.9)}
-.res-screen .hero{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin:14px 0;border:5px solid transparent;border-radius:4px;cursor:pointer;background:linear-gradient(180deg,#312d28,#201d19) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519) border-box;color:#F1DDA0;font:700 14px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:15px 16px;box-shadow:0 14px 26px -12px rgba(0,0,0,.55)}
-.res-screen .hero .shim{position:absolute;inset:0;border-radius:4px;border:5px solid transparent;background:linear-gradient(120deg,rgba(255,250,230,.25),rgba(255,253,245,.65) 34%,#fff 50%,rgba(255,253,245,.65) 66%,rgba(255,250,230,.25)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rvShim 3s ease-in-out infinite;pointer-events:none}
-.res-screen .hero svg{width:18px;height:18px;position:relative;stroke:#F1DDA0;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.res-screen .hero{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin:14px 0;border:4px solid transparent;border-radius:4px;cursor:pointer;background:#FCFAF4 padding-box,linear-gradient(135deg,#EED89A,#D8A93E 22%,#B8831F 42%,#F3E3A6 55%,#C89A2C 72%,#9C7519) border-box;color:#241d0c;font:700 14px/1 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;padding:14px 16px;box-shadow:0 11px 22px -12px rgba(120,90,20,.5)}
+.res-screen .hero .shim{display:none}
+.res-screen .hero svg{width:18px;height:18px;position:relative;stroke:#B8831F;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .hero .lbl{position:relative;white-space:nowrap;display:flex;align-items:center}
 /* Stand-out chat invite BUBBLE button, sitting above the photo (tail points down at it) */
 .res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
@@ -972,13 +978,24 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .kin{display:block;width:100%;margin:0 auto 8px;border:1.5px solid #e4dcc6;border-radius:3px;padding:11px 14px;font:400 14px/1 'Jost',sans-serif;color:#211E1A;background:#fff;text-align:center}
 .res-screen .kin:focus{outline:none;border-color:#C8A060}
 .res-screen .kin::placeholder{color:#a49e8f}
-.res-screen .kbtn{width:100%;border:none;border-radius:3px;padding:12px;cursor:pointer;background:linear-gradient(180deg,#33302A,#201D19);color:#F1DDA0;font:700 12px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.res-screen .kbtn{width:100%;border:none;border-radius:3px;padding:13px;cursor:pointer;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#2a1f05;font:700 12px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 8px 16px -10px rgba(150,110,20,.55)}
 .res-screen .keep-msg{font:500 12px/1.4 'Jost',sans-serif;color:#B08830;margin-top:9px;min-height:0}
 .res-screen .priv{font:400 11px/1.4 'Jost',sans-serif;color:#8a8578;margin-top:9px}
 .res-screen .priv u{cursor:pointer}
 .res-screen .retake-wrap{text-align:center;margin-top:16px}
-.res-screen .retake{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;padding:9px 16px;background:linear-gradient(180deg,#33302A,#201D19);border:1px solid rgba(214,169,70,.5);box-shadow:0 5px 12px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(233,196,110,.16);border-radius:2px;font:600 10px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:#E9C46A;cursor:pointer;text-decoration:none;margin:0}
-.res-screen .retake svg{width:12px;height:12px;stroke:#E9C46A;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.res-screen .retake{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;padding:10px 18px;border:2px solid transparent;border-radius:3px;background:linear-gradient(180deg,#eef1f4,#d3d8dd 55%,#c2c8ce) padding-box,linear-gradient(150deg,#e8ebee,#a9b0b6 55%,#8a9096) border-box;box-shadow:0 6px 13px -9px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.8);font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:#3a352c;cursor:pointer;text-decoration:none;margin:0}
+.res-screen .retake svg{width:15px;height:15px;stroke:#6b6459;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+/* Gentle "tailor first?" prompt */
+.style-nudge{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(28,22,10,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.style-nudge.on{display:flex}
+.style-nudge .sn-card{max-width:340px;width:100%;background:#FCFAF4;border:1px solid rgba(201,162,78,.55);border-radius:6px;padding:26px 22px 20px;text-align:center;box-shadow:0 24px 50px -20px rgba(0,0,0,.55);animation:snPop .4s cubic-bezier(.34,1.4,.64,1) both}
+@keyframes snPop{0%{opacity:0;transform:translateY(10px) scale(.96)}100%{opacity:1;transform:none}}
+.style-nudge .sn-star{width:36px;height:36px;margin:0 auto 8px;display:block;filter:drop-shadow(0 2px 3px rgba(120,90,20,.35))}
+.style-nudge h4{font:400 22px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:0 0 8px}
+.style-nudge p{font:400 14px/1.5 'Jost',sans-serif;color:#5a5349;margin:0 0 18px}
+.style-nudge .sn-go{width:100%;border:2px solid #2E9E57;border-radius:3px;padding:13px;cursor:pointer;background:#fff;color:#227a45;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 14px -10px rgba(46,158,87,.5)}
+.style-nudge .sn-skip{display:block;width:100%;margin-top:12px;padding:6px;background:none;border:none;cursor:pointer;font:600 12px/1 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#8a8478;text-decoration:underline}
+@media (prefers-reduced-motion:reduce){.style-nudge .sn-card{animation:none}}
 .res-screen .foot{margin-top:16px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid #efece4}
 .res-screen .foot span.lnk{font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2A2724;cursor:pointer}
 .res-screen .foot .st{color:#C8971E;font-size:12px;line-height:1}
@@ -1136,8 +1153,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <!-- Actions mirror -->
     <div class="wb-mirror wb-acts">
       <span class="wb-sweep"></span>
-      <a class="hm-cta wb-cta" wb-press onclick="openShopStyle()"><span class="shim"></span><span class="lbl">Shop your style&nbsp;<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;vertical-align:-6px;margin-left:1px"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></a>
       <div class="wb-list">
+        <div class="wb-item" wb-lift onclick="openShopStyle()">
+          <div class="wb-row"><span class="wb-chip" style="background:linear-gradient(150deg,#FFFEFB,#F6EFDE 58%,#EBE0C9);box-shadow:0 3px 7px -3px rgba(201,154,46,.55),inset 0 0 0 1px rgba(201,154,46,.5)"><svg viewBox="0 0 24 24"><defs><radialGradient id="wbShopStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#wbShopStar)" stroke="#9AA0A6" stroke-width="1.2" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><span class="wb-lbl"><span class="tt"><b>Shop your style</b><svg class="wb-arr" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Matched to your style</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
         <div class="wb-item" wb-lift onclick="savedPhoto()">
           <div class="wb-row"><span class="wb-chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px #E01B1B99"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.4" width="18" height="12.4" rx="2.6"/><path d="M8.4 7.4l1.05-1.95a1.05 1.05 0 0 1 .93-.55h3.24a1.05 1.05 0 0 1 .93.55L15.6 7.4"/><circle cx="12" cy="13.4" r="3.5"/></svg></span><span class="wb-lbl"><span class="tt"><b>Analyze an outfit</b><svg class="wb-arr" style="color:#E01B1B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Upload a photo for feedback</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
@@ -1147,23 +1167,23 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="showDream()">
-          <div class="wb-row"><span class="wb-chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px #0FA6B699"><span class="wb-badge tag" id="wbEditBadge">New</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.5 L12.63 13.2 L14.45 13.25 L13.0 14.4 L13.5 16.15 L12 15.1 L10.5 16.15 L11.0 14.4 L9.55 13.25 L11.37 13.2 Z" fill="#fff" stroke="none"/></svg></span><span class="wb-lbl"><span class="tt"><b>Shop Style Star Edit</b><svg class="wb-arr" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Hand-picked pieces you'll love</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px #0FA6B699"><span class="wb-badge tag" id="wbEditBadge">New</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 9.4h16.8l-.7 7.9a1.2 1.2 0 0 1-1.2 1.1H5.5a1.2 1.2 0 0 1-1.2-1.1z"/><path d="M8.4 9.4V8.2a3.6 3.6 0 0 1 7.2 0v1.2"/><path d="M12 11.9 L12.55 13.45 L14.2 13.5 L12.85 14.5 L13.35 16.1 L12 15.1 L10.65 16.1 L11.15 14.5 L9.8 13.5 L11.45 13.45 Z" fill="#fff" stroke="none"/></svg></span><span class="wb-lbl"><span class="tt"><b>Shop Style Star Edit</b><svg class="wb-arr" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Hand-picked pieces you'll love</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="loadSaved()">
-          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg></span><span class="wb-lbl"><span class="tt"><b>See my Style Portrait</b><svg class="wb-arr" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Your signature style, from the quiz</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:0 3px 7px -3px rgba(90,96,104,.55),inset 0 1px 0 rgba(255,255,255,.8)"><svg viewBox="0 0 24 24" fill="none" stroke="#B8891F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.8" r="3.4"/><path d="M5.8 19c0-3.5 2.8-5.5 6.2-5.5s6.2 2 6.2 5.5"/></svg></span><span class="wb-lbl"><span class="tt"><b>See my Style Portrait</b><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Your signature style, from the quiz</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="openPrefs()">
-          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8"/><path d="M16 8h4"/><circle cx="14" cy="8" r="2"/><path d="M4 16h4"/><path d="M12 16h8"/><circle cx="8" cy="16" r="2"/></svg></span><span class="wb-lbl"><span class="tt"><b>Refine your preferences</b><svg class="wb-arr" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Sizes, colors &amp; the styles you love</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px #2E9E5799"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3 3 5-5.5"/><path d="M15 6l5 5M20 6l-5 5"/></svg></span><span class="wb-lbl"><span class="tt"><b>Refine your preferences</b><svg class="wb-arr" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Add your sizes, colors and faves</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="showShop()">
-          <div class="wb-row"><span class="wb-chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 9.5l1.1-4.5h12.6l1.1 4.5"/><path d="M5.6 9.5v9h12.8v-9"/><path d="M9.6 18.5v-4.3h4.8v4.3"/><path d="M4.6 9.5a2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0 2 2 0 0 0 3.7 0"/></svg></span><span class="wb-lbl"><span class="tt"><b>Shop the Mall</b><svg class="wb-arr" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Browse curated stores</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:linear-gradient(160deg,#FDFDFC,#EFEFEB);box-shadow:0 3px 7px -3px rgba(70,70,70,.5),inset 0 0 0 1px rgba(40,40,40,.22)"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.4" stroke-linejoin="round"><rect x="4.6" y="5.8" width="14.8" height="13.4"/><rect x="6.7" y="8" width="2.5" height="2.5" fill="#1a1a1a" stroke="none"/><rect x="10.75" y="8" width="2.5" height="2.5" fill="#1a1a1a" stroke="none"/><rect x="14.8" y="8" width="2.5" height="2.5" fill="#1a1a1a" stroke="none"/><rect x="6.7" y="12" width="2.5" height="2.5" fill="#1a1a1a" stroke="none"/><rect x="14.8" y="12" width="2.5" height="2.5" fill="#1a1a1a" stroke="none"/><path d="M10.6 19.2v-4.4h2.8v4.4" fill="#1a1a1a" stroke="none"/></svg></span><span class="wb-lbl"><span class="tt"><b>Shop the Mall</b><svg class="wb-arr" style="color:#4a463e" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Browse curated stores</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
       </div>
-      <div class="wb-retake-wrap"><a class="wb-retake" wb-press onclick="retakeQuiz()"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8 8 0 1 0 18.5 15.8"/><path d="M20 5v5h-5"/></svg>Retake the Quiz</a></div>
+      <div class="wb-retake-wrap"><a class="wb-retake" wb-press onclick="retakeQuiz()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 9h7M15 9h5M4 15h4M12 15h8"/><circle cx="13" cy="9" r="1.9" fill="#6b6459" stroke="none"/><circle cx="10" cy="15" r="1.9" fill="#6b6459" stroke="none"/></svg>Retake the Quiz</a></div>
       <!-- Footer — black text + gold-star separators, kept on the mirror's cream so it stays readable -->
       <div class="hm-foot wb-foot">
         <span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span>
@@ -1198,7 +1218,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <p class="hm-sub">Your personal stylist is ready!</p>
     <p class="hm-body">Expert style guidance and personalized shopping, all in one place.</p>
 
-    <a class="hm-cta" data-press onclick="startQ()"><span class="shim"></span><span class="lbl">Start my style quiz&nbsp;&rarr;</span></a>
+    <a class="hm-cta" data-press onclick="startQ()"><svg class="hm-cta-seal" viewBox="0 0 24 24"><defs><radialGradient id="hmSeal" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#hmSeal)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span class="hm-cta-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 9h7M15 9h5M4 15h4M12 15h8"/><circle cx="13" cy="9" r="2.1" fill="#fff"/><circle cx="10" cy="15" r="2.1" fill="#fff"/></svg></span><span class="lbl">Start my style quiz</span><svg class="hm-cta-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></a>
 
     <div id="restoreSection">
       <div class="hm-help first">Already taken the quiz? <b onclick="showRestore()">Restore your results</b></div>
@@ -1232,7 +1252,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
       <div class="hm-card" data-press data-shelf onclick="showDream()">
         <div class="hm-cardrow">
-          <span class="hm-ic" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.5 L12.63 13.2 L14.45 13.25 L13.0 14.4 L13.5 16.15 L12 15.1 L10.5 16.15 L11.0 14.4 L9.55 13.25 L11.37 13.2 Z" fill="#FFFFFF" stroke="none"/></svg></span>
+          <span class="hm-ic" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 9.4h16.8l-.7 7.9a1.2 1.2 0 0 1-1.2 1.1H5.5a1.2 1.2 0 0 1-1.2-1.1z"/><path d="M8.4 9.4V8.2a3.6 3.6 0 0 1 7.2 0v1.2"/><path d="M12 11.9 L12.55 13.45 L14.2 13.5 L12.85 14.5 L13.35 16.1 L12 15.1 L10.65 16.1 L11.15 14.5 L9.8 13.5 L11.45 13.45 Z" fill="#FFFFFF" stroke="none"/></svg></span>
           <div class="hm-ctext"><div class="hm-ctitle"><span>Shop Style Star Edit</span><svg class="hm-arr" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="hm-csub">Hand-picked pieces you'll love</div></div>
         </div>
         <div class="hm-shelf"></div>
@@ -1342,11 +1362,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <button class="savebtn" id="resSaveBtn" onclick="openSaveSheetManual()">
         <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my results</button>
       <!-- Action shelves — each bound to its existing handler -->
-      <div class="act" data-shelf onclick="openPrefs()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
+      <div class="act" data-shelf onclick="openShopStyle()">
+        <div class="actrow"><span class="chip" style="background:linear-gradient(150deg,#FFFEFB,#F6EFDE 58%,#EBE0C9);box-shadow:0 3px 7px -3px rgba(201,154,46,.55),inset 0 0 0 1px rgba(201,154,46,.5)"><svg viewBox="0 0 24 24"><defs><radialGradient id="resShopStarRow" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#resShopStarRow)" stroke="#9AA0A6" stroke-width="1.2" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop your style</span><svg class="ar" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Matched to your style</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
-      <button class="hero" onclick="openShopStyle()"><span class="shim"></span><span class="lbl">Shop your style&nbsp;<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;margin-left:1px"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></button>
+      <div class="act" data-shelf onclick="openPrefs()">
+        <div class="actrow"><span class="chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px rgba(46,158,87,.6)"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M3 8l3 3 5-5.5"/><path d="M15 6l5 5M20 6l-5 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Add your sizes, colors and faves</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
       <div class="act" data-shelf onclick="showPhoto()">
         <div class="actrow"><span class="chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze an outfit</span><svg class="ar" style="color:#E01B1B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -1356,11 +1379,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showDream()">
-        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop Style Star Edit</span><svg class="ar" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M3.6 9.4h16.8l-.7 7.9a1.2 1.2 0 0 1-1.2 1.1H5.5a1.2 1.2 0 0 1-1.2-1.1z"/><path d="M8.4 9.4V8.2a3.6 3.6 0 0 1 7.2 0v1.2"/><path d="M12 11.9 L12.55 13.45 L14.2 13.5 L12.85 14.5 L13.35 16.1 L12 15.1 L10.65 16.1 L11.15 14.5 L9.8 13.5 L11.45 13.45 Z" fill="#fff" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop Style Star Edit</span><svg class="ar" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showShop()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse curated stores</div></div></div>
+        <div class="actrow"><span class="chip" style="background:linear-gradient(160deg,#FDFDFC,#EFEFEB);box-shadow:0 3px 7px -3px rgba(70,70,70,.5),inset 0 0 0 1px rgba(40,40,40,.22)"><svg viewBox="0 0 24 24" style="stroke:#1a1a1a;fill:none;stroke-width:1.5"><rect x="4.4" y="5.6" width="15.2" height="13.6"/><rect x="6.6" y="7.8" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><rect x="10.65" y="7.8" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><rect x="14.7" y="7.8" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><rect x="6.6" y="11.9" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><rect x="14.7" y="11.9" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><path d="M10.5 19.2v-4.6h3v4.6" style="fill:#1a1a1a;stroke:none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#4a463e" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse curated stores</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
 
@@ -1382,7 +1405,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="priv">We'll never share your email. <u onclick="showPrivacy()">Privacy Policy</u></div>
       </div>
 
-      <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><svg viewBox="0 0 24 24"><path d="M20 11A8 8 0 1 0 18.5 15.8"/><path d="M20 5v5h-5"/></svg>Retake the Quiz</button></div>
+      <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><svg viewBox="0 0 24 24"><path d="M4 9h7M15 9h5M4 15h4M12 15h8"/><circle cx="13" cy="9" r="1.9" fill="#6b6459" stroke="none"/><circle cx="10" cy="15" r="1.9" fill="#6b6459" stroke="none"/></svg>Retake the Quiz</button></div>
       <div class="foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
     </div>
   </div>
@@ -1391,6 +1414,17 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="doors">
     <div class="door l"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarL)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
     <div class="door r"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarR)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
+  </div>
+</div>
+
+<!-- Gentle "tailor first?" prompt — shown once the first time she shops before refining -->
+<div class="style-nudge" id="styleNudge">
+  <div class="sn-card">
+    <svg class="sn-star" viewBox="0 0 24 24"><defs><radialGradient id="snStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#snStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
+    <h4>Want your shopping more personalized?</h4>
+    <p>Add your sizes, colors, likes and dislikes.</p>
+    <button class="sn-go" onclick="styleNudgeRefine()">Refine my style</button>
+    <button class="sn-skip" onclick="styleNudgeSkip()">Just show me</button>
   </div>
 </div>
 
@@ -1438,7 +1472,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button type="button" class="occ-chip occ-skip-chip" onclick="skipOccasion(this)">Skip &mdash; just style it</button>
       </div>
     </div>
-    <button id="analyzeBtn" onclick="ctaAnalyze()"><span class="shim"></span><span class="lbl">Analyze my outfit <svg viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></button>
+    <button id="analyzeBtn" onclick="ctaAnalyze()"><span class="ph-tile"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><span class="lbl">Analyze my outfit</span><svg class="ph-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
     <div class="ph-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
   </div>
 </div>
@@ -1545,8 +1579,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- BEAT 2 — your look: a keepsake recap she can tap to revisit or chat about -->
       <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><div class="lscap">The look you shared</div><span class="ls-occ" id="lookOcc"></span></div>
 
-      <!-- Primary chat CTA, right under the look -->
-      <button class="hero" onclick="openChatAboutLook()"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg>&nbsp;Ask about this look</span></button>
     </div>
 
     <!-- PIECE 4b: the "what next" menu — its own frame -->
@@ -1554,7 +1586,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- BEAT 3 — what next: a tidy menu -->
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
       <!-- Shop your style — broad picks that vibe with her (quiz profile, or her look) -->
-      <button class="hero" onclick="openShopStyle('look')"><span class="shim"></span><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;vertical-align:-4px"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/></svg>&nbsp;Shop your style</span></button>
+      <div class="act" data-shelf onclick="openShopStyle('look')">
+        <div class="actrow"><span class="chip" style="background:linear-gradient(150deg,#FFFEFB,#F6EFDE 58%,#EBE0C9);box-shadow:0 3px 7px -3px rgba(201,154,46,.55),inset 0 0 0 1px rgba(201,154,46,.5)"><svg viewBox="0 0 24 24"><defs><radialGradient id="resShopStarPhoto" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#resShopStarPhoto)" stroke="#9AA0A6" stroke-width="1.2" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop your style</span><svg class="ar" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Matched to your style</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
       <div class="act" data-shelf onclick="showPhoto()">
         <div class="actrow"><span class="chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><svg class="ar" style="color:#E01B1B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -1565,20 +1600,20 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showDream()">
-        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop Style Star Edit</span><svg class="ar" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M3.6 9.4h16.8l-.7 7.9a1.2 1.2 0 0 1-1.2 1.1H5.5a1.2 1.2 0 0 1-1.2-1.1z"/><path d="M8.4 9.4V8.2a3.6 3.6 0 0 1 7.2 0v1.2"/><path d="M12 11.9 L12.55 13.45 L14.2 13.5 L12.85 14.5 L13.35 16.1 L12 15.1 L10.65 16.1 L11.15 14.5 L9.8 13.5 L11.45 13.45 Z" fill="#fff" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop Style Star Edit</span><svg class="ar" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <!-- See my Style Portrait — quiz-takers only (gated in _photoSaveArea) -->
       <div class="act" id="photoPortraitBtn" data-shelf onclick="loadSaved()" style="display:none">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">See my Style Portrait</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Your signature style, from the quiz</div></div></div>
+        <div class="actrow"><span class="chip" style="background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:0 3px 7px -3px rgba(90,96,104,.55),inset 0 1px 0 rgba(255,255,255,.8)"><svg viewBox="0 0 24 24" style="stroke:#B8891F;fill:none;stroke-width:1.7"><circle cx="12" cy="8.8" r="3.4"/><path d="M5.8 19c0-3.5 2.8-5.5 6.2-5.5s6.2 2 6.2 5.5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">See my Style Portrait</span><svg class="ar" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Your signature style, from the quiz</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="openPrefs()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.3" fill="#E9C46A" stroke="none"/><circle cx="15" cy="15" r="2.3" fill="#E9C46A" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px rgba(46,158,87,.6)"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M3 8l3 3 5-5.5"/><path d="M15 6l5 5M20 6l-5 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Add your sizes, colors and faves</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showShop()">
-        <div class="actrow"><span class="chip dark"><svg viewBox="0 0 24 24"><path d="M4 10.5V19h16v-8.5"/><path d="M3.5 6h17l-.8 3.5a2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0 2 2 0 0 1-3.9 0L3.5 6z"/><path d="M10 19v-4.5h4V19"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse more curated stores</div></div></div>
+        <div class="actrow"><span class="chip" style="background:linear-gradient(160deg,#FDFDFC,#EFEFEB);box-shadow:0 3px 7px -3px rgba(70,70,70,.5),inset 0 0 0 1px rgba(40,40,40,.22)"><svg viewBox="0 0 24 24" style="stroke:#1a1a1a;fill:none;stroke-width:1.5"><rect x="4.4" y="5.6" width="15.2" height="13.6"/><rect x="6.6" y="7.8" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><rect x="10.65" y="7.8" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><rect x="14.7" y="7.8" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><rect x="6.6" y="11.9" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><rect x="14.7" y="11.9" width="2.7" height="2.7" style="fill:#1a1a1a;stroke:none"/><path d="M10.5 19.2v-4.6h3v4.6" style="fill:#1a1a1a;stroke:none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#4a463e" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse more curated stores</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <!-- Inline "Shop your style" AI picks render here (shopMyStyle) -->
@@ -1591,7 +1626,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
       <!-- Save profile (quiz-takers only). FUTURE: "Email me these tips & links" slots in right here. -->
       <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
-        <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my style profile</button>
+        <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my style details</button>
       <!-- Profile save block (quiz-takers only) → existing save flow (_persistSave) -->
       <div class="keep" id="resKeepPhoto">
         <h4>Come back anytime</h4>
@@ -1611,7 +1646,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button class="qn-btn" onclick="startQ()">Take our fun style quiz &rarr;</button>
       </div>
 
-      <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><svg viewBox="0 0 24 24"><path d="M20 11A8 8 0 1 0 18.5 15.8"/><path d="M20 5v5h-5"/></svg>Retake the Quiz</button></div>
+      <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><svg viewBox="0 0 24 24"><path d="M4 9h7M15 9h5M4 15h4M12 15h8"/><circle cx="13" cy="9" r="1.9" fill="#6b6459" stroke="none"/><circle cx="10" cy="15" r="1.9" fill="#6b6459" stroke="none"/></svg>Retake the Quiz</button></div>
       <div class="foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
     </div>
   </div>
@@ -1641,11 +1676,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="pref-done-title" id="prefDoneTitle">Bringing out your best!</div>
 
     <div id="prefSaveBlock">
-      <div class="pref-done-sub">You've named your preferences, and that clarity is the secret to a wardrobe that brings out the best in you. From here, shopping only gets easier and more fun. Save your profile so it's always ready for you, on any device.</div>
+      <div class="pref-done-sub">You've named your preferences, and that clarity is the secret to a wardrobe that brings out the best in you. From here, shopping only gets easier and more fun. Save your details so they're always ready for you, on any device.</div>
       <div class="stay-form" id="prefSaveForm">
         <input type="text" class="stay-input" id="prefSaveName" placeholder="Your first name (optional)">
         <input type="email" class="stay-input" id="prefSaveEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')savePrefProfile()">
-        <button class="btn-p" id="prefSaveBtn" style="margin-top:0;max-width:280px" onclick="savePrefProfile()">Save my style profile</button>
+        <button class="btn-p" id="prefSaveBtn" style="margin-top:0;max-width:280px" onclick="savePrefProfile()">Save my style details</button>
       </div>
       <div id="prefSaveMsg" style="font-size:13px;color:#777;margin-top:8px"></div>
       <div style="font-size:12.5px;color:#6e6e6e;margin-top:6px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
@@ -1657,7 +1692,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <button class="btn-pink" onclick="prefShopNow()" style="max-width:280px">Let's go shopping &rarr;</button>
       <div class="pref-done-acts">
         <button class="pda" onclick="openChat()"><span class="pda-tile pda-pink-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span>Ask your stylist</span></button>
-        <button class="pda" onclick="loadSaved()"><span class="pda-tile pda-dark-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#E9C46A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M6.2 19c0-3.2 2.6-5 5.8-5s5.8 1.8 5.8 5"/></svg></span><span>See my Style Portrait</span></button>
+        <button class="pda" onclick="loadSaved()"><span class="pda-tile pda-dark-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#B8891F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.8" r="3.4"/><path d="M5.8 19c0-3.5 2.8-5.5 6.2-5.5s6.2 2 6.2 5.5"/></svg></span><span>See my Style Portrait</span></button>
       </div>
       <button class="retake" onclick="prefNotNow()" style="margin-top:12px">Not right now</button>
     </div>
@@ -1911,7 +1946,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <p style="margin-bottom:12px"><strong>What we collect</strong></p>
       <p style="margin-bottom:12px">When you save your results, we collect your email address, quiz answers, style portrait, and any preferences you share (sizes, colors, etc.). Photos shared for style analysis are processed by AI in real time and are never stored.</p>
       <p style="margin-bottom:12px"><strong>How we use it</strong></p>
-      <p style="margin-bottom:12px">We use your information to save your style profile so you can access it across devices, to personalize your shopping suggestions, and to send you occasional styling updates. We never sell or share your personal information with third parties.</p>
+      <p style="margin-bottom:12px">We use your information to save your style details so you can access them across devices, to personalize your shopping suggestions, and to send you occasional styling updates. We never sell or share your personal information with third parties.</p>
       <p style="margin-bottom:12px"><strong>Affiliate links</strong></p>
       <p style="margin-bottom:12px">Some product links on Style Star are affiliate links. When you make a purchase through these links, we may earn a small commission at no extra cost to you. This never influences which items we recommend.</p>
       <p style="margin-bottom:12px"><strong>Your choices</strong></p>
@@ -1932,7 +1967,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="sheet-card">
     <button class="sheet-x" onclick="dismissSaveSheet()" aria-label="Close">&times;</button>
     <div class="sheet-grab"></div>
-    <div class="sheet-title">Don't lose your style profile ✨</div>
+    <div class="sheet-title">Don't lose your style details ✨</div>
     <div class="sheet-sub" id="sheetSub">Save your results so you can come back anytime, on any device.</div>
     <div class="stay-form">
       <input type="text" class="stay-input" id="sheetName" placeholder="Your first name (optional)">
@@ -2960,10 +2995,22 @@ function prefTopBack(){if(prefStep>0){prevPref();}else{showBack(prefReturnScreen
 function prefDoneEdit(){prefStep=4;show('s-pref');renderPref();window.scrollTo(0,0);}
 // After refining preferences: drop her straight into her personalized "Shop your
 // style" picks, no portrait reveal (genOutfits scrolls to the picks section).
-function prefShopNow(){openShopStyle();}
+function prefShopNow(){openShopStyle(undefined,true);}
 // Clean standalone "Shop your style" page — nothing but her personalized picks.
-var shopStyleFrom='',_shopStyleMode='quiz';
-function openShopStyle(mode){
+var shopStyleFrom='',_shopStyleMode='quiz',_nudgeMode;
+// Has she added any real preferences yet (sizes / loved colors / never-wears)?
+function _hasRefined(){return prefs.colorsLove.length>0||prefs.neverWear.length>0||prefs.neverPatterns.length>0||(prefs.sizes&&((prefs.sizes.tops&&prefs.sizes.tops.length>0)||(prefs.sizes.bottoms&&prefs.sizes.bottoms.length>0)||(prefs.sizes.shoes&&prefs.sizes.shoes.length>0)||(prefs.sizes.dresses&&prefs.sizes.dresses.length>0)));}
+// The FIRST time she shops without having refined, gently offer to tailor first
+// (skippable, once ever). Never for the look-mode shopping or straight from prefs.
+function openShopStyle(mode,skipNudge){
+  if(mode!=='look'&&!skipNudge&&!_hasRefined()&&!localStorage.getItem('ss_stylenudge')){
+    _nudgeMode=mode;var n=document.getElementById('styleNudge');if(n){n.classList.add('on');return;}
+  }
+  _openShopStyleNow(mode);
+}
+function styleNudgeRefine(){try{localStorage.setItem('ss_stylenudge','1')}catch(e){}var n=document.getElementById('styleNudge');if(n)n.classList.remove('on');openPrefs();}
+function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e){}var n=document.getElementById('styleNudge');if(n)n.classList.remove('on');_openShopStyleNow(_nudgeMode);}
+function _openShopStyleNow(mode){
   _shopStyleMode=(mode==='look')?'look':'quiz';
   var cur=(document.querySelector('.scr.act')||{}).id;
   if(cur&&cur!=='s-shopstyle'&&cur!=='s-pref-done')shopStyleFrom=cur;else if(!shopStyleFrom)shopStyleFrom='s-wb';
@@ -3037,7 +3084,7 @@ function showPrefDone(){
     saveBlock.style.display='none';
     savedBlock.style.display='block';
     if(dt)dt.textContent='Your style, in alignment';
-    document.getElementById('prefSavedSub').textContent='Your style profile is updated and saved. Your shopping suggestions and styling advice are now more personalized just for you.';
+    document.getElementById('prefSavedSub').textContent='Your style details are updated and saved. Your shopping suggestions and styling advice are now more personalized just for you.';
     syncPrefsToServer();
   }else{
     saveBlock.style.display='block';
@@ -3074,7 +3121,7 @@ function prefSaveComplete(email){
   var savedBlock=document.getElementById('prefSavedBlock');
   savedBlock.style.display='block';
   var dt2=document.getElementById('prefDoneTitle');if(dt2)dt2.textContent='Your style, in alignment';
-  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is updated and saved. Your shopping suggestions and styling advice are now more personalized just for you.';
+  document.getElementById('prefSavedSub').innerHTML='✨ Your style details are updated and saved. Your shopping suggestions and styling advice are now more personalized just for you.';
   window.scrollTo(0,0);
 }
 async function savePrefProfile(){
@@ -3083,11 +3130,11 @@ async function savePrefProfile(){
   const msg=document.getElementById('prefSaveMsg');
   const btn=document.getElementById('prefSaveBtn');
   if(!email||!email.includes('@')){
-    if(msg){msg.style.color='#c0392b';msg.textContent='Please enter a valid email so we can save your profile.'}
+    if(msg){msg.style.color='#c0392b';msg.textContent='Please enter a valid email so we can save your details.'}
     return;
   }
   // Immediate, unmistakable feedback that the tap registered
-  if(msg){msg.style.color='#777';msg.textContent='Saving your style profile…'}
+  if(msg){msg.style.color='#777';msg.textContent='Saving your style details…'}
   if(btn){btn.disabled=true;btn.style.opacity='0.6';btn.textContent='Saving…'}
   if(nameVal){
     userName=nameVal.charAt(0).toUpperCase()+nameVal.slice(1);
