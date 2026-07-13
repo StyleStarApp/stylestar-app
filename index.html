@@ -836,7 +836,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .ac-div i{flex:1;max-width:52px;height:1px;background:linear-gradient(90deg,transparent,#C8971E)}
 .res-screen .ac-div i.r{background:linear-gradient(270deg,transparent,#C8971E)}
 .res-screen .ac-div span{font:600 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:#B08830;text-transform:uppercase;white-space:nowrap}
-.res-screen .ac-notes{font:400 16px/1.5 'DM Serif Display',serif;color:#4a453d;text-wrap:balance}
+.res-screen .ac-notes{font:400 18px/1.45 'DM Serif Display',serif;color:#4a453d;text-wrap:balance}
 .res-screen .arch-motto{font:italic 600 15px/1.55 'Lora',serif;color:#3c3628;max-width:280px;margin:14px auto 0}
 .res-screen .ac-sweep{display:none}
 #s-res.rv-open .ac-sweep{animation:wbSweep 1.4s ease-out 1.2s both}
@@ -1320,7 +1320,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="sc-lead"><i class="l"></i>Your Style Card<i class="r"></i></div>
       <div class="sc-row" data-shelf onclick="saveStyleCard('quiz')">
         <span class="sc-thumb"><img id="scThumb" alt="Your Style Constellation preview"></span>
-        <div class="tx"><div class="sc-tt">See &amp; share your Style Constellation</div><div class="sc-ss">A shareable keepsake of your signature style</div></div>
+        <div class="tx"><div class="sc-tt">See &amp; share your<br>Style Constellation</div><div class="sc-ss">A shareable keepsake of your signature style</div></div>
         <svg class="sc-ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
       </div>
     </div>
@@ -1329,7 +1329,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="sc-lead"><i class="l"></i>Your Style Mood Board<i class="r"></i></div>
       <div class="sc-row" data-shelf onclick="openVisionBoard()">
         <span class="sc-thumb" style="display:flex;align-items:center;justify-content:center;background:#28251F;position:relative"><svg viewBox="0 0 24 24" width="30" height="30" fill="#E9C46A"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg><img id="vbThumb" alt="Your Style Mood Board preview" style="position:absolute;inset:0;display:none"></span>
-        <div class="tx"><div class="sc-tt">See &amp; share your Mood Board</div><div class="sc-ss">A shareable keepsake of your style vibe</div></div>
+        <div class="tx"><div class="sc-tt">See &amp; share your<br>Mood Board</div><div class="sc-ss">A shareable keepsake of your style vibe</div></div>
         <svg class="sc-ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
       </div>
     </div>
@@ -4409,24 +4409,24 @@ function buildCardBlob(source,callback){
     function drawNotes(ctx,names,y){
       const cx=W/2;
       ctx.textAlign='center';ctx.textBaseline='alphabetic';
-      let fs=37;ctx.font='600 '+fs+'px "Jost", sans-serif';
-      while(ctx.measureText(names[0]).width>W-170&&fs>22){fs--;ctx.font='600 '+fs+'px "Jost", sans-serif';}
+      let fs=37;ctx.font=fs+'px "DM Serif Display", serif';
+      while(ctx.measureText(names[0]).width>W-170&&fs>22){fs--;ctx.font=fs+'px "DM Serif Display", serif';}
       ctx.fillStyle='#E9C46E';
       ctx.fillText(names[0],cx,y);
       if(names.length>1){
         const rest=names.slice(1).map(n=>String(n).replace(/^The\s+/i,''));
         const gap=15;
         function tw(sz){
-          ctx.font='600 '+sz+'px "Jost", sans-serif';
+          ctx.font=sz+'px "DM Serif Display", serif';
           let w=rest.reduce((a,n)=>a+ctx.measureText(n).width,0);
           if(rest.length>1){ctx.font=(sz-6)+'px "DM Serif Display", serif';w+=gap*2+ctx.measureText('★').width;}
           return w;
         }
-        let ns=29;while(tw(ns)>W-170&&ns>16)ns--;
+        let ns=33;while(tw(ns)>W-170&&ns>18)ns--;
         let x=cx-tw(ns)/2;const ny=y+48;
         ctx.textAlign='left';
         rest.forEach(function(n,i){
-          ctx.font='600 '+ns+'px "Jost", sans-serif';ctx.fillStyle='#dcc487';
+          ctx.font=ns+'px "DM Serif Display", serif';ctx.fillStyle='#dcc487';
           ctx.fillText(n,x,ny);x+=ctx.measureText(n).width;
           if(i<rest.length-1){
             x+=gap;ctx.font=(ns-6)+'px "DM Serif Display", serif';ctx.fillStyle='#E9C46E';
@@ -4633,7 +4633,7 @@ function buildVisionBlob(callback){
           if(rest.length>1){ctx.font=(sz-5)+'px "Jost",sans-serif';w+=gap*2+ctx.measureText('★').width;}
           return w;
         }
-        let nf2=21;while(tw(nf2)>cardW-52&&nf2>13)nf2--;
+        let nf2=24;while(tw(nf2)>cardW-52&&nf2>15)nf2--;
         let x=midX-tw(nf2)/2;const ny=cardY+202;
         ctx.textAlign='left';
         rest.forEach(function(n,i){
