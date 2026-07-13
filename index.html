@@ -246,7 +246,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .act-pair{display:flex;gap:10px;justify-content:center;width:100%;max-width:340px;margin:8px auto 0}
 .act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
 .act-pair .act-btn svg{width:19px;height:19px}
-#s-pref .top-back-wrap{margin-right:-16px}
+#s-pref .top-back-wrap,#s-pref-done .top-back-wrap{margin-right:-16px}
 #s-dream .top-back-wrap{margin-right:-20px;margin-top:-0.7rem}
 #s-shopstyle .top-back-wrap{margin-right:-20px;margin-top:-0.1rem}
 #s-chat{position:relative}
@@ -1632,6 +1632,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </div>
 
 <div class="scr" id="s-pref-done">
+  <div class="top-back-wrap"><button class="top-back" onclick="prefDoneEdit()">&larr; Back</button></div>
   <div class="pref-done">
     <div class="pref-done-star">⭐</div>
     <div class="pref-done-title" id="prefDoneTitle">Bringing out your best!</div>
@@ -2945,6 +2946,10 @@ function openPrefs(){
 }
 function skipPrefs(){showBack(prefReturnScreen)}
 function prefDone(){showBack(prefReturnScreen)}
+// "Back" on the "Your style, in alignment" screen: return to the refinement
+// questions (last step) so she can change any answer. Answers persist in `prefs`,
+// so renderPref() shows them filled in; tapping "Done" flows back here.
+function prefDoneEdit(){prefStep=4;show('s-pref');renderPref();window.scrollTo(0,0);}
 // After refining preferences: drop her straight into her personalized "Shop your
 // style" picks, no portrait reveal (genOutfits scrolls to the picks section).
 function prefShopNow(){openShopStyle();}
