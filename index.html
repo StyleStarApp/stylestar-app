@@ -984,6 +984,17 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .retake-wrap{text-align:center;margin-top:16px}
 .res-screen .retake{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;padding:10px 18px;border:2px solid transparent;border-radius:3px;background:linear-gradient(180deg,#eef1f4,#d3d8dd 55%,#c2c8ce) padding-box,linear-gradient(150deg,#e8ebee,#a9b0b6 55%,#8a9096) border-box;box-shadow:0 6px 13px -9px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.8);font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:#3a352c;cursor:pointer;text-decoration:none;margin:0}
 .res-screen .retake svg{width:15px;height:15px;stroke:#6b6459;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+/* Gentle "tailor first?" prompt */
+.style-nudge{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(28,22,10,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.style-nudge.on{display:flex}
+.style-nudge .sn-card{max-width:340px;width:100%;background:#FCFAF4;border:1px solid rgba(201,162,78,.55);border-radius:6px;padding:26px 22px 20px;text-align:center;box-shadow:0 24px 50px -20px rgba(0,0,0,.55);animation:snPop .4s cubic-bezier(.34,1.4,.64,1) both}
+@keyframes snPop{0%{opacity:0;transform:translateY(10px) scale(.96)}100%{opacity:1;transform:none}}
+.style-nudge .sn-star{width:36px;height:36px;margin:0 auto 8px;display:block;filter:drop-shadow(0 2px 3px rgba(120,90,20,.35))}
+.style-nudge h4{font:400 22px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:0 0 8px}
+.style-nudge p{font:400 14px/1.5 'Jost',sans-serif;color:#5a5349;margin:0 0 18px}
+.style-nudge .sn-go{width:100%;border:none;border-radius:3px;padding:14px;cursor:pointer;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#2a1f05;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 8px 16px -10px rgba(150,110,20,.55)}
+.style-nudge .sn-skip{display:block;width:100%;margin-top:12px;padding:6px;background:none;border:none;cursor:pointer;font:600 12px/1 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#8a8478;text-decoration:underline}
+@media (prefers-reduced-motion:reduce){.style-nudge .sn-card{animation:none}}
 .res-screen .foot{margin-top:16px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid #efece4}
 .res-screen .foot span.lnk{font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2A2724;cursor:pointer}
 .res-screen .foot .st{color:#C8971E;font-size:12px;line-height:1}
@@ -1163,7 +1174,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="openPrefs()">
-          <div class="wb-row"><span class="wb-chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px #2E9E5799"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3 3 5-5.5"/><path d="M15 6l5 5M20 6l-5 5"/></svg></span><span class="wb-lbl"><span class="tt"><b>Refine your preferences</b><svg class="wb-arr" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Sizes, colors &amp; the styles you love</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px #2E9E5799"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3 3 5-5.5"/><path d="M15 6l5 5M20 6l-5 5"/></svg></span><span class="wb-lbl"><span class="tt"><b>Refine your preferences</b><svg class="wb-arr" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Add your sizes, colors and faves</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="showShop()">
@@ -1355,7 +1366,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="openPrefs()">
-        <div class="actrow"><span class="chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px rgba(46,158,87,.6)"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M3 8l3 3 5-5.5"/><path d="M15 6l5 5M20 6l-5 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px rgba(46,158,87,.6)"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M3 8l3 3 5-5.5"/><path d="M15 6l5 5M20 6l-5 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Add your sizes, colors and faves</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showPhoto()">
@@ -1402,6 +1413,17 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="doors">
     <div class="door l"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarL)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
     <div class="door r"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarR)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
+  </div>
+</div>
+
+<!-- Gentle "tailor first?" prompt — shown once the first time she shops before refining -->
+<div class="style-nudge" id="styleNudge">
+  <div class="sn-card">
+    <svg class="sn-star" viewBox="0 0 24 24"><defs><radialGradient id="snStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#snStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
+    <h4>Want these tailored to you?</h4>
+    <p>Add your sizes, colors and faves, and I'll match your shopping to them. It only takes about 30 seconds.</p>
+    <button class="sn-go" onclick="styleNudgeRefine()">Refine my style</button>
+    <button class="sn-skip" onclick="styleNudgeSkip()">Just show me</button>
   </div>
 </div>
 
@@ -1585,7 +1607,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="openPrefs()">
-        <div class="actrow"><span class="chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px rgba(46,158,87,.6)"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M3 8l3 3 5-5.5"/><path d="M15 6l5 5M20 6l-5 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Sizes, colors &amp; the styles you love</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px rgba(46,158,87,.6)"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M3 8l3 3 5-5.5"/><path d="M15 6l5 5M20 6l-5 5"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Add your sizes, colors and faves</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showShop()">
@@ -2971,10 +2993,22 @@ function prefTopBack(){if(prefStep>0){prevPref();}else{showBack(prefReturnScreen
 function prefDoneEdit(){prefStep=4;show('s-pref');renderPref();window.scrollTo(0,0);}
 // After refining preferences: drop her straight into her personalized "Shop your
 // style" picks, no portrait reveal (genOutfits scrolls to the picks section).
-function prefShopNow(){openShopStyle();}
+function prefShopNow(){openShopStyle(undefined,true);}
 // Clean standalone "Shop your style" page — nothing but her personalized picks.
-var shopStyleFrom='',_shopStyleMode='quiz';
-function openShopStyle(mode){
+var shopStyleFrom='',_shopStyleMode='quiz',_nudgeMode;
+// Has she added any real preferences yet (sizes / loved colors / never-wears)?
+function _hasRefined(){return prefs.colorsLove.length>0||prefs.neverWear.length>0||prefs.neverPatterns.length>0||(prefs.sizes&&((prefs.sizes.tops&&prefs.sizes.tops.length>0)||(prefs.sizes.bottoms&&prefs.sizes.bottoms.length>0)||(prefs.sizes.shoes&&prefs.sizes.shoes.length>0)||(prefs.sizes.dresses&&prefs.sizes.dresses.length>0)));}
+// The FIRST time she shops without having refined, gently offer to tailor first
+// (skippable, once ever). Never for the look-mode shopping or straight from prefs.
+function openShopStyle(mode,skipNudge){
+  if(mode!=='look'&&!skipNudge&&!_hasRefined()&&!localStorage.getItem('ss_stylenudge')){
+    _nudgeMode=mode;var n=document.getElementById('styleNudge');if(n){n.classList.add('on');return;}
+  }
+  _openShopStyleNow(mode);
+}
+function styleNudgeRefine(){try{localStorage.setItem('ss_stylenudge','1')}catch(e){}var n=document.getElementById('styleNudge');if(n)n.classList.remove('on');openPrefs();}
+function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e){}var n=document.getElementById('styleNudge');if(n)n.classList.remove('on');_openShopStyleNow(_nudgeMode);}
+function _openShopStyleNow(mode){
   _shopStyleMode=(mode==='look')?'look':'quiz';
   var cur=(document.querySelector('.scr.act')||{}).id;
   if(cur&&cur!=='s-shopstyle'&&cur!=='s-pref-done')shopStyleFrom=cur;else if(!shopStyleFrom)shopStyleFrom='s-wb';
