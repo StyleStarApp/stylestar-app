@@ -285,6 +285,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Prefs buttons match the Quiz (its twin): warm gold Next, soft outline Back — softer than solid black */
 #s-pref #prefNext{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
 #s-pref #prefNext:hover{opacity:1;filter:brightness(1.08)}
+#s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
+#s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
 .pref-done{text-align:center;padding:2rem 1rem}
 .pref-done-star{font-size:42px;margin-bottom:12px;line-height:1}
 .pref-done-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
@@ -1623,6 +1625,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div id="prefContent"></div>
   <div style="margin-top:1rem">
     <button class="btn-pink" id="prefNext" onclick="nextPref()">Next</button>
+    <button class="btn-o" id="prefBack" onclick="prevPref()">Back</button>
     <button class="retake" onclick="skipPrefs()">Skip for now</button>
   </div>
 </div>
@@ -3289,7 +3292,9 @@ function renderPref(){
   const philo=document.getElementById('prefPhilo');
   if(philo)philo.textContent=prefPhilos[prefStep]||prefPhilos[0];
   const c=document.getElementById('prefContent');
+  const backBtn=document.getElementById('prefBack');
   const nextBtn=document.getElementById('prefNext');
+  backBtn.style.display=prefStep===0?'none':'block';
   nextBtn.textContent=prefStep===4?'Done':'Next';
 
   if(prefStep===0) renderPrefSizes(c);
