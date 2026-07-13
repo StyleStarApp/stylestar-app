@@ -193,7 +193,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .chat-hdr-title{font:400 19px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.4px #1a1a1a;display:inline-block;position:relative;padding-bottom:8px}
 .chat-hdr-title::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2.5px;border-radius:0;background:#E0B84C}
 .chat-hdr-title::before{content:"";position:absolute;bottom:-1px;left:58%;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
-.chat-hdr-sub{font:500 10px/1.3 'Jost',sans-serif;color:#8a6a17;letter-spacing:0;margin-top:2px;white-space:nowrap}
+.chat-hdr-sub{font:500 10px/1.4 'Jost',sans-serif;color:#8a6a17;letter-spacing:0;margin-top:2px}
+.chat-hdr-sub .s2{font-weight:400;opacity:.72}
 .chat-close{font:500 12.5px/1 'DM Sans',sans-serif;color:#666;cursor:pointer;background:none;border:none;white-space:nowrap;padding:4px 2px;letter-spacing:.02em}
 .chat-messages{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:10px}
 .chat-msg{max-width:85%;padding:12px 16px;border-radius:16px;font-size:15px;line-height:1.6;font-family:'DM Sans',sans-serif}
@@ -384,7 +385,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .faq-steps li{margin:4px 0}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqall{border-radius:0}
-#s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f6f7f8;background-image:linear-gradient(180deg,rgba(38,42,48,.10) 0,rgba(38,42,48,0) 30px),repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(150,158,166,.10) 100%)}
+#s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f7f6f4;background-image:linear-gradient(180deg,rgba(42,40,36,.10) 0,rgba(42,40,36,0) 30px),repeating-linear-gradient(90deg,#ecebe7 0px,#fcfbf9 21px,#ecebe7 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(166,160,150,.10) 100%)}
 #s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:10px;z-index:6;background:linear-gradient(180deg,#fbfcfd 0%,#cbd0d4 22%,#868d93 46%,#eef0f2 52%,#a1a7ad 62%,#5e646a 86%,#868c92 100%);box-shadow:0 5px 9px -3px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
 #s-photo .ph-back{position:absolute;top:13px;right:6px;z-index:5;background:none;border:none;font:500 12.5px/1 'DM Sans',sans-serif;color:#666;cursor:pointer;padding:4px 2px;letter-spacing:.02em}
@@ -532,7 +533,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* White+gold-outline star "light fixture", tilted, stuck onto the top-left corner of the sign (absolute, no layout shift) */
 .mall-fixture{position:absolute;top:-38px;left:-30px;width:108px;height:108px;z-index:6;pointer-events:none}
 .mall-fixture .mf-glow{position:absolute;left:50%;top:50%;width:132px;height:132px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,214,120,.26),rgba(255,214,120,.07) 48%,rgba(255,214,120,0) 72%)}
-.mall-fixture .mf-star{position:absolute;top:6px;left:6px;width:96px;height:96px;z-index:2;transform:rotate(-40deg);filter:drop-shadow(0 3px 6px rgba(90,70,20,.3))}
+.mall-fixture .mf-star{position:absolute;top:6px;left:6px;width:96px;height:96px;z-index:2;transform:rotate(-48deg);filter:drop-shadow(0 3px 6px rgba(90,70,20,.3))}
 .mall-sign-logo{font-family:'DM Serif Display',Georgia,serif;font-size:29px;color:#1a1a1a;-webkit-text-stroke:.6px #1a1a1a;display:inline-block;position:relative;padding-bottom:5px;letter-spacing:.01em}
 .mall-sign-logo::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:3px;background:#E0B84C}
 .mall-sign-logo::before{content:"";position:absolute;bottom:-1.5px;left:66%;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
@@ -824,7 +825,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .eng-rule.r{background:linear-gradient(90deg,#C9A24E,transparent)}
 .res-screen .eng-lbl{font:600 12px/1 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#B8891E;white-space:nowrap}
 .res-screen .nm{font:400 28px/1.1 'DM Serif Display',serif;color:#1f1d19;margin:8px 0 0;overflow-wrap:break-word;text-wrap:balance}
-.res-screen .nm i{font-style:italic}
+.res-screen .nm i{font-style:normal}
 .res-screen .notes{font:500 13px/1.55 'Fraunces',serif;color:#33312c;padding:0 2px;overflow-wrap:break-word;text-wrap:pretty}
 .res-screen .notes b{color:#C8971E;margin:0 5px;font-weight:600}
 .res-screen .arch-card{position:relative;overflow:hidden;max-width:302px;margin:8px auto 0;padding:14px 13px 12px;border:6px solid transparent;
@@ -837,7 +838,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .ac-div i.r{background:linear-gradient(270deg,transparent,#C8971E)}
 .res-screen .ac-div span{font:600 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:#B08830;text-transform:uppercase;white-space:nowrap}
 .res-screen .ac-notes{font:500 17px/1.5 'Fraunces',serif;color:#3c3628;text-wrap:balance}
-.res-screen .arch-motto{font:italic 600 15px/1.55 'Fraunces',serif;color:#3c3628;max-width:280px;margin:14px auto 0}
+.res-screen .arch-motto{font:italic 600 15px/1.55 'Lora',serif;color:#3c3628;max-width:280px;margin:14px auto 0}
 .res-screen .ac-sweep{display:none}
 #s-res.rv-open .ac-sweep{animation:wbSweep 1.4s ease-out 1.2s both}
 /* clipboard + boards rise behind the opening doors so there's no black gap */
@@ -1115,7 +1116,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div style="position:absolute;top:30px;left:50%;width:150px;margin-left:-75px;z-index:3">
         <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
         <div class="hm-star-inner" style="position:relative;width:124px;height:124px;margin:-9px auto 0;display:flex;align-items:center;justify-content:center">
-          <svg width="124" height="124" viewBox="0 0 24 24" style="position:absolute"><defs><linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg>
+          <svg width="124" height="124" viewBox="0 0 24 24" style="position:absolute"><defs><linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.6" stroke-linejoin="miter" stroke-miterlimit="10" d="M12 1L14.85 8.08L22.46 8.6L16.61 13.5L18.47 20.9L12 16.85L5.53 20.9L7.39 13.5L1.54 8.6L9.15 8.08Z"/></svg>
           <img src="logo-star.png" alt="Style Star">
         </div>
       </div>
@@ -1186,7 +1187,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="hm-star-wrap">
         <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
         <div class="hm-star-inner">
-          <svg width="130" height="130" viewBox="0 0 24 24"><defs><linearGradient id="starHaloHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloHome)" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6l2.98 7.04 7.52.6-5.72 4.94 1.74 7.32L12 19.55 5.48 21.5l1.74-7.32L1.5 9.24l7.52-.6L12 1.6z"/></svg>
+          <svg width="130" height="130" viewBox="0 0 24 24"><defs><linearGradient id="starHaloHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloHome)" stroke-width="0.6" stroke-linejoin="miter" stroke-miterlimit="10" d="M12 1L14.85 8.08L22.46 8.6L16.61 13.5L18.47 20.9L12 16.85L5.53 20.9L7.39 13.5L1.54 8.6L9.15 8.08Z"/></svg>
           <img src="logo-star.png" alt="Style Star">
         </div>
       </div>
@@ -1718,7 +1719,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         </svg>
         <div>
           <div class="chat-hdr-title">style Star Stylist</div>
-          <div class="chat-hdr-sub">Created with love by a real stylist, powered by AI</div>
+          <div class="chat-hdr-sub">Created with love by a real stylist<br><span class="s2">powered by AI</span></div>
         </div>
       </div>
       <button class="chat-close" onclick="chatBack()">&larr; Back</button>
@@ -1856,7 +1857,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="mall-sign">
         <div class="mall-fixture">
           <span class="mf-glow"></span>
-          <svg class="mf-star" viewBox="0 0 24 24"><defs><linearGradient id="mallStarG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#mallStarG)" stroke-width="0.7" stroke-linejoin="miter" stroke-miterlimit="6" d="M12 1L14.59 8.44L22.46 8.60L16.19 13.36L18.47 20.90L12 16.4L5.53 20.90L7.82 13.36L1.54 8.60L9.41 8.44Z"/></svg>
+          <svg class="mf-star" viewBox="0 0 24 24"><defs><linearGradient id="mallStarG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#mallStarG)" stroke-width="0.7" stroke-linejoin="miter" stroke-miterlimit="10" d="M12 1L14.85 8.08L22.46 8.6L16.61 13.5L18.47 20.9L12 16.85L5.53 20.9L7.39 13.5L1.54 8.6L9.15 8.08Z"/></svg>
         </div>
         <div class="mall-sign-logo">style Star Mall</div>
         <div class="mall-sign-sub">Enjoy shopping our favorite stores. These are the places we love, all in one&nbsp;spot.</div>
