@@ -288,7 +288,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
 #s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
 .pref-done{text-align:center;padding:0.75rem 1rem 2rem}
-.pref-done-star{font-size:42px;margin-bottom:12px;line-height:1}
+.pref-done-star{margin:0 auto 14px;line-height:0}
+.pref-done-star svg{width:86px;height:86px;display:inline-block;filter:drop-shadow(0 3px 6px rgba(224,174,70,.32))}
 .pref-done-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
 .pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem;line-height:1.5}
 .pref-done-acts{display:flex;gap:10px;max-width:280px;margin:12px auto 0}
@@ -1633,7 +1634,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="scr" id="s-pref-done">
   <div class="top-back-wrap"><button class="top-back" onclick="prefDoneEdit()">&larr; Back</button></div>
   <div class="pref-done">
-    <div class="pref-done-star">⭐</div>
+    <div class="pref-done-star"><svg viewBox="0 0 24 24"><defs><radialGradient id="prefStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#prefStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>
     <div class="pref-done-title" id="prefDoneTitle">Bringing out your best!</div>
 
     <div id="prefSaveBlock">
