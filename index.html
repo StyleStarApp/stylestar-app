@@ -1626,7 +1626,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
       <!-- Save profile (quiz-takers only). FUTURE: "Email me these tips & links" slots in right here. -->
       <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
-        <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my style profile</button>
+        <svg viewBox="0 0 24 24" fill="#C8971E"><path d="M12 21C12 21 3.5 15.4 3.5 9.4 3.5 6.6 5.7 4.7 8.2 4.7c1.7 0 3.1.9 3.8 2.3.7-1.4 2.1-2.3 3.8-2.3 2.5 0 4.7 1.9 4.7 4.7 0 6-8.5 11.6-8.5 11.6z"/></svg>Save my style details</button>
       <!-- Profile save block (quiz-takers only) → existing save flow (_persistSave) -->
       <div class="keep" id="resKeepPhoto">
         <h4>Come back anytime</h4>
@@ -1676,11 +1676,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="pref-done-title" id="prefDoneTitle">Bringing out your best!</div>
 
     <div id="prefSaveBlock">
-      <div class="pref-done-sub">You've named your preferences, and that clarity is the secret to a wardrobe that brings out the best in you. From here, shopping only gets easier and more fun. Save your profile so it's always ready for you, on any device.</div>
+      <div class="pref-done-sub">You've named your preferences, and that clarity is the secret to a wardrobe that brings out the best in you. From here, shopping only gets easier and more fun. Save your details so they're always ready for you, on any device.</div>
       <div class="stay-form" id="prefSaveForm">
         <input type="text" class="stay-input" id="prefSaveName" placeholder="Your first name (optional)">
         <input type="email" class="stay-input" id="prefSaveEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')savePrefProfile()">
-        <button class="btn-p" id="prefSaveBtn" style="margin-top:0;max-width:280px" onclick="savePrefProfile()">Save my style profile</button>
+        <button class="btn-p" id="prefSaveBtn" style="margin-top:0;max-width:280px" onclick="savePrefProfile()">Save my style details</button>
       </div>
       <div id="prefSaveMsg" style="font-size:13px;color:#777;margin-top:8px"></div>
       <div style="font-size:12.5px;color:#6e6e6e;margin-top:6px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
@@ -1946,7 +1946,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <p style="margin-bottom:12px"><strong>What we collect</strong></p>
       <p style="margin-bottom:12px">When you save your results, we collect your email address, quiz answers, style portrait, and any preferences you share (sizes, colors, etc.). Photos shared for style analysis are processed by AI in real time and are never stored.</p>
       <p style="margin-bottom:12px"><strong>How we use it</strong></p>
-      <p style="margin-bottom:12px">We use your information to save your style profile so you can access it across devices, to personalize your shopping suggestions, and to send you occasional styling updates. We never sell or share your personal information with third parties.</p>
+      <p style="margin-bottom:12px">We use your information to save your style details so you can access them across devices, to personalize your shopping suggestions, and to send you occasional styling updates. We never sell or share your personal information with third parties.</p>
       <p style="margin-bottom:12px"><strong>Affiliate links</strong></p>
       <p style="margin-bottom:12px">Some product links on Style Star are affiliate links. When you make a purchase through these links, we may earn a small commission at no extra cost to you. This never influences which items we recommend.</p>
       <p style="margin-bottom:12px"><strong>Your choices</strong></p>
@@ -1967,7 +1967,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="sheet-card">
     <button class="sheet-x" onclick="dismissSaveSheet()" aria-label="Close">&times;</button>
     <div class="sheet-grab"></div>
-    <div class="sheet-title">Don't lose your style profile ✨</div>
+    <div class="sheet-title">Don't lose your style details ✨</div>
     <div class="sheet-sub" id="sheetSub">Save your results so you can come back anytime, on any device.</div>
     <div class="stay-form">
       <input type="text" class="stay-input" id="sheetName" placeholder="Your first name (optional)">
@@ -3084,7 +3084,7 @@ function showPrefDone(){
     saveBlock.style.display='none';
     savedBlock.style.display='block';
     if(dt)dt.textContent='Your style, in alignment';
-    document.getElementById('prefSavedSub').textContent='Your style profile is updated and saved. Your shopping suggestions and styling advice are now more personalized just for you.';
+    document.getElementById('prefSavedSub').textContent='Your style details are updated and saved. Your shopping suggestions and styling advice are now more personalized just for you.';
     syncPrefsToServer();
   }else{
     saveBlock.style.display='block';
@@ -3121,7 +3121,7 @@ function prefSaveComplete(email){
   var savedBlock=document.getElementById('prefSavedBlock');
   savedBlock.style.display='block';
   var dt2=document.getElementById('prefDoneTitle');if(dt2)dt2.textContent='Your style, in alignment';
-  document.getElementById('prefSavedSub').innerHTML='✨ Your style profile is updated and saved. Your shopping suggestions and styling advice are now more personalized just for you.';
+  document.getElementById('prefSavedSub').innerHTML='✨ Your style details are updated and saved. Your shopping suggestions and styling advice are now more personalized just for you.';
   window.scrollTo(0,0);
 }
 async function savePrefProfile(){
@@ -3130,11 +3130,11 @@ async function savePrefProfile(){
   const msg=document.getElementById('prefSaveMsg');
   const btn=document.getElementById('prefSaveBtn');
   if(!email||!email.includes('@')){
-    if(msg){msg.style.color='#c0392b';msg.textContent='Please enter a valid email so we can save your profile.'}
+    if(msg){msg.style.color='#c0392b';msg.textContent='Please enter a valid email so we can save your details.'}
     return;
   }
   // Immediate, unmistakable feedback that the tap registered
-  if(msg){msg.style.color='#777';msg.textContent='Saving your style profile…'}
+  if(msg){msg.style.color='#777';msg.textContent='Saving your style details…'}
   if(btn){btn.disabled=true;btn.style.opacity='0.6';btn.textContent='Saving…'}
   if(nameVal){
     userName=nameVal.charAt(0).toUpperCase()+nameVal.slice(1);
