@@ -285,8 +285,6 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Prefs buttons match the Quiz (its twin): warm gold Next, soft outline Back — softer than solid black */
 #s-pref #prefNext{border:4px solid transparent;background:linear-gradient(180deg,#2b2523,#1c1615) padding-box,linear-gradient(135deg,#F3E6B8,#DFB94E 40%,#B8891F 70%,#E8CE7E) border-box;color:#fff;box-shadow:0 12px 22px -14px rgba(0,0,0,.5),inset 0 0 0 2px #9aa1a7}
 #s-pref #prefNext:hover{opacity:1;filter:brightness(1.08)}
-#s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
-#s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
 .pref-done{text-align:center;padding:2rem 1rem}
 .pref-done-star{font-size:42px;margin-bottom:12px;line-height:1}
 .pref-done-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
@@ -1617,7 +1615,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <!-- Tap-to-zoom lightbox for the shared outfit photo (used on the outfit results) -->
 <div class="plight" id="photoLightbox" onclick="closeLightbox()"><span class="plight-x">&times;</span><img id="plightImg" alt="Your outfit"/></div>
 <div class="scr" id="s-pref">
-  <div class="top-back-wrap"><button class="top-back" onclick="showBack(prefReturnScreen)">&larr; Back</button></div>
+  <div class="top-back-wrap"><button class="top-back" onclick="prefTopBack()">&larr; Back</button></div>
   <div class="pref-hdr">
     <div class="pref-philo" id="prefPhilo">The more we refine our preferences, the more beauty comes into our lives.</div>
   </div>
@@ -1625,7 +1623,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div id="prefContent"></div>
   <div style="margin-top:1rem">
     <button class="btn-pink" id="prefNext" onclick="nextPref()">Next</button>
-    <button class="btn-o" id="prefBack" onclick="prevPref()">Back</button>
     <button class="retake" onclick="skipPrefs()">Skip for now</button>
   </div>
 </div>
@@ -2945,12 +2942,14 @@ function openPrefs(){
 }
 function skipPrefs(){showBack(prefReturnScreen)}
 function prefDone(){showBack(prefReturnScreen)}
-// "Back" on the "Your style, in alignment" screen: return to the refinement
-// questions at the FIRST step so she reviews her answers from the start (sizes,
-// colors, ...) rather than landing on the last "any other notes?" box. Answers
-// persist in `prefs`, so renderPref() shows them filled in; "Next" pages through
-// and "Done" flows back here.
-function prefDoneEdit(){prefStep=0;show('s-pref');renderPref();window.scrollTo(0,0);}
+// Top-right "Back" within the refinement flow: step back one page. Only the FIRST
+// page (sizes) exits to where she came from; every other page goes to the previous
+// question, so Back is always linear and never jumps out of the flow unexpectedly.
+function prefTopBack(){if(prefStep>0){prevPref();}else{showBack(prefReturnScreen);}}
+// "Back" on the "Your style, in alignment" screen: return to the last question
+// (the previous page in the flow); from there each Back steps to the previous
+// question. Answers persist in `prefs`, so renderPref() shows them filled in.
+function prefDoneEdit(){prefStep=4;show('s-pref');renderPref();window.scrollTo(0,0);}
 // After refining preferences: drop her straight into her personalized "Shop your
 // style" picks, no portrait reveal (genOutfits scrolls to the picks section).
 function prefShopNow(){openShopStyle();}
@@ -3290,9 +3289,7 @@ function renderPref(){
   const philo=document.getElementById('prefPhilo');
   if(philo)philo.textContent=prefPhilos[prefStep]||prefPhilos[0];
   const c=document.getElementById('prefContent');
-  const backBtn=document.getElementById('prefBack');
   const nextBtn=document.getElementById('prefNext');
-  backBtn.style.display=prefStep===0?'none':'block';
   nextBtn.textContent=prefStep===4?'Done':'Next';
 
   if(prefStep===0) renderPrefSizes(c);
