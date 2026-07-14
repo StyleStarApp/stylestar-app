@@ -3743,7 +3743,7 @@ function openChat(fromLook){
   if(hint){
     const hasPrefs=prefs.colorsLove.length>0||prefs.neverWear.length>0||(prefs.sizes.tops&&prefs.sizes.tops.length>0);
     if(!hasPrefs){
-      hint.innerHTML='<button class="act-btn act-2" onclick="openPrefs()" style="padding:11px 18px;font-size:11px;max-width:320px;margin:0 auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><circle cx="10" cy="9" r="2.4" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="2.4" fill="currentColor" stroke="none"/></svg>Refine for better suggestions</button>';
+      hint.innerHTML='<button class="act-btn act-2" onclick="openPrefs()" style="padding:11px 18px;font-size:11px;max-width:320px;margin:0 auto"><span style="color:#2E9E4F;font-weight:700;font-size:13px;margin-right:6px">&#10003; &#10007;</span>Refine for better suggestions</button>';
     }else{hint.innerHTML=''}
   }
   setTimeout(()=>document.getElementById('chatInput').focus(),300);
