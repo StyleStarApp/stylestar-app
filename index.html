@@ -1052,6 +1052,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .door.l .dstar{right:12px}
 .res-screen .door.r .dstar{left:12px}
 .res-screen .door .dstar svg{width:100%;height:100%;transform-origin:50% 50%}
+/* warm rotating caption under the spinning stars while the portrait composes */
+.res-screen .rv-cap{position:absolute;top:calc(50% + 64px);left:0;right:0;text-align:center;padding:0 24px;z-index:6;font:700 15px/1.4 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#2a2620;opacity:0;transition:opacity .55s ease;pointer-events:none}
+.res-screen.rv-compose .rv-cap{opacity:1}
 
 /* reveal state machine (classes toggled in JS) */
 .res-screen.rv-compose .dstar svg,.res-screen.rv-open .dstar svg{animation:rvStarLoop 1.05s linear infinite}
@@ -1420,6 +1423,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="doors">
     <div class="door l"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarL)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
     <div class="door r"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarR)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
+    <div class="rv-cap" id="resCap"></div>
   </div>
 </div>
 
@@ -2190,6 +2194,7 @@ function _resShowCompose(id){
   document.getElementById('pw').style.display='none';
   void s.offsetWidth;
   s.classList.add('rv-compose');
+  if(id==='s-res')_startQuizCaps();
 }
 // Play the reveal: doors swing open, boards rise. `fromCompose` means the closed
 // doors were already showing (loading path) so we open immediately; otherwise (instant
@@ -2197,6 +2202,7 @@ function _resShowCompose(id){
 function _playResReveal(fromCompose,id){
   var s=document.getElementById(id||'s-res');
   function open(){
+    _stopQuizCaps();
     s.classList.remove('rv-compose');
     void s.offsetWidth;
     s.classList.add('rv-open');
@@ -2513,7 +2519,7 @@ async function retryPhoto(){
 // Rotating stylist captions on the "Analyzing your outfit" loader. Same elegant
 // uppercase crossfade (span .a shows first, .b second, 5s cycle) — we just swap the
 // text to a fresh pair each cycle so a longer wait feels alive, like a stylist at work.
-var LOOK_CAPS=['READING YOUR LOOK','LOVING THE DETAILS','SEEING WHAT WORKS','THINKING IT THROUGH','STYLING IT FOR YOU','COMPOSING STYLE TIPS','FINDING THE MAGIC','PULLING IT TOGETHER'];
+var LOOK_CAPS=['READING YOUR LOOK','SEEING WHAT WORKS','THINKING IT THROUGH','STYLING IT FOR YOU','COMPOSING STYLE TIPS','PULLING IT TOGETHER'];
 var _lookCapTimer=null;
 function _startLookCaps(){
   var a=document.getElementById('alCapA'),b=document.getElementById('alCapB');
@@ -2524,6 +2530,25 @@ function _startLookCaps(){
   _lookCapTimer=setInterval(function(){p=(p+2)%n;a.textContent=LOOK_CAPS[p];b.textContent=LOOK_CAPS[(p+1)%n];},5000);
 }
 function _stopLookCaps(){if(_lookCapTimer){clearInterval(_lookCapTimer);_lookCapTimer=null;}}
+// Warm rotating caption on the quiz Style-Portrait reveal, shown under the spinning
+// stars while the AI composes her portrait (the closed-doors "compose" beat).
+var QUIZ_CAPS=['READING YOUR ANSWERS','SEEING WHO YOU ARE','FINDING YOUR STYLE','CAPTURING YOUR SIGNATURE','COMPOSING YOUR PORTRAIT','BRINGING IT TO LIFE'];
+var _quizCapTimer=null,_quizCapFade=null;
+function _startQuizCaps(){
+  var el=document.getElementById('resCap');if(!el)return;
+  _stopQuizCaps();
+  var n=QUIZ_CAPS.length,i=Math.floor(Math.random()*n);
+  el.style.opacity='';el.textContent=QUIZ_CAPS[i];
+  _quizCapTimer=setInterval(function(){
+    el.style.opacity='0';
+    _quizCapFade=setTimeout(function(){i=(i+1)%n;el.textContent=QUIZ_CAPS[i];el.style.opacity='1';},550);
+  },2900);
+}
+function _stopQuizCaps(){
+  if(_quizCapTimer){clearInterval(_quizCapTimer);_quizCapTimer=null;}
+  if(_quizCapFade){clearTimeout(_quizCapFade);_quizCapFade=null;}
+  var el=document.getElementById('resCap');if(el)el.style.opacity='';
+}
 function _showPhotoLoad(){
   var img=document.getElementById('alPhoto');
   if(img){
