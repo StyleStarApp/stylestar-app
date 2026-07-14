@@ -2101,7 +2101,7 @@ function show(id,skipHistory){
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
   var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-chat');
   var gf=document.querySelector('.quiz-footer');
-  if(gf)gf.style.display=(ownChrome||id==='s-shop')?'none':'';
+  if(gf)gf.style.display=(ownChrome||id==='s-shop'||id==='s-quiz')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
