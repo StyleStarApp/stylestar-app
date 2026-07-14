@@ -517,11 +517,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .sheet-x:hover{background:#e9e5dd;color:#666}
 .sheet-title{font-family:'DM Serif Display',Georgia,serif;font-size:21px;font-weight:400;color:#1a1a1a;margin-bottom:6px}
 .sheet-sub{font-size:14px;color:#555;line-height:1.5;margin-bottom:14px;max-width:320px;margin-left:auto;margin-right:auto}
-.save-toast{position:fixed;right:0;bottom:18px;z-index:9997;width:min(330px,calc(100% - 16px));background:#fff;border-radius:16px 0 0 16px;box-shadow:0 10px 34px rgba(20,16,8,0.24);border-left:3px solid #D4AF37;padding:16px 18px 18px;transform:translateX(110%);transition:transform .72s cubic-bezier(.22,.7,.25,1);display:none;text-align:left}
+.save-toast{position:fixed;right:10px;bottom:18px;z-index:9997;width:min(322px,calc(100% - 24px));background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border:1px solid #d7d2c7;border-radius:0;box-shadow:0 16px 40px -12px rgba(20,16,8,.4);padding:20px 20px 18px;transform:translateX(calc(100% + 24px));transition:transform .72s cubic-bezier(.22,.7,.25,1);display:none;text-align:center}
+.save-toast::before{content:"";position:absolute;inset:7px;border:1px solid rgba(140,130,110,.32);pointer-events:none}
 .save-toast.show{transform:translateX(0)}
-.save-toast-title{font-family:'DM Serif Display',Georgia,serif;font-size:16px;font-weight:400;color:#1a1a1a;margin-bottom:5px;padding-right:18px}
-.save-toast-sub{font-size:13px;color:#555;line-height:1.45;margin-bottom:10px}
-.save-toast .stay-input{max-width:100%;width:100%;text-align:left;padding:11px 14px;font-size:14px}
+.save-toast-title{font-family:'DM Serif Display',Georgia,serif;font-size:18px;font-weight:400;color:#1a1a1a;margin-bottom:6px;padding:0 22px}
+.save-toast-sub{font-size:13px;color:#555;line-height:1.5;margin-bottom:12px}
+.save-toast .stay-input{max-width:100%;width:100%;text-align:center;padding:11px 14px;font-size:14px}
 .save-toast .btn-p{margin-top:10px;max-width:100%;padding:13px}
 .mall-cat{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1a1a1a;font-weight:700;margin:1.7rem 0 0.85rem;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.6)}
 .mall-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -1996,12 +1997,12 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </div>
 
 <div class="save-toast" id="saveToast">
-  <button class="sheet-x" onclick="dismissSideToast()" aria-label="Close" style="top:8px;right:10px">&times;</button>
-  <div class="save-toast-title" id="toastTitle">One more thing ✨</div>
-  <div class="save-toast-sub">Want me to save your results? Pop in your email and you can pick up right here anytime.</div>
+  <button class="sheet-x" onclick="dismissSideToast()" aria-label="Close" style="top:11px;right:13px">&times;</button>
+  <div class="save-toast-title" id="toastTitle">⭐ Whenever you're ready ⭐</div>
+  <div class="save-toast-sub">Your Style Portrait will be here anytime you want it, on any device. Quick and easy.</div>
   <input type="text" class="stay-input" id="toastName" placeholder="First name (optional)">
   <input type="email" class="stay-input" id="toastEmail" placeholder="Enter your email" style="margin-top:8px" onkeydown="if(event.key==='Enter')saveFromSideToast()">
-  <button class="btn-p" id="toastSaveBtn" onclick="saveFromSideToast()">Save my results</button>
+  <button class="btn-p" id="toastSaveBtn" onclick="saveFromSideToast()">Save my style details</button>
   <div id="toastMsg" style="font-size:12px;color:#777;margin-top:6px"></div>
 </div>
 
