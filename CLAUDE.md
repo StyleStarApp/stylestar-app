@@ -2418,3 +2418,75 @@ A long live-polish session with Cath, all merged → live. Branch this session: 
 - ▶ **STILL OPEN / QUEUED (Cath's pick next):** (1) finalize the rotating loading lines; (2) edit the
   **"Shop your style" subtitle sayings** (`SHOP_MSGS`: 'Chosen with you in mind.' etc. — 6 lines, she wants to
   reword/cut/add); (3) the **footer-pages glow-up** (Our Story / FAQ / Privacy) — the last old-look screens.
+
+**2026-07-14 (cont. — rotating personality lines finalized, two loader "moments", pop-ups → linen stationery cards, portrait-reveal + heart fixes — ALL SHIPPED LIVE, PRs #336–#341)**
+Branch this session: `claude/style-star-6h5v9k-lt1y6t`. A long, happy copy + polish session with Cath.
+- ✅ **Rotating personality lines — all three spots edited line-by-line with Cath and finalized** (PRs #336–#337):
+  - **Welcome Back (`WB_MSGS`, 9 lines):** tightened #4/#6/#8; then reworded #4 ("Your own personal stylist, /
+    making style clear, easy, and fun."), #5 (now a graceful 3-liner keeping every word), #9 ("…put-together,
+    and fully you.") so **none overflow their intended 2-line layout on a phone** (measured at 375px with a
+    headless harness — #4/#5/#9 were spilling to 3–4 lines).
+  - **Shop your style (`SHOP_MSGS`):** rebuilt to 7 brand-voice lines (Align your style. Shine your light. /
+    Your signature style is coming together. / Here to help you shine your light. / Embracing your unique
+    personal style. / Personalized for you. / Bringing out your most confident you. / **Style with intention
+    and heart.** ← Cath's own line, added last). Deleted "Chosen with you in mind."
+  - **Loading line under the spinning star (`LOADING_MSGS`, 7):** Gathering all the best options for you… /
+    Looking for pieces you'll love… / Finding pieces that fit your style story… / Looking through hundreds of
+    options for you… / Searching for pieces to help you shine… / Finding pieces that fit your signature
+    style… / Searching all the latest options, just for you…
+- ✅ **NEW loader "moment" #1 — rotating captions on the Analyze-an-outfit loader (`#s-photo-load`)** (PR #338).
+  Kept the existing elegant uppercase crossfade (span `.a` first, `.b` second, 5s CSS loop) but now JS swaps
+  the text to a fresh pair each cycle so a longer wait feels alive. `LOOK_CAPS` (6, Cath's picks): READING YOUR
+  LOOK / SEEING WHAT WORKS / THINKING IT THROUGH / STYLING IT FOR YOU / COMPOSING STYLE TIPS / PULLING IT
+  TOGETHER. `_startLookCaps()` on `_showPhotoLoad`, `_stopLookCaps()` in `_revealPhotoRes` (all 3 exit paths
+  funnel through it). All fit one line at 21px (verified).
+- ✅ **NEW loader "moment" #2 — composing caption on the QUIZ Style-Portrait reveal (`#s-res`)** (PRs #338–#339).
+  During the closed-doors "composing" beat, a caption now shows on a **pearly framed card (the archetype-card
+  frame: `.arch-card`'s cream gradient + `.ac-studs` pearl studs + chrome interior) above the spinning stars**,
+  in **DM Serif Display** (NOT Fraunces — Cath caught that we moved to DM Serif Display + Lora in this world),
+  22px, **fixed 296×83 size** so it stays steady as phrases rotate. `QUIZ_CAPS` (6): Reading your answers /
+  Seeing who you are / Finding your style / Capturing your signature / Composing your portrait / Bringing it to
+  life. New markup `#resCap`→`.rvc-card`(pearly)→`.rvc-inner`(chrome)→`#resCapTxt`; `_startQuizCaps`/`_stopQuizCaps`
+  crossfade the TEXT (opacity) every ~2.9s inside the steady card. Started in `_resShowCompose('s-res')`,
+  stopped in `_playResReveal` open().
+  - ▶ **IMPORTANT follow-up fix (PR #341):** the caption was ALSO flashing on a plain **revisit** ("See my
+    style portrait" → `loadSaved`), because that path uses the `rv-quick` glint reveal which briefly passes
+    through `rv-compose`. Fixed by gating the card to a NEW **`rvq`** marker class that ONLY a real compose
+    sets: `_startQuizCaps` adds `s-res.rvq`, `_stopQuizCaps` removes it; CSS is now
+    `.res-screen.rv-compose.rvq .rv-cap{opacity:1}`. So the card shows on a fresh quiz + **retake** only, and a
+    revisit opens the doors **plain, no signage** (Cath's ask). Verified hidden-on-revisit / shown-on-compose.
+- ✅ **All three results-screen POP-UPS redesigned into warm "linen stationery cards"** (PRs #340–#341). Shared
+  recipe: the cool linen weave (`#FBFAF7` + faint crosshatch, same as the WB vanity mirror — NO brown/tan),
+  **square** (border-radius 0), a delicate **engraved inner frame** (`::before{inset:…;border:1px solid
+  rgba(140,130,110,.32)}`), amber removed. Cath dislikes the amber `#D4AF37`/`rgba(201,162,78)` lines and
+  rounded corners.
+  - **Save sheet (bottom, `.sheet-card`):** was full-width rounded with a gold grab-bar → now a **slimmer
+    floating** linen card (`width:min(360px,calc(100% - 40px))`, lifted off the bottom), grab-bar removed.
+    Copy de-redundified + made "easy": title **"⭐ Save your style details ⭐"** (yellow ⭐ emoji each side —
+    Cath wants ⭐, not the 4-point ✦/✨), sub **"Quick and easy. Add your email and come back to your Style
+    Portrait anytime, on any device."** (default + the with-name variants in `showSaveSheet`/`openSaveSheetManual`
+    updated), button **"Save my style details"**.
+  - **Side card (`.save-toast`):** same linen/square/frame treatment, gold left-border removed, centered.
+    Title **"⭐ Yours to keep ⭐"** (Cath rejected "No rush" as abrupt; chose the gift-framed line), sub "Your
+    Style Portrait will be here anytime you want it, on any device. Quick and easy.", button "Save my style
+    details". **Timing slowed 12s → 30s** after the first ask is dismissed (Cath: the second one came in too
+    fast, rushing her reading). Title needs `padding:0 22px` so it clears the ×.
+  - **Style nudge ("Want your shopping more personalized?", `.sn-card`):** square linen card + engraved frame
+    (amber border removed), **arrow SVG added to the green "Refine my style" button** (kept green per Cath),
+    skip link reworded **"Just show me" → "Just show me some ideas"**.
+- ✅ **Prettier heart on the save buttons** (PR #341): the lopsided hand-drawn heart on `#resSaveBtn` +
+  `#resSaveBtnPhoto` → a clean **symmetric heart** (Material path) with a **jewelry-gold gradient** fill
+  (`#F7E9B0→#E6C24E→#C99A2C`, ids `heartG`/`heartG2`). Keeps the single `heartBeat` on reveal.
+- ✅ **Unified save-button label** to **"Save my style details"** across the portrait main save button, the
+  "Keep your portrait" block (`.kbtn`), and the photo results — matches the new pop-ups. (Only remaining
+  "Save my results" text is a harmless code comment.)
+- **Tooling note:** verified everything in a **headless Chromium http-harness** (serve repo on :8199, wait
+  ~6s for the home entrance reveal to tear down, then drive `show()` / `_resShowCompose` etc.). `playwright-core`
+  installed in the session scratchpad; browser at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`. Used the
+  **Edit tool** throughout (never perl/sed on `index.html`).
+- ▶ **Deferred / open after this session** (see the master to-do above; nothing blocking):
+  1. **Footer-pages glow-up** (Our Story / FAQ / Privacy) — the last old-look screens (Fraunces/DM-Sans).
+     Bring them into the chrome/gold/DM-Serif world for full app consistency.
+  2. Cath left the Welcome Back lines as-is re: the word "intention" (kept it unique to the Shop rotation).
+  3. Still queued from before: Vision Board real-photo curation; "Email me these tips & links" after a photo
+     analysis (needs MailerLite transactional); the affiliate-link wiring once programs approve (revenue switch).
