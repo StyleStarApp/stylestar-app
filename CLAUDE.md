@@ -2491,6 +2491,77 @@ Branch this session: `claude/style-star-6h5v9k-lt1y6t`. A long, happy copy + pol
   3. Still queued from before: Vision Board real-photo curation; "Email me these tips & links" after a photo
      analysis (needs MailerLite transactional); the affiliate-link wiring once programs approve (revenue switch).
 
+**2026-07-14 (cont. — ▶ SALLY'S HUMAN THREAD woven through the app + My Story rewrite + FAQ voice + restraint polish — SHIPPED LIVE, PR #344)**
+Branch this session: `claude/style-star-8bgaud`. Acted on Sally Hogshead's north star (surface the real
+stylist so a stranger FEELS the human moat) and did a restraint-polish pass. All merged → live.
+- ✅ **Home founder line** (`s-wel`, under the "Start my style quiz" CTA — the high-visibility spot that keeps
+  the headline clean): *"Hi, I'm Catherine. I've styled women for over 20 years. I created this with love and
+  intention."* Cath's **name is the tappable link** to her story (no separate "Read my story →" link, so nothing
+  competes with the quiz CTA — Cath's call), set in her **Dancing Script signature** with a **subtle gold
+  underline** (tappable affordance) and a **tiny gold ★** before "Hi." New `.hm-founder`/`.fnm`/`.fstar` (namespaced
+  to home); registered in the entrance-reveal sequence (`body.ss-anim` opacity list + a `body.ss-play .hm-founder`
+  rise at 1.5s; restore bumped 1.55→1.6s). Cath wrestled with "too much about me" — reassured (Sally: the person
+  IS the moat; the line is framed as a gift TO the reader, quiz still the loud hero). No photo of her (her firm call).
+- ✅ **"Our Story" → "My Story"** everywhere (page title + all 6 footer links; `showStory()` unchanged). Decision:
+  it is genuinely just Cath, so first-person is more honest and a stronger differentiator than company-sounding "we".
+  Rule agreed: lean **first-person in the personal/heart moments**, keep "we" for product/brand/legal voice.
+- ✅ **My Story rewritten in first person** (was third person: "a certified image consultant… she… our founder").
+  Opens "a personal stylist and certified image consultant"; speaks directly to the reader ("You already have great
+  instincts"); smoothed a few lines; completed a dangling fragment ("I'm here with thoughtful guidance…"). Kept the
+  inclusive "we" (all of us women) in the shine/wardrobe lines only. **Closes like a letter with "With love,
+  Catherine" in the Dancing Script signature** (`.story-sig`, dark, distinct from the flowers line). The
+  **"A personal stylist at your fingertips who really knows your style… helps you find what suits you"** line kept the
+  stylist framing over Cath's "styling and shopping app" idea (Sally: don't read as "just an app"; also redundant on
+  the app). **Flowers line** ("New clothes are like fresh flowers…"): moved up above the "shine your light" climax so
+  the story rises uninterrupted; then de-cursived (dropped the big gold Dancing Script `.story-quote`, removed that
+  CSS) so the **signature is the only handwriting on the page**; then **woven into the end of the shopping paragraph**
+  as a plain sentence ("…fun and easy. New clothes are like fresh flowers, so enjoy them now.") so it doesn't float.
+- ✅ **FAQ human-thread + accuracy pass:** "What makes Style Star different?" now **leads with the real stylist**
+  (Catherine, 20 yrs, "not a faceless algorithm… real styling from a real stylist who genuinely cares") then keeps
+  the you-first philosophy. First-person on **"Is this a real stylist or AI?"**, **"Do you sell the clothes?"** ("hand-
+  selected by me"), **"How do I get in touch?"** ("I'd love to hear from you. Reach me at…"), and **"the heart behind
+  Style Star"** ("I believe…", matches My Story). **"Can I share my results?"** rewritten to the current keepsakes —
+  **Style Constellation** (star map) + **Style Mood Board** (collage) — dropping the stale "Style Card / Style
+  Signature" wording. Photo-privacy answer made precise: "processed in real time and **never stored on our servers**"
+  (matches the chat line). Headline **"Questions We Hear Often" → "Frequently Asked Questions"** (avoids "we").
+  Deliberately KEPT "we" (brand/legal voice) on: What is Style Star, Can I share (the "we'd love that"), Is it free,
+  Is my info private, Is it for every body, and "our expertise" in the "don't know my style" answer (Cath: "can't take
+  all the credit ha").
+- ✅ **Restraint polish (Cath's calls):** (1) **Quiz-result mirror doors** — removed the pearly framed rotating
+  caption we added last session (`.rv-cap`/`.rvc-*`, `QUIZ_CAPS`, `_startQuizCaps`/`_stopQuizCaps`, `rvq` marker);
+  back to just plain spinning stars. Confirmed the doors have **no artificial timer** — `genResult()` shows the closed
+  doors then awaits the AI and opens the instant it resolves. (2) **Save-button heart** — swapped the hand-drawn gold
+  SVG for the **gold emoji heart 💛** on both `#resSaveBtn`/`#resSaveBtnPhoto` (new `.hrt` span; retargeted the
+  `heartBeat` reveal + reduced-motion rules from `.savebtn svg` → `.savebtn .hrt`; removed the `heartG` gradients).
+  Cath's instinct (emoji > tiny hand-drawn heart) was right; picked 💛 gold over red/white to stay on-palette.
+  (3) **Style-nudge "Refine my style" button** (`.sn-go`) green → **black fill + white text, arrow alone green**
+  (`.sn-go svg path{stroke:#2FA35C}` to override the currentColor arrow).
+- ✅ **Results save-ask timing slowed** so she can enjoy her portrait before the ask (Cath: "too fast"): bottom save
+  sheet **2s → 10s** after she reaches the bottom; no-scroll backup **22s → 35s**; the side card (only after she
+  dismisses the first) **30s → 60s**. (Explained the exact trigger logic to her; she approved these numbers, will
+  test on-device.)
+- **Welcome Back:** checked the 9 `WB_MSGS` rotating lines — ~half already carry the human/founder thread (esp.
+  "Created with love by a real stylist" and "This is my gift to you…"). Decided **no change** (Sally case is weaker
+  for returning users who've already met her; screen already warm). A subtle "— Catherine" signature was offered and
+  declined.
+- **⚠️ CONTAINER RESTART GOTCHA (mid-session):** the cloud container restarted and **reset the LOCAL branch to old
+  `main` (e97d021)**, silently discarding local session commits from the working copy (a render briefly showed the OLD
+  "Our Story"/third-person file). **All work was safe on the remote** (each change had been pushed). Fix:
+  `git fetch origin <branch>` then `git reset --hard origin/<branch>` to restore, then re-applied only the one
+  uncommitted edit. LESSON: after a restart, VERIFY `git log`/file state before trusting a render, and reset local to
+  the remote branch tip. Commit+push frequently (we did — that's what saved it).
+- **Tooling notes:** installed `playwright-core` **isolated in the scratchpad** (`scratchpad/render/`, not the repo)
+  to avoid polluting the repo `package.json`/`node_modules` (an earlier stray `npm install` in the repo root had to be
+  reverted — `git checkout -- package.json`, delete lockfile). Headless Chromium **can't reach fonts.gstatic.com**
+  (only the CSS host resolves), so Dancing Script won't paint in raw renders; for a true signature preview, **fetch the
+  woff2 via the proxy and embed it base64** (or inject as an addStyleTag @font-face). Launch Playwright with
+  `proxy:{server: HTTPS_PROXY, bypass:'127.0.0.1,localhost'}` so Google Fonts load; serve the repo over
+  `http://127.0.0.1:8199` and wait ~3.5s past load.
+- **Merged as PR #344 → live** (squash). Cath to test on her phone (founder line, My Story flow, ~10s save-sheet beat;
+  Dancing Script renders fine on device — it's the same font as the Style Star Edit signature).
+- ▶ **Sally's home-page ACTION below is now ✅ DONE** (this session). The broader thread (weave the human moat through
+  welcome email, chat, results, etc.) continues; the highest-value surfaces (Home, My Story, FAQ, Chat) are now covered.
+
 ### ▶ NORTH STAR (2026-07-14, from Sally Hogshead — award-winning marketing expert, author of "How to Fascinate"): DIFFERENTIATION = THE REAL STYLIST BEHIND IT
 Sally (Cath's friend, a marketing/branding genius) gave Cath the single most important strategic note yet:
 **Style Star must clearly, loudly differentiate on the one thing no competitor can copy — that it is built with
