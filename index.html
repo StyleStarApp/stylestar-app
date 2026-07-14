@@ -326,7 +326,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .shop-star-wrap{position:relative;width:72px;height:72px;margin:2px auto 12px}
 .shop-star-main{width:72px;height:72px;display:block;filter:drop-shadow(0 2px 5px rgba(224,174,70,.3));animation:spin 1.7s linear infinite;transform-origin:50% 50%}
 @media(prefers-reduced-motion:reduce){.shop-star-main{animation:none}}
-#s-shopstyle .shop-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:47vh;padding:0}
+#s-shopstyle .shop-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:232px;padding:8px 0}
 .shop-refresh{text-align:center;margin-top:14px}
 .shop-refresh-btn{font-size:15.5px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.03em}
 .shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;font-style:italic;max-width:320px;margin-left:auto;margin-right:auto}
@@ -580,12 +580,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-body{font:400 13.5px/1.5 'Jost',sans-serif;color:#4a463e;margin:5px 4px 0;text-wrap:balance;animation:ssRise .6s ease .28s both}
 .hm-cta{position:relative;display:flex;align-items:center;gap:9px;width:calc(100% - 26px);margin:16px auto 0;border-radius:0;cursor:pointer;background:#FCFAF4;
   padding:13px 13px;box-shadow:0 0 0 5px #B4BAC0,0 0 0 10px #E7C24F,0 12px 22px -12px rgba(70,72,80,.5);animation:ssRise .6s ease .32s both}
-.hm-cta .hm-cta-tile{flex:0 0 auto;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#F3E1A0,#D8A93E 55%,#B07E1C);box-shadow:0 2px 5px -2px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.5)}
+.hm-cta .hm-cta-tile{flex:0 0 auto;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#D9A93E}
 .hm-cta .hm-cta-tile svg{width:21px;height:21px}
 .hm-cta .hm-cta-body{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:9px}
 .hm-cta .lbl{position:relative;font:700 13.5px/1 'Jost',sans-serif;letter-spacing:.015em;text-transform:uppercase;color:#241d0c;white-space:nowrap}
 .hm-cta .hm-cta-arr{flex:0 0 auto;width:18px;height:18px;color:#B8831F}
-.hm-cta-seal{position:absolute;top:-26px;right:-15px;width:50px;height:50px;transform:rotate(-10deg);filter:drop-shadow(0 0 6px rgba(244,208,102,.6)) drop-shadow(0 3px 4px rgba(120,90,20,.4));z-index:3;transform-origin:center;animation:ssSealPop 1.1s cubic-bezier(.34,1.56,.64,1) 1s 1 both,ssSealShimmer 2.7s ease-in-out 2.3s infinite}
+.hm-cta-seal{position:absolute;top:-29px;right:-17px;width:56px;height:56px;transform:rotate(-10deg);filter:drop-shadow(0 0 6px rgba(244,208,102,.6)) drop-shadow(0 3px 4px rgba(120,90,20,.4));z-index:3;transform-origin:center;animation:ssSealPop 1.1s cubic-bezier(.34,1.56,.64,1) 1s 1 both,ssSealShimmer 2.7s ease-in-out 2.3s infinite}
 @keyframes ssSealPop{0%{transform:rotate(-10deg) scale(0);opacity:0}55%{transform:rotate(-2deg) scale(1.22);opacity:1}78%{transform:rotate(-15deg) scale(.94)}100%{transform:rotate(-10deg) scale(1);opacity:1}}
 @keyframes ssSealShimmer{0%,100%{transform:rotate(-10deg) scale(1);filter:drop-shadow(0 0 6px rgba(244,208,102,.58)) drop-shadow(0 3px 4px rgba(120,90,20,.4)) brightness(1.04)}50%{transform:rotate(-10deg) scale(1.06);filter:drop-shadow(0 0 12px rgba(247,214,116,.92)) drop-shadow(0 3px 5px rgba(120,90,20,.4)) brightness(1.2)}}
 @media (prefers-reduced-motion:reduce){.hm-cta-seal{animation:none}}
@@ -1224,7 +1224,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <p class="hm-sub">Your personal stylist is ready!</p>
     <p class="hm-body">Expert style guidance and personalized shopping, all in one place.</p>
 
-    <a class="hm-cta" data-press onclick="startQ()"><svg class="hm-cta-seal" viewBox="0 0 24 24"><defs><radialGradient id="hmSeal" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#hmSeal)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span class="hm-cta-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span><span class="hm-cta-body"><span class="lbl">Start my style quiz</span><svg class="hm-cta-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></a>
+    <a class="hm-cta" data-press onclick="startQ()"><svg class="hm-cta-seal" viewBox="0 0 24 24"><defs><radialGradient id="hmSeal" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#hmSeal)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span class="hm-cta-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h11M19 7h1M4 17h4M12 17h8"/><circle cx="17" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span><span class="hm-cta-body"><span class="lbl">Start my style quiz</span><svg class="hm-cta-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></a>
 
     <div id="restoreSection">
       <div class="hm-help first">Already taken the quiz? <b onclick="showRestore()">Restore your results</b></div>
@@ -3035,6 +3035,7 @@ function _openShopStyleNow(mode){
 async function _shopStyleGen(){
   var cont=document.getElementById('shopStyleContent');
   var talk=document.querySelector('#s-shopstyle .ss-shop-talk');if(talk)talk.classList.remove('on');
+  var gf=document.querySelector('.quiz-footer');if(gf)gf.style.display='none';
   cont.innerHTML='<div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div>';
   var basis;
   if(_shopStyleMode==='look'){
@@ -3060,8 +3061,10 @@ async function _shopStyleGen(){
     html+='</div><div class="shop-refresh"><button class="shop-refresh-btn" onclick="_shopStyleGen()">&#8635; Show me different options</button></div>';
     cont.innerHTML=html;
     if(talk)talk.classList.add('on');
+    if(gf)gf.style.display='';
   }catch(e){
     cont.innerHTML='<div class="shop-loading">Couldn\'t load options right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="_shopStyleGen()" style="max-width:200px;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#2a1f05">Try again</button></div>';
+    if(gf)gf.style.display='';
   }
 }
 function shopStyleBack(){show(shopStyleFrom||'s-wb');}
