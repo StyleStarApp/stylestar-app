@@ -3231,7 +3231,7 @@ function _resultsScroll(){
   if(emailDone||saveSheetShown||saveSheetDismissed)return;
   // She's reached the bottom — give her a beat to enjoy it, then rise.
   if(_nearBottom()&&!_stage1Beat){
-    _stage1Beat=setTimeout(showSaveSheet,2000);
+    _stage1Beat=setTimeout(showSaveSheet,10000); // a real beat to linger and enjoy her portrait before the ask
   }
 }
 function _clearSheetTriggers(){
@@ -3242,7 +3242,7 @@ function _clearSheetTriggers(){
 }
 function scheduleSaveSheet(){
   if(emailDone||saveSheetShown||saveSheetDismissed||_sheetTimer)return;
-  _sheetTimer=setTimeout(showSaveSheet,22000); // long backup for a slow reader who never scrolls
+  _sheetTimer=setTimeout(showSaveSheet,35000); // long backup for a slow reader who never scrolls
   window.addEventListener('scroll',_resultsScroll,{passive:true});
 }
 // Shared, hardened save core used by every save entry point.
@@ -3297,7 +3297,7 @@ function dismissSaveSheet(){
   if(_stage1Beat){clearTimeout(_stage1Beat);_stage1Beat=null}
   window.removeEventListener('scroll',_resultsScroll);
   // Arm the gentle, slower side ask well later (no rush at all).
-  _stage2Timer=setTimeout(showSideToast,30000);
+  _stage2Timer=setTimeout(showSideToast,60000);
   var el=document.getElementById('saveSheet');
   el.classList.remove('show');
   setTimeout(function(){el.style.display='none'},320);
