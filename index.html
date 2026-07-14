@@ -1045,11 +1045,12 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen.rv-open .p2.p2b{animation:rvRise .7s ease 1.42s both}
 .res-screen.rv-done .p2.p2b{opacity:1}
 /* quiz-skipper nudge card (shown in place of the profile save) */
-.res-screen .quiznudge{margin:2px 0 4px;padding:18px 16px 17px;text-align:center;border-radius:3px;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 10px 22px -14px rgba(0,0,0,.5)}
-.res-screen .quiznudge .qn-star{font-size:19px;color:#C8971E;line-height:1}
+.res-screen .quiznudge{margin:2px 0 4px;padding:18px 16px 17px;text-align:center;border-radius:3px;border:2px solid #CBA24B;background:#fff;box-shadow:0 10px 22px -14px rgba(0,0,0,.5)}
+.res-screen .quiznudge .qn-star{width:30px;height:30px;margin:0 auto 6px;filter:drop-shadow(0 2px 3px rgba(120,90,20,.3))}
+.res-screen .quiznudge .qn-star svg{width:100%;height:100%;display:block}
 .res-screen .quiznudge h4{font:400 20px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:6px 0 5px;text-wrap:balance}
 .res-screen .quiznudge p{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 13px;max-width:34ch}
-.res-screen .quiznudge .qn-btn{width:100%;border:none;border-radius:3px;padding:13px;cursor:pointer;background:linear-gradient(180deg,#33302A,#201D19);color:#F1DDA0;font:700 12px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.res-screen .quiznudge .qn-btn{width:100%;border:none;border-radius:3px;padding:13px;cursor:pointer;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#211803;font:700 12px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase}
 
 /* beveled chrome mirror doors (reveal overlay) */
 .res-screen .doors{position:fixed;inset:0;overflow:hidden;z-index:60;perspective:1400px;pointer-events:none}
@@ -1659,7 +1660,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
       <!-- Quiz invite — shown ONLY to non-quiz-takers (their conversion CTA); sits at the bottom -->
       <div class="quiznudge" id="photoQuizNudge" style="display:none">
-        <div class="qn-star">&#9733;</div>
+        <div class="qn-star"><svg viewBox="0 0 24 24"><defs><radialGradient id="qnStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#qnStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>
         <h4>Want everything personally styled for you?</h4>
         <p>Take our fun style quiz and I'll tailor your portrait, tips, and shopping to your taste.</p>
         <button class="qn-btn" onclick="startQ()">Take our fun style quiz &rarr;</button>
