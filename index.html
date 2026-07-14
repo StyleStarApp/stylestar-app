@@ -509,9 +509,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-foot .st{color:#E6C24E;font-size:12px;line-height:1}
 .sheet-backdrop{position:fixed;inset:0;background:rgba(20,16,8,0.32);z-index:9998;display:none;align-items:flex-end;justify-content:center;opacity:0;transition:opacity .3s ease}
 .sheet-backdrop.show{opacity:1}
-.sheet-card{width:100%;max-width:480px;background:#fff;border-radius:0;box-shadow:0 -8px 40px rgba(0,0,0,0.2);padding:1.25rem 1.5rem 1.75rem;transform:translateY(102%);transition:transform .38s cubic-bezier(.2,.85,.25,1);position:relative;text-align:center}
+.sheet-card{width:min(360px,calc(100% - 40px));margin:0 auto 22px;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border:1px solid #d7d2c7;border-radius:0;box-shadow:0 18px 50px -12px rgba(20,16,8,.42);padding:1.7rem 1.6rem 1.55rem;transform:translateY(calc(100% + 44px));transition:transform .4s cubic-bezier(.2,.85,.25,1);position:relative;text-align:center}
+.sheet-card::before{content:"";position:absolute;inset:8px;border:1px solid rgba(140,130,110,.32);pointer-events:none}
 .sheet-backdrop.show .sheet-card{transform:translateY(0)}
-.sheet-grab{width:42px;height:4px;border-radius:0;background:#dcd8ce;margin:0 auto 14px}
+.sheet-grab{display:none}
 .sheet-x{position:absolute;top:12px;right:14px;width:30px;height:30px;border:none;background:#f3f0ea;border-radius:50%;font-size:18px;color:#999;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
 .sheet-x:hover{background:#e9e5dd;color:#666}
 .sheet-title{font-family:'DM Serif Display',Georgia,serif;font-size:21px;font-weight:400;color:#1a1a1a;margin-bottom:6px}
@@ -1981,7 +1982,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="sheet-card">
     <button class="sheet-x" onclick="dismissSaveSheet()" aria-label="Close">&times;</button>
     <div class="sheet-grab"></div>
-    <div class="sheet-title">Don't lose your style details ✨</div>
+    <div class="sheet-title">⭐ Save your style details ⭐</div>
     <div class="sheet-sub" id="sheetSub">Save your results so you can come back anytime, on any device.</div>
     <div class="stay-form">
       <input type="text" class="stay-input" id="sheetName" placeholder="Your first name (optional)">
