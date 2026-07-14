@@ -1983,11 +1983,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <button class="sheet-x" onclick="dismissSaveSheet()" aria-label="Close">&times;</button>
     <div class="sheet-grab"></div>
     <div class="sheet-title">⭐ Save your style details ⭐</div>
-    <div class="sheet-sub" id="sheetSub">Save your results so you can come back anytime, on any device.</div>
+    <div class="sheet-sub" id="sheetSub">Quick and easy. Add your email and come back to your Style Portrait anytime, on any device.</div>
     <div class="stay-form">
       <input type="text" class="stay-input" id="sheetName" placeholder="Your first name (optional)">
       <input type="email" class="stay-input" id="sheetEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')saveFromSheet()">
-      <button class="btn-p" id="sheetSaveBtn" style="margin-top:0;max-width:280px" onclick="saveFromSheet()">Save my results</button>
+      <button class="btn-p" id="sheetSaveBtn" style="margin-top:0;max-width:280px" onclick="saveFromSheet()">Save my style details</button>
     </div>
     <div id="sheetMsg" style="font-size:13px;color:#777;margin-top:8px"></div>
     <div style="font-size:12.5px;color:#6e6e6e;margin-top:6px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
@@ -3298,7 +3298,7 @@ function showSaveSheet(){
   saveSheetShown=true;
   if(userName&&userName!=='You'){
     var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName;
-    var sub=document.getElementById('sheetSub');if(sub)sub.textContent='Save your results, '+userName+', so you can come back anytime, on any device.';
+    var sub=document.getElementById('sheetSub');if(sub)sub.textContent='Quick and easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
   }
   var el=document.getElementById('saveSheet');
   el.style.display='flex';
@@ -3327,7 +3327,7 @@ function openSaveSheetManual(){
   sideToastDismissed=true;     // she found it herself — don't also slide the side ask
   _clearSheetTriggers();
   var sub=document.getElementById('sheetSub');
-  if(sub&&userName&&userName!=='You')sub.textContent='Save your results, '+userName+', so you can come back anytime, on any device.';
+  if(sub&&userName&&userName!=='You')sub.textContent='Quick and easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
   if(userName&&userName!=='You'){var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName}
   var el=document.getElementById('saveSheet');
   el.style.display='flex';
