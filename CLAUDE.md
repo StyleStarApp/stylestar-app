@@ -2358,3 +2358,63 @@ quiz" link.
   Analyzing loader, Quiz, Stylist chat, Style Star Edit, Shop your style, and now the **Mall** are all in the
   chrome/gold world. Remaining old-look: **Refine Preferences was reskinned earlier**; the **footer pages
   (Our Story / FAQ / Privacy)** are the main ones left (+ a future Contact page + Terms of Service).
+
+**2026-07-14 (Discover-button + Shop-your-style polish, quiz/chat/footer tweaks — all SHIPPED LIVE, PRs #325–#334)**
+A long live-polish session with Cath, all merged → live. Branch this session: `claude/style-star-6h5v9k`.
+- **Discover "Start my style quiz" CTA (`.hm-cta`, home `s-wel`) — heavily iterated:**
+  - **Squared corners** (was rounded, `border-radius:0`) for consistency.
+  - **Frame = equal-width gold (outer) + silver (inner)**, brighter + thicker. LESSON: the gradient-border
+    technique (`background: cream padding-box, gold-gradient border-box` + inset silver ring) rendered as
+    mostly-silver at button scale — the pale gold gradient stops washed out. FIX = bulletproof **stacked
+    solid box-shadow rings**: `box-shadow:0 0 0 5px #B4BAC0, 0 0 0 10px #ECD070, 0 12px 22px -12px rgba(...)`
+    (silver inner ring first/closest, gold outer ring second). Reliable two-tone metal. Button is
+    `width:calc(100% - 26px);margin:16px auto 0` so the 10px rings don't overflow the mirror gutter.
+  - **Gold shade lightened twice** (Cath: "too amber/brownish") → frame `#ECD070`, icon tile `#EACD68→#DFB44C→#EACD68`
+    (lighter, less amber), arrow recolored from amber `#B8831F` → **`#D2AF48`** to match the new gold.
+  - **Icon tile sized to 44px / radius 10px / svg 23px = identical to the other home icons** (`.hm-ic`, the
+    camera/chat/bag). Was 36px (looked smaller). Tile is now flat **uniform gold** (removed the old
+    gradient + inset-highlight that read as shimmer/shadow). Nudged left via `padding:13px 13px 13px 7px`.
+  - **Label+arrow centering:** the sliders tile lives on the left, so "START MY STYLE QUIZ" is centered in
+    the space *beside* it (wrapped label+arrow in `.hm-cta-body{flex:1;justify-content:center}`), NOT dead-
+    center — the phrase is too wide to center with the icon present without overlap. Told Cath the only way
+    to perfectly center is to drop the icon (like the Analyze button); she kept the icon. Arrow sits inside.
+  - **Sliders icon** (inline svg): top dot moved right (`cx=17`), bottom dot left (`cx=10`); track lines
+    extended out to `M1 7h14M19 7h4M1 17h7M12 17h11` ("show some range").
+  - **Corner sparkle star** (`.hm-cta-seal`): enlarged 46→**61px**. Cath disliked the pop-then-dim "let-down"
+    → gave it a **constant soft gold glow** (base `filter: drop-shadow(0 0 6px rgba(244,208,102,.6)) ...`)
+    **plus a gentle infinite shimmer** (`ssSealShimmer 2.7s ease-in-out 2.3s infinite`, brightness/scale
+    pulse) so it never fully goes out. Honors reduced-motion.
+- **Shop your style page (`s-shopstyle`, the clean AI-picks page):**
+  - **Loading = compact SQUARE card** (Cath: too much white space, text too low). `#s-shopstyle .shop-loading`
+    is `flex-column; justify-content:flex-start; min-height:190px; padding:8px 0 0`. Spinning star enlarged
+    72→**86px** and tuned to sit **dead-center in the square** (measured via headless: star center within
+    ~0.1px of card center; card ~366×338). NOTE the star-center math depends on the header height — when the
+    Back button hides (below) the header shrinks, so min-height was retuned 210→190 to re-center.
+  - **Focus during the "thinking" spin (Cath's calls, I agreed):** hide the shared **footer** AND the
+    top-right **Back button** AND the "Want to talk it through? Ask your stylist" line while the star spins,
+    and **restore all three once the shop picks load** (so she can't tap away before seeing options). All
+    toggled inside `_shopStyleGen()`: hide at loading-start, `display=''`/`.classList.add('on')` in the
+    success + error branches. `.ss-shop-talk` default `display:none`, shown via `.on`.
+  - **Rotating loading message** — new `LOADING_MSGS` array + `_pickLoadMsg()` (random, no immediate repeat),
+    injected into the loader HTML. Current set (Cath's 4): 'Finding your perfect pieces…', 'Looking for
+    pieces you'll love…', 'Finding pieces that fit your style story…', 'Looking through hundreds of options
+    for you…'. ▶ OPEN: Cath still wants to finalize the set — I offered more (Curating pieces just for you… /
+    Handpicking pieces you'll love… / Pulling together your perfect picks… / Searching for pieces that feel
+    like you… / Finding pieces to make you shine… / Gathering ideas that match your style…).
+- **Quiz (`s-quiz`): footer removed** — added `id==='s-quiz'` to the footer-hide condition in `show()` so a
+  user can't tap Shop/Our Story/FAQ and bail mid-quiz. Keeps the per-question Back (protect completion). This
+  "hide exits during a focused flow" principle now applies to the quiz + the Shop-your-style spin.
+- **Stylist chat "Refine for better suggestions" button** (`#chatRefineHint`, shown only when prefs empty):
+  replaced the slider line-art icon with a **green check + X**. First used unicode `✓ ✗` — rendered
+  slanted/cursive on iOS — so switched to two small **plain straight green SVG marks** (`stroke:#2E9E4F`),
+  label kept on one line (`white-space:nowrap`, `max-width:340px`). LESSON: for a guaranteed upright/plain
+  check or X, draw SVG, don't rely on unicode dingbat glyphs.
+- **Footer stars prettier:** the `★` separators (Shop ★ Our Story ★ FAQ) were dark amber `#C8971E` (read
+  brownish). Changed **only the 5 footer-star selectors** (`.quiz-footer span.star`, `#s-photo .ph-foot .st`,
+  `.hm-foot span.star`, `#s-wb .wb-foot span.star`, `.res-screen .foot .st`) to a brighter gold **`#E6C24E`**.
+  Left all other `#C8971E` uses (progress label, quiz cat, prices, save heart, etc.) untouched.
+- ⚠️ **Tooling reminder (still true):** use the **Edit tool** on `index.html`, never `perl`/`sed` byte-subs
+  (multibyte curly quotes/emoji/★ corrupt). HTML entities (`&#10003;` etc.) keep edits ASCII-safe.
+- ▶ **STILL OPEN / QUEUED (Cath's pick next):** (1) finalize the rotating loading lines; (2) edit the
+  **"Shop your style" subtitle sayings** (`SHOP_MSGS`: 'Chosen with you in mind.' etc. — 6 lines, she wants to
+  reword/cut/add); (3) the **footer-pages glow-up** (Our Story / FAQ / Privacy) — the last old-look screens.
