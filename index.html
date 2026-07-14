@@ -975,7 +975,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* Her photo clipped to the clipboard — a small, tilted snapshot the stylist is working from */
 .res-screen .clipphoto{position:absolute;top:-15px;left:3px;z-index:8;width:90px;transform:rotate(-9deg);cursor:pointer}
 /* Tight contact shadow + soft cast shadow → reads like it's lifting off the board */
-.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:cover;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.28),0 13px 21px -7px rgba(0,0,0,.62)}
+.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:contain;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.28),0 13px 21px -7px rgba(0,0,0,.62)}
 .res-screen .clipphoto .clip-pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(9deg);width:15px;height:11px;border-radius:3px;background:linear-gradient(180deg,#F6E4A6,#E3BB54 45%,#CFA236 66%,#9A7418);box-shadow:0 2px 4px -1px rgba(90,60,10,.55),inset 0 1px 0 rgba(255,255,255,.65);z-index:2}
 @keyframes clipJig{0%{transform:rotate(-9deg)}25%{transform:rotate(-13deg)}55%{transform:rotate(-5.5deg)}80%{transform:rotate(-10.5deg)}100%{transform:rotate(-9deg)}}
 .res-screen .clipphoto.jig{animation:clipJig .5s ease}
