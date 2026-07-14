@@ -1052,6 +1052,13 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .door.l .dstar{right:12px}
 .res-screen .door.r .dstar{left:12px}
 .res-screen .door .dstar svg{width:100%;height:100%;transform-origin:50% 50%}
+/* rotating caption on a pearly framed card, above the spinning stars, while the portrait composes */
+.res-screen .rv-cap{position:absolute;left:0;right:0;top:50%;transform:translateY(calc(-100% - 70px));display:flex;justify-content:center;z-index:6;opacity:0;transition:opacity .55s ease;pointer-events:none}
+.res-screen.rv-compose .rv-cap{opacity:1}
+.res-screen .rvc-card{position:relative;overflow:visible;width:238px;padding:7px;border-radius:2px;background:linear-gradient(150deg,#efe7d4,#e3d7bd);box-shadow:0 9px 20px -10px rgba(120,90,20,.5)}
+.res-screen .rvc-inner{position:relative;overflow:hidden;padding:14px 16px;text-align:center;background:linear-gradient(158deg,#f1f3f5 0%,#e2e5e8 28%,#f5f6f8 47%,#dcdfe2 68%,#edeff1 100%)}
+.res-screen .rvc-inner::before{content:"";position:absolute;inset:0;background:linear-gradient(118deg,transparent 40%,rgba(255,255,255,.5) 49%,transparent 57%);pointer-events:none}
+.res-screen .rvc-txt{position:relative;display:inline-block;font:italic 500 18px/1.35 'Lora',serif;color:#2a2620;transition:opacity .5s ease}
 
 /* reveal state machine (classes toggled in JS) */
 .res-screen.rv-compose .dstar svg,.res-screen.rv-open .dstar svg{animation:rvStarLoop 1.05s linear infinite}
@@ -1420,6 +1427,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="doors">
     <div class="door l"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarL)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
     <div class="door r"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarR)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
+    <div class="rv-cap" id="resCap"><div class="rvc-card"><span class="ac-studs"></span><div class="rvc-inner"><span class="rvc-txt" id="resCapTxt">Composing your portrait</span></div></div></div>
   </div>
 </div>
 
@@ -1511,8 +1519,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
   <div class="al-caps">
     <div class="row">
-      <span class="a">READING YOUR LOOK</span>
-      <span class="b">COMPOSING STYLE TIPS</span>
+      <span class="a" id="alCapA">READING YOUR LOOK</span>
+      <span class="b" id="alCapB">COMPOSING STYLE TIPS</span>
     </div>
     <div class="al-dots"><i></i><i></i><i></i></div>
   </div>
@@ -2190,6 +2198,7 @@ function _resShowCompose(id){
   document.getElementById('pw').style.display='none';
   void s.offsetWidth;
   s.classList.add('rv-compose');
+  if(id==='s-res')_startQuizCaps();
 }
 // Play the reveal: doors swing open, boards rise. `fromCompose` means the closed
 // doors were already showing (loading path) so we open immediately; otherwise (instant
@@ -2197,6 +2206,7 @@ function _resShowCompose(id){
 function _playResReveal(fromCompose,id){
   var s=document.getElementById(id||'s-res');
   function open(){
+    _stopQuizCaps();
     s.classList.remove('rv-compose');
     void s.offsetWidth;
     s.classList.add('rv-open');
@@ -2510,6 +2520,39 @@ async function retryPhoto(){
 // The "reading your look" studio loader (#s-photo-load): show the user's uploaded
 // photo dimmed inside the lit frame while runPhotoAnalysis() calls the AI. Falls back
 // to the dark gradient placeholder if no photo is available.
+// Rotating stylist captions on the "Analyzing your outfit" loader. Same elegant
+// uppercase crossfade (span .a shows first, .b second, 5s cycle) — we just swap the
+// text to a fresh pair each cycle so a longer wait feels alive, like a stylist at work.
+var LOOK_CAPS=['READING YOUR LOOK','SEEING WHAT WORKS','THINKING IT THROUGH','STYLING IT FOR YOU','COMPOSING STYLE TIPS','PULLING IT TOGETHER'];
+var _lookCapTimer=null;
+function _startLookCaps(){
+  var a=document.getElementById('alCapA'),b=document.getElementById('alCapB');
+  if(!a||!b)return;
+  _stopLookCaps();
+  var n=LOOK_CAPS.length,p=Math.floor(Math.random()*n);p-=p%2; // even start so the pairs walk cleanly
+  a.textContent=LOOK_CAPS[p%n];b.textContent=LOOK_CAPS[(p+1)%n];
+  _lookCapTimer=setInterval(function(){p=(p+2)%n;a.textContent=LOOK_CAPS[p];b.textContent=LOOK_CAPS[(p+1)%n];},5000);
+}
+function _stopLookCaps(){if(_lookCapTimer){clearInterval(_lookCapTimer);_lookCapTimer=null;}}
+// Warm rotating caption on the quiz Style-Portrait reveal, shown under the spinning
+// stars while the AI composes her portrait (the closed-doors "compose" beat).
+var QUIZ_CAPS=['Reading your answers','Seeing who you are','Finding your style','Capturing your signature','Composing your portrait','Bringing it to life'];
+var _quizCapTimer=null,_quizCapFade=null;
+function _startQuizCaps(){
+  var el=document.getElementById('resCapTxt');if(!el)return;
+  _stopQuizCaps();
+  var n=QUIZ_CAPS.length,i=Math.floor(Math.random()*n);
+  el.style.opacity='';el.textContent=QUIZ_CAPS[i];
+  _quizCapTimer=setInterval(function(){
+    el.style.opacity='0';
+    _quizCapFade=setTimeout(function(){i=(i+1)%n;el.textContent=QUIZ_CAPS[i];el.style.opacity='1';},550);
+  },2900);
+}
+function _stopQuizCaps(){
+  if(_quizCapTimer){clearInterval(_quizCapTimer);_quizCapTimer=null;}
+  if(_quizCapFade){clearTimeout(_quizCapFade);_quizCapFade=null;}
+  var el=document.getElementById('resCapTxt');if(el)el.style.opacity='';
+}
 function _showPhotoLoad(){
   var img=document.getElementById('alPhoto');
   if(img){
@@ -2517,10 +2560,12 @@ function _showPhotoLoad(){
     else{img.removeAttribute('src');img.style.display='none';}
   }
   show('s-photo-load');
+  _startLookCaps();
 }
 // When the analysis resolves, bring up the outfit-results screen. No doors/curtains
 // here (the studio loader was the anticipation beat) — the boards just rise in.
 function _revealPhotoRes(){
+  _stopLookCaps();
   _resShowCompose('s-photo-res');
   _playResReveal(true,'s-photo-res');
 }
