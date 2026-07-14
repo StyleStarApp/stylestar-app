@@ -1050,7 +1050,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .quiznudge .qn-star svg{width:100%;height:100%;display:block}
 .res-screen .quiznudge h4{font:400 20px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:6px 0 5px;text-wrap:balance}
 .res-screen .quiznudge p{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 13px;max-width:34ch}
-.res-screen .quiznudge .qn-btn{width:100%;border:none;border-radius:3px;padding:13px;cursor:pointer;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#211803;font:700 12px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.res-screen .quiznudge .qn-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;border:1.5px solid #CBA14A;border-radius:3px;padding:8px 15px 8px 8px;cursor:pointer;background:linear-gradient(180deg,#E9ECEF,#D0D5DA);color:#3a352c;font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.res-screen .quiznudge .qn-btn .rt-tile{flex:0 0 auto;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68;box-shadow:0 2px 4px -2px rgba(120,90,20,.4)}
+.res-screen .quiznudge .qn-btn .rt-tile svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.res-screen .quiznudge .qn-btn .rt-arr{flex:0 0 auto;width:17px;height:17px;stroke:#B8831F;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 
 /* beveled chrome mirror doors (reveal overlay) */
 .res-screen .doors{position:fixed;inset:0;overflow:hidden;z-index:60;perspective:1400px;pointer-events:none}
@@ -1663,7 +1666,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="qn-star"><svg viewBox="0 0 24 24"><defs><radialGradient id="qnStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#qnStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>
         <h4>Want everything personally styled for you?</h4>
         <p>Take our fun style quiz and I'll tailor your portrait, tips, and shopping to your taste.</p>
-        <button class="qn-btn" onclick="startQ()">Take our fun style quiz &rarr;</button>
+        <button class="qn-btn" onclick="startQ()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Take our fun style quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
       </div>
 
       <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button></div>
