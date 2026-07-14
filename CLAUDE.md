@@ -2490,3 +2490,56 @@ Branch this session: `claude/style-star-6h5v9k-lt1y6t`. A long, happy copy + pol
   2. Cath left the Welcome Back lines as-is re: the word "intention" (kept it unique to the Shop rotation).
   3. Still queued from before: Vision Board real-photo curation; "Email me these tips & links" after a photo
      analysis (needs MailerLite transactional); the affiliate-link wiring once programs approve (revenue switch).
+
+### ▶ NORTH STAR (2026-07-14, from Sally Hogshead — award-winning marketing expert, author of "How to Fascinate"): DIFFERENTIATION = THE REAL STYLIST BEHIND IT
+Sally (Cath's friend, a marketing/branding genius) gave Cath the single most important strategic note yet:
+**Style Star must clearly, loudly differentiate on the one thing no competitor can copy — that it is built with
+love, expertise, and real care by a REAL, experienced personal stylist (Cath, 20+ years).** Otherwise it reads
+as "just another styling app / faceless AI." Sally believes what Cath offers is genuinely golden, unique, and
+valuable — but the app needs CLARITY around that human/expert distinction, up front and everywhere.
+- **The gap:** a brand-new visitor who doesn't know Cath cannot currently FEEL the "real stylist who cares"
+  difference on the first screen. The AI, the quiz, the design are table stakes; the human soul is the moat.
+- **▶ ACTION (next session, high priority — Cath wants this): surface the human/founder story on the HOME page**
+  (`s-wel`, "Discover your signature style"). Add a small, elegant **founder line** — ideally first-person so a
+  stranger feels met by a person, not a product — with a soft link to the existing **Our Story** page ("Read my
+  story →"). Wording options offered (Cath to pick/refine): "Hi, I'm Cath. I've styled women for two decades.
+  This is my gift to you." / "Created with love by Cath, a personal stylist of over 20 years." / "Real styling,
+  from a stylist who's spent 20 years helping women feel like themselves." / "Personal styling from a real
+  stylist who truly cares, not an algorithm." Design/placement to be built beautifully (don't crowd the hero).
+- **Bigger principle:** weave the "real stylist, built with love + expertise" thread through the WHOLE app, not
+  just home — welcome email, stylist chat, results, Our Story, FAQ. This is the positioning; make it felt
+  everywhere. (Ties to the already-live chat line "Created with love by a real stylist, powered by AI" and the
+  Style Star Edit "Curated by Catherine.") This north star should shape copy + design decisions going forward.
+
+### ▶ FOUNDER CONTEXT + COACHING NOTES (2026-07-14 — Cath's priorities, fears, and how to help her)
+- **#1 priority right now:** make the app **beautiful, cohesive, on-brand, user-friendly** so a NEW user who
+  doesn't know Cath **instantly "gets it," loves it, and gains value.** Clarity of vision + the Sally
+  differentiation above are the frame for all app work.
+- **Design confidence:** Cath worries she's "not a graphic designer" and fears the app could read **too Vegas /
+  cartoonish / tacky** vs the **upscale-boutique + fun** feel she wants. Honest assessment given to her: it is
+  NOT tacky — the chrome/gold/dressing-room world + DM Serif Display + linen cards read genuinely boutique. The
+  refinement levers going forward are **RESTRAINT** (fewer shiny/shimmer/sparkle/reveal effects happening at
+  once; more calm + negative space — luxury whispers) and **unifying the few off-palette bits** (the bright
+  red/pink/teal icon tiles; emoji ⭐📸💫 vs the custom gold SVG stars — be intentional which is where). ▶ Offered
+  a future **"sophistication / restraint audit"** (screen-by-screen, flag anything tipping tacky, pare back).
+  Reassure her: her eye IS good — her calls (amber reads cheap, rounded-vs-square, shimmer let-down,
+  readability for older users) are sophisticated instincts. Her worry is a confidence gap, not a competence gap.
+- **Launch / testers (Cath's emotional strategy — HONOR IT):** she is **deliberately NOT sharing widely yet.**
+  She fears losing momentum, "evil eye," jealousy, negativity, and that people won't understand the affiliate
+  links aren't wired in. Most of her friends don't understand AI and are somewhat anti-AI. She's confident in
+  what she's building and wants zero negative noise until truly ready. This is legit soft-launch strategy, not
+  silliness — protect it. When she IS ready for feedback: recommend a **small hand-picked circle of 5–10 warm,
+  constructive testers** (skip AI-hostile people; consider a couple who DON'T know her to judge the product not
+  the person), framed as a private in-progress honor, with a note that some links aren't live yet. (Offered a
+  tester-invite message; she said not yet.)
+- **▶ Cath explicitly asked me to keep PUSHING her on the to-do list and keep her ON TRACK / focused each
+  session** (surface the master to-do, nudge toward the next step, gently guard against endless polishing).
+- **Honest strengths/weaknesses shared with Cath (she asked directly):** STRENGTHS — exceptional ear for tone/
+  warmth + copy; crystal-clear brand values (shine your light, value-first, never make a woman feel bad, every
+  age/body/budget); authentic heart (the moat); courage to embrace AI when peers won't; persistence + craft.
+  GROWTH EDGES — perfectionism can become a hiding place (more solo polish < 10 real users; the app is good
+  enough to start learning from people; biggest risk to the dream is staying in the workshop too long); she
+  UNDERESTIMATES herself (confidence gap, not competence gap); fear of others' judgment can become a ceiling;
+  many directions → guard the "one lever at a time" discipline. The single most useful criticism: **her standard
+  for the product is higher than her belief in herself, and that gap is what's most likely to slow her down —
+  trust the work, and herself, more.** (Use this to gently encourage her toward shipping/sharing when ready.)
