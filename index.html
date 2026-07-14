@@ -509,14 +509,14 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-foot .st{color:#E6C24E;font-size:12px;line-height:1}
 .sheet-backdrop{position:fixed;inset:0;background:rgba(20,16,8,0.32);z-index:9998;display:none;align-items:flex-end;justify-content:center;opacity:0;transition:opacity .3s ease}
 .sheet-backdrop.show{opacity:1}
-.sheet-card{width:min(360px,calc(100% - 40px));margin:0 auto 22px;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border:1px solid #d7d2c7;border-radius:0;box-shadow:0 18px 50px -12px rgba(20,16,8,.42);padding:1.7rem 1.6rem 1.55rem;transform:translateY(calc(100% + 44px));transition:transform .4s cubic-bezier(.2,.85,.25,1);position:relative;text-align:center}
+.sheet-card{width:min(404px,calc(100% - 18px));margin:0 auto 22px;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border:1px solid #d7d2c7;border-radius:0;box-shadow:0 18px 50px -12px rgba(20,16,8,.42);padding:1.7rem 1.2rem 1.55rem;transform:translateY(calc(100% + 44px));transition:transform .4s cubic-bezier(.2,.85,.25,1);position:relative;text-align:center}
 .sheet-card::before{content:"";position:absolute;inset:8px;border:1px solid rgba(140,130,110,.32);pointer-events:none}
 .sheet-backdrop.show .sheet-card{transform:translateY(0)}
 .sheet-grab{display:none}
 .sheet-x{position:absolute;top:12px;right:14px;width:30px;height:30px;border:none;background:#f3f0ea;border-radius:50%;font-size:18px;color:#999;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
 .sheet-x:hover{background:#e9e5dd;color:#666}
 .sheet-title{font-family:'DM Serif Display',Georgia,serif;font-size:21px;font-weight:400;color:#1a1a1a;margin-bottom:6px}
-.sheet-sub{font-size:14px;color:#555;line-height:1.5;margin-bottom:14px;max-width:320px;margin-left:auto;margin-right:auto}
+.sheet-sub{font-size:14px;color:#555;line-height:1.5;margin-bottom:14px;max-width:376px;margin-left:auto;margin-right:auto}
 .save-toast{position:fixed;right:10px;bottom:18px;z-index:9997;width:min(322px,calc(100% - 24px));background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border:1px solid #d7d2c7;border-radius:0;box-shadow:0 16px 40px -12px rgba(20,16,8,.4);padding:20px 20px 18px;transform:translateX(calc(100% + 24px));transition:transform .72s cubic-bezier(.22,.7,.25,1);display:none;text-align:center}
 .save-toast::before{content:"";position:absolute;inset:7px;border:1px solid rgba(140,130,110,.32);pointer-events:none}
 .save-toast.show{transform:translateX(0)}
@@ -594,9 +594,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-help{font:400 12.5px/1.55 'Jost',sans-serif;color:#4a463e;margin-top:5px}
 .hm-help.first{margin-top:10px}
 .hm-help b{color:#1A1814;font-weight:700;cursor:pointer}
-.hm-founder{margin:15px auto 2px;max-width:302px;text-align:center;animation:ssRise .6s ease .34s both}
-.hm-founder p{font:400 12.5px/1.75 'Jost',sans-serif;color:#4a463e;margin:0}
-.hm-founder .fstar{color:#D8A52E;font-size:10px;vertical-align:2px}
+.hm-founder{margin:15px auto 2px;max-width:352px;text-align:center;animation:ssRise .6s ease .34s both}
+.hm-founder p{font:400 12.5px/1.7 'Jost',sans-serif;color:#4a463e;margin:0;text-wrap:balance;overflow-wrap:break-word}
 .hm-founder .fnm{font-family:'Dancing Script',cursive;font-weight:700;font-size:20px;color:#1A1814;cursor:pointer;border-bottom:1px solid rgba(184,137,31,.5);line-height:1;padding-bottom:0}
 .hm-divwrap{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 12px}
 .hm-hair{height:1px;width:34px}
@@ -698,7 +697,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-retake{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:6px 15px 6px 7px;border-radius:3px;border:1.5px solid #CBA14A;
   background:linear-gradient(180deg,#E9ECEF,#D0D5DA);
   box-shadow:none;font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:#3a352c;cursor:pointer}
-#s-wb .wb-retake .rt-tile{flex:0 0 auto;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#F3E1A0,#D8A93E 55%,#B07E1C);box-shadow:0 2px 4px -2px rgba(120,90,20,.5)}
+#s-wb .wb-retake .rt-tile{flex:0 0 auto;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68;box-shadow:0 2px 4px -2px rgba(120,90,20,.4)}
 #s-wb .wb-retake .rt-tile svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round}
 #s-wb .wb-retake .rt-arr{flex:0 0 auto;width:17px;height:17px;stroke:#B8831F;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 /* footer — black text, gold-star separators (reuses .hm-foot layout); sits on the mirror's cream */
@@ -896,7 +895,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .p3-lead{text-align:center;margin:2px 0 17px}
 .res-screen .p3-lead h3{font:400 20px/1.2 'DM Serif Display',serif;color:#211E1A;margin:0 0 9px}
 .res-screen .p3-lead .rule{display:block;width:42px;height:1px;margin:0 auto;background:linear-gradient(90deg,transparent,#C9A24E,transparent)}
-.res-screen .savebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:3px;cursor:pointer;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;color:#1f1d19;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.res-screen .savebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:3px;cursor:pointer;border:2px solid #CBA24B;background:#fff;color:#1f1d19;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
 .res-screen .savebtn .hrt{font-size:16px;line-height:1;display:inline-block;transform-origin:center}
 .res-screen .pair{display:flex;gap:9px;margin-top:9px}
 .res-screen .pair .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border:3px solid transparent;border-radius:3px;cursor:pointer;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#F3E3A6,#C89A2C) border-box;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px #9aa1a7}
@@ -995,7 +994,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .priv u{cursor:pointer}
 .res-screen .retake-wrap{text-align:center;margin-top:16px}
 .res-screen .retake{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:auto;padding:6px 15px 6px 7px;border:1.5px solid #CBA14A;border-radius:3px;background:linear-gradient(180deg,#E9ECEF,#D0D5DA);box-shadow:none;font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:#3a352c;cursor:pointer;text-decoration:none;margin:0}
-.res-screen .retake .rt-tile{flex:0 0 auto;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#F3E1A0,#D8A93E 55%,#B07E1C);box-shadow:0 2px 4px -2px rgba(120,90,20,.5)}
+.res-screen .retake .rt-tile{flex:0 0 auto;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68;box-shadow:0 2px 4px -2px rgba(120,90,20,.4)}
 .res-screen .retake .rt-tile svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .retake .rt-arr{flex:0 0 auto;width:17px;height:17px;stroke:#B8831F;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 /* Gentle "tailor first?" prompt */
@@ -1007,7 +1006,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .style-nudge .sn-star{width:36px;height:36px;margin:0 auto 8px;display:block;filter:drop-shadow(0 2px 3px rgba(120,90,20,.35))}
 .style-nudge h4{font:400 22px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:0 0 8px}
 .style-nudge p{font:400 14px/1.5 'Jost',sans-serif;color:#5a5349;margin:0 0 18px}
-.style-nudge .sn-go{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:2px solid #1a1a1a;border-radius:0;padding:13px;cursor:pointer;background:#1a1a1a;color:#fff;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 14px -10px rgba(20,16,8,.5)}
+.style-nudge .sn-go{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:2px solid #1a1a1a;border-radius:0;padding:13px;cursor:pointer;background:#fff;color:#1a1a1a;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 14px -10px rgba(20,16,8,.3)}
 .style-nudge .sn-go svg{flex:none}
 .style-nudge .sn-go svg path{stroke:#2FA35C}
 .style-nudge .sn-skip{display:block;width:100%;margin-top:12px;padding:6px;background:none;border:none;cursor:pointer;font:600 12px/1 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#8a8478;text-decoration:underline}
@@ -1046,11 +1045,15 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen.rv-open .p2.p2b{animation:rvRise .7s ease 1.42s both}
 .res-screen.rv-done .p2.p2b{opacity:1}
 /* quiz-skipper nudge card (shown in place of the profile save) */
-.res-screen .quiznudge{margin:2px 0 4px;padding:18px 16px 17px;text-align:center;border-radius:3px;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 10px 22px -14px rgba(0,0,0,.5)}
-.res-screen .quiznudge .qn-star{font-size:19px;color:#C8971E;line-height:1}
+.res-screen .quiznudge{margin:2px 0 4px;padding:18px 16px 17px;text-align:center;border-radius:3px;border:2px solid #CBA24B;background:#fff;box-shadow:0 10px 22px -14px rgba(0,0,0,.5)}
+.res-screen .quiznudge .qn-star{width:30px;height:30px;margin:0 auto 6px;filter:drop-shadow(0 2px 3px rgba(120,90,20,.3))}
+.res-screen .quiznudge .qn-star svg{width:100%;height:100%;display:block}
 .res-screen .quiznudge h4{font:400 20px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:6px 0 5px;text-wrap:balance}
 .res-screen .quiznudge p{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 13px;max-width:34ch}
-.res-screen .quiznudge .qn-btn{width:100%;border:none;border-radius:3px;padding:13px;cursor:pointer;background:linear-gradient(180deg,#33302A,#201D19);color:#F1DDA0;font:700 12px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.res-screen .quiznudge .qn-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;border:1.5px solid #CBA14A;border-radius:3px;padding:8px 15px 8px 8px;cursor:pointer;background:linear-gradient(180deg,#E9ECEF,#D0D5DA);color:#3a352c;font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.res-screen .quiznudge .qn-btn .rt-tile{flex:0 0 auto;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68;box-shadow:0 2px 4px -2px rgba(120,90,20,.4)}
+.res-screen .quiznudge .qn-btn .rt-tile svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.res-screen .quiznudge .qn-btn .rt-arr{flex:0 0 auto;width:17px;height:17px;stroke:#B8831F;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 
 /* beveled chrome mirror doors (reveal overlay) */
 .res-screen .doors{position:fixed;inset:0;overflow:hidden;z-index:60;perspective:1400px;pointer-events:none}
@@ -1237,7 +1240,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <a class="hm-cta" data-press onclick="startQ()"><svg class="hm-cta-seal" viewBox="0 0 24 24"><defs><radialGradient id="hmSeal" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#hmSeal)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span class="hm-cta-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M1 7h14M19 7h4M1 17h7M12 17h11"/><circle cx="17" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span><span class="hm-cta-body"><span class="lbl">Start my style quiz</span><svg class="hm-cta-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></a>
 
     <div class="hm-founder">
-      <p><span class="fstar">&#9733;</span> Hi, I'm <span class="fnm" onclick="showStory()">Catherine</span>. I've styled women for over 20 years. I created this with love and intention.</p>
+      <p>Hi, I'm <span class="fnm" onclick="showStory()">Catherine</span>. I've styled women for over 20 years. I created this with love &amp; intention.</p>
     </div>
 
     <div id="restoreSection">
@@ -1660,10 +1663,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
       <!-- Quiz invite — shown ONLY to non-quiz-takers (their conversion CTA); sits at the bottom -->
       <div class="quiznudge" id="photoQuizNudge" style="display:none">
-        <div class="qn-star">&#9733;</div>
+        <div class="qn-star"><svg viewBox="0 0 24 24"><defs><radialGradient id="qnStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#qnStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>
         <h4>Want everything personally styled for you?</h4>
         <p>Take our fun style quiz and I'll tailor your portrait, tips, and shopping to your taste.</p>
-        <button class="qn-btn" onclick="startQ()">Take our fun style quiz &rarr;</button>
+        <button class="qn-btn" onclick="startQ()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Take our fun style quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
       </div>
 
       <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button></div>
@@ -1986,7 +1989,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <button class="sheet-x" onclick="dismissSaveSheet()" aria-label="Close">&times;</button>
     <div class="sheet-grab"></div>
     <div class="sheet-title">⭐ Save your style details ⭐</div>
-    <div class="sheet-sub" id="sheetSub">Quick and easy. Add your email and come back to your Style Portrait anytime, on any device.</div>
+    <div class="sheet-sub" id="sheetSub">Quick &amp; easy. Add your email and come back to your Style Portrait anytime, on any device.</div>
     <div class="stay-form">
       <input type="text" class="stay-input" id="sheetName" placeholder="Your first name (optional)">
       <input type="email" class="stay-input" id="sheetEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')saveFromSheet()">
@@ -2001,7 +2004,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="save-toast" id="saveToast">
   <button class="sheet-x" onclick="dismissSideToast()" aria-label="Close" style="top:11px;right:13px">&times;</button>
   <div class="save-toast-title" id="toastTitle">⭐ Yours to keep ⭐</div>
-  <div class="save-toast-sub">Your Style Portrait will be here anytime you want it, on any device. Quick and easy.</div>
+  <div class="save-toast-sub">Your Style Portrait will be here anytime you want it, on any device. Quick &amp; easy.</div>
   <input type="text" class="stay-input" id="toastName" placeholder="First name (optional)">
   <input type="email" class="stay-input" id="toastEmail" placeholder="Enter your email" style="margin-top:8px" onkeydown="if(event.key==='Enter')saveFromSideToast()">
   <button class="btn-p" id="toastSaveBtn" onclick="saveFromSideToast()">Save my style details</button>
@@ -3280,7 +3283,7 @@ function showSaveSheet(){
   saveSheetShown=true;
   if(userName&&userName!=='You'){
     var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName;
-    var sub=document.getElementById('sheetSub');if(sub)sub.textContent='Quick and easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
+    var sub=document.getElementById('sheetSub');if(sub)sub.textContent='Quick & easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
   }
   var el=document.getElementById('saveSheet');
   el.style.display='flex';
@@ -3309,7 +3312,7 @@ function openSaveSheetManual(){
   sideToastDismissed=true;     // she found it herself — don't also slide the side ask
   _clearSheetTriggers();
   var sub=document.getElementById('sheetSub');
-  if(sub&&userName&&userName!=='You')sub.textContent='Quick and easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
+  if(sub&&userName&&userName!=='You')sub.textContent='Quick & easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
   if(userName&&userName!=='You'){var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName}
   var el=document.getElementById('saveSheet');
   el.style.display='flex';
