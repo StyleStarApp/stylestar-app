@@ -1998,7 +1998,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="save-toast" id="saveToast">
   <button class="sheet-x" onclick="dismissSideToast()" aria-label="Close" style="top:11px;right:13px">&times;</button>
-  <div class="save-toast-title" id="toastTitle">⭐ Whenever you're ready ⭐</div>
+  <div class="save-toast-title" id="toastTitle">⭐ No rush ⭐</div>
   <div class="save-toast-sub">Your Style Portrait will be here anytime you want it, on any device. Quick and easy.</div>
   <input type="text" class="stay-input" id="toastName" placeholder="First name (optional)">
   <input type="email" class="stay-input" id="toastEmail" placeholder="Enter your email" style="margin-top:8px" onkeydown="if(event.key==='Enter')saveFromSideToast()">
@@ -3312,7 +3312,7 @@ function dismissSaveSheet(){
   if(_stage1Beat){clearTimeout(_stage1Beat);_stage1Beat=null}
   window.removeEventListener('scroll',_resultsScroll);
   // Arm the gentle, slower side ask well later (no rush at all).
-  _stage2Timer=setTimeout(showSideToast,12000);
+  _stage2Timer=setTimeout(showSideToast,30000);
   var el=document.getElementById('saveSheet');
   el.classList.remove('show');
   setTimeout(function(){el.style.display='none'},320);
