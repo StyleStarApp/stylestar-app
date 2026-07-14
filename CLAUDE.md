@@ -2604,6 +2604,26 @@ Branch `claude/style-star-8bgaud`. All merged → live.
      bold quiz button for the conversion moment; Refine card = quieter white button). Cath will "look at the nudge cards
      again after this merge."
 
+**2026-07-14 (cont. — walkthrough fixes: shop subtitle one-line, outfit clip full-length, dropped a loading line — SHIPPED LIVE, PR #348)**
+- ✅ **Shop your style (look mode) subtitle** was wrapping with "style." orphaned → **one line**: "In the vibe of the
+  look you shared & your style." (dropped "just", "and" → "&"); widened `#s-shopstyle .ss-shop-sub` max-width 300 → 360
+  + `text-wrap:balance` (splits evenly on very narrow phones).
+- ✅ **Outfit-analysis clip photo bug** (Cath: cropped a group photo to a skinny portrait via the crop tool, then the
+  little pinned "polaroid" on the clipboard cut off her HEAD). Cause: `.clipphoto img` used `object-fit:cover`, which
+  center-crops a tall/narrow image (losing head + feet). Fix: → `object-fit:contain` so it shows the whole photo head
+  to toe, matching the `.lookshot` "look you shared" thumbnail (which already used contain). NOTE: the **AI analysis was
+  always fine** — it received the full `photoData` (via `_commitPhoto`); only the clip's DISPLAY was cropping. Skinny
+  crops now show with white side-matting (like a matted snapshot) instead of a chopped head.
+- ✅ **Removed the "Searching for pieces to help you shine" line** from `LOADING_MSGS` (Cath changed her mind).
+- **Discussed the Discover founder line** ("I created this with love & intention") — Cath worried "intention" might leave
+  people wondering "what intention?" Talked it through; DECISION: **keep it as-is.** Rationale: "with intention" reads as
+  *how* it was made (thoughtfully/purposefully), like "made with love" (nobody asks "love of what?"), AND "intention" is
+  already a core brand word (her Shop line "Style with intention and heart"). Offered warmer/reader-focused alternatives
+  ("to help you shine", "just for you") if she ever wants them; she chose to keep the original.
+- ▶ **NEXT (Cath's ask, not started):** **tone down the button colors** (the bright red/pink/teal/green icon-tile
+  colors that read "too rainbow-ish", esp. on Welcome Back) + a careful **Welcome Back page review**. This is the
+  long-standing "color-code the buttons by purpose (shop vs styling)" + "WB menu is too rainbow" thread.
+
 ### ▶ NORTH STAR (2026-07-14, from Sally Hogshead — award-winning marketing expert, author of "How to Fascinate"): DIFFERENTIATION = THE REAL STYLIST BEHIND IT
 Sally (Cath's friend, a marketing/branding genius) gave Cath the single most important strategic note yet:
 **Style Star must clearly, loudly differentiate on the one thing no competitor can copy — that it is built with
