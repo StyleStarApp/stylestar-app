@@ -378,7 +378,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .story-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
 .story-title{font-size:26px;font-weight:400;color:#1a1a1a;margin-bottom:1rem;font-family:'DM Serif Display',Georgia,serif}
 .story-text{font-size:16px;color:#1a1a1a;line-height:1.75;margin-bottom:1rem;text-align:left;font-family:'DM Sans',sans-serif;font-weight:500}
-.story-quote{font-family:'Dancing Script',cursive;font-size:32px;color:#C8A24B;font-weight:600;padding:0.5rem 0;text-align:center;line-height:1.3}
+.story-sig{font-family:'Dancing Script',cursive;font-size:28px;color:#1a1a1a;font-weight:600;text-align:center;margin-top:0.7rem;line-height:1.2}
 .story-manifesto{font-size:18px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.6;margin-top:0.5rem}
 .story-heart{font-size:28px;text-align:center;margin:1rem 0}
 .faq-list{text-align:left;margin-top:0.5rem}
@@ -594,6 +594,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-help{font:400 12.5px/1.55 'Jost',sans-serif;color:#4a463e;margin-top:5px}
 .hm-help.first{margin-top:10px}
 .hm-help b{color:#1A1814;font-weight:700;cursor:pointer}
+.hm-founder{margin:15px auto 2px;max-width:302px;text-align:center;animation:ssRise .6s ease .34s both}
+.hm-founder p{font:400 12.5px/1.75 'Jost',sans-serif;color:#4a463e;margin:0}
+.hm-founder .fstar{color:#D8A52E;font-size:10px;vertical-align:2px}
+.hm-founder .fnm{font-family:'Dancing Script',cursive;font-weight:700;font-size:20px;color:#1A1814;cursor:pointer;border-bottom:1px solid rgba(184,137,31,.5);line-height:1;padding-bottom:0}
 .hm-divwrap{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 12px}
 .hm-hair{height:1px;width:34px}
 .hm-hair.l{background:linear-gradient(90deg,transparent,#C9A24E)}
@@ -741,7 +745,7 @@ body.ss-done .hm-entrance{display:none}
 
 /* armed initial states (only while a reveal is in progress) */
 body.ss-anim .hm-room{transform:scale(.95);transform-origin:center 42%}
-body.ss-anim .hm-h1,body.ss-anim .hm-sub,body.ss-anim .hm-body,body.ss-anim .hm-cta,body.ss-anim #restoreSection,body.ss-anim .hm-divwrap,body.ss-anim .hm-shelves,body.ss-anim .hm-foot,body.ss-anim #s-wb .wbx{opacity:0}
+body.ss-anim .hm-h1,body.ss-anim .hm-sub,body.ss-anim .hm-body,body.ss-anim .hm-cta,body.ss-anim .hm-founder,body.ss-anim #restoreSection,body.ss-anim .hm-divwrap,body.ss-anim .hm-shelves,body.ss-anim .hm-foot,body.ss-anim #s-wb .wbx{opacity:0}
 
 /* ===== full reveal (first open) ===== */
 body.ss-play .hm-veil{animation:ssVeilOut .9s ease .2s forwards}
@@ -761,7 +765,8 @@ body.ss-play .hm-h1{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.15s forwar
 body.ss-play .hm-sub{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.28s forwards}
 body.ss-play .hm-body{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.28s forwards}
 body.ss-play .hm-cta{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.4s forwards}
-body.ss-play #restoreSection{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.55s forwards}
+body.ss-play .hm-founder{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.5s forwards}
+body.ss-play #restoreSection{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.6s forwards}
 body.ss-play .hm-divwrap,body.ss-play .hm-shelves,body.ss-play .hm-foot{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.72s forwards}
 body.ss-play #s-wb .wbx{animation:ssRiseIn .6s cubic-bezier(.2,.7,.2,1) 1.4s forwards}
 
@@ -892,7 +897,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .p3-lead h3{font:400 20px/1.2 'DM Serif Display',serif;color:#211E1A;margin:0 0 9px}
 .res-screen .p3-lead .rule{display:block;width:42px;height:1px;margin:0 auto;background:linear-gradient(90deg,transparent,#C9A24E,transparent)}
 .res-screen .savebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:3px;cursor:pointer;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;color:#1f1d19;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
-.res-screen .savebtn svg{width:16px;height:16px;transform-origin:center}
+.res-screen .savebtn .hrt{font-size:16px;line-height:1;display:inline-block;transform-origin:center}
 .res-screen .pair{display:flex;gap:9px;margin-top:9px}
 .res-screen .pair .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border:3px solid transparent;border-radius:3px;cursor:pointer;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#F3E3A6,#C89A2C) border-box;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px #9aa1a7}
 .res-screen .pair .t svg{width:22px;height:22px;stroke:#8a6d20;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
@@ -1002,8 +1007,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .style-nudge .sn-star{width:36px;height:36px;margin:0 auto 8px;display:block;filter:drop-shadow(0 2px 3px rgba(120,90,20,.35))}
 .style-nudge h4{font:400 22px/1.2 'DM Serif Display',serif;color:#1f1d19;margin:0 0 8px}
 .style-nudge p{font:400 14px/1.5 'Jost',sans-serif;color:#5a5349;margin:0 0 18px}
-.style-nudge .sn-go{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:2px solid #2E9E57;border-radius:0;padding:13px;cursor:pointer;background:#fff;color:#227a45;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 14px -10px rgba(46,158,87,.5)}
+.style-nudge .sn-go{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:2px solid #1a1a1a;border-radius:0;padding:13px;cursor:pointer;background:#1a1a1a;color:#fff;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 14px -10px rgba(20,16,8,.5)}
 .style-nudge .sn-go svg{flex:none}
+.style-nudge .sn-go svg path{stroke:#2FA35C}
 .style-nudge .sn-skip{display:block;width:100%;margin-top:12px;padding:6px;background:none;border:none;cursor:pointer;font:600 12px/1 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#8a8478;text-decoration:underline}
 @media (prefers-reduced-motion:reduce){.style-nudge .sn-card{animation:none}}
 .res-screen .foot{margin-top:16px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid #efece4}
@@ -1056,13 +1062,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .door.l .dstar{right:12px}
 .res-screen .door.r .dstar{left:12px}
 .res-screen .door .dstar svg{width:100%;height:100%;transform-origin:50% 50%}
-/* rotating caption on a pearly framed card, above the spinning stars, while the portrait composes */
-.res-screen .rv-cap{position:absolute;left:0;right:0;top:50%;transform:translateY(calc(-100% - 70px));display:flex;justify-content:center;z-index:6;opacity:0;transition:opacity .55s ease;pointer-events:none}
-.res-screen.rv-compose.rvq .rv-cap{opacity:1}
-.res-screen .rvc-card{position:relative;overflow:visible;width:296px;padding:9px;border-radius:2px;background:linear-gradient(150deg,#efe7d4,#e3d7bd);box-shadow:0 10px 24px -10px rgba(120,90,20,.5)}
-.res-screen .rvc-inner{position:relative;overflow:hidden;padding:18px 22px;text-align:center;background:linear-gradient(158deg,#f1f3f5 0%,#e2e5e8 28%,#f5f6f8 47%,#dcdfe2 68%,#edeff1 100%)}
-.res-screen .rvc-inner::before{content:"";position:absolute;inset:0;background:linear-gradient(118deg,transparent 40%,rgba(255,255,255,.5) 49%,transparent 57%);pointer-events:none}
-.res-screen .rvc-txt{position:relative;display:inline-block;white-space:nowrap;font:400 22px/1.3 'DM Serif Display',serif;color:#2a2620;transition:opacity .5s ease}
 
 /* reveal state machine (classes toggled in JS) */
 .res-screen.rv-compose .dstar svg,.res-screen.rv-open .dstar svg{animation:rvStarLoop 1.05s linear infinite}
@@ -1080,9 +1079,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen.rv-open .shop-section{animation:rvRise .7s ease 1.6s both}
 .res-screen.rv-open .sig-dot{animation:sigPlot .75s cubic-bezier(.34,1.28,.5,1) both}
 /* revisit (rv-quick): the whole portrait is already there — doors just open to reveal it, no cascade */
-.res-screen.rv-quick.rv-open .p1,.res-screen.rv-quick.rv-open .p2,.res-screen.rv-quick.rv-open .pcard,.res-screen.rv-quick.rv-open .p3,.res-screen.rv-quick.rv-open .shop-section,.res-screen.rv-quick.rv-open .sig-dot,.res-screen.rv-quick.rv-open .savebtn svg,#s-res.rv-quick.rv-open .arch-card,#s-res.rv-quick.rv-open .arch-motto,#s-res.rv-quick.rv-open .para{animation:none!important;opacity:1!important;transform:none!important}
+.res-screen.rv-quick.rv-open .p1,.res-screen.rv-quick.rv-open .p2,.res-screen.rv-quick.rv-open .pcard,.res-screen.rv-quick.rv-open .p3,.res-screen.rv-quick.rv-open .shop-section,.res-screen.rv-quick.rv-open .sig-dot,.res-screen.rv-quick.rv-open .savebtn .hrt,#s-res.rv-quick.rv-open .arch-card,#s-res.rv-quick.rv-open .arch-motto,#s-res.rv-quick.rv-open .para{animation:none!important;opacity:1!important;transform:none!important}
 #s-res.rv-quick.rv-open .ac-sweep{animation:none!important;opacity:0!important}
-.res-screen.rv-open .savebtn svg{animation:heartBeat 1s ease 1.4s 1 both}
+.res-screen.rv-open .savebtn .hrt{animation:heartBeat 1s ease 1.4s 1 both}
 /* terminal static state — no animations, so returning to the screen never replays */
 .res-screen.rv-done .doors{display:none}
 .res-screen.rv-done .p1,.res-screen.rv-done .p2,.res-screen.rv-done .pcard,.res-screen.rv-done .p3,.res-screen.rv-done .shop-section{opacity:1}
@@ -1111,14 +1110,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 #s-photo-res.rv-open .p2.p2b{animation-delay:.38s}
 #s-photo-res.rv-open .p3{animation-delay:.55s}
 #s-photo-res.rv-open .shop-section{animation-delay:.55s}
-#s-photo-res.rv-open .savebtn svg{animation-delay:1.4s}
+#s-photo-res.rv-open .savebtn .hrt{animation-delay:1.4s}
 
 @media (prefers-reduced-motion: reduce){
   .res-screen .doors{display:none!important}
   .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section,.res-screen .arch-card,.res-screen .arch-motto,.res-screen .para{opacity:1!important;animation:none!important;transform:none!important}
   .res-screen .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
   .res-screen .spot{animation:none!important;opacity:.62}
-  .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
+  .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn .hrt,.res-screen .dstar svg{animation:none!important}
   .res-screen .ask-nudge.on{animation:none!important;opacity:1;transform:none}
 }
 </style>
@@ -1204,7 +1203,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- Footer — black text + gold-star separators, kept on the mirror's cream so it stays readable -->
       <div class="hm-foot wb-foot">
         <span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span>
-        <span class="lnk" onclick="showStory()">Our Story</span><span class="star">&#9733;</span>
+        <span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span>
         <span class="lnk" onclick="showFAQ()">FAQ</span>
       </div>
     </div>
@@ -1236,6 +1235,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <p class="hm-body">Expert style guidance and personalized shopping, all in one place.</p>
 
     <a class="hm-cta" data-press onclick="startQ()"><svg class="hm-cta-seal" viewBox="0 0 24 24"><defs><radialGradient id="hmSeal" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#hmSeal)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span class="hm-cta-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M1 7h14M19 7h4M1 17h7M12 17h11"/><circle cx="17" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span><span class="hm-cta-body"><span class="lbl">Start my style quiz</span><svg class="hm-cta-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></a>
+
+    <div class="hm-founder">
+      <p><span class="fstar">&#9733;</span> Hi, I'm <span class="fnm" onclick="showStory()">Catherine</span>. I've styled women for over 20 years. I created this with love and intention.</p>
+    </div>
 
     <div id="restoreSection">
       <div class="hm-help first">Already taken the quiz? <b onclick="showRestore()">Restore your results</b></div>
@@ -1277,7 +1280,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
     </div>
 
-    <div class="hm-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+    <div class="hm-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
   </div>
   </div>
 </div>
@@ -1377,7 +1380,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
       <button class="savebtn" id="resSaveBtn" onclick="openSaveSheetManual()">
-        <svg viewBox="0 0 24 24"><defs><linearGradient id="heartG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7E9B0"/><stop offset=".5" stop-color="#E6C24E"/><stop offset="1" stop-color="#C99A2C"/></linearGradient></defs><path fill="url(#heartG)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Save my style details</button>
+        <span class="hrt">&#128155;</span>Save my style details</button>
       <!-- Action shelves — each bound to its existing handler -->
       <div class="act" data-shelf onclick="openShopStyle()">
         <div class="actrow"><span class="chip" style="background:linear-gradient(150deg,#FEEF98,#F6CE3E 50%,#E4B02E);box-shadow:0 3px 7px -3px rgba(201,154,46,.6),inset 0 1px 0 rgba(255,255,255,.45)"><svg viewBox="0 0 24 24" style="width:31px;height:31px"><defs><radialGradient id="resShopStarRow" cx="42%" cy="38%" r="62%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".42" stop-color="#FFFFFF"/><stop offset=".72" stop-color="#DDE1E5"/><stop offset="1" stop-color="#AAB0B6"/></radialGradient></defs><path fill="url(#resShopStarRow)" stroke="#7A8189" stroke-width="1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop your style</span><svg class="ar" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Personalized just for you</div></div></div>
@@ -1423,7 +1426,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
 
       <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button></div>
-      <div class="foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+      <div class="foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
     </div>
   </div>
 
@@ -1431,7 +1434,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="doors">
     <div class="door l"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarL)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
     <div class="door r"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarR)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
-    <div class="rv-cap" id="resCap"><div class="rvc-card"><span class="ac-studs"></span><div class="rvc-inner"><span class="rvc-txt" id="resCapTxt">Composing your portrait</span></div></div></div>
   </div>
 </div>
 
@@ -1491,7 +1493,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
     </div>
     <button id="analyzeBtn" onclick="ctaAnalyze()"><span class="ph-spacer" aria-hidden="true"></span><span class="lbl">Analyze my outfit</span><svg class="ph-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
-    <div class="ph-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+    <div class="ph-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
   </div>
 </div>
 
@@ -1644,7 +1646,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
       <!-- Save profile (quiz-takers only). FUTURE: "Email me these tips & links" slots in right here. -->
       <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
-        <svg viewBox="0 0 24 24"><defs><linearGradient id="heartG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7E9B0"/><stop offset=".5" stop-color="#E6C24E"/><stop offset="1" stop-color="#C99A2C"/></linearGradient></defs><path fill="url(#heartG2)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Save my style details</button>
+        <span class="hrt">&#128155;</span>Save my style details</button>
       <!-- Profile save block (quiz-takers only) → existing save flow (_persistSave) -->
       <div class="keep" id="resKeepPhoto">
         <h4>Come back anytime</h4>
@@ -1665,7 +1667,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
 
       <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button></div>
-      <div class="foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+      <div class="foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
     </div>
   </div>
 
@@ -1730,37 +1732,35 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="scr" id="s-story">
   <div class="story-wrap">
     <div style="text-align:right;margin-bottom:2px"><button onclick="closeStory()" style="background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#777;cursor:pointer;padding:4px 2px">&larr; Back</button></div>
-    <div class="story-title">Our Story</div>
+    <div class="story-title">My Story</div>
     <div class="story-text">
-      Style Star was created by a certified image consultant with 20+ years of styling experience and a lifetime love of shopping. Let's just say, she's been shopping since before she could walk. Some of her earliest happy memories are browsing department stores with her mom.
+      I'm Catherine, a personal stylist and certified image consultant with over 20 years of styling experience and a lifetime love of shopping. Let's just say I've been shopping since before I could walk. Some of my earliest happy memories are browsing department stores with my mom.
     </div>
     <div class="story-text">
-      She turned that passion into a career doing closet consultations, shopping trips, and custom boutique try-on sessions with real women. Along the way, she realized something: most women aren't looking for a makeover. They want to feel more confident, more pulled together, and more like themselves. They want to stop staring at a full closet feeling like they have nothing to wear, and start looking in the mirror thinking, "Yes, this is me!"
+      I turned that passion into a career doing closet consultations, shopping trips, and custom boutique try-on sessions with real women. Along the way, I realized something: most women aren't looking for a makeover. They want to feel more confident, more pulled together, and more like themselves. They want to stop staring at a full closet feeling like they have nothing to wear, and start looking in the mirror thinking, "Yes, this is me!"
     </div>
     <div class="story-text">
-      Style Star was built to bring that experience to every woman. A personal stylist at your fingertips that knows your style, answers your questions, and helps you shop with confidence.
+      I built Style Star to bring that experience to every woman. A personal stylist at your fingertips who really knows your style, answers your questions, and helps you find what suits you with confidence.
     </div>
     <div class="story-text">
-      The approach is rooted in the idea that style lives on a spectrum. Some women lean classic, others trendy. Some feel best in effortless simplicity, others come alive in glamour and boldness. Your style is a melody, a beautiful combination of notes that make you you.
+      My approach is rooted in the idea that style lives on a spectrum. Some women lean classic, others trendy. Some feel best in effortless simplicity, others come alive in glamour and boldness. Your style is a melody, a beautiful combination of notes that make you you.
     </div>
     <div class="story-text">
-      Our founder will tell you her favorite moments are when a client tries something on and everything clicks. You can feel the energy change. That's the magic: when your clothes match who you actually are, not what a trend or a brand tells you to be. That's when we shine brighter being ourselves.
+      My favorite moments are when a client tries something on and everything clicks. You can feel the energy in the room change. That's the magic: when your clothes match who you actually are, not what a trend or a brand tells you to be. That's when we shine brightest, simply by being ourselves.
     </div>
     <div class="story-text">
-      Sometimes the smallest adjustment changes everything. One notch more polished. One notch more relaxed. One notch more bold. The goal is alignment. Thoughtful guidance designed to help you become your own style star.
+      Sometimes the smallest adjustment changes everything. One notch more polished. One notch more relaxed. One notch more bold. The goal is alignment. I'm here with thoughtful guidance to help you become your own style star.
     </div>
     <div class="story-text">
-      Here's something most people don't realize about shopping: 99% of what's in any given store is going to be a no. That's not failure. That's fashion. Real style is in the editing, the refining, and knowing what deserves a yes. Women already have great instincts about their personal style. They just need help defining it and building the wardrobe to match. That's what Style Star does. It brings your own intuition into sharper focus and makes shopping for the real you fun and easy.
+      Here's something most people don't realize about shopping: 99% of what's in any given store is going to be a no. That's not failure. That's fashion. Real style is in the editing, the refining, and knowing what deserves a yes. You already have great instincts about your personal style. You just need help defining it and building the wardrobe to match. That's what I created Style Star to do. It brings your own intuition into sharper focus and makes shopping for the real you fun and easy. New clothes are like fresh flowers, so enjoy them now.
     </div>
     <div class="story-text">
-      We believe your style is one of the most powerful ways you shine your light to the world. Finding outfits and pieces that suit your unique preferences isn't just shopping. It's how we build a wardrobe with meaning. It's how we make our own stars align.
-    </div>
-    <div class="story-quote">
-      New clothes are like fresh flowers, enjoy them now.
+      I believe your style is one of the most powerful ways you shine your light to the world. Finding the outfits and pieces that suit your unique preferences isn't just shopping. It's how we build a wardrobe with meaning. It's how we make our own stars align.
     </div>
     <div class="story-text" style="text-align:center;color:#777;margin-top:0.5rem">
-      We're glad you're here. ⭐
+      I'm so glad you're here. ⭐
     </div>
+    <div class="story-sig">With love, Catherine</div>
     <button class="btn-outline" onclick="closeStory()" style="max-width:260px;margin:1rem auto 0;display:block" id="storyBtn">Back</button>
     <div id="storyQuiz" style="display:none;margin-top:14px"><span style="font-size:14.5px;color:#777">Ready to discover your style? </span><span onclick="storyStartQuiz()" style="font-size:14.5px;color:#B08830;font-weight:600;text-decoration:underline;cursor:pointer">Take the quiz &rarr;</span></div>
   </div>
@@ -1927,16 +1927,16 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="scr" id="s-faq">
   <div class="story-wrap">
     <div style="text-align:right;margin-bottom:2px"><button onclick="closeFAQ()" style="background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#777;cursor:pointer;padding:4px 2px">&larr; Back</button></div>
-    <div class="story-title">Questions We Hear Often</div>
+    <div class="story-title">Frequently Asked Questions</div>
     <div class="faq-list">
       <div class="faq-item"><div class="faq-q">What is Style Star?</div><div class="faq-a">Style Star combines the insight of a personal stylist with the convenience of modern technology. Every tool is here to enhance your style: the quiz helps us understand your style's nuances, styling advice and photo feedback are there whenever you need them, and curated shopping links take you straight to the good stuff, making it all fun and easy. We turn the overwhelm of endless choices into the joy of finding what's truly you.</div></div>
       <div class="faq-item"><div class="faq-q">What if I don't know what my style is?</div><div class="faq-a">That's exactly why Style Star exists. You don't need to have it all figured out. That's our job. We help you discover what suits your personality, lifestyle, and preferences, so shopping feels easier, getting dressed feels faster, and every piece you bring home brings out the best in you. Your discernment, combined with our expertise, is where the magic happens.</div></div>
-      <div class="faq-item"><div class="faq-q">What makes Style Star different?</div><div class="faq-a">Most style advice tells everyone to wear the same trends or invest in certain brands. Style Star starts with you. Instead of asking "What's fashionable?" we ask "What feels most like you?" We're not here to tell you what's beautiful. We help you recognize what feels beautiful to you, and shine a light on exactly that.</div></div>
+      <div class="faq-item"><div class="faq-q">What makes Style Star different?</div><div class="faq-a">Style Star was created by me, Catherine, a personal stylist of over 20 years. It's not a faceless algorithm. It's real styling from a real stylist who genuinely cares, brought to you with expertise and love. And where most style advice pushes everyone toward the same trends and brands, I start with you. Instead of asking "What's fashionable?" I ask "What feels most like you?" I'm not here to tell you what's beautiful. I'm here to help you recognize what feels beautiful to you, and shine a light on exactly that.</div></div>
       <div class="faq-item"><div class="faq-q">Do I have to take the quiz?</div><div class="faq-a">Not at all. You're welcome to chat with your stylist, analyze a photo, or browse and shop anytime. The quiz helps us understand the nuances of your style so everything feels more personal, but it's completely optional.</div></div>
       <div class="faq-item"><div class="faq-q">What is my Style Portrait?</div><div class="faq-a">Your Style Portrait is a snapshot of your personal style from the quiz. It highlights your natural preferences and becomes the foundation for the guidance, shopping ideas, and advice you'll get throughout the app.</div></div>
-      <div class="faq-item"><div class="faq-q">Can I share my results?</div><div class="faq-a">Yes, and we'd love that! After the quiz, you'll get a beautiful Style Card with your Style Signature that you can text to a friend or post on Instagram. It's a fun way to celebrate your style, and to invite the women you love to discover theirs.</div></div>
-      <div class="faq-item"><div class="faq-q">Can I upload a photo for style advice?</div><div class="faq-a">Yes. Share an outfit or a piece you're considering, and your stylist will give you thoughtful feedback to elevate the look while keeping it true to you. Your photo is processed in real time and never saved.</div></div>
-      <div class="faq-item"><div class="faq-q">Is this a real stylist or AI?</div><div class="faq-a">Both. Style Star was created by a certified image consultant with 20+ years of styling experience, and your AI stylist is trained on her approach and philosophy, so you get thoughtful, professional guidance anytime.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I share my results?</div><div class="faq-a">Yes, and we'd love that! After the quiz, you'll get two beautiful keepsakes to share: your Style Constellation, a star map of your signature style, and your Style Mood Board, a collage of your style vibe. Text either one to a friend or post it on Instagram. It's a fun way to celebrate your style, and to invite the women you love to discover theirs.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I upload a photo for style advice?</div><div class="faq-a">Yes. Share an outfit or a piece you're considering, and your stylist will give you thoughtful feedback to elevate the look while keeping it true to you. Your photo is processed in real time and never stored on our servers.</div></div>
+      <div class="faq-item"><div class="faq-q">Is this a real stylist or AI?</div><div class="faq-a">Both. I'm Catherine, a certified image consultant with over 20 years of styling experience, and I created Style Star's AI stylist to think the way I do, trained on my own approach and philosophy. So you get my expertise, available to you anytime.</div></div>
       <div class="faq-item"><div class="faq-q">Can I retake the quiz or change my results?</div><div class="faq-a">Yes, as many times as you want. Your style can evolve, and your results can grow right along with it.</div></div>
       <div class="faq-item"><div class="faq-q">How do I get my results back on another device?</div><div class="faq-a">Just your email. You don't need to create a password or remember anything. Simply save your results with your email address and you can pick up right where you left off, on any device.</div></div>
       <div class="faq-item"><div class="faq-q">Can I add Style Star to my phone like an app?</div><div class="faq-a">Yes! You can add Style Star to your home screen so it opens full-screen with its own icon, just like an app. No app store needed. 📲
@@ -1946,10 +1946,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <ol class="faq-steps"><li>Open stylestar.app in Chrome.</li><li>Tap the menu (the three dots in the top right).</li><li>Tap "Add to Home screen," then "Add."</li></ol></div></div>
       <div class="faq-item"><div class="faq-q">Is Style Star free?</div><div class="faq-a">Yes, Style Star is free to use. If you shop through some of our links, we may earn a small commission at no extra cost to you, and that's what helps keep it free.</div></div>
       <div class="faq-item"><div class="faq-q">Is my information private?</div><div class="faq-a">Yes. We use your information only to personalize your styling experience and save your results. We never sell your information. You can read the details in our <span class="lnk" onclick="showPrivacy()">Privacy Policy</span>.</div></div>
-      <div class="faq-item"><div class="faq-q">Do you sell the clothes?</div><div class="faq-a">No, we don't sell anything ourselves. We point you to the stores and pieces that suit your style. In the Style Star Edit, you'll find pieces personally hand-selected by our founder, the ones she wears herself and recommends to her clients.</div></div>
+      <div class="faq-item"><div class="faq-q">Do you sell the clothes?</div><div class="faq-a">No, we don't sell anything ourselves. We point you to the stores and pieces that suit your style. In the Style Star Edit, you'll find pieces personally hand-selected by me, the ones I wear myself and recommend to my clients.</div></div>
       <div class="faq-item"><div class="faq-q">Is Style Star for every body, age, and budget?</div><div class="faq-a">Absolutely. Style is personal, and Style Star is here to celebrate yours, whatever your size, age, or budget. Beautiful style exists at every price point, and you don't need to be a fashion expert. We meet you exactly where you are.</div></div>
-      <div class="faq-item"><div class="faq-q">How do I get in touch?</div><div class="faq-a">We'd love to hear from you. Reach us at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a>.</div></div>
-      <div class="faq-item"><div class="faq-q">What is the heart behind Style Star?</div><div class="faq-a">We believe style has the power to help you shine your light, and when you feel confident in yourself, that light naturally reaches the people around you. 💫</div></div>
+      <div class="faq-item"><div class="faq-q">How do I get in touch?</div><div class="faq-a">I'd love to hear from you. Reach me at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a>.</div></div>
+      <div class="faq-item"><div class="faq-q">What is the heart behind Style Star?</div><div class="faq-a">I believe style has the power to help you shine your light, and when you feel confident in yourself, that light naturally reaches the people around you. 💫</div></div>
     </div>
     <button class="btn-outline" onclick="closeFAQ()" style="max-width:260px;margin:1.5rem auto 0;display:block">Back</button>
   </div>
@@ -1978,7 +1978,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </div>
 
 </div>
-<div class="quiz-footer"><div class="quiz-footer-links"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">Our Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
+<div class="quiz-footer"><div class="quiz-footer-links"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
 </div>
 
 <div class="sheet-backdrop" id="saveSheet" onclick="if(event.target===this)dismissSaveSheet()">
@@ -2202,7 +2202,6 @@ function _resShowCompose(id){
   document.getElementById('pw').style.display='none';
   void s.offsetWidth;
   s.classList.add('rv-compose');
-  if(id==='s-res')_startQuizCaps();
 }
 // Play the reveal: doors swing open, boards rise. `fromCompose` means the closed
 // doors were already showing (loading path) so we open immediately; otherwise (instant
@@ -2210,7 +2209,6 @@ function _resShowCompose(id){
 function _playResReveal(fromCompose,id){
   var s=document.getElementById(id||'s-res');
   function open(){
-    _stopQuizCaps();
     s.classList.remove('rv-compose');
     void s.offsetWidth;
     s.classList.add('rv-open');
@@ -2538,27 +2536,6 @@ function _startLookCaps(){
   _lookCapTimer=setInterval(function(){p=(p+2)%n;a.textContent=LOOK_CAPS[p];b.textContent=LOOK_CAPS[(p+1)%n];},5000);
 }
 function _stopLookCaps(){if(_lookCapTimer){clearInterval(_lookCapTimer);_lookCapTimer=null;}}
-// Warm rotating caption on the quiz Style-Portrait reveal, shown under the spinning
-// stars while the AI composes her portrait (the closed-doors "compose" beat).
-var QUIZ_CAPS=['Reading your answers','Seeing who you are','Finding your style','Capturing your signature','Composing your portrait','Bringing it to life'];
-var _quizCapTimer=null,_quizCapFade=null;
-function _startQuizCaps(){
-  var el=document.getElementById('resCapTxt');if(!el)return;
-  _stopQuizCaps();
-  var sc=document.getElementById('s-res');if(sc)sc.classList.add('rvq'); // mark a REAL compose (fresh quiz / retake) so the caption never shows on a plain revisit
-  var n=QUIZ_CAPS.length,i=Math.floor(Math.random()*n);
-  el.style.opacity='';el.textContent=QUIZ_CAPS[i];
-  _quizCapTimer=setInterval(function(){
-    el.style.opacity='0';
-    _quizCapFade=setTimeout(function(){i=(i+1)%n;el.textContent=QUIZ_CAPS[i];el.style.opacity='1';},550);
-  },2900);
-}
-function _stopQuizCaps(){
-  if(_quizCapTimer){clearInterval(_quizCapTimer);_quizCapTimer=null;}
-  if(_quizCapFade){clearTimeout(_quizCapFade);_quizCapFade=null;}
-  var el=document.getElementById('resCapTxt');if(el)el.style.opacity='';
-  var sc=document.getElementById('s-res');if(sc)sc.classList.remove('rvq');
-}
 function _showPhotoLoad(){
   var img=document.getElementById('alPhoto');
   if(img){
@@ -3250,7 +3227,7 @@ function _resultsScroll(){
   if(emailDone||saveSheetShown||saveSheetDismissed)return;
   // She's reached the bottom — give her a beat to enjoy it, then rise.
   if(_nearBottom()&&!_stage1Beat){
-    _stage1Beat=setTimeout(showSaveSheet,2000);
+    _stage1Beat=setTimeout(showSaveSheet,10000); // a real beat to linger and enjoy her portrait before the ask
   }
 }
 function _clearSheetTriggers(){
@@ -3261,7 +3238,7 @@ function _clearSheetTriggers(){
 }
 function scheduleSaveSheet(){
   if(emailDone||saveSheetShown||saveSheetDismissed||_sheetTimer)return;
-  _sheetTimer=setTimeout(showSaveSheet,22000); // long backup for a slow reader who never scrolls
+  _sheetTimer=setTimeout(showSaveSheet,35000); // long backup for a slow reader who never scrolls
   window.addEventListener('scroll',_resultsScroll,{passive:true});
 }
 // Shared, hardened save core used by every save entry point.
@@ -3316,7 +3293,7 @@ function dismissSaveSheet(){
   if(_stage1Beat){clearTimeout(_stage1Beat);_stage1Beat=null}
   window.removeEventListener('scroll',_resultsScroll);
   // Arm the gentle, slower side ask well later (no rush at all).
-  _stage2Timer=setTimeout(showSideToast,30000);
+  _stage2Timer=setTimeout(showSideToast,60000);
   var el=document.getElementById('saveSheet');
   el.classList.remove('show');
   setTimeout(function(){el.style.display='none'},320);
@@ -3599,7 +3576,7 @@ function showStory(){
   // Only invite a from-the-home-page visitor to take the quiz.
   document.getElementById('storyQuiz').style.display=(storyPrevScreen==='s-wel')?'block':'none';
 }
-// "Take the quiz" from Our Story: start the quiz and return to the welcome
+// "Take the quiz" from My Story: start the quiz and return to the welcome
 // page (not back to the story) if she backs out of question 1.
 function storyStartQuiz(){
   document.querySelector('.quiz-footer').style.display='';
