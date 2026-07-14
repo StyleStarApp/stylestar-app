@@ -892,7 +892,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .p3-lead h3{font:400 20px/1.2 'DM Serif Display',serif;color:#211E1A;margin:0 0 9px}
 .res-screen .p3-lead .rule{display:block;width:42px;height:1px;margin:0 auto;background:linear-gradient(90deg,transparent,#C9A24E,transparent)}
 .res-screen .savebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:3px;cursor:pointer;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;color:#1f1d19;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
-.res-screen .savebtn svg{width:16px;height:16px;transform-origin:center}
+.res-screen .savebtn .hrt{font-size:16px;line-height:1;display:inline-block;transform-origin:center}
 .res-screen .pair{display:flex;gap:9px;margin-top:9px}
 .res-screen .pair .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border:3px solid transparent;border-radius:3px;cursor:pointer;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#F3E3A6,#C89A2C) border-box;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px #9aa1a7}
 .res-screen .pair .t svg{width:22px;height:22px;stroke:#8a6d20;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
@@ -1056,13 +1056,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .door.l .dstar{right:12px}
 .res-screen .door.r .dstar{left:12px}
 .res-screen .door .dstar svg{width:100%;height:100%;transform-origin:50% 50%}
-/* rotating caption on a pearly framed card, above the spinning stars, while the portrait composes */
-.res-screen .rv-cap{position:absolute;left:0;right:0;top:50%;transform:translateY(calc(-100% - 70px));display:flex;justify-content:center;z-index:6;opacity:0;transition:opacity .55s ease;pointer-events:none}
-.res-screen.rv-compose.rvq .rv-cap{opacity:1}
-.res-screen .rvc-card{position:relative;overflow:visible;width:296px;padding:9px;border-radius:2px;background:linear-gradient(150deg,#efe7d4,#e3d7bd);box-shadow:0 10px 24px -10px rgba(120,90,20,.5)}
-.res-screen .rvc-inner{position:relative;overflow:hidden;padding:18px 22px;text-align:center;background:linear-gradient(158deg,#f1f3f5 0%,#e2e5e8 28%,#f5f6f8 47%,#dcdfe2 68%,#edeff1 100%)}
-.res-screen .rvc-inner::before{content:"";position:absolute;inset:0;background:linear-gradient(118deg,transparent 40%,rgba(255,255,255,.5) 49%,transparent 57%);pointer-events:none}
-.res-screen .rvc-txt{position:relative;display:inline-block;white-space:nowrap;font:400 22px/1.3 'DM Serif Display',serif;color:#2a2620;transition:opacity .5s ease}
 
 /* reveal state machine (classes toggled in JS) */
 .res-screen.rv-compose .dstar svg,.res-screen.rv-open .dstar svg{animation:rvStarLoop 1.05s linear infinite}
@@ -1080,9 +1073,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen.rv-open .shop-section{animation:rvRise .7s ease 1.6s both}
 .res-screen.rv-open .sig-dot{animation:sigPlot .75s cubic-bezier(.34,1.28,.5,1) both}
 /* revisit (rv-quick): the whole portrait is already there — doors just open to reveal it, no cascade */
-.res-screen.rv-quick.rv-open .p1,.res-screen.rv-quick.rv-open .p2,.res-screen.rv-quick.rv-open .pcard,.res-screen.rv-quick.rv-open .p3,.res-screen.rv-quick.rv-open .shop-section,.res-screen.rv-quick.rv-open .sig-dot,.res-screen.rv-quick.rv-open .savebtn svg,#s-res.rv-quick.rv-open .arch-card,#s-res.rv-quick.rv-open .arch-motto,#s-res.rv-quick.rv-open .para{animation:none!important;opacity:1!important;transform:none!important}
+.res-screen.rv-quick.rv-open .p1,.res-screen.rv-quick.rv-open .p2,.res-screen.rv-quick.rv-open .pcard,.res-screen.rv-quick.rv-open .p3,.res-screen.rv-quick.rv-open .shop-section,.res-screen.rv-quick.rv-open .sig-dot,.res-screen.rv-quick.rv-open .savebtn .hrt,#s-res.rv-quick.rv-open .arch-card,#s-res.rv-quick.rv-open .arch-motto,#s-res.rv-quick.rv-open .para{animation:none!important;opacity:1!important;transform:none!important}
 #s-res.rv-quick.rv-open .ac-sweep{animation:none!important;opacity:0!important}
-.res-screen.rv-open .savebtn svg{animation:heartBeat 1s ease 1.4s 1 both}
+.res-screen.rv-open .savebtn .hrt{animation:heartBeat 1s ease 1.4s 1 both}
 /* terminal static state — no animations, so returning to the screen never replays */
 .res-screen.rv-done .doors{display:none}
 .res-screen.rv-done .p1,.res-screen.rv-done .p2,.res-screen.rv-done .pcard,.res-screen.rv-done .p3,.res-screen.rv-done .shop-section{opacity:1}
@@ -1111,14 +1104,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 #s-photo-res.rv-open .p2.p2b{animation-delay:.38s}
 #s-photo-res.rv-open .p3{animation-delay:.55s}
 #s-photo-res.rv-open .shop-section{animation-delay:.55s}
-#s-photo-res.rv-open .savebtn svg{animation-delay:1.4s}
+#s-photo-res.rv-open .savebtn .hrt{animation-delay:1.4s}
 
 @media (prefers-reduced-motion: reduce){
   .res-screen .doors{display:none!important}
   .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section,.res-screen .arch-card,.res-screen .arch-motto,.res-screen .para{opacity:1!important;animation:none!important;transform:none!important}
   .res-screen .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
   .res-screen .spot{animation:none!important;opacity:.62}
-  .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn svg,.res-screen .dstar svg{animation:none!important}
+  .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn .hrt,.res-screen .dstar svg{animation:none!important}
   .res-screen .ask-nudge.on{animation:none!important;opacity:1;transform:none}
 }
 </style>
@@ -1377,7 +1370,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="p3">
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
       <button class="savebtn" id="resSaveBtn" onclick="openSaveSheetManual()">
-        <svg viewBox="0 0 24 24"><defs><linearGradient id="heartG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7E9B0"/><stop offset=".5" stop-color="#E6C24E"/><stop offset="1" stop-color="#C99A2C"/></linearGradient></defs><path fill="url(#heartG)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Save my style details</button>
+        <span class="hrt">&#128155;</span>Save my style details</button>
       <!-- Action shelves — each bound to its existing handler -->
       <div class="act" data-shelf onclick="openShopStyle()">
         <div class="actrow"><span class="chip" style="background:linear-gradient(150deg,#FEEF98,#F6CE3E 50%,#E4B02E);box-shadow:0 3px 7px -3px rgba(201,154,46,.6),inset 0 1px 0 rgba(255,255,255,.45)"><svg viewBox="0 0 24 24" style="width:31px;height:31px"><defs><radialGradient id="resShopStarRow" cx="42%" cy="38%" r="62%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".42" stop-color="#FFFFFF"/><stop offset=".72" stop-color="#DDE1E5"/><stop offset="1" stop-color="#AAB0B6"/></radialGradient></defs><path fill="url(#resShopStarRow)" stroke="#7A8189" stroke-width="1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop your style</span><svg class="ar" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Personalized just for you</div></div></div>
@@ -1431,7 +1424,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="doors">
     <div class="door l"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarL)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
     <div class="door r"><span class="gl"></span><span class="dstar"><svg width="58" height="58" viewBox="0 0 24 24"><defs><linearGradient id="dStarR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDF6D2"/><stop offset=".42" stop-color="#EAC24E"/><stop offset=".72" stop-color="#C89A2C"/><stop offset="1" stop-color="#8a6a17"/></linearGradient></defs><path fill="url(#dStarR)" stroke="#FBF1C2" stroke-width="0.5" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
-    <div class="rv-cap" id="resCap"><div class="rvc-card"><span class="ac-studs"></span><div class="rvc-inner"><span class="rvc-txt" id="resCapTxt">Composing your portrait</span></div></div></div>
   </div>
 </div>
 
@@ -1644,7 +1636,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
       <!-- Save profile (quiz-takers only). FUTURE: "Email me these tips & links" slots in right here. -->
       <button class="savebtn" id="resSaveBtnPhoto" onclick="openSaveSheetManual()">
-        <svg viewBox="0 0 24 24"><defs><linearGradient id="heartG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7E9B0"/><stop offset=".5" stop-color="#E6C24E"/><stop offset="1" stop-color="#C99A2C"/></linearGradient></defs><path fill="url(#heartG2)" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Save my style details</button>
+        <span class="hrt">&#128155;</span>Save my style details</button>
       <!-- Profile save block (quiz-takers only) → existing save flow (_persistSave) -->
       <div class="keep" id="resKeepPhoto">
         <h4>Come back anytime</h4>
@@ -2202,7 +2194,6 @@ function _resShowCompose(id){
   document.getElementById('pw').style.display='none';
   void s.offsetWidth;
   s.classList.add('rv-compose');
-  if(id==='s-res')_startQuizCaps();
 }
 // Play the reveal: doors swing open, boards rise. `fromCompose` means the closed
 // doors were already showing (loading path) so we open immediately; otherwise (instant
@@ -2210,7 +2201,6 @@ function _resShowCompose(id){
 function _playResReveal(fromCompose,id){
   var s=document.getElementById(id||'s-res');
   function open(){
-    _stopQuizCaps();
     s.classList.remove('rv-compose');
     void s.offsetWidth;
     s.classList.add('rv-open');
@@ -2538,27 +2528,6 @@ function _startLookCaps(){
   _lookCapTimer=setInterval(function(){p=(p+2)%n;a.textContent=LOOK_CAPS[p];b.textContent=LOOK_CAPS[(p+1)%n];},5000);
 }
 function _stopLookCaps(){if(_lookCapTimer){clearInterval(_lookCapTimer);_lookCapTimer=null;}}
-// Warm rotating caption on the quiz Style-Portrait reveal, shown under the spinning
-// stars while the AI composes her portrait (the closed-doors "compose" beat).
-var QUIZ_CAPS=['Reading your answers','Seeing who you are','Finding your style','Capturing your signature','Composing your portrait','Bringing it to life'];
-var _quizCapTimer=null,_quizCapFade=null;
-function _startQuizCaps(){
-  var el=document.getElementById('resCapTxt');if(!el)return;
-  _stopQuizCaps();
-  var sc=document.getElementById('s-res');if(sc)sc.classList.add('rvq'); // mark a REAL compose (fresh quiz / retake) so the caption never shows on a plain revisit
-  var n=QUIZ_CAPS.length,i=Math.floor(Math.random()*n);
-  el.style.opacity='';el.textContent=QUIZ_CAPS[i];
-  _quizCapTimer=setInterval(function(){
-    el.style.opacity='0';
-    _quizCapFade=setTimeout(function(){i=(i+1)%n;el.textContent=QUIZ_CAPS[i];el.style.opacity='1';},550);
-  },2900);
-}
-function _stopQuizCaps(){
-  if(_quizCapTimer){clearInterval(_quizCapTimer);_quizCapTimer=null;}
-  if(_quizCapFade){clearTimeout(_quizCapFade);_quizCapFade=null;}
-  var el=document.getElementById('resCapTxt');if(el)el.style.opacity='';
-  var sc=document.getElementById('s-res');if(sc)sc.classList.remove('rvq');
-}
 function _showPhotoLoad(){
   var img=document.getElementById('alPhoto');
   if(img){
