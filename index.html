@@ -1985,7 +1985,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <button class="sheet-x" onclick="dismissSaveSheet()" aria-label="Close">&times;</button>
     <div class="sheet-grab"></div>
     <div class="sheet-title">⭐ Save your style details ⭐</div>
-    <div class="sheet-sub" id="sheetSub">Quick and easy. Add your email and come back to your Style Portrait anytime, on any device.</div>
+    <div class="sheet-sub" id="sheetSub">Quick &amp; easy. Add your email and come back to your Style Portrait anytime, on any device.</div>
     <div class="stay-form">
       <input type="text" class="stay-input" id="sheetName" placeholder="Your first name (optional)">
       <input type="email" class="stay-input" id="sheetEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')saveFromSheet()">
@@ -2000,7 +2000,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="save-toast" id="saveToast">
   <button class="sheet-x" onclick="dismissSideToast()" aria-label="Close" style="top:11px;right:13px">&times;</button>
   <div class="save-toast-title" id="toastTitle">⭐ Yours to keep ⭐</div>
-  <div class="save-toast-sub">Your Style Portrait will be here anytime you want it, on any device. Quick and easy.</div>
+  <div class="save-toast-sub">Your Style Portrait will be here anytime you want it, on any device. Quick &amp; easy.</div>
   <input type="text" class="stay-input" id="toastName" placeholder="First name (optional)">
   <input type="email" class="stay-input" id="toastEmail" placeholder="Enter your email" style="margin-top:8px" onkeydown="if(event.key==='Enter')saveFromSideToast()">
   <button class="btn-p" id="toastSaveBtn" onclick="saveFromSideToast()">Save my style details</button>
@@ -3279,7 +3279,7 @@ function showSaveSheet(){
   saveSheetShown=true;
   if(userName&&userName!=='You'){
     var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName;
-    var sub=document.getElementById('sheetSub');if(sub)sub.textContent='Quick and easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
+    var sub=document.getElementById('sheetSub');if(sub)sub.textContent='Quick & easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
   }
   var el=document.getElementById('saveSheet');
   el.style.display='flex';
@@ -3308,7 +3308,7 @@ function openSaveSheetManual(){
   sideToastDismissed=true;     // she found it herself — don't also slide the side ask
   _clearSheetTriggers();
   var sub=document.getElementById('sheetSub');
-  if(sub&&userName&&userName!=='You')sub.textContent='Quick and easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
+  if(sub&&userName&&userName!=='You')sub.textContent='Quick & easy, '+userName+'. Add your email and come back to your Style Portrait anytime, on any device.';
   if(userName&&userName!=='You'){var n=document.getElementById('sheetName');if(n&&!n.value)n.value=userName}
   var el=document.getElementById('saveSheet');
   el.style.display='flex';
