@@ -305,7 +305,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .pref-done-acts .pda-dark-tile{background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
 #s-shopstyle .ss-shop-hdr{text-align:center;margin:6px 0 18px}
 #s-shopstyle .ss-shop-title{font-family:'DM Serif Display',serif;font-size:25px;font-weight:400;color:#1a1a1a}
-#s-shopstyle .ss-shop-sub{font-size:13.5px;color:#6e6e6e;margin:5px auto 0;line-height:1.5;max-width:300px}
+#s-shopstyle .ss-shop-sub{font-size:13.5px;color:#6e6e6e;margin:5px auto 0;line-height:1.5;max-width:360px;text-wrap:balance}
 #s-shopstyle .ss-shop-talk{display:none;text-align:center;font-size:14px;color:#6e6e6e;margin:22px auto 4px;line-height:1.6}
 #s-shopstyle .ss-shop-talk.on{display:block}
 #s-shopstyle .ss-shop-talk span{color:#EC4899;font-weight:600;cursor:pointer;text-decoration:underline}
@@ -975,7 +975,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* Her photo clipped to the clipboard — a small, tilted snapshot the stylist is working from */
 .res-screen .clipphoto{position:absolute;top:-15px;left:3px;z-index:8;width:90px;transform:rotate(-9deg);cursor:pointer}
 /* Tight contact shadow + soft cast shadow → reads like it's lifting off the board */
-.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:cover;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.28),0 13px 21px -7px rgba(0,0,0,.62)}
+.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:contain;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.28),0 13px 21px -7px rgba(0,0,0,.62)}
 .res-screen .clipphoto .clip-pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(9deg);width:15px;height:11px;border-radius:3px;background:linear-gradient(180deg,#F6E4A6,#E3BB54 45%,#CFA236 66%,#9A7418);box-shadow:0 2px 4px -1px rgba(90,60,10,.55),inset 0 1px 0 rgba(255,255,255,.65);z-index:2}
 @keyframes clipJig{0%{transform:rotate(-9deg)}25%{transform:rotate(-13deg)}55%{transform:rotate(-5.5deg)}80%{transform:rotate(-10.5deg)}100%{transform:rotate(-9deg)}}
 .res-screen .clipphoto.jig{animation:clipJig .5s ease}
@@ -3054,7 +3054,7 @@ function _openShopStyleNow(mode){
   try{var d=JSON.parse(localStorage.getItem('ss_data'));if(d){userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});}}catch(e){}
   var subEl=document.querySelector('#s-shopstyle .ss-shop-sub');
   if(subEl){
-    if(_shopStyleMode==='look'){subEl.textContent='In the vibe of the look you just shared, and your style.';}
+    if(_shopStyleMode==='look'){subEl.textContent='In the vibe of the look you shared & your style.';}
     else{var last=parseInt(localStorage.getItem('ss_shop_msg')||'-1',10),si;
       do{si=Math.floor(Math.random()*SHOP_MSGS.length);}while(SHOP_MSGS.length>1&&si===last);
       try{localStorage.setItem('ss_shop_msg',String(si));}catch(e){}
@@ -4127,7 +4127,7 @@ function refreshWbBadges(){
 }
 var WB_MSGS=['Your own personal stylist,<br>made with love to help you shine.','A personal stylist at your fingertips,<br>created with love.','Created with love by a real stylist<br>to help you shine.','Your own personal stylist,<br>making style clear, easy, and fun.','This is my gift to you:<br>everything I know about style,<br>made clear, easy, and fun.','Made with love, to help you shine<br>your style out to the world.','Built with heart, here to help you<br>shine your light.','Style is one of the most beautiful<br>ways to shine your light.','Here to help you feel confident,<br>put-together, and fully you.'];
 var SHOP_MSGS=['Align your style. Shine your light.','Your signature style is coming together.','Here to help you shine your light.','Embracing your unique personal style.','Personalized for you.','Bringing out your most confident you.','Style with intention and heart.'];
-var LOADING_MSGS=['Gathering all the best options for you&hellip;','Looking for pieces you&rsquo;ll love&hellip;','Finding pieces that fit your style story&hellip;','Looking through hundreds of options for you&hellip;','Searching for pieces to help you shine&hellip;','Finding pieces that fit your signature style&hellip;','Searching all the latest options, just for you&hellip;'];
+var LOADING_MSGS=['Gathering all the best options for you&hellip;','Looking for pieces you&rsquo;ll love&hellip;','Finding pieces that fit your style story&hellip;','Looking through hundreds of options for you&hellip;','Finding pieces that fit your signature style&hellip;','Searching all the latest options, just for you&hellip;'];
 var _lastLoadMsg=-1;
 function _pickLoadMsg(){var i;do{i=Math.floor(Math.random()*LOADING_MSGS.length);}while(LOADING_MSGS.length>1&&i===_lastLoadMsg);_lastLoadMsg=i;return LOADING_MSGS[i];}
 function updateWbScreen(){
