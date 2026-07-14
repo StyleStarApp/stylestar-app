@@ -2562,6 +2562,48 @@ stylist so a stranger FEELS the human moat) and did a restraint-polish pass. All
 - ▶ **Sally's home-page ACTION below is now ✅ DONE** (this session). The broader thread (weave the human moat through
   welcome email, chat, results, etc.) continues; the highest-value surfaces (Home, My Story, FAQ, Chat) are now covered.
 
+**2026-07-14 (cont. — on-device polish pass: founder line to 2 lines, button/frame consistency, no-brown — SHIPPED LIVE, PR #346)**
+Cath tested the founder/human-thread work on her real phone and sent screenshots; this pass fixes what she caught.
+Branch `claude/style-star-8bgaud`. All merged → live.
+- ✅ **Home founder line now on TWO clean lines** (was wrapping to 3 with a lonely "intention." on line 3). Fixes:
+  dropped the leading gold ★ (the script signature already sets the line apart), "and" → "**&**" ("with love &
+  intention"), **widened `.hm-founder` max-width 302 → 352px** (it was capped narrower than the CTA — Cath spotted the
+  room), and added `text-wrap:balance`. ("&" for "and" is a fine stylistic choice, not a grammar error.)
+- ✅ **Buttons / gold frames — flatten the "varied gold gradient / brown" look Cath kept catching:**
+  - **Results "Save my style details"** button (`.savebtn`): gold-gradient border → **single solid gold** (`#CBA24B`),
+    white body.
+  - **Style-nudge "Refine my style"** button (`.sn-go`): black fill → **white bg, black text, green arrow** (the arrow
+    green via `.sn-go svg path{stroke:#2FA35C}`).
+  - **Quiz-nudge card** (`#photoQuizNudge`, "Want everything personally styled for you?", shown to non-quiz-takers on
+    photo results): gold-gradient frame → **solid gold** (`#CBA24B`); flat amber text ★ (read brown) → the **dimensional
+    radial-gold SVG star** (new `qnStar` gradient, matches the style-nudge star); and the **"Take our fun style quiz"
+    button** now matches the **Retake / home Start-quiz** buttons — silver body + gold border + **gold slider-icon tile**
+    + gold arrow (Cath's idea: all quiz-launch buttons share the slider look). (Briefly tried a warm gold-fill; Cath
+    preferred the silver+slider for the family consistency.)
+  - **"Retake the Quiz"** button (results `.retake` + Welcome Back `.wb-retake`): the gold icon tile gradient dipped into
+    brown (`#B07E1C`) → **flat clean gold `#EACD68`** (matches the home quiz tile). Gold border + silver metallic body kept.
+- ✅ **Save-sheet pop-up subtitle** was wrapping to 3 lines → widened the card (`.sheet-card` min 360→**404px**, less
+  side padding) + bumped `.sheet-sub` max-width, AND shortened **"Quick and easy" → "Quick & easy"** (matching the
+  founder line's "&") in all 4 spots (default sheet sub, both named variants, side toast). Now 2 lines.
+- **Save-ask timing** (from the prior entry, now live): bottom sheet 2s→10s after reaching bottom, 22s→35s no-scroll
+  backup, side card 30s→60s. Cath to confirm the 10s beat feels right on-device.
+- **Container restarted again mid-session** (twice total today) — same recovery: work was safe on the remote; after each
+  restart `git fetch origin <branch> && git reset --hard origin/<branch>` (or `checkout -B <branch> origin/main` after a
+  merge), then a **force-with-lease** push (the branch, after restarting from main, only holds already-merged history so
+  a forced update is correct). PIL/Pillow used for side-by-side compare images (`pip install Pillow`).
+- ▶ **OPEN TO-DOs Cath explicitly parked (keep on the list):**
+  1. **🟡 Gold consistency sweep** — audit EVERY gold frame/tile/star/arrow app-wide; flatten the remaining
+     metallic-gold gradients / brown dips to one clean solid gold so it's a single intentional system (we did save
+     button, both nudge frames, quiz-nudge star, retake tiles, quiz-nudge button this pass — but there are more, e.g.
+     the retake button's silver-gradient body + amber `#B8831F` arrow, the `.hm-cta` rings, etc.). Cath wants this but
+     said WAIT and do it holistically.
+  2. **🟡 Unify the two nudge cards to read as siblings** — the quiz-results style-nudge ("Want your shopping more
+     personalized?") has a gray-linen engraved frame + white Refine button; the photo-results quiz-nudge has a solid
+     gold frame + white bg + silver/slider quiz button. Both are clean (same pretty star) but don't match each other.
+     Claude's lean: give BOTH the solid-gold-frame + white-bg look, keep their buttons different on purpose (quiz card =
+     bold quiz button for the conversion moment; Refine card = quieter white button). Cath will "look at the nudge cards
+     again after this merge."
+
 ### ▶ NORTH STAR (2026-07-14, from Sally Hogshead — award-winning marketing expert, author of "How to Fascinate"): DIFFERENTIATION = THE REAL STYLIST BEHIND IT
 Sally (Cath's friend, a marketing/branding genius) gave Cath the single most important strategic note yet:
 **Style Star must clearly, loudly differentiate on the one thing no competitor can copy — that it is built with
