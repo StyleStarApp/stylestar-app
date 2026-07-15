@@ -732,6 +732,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-portrait{position:relative;cursor:pointer;text-align:center;padding:2px 4px 0}
 #s-wb .wb-port-title{font-family:'DM Serif Display',Georgia,serif;font-size:26px;color:#221e18;line-height:1.05;margin-bottom:9px}
 #s-wb .wb-port-motto{font-family:'Lora',serif;font-style:italic;font-size:15.5px;color:#463c2e;line-height:1.42;max-width:270px;margin:0 auto 11px}
+#s-wb .wb-port-motto.wb-tagline{font-family:'DM Sans',sans-serif;font-style:normal;font-size:14px;color:#5a5044}
 #s-wb .wb-port-cta{font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#8a6a1e;letter-spacing:.01em;display:inline-flex;align-items:center;gap:3px}
 #s-wb .wb-port-cta svg{width:16px;height:16px}
 #s-wb .wb-portrait.wb-tapped{transform:scale(.985);transition:transform .08s}
@@ -4276,17 +4277,17 @@ function _buildWbHubs(){
 }
 function updateWbScreen(){
   _buildWbHubs();
-  var m=document.getElementById('wbMsg2');
-  if(m){var last=parseInt(localStorage.getItem('ss_wb_msg')||'-1',10),i;
-    do{i=Math.floor(Math.random()*WB_MSGS.length);}while(WB_MSGS.length>1&&i===last);
-    try{localStorage.setItem('ss_wb_msg',String(i));}catch(e){}
-    m.innerHTML=WB_MSGS[i];}
-  // Portrait hub: "<Name>'s Style" + her personal motto (graceful fallback if none)
+  // Portrait hub: "<Name>'s Style" + her personal motto. If she has no motto yet,
+  // fall back to a warm curated tagline instead of a blank line.
   var pt=document.getElementById('wbPortTitle'),pm=document.getElementById('wbPortMotto');
   if(pt){var fn=wbFirstName();pt.textContent=fn?(fn+'’s Style'):'Your Style';}
   if(pm){var mo=wbMotto();
-    if(mo){pm.innerHTML='“'+wbEsc(mo)+'”';pm.style.display='';}
-    else{pm.style.display='none';}}
+    if(mo){pm.innerHTML='“'+wbEsc(mo)+'”';pm.classList.remove('wb-tagline');}
+    else{var last=parseInt(localStorage.getItem('ss_wb_msg')||'-1',10),i;
+      do{i=Math.floor(Math.random()*WB_MSGS.length);}while(WB_MSGS.length>1&&i===last);
+      try{localStorage.setItem('ss_wb_msg',String(i));}catch(e){}
+      pm.innerHTML=WB_MSGS[i];pm.classList.add('wb-tagline');}
+    pm.style.display='';}
   refreshWbBadges();
 }
 // Near-real-time refresh so a new reply/drop appears without a manual reload.
