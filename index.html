@@ -651,13 +651,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wel [data-shelf].hm-tapped,#s-wel [data-shelf]:active{transform:scale(.9);filter:brightness(.88)}
 
 /* ===== Welcome Back — "lit vanity" mirror design (Design handoff) ===== */
-#s-wb{position:relative;padding:16px;margin:-0.5rem -1.75rem -1.5rem;font-family:'Jost',sans-serif;background-color:#28251F;
+#s-wb{position:relative;padding:16px;margin:-0.5rem -1.75rem -1.5rem;font-family:'Jost',sans-serif;background-color:#0c0c0e;
   background-image:
-    radial-gradient(130% 72% at 50% 30%, rgba(255,244,222,.34) 0%, rgba(255,244,222,0) 58%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0, rgba(0,0,0,.045) 2px, transparent 2px, transparent 7px),
-    repeating-linear-gradient(to bottom,#28251F 0 54px,#F2EFE8 54px 108px);
-  background-repeat:no-repeat,repeat,repeat;background-position:center,center,top;
-  box-shadow:inset 0 0 80px rgba(0,0,0,.24)}
+    radial-gradient(120% 55% at 50% 12%, rgba(255,255,255,.06) 0%, rgba(255,255,255,0) 55%),
+    linear-gradient(180deg,#171719,#0a0a0b);
+  background-repeat:no-repeat,no-repeat;background-position:center,center;
+  box-shadow:inset 0 0 90px rgba(0,0,0,.5)}
 #s-wb .hm-room{position:relative;padding-top:6px;max-width:400px;margin:0 auto}
 /* the star pendant hangs in front of the greeting mirror; it is the reveal-star merge target.
    Lifted up so the chrome bracket posts meet the gold rail (no dark gap). */
@@ -670,8 +669,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
 #s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-27px;padding:112px 30px 24px;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
-#s-wb .wb-acts{border-width:7px;margin-top:3px;padding:5px 12px 13px;
-  box-shadow:0 16px 26px -16px rgba(0,0,0,.42),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
+#s-wb .wb-acts{border:none;margin-top:0;padding:0;background:none;box-shadow:none}
 #s-wb .wb-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
 #s-wb .wb-sweep{position:absolute;top:0;bottom:0;left:0;width:100%;background:radial-gradient(ellipse 62% 130% at 50% 50%,rgba(255,255,255,.42),rgba(255,255,255,0) 70%);pointer-events:none;z-index:9;opacity:0}
 #s-wb .wb-greet .wb-sweep{animation:wbBloom 2s ease .3s both}
@@ -752,6 +750,26 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-foot{margin-top:12px;padding-top:11px;border-top:1px solid rgba(33,30,26,.10);gap:8px}
 #s-wb .wb-foot span.lnk{font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1c1a17}
 #s-wb .wb-foot span.star{color:#E6C24E;font-size:11px}
+/* --- Welcome Back v2: white hub cards on black lacquer, awning + vanity light bar --- */
+#s-wb .hub-card{position:relative;background:#FBFAF7;border-radius:2px;padding:0 14px 14px;box-shadow:0 12px 26px -14px rgba(0,0,0,.7),inset 0 0 0 1.5px rgba(196,201,207,.95)}
+#s-wb .hub-shop{margin:16px 2px 12px}
+#s-wb .hub-style{margin:0 2px 16px}
+#s-wb .hub-card .wb-item{margin:0}
+#s-wb .awn-rod{height:5px;margin:0 -14px;background:linear-gradient(180deg,#eee,#8a8a8a)}
+#s-wb .awn-face{height:18px;margin:0 -14px;background:linear-gradient(180deg,rgba(255,255,255,.20),rgba(0,0,0,.10)),repeating-linear-gradient(90deg,#22222a 0 17px,#F6F3EC 17px 34px)}
+#s-wb .awn-trim{height:2px;margin:0 -14px;background:linear-gradient(180deg,#EBD186,#BE9730)}
+#s-wb .awn-val{height:19px;margin:0 -14px 4px;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(0,0,0,.14)),repeating-linear-gradient(90deg,#22222a 0 17px,#F6F3EC 17px 34px);-webkit-mask:radial-gradient(9px at 9px 0,#000 97%,#0000) 0 100%/18px 13px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 13px) no-repeat;mask:radial-gradient(9px at 9px 0,#000 97%,#0000) 0 100%/18px 13px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 13px) no-repeat}
+#s-wb .mbar{margin:0 -14px 6px;padding:9px 18px 10px;border:8px solid #D8DDE2;border-top:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:0 6px 12px -8px rgba(0,0,0,.4),inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
+#s-wb .mbar-row{display:flex;justify-content:space-between;align-items:center}
+#s-wb .mbulb{width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 11px 3px rgba(244,214,120,.8),0 0 4px rgba(255,238,180,.95),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45)}
+#s-wb .wb-chip-line{width:40px!important;height:40px!important;background:#F5EFE2!important;border:1px solid #D8C285!important;border-radius:9px!important;box-shadow:none!important;color:#26221c}
+#s-wb .wb-chip-line svg{width:24px;height:24px;color:#26221c}
+#s-wb .wb-item .wb-arr{color:#26221c!important}
+#s-wb .hub-card .wb-hub{margin:12px 0 8px}
+#s-wb .hub-card .wb-hub-t{font-size:16px;letter-spacing:.2em;color:#151515}
+#s-wb .wb-acts .wb-foot{border-top:1px solid rgba(255,255,255,.13);margin-top:16px}
+#s-wb .wb-acts .wb-foot span.lnk{color:#EDE7DA}
+#s-wb .wb-retake{box-shadow:0 6px 14px -8px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(196,201,207,.9)}
 /* press / lift feedback (iOS-safe via JS .wb-tapped as well) */
 #s-wb [wb-press]{transition:transform .13s ease;-webkit-tap-highlight-color:transparent}
 #s-wb [wb-press]:active{transform:scale(.98)}
@@ -4258,21 +4276,30 @@ function _buildWbHubs(){
   if(!list||list.dataset.hubs)return;
   var items=Array.prototype.slice.call(list.querySelectorAll('.wb-item'));
   if(items.length<7)return; // source: 0 ShopStyle,1 Analyze,2 Ask,3 Edit,4 Portrait,5 Refine,6 Mall
-  function arr(it,c){var a=it.querySelector('.wb-arr');if(a)a.style.color=c;}
-  function gold(it){var c=it.querySelector('.wb-chip');c.style.background='linear-gradient(150deg,#F7E7A8,#E9C255 52%,#D7A83A)';c.style.boxShadow='0 3px 7px -3px rgba(201,154,46,.55),inset 0 1px 0 rgba(255,255,255,.5)';arr(it,'#C89A2C');}
-  function jewel(it){var c=it.querySelector('.wb-chip');if(c&&!c.querySelector('.jewel')){var s=document.createElement('span');s.className='jewel';c.appendChild(s);}}
-  function hdr(t,pearly){var d=document.createElement('div');d.className='wb-hub';var plate=document.createElement('span');plate.className='wb-hub-t'+(pearly?' pearly':'');if(pearly){var st=document.createElement('span');st.className='wb-hub-studs';plate.appendChild(st);}var lbl=document.createElement('span');lbl.className='wb-hub-lbl';lbl.textContent=t;plate.appendChild(lbl);d.appendChild(plate);return d;}
-  // SHOP -> gold
-  gold(items[0]); gold(items[3]); gold(items[6]);
-  items[6].querySelector('.wb-chip').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M3.2 9l1.2-4.2h15.2L20.8 9"/><path d="M4 9v9.6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9"/><path d="M3.2 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M10 20v-4.2h4V20"/></svg>';
-  items[6].querySelector('.wb-chip').style.background='linear-gradient(150deg,#F7E7A8,#E9C255 52%,#D7A83A)';
-  // STYLING: Analyze -> pink (same Style Star stylist as the chat); Ask stays pink, Refine stays green
-  var ac=items[1].querySelector('.wb-chip'); ac.style.background='#EC4899'; ac.style.boxShadow='0 3px 7px -3px #EC489999'; arr(items[1],'#EC4899');
-  // Portrait now lives in the greeting mirror above (merged hero); drop it from this menu.
-  [items[0],items[1],items[2],items[3],items[5],items[6]].forEach(jewel);
+  function ic(p){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px">'+p+'</svg>';}
+  var ICON={
+    0:ic('<path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/>'),
+    3:ic('<path d="M6.8 8.9h10.4l-.8 10.4H7.6z"/><path d="M9.3 8.9V7a2.7 2.7 0 0 1 5.4 0v1.9"/>'),
+    6:ic('<path d="M4.3 9.4l1.1-4.1h13.2l1.1 4.1"/><path d="M5.5 9.7V18.8h13V9.7"/><path d="M4.3 9.4a1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0"/><path d="M10.2 18.8v-4.1h3.6v4.1"/>'),
+    1:ic('<path d="M4.2 9h2.9l1.3-1.9h7l1.3 1.9h2.9v9.6H4.2z"/><circle cx="12" cy="13.4" r="2.8"/>'),
+    2:ic('<path d="M5.2 6.6h13.6v8.4H9.4L5.6 18.6V6.6z"/><path d="M8.6 10.6h6.8M8.6 12.8h4.2"/>'),
+    5:ic('<path d="M2.6 12.4l3.6 3.6 6.2-7.8"/><path d="M15.3 10.6l4.8 5.8M20.1 10.6l-4.8 5.8"/>')
+  };
+  // Swap each colored tile for a charcoal line icon inside a cream chip, preserving any badge.
+  function setIcon(i){var chip=items[i].querySelector('.wb-chip');if(!chip)return;var badge=chip.querySelector('.wb-badge');chip.removeAttribute('style');chip.className='wb-chip wb-chip-line';chip.innerHTML=ICON[i];if(badge)chip.appendChild(badge);}
+  [0,3,6,1,2,5].forEach(setIcon);
+  function hub(t){var d=document.createElement('div');d.className='wb-hub';var s=document.createElement('div');s.className='wb-hub-t';var l=document.createElement('span');l.className='wb-hub-lbl';l.textContent=t;s.appendChild(l);d.appendChild(s);return d;}
   list.innerHTML='';
-  list.appendChild(hdr('Shopping')); list.appendChild(items[0]); list.appendChild(items[3]); list.appendChild(items[6]);
-  list.appendChild(hdr('Styling')); list.appendChild(items[1]); list.appendChild(items[2]); list.appendChild(items[5]);
+  // Shopping card: awning topper + label + shop items
+  var shop=document.createElement('div');shop.className='hub-card hub-shop';
+  var awn=document.createElement('div');awn.innerHTML='<div class="awn-rod"></div><div class="awn-face"></div><div class="awn-trim"></div><div class="awn-val"></div>';
+  while(awn.firstChild)shop.appendChild(awn.firstChild);
+  shop.appendChild(hub('Shopping'));shop.appendChild(items[0]);shop.appendChild(items[3]);shop.appendChild(items[6]);
+  // Styling card: vanity light bar topper + label + styling items
+  var sty=document.createElement('div');sty.className='hub-card hub-style';
+  var mbar=document.createElement('div');mbar.className='mbar';var r='<div class="mbar-row">';for(var i=0;i<7;i++)r+='<span class="mbulb"></span>';r+='</div>';mbar.innerHTML=r;
+  sty.appendChild(mbar);sty.appendChild(hub('Styling'));sty.appendChild(items[1]);sty.appendChild(items[2]);sty.appendChild(items[5]);
+  list.appendChild(shop);list.appendChild(sty);
   list.dataset.hubs='1';
 }
 function updateWbScreen(){
