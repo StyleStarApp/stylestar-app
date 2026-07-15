@@ -663,7 +663,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-pend{position:relative;width:100%;height:34px;z-index:6;margin-top:-17px}
 /* the whole pendant is one SVG (hook + ring + star + logo), so the parts stay locked together.
    The hanger hook curves around the top of the gold rail. */
-#s-wb .wb-pendsvg{position:absolute;top:-13px;left:50%;transform:translateX(-50%);z-index:6;filter:drop-shadow(0 3px 6px rgba(200,151,30,.16)) drop-shadow(0 5px 5px rgba(28,20,6,.12))}
+#s-wb .wb-pendsvg{position:absolute;top:-8px;left:50%;transform:translateX(-50%);z-index:6;filter:drop-shadow(0 3px 6px rgba(200,151,30,.16)) drop-shadow(0 5px 5px rgba(28,20,6,.12))}
 /* silver mirror frames (greeting on top, actions below) */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #D8DDE2;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
@@ -762,8 +762,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background:
     /* gold trim hugging the very bottom — the scallop mask makes it follow the hem's curve */
     linear-gradient(180deg,rgba(0,0,0,0) calc(100% - 2.5px),#EBC65E calc(100% - 2.5px),#C99A2C 100%),
-    /* whisper-thin HORIZONTAL crease — the fold where the awning bends out from the wall */
-    linear-gradient(180deg,rgba(0,0,0,0) 0 24px,rgba(255,255,255,.09) 24.5px,rgba(0,0,0,.12) 25.8px,rgba(0,0,0,0) 27px 100%),
+    /* whisper-thin HORIZONTAL crease — the fold where the awning bends out, centred on the canopy */
+    linear-gradient(180deg,rgba(0,0,0,0) 0 20px,rgba(255,255,255,.09) 20.5px,rgba(0,0,0,.12) 21.8px,rgba(0,0,0,0) 23px 100%),
     /* canopy juts out: catches light along the top, deepens into shadow toward the projecting hem */
     linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.05) 16%,rgba(0,0,0,0) 42%,rgba(0,0,0,.26) 100%),
     /* bold alternating stripes */
@@ -1239,13 +1239,12 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         </defs>
         <!-- a simple S-hook, tilted to the right as if hanging on the rail: top curl laps over the gold
              rail, bottom curl cradles the jewel ring (rotated around the ring so the star hangs plumb) -->
-        <g transform="rotate(12 60 34)">
-          <path d="M60 12 C52 12 52 22.5 60 22.5 C66.5 22.5 66.5 31 60 31 C55.5 31 55 36 60 37.5" stroke="url(#wbHookWire)" stroke-width="1.6" stroke-linecap="round"/>
+        <!-- a simple S-hook: top curl sits over the gold rail, bottom curl passes through the loop -->
+        <g transform="rotate(10 60 34)">
+          <path d="M60 15 C52.5 15 52.5 24 60 24 C68 24 68 34.5 60 36" stroke="url(#wbHookWire)" stroke-width="1.6" stroke-linecap="round"/>
         </g>
-        <!-- ONE jewel ring; the hook threads through it and the star hangs directly below -->
+        <!-- ONE jewel ring; the S passes through it and the star hangs directly below -->
         <ellipse cx="60" cy="34" rx="2.7" ry="3.4" stroke="#C8971E" stroke-width="1.2"/>
-        <!-- the hook tip, redrawn in front of the ring's lower edge so it reads as threaded through the hole -->
-        <path d="M58.8 34.2 C56.5 34.5 56.8 37.5 60 37.5" stroke="url(#wbHookWire)" stroke-width="1.6" stroke-linecap="round" fill="none"/>
         <!-- the star, hung directly below the ring -->
         <g transform="translate(0 34) scale(5)">
           <path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.55" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/>
