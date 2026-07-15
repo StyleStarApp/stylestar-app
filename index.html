@@ -98,7 +98,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
   box-shadow:0 6px 44px rgba(0,0,0,.14),inset 0 0 0 2px rgba(201,161,78,.6)}
 /* Style Star Edit: bold two-band frame, gold + silver the same thickness (8px each) */
-.ss.dream-mirror,.ss.shop-mirror,.ss.story-mirror,.ss.faq-mirror,.ss.privacy-mirror{position:relative;border-radius:0;border:8px solid transparent;
+.ss.dream-mirror,.ss.shop-mirror,.ss.story-mirror,.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#F3E6B8 0%,#DFB94E 32%,#B8891F 62%,#E8CE7E 100%) border-box;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
 /* My Story: a small pink heart by the signature (this page is Catherine herself) */
@@ -1453,7 +1453,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <input class="kin" id="keepEmail" type="email" placeholder="Enter your email"/>
         <button class="kbtn" onclick="saveResKeep()">Save my style details</button>
         <div class="keep-msg" id="keepMsg"></div>
-        <div class="priv">We'll never share your email. <u onclick="showPrivacy()">Privacy Policy</u></div>
+        <div class="priv">We'll never share your email. <u onclick="showPrivacy()">Privacy Policy</u> &middot; <u onclick="showTerms()">Terms</u></div>
       </div>
 
       <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button></div>
@@ -1686,7 +1686,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <input class="kin" id="keepEmailPhoto" type="email" placeholder="Enter your email"/>
         <button class="kbtn" onclick="saveResKeep('keepNamePhoto','keepEmailPhoto','keepMsgPhoto')">Save &amp; remember me</button>
         <div class="keep-msg" id="keepMsgPhoto"></div>
-        <div class="priv">We'll never share your email. <u onclick="showPrivacy()">Privacy Policy</u></div>
+        <div class="priv">We'll never share your email. <u onclick="showPrivacy()">Privacy Policy</u> &middot; <u onclick="showTerms()">Terms</u></div>
       </div>
 
       <!-- Quiz invite — shown ONLY to non-quiz-takers (their conversion CTA); sits at the bottom -->
@@ -1734,7 +1734,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button class="btn-p" id="prefSaveBtn" style="margin-top:0;max-width:280px" onclick="savePrefProfile()">Save my style details</button>
       </div>
       <div id="prefSaveMsg" style="font-size:13px;color:#777;margin-top:8px"></div>
-      <div style="font-size:12.5px;color:#6e6e6e;margin-top:6px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
+      <div style="font-size:12.5px;color:#6e6e6e;margin-top:6px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span> &middot; <span onclick="showTerms()" style="text-decoration:underline;cursor:pointer">Terms</span></div>
       <button class="retake" onclick="prefDone()" style="margin-top:10px">Maybe later</button>
     </div>
 
@@ -1979,7 +1979,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="faq-sub">On an Android phone (using Chrome):</div>
         <ol class="faq-steps"><li>Open stylestar.app in Chrome.</li><li>Tap the menu (the three dots in the top right).</li><li>Tap "Add to Home screen," then "Add."</li></ol></div></div>
       <div class="faq-item"><div class="faq-q">Is Style Star free?</div><div class="faq-a">Yes, Style Star is free to use. If you shop through some of our links, we may earn a small commission at no extra cost to you, and that's what helps keep it free.</div></div>
-      <div class="faq-item"><div class="faq-q">Is my information private?</div><div class="faq-a">Yes. We use your information only to personalize your styling experience and save your results. We never sell your information. You can read the details in our <span class="lnk" onclick="showPrivacy()">Privacy Policy</span>.</div></div>
+      <div class="faq-item"><div class="faq-q">Is my information private?</div><div class="faq-a">Yes. We use your information only to personalize your styling experience and save your results. We never sell your information. You can read the details in our <span class="lnk" onclick="showPrivacy()">Privacy Policy</span> and <span class="lnk" onclick="showTerms()">Terms of Service</span>.</div></div>
       <div class="faq-item"><div class="faq-q">Do you sell the clothes?</div><div class="faq-a">No, we don't sell anything ourselves. We point you to the stores and pieces that suit your style. In the Style Star Edit, you'll find pieces personally hand-selected by me, the ones I wear myself and recommend to my clients.</div></div>
       <div class="faq-item"><div class="faq-q">Is Style Star for every body, age, and budget?</div><div class="faq-a">Absolutely. Style is personal, and Style Star is here to celebrate yours, whatever your size, age, or budget. Beautiful style exists at every price point, and you don't need to be a fashion expert. We meet you exactly where you are.</div></div>
       <div class="faq-item"><div class="faq-q">How do I get in touch?</div><div class="faq-a">I'd love to hear from you. Reach me at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a>.</div></div>
@@ -2014,6 +2014,39 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   </div>
 </div>
 
+<div class="scr" id="s-terms">
+  <div class="story-wrap">
+    <div class="pp-head">
+      <img src="logo-star.png" alt="Style Star" class="pp-lh-logo">
+      <button class="top-back" onclick="closeTerms()">&larr; Back</button>
+    </div>
+    <div class="story-title">Terms of Service</div>
+    <div style="font-size:14px;color:#555;line-height:1.8;text-align:left">
+      <p style="margin-bottom:12px">Welcome to Style Star. These terms explain how you can use our app and what you can expect from us. By using Style Star, you agree to them. We have kept them short and human, the way we like everything here.</p>
+      <p style="margin-bottom:12px"><strong>Using Style Star</strong></p>
+      <p style="margin-bottom:12px">Style Star is here for your personal use, to help you discover your style, get ideas, and enjoy shopping. Please use it kindly and lawfully, and do not misuse it or disrupt it for others.</p>
+      <p style="margin-bottom:12px"><strong>Style advice is for inspiration</strong></p>
+      <p style="margin-bottom:12px">Our styling suggestions, quiz results, and stylist feedback are offered as inspiration and guidance, not professional, medical, or financial advice. Style is personal, so trust your own judgment. Every choice about what to buy or wear is yours.</p>
+      <p style="margin-bottom:12px"><strong>Shopping and affiliate links</strong></p>
+      <p style="margin-bottom:12px">Style Star points you to products and stores we love. Those purchases, prices, shipping, and returns are handled entirely by the third-party stores, under their own terms, not ours. Some links are affiliate links, which means we may earn a small commission at no extra cost to you. You can read more in our <span class="lnk" onclick="showPrivacy()">Privacy Policy</span>.</p>
+      <p style="margin-bottom:12px"><strong>Your photos and information</strong></p>
+      <p style="margin-bottom:12px">Photos you share for style feedback are processed in real time and are never stored on our servers. How we handle the information you choose to save is explained in our <span class="lnk" onclick="showPrivacy()">Privacy Policy</span>.</p>
+      <p style="margin-bottom:12px"><strong>Our brand and content</strong></p>
+      <p style="margin-bottom:12px">The Style Star name, logo, writing, and designs belong to us. Please enjoy them within the app, but do not copy, resell, or use them as your own without permission.</p>
+      <p style="margin-bottom:12px"><strong>Availability</strong></p>
+      <p style="margin-bottom:12px">We work hard to keep Style Star running smoothly, but we cannot promise it will always be perfect or uninterrupted. We may update or improve features over time.</p>
+      <p style="margin-bottom:12px"><strong>Changes to these terms</strong></p>
+      <p style="margin-bottom:12px">We may update these terms as Style Star grows. When we do, we will post the new version here with an updated date.</p>
+      <p style="margin-bottom:12px"><strong>Governing law</strong></p>
+      <p style="margin-bottom:12px">These terms are governed by the laws of the State of Florida.</p>
+      <p style="margin-bottom:12px"><strong>Contact</strong></p>
+      <p style="margin-bottom:12px">Questions about these terms? Reach us at hello@stylestar.app</p>
+      <p style="margin-top:20px;font-size:11px;color:#bbb">Last updated July 15, 2026</p>
+    </div>
+    <button class="btn-outline" onclick="closeTerms()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
+  </div>
+</div>
+
 </div>
 <div class="quiz-footer"><div class="quiz-footer-links"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
 </div>
@@ -2030,7 +2063,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <button class="btn-p" id="sheetSaveBtn" style="margin-top:0;max-width:280px" onclick="saveFromSheet()">Save my style details</button>
     </div>
     <div id="sheetMsg" style="font-size:13px;color:#777;margin-top:8px"></div>
-    <div style="font-size:12.5px;color:#6e6e6e;margin-top:6px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span></div>
+    <div style="font-size:12.5px;color:#6e6e6e;margin-top:6px">We'll never share your email. <span onclick="showPrivacy()" style="text-decoration:underline;cursor:pointer">Privacy Policy</span> &middot; <span onclick="showTerms()" style="text-decoration:underline;cursor:pointer">Terms</span></div>
     <button class="retake" onclick="dismissSaveSheet()" style="margin-top:10px">Maybe later</button>
   </div>
 </div>
@@ -2155,7 +2188,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -2173,6 +2206,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('faq-mirror',id==='s-faq');
   // And the Privacy Policy (same letterhead + display-case frame).
   if(card)card.classList.toggle('privacy-mirror',id==='s-privacy');
+  // And the Terms of Service (same letterhead + display-case frame).
+  if(card)card.classList.toggle('terms-mirror',id==='s-terms');
   // Same gold+silver display-case frame around the clean Shop your style page.
   if(card)card.classList.toggle('shop-mirror',id==='s-shopstyle');
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
@@ -3726,6 +3761,17 @@ function showPrivacy(){
 function closePrivacy(){
   document.querySelector('.quiz-footer').style.display='';
   showBack(privacyPrevScreen);
+}
+let termsPrevScreen='s-wel';
+function showTerms(){
+  const cur=document.querySelector('.scr.act');
+  termsPrevScreen=cur?cur.id:'s-wel';
+  show('s-terms');
+  document.querySelector('.quiz-footer').style.display='none';
+}
+function closeTerms(){
+  document.querySelector('.quiz-footer').style.display='';
+  showBack(termsPrevScreen);
 }
 
 function saveChatHistory(){
