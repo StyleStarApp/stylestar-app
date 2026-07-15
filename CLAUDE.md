@@ -2624,6 +2624,45 @@ Branch `claude/style-star-8bgaud`. All merged → live.
   colors that read "too rainbow-ish", esp. on Welcome Back) + a careful **Welcome Back page review**. This is the
   long-standing "color-code the buttons by purpose (shop vs styling)" + "WB menu is too rainbow" thread.
 
+**2026-07-15 (▶ WELCOME BACK REDESIGN — 3 premium hubs, the "rainbow → order" unlock — SHIPPED LIVE, PR #350)**
+A long, excellent design session (lots of mockups via the http-harness + injection). The breakthrough insight (Claude
++ Cath): the "too rainbow" problem was really a **STRUCTURE** problem (7 equal buttons, 7 colors, no hierarchy), NOT a
+color problem — so the fix is ORDER (hubs), which lets Cath KEEP the colors she loves because grouping makes them read
+intentional, not chaotic. Cath drove every call. Design explored + rejected along the way: a 3-metal (gold/charcoal/
+chrome) all-neutral version (she wanted to keep her colors); framed "display cases" per hub (she disliked the rounded
+edges + the "broken up" feeling → wanted CONTINUOUS scroll); gold-underline + brown-star headers (rejected).
+- ✅ **Welcome Back (`s-wb`) rebuilt into 3 purpose hubs, continuous scroll:**
+  1. **YOUR STYLE PORTRAIT (first — the hero).** Cath's call: lead with HER, not shopping ("the fun stuff is my
+     intention"). The Portrait row is now a hero: a dark **mini-constellation tile** + her **real archetype name** (e.g.
+     "The Timeless Classic") in DM Serif + "See your full Style Portrait". Names her identity first = pure Sally
+     differentiation. (WB is only shown to quiz-takers — email-only savers go to Discover — so an archetype always
+     exists; graceful "Reveal your Style Portrait" fallback wired anyway.)
+  2. **SHOP** = gold tiles (Shop your style, Shop Style Star Edit, Shop the Mall + a clean line storefront icon
+     replacing the tan illustration).
+  3. **YOUR STYLING** = **pink Analyze + pink Ask** (Cath's insight: the SAME Style Star stylist does the chat AND the
+     photo analysis, so both pink = "your stylist, two ways") + **green Refine** (green matches the yes-checkmarks
+     inside; the tile previews the experience).
+- ✅ **Header treatment = "Header B"** (chosen from a 4-option comparison): DM Serif Display label, LEFT-aligned, with a
+  small **gold accent bar** to its left (no stars, no underline — those read cheap/brown/too-spaced to Cath).
+- ✅ **Premium polish:** thinner/more-refined chrome shelves (`.wb-bar` 5→3px); a soft **jewel sheen** overlay on every
+  tile; **lighter subtitles** (`.wb-sub`) for hierarchy; breathing room above Retake; **calmer** — vanity **bulbs no
+  longer blink** + **shelf shimmer off** (`.wb-acts .wb-sweep` hidden). (Cath: "luxury whispers" — less is more.)
+- **Implementation:** a guarded, idempotent **`_buildWbHubs()`** regroups the existing flat `.wb-list` markup into the
+  3 hubs on WB show (reorders the SAME elements so the `wb-lift` handlers + `onclick`s are preserved; recolors tiles;
+  builds the Portrait hero); it runs from `updateWbScreen()`, which also populates `#wbArchName` from `topArchNames`.
+  New CSS block scoped to `#s-wb` (`.wb-hub`/`.wb-hub-bar`/`.wb-hub-t`, `.portrait-hero`, `.wb-chip>.jewel`, thin
+  `.wb-bar`, lighter `.wb-sub`, retake margin, bulbs `animation:none`, sweep hidden). DM Serif Display already loaded.
+- ▶ **FOLLOW-UPS (Cath expects small visual tweaks; structure/wiring she feels "very solid"):**
+  1. **Wire the Portrait hero constellation to her REAL per-person star map** (currently a beautiful CONSISTENT
+     decorative constellation; the archetype NAME is already real). Compute 12 points from her `answers` (the Style
+     Constellation logic in `buildCardBlob`) → a small SVG in the hero tile. The "wow, that's MY map" upgrade.
+  2. **Carry the 3-hub system to Home (`s-wel`) and the results screens** (`s-res`/`s-photo-res`) so the whole app is
+     one world (same hubs/headers/colors/tiles). Cath: build WB first, perfect it, THEN roll outward — we're now here.
+  3. **Custom refined line-art icon set** (Cath: some icons need improving; a single consistent thin-line family is the
+     biggest untapped premium lever — its own project).
+  4. **Revisit the opening entrance animation** later (part of the restraint/"luxury whispers" pass).
+  5. Small visual refinements to come as Cath tests on-device.
+
 ### ▶ NORTH STAR (2026-07-14, from Sally Hogshead — award-winning marketing expert, author of "How to Fascinate"): DIFFERENTIATION = THE REAL STYLIST BEHIND IT
 Sally (Cath's friend, a marketing/branding genius) gave Cath the single most important strategic note yet:
 **Style Star must clearly, loudly differentiate on the one thing no competitor can copy — that it is built with
