@@ -701,12 +701,18 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-retake .rt-tile svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round}
 #s-wb .wb-retake .rt-arr{flex:0 0 auto;width:17px;height:17px;stroke:#B8831F;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 /* ===== Welcome Back — hub system (Portrait / Shop / Your Styling) ===== */
-#s-wb .wb-hub{display:flex;align-items:center;gap:11px;margin:22px 4px 11px}
-#s-wb .wb-hub:first-child{margin-top:4px}
-#s-wb .wb-hub-bar{width:4px;height:22px;border-radius:2px;background:linear-gradient(180deg,#EAC85F,#C99A2C);flex:0 0 auto}
-#s-wb .wb-hub-t{font-family:'DM Serif Display',Georgia,serif;font-size:22px;color:#221e18;line-height:1}
+#s-wb .wb-hub{text-align:center;margin:10px 0 7px}
+#s-wb .wb-hub:first-child{margin-top:2px}
+#s-wb .wb-hub-t{display:inline-block;font:700 13px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#2b2620}
+#s-wb .wb-portrait-frame{position:relative;margin:9px 0 10px;padding:8px;border-radius:2px;background:linear-gradient(150deg,#efe7d4,#e3d7bd);box-shadow:0 8px 18px -11px rgba(120,90,20,.4)}
+#s-wb .wb-pf-inner{position:relative;overflow:hidden;padding:13px 15px 12px;background:linear-gradient(158deg,#f1f3f5 0%,#e2e5e8 28%,#f5f6f8 47%,#dcdfe2 68%,#edeff1 100%)}
+#s-wb .wb-portrait-frame .wb-item{margin:0}
+#s-wb .wb-pf-label{position:relative;text-align:center;font-family:'DM Serif Display',Georgia,serif;font-size:19px;color:#221e18;line-height:1;margin-bottom:11px}
+#s-wb .wb-hub-studs{position:absolute;inset:0;pointer-events:none;border-radius:2px;background:radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) center top/13px 8px repeat-x,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) center bottom/13px 8px repeat-x,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) left center/8px 13px repeat-y,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) right center/8px 13px repeat-y}
+#s-wb .wb-hub-lbl{position:relative}
 #s-wb .wb-chip>.jewel{position:absolute;inset:0;border-radius:9px;background:linear-gradient(158deg,rgba(255,255,255,.5),rgba(255,255,255,0) 46%);pointer-events:none}
 #s-wb .portrait-hero .wb-chip{width:46px;height:46px}
+#s-wb .portrait-hero .wb-bar,#s-wb .portrait-hero .wb-shadow,#s-wb .portrait-hero .wb-brks{display:none}
 #s-wb .portrait-hero .wb-chip.wb-const{background:#211d16;box-shadow:0 4px 10px -3px rgba(20,16,8,.5),inset 0 1px 0 rgba(255,255,255,.08)}
 #s-wb .portrait-hero .tt b{font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:20px}
 #s-wb .wb-bar{height:3px;background:linear-gradient(180deg,#FCFDFE,#CBD1D6 45%,#9EA5AB 56%,#E4E7EA 70%,#B6BCC2 100%)}
@@ -4155,7 +4161,7 @@ function _buildWbHubs(){
   function arr(it,c){var a=it.querySelector('.wb-arr');if(a)a.style.color=c;}
   function gold(it){var c=it.querySelector('.wb-chip');c.style.background='linear-gradient(150deg,#F7E7A8,#E9C255 52%,#D7A83A)';c.style.boxShadow='0 3px 7px -3px rgba(201,154,46,.55),inset 0 1px 0 rgba(255,255,255,.5)';arr(it,'#C89A2C');}
   function jewel(it){var c=it.querySelector('.wb-chip');if(c&&!c.querySelector('.jewel')){var s=document.createElement('span');s.className='jewel';c.appendChild(s);}}
-  function hdr(t){var d=document.createElement('div');d.className='wb-hub';d.innerHTML='<span class="wb-hub-bar"></span><span class="wb-hub-t"></span>';d.querySelector('.wb-hub-t').textContent=t;return d;}
+  function hdr(t,pearly){var d=document.createElement('div');d.className='wb-hub';var plate=document.createElement('span');plate.className='wb-hub-t'+(pearly?' pearly':'');if(pearly){var st=document.createElement('span');st.className='wb-hub-studs';plate.appendChild(st);}var lbl=document.createElement('span');lbl.className='wb-hub-lbl';lbl.textContent=t;plate.appendChild(lbl);d.appendChild(plate);return d;}
   // SHOP -> gold
   gold(items[0]); gold(items[3]); gold(items[6]);
   items[6].querySelector('.wb-chip').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M3.2 9l1.2-4.2h15.2L20.8 9"/><path d="M4 9v9.6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9"/><path d="M3.2 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M10 20v-4.2h4V20"/></svg>';
@@ -4171,9 +4177,17 @@ function _buildWbHubs(){
   var ps=items[4].querySelector('.wb-sub'); if(ps)ps.id='wbArchSub';
   items.forEach(jewel);
   list.innerHTML='';
-  list.appendChild(hdr('Your Style Portrait')); list.appendChild(items[4]);
-  list.appendChild(hdr('Shop')); list.appendChild(items[0]); list.appendChild(items[3]); list.appendChild(items[6]);
-  list.appendChild(hdr('Your Styling')); list.appendChild(items[1]); list.appendChild(items[2]); list.appendChild(items[5]);
+  var pf=document.createElement('div');pf.className='wb-portrait-frame';
+  var pst=document.createElement('span');pst.className='wb-hub-studs';pf.appendChild(pst);
+  var pin=document.createElement('div');pin.className='wb-pf-inner';
+  var plbl=document.createElement('div');plbl.className='wb-pf-label';plbl.textContent='Your Style Portrait';pin.appendChild(plbl);
+  pin.appendChild(items[4]);
+  pf.appendChild(pin);
+  // Portrait is its OWN full-width pearly frame, separate from the chrome actions mirror below.
+  var acts=document.querySelector('#s-wb .wb-acts');
+  if(acts&&acts.parentNode)acts.parentNode.insertBefore(pf,acts); else list.appendChild(pf);
+  list.appendChild(hdr('Shopping')); list.appendChild(items[0]); list.appendChild(items[3]); list.appendChild(items[6]);
+  list.appendChild(hdr('Styling')); list.appendChild(items[1]); list.appendChild(items[2]); list.appendChild(items[5]);
   list.dataset.hubs='1';
 }
 function updateWbScreen(){
