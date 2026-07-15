@@ -667,7 +667,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* silver mirror frames (greeting on top, actions below) */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #D8DDE2;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
-#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-24px;padding:108px 30px 22px;
+#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-24px;padding:120px 30px 22px;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
 #s-wb .wb-acts{border:none;margin-top:0;padding:0;background:none;box-shadow:none}
 #s-wb .wb-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
@@ -1232,20 +1232,23 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <!-- ONE connected pendant: chrome S-hook grips the gold rail, threads the top jewel ring,
            the two rings hold the star's jump-ring, and the star hangs snug beneath. All drawn in a
            single SVG coordinate space so the pieces can never drift apart. Rail sits at ~y16-22. -->
-      <svg class="wb-pendsvg" width="112" height="140" viewBox="0 0 112 140" fill="none">
+      <svg class="wb-pendsvg" width="120" height="154" viewBox="0 0 120 154" fill="none">
         <defs>
           <linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient>
           <linearGradient id="wbHookWire" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8A9097"/><stop offset=".5" stop-color="#C9CED3"/><stop offset="1" stop-color="#6A7077"/></linearGradient>
         </defs>
-        <!-- a simple S-hook: top curl laps over the gold rail, bottom curl cradles the jewel ring -->
-        <path d="M56 31.5 C63.5 31.5 63.5 21.5 56 21.5 C48.5 21.5 48.5 11.5 56 11.5" stroke="url(#wbHookWire)" stroke-width="1.6" stroke-linecap="round"/>
-        <!-- ONE jewel ring; the star hangs directly from it -->
-        <ellipse cx="56" cy="33.4" rx="2.6" ry="3.2" stroke="#C8971E" stroke-width="1.2"/>
+        <!-- a simple S-hook, tilted to the right as if hanging on the rail: top curl laps over the gold
+             rail, bottom curl cradles the jewel ring (rotated around the ring so the star hangs plumb) -->
+        <g transform="rotate(14 60 34)">
+          <path d="M60 34 C67.5 34 67.5 24 60 24 C52.5 24 52.5 13 60 13" stroke="url(#wbHookWire)" stroke-width="1.6" stroke-linecap="round"/>
+        </g>
+        <!-- ONE jewel ring; the star hangs directly below it -->
+        <ellipse cx="60" cy="34" rx="2.6" ry="3.2" stroke="#C8971E" stroke-width="1.2"/>
         <!-- the star, hung directly below the ring -->
-        <g transform="translate(3.2 33.4) scale(4.4)">
+        <g transform="translate(0 34) scale(5)">
           <path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.55" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/>
         </g>
-        <image href="logo-star.png" x="35" y="62" width="42" height="36" preserveAspectRatio="xMidYMid meet"/>
+        <image href="logo-star.png" x="38" y="66" width="44" height="38" preserveAspectRatio="xMidYMid meet"/>
       </svg>
     </div>
   <div class="wbx">
