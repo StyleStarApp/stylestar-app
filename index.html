@@ -660,7 +660,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .hm-room{position:relative;padding-top:6px;max-width:400px;margin:0 auto}
 /* the star pendant hangs in front of the greeting mirror; it is the reveal-star merge target.
    Lifted up so the chrome bracket posts meet the gold rail (no dark gap). */
-#s-wb .wb-pend{position:relative;width:100%;height:34px;z-index:6;margin-top:-6px}
+#s-wb .wb-pend{position:relative;width:100%;height:34px;z-index:6;margin-top:-17px}
 #s-wb .hm-star-inner{transform:scale(1.4);transform-origin:top center}
 /* Lighter star shadow on Welcome Back (the 1.4x scale was amplifying it) */
 #s-wb .hm-star-inner>svg{filter:drop-shadow(0 2px 6px rgba(200,151,30,.20)) drop-shadow(0 4px 5px rgba(28,20,6,.10))}
@@ -713,7 +713,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-badge.tag{top:-7px;right:-9px;padding:2px 5px;border-radius:7px;font-size:7px;line-height:1;letter-spacing:.05em;text-transform:uppercase}
 /* retake — compact flat mirror-gray button (2-slider icon) */
 #s-wb .wb-retake-wrap{text-align:center;margin-top:11px}
-#s-wb .wb-retake{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 26px 10px 10px;border-radius:3px;border:1.5px solid #CBA14A;
+#s-wb .wb-retake{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 26px 10px 10px;border-radius:0;border:2.5px solid #CBA14A;
   background:linear-gradient(180deg,#E9ECEF,#D0D5DA);
   box-shadow:none;font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:#3a352c;cursor:pointer}
 #s-wb .wb-retake .rt-tile{flex:0 0 auto;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68;box-shadow:0 2px 4px -2px rgba(120,90,20,.4)}
@@ -731,7 +731,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-port-title{font-family:'DM Serif Display',Georgia,serif;font-size:26px;color:#221e18;line-height:1.05;margin-bottom:9px}
 #s-wb .wb-port-motto{font-family:'Lora',serif;font-style:italic;font-size:15.5px;color:#463c2e;line-height:1.42;max-width:270px;margin:0 auto 11px}
 #s-wb .wb-port-motto.wb-tagline{font-family:'DM Sans',sans-serif;font-style:normal;font-size:14px;color:#5a5044}
-#s-wb .wb-port-cta{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#1a1a1a;letter-spacing:.01em;display:flex;justify-content:center;align-items:center;gap:5px}
+#s-wb .wb-port-cta{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#1a1a1a;letter-spacing:.01em;display:flex;justify-content:center;align-items:center;gap:5px;padding-left:22px}
 #s-wb .wb-port-cta span{text-decoration:underline;text-underline-offset:3px}
 #s-wb .wb-port-cta svg{width:17px;height:17px;stroke:#1a1a1a}
 #s-wb .wb-portrait.wb-tapped{transform:scale(.985);transition:transform .08s}
@@ -752,14 +752,14 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-foot span.lnk{font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1c1a17}
 #s-wb .wb-foot span.star{color:#E6C24E;font-size:11px}
 /* --- Welcome Back v2: white hub cards on black lacquer, awning + vanity light bar --- */
-#s-wb .hub-card{position:relative;background:#FBFAF7;border-radius:2px;padding:0 14px 14px;box-shadow:0 12px 26px -14px rgba(0,0,0,.7),inset 0 0 0 1.5px rgba(196,201,207,.95)}
+#s-wb .hub-card{position:relative;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border-radius:2px;padding:0 14px 14px;box-shadow:0 12px 26px -14px rgba(0,0,0,.7),inset 0 0 0 1.5px rgba(196,201,207,.95)}
 #s-wb .hub-shop{margin:16px 2px 12px}
 #s-wb .hub-style{margin:0 2px 10px}
 #s-wb .hub-card .wb-item{margin:0}
 #s-wb .awn-rod{height:5px;margin:0 -14px;background:linear-gradient(180deg,#eee,#8a8a8a)}
 #s-wb .awn-face{height:18px;margin:0 -14px;background:linear-gradient(180deg,rgba(255,255,255,.20),rgba(0,0,0,.10)),repeating-linear-gradient(90deg,#22222a 0 21px,#F6F3EC 21px 42px)}
 #s-wb .awn-trim{display:none}
-#s-wb .awn-val{height:19px;margin:0 -14px 4px;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(0,0,0,.14)),repeating-linear-gradient(90deg,#22222a 0 21px,#F6F3EC 21px 42px);-webkit-mask:radial-gradient(9px at 9px 0,#000 97%,#0000) 0 100%/18px 13px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 13px) no-repeat;mask:radial-gradient(9px at 9px 0,#000 97%,#0000) 0 100%/18px 13px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 13px) no-repeat}
+#s-wb .awn-val{height:17px;margin:0 -14px 4px;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(0,0,0,.16)),repeating-linear-gradient(90deg,#22222a 0 21px,#F6F3EC 21px 42px);box-shadow:0 2px 4px -2px rgba(0,0,0,.4)}
 #s-wb .mbar{margin:0 -14px 6px;padding:9px 18px 10px;border:8px solid #D8DDE2;border-top:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:0 6px 12px -8px rgba(0,0,0,.4),inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
 #s-wb .mbar-row{display:flex;justify-content:space-between;align-items:center}
 #s-wb .mbulb{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 7px 2px rgba(244,214,120,.72),0 0 3px rgba(255,238,180,.9),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45)}
@@ -771,7 +771,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .hub-card .wb-shadow{display:none}
 #s-wb .wb-acts .wb-foot{margin:14px -16px -16px;padding:16px 12px 26px;border-top:1.5px solid rgba(196,201,207,.9);background:#FBFAF7;border-radius:0;box-shadow:none;justify-content:center}
 #s-wb .wb-acts .wb-foot span.lnk{color:#1c1a17}
-#s-wb .wb-retake{box-shadow:0 6px 14px -8px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(196,201,207,.9)}
+#s-wb .wb-retake{box-shadow:0 6px 14px -8px rgba(0,0,0,.6),inset 0 0 0 2.5px rgba(196,201,207,.9)}
 /* press / lift feedback (iOS-safe via JS .wb-tapped as well) */
 #s-wb [wb-press]{transition:transform .13s ease;-webkit-tap-highlight-color:transparent}
 #s-wb [wb-press]:active{transform:scale(.98)}
