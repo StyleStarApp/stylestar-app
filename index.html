@@ -98,7 +98,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
   box-shadow:0 6px 44px rgba(0,0,0,.14),inset 0 0 0 2px rgba(201,161,78,.6)}
 /* Style Star Edit: bold two-band frame, gold + silver the same thickness (8px each) */
-.ss.dream-mirror,.ss.shop-mirror,.ss.story-mirror{position:relative;border-radius:0;border:8px solid transparent;
+.ss.dream-mirror,.ss.shop-mirror,.ss.story-mirror,.ss.faq-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#F3E6B8 0%,#DFB94E 32%,#B8891F 62%,#E8CE7E 100%) border-box;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
 /* My Story: a small pink heart by the signature (this page is Catherine herself) */
@@ -384,12 +384,17 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .story-sig{font-family:'Dancing Script',cursive;font-size:28px;color:#1a1a1a;font-weight:600;text-align:center;margin-top:0.7rem;line-height:1.2}
 .story-manifesto{font-size:18px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.6;margin-top:0.5rem}
 .story-heart{font-size:28px;text-align:center;margin:1rem 0}
+/* FAQ letterhead: small logo top-left, back top-right, title sized to one line */
+.faq-head{display:flex;align-items:center;justify-content:space-between;margin:2px 0 0.6rem}
+.faq-lh-logo{width:66px;height:auto;display:block}
+.faq-head .top-back{color:#666}
+#s-faq .story-title{font-size:21px;text-wrap:balance;margin-bottom:1rem}
 .faq-list{text-align:left;margin-top:0.5rem}
 .faq-item{padding:14px 2px;border-bottom:1px solid #eee}
 .faq-item:last-child{border-bottom:none}
 .faq-q{font-family:'DM Serif Display',Georgia,serif;font-size:17px;font-weight:400;color:#1a1a1a;margin-bottom:6px;line-height:1.3}
 .faq-a{font-size:15px;color:#555;line-height:1.65}
-.faq-a a,.faq-a span.lnk{color:#B08830;text-decoration:underline;cursor:pointer}
+.faq-a a,.faq-a span.lnk{color:#C8971E;text-decoration:underline;cursor:pointer}
 .faq-sub{font-weight:600;color:#1a1a1a;margin-top:10px;margin-bottom:2px}
 .faq-steps{margin:2px 0 4px;padding-left:1.25rem}
 .faq-steps li{margin:4px 0}
@@ -1952,7 +1957,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="scr" id="s-faq">
   <div class="story-wrap">
-    <div style="text-align:right;margin-bottom:2px"><button onclick="closeFAQ()" style="background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#777;cursor:pointer;padding:4px 2px">&larr; Back</button></div>
+    <div class="faq-head">
+      <img src="logo-star.png" alt="Style Star" class="faq-lh-logo">
+      <button class="top-back" onclick="closeFAQ()">&larr; Back</button>
+    </div>
     <div class="story-title">Frequently Asked Questions</div>
     <div class="faq-list">
       <div class="faq-item"><div class="faq-q">What is Style Star?</div><div class="faq-a">Style Star combines the insight of a personal stylist with the convenience of modern technology. Every tool is here to enhance your style: the quiz helps us understand your style's nuances, styling advice and photo feedback are there whenever you need them, and curated shopping links take you straight to the good stuff, making it all fun and easy. We turn the overwhelm of endless choices into the joy of finding what's truly you.</div></div>
@@ -2144,7 +2152,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -2158,6 +2166,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('dream-mirror',id==='s-dream');
   // Same gold+silver display-case frame around Catherine's My Story page.
   if(card)card.classList.toggle('story-mirror',id==='s-story');
+  // And around the FAQ (letterhead header + display-case frame).
+  if(card)card.classList.toggle('faq-mirror',id==='s-faq');
   // Same gold+silver display-case frame around the clean Shop your style page.
   if(card)card.classList.toggle('shop-mirror',id==='s-shopstyle');
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
