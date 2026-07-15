@@ -764,6 +764,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
     linear-gradient(180deg,rgba(0,0,0,0) calc(100% - 2.5px),#EBC65E calc(100% - 2.5px),#C99A2C 100%),
     /* soft fold shadow at each seam */
     repeating-linear-gradient(90deg,rgba(0,0,0,.20) 0,rgba(0,0,0,0) 4px,rgba(0,0,0,0) 22px,rgba(0,0,0,.20) 26px),
+    /* whisper-thin crease down the centre of each panel — where the fabric folds */
+    repeating-linear-gradient(90deg,rgba(0,0,0,0) 0 12px,rgba(0,0,0,.09) 12.6px,rgba(0,0,0,.09) 13.4px,rgba(0,0,0,0) 14px 26px),
     /* canopy juts out: catches light along the top, deepens into shadow toward the projecting hem */
     linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.05) 16%,rgba(0,0,0,0) 42%,rgba(0,0,0,.26) 100%),
     /* bold alternating stripes */
@@ -1239,7 +1241,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         </defs>
         <!-- a simple S-hook, tilted to the right as if hanging on the rail: top curl laps over the gold
              rail, bottom curl cradles the jewel ring (rotated around the ring so the star hangs plumb) -->
-        <g transform="rotate(14 60 34)">
+        <g transform="rotate(24 60 34)">
           <path d="M60 34 C67.5 34 67.5 24 60 24 C52.5 24 52.5 13 60 13" stroke="url(#wbHookWire)" stroke-width="1.6" stroke-linecap="round"/>
         </g>
         <!-- ONE jewel ring; the star hangs directly below it -->
