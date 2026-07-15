@@ -715,12 +715,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-badge.tag{top:-7px;right:-9px;padding:2px 5px;border-radius:7px;font-size:7px;line-height:1;letter-spacing:.05em;text-transform:uppercase}
 /* retake — compact flat mirror-gray button (2-slider icon) */
 #s-wb .wb-retake-wrap{text-align:center;margin-top:11px}
-#s-wb .wb-retake{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 26px 10px 10px;border-radius:0;border:2.5px solid #CBA14A;
-  background:linear-gradient(180deg,#E9ECEF,#D0D5DA);
-  box-shadow:none;font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:#3a352c;cursor:pointer}
-#s-wb .wb-retake .rt-tile{flex:0 0 auto;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68;box-shadow:0 2px 4px -2px rgba(120,90,20,.4)}
+#s-wb .wb-retake{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:8px 15px 8px 8px;border-radius:0;border:none;
+  background:#FCFAF4;
+  font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;color:#241d0c;cursor:pointer}
+#s-wb .wb-retake .rt-tile{flex:0 0 auto;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68}
 #s-wb .wb-retake .rt-tile svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round}
-#s-wb .wb-retake .rt-arr{flex:0 0 auto;width:17px;height:17px;stroke:#B8831F;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#s-wb .wb-retake .rt-arr{flex:0 0 auto;width:16px;height:16px;stroke:#D2AF48;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 /* ===== Welcome Back — hub system (Portrait / Shop / Your Styling) ===== */
 #s-wb .wb-hub{text-align:center;margin:10px 0 7px}
 #s-wb .wb-hub:first-child{margin-top:2px}
@@ -788,7 +788,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .hub-card .wb-shadow{display:none}
 #s-wb .wb-acts .wb-foot{margin:14px -16px -16px;padding:16px 12px 26px;border-top:1.5px solid rgba(196,201,207,.9);background:#FBFAF7;border-radius:0;box-shadow:none;justify-content:center}
 #s-wb .wb-acts .wb-foot span.lnk{color:#1c1a17}
-#s-wb .wb-retake{box-shadow:0 6px 14px -8px rgba(0,0,0,.6),inset 0 0 0 2.5px rgba(196,201,207,.9)}
+#s-wb .wb-retake{box-shadow:0 0 0 3px #B4BAC0,0 0 0 6px #ECD070,0 8px 16px -10px rgba(70,72,80,.5)}
 /* press / lift feedback (iOS-safe via JS .wb-tapped as well) */
 #s-wb [wb-press]{transition:transform .13s ease;-webkit-tap-highlight-color:transparent}
 #s-wb [wb-press]:active{transform:scale(.98)}
@@ -1078,10 +1078,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .priv{font:400 11px/1.4 'Jost',sans-serif;color:#8a8578;margin-top:9px}
 .res-screen .priv u{cursor:pointer}
 .res-screen .retake-wrap{text-align:center;margin-top:16px}
-.res-screen .retake{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:auto;padding:6px 15px 6px 7px;border:1.5px solid #CBA14A;border-radius:3px;background:linear-gradient(180deg,#E9ECEF,#D0D5DA);box-shadow:none;font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:#3a352c;cursor:pointer;text-decoration:none;margin:0}
-.res-screen .retake .rt-tile{flex:0 0 auto;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68;box-shadow:0 2px 4px -2px rgba(120,90,20,.4)}
+.res-screen .retake{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:auto;padding:8px 15px 8px 8px;border:none;border-radius:0;background:#FCFAF4;box-shadow:0 0 0 3px #B4BAC0,0 0 0 6px #ECD070,0 8px 16px -10px rgba(70,72,80,.5);font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;color:#241d0c;cursor:pointer;text-decoration:none;margin:0}
+.res-screen .retake .rt-tile{flex:0 0 auto;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68}
 .res-screen .retake .rt-tile svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.res-screen .retake .rt-arr{flex:0 0 auto;width:17px;height:17px;stroke:#B8831F;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.res-screen .retake .rt-arr{flex:0 0 auto;width:16px;height:16px;stroke:#D2AF48;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 /* Gentle "tailor first?" prompt */
 .style-nudge{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(28,22,10,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .style-nudge.on{display:flex}
