@@ -2652,6 +2652,18 @@ edges + the "broken up" feeling → wanted CONTINUOUS scroll); gold-underline + 
   builds the Portrait hero); it runs from `updateWbScreen()`, which also populates `#wbArchName` from `topArchNames`.
   New CSS block scoped to `#s-wb` (`.wb-hub`/`.wb-hub-bar`/`.wb-hub-t`, `.portrait-hero`, `.wb-chip>.jewel`, thin
   `.wb-bar`, lighter `.wb-sub`, retake margin, bulbs `animation:none`, sweep hidden). DM Serif Display already loaded.
+- ✅ **LAYOUT REFINEMENT (same day, PR #352) after Cath's on-screen review:** (1) **Your Style Portrait is now its OWN
+  full-width framed showcase**, pulled OUT of the actions mirror to be a sibling above it (via `_buildWbHubs()`
+  `acts.parentNode.insertBefore(pf, acts)`). Its frame matches the **reveal archetype card** exactly: a pearl-studded
+  champagne BORDER (`.wb-portrait-frame` + `.wb-hub-studs`, cloned from `.arch-card`/`.ac-studs`) around a **SILVER
+  chrome interior** (`.wb-pf-inner`, cloned from `.ac-inner` `linear-gradient(158deg,#f1f3f5…#edeff1)`) — NOT champagne
+  throughout (Cath: "on the reveal the middle is silver, not champagne"). The hero row sits on the silver, off the
+  chrome shelf (`.portrait-hero .wb-bar/.wb-shadow/.wb-brks{display:none}`). Label `.wb-pf-label` centered DM Serif.
+  (2) The **chrome actions mirror below** holds the **SHOPPING** + **STYLING** sections. (3) Section labels went
+  through: framed silver nameplates → **rejected** (too spaced/bulky) → **plain block ALL-CAPS** (`.wb-hub-t` Jost 700,
+  letter-spacing .2em, uppercase, no frame) with **tightened margins** (`.wb-hub` 24→10px). Labels renamed **Shop →
+  SHOPPING, Your Styling → STYLING**. LESSON: "pearly" ≠ champagne — the reveal card is a champagne/pearl frame around a
+  silver middle; match both layers.
 - ▶ **FOLLOW-UPS (Cath expects small visual tweaks; structure/wiring she feels "very solid"):**
   1. **Wire the Portrait hero constellation to her REAL per-person star map** (currently a beautiful CONSISTENT
      decorative constellation; the archetype NAME is already real). Compute 12 points from her `answers` (the Style
