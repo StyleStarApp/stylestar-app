@@ -729,6 +729,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-pf-inner{position:relative;overflow:hidden;padding:13px 15px 12px;background:linear-gradient(158deg,#f1f3f5 0%,#e2e5e8 28%,#f5f6f8 47%,#dcdfe2 68%,#edeff1 100%)}
 #s-wb .wb-portrait-frame .wb-item{margin:0}
 #s-wb .wb-pf-label{position:relative;text-align:center;font-family:'DM Serif Display',Georgia,serif;font-size:19px;color:#221e18;line-height:1;margin-bottom:11px}
+#s-wb .wb-portrait{position:relative;cursor:pointer;text-align:center;padding:8px 8px 5px}
+#s-wb .wb-port-title{font-family:'DM Serif Display',Georgia,serif;font-size:24px;color:#221e18;line-height:1.04;margin-bottom:9px}
+#s-wb .wb-port-motto{font-family:'Lora',serif;font-style:italic;font-size:15.5px;color:#463c2e;line-height:1.42;max-width:270px;margin:0 auto 11px}
+#s-wb .wb-port-cta{font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#8a6a1e;letter-spacing:.01em;display:inline-flex;align-items:center;gap:3px}
+#s-wb .wb-port-cta svg{width:16px;height:16px}
+#s-wb .wb-portrait.wb-tapped{transform:scale(.985);transition:transform .08s}
 #s-wb .wb-hub-studs{position:absolute;inset:0;pointer-events:none;border-radius:2px;background:radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) center top/13px 8px repeat-x,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) center bottom/13px 8px repeat-x,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) left center/8px 13px repeat-y,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) right center/8px 13px repeat-y}
 #s-wb .wb-hub-lbl{position:relative}
 #s-wb .wb-chip>.jewel{position:absolute;inset:0;border-radius:9px;background:linear-gradient(158deg,rgba(255,255,255,.5),rgba(255,255,255,0) 46%);pointer-events:none}
@@ -1207,7 +1213,6 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="wb-starcast"></div>
       <div class="wb-bulbs l"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-bulbs r"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
-      <div class="wb-h1" id="wbGreet">Welcome back!</div>
       <p class="wb-msg2" id="wbMsg2">Your own personal stylist,<br>made with love to help you shine.</p>
     </div>
     <!-- Actions mirror -->
@@ -4199,6 +4204,12 @@ function wbFirstName(){
   if(!n||n==='You')return '';
   return n.split(/\s+/)[0];
 }
+function wbMotto(){
+  var mo='';
+  try{var d=JSON.parse(localStorage.getItem('ss_data'));if(d&&d.motto)mo=d.motto;}catch(e){}
+  if(!mo&&typeof userMotto!=='undefined'&&userMotto)mo=userMotto;
+  return (mo||'').trim();
+}
 // Unread stylist replies. Backed by a real counter in localStorage. The stylist
 // chat is currently instant/synchronous, so nothing increments this yet and the
 // badge stays hidden (0 = the empty state); it's ready for a future async-reply
@@ -4252,19 +4263,17 @@ function _buildWbHubs(){
   items[6].querySelector('.wb-chip').style.background='linear-gradient(150deg,#F7E7A8,#E9C255 52%,#D7A83A)';
   // STYLING: Analyze -> pink (same Style Star stylist as the chat); Ask stays pink, Refine stays green
   var ac=items[1].querySelector('.wb-chip'); ac.style.background='#EC4899'; ac.style.boxShadow='0 3px 7px -3px #EC489999'; arr(items[1],'#EC4899');
-  // PORTRAIT hero: dark constellation tile + archetype name (populated in updateWbScreen)
-  items[4].classList.add('portrait-hero');
-  var pc=items[4].querySelector('.wb-chip'); pc.classList.add('wb-const');
-  pc.innerHTML='<svg viewBox="0 0 46 46" style="width:100%;height:100%;display:block;border-radius:9px"><rect width="46" height="46" fill="#211d16"/><g stroke="#C9A24B" stroke-width="0.7" opacity="0.5"><line x1="11" y1="13" x2="22" y2="22"/><line x1="22" y1="22" x2="34" y2="15"/><line x1="22" y1="22" x2="28" y2="35"/><line x1="28" y1="35" x2="15" y2="32"/></g><g fill="#F2D479"><circle cx="11" cy="13" r="1.7"/><circle cx="22" cy="22" r="2.1"/><circle cx="34" cy="15" r="1.5"/><circle cx="28" cy="35" r="1.7"/><circle cx="15" cy="32" r="1.4"/></g></svg>';
-  arr(items[4],'#C89A2C');
-  var pn=items[4].querySelector('.tt b'); if(pn)pn.id='wbArchName';
-  var ps=items[4].querySelector('.wb-sub'); if(ps)ps.id='wbArchSub';
+  // PORTRAIT hub: "<Name>'s Style" + her personal motto (populated in updateWbScreen).
+  // Repurpose the existing portrait wb-item (keeps its onclick=loadSaved + bound tap feedback).
+  items[4].className='wb-portrait';
+  items[4].innerHTML='<div class="wb-port-title" id="wbPortTitle">Your Style</div>'
+    +'<div class="wb-port-motto" id="wbPortMotto"></div>'
+    +'<div class="wb-port-cta">See your full Style Portrait <svg viewBox="0 0 24 24" fill="none" stroke="#C89A2C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></div>';
   items.forEach(jewel);
   list.innerHTML='';
   var pf=document.createElement('div');pf.className='wb-portrait-frame';
   var pst=document.createElement('span');pst.className='wb-hub-studs';pf.appendChild(pst);
   var pin=document.createElement('div');pin.className='wb-pf-inner';
-  var plbl=document.createElement('div');plbl.className='wb-pf-label';plbl.textContent='Your Style Portrait';pin.appendChild(plbl);
   pin.appendChild(items[4]);
   pf.appendChild(pin);
   // Portrait is its OWN full-width pearly frame, separate from the chrome actions mirror below.
@@ -4276,20 +4285,17 @@ function _buildWbHubs(){
 }
 function updateWbScreen(){
   _buildWbHubs();
-  var g=document.getElementById('wbGreet');
-  if(g){var fn=wbFirstName();g.innerHTML=fn?('Welcome back,<br>'+wbEsc(fn)+'!'):'Welcome back!';}
   var m=document.getElementById('wbMsg2');
   if(m){var last=parseInt(localStorage.getItem('ss_wb_msg')||'-1',10),i;
     do{i=Math.floor(Math.random()*WB_MSGS.length);}while(WB_MSGS.length>1&&i===last);
     try{localStorage.setItem('ss_wb_msg',String(i));}catch(e){}
     m.innerHTML=WB_MSGS[i];}
-  // Portrait hero: name her real archetype (graceful fallback if none)
-  var an=document.getElementById('wbArchName'),asub=document.getElementById('wbArchSub');
-  if(an){
-    var arch=(typeof topArchNames!=='undefined'&&topArchNames&&topArchNames[0])||'';
-    if(arch){an.textContent=arch;if(asub)asub.textContent='See your full Style Portrait';}
-    else{an.textContent='Reveal your Style Portrait';if(asub)asub.textContent='Take the quiz to discover your style';}
-  }
+  // Portrait hub: "<Name>'s Style" + her personal motto (graceful fallback if none)
+  var pt=document.getElementById('wbPortTitle'),pm=document.getElementById('wbPortMotto');
+  if(pt){var fn=wbFirstName();pt.textContent=fn?(fn+'’s Style'):'Your Style';}
+  if(pm){var mo=wbMotto();
+    if(mo){pm.innerHTML='“'+wbEsc(mo)+'”';pm.style.display='';}
+    else{pm.style.display='none';}}
   refreshWbBadges();
 }
 // Near-real-time refresh so a new reply/drop appears without a manual reload.
