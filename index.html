@@ -98,9 +98,12 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
   box-shadow:0 6px 44px rgba(0,0,0,.14),inset 0 0 0 2px rgba(201,161,78,.6)}
 /* Style Star Edit: bold two-band frame, gold + silver the same thickness (8px each) */
-.ss.dream-mirror,.ss.shop-mirror{position:relative;border-radius:0;border:8px solid transparent;
+.ss.dream-mirror,.ss.shop-mirror,.ss.story-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#F3E6B8 0%,#DFB94E 32%,#B8891F 62%,#E8CE7E 100%) border-box;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
+/* My Story: a small pink heart by the signature (this page is Catherine herself) */
+.story-sig .ph{font-size:0.62em;vertical-align:0.12em;margin-left:2px}
+#s-story .top-back-wrap{position:absolute;top:6px;right:10px;margin:0;z-index:20}
 /* Shop your style: its own DM-Serif title (twin to the Edit) */
 #s-shopstyle .ss-shop-logo{font:400 30px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.7px #1a1a1a;display:inline-block;position:relative;padding-bottom:11px;margin:6px 0 2px;letter-spacing:.01em}
 #s-shopstyle .ss-shop-logo::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3px;background:#E0B84C}
@@ -1754,7 +1757,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="scr" id="s-story">
   <div class="story-wrap">
-    <div style="text-align:right;margin-bottom:2px"><button onclick="closeStory()" style="background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#777;cursor:pointer;padding:4px 2px">&larr; Back</button></div>
+    <div class="top-back-wrap"><button class="top-back" onclick="closeStory()">&larr; Back</button></div>
     <div class="story-title">My Story</div>
     <div class="story-text">
       I'm Catherine, a personal stylist and certified image consultant with over 20 years of styling experience and a lifetime love of shopping. Let's just say I've been shopping since before I could walk. Some of my earliest happy memories are exploring department stores with my mom and playing dress-up with my friends.
@@ -1783,7 +1786,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="story-text" style="text-align:center;color:#777;margin-top:0.5rem">
       I'm so glad you're here. ⭐
     </div>
-    <div class="story-sig">With love, Catherine</div>
+    <div class="story-sig">With love, Catherine <span class="ph">&#128151;</span></div>
     <button class="btn-outline" onclick="closeStory()" style="max-width:260px;margin:1rem auto 0;display:block" id="storyBtn">Back</button>
     <div id="storyQuiz" style="display:none;margin-top:14px"><span style="font-size:14.5px;color:#777">Ready to discover your style? </span><span onclick="storyStartQuiz()" style="font-size:14.5px;color:#B08830;font-weight:600;text-decoration:underline;cursor:pointer">Take the quiz &rarr;</span></div>
   </div>
@@ -2153,6 +2156,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('chat-mirror',id==='s-chat');
   // And around the boutique Style Star Edit.
   if(card)card.classList.toggle('dream-mirror',id==='s-dream');
+  // Same gold+silver display-case frame around Catherine's My Story page.
+  if(card)card.classList.toggle('story-mirror',id==='s-story');
   // Same gold+silver display-case frame around the clean Shop your style page.
   if(card)card.classList.toggle('shop-mirror',id==='s-shopstyle');
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
