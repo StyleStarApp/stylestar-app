@@ -369,6 +369,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .dc-logo{font:400 30px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.7px #1a1a1a;display:inline-block;position:relative;padding-bottom:11px;margin:8px 0 0;letter-spacing:.01em}
 .dc-logo::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3px;background:#E0B84C}
 .dc-logo::before{content:"";position:absolute;bottom:0.5px;left:67%;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
+/* Style Star Edit: a little jewel star (gold with silver outline) pinned to the top-left corner */
+.dc-corner-star{position:absolute;top:6px;left:8px;width:44px;height:44px;transform:rotate(-16deg);z-index:20;filter:drop-shadow(0 2px 3px rgba(120,90,20,.28))}
 /* a touch of the entry button's turquoise, and the "not AI" promise */
 .dc-tagline{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
 .dc-tagline::before,.dc-tagline::after{content:"\2605";font-size:14px;color:#0FA6B6}
@@ -1846,6 +1848,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="scr" id="s-dream">
   <div class="dc-wrap">
+    <svg class="dc-corner-star" viewBox="0 0 24 24"><defs><radialGradient id="editStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#editStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
     <div class="top-back-wrap"><button class="top-back" onclick="closeDream()">&larr; Back</button></div>
     <div class="dc-logo">style Star Edit</div>
     <div class="dc-tagline">Curated by Catherine</div>
