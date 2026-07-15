@@ -661,13 +661,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* the star pendant hangs in front of the greeting mirror; it is the reveal-star merge target.
    Lifted up so the chrome bracket posts meet the gold rail (no dark gap). */
 #s-wb .wb-pend{position:relative;width:100%;height:34px;z-index:6;margin-top:-17px}
-#s-wb .hm-star-inner{transform:scale(1.4);transform-origin:top center}
-/* Lighter star shadow on Welcome Back (the 1.4x scale was amplifying it) */
-#s-wb .hm-star-inner>svg{filter:drop-shadow(0 2px 6px rgba(200,151,30,.20)) drop-shadow(0 4px 5px rgba(28,20,6,.10))}
+/* the whole pendant is one SVG (hook + ring + star + logo), so the parts stay locked together.
+   The hanger hook curves around the top of the gold rail. */
+#s-wb .wb-pendsvg{position:absolute;top:-13px;left:50%;transform:translateX(-50%);z-index:6;filter:drop-shadow(0 3px 6px rgba(200,151,30,.16)) drop-shadow(0 5px 5px rgba(28,20,6,.12))}
 /* silver mirror frames (greeting on top, actions below) */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #D8DDE2;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
-#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-24px;padding:92px 30px 22px;
+#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-24px;padding:120px 30px 22px;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
 #s-wb .wb-acts{border:none;margin-top:0;padding:0;background:none;box-shadow:none}
 #s-wb .wb-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
@@ -756,15 +756,24 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .hub-shop{margin:16px 2px 12px}
 #s-wb .hub-style{margin:0 2px 10px}
 #s-wb .hub-card .wb-item{margin:0}
-#s-wb .awn-rod{display:none}
-#s-wb .awn-face{height:33px;margin:0 -14px;
+/* thin gold trim line along the straight TOP of the awning */
+#s-wb .awn-rod{display:block;height:1.5px;margin:0 -14px;background:linear-gradient(180deg,#EAD08A,#C99A2C)}
+#s-wb .awn-face{position:relative;height:46px;margin:0 -14px;
   background:
-    repeating-linear-gradient(90deg,rgba(0,0,0,.26) 0,rgba(0,0,0,0) 5px,rgba(255,255,255,.22) 11.5px,rgba(0,0,0,0) 18px,rgba(0,0,0,.26) 23px),
-    linear-gradient(180deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 30%,rgba(0,0,0,.14) 100%),
-    repeating-linear-gradient(90deg,#15151a 0 23px,#FCFCFA 23px 46px);
-  -webkit-mask:radial-gradient(11.5px at 11.5px 0,#000 98%,#0000) 0 100%/23px 15px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 15px) no-repeat;
-          mask:radial-gradient(11.5px at 11.5px 0,#000 98%,#0000) 0 100%/23px 15px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 15px) no-repeat}
-#s-wb .awn-trim{display:block;height:2px;margin:5px -14px 6px;background:linear-gradient(180deg,#EAD08A,#C99A2C)}
+    /* gold trim hugging the very bottom — the scallop mask makes it follow the hem's curve */
+    linear-gradient(180deg,rgba(0,0,0,0) calc(100% - 2.5px),#EBC65E calc(100% - 2.5px),#C99A2C 100%),
+    /* whisper-thin HORIZONTAL crease — the fold where the awning bends out, centred on the canopy */
+    linear-gradient(180deg,rgba(0,0,0,0) 0 20px,rgba(255,255,255,.09) 20.5px,rgba(0,0,0,.12) 21.8px,rgba(0,0,0,0) 23px 100%),
+    /* canopy juts out: catches light along the top, deepens into shadow toward the projecting hem */
+    linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.05) 16%,rgba(0,0,0,0) 42%,rgba(0,0,0,.26) 100%),
+    /* bold alternating stripes */
+    repeating-linear-gradient(90deg,#17171c 0 26px,#FBFBF9 26px 52px);
+  /* gentle rounded scallops along the hem */
+  -webkit-mask:radial-gradient(13px 4px at 13px 0,#000 97%,#0000) bottom left/26px 4px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 4px) no-repeat;
+          mask:radial-gradient(13px 4px at 13px 0,#000 97%,#0000) bottom left/26px 4px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 4px) no-repeat;
+  /* the whole canopy projects out and casts a soft shadow on the card below */
+  filter:drop-shadow(0 5px 4px rgba(0,0,0,.26))}
+#s-wb .awn-trim{display:none}
 #s-wb .awn-val{display:none}
 #s-wb .mbar{margin:0 -14px 6px;padding:9px 18px 10px;border:8px solid #D8DDE2;border-top:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:0 6px 12px -8px rgba(0,0,0,.4),inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
 #s-wb .mbar-row{display:flex;justify-content:space-between;align-items:center}
@@ -1220,19 +1229,28 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
   <div class="hm-room">
     <!-- Hanging rod + S-hook + crowning star. The star is the reveal's flying-star merge target. -->
     <div class="wb-pend">
-      <!-- S-hook hangs the star directly from the gold rail (no chrome rack rod) -->
-      <!-- One connected piece: S-hook over the rail + two jewel loops (hook threads the TOP loop; star hangs from the BOTTOM loop) -->
-      <svg width="26" height="44" viewBox="0 0 26 44" style="position:absolute;top:-3px;left:50%;transform:translateX(-50%);z-index:6" fill="none">
-        <path d="M13 4.5 C7.5 4.5 7.5 13.5 13 13.5 C18.5 13.5 18.5 21 13 21" stroke="#5A6067" stroke-width="1.2" stroke-linecap="round"/>
-        <ellipse cx="13" cy="23" rx="3.1" ry="3.4" stroke="#C8971E" stroke-width="1.1"/>
-        <ellipse cx="13" cy="29.2" rx="3.1" ry="3.4" stroke="#C8971E" stroke-width="1.1"/>
+      <!-- ONE connected pendant: chrome S-hook grips the gold rail, threads the top jewel ring,
+           the two rings hold the star's jump-ring, and the star hangs snug beneath. All drawn in a
+           single SVG coordinate space so the pieces can never drift apart. Rail sits at ~y16-22. -->
+      <svg class="wb-pendsvg" width="120" height="154" viewBox="0 0 120 154" fill="none">
+        <defs>
+          <linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient>
+          <linearGradient id="wbHookWire" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8A9097"/><stop offset=".5" stop-color="#C9CED3"/><stop offset="1" stop-color="#6A7077"/></linearGradient>
+        </defs>
+        <!-- a simple S-hook, tilted to the right as if hanging on the rail: top curl laps over the gold
+             rail, bottom curl cradles the jewel ring (rotated around the ring so the star hangs plumb) -->
+        <!-- a simple S-hook: top curl sits over the gold rail, bottom curl passes through the loop -->
+        <g transform="rotate(10 60 34)">
+          <path d="M60 15 C52.5 15 52.5 24 60 24 C68 24 68 34.5 60 36" stroke="url(#wbHookWire)" stroke-width="1.6" stroke-linecap="round"/>
+        </g>
+        <!-- ONE jewel ring; the S passes through it and the star hangs directly below -->
+        <ellipse cx="60" cy="34" rx="2.7" ry="3.4" stroke="#C8971E" stroke-width="1.2"/>
+        <!-- the star, hung directly below the ring -->
+        <g transform="translate(0 34) scale(5)">
+          <path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.55" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/>
+        </g>
+        <image href="logo-star.png" x="38" y="66" width="44" height="38" preserveAspectRatio="xMidYMid meet"/>
       </svg>
-      <div style="position:absolute;top:24px;left:50%;width:150px;margin-left:-75px;z-index:3;transform:scale(0.72);transform-origin:top center">
-        <div class="hm-star-inner" style="position:relative;width:124px;height:124px;margin:0 auto;display:flex;align-items:center;justify-content:center">
-          <svg width="124" height="124" viewBox="0 0 24 24" style="position:absolute"><defs><linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.55" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/></svg>
-          <img src="logo-star.png" alt="Style Star">
-        </div>
-      </div>
     </div>
   <div class="wbx">
     <!-- Greeting "lit vanity" mirror -->
@@ -4438,7 +4456,7 @@ function maybePlayEntrance(){
   requestAnimationFrame(function(){
     // Aim the two flying door-stars + the burst at the real logo so they merge
     // dead-centre on it, whatever the screen size.
-    var logo=scr.querySelector('.hm-star-inner img')||scr.querySelector('.hm-star-inner');
+    var logo=scr.querySelector('.hm-star-inner img')||scr.querySelector('.hm-star-inner')||scr.querySelector('.wb-pendsvg image')||scr.querySelector('.wb-pendsvg');
     var flyL=document.getElementById('ssFlyL'),flyR=document.getElementById('ssFlyR'),burst=document.getElementById('ssBurst');
     if(logo&&flyL&&flyR&&burst){
       var r=logo.getBoundingClientRect();
