@@ -667,7 +667,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* silver mirror frames (greeting on top, actions below) */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #D8DDE2;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
-#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-14px;padding:96px 30px 22px;
+#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-24px;padding:92px 30px 22px;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
 #s-wb .wb-acts{border:none;margin-top:0;padding:0;background:none;box-shadow:none}
 #s-wb .wb-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
@@ -731,7 +731,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-port-title{font-family:'DM Serif Display',Georgia,serif;font-size:26px;color:#221e18;line-height:1.05;margin-bottom:9px}
 #s-wb .wb-port-motto{font-family:'Lora',serif;font-style:italic;font-size:15.5px;color:#463c2e;line-height:1.42;max-width:270px;margin:0 auto 11px}
 #s-wb .wb-port-motto.wb-tagline{font-family:'DM Sans',sans-serif;font-style:normal;font-size:14px;color:#5a5044}
-#s-wb .wb-port-cta{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#1a1a1a;letter-spacing:.01em;display:flex;justify-content:center;align-items:center;gap:5px;padding-left:22px}
+#s-wb .wb-port-cta{font-family:'Jost',sans-serif;font-size:16px;font-weight:600;color:#1a1a1a;letter-spacing:.01em;display:flex;justify-content:center;align-items:center;gap:5px;padding-left:20px;white-space:nowrap}
 #s-wb .wb-port-cta span{text-decoration:underline;text-underline-offset:3px}
 #s-wb .wb-port-cta svg{width:17px;height:17px;stroke:#1a1a1a}
 #s-wb .wb-portrait.wb-tapped{transform:scale(.985);transition:transform .08s}
@@ -756,10 +756,16 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .hub-shop{margin:16px 2px 12px}
 #s-wb .hub-style{margin:0 2px 10px}
 #s-wb .hub-card .wb-item{margin:0}
-#s-wb .awn-rod{height:5px;margin:0 -14px;background:linear-gradient(180deg,#eee,#8a8a8a)}
-#s-wb .awn-face{height:18px;margin:0 -14px;background:linear-gradient(180deg,rgba(255,255,255,.20),rgba(0,0,0,.10)),repeating-linear-gradient(90deg,#22222a 0 21px,#F6F3EC 21px 42px)}
-#s-wb .awn-trim{display:none}
-#s-wb .awn-val{height:17px;margin:0 -14px 4px;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(0,0,0,.16)),repeating-linear-gradient(90deg,#22222a 0 21px,#F6F3EC 21px 42px);box-shadow:0 2px 4px -2px rgba(0,0,0,.4)}
+#s-wb .awn-rod{display:none}
+#s-wb .awn-face{height:33px;margin:0 -14px;
+  background:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.26) 0,rgba(0,0,0,0) 5px,rgba(255,255,255,.22) 11.5px,rgba(0,0,0,0) 18px,rgba(0,0,0,.26) 23px),
+    linear-gradient(180deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 30%,rgba(0,0,0,.14) 100%),
+    repeating-linear-gradient(90deg,#15151a 0 23px,#FCFCFA 23px 46px);
+  -webkit-mask:radial-gradient(11.5px at 11.5px 0,#000 98%,#0000) 0 100%/23px 15px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 15px) no-repeat;
+          mask:radial-gradient(11.5px at 11.5px 0,#000 98%,#0000) 0 100%/23px 15px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 15px) no-repeat}
+#s-wb .awn-trim{display:block;height:2px;margin:5px -14px 6px;background:linear-gradient(180deg,#EAD08A,#C99A2C)}
+#s-wb .awn-val{display:none}
 #s-wb .mbar{margin:0 -14px 6px;padding:9px 18px 10px;border:8px solid #D8DDE2;border-top:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:0 6px 12px -8px rgba(0,0,0,.4),inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
 #s-wb .mbar-row{display:flex;justify-content:space-between;align-items:center}
 #s-wb .mbulb{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 7px 2px rgba(244,214,120,.72),0 0 3px rgba(255,238,180,.9),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45)}
@@ -1215,10 +1221,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <!-- Hanging rod + S-hook + crowning star. The star is the reveal's flying-star merge target. -->
     <div class="wb-pend">
       <!-- S-hook hangs the star directly from the gold rail (no chrome rack rod) -->
-      <svg width="24" height="28" viewBox="0 0 24 22" style="position:absolute;top:-4px;left:50%;transform:translateX(-50%);z-index:6"><path d="M12 2.5 C4.3 2.5 4.3 12 12 12 C18 12 18 19.5 12 19.5" fill="none" stroke="#565C62" stroke-width="2" stroke-linecap="round"/></svg>
-      <div style="position:absolute;top:13px;left:50%;width:150px;margin-left:-75px;z-index:3;transform:scale(0.72);transform-origin:top center">
-        <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
-        <div class="hm-star-inner" style="position:relative;width:124px;height:124px;margin:-9px auto 0;display:flex;align-items:center;justify-content:center">
+      <!-- One connected piece: S-hook over the rail + two jewel loops (hook threads the TOP loop; star hangs from the BOTTOM loop) -->
+      <svg width="26" height="44" viewBox="0 0 26 44" style="position:absolute;top:-3px;left:50%;transform:translateX(-50%);z-index:6" fill="none">
+        <path d="M13 4.5 C7.5 4.5 7.5 13.5 13 13.5 C18.5 13.5 18.5 21 13 21" stroke="#5A6067" stroke-width="1.2" stroke-linecap="round"/>
+        <ellipse cx="13" cy="23" rx="3.1" ry="3.4" stroke="#C8971E" stroke-width="1.1"/>
+        <ellipse cx="13" cy="29.2" rx="3.1" ry="3.4" stroke="#C8971E" stroke-width="1.1"/>
+      </svg>
+      <div style="position:absolute;top:24px;left:50%;width:150px;margin-left:-75px;z-index:3;transform:scale(0.72);transform-origin:top center">
+        <div class="hm-star-inner" style="position:relative;width:124px;height:124px;margin:0 auto;display:flex;align-items:center;justify-content:center">
           <svg width="124" height="124" viewBox="0 0 24 24" style="position:absolute"><defs><linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.55" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/></svg>
           <img src="logo-star.png" alt="Style Star">
         </div>
