@@ -704,7 +704,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-hub{text-align:center;margin:24px 0 13px}
 #s-wb .wb-hub:first-child{margin-top:4px}
 #s-wb .wb-hub-t{position:relative;display:inline-block;font-family:'DM Serif Display',Georgia,serif;font-size:19px;color:#221e18;line-height:1;padding:7px 26px;border:2px solid transparent;border-radius:2px;background:linear-gradient(#FCFBF9,#FCFBF9) padding-box,linear-gradient(180deg,#EEF1F4,#B4BBC2 55%,#DDE1E4) border-box;box-shadow:0 2px 7px -4px rgba(20,16,8,.28)}
-#s-wb .wb-hub-t.pearly{border:none;padding:9px 32px;background:linear-gradient(150deg,#efe7d4,#e3d7bd);box-shadow:0 4px 13px -7px rgba(120,90,20,.45)}
+#s-wb .wb-portrait-frame{position:relative;margin:9px 0 10px;padding:14px 16px 13px;border-radius:2px;background:linear-gradient(150deg,#efe7d4,#e3d7bd);box-shadow:0 8px 18px -11px rgba(120,90,20,.5)}
+#s-wb .wb-portrait-frame .wb-item{margin:0}
+#s-wb .wb-pf-label{position:relative;text-align:center;font-family:'DM Serif Display',Georgia,serif;font-size:19px;color:#221e18;line-height:1;margin-bottom:11px}
 #s-wb .wb-hub-studs{position:absolute;inset:0;pointer-events:none;border-radius:2px;background:radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) center top/13px 8px repeat-x,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) center bottom/13px 8px repeat-x,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) left center/8px 13px repeat-y,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) right center/8px 13px repeat-y}
 #s-wb .wb-hub-lbl{position:relative}
 #s-wb .wb-chip>.jewel{position:absolute;inset:0;border-radius:9px;background:linear-gradient(158deg,rgba(255,255,255,.5),rgba(255,255,255,0) 46%);pointer-events:none}
@@ -4174,9 +4176,15 @@ function _buildWbHubs(){
   var ps=items[4].querySelector('.wb-sub'); if(ps)ps.id='wbArchSub';
   items.forEach(jewel);
   list.innerHTML='';
-  list.appendChild(hdr('Your Style Portrait',true)); list.appendChild(items[4]);
-  list.appendChild(hdr('Shop')); list.appendChild(items[0]); list.appendChild(items[3]); list.appendChild(items[6]);
-  list.appendChild(hdr('Your Styling')); list.appendChild(items[1]); list.appendChild(items[2]); list.appendChild(items[5]);
+  var pf=document.createElement('div');pf.className='wb-portrait-frame';
+  var pst=document.createElement('span');pst.className='wb-hub-studs';pf.appendChild(pst);
+  var plbl=document.createElement('div');plbl.className='wb-pf-label';plbl.textContent='Your Style Portrait';pf.appendChild(plbl);
+  pf.appendChild(items[4]);
+  // Portrait is its OWN full-width pearly frame, separate from the chrome actions mirror below.
+  var acts=document.querySelector('#s-wb .wb-acts');
+  if(acts&&acts.parentNode)acts.parentNode.insertBefore(pf,acts); else list.appendChild(pf);
+  list.appendChild(hdr('Shopping')); list.appendChild(items[0]); list.appendChild(items[3]); list.appendChild(items[6]);
+  list.appendChild(hdr('Styling')); list.appendChild(items[1]); list.appendChild(items[2]); list.appendChild(items[5]);
   list.dataset.hubs='1';
 }
 function updateWbScreen(){
