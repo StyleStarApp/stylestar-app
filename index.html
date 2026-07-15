@@ -103,6 +103,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
 /* My Story: a small pink heart by the signature (this page is Catherine herself) */
 .story-sig .ph,.dc-sign .ph{font-size:0.62em;vertical-align:0.12em;margin-left:2px}
+.pinkheart{fill:#F49AC1;vertical-align:middle;display:inline-block;transform:rotate(-12deg)}
 #s-story .top-back-wrap{position:absolute;top:5px;right:8px;margin:0;z-index:20}
 /* Shop your style: its own DM-Serif title (twin to the Edit) */
 #s-shopstyle .ss-shop-logo{font:400 30px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.7px #1a1a1a;display:inline-block;position:relative;padding-bottom:11px;margin:6px 0 2px;letter-spacing:.01em}
@@ -1334,7 +1335,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <a class="hm-cta" data-press onclick="startQ()"><svg class="hm-cta-seal" viewBox="0 0 24 24"><defs><radialGradient id="hmSeal" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#hmSeal)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span class="hm-cta-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M1 7h14M19 7h4M1 17h7M12 17h11"/><circle cx="17" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span><span class="hm-cta-body"><span class="lbl">Start my style quiz</span><svg class="hm-cta-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></a>
 
     <div class="hm-founder">
-      <p>Hi, I'm <span class="fnm" onclick="showStory()">Catherine</span>. I've styled women for over 20 years. I created this with love &amp; intention.&nbsp;<span class="fheart">&#129655;</span></p>
+      <p>Hi, I'm <span class="fnm" onclick="showStory()">Catherine</span>. I've styled women for over 20 years. I created this with love &amp; intention&nbsp;<svg class="pinkheart" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M12 20.3l-1.45-1.32C5.4 14.24 2 11.16 2 7.4 2 4.42 4.42 2 7.4 2c1.68 0 3.3.78 4.6 2.02C13.3 2.78 14.92 2 16.6 2 19.58 2 22 4.42 22 7.4c0 3.76-3.4 6.84-8.55 11.59L12 20.3z"/></svg></p>
     </div>
 
     <div id="restoreSection">
@@ -1857,7 +1858,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="story-text" style="text-align:center;color:#777;margin-top:0.5rem">
       I'm so glad you're here. ⭐
     </div>
-    <div class="story-sig">With love, Catherine <span class="ph">&#129655;</span></div>
+    <div class="story-sig">With love, Catherine <svg class="pinkheart" style="width:18px;height:18px;margin-left:3px" viewBox="0 0 24 24"><path d="M12 20.3l-1.45-1.32C5.4 14.24 2 11.16 2 7.4 2 4.42 4.42 2 7.4 2c1.68 0 3.3.78 4.6 2.02C13.3 2.78 14.92 2 16.6 2 19.58 2 22 4.42 22 7.4c0 3.76-3.4 6.84-8.55 11.59L12 20.3z"/></svg></div>
     <button class="btn-outline" onclick="closeStory()" style="max-width:260px;margin:1rem auto 0;display:block" id="storyBtn">Back</button>
     <div id="storyQuiz" style="display:none;margin-top:14px"><span style="font-size:14.5px;color:#777">Ready to discover your style? </span><span onclick="storyStartQuiz()" style="font-size:14.5px;color:#B08830;font-weight:600;text-decoration:underline;cursor:pointer">Take the quiz &rarr;</span></div>
   </div>
@@ -1995,7 +1996,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <a class="dc-item-btn" href="https://a.co/d/04ATQcWA" target="_blank"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
-    <div class="dc-sign">With love, Catherine <span class="ph">&#129655;</span></div>
+    <div class="dc-sign">With love, Catherine <svg class="pinkheart" style="width:19px;height:19px;margin-left:3px" viewBox="0 0 24 24"><path d="M12 20.3l-1.45-1.32C5.4 14.24 2 11.16 2 7.4 2 4.42 4.42 2 7.4 2c1.68 0 3.3.78 4.6 2.02C13.3 2.78 14.92 2 16.6 2 19.58 2 22 4.42 22 7.4c0 3.76-3.4 6.84-8.55 11.59L12 20.3z"/></svg></div>
     <div class="dc-disclosure">Some items include affiliate links that support Style Star at no extra cost to you. Nothing in the Style Star Edit is chosen by AI. Every piece is personally selected by our founder because she truly loves it.</div>
 
     <button class="btn-outline" onclick="closeDream()" style="max-width:260px;margin:1rem auto 0;display:block" id="dreamBtn">Back</button>
