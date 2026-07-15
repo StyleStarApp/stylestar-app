@@ -98,7 +98,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
   box-shadow:0 6px 44px rgba(0,0,0,.14),inset 0 0 0 2px rgba(201,161,78,.6)}
 /* Style Star Edit: bold two-band frame, gold + silver the same thickness (8px each) */
-.ss.dream-mirror,.ss.shop-mirror,.ss.story-mirror,.ss.faq-mirror{position:relative;border-radius:0;border:8px solid transparent;
+.ss.dream-mirror,.ss.shop-mirror,.ss.story-mirror,.ss.faq-mirror,.ss.privacy-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#F3E6B8 0%,#DFB94E 32%,#B8891F 62%,#E8CE7E 100%) border-box;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
 /* My Story: a small pink heart by the signature (this page is Catherine herself) */
@@ -384,10 +384,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .story-sig{font-family:'Dancing Script',cursive;font-size:28px;color:#1a1a1a;font-weight:600;text-align:center;margin-top:0.7rem;line-height:1.2}
 .story-manifesto{font-size:18px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.6;margin-top:0.5rem}
 .story-heart{font-size:28px;text-align:center;margin:1rem 0}
-/* FAQ letterhead: small logo top-left, back top-right, title sized to one line */
-.faq-head{display:flex;align-items:center;justify-content:space-between;margin:2px 0 0.6rem}
-.faq-lh-logo{width:66px;height:auto;display:block}
-.faq-head .top-back{color:#666}
+/* Letterhead (FAQ + Privacy): small logo top-left, back top-right, title one line */
+.faq-head,.pp-head{display:flex;align-items:center;justify-content:space-between;margin:2px 0 0.6rem}
+.faq-lh-logo,.pp-lh-logo{width:66px;height:auto;display:block}
+.faq-head .top-back,.pp-head .top-back{position:absolute;top:6px;right:10px;color:#666;z-index:20}
 #s-faq .story-title{font-size:21px;text-wrap:balance;margin-bottom:1rem}
 .faq-list{text-align:left;margin-top:0.5rem}
 .faq-item{padding:14px 2px;border-bottom:1px solid #eee}
@@ -1991,8 +1991,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="scr" id="s-privacy">
   <div class="story-wrap">
-    <div style="text-align:right;margin-bottom:2px"><button onclick="closePrivacy()" style="background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#777;cursor:pointer;padding:4px 2px">&larr; Back</button></div>
-    <div style="font-family:'DM Serif Display',Georgia,serif;font-size:24px;font-weight:400;margin-bottom:1rem">Privacy Policy</div>
+    <div class="pp-head">
+      <img src="logo-star.png" alt="Style Star" class="pp-lh-logo">
+      <button class="top-back" onclick="closePrivacy()">&larr; Back</button>
+    </div>
+    <div class="story-title">Privacy Policy</div>
     <div style="font-size:14px;color:#555;line-height:1.8;text-align:left">
       <p style="margin-bottom:12px">Your privacy matters to us. This policy explains what information Style Star collects, how we use it, and your choices.</p>
       <p style="margin-bottom:12px"><strong>What we collect</strong></p>
@@ -2152,7 +2155,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -2168,6 +2171,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('story-mirror',id==='s-story');
   // And around the FAQ (letterhead header + display-case frame).
   if(card)card.classList.toggle('faq-mirror',id==='s-faq');
+  // And the Privacy Policy (same letterhead + display-case frame).
+  if(card)card.classList.toggle('privacy-mirror',id==='s-privacy');
   // Same gold+silver display-case frame around the clean Shop your style page.
   if(card)card.classList.toggle('shop-mirror',id==='s-shopstyle');
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
