@@ -3283,7 +3283,7 @@ async function _shopStyleGen(){
     if(bk)bk.style.display='';
   }
 }
-function shopStyleBack(){show(shopStyleFrom||'s-wb');}
+function shopStyleBack(){showBack(shopStyleFrom||'s-wb');}
 // "Not right now": land on the portrait's "What would you like to do?" menu, no reveal.
 function prefNotNow(){
   _resNoReveal=true;loadSaved();
@@ -4009,7 +4009,7 @@ function closeChat(){chatLookPhoto=null;showBack(chatPrevScreen)}
 // Done → land on the "What would you like to do?" menu; Back → top of the origin
 // (e.g. re-read the outfit analysis and scroll to the shopping links).
 function chatDone(){chatLookPhoto=null;showBack(chatPrevScreen)}
-function chatBack(){chatLookPhoto=null;show(chatPrevScreen)}
+function chatBack(){chatLookPhoto=null;showBack(chatPrevScreen)}
 
 function linkStores(text){
   const storeNames='Nordstrom|J\\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia';
