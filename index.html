@@ -820,6 +820,38 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo-res .ns-ar{flex:none;font-size:20px;color:#26221c;line-height:1}
 /* keep the one-line lead from overflowing on very small/old phones */
 @media (max-width:359px){#s-photo-res .ns-lead{font-size:16px}}
+/* ===== Outfit-results hubs as framed "rooms": lit vanity mirror (Styling), curtain square (Shopping), pearl mirror (Portrait). Light, not the black lacquer. ===== */
+#s-photo-res .p3-hubwrap{background:none;margin:14px 0 0;padding:0}
+#s-photo-res .retake-wrap{background:none;margin:0;padding:16px 0 4px}
+#s-photo-res .twoup{display:flex;gap:10px}
+#s-photo-res .tile2{flex:1 1 0;min-width:0;background:#fff;border:1px solid #D8C285;border-radius:2px;padding:15px 6px 14px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:9px;box-shadow:0 4px 9px -7px rgba(0,0,0,.4);-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
+#s-photo-res .tile2:active{transform:scale(.97);filter:brightness(.98)}
+#s-photo-res .tile2 .chip2{width:44px;height:44px;border-radius:10px;background:#F5EFE2;border:1px solid #D8C285;display:flex;align-items:center;justify-content:center}
+#s-photo-res .tile2 .chip2 svg{width:23px;height:23px;stroke:#26221c;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#s-photo-res .tile2 .t2t{font:600 14px/1.16 'Jost',sans-serif;color:#211E1A}
+#s-photo-res .hlbl{font:700 17px/1 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#1a1a1a;text-align:center;margin:0 0 13px}
+/* STYLING — lit vanity mirror, small bulbs all around */
+#s-photo-res .vhub{position:relative;margin:0 0 15px;padding:24px 20px 22px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55),inset 0 0 0 1px #8a9096,inset 0 0 0 3px rgba(255,255,255,.85),inset 0 0 0 12px #E6E9ED}
+#s-photo-res .vb{position:absolute;pointer-events:none}
+#s-photo-res .vb i{display:block;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 40%,#F3D262 70%,#D3B048);box-shadow:0 0 4px 1px rgba(244,214,120,.75)}
+#s-photo-res .vb.t{top:4px;left:16px;right:16px;display:flex;justify-content:space-between}
+#s-photo-res .vb.b{bottom:4px;left:16px;right:16px;display:flex;justify-content:space-between}
+#s-photo-res .vb.l{left:4px;top:22px;bottom:22px;display:flex;flex-direction:column;justify-content:space-between}
+#s-photo-res .vb.r{right:4px;top:22px;bottom:22px;display:flex;flex-direction:column;justify-content:space-between}
+/* SHOPPING — curtain-stripe frame, full square */
+#s-photo-res .chub{position:relative;margin:0 0 15px;padding:13px;background:repeating-linear-gradient(90deg,#17171c 0 20px,#f4efe5 20px 40px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.6)}
+#s-photo-res .chub-in{background:#FBFAF7;border-radius:1px;padding:16px 14px 15px}
+/* PORTRAIT — light pearl-framed mirror, all its own */
+#s-photo-res .phub2{position:relative;margin:0;padding:7px;border-radius:2px;background:linear-gradient(150deg,#f4ecd6,#e7d9b2 55%,#f4ecd6);box-shadow:0 12px 26px -14px rgba(0,0,0,.5)}
+#s-photo-res .phub2-studs{position:absolute;inset:0;border-radius:2px;pointer-events:none;background:radial-gradient(3.2px 3.2px at 46% 38%,#fff 0,#f4efe4 45%,#dcd2be 78%,transparent 88%) center top/14px 8px repeat-x,radial-gradient(3.2px 3.2px at 46% 38%,#fff 0,#f4efe4 45%,#dcd2be 78%,transparent 88%) center bottom/14px 8px repeat-x,radial-gradient(3.2px 3.2px at 46% 38%,#fff 0,#f4efe4 45%,#dcd2be 78%,transparent 88%) left center/8px 14px repeat-y,radial-gradient(3.2px 3.2px at 46% 38%,#fff 0,#f4efe4 45%,#dcd2be 78%,transparent 88%) right center/8px 14px repeat-y}
+#s-photo-res .phub2-in{position:relative;background:linear-gradient(158deg,#f1f3f5,#f8f9fa 45%,#edeff1);border-radius:1px;padding:19px 16px 18px;text-align:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
+#s-photo-res .phub2 .plbl{font:700 11px/1 'Jost',sans-serif;letter-spacing:.24em;color:#B8901F;text-transform:uppercase}
+#s-photo-res .phub2 .pbig{font:400 20px/1.15 'DM Serif Display',serif;color:#1c1a16;margin:8px 0 3px}
+#s-photo-res .phub2 .psub{font:400 13px/1.4 'Jost',sans-serif;color:#5b5349;margin-bottom:15px}
+#s-photo-res .phub2 .pgo{display:inline-flex;align-items:center;gap:9px;background:#F5EFE2;color:#241a05;font:700 12px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;border:1.5px solid #C9A24E;border-radius:2px;padding:12px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-photo-res .phub2 .pgo:active{filter:brightness(.97)}
+#s-photo-res .phub2 .pgo svg.pa{width:16px;height:16px;stroke:#241a05;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+#s-photo-res .phub2 .pgo svg.ps{width:15px;height:15px;fill:#DBB84E}
 /* tighten the WB Shopping->Styling gap to match See my Portrait (~16px) */
 #s-wb .hub-shop{margin-bottom:0}
 #s-wb .hub-style{margin-top:9px}
@@ -1767,37 +1799,44 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more in this style</b><small>I&rsquo;ll find pieces that vibe with the look you shared</small></span><span class="ns-ar">&rsaquo;</span></button>
       </div>
 
-      <!-- BEAT 2 — everything else, grouped into Shopping / Styling on black lacquer (matches WB + Style Portrait) -->
+      <!-- BEAT 2 — three framed "rooms": lit vanity mirror (Styling), curtain square (Shopping), pearl mirror (Portrait) -->
       <div class="p3-hubwrap">
-      <div class="hub-card hub-style">
-      <div class="mbar"><div class="mbar-row"><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span></div></div>
-      <div class="p3-hub">Styling</div>
-      <div class="act" data-shelf onclick="showPhoto()">
-        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+
+      <!-- STYLING — lit vanity mirror, bulbs all around -->
+      <div class="vhub">
+        <span class="vb t"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="vb b"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="vb l"><i></i><i></i><i></i><i></i></span>
+        <span class="vb r"><i></i><i></i><i></i><i></i></span>
+        <div class="hlbl">Styling</div>
+        <div class="twoup">
+          <div class="tile2" onclick="showPhoto()"><span class="chip2"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><span class="t2t">Analyze<br>an outfit</span></div>
+          <div class="tile2" onclick="openPrefs()"><span class="chip2"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M2 12L5.4 15.5L10.6 7"/><path d="M15 8L21.5 16M21.5 8L15 16"/></svg></span><span class="t2t">Refine<br>preferences</span></div>
+        </div>
       </div>
-      <div class="act" data-shelf onclick="openPrefs()">
-        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M2 12L5.4 15.5L10.6 7"/><path d="M15 8L21.5 16M21.5 8L15 16"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Add your sizes, colors and faves</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+
+      <!-- SHOPPING — curtain-draped square -->
+      <div class="chub">
+        <div class="chub-in">
+          <div class="hlbl">Shopping</div>
+          <div class="twoup">
+            <div class="tile2" onclick="showDream()"><span class="chip2"><svg viewBox="0 0 24 24"><path d="M2.8 8.8h18.4l-.8 9.5a1.3 1.3 0 0 1-1.3 1.2H4.9a1.3 1.3 0 0 1-1.3-1.2z"/><path d="M7.6 8.8V6.4a4.4 4.4 0 0 1 8.8 0v2.4"/><path d="M12 11.9 L12.75 13.9 L14.9 13.97 L13.18 15.25 L13.8 17.3 L12 16.05 L10.2 17.3 L10.82 15.25 L9.1 13.97 L11.25 13.9 Z" fill="#26221c" stroke="none"/></svg></span><span class="t2t">Style Star<br>Edit</span></div>
+            <div class="tile2" onclick="showShop()"><span class="chip2"><svg viewBox="0 0 24 24"><path d="M4.3 9.4l1.1-4.1h13.2l1.1 4.1"/><path d="M5.5 9.7V18.8h13V9.7"/><path d="M4.3 9.4a1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0"/><path d="M10.2 18.8v-4.1h3.6v4.1"/></svg></span><span class="t2t">Shop the<br>Mall</span></div>
+          </div>
+        </div>
       </div>
-      <!-- See my Style Portrait — quiz-takers only (gated in _photoSaveArea) -->
-      <div class="act" id="photoPortraitBtn" data-shelf onclick="loadSaved()" style="display:none">
-        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke="#26221c" stroke-width="1.6"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><path transform="translate(12 12) scale(0.5) translate(-12 -12)" fill="#26221c" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">See my Style Portrait</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Your signature style, from the quiz</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+
+      <!-- PORTRAIT — pearl-framed mirror, all its own (quiz-takers only, gated in _photoSaveArea) -->
+      <div class="phub2" id="photoPortraitHub" style="display:none">
+        <span class="phub2-studs"></span>
+        <div class="phub2-in">
+          <div class="plbl">Your Style Portrait</div>
+          <div class="pbig">The signature that&rsquo;s all you</div>
+          <div class="psub">Revisit your portrait from the quiz</div>
+          <button class="pgo" onclick="loadSaved()"><svg class="ps" viewBox="0 0 24 24"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7L12 18.4 5.7 21.2l1.7-7L2 9.5l7.1-.6z"/></svg>See my Style Portrait<svg class="pa" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
+        </div>
       </div>
-      </div>
-      <div class="hub-card hub-shop">
-      <div class="awn-rod"></div><div class="awn-face"></div>
-      <div class="p3-hub">Shopping</div>
-      <div class="act" data-shelf onclick="showDream()">
-        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><path d="M2.8 8.8h18.4l-.8 9.5a1.3 1.3 0 0 1-1.3 1.2H4.9a1.3 1.3 0 0 1-1.3-1.2z"/><path d="M7.6 8.8V6.4a4.4 4.4 0 0 1 8.8 0v2.4"/><path d="M12 11.9 L12.75 13.9 L14.9 13.97 L13.18 15.25 L13.8 17.3 L12 16.05 L10.2 17.3 L10.82 15.25 L9.1 13.97 L11.25 13.9 Z" fill="#26221c" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop Style Star Edit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
-      </div>
-      <div class="act" data-shelf onclick="showShop()">
-        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4.3 9.4l1.1-4.1h13.2l1.1 4.1"/><path d="M5.5 9.7V18.8h13V9.7"/><path d="M4.3 9.4a1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0"/><path d="M10.2 18.8v-4.1h3.6v4.1"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse curated stores</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
-      </div>
-      </div>
+
       </div>
       <!-- Inline "Shop your style" AI picks render here (shopMyStyle) -->
       <div class="shop-section" id="shopSectionPhoto" style="display:none">
@@ -2779,7 +2818,7 @@ function _photoSaveArea(on){
   // "Retake the Quiz" only makes sense if she's actually taken it.
   var rt=document.querySelector('#s-photo-res .retake-wrap');if(rt)rt.style.display=quizTaken?'':'none';
   // "See my Style Portrait" only exists for quiz-takers (needs a saved portrait).
-  var pp=document.getElementById('photoPortraitBtn');if(pp)pp.style.display=quizTaken?'':'none';
+  var pp=document.getElementById('photoPortraitHub');if(pp)pp.style.display=quizTaken?'':'none';
   if(on===false){['resKeepPhoto','resSaveBtnPhoto','photoQuizNudge'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display='none'});return}
   var showSave=quizTaken&&!emailDone;
   ['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display=showSave?'':'none'});
