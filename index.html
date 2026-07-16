@@ -419,6 +419,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .faq-steps li{margin:4px 0}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqall{border-radius:0}
+/* Outfit results: drop the app card's side margin so the full-bleed framed rooms reach the true screen edges */
+body.res-fb{padding-left:0;padding-right:0}
 #s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f7f6f2;background-image:linear-gradient(180deg,rgba(48,43,32,.08) 0,rgba(48,43,32,0) 30px),repeating-linear-gradient(90deg,#ecebe4 0px,#fbfbf8 21px,#ecebe4 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(184,172,150,.08) 100%)}
 #s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
@@ -844,8 +846,8 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo-res .vb.b{bottom:5px;left:22px;right:22px;display:flex;justify-content:space-between}
 #s-photo-res .vb.l{left:5px;top:28px;bottom:28px;display:flex;flex-direction:column;justify-content:space-between}
 #s-photo-res .vb.r{right:5px;top:28px;bottom:28px;display:flex;flex-direction:column;justify-content:space-between}
-/* SHOPPING — curtain square: solid black frame with VERTICAL drapery stripes down the sides; top & bottom capped solid (valance + hem) so there's no toothy edge */
-#s-photo-res .chub{position:relative;box-sizing:border-box;padding:22px 48px;border:8px solid #17171c;background:linear-gradient(#17171c,#17171c) top/100% 22px no-repeat,linear-gradient(#17171c,#17171c) bottom/100% 22px no-repeat,repeating-linear-gradient(90deg,#17171c 0 22px,#f4efe5 22px 44px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.6)}
+/* SHOPPING — curtain square: VERTICAL drapery stripes with a solid black frame that bleeds to the screen edges, plus a cream mat inside the frame */
+#s-photo-res .chub{position:relative;box-sizing:border-box;padding:28px;border:9px solid #17171c;background:repeating-linear-gradient(90deg,#17171c 0 22px,#f4efe5 22px 44px);border-radius:0;box-shadow:0 12px 26px -14px rgba(0,0,0,.6),inset 0 0 0 11px #FBFAF7}
 #s-photo-res .chub-in{flex:1;display:flex;flex-direction:column;justify-content:center;background:#FBFAF7;border-radius:1px;padding:22px 16px}
 /* PORTRAIT — light pearl square, frame thickness matches the vanity mirror */
 #s-photo-res .phub2{position:relative;padding:18px;border-radius:2px;background:linear-gradient(150deg,#f4ecd6,#e7d9b2 55%,#f4ecd6);box-shadow:0 12px 26px -14px rgba(0,0,0,.5)}
@@ -2386,6 +2388,8 @@ function show(id,skipHistory){
   // framed outfit-upload screen so their backgrounds match the squared
   // framed pages (no rounded corners).
   if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-shop');
+  // Outfit results: let the framed rooms bleed to the true screen edges (drop the card's side margin).
+  document.body.classList.toggle('res-fb',id==='s-photo-res');
   // Frame the whole app column in the chrome vanity mirror while she takes the quiz.
   if(card)card.classList.toggle('quiz-mirror',id==='s-quiz');
   // Same chrome frame around the stylist chat.
