@@ -606,7 +606,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .hm-body{font:400 13.5px/1.5 'Jost',sans-serif;color:#4a463e;margin:5px 4px 0;text-wrap:balance;animation:ssRise .6s ease .28s both}
 .hm-cta{position:relative;display:flex;align-items:center;gap:9px;width:calc(100% - 26px);margin:16px auto 0;border-radius:0;cursor:pointer;background:#FCFAF4;
   padding:13px 13px 13px 7px;box-shadow:0 0 0 5px #B4BAC0,0 0 0 10px #ECD070,0 12px 22px -12px rgba(70,72,80,.5);animation:ssRise .6s ease .32s both}
-.hm-cta .hm-cta-tile{flex:0 0 auto;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:#EACD68}
+.hm-cta .hm-cta-tile{flex:0 0 auto;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:#EACD68;border:1px solid #B7BCC2}
 .hm-cta .hm-cta-tile svg{width:23px;height:23px}
 .hm-cta .hm-cta-body{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:9px}
 .hm-cta .lbl{position:relative;font:700 13.5px/1 'Jost',sans-serif;letter-spacing:.015em;text-transform:uppercase;color:#241d0c;white-space:nowrap}
@@ -720,7 +720,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-retake{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:8px 15px 8px 8px;border-radius:0;border:none;
   background:#FCFAF4;
   font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;color:#241d0c;cursor:pointer}
-#s-wb .wb-retake .rt-tile{flex:0 0 auto;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68}
+#s-wb .wb-retake .rt-tile{flex:0 0 auto;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68;border:1px solid #B7BCC2}
 #s-wb .wb-retake .rt-tile svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round}
 #s-wb .wb-retake .rt-arr{flex:0 0 auto;width:16px;height:16px;stroke:#D2AF48;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 /* ===== Welcome Back — hub system (Portrait / Shop / Your Styling) ===== */
@@ -783,7 +783,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .mbar-row,#s-res .mbar-row{display:flex;justify-content:space-between;align-items:center}
 #s-wb .mbulb,#s-res .mbulb{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 7px 2px rgba(244,214,120,.72),0 0 3px rgba(255,238,180,.9),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45)}
 /* Match WB: hubs on a black-lacquer backdrop, WB label font (bigger), no flanks */
-#s-res .p3-hubwrap{background-color:#0c0c0e;margin:16px -18px;padding:8px 0 12px}
+#s-res .p3-hubwrap{background-color:#0c0c0e;margin:16px -18px 0;padding:8px 0 12px}
+/* carry the black lacquer down around the Retake button (footer stays on white) */
+#s-res .retake-wrap{background-color:#0c0c0e;margin:0 -18px;padding:16px 0 18px}
 #s-res .hub-shop{margin:0 2px 0}
 #s-res .hub-style{margin:16px 2px 0}
 #s-res .hub-card .p3-hub{display:block;text-align:center;margin:13px 0 11px;font-size:21px;letter-spacing:.2em;color:#151515}
@@ -1100,7 +1102,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .priv u{cursor:pointer}
 .res-screen .retake-wrap{text-align:center;margin-top:16px}
 .res-screen .retake{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:auto;padding:8px 15px 8px 8px;border:none;border-radius:0;background:#FCFAF4;box-shadow:0 0 0 3px #B4BAC0,0 0 0 6px #ECD070,0 8px 16px -10px rgba(70,72,80,.5);font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;color:#241d0c;cursor:pointer;text-decoration:none;margin:0}
-.res-screen .retake .rt-tile{flex:0 0 auto;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68}
+.res-screen .retake .rt-tile{flex:0 0 auto;width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#EACD68;border:1px solid #B7BCC2}
 .res-screen .retake .rt-tile svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .retake .rt-arr{flex:0 0 auto;width:16px;height:16px;stroke:#D2AF48;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 /* Gentle "tailor first?" prompt */
