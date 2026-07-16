@@ -104,6 +104,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* My Story: a small pink heart by the signature (this page is Catherine herself) */
 .story-sig .ph,.dc-sign .ph{font-size:0.62em;vertical-align:0.12em;margin-left:2px}
 .pinkheart{fill:#F49AC1;vertical-align:middle;display:inline-block;transform:rotate(12deg)}
+.sty-u{text-decoration:underline;text-decoration-color:#EC4899;text-decoration-thickness:1.5px;text-underline-offset:3px}
 #s-story .top-back-wrap{position:absolute;top:5px;right:8px;margin:0;z-index:20}
 /* Shop your style: its own DM-Serif title (twin to the Edit) */
 #s-shopstyle .ss-shop-logo{font:400 30px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.7px #1a1a1a;display:inline-block;position:relative;padding-bottom:11px;margin:6px 0 2px;letter-spacing:.01em}
@@ -416,18 +417,20 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 .faq-steps li{margin:4px 0}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqall{border-radius:0}
-#s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f9f6ee;background-image:linear-gradient(180deg,rgba(48,43,32,.10) 0,rgba(48,43,32,0) 30px),repeating-linear-gradient(90deg,#eee9df 0px,#fdfaf2 21px,#eee9df 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(184,172,150,.10) 100%)}
-#s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:10px;z-index:6;background:linear-gradient(180deg,#fbfcfd 0%,#cbd0d4 22%,#868d93 46%,#eef0f2 52%,#a1a7ad 62%,#5e646a 86%,#868c92 100%);box-shadow:0 5px 9px -3px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
+#s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f7f6f2;background-image:linear-gradient(180deg,rgba(48,43,32,.08) 0,rgba(48,43,32,0) 30px),repeating-linear-gradient(90deg,#ecebe4 0px,#fbfbf8 21px,#ecebe4 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(184,172,150,.08) 100%)}
+#s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
 #s-photo .ph-back{position:absolute;top:13px;right:6px;z-index:5;background:none;border:none;font:500 12.5px/1 'DM Sans',sans-serif;color:#666;cursor:pointer;padding:4px 2px;letter-spacing:.02em}
 #s-photo .ph-back:hover{color:#1a1a1a}
 /* Logo plaque hanging from the gold rod on two wires */
-#s-photo .ph-hang,#s-photo-load .ph-hang{position:relative;width:188px;margin:-24px auto 7px;padding-top:23px}
-#s-photo .ph-wires,#s-photo-load .ph-wires{position:absolute;top:0;left:0;width:188px;height:23px;overflow:visible}
+#s-photo .ph-hang,#s-photo-load .ph-hang{position:relative;width:auto;margin:12px auto 12px;padding-top:0}
+#s-photo .ph-hang::before,#s-photo-load .ph-hang::before{content:"";position:absolute;left:50%;bottom:100%;transform:translateX(-50%);width:1.8px;height:22px;background:linear-gradient(180deg,#B8891F 0,#EAC24E 50%,#C89A2C 100%)}
+#s-photo .ph-hang::after,#s-photo-load .ph-hang::after{content:"";position:absolute;left:50%;bottom:calc(100% - 3px);transform:translateX(-50%);width:6px;height:6px;border-radius:50%;border:1.5px solid #C89A2C;background:transparent;z-index:2}
+#s-photo .ph-wires,#s-photo-load .ph-wires{display:none}
 #s-photo .ph-wires line,#s-photo-load .ph-wires line{stroke:#8b9299;stroke-width:1.15}
 #s-photo .ph-wires circle,#s-photo-load .ph-wires circle{fill:none;stroke:#8b9299;stroke-width:1.3}
-#s-photo .ph-logo-frame,#s-photo-load .ph-logo-frame{width:188px;padding:3px 0;background:#fff;border:6px solid #1a1a1a;box-shadow:0 9px 17px -8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
-#s-photo .ph-logo-frame img,#s-photo-load .ph-logo-frame img{display:block;width:66px;height:auto}
+#s-photo .ph-logo-frame,#s-photo-load .ph-logo-frame{width:auto;padding:0;background:none;border:none;box-shadow:none;display:flex;align-items:center;justify-content:center}
+#s-photo .ph-logo-frame img,#s-photo-load .ph-logo-frame img{display:block;width:78px;height:auto}
 /* ===== "Analyzing your outfit" screen — the lit "dressing-room studio" (#s-photo-load) ===== */
 /* Analyzing screen shares the Studio background + gold rod + hanging logo of #s-photo */
 #s-photo-load.studio{margin:-0.5rem -1.75rem -1.5rem;padding:28px 18px 22px;min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:'Jost',sans-serif;
@@ -480,7 +483,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   .al-caps .b{animation:none;opacity:0}
   .al-dots i{animation:none;opacity:.7}
 }
-#s-photo .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px),#FBFAF7;border:12px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(224,27,27,.55);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
+#s-photo .photo-upload-area{width:100%;max-width:300px;aspect-ratio:3/4;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:0;background:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px),#FBFAF7;border:7px solid #1a1a1a;box-shadow:0 16px 32px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,154,52,.4);transition:transform .15s;user-select:none;-webkit-user-select:none;touch-action:auto}
 /* Before a photo loads the frame scrolls the page like everything else. Once a
    photo is loaded we allow vertical page scroll (pan-y) — a one-finger up/down
    drag scrolls to the Analyze button — while pinch (2-finger) zoom and the crop
@@ -490,8 +493,9 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem;cursor:pointer}
 #s-photo .photo-icon{font-size:40px}
 #s-photo .photo-cta{font:600 20px/1.2 'DM Serif Display',serif;color:#1a1a1a}
-#s-photo .photo-sub{font:italic 400 16.5px/1.35 'Lora',serif;color:#E01B1B}
-#s-photo .photo-hint{font:700 11.5px/1.5 'Jost',sans-serif;letter-spacing:.11em;text-transform:uppercase;color:#E01B1B;max-width:230px}
+#s-photo .photo-sub{font:italic 400 16.5px/1.35 'Lora',serif;color:#EC4899}
+#s-photo .photo-hint{font:700 11.5px/1.5 'Jost',sans-serif;letter-spacing:.11em;text-transform:uppercase;color:#8a8176;max-width:230px}
+#s-photo .photo-hint .ph-star{color:#C79A34}
 #s-photo .photo-preview{position:absolute;top:0;left:0;transform-origin:0 0;max-width:none;will-change:transform;pointer-events:none;-webkit-user-drag:none}
 /* In-frame crop / zoom editor */
 #s-photo .ph-edit{position:absolute;inset:0;pointer-events:none}
@@ -514,7 +518,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Optional "where are you headed?" occasion picker */
 #s-photo .occ-block{width:100%;max-width:300px;margin:9px auto 2px;text-align:center}
 #s-photo .occ-q{display:flex;align-items:baseline;justify-content:center;gap:9px;font:400 20px/1.2 'DM Serif Display',serif;color:#1a1a1a;margin-bottom:9px}
-#s-photo .occ-opt{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#E01B1B}
+#s-photo .occ-opt{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#9a938a}
 #s-photo .occ-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:318px;margin:0 auto}
 #s-photo .occ-chip{display:flex;align-items:center;justify-content:center;min-height:42px;border:1px solid #1a1a1a;background:#fff;color:#3a352c;font:600 13.5px/1.15 'Jost',sans-serif;padding:6px 6px;border-radius:0;cursor:pointer;transition:all .18s;text-align:center;white-space:nowrap}
 #s-photo .occ-chip.occ-skip-chip{white-space:normal;font-size:12.5px}
@@ -526,7 +530,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo #analyzeBtn:hover{filter:brightness(1.02)}
 #s-photo #analyzeBtn .ph-spacer{display:none}
 #s-photo #analyzeBtn .lbl{display:inline;font:700 19px/1 'Jost',sans-serif;letter-spacing:.01em;color:#1a1a1a;white-space:nowrap;vertical-align:middle}
-#s-photo #analyzeBtn .ph-arr{display:inline-block;width:26px;height:26px;margin-left:10px;vertical-align:middle;stroke:#E01B1B;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#s-photo #analyzeBtn .ph-arr{display:inline-block;width:26px;height:26px;margin-left:10px;vertical-align:middle;stroke:#C79A34;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 #s-photo .ph-foot{margin-top:12px;padding-top:11px;width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:11px;border-top:1px solid rgba(201,162,78,.3)}
 #s-photo .ph-foot .lnk{font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a453c;cursor:pointer}
 #s-photo .ph-foot .lnk:hover{color:#1a1a1a}
@@ -1047,10 +1051,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .p3-hub::before{background:linear-gradient(90deg,transparent,#cdbf92)}
 .res-screen .p3-hub::after{background:linear-gradient(90deg,#cdbf92,transparent)}
 /* Stand-out chat invite BUBBLE button, sitting above the photo (tail points down at it) */
-.res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
+.res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:repeating-linear-gradient(90deg,#ecebe4 0px,#fbfbf8 21px,#ecebe4 42px) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
 .res-screen .ask-bubble b{font-weight:700;color:#201E1A}
 .res-screen .ask-bubble .chip{margin-top:1px}
-.res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#eef0f1;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
+.res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#f2f1ea;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
 .res-screen .ask-bubble:active{transform:scale(.985);filter:brightness(.98)}
 /* Gentle one-time "stylist nudge" that pops above the Ask hero after the results settle */
 .res-screen .ask-nudge{position:relative;margin:0 8px 8px;background:#F2EFE8;border:1px solid rgba(201,162,78,.6);border-radius:14px;padding:11px 30px 11px 13px;display:none;gap:9px;align-items:flex-start;box-shadow:0 12px 22px -10px rgba(30,20,5,.5);opacity:0;transform:translateY(8px) scale(.7);transform-origin:50% 130%;pointer-events:none}
@@ -1300,7 +1304,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="wbChat()">
-          <div class="wb-row"><span class="wb-chip" style="background:#EC4899;box-shadow:0 3px 7px -3px #EC489999"><span class="wb-badge count" id="wbAskBadge">0</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span class="wb-lbl"><span class="tt"><b>Ask your stylist</b><svg class="wb-arr" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Expert guidance, anytime</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:#EC4899;box-shadow:0 3px 7px -3px #EC489999"><span class="wb-badge count" id="wbAskBadge">0</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span class="wb-lbl"><span class="tt"><b>Ask your <span class="sty-u">stylist</span></b><svg class="wb-arr" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Expert guidance, anytime</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="showDream()">
@@ -1530,7 +1534,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="openChat()">
-        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Expert guidance, anytime</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your <span class="sty-u">stylist</span></span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Expert guidance, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="openPrefs()">
@@ -1591,14 +1595,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <line x1="94" y1="4" x2="173" y2="23"/>
         <circle cx="94" cy="4" r="3.2"/>
       </svg>
-      <div class="ph-logo-frame"><img src="logo-tight.png" alt="Style Star"></div>
+      <div class="ph-logo-frame"><img src="logo-star.png" alt="Style Star"></div>
     </div>
     <div class="photo-upload-area" id="photoArea">
       <div class="photo-placeholder" id="photoPlaceholder" onclick="document.getElementById('photoIn').click()">
         <div class="photo-icon">📸</div>
         <div class="photo-cta">Tap to share your photo</div>
         <div class="photo-sub">I'll style it, just for you</div>
-        <div class="photo-hint">★ Full-length photo of just you works best</div>
+        <div class="photo-hint"><span class="ph-star">★</span> Full-length photo of just you works best</div>
       </div>
       <img id="photoPreview" class="photo-preview" style="display:none" alt="Your photo">
       <div class="ph-crop" id="phCrop">
@@ -1639,7 +1643,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <line x1="94" y1="4" x2="173" y2="22"></line>
         <circle cx="94" cy="4" r="3.2"></circle>
       </svg>
-      <div class="ph-logo-frame"><img src="logo-tight.png" alt="Style Star"></div>
+      <div class="ph-logo-frame"><img src="logo-star.png" alt="Style Star"></div>
     </div>
   </div>
 
@@ -1727,7 +1731,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <!-- PIECE 4: actions -->
     <div class="p3">
       <!-- BEAT 1 — a stand-out chat invite bubble, ABOVE the photo -->
-      <button class="ask-bubble" onclick="openChatAboutLook()"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="abx"><b>Have a question about your look?</b> I'm right here. Ask me anything.</span></button>
+      <button class="ask-bubble" onclick="openChatAboutLook()"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="abx"><b>Have a question about your look?</b> I'm here. Ask me anything<svg class="pinkheart" style="width:12px;height:12px;margin-left:2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span></button>
 
       <!-- BEAT 2 — your look: a keepsake recap she can tap to revisit or chat about -->
       <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><div class="lscap">The look you shared</div><span class="ls-occ" id="lookOcc"></span></div>
@@ -1749,7 +1753,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
       <!-- Familiar pink chat path (a second, recognizable route to the same look chat) -->
       <div class="act" data-shelf onclick="openChatAboutLook()">
-        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><svg class="ar" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Chat about your look, anytime</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your <span class="sty-u">stylist</span></span><svg class="ar" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Chat about your look, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showDream()">
@@ -1844,7 +1848,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="pref-done-sub" id="prefSavedSub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
       <button class="btn-pink" onclick="prefShopNow()" style="max-width:280px">Let's go shopping &rarr;</button>
       <div class="pref-done-acts">
-        <button class="pda" onclick="openChat()"><span class="pda-tile pda-pink-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span>Ask your stylist</span></button>
+        <button class="pda" onclick="openChat()"><span class="pda-tile pda-pink-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span>Ask your <span class="sty-u">stylist</span></span></button>
         <button class="pda" onclick="loadSaved()"><span class="pda-tile pda-dark-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#B8891F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="#B8891F" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><span>See my Style Portrait</span></button>
       </div>
       <button class="retake" onclick="prefNotNow()" style="margin-top:12px">Not right now</button>
