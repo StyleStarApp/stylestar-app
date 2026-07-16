@@ -765,13 +765,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-foot span.lnk{font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1c1a17}
 #s-wb .wb-foot span.star{color:#E6C24E;font-size:11px}
 /* --- Welcome Back v2: white hub cards on black lacquer, awning + vanity light bar --- */
-#s-wb .hub-card,#s-res .hub-card{position:relative;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border-radius:2px;padding:0 14px 14px;box-shadow:0 12px 26px -14px rgba(0,0,0,.7),inset 0 0 0 1.5px rgba(196,201,207,.95)}
-#s-wb .hub-shop,#s-res .hub-shop{margin:16px 2px 12px}
-#s-wb .hub-style,#s-res .hub-style{margin:16px 2px 10px}
+#s-wb .hub-card,#s-res .hub-card,#s-photo-res .hub-card{position:relative;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border-radius:2px;padding:0 14px 14px;box-shadow:0 12px 26px -14px rgba(0,0,0,.7),inset 0 0 0 1.5px rgba(196,201,207,.95)}
+#s-wb .hub-shop,#s-res .hub-shop,#s-photo-res .hub-shop{margin:16px 2px 12px}
+#s-wb .hub-style,#s-res .hub-style,#s-photo-res .hub-style{margin:16px 2px 10px}
 #s-wb .hub-card .wb-item{margin:0}
 /* thin gold trim line along the straight TOP of the awning */
-#s-wb .awn-rod,#s-res .awn-rod{display:block;height:1.5px;margin:0 -14px;background:linear-gradient(180deg,#EAD08A,#C99A2C)}
-#s-wb .awn-face,#s-res .awn-face{position:relative;height:34px;margin:0 -14px;
+#s-wb .awn-rod,#s-res .awn-rod,#s-photo-res .awn-rod{display:block;height:1.5px;margin:0 -14px;background:linear-gradient(180deg,#EAD08A,#C99A2C)}
+#s-wb .awn-face,#s-res .awn-face,#s-photo-res .awn-face{position:relative;height:34px;margin:0 -14px;
   background:
     /* gold trim hugging the very bottom — the scallop mask makes it follow the hem's curve */
     linear-gradient(180deg,rgba(0,0,0,0) calc(100% - 2.5px),#EBC65E calc(100% - 2.5px),#C99A2C 100%),
@@ -788,18 +788,38 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   filter:drop-shadow(0 5px 4px rgba(0,0,0,.26))}
 #s-wb .awn-trim{display:none}
 #s-wb .awn-val{display:none}
-#s-wb .mbar,#s-res .mbar{margin:0 -14px 6px;padding:9px 18px 10px;border:8px solid #D8DDE2;border-top:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:0 6px 12px -8px rgba(0,0,0,.4),inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
-#s-wb .mbar-row,#s-res .mbar-row{display:flex;justify-content:space-between;align-items:center}
-#s-wb .mbulb,#s-res .mbulb{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 7px 2px rgba(244,214,120,.72),0 0 3px rgba(255,238,180,.9),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45)}
+#s-wb .mbar,#s-res .mbar,#s-photo-res .mbar{margin:0 -14px 6px;padding:9px 18px 10px;border:8px solid #D8DDE2;border-top:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:0 6px 12px -8px rgba(0,0,0,.4),inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
+#s-wb .mbar-row,#s-res .mbar-row,#s-photo-res .mbar-row{display:flex;justify-content:space-between;align-items:center}
+#s-wb .mbulb,#s-res .mbulb,#s-photo-res .mbulb{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 7px 2px rgba(244,214,120,.72),0 0 3px rgba(255,238,180,.9),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45)}
 /* Match WB: hubs on a black-lacquer backdrop, WB label font (bigger), no flanks */
-#s-res .p3-hubwrap{background-color:#0c0c0e;margin:16px -18px 0;padding:8px 0 12px}
+#s-res .p3-hubwrap,#s-photo-res .p3-hubwrap{background-color:#0c0c0e;margin:16px -18px 0;padding:8px 0 12px}
 /* carry the black lacquer down around the Retake button (footer stays on white) */
-#s-res .retake-wrap{background-color:#0c0c0e;margin:0 -18px;padding:4px 0 16px}
-#s-res .hub-shop{margin:0 2px 0}
-#s-res .hub-style{margin:16px 2px 0}
-#s-res .hub-card .p3-hub{display:block;text-align:center;margin:13px 0 11px;font-size:21px;letter-spacing:.2em;color:#151515}
-#s-res .hub-card .p3-hub::before,#s-res .hub-card .p3-hub::after{display:none}
-#s-res .hub-card .act{margin-top:14px}
+#s-res .retake-wrap,#s-photo-res .retake-wrap{background-color:#0c0c0e;margin:0 -18px;padding:4px 0 16px}
+#s-res .hub-shop,#s-photo-res .hub-shop{margin:0 2px 0}
+#s-res .hub-style,#s-photo-res .hub-style{margin:16px 2px 0}
+/* Outfit results leads with Styling, so flip the hub top-gaps (Styling flush, Shopping gapped) */
+#s-photo-res .hub-style{margin:0 2px 0}
+#s-photo-res .hub-shop{margin:16px 2px 0}
+#s-res .hub-card .p3-hub,#s-photo-res .hub-card .p3-hub{display:block;text-align:center;margin:13px 0 11px;font-size:21px;letter-spacing:.2em;color:#151515}
+#s-res .hub-card .p3-hub::before,#s-res .hub-card .p3-hub::after,#s-photo-res .hub-card .p3-hub::before,#s-photo-res .hub-card .p3-hub::after{display:none}
+#s-res .hub-card .act,#s-photo-res .hub-card .act{margin-top:14px}
+/* Outfit results: two gentle "what's next" recommendations sitting above the hubs */
+#s-photo-res .nextstep{margin:2px 2px 4px;text-align:center}
+#s-photo-res .ns-lead{font:italic 500 15px/1.4 'Fraunces',serif;color:#5b5348;margin-bottom:11px}
+#s-photo-res .ns-btn{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 15px;border-radius:2px;cursor:pointer;background:#fff;margin-bottom:11px;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
+#s-photo-res .ns-btn:last-child{margin-bottom:0}
+#s-photo-res .ns-btn:active{transform:scale(.99);filter:brightness(.99)}
+#s-photo-res .ns-pink{border:1.5px solid #EC4899;box-shadow:0 9px 20px -11px rgba(236,72,153,.55)}
+#s-photo-res .ns-gold{border:1.5px solid #CBA24B;box-shadow:0 9px 20px -11px rgba(203,162,75,.5)}
+#s-photo-res .ns-ic{flex:none;width:47px;height:47px;border-radius:11px;display:flex;align-items:center;justify-content:center}
+#s-photo-res .ns-ic.pink{background:#EC4899}
+#s-photo-res .ns-ic.pink svg{width:25px;height:25px;fill:#fff}
+#s-photo-res .ns-ic.gold{background:linear-gradient(160deg,#F4DE93,#E2B94E)}
+#s-photo-res .ns-ic.gold svg{width:24px;height:24px;fill:none;stroke:#4a3a12;stroke-width:1.5}
+#s-photo-res .ns-tx{flex:1;min-width:0}
+#s-photo-res .ns-tx b{display:block;font:400 17px/1.15 'DM Serif Display',serif;color:#1a1a1a}
+#s-photo-res .ns-tx small{display:block;font:400 12.5px/1.35 'DM Sans',sans-serif;color:#6b6459;margin-top:4px}
+#s-photo-res .ns-ar{flex:none;font-size:21px;color:#c9a24a;line-height:1}
 /* tighten the WB Shopping->Styling gap to match See my Portrait (~16px) */
 #s-wb .hub-shop{margin-bottom:0}
 #s-wb .hub-style{margin-top:9px}
@@ -1125,9 +1145,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 @media (prefers-reduced-motion:reduce){.style-nudge .sn-card{animation:none}}
 .res-screen .foot{margin-top:16px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid #efece4}
 /* Style Portrait footer: full-width white band filling the bottom, matching WB */
-#s-res{padding-bottom:0}
-#s-res .p3{padding-bottom:0}
-#s-res .foot{width:100vw;margin:0 calc(50% - 50vw) -24px;padding:22px 12px 52px;background:#FBFAF7;border-top:1.5px solid rgba(196,201,207,.9)}
+#s-res,#s-photo-res{padding-bottom:0}
+#s-res .p3,#s-photo-res .p3{padding-bottom:0}
+#s-res .foot,#s-photo-res .foot{width:100vw;margin:0 calc(50% - 50vw) -24px;padding:22px 12px 52px;background:#FBFAF7;border-top:1.5px solid rgba(196,201,207,.9)}
 .res-screen .foot span.lnk{font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2A2724;cursor:pointer}
 .res-screen .foot .st{color:#E6C24E;font-size:12px;line-height:1}
 
@@ -1735,50 +1755,49 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
     </div>
 
-    <!-- PIECE 4: actions -->
+    <!-- PIECE 4: the "what next" area -->
     <div class="p3">
-      <!-- BEAT 1 — a stand-out chat invite bubble, ABOVE the photo -->
-      <button class="ask-bubble" onclick="openChatAboutLook()"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="abx"><b>Have a question about your look?</b> I'm here. Ask me anything<svg class="pinkheart" style="width:12px;height:12px;margin-left:2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span></button>
-
-      <!-- BEAT 2 — your look: a keepsake recap she can tap to revisit or chat about -->
+      <!-- BEAT 0 — her look: a keepsake recap she can tap to zoom or chat about -->
       <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><div class="lscap">The look you shared</div><span class="ls-occ" id="lookOcc"></span></div>
 
-    </div>
+      <!-- BEAT 1 — two gentle next steps: talk it through, or shop more in this style -->
+      <div class="nextstep" id="photoNextStep">
+        <div class="ns-lead">Not sure what&rsquo;s next? I&rsquo;ve got you <svg class="pinkheart" style="width:13px;height:13px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+        <button class="ns-btn ns-pink" onclick="openChatAboutLook()"><span class="ns-ic pink"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="ns-tx"><b>Ask me about this look</b><small>Shoes, layering, where to wear it &mdash; ask me anything</small></span><span class="ns-ar">&rsaquo;</span></button>
+        <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more pieces in this style</b><small>I&rsquo;ll find picks that go with the look you shared</small></span><span class="ns-ar">&rsaquo;</span></button>
+      </div>
 
-    <!-- PIECE 4b: the "what next" menu — its own frame -->
-    <div class="p3">
-      <!-- BEAT 3 — what next: a tidy menu -->
-      <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
-      <!-- Shop your style — broad picks that vibe with her (quiz profile, or her look) -->
-      <div class="act" data-shelf onclick="openShopStyle('look')">
-        <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round" style="width:23px;height:23px"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop your style</span><svg class="ar" style="color:#C89A2C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Personalized just for you</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
-      </div>
+      <!-- BEAT 2 — everything else, grouped into Shopping / Styling on black lacquer (matches WB + Style Portrait) -->
+      <div class="p3-hubwrap">
+      <div class="hub-card hub-style">
+      <div class="mbar"><div class="mbar-row"><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span></div></div>
+      <div class="p3-hub">Styling</div>
       <div class="act" data-shelf onclick="showPhoto()">
-        <div class="actrow"><span class="chip" style="background:#E01B1B;box-shadow:0 3px 7px -3px rgba(224,27,27,.6)"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><svg class="ar" style="color:#E01B1B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
-      <!-- Familiar pink chat path (a second, recognizable route to the same look chat) -->
-      <div class="act" data-shelf onclick="openChatAboutLook()">
-        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your <span class="sty-u">stylist</span></span><svg class="ar" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Chat about your look, anytime</div></div></div>
-        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
-      </div>
-      <div class="act" data-shelf onclick="showDream()">
-        <div class="actrow"><span class="chip" style="background:#0FA6B6;box-shadow:0 3px 7px -3px rgba(15,166,182,.6)"><svg viewBox="0 0 24 24"><path d="M2.8 8.8h18.4l-.8 9.5a1.3 1.3 0 0 1-1.3 1.2H4.9a1.3 1.3 0 0 1-1.3-1.2z"/><path d="M7.6 8.8V6.4a4.4 4.4 0 0 1 8.8 0v2.4"/><path d="M12 11.9 L12.75 13.9 L14.9 13.97 L13.18 15.25 L13.8 17.3 L12 16.05 L10.2 17.3 L10.82 15.25 L9.1 13.97 L11.25 13.9 Z" fill="#26221c" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop Style Star Edit</span><svg class="ar" style="color:#0FA6B6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
+      <div class="act" data-shelf onclick="openPrefs()">
+        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M2 12L5.4 15.5L10.6 7"/><path d="M15 8L21.5 16M21.5 8L15 16"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Add your sizes, colors and faves</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <!-- See my Style Portrait — quiz-takers only (gated in _photoSaveArea) -->
       <div class="act" id="photoPortraitBtn" data-shelf onclick="loadSaved()" style="display:none">
-        <div class="actrow"><span class="chip" style="background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:0 3px 7px -3px rgba(90,96,104,.55),inset 0 1px 0 rgba(255,255,255,.8)"><svg viewBox="0 0 24 24" style="stroke:#B8891F;fill:none;stroke-width:1.7"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="#B8891F" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">See my Style Portrait</span><svg class="ar" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Your signature style, from the quiz</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke="#26221c" stroke-width="1.6"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><path transform="translate(12 12) scale(0.5) translate(-12 -12)" fill="#26221c" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">See my Style Portrait</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Your signature style, from the quiz</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
-      <div class="act" data-shelf onclick="openPrefs()">
-        <div class="actrow"><span class="chip" style="background:#2E9E57;box-shadow:0 3px 7px -3px rgba(46,158,87,.6)"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M2 12L5.4 15.5L10.6 7"/><path d="M15 8L21.5 16M21.5 8L15 16"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#2E9E57" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Add your sizes, colors and faves</div></div></div>
+      </div>
+      <div class="hub-card hub-shop">
+      <div class="awn-rod"></div><div class="awn-face"></div>
+      <div class="p3-hub">Shopping</div>
+      <div class="act" data-shelf onclick="showDream()">
+        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><path d="M2.8 8.8h18.4l-.8 9.5a1.3 1.3 0 0 1-1.3 1.2H4.9a1.3 1.3 0 0 1-1.3-1.2z"/><path d="M7.6 8.8V6.4a4.4 4.4 0 0 1 8.8 0v2.4"/><path d="M12 11.9 L12.75 13.9 L14.9 13.97 L13.18 15.25 L13.8 17.3 L12 16.05 L10.2 17.3 L10.82 15.25 L9.1 13.97 L11.25 13.9 Z" fill="#26221c" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop Style Star Edit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Hand-picked pieces you'll love</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showShop()">
-        <div class="actrow"><span class="chip" style="background:linear-gradient(160deg,#E4D4B0,#CBB683);box-shadow:0 3px 7px -3px rgba(150,130,90,.55);overflow:hidden"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4.3 9.4l1.1-4.1h13.2l1.1 4.1"/><path d="M5.5 9.7V18.8h13V9.7"/><path d="M4.3 9.4a1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0"/><path d="M10.2 18.8v-4.1h3.6v4.1"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#4a463e" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse more curated stores</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4.3 9.4l1.1-4.1h13.2l1.1 4.1"/><path d="M5.5 9.7V18.8h13V9.7"/><path d="M4.3 9.4a1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0"/><path d="M10.2 18.8v-4.1h3.6v4.1"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse curated stores</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      </div>
       </div>
       <!-- Inline "Shop your style" AI picks render here (shopMyStyle) -->
       <div class="shop-section" id="shopSectionPhoto" style="display:none">
@@ -2751,7 +2770,7 @@ function _revealPhotoRes(){
 // Show/hide the finishing-touches + complete-the-look boards and the "what's working"
 // label together (all hidden when there's no full analysis to show — partial/error).
 function _photoBoards(on){
-  ['pTipsBoard','pShopBoard','pWorkLbl'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=on?'':'none'});
+  ['pTipsBoard','pShopBoard','pWorkLbl','photoNextStep'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=on?'':'none'});
 }
 // Decide the save area on the outfit screen. A profile save only makes sense once
 // she's taken the quiz; a quiz-skipper sees the "take the quiz" nudge instead.

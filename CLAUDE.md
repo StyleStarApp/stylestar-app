@@ -2816,3 +2816,41 @@ Branch this session: `claude/style-star-continuation-4jlcgz`. A long, happy live
   - **Slider dot** (both `.pref-word::before` + `.ph-mast::before`): centered vertically on the line (`bottom:-1.5px`, was riding high at `bottom:0`) and moved to the **"e | S" gap** (`left:66%`→**`50%`** after several "one hair left" nudges). NOTE: exact % is font-dependent — verify on device; a hair adjust = tweak the `left:%` on those two `::before` rules.
   - **Class-conflict LESSON:** the center star was first named `.ph-star`, which collided with the hint's `.ph-star` (the "★ FULL-LENGTH…" star) and broke the hint layout → renamed the charm to **`.ph-charm`**. And a **duplicate SVG-gradient `id`** across the two screens made the loader's star invisible (hidden screen's def won the `url(#id)` ref) — fixed first with unique ids, then mooted by going flat solid gold. RULE: unique SVG ids per screen, or avoid gradient refs on shared markup.
 - ▶ **NEXT SESSION (Cath's explicit next task): the OUTFIT-RESULTS buttons.** She wants a run-through / rework of the action buttons on the outfit-results page (`#s-photo-res` — the "What would you like to do next?" area: the ask pop-up, shopping/styling tiles, etc.). Start there. Also still parked from 2026-07-16 AM: the Welcome Back **star-as-button** portrait idea; the **"shopping list"** feature idea; whether to bring the Shopping/Styling **hub grouping** to `s-photo-res`.
+
+**2026-07-16 (cont. — ▶ OUTFIT-RESULTS "what's next" redesign: guided next-steps + Shopping/Styling hubs)**
+Branch this session: `claude/style-star-mz1aud`. Cath's problem statement: after a woman reads her outfit
+feedback (and maybe taps a "Complete the Look" buy link) she hits a **wall of 7 equal buttons** with no sense
+of what to do → she freezes / leaves. Fix = a stylist gently taking her hand instead of handing her a menu.
+- Explored 3 directions in the render harness (Ask-leads / Shop-leads / hybrid). Cath chose the **HYBRID**:
+  a warm lead line + **TWO gentle next steps**, then the rest grouped into calm hubs. Built & verified; NOT yet
+  merged (pushed to the branch — she'll look on-device, then merge/PR).
+- **What shipped in the code (`#s-photo-res` `.p3`):**
+  - **Removed the duplicate/clutter:** deleted the old `.ask-bubble` chat pop-up AND the lower "THE LOOK YOU
+    SHARED" `lookshot` recap (redundant — her photo already sits clipped to the Outfit-Analysis clipboard `.p1`;
+    the `lookShot`/`lookOcc` JS setters in `runPhotoAnalysis` are all `if(el)`-guarded so removing the markup is
+    safe; `.lookshot`/`.ask-bubble` CSS is now dead but harmless). Also dropped the duplicate "Ask your stylist"
+    menu row + the standalone "Shop your style" row (both promoted into the next-steps).
+  - **NEW `.nextstep` block** (id `photoNextStep`) at the top of the actions: lead **"Not sure what's next?
+    I've got you 🩷"** (the shared `.pinkheart` SVG) + two prominent buttons — **`.ns-btn.ns-pink`
+    "Ask me about this look"** (`openChatAboutLook()`) and **`.ns-btn.ns-gold` "Pull more pieces in this style"**
+    (`openShopStyle('look')`). New scoped CSS `#s-photo-res .nextstep/.ns-*` (pink/gold bordered cards, 47px
+    color-icon tile, DM-Serif title + DM-Sans sub, `&rsaquo;` chevron). No `data-shelf` on these (own `:active`).
+  - **Shopping / Styling HUBS** (the WB + Style-Portrait look): reused the existing `#s-res` hub CSS by adding
+    `#s-photo-res` to every hub selector (`.hub-card/.hub-shop/.hub-style/.awn-rod/.awn-face/.mbar/.mbar-row/
+    .mbulb/.p3-hubwrap/.retake-wrap/.p3-hub/.hub-card .act` + the `#s-res{padding-bottom} / .p3 / .foot`
+    full-width white band rules, all lines ~768–1130). New markup: `.p3-hubwrap` (black lacquer) → **Shopping**
+    (awning topper: Shop Style Star Edit, Shop the Mall) + **Styling** (vanity-bulb topper: Analyze another
+    outfit, Refine your preferences, See my Style Portrait [gated `#photoPortraitBtn`, quiz-takers]). Tiles are
+    the cream/charcoal `.act` style (chips auto-charcoal via `.res-screen .chip svg{stroke:#26221c!important}`).
+  - **Partial/error photo:** `_photoBoards(on)` now also toggles `photoNextStep` — so a headshot/failed analysis
+    hides the next-steps (no "ask about THIS look" when there's no look) while the hubs stay for navigation.
+  - Save/keep (quiz-takers) + quiz-nudge (skippers) + retake + footer unchanged, below the hubs. The whole `.p3`
+    still rises together on the existing reveal (no reveal wiring change).
+- Verified in the http-harness (serve on :8199, wait ~6.5s for the entrance reveal): quiz-taker view (save +
+  retake + See-Portrait tile), skipper view (quiz-nudge, no save/retake/portrait), reveal compose→open→rv-done
+  settles clean, partial hides `photoNextStep`. **No JS errors.** Mockups + renders in scratchpad `render/`.
+- **Wording knobs Cath may still tweak:** lead line ("...I've got you" vs "A couple of lovely ways to keep
+  going"); gold button ("Pull more pieces in this style" vs "Find more like this"). All trivial text edits.
+- ▶ Open follow-ups: bring the SAME 3-step treatment to the QUIZ Style Portrait (`#s-res`) if she likes it here
+  (it already has the hubs; it'd gain the "next steps" idea); the WB **star-as-button** portrait; the
+  **"shopping list"** feature idea.
