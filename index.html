@@ -785,7 +785,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* Match WB: hubs on a black-lacquer backdrop, WB label font (bigger), no flanks */
 #s-res .p3-hubwrap{background-color:#0c0c0e;margin:16px -18px 0;padding:8px 0 12px}
 /* carry the black lacquer down around the Retake button (footer stays on white) */
-#s-res .retake-wrap{background-color:#0c0c0e;margin:0 -18px;padding:4px 0 14px}
+#s-res .retake-wrap{background-color:#0c0c0e;margin:0 -18px;padding:4px 0 16px}
 #s-res .hub-shop{margin:0 2px 0}
 #s-res .hub-style{margin:16px 2px 0}
 #s-res .hub-card .p3-hub{display:block;text-align:center;margin:13px 0 11px;font-size:21px;letter-spacing:.2em;color:#151515}
@@ -800,7 +800,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .hub-card .wb-hub{margin:12px 0 8px}
 #s-wb .hub-card .wb-hub-t{font-size:21px;letter-spacing:.2em;color:#151515}
 #s-wb .hub-card .wb-shadow{display:none}
-#s-wb .wb-acts .wb-foot{margin:14px -16px -16px;padding:16px 12px 26px;border-top:1.5px solid rgba(196,201,207,.9);background:#FBFAF7;border-radius:0;box-shadow:none;justify-content:center}
+#s-wb .wb-acts .wb-foot{margin:16px -16px -16px;padding:16px 12px 26px;border-top:1.5px solid rgba(196,201,207,.9);background:#FBFAF7;border-radius:0;box-shadow:none;justify-content:center}
 #s-wb .wb-acts .wb-foot span.lnk{color:#1c1a17}
 #s-wb .wb-retake{box-shadow:0 0 0 3px #B4BAC0,0 0 0 6px #ECD070,0 8px 16px -10px rgba(70,72,80,.5)}
 /* press / lift feedback (iOS-safe via JS .wb-tapped as well) */
@@ -960,7 +960,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* clipboard + boards rise behind the opening doors so there's no black gap */
 #s-res.rv-open .p1{animation-delay:.1s}
 #s-res.rv-open .p2{animation-delay:.28s}
-#s-res.rv-open .pcard{animation-delay:.5s}
+#s-res.rv-open .pcard,#s-res.rv-open .kbwrap{animation-delay:.5s}
 #s-res.rv-open .p3{animation-delay:.65s}
 #s-res.rv-open .shop-section{animation-delay:.65s}
 /* staged ceremony (compressed): linen card -> motto -> portrait */
@@ -1001,14 +1001,11 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .pair .t svg{width:22px;height:22px;stroke:#8a6d20;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .pair .t span{font:600 13px/1 'Jost',sans-serif;color:#2f2a22}
 .res-screen .pcard{width:346px;max-width:97%;margin:18px auto 0;opacity:0;background-color:#fdfcf9;background-image:repeating-linear-gradient(90deg,rgba(120,108,84,.045) 0 1px,transparent 1px 3px),repeating-linear-gradient(0deg,rgba(120,108,84,.045) 0 1px,transparent 1px 3px);border-radius:0;box-shadow:0 16px 30px -14px rgba(0,0,0,.6),0 2px 5px rgba(0,0,0,.16);padding:15px 18px 17px;position:relative}
-/* Gold-foil photo-corner mounts — the card looks tucked into triangular pockets,
-   like a business card slipped into a leather album. A tiny shadow line along each
-   pocket's inner edge sells the "tucked under" illusion. */
-.res-screen .pcard::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom right,#F0D890 0,#C99B37 32%,#9C7820 48%,rgba(70,48,8,.4) 49.5%,transparent 50%) top left/27px 27px no-repeat,linear-gradient(to bottom left,#F0D890 0,#C99B37 32%,#9C7820 48%,rgba(70,48,8,.4) 49.5%,transparent 50%) top right/27px 27px no-repeat,linear-gradient(to top right,#F0D890 0,#C99B37 32%,#9C7820 48%,rgba(70,48,8,.4) 49.5%,transparent 50%) bottom left/27px 27px no-repeat,linear-gradient(to top left,#F0D890 0,#C99B37 32%,#9C7820 48%,rgba(70,48,8,.4) 49.5%,transparent 50%) bottom right/27px 27px no-repeat}
-/* Style Vision Board card — striped "curtain" frame instead of the gold photo-corners (so it reads as its own thing, matching the board's black/cream stripe border) */
-.res-screen .pcard.pcard-vb::after{display:none}
-.res-screen .pcard.pcard-vb{box-shadow:0 16px 30px -14px rgba(0,0,0,.6),0 0 0 1.5px #c8a44d}
-.res-screen .pcard.pcard-vb::before{content:"";position:absolute;inset:-15px;z-index:-1;background:repeating-linear-gradient(to bottom,#1c1a15 0 28px,#f2efe8 28px 56px)}
+/* Style Constellation + Mood Board: two thin-gold-framed cards on ONE black/cream striped "curtain" panel */
+.res-screen .kbwrap{width:346px;max-width:97%;margin:18px auto 0;padding:15px;position:relative;opacity:0;background:repeating-linear-gradient(to bottom,#1c1a15 0 28px,#f2efe8 28px 56px);box-shadow:0 16px 30px -14px rgba(0,0,0,.6)}
+.res-screen .kbwrap .pcard{width:auto;max-width:none;margin:0;opacity:1;animation:none!important;box-shadow:0 0 0 1.5px #c8a44d,0 2px 6px rgba(0,0,0,.28)}
+.res-screen .kbwrap .pcard+.pcard{margin-top:15px}
+.res-screen .kbwrap .pcard::after,.res-screen .kbwrap .pcard.pcard-vb::before{display:none}
 .res-screen .sc-lead{display:flex;align-items:center;justify-content:center;gap:11px;margin:2px 0 12px;color:#C8971E;font:700 11.5px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase}
 .res-screen .sc-lead i{height:1px;width:32px;display:block}
 .res-screen .sc-lead i.l{background:linear-gradient(90deg,transparent,#C8971E)}
@@ -1189,17 +1186,17 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen.rv-open .spot{animation:rvSpot 1.3s ease .1s both}
 .res-screen.rv-open .p1{animation:rvRise .7s ease 1.15s both}
 .res-screen.rv-open .p2{animation:rvRise .7s ease 1.32s both}
-.res-screen.rv-open .pcard{animation:rvRise .7s ease 1.46s both}
+.res-screen.rv-open .pcard,.res-screen.rv-open .kbwrap{animation:rvRise .7s ease 1.46s both}
 .res-screen.rv-open .p3{animation:rvRise .7s ease 1.6s both}
 .res-screen.rv-open .shop-section{animation:rvRise .7s ease 1.6s both}
 .res-screen.rv-open .sig-dot{animation:sigPlot .75s cubic-bezier(.34,1.28,.5,1) both}
 /* revisit (rv-quick): the whole portrait is already there — doors just open to reveal it, no cascade */
-.res-screen.rv-quick.rv-open .p1,.res-screen.rv-quick.rv-open .p2,.res-screen.rv-quick.rv-open .pcard,.res-screen.rv-quick.rv-open .p3,.res-screen.rv-quick.rv-open .shop-section,.res-screen.rv-quick.rv-open .sig-dot,.res-screen.rv-quick.rv-open .savebtn .hrt,#s-res.rv-quick.rv-open .arch-card,#s-res.rv-quick.rv-open .arch-motto,#s-res.rv-quick.rv-open .para{animation:none!important;opacity:1!important;transform:none!important}
+.res-screen.rv-quick.rv-open .p1,.res-screen.rv-quick.rv-open .p2,.res-screen.rv-quick.rv-open .pcard,.res-screen.rv-quick.rv-open .kbwrap,.res-screen.rv-quick.rv-open .p3,.res-screen.rv-quick.rv-open .shop-section,.res-screen.rv-quick.rv-open .sig-dot,.res-screen.rv-quick.rv-open .savebtn .hrt,#s-res.rv-quick.rv-open .arch-card,#s-res.rv-quick.rv-open .arch-motto,#s-res.rv-quick.rv-open .para{animation:none!important;opacity:1!important;transform:none!important}
 #s-res.rv-quick.rv-open .ac-sweep{animation:none!important;opacity:0!important}
 .res-screen.rv-open .savebtn .hrt{animation:heartBeat 1s ease 1.4s 1 both}
 /* terminal static state — no animations, so returning to the screen never replays */
 .res-screen.rv-done .doors{display:none}
-.res-screen.rv-done .p1,.res-screen.rv-done .p2,.res-screen.rv-done .pcard,.res-screen.rv-done .p3,.res-screen.rv-done .shop-section{opacity:1}
+.res-screen.rv-done .p1,.res-screen.rv-done .p2,.res-screen.rv-done .pcard,.res-screen.rv-done .kbwrap,.res-screen.rv-done .p3,.res-screen.rv-done .shop-section{opacity:1}
 .res-screen.rv-done .spot{opacity:.62}
 
 @keyframes rvRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -1229,7 +1226,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 @media (prefers-reduced-motion: reduce){
   .res-screen .doors{display:none!important}
-  .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .p3,.res-screen .shop-section,.res-screen .arch-card,.res-screen .arch-motto,.res-screen .para{opacity:1!important;animation:none!important;transform:none!important}
+  .res-screen .p1,.res-screen .p2,.res-screen .pcard,.res-screen .kbwrap,.res-screen .p3,.res-screen .shop-section,.res-screen .arch-card,.res-screen .arch-motto,.res-screen .para{opacity:1!important;animation:none!important;transform:none!important}
   .res-screen .sig-dot{animation:none!important;left:calc(var(--x) - 6px)!important}
   .res-screen .spot{animation:none!important;opacity:.62}
   .res-screen .sweep,.res-screen .rv-dust i,.res-screen .hero .shim,.res-screen .savebtn .hrt,.res-screen .dstar svg{animation:none!important}
@@ -1483,7 +1480,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
     </div>
 
-    <!-- PIECE 2.5: Style Card — its own keepsake (business-card) panel -->
+    <!-- PIECE 2.5: Style Constellation + Mood Board keepsakes on one striped curtain panel -->
+    <div class="kbwrap">
     <div class="pcard">
       <div class="sc-lead"><i class="l"></i>Your Style Constellation<i class="r"></i></div>
       <div class="sc-row" data-shelf onclick="saveStyleCard('quiz')">
@@ -1500,6 +1498,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="tx"><div class="sc-tt">See &amp; share your<br>Mood Board</div><div class="sc-ss">A shareable keepsake of your style vibe</div></div>
         <svg class="sc-ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
       </div>
+    </div>
     </div>
 
     <!-- PIECE 3: actions -->
