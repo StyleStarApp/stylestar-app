@@ -804,22 +804,22 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-res .hub-card .p3-hub::before,#s-res .hub-card .p3-hub::after,#s-photo-res .hub-card .p3-hub::before,#s-photo-res .hub-card .p3-hub::after{display:none}
 #s-res .hub-card .act,#s-photo-res .hub-card .act{margin-top:14px}
 /* Outfit results: two gentle "what's next" recommendations sitting above the hubs */
-#s-photo-res .nextstep{margin:2px 2px 4px;text-align:center}
-#s-photo-res .ns-lead{font:italic 500 15px/1.4 'Fraunces',serif;color:#5b5348;margin-bottom:11px}
-#s-photo-res .ns-btn{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 15px;border-radius:2px;cursor:pointer;background:#fff;margin-bottom:11px;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
+#s-photo-res .nextstep{margin:2px 0 8px;text-align:center}
+#s-photo-res .ns-lead{font:400 18px/1.25 'DM Serif Display',serif;color:#211E1A;white-space:nowrap;margin-bottom:12px}
+#s-photo-res .ns-lead .pinkheart{width:16px;height:16px;vertical-align:-2px}
+#s-photo-res .ns-btn{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 15px;border-radius:2px;cursor:pointer;background:#fff;border:1.5px solid #BFC2C6;margin-bottom:11px;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
 #s-photo-res .ns-btn:last-child{margin-bottom:0}
 #s-photo-res .ns-btn:active{transform:scale(.99);filter:brightness(.99)}
-#s-photo-res .ns-pink{border:1.5px solid #EC4899;box-shadow:0 9px 20px -11px rgba(236,72,153,.55)}
-#s-photo-res .ns-gold{border:1.5px solid #CBA24B;box-shadow:0 9px 20px -11px rgba(203,162,75,.5)}
-#s-photo-res .ns-ic{flex:none;width:47px;height:47px;border-radius:11px;display:flex;align-items:center;justify-content:center}
-#s-photo-res .ns-ic.pink{background:#EC4899}
-#s-photo-res .ns-ic.pink svg{width:25px;height:25px;fill:#fff}
-#s-photo-res .ns-ic.gold{background:linear-gradient(160deg,#F4DE93,#E2B94E)}
-#s-photo-res .ns-ic.gold svg{width:24px;height:24px;fill:none;stroke:#4a3a12;stroke-width:1.5}
+#s-photo-res .ns-ic{flex:none;width:44px;height:44px;border-radius:10px;background:#fff;border:1.5px solid #1a1a1a;display:flex;align-items:center;justify-content:center}
+#s-photo-res .ns-ic svg{width:23px;height:23px}
+#s-photo-res .ns-ic.pink svg{fill:#EC4899}
+#s-photo-res .ns-ic.gold svg{fill:#E0B84C;stroke:none}
 #s-photo-res .ns-tx{flex:1;min-width:0}
-#s-photo-res .ns-tx b{display:block;font:400 17px/1.15 'DM Serif Display',serif;color:#1a1a1a}
-#s-photo-res .ns-tx small{display:block;font:400 12.5px/1.35 'DM Sans',sans-serif;color:#6b6459;margin-top:4px}
-#s-photo-res .ns-ar{flex:none;font-size:21px;color:#c9a24a;line-height:1}
+#s-photo-res .ns-tx b{display:block;font:600 18px/1.1 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
+#s-photo-res .ns-tx small{display:block;font:400 14px/1.4 'Jost',sans-serif;color:#453f37;margin-top:3px}
+#s-photo-res .ns-ar{flex:none;font-size:20px;color:#26221c;line-height:1}
+/* keep the one-line lead from overflowing on very small/old phones */
+@media (max-width:359px){#s-photo-res .ns-lead{font-size:16px}}
 /* tighten the WB Shopping->Styling gap to match See my Portrait (~16px) */
 #s-wb .hub-shop{margin-bottom:0}
 #s-wb .hub-style{margin-top:9px}
@@ -1107,7 +1107,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* Her photo clipped to the clipboard — a small, tilted snapshot the stylist is working from */
 .res-screen .clipphoto{position:absolute;top:-15px;left:3px;z-index:8;width:90px;transform:rotate(-9deg);cursor:pointer}
 /* Tight contact shadow + soft cast shadow → reads like it's lifting off the board */
-.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:contain;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.28),0 13px 21px -7px rgba(0,0,0,.62)}
+.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:contain;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:none}
 .res-screen .clipphoto .clip-pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(9deg);width:15px;height:11px;border-radius:3px;background:linear-gradient(180deg,#F6E4A6,#E3BB54 45%,#CFA236 66%,#9A7418);box-shadow:0 2px 4px -1px rgba(90,60,10,.55),inset 0 1px 0 rgba(255,255,255,.65);z-index:2}
 @keyframes clipJig{0%{transform:rotate(-9deg)}25%{transform:rotate(-13deg)}55%{transform:rotate(-5.5deg)}80%{transform:rotate(-10.5deg)}100%{transform:rotate(-9deg)}}
 .res-screen .clipphoto.jig{animation:clipJig .5s ease}
@@ -1762,9 +1762,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
       <!-- BEAT 1 — two gentle next steps: talk it through, or shop more in this style -->
       <div class="nextstep" id="photoNextStep">
-        <div class="ns-lead">Not sure what&rsquo;s next? I&rsquo;ve got you <svg class="pinkheart" style="width:13px;height:13px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-        <button class="ns-btn ns-pink" onclick="openChatAboutLook()"><span class="ns-ic pink"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="ns-tx"><b>Ask me about this look</b><small>Shoes, layering, where to wear it &mdash; ask me anything</small></span><span class="ns-ar">&rsaquo;</span></button>
-        <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more pieces in this style</b><small>I&rsquo;ll find picks that go with the look you shared</small></span><span class="ns-ar">&rsaquo;</span></button>
+        <div class="ns-lead">Not sure what&rsquo;s next? I&rsquo;ve got you <svg class="pinkheart" style="width:16px;height:16px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+        <button class="ns-btn ns-pink" onclick="openChatAboutLook()"><span class="ns-ic pink"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="ns-tx"><b>Ask me about this look</b><small>Shoes, layering, one notch more polished? Ask me.</small></span><span class="ns-ar">&rsaquo;</span></button>
+        <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more in this style</b><small>I&rsquo;ll find pieces that vibe with the look you shared</small></span><span class="ns-ar">&rsaquo;</span></button>
       </div>
 
       <!-- BEAT 2 — everything else, grouped into Shopping / Styling on black lacquer (matches WB + Style Portrait) -->
