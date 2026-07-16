@@ -782,7 +782,11 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .mbar,#s-res .mbar{margin:0 -14px 6px;padding:9px 18px 10px;border:8px solid #D8DDE2;border-top:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:0 6px 12px -8px rgba(0,0,0,.4),inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
 #s-wb .mbar-row,#s-res .mbar-row{display:flex;justify-content:space-between;align-items:center}
 #s-wb .mbulb,#s-res .mbulb{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 7px 2px rgba(244,214,120,.72),0 0 3px rgba(255,238,180,.9),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45)}
-#s-res .hub-card .p3-hub{margin:12px 0 11px}
+/* Match WB hub label exactly (18px Jost, .2em, #151515, no flanks) + widen cards to the frame */
+#s-res .hub-shop{margin:16px -18px 12px}
+#s-res .hub-style{margin:16px -18px 10px}
+#s-res .hub-card .p3-hub{display:block;text-align:center;margin:13px 0 11px;font-size:18px;letter-spacing:.2em;color:#151515}
+#s-res .hub-card .p3-hub::before,#s-res .hub-card .p3-hub::after{display:none}
 #s-res .hub-card .act{margin-top:14px}
 #s-wb .wb-chip-line{width:40px!important;height:40px!important;background:#F5EFE2!important;border:1px solid #D8C285!important;border-radius:9px!important;box-shadow:none!important;color:#26221c}
 #s-wb .wb-chip-line svg{width:24px;height:24px;color:#26221c}
