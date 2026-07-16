@@ -2891,3 +2891,32 @@ extended with `#s-photo-res`, then this page overrides it).
      device, tune the `#s-photo-res .chub` gradient stop.
   3. Bulbs: shipped the "all the way around" vanity version; the calmer "top + bottom only" is an option if she
      wants it airier.
+
+**2026-07-16 (cont. — framed-rooms hubs finalized: full-bleed, black backdrop, 4-keepsake Portrait — SHIPPED LIVE)**
+Many live rounds with Cath on the `#s-photo-res` framed hubs; final state now on `main`:
+- **Full-bleed to the true screen edges.** The frames are `width:100vw`, but the app is a rounded card (`.ss`)
+  with a 12px body-padding margin + `overflow:hidden`, so they only reached the CARD edge. Fix: `show()` toggles
+  **`body.res-fb`** (`padding-left/right:0`) when `id==='s-photo-res'`, dropping the card's side margin so the
+  whole results stage + frames bleed to the phone edges (removed on every other screen). `.ss` was already
+  `sqall` (square) here.
+- **Black full-bleed backdrop behind all three frames.** `#s-photo-res .p3-hubwrap` is now `background:#17171c`
+  + full-bleed (`width:100vw;margin-left:calc(50% - 50vw)`), so the gaps between the vanity / curtain / pearl
+  frames are black and they read as one cohesive set; the Shopping frame's black merges into it. `phub2`
+  margin-bottom moved to the hubwrap (24px) so the black ends before the Save block.
+- **SHOPPING curtain = "option A"** (Cath picked it from a 4-option comparison): VERTICAL drapery stripes
+  (`repeating-linear-gradient(90deg,#17171c 0 22px,#f4efe5 22px 44px)`) + a solid black frame (`border:9px
+  #17171c`, `border-radius:0`) + a cream mat inside (`inset 0 0 0 11px #FBFAF7`). NOTE it still has a faint
+  "toothy" edge where black stripes meet the black frame (inherent to vertical-stripes-on-a-black-edge; the mat
+  softens it) — Cath accepted it. (Rejected along the way: horizontal stripes = "awning"; side-drapes + solid
+  valance/hem = "not it"; thin cream mat alone didn't kill the teeth.)
+- **Squares → full-width, black outlines, bigger tiles w/ taglines.** Frames dropped `aspect-ratio:1` (content
+  height, "shorter"). Tiles (`.tile2`) are white w/ **black 1.5px borders**, cream icon chip w/ black border,
+  charcoal icon, Jost title + a `.t2s` tagline. Vanity mirror frame thickened + **bigger bulbs** (9px, all four
+  sides). Pearl frame (`.phub2`) matches the vanity thickness w/ **bigger pearl studs**.
+- **Portrait hub = "CATHERINE'S STYLE"** (name-aware `#portraitTitle` set in `_photoSaveArea`, falls back to
+  "Your Style"; gated to quiz-takers via `#photoPortraitHub`). Dropped the old single CTA + "signature style"
+  headline. Now a **2×2 grid of the four keepsakes**: **Portrait** (`loadSaved`), **Signature** (new
+  `showSignature()` = loadSaved + scroll to `#s-res .p2` chart), **Constellation** (`saveStyleCard('quiz')`),
+  **Mood Board** (`openVisionBoard()`). All four verified firing cleanly.
+- ▶ Still on the list: the app-wide **gold-buttons → cream** pass (Save/Retake/Discover CTAs, quiz Continue,
+  etc.); revisit the Shopping "toothy" edge if it bugs Cath on-device; the bulbs "top+bottom only" option.
