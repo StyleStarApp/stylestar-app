@@ -756,13 +756,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-wb .wb-foot span.lnk{font:700 12px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1c1a17}
 #s-wb .wb-foot span.star{color:#E6C24E;font-size:11px}
 /* --- Welcome Back v2: white hub cards on black lacquer, awning + vanity light bar --- */
-#s-wb .hub-card{position:relative;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border-radius:2px;padding:0 14px 14px;box-shadow:0 12px 26px -14px rgba(0,0,0,.7),inset 0 0 0 1.5px rgba(196,201,207,.95)}
-#s-wb .hub-shop{margin:16px 2px 12px}
-#s-wb .hub-style{margin:0 2px 10px}
+#s-wb .hub-card,#s-res .hub-card{position:relative;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border-radius:2px;padding:0 14px 14px;box-shadow:0 12px 26px -14px rgba(0,0,0,.7),inset 0 0 0 1.5px rgba(196,201,207,.95)}
+#s-wb .hub-shop,#s-res .hub-shop{margin:16px 2px 12px}
+#s-wb .hub-style,#s-res .hub-style{margin:16px 2px 10px}
 #s-wb .hub-card .wb-item{margin:0}
 /* thin gold trim line along the straight TOP of the awning */
-#s-wb .awn-rod{display:block;height:1.5px;margin:0 -14px;background:linear-gradient(180deg,#EAD08A,#C99A2C)}
-#s-wb .awn-face{position:relative;height:34px;margin:0 -14px;
+#s-wb .awn-rod,#s-res .awn-rod{display:block;height:1.5px;margin:0 -14px;background:linear-gradient(180deg,#EAD08A,#C99A2C)}
+#s-wb .awn-face,#s-res .awn-face{position:relative;height:34px;margin:0 -14px;
   background:
     /* gold trim hugging the very bottom — the scallop mask makes it follow the hem's curve */
     linear-gradient(180deg,rgba(0,0,0,0) calc(100% - 2.5px),#EBC65E calc(100% - 2.5px),#C99A2C 100%),
@@ -779,9 +779,15 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   filter:drop-shadow(0 5px 4px rgba(0,0,0,.26))}
 #s-wb .awn-trim{display:none}
 #s-wb .awn-val{display:none}
-#s-wb .mbar{margin:0 -14px 6px;padding:9px 18px 10px;border:8px solid #D8DDE2;border-top:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:0 6px 12px -8px rgba(0,0,0,.4),inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
-#s-wb .mbar-row{display:flex;justify-content:space-between;align-items:center}
-#s-wb .mbulb{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 7px 2px rgba(244,214,120,.72),0 0 3px rgba(255,238,180,.9),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45)}
+#s-wb .mbar,#s-res .mbar{margin:0 -14px 6px;padding:9px 18px 10px;border:8px solid #D8DDE2;border-top:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:0 6px 12px -8px rgba(0,0,0,.4),inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7)}
+#s-wb .mbar-row,#s-res .mbar-row{display:flex;justify-content:space-between;align-items:center}
+#s-wb .mbulb,#s-res .mbulb{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 38%,#F3D262 68%,#D3B048);box-shadow:0 0 7px 2px rgba(244,214,120,.72),0 0 3px rgba(255,238,180,.9),0 0 0 1px rgba(175,145,60,.4),inset 0 -1.5px 2px rgba(158,128,52,.45)}
+/* Match WB hub label exactly (18px Jost, .2em, #151515, no flanks) + widen cards to the frame */
+#s-res .hub-shop{margin:16px -18px 12px}
+#s-res .hub-style{margin:16px -18px 10px}
+#s-res .hub-card .p3-hub{display:block;text-align:center;margin:13px 0 11px;font-size:18px;letter-spacing:.2em;color:#151515}
+#s-res .hub-card .p3-hub::before,#s-res .hub-card .p3-hub::after{display:none}
+#s-res .hub-card .act{margin-top:14px}
 #s-wb .wb-chip-line{width:40px!important;height:40px!important;background:#F5EFE2!important;border:1px solid #D8C285!important;border-radius:9px!important;box-shadow:none!important;color:#26221c}
 #s-wb .wb-chip-line svg{width:24px;height:24px;color:#26221c}
 #s-wb .wb-item .wb-arr{color:#26221c!important}
@@ -1491,7 +1497,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
       <button class="savebtn" id="resSaveBtn" onclick="openSaveSheetManual()">
         <span class="hrt">&#128155;</span>Save my style details</button>
-      <!-- Action shelves grouped into Shopping / Styling hubs -->
+      <!-- Action shelves grouped into Shopping / Styling hubs (WB-style awning + vanity bulbs) -->
+      <div class="hub-card hub-shop">
+      <div class="awn-rod"></div><div class="awn-face"></div>
       <div class="p3-hub">Shopping</div>
       <div class="act" data-shelf onclick="openShopStyle()">
         <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round" style="width:23px;height:23px"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop your style</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Personalized just for you</div></div></div>
@@ -1505,6 +1513,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4.3 9.4l1.1-4.1h13.2l1.1 4.1"/><path d="M5.5 9.7V18.8h13V9.7"/><path d="M4.3 9.4a1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0"/><path d="M10.2 18.8v-4.1h3.6v4.1"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Browse curated stores</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
+      </div>
+      <div class="hub-card hub-style">
+      <div class="mbar"><div class="mbar-row"><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span></div></div>
       <div class="p3-hub">Styling</div>
       <div class="act" data-shelf onclick="showPhoto()">
         <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze an outfit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
@@ -1517,6 +1528,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="act" data-shelf onclick="openPrefs()">
         <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M2 12L5.4 15.5L10.6 7"/><path d="M15 8L21.5 16M21.5 8L15 16"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Add your sizes, colors and faves</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
       </div>
 
       <!-- Inline "Shop your style" AI picks render here (genOutfits) -->
