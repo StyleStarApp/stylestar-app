@@ -263,8 +263,10 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 @media (max-width:352px){#s-pref .pref-page-title{font-size:14px;margin-left:-6px;margin-right:-6px}#s-pref .pref-t-star{width:17px;height:17px}}
 .pref-mast{display:flex;align-items:center;justify-content:space-between;margin:2px -13px 0.7rem -11px}
 .pref-mast .top-back{padding:4px 0;margin-top:-3px}
-.pref-word{font:400 19px/1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;white-space:nowrap}
+.pref-word{font:400 19px/1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;white-space:nowrap;display:inline-block;position:relative;padding-bottom:7px}
 .pref-word .st{color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a}
+.pref-word::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2px;background:#E0B84C}
+.pref-word::before{content:"";position:absolute;bottom:0;left:66%;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
 #s-pref .pref-qcard{display:block;max-width:322px;margin:6px auto 2px;padding:16px 20px 19px;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border:1px solid #e4d9bf;box-shadow:0 5px 14px -9px rgba(120,90,20,.3),inset 0 0 0 2px #fff;border-radius:2px}
 #s-pref .pref-philo{position:relative;display:inline-block;font:italic 600 19px/1.45 'Lora',serif;color:#35302a;max-width:300px;padding-bottom:14px;min-height:40px;text-wrap:balance}
 #s-pref .pref-philo::after{content:"";position:absolute;left:32%;right:32%;bottom:4px;height:2px;background:#E0B84C}
@@ -430,10 +432,13 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 #s-photo .ph-wires line,#s-photo-load .ph-wires line{stroke:#8b9299;stroke-width:1.15}
 #s-photo .ph-wires circle,#s-photo-load .ph-wires circle{fill:none;stroke:#8b9299;stroke-width:1.3}
 #s-photo .ph-logo-frame,#s-photo-load .ph-logo-frame{width:auto;padding:0;background:none;border:none;box-shadow:none;display:flex;align-items:center;justify-content:center}
-#s-photo .ph-logo-frame img,#s-photo-load .ph-logo-frame img{display:block;width:78px;height:auto}
+#s-photo .ph-charm,#s-photo-load .ph-charm{display:block;width:56px;height:56px;filter:drop-shadow(0 2px 3px rgba(150,110,20,.28))}
+#s-photo .ph-mast,#s-photo-load .ph-mast{position:absolute;top:15px;left:9px;z-index:6;font:400 19px/1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;padding-bottom:7px;display:inline-block}
+#s-photo .ph-mast::after,#s-photo-load .ph-mast::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2px;background:#E0B84C}
+#s-photo .ph-mast::before,#s-photo-load .ph-mast::before{content:"";position:absolute;bottom:0;left:66%;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
 /* ===== "Analyzing your outfit" screen — the lit "dressing-room studio" (#s-photo-load) ===== */
 /* Analyzing screen shares the Studio background + gold rod + hanging logo of #s-photo */
-#s-photo-load.studio{margin:-0.5rem -1.75rem -1.5rem;padding:28px 18px 22px;min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:'Jost',sans-serif;
+#s-photo-load.studio{margin:-0.5rem -1.75rem -1.5rem;padding:16px 18px 22px;min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:'Jost',sans-serif;
   background-color:#f6f7f8;
   background-image:linear-gradient(180deg,rgba(38,42,48,.10) 0,rgba(38,42,48,0) 30px),repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(150,158,166,.10) 100%)}
 /* keep the screen hidden until it's the active screen (studio sets display:flex) */
@@ -1587,6 +1592,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="scr" id="s-photo">
   <div class="ph-rod"></div>
+  <div class="ph-mast">style Star</div>
   <button class="ph-back" onclick="showBack(photoPrevScreen)">&larr; Back</button>
   <div class="ph-wrap">
     <div class="ph-hang">
@@ -1595,7 +1601,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <line x1="94" y1="4" x2="173" y2="23"/>
         <circle cx="94" cy="4" r="3.2"/>
       </svg>
-      <div class="ph-logo-frame"><img src="logo-star.png" alt="Style Star"></div>
+      <div class="ph-logo-frame"><svg class="ph-charm" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#C89A2C" stroke-width="1.6" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>
     </div>
     <div class="photo-upload-area" id="photoArea">
       <div class="photo-placeholder" id="photoPlaceholder" onclick="document.getElementById('photoIn').click()">
@@ -1636,6 +1642,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
 <div class="scr studio" id="s-photo-load">
   <div class="ph-rod"></div>
+  <div class="ph-mast">style Star</div>
   <div class="ph-wrap">
     <div class="ph-hang">
       <svg class="ph-wires" viewBox="0 0 188 23" preserveAspectRatio="none" aria-hidden="true">
@@ -1643,7 +1650,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <line x1="94" y1="4" x2="173" y2="22"></line>
         <circle cx="94" cy="4" r="3.2"></circle>
       </svg>
-      <div class="ph-logo-frame"><img src="logo-star.png" alt="Style Star"></div>
+      <div class="ph-logo-frame"><svg class="ph-charm" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#C89A2C" stroke-width="1.6" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>
     </div>
   </div>
 
