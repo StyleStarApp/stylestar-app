@@ -104,6 +104,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 /* My Story: a small pink heart by the signature (this page is Catherine herself) */
 .story-sig .ph,.dc-sign .ph{font-size:0.62em;vertical-align:0.12em;margin-left:2px}
 .pinkheart{fill:#F49AC1;vertical-align:middle;display:inline-block;transform:rotate(12deg)}
+.sty-u{text-decoration:underline;text-decoration-color:#EC4899;text-decoration-thickness:1.5px;text-underline-offset:3px}
 #s-story .top-back-wrap{position:absolute;top:5px;right:8px;margin:0;z-index:20}
 /* Shop your style: its own DM-Serif title (twin to the Edit) */
 #s-shopstyle .ss-shop-logo{font:400 30px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.7px #1a1a1a;display:inline-block;position:relative;padding-bottom:11px;margin:6px 0 2px;letter-spacing:.01em}
@@ -1050,10 +1051,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .p3-hub::before{background:linear-gradient(90deg,transparent,#cdbf92)}
 .res-screen .p3-hub::after{background:linear-gradient(90deg,#cdbf92,transparent)}
 /* Stand-out chat invite BUBBLE button, sitting above the photo (tail points down at it) */
-.res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:repeating-linear-gradient(90deg,#e9ecee 0px,#fbfcfc 21px,#e9ecee 42px) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
+.res-screen .ask-bubble{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin:2px 0 22px;padding:15px 16px;cursor:pointer;border:2px solid transparent;border-radius:16px;background:repeating-linear-gradient(90deg,#ecebe4 0px,#fbfbf8 21px,#ecebe4 42px) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#C89A2C) border-box;box-shadow:0 15px 28px -12px rgba(30,20,5,.5);font:400 14px/1.5 'Jost',sans-serif;color:#413d36;-webkit-tap-highlight-color:transparent;transition:transform .18s ease,filter .18s ease}
 .res-screen .ask-bubble b{font-weight:700;color:#201E1A}
 .res-screen .ask-bubble .chip{margin-top:1px}
-.res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#eef0f1;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
+.res-screen .ask-bubble:after{content:"";position:absolute;left:32px;bottom:-9px;width:15px;height:15px;background:#f2f1ea;border-right:2px solid #C89A2C;border-bottom:2px solid #C89A2C;transform:rotate(45deg)}
 .res-screen .ask-bubble:active{transform:scale(.985);filter:brightness(.98)}
 /* Gentle one-time "stylist nudge" that pops above the Ask hero after the results settle */
 .res-screen .ask-nudge{position:relative;margin:0 8px 8px;background:#F2EFE8;border:1px solid rgba(201,162,78,.6);border-radius:14px;padding:11px 30px 11px 13px;display:none;gap:9px;align-items:flex-start;box-shadow:0 12px 22px -10px rgba(30,20,5,.5);opacity:0;transform:translateY(8px) scale(.7);transform-origin:50% 130%;pointer-events:none}
@@ -1303,7 +1304,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="wbChat()">
-          <div class="wb-row"><span class="wb-chip" style="background:#EC4899;box-shadow:0 3px 7px -3px #EC489999"><span class="wb-badge count" id="wbAskBadge">0</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span class="wb-lbl"><span class="tt"><b>Ask your stylist</b><svg class="wb-arr" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Expert guidance, anytime</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:#EC4899;box-shadow:0 3px 7px -3px #EC489999"><span class="wb-badge count" id="wbAskBadge">0</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span class="wb-lbl"><span class="tt"><b>Ask your <span class="sty-u">stylist</span></b><svg class="wb-arr" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Expert guidance, anytime</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="showDream()">
@@ -1533,7 +1534,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="openChat()">
-        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Expert guidance, anytime</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your <span class="sty-u">stylist</span></span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Expert guidance, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="openPrefs()">
@@ -1730,7 +1731,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <!-- PIECE 4: actions -->
     <div class="p3">
       <!-- BEAT 1 — a stand-out chat invite bubble, ABOVE the photo -->
-      <button class="ask-bubble" onclick="openChatAboutLook()"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="abx"><b>Have a question about your look?</b> I'm right here. Ask me anything.</span></button>
+      <button class="ask-bubble" onclick="openChatAboutLook()"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="abx"><b>Have a question about your look?</b> I'm right here<svg class="pinkheart" style="width:12px;height:12px;margin-left:2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg> Ask me anything.</span></button>
 
       <!-- BEAT 2 — your look: a keepsake recap she can tap to revisit or chat about -->
       <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><div class="lscap">The look you shared</div><span class="ls-occ" id="lookOcc"></span></div>
@@ -1752,7 +1753,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       </div>
       <!-- Familiar pink chat path (a second, recognizable route to the same look chat) -->
       <div class="act" data-shelf onclick="openChatAboutLook()">
-        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your stylist</span><svg class="ar" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Chat about your look, anytime</div></div></div>
+        <div class="actrow"><span class="chip" style="background:#EC4899;box-shadow:0 3px 7px -3px rgba(236,72,153,.6)"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Ask your <span class="sty-u">stylist</span></span><svg class="ar" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Chat about your look, anytime</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       <div class="act" data-shelf onclick="showDream()">
@@ -1847,7 +1848,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="pref-done-sub" id="prefSavedSub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
       <button class="btn-pink" onclick="prefShopNow()" style="max-width:280px">Let's go shopping &rarr;</button>
       <div class="pref-done-acts">
-        <button class="pda" onclick="openChat()"><span class="pda-tile pda-pink-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span>Ask your stylist</span></button>
+        <button class="pda" onclick="openChat()"><span class="pda-tile pda-pink-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span>Ask your <span class="sty-u">stylist</span></span></button>
         <button class="pda" onclick="loadSaved()"><span class="pda-tile pda-dark-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#B8891F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="#B8891F" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><span>See my Style Portrait</span></button>
       </div>
       <button class="retake" onclick="prefNotNow()" style="margin-top:12px">Not right now</button>
