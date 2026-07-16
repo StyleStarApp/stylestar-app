@@ -2854,3 +2854,40 @@ of what to do → she freezes / leaves. Fix = a stylist gently taking her hand i
 - ▶ Open follow-ups: bring the SAME 3-step treatment to the QUIZ Style Portrait (`#s-res`) if she likes it here
   (it already has the hubs; it'd gain the "next steps" idea); the WB **star-as-button** portrait; the
   **"shopping list"** feature idea.
+
+**2026-07-16 (cont. — ▶ OUTFIT-RESULTS hubs reimagined as framed "rooms" — SHIPPED LIVE, PRs #418–#421)**
+Branch `claude/style-star-mz1aud`. Iterated the outfit-results "what's next" area live with Cath (render harness
++ SendUserFile each round). Sequence of merges: #418 (guided next-steps + Styling/Shopping hubs), #419 (refine
+lead line + next-step buttons), #420 (hubs as framed rooms), #421 (if separate). All on the OUTFIT results
+`#s-photo-res` ONLY — the QUIZ Style Portrait `#s-res` keeps its black-lacquer awning/bulb hubs (shared CSS was
+extended with `#s-photo-res`, then this page overrides it).
+- **The "what's next" flow now:** her look photo → **"Not sure what's next? I've got you 🩷"** (upright DM Serif
+  Display lead, big + dark, one line w/ a `max-width:359px` fallback) → two **next-step buttons** (gray-framed,
+  no shadow, Jost titles, white icon tiles w/ black frame — **pink** chat bubble + **gold** star): *Ask me about
+  this look* (`openChatAboutLook`) and *Pull more in this style* (`openShopStyle('look')`).
+- **▶ Three framed "rooms"** (Cath's design, replaces the flat hub list; all scoped `#s-photo-res`, the black
+  lacquer `.p3-hubwrap`/`.retake-wrap` overridden to light):
+  1. **STYLING = a lit vanity mirror** (`.vhub`): silver chrome frame + small gold bulbs wrapping ALL FOUR sides
+     (`.vb.t/.b/.l/.r`), 2 tiles side by side (Analyze an outfit / Refine preferences).
+  2. **SHOPPING = a curtain-draped square** (`.chub`): black/cream vertical curtain-stripe frame
+     (`repeating-linear-gradient(90deg,#17171c 0 20px,#f4efe5 20px 40px)`) around a cream inner panel; 2 tiles
+     (Style Star Edit / Shop the Mall).
+  3. **PORTRAIT = a light pearl-framed mirror all its own** (`.phub2`, id `photoPortraitHub`, quiz-takers only —
+     gating moved from the old `photoPortraitBtn` tile to this hub in `_photoSaveArea`): champagne pearl-stud
+     border + silver interior, "YOUR STYLE PORTRAIT" / "The signature that's all you" / "Revisit your portrait
+     from the quiz" + a CTA. Cath rejected a first DARK constellation version → went light/pearl.
+- **2-up tiles** (`.twoup`/`.tile2`): white cards, gold border, cream icon chip (charcoal line icon), Jost
+  15px title (2 lines). Cath loves that side-by-side "breaks consistency with the other pages → something new
+  to explore even though it goes to the same places."
+- ✅ **Portrait CTA is CREAM** (`#F5EFE2` fill + gold border + charcoal text + small gold star), NOT gold-filled
+  — Cath dislikes the gold-fill buttons.
+- Verified in harness: quiz-taker (Portrait hub shows) vs skipper (hidden, quiz-nudge instead), no JS errors.
+- ▶ **PARKED — Cath's calls for next passes:**
+  1. **🟡 Change ALL gold-fill buttons → cream, app-wide** (Cath: "add to list to change all the gold buttons…
+     same cream color as our other buttons"). A dedicated consistency pass: e.g. the "Save & remember me"
+     `.kbtn`, the "Save my style details" area, the bright-gold Discover/Retake CTA fills, the quiz Continue
+     button, etc. This hub's Portrait button already done as the pattern.
+  2. **Curtain stripe width** — bumped mock 15px → live 20px; Cath "might need wider, not sure" → judge on
+     device, tune the `#s-photo-res .chub` gradient stop.
+  3. Bulbs: shipped the "all the way around" vanity version; the calmer "top + bottom only" is an option if she
+     wants it airier.
