@@ -2948,3 +2948,10 @@ Cath walked the live storefront on her phone; a series of quick fix-rounds, each
 - ✅ **Bricks enlarged twice**: background-size 40×24 (implicit) → 60×36 → **72×43** (1.8×, Cath's final call).
 - **DECISION (Cath liked the reasoning): results headline STAYS "shop your style"** — the two states are a handoff ("shopping your style…" = I'm working → "shop your style" = your turn), and the arrival page should match the button that opened it. If a bigger "ta-da" is ever wanted, do it in the SUBTITLE, not the title.
 - **Workflow note:** each squash-merge diverges the branch — before each new commit, `git checkout -B claude/<branch> origin/main` (keeps working-tree edits), then force-with-lease push. PR #426 hit a merge conflict from skipping this; cherry-pick onto fresh main fixed it.
+
+### ▶ NEXT SESSION — START HERE (Cath's picks, saved 2026-07-17 at pause)
+Cath ended the session happy ("all is looking really good") after the Shop-your-style storefront work. Her chosen next tasks, from her real-device screenshots:
+1. **Analyzing-your-outfit loader (`#s-photo-load`, the "Dimming Studio"): fix the vanity BULBS getting cut off** on the mirror frame — on her phone the side bulbs are clipped in half at the frame edges (top/bottom rows read fine; the left/right columns + corners are the problem). Rework how that frame + bulb layout looks.
+2. **Outfit results (`#s-photo-res`): the "THE LOOK YOU SHARED" photo recap** — she's CONSIDERING framing that duplicate photo in "that same frame" (the studio/bulb mirror frame from the loader, for continuity) — NOT decided, explore with her. Also she thinks **that section might need a TITLE at the top**.
+3. **Outfit results: rework how the HUBS below it look** (the vanity-mirror Styling / curtain Shopping / pearl Portrait rooms).
+Also still standing: bricks were enlarged to 90×54 (2.25×) at her request (PR #431) — confirm on-device it landed right; the gold→cream sweep; WB star-as-button; shopping-list idea; **~July 24 Almira/state response** on "Style Star by Catherine, LLC" + TM filing.
