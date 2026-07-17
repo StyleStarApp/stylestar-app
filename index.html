@@ -1176,12 +1176,21 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* Her outfit photo, kept on the results as an anchor (tap to chat about it) */
 .res-screen .ls-lead{display:none;font:700 15px/1.3 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#1a1a1a;text-align:center;margin:6px 0 12px}
 .res-screen .ls-lead.on{display:block}
-.res-screen .lookshot{display:none;position:relative;margin:0 auto 16px;width:190px;cursor:pointer;text-align:center}
-.res-screen .lookshot img{display:block;width:190px;height:252px;object-fit:contain;background:#fff;border:5px solid #fff;border-radius:2px;box-shadow:0 10px 24px -9px rgba(0,0,0,.55),0 0 0 1px rgba(201,162,78,.55)}
+.res-screen .lookshot{display:none;position:relative;margin:0 auto 16px;width:214px;cursor:pointer;text-align:center}
+/* framed in the studio bulb mirror (continuity with the analyzing-outfit loader) so the recap reads "we really analyzed this look" */
+.res-screen .ls-frame{position:relative;width:190px;margin:0 auto;border:11px solid #191510;background:#191510;border-radius:2px;box-shadow:0 13px 28px -12px rgba(0,0,0,.62)}
+.res-screen .lookshot img{display:block;width:100%;height:244px;object-fit:contain;background:#fff}
+.res-screen .ls-hair{position:absolute;inset:0;border:1.5px solid rgba(201,162,78,.55);pointer-events:none;z-index:3}
+.res-screen .ls-bulbs{position:absolute;z-index:4;display:flex}
+.res-screen .ls-bulbs.t{top:4px;left:5px;right:5px;justify-content:space-between}
+.res-screen .ls-bulbs.b{bottom:4px;left:5px;right:5px;justify-content:space-between}
+.res-screen .ls-bulbs.l{top:5px;bottom:5px;left:4px;flex-direction:column;justify-content:space-between}
+.res-screen .ls-bulbs.r{top:5px;bottom:5px;right:4px;flex-direction:column;justify-content:space-between}
+.res-screen .ls-bulbs i{width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 40%,#F3D262 70%,#D3B048);box-shadow:0 0 5px 1.5px rgba(244,214,120,.8)}
 .res-screen .lookshot .lscap{margin-top:9px;font:700 11px/1.3 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a6d20}
 .res-screen .lookshot .ls-occ{display:none;margin:6px auto 0;font:700 9.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#1a1a1a;background:#fff;border:1px solid #1a1a1a;border-radius:999px;padding:5px 11px}
 .res-screen .lookshot .ls-occ.on{display:inline-block}
-.res-screen .ls-expand{position:absolute;top:9px;right:9px;width:29px;height:29px;border-radius:50%;background:rgba(20,16,8,.6);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.res-screen .ls-expand{position:absolute;top:7px;right:7px;z-index:5;width:26px;height:26px;border-radius:50%;background:rgba(20,16,8,.72);display:flex;align-items:center;justify-content:center;cursor:pointer}
 .res-screen .ls-expand svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 /* Full-size photo viewer */
 .plight{position:fixed;inset:0;z-index:200;background:rgba(14,11,6,.93);display:none;align-items:center;justify-content:center;padding:22px}
@@ -1191,7 +1200,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 /* Her photo clipped to the clipboard — a small, tilted snapshot the stylist is working from */
 .res-screen .clipphoto{position:absolute;top:-15px;left:3px;z-index:8;width:90px;transform:rotate(-9deg);cursor:pointer}
 /* Tight contact shadow + soft cast shadow → reads like it's lifting off the board */
-.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:contain;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:none}
+.res-screen .clipphoto img{display:block;width:90px;height:114px;object-fit:contain;background:#fff;border:4px solid #fff;border-radius:2px;box-shadow:0 0 0 1px rgba(201,162,78,.55)}
 .res-screen .clipphoto .clip-pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(9deg);width:15px;height:11px;border-radius:3px;background:linear-gradient(180deg,#F6E4A6,#E3BB54 45%,#CFA236 66%,#9A7418);box-shadow:0 2px 4px -1px rgba(90,60,10,.55),inset 0 1px 0 rgba(255,255,255,.65);z-index:2}
 @keyframes clipJig{0%{transform:rotate(-9deg)}25%{transform:rotate(-13deg)}55%{transform:rotate(-5.5deg)}80%{transform:rotate(-10.5deg)}100%{transform:rotate(-9deg)}}
 .res-screen .clipphoto.jig{animation:clipJig .5s ease}
@@ -1844,7 +1853,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div class="p3">
       <!-- BEAT 0 — her look: a warm heading + keepsake recap she can tap to zoom or chat about -->
       <div class="ls-lead" id="lookLead">Here&rsquo;s your look</div>
-      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><span class="ls-occ" id="lookOcc"></span></div>
+      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><div class="ls-frame"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-hair"></span><span class="ls-bulbs t"><i></i><i></i><i></i><i></i><i></i></span><span class="ls-bulbs b"><i></i><i></i><i></i><i></i><i></i></span><span class="ls-bulbs l"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="ls-bulbs r"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span></div><span class="ls-occ" id="lookOcc"></span></div>
 
       <!-- BEAT 1 — two gentle next steps: talk it through, or shop more in this style -->
       <div class="nextstep" id="photoNextStep">

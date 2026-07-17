@@ -2956,6 +2956,13 @@ Worked through START-HERE tasks 1 & 2 below. Prior session (session_01TRdqZMX2PE
 - ✅ **Bonus (#435): Back from outfit results returns to the upload screen with her photo STILL loaded** (was losing it).
 - ▶ **TASK 3 NOT done** — "rework how the HUBS look" (vanity-mirror Styling / curtain Shopping / pearl Portrait rooms on `#s-photo-res`) was NOT taken up as its own pass; #437 only recolored their section labels to black. If Cath still wants a hub rework, it's open.
 
+**2026-07-17 (cont. — resumed: bulb-frame around "Here's your look" + gold hairline on the clip photo)**
+Cath's call (reversing my earlier advice-against): she wants the outfit-results photo recap to FEEL like a real analysis, so **frame the "Here's your look" duplicate in the studio bulb mirror** (same vanity-bulb frame as the analyzing loader `#s-photo-load`, for continuity). Done:
+- **`.ls-frame`** now wraps `#lookShotImg`: an 11px black `#191510` frame + gold hairline inset (`.ls-hair`, 1.5px `rgba(201,162,78,.55)`) + gold vanity bulbs on all four sides (`.ls-bulbs .t/.b/.l/.r`, 5 top/bottom, 6 each side, 8px radial-gold, static/no pulse to keep the results page calm). Photo is `object-fit:contain` on white so it shows head-to-toe (no crop). `.lookshot` widened 190→214px so the side bulbs have room; `.ls-expand` (zoom) moved inside the frame top-right (z-index 5) — tap-to-chat + lightbox behavior preserved (ids `lookShot`/`lookShotImg`/`lookOcc` unchanged, so the `runPhotoAnalysis` show/hide JS still works). Occasion pill sits below the frame.
+- **Clip photo** (`.clipphoto img`, the little tilted snapshot pinned to the Outfit-Analysis clipboard) got the SAME thin **gold hairline** Cath asked for: `box-shadow:0 0 0 1px rgba(201,162,78,.55)` (was `none`), echoing the recap's gold.
+- Verified in the http-harness (:8199, wait ~6.5s): full photo in the bulb frame (contain, gold hairline, bulbs even on all sides, expand button clean top-right, DATE NIGHT pill below) + the clip's gold hairline; no JS errors. Renders in scratchpad `render/` (recap.png, clip.png).
+- ▶ Task 3 from the old START-HERE (rework the hub ROOMS' look) still untouched — separate pass if Cath wants it.
+
 ### ▶ NEXT SESSION — START HERE (updated on resume 2026-07-17; tasks 1 & 2 now DONE & live)
 Tasks 1 (loader bulbs) & 2 (photo recap heading) from the previous START-HERE are ✅ DONE & live (see the PRs #433–#437 entry just above). Cath is resuming; confirm those landed right on her phone, then pick the next lever. Still open / candidate next steps:
 1. **Confirm on-device** the loader bulbs + the "Here's your look" recap heading look right (they're live).
