@@ -1174,8 +1174,14 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 @keyframes nudgePop{from{opacity:0;transform:translateY(8px) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes nudgeBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 /* Her outfit photo, kept on the results as an anchor (tap to chat about it) */
-/* The whole "Here's your look" section framed in ONE lit-vanity mirror (heading + photo + next steps); the photo itself keeps only a thin hairline frame */
-#s-photo-res .lookhub{position:relative;width:100vw;margin:0 calc(50% - 50vw) 18px;padding:34px 24px 30px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55),inset 0 0 0 1px #8a9096,inset 0 0 0 4px rgba(255,255,255,.9),inset 0 0 0 19px #E4E7EB,inset 0 0 0 20px #b7bdc3}
+/* The whole "Here's your look" section framed in the SAME black gallery bulb frame as the "Analyzing your outfit" loader: black frame, gold hairline, gold bulbs glowing in a dark gutter around a light content panel */
+#s-photo-res .lookhub{position:relative;width:100vw;margin:0 calc(50% - 50vw) 18px;border:12px solid #191510;padding:24px;background:radial-gradient(120% 90% at 50% 18%,#2a2521,#100d0b);box-shadow:0 26px 40px -16px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.3)}
+#s-photo-res .lookhub .lh-hair{position:absolute;inset:0;border:1.5px solid rgba(201,162,78,.5);pointer-events:none;z-index:6}
+#s-photo-res .lookhub .lh-inner{position:relative;z-index:5;background:#FBFAF7;border-radius:2px;padding:26px 20px 24px}
+/* bulbs sit in the dark gutter, matching the loader (11px gold, static/calm on the results page) */
+#s-photo-res .lookhub .vb.t,#s-photo-res .lookhub .vb.b{left:16px;right:16px}
+#s-photo-res .lookhub .vb.l,#s-photo-res .lookhub .vb.r{top:20px;bottom:20px}
+#s-photo-res .lookhub .vb i{width:11px;height:11px}
 .res-screen .ls-lead{display:none;font:700 15px/1.3 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#1a1a1a;text-align:center;margin:0 0 13px}
 .res-screen .ls-lead.on{display:block}
 .res-screen .lookshot{display:none;position:relative;margin:0 auto 18px;width:196px;cursor:pointer;text-align:center}
@@ -1853,6 +1859,8 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <span class="vb b"><i></i><i></i><i></i><i></i><i></i><i></i></span>
         <span class="vb l"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
         <span class="vb r"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="lh-hair"></span>
+        <div class="lh-inner">
         <div class="ls-lead" id="lookLead">Here&rsquo;s your look</div>
         <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><div class="ls-frame"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-hair"></span><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span></div><span class="ls-occ" id="lookOcc"></span></div>
 
@@ -1861,6 +1869,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <div class="ns-lead">Not sure what&rsquo;s next? I&rsquo;ve got you <svg class="pinkheart" style="width:16px;height:16px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
           <button class="ns-btn ns-pink" onclick="openChatAboutLook()"><span class="ns-ic pink"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="ns-tx"><b>Ask me about this look</b><small>Shoes, layering, one notch more polished? Ask me.</small></span><span class="ns-ar">&rsaquo;</span></button>
           <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more in this style</b><small>I&rsquo;ll find pieces that vibe with the look you shared</small></span><span class="ns-ar">&rsaquo;</span></button>
+        </div>
         </div>
       </div>
 
