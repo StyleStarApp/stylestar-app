@@ -1170,7 +1170,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 @keyframes nudgePop{from{opacity:0;transform:translateY(8px) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes nudgeBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 /* Her outfit photo, kept on the results as an anchor (tap to chat about it) */
-.res-screen .lookshot{display:none;position:relative;margin:4px auto 16px;width:190px;cursor:pointer;text-align:center}
+.res-screen .ls-lead{display:none;font:400 19px/1.25 'DM Serif Display',serif;color:#211E1A;text-align:center;margin:2px 0 11px}
+.res-screen .ls-lead.on{display:block}
+.res-screen .lookshot{display:none;position:relative;margin:0 auto 16px;width:190px;cursor:pointer;text-align:center}
 .res-screen .lookshot img{display:block;width:190px;height:252px;object-fit:contain;background:#fff;border:5px solid #fff;border-radius:2px;box-shadow:0 10px 24px -9px rgba(0,0,0,.55),0 0 0 1px rgba(201,162,78,.55)}
 .res-screen .lookshot .lscap{margin-top:9px;font:700 11px/1.3 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a6d20}
 .res-screen .lookshot .ls-occ{display:none;margin:6px auto 0;font:700 9.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a6d20;background:rgba(201,162,78,.14);border:1px solid rgba(201,162,78,.42);border-radius:999px;padding:5px 11px}
@@ -1835,8 +1837,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
     <!-- PIECE 4: the "what next" area -->
     <div class="p3">
-      <!-- BEAT 0 — her look: a keepsake recap she can tap to zoom or chat about -->
-      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><div class="lscap">The look you shared</div><span class="ls-occ" id="lookOcc"></span></div>
+      <!-- BEAT 0 — her look: a warm heading + keepsake recap she can tap to zoom or chat about -->
+      <div class="ls-lead" id="lookLead">Here&rsquo;s your look</div>
+      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span><span class="ls-occ" id="lookOcc"></span></div>
 
       <!-- BEAT 1 — two gentle next steps: talk it through, or shop more in this style -->
       <div class="nextstep" id="photoNextStep">
@@ -2908,6 +2911,7 @@ function _renderShop(items){
 async function runPhotoAnalysis(){
   _lookGreeted=false;chatLookPhoto=null;_lookCtx=null;_resetAskNudge();  // a fresh analysis → chat greets this look once; nudge re-arms
   var _ls0=document.getElementById('lookShot');if(_ls0)_ls0.style.display='none';
+  var _ll0=document.getElementById('lookLead');if(_ll0)_ll0.classList.remove('on');
   var _cp0=document.getElementById('clipPhoto');if(_cp0)_cp0.style.display='none';
   const occ=photoOccasion;
   const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
@@ -2969,6 +2973,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     if(photoData){
       var _src='data:image/jpeg;base64,'+photoData;
       var _ls=document.getElementById('lookShot');if(_ls){document.getElementById('lookShotImg').src=_src;_ls.style.display='block'}
+      var _ll=document.getElementById('lookLead');if(_ll)_ll.classList.add('on');
       var _lo=document.getElementById('lookOcc');if(_lo){if(occ){_lo.textContent=occ;_lo.classList.add('on')}else{_lo.textContent='';_lo.classList.remove('on')}}
       var _cp=document.getElementById('clipPhoto');if(_cp){document.getElementById('clipPhotoImg').src=_src;_cp.style.display='block'}
     }
