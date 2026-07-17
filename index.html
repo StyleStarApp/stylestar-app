@@ -856,7 +856,9 @@ body.res-fb{padding-left:0;padding-right:0}
 /* ===== Outfit-results hubs as full-width framed SQUARES: lit vanity mirror (Styling), curtain square (Shopping), pearl square (Portrait). Black outlines, no gold lines. ===== */
 #s-photo-res .p3-hubwrap{background:#17171c;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:14px;margin-bottom:24px;padding:0}
 #s-photo-res .retake-wrap{background:none;margin:0;padding:16px 0 4px}
-#s-photo-res .p3{box-shadow:0 12px 24px -14px rgba(0,0,0,.5)}
+/* p3 "what next" white zone bleeds full-width to the phone edges (no floating card) —
+   since the photo isn't framed, the white simply becomes a clean full-width section. */
+#s-photo-res .p3{box-shadow:none;width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:22px;padding-right:22px}
 /* frames go FULL-BLEED to the screen edges (content height, not forced square) */
 #s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-bottom:16px;display:flex;flex-direction:column}
 #s-photo-res .phub2{margin-bottom:0}
