@@ -1772,7 +1772,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </div>
 
 <div class="scr res-screen" id="s-photo-res">
-  <div class="top-back-wrap"><button class="top-back" onclick="showBack(photoPrevScreen)">&larr; Back</button></div>
+  <div class="top-back-wrap"><button class="top-back" onclick="photoResBack()">&larr; Back</button></div>
   <span class="rv-dust"><i class="du1"></i><i class="du2"></i><i class="du3"></i></span>
   <span class="spot"></span>
 
@@ -2618,6 +2618,14 @@ function showPhoto(){var a=document.querySelector('.scr.act');if(a&&a.id&&a.id!=
   var ed=document.getElementById('phEdit');if(ed)ed.style.display='none';
   document.getElementById('analyzeBtn').style.display='block';
   photoData=null;photoImg=null;_cPts={};_cropMode=false;_boxDrag=null;_resetAskNudge();resetOccasion()}
+// Back from the outfit results (#s-photo-res): return her to the upload screen with
+// her just-submitted photo STILL loaded, so she can change it, re-crop, or re-analyze
+// the same photo — never dead-ending to the menu. showPhoto() would wipe the photo,
+// so we re-show the screen directly. Falls back to the old behavior if no photo remains.
+function photoResBack(){
+  if(photoImg){show('s-photo');}
+  else{showBack(photoPrevScreen);}
+}
 // Optional "where are you headed?" picker — tailors the tips + shopping to the moment.
 function resetOccasion(){photoOccasion='';document.querySelectorAll('#occChips .occ-chip').forEach(function(c){c.classList.remove('sel')})}
 function pickOccasion(btn,name){
