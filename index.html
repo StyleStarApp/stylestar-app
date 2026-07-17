@@ -863,7 +863,7 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-photo-res .eng-lbl{color:#1a1a1a}
 /* "Finishing Touches" + "Complete the Look" board headers match the SHOPPING/STYLING titles; drop the little hairline rules (leaves the "Your Outfit Analysis" sub-label as-is) */
 #pTipsBoard .eng-lbl,#pShopBoard .eng-lbl{font:700 21px/1.1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#151515;white-space:nowrap;text-align:center}
-#pTipsBoard .eng-rule,#pShopBoard .eng-rule{display:none}
+#s-photo-res .eng-rule{display:none}
 /* widen the outfit-results boards + trim inner padding so the 21px headers sit on one line */
 #s-photo-res .p1,#s-photo-res .p2{width:368px}
 #s-photo-res .p2 .page{padding-left:14px;padding-right:14px}
@@ -879,7 +879,11 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-photo-res .tile2 .chip2 svg{width:27px;height:27px;stroke:#1a1a1a;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 #s-photo-res .tile2 .t2t{font:600 15px/1.16 'Jost',sans-serif;color:#1a1a1a}
 #s-photo-res .tile2 .t2s{font:400 12px/1.3 'Jost',sans-serif;color:#5b5349}
-#s-photo-res .hlbl{font:700 21px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#151515;text-align:center;margin:12px 0 8px}
+#s-photo-res .hlbl{font:700 21px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#151515;text-align:center;margin:0 0 4px}
+/* even + reduced gap above the STYLING/SHOPPING titles, and tighter gap to the first button */
+#s-photo-res .vhub{padding-top:30px!important}
+#s-photo-res .chub-in{padding-top:10px}
+#s-photo-res .vhub .act:first-of-type,#s-photo-res .chub-in .act:first-of-type{margin-top:6px}
 /* STYLING — lit vanity mirror: thicker silver frame, bigger bulbs */
 #s-photo-res .vhub{position:relative;padding:32px 26px 30px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55),inset 0 0 0 1px #8f8b86,inset 0 0 0 4px rgba(255,255,255,.92),inset 0 0 0 19px #E6E5E2,inset 0 0 0 20px #BBB8B3}
 #s-photo-res .vb{position:absolute;pointer-events:none}
@@ -1878,7 +1882,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="nextstep" id="photoNextStep">
           <div class="ns-lead">Not sure what&rsquo;s next? I&rsquo;ve got you <svg class="pinkheart" style="width:16px;height:16px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
           <button class="ns-btn ns-pink" onclick="openChatAboutLook()"><span class="ns-ic pink"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="ns-tx"><b>Ask me about this look</b><small>Shoes, layering, one notch more polished? Ask me.</small></span><span class="ns-ar">&rsaquo;</span></button>
-          <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more in this style</b><small>I&rsquo;ll find pieces that vibe with the look you shared</small></span><span class="ns-ar">&rsaquo;</span></button>
+          <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more in this style</b><small>I&rsquo;ll find more pieces that vibe with this look</small></span><span class="ns-ar">&rsaquo;</span></button>
         </div>
         </div>
       </div>
@@ -1894,7 +1898,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <span class="vb r"><i></i><i></i><i></i><i></i></span>
         <div class="hlbl">Styling</div>
         <div class="act" data-shelf onclick="showPhoto()">
-          <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze an outfit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
+          <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="ss">Upload a photo for feedback</div></div></div>
           <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
         </div>
         <div class="act" data-shelf onclick="openPrefs()">
