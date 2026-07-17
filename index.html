@@ -337,7 +337,7 @@ body.shop-brick{background-color:#E6E1D6;background-image:url("data:image/svg+xm
 .pref-done-acts .pda-dark-tile{background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
 #s-shopstyle .ss-shop-hdr{text-align:center;margin:6px 0 18px}
 #s-shopstyle.thinking .ss-shop-logo{font-size:23px}
-#shopLoadMsg{transition:opacity .4s ease}
+#shopLoadMsg{transition:opacity .4s ease;display:block;max-width:310px;margin:0 auto;text-wrap:balance}
 #s-shopstyle .ss-shop-title{font-family:'DM Serif Display',serif;font-size:25px;font-weight:400;color:#1a1a1a}
 #s-shopstyle .ss-shop-sub{font-size:13.5px;color:#6e6e6e;margin:5px auto 0;line-height:1.5;max-width:360px;text-wrap:balance}
 #s-shopstyle .ss-shop-talk{display:none;text-align:center;font-size:14px;color:#6e6e6e;margin:22px auto 4px;line-height:1.6}
@@ -3398,7 +3398,7 @@ async function _shopStyleGen(){
     if(bk)bk.style.display='';
   }catch(e){
     _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent='Shop your style';
-    cont.innerHTML='<div class="shop-loading">Couldn\'t load options right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="_shopStyleGen()" style="max-width:200px;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#2a1f05">Try again</button></div>';
+    cont.innerHTML='<div class="shop-loading">Couldn\'t load options right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="_shopStyleGen()" style="max-width:200px">Try again</button></div>';
     if(gf)gf.style.display='';
     if(bk)bk.style.display='';
   }
