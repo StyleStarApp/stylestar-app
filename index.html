@@ -98,12 +98,29 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
   box-shadow:0 6px 44px rgba(0,0,0,.14),inset 0 0 0 2px rgba(201,161,78,.6)}
 /* Info + Shop pages: bold two-band frame, gold + silver the same thickness (8px each) */
-.ss.shop-mirror,.ss.story-mirror,.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror{position:relative;border-radius:0;border:8px solid transparent;
+.ss.story-mirror,.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#F3E6B8 0%,#DFB94E 32%,#B8891F 62%,#E8CE7E 100%) border-box;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
+/* Shop your style: her personal boutique storefront — black store window with a
+   slight beveled inner edge, on the Mall's brick wall (body.shop-brick) */
+.ss.shop-mirror{position:relative;border-radius:0;border:11px solid #17171c;background:#fff;
+  box-shadow:inset 0 0 0 2px #9aa1a7,inset 0 0 0 3.5px #e6e9eb,0 18px 34px -18px rgba(0,0,0,.5)}
+body.shop-brick{background-color:#E6E1D6;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23FEFDFB'/%3E%3Cstop offset='0.5' stop-color='%23F8F6F1'/%3E%3Cstop offset='1' stop-color='%23EFEBE2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='40' height='24' fill='%23E6E1D6'/%3E%3Crect x='1' y='1' width='18' height='10' rx='1.4' fill='url(%23g)'/%3E%3Crect x='21' y='1' width='18' height='10' rx='1.4' fill='url(%23g)'/%3E%3Crect x='-10' y='13' width='18' height='10' rx='1.4' fill='url(%23g)'/%3E%3Crect x='10' y='13' width='18' height='10' rx='1.4' fill='url(%23g)'/%3E%3Crect x='30' y='13' width='18' height='10' rx='1.4' fill='url(%23g)'/%3E%3C/svg%3E")}
+/* the black/white awning mounted across the top of the shop window */
+#s-shopstyle .ssa-rod{display:block;height:2px;margin:-0.5rem -1.75rem 0;background:linear-gradient(180deg,#EAD08A,#C99A2C)}
+#s-shopstyle .ssa-awn{position:relative;height:34px;margin:0 -1.75rem 14px;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,0) calc(100% - 2.5px),#EBC65E calc(100% - 2.5px),#C99A2C 100%),
+    linear-gradient(180deg,rgba(0,0,0,0) 0 14px,rgba(255,255,255,.09) 14.5px,rgba(0,0,0,.12) 15.8px,rgba(0,0,0,0) 17px 100%),
+    linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.05) 16%,rgba(0,0,0,0) 42%,rgba(0,0,0,.26) 100%),
+    repeating-linear-gradient(90deg,#17171c 0 26px,#FBFBF9 26px 52px);
+  -webkit-mask:radial-gradient(13px 4px at 13px 0,#000 97%,#0000) bottom left/26px 4px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 4px) no-repeat;
+          mask:radial-gradient(13px 4px at 13px 0,#000 97%,#0000) bottom left/26px 4px repeat-x,linear-gradient(#000 0 0) top/100% calc(100% - 4px) no-repeat;
+  filter:drop-shadow(0 5px 4px rgba(0,0,0,.26))}
 /* My Story: a small pink heart by the signature (this page is Catherine herself) */
 .story-sig .ph,.dc-sign .ph{font-size:0.62em;vertical-align:0.12em;margin-left:2px}
 .pinkheart{fill:#F49AC1;vertical-align:middle;display:inline-block;transform:rotate(12deg)}
+.pinkheart.hl{transform:rotate(-12deg)}
 .sty-u{text-decoration:underline;text-decoration-color:#EC4899;text-decoration-thickness:1.5px;text-underline-offset:3px}
 #s-story .top-back-wrap{position:absolute;top:5px;right:8px;margin:0;z-index:20}
 /* Shop your style: its own DM-Serif title (twin to the Edit) */
@@ -1944,6 +1961,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 </div>
 
 <div class="scr" id="s-shopstyle">
+  <div class="ssa-rod"></div><div class="ssa-awn"></div>
   <div class="top-back-wrap"><button class="top-back" onclick="shopStyleBack()">&larr; Back</button></div>
   <div class="ss-shop-hdr">
     <div class="ss-shop-logo">Shop your style</div>
@@ -2394,6 +2412,7 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-shop');
   // Outfit results: let the framed rooms bleed to the true screen edges (drop the card's side margin).
   document.body.classList.toggle('res-fb',id==='s-photo-res');
+  document.body.classList.toggle('shop-brick',id==='s-shopstyle');
   // Frame the whole app column in the chrome vanity mirror while she takes the quiz.
   if(card)card.classList.toggle('quiz-mirror',id==='s-quiz');
   // Same chrome frame around the stylist chat.
@@ -3344,7 +3363,7 @@ function _openShopStyleNow(mode){
 async function _shopStyleGen(){
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
-  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='Shopping your style&hellip;';
+  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="pinkheart hl" style="width:17px;height:17px;margin-right:5px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>Shopping your style&hellip;';
   var talk=document.querySelector('#s-shopstyle .ss-shop-talk');if(talk)talk.classList.remove('on');
   var gf=document.querySelector('.quiz-footer');if(gf)gf.style.display='none';
   var bk=document.querySelector('#s-shopstyle .top-back-wrap');if(bk)bk.style.display='none';
