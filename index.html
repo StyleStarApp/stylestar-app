@@ -488,8 +488,11 @@ body.res-fb{padding-left:0;padding-right:0}
 .al-bulbs.right{top:5px;bottom:5px;right:5px;flex-direction:column;justify-content:space-between}
 .al-bulb{width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 40%,#F3D262 70%,#D3B048);animation:alBulb 2.4s ease-in-out infinite}
 /* photo */
-.al-photo{position:absolute;inset:22px;border-radius:2px;overflow:hidden}
-.al-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.al-photo{position:absolute;inset:22px;border-radius:2px;overflow:hidden;background:#141019}
+/* contain (not cover) so she sees her WHOLE framed photo head-to-toe while it analyzes —
+   matching exactly what she cropped and what the results screen shows. A tall/narrow crop
+   just gets a little dark matting on the sides, like a gallery mat. */
+.al-photo img{width:100%;height:100%;object-fit:contain;display:block}
 /* scanning beam */
 .al-beam{position:absolute;left:0;right:0;top:-8%;height:78px;pointer-events:none;animation:alScan 3.4s ease-in-out infinite}
 .al-beam .glow{position:absolute;inset:0;mix-blend-mode:screen;background:linear-gradient(180deg,rgba(246,231,180,0) 0%,rgba(246,231,180,.10) 45%,rgba(255,240,195,.5) 100%)}
