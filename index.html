@@ -858,7 +858,9 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-photo-res .retake-wrap{background:none;margin:0;padding:16px 0 4px}
 /* p3 "what next" white zone bleeds full-width to the phone edges (no floating card) —
    since the photo isn't framed, the white simply becomes a clean full-width section. */
-#s-photo-res .p3{box-shadow:none;width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:22px;padding-right:22px;border-radius:20px 20px 0 0}
+#s-photo-res .p3{box-shadow:none;width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:22px;padding-right:22px}
+/* section labels on the outfit page: black (not brown), Jost caps */
+#s-photo-res .eng-lbl{color:#1a1a1a}
 /* frames go FULL-BLEED to the screen edges (content height, not forced square) */
 #s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-bottom:16px;display:flex;flex-direction:column}
 #s-photo-res .phub2{margin-bottom:0}
@@ -1177,7 +1179,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .lookshot{display:none;position:relative;margin:0 auto 16px;width:190px;cursor:pointer;text-align:center}
 .res-screen .lookshot img{display:block;width:190px;height:252px;object-fit:contain;background:#fff;border:5px solid #fff;border-radius:2px;box-shadow:0 10px 24px -9px rgba(0,0,0,.55),0 0 0 1px rgba(201,162,78,.55)}
 .res-screen .lookshot .lscap{margin-top:9px;font:700 11px/1.3 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a6d20}
-.res-screen .lookshot .ls-occ{display:none;margin:6px auto 0;font:700 9.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a6d20;background:rgba(201,162,78,.14);border:1px solid rgba(201,162,78,.42);border-radius:999px;padding:5px 11px}
+.res-screen .lookshot .ls-occ{display:none;margin:6px auto 0;font:700 9.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#1a1a1a;background:#fff;border:1px solid #1a1a1a;border-radius:999px;padding:5px 11px}
 .res-screen .lookshot .ls-occ.on{display:inline-block}
 .res-screen .ls-expand{position:absolute;top:9px;right:9px;width:29px;height:29px;border-radius:50%;background:rgba(20,16,8,.6);display:flex;align-items:center;justify-content:center;cursor:pointer}
 .res-screen .ls-expand svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -1240,9 +1242,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .p3 .shop-section{width:auto;max-width:none;margin:16px 0 2px;padding:16px 0 0;background:none;box-shadow:none;border:0;border-top:1px solid rgba(201,162,78,.35);border-radius:0}
 
 /* ---- Outfit styling-session boards (celebrate / finishing touches / complete the look) ---- */
-.res-screen .occ-pill{display:inline-block;margin:10px auto 0;font:600 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a6d20;border:1px solid rgba(201,162,78,.55);border-radius:999px;padding:5px 12px}
+.res-screen .occ-pill{display:inline-block;margin:10px auto 0;font:600 10px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1a1a1a;background:#fff;border:1px solid #1a1a1a;border-radius:999px;padding:5px 12px}
 .res-screen .occ-pill:empty{display:none}
-.res-screen .worklbl{font:600 11px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#B8891E;margin:17px 0 3px}
+.res-screen .worklbl{font:600 11px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#1a1a1a;margin:17px 0 3px}
+.res-screen .worklbl .wl-star{color:#E3B53E}
 .res-screen .tips{text-align:left;margin-top:2px}
 .res-screen .tip{display:flex;gap:11px;padding:13px 0;border-top:1px solid rgba(201,162,78,.18)}
 .res-screen .tip:first-child{border-top:0;padding-top:2px}
@@ -1801,7 +1804,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <!-- DYNAMIC: occasion tag → #pOcc (empty when none chosen) -->
           <div class="occ-pill" id="pOcc"></div>
           <!-- "What's working" celebration label (hidden on partial/error) -->
-          <div class="worklbl" id="pWorkLbl">&#9733; What&rsquo;s working</div>
+          <div class="worklbl" id="pWorkLbl"><span class="wl-star">&#9733;</span> What&rsquo;s working</div>
           <!-- DYNAMIC: celebration paragraph → #prp -->
           <p class="para" id="prp"></p>
           <!-- Fallback action (e.g. "Share a full outfit photo" / "Try again") when there's no analysis -->
