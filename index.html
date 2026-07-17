@@ -837,7 +837,7 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-res .hub-card .p3-hub::before,#s-res .hub-card .p3-hub::after,#s-photo-res .hub-card .p3-hub::before,#s-photo-res .hub-card .p3-hub::after{display:none}
 #s-res .hub-card .act,#s-photo-res .hub-card .act{margin-top:14px}
 /* Outfit results: two gentle "what's next" recommendations sitting above the hubs */
-#s-photo-res .nextstep{margin:2px 0 8px;text-align:center}
+#s-photo-res .nextstep{margin:2px 0 0;text-align:center}
 #s-photo-res .ns-lead{font:400 18px/1.25 'DM Serif Display',serif;color:#211E1A;white-space:nowrap;margin-bottom:12px}
 #s-photo-res .ns-lead .pinkheart{width:16px;height:16px;vertical-align:-2px}
 #s-photo-res .ns-btn{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 15px;border-radius:2px;cursor:pointer;background:#fff;border:1.5px solid #BFC2C6;margin-bottom:11px;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
@@ -1174,19 +1174,21 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 @keyframes nudgePop{from{opacity:0;transform:translateY(8px) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes nudgeBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 /* Her outfit photo, kept on the results as an anchor (tap to chat about it) */
-.res-screen .ls-lead{display:none;font:700 15px/1.3 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#1a1a1a;text-align:center;margin:6px 0 12px}
+/* The whole "Here's your look" section framed in the SAME black gallery bulb frame as the "Analyzing your outfit" loader: black frame, gold hairline, gold bulbs glowing in a dark gutter around a light content panel */
+#s-photo-res .lookhub{position:relative;width:100vw;margin:0 calc(50% - 50vw) 18px;border:12px solid #191510;padding:24px;background:radial-gradient(120% 90% at 50% 18%,#2a2521,#100d0b);box-shadow:0 26px 40px -16px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.3)}
+#s-photo-res .lookhub .lh-hair{position:absolute;inset:0;border:1.5px solid rgba(201,162,78,.5);pointer-events:none;z-index:6}
+#s-photo-res .lookhub .lh-inner{position:relative;z-index:5;background:#FBFAF7;border-radius:2px;padding:26px 20px 24px}
+/* bulbs sit in the dark gutter, matching the loader (11px gold, static/calm on the results page) */
+#s-photo-res .lookhub .vb.t,#s-photo-res .lookhub .vb.b{left:16px;right:16px}
+#s-photo-res .lookhub .vb.l,#s-photo-res .lookhub .vb.r{top:20px;bottom:20px}
+#s-photo-res .lookhub .vb i{width:11px;height:11px}
+.res-screen .ls-lead{display:none;font:700 15px/1.3 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#1a1a1a;text-align:center;margin:0 0 13px}
 .res-screen .ls-lead.on{display:block}
-.res-screen .lookshot{display:none;position:relative;margin:0 auto 16px;width:214px;cursor:pointer;text-align:center}
-/* framed in the studio bulb mirror (continuity with the analyzing-outfit loader) so the recap reads "we really analyzed this look" */
-.res-screen .ls-frame{position:relative;width:190px;margin:0 auto;border:11px solid #191510;background:#191510;border-radius:2px;box-shadow:0 13px 28px -12px rgba(0,0,0,.62)}
-.res-screen .lookshot img{display:block;width:100%;height:244px;object-fit:contain;background:#fff}
-.res-screen .ls-hair{position:absolute;inset:0;border:1.5px solid rgba(201,162,78,.55);pointer-events:none;z-index:3}
-.res-screen .ls-bulbs{position:absolute;z-index:4;display:flex}
-.res-screen .ls-bulbs.t{top:4px;left:5px;right:5px;justify-content:space-between}
-.res-screen .ls-bulbs.b{bottom:4px;left:5px;right:5px;justify-content:space-between}
-.res-screen .ls-bulbs.l{top:5px;bottom:5px;left:4px;flex-direction:column;justify-content:space-between}
-.res-screen .ls-bulbs.r{top:5px;bottom:5px;right:4px;flex-direction:column;justify-content:space-between}
-.res-screen .ls-bulbs i{width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 37% 33%,#FFFBE3,#FFECA0 40%,#F3D262 70%,#D3B048);box-shadow:0 0 5px 1.5px rgba(244,214,120,.8)}
+.res-screen .lookshot{display:none;position:relative;margin:0 auto 18px;width:196px;cursor:pointer;text-align:center}
+/* photo: a slim dark edge + a thin gold hairline (the bulbs now live on the section frame, not the photo) */
+.res-screen .ls-frame{position:relative;width:186px;margin:0 auto;border:4px solid #191510;background:#191510;border-radius:2px;box-shadow:0 10px 22px -12px rgba(0,0,0,.6)}
+.res-screen .lookshot img{display:block;width:100%;height:242px;object-fit:contain;background:#fff}
+.res-screen .ls-hair{position:absolute;inset:0;border:1.5px solid rgba(201,162,78,.6);pointer-events:none;z-index:3}
 .res-screen .lookshot .lscap{margin-top:9px;font:700 11px/1.3 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a6d20}
 .res-screen .lookshot .ls-occ{display:none;margin:6px auto 0;font:700 9.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#1a1a1a;background:#fff;border:1px solid #1a1a1a;border-radius:999px;padding:5px 11px}
 .res-screen .lookshot .ls-occ.on{display:inline-block}
@@ -1851,15 +1853,24 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
     <!-- PIECE 4: the "what next" area -->
     <div class="p3">
-      <!-- BEAT 0 — her look: a warm heading + keepsake recap she can tap to zoom or chat about -->
-      <div class="ls-lead" id="lookLead">Here&rsquo;s your look</div>
-      <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><div class="ls-frame"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-hair"></span><span class="ls-bulbs t"><i></i><i></i><i></i><i></i><i></i></span><span class="ls-bulbs b"><i></i><i></i><i></i><i></i><i></i></span><span class="ls-bulbs l"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="ls-bulbs r"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span></div><span class="ls-occ" id="lookOcc"></span></div>
+      <!-- BEAT 0+1 — her look framed in one lit-vanity mirror: heading, hairline-framed photo, and the two next steps all inside the bulb frame -->
+      <div class="lookhub" id="lookHub" style="display:none">
+        <span class="vb t"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="vb b"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="vb l"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="vb r"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="lh-hair"></span>
+        <div class="lh-inner">
+        <div class="ls-lead" id="lookLead">Here&rsquo;s your look</div>
+        <div class="lookshot" id="lookShot" data-shelf onclick="openChatAboutLook()"><div class="ls-frame"><img id="lookShotImg" alt="The outfit you shared"><span class="ls-hair"></span><span class="ls-expand" onclick="openLightbox(event)"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></svg></span></div><span class="ls-occ" id="lookOcc"></span></div>
 
-      <!-- BEAT 1 — two gentle next steps: talk it through, or shop more in this style -->
-      <div class="nextstep" id="photoNextStep">
-        <div class="ns-lead">Not sure what&rsquo;s next? I&rsquo;ve got you <svg class="pinkheart" style="width:16px;height:16px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-        <button class="ns-btn ns-pink" onclick="openChatAboutLook()"><span class="ns-ic pink"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="ns-tx"><b>Ask me about this look</b><small>Shoes, layering, one notch more polished? Ask me.</small></span><span class="ns-ar">&rsaquo;</span></button>
-        <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more in this style</b><small>I&rsquo;ll find pieces that vibe with the look you shared</small></span><span class="ns-ar">&rsaquo;</span></button>
+        <!-- two gentle next steps: talk it through, or shop more in this style -->
+        <div class="nextstep" id="photoNextStep">
+          <div class="ns-lead">Not sure what&rsquo;s next? I&rsquo;ve got you <svg class="pinkheart" style="width:16px;height:16px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+          <button class="ns-btn ns-pink" onclick="openChatAboutLook()"><span class="ns-ic pink"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="ns-tx"><b>Ask me about this look</b><small>Shoes, layering, one notch more polished? Ask me.</small></span><span class="ns-ar">&rsaquo;</span></button>
+          <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more in this style</b><small>I&rsquo;ll find pieces that vibe with the look you shared</small></span><span class="ns-ar">&rsaquo;</span></button>
+        </div>
+        </div>
       </div>
 
       <!-- BEAT 2 — three framed "rooms": lit vanity mirror (Styling), curtain square (Shopping), pearl mirror (Portrait) -->
@@ -2890,7 +2901,7 @@ function _revealPhotoRes(){
 // Show/hide the finishing-touches + complete-the-look boards and the "what's working"
 // label together (all hidden when there's no full analysis to show — partial/error).
 function _photoBoards(on){
-  ['pTipsBoard','pShopBoard','pWorkLbl','photoNextStep'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=on?'':'none'});
+  ['pTipsBoard','pShopBoard','pWorkLbl','photoNextStep','lookHub'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=on?'':'none'});
 }
 // Decide the save area on the outfit screen. A profile save only makes sense once
 // she's taken the quiz; a quiz-skipper sees the "take the quiz" nudge instead.
