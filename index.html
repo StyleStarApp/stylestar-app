@@ -3045,7 +3045,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
       _revealPhotoRes();
       return;
     }
-    document.getElementById('prn').textContent=userName&&userName!=="You"?'Styling your look, '+userName:'Styling your look';
+    document.getElementById('prn').innerHTML=userName&&userName!=="You"?'Styling your look<br>'+_esc(userName):'Styling your look';
     document.getElementById('pOcc').textContent=occ?'For '+occ.toLowerCase():'';
     document.getElementById('prp').textContent=parsed.celebrate||'';
     _renderTips(parsed.tips);
