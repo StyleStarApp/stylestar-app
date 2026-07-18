@@ -343,7 +343,13 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .pref-done-acts .pda-pink-tile{background:#EC4899;box-shadow:0 3px 8px -3px rgba(236,72,153,.6)}
 .pref-done-acts .pda-dark-tile{background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
 .pref-anytime{font-size:12.5px;color:#7a746a;line-height:1.4;margin:16px auto 0;max-width:290px}
-.pref-anytime span{color:#EC4899;text-decoration:underline;cursor:pointer;white-space:nowrap}
+.pref-anytime span{color:#2FA35C;text-decoration:underline;cursor:pointer;white-space:nowrap}
+/* recap of what she just saved — soft pills, only the sections she filled in */
+.pref-recap{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;max-width:300px;margin:16px auto 2px}
+.pref-recap .prc{display:inline-flex;align-items:center;gap:6px;font:500 12.5px/1 'Jost',sans-serif;color:#4f4a41;background:#F7F3EA;border:1px solid #E4DAC6;border-radius:20px;padding:8px 13px}
+.pref-recap .prc b{color:#1a1a1a;font-weight:700}
+.pref-recap .prc .ck{width:13px;height:13px;flex:none}
+.pref-recap .prc .sw{width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.15);display:inline-block}
 #s-shopstyle .ss-shop-hdr{text-align:center;margin:0 0 18px}
 #s-shopstyle.thinking .ss-shop-logo{font-size:27px}
 #s-shopstyle.thinking .ss-shop-logo::before{left:calc(69.4% - 5px)}
@@ -2036,6 +2042,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 
     <div id="prefSavedBlock" style="display:none">
       <div class="pref-done-sub" id="prefSavedSub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
+      <div class="pref-recap" id="prefRecap"></div>
       <button class="btn-pink" onclick="prefShopNow()" style="max-width:280px"><span>Let's go shopping</span><svg class="lgs-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
       <div class="pref-done-acts">
         <button class="pda" onclick="openChat()"><span class="pda-tile pda-pink-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span>Ask your <span class="sty-u">stylist</span></span></button>
@@ -3564,6 +3571,7 @@ function showPrefDone(){
     savedBlock.style.display='block';
     if(dt)dt.textContent='Your style, in alignment';
     document.getElementById('prefSavedSub').textContent='Thank you for sharing these with me. Knowing your sizes, the colors you love, and the styles you reach for is the real secret to finding pieces that truly work for you. The more you tell me, the better it gets.';
+    _renderPrefRecap();
     syncPrefsToServer();
   }else{
     saveBlock.style.display='block';
@@ -3574,6 +3582,30 @@ function showPrefDone(){
   show('s-pref-done');
 }
 
+// Recap pills of what she just saved — a satisfying "it registered" beat, and a
+// gentle nudge to add the sections she left empty. Only shows filled-in categories.
+function _renderPrefRecap(){
+  var el=document.getElementById('prefRecap');if(!el)return;
+  var pills=[];
+  var sz=prefs.sizes||{};
+  if(['tops','bottoms','dresses','shoes'].some(function(k){return sz[k]&&sz[k].length>0})){
+    pills.push('<span class="prc"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="#2FA35C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6"/></svg><b>Sizes</b> saved</span>');
+  }
+  var cl=prefs.colorsLove||[];
+  if(cl.length>0){
+    var sw=cl.slice(0,4).map(function(name){
+      var col=prefColors.find(function(c){return c.n===name});
+      var hex=col?col.c:'#ccc';
+      var brd=(name==='White'||name==='Ivory'||name==='Pale Yellow')?';border-color:#ccc':'';
+      return '<span class="sw" style="background:'+hex+brd+'"></span>';
+    }).join('');
+    pills.push('<span class="prc">'+sw+'<b>'+cl.length+'</b> color'+(cl.length>1?'s':'')+' you love</span>');
+  }
+  var av=(prefs.neverWear||[]).length+(prefs.neverPatterns||[]).length;
+  if(av>0)pills.push('<span class="prc"><b>'+av+'</b> style'+(av>1?'s':'')+' to avoid</span>');
+  el.innerHTML=pills.join('');
+  el.style.display=pills.length?'flex':'none';
+}
 // Returning saver updated her preferences — quietly refresh the server copy so
 // it stays in sync. Never blocks the UI and never wipes existing data.
 async function syncPrefsToServer(){
@@ -3601,6 +3633,7 @@ function prefSaveComplete(email){
   savedBlock.style.display='block';
   var dt2=document.getElementById('prefDoneTitle');if(dt2)dt2.textContent='Your style, in alignment';
   document.getElementById('prefSavedSub').textContent='Thank you for sharing these with me. Knowing your sizes, the colors you love, and the styles you reach for is the real secret to finding pieces that truly work for you. The more you tell me, the better it gets.';
+  _renderPrefRecap();
   window.scrollTo(0,0);
 }
 async function savePrefProfile(){
