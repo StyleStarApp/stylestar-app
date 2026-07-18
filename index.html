@@ -867,7 +867,9 @@ body.res-fb{padding-left:0;padding-right:0}
 /* widen the outfit-results boards + trim inner padding so the 21px headers sit on one line */
 #s-photo-res .p1,#s-photo-res .p2{width:368px}
 #s-photo-res .p2 .page{padding-left:14px;padding-right:14px}
-#s-photo-res .worklbl{letter-spacing:.14em;white-space:nowrap}
+#s-photo-res .worklbl{letter-spacing:.14em;white-space:nowrap;position:relative}
+/* the pretty gold+silver star, tucked up-right of "What's working", tilted left */
+#s-photo-res .worklbl .wl-jewel{display:inline-block;width:23px;height:23px;vertical-align:middle;position:relative;top:-11px;margin-left:5px;transform:rotate(-20deg);filter:drop-shadow(0 1px 3px rgba(224,174,70,.35))}
 /* frames go FULL-BLEED to the screen edges (content height, not forced square) */
 #s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-bottom:16px;display:flex;flex-direction:column}
 #s-photo-res .phub2{margin-bottom:0}
@@ -879,11 +881,11 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-photo-res .tile2 .chip2 svg{width:27px;height:27px;stroke:#1a1a1a;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 #s-photo-res .tile2 .t2t{font:600 15px/1.16 'Jost',sans-serif;color:#1a1a1a}
 #s-photo-res .tile2 .t2s{font:400 12px/1.3 'Jost',sans-serif;color:#5b5349}
-#s-photo-res .hlbl{font:700 21px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#151515;text-align:center;margin:0 0 4px}
-/* even + reduced gap above the STYLING/SHOPPING titles, and tighter gap to the first button */
+#s-photo-res .hlbl{font:700 21px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#151515;text-align:center;margin:0 0 2px}
+/* even + reduced gap above the STYLING/SHOPPING titles, and a tight, equal gap to the first button */
 #s-photo-res .vhub{padding-top:30px!important}
 #s-photo-res .chub-in{padding-top:10px}
-#s-photo-res .vhub .act:first-of-type,#s-photo-res .chub-in .act:first-of-type{margin-top:6px}
+#s-photo-res .vhub .act:first-of-type,#s-photo-res .chub-in .act:first-of-type{margin-top:2px}
 /* STYLING — lit vanity mirror: thicker silver frame, bigger bulbs */
 #s-photo-res .vhub{position:relative;padding:32px 26px 30px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55),inset 0 0 0 1px #8f8b86,inset 0 0 0 4px rgba(255,255,255,.92),inset 0 0 0 19px #E6E5E2,inset 0 0 0 20px #BBB8B3}
 #s-photo-res .vb{position:absolute;pointer-events:none}
@@ -898,10 +900,10 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-photo-res .chub .awn-face{margin:0;height:38px}
 #s-photo-res .chub-in{position:relative;flex:1;display:flex;flex-direction:column;justify-content:center;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border:3px solid #17171c;border-top:none;border-radius:0 0 2px 2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.5);padding:24px 18px 26px}
 /* PORTRAIT — light pearl square, frame thickness matches the vanity mirror */
-#s-photo-res .phub2{position:relative;padding:18px;border-radius:2px;background:linear-gradient(150deg,#f4ecd6,#e7d9b2 55%,#f4ecd6);box-shadow:0 12px 26px -14px rgba(0,0,0,.5)}
-#s-photo-res .phub2-studs{position:absolute;inset:0;border-radius:2px;pointer-events:none;background:radial-gradient(5px 5px at 46% 40%,#fff 0,#f2ead4 44%,#d6c9a6 76%,transparent 86%) center top/21px 12px repeat-x,radial-gradient(5px 5px at 46% 40%,#fff 0,#f2ead4 44%,#d6c9a6 76%,transparent 86%) center bottom/21px 12px repeat-x,radial-gradient(5px 5px at 46% 40%,#fff 0,#f2ead4 44%,#d6c9a6 76%,transparent 86%) left center/12px 21px repeat-y,radial-gradient(5px 5px at 46% 40%,#fff 0,#f2ead4 44%,#d6c9a6 76%,transparent 86%) right center/12px 21px repeat-y}
+#s-photo-res .phub2{position:relative;padding:22px;border-radius:2px;background:linear-gradient(150deg,#f4ecd6,#e7d9b2 55%,#f4ecd6);box-shadow:0 12px 26px -14px rgba(0,0,0,.5)}
+#s-photo-res .phub2-studs{position:absolute;inset:0;border-radius:2px;pointer-events:none;background:radial-gradient(7px 7px at 46% 40%,#fff 0,#f2ead4 44%,#d6c9a6 76%,transparent 86%) center top/28px 17px repeat-x,radial-gradient(7px 7px at 46% 40%,#fff 0,#f2ead4 44%,#d6c9a6 76%,transparent 86%) center bottom/28px 17px repeat-x,radial-gradient(7px 7px at 46% 40%,#fff 0,#f2ead4 44%,#d6c9a6 76%,transparent 86%) left center/17px 28px repeat-y,radial-gradient(7px 7px at 46% 40%,#fff 0,#f2ead4 44%,#d6c9a6 76%,transparent 86%) right center/17px 28px repeat-y}
 #s-photo-res .phub2-in{flex:1;position:relative;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(158deg,#f1f3f5,#f8f9fa 45%,#edeff1);border-radius:1px;padding:22px 18px;text-align:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
-#s-photo-res .phub2 .plbl{font:700 17px/1.2 'Jost',sans-serif;letter-spacing:.22em;color:#1a1a1a;text-transform:uppercase;margin:0 0 15px;text-wrap:balance}
+#s-photo-res .phub2 .plbl{font:700 21px/1.1 'Jost',sans-serif;letter-spacing:.14em;color:#151515;text-transform:uppercase;white-space:nowrap;margin:0 0 14px}
 #s-photo-res .phub2 .pbig{font:400 23px/1.15 'DM Serif Display',serif;color:#1c1a16;margin:13px 0 5px}
 #s-photo-res .phub2 .psub{font:400 13px/1.4 'Jost',sans-serif;color:#5b5349;margin-bottom:18px}
 #s-photo-res .phub2 .pgo{display:inline-flex;align-items:center;gap:9px;background:#F5EFE2;color:#1a1a1a;font:700 12px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;border:1.5px solid #1a1a1a;border-radius:2px;padding:13px 22px;cursor:pointer;-webkit-tap-highlight-color:transparent;align-self:center}
@@ -909,11 +911,18 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-photo-res .phub2 .pgo svg.pa{width:16px;height:16px;stroke:#1a1a1a;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
 #s-photo-res .phub2 .pgo svg.ps{width:15px;height:15px;fill:#1a1a1a}
 /* Portrait hub: 2x2 grid of the four style keepsakes */
-#s-photo-res .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
-#s-photo-res .pbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:#fff;border:1.5px solid #1a1a1a;border-radius:2px;padding:15px 6px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
+#s-photo-res .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:6px}
+#s-photo-res .pbtn{display:flex;flex-direction:column;align-items:center;gap:8px;background:#fff;border:1.5px solid #1a1a1a;border-radius:2px;padding:9px 9px 11px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
 #s-photo-res .pbtn:active{transform:scale(.97);filter:brightness(.98)}
-#s-photo-res .pbtn .pbi{width:42px;height:42px;border-radius:10px;background:#F5EFE2;border:1.5px solid #1a1a1a;display:flex;align-items:center;justify-content:center;flex:none}
-#s-photo-res .pbtn .pbi svg{width:23px;height:23px;stroke:#1a1a1a;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+/* each button shows a mini version of the actual keepsake */
+#s-photo-res .pvis{width:100%;height:62px;border-radius:2px;overflow:hidden;border:1px solid #d3d7dc}
+#s-photo-res .pvis svg{width:100%;height:100%;display:block}
+#s-photo-res .pv-portrait{display:flex;align-items:center;justify-content:center;background:linear-gradient(158deg,#fdfbf6,#f4efe4)}
+#s-photo-res .pv-portrait .pv-star{width:40px;height:40px;filter:drop-shadow(0 1px 3px rgba(224,174,70,.35))}
+#s-photo-res .pv-sig{background:linear-gradient(158deg,#fdfbf6,#f2f0ea)}
+#s-photo-res .pv-const{background:radial-gradient(120% 100% at 50% 22%,#2a2521,#100d0b)}
+#s-photo-res .pv-mood{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:3px;padding:6px;background:#faf7f0}
+#s-photo-res .pv-mood .mq{border-radius:1px}
 #s-photo-res .pbtn .pbt{font:600 13.5px/1.1 'Jost',sans-serif;color:#1a1a1a}
 /* tighten the WB Shopping->Styling gap to match See my Portrait (~16px) */
 #s-wb .hub-shop{margin-bottom:0}
@@ -1829,7 +1838,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <!-- DYNAMIC: occasion tag → #pOcc (empty when none chosen) -->
           <div class="occ-pill" id="pOcc"></div>
           <!-- "What's working" celebration label (hidden on partial/error) -->
-          <div class="worklbl" id="pWorkLbl">What&rsquo;s working</div>
+          <div class="worklbl" id="pWorkLbl"><span class="wl-tx">What&rsquo;s working</span><svg class="wl-jewel" viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="wlStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#wlStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>
           <!-- DYNAMIC: celebration paragraph → #prp -->
           <p class="para" id="prp"></p>
           <!-- Fallback action (e.g. "Share a full outfit photo" / "Try again") when there's no analysis -->
@@ -1929,10 +1938,10 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <div class="phub2-in">
           <div class="plbl" id="portraitTitle">Your Style</div>
           <div class="pgrid">
-            <div class="pbtn" onclick="loadSaved()"><span class="pbi"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.6"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span class="pbt">Portrait</span></div>
-            <div class="pbtn" onclick="showSignature()"><span class="pbi"><svg viewBox="0 0 24 24"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1"/><circle cx="10" cy="17" r="2.1"/></svg></span><span class="pbt">Signature</span></div>
-            <div class="pbtn" onclick="saveStyleCard('quiz')"><span class="pbi"><svg viewBox="0 0 24 24"><path d="M5 8l6 3 3-5 5 7"/><circle cx="5" cy="8" r="1.4" fill="#1a1a1a" stroke="none"/><circle cx="11" cy="11" r="1.4" fill="#1a1a1a" stroke="none"/><circle cx="14" cy="6" r="1.4" fill="#1a1a1a" stroke="none"/><circle cx="19" cy="13" r="1.4" fill="#1a1a1a" stroke="none"/></svg></span><span class="pbt">Constellation</span></div>
-            <div class="pbtn" onclick="openVisionBoard()"><span class="pbi"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><rect x="13.5" y="13.5" width="7" height="7" rx="1"/></svg></span><span class="pbt">Mood Board</span></div>
+            <div class="pbtn" onclick="loadSaved()"><div class="pvis pv-portrait"><svg class="pv-star" viewBox="0 0 24 24"><defs><radialGradient id="pvPortStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#pvPortStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div><span class="pbt">Portrait</span></div>
+            <div class="pbtn" onclick="showSignature()"><div class="pvis pv-sig"><svg viewBox="0 0 100 62"><g stroke="#c4c8ce" stroke-width="3.5" stroke-linecap="round"><line x1="16" y1="17" x2="84" y2="17"/><line x1="16" y1="31" x2="84" y2="31"/><line x1="16" y1="45" x2="84" y2="45"/></g><g fill="#E4B948" stroke="#B7BCC2" stroke-width="1"><circle cx="44" cy="17" r="5.4"/><circle cx="66" cy="31" r="5.4"/><circle cx="32" cy="45" r="5.4"/></g></svg></div><span class="pbt">Signature</span></div>
+            <div class="pbtn" onclick="saveStyleCard('quiz')"><div class="pvis pv-const"><svg viewBox="0 0 100 62"><polyline points="16,22 34,40 52,15 70,36 86,20" fill="none" stroke="#8a7a44" stroke-width="1"/><g fill="#E9CF7A"><circle cx="16" cy="22" r="2.7"/><circle cx="34" cy="40" r="2.7"/><circle cx="52" cy="15" r="2.7"/><circle cx="70" cy="36" r="2.7"/><circle cx="86" cy="20" r="2.7"/><circle cx="42" cy="50" r="1.8"/><circle cx="24" cy="50" r="1.6"/></g></svg></div><span class="pbt">Constellation</span></div>
+            <div class="pbtn" onclick="openVisionBoard()"><div class="pvis pv-mood"><span class="mq" style="background:#E8C5C0"></span><span class="mq" style="background:#ECD98F"></span><span class="mq" style="background:#C9D6C4"></span><span class="mq" style="background:#E0AEBD"></span><span class="mq" style="background:#F3ECDC"></span><span class="mq" style="background:#BFCAD6"></span></div><span class="pbt">Mood Board</span></div>
           </div>
         </div>
       </div>
