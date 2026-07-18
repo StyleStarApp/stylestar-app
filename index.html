@@ -867,11 +867,11 @@ body.res-fb{padding-left:0;padding-right:0}
 /* widen the outfit-results boards + trim inner padding so the 21px headers sit on one line */
 #s-photo-res .p1,#s-photo-res .p2{width:368px}
 #s-photo-res .p2 .page{padding-left:14px;padding-right:14px}
-#s-photo-res .worklbl{letter-spacing:.14em;white-space:nowrap;position:relative}
-/* the pretty gold+silver star, tucked up-right of "What's working", tilted left, bigger + brighter with a breathing glow (like the Discovery CTA seal), no spin */
-#s-photo-res .worklbl .wl-jewel{display:inline-block;width:48px;height:48px;vertical-align:middle;position:relative;top:-17px;margin-left:7px;transform:rotate(-18deg);transform-origin:center;animation:wlStarBreath 2.8s ease-in-out infinite}
-@keyframes wlStarBreath{0%,100%{transform:rotate(-18deg) scale(1);filter:drop-shadow(0 0 5px rgba(244,208,102,.55)) drop-shadow(0 2px 3px rgba(120,90,20,.35)) brightness(1.05)}50%{transform:rotate(-18deg) scale(1.08);filter:drop-shadow(0 0 13px rgba(247,214,116,.95)) drop-shadow(0 2px 4px rgba(120,90,20,.35)) brightness(1.22)}}
-@media (prefers-reduced-motion:reduce){#s-photo-res .worklbl .wl-jewel{animation:none;filter:drop-shadow(0 0 6px rgba(244,208,102,.6))}}
+#s-photo-res .worklbl{letter-spacing:.14em;position:relative;text-align:center}
+/* the pretty gold+silver star, floated up-right so "What's working" stays centered; bigger, cleaner (little glow), tilted left, gentle breathing, no spin */
+#s-photo-res .worklbl .wl-jewel{position:absolute;top:-42px;right:0;width:58px;height:58px;transform:rotate(-16deg);transform-origin:center;animation:wlStarBreath 2.8s ease-in-out infinite}
+@keyframes wlStarBreath{0%,100%{transform:rotate(-16deg) scale(1);filter:drop-shadow(0 1px 2px rgba(150,110,30,.22)) brightness(1.02)}50%{transform:rotate(-16deg) scale(1.04);filter:drop-shadow(0 0 4px rgba(247,214,116,.45)) drop-shadow(0 1px 2px rgba(150,110,30,.22)) brightness(1.09)}}
+@media (prefers-reduced-motion:reduce){#s-photo-res .worklbl .wl-jewel{animation:none;filter:drop-shadow(0 1px 2px rgba(150,110,30,.22))}}
 /* frames go FULL-BLEED to the screen edges (content height, not forced square) */
 #s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-bottom:16px;display:flex;flex-direction:column}
 #s-photo-res .phub2{margin-bottom:0}
@@ -920,10 +920,14 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-photo-res .pvis svg{width:100%;height:100%;display:block}
 #s-photo-res .pvis img{width:100%;height:100%;object-fit:cover;object-position:center 45%;display:block}
 #s-photo-res .pv-portrait{display:flex;align-items:center;justify-content:center;background:linear-gradient(158deg,#fdfbf6,#f4efe4)}
-#s-photo-res .pv-portrait .pv-star{width:44px;height:44px;filter:drop-shadow(0 1px 3px rgba(224,174,70,.35))}
+#s-photo-res .pv-portrait .pv-star{width:120px;height:120px;filter:drop-shadow(0 1px 3px rgba(224,174,70,.3))}
 /* Signature: a real mini of the 12-spectrum chart, gold dots at her actual answers */
-#s-photo-res .pv-sig{background:linear-gradient(158deg,#fdfbf6,#f2f0ea);display:flex;flex-direction:column;justify-content:center;gap:8px;padding:13px 16px}
-#s-photo-res .pv-sig .pvs-row{position:relative;height:2.5px;border-radius:2px;background:#cdd1d6}
+#s-photo-res .pv-sig{background:linear-gradient(158deg,#fdfbf6,#f2f0ea);display:flex;flex-direction:column;justify-content:center;gap:7px;padding:11px 7px}
+#s-photo-res .pv-sig .pvs-row{display:flex;align-items:center;gap:4px}
+#s-photo-res .pv-sig .pvs-l,#s-photo-res .pv-sig .pvs-r{flex:0 0 auto;width:39px;font:600 4.8px/1 'Jost',sans-serif;letter-spacing:.01em;text-transform:uppercase;color:#8a8578;white-space:nowrap;overflow:hidden}
+#s-photo-res .pv-sig .pvs-l{text-align:right}
+#s-photo-res .pv-sig .pvs-r{text-align:left}
+#s-photo-res .pv-sig .pvs-track{position:relative;flex:1;height:2.5px;border-radius:2px;background:#cdd1d6}
 #s-photo-res .pv-sig .pvs-dot{position:absolute;top:50%;width:7px;height:7px;border-radius:50%;background:#E4B948;border:.6px solid #B7BCC2;transform:translate(-50%,-50%)}
 #s-photo-res .pv-const{background:radial-gradient(120% 100% at 50% 22%,#2a2521,#100d0b)}
 #s-photo-res .pv-mood{background:#faf7f0}
@@ -2665,7 +2669,7 @@ function _renderVisionThumb(){
 function _renderSigThumb(){
   var el=document.getElementById('pvSig');if(!el)return;
   if(!answers||answers.length<12){el.innerHTML='';return;}
-  var h='';for(var i=0;i<12;i++){var pct=((answers[i]-1)/10)*100;h+='<span class="pvs-row"><span class="pvs-dot" style="left:'+pct+'%"></span></span>';}
+  var h='';for(var i=0;i<12;i++){var pct=((answers[i]-1)/10)*100;var q=questions[i]||{left:'',right:''};h+='<span class="pvs-row"><span class="pvs-l">'+q.left+'</span><span class="pvs-track"><span class="pvs-dot" style="left:'+pct+'%"></span></span><span class="pvs-r">'+q.right+'</span></span>';}
   el.innerHTML=h;
 }
 // "Keep your portrait" inline save block → shared hardened save core.
