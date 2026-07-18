@@ -3570,7 +3570,7 @@ function showPrefDone(){
     saveBlock.style.display='none';
     savedBlock.style.display='block';
     if(dt)dt.textContent='Your style, in alignment';
-    document.getElementById('prefSavedSub').textContent='Thank you for sharing these with me. Knowing your sizes, the colors you love, and the styles you reach for is the key to finding pieces that truly work for you. The more clarity we have, the better.';
+    document.getElementById('prefSavedSub').textContent='Thank you for sharing your preferences. Knowing your sizes, colors, likes and dislikes is the key to finding pieces that truly work for you. The more clarity we have, the better.';
     _renderPrefRecap();
     syncPrefsToServer();
   }else{
@@ -3603,6 +3603,13 @@ function _renderPrefRecap(){
   }
   var av=(prefs.neverWear||[]).length+(prefs.neverPatterns||[]).length;
   if(av>0)pills.push('<span class="prc"><b>'+av+'</b> style'+(av>1?'s':'')+' to avoid</span>');
+  var ck='<svg class="ck" viewBox="0 0 24 24" fill="none" stroke="#2FA35C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6"/></svg>';
+  if((prefs.jewelry&&prefs.jewelry.trim())||(prefs.dailyShoes&&prefs.dailyShoes.trim())||(prefs.bagStyle&&prefs.bagStyle.trim())){
+    pills.push('<span class="prc">'+ck+'Jewelry, shoes &amp; bags</span>');
+  }
+  if((prefs.otherNotes&&prefs.otherNotes.trim())||(prefs.neverOther&&prefs.neverOther.trim())){
+    pills.push('<span class="prc">'+ck+'Your notes</span>');
+  }
   el.innerHTML=pills.join('');
   el.style.display=pills.length?'flex':'none';
 }
@@ -3632,7 +3639,7 @@ function prefSaveComplete(email){
   var savedBlock=document.getElementById('prefSavedBlock');
   savedBlock.style.display='block';
   var dt2=document.getElementById('prefDoneTitle');if(dt2)dt2.textContent='Your style, in alignment';
-  document.getElementById('prefSavedSub').textContent='Thank you for sharing these with me. Knowing your sizes, the colors you love, and the styles you reach for is the key to finding pieces that truly work for you. The more clarity we have, the better.';
+  document.getElementById('prefSavedSub').textContent='Thank you for sharing your preferences. Knowing your sizes, colors, likes and dislikes is the key to finding pieces that truly work for you. The more clarity we have, the better.';
   _renderPrefRecap();
   window.scrollTo(0,0);
 }
