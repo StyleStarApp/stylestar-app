@@ -286,7 +286,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 @media (max-width:384px){#s-pref .pref-page-title{font-size:16px}#s-pref .pref-t-star{width:20px;height:20px}}
 @media (max-width:352px){#s-pref .pref-page-title{font-size:14px;margin-left:-6px;margin-right:-6px}#s-pref .pref-t-star{width:17px;height:17px}}
 .pref-mast{display:flex;align-items:center;justify-content:space-between;margin:2px -13px 0.7rem -11px}
-#s-pref-done .pref-mast{margin-bottom:0.4rem}
+#s-pref-done .pref-mast{margin-bottom:0.25rem}
 .pref-mast .top-back{padding:4px 0;margin-top:-3px}
 .pref-word{font:400 19px/1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;white-space:nowrap;display:inline-block;position:relative;padding-bottom:7px}
 .pref-word .st{color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a}
@@ -331,7 +331,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-pref #prefNext:hover{opacity:1;filter:brightness(1.08)}
 #s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
 #s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
-.pref-done{text-align:center;padding:0.15rem 1rem 0.75rem}
+.pref-done{text-align:center;padding:0 1rem 0.5rem}
 .pref-done-star{margin:0 auto 14px;line-height:0}
 .pref-done-star svg{width:86px;height:86px;display:inline-block;filter:drop-shadow(0 3px 6px rgba(224,174,70,.32))}
 .pref-done-title{font-family:'DM Serif Display',serif;font-size:23px;font-weight:400;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
@@ -363,6 +363,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-pref-done .btn-p{border:1.5px solid #1a1a1a;background:#F5EFE2;color:#1a1a1a;box-shadow:none}
 #s-pref-done .btn-pink{border:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);color:#1a1a1a;box-shadow:0 0 0 3px #B4BAC0,0 0 0 6px #ECD070;margin:14px auto 10px;display:inline-flex;align-items:center;justify-content:center;gap:9px}
 #s-pref-done .btn-pink .lgs-ar{width:19px;height:19px;flex:none}
+#s-pref-done .btn-pink{position:relative;overflow:visible}
+#s-pref-done .btn-pink .hm-cta-seal{animation:ssSealPop 1.1s cubic-bezier(.34,1.56,.64,1) .15s 1 both,ssSealShimmer 2.7s ease-in-out 1.4s infinite}
 #s-pref-done .btn-p:hover,#s-pref-done .btn-pink:hover{opacity:1;filter:brightness(1.03)}
 .email-section{margin:1.5rem 0;text-align:center}
 .shop-section{margin:1.5rem 0;text-align:center}
@@ -2044,7 +2046,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
     <div id="prefSavedBlock" style="display:none">
       <div class="pref-done-sub" id="prefSavedSub">These preferences are saved and will make your shopping suggestions and chat advice more personalized.</div>
       <div class="pref-recap" id="prefRecap"></div>
-      <button class="btn-pink" onclick="prefShopNow()" style="max-width:280px"><span>Let's go shopping</span><svg class="lgs-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
+      <button class="btn-pink" onclick="prefShopNow()" style="max-width:280px"><svg class="hm-cta-seal" viewBox="0 0 24 24"><defs><radialGradient id="prefSeal" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#prefSeal)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span>Let's go shopping</span><svg class="lgs-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
       <div class="pref-done-acts">
         <button class="pda" onclick="openChat()"><span class="pda-tile pda-pink-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span>Ask your <span class="sty-u">stylist</span></span></button>
         <button class="pda" onclick="loadSaved()"><span class="pda-tile pda-dark-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#E3B53E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="#E3B53E" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><span>See my Style Portrait</span></button>
