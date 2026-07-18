@@ -1268,7 +1268,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 .res-screen .kin{display:block;width:100%;margin:0 auto 8px;border:1.5px solid #e4dcc6;border-radius:3px;padding:11px 14px;font:400 14px/1 'Jost',sans-serif;color:#211E1A;background:#fff;text-align:center}
 .res-screen .kin:focus{outline:none;border-color:#C8A060}
 .res-screen .kin::placeholder{color:#a49e8f}
-.res-screen .kbtn{width:100%;border:none;border-radius:3px;padding:13px;cursor:pointer;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#2a1f05;font:700 12px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 8px 16px -10px rgba(150,110,20,.55)}
+.res-screen .kbtn{width:100%;border:2px solid #CBA24B;border-radius:3px;padding:13px;cursor:pointer;background:#F5EFE2;color:#1f1d19;font:700 12px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase;box-shadow:none}
 .res-screen .keep-msg{font:500 12px/1.4 'Jost',sans-serif;color:#B08830;margin-top:9px;min-height:0}
 .res-screen .priv{font:400 11px/1.4 'Jost',sans-serif;color:#8a8578;margin-top:9px}
 .res-screen .priv u{cursor:pointer}
@@ -3175,7 +3175,7 @@ Respond with ONLY valid JSON:
     html+='<div class="shop-refresh"><button class="shop-refresh-btn" onclick="genOutfits(\''+source+'\')">↻ Show me different options</button></div>';
     document.getElementById(container).innerHTML=html;
   }catch(e){
-    document.getElementById(container).innerHTML='<div class="shop-loading">Couldn\'t load picks right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="genOutfits(\''+source+'\')" style="max-width:200px;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#2a1f05">Try again</button></div>';
+    document.getElementById(container).innerHTML='<div class="shop-loading">Couldn\'t load picks right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="genOutfits(\''+source+'\')" style="max-width:200px;background:#F5EFE2;color:#1a1a1a;border:1.5px solid #CBA24B">Try again</button></div>';
   }
 }
 let lastPhotoSliders=null,lastPhotoArchNames=[];
@@ -3218,7 +3218,7 @@ async function shopMyStyle(){
     html+='</div><div class="shop-refresh"><button class="shop-refresh-btn" onclick="shopMyStyle()">&#8635; Show me different picks</button></div>';
     cont.innerHTML=html;
   }catch(e){
-    cont.innerHTML='<div class="shop-loading">Couldn\'t load picks right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="shopMyStyle()" style="max-width:200px;background:linear-gradient(180deg,#F7EBC2,#EAD07A 44%,#DBB84E);color:#2a1f05">Try again</button></div>';
+    cont.innerHTML='<div class="shop-loading">Couldn\'t load picks right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="shopMyStyle()" style="max-width:200px;background:#F5EFE2;color:#1a1a1a;border:1.5px solid #CBA24B">Try again</button></div>';
   }
 }
 
