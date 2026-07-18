@@ -847,9 +847,11 @@ body.res-fb{padding-left:0;padding-right:0}
 /* Outfit results leads with Styling, so flip the hub top-gaps (Styling flush, Shopping gapped) */
 #s-photo-res .hub-style{margin:0 2px 0}
 #s-photo-res .hub-shop{margin:16px 2px 0}
-#s-res .hub-card .p3-hub,#s-photo-res .hub-card .p3-hub{display:block;text-align:center;margin:13px 0 11px;font-size:21px;letter-spacing:.2em;color:#151515}
+#s-res .hub-card .p3-hub,#s-photo-res .hub-card .p3-hub{display:block;text-align:center;margin:5px 0 2px;font-size:21px;letter-spacing:.2em;color:#151515}
 #s-res .hub-card .p3-hub::before,#s-res .hub-card .p3-hub::after,#s-photo-res .hub-card .p3-hub::before,#s-photo-res .hub-card .p3-hub::after{display:none}
-#s-res .hub-card .act,#s-photo-res .hub-card .act{margin-top:14px}
+/* match the outfit-page hub spacing: tight title->first button (11px), 18px between buttons */
+#s-res .hub-card .act,#s-photo-res .hub-card .act{margin-top:18px}
+#s-res .hub-card .p3-hub + .act,#s-photo-res .hub-card .p3-hub + .act{margin-top:9px}
 /* Outfit results: two gentle "what's next" recommendations sitting above the hubs */
 #s-photo-res .nextstep{margin:2px 0 0;text-align:center}
 #s-photo-res .ns-lead{font:400 18px/1.25 'DM Serif Display',serif;color:#211E1A;white-space:nowrap;margin-bottom:12px}
@@ -958,7 +960,7 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-wb .wb-chip-line{width:40px!important;height:40px!important;background:#F5EFE2!important;border:1px solid #D8C285!important;border-radius:9px!important;box-shadow:none!important;color:#26221c}
 #s-wb .wb-chip-line svg{width:24px;height:24px;color:#26221c}
 #s-wb .wb-item .wb-arr{color:#26221c!important}
-#s-wb .hub-card .wb-hub{margin:12px 0 8px}
+#s-wb .hub-card .wb-hub{margin:5px 0 8px}
 #s-wb .hub-card .wb-hub-t{font-size:21px;letter-spacing:.2em;color:#151515}
 #s-wb .hub-card .wb-shadow{display:none}
 #s-wb .wb-acts .wb-foot{margin:16px -16px -16px;padding:16px 12px 26px;border-top:1.5px solid rgba(196,201,207,.9);background:#FBFAF7;border-radius:0;box-shadow:none;justify-content:center}
