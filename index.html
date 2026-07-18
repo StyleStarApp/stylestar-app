@@ -3570,7 +3570,7 @@ function showPrefDone(){
     saveBlock.style.display='none';
     savedBlock.style.display='block';
     if(dt)dt.textContent='Your style, in alignment';
-    document.getElementById('prefSavedSub').textContent='Thank you for sharing these with me. Knowing your sizes, the colors you love, and the styles you reach for is the real secret to finding pieces that truly work for you. The more you tell me, the better it gets.';
+    document.getElementById('prefSavedSub').textContent='Thank you for sharing these with me. Knowing your sizes, the colors you love, and the styles you reach for is the key to finding pieces that truly work for you. The more clarity we have, the better.';
     _renderPrefRecap();
     syncPrefsToServer();
   }else{
@@ -3632,7 +3632,7 @@ function prefSaveComplete(email){
   var savedBlock=document.getElementById('prefSavedBlock');
   savedBlock.style.display='block';
   var dt2=document.getElementById('prefDoneTitle');if(dt2)dt2.textContent='Your style, in alignment';
-  document.getElementById('prefSavedSub').textContent='Thank you for sharing these with me. Knowing your sizes, the colors you love, and the styles you reach for is the real secret to finding pieces that truly work for you. The more you tell me, the better it gets.';
+  document.getElementById('prefSavedSub').textContent='Thank you for sharing these with me. Knowing your sizes, the colors you love, and the styles you reach for is the key to finding pieces that truly work for you. The more clarity we have, the better.';
   _renderPrefRecap();
   window.scrollTo(0,0);
 }
