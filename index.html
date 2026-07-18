@@ -868,8 +868,10 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-photo-res .p1,#s-photo-res .p2{width:368px}
 #s-photo-res .p2 .page{padding-left:14px;padding-right:14px}
 #s-photo-res .worklbl{letter-spacing:.14em;white-space:nowrap;position:relative}
-/* the pretty gold+silver star, tucked up-right of "What's working", tilted left */
-#s-photo-res .worklbl .wl-jewel{display:inline-block;width:23px;height:23px;vertical-align:middle;position:relative;top:-11px;margin-left:5px;transform:rotate(-20deg);filter:drop-shadow(0 1px 3px rgba(224,174,70,.35))}
+/* the pretty gold+silver star, tucked up-right of "What's working", tilted left, bigger + brighter with a breathing glow (like the Discovery CTA seal), no spin */
+#s-photo-res .worklbl .wl-jewel{display:inline-block;width:31px;height:31px;vertical-align:middle;position:relative;top:-13px;margin-left:6px;transform:rotate(-18deg);transform-origin:center;animation:wlStarBreath 2.8s ease-in-out infinite}
+@keyframes wlStarBreath{0%,100%{transform:rotate(-18deg) scale(1);filter:drop-shadow(0 0 5px rgba(244,208,102,.55)) drop-shadow(0 2px 3px rgba(120,90,20,.35)) brightness(1.05)}50%{transform:rotate(-18deg) scale(1.08);filter:drop-shadow(0 0 13px rgba(247,214,116,.95)) drop-shadow(0 2px 4px rgba(120,90,20,.35)) brightness(1.22)}}
+@media (prefers-reduced-motion:reduce){#s-photo-res .worklbl .wl-jewel{animation:none;filter:drop-shadow(0 0 6px rgba(244,208,102,.6))}}
 /* frames go FULL-BLEED to the screen edges (content height, not forced square) */
 #s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-bottom:16px;display:flex;flex-direction:column}
 #s-photo-res .phub2{margin-bottom:0}
@@ -914,15 +916,18 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-photo-res .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:6px}
 #s-photo-res .pbtn{display:flex;flex-direction:column;align-items:center;gap:8px;background:#fff;border:1.5px solid #1a1a1a;border-radius:2px;padding:9px 9px 11px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
 #s-photo-res .pbtn:active{transform:scale(.97);filter:brightness(.98)}
-/* each button shows a mini version of the actual keepsake */
-#s-photo-res .pvis{width:100%;height:62px;border-radius:2px;overflow:hidden;border:1px solid #d3d7dc}
+/* each button shows a mini rendering of the actual keepsake */
+#s-photo-res .pvis{width:100%;height:84px;border-radius:2px;overflow:hidden;border:1px solid #d3d7dc}
 #s-photo-res .pvis svg{width:100%;height:100%;display:block}
+#s-photo-res .pvis img{width:100%;height:100%;object-fit:cover;object-position:center 42%;display:block}
 #s-photo-res .pv-portrait{display:flex;align-items:center;justify-content:center;background:linear-gradient(158deg,#fdfbf6,#f4efe4)}
-#s-photo-res .pv-portrait .pv-star{width:40px;height:40px;filter:drop-shadow(0 1px 3px rgba(224,174,70,.35))}
-#s-photo-res .pv-sig{background:linear-gradient(158deg,#fdfbf6,#f2f0ea)}
+#s-photo-res .pv-portrait .pv-star{width:44px;height:44px;filter:drop-shadow(0 1px 3px rgba(224,174,70,.35))}
+/* Signature: a real mini of the 12-spectrum chart, gold dots at her actual answers */
+#s-photo-res .pv-sig{background:linear-gradient(158deg,#fdfbf6,#f2f0ea);display:flex;flex-direction:column;justify-content:center;gap:3px;padding:9px 13px}
+#s-photo-res .pv-sig .pvs-row{position:relative;height:2px;border-radius:2px;background:#cdd1d6}
+#s-photo-res .pv-sig .pvs-dot{position:absolute;top:50%;width:5px;height:5px;border-radius:50%;background:#E4B948;border:.5px solid #B7BCC2;transform:translate(-50%,-50%)}
 #s-photo-res .pv-const{background:radial-gradient(120% 100% at 50% 22%,#2a2521,#100d0b)}
-#s-photo-res .pv-mood{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:3px;padding:6px;background:#faf7f0}
-#s-photo-res .pv-mood .mq{border-radius:1px}
+#s-photo-res .pv-mood{background:#faf7f0}
 #s-photo-res .pbtn .pbt{font:600 13.5px/1.1 'Jost',sans-serif;color:#1a1a1a}
 /* tighten the WB Shopping->Styling gap to match See my Portrait (~16px) */
 #s-wb .hub-shop{margin-bottom:0}
@@ -1939,9 +1944,9 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
           <div class="plbl" id="portraitTitle">Your Style</div>
           <div class="pgrid">
             <div class="pbtn" onclick="loadSaved()"><div class="pvis pv-portrait"><svg class="pv-star" viewBox="0 0 24 24"><defs><radialGradient id="pvPortStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#pvPortStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div><span class="pbt">Portrait</span></div>
-            <div class="pbtn" onclick="showSignature()"><div class="pvis pv-sig"><svg viewBox="0 0 100 62"><g stroke="#c4c8ce" stroke-width="3.5" stroke-linecap="round"><line x1="16" y1="17" x2="84" y2="17"/><line x1="16" y1="31" x2="84" y2="31"/><line x1="16" y1="45" x2="84" y2="45"/></g><g fill="#E4B948" stroke="#B7BCC2" stroke-width="1"><circle cx="44" cy="17" r="5.4"/><circle cx="66" cy="31" r="5.4"/><circle cx="32" cy="45" r="5.4"/></g></svg></div><span class="pbt">Signature</span></div>
-            <div class="pbtn" onclick="saveStyleCard('quiz')"><div class="pvis pv-const"><svg viewBox="0 0 100 62"><polyline points="16,22 34,40 52,15 70,36 86,20" fill="none" stroke="#8a7a44" stroke-width="1"/><g fill="#E9CF7A"><circle cx="16" cy="22" r="2.7"/><circle cx="34" cy="40" r="2.7"/><circle cx="52" cy="15" r="2.7"/><circle cx="70" cy="36" r="2.7"/><circle cx="86" cy="20" r="2.7"/><circle cx="42" cy="50" r="1.8"/><circle cx="24" cy="50" r="1.6"/></g></svg></div><span class="pbt">Constellation</span></div>
-            <div class="pbtn" onclick="openVisionBoard()"><div class="pvis pv-mood"><span class="mq" style="background:#E8C5C0"></span><span class="mq" style="background:#ECD98F"></span><span class="mq" style="background:#C9D6C4"></span><span class="mq" style="background:#E0AEBD"></span><span class="mq" style="background:#F3ECDC"></span><span class="mq" style="background:#BFCAD6"></span></div><span class="pbt">Mood Board</span></div>
+            <div class="pbtn" onclick="showSignature()"><div class="pvis pv-sig" id="pvSig"></div><span class="pbt">Signature</span></div>
+            <div class="pbtn" onclick="saveStyleCard('quiz')"><div class="pvis pv-const"><img id="pvConstImg" alt="Your Style Constellation"></div><span class="pbt">Constellation</span></div>
+            <div class="pbtn" onclick="openVisionBoard()"><div class="pvis pv-mood"><img id="pvMoodImg" alt="Your Style Mood Board"></div><span class="pbt">Mood Board</span></div>
           </div>
         </div>
       </div>
@@ -2634,22 +2639,35 @@ function _renderArchNames(names,motto){
 }
 // Draw a small preview of the actual Style Constellation card into the results entry.
 function _renderCardThumb(){
-  var img=document.getElementById('scThumb');if(!img)return;
+  var imgs=['scThumb','pvConstImg'].map(function(id){return document.getElementById(id)}).filter(Boolean);
+  if(!imgs.length)return;
   try{buildCardBlob('quiz',function(blob,url){
-    if(!img)return;
-    var old=img.getAttribute('data-u');if(old){try{URL.revokeObjectURL(old)}catch(e){}}
-    img.src=url;img.setAttribute('data-u',url);
+    imgs.forEach(function(img){
+      var old=img.getAttribute('data-u');if(old){try{URL.revokeObjectURL(old)}catch(e){}}
+      img.src=url;img.setAttribute('data-u',url);img.style.display='block';
+    });
   });}catch(e){}
 }
 // Draw a small preview of the actual Vision Board into its results entry (the gold
 // star stays underneath as the fallback until the collage is ready).
 function _renderVisionThumb(){
-  var img=document.getElementById('vbThumb');if(!img)return;
+  var imgs=['vbThumb','pvMoodImg'].map(function(id){return document.getElementById(id)}).filter(Boolean);
+  if(!imgs.length)return;
   try{buildVisionBlob(function(blob,url){
-    if(!blob||!img)return;
-    var old=img.getAttribute('data-u');if(old){try{URL.revokeObjectURL(old)}catch(e){}}
-    img.src=url;img.setAttribute('data-u',url);img.style.display='block';
+    if(!blob)return;
+    imgs.forEach(function(img){
+      var old=img.getAttribute('data-u');if(old){try{URL.revokeObjectURL(old)}catch(e){}}
+      img.src=url;img.setAttribute('data-u',url);img.style.display='block';
+    });
   });}catch(e){}
+}
+// A real mini of her Style Signature: the 12-spectrum chart with gold dots at her
+// actual answers (mirrors the full signature/buildChart, just tiny).
+function _renderSigThumb(){
+  var el=document.getElementById('pvSig');if(!el)return;
+  if(!answers||answers.length<12){el.innerHTML='';return;}
+  var h='';for(var i=0;i<12;i++){var pct=((answers[i]-1)/10)*100;h+='<span class="pvs-row"><span class="pvs-dot" style="left:'+pct+'%"></span></span>';}
+  el.innerHTML=h;
 }
 // "Keep your portrait" inline save block → shared hardened save core.
 async function saveResKeep(nameId,emailId,msgId){
@@ -2944,6 +2962,8 @@ function _photoSaveArea(on){
   // "See my Style Portrait" only exists for quiz-takers (needs a saved portrait).
   var pp=document.getElementById('photoPortraitHub');if(pp)pp.style.display=quizTaken?'':'none';
   var ptt=document.getElementById('portraitTitle');if(ptt){var _pfn=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';ptt.textContent=_pfn?_pfn+'’s Style':'Your Style';}
+  // Fill the keepsake buttons with real mini renderings of her constellation, mood board + signature.
+  if(quizTaken){try{_renderCardThumb();_renderVisionThumb();_renderSigThumb();}catch(e){}}
   if(on===false){['resKeepPhoto','resSaveBtnPhoto','photoQuizNudge'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display='none'});return}
   var showSave=quizTaken&&!emailDone;
   ['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display=showSave?'':'none'});
