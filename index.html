@@ -333,8 +333,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-pref #prefBack{background:#fff;color:#3a352e;border:1.5px solid #8f8a80}
 #s-pref #prefBack:hover{background:#f7f6f3;color:#1c1a16}
 .pref-done{text-align:center;padding:0 1rem 2px}
-.pref-done-star{margin:-6px auto 4px;line-height:0}
-.pref-done-star svg{width:86px;height:86px;display:inline-block;filter:drop-shadow(0 0 6px rgba(244,208,102,.6)) drop-shadow(0 3px 4px rgba(120,90,20,.4))}
+.pref-done-star{margin:-12px auto 2px;line-height:0}
+.pref-done-star svg{width:86px;height:86px;display:inline-block;filter:none}
 .pref-done-title{font-family:'DM Serif Display',serif;font-size:23px;font-weight:400;color:#1a1a1a;margin-bottom:8px;line-height:1.25}
 .pref-done-sub{font-size:15px;color:#666;margin-bottom:1.5rem;line-height:1.5}
 .pref-done-acts{display:flex;gap:10px;max-width:280px;margin:12px auto 0}
@@ -344,7 +344,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .pref-done-acts .pda-tile svg{width:23px;height:23px}
 .pref-done-acts .pda-pink-tile{background:#EC4899;box-shadow:0 3px 8px -3px rgba(236,72,153,.6)}
 .pref-done-acts .pda-dark-tile{background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
-.pref-anytime{font-size:12.5px;color:#7a746a;line-height:1.4;margin:16px auto 0;max-width:290px}
+.pref-anytime{font-size:12.5px;color:#7a746a;line-height:1.4;margin:12px auto 0;max-width:290px}
 .pref-anytime span{color:#2FA35C;text-decoration:underline;cursor:pointer;white-space:nowrap}
 /* recap of what she just saved — soft pills, only the sections she filled in */
 .pref-recap{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;max-width:300px;margin:16px auto 2px}
@@ -365,7 +365,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-pref-done .btn-pink{border:none;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);color:#1a1a1a;box-shadow:0 0 0 3px #B4BAC0,0 0 0 6px #ECD070;margin:14px auto 10px;display:inline-flex;align-items:center;justify-content:center;gap:9px}
 #s-pref-done .btn-pink .lgs-ar{width:19px;height:19px;flex:none}
 #s-pref-done .btn-pink{position:relative;overflow:visible}
-#s-pref-done .btn-pink .hm-cta-seal{animation:none}
+#s-pref-done .btn-pink .hm-cta-seal{animation:none;filter:none}
 #s-pref-done .btn-p:hover,#s-pref-done .btn-pink:hover{opacity:1;filter:brightness(1.03)}
 .email-section{margin:1.5rem 0;text-align:center}
 .shop-section{margin:1.5rem 0;text-align:center}
@@ -2055,7 +2055,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button class="pda" onclick="loadSaved()"><span class="pda-tile pda-dark-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#E3B53E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="#E3B53E" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><span>See my Style Portrait</span></button>
       </div>
       <div class="pref-anytime">Your preferences are never locked in. <span onclick="openPrefs()">Add or refine them anytime &rarr;</span></div>
-      <button class="retake" onclick="prefNotNow()" style="margin-top:12px">Not right now</button>
+      <button class="retake" onclick="prefNotNow()" style="margin-top:8px">Not right now</button>
     </div>
   </div>
 </div>
