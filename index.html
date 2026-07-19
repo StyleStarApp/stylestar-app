@@ -2131,7 +2131,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
         <button class="chat-chip" onclick="document.getElementById('chatPhotoIn').click()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><circle cx="12" cy="13.3" r="3.2"/></svg>Send a photo for advice</button>
       </div>
     </div>
-    <div class="chat-privacy">Your messages and photos are private to you, and never stored on our servers</div>
+    <div class="chat-privacy">&#128274; Your messages and photos are private (no one reads them), and never stored on our servers.</div>
     <div id="chatFresh" style="text-align:center;margin:-2px 0 4px"><button class="chat-fresh" onclick="askClearChat()">Start a fresh conversation</button></div>
     <div class="chat-input-wrap">
       <button class="chat-photo-btn" onclick="document.getElementById('chatPhotoIn').click()" aria-label="Send a photo">📸</button>
@@ -3935,7 +3935,7 @@ function renderPrefSizes(c){
   c.innerHTML=`
     <div class="pref-title">My Sizes</div>
     <div class="pref-sub">Share as much or as little as you'd like. Your preferences help us style you better.</div>
-    <div class="pref-private">&#128274; Private to you. Only used to personalize your styling, never seen by anyone.</div>
+    <div class="pref-private">&#128274; Your details are private (no one sees them), and only used to personalize your styling.</div>
     <div class="pref-label">Tops</div>
     <div class="pref-grid sizegrid">${chips(tops,'pref-size-tops',prefs.sizes.tops)}</div>
     <div class="pref-label">Bottoms</div>
