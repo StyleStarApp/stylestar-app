@@ -2511,7 +2511,7 @@ function show(id,skipHistory){
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
   var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-chat');
   var gf=document.querySelector('.quiz-footer');
-  if(gf)gf.style.display=(ownChrome||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref')?'none':'';
+  if(gf)gf.style.display=(ownChrome||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
@@ -4066,12 +4066,11 @@ function showStory(){
   // Only invite a from-the-home-page visitor to take the quiz.
   document.getElementById('storyQuiz').style.display=(storyPrevScreen==='s-wel')?'block':'none';
 }
-// "Take the quiz" from My Story: start the quiz and return to the welcome
-// page (not back to the story) if she backs out of question 1.
+// "Take the quiz" from My Story: start the quiz. If she backs out of question 1
+// she returns to My Story (where she launched it), not the Discover page, which
+// is wrong for a returning user. startQ() sets quizOrigin to the current screen.
 function storyStartQuiz(){
-  document.querySelector('.quiz-footer').style.display='';
   startQ();
-  quizOrigin='s-wel';
 }
 function closeStory(){
   document.querySelector('.quiz-footer').style.display='';
