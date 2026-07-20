@@ -731,7 +731,7 @@ body.res-fb{padding-left:0;padding-right:0}
    hair below the gold rail -- no floating pendant above it anymore. */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #D8DDE2;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
-#s-wb .wb-greet{background:radial-gradient(130% 85% at 50% 12%,#ffffff 0%,#f7f8f9 32%,#eceef0 64%,#e3e6e8 100%);z-index:1;border-width:11px;margin-top:0;padding:0 30px 8px;overflow:visible;
+#s-wb .wb-greet{background:radial-gradient(140% 95% at 50% 10%,#ffffff 0%,#eef2f4 20%,#c9d0d4 40%,#f4f7f8 55%,#bcc4c9 75%,#e3e8eb 100%);z-index:1;border-width:11px;margin-top:0;padding:0 30px 8px;overflow:visible;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
 /* Chain + name render as ONE stack ON TOP of the greeting frame (higher z-index). The
    chain is a single SVG (top ring wrapping the gold rail, a run of small tightly
@@ -746,7 +746,7 @@ body.res-fb{padding-left:0;padding-right:0}
 /* when she hasn't given her name: no label on the chain (the chain itself is unchanged --
    its length doesn't depend on whether we know her name) */
 #s-wb.wb-noname .wb-chainname{display:none}
-#s-wb .wb-chainspace{height:49px}
+#s-wb .wb-chainspace{height:45px}
 #s-wb .wb-acts{border:none;margin-top:0;padding:0;background:none;box-shadow:none}
 #s-wb .wb-sweep{position:absolute;top:0;bottom:0;left:0;width:100%;background:radial-gradient(ellipse 62% 130% at 50% 50%,rgba(255,255,255,.42),rgba(255,255,255,0) 70%);pointer-events:none;z-index:9;opacity:0}
 #s-wb .wb-greet .wb-sweep{animation:wbBloom 2s ease .3s both}
@@ -809,10 +809,9 @@ body.res-fb{padding-left:0;padding-right:0}
    stays the same size so the logo (positioned as a % of it) and all the surrounding
    text keep their exact positions; only the star SHAPE is scaled up beyond its box via
    transform, so it overlaps neighboring text/space rather than pushing anything. */
-#s-wb .wb-starwrap{position:relative;width:134px;height:134px;margin:-13px auto 0;
-  background:radial-gradient(closest-side,rgba(233,190,90,.32),rgba(233,190,90,0) 70%);background-size:170% 170%;background-position:center}
+#s-wb .wb-starwrap{position:relative;width:134px;height:134px;margin:-13px auto 0}
 #s-wb .wb-starsvg{width:100%;height:100%;transform:scale(1.95);pointer-events:none}
-#s-wb .wb-hlogo{position:absolute;left:50%;top:43%;transform:translate(-50%,-52%);width:75px;height:auto;z-index:1}
+#s-wb .wb-hlogo{position:absolute;left:50%;top:43%;transform:translate(-50%,-52%);width:80px;height:auto;z-index:1}
 #s-wb .wb-port-motto{position:relative;z-index:2;font-family:'Lora',serif;font-style:italic;font-weight:600;font-size:15.5px;color:#463c2e;line-height:1.42;max-width:270px;margin:-34px auto 7px}
 #s-wb .wb-port-motto.wb-tagline{font-family:'DM Sans',sans-serif;font-style:normal;font-size:14px;color:#5a5044}
 #s-wb .wb-port-cta{font-family:'Jost',sans-serif;font-size:13.5px;font-weight:600;color:#1a1a1a;letter-spacing:.01em;display:inline-flex;justify-content:center;align-items:center;gap:5px;white-space:nowrap;
@@ -1426,7 +1425,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <div class="wb-chainspace"></div>
         <div class="wb-starwrap">
           <svg class="wb-starsvg" viewBox="0 0 24 24">
-          <path fill="#FFFFFF" stroke="#C8971E" stroke-width="0.07" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
+          <path fill="none" stroke="#AEB4BA" stroke-width="0.22" stroke-linejoin="round" stroke-linecap="round" transform="translate(12 12) scale(1.065) translate(-12 -12)" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/>
+          <path fill="#FFFFFF" stroke="#DDAF3F" stroke-width="0.1" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
           <img class="wb-hlogo" src="logo-star.png" alt="Style Star">
         </div>
         <div class="wb-port-motto" id="wbPortMotto"></div>
