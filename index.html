@@ -1005,39 +1005,28 @@ body.res-fb{padding-left:0;padding-right:0}
 
 /* ===== Opening entrance — simple star reveal =====
    An opaque black overlay draws its OWN centered star + logo, independent of whatever
-   screen is underneath: the star fades in large, gives one soft shimmer/sparkle burst,
-   then the whole overlay fades away -- revealing the destination screen (s-wel or s-wb)
-   exactly as it already rendered beneath it. Nothing about the destination's own content
-   is scaled, hidden, or re-animated by this, so there's no cascade and nothing for the
+   screen is underneath: the star fades in large, gives one soft glow burst, then the
+   whole overlay fades away -- revealing the destination screen (s-wel or s-wb) exactly
+   as it already rendered beneath it. Nothing about the destination's own content is
+   scaled, hidden, or re-animated by this, so there's no cascade and nothing for the
    two to ever get out of sync with. */
 .hm-entrance{display:none;position:fixed;inset:0;z-index:9998;pointer-events:none;background:#0a0a0b}
 body.ss-anim .hm-entrance{display:flex;align-items:center;justify-content:center}
 body.ss-done .hm-entrance{display:none}
-.ss-starwrap{position:relative;width:280px;height:280px;max-width:80vw;max-height:80vw;opacity:0;transform:scale(.72)}
+/* margin-top nudges the star up a touch -- true flex/viewport centering can still read
+   as slightly low on phones (address-bar/home-indicator chrome eats into the visible
+   area unevenly), so this is a small deliberate optical correction. */
+.ss-starwrap{position:relative;width:280px;height:280px;max-width:80vw;max-height:80vw;margin-top:-40px;opacity:0;transform:scale(.72)}
 .ss-glow{position:absolute;left:50%;top:50%;width:400px;height:400px;margin:-200px 0 0 -200px;opacity:0;transform:scale(.5)}
 .ss-star-svg{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 0 30px rgba(233,190,90,.55))}
 .ss-star-logo{position:absolute;left:50%;top:47%;transform:translate(-50%,-52%);width:36%;height:auto}
-.ss-spark{position:absolute;width:11px;height:11px;opacity:0}
-.ss-spark::before,.ss-spark::after{content:'';position:absolute;background:linear-gradient(90deg,transparent,#FBF1C2,transparent)}
-.ss-spark::before{left:0;right:0;top:50%;height:1.6px;transform:translateY(-50%)}
-.ss-spark::after{top:0;bottom:0;left:50%;width:1.6px;transform:translateX(-50%)}
-.ss-spark.s1{top:2%;left:12%}
-.ss-spark.s2{top:14%;right:4%}
-.ss-spark.s3{bottom:6%;left:2%}
-.ss-spark.s4{bottom:0;right:18%}
 
 body.ss-play .ss-starwrap{animation:ssStarIn .7s cubic-bezier(.2,.7,.2,1) .1s forwards}
 body.ss-play .ss-glow{animation:ssGlowBurst 1s ease .72s both}
-body.ss-play .ss-spark{animation:ssTwinkle .8s ease both}
-body.ss-play .ss-spark.s1{animation-delay:.82s}
-body.ss-play .ss-spark.s2{animation-delay:.94s}
-body.ss-play .ss-spark.s3{animation-delay:1.02s}
-body.ss-play .ss-spark.s4{animation-delay:.9s}
 body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 
 @keyframes ssStarIn{to{opacity:1;transform:scale(1)}}
 @keyframes ssGlowBurst{0%{opacity:0;transform:scale(.55)}50%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(1.4)}}
-@keyframes ssTwinkle{0%{opacity:0;transform:scale(.4)}45%{opacity:1;transform:scale(1.15)}100%{opacity:0;transform:scale(.7)}}
 @keyframes ssOverlayOut{to{opacity:0}}
 @media (prefers-reduced-motion: reduce){
   body.ss-anim .hm-entrance,body.ss-play .hm-entrance{display:none}
@@ -1423,21 +1412,30 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="wb-chainstack">
         <svg class="wb-chainsvg" viewBox="0 0 26 66" fill="none">
           <defs><linearGradient id="wbChainG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E4A6"/><stop offset=".5" stop-color="#DDAF3F"/><stop offset="1" stop-color="#B8891F"/></linearGradient></defs>
-          <ellipse cx="13" cy="9" rx="6" ry="7" stroke="url(#wbChainG)" stroke-width="1.2"/>
-          <ellipse cx="13" cy="15.0" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="18.4" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="21.8" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="25.2" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="28.6" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="32.0" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="35.4" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="38.8" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="42.2" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="45.6" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="49.0" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="52.4" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="55.8" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
-          <ellipse cx="13" cy="62" rx="2.8" ry="3.6" stroke="url(#wbChainG)" stroke-width="1.1"/>
+          <ellipse cx="13" cy="9" rx="5" ry="6" stroke="url(#wbChainG)" stroke-width="0.9"/>
+          <ellipse cx="13" cy="14.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="16.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="18.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="20.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="22.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="24.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="26.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="28.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="30.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="32.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="34.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="36.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="38.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="40.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="42.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="44.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="46.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="48.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="50.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="52.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="54.0" rx="1" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="56.0" rx="1.6" ry="1" stroke="url(#wbChainG)" stroke-width="0.45"/>
+          <ellipse cx="13" cy="62" rx="1.8" ry="2.4" stroke="url(#wbChainG)" stroke-width="0.7"/>
         </svg>
         <div class="wb-chainname" id="wbPortTitle"></div>
       </div>
@@ -1578,7 +1576,6 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <svg class="ss-glow" viewBox="0 0 200 200"><defs><radialGradient id="ssGlowG" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FCEBAE" stop-opacity=".9"/><stop offset="45%" stop-color="#E8BE55" stop-opacity=".32"/><stop offset="100%" stop-color="#E8BE55" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="100" fill="url(#ssGlowG)"/></svg>
       <svg class="ss-star-svg" viewBox="0 0 24 24"><defs><linearGradient id="ssStarHalo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#ssStarHalo)" stroke-width="0.4" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/></svg>
       <img class="ss-star-logo" src="logo-star.png" alt="Style Star">
-      <span class="ss-spark s1"></span><span class="ss-spark s2"></span><span class="ss-spark s3"></span><span class="ss-spark s4"></span>
     </div>
   </div>
 
