@@ -4646,7 +4646,7 @@ function refreshWbBadges(){
   var ed=document.getElementById('wbEditBadge');
   if(ed){if(wbEditHasNew())ed.classList.add('on');else ed.classList.remove('on');}
 }
-var WB_MSGS=['Your own personal stylist,<br>made with love to help you shine.','Created with love by a real stylist<br>to help you shine.','This is my gift to you:<br>everything I know about style,<br>made clear, easy, and fun.','Made with love, to help you shine<br>your style out to the world.','Built with heart, here to help you<br>shine your light.','Style is one of the most beautiful<br>ways to shine your light.','Here to help you feel confident,<br>put-together, and fully you.'];
+var WB_MSGS=['Your own personal stylist,<br>made with love to help you shine.','I created this with love,<br>as a real stylist, to help you shine.','This is my gift to you:<br>everything I know about style,<br>made clear, easy, and fun.','Made with love, to help you shine<br>your style out to the world.','Built with heart, here to help you<br>shine your light.','I believe style is one of the most<br>beautiful ways to shine your light.','Here to help you feel confident,<br>put-together, and fully you.'];
 var SHOP_MSGS=['Align your style. Shine your light.','Your signature style is coming together.','Here to help you shine your light.','Embracing your unique personal style.','Personalized for you.','Bringing out your most confident you.','Style with intention and heart.'];
 var LOADING_MSGS=['Gathering all the best options for you&hellip;','Looking for pieces you&rsquo;ll love&hellip;','Finding pieces that fit your style story&hellip;','Looking through thousands of options for you&hellip;','Finding pieces that fit your signature style&hellip;','Searching all the latest options, just for you&hellip;'];
 var _lastLoadMsg=-1;
@@ -4701,7 +4701,7 @@ function updateWbScreen(){
     else{var last=parseInt(localStorage.getItem('ss_wb_msg')||'-1',10),i;
       do{i=Math.floor(Math.random()*WB_MSGS.length);}while(WB_MSGS.length>1&&i===last);
       try{localStorage.setItem('ss_wb_msg',String(i));}catch(e){}
-      pm.innerHTML=WB_MSGS[i]+wbHeart;pm.classList.add('wb-tagline');}
+      pm.innerHTML='“'+WB_MSGS[i]+'”'+wbHeart;pm.classList.add('wb-tagline');}
     pm.style.display='';}
   refreshWbBadges();
 }
@@ -4805,9 +4805,12 @@ async function autoRestoreFromLink(){
 // first thing shown. Honors prefers-reduced-motion, and always tears the overlay
 // down afterward.
 function maybePlayEntrance(){
+  // Welcome Back's board is deliberately excluded from this reveal now (it used to
+  // play here too, but the board's own board is meant to be a still, static board --
+  // see the #s-wb .hm-room/.wbx !important overrides above, which also guard against
+  // the reveal still being mid-flight from s-wel if she navigates to s-wb quickly).
   var wel=document.getElementById('s-wel');
-  var wb=document.getElementById('s-wb');
-  var scr=(wel&&wel.classList.contains('act'))?wel:((wb&&wb.classList.contains('act'))?wb:null);
+  var scr=(wel&&wel.classList.contains('act'))?wel:null;
   if(!scr)return;
   if(document.body.classList.contains('ss-anim')||document.body.classList.contains('ss-play')||document.body.classList.contains('ss-done'))return;
   var reduce=false;
@@ -4816,7 +4819,7 @@ function maybePlayEntrance(){
   requestAnimationFrame(function(){
     // Aim the two flying door-stars + the burst at the real logo so they merge
     // dead-centre on it, whatever the screen size.
-    var logo=scr.querySelector('.hm-star-inner img')||scr.querySelector('.hm-star-inner')||scr.querySelector('.wb-hlogo')||scr.querySelector('.wb-starwrap');
+    var logo=scr.querySelector('.hm-star-inner img')||scr.querySelector('.hm-star-inner');
     var flyL=document.getElementById('ssFlyL'),flyR=document.getElementById('ssFlyR'),burst=document.getElementById('ssBurst');
     if(logo&&flyL&&flyR&&burst){
       var r=logo.getBoundingClientRect();
