@@ -738,7 +738,7 @@ body.res-fb{padding-left:0;padding-right:0}
    the frame's silver border, and continues down inside to the ring -- a fine gold chain
    throughout, not silver. Her name simply writes across the chain where they cross. */
 #s-wb .wb-chainstack{position:absolute;left:50%;top:-9px;transform:translateX(-50%);width:220px;z-index:10;pointer-events:none}
-#s-wb .wb-chainloop{position:absolute;left:50%;top:0;transform:translateX(-50%);display:block}
+#s-wb .wb-chainloop{position:absolute;left:50%;top:-6px;transform:translateX(-50%);display:block}
 #s-wb .wb-chain{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:1.6px;height:40px;
   background:repeating-linear-gradient(180deg,#F0CE72 0 3px,#B8891F 3px 6px);border-radius:1px}
 #s-wb .wb-ring{position:absolute;left:50%;top:44px;transform:translateX(-50%);width:8px;height:10px;border:1.4px solid #C8971E;border-radius:50%}
@@ -1465,7 +1465,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="wb-bulbs l"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-bulbs r"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-chainstack">
-        <svg class="wb-chainloop" width="16" height="11" viewBox="0 0 16 11" fill="none"><path d="M2 10.5C2 4 14 4 14 10.5" stroke="url(#wbChainLoopG)" stroke-width="1.5" stroke-linecap="round"/><defs><linearGradient id="wbChainLoopG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F0CE72"/><stop offset="1" stop-color="#B8891F"/></linearGradient></defs></svg>
+        <svg class="wb-chainloop" width="16" height="17" viewBox="0 0 16 17" fill="none"><path d="M2 16.5C2 5 14 5 14 16.5" stroke="url(#wbChainLoopG)" stroke-width="1.5" stroke-linecap="round"/><defs><linearGradient id="wbChainLoopG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F0CE72"/><stop offset="1" stop-color="#B8891F"/></linearGradient></defs></svg>
         <div class="wb-chain"></div>
         <div class="wb-ring"></div>
         <div class="wb-chainname" id="wbPortTitle"></div>
@@ -4684,7 +4684,7 @@ function updateWbScreen(){
   var wbScr=document.getElementById('s-wb');if(wbScr)wbScr.classList.toggle('wb-noname',!fn);
   if(pt){pt.textContent=fn?(fn+'’s Style'):'';}
   if(pm){var mo=wbMotto();
-    var wbHeart='<svg class="pinkheart" style="width:14px;height:14px;margin-left:3px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
+    var wbHeart='<svg class="pinkheart" style="width:14px;height:14px;margin-left:3px;vertical-align:-5px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
     if(mo){pm.innerHTML='“'+wbEsc(mo)+'”'+wbHeart;pm.classList.remove('wb-tagline');}
     else{var last=parseInt(localStorage.getItem('ss_wb_msg')||'-1',10),i;
       do{i=Math.floor(Math.random()*WB_MSGS.length);}while(WB_MSGS.length>1&&i===last);
