@@ -726,29 +726,30 @@ body.res-fb{padding-left:0;padding-right:0}
     linear-gradient(180deg,#171719,#0a0a0b);
   background-repeat:no-repeat,no-repeat;background-position:center,center;
   box-shadow:inset 0 0 90px rgba(0,0,0,.5)}
-#s-wb .hm-room{position:relative;padding-top:14px;max-width:400px;margin:0 auto}
-/* silver mirror frames (greeting on top, actions below). The greeting frame now sits
-   flush right under the gold rail -- no floating pendant above it anymore. */
+#s-wb .hm-room{position:relative;padding-top:5px;max-width:400px;margin:0 auto}
+/* silver mirror frames (greeting on top, actions below). The greeting frame sits just a
+   hair below the gold rail -- no floating pendant above it anymore. */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #D8DDE2;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
-#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:0;padding:0 30px 22px;overflow:visible;
+#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:0;padding:0 30px 15px;overflow:visible;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
 /* chain + ring + name render as ONE stack ON TOP of the greeting frame (higher z-index),
-   starting right at the top of the frame so it visually bridges the gold rail, crosses the
-   frame's silver border, and continues down inside to the ring -- a gold chain throughout,
-   not silver. Her name simply writes across the chain where they cross. */
-#s-wb .wb-chainstack{position:absolute;left:50%;top:-3px;transform:translateX(-50%);width:220px;z-index:10;pointer-events:none}
-#s-wb .wb-chain{position:absolute;left:50%;top:0;transform:translateX(-50%);width:3px;height:64px;
-  background:repeating-linear-gradient(180deg,#F0CE72 0 5px,#B8891F 5px 10px);border-radius:2px}
-#s-wb .wb-ring{position:absolute;left:50%;top:60px;transform:translateX(-50%);width:9px;height:11px;border:1.6px solid #C8971E;border-radius:50%}
-#s-wb .wb-chainname{position:absolute;left:-90px;right:-90px;top:15px;height:44px;display:flex;align-items:center;justify-content:center;
-  font:400 26px/1.1 'DM Serif Display',serif;color:#211E1A;padding:0 8px}
+   starting right at the top of the frame so it visually loops over the gold rail, crosses
+   the frame's silver border, and continues down inside to the ring -- a fine gold chain
+   throughout, not silver. Her name simply writes across the chain where they cross. */
+#s-wb .wb-chainstack{position:absolute;left:50%;top:-9px;transform:translateX(-50%);width:220px;z-index:10;pointer-events:none}
+#s-wb .wb-chainloop{position:absolute;left:50%;top:-6px;transform:translateX(-50%);display:block}
+#s-wb .wb-chain{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:1.6px;height:40px;
+  background:repeating-linear-gradient(180deg,#F0CE72 0 3px,#B8891F 3px 6px);border-radius:1px}
+#s-wb .wb-ring{position:absolute;left:50%;top:44px;transform:translateX(-50%);width:8px;height:10px;border:1.4px solid #C8971E;border-radius:50%}
+#s-wb .wb-chainname{position:absolute;left:-90px;right:-90px;top:11px;height:34px;display:flex;align-items:center;justify-content:center;
+  font:400 25px/1.1 'DM Serif Display',serif;color:#211E1A;padding:0 8px}
 /* when she hasn't given her name: no label, shorter chain, star sits higher */
-#s-wb.wb-noname .wb-chain{height:30px}
-#s-wb.wb-noname .wb-ring{top:26px}
+#s-wb.wb-noname .wb-chain{height:20px}
+#s-wb.wb-noname .wb-ring{top:24px}
 #s-wb.wb-noname .wb-chainname{display:none}
-#s-wb .wb-chainspace{height:64px}
-#s-wb.wb-noname .wb-chainspace{height:30px}
+#s-wb .wb-chainspace{height:40px}
+#s-wb.wb-noname .wb-chainspace{height:20px}
 #s-wb .wb-acts{border:none;margin-top:0;padding:0;background:none;box-shadow:none}
 #s-wb .wb-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
 #s-wb .wb-sweep{position:absolute;top:0;bottom:0;left:0;width:100%;background:radial-gradient(ellipse 62% 130% at 50% 50%,rgba(255,255,255,.42),rgba(255,255,255,0) 70%);pointer-events:none;z-index:9;opacity:0}
@@ -809,10 +810,10 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-wb .wb-pf-label{position:relative;text-align:center;font-family:'DM Serif Display',Georgia,serif;font-size:19px;color:#221e18;line-height:1;margin-bottom:11px}
 #s-wb .wb-portrait{position:relative;cursor:pointer;text-align:center;padding:2px 4px 0}
 /* the star -- bigger now -- hangs directly beneath the chain/ring above */
-#s-wb .wb-starwrap{position:relative;width:134px;height:134px;margin:-6px auto 0}
+#s-wb .wb-starwrap{position:relative;width:134px;height:134px;margin:-13px auto 0}
 #s-wb .wb-starsvg{width:100%;height:100%;filter:drop-shadow(0 4px 8px rgba(200,151,30,.25))}
 #s-wb .wb-hlogo{position:absolute;left:50%;top:47%;transform:translate(-50%,-52%);width:63px;height:auto}
-#s-wb .wb-port-motto{font-family:'Lora',serif;font-style:italic;font-size:15.5px;color:#463c2e;line-height:1.42;max-width:270px;margin:4px auto 11px}
+#s-wb .wb-port-motto{font-family:'Lora',serif;font-style:italic;font-size:15.5px;color:#463c2e;line-height:1.42;max-width:270px;margin:-2px auto 7px}
 #s-wb .wb-port-motto.wb-tagline{font-family:'DM Sans',sans-serif;font-style:normal;font-size:14px;color:#5a5044}
 #s-wb .wb-port-cta{font-family:'Jost',sans-serif;font-size:16px;font-weight:600;color:#1a1a1a;letter-spacing:.01em;display:flex;justify-content:center;align-items:center;gap:5px;padding-left:20px;white-space:nowrap}
 #s-wb .wb-port-cta span{text-decoration:underline;text-underline-offset:3px}
@@ -1069,6 +1070,18 @@ body.ss-fast .hm-h1,body.ss-fast .hm-sub,body.ss-fast .hm-body,body.ss-fast .hm-
 /* terminal state after the reveal — stable, no restart flicker */
 body.ss-done .hm-room{transform:none}
 body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-cta,body.ss-done #restoreSection,body.ss-done .hm-divwrap,body.ss-done .hm-shelves,body.ss-done .hm-foot,body.ss-done #s-wb .wbx{opacity:1;transform:none;animation:none}
+
+/* Welcome Back only: the gold rail lives OUTSIDE #s-wb .hm-room and is never
+   transformed by the reveal, but .hm-room itself gets scaled (.95 -> 1) during
+   the reveal. That mismatch is exactly what can make the chain look briefly
+   out of place next to the rail on some devices. Simplest fix: this screen's
+   room/board never takes part in that scale/slide at all -- it renders in its
+   final position immediately, so the chain-to-rail alignment can never depend
+   on animation timing. (An ID selector here outranks the body.ss-* class
+   rules above regardless of source order, so this always wins.)
+   The star-burst overlay itself is unaffected and still plays normally. */
+#s-wb .hm-room{transform:none!important;animation:none!important}
+#s-wb .wbx{opacity:1!important;transform:none!important;animation:none!important}
 
 @keyframes ssVeilOut{to{opacity:0}}
 @keyframes ssHomeIn{to{transform:scale(1)}}
@@ -1464,6 +1477,7 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
       <div class="wb-bulbs l"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-bulbs r"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-chainstack">
+        <svg class="wb-chainloop" width="16" height="17" viewBox="0 0 16 17" fill="none"><path d="M2 16.5C2 5 14 5 14 16.5" stroke="url(#wbChainLoopG)" stroke-width="1.5" stroke-linecap="round"/><defs><linearGradient id="wbChainLoopG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F0CE72"/><stop offset="1" stop-color="#B8891F"/></linearGradient></defs></svg>
         <div class="wb-chain"></div>
         <div class="wb-ring"></div>
         <div class="wb-chainname" id="wbPortTitle"></div>
@@ -4632,7 +4646,7 @@ function refreshWbBadges(){
   var ed=document.getElementById('wbEditBadge');
   if(ed){if(wbEditHasNew())ed.classList.add('on');else ed.classList.remove('on');}
 }
-var WB_MSGS=['Your own personal stylist,<br>made with love to help you shine.','Created with love by a real stylist<br>to help you shine.','This is my gift to you:<br>everything I know about style,<br>made clear, easy, and fun.','Made with love, to help you shine<br>your style out to the world.','Built with heart, here to help you<br>shine your light.','Style is one of the most beautiful<br>ways to shine your light.','Here to help you feel confident,<br>put-together, and fully you.'];
+var WB_MSGS=['Your own personal stylist,<br>made with love to help you shine.','This is my gift to you:<br>everything I know about style,<br>made clear, easy, and fun.','Made with love, to help you shine<br>your style out to the world.','Built with heart, here to help you<br>shine your light.','I believe style is one of the most<br>beautiful ways to shine your light.','Here to help you feel confident,<br>put-together, and fully you.'];
 var SHOP_MSGS=['Align your style. Shine your light.','Your signature style is coming together.','Here to help you shine your light.','Embracing your unique personal style.','Personalized for you.','Bringing out your most confident you.','Style with intention and heart.'];
 var LOADING_MSGS=['Gathering all the best options for you&hellip;','Looking for pieces you&rsquo;ll love&hellip;','Finding pieces that fit your style story&hellip;','Looking through thousands of options for you&hellip;','Finding pieces that fit your signature style&hellip;','Searching all the latest options, just for you&hellip;'];
 var _lastLoadMsg=-1;
@@ -4682,11 +4696,12 @@ function updateWbScreen(){
   var wbScr=document.getElementById('s-wb');if(wbScr)wbScr.classList.toggle('wb-noname',!fn);
   if(pt){pt.textContent=fn?(fn+'’s Style'):'';}
   if(pm){var mo=wbMotto();
-    if(mo){pm.innerHTML='“'+wbEsc(mo)+'”';pm.classList.remove('wb-tagline');}
+    var wbHeart='<svg class="pinkheart" style="width:14px;height:14px;margin-left:3px;vertical-align:-5px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
+    if(mo){pm.innerHTML='“'+wbEsc(mo)+'”'+wbHeart;pm.classList.remove('wb-tagline');}
     else{var last=parseInt(localStorage.getItem('ss_wb_msg')||'-1',10),i;
       do{i=Math.floor(Math.random()*WB_MSGS.length);}while(WB_MSGS.length>1&&i===last);
       try{localStorage.setItem('ss_wb_msg',String(i));}catch(e){}
-      pm.innerHTML=WB_MSGS[i];pm.classList.add('wb-tagline');}
+      pm.innerHTML='“'+WB_MSGS[i]+'”'+wbHeart;pm.classList.add('wb-tagline');}
     pm.style.display='';}
   refreshWbBadges();
 }
@@ -4790,9 +4805,12 @@ async function autoRestoreFromLink(){
 // first thing shown. Honors prefers-reduced-motion, and always tears the overlay
 // down afterward.
 function maybePlayEntrance(){
+  // Welcome Back's board is deliberately excluded from this reveal now (it used to
+  // play here too, but the board's own board is meant to be a still, static board --
+  // see the #s-wb .hm-room/.wbx !important overrides above, which also guard against
+  // the reveal still being mid-flight from s-wel if she navigates to s-wb quickly).
   var wel=document.getElementById('s-wel');
-  var wb=document.getElementById('s-wb');
-  var scr=(wel&&wel.classList.contains('act'))?wel:((wb&&wb.classList.contains('act'))?wb:null);
+  var scr=(wel&&wel.classList.contains('act'))?wel:null;
   if(!scr)return;
   if(document.body.classList.contains('ss-anim')||document.body.classList.contains('ss-play')||document.body.classList.contains('ss-done'))return;
   var reduce=false;
@@ -4801,7 +4819,7 @@ function maybePlayEntrance(){
   requestAnimationFrame(function(){
     // Aim the two flying door-stars + the burst at the real logo so they merge
     // dead-centre on it, whatever the screen size.
-    var logo=scr.querySelector('.hm-star-inner img')||scr.querySelector('.hm-star-inner')||scr.querySelector('.wb-hlogo')||scr.querySelector('.wb-starwrap');
+    var logo=scr.querySelector('.hm-star-inner img')||scr.querySelector('.hm-star-inner');
     var flyL=document.getElementById('ssFlyL'),flyR=document.getElementById('ssFlyR'),burst=document.getElementById('ssBurst');
     if(logo&&flyL&&flyR&&burst){
       var r=logo.getBoundingClientRect();
