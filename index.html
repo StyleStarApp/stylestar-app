@@ -726,18 +726,29 @@ body.res-fb{padding-left:0;padding-right:0}
     linear-gradient(180deg,#171719,#0a0a0b);
   background-repeat:no-repeat,no-repeat;background-position:center,center;
   box-shadow:inset 0 0 90px rgba(0,0,0,.5)}
-#s-wb .hm-room{position:relative;padding-top:6px;max-width:400px;margin:0 auto}
-/* the star pendant hangs in front of the greeting mirror; it is the reveal-star merge target.
-   Lifted up so the chrome bracket posts meet the gold rail (no dark gap). */
-#s-wb .wb-pend{position:relative;width:100%;height:34px;z-index:6;margin-top:-17px}
-/* the whole pendant is one SVG (hook + ring + star + logo), so the parts stay locked together.
-   The hanger hook curves around the top of the gold rail. */
-#s-wb .wb-pendsvg{position:absolute;top:-13px;left:50%;transform:translateX(-50%);z-index:6;filter:drop-shadow(0 3px 6px rgba(200,151,30,.16)) drop-shadow(0 5px 5px rgba(28,20,6,.12))}
-/* silver mirror frames (greeting on top, actions below) */
+#s-wb .hm-room{position:relative;padding-top:14px;max-width:400px;margin:0 auto}
+/* silver mirror frames (greeting on top, actions below). The greeting frame now sits
+   flush right under the gold rail -- no floating pendant above it anymore. */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #D8DDE2;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
-#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:-24px;padding:158px 30px 22px;
+#s-wb .wb-greet{z-index:1;border-width:11px;margin-top:0;padding:0 30px 22px;overflow:visible;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
+/* chain + ring + name render as ONE stack ON TOP of the greeting frame (higher z-index),
+   starting right at the top of the frame so it visually bridges the gold rail, crosses the
+   frame's silver border, and continues down inside to the ring -- a gold chain throughout,
+   not silver. Her name simply writes across the chain where they cross. */
+#s-wb .wb-chainstack{position:absolute;left:50%;top:-3px;transform:translateX(-50%);width:220px;z-index:10;pointer-events:none}
+#s-wb .wb-chain{position:absolute;left:50%;top:0;transform:translateX(-50%);width:3px;height:64px;
+  background:repeating-linear-gradient(180deg,#F0CE72 0 5px,#B8891F 5px 10px);border-radius:2px}
+#s-wb .wb-ring{position:absolute;left:50%;top:60px;transform:translateX(-50%);width:9px;height:11px;border:1.6px solid #C8971E;border-radius:50%}
+#s-wb .wb-chainname{position:absolute;left:-90px;right:-90px;top:15px;height:44px;display:flex;align-items:center;justify-content:center;
+  font:400 26px/1.1 'DM Serif Display',serif;color:#211E1A;padding:0 8px}
+/* when she hasn't given her name: no label, shorter chain, star sits higher */
+#s-wb.wb-noname .wb-chain{height:30px}
+#s-wb.wb-noname .wb-ring{top:26px}
+#s-wb.wb-noname .wb-chainname{display:none}
+#s-wb .wb-chainspace{height:64px}
+#s-wb.wb-noname .wb-chainspace{height:30px}
 #s-wb .wb-acts{border:none;margin-top:0;padding:0;background:none;box-shadow:none}
 #s-wb .wb-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
 #s-wb .wb-sweep{position:absolute;top:0;bottom:0;left:0;width:100%;background:radial-gradient(ellipse 62% 130% at 50% 50%,rgba(255,255,255,.42),rgba(255,255,255,0) 70%);pointer-events:none;z-index:9;opacity:0}
@@ -797,8 +808,11 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-wb .wb-portrait-frame .wb-item{margin:0}
 #s-wb .wb-pf-label{position:relative;text-align:center;font-family:'DM Serif Display',Georgia,serif;font-size:19px;color:#221e18;line-height:1;margin-bottom:11px}
 #s-wb .wb-portrait{position:relative;cursor:pointer;text-align:center;padding:2px 4px 0}
-#s-wb .wb-port-title{font-family:'DM Serif Display',Georgia,serif;font-size:26px;color:#221e18;line-height:1.05;margin-bottom:9px}
-#s-wb .wb-port-motto{font-family:'Lora',serif;font-style:italic;font-size:15.5px;color:#463c2e;line-height:1.42;max-width:270px;margin:0 auto 11px}
+/* the star -- bigger now -- hangs directly beneath the chain/ring above */
+#s-wb .wb-starwrap{position:relative;width:134px;height:134px;margin:-6px auto 0}
+#s-wb .wb-starsvg{width:100%;height:100%;filter:drop-shadow(0 4px 8px rgba(200,151,30,.25))}
+#s-wb .wb-hlogo{position:absolute;left:50%;top:47%;transform:translate(-50%,-52%);width:63px;height:auto}
+#s-wb .wb-port-motto{font-family:'Lora',serif;font-style:italic;font-size:15.5px;color:#463c2e;line-height:1.42;max-width:270px;margin:4px auto 11px}
 #s-wb .wb-port-motto.wb-tagline{font-family:'DM Sans',sans-serif;font-style:normal;font-size:14px;color:#5a5044}
 #s-wb .wb-port-cta{font-family:'Jost',sans-serif;font-size:16px;font-weight:600;color:#1a1a1a;letter-spacing:.01em;display:flex;justify-content:center;align-items:center;gap:5px;padding-left:20px;white-space:nowrap}
 #s-wb .wb-port-cta span{text-decoration:underline;text-underline-offset:3px}
@@ -1438,38 +1452,29 @@ body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-
 <div class="scr" id="s-wb">
   <div class="hm-goldrail"></div>
   <div class="hm-room">
-    <!-- Hanging rod + S-hook + crowning star. The star is the reveal's flying-star merge target. -->
-    <div class="wb-pend">
-      <!-- ONE connected pendant: chrome S-hook grips the gold rail, threads the top jewel ring,
-           the two rings hold the star's jump-ring, and the star hangs snug beneath. All drawn in a
-           single SVG coordinate space so the pieces can never drift apart. Rail sits at ~y16-22. -->
-      <svg class="wb-pendsvg" width="170" height="192" viewBox="0 0 170 192" fill="none">
-        <defs>
-          <linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient>
-          <linearGradient id="wbHookWire" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8A9097"/><stop offset=".5" stop-color="#C9CED3"/><stop offset="1" stop-color="#6A7077"/></linearGradient>
-        </defs>
-        <!-- a simple S-hook: top curl laps over the gold rail, bottom curl passes through the jewel ring -->
-        <path d="M85 13 C79 13 79 23 85 23 C91 23 91 33 85 33" stroke="url(#wbHookWire)" stroke-width="1.9" stroke-linecap="round"/>
-        <!-- ONE jewel ring; the S passes through it and the star hangs directly below -->
-        <ellipse cx="85" cy="33" rx="3.2" ry="4" stroke="#C8971E" stroke-width="1.4"/>
-        <!-- the star (same path as the Discover pendant), hung directly below the ring -->
-        <g transform="translate(1 30) scale(7)">
-          <path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.42" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/>
-        </g>
-        <!-- logo centered on the star's body, sized to match the Discover pendant -->
-        <image href="logo-star.png" x="51.8" y="68.5" width="66.4" height="70" preserveAspectRatio="xMidYMid meet"/>
-      </svg>
-    </div>
   <div class="wbx">
-    <!-- Greeting "lit vanity" mirror -->
+    <!-- Greeting "lit vanity" mirror -- sits flush under the gold rail. A gold chain
+         hangs from the rail, crosses the frame's silver border, and continues down
+         inside to a ring and the star; her name writes across the chain where they
+         cross. The star is the reveal's flying-star merge target. -->
     <div class="wb-mirror wb-greet">
       <span class="wb-glass"></span>
       <span class="wb-sweep"></span>
       <div class="wb-starcast"></div>
       <div class="wb-bulbs l"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-bulbs r"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
+      <div class="wb-chainstack">
+        <div class="wb-chain"></div>
+        <div class="wb-ring"></div>
+        <div class="wb-chainname" id="wbPortTitle"></div>
+      </div>
       <div class="wb-portrait" wb-lift onclick="loadSaved()">
-        <div class="wb-port-title" id="wbPortTitle">Your Style</div>
+        <div class="wb-chainspace"></div>
+        <div class="wb-starwrap">
+          <svg class="wb-starsvg" viewBox="0 0 24 24"><defs><linearGradient id="starHaloWB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs>
+          <path fill="#FFFFFF" stroke="url(#starHaloWB)" stroke-width="0.42" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/></svg>
+          <img class="wb-hlogo" src="logo-star.png" alt="Style Star">
+        </div>
         <div class="wb-port-motto" id="wbPortMotto"></div>
         <div class="wb-port-cta"><span>See your full Style Portrait</span> <svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></div>
       </div>
@@ -4668,10 +4673,14 @@ function _buildWbHubs(){
 }
 function updateWbScreen(){
   _buildWbHubs();
-  // Portrait hub: "<Name>'s Style" + her personal motto. If she has no motto yet,
-  // fall back to a warm curated tagline instead of a blank line.
+  // Portrait hub: "<Name>'s Style" written across the chain, above her personal motto.
+  // If she hasn't given a name, leave the label blank and let the star sit higher
+  // (via the wb-noname class) instead of showing a generic placeholder. If she has
+  // no personal motto yet, fall back to a warm curated tagline instead of a blank line.
   var pt=document.getElementById('wbPortTitle'),pm=document.getElementById('wbPortMotto');
-  if(pt){var fn=wbFirstName();pt.textContent=fn?(fn+'’s Style'):'Your Style';}
+  var fn=wbFirstName();
+  var wbScr=document.getElementById('s-wb');if(wbScr)wbScr.classList.toggle('wb-noname',!fn);
+  if(pt){pt.textContent=fn?(fn+'’s Style'):'';}
   if(pm){var mo=wbMotto();
     if(mo){pm.innerHTML='“'+wbEsc(mo)+'”';pm.classList.remove('wb-tagline');}
     else{var last=parseInt(localStorage.getItem('ss_wb_msg')||'-1',10),i;
@@ -4792,7 +4801,7 @@ function maybePlayEntrance(){
   requestAnimationFrame(function(){
     // Aim the two flying door-stars + the burst at the real logo so they merge
     // dead-centre on it, whatever the screen size.
-    var logo=scr.querySelector('.hm-star-inner img')||scr.querySelector('.hm-star-inner')||scr.querySelector('.wb-pendsvg image')||scr.querySelector('.wb-pendsvg');
+    var logo=scr.querySelector('.hm-star-inner img')||scr.querySelector('.hm-star-inner')||scr.querySelector('.wb-hlogo')||scr.querySelector('.wb-starwrap');
     var flyL=document.getElementById('ssFlyL'),flyR=document.getElementById('ssFlyR'),burst=document.getElementById('ssBurst');
     if(logo&&flyL&&flyR&&burst){
       var r=logo.getBoundingClientRect();
