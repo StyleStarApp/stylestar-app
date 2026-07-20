@@ -4684,11 +4684,12 @@ function updateWbScreen(){
   var wbScr=document.getElementById('s-wb');if(wbScr)wbScr.classList.toggle('wb-noname',!fn);
   if(pt){pt.textContent=fn?(fn+'’s Style'):'';}
   if(pm){var mo=wbMotto();
-    if(mo){pm.innerHTML='“'+wbEsc(mo)+'”';pm.classList.remove('wb-tagline');}
+    var wbHeart='<svg class="pinkheart" style="width:14px;height:14px;margin-left:3px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
+    if(mo){pm.innerHTML='“'+wbEsc(mo)+'”'+wbHeart;pm.classList.remove('wb-tagline');}
     else{var last=parseInt(localStorage.getItem('ss_wb_msg')||'-1',10),i;
       do{i=Math.floor(Math.random()*WB_MSGS.length);}while(WB_MSGS.length>1&&i===last);
       try{localStorage.setItem('ss_wb_msg',String(i));}catch(e){}
-      pm.innerHTML=WB_MSGS[i];pm.classList.add('wb-tagline');}
+      pm.innerHTML=WB_MSGS[i]+wbHeart;pm.classList.add('wb-tagline');}
     pm.style.display='';}
   refreshWbBadges();
 }
