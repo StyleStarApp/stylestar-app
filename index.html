@@ -731,7 +731,7 @@ body.res-fb{padding-left:0;padding-right:0}
    hair below the gold rail -- no floating pendant above it anymore. */
 #s-wb .wb-mirror{position:relative;text-align:center;border:8px solid #D8DDE2;
   background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px)}
-#s-wb .wb-greet{background:radial-gradient(130% 85% at 50% 12%,#ffffff 0%,#f7f8f9 32%,#eceef0 64%,#e3e6e8 100%);z-index:1;border-width:11px;margin-top:0;padding:0 30px 15px;overflow:visible;
+#s-wb .wb-greet{background:radial-gradient(130% 85% at 50% 12%,#ffffff 0%,#f7f8f9 32%,#eceef0 64%,#e3e6e8 100%);z-index:1;border-width:11px;margin-top:0;padding:0 30px 8px;overflow:visible;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
 /* Chain + name render as ONE stack ON TOP of the greeting frame (higher z-index). The
    chain is a single SVG (top ring wrapping the gold rail, a run of small tightly
@@ -4632,7 +4632,13 @@ function updateWbScreen(){
   var pt=document.getElementById('wbPortTitle'),pm=document.getElementById('wbPortMotto');
   var fn=wbFirstName();
   var wbScr=document.getElementById('s-wb');if(wbScr)wbScr.classList.toggle('wb-noname',!fn);
-  if(pt){pt.textContent=fn?(fn+'’s Style'):'';}
+  if(pt){pt.textContent=fn?(fn+'’s Style'):'';pt.style.fontSize='28px';
+    // Shrink-to-fit: a long name can render wider than the card at 28px (the box
+    // uses white-space:nowrap so it never wraps), so measure against the card's
+    // real width and step the size down until it fits, rather than assume a
+    // fixed max length.
+    if(fn){var greetEl=document.querySelector('#s-wb .wb-greet');var maxW=greetEl?greetEl.clientWidth-24:240;var fs=28;
+      while(pt.scrollWidth>maxW&&fs>16){fs-=1;pt.style.fontSize=fs+'px';}}}
   if(pm){var mo=wbMotto();
     var wbHeart='<svg class="pinkheart" style="width:14px;height:14px;margin-left:3px;vertical-align:-5px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
     if(mo){pm.innerHTML='“'+wbEsc(mo)+'”'+wbHeart;pm.classList.remove('wb-tagline');}
