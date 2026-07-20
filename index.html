@@ -818,7 +818,9 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-wb .wb-port-cta{font-family:'Jost',sans-serif;font-size:16px;font-weight:600;color:#1a1a1a;letter-spacing:.01em;display:flex;justify-content:center;align-items:center;gap:5px;padding-left:20px;white-space:nowrap}
 #s-wb .wb-port-cta span{text-decoration:underline;text-underline-offset:3px}
 #s-wb .wb-port-cta svg{width:17px;height:17px;stroke:#1a1a1a}
-#s-wb .wb-portrait.wb-tapped{transform:scale(.985);transition:transform .08s}
+/* wb-portrait deliberately has NO wb-lift/tap-press effect (see markup): the chain
+   is a separate fixed element that doesn't move with it, so any press transform
+   (lift/scale) on the star makes it visually pop off the loop it's hanging from. */
 #s-wb .wb-hub-studs{position:absolute;inset:0;pointer-events:none;border-radius:2px;background:radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) center top/13px 8px repeat-x,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) center bottom/13px 8px repeat-x,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) left center/8px 13px repeat-y,radial-gradient(3.4px 3.4px at 46% 38%,#ffffff 0%,#f4efe4 44%,#dcd2be 78%,rgba(220,210,190,0) 88%) right center/8px 13px repeat-y}
 #s-wb .wb-hub-lbl{position:relative}
 #s-wb .wb-chip>.jewel{position:absolute;inset:0;border-radius:9px;background:linear-gradient(158deg,rgba(255,255,255,.5),rgba(255,255,255,0) 46%);pointer-events:none}
@@ -1421,7 +1423,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         </svg>
         <div class="wb-chainname" id="wbPortTitle"></div>
       </div>
-      <div class="wb-portrait" wb-lift onclick="wbPortraitTap()">
+      <div class="wb-portrait" onclick="wbPortraitTap()">
         <div class="wb-chainspace"></div>
         <div class="wb-starwrap">
           <svg class="wb-starsvg" viewBox="0 0 24 24">
