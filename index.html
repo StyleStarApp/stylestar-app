@@ -734,19 +734,19 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-wb .wb-greet{z-index:1;border-width:11px;margin-top:0;padding:0 30px 15px;overflow:visible;
   box-shadow:0 24px 26px -14px rgba(0,0,0,.6),0 0 0 1px #7c828a,inset 0 0 0 1px #8a9096,inset 0 0 0 2.5px rgba(255,255,255,.7),inset 0 2px 6px rgba(255,255,255,.5)}
 /* Chain + name render as ONE stack ON TOP of the greeting frame (higher z-index). The
-   chain is a single SVG (top ring wrapping the gold rail, four small interlocking links,
-   a bottom ring for the star's bail) -- one piece, so it can never drift apart the way
-   separately-positioned pieces did before. top:-30px is calibrated so the top ring's
-   center lands on the gold rail's center (measured, not eyeballed). Her name writes
-   across the chain where they cross. */
+   chain is a single SVG (top ring wrapping the gold rail, a run of small tightly
+   overlapping links, a bottom ring for the star's bail) -- one piece, so it can never
+   drift apart the way separately-positioned pieces did before. top:-30px is calibrated
+   so the top ring's center lands on the gold rail's center (measured, not eyeballed).
+   Her name sits lower, crossing the lower half of the chain, closer to the star. */
 #s-wb .wb-chainstack{position:absolute;left:50%;top:-30px;transform:translateX(-50%);width:26px;z-index:10;pointer-events:none}
-#s-wb .wb-chainsvg{display:block;width:26px;height:62px}
-#s-wb .wb-chainname{position:absolute;left:-90px;right:-90px;top:14px;height:34px;display:flex;align-items:center;justify-content:center;
-  font:400 25px/1.1 'DM Serif Display',serif;color:#211E1A;padding:0 8px}
+#s-wb .wb-chainsvg{display:block;width:26px;height:86px}
+#s-wb .wb-chainname{position:absolute;left:-90px;right:-90px;top:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  font:400 19px/1.1 'DM Serif Display',serif;color:#211E1A;padding:0 8px}
 /* when she hasn't given her name: no label on the chain (the chain itself is unchanged --
    its length doesn't depend on whether we know her name) */
 #s-wb.wb-noname .wb-chainname{display:none}
-#s-wb .wb-chainspace{height:38px}
+#s-wb .wb-chainspace{height:61px}
 #s-wb .wb-acts{border:none;margin-top:0;padding:0;background:none;box-shadow:none}
 #s-wb .wb-glass{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.07) 14%,transparent 30%,transparent 100%);mix-blend-mode:screen}
 #s-wb .wb-sweep{position:absolute;top:0;bottom:0;left:0;width:100%;background:radial-gradient(ellipse 62% 130% at 50% 50%,rgba(255,255,255,.42),rgba(255,255,255,0) 70%);pointer-events:none;z-index:9;opacity:0}
@@ -1421,14 +1421,28 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="wb-bulbs l"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-bulbs r"><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span><span class="wb-bulb"></span></div>
       <div class="wb-chainstack">
-        <svg class="wb-chainsvg" viewBox="0 0 26 62" fill="none">
+        <svg class="wb-chainsvg" viewBox="0 0 26 86" fill="none">
           <defs><linearGradient id="wbChainG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E4A6"/><stop offset=".5" stop-color="#DDAF3F"/><stop offset="1" stop-color="#B8891F"/></linearGradient></defs>
           <ellipse cx="13" cy="9" rx="6" ry="7" stroke="url(#wbChainG)" stroke-width="1.2"/>
-          <ellipse cx="13" cy="19" rx="3" ry="2" stroke="url(#wbChainG)" stroke-width="0.85"/>
-          <ellipse cx="13" cy="27" rx="2.1" ry="2.8" stroke="url(#wbChainG)" stroke-width="0.85"/>
-          <ellipse cx="13" cy="35" rx="3" ry="2" stroke="url(#wbChainG)" stroke-width="0.85"/>
-          <ellipse cx="13" cy="43" rx="2.1" ry="2.8" stroke="url(#wbChainG)" stroke-width="0.85"/>
-          <ellipse cx="13" cy="53" rx="2.8" ry="3.6" stroke="url(#wbChainG)" stroke-width="1.1"/>
+          <ellipse cx="13" cy="15.0" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="18.4" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="21.8" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="25.2" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="28.6" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="32.0" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="35.4" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="38.8" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="42.2" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="45.6" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="49.0" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="52.4" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="55.8" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="59.2" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="62.6" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="66.0" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="69.4" rx="1.6" ry="2.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="72.8" rx="2.6" ry="1.6" stroke="url(#wbChainG)" stroke-width="0.7"/>
+          <ellipse cx="13" cy="80" rx="2.8" ry="3.6" stroke="url(#wbChainG)" stroke-width="1.1"/>
         </svg>
         <div class="wb-chainname" id="wbPortTitle"></div>
       </div>
