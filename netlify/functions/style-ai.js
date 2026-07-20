@@ -1,5 +1,3 @@
-const https = require('https');
-
 // Hosts allowed to use this function. The request's own host is always allowed
 // too, so Netlify deploy previews (random-name.netlify.app) keep working.
 const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
@@ -22,23 +20,22 @@ function hostOf(value) {
 // Real browsers send Origin and/or Referer on a same-origin request; random
 // scripts hitting the URL directly do not. This blocks the "free Claude proxy"
 // abuse without affecting any real visitor.
-function isAllowed(event) {
-  const h = event.headers || {};
-  const requestHost = (h.host || h.Host || '').toLowerCase();
+function isAllowed(req) {
+  const requestHost = (req.headers.get('host') || '').toLowerCase();
   const allowed = new Set([...ALLOWED_HOSTS, requestHost].filter(Boolean));
-  const originHost = hostOf(h.origin || h.Origin);
-  const refererHost = hostOf(h.referer || h.Referer);
+  const originHost = hostOf(req.headers.get('origin'));
+  const refererHost = hostOf(req.headers.get('referer'));
 
   // If neither header is present, it's not a normal browser request → reject.
   if (!originHost && !refererHost) return false;
   return allowed.has(originHost) || allowed.has(refererHost);
 }
 
-exports.handler = async (event) => {
+export default async (req) => {
   // Reflect the caller's origin only if it's one of ours; otherwise lock to the
   // primary domain. (Same-origin app calls don't rely on this, but it stops
   // other sites' JavaScript from reading our responses.)
-  const reqOrigin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+  const reqOrigin = req.headers.get('origin') || '';
   const allowOrigin = ALLOWED_HOSTS.includes(hostOf(reqOrigin)) ? reqOrigin : 'https://www.stylestar.app';
 
   const headers = {
@@ -48,80 +45,52 @@ exports.handler = async (event) => {
     'Content-Type': 'application/json'
   };
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+  if (req.method === 'OPTIONS') {
+    return new Response('', { status: 200, headers });
   }
 
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
+  if (req.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
   }
 
   // Door check: must look like it came from our own site.
-  if (!isAllowed(event)) {
-    return { statusCode: 403, headers, body: JSON.stringify({ error: 'Forbidden' }) };
+  if (!isAllowed(req)) {
+    return new Response(JSON.stringify({ error: 'Forbidden' }), { status: 403, headers });
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: 'API key not configured' }) };
+    return new Response(JSON.stringify({ error: 'API key not configured' }), { status: 500, headers });
   }
 
   try {
-    const body = JSON.parse(event.body);
+    const body = await req.json();
 
     // Basic shape guard: messages must be a non-empty, sensibly sized array.
     if (!Array.isArray(body.messages) || body.messages.length === 0 || body.messages.length > 40) {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid request' }) };
+      return new Response(JSON.stringify({ error: 'Invalid request' }), { status: 400, headers });
     }
 
     const maxTokens = Math.min(parseInt(body.max_tokens, 10) || 500, MAX_TOKENS_CAP);
 
-    const requestBody = JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: maxTokens,
-      messages: body.messages
+    const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: maxTokens,
+        messages: body.messages
+      })
     });
 
-    const data = await new Promise((resolve, reject) => {
-      const options = {
-        hostname: 'api.anthropic.com',
-        path: '/v1/messages',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-          'Content-Length': Buffer.byteLength(requestBody)
-        }
-      };
+    const data = await anthropicRes.json();
 
-      const req = https.request(options, (res) => {
-        let responseData = '';
-        res.on('data', (chunk) => { responseData += chunk; });
-        res.on('end', () => {
-          try {
-            resolve(JSON.parse(responseData));
-          } catch (e) {
-            reject(new Error('Failed to parse API response: ' + responseData.substring(0, 200)));
-          }
-        });
-      });
-
-      req.on('error', (e) => reject(e));
-      req.write(requestBody);
-      req.end();
-    });
-
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify(data)
-    };
+    return new Response(JSON.stringify(data), { status: 200, headers });
   } catch (error) {
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({ error: error.message || 'Failed to process request' })
-    };
+    return new Response(JSON.stringify({ error: error.message || 'Failed to process request' }), { status: 500, headers });
   }
 };

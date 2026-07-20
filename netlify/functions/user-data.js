@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 const MAILERLITE_GROUP_NAME = 'Style Star Signups';
 const ML_BASE = 'https://connect.mailerlite.com/api';
@@ -93,31 +93,31 @@ async function addToMailerLite(email, name, token) {
   } catch (e) {}
 }
 
-exports.handler = async function(event) {
+export default async (req) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json'
   };
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+  if (req.method === 'OPTIONS') {
+    return new Response('', { status: 200, headers });
   }
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_KEY = process.env.SUPABASE_KEY;
 
   if (!SUPABASE_URL || !SUPABASE_KEY) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: 'Database not configured' }) };
+    return new Response(JSON.stringify({ error: 'Database not configured' }), { status: 500, headers });
   }
 
   const baseUrl = SUPABASE_URL + '/rest/v1/users';
 
   try {
-    if (event.httpMethod === 'POST') {
-      const { email, data } = JSON.parse(event.body);
+    if (req.method === 'POST') {
+      const { email, data } = await req.json();
       if (!email || !data) {
-        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Email and data required' }) };
+        return new Response(JSON.stringify({ error: 'Email and data required' }), { status: 400, headers });
       }
       const key = email.toLowerCase().trim();
       const saveData = { ...data, updatedAt: new Date().toISOString() };
@@ -162,19 +162,19 @@ exports.handler = async function(event) {
       const restoreToken = makeToken(key);
       try { await addToMailerLite(key, mlName, restoreToken); } catch (e) {}
 
-      return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+      return new Response(JSON.stringify({ success: true }), { status: 200, headers });
     }
 
-    if (event.httpMethod === 'GET') {
-      const q = event.queryStringParameters || {};
+    if (req.method === 'GET') {
+      const q = new URL(req.url).searchParams;
       // Look up by opaque token (from the welcome-email link) or by email.
-      let email = q.email;
-      if (!email && q.token) {
-        const decoded = readToken(q.token);
+      let email = q.get('email');
+      if (!email && q.get('token')) {
+        const decoded = readToken(q.get('token'));
         if (decoded) email = decoded;
       }
       if (!email) {
-        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Email or token required' }) };
+        return new Response(JSON.stringify({ error: 'Email or token required' }), { status: 400, headers });
       }
       const key = email.toLowerCase().trim();
 
@@ -185,14 +185,14 @@ exports.handler = async function(event) {
 
       if (rows && rows.length > 0 && rows[0].data) {
         const data = typeof rows[0].data === 'string' ? JSON.parse(rows[0].data) : rows[0].data;
-        return { statusCode: 200, headers, body: JSON.stringify({ success: true, data }) };
+        return new Response(JSON.stringify({ success: true, data }), { status: 200, headers });
       }
 
-      return { statusCode: 404, headers, body: JSON.stringify({ success: false, message: 'No results found' }) };
+      return new Response(JSON.stringify({ success: false, message: 'No results found' }), { status: 404, headers });
     }
 
-    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
   } catch (err) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server error', detail: err.message }) };
+    return new Response(JSON.stringify({ error: 'Server error', detail: err.message }), { status: 500, headers });
   }
 };
