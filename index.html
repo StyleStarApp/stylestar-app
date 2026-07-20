@@ -1071,6 +1071,18 @@ body.ss-fast .hm-h1,body.ss-fast .hm-sub,body.ss-fast .hm-body,body.ss-fast .hm-
 body.ss-done .hm-room{transform:none}
 body.ss-done .hm-h1,body.ss-done .hm-sub,body.ss-done .hm-body,body.ss-done .hm-cta,body.ss-done #restoreSection,body.ss-done .hm-divwrap,body.ss-done .hm-shelves,body.ss-done .hm-foot,body.ss-done #s-wb .wbx{opacity:1;transform:none;animation:none}
 
+/* Welcome Back only: the gold rail lives OUTSIDE #s-wb .hm-room and is never
+   transformed by the reveal, but .hm-room itself gets scaled (.95 -> 1) during
+   the reveal. That mismatch is exactly what can make the chain look briefly
+   out of place next to the rail on some devices. Simplest fix: this screen's
+   room/board never takes part in that scale/slide at all -- it renders in its
+   final position immediately, so the chain-to-rail alignment can never depend
+   on animation timing. (An ID selector here outranks the body.ss-* class
+   rules above regardless of source order, so this always wins.)
+   The star-burst overlay itself is unaffected and still plays normally. */
+#s-wb .hm-room{transform:none!important;animation:none!important}
+#s-wb .wbx{opacity:1!important;transform:none!important;animation:none!important}
+
 @keyframes ssVeilOut{to{opacity:0}}
 @keyframes ssHomeIn{to{transform:scale(1)}}
 @keyframes ssGlow{0%{opacity:0;transform:translateX(-50%) scaleX(.14)}34%{opacity:.9}70%{opacity:.5}100%{opacity:0;transform:translateX(-50%) scaleX(1.15)}}
