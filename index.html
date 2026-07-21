@@ -138,6 +138,63 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .ss.pref-mirror{position:relative;border-radius:0;border:8px solid transparent;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
   box-shadow:0 7px 40px rgba(0,0,0,.16),inset 0 0 0 8px #AEB4BA,inset 0 0 0 10px #C9A14E}
+/* Your Wardrobe: same gold+silver display-case frame as FAQ/Shop your style */
+.ss.wardrobe-mirror{position:relative;border-radius:0;border:8px solid transparent;
+  background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#F3E6B8 0%,#DFB94E 32%,#B8891F 62%,#E8CE7E 100%) border-box;
+  box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
+/* ===== Your Wardrobe ===== */
+#s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:9px;text-align:center}
+#s-wardrobe .wdr-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
+#s-wardrobe .wdr-title::before{content:"";position:absolute;left:63%;bottom:-3px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C)}
+#s-wardrobe .wdr-head{text-align:center;margin-bottom:6px}
+#s-wardrobe .wdr-sub{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:10px}
+#s-wardrobe .wdr-sub b{color:#B08830;font-weight:600}
+#s-wardrobe .wdr-tabs{display:flex;gap:8px;margin:18px 0 16px}
+#s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
+#s-wardrobe .wdr-pane{display:none}
+#s-wardrobe .wdr-pane.on{display:block}
+#s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:30px 14px 10px;margin-top:24px}
+#s-wardrobe .wdr-tag{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:#F7F1E1;padding:9px 22px 8px;border:1.5px dashed #B7AF9C;box-shadow:0 3px 8px rgba(0,0,0,.14);text-align:center;white-space:nowrap}
+#s-wardrobe .wdr-tag .l1{font:600 9px/1 'Jost',sans-serif;letter-spacing:.28em;color:#26221c}
+#s-wardrobe .wdr-tag .l-rule{width:22px;height:1px;background:#B7AF9C;margin:4px auto}
+#s-wardrobe .wdr-tag .l2{font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;color:#8a8474}
+#s-wardrobe .wdr-cat{margin-bottom:16px}
+#s-wardrobe .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;border-bottom:1px solid #e7e0cf;padding-bottom:6px}
+#s-wardrobe .wdr-item{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:9px 2px;gap:6px 8px;border-bottom:1px solid #f0ebe0}
+#s-wardrobe .wdr-item:last-child{border-bottom:none}
+#s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 145px}
+#s-wardrobe .wdr-name.custom::before{content:"\2726 ";color:#C9A44C;font-size:11px}
+#s-wardrobe .wdr-toggle{display:flex;gap:5px;flex:0 0 auto;white-space:nowrap}
+#s-wardrobe .wdr-btn{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.04em;padding:5px 10px;border-radius:0;white-space:nowrap;border:1px solid #d8d2c2;color:#8a8474;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-btn.have{background:#F2F0EA;border-color:#B7AF9C;color:#726B58}
+#s-wardrobe .wdr-btn.have::before{content:"\2713 "}
+#s-wardrobe .wdr-btn.want{background:#1a1a1a;border-color:#1a1a1a;color:#EACD68}
+#s-wardrobe .wdr-expand{flex-basis:100%;margin:4px 0 0;padding:10px 8px 6px;background:#F4EFE4}
+#s-wardrobe .wdr-expand-lbl{font:600 11px/1.3 'Jost',sans-serif;color:#8a6a1e;margin-bottom:8px}
+#s-wardrobe .wdr-expand-lbl a{color:#8a6a1e;cursor:pointer}
+#s-wardrobe .wdr-see-wrap{flex-basis:100%;text-align:right;margin-top:-4px}
+#s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;display:inline-block}
+#s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none}
+#s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
+#s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
+#s-wardrobe .wdr-add{display:flex;align-items:center;gap:8px;margin:14px 2px 4px;padding:11px 12px;background:#fff;border:1.5px solid #1a1a1a}
+#s-wardrobe .wdr-add input{border:none;outline:none;font:400 13.5px 'Jost',sans-serif;flex:1;color:#2b2620;background:transparent}
+#s-wardrobe .wdr-add input::placeholder{color:#a39c8a}
+#s-wardrobe .wdr-add .plus{font-size:16px;color:#1a1a1a;font-weight:700}
+#s-wardrobe .wdr-trend-note{font:italic 400 12.5px/1.4 'Fraunces',serif;color:#5c5648;margin:2px 0 16px;text-align:center}
+#s-wardrobe .wdr-trend-by{text-align:center;font:600 10.5px/1 'Jost',sans-serif;color:#8a6a1e;letter-spacing:.1em;margin-bottom:8px}
+#s-wardrobe .wdr-tstack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+#s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px}
+#s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
+#s-wardrobe .wdr-tcard .tnf{font:italic 400 13px/1.4 'Fraunces',serif;color:#5c5648;margin-bottom:11px}
+#s-wardrobe .wdr-tcard .tlf{font:600 11.5px/1 'Jost',sans-serif;color:#8a6a1e;cursor:pointer}
+#s-wardrobe .wdr-foot{text-align:center;margin-top:26px;font:400 13px/1 'Jost',sans-serif;color:#8a8474}
+#s-wardrobe .wdr-foot span.lnk{cursor:pointer}
+#s-wardrobe .wdr-foot span.st{color:#E6C24E;font-size:11px;margin:0 6px}
+/* stitched-tag topper for the Welcome Back / Style Portrait entry hub (matches the room) */
+#s-wb .tag-topper,#s-res .tag-topper{position:relative;text-align:center;height:24px;margin-bottom:8px}
+#s-wb .tag-topper span,#s-res .tag-topper span{position:relative;display:inline-block;background:#F7F1E1;padding:6px 16px 5px;border:1.3px dashed #B7AF9C;font:600 9px/1 'Jost',sans-serif;letter-spacing:.16em;color:#26221c;box-shadow:0 3px 6px rgba(0,0,0,.18)}
 .ss.quiz-mirror .tag{display:none}
 .ss.chat-mirror,.ss.dream-mirror{background:
   repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px) padding-box,
@@ -433,6 +490,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-dream .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin-top:1.5rem;line-height:1.65;font-style:italic}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 #s-dream .btn-outline{border-radius:2px;border-width:1.5px;max-width:260px;margin:1.3rem auto 0}
+#s-dream .dc-trend-link{text-align:center;font:600 12.5px/1.4 'Jost',sans-serif;color:#0FA6B6;text-decoration:underline;cursor:pointer;margin-top:12px}
 .our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#6e6e6e;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
 .our-story-link:hover{color:#666}
 .story-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
@@ -998,6 +1056,8 @@ body.card-fb{padding:0}
    margin-top here only needs to be 2px to land on the same 9px total. */
 #s-wb .hub-shop{margin-top:6px;margin-bottom:0}
 #s-wb .hub-style{margin-top:2px}
+#s-wb .hub-wardrobe,#s-res .hub-wardrobe{margin-top:2px;padding-top:10px}
+#s-wb .tag-topper,#s-res .tag-topper{margin-left:-14px;margin-right:-14px}
 #s-wb .wb-chip-line{width:40px!important;height:40px!important;background:#F5EFE2!important;border:1px solid #D8C285!important;border-radius:9px!important;box-shadow:none!important;color:#26221c}
 #s-wb .wb-chip-line svg{width:24px;height:24px;color:#26221c}
 #s-wb .wb-item .wb-arr{color:#26221c!important}
@@ -1512,6 +1572,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <div class="wb-row"><span class="wb-chip" style="background:linear-gradient(160deg,#E4D4B0,#CBB683);box-shadow:0 3px 7px -3px rgba(150,130,90,.55);overflow:hidden"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4.3 9.4l1.1-4.1h13.2l1.1 4.1"/><path d="M5.5 9.7V18.8h13V9.7"/><path d="M4.3 9.4a1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0"/><path d="M10.2 18.8v-4.1h3.6v4.1"/></svg></span><span class="wb-lbl"><span class="tt"><b>Shop the Mall</b><svg class="wb-arr" style="color:#4a463e" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Browse curated stores</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
+        <div class="wb-item" wb-lift onclick="openWardrobe()">
+          <div class="wb-row"><span class="wb-chip" style="background:#EACD68;box-shadow:0 3px 7px -3px rgba(201,154,46,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><span class="wb-lbl"><span class="tt"><b>Your Wardrobe</b><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Your personal wardrobe checklist</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
       </div>
       <div class="wb-retake-wrap"><a class="wb-retake" wb-press onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></a></div>
       <!-- Footer — black text + gold-star separators, kept on the mirror's cream so it stays readable -->
@@ -1733,6 +1797,13 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
       <div class="act" data-shelf onclick="openPrefs()">
         <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" style="stroke-width:2"><path d="M2 12L5.4 15.5L10.6 7"/><path d="M15 8L21.5 16M21.5 8L15 16"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Refine your preferences</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Add your sizes, colors and faves</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      </div>
+      <div class="hub-card hub-wardrobe">
+      <div class="tag-topper"><span>YOUR WARDROBE</span></div>
+      <div class="act" data-shelf onclick="openWardrobe()">
+        <div class="actrow"><span class="chip" style="background:#EACD68;border:1px solid #C9A44C"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Your personal wardrobe checklist</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       </div>
@@ -2261,6 +2332,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 
     <div class="dc-sign">With love, Catherine <svg class="pinkheart" style="width:19px;height:19px;margin-left:0" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-disclosure">Some items include affiliate links that support Style Star at no extra cost to you. Nothing in the Style Star Edit is chosen by AI. Every piece is personally selected by our founder because she truly loves it.</div>
+    <div class="dc-trend-link" onclick="openWardrobe('trend')">Curious what's trending right now? &rarr;</div>
 
     <button class="btn-outline" onclick="closeDream()" style="max-width:260px;margin:1rem auto 0;display:block" id="dreamBtn">Back</button>
   </div>
@@ -2284,6 +2356,38 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="mall-foot"><div class="flinks"><span class="lnk" onclick="showDream()">Edit</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
     </div>
   </div>
+</div>
+
+<div class="scr" id="s-wardrobe">
+  <div class="top-back-wrap"><button class="top-back" onclick="closeWardrobe()">&larr; Back</button></div>
+  <div class="wdr-head">
+    <div class="wdr-title">Your Wardrobe</div>
+    <div class="wdr-sub" id="wdrSub">Built for you, from your style.</div>
+  </div>
+
+  <div class="wdr-tabs">
+    <div class="wdr-tab" data-tab="list" onclick="wardrobeTab('list')">Her List</div>
+    <div class="wdr-tab" data-tab="trend" onclick="wardrobeTab('trend')">What's Trending</div>
+  </div>
+
+  <div class="wdr-pane" data-pane="list">
+    <div class="wdr-card">
+      <div class="wdr-tag"><div class="l1">STYLE STAR</div><div class="l-rule"></div><div class="l2">YOUR WARDROBE</div></div>
+      <div id="wdrListBody"></div>
+      <div class="wdr-add">
+        <div class="plus">+</div>
+        <input id="wdrAddInput" type="text" placeholder="Add something you want or need&hellip;" onkeydown="if(event.key==='Enter')wardrobeAddCustom()">
+      </div>
+    </div>
+  </div>
+
+  <div class="wdr-pane" data-pane="trend">
+    <div class="wdr-trend-by">CURATED BY CATHERINE</div>
+    <div class="wdr-trend-note">"A few things I'm loving right now &mdash; no pressure to buy them all, just here if you want a touch of current."</div>
+    <div class="wdr-tstack" id="wdrTrendBody"></div>
+  </div>
+
+  <div class="wdr-foot"><span class="lnk" onclick="showDream()">Edit</span><span class="st">&#9733;</span><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
 </div>
 
 <div class="scr" id="s-faq">
@@ -2521,12 +2625,12 @@ function show(id,skipHistory){
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
   var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-chat');
   var gf=document.querySelector('.quiz-footer');
-  if(gf)gf.style.display=(ownChrome||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms')?'none':'';
+  if(gf)gf.style.display=(ownChrome||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -2559,6 +2663,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('shop-mirror',id==='s-shopstyle');
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
   if(card)card.classList.toggle('pref-mirror',id==='s-pref'||id==='s-pref-done');
+  // Same gold+silver display-case frame around Your Wardrobe.
+  if(card)card.classList.toggle('wardrobe-mirror',id==='s-wardrobe');
   if(!skipHistory){
     history.pushState({screen:id},null,'');
   }
@@ -3361,10 +3467,12 @@ async function restoreResults(){
       topArchNames=d.topArchNames||[];
       if(d.answers&&d.answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
       if(d.prefs)prefs=d.prefs;
+      if(d.wardrobe)wardrobeData=d.wardrobe;
       emailDone=true;
       try{
         localStorage.setItem('ss_data',JSON.stringify({userName,answers,topArchNames,portrait:d.portrait}));
         localStorage.setItem('ss_prefs',JSON.stringify(prefs));
+        if(d.wardrobe)localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));
         localStorage.setItem('ss_email',email);
         localStorage.setItem('ss_emailDone','true');
       }catch(e){}
@@ -3588,7 +3696,7 @@ function buildFullUserData(){
   const savedMotto=userMotto||base.motto||'';
   let portrait=base.portrait||'';
   if(!portrait){const rp=document.getElementById('rp');if(rp)portrait=rp.textContent}
-  return{motto:savedMotto,userName:name,answers:ans,topArchNames:arch,portrait:portrait,prefs:prefs};
+  return{motto:savedMotto,userName:name,answers:ans,topArchNames:arch,portrait:portrait,prefs:prefs,wardrobe:wardrobeData};
 }
 
 // Decide which version of the after-preferences screen to show.
@@ -4175,6 +4283,263 @@ function closeShop(){
   document.querySelector('.quiz-footer').style.display='';
   showBack(shopPrevScreen);
 }
+
+// --- Your Wardrobe ---------------------------------------------------------
+// A personal, evolving wardrobe checklist (Catherine's real closet-consult
+// clipboard, digitized) + a curated seasonal "What's Trending" tab. Common
+// basics default to "have it"; more special/aspirational pieces default to
+// "want it" so there's always a real starter list, not a blank form. Items
+// matching her never-wear list/patterns are quietly excluded. Category order
+// nudges toward her lifestyle (very sporty or very dressy quiz answers).
+const wardrobeItems=[
+  {cat:'Tops',items:[
+    {id:'t1',n:'White button-down or blouse',common:true},
+    {id:'t2',n:'Black tee or top',common:true},
+    {id:'t3',n:'Neutral cardigan or lightweight sweater',common:false},
+    {id:'t4',n:'A top in your favorite color',common:false},
+    {id:'t5',n:'A print or patterned top',common:false},
+    {id:'t6',n:'A polished work blouse',common:false},
+    {id:'t7',n:'A dressy or going-out top',common:false}
+  ]},
+  {cat:'Bottoms',items:[
+    {id:'b1',n:'Blue jeans',common:true},
+    {id:'b2',n:'White jeans or pants',common:false},
+    {id:'b3',n:'Black dress pants',common:false},
+    {id:'b4',n:'A skirt you love',common:false},
+    {id:'b5',n:'Shorts',common:false,tags:['Short shorts']}
+  ]},
+  {cat:'Dresses',items:[
+    {id:'d1',n:'An easy everyday dress',common:false},
+    {id:'d2',n:'A print or patterned dress',common:false},
+    {id:'d3',n:'A little black dress',common:false},
+    {id:'d4',n:'A work-appropriate dress',common:false},
+    {id:'d5',n:'A special-occasion dress',common:false}
+  ]},
+  {cat:'Jackets & Layers',items:[
+    {id:'j1',n:'Denim jacket',common:true},
+    {id:'j2',n:'A blazer',common:false},
+    {id:'j3',n:'The perfect leather jacket',common:false},
+    {id:'j4',n:'A warm winter coat',common:false},
+    {id:'j5',n:'A wrap or shrug for layering',common:false}
+  ]},
+  {cat:'Shoes',items:[
+    {id:'s1',n:'Neutral sandals',common:true},
+    {id:'s2',n:'Comfortable flats or loafers',common:true},
+    {id:'s3',n:'A dressy heel',common:false},
+    {id:'s4',n:'Boots',common:false},
+    {id:'s5',n:'A nice sneaker',common:false}
+  ]},
+  {cat:'Activewear',items:[
+    {id:'a1',n:'Leggings or joggers',common:true},
+    {id:'a2',n:'A supportive sports bra',common:false},
+    {id:'a3',n:'Workout tops',common:false},
+    {id:'a4',n:'Sneakers built for movement',common:false}
+  ]},
+  {cat:'Extras & Accessories',items:[
+    {id:'e1',n:'An everyday day bag',common:true},
+    {id:'e2',n:'An evening bag',common:false},
+    {id:'e3',n:'Everyday earrings (studs or hoops)',common:true},
+    {id:'e4',n:'Statement earrings',common:false},
+    {id:'e5',n:'A scarf or pashmina',common:false},
+    {id:'e6',n:'Sunglasses',common:true}
+  ]}
+];
+// Seasonal trend picks — Catherine's own curation (not AI), same spirit as the
+// Style Star Edit. Update this list whenever trends change; nothing here is
+// pulled from a live feed.
+const trendItems=[
+  {n:'Wide-Leg Jeans',note:"Softer than skinny, still polished — the easiest swap if your denim feels dated."},
+  {n:'Statement Earrings',note:"The single easiest way to feel current without changing a thing about your style."},
+  {n:'Ballet Flats',note:"Back, and better than ever — comfortable enough for anywhere."},
+  {n:'A Great Trench',note:"A quiet trend that never really left. Instant polish over anything."}
+];
+let wardrobeData={items:{},custom:[]};
+function loadWardrobeData(){
+  let d={items:{},custom:[]};
+  try{const raw=JSON.parse(localStorage.getItem('ss_wardrobe'));if(raw)d=raw}catch(e){}
+  if(!d.items)d.items={};
+  if(!d.custom)d.custom=[];
+  return d;
+}
+function saveWardrobeData(){
+  try{localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData))}catch(e){}
+}
+function _wardrobeExcluded(item){
+  if(!item.tags||!item.tags.length)return false;
+  return item.tags.some(function(t){
+    return (prefs.neverWear&&prefs.neverWear.indexOf(t)>-1)||(prefs.neverPatterns&&prefs.neverPatterns.indexOf(t)>-1);
+  });
+}
+function _wardrobeDefault(item){return item.common?'have':'want'}
+// Nudge category order toward her lifestyle: a very sporty-leaning quiz answer
+// brings Activewear forward; a very dressy-leaning answer brings Dresses forward.
+function _wardrobeCatOrder(){
+  const cats=wardrobeItems.map(function(c){return c.cat});
+  const a=(Array.isArray(answers)&&answers.length===12)?answers:new Array(12).fill(6);
+  const boost=[];
+  if(a[5]<=4)boost.push('Activewear'); // Sporty-Professional, low = sporty
+  if(a[4]>=8&&boost.indexOf('Dresses')===-1)boost.push('Dresses'); // Casual-Dressy, high = dressy
+  if(!boost.length)return cats;
+  const head=cats[0];
+  const rest=cats.slice(1).filter(function(c){return boost.indexOf(c)===-1});
+  return [head].concat(boost,rest);
+}
+function _wardrobeEnsureInit(){
+  wardrobeItems.forEach(function(cat){
+    cat.items.forEach(function(it){
+      if(!(it.id in wardrobeData.items)&&!_wardrobeExcluded(it)){
+        wardrobeData.items[it.id]=_wardrobeDefault(it);
+      }
+    });
+  });
+  saveWardrobeData();
+}
+function _wardrobeGetState(id){
+  if(id in wardrobeData.items)return wardrobeData.items[id];
+  const c=wardrobeData.custom.find(function(x){return x.id===id});
+  return c?c.state:'want';
+}
+// Trend items ("trend{i}") resolve straight from trendItems, not wardrobeData —
+// they're Catherine's curation, not part of her personal have-it/want-it list.
+function _wardrobeFindName(id){
+  if(id.indexOf('trend')===0){
+    const i=parseInt(id.slice(5),10);
+    if(trendItems[i])return trendItems[i].n;
+  }
+  for(let i=0;i<wardrobeItems.length;i++){
+    const found=wardrobeItems[i].items.find(function(it){return it.id===id});
+    if(found)return found.n;
+  }
+  const c=wardrobeData.custom.find(function(x){return x.id===id});
+  return c?c.n:'';
+}
+function wardrobeToggle(id,state,isCustom){
+  if(isCustom){
+    const c=wardrobeData.custom.find(function(x){return x.id===id});
+    if(c)c.state=state;
+  }else{
+    wardrobeData.items[id]=state;
+  }
+  saveWardrobeData();
+  renderWardrobeList();
+}
+function wardrobeAddCustom(){
+  const inp=document.getElementById('wdrAddInput');
+  if(!inp)return;
+  const val=inp.value.trim();
+  if(!val)return;
+  const id='c'+Date.now();
+  wardrobeData.custom.push({id:id,n:val,state:'want'});
+  saveWardrobeData();
+  inp.value='';
+  renderWardrobeList();
+}
+function _wardrobeItemRow(id,name,isCustom){
+  const st=_wardrobeGetState(id);
+  const nameClass=isCustom?'wdr-name custom':'wdr-name';
+  const haveCls='wdr-btn'+(st==='have'?' have':'');
+  const wantCls='wdr-btn'+(st==='want'?' want':'');
+  const seeLink=(st==='want')?'<div class="wdr-see-wrap"><span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')">&#10022; See ideas &rarr;</span></div>':'';
+  return '<div class="wdr-item">'
+    +'<div class="'+nameClass+'">'+_esc(name)+'</div>'
+    +'<div class="wdr-toggle">'
+      +'<div class="'+haveCls+'" onclick="wardrobeToggle(\''+id+'\',\'have\','+(isCustom?'true':'false')+')">HAVE IT</div>'
+      +'<div class="'+wantCls+'" onclick="wardrobeToggle(\''+id+'\',\'want\','+(isCustom?'true':'false')+')">WANT IT</div>'
+    +'</div>'
+    +seeLink
+    +'<div class="wdr-expand" id="wx_'+id+'" style="display:none"></div>'
+    +'</div>';
+}
+function renderWardrobeList(){
+  const body=document.getElementById('wdrListBody');
+  if(!body)return;
+  const order=_wardrobeCatOrder();
+  const byName={};
+  wardrobeItems.forEach(function(c){byName[c.cat]=c});
+  let html='';
+  order.forEach(function(catName){
+    const cat=byName[catName];if(!cat)return;
+    const visible=cat.items.filter(function(it){return !_wardrobeExcluded(it)});
+    if(!visible.length)return;
+    html+='<div class="wdr-cat"><div class="wdr-cat-t">'+_esc(catName)+'</div>';
+    visible.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,false)});
+    html+='</div>';
+  });
+  if(wardrobeData.custom.length){
+    html+='<div class="wdr-cat"><div class="wdr-cat-t">Her Own List</div>';
+    wardrobeData.custom.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,true)});
+    html+='</div>';
+  }
+  body.innerHTML=html;
+}
+function wardrobeSeeIdeas(id){
+  const box=document.getElementById('wx_'+id);
+  if(!box)return;
+  if(box.style.display==='block'){box.style.display='none';return}
+  box.style.display='block';
+  _wardrobeIdeaGen(id);
+}
+async function _wardrobeIdeaGen(id){
+  const box=document.getElementById('wx_'+id);
+  if(!box)return;
+  const name=_wardrobeFindName(id);
+  if(!name)return;
+  box.innerHTML='<div class="wdr-expand-lbl">Finding ideas for &ldquo;'+_esc(name)+'&rdquo;&hellip;</div>';
+  const basis=(Array.isArray(answers)&&answers.length===12&&topArchNames.length)?('Her style: '+topArchNames.join(', ')+'.'):'';
+  const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
+  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+'\n\nFor each provide:\n- name: specific (color, style, fabric)\n- store: ONE store (pick from: '+stores+')\n\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences and size range if given\n- Be very specific, not "a nice jacket" but "Cropped Tan Suede Moto Jacket"\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","store":"Store Name"}]}';
+  try{
+    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});
+    if(!r.ok)throw 0;
+    const d=await r.json();if(!d.content)throw 0;
+    const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
+    let html='<div class="wdr-expand-lbl">&#10022; See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="_wardrobeIdeaGen(\''+id+'\')">&mdash; refresh</a></div><div class="shop-grid hscroll">';
+    parsed.items.forEach(function(item){
+      const url=getStoreUrl(item.store,item.name);
+      html+='<div class="shop-card"><div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
+    });
+    html+='</div>';
+    box.innerHTML=html;
+  }catch(e){
+    box.innerHTML='<div class="wdr-expand-lbl">Couldn\'t load ideas right now. <a onclick="_wardrobeIdeaGen(\''+id+'\')">Try again</a></div>';
+  }
+}
+function renderWardrobeTrend(){
+  const body=document.getElementById('wdrTrendBody');
+  if(!body||body.dataset.built)return;
+  let html='';
+  trendItems.forEach(function(item,i){
+    const tid='trend'+i;
+    html+='<div class="wdr-tcard"><div class="ttf">'+_esc(item.n)+'</div><div class="tnf">'+_esc(item.note)+'</div><span class="tlf" onclick="wardrobeSeeIdeas(\''+tid+'\')">See ideas in your size &rarr;</span><div class="wdr-expand" id="wx_'+tid+'" style="display:none"></div></div>';
+  });
+  body.innerHTML=html;
+  body.dataset.built='1';
+}
+let wardrobePrevScreen='s-wel';
+function openWardrobe(tab){
+  const cur=document.querySelector('.scr.act');
+  wardrobePrevScreen=cur?cur.id:'s-wel';
+  wardrobeData=loadWardrobeData();
+  _wardrobeEnsureInit();
+  show('s-wardrobe');
+  document.querySelector('.quiz-footer').style.display='none';
+  const sub=document.getElementById('wdrSub');
+  if(sub){
+    sub.innerHTML=(quizTaken&&topArchNames&&topArchNames[0])?('Built for you, from your <b>'+_esc(topArchNames[0])+'</b> style'):'Built for you, from your style';
+  }
+  wardrobeTab(tab||'list');
+  renderWardrobeList();
+  renderWardrobeTrend();
+}
+function closeWardrobe(){
+  document.querySelector('.quiz-footer').style.display='';
+  showBack(wardrobePrevScreen);
+}
+function wardrobeTab(which){
+  document.querySelectorAll('#s-wardrobe .wdr-tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===which)});
+  document.querySelectorAll('#s-wardrobe .wdr-pane').forEach(function(p){p.classList.toggle('on',p.dataset.pane===which)});
+}
+
 let privacyPrevScreen='s-wel';
 function showPrivacy(){
   const cur=document.querySelector('.scr.act');
@@ -4653,7 +5018,7 @@ function _buildWbHubs(){
   var list=document.querySelector('#s-wb .wb-list');
   if(!list||list.dataset.hubs)return;
   var items=Array.prototype.slice.call(list.querySelectorAll('.wb-item'));
-  if(items.length<7)return; // source: 0 ShopStyle,1 Analyze,2 Ask,3 Edit,4 Portrait,5 Refine,6 Mall
+  if(items.length<8)return; // source: 0 ShopStyle,1 Analyze,2 Ask,3 Edit,4 Portrait,5 Refine,6 Mall,7 Wardrobe
   function ic(p){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px">'+p+'</svg>';}
   var ICON={
     0:ic('<path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/>'),
@@ -4662,11 +5027,12 @@ function _buildWbHubs(){
     1:ic('<path d="M4.2 9h2.9l1.3-1.9h7l1.3 1.9h2.9v9.6H4.2z"/><circle cx="12" cy="13.4" r="2.8"/>'),
     2:ic('<path d="M5.2 6.6h13.6v8.4H9.4L5.6 18.6V6.6z"/><path d="M8.6 10.6h6.8M8.6 12.8h4.2"/>'),
     5:ic('<path d="M2.6 12.4l3.6 3.6 6.2-7.8"/><path d="M15.3 10.6l4.8 5.8M20.1 10.6l-4.8 5.8"/>'),
-    4:ic('<rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="currentColor" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/>')
+    4:ic('<rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="currentColor" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/>'),
+    7:ic('<path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/>')
   };
   // Swap each colored tile for a charcoal line icon inside a cream chip, preserving any badge.
   function setIcon(i){var chip=items[i].querySelector('.wb-chip');if(!chip)return;var badge=chip.querySelector('.wb-badge');chip.removeAttribute('style');chip.className='wb-chip wb-chip-line';chip.innerHTML=ICON[i];if(badge)chip.appendChild(badge);}
-  [0,3,6,1,2,5,4].forEach(setIcon);
+  [0,3,6,1,2,5,4,7].forEach(setIcon);
   function hub(t){var d=document.createElement('div');d.className='wb-hub';var s=document.createElement('div');s.className='wb-hub-t';var l=document.createElement('span');l.className='wb-hub-lbl';l.textContent=t;s.appendChild(l);d.appendChild(s);return d;}
   list.innerHTML='';
   // Shopping card: awning topper + label + shop items
@@ -4678,7 +5044,11 @@ function _buildWbHubs(){
   var sty=document.createElement('div');sty.className='hub-card hub-style';
   var mbar=document.createElement('div');mbar.className='mbar';var r='<div class="mbar-row">';for(var i=0;i<7;i++)r+='<span class="mbulb"></span>';r+='</div>';mbar.innerHTML=r;
   sty.appendChild(mbar);sty.appendChild(hub('Styling'));sty.appendChild(items[1]);sty.appendChild(items[2]);sty.appendChild(items[4]);sty.appendChild(items[5]);
-  list.appendChild(shop);list.appendChild(sty);
+  // Wardrobe card: stitched garment-label topper (matches the Your Wardrobe room) + item
+  var wdr=document.createElement('div');wdr.className='hub-card hub-wardrobe';
+  var tag=document.createElement('div');tag.className='tag-topper';tag.innerHTML='<span>YOUR WARDROBE</span>';
+  wdr.appendChild(tag);wdr.appendChild(items[7]);
+  list.appendChild(shop);list.appendChild(sty);list.appendChild(wdr);
   list.dataset.hubs='1';
 }
 function updateWbScreen(){
@@ -4760,6 +5130,7 @@ function fallbackInitialScreen(){
     userName=d.userName;
   }
   if(d&&d.prefs)prefs=d.prefs;
+  if(d&&d.wardrobe){wardrobeData=d.wardrobe;try{localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));}catch(e){}}
   document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('act')});
   if(hasQuiz){
     document.getElementById('s-wb').classList.add('act');
@@ -4797,10 +5168,12 @@ async function autoRestoreFromLink(){
       var d=json.data;
       userName=d.userName||'You';
       if(d.prefs)prefs=d.prefs;
+      if(d.wardrobe)wardrobeData=d.wardrobe;
       emailDone=true;
       try{
         localStorage.setItem('ss_emailDone','true');
         if(d.prefs)localStorage.setItem('ss_prefs',JSON.stringify(d.prefs));
+        if(d.wardrobe)localStorage.setItem('ss_wardrobe',JSON.stringify(d.wardrobe));
       }catch(e){}
       try{history.replaceState({},'',location.pathname)}catch(e){} // drop the token from the URL
       var hasPortrait=!!(d.portrait&&String(d.portrait).trim());
