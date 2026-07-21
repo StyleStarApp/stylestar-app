@@ -473,11 +473,6 @@ body.res-fb{padding-left:0;padding-right:0}
 /* Discover + Welcome Back: drop the app card's outer margin on all four sides so their
    full-bleed curtain/lacquer backgrounds reach the true screen edges, not just the card's. */
 body.card-fb{padding:0}
-/* Shift the whole visible assembly (gold rail + everything hanging/sitting below it) down
-   together as one rigid unit, so nothing moves out of alignment with anything else. The
-   screen's own background (curtain stripe / dark lacquer) stays put behind it, unmoved --
-   the extra space revealed above is simply more of that same background, not a gap. */
-.hm-shift{position:relative;margin-top:14px}
 #s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f7f6f2;background-image:linear-gradient(180deg,rgba(48,43,32,.08) 0,rgba(48,43,32,0) 30px),repeating-linear-gradient(90deg,#ecebe4 0px,#fbfbf8 21px,#ecebe4 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(184,172,150,.08) 100%)}
 #s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
@@ -1020,14 +1015,7 @@ body.card-fb{padding:0}
 
 /* Gold rail: a permanent part of the home page; the hanging rack reads as mounted to it. NOT an animation-only element. */
 .hm-room{position:relative}
-/* top:-8px (not 8px) is deliberate: .hm-goldrail's containing block is now .hm-shift, a
-   normal-flow child of #s-wel/#s-wb -- so it's already carried down by that screen's own
-   16px padding, same as everything else inside .hm-shift. The old top:8px assumed the rail
-   was a direct child of #s-wel (bypassing that padding, since absolute positioning ignores
-   an ancestor's own padding only when it IS that ancestor). -8px cancels the inherited 16px
-   so the rail lands exactly where it always has relative to the content below it, no matter
-   what .hm-shift's margin-top is -- so that single value is the only thing to ever change. */
-.hm-goldrail{position:absolute;top:-8px;left:0;right:0;height:6px;z-index:5;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 3px 8px -3px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+.hm-goldrail{position:absolute;top:8px;left:0;right:0;height:6px;z-index:5;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 3px 8px -3px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 /* Welcome Back's pendant + mirror styles live in the "lit vanity" block above. */
 
 /* ===== Opening entrance — simple star reveal =====
@@ -1425,7 +1413,6 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="prog-wrap" id="pw"><div class="prog-bar"><div class="prog-fill" id="pf"></div></div><div class="prog-lbl" id="pl"></div></div>
 
 <div class="scr" id="s-wb">
-  <div class="hm-shift">
   <div class="hm-goldrail"></div>
   <div class="hm-room">
   <div class="wbx">
@@ -1503,11 +1490,9 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
   </div>
   </div>
-  </div>
 </div>
 
 <div class="scr act" id="s-wel">
-  <div class="hm-shift">
   <div class="hm-goldrail"></div>
   <div class="hm-room">
   <div class="hm-mirror">
@@ -1577,7 +1562,6 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
 
     <div class="hm-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
-  </div>
   </div>
   </div>
 </div>
