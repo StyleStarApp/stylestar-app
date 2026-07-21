@@ -1020,7 +1020,14 @@ body.card-fb{padding:0}
 
 /* Gold rail: a permanent part of the home page; the hanging rack reads as mounted to it. NOT an animation-only element. */
 .hm-room{position:relative}
-.hm-goldrail{position:absolute;top:8px;left:0;right:0;height:6px;z-index:5;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 3px 8px -3px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+/* top:-8px (not 8px) is deliberate: .hm-goldrail's containing block is now .hm-shift, a
+   normal-flow child of #s-wel/#s-wb -- so it's already carried down by that screen's own
+   16px padding, same as everything else inside .hm-shift. The old top:8px assumed the rail
+   was a direct child of #s-wel (bypassing that padding, since absolute positioning ignores
+   an ancestor's own padding only when it IS that ancestor). -8px cancels the inherited 16px
+   so the rail lands exactly where it always has relative to the content below it, no matter
+   what .hm-shift's margin-top is -- so that single value is the only thing to ever change. */
+.hm-goldrail{position:absolute;top:-8px;left:0;right:0;height:6px;z-index:5;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 3px 8px -3px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 /* Welcome Back's pendant + mirror styles live in the "lit vanity" block above. */
 
 /* ===== Opening entrance — simple star reveal =====
