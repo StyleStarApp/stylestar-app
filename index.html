@@ -742,7 +742,7 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-wb .wb-chainstack{position:absolute;left:50%;top:-25px;transform:translateX(-50%);width:26px;z-index:10;pointer-events:none}
 #s-wb .wb-chainsvg{display:block;width:26px;height:20px}
 #s-wb .wb-chainname{position:absolute;left:-115px;right:-115px;top:25px;height:34px;display:flex;align-items:center;justify-content:center;
-  font:400 28px/1.1 'DM Serif Display',serif;color:#211E1A;padding:0 8px;white-space:nowrap}
+  font:400 22px/1.1 'DM Serif Display',serif;color:#211E1A;padding:0 8px;white-space:nowrap}
 /* when she hasn't given her name: no label on the chain (the chain itself is unchanged --
    its length doesn't depend on whether we know her name) */
 #s-wb.wb-noname .wb-chainname{display:none}
@@ -4639,13 +4639,13 @@ function updateWbScreen(){
   var pt=document.getElementById('wbPortTitle'),pm=document.getElementById('wbPortMotto');
   var fn=wbFirstName();
   var wbScr=document.getElementById('s-wb');if(wbScr)wbScr.classList.toggle('wb-noname',!fn);
-  if(pt){pt.textContent=fn?(fn+'’s Style'):'';pt.style.fontSize='28px';
-    // Shrink-to-fit: a long name can render wider than the card at 28px (the box
+  if(pt){pt.textContent=fn?(fn+'’s Style'):'';pt.style.fontSize='22px';
+    // Shrink-to-fit: a long name can render wider than the card at 22px (the box
     // uses white-space:nowrap so it never wraps), so measure against the card's
     // real width and step the size down until it fits, rather than assume a
     // fixed max length.
-    if(fn){var greetEl=document.querySelector('#s-wb .wb-greet');var maxW=greetEl?greetEl.clientWidth-24:240;var fs=28;
-      while(pt.scrollWidth>maxW&&fs>16){fs-=1;pt.style.fontSize=fs+'px';}}}
+    if(fn){var greetEl=document.querySelector('#s-wb .wb-greet');var maxW=greetEl?greetEl.clientWidth-24:240;var fs=22;
+      while(pt.scrollWidth>maxW&&fs>14){fs-=1;pt.style.fontSize=fs+'px';}}}
   if(pm){var mo=wbMotto();
     var wbHeart='<svg class="pinkheart" style="width:17px;height:17px;margin-left:3px;vertical-align:-6px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
     if(mo){pm.innerHTML='“'+wbEsc(mo)+'”'+wbHeart;pm.classList.remove('wb-tagline');}
