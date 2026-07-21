@@ -1026,7 +1026,11 @@ body.card-fb{padding:0}
    was a direct child of #s-wel (bypassing that padding). -8px cancels the inherited 16px so
    the rail lands exactly where it always has relative to the content below it, no matter
    what .hm-shift's margin-top is -- so that single value is the only thing to ever change. */
-.hm-goldrail{position:absolute;top:-8px;left:0;right:0;height:6px;z-index:5;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 3px 8px -3px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+/* left/right:-16px (not 0) for the same reason top is -8px: .hm-shift's own box is inset
+   16px from #s-wel/#s-wb's true edges (it's a normal-flow child confined to the screen's
+   content box, not its full padding box like the rail used to be positioned against
+   directly) -- so -16px on each side cancels that inset and the rail spans edge to edge. */
+.hm-goldrail{position:absolute;top:-8px;left:-16px;right:-16px;height:6px;z-index:5;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 3px 8px -3px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 /* Welcome Back's pendant + mirror styles live in the "lit vanity" block above. */
 
 /* ===== Opening entrance — simple star reveal =====
