@@ -4615,11 +4615,12 @@ function _buildWbHubs(){
     6:ic('<path d="M4.3 9.4l1.1-4.1h13.2l1.1 4.1"/><path d="M5.5 9.7V18.8h13V9.7"/><path d="M4.3 9.4a1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0"/><path d="M10.2 18.8v-4.1h3.6v4.1"/>'),
     1:ic('<path d="M4.2 9h2.9l1.3-1.9h7l1.3 1.9h2.9v9.6H4.2z"/><circle cx="12" cy="13.4" r="2.8"/>'),
     2:ic('<path d="M5.2 6.6h13.6v8.4H9.4L5.6 18.6V6.6z"/><path d="M8.6 10.6h6.8M8.6 12.8h4.2"/>'),
-    5:ic('<path d="M2.6 12.4l3.6 3.6 6.2-7.8"/><path d="M15.3 10.6l4.8 5.8M20.1 10.6l-4.8 5.8"/>')
+    5:ic('<path d="M2.6 12.4l3.6 3.6 6.2-7.8"/><path d="M15.3 10.6l4.8 5.8M20.1 10.6l-4.8 5.8"/>'),
+    4:ic('<rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="currentColor" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/>')
   };
   // Swap each colored tile for a charcoal line icon inside a cream chip, preserving any badge.
   function setIcon(i){var chip=items[i].querySelector('.wb-chip');if(!chip)return;var badge=chip.querySelector('.wb-badge');chip.removeAttribute('style');chip.className='wb-chip wb-chip-line';chip.innerHTML=ICON[i];if(badge)chip.appendChild(badge);}
-  [0,3,6,1,2,5].forEach(setIcon);
+  [0,3,6,1,2,5,4].forEach(setIcon);
   function hub(t){var d=document.createElement('div');d.className='wb-hub';var s=document.createElement('div');s.className='wb-hub-t';var l=document.createElement('span');l.className='wb-hub-lbl';l.textContent=t;s.appendChild(l);d.appendChild(s);return d;}
   list.innerHTML='';
   // Shopping card: awning topper + label + shop items
