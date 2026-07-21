@@ -470,9 +470,11 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .ss.sqall{border-radius:0}
 /* Outfit results: drop the app card's side margin so the full-bleed framed rooms reach the true screen edges */
 body.res-fb{padding-left:0;padding-right:0}
-/* Discover + Welcome Back: drop the app card's outer margin on all four sides so their
-   full-bleed curtain/lacquer backgrounds reach the true screen edges, not just the card's. */
-body.card-fb{padding:0}
+/* Discover + Welcome Back: drop the app card's outer margin on the sides and bottom so their
+   full-bleed curtain/lacquer backgrounds reach the true screen edges there, but keep a touch
+   of top margin so there's a little dark curtain visible above the gold rail (a framed look
+   rather than the rail sitting flush against the very top edge). */
+body.card-fb{padding:12px 0 0}
 #s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f7f6f2;background-image:linear-gradient(180deg,rgba(48,43,32,.08) 0,rgba(48,43,32,0) 30px),repeating-linear-gradient(90deg,#ecebe4 0px,#fbfbf8 21px,#ecebe4 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(184,172,150,.08) 100%)}
 #s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
