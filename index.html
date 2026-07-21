@@ -470,6 +470,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .ss.sqall{border-radius:0}
 /* Outfit results: drop the app card's side margin so the full-bleed framed rooms reach the true screen edges */
 body.res-fb{padding-left:0;padding-right:0}
+/* Discover + Welcome Back: drop the app card's outer margin on all four sides so their
+   full-bleed curtain/lacquer backgrounds reach the true screen edges, not just the card's. */
+body.card-fb{padding:0}
 #s-photo{margin:-0.5rem -1.75rem -1.5rem;padding:16px 20px 14px;min-height:100vh;position:relative;overflow:hidden;color:#2a2620;font-family:'Jost',sans-serif;background-color:#f7f6f2;background-image:linear-gradient(180deg,rgba(48,43,32,.08) 0,rgba(48,43,32,0) 30px),repeating-linear-gradient(90deg,#ecebe4 0px,#fbfbf8 21px,#ecebe4 42px),linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 16%,rgba(184,172,150,.08) 100%)}
 #s-photo .ph-rod,#s-photo-load .ph-rod{position:absolute;top:0;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 #s-photo .ph-wrap,#s-photo-load .ph-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:356px;margin:0 auto}
@@ -642,7 +645,7 @@ body.res-fb{padding-left:0;padding-right:0}
 </style>
 <style>
 /* ===== Home (welcome) screen — "jewelry / dressing-room" design (Design handoff) ===== */
-#s-wel{position:relative;padding:16px;margin:-0.5rem -1.75rem -1.5rem;font-family:'Jost',sans-serif;background-color:#28251F;
+#s-wel{position:relative;padding:16px;margin:-0.5rem -1.75rem -1.5rem;min-height:100vh;font-family:'Jost',sans-serif;background-color:#28251F;
   background-image:
     radial-gradient(130% 72% at 50% 30%, rgba(255,244,222,.34) 0%, rgba(255,244,222,0) 58%),
     repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0, rgba(0,0,0,.045) 2px, transparent 2px, transparent 7px),
@@ -720,7 +723,7 @@ body.res-fb{padding-left:0;padding-right:0}
 #s-wel [data-shelf].hm-tapped,#s-wel [data-shelf]:active{transform:scale(.9);filter:brightness(.88)}
 
 /* ===== Welcome Back — "lit vanity" mirror design (Design handoff) ===== */
-#s-wb{position:relative;padding:16px;margin:-0.5rem -1.75rem -1.5rem;font-family:'Jost',sans-serif;background-color:#0c0c0e;
+#s-wb{position:relative;padding:16px;margin:-0.5rem -1.75rem -1.5rem;min-height:100vh;font-family:'Jost',sans-serif;background-color:#0c0c0e;
   background-image:
     radial-gradient(120% 55% at 50% 12%, rgba(255,255,255,.06) 0%, rgba(255,255,255,0) 55%),
     linear-gradient(180deg,#171719,#0a0a0b);
@@ -2491,6 +2494,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-shop');
   // Outfit results: let the framed rooms bleed to the true screen edges (drop the card's side margin).
   document.body.classList.toggle('res-fb',id==='s-photo-res');
+  // Discover + Welcome Back: let their full-bleed backgrounds reach the true screen edges on all sides.
+  document.body.classList.toggle('card-fb',id==='s-wel'||id==='s-wb');
   document.body.classList.toggle('shop-brick',id==='s-shopstyle');
   document.documentElement.classList.toggle('shop-brick',id==='s-shopstyle');
   var tcMeta=document.querySelector('meta[name="theme-color"]');
@@ -4734,6 +4739,7 @@ function fallbackInitialScreen(){
   // .act directly instead of going through show(), which is where sqall lives).
   var card=document.querySelector('.ss');
   if(card)card.classList.toggle('sqall',onW||onWB);
+  document.body.classList.toggle('card-fb',onW||onWB);
 }
 
 // Auto-restore from the welcome-email link. The link carries an opaque token
