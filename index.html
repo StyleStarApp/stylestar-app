@@ -1380,6 +1380,16 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-res .foot,#s-photo-res .foot{width:100vw;margin:0 calc(50% - 50vw) -24px;padding:22px 12px 52px;background:#FBFAF7;border-top:1.5px solid rgba(196,201,207,.9)}
 .res-screen .foot span.lnk{font:700 13px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#2A2724;cursor:pointer}
 .res-screen .foot .st{color:#E6C24E;font-size:12px;line-height:1}
+/* DESKTOP FIX: the outfit-results "rooms" use 100vw full-bleed, which is fine on a
+   phone (viewport ~= app card) but on a wide laptop window 100vw is the whole screen,
+   so the tile CONTENT (centered in that huge width) fell outside the clipped 480px card
+   and the Styling/Shopping/Portrait hubs looked empty. On viewports wider than the card,
+   cap every full-bleed element to the 480px card so it bleeds to the CARD edges, not the
+   screen edges. calc(50% - 240px) self-corrects at each nesting level. Phones (<=480px)
+   are untouched. */
+@media (min-width:481px){
+  #s-photo-res .p3,#s-photo-res .p3-hubwrap,#s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2,#s-photo-res .lookhub,#s-photo-res .foot,#s-res .foot{width:480px;margin-left:calc(50% - 240px);margin-right:calc(50% - 240px)}
+}
 
 /* the inline "Shop your style" results keep the existing .shop-* look on a light card */
 .res-screen .shop-section{width:300px;max-width:94%;margin:16px auto 0;background:#FCFCFB;border-radius:2px;box-shadow:0 12px 24px -14px rgba(0,0,0,.5),inset 0 0 0 1px rgba(201,162,78,.35);padding:18px 16px}
