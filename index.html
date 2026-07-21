@@ -1818,7 +1818,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
       </div>
       <div class="hub-card hub-wardrobe">
-      <div class="tag-topper"><span>YOUR WARDROBE</span></div>
+      <div class="tag-topper"><span>BUILDING YOUR WARDROBE</span></div>
       <div class="act" data-shelf onclick="openWardrobe()">
         <div class="actrow"><span class="chip" style="background:#EACD68;border:1px solid #C9A44C"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Your personal wardrobe checklist</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -5063,7 +5063,7 @@ function _buildWbHubs(){
   sty.appendChild(mbar);sty.appendChild(hub('Styling'));sty.appendChild(items[1]);sty.appendChild(items[2]);sty.appendChild(items[4]);sty.appendChild(items[5]);
   // Wardrobe card: stitched garment-label topper (matches the Your Wardrobe room) + item
   var wdr=document.createElement('div');wdr.className='hub-card hub-wardrobe';
-  var tag=document.createElement('div');tag.className='tag-topper';tag.innerHTML='<span>YOUR WARDROBE</span>';
+  var tag=document.createElement('div');tag.className='tag-topper';tag.innerHTML='<span>BUILDING YOUR WARDROBE</span>';
   wdr.appendChild(tag);wdr.appendChild(items[7]);
   list.appendChild(shop);list.appendChild(sty);list.appendChild(wdr);
   list.dataset.hubs='1';
