@@ -174,16 +174,14 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-btn.have{background:#F2F0EA;border-color:#B7AF9C;color:#726B58}
 #s-wardrobe .wdr-btn.have::before{content:"\2713 "}
 #s-wardrobe .wdr-btn.want{background:#1a1a1a;border-color:#1a1a1a;color:#EACD68}
-#s-wardrobe .wdr-expand{flex-basis:100%;margin:4px 0 0;padding:10px 8px 6px;background:#F4EFE4}
+#s-wardrobe .wdr-expand{flex-basis:100%;min-width:0;margin:4px 0 0;padding:10px 8px 6px;background:#F4EFE4}
 #s-wardrobe .wdr-expand-lbl{font:600 11px/1.3 'Jost',sans-serif;color:#8a6a1e;margin-bottom:8px}
 #s-wardrobe .wdr-expand-lbl a{color:#8a6a1e;cursor:pointer}
 #s-wardrobe .wdr-see-wrap{flex-basis:100%;text-align:right;margin-top:-4px}
 #s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;display:inline-block}
 #s-wardrobe .wdr-see-star{color:#E6C24E}
-#s-wardrobe .shop-grid.hscroll{display:block;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:none;cursor:grab}
-#s-wardrobe .shop-grid.hscroll.grabbing{cursor:grabbing}
+#s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
-#s-wardrobe .shop-grid.hscroll .shop-track{display:flex;flex-wrap:nowrap;gap:8px;width:max-content}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
 /* Swipe hint + "thinking" loader + one-time nudge */
 #s-wardrobe .wdr-swipe-hint{text-align:right;font:600 11px/1 'Jost',sans-serif;color:#9a9a9a;letter-spacing:.03em;margin:0 4px 6px}
@@ -199,7 +197,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-trend-by{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin-bottom:10px}
 #s-wardrobe .wdr-trend-by::before,#s-wardrobe .wdr-trend-by::after{content:"\2605";font-size:14px;color:#0FA6B6}
 #s-wardrobe .wdr-tstack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
-#s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px}
+#s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px;min-width:0}
 #s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
 #s-wardrobe .wdr-tcard .tnf{font:italic 400 13px/1.4 'Fraunces',serif;color:#5c5648;margin-bottom:11px}
 #s-wardrobe .wdr-tcard .tlf{font:600 11.5px/1 'Jost',sans-serif;color:#8a6a1e;cursor:pointer}
@@ -4545,15 +4543,15 @@ async function _wardrobeIdeaGen(id,boxId){
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
-    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div><div class="shop-grid hscroll"><div class="shop-track">';
+    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div><div class="shop-grid hscroll">';
     parsed.items.forEach(function(item){
       const url=getStoreUrl(item.store,item.name);
       html+='<div class="shop-card"><div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
     });
-    html+='</div></div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
+    html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
     box.innerHTML=html;
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
-    _swipeHint(_g,_h);_dragScroll(_g);_nudgeScroll(_g);
+    _swipeHint(_g,_h);_nudgeScroll(_g);
   }catch(e){
     box.innerHTML='<div class="wdr-expand-lbl">Couldn\'t load ideas right now. <a onclick="'+again+'">Try again</a></div>';
   }
@@ -4601,35 +4599,6 @@ function _swipeHint(scrollEl,hintEl){
 // this nested strip a native horizontal touch-scroll, so we drive scrollLeft
 // ourselves (touch-action:pan-y leaves vertical page-scroll to the browser).
 // A drag suppresses the trailing "Shop" link click; a tap still opens it.
-function _dragScroll(el){
-  if(!el||el._ds)return; el._ds=true;
-  let sx=0,sy=0,sl=0,py=0,axis=0,moved=false,dragging=false;
-  // Touch (mobile): full manual control. touch-action:none means the browser
-  // never claims the gesture, so iOS can't hijack the horizontal swipe. We move
-  // the strip on horizontal drags and scroll the page ourselves on vertical ones.
-  el.addEventListener('touchstart',function(e){
-    if(e.touches.length!==1){dragging=false;return}
-    dragging=true;axis=0;moved=false;
-    sx=e.touches[0].clientX;sy=e.touches[0].clientY;sl=el.scrollLeft;
-    py=window.pageYOffset||document.documentElement.scrollTop||0;
-  },{passive:true});
-  el.addEventListener('touchmove',function(e){
-    if(!dragging)return;
-    const t=e.touches[0],dx=t.clientX-sx,dy=t.clientY-sy;
-    if(!axis&&(Math.abs(dx)>4||Math.abs(dy)>4))axis=Math.abs(dx)>Math.abs(dy)?'x':'y';
-    if(axis==='x'){moved=true;el.scrollLeft=sl-dx;e.preventDefault();}
-    else if(axis==='y'){window.scrollTo(0,py-dy);e.preventDefault();}
-  },{passive:false});
-  el.addEventListener('touchend',function(){dragging=false;});
-  el.addEventListener('touchcancel',function(){dragging=false;});
-  // Mouse (desktop) via pointer events, gated to mouse so it never double-fires with touch.
-  let mdown=false;
-  el.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;mdown=true;moved=false;sx=e.clientX;sl=el.scrollLeft;el.classList.add('grabbing');});
-  el.addEventListener('pointermove',function(e){if(!mdown||e.pointerType!=='mouse')return;const dx=e.clientX-sx;if(Math.abs(dx)>3)moved=true;if(moved)el.scrollLeft=sl-dx;});
-  window.addEventListener('pointerup',function(e){if(e.pointerType==='mouse'){mdown=false;el.classList.remove('grabbing');}});
-  // A drag suppresses the trailing link click; a clean tap still opens it.
-  el.addEventListener('click',function(e){if(moved){e.preventDefault();e.stopPropagation();moved=false;}},true);
-}
 // Gentle one-time "this scrolls" nudge: slide right a touch, then settle back.
 function _nudgeScroll(el){
   if(!el)return;
