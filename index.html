@@ -179,6 +179,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-expand-lbl a{color:#8a6a1e;cursor:pointer}
 #s-wardrobe .wdr-see-wrap{flex-basis:100%;text-align:right;margin-top:-4px}
 #s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;display:inline-block}
+#s-wardrobe .wdr-see-star{color:#E6C24E}
 #s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
@@ -4459,7 +4460,7 @@ function _wardrobeItemRow(id,name,isCustom){
   const nameClass=isCustom?'wdr-name custom':'wdr-name';
   const haveCls='wdr-btn'+(st==='have'?' have':'');
   const wantCls='wdr-btn'+(st==='want'?' want':'');
-  const seeLink=(st==='want')?'<div class="wdr-see-wrap"><span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')">&#9733; See ideas &rarr;</span></div>':'';
+  const seeLink=(st==='want')?'<div class="wdr-see-wrap"><span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')"><span class="wdr-see-star">&#9733;</span> See ideas &rarr;</span></div>':'';
   return '<div class="wdr-item">'
     +'<div class="'+nameClass+'">'+_esc(name)+'</div>'
     +'<div class="wdr-toggle">'
@@ -4513,7 +4514,7 @@ async function _wardrobeIdeaGen(id){
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
-    let html='<div class="wdr-expand-lbl">&#9733; See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="_wardrobeIdeaGen(\''+id+'\')">&mdash; refresh</a></div><div class="shop-grid hscroll">';
+    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="_wardrobeIdeaGen(\''+id+'\')">&mdash; refresh</a></div><div class="shop-grid hscroll">';
     parsed.items.forEach(function(item){
       const url=getStoreUrl(item.store,item.name);
       html+='<div class="shop-card"><div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
