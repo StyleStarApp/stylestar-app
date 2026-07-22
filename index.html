@@ -180,9 +180,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-see-wrap{flex-basis:100%;text-align:right;margin-top:-4px}
 #s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;display:inline-block}
 #s-wardrobe .wdr-see-star{color:#E6C24E}
-#s-wardrobe .shop-grid.hscroll{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:none;cursor:grab}
+#s-wardrobe .shop-grid.hscroll{display:block;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:none;cursor:grab}
 #s-wardrobe .shop-grid.hscroll.grabbing{cursor:grabbing}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
+#s-wardrobe .shop-grid.hscroll .shop-track{display:flex;flex-wrap:nowrap;gap:8px;width:max-content}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
 /* Swipe hint + "thinking" loader + one-time nudge */
 #s-wardrobe .wdr-swipe-hint{text-align:right;font:600 11px/1 'Jost',sans-serif;color:#9a9a9a;letter-spacing:.03em;margin:0 4px 6px}
@@ -4544,12 +4545,12 @@ async function _wardrobeIdeaGen(id,boxId){
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
-    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div><div class="shop-grid hscroll">';
+    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div><div class="shop-grid hscroll"><div class="shop-track">';
     parsed.items.forEach(function(item){
       const url=getStoreUrl(item.store,item.name);
       html+='<div class="shop-card"><div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
     });
-    html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
+    html+='</div></div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
     box.innerHTML=html;
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
     _swipeHint(_g,_h);_dragScroll(_g);_nudgeScroll(_g);
