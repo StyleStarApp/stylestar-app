@@ -180,9 +180,15 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-see-wrap{flex-basis:100%;text-align:right;margin-top:-4px}
 #s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;display:inline-block}
 #s-wardrobe .wdr-see-star{color:#E6C24E}
-#s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none}
+#s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
+/* Swipe hint + "thinking" loader + one-time nudge */
+#s-wardrobe .wdr-swipe-hint{text-align:right;font:600 11px/1 'Jost',sans-serif;color:#9a9a9a;letter-spacing:.03em;margin:0 4px 6px}
+#s-wardrobe .wdr-loading{display:flex;flex-direction:column;align-items:center;gap:9px;padding:16px 0 12px}
+#s-wardrobe .wdr-load-star{width:34px;height:34px;animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
+#s-wardrobe .wdr-load-txt{font:600 12.5px/1.3 'Jost',sans-serif;color:#8a6a1e;text-align:center}
+@media(prefers-reduced-motion:reduce){#s-wardrobe .wdr-load-star{animation:none}}
 #s-wardrobe .wdr-add{display:flex;align-items:center;gap:8px;margin:14px 2px 4px;padding:11px 12px;background:#fff;border:2px dashed #4a453c}
 #s-wardrobe .wdr-add input{border:none;outline:none;font:400 13.5px 'Jost',sans-serif;flex:1;color:#2b2620;background:transparent}
 #s-wardrobe .wdr-add input::placeholder{color:#a39c8a}
@@ -2414,6 +2420,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="wdr-teaser">
       <div class="wdr-teaser-t">What's Trending</div>
       <div class="wdr-trend-note" id="wdrTeaserNote">Popular in stores right now,<br>if you want a touch of current<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+      <div class="wdr-swipe-hint" id="wdrTeaserSwipe" style="display:none">Swipe for more &rarr;</div>
       <div class="wdr-tt-scroll" id="wdrTeaserBody"></div>
       <div class="wdr-expand wdr-teaser-ideas" id="wdrTeaserIdeas" style="display:none"></div>
     </div>
@@ -4527,7 +4534,7 @@ async function _wardrobeIdeaGen(id,boxId){
   const again="_wardrobeIdeaGen('"+id+"'"+(boxId?",'"+boxId+"'":"")+")";
   const name=_wardrobeFindName(id);
   if(!name)return;
-  box.innerHTML='<div class="wdr-expand-lbl">Finding ideas for &ldquo;'+_esc(name)+'&rdquo;&hellip;</div>';
+  box.innerHTML='<div class="wdr-loading"><svg class="wdr-load-star" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E6C24E" stroke="#b8bcc2" stroke-width="0.6"/></svg><div class="wdr-load-txt">Finding ideas for &ldquo;'+_esc(name)+'&rdquo;&hellip;</div></div>';
   const basis=(Array.isArray(answers)&&answers.length===12&&topArchNames.length)?('Her style: '+topArchNames.join(', ')+'.'):'';
   const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
   const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+'\n\nFor each provide:\n- name: specific (color, style, fabric)\n- store: ONE store (pick from: '+stores+')\n\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences and size range if given\n- Be very specific, not "a nice jacket" but "Cropped Tan Suede Moto Jacket"\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","store":"Store Name"}]}';
@@ -4541,8 +4548,10 @@ async function _wardrobeIdeaGen(id,boxId){
       const url=getStoreUrl(item.store,item.name);
       html+='<div class="shop-card"><div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
     });
-    html+='</div>';
+    html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
     box.innerHTML=html;
+    const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
+    _swipeHint(_g,_h);_nudgeScroll(_g);
   }catch(e){
     box.innerHTML='<div class="wdr-expand-lbl">Couldn\'t load ideas right now. <a onclick="'+again+'">Try again</a></div>';
   }
@@ -4576,6 +4585,39 @@ function renderWardrobeTeaser(preview){
   body.innerHTML=html;
   const box=document.getElementById('wdrTeaserIdeas');
   if(box){box.style.display='none';box.dataset.open=''}
+  _swipeHint(body,document.getElementById('wdrTeaserSwipe'));
+  _observeTeaserNudge();
+}
+// Show a "Swipe for more" caption only when the strip actually overflows.
+function _swipeHint(scrollEl,hintEl){
+  if(!scrollEl||!hintEl)return;
+  requestAnimationFrame(function(){
+    hintEl.style.display=(scrollEl.scrollWidth-scrollEl.clientWidth>8)?'':'none';
+  });
+}
+// Gentle one-time "this scrolls" nudge: slide right a touch, then settle back.
+function _nudgeScroll(el){
+  if(!el)return;
+  try{if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return}catch(e){}
+  setTimeout(function(){
+    if(el.scrollWidth-el.clientWidth<8)return;
+    try{el.scrollTo({left:34,behavior:'smooth'})}catch(e){el.scrollLeft=34}
+    setTimeout(function(){try{el.scrollTo({left:0,behavior:'smooth'})}catch(e){el.scrollLeft=0}},560);
+  },300);
+}
+// Nudge the teaser strip once it scrolls into view (it's below the fold).
+let _teaserNudged=false;
+function _observeTeaserNudge(){
+  const el=document.getElementById('wdrTeaserBody');
+  if(!el||_teaserNudged)return;
+  try{
+    const io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting&&!_teaserNudged){_teaserNudged=true;_nudgeScroll(el);io.disconnect();}
+      });
+    },{threshold:0.55});
+    io.observe(el);
+  }catch(e){_teaserNudged=true;_nudgeScroll(el)}
 }
 function wardrobeSeeAllTrending(){
   wardrobeTab('trend');
@@ -4585,6 +4627,7 @@ let wardrobePrevScreen='s-wel';
 function openWardrobe(tab){
   const cur=document.querySelector('.scr.act');
   wardrobePrevScreen=cur?cur.id:'s-wel';
+  _teaserNudged=false;
   wardrobeData=loadWardrobeData();
   _wardrobeEnsureInit();
   show('s-wardrobe');
