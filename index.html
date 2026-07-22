@@ -2412,7 +2412,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
     <div class="wdr-teaser">
       <div class="wdr-teaser-t">What's Trending</div>
-      <div class="wdr-trend-note" id="wdrTeaserNote">"A few pieces I'm loving in stores right now, if you'd like a peek."</div>
+      <div class="wdr-trend-note" id="wdrTeaserNote">"Popular in stores right now, if you want a touch of current."</div>
       <div class="wdr-tt-scroll" id="wdrTeaserBody"></div>
       <div class="wdr-expand wdr-teaser-ideas" id="wdrTeaserIdeas" style="display:none"></div>
     </div>
@@ -4595,7 +4595,7 @@ function openWardrobe(tab){
   wardrobeTab(tab||'list');
   renderWardrobeList();
   renderWardrobeTrend();
-  renderWardrobeTeaser(false);
+  renderWardrobeTeaser(true);
 }
 function closeWardrobe(){
   document.querySelector('.quiz-footer').style.display='';
