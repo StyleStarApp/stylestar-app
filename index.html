@@ -147,7 +147,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
   box-shadow:0 8px 44px rgba(0,0,0,.16)}
 .ss.wardrobe-mirror::before{content:"";position:absolute;top:7px;right:7px;bottom:7px;left:7px;border:2px dashed #4a453c;pointer-events:none;z-index:3}
 /* ===== Your Wardrobe ===== */
-#s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:9px;text-align:center}
+#s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px;text-align:center}
 #s-wardrobe .wdr-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
 #s-wardrobe .wdr-title::before{content:"";position:absolute;left:63%;bottom:-3px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C)}
 #s-wardrobe .wdr-head{text-align:center;margin-bottom:6px}
@@ -160,7 +160,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-pane.on{display:block}
 #s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:30px 14px 10px;margin-top:24px}
 #s-wardrobe .wdr-tag{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:#F7F1E1;padding:9px 22px 8px;border:2px dashed #4a453c;box-shadow:0 3px 8px rgba(0,0,0,.14);text-align:center;white-space:nowrap}
-#s-wardrobe .wdr-tag .l1{font:600 9px/1 'Jost',sans-serif;letter-spacing:.28em;color:#26221c}
+#s-wardrobe .wdr-tag .l1{font:400 17px/1 'DM Serif Display',Georgia,serif;-webkit-text-stroke:.3px #1a1a1a;letter-spacing:0;color:#1a1a1a}
 #s-wardrobe .wdr-tag .l-rule{width:22px;height:1px;background:#4a453c;margin:4px auto}
 #s-wardrobe .wdr-tag .l2{font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;color:#8a8474}
 #s-wardrobe .wdr-cat{margin-bottom:16px}
@@ -168,7 +168,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-item{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:9px 2px;gap:6px 8px;border-bottom:1px solid #f0ebe0}
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
 #s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 145px}
-#s-wardrobe .wdr-name.custom::before{content:"\2605 ";color:#C9A44C;font-size:11px}
+#s-wardrobe .wdr-name.custom::before{content:"\2605 ";color:#E6C24E;font-size:11px}
 #s-wardrobe .wdr-toggle{display:flex;gap:5px;flex:0 0 auto;white-space:nowrap}
 #s-wardrobe .wdr-btn{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.04em;padding:5px 10px;border-radius:0;white-space:nowrap;border:1px solid #d8d2c2;color:#8a8474;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-btn.have{background:#F2F0EA;border-color:#B7AF9C;color:#726B58}
@@ -179,6 +179,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-expand-lbl a{color:#8a6a1e;cursor:pointer}
 #s-wardrobe .wdr-see-wrap{flex-basis:100%;text-align:right;margin-top:-4px}
 #s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;display:inline-block}
+#s-wardrobe .wdr-see-star{color:#E6C24E}
 #s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
@@ -198,7 +199,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-foot span.st{color:#E6C24E;font-size:11px;margin:0 6px}
 /* stitched-tag topper for the Welcome Back / Style Portrait entry hub (matches the room) */
 #s-wb .tag-topper,#s-res .tag-topper{position:relative;text-align:center;height:auto;margin-bottom:8px}
-#s-wb .tag-topper span,#s-res .tag-topper span{position:relative;display:inline-block;background:#F7F1E1;padding:7px 16px 6px;border:1.5px dashed #4a453c;font:700 13px/1 'Jost',sans-serif;letter-spacing:.2em;color:#151515;box-shadow:0 3px 6px rgba(0,0,0,.18)}
+#s-wb .tag-topper span,#s-res .tag-topper span{position:relative;display:inline-block;background:#F7F1E1;padding:7px 16px 6px;font:700 13px/1 'Jost',sans-serif;letter-spacing:.2em;color:#151515;box-shadow:0 3px 6px rgba(0,0,0,.18)}
+#s-wb .tag-topper span::before,#s-res .tag-topper span::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;border:1.5px dashed #4a453c;pointer-events:none}
 .ss.quiz-mirror .tag{display:none}
 .ss.chat-mirror,.ss.dream-mirror{background:
   repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px) padding-box,
@@ -337,7 +339,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
 .act-pair .act-btn svg{width:19px;height:19px}
 #s-pref .top-back-wrap,#s-pref-done .top-back-wrap{margin-right:-16px}
-#s-wardrobe .top-back-wrap{margin-right:-15px}
+#s-wardrobe .top-back-wrap{margin-right:-16px}
 #s-dream .top-back-wrap{margin-right:-20px;margin-top:-0.7rem}
 #s-shopstyle .top-back-wrap{margin-right:-20px;margin-top:-0.1rem}
 #s-chat{position:relative}
@@ -2391,7 +2393,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 
   <div class="wdr-pane" data-pane="list">
     <div class="wdr-card">
-      <div class="wdr-tag"><div class="l1">STYLE STAR</div><div class="l-rule"></div><div class="l2">YOUR WARDROBE</div></div>
+      <div class="wdr-tag"><div class="l1">style Star</div><div class="l-rule"></div><div class="l2">YOUR WARDROBE</div></div>
       <div id="wdrListBody"></div>
       <div class="wdr-add">
         <div class="plus">+</div>
@@ -4458,7 +4460,7 @@ function _wardrobeItemRow(id,name,isCustom){
   const nameClass=isCustom?'wdr-name custom':'wdr-name';
   const haveCls='wdr-btn'+(st==='have'?' have':'');
   const wantCls='wdr-btn'+(st==='want'?' want':'');
-  const seeLink=(st==='want')?'<div class="wdr-see-wrap"><span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')">&#9733; See ideas &rarr;</span></div>':'';
+  const seeLink=(st==='want')?'<div class="wdr-see-wrap"><span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')"><span class="wdr-see-star">&#9733;</span> See ideas &rarr;</span></div>':'';
   return '<div class="wdr-item">'
     +'<div class="'+nameClass+'">'+_esc(name)+'</div>'
     +'<div class="wdr-toggle">'
@@ -4512,7 +4514,7 @@ async function _wardrobeIdeaGen(id){
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
-    let html='<div class="wdr-expand-lbl">&#9733; See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="_wardrobeIdeaGen(\''+id+'\')">&mdash; refresh</a></div><div class="shop-grid hscroll">';
+    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="_wardrobeIdeaGen(\''+id+'\')">&mdash; refresh</a></div><div class="shop-grid hscroll">';
     parsed.items.forEach(function(item){
       const url=getStoreUrl(item.store,item.name);
       html+='<div class="shop-card"><div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
