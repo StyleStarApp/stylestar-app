@@ -180,7 +180,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-see-wrap{flex-basis:100%;text-align:right;margin-top:-4px}
 #s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;display:inline-block}
 #s-wardrobe .wdr-see-star{color:#E6C24E}
-#s-wardrobe .shop-grid.hscroll{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-y;cursor:grab}
+#s-wardrobe .shop-grid.hscroll{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:none;cursor:grab}
 #s-wardrobe .shop-grid.hscroll.grabbing{cursor:grabbing}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
@@ -4602,18 +4602,31 @@ function _swipeHint(scrollEl,hintEl){
 // A drag suppresses the trailing "Shop" link click; a tap still opens it.
 function _dragScroll(el){
   if(!el||el._ds)return; el._ds=true;
-  let active=false,sx=0,sl=0,moved=false,pid=-1;
-  el.addEventListener('pointerdown',function(e){active=true;moved=false;pid=e.pointerId;sx=e.clientX;sl=el.scrollLeft;});
-  el.addEventListener('pointermove',function(e){
-    if(!active||e.pointerId!==pid)return;
-    const dx=e.clientX-sx;
-    // Only capture once it's clearly a drag — so a clean tap still opens the link.
-    if(!moved&&Math.abs(dx)>3){moved=true;try{el.setPointerCapture(pid)}catch(_){}el.classList.add('grabbing');}
-    if(moved)el.scrollLeft=sl-dx;
-  });
-  function end(){active=false;pid=-1;el.classList.remove('grabbing');}
-  el.addEventListener('pointerup',end);
-  el.addEventListener('pointercancel',end);
+  let sx=0,sy=0,sl=0,py=0,axis=0,moved=false,dragging=false;
+  // Touch (mobile): full manual control. touch-action:none means the browser
+  // never claims the gesture, so iOS can't hijack the horizontal swipe. We move
+  // the strip on horizontal drags and scroll the page ourselves on vertical ones.
+  el.addEventListener('touchstart',function(e){
+    if(e.touches.length!==1){dragging=false;return}
+    dragging=true;axis=0;moved=false;
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;sl=el.scrollLeft;
+    py=window.pageYOffset||document.documentElement.scrollTop||0;
+  },{passive:true});
+  el.addEventListener('touchmove',function(e){
+    if(!dragging)return;
+    const t=e.touches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(!axis&&(Math.abs(dx)>4||Math.abs(dy)>4))axis=Math.abs(dx)>Math.abs(dy)?'x':'y';
+    if(axis==='x'){moved=true;el.scrollLeft=sl-dx;e.preventDefault();}
+    else if(axis==='y'){window.scrollTo(0,py-dy);e.preventDefault();}
+  },{passive:false});
+  el.addEventListener('touchend',function(){dragging=false;});
+  el.addEventListener('touchcancel',function(){dragging=false;});
+  // Mouse (desktop) via pointer events, gated to mouse so it never double-fires with touch.
+  let mdown=false;
+  el.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;mdown=true;moved=false;sx=e.clientX;sl=el.scrollLeft;el.classList.add('grabbing');});
+  el.addEventListener('pointermove',function(e){if(!mdown||e.pointerType!=='mouse')return;const dx=e.clientX-sx;if(Math.abs(dx)>3)moved=true;if(moved)el.scrollLeft=sl-dx;});
+  window.addEventListener('pointerup',function(e){if(e.pointerType==='mouse'){mdown=false;el.classList.remove('grabbing');}});
+  // A drag suppresses the trailing link click; a clean tap still opens it.
   el.addEventListener('click',function(e){if(moved){e.preventDefault();e.stopPropagation();moved=false;}},true);
 }
 // Gentle one-time "this scrolls" nudge: slide right a touch, then settle back.
