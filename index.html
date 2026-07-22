@@ -147,7 +147,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
   box-shadow:0 8px 44px rgba(0,0,0,.16)}
 .ss.wardrobe-mirror::before{content:"";position:absolute;top:7px;right:7px;bottom:7px;left:7px;border:2px dashed #4a453c;pointer-events:none;z-index:3}
 /* ===== Your Wardrobe ===== */
-#s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:9px;text-align:center}
+#s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px;text-align:center}
 #s-wardrobe .wdr-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
 #s-wardrobe .wdr-title::before{content:"";position:absolute;left:63%;bottom:-3px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C)}
 #s-wardrobe .wdr-head{text-align:center;margin-bottom:6px}
@@ -160,7 +160,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-pane.on{display:block}
 #s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:30px 14px 10px;margin-top:24px}
 #s-wardrobe .wdr-tag{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:#F7F1E1;padding:9px 22px 8px;border:2px dashed #4a453c;box-shadow:0 3px 8px rgba(0,0,0,.14);text-align:center;white-space:nowrap}
-#s-wardrobe .wdr-tag .l1{font:600 9px/1 'Jost',sans-serif;letter-spacing:.28em;color:#26221c}
+#s-wardrobe .wdr-tag .l1{font:400 17px/1 'DM Serif Display',Georgia,serif;-webkit-text-stroke:.3px #1a1a1a;letter-spacing:0;color:#1a1a1a}
 #s-wardrobe .wdr-tag .l-rule{width:22px;height:1px;background:#4a453c;margin:4px auto}
 #s-wardrobe .wdr-tag .l2{font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;color:#8a8474}
 #s-wardrobe .wdr-cat{margin-bottom:16px}
@@ -198,7 +198,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-foot span.st{color:#E6C24E;font-size:11px;margin:0 6px}
 /* stitched-tag topper for the Welcome Back / Style Portrait entry hub (matches the room) */
 #s-wb .tag-topper,#s-res .tag-topper{position:relative;text-align:center;height:auto;margin-bottom:8px}
-#s-wb .tag-topper span,#s-res .tag-topper span{position:relative;display:inline-block;background:#F7F1E1;padding:7px 16px 6px;border:1.5px dashed #4a453c;font:700 13px/1 'Jost',sans-serif;letter-spacing:.2em;color:#151515;box-shadow:0 3px 6px rgba(0,0,0,.18)}
+#s-wb .tag-topper span,#s-res .tag-topper span{position:relative;display:inline-block;background:#F7F1E1;padding:7px 16px 6px;font:700 13px/1 'Jost',sans-serif;letter-spacing:.2em;color:#151515;box-shadow:0 3px 6px rgba(0,0,0,.18)}
+#s-wb .tag-topper span::before,#s-res .tag-topper span::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;border:1.5px dashed #4a453c;pointer-events:none}
 .ss.quiz-mirror .tag{display:none}
 .ss.chat-mirror,.ss.dream-mirror{background:
   repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px) padding-box,
@@ -2391,7 +2392,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 
   <div class="wdr-pane" data-pane="list">
     <div class="wdr-card">
-      <div class="wdr-tag"><div class="l1">STYLE STAR</div><div class="l-rule"></div><div class="l2">YOUR WARDROBE</div></div>
+      <div class="wdr-tag"><div class="l1">style Star</div><div class="l-rule"></div><div class="l2">YOUR WARDROBE</div></div>
       <div id="wdrListBody"></div>
       <div class="wdr-add">
         <div class="plus">+</div>
