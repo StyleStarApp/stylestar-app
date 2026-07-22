@@ -3092,8 +3092,18 @@ Branch this session: `claude/resume-style-star-hfy4sn`. A short, tidy polish ses
 - 📌 **PARKED (Cath's idea, logged above in START-HERE item 2):** a **"NEW" badge on the What's Trending tab** when Catherine updates it — mirror the Shop Style Star Edit "NEW" pill (`ss_edit_seen` pattern) via a `ss_trending_seen` stamp. Not built.
 - **Git note:** every PR squash-merges, so after each merge the branch is reset to `origin/main` and force-with-lease pushed for the next change. The recurring stop-hook "Unverified commit (noreply@github.com)" warning is GitHub's own squash-merge commit on published `main` — expected + harmless; do NOT amend/rewrite it (would fork `main`).
 
-### ▶ NEXT SESSION — START HERE (updated 2026-07-21, late — Cath paused to start a fresh chat)
-Nothing broken; all this session's polish is live (PRs #514–#519). Open threads, unchanged priority:
+**2026-07-22 (financials update + Welcome Back pendant-star polish — SHIPPED LIVE)**
+Branch this session: `claude/style-star-eyc2x4`. Short, tidy morning session.
+- ✅ **BUSINESS-EXPENSES.md updated** with real confirmed amounts Cath gave: **MailerLite $205.20/yr** (paid 2026-07-21, covers up to **1,000 subscribers** — flagged an upgrade reminder + a post-launch to-do to watch the subscriber count so the tier bump isn't a surprise), **Plausible $90/yr** (paid 2026-07-17), **Netlify $33/mo**, **Claude Max $249.99/mo**. Added a **recurring-cost snapshot** (confirmed software ≈ **$3,691/yr**). **GoDaddy** (website/domain cost) + **GitHub** (unsure if she pays) flagged as ▶ LOOK UP for Cath. Merged to main.
+- ✅ **Welcome Back pendant star (`#s-wb .wb-starsvg`) polish** (Cath drove it live via renders):
+  - **Removed the gray/silver outline** (`stroke:#B7BCC2` → `stroke:none`) so it's just the soft-yellow star. Applied to BOTH the static pendant star AND the WB **opening-animation** star (`body.ss-wb-star .ss-star-svg path`, line ~1122) so they match.
+  - **Enlarged + pulled down:** `.wb-starsvg` transform `scale(1.8)` → `translateY(20px) scale(2.22)` so the bottom two points reach just above the "See your full Style Portrait" CTA without the side points crowding the vanity bulbs. (Iterated 2.15/2.45/2.28/2.22; Cath landed on 2.22 + a 20px downshift.)
+  - **Scooted the "style Star" wordmark down within the star:** `#s-wb .wb-wordmark top:43% → 50%` so the logo sits centered in the bigger star (compared 50% vs 56%; chose 50% for a clean gap above the quote).
+  - NOTE: the opening-animation star is a separate full-screen reveal element (flies in + merges, JS-computed landing) at a totally different scale from the settled pendant, so only the OUTLINE needed mirroring there — size/logo-position are pendant-specific and were deliberately NOT changed on the entrance star (would risk the merge alignment).
+- Render harness rebuilt in scratchpad `render/` (playwright-core, chromium at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`, serve on :8199, seed a quiz-taker `ss_data` in localStorage + `show('s-wb')`, wait ~7s for the entrance reveal). Used the Edit tool throughout.
+
+### ▶ NEXT SESSION — START HERE (updated 2026-07-22)
+Nothing broken; everything live. Open threads, unchanged priority:
 1. **BUILDING YOUR WARDROBE label** is at 13px one-line (Cath's Option B) — she's happy for now; a possible future revisit is the two-line header-size version (Option A) if she wants it truly header-sized.
 2. **MailerLite free-trial email** — Cath needs to check her account (her task, not app work).
 3. **Your Wardrobe refinements** as she uses it: the parked **"NEW" badge on What's Trending**, and the **"not right now" mute** toggle on Want-it items.
