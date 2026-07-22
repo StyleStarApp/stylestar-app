@@ -187,8 +187,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-add input{border:none;outline:none;font:400 13.5px 'Jost',sans-serif;flex:1;color:#2b2620;background:transparent}
 #s-wardrobe .wdr-add input::placeholder{color:#a39c8a}
 #s-wardrobe .wdr-add .plus{font-size:16px;color:#1a1a1a;font-weight:700}
-#s-wardrobe .wdr-trend-note{font:italic 400 12.5px/1.4 'Fraunces',serif;color:#5c5648;margin:2px 0 16px;text-align:center}
-#s-wardrobe .wdr-trend-by{text-align:center;font:600 10.5px/1 'Jost',sans-serif;color:#8a6a1e;letter-spacing:.1em;margin-bottom:8px}
+#s-wardrobe .wdr-trend-note{font:italic 400 12.5px/1.4 'Fraunces',serif;color:#5c5648;margin:2px 0 16px;text-align:center;text-wrap:balance}
+#s-wardrobe .wdr-trend-by{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin-bottom:10px}
+#s-wardrobe .wdr-trend-by::before,#s-wardrobe .wdr-trend-by::after{content:"\2605";font-size:14px;color:#0FA6B6}
 #s-wardrobe .wdr-tstack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
 #s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px}
 #s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
@@ -2412,7 +2413,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
     <div class="wdr-teaser">
       <div class="wdr-teaser-t">What's Trending</div>
-      <div class="wdr-trend-note" id="wdrTeaserNote">"Popular in stores right now, if you want a touch of current."</div>
+      <div class="wdr-trend-note" id="wdrTeaserNote">"Popular in stores right now, if you want a touch of current."<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
       <div class="wdr-tt-scroll" id="wdrTeaserBody"></div>
       <div class="wdr-expand wdr-teaser-ideas" id="wdrTeaserIdeas" style="display:none"></div>
     </div>
@@ -2420,7 +2421,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 
   <div class="wdr-pane" data-pane="trend">
     <div class="wdr-trend-by">CURATED BY CATHERINE</div>
-    <div class="wdr-trend-note">"A few things I'm loving right now &mdash; no pressure to buy them all, just here if you want a touch of current."</div>
+    <div class="wdr-trend-note">Here is a list of what&rsquo;s IN right now. It&rsquo;s always fun to refresh your wardrobe with something current.<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wdr-tstack" id="wdrTrendBody"></div>
   </div>
 
