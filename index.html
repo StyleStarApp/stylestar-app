@@ -197,6 +197,17 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-foot{text-align:center;margin-top:26px;font:400 14px/1 'Jost',sans-serif;color:#6f6a63}
 #s-wardrobe .wdr-foot span.lnk{cursor:pointer}
 #s-wardrobe .wdr-foot span.st{color:#E6C24E;font-size:11px;margin:0 6px}
+/* Bottom-of-list "What's Trending" horizontal teaser (2nd entry point) */
+#s-wardrobe .wdr-teaser{margin-top:26px}
+#s-wardrobe .wdr-teaser-t{text-align:center;font:400 22px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:4px}
+#s-wardrobe .wdr-tt-scroll{display:flex;overflow-x:auto;gap:12px;padding:4px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#s-wardrobe .wdr-tt-scroll::-webkit-scrollbar{display:none}
+#s-wardrobe .wdr-tt-card{flex:0 0 205px;background:#F5EFE2;border:1px solid #1a1a1a;padding:15px 15px 13px;display:flex;flex-direction:column}
+#s-wardrobe .wdr-tt-n{font:600 15px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
+#s-wardrobe .wdr-tt-note{font:italic 400 12.5px/1.4 'Fraunces',serif;color:#5c5648;margin-bottom:11px;flex:1}
+#s-wardrobe .wdr-tt-see{font:600 11.5px/1 'Jost',sans-serif;color:#8a6a1e;cursor:pointer}
+#s-wardrobe .wdr-tt-all{flex:0 0 132px;align-items:center;justify-content:center;text-align:center;background:#1a1a1a;color:#EACD68;font:600 12.5px/1.3 'Jost',sans-serif;cursor:pointer;padding:15px 12px}
+#s-wardrobe .wdr-teaser-ideas{margin-top:6px}
 /* stitched-tag topper for the Welcome Back / Style Portrait entry hub (matches the room) */
 #s-wb .tag-topper,#s-res .tag-topper{position:relative;text-align:center;height:auto;margin-bottom:8px}
 #s-wb .tag-topper span,#s-res .tag-topper span{position:relative;display:inline-block;padding:7px 16px 6px;font:700 13px/1 'Jost',sans-serif;letter-spacing:.2em;color:#151515;box-shadow:0 3px 6px rgba(0,0,0,.18);background-color:#F7F1E1;background-image:repeating-linear-gradient(90deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(90deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(0deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(0deg,#4a453c 0 5px,transparent 5px 9px);background-size:100% 1.5px,100% 1.5px,1.5px 100%,1.5px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat}
@@ -2399,6 +2410,12 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <input id="wdrAddInput" type="text" placeholder="Add something you want or need&hellip;" onkeydown="if(event.key==='Enter')wardrobeAddCustom()">
       </div>
     </div>
+    <div class="wdr-teaser">
+      <div class="wdr-teaser-t">What's Trending</div>
+      <div class="wdr-trend-note" id="wdrTeaserNote">"A few pieces I'm loving in stores right now, if you'd like a peek."</div>
+      <div class="wdr-tt-scroll" id="wdrTeaserBody"></div>
+      <div class="wdr-expand wdr-teaser-ideas" id="wdrTeaserIdeas" style="display:none"></div>
+    </div>
   </div>
 
   <div class="wdr-pane" data-pane="trend">
@@ -4423,8 +4440,8 @@ function _wardrobeGetState(id){
 // they're Catherine's curation, not part of her personal have-it/want-it list.
 function _wardrobeFindName(id){
   if(id.indexOf('trend')===0){
-    const i=parseInt(id.slice(5),10);
-    if(trendItems[i])return trendItems[i].n;
+    const m=id.match(/^trendT?(\d+)$/);
+    if(m&&trendItems[+m[1]])return trendItems[+m[1]].n;
   }
   for(let i=0;i<wardrobeItems.length;i++){
     const found=wardrobeItems[i].items.find(function(it){return it.id===id});
@@ -4492,16 +4509,21 @@ function renderWardrobeList(){
   }
   body.innerHTML=html;
 }
-function wardrobeSeeIdeas(id){
-  const box=document.getElementById('wx_'+id);
+function wardrobeSeeIdeas(id,boxId){
+  const box=document.getElementById(boxId||('wx_'+id));
   if(!box)return;
-  if(box.style.display==='block'){box.style.display='none';return}
+  // Shared box (the teaser strip): tapping the same item again closes it.
+  if(boxId){
+    if(box.style.display==='block'&&box.dataset.open===id){box.style.display='none';box.dataset.open='';return}
+    box.dataset.open=id;
+  }else if(box.style.display==='block'){box.style.display='none';return}
   box.style.display='block';
-  _wardrobeIdeaGen(id);
+  _wardrobeIdeaGen(id,boxId);
 }
-async function _wardrobeIdeaGen(id){
-  const box=document.getElementById('wx_'+id);
+async function _wardrobeIdeaGen(id,boxId){
+  const box=document.getElementById(boxId||('wx_'+id));
   if(!box)return;
+  const again="_wardrobeIdeaGen('"+id+"'"+(boxId?",'"+boxId+"'":"")+")";
   const name=_wardrobeFindName(id);
   if(!name)return;
   box.innerHTML='<div class="wdr-expand-lbl">Finding ideas for &ldquo;'+_esc(name)+'&rdquo;&hellip;</div>';
@@ -4513,7 +4535,7 @@ async function _wardrobeIdeaGen(id){
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
-    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="_wardrobeIdeaGen(\''+id+'\')">&mdash; refresh</a></div><div class="shop-grid hscroll">';
+    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div><div class="shop-grid hscroll">';
     parsed.items.forEach(function(item){
       const url=getStoreUrl(item.store,item.name);
       html+='<div class="shop-card"><div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
@@ -4521,7 +4543,7 @@ async function _wardrobeIdeaGen(id){
     html+='</div>';
     box.innerHTML=html;
   }catch(e){
-    box.innerHTML='<div class="wdr-expand-lbl">Couldn\'t load ideas right now. <a onclick="_wardrobeIdeaGen(\''+id+'\')">Try again</a></div>';
+    box.innerHTML='<div class="wdr-expand-lbl">Couldn\'t load ideas right now. <a onclick="'+again+'">Try again</a></div>';
   }
 }
 function renderWardrobeTrend(){
@@ -4534,6 +4556,29 @@ function renderWardrobeTrend(){
   });
   body.innerHTML=html;
   body.dataset.built='1';
+}
+// Bottom-of-Her-List horizontal teaser — a 2nd entry point into the same
+// trendItems. preview=true shows the first 3 + a "See all trending" card that
+// jumps to the full tab; preview=false shows every trend item.
+function renderWardrobeTeaser(preview){
+  const body=document.getElementById('wdrTeaserBody');
+  if(!body)return;
+  const list=preview?trendItems.slice(0,3):trendItems;
+  let html='';
+  list.forEach(function(item,i){
+    const tid='trendT'+i;
+    html+='<div class="wdr-tt-card"><div class="wdr-tt-n">'+_esc(item.n)+'</div><div class="wdr-tt-note">'+_esc(item.note)+'</div><span class="wdr-tt-see" onclick="wardrobeSeeIdeas(\''+tid+'\',\'wdrTeaserIdeas\')"><span class="wdr-see-star">&#9733;</span> See ideas in your size &rarr;</span></div>';
+  });
+  if(preview&&trendItems.length>3){
+    html+='<div class="wdr-tt-card wdr-tt-all" onclick="wardrobeSeeAllTrending()">See all trending &rarr;</div>';
+  }
+  body.innerHTML=html;
+  const box=document.getElementById('wdrTeaserIdeas');
+  if(box){box.style.display='none';box.dataset.open=''}
+}
+function wardrobeSeeAllTrending(){
+  wardrobeTab('trend');
+  try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}
 }
 let wardrobePrevScreen='s-wel';
 function openWardrobe(tab){
@@ -4550,6 +4595,7 @@ function openWardrobe(tab){
   wardrobeTab(tab||'list');
   renderWardrobeList();
   renderWardrobeTrend();
+  renderWardrobeTeaser(false);
 }
 function closeWardrobe(){
   document.querySelector('.quiz-footer').style.display='';
