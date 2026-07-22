@@ -180,7 +180,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-see-wrap{flex-basis:100%;text-align:right;margin-top:-4px}
 #s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;display:inline-block}
 #s-wardrobe .wdr-see-star{color:#E6C24E}
-#s-wardrobe .shop-grid.hscroll{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#s-wardrobe .shop-grid.hscroll{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-y;cursor:grab}
+#s-wardrobe .shop-grid.hscroll.grabbing{cursor:grabbing}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
 /* Swipe hint + "thinking" loader + one-time nudge */
@@ -4551,7 +4552,7 @@ async function _wardrobeIdeaGen(id,boxId){
     html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
     box.innerHTML=html;
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
-    _swipeHint(_g,_h);_nudgeScroll(_g);
+    _swipeHint(_g,_h);_dragScroll(_g);_nudgeScroll(_g);
   }catch(e){
     box.innerHTML='<div class="wdr-expand-lbl">Couldn\'t load ideas right now. <a onclick="'+again+'">Try again</a></div>';
   }
@@ -4594,6 +4595,26 @@ function _swipeHint(scrollEl,hintEl){
   requestAnimationFrame(function(){
     hintEl.style.display=(scrollEl.scrollWidth-scrollEl.clientWidth>8)?'':'none';
   });
+}
+// Deterministic drag-to-scroll for the idea carousels: iOS was refusing to give
+// this nested strip a native horizontal touch-scroll, so we drive scrollLeft
+// ourselves (touch-action:pan-y leaves vertical page-scroll to the browser).
+// A drag suppresses the trailing "Shop" link click; a tap still opens it.
+function _dragScroll(el){
+  if(!el||el._ds)return; el._ds=true;
+  let active=false,sx=0,sl=0,moved=false,pid=-1;
+  el.addEventListener('pointerdown',function(e){active=true;moved=false;pid=e.pointerId;sx=e.clientX;sl=el.scrollLeft;});
+  el.addEventListener('pointermove',function(e){
+    if(!active||e.pointerId!==pid)return;
+    const dx=e.clientX-sx;
+    // Only capture once it's clearly a drag — so a clean tap still opens the link.
+    if(!moved&&Math.abs(dx)>3){moved=true;try{el.setPointerCapture(pid)}catch(_){}el.classList.add('grabbing');}
+    if(moved)el.scrollLeft=sl-dx;
+  });
+  function end(){active=false;pid=-1;el.classList.remove('grabbing');}
+  el.addEventListener('pointerup',end);
+  el.addEventListener('pointercancel',end);
+  el.addEventListener('click',function(e){if(moved){e.preventDefault();e.stopPropagation();moved=false;}},true);
 }
 // Gentle one-time "this scrolls" nudge: slide right a touch, then settle back.
 function _nudgeScroll(el){
