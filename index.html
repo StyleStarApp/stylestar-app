@@ -187,7 +187,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-add input{border:none;outline:none;font:400 13.5px 'Jost',sans-serif;flex:1;color:#2b2620;background:transparent}
 #s-wardrobe .wdr-add input::placeholder{color:#a39c8a}
 #s-wardrobe .wdr-add .plus{font-size:16px;color:#1a1a1a;font-weight:700}
-#s-wardrobe .wdr-trend-note{font:italic 400 12.5px/1.4 'Fraunces',serif;color:#5c5648;margin:2px 0 16px;text-align:center;text-wrap:balance}
+#s-wardrobe .wdr-trend-note{font:500 15.5px/1.5 'Fraunces',Georgia,serif;font-style:normal;color:#5c5648;margin:2px 0 16px;text-align:center;text-wrap:balance}
 #s-wardrobe .wdr-trend-by{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin-bottom:10px}
 #s-wardrobe .wdr-trend-by::before,#s-wardrobe .wdr-trend-by::after{content:"\2605";font-size:14px;color:#0FA6B6}
 #s-wardrobe .wdr-tstack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
@@ -4599,6 +4599,15 @@ function openWardrobe(tab){
   renderWardrobeTeaser(true);
 }
 function closeWardrobe(){
+  // If she's on the Trending tab (reached via the toggle or the bottom-of-list
+  // "See all trending" card), Back steps her to Her List first rather than
+  // exiting the whole page. A second Back then leaves.
+  const trendPane=document.querySelector('#s-wardrobe .wdr-pane[data-pane="trend"]');
+  if(trendPane&&trendPane.classList.contains('on')){
+    wardrobeTab('list');
+    try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}
+    return;
+  }
   document.querySelector('.quiz-footer').style.display='';
   showBack(wardrobePrevScreen);
 }
