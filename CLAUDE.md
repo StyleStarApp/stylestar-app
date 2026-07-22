@@ -3102,6 +3102,13 @@ Branch this session: `claude/style-star-eyc2x4`. Short, tidy morning session.
   - So the net of today's WB star work = **outline off, everything else original.**
 - Render harness rebuilt in scratchpad `render/` (playwright-core, chromium at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`, serve on :8199, seed a quiz-taker `ss_data` in localStorage + `show('s-wb')`, wait ~7s for the entrance reveal). Used the Edit tool throughout.
 
+**2026-07-22 (later — footer style toned down site-wide — SHIPPED LIVE, PR #521)**
+Branch: `claude/style-star-footer-edit-huunsc`. Quick, tidy session — Cath liked how the **Your Wardrobe** footer looked (subtler than the rest) and wanted that style everywhere.
+- ✅ **All footers switched from bold UPPERCASE near-black → the quiet Wardrobe treatment:** regular weight (700→400), **normal case** (no more UPPERCASE), **no wide letter-spacing**, a clean neutral gray **#6f6a63** (deeper/cooler than the Wardrobe page's original warm #8a8474, which leaned tan), and **14px** (up from 13px) for readability — Cath's 18-80+ audience. Gold ★ separators (#E6C24E) unchanged. **Which links appear on each page was NOT touched** (Cath: "we're good there").
+- Rules edited (all in `index.html`): `.quiz-footer span.lnk` (~460), `.faq-foot/.mall-foot/.pg-foot .lnk` (~518), `.hm-foot span.lnk` (~781), `#s-wb .wb-foot span.lnk` (~913) + `#s-wb .wb-acts .wb-foot span.lnk` color (~1075), `.res-screen .foot span.lnk` (~1385), the `#s-wardrobe .wdr-foot` base (~196, bumped to 14px + #6f6a63 for uniformity), and the now-dead `#s-photo .ph-foot .lnk` (~666, updated for consistency though its markup was already removed).
+- Verified in the render harness (FAQ / Mall / Wardrobe footer crops); Cath approved ("the toned down look is working well for us") → PR #521 squash-merged to main.
+- Design note logged: the "subtle footer" instinct fits the ongoing **restraint / "luxury whispers"** direction — footers are quiet nav, not headlines.
+
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-22)
 Nothing broken; everything live. Open threads, unchanged priority:
 1. **BUILDING YOUR WARDROBE label** is at 13px one-line (Cath's Option B) — she's happy for now; a possible future revisit is the two-line header-size version (Option A) if she wants it truly header-sized.
