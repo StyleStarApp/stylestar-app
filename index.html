@@ -165,8 +165,12 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tag .l2{font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;color:#8a8474;margin-top:3px}
 #s-wardrobe .wdr-howto{font:400 13px/1.55 'Jost',sans-serif;color:#5a554c;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0}
 #s-wardrobe .wdr-howto b{color:#26221c;font-weight:600}
-#s-wardrobe .wdr-progress{font:500 13px/1.4 'Jost',sans-serif;color:#6f6a63;text-align:center;padding:6px 0 12px}
-#s-wardrobe .wdr-progress b{color:#1a1a1a;font-weight:700}
+#s-wardrobe .wdr-plan-wrap{text-align:center;padding:10px 0 16px}
+#s-wardrobe .wdr-plan{display:flex;align-items:center;justify-content:center}
+#s-wardrobe .wp-stat{display:flex;flex-direction:column;align-items:center;padding:0 24px}
+#s-wardrobe .wp-num{font:400 30px/1 'Fraunces',Georgia,serif;color:#E0B84C}
+#s-wardrobe .wp-lbl{font:600 10.5px/1.3 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8474;margin-top:5px}
+#s-wardrobe .wp-div{width:1px;height:40px;background:linear-gradient(180deg,transparent,#e0cfa0 50%,transparent)}
 #s-wardrobe .wdr-shopwants{display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,#2b2523,#1a1512);border:1px solid #1a1512;box-shadow:0 0 0 2px #E0B84C;color:#F5EFE2;padding:13px 15px;margin:2px 0 16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-shopwants .wsw-bag{font-size:19px;line-height:1}
 #s-wardrobe .wdr-shopwants .wsw-txt{flex:1;font:600 15px/1.15 'Jost',sans-serif;letter-spacing:.01em}
@@ -180,12 +184,19 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
 #s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 145px}
 #s-wardrobe .wdr-name.custom::before{content:"\2605 ";color:#E6C24E;font-size:11px}
-#s-wardrobe .wdr-del{position:absolute;left:-33px;top:7px;color:#b8b2a4;font-size:16px;line-height:1;cursor:pointer;padding:3px 5px;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-del{position:absolute;left:-34px;top:4px;color:#8a8272;font-size:22px;line-height:1;cursor:pointer;padding:2px 6px;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-del:hover,#s-wardrobe .wdr-del:active{color:#c0392b;background:#f3ede0}
 #s-wardrobe .wdr-undo{display:flex;align-items:center;justify-content:space-between;gap:10px;font:500 13px/1.4 'Jost',sans-serif;color:#6f6a63;background:#f3ede0;border:1px dashed #cfc6b2;padding:8px 12px;margin:2px 0 12px}
 #s-wardrobe .wdr-undo-btn{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;padding:2px 4px}
 #s-wardrobe .wdr-removed{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;padding:12px 0 2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-removed:hover{color:#1a1a1a}
+#s-wardrobe .wdr-reset{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;padding:14px 0 2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-reset:hover{color:#1a1a1a}
+#s-wardrobe .wdr-reset-confirm{text-align:center;padding:14px 8px 4px;font:500 12.5px/1.55 'Jost',sans-serif;color:#6f6a63}
+#s-wardrobe .wdr-reset-confirm b{display:block;color:#2b2620;font-weight:600;font-size:13.5px;margin-bottom:4px}
+#s-wardrobe .wdr-rc-btns{margin-top:8px;display:flex;justify-content:center;gap:18px}
+#s-wardrobe .wdr-rc-yes{color:#c0392b;font-weight:700;text-decoration:underline;cursor:pointer;padding:3px 6px;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-rc-no{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;padding:3px 6px;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-toggle{display:flex;gap:5px;flex:0 0 auto;white-space:nowrap}
 #s-wardrobe .wdr-btn{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.04em;padding:5px 10px;border-radius:0;white-space:nowrap;border:1px solid #d8d2c2;color:#8a8474;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-btn.have{background:#F2F0EA;border-color:#B7AF9C;color:#726B58}
@@ -3533,7 +3544,7 @@ async function restoreResults(){
       topArchNames=d.topArchNames||[];
       if(d.answers&&d.answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
       if(d.prefs)prefs=d.prefs;
-      if(d.wardrobe)wardrobeData=d.wardrobe;
+      if(d.wardrobe)wardrobeData=_normalizeWardrobe(d.wardrobe);
       emailDone=true;
       try{
         localStorage.setItem('ss_data',JSON.stringify({userName,answers,topArchNames,portrait:d.portrait}));
@@ -4467,15 +4478,26 @@ const trendItems=[
   {n:'A Great Trench',note:"A quiet trend that never really left. Instant polish over anything."}
 ];
 let wardrobeData={items:{},custom:[]};
+// Make any wardrobe record safe to use: guarantee the shape, and enforce the
+// zero-pre-tap model. Old saved records (local OR from Supabase/restore) may hold
+// auto-assigned Have/Want defaults from before that change — clearing them here is
+// what stops "Shop my whole Want list" from trying to shop ~56 pieces she never tapped.
+function _normalizeWardrobe(d){
+  if(!d||typeof d!=='object')d={};
+  if(!d.items||typeof d.items!=='object')d.items={};
+  if(!Array.isArray(d.custom))d.custom=[];
+  if(!Array.isArray(d.hidden))d.hidden=[];
+  if(!d.pretap0){d.items={};d.pretap0=true;}
+  return d;
+}
 function loadWardrobeData(){
   let d={items:{},custom:[]};
   try{const raw=JSON.parse(localStorage.getItem('ss_wardrobe'));if(raw)d=raw}catch(e){}
-  if(!d.items)d.items={};
-  if(!d.custom)d.custom=[];
-  if(!d.hidden)d.hidden=[];
-  // One-time switch to the zero-pre-tap model: clear any previously auto-assigned
-  // Have/Want defaults so nothing starts pre-marked. Runs once; user taps then persist.
-  if(!d.pretap0){d.items={};d.pretap0=true;}
+  d=_normalizeWardrobe(d);
+  // Persist the normalized record immediately. _wardrobeWants() (used by the chat
+  // and "Shop my whole Want list") reads straight from storage, so if we only
+  // cleaned the in-memory copy the stale defaults would linger in storage.
+  try{localStorage.setItem('ss_wardrobe',JSON.stringify(d));}catch(e){}
   return d;
 }
 function saveWardrobeData(){
@@ -4573,6 +4595,19 @@ function wardrobeShowRemoved(){
   saveWardrobeData();
   renderWardrobeList();
 }
+// Start over on the main checklist: clears every Have/Want mark on the standard
+// items. Her own typed-in additions (and any items she removed) are left exactly
+// as they are. Uses a gentle inline confirm, not a browser dialog.
+var _wdrResetConfirm=false;
+function askWardrobeReset(){_wdrResetConfirm=true;renderWardrobeList();}
+function cancelWardrobeReset(){_wdrResetConfirm=false;renderWardrobeList();}
+function wardrobeReset(){
+  wardrobeData.items={};
+  _wdrResetConfirm=false;
+  saveWardrobeData();
+  renderWardrobeList();
+  try{document.getElementById('wdrListBody').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
+}
 // Her wardrobe "wishlist" for the stylist chat: everything she has marked Want,
 // plus her own additions. Lets the stylist say "I know a vacation dress has been
 // on your list." Reads straight from storage so it works even if she hasn't
@@ -4653,12 +4688,13 @@ function renderWardrobeList(){
   wardrobeData.custom.forEach(function(c){if(c.state==='have')haveCount++;else if(c.state==='want')wantCount++;});
   let html='';
   if(haveCount||wantCount){
-    var _parts=[];
-    if(haveCount)_parts.push('<b>'+haveCount+'</b> in your closet');
-    if(wantCount)_parts.push('<b>'+wantCount+'</b> on your wishlist');
-    html+='<div class="wdr-progress">Your plan so far: '+_parts.join(' &middot; ')+'</div>';
+    var _st='';
+    if(haveCount)_st+='<div class="wp-stat"><span class="wp-num">'+haveCount+'</span><span class="wp-lbl">In your closet</span></div>';
+    if(haveCount&&wantCount)_st+='<div class="wp-div"></div>';
+    if(wantCount)_st+='<div class="wp-stat"><span class="wp-num">'+wantCount+'</span><span class="wp-lbl">On your wishlist</span></div>';
+    html+='<div class="wdr-plan-wrap"><div class="wdr-plan">'+_st+'</div></div>';
   }
-  if(wantCount){html+='<div class="wdr-shopwants" role="button" onclick="shopWantList()"><span class="wsw-bag">&#128717;</span><span class="wsw-txt">Shop my whole Want list<span class="wsw-n">'+wantCount+' piece'+(wantCount>1?'s':'')+'</span></span><span class="wsw-ar">&#8594;</span></div>';}
+  if(wantCount){html+='<div class="wdr-shopwants" role="button" onclick="shopWantList()"><span class="wsw-bag">&#128717;</span><span class="wsw-txt">Shop my whole wishlist<span class="wsw-n">'+wantCount+' piece'+(wantCount>1?'s':'')+'</span></span><span class="wsw-ar">&#8594;</span></div>';}
   if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.name||'')+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
   order.forEach(function(catName){
     const cat=byName[catName];if(!cat)return;
@@ -4674,6 +4710,11 @@ function renderWardrobeList(){
     html+='</div>';
   }
   if(hidden.length){html+='<div class="wdr-removed" onclick="wardrobeShowRemoved()">Show '+hidden.length+' removed item'+(hidden.length>1?'s':'')+' &#8635;</div>';}
+  if(_wdrResetConfirm){
+    html+='<div class="wdr-reset-confirm"><b>Start the list over?</b>This clears every Have and Want mark. Your own additions stay right where they are.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
+  }else if(Object.keys(wardrobeData.items).length){
+    html+='<div class="wdr-reset" onclick="askWardrobeReset()">Reset my list &#8635;</div>';
+  }
   body.innerHTML=html;
 }
 function wardrobeSeeIdeas(id,boxId){
@@ -4790,7 +4831,7 @@ let wardrobePrevScreen='s-wel';
 function openWardrobe(tab){
   const cur=document.querySelector('.scr.act');
   wardrobePrevScreen=cur?cur.id:'s-wel';
-  _teaserNudged=false;
+  _teaserNudged=false;_wdrResetConfirm=false;
   _wardrobeUndo=null;if(_wardrobeUndoTimer){clearTimeout(_wardrobeUndoTimer);_wardrobeUndoTimer=null;}
   wardrobeData=loadWardrobeData();
   _wardrobeEnsureInit();
@@ -4803,7 +4844,10 @@ function openWardrobe(tab){
   }
   const sub=document.getElementById('wdrSub');
   if(sub){
-    sub.innerHTML=(quizTaken&&topArchNames&&topArchNames[0])?('Built for you, from your <b>'+_esc(String(topArchNames[0]).replace(/^The\s+/i,''))+'</b> style'):'Built for you, from your style';
+    // Founder's voice: this is Catherine's real professional checklist, which the
+    // user makes her own. Honest (the list itself is universal, not archetype-built)
+    // and leans on the real-stylist differentiation. The pink heart marks her voice.
+    sub.innerHTML='The checklist I use in every closet consultation, for you to make your own <svg class="pinkheart" style="width:13px;height:13px;margin-left:2px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
   }
   wardrobeTab(tab||'list');
   renderWardrobeList();
@@ -5418,7 +5462,7 @@ function fallbackInitialScreen(){
     userName=d.userName;
   }
   if(d&&d.prefs)prefs=d.prefs;
-  if(d&&d.wardrobe){wardrobeData=d.wardrobe;try{localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));}catch(e){}}
+  if(d&&d.wardrobe){wardrobeData=_normalizeWardrobe(d.wardrobe);try{localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));}catch(e){}}
   document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('act')});
   if(hasQuiz){
     document.getElementById('s-wb').classList.add('act');
@@ -5456,12 +5500,12 @@ async function autoRestoreFromLink(){
       var d=json.data;
       userName=d.userName||'You';
       if(d.prefs)prefs=d.prefs;
-      if(d.wardrobe)wardrobeData=d.wardrobe;
+      if(d.wardrobe)wardrobeData=_normalizeWardrobe(d.wardrobe);
       emailDone=true;
       try{
         localStorage.setItem('ss_emailDone','true');
         if(d.prefs)localStorage.setItem('ss_prefs',JSON.stringify(d.prefs));
-        if(d.wardrobe)localStorage.setItem('ss_wardrobe',JSON.stringify(d.wardrobe));
+        if(d.wardrobe)localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));
       }catch(e){}
       try{history.replaceState({},'',location.pathname)}catch(e){} // drop the token from the URL
       var hasPortrait=!!(d.portrait&&String(d.portrait).trim());
