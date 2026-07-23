@@ -4695,7 +4695,7 @@ function renderWardrobeList(){
     if(wantCount)_st+='<div class="wp-stat"><span class="wp-num">'+wantCount+'</span><span class="wp-lbl">On your wishlist</span></div>';
     html+='<div class="wdr-plan-wrap"><div class="wp-eyebrow">Your plan so far</div><div class="wdr-plan">'+_st+'</div></div>';
   }
-  if(wantCount){html+='<div class="wdr-shopwants" role="button" onclick="shopWantList()"><span class="wsw-bag">&#128717;</span><span class="wsw-txt">Shop my whole Want list<span class="wsw-n">'+wantCount+' piece'+(wantCount>1?'s':'')+'</span></span><span class="wsw-ar">&#8594;</span></div>';}
+  if(wantCount){html+='<div class="wdr-shopwants" role="button" onclick="shopWantList()"><span class="wsw-bag">&#128717;</span><span class="wsw-txt">Shop my whole wishlist<span class="wsw-n">'+wantCount+' piece'+(wantCount>1?'s':'')+'</span></span><span class="wsw-ar">&#8594;</span></div>';}
   if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.name||'')+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
   order.forEach(function(catName){
     const cat=byName[catName];if(!cat)return;
