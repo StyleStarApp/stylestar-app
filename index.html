@@ -177,6 +177,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-del:hover,#s-wardrobe .wdr-del:active{color:#c0392b;background:#f3ede0}
 #s-wardrobe .wdr-undo{display:flex;align-items:center;justify-content:space-between;gap:10px;font:500 13px/1.4 'Jost',sans-serif;color:#6f6a63;background:#f3ede0;border:1px dashed #cfc6b2;padding:8px 12px;margin:2px 0 12px}
 #s-wardrobe .wdr-undo-btn{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;padding:2px 4px}
+#s-wardrobe .wdr-removed{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;padding:12px 0 2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-removed:hover{color:#1a1a1a}
 #s-wardrobe .wdr-toggle{display:flex;gap:5px;flex:0 0 auto;white-space:nowrap}
 #s-wardrobe .wdr-btn{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.04em;padding:5px 10px;border-radius:0;white-space:nowrap;border:1px solid #d8d2c2;color:#8a8474;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-btn.have{background:#F2F0EA;border-color:#B7AF9C;color:#726B58}
@@ -4452,6 +4454,10 @@ function loadWardrobeData(){
   try{const raw=JSON.parse(localStorage.getItem('ss_wardrobe'));if(raw)d=raw}catch(e){}
   if(!d.items)d.items={};
   if(!d.custom)d.custom=[];
+  if(!d.hidden)d.hidden=[];
+  // One-time switch to the zero-pre-tap model: clear any previously auto-assigned
+  // Have/Want defaults so nothing starts pre-marked. Runs once; user taps then persist.
+  if(!d.pretap0){d.items={};d.pretap0=true;}
   return d;
 }
 function saveWardrobeData(){
@@ -4463,7 +4469,9 @@ function _wardrobeExcluded(item){
     return (prefs.neverWear&&prefs.neverWear.indexOf(t)>-1)||(prefs.neverPatterns&&prefs.neverPatterns.indexOf(t)>-1);
   });
 }
-function _wardrobeDefault(item){return item.common?'have':'want'}
+// Zero pre-tap: nothing starts marked. An item with no saved state is "unset"
+// (neither Have nor Want highlighted) until she taps.
+function _wardrobeDefault(item){return 'unset'}
 // Nudge category order toward her lifestyle: a very sporty-leaning quiz answer
 // brings Activewear forward; a very dressy-leaning answer brings Dresses forward.
 function _wardrobeCatOrder(){
@@ -4478,19 +4486,13 @@ function _wardrobeCatOrder(){
   return [head].concat(boost,rest);
 }
 function _wardrobeEnsureInit(){
-  wardrobeItems.forEach(function(cat){
-    cat.items.forEach(function(it){
-      if(!(it.id in wardrobeData.items)&&!_wardrobeExcluded(it)){
-        wardrobeData.items[it.id]=_wardrobeDefault(it);
-      }
-    });
-  });
-  saveWardrobeData();
+  // Zero pre-tap: no defaults assigned. Items stay unset until she taps.
+  if(!wardrobeData.hidden)wardrobeData.hidden=[];
 }
 function _wardrobeGetState(id){
   if(id in wardrobeData.items)return wardrobeData.items[id];
   const c=wardrobeData.custom.find(function(x){return x.id===id});
-  return c?c.state:'want';
+  return c?c.state:'unset';
 }
 // Trend items ("trend{i}") resolve straight from trendItems, not wardrobeData —
 // they're Catherine's curation, not part of her personal have-it/want-it list.
@@ -4517,11 +4519,20 @@ function wardrobeToggle(id,state,isCustom){
   renderWardrobeList();
 }
 var _wardrobeUndo=null,_wardrobeUndoTimer=null;
-function wardrobeRemoveCustom(id){
-  var idx=wardrobeData.custom.findIndex(function(x){return x.id===id});
-  if(idx<0)return;
-  _wardrobeUndo={item:wardrobeData.custom[idx],idx:idx};
-  wardrobeData.custom.splice(idx,1);
+// Remove any item: custom ones are deleted; standard ones are hidden (added to
+// wardrobeData.hidden so they drop off her list). Both offer a 6s Undo.
+function wardrobeRemove(id,isCustom){
+  if(isCustom){
+    var idx=wardrobeData.custom.findIndex(function(x){return x.id===id});
+    if(idx<0)return;
+    _wardrobeUndo={type:'custom',item:wardrobeData.custom[idx],idx:idx,name:wardrobeData.custom[idx].n};
+    wardrobeData.custom.splice(idx,1);
+  }else{
+    if(!wardrobeData.hidden)wardrobeData.hidden=[];
+    if(wardrobeData.hidden.indexOf(id)>-1)return;
+    wardrobeData.hidden.push(id);
+    _wardrobeUndo={type:'std',id:id,name:_wardrobeFindName(id)};
+  }
   saveWardrobeData();
   if(_wardrobeUndoTimer)clearTimeout(_wardrobeUndoTimer);
   _wardrobeUndoTimer=setTimeout(function(){_wardrobeUndo=null;renderWardrobeList();},6000);
@@ -4531,9 +4542,39 @@ function wardrobeUndoRemove(){
   if(!_wardrobeUndo)return;
   var u=_wardrobeUndo;_wardrobeUndo=null;
   if(_wardrobeUndoTimer){clearTimeout(_wardrobeUndoTimer);_wardrobeUndoTimer=null;}
-  wardrobeData.custom.splice(Math.min(Math.max(u.idx,0),wardrobeData.custom.length),0,u.item);
+  if(u.type==='custom'){
+    wardrobeData.custom.splice(Math.min(Math.max(u.idx,0),wardrobeData.custom.length),0,u.item);
+  }else{
+    wardrobeData.hidden=(wardrobeData.hidden||[]).filter(function(x){return x!==u.id});
+  }
   saveWardrobeData();
   renderWardrobeList();
+}
+function wardrobeShowRemoved(){
+  wardrobeData.hidden=[];
+  saveWardrobeData();
+  renderWardrobeList();
+}
+// Her wardrobe "wishlist" for the stylist chat: everything she has marked Want,
+// plus her own additions. Lets the stylist say "I know a vacation dress has been
+// on your list." Reads straight from storage so it works even if she hasn't
+// opened the wardrobe this session.
+function _wardrobeForPrompt(){
+  try{
+    var wd=null;
+    try{wd=JSON.parse(localStorage.getItem('ss_wardrobe'));}catch(e){}
+    if(!wd)wd=wardrobeData;
+    if(!wd||!wd.items)return '';
+    var hidden=wd.hidden||[];
+    var wants=[];
+    wardrobeItems.forEach(function(cat){cat.items.forEach(function(it){
+      if(hidden.indexOf(it.id)>-1||_wardrobeExcluded(it))return;
+      if(wd.items[it.id]==='want')wants.push(it.n);
+    });});
+    (wd.custom||[]).forEach(function(c){if(c.state==='want')wants.push(c.n);});
+    if(!wants.length)return '';
+    return '\n\nFrom her Your Wardrobe list, pieces she has marked she WANTS to add: '+wants.join(', ')+'. Reference these naturally only when it genuinely helps her (for example, "I know a vacation dress has been on your list"). Never force it or read the whole list back to her.';
+  }catch(e){return ''}
 }
 function wardrobeAddCustom(){
   const inp=document.getElementById('wdrAddInput');
@@ -4552,7 +4593,7 @@ function _wardrobeItemRow(id,name,isCustom){
   const haveCls='wdr-btn'+(st==='have'?' have':'');
   const wantCls='wdr-btn'+(st==='want'?' want':'');
   const seeLink=(st==='want')?'<div class="wdr-see-wrap"><span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')"><span class="wdr-see-star">&#9733;</span> See ideas &rarr;</span></div>':'';
-  const delBtn=isCustom?'<span class="wdr-del" role="button" title="Remove" onclick="wardrobeRemoveCustom(\''+id+'\')">&times;</span>':'';
+  const delBtn='<span class="wdr-del" role="button" title="Remove" onclick="wardrobeRemove(\''+id+'\','+(isCustom?'true':'false')+')">&times;</span>';
   return '<div class="wdr-item">'
     +delBtn
     +'<div class="'+nameClass+'">'+_esc(name)+'</div>'
@@ -4570,21 +4611,23 @@ function renderWardrobeList(){
   const order=_wardrobeCatOrder();
   const byName={};
   wardrobeItems.forEach(function(c){byName[c.cat]=c});
+  const hidden=wardrobeData.hidden||[];
   let html='';
+  if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.name||'')+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
   order.forEach(function(catName){
     const cat=byName[catName];if(!cat)return;
-    const visible=cat.items.filter(function(it){return !_wardrobeExcluded(it)});
+    const visible=cat.items.filter(function(it){return !_wardrobeExcluded(it)&&hidden.indexOf(it.id)<0});
     if(!visible.length)return;
     html+='<div class="wdr-cat"><div class="wdr-cat-t">'+_esc(catName)+'</div>';
     visible.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,false)});
     html+='</div>';
   });
-  if(wardrobeData.custom.length||_wardrobeUndo){
+  if(wardrobeData.custom.length){
     html+='<div class="wdr-cat"><div class="wdr-cat-t">My Additions</div>';
-    if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.item.n)+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
     wardrobeData.custom.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,true)});
     html+='</div>';
   }
+  if(hidden.length){html+='<div class="wdr-removed" onclick="wardrobeShowRemoved()">Show '+hidden.length+' removed item'+(hidden.length>1?'s':'')+' &#8635;</div>';}
   body.innerHTML=html;
 }
 function wardrobeSeeIdeas(id,boxId){
@@ -4992,7 +5035,7 @@ Her style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of 
 
 Give genuinely helpful, specific advice based on what she tells you and what you can see. If it comes up naturally that knowing her taste would help, you may ONCE gently note that our fun Style Star style quiz lets you tailor everything to her. Never push it, never repeat it, and never let it get in the way of answering her question.`;
 
-  const systemPrompt=`You are a personal stylist powered by AI. ${_profileBlock}
+  const systemPrompt=`You are a personal stylist powered by AI. ${_profileBlock}${_wardrobeForPrompt()}
 
 HOW TO RESPOND:\n- Never use any dashes or hyphens as punctuation. Use commas or periods instead.
 - Get to the point. Lead with the specific suggestion or answer.
