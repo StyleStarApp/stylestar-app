@@ -171,6 +171,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
 #s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 145px}
 #s-wardrobe .wdr-name.custom::before{content:"\2605 ";color:#E6C24E;font-size:11px}
+#s-wardrobe .wdr-del{display:inline-block;margin-left:9px;color:#b8b2a4;font-size:17px;line-height:1;cursor:pointer;padding:1px 7px;border-radius:3px;-webkit-tap-highlight-color:transparent;vertical-align:-1px}
+#s-wardrobe .wdr-del:hover,#s-wardrobe .wdr-del:active{color:#c0392b;background:#f3ede0}
 #s-wardrobe .wdr-toggle{display:flex;gap:5px;flex:0 0 auto;white-space:nowrap}
 #s-wardrobe .wdr-btn{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.04em;padding:5px 10px;border-radius:0;white-space:nowrap;border:1px solid #d8d2c2;color:#8a8474;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-btn.have{background:#F2F0EA;border-color:#B7AF9C;color:#726B58}
@@ -4405,7 +4407,8 @@ const wardrobeItems=[
     {id:'bg6',n:'Gym bags',common:false}
   ]},
   {cat:'Extras & Accessories',items:[
-    {id:'ex1',n:'Everyday earrings (studs or hoops)',common:true},
+    {id:'ex1',n:'Hoop earrings',common:true},
+    {id:'ex9',n:'Stud earrings',common:true},
     {id:'ex2',n:'Statement earrings',common:false},
     {id:'ex3',n:'Scarves/Pashminas',common:false},
     {id:'ex4',n:'Sunglasses',common:true},
@@ -4494,6 +4497,11 @@ function wardrobeToggle(id,state,isCustom){
   saveWardrobeData();
   renderWardrobeList();
 }
+function wardrobeRemoveCustom(id){
+  wardrobeData.custom=wardrobeData.custom.filter(function(x){return x.id!==id});
+  saveWardrobeData();
+  renderWardrobeList();
+}
 function wardrobeAddCustom(){
   const inp=document.getElementById('wdrAddInput');
   if(!inp)return;
@@ -4511,8 +4519,9 @@ function _wardrobeItemRow(id,name,isCustom){
   const haveCls='wdr-btn'+(st==='have'?' have':'');
   const wantCls='wdr-btn'+(st==='want'?' want':'');
   const seeLink=(st==='want')?'<div class="wdr-see-wrap"><span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')"><span class="wdr-see-star">&#9733;</span> See ideas &rarr;</span></div>':'';
+  const delBtn=isCustom?'<span class="wdr-del" role="button" title="Remove" onclick="wardrobeRemoveCustom(\''+id+'\')">&times;</span>':'';
   return '<div class="wdr-item">'
-    +'<div class="'+nameClass+'">'+_esc(name)+'</div>'
+    +'<div class="'+nameClass+'">'+_esc(name)+delBtn+'</div>'
     +'<div class="wdr-toggle">'
       +'<div class="'+haveCls+'" onclick="wardrobeToggle(\''+id+'\',\'have\','+(isCustom?'true':'false')+')">HAVE IT</div>'
       +'<div class="'+wantCls+'" onclick="wardrobeToggle(\''+id+'\',\'want\','+(isCustom?'true':'false')+')">WANT IT</div>'
@@ -4537,7 +4546,7 @@ function renderWardrobeList(){
     html+='</div>';
   });
   if(wardrobeData.custom.length){
-    html+='<div class="wdr-cat"><div class="wdr-cat-t">Her Own List</div>';
+    html+='<div class="wdr-cat"><div class="wdr-cat-t">My Own List</div>';
     wardrobeData.custom.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,true)});
     html+='</div>';
   }
