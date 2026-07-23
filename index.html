@@ -495,7 +495,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .shop-loading{text-align:center;padding:2rem 0;color:#444;font-size:17.5px;font-weight:500}
 .shop-star-wrap{position:relative;width:86px;height:86px;margin:2px auto 14px}
 .shop-star-main{width:86px;height:86px;display:block;filter:drop-shadow(0 2px 5px rgba(224,174,70,.3));animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
-@media(prefers-reduced-motion:reduce){.shop-star-main{animation:none}}
+.shop-bag-main{width:82px;height:82px;display:block;filter:drop-shadow(0 3px 6px rgba(224,174,70,.32));animation:shopBagSway 2.4s ease-in-out infinite;transform-origin:50% 14%}
+@keyframes shopBagSway{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@media(prefers-reduced-motion:reduce){.shop-star-main,.shop-bag-main{animation:none}}
 #s-shopstyle .shop-loading{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:190px;padding:8px 0 0;font-size:19.5px}
 .shop-refresh{text-align:center;margin-top:14px}
 .shop-refresh-btn{font-size:15.5px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.03em}
@@ -3691,7 +3693,7 @@ function _openShopStyleNow(mode){
   var subEl=document.querySelector('#s-shopstyle .ss-shop-sub');
   if(subEl){
     if(_shopStyleMode==='look'){subEl.textContent='In the vibe of the look you shared & your style.';}
-    else if(_shopStyleMode==='wantlist'){subEl.textContent='Everything on your list, styled for you.';}
+    else if(_shopStyleMode==='wantlist'){subEl.textContent='Everything on your wishlist, styled for you.';}
     else{var last=parseInt(localStorage.getItem('ss_shop_msg')||'-1',10),si;
       do{si=Math.floor(Math.random()*SHOP_MSGS.length);}while(SHOP_MSGS.length>1&&si===last);
       try{localStorage.setItem('ss_shop_msg',String(si));}catch(e){}
@@ -3703,11 +3705,12 @@ function _openShopStyleNow(mode){
 async function _shopStyleGen(){
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
-  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="pinkheart hl" style="width:17px;height:17px;margin-right:5px;vertical-align:-3px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>shopping your style&hellip;';
+  var _isWL=(_shopStyleMode==='wantlist');
+  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="pinkheart hl" style="width:17px;height:17px;margin-right:5px;vertical-align:-3px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>'+(_isWL?'shopping your wishlist&hellip;':'shopping your style&hellip;');
   var talk=document.querySelector('#s-shopstyle .ss-shop-talk');if(talk)talk.classList.remove('on');
   var gf=document.querySelector('.quiz-footer');if(gf)gf.style.display='none';
   var bk=document.querySelector('#s-shopstyle .top-back-wrap');if(bk)bk.style.display='none';
-  cont.innerHTML='<div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div><span id="shopLoadMsg">'+_pickLoadMsg()+'</span></div>';
+  cont.innerHTML='<div class="shop-loading"><div class="shop-star-wrap">'+(_isWL?_SHOP_BAG_SVG:_SHOP_STAR_SVG)+'</div><span id="shopLoadMsg">'+_pickLoadMsg()+'</span></div>';
   _startShopMsgs();
   var basis;
   if(_shopStyleMode==='look'){
@@ -3739,13 +3742,13 @@ async function _shopStyleGen(){
       html+='<div class="shop-card"><div>'+top+'<div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
     });
     html+='</div>'+(_wlTrunc?'<div class="shop-trunc">Showing 16 of your '+(_wlTrunc+16)+' wants. Shop the rest anytime from your list.</div>':'')+'<div class="shop-refresh"><button class="shop-refresh-btn" onclick="_shopStyleGen()">&#8635; Show me different options</button></div>';
-    _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent='shop your style';
+    _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent=_isWL?'shop your wishlist':'shop your style';
     cont.innerHTML=html;
     if(talk)talk.classList.add('on');
     if(gf)gf.style.display='';
     if(bk)bk.style.display='';
   }catch(e){
-    _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent='shop your style';
+    _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent=_isWL?'shop your wishlist':'shop your style';
     cont.innerHTML='<div class="shop-loading">Couldn\'t load options right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="_shopStyleGen()" style="max-width:200px">Try again</button></div>';
     if(gf)gf.style.display='';
     if(bk)bk.style.display='';
@@ -5345,8 +5348,13 @@ function refreshWbBadges(){
 var WB_MSGS=['Your own personal stylist,<br>made with love to help you shine.','This is my gift to you:<br>everything I know about style,<br>made clear, easy, and fun.','Made with love, to help you shine<br>your style out to the world.','Built with heart, here to help you<br>shine your light.','I believe style is one of the most<br>beautiful ways to shine your light.','Here to help you feel confident,<br>put-together, and fully you.'];
 var SHOP_MSGS=['Align your style. Shine your light.','Your signature style is coming together.','Here to help you shine your light.','Embracing your unique personal style.','Personalized for you.','Bringing out your most confident you.','Style with intention and heart.'];
 var LOADING_MSGS=['Gathering all the best options for you&hellip;','Looking for pieces you&rsquo;ll love&hellip;','Finding pieces that fit your style story&hellip;','Looking through thousands of options for you&hellip;','Finding pieces that fit your signature style&hellip;','Searching all the latest options, just for you&hellip;'];
+var WISHLIST_MSGS=['Gathering everything on your wishlist&hellip;','Shopping your whole list, just for you&hellip;','Finding a piece for every wish&hellip;','Pulling together your wishlist&hellip;','Looking for pieces you&rsquo;ll love&hellip;'];
 var _lastLoadMsg=-1;
-function _pickLoadMsg(){var i;do{i=Math.floor(Math.random()*LOADING_MSGS.length);}while(LOADING_MSGS.length>1&&i===_lastLoadMsg);_lastLoadMsg=i;return LOADING_MSGS[i];}
+function _pickLoadMsg(){var arr=(_shopStyleMode==='wantlist')?WISHLIST_MSGS:LOADING_MSGS;var i;do{i=Math.floor(Math.random()*arr.length);}while(arr.length>1&&i===_lastLoadMsg);_lastLoadMsg=i;return arr[i];}
+// Loader icons for the Shop-your-style waiting spot: the signature spinning
+// star for style shopping, a gently swaying gold shopping bag for wishlist shopping.
+var _SHOP_STAR_SVG='<svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>';
+var _SHOP_BAG_SVG='<svg class="shop-bag-main" viewBox="0 0 24 24"><defs><linearGradient id="shopBagG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9E7A6"/><stop offset=".55" stop-color="#EFC85C"/><stop offset="1" stop-color="#E0B341"/></linearGradient></defs><path d="M9 7 V6.2 A3 3 0 0 1 15 6.2 V7" fill="none" stroke="#CDA23A" stroke-width="1.3" stroke-linecap="round"/><path d="M6.4 7 H17.6 L18.5 19.4 A1.3 1.3 0 0 1 17.2 20.8 H6.8 A1.3 1.3 0 0 1 5.5 19.4 Z" fill="url(#shopBagG)" stroke="#C99A2C" stroke-width="0.9" stroke-linejoin="round"/><path d="M12 10.4 L12.9 12.2 L14.9 12.5 L13.45 13.9 L13.8 15.9 L12 15 L10.2 15.9 L10.55 13.9 L9.1 12.5 L11.1 12.2 Z" fill="#fff" opacity=".85"/></svg>';
 // Transform the flat Welcome Back action list into three labeled hubs
 // (Your Style Portrait / Shop / Your Styling), color-coded by purpose, with the
 // Portrait as a hero (her archetype name + a mini constellation). Runs once.
