@@ -4603,7 +4603,8 @@ var _wdrResetConfirm=false;
 function askWardrobeReset(){_wdrResetConfirm=true;renderWardrobeList();}
 function cancelWardrobeReset(){_wdrResetConfirm=false;renderWardrobeList();}
 function wardrobeReset(){
-  wardrobeData.items={};
+  wardrobeData.items={};      // clear every Have/Want mark
+  wardrobeData.hidden=[];     // full start-over: bring back any removed items
   _wdrResetConfirm=false;
   saveWardrobeData();
   renderWardrobeList();
@@ -4700,8 +4701,8 @@ function renderWardrobeList(){
   // Reset lives up top (near her counts) so it's easy to find without scrolling
   // the whole list. The inline confirm protects against an accidental tap.
   if(_wdrResetConfirm){
-    html+='<div class="wdr-reset-confirm"><b>Start the list over?</b>This clears every Have and Want mark. Your own additions stay right where they are.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
-  }else if(Object.keys(wardrobeData.items).length){
+    html+='<div class="wdr-reset-confirm"><b>Start the list over?</b>This clears every Have and Want mark and brings back any items you removed. Your own additions stay.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
+  }else if(Object.keys(wardrobeData.items).length||(wardrobeData.hidden&&wardrobeData.hidden.length)){
     html+='<div class="wdr-reset-wrap"><span class="wdr-reset" onclick="askWardrobeReset()">Reset my list &#8635;</span></div>';
   }
   order.forEach(function(catName){
