@@ -190,9 +190,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-undo-btn{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;padding:2px 4px}
 #s-wardrobe .wdr-removed{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;padding:12px 0 2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-removed:hover{color:#1a1a1a}
-#s-wardrobe .wdr-reset{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;padding:14px 0 2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-reset:hover{color:#1a1a1a}
-#s-wardrobe .wdr-reset-confirm{text-align:center;padding:14px 8px 4px;font:500 12.5px/1.55 'Jost',sans-serif;color:#6f6a63}
+#s-wardrobe .wdr-reset-wrap{text-align:center;padding:2px 0 8px}
+#s-wardrobe .wdr-reset{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 'Jost',sans-serif;letter-spacing:.02em;color:#4a453c;border:1.5px solid #b3ada0;background:#fff;padding:10px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-reset:hover,#s-wardrobe .wdr-reset:active{border-color:#1a1a1a;color:#1a1a1a}
+#s-wardrobe .wdr-reset-confirm{text-align:center;padding:6px 8px 10px;font:500 12.5px/1.55 'Jost',sans-serif;color:#6f6a63}
 #s-wardrobe .wdr-reset-confirm b{display:block;color:#2b2620;font-weight:600;font-size:13.5px;margin-bottom:4px}
 #s-wardrobe .wdr-rc-btns{margin-top:8px;display:flex;justify-content:center;gap:18px}
 #s-wardrobe .wdr-rc-yes{color:#c0392b;font-weight:700;text-decoration:underline;cursor:pointer;padding:3px 6px;-webkit-tap-highlight-color:transparent}
@@ -2438,7 +2439,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 
   <div class="wdr-pane" data-pane="list">
-    <div class="wdr-howto"><b>This is your wardrobe plan.</b> Go down the list and tap <b>Have</b> or <b>Want</b> on each piece. The pieces you mark <b>Want</b> are your gaps to fill, so tap <b>See ideas</b> to shop them in your style, and little by little, build a complete wardrobe that works for your life.</div>
+    <div class="wdr-howto"><b>This is your wardrobe plan.</b> Go down the list and tap <b>Have</b> or <b>Want</b> on each piece. The pieces you mark <b>Want</b> are your gaps to fill, so tap <b>See ideas</b> to shop them in your style, and little by little, build a complete wardrobe that works beautifully for your life.</div>
     <div class="wdr-card">
       <div class="wdr-tag"><div class="l1">style Star</div></div>
       <div id="wdrListBody"></div>
@@ -4696,6 +4697,13 @@ function renderWardrobeList(){
   }
   if(wantCount){html+='<div class="wdr-shopwants" role="button" onclick="shopWantList()"><span class="wsw-bag">&#128717;</span><span class="wsw-txt">Shop my whole wishlist<span class="wsw-n">'+wantCount+' piece'+(wantCount>1?'s':'')+'</span></span><span class="wsw-ar">&#8594;</span></div>';}
   if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.name||'')+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
+  // Reset lives up top (near her counts) so it's easy to find without scrolling
+  // the whole list. The inline confirm protects against an accidental tap.
+  if(_wdrResetConfirm){
+    html+='<div class="wdr-reset-confirm"><b>Start the list over?</b>This clears every Have and Want mark. Your own additions stay right where they are.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
+  }else if(Object.keys(wardrobeData.items).length){
+    html+='<div class="wdr-reset-wrap"><span class="wdr-reset" onclick="askWardrobeReset()">Reset my list &#8635;</span></div>';
+  }
   order.forEach(function(catName){
     const cat=byName[catName];if(!cat)return;
     const visible=cat.items.filter(function(it){return !_wardrobeExcluded(it)&&hidden.indexOf(it.id)<0});
@@ -4710,11 +4718,6 @@ function renderWardrobeList(){
     html+='</div>';
   }
   if(hidden.length){html+='<div class="wdr-removed" onclick="wardrobeShowRemoved()">Show '+hidden.length+' removed item'+(hidden.length>1?'s':'')+' &#8635;</div>';}
-  if(_wdrResetConfirm){
-    html+='<div class="wdr-reset-confirm"><b>Start the list over?</b>This clears every Have and Want mark. Your own additions stay right where they are.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
-  }else if(Object.keys(wardrobeData.items).length){
-    html+='<div class="wdr-reset" onclick="askWardrobeReset()">Reset my list &#8635;</div>';
-  }
   body.innerHTML=html;
 }
 function wardrobeSeeIdeas(id,boxId){
