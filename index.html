@@ -4356,36 +4356,36 @@ const wardrobeItems=[
     {id:'bo1',n:'Blue jeans',common:true},
     {id:'bo2',n:'White jeans',common:false},
     {id:'bo3',n:'Black trousers',common:false},
-    {id:'bo4',n:'Linen pants',common:false},
     {id:'bo5',n:'Skirts',common:false},
+    {id:'bo4',n:'Linen pants',common:false},
     {id:'bo6',n:'Shorts',common:false,tags:['Short shorts']}
   ]},
   {cat:'Dresses',items:[
     {id:'dr1',n:'Daytime casual dresses',common:false},
-    {id:'dr2',n:'Vacation/Resort dresses',common:false},
     {id:'dr3',n:'Work-appropriate dresses',common:false},
+    {id:'dr2',n:'Vacation/Resort dresses',common:false},
     {id:'dr4',n:'Special-occasion dresses',common:false}
   ]},
   {cat:'Jackets & Layers',items:[
     {id:'ja1',n:'Cardigans',common:true},
-    {id:'ja2',n:'Blazers',common:false},
-    {id:'ja3',n:'The perfect leather jacket',common:false},
-    {id:'ja4',n:'Warm winter coats',common:false},
     {id:'ja5',n:'Sweaters',common:false},
+    {id:'ja8',n:'Light casual jackets',common:false},
+    {id:'ja2',n:'Blazers',common:false},
     {id:'ja6',n:'Belted trench',common:false},
-    {id:'ja8',n:'Light casual jackets',common:false}
+    {id:'ja3',n:'The perfect leather jacket',common:false},
+    {id:'ja4',n:'Warm winter coats',common:false}
   ]},
   {cat:'Shoes',items:[
     {id:'sh1',n:'Neutral sandals',common:true},
     {id:'sh2',n:'Closed-toe flats',common:true},
-    {id:'sh3',n:'Dressy closed-toe heels',common:false},
-    {id:'sh4',n:'Dressy heeled sandals',common:false},
+    {id:'sh9',n:'Fashion sneakers',common:false},
+    {id:'sh10',n:'Athletic sneakers',common:false},
     {id:'sh5',n:'Wedges',common:false},
     {id:'sh6',n:'Espadrilles',common:false},
-    {id:'sh7',n:'Boots for fun',common:false},
+    {id:'sh4',n:'Dressy heeled sandals',common:false},
+    {id:'sh3',n:'Dressy closed-toe heels',common:false},
     {id:'sh8',n:'Boots for warmth',common:false},
-    {id:'sh9',n:'Fashion sneakers',common:false},
-    {id:'sh10',n:'Athletic sneakers',common:false}
+    {id:'sh7',n:'Boots for fun',common:false}
   ]},
   {cat:'Activewear',items:[
     {id:'ac1',n:'Leggings',common:true},
@@ -4401,22 +4401,22 @@ const wardrobeItems=[
   ]},
   {cat:'Bags',items:[
     {id:'bg1',n:'Daytime tote bags',common:true},
-    {id:'bg2',n:'Evening bags',common:false},
     {id:'bg3',n:'Crossbody bags',common:false},
-    {id:'bg4',n:'Belt bags',common:false},
     {id:'bg5',n:'Structured work bags',common:false},
-    {id:'bg6',n:'Gym bags',common:false}
+    {id:'bg4',n:'Belt bags',common:false},
+    {id:'bg6',n:'Gym bags',common:false},
+    {id:'bg2',n:'Evening bags',common:false}
   ]},
   {cat:'Extras & Accessories',items:[
     {id:'ex1',n:'Hoop earrings',common:true},
     {id:'ex9',n:'Stud earrings',common:true},
     {id:'ex2',n:'Statement earrings',common:false},
-    {id:'ex3',n:'Scarves/Pashminas',common:false},
+    {id:'ex7',n:'Bracelets',common:false},
+    {id:'ex8',n:'Necklaces',common:false},
     {id:'ex4',n:'Sunglasses',common:true},
     {id:'ex5',n:'Belts',common:false},
-    {id:'ex6',n:'Nice hair accessories',common:false},
-    {id:'ex7',n:'Bracelets',common:false},
-    {id:'ex8',n:'Necklaces',common:false}
+    {id:'ex3',n:'Scarves/Pashminas',common:false},
+    {id:'ex6',n:'Nice hair accessories',common:false}
   ]}
 ];
 // Seasonal trend picks — Catherine's own curation (not AI), same spirit as the
@@ -4562,7 +4562,7 @@ function renderWardrobeList(){
     html+='</div>';
   });
   if(wardrobeData.custom.length||_wardrobeUndo){
-    html+='<div class="wdr-cat"><div class="wdr-cat-t">My Own List</div>';
+    html+='<div class="wdr-cat"><div class="wdr-cat-t">My Additions</div>';
     if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.item.n)+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
     wardrobeData.custom.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,true)});
     html+='</div>';
