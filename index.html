@@ -171,7 +171,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
 #s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 145px}
 #s-wardrobe .wdr-name.custom::before{content:"\2605 ";color:#E6C24E;font-size:11px}
-#s-wardrobe .wdr-del{display:inline-block;margin-left:9px;color:#b8b2a4;font-size:17px;line-height:1;cursor:pointer;padding:1px 7px;border-radius:3px;-webkit-tap-highlight-color:transparent;vertical-align:-1px}
+#s-wardrobe .wdr-del{display:inline-block;margin-right:5px;color:#b8b2a4;font-size:17px;line-height:1;cursor:pointer;padding:1px 6px;border-radius:3px;-webkit-tap-highlight-color:transparent;flex:0 0 auto}
 #s-wardrobe .wdr-del:hover,#s-wardrobe .wdr-del:active{color:#c0392b;background:#f3ede0}
 #s-wardrobe .wdr-undo{display:flex;align-items:center;justify-content:space-between;gap:10px;font:500 13px/1.4 'Jost',sans-serif;color:#6f6a63;background:#f3ede0;border:1px dashed #cfc6b2;padding:8px 12px;margin:2px 0 12px}
 #s-wardrobe .wdr-undo-btn{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;padding:2px 4px}
@@ -4373,7 +4373,6 @@ const wardrobeItems=[
     {id:'ja4',n:'Warm winter coats',common:false},
     {id:'ja5',n:'Sweaters',common:false},
     {id:'ja6',n:'Belted trench',common:false},
-    {id:'ja7',n:'Denim jackets',common:false},
     {id:'ja8',n:'Light casual jackets',common:false}
   ]},
   {cat:'Shoes',items:[
@@ -4537,7 +4536,8 @@ function _wardrobeItemRow(id,name,isCustom){
   const seeLink=(st==='want')?'<div class="wdr-see-wrap"><span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')"><span class="wdr-see-star">&#9733;</span> See ideas &rarr;</span></div>':'';
   const delBtn=isCustom?'<span class="wdr-del" role="button" title="Remove" onclick="wardrobeRemoveCustom(\''+id+'\')">&times;</span>':'';
   return '<div class="wdr-item">'
-    +'<div class="'+nameClass+'">'+_esc(name)+delBtn+'</div>'
+    +delBtn
+    +'<div class="'+nameClass+'">'+_esc(name)+'</div>'
     +'<div class="wdr-toggle">'
       +'<div class="'+haveCls+'" onclick="wardrobeToggle(\''+id+'\',\'have\','+(isCustom?'true':'false')+')">HAVE IT</div>'
       +'<div class="'+wantCls+'" onclick="wardrobeToggle(\''+id+'\',\'want\','+(isCustom?'true':'false')+')">WANT IT</div>'
