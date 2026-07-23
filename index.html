@@ -165,8 +165,13 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tag .l2{font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;color:#8a8474;margin-top:3px}
 #s-wardrobe .wdr-howto{font:400 13px/1.55 'Jost',sans-serif;color:#5a554c;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0}
 #s-wardrobe .wdr-howto b{color:#26221c;font-weight:600}
-#s-wardrobe .wdr-progress{font:500 13px/1.4 'Jost',sans-serif;color:#6f6a63;text-align:center;padding:6px 0 12px}
-#s-wardrobe .wdr-progress b{color:#1a1a1a;font-weight:700}
+#s-wardrobe .wdr-plan-wrap{text-align:center;padding:4px 0 15px}
+#s-wardrobe .wp-eyebrow{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#4a453c;margin-bottom:10px}
+#s-wardrobe .wdr-plan{display:flex;align-items:center;justify-content:center}
+#s-wardrobe .wp-stat{display:flex;flex-direction:column;align-items:center;padding:0 24px}
+#s-wardrobe .wp-num{font:400 30px/1 'Fraunces',Georgia,serif;color:#E0B84C}
+#s-wardrobe .wp-lbl{font:600 10.5px/1.3 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8474;margin-top:5px}
+#s-wardrobe .wp-div{width:1px;height:40px;background:linear-gradient(180deg,transparent,#e0cfa0 50%,transparent)}
 #s-wardrobe .wdr-shopwants{display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,#2b2523,#1a1512);border:1px solid #1a1512;box-shadow:0 0 0 2px #E0B84C;color:#F5EFE2;padding:13px 15px;margin:2px 0 16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-shopwants .wsw-bag{font-size:19px;line-height:1}
 #s-wardrobe .wdr-shopwants .wsw-txt{flex:1;font:600 15px/1.15 'Jost',sans-serif;letter-spacing:.01em}
@@ -4684,10 +4689,11 @@ function renderWardrobeList(){
   wardrobeData.custom.forEach(function(c){if(c.state==='have')haveCount++;else if(c.state==='want')wantCount++;});
   let html='';
   if(haveCount||wantCount){
-    var _parts=[];
-    if(haveCount)_parts.push('<b>'+haveCount+'</b> in your closet');
-    if(wantCount)_parts.push('<b>'+wantCount+'</b> on your wishlist');
-    html+='<div class="wdr-progress">Your plan so far: '+_parts.join(' &middot; ')+'</div>';
+    var _st='';
+    if(haveCount)_st+='<div class="wp-stat"><span class="wp-num">'+haveCount+'</span><span class="wp-lbl">In your closet</span></div>';
+    if(haveCount&&wantCount)_st+='<div class="wp-div"></div>';
+    if(wantCount)_st+='<div class="wp-stat"><span class="wp-num">'+wantCount+'</span><span class="wp-lbl">On your wishlist</span></div>';
+    html+='<div class="wdr-plan-wrap"><div class="wp-eyebrow">Your plan so far</div><div class="wdr-plan">'+_st+'</div></div>';
   }
   if(wantCount){html+='<div class="wdr-shopwants" role="button" onclick="shopWantList()"><span class="wsw-bag">&#128717;</span><span class="wsw-txt">Shop my whole Want list<span class="wsw-n">'+wantCount+' piece'+(wantCount>1?'s':'')+'</span></span><span class="wsw-ar">&#8594;</span></div>';}
   if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.name||'')+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
