@@ -163,6 +163,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tag .l1{font:400 17px/1 'DM Serif Display',Georgia,serif;-webkit-text-stroke:.3px #1a1a1a;letter-spacing:0;color:#1a1a1a}
 #s-wardrobe .wdr-tag .l-rule{width:22px;height:1px;background:#4a453c;margin:4px auto}
 #s-wardrobe .wdr-tag .l2{font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;color:#8a8474;margin-top:3px}
+#s-wardrobe .wdr-tagwrap{text-align:center;margin:4px 0 16px}
+#s-wardrobe .wdr-tag-flow{position:static;top:auto;left:auto;transform:none;display:inline-block}
 #s-wardrobe .wdr-cat{margin-bottom:16px}
 #s-wardrobe .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;border-bottom:1px solid #e7e0cf;padding-bottom:6px}
 #s-wardrobe .wdr-item{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:9px 2px;gap:6px 8px;border-bottom:1px solid #f0ebe0}
@@ -2398,18 +2400,18 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-wardrobe">
   <div class="top-back-wrap"><button class="top-back" onclick="closeWardrobe()">&larr; Back</button></div>
   <div class="wdr-head">
-    <div class="wdr-title">Your Wardrobe</div>
+    <div class="wdr-title" id="wdrTitle">Your Wardrobe</div>
     <div class="wdr-sub" id="wdrSub">Built for you, from your style.</div>
   </div>
 
   <div class="wdr-tabs">
-    <div class="wdr-tab" data-tab="list" onclick="wardrobeTab('list')">Her List</div>
+    <div class="wdr-tab" data-tab="list" onclick="wardrobeTab('list')">My List</div>
     <div class="wdr-tab" data-tab="trend" onclick="wardrobeTab('trend')">What's Trending</div>
   </div>
 
   <div class="wdr-pane" data-pane="list">
     <div class="wdr-card">
-      <div class="wdr-tag"><div class="l1">style Star</div><div class="l2">YOUR WARDROBE</div></div>
+      <div class="wdr-tag"><div class="l1">style Star</div></div>
       <div id="wdrListBody"></div>
       <div class="wdr-add">
         <div class="plus">+</div>
@@ -2426,6 +2428,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 
   <div class="wdr-pane" data-pane="trend">
+    <div class="wdr-tagwrap"><div class="wdr-tag wdr-tag-flow"><div class="l1">style Star</div></div></div>
     <div class="wdr-trend-by">CURATED BY CATHERINE</div>
     <div class="wdr-trend-note">Here&rsquo;s what&rsquo;s IN right now. It&rsquo;s always fun to refresh your wardrobe with something current<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wdr-tstack" id="wdrTrendBody"></div>
@@ -4637,9 +4640,14 @@ function openWardrobe(tab){
   _wardrobeEnsureInit();
   show('s-wardrobe');
   document.querySelector('.quiz-footer').style.display='none';
+  const ttl=document.getElementById('wdrTitle');
+  if(ttl){
+    var _fn=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';
+    ttl.textContent=_fn?(_fn+'’s Wardrobe'):'Your Wardrobe';
+  }
   const sub=document.getElementById('wdrSub');
   if(sub){
-    sub.innerHTML=(quizTaken&&topArchNames&&topArchNames[0])?('Built for you, from your <b>'+_esc(topArchNames[0])+'</b> style'):'Built for you, from your style';
+    sub.innerHTML=(quizTaken&&topArchNames&&topArchNames[0])?('Built for you, from your <b>'+_esc(String(topArchNames[0]).replace(/^The\s+/i,''))+'</b> style'):'Built for you, from your style';
   }
   wardrobeTab(tab||'list');
   renderWardrobeList();
