@@ -4341,56 +4341,77 @@ function closeShop(){
 // nudges toward her lifestyle (very sporty or very dressy quiz answers).
 const wardrobeItems=[
   {cat:'Tops',items:[
-    {id:'t1',n:'White button-down or blouse',common:true},
-    {id:'t2',n:'Black tee or top',common:true},
-    {id:'t4',n:'A top in your favorite color',common:false},
-    {id:'t5',n:'A print or patterned top',common:false},
-    {id:'t6',n:'A polished work blouse',common:false},
-    {id:'t7',n:'A dressy or going-out top',common:false}
+    {id:'to1',n:'White tops',common:true},
+    {id:'to2',n:'Black tops',common:true},
+    {id:'to3',n:'Tops in your favorite colors',common:false},
+    {id:'to4',n:'Print tops',common:false},
+    {id:'to5',n:'Polished work blouses',common:false},
+    {id:'to6',n:'Dressy or going-out tops',common:false}
   ]},
   {cat:'Bottoms',items:[
-    {id:'b1',n:'Blue jeans',common:true},
-    {id:'b2',n:'White jeans or pants',common:false},
-    {id:'b3',n:'Black dress pants',common:false},
-    {id:'b4',n:'A skirt you love',common:false},
-    {id:'b5',n:'Shorts',common:false,tags:['Short shorts']}
+    {id:'bo1',n:'Blue jeans',common:true},
+    {id:'bo2',n:'White jeans',common:false},
+    {id:'bo3',n:'Black trousers',common:false},
+    {id:'bo4',n:'Linen pants',common:false},
+    {id:'bo5',n:'Skirts',common:false},
+    {id:'bo6',n:'Shorts',common:false,tags:['Short shorts']}
   ]},
   {cat:'Dresses',items:[
-    {id:'d1',n:'An easy everyday dress',common:false},
-    {id:'d2',n:'A print or patterned dress',common:false},
-    {id:'d3',n:'A little black dress',common:false},
-    {id:'d4',n:'A work-appropriate dress',common:false},
-    {id:'d5',n:'A special-occasion dress',common:false}
+    {id:'dr1',n:'Daytime casual dresses',common:false},
+    {id:'dr2',n:'Vacation/Resort dresses',common:false},
+    {id:'dr3',n:'Work-appropriate dresses',common:false},
+    {id:'dr4',n:'Special-occasion dresses',common:false}
   ]},
   {cat:'Jackets & Layers',items:[
-    {id:'j1',n:'Denim jacket',common:true},
-    {id:'j2',n:'A blazer',common:false},
-    {id:'j3',n:'The perfect leather jacket',common:false},
-    {id:'j4',n:'A warm winter coat',common:false},
-    {id:'j5',n:'A wrap or shrug for layering',common:false},
-    {id:'j6',n:'Cardigan',common:false},
-    {id:'j7',n:'Sweater',common:false}
+    {id:'ja1',n:'Cardigans',common:true},
+    {id:'ja2',n:'Blazers',common:false},
+    {id:'ja3',n:'The perfect leather jacket',common:false},
+    {id:'ja4',n:'Warm winter coats',common:false},
+    {id:'ja5',n:'Sweaters',common:false},
+    {id:'ja6',n:'Belted trench',common:false},
+    {id:'ja7',n:'Denim jackets',common:false},
+    {id:'ja8',n:'Light casual jackets',common:false}
   ]},
   {cat:'Shoes',items:[
-    {id:'s1',n:'Neutral sandals',common:true},
-    {id:'s2',n:'Comfortable flats or loafers',common:true},
-    {id:'s3',n:'A dressy heel',common:false},
-    {id:'s4',n:'Boots',common:false},
-    {id:'s5',n:'A nice sneaker',common:false}
+    {id:'sh1',n:'Neutral sandals',common:true},
+    {id:'sh2',n:'Closed-toe flats',common:true},
+    {id:'sh3',n:'Dressy closed-toe heels',common:false},
+    {id:'sh4',n:'Dressy heeled sandals',common:false},
+    {id:'sh5',n:'Wedges',common:false},
+    {id:'sh6',n:'Espadrilles',common:false},
+    {id:'sh7',n:'Boots for fun',common:false},
+    {id:'sh8',n:'Boots for warmth',common:false},
+    {id:'sh9',n:'Fashion sneakers',common:false},
+    {id:'sh10',n:'Athletic sneakers',common:false}
   ]},
   {cat:'Activewear',items:[
-    {id:'a1',n:'Leggings or joggers',common:true},
-    {id:'a2',n:'A supportive sports bra',common:false},
-    {id:'a3',n:'Workout tops',common:false},
-    {id:'a4',n:'Sneakers built for movement',common:false}
+    {id:'ac1',n:'Leggings',common:true},
+    {id:'ac2',n:'Joggers',common:false},
+    {id:'ac3',n:'Athletic shorts',common:false},
+    {id:'ac4',n:'Supportive sports bras',common:false},
+    {id:'ac5',n:'Workout tanks',common:false},
+    {id:'ac6',n:'Workout tees',common:false},
+    {id:'ac7',n:'Workout long-sleeve tops',common:false},
+    {id:'ac8',n:'Athletic jackets',common:false},
+    {id:'ac9',n:'Swimsuits',common:false},
+    {id:'ac10',n:'Swim coverups',common:false}
+  ]},
+  {cat:'Bags',items:[
+    {id:'bg1',n:'Daytime tote bags',common:true},
+    {id:'bg2',n:'Evening bags',common:false},
+    {id:'bg3',n:'Crossbody bags',common:false},
+    {id:'bg4',n:'Belt bags',common:false},
+    {id:'bg5',n:'Structured work bags',common:false},
+    {id:'bg6',n:'Gym bags',common:false}
   ]},
   {cat:'Extras & Accessories',items:[
-    {id:'e1',n:'An everyday day bag',common:true},
-    {id:'e2',n:'An evening bag',common:false},
-    {id:'e3',n:'Everyday earrings (studs or hoops)',common:true},
-    {id:'e4',n:'Statement earrings',common:false},
-    {id:'e5',n:'A scarf or pashmina',common:false},
-    {id:'e6',n:'Sunglasses',common:true}
+    {id:'ex1',n:'Everyday earrings (studs or hoops)',common:true},
+    {id:'ex2',n:'Statement earrings',common:false},
+    {id:'ex3',n:'A scarf or pashmina',common:false},
+    {id:'ex4',n:'Sunglasses',common:true},
+    {id:'ex5',n:'Nice hair accessories',common:false},
+    {id:'ex6',n:'Bracelets',common:false},
+    {id:'ex7',n:'Necklaces',common:false}
   ]}
 ];
 // Seasonal trend picks — Catherine's own curation (not AI), same spirit as the
