@@ -165,8 +165,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tag .l2{font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;color:#8a8474;margin-top:3px}
 #s-wardrobe .wdr-howto{font:400 13px/1.55 'Jost',sans-serif;color:#5a554c;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0}
 #s-wardrobe .wdr-howto b{color:#26221c;font-weight:600}
-#s-wardrobe .wdr-plan-wrap{text-align:center;padding:4px 0 15px}
-#s-wardrobe .wp-eyebrow{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#4a453c;margin-bottom:10px}
+#s-wardrobe .wdr-plan-wrap{text-align:center;padding:10px 0 16px}
 #s-wardrobe .wdr-plan{display:flex;align-items:center;justify-content:center}
 #s-wardrobe .wp-stat{display:flex;flex-direction:column;align-items:center;padding:0 24px}
 #s-wardrobe .wp-num{font:400 30px/1 'Fraunces',Georgia,serif;color:#E0B84C}
@@ -4693,7 +4692,7 @@ function renderWardrobeList(){
     if(haveCount)_st+='<div class="wp-stat"><span class="wp-num">'+haveCount+'</span><span class="wp-lbl">In your closet</span></div>';
     if(haveCount&&wantCount)_st+='<div class="wp-div"></div>';
     if(wantCount)_st+='<div class="wp-stat"><span class="wp-num">'+wantCount+'</span><span class="wp-lbl">On your wishlist</span></div>';
-    html+='<div class="wdr-plan-wrap"><div class="wp-eyebrow">Your plan so far</div><div class="wdr-plan">'+_st+'</div></div>';
+    html+='<div class="wdr-plan-wrap"><div class="wdr-plan">'+_st+'</div></div>';
   }
   if(wantCount){html+='<div class="wdr-shopwants" role="button" onclick="shopWantList()"><span class="wsw-bag">&#128717;</span><span class="wsw-txt">Shop my whole wishlist<span class="wsw-n">'+wantCount+' piece'+(wantCount>1?'s':'')+'</span></span><span class="wsw-ar">&#8594;</span></div>';}
   if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.name||'')+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
