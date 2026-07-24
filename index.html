@@ -248,7 +248,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wb .tag-topper,#s-res .tag-topper{position:relative;text-align:center;height:auto;margin-bottom:8px}
 /* five gold stars above the BUILD tag (matches the outfit-results Build room) */
 #s-wb .hub-wardrobe .tag-stars,#s-res .hub-wardrobe .tag-stars{display:flex;gap:6px;justify-content:center;margin-bottom:8px}
-#s-wb .hub-wardrobe .tag-stars svg,#s-res .hub-wardrobe .tag-stars svg{width:20px;height:20px;display:block;fill:#E6C24E}
+#s-wb .hub-wardrobe .tag-stars svg,#s-res .hub-wardrobe .tag-stars svg{width:23px;height:23px;display:block;fill:#E6C24E}
 #s-wb .tag-topper span,#s-res .tag-topper span{position:relative;display:inline-block;padding:7px 16px 6px;font:700 13px/1 'Jost',sans-serif;letter-spacing:.2em;color:#151515;box-shadow:0 3px 6px rgba(0,0,0,.18);background-color:#F7F1E1;background-image:repeating-linear-gradient(90deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(90deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(0deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(0deg,#4a453c 0 5px,transparent 5px 9px);background-size:100% 1.5px,100% 1.5px,1.5px 100%,1.5px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat}
 .ss.quiz-mirror .tag{display:none}
 .ss.chat-mirror,.ss.dream-mirror{background:
@@ -1125,10 +1125,18 @@ body.card-fb{padding:0}
    margin-top here only needs to be 2px to land on the same 9px total. */
 #s-wb .hub-shop{margin-top:6px;margin-bottom:0}
 #s-wb .hub-style{margin-top:2px;margin-bottom:0}
-#s-res .hub-wardrobe{margin-top:2px;padding-top:10px}
+#s-res .hub-wardrobe{margin-top:2px;padding:18px 20px 16px}
 /* s-wb hubs sit in a flex column with a 7px gap, so pull Wardrobe up 5px to net a
    ~2px hairline gap under Styling (matching the Style Portrait page). */
-#s-wb .hub-wardrobe{margin-top:-5px;padding-top:10px}
+#s-wb .hub-wardrobe{margin-top:-5px;padding:18px 20px 16px}
+/* Build hub = a dashed "sewn label" frame room, matching the outfit-results Build room:
+   swap the shared silver card frame for the dashed frame, and BUILD becomes a bare heading */
+#s-res .hub-wardrobe,#s-wb .hub-wardrobe{box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
+#s-res .hub-wardrobe::before,#s-wb .hub-wardrobe::before{content:"";position:absolute;top:11px;right:11px;bottom:11px;left:11px;border:2px dashed #4a453c;pointer-events:none;z-index:2}
+#s-res .hub-wardrobe .tag-stars,#s-wb .hub-wardrobe .tag-stars{margin-bottom:3px}
+#s-res .hub-wardrobe .tag-topper,#s-wb .hub-wardrobe .tag-topper{margin:0 0 12px}
+#s-res .hub-wardrobe .tag-topper span,#s-wb .hub-wardrobe .tag-topper span{background-image:none;background-color:transparent;box-shadow:none;padding:0;font-size:21px}
+#s-res .hub-wardrobe .act{margin-top:2px}
 #s-wb .tag-topper,#s-res .tag-topper{margin-left:-14px;margin-right:-14px}
 #s-wb .wb-chip-line{width:40px!important;height:40px!important;background:#F5EFE2!important;border:1px solid #D8C285!important;border-radius:9px!important;box-shadow:none!important;color:#26221c}
 #s-wb .wb-chip-line svg{width:24px;height:24px;color:#26221c}
