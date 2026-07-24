@@ -247,8 +247,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 /* stitched-tag topper for the Welcome Back / Style Portrait entry hub (matches the room) */
 #s-wb .tag-topper,#s-res .tag-topper{position:relative;text-align:center;height:auto;margin-bottom:8px}
 /* five gold stars above the BUILD tag (matches the outfit-results Build room) */
-#s-wb .hub-wardrobe .tag-stars,#s-res .hub-wardrobe .tag-stars{display:flex;gap:6px;justify-content:center;margin-bottom:8px}
-#s-wb .hub-wardrobe .tag-stars svg,#s-res .hub-wardrobe .tag-stars svg{width:23px;height:23px;display:block;fill:#E6C24E}
+/* five gold stars in a stitched "sewn-on" patch above the BUILD heading (matches the outfit-results Build room) */
+#s-wb .hub-wardrobe .tag-stars,#s-res .hub-wardrobe .tag-stars{width:-moz-fit-content;width:fit-content;margin:0 auto 3px;padding:4px 15px;display:flex;gap:5px;align-items:center;justify-content:center;background-color:#F7F1E1;background-image:repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 10px),repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 10px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 10px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 10px);background-size:100% 1.5px,100% 1.5px,1.5px 100%,1.5px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat}
+#s-wb .hub-wardrobe .tag-stars svg,#s-res .hub-wardrobe .tag-stars svg{width:20px;height:20px;display:block;fill:#E6C24E}
 #s-wb .tag-topper span,#s-res .tag-topper span{position:relative;display:inline-block;padding:7px 16px 6px;font:700 13px/1 'Jost',sans-serif;letter-spacing:.2em;color:#151515;box-shadow:0 3px 6px rgba(0,0,0,.18);background-color:#F7F1E1;background-image:repeating-linear-gradient(90deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(90deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(0deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(0deg,#4a453c 0 5px,transparent 5px 9px);background-size:100% 1.5px,100% 1.5px,1.5px 100%,1.5px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat}
 .ss.quiz-mirror .tag{display:none}
 .ss.chat-mirror,.ss.dream-mirror{background:
@@ -1001,6 +1002,9 @@ body.card-fb{padding:0}
 #s-res .retake-wrap,#s-photo-res .retake-wrap{background-color:#0c0c0e;margin:0 -18px;padding:4px 0 16px}
 #s-res .hub-shop,#s-photo-res .hub-shop{margin:0 2px 0}
 #s-res .hub-style,#s-photo-res .hub-style{margin:16px 2px 0}
+/* Style Portrait: full-bleed the "what next" hub band + Retake lacquer to the phone edges, matching the outfit-results page */
+#s-res .p3-hubwrap{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:13px;margin-bottom:0;padding:8px 0 12px}
+#s-res .retake-wrap{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:0;margin-bottom:0;padding:4px 0 16px}
 /* Outfit results leads with Styling, so flip the hub top-gaps (Styling flush, Shopping gapped) */
 #s-photo-res .hub-style{margin:0 2px 0}
 #s-photo-res .hub-shop{margin:16px 2px 0}
@@ -1113,12 +1117,12 @@ body.card-fb{padding:0}
 #s-photo-res .pbtn .pbt{font:400 18px/1.1 'DM Serif Display',serif;color:#1a1a1a}
 /* BUILD — the wardrobe: a linen fabric-label panel pinned to the dark board, with a charcoal topstitch (matches the Your Wardrobe page identity) */
 #s-photo-res .bhub{position:relative;padding:18px 22px 22px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
-#s-photo-res .bhub::before{content:"";position:absolute;top:11px;right:11px;bottom:11px;left:11px;border:2px dashed #4a453c;pointer-events:none;z-index:2}
+/* Build room: no outer frame; the stitched patch hugs just the stars */
 /* little sewn-on "five-star" label patch at the top (gradient dashes = iOS-safe on its short sides) */
-#s-photo-res .bhub .blabel{margin:0;display:flex;justify-content:center}
-#s-photo-res .bhub .bstars{display:flex;gap:6px;align-items:center}
-#s-photo-res .bhub .bstars svg{width:23px;height:23px;display:block;fill:#E6C24E}
-#s-photo-res .bhub .hlbl{margin-top:3px}
+#s-photo-res .bhub .blabel{width:-moz-fit-content;width:fit-content;margin:0 auto;padding:4px 15px;display:flex;justify-content:center;background-color:#F7F1E1;background-image:repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 10px),repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 10px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 10px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 10px);background-size:100% 1.5px,100% 1.5px,1.5px 100%,1.5px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat}
+#s-photo-res .bhub .bstars{display:flex;gap:5px;align-items:center}
+#s-photo-res .bhub .bstars svg{width:20px;height:20px;display:block;fill:#E6C24E}
+#s-photo-res .bhub .hlbl{margin-top:10px}
 #s-photo-res .bhub .hlbl + .act{margin-top:12px}
 /* Equal black gaps between all three boards: mirror->Shopping is margin(6+3 via
    .wb-list)=9px; Shopping->Styling is margin + the .wb-list flex gap(7px), so
@@ -1132,9 +1136,7 @@ body.card-fb{padding:0}
 /* Build hub = a dashed "sewn label" frame room, matching the outfit-results Build room:
    swap the shared silver card frame for the dashed frame, and BUILD becomes a bare heading */
 #s-res .hub-wardrobe,#s-wb .hub-wardrobe{box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
-#s-res .hub-wardrobe::before,#s-wb .hub-wardrobe::before{content:"";position:absolute;top:11px;right:11px;bottom:11px;left:11px;border:2px dashed #4a453c;pointer-events:none;z-index:2}
-#s-res .hub-wardrobe .tag-stars,#s-wb .hub-wardrobe .tag-stars{margin-bottom:3px}
-#s-res .hub-wardrobe .tag-topper,#s-wb .hub-wardrobe .tag-topper{margin:0 0 12px}
+#s-res .hub-wardrobe .tag-topper,#s-wb .hub-wardrobe .tag-topper{margin:10px 0 12px}
 #s-res .hub-wardrobe .tag-topper span,#s-wb .hub-wardrobe .tag-topper span{background-image:none;background-color:transparent;box-shadow:none;padding:0;font-size:21px}
 #s-res .hub-wardrobe .act{margin-top:2px}
 #s-wb .tag-topper,#s-res .tag-topper{margin-left:-14px;margin-right:-14px}
@@ -1464,7 +1466,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    screen edges. calc(50% - 240px) self-corrects at each nesting level. Phones (<=480px)
    are untouched. */
 @media (min-width:481px){
-  #s-photo-res .p3,#s-photo-res .p3-hubwrap,#s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2,#s-photo-res .bhub,#s-photo-res .lookhub,#s-photo-res .foot,#s-res .foot{width:480px;margin-left:calc(50% - 240px);margin-right:calc(50% - 240px)}
+  #s-photo-res .p3,#s-photo-res .p3-hubwrap,#s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2,#s-photo-res .bhub,#s-photo-res .lookhub,#s-photo-res .foot,#s-res .foot,#s-res .p3-hubwrap,#s-res .retake-wrap{width:480px;margin-left:calc(50% - 240px);margin-right:calc(50% - 240px)}
 }
 
 /* the inline "Shop your style" results keep the existing .shop-* look on a light card */
