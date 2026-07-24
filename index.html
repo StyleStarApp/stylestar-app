@@ -246,6 +246,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-teaser-ideas{margin-top:6px}
 /* stitched-tag topper for the Welcome Back / Style Portrait entry hub (matches the room) */
 #s-wb .tag-topper,#s-res .tag-topper{position:relative;text-align:center;height:auto;margin-bottom:8px}
+/* five gold stars above the BUILD tag (matches the outfit-results Build room) */
+#s-wb .hub-wardrobe .tag-stars,#s-res .hub-wardrobe .tag-stars{display:flex;gap:6px;justify-content:center;margin-bottom:8px}
+#s-wb .hub-wardrobe .tag-stars svg,#s-res .hub-wardrobe .tag-stars svg{width:20px;height:20px;display:block;fill:#E6C24E}
 #s-wb .tag-topper span,#s-res .tag-topper span{position:relative;display:inline-block;padding:7px 16px 6px;font:700 13px/1 'Jost',sans-serif;letter-spacing:.2em;color:#151515;box-shadow:0 3px 6px rgba(0,0,0,.18);background-color:#F7F1E1;background-image:repeating-linear-gradient(90deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(90deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(0deg,#4a453c 0 5px,transparent 5px 9px),repeating-linear-gradient(0deg,#4a453c 0 5px,transparent 5px 9px);background-size:100% 1.5px,100% 1.5px,1.5px 100%,1.5px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat}
 .ss.quiz-mirror .tag{display:none}
 .ss.chat-mirror,.ss.dream-mirror{background:
@@ -1880,6 +1883,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
       </div>
       <div class="hub-card hub-wardrobe">
+      <div class="tag-stars"><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>
       <div class="tag-topper"><span>BUILD</span></div>
       <div class="act" data-shelf onclick="openWardrobe()">
         <div class="actrow"><span class="chip" style="background:#EACD68;border:1px solid #C9A44C"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Your personal wardrobe checklist</div></div></div>
@@ -5409,8 +5413,10 @@ function _buildWbHubs(){
   sty.appendChild(mbar);sty.appendChild(hub('Style'));sty.appendChild(items[1]);sty.appendChild(items[2]);sty.appendChild(items[4]);sty.appendChild(items[5]);
   // Wardrobe card: stitched garment-label topper (matches the Your Wardrobe room) + item
   var wdr=document.createElement('div');wdr.className='hub-card hub-wardrobe';
+  var _bstar='<svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>';
+  var stars=document.createElement('div');stars.className='tag-stars';stars.innerHTML=_bstar+_bstar+_bstar+_bstar+_bstar;
   var tag=document.createElement('div');tag.className='tag-topper';tag.innerHTML='<span>BUILD</span>';
-  wdr.appendChild(tag);wdr.appendChild(items[7]);
+  wdr.appendChild(stars);wdr.appendChild(tag);wdr.appendChild(items[7]);
   list.appendChild(shop);list.appendChild(sty);list.appendChild(wdr);
   list.dataset.hubs='1';
 }
