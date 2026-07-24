@@ -1043,7 +1043,7 @@ body.card-fb{padding:0}
 @keyframes wlStarBreath{0%,100%{transform:rotate(-42deg) scale(1);filter:drop-shadow(0 1px 2px rgba(150,110,30,.22)) brightness(1.02)}50%{transform:rotate(-42deg) scale(1.04);filter:drop-shadow(0 0 4px rgba(247,214,116,.45)) drop-shadow(0 1px 2px rgba(150,110,30,.22)) brightness(1.09)}}
 @media (prefers-reduced-motion:reduce){#s-photo-res .worklbl .wl-jewel{animation:none;filter:drop-shadow(0 1px 2px rgba(150,110,30,.22))}}
 /* frames go FULL-BLEED to the screen edges (content height, not forced square) */
-#s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-bottom:16px;display:flex;flex-direction:column}
+#s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2,#s-photo-res .bhub{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-bottom:16px;display:flex;flex-direction:column}
 #s-photo-res .phub2{margin-bottom:0}
 /* tiles: bigger, black outline, icon + title + descriptive tagline */
 #s-photo-res .twoup{display:flex;gap:11px}
@@ -1108,6 +1108,10 @@ body.card-fb{padding:0}
 #s-photo-res .pv-const{background:radial-gradient(120% 100% at 50% 22%,#2a2521,#100d0b)}
 #s-photo-res .pv-mood{background:#faf7f0}
 #s-photo-res .pbtn .pbt{font:400 18px/1.1 'DM Serif Display',serif;color:#1a1a1a}
+/* BUILD — the wardrobe: a linen fabric-label panel pinned to the dark board, with a charcoal topstitch (matches the Your Wardrobe page identity) */
+#s-photo-res .bhub{position:relative;padding:30px 24px 27px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
+#s-photo-res .bhub::before{content:"";position:absolute;top:11px;right:11px;bottom:11px;left:11px;border:2px dashed #4a453c;pointer-events:none;z-index:2}
+#s-photo-res .bhub .hlbl + .act{margin-top:9px}
 /* Equal black gaps between all three boards: mirror->Shopping is margin(6+3 via
    .wb-list)=9px; Shopping->Styling is margin + the .wb-list flex gap(7px), so
    margin-top here only needs to be 2px to land on the same 9px total. */
@@ -1444,7 +1448,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    screen edges. calc(50% - 240px) self-corrects at each nesting level. Phones (<=480px)
    are untouched. */
 @media (min-width:481px){
-  #s-photo-res .p3,#s-photo-res .p3-hubwrap,#s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2,#s-photo-res .lookhub,#s-photo-res .foot,#s-res .foot{width:480px;margin-left:calc(50% - 240px);margin-right:calc(50% - 240px)}
+  #s-photo-res .p3,#s-photo-res .p3-hubwrap,#s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2,#s-photo-res .bhub,#s-photo-res .lookhub,#s-photo-res .foot,#s-res .foot{width:480px;margin-left:calc(50% - 240px);margin-right:calc(50% - 240px)}
 }
 
 /* the inline "Shop your style" results keep the existing .shop-* look on a light card */
@@ -1840,7 +1844,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="p3-hubwrap">
       <div class="hub-card hub-shop">
       <div class="awn-rod"></div><div class="awn-face"></div>
-      <div class="p3-hub">Shopping</div>
+      <div class="p3-hub">Shop</div>
       <div class="act" data-shelf onclick="openShopStyle()">
         <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round" style="width:23px;height:23px"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop your style</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Personalized just for you</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -1856,7 +1860,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
       <div class="hub-card hub-style">
       <div class="mbar"><div class="mbar-row"><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span><span class="mbulb"></span></div></div>
-      <div class="p3-hub">Styling</div>
+      <div class="p3-hub">Style</div>
       <div class="act" data-shelf onclick="showPhoto()">
         <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze an outfit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Upload a photo for feedback</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -1871,7 +1875,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
       </div>
       <div class="hub-card hub-wardrobe">
-      <div class="tag-topper"><span>BUILDING YOUR WARDROBE</span></div>
+      <div class="tag-topper"><span>BUILD</span></div>
       <div class="act" data-shelf onclick="openWardrobe()">
         <div class="actrow"><span class="chip" style="background:#EACD68;border:1px solid #C9A44C"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Your personal wardrobe checklist</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -2092,7 +2096,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <span class="vb b"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
         <span class="vb l"><i></i><i></i><i></i><i></i></span>
         <span class="vb r"><i></i><i></i><i></i><i></i></span>
-        <div class="hlbl">Styling</div>
+        <div class="hlbl">Style</div>
         <div class="act" data-shelf onclick="showPhoto()">
           <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2.4"/><path d="M8.6 7.5l1.2-2.2h4.4l1.2 2.2"/><circle cx="12" cy="13.3" r="3"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Analyze another outfit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Upload a photo for feedback</div></div></div>
           <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -2107,7 +2111,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="chub">
         <div class="awn-rod"></div><div class="awn-face"></div>
         <div class="chub-in">
-          <div class="hlbl">Shopping</div>
+          <div class="hlbl">Shop</div>
           <div class="act" data-shelf onclick="showDream()">
             <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><path d="M2.8 8.8h18.4l-.8 9.5a1.3 1.3 0 0 1-1.3 1.2H4.9a1.3 1.3 0 0 1-1.3-1.2z"/><path d="M7.6 8.8V6.4a4.4 4.4 0 0 1 8.8 0v2.4"/><path d="M12 11.9 L12.75 13.9 L14.9 13.97 L13.18 15.25 L13.8 17.3 L12 16.05 L10.2 17.3 L10.82 15.25 L9.1 13.97 L11.25 13.9 Z" fill="#26221c" stroke="none"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop Style Star Edit</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Hand-picked pieces you'll love</div></div></div>
             <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
@@ -2116,6 +2120,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
             <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.3 9.4l1.1-4.1h13.2l1.1 4.1"/><path d="M5.5 9.7V18.8h13V9.7"/><path d="M4.3 9.4a1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0 1.85 1.85 0 0 0 3.7 0"/><path d="M10.2 18.8v-4.1h3.6v4.1"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Shop the Mall</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Browse curated stores</div></div></div>
             <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
           </div>
+        </div>
+      </div>
+
+      <!-- BUILD — the wardrobe: linen fabric-label panel with a charcoal topstitch (everyone) -->
+      <div class="bhub">
+        <div class="hlbl">Build</div>
+        <div class="act" data-shelf onclick="openWardrobe()">
+          <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Your personal wardrobe checklist</div></div></div>
+          <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
         </div>
       </div>
 
@@ -5383,14 +5396,14 @@ function _buildWbHubs(){
   var shop=document.createElement('div');shop.className='hub-card hub-shop';
   var awn=document.createElement('div');awn.innerHTML='<div class="awn-rod"></div><div class="awn-face"></div><div class="awn-trim"></div><div class="awn-val"></div>';
   while(awn.firstChild)shop.appendChild(awn.firstChild);
-  shop.appendChild(hub('Shopping'));shop.appendChild(items[0]);shop.appendChild(items[3]);shop.appendChild(items[6]);
+  shop.appendChild(hub('Shop'));shop.appendChild(items[0]);shop.appendChild(items[3]);shop.appendChild(items[6]);
   // Styling card: vanity light bar topper + label + styling items
   var sty=document.createElement('div');sty.className='hub-card hub-style';
   var mbar=document.createElement('div');mbar.className='mbar';var r='<div class="mbar-row">';for(var i=0;i<7;i++)r+='<span class="mbulb"></span>';r+='</div>';mbar.innerHTML=r;
-  sty.appendChild(mbar);sty.appendChild(hub('Styling'));sty.appendChild(items[1]);sty.appendChild(items[2]);sty.appendChild(items[4]);sty.appendChild(items[5]);
+  sty.appendChild(mbar);sty.appendChild(hub('Style'));sty.appendChild(items[1]);sty.appendChild(items[2]);sty.appendChild(items[4]);sty.appendChild(items[5]);
   // Wardrobe card: stitched garment-label topper (matches the Your Wardrobe room) + item
   var wdr=document.createElement('div');wdr.className='hub-card hub-wardrobe';
-  var tag=document.createElement('div');tag.className='tag-topper';tag.innerHTML='<span>BUILDING YOUR WARDROBE</span>';
+  var tag=document.createElement('div');tag.className='tag-topper';tag.innerHTML='<span>BUILD</span>';
   wdr.appendChild(tag);wdr.appendChild(items[7]);
   list.appendChild(shop);list.appendChild(sty);list.appendChild(wdr);
   list.dataset.hubs='1';
