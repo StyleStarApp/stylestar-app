@@ -1109,9 +1109,14 @@ body.card-fb{padding:0}
 #s-photo-res .pv-mood{background:#faf7f0}
 #s-photo-res .pbtn .pbt{font:400 18px/1.1 'DM Serif Display',serif;color:#1a1a1a}
 /* BUILD — the wardrobe: a linen fabric-label panel pinned to the dark board, with a charcoal topstitch (matches the Your Wardrobe page identity) */
-#s-photo-res .bhub{position:relative;padding:30px 24px 27px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
+#s-photo-res .bhub{position:relative;padding:26px 22px 22px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
 #s-photo-res .bhub::before{content:"";position:absolute;top:11px;right:11px;bottom:11px;left:11px;border:2px dashed #4a453c;pointer-events:none;z-index:2}
-#s-photo-res .bhub .hlbl + .act{margin-top:9px}
+/* little sewn-on "five-star" label patch at the top (gradient dashes = iOS-safe on its short sides) */
+#s-photo-res .bhub .blabel{width:44%;min-height:30px;margin:0 auto;display:flex;align-items:center;justify-content:center;background-color:#EFEBE0;background-image:repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 10px),repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 10px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 10px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 10px);background-size:100% 1.5px,100% 1.5px,1.5px 100%,1.5px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat}
+#s-photo-res .bhub .bstars{display:flex;gap:5px;align-items:center}
+#s-photo-res .bhub .bstars svg{width:12px;height:12px;display:block;fill:#E6C24E}
+#s-photo-res .bhub .hlbl{margin-top:14px}
+#s-photo-res .bhub .hlbl + .act{margin-top:12px}
 /* Equal black gaps between all three boards: mirror->Shopping is margin(6+3 via
    .wb-list)=9px; Shopping->Styling is margin + the .wb-list flex gap(7px), so
    margin-top here only needs to be 2px to land on the same 9px total. */
@@ -2125,6 +2130,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 
       <!-- BUILD — the wardrobe: linen fabric-label panel with a charcoal topstitch (everyone) -->
       <div class="bhub">
+        <div class="blabel"><span class="bstars"><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span></div>
         <div class="hlbl">Build</div>
         <div class="act" data-shelf onclick="openWardrobe()">
           <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Your personal wardrobe checklist</div></div></div>
