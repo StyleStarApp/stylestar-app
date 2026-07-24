@@ -1002,9 +1002,6 @@ body.card-fb{padding:0}
 #s-res .retake-wrap,#s-photo-res .retake-wrap{background-color:#0c0c0e;margin:0 -18px;padding:4px 0 16px}
 #s-res .hub-shop,#s-photo-res .hub-shop{margin:0 2px 0}
 #s-res .hub-style,#s-photo-res .hub-style{margin:16px 2px 0}
-/* Style Portrait: full-bleed the "what next" hub band + Retake lacquer to the phone edges, matching the outfit-results page */
-#s-res .p3-hubwrap{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:13px;margin-bottom:0;padding:8px 0 12px}
-#s-res .retake-wrap{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:0;margin-bottom:0;padding:4px 0 16px}
 /* Outfit results leads with Styling, so flip the hub top-gaps (Styling flush, Shopping gapped) */
 #s-photo-res .hub-style{margin:0 2px 0}
 #s-photo-res .hub-shop{margin:16px 2px 0}
@@ -1325,6 +1322,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .res-screen .kbwrap .pcard{width:auto;max-width:none;margin:0;opacity:1;animation:none!important;box-shadow:0 0 0 1.5px #c8a44d,0 2px 6px rgba(0,0,0,.28)}
 .res-screen .kbwrap .pcard+.pcard{margin-top:15px}
 .res-screen .kbwrap .pcard::after,.res-screen .kbwrap .pcard.pcard-vb::before{display:none}
+/* Style Portrait: wider, balanced content on the full-bleed black stage (Cath, 2026-07-24) */
+#s-res .p1,#s-res .p2,#s-res .p3,#s-res .kbwrap{width:374px;max-width:calc(100% - 12px)}
 .res-screen .sc-lead{margin:2px 0 13px;text-align:center;color:#C8971E;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
 .res-screen .sc-lead i{display:none}
 .res-screen .sc-row{display:flex;align-items:center;gap:11px;padding:2px 2px 3px;cursor:pointer;text-align:left}
@@ -1466,7 +1465,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    screen edges. calc(50% - 240px) self-corrects at each nesting level. Phones (<=480px)
    are untouched. */
 @media (min-width:481px){
-  #s-photo-res .p3,#s-photo-res .p3-hubwrap,#s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2,#s-photo-res .bhub,#s-photo-res .lookhub,#s-photo-res .foot,#s-res .foot,#s-res .p3-hubwrap,#s-res .retake-wrap{width:480px;margin-left:calc(50% - 240px);margin-right:calc(50% - 240px)}
+  #s-photo-res .p3,#s-photo-res .p3-hubwrap,#s-photo-res .vhub,#s-photo-res .chub,#s-photo-res .phub2,#s-photo-res .bhub,#s-photo-res .lookhub,#s-photo-res .foot,#s-res .foot{width:480px;margin-left:calc(50% - 240px);margin-right:calc(50% - 240px)}
 }
 
 /* the inline "Shop your style" results keep the existing .shop-* look on a light card */
@@ -2751,7 +2750,7 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-shop');
   // Outfit results + the outfit-upload screens: let their full-bleed elements (the framed
   // rooms; the gold rod at the top) bleed to the true screen edges (drop the card's side margin).
-  document.body.classList.toggle('res-fb',id==='s-photo-res'||id==='s-photo'||id==='s-photo-load');
+  document.body.classList.toggle('res-fb',id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-res');
   // Discover + Welcome Back: let their full-bleed backgrounds reach the true screen edges on all sides.
   document.body.classList.toggle('card-fb',id==='s-wel'||id==='s-wb');
   document.body.classList.toggle('shop-brick',id==='s-shopstyle');
