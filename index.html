@@ -4417,56 +4417,56 @@ function closeShop(){
 // nudges toward her lifestyle (very sporty or very dressy quiz answers).
 const wardrobeItems=[
   {cat:'Tops',items:[
+    {id:'to3',n:'Tops in your favorite colors',common:false},
     {id:'to1',n:'White tops',common:true},
     {id:'to2',n:'Black tops',common:true},
-    {id:'to7',n:'Tank tops/Camisoles',common:true},
-    {id:'to3',n:'Tops in your favorite colors',common:false},
     {id:'to4',n:'Print tops',common:false},
-    {id:'to8',n:'Sweatshirts',common:false},
-    {id:'to5',n:'Polished work blouses',common:false},
+    {id:'to7',n:'Tank tops/Camisoles',common:true},
+    {id:'to5',n:'Professional blouses',common:false},
     {id:'to6',n:'Dressy or going-out tops',common:false}
   ]},
   {cat:'Bottoms',items:[
     {id:'bo1',n:'Blue jeans',common:true},
     {id:'bo2',n:'White jeans',common:false},
+    {id:'bo7',n:'Casual pants',common:false},
+    {id:'bo8',n:'Wide-leg pants',common:false},
     {id:'bo3',n:'Black trousers',common:false},
-    {id:'bo5',n:'Skirts',common:false},
     {id:'bo4',n:'Linen pants',common:false},
-    {id:'bo6',n:'Shorts',common:false,tags:['Short shorts']}
+    {id:'bo9',n:'Pencil skirt',common:false},
+    {id:'bo10',n:'Flowy skirt',common:false},
+    {id:'bo11',n:'Denim skirt',common:false},
+    {id:'bo6',n:'Shorts',common:false}
   ]},
   {cat:'Dresses',items:[
     {id:'dr1',n:'Daytime casual dresses',common:false},
     {id:'dr3',n:'Work-appropriate dresses',common:false},
-    {id:'dr2',n:'Vacation/Resort dresses',common:false},
-    {id:'dr4',n:'Special-occasion dresses',common:false}
+    {id:'dr5',n:'Sundresses',common:false},
+    {id:'dr6',n:'Maxi dresses',common:false},
+    {id:'dr7',n:'Wrap dresses',common:false},
+    {id:'dr8',n:'Sweater dresses',common:false},
+    {id:'dr9',n:'Cocktail dresses',common:false},
+    {id:'dr10',n:'Formal gowns',common:false}
   ]},
   {cat:'Jackets & Layers',items:[
     {id:'ja1',n:'Cardigans',common:true},
     {id:'ja5',n:'Sweaters',common:false},
     {id:'ja8',n:'Light casual jackets',common:false},
+    {id:'ja10',n:'Cropped jackets',common:false},
     {id:'ja2',n:'Blazers',common:false},
     {id:'ja6',n:'Belted trench',common:false},
     {id:'ja9',n:'Raincoats',common:false},
     {id:'ja3',n:'The perfect leather jacket',common:false},
-    {id:'ja4',n:'Warm winter coats',common:false}
-  ]},
-  {cat:'Shoes',items:[
-    {id:'sh1',n:'Neutral sandals',common:true},
-    {id:'sh2',n:'Closed-toe flats',common:true},
-    {id:'sh9',n:'Fashion sneakers',common:false},
-    {id:'sh10',n:'Athletic sneakers',common:false},
-    {id:'sh5',n:'Wedges',common:false},
-    {id:'sh6',n:'Espadrilles',common:false},
-    {id:'sh4',n:'Dressy heeled sandals',common:false},
-    {id:'sh3',n:'Dressy closed-toe heels',common:false},
-    {id:'sh8',n:'Boots for warmth',common:false},
-    {id:'sh7',n:'Boots for fun',common:false}
+    {id:'ja4',n:'Wool coats',common:false},
+    {id:'ja11',n:'Puffer coats',common:false}
   ]},
   {cat:'Activewear',items:[
     {id:'ac1',n:'Leggings',common:true},
     {id:'ac2',n:'Joggers',common:false},
+    {id:'to8',n:'Sweatshirts',common:false},
     {id:'ac3',n:'Athletic shorts',common:false},
+    {id:'ac12',n:'Tennis skirts',common:false},
     {id:'ac4',n:'Supportive sports bras',common:false},
+    {id:'ac11',n:'Matching athletic sets',common:false},
     {id:'ac5',n:'Workout tanks',common:false},
     {id:'ac6',n:'Workout tees',common:false},
     {id:'ac7',n:'Workout long-sleeve tops',common:false},
@@ -4477,12 +4477,33 @@ const wardrobeItems=[
   {cat:'Sleepwear',items:[
     {id:'sl1',n:'Pajamas',common:true},
     {id:'sl2',n:'Nightgowns',common:false},
+    {id:'sl4',n:'Loungewear sets',common:false},
     {id:'sl3',n:'Robes',common:false}
   ]},
   {cat:'Foundations',items:[
     {id:'fo1',n:'Perfectly fitting bras',common:true},
+    {id:'fo4',n:'Strapless bras',common:false},
     {id:'fo2',n:'Comfortable underwear',common:true},
-    {id:'fo3',n:'Beautiful underwear',common:false}
+    {id:'fo3',n:'Beautiful underwear',common:false},
+    {id:'fo5',n:'Special lingerie',common:false}
+  ]},
+  {cat:'Shoes',items:[
+    {id:'sh1',n:'Flat sandals',common:true},
+    {id:'sh11',n:'Flip flops',common:false},
+    {id:'sh12',n:'Slides',common:false},
+    {id:'sh13',n:'Loafers',common:false},
+    {id:'sh2',n:'Closed-toe flats',common:true},
+    {id:'sh9',n:'Fashion sneakers',common:false},
+    {id:'sh10',n:'Athletic sneakers',common:false},
+    {id:'sh5',n:'Wedges',common:false},
+    {id:'sh6',n:'Espadrilles',common:false},
+    {id:'sh14',n:'Kitten heels',common:false},
+    {id:'sh15',n:'Block heel sandals',common:false},
+    {id:'sh4',n:'High heel sandals',common:false},
+    {id:'sh3',n:'Dressy pumps',common:false},
+    {id:'sh8',n:'Tall boots',common:false},
+    {id:'sh7',n:'Ankle boots',common:false},
+    {id:'sh16',n:'Slippers',common:false}
   ]},
   {cat:'Bags',items:[
     {id:'bg1',n:'Daytime tote bags',common:true},
