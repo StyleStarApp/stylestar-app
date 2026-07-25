@@ -2466,7 +2466,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="top-back-wrap"><button class="top-back" onclick="closeWardrobe()">&larr; Back</button></div>
   <div class="wdr-head">
     <div class="wdr-title" id="wdrTitle">Your Wardrobe</div>
-    <div class="wdr-sub" id="wdrSub">Built for you, from your style.</div>
+    <div class="wdr-sub" id="wdrSub">The checklist I use in every closet consultation, for you to make your own.</div>
   </div>
 
   <div class="wdr-tabs">
@@ -4541,27 +4541,16 @@ function loadWardrobeData(){
 function saveWardrobeData(){
   try{localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData))}catch(e){}
 }
-function _wardrobeExcluded(item){
-  if(!item.tags||!item.tags.length)return false;
-  return item.tags.some(function(t){
-    return (prefs.neverWear&&prefs.neverWear.indexOf(t)>-1)||(prefs.neverPatterns&&prefs.neverPatterns.indexOf(t)>-1);
-  });
-}
+// The checklist is intentionally IDENTICAL for every user — no auto-hiding based
+// on her preferences. She removes anything she doesn't want herself with the ✕.
+function _wardrobeExcluded(item){return false}
 // Zero pre-tap: nothing starts marked. An item with no saved state is "unset"
 // (neither Have nor Want highlighted) until she taps.
 function _wardrobeDefault(item){return 'unset'}
-// Nudge category order toward her lifestyle: a very sporty-leaning quiz answer
-// brings Activewear forward; a very dressy-leaning answer brings Dresses forward.
+// Fixed category order for EVERY user — no re-ordering based on her quiz answers.
+// One identical checklist for everyone; she tailors it herself.
 function _wardrobeCatOrder(){
-  const cats=wardrobeItems.map(function(c){return c.cat});
-  const a=(Array.isArray(answers)&&answers.length===12)?answers:new Array(12).fill(6);
-  const boost=[];
-  if(a[5]<=4)boost.push('Activewear'); // Sporty-Professional, low = sporty
-  if(a[4]>=8&&boost.indexOf('Dresses')===-1)boost.push('Dresses'); // Casual-Dressy, high = dressy
-  if(!boost.length)return cats;
-  const head=cats[0];
-  const rest=cats.slice(1).filter(function(c){return boost.indexOf(c)===-1});
-  return [head].concat(boost,rest);
+  return wardrobeItems.map(function(c){return c.cat});
 }
 function _wardrobeEnsureInit(){
   // Zero pre-tap: no defaults assigned. Items stay unset until she taps.
