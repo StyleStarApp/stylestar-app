@@ -224,6 +224,11 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    narrow phones and dropped the heart onto a second line, stranded under the
    name. Basis 0 keeps name + Ideas + heart on one line at any width. */
 #s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 0;min-width:0}
+/* On narrow phones (and anyone using Display Zoom) a few of the longer item
+   names wrapped to two lines. Reclaiming a little row padding and gap fixes
+   most of them WITHOUT shrinking the text -- readability matters more here
+   than a perfectly even list. Wider phones are untouched. */
+@media(max-width:374px){#s-wardrobe .wdr-item{gap:0 6px;padding-left:0;padding-right:0}}
 /* Catherine's line on anchor pieces — the "oh, I really need that" moment. Only
    ~20 items carry one, so they read as her speaking up, not as page furniture. */
 #s-wardrobe .wdr-note{display:block;font:italic 400 12.5px/1.35 'Fraunces',Georgia,serif;color:#8a7a52;margin-top:3px;padding-right:4px}
@@ -4741,12 +4746,21 @@ function wardrobeShowRemoved(){
 var _wdrResetConfirm=false;
 function askWardrobeReset(where){_wdrResetConfirm=where||'top';renderWardrobeList();}
 function cancelWardrobeReset(){_wdrResetConfirm=false;renderWardrobeList();}
+// Show the full how-to on early visits, and step it back to the one-line
+// reminder once she's clearly got the hang of it (a few hearts tapped).
+// Called on page open and after a reset -- deliberately NOT on every heart tap,
+// so the list can never shift under her thumb mid-scroll.
+function _wdrSyncHowto(){
+  var hw=document.getElementById('wdrHowto');
+  if(hw)hw.classList.toggle('brief',_wardrobeWants().length>=3);
+}
 function wardrobeReset(){
   wardrobeData.items={};      // clear every wishlist heart
   wardrobeData.hidden=[];     // full start-over: bring back any removed items
   _wdrResetConfirm=false;
   saveWardrobeData();
   renderWardrobeList();
+  _wdrSyncHowto();            // starting over means the full instructions come back
   try{document.getElementById('wdrListBody').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
 }
 // Her wardrobe "wishlist" for the stylist chat: everything she has marked Want,
@@ -5046,11 +5060,7 @@ function openWardrobe(tab){
   }
   // The founder's-voice line now opens the single how-to paragraph under the
   // tabs, so there's no separate subtitle up here to fill in.
-  // Step the how-to back to its one-line reminder once she's hearted a few.
-  // Evaluated ONCE here, not on every heart tap, so the page never shifts
-  // under her thumb mid-scroll; it only changes on her next visit.
-  var _hw=document.getElementById('wdrHowto');
-  if(_hw)_hw.classList.toggle('brief',_wardrobeWants().length>=3);
+  _wdrSyncHowto();
   refreshTrendBadge();
   wardrobeTab(tab||'list');
   renderWardrobeList();
