@@ -161,8 +161,14 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tab:not(.on){background:#F5EFE2;color:#3a352c;border-color:#C9A44C}
 /* The arrow points at the tab it takes you to, so it leads the eye the right
    way: the left tab gets a leading arrow, the right tab a trailing one. */
-#s-wardrobe .wdr-tab[data-tab="trend"]:not(.on)::after{content:"\2192";font-size:15px;letter-spacing:0;margin-left:6px}
-#s-wardrobe .wdr-tab[data-tab="list"]:not(.on)::before{content:"\2190";font-size:15px;letter-spacing:0;margin-right:6px}
+/* The arrow sits on its own line under the label, so the label stays centred
+   (inline it pushed the words off centre) and both tabs carry a matching gold
+   arrow pointing out to its own side. */
+#s-wardrobe .wdr-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:9px 0 8px}
+#s-wardrobe .wdr-tab::after{display:block;font-size:16px;line-height:1;letter-spacing:0;height:16px;color:#C9A44C}
+#s-wardrobe .wdr-tab[data-tab="list"]::after{content:"\2190"}
+#s-wardrobe .wdr-tab[data-tab="trend"]::after{content:"\2192"}
+#s-wardrobe .wdr-tab.on::after{color:#EACD68}
 #s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:8px 0 14px}
 #s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
