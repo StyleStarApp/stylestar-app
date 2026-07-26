@@ -219,6 +219,13 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-removed:hover{color:#1a1a1a}
 #s-wardrobe .wdr-reset-wrap{text-align:center;padding:2px 0 8px}
 #s-wardrobe .wdr-reset-wrap.end{padding:14px 0 4px}
+/* Back to top — the list is ~98 items. Deliberately quiet: a utility, not a CTA,
+   so it borrows the dark/gold palette but stays small. Pinned to the app column
+   (not the window) so it doesn't drift off to the right on a desktop screen. */
+#s-wardrobe .wdr-top{position:fixed;bottom:20px;left:max(24px,calc(50% - 216px));z-index:40;display:inline-flex;align-items:center;gap:5px;background:linear-gradient(180deg,#2b2523,#1c1615);color:#F5EFE2;border-radius:0;box-shadow:0 0 0 2px #ECD070,0 5px 15px rgba(0,0,0,.3);font:600 12px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;padding:10px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .22s ease,transform .22s ease}
+#s-wardrobe .wdr-top svg{width:14px;height:14px;color:#ECD070}
+#s-wardrobe .wdr-top.on{opacity:1;pointer-events:auto;transform:none}
+@media (prefers-reduced-motion:reduce){#s-wardrobe .wdr-top{transition:none}}
 #s-wardrobe .wdr-reset{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 'Jost',sans-serif;letter-spacing:.02em;color:#4a453c;border:1.5px solid #b3ada0;background:#fff;padding:10px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-reset:hover,#s-wardrobe .wdr-reset:active{border-color:#1a1a1a;color:#1a1a1a}
 #s-wardrobe .wdr-reset-confirm{text-align:center;padding:6px 0 10px;margin:0 -13px;font:500 12.5px/1.55 'Jost',sans-serif;color:#6f6a63}
@@ -2533,6 +2540,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 
   <div class="wdr-foot"><span class="lnk" onclick="showDream()">Edit</span><span class="st">&#9733;</span><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+  <div class="wdr-top" id="wdrTopBtn" role="button" title="Back to top" onclick="wardrobeToTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M5.5 12 12 5.5 18.5 12"/></svg>Top</div>
 </div>
 
 <div class="scr" id="s-faq">
@@ -4841,6 +4849,18 @@ function _wdrRenderShopEnd(n){
     +'<div class="wse-sub">Shop them all together, in your style and your size.</div>'
     +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
 }
+// Back-to-top, shown once she's a screenful or so into the list. Guarded on the
+// screen being active so the fixed button can never linger over another screen.
+function _wdrTopBtnUpdate(){
+  const b=document.getElementById('wdrTopBtn'),s=document.getElementById('s-wardrobe');
+  if(!b||!s)return;
+  b.classList.toggle('on',s.classList.contains('act')&&window.scrollY>620);
+}
+function wardrobeToTop(){
+  const soft=!window.matchMedia||!matchMedia('(prefers-reduced-motion:reduce)').matches;
+  try{window.scrollTo({top:0,behavior:soft?'smooth':'auto'})}catch(e){window.scrollTo(0,0)}
+}
+window.addEventListener('scroll',_wdrTopBtnUpdate,{passive:true});
 // One button, used both at the top of the list (quick access) and at the
 // bottom (the payoff). TODO: the 🛍 is a placeholder — swap for line art with
 // the rest of the icon pass.
@@ -4987,6 +5007,7 @@ function openWardrobe(tab){
   renderWardrobeList();
   renderWardrobeTrend();
   renderWardrobeTeaser(true);
+  _wdrTopBtnUpdate();   // sync back-to-top with wherever the page has landed
 }
 function closeWardrobe(){
   // If she's on the Trending tab (reached via the toggle or the bottom-of-list
