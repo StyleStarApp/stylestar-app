@@ -153,12 +153,22 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-head{text-align:center;margin-bottom:6px}
 #s-wardrobe .wdr-sub{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:10px}
 #s-wardrobe .wdr-sub b{color:#B08830;font-weight:600}
-#s-wardrobe .wdr-tabs{display:flex;gap:8px;margin:18px 0 16px}
+#s-wardrobe .wdr-tabs{display:flex;gap:8px;margin:18px 0 0}
+/* The unselected tab used to be transparent with light grey text, which reads
+   as "disabled" rather than "the other option" -- real testing showed a user
+   never realised she could tap it. It now gets a cream fill, darker text and
+   an arrow, so both tabs look like buttons: one pressed in, one not. */
+#s-wardrobe .wdr-tab:not(.on){background:#F5EFE2;color:#3a352c;border-color:#C9A44C}
+/* The arrow points at the tab it takes you to, so it leads the eye the right
+   way: the left tab gets a leading arrow, the right tab a trailing one. */
+#s-wardrobe .wdr-tab[data-tab="trend"]:not(.on)::after{content:"\2192";font-size:15px;letter-spacing:0;margin-left:6px}
+#s-wardrobe .wdr-tab[data-tab="list"]:not(.on)::before{content:"\2190";font-size:15px;letter-spacing:0;margin-right:6px}
+#s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:8px 0 14px}
 #s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
 /* Gold "New" pill on the Trending tab, matching the Style Star Edit's pill. */
 #s-wardrobe .wdr-tab{position:relative}
-#s-wardrobe .wdr-tab-badge{position:absolute;top:-6px;right:-6px;display:none;align-items:center;justify-content:center;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;z-index:2}
+#s-wardrobe .wdr-tab-badge{position:absolute;top:-6px;right:3px;display:none;align-items:center;justify-content:center;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;z-index:2}
 #s-wardrobe .wdr-tab-badge.on{display:flex}
 /* Inline "New" pill beside the What's Trending button in the Build hubs.
    Sits in the flow next to the label rather than floating on a corner. */
@@ -2564,6 +2574,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="wdr-tab" data-tab="list" onclick="wardrobeTab('list')">My List</div>
     <div class="wdr-tab" data-tab="trend" onclick="wardrobeTab('trend')">What's Trending<span class="wdr-tab-badge">New</span></div>
   </div>
+  <div class="wdr-tabhint">Tap either list</div>
 
   <div class="wdr-pane" data-pane="list">
     <div class="wdr-howto" id="wdrHowto"><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>heart</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your size and style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span><span class="hw-brief">Tap the <svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg> to add &middot; tap <b>Ideas</b> to shop</span></div>
