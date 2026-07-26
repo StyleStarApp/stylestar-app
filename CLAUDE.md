@@ -3285,3 +3285,101 @@ Your Wardrobe is in great shape — the checklist review is DONE (98 items, 10 c
 3. **⚖️ Almira / the LLC — nudge SENT 2026-07-26, detailed reply promised.** Cath emailed Almira; she replied with a short note saying **a detailed answer is coming soon — hopefully Monday**. Watch for it: it gates the whole money path (LLC "Style Star by Catherine, LLC" name approval → trademark filing → EIN → business bank → affiliate applications → [Claude] wire affiliate links + product images + FTC disclosure).
 4. **Parked Wardrobe micro-features:** the **"NEW" badge on What's Trending** when Cath updates it (mirror the Edit's `ss_edit_seen` pill with a `ss_trending_seen` stamp); the **"not right now" mute** on a wishlist item; **item thumbnails** (see above — pair with affiliate work).
 5. Standing/unchanged: Vision Board real-photo curation; re-tune the 28 archetypes against real Supabase data once volume accrues; refine the line-art icons; Welcome Back top-section redesign (parked, star-as-button idea OFF).
+
+**2026-07-26 (cont. — Wardrobe polish + ▶ REAL USER TESTING from Cath's mom: two new entry points to What's Trending — ALL SHIPPED LIVE, PRs #604–#606)**
+Branch this session: `claude/style-star-9oayy3`. Short, high-value session; everything merged → live.
+- ✅ **The how-to paragraph steps back after first use** (#604, the long-parked "remind me later" item). Full
+  paragraph on early visits; once she's hearted **3+** items it collapses to one quiet line ("Tap the ♡ to add ·
+  tap **Ideas** to shop"), reclaiming **~100px** (125px → 24px) on every later visit. Both texts live in the
+  markup (`.hw-full` / `.hw-brief`), toggled by a `.brief` class on `#wdrHowto`.
+  **KEY DESIGN CALL:** the state is decided **ONCE on page open** (`_wdrSyncHowto()` from `openWardrobe`), NOT on
+  every heart tap — otherwise the whole list jumps under her thumb the moment she taps her third heart. So it only
+  steps back on her NEXT visit, which is what "after first use" should mean.
+- ✅ **"New" pill on What's Trending** (#604) — the other parked micro-feature. Mirrors the Style Star Edit pill
+  exactly: `wbTrendSig()` (= `trendItems.length`) / `wbTrendHasNew()` / `markTrendSeen()` against a
+  **`ss_trending_seen`** stamp. Shown on the **Trending tab** AND the **Welcome Back "Your Wardrobe" row**; clears
+  the moment she opens the Trending tab (`wardrobeTab('trend')` → `markTrendSeen`). **To light it up for returning
+  users, Cath just adds an item to `trendItems` — no flag to flip.**
+- ✅ **Reset restores the full how-to** (#604) — a real bug **Cath caught by reasoning about it, not from a
+  screenshot**: `wardrobeReset()` cleared the hearts and re-rendered but never re-evaluated the how-to, so after a
+  reset the one-liner stayed until she left the page and came back. Now `wardrobeReset` calls `_wdrSyncHowto()`.
+  Nice distinction worth remembering: bringing it back on **reset** is safe (the page already re-renders + scrolls,
+  so a change is expected), whereas doing it on a **heart tap** would jolt the list mid-scroll.
+- ✅ **Fewer item names wrap on narrow phones, with ZERO wording changes** (#604). Measured with the **real Jost
+  font embedded**: at **375px and wider NOTHING wraps at all**; the four long names only wrap at **360px and
+  below** — which is where anyone using **Display Zoom** lands (likely Cath herself, and common in an 18-80+
+  audience). Reclaiming row gap + padding at `@media(max-width:374px)` took 360px from **4 wraps → 1** (only "Tops
+  in your favorite colors" remains; **"The perfect leather jacket" now fits**). Deliberately did NOT shrink the
+  font — readability beats an even list for this audience. Wider phones provably untouched (the rule can't apply
+  above 374px). At 320px it's 15 → 11 (very narrow is a losing battle; fine).
+
+### ▶ REAL USER TESTING (2026-07-26): Cath's MOM used the app — the best feedback yet
+- **She LOVED it and could not stop clicking the shopping links** — even after Cath told her they aren't wired up
+  yet. Strong validation of the shopping-first instinct and the Mall/Edit/Ideas flows.
+- **BUT she never discovered What's Trending from the tab at the top.** She only found it via the **teaser strip
+  at the bottom**. The white tab next to the black "My List" tab did not read as something she could tap.
+- **DIAGNOSIS (worth keeping):** the unselected tab was `background:transparent; color:#8a8474` (light grey) —
+  and in almost every interface convention **grey text = disabled**. So the pair read as "one button + one
+  greyed-out label," not "a switch with two sides." The selected state was so heavy it made the unselected one
+  look unavailable. Amplified for a less app-fluent user.
+- **BIGGER INSIGHT: content is more discoverable than chrome.** She found it at the bottom because that's where
+  the actual *trends* were (wide-leg jeans, ballet flats) — she didn't need a control, she saw clothes she wanted.
+  Validates the teaser strip strongly.
+- ✅ **FIX 1 — What's Trending added as a second Build-hub button** (#605, Cath's call; also fixed that Build was
+  the only hub with ONE button while Shop has 3 and Style has 4, so it read empty). Added to **all three** Build
+  hubs (Welcome Back, Style Portrait, Outfit results): trending-up line icon, sub "What's in right now, picked by
+  Catherine", inline gold **New** pill (`.tr-new`). Calls **`openWardrobe('trend')`** → lands straight on the
+  Trending tab, so a user who never notices the toggle still gets there in one tap (and it clears the pill).
+  Welcome Back needed a **9th `.wb-item` + an `ICON[8]` entry** and `[0,3,6,1,2,5,4,7,8]` in the `setIcon` pass so
+  its tile converts to the cream chip + charcoal line icon. `refreshTrendBadge()` drives the three inline pills and
+  is called from `show()` so they stay honest everywhere.
+- ✅ **FIX 2 — the unselected tab now looks tappable** (#606). Cath picked "D+E combined, wording 2" from a
+  rendered comparison: **cream fill `#F5EFE2` + darker text `#3a352c` + gold border + an arrow**, plus a quiet
+  **"Tap either list"** line under the tabs (`.wdr-tabhint`). Two things surfaced only once it was on the real page
+  (the mockups only ever showed My List active):
+  - **The arrow must flip direction.** A single `::after` arrow rendered **"MY LIST →"** in the other state —
+    pointing right toward Trending while actually taking you LEFT. Now the left tab gets a leading `←`
+    (`[data-tab="list"]:not(.on)::before`) and the right tab a trailing `→`, so each arrow points at the tab it
+    opens. **LESSON: always render BOTH states of a toggle before shipping.**
+  - **The New pill overhung the stitched frame** by ~9px (sitting on the dashes). Moved `right:-6px` → `right:3px`;
+    measured −0.1px at 360px and −0.2px at 390px (just inside the stitch).
+- **NET: three routes to What's Trending now** — the Build hub button, the bottom teaser strip, and the tab itself.
+- ▶ **PARKED (Cath's call, revisit later): a small strip of trending ITEMS near the top of My List.** The strongest
+  version of the discovery fix (she'd see wide-leg jeans, not a tab) — but it competes with the list, and we've
+  already added two entry points. Hold.
+- ⚠️ **TOOLING LESSONS (all cost real time this session):**
+  1. **Mockup CSS MUST be id-scoped.** The first 5-option tab comparison rendered all five variants IDENTICALLY
+     because per-variant `<style>` blocks used `.v .tab` selectors, which match every block on the page. Cath
+     couldn't tell the options apart and said so. Fix: `#vA .tab`, `#vB .tab`… and **audit computed styles
+     (`console.table`) to PROVE the variants differ before sending the image.**
+  2. **One labelled image beats N separate crops.** Five small cropped strips on a phone were unreadable; a single
+     tall image with each option labelled + described in-image was immediately clear.
+  3. **`pkill -f "<pattern>"` kills its own shell** when the pattern appears in the running command line (exit 143)
+     — it killed a heredoc mid-write and the local http server twice. Don't pkill on a self-matching pattern.
+  4. **Multi-paragraph commit messages: write to a file and `git commit -F <file>`** — unescaped quotes/apostrophes
+     in `-m` broke the shell and the commit silently didn't land (caught by checking `git log` before pushing).
+  5. **`ss_wardrobe` seeds MUST include `pretap0:true`** or `_normalizeWardrobe()`'s migration wipes `items` and
+     everything renders as an empty wishlist.
+  6. After each squash-merge the branch diverges; `git checkout -B <branch> origin/main` then **force-with-lease**
+     — but **verify first** with `git diff origin/<branch> origin/main --stat -- index.html` (empty = the remote
+     branch is already-merged content, safe to force).
+  7. The recurring stop-hook **"Unverified commit (noreply@github.com)"** fired 3× on `62db332`/`2f02946` —
+     both are **GitHub's own squash-merge commits on published `main`**, authored under Cath's account.
+     **Confirmed harmless; do NOT amend** (would rewrite published history and fork `main`).
+
+### ▶ NEXT SESSION — START HERE (updated 2026-07-26, evening)
+Your Wardrobe is in strong shape and had its first real outside user (Cath's mom) — she loved it and the one thing
+she missed (What's Trending) now has three entry points. All live, nothing broken.
+1. **📧 The TWO email projects — do them TOGETHER, at her desk** (same MailerLite transactional/automation
+   plumbing): **"Email me my wishlist"** and the long-parked **"Email me these tips & links"** after a photo
+   analysis. FIRST confirm her MailerLite plan supports transactional sends. **▶ Design rule already decided: every
+   email links BACK INTO the app, never straight out to a retailer** (Amazon Associates bans affiliate links in
+   email; see the architecture decision above). **▶ Also bundle in: email capture ON the Your Wardrobe page** for
+   users who haven't given an email — high-intent moment, she's just built a wishlist she doesn't want to lose.
+2. **⚖️ Almira / the LLC** — detailed reply promised "hopefully Monday." Gates the money path
+   (LLC name → trademark → EIN → business bank → affiliates → wire real links).
+3. **Parked Wardrobe items:** the trending-items strip at the top of My List (see above); the **"not right now"
+   mute** on a wishlist item; **item thumbnails** (pair with the affiliate work — product images come with
+   affiliate feeds, turning the Wardrobe into a lookbook).
+4. Standing/unchanged: Vision Board real-photo curation; re-tune the 28 archetypes against real Supabase data once
+   volume accrues; refine the line-art icons; Welcome Back top-section redesign (parked, star-as-button idea OFF).
