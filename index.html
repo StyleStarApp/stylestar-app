@@ -159,13 +159,20 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    never realised she could tap it. It now gets a cream fill, darker text and
    an arrow, so both tabs look like buttons: one pressed in, one not. */
 #s-wardrobe .wdr-tab:not(.on){background:#F5EFE2;color:#3a352c;border-color:#C9A44C}
-/* The arrow points at the tab it takes you to, so it leads the eye the right
-   way: the left tab gets a leading arrow, the right tab a trailing one. */
-#s-wardrobe .wdr-tab[data-tab="trend"]:not(.on)::after{content:"\2192";font-size:15px;letter-spacing:0;margin-left:6px}
-#s-wardrobe .wdr-tab[data-tab="list"]:not(.on)::before{content:"\2190";font-size:15px;letter-spacing:0;margin-right:6px}
 #s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:8px 0 14px}
 #s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
+/* The arrow sits on its own line under the label, so the label stays centred
+   (inline it pushed the words off centre) and both tabs carry a matching gold
+   arrow pointing out to its own side. The fixed-height ::after keeps the two
+   tabs exactly the same height whichever one is selected.
+   NOTE: these must stay AFTER the base .wdr-tab rule above -- same specificity,
+   so an earlier padding would be silently overridden by it. */
+#s-wardrobe .wdr-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:9px 0 8px}
+#s-wardrobe .wdr-tab::after{display:block;font-size:16px;line-height:1;letter-spacing:0;height:16px;color:#C9A44C}
+#s-wardrobe .wdr-tab[data-tab="list"]::after{content:"\2190"}
+#s-wardrobe .wdr-tab[data-tab="trend"]::after{content:"\2192"}
+#s-wardrobe .wdr-tab.on::after{color:#EACD68}
 /* Gold "New" pill on the Trending tab, matching the Style Star Edit's pill. */
 #s-wardrobe .wdr-tab{position:relative}
 #s-wardrobe .wdr-tab-badge{position:absolute;top:-6px;right:3px;display:none;align-items:center;justify-content:center;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;z-index:2}
