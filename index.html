@@ -287,7 +287,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    the -3px runs it out to the inner edge of the stitched frame and stops there,
    so the stitch stays unbroken (measured: 3px at every width). */
 #s-wardrobe .wdr-teaser{margin-top:0;padding-top:2px}
-#s-wardrobe .wdr-teaser::before{content:"";display:block;height:26px;margin:26px -3px 22px;background:repeating-linear-gradient(90deg,#17171c 0 20px,#f4efe5 20px 40px)}
+/* The stripe tile is itself mirror-symmetric (cream | black | cream) and is
+   centred, so the band reads the same from either end instead of the repeat
+   starting at the left edge and landing mid-stripe on the right. */
+#s-wardrobe .wdr-teaser::before{content:"";display:block;height:26px;margin:26px -3px 22px;background-color:#f4efe5;background-image:linear-gradient(90deg,#f4efe5 0 10px,#17171c 10px 30px,#f4efe5 30px 40px);background-size:40px 100%;background-repeat:repeat-x;background-position:center}
 #s-wardrobe .wdr-teaser-t{text-align:center;font:400 22px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:4px}
 #s-wardrobe .wdr-tt-scroll{display:flex;overflow-x:auto;gap:12px;padding:4px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #s-wardrobe .wdr-tt-scroll::-webkit-scrollbar{display:none}
