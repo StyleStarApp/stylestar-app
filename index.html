@@ -4834,7 +4834,9 @@ function renderWardrobeList(){
     html+='</div>';
   }
   if(hidden.length){html+='<div class="wdr-removed" onclick="wardrobeShowRemoved()">Show '+hidden.length+' removed item'+(hidden.length>1?'s':'')+' &#8635;</div>';}
-  html+=_wdrResetBlock('end');
+  // The list card ends on the "add something" row, straight after the last
+  // item. The end-of-list reset renders below the shop CTA instead — see
+  // _wdrRenderShopEnd.
   body.innerHTML=html;
   _wdrRenderShopEnd(wantCount);
 }
@@ -4854,12 +4856,18 @@ function _wdrResetBlock(where){
 function _wdrRenderShopEnd(n){
   const el=document.getElementById('wdrShopEnd');
   if(!el)return;
-  if(!n){el.innerHTML='';el.style.display='none';return}
-  el.style.display='';
-  el.innerHTML='<div class="wdr-shopend"><div class="wse-rule"></div>'
-    +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your wishlist</div>'
-    +'<div class="wse-sub">Shop them all together,<br>in your style and your size.</div>'
-    +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
+  let html='';
+  if(n){
+    html+='<div class="wdr-shopend"><div class="wse-rule"></div>'
+      +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your wishlist</div>'
+      +'<div class="wse-sub">Shop them all together,<br>in your style and your size.</div>'
+      +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
+  }
+  // Reset sits below the shop CTA, so the list card can end cleanly on the
+  // "add something" row. Shows on its own if she has marks but no wishlist.
+  html+=_wdrResetBlock('end');
+  el.innerHTML=html;
+  el.style.display=html?'':'none';
 }
 // Back-to-top, shown once she's a screenful or so into the list. Guarded on the
 // screen being active so the fixed button can never linger over another screen.
