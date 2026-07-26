@@ -190,7 +190,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-shopend{margin:22px 0 4px;text-align:center}
 #s-wardrobe .wdr-shopend .wse-rule{width:54px;height:1px;background:linear-gradient(90deg,transparent,#DFC271,transparent);margin:0 auto 14px}
 #s-wardrobe .wdr-shopend .wse-lead{font:400 21px/1.25 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:5px}
-#s-wardrobe .wdr-shopend .wse-sub{font:500 14px/1.45 'Jost',sans-serif;color:#6f6a63;margin:0 auto 14px;max-width:270px}
+/* Explicit two-line break (Cath's call), so the max-width must be wide enough
+   that neither line re-wraps on its own. */
+#s-wardrobe .wdr-shopend .wse-sub{font:500 14px/1.45 'Jost',sans-serif;color:#6f6a63;margin:0 auto 14px;max-width:300px}
 #s-wardrobe .wdr-shopend .wdr-shopwrap{margin:0}
 #s-wardrobe .wdr-tagwrap{text-align:center;margin:4px 0 16px}
 #s-wardrobe .wdr-tag-flow{position:static;top:auto;left:auto;transform:none;display:inline-block}
@@ -4846,7 +4848,7 @@ function _wdrRenderShopEnd(n){
   el.style.display='';
   el.innerHTML='<div class="wdr-shopend"><div class="wse-rule"></div>'
     +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your wishlist</div>'
-    +'<div class="wse-sub">Shop them all together, in your style and your size.</div>'
+    +'<div class="wse-sub">Shop them all together,<br>in your style and your size.</div>'
     +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
 }
 // Back-to-top, shown once she's a screenful or so into the list. Guarded on the
