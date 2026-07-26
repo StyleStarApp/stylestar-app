@@ -208,7 +208,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;border-bottom:1px solid #e7e0cf;padding-bottom:6px}
 #s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #f0ebe0}
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
-#s-wardrobe .wdr-item.want{background:#FCF6E6}
+#s-wardrobe .wdr-item.want{background:#FAF1DA}
 /* flex-basis 0, not 120px: with a 120px basis the row's own flex-wrap fired on
    narrow phones and dropped the heart onto a second line, stranded under the
    name. Basis 0 keeps name + Ideas + heart on one line at any width. */
@@ -225,6 +225,12 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-removed:hover{color:#1a1a1a}
 #s-wardrobe .wdr-reset-wrap{text-align:center;padding:2px 0 8px}
 #s-wardrobe .wdr-reset-wrap.end{padding:14px 0 4px}
+/* The top copy is a quiet link, not a button: resetting is the last thing she
+   wants on arrival, and a full button there competed with the shop CTA and sat
+   between her instructions and the list. The bottom copy stays a real button. */
+#s-wardrobe .wdr-reset-wrap.top{padding:0 0 10px}
+#s-wardrobe .wdr-reset-wrap.top .wdr-reset{border:none;background:none;padding:4px 6px;font-size:12.5px;font-weight:500;color:#8a8474;text-decoration:underline}
+#s-wardrobe .wdr-reset-wrap.top .wdr-reset:hover,#s-wardrobe .wdr-reset-wrap.top .wdr-reset:active{color:#1a1a1a}
 /* Back to top — the list is ~98 items. Deliberately quiet: a utility, not a CTA,
    so it borrows the dark/gold palette but stays small. Pinned to the app column
    (not the window) so it doesn't drift off to the right on a desktop screen. */
@@ -4836,7 +4842,7 @@ function _wdrResetBlock(where){
   }
   if(_wdrResetConfirm)return '';   // the other copy hides while one confirm is open
   if(!Object.keys(wardrobeData.items).length&&!(wardrobeData.hidden&&wardrobeData.hidden.length))return '';
-  return '<div class="wdr-reset-wrap'+(where==='end'?' end':'')+'"><span class="wdr-reset" onclick="askWardrobeReset(\''+where+'\')">Reset my list &#8635;</span></div>';
+  return '<div class="wdr-reset-wrap '+where+'"><span class="wdr-reset" onclick="askWardrobeReset(\''+where+'\')">Reset my list &#8635;</span></div>';
 }
 // The end-of-list payoff. Lives outside the list card (below the "add something"
 // row, above What's Trending) so it reads as the closing beat of her list.
