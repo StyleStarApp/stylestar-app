@@ -156,6 +156,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tabs{display:flex;gap:8px;margin:18px 0 16px}
 #s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
+/* Gold "New" pill on the Trending tab, matching the Style Star Edit's pill. */
+#s-wardrobe .wdr-tab{position:relative}
+#s-wardrobe .wdr-tab-badge{position:absolute;top:-6px;right:-6px;display:none;align-items:center;justify-content:center;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;z-index:2}
+#s-wardrobe .wdr-tab-badge.on{display:flex}
 #s-wardrobe .wdr-pane{display:none}
 #s-wardrobe .wdr-pane.on{display:block}
 /* The list reclaims the dead horizontal padding on both sides (nothing lived to
@@ -172,6 +176,14 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tag .l2{font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;color:#8a8474;margin-top:3px}
 #s-wardrobe .wdr-howto{font:400 13px/1.55 'Jost',sans-serif;color:#5a554c;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0}
 #s-wardrobe .wdr-howto b{color:#26221c;font-weight:600}
+/* Once she has clearly got the hang of it (a few hearts tapped), the how-to
+   steps back to a single quiet reminder line, reclaiming the space on every
+   later visit. Decided once per page open so it never collapses under her thumb. */
+#s-wardrobe .wdr-howto .hw-brief{display:none}
+#s-wardrobe .wdr-howto.brief{background:transparent;border:none;padding:5px 2px 0;text-align:center;color:#8a8474;font-size:12.5px}
+#s-wardrobe .wdr-howto.brief .hw-full{display:none}
+#s-wardrobe .wdr-howto.brief .hw-brief{display:inline}
+#s-wardrobe .wdr-howto .hw-brief svg{width:13px;height:13px;vertical-align:-2px}
 #s-wardrobe .wdr-plan-wrap{text-align:center;padding:10px 0 16px}
 #s-wardrobe .wdr-plan{display:flex;align-items:center;justify-content:center}
 #s-wardrobe .wp-stat{display:flex;flex-direction:column;align-items:center;padding:0 24px}
@@ -212,6 +224,11 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    narrow phones and dropped the heart onto a second line, stranded under the
    name. Basis 0 keeps name + Ideas + heart on one line at any width. */
 #s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 0;min-width:0}
+/* On narrow phones (and anyone using Display Zoom) a few of the longer item
+   names wrapped to two lines. Reclaiming a little row padding and gap fixes
+   most of them WITHOUT shrinking the text -- readability matters more here
+   than a perfectly even list. Wider phones are untouched. */
+@media(max-width:374px){#s-wardrobe .wdr-item{gap:0 6px;padding-left:0;padding-right:0}}
 /* Catherine's line on anchor pieces — the "oh, I really need that" moment. Only
    ~20 items carry one, so they read as her speaking up, not as page furniture. */
 #s-wardrobe .wdr-note{display:block;font:italic 400 12.5px/1.35 'Fraunces',Georgia,serif;color:#8a7a52;margin-top:3px;padding-right:4px}
@@ -1724,7 +1741,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="openWardrobe()">
-          <div class="wb-row"><span class="wb-chip" style="background:#EACD68;box-shadow:0 3px 7px -3px rgba(201,154,46,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><span class="wb-lbl"><span class="tt"><b>Your Wardrobe</b><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Your personal wardrobe checklist</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:#EACD68;box-shadow:0 3px 7px -3px rgba(201,154,46,.6)"><span class="wb-badge tag" id="wbTrendBadge">New</span><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><span class="wb-lbl"><span class="tt"><b>Your Wardrobe</b><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Your personal wardrobe checklist</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
       </div>
@@ -2529,11 +2546,11 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 
   <div class="wdr-tabs">
     <div class="wdr-tab" data-tab="list" onclick="wardrobeTab('list')">My List</div>
-    <div class="wdr-tab" data-tab="trend" onclick="wardrobeTab('trend')">What's Trending</div>
+    <div class="wdr-tab" data-tab="trend" onclick="wardrobeTab('trend')">What's Trending<span class="wdr-tab-badge">New</span></div>
   </div>
 
   <div class="wdr-pane" data-pane="list">
-    <div class="wdr-howto">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>heart</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your size and style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <div class="wdr-howto" id="wdrHowto"><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>heart</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your size and style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span><span class="hw-brief">Tap the <svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg> to add &middot; tap <b>Ideas</b> to shop</span></div>
     <div class="wdr-card">
       <div id="wdrListBody"></div>
       <div class="wdr-add">
@@ -4729,12 +4746,21 @@ function wardrobeShowRemoved(){
 var _wdrResetConfirm=false;
 function askWardrobeReset(where){_wdrResetConfirm=where||'top';renderWardrobeList();}
 function cancelWardrobeReset(){_wdrResetConfirm=false;renderWardrobeList();}
+// Show the full how-to on early visits, and step it back to the one-line
+// reminder once she's clearly got the hang of it (a few hearts tapped).
+// Called on page open and after a reset -- deliberately NOT on every heart tap,
+// so the list can never shift under her thumb mid-scroll.
+function _wdrSyncHowto(){
+  var hw=document.getElementById('wdrHowto');
+  if(hw)hw.classList.toggle('brief',_wardrobeWants().length>=3);
+}
 function wardrobeReset(){
   wardrobeData.items={};      // clear every wishlist heart
   wardrobeData.hidden=[];     // full start-over: bring back any removed items
   _wdrResetConfirm=false;
   saveWardrobeData();
   renderWardrobeList();
+  _wdrSyncHowto();            // starting over means the full instructions come back
   try{document.getElementById('wdrListBody').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
 }
 // Her wardrobe "wishlist" for the stylist chat: everything she has marked Want,
@@ -5034,6 +5060,8 @@ function openWardrobe(tab){
   }
   // The founder's-voice line now opens the single how-to paragraph under the
   // tabs, so there's no separate subtitle up here to fill in.
+  _wdrSyncHowto();
+  refreshTrendBadge();
   wardrobeTab(tab||'list');
   renderWardrobeList();
   renderWardrobeTrend();
@@ -5056,6 +5084,7 @@ function closeWardrobe(){
 function wardrobeTab(which){
   document.querySelectorAll('#s-wardrobe .wdr-tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===which)});
   document.querySelectorAll('#s-wardrobe .wdr-pane').forEach(function(p){p.classList.toggle('on',p.dataset.pane===which)});
+  if(which==='trend')markTrendSeen();
 }
 
 let privacyPrevScreen='s-wel';
@@ -5518,11 +5547,32 @@ function markEditSeen(){
   try{localStorage.setItem('ss_edit_seen',String(wbEditSig()));}catch(e){}
   refreshWbBadges();
 }
+// Same pattern for What's Trending: when Catherine adds a trend, returning
+// users see a gold NEW pill until they open the Trending tab. Signature = the
+// number of trend items, so adding one is all it takes to light it up again.
+function wbTrendSig(){return trendItems.length;}
+function wbTrendHasNew(){
+  var sig=wbTrendSig();if(!sig)return false;
+  var seen=null;try{seen=localStorage.getItem('ss_trending_seen');}catch(e){}
+  return seen===null||Number(seen)<sig;
+}
+function markTrendSeen(){
+  try{localStorage.setItem('ss_trending_seen',String(wbTrendSig()));}catch(e){}
+  refreshTrendBadge();refreshWbBadges();
+}
+// The pill on the Trending tab itself (the Welcome Back entry pill is handled
+// alongside the other tiles in refreshWbBadges).
+function refreshTrendBadge(){
+  var t=document.querySelector('#s-wardrobe .wdr-tab[data-tab="trend"] .wdr-tab-badge');
+  if(t)t.classList.toggle('on',wbTrendHasNew());
+}
 function refreshWbBadges(){
   var ask=document.getElementById('wbAskBadge');
   if(ask){var n=wbUnreadReplies();if(n>0){ask.textContent=n>9?'9+':String(n);ask.classList.add('on');}else{ask.classList.remove('on');}}
   var ed=document.getElementById('wbEditBadge');
   if(ed){if(wbEditHasNew())ed.classList.add('on');else ed.classList.remove('on');}
+  var wd=document.getElementById('wbTrendBadge');
+  if(wd){if(wbTrendHasNew())wd.classList.add('on');else wd.classList.remove('on');}
 }
 var WB_MSGS=['Your own personal stylist,<br>made with love to help you shine.','This is my gift to you:<br>everything I know about style,<br>made clear, easy, and fun.','Made with love, to help you shine<br>your style out to the world.','Built with heart, here to help you<br>shine your light.','I believe style is one of the most<br>beautiful ways to shine your light.','Here to help you feel confident,<br>put-together, and fully you.'];
 var SHOP_MSGS=['Align your style. Shine your light.','Your signature style is coming together.','Here to help you shine your light.','Embracing your unique personal style.','Personalized for you.','Bringing out your most confident you.','Style with intention and heart.'];
