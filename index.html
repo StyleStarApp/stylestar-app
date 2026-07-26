@@ -218,6 +218,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-removed{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;padding:12px 0 2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-removed:hover{color:#1a1a1a}
 #s-wardrobe .wdr-reset-wrap{text-align:center;padding:2px 0 8px}
+#s-wardrobe .wdr-reset-wrap.end{padding:14px 0 4px}
 #s-wardrobe .wdr-reset{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 'Jost',sans-serif;letter-spacing:.02em;color:#4a453c;border:1.5px solid #b3ada0;background:#fff;padding:10px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-reset:hover,#s-wardrobe .wdr-reset:active{border-color:#1a1a1a;color:#1a1a1a}
 #s-wardrobe .wdr-reset-confirm{text-align:center;padding:6px 0 10px;margin:0 -13px;font:500 12.5px/1.55 'Jost',sans-serif;color:#6f6a63}
@@ -2505,7 +2506,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 
   <div class="wdr-pane" data-pane="list">
-    <div class="wdr-howto"><b>This is your wardrobe plan.</b> Go down the list and tap the <b>heart</b> on anything you would love to add. Those pieces become your wishlist, ready to shop together whenever you like. You can tap <b>Ideas</b> on any piece to see it in your style and size, and little by little, build a wardrobe that works beautifully for your life.</div>
+    <div class="wdr-howto">Make this list your own by tapping the <b>heart</b> on all the items you want to add to your closet. Then tap <b>Ideas</b> to see it in your style and size.</div>
     <div class="wdr-card">
       <div class="wdr-tag"><div class="l1">style Star</div></div>
       <div id="wdrListBody"></div>
@@ -4697,8 +4698,10 @@ function wardrobeShowRemoved(){
 // Start over on the main checklist: clears her wishlist hearts on the standard
 // items. Her own typed-in additions (and any items she removed) are left exactly
 // as they are. Uses a gentle inline confirm, not a browser dialog.
+// Reset sits both above and below the list. Holds WHICH one was tapped ('top' or
+// 'end') so the confirm opens where her thumb already is, not up the page.
 var _wdrResetConfirm=false;
-function askWardrobeReset(){_wdrResetConfirm=true;renderWardrobeList();}
+function askWardrobeReset(where){_wdrResetConfirm=where||'top';renderWardrobeList();}
 function cancelWardrobeReset(){_wdrResetConfirm=false;renderWardrobeList();}
 function wardrobeReset(){
   wardrobeData.items={};      // clear every wishlist heart
@@ -4793,13 +4796,10 @@ function renderWardrobeList(){
   }
   if(wantCount){html+='<div class="wdr-shopwrap">'+_wdrShopBtn(wantCount)+'</div>';}
   if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.name||'')+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
-  // Reset lives up top (near her counts) so it's easy to find without scrolling
-  // the whole list. The inline confirm protects against an accidental tap.
-  if(_wdrResetConfirm){
-    html+='<div class="wdr-reset-confirm"><b>Start the list over?</b>Clears your whole wishlist and brings back any items you removed. Your additions stay.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
-  }else if(Object.keys(wardrobeData.items).length||(wardrobeData.hidden&&wardrobeData.hidden.length)){
-    html+='<div class="wdr-reset-wrap"><span class="wdr-reset" onclick="askWardrobeReset()">Reset my list &#8635;</span></div>';
-  }
+  // Reset lives up top (near her counts) AND at the end of the list, so it's
+  // reachable whether she's just arrived or just finished going through it.
+  // The inline confirm protects against an accidental tap.
+  html+=_wdrResetBlock('top');
   order.forEach(function(catName){
     const cat=byName[catName];if(!cat)return;
     const visible=cat.items.filter(function(it){return !_wardrobeExcluded(it)&&hidden.indexOf(it.id)<0});
@@ -4814,8 +4814,19 @@ function renderWardrobeList(){
     html+='</div>';
   }
   if(hidden.length){html+='<div class="wdr-removed" onclick="wardrobeShowRemoved()">Show '+hidden.length+' removed item'+(hidden.length>1?'s':'')+' &#8635;</div>';}
+  html+=_wdrResetBlock('end');
   body.innerHTML=html;
   _wdrRenderShopEnd(wantCount);
+}
+// Renders either the reset link or, if this is the one she tapped, the inline
+// confirm. Both copies are identical, so the confirm opens where she tapped.
+function _wdrResetBlock(where){
+  if(_wdrResetConfirm===where){
+    return '<div class="wdr-reset-confirm"><b>Start the list over?</b>Clears your whole wishlist and brings back any items you removed. Your additions stay.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
+  }
+  if(_wdrResetConfirm)return '';   // the other copy hides while one confirm is open
+  if(!Object.keys(wardrobeData.items).length&&!(wardrobeData.hidden&&wardrobeData.hidden.length))return '';
+  return '<div class="wdr-reset-wrap'+(where==='end'?' end':'')+'"><span class="wdr-reset" onclick="askWardrobeReset(\''+where+'\')">Reset my list &#8635;</span></div>';
 }
 // The end-of-list payoff. Lives outside the list card (below the "add something"
 // row, above What's Trending) so it reads as the closing beat of her list.
