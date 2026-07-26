@@ -189,8 +189,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-shopwants .wsw-ar{width:19px;height:19px;flex:none;color:#E0B84C}
 /* The end-of-list payoff: she has just been down all ~98 pieces, so name what
    she built before offering the same action, rather than repeating the button. */
-#s-wardrobe .wdr-shopend{margin:22px 0 4px;text-align:center}
-#s-wardrobe .wdr-shopend .wse-rule{width:54px;height:1px;background:linear-gradient(90deg,transparent,#DFC271,transparent);margin:0 auto 14px}
+#s-wardrobe .wdr-shopend{margin:10px 0 4px;text-align:center}
 #s-wardrobe .wdr-shopend .wse-lead{font:400 21px/1.25 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:5px}
 /* Explicit two-line break (Cath's call), so the max-width must be wide enough
    that neither line re-wraps on its own. */
@@ -285,9 +284,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 /* A real page break before What's Trending, so the secondary offer stops
    reading as part of the main wishlist CTA. Uses the app's curtain stripe
    (Discover backdrop, Mall awning, the keepsakes) rather than a new device;
-   the negative margin runs it to the frame, where .ss clips it flush. */
+   the -3px runs it out to the inner edge of the stitched frame and stops there,
+   so the stitch stays unbroken (measured: 3px at every width). */
 #s-wardrobe .wdr-teaser{margin-top:0;padding-top:2px}
-#s-wardrobe .wdr-teaser::before{content:"";display:block;height:26px;margin:26px -18px 22px;background:repeating-linear-gradient(90deg,#17171c 0 20px,#f4efe5 20px 40px)}
+#s-wardrobe .wdr-teaser::before{content:"";display:block;height:26px;margin:26px -3px 22px;background:repeating-linear-gradient(90deg,#17171c 0 20px,#f4efe5 20px 40px)}
 #s-wardrobe .wdr-teaser-t{text-align:center;font:400 22px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:4px}
 #s-wardrobe .wdr-tt-scroll{display:flex;overflow-x:auto;gap:12px;padding:4px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #s-wardrobe .wdr-tt-scroll::-webkit-scrollbar{display:none}
@@ -4863,7 +4863,7 @@ function _wdrRenderShopEnd(n){
   if(!el)return;
   let html='';
   if(n){
-    html+='<div class="wdr-shopend"><div class="wse-rule"></div>'
+    html+='<div class="wdr-shopend">'
       +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your wishlist</div>'
       +'<div class="wse-sub">Shop them all together,<br>in your style and your size.</div>'
       +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
