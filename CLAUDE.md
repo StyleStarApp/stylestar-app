@@ -3370,6 +3370,7 @@ Branch this session: `claude/style-star-9oayy3`. Short, high-value session; ever
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-26, evening)
 Your Wardrobe is in strong shape and had its first real outside user (Cath's mom) — she loved it and the one thing
 she missed (What's Trending) now has three entry points. All live, nothing broken.
+0. **📝 CONTENT: add more to What's Trending + more to the Style Star Edit** (Cath asked 2026-07-26; see the CONTENT TO-DO section at the end of this file). Easy, high-value, no blockers.
 1. **📧 The TWO email projects — do them TOGETHER, at her desk** (same MailerLite transactional/automation
    plumbing): **"Email me my wishlist"** and the long-parked **"Email me these tips & links"** after a photo
    analysis. FIRST confirm her MailerLite plan supports transactional sends. **▶ Design rule already decided: every
@@ -3383,3 +3384,42 @@ she missed (What's Trending) now has three entry points. All live, nothing broke
    affiliate feeds, turning the Wardrobe into a lookbook).
 4. Standing/unchanged: Vision Board real-photo curation; re-tune the 28 archetypes against real Supabase data once
    volume accrues; refine the line-art icons; Welcome Back top-section redesign (parked, star-as-button idea OFF).
+
+**2026-07-26 (cont. — tab arrows under the labels + What's Trending grew to 7 — SHIPPED LIVE, PRs #608–#609)**
+- ✅ **Tab arrows moved UNDER the labels** (#608, Cath's idea after seeing the inline version on her phone).
+  Inline, the arrow ate space inside the button and pushed the label off centre, and only the unselected tab
+  carried one, so the two sides didn't match. Now the arrow sits on its own line beneath the label and **BOTH
+  tabs carry a gold arrow pointing out to its own side** (left `←`, right `→`), so they read as a matched pair.
+  The tab is a centred flex column with a **fixed-height `::after`** so both tabs stay the same height whichever
+  is selected; selected arrow = bright gold `#EACD68` (matches its label), unselected = softer `#C9A44C`.
+  Tabs 37px → **51px** tall (Cath accepted the trade for the cleaner look).
+  ⚠️ **CSS ORDERING BUG caught in verification:** the new layout rules were first placed ABOVE the base
+  `#s-wardrobe .wdr-tab` rule — same specificity, so the base `padding:10px 0` silently won and the intended
+  padding never applied (tabs measured 54px, not 51px). It only *looked* right by luck because the flex
+  properties survived (the base rule doesn't set them). Moved below the base rule with a comment. **LESSON: when
+  adding to a long single-file stylesheet, check whether an existing same-specificity rule appears LATER and
+  will override you — verify by measuring, not by eyeballing the render.**
+- ✅ **What's Trending grew 4 → 7 items** (#609). Cath picked from a set of drafted candidates: added **Linen
+  Everything**, **Straw and Basket Bags**, **Suede**. (Deliberately did NOT invent trends unilaterally — the tab
+  says "CURATED BY CATHERINE" and a real stylist picking them IS the Sally differentiator; also Claude's
+  knowledge cutoff can't reliably call current trends. Pattern that worked: Claude drafts candidates + blurbs in
+  her voice, Cath approves/cuts/edits.)
+- ✅ **Em-dashes removed** from the two older trend blurbs (Wide-Leg Jeans, Ballet Flats) — they predated the
+  no-dashes brand-voice rule ("dashes read as AI"). All 7 blurbs are now dash-free.
+- ▶ **ORDERING RULE (important, now commented on the array):** the **teaser strip at the bottom of My List shows
+  only the FIRST THREE** `trendItems` — and that strip is a main discovery path (it's how Cath's mom found the
+  tab at all). Appending new items buries them. So **lead with whatever is most seasonal and re-sort when the
+  weather turns.** Current order: Linen Everything · Straw and Basket Bags · Wide-Leg Jeans (teaser) then
+  Statement Earrings · Ballet Flats · Suede · A Great Trench.
+- **Confirmed end-to-end:** growing the list relit the **New pill automatically** for a user seeded at
+  `ss_trending_seen=4` and cleared to 7 on opening the tab. No flag to flip — adding an item is all it takes.
+
+### ▶ CONTENT TO-DO (Cath, 2026-07-26 — she wants these, resurface each session)
+- **📝 Add MORE items to What's Trending.** Cath explicitly wants to keep growing this list. Working pattern:
+  Claude drafts candidate names + one-line blurbs in her voice (dash-free), Cath approves/cuts/rewrites — she is
+  the trend authority, Claude never adds unilaterally. Remember to **re-sort seasonally** (first three feed the
+  teaser). Every addition automatically relights the New pill for returning users.
+- **📝 Add MORE items to the Style Star Edit** (`s-dream`, the founder-curated product list, `.dc-item`s in the
+  markup). Cath wants to do this soon. NOTE the Edit's own "NEW" pill works the same way (`wbEditSig()` = the
+  number of `.dc-item`s, stamped against `ss_edit_seen`), so adding items lights it up automatically too.
+  When affiliate programs approve, this is also where product images + tagged links land (money-path step 7).
