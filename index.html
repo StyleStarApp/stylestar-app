@@ -160,6 +160,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tab{position:relative}
 #s-wardrobe .wdr-tab-badge{position:absolute;top:-6px;right:-6px;display:none;align-items:center;justify-content:center;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;z-index:2}
 #s-wardrobe .wdr-tab-badge.on{display:flex}
+/* Inline "New" pill beside the What's Trending button in the Build hubs.
+   Sits in the flow next to the label rather than floating on a corner. */
+.tr-new{display:none;align-items:center;margin-left:7px;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;flex:0 0 auto}
+.tr-new.on{display:inline-flex}
 #s-wardrobe .wdr-pane{display:none}
 #s-wardrobe .wdr-pane.on{display:block}
 /* The list reclaims the dead horizontal padding on both sides (nothing lived to
@@ -1744,6 +1748,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <div class="wb-row"><span class="wb-chip" style="background:#EACD68;box-shadow:0 3px 7px -3px rgba(201,154,46,.6)"><span class="wb-badge tag" id="wbTrendBadge">New</span><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><span class="wb-lbl"><span class="tt"><b>Your Wardrobe</b><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Your personal wardrobe checklist</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
+        <div class="wb-item" wb-lift onclick="openWardrobe('trend')">
+          <div class="wb-row"><span class="wb-chip" style="background:#EACD68;box-shadow:0 3px 7px -3px rgba(201,154,46,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/></svg></span><span class="wb-lbl"><span class="tt"><b>What&rsquo;s Trending</b><span class="tr-new" id="trendNewWb">New</span><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">What&rsquo;s in right now, picked by Catherine</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
       </div>
       <div class="wb-retake-wrap"><a class="wb-retake" wb-press onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></a></div>
       <!-- Footer — black text + gold-star separators, kept on the mirror's cream so it stays readable -->
@@ -1973,6 +1981,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="tag-topper"><span>BUILD</span></div>
       <div class="act" data-shelf onclick="openWardrobe()">
         <div class="actrow"><span class="chip" style="background:#EACD68;border:1px solid #C9A44C"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Your personal wardrobe checklist</div></div></div>
+        <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+      </div>
+      <div class="act" data-shelf onclick="openWardrobe('trend')">
+        <div class="actrow"><span class="chip" style="background:#EACD68;border:1px solid #C9A44C"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">What&rsquo;s Trending</span><span class="tr-new" id="trendNewRes">New</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">What&rsquo;s in right now, picked by Catherine</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
       </div>
@@ -2224,6 +2236,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <div class="hlbl">Build</div>
         <div class="act" data-shelf onclick="openWardrobe()">
           <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">Your personal wardrobe checklist</div></div></div>
+          <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+        </div>
+        <div class="act" data-shelf onclick="openWardrobe('trend')">
+          <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">What&rsquo;s Trending</span><span class="tr-new" id="trendNewPhoto">New</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">What&rsquo;s in right now, picked by Catherine</div></div></div>
           <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
         </div>
       </div>
@@ -2809,6 +2825,8 @@ function retakeQuiz(){
 function show(id,skipHistory){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
   document.getElementById(id).classList.add('act');
+  // Keep the What's Trending "New" pills honest wherever they appear.
+  try{refreshTrendBadge();}catch(e){}
   var onWel=(id==='s-wel');
   // Screens with their own built-in footer + logo hide the shared global chrome:
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
@@ -5558,13 +5576,18 @@ function wbTrendHasNew(){
 }
 function markTrendSeen(){
   try{localStorage.setItem('ss_trending_seen',String(wbTrendSig()));}catch(e){}
-  refreshTrendBadge();refreshWbBadges();
+  refreshWbBadges();
 }
 // The pill on the Trending tab itself (the Welcome Back entry pill is handled
 // alongside the other tiles in refreshWbBadges).
 function refreshTrendBadge(){
+  var isNew=wbTrendHasNew();
   var t=document.querySelector('#s-wardrobe .wdr-tab[data-tab="trend"] .wdr-tab-badge');
-  if(t)t.classList.toggle('on',wbTrendHasNew());
+  if(t)t.classList.toggle('on',isNew);
+  // The inline pills on the Build hubs' What's Trending buttons.
+  ['trendNewWb','trendNewRes','trendNewPhoto'].forEach(function(id){
+    var e=document.getElementById(id);if(e)e.classList.toggle('on',isNew);
+  });
 }
 function refreshWbBadges(){
   var ask=document.getElementById('wbAskBadge');
@@ -5573,6 +5596,7 @@ function refreshWbBadges(){
   if(ed){if(wbEditHasNew())ed.classList.add('on');else ed.classList.remove('on');}
   var wd=document.getElementById('wbTrendBadge');
   if(wd){if(wbTrendHasNew())wd.classList.add('on');else wd.classList.remove('on');}
+  refreshTrendBadge();
 }
 var WB_MSGS=['Your own personal stylist,<br>made with love to help you shine.','This is my gift to you:<br>everything I know about style,<br>made clear, easy, and fun.','Made with love, to help you shine<br>your style out to the world.','Built with heart, here to help you<br>shine your light.','I believe style is one of the most<br>beautiful ways to shine your light.','Here to help you feel confident,<br>put-together, and fully you.'];
 var SHOP_MSGS=['Align your style. Shine your light.','Your signature style is coming together.','Here to help you shine your light.','Embracing your unique personal style.','Personalized for you.','Bringing out your most confident you.','Style with intention and heart.'];
@@ -5601,11 +5625,12 @@ function _buildWbHubs(){
     2:ic('<path d="M5.2 6.6h13.6v8.4H9.4L5.6 18.6V6.6z"/><path d="M8.6 10.6h6.8M8.6 12.8h4.2"/>'),
     5:ic('<path d="M2.6 12.4l3.6 3.6 6.2-7.8"/><path d="M15.3 10.6l4.8 5.8M20.1 10.6l-4.8 5.8"/>'),
     4:ic('<rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="currentColor" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/>'),
-    7:ic('<path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/>')
+    7:ic('<path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/>'),
+    8:ic('<path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/>')
   };
   // Swap each colored tile for a charcoal line icon inside a cream chip, preserving any badge.
   function setIcon(i){var chip=items[i].querySelector('.wb-chip');if(!chip)return;var badge=chip.querySelector('.wb-badge');chip.removeAttribute('style');chip.className='wb-chip wb-chip-line';chip.innerHTML=ICON[i];if(badge)chip.appendChild(badge);}
-  [0,3,6,1,2,5,4,7].forEach(setIcon);
+  [0,3,6,1,2,5,4,7,8].forEach(setIcon);
   function hub(t){var d=document.createElement('div');d.className='wb-hub';var s=document.createElement('div');s.className='wb-hub-t';var l=document.createElement('span');l.className='wb-hub-lbl';l.textContent=t;s.appendChild(l);d.appendChild(s);return d;}
   list.innerHTML='';
   // Shopping card: awning topper + label + shop items
@@ -5623,6 +5648,7 @@ function _buildWbHubs(){
   var stars=document.createElement('div');stars.className='tag-stars';stars.innerHTML=_bstar+_bstar+_bstar+_bstar+_bstar;
   var tag=document.createElement('div');tag.className='tag-topper';tag.innerHTML='<span>BUILD</span>';
   wdr.appendChild(stars);wdr.appendChild(tag);wdr.appendChild(items[7]);
+  if(items[8])wdr.appendChild(items[8]);   // What's Trending: a second way in, so it isn't only findable via the tab
   list.appendChild(shop);list.appendChild(sty);list.appendChild(wdr);
   list.dataset.hubs='1';
 }
