@@ -158,7 +158,12 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
 #s-wardrobe .wdr-pane{display:none}
 #s-wardrobe .wdr-pane.on{display:block}
-#s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:30px 14px 10px;margin-top:24px}
+/* The list reclaims the dead horizontal padding on both sides (nothing lived to
+   the right of the heart). The left inset is rebuilt inside the card as padding
+   so the row's left edge lands exactly where it did before, keeping the gutter
+   the absolutely-positioned remove ✕ hangs in. Net: ~22px more for item names. */
+#s-wardrobe{margin-left:-16px;margin-right:-16px}
+#s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:30px 8px 10px 30px;margin-top:24px}
 #s-wardrobe .wdr-tag{position:absolute;top:-15px;left:50%;transform:translateX(-50%);padding:9px 22px 8px;box-shadow:0 3px 8px rgba(0,0,0,.14);text-align:center;white-space:nowrap;background-color:#F7F1E1;background-image:repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 11px),repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 11px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 11px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 11px);background-size:100% 2px,100% 2px,2px 100%,2px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat}
 #s-wardrobe .wdr-tag .l1{font:400 17px/1 'DM Serif Display',Georgia,serif;-webkit-text-stroke:.3px #1a1a1a;letter-spacing:0;color:#1a1a1a}
 #s-wardrobe .wdr-tag .l-rule{width:22px;height:1px;background:#4a453c;margin:4px auto}
@@ -183,7 +188,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #f0ebe0}
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
 #s-wardrobe .wdr-item.want{background:#FCF6E6}
-#s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 120px;min-width:0}
+/* flex-basis 0, not 120px: with a 120px basis the row's own flex-wrap fired on
+   narrow phones and dropped the heart onto a second line, stranded under the
+   name. Basis 0 keeps name + Ideas + heart on one line at any width. */
+#s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 0;min-width:0}
 /* Catherine's line on anchor pieces — the "oh, I really need that" moment. Only
    ~20 items carry one, so they read as her speaking up, not as page furniture. */
 #s-wardrobe .wdr-note{display:block;font:italic 400 12.5px/1.35 'Fraunces',Georgia,serif;color:#8a7a52;margin-top:3px;padding-right:4px}
@@ -394,7 +402,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .act-pair .act-btn{flex:1;flex-direction:column;max-width:none;margin:0;padding:14px 6px;font-size:10.5px;letter-spacing:0.02em;gap:7px;line-height:1.25}
 .act-pair .act-btn svg{width:19px;height:19px}
 #s-pref .top-back-wrap,#s-pref-done .top-back-wrap{margin-right:-16px}
-#s-wardrobe .top-back-wrap{margin-right:-16px}
+/* The screen itself now carries the -16px pull toward the frame (see .wdr-card
+   above), so the Back button no longer adds its own or it clips off the edge. */
+#s-wardrobe .top-back-wrap{margin-right:0}
 #s-dream .top-back-wrap{margin-right:-20px;margin-top:-0.7rem}
 #s-shopstyle .top-back-wrap{margin-right:-20px;margin-top:-0.1rem}
 #s-chat{position:relative}
@@ -2480,7 +2490,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 
   <div class="wdr-pane" data-pane="list">
-    <div class="wdr-howto"><b>This is your wardrobe plan.</b> Go down the list and tap the <b>heart</b> on anything you would love to add. Those pieces become your wishlist, ready to shop together whenever you like. You can tap <b>See ideas</b> on any piece to see it in your style and size, and little by little, build a wardrobe that works beautifully for your life.</div>
+    <div class="wdr-howto"><b>This is your wardrobe plan.</b> Go down the list and tap the <b>heart</b> on anything you would love to add. Those pieces become your wishlist, ready to shop together whenever you like. You can tap <b>Ideas</b> on any piece to see it in your style and size, and little by little, build a wardrobe that works beautifully for your life.</div>
     <div class="wdr-card">
       <div class="wdr-tag"><div class="l1">style Star</div></div>
       <div id="wdrListBody"></div>
@@ -4744,7 +4754,7 @@ function _wardrobeItemRow(id,name,isCustom,note){
   return '<div class="wdr-item'+(want?' want':'')+'">'
     +delBtn
     +'<div class="'+nameClass+'">'+_esc(name)+noteHtml+'</div>'
-    +'<span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')"><span class="wdr-see-star">&#9733;</span> See ideas &rarr;</span>'
+    +'<span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')">Ideas &rarr;</span>'
     +'<span class="wdr-heart" role="button" aria-pressed="'+(want?'true':'false')+'" title="'+(want?'On your wishlist':'Add to wishlist')+'" onclick="wardrobeWant(\''+id+'\','+cust+')">'+_wdrHeart(want)+'</span>'
     +'<div class="wdr-expand" id="wx_'+id+'" style="display:none"></div>'
     +'</div>';
