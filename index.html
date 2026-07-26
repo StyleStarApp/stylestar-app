@@ -180,9 +180,13 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tag-flow{position:static;top:auto;left:auto;transform:none;display:inline-block}
 #s-wardrobe .wdr-cat{margin-bottom:16px}
 #s-wardrobe .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;border-bottom:1px solid #e7e0cf;padding-bottom:6px}
-#s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:9px 2px;gap:6px 8px;border-bottom:1px solid #f0ebe0}
+#s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #f0ebe0}
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
-#s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 145px}
+#s-wardrobe .wdr-item.want{background:#FCF6E6}
+#s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 120px;min-width:0}
+/* Catherine's line on anchor pieces — the "oh, I really need that" moment. Only
+   ~20 items carry one, so they read as her speaking up, not as page furniture. */
+#s-wardrobe .wdr-note{display:block;font:italic 400 12.5px/1.35 'Fraunces',Georgia,serif;color:#8a7a52;margin-top:3px;padding-right:4px}
 #s-wardrobe .wdr-name.custom::before{content:"\2605 ";color:#E6C24E;font-size:11px}
 #s-wardrobe .wdr-del{position:absolute;left:-34px;top:4px;color:#8a8272;font-size:22px;line-height:1;cursor:pointer;padding:2px 6px;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-del:hover,#s-wardrobe .wdr-del:active{color:#c0392b;background:#f3ede0}
@@ -198,16 +202,17 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-rc-btns{margin-top:8px;display:flex;justify-content:center;gap:18px}
 #s-wardrobe .wdr-rc-yes{color:#2E9E4F;font-weight:700;text-decoration:underline;cursor:pointer;padding:3px 6px;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-rc-no{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;padding:3px 6px;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-toggle{display:flex;gap:5px;flex:0 0 auto;white-space:nowrap}
-#s-wardrobe .wdr-btn{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.04em;padding:5px 10px;border-radius:0;white-space:nowrap;border:1px solid #d8d2c2;color:#8a8474;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-btn.have{background:#F2F0EA;border-color:#B7AF9C;color:#726B58}
-#s-wardrobe .wdr-btn.have::before{content:"\2713 "}
-#s-wardrobe .wdr-btn.want{background:#1a1a1a;border-color:#1a1a1a;color:#EACD68}
+/* One positive action per row. The heart sits in a fixed right-hand column so she
+   can run her thumb straight down the list. No "have" — owning blue jeans never
+   meant she didn't want another pair. */
+#s-wardrobe .wdr-heart{flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-heart svg{width:23px;height:23px;display:block}
 #s-wardrobe .wdr-expand{flex-basis:100%;min-width:0;margin:4px 0 0;padding:10px 8px 6px;background:#F4EFE4}
 #s-wardrobe .wdr-expand-lbl{font:600 11px/1.3 'Jost',sans-serif;color:#8a6a1e;margin-bottom:8px}
 #s-wardrobe .wdr-expand-lbl a{color:#8a6a1e;cursor:pointer}
-#s-wardrobe .wdr-see-wrap{flex-basis:100%;text-align:right;margin-top:-4px}
-#s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;display:inline-block}
+/* Shopping is never gated behind marking the row — every item is one tap from
+   real products, wanted or not. */
+#s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;flex:0 0 auto;white-space:nowrap;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-see-star{color:#E6C24E}
 #s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
@@ -2475,7 +2480,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 
   <div class="wdr-pane" data-pane="list">
-    <div class="wdr-howto"><b>This is your wardrobe plan.</b> Go down the list and tap <b>Have</b> or <b>Want</b> on each piece. The pieces you mark <b>Want</b> are your gaps to fill, so tap <b>See ideas</b> to shop them in your style, and little by little, build a complete wardrobe that works beautifully for your life.</div>
+    <div class="wdr-howto"><b>This is your wardrobe plan.</b> Go down the list and tap the <b>heart</b> on anything you would love to add. Those pieces become your wishlist, ready to shop together whenever you like. You can tap <b>See ideas</b> on any piece to see it in your style and size, and little by little, build a wardrobe that works beautifully for your life.</div>
     <div class="wdr-card">
       <div class="wdr-tag"><div class="l1">style Star</div></div>
       <div id="wdrListBody"></div>
@@ -4418,19 +4423,19 @@ function closeShop(){
 const wardrobeItems=[
   {cat:'Tops',items:[
     {id:'to3',n:'Tops in your favorite colors',common:false},
-    {id:'to1',n:'White tops',common:true},
-    {id:'to2',n:'Black tops',common:true},
+    {id:'to1',n:'White tops',common:true,note:"Nothing makes the rest of an outfit look crisper. Worth having more than one."},
+    {id:'to2',n:'Black tops',common:true,note:"The quiet workhorse. You will reach for it more than almost anything you own."},
     {id:'to4',n:'Print tops',common:false},
     {id:'to7',n:'Tank tops/Camisoles',common:true},
     {id:'to5',n:'Professional blouses',common:false},
     {id:'to6',n:'Dressy or going-out tops',common:false}
   ]},
   {cat:'Bottoms',items:[
-    {id:'bo1',n:'Blue jeans',common:true},
+    {id:'bo1',n:'Blue jeans',common:true,note:"The pair that truly fits you changes everything. Always worth the search."},
     {id:'bo2',n:'White jeans',common:false},
     {id:'bo7',n:'Casual pants',common:false},
     {id:'bo8',n:'Wide-leg pants',common:false},
-    {id:'bo3',n:'Black trousers',common:false},
+    {id:'bo3',n:'Black trousers',common:false,note:"Dressy or casual, they go anywhere. One of the hardest working pieces in a closet."},
     {id:'bo4',n:'Linen pants',common:false},
     {id:'bo9',n:'Pencil skirt',common:false},
     {id:'bo10',n:'Flowy skirt',common:false},
@@ -4442,9 +4447,9 @@ const wardrobeItems=[
     {id:'dr3',n:'Work-appropriate dresses',common:false},
     {id:'dr5',n:'Sundresses',common:false},
     {id:'dr6',n:'Maxi dresses',common:false},
-    {id:'dr7',n:'Wrap dresses',common:false},
+    {id:'dr7',n:'Wrap dresses',common:false,note:"Beautiful on every shape. The easiest yes in your closet."},
     {id:'dr8',n:'Sweater dresses',common:false},
-    {id:'dr9',n:'Cocktail dresses',common:false},
+    {id:'dr9',n:'Cocktail dresses',common:false,note:"One you love means never panicking when an invitation arrives."},
     {id:'dr10',n:'Formal gowns',common:false}
   ]},
   {cat:'Jackets & Layers',items:[
@@ -4452,10 +4457,10 @@ const wardrobeItems=[
     {id:'ja5',n:'Sweaters',common:false},
     {id:'ja8',n:'Light casual jackets',common:false},
     {id:'ja10',n:'Cropped jackets',common:false},
-    {id:'ja2',n:'Blazers',common:false},
-    {id:'ja6',n:'Belted trench',common:false},
+    {id:'ja2',n:'Blazers',common:false,note:"Instant polish over jeans, a dress, or absolutely anything."},
+    {id:'ja6',n:'Belted trench',common:false,note:"The piece that makes everything under it look intentional."},
     {id:'ja9',n:'Raincoats',common:false},
-    {id:'ja3',n:'The perfect leather jacket',common:false},
+    {id:'ja3',n:'The perfect leather jacket',common:false,note:"Worth the hunt. It makes even a soft dress feel a little bit cool."},
     {id:'ja4',n:'Wool coats',common:false},
     {id:'ja11',n:'Puffer coats',common:false}
   ]},
@@ -4465,7 +4470,7 @@ const wardrobeItems=[
     {id:'to8',n:'Sweatshirts',common:false},
     {id:'ac3',n:'Athletic shorts',common:false},
     {id:'ac12',n:'Tennis skirts',common:false},
-    {id:'ac4',n:'Supportive sports bras',common:false},
+    {id:'ac4',n:'Supportive sports bras',common:false,note:"Fit matters more here than anywhere. Everything feels better when this is right."},
     {id:'ac11',n:'Matching athletic sets',common:false},
     {id:'ac5',n:'Workout tanks',common:false},
     {id:'ac6',n:'Workout tees',common:false},
@@ -4478,10 +4483,10 @@ const wardrobeItems=[
     {id:'sl1',n:'Pajamas',common:true},
     {id:'sl2',n:'Nightgowns',common:false},
     {id:'sl4',n:'Loungewear sets',common:false},
-    {id:'sl3',n:'Robes',common:false}
+    {id:'sl3',n:'Robes',common:false,note:"A beautiful robe changes the whole feeling of your morning."}
   ]},
   {cat:'Foundations',items:[
-    {id:'fo1',n:'Perfectly fitting bras',common:true},
+    {id:'fo1',n:'Perfectly fitting bras',common:true,note:"Nothing changes the way your clothes fall more than this. Worth a proper fitting."},
     {id:'fo4',n:'Strapless bras',common:false},
     {id:'fo2',n:'Comfortable underwear',common:true},
     {id:'fo3',n:'Beautiful underwear',common:false},
@@ -4492,7 +4497,7 @@ const wardrobeItems=[
     {id:'sh11',n:'Flip flops',common:false},
     {id:'sh12',n:'Slides',common:false},
     {id:'sh13',n:'Loafers',common:false},
-    {id:'sh2',n:'Closed-toe flats',common:true},
+    {id:'sh2',n:'Closed-toe flats',common:true,note:"Comfortable and polished at the same time. The pair you will live in."},
     {id:'sh9',n:'Fashion sneakers',common:false},
     {id:'sh10',n:'Athletic sneakers',common:false},
     {id:'sh5',n:'Wedges',common:false},
@@ -4500,16 +4505,16 @@ const wardrobeItems=[
     {id:'sh14',n:'Kitten heels',common:false},
     {id:'sh15',n:'Block heel sandals',common:false},
     {id:'sh4',n:'High heel sandals',common:false},
-    {id:'sh3',n:'Dressy pumps',common:false},
+    {id:'sh3',n:'Dressy pumps',common:false,note:"One classic pair carries you through weddings, dinners, and every occasion."},
     {id:'sh8',n:'Tall boots',common:false},
-    {id:'sh7',n:'Ankle boots',common:false},
+    {id:'sh7',n:'Ankle boots',common:false,note:"They make jeans look styled instead of thrown on."},
     {id:'sh16',n:'Slippers',common:false}
   ]},
   {cat:'Bags',items:[
     {id:'bg7',n:'Shoulder bags',common:false},
     {id:'bg8',n:'Top handle bags',common:false},
-    {id:'bg3',n:'Crossbody bags',common:false},
-    {id:'bg1',n:'Tote bags',common:false},
+    {id:'bg3',n:'Crossbody bags',common:false,note:"Hands free and still elegant, for the days you are moving."},
+    {id:'bg1',n:'Tote bags',common:false,note:"Big enough for real life and still beautiful. An everyday essential."},
     {id:'bg9',n:'Laptop bags',common:false},
     {id:'bg4',n:'Belt bags',common:false},
     {id:'bg2',n:'Evening bags',common:false},
@@ -4523,14 +4528,14 @@ const wardrobeItems=[
   {cat:'Extras & Accessories',items:[
     {id:'ex1',n:'Hoop earrings',common:false},
     {id:'ex9',n:'Stud earrings',common:false},
-    {id:'ex2',n:'Statement earrings',common:false},
+    {id:'ex2',n:'Statement earrings',common:false,note:"One pair can lift the simplest outfit into something memorable."},
     {id:'ex7',n:'Bracelets',common:false},
     {id:'ex8',n:'Necklaces',common:false},
     {id:'ex12',n:'Rings',common:false},
-    {id:'ex4',n:'Sunglasses',common:false},
+    {id:'ex4',n:'Sunglasses',common:false,note:"The fastest way to look pulled together, even on a no effort day."},
     {id:'ex10',n:'Sun hats',common:false},
     {id:'ex11',n:'Cold-weather hats',common:false},
-    {id:'ex5',n:'Belts',common:false},
+    {id:'ex5',n:'Belts',common:false,note:"The quickest way to define your waist and make an outfit look designed."},
     {id:'ex3',n:'Scarves/Pashminas',common:false},
     {id:'ex6',n:'Hair accessories',common:false}
   ]}
@@ -4555,6 +4560,12 @@ function _normalizeWardrobe(d){
   if(!Array.isArray(d.custom))d.custom=[];
   if(!Array.isArray(d.hidden))d.hidden=[];
   if(!d.pretap0){d.items={};d.pretap0=true;}
+  // The list is a wishlist now — "have" is gone. Drop any state that isn't a
+  // real Want so old records (local or restored from Supabase) can't carry a
+  // dead state into the counts, the chat, or "Shop my whole wishlist".
+  // Idempotent, so it needs no migration flag.
+  Object.keys(d.items).forEach(function(k){if(d.items[k]!=='want')delete d.items[k]});
+  d.custom.forEach(function(c){if(c&&c.state!=='want')c.state='unset'});
   return d;
 }
 function loadWardrobeData(){
@@ -4574,7 +4585,7 @@ function saveWardrobeData(){
 // on her preferences. She removes anything she doesn't want herself with the ✕.
 function _wardrobeExcluded(item){return false}
 // Zero pre-tap: nothing starts marked. An item with no saved state is "unset"
-// (neither Have nor Want highlighted) until she taps.
+// (an empty heart) until she taps.
 function _wardrobeDefault(item){return 'unset'}
 // Fixed category order for EVERY user — no re-ordering based on her quiz answers.
 // One identical checklist for everyone; she tailors it herself.
@@ -4591,7 +4602,7 @@ function _wardrobeGetState(id){
   return c?c.state:'unset';
 }
 // Trend items ("trend{i}") resolve straight from trendItems, not wardrobeData —
-// they're Catherine's curation, not part of her personal have-it/want-it list.
+// they're Catherine's curation, not part of her personal wishlist.
 function _wardrobeFindName(id){
   if(id.indexOf('trend')===0){
     const m=id.match(/^trendT?(\d+)$/);
@@ -4604,12 +4615,18 @@ function _wardrobeFindName(id){
   const c=wardrobeData.custom.find(function(x){return x.id===id});
   return c?c.n:'';
 }
-function wardrobeToggle(id,state,isCustom){
+// Tap the heart to add a piece to her wishlist; tap again to take it off.
+// One positive action, no opposite state to argue with.
+function wardrobeWant(id,isCustom){
+  const on=_wardrobeGetState(id)==='want';
+  const next=on?'unset':'want';
   if(isCustom){
     const c=wardrobeData.custom.find(function(x){return x.id===id});
-    if(c)c.state=state;
+    if(c)c.state=next;
+  }else if(next==='want'){
+    wardrobeData.items[id]='want';
   }else{
-    wardrobeData.items[id]=state;
+    delete wardrobeData.items[id];
   }
   saveWardrobeData();
   renderWardrobeList();
@@ -4651,14 +4668,14 @@ function wardrobeShowRemoved(){
   saveWardrobeData();
   renderWardrobeList();
 }
-// Start over on the main checklist: clears every Have/Want mark on the standard
+// Start over on the main checklist: clears her wishlist hearts on the standard
 // items. Her own typed-in additions (and any items she removed) are left exactly
 // as they are. Uses a gentle inline confirm, not a browser dialog.
 var _wdrResetConfirm=false;
 function askWardrobeReset(){_wdrResetConfirm=true;renderWardrobeList();}
 function cancelWardrobeReset(){_wdrResetConfirm=false;renderWardrobeList();}
 function wardrobeReset(){
-  wardrobeData.items={};      // clear every Have/Want mark
+  wardrobeData.items={};      // clear every wishlist heart
   wardrobeData.hidden=[];     // full start-over: bring back any removed items
   _wdrResetConfirm=false;
   saveWardrobeData();
@@ -4710,21 +4727,25 @@ function wardrobeAddCustom(){
   inp.value='';
   renderWardrobeList();
 }
-function _wardrobeItemRow(id,name,isCustom){
-  const st=_wardrobeGetState(id);
+// Outline vs filled heart. Drawn as SVG, never a unicode glyph — iOS renders
+// dingbats as emoji, which would break the look.
+var _WDR_HEART_PATH='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z';
+function _wdrHeart(on){
+  return on
+    ? '<svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1"><path d="'+_WDR_HEART_PATH+'"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="#c3bba6" stroke-width="1.9"><path d="'+_WDR_HEART_PATH+'"/></svg>';
+}
+function _wardrobeItemRow(id,name,isCustom,note){
+  const want=_wardrobeGetState(id)==='want';
   const nameClass=isCustom?'wdr-name custom':'wdr-name';
-  const haveCls='wdr-btn'+(st==='have'?' have':'');
-  const wantCls='wdr-btn'+(st==='want'?' want':'');
-  const seeLink=(st==='want')?'<div class="wdr-see-wrap"><span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')"><span class="wdr-see-star">&#9733;</span> See ideas &rarr;</span></div>':'';
-  const delBtn='<span class="wdr-del" role="button" title="Remove" onclick="wardrobeRemove(\''+id+'\','+(isCustom?'true':'false')+')">&times;</span>';
-  return '<div class="wdr-item">'
+  const cust=isCustom?'true':'false';
+  const noteHtml=note?'<span class="wdr-note">'+_esc(note)+'</span>':'';
+  const delBtn='<span class="wdr-del" role="button" title="Remove" onclick="wardrobeRemove(\''+id+'\','+cust+')">&times;</span>';
+  return '<div class="wdr-item'+(want?' want':'')+'">'
     +delBtn
-    +'<div class="'+nameClass+'">'+_esc(name)+'</div>'
-    +'<div class="wdr-toggle">'
-      +'<div class="'+haveCls+'" onclick="wardrobeToggle(\''+id+'\',\'have\','+(isCustom?'true':'false')+')">HAVE</div>'
-      +'<div class="'+wantCls+'" onclick="wardrobeToggle(\''+id+'\',\'want\','+(isCustom?'true':'false')+')">WANT</div>'
-    +'</div>'
-    +seeLink
+    +'<div class="'+nameClass+'">'+_esc(name)+noteHtml+'</div>'
+    +'<span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')"><span class="wdr-see-star">&#9733;</span> See ideas &rarr;</span>'
+    +'<span class="wdr-heart" role="button" aria-pressed="'+(want?'true':'false')+'" title="'+(want?'On your wishlist':'Add to wishlist')+'" onclick="wardrobeWant(\''+id+'\','+cust+')">'+_wdrHeart(want)+'</span>'
     +'<div class="wdr-expand" id="wx_'+id+'" style="display:none"></div>'
     +'</div>';
 }
@@ -4735,28 +4756,21 @@ function renderWardrobeList(){
   const byName={};
   wardrobeItems.forEach(function(c){byName[c.cat]=c});
   const hidden=wardrobeData.hidden||[];
-  let haveCount=0,wantCount=0;
+  let wantCount=0;
   wardrobeItems.forEach(function(cat){cat.items.forEach(function(it){
-    if(hidden.indexOf(it.id)<0&&!_wardrobeExcluded(it)){
-      var s=wardrobeData.items[it.id];
-      if(s==='have')haveCount++;else if(s==='want')wantCount++;
-    }
+    if(hidden.indexOf(it.id)<0&&!_wardrobeExcluded(it)&&wardrobeData.items[it.id]==='want')wantCount++;
   });});
-  wardrobeData.custom.forEach(function(c){if(c.state==='have')haveCount++;else if(c.state==='want')wantCount++;});
+  wardrobeData.custom.forEach(function(c){if(c.state==='want')wantCount++;});
   let html='';
-  if(haveCount||wantCount){
-    var _st='';
-    if(haveCount)_st+='<div class="wp-stat"><span class="wp-num">'+haveCount+'</span><span class="wp-lbl">In your closet</span></div>';
-    if(haveCount&&wantCount)_st+='<div class="wp-div"></div>';
-    if(wantCount)_st+='<div class="wp-stat"><span class="wp-num">'+wantCount+'</span><span class="wp-lbl">On your wishlist</span></div>';
-    html+='<div class="wdr-plan-wrap"><div class="wdr-plan">'+_st+'</div></div>';
+  if(wantCount){
+    html+='<div class="wdr-plan-wrap"><div class="wdr-plan"><div class="wp-stat"><span class="wp-num">'+wantCount+'</span><span class="wp-lbl">On your wishlist</span></div></div></div>';
   }
   if(wantCount){html+='<div class="wdr-shopwants" role="button" onclick="shopWantList()"><span class="wsw-bag">&#128717;</span><span class="wsw-txt">Shop my whole wishlist<span class="wsw-n">'+wantCount+' piece'+(wantCount>1?'s':'')+'</span></span><span class="wsw-ar">&#8594;</span></div>';}
   if(_wardrobeUndo){html+='<div class="wdr-undo">Removed &ldquo;'+_esc(_wardrobeUndo.name||'')+'&rdquo;<span class="wdr-undo-btn" onclick="wardrobeUndoRemove()">Undo</span></div>';}
   // Reset lives up top (near her counts) so it's easy to find without scrolling
   // the whole list. The inline confirm protects against an accidental tap.
   if(_wdrResetConfirm){
-    html+='<div class="wdr-reset-confirm"><b>Start the list over?</b>Clears every Have and Want mark and brings back any items you removed. Your additions stay.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
+    html+='<div class="wdr-reset-confirm"><b>Start the list over?</b>Clears your whole wishlist and brings back any items you removed. Your additions stay.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
   }else if(Object.keys(wardrobeData.items).length||(wardrobeData.hidden&&wardrobeData.hidden.length)){
     html+='<div class="wdr-reset-wrap"><span class="wdr-reset" onclick="askWardrobeReset()">Reset my list &#8635;</span></div>';
   }
@@ -4765,7 +4779,7 @@ function renderWardrobeList(){
     const visible=cat.items.filter(function(it){return !_wardrobeExcluded(it)&&hidden.indexOf(it.id)<0});
     if(!visible.length)return;
     html+='<div class="wdr-cat"><div class="wdr-cat-t">'+_esc(catName)+'</div>';
-    visible.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,false)});
+    visible.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,false,it.note)});
     html+='</div>';
   });
   if(wardrobeData.custom.length){
