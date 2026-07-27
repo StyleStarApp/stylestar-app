@@ -86,9 +86,11 @@ The app runs on **Claude Sonnet 4.6**: **$3 per million words-in, $15 per millio
 in the app stops working (the quiz, chat, photo analysis, all shopping) while the site stays up.
 **Turn on auto-reload, or check the balance before any launch or press.**
 
-📌 Note: the 102-store list added ~1,800 tokens to every shopping call, which roughly doubled the
-cost of a shop from ~0.4¢ to ~0.9¢. Still tiny, but it is the reason to build the retailer-scoring
-step — sending only the ~15 best-matched stores would cut it back down *and* improve the picks.
+📌 Note: the 102-store list, now fully tagged with Cath's own price/archetype/size notes, adds about
+2,800 words to every shopping call. That took a shop from roughly 0.4¢ to about 1.1¢. Still tiny, but
+it is the reason to build the retailer-scoring step — sending only the ~15 best-matched stores would
+cut it back down *and* sharpen the picks, because the AI would be choosing from a shortlist a stylist
+would actually consider.
 
 ---
 

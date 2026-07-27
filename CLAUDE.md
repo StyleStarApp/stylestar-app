@@ -3471,6 +3471,47 @@ written into the comment above the `STORES` table in `index.html`.
 ▶ **Lesson that produced this:** when adding stores, check the BUSINESS MODEL, not just whether the
 search URL works. A working URL on the wrong kind of company is still wrong.
 
+### ▶ ALL 102 STORES NOW CARRY CATH'S OWN TAGS (finished 2026-07-27, three batches)
+Cath reviewed the entire store table store by store and sent her tags in three batches (26, then 33,
+then the final 43). **Every single store's price tier, style archetype, sizes carried and "best for"
+is now HERS, not Claude's guess.** This is real stylist knowledge and the most valuable thing in the
+table. **▶ If a new store is ever added, get her tags for it — do not invent them, and do not "tidy"
+hers.**
+- **Her vocabulary, kept verbatim:** price runs `$` to `$$$$` (ranges like `$$-$$$$` where a store
+  spans tiers). Archetypes are her own words (Classic Sophisticate, Elevated Natural, Quiet Luxury,
+  Coastal Chic, Glamorous Luxe, Modern Glam, Athletic Luxe, Playful Chic, Edgy Chic, Bohemian Chic,
+  Professional Power, Trendsetter, Comfort Chic, Preppy Classic, Universal…). These are NOT the 28
+  quiz archetype names, and that is fine — they are a stylist's shorthand for what a store is for.
+- **"Standard" in her notes means no special ranges**, which is an empty `s:[]` here.
+- **New size word this batch: `narrow`** (shoe widths). Zappos and Naturalizer carry wide AND narrow;
+  DSW is wide only. Extended-size ranges are noted in the `c` description rather than the size list,
+  since the app never asks a woman for that.
+- **Four renames she asked for:** `Tiffany` → **Tiffany & Co.**, `Alo` → **Alo Yoga**, `Izod` →
+  **IZOD**, `Net-a-Porter` → **NET-A-PORTER**. ⚠️ **A rename is a crash risk**, and this one nearly
+  was: `_STORE_ALIAS` values must be REAL keys in `STORES`, or `resolveStore` returns a key with no
+  entry and `STORES[key].u` throws, taking the whole page down. Aliases were updated, and
+  `getStoreUrl` now guards with `key&&STORES[key]` as belt-and-braces. **Rule: rename a store → update
+  its aliases → verify the OLD spelling still resolves** (the AI has years of habit calling it the old
+  name).
+- **Her corrections to my guesses this batch:** Target +petite, Levi's +petite, Johnny Was +petite,
+  Naturalizer +narrow, Zappos +narrow, DSW wide only, plus every legacy `mid`/`luxe`/`budget` tier
+  finally replaced with her `$` notation.
+- **▶ THE BUSINESS FIELDS STAY OUT OF THE APP.** She proposed an 18-field "Retailer Intelligence
+  Database" including Affiliate status, Commission rate and AI Priority. Agreed with her that those
+  three belong in **a spreadsheet she owns** — they change HER decisions (which programs to apply to,
+  which partnerships to chase), not the AI's picks. Putting commission rates in the app would quietly
+  bias suggestions toward what pays best, which is exactly the opposite of the brand. The app only
+  ever knows what helps a woman shop: price, style, sizes, strengths.
+- **Cost consequence, worth knowing:** the fully tagged list is ~2,800 words on EVERY shopping call,
+  taking a shop from ~0.4¢ to ~1.1¢. Tiny in absolute terms, but it is the concrete argument for the
+  **retailer-scoring step** — score her Style Portrait against the `a` tags, send only the ~15 best
+  matched stores, and the call gets both cheaper AND sharper. That is the strategic prize, deliberately
+  deferred until her knowledge was in the table. It is in now.
+- Verified with 99 automated checks across four suites (`verify.js` 48, `width.js` 15, `b2.js` 14,
+  `b3.js` 22) driving the real functions in a browser: table shape, alias integrity, old spellings
+  still resolving, unknown store falling to Google Shopping rather than throwing, her specific
+  corrections, no overflow, no JS errors.
+
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, evening)
 **▶ FIRST: is PR #627 (the shopping fix) merged?** It was left open deliberately for Cath to tap through on the
 Netlify deploy preview — she should check that the links land somewhere sensible before it goes live. If she has
