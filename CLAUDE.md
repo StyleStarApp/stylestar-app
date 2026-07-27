@@ -3552,14 +3552,50 @@ exactly the bug class the alias fix just hit).
 - Verified with `dims/rank.js`, 13 checks run against **all 28 archetypes**: zero coverage gaps and
   ≥3 stores per tier for every single one, shortlists 46-50 of 102, no duplicates, two opposite women
   share **no** top-6 store, and a very relaxed woman's top ten still averages high polish.
-- **▶ KNOWN LIMIT, and Cath spotted it herself: two taste axes cannot separate everything.** Sporty
-  vs preppy-resort collapses (J.McLaughlin and Vuori both sit at 5/3), as does classic vs trendy
-  (Talbots and Zara can land near each other). The AI still reads the archetype words and category
-  strengths, so it recovers most of this, but **the fix is more dimensions from Cath.** Highest value
-  next, in order: **Classic↔Trendy** (slider 1, the single biggest gap), **Casual↔Dressy** (slider 5,
-  and note this is NOT polish — proved above), **Neutral↔Colorful** (slider 7), then **Preppy↔Edgy**
-  (slider 3). Adding a dimension is cheap: score the 102, add a number to each `d` array, extend
-  `_herDims()` and the gap sum.
+### ▶ TWO MORE AXES, SCORED AS INDEPENDENT PAIRS (2026-07-27, same evening)
+Cath immediately asked "should we do a chart for classic/edgy too?" and then sent **Classic, Trendy,
+Casual, Dressy** — as **four independent 1-10 columns, not two sliders.** That framing is hers and it
+is better than what was asked for. `d` is now 7 numbers:
+`[fitted, alluring, polish, classic, trendy, casual, dressy]`.
+- **▶ WHY INDEPENDENT PAIRS BEAT A SINGLE AXIS, and this generalises.** Nordstrom is **8 classic AND
+  7 trendy** because it genuinely serves both; Talbots is 10/1. Collapsed to one slider, a store that
+  serves EVERYBODY looks identical to one that serves NOBODY (both land mid-scale). Kept as a pair,
+  the score becomes "how well does this store serve HER side", which is how a stylist actually thinks:
+  a 70%-classic woman wants whoever is *strongest* at classic, not whoever sits nearest a midpoint.
+- **So the two kinds of dimension are used differently** (`_storeFit`): fitted/alluring are a
+  **distance penalty** (subtracted), classic/trendy + casual/dressy are a **weighted preference
+  score** (added), and polish rides along at ×0.15 — enough to separate two close matches toward the
+  more refined, far too small to drag every woman into luxury. Her lean comes from slider 1
+  (Classic↔Trendy) and slider 5 (Casual↔Dressy), each mapped to a 0-1 weight.
+- **▶ THE IMPROVEMENT IS DRAMATIC AND MEASURED, not asserted.** Timeless Classic went from
+  *Athleta, Banana Republic Factory, Levi's…* to **J.Crew, Vince, Levi's, J.McLaughlin, Ann Taylor,
+  Theory** — the athletic store is gone from the top entirely. Vibrant Athlete went from
+  *J.McLaughlin, Madewell, Boden…* to **Madewell, Vuori, Levi's, Lacoste** with Athleta in the top 8.
+  Classic and trendy women now share ≤2 stores in their top 8.
+- ⚠️ **A REAL RISK THE NEW AXES CREATED, caught in simulation:** the dressier a woman's taste, the
+  more her best-matched stores skew expensive, because dressy correlates with price in the tags. The
+  glam profile's top ten became almost all $$$$. Fixed two ways: (1) deleted the prompt line "match
+  the store to her **including her budget range**" — the app never asks her budget, so that line
+  promised something it could not do; (2) replaced it with an explicit instruction to **spread the
+  prices** and always include something genuinely affordable. Verified: even the TOP 15 spans at least
+  two price tiers for every one of the 28 archetypes.
+- Verified by `dims/rank2.js`, 14 checks across all 28 archetypes. Prompt still 52% smaller.
+
+### ▶ WHERE THE DIMENSION WORK SHOULD STOP (recommendation, 2026-07-27)
+Cath then asked whether Fitted/Relaxed and the other sliders should be redone the same paired way.
+Honest read, given the evidence above:
+- **▶ WORTH DOING: Relaxed / Fitted as an independent pair.** The paired framing measurably beat the
+  single-axis one, and fit is the thing a department store most obviously spans (Nordstrom sells both
+  loose linen and bodycon; its single "fitted 6" hides that). Would replace the current single fitted
+  score with two columns and turn that axis from a penalty into a preference score.
+- **▶ PROBABLY WORTH IT: Neutral / Colorful as a pair** (slider 7). Cleanly separates FARM Rio, Boden
+  and Kendra Scott from COS and Everlane, and colour is something women feel strongly about.
+- **▶ NOT WORTH IT: Modest / Alluring as a pair.** Her own definition of alluring is how the aesthetic
+  *feels* — brand character, not a range a store spans. A single score is the right shape.
+- **▶ STOP AFTER THAT.** Every axis added dilutes the others, so a bad mismatch on one gets averaged
+  away. The 12 quiz sliders are also not independent (Casual↔Dressy and Comfort↔Style largely say the
+  same thing), so scoring all twelve would make matching *worse*, not better. Better use of Cath's
+  time after these: judging real suggestions against real stores.
 
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, evening)
 **▶ FIRST: is PR #627 (the shopping fix) merged?** It was left open deliberately for Cath to tap through on the
