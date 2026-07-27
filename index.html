@@ -3501,10 +3501,16 @@ Respond with ONLY valid JSON in this exact format, no other text:
 //   s = size ranges genuinely carried: petite, plus, tall, and for shoes the
 //       widths wide / narrow. "Standard" in Cath's notes means none of these,
 //       which is an empty list here.
-//   d = Cath's three 1-10 dimension scores: [fitted, alluring, polish].
+//   d = Cath's 1-10 dimension scores, in order:
+//       [fitted, alluring, polish, classic, trendy, casual, dressy]
 //       fitted   = how tailored or body-skimming the silhouettes are
 //       alluring = how glamorous, feminine, sensual or fashion-forward it feels
 //       polish   = how refined, elevated and put-together the look tends to be
+//       classic/trendy and casual/dressy are scored INDEPENDENTLY, not as one
+//       slider each. That is deliberate and it matters: Nordstrom is 8 classic
+//       AND 7 trendy because it genuinely serves both, while Talbots is 10/1.
+//       Collapsing each pair to a single axis would make a store that serves
+//       everybody look identical to one that serves nobody.
 //   c = what this store is genuinely good for
 // ▶ EVERY tag below is Cath's own, reviewed store by store in three batches.
 //   This is stylist knowledge, not something to be guessed at or "tidied" later:
@@ -3522,129 +3528,129 @@ Respond with ONLY valid JSON in this exact format, no other text:
 //   purpose, so do not add them from that list.
 const STORES={
   // Department stores and multi-brand
-  'Nordstrom':{u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[6,5,9],c:'almost everything, dresses, shoes, denim'},
-  "Macy's":{u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[5,5,6],c:'everyday, dresses, shoes, handbags'},
-  "Dillard's":{u:'https://www.dillards.com/search?text=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7],c:'dresses, occasion, workwear'},
-  'Belk':{u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[5,4,6],c:'everyday, dresses, shoes'},
-  'Bloomingdales':{u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[7,7,9],c:'designer, denim, shoes'},
-  'Saks':{u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],d:[8,9,10],c:'designer, bags, occasion'},
-  'Neiman Marcus':{u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[8,9,10],c:'designer, evening, shoes'},
-  'Bergdorf Goodman':{u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'$$$$',a:'Luxury Fashion',s:[],d:[9,9,10],c:'couture, designer, fine jewelry'},
-  'NET-A-PORTER':{u:'https://www.net-a-porter.com/en-us/shop/search?q=',t:'$$$$',a:'Luxury Fashion, Quiet Luxury',s:[],d:[8,9,10],c:'luxury designer clothing, handbags, shoes'},
+  'Nordstrom':{u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[6,5,9,8,7,7,8],c:'almost everything, dresses, shoes, denim'},
+  "Macy's":{u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[5,5,6,7,5,7,7],c:'everyday, dresses, shoes, handbags'},
+  "Dillard's":{u:'https://www.dillards.com/search?text=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7,8,4,6,8],c:'dresses, occasion, workwear'},
+  'Belk':{u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[5,4,6,7,3,8,5],c:'everyday, dresses, shoes'},
+  'Bloomingdales':{u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[7,7,9,8,8,6,9],c:'designer, denim, shoes'},
+  'Saks':{u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],d:[8,9,10,8,9,3,10],c:'designer, bags, occasion'},
+  'Neiman Marcus':{u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[8,9,10,9,8,3,10],c:'designer, evening, shoes'},
+  'Bergdorf Goodman':{u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'$$$$',a:'Luxury Fashion',s:[],d:[9,9,10,10,9,2,10],c:'couture, designer, fine jewelry'},
+  'NET-A-PORTER':{u:'https://www.net-a-porter.com/en-us/shop/search?q=',t:'$$$$',a:'Luxury Fashion, Quiet Luxury',s:[],d:[8,9,10,9,9,3,10],c:'luxury designer clothing, handbags, shoes'},
   // searchSuggestion=false stops Shopbop redirecting the term into a suggestion,
   // the way Revolve does. Ordered first so the term still appends at the end.
-  'Shopbop':{u:'https://www.shopbop.com/products?searchSuggestion=false&query=',t:'$$$',a:'Modern Chic, Trendsetter',s:[],d:[7,7,8],c:'contemporary designers, denim, shoes'},
-  'Nordstrom Rack':{u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],d:[6,5,7],c:'designer deals, shoes, denim'},
-  'Saks Off 5th':{u:'https://www.saksoff5th.com/search?q=',t:'$-$$',a:'Luxe Bargains',s:['plus'],d:[7,7,7],c:'designer deals'},
-  'TJ Maxx':{u:'https://tjmaxx.tjx.com/store/shop/search?q=',t:'$',a:'Treasure Hunter',s:['plus'],d:[5,5,5],c:'value finds, handbags, shoes'},
+  'Shopbop':{u:'https://www.shopbop.com/products?searchSuggestion=false&query=',t:'$$$',a:'Modern Chic, Trendsetter',s:[],d:[7,7,8,6,9,6,8],c:'contemporary designers, denim, shoes'},
+  'Nordstrom Rack':{u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],d:[6,5,7,7,6,8,6],c:'designer deals, shoes, denim'},
+  'Saks Off 5th':{u:'https://www.saksoff5th.com/search?q=',t:'$-$$',a:'Luxe Bargains',s:['plus'],d:[7,7,7,7,7,6,7],c:'designer deals'},
+  'TJ Maxx':{u:'https://tjmaxx.tjx.com/store/shop/search?q=',t:'$',a:'Treasure Hunter',s:['plus'],d:[5,5,5,5,6,9,5],c:'value finds, handbags, shoes'},
   // Contemporary and mainstream
-  'J.Crew':{u:'https://www.jcrew.com/r/search/?N=0&Nloc=en&Ntrm=',t:'$$',a:'Classic Sophisticate, Playful Classic',s:['petite','tall'],d:[7,3,9],c:'timeless classics, workwear, denim, dresses'},
-  'Zara':{u:'https://www.zara.com/us/en/search?searchTerm=',t:'$$',a:'Trendsetter, Modern Chic',s:[],d:[8,7,7],c:'fashion-forward trends, statement pieces'},
-  'Mango':{u:'https://shop.mango.com/us/en/search/women?q=',t:'$$',a:'Modern Minimalist, European Chic',s:[],d:[7,6,8],c:'workwear, elevated trends, outerwear'},
-  'Target':{u:'https://www.target.com/s?searchTerm=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[4,2,5],c:'affordable fashion, basics, accessories'},
-  'Amazon':{u:'https://www.amazon.com/s?k=',t:'$-$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[5,5,5],c:'almost everything, basics, accessories, shoes'},
-  'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[5,6,8],c:'dresses, occasion, unique pieces'},
-  'Express':{u:'https://www.express.com/exp/search?q=',t:'$$',a:'Modern Glam, Professional Power',s:['petite'],d:[9,8,7],c:'going-out looks, workwear, denim'},
+  'J.Crew':{u:'https://www.jcrew.com/r/search/?N=0&Nloc=en&Ntrm=',t:'$$',a:'Classic Sophisticate, Playful Classic',s:['petite','tall'],d:[7,3,9,10,3,7,8],c:'timeless classics, workwear, denim, dresses'},
+  'Zara':{u:'https://www.zara.com/us/en/search?searchTerm=',t:'$$',a:'Trendsetter, Modern Chic',s:[],d:[8,7,7,3,10,6,7],c:'fashion-forward trends, statement pieces'},
+  'Mango':{u:'https://shop.mango.com/us/en/search/women?q=',t:'$$',a:'Modern Minimalist, European Chic',s:[],d:[7,6,8,6,8,6,7],c:'workwear, elevated trends, outerwear'},
+  'Target':{u:'https://www.target.com/s?searchTerm=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[4,2,5,5,5,10,2],c:'affordable fashion, basics, accessories'},
+  'Amazon':{u:'https://www.amazon.com/s?k=',t:'$-$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[5,5,5,5,5,8,5],c:'almost everything, basics, accessories, shoes'},
+  'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[5,6,8,6,8,7,7],c:'dresses, occasion, unique pieces'},
+  'Express':{u:'https://www.express.com/exp/search?q=',t:'$$',a:'Modern Glam, Professional Power',s:['petite'],d:[9,8,7,4,8,5,8],c:'going-out looks, workwear, denim'},
   // The old /r/search?query= silently landed on Revolve's homepage (Cath caught
   // it live; Revolve blocks automated checks so it could not be tested here).
   // Real pattern, from her address bar. d=Womens scopes it to womenswear, and
   // comes first only so the search term can still be appended at the end.
-  'Revolve':{u:'https://www.revolve.com/r/Search.jsp?d=Womens&search=',t:'$$$',a:'Glamorous Luxe, Trendsetter',s:[],d:[10,10,8],c:'occasion dresses, vacation, designer contemporary'},
-  'Abercrombie':{u:'https://www.abercrombie.com/shop/us/search?searchTerm=',t:'$$',a:'Casual Trendy, Elevated Casual',s:['petite','tall'],d:[7,6,7],c:'denim, dresses, everyday fashion'},
-  'H&M':{u:'https://www2.hm.com/en_us/search-results.html?q=',t:'$',a:'Trendsetter, Casual Everyday',s:['plus'],d:[6,5,5],c:'affordable trends, basics'},
-  'Banana Republic':{u:'https://bananarepublic.gap.com/browse/search.do?searchText=',t:'$$',a:'Classic Sophisticate, Modern Minimalist',s:['petite','tall'],d:[7,4,9],c:'workwear, elevated basics, tailoring'},
-  'Banana Republic Factory':{u:'https://bananarepublicfactory.gapfactory.com/browse/search.do?searchText=',t:'$-$$',a:'Classic Sophisticate',s:['petite','tall'],d:[6,3,7],c:'affordable workwear, tailoring, basics'},
-  'Madewell':{u:'https://www.madewell.com/search?q=',t:'$$',a:'Elevated Natural, Casual Classic',s:['petite','plus','tall'],d:[5,3,8],c:'denim, casual essentials, leather goods'},
-  'Everlane':{u:'https://www.everlane.com/search?q=',t:'$$',a:'Modern Minimalist, Elevated Natural',s:[],d:[4,2,9],c:'elevated basics, denim, outerwear'},
-  'Aritzia':{u:'https://www.aritzia.com/us/en/search?q=',t:'$$-$$$',a:'Modern Minimalist, Quiet Luxury',s:[],d:[8,6,9],c:'elevated basics, tailoring, outerwear'},
-  'Uniqlo':{u:'https://www.uniqlo.com/us/en/search?q=',t:'$',a:'Modern Minimalist',s:[],d:[4,2,8],c:'basics, layering pieces, outerwear'},
-  'Quince':{u:'https://www.quince.com/search?q=',t:'$$',a:'Quiet Luxury, Elevated Natural',s:['plus'],d:[4,2,9],c:'cashmere, linen, silk, luxury basics'},
-  'Old Navy':{u:'https://oldnavy.gap.com/browse/search.do?searchText=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[3,2,4],c:'budget basics, activewear, family essentials'},
-  "Lands' End":{u:'https://www.landsend.com/search?q=',t:'$$',a:'Classic Casual',s:['petite','plus','tall'],d:[3,1,6],c:'swimwear, outerwear, basics, uniforms'},
-  'Boden':{u:'https://www.bodenusa.com/en-us/search?q=',t:'$$',a:'Playful Classic',s:['petite','tall'],d:[5,3,8],c:'colorful dresses, prints'},
-  'FARM Rio':{u:'https://farmrio.com/search?q=',t:'$$$',a:'Playful Chic, Bohemian Chic',s:[],d:[5,7,8],c:'colorful dresses, vacation wear, statement prints'},
-  'Tommy Bahama':{u:'https://www.tommybahama.com/search?q=',t:'$$$',a:'Coastal Chic, Elevated Natural',s:[],d:[3,2,8],c:'resortwear, vacation clothing, linen'},
-  'J.McLaughlin':{u:'https://www.jmclaughlin.com/search?q=',t:'$$$',a:'Coastal Classic, Resort Chic',s:[],d:[5,3,9],c:'resortwear, polished casual, prints'},
-  'IZOD':{u:'https://www.izod.com/search?q=',t:'$$',a:'Casual Classic',s:[],d:[4,2,6],c:'polos, golfwear, casual basics'},
-  'Lacoste':{u:'https://www.lacoste.com/us/search/?q=',t:'$$$',a:'Classic Sport, Preppy Classic',s:[],d:[5,3,8],c:'polos, casual sportswear, sneakers'},
-  'Gap':{u:'https://www.gap.com/browse/search.do?searchText=',t:'$-$$',a:'Casual Classic',s:['petite','plus','tall'],d:[4,2,6],c:'everyday basics, denim, casualwear'},
-  'White House Black Market':{u:'https://www.whitehouseblackmarket.com/store/search?q=',t:'$$',a:'Professional Power, Modern Glam',s:['petite'],d:[8,7,9],c:'sleek workwear, occasion'},
-  'Garnet Hill':{u:'https://www.garnethill.com/search?q=',t:'$$',a:'Elevated Natural',s:['petite','plus'],d:[3,2,8],c:'natural fibers, sleepwear'},
-  'Soft Surroundings':{u:'https://www.softsurroundings.com/search.php?q=',t:'$$',a:'Relaxed Feminine',s:['petite','plus'],d:[2,2,6],c:'soft knits, travel'},
-  'Tuckernuck':{u:'https://www.tnuck.com/search?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[6,5,9],c:'dresses, polished separates, occasion, resort'},
+  'Revolve':{u:'https://www.revolve.com/r/Search.jsp?d=Womens&search=',t:'$$$',a:'Glamorous Luxe, Trendsetter',s:[],d:[10,10,8,2,10,4,10],c:'occasion dresses, vacation, designer contemporary'},
+  'Abercrombie':{u:'https://www.abercrombie.com/shop/us/search?searchTerm=',t:'$$',a:'Casual Trendy, Elevated Casual',s:['petite','tall'],d:[7,6,7,5,8,9,4],c:'denim, dresses, everyday fashion'},
+  'H&M':{u:'https://www2.hm.com/en_us/search-results.html?q=',t:'$',a:'Trendsetter, Casual Everyday',s:['plus'],d:[6,5,5,3,9,8,4],c:'affordable trends, basics'},
+  'Banana Republic':{u:'https://bananarepublic.gap.com/browse/search.do?searchText=',t:'$$',a:'Classic Sophisticate, Modern Minimalist',s:['petite','tall'],d:[7,4,9,9,4,5,9],c:'workwear, elevated basics, tailoring'},
+  'Banana Republic Factory':{u:'https://bananarepublicfactory.gapfactory.com/browse/search.do?searchText=',t:'$-$$',a:'Classic Sophisticate',s:['petite','tall'],d:[6,3,7,8,3,7,6],c:'affordable workwear, tailoring, basics'},
+  'Madewell':{u:'https://www.madewell.com/search?q=',t:'$$',a:'Elevated Natural, Casual Classic',s:['petite','plus','tall'],d:[5,3,8,7,5,10,3],c:'denim, casual essentials, leather goods'},
+  'Everlane':{u:'https://www.everlane.com/search?q=',t:'$$',a:'Modern Minimalist, Elevated Natural',s:[],d:[4,2,9,9,4,8,5],c:'elevated basics, denim, outerwear'},
+  'Aritzia':{u:'https://www.aritzia.com/us/en/search?q=',t:'$$-$$$',a:'Modern Minimalist, Quiet Luxury',s:[],d:[8,6,9,7,8,7,7],c:'elevated basics, tailoring, outerwear'},
+  'Uniqlo':{u:'https://www.uniqlo.com/us/en/search?q=',t:'$',a:'Modern Minimalist',s:[],d:[4,2,8,8,5,8,4],c:'basics, layering pieces, outerwear'},
+  'Quince':{u:'https://www.quince.com/search?q=',t:'$$',a:'Quiet Luxury, Elevated Natural',s:['plus'],d:[4,2,9,10,3,8,6],c:'cashmere, linen, silk, luxury basics'},
+  'Old Navy':{u:'https://oldnavy.gap.com/browse/search.do?searchText=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[3,2,4,5,4,10,1],c:'budget basics, activewear, family essentials'},
+  "Lands' End":{u:'https://www.landsend.com/search?q=',t:'$$',a:'Classic Casual',s:['petite','plus','tall'],d:[3,1,6,8,1,10,2],c:'swimwear, outerwear, basics, uniforms'},
+  'Boden':{u:'https://www.bodenusa.com/en-us/search?q=',t:'$$',a:'Playful Classic',s:['petite','tall'],d:[5,3,8,9,5,6,7],c:'colorful dresses, prints'},
+  'FARM Rio':{u:'https://farmrio.com/search?q=',t:'$$$',a:'Playful Chic, Bohemian Chic',s:[],d:[5,7,8,3,10,7,7],c:'colorful dresses, vacation wear, statement prints'},
+  'Tommy Bahama':{u:'https://www.tommybahama.com/search?q=',t:'$$$',a:'Coastal Chic, Elevated Natural',s:[],d:[3,2,8,7,2,10,3],c:'resortwear, vacation clothing, linen'},
+  'J.McLaughlin':{u:'https://www.jmclaughlin.com/search?q=',t:'$$$',a:'Coastal Classic, Resort Chic',s:[],d:[5,3,9,10,2,6,7],c:'resortwear, polished casual, prints'},
+  'IZOD':{u:'https://www.izod.com/search?q=',t:'$$',a:'Casual Classic',s:[],d:[4,2,6,8,2,9,3],c:'polos, golfwear, casual basics'},
+  'Lacoste':{u:'https://www.lacoste.com/us/search/?q=',t:'$$$',a:'Classic Sport, Preppy Classic',s:[],d:[5,3,8,9,4,8,4],c:'polos, casual sportswear, sneakers'},
+  'Gap':{u:'https://www.gap.com/browse/search.do?searchText=',t:'$-$$',a:'Casual Classic',s:['petite','plus','tall'],d:[4,2,6,7,3,10,2],c:'everyday basics, denim, casualwear'},
+  'White House Black Market':{u:'https://www.whitehouseblackmarket.com/store/search?q=',t:'$$',a:'Professional Power, Modern Glam',s:['petite'],d:[8,7,9,8,6,4,9],c:'sleek workwear, occasion'},
+  'Garnet Hill':{u:'https://www.garnethill.com/search?q=',t:'$$',a:'Elevated Natural',s:['petite','plus'],d:[3,2,8,8,2,9,3],c:'natural fibers, sleepwear'},
+  'Soft Surroundings':{u:'https://www.softsurroundings.com/search.php?q=',t:'$$',a:'Relaxed Feminine',s:['petite','plus'],d:[2,2,6,7,1,10,2],c:'soft knits, travel'},
+  'Tuckernuck':{u:'https://www.tnuck.com/search?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[6,5,9,9,5,5,9],c:'dresses, polished separates, occasion, resort'},
   // Elevated natural / quiet luxury: where a stylist sends this woman first
-  'Jenni Kayne':{u:'https://www.jennikayne.com/search?q=',t:'$$$$',a:'Elevated Natural, Quiet Luxury',s:[],d:[3,2,10],c:'luxury casualwear, cashmere, sweaters'},
-  'Frank & Eileen':{u:'https://frankandeileen.com/search?q=',t:'$$$',a:'Elevated Natural, Coastal Chic',s:[],d:[2,2,9],c:'button-downs, relaxed luxury, travel'},
-  'Faherty':{u:'https://fahertybrand.com/search?q=',t:'$$$',a:'Coastal Chic, Elevated Natural',s:[],d:[3,2,8],c:'resortwear, knitwear, beach lifestyle'},
-  'Marine Layer':{u:'https://www.marinelayer.com/search?q=',t:'$$',a:'Casual Classic, Elevated Natural',s:[],d:[3,2,7],c:'soft basics, casualwear, weekend style'},
-  'Rails':{u:'https://www.railsclothing.com/search?q=',t:'$$$',a:'Elevated Natural, California Casual',s:[],d:[4,3,8],c:'soft shirts, dresses, casual luxury'},
-  'Cuyana':{u:'https://www.cuyana.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[4,2,10],c:'leather handbags, timeless accessories'},
-  'Eileen Fisher':{u:'https://www.eileenfisher.com/search?q=',t:'$$$',a:'Elevated Natural, Modern Minimalist',s:['petite','plus'],d:[2,1,9],c:'sustainable luxury, linen, relaxed tailoring'},
+  'Jenni Kayne':{u:'https://www.jennikayne.com/search?q=',t:'$$$$',a:'Elevated Natural, Quiet Luxury',s:[],d:[3,2,10,10,2,8,5],c:'luxury casualwear, cashmere, sweaters'},
+  'Frank & Eileen':{u:'https://frankandeileen.com/search?q=',t:'$$$',a:'Elevated Natural, Coastal Chic',s:[],d:[2,2,9,9,2,10,3],c:'button-downs, relaxed luxury, travel'},
+  'Faherty':{u:'https://fahertybrand.com/search?q=',t:'$$$',a:'Coastal Chic, Elevated Natural',s:[],d:[3,2,8,7,3,10,3],c:'resortwear, knitwear, beach lifestyle'},
+  'Marine Layer':{u:'https://www.marinelayer.com/search?q=',t:'$$',a:'Casual Classic, Elevated Natural',s:[],d:[3,2,7,6,4,10,2],c:'soft basics, casualwear, weekend style'},
+  'Rails':{u:'https://www.railsclothing.com/search?q=',t:'$$$',a:'Elevated Natural, California Casual',s:[],d:[4,3,8,6,5,9,4],c:'soft shirts, dresses, casual luxury'},
+  'Cuyana':{u:'https://www.cuyana.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[4,2,10,10,2,6,7],c:'leather handbags, timeless accessories'},
+  'Eileen Fisher':{u:'https://www.eileenfisher.com/search?q=',t:'$$$',a:'Elevated Natural, Modern Minimalist',s:['petite','plus'],d:[2,1,9,10,1,8,6],c:'sustainable luxury, linen, relaxed tailoring'},
   // Minimal / tailored
-  'Theory':{u:'https://www.theory.com/search?q=',t:'$$$',a:'Modern Minimalist, Professional Power',s:[],d:[8,3,10],c:'tailoring, workwear, luxury basics'},
-  'Vince':{u:'https://www.vince.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[6,2,10],c:'luxury basics, knitwear, outerwear'},
-  'COS':{u:'https://www.cos.com/en-us/search?q=',t:'$$',a:'Modern Minimalist',s:[],d:[4,2,9],c:'architectural basics, tailoring'},
-  'M.M.LaFleur':{u:'https://mmlafleur.com/search?q=',t:'$$$',a:'Professional Power, Modern Minimalist',s:['plus'],d:[8,3,10],c:'executive workwear, tailoring'},
+  'Theory':{u:'https://www.theory.com/search?q=',t:'$$$',a:'Modern Minimalist, Professional Power',s:[],d:[8,3,10,10,4,3,10],c:'tailoring, workwear, luxury basics'},
+  'Vince':{u:'https://www.vince.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[6,2,10,10,4,6,8],c:'luxury basics, knitwear, outerwear'},
+  'COS':{u:'https://www.cos.com/en-us/search?q=',t:'$$',a:'Modern Minimalist',s:[],d:[4,2,9,9,7,6,7],c:'architectural basics, tailoring'},
+  'M.M.LaFleur':{u:'https://mmlafleur.com/search?q=',t:'$$$',a:'Professional Power, Modern Minimalist',s:['plus'],d:[8,3,10,10,3,3,10],c:'executive workwear, tailoring'},
   // Romantic / boho
-  'Sézane':{u:'https://www.sezane.com/us/search?q=',t:'$$$',a:'Parisian Chic, Romantic Feminine',s:[],d:[6,5,9],c:'knitwear, blouses, timeless french style'},
-  'LoveShackFancy':{u:'https://loveshackfancy.com/search?q=',t:'$$$$',a:'Romantic Feminine, Playful Chic',s:[],d:[6,8,9],c:'feminine dresses, occasion, florals'},
-  'Free People':{u:'https://www.freepeople.com/search?q=',t:'$$-$$$',a:'Bohemian Chic, Romantic Feminine',s:['petite'],d:[3,6,6],c:'boho fashion, sweaters, dresses'},
-  'Johnny Was':{u:'https://www.johnnywas.com/search?q=',t:'$$$',a:'Bohemian Chic, Elevated Natural',s:['petite','plus'],d:[3,4,8],c:'embroidered tops, resortwear, relaxed luxury'},
-  "Altar'd State":{u:'https://www.altardstate.com/search?q=',t:'$$',a:'Romantic Feminine, Bohemian Chic',s:[],d:[5,5,6],c:'dresses, casual feminine fashion'},
-  'Baltic Born':{u:'https://balticborn.com/search?q=',t:'$$',a:'Romantic Feminine',s:['plus'],d:[6,7,7],c:'wedding guest dresses, occasionwear'},
-  'Reformation':{u:'https://www.thereformation.com/search?q=',t:'$$$',a:'Romantic Feminine, Modern Chic',s:['petite','plus'],d:[9,9,9],c:'dresses, sustainable fashion, occasion'},
+  'Sézane':{u:'https://www.sezane.com/us/search?q=',t:'$$$',a:'Parisian Chic, Romantic Feminine',s:[],d:[6,5,9,9,7,6,7],c:'knitwear, blouses, timeless french style'},
+  'LoveShackFancy':{u:'https://loveshackfancy.com/search?q=',t:'$$$$',a:'Romantic Feminine, Playful Chic',s:[],d:[6,8,9,6,9,5,9],c:'feminine dresses, occasion, florals'},
+  'Free People':{u:'https://www.freepeople.com/search?q=',t:'$$-$$$',a:'Bohemian Chic, Romantic Feminine',s:['petite'],d:[3,6,6,4,8,10,3],c:'boho fashion, sweaters, dresses'},
+  'Johnny Was':{u:'https://www.johnnywas.com/search?q=',t:'$$$',a:'Bohemian Chic, Elevated Natural',s:['petite','plus'],d:[3,4,8,5,6,9,4],c:'embroidered tops, resortwear, relaxed luxury'},
+  "Altar'd State":{u:'https://www.altardstate.com/search?q=',t:'$$',a:'Romantic Feminine, Bohemian Chic',s:[],d:[5,5,6,6,7,8,5],c:'dresses, casual feminine fashion'},
+  'Baltic Born':{u:'https://balticborn.com/search?q=',t:'$$',a:'Romantic Feminine',s:['plus'],d:[6,7,7,6,8,5,8],c:'wedding guest dresses, occasionwear'},
+  'Reformation':{u:'https://www.thereformation.com/search?q=',t:'$$$',a:'Romantic Feminine, Modern Chic',s:['petite','plus'],d:[9,9,9,6,9,5,9],c:'dresses, sustainable fashion, occasion'},
   // Edgy
-  'AllSaints':{u:'https://www.allsaints.com/us/search/?q=',t:'$$$',a:'Edgy Chic, Modern Minimalist',s:[],d:[8,8,9],c:'leather jackets, edgy contemporary fashion'},
-  'Rag & Bone':{u:'https://www.rag-bone.com/search?q=',t:'$$$',a:'Edgy Chic, Modern Minimalist',s:[],d:[7,5,9],c:'premium denim, modern essentials'},
+  'AllSaints':{u:'https://www.allsaints.com/us/search/?q=',t:'$$$',a:'Edgy Chic, Modern Minimalist',s:[],d:[8,8,9,5,9,6,8],c:'leather jackets, edgy contemporary fashion'},
+  'Rag & Bone':{u:'https://www.rag-bone.com/search?q=',t:'$$$',a:'Edgy Chic, Modern Minimalist',s:[],d:[7,5,9,7,8,7,6],c:'premium denim, modern essentials'},
   // Denim
-  "Levi's":{u:'https://www.levi.com/US/en_US/search?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[6,3,7],c:'denim, casualwear, jackets'},
-  'NYDJ':{u:'https://www.nydj.com/search?q=',t:'$$$',a:'Classic Sophisticate',s:['petite','plus'],d:[7,3,8],c:'premium denim, flattering fit'},
+  "Levi's":{u:'https://www.levi.com/US/en_US/search?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[6,3,7,8,5,10,2],c:'denim, casualwear, jackets'},
+  'NYDJ':{u:'https://www.nydj.com/search?q=',t:'$$$',a:'Classic Sophisticate',s:['petite','plus'],d:[7,3,8,8,3,8,4],c:'premium denim, flattering fit'},
   // Bags and jewelry
-  'Coach':{u:'https://www.coach.com/search?q=',t:'$$$',a:'Classic Sophisticate, Modern Luxe',s:[],d:[5,5,9],c:'leather handbags, wallets, accessories'},
-  'Kate Spade':{u:'https://www.katespade.com/search?q=',t:'$$$',a:'Playful Chic, Classic Feminine',s:[],d:[5,5,8],c:'handbags, jewelry, colorful accessories'},
-  'Gorjana':{u:'https://gorjana.com/search?q=',t:'$$',a:'Elevated Natural, Coastal Chic',s:[],d:[5,3,8],c:'everyday jewelry, layering pieces'},
-  'Mejuri':{u:'https://mejuri.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[5,2,10],c:'fine jewelry, everyday essentials'},
+  'Coach':{u:'https://www.coach.com/search?q=',t:'$$$',a:'Classic Sophisticate, Modern Luxe',s:[],d:[5,5,9,9,5,6,8],c:'leather handbags, wallets, accessories'},
+  'Kate Spade':{u:'https://www.katespade.com/search?q=',t:'$$$',a:'Playful Chic, Classic Feminine',s:[],d:[5,5,8,8,7,6,7],c:'handbags, jewelry, colorful accessories'},
+  'Gorjana':{u:'https://gorjana.com/search?q=',t:'$$',a:'Elevated Natural, Coastal Chic',s:[],d:[5,3,8,7,6,8,4],c:'everyday jewelry, layering pieces'},
+  'Mejuri':{u:'https://mejuri.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[5,2,10,9,5,7,5],c:'fine jewelry, everyday essentials'},
   // Active, swim, foundations, shoes
-  'Vuori':{u:'https://vuoriclothing.com/search?q=',t:'$$$',a:'Elevated Natural, Coastal Chic',s:[],d:[5,3,8],c:'premium athleisure, casual basics'},
-  'Summersalt':{u:'https://www.summersalt.com/search?q=',t:'$$',a:'Modern Minimalist, Coastal Chic',s:['plus'],d:[8,7,8],c:'swimwear, resortwear, travel'},
-  'Soma':{u:'https://www.soma.com/store/search?q=',t:'$$',a:'Relaxed Feminine',s:['plus'],d:[7,5,8],c:'bras, lingerie, sleepwear'},
-  'Naturalizer':{u:'https://www.naturalizer.com/search?q=',t:'$$',a:'Classic Sophisticate, Comfort Chic',s:['wide','narrow'],d:[5,2,8],c:'comfortable dress shoes, work shoes'},
+  'Vuori':{u:'https://vuoriclothing.com/search?q=',t:'$$$',a:'Elevated Natural, Coastal Chic',s:[],d:[5,3,8,6,6,10,2],c:'premium athleisure, casual basics'},
+  'Summersalt':{u:'https://www.summersalt.com/search?q=',t:'$$',a:'Modern Minimalist, Coastal Chic',s:['plus'],d:[8,7,8,6,7,8,5],c:'swimwear, resortwear, travel'},
+  'Soma':{u:'https://www.soma.com/store/search?q=',t:'$$',a:'Relaxed Feminine',s:['plus'],d:[7,5,8,7,4,9,3],c:'bras, lingerie, sleepwear'},
+  'Naturalizer':{u:'https://www.naturalizer.com/search?q=',t:'$$',a:'Classic Sophisticate, Comfort Chic',s:['wide','narrow'],d:[5,2,8,9,2,7,6],c:'comfortable dress shoes, work shoes'},
   // Classic and easy-to-wear
-  'Ann Taylor':{u:'https://www.anntaylor.com/search?q=',t:'$$',a:'Professional Power, Classic Sophisticate',s:['petite','tall'],d:[7,3,9],c:'workwear, dresses, blazers'},
-  'LOFT':{u:'https://www.loft.com/search?q=',t:'$$',a:'Casual Classic',s:['petite','plus','tall'],d:[5,3,7],c:'relaxed workwear, denim'},
-  'Talbots':{u:'https://www.talbots.com/search?q=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[5,2,9],c:'timeless workwear, knits'},
-  'J.Jill':{u:'https://www.jjill.com/SearchDisplay?searchTerm=',t:'$$',a:'Elevated Natural',s:['petite','plus'],d:[2,1,8],c:'linen, relaxed essentials'},
-  "Chico's":{u:'https://www.chicos.com/store/search?q=',t:'$$',a:'Relaxed Classic',s:['petite'],d:[3,2,7],c:'travel pieces, easy separates'},
+  'Ann Taylor':{u:'https://www.anntaylor.com/search?q=',t:'$$',a:'Professional Power, Classic Sophisticate',s:['petite','tall'],d:[7,3,9,10,2,4,8],c:'workwear, dresses, blazers'},
+  'LOFT':{u:'https://www.loft.com/search?q=',t:'$$',a:'Casual Classic',s:['petite','plus','tall'],d:[5,3,7,8,3,8,5],c:'relaxed workwear, denim'},
+  'Talbots':{u:'https://www.talbots.com/search?q=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[5,2,9,10,1,6,7],c:'timeless workwear, knits'},
+  'J.Jill':{u:'https://www.jjill.com/SearchDisplay?searchTerm=',t:'$$',a:'Elevated Natural',s:['petite','plus'],d:[2,1,8,8,1,10,2],c:'linen, relaxed essentials'},
+  "Chico's":{u:'https://www.chicos.com/store/search?q=',t:'$$',a:'Relaxed Classic',s:['petite'],d:[3,2,7,8,2,9,3],c:'travel pieces, easy separates'},
   // Size-inclusive specialists
-  'Universal Standard':{u:'https://www.universalstandard.com/search?q=',t:'$$',a:'Modern Minimalist',s:['plus'],d:[6,4,8],c:'tailoring, elevated basics'},
-  'Eloquii':{u:'https://www.eloquii.com/search?q=',t:'$$',a:'Modern Glam',s:['plus'],d:[7,7,8],c:'dresses, workwear'},
-  'Torrid':{u:'https://www.torrid.com/search?q=',t:'$$',a:'Casual Trendy',s:['plus'],d:[7,8,7],c:'denim, everyday, lingerie'},
-  'Lane Bryant':{u:'https://www.lanebryant.com/search?q=',t:'$$',a:'Casual Classic',s:['plus'],d:[5,4,6],c:'bras, denim, basics'},
-  'Good American':{u:'https://www.goodamerican.com/search?q=',t:'$$$',a:'Modern Sexy',s:['plus'],d:[9,8,8],c:'premium denim, curve fit'},
-  'Petite Studio':{u:'https://petitestudionyc.com/search?q=',t:'$$$',a:'Modern Minimalist',s:['petite'],d:[7,4,9],c:'petite tailoring, dresses'},
+  'Universal Standard':{u:'https://www.universalstandard.com/search?q=',t:'$$',a:'Modern Minimalist',s:['plus'],d:[6,4,8,7,5,7,6],c:'tailoring, elevated basics'},
+  'Eloquii':{u:'https://www.eloquii.com/search?q=',t:'$$',a:'Modern Glam',s:['plus'],d:[7,7,8,6,7,5,8],c:'dresses, workwear'},
+  'Torrid':{u:'https://www.torrid.com/search?q=',t:'$$',a:'Casual Trendy',s:['plus'],d:[7,8,7,4,8,8,5],c:'denim, everyday, lingerie'},
+  'Lane Bryant':{u:'https://www.lanebryant.com/search?q=',t:'$$',a:'Casual Classic',s:['plus'],d:[5,4,6,6,4,8,4],c:'bras, denim, basics'},
+  'Good American':{u:'https://www.goodamerican.com/search?q=',t:'$$$',a:'Modern Sexy',s:['plus'],d:[9,8,8,4,8,7,6],c:'premium denim, curve fit'},
+  'Petite Studio':{u:'https://petitestudionyc.com/search?q=',t:'$$$',a:'Modern Minimalist',s:['petite'],d:[7,4,9,8,6,5,8],c:'petite tailoring, dresses'},
   // Activewear and swim
-  'Lululemon':{u:'https://shop.lululemon.com/search?Ntt=',t:'$$$',a:'Elevated Natural, Athletic Luxe',s:[],d:[8,6,8],c:'premium activewear, athleisure'},
-  'Athleta':{u:'https://athleta.gap.com/browse/search.do?searchText=',t:'$$',a:'Elevated Natural, Athletic Luxe',s:['petite','plus','tall'],d:[6,3,8],c:'activewear, travel, everyday performance'},
-  'Alo Yoga':{u:'https://www.aloyoga.com/search?q=',t:'$$$',a:'Modern Glam, Athletic Luxe',s:[],d:[9,8,8],c:'luxury activewear, athleisure'},
-  'Everything But Water':{u:'https://www.everythingbutwater.com/search?q=',t:'$$$',a:'Coastal Chic, Glamorous Luxe',s:['plus'],d:[8,8,9],c:'designer swimwear, resort fashion'},
+  'Lululemon':{u:'https://shop.lululemon.com/search?Ntt=',t:'$$$',a:'Elevated Natural, Athletic Luxe',s:[],d:[8,6,8,5,7,10,2],c:'premium activewear, athleisure'},
+  'Athleta':{u:'https://athleta.gap.com/browse/search.do?searchText=',t:'$$',a:'Elevated Natural, Athletic Luxe',s:['petite','plus','tall'],d:[6,3,8,6,5,10,2],c:'activewear, travel, everyday performance'},
+  'Alo Yoga':{u:'https://www.aloyoga.com/search?q=',t:'$$$',a:'Modern Glam, Athletic Luxe',s:[],d:[9,8,8,4,9,10,3],c:'luxury activewear, athleisure'},
+  'Everything But Water':{u:'https://www.everythingbutwater.com/search?q=',t:'$$$',a:'Coastal Chic, Glamorous Luxe',s:['plus'],d:[8,8,9,8,7,6,9],c:'designer swimwear, resort fashion'},
   // Foundations
-  'Spanx':{u:'https://www.spanx.com/search?q=',t:'$$$',a:'Modern Minimalist, Professional Power',s:['plus'],d:[10,6,9],c:'shapewear, leggings, smoothing basics'},
-  'SKIMS':{u:'https://skims.com/search?q=',t:'$$$',a:'Modern Glam, Modern Minimalist',s:['plus'],d:[10,10,8],c:'shapewear, loungewear, basics'},
+  'Spanx':{u:'https://www.spanx.com/search?q=',t:'$$$',a:'Modern Minimalist, Professional Power',s:['plus'],d:[10,6,9,7,8,7,5],c:'shapewear, leggings, smoothing basics'},
+  'SKIMS':{u:'https://skims.com/search?q=',t:'$$$',a:'Modern Glam, Modern Minimalist',s:['plus'],d:[10,10,8,3,10,8,4],c:'shapewear, loungewear, basics'},
   // Shoes
-  'Zappos':{u:'https://www.zappos.com/search?term=',t:'$$',a:'Universal',s:['wide','narrow'],d:[5,5,7],c:'shoes, sneakers, boots, comfort footwear, extended widths'},
-  'DSW':{u:'https://www.dsw.com/en/us/search?q=',t:'$$',a:'Universal',s:['wide'],d:[5,5,6],c:'shoes, handbags, accessories, extended widths'},
-  'Sam Edelman':{u:'https://www.samedelman.com/search?q=',t:'$$$',a:'Modern Chic, Classic Sophisticate',s:[],d:[7,6,8],c:'fashion shoes, boots, sandals'},
+  'Zappos':{u:'https://www.zappos.com/search?term=',t:'$$',a:'Universal',s:['wide','narrow'],d:[5,5,7,6,5,9,5],c:'shoes, sneakers, boots, comfort footwear, extended widths'},
+  'DSW':{u:'https://www.dsw.com/en/us/search?q=',t:'$$',a:'Universal',s:['wide'],d:[5,5,6,6,6,8,5],c:'shoes, handbags, accessories, extended widths'},
+  'Sam Edelman':{u:'https://www.samedelman.com/search?q=',t:'$$$',a:'Modern Chic, Classic Sophisticate',s:[],d:[7,6,8,7,7,6,8],c:'fashion shoes, boots, sandals'},
   // Designer and jewelry
-  'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[9,9,9],c:'statement dresses, occasionwear'},
-  'Veronica Beard':{u:'https://www.veronicabeard.com/search?q=',t:'$$$$',a:'Professional Power, Classic Sophisticate',s:[],d:[9,8,10],c:'blazers, premium denim, elevated separates'},
-  'Tory Burch':{u:'https://www.toryburch.com/en-us/search/?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[6,5,9],c:'handbags, shoes, workwear, resort'},
-  'Gucci':{u:'https://www.gucci.com/us/en/search?searchString=',t:'$$$$',a:'Glamorous Luxe, Luxury Fashion',s:[],d:[9,10,10],c:'designer handbags, shoes, belts, accessories'},
-  'Tiffany & Co.':{u:'https://www.tiffany.com/search/?q=',t:'$$$$',a:'Luxury Fashion, Classic Sophisticate',s:[],d:[5,6,10],c:'fine jewelry, luxury gifts'},
-  'Kendra Scott':{u:'https://www.kendrascott.com/search?q=',t:'$$',a:'Playful Chic, Modern Glam',s:[],d:[5,5,7],c:'fashion jewelry, gifts, statement earrings'},
+  'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[9,9,9,6,10,3,10],c:'statement dresses, occasionwear'},
+  'Veronica Beard':{u:'https://www.veronicabeard.com/search?q=',t:'$$$$',a:'Professional Power, Classic Sophisticate',s:[],d:[9,8,10,9,8,4,10],c:'blazers, premium denim, elevated separates'},
+  'Tory Burch':{u:'https://www.toryburch.com/en-us/search/?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[6,5,9,9,6,6,8],c:'handbags, shoes, workwear, resort'},
+  'Gucci':{u:'https://www.gucci.com/us/en/search?searchString=',t:'$$$$',a:'Glamorous Luxe, Luxury Fashion',s:[],d:[9,10,10,8,10,4,10],c:'designer handbags, shoes, belts, accessories'},
+  'Tiffany & Co.':{u:'https://www.tiffany.com/search/?q=',t:'$$$$',a:'Luxury Fashion, Classic Sophisticate',s:[],d:[5,6,10,10,4,2,10],c:'fine jewelry, luxury gifts'},
+  'Kendra Scott':{u:'https://www.kendrascott.com/search?q=',t:'$$',a:'Playful Chic, Modern Glam',s:[],d:[5,5,7,6,7,7,6],c:'fashion jewelry, gifts, statement earrings'},
   // Eyewear
-  'Sunglass Hut':{u:'https://www.sunglasshut.com/us/search?q=',t:'$$-$$$$',a:'Universal',s:[],d:[5,5,8],c:'designer sunglasses, eyewear'},
-  'Warby Parker':{u:'https://www.warbyparker.com/search?q=',t:'$$',a:'Modern Minimalist',s:[],d:[4,2,9],c:'prescription glasses, sunglasses'},
-  'Quay':{u:'https://www.quayaustralia.com/search?q=',t:'$$',a:'Trendsetter, Modern Glam',s:[],d:[6,7,6],c:'fashion sunglasses'}
+  'Sunglass Hut':{u:'https://www.sunglasshut.com/us/search?q=',t:'$$-$$$$',a:'Universal',s:[],d:[5,5,8,7,8,6,7],c:'designer sunglasses, eyewear'},
+  'Warby Parker':{u:'https://www.warbyparker.com/search?q=',t:'$$',a:'Modern Minimalist',s:[],d:[4,2,9,9,5,8,4],c:'prescription glasses, sunglasses'},
+  'Quay':{u:'https://www.quayaustralia.com/search?q=',t:'$$',a:'Trendsetter, Modern Glam',s:[],d:[6,7,6,3,10,8,5],c:'fashion sunglasses'}
 };
 // Kept as a plain name→url map because linkStores() and older callers use it.
 const storeUrls={};Object.keys(STORES).forEach(function(k){storeUrls[k]=STORES[k].u});
@@ -3699,14 +3705,32 @@ function getStoreUrl(store,item,search){
 //     barely at all with alluring (0.16). So it RANKS, it never matches: a
 //     woman who dresses casually wants the most refined casual store, not the
 //     least refined one.
-const _DIM_FIT=0,_DIM_ALL=1,_DIM_POL=2;
-// Her own position on the two taste axes, read off the quiz sliders. Sliders
-// run 1-11, Cath's store scale runs 1-10, hence the 0.9. "Alluring" in her
-// definition is glamorous AND sensual, so it blends the two sliders that carry
-// those: Natural-Glam and Modest-Alluring.
+// The pairs are scored independently, so they are used differently from the
+// distance axes. A woman who is 70% classic wants whoever is STRONGEST at
+// classic, not whoever sits nearest some midpoint, and a store strong at both
+// should serve her well either way. So these are a weighted "how well does this
+// store serve her side of the spectrum", where higher is better.
+const _DIM_FIT=0,_DIM_ALL=1,_DIM_POL=2,_DIM_CLA=3,_DIM_TRE=4,_DIM_CAS=5,_DIM_DRE=6;
+// Her own position, read off the quiz sliders. Sliders run 1-11, Cath's store
+// scale runs 1-10, hence the 0.9. "Alluring" in her definition is glamorous AND
+// sensual, so it blends the two sliders that carry those.
 function _herDims(){
   const to10=function(v){return 1+(v-1)*0.9};
-  return [to10(answers[8]),to10((answers[1]+answers[10])/2)];
+  const w=function(v){return (v-1)/10};       // slider 1-11 -> 0..1 lean
+  return {fit:to10(answers[8]),all:to10((answers[1]+answers[10])/2),
+    trendy:w(answers[0]),dressy:w(answers[4])};
+}
+// How well one store serves her, higher is better. The two distance axes are
+// subtracted as a penalty; the two lean axes are added as a weighted score.
+// Polish rides along at a deliberately small weight: enough to separate two
+// close matches toward the more refined one, far too small to drag every woman
+// into the luxury tier (polish correlates 0.67 with price).
+function _storeFit(k,her){
+  const d=STORES[k].d;
+  const lean=(1-her.trendy)*d[_DIM_CLA]+her.trendy*d[_DIM_TRE]
+            +(1-her.dressy)*d[_DIM_CAS]+her.dressy*d[_DIM_DRE];
+  const gap=Math.abs(d[_DIM_FIT]-her.fit)+Math.abs(d[_DIM_ALL]-her.all);
+  return lean-gap+d[_DIM_POL]*0.15;
 }
 // A store must never be dropped in a way that leaves a whole kind of shopping
 // unreachable. If the shortlist happens to contain no shoe store, the AI cannot
@@ -3730,11 +3754,10 @@ function _rankedStores(){
   // ranking would be invented. Leave the list alone rather than fake a profile.
   if(!quizTaken)return keys;
   const her=_herDims();
-  const scored=keys.map(function(k){
-    const d=STORES[k].d;
-    return {k:k,gap:Math.abs(d[_DIM_FIT]-her[0])+Math.abs(d[_DIM_ALL]-her[1]),pol:d[_DIM_POL]};
-  }).sort(function(a,b){return (a.gap-b.gap)||(b.pol-a.pol)});
-  const KEEP=46,order=scored.map(function(x){return x.k});
+  const order=keys.map(function(k){return {k:k,fit:_storeFit(k,her)}})
+    .sort(function(a,b){return b.fit-a.fit})
+    .map(function(x){return x.k});
+  const KEEP=46;
   const out=order.slice(0,KEEP),have=new Set(out);
   const add=function(test){
     if(order.some(function(k){return have.has(k)&&test(k)}))return;
@@ -3797,7 +3820,12 @@ function _shopRules(){
     '  TOO VAGUE, never do this: "sandals" / "bag" / "dress" / "white bag" / "heels".\n'+
     '  TOO LONG, never do this: "Blush Silk Charmeuse Midi Wrap Dress with Tie Waist".\n'+
     _sizeGuidance()+
-    '- Match the store to her using the tags above, including her budget range.\n';
+    '- Match the store to her using the tags above.\n'+
+    // The app never asks her budget, so this used to promise something it could
+    // not do. Worse, the dressier a woman's taste the more her best-matched
+    // stores skew expensive, because dressy correlates with price in the tags.
+    // Spreading the price points is both honest and what a good stylist does.
+    '- SPREAD THE PRICES across your picks. Always include something genuinely affordable alongside anything special. Never send her a set where every option is expensive.\n';
 }
 // ▶ CATH: this is the wording on every shopping button, in ONE place. It says
 // "Find it" rather than "Shop" because the link runs a search at that store, so
