@@ -3654,6 +3654,25 @@ with wrong or zero results, and no photos anywhere.
   **Talbots** remains unverified — Cath sent `talbots.com/petite`, which is a category page rather than a search, and
   Talbots serves a byte-identical shell for every URL. Its `search?q=` pattern is platform-standard so it is safe to
   include; a real search URL from her address bar would settle it if it ever matters.
+- **✅ FINAL FIVE (Cath, end of session) — shapewear + sunglasses, both were total gaps:** **Spanx** ✅ verified
+  (`https://www.spanx.com/search?q=`, textbook variation 943KB/1.2MB/237KB), **SKIMS**
+  (`https://skims.com/search?q=`, borderline ~4KB variation so unverified but standard; note SKIMS also covers bras,
+  underwear and loungewear, feeding the Foundations and Sleepwear categories), **Sunglass Hut**
+  (`https://www.sunglasshut.com/us/search?q=`, bot wall) and **Warby Parker**
+  (`https://www.warbyparker.com/search?q=`, bot wall) for breadth and prescription, plus **Quay**
+  (`https://www.quayaustralia.com/search?q=`, leaning real). Shapewear had NO retailer at all despite Cath adding
+  Shapewear to the Foundations checklist the same day. **Final list ~70 stores.**
+- **▶ PETITE/TALL IS A SUB-LINE, NOT A RETAILER — this reframes Cath's sourcing research.** Petite Studio is about the
+  only pure-petite name of scale; everything else (Ann Taylor Petite, LOFT Petite, Talbots Petite, J.Crew Petite,
+  Boden Petite) is a sub-line of a store already on the list. So for petite and tall the useful question is **"which of
+  our ~70 stores have a petite line?"** — tagging work, not sourcing work. **Plus is genuinely different**: real
+  specialists exist and four are already in (Universal Standard, Eloquii, Torrid, Good American); Lane Bryant and
+  Dia&Co are the obvious ones still missing if she wants more.
+- **✅ DEPLOY PREVIEWS WILL WORK FOR TESTING THIS.** Checked `netlify/functions/style-ai.js`: `isAllowed()` adds the
+  request's OWN host to the allow-list, and the code comment says so explicitly ("so Netlify deploy previews
+  (random-name.netlify.app) keep working"). So the AI shopping functions normally on a PR preview URL. **Given this
+  change touches shopping across six features — the core of the app — do NOT merge it on sight the way the content
+  edits were merged. Let Cath tap through the deploy preview first.**
 - **▶ VERIFICATION WORKFLOW THAT WORKS — use this whenever a store can't be checked from here.** Many retailers block
   bots or render search client-side, so Claude genuinely cannot confirm them. **Cath can settle it in ten seconds:
   search on the store's site, then send the URL from her address bar.** This solved BOTH J.Jill and Mango, and each
