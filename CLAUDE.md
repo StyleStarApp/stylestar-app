@@ -3553,3 +3553,101 @@ herself (she wrote "need (or want)" and hedged).
   matching cut. Healthy constraint on a curated list, but a real one. Flag it before she uses the number in copy.
 - This rule generalizes: **the checklist is a possibility map, never a requirement list.** Apply it to any future
   copy, marketing, or the eventual paid Style Guide.
+
+**2026-07-27 (cont. — ▶ THE SHOPPING-LINKS PROBLEM: diagnosed, plan agreed, store research done — NOT YET BUILT)**
+Cath asked the honest question "what has to be true before I show this to people," and the answer turned out to be a
+real product gap, not nerves. **She was right and Claude's initial "is it the work or is it you" framing was too
+quick.** What she'd been seeing while testing: shop links that land on a store SEARCH BAR instead of the item, often
+with wrong or zero results, and no photos anywhere.
+- **▶ ROOT CAUSE (confirmed in code).** Every shopping link in the app is built by `getStoreUrl(store,item)` (~line
+  3512), which does exactly one thing: glue the item name onto a store's search URL. **The AI is not connected to any
+  store's inventory and never was.** It invents a plausible item from her style profile; the app then types that whole
+  phrase into the store's search box and hopes. Nothing is ever looked up, so there is also no product record and
+  therefore **no photo to show**. The prompt even instructs "Be very specific, not 'a nice top' but 'Ribbed Cream
+  Mock-Neck Tank'" — beautiful on the card, useless as a search query. If the AI names a store outside the known list,
+  the link silently becomes a **Google search**.
+- **SIX places build these links:** `_shopStyleGen` (Shop your style), `_wardrobeIdeaGen` (the Wardrobe "Ideas"
+  carousel), `_renderShop` (Complete the Look on outfit results), `shopMyStyle`, `genOutfits`, and `linkStores`
+  (store names inside stylist-chat replies). All six share the same weakness.
+- **▶ THE AGREED FIX (3 parts, no affiliate approval needed, ~1 session + tuning):**
+  1. **Ask the AI for a SECOND field: a short search term.** `name` stays the pretty descriptive card text ("Blush pink
+     silk midi wrap dress"); new `search` is what the link actually queries ("pink midi dress"). Massively better hit rate.
+  2. **Change the card wording** from "Shop →" to "Find this at {store} →" so it never implies a specific product page.
+  3. **Close the Google fallback** by constraining the AI to stores we actually have URLs for.
+  **Expectation set with Cath:** this does NOT add photos and does NOT produce real products. It takes the shopping from
+  "this seems broken" to "this works, simply." The real thing (photos, true product deep links) genuinely requires
+  affiliate product feeds. **None of this work is thrown away later** — the search fallback stays useful for anything a
+  feed can't match.
+- **▶ IMPORTANT EXPECTATION for money-path step 7:** "wire up affiliate links" is really TWO jobs. The **Mall + Style
+  Star Edit** are a genuine link swap (an afternoon). The **AI shopping picks** need a real product-feed integration
+  (search the feed, render photos, deep-link) — substantially more work. Don't let step 7 read as a single easy task.
+
+### ▶ SIZE RANGES: what we can honestly promise (decided 2026-07-27)
+- ⚠️ **The app currently OVER-PROMISES "in your size" in FOUR places** and cannot deliver it: the Wardrobe how-to ("tap
+  Ideas to see them in your size and style"), every trending card and teaser card ("See ideas in your size →"), and the
+  FAQ ("shopping ideas in your size"). A store search returns every size; nothing filters. **Cath's call: fix the copy,
+  do not promise size finds we can't do.** What IS true today: colors mostly carry through (colour is in the search
+  words), and never-wear exclusions are honoured absolutely by the prompt.
+- ✅ **What we CAN honestly do: size RANGES via the search term.** `petite midi dress`, `plus size midi dress`,
+  `tall trousers` all return real results at most major retailers. So numeric sizes no, ranges yes.
+- ✅ **Refine question changing** from the pants-length question (`pantsFit`, ~line 4339: "I often need shorter/cropped
+  lengths / Standard lengths work fine / I usually need longer lengths") to a direct **"Do you usually shop petite,
+  regular, tall, or plus?" — MULTI-SELECT** (petite-plus is real). Migrate old saved answers: shorter/cropped → petite,
+  longer → tall, standard → regular. Cath and other early users already have saved prefs, so don't drop them.
+- **▶ CATH'S KEY RULE (stylist insight, protect this): size range applies PER CATEGORY, never globally.** Her words:
+  short clients still wear regular-length dresses, athletic wear, bags and accessories, "so let's make sure our special
+  sizing ladies don't get fewer pickings because of that."
+  - **Petite/Tall** matter for: pants, jeans, trousers, maxi dresses, coats, anything length-driven. **Irrelevant for:**
+    bags, jewelry, accessories, shoes, most tops, most dresses.
+  - **Plus** matters for apparel generally. **Irrelevant for:** bags, jewelry, sunglasses, hats, shoes.
+  - The size qualifier AND any store narrowing apply ONLY where fit depends on it. Everywhere else she sees the full
+    store list. **Nobody gets a smaller world because of her body.**
+  - Consequence: prefer petite/plus-carrying stores for a petite trouser; ignore that entirely for a handbag (sending a
+    plus-size woman to Zara for a dress is a bad experience no matter how good the search is).
+
+### ▶ STORE LIST EXPANSION (researched 2026-07-27, ready to build)
+- **Cath was surprised the AI shops from 20 stores that DON'T match her Mall's 25.** Zappos — the store she shops at
+  most and just added to the Mall — could never be suggested. Her call: **"expand that by A LOT."**
+- **Key framing that resolves the brand tension:** the shopping store list is **plumbing** (which stores the app knows
+  how to search), NOT curation. Her taste lives in the **Mall** and the **Style Star Edit**, which stay hers. So
+  expanding the search pool doesn't dilute "curated by Catherine" at all.
+- **⚠️ LIVE BUG FOUND: Mango is broken right now.** The URL in the app (`https://shop.mango.com/us/search?kw=`) returns
+  **404**, as do three other patterns tried. Mango is one of the 20 the AI picks from, so those suggestions currently
+  dead-end. **Decide: drop it, or Cath confirms a working search URL from her phone.**
+- **✅ Chico's fixed:** the working pattern is `https://www.chicos.com/store/search?q=` (not `/search?q=`).
+- **❌ Still unsolved: J.Jill** (several patterns all 404). **Cath to send the URL from her address bar after searching
+  on their site.** Also **Dillard's** sits behind a bot wall (377-byte response), unverified either way.
+- **Testing method + what it proves:** fetched every candidate search URL with a desktop UA and checked status, page
+  size, and whether the search term was echoed back. **26 verified working** (real page + term echoed). **~25 return
+  403** — that is a bot wall, NOT a broken link; importantly **eleven of those are already live in the app today**
+  (J.Crew, Anthropologie, Madewell, Express, H&M, Lululemon, Abercrombie, Revolve, Saks, Bloomingdale's, Aritzia), so
+  they are proven by real users. Only Mango / J.Jill / possibly Dillard's are genuinely broken.
+- **Cath's own additions, all tested:** Dillard's, Macy's, Neiman Marcus, Kohl's, Nordstrom Rack, Saks Off 5th, Zappos,
+  DSW, Banana Republic Factory, Tiffany, Gucci, Alice + Olivia, Veronica Beard, Good American, Lululemon, Alo, Tommy
+  Bahama, J.Jill, Ann Taylor, LOFT, Boden, **Izod, Lacoste, Sam Edelman, Tory Burch**. (Izod checked specifically for
+  womenswear before including — their site shows women's and men's equally, so it's fine.)
+- **❌ EXCLUDED by agreement: Shein and Temu** (quality and ethics).
+- **▶ DESIGN: tag every store, don't just list names.** Each entry should carry `price` tier, `sizes` carried
+  (petite/plus/tall/wide widths), and `strong` categories. Then the AI can choose properly — plus-size activewear goes
+  to stores that actually sell it, a budget shopper gets budget stores — which finally makes "every body, every age,
+  every budget" something the app ACTS on rather than just believes.
+- **Target: ~59 stores** (from 20), covering the gaps: department, off-price, shoe specialists (Zappos/DSW — there were
+  none), inclusive-first (Universal Standard, Eloquii, Torrid, Good American), classic (Ann Taylor, LOFT, Talbots,
+  J.Jill, Chico's, Boden), luxury (Tiffany, Gucci, Alice + Olivia, Veronica Beard, Net-a-Porter), budget (Quince,
+  Uniqlo, Lands' End, Kohl's, JCPenney).
+- **⚠️ AFFILIATE TRADE-OFF (flagged, decided to expand anyway):** later, only approved stores earn. A big list means many
+  suggestions earn $0 at first. Not a reason to stay small — a shopper who finds the right thing trusts you. But when
+  approvals land, bias the AI TOWARD approved stores while keeping the rest available. That's a one-line prompt change.
+- **Candidate list + raw test results:** session scratchpad `stores/` (`cand.json`, `results.txt`).
+
+### ▶ NEXT SESSION — START HERE (updated 2026-07-27, end of day)
+**The shopping-links fix is the top priority and the thing standing between Cath and real testers.** Everything is
+researched and decided; it just needs building. Read the three sections directly above first.
+1. **Build the shopping fix** (three parts: the `search` field, the card wording, closing the Google fallback), across
+   all six link-building features.
+2. **Expand the store list to ~59, tagged** with price / sizes / strengths, and wire the per-category size logic.
+3. **Fix the four "in your size" over-promises** in the copy.
+4. **Blocked on Cath:** the **J.Jill** search URL from her address bar; the **Mango** drop-or-keep decision; and whether
+   **Kohl's and JCPenney** belong in her list at all.
+5. Then everything previously queued: the two email projects, the Edit's still-empty Activewear category, the parked
+   Wardrobe features, and the legal chain (still waiting on Florida).
