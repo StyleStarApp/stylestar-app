@@ -3381,7 +3381,88 @@ Branch this session: `claude/style-star-9oayy3`. Short, high-value session; ever
      both are **GitHub's own squash-merge commits on published `main`**, authored under Cath's account.
      **Confirmed harmless; do NOT amend** (would rewrite published history and fork `main`).
 
-### ▶ NEXT SESSION — START HERE (updated 2026-07-27)
+**2026-07-27 (cont. — ▶ THE SHOPPING FIX BUILT: search terms, 66 tagged stores, honest size copy — PR #627, AWAITING CATH'S PREVIEW)**
+Branch this session: `claude/style-star-shopping-fix-e3escr`. Built items 1–3 of the plan agreed at the end of the
+previous session. **NOT merged — deliberately.** This touches shopping across all six features (the core of the app),
+so per the agreed plan it is sitting in **PR #627** for Cath to tap through on the Netlify deploy preview first.
+- ✅ **1. The AI now returns a short `search` term alongside the pretty `name`.** The card still reads "Blush Silk
+  Charmeuse Midi Wrap Dress"; the LINK searches "pink midi dress". This is the actual fix for "the link lands on a
+  search bar with wrong or zero results" — the app was typing the whole descriptive phrase into the store's search box.
+- ✅ **2. Store pool 20 → 66, each TAGGED** `{u:url, t:price tier, s:[size ranges carried], c:'what it is good for'}`
+  in a new **`STORES`** table (replaces the flat `storeUrls`, which is now derived from it so `linkStores` still works).
+  Zappos, the store Cath shops most, could never be suggested before. New shared helpers: **`_storeListForPrompt()`**
+  (renders the tagged list), **`_shopRules()`** (ONE block every feature uses, so the five hardcoded copies of the old
+  20-store string are gone), **`_shopCard()`** (one shared card), **`resolveStore()`** (normalisation).
+- ✅ **3. Google fallback closed.** `resolveStore()` normalises punctuation/spacing/case/`.com` plus an alias map, so
+  "Bloomingdale's", "J Crew", "Saks Fifth Avenue", "Zappos.com" all resolve; the card shows the RESOLVED name. A
+  genuinely unknown store now falls back to **Google Shopping** (`tbm=shop`, real products) instead of a web search.
+- ✅ **Per-category size logic (Cath's rule, kept literally).** Refine's "Pants fit" question → a direct
+  **petite / regular / tall / plus multi-select** (`prefs.sizes.fit`); old `pantsfit` answers **migrate on read** via
+  `_fitSizes()` (shorter/cropped→Petite, longer→Tall), so existing saved users keep their answer. New `_sizeGuidance()`
+  tells the AI to add a size word **only** to pants/jeans/skirts/dresses/coats/jackets/tops/activewear/swim, and
+  **never** to bags, jewelry, sunglasses, hats, scarves, belts or shoes, plus "never give her fewer or lesser ideas
+  because of her size."
+- ✅ **Honest copy.** The four "in your size" promises → "in your style" (Wardrobe how-to, trending card link, teaser
+  card link, FAQ). The FAQ's stale **"Have It / Want It"** wording updated to the **wishlist** the feature actually is.
+  Buttons say **"Find it →"** not "Shop →" (promises results, not a guaranteed product page) via a single
+  **`FIND_LABEL`** constant — ▶ Cath's to reword in one place.
+- ⚠️ **TWO REAL PRE-EXISTING BUGS found and fixed** (both live on `main` today, both in the stylist chat):
+  1. **`linkStores` searched for an EMPTY STRING.** `item.replace(/^[\s,a-z]+/i,'')` was meant to strip lead-in words
+     but, with the `i` flag, ate the entire phrase whenever it was all letters. "Try the navy linen blazer from
+     Nordstrom" produced `nordstrom.com/sr?keyword=` with nothing after the `=`. **This is very likely part of what
+     Cath was seeing.** Replaced with `_searchableItem()` (drops lead-in words, keeps the last ≤4 words).
+  2. **Nested anchors.** The bare-store-name pass guarded against re-linking using the ORIGINAL `text`, not the
+     partly-linked result, so it re-wrapped names already inside a link → nested `<a>` → empty-text links. Fixed with
+     `_outsideLinks()`, which only replaces outside existing anchors. Bare store mentions now link to the shop FRONT
+     (`_storeHome()`), not an empty search page.
+- **VERIFICATION (all in scratchpad `render/`):** a 48-check suite (`verify.js`) driving the REAL functions in
+  Chromium with `fetch` stubbed — link building, store resolution, card render, size rule, legacy migration, the
+  Wardrobe carousel end-to-end, chat linking, the Refine screen; layout measured at **8 widths (320→1280)**; JS parse,
+  mojibake, div balance. **Measurement caught a regression I would have missed by eye:** the longer button label
+  wrapped to **3 lines** in the 128px Wardrobe cards and 3 of 6 grid cards → fixed with `white-space:nowrap`, tighter
+  `.shop-link` padding (20px→10px), and choosing **"Find it"** over "Find this" (measured: "Find it" lands the outfit
+  board at exactly main's height, "Find this" cost +32px of wrapping).
+- **STORE URL TESTING (66 URLs, `test-stores.js`):** 19 **VERIFIED** (page size varies by search term = real
+  server-side search): Target, Amazon, Mango, Zappos, Nordstrom Rack, LOFT, J.Jill, J.McLaughlin, Universal Standard,
+  Good American, Petite Studio, Alo, Everything But Water, Farm Rio, Izod, Alice + Olivia, Spanx, Veronica Beard,
+  Quay. 19 client-side-rendered (200 + full page, standard patterns). 23 bot-walled here — **11 of those are live in
+  the app today and work for real users**, so a 403 proves nothing. 5 blocked at the TLS edge (Revolve — also live
+  today, Net-a-Porter, Gucci, Torrid, Eloquii). **No broken URLs found beyond Mango** (already fixed).
+  - ⚠️ **False alarm worth remembering:** Saks Off 5th `/search?q=` appeared to redirect to the homepage, which looked
+    like the Mango-class bug. The **control test settled it**: its homepage returns a byte-identical 912-byte shell,
+    as do DSW (4732) and Dillard's (377). They are bot walls, not broken paths. Always fetch the homepage as a control
+    before declaring a search URL broken.
+  - ⚠️ **Browser verification is NOT available here.** Chromium gets `ERR_CONNECTION_RESET` to retail sites with and
+    without the proxy (curl works fine). Don't burn time on it; curl + the page-size-varies test is the method.
+  - The old-vs-new search-term comparison was **mostly inconclusive** because most of these are SPAs whose server HTML
+    barely changes. Where results ARE server-rendered the short term is clearly better: Petite Studio 26→70 product
+    links, Everything But Water 13→265 prices, Spanx 25→73. **The definitive check is Cath tapping the preview.**
+- ▶ **WHAT THIS DOES NOT DO (expectation set with Cath):** no photos, no real product deep links. Those need affiliate
+  product feeds. Reminder that **money-path step 7 is really TWO jobs**: the Mall + Edit are a genuine link swap (an
+  afternoon); the AI shopping picks need a real feed integration (search the feed, render photos, deep-link) —
+  substantially more work. None of this session's work is wasted then: the search fallback stays useful for anything a
+  feed can't match.
+- ▶ **TWO THINGS ONLY CATH CAN DO** (already on her homework list, now the blocking items): (1) **tap through 10–15
+  suggestions** and say where the searches land wrong — Claude can verify a link returns results, only she can judge
+  whether "pink midi dress" is right for a blush silk wrap dress; (2) **correct the store tags** (price tier / sizes
+  carried / category strengths) — they are Claude's best guess and are marked in the code as needing her eye.
+- Minor pre-existing things noticed, NOT changed: the `s-shopstyle` static markup still holds the deleted subtitle
+  "Chosen with you in mind." (the JS overwrites it on open, so users never see it); and there is a 10px horizontal
+  overflow on the shop grid at a 320px viewport — **verified identical on `main`**, so not a regression.
+- **Tooling lessons:** `pkill -f "<pattern>"` kills its own shell when the pattern matches the running command (lost a
+  heredoc and the local server twice — start it with `(nohup … &)` instead). `git cherry-pick` has **no `-q` flag**
+  (exits 129 after `checkout -B` already moved the branch; recover via `git reflog`). Multi-paragraph commit messages
+  must go through `git commit -F <file>` — unescaped apostrophes in `-m` break the shell and the commit silently
+  doesn't land.
+
+### ▶ NEXT SESSION — START HERE (updated 2026-07-27, evening)
+**▶ FIRST: is PR #627 (the shopping fix) merged?** It was left open deliberately for Cath to tap through on the
+Netlify deploy preview — she should check that the links land somewhere sensible before it goes live. If she has
+given feedback on where searches land wrong, tune the `search`-term guidance in `_shopRules()`; if she has corrected
+any store tags, update the `STORES` table. Then merge.
+Everything below this line was the plan before that PR, and still stands:
+
+### ▶ (previous plan, 2026-07-27)
 A big content day shipped (PRs #610–#615): **What's Trending 7 → 15**, the **Style Star Edit 10 → 15**, and the
 **Mall 23 → 25**. Every gap Claude flagged in the Edit is filled except **Activewear**. Both NEW pills will be lit
 for returning visitors. Nothing broken; Cath confirmed all the new links work on her phone.

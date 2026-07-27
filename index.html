@@ -510,6 +510,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .pref-title{display:flex;align-items:center;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:700;color:#1a1a1a;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
 .pref-title::before{content:"";flex:none;width:20px;height:20px;margin-right:5px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3CradialGradient id='g' cx='42%25' cy='36%25' r='70%25'%3E%3Cstop offset='0' stop-color='%23FFFCEF'/%3E%3Cstop offset='.4' stop-color='%23F9E5A0'/%3E%3Cstop offset='.75' stop-color='%23F0CB5E'/%3E%3Cstop offset='1' stop-color='%23E6B845'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath fill='url(%23g)' stroke='%23B7BCC2' stroke-width='1.1' stroke-linejoin='round' d='M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z'/%3E%3C/svg%3E") no-repeat center/contain}
 .pref-sub{font-size:14px;color:#666;margin-bottom:0.7rem;line-height:1.5}
+.pref-note-sm{font-size:12.5px;color:#6f6a63;line-height:1.45;margin-top:8px}
 .pref-private{font-size:12.5px;color:#7a7a7a;background:#f6f4ef;border-radius:4px;padding:7px 10px;margin-bottom:0.9rem;line-height:1.45}
 .pref-label{font-size:12px;font-weight:700;color:#8a6d1e;margin-bottom:9px;text-transform:uppercase;letter-spacing:0.11em}
 .pref-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem}
@@ -590,7 +591,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .shop-trunc{text-align:center;font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:12px}
 .shop-item-name{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px;line-height:1.3}
 .shop-item-store{font-size:12px;color:#555;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;font-weight:600}
-.shop-link{display:inline-block;font-size:11px;font-weight:600;color:#fff;background:#1a1a1a;padding:8px 20px;border-radius:20px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:opacity 0.2s}
+/* nowrap + tighter padding: "Find this" is longer than the old "Shop" and was
+   wrapping to three lines in the 128px Wardrobe cards. */
+.shop-link{display:inline-block;font-size:11px;font-weight:600;color:#fff;background:#1a1a1a;padding:8px 10px;border-radius:20px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;transition:opacity 0.2s}
 .shop-link:hover{opacity:0.85}
 .shop-loading{text-align:center;padding:2rem 0;color:#444;font-size:17.5px;font-weight:500}
 .shop-star-wrap{position:relative;width:86px;height:86px;margin:2px auto 14px}
@@ -2624,7 +2627,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="wdr-tabhint">Tap either list</div>
 
   <div class="wdr-pane" data-pane="list">
-    <div class="wdr-howto" id="wdrHowto"><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>heart</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your size and style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span><span class="hw-brief">Tap the <svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg> to add &middot; tap <b>Ideas</b> to shop</span></div>
+    <div class="wdr-howto" id="wdrHowto"><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>heart</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span><span class="hw-brief">Tap the <svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg> to add &middot; tap <b>Ideas</b> to shop</span></div>
     <div class="wdr-card">
       <div id="wdrListBody"></div>
       <div class="wdr-add">
@@ -2667,7 +2670,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="faq-item"><div class="faq-q">Is my information private?</div><div class="faq-a">Yes. We use your details only to personalize your styling and save your results, we never sell them, and you can read exactly how we handle everything in our <span class="lnk" onclick="showPrivacy()">Privacy Policy</span> and <span class="lnk" onclick="showTerms()">Terms of Service</span>.</div></div>
       <div class="faq-item"><div class="faq-q">Do I have to take the quiz?</div><div class="faq-a">Not at all. You're welcome to chat with your stylist, analyze a photo, or browse and shop anytime. The quiz helps us understand the nuances of your style so everything feels more personal, but it's completely optional.</div></div>
       <div class="faq-item"><div class="faq-q">What is my Style Portrait?</div><div class="faq-a">Your Style Portrait is a snapshot of your personal style from the quiz. It highlights your natural preferences and becomes the foundation for the guidance, shopping ideas, and advice you'll get throughout the app.</div></div>
-      <div class="faq-item"><div class="faq-q">How does Style Star help me build my wardrobe?</div><div class="faq-a">Style Star includes a list feature, called <i>Your Wardrobe</i>, to help you build a complete, well-rounded closet. I took the same checklist I use in my real closet consultations and turned it into an easy Have It / Want It list, so you can see which pieces you already own and which ones would fill in the gaps. Then just tap anything you&rsquo;d like for shopping ideas in your size, or peek at <i>What&rsquo;s Trending</i> to see what&rsquo;s fresh right now.</div></div>
+      <div class="faq-item"><div class="faq-q">How does Style Star help me build my wardrobe?</div><div class="faq-a">Style Star includes a list feature, called <i>Your Wardrobe</i>, to help you build a complete, well-rounded closet. I took the same checklist I use in my real closet consultations and turned it into an easy wishlist, so you can tap a heart on anything you&rsquo;d love to add and see at a glance what would round out your closet. Then just tap anything you&rsquo;d like for shopping ideas matched to your style, or peek at <i>What&rsquo;s Trending</i> to see what&rsquo;s fresh right now.</div></div>
       <div class="faq-item"><div class="faq-q">Can I share my results?</div><div class="faq-a">Yes, and we'd love that! After the quiz, you'll get two beautiful keepsakes to share: your Style Constellation, a star map of your signature style, and your Style Mood Board, a collage of your style vibe. Text either one to a friend or post it on Instagram. It's a fun way to celebrate your style, and to invite the women you love to discover theirs.</div></div>
       <div class="faq-item"><div class="faq-q">Can I upload a photo for style advice?</div><div class="faq-a">Yes. Share an outfit or a piece you're considering, and your stylist will give you thoughtful feedback to elevate the look while keeping it true to you. Your photo is processed in real time and never stored on our servers.</div></div>
       <div class="faq-item"><div class="faq-q">Can I retake the quiz or change my results?</div><div class="faq-a">Yes, as many times as you want. Your style can evolve, and your results can grow right along with it.</div></div>
@@ -3400,10 +3403,11 @@ function _renderTips(tips){
 function _renderShop(items){
   const c=document.getElementById('pShopList');
   c.innerHTML=(items||[]).map(it=>{
-    const url=getStoreUrl(it.store,it.name);
+    const url=getStoreUrl(it.store,it.name,it.search);
     const emoji=photoShopEmoji[it.category]||'✨';
     const why=it.why?' &middot; '+_esc(it.why):'';
-    return `<div class="shoprow"><div class="si">${emoji}</div><div class="sb"><strong>${_esc(it.name||'')}</strong><span>${_esc(it.store||'')}${why}</span></div><a class="go" href="${url}" target="_blank" rel="noopener">Shop &rarr;</a></div>`;
+    const st=resolveStore(it.store)||it.store||'';
+    return `<div class="shoprow"><div class="si">${emoji}</div><div class="sb"><strong>${_esc(it.name||'')}</strong><span>${_esc(st)}${why}</span></div><a class="go" href="${url}" target="_blank" rel="noopener">${FIND_LABEL}</a></div>`;
   }).join('');
 }
 async function runPhotoAnalysis(){
@@ -3412,7 +3416,6 @@ async function runPhotoAnalysis(){
   var _ll0=document.getElementById('lookLead');if(_ll0)_ll0.classList.remove('on');
   var _cp0=document.getElementById('clipPhoto');if(_cp0)_cp0.style.display='none';
   const occ=photoOccasion;
-  const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
   const prompt=`You are Catherine, a warm, honest personal stylist with 20 years of experience. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} has uploaded a photo of an outfit she is wearing${occ?' for '+occ:''} and wants your real styling help: honest feedback, the finishing touches that elevate it, and specific pieces to complete it. She came for your expert eye, not just compliments. Make her look genuinely better and leave her with something she did not walk in with.
 
 FIRST: If the photo only shows a face/headshot, or you cannot see most of the outfit, respond with EXACTLY this JSON:
@@ -3421,8 +3424,9 @@ FIRST: If the photo only shows a face/headshot, or you cannot see most of the ou
 If you CAN see the outfit, give her a real styling session with three parts:
 1. "celebrate": 1-2 sentences naming what is SPECIFICALLY working and why, a genuine earned observation (a color pairing, a proportion, a smart styling choice). Be specific and real; skip generic praise like "you look amazing." If little stands out, honestly credit a good instinct rather than gushing.
 2. "tips": 2-3 finishing touches that genuinely ELEVATE the look, most impactful first. The first is the single change that takes it from nice to striking; then one or two more. Frame as elevation ("to take this further, try / add / swap"), never as fixing a flaw, and be specific about what and why. Each: {"title": 2-4 words, "text": one clear, encouraging sentence}.
-3. "shop": 3-4 specific shoppable pieces that COMPLETE or pair with what she is ALREADY wearing (the jacket, shoes, bag, belt, or jewelry your tips call for). Each: {"category": one of top/bottom/dress/jacket/shoes/bag/jewelry/belt/accessory, "name": specific (color + style + item, e.g. "Camel Structured Blazer"), "store": ONE of (${stores}), "why": 2-4 words on how it helps}.
+3. "shop": 3-4 specific shoppable pieces that COMPLETE or pair with what she is ALREADY wearing (the jacket, shoes, bag, belt, or jewelry your tips call for). Each: {"category": one of top/bottom/dress/jacket/shoes/bag/jewelry/belt/accessory, "name": specific (color + style + item, e.g. "Camel Structured Blazer"), "search": a short plain 2-4 word search term that returns results in that store's search box (e.g. "camel blazer"), "store": one from the store list below, "why": 2-4 words on how it helps}.
 ${occ?'Tailor the finishing touches and the shopping specifically to '+occ+'.\n':''}${getPrefsForPrompt()}
+${_shopRules()}
 
 VOICE, generous honesty (be direct):
 - Be genuinely helpful, not just nice. She came for your expert eye, not compliments. A great stylist earns trust by seeing what others miss and saying it plainly but warmly. Empty praise has no value.
@@ -3439,7 +3443,7 @@ GUARDRAILS, never break these:
 - If there are multiple people, style only the main woman.
 
 Respond with ONLY valid JSON in this exact format, no other text:
-{"celebrate":"...","tips":[{"title":"...","text":"..."}],"shop":[{"category":"jacket","name":"...","store":"...","why":"..."}]}`;
+{"celebrate":"...","tips":[{"title":"...","text":"..."}],"shop":[{"category":"jacket","name":"...","search":"...","store":"...","why":"..."}]}`;
 
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:800,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:photoType,data:photoData}},{type:"text",text:prompt}]}]})});
@@ -3487,32 +3491,174 @@ Respond with ONLY valid JSON in this exact format, no other text:
     _revealPhotoRes();
   }
 }
-const storeUrls={
-  'Nordstrom':'https://www.nordstrom.com/sr?keyword=',
-  'J.Crew':'https://www.jcrew.com/r/search/?N=0&Nloc=en&Ntrm=',
-  'Zara':'https://www.zara.com/us/en/search?searchTerm=',
-  'Target':'https://www.target.com/s?searchTerm=',
-  'Amazon':'https://www.amazon.com/s?k=',
-  'Anthropologie':'https://www.anthropologie.com/search?q=',
-  'Express':'https://www.express.com/exp/search?q=',
-  'Mango':'https://shop.mango.com/us/search?kw=',
-  'Revolve':'https://www.revolve.com/r/search?query=',
-  'Abercrombie':'https://www.abercrombie.com/shop/us/search?searchTerm=',
-  'H&M':'https://www2.hm.com/en_us/search-results.html?q=',
-  'Banana Republic':'https://bananarepublic.gap.com/browse/search.do?searchText=',
-  'Madewell':'https://www.madewell.com/search?q=',
-  'Everlane':'https://www.everlane.com/search?q=',
-  'Saks':'https://www.saksfifthavenue.com/search?q=',
-  'Bloomingdales':'https://www.bloomingdales.com/shop/search?keyword=',
-  'Lululemon':'https://shop.lululemon.com/search?Ntt=',
-  'Athleta':'https://athleta.gap.com/browse/search.do?searchText=',
-  'Old Navy':'https://oldnavy.gap.com/browse/search.do?searchText=',
-  'Aritzia':'https://www.aritzia.com/us/en/search?q='
+// ── THE STORE POOL ──────────────────────────────────────────────────────────
+// This is PLUMBING, not curation: it is simply which stores the app knows how to
+// search. Catherine's taste lives in the Style Star Edit and the Mall. Expanding
+// this list does not dilute "curated by Catherine" at all.
+//   u = search URL (term is appended, URL-encoded)
+//   t = price tier: budget | mid | luxe
+//   s = size ranges genuinely carried: petite, plus, tall, wide (shoe widths)
+//   c = what this store is genuinely good for
+// ▶ CATH: the t/s/c tags are Claude's best guess and are the one part of this
+//   table that needs YOUR eye. Correcting them is what lets the app send a woman
+//   to the right store instead of a plausible one. Nothing breaks if a tag is
+//   wrong; the suggestions just get less sharp.
+// ▶ RULE: every store here must be a place a woman can browse and BUY AND KEEP a
+//   specific item. No subscription styling boxes, no rentals.
+const STORES={
+  // Department stores and multi-brand
+  'Nordstrom':{u:'https://www.nordstrom.com/sr?keyword=',t:'mid',s:['petite','plus','tall','wide'],c:'almost everything, dresses, shoes, denim, occasion'},
+  "Macy's":{u:'https://www.macys.com/shop/search?keyword=',t:'mid',s:['petite','plus','tall','wide'],c:'everyday, dresses, shoes, handbags'},
+  "Dillard's":{u:'https://www.dillards.com/search?text=',t:'mid',s:['petite','plus'],c:'dresses, occasion, workwear, shoes'},
+  'Belk':{u:'https://www.belk.com/search/?q=',t:'mid',s:['petite','plus'],c:'everyday, dresses, shoes'},
+  'Bloomingdales':{u:'https://www.bloomingdales.com/shop/search?keyword=',t:'luxe',s:['petite','plus'],c:'designer, dresses, denim, shoes'},
+  'Saks':{u:'https://www.saksfifthavenue.com/search?q=',t:'luxe',s:['petite','plus'],c:'designer, occasion, bags, shoes'},
+  'Neiman Marcus':{u:'https://www.neimanmarcus.com/search.jsp?q=',t:'luxe',s:[],c:'designer, occasion, bags, shoes'},
+  'Bergdorf Goodman':{u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'luxe',s:[],c:'top designer, occasion, jewelry'},
+  'Net-a-Porter':{u:'https://www.net-a-porter.com/en-us/shop/search?q=',t:'luxe',s:[],c:'designer, occasion, bags'},
+  'Nordstrom Rack':{u:'https://www.nordstromrack.com/search?query=',t:'budget',s:['petite','plus','wide'],c:'deals on brands, shoes, denim, basics'},
+  'Saks Off 5th':{u:'https://www.saksoff5th.com/search?q=',t:'budget',s:['plus'],c:'designer deals, dresses, bags'},
+  'TJ Maxx':{u:'https://tjmaxx.tjx.com/store/shop/search?q=',t:'budget',s:['plus'],c:'deals, everyday, shoes, bags'},
+  // Contemporary and mainstream
+  'J.Crew':{u:'https://www.jcrew.com/r/search/?N=0&Nloc=en&Ntrm=',t:'mid',s:['petite','plus','tall'],c:'classic, blazers, trousers, sweaters'},
+  'Zara':{u:'https://www.zara.com/us/en/search?searchTerm=',t:'budget',s:[],c:'trend-forward, blazers, dresses, shoes'},
+  'Mango':{u:'https://shop.mango.com/us/en/search/women?q=',t:'mid',s:['petite'],c:'european trends, tailoring, linen'},
+  'Target':{u:'https://www.target.com/s?searchTerm=',t:'budget',s:['plus','tall'],c:'everyday basics, activewear, swim'},
+  'Amazon':{u:'https://www.amazon.com/s?k=',t:'budget',s:['petite','plus','tall','wide'],c:'almost everything, basics, accessories'},
+  'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'mid',s:['petite','plus'],c:'romantic, prints, dresses'},
+  'Express':{u:'https://www.express.com/exp/search?q=',t:'mid',s:['petite','tall'],c:'workwear, going out, denim'},
+  'Revolve':{u:'https://www.revolve.com/r/search?query=',t:'mid',s:[],c:'trendy, going out, vacation, dresses'},
+  'Abercrombie':{u:'https://www.abercrombie.com/shop/us/search?searchTerm=',t:'mid',s:['petite','plus','tall'],c:'denim, dresses, everyday'},
+  'H&M':{u:'https://www2.hm.com/en_us/search-results.html?q=',t:'budget',s:['plus'],c:'trends, basics, low prices'},
+  'Banana Republic':{u:'https://bananarepublic.gap.com/browse/search.do?searchText=',t:'mid',s:['petite','tall'],c:'workwear, tailoring, cashmere'},
+  'Banana Republic Factory':{u:'https://bananarepublicfactory.gapfactory.com/browse/search.do?searchText=',t:'budget',s:['petite','tall'],c:'workwear for less, basics'},
+  'Madewell':{u:'https://www.madewell.com/search?q=',t:'mid',s:['petite','plus','tall'],c:'denim, casual, leather'},
+  'Everlane':{u:'https://www.everlane.com/search?q=',t:'mid',s:[],c:'minimalist, quality basics'},
+  'Aritzia':{u:'https://www.aritzia.com/us/en/search?q=',t:'mid',s:[],c:'elevated basics, blazers, outerwear'},
+  'Uniqlo':{u:'https://www.uniqlo.com/us/en/search?q=',t:'budget',s:[],c:'basics, layering, lightweight outerwear'},
+  'Quince':{u:'https://www.quince.com/search?q=',t:'budget',s:[],c:'affordable luxury, cashmere, silk'},
+  'Old Navy':{u:'https://oldnavy.gap.com/browse/search.do?searchText=',t:'budget',s:['petite','plus','tall'],c:'everyday basics, denim, activewear'},
+  "Lands' End":{u:'https://www.landsend.com/search?q=',t:'budget',s:['petite','plus','tall'],c:'classic, swim, outerwear'},
+  'Boden':{u:'https://www.bodenusa.com/en-us/search?q=',t:'mid',s:['petite','tall'],c:'british prints, dresses, color'},
+  'Farm Rio':{u:'https://farmrio.com/search?q=',t:'mid',s:[],c:'bold prints, color, vacation'},
+  'Tommy Bahama':{u:'https://www.tommybahama.com/search?q=',t:'mid',s:[],c:'resort, linen, coastal'},
+  'J.McLaughlin':{u:'https://www.jmclaughlin.com/search?q=',t:'mid',s:[],c:'coastal classic, prints, polish'},
+  'Izod':{u:'https://www.izod.com/search?q=',t:'budget',s:[],c:'casual classic, polos'},
+  'Lacoste':{u:'https://www.lacoste.com/us/search/?q=',t:'mid',s:[],c:'sporty classic, polos'},
+  // Classic and easy-to-wear
+  'Ann Taylor':{u:'https://www.anntaylor.com/search?q=',t:'mid',s:['petite','tall'],c:'workwear, dresses, blazers'},
+  'LOFT':{u:'https://www.loft.com/search?q=',t:'mid',s:['petite','plus','tall'],c:'relaxed workwear, dresses, denim'},
+  'Talbots':{u:'https://www.talbots.com/search?q=',t:'mid',s:['petite','plus'],c:'classic, workwear, knits'},
+  'J.Jill':{u:'https://www.jjill.com/SearchDisplay?searchTerm=',t:'mid',s:['petite','plus'],c:'relaxed, easy knits, linen'},
+  "Chico's":{u:'https://www.chicos.com/store/search?q=',t:'mid',s:['petite'],c:'relaxed, travel-friendly, jewelry'},
+  // Size-inclusive specialists
+  'Universal Standard':{u:'https://www.universalstandard.com/search?q=',t:'mid',s:['plus'],c:'size-inclusive basics, tailoring'},
+  'Eloquii':{u:'https://www.eloquii.com/search?q=',t:'mid',s:['plus'],c:'plus dresses, workwear, occasion'},
+  'Torrid':{u:'https://www.torrid.com/search?q=',t:'mid',s:['plus'],c:'plus everyday, denim, lingerie'},
+  'Lane Bryant':{u:'https://www.lanebryant.com/search?q=',t:'mid',s:['plus'],c:'plus basics, bras, denim'},
+  'Good American':{u:'https://www.goodamerican.com/search?q=',t:'mid',s:['plus'],c:'denim, curve-friendly fit'},
+  'Petite Studio':{u:'https://petitestudionyc.com/search?q=',t:'mid',s:['petite'],c:'petite dresses and workwear'},
+  // Activewear and swim
+  'Lululemon':{u:'https://shop.lululemon.com/search?Ntt=',t:'mid',s:[],c:'activewear, leggings, athleisure'},
+  'Athleta':{u:'https://athleta.gap.com/browse/search.do?searchText=',t:'mid',s:['petite','plus','tall'],c:'activewear, swim, travel'},
+  'Alo':{u:'https://www.aloyoga.com/search?q=',t:'mid',s:[],c:'activewear, leggings, athleisure'},
+  'Everything But Water':{u:'https://www.everythingbutwater.com/search?q=',t:'mid',s:['plus'],c:'swimwear, coverups, resort'},
+  // Foundations
+  'Spanx':{u:'https://www.spanx.com/search?q=',t:'mid',s:['plus'],c:'shapewear, leggings, ponte'},
+  'SKIMS':{u:'https://skims.com/search?q=',t:'mid',s:['plus'],c:'shapewear, bras, underwear, loungewear'},
+  // Shoes
+  'Zappos':{u:'https://www.zappos.com/search?term=',t:'mid',s:['wide'],c:'shoes, wide and narrow widths, boots, sneakers'},
+  'DSW':{u:'https://www.dsw.com/en/us/search?q=',t:'budget',s:['wide'],c:'shoes for less, boots, sneakers'},
+  'Sam Edelman':{u:'https://www.samedelman.com/search?q=',t:'mid',s:[],c:'shoes, boots, sandals'},
+  // Designer and jewelry
+  'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'luxe',s:[],c:'occasion, prints, statement dresses'},
+  'Veronica Beard':{u:'https://www.veronicabeard.com/search?q=',t:'luxe',s:[],c:'blazers, tailoring'},
+  'Tory Burch':{u:'https://www.toryburch.com/en-us/search/?q=',t:'luxe',s:[],c:'bags, shoes, polished classics'},
+  'Gucci':{u:'https://www.gucci.com/us/en/search?searchString=',t:'luxe',s:[],c:'designer bags, shoes'},
+  'Tiffany':{u:'https://www.tiffany.com/search/?q=',t:'luxe',s:[],c:'fine jewelry'},
+  'Kendra Scott':{u:'https://www.kendrascott.com/search?q=',t:'mid',s:[],c:'jewelry, color, everyday pieces'},
+  // Eyewear
+  'Sunglass Hut':{u:'https://www.sunglasshut.com/us/search?q=',t:'mid',s:[],c:'sunglasses, designer frames'},
+  'Warby Parker':{u:'https://www.warbyparker.com/search?q=',t:'mid',s:[],c:'sunglasses, eyeglasses'},
+  'Quay':{u:'https://www.quayaustralia.com/search?q=',t:'budget',s:[],c:'trendy sunglasses'}
 };
-function getStoreUrl(store,item){
-  const searchTerm=encodeURIComponent(item);
-  if(storeUrls[store])return storeUrls[store]+searchTerm;
-  return'https://www.google.com/search?q='+encodeURIComponent(item+' '+store);
+// Kept as a plain name→url map because linkStores() and older callers use it.
+const storeUrls={};Object.keys(STORES).forEach(function(k){storeUrls[k]=STORES[k].u});
+
+// Resolve whatever the AI called a store to a real key in STORES. Handles
+// punctuation, possessives and spacing ("Bloomingdale's", "J Crew", "LOFT").
+const _STORE_ALIAS={'saksfifthavenue':'Saks','saksoff5thavenue':'Saks Off 5th','offthfth':'Saks Off 5th','netaporter':'Net-a-Porter','aliceolivia':'Alice + Olivia','aliceandolivia':'Alice + Olivia','marshalls':'TJ Maxx','tjx':'TJ Maxx','aloyoga':'Alo','landsend':"Lands' End",'jjill':'J.Jill','jcrewfactory':'J.Crew','gapfactory':'Banana Republic Factory','tiffanyco':'Tiffany','universalstd':'Universal Standard','bodenusa':'Boden','quayaustralia':'Quay'};
+function _normStore(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'')}
+function resolveStore(name){
+  if(!name)return'';
+  if(STORES[name])return name;
+  const n=_normStore(name);
+  if(!n)return'';
+  const keys=Object.keys(STORES);
+  let k=keys.find(function(s){return _normStore(s)===n});
+  if(k)return k;
+  if(_STORE_ALIAS[n])return _STORE_ALIAS[n];
+  // tolerate a trailing "s", a leading "the", or a ".com"
+  const n2=n.replace(/^the/,'').replace(/com$/,'').replace(/s$/,'');
+  k=keys.find(function(s){return _normStore(s).replace(/^the/,'').replace(/s$/,'')===n2});
+  return k||'';
+}
+// Build the outbound link. `search` is the short, searchable term the AI gives us
+// (e.g. "pink midi dress"); `item` is the pretty descriptive name shown on the
+// card. We always query the SEARCH term, because a full descriptive name typed
+// into a store's search box returns little or nothing.
+function getStoreUrl(store,item,search){
+  const term=encodeURIComponent(String(search||item||'').trim());
+  const key=resolveStore(store);
+  if(key)return STORES[key].u+term;
+  // Unknown store: still get her to real products rather than a web page of links.
+  return'https://www.google.com/search?tbm=shop&q='+term;
+}
+// The store list the AI picks from, rendered compactly with its tags so it can
+// match a woman to the right store instead of a plausible one.
+function _storeListForPrompt(){
+  return Object.keys(STORES).map(function(k){
+    const s=STORES[k];
+    return k+' ['+s.t+(s.s.length?'; carries '+s.s.join('/'):'')+'; '+s.c+']';
+  }).join('\n');
+}
+// Size ranges are a per-CATEGORY thing, never a global filter. A petite woman
+// still wears regular-length dresses, activewear, bags and jewelry, so she must
+// never end up with fewer options than anyone else because of her size.
+function _sizeGuidance(){
+  const f=_fitSizes().filter(function(x){return x!=='Regular'});
+  let s='\nSIZE RULE, follow exactly:\n'+
+    '- Add a size word to "search" ONLY where fit genuinely depends on it: pants, jeans, trousers, skirts, dresses, coats, jackets, blazers, tops, activewear and swim.\n'+
+    '- NEVER add a size word, and never narrow the store choice, for bags, jewelry, sunglasses, hats, scarves, belts or shoes. Those suit everyone.\n';
+  if(f.length){
+    s+='- She usually shops '+f.join(' and ').toLowerCase()+'. For fit-dependent items only, lead the search term with that word (for example "'+f[0].toLowerCase()+' wide leg trousers") and prefer a store that carries it.\n'+
+       '- Never give her fewer or lesser ideas because of her size. She sees the same full range as everyone else.\n';
+  }
+  return s;
+}
+// One shared block so all six shopping features ask for the same thing and stay
+// consistent. The "search" field is what actually makes the links work.
+function _shopRules(){
+  return '\nPICK THE STORE from this list ONLY, using the name exactly as written:\n'+_storeListForPrompt()+
+    '\n\nFOR EVERY ITEM GIVE BOTH:\n'+
+    '- "name": the pretty descriptive name she reads on the card (color, fabric, style, item), for example "Blush Silk Midi Wrap Dress".\n'+
+    '- "search": a SHORT plain search term of 2 to 4 words that will actually return results typed into that store\'s search box, for example "pink midi dress". Plain everyday words only: no fabric-and-color pile-ups, no brand names, no punctuation. This is what the shopping link searches, so it matters more than the pretty name.\n'+
+    _sizeGuidance()+
+    '- Match the store to her using the tags above, including her budget range.\n';
+}
+// ▶ CATH: this is the wording on every shopping button, in ONE place. It says
+// "Find it" rather than "Shop" because the link runs a search at that store, so
+// it should promise her results to look through, not one guaranteed product
+// page. Change the words here and they change everywhere.
+const FIND_LABEL='Find it &rarr;';
+// One shared card so all four grid features stay identical.
+function _shopCard(item,topHtml){
+  const key=resolveStore(item.store);
+  const url=getStoreUrl(item.store,item.name,item.search);
+  return '<div class="shop-card"><div>'+(topHtml||'')+
+    '<div class="shop-item-name">'+_esc(item.name||'')+'</div>'+
+    '<div class="shop-item-store">'+_esc(key||item.store||'')+'</div></div>'+
+    '<a href="'+url+'" target="_blank" rel="noopener" class="shop-link">'+FIND_LABEL+'</a></div>';
 }
 async function genOutfits(source){
   const sectionId=source==='quiz'?'shopSection':(source==='page'?null:'shopSectionPhoto');
@@ -3533,20 +3679,17 @@ Style notes: ${archNames.join(', ')}${getPrefsForPrompt()}
 
 For each item provide:
 - category: one of "top", "bottom", "dress", "jacket", "shoes", "bag", "jewelry", "activewear"
-- name: A specific item name (e.g. "Fitted Navy Blazer" or "Gold Hoop Earrings" — be specific about color, style, fabric)
-- store: ONE store (pick from: Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia)
-
+${_shopRules()}
 RULES:
 - Match every suggestion to her specific slider positions
 - NEVER suggest items on her never-wear list or in colors she skips
 - If she has color preferences, prioritize those colors
-- If she has size info, suggest items that come in her size range
 - Include a mix of categories across the 6 items
 - Include a range of price points
-- Be very specific — not "a nice top" but "Ribbed Cream Mock-Neck Tank"
+- Be very specific in "name" — not "a nice top" but "Ribbed Cream Mock-Neck Tank"
 
 Respond with ONLY valid JSON:
-{"items":[{"category":"top","name":"Item Name","store":"Store Name"}]}`;
+{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}`;
 
   const catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
@@ -3559,14 +3702,7 @@ Respond with ONLY valid JSON:
     const parsed=JSON.parse(clean);
     let html='<div class="shop-grid">';
     parsed.items.forEach(item=>{
-      const url=getStoreUrl(item.store,item.name);
-      const emoji=catEmoji[item.category]||'✨';
-      html+=`<div class="shop-card">
-        <div><div class="shop-emoji">${emoji}</div>
-        <div class="shop-item-name">${item.name}</div>
-        <div class="shop-item-store">${item.store}</div></div>
-        <a href="${url}" target="_blank" rel="noopener" class="shop-link">Shop →</a>
-      </div>`;
+      html+=_shopCard(item,'<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
     });
     html+='</div>';
     html+='<div class="shop-refresh"><button class="shop-refresh-btn" onclick="genOutfits(\''+source+'\')">↻ Show me different options</button></div>';
@@ -3597,7 +3733,7 @@ async function shopMyStyle(){
     sub='Ideas in the vibe of the look you shared';
   }
   var subEl=document.getElementById('shopSubPhoto');if(subEl)subEl.textContent=sub;
-  var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n- name: A specific item name (be specific about color, style, fabric)\n- store: ONE store (pick from: Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia)\n\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute and overrides every other suggestion.\n- Prioritize her color preferences and size range if given\n- Mix categories and price points across the 6 items\n- Be very specific, not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","store":"Store Name"}]}`;
+  var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n${_shopRules()}\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute and overrides every other suggestion.\n- Prioritize her color preferences\n- Mix categories and price points across the 6 items\n- Be very specific in "name", not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}`;
   var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
     var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:400,messages:[{role:"user",content:prompt}]})});
@@ -3608,9 +3744,7 @@ async function shopMyStyle(){
     var parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
     var html='<div class="shop-grid">';
     parsed.items.forEach(function(item){
-      var url=getStoreUrl(item.store,item.name);
-      var emoji=catEmoji[item.category]||'✨';
-      html+='<div class="shop-card"><div><div class="shop-emoji">'+emoji+'</div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
+      html+=_shopCard(item,'<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
     });
     html+='</div><div class="shop-refresh"><button class="shop-refresh-btn" onclick="shopMyStyle()">&#8635; Show me different picks</button></div>';
     cont.innerHTML=html;
@@ -3905,14 +4039,14 @@ async function _shopStyleGen(){
     var sliderDesc=questions.map(function(q,i){return q.cat+': '+answers[i]+'/11 (1='+q.left+', 6=center, 11='+q.right+')'}).join('\n');
     basis='Her style profile from the Style Star quiz:\n'+sliderDesc+'\nStyle notes: '+topArchNames.join(', ')+getPrefsForPrompt();
   }
-  var stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
   var prompt,maxTok=400,_wlTrunc=0;
   if(_shopStyleMode==='wantlist'){
     var wl=(_wantListNames||[]);if(wl.length>16){_wlTrunc=wl.length-16;wl=wl.slice(0,16);}
-    maxTok=900;
-    prompt='You are Catherine, a personal stylist. This woman has a wardrobe wishlist. For EACH item on her list, suggest ONE specific shoppable piece she would genuinely love that fits her style.\n\n'+basis+'\n\nHer wishlist:\n'+wl.map(function(w,i){return (i+1)+'. '+w}).join('\n')+'\n\nFor each wishlist item provide:\n- want: the exact wishlist item text it is for\n- name: a specific pick (color, style, fabric)\n- store: ONE store (pick from: '+stores+')\n\nRULES:\n- Give exactly one pick per wishlist item, in the same order\n- NEVER suggest anything on her never-wear list, in colors she skips, or a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences and size range if given\n- Be very specific, not "a nice dress" but "Emerald Linen Midi Wrap Dress"\n\nRespond with ONLY valid JSON:\n{"items":[{"want":"Wishlist item","name":"Item Name","store":"Store Name"}]}';
+    maxTok=1400;
+    prompt='You are Catherine, a personal stylist. This woman has a wardrobe wishlist. For EACH item on her list, suggest ONE specific shoppable piece she would genuinely love that fits her style.\n\n'+basis+'\n\nHer wishlist:\n'+wl.map(function(w,i){return (i+1)+'. '+w}).join('\n')+'\n\nFor each wishlist item provide:\n- want: the exact wishlist item text it is for\n'+_shopRules()+'\nRULES:\n- Give exactly one pick per wishlist item, in the same order\n- NEVER suggest anything on her never-wear list, in colors she skips, or a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice dress" but "Emerald Linen Midi Wrap Dress"\n\nRespond with ONLY valid JSON:\n{"items":[{"want":"Wishlist item","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
-    prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n- name: specific (color, style, fabric)\n- store: ONE store (pick from: '+stores+')\n\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences and size range if given\n- Mix categories and price points across the 6 items\n- Be very specific, not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","store":"Store Name"}]}';
+    maxTok=700;
+    prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Mix categories and price points across the 6 items\n- Be very specific in "name", not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }
   var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
@@ -3922,9 +4056,8 @@ async function _shopStyleGen(){
     var parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
     var html='<div class="shop-grid">';
     parsed.items.forEach(function(item){
-      var url=getStoreUrl(item.store,item.name);
       var top=(_shopStyleMode==='wantlist')?('<div class="shop-want-for">'+_esc(item.want||'')+'</div>'):('<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
-      html+='<div class="shop-card"><div>'+top+'<div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
+      html+=_shopCard(item,top);
     });
     html+='</div>'+(_wlTrunc?'<div class="shop-trunc">Showing 16 of your '+(_wlTrunc+16)+' wants. Shop the rest anytime from your list.</div>':'')+'<div class="shop-refresh"><button class="shop-refresh-btn" onclick="_shopStyleGen()">&#8635; Show me different options</button></div>';
     _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent=_isWL?'shop your wishlist':'shop your style';
@@ -4306,8 +4439,8 @@ function savePrefStep(){
       const chips=document.querySelectorAll(`.pref-size-${f}.sel`);
       prefs.sizes[f]=Array.from(chips).map(c=>c.textContent);
     });
-    const heightChips=document.querySelectorAll('.pref-size-pantsfit.sel');
-    prefs.sizes.pantsfit=Array.from(heightChips).map(c=>c.textContent);
+    const fitChips=document.querySelectorAll('.pref-size-fit.sel');
+    prefs.sizes.fit=Array.from(fitChips).map(c=>c.textContent);
   }else if(prefStep===1){
     prefs.colorsLove=[];
     document.querySelectorAll('.color-dot.love').forEach(d=>prefs.colorsLove.push(d.dataset.name));
@@ -4336,7 +4469,7 @@ function renderPrefSizes(c){
   const tops=['XXS','XS','S','M','L','XL','XXL','1X','2X','3X'];
   const bottoms=['00','0','2','4','6','8','10','12','14','16','18','20','22','24'];
   const shoes=['5','5.5','6','6.5','7','7.5','8','8.5','9','9.5','10','10.5','11','12'];
-  const pantsFit=['I often need shorter/cropped lengths','Standard lengths work fine','I usually need longer lengths'];
+  const fitRanges=['Petite','Regular','Tall','Plus'];
   function chips(arr,cls,saved){
     return arr.map(s=>`<div class="pref-chip ${cls} ${(saved||[]).includes(s)?'sel':''}" onclick="this.classList.toggle('sel')">${s}</div>`).join('');
   }
@@ -4352,8 +4485,9 @@ function renderPrefSizes(c){
     <div class="pref-grid sizegrid">${chips(bottoms,'pref-size-dresses',prefs.sizes.dresses)}</div>
     <div class="pref-label">Shoes</div>
     <div class="pref-grid sizegrid">${chips(shoes,'pref-size-shoes',prefs.sizes.shoes)}</div>
-    <div class="pref-label">Pants fit</div>
-    <div class="pref-grid">${chips(pantsFit,'pref-size-pantsfit',prefs.sizes.pantsfit)}</div>
+    <div class="pref-label">Do you usually shop petite, regular, tall or plus?</div>
+    <div class="pref-grid sizegrid">${chips(fitRanges,'pref-size-fit',_fitSizes())}</div>
+    <div class="pref-note-sm">Pick as many as fit you. We only use this where fit depends on it, never for bags, jewelry or accessories.</div>
   `;
 }
 
@@ -4434,6 +4568,17 @@ function renderPrefOther(c){
   `;
 }
 
+// The old "Pants fit" question only ever described length. It is now a direct
+// petite/regular/tall/plus question, so old saved answers migrate on read.
+const _FIT_FROM_PANTS={'I often need shorter/cropped lengths':'Petite','Standard lengths work fine':'Regular','I usually need longer lengths':'Tall'};
+function _fitSizes(){
+  if(!prefs.sizes)prefs.sizes={};
+  if(!prefs.sizes.fit||!prefs.sizes.fit.length){
+    const old=prefs.sizes.pantsfit||[];
+    if(old.length)prefs.sizes.fit=old.map(function(v){return _FIT_FROM_PANTS[v]||''}).filter(Boolean);
+  }
+  return prefs.sizes.fit||[];
+}
 function getPrefsForPrompt(){
   const p=prefs;
   let lines=[];
@@ -4441,7 +4586,8 @@ function getPrefsForPrompt(){
   if(p.sizes.bottoms&&p.sizes.bottoms.length)lines.push('Bottoms size: '+p.sizes.bottoms.join('/'));
   if(p.sizes.dresses&&p.sizes.dresses.length)lines.push('Dress size: '+p.sizes.dresses.join('/'));
   if(p.sizes.shoes&&p.sizes.shoes.length)lines.push('Shoe size: '+p.sizes.shoes.join('/'));
-  if(p.sizes.pantsfit&&p.sizes.pantsfit.length)lines.push('Pants fit: '+p.sizes.pantsfit.join(', '));
+  const _fit=_fitSizes();
+  if(_fit.length)lines.push('She usually shops: '+_fit.join(', '));
   if(p.colorsLove.length)lines.push('Colors she loves: '+p.colorsLove.join(', '));
   if(p.colorsSkip.length)lines.push('Colors to avoid: '+p.colorsSkip.join(', '));
   if(p.neverWear.length)lines.push('Never wear: '+p.neverWear.join(', '));
@@ -5003,7 +5149,7 @@ function _wdrTopBtnUpdate(){
   const b=document.getElementById('wdrTopBtn'),s=document.getElementById('s-wardrobe');
   if(!b||!s)return;
   // Stand down once What's Trending reaches the button's row — otherwise it
-  // sits on top of a trending card's "See ideas in your size" link. By then
+  // sits on top of a trending card's "See ideas in your style" link. By then
   // she's at the end of the page anyway.
   let blocked=false;
   const t=document.querySelector('#s-wardrobe .wdr-teaser');
@@ -5046,17 +5192,15 @@ async function _wardrobeIdeaGen(id,boxId){
   if(!name)return;
   box.innerHTML='<div class="wdr-loading"><svg class="wdr-load-star" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E6C24E" stroke="#b8bcc2" stroke-width="0.6"/></svg><div class="wdr-load-txt">Finding ideas for &ldquo;'+_esc(name)+'&rdquo;&hellip;</div></div>';
   const basis=(Array.isArray(answers)&&answers.length===12&&topArchNames.length)?('Her style: '+topArchNames.join(', ')+'.'):'';
-  const stores='Nordstrom, J.Crew, Zara, Target, Amazon, Anthropologie, Express, Mango, Revolve, Abercrombie, H&M, Banana Republic, Madewell, Everlane, Saks, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia';
-  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+'\n\nFor each provide:\n- name: specific (color, style, fabric)\n- store: ONE store (pick from: '+stores+')\n\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences and size range if given\n- Be very specific, not "a nice jacket" but "Cropped Tan Suede Moto Jacket"\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","store":"Store Name"}]}';
+  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+'\n'+_shopRules()+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice jacket" but "Cropped Tan Suede Moto Jacket"\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
-    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:300,messages:[{role:"user",content:prompt}]})});
+    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
     let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div><div class="shop-grid hscroll">';
     parsed.items.forEach(function(item){
-      const url=getStoreUrl(item.store,item.name);
-      html+='<div class="shop-card"><div><div class="shop-item-name">'+_esc(item.name)+'</div><div class="shop-item-store">'+_esc(item.store)+'</div></div><a href="'+url+'" target="_blank" rel="noopener" class="shop-link">Shop &rarr;</a></div>';
+      html+=_shopCard(item);
     });
     html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
     box.innerHTML=html;
@@ -5072,7 +5216,7 @@ function renderWardrobeTrend(){
   let html='';
   trendItems.forEach(function(item,i){
     const tid='trend'+i;
-    html+='<div class="wdr-tcard"><div class="ttf">'+_esc(item.n)+'</div><div class="tnf">'+_esc(item.note)+'</div><span class="tlf" onclick="wardrobeSeeIdeas(\''+tid+'\')">See ideas in your size &rarr;</span><div class="wdr-expand" id="wx_'+tid+'" style="display:none"></div></div>';
+    html+='<div class="wdr-tcard"><div class="ttf">'+_esc(item.n)+'</div><div class="tnf">'+_esc(item.note)+'</div><span class="tlf" onclick="wardrobeSeeIdeas(\''+tid+'\')">See ideas in your style &rarr;</span><div class="wdr-expand" id="wx_'+tid+'" style="display:none"></div></div>';
   });
   body.innerHTML=html;
   body.dataset.built='1';
@@ -5087,7 +5231,7 @@ function renderWardrobeTeaser(preview){
   let html='';
   list.forEach(function(item,i){
     const tid='trendT'+i;
-    html+='<div class="wdr-tt-card"><div class="wdr-tt-n">'+_esc(item.n)+'</div><div class="wdr-tt-note">'+_esc(item.note)+'</div><span class="wdr-tt-see" onclick="wardrobeSeeIdeas(\''+tid+'\',\'wdrTeaserIdeas\')"><span class="wdr-see-star">&#9733;</span> See ideas in your size &rarr;</span></div>';
+    html+='<div class="wdr-tt-card"><div class="wdr-tt-n">'+_esc(item.n)+'</div><div class="wdr-tt-note">'+_esc(item.note)+'</div><span class="wdr-tt-see" onclick="wardrobeSeeIdeas(\''+tid+'\',\'wdrTeaserIdeas\')"><span class="wdr-see-star">&#9733;</span> See ideas in your style &rarr;</span></div>';
   });
   if(preview&&trendItems.length>3){
     html+='<div class="wdr-tt-card wdr-tt-all" onclick="wardrobeSeeAllTrending()">See all trending &rarr;</div>';
@@ -5334,18 +5478,39 @@ function closeChat(){chatLookPhoto=null;showBack(chatPrevScreen)}
 function chatDone(){chatLookPhoto=null;showBack(chatPrevScreen)}
 function chatBack(){chatLookPhoto=null;showBack(chatPrevScreen)}
 
+// A bare store mention links to the shop front, not an empty search results page.
+function _storeHome(key){try{return new URL(STORES[key].u).origin}catch(e){return STORES[key].u}}
+// Trim the lead-in words off a phrase the stylist wrote ("Try the navy linen
+// blazer") so what reaches the store's search box is the item itself, and keep
+// it short, because long descriptive phrases return nothing in a search box.
+const _LEADIN=/^(?:try|add|adds|pair|pairing|get|grab|consider|maybe|also|and|plus|with|the|a|an|some|any|this|that|these|those|your|my|her|it|is|are|would|will|be|look|for|in|of|to|i|we|love|like|really|great|perfect|nice|good|wear|wearing|something|piece|option|even|just|one)$/i;
+function _searchableItem(phrase){
+  let w=String(phrase||'').replace(/["']/g,'').trim().split(/\s+/).filter(Boolean);
+  while(w.length>2&&_LEADIN.test(w[0].replace(/[^\w]/g,'')))w.shift();
+  if(w.length>4)w=w.slice(-4);          // the item name sits at the end
+  return w.join(' ').trim();
+}
+// Run a replacement only on text OUTSIDE existing links, so the bare-store-name
+// pass cannot re-wrap a store name that the item pass has already linked.
+function _outsideLinks(html,re,fn){
+  return html.split(/(<a\b[^>]*>[\s\S]*?<\/a>)/g).map(function(part){
+    return /^<a\b/i.test(part)?part:part.replace(re,fn);
+  }).join('');
+}
 function linkStores(text){
-  const storeNames='Nordstrom|J\\.Crew|Zara|Target|Amazon|Anthropologie|Express|Mango|Revolve|Abercrombie|H&M|Banana Republic|Madewell|Everlane|Saks|Bloomingdales|Lululemon|Athleta|Old Navy|Aritzia';
-  return text.replace(new RegExp('([\\w\\s,"-]{3,40})(?:\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,store){
-    const cleanItem=item.replace(/^[\s,a-z]+/i,'').trim();
-    const cleanStore=Object.keys(storeUrls).find(s=>s.toLowerCase()===store.toLowerCase())||store;
+  // Longest name first so "Saks Off 5th" wins over "Saks", and escape . + & etc.
+  const storeNames=Object.keys(STORES).sort(function(a,b){return b.length-a.length})
+    .map(function(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}).join('|');
+  const linked=text.replace(new RegExp('([\\w\\s,"-]{3,40})(?:\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,store){
+    const cleanItem=_searchableItem(item);
+    const cleanStore=resolveStore(store)||store;
+    if(!cleanItem)return match;
     const url=getStoreUrl(cleanStore,cleanItem);
-    return cleanItem+' from <a href="'+url+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
-  }).replace(new RegExp('\\b('+storeNames+')\\b','g'),function(store){
-    if(text.indexOf('>'+store+'</a>')!==-1)return store;
-    const cleanStore=Object.keys(storeUrls).find(s=>s.toLowerCase()===store.toLowerCase())||store;
-    const baseUrl=storeUrls[cleanStore];
-    if(baseUrl)return'<a href="'+baseUrl+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
+    return item.trimEnd()+' from <a href="'+url+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
+  });
+  return _outsideLinks(linked,new RegExp('\\b('+storeNames+')\\b','g'),function(store){
+    const cleanStore=resolveStore(store);
+    if(cleanStore)return'<a href="'+_storeHome(cleanStore)+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
     return store;
   });
 }
@@ -5530,7 +5695,10 @@ SHOPPING:
 - Include an estimated price for every item in parentheses with ~ for approximate.
 - Format each item as: Item name from StoreName (~$price)
 - The store name MUST appear after the word "from" so it becomes a clickable link.
-- Use real stores: Nordstrom, J.Crew, Zara, Anthropologie, Revolve, Madewell, Everlane, Saks, Target, Amazon, Express, Mango, Abercrombie, H&M, Banana Republic, Bloomingdales, Lululemon, Athleta, Old Navy, Aritzia
+- Name the store EXACTLY as written in this list, and only these stores, so the link works:
+`+Object.keys(STORES).join(', ')+`
+- Keep the item name before "from" short and searchable (2 to 4 plain words like "navy linen blazer"), because that phrase becomes the shopping search.
+- Match the store to her using what you know of her budget and size range. Only mention a size range for things where fit depends on it, never for bags, jewelry or accessories.
 - Mix price points
 - When suggesting multiple items, try to group from the same store when possible so she can shop in one place. But never compromise the best pick just to match stores. The right item always wins.
 - Keep responses short and actionable. Lead with the items, not the explanation.
