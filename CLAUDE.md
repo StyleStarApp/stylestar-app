@@ -3642,10 +3642,18 @@ with wrong or zero results, and no photos anywhere.
   plausible-but-unverified. **Izod** ✅ verified (checked specifically that it carries womenswear before including — it
   does, women's and men's are equally represented). **Tory Burch** 200/JS-rendered. **Sam Edelman** and **Lacoste** sit
   behind bot walls on standard patterns.
-- **▶ STILL OPEN — department stores Cath has not yet ruled on:** **Belk** (Southeast US, regionally relevant to an
-  Orlando stylist, Claude's top pick), **Bergdorf Goodman** (would top out the luxury tier above Neiman), **TJ Maxx**
-  (beloved, but store-specific inventory makes searches inherently hit or miss), **Von Maur** (Midwest-centric and the
-  connection failed entirely — Claude suggested skipping).
+- **✅ DEPARTMENT STORES DECIDED (Cath, 2026-07-27):** **Belk YES** (Southeast US, regionally relevant to an Orlando
+  stylist), **Bergdorf Goodman YES** (tops out the luxury tier above Neiman), **TJ Maxx YES** (beloved, though
+  store-specific inventory makes its searches inherently hit or miss), **Von Maur NO**.
+- **✅ FINAL VERIFICATIONS (end of session):** **Kendra Scott** confirmed BY CATH (she sent
+  `https://www.kendrascott.com/search?q=turquoise` from her own browser and got results — the pattern Claude guessed
+  was right, but only her browser could prove it). **Farm Rio** ✅ verified by Claude
+  (`https://farmrio.com/search?q=`) — a genuinely useful addition since nothing else in the list does joyful print and
+  colour, which leaves The Pop of Color, The Free Spirit and The Bold Expressionist with nowhere obvious to shop. Note
+  the URL Cath sent carried `gclid`, `gbraid` and `_gl` Google Ads tracking, trimmed off per the standing rule.
+  **Talbots** remains unverified — Cath sent `talbots.com/petite`, which is a category page rather than a search, and
+  Talbots serves a byte-identical shell for every URL. Its `search?q=` pattern is platform-standard so it is safe to
+  include; a real search URL from her address bar would settle it if it ever matters.
 - **▶ VERIFICATION WORKFLOW THAT WORKS — use this whenever a store can't be checked from here.** Many retailers block
   bots or render search client-side, so Claude genuinely cannot confirm them. **Cath can settle it in ten seconds:
   search on the store's site, then send the URL from her address bar.** This solved BOTH J.Jill and Mango, and each
@@ -3676,8 +3684,9 @@ researched and decided; it just needs building. Read the three sections directly
    all six link-building features.
 2. **Expand the store list to ~59, tagged** with price / sizes / strengths, and wire the per-category size logic.
 3. **Fix the four "in your size" over-promises** in the copy.
-4. **Blocked on Cath (small):** which of **Belk / Bergdorf Goodman / TJ Maxx / Von Maur** to include, and ideally the
-   address-bar URLs for **Kendra Scott** and **Talbots** so they can be verified. (J.Jill, Mango and Chico's are all ✅
-   solved; Kohl's and JCPenney are ✅ removed.) None of this blocks starting the build.
+4. **Store list is CLOSED and ready — nothing is blocked.** ~65 stores. All decisions made: Belk/Bergdorf/TJ Maxx in,
+   Von Maur out, Kohl's/JCPenney out, Shein/Temu out. Mango, J.Jill and Chico's URLs all fixed; Kendra Scott and Farm
+   Rio verified. The only outstanding nicety is **more per-store size metadata from Cath** (she has given petite for
+   Talbots, LOFT and Banana Republic) — the build can proceed without it and absorb more as she supplies it.
 5. Then everything previously queued: the two email projects, the Edit's still-empty Activewear category, the parked
    Wardrobe features, and the legal chain (still waiting on Florida).
