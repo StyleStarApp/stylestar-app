@@ -48,13 +48,47 @@ Amounts below are *rough typical ranges* to help you find them — **replace wit
 
 | Vendor | What it's for | Typical cost | Status to confirm |
 |--------|---------------|--------------|-------------------|
-| **Anthropic (Claude API)** | Powers the AI write-ups, stylist chat, photo analysis (`ANTHROPIC_API_KEY`) | usage-based (pay per use) | **PAID — verify usage charges** (separate from Claude Max) |
+| **Anthropic (Claude API)** | Powers the AI write-ups, stylist chat, photo analysis (`ANTHROPIC_API_KEY`) | usage-based, roughly **10-15¢ per woman** who uses the app fully (see below) | **PAID — check console.anthropic.com → Usage** (a SEPARATE account from Claude Max) |
 | **Supabase** | Stores user data (the `users` table) | ~$25/mo (Pro) | **PAID** — CLAUDE.md notes you're on the paid plan; verify exact amount |
 | **GoDaddy** | Domain / website registration (Cath to look up cost) | ? | **▶ LOOK UP** — Cath to check the GoDaddy billing/statement for the annual cost |
 | **GitHub** | Code hosting (the repo) | free, or ~$4/mo (Pro/paid) | **▶ LOOK UP** — Cath unsure if she pays; check the GitHub billing page |
 | **Domain — stylestar.app** | Your web address (annual registration) | ~$12–25/yr | **PAID** — confirm the registrar (Netlify DNS hosts it, but who is the registrar — GoDaddy?) |
 | **iCloud+** | Custom email domain for hello@stylestar.app | ~$1–3/mo (part of your Apple plan) | **PAID** (bundled in iCloud+) |
 | **Canva** | Design (mockups, graphics) | free, or ~$13/mo Pro | verify (free or Pro?) |
+
+---
+
+## 🤖 What the app's AI actually costs (measured 2026-07-27)
+
+**Two different Anthropic bills, easy to confuse:**
+- **Claude Max, $249.99/mo, billed at claude.ai** — Cath's own subscription for *building* the app.
+  Flat fee, unaffected by how many people use Style Star.
+- **Claude API, pay-per-use, billed at console.anthropic.com** — what the *app* spends when a woman
+  takes the quiz, shops, uploads a photo, or chats. This is the one that grows with real users.
+  **▶ Check spend at console.anthropic.com → Usage.**
+
+The app runs on **Claude Sonnet 4.6**: **$3 per million words-in, $15 per million words-out**
+(tokens, roughly ¾ of a word each). In practice that is fractions of a cent per action:
+
+| What she does | Cost | How we know |
+|---|---|---|
+| Shop your style (6 picks) | **~0.9¢** | measured on a real call |
+| Wardrobe "Ideas" (4 options) | ~0.7¢ | estimated |
+| Shop my whole wishlist (16 picks) | ~1.9¢ | estimated |
+| Analyze an outfit (includes the photo) | ~1.9¢ | estimated |
+| Quiz Style Portrait | ~1¢ | estimated |
+| One stylist chat message | ~1.4¢ | estimated, grows with conversation length |
+
+**A woman who does everything ≈ 10-15¢.** So **1,000 women ≈ $100-150**, and that only happens if
+1,000 women actually use it. Today it is Cath, her mom and her sister, so the bill is a few dollars.
+
+⚠️ **The one real risk: the API runs on prepaid credits.** If the balance hits zero, every AI feature
+in the app stops working (the quiz, chat, photo analysis, all shopping) while the site stays up.
+**Turn on auto-reload, or check the balance before any launch or press.**
+
+📌 Note: the 102-store list added ~1,800 tokens to every shopping call, which roughly doubled the
+cost of a shop from ~0.4¢ to ~0.9¢. Still tiny, but it is the reason to build the retailer-scoring
+step — sending only the ~15 best-matched stores would cut it back down *and* improve the picks.
 
 ---
 
