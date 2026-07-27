@@ -3673,9 +3673,10 @@ with wrong or zero results, and no photos anywhere.
   Star exists to help her see and choose for herself. It also sits alongside her value-first rule (nothing should
   require a commitment before she gets value). **Lesson for adding any future store: check the BUSINESS MODEL, not
   just whether the search URL works.** A working URL on the wrong kind of company is still wrong.
-  ▶ **ASK CATH ONCE (not yet decided):** rental subscriptions (Rent the Runway, Nuuly) are an adjacent category —
-  not styling boxes, but still subscriptions where you do not keep the clothes. Likely also out; confirm rather than
-  assume, so it is settled in one go.
+  ✅ **RENTALS ARE OUT TOO** (Cath, same conversation: *"No rentals either, same reason"*). So Rent the Runway, Nuuly
+  and any similar service are excluded alongside the styling boxes. **The full rule: every store in the pool must be a
+  place a woman can browse and BUY AND KEEP a specific item.** No subscriptions, no boxes, no rentals. Coherent with
+  the brand — Style Star helps her build a wardrobe that is hers, and clothes that go back are not hers.
 - **▶ PETITE/TALL IS A SUB-LINE, NOT A RETAILER — this reframes Cath's sourcing research.** Petite Studio is about the
   only pure-petite name of scale; everything else (Ann Taylor Petite, LOFT Petite, Talbots Petite, J.Crew Petite,
   Boden Petite) is a sub-line of a store already on the list. So for petite and tall the useful question is **"which of
