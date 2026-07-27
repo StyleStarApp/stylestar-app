@@ -3662,6 +3662,11 @@ with wrong or zero results, and no photos anywhere.
   (`https://www.warbyparker.com/search?q=`, bot wall) for breadth and prescription, plus **Quay**
   (`https://www.quayaustralia.com/search?q=`, leaning real). Shapewear had NO retailer at all despite Cath adding
   Shapewear to the Foundations checklist the same day. **Final list ~70 stores.**
+- **Plus-size additions (Cath, end of session): Lane Bryant** (`https://www.lanebryant.com/search?q=`) — standard
+  pattern, renders client-side so unverified, safe to include. **Dia&Co** (`https://www.dia.com/search?q=`) — same,
+  BUT ⚠️ **Dia&Co is primarily a subscription styling-box service, not a browse-and-buy retailer**, so a keyword
+  search may not behave like shopping at all. Flagged to Cath; include only if she confirms their site searches
+  normally. Plus is otherwise well covered by Universal Standard, Eloquii, Torrid, Good American and Lane Bryant.
 - **▶ PETITE/TALL IS A SUB-LINE, NOT A RETAILER — this reframes Cath's sourcing research.** Petite Studio is about the
   only pure-petite name of scale; everything else (Ann Taylor Petite, LOFT Petite, Talbots Petite, J.Crew Petite,
   Boden Petite) is a sub-line of a store already on the list. So for petite and tall the useful question is **"which of
@@ -3709,3 +3714,38 @@ researched and decided; it just needs building. Read the three sections directly
    Talbots, LOFT and Banana Republic) — the build can proceed without it and absorb more as she supplies it.
 5. Then everything previously queued: the two email projects, the Edit's still-empty Activewear category, the parked
    Wardrobe features, and the legal chain (still waiting on Florida).
+
+
+### ▶ CATH'S HOMEWORK — things only she can do (list requested 2026-07-27, resurface each session)
+Cath asked what she can do to be more thorough between sessions. These are genuinely blocked on her expertise or her
+phone, not on Claude's time. Roughly in value order.
+**1. ⭐ SIZE METADATA PER STORE — the highest-value item.** For each of the ~70 stores: does it carry **petite**,
+   **plus**, **tall**, and (for shoes) **wide/narrow widths**? She has already given petite for Talbots, LOFT and
+   Banana Republic. Claude will draft the full set and she corrects it, but anything she notes while shopping is
+   directly usable. Remember the reframing: petite/tall is mostly a SUB-LINE of stores already on the list, so this is
+   tagging work, not sourcing work.
+**2. ⭐ CATEGORY STRENGTHS — pure stylist knowledge Claude cannot infer.** Which store is her go-to for dresses? For
+   denim? Work clothes? Occasion? Shoes? Jewelry? This is what lets the AI send a woman to the right place instead of
+   a plausible one, and it is exactly the expertise that differentiates the app.
+**3. PRICE TIER SANITY CHECK.** Claude will assign budget / mid / luxe per store; Cath knows where each really sits
+   for HER audience, which spans 18 to 80 and every budget.
+**4. SPOT-VERIFY THE UNVERIFIABLE STORES** using the address-bar trick that solved J.Jill and Mango (search on the
+   site, send the URL). Only worth doing for stores she would actually send a client to. Currently unverified:
+   Talbots, Kendra Scott, SKIMS, Lane Bryant, Dia&Co, Sam Edelman, Lacoste, Tory Burch, Belk, Bergdorf Goodman,
+   TJ Maxx, Sunglass Hut, Warby Parker, Dillard's, plus the ~11 bot-walled ones already proven by being live today.
+**5. THE TWO PIECES OF COPY THE BUILD NEEDS.** (a) The card wording — is "Find this at Nordstrom →" right, or does she
+   have better? (b) The four "in your size" spots — replacement wording in her voice ("in your style"? "picked for
+   you"?).
+**6. ⭐ AFTER THE BUILD SHIPS, THE REAL QUALITY GATE:** tap through 10-15 suggestions across Shop your style, Wardrobe
+   Ideas and Complete the Look, and tell Claude **where the searches land wrong**. Claude can verify a link returns
+   results; only Cath can judge whether "pink midi dress" is the right search for a blush silk wrap dress. This single
+   step is the difference between the fix working and half-working.
+**7. (No pressure, her own timing) THINK ABOUT FIRST TESTERS.** Once the shopping is honest, who are the 5-10 warm,
+   constructive people? Her soft-launch instinct is legitimate and protected — this is just so the list exists when
+   she wants it.
+
+### ▶ AGREED PLAN (2026-07-27, end of session): save everything now, build in a FRESH session
+Cath's call, and the right one. Today's session ran long and produced a great deal of decision-making; the build is a
+big careful change touching shopping across six features. Nothing is lost by starting fresh because the handoff above
+is complete. **Next session: build items 1-3 of START HERE, then give Cath a Netlify deploy-preview URL to tap through
+on her phone BEFORE merging** (previews are confirmed working with the AI functions — see the note above).
