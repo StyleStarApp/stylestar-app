@@ -3581,6 +3581,27 @@ is better than what was asked for. `d` is now 7 numbers:
   two price tiers for every one of the 28 archetypes.
 - Verified by `dims/rank2.js`, 14 checks across all 28 archetypes. Prompt still 52% smaller.
 
+### ▶ REVERSED THE SAME EVENING: SORT, DO NOT TRIM (2026-07-27)
+Cath's priority, in her words: *"the last thing I want is for her to not get shown something she
+would actually want."* That settles a trade-off I had made the other way, so the shortlist is gone —
+**the AI now gets ALL 102 stores, ordered best-fit first.** Reasoning, in case it is ever revisited:
+- **Sorting does 100% of the quality work**, because the prompt tells the AI to favour the top of the
+  list. Trimming only ever saved money.
+- **The money is under half a cent per shop** (~2,420 tokens vs ~1,150, so ~0.73¢ vs ~0.35¢). At
+  1,000 women shopping five times each that is roughly **$19 a year**. Against her stated priority
+  that is not a trade worth making.
+- **Measurement said the trim was riskier than it looked:** for one archetype the best store in a
+  whole category sat at **rank 72**, so a plain top-46 really would have lost it. The coverage rules
+  patched that — and **two genuine bugs turned up in the patching apparatus** (the tier top-up never
+  fired; `_tierOf` read the wrong end of a price range). **The safest code is the code not written.**
+  `_COVER` and the KEEP logic are deleted; `_tierOf` stays because the tests use it.
+- Verified by `dims/rank3.js` (13 checks): all 28 archetypes see all 102 stores, every category and
+  price tier reachable for every archetype, ordering still discriminates hard (glam and easygoing
+  share no top-6 store), and every archetype has 3+ affordable stores inside its top 20 so nobody is
+  shown only luxury.
+- ▶ **If cost ever genuinely matters** (it will not until there are thousands of users), the honest
+  lever is not trimming the store list but caching or shortening elsewhere. Re-read this entry first.
+
 ### ▶ WHERE THE DIMENSION WORK SHOULD STOP (recommendation, 2026-07-27)
 Cath then asked whether Fitted/Relaxed and the other sliders should be redone the same paired way.
 Honest read, given the evidence above:

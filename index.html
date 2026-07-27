@@ -3736,47 +3736,31 @@ function _storeFit(k,her){
 // unreachable. If the shortlist happens to contain no shoe store, the AI cannot
 // suggest shoes however well matched the rest are, so every bucket below is
 // guaranteed at least one store and every price tier at least two.
-const _COVER=[/shoe|sneaker|boot|sandal|footwear|heel|flat|pump|espadrille/,
-  /handbag|bags?\b|tote|clutch|wallet/,/jewelry|earring/,/sunglass|eyewear|glasses/,
-  /swim/,/activewear|athleisure|legging|performance/,/denim|jean/,
-  /dress|occasion|gown|wedding/,/workwear|tailoring|blazer|professional|executive/,
-  /bra|lingerie|shapewear|underwear|sleepwear|loungewear/,/outerwear|coat|jacket/];
 // The CHEAPEST end of a store's range, because the question this answers is
 // "could a woman on a budget buy anything here at all". Nordstrom spans $$-$$$$
 // and a budget shopper can absolutely shop it, so it counts as $$, not $$$$.
 function _tierOf(k){return (STORES[k].t.split('-')[0].match(/\$/g)||[]).length}
-// Rank every store by how close it sits to her on the two taste axes, breaking
-// ties toward the more refined one. Then keep the best KEEP, adding back
-// whatever coverage that would have lost.
+// ▶ SORT, DO NOT TRIM. This deliberately hands the AI ALL the stores, ordered
+// best fit first, rather than a shortlist.
+//   An earlier version kept only the best 46 to halve the prompt. It needed a
+//   whole apparatus of coverage rules to stop that trim quietly making some
+//   kind of shopping impossible, and measurement showed why: for one archetype
+//   the best store in a category sat at rank 72, so a plain top-46 really would
+//   have lost it. Two genuine bugs turned up in that patching apparatus.
+//   Sorting already does ALL of the quality work, because the AI is told to
+//   favour the top. Trimming only ever saved money, and the money is under half
+//   a cent per shop. Against Cath's clear priority, that nothing a woman would
+//   actually want gets hidden from her, that is not a trade worth making. The
+//   safest code here is the code that is not written.
 function _rankedStores(){
   const keys=Object.keys(STORES);
   // Before the quiz her sliders are all still at the neutral default, so any
   // ranking would be invented. Leave the list alone rather than fake a profile.
   if(!quizTaken)return keys;
   const her=_herDims();
-  const order=keys.map(function(k){return {k:k,fit:_storeFit(k,her)}})
+  return keys.map(function(k){return {k:k,fit:_storeFit(k,her)}})
     .sort(function(a,b){return b.fit-a.fit})
     .map(function(x){return x.k});
-  const KEEP=46;
-  const out=order.slice(0,KEEP),have=new Set(out);
-  const add=function(test){
-    if(order.some(function(k){return have.has(k)&&test(k)}))return;
-    const found=order.find(function(k){return !have.has(k)&&test(k)});
-    if(found){out.push(found);have.add(found)}
-  };
-  _COVER.forEach(function(re){add(function(k){return re.test(STORES[k].c)})});
-  // Every price tier needs real depth, not a token single store, or a woman on
-  // a budget quietly ends up with one option while everyone else gets thirty.
-  [1,2,3,4].forEach(function(t){
-    const atTier=function(){return out.filter(function(x){return _tierOf(x)===t}).length};
-    while(atTier()<3){
-      const found=order.find(function(k){return !have.has(k)&&_tierOf(k)===t});
-      if(!found)break;
-      out.push(found);have.add(found);
-    }
-  });
-  // Keep the final list in match order so "prefer the top" means something.
-  return order.filter(function(k){return have.has(k)});
 }
 function _storeListForPrompt(){
   return _rankedStores().map(function(k){
