@@ -3628,6 +3628,45 @@ index.**
   specialists to lead, the one-line lever is to subtract a small "breadth" term (the store's mean
   across a pair) from each pair's score.
 
+### ▶ STORE VARIETY — "she could just go to Nordstrom" (Cath, 2026-07-27)
+Cath's product insight, and it is an existential one: *"if Style Star gives every single suggestion at
+Nordstrom she might think well I can just go straight to Nordstrom.com and skip this."* Also her
+stylist view, which reframes the earlier Nordstrom-dominance worry entirely: **she PREFERS department
+stores for wardrobe building** (better odds on size, colour, stock, returns) and uses boutiques for
+the unique or non-mainstream piece. So big stores are not the problem. **A set that is ALL one big
+store is.** The fix belongs in variety-within-a-set, NOT in the matching.
+- **▶ FOUND: the chat prompt was actively causing it.** It said *"try to group from the same store when
+  possible so she can shop in one place."* That is the "everything at Nordstrom" instruction, in
+  writing.
+- **The rules now differ by feature, on purpose:**
+  - **Wardrobe "Ideas" carousel** — `_shopRules('compare')`. The 4 options are alternatives for ONE
+    piece she is choosing between, so **every one must be a different store**. Four white blouses at
+    one store tells her nothing she could not have found herself.
+  - **Shop your style / wishlist / Complete the Look** — default `_shopRules()`. **No more than two
+    picks at the same store**, plus include at least one smaller or specialist store when one honestly
+    suits the piece better.
+  - **Stylist chat** — Cath's call, and she is right: *"if she is getting suggestions on the chat of
+    what to purchase it is easier for her to buy all at one store."* Chat answers are usually
+    outfit-shaped and she is BUYING, so one order = one checkout, one shipping, one return. Chat now
+    **groups within an answer** but is told **not to default to the same store across answers**, which
+    is what protects against the go-direct problem.
+- ⚠️ **A VARIETY RULE WITH NO BRAKE CREATES ITS OWN BUG.** The first live test came back with
+  **Gorjana, a jewelry brand, selling a canvas tote** — the AI reaching for a different name and
+  landing somewhere that cannot possibly stock the item. Added an explicit line: never pick a store
+  that does not sell that kind of thing; repeating a store is better than sending her somewhere
+  impossible. Re-tested clean (Naturalizer→pumps, Cuyana→satchel, Mejuri→necklace).
+- ⚠️ **REAL BUG FOUND AND FIXED IN THE SIZE RULE, caught only by a live call.** `_sizeGuidance()`
+  always emitted "add a size word to pants, dresses, tops…" even for a woman with NO size range saved.
+  The AI dutifully looked for a size word, found none, and **invented one — appending "regular" to
+  every search term** ("white poplin top regular"), which lands on a worse page than no word at all.
+  Now the whole block returns `''` when she has given no fit or width, and when it does appear it says
+  explicitly: only the words named below, never invent one, never write "regular"/"standard"/"misses".
+- **▶ TESTING LESSON worth keeping:** prompt rules are only real if the model follows them, and
+  headless render tests cannot tell you that. `scratchpad/variety.js` builds the REAL prompts for
+  three archetypes plus the compare carousel and calls the LIVE `stylestar.app` function, then asserts
+  store-repeat counts and store/category sanity. **Both bugs above were invisible to every static
+  test and obvious on the first live call.** Use this pattern whenever a prompt rule changes.
+
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, evening)
 **▶ FIRST: is PR #627 (the shopping fix) merged?** It was left open deliberately for Cath to tap through on the
 Netlify deploy preview — she should check that the links land somewhere sensible before it goes live. If she has

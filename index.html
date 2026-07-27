@@ -3788,8 +3788,15 @@ function _storeListForPrompt(){
 function _sizeGuidance(){
   const f=_fitSizes().filter(function(x){return x!=='Regular'});
   const w=((prefs.sizes&&prefs.sizes.width)||[]).filter(function(x){return x!=='Medium'});
+  // ⚠️ With no size range of her own there is nothing to say, and saying it
+  // anyway actively hurt: tested live, the AI read "add a size word to tops",
+  // found no size to use, and invented one, appending "regular" to every search
+  // ("white poplin top regular"). That lands on a worse page than no word at
+  // all. So the rule only appears when she has actually given a size range.
+  if(!f.length&&!w.length)return '';
   let s='\nSIZE RULE, follow exactly:\n'+
-    '- Add a size word to "search" ONLY where fit genuinely depends on it: pants, jeans, trousers, skirts, dresses, coats, jackets, blazers, tops, activewear and swim.\n'+
+    '- The ONLY size words you may use are the ones named below. Never invent one, and never write "regular", "standard" or "misses".\n'+
+    '- Use them ONLY where fit genuinely depends on it: pants, jeans, trousers, skirts, dresses, coats, jackets, blazers, tops, activewear and swim.\n'+
     '- NEVER add a size word, and never narrow the store choice, for bags, jewelry, sunglasses, hats, scarves or belts. Those suit everyone.\n'+
     '- Shoes are their own case. Petite, tall and plus never apply to shoes. Width does.\n';
   if(f.length){
@@ -3805,7 +3812,9 @@ function _sizeGuidance(){
 }
 // One shared block so all six shopping features ask for the same thing and stay
 // consistent. The "search" field is what actually makes the links work.
-function _shopRules(){
+// mode 'compare' is for the Wardrobe "Ideas" carousel, where the options are
+// alternatives for ONE piece and she is choosing between them.
+function _shopRules(mode){
   return '\nPICK THE STORE from this list ONLY, using the name exactly as written.'+
     (quizTaken?' The list is already ORDERED by how well each store suits her, closest first, so favour the top of it. Go further down only when the piece needs a specialist that the top of the list does not carry.':'')+
     '\n'+_storeListForPrompt()+
@@ -3823,7 +3832,21 @@ function _shopRules(){
     // not do. Worse, the dressier a woman's taste the more her best-matched
     // stores skew expensive, because dressy correlates with price in the tags.
     // Spreading the price points is both honest and what a good stylist does.
-    '- SPREAD THE PRICES across your picks. Always include something genuinely affordable alongside anything special. Never send her a set where every option is expensive.\n';
+    '- SPREAD THE PRICES across your picks. Always include something genuinely affordable alongside anything special. Never send her a set where every option is expensive.\n'+
+    // ▶ THE POINT OF THE WHOLE APP IS AT STAKE HERE (Cath, 2026-07-27). She
+    // rightly loves department stores for wardrobe building: better odds on
+    // size, colour and stock. But if every suggestion lands at Nordstrom she
+    // will reasonably think "I could have just gone to Nordstrom.com", and the
+    // app has talked itself out of a job. Big stores are welcome; a set that is
+    // ALL one big store is not.
+    (mode==='compare'
+      ? '- EVERY option must come from a DIFFERENT store. She is comparing versions of the same piece, so four of them at one store tells her nothing she could not have found herself.\n'
+      : '- VARY THE STORES. Never put more than two picks at the same store. A list she could have gotten by walking into one shop is a list she did not need.\n'+
+        '- Big stores are genuinely useful and she likes them, so one or two belong here. Alongside them include at least one smaller or specialist store whenever one honestly suits that piece better.\n')+
+    // A variety rule with no brake produces its own bug: reaching for a
+    // different name and landing on a store that does not sell that kind of
+    // thing at all. Caught live, a jewelry brand being given a canvas tote.
+    '- NEVER pick a store that does not actually sell that kind of item. Check the tags. A jewelry brand has no handbags, an eyewear shop has no dresses. Sending her somewhere that cannot possibly have it is worse than repeating a store.\n';
 }
 // ▶ CATH: this is the wording on every shopping button, in ONE place. It says
 // "Find it" rather than "Shop" because the link runs a search at that store, so
@@ -5377,7 +5400,7 @@ async function _wardrobeIdeaGen(id,boxId){
   if(!name)return;
   box.innerHTML='<div class="wdr-loading"><svg class="wdr-load-star" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E6C24E" stroke="#b8bcc2" stroke-width="0.6"/></svg><div class="wdr-load-txt">Finding ideas for &ldquo;'+_esc(name)+'&rdquo;&hellip;</div></div>';
   const basis=(Array.isArray(answers)&&answers.length===12&&topArchNames.length)?('Her style: '+topArchNames.join(', ')+'.'):'';
-  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+'\n'+_shopRules()+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice jacket" but "Cropped Tan Suede Moto Jacket"\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
+  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice jacket" but "Cropped Tan Suede Moto Jacket"\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
@@ -5885,7 +5908,9 @@ SHOPPING:
 - Keep the item name before "from" short and searchable (2 to 4 plain words like "navy linen blazer"), because that phrase becomes the shopping search.
 - Match the store to her using what you know of her budget and size range. Only mention a size range for things where fit depends on it, never for bags, jewelry or accessories.
 - Mix price points
-- When suggesting multiple items, try to group from the same store when possible so she can shop in one place. But never compromise the best pick just to match stores. The right item always wins.
+- When you name several pieces in ONE answer, group them at the same store where you can. She is buying, and one order means one checkout, one shipping charge and one return. A big department store is usually the easiest place to do that.
+- But do not default to the SAME store every time you answer. If every reply you ever give sends her to one shop, she will start going there directly instead of asking you. Vary which store you lean on from answer to answer.
+- Never compromise the best pick to group or to vary. The right item always wins.
 - Keep responses short and actionable. Lead with the items, not the explanation.
 - When she asks "what should I wear" or "what should I buy," get straight to the specific items. No preamble.
 
