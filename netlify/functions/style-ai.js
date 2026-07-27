@@ -3,8 +3,11 @@
 const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
 
 // Hard ceiling on response size so no single request can be made expensive.
-// The app only ever asks for 300-500, so real usage is unaffected.
-const MAX_TOKENS_CAP = 1024;
+// Most calls ask for 500-800. The exception is "Shop my whole wishlist", which
+// returns one pick per wishlist item (up to 16) and so needs real room; the
+// ceiling has to clear that or the JSON truncates mid-object and the page shows
+// "Couldn't load options right now". Still a hard bound on abuse.
+const MAX_TOKENS_CAP = 1536;
 
 // Pull the hostname out of an Origin or Referer header value.
 function hostOf(value) {
