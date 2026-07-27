@@ -3667,12 +3667,40 @@ store is.** The fix belongs in variety-within-a-set, NOT in the matching.
   store-repeat counts and store/category sanity. **Both bugs above were invisible to every static
   test and obvious on the first live call.** Use this pattern whenever a prompt rule changes.
 
-### ▶ NEXT SESSION — START HERE (updated 2026-07-27, evening)
-**▶ FIRST: is PR #627 (the shopping fix) merged?** It was left open deliberately for Cath to tap through on the
-Netlify deploy preview — she should check that the links land somewhere sensible before it goes live. If she has
-given feedback on where searches land wrong, tune the `search`-term guidance in `_shopRules()`; if she has corrected
-any store tags, update the `STORES` table. Then merge.
-Everything below this line was the plan before that PR, and still stands:
+### ▶ SAVED IDEA (Cath loves this one, 2026-07-27): "Nordstrom, because they carry petite"
+**The strongest answer to "why not just go to Nordstrom myself" is not variety, it is showing the JUDGMENT.**
+A short stylist line under a pick — *"Nordstrom, because they carry petite in this cut"* / *"Quince, because
+their silk is the best value at this price"* — makes visible the thing she is actually getting: not a link to a
+store, but a stylist who knows **which** store and **why**. Cath: *"really great to think about including those
+stylist touches."*
+- **Why it is the right lever:** every other improvement makes the guess better; this one makes the *value*
+  legible. It is also pure Sally differentiation — a faceless algorithm does not explain itself.
+- **How to build it:** one more field per item in the shopping JSON (`why`, one short clause, ≤10 words),
+  rendered small and quiet under the store name on `.shop-card`. The prompt already has everything it needs to
+  write it — the `a` archetype tags, the `s` size ranges and the `c` category strengths are all in the store
+  line, so the reason can be real rather than invented. **Add a rule that it must cite something TRUE from the
+  tags** (carries petite / strong on denim / best value at this price), never generic flattery.
+- **▶ DELIBERATELY NOT BUILT YET.** It is more words on an already-busy card, and Cath's live testing may change
+  what belongs there. Build it AFTER she reports back. Cost is trivial (a few tokens per item).
+- Related, same spirit: the same `why` clause would make the **Wardrobe "Ideas" carousel** far stronger, since
+  those four options are a comparison and the reason each one is different is exactly what she wants to know.
+
+### ▶ NEXT SESSION — START HERE (updated 2026-07-27, late evening)
+**Everything from the shopping work is MERGED AND LIVE** (PRs #627, #634–#640). Nothing is pending review.
+The store system is finished: 102 stores, every tag Cath's own, 10 dimension scores each, matching + variety
+rules, all verified. **Cath is now TESTING the live app and will come back with results.**
+**▶ WHEN SHE RETURNS, START HERE:** ask for her list of things that landed wrong, in the form `item → store`.
+- A wrong **store** (a jewelry brand for a bag, a store she would never send someone to) → the matching or the
+  variety rules. Tune `_storeFit` weights or `_shopRules()`.
+- A wrong **landing page** (right store, but the search shows everything or nothing) → the `search`-term
+  guidance in `_shopRules()`. Reproduce with `scratchpad/live-search.js` before changing wording.
+- **▶ ALWAYS re-verify prompt changes against the LIVE API** with `scratchpad/variety.js`, not just the headless
+  render tests. Two real bugs this session were invisible to every static test and obvious on the first live
+  call (see the store-variety entry above).
+Then, in order: **the "why this store" stylist line** (saved idea above, she loves it) → the two email projects →
+the standing list below.
+
+### ▶ (previous plan, 2026-07-27)
 
 ### ▶ (previous plan, 2026-07-27)
 A big content day shipped (PRs #610–#615): **What's Trending 7 → 15**, the **Style Star Edit 10 → 15**, and the
