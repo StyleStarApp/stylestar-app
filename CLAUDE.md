@@ -3611,9 +3611,11 @@ with wrong or zero results, and no photos anywhere.
 - **Key framing that resolves the brand tension:** the shopping store list is **plumbing** (which stores the app knows
   how to search), NOT curation. Her taste lives in the **Mall** and the **Style Star Edit**, which stay hers. So
   expanding the search pool doesn't dilute "curated by Catherine" at all.
-- **⚠️ LIVE BUG FOUND: Mango is broken right now.** The URL in the app (`https://shop.mango.com/us/search?kw=`) returns
-  **404**, as do three other patterns tried. Mango is one of the 20 the AI picks from, so those suggestions currently
-  dead-end. **Decide: drop it, or Cath confirms a working search URL from her phone.**
+- **⚠️ LIVE BUG FOUND AND FIXED: Mango.** The URL in the app (`https://shop.mango.com/us/search?kw=`) returns **404**,
+  so every Mango suggestion currently dead-ends. Cath sent a working URL from her own browser and the correct US
+  pattern is **`https://shop.mango.com/us/en/search/women?q=`**. Two things were missing: the `/en/` locale segment and
+  the `/search/women` path (not `/search?kw=`). Verified as a real server-side search (page size varies by term, and a
+  nonsense term returns the smallest page). **Bonus: that path scopes to womenswear**, so it can't surface menswear.
 - **✅ Chico's fixed:** the working pattern is `https://www.chicos.com/store/search?q=` (not `/search?q=`).
 - **✅ J.Jill SOLVED (Cath sent the URL from her address bar).** Their site emits a long WebSphere Commerce URL, but
   every parameter except the search term is boilerplate. The clean pattern is
@@ -3630,7 +3632,30 @@ with wrong or zero results, and no photos anywhere.
   DSW, Banana Republic Factory, Tiffany, Gucci, Alice + Olivia, Veronica Beard, Good American, Lululemon, Alo, Tommy
   Bahama, J.Jill, Ann Taylor, LOFT, Boden, **Izod, Lacoste, Sam Edelman, Tory Burch**. (Izod checked specifically for
   womenswear before including — their site shows women's and men's equally, so it's fine.)
-- **❌ EXCLUDED by agreement: Shein and Temu** (quality and ethics).
+- **❌ EXCLUDED by agreement: Shein and Temu** (quality and ethics). **Also REMOVED at Cath's call: Kohl's and
+  JCPenney.** Noted to her that they were the only two *budget department* stores, but the budget tier stays covered by
+  Target, Old Navy, Amazon, Uniqlo, Quince and Lands' End, so nobody at the affordable end is stranded.
+- **Later additions (2026-07-27, same session):** **J.McLaughlin** ✅ verified working
+  (`https://www.jmclaughlin.com/search?q=`, page size varies properly by term) — coastal classic, strong in Florida,
+  fills a niche nothing else covered. **Kendra Scott** (`https://www.kendrascott.com/search?q=`) and **Talbots**
+  (`https://www.talbots.com/search?q=`) return 200 on the standard pattern but render results client-side, so they are
+  plausible-but-unverified. **Izod** ✅ verified (checked specifically that it carries womenswear before including — it
+  does, women's and men's are equally represented). **Tory Burch** 200/JS-rendered. **Sam Edelman** and **Lacoste** sit
+  behind bot walls on standard patterns.
+- **▶ STILL OPEN — department stores Cath has not yet ruled on:** **Belk** (Southeast US, regionally relevant to an
+  Orlando stylist, Claude's top pick), **Bergdorf Goodman** (would top out the luxury tier above Neiman), **TJ Maxx**
+  (beloved, but store-specific inventory makes searches inherently hit or miss), **Von Maur** (Midwest-centric and the
+  connection failed entirely — Claude suggested skipping).
+- **▶ VERIFICATION WORKFLOW THAT WORKS — use this whenever a store can't be checked from here.** Many retailers block
+  bots or render search client-side, so Claude genuinely cannot confirm them. **Cath can settle it in ten seconds:
+  search on the store's site, then send the URL from her address bar.** This solved BOTH J.Jill and Mango, and each
+  time the URL could then be trimmed to a short canonical form. Ask for it rather than guessing.
+- **▶ THE TEST THAT CATCHES A FAKE SEARCH (learned from Mango):** a 200 response proves nothing. Fetch the same search
+  URL with several different terms including a nonsense one. **If every response is the same byte size, the search
+  parameter is being ignored** and the link is useless. If sizes vary meaningfully, it's a real server-side search.
+- **▶ SIZE METADATA COMES FROM CATH, NOT FROM GUESSING.** She confirmed **Talbots, LOFT and Banana Republic carry
+  petite**. This is exactly the knowledge the tagged-store design needs and Claude cannot reliably infer it from a
+  website. Ask her per store: good for petite / plus / tall / wide shoe widths.
 - **▶ DESIGN: tag every store, don't just list names.** Each entry should carry `price` tier, `sizes` carried
   (petite/plus/tall/wide widths), and `strong` categories. Then the AI can choose properly — plus-size activewear goes
   to stores that actually sell it, a budget shopper gets budget stores — which finally makes "every body, every age,
@@ -3651,7 +3676,8 @@ researched and decided; it just needs building. Read the three sections directly
    all six link-building features.
 2. **Expand the store list to ~59, tagged** with price / sizes / strengths, and wire the per-category size logic.
 3. **Fix the four "in your size" over-promises** in the copy.
-4. **Blocked on Cath:** the **Mango** drop-or-keep decision (its links 404 today), and whether **Kohl's and JCPenney**
-   belong in her list at all. (J.Jill is ✅ solved — see the store section above.)
+4. **Blocked on Cath (small):** which of **Belk / Bergdorf Goodman / TJ Maxx / Von Maur** to include, and ideally the
+   address-bar URLs for **Kendra Scott** and **Talbots** so they can be verified. (J.Jill, Mango and Chico's are all ✅
+   solved; Kohl's and JCPenney are ✅ removed.) None of this blocks starting the build.
 5. Then everything previously queued: the two email projects, the Edit's still-empty Activewear category, the parked
    Wardrobe features, and the legal chain (still waiting on Florida).
