@@ -3527,7 +3527,11 @@ const STORES={
   'Amazon':{u:'https://www.amazon.com/s?k=',t:'budget',s:['petite','plus','tall','wide'],c:'almost everything, basics, accessories'},
   'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'mid',s:['petite','plus'],c:'romantic, prints, dresses'},
   'Express':{u:'https://www.express.com/exp/search?q=',t:'mid',s:['petite','tall'],c:'workwear, going out, denim'},
-  'Revolve':{u:'https://www.revolve.com/r/search?query=',t:'mid',s:[],c:'trendy, going out, vacation, dresses'},
+  // The old /r/search?query= silently landed on Revolve's homepage (Cath caught
+  // it live; Revolve blocks automated checks so it could not be tested here).
+  // Real pattern, from her address bar. d=Womens scopes it to womenswear, and
+  // comes first only so the search term can still be appended at the end.
+  'Revolve':{u:'https://www.revolve.com/r/Search.jsp?d=Womens&search=',t:'mid',s:[],c:'trendy, going out, vacation, dresses'},
   'Abercrombie':{u:'https://www.abercrombie.com/shop/us/search?searchTerm=',t:'mid',s:['petite','plus','tall'],c:'denim, dresses, everyday'},
   'H&M':{u:'https://www2.hm.com/en_us/search-results.html?q=',t:'budget',s:['plus'],c:'trends, basics, low prices'},
   'Banana Republic':{u:'https://bananarepublic.gap.com/browse/search.do?searchText=',t:'mid',s:['petite','tall'],c:'workwear, tailoring, cashmere'},
