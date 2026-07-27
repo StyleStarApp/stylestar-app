@@ -3381,10 +3381,16 @@ Branch this session: `claude/style-star-9oayy3`. Short, high-value session; ever
      both are **GitHub's own squash-merge commits on published `main`**, authored under Cath's account.
      **Confirmed harmless; do NOT amend** (would rewrite published history and fork `main`).
 
-### ▶ NEXT SESSION — START HERE (updated 2026-07-26, evening)
-Your Wardrobe is in strong shape and had its first real outside user (Cath's mom) — she loved it and the one thing
-she missed (What's Trending) now has three entry points. All live, nothing broken.
-0. **📝 CONTENT: add more to What's Trending + more to the Style Star Edit** (Cath asked 2026-07-26; see the CONTENT TO-DO section at the end of this file). Easy, high-value, no blockers.
+### ▶ NEXT SESSION — START HERE (updated 2026-07-27)
+A big content day shipped (PRs #610–#615): **What's Trending 7 → 15**, the **Style Star Edit 10 → 15**, and the
+**Mall 23 → 25**. Every gap Claude flagged in the Edit is filled except **Activewear**. Both NEW pills will be lit
+for returning visitors. Nothing broken; Cath confirmed all the new links work on her phone.
+0. **📝 CONTENT (ongoing, Cath wants to keep growing both):** the Edit's **Activewear** category is still EMPTY, and
+   Dresses/Bags/Tops each hold only one piece. What's Trending can always grow. **▶ Before adding anything, read the
+   "RULES LEARNED" block at the end of this file** — it covers trimming tracking params, regular-vs-sale price,
+   naming, which retailers can be machine-verified, and the verification script. **▶ Also still open: whether to
+   promote any of the eight new trends into the FIRST THREE**, since only those feed the teaser strip at the bottom
+   of My List (the path Cath's mom actually used to find the tab). Re-sort seasonally.
 1. **📧 The TWO email projects — do them TOGETHER, at her desk** (same MailerLite transactional/automation
    plumbing): **"Email me my wishlist"** and the long-parked **"Email me these tips & links"** after a photo
    analysis. FIRST confirm her MailerLite plan supports transactional sends. **▶ Design rule already decided: every
@@ -3439,3 +3445,85 @@ she missed (What's Trending) now has three entry points. All live, nothing broke
   markup). Cath wants to do this soon. NOTE the Edit's own "NEW" pill works the same way (`wbEditSig()` = the
   number of `.dc-item`s, stamped against `ss_edit_seen`), so adding items lights it up automatically too.
   When affiliate programs approve, this is also where product images + tagged links land (money-path step 7).
+
+**2026-07-27 (▶ CONTENT DAY: 8 new trends, 4 new Edit pieces, 2 new Mall stores — ALL SHIPPED LIVE, PRs #610–#615)**
+Branch this session: `claude/style-star-btk10x`. A happy, fast content session. Cath supplied every pick; Claude
+wrote/polished the blurbs, cleaned the links, and shipped. Six PRs, all squash-merged → live.
+- ✅ **What's Trending 7 → 15** (#610). Cath's six: **Belted Shirt Dresses · Romantic Flowy Dresses · Asymmetrical
+  Hem Skirts · Military Inspired Jackets · Large Cuff Bracelets · Preppy Loafers** (she rewrote that blurb herself:
+  "Comfortable enough for all day, appropriate for work or casual."). Plus two of Claude's candidates she liked:
+  **Chunky Gold Jewelry · Butter Yellow**. (Offered but not taken: Polka Dots, Leopard Print, Bermuda Shorts,
+  Waistcoats and Vests, Barrel Leg Jeans, Sheer Layers.) All dash-free; deliberately avoided reusing the existing
+  set's "easiest way" and "polish" phrasings. **Butter Yellow framing note:** a *trend colour* is fashion news, not
+  seasonal colour analysis, so it doesn't conflict with the brand's "wear what you love, no colour rules" stance.
+- ✅ **Style Star Edit 10 → 15** (#611, #612, #614, #615). Claude did a gap analysis against the 10 Your Wardrobe
+  categories and Cath filled the top gaps in order:
+  1. **Cinq à Sept Le Petit Khloe Blazer — White**, Nordstrom, $395 (Jackets & Layers was a completely EMPTY category)
+  2. **Good American Always Fits High Rise Bootcut Jeans**, Bloomingdale's, $169 (no jeans at all, despite jeans
+     being the FIRST item on the Your Wardrobe checklist)
+  3. **Felina Body Luxe Convertible Strapless Underwire Contour Bra**, Nordstrom, $56 (Foundations was EMPTY)
+  4. **Seafolly Multi-Way Twist Bandeau Bikini Top**, Everything But Water, $110 (no swim)
+  5. **Lucky Brand Mindra Espadrille Wedge**, Zappos, $79 (the only shoe was a dressy evening sandal)
+  **Still empty: Activewear.** Also thin: Dresses (one maxi), Bags (one tote), Tops (one silk blouse).
+- ✅ **Mall 23 → 25 stores** (#613): **Zappos** (leads the Shoes category; description leans on size + width range,
+  which matters for the older end of an 18-to-80 audience) and **Everything But Water** (the Mall's first swim
+  retailer, Florida-founded). ⚠️ **Placement note:** `.mall-grid` is a **2-column grid**, so a category holding one
+  store renders with a visibly empty half. Rather than pad the Mall with stores Cath hadn't vetted, EBW joined
+  Activewear, **renamed "Activewear & Swim"** (Athleta + Vuori both sell swim). Split it into a dedicated swim
+  section once she's picked 2-3 swim stores she actually likes.
+
+### ▶ RULES LEARNED / REAFFIRMED THIS SESSION (apply to all future Edit + Mall additions)
+- **▶ ALWAYS TRIM TRACKING PARAMETERS off product links.** Three reasons, the third is the money one: they go
+  stale, they make links fragile, and **once affiliate links are live, extra tracking params can interfere with
+  commission attribution.** What was stripped this session: Nordstrom `origin=`/`recs_*`/`breadcrumb=`/`color=`;
+  Everything But Water `nav=root`, `List=Site+Search`, and a malformed empty `&=&`.
+  **Canonical forms:** Nordstrom `https://www.nordstrom.com/s/<id>` · Bloomingdale's
+  `/shop/product/<slug>?ID=<id>` (**the `?ID=` is REQUIRED, not tracking — do NOT strip it**) · Zappos
+  `/p/<slug>/product/<id>/color/<n>` (already canonical; the short `/product/<id>` just redirects to it).
+- **▶ LIST THE REGULAR PRICE, NEVER THE SALE PRICE** (Cath asked directly about the $79/$71.10 espadrilles).
+  Sales expire and the Edit is meant to be evergreen. The asymmetry is the argument: arriving to find an item
+  **cheaper** than listed feels lucky; arriving to find it **more expensive** feels misled. Only one is recoverable.
+- **▶ NAMING: brand first**, matching the existing entries ("L'AGENCE Dani Silk Charmeuse Blouse"). Append
+  **" — Colour"** only when the link pins a specific colourway. Drop internal colour codes (Good American's
+  "Indigo446" reads like a typo).
+- **▶ LINK TO THE BASE PRODUCT (no colour pinned) when the note brags about colour range**, so the shopper sees
+  all of them. Done for the Seafolly ("six beautiful colors") and the Felina ("get it in both nude and black").
+- **▶ CLAUDE MUST NEVER PICK THE PRODUCTS.** The disclosure says "Nothing in the Style Star Edit is chosen by AI.
+  Every piece is personally selected by our founder." Claude identifies GAPS and polishes NOTES; the picks are
+  Cath's. Same for Mall stores. Protect this.
+- **▶ RETAILER BOT BEHAVIOUR (saves re-testing):** **Bloomingdale's returns 403 to everything**, including its own
+  homepage — a 403 there means nothing is wrong; verified by testing the long-live MZ Wallace link as a control.
+  **Nordstrom returns 200 but serves a JS shell**, so the page loads yet the product name isn't readable
+  server-side. **Zappos and Everything But Water serve real content** — those two can be fully verified (product
+  name, price, even colour count). Always say plainly which details were verified and which weren't.
+- **▶ VERIFICATION PATTERN for content-only edits** (no render harness needed): a Node script that (1) re-parses
+  BOTH inline `<script>` blocks — all the app's JS lives in one block, so a stray character is fatal, (2) evaluates
+  `trendItems`/`mallStores` directly in a VM to confirm counts and shape, (3) counts `.dc-item` blocks and checks
+  stars/names/metas/links are all aligned with unique https URLs, (4) checks div-nesting balance after any
+  hand-edited HTML, and (5) greps for mojibake (`Ã|â€|Â`).
+- ⚠️ **GIT: `git cherry-pick` has NO `-q` flag.** Using it exits 129 *after* `git checkout -B` has already reset the
+  branch, orphaning the just-made commit. Recovery: `git reflog --format="%H %gs" | grep -m1 "<subject>"` then
+  cherry-pick that SHA. Nothing is lost, but check `git log` before assuming.
+- ⚠️ **GIT: `--force-with-lease` fails if the remote-tracking ref is stale** (e.g. after fetching only `main`).
+  Fix: `git fetch origin <branch>`, then confirm the remote branch holds only already-merged content with
+  `git diff origin/<branch> origin/main --stat -- index.html` (empty = safe), then force.
+- ⚠️ **GIT: two Edit items added in separate PRs WILL conflict** — every new `.dc-item` inserts at the same anchor
+  (just above `<div class="dc-sign">`). Resolve by keeping BOTH, then re-verify item counts and div balance.
+
+### ▶ REMINDER FOR WHEN AFFILIATE APPROVALS LAND (Cath asked 2026-07-27 to be reminded — surface at money-path step 7)
+Cath's own words: *"when it comes time for us to get approved for affiliate links please remind me to think about
+adding more swim stores to the mall and also figure out how to make the most of our links and provide broad ranges etc."*
+So, at that moment, walk her through:
+1. **Add more swim stores to the Mall** and split out a proper dedicated swim section (see the 2-column-grid note above).
+2. **Get the most out of every link** — deep-link to actual PRODUCTS rather than store search URLs (the whole app
+   still uses `getStoreUrl()` search links, which convert far worse than product links), and audit every outbound
+   link so each carries her tag: Mall stores, Style Star Edit items, "Complete the Look" on outfit results, the
+   "Ideas" carousels in Your Wardrobe, and Shop-your-style picks.
+3. **Provide broad ranges** — price (she already spans $17 to $510, keep it), sizes (inclusive/extended, petite,
+   tall, wide-width), and store mix, so every woman in an 18-to-80 audience finds something she can actually buy.
+4. **Prefer retailers with real affiliate programs.** Flagged this session: **Sexy Little Robe** and **Baby Gold**
+   are small independent brands that may have NO affiliate program, so those two Edit items may earn $0 forever.
+   Fine for genuine loves, worth knowing. Big multi-brand retailers are also more DURABLE (a sold-out product on
+   Nordstrom still resolves; a small brand's link breaks).
+5. Then: product images on the Edit + Mall + Your Wardrobe (turning them into real lookbooks), and confirm final
+   **FTC disclosure** wording/placement with Almira.
