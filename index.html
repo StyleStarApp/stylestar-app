@@ -3424,7 +3424,7 @@ FIRST: If the photo only shows a face/headshot, or you cannot see most of the ou
 If you CAN see the outfit, give her a real styling session with three parts:
 1. "celebrate": 1-2 sentences naming what is SPECIFICALLY working and why, a genuine earned observation (a color pairing, a proportion, a smart styling choice). Be specific and real; skip generic praise like "you look amazing." If little stands out, honestly credit a good instinct rather than gushing.
 2. "tips": 2-3 finishing touches that genuinely ELEVATE the look, most impactful first. The first is the single change that takes it from nice to striking; then one or two more. Frame as elevation ("to take this further, try / add / swap"), never as fixing a flaw, and be specific about what and why. Each: {"title": 2-4 words, "text": one clear, encouraging sentence}.
-3. "shop": 3-4 specific shoppable pieces that COMPLETE or pair with what she is ALREADY wearing (the jacket, shoes, bag, belt, or jewelry your tips call for). Each: {"category": one of top/bottom/dress/jacket/shoes/bag/jewelry/belt/accessory, "name": specific (color + style + item, e.g. "Camel Structured Blazer"), "search": a short plain 2-4 word search term that returns results in that store's search box (e.g. "camel blazer"), "store": one from the store list below, "why": 2-4 words on how it helps}.
+3. "shop": 3-4 specific shoppable pieces that COMPLETE or pair with what she is ALREADY wearing (the jacket, shoes, bag, belt, or jewelry your tips call for). Each: {"category": one of top/bottom/dress/jacket/shoes/bag/jewelry/belt/accessory, "name": specific (color + style + item, e.g. "Camel Structured Blazer"), "search": the 2-5 words she would type into that store's search box, keeping the color and the defining feature (e.g. "camel structured blazer", never just "blazer"), "store": one from the store list below, "why": 2-4 words on how it helps}.
 ${occ?'Tailor the finishing touches and the shopping specifically to '+occ+'.\n':''}${getPrefsForPrompt()}
 ${_shopRules()}
 
@@ -3642,7 +3642,12 @@ function _shopRules(){
   return '\nPICK THE STORE from this list ONLY, using the name exactly as written:\n'+_storeListForPrompt()+
     '\n\nFOR EVERY ITEM GIVE BOTH:\n'+
     '- "name": the pretty descriptive name she reads on the card (color, fabric, style, item), for example "Blush Silk Midi Wrap Dress".\n'+
-    '- "search": a SHORT plain search term of 2 to 4 words that will actually return results typed into that store\'s search box, for example "pink midi dress". Plain everyday words only: no fabric-and-color pile-ups, no brand names, no punctuation. This is what the shopping link searches, so it matters more than the pretty name.\n'+
+    '- "search": the 2 to 5 words a woman would actually type into that store\'s search box to find THIS piece. This is what the shopping link searches, so it matters more than the pretty name.\n'+
+    '  KEEP the color and the one feature that defines the piece. Without them she lands on everything the store sells and has to hunt.\n'+
+    '  Drop only brand names, fabric names, marketing words and punctuation.\n'+
+    '  Good: "black strappy sandals" / "white top handle bag" / "navy wrap midi dress" / "ivory mock neck sweater" / "camel longline coat".\n'+
+    '  TOO VAGUE, never do this: "sandals" / "bag" / "dress" / "white bag" / "heels".\n'+
+    '  TOO LONG, never do this: "Blush Silk Charmeuse Midi Wrap Dress with Tie Waist".\n'+
     _sizeGuidance()+
     '- Match the store to her using the tags above, including her budget range.\n';
 }
