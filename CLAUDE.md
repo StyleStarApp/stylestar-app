@@ -3662,11 +3662,20 @@ with wrong or zero results, and no photos anywhere.
   (`https://www.warbyparker.com/search?q=`, bot wall) for breadth and prescription, plus **Quay**
   (`https://www.quayaustralia.com/search?q=`, leaning real). Shapewear had NO retailer at all despite Cath adding
   Shapewear to the Foundations checklist the same day. **Final list ~70 stores.**
-- **Plus-size additions (Cath, end of session): Lane Bryant** (`https://www.lanebryant.com/search?q=`) — standard
-  pattern, renders client-side so unverified, safe to include. **Dia&Co** (`https://www.dia.com/search?q=`) — same,
-  BUT ⚠️ **Dia&Co is primarily a subscription styling-box service, not a browse-and-buy retailer**, so a keyword
-  search may not behave like shopping at all. Flagged to Cath; include only if she confirms their site searches
-  normally. Plus is otherwise well covered by Universal Standard, Eloquii, Torrid, Good American and Lane Bryant.
+- **Plus-size addition (Cath, end of session): Lane Bryant** (`https://www.lanebryant.com/search?q=`) — standard
+  pattern, renders client-side so unverified, safe to include. Plus is well covered by Universal Standard, Eloquii,
+  Torrid, Good American and Lane Bryant.
+- **❌ Dia&Co REJECTED, and it became a standing rule.** Claude flagged that Dia&Co is primarily a subscription
+  styling-box service rather than a browse-and-buy retailer; Cath's reply was immediate and emphatic: *"Oh no I don't
+  want that dia&co. No subscription boxes I cannot stand those things."*
+  **▶ BRAND RULE: NO SUBSCRIPTION STYLING BOXES, EVER** (Dia&Co, Stitch Fix, Trunk Club, Wantable and the like). This
+  is not just taste, it is coherent with the whole product: a box picks FOR a woman and mails it to her, while Style
+  Star exists to help her see and choose for herself. It also sits alongside her value-first rule (nothing should
+  require a commitment before she gets value). **Lesson for adding any future store: check the BUSINESS MODEL, not
+  just whether the search URL works.** A working URL on the wrong kind of company is still wrong.
+  ▶ **ASK CATH ONCE (not yet decided):** rental subscriptions (Rent the Runway, Nuuly) are an adjacent category —
+  not styling boxes, but still subscriptions where you do not keep the clothes. Likely also out; confirm rather than
+  assume, so it is settled in one go.
 - **▶ PETITE/TALL IS A SUB-LINE, NOT A RETAILER — this reframes Cath's sourcing research.** Petite Studio is about the
   only pure-petite name of scale; everything else (Ann Taylor Petite, LOFT Petite, Talbots Petite, J.Crew Petite,
   Boden Petite) is a sub-line of a store already on the list. So for petite and tall the useful question is **"which of
