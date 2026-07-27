@@ -3455,6 +3455,22 @@ so per the agreed plan it is sitting in **PR #627** for Cath to tap through on t
   must go through `git commit -F <file>` — unescaped apostrophes in `-m` break the shell and the commit silently
   doesn't land.
 
+### ▶ STORE-POOL ELIGIBILITY — THE FULL RULE (confirmed by Cath 2026-07-27)
+Every store in the `STORES` table must be a place a woman can browse and **BUY AND KEEP** a specific
+item, and must meet Cath's quality bar. **Three standing exclusions, all her explicit calls:**
+1. **No subscription styling boxes** — Stitch Fix, Dia&Co, Trunk Club, Wantable, **Fabletics** (VIP
+   membership model). Her words: *"No subscription boxes I cannot stand those things."* Coherent with
+   the brand: a box picks FOR her; Style Star helps her see and choose for herself.
+2. **No rentals** — Rent the Runway, Nuuly. *"No rentals either, same reason."* Clothes that go back
+   are not hers.
+3. **No fast fashion** — Shein, Temu, and (confirmed 2026-07-27) **Cider, Princess Polly, Meshki,
+   Peppermayo, Cotton On**. Quality and ethics.
+⚠️ **All of these names appear on Cath's wider retailer wishlist document** (the ~200-store universe she
+sent 2026-07-27). They are excluded ON PURPOSE. **Do not add them from that list.** The rule is also
+written into the comment above the `STORES` table in `index.html`.
+▶ **Lesson that produced this:** when adding stores, check the BUSINESS MODEL, not just whether the
+search URL works. A working URL on the wrong kind of company is still wrong.
+
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, evening)
 **▶ FIRST: is PR #627 (the shopping fix) merged?** It was left open deliberately for Cath to tap through on the
 Netlify deploy preview — she should check that the links land somewhere sensible before it goes live. If she has
