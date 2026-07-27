@@ -3615,8 +3615,12 @@ with wrong or zero results, and no photos anywhere.
   **404**, as do three other patterns tried. Mango is one of the 20 the AI picks from, so those suggestions currently
   dead-end. **Decide: drop it, or Cath confirms a working search URL from her phone.**
 - **✅ Chico's fixed:** the working pattern is `https://www.chicos.com/store/search?q=` (not `/search?q=`).
-- **❌ Still unsolved: J.Jill** (several patterns all 404). **Cath to send the URL from her address bar after searching
-  on their site.** Also **Dillard's** sits behind a bot wall (377-byte response), unverified either way.
+- **✅ J.Jill SOLVED (Cath sent the URL from her address bar).** Their site emits a long WebSphere Commerce URL, but
+  every parameter except the search term is boilerplate. The clean pattern is
+  **`https://www.jjill.com/SearchDisplay?searchTerm=`** — verified identical results to the full URL. NOTE J.Jill
+  renders products client-side, so a nonsense term still returns a full page; the URL pattern is confirmed correct,
+  but result quality can't be judged server-side. Also **Dillard's** sits behind a bot wall (377-byte response),
+  unverified either way.
 - **Testing method + what it proves:** fetched every candidate search URL with a desktop UA and checked status, page
   size, and whether the search term was echoed back. **26 verified working** (real page + term echoed). **~25 return
   403** — that is a bot wall, NOT a broken link; importantly **eleven of those are already live in the app today**
@@ -3647,7 +3651,7 @@ researched and decided; it just needs building. Read the three sections directly
    all six link-building features.
 2. **Expand the store list to ~59, tagged** with price / sizes / strengths, and wire the per-category size logic.
 3. **Fix the four "in your size" over-promises** in the copy.
-4. **Blocked on Cath:** the **J.Jill** search URL from her address bar; the **Mango** drop-or-keep decision; and whether
-   **Kohl's and JCPenney** belong in her list at all.
+4. **Blocked on Cath:** the **Mango** drop-or-keep decision (its links 404 today), and whether **Kohl's and JCPenney**
+   belong in her list at all. (J.Jill is ✅ solved — see the store section above.)
 5. Then everything previously queued: the two email projects, the Edit's still-empty Activewear category, the parked
    Wardrobe features, and the legal chain (still waiting on Florida).
