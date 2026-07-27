@@ -2750,6 +2750,20 @@ Branch this session: `claude/style-star-gmw04k`. A run of small live-polish fixe
 - **▶ TIMELINE: state response expected on or before JULY 24.** If the LLC name clears with no issues, Almira expects to **file the trademark applications on or before July 24** as well. She'll notify Cath the moment the state responds and send the TM applications for Cath's **final action steps**.
 - **Nothing for Cath to do right now** — waiting on the state via Almira. **▶ NEXT to watch (~July 24):** confirmation the "Style Star by Catherine, LLC" name cleared + the TM apps arriving for Cath's final sign-off. When it lands, log the confirmed LLC + TM-filing status here, then the chain advances to **EIN issued → business bank account → affiliate applications**.
 
+### ▶ LEGAL UPDATE (2026-07-27 — state STILL silent; Indie Law has chased them; TMs drafted and ready)
+- Cath nudged Almira on **July 24**; the **Indie Client Care Team replied July 27**: Florida has **not yet responded**
+  on "Style Star by Catherine, LLC," and **Indie Law has already sent the state a follow-up** to check status. They will
+  be in touch **the moment approval lands** so they can immediately file the trademarks under the new LLC. Cath's
+  **trademark applications are already drafted and ready** for next steps.
+- **Read on it:** the only thing that slipped is the STATE's own processing time (Almira's "on or before July 24" was
+  her estimate of their turnaround, not a broken commitment). Normal delay, not a red flag. **Nothing for Cath to do.**
+- **▶ DECISION UNCHANGED: still WAIT** and file the TMs under the LLC (per 2026-07-16). **Revisit trigger:** if the
+  state stays silent for **several more weeks**, reconsider filing the TMs under Cath's name now to lock the earlier
+  USPTO priority date, then assign to the LLC later (Almira already offered this). Not there yet as of 07-27.
+- **Money path is unchanged and still gated here:** state approves the LLC name → TMs filed → **EIN** issued (included
+  in TM Max) → [Cath] business bank account → [Cath] affiliate applications → **[Claude] wire affiliate links + product
+  images + FTC disclosure** (the revenue switch). None of this blocks app work.
+
 ### ▶ NORTH STAR (2026-07-14, from Sally Hogshead — award-winning marketing expert, author of "How to Fascinate"): DIFFERENTIATION = THE REAL STYLIST BEHIND IT
 Sally (Cath's friend, a marketing/branding genius) gave Cath the single most important strategic note yet:
 **Style Star must clearly, loudly differentiate on the one thing no competitor can copy — that it is built with
@@ -3377,8 +3391,10 @@ she missed (What's Trending) now has three entry points. All live, nothing broke
    email links BACK INTO the app, never straight out to a retailer** (Amazon Associates bans affiliate links in
    email; see the architecture decision above). **▶ Also bundle in: email capture ON the Your Wardrobe page** for
    users who haven't given an email — high-intent moment, she's just built a wishlist she doesn't want to lose.
-2. **⚖️ Almira / the LLC** — detailed reply promised "hopefully Monday." Gates the money path
-   (LLC name → trademark → EIN → business bank → affiliates → wire real links).
+2. **⚖️ Almira / the LLC — ANSWERED 2026-07-27: the state is still silent, Indie Law has chased them, TMs are drafted
+   and ready. NOTHING for Cath to do; just wait for their notice.** Decision to wait and file under the LLC is
+   unchanged; revisit only if the state stays quiet for several more weeks (see the 07-27 legal entry). Gates the
+   money path (LLC name → trademark → EIN → business bank → affiliates → wire real links).
 3. **Parked Wardrobe items:** the trending-items strip at the top of My List (see above); the **"not right now"
    mute** on a wishlist item; **item thumbnails** (pair with the affiliate work — product images come with
    affiliate feeds, turning the Wardrobe into a lookbook).
