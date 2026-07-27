@@ -3602,21 +3602,31 @@ would actually want."* That settles a trade-off I had made the other way, so the
 - ▶ **If cost ever genuinely matters** (it will not until there are thousands of users), the honest
   lever is not trimming the store list but caching or shortening elsewhere. Re-read this entry first.
 
-### ▶ WHERE THE DIMENSION WORK SHOULD STOP (recommendation, 2026-07-27)
-Cath then asked whether Fitted/Relaxed and the other sliders should be redone the same paired way.
-Honest read, given the evidence above:
-- **▶ WORTH DOING: Relaxed / Fitted as an independent pair.** The paired framing measurably beat the
-  single-axis one, and fit is the thing a department store most obviously spans (Nordstrom sells both
-  loose linen and bodycon; its single "fitted 6" hides that). Would replace the current single fitted
-  score with two columns and turn that axis from a penalty into a preference score.
-- **▶ PROBABLY WORTH IT: Neutral / Colorful as a pair** (slider 7). Cleanly separates FARM Rio, Boden
-  and Kendra Scott from COS and Everlane, and colour is something women feel strongly about.
-- **▶ NOT WORTH IT: Modest / Alluring as a pair.** Her own definition of alluring is how the aesthetic
-  *feels* — brand character, not a range a store spans. A single score is the right shape.
-- **▶ STOP AFTER THAT.** Every axis added dilutes the others, so a bad mismatch on one gets averaged
-  away. The 12 quiz sliders are also not independent (Casual↔Dressy and Comfort↔Style largely say the
-  same thing), so scoring all twelve would make matching *worse*, not better. Better use of Cath's
-  time after these: judging real suggestions against real stores.
+### ▶ THE DIMENSION SET IS NOW COMPLETE — 4 PAIRS + 2 SINGLES (2026-07-27)
+Cath sent the last two tables the same evening. **`d` is now 10 numbers per store:**
+`[relaxed, alluring, polish, classic, trendy, casual, dressy, fitted, neutral, colorful]`
+⚠️ **The order reads oddly on purpose:** `relaxed` replaced an earlier single `fitted` score in slot 0
+and its partner was appended at the end. **Always go through the `_DIM_*` constants, never a bare
+index.**
+- **FOUR PAIRS, all weighted preference scores** (more of her own side is simply better):
+  relaxed/fitted ← slider 9 · classic/trendy ← slider 1 · casual/dressy ← slider 5 ·
+  neutral/colorful ← slider 7.
+- **TWO SINGLES:** `alluring` is a distance PENALTY (weighted ×2.5 so one axis still counts against
+  four pairs) — deliberately NOT paired, because Cath's definition is how the aesthetic *feels*, i.e.
+  brand character, not a range a store spans. `polish` rides at ×0.15 as a refinement tie-break.
+- **▶ STOP HERE. Do NOT score the remaining sliders.** Every axis added dilutes the others, so a bad
+  mismatch on one gets averaged away, and the 12 quiz sliders are not independent (Casual↔Dressy and
+  Comfort↔Style largely say the same thing). Scoring all twelve would make matching *worse*.
+- **▶ OPEN QUESTION FOR CATH — BREADTH vs FIT, flagged not fixed.** A store strong on BOTH sides of
+  every pair scores near the max whatever her lean is, so department stores now rise for almost
+  everyone: **Nordstrom tops 20 of the 28 archetypes' top-5**, and department stores take 34% of all
+  top-5 slots (36 distinct stores fill the 140 slots, so diversity is still decent). This is arguably
+  correct — Nordstrom genuinely suits most women, and Cath's 10-neutral/9-colorful scoring for it is
+  accurate breadth. But a stylist's value is partly sending someone somewhere specific. **Deliberately
+  left alone: this is a stylist judgment, not an engineering one, and over-tuning a proxy without her
+  eye is the trap.** `dims/rank3.js` now tracks the number so a regression is visible. If she wants
+  specialists to lead, the one-line lever is to subtract a small "breadth" term (the store's mean
+  across a pair) from each pair's score.
 
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, evening)
 **▶ FIRST: is PR #627 (the shopping fix) merged?** It was left open deliberately for Cath to tap through on the
