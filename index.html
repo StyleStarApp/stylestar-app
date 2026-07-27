@@ -3504,7 +3504,13 @@ Respond with ONLY valid JSON in this exact format, no other text:
 //   to the right store instead of a plausible one. Nothing breaks if a tag is
 //   wrong; the suggestions just get less sharp.
 // ▶ RULE: every store here must be a place a woman can browse and BUY AND KEEP a
-//   specific item. No subscription styling boxes, no rentals.
+//   specific item, and must meet Cath's quality bar. Three standing exclusions:
+//     - no subscription styling boxes (Stitch Fix, Dia&Co, Fabletics VIP...)
+//     - no rentals (Rent the Runway, Nuuly...)
+//     - no fast fashion (Shein, Temu, Cider, Princess Polly, Meshki, Peppermayo,
+//       Cotton On) on quality and ethics grounds
+//   These names appear on Cath's wider retailer wishlist. They are excluded on
+//   purpose, so do not add them from that list.
 const STORES={
   // Department stores and multi-brand
   'Nordstrom':{u:'https://www.nordstrom.com/sr?keyword=',t:'mid',s:['petite','plus','tall','wide'],c:'almost everything, dresses, shoes, denim, occasion'},
@@ -3516,6 +3522,9 @@ const STORES={
   'Neiman Marcus':{u:'https://www.neimanmarcus.com/search.jsp?q=',t:'luxe',s:[],c:'designer, occasion, bags, shoes'},
   'Bergdorf Goodman':{u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'luxe',s:[],c:'top designer, occasion, jewelry'},
   'Net-a-Porter':{u:'https://www.net-a-porter.com/en-us/shop/search?q=',t:'luxe',s:[],c:'designer, occasion, bags'},
+  // searchSuggestion=false stops Shopbop redirecting the term into a suggestion,
+  // the way Revolve does. Ordered first so the term still appends at the end.
+  'Shopbop':{u:'https://www.shopbop.com/products?searchSuggestion=false&query=',t:'luxe',s:[],c:'designer multi-brand, dresses, shoes, bags'},
   'Nordstrom Rack':{u:'https://www.nordstromrack.com/search?query=',t:'budget',s:['petite','plus','wide'],c:'deals on brands, shoes, denim, basics'},
   'Saks Off 5th':{u:'https://www.saksoff5th.com/search?q=',t:'budget',s:['plus'],c:'designer deals, dresses, bags'},
   'TJ Maxx':{u:'https://tjmaxx.tjx.com/store/shop/search?q=',t:'budget',s:['plus'],c:'deals, everyday, shoes, bags'},
@@ -3552,6 +3561,7 @@ const STORES={
   'Gap':{u:'https://www.gap.com/browse/search.do?searchText=',t:'budget',s:['petite','plus','tall'],c:'everyday basics, denim, casual'},
   'White House Black Market':{u:'https://www.whitehouseblackmarket.com/store/search?q=',t:'mid',s:['petite'],c:'polished workwear, occasion, dresses'},
   'Garnet Hill':{u:'https://www.garnethill.com/search?q=',t:'mid',s:['petite','plus'],c:'relaxed classic, prints, sleepwear'},
+  'Soft Surroundings':{u:'https://www.softsurroundings.com/search.php?q=',t:'mid',s:['petite','plus'],c:'relaxed feminine, travel knits, comfort'},
   'Tuckernuck':{u:'https://www.tnuck.com/search?q=',t:'mid',s:[],c:'classic coastal, occasion, prints'},
   // Elevated natural / quiet luxury: where a stylist sends this woman first
   'Jenni Kayne':{u:'https://www.jennikayne.com/search?q=',t:'luxe',s:[],c:'quiet luxury, cashmere, relaxed elevated'},
