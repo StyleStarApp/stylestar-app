@@ -86,10 +86,11 @@ The app runs on **Claude Sonnet 4.6**: **$3 per million words-in, $15 per millio
 in the app stops working (the quiz, chat, photo analysis, all shopping) while the site stays up.
 **Turn on auto-reload, or check the balance before any launch or press.**
 
-📌 Note: the fully tagged 102-store list briefly pushed a shop from ~0.4¢ to ~1.1¢. The retailer
-matching built on 2026-07-27 then cut the store list in half for each woman (only the ~48 stores that
-actually suit her), bringing a shop back to roughly **0.6¢** — cheaper *and* better targeted at the
-same time.
+📌 Note: the fully tagged 102-store list pushed a shop from ~0.4¢ to about **0.9¢**. A shortlist was
+built that would have halved it again, then deliberately removed: it saved under half a cent per shop
+(roughly $19 a year at 1,000 active women) at the risk of hiding a store a woman would have wanted.
+Not a trade worth making at this scale. The stores are now sorted best-fit-first instead of trimmed,
+which delivers the quality gain with nothing hidden.
 
 ---
 
