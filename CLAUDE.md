@@ -3512,6 +3512,55 @@ hers.**
   still resolving, unknown store falling to Google Shopping rather than throwing, her specific
   corrections, no overflow, no JS errors.
 
+### ▶ RETAILER MATCHING IS BUILT (2026-07-27) — Cath's Fitted / Alluring / Polish scores
+Cath sent a table scoring all 102 stores 1-10 on three dimensions she defined herself:
+**Fitted** (how tailored/body-skimming), **Alluring** (how glamorous, feminine, sensual or
+fashion-forward), **Polish** (how refined, elevated, put-together). All 102 resolved cleanly to
+store keys, no gaps. Stored as `d:[fitted,alluring,polish]` **on each `STORES` entry** — one source
+of truth, deliberately NOT a parallel table (a parallel table drifts out of sync on a rename,
+exactly the bug class the alias fix just hit).
+- **▶ THE KEY INSIGHT, and it is load-bearing: two of her dimensions are TASTE, one is QUALITY.**
+  Fitted and Alluring have a different right answer for every woman, so they are what we MATCH on.
+  **Polish is not taste, it is refinement, and nobody wants less of it.** Proved from her own data:
+  among stores that sit in the SAME stylistic place (fitted ≤4, alluring ≤3) polish runs from
+  **Jenni Kayne 10 down to Old Navy 4**; polish correlates 0.67 with price tier and only **0.16**
+  with alluring; average polish rises monotonically by tier (5.4 → 7.4 → 8.5 → 9.6). So a woman who
+  dresses casually wants the most refined CASUAL store, not the least refined one. **Polish RANKS
+  (tie-break), it never matches.** Getting this backwards would have sent relaxed dressers to Old
+  Navy and Target.
+- **How her quiz maps in** (`_herDims()`): Fitted ← slider 9 (Relaxed↔Fitted). Alluring ← the mean
+  of slider 2 (Natural↔Glam) and slider 11 (Modest↔Alluring), because her own definition of
+  alluring is glamorous AND sensual. Sliders are 1-11, her scale is 1-10, hence the ×0.9.
+- **`_rankedStores()`** sorts all 102 by `|fitted gap| + |alluring gap|`, ties broken by higher
+  polish, keeps the best 46, then **adds back coverage**. Result: prompt drops **8,965 → ~4,260
+  chars (52% smaller)**, so a shop goes back to roughly 0.6¢. The list is passed to the AI **in
+  match order** with an instruction to favour the top and go further down only for a specialist.
+- **▶ TWO COVERAGE GUARANTEES, both non-negotiable — this is where the danger is.** Trimming a
+  store list can silently make a whole kind of shopping impossible. (1) `_COVER` forces at least one
+  store for each of shoes / bags / jewelry / eyewear / swim / activewear / denim / dresses /
+  workwear / foundations / outerwear. (2) every price tier keeps **at least 3** stores, so a woman on
+  a budget never quietly ends up with one option while everyone else gets thirty. `_tierOf` reads the
+  **cheapest** end of a range (Nordstrom `$$-$$$$` counts as `$$`) because the question is "could she
+  buy anything here at all".
+- **Before the quiz, no ranking at all.** `answers` sits at the neutral default until she moves a
+  slider, so ranking a non-quiz-taker would sort against an invented profile. `_rankedStores()`
+  returns the full list when `!quizTaken`, and the "ordered by fit" line is omitted.
+- ⚠️ **Two real bugs caught by simulation, not by eye:** the tier top-up used an `add()` helper whose
+  own test passed for stores already in the list, so it never fired (glam/edgy women were left with
+  ONE budget store); and `_tierOf` originally read the *top* of a price range, which counted Amazon
+  as `$$$` and understated how much a budget shopper could reach.
+- Verified with `dims/rank.js`, 13 checks run against **all 28 archetypes**: zero coverage gaps and
+  ≥3 stores per tier for every single one, shortlists 46-50 of 102, no duplicates, two opposite women
+  share **no** top-6 store, and a very relaxed woman's top ten still averages high polish.
+- **▶ KNOWN LIMIT, and Cath spotted it herself: two taste axes cannot separate everything.** Sporty
+  vs preppy-resort collapses (J.McLaughlin and Vuori both sit at 5/3), as does classic vs trendy
+  (Talbots and Zara can land near each other). The AI still reads the archetype words and category
+  strengths, so it recovers most of this, but **the fix is more dimensions from Cath.** Highest value
+  next, in order: **Classic↔Trendy** (slider 1, the single biggest gap), **Casual↔Dressy** (slider 5,
+  and note this is NOT polish — proved above), **Neutral↔Colorful** (slider 7), then **Preppy↔Edgy**
+  (slider 3). Adding a dimension is cheap: score the 102, add a number to each `d` array, extend
+  `_herDims()` and the gap sum.
+
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, evening)
 **▶ FIRST: is PR #627 (the shopping fix) merged?** It was left open deliberately for Cath to tap through on the
 Netlify deploy preview — she should check that the links land somewhere sensible before it goes live. If she has
