@@ -3527,3 +3527,29 @@ So, at that moment, walk her through:
    Nordstrom still resolves; a small brand's link breaks).
 5. Then: product images on the Edit + Mall + Your Wardrobe (turning them into real lookbooks), and confirm final
    **FTC disclosure** wording/placement with Almira.
+
+**2026-07-27 (cont. — ▶ THE 100-PIECE MILESTONE + teaser refresh — SHIPPED LIVE, PR #617)**
+- ✅ **Your Wardrobe now holds exactly 10 categories and 100 items.** Cath added **Athletic socks** (Activewear,
+  `ac13`) and **Shapewear** (Foundations, `fo6`, placed with the functional pieces before Special lingerie). She
+  spotted the round number herself and wants it as a talking point.
+- ✅ **Trending teaser refreshed**: **Butter Yellow · Romantic Flowy Dresses · Linen Everything** are now the first
+  three, so the strip at the bottom of My List shows the new picks. Count unchanged at 15, so this deliberately did
+  NOT relight the New pill (nothing added, only resequenced).
+- ⚠️ **Bug caught in verification, worth remembering:** the first pass at the reorder inserted both trends at the
+  top WITHOUT removing them from the bottom, leaving 17 entries with two duplicates. The standing check
+  (`new Set(names).size === names.length`) caught it. **Always dedupe-check after any array reorder.**
+
+### ▶ BRAND FRAMING RULE: how to talk about "10 categories, 100 items" (agreed 2026-07-27)
+Cath wants 10-and-100 as a memorable talking point. It's a strong hook, but the FRAMING matters and she sensed it
+herself (she wrote "need (or want)" and hedged).
+- **❌ Avoid:** "women NEED 100 items for a complete closet." To a woman on a budget, or one who owns thirty things,
+  that lands as a bill she can't pay. It's the one framing that works against the brand's core promise that she is
+  never lacking.
+- **✅ Use instead, a MAP not a MANDATE:** **"10 categories. 100 pieces. Everything a complete wardrobe could hold."**
+  Or: *"The 100 pieces that make up a fully rounded closet, heart the ones missing from yours."* The number keeps
+  all its memorable power; the promise becomes *here is the whole territory* rather than *here is what you owe*.
+  It's also truer to the feature: nobody wants all 100, and the list never asks her to.
+- **⚠️ Practical consequence:** once 100 is said publicly, the list is PINNED at 100. Every future addition needs a
+  matching cut. Healthy constraint on a curated list, but a real one. Flag it before she uses the number in copy.
+- This rule generalizes: **the checklist is a possibility map, never a requirement list.** Apply it to any future
+  copy, marketing, or the eventual paid Style Guide.
