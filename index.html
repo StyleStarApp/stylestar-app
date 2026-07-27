@@ -3496,13 +3496,17 @@ Respond with ONLY valid JSON in this exact format, no other text:
 // search. Catherine's taste lives in the Style Star Edit and the Mall. Expanding
 // this list does not dilute "curated by Catherine" at all.
 //   u = search URL (term is appended, URL-encoded)
-//   t = price tier: budget | mid | luxe
+//   t = price, in Cath's $ to $$$$ notation
+//   a = style archetype(s) this store serves, in Cath's vocabulary
 //   s = size ranges genuinely carried: petite, plus, tall, wide (shoe widths)
 //   c = what this store is genuinely good for
-// ▶ CATH: the t/s/c tags are Claude's best guess and are the one part of this
-//   table that needs YOUR eye. Correcting them is what lets the app send a woman
-//   to the right store instead of a plausible one. Nothing breaks if a tag is
-//   wrong; the suggestions just get less sharp.
+// ▶ CATH is reviewing these tags in batches. A store whose tags she has confirmed
+//   carries an `a` archetype; the rest are still Claude's best guess and are the
+//   one part of this table that needs her eye. Nothing breaks if a tag is wrong;
+//   the suggestions just get less sharp.
+// ▶ The `a` field is the seed of the archetype-to-retailer matching idea: a
+//   stylist doesn't send an Elevated Natural to Zara, she sends her to Quince
+//   and Jenni Kayne. Scoring on this is the next step.
 // ▶ RULE: every store here must be a place a woman can browse and BUY AND KEEP a
 //   specific item, and must meet Cath's quality bar. Three standing exclusions:
 //     - no subscription styling boxes (Stitch Fix, Dia&Co, Fabletics VIP...)
@@ -3513,21 +3517,21 @@ Respond with ONLY valid JSON in this exact format, no other text:
 //   purpose, so do not add them from that list.
 const STORES={
   // Department stores and multi-brand
-  'Nordstrom':{u:'https://www.nordstrom.com/sr?keyword=',t:'mid',s:['petite','plus','tall','wide'],c:'almost everything, dresses, shoes, denim, occasion'},
-  "Macy's":{u:'https://www.macys.com/shop/search?keyword=',t:'mid',s:['petite','plus','tall','wide'],c:'everyday, dresses, shoes, handbags'},
-  "Dillard's":{u:'https://www.dillards.com/search?text=',t:'mid',s:['petite','plus'],c:'dresses, occasion, workwear, shoes'},
-  'Belk':{u:'https://www.belk.com/search/?q=',t:'mid',s:['petite','plus'],c:'everyday, dresses, shoes'},
-  'Bloomingdales':{u:'https://www.bloomingdales.com/shop/search?keyword=',t:'luxe',s:['petite','plus'],c:'designer, dresses, denim, shoes'},
-  'Saks':{u:'https://www.saksfifthavenue.com/search?q=',t:'luxe',s:['petite','plus'],c:'designer, occasion, bags, shoes'},
-  'Neiman Marcus':{u:'https://www.neimanmarcus.com/search.jsp?q=',t:'luxe',s:[],c:'designer, occasion, bags, shoes'},
-  'Bergdorf Goodman':{u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'luxe',s:[],c:'top designer, occasion, jewelry'},
+  'Nordstrom':{u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],c:'almost everything, dresses, shoes, denim'},
+  "Macy's":{u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],c:'everyday, dresses, shoes, handbags'},
+  "Dillard's":{u:'https://www.dillards.com/search?text=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],c:'dresses, occasion, workwear'},
+  'Belk':{u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],c:'everyday, dresses, shoes'},
+  'Bloomingdales':{u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],c:'designer, denim, shoes'},
+  'Saks':{u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],c:'designer, bags, occasion'},
+  'Neiman Marcus':{u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],c:'designer, evening, shoes'},
+  'Bergdorf Goodman':{u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'$$$$',a:'Luxury Fashion',s:[],c:'couture, designer, fine jewelry'},
   'Net-a-Porter':{u:'https://www.net-a-porter.com/en-us/shop/search?q=',t:'luxe',s:[],c:'designer, occasion, bags'},
   // searchSuggestion=false stops Shopbop redirecting the term into a suggestion,
   // the way Revolve does. Ordered first so the term still appends at the end.
   'Shopbop':{u:'https://www.shopbop.com/products?searchSuggestion=false&query=',t:'luxe',s:[],c:'designer multi-brand, dresses, shoes, bags'},
-  'Nordstrom Rack':{u:'https://www.nordstromrack.com/search?query=',t:'budget',s:['petite','plus','wide'],c:'deals on brands, shoes, denim, basics'},
-  'Saks Off 5th':{u:'https://www.saksoff5th.com/search?q=',t:'budget',s:['plus'],c:'designer deals, dresses, bags'},
-  'TJ Maxx':{u:'https://tjmaxx.tjx.com/store/shop/search?q=',t:'budget',s:['plus'],c:'deals, everyday, shoes, bags'},
+  'Nordstrom Rack':{u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],c:'designer deals, shoes, denim'},
+  'Saks Off 5th':{u:'https://www.saksoff5th.com/search?q=',t:'$-$$',a:'Luxe Bargains',s:['plus'],c:'designer deals'},
+  'TJ Maxx':{u:'https://tjmaxx.tjx.com/store/shop/search?q=',t:'$',a:'Treasure Hunter',s:['plus'],c:'value finds, handbags, shoes'},
   // Contemporary and mainstream
   'J.Crew':{u:'https://www.jcrew.com/r/search/?N=0&Nloc=en&Ntrm=',t:'mid',s:['petite','plus','tall'],c:'classic, blazers, trousers, sweaters'},
   'Zara':{u:'https://www.zara.com/us/en/search?searchTerm=',t:'budget',s:[],c:'trend-forward, blazers, dresses, shoes'},
@@ -3552,16 +3556,16 @@ const STORES={
   'Quince':{u:'https://www.quince.com/search?q=',t:'budget',s:[],c:'affordable luxury, cashmere, silk'},
   'Old Navy':{u:'https://oldnavy.gap.com/browse/search.do?searchText=',t:'budget',s:['petite','plus','tall'],c:'everyday basics, denim, activewear'},
   "Lands' End":{u:'https://www.landsend.com/search?q=',t:'budget',s:['petite','plus','tall'],c:'classic, swim, outerwear'},
-  'Boden':{u:'https://www.bodenusa.com/en-us/search?q=',t:'mid',s:['petite','tall'],c:'british prints, dresses, color'},
+  'Boden':{u:'https://www.bodenusa.com/en-us/search?q=',t:'$$',a:'Playful Classic',s:['petite','tall'],c:'colorful dresses, prints'},
   'Farm Rio':{u:'https://farmrio.com/search?q=',t:'mid',s:[],c:'bold prints, color, vacation'},
   'Tommy Bahama':{u:'https://www.tommybahama.com/search?q=',t:'mid',s:[],c:'resort, linen, coastal'},
   'J.McLaughlin':{u:'https://www.jmclaughlin.com/search?q=',t:'mid',s:[],c:'coastal classic, prints, polish'},
   'Izod':{u:'https://www.izod.com/search?q=',t:'budget',s:[],c:'casual classic, polos'},
   'Lacoste':{u:'https://www.lacoste.com/us/search/?q=',t:'mid',s:[],c:'sporty classic, polos'},
   'Gap':{u:'https://www.gap.com/browse/search.do?searchText=',t:'budget',s:['petite','plus','tall'],c:'everyday basics, denim, casual'},
-  'White House Black Market':{u:'https://www.whitehouseblackmarket.com/store/search?q=',t:'mid',s:['petite'],c:'polished workwear, occasion, dresses'},
-  'Garnet Hill':{u:'https://www.garnethill.com/search?q=',t:'mid',s:['petite','plus'],c:'relaxed classic, prints, sleepwear'},
-  'Soft Surroundings':{u:'https://www.softsurroundings.com/search.php?q=',t:'mid',s:['petite','plus'],c:'relaxed feminine, travel knits, comfort'},
+  'White House Black Market':{u:'https://www.whitehouseblackmarket.com/store/search?q=',t:'$$',a:'Professional Power, Modern Glam',s:['petite'],c:'sleek workwear, occasion'},
+  'Garnet Hill':{u:'https://www.garnethill.com/search?q=',t:'$$',a:'Elevated Natural',s:['petite','plus'],c:'natural fibers, sleepwear'},
+  'Soft Surroundings':{u:'https://www.softsurroundings.com/search.php?q=',t:'$$',a:'Relaxed Feminine',s:['petite','plus'],c:'soft knits, travel'},
   'Tuckernuck':{u:'https://www.tnuck.com/search?q=',t:'mid',s:[],c:'classic coastal, occasion, prints'},
   // Elevated natural / quiet luxury: where a stylist sends this woman first
   'Jenni Kayne':{u:'https://www.jennikayne.com/search?q=',t:'luxe',s:[],c:'quiet luxury, cashmere, relaxed elevated'},
@@ -3601,18 +3605,18 @@ const STORES={
   'Soma':{u:'https://www.soma.com/store/search?q=',t:'mid',s:['plus'],c:'bras, sleepwear, comfortable underwear'},
   'Naturalizer':{u:'https://www.naturalizer.com/search?q=',t:'mid',s:['wide'],c:'comfortable dress shoes, wide widths'},
   // Classic and easy-to-wear
-  'Ann Taylor':{u:'https://www.anntaylor.com/search?q=',t:'mid',s:['petite','tall'],c:'workwear, dresses, blazers'},
-  'LOFT':{u:'https://www.loft.com/search?q=',t:'mid',s:['petite','plus','tall'],c:'relaxed workwear, dresses, denim'},
-  'Talbots':{u:'https://www.talbots.com/search?q=',t:'mid',s:['petite','plus'],c:'classic, workwear, knits'},
-  'J.Jill':{u:'https://www.jjill.com/SearchDisplay?searchTerm=',t:'mid',s:['petite','plus'],c:'relaxed, easy knits, linen'},
-  "Chico's":{u:'https://www.chicos.com/store/search?q=',t:'mid',s:['petite'],c:'relaxed, travel-friendly, jewelry'},
+  'Ann Taylor':{u:'https://www.anntaylor.com/search?q=',t:'$$',a:'Professional Power, Classic Sophisticate',s:['petite','tall'],c:'workwear, dresses, blazers'},
+  'LOFT':{u:'https://www.loft.com/search?q=',t:'$$',a:'Casual Classic',s:['petite','plus','tall'],c:'relaxed workwear, denim'},
+  'Talbots':{u:'https://www.talbots.com/search?q=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],c:'timeless workwear, knits'},
+  'J.Jill':{u:'https://www.jjill.com/SearchDisplay?searchTerm=',t:'$$',a:'Elevated Natural',s:['petite','plus'],c:'linen, relaxed essentials'},
+  "Chico's":{u:'https://www.chicos.com/store/search?q=',t:'$$',a:'Relaxed Classic',s:['petite'],c:'travel pieces, easy separates'},
   // Size-inclusive specialists
-  'Universal Standard':{u:'https://www.universalstandard.com/search?q=',t:'mid',s:['plus'],c:'size-inclusive basics, tailoring'},
-  'Eloquii':{u:'https://www.eloquii.com/search?q=',t:'mid',s:['plus'],c:'plus dresses, workwear, occasion'},
-  'Torrid':{u:'https://www.torrid.com/search?q=',t:'mid',s:['plus'],c:'plus everyday, denim, lingerie'},
-  'Lane Bryant':{u:'https://www.lanebryant.com/search?q=',t:'mid',s:['plus'],c:'plus basics, bras, denim'},
-  'Good American':{u:'https://www.goodamerican.com/search?q=',t:'mid',s:['plus'],c:'denim, curve-friendly fit'},
-  'Petite Studio':{u:'https://petitestudionyc.com/search?q=',t:'mid',s:['petite'],c:'petite dresses and workwear'},
+  'Universal Standard':{u:'https://www.universalstandard.com/search?q=',t:'$$',a:'Modern Minimalist',s:['plus'],c:'tailoring, elevated basics'},
+  'Eloquii':{u:'https://www.eloquii.com/search?q=',t:'$$',a:'Modern Glam',s:['plus'],c:'dresses, workwear'},
+  'Torrid':{u:'https://www.torrid.com/search?q=',t:'$$',a:'Casual Trendy',s:['plus'],c:'denim, everyday, lingerie'},
+  'Lane Bryant':{u:'https://www.lanebryant.com/search?q=',t:'$$',a:'Casual Classic',s:['plus'],c:'bras, denim, basics'},
+  'Good American':{u:'https://www.goodamerican.com/search?q=',t:'$$$',a:'Modern Sexy',s:['plus'],c:'premium denim, curve fit'},
+  'Petite Studio':{u:'https://petitestudionyc.com/search?q=',t:'$$$',a:'Modern Minimalist',s:['petite'],c:'petite tailoring, dresses'},
   // Activewear and swim
   'Lululemon':{u:'https://shop.lululemon.com/search?Ntt=',t:'mid',s:[],c:'activewear, leggings, athleisure'},
   'Athleta':{u:'https://athleta.gap.com/browse/search.do?searchText=',t:'mid',s:['petite','plus','tall'],c:'activewear, swim, travel'},
@@ -3674,7 +3678,7 @@ function getStoreUrl(store,item,search){
 function _storeListForPrompt(){
   return Object.keys(STORES).map(function(k){
     const s=STORES[k];
-    return k+' ['+s.t+(s.s.length?'; carries '+s.s.join('/'):'')+'; '+s.c+']';
+    return k+' ['+s.t+(s.a?'; '+s.a:'')+(s.s.length?'; carries '+s.s.join('/'):'')+'; '+s.c+']';
   }).join('\n');
 }
 // Size ranges are a per-CATEGORY thing, never a global filter. A petite woman
@@ -3682,12 +3686,19 @@ function _storeListForPrompt(){
 // never end up with fewer options than anyone else because of her size.
 function _sizeGuidance(){
   const f=_fitSizes().filter(function(x){return x!=='Regular'});
+  const w=((prefs.sizes&&prefs.sizes.width)||[]).filter(function(x){return x!=='Medium'});
   let s='\nSIZE RULE, follow exactly:\n'+
     '- Add a size word to "search" ONLY where fit genuinely depends on it: pants, jeans, trousers, skirts, dresses, coats, jackets, blazers, tops, activewear and swim.\n'+
-    '- NEVER add a size word, and never narrow the store choice, for bags, jewelry, sunglasses, hats, scarves, belts or shoes. Those suit everyone.\n';
+    '- NEVER add a size word, and never narrow the store choice, for bags, jewelry, sunglasses, hats, scarves or belts. Those suit everyone.\n'+
+    '- Shoes are their own case. Petite, tall and plus never apply to shoes. Width does.\n';
   if(f.length){
-    s+='- She usually shops '+f.join(' and ').toLowerCase()+'. For fit-dependent items only, lead the search term with that word (for example "'+f[0].toLowerCase()+' wide leg trousers") and prefer a store that carries it.\n'+
-       '- Never give her fewer or lesser ideas because of her size. She sees the same full range as everyone else.\n';
+    s+='- She usually shops '+f.join(' and ').toLowerCase()+'. For fit-dependent items only, lead the search term with that word (for example "'+f[0].toLowerCase()+' wide leg trousers") and prefer a store that carries it.\n';
+  }
+  if(w.length){
+    s+='- Her shoe width is '+w.join(' and ').toLowerCase()+'. For SHOES ONLY, lead the search term with it (for example "'+w[0].toLowerCase()+' width ankle boots") and prefer a store that carries that width. Never apply width to anything but shoes.\n';
+  }
+  if(f.length||w.length){
+    s+='- Never give her fewer or lesser ideas because of her size. She sees the same full range as everyone else.\n';
   }
   return s;
 }
@@ -4501,6 +4512,8 @@ function savePrefStep(){
     });
     const fitChips=document.querySelectorAll('.pref-size-fit.sel');
     prefs.sizes.fit=Array.from(fitChips).map(c=>c.textContent);
+    const widthChips=document.querySelectorAll('.pref-size-width.sel');
+    prefs.sizes.width=Array.from(widthChips).map(c=>c.textContent);
   }else if(prefStep===1){
     prefs.colorsLove=[];
     document.querySelectorAll('.color-dot.love').forEach(d=>prefs.colorsLove.push(d.dataset.name));
@@ -4529,6 +4542,7 @@ function renderPrefSizes(c){
   const tops=['XXS','XS','S','M','L','XL','XXL','1X','2X','3X'];
   const bottoms=['00','0','2','4','6','8','10','12','14','16','18','20','22','24'];
   const shoes=['5','5.5','6','6.5','7','7.5','8','8.5','9','9.5','10','10.5','11','12'];
+  const shoeWidth=['Narrow','Medium','Wide'];
   const fitRanges=['Petite','Regular','Tall','Plus'];
   function chips(arr,cls,saved){
     return arr.map(s=>`<div class="pref-chip ${cls} ${(saved||[]).includes(s)?'sel':''}" onclick="this.classList.toggle('sel')">${s}</div>`).join('');
@@ -4545,6 +4559,8 @@ function renderPrefSizes(c){
     <div class="pref-grid sizegrid">${chips(bottoms,'pref-size-dresses',prefs.sizes.dresses)}</div>
     <div class="pref-label">Shoes</div>
     <div class="pref-grid sizegrid">${chips(shoes,'pref-size-shoes',prefs.sizes.shoes)}</div>
+    <div class="pref-label">Shoe width</div>
+    <div class="pref-grid sizegrid">${chips(shoeWidth,'pref-size-width',prefs.sizes.width)}</div>
     <div class="pref-label">Do you usually shop petite, regular, tall or plus?</div>
     <div class="pref-grid sizegrid">${chips(fitRanges,'pref-size-fit',_fitSizes())}</div>
     <div class="pref-note-sm">Pick as many as fit you. We only use this where fit depends on it, never for bags, jewelry or accessories.</div>
@@ -4648,6 +4664,7 @@ function getPrefsForPrompt(){
   if(p.sizes.shoes&&p.sizes.shoes.length)lines.push('Shoe size: '+p.sizes.shoes.join('/'));
   const _fit=_fitSizes();
   if(_fit.length)lines.push('She usually shops: '+_fit.join(', '));
+  if(p.sizes.width&&p.sizes.width.length)lines.push('Shoe width (shoes only): '+p.sizes.width.join(', '));
   if(p.colorsLove.length)lines.push('Colors she loves: '+p.colorsLove.join(', '));
   if(p.colorsSkip.length)lines.push('Colors to avoid: '+p.colorsSkip.join(', '));
   if(p.neverWear.length)lines.push('Never wear: '+p.neverWear.join(', '));
