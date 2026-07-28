@@ -3809,6 +3809,15 @@ It has now solved J.Jill, Mango, Kendra Scott, Sam Edelman, Naturalizer, Madewel
 - **Two fixes usually hide in one URL.** Sézane needed BOTH a locale change (`/us/` → `/us-en/`) and a parameter
   change (`?q=` → `?s=`); Madewell needed a path change AND kept a women's filter; J.Crew's was an entirely retired
   URL format. Read the whole URL, not just the parameter.
+- **A store url does NOT have to end in a parameter.** `getStoreUrl` simply appends the encoded term to `u`, so a
+  PATH-based search works too: Dillard's is `https://www.dillards.com/search-term/` and the term becomes the next
+  path segment. `%20` is fine in a path. Any test asserting the url shape must allow a trailing `/` as well as
+  `?x=`, `&x=` and `#x=`.
+- ⚠️ **Watch for an AUTOCOMPLETE url, it is not a search url.** Cath's first Macy's link was
+  `/shop/featured/women-red-dress?cm_kws_ac=red+&ss=true`; `cm_kws_ac` means she clicked a dropdown SUGGESTION,
+  which lands on a curated page rather than running a search. Always ask her to TYPE the term and press Enter.
+  (Macy's then still rewrites to `/shop/featured/<hyphenated-term>`, so whether the plain `?keyword=` search url
+  also works is still an open question at the time of writing.)
 
 ### ▶ DECISION (2026-07-28, Cath): LUXURY GOES THROUGH OUR RETAILERS, NEVER DIRECT TO THE BRAND
 **Cath's words: "Definitely would prefer we direct her to purchase luxury from one of our affiliates instead
