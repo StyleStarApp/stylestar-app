@@ -3795,7 +3795,12 @@ function _rankedStores(){
 function _storeListForPrompt(){
   return _rankedStores().map(function(k){
     const s=STORES[k];
-    return k+' ['+s.t+(s.a?'; '+s.a:'')+(s.s.length?'; carries '+s.s.join('/'):'')+'; '+s.c+']';
+    // Cath's colour scores have to be IN the line or "check the tags before you
+    // send her somewhere for butter yellow" is an instruction about data the AI
+    // cannot see. Only the informative ends are named; the middle says nothing,
+    // which keeps the list short.
+    const col=s.d[_DIM_COL]>=8?'; great for colour':(s.d[_DIM_COL]<=4?'; mostly neutrals':'');
+    return k+' ['+s.t+(s.a?'; '+s.a:'')+(s.s.length?'; carries '+s.s.join('/'):'')+col+'; '+s.c+']';
   }).join('\n');
 }
 // Size ranges are a per-CATEGORY thing, never a global filter. A petite woman
@@ -3862,7 +3867,13 @@ function _shopRules(mode){
     // A variety rule with no brake produces its own bug: reaching for a
     // different name and landing on a store that does not sell that kind of
     // thing at all. Caught live, a jewelry brand being given a canvas tote.
-    '- NEVER pick a store that does not actually sell that kind of item. Check the tags. A jewelry brand has no handbags, an eyewear shop has no dresses. Sending her somewhere that cannot possibly have it is worse than repeating a store.\n';
+    '- NEVER pick a store that does not actually sell that kind of item. Check the tags. A jewelry brand has no handbags, an eyewear shop has no dresses. Sending her somewhere that cannot possibly have it is worse than repeating a store.\n'+
+    // Caught live: a butter yellow blazer sent to Aritzia, whose own tags read
+    // 9 neutral / 5 colorful. The search worked perfectly and returned two
+    // dresses, because the store simply does not stock that colour in that
+    // piece. Cath's own reasoning for liking department stores is the fix here:
+    // when the odds are long, a big multi-brand store has far better ones.
+    '- If the piece hinges on a specific or unusual COLOUR, send her where that colour actually lives. NEVER choose a store marked "mostly neutrals" for one. Pick a store marked "great for colour", or a large multi-brand store where the odds are far better. A precise colour at a store that stocks neutrals will show her nothing.\n';
 }
 // ▶ CATH: this is the wording on every shopping button, in ONE place. It says
 // "Find it" rather than "Shop" because the link runs a search at that store, so
@@ -5358,7 +5369,7 @@ function _wdrRenderShopEnd(n){
   if(n){
     html+='<div class="wdr-shopend">'
       +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your wishlist</div>'
-      +'<div class="wse-sub">Shop them all together,<br>in your style and your size.</div>'
+      +'<div class="wse-sub">Shop them all together,<br>in your style.</div>'
       +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
   }
   // Reset sits below the shop CTA, so the list card can end cleanly on the

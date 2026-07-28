@@ -3685,6 +3685,31 @@ stylist touches."*
 - Related, same spirit: the same `why` clause would make the **Wardrobe "Ideas" carousel** far stronger, since
   those four options are a comparison and the reason each one is different is exactly what she wants to know.
 
+### ▶ CATH'S FIRST TESTING ROUND (2026-07-27) — two real finds
+She started tapping through the live app. Two things, both fixed.
+1. **A missed "in your size" promise.** The wishlist payoff line still read *"Shop them all together, in your
+   style and your size."* The earlier sweep caught four of these and missed this one (it is built in JS in
+   `_wdrRenderShopEnd`, not static markup, which is why the grep for it came up short). Now "in your style."
+   **▶ If any other size promise turns up, search the JS string builders as well as the markup.**
+2. **▶ "Butter Yellow" trend ideas sent her to Aritzia for a yellow blazer that does not exist there.** The
+   search itself worked perfectly and returned two dresses. The store simply does not stock that colour in that
+   piece — Aritzia's own tags read 9 neutral / 5 colorful.
+   - **THE ACTUAL BUG was subtler than it looked, and worth remembering: the prompt told the AI to "check the
+     tags" for colour, but the colour scores were never IN the prompt.** `_storeListForPrompt()` emitted price,
+     archetype, sizes and strengths only. The rule was an instruction about data the model could not see.
+   - Fixed by putting Cath's colour scores in the store line, but ONLY at the informative ends:
+     `great for colour` at 8+, `mostly neutrals` at 4 or below, nothing in the middle. That keeps the list short
+     (+1,250 chars, a shop goes ~0.73→~0.83¢) while making the rule real.
+   - Rule wording matters: "prefer a colorful store" got 3 of 4 runs clean; the explicit **"NEVER choose a store
+     marked mostly neutrals"** holds about the same. Measured live over 4 runs × 4 options: Quince (colorful 2),
+     Ann Taylor (3) and Aritzia disappeared entirely; Nordstrom, Boden and Anthropologie (all 9) now lead.
+     **About 1 slip in 16 options remains** — honest residual, not a clean guarantee.
+   - **▶ IF SHE SEES IT AGAIN, the deterministic fix** is to drop `mostly neutrals` stores from the list
+     `_wardrobeIdeaGen` sends when the requested item name contains a colour word. Not built: it needs a colour
+     word list and can misfire, and the prompt fix already removed the bulk of the problem.
+   - **▶ THE REAL CEILING, say it plainly:** the AI still cannot see any store's inventory. Better tags and
+     better rules improve the aim; only affiliate product feeds fix it properly.
+
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, late evening)
 **Everything from the shopping work is MERGED AND LIVE** (PRs #627, #634–#640). Nothing is pending review.
 The store system is finished: 102 stores, every tag Cath's own, 10 dimension scores each, matching + variety
