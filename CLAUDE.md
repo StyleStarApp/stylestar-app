@@ -3710,20 +3710,46 @@ She started tapping through the live app. Two things, both fixed.
    - **▶ THE REAL CEILING, say it plainly:** the AI still cannot see any store's inventory. Better tags and
      better rules improve the aim; only affiliate product feeds fix it properly.
 
-### ▶ NEXT SESSION — START HERE (updated 2026-07-27, late evening)
-**Everything from the shopping work is MERGED AND LIVE** (PRs #627, #634–#640). Nothing is pending review.
-The store system is finished: 102 stores, every tag Cath's own, 10 dimension scores each, matching + variety
-rules, all verified. **Cath is now TESTING the live app and will come back with results.**
-**▶ WHEN SHE RETURNS, START HERE:** ask for her list of things that landed wrong, in the form `item → store`.
-- A wrong **store** (a jewelry brand for a bag, a store she would never send someone to) → the matching or the
+### ▶ NEXT SESSION — START HERE (updated 2026-07-27, night — Cath paused here)
+**Everything is MERGED AND LIVE. Nothing is pending review** (PRs #627, #634–#646). The store system is
+finished: 102 stores, every tag Cath's own, 10 dimension scores each, matching + variety + colour rules, all
+verified against the live API. **Cath has STARTED testing and is pausing overnight. She will come back with
+more findings.**
+
+**▶ 1. FIRST THING: ask what else she found.** Her first round produced exactly two things (both fixed, see
+the testing-round entry above): a missed "in your size" promise, and Butter Yellow sending her to a
+neutral-leaning store. Ask for the rest in the form `item → store`, and read it like this:
+- wrong **store** (a jewelry brand for a bag, somewhere she'd never send a client) → the matching or the
   variety rules. Tune `_storeFit` weights or `_shopRules()`.
-- A wrong **landing page** (right store, but the search shows everything or nothing) → the `search`-term
-  guidance in `_shopRules()`. Reproduce with `scratchpad/live-search.js` before changing wording.
-- **▶ ALWAYS re-verify prompt changes against the LIVE API** with `scratchpad/variety.js`, not just the headless
-  render tests. Two real bugs this session were invisible to every static test and obvious on the first live
-  call (see the store-variety entry above).
-Then, in order: **the "why this store" stylist line** (saved idea above, she loves it) → the two email projects →
-the standing list below.
+- wrong **landing page** (right store, but the search shows everything or nothing) → the `search`-term
+  guidance in `_shopRules()`. Reproduce with `scratchpad/live-search.js` before rewording anything.
+- **nothing of that colour at that store** → the colour rule. About **1 option in 16** still slips to a
+  `mostly neutrals` store; the deterministic fix is written up in the testing-round entry, not built.
+- **▶ ALWAYS re-verify prompt changes against the LIVE API** (`scratchpad/variety.js`, `scratchpad/butter.js`),
+  never the headless render tests alone. THREE real bugs this session were invisible to every static test and
+  obvious on the first live call: the empty-string chat links, the invented "regular" size word, and the colour
+  scores missing from the prompt entirely.
+
+**▶ 2. THEN, in order:** the **"why this store" stylist line** (saved idea above, she loves it, spec is written) →
+the two **email projects** → the standing list below.
+
+**📌 STATE OF THE CONTENT (this session):** the **Style Star Edit is now 17 items** and, with Cath's lululemon
+Align leggings, **every one of the ten wardrobe categories is filled** — Activewear was the last gap. She also
+added a $12.99 Target heart claw clip, which is now the most affordable piece in the Edit by some way and widens
+its range ($12.99 to $510) in the direction her 18-to-80, every-budget audience most needs. **More small,
+affordable pieces would be genuinely useful, not filler.** Both NEW pills light up on their own.
+
+**⚙️ TOOLING NOTES THAT SAVED TIME (all in the session scratchpad):**
+- `scratchpad/variety.js` — builds the REAL prompts and calls the live function; asserts store repetition and
+  whether each store could plausibly sell the item.
+- `scratchpad/butter.js` — the colour case, 4 runs, asserts no `mostly neutrals` store appears.
+- `scratchpad/edit.js` — Edit integrity: script blocks parse, no mojibake, names/links/stars/prices aligned,
+  divs balanced, no tracking params.
+- `scratchpad/dims/rank3.js` — matching across all 28 archetypes, plus the store-diversity guard.
+- ⚠️ **Restart the local server before any harness run** (`(nohup python3 -m http.server 8199 &)`); it dies
+  between sessions and Playwright then fails with ERR_CONNECTION_REFUSED.
+- ⚠️ **`git cherry-pick HEAD@{1}` after `git checkout -B` resolves to the WRONG commit.** Capture the SHA in a
+  variable BEFORE moving the branch, or recover from `git reflog`.
 
 ### ▶ (previous plan, 2026-07-27)
 
@@ -4062,9 +4088,10 @@ with wrong or zero results, and no photos anywhere.
   approvals land, bias the AI TOWARD approved stores while keeping the rest available. That's a one-line prompt change.
 - **Candidate list + raw test results:** session scratchpad `stores/` (`cand.json`, `results.txt`).
 
-### ▶ NEXT SESSION — START HERE (updated 2026-07-27, end of day)
-**The shopping-links fix is the top priority and the thing standing between Cath and real testers.** Everything is
-researched and decided; it just needs building. Read the three sections directly above first.
+### ▶ ~~NEXT SESSION — START HERE~~ (2026-07-27, end of day) — ✅ ALL DONE, SUPERSEDED
+⚠️ **This plan is COMPLETE. Do not follow it.** Every item below was built and merged the same night
+(PRs #627, #634–#646). **The live start-here is the one titled "(updated 2026-07-27, night — Cath paused
+here)" further up this file.** Kept only as the record of what was decided before the build.
 1. **Build the shopping fix** (three parts: the `search` field, the card wording, closing the Google fallback), across
    all six link-building features.
 2. **Expand the store list to ~59, tagged** with price / sizes / strengths, and wire the per-category size logic.
@@ -4080,24 +4107,28 @@ researched and decided; it just needs building. Read the three sections directly
 ### ▶ CATH'S HOMEWORK — things only she can do (list requested 2026-07-27, resurface each session)
 Cath asked what she can do to be more thorough between sessions. These are genuinely blocked on her expertise or her
 phone, not on Claude's time. Roughly in value order.
-**1. ⭐ SIZE METADATA PER STORE — the highest-value item.** For each of the ~70 stores: does it carry **petite**,
+⚠️ **STATUS 2026-07-27 night: items 1, 2, 3 and 5 are DONE** — Cath tagged all 102 stores herself across three
+batches, then sent four more dimension tables (fitted/alluring/polish, classic/trendy/casual/dressy,
+relaxed/fitted, neutral/colorful). Item 6, the real quality gate, is IN PROGRESS: she has started tapping through
+and found two things so far. **Only 4, 6 and 7 remain.**
+**1. ✅ DONE — SIZE METADATA PER STORE.** For each of the ~70 stores: does it carry **petite**,
    **plus**, **tall**, and (for shoes) **wide/narrow widths**? She has already given petite for Talbots, LOFT and
    Banana Republic. Claude will draft the full set and she corrects it, but anything she notes while shopping is
    directly usable. Remember the reframing: petite/tall is mostly a SUB-LINE of stores already on the list, so this is
    tagging work, not sourcing work.
-**2. ⭐ CATEGORY STRENGTHS — pure stylist knowledge Claude cannot infer.** Which store is her go-to for dresses? For
+**2. ✅ DONE — CATEGORY STRENGTHS — pure stylist knowledge Claude cannot infer.** Which store is her go-to for dresses? For
    denim? Work clothes? Occasion? Shoes? Jewelry? This is what lets the AI send a woman to the right place instead of
    a plausible one, and it is exactly the expertise that differentiates the app.
-**3. PRICE TIER SANITY CHECK.** Claude will assign budget / mid / luxe per store; Cath knows where each really sits
+**3. ✅ DONE — PRICE TIER SANITY CHECK.** Claude will assign budget / mid / luxe per store; Cath knows where each really sits
    for HER audience, which spans 18 to 80 and every budget.
 **4. SPOT-VERIFY THE UNVERIFIABLE STORES** using the address-bar trick that solved J.Jill and Mango (search on the
    site, send the URL). Only worth doing for stores she would actually send a client to. Currently unverified:
    Talbots, Kendra Scott, SKIMS, Lane Bryant, Dia&Co, Sam Edelman, Lacoste, Tory Burch, Belk, Bergdorf Goodman,
    TJ Maxx, Sunglass Hut, Warby Parker, Dillard's, plus the ~11 bot-walled ones already proven by being live today.
-**5. THE TWO PIECES OF COPY THE BUILD NEEDS.** (a) The card wording — is "Find this at Nordstrom →" right, or does she
+**5. ✅ DONE — THE TWO PIECES OF COPY.** ("Find it" chosen; "in your style" replaced every size promise.) Originally: (a) The card wording — is "Find this at Nordstrom →" right, or does she
    have better? (b) The four "in your size" spots — replacement wording in her voice ("in your style"? "picked for
    you"?).
-**6. ⭐ AFTER THE BUILD SHIPS, THE REAL QUALITY GATE:** tap through 10-15 suggestions across Shop your style, Wardrobe
+**6. ⭐ IN PROGRESS — THE REAL QUALITY GATE:** tap through 10-15 suggestions across Shop your style, Wardrobe
    Ideas and Complete the Look, and tell Claude **where the searches land wrong**. Claude can verify a link returns
    results; only Cath can judge whether "pink midi dress" is the right search for a blush silk wrap dress. This single
    step is the difference between the fix working and half-working.
@@ -4105,7 +4136,7 @@ phone, not on Claude's time. Roughly in value order.
    constructive people? Her soft-launch instinct is legitimate and protected — this is just so the list exists when
    she wants it.
 
-### ▶ AGREED PLAN (2026-07-27, end of session): save everything now, build in a FRESH session
+### ▶ ~~AGREED PLAN (2026-07-27): build in a FRESH session~~ — ✅ DONE, the build shipped that night
 Cath's call, and the right one. Today's session ran long and produced a great deal of decision-making; the build is a
 big careful change touching shopping across six features. Nothing is lost by starting fresh because the handoff above
 is complete. **Next session: build items 1-3 of START HERE, then give Cath a Netlify deploy-preview URL to tap through
