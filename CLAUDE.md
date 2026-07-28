@@ -33,9 +33,16 @@ address bar**. Do the 34 without troubling her.
 ⚠️ **The earlier priority ranking has a blind spot.** It counted how often a store lands in an archetype's top 20,
 which UNDER-WEIGHTS category specialists: an eyewear or intimates store can be rare in the rankings and still be
 the ONLY sensible pick when that category comes up. Rank by scarcity too (`scratchpad/render/remaining.js`).
-**Ask Cath for these ~10, in order:** **Nordstrom** (25/28) · Sunglass Hut, Warby Parker, Quay (only 3 eyewear
-stores exist) · Garnet Hill, Torrid, Lane Bryant (only 4 intimates) · Belk, TJ Maxx, Vuori, Ann Taylor. Stop
-there; the long tail has real diminishing returns.
+⚠️ **AND THE SCARCITY LIST WAS WRONG THE FIRST TIME, corrected by Cath.** It was built by REGEX over her `c`
+descriptions, so any store whose text happened to contain "bras" or "lingerie" or "sleepwear" was filed as an
+intimates store. **Garnet Hill, Torrid and Lane Bryant are not intimates stores** (a natural-fibres catalogue and
+two plus-size FASHION retailers that happen to carry some). **Never infer a store's category by keyword-matching
+her tags; her knowledge is the authority, so ask her.**
+Corrected picture: genuine intimates = **Soma** (fixed 2026-07-28), **Spanx** (verified), **SKIMS** (open) — so
+that category is nearly closed already. Genuine eyewear = Sunglass Hut, Warby Parker, **Quay** (already verified).
+**Ask Cath for these ~7, in order:** **Nordstrom** (25/28, by far the most important) · Sunglass Hut, Warby Parker
+(two of only three eyewear stores) · SKIMS (the only unverified real intimates store) · Belk, TJ Maxx, Vuori,
+Ann Taylor (by exposure). Stop there; the long tail has real diminishing returns.
 ▶ **Cath asked whether Claude Cowork could solve the browser gap.** Plausible and cheap to test: this sandbox
 blocks retail sites at the network layer and Cowork runs elsewhere. BUT many retailers block automated browsers
 specifically (403 to every header combination tried here), so it may fix the rendering problem and still hit the
