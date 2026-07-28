@@ -3794,6 +3794,20 @@ THREE separate problems; she only noticed one.
   **RULE: always `git fetch origin main` IMMEDIATELY BEFORE `checkout -B`, and re-run the tests after any branch
   reset, never assume the working tree still holds what you merged.**
 
+### ▶ STORE-URL VERIFICATION STATUS (2026-07-28) — do not redo the confirmed ones
+**FIXED AND LIVE this session (10):** Mejuri (`?q=`→`?query=`) · Chico's, White House Black Market, Soma
+(`?q=`→`?searchTerm=`) · Sam Edelman, Naturalizer (`?q=`→**`#q=`**, hash) · Madewell (`/search?q=` →
+`/search-results/?r_productGender=women&q=`) · J.Crew (retired `?Ntrm=` → `?term=`) · Sézane (`/us/search?q=` →
+`/us-en/search?s=`) · Dillard's (`?text=` → path `/search-term/`).
+**CONFIRMED ALREADY CORRECT, leave alone:** **Macy's** `https://www.macys.com/shop/search?keyword=` — Cath
+verified in her browser. (Macy's ALSO serves `/shop/featured/<hyphenated-term>`, and that works even for an
+arbitrary phrase like "navy linen blazer", but `?keyword=` is simpler and needs no hyphenation, so it stays.)
+**STILL UNVERIFIED, in priority order** (exposure = how many of the 28 archetypes put it in their top 20, so a
+break here is costly): Lacoste 14 · Banana Republic 13 · Boden 12 · Tory Burch 12 · Bloomingdales 11 · Theory 10 ·
+Levi's 10 · Aritzia 8. Then a long tail that rarely surfaces.
+▶ **Rerun `scratchpad/render/priority.js` to regenerate that ranking** (it scores every unverified store by how
+often `_storeFit` puts it in a woman's top 20).
+
 ### ▶ THE ADDRESS-BAR WORKFLOW, AND ITS BEST TRICK (2026-07-28)
 Retail sites block this environment completely: `curl` gets 403 from about half of them, and **Chromium cannot
 load a single one** (tested with the proxy, without it, and with `--proxy-server` forced; the requests never even
