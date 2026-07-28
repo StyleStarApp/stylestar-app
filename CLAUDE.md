@@ -3794,6 +3794,41 @@ THREE separate problems; she only noticed one.
   **RULE: always `git fetch origin main` IMMEDIATELY BEFORE `checkout -B`, and re-run the tests after any branch
   reset, never assume the working tree still holds what you merged.**
 
+### ▶ DECISION (2026-07-28, Cath): LUXURY GOES THROUGH OUR RETAILERS, NEVER DIRECT TO THE BRAND
+**Cath's words: "Definitely would prefer we direct her to purchase luxury from one of our affiliates instead
+of have her purchase at Louis Vuitton for example."** This is now a standing rule, and it is a MONEY rule as
+much as a styling one.
+- **The stylist still names the designer freely** (that is real expertise and the whole differentiation), but the
+  PURCHASE is always routed to a shop we carry: **Neiman Marcus, Saks, Bergdorf Goodman, NET-A-PORTER, Nordstrom,
+  Bloomingdales**. Written as *"the Celine Shopping Tote at Neiman Marcus"*, never *"from Celine"*.
+- **WHY IT MATTERS COMMERCIALLY:** Louis Vuitton and the other houses sell direct and have **no affiliate program**,
+  so a link to louisvuitton.com can never earn a cent. The six retailers above all have programs. Same advice,
+  same bag, but the click can actually pay once money-path step 7 lands.
+- ✅ **BUILT** as a rule in the `sendChat` system prompt (the chat was the only shopping surface NOT already
+  constrained to the store list; `_shopRules()` already says "PICK THE STORE from this list ONLY").
+- ✅ **VERIFIED AGAINST THE LIVE API, 6/6 with ZERO direct-to-brand links**, including the hardest case
+  ("Where should I buy a Louis Vuitton Neverfull?" → Saks, Neiman Marcus, Bloomingdales). A clarifying question
+  back to her counts as neither pass nor fail; that is good styling, not a routing failure.
+- ⚠️ **KNOWN EDGE, flagged to Cath, deliberately NOT special-cased:** a few houses genuinely do not wholesale at
+  all (**Louis Vuitton, Chanel, Hermès**), so a department-store search for those specific bags may land on
+  nothing or on resale. Every other house (Celine, Saint Laurent, Bottega, Gucci, Prada, Loewe) really is stocked
+  there and works properly. Cath's preference is explicit, so the rule stands as written; revisit only if she sees
+  it land badly in testing.
+- **The Google Shopping fallback stays as a safety net** underneath this (PR #650), for when the model names a
+  brand directly anyway. Belt and braces.
+- ▶ **DO NOT add Louis Vuitton / Celine / Chanel as their own STORES entries.** They would need Cath's tags, they
+  earn nothing, and the four multi-brand luxury retailers already in the 102 stock the same bags.
+
+**2026-07-28 (cont. — Madewell's search path + the women's filter, from Cath's address bar)**
+- ✅ **Madewell fixed:** `https://www.madewell.com/search?q=` → **`https://www.madewell.com/search-results/?r_productGender=women&q=`**.
+  Two things were wrong: the path is `/search-results/`, not `/search`, which is why tapping a Madewell link
+  dumped her on the homepage.
+- **▶ NEW TRICK WORTH REUSING: a store filter can be PRESERVED by putting it BEFORE the search param.** Query
+  parameters work in any order, and `getStoreUrl` appends the term to the END of the stored URL, so
+  `?r_productGender=women&q=` keeps Madewell scoped to womenswear while still ending in the term. Madewell sells
+  men's too, so without it she can get menswear in her results. **Apply the same shape to any store with a
+  useful filter** (compare the Mango lesson, where `/search/women` scoped the path).
+
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, night — Cath paused here)
 **Everything is MERGED AND LIVE. Nothing is pending review** (PRs #627, #634–#646). The store system is
 finished: 102 stores, every tag Cath's own, 10 dimension scores each, matching + variety + colour rules, all
