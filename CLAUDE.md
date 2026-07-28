@@ -3812,9 +3812,12 @@ Factory all use that same `/browse/search.do?searchText=` pattern on their own s
 effectively validated five stores. They had all been stuck in the "cannot tell" pile because they render results
 client-side. **Lesson: when a store belongs to a family, verifying one usually verifies the siblings** — the same
 was true in reverse for Chico's / Soma / White House Black Market, where one broken parameter meant three.
-**STILL UNVERIFIED:** only **Levi's 10 · Aritzia 8** and a long tail that rarely surfaces. (Theory was matched to
-Cath's real url — trailing slash plus `lang=default` moved in front of the term — but Theory blocks us, so it is
-reproduced rather than proven.) **Everything else is fixed or confirmed, and every change is proven end to end.**
+✅ **THE TWELVE-STORE PRIORITY LIST IS COMPLETE.** Cath checked every one in her browser. **14 fixed** (the 12
+above plus Theory `?q=` → `/search/?lang=default&q=` and Levi's `?q=` → path `/search/`), **7 confirmed already
+correct** (Macy's, Bloomingdales, Tory Burch, Aritzia, Banana Republic + the Gap family). Only a long tail of
+rarely-surfacing stores was never checked; nothing left above 8/28 exposure.
+⚠️ **Theory is the one change NOT proven** — it blocks us, and Cath sent the url but did not paste the generated
+one back, so it is reproduced from her real url rather than confirmed. Everything else is proven end to end.
 - ✅ **Lacoste confirmed by Cath**, `%20` inside the JSON parameter works exactly as `+` does. No encoding change needed.
 - ⚠️ **A CLIENT-SIDE SEARCH LOADS THE PAGE FIRST AND THEN APPLIES THE QUERY, so there is a visible DELAY** before
   the results appear. Cath saw it on Lacoste. It is inherent to `#q=` and JSON-parameter stores (Lacoste, Sam
