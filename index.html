@@ -3550,9 +3550,9 @@ Respond with ONLY valid JSON in this exact format, no other text:
 const STORES={
   // Department stores and multi-brand
   'Nordstrom':{u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,9,8,7,7,8,8,10,9],c:'almost everything, dresses, shoes, denim'},
-  "Macy's":{u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[7,5,6,7,5,7,7,6,8,8],c:'everyday, dresses, shoes, handbags'},
-  "Dillard's":{u:'https://www.dillards.com/search?text=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7,8,4,6,8,7,9,7],c:'dresses, occasion, workwear'},
-  'Belk':{u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[8,4,6,7,3,8,5,5,8,6],c:'everyday, dresses, shoes'},
+  "Macy's":{u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[7,5,6,8,6,7,7,6,8,8],c:'everyday, dresses, shoes, handbags'},
+  "Dillard's":{u:'https://www.dillards.com/search?text=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7,8,5,6,8,7,9,8],c:'dresses, occasion, workwear'},
+  'Belk':{u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[8,5,6,8,5,8,6,5,8,7],c:'everyday, dresses, shoes'},
   'Bloomingdales':{u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[6,7,9,8,8,6,9,8,9,8],c:'designer, denim, shoes'},
   'Saks':{u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],d:[3,9,10,8,9,3,10,9,10,9],c:'designer, bags, occasion'},
   'Neiman Marcus':{u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[3,9,10,9,8,3,10,9,10,9],c:'designer, evening, shoes'},
@@ -3568,8 +3568,8 @@ const STORES={
   'J.Crew':{u:'https://www.jcrew.com/r/search/?N=0&Nloc=en&Ntrm=',t:'$$',a:'Classic Sophisticate, Playful Classic',s:['petite','tall'],d:[5,3,9,10,3,7,8,8,9,6],c:'timeless classics, workwear, denim, dresses'},
   'Zara':{u:'https://www.zara.com/us/en/search?searchTerm=',t:'$$',a:'Trendsetter, Modern Chic',s:[],d:[5,7,7,3,10,6,7,9,7,8],c:'fashion-forward trends, statement pieces'},
   'Mango':{u:'https://shop.mango.com/us/en/search/women?q=',t:'$$',a:'Modern Minimalist, European Chic',s:[],d:[5,6,8,6,8,6,7,8,8,7],c:'workwear, elevated trends, outerwear'},
-  'Target':{u:'https://www.target.com/s?searchTerm=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[9,2,5,5,5,10,2,4,7,8],c:'affordable fashion, basics, accessories'},
-  'Amazon':{u:'https://www.amazon.com/s?k=',t:'$-$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,5,5,5,8,5,5,8,8],c:'almost everything, basics, accessories, shoes'},
+  'Target':{u:'https://www.target.com/s?searchTerm=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[9,3,5,6,6,10,4,5,8,8],c:'affordable fashion, basics, accessories'},
+  'Amazon':{u:'https://www.amazon.com/s?k=',t:'$-$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,5,7,6,8,6,6,8,8],c:'almost everything, basics, accessories, shoes'},
   'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[8,6,8,6,8,7,7,5,6,9],c:'dresses, occasion, unique pieces'},
   'Express':{u:'https://www.express.com/exp/search?q=',t:'$$',a:'Modern Glam, Professional Power',s:['petite'],d:[3,8,7,4,8,5,8,10,8,7],c:'going-out looks, workwear, denim'},
   // The old /r/search?query= silently landed on Revolve's homepage (Cath caught
