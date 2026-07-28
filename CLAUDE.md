@@ -3795,22 +3795,29 @@ THREE separate problems; she only noticed one.
   reset, never assume the working tree still holds what you merged.**
 
 ### ▶ STORE-URL VERIFICATION STATUS (2026-07-28) — do not redo the confirmed ones
-**FIXED AND LIVE this session (10):** Mejuri (`?q=`→`?query=`) · Chico's, White House Black Market, Soma
+**FIXED AND LIVE this session (12):** Mejuri (`?q=`→`?query=`) · Chico's, White House Black Market, Soma
 (`?q=`→`?searchTerm=`) · Sam Edelman, Naturalizer (`?q=`→**`#q=`**, hash) · Madewell (`/search?q=` →
 `/search-results/?r_productGender=women&q=`) · J.Crew (retired `?Ntrm=` → `?term=`) · Sézane (`/us/search?q=` →
-`/us-en/search?s=`) · Dillard's (`?text=` → path `/search-term/`).
-**CONFIRMED ALREADY CORRECT, leave alone:** **Macy's** `https://www.macys.com/shop/search?keyword=` — Cath
-verified in her browser. (Macy's ALSO serves `/shop/featured/<hyphenated-term>`, and that works even for an
-arbitrary phrase like "navy linen blazer", but `?keyword=` is simpler and needs no hyphenation, so it stays.)
+`/us-en/search?s=`) · Dillard's (`?text=` → path `/search-term/`) · Lacoste (needs a **`tpl` template**, term
+appears twice) · Boden (`bodenusa.com/en-us/search?q=` → `us.boden.com/search?q=`; the old one 200'd but
+redirected to the homepage with `/search` stripped).
+**CONFIRMED ALREADY CORRECT, leave alone:** **Macy's** `/shop/search?keyword=` · **Bloomingdales**
+`/shop/search?keyword=` · **Tory Burch** `/en-us/search/?q=` (byte-identical to Cath's) — all verified in her
+browser. ⚠️ **Macy's and Bloomingdales are the same company and platform, and BOTH rewrite a typed search to
+`/shop/featured/<hyphenated-term>`.** That rewrite looks like proof our url is wrong and is not: the plain
+`?keyword=` search works on both. Do not "fix" either on the strength of a `/shop/featured/` url.
 **THE WHOLE GAP FAMILY, confirmed by one URL:** Cath's Banana Republic search came back byte-identical to ours,
 `https://bananarepublic.gap.com/browse/search.do?searchText=`. **Gap, Old Navy, Athleta and Banana Republic
 Factory all use that same `/browse/search.do?searchText=` pattern on their own subdomain**, so one paste
 effectively validated five stores. They had all been stuck in the "cannot tell" pile because they render results
 client-side. **Lesson: when a store belongs to a family, verifying one usually verifies the siblings** — the same
 was true in reverse for Chico's / Soma / White House Black Market, where one broken parameter meant three.
-**STILL UNVERIFIED, in priority order** (exposure = how many of the 28 archetypes put it in their top 20, so a
-break here is costly): Lacoste 14 · Banana Republic 13 · Boden 12 · Tory Burch 12 · Bloomingdales 11 · Theory 10 ·
-Levi's 10 · Aritzia 8. Then a long tail that rarely surfaces.
+**STILL UNVERIFIED** (exposure = how many of the 28 archetypes put the store in their top 20, so a break here is
+costly): **Theory 10 · Levi's 10 · Aritzia 8**, then a long tail that rarely surfaces. Every store above 10 is now
+either fixed or confirmed, so the costly half of the problem is closed.
+▶ **STILL TO CONFIRM: Lacoste.** The fix reproduces Cath's working url except it encodes the term `%20` where her
+browser wrote `+`, INSIDE the JSON parameter. Both decode to a space so it should be fine, but it is the one
+change today not confirmed end to end. If it fails, encode that one as `+`.
 ▶ **Rerun `scratchpad/render/priority.js` to regenerate that ranking** (it scores every unverified store by how
 often `_storeFit` puts it in a woman's top 20).
 
