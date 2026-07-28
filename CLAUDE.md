@@ -23,6 +23,25 @@ by email.
    the proxy, without it, and with `--proxy-server` forced): the requests never even reach the proxy and are
    reset. It is the sandbox, not a setting she controls. Her address bar is the substitute and it is a good one.
 
+### 1b. Finish the store URLs — CORRECTION, more is left than the 2026-07-28 wrap-up implied
+That session said "the costly half is closed". **Not true: NORDSTROM has never been verified**, and it sits at
+**25 of 28** exposure, the most suggested store in the app. It fell into the "cannot tell" pile because its search
+renders client-side, and was then assumed fine because it is Nordstrom. That is an assumption, not evidence.
+**75 of 102 stores are unconfirmed**, but they split usefully: **34 can be verified here** (their search is
+server-rendered, so the vary-the-term size test works — just re-run `scratchpad/sweep.js`), and **41 need Cath's
+address bar**. Do the 34 without troubling her.
+⚠️ **The earlier priority ranking has a blind spot.** It counted how often a store lands in an archetype's top 20,
+which UNDER-WEIGHTS category specialists: an eyewear or intimates store can be rare in the rankings and still be
+the ONLY sensible pick when that category comes up. Rank by scarcity too (`scratchpad/render/remaining.js`).
+**Ask Cath for these ~10, in order:** **Nordstrom** (25/28) · Sunglass Hut, Warby Parker, Quay (only 3 eyewear
+stores exist) · Garnet Hill, Torrid, Lane Bryant (only 4 intimates) · Belk, TJ Maxx, Vuori, Ann Taylor. Stop
+there; the long tail has real diminishing returns.
+▶ **Cath asked whether Claude Cowork could solve the browser gap.** Plausible and cheap to test: this sandbox
+blocks retail sites at the network layer and Cowork runs elsewhere. BUT many retailers block automated browsers
+specifically (403 to every header combination tried here), so it may fix the rendering problem and still hit the
+bot wall. **Test: ask Cowork to open `https://www.sezane.com/us-en/search?s=pink+dress` and say whether it sees
+pink dresses.** If yes, that unlocks the remaining 41 and every future store audit.
+
 ### 2. Then, the app work
 - **📧 The two email projects, together** (same MailerLite plumbing): "Email me my wishlist" and the long-parked
   "Email me these tips & links" after a photo analysis. Needs her at a desk. **Every email links BACK INTO the
