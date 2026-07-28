@@ -3816,8 +3816,8 @@ was true in reverse for Chico's / Soma / White House Black Market, where one bro
 above plus Theory `?q=` → `/search/?lang=default&q=` and Levi's `?q=` → path `/search/`), **7 confirmed already
 correct** (Macy's, Bloomingdales, Tory Burch, Aritzia, Banana Republic + the Gap family). Only a long tail of
 rarely-surfacing stores was never checked; nothing left above 8/28 exposure.
-⚠️ **Theory is the one change NOT proven** — it blocks us, and Cath sent the url but did not paste the generated
-one back, so it is reproduced from her real url rather than confirmed. Everything else is proven end to end.
+✅ **EVERY CHANGE IS PROVEN END TO END.** Cath pasted the generated url for each store that could not be tested
+from here and confirmed real results, including Theory (`/search/?lang=default&q=white%20skirt`) and Lacoste.
 - ✅ **Lacoste confirmed by Cath**, `%20` inside the JSON parameter works exactly as `+` does. No encoding change needed.
 - ⚠️ **A CLIENT-SIDE SEARCH LOADS THE PAGE FIRST AND THEN APPLIES THE QUERY, so there is a visible DELAY** before
   the results appear. Cath saw it on Lacoste. It is inherent to `#q=` and JSON-parameter stores (Lacoste, Sam
