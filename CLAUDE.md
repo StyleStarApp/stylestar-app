@@ -3794,6 +3794,22 @@ THREE separate problems; she only noticed one.
   **RULE: always `git fetch origin main` IMMEDIATELY BEFORE `checkout -B`, and re-run the tests after any branch
   reset, never assume the working tree still holds what you merged.**
 
+### ▶ THE ADDRESS-BAR WORKFLOW, AND ITS BEST TRICK (2026-07-28)
+Retail sites block this environment completely: `curl` gets 403 from about half of them, and **Chromium cannot
+load a single one** (tested with the proxy, without it, and with `--proxy-server` forced; the requests never even
+reach the proxy). So for any store that blocks us, **Cath's address bar is the only instrument that exists.**
+It has now solved J.Jill, Mango, Kendra Scott, Sam Edelman, Naturalizer, Madewell, J.Crew and Sézane.
+- **The normal ask:** search on the store's site, send the URL from the RESULTS page. The term must be visible in it.
+- ⚠️ **▶ THE TRICK THAT RESCUED SÉZANE, and it generalises: a site can ACCEPT a parameter it never PRODUCES.**
+  Sézane's own search box leaves the address bar on `/us-en/search` with no term at all, which looks like proof
+  that it cannot be deep-linked. It is not. Claude proposed three candidate URLs, Cath pasted each into her address
+  bar, and **`?s=` worked** while `?q=` and `?query=` did not. **So "the URL does not change when I search" NEVER
+  means "this store cannot be linked."** Always propose 3 or 4 candidate parameters (`q`, `query`, `s`, `term`,
+  `keyword`, `searchTerm`, `text`) for her to paste. She is the test harness for everything unreachable from here.
+- **Two fixes usually hide in one URL.** Sézane needed BOTH a locale change (`/us/` → `/us-en/`) and a parameter
+  change (`?q=` → `?s=`); Madewell needed a path change AND kept a women's filter; J.Crew's was an entirely retired
+  URL format. Read the whole URL, not just the parameter.
+
 ### ▶ DECISION (2026-07-28, Cath): LUXURY GOES THROUGH OUR RETAILERS, NEVER DIRECT TO THE BRAND
 **Cath's words: "Definitely would prefer we direct her to purchase luxury from one of our affiliates instead
 of have her purchase at Louis Vuitton for example."** This is now a standing rule, and it is a MONEY rule as
