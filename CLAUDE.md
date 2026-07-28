@@ -3710,6 +3710,46 @@ She started tapping through the live app. Two things, both fixed.
    - **▶ THE REAL CEILING, say it plainly:** the AI still cannot see any store's inventory. Better tags and
      better rules improve the aim; only affiliate product feeds fix it properly.
 
+**2026-07-28 (▶ CATH'S TESTING ROUND 2: four store searches were silently ignoring the search term — FIXED, PR #648)**
+Branch this session: `claude/style-star-45o0px`. Cath tested on her phone and reported two stores landing wrong.
+Overall verdict from her: **"the shop links are coming up with better results than before"** — the 20-store →
+102-store expansion and the `search` field are working. Two specific failures, and chasing them found two more.
+- ⚠️ **THE BUG CLASS, and it is the important part: a store can ignore our query parameter entirely and still look
+  perfectly healthy.** Mejuri returned HTTP 200 with a full-size page — every status check passed — but the page
+  said **"we couldn't find any matches for `undefined`"**. That literal `undefined` is the tell: their JS reads a
+  *different* param name, got nothing from ours, and stringified it. Sam Edelman's version of the same failure was
+  quieter still: it just showed the entire 1033-product catalogue with no error at all.
+- ✅ **THE DETECTION TEST (reusable, and it is the only one that works):** fetch the SAME search URL with several
+  DIFFERENT terms including a nonsense one. **If every response is essentially the same byte size, the parameter is
+  being ignored.** Then try alternative param names (`query`, `term`, `keyword`, `searchTerm`, `text`, `Ntt`); if an
+  alternative *does* vary while ours does not, ours is wrong. Scripts kept in the session scratchpad
+  (`sweep.js` → `param.js` → `confirm.js`).
+  ⚠️ **Identical size alone does NOT prove broken** — many stores render results client-side and always return the
+  same shell (Nordstrom is one, and it works fine). Only "an alternative param varies where ours doesn't" is proof.
+  23 stores are legitimately inconclusive this way; that is the honest answer, not a fault.
+- ✅ **FOUR FIXED** (0.0% size variation → real variation): **Mejuri** `?q=` → **`?query=`** (14.9%) · **Chico's**,
+  **White House Black Market** and **Soma**, all one platform, `?q=` → **`?searchTerm=`** (18.3% / 7.0% / 7.0%).
+- ⚠️ **WHY THEY WERE MISSED FOR SO LONG — a genuine hole in the earlier testing:** the `STORES` table has **102**
+  entries but 6 keys are **double-quoted** because the names contain an apostrophe (`"Chico's"`, `"Macy's"`,
+  `"Dillard's"`, `"Lands' End"`, `"Altar'd State"`, `"Levi's"`). Every extraction regex written as `'([^']+)':`
+  silently skipped all six, so they were never swept. **RULE: when parsing the STORES table, match BOTH quote
+  styles** (`^\s*(".*?"|'.*?'):\s*\{\s*u:`) and assert the count is 102 before trusting any sweep result.
+  Note this also means CLAUDE.md's earlier "✅ Chico's fixed" was only half right — it corrected the PATH
+  (`/store/search`) but left the wrong PARAM.
+- ✅ Added 4 aliases (`whbm`, `whitehouseblackmkt`, `chicos`, `somaintimates`) so an abbreviation resolves instead of
+  falling through to Google Shopping. Verified in a real browser against the live `getStoreUrl`: all four stores
+  build the right URL, aliases resolve **including the curly-apostrophe `Chico’s`** the model may return, the
+  unknown-store fallback still works, no page errors, all 24 alias targets are real keys.
+- ▶ **SAM EDELMAN STILL OPEN — needs Cath, cannot be done from here.** It (and sibling Caleres brand **Naturalizer**)
+  return 403 to every automated request, with every UA and header set tried. Her screenshot shows `/search?q=` landing
+  on the full 1033-product catalogue, so the param is being ignored, but the correct one can't be determined remotely.
+  **Fix = the address-bar trick that already solved J.Jill, Mango and Kendra Scott: search on the site, send the URL.**
+  Same applies to the other bot-walled unverifiables: Macy's, Dillard's, Lands' End, Altar'd State, Levi's, plus the
+  28 in the BLOCKED list (Abercrombie, Aritzia, Belk, Bergdorf, Bloomingdale's, J.Crew, Madewell, Saks, TJ Maxx, etc.).
+  **Note a 403 here proves nothing either way** — 11 of those are live in the app today and work for real users.
+- **Also worth knowing:** 4 stores were down/rate-limited at test time (LoveShackFancy 429, Quay 429, Marine Layer 503,
+  NET-A-PORTER 503) — transient, worth a re-check, not evidence of a bad URL.
+
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, night — Cath paused here)
 **Everything is MERGED AND LIVE. Nothing is pending review** (PRs #627, #634–#646). The store system is
 finished: 102 stores, every tag Cath's own, 10 dimension scores each, matching + variety + colour rules, all
