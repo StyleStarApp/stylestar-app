@@ -5718,9 +5718,12 @@ function _storeHome(key){try{return new URL(STORES[key].u).origin}catch(e){retur
 // Trim the lead-in words off a phrase the stylist wrote ("Try the navy linen
 // blazer") so what reaches the store's search box is the item itself, and keep
 // it short, because long descriptive phrases return nothing in a search box.
-const _LEADIN=/^(?:try|add|adds|pair|pairing|get|grab|consider|maybe|also|and|plus|with|the|a|an|some|any|this|that|these|those|your|my|her|it|is|are|would|will|be|look|for|in|of|to|i|we|love|like|really|great|perfect|nice|good|wear|wearing|something|piece|option|even|just|one)$/i;
+const _LEADIN=/^(?:try|add|adds|pair|pairing|get|grab|consider|maybe|also|and|or|but|plus|with|the|a|an|some|any|this|that|these|those|your|my|her|it|is|are|would|will|be|look|for|in|of|to|i|we|love|like|really|great|perfect|nice|good|wear|wearing|something|piece|option|even|just|one)$/i;
 function _searchableItem(phrase){
-  let w=String(phrase||'').replace(/["']/g,'').trim().split(/\s+/).filter(Boolean);
+  // Strip punctuation to spaces FIRST. A leading comma used to survive as its
+  // own token, and because a comma matches no lead-in word the stripper stopped
+  // dead on it, leaving "or the Sicily bag" as the search term.
+  let w=String(phrase||'').replace(/[^\w\s-]+/g,' ').trim().split(/\s+/).filter(Boolean);
   while(w.length>2&&_LEADIN.test(w[0].replace(/[^\w]/g,'')))w.shift();
   if(w.length>4)w=w.slice(-4);          // the item name sits at the end
   return w.join(' ').trim();
@@ -5732,16 +5735,41 @@ function _outsideLinks(html,re,fn){
     return /^<a\b/i.test(part)?part:part.replace(re,fn);
   }).join('');
 }
+// A brand the stylist names that Style Star does not stock (a luxury house like
+// Celine, or a small label) used to come out as PLAIN TEXT: she read "the
+// Shopping Tote from Celine" and had nothing to tap. Google Shopping carries
+// every brand and shows real products with prices, so a named piece is never a
+// dead end. This is the same fallback getStoreUrl already uses for an
+// unrecognised store, just applied to the chat.
+function _brandSearchUrl(brand,item){
+  return 'https://www.google.com/search?tbm=shop&q='+encodeURIComponent((brand+' '+item).trim());
+}
+// Words that get capitalised mid-sentence but are not brands. Without this,
+// "a blazer from Monday" or "pieces from Her closet" would get linked.
+const _NOTBRAND=/^(?:the|her|his|your|my|our|their|this|that|these|those|it|she|he|they|you|i|we|us|me|him|them|there|here|now|then|home|work|scratch|memory|experience|style star|catherine|monday|tuesday|wednesday|thursday|friday|saturday|sunday|january|february|march|april|may|june|july|august|september|october|november|december|spring|summer|fall|autumn|winter)$/i;
 function linkStores(text){
   // Longest name first so "Saks Off 5th" wins over "Saks", and escape . + & etc.
   const storeNames=Object.keys(STORES).sort(function(a,b){return b.length-a.length})
     .map(function(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}).join('|');
-  const linked=text.replace(new RegExp('([\\w\\s,"-]{3,40})(?:\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,store){
+  // Keep the stylist's own connector word. Rebuilding the sentence with a
+  // hardcoded "from" silently rewrote her wording ("a blazer at Nordstrom"
+  // came out as "a blazer from Nordstrom").
+  let linked=text.replace(new RegExp('([\\w\\s,"-]{3,40})(\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,joiner,store){
     const cleanItem=_searchableItem(item);
     const cleanStore=resolveStore(store)||store;
     if(!cleanItem)return match;
     const url=getStoreUrl(cleanStore,cleanItem);
-    return item.trimEnd()+' from <a href="'+url+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
+    return item.trimEnd()+joiner.replace(/\s+$/,' ')+'<a href="'+url+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
+  });
+  // Second pass: "item from SomeBrand" where SomeBrand is NOT one of our stores.
+  // Runs outside existing links so it cannot touch what the pass above linked.
+  linked=_outsideLinks(linked,new RegExp('([\\w\\s,"-]{3,40})(\\s+(?:from|by)\\s+)([A-Z][\\w&\'\\.]*(?:\\s+[A-Z][\\w&\'\\.]*){0,2})','g'),function(match,item,joiner,brand){
+    const b=brand.trim();
+    if(resolveStore(b))return match;        // a real store, already handled above
+    if(_NOTBRAND.test(b))return match;      // not a brand at all
+    const cleanItem=_searchableItem(item);
+    if(!cleanItem)return match;
+    return item.trimEnd()+joiner.replace(/\s+$/,' ')+'<a href="'+_brandSearchUrl(b,cleanItem)+'" target="_blank" rel="noopener">'+b+'</a>';
   });
   return _outsideLinks(linked,new RegExp('\\b('+storeNames+')\\b','g'),function(store){
     const cleanStore=resolveStore(store);
