@@ -3800,7 +3800,12 @@ wrote/polished the blurbs, cleaned the links, and shipped. Six PRs, all squash-m
   Everything But Water `nav=root`, `List=Site+Search`, and a malformed empty `&=&`.
   **Canonical forms:** Nordstrom `https://www.nordstrom.com/s/<id>` · Bloomingdale's
   `/shop/product/<slug>?ID=<id>` (**the `?ID=` is REQUIRED, not tracking — do NOT strip it**) · Zappos
-  `/p/<slug>/product/<id>/color/<n>` (already canonical; the short `/product/<id>` just redirects to it).
+  `/p/<slug>/product/<id>/color/<n>` (already canonical; the short `/product/<id>` just redirects to it) ·
+  **lululemon** `/p/<category>/<Name>/_/prod<id>` — strip BOTH `?color=` and `cid=` (the latter comes off their
+  share button). **Confirmed working on-device by Cath 2026-07-27**, which matters because lululemon 403s every
+  automated request including its own homepage, so it can never be machine-verified. · **Target**
+  `/p/<slug>/-/A-<tcin>` (already canonical; note Target renders PRICE client-side and walls its own API, so the
+  price always has to come from Cath).
 - **▶ LIST THE REGULAR PRICE, NEVER THE SALE PRICE** (Cath asked directly about the $79/$71.10 espadrilles).
   Sales expire and the Edit is meant to be evergreen. The asymmetry is the argument: arriving to find an item
   **cheaper** than listed feels lucky; arriving to find it **more expensive** feels misled. Only one is recoverable.
