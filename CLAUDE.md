@@ -3802,6 +3802,12 @@ THREE separate problems; she only noticed one.
 **CONFIRMED ALREADY CORRECT, leave alone:** **Macy's** `https://www.macys.com/shop/search?keyword=` — Cath
 verified in her browser. (Macy's ALSO serves `/shop/featured/<hyphenated-term>`, and that works even for an
 arbitrary phrase like "navy linen blazer", but `?keyword=` is simpler and needs no hyphenation, so it stays.)
+**THE WHOLE GAP FAMILY, confirmed by one URL:** Cath's Banana Republic search came back byte-identical to ours,
+`https://bananarepublic.gap.com/browse/search.do?searchText=`. **Gap, Old Navy, Athleta and Banana Republic
+Factory all use that same `/browse/search.do?searchText=` pattern on their own subdomain**, so one paste
+effectively validated five stores. They had all been stuck in the "cannot tell" pile because they render results
+client-side. **Lesson: when a store belongs to a family, verifying one usually verifies the siblings** — the same
+was true in reverse for Chico's / Soma / White House Black Market, where one broken parameter meant three.
 **STILL UNVERIFIED, in priority order** (exposure = how many of the 28 archetypes put it in their top 20, so a
 break here is costly): Lacoste 14 · Banana Republic 13 · Boden 12 · Tory Burch 12 · Bloomingdales 11 · Theory 10 ·
 Levi's 10 · Aritzia 8. Then a long tail that rarely surfaces.
