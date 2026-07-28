@@ -3750,6 +3750,50 @@ Overall verdict from her: **"the shop links are coming up with better results th
 - **Also worth knowing:** 4 stores were down/rate-limited at test time (LoveShackFancy 429, Quay 429, Marine Layer 503,
   NET-A-PORTER 503) — transient, worth a re-check, not evidence of a bad URL.
 
+**2026-07-28 (cont. — ▶ STYLIST CHAT: a named brand could have no link at all — FIXED, PR #650)**
+Cath asked the chat for "a real luxury brand". It answered well (Neverfull from **Louis Vuitton**, Cabas Chyc from
+**Saint Laurent**, Shopping Tote from **Celine**) and **not one was tappable**. Her five screenshots actually held
+THREE separate problems; she only noticed one.
+- ⚠️ **CAUSE:** `linkStores` only ever recognised the 102 names in `STORES`, so any brand outside the table came out
+  as plain text. **The chat prompt makes this likely by design:** it says *"Format shopping suggestions as 'item from
+  StoreName' so they become clickable links"* but **never tells the model which stores exist**, so the stylist names
+  whatever genuinely answers the question. Asking for luxury is exactly when she reaches outside our list.
+- ✅ **FIX:** a second pass in `linkStores` for `"item from SomeBrand"` where the brand is unknown → **Google Shopping**
+  (`tbm=shop`, real products with prices). Same fallback `getStoreUrl` already uses for an unknown store. Guarded by a
+  `_NOTBRAND` stop list so capitalised non-brands are left alone ("from Her closet", "from Monday", "From September").
+- ⚠️ **TWO BUGS FOUND WHILE TESTING IT, one pre-existing and live for months:**
+  1. **The stylist's own wording was being rewritten.** Both passes rebuilt the sentence with a hardcoded `' from '`,
+     so *"the Sicily bag **by** Dolce Gabbana"* became *"from Dolce Gabbana"* and *"a blazer **at** Nordstrom"* became
+     *"from Nordstrom"*. The connector is now captured and preserved. **LESSON: when a regex replacement rebuilds a
+     sentence, capture the connective words too, or you silently edit the model's prose.**
+  2. **A leading comma killed the search-term cleaner.** It survived into `_searchableItem` as its own token, and
+     since a comma matches no lead-in word the strip loop stopped dead on it → search term `"Dolce Gabbana or the
+     Sicily bag"`. Now punctuation is cleared to spaces BEFORE the words are examined, which tightens the ordinary
+     store search terms too.
+- **Verified** in a real browser on the exact replies from her screenshots + false-positive traps, asserting each time
+  that the text is preserved EXACTLY, no nested anchors, no empty hrefs, no page errors.
+- ▶ **TWO MORE FINDINGS FROM THE SAME SCREENSHOTS, both still open, both need Cath's address bar:**
+  1. **Madewell's search URL is broken.** The chat built a correct-looking `madewell.com/search?q=Structured Large
+     Tote`, and tapping it landed her on the **madewell.com homepage**. Same class as Sam Edelman. It 403s us, so it
+     cannot be verified from here.
+  2. **Shopbop: the search WORKS but the term was too specific.** `"blush croc top handle bag"` → *"Sorry, we couldn't
+     find a match"*. Not a broken URL, a search-term-length problem: the model kept both the colour AND two
+     descriptors. `_shopRules()` already says 2 to 5 words and warns against being too long; this is the residual.
+     **Watch whether it recurs before tightening the rule, since making it shorter risks the opposite failure (too
+     vague), which the rules also explicitly warn about.**
+- ▶ **OPEN DESIGN QUESTION FOR CATH (genuinely her call, not an engineering one):** should the stylist stay FREE to
+  name a luxury house we don't stock (honest expertise, now with a working Google Shopping link), or should she steer
+  to a retailer we DO carry ("the Celine Shopping Tote, at Neiman Marcus")? **There is a real money angle:** Louis
+  Vuitton sells direct and has no affiliate program, whereas Celine and Saint Laurent sit in Neiman Marcus, Saks,
+  Bergdorf and NET-A-PORTER, all of which DO have affiliate programs. Steering would earn; naming freely is warmer and
+  more expert. Revisit at money-path step 7 if not before.
+- ⚠️ **GIT LESSON, cost real time, and it is the recurring one:** after merging PR #648 I ran
+  `git checkout -B <branch> origin/main` **without re-fetching**, so the branch was rebuilt from a STALE `origin/main`
+  and the working copy silently lost the store-URL fixes. The regression only surfaced because the test suite was
+  re-run and Mejuri came back as `?q=`. **Live `main` was never affected** (verified with `git show origin/main:...`).
+  **RULE: always `git fetch origin main` IMMEDIATELY BEFORE `checkout -B`, and re-run the tests after any branch
+  reset, never assume the working tree still holds what you merged.**
+
 ### ▶ NEXT SESSION — START HERE (updated 2026-07-27, night — Cath paused here)
 **Everything is MERGED AND LIVE. Nothing is pending review** (PRs #627, #634–#646). The store system is
 finished: 102 stores, every tag Cath's own, 10 dimension scores each, matching + variety + colour rules, all
