@@ -3812,12 +3812,14 @@ Factory all use that same `/browse/search.do?searchText=` pattern on their own s
 effectively validated five stores. They had all been stuck in the "cannot tell" pile because they render results
 client-side. **Lesson: when a store belongs to a family, verifying one usually verifies the siblings** — the same
 was true in reverse for Chico's / Soma / White House Black Market, where one broken parameter meant three.
-**STILL UNVERIFIED** (exposure = how many of the 28 archetypes put the store in their top 20, so a break here is
-costly): **Theory 10 · Levi's 10 · Aritzia 8**, then a long tail that rarely surfaces. Every store above 10 is now
-either fixed or confirmed, so the costly half of the problem is closed.
-▶ **STILL TO CONFIRM: Lacoste.** The fix reproduces Cath's working url except it encodes the term `%20` where her
-browser wrote `+`, INSIDE the JSON parameter. Both decode to a space so it should be fine, but it is the one
-change today not confirmed end to end. If it fails, encode that one as `+`.
+**STILL UNVERIFIED:** only **Levi's 10 · Aritzia 8** and a long tail that rarely surfaces. (Theory was matched to
+Cath's real url — trailing slash plus `lang=default` moved in front of the term — but Theory blocks us, so it is
+reproduced rather than proven.) **Everything else is fixed or confirmed, and every change is proven end to end.**
+- ✅ **Lacoste confirmed by Cath**, `%20` inside the JSON parameter works exactly as `+` does. No encoding change needed.
+- ⚠️ **A CLIENT-SIDE SEARCH LOADS THE PAGE FIRST AND THEN APPLIES THE QUERY, so there is a visible DELAY** before
+  the results appear. Cath saw it on Lacoste. It is inherent to `#q=` and JSON-parameter stores (Lacoste, Sam
+  Edelman, Naturalizer) and is NOT a broken link. Do not "fix" a slow store, and do not read a brief empty page
+  as failure when testing one.
 ▶ **Rerun `scratchpad/render/priority.js` to regenerate that ranking** (it scores every unverified store by how
 often `_storeFit` puts it in a woman's top 20).
 
