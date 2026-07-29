@@ -374,6 +374,14 @@ the store audit.
   still does not see real inventory. Saving a link that lands badly is worse than not saving it, so **her
   homework item 6 — the quality gate — is now the highest-value thing she can do**, more so than before.
 
+### ▶ NEW INPUT FOR THE 0c CONVERSATION (2026-07-29, late): a Cowork spec is parked at `docs/curated-catalog-spec.md`
+Cath brought back a full spec from Cowork — **"Option 3: your own curated catalog"** — real products she picks,
+tagged by 9 style families + attrs/patterns/sizes, hard-filtered by the archetype so never-wear finally becomes
+structural. It references a **companion spreadsheet that was NOT uploaded** (ask her for it if this goes ahead).
+⚠️ **It is PARKED, not approved** — it is exactly the "option 3-adjacent" landscape of the 0c conversation below,
+so read it WITH her, pressure-test the honest arithmetic in its Step 3 (60 items ≈ 8 hours of her time), and let
+her decide. Notably it already respects today's decisions (colorsSkip stays deleted, no budget question).
+
 ### ⭐ 0c. ▶ CATH ASKED TO PARK THIS AS A TOPIC TO COVER (2026-07-29) — a CONVERSATION, not a build
 **Her words:** *"I feel like I need to get more clear on what the AI searches and affiliate links can and can't
 do with suggesting shoppable items."* She asked for this to go on the list explicitly so it is not lost.
