@@ -159,7 +159,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    never realised she could tap it. It now gets a cream fill, darker text and
    an arrow, so both tabs look like buttons: one pressed in, one not. */
 #s-wardrobe .wdr-tab:not(.on){background:#F5EFE2;color:#3a352c;border-color:#C9A44C}
-#s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:8px 0 14px}
+#s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:8px 0 4px}
+/* Page-level affiliate notice, the blog-post convention: quiet, but above every
+   link on the screen. #6e6e6e matches the disclosure on every other surface. */
+#s-wardrobe .wdr-disclosure{font:italic 400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:0 0 13px}
 #s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
 /* The arrow sits on its own line under the label, so the label stays centred
@@ -2650,6 +2653,16 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="wdr-tab" data-tab="trend" onclick="wardrobeTab('trend')">What's Trending<span class="wdr-tab-badge">New</span></div>
   </div>
   <div class="wdr-tabhint">Tap either list</div>
+  <!-- Once per screen, and placed BELOW the tabs on purpose: directly under the
+       "Your Wardrobe" title it read like a tagline for the page, which is not
+       what a legal notice should look like. Here it is plainly page chrome, and
+       being outside both panes it covers My List AND What's Trending, above
+       every link on the screen. It used to be repeated under every "Ideas"
+       carousel, which stacked up to five identical notices on one page.
+       ⚠️ Deliberately NOT inside .wdr-howto: that block collapses to one line
+       once she has hearted 3+ items, which would quietly hide the disclosure
+       from exactly the returning users who shop the most. -->
+  <div class="wdr-disclosure">Some links may earn us a commission.</div>
 
   <div class="wdr-pane" data-pane="list">
     <div class="wdr-howto" id="wdrHowto"><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>heart</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span><span class="hw-brief">Tap the <svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg> to add &middot; tap <b>Ideas</b> to shop</span></div>
@@ -3928,17 +3941,15 @@ function _shopRules(mode){
 // page. Change the words here and they change everywhere.
 const FIND_LABEL='Find it &rarr;';
 // One shared card so all four grid features stay identical.
-// The affiliate disclosure that goes under a set of shopping links rendered by
-// JavaScript. Wording is deliberately word-for-word identical to the static
-// copies elsewhere, so she never sees two different promises about the same thing.
-// ▶ ALL SIX PLACES this notice lives, for when Amazon's required sentence has to
-//   be added at affiliate-approval time: the two `.shopdisc` divs on the photo
-//   results screen (Complete the Look, Shop your style), the `.shopdisc` under
-//   #shopContent on the Style Portrait, the `.shop-disclosure` on the Shop your
-//   style screen, this constant (the Wardrobe "Ideas" carousels), and
-//   `.chat-disclosure` in the stylist chat. The Edit and the Mall have their own,
-//   longer, "nothing here is chosen by AI" version -- leave those alone.
-const AFFIL_NOTE='<div class="shop-disclosure">Some links may earn us a commission.</div>';
+// ▶ THE AFFILIATE DISCLOSURE lives in SIX places, all of them plain markup now,
+//   so grepping for `may earn us a commission` finds every one. That grep is
+//   the edit list for the moment Amazon's required sentence has to be added:
+//   the three `.shopdisc` divs (Complete the Look, Shop your style on the photo
+//   results, Shop your style on the Style Portrait), `.shop-disclosure` on the
+//   Shop your style screen, `.wdr-disclosure` at the top of Your Wardrobe, and
+//   `.chat-disclosure` in the stylist chat. One wording everywhere, and a test
+//   asserts they stay byte-identical. The Edit and the Mall have their own,
+//   longer, "nothing here is chosen by AI" version -- leave those two alone.
 function _shopCard(item,topHtml){
   const key=resolveStore(item.store);
   const url=getStoreUrl(item.store,item.name,item.search);
@@ -5495,7 +5506,7 @@ async function _wardrobeIdeaGen(id,boxId){
     parsed.items.forEach(function(item){
       html+=_shopCard(item);
     });
-    html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>'+AFFIL_NOTE;
+    html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
     box.innerHTML=html;
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
     _swipeHint(_g,_h);_nudgeScroll(_g);
