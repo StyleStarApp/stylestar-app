@@ -354,6 +354,12 @@ lands somewhere real. ▶ **Cheaper middle step before full feeds:** many retail
 FILTERS in the search URL, so `getStoreUrl` could build a filtered search. Same address-bar research method as
 the store audit.
 
+- ▶ **CATH ASKED (2026-07-29, end of session): add the My Wishlist row to the OTHER hub pages.** It currently
+  lives only in the Shop hub on **Welcome Back** (with its live count pill). She wants it on the **Style
+  Portrait page and the Analyze Outfit (photo results) page** too — the other screens that carry the menu
+  buttons. Natural fit: the same hub-row pattern (and `refreshTrendBadge()` shows how the pills stay honest
+  across all three hubs — the What's Trending button already spans exactly these three). **Do this alongside
+  or before the navigation session**, since both touch the same hub areas.
 - ▶ **STILL OPEN on this feature, flagged not built:** (1) **"Email me my wishlist"** is now unblocked and is
   the natural next step — same MailerLite session as the other email work, and it is now a genuinely better
   email because her Edit picks carry real products and prices. (2) My Wishlist should join the
