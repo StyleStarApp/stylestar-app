@@ -59,11 +59,25 @@ now done; the copy one is the natural next piece of work.
   would throw if wired to a button. Worth deleting in a tidy-up session, not in a security diff.
 
 ### ⭐ 0b. ▶ STILL OPEN AFTER THE LOCKDOWN — the two follow-ups
-1. **On-demand restore email.** `sendRestoreLink()` currently refreshes the subscriber's `restore_token` field
-   in MailerLite. Whether that *sends* depends on Cath having an automation triggered by a field update. **Her
-   plan is the MailerLite "Comfort plan" (500–1,000 subscribers, 10,000 emails/month)** — and the welcome email
-   already sends, which proves automations work on it. **Confirm the trigger type, then this is a small job.**
-   Until then the copy points her at the welcome email already in her inbox, which is honest and works.
+1. ✅ **On-demand restore email — CODE IS BUILT, waiting on ONE thing Cath does in MailerLite.**
+   Cath confirmed her welcome email is triggered by **"when subscriber joins a group"**, which is the most basic
+   MailerLite trigger and settles the whole approach — **no plan upgrade, and no dependency on a field-update
+   trigger.** Her plan (the "Comfort plan", 500–1,000 subscribers, 10,000 emails/month) is far more than enough.
+   - **How it works:** `sendRestoreLink()` writes a fresh `restore_token` onto her subscriber record, then adds
+     her to a **second, separate group `Style Star Restore Requests`** — and that join is what fires the
+     automation. Deliberately NOT the signups group, or asking for a link would re-send the welcome email.
+   - ⚠️ **THE NON-OBVIOUS BIT: she is REMOVED from the group first, then added.** MailerLite fires the trigger
+     on the *join*, so a woman already sitting in the group would ask for a link and **silently get nothing**.
+     Leaving and rejoining makes every request a real join. A test asserts the DELETE happens before the POST,
+     and that asking twice joins twice.
+   - The group is **created via the API if it doesn't exist**, so the first request can't fail on a missing group.
+   - ▶ **WHAT CATH STILL HAS TO DO (the only blocker):** build an automation in MailerLite triggered by joining
+     **`Style Star Restore Requests`**, whose email links to `https://stylestar.app/?r={$restore_token}` — the
+     same field her welcome email already uses.
+   - ⚠️ **AND THEN ONE STRING CHANGES.** The copy currently says *"your link back to your results is in the
+     welcome email we sent you"* — true today. The moment her automation is live it should become *"we've just
+     sent you a link."* **Deliberately not written yet**, on the same principle as Amazon's required sentence
+     and the Anthropic training claim: never publish a promise that isn't true yet.
 2. **The privacy-copy rewrite (the second Cowork brief) — NOT YET APPLIED.** Seven find-and-replace pairs plus
    a sub-processor section. It is good work and the diagnosis is fair: the copy says *"never stored on our
    servers"*, *"it never touches our servers"*, *"no person at Style Star ever has access"* and *"your details

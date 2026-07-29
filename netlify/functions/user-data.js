@@ -1,8 +1,12 @@
 import crypto from 'crypto';
 
 const MAILERLITE_GROUP_NAME = 'Style Star Signups';
+// A SEPARATE group from the signups one, so asking for a restore link can never
+// re-fire the welcome email. Cath's automation for this group is what actually
+// sends the "here's your link back" email.
+const MAILERLITE_RESTORE_GROUP_NAME = 'Style Star Restore Requests';
 const ML_BASE = 'https://connect.mailerlite.com/api';
-let mlGroupIdCache = null;
+const mlGroupIds = new Map();
 
 // Hosts allowed to use this function. The request's own host is always allowed
 // too, so Netlify deploy previews (random-name.netlify.app) keep working.
@@ -135,18 +139,34 @@ function mlHeaders(apiKey) {
   };
 }
 
-// Look up the MailerLite group id by name (lists groups and matches; cached)
-async function mlGetGroupId(apiKey) {
-  if (mlGroupIdCache) return mlGroupIdCache;
-  const res = await fetch(ML_BASE + '/groups?limit=100', { headers: mlHeaders(apiKey) });
-  if (!res.ok) return null;
-  const json = await res.json();
-  const list = json.data || [];
-  const wanted = MAILERLITE_GROUP_NAME.trim().toLowerCase();
-  const group = list.find(g => g.name && g.name.trim().toLowerCase() === wanted);
-  if (group && group.id) { mlGroupIdCache = group.id; return group.id; }
+// Look up a MailerLite group id by name (lists groups and matches; cached).
+// createIfMissing is used only for the restore group, so the first request
+// doesn't fail just because the group hasn't been made in the UI yet.
+async function mlGroupId(apiKey, name, createIfMissing) {
+  if (mlGroupIds.has(name)) return mlGroupIds.get(name);
+  try {
+    const res = await fetch(ML_BASE + '/groups?limit=100', { headers: mlHeaders(apiKey) });
+    if (res.ok) {
+      const json = await res.json();
+      const wanted = name.trim().toLowerCase();
+      const group = (json.data || []).find(g => g.name && g.name.trim().toLowerCase() === wanted);
+      if (group && group.id) { mlGroupIds.set(name, group.id); return group.id; }
+    }
+  } catch (e) {}
+  if (!createIfMissing) return null;
+  try {
+    const res = await fetch(ML_BASE + '/groups', {
+      method: 'POST', headers: mlHeaders(apiKey), body: JSON.stringify({ name })
+    });
+    if (res.ok) {
+      const json = await res.json();
+      const id = json && json.data && json.data.id;
+      if (id) { mlGroupIds.set(name, id); return id; }
+    }
+  } catch (e) {}
   return null;
 }
+function mlGetGroupId(apiKey) { return mlGroupId(apiKey, MAILERLITE_GROUP_NAME, false); }
 
 // Add (or update) a subscriber in MailerLite, then assign to the signups group.
 // Create is done first and isolated so the group logic can never block a signup.
@@ -184,14 +204,39 @@ async function addToMailerLite(email, name, token) {
 }
 
 // Re-issue a restore link for someone who already has an account.
-// Writes a fresh token onto her MailerLite subscriber record, which is the same
-// field the welcome email's button reads. If Cath's plan supports an automation
-// triggered by that field changing, this is what sends the email.
-// TODO: confirm the MailerLite plan supports a transactional/automation send on
-// a custom-field update. Until then a woman restores from the link already in
-// her welcome email, and the app's copy says exactly that.
+//
+// Writes a FRESH token onto her subscriber record (the automation's email builds
+// the link from that field), then drops her into the restore group — and joining
+// that group is what fires Cath's automation and sends the email.
+//
+// ⚠️ She is removed from the group FIRST. MailerLite fires "when a subscriber
+// joins a group" on the join itself, so a woman already sitting in the group
+// would ask for a link and silently get nothing. Leaving and rejoining makes
+// every request a real join. The removal happens before the trigger, so it
+// can't race with the send it's about to cause.
 async function sendRestoreLink(email) {
-  try { await addToMailerLite(email, null, makeToken(email)); } catch (e) {}
+  const apiKey = process.env.MAILERLITE_API_KEY;
+  if (!apiKey) return; // not configured — skip quietly
+  const token = makeToken(email);
+  if (!token) return;
+  try {
+    const res = await fetch(ML_BASE + '/subscribers', {
+      method: 'POST',
+      headers: mlHeaders(apiKey),
+      body: JSON.stringify({ email: email, fields: { restore_token: token } })
+    });
+    if (!res.ok) return;
+    const json = await res.json();
+    const subId = json && json.data && json.data.id;
+    if (!subId) return;
+
+    const groupId = await mlGroupId(apiKey, MAILERLITE_RESTORE_GROUP_NAME, true);
+    if (!groupId) return;
+
+    const groupUrl = ML_BASE + '/subscribers/' + subId + '/groups/' + groupId;
+    try { await fetch(groupUrl, { method: 'DELETE', headers: mlHeaders(apiKey) }); } catch (e) {}
+    await fetch(groupUrl, { method: 'POST', headers: mlHeaders(apiKey) });
+  } catch (e) {}
 }
 
 export default async (req) => {

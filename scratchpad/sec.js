@@ -10,14 +10,17 @@ process.env.RESTORE_SECRET = 'test-secret-for-verification';
 delete process.env.MAILERLITE_API_KEY; // keep MailerLite out of it entirely
 
 const DB = new Map(); // email -> data object
+const ML = 'https://connect.mailerlite.com/api';
 let mlCalls = [];
 
 const realFetch = globalThis.fetch;
 globalThis.fetch = async (url, opts = {}) => {
   const u = String(url);
   if (u.startsWith('https://connect.mailerlite.com')) {
-    mlCalls.push(u);
-    return new Response(JSON.stringify({ data: { id: '1' } }), { status: 200 });
+    mlCalls.push(((opts.method || 'GET').toUpperCase()) + ' ' + u.replace(ML, ''));
+    if (u.includes('/groups?')) return new Response(JSON.stringify({ data: [{ id: 'g-signups', name: 'Style Star Signups' }] }), { status: 200 });
+    if (u.endsWith('/groups')) return new Response(JSON.stringify({ data: { id: 'g-restore' } }), { status: 200 });
+    return new Response(JSON.stringify({ data: { id: 'sub-1' } }), { status: 200 });
   }
   if (u.startsWith('https://fake.supabase.co')) {
     const m = u.match(/email=eq\.([^&]+)/);
@@ -220,7 +223,37 @@ res = await call('GET', { query: '?token=' + encodeURIComponent(OWNER_TOKEN), ip
 ok('a different IP is unaffected', res.status === 200, 'got ' + res.status);
 
 // ---------------------------------------------------------------------------
-console.log('\n9. Shape checks');
+// ---------------------------------------------------------------------------
+console.log('\n9. Asking for a restore link (the on-demand send)');
+process.env.MAILERLITE_API_KEY = 'fake-ml-key';
+mlCalls = [];
+res = await call('GET', { query: '?email=new@example.com' });
+ok('an existing account gets a 200', res.status === 200);
+ok('a fresh token is written to her subscriber record',
+   mlCalls.some(c => c === 'POST /subscribers'), mlCalls.join(' | '));
+const joinIdx = mlCalls.findIndex(c => c === 'POST /subscribers/sub-1/groups/g-restore');
+const leaveIdx = mlCalls.findIndex(c => c === 'DELETE /subscribers/sub-1/groups/g-restore');
+ok('she is added to the restore group (this is what sends the email)', joinIdx !== -1, mlCalls.join(' | '));
+ok('she is removed from it FIRST, so a repeat request re-triggers',
+   leaveIdx !== -1 && leaveIdx < joinIdx, mlCalls.join(' | '));
+ok('the signups group is never touched (no re-sent welcome email)',
+   !mlCalls.some(c => c.includes('g-signups')), mlCalls.join(' | '));
+
+// Asking twice must send twice — that's the whole point of the leave/rejoin.
+mlCalls = [];
+await call('GET', { query: '?email=new@example.com' });
+ok('asking a second time joins the group again',
+   mlCalls.filter(c => c === 'POST /subscribers/sub-1/groups/g-restore').length === 1, mlCalls.join(' | '));
+
+// An address with no account must trigger NOTHING — otherwise a stranger could
+// use this to mail a woman, and the timing would leak who has an account.
+mlCalls = [];
+res = await call('GET', { query: '?email=nobody@example.com' });
+ok('an unknown address sends no email at all', mlCalls.length === 0, mlCalls.join(' | '));
+ok('…and still returns the identical 200', res.status === 200);
+delete process.env.MAILERLITE_API_KEY;
+
+console.log('\n10. Shape checks');
 res = await call('GET');
 ok('no token and no email → 400', res.status === 400, 'got ' + res.status);
 res = await call('DELETE');
