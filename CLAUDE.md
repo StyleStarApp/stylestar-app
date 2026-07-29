@@ -232,8 +232,12 @@ asked what to do.
      MailerLite subscriber in one call. Two ways in: **her own restore token** (self-service, ready for a button
      whenever we add one) or an **`x-admin-secret` header** matching a new **`ADMIN_SECRET` Netlify env var**,
      so Cath can action an emailed request without touching two dashboards. **Never by bare email** — that
-     would let anyone delete anyone. ▶ **Cath has to set `ADMIN_SECRET` in Netlify** for the admin route to do
-     anything; with the variable unset the header is simply ignored (tested).
+     would let anyone delete anyone. ✅ **`ADMIN_SECRET` IS SET in Netlify — confirmed by Cath's own screenshot
+     2026-07-29** (all scopes, all deploy contexts), so the admin route is fully live; nothing left to do here.
+     Also visible in that screenshot: **`ANTHROPIC_API_KEY` is scoped to ONE deploy context (production)**, which
+     is why deploy previews can't generate AI content ("invalid x-api-key"). That is good security posture
+     (a preview can't spend her key), not a bug — don't "fix" it, and don't read dead AI features on a preview
+     URL as a regression.
    - ▶ **STILL OPEN, deliberately:** there is **no in-app delete button yet**. The policy's promise ("email us")
      is now backed by one call instead of manual work, which is what the brief asked for. A self-service
      control is a small follow-up, but it is new UI on a sensitive action and **Cath should see it rendered
