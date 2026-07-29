@@ -74,10 +74,12 @@ now done; the copy one is the natural next piece of work.
    - ▶ **WHAT CATH STILL HAS TO DO (the only blocker):** build an automation in MailerLite triggered by joining
      **`Style Star Restore Requests`**, whose email links to `https://stylestar.app/?r={$restore_token}` — the
      same field her welcome email already uses.
-   - ⚠️ **AND THEN ONE STRING CHANGES.** The copy currently says *"your link back to your results is in the
-     welcome email we sent you"* — true today. The moment her automation is live it should become *"we've just
-     sent you a link."* **Deliberately not written yet**, on the same principle as Amazon's required sentence
-     and the Anthropic training claim: never publish a promise that isn't true yet.
+   - ✅ **AND THE STRING HAS NOW CHANGED, because it became true.** It said *"your link is in the welcome email
+     we sent you"* while the automation was still being built, then became **"we've just sent you a link"** the
+     moment Cath activated it and the test passed. It **still names the welcome email as a fallback**, which is
+     not padding: the 24-hour rule below means a second request in one day sends nothing, and the welcome email
+     is the only route back in that window. Same principle as Amazon's required sentence and the Anthropic
+     training claim: the copy tracks what is actually true, and changed the day the truth changed.
    - ✅ **CATH BUILT THE AUTOMATION (2026-07-29) AND IT IS TESTED END TO END.** She added herself to the group
      manually, the email arrived, and **the gold button landed her in her Style Portrait**. The whole chain is
      proven: request → group join → automation → token → restored results.

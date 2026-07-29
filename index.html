@@ -4302,7 +4302,7 @@ async function restoreResults(){
   try{
     await fetch('/.netlify/functions/user-data?email='+encodeURIComponent(email));
   }catch(e){}
-  document.getElementById('restoreMsg').innerHTML="Check your email &mdash; your link back to your results is in the welcome email we sent you. Tap the button in it and you'll land right back in your Style Portrait.<br><br>Nothing there? You may not have saved your results yet. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take our fun style quiz</span>?";
+  document.getElementById('restoreMsg').innerHTML="Check your email &mdash; we've just sent you a link back to your results. Tap the button in it and you'll land right back in your Style Portrait. It's in your original welcome email too, if that's quicker to find.<br><br>Nothing there? You may not have saved your results yet. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take our fun style quiz</span>?";
 }
 
 let chatHistory=[];
