@@ -119,6 +119,18 @@ welcome email did not.** Half an hour went into suspecting the code and the welc
   history of every group join, send, open and delete. It answered in seconds what code reading could not.
 - ✅ **THEN PROVEN CLEAN: Cath re-tested with a truly fresh `+` alias and BOTH emails arrived** (welcome on save,
   restore on request). The whole email system is verified end to end with no asterisks.
+- ✅ **CATH REWROTE THE WELCOME EMAIL HERSELF (2026-07-29, same day) and it shipped as written — zero copy
+  notes.** It opens with the 20-years-of-real-clients line (the Sally differentiation on the FIRST touchpoint),
+  then five emoji bullets that map to real features (chat / photo feedback / Mall + Edit / wardrobe checklist /
+  Style Portrait), closes "You deserve to be your very own style star." Every claim checked true against the
+  app. **Her copy instincts needed no editing — remember this before "improving" her words.**
+  ⚠️ **ONE CHECK LEFT OPEN, ask if unconfirmed:** after the rewrite, confirm the welcome button still links to
+  `https://stylestar.app/?r={$restore_token}` (rewrites can recreate buttons, and the app's "it's in your
+  original welcome email too" promise depends on that token). Subject line should be untouched (edited in
+  place, not via template) but glance at it too.
+  ▶ **Related honesty note:** tokens now expire after 30 days, so a welcome email's button quietly dies a month
+  after signup. By design (forwarded email ≠ permanent access); she just requests a fresh link. **Never add a
+  "keep this email forever" line to the welcome copy.**
 
 ### ▶ THE RESTORE FORM STANDS DOWN AFTER SENDING (2026-07-29, Cath's design catch)
 Cath, testing on her phone: the big black **FIND MY RESULTS** button looked *"too big/too harsh"* sitting above
