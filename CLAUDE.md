@@ -711,6 +711,40 @@ address bar alone*. So there was literally nothing to paste into an application 
   (Supabase, MailerLite, Anthropic) and has no California/CCPA section. Neither blocks affiliate approval and
   hers is already above average for an app this size. Worth asking Almira when the trademarks are done.
 
+### ▶ EVERY SHOPPING SURFACE NOW CARRIES AN AFFILIATE DISCLOSURE (2026-07-29)
+Both an FTC requirement and an approval signal: a reviewer checks that the disclosure sits **near the links**,
+not only in the privacy policy.
+- ⚠️ **THE FIRST AUDIT WAS WRONG, because it grepped for the wrong class names.** Searching `dc-disclosure` and
+  `shop-disclosure` found only the Edit and the Mall, and produced the claim that the four AI shopping surfaces
+  had nothing. **There was a third class, `shopdisc`**, already doing the job on the photo results screen. The
+  true gap was four different surfaces than the ones first named. **Lesson: audit by finding every place that
+  RENDERS a link (`_shopCard` call sites + the chat linkifier), then check each one — never by grepping for the
+  class name you happen to remember.**
+- **▶ THE SIX PLACES the wording now lives** (this is the edit list for Amazon's sentence at approval time):
+  1. `.shopdisc` under **Complete the Look** (`#pShopList`, photo results) — already existed
+  2. `.shopdisc` under **Shop your style** on the photo results (`#shopContentPhoto`) — already existed
+  3. `.shopdisc` under **Shop your style** on the Style Portrait (`#shopContent`) — added
+  4. `.shop-disclosure` on the **Shop your style / wishlist screen** (`s-shopstyle`) — added
+  5. **`AFFIL_NOTE`**, the JS constant, injected under every **Wardrobe "Ideas" carousel** — added
+  6. `.chat-disclosure` in the **stylist chat** (the linkifier turns store names in her answers into links,
+     so this screen needs one too) — added
+  The Edit and the Mall keep their own longer *"nothing here is chosen by AI"* version. **Leave those alone.**
+- **One wording everywhere:** *"Some links may earn us a small commission, at no extra cost to you."* A test
+  asserts all six copies are byte-identical, so she never sees two different promises about the same thing.
+- ⚠️ **A DISCLOSURE THAT CANNOT BE READ IS NOT A DISCLOSURE.** The chat line was first styled `#9a9a9a` at
+  10.5px, one notch quieter than the privacy line above it — which **measured 2.5:1 contrast and failed.** That
+  instinct (a legal notice should be the quietest thing on screen) is exactly backwards, and it matters double
+  for an 18-to-80 audience where readability is a stated priority. Now `#6e6e6e` at 11px, **4.6:1**, matching
+  `.shop-disclosure` everywhere else. **The test measures real contrast against the real painted background on
+  every surface** — a colour that looks fine on a light card can vanish on the dark results screen.
+- Verified by `scratchpad/disclose.js`, **40 checks**: each of the six is present, says it plainly, occupies real
+  space on screen, and clears 3:1 against whatever is actually behind it (the AI calls are stubbed, so this is a
+  render + contrast test, not an API test). Plus the Edit/Mall disclosures intact, no overflow, no JS errors.
+- ✅ **Also fixed: the Mall said "Net-a-Porter"** while the rest of the app had been renamed **NET-A-PORTER**.
+  `mallStores` is a display list, not keyed off `STORES`, so it had drifted. Tested that all three spellings
+  still resolve through `resolveStore` and that the URL still builds — **a rename is a crash risk**, per the
+  alias lesson from 2026-07-27.
+
 ### ▶ NAVIGATION AUDIT (2026-07-29) — Cath asked for a Home button; here is what is actually wrong
 She asked for "a home page button that maybe has a drop down menu for all our pages," noting the footers differ
 and some pages need Back buttons to escape. **She was right, and it measures worse than she described.**
@@ -803,9 +837,9 @@ So, at that moment, walk her through:
 6. ⚠️ **ADD AMAZON'S REQUIRED SENTENCE — deliberately NOT shipped yet, see 2026-07-29 below.** The moment the
    Associates account is approved AND the first Amazon link goes live, the exact string must appear:
    **"As an Amazon Associate I earn from qualifying purchases."** Not a paraphrase — Amazon requires that
-   wording. Put it in the Privacy Policy's Affiliate links section and beside the link surfaces
-   (`.dc-disclosure` on the Edit + Mall already exists; **the Wardrobe "Ideas" carousels, Shop-your-style and
-   the chat picks have NO disclosure at all** and need one).
+   wording. Put it in the Privacy Policy's Affiliate links section and beside the link surfaces.
+   ✅ **Every shopping surface now carries a disclosure (done 2026-07-29)** — see the audit section below for
+   the list of **six** places the wording lives, which is exactly the list to edit at that moment.
 7. ⚠️ **AMAZON'S 180-DAY CLOCK — a sequencing trap, tell her before she applies.** Once accepted, Amazon
    requires **3 qualifying sales within 180 days** or it closes the account. The clock starts at APPROVAL, not
    at launch. So applying to Amazon the day the business bank account opens, while the app still has no users,

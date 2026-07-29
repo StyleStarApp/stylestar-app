@@ -463,6 +463,12 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .chat-chip{padding:8px 14px;border-radius:20px;border:1.5px solid #ebebeb;background:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#666;cursor:pointer;transition:all 0.2s;white-space:nowrap}
 .chat-chip:hover{border-color:#1a1a1a;color:#1a1a1a}
 .chat-privacy{font-size:11px;color:#8a8a8a;text-align:center;padding:4px 0}
+/* Sits directly under the privacy line -- the stylist links to stores inside her
+   answers, so the disclosure belongs on this screen too. Deliberately NOT quieter
+   than the line above it: this is a legal notice that has to be legible, and the
+   first colour tried (#9a9a9a) measured 2.5:1 against the chat background, which
+   fails. #6e6e6e matches .shop-disclosure everywhere else and measures ~5:1. */
+.chat-disclosure{font-size:11px;color:#6e6e6e;text-align:center;padding:0 0 4px;font-style:italic}
 .chat-fresh{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:11.5px;color:#8a8a8a;text-decoration:underline;cursor:pointer;padding:2px 4px;transition:color .2s}
 .chat-fresh:hover{color:#EC4899}
 #chatRefineHint button{border-radius:4px!important;border:1.5px solid #1a1a1a!important;color:#1a1a1a!important}
@@ -2015,6 +2021,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <div class="shop-title">Shop your style</div>
         <div class="shop-sub">Shopping ideas based on your style portrait</div>
         <div id="shopContent"></div>
+        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn us a small commission,<br>at no extra cost to you.</div>
       </div>
 
       <!-- Keep-your-portrait save block → existing save flow (_persistSave) -->
@@ -2372,6 +2379,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="ss-shop-sub">Chosen with you in mind.</div>
   </div>
   <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
+  <div class="shop-disclosure">Some links may earn us a small commission, at no extra cost to you.</div>
   <div class="ss-shop-talk">Want to talk it through? <span onclick="openChat()">Ask your stylist &rarr;</span></div>
 </div>
 
@@ -2437,6 +2445,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
     </div>
     <div class="chat-privacy">&#128274; Your messages and photos are private (no one reads them), and never stored on our servers.</div>
+    <div class="chat-disclosure">Some links may earn us a small commission, at no extra cost to you.</div>
     <div id="chatFresh" style="text-align:center;margin:-2px 0 4px"><button class="chat-fresh" onclick="askClearChat()">Start a fresh conversation</button></div>
     <div class="chat-input-wrap">
       <button class="chat-photo-btn" onclick="document.getElementById('chatPhotoIn').click()" aria-label="Send a photo">📸</button>
@@ -3919,6 +3928,17 @@ function _shopRules(mode){
 // page. Change the words here and they change everywhere.
 const FIND_LABEL='Find it &rarr;';
 // One shared card so all four grid features stay identical.
+// The affiliate disclosure that goes under a set of shopping links rendered by
+// JavaScript. Wording is deliberately word-for-word identical to the static
+// copies elsewhere, so she never sees two different promises about the same thing.
+// ▶ ALL SIX PLACES this notice lives, for when Amazon's required sentence has to
+//   be added at affiliate-approval time: the two `.shopdisc` divs on the photo
+//   results screen (Complete the Look, Shop your style), the `.shopdisc` under
+//   #shopContent on the Style Portrait, the `.shop-disclosure` on the Shop your
+//   style screen, this constant (the Wardrobe "Ideas" carousels), and
+//   `.chat-disclosure` in the stylist chat. The Edit and the Mall have their own,
+//   longer, "nothing here is chosen by AI" version -- leave those alone.
+const AFFIL_NOTE='<div class="shop-disclosure">Some links may earn us a small commission, at no extra cost to you.</div>';
 function _shopCard(item,topHtml){
   const key=resolveStore(item.store);
   const url=getStoreUrl(item.store,item.name,item.search);
@@ -4928,7 +4948,7 @@ const mallStores=[
     {n:'Saks Fifth Avenue',d:'Luxury and designer labels',u:'https://www.saksfifthavenue.com'},
     {n:"Bloomingdale's",d:'Designer to contemporary in one place',u:'https://www.bloomingdales.com'},
     {n:'Revolve',d:'Trend-forward and going-out looks',u:'https://www.revolve.com'},
-    {n:'Net-a-Porter',d:'Luxury designer fashion',u:'https://www.net-a-porter.com'}
+    {n:'NET-A-PORTER',d:'Luxury designer fashion',u:'https://www.net-a-porter.com'}
   ]},
   {cat:'Value & Basics',stores:[
     {n:'Amazon',d:'Everything, fast, great for basics',u:'https://www.amazon.com/fashion'},
@@ -5475,7 +5495,7 @@ async function _wardrobeIdeaGen(id,boxId){
     parsed.items.forEach(function(item){
       html+=_shopCard(item);
     });
-    html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
+    html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>'+AFFIL_NOTE;
     box.innerHTML=html;
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
     _swipeHint(_g,_h);_nudgeScroll(_g);
