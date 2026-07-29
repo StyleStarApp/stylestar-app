@@ -619,6 +619,13 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .wl-save svg{width:14px;height:14px;display:block;flex:0 0 auto}
 .wl-save:hover{color:#54503f}
 .wl-save.on{color:#B4436F;border-color:rgba(180,67,111,.3);background:rgba(244,154,193,.09)}
+/* On the Style Star Edit the control gets its OWN row under "Shop this item":
+   that button measures 209px inside a 232px column, so there is no room beside
+   it at any phone width. Given it stands alone under a big black button, it
+   carries a visible outline so it reads as a real secondary action. */
+#s-dream .dc-save-row{margin-top:11px}
+#s-dream .wl-save{margin-left:0;padding:8px 14px;border-color:#E6D6A8}
+#s-dream .wl-save.on{border-color:rgba(180,67,111,.35)}
 /* Complete the Look sits on the dark results screen, so the same control needs
    its own colours there or it disappears into the board. */
 .res-screen .shoprow .wl-save{padding:4px 6px;color:#6b655a}
@@ -650,6 +657,13 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-b{flex:1;min-width:0}
 #s-wishlist .wl-nm{display:block;font:600 14px/1.35 'Jost',sans-serif;color:#26221c}
 #s-wishlist .wl-st{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8272;margin-top:3px}
+/* Cath's own Edit picks are a different KIND of saved piece -- a real product
+   link with a price, not a search -- so they are marked rather than blended in.
+   Hiding the difference would mean one tap lands on the actual shoe and the next
+   on 200 search results, with nothing to explain why. */
+#s-wishlist .wl-pick{display:inline-flex;align-items:center;gap:4px;font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#8a6d20;background:#F9F3E3;border:1px solid #E6D6A8;border-radius:999px;padding:3px 7px 3px 6px;margin-bottom:5px}
+#s-wishlist .wl-pick svg{width:9px;height:9px;fill:#C8971E;display:block;flex:0 0 auto}
+#s-wishlist .wl-pr{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E;margin-left:7px;text-transform:none}
 #s-wishlist .wl-go{flex:0 0 auto;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
 #s-wishlist .wl-del{flex:0 0 auto;color:#a8a294;font-size:21px;line-height:1;cursor:pointer;padding:2px 3px;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-del:hover{color:#6b655a}
@@ -5047,6 +5061,7 @@ function showDream(){
   dreamPrevScreen=cur?cur.id:'s-wel';
   show('s-dream');
   markEditSeen();
+  try{_wlDecorateEdit();}catch(e){}
 }
 function closeDream(){
   showBack(dreamPrevScreen);
@@ -5291,8 +5306,12 @@ function _normalizeWardrobe(d){
     if(_wlSeen[x.id])return false;          // same piece saved twice -> keep the first
     _wlSeen[x.id]=1;return true;
   }).map(function(x){
-    return {id:String(x.id),name:String(x.name),store:String(x.store||''),
-            search:String(x.search||''),ts:Number(x.ts)||0};
+    var o={id:String(x.id),name:String(x.name),store:String(x.store||''),
+           search:String(x.search||''),ts:Number(x.ts)||0};
+    // Cath's Edit picks are real product links, so they alone keep a stored URL
+    // and price. Everything else rebuilds its link from store + search term.
+    if(x.pick){o.pick=true;o.url=_wlSafeUrl(x.url);o.price=String(x.price||'');}
+    return o;
   });
   if(!d.pretap0){d.items={};d.pretap0=true;}
   // The list is want-only now — "have" is gone. Drop any state that isn't a
@@ -5765,6 +5784,7 @@ function closeWardrobe(){
 // rebuilds it on every render. That means a store-URL fix (there have been 14)
 // silently repairs every already-saved item instead of leaving her with a
 // growing pile of links that were correct on the day she tapped them.
+var _WL_STAR_PATH='M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z';
 var _WL_HEART_PATH='M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z';
 var _wlReg={};              // id -> {name,store,search}; filled as cards render
 var _wlToastTimer=null,_wlSyncTimer=null;
@@ -5787,14 +5807,58 @@ function _wlHeartSvg(on){
     ? '<svg viewBox="0 0 24 24" fill="#F49AC1" stroke="#B4436F" stroke-width="1"><path d="'+_WL_HEART_PATH+'"/></svg>'
     : '<svg viewBox="0 0 24 24" fill="none" stroke="#b0a898" stroke-width="1.9"><path d="'+_WL_HEART_PATH+'"/></svg>';
 }
+// Only ever trust an http(s) link into an href. A stored URL comes back out of
+// localStorage, which a determined person can edit by hand.
+function _wlSafeUrl(u){u=String(u||'');return /^https?:\/\//i.test(u)?u:''}
 function _wlRegister(item){
   if(!item||!item.name)return '';
   var store='';
   try{store=resolveStore(item.store)||item.store||''}catch(e){store=item.store||''}
+  // ⚠️ Cath's Style Star Edit picks must NOT be resolved through the store table:
+  // their store reads "Badu · Amazon" (a brand AND a retailer), which is not a
+  // key, and their link is a real product URL rather than a search we build.
+  if(item.pick)store=String(item.store||'');
   var id=_wlMakeId(item.name,store);
   if(!id||id==='~')return '';
-  _wlReg[id]={name:String(item.name),store:String(store),search:String(item.search||'')};
+  var e={name:String(item.name),store:store,search:String(item.search||'')};
+  if(item.pick){e.pick=true;e.url=_wlSafeUrl(item.url);e.price=String(item.price||'');}
+  _wlReg[id]=e;
   return id;
+}
+// ▶ THE TWO KINDS OF SAVED PIECE, and the difference is honest, not cosmetic:
+//   • an AI suggestion  -> we hold the store + search term and REBUILD a search
+//     link every render, so a store-URL fix repairs it. It lands on results.
+//   • one of Cath's Edit picks -> a real product link she chose herself, so the
+//     URL IS the item and there is no formula to rebuild it. It lands on the
+//     actual piece, with its price.
+// The Edit rows are marked "Catherine's pick" and say "Shop it" rather than
+// "Find it", so a woman is never surprised by which kind she just tapped.
+function _wlEditItems(){
+  var out=[];
+  var els=document.querySelectorAll('#s-dream .dc-item');
+  for(var i=0;i<els.length;i++){
+    var el=els[i],n=el.querySelector('.dc-item-name'),a=el.querySelector('.dc-item-btn');
+    if(!n||!a)continue;
+    var st=el.querySelector('.dc-store'),pr=el.querySelector('.dc-price');
+    out.push({el:el,name:n.textContent.trim(),store:st?st.textContent.trim():'',
+              price:pr?pr.textContent.trim():'',url:a.getAttribute('href')||'',pick:true});
+  }
+  return out;
+}
+// Built from the markup at runtime rather than hand-added to each of the 17
+// blocks: every Edit item Cath adds in future gets a Save control for free, with
+// nothing for her to remember. Idempotent, since the screen is reopened often.
+function _wlDecorateEdit(){
+  _wlEditItems().forEach(function(it){
+    if(it.el.querySelector('.wl-save'))return;
+    var btn=it.el.querySelector('.dc-item-btn');
+    if(!btn)return;
+    var row=document.createElement('div');
+    row.className='dc-save-row';
+    row.innerHTML=_wlSaveBtn(it);
+    btn.parentNode.insertBefore(row,btn.nextSibling);
+  });
+  _wlSyncButtons();
 }
 // The control is LABELLED, not a bare icon: her mom's testing (2026-07-26)
 // showed that an unlabelled control reads as decoration, not as something to tap.
@@ -5813,7 +5877,9 @@ function wishToggle(id){
   else{
     var m=_wlReg[id];
     if(!m)return;                       // a stale button from a re-rendered surface
-    _wlList().unshift({id:id,name:m.name,store:m.store,search:m.search,ts:Date.now()});
+    var entry={id:id,name:m.name,store:m.store,search:m.search,ts:Date.now()};
+    if(m.pick){entry.pick=true;entry.url=m.url;entry.price=m.price;}
+    _wlList().unshift(entry);
     added=true;
   }
   saveWardrobeData();
@@ -5893,12 +5959,17 @@ function renderWishlist(){
    +'<div class="wl-disclosure">Some links may earn us a commission.</div>'
    +'<div class="wl-card">';
   list.forEach(function(it){
-    var url='';
-    try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}
-    h+='<div class="wl-row">'
+    var pick=!!it.pick,url='';
+    if(pick)url=_wlSafeUrl(it.url);
+    else{try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}}
+    h+='<div class="wl-row'+(pick?' pick':'')+'">'
       +'<span class="wl-mark"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg></span>'
-      +'<div class="wl-b"><span class="wl-nm">'+_esc(it.name)+'</span><span class="wl-st">'+_esc(it.store)+'</span></div>'
-      +(url?'<a class="wl-go" href="'+_esc(url)+'" target="_blank" rel="noopener">Find it &rarr;</a>':'')
+      +'<div class="wl-b">'
+      +(pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_STAR_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
+      +'<span class="wl-nm">'+_esc(it.name)+'</span>'
+      +'<span class="wl-st">'+_esc(it.store)
+      +(pick&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span></div>'
+      +(url?'<a class="wl-go" href="'+_esc(url)+'" target="_blank" rel="noopener">'+(pick?'Shop it':'Find it')+' &rarr;</a>':'')
       +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
       +'</div>';
   });
