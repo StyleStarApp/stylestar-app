@@ -2719,7 +2719,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <p style="margin-bottom:12px"><strong>What we collect</strong></p>
       <p style="margin-bottom:12px">When you save your results, we collect your email address, quiz answers, style portrait, and any preferences you share (sizes, colors, etc.). Your conversations with your stylist and any photos you share are handled by AI in real time to give you instant help. They are private, never read or viewed by anyone at Style Star, and your photos are never stored on our servers. Your chat history is saved only on your own device, so you can pick up where you left off. It never touches our servers, and only you can see it. You can clear it anytime by starting a fresh conversation.</p>
       <p style="margin-bottom:12px"><strong>How we use it</strong></p>
-      <p style="margin-bottom:12px">We use your information to save your style details so you can access them across devices, to personalize your shopping suggestions, and to send you occasional styling updates. We never sell or share your personal information with third parties.</p>
+      <p style="margin-bottom:12px">We use your information to save your style details so you can access them across devices, to personalize your shopping suggestions, and to send you occasional styling updates. We never sell your personal information, and we never share it with anyone who wants to market to you. We do share it with the trusted service providers who help us run Style Star, such as the secure database that stores your results and the service that sends your emails, and only ever so they can do that job for us.</p>
       <p style="margin-bottom:12px"><strong>Analytics</strong></p>
       <p style="margin-bottom:12px">We use privacy-friendly analytics to understand how Style Star is used, in simple, anonymous numbers. We do not use advertising cookies or track you across other websites.</p>
       <p style="margin-bottom:12px"><strong>Affiliate links</strong></p>
@@ -2730,7 +2730,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <p style="margin-bottom:12px">Style Star is made for adults and teens. It is not directed to children under 13, and we do not knowingly collect information from them.</p>
       <p style="margin-bottom:12px"><strong>Contact</strong></p>
       <p style="margin-bottom:12px">Questions about your privacy? Reach us at hello@stylestar.app</p>
-      <p style="margin-top:20px;font-size:11px;color:#bbb">Last updated July 15, 2026</p>
+      <p style="margin-top:20px;font-size:11px;color:#bbb">Last updated July 29, 2026</p>
     </div>
     <button class="btn-outline" onclick="closePrivacy()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
     <div class="pg-foot"><div class="flinks"><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showTerms()">Terms</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
@@ -2899,6 +2899,34 @@ function retakeQuiz(){
   document.getElementById('pw').style.display='block';
   loadQ(0);
 }
+// ---- Real URLs for the four pages that need one -------------------------
+// Every other screen is reached by tapping through the app, so it lives at "/".
+// These four are different: they get linked TO from outside. The privacy and
+// terms URLs are required by affiliate application forms (there is a mandatory
+// "Privacy Policy URL" field, and some networks fetch it to check it loads);
+// story and faq come along free, since it is the same three lines of code.
+// netlify.toml rewrites these paths to index.html, so the address bar keeps the
+// pretty path and the router at the bottom of this file opens the right screen.
+// The policy text is NOT duplicated anywhere -- a reviewer sees the real page.
+// WARNING: once a URL is submitted to an affiliate network, never change its path.
+var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq'};
+function _pathForScreen(id){return _ROUTES[id]||'/';}
+// The reverse lookup, for someone who lands on one of those paths directly.
+// Tolerates a trailing slash and odd capitalisation, both of which people type.
+function _screenForPath(p){
+  p=String(p||'').replace(/\/+$/,'').toLowerCase();
+  if(!p)return '';
+  for(var id in _ROUTES){if(_ROUTES[id]===p)return id;}
+  return '';
+}
+// Open a deep-linked page through its normal function, so it sets its own
+// "where did she come from" variable and its Back button behaves correctly.
+function _openRoute(id){
+  if(id==='s-privacy')showPrivacy();
+  else if(id==='s-terms')showTerms();
+  else if(id==='s-story')showStory();
+  else if(id==='s-faq')showFAQ();
+}
 function show(id,skipHistory){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
   document.getElementById(id).classList.add('act');
@@ -2950,7 +2978,10 @@ function show(id,skipHistory){
   // Same gold+silver display-case frame around Your Wardrobe.
   if(card)card.classList.toggle('wardrobe-mirror',id==='s-wardrobe');
   if(!skipHistory){
-    history.pushState({screen:id},null,'');
+    // Passing a path (rather than the old '', which meant "leave the URL alone")
+    // is what makes /privacy and /terms real addresses she can paste into an
+    // affiliate application. Every screen without its own route reports "/".
+    history.pushState({screen:id},null,_pathForScreen(id));
   }
   window.scrollTo(0,0);
 }
@@ -6358,6 +6389,15 @@ function maybePlayEntrance(){
     autoRestoreFromLink().then(function(ok){if(!ok)fallbackInitialScreen();maybePlayEntrance();});
   }else{
     fallbackInitialScreen();
+    // Someone who typed, or was sent, /privacy /terms /story /faq lands on that
+    // page. fallbackInitialScreen() runs first on purpose: it restores her saved
+    // data into memory and sets the screen underneath, so the page's Back button
+    // returns her to the right home screen (Welcome Back if she has results).
+    var deep=_screenForPath(location.pathname);
+    if(deep){
+      _openRoute(deep);
+      return; // and no entrance curtain over a legal page she came here to read
+    }
     maybePlayEntrance();
   }
 })();
