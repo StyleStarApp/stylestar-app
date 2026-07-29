@@ -70,8 +70,57 @@ forced. **The headline: Style Star now has TWO lists and they must never be conf
 - ⚠️ **THE DISCLOSURE LIST IS NOW SEVEN, NOT SIX.** My Wishlist shows links, so it carries the same line. **It
   renders only when the list has items** (nothing to disclose on an empty page). Add it to the edit list for
   Amazon's required sentence at money-path step 7.
+### ▶ THE STYLE STAR EDIT CAN BE SAVED TOO (2026-07-29, same day) — and it answers the "exact item" question
+Cath's follow-up was the sharpest question of the session: *"I feel like she wants to save an exact item. Not
+just a search bar item from nordstrom... but an actual specific shoe she wants."* **She is right, and she had
+already solved it herself without noticing: the Style Star Edit is 17 REAL product links she chose by hand.**
+- ✅ **BUILT: a Save control on every Edit item**, and **generated from the markup at runtime** (`_wlDecorateEdit()`
+  from `showDream()`) rather than hand-added to each of the 17 blocks. **So every Edit item she adds in future
+  gets one automatically** — nothing for her to remember, and no chance a new item silently lacks one.
+- ▶ **THE TWO KINDS OF SAVED PIECE ARE NOW EXPLICIT, and Cath chose to mark the difference rather than hide it**
+  ("with the edit marked as my selections"):
+  - **An AI suggestion** — we hold store + search term, **rebuild** a search link every render, no price, button
+    says **"Find it"**. Lands on results.
+  - **One of her Edit picks** — a **real product URL she chose**, so the URL IS the item and there is no formula
+    to rebuild it. Carries its **price**, a gold **"Catherine's pick"** badge, and says **"Shop it"**. Lands on
+    the actual piece.
+  - **Why marking beats blending:** a list where one tap gives a shoe and the next gives 200 search results,
+    with nothing to explain why, reads as broken. Marked, the difference becomes a feature — and her picks read
+    as the most valuable rows, which they are.
+- ⚠️ **THE PICKS ARE A DELIBERATE EXCEPTION TO THE "NEVER STORE THE URL" RULE.** Everything else rebuilds its
+  link so a store-URL fix repairs it; a specific product link cannot be rebuilt from anything. That is fine
+  because **Cath owns those links and can fix one herself** — but it means a dead Edit link stays dead in a
+  woman's wishlist. Worth a periodic check of the Edit links.
+- ⚠️ **`_wlRegister` must NOT resolve an Edit pick through the store table.** Their store field reads
+  "Badu · Amazon" — a brand AND a retailer, not a `STORES` key. `if(item.pick)` skips `resolveStore`.
+- **Security:** a stored URL comes back out of localStorage, so `_wlSafeUrl()` allows only `http(s)` — a
+  hand-edited `javascript:` URL is stripped on load and no link is rendered. Tested.
+- ⚠️ **LAYOUT, measured not guessed:** "Shop this item" is **209px wide inside a 232px column**, so a Save
+  control can never sit beside it at any phone width. It gets **its own row** underneath, flush left, with a
+  visible outline so it still reads as a real action under a big black button. **The first test asserted equal
+  `top` values, which was the wrong test** (different heights, baseline-aligned) — the real finding was that it
+  genuinely did not fit.
+- **Verified: the suite is now 99 checks**, adding the Edit control on all 17 items, no duplicate controls after
+  reopening the screen three times, the exact URL and price surviving a save and a reload, both kinds rendering
+  distinctly side by side, the `javascript:` URL being stripped, and the Edit laying out cleanly at 390 and 360.
+
+### ▶ WHAT AFFILIATE APPROVAL WILL AND WILL NOT CHANGE (asked by Cath 2026-07-29, answer worth reusing verbatim)
+She asked *"will this differ once we get affiliate links?"* **Three things get conflated and they are separate:**
+1. **Affiliate tags** — her tracking id on the links that already exist. A day's work. **Changes nothing about
+   search-vs-product**; the same click just earns.
+2. **Product feeds** — the networks send real catalogs (name, price, stock, size). **THIS is the one that turns
+   a search into a specific product**, and it is a real build.
+3. **The AI seeing real inventory** — needs feeds first.
+▶ **So approval alone does NOT fix "exact item."** Say this plainly whenever it comes up; the Edit picks are
+currently the ONLY exact items in the app. ▶ **Why the AI cannot simply emit product URLs today:** it has no
+live catalog, so it would **invent** a plausible URL that 404s — strictly worse than a search, which always
+lands somewhere real. ▶ **Cheaper middle step before full feeds:** many retailers accept size/colour/price
+FILTERS in the search URL, so `getStoreUrl` could build a filtered search. Same address-bar research method as
+the store audit.
+
 - ▶ **STILL OPEN on this feature, flagged not built:** (1) **"Email me my wishlist"** is now unblocked and is
-  the natural next step — same MailerLite session as the other email work. (2) My Wishlist should join the
+  the natural next step — same MailerLite session as the other email work, and it is now a genuinely better
+  email because her Edit picks carry real products and prices. (2) My Wishlist should join the
   **one shared footer** when the nav standardisation happens; it currently reuses the Wardrobe's footer exactly
   so it adds **zero** new footer variants to the eight that already exist. (3) Product images land here at
   money-path step 7 and would turn it into a real lookbook.
