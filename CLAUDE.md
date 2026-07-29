@@ -9,6 +9,73 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (updated 2026-07-29)
 
+### ⭐ 0a. 🔒 `user-data.js` IS LOCKED DOWN (2026-07-29). Read before touching saving or restoring.
+Cath brought two briefs back from a Cowork conversation — a security review of `user-data.js` and a privacy-copy
+rewrite. **Both were accurate, checked line by line against the real code.** The security one was urgent and is
+now done; the copy one is the natural next piece of work.
+- ⚠️ **WHAT WAS WRONG: an email address was treated as a password.** `GET ?email=<anyone>` returned that woman's
+  whole record — name, sizes, fit, shoe width, loved colours, never-wear list, portrait, wardrobe and wishlist —
+  and `Access-Control-Allow-Origin: '*'` meant **any other website's JavaScript could make that call**. `POST`
+  had the same gap in reverse: anyone could overwrite anyone's profile. **Only four people had saved profiles
+  (Cath, her mom, her sister, her friend Jennifer), she confirmed they don't mind, so no notification was owed.**
+  At real scale this would have been a genuine breach.
+- **▶ THE FIX IN ONE LINE: an email now gets you a LINK, never DATA.**
+  - `?token=` returns her results. `?email=` returns **the identical response whether or not the account
+    exists** — otherwise the endpoint stays an enumeration oracle, a way to check who uses Style Star.
+  - `POST` creating a **new** record is open (that's a first save, and it returns a token). `POST` over an
+    **existing** profile needs that token. Softening: a record with no `portrait` was never a finished profile,
+    so a real first save can take it over — that's the squatter case, and it is a `TODO`, not email verification.
+  - Tokens now carry an **issued-at stamp and expire after 30 days**. A forwarded welcome email was previously
+    permanent access. **Legacy tokens (a bare email, pre-timestamp) are still honoured** so links already sitting
+    in sent welcome emails don't break; there's a `TODO` to drop that support around November.
+  - **Rate limiting** on both functions (20/min per IP on `user-data`, 30/min on `style-ai`, in-memory).
+- ⚠️ **ONE DELIBERATE DIFFERENCE FROM `style-ai.js`, and it matters.** Both share the origin check, but
+  `style-ai` allows **any** self-reported `Host` (for deploy previews). Copying that verbatim into `user-data`
+  left a hole: a non-browser client can set `Host` **and** `Origin` to its own domain and walk through.
+  `user-data` now allows a self-host **only when it matches `*.netlify.app`**. **The test caught this, not
+  review** — the first run "passed" the cross-origin check for the wrong reason. Previews still work (tested).
+- ⚠️ **THE ORIGIN CHECK IS A SPEED BUMP, NOT AUTHENTICATION.** `Origin` and `Referer` are trivially forged. It
+  sits **in front of** the token checks, never instead of them. Don't ever let it be the only guard.
+- ▶ **THE ONE REAL BEHAVIOUR CHANGE, tell Cath if she notices it:** typing an email into "Find my results" no
+  longer restores inline. It now says *"Check your email — your link back to your results is in the welcome
+  email we sent you."* **That is true today** because `addToMailerLite` already writes a `restore_token` field
+  on every save and the app already exchanges `?r=<token>`. The message is **identical for an address with no
+  account**, on purpose. Consequence: a woman who deleted her welcome email is stuck until the on-demand send
+  is wired (see 0b).
+- **Client side:** one shared `saveUserRecord()` replaced five hand-rolled POSTs, so the token logic lives in
+  one place. It stores `ss_token` from the first save and sends it on every later save; `autoRestoreFromLink()`
+  writes it too, **so a woman restoring on a new phone can save again immediately** (tested — this was the
+  regression most likely to bite).
+- **Verified by two suites, 78 checks, all passing.** `scratchpad/sec.js` (55) runs the **real handler** with
+  Supabase and MailerLite stubbed: no data by email, identical bodies for existing vs unknown, tampered /
+  truncated / expired / legacy tokens, cross-origin and forged-Host rejection, deploy previews still working,
+  another account's token not unlocking this one, rate limiting per IP. `scratchpad/e2e.js` (23) drives the
+  **real `index.html` in Chromium against the real function**: save → token stored → save again → stranger
+  refused → restore from the emailed link on a fresh browser context → save again from that device → expired
+  link refused → zero JS errors.
+- 🔎 **FOUND WHILE TESTING, pre-existing and deliberately NOT fixed** (the brief asked for a small diff):
+  **`saveUserData()` and `saveUserDataPhoto()` are dead code.** They read `stayInput` / `stayName` / `stayForm`
+  / `staySection`, and **none of those ids exist in the markup any more**; nothing calls either function. They
+  would throw if wired to a button. Worth deleting in a tidy-up session, not in a security diff.
+
+### ⭐ 0b. ▶ STILL OPEN AFTER THE LOCKDOWN — the two follow-ups
+1. **On-demand restore email.** `sendRestoreLink()` currently refreshes the subscriber's `restore_token` field
+   in MailerLite. Whether that *sends* depends on Cath having an automation triggered by a field update. **Her
+   plan is the MailerLite "Comfort plan" (500–1,000 subscribers, 10,000 emails/month)** — and the welcome email
+   already sends, which proves automations work on it. **Confirm the trigger type, then this is a small job.**
+   Until then the copy points her at the welcome email already in her inbox, which is honest and works.
+2. **The privacy-copy rewrite (the second Cowork brief) — NOT YET APPLIED.** Seven find-and-replace pairs plus
+   a sub-processor section. It is good work and the diagnosis is fair: the copy says *"never stored on our
+   servers"*, *"it never touches our servers"*, *"no person at Style Star ever has access"* and *"your details
+   are private (no one sees them)"* — and none of those survive contact with Supabase, MailerLite, Netlify
+   Forms and a chat history that really does sit in `localStorage.ss_chat`. ⚠️ **Two cautions when applying it:**
+   its **line numbers have drifted** (it cites 2450 for `.chat-privacy`, which is really 2547) so **match on
+   text, never on line number**; and its claim that the AI provider doesn't train on user data **must be checked
+   against Anthropic's current terms before publishing**, not assumed. Its sub-processor list is otherwise
+   correct — Plausible, Netlify Forms, Supabase, MailerLite and Anthropic are all genuinely in use.
+   Also worth doing while in there: the **CCPA section** and a **real deletion path** (a `DELETE` handler that
+   removes the Supabase row and unsubscribes from MailerLite), both already flagged in this file.
+
 ### ⭐ 0. ✅ MY WISHLIST IS BUILT (2026-07-29). Read this before touching either list.
 Cath asked for the saved list and it shipped this session, together with the naming and iconography work it
 forced. **The headline: Style Star now has TWO lists and they must never be conflated again.**

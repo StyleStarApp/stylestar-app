@@ -9,6 +9,35 @@ const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
 // "Couldn't load options right now". Still a hard bound on abuse.
 const MAX_TOKENS_CAP = 1536;
 
+// --- Rate limiting -----------------------------------------------------------
+// The origin check is a speed bump, not authentication — Origin and Referer are
+// trivially set by any non-browser client — and every call here costs real money
+// against the Anthropic key. In-memory and per-instance, so it resets on a cold
+// start; imperfect, and still far better than nothing.
+// The cap is generous: a woman shopping hard moves through several calls a
+// minute, and this must never bite a real visitor.
+const RATE_MAX = 30;              // requests…
+const RATE_WINDOW_MS = 60 * 1000; // …per minute, per IP
+const rateHits = new Map();
+function clientIp(req) {
+  return (req.headers.get('x-nf-client-connection-ip') ||
+    (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() ||
+    'unknown');
+}
+function rateLimited(req) {
+  const ip = clientIp(req);
+  const now = Date.now();
+  const hits = (rateHits.get(ip) || []).filter(t => now - t < RATE_WINDOW_MS);
+  hits.push(now);
+  rateHits.set(ip, hits);
+  if (rateHits.size > 5000) {
+    for (const [k, v] of rateHits) {
+      if (!v.length || now - v[v.length - 1] > RATE_WINDOW_MS) rateHits.delete(k);
+    }
+  }
+  return hits.length > RATE_MAX;
+}
+
 // Pull the hostname out of an Origin or Referer header value.
 function hostOf(value) {
   if (!value) return '';
@@ -59,6 +88,10 @@ export default async (req) => {
   // Door check: must look like it came from our own site.
   if (!isAllowed(req)) {
     return new Response(JSON.stringify({ error: 'Forbidden' }), { status: 403, headers });
+  }
+
+  if (rateLimited(req)) {
+    return new Response(JSON.stringify({ error: 'Too many requests' }), { status: 429, headers });
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;

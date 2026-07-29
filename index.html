@@ -4213,6 +4213,28 @@ function clearSaved(){
   try{localStorage.removeItem('ss_data')}catch(e){}
   location.reload();
 }
+// --- Saving to the server, with proof of ownership --------------------------
+// An email address is not a secret, so the server won't overwrite an existing
+// profile on the strength of one. The first save returns a token; we keep it on
+// the device and send it with every later save. The restore link writes it too,
+// so a woman who comes back on a new phone can save again straight away.
+function _ssToken(){try{return localStorage.getItem('ss_token')||''}catch(e){return''}}
+function _setSsToken(t){if(!t)return;try{localStorage.setItem('ss_token',t)}catch(e){}}
+function saveUserRecord(email,data){
+  var body={email:email,data:data};
+  var t=_ssToken();
+  if(t)body.token=t;
+  return fetch('/.netlify/functions/user-data',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  }).then(function(res){
+    return res.json().then(function(j){
+      if(j&&j.token)_setSsToken(j.token);
+      return {ok:res.ok,status:res.status,json:j};
+    }).catch(function(){return {ok:res.ok,status:res.status,json:null}});
+  });
+}
 async function doStay(emailVal,nameVal,formId,successId,sectionId){
   if(!emailVal||!emailVal.includes('@'))return;
   if(nameVal){
@@ -4233,11 +4255,7 @@ async function doStay(emailVal,nameVal,formId,successId,sectionId){
   try{
     const portrait=document.getElementById('rp')?document.getElementById('rp').textContent:'';
     const data={userName,answers,topArchNames,portrait,prefs};
-    await fetch('/.netlify/functions/user-data',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:emailVal,data})
-    });
+    await saveUserRecord(emailVal,data);
     try{localStorage.setItem('ss_email',emailVal)}catch(e){}
   }catch(e){}
   emailDone=true;
@@ -4270,40 +4288,14 @@ async function restoreResults(){
     document.getElementById('restoreMsg').textContent='Please enter a valid email.';
     return;
   }
-  document.getElementById('restoreMsg').textContent='Loading your results...';
+  document.getElementById('restoreMsg').textContent='One moment...';
+  // Typing an email no longer returns anyone's results — it points her at the
+  // link in her own inbox. The message is deliberately the SAME whether or not
+  // she has an account, so this can't be used to find out who uses Style Star.
   try{
-    const res=await fetch('/.netlify/functions/user-data?email='+encodeURIComponent(email));
-    const text=await res.text();
-    let json;
-    try{json=JSON.parse(text)}catch(e){
-      document.getElementById('restoreMsg').textContent='Something went wrong. Please try again.';
-      return;
-    }
-    if(json.success&&json.data){
-      const d=json.data;
-      userName=d.userName||'You';
-      answers=d.answers||new Array(12).fill(6);
-      topArchNames=d.topArchNames||[];
-      if(d.answers&&d.answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
-      if(d.prefs)prefs=d.prefs;
-      if(d.wardrobe)wardrobeData=_normalizeWardrobe(d.wardrobe);
-      emailDone=true;
-      try{
-        localStorage.setItem('ss_data',JSON.stringify({userName,answers,topArchNames,portrait:d.portrait}));
-        localStorage.setItem('ss_prefs',JSON.stringify(prefs));
-        if(d.wardrobe)localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));
-        localStorage.setItem('ss_email',email);
-        localStorage.setItem('ss_emailDone','true');
-      }catch(e){}
-      const top3=topArchNames.map(n=>({n:n}));
-      userMotto=d.motto||'';
-      showResult(d.portrait,top3,d.motto);
-    }else{
-      document.getElementById('restoreMsg').innerHTML="We couldn't find results for that email. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take our fun style quiz</span>?";
-    }
-  }catch(e){
-    document.getElementById('restoreMsg').textContent='Something went wrong. Please try again.';
-  }
+    await fetch('/.netlify/functions/user-data?email='+encodeURIComponent(email));
+  }catch(e){}
+  document.getElementById('restoreMsg').innerHTML="Check your email &mdash; your link back to your results is in the welcome email we sent you. Tap the button in it and you'll land right back in your Style Portrait.<br><br>Nothing there? You may not have saved your results yet. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take our fun style quiz</span>?";
 }
 
 let chatHistory=[];
@@ -4586,11 +4578,7 @@ async function syncPrefsToServer(){
   let email='';try{email=localStorage.getItem('ss_email')||''}catch(e){}
   if(!email||!email.includes('@'))return;
   try{
-    await fetch('/.netlify/functions/user-data',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:email,data:buildFullUserData()})
-    });
+    await saveUserRecord(email,buildFullUserData());
   }catch(e){}
 }
 
@@ -4641,11 +4629,7 @@ async function savePrefProfile(){
   }catch(e){}
   // Save the full profile (portrait + answers + preferences) to the server
   try{
-    await withTimeout(fetch('/.netlify/functions/user-data',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:email,data:fullData})
-    }),8000);
+    await withTimeout(saveUserRecord(email,fullData),8000);
   }catch(e){}
   prefSaveComplete(email);
 }
@@ -4696,10 +4680,7 @@ async function _persistSave(email,nameVal){
     await withTimeout(fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}),6000);
   }catch(e){}
   try{
-    await withTimeout(fetch('/.netlify/functions/user-data',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:email,data:fullData})
-    }),8000);
+    await withTimeout(saveUserRecord(email,fullData),8000);
   }catch(e){}
   emailDone=true;
   try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
@@ -6017,10 +5998,7 @@ async function saveWishlistEmail(){
     await withTimeout(fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}),6000);
   }catch(e){}
   try{
-    await withTimeout(fetch('/.netlify/functions/user-data',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:email,data:full})
-    }),8000);
+    await withTimeout(saveUserRecord(email,full),8000);
   }catch(e){}
   emailDone=true;
   try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
@@ -6769,6 +6747,8 @@ async function autoRestoreFromLink(){
     var json=await res.json();
     if(json&&json.success&&json.data){
       var d=json.data;
+      // The link also hands back a fresh token, so this device can save again.
+      if(json.token)_setSsToken(json.token);
       userName=d.userName||'You';
       if(d.prefs)prefs=d.prefs;
       if(d.wardrobe)wardrobeData=_normalizeWardrobe(d.wardrobe);
