@@ -50,6 +50,10 @@ bot wall. **Test: ask Cowork to open `https://www.sezane.com/us-en/search?s=pink
 pink dresses.** If yes, that unlocks the remaining 41 and every future store audit.
 
 ### 2. Then, the app work
+- **🧭 NAVIGATION — Cath raised this 2026-07-29, AUDITED BUT NOT YET BUILT.** Her observation was right and the
+  measurement is worse than she thought: the app has **EIGHT different footer link sets**, **no Home button
+  anywhere** (the logo images are not even clickable), and **12+ screens whose only exit is the small grey
+  `← Back`**. See the full section below for the recommendation (**not a dropdown**) before building anything.
 - **📧 The two email projects, together** (same MailerLite plumbing): "Email me my wishlist" and the long-parked
   "Email me these tips & links" after a photo analysis. Needs her at a desk. **Every email links BACK INTO the
   app, never straight out to a retailer** (Amazon Associates bans affiliate links in email). Bundle in **email
@@ -663,6 +667,69 @@ much as a styling one.
 - ▶ **DO NOT add Louis Vuitton / Celine / Chanel as their own STORES entries.** They would need Cath's tags, they
   earn nothing, and the four multi-brand luxury retailers already in the 102 stock the same bags.
 
+### ▶ THE LEGAL PAGES HAVE REAL URLs NOW (2026-07-29) — required for every affiliate application
+Cath came back from a Cowork conversation with the thing nobody had noticed: **affiliate approval needs a URL for
+the privacy policy, and Style Star did not have one.** The policy existed and was good — it already had an
+**Affiliate links** section, which is exactly what the networks look for — but as a single-page app every "page"
+is a hidden div, and `show()` called `history.pushState(state,null,'')`, that empty string meaning *leave the
+address bar alone*. So there was literally nothing to paste into an application form.
+- ✅ **BUILT: four real addresses** — `/privacy`, `/terms`, `/story`, `/faq`. `netlify.toml` **rewrites** them
+  (status **200**, not 301) to `/index.html`, so the address bar keeps the pretty path, and a small router in
+  `index.html` opens the matching screen. **The policy text is not duplicated anywhere** — one source of truth,
+  and a reviewer sees the real designed page rather than a bare fallback copy.
+- **How the router works, so it can be extended safely:** `_ROUTES` maps screen id → path, `_pathForScreen()`
+  is what `show()` now passes to `pushState` (**every routeless screen reports `/`**, so the URL never gets
+  stranded on `/story` after she navigates away), and `_screenForPath()` does the reverse for a cold landing.
+  To add a page later: one entry in `_ROUTES`, one `[[redirects]]` block, one line in `_openRoute()`.
+- **▶ DESIGN CALL worth keeping: the boot path runs `fallbackInitialScreen()` FIRST, then opens the deep-linked
+  page on top.** That is what makes Back correct — her saved data is already in memory, so the page's own
+  `privacyPrevScreen` records the real screen underneath and Back lands her on **Welcome Back if she has
+  results**, the welcome screen if she doesn't. Verified both ways. It also skips the entrance curtain, since a
+  2.25s star animation over a legal page someone came to *read* is wrong.
+- ⚠️ **NEVER CHANGE THESE PATHS once a URL has been submitted to an affiliate network.** Written into
+  `netlify.toml` and the code comment too.
+- ✅ **WORDING FIX SHIPPED: the policy over-promised.** It said *"We never sell or share your personal
+  information with third parties"* — but her email goes to MailerLite and her results are stored in Supabase.
+  That is completely normal, and the absolute wording was the problem, not the practice. Now: *"We never sell
+  your personal information, and we never share it with anyone who wants to market to you. We do share it with
+  the trusted service providers who help us run Style Star…"* Accurate, and still in her voice. Date bumped to
+  July 29, 2026.
+- ⚠️ **THE SECOND WORDING FIX WAS DELIBERATELY NOT SHIPPED, and this was the right call.** Amazon requires the
+  exact sentence *"As an Amazon Associate I earn from qualifying purchases."* **Cath is not an Amazon Associate
+  yet and has no Amazon links**, so putting that sentence on a legal page today would be a false statement on
+  the one page that must be true. Her existing generic disclosure (*"Style Star may earn a small commission from
+  some links, at no extra cost to you"*) is present on the Edit and the Mall and is what a reviewer needs to see
+  at application time. **Moved to money-path step 7, items 6 and 7** — including Amazon's 180-day / 3-sales trap.
+- **Verified by `scratchpad/routes.js`, 56 checks, all passing.** A local server applies the rewrite rules read
+  **from the real `netlify.toml`** (so a typo there fails the test), and a real Chromium drives the real app:
+  each path opens and *visibly renders* the right screen, the address bar holds the path, the policy text is in
+  the **raw served HTML** (so a reviewer's bot that runs no JS still finds it), Back works from both a new and a
+  returning visitor, in-app navigation writes and clears the URL, browser Back still walks screen history,
+  `_screenForPath` survives trailing slashes / capitals / `null` / lookalike paths, the four ordinary screens
+  still open, the `?r=` email restore link still degrades gracefully, and there are zero JS errors.
+- ▶ **STILL TO DO on the policy, low priority, flagged not fixed:** it does not name its sub-processors
+  (Supabase, MailerLite, Anthropic) and has no California/CCPA section. Neither blocks affiliate approval and
+  hers is already above average for an app this size. Worth asking Almira when the trademarks are done.
+
+### ▶ NAVIGATION AUDIT (2026-07-29) — Cath asked for a Home button; here is what is actually wrong
+She asked for "a home page button that maybe has a drop down menu for all our pages," noting the footers differ
+and some pages need Back buttons to escape. **She was right, and it measures worse than she described.**
+- **EIGHT different footer link sets:** Welcome / Welcome Back / global `.quiz-footer` all say *Shop · My Story ·
+  FAQ*; Chat says *Edit · Quiz · FAQ*; the Mall says *Edit · My Story · FAQ*; FAQ says *My Story · Privacy ·
+  Terms*; Privacy says *My Story · Terms · FAQ*; Terms says *My Story · Privacy · FAQ*.
+- **There is no Home button anywhere in the app**, and the logo `<img>`s are not clickable.
+- **12+ screens exit only via the small grey `← Back`** at the top right.
+- **▶ RECOMMENDED, NOT a dropdown — and the reason is her own user testing.** The lesson from her mom was that a
+  *visible* tab did not read as tappable. A dropdown hides navigation behind a tap **and** a mental model, which
+  is the same failure mode one level deeper, and this is an 18-to-80 audience where readability is a stated
+  priority. Instead: **(1) make the logo go home on every page** (already sitting top-left on the framed pages;
+  the most universal convention on the web and it adds no new chrome), **(2) standardise to ONE footer** so the
+  links never move, **(3) "Home" means her HUB** — Welcome Back if she has saved data, Welcome if she is new.
+  ▶ **That third piece already exists in code**: the `popstate` handler has exactly that branch. Reuse it.
+- **NOT BUILT YET — Cath should see the footer options rendered before anything is committed.** ⚠️ And when that
+  comparison is made, remember the two rendering lessons: **id-scope the mockup CSS** (`#vA .foot`, not `.v
+  .foot`) and prove the variants differ with `console.table` first, and **one tall labelled image beats N crops**.
+
 ### ▶ CONTENT TO-DO (Cath, 2026-07-26 — she wants these, resurface each session)
 - **📝 Add MORE items to What's Trending.** Cath explicitly wants to keep growing this list. Working pattern:
   Claude drafts candidate names + one-line blurbs in her voice (dash-free), Cath approves/cuts/rewrites — she is
@@ -733,6 +800,18 @@ So, at that moment, walk her through:
    Nordstrom still resolves; a small brand's link breaks).
 5. Then: product images on the Edit + Mall + Your Wardrobe (turning them into real lookbooks), and confirm final
    **FTC disclosure** wording/placement with Almira.
+6. ⚠️ **ADD AMAZON'S REQUIRED SENTENCE — deliberately NOT shipped yet, see 2026-07-29 below.** The moment the
+   Associates account is approved AND the first Amazon link goes live, the exact string must appear:
+   **"As an Amazon Associate I earn from qualifying purchases."** Not a paraphrase — Amazon requires that
+   wording. Put it in the Privacy Policy's Affiliate links section and beside the link surfaces
+   (`.dc-disclosure` on the Edit + Mall already exists; **the Wardrobe "Ideas" carousels, Shop-your-style and
+   the chat picks have NO disclosure at all** and need one).
+7. ⚠️ **AMAZON'S 180-DAY CLOCK — a sequencing trap, tell her before she applies.** Once accepted, Amazon
+   requires **3 qualifying sales within 180 days** or it closes the account. The clock starts at APPROVAL, not
+   at launch. So applying to Amazon the day the business bank account opens, while the app still has no users,
+   burns the window for nothing. **Apply to the networks without that rule first** (most of the 102 stores run
+   through ShareASale / Rakuten / Impact / CJ / Awin), and save Amazon until there is real traffic. Re-check the
+   current terms at application time; program rules change.
 
 ### ▶ BRAND FRAMING RULE: how to talk about "10 categories, 100 items" (agreed 2026-07-27)
 Cath wants 10-and-100 as a memorable talking point. It's a strong hook, but the FRAMING matters and she sensed it

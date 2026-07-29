@@ -1,3 +1,38 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+
+# Real URLs for the pages that need one.
+#
+# Style Star is a single-page app: every "page" is a hidden div that JavaScript
+# reveals, so none of them had an address of their own. That mattered most for
+# the legal pages, because every affiliate program's application form has a
+# required "Privacy Policy URL" field and several of them fetch that URL to
+# check it loads.
+#
+# These are rewrites (status 200), not redirects, so the address bar keeps the
+# pretty path while index.html is served. The router in index.html then opens
+# the matching screen. Nothing is duplicated -- there is still exactly one copy
+# of the policy text, and a reviewer sees the real designed page.
+#
+# WARNING: once one of these URLs has been submitted to an affiliate network,
+# never change its path.
+[[redirects]]
+  from = "/privacy"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/story"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/faq"
+  to = "/index.html"
+  status = 200
