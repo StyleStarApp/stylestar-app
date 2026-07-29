@@ -39,10 +39,11 @@ function isAllowed(req) {
   const requestHost = (req.headers.get('host') || '').toLowerCase();
   const allowed = new Set(ALLOWED_HOSTS);
   // Deploy previews get a random *.netlify.app host, so the request's own host
-  // is allowed — but ONLY when it looks like one of ours. style-ai.js trusts
-  // any self-reported host; this function guards personal data, so it doesn't:
-  // otherwise a non-browser client could send Host and Origin both set to its
-  // own domain and walk straight through.
+  // is allowed — but ONLY when it looks like one of ours: otherwise a
+  // non-browser client could send Host and Origin both set to its own domain
+  // and walk straight through. (style-ai.js used to trust any self-reported
+  // host; the same restriction was backported there 2026-07-29, so the two
+  // checks are identical again.)
   if (/(^|\.)netlify\.app$/.test(requestHost)) allowed.add(requestHost);
   const originHost = hostOf(req.headers.get('origin'));
   const refererHost = hostOf(req.headers.get('referer'));
@@ -77,6 +78,51 @@ function rateLimited(req) {
     }
   }
   return hits.length > RATE_MAX;
+}
+
+// --- Restore-link cooldown ----------------------------------------------------
+// At most one restore email per ADDRESS per 5 minutes, however many times the
+// form is submitted and from however many IPs — so nobody can flood one woman's
+// inbox (and our MailerLite group churn) by hammering "Find my results" with
+// her address. Independent of the per-IP limit above, in-memory like it and
+// imperfect for the same acceptable reasons. MailerLite's own once-per-24h
+// automation rule sits behind this as the real backstop.
+const RESTORE_COOLDOWN_MS = 5 * 60 * 1000;
+const restoreSentAt = new Map(); // email -> when we last triggered a send
+function restoreOnCooldown(email) {
+  const last = restoreSentAt.get(email);
+  return !!last && (Date.now() - last) < RESTORE_COOLDOWN_MS;
+}
+function markRestoreSent(email) {
+  restoreSentAt.set(email, Date.now());
+  if (restoreSentAt.size > 5000) {
+    const now = Date.now();
+    for (const [k, t] of restoreSentAt) {
+      if (now - t > RESTORE_COOLDOWN_MS) restoreSentAt.delete(k);
+    }
+  }
+}
+
+// --- Admin credential ---------------------------------------------------------
+// A valid x-admin-secret is stronger proof than an Origin header (anyone can
+// type an Origin into curl; only Cath knows the secret), so it also bypasses
+// the origin check — that is what makes the DELETE usable from a terminal,
+// where there is no Origin at all:
+//
+//   curl -X DELETE -H "x-admin-secret: $ADMIN_SECRET" \
+//     "https://stylestar.app/.netlify/functions/user-data?email=her@example.com"
+//
+// With ADMIN_SECRET unset in Netlify the header is ignored entirely. Both
+// sides are hashed before comparing so the comparison is constant-time
+// (timingSafeEqual needs equal-length inputs, and checking the length first
+// would itself leak).
+function isAdminReq(req) {
+  const secret = process.env.ADMIN_SECRET;
+  const given = req.headers.get('x-admin-secret');
+  if (!secret || !given) return false;
+  const a = crypto.createHash('sha256').update(String(given)).digest();
+  const b = crypto.createHash('sha256').update(String(secret)).digest();
+  return crypto.timingSafeEqual(a, b);
 }
 
 // --- Opaque restore token ---------------------------------------------------
@@ -239,6 +285,10 @@ async function addToMailerLite(email, name, token) {
 async function sendRestoreLink(email) {
   const apiKey = process.env.MAILERLITE_API_KEY;
   if (!apiKey) return; // not configured — skip quietly
+  // One email per address per 5 minutes, marked BEFORE the send so two
+  // simultaneous requests can't both slip past the check.
+  if (restoreOnCooldown(email)) return;
+  markRestoreSent(email);
   const token = makeToken(email);
   if (!token) return;
   try {
@@ -278,8 +328,13 @@ export default async (req) => {
     return new Response('', { status: 200, headers });
   }
 
-  // Door check: must look like it came from our own site.
-  if (!isAllowed(req)) {
+  // Door check: must look like it came from our own site. One exception: an
+  // admin DELETE proves itself with the secret instead of an Origin header, so
+  // Cath can action a deletion request from a plain terminal (see isAdminReq
+  // for the exact curl command). DELETE only — the secret is a deletion
+  // credential, not a master key to the rest of the API.
+  const isAdmin = req.method === 'DELETE' && isAdminReq(req);
+  if (!isAllowed(req) && !isAdmin) {
     return new Response(JSON.stringify({ error: 'Forbidden' }), { status: 403, headers });
   }
 
@@ -400,13 +455,28 @@ export default async (req) => {
       // given woman uses Style Star, which is its own privacy leak.
       if (!tokenParam) {
         const key = String(emailParam).toLowerCase().trim();
+        // ⚠️ Constant-time on purpose. The BODY is identical either way, but
+        // the MailerLite round-trips only happen when the account exists —
+        // roughly 380ms vs 60ms — which quietly answers "does she use Style
+        // Star?" for anyone with a stopwatch. So both outcomes wait out the
+        // same floor before responding. Deliberately NOT fire-and-forget: a
+        // Netlify function can be frozen the moment its response returns, so
+        // an un-awaited send would sometimes silently never happen — breaking
+        // the restore email to hide a side-channel. The floor covers a normal
+        // send with room to spare; only an unusually slow MailerLite call can
+        // still peek past it, an accepted tail.
+        const EMAIL_RESPONSE_FLOOR_MS = 1200;
+        const started = Date.now();
         try {
           const look = await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key) + '&select=email', {
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
           });
           const rows = await look.json();
+          // sendRestoreLink itself enforces the per-address cooldown.
           if (rows && rows.length > 0) await sendRestoreLink(key);
         } catch (e) {}
+        const wait = EMAIL_RESPONSE_FLOOR_MS - (Date.now() - started);
+        if (wait > 0) await new Promise(r => setTimeout(r, wait));
         return new Response(JSON.stringify({ success: true, sent: true }), { status: 200, headers });
       }
 
@@ -443,8 +513,7 @@ export default async (req) => {
     // delete anyone.
     if (req.method === 'DELETE') {
       const q = new URL(req.url).searchParams;
-      const adminSecret = process.env.ADMIN_SECRET;
-      const isAdmin = !!adminSecret && req.headers.get('x-admin-secret') === adminSecret;
+      // isAdmin was decided at the door check above (constant-time compare).
 
       let key = '';
       if (isAdmin && q.get('email')) {

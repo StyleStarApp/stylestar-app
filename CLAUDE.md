@@ -9,6 +9,50 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (updated 2026-07-29)
 
+### ⭐ 0-new. ✅ THE SECOND COWORK BRIEF SHIPPED (2026-07-29, evening) — 8 follow-ups, two commits
+Cath pasted a second Cowork brief (7 numbered as "seven", actually 8 items). **Every claim was verified against
+the real code before building, and all 8 were accurate.** Two commits on `claude/claude-md-cowork-message-k0ve4c`:
+security first, then product.
+- 🔒 **COMMIT 1 (security):** (1) **The GET-by-email lookup is constant-time now** — both outcomes wait out the
+  same 1200ms floor. ⚠️ **The brief asked for fire-and-forget and that was deliberately NOT done:** a Netlify
+  function can be frozen the moment its response returns, so an un-awaited `sendRestoreLink()` would sometimes
+  silently never send — breaking the restore email to hide a side-channel. The floor closes the stopwatch instead;
+  only an unusually slow MailerLite call can peek past it (accepted tail). ▶ **Visible consequence: "Find my
+  results" now takes ~1.2s to confirm.** That is the security feature working, not a slow bug. (2) **Cath can
+  action a deletion from a terminal**: a valid `x-admin-secret` bypasses the origin check for DELETE only
+  (constant-time compare; the exact curl command is in a comment above `isAdminReq()`). (3) **Restore links have
+  a 5-min per-ADDRESS cooldown** (lives inside `sendRestoreLink`, marked before the send so concurrent requests
+  can't double-send; MailerLite's 24h rule remains the backstop). (4) ⚠️ **The "one deliberate difference" from
+  0a below is GONE**: the `*.netlify.app` host restriction is backported into `style-ai.js`, closing the
+  free-Claude-proxy hole on Cath's API key. Deploy previews verified still working.
+- **COMMIT 2 (product):** (5) **`startQ()` now resets `cur=0`** — leaving the quiz mid-way (browser Back, a
+  footer link) and restarting used to show question 1 while writing answers to the wrong slots and jumping ahead;
+  a scrambled-archetype bug that was live. (6) **`colorsSkip` is REMOVED — Cath's explicit call** (asked: wire a
+  dislike tap state vs delete; she chose delete). Nothing could ever populate it, so every prompt promising
+  "colors she skips" was a false claim to the model. The `.hate` CSS, the field, the prompt line and SEVEN prompt
+  phrases are gone (one hid in the wantlist prompt with different wording, one in the chat prompt — **grep for
+  the CONCEPT, not one phrasing**). A colors-to-avoid feature can return later as a considered design. (7)
+  **`filterNeverWear()` is the never-wear GUARANTEE**: prompts said the rule was absolute but nothing checked
+  what came back; now anything matching her never-wear chips, pattern chips, or comma-separated hard-no phrases
+  is dropped before rendering, on **all five surfaces** (genOutfits, shopMyStyle, _shopStyleGen, _wardrobeIdeaGen,
+  _renderShop). Chips match plural↔singular; free text matches per comma phrase, never word-by-word ("no crop
+  tops" must not kill every top). ⚠️ **The brief also asked to "request a replacement" for dropped items — NOT
+  built**, deliberately: a second AI round-trip per violation for a rare case, and the "Show me different options"
+  refresh already covers it. She just sees 5 cards instead of 6. Revisit only if violations turn out common. (8)
+  **Plausible custom events**: Quiz Started (`retake:true` on retakes) / Quiz Question (number) / Quiz Completed /
+  Preferences Saved (fires when step 5 completes) / Photo Analyzed (`partial` flag) / **Product Click** — the last
+  via ONE delegated listener on external links (retailer = link domain, surface = screen id), so every current
+  and future shopping surface is covered without per-card wiring. **No event ever carries her answers, name, or
+  email** — a test asserts it.
+- **Verified: `sec.js` grew 55→89 checks** (constant-time within 150ms measured with MailerLite latency stubbed
+  in, cooldown across a patched clock, terminal-curl admin cases, secret does NOT open GET, style-ai forged-host
+  cases), **new `followups.js` 37 checks** in real Chromium (the quiz restart bug driven end to end, the filter
+  on the real render paths, every event asserted), and **e2e 29 + copy 41 still green** (copy matters — prompts
+  were edited).
+- ▶ **Two things for Cath to know:** the ~1.2s "Find my results" confirm above, and **Plausible now has custom
+  events** — her dashboard (plausible.io) will start showing quiz funnel + which retailers get clicked from
+  which screens. Nothing to configure; events appear as they happen.
+
 ### ⭐ 0a. 🔒 `user-data.js` IS LOCKED DOWN (2026-07-29). Read before touching saving or restoring.
 Cath brought two briefs back from a Cowork conversation — a security review of `user-data.js` and a privacy-copy
 rewrite. **Both were accurate, checked line by line against the real code.** The security one was urgent and is
@@ -34,6 +78,8 @@ now done; the copy one is the natural next piece of work.
   left a hole: a non-browser client can set `Host` **and** `Origin` to its own domain and walk through.
   `user-data` now allows a self-host **only when it matches `*.netlify.app`**. **The test caught this, not
   review** — the first run "passed" the cross-origin check for the wrong reason. Previews still work (tested).
+  ▶ **UPDATE, later 2026-07-29: the difference is GONE** — the restriction was backported into `style-ai.js`
+  (see 0-new above), so the two checks are identical again. Keep them that way.
 - ⚠️ **THE ORIGIN CHECK IS A SPEED BUMP, NOT AUTHENTICATION.** `Origin` and `Referer` are trivially forged. It
   sits **in front of** the token checks, never instead of them. Don't ever let it be the only guard.
 - ▶ **THE ONE REAL BEHAVIOUR CHANGE, tell Cath if she notices it:** typing an email into "Find my results" no
