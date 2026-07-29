@@ -78,17 +78,39 @@ now done; the copy one is the natural next piece of work.
      welcome email we sent you"* — true today. The moment her automation is live it should become *"we've just
      sent you a link."* **Deliberately not written yet**, on the same principle as Amazon's required sentence
      and the Anthropic training claim: never publish a promise that isn't true yet.
-2. **The privacy-copy rewrite (the second Cowork brief) — NOT YET APPLIED.** Seven find-and-replace pairs plus
-   a sub-processor section. It is good work and the diagnosis is fair: the copy says *"never stored on our
-   servers"*, *"it never touches our servers"*, *"no person at Style Star ever has access"* and *"your details
-   are private (no one sees them)"* — and none of those survive contact with Supabase, MailerLite, Netlify
-   Forms and a chat history that really does sit in `localStorage.ss_chat`. ⚠️ **Two cautions when applying it:**
-   its **line numbers have drifted** (it cites 2450 for `.chat-privacy`, which is really 2547) so **match on
-   text, never on line number**; and its claim that the AI provider doesn't train on user data **must be checked
-   against Anthropic's current terms before publishing**, not assumed. Its sub-processor list is otherwise
-   correct — Plausible, Netlify Forms, Supabase, MailerLite and Anthropic are all genuinely in use.
-   Also worth doing while in there: the **CCPA section** and a **real deletion path** (a `DELETE` handler that
-   removes the Supabase row and unsubscribes from MailerLite), both already flagged in this file.
+2. ✅ **The privacy-copy rewrite (the second Cowork brief) — APPLIED, plus CCPA and a real deletion path.**
+   The diagnosis was fair and every claim checked out: the copy said *"never stored on our servers"*, *"it never
+   touches our servers"*, *"no person at Style Star ever has access"* and *"your details are private (no one
+   sees them)"* — and none of those survived contact with Supabase, MailerLite, Netlify Forms and a chat
+   history that really does sit in `localStorage.ss_chat`. All seven replacements are in.
+   - ⚠️ **ITS LINE NUMBERS HAD DRIFTED** (it cited 2450 for `.chat-privacy`, really 2547). **Matched on text.**
+     Any future brief from a Cowork conversation should be assumed to have drifted the same way.
+   - ✅ **THE ONE CLAIM IT ASKED US TO CHECK IS TRUE.** Anthropic's commercial terms say *"Anthropic may not
+     train models on Customer Content from Services."* So the FAQ can honestly say her photos and chats are not
+     used to train the AI. **Verified, not assumed** — the brief was right to flag it.
+   - **Its sub-processor list was correct** and is now named in the policy: Anthropic, Supabase, MailerLite,
+     Netlify, Plausible (confirmed live at `index.html` line 26).
+   - ⚠️ **THE EM DASHES WERE CONVERTED TO COMMAS.** The brief's copy is full of them and the house style is no
+     dashes anywhere. Watch for this on every pasted-in draft.
+   - ✅ **Added a California / CCPA section** — and the honest version is *stronger* than boilerplate, because
+     "we do not sell personal information, and we never have, so there is nothing to opt out of" is a real
+     promise rather than a checkbox.
+   - ✅ **DELETION IS NOW A MECHANISM, NOT A PROMISE.** A `DELETE` handler removes the Supabase row **and** the
+     MailerLite subscriber in one call. Two ways in: **her own restore token** (self-service, ready for a button
+     whenever we add one) or an **`x-admin-secret` header** matching a new **`ADMIN_SECRET` Netlify env var**,
+     so Cath can action an emailed request without touching two dashboards. **Never by bare email** — that
+     would let anyone delete anyone. ▶ **Cath has to set `ADMIN_SECRET` in Netlify** for the admin route to do
+     anything; with the variable unset the header is simply ignored (tested).
+   - ▶ **STILL OPEN, deliberately:** there is **no in-app delete button yet**. The policy's promise ("email us")
+     is now backed by one call instead of manual work, which is what the brief asked for. A self-service
+     control is a small follow-up, but it is new UI on a sensitive action and **Cath should see it rendered
+     before it ships**.
+   - **Verified by `scratchpad/copy.js`, 41 checks** in a real Chromium: every retired promise is gone from the
+     whole file, each new section actually *renders and is visible* on the right screen, the policy text is in
+     the **raw served HTML** (a reviewer's bot runs no JS), no mojibake, no overflow at 360px, zero JS errors.
+     ⚠️ **The preferences line is built at runtime by `renderPrefSizes()`**, so a plain `querySelector` finds
+     nothing — the test renders it into a scratch node. An empty string quietly passed the "no longer says…"
+     check before that was fixed, which is the classic false-negative shape.
 
 ### ⭐ 0. ✅ MY WISHLIST IS BUILT (2026-07-29). Read this before touching either list.
 Cath asked for the saved list and it shipped this session, together with the naming and iconography work it

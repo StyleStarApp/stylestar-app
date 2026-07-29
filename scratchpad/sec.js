@@ -34,6 +34,7 @@ globalThis.fetch = async (url, opts = {}) => {
       DB.set(email, JSON.parse(JSON.parse(opts.body).data));
       return new Response('', { status: 204 });
     }
+    if (method === 'DELETE') { DB.delete(email); return new Response('', { status: 204 }); }
     if (method === 'POST') {
       const b = JSON.parse(opts.body);
       DB.set(b.email, JSON.parse(b.data));
@@ -253,10 +254,42 @@ ok('an unknown address sends no email at all', mlCalls.length === 0, mlCalls.joi
 ok('…and still returns the identical 200', res.status === 200);
 delete process.env.MAILERLITE_API_KEY;
 
-console.log('\n10. Shape checks');
+// ---------------------------------------------------------------------------
+console.log('\n10. Deletion is a real mechanism, not just a promise');
+DB.set('goodbye@example.com', { userName: 'Jennifer', portrait: 'p' });
+res = await call('DELETE', { query: '?email=goodbye@example.com' });
+ok('a bare email cannot delete anyone', res.status === 401, 'got ' + res.status);
+ok('her record survives that', DB.has('goodbye@example.com'));
+
+const strangerTok = (await body(await call('POST', { body: { email: 'stranger@example.com', data: { userName: 's' } } }))).token;
+res = await call('DELETE', { query: '?token=' + encodeURIComponent(strangerTok) + '&email=goodbye@example.com' });
+ok("another woman's token cannot delete her record", DB.has('goodbye@example.com'));
+
+// Her own link deletes her, in both systems.
+process.env.MAILERLITE_API_KEY = 'fake-ml-key';
+DB.set('goodbye@example.com', { userName: 'Jennifer', portrait: 'p' });
+const hers = forgeToken('goodbye@example.com', Date.now());
+mlCalls = [];
+res = await call('DELETE', { query: '?token=' + encodeURIComponent(hers) });
+ok('her own link deletes her results', res.status === 200 && !DB.has('goodbye@example.com'), 'status ' + res.status);
+ok('and removes her from the email list', mlCalls.some(c => c.startsWith('DELETE /subscribers/')), mlCalls.join(' | '));
+
+// Cath can action an emailed request without touching two dashboards.
+process.env.ADMIN_SECRET = 'admin-pass';
+DB.set('goodbye@example.com', { userName: 'Jennifer', portrait: 'p' });
+res = await call('DELETE', { query: '?email=goodbye@example.com', headers: { ...GOOD, 'x-admin-secret': 'wrong' } });
+ok('a wrong admin secret is refused', res.status === 401 && DB.has('goodbye@example.com'), 'got ' + res.status);
+res = await call('DELETE', { query: '?email=goodbye@example.com', headers: { ...GOOD, 'x-admin-secret': 'admin-pass' } });
+ok('the right admin secret deletes her', res.status === 200 && !DB.has('goodbye@example.com'), 'got ' + res.status);
+delete process.env.ADMIN_SECRET;
+delete process.env.MAILERLITE_API_KEY;
+res = await call('DELETE', { query: '?email=x@y.com', headers: { ...GOOD, 'x-admin-secret': 'admin-pass' } });
+ok('with no ADMIN_SECRET configured, that header does nothing', res.status === 401, 'got ' + res.status);
+
+console.log('\n11. Shape checks');
 res = await call('GET');
 ok('no token and no email → 400', res.status === 400, 'got ' + res.status);
-res = await call('DELETE');
+res = await call('PUT');
 ok('unsupported method → 405', res.status === 405, 'got ' + res.status);
 res = await call('POST', { body: { email: 'x@y.com' } });
 ok('missing data → 400', res.status === 400, 'got ' + res.status);

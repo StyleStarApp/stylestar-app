@@ -410,6 +410,61 @@ export default async (req) => {
       return new Response(JSON.stringify({ success: false, message: 'No results found' }), { status: 404, headers });
     }
 
+    // --- DELETE: honour a deletion request in one call ----------------------
+    // The policy promises we'll remove her information. Doing that by hand
+    // across Supabase and MailerLite is the kind of promise that quietly gets
+    // harder to keep, so it's a mechanism instead.
+    //
+    // Two ways in: her own restore token (self-service, ready for a button in
+    // the app), or ADMIN_SECRET so Cath can action an emailed request without
+    // touching two dashboards. Never by bare email — that would let anyone
+    // delete anyone.
+    if (req.method === 'DELETE') {
+      const q = new URL(req.url).searchParams;
+      const adminSecret = process.env.ADMIN_SECRET;
+      const isAdmin = !!adminSecret && req.headers.get('x-admin-secret') === adminSecret;
+
+      let key = '';
+      if (isAdmin && q.get('email')) {
+        key = String(q.get('email')).toLowerCase().trim();
+      } else {
+        const decoded = q.get('token') ? readToken(q.get('token')) : null;
+        if (!decoded) {
+          return new Response(JSON.stringify({ error: 'Invalid or expired link' }), { status: 401, headers });
+        }
+        key = String(decoded).toLowerCase().trim();
+      }
+
+      // 1) Remove her saved results.
+      try {
+        await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
+          method: 'DELETE',
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+        });
+      } catch (e) {}
+
+      // 2) Remove her from the email list (best effort — a MailerLite hiccup
+      //    must not make the request look like it failed when the results,
+      //    which are the sensitive part, are already gone).
+      let mailRemoved = false;
+      try {
+        const apiKey = process.env.MAILERLITE_API_KEY;
+        if (apiKey) {
+          const look = await fetch(ML_BASE + '/subscribers/' + encodeURIComponent(key), { headers: mlHeaders(apiKey) });
+          if (look.ok) {
+            const json = await look.json();
+            const subId = json && json.data && json.data.id;
+            if (subId) {
+              const del = await fetch(ML_BASE + '/subscribers/' + subId, { method: 'DELETE', headers: mlHeaders(apiKey) });
+              mailRemoved = del.ok;
+            }
+          }
+        }
+      } catch (e) {}
+
+      return new Response(JSON.stringify({ success: true, mailRemoved }), { status: 200, headers });
+    }
+
     return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
   } catch (err) {
     return new Response(JSON.stringify({ error: 'Server error', detail: err.message }), { status: 500, headers });
