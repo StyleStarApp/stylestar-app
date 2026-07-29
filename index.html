@@ -539,8 +539,6 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .color-dot{width:44px;height:44px;border-radius:50%;border:2px solid #eee;cursor:pointer;transition:all 0.2s;position:relative}
 .color-dot.love{width:54px;height:54px;border:2px solid #eee}
 .color-dot.love::after{content:"✓";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:22px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.7),0 0 8px rgba(0,0,0,0.3)}
-.color-dot.hate{opacity:0.3}
-.color-dot.hate::after{content:"✕";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:18px;font-weight:700;text-shadow:0 0 3px rgba(0,0,0,0.5)}
 .color-name{font-size:9px;text-align:center;color:#777;margin-top:2px}
 .color-item{display:flex;flex-direction:column;align-items:center;gap:2px}
 .color-dot[data-name="Metallics"]{}
@@ -3034,7 +3032,28 @@ const archLines={
 };
 let answers=new Array(12).fill(6),cur=0,userName="",topArchNames=[],userMotto='',quizTaken=false,emailDone=false,quizOrigin='s-wel';
 try{if(localStorage.getItem('ss_emailDone')==='true')emailDone=true}catch(e){}
-function startQ(){var a=document.querySelector('.scr.act');quizOrigin=(a&&a.id&&a.id!=='s-quiz')?a.id:'s-wel';userName=(userName&&userName!=='You')?userName:'You';show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
+// ---- Analytics (Plausible custom events) -----------------------------------
+// Anonymous product analytics: an event name plus tiny non-personal props (a
+// question number, a retailer domain, a screen id). Never her answers, name,
+// email, or anything she typed. The queue shim in <head> means plausible()
+// always exists, even if the script is still loading or blocked.
+function track(name,props){try{window.plausible&&plausible(name,props?{props:props}:undefined)}catch(e){}}
+// Outbound product clicks: ONE delegated listener instead of wiring every
+// surface by hand (shop cards, Complete the Look, the Edit, the Mall, the
+// chat's linkified store names) — so any future surface is covered
+// automatically. Retailer = the link's domain; surface = the screen she is on.
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest&&e.target.closest('a[href^="http"]');
+  if(!a)return;
+  var host='';try{host=new URL(a.href).hostname.replace(/^www\./,'').toLowerCase()}catch(err){return}
+  if(!host||host==='stylestar.app'||host.endsWith('.stylestar.app'))return; // our own pages
+  var scr=document.querySelector('.scr.act');
+  track('Product Click',{retailer:host,surface:(scr&&scr.id)||'unknown'});
+});
+// cur=0 matters: backing out of the quiz mid-way (browser Back, a footer link)
+// leaves cur where she stopped, and loadQ(0) shows question 1 without touching
+// it — so a restart would write answers to the wrong slots and jump ahead.
+function startQ(){var a=document.querySelector('.scr.act');quizOrigin=(a&&a.id&&a.id!=='s-quiz')?a.id:'s-wel';userName=(userName&&userName!=='You')?userName:'You';cur=0;track('Quiz Started');show('s-quiz');document.getElementById('pw').style.display='block';loadQ(0)}
 // Retake the quiz: jump straight to question 1 with a fresh set of sliders.
 // Keeps her saved name (warmth) and leaves her saved data untouched until she
 // finishes — so abandoning mid-retake never loses her existing results.
@@ -3043,6 +3062,7 @@ function retakeQuiz(){
   try{var d=JSON.parse(localStorage.getItem('ss_data'));if(d&&d.userName)userName=d.userName}catch(e){}
   answers=new Array(12).fill(6);
   cur=0;
+  track('Quiz Started',{retake:true});
   show('s-quiz');
   document.getElementById('pw').style.display='block';
   loadQ(0);
@@ -3179,12 +3199,12 @@ history.replaceState({screen:document.querySelector('.scr.act')?document.querySe
 function loadQ(i){const q=questions[i];document.getElementById('qc').textContent=q.cat;document.getElementById('qt').textContent=q.title;document.getElementById('ll').textContent=q.left;document.getElementById('lr').textContent=q.right;document.getElementById('sl').value=answers[i];updHint(answers[i],i);document.getElementById('pf').style.width=Math.round((i/12)*100)+'%';document.getElementById('pl').textContent=(i+1)+' of 12';document.getElementById('nb').textContent=i===11?'See my style portrait':'Continue'}
 function onSl(v){answers[cur]=parseInt(v);updHint(v,cur)}
 function updHint(v,i){document.getElementById('sh').textContent=questions[i].hints[parseInt(v)-1]}
-function nextQ(){answers[cur]=parseInt(document.getElementById('sl').value);if(cur<11){cur++;loadQ(cur)}else{genResult()}}
+function nextQ(){answers[cur]=parseInt(document.getElementById('sl').value);track('Quiz Question',{question:cur+1});if(cur<11){cur++;loadQ(cur)}else{genResult()}}
 function prevQ(){if(cur>0){cur--;loadQ(cur)}else{show(quizOrigin);document.getElementById('pw').style.display='none'}}
 function dist(a,b){return Math.sqrt(a.reduce((s,v,i)=>s+(v-b[i])**2,0))}
 function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)}));scored.sort((a,b)=>a.d-b.d);return scored.slice(0,3)}
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;const delay=(1.7+i*0.05).toFixed(2);c.innerHTML+=`<div class="sig-row"><div class="sig-cat">${q.cat}</div><div class="sig-track"><span class="sig-dot" style="--x:${pct}%;animation-delay:${delay}s"></span><span class="sig-end l">${q.left}</span><span class="sig-end r">${q.right}</span></div></div>`})}
-async function genResult(){_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=JSON.parse(txt.replace(/^```json?\s*/i,'').replace(/\s*```\s*$/,''));if(j&&j.portrait){ptxt=j.portrait;motto=j.motto||''}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
+async function genResult(){track('Quiz Completed');_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=JSON.parse(txt.replace(/^```json?\s*/i,'').replace(/\s*```\s*$/,''));if(j&&j.portrait){ptxt=j.portrait;motto=j.motto||''}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment, and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 // Put a results screen into its "loading" state: closed mirror doors with the
@@ -3599,7 +3619,7 @@ function _renderTips(tips){
 }
 function _renderShop(items){
   const c=document.getElementById('pShopList');
-  c.innerHTML=(items||[]).map(it=>{
+  c.innerHTML=filterNeverWear(items).map(it=>{
     const url=getStoreUrl(it.store,it.name,it.search);
     const emoji=photoShopEmoji[it.category]||'✨';
     const why=it.why?' &middot; '+_esc(it.why):'';
@@ -3636,7 +3656,7 @@ VOICE, generous honesty (be direct):
 GUARDRAILS, never break these:
 - Never comment negatively on her body or her age, and never reference her size or age. Never use "hide," "conceal," "disguise," or "camouflage." Use "flatter," "balance," "lengthen," "highlight."
 - Make each shop "name" specific enough to search for.
-- Match suggestions to her preferences, and NEVER suggest anything on her never-wear list, in colors she avoids, or that she listed as a hard no. Honor her exact words. This rule is absolute.
+- Match suggestions to her preferences, and NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.
 - If there are multiple people, style only the main woman.
 
 Respond with ONLY valid JSON in this exact format, no other text:
@@ -3651,6 +3671,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     const raw=d.content.map(c=>c.text||'').join('');
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
+    track('Photo Analyzed',{partial:!!parsed.partial});
     if(parsed.partial){
       document.getElementById('prn').textContent=userName&&userName!=="You"?userName+", let's try another photo!":"Let's try another photo!";
       document.getElementById('pOcc').textContent='';
@@ -4111,7 +4132,7 @@ For each item provide:
 ${_shopRules()}
 RULES:
 - Match every suggestion to her specific slider positions
-- NEVER suggest items on her never-wear list or in colors she skips
+- NEVER suggest items on her never-wear list
 - If she has color preferences, prioritize those colors
 - Include a mix of categories across the 6 items
 - Include a range of price points
@@ -4130,7 +4151,7 @@ Respond with ONLY valid JSON:
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
     let html='<div class="shop-grid">';
-    parsed.items.forEach(item=>{
+    filterNeverWear(parsed.items).forEach(item=>{
       html+=_shopCard(item,'<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
     });
     html+='</div>';
@@ -4162,7 +4183,7 @@ async function shopMyStyle(){
     sub='Ideas in the vibe of the look you shared';
   }
   var subEl=document.getElementById('shopSubPhoto');if(subEl)subEl.textContent=sub;
-  var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n${_shopRules()}\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute and overrides every other suggestion.\n- Prioritize her color preferences\n- Mix categories and price points across the 6 items\n- Be very specific in "name", not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}`;
+  var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n${_shopRules()}\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute and overrides every other suggestion.\n- Prioritize her color preferences\n- Mix categories and price points across the 6 items\n- Be very specific in "name", not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}`;
   var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
     var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:400,messages:[{role:"user",content:prompt}]})});
@@ -4172,7 +4193,7 @@ async function shopMyStyle(){
     var raw=d.content.map(c=>c.text||'').join('');
     var parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
     var html='<div class="shop-grid">';
-    parsed.items.forEach(function(item){
+    filterNeverWear(parsed.items).forEach(function(item){
       html+=_shopCard(item,'<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
     });
     html+='</div><div class="shop-refresh"><button class="shop-refresh-btn" onclick="shopMyStyle()">&#8635; Show me different picks</button></div>';
@@ -4383,7 +4404,10 @@ let prefReturnScreen='s-res';
 // opens the portrait from Welcome Back). Empty = no back button (e.g. fresh quiz).
 let resBackScreen='';
 function resBack(){showBack(resBackScreen||'s-wb')}
-let prefs={sizes:{},colorsLove:[],colorsSkip:[],neverWear:[],neverPatterns:[],neverOther:'',jewelry:'',dailyShoes:'',bagStyle:'',otherNotes:''};
+// (colorsSkip was removed 2026-07-29: nothing could ever populate it — the UI
+// only offers "love" — so it silently promised the AI coverage that never
+// existed. A colors-to-avoid feature can come back later as a considered design.)
+let prefs={sizes:{},colorsLove:[],neverWear:[],neverPatterns:[],neverOther:'',jewelry:'',dailyShoes:'',bagStyle:'',otherNotes:''};
 
 const prefColors=[
 {n:'White',c:'#ffffff'},{n:'Ivory',c:'#FFFFF0'},{n:'Tan',c:'#D2B48C'},{n:'Khaki',c:'#BDB291'},{n:'Brown',c:'#6B4226'},{n:'Black',c:'#1a1a1a'},{n:'Charcoal',c:'#5C5C5C'},{n:'Gray',c:'#B8B8B8'},
@@ -4479,10 +4503,10 @@ async function _shopStyleGen(){
   if(_shopStyleMode==='wantlist'){
     var wl=(_wantListNames||[]);if(wl.length>16){_wlTrunc=wl.length-16;wl=wl.slice(0,16);}
     maxTok=1400;
-    prompt='You are Catherine, a personal stylist. This woman has a wardrobe list. For EACH item on her list, suggest ONE specific shoppable piece she would genuinely love that fits her style.\n\n'+basis+'\n\nHer list:\n'+wl.map(function(w,i){return (i+1)+'. '+w}).join('\n')+'\n\nFor each list item provide:\n- want: the exact list item text it is for\n'+_shopRules()+'\nRULES:\n- Give exactly one pick per list item, in the same order\n- NEVER suggest anything on her never-wear list, in colors she skips, or a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice dress" but "Emerald Linen Midi Wrap Dress"\n\nRespond with ONLY valid JSON:\n{"items":[{"want":"List item","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. This woman has a wardrobe list. For EACH item on her list, suggest ONE specific shoppable piece she would genuinely love that fits her style.\n\n'+basis+'\n\nHer list:\n'+wl.map(function(w,i){return (i+1)+'. '+w}).join('\n')+'\n\nFor each list item provide:\n- want: the exact list item text it is for\n'+_shopRules()+'\nRULES:\n- Give exactly one pick per list item, in the same order\n- NEVER suggest anything on her never-wear list or a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice dress" but "Emerald Linen Midi Wrap Dress"\n\nRespond with ONLY valid JSON:\n{"items":[{"want":"List item","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Mix categories and price points across the 6 items\n- Be very specific in "name", not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Mix categories and price points across the 6 items\n- Be very specific in "name", not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }
   var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
@@ -4491,7 +4515,7 @@ async function _shopStyleGen(){
     var d=await r.json();if(!d.content)throw 0;
     var parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
     var html='<div class="shop-grid">';
-    parsed.items.forEach(function(item){
+    filterNeverWear(parsed.items).forEach(function(item){
       var top=(_shopStyleMode==='wantlist')?('<div class="shop-want-for">'+_esc(item.want||'')+'</div>'):('<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
       html+=_shopCard(item,top);
     });
@@ -4850,7 +4874,7 @@ function renderPref(){
 function nextPref(){
   savePrefStep();
   if(prefStep<4){prefStep++;renderPref();window.scrollTo(0,0)}
-  else{savePrefs();showPrefDone()}
+  else{savePrefs();track('Preferences Saved');showPrefDone()}
 }
 function prevPref(){
   savePrefStep();
@@ -4928,7 +4952,7 @@ function renderPrefColors(c){
     const style=isGrad?`background:${col.c}`:`background:${col.c}`;
     const border=(col.n==='White'||col.n==='Ivory'||col.n==='Pale Yellow'||col.n==='Khaki'||col.n==='Mint')?'border-color:#ddd':'';
     const loveClass=prefs.colorsLove.includes(col.n)?'love':'';
-    loveH+=`<div class="color-item"><div class="color-dot ${loveClass}" data-name="${col.n}" style="${style};${border}" onclick="toggleColor(this,'love')"></div><div class="color-name">${col.n}</div></div>`;
+    loveH+=`<div class="color-item"><div class="color-dot ${loveClass}" data-name="${col.n}" style="${style};${border}" onclick="toggleColor(this)"></div><div class="color-name">${col.n}</div></div>`;
   });
   c.innerHTML=`
     <div class="pref-title">My Colors</div>
@@ -4937,11 +4961,7 @@ function renderPrefColors(c){
   `;
 }
 
-function toggleColor(el,type){
-  if(type==='love'){el.classList.remove('hate')}
-  if(type==='hate'){el.classList.remove('love')}
-  el.classList.toggle(type);
-}
+function toggleColor(el){el.classList.toggle('love')}
 
 function renderPrefNever(c){
   function chips(arr,cls,saved){
@@ -5009,6 +5029,24 @@ function _fitSizes(){
   }
   return prefs.sizes.fit||[];
 }
+// The prompts tell the model her never-wear list is ABSOLUTE, but a rule the
+// model follows is not a guarantee — nothing ever checked what actually came
+// back. This is the guarantee: anything that slips through is dropped before
+// it can render. Chip text is matched (plural or singular) against the item's
+// name and search words; her free-text hard no's are matched per
+// comma-separated phrase, never word by word — "no crop tops please" must not
+// quietly kill every top in the app.
+function filterNeverWear(items){
+  if(!Array.isArray(items))return[];
+  const terms=(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
+    .concat(String(prefs.neverOther||'').split(',').map(t=>t.replace(/^\s*(no|never|not)\s+/i,'')))
+    .map(t=>String(t).toLowerCase().trim()).filter(t=>t.length>2);
+  if(!terms.length)return items;
+  return items.filter(it=>{
+    const hay=((it.name||'')+' '+(it.search||'')).toLowerCase();
+    return !terms.some(t=>hay.includes(t)||(t.endsWith('s')&&hay.includes(t.slice(0,-1))));
+  });
+}
 function getPrefsForPrompt(){
   const p=prefs;
   let lines=[];
@@ -5020,7 +5058,6 @@ function getPrefsForPrompt(){
   if(_fit.length)lines.push('She usually shops: '+_fit.join(', '));
   if(p.sizes.width&&p.sizes.width.length)lines.push('Shoe width (shoes only): '+p.sizes.width.join(', '));
   if(p.colorsLove.length)lines.push('Colors she loves: '+p.colorsLove.join(', '));
-  if(p.colorsSkip.length)lines.push('Colors to avoid: '+p.colorsSkip.join(', '));
   if(p.neverWear.length)lines.push('Never wear: '+p.neverWear.join(', '));
   if(p.neverPatterns.length)lines.push('Patterns to avoid: '+p.neverPatterns.join(', '));
   if(p.neverOther)lines.push('HARD NO, never suggest these (her exact words): '+p.neverOther);
@@ -5647,14 +5684,14 @@ async function _wardrobeIdeaGen(id,boxId){
   if(!name)return;
   box.innerHTML='<div class="wdr-loading"><svg class="wdr-load-star" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E6C24E" stroke="#b8bcc2" stroke-width="0.6"/></svg><div class="wdr-load-txt">Finding ideas for &ldquo;'+_esc(name)+'&rdquo;&hellip;</div></div>';
   const basis=(Array.isArray(answers)&&answers.length===12&&topArchNames.length)?('Her style: '+topArchNames.join(', ')+'.'):'';
-  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice jacket" but "Cropped Tan Suede Moto Jacket"\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
+  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice jacket" but "Cropped Tan Suede Moto Jacket"\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
     let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div><div class="shop-grid hscroll">';
-    parsed.items.forEach(function(item){
+    filterNeverWear(parsed.items).forEach(function(item){
       html+=_shopCard(item);
     });
     html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
@@ -6359,7 +6396,7 @@ HOW TO RESPOND:\n- Never use any dashes or hyphens as punctuation. Use commas or
 - 1-3 sentences for simple questions. One short paragraph max for complex styling advice.
 - Be specific. Name exact items, colors, and stores. "A white linen button-down from Madewell" not "maybe try a nice top."
 - Format shopping suggestions as "item from StoreName" so they become clickable links.
-- NEVER recommend anything she listed as a never-wear, a color she avoids, or a hard no she never wants suggested. Honor her exact words. This is absolute.
+- NEVER recommend anything she listed as a never-wear or a hard no she never wants suggested. Honor her exact words. This is absolute.
 - Upbeat and confident, but not over-the-top. No gushing.
 - Use her name sparingly.
 - NEVER use the word "profile."
