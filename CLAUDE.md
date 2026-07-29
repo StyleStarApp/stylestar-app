@@ -100,6 +100,44 @@ now done; the copy one is the natural next piece of work.
    - **The email body lives in a "Standard hero" block**, whose slots are fixed (heading → text → button). The
      button cannot be dragged and there is no typing below it. The sign-off goes in the block's
      **"Additional text"** toggle, which is the slot underneath the button.
+   - ✅ **Picking an existing email as the design COPIES it, it does not move it.** Cath's welcome automation was
+     untouched afterwards: still Active, still triggered by *Style Star Signups*, **25 completed**. Checked
+     because it was the obvious thing to fear, and it was unfounded.
+
+### ⭐ 0b-ii. ⚠️ NEVER TEST A SIGNUP EMAIL WITH A PREVIOUSLY USED ADDRESS (learned the hard way 2026-07-29)
+Cath tested a fresh save with an address she had used in June and then deleted. **The restore email arrived; the
+welcome email did not.** Half an hour went into suspecting the code and the welcome automation. Both were fine.
+- ▶ **THE CAUSE: MailerLite's delete is a SOFT delete.** Her save did not create a subscriber, it **restored**
+  the June one, *with its group memberships intact*. Her activity log showed `Subscriber was restored` and **no**
+  `Added to group Style Star Signups` event — because she was already in that group from June 23.
+- **The welcome automation fires on JOINING the group.** No join, no trigger, no email. Exactly the same trap
+  that `sendRestoreLink()` engineers around by leaving the group before rejoining. **The welcome flow must NOT
+  copy that trick** — re-welcoming an existing subscriber is wrong; this is correct behaviour, not a bug.
+- ▶ **HOW TO TEST PROPERLY: use a `+` alias** (`cathellspermann+test2@gmail.com`). MailerLite treats it as a
+  brand-new subscriber and it still lands in her normal inbox. **A deleted address is not a fresh address.**
+- ▶ **THE DIAGNOSTIC THAT SOLVED IT, reuse it:** the subscriber's **Activity log** in MailerLite is a timestamped
+  history of every group join, send, open and delete. It answered in seconds what code reading could not.
+- ✅ **THEN PROVEN CLEAN: Cath re-tested with a truly fresh `+` alias and BOTH emails arrived** (welcome on save,
+  restore on request). The whole email system is verified end to end with no asterisks.
+
+### ▶ THE RESTORE FORM STANDS DOWN AFTER SENDING (2026-07-29, Cath's design catch)
+Cath, testing on her phone: the big black **FIND MY RESULTS** button looked *"too big/too harsh"* sitting above
+the quiet "check your email" note — and she asked whether it should disappear once tapped. **She was right, and
+it shipped:** after a successful send, the whole ask (helper line + email field + button) hides and only the
+confirmation text remains, with a **"Typed the wrong address? Try a different email"** link that restores the
+cleared form (never a dead end — and it matters, because the wrong-address case is real: the message claims a
+send that never happened). `showRestore()` always reopens in the asking state via `restoreAskAgain()`.
+- **The principle, worth reusing:** once a form has done its job, its call to action should stand down — a loud
+  button above a quiet confirmation is the loudest thing on screen at the moment it means least.
+- ⚠️ **TEST LESSON (again the false-negative shape):** the first visibility assertion PASSED for the wrong
+  reason — the e2e test had never called `showRestore()`, so `#restoreForm` was `display:none` and everything
+  inside reported hidden. Only the *"brings the form back"* sibling check exposed it. **Assert visibility only
+  after driving the UI the way she actually reaches it.**
+- **`scratchpad/shot.js`** renders labelled before/after comparisons of this form (skip the `.hm-entrance`
+  overlay first — it covers screenshots for ~2s). Suite is now e2e 29 checks.
+- ⚠️ **AND THE REAL LESSON ABOUT TEST DATA:** the whole confusion came from testing with a *nearly* clean
+  address. Almost-clean state is worse than obviously dirty state, because it fails in a way that looks like a
+  code bug. **Assume nothing about an address you have used before, even once, even months ago.**
 
 ### ⭐ 0b-i. ▶ THE "there" PLACEHOLDER — leave it, but the overwrite bug is FIXED (2026-07-29)
 When a woman never gives her first name, `user-data.js` writes the literal word **`there`** into her MailerLite

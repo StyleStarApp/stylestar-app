@@ -1927,9 +1927,11 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="hm-help">Prefer to shop first? <b onclick="showShop()">Browse the Mall &rarr;</b></div>
     </div>
     <div id="restoreForm" style="display:none">
-      <div style="font:400 11.5px/1.5 'Jost',sans-serif;color:#6b655a;margin-bottom:8px">Enter the email you saved with and we'll bring your style portrait back.</div>
-      <input type="email" class="stay-input" id="restoreEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')restoreResults()">
-      <button class="btn-p" style="margin-top:8px;max-width:280px" onclick="restoreResults()">Find my results</button>
+      <div id="restoreAsk">
+        <div style="font:400 11.5px/1.5 'Jost',sans-serif;color:#6b655a;margin-bottom:8px">Enter the email you saved with and we'll bring your style portrait back.</div>
+        <input type="email" class="stay-input" id="restoreEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')restoreResults()">
+        <button class="btn-p" style="margin-top:8px;max-width:280px" onclick="restoreResults()">Find my results</button>
+      </div>
       <div id="restoreMsg" style="font-size:12px;color:#777;margin-top:8px"></div>
     </div>
 
@@ -4286,7 +4288,8 @@ function saveUserDataPhoto(){doStay(document.getElementById('stayInputPhoto').va
 function showRestore(){
   document.getElementById('restoreSection').style.display='none';
   document.getElementById('restoreForm').style.display='block';
-  document.getElementById('restoreEmail').focus();
+  // Always open on the asking state, even if she used this earlier in the visit.
+  restoreAskAgain();
 }
 
 async function restoreResults(){
@@ -4302,7 +4305,21 @@ async function restoreResults(){
   try{
     await fetch('/.netlify/functions/user-data?email='+encodeURIComponent(email));
   }catch(e){}
-  document.getElementById('restoreMsg').innerHTML="Check your email &mdash; we've just sent you a link back to your results. Tap the button in it and you'll land right back in your Style Portrait. It's in your original welcome email too, if that's quicker to find.<br><br>Nothing there? You may not have saved your results yet. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take our fun style quiz</span>?";
+  // Her email is on its way, so the form has done its job. Stand it down: a big
+  // black button shouting FIND MY RESULTS above the quiet "check your email"
+  // note is the loudest thing on screen at the moment it means least.
+  var ask=document.getElementById('restoreAsk');
+  if(ask)ask.style.display='none';
+  document.getElementById('restoreMsg').innerHTML="Check your email &mdash; we've just sent you a link back to your results. Tap the button in it and you'll land right back in your Style Portrait. It's in your original welcome email too, if that's quicker to find.<br><br>Typed the wrong address? <span onclick=\"restoreAskAgain()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">Try a different email</span>.<br><br>Nothing there? You may not have saved your results yet. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take our fun style quiz</span>?";
+}
+// Bring the form back for a woman who mistyped her address. Never a dead end.
+function restoreAskAgain(){
+  var ask=document.getElementById('restoreAsk');
+  if(ask)ask.style.display='';
+  var msg=document.getElementById('restoreMsg');
+  if(msg)msg.innerHTML='';
+  var input=document.getElementById('restoreEmail');
+  if(input){input.value='';input.focus()}
 }
 
 let chatHistory=[];
