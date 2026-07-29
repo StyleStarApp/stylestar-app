@@ -729,8 +729,28 @@ not only in the privacy policy.
   6. `.chat-disclosure` in the **stylist chat** (the linkifier turns store names in her answers into links,
      so this screen needs one too) — added
   The Edit and the Mall keep their own longer *"nothing here is chosen by AI"* version. **Leave those alone.**
-- **One wording everywhere:** *"Some links may earn us a small commission, at no extra cost to you."* A test
-  asserts all six copies are byte-identical, so she never sees two different promises about the same thing.
+- **One wording everywhere:** *"Some links may earn us a commission."* A test asserts all six copies are
+  byte-identical, so she never sees two different promises about the same thing.
+- ⚠️ **SHORTENED THE SAME DAY, and the measurement is the interesting part.** Cath saw it live and said the
+  two-line version felt *"a little cringe... I don't like reminding our user so much about the commissions"*,
+  and asked whether it could fit on one line without going too small. **Shrinking could never have worked:**
+  measured with the real DM Sans embedded, the old wording was **380px wide** while the tightest container (the
+  Wardrobe Ideas carousel) is only **240–266px**. Even at 11px it was 334px. **The font was never the lever;
+  the words were.** ▶ **Generalises: before offering to shrink something to fit, measure whether shrinking can
+  possibly close the gap.**
+- **▶ THE CLAUSE THAT WAS DOING THE DAMAGE: "at no extra cost to you."** 25 of the old 67 characters, and it is
+  **not legally required** — it is convention. It was also the apologetic part, the sentence protesting slightly
+  too much. Cutting it fixed the wrap AND the tone at once; nothing about compliance was traded away. The
+  fuller, warmer version still lives in the **Privacy Policy, the FAQ, the Terms, the Edit and the Mall**, where
+  there is room for it. **Those five keep their own longer wording — do not "unify" them with this one.**
+- **Cath chose the plainest of three measured candidates** (she was shown all three rendered in the real
+  carousel at her own phone width). Her pick reads most like a quiet footnote precisely because it explains
+  least. Verified one line on **all six surfaces at both 390px and 360px** (`scratchpad/fitcheck.js`) — 360px
+  matters because that is where Display Zoom users land, and one candidate passed at 390 and failed at 360.
+- ▶ **STILL OPEN, flagged for her not fixed: FREQUENCY, not wording.** In Your Wardrobe the notice appears under
+  **every** carousel she opens, so opening five items shows it five times. That is arguably the real "reminding
+  her so much" problem. Left alone deliberately: keeping the disclosure next to the links is the safe reading of
+  the FTC rule, and thinning it out is a judgment call that is hers to make, not one to make quietly.
 - ⚠️ **A DISCLOSURE THAT CANNOT BE READ IS NOT A DISCLOSURE.** The chat line was first styled `#9a9a9a` at
   10.5px, one notch quieter than the privacy line above it — which **measured 2.5:1 contrast and failed.** That
   instinct (a legal notice should be the quietest thing on screen) is exactly backwards, and it matters double
