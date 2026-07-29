@@ -128,6 +128,29 @@ the store audit.
   still does not see real inventory. Saving a link that lands badly is worse than not saving it, so **her
   homework item 6 — the quality gate — is now the highest-value thing she can do**, more so than before.
 
+### ⭐ 0c. ▶ CATH ASKED TO PARK THIS AS A TOPIC TO COVER (2026-07-29) — a CONVERSATION, not a build
+**Her words:** *"I feel like I need to get more clear on what the AI searches and affiliate links can and can't
+do with suggesting shoppable items."* She asked for this to go on the list explicitly so it is not lost.
+**Treat it as a session of its own** — she wants to UNDERSTAND the landscape before deciding what to build, and
+that is exactly the right instinct: the decision that follows it (feeds? filters? neither yet?) is expensive.
+⚠️ **Do not turn this into a build proposal when it comes up.** Explain, answer her questions, and let her
+choose. The full detail is in **"WHAT AFFILIATE APPROVAL WILL AND WILL NOT CHANGE"** below; this is the summary
+she asked to keep, in the framing she found clear:
+1. **Getting approved gets you TAGS.** A day's work, and it makes every existing click earn money — **but a
+   search link stays a search link.**
+2. **PRODUCT FEEDS are the thing she is actually describing**, and they are a real build: ingesting catalogs,
+   matching them to what the stylist wants to suggest, keeping them fresh. **They are also the prize** — feeds
+   carry size and stock, so the app could honestly say **"in your size"** again, which had to be removed from
+   four places (2026-07-27) because a store search cannot filter.
+3. **A cheaper middle step:** many retailers accept **filters in the search URL**, so we could send
+   `blush sandals, size 8, under $150` instead of just `blush sandals`. Not a specific product, but much
+   closer — and it uses **the same address-bar method she used for the store audit**, so she already knows how
+   to do the research and it needs no approvals from anyone.
+▶ **Useful framing for that conversation:** today the ONLY exact items in the app are **her own Edit picks**
+(17 real product links she chose). Everything the AI suggests is a well-judged guess turned into a search. So
+the honest question for her is not "how do we make the AI exact" but **"how much of the app should be her
+curation, and how much should be search — and is option 3 enough to close the gap for the search half?"**
+
 ### 1. Cath's three access items — SHE ASKED FOR THESE FIRST, they make everything else faster
 1. **MailerLite (the one that unblocks real work).** Before the email session, Cath checks whether her plan
    (paid 2026-07-21, $205.20/yr, up to 1,000 subscribers) supports **transactional or automation sends**. That
