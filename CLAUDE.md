@@ -804,6 +804,48 @@ and some pages need Back buttons to escape. **She was right, and it measures wor
   comparison is made, remember the two rendering lessons: **id-scope the mockup CSS** (`#vA .foot`, not `.v
   .foot`) and prove the variants differ with `console.table` first, and **one tall labelled image beats N crops**.
 
+### ▶ CATH'S PARKED QUESTIONS (raised 2026-07-29, answered in chat, nothing built yet)
+She wrote these down so they would not be lost. **Do not treat any of them as approved work** — they are
+questions she wanted understood, plus one feature idea she likes. Resurface when the money path unblocks.
+- **1. "Will the shopping change completely once we wire in affiliate links?"** ▶ The answer she was given, and
+  the distinction is the important part, because **three separate things were being conflated**:
+  **(a) affiliate TAGS** — appending her tracking id to the links that already exist. A day's work, changes
+  nothing about how items are chosen, just makes the same click earn. **(b) PRODUCT-LEVEL links** — landing on
+  a specific product page instead of a store search. Needs product feeds from the networks; a real build.
+  **(c) the AI actually SEEING real inventory** — ⚠️ **it does not today, and she did not know that.** Right
+  now the model invents a well-judged item name from its training knowledge ("Blush Strappy Block-Heel
+  Sandals"), picks a store it believes carries that kind of thing, and `getStoreUrl()` runs a SEARCH for it.
+  Nothing checks that the item exists, is in stock, or is in her size. **That is exactly why her homework item
+  6, the quality gate, is the highest-value thing she can do** — only she can judge whether the search term was
+  the right one. Approval alone does NOT fix this; product feeds are what fix it.
+  - **Partial approvals degrade gracefully:** approved stores get tagged links, unapproved ones stay plain
+    search links. Same experience, some earn and some do not.
+  - ⚠️ **A DECISION SHE WILL FACE, flag it before it arrives:** whether to prefer an approved store when two are
+    equally good. The standing rule (2026-07-27) is that commission data stays OUT of the app so picks are never
+    biased by what pays best. Preferring an approved store as a TIE-BREAK is defensible; letting it outrank fit
+    is not. **Her call, and it should be a deliberate one, not a drift.**
+  - ▶ **THE PRIZE NOBODY HAS NAMED YET: product feeds would let the app honestly say "in your size" again.**
+    That promise was removed from four places on 2026-07-27 because a store search cannot filter size. Real
+    feeds carry size and stock, so the feature could come back for real. Worth remembering when she weighs
+    whether feeds are worth the effort.
+  - **A cheaper middle step than full feeds:** many retailers accept size/colour FILTERS in the search URL, so
+    `getStoreUrl` could build a filtered search rather than a bare one. Much less work than ingesting catalogs,
+    and lands her closer. Needs per-store research, same address-bar method as the URL audit.
+- **2. "Can she save items she wants to buy later — a Style Star cart or faves list?"** ▶ She likes this and it
+  is a genuinely good idea. **Most of the machinery already exists:** `wardrobeData` already persists hearts to
+  localStorage AND Supabase, so a saved-items list is an extension, not a new system. **The gap is what gets
+  saved:** the Wardrobe hearts save CATEGORIES ("White tops"), whereas she is describing saving a SPECIFIC
+  suggestion — the actual card, item name + store + link. So: a save control on `_shopCard`, a new list, a
+  screen to see it.
+  ▶ **Why this is the strongest feature idea on the board: it connects three things already on the roadmap** —
+  the long-parked **"Email me my wishlist"**, the planned **email capture on the Wardrobe page** (a high-intent
+  moment), and **product images** at money-path step 7. It is also the natural reason for a woman to COME BACK,
+  which is the one thing the app currently has no mechanism for.
+- **3. She asked for other ideas.** ⚠️ **Deliberately given only a few, and told plainly that the honest answer
+  is she does not need more ideas — she needs users.** Per her own stated growth edge (perfectionism as a
+  hiding place, many directions at once), the useful move is to protect the one-lever-at-a-time discipline.
+  **If she builds one more thing before testers, it should be the saved list.**
+
 ### ▶ CONTENT TO-DO (Cath, 2026-07-26 — she wants these, resurface each session)
 - **📝 Add MORE items to What's Trending.** Cath explicitly wants to keep growing this list. Working pattern:
   Claude drafts candidate names + one-line blurbs in her voice (dash-free), Cath approves/cuts/rewrites — she is
