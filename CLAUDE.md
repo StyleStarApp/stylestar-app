@@ -7,7 +7,32 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-07-28)
+## ▶ NEXT SESSION — START HERE (updated 2026-07-29)
+
+### ⭐ 0. CATH HAS CHOSEN THE NEXT BUILD: THE SAVED LIST. Start here unless she says otherwise.
+Her words, 2026-07-29: **"I def want to build the save thing."** This is the one feature she picked after being
+told plainly that she does not need more ideas, she needs users — so treat it as a deliberate choice, not a
+drift, and **build it rather than re-opening the question.**
+- **What she asked for:** a woman taps "Shop my style", sees something she wants but is not ready to buy, and
+  saves it to a Style Star list to come back to. Her framing: *"a saved cart or list of faves or links she
+  wants to revisit later."*
+- **Most of the machinery exists.** `wardrobeData` already persists to localStorage AND Supabase, so a saved
+  list is an extension of a working system, not a new one. **The gap is WHAT gets saved:** Wardrobe hearts save
+  CATEGORIES ("White tops"); she wants the SPECIFIC card — item name + store + link (+ the search term, so the
+  link can be rebuilt).
+- **Roughly:** a save control on `_shopCard` (it is the one shared card behind all four AI shopping surfaces,
+  so one change covers them all) → a new list on `wardrobeData` → a screen to see it → an entry point from
+  Welcome Back / the Build hub.
+- ⚠️ **Design questions to put to her BEFORE building, not after:** what the list is called in her voice (not
+  "cart" — she is not a shop); whether a saved item shows the store or just the piece; what happens when she
+  has saved nothing yet; and whether saving is the moment to ask for her email (**it is the highest-intent
+  moment in the app**, and email capture on this screen is already on the roadmap).
+- ▶ **Why this one is worth doing before testers:** it is **the only mechanism in the app that gives a woman a
+  reason to come back**, which is also the only thing worth measuring once testers arrive. It also unblocks the
+  long-parked **"Email me my wishlist"** and lands next to **product images** at money-path step 7.
+- ⚠️ **A saved item is only as good as the search behind it** (see her parked question 1 below — the AI does not
+  see real inventory). Saving a link that lands badly is worse than not saving it, so **her homework item 6, the
+  quality gate, gets MORE important the moment this ships**, not less. Say so when it comes up.
 
 ### 1. Cath's three access items — SHE ASKED FOR THESE FIRST, they make everything else faster
 1. **MailerLite (the one that unblocks real work).** Before the email session, Cath checks whether her plan
@@ -156,8 +181,10 @@ permanent. Even if a chat window disappears, the work does **not**.
 3. Choose the **stylestar-app** repo/project.
 4. Paste this **restart phrase**:
 
-   > _Continue my Style Star project. Read CLAUDE.md and tell me where we left off.
-   > We're working on branch `claude/festive-ptolemy-U8Xlb`._
+   > _Continue my Style Star project. Read CLAUDE.md and tell me where we left off._
+
+   (No branch name needed — each session gets its own, and Claude reads the current state from
+   `main`. Naming an old branch here only ever caused confusion.)
 
 5. Claude reads this file automatically, resurfaces the roadmap, and you pick up exactly
    where you stopped.
@@ -174,8 +201,9 @@ because it's saved on GitHub.
 
 ### Quick reference
 - **Code & history:** github.com/StyleStarApp/stylestar-app
-- **Working branch:** `claude/festive-ptolemy-U8Xlb`
-- **Live site:** served by Netlify (auto-deploys from `main`)
+- **Working branch:** a fresh `claude/...` branch each session; everything real lives on `main`
+- **Live site:** served by Netlify (auto-deploys from `main`) — **stylestar.app**
+- **Legal pages (for affiliate application forms):** stylestar.app/privacy · /terms · /story · /faq
 - **Emails / user data:** Supabase (stores data) + MailerLite (sends email)
 
 ### ▶ DECISION (2026-06-28): affiliate applications ON HOLD until LLC + EIN + business bank
