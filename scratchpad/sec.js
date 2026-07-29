@@ -14,10 +14,18 @@ const ML = 'https://connect.mailerlite.com/api';
 const ML_SUBS = new Map(); // email -> the name currently on her subscriber record
 let mlCalls = [];
 
+// The timing tests give MailerLite realistic latency so a real send takes
+// real time; everywhere else the stub answers instantly.
+let ML_DELAY = 0;
+
 const realFetch = globalThis.fetch;
 globalThis.fetch = async (url, opts = {}) => {
   const u = String(url);
+  if (u.startsWith('https://api.anthropic.com')) {
+    return new Response(JSON.stringify({ content: [{ type: 'text', text: 'stubbed' }] }), { status: 200 });
+  }
   if (u.startsWith('https://connect.mailerlite.com')) {
+    if (ML_DELAY) await new Promise(r => setTimeout(r, ML_DELAY));
     const method = (opts.method || 'GET').toUpperCase();
     mlCalls.push(method + ' ' + u.replace(ML, '') + (opts.body ? ' ' + opts.body : ''));
     if (u.includes('/groups?')) return new Response(JSON.stringify({ data: [{ id: 'g-signups', name: 'Style Star Signups' }] }), { status: 200 });
@@ -249,11 +257,26 @@ ok('she is removed from it FIRST, so a repeat request re-triggers',
 ok('the signups group is never touched (no re-sent welcome email)',
    !mlCalls.some(c => c.includes('g-signups')), mlCalls.join(' | '));
 
-// Asking twice must send twice — that's the whole point of the leave/rejoin.
+// Asking again IMMEDIATELY must send nothing — one email per address per five
+// minutes, however many IPs the asks come from, so one inbox can't be flooded.
+mlCalls = [];
+res = await call('GET', { query: '?email=new@example.com' });
+ok('a second ask inside 5 minutes sends nothing', mlCalls.length === 0, mlCalls.join(' | '));
+ok('…and still returns the identical 200', res.status === 200 &&
+   JSON.stringify(await body(res)) === JSON.stringify({ success: true, sent: true }));
+
+// After the window she can ask again — and the leave/rejoin still re-triggers
+// the automation (asking on different days must send on different days).
+const _realNow = Date.now;
+Date.now = () => _realNow() + 6 * 60 * 1000;
 mlCalls = [];
 await call('GET', { query: '?email=new@example.com' });
-ok('asking a second time joins the group again',
+Date.now = _realNow;
+const join2 = mlCalls.findIndex(c => c === 'POST /subscribers/sub-1/groups/g-restore');
+const leave2 = mlCalls.findIndex(c => c === 'DELETE /subscribers/sub-1/groups/g-restore');
+ok('after the cooldown she can ask again (a fresh send happens)',
    mlCalls.filter(c => c === 'POST /subscribers/sub-1/groups/g-restore').length === 1, mlCalls.join(' | '));
+ok('and she is still removed from the group first', leave2 !== -1 && leave2 < join2, mlCalls.join(' | '));
 
 // An address with no account must trigger NOTHING — otherwise a stranger could
 // use this to mail a woman, and the timing would leak who has an account.
@@ -261,6 +284,28 @@ mlCalls = [];
 res = await call('GET', { query: '?email=nobody@example.com' });
 ok('an unknown address sends no email at all', mlCalls.length === 0, mlCalls.join(' | '));
 ok('…and still returns the identical 200', res.status === 200);
+
+// ---------------------------------------------------------------------------
+console.log('\n9b. The email lookup takes the same TIME whether the account exists');
+// The bodies were already identical; this closes the stopwatch. MailerLite
+// gets 200ms of latency per call here so the exists-path really is doing slow
+// work, and both paths must still come back together (at the response floor).
+ML_DELAY = 200;
+await call('POST', { body: { email: 'clock@example.com', data: PROFILE } });
+mlCalls = [];
+let t0 = Date.now();
+res = await call('GET', { query: '?email=clock@example.com' });
+const existsMs = Date.now() - t0;
+ok('the slow path really ran (a send actually happened)',
+   mlCalls.some(c => c === 'POST /subscribers/sub-1/groups/g-restore'), mlCalls.join(' | '));
+t0 = Date.now();
+res = await call('GET', { query: '?email=ghost@example.com' });
+const unknownMs = Date.now() - t0;
+ok('existing vs unknown within 150ms (' + existsMs + 'ms vs ' + unknownMs + 'ms)',
+   Math.abs(existsMs - unknownMs) <= 150);
+ok('neither returns before the floor', existsMs >= 1150 && unknownMs >= 1150,
+   existsMs + 'ms / ' + unknownMs + 'ms');
+ML_DELAY = 0;
 delete process.env.MAILERLITE_API_KEY;
 
 // ---------------------------------------------------------------------------
@@ -291,6 +336,17 @@ res = await call('DELETE', { query: '?email=goodbye@example.com', headers: { ...
 ok('a wrong admin secret is refused', res.status === 401 && DB.has('goodbye@example.com'), 'got ' + res.status);
 res = await call('DELETE', { query: '?email=goodbye@example.com', headers: { ...GOOD, 'x-admin-secret': 'admin-pass' } });
 ok('the right admin secret deletes her', res.status === 200 && !DB.has('goodbye@example.com'), 'got ' + res.status);
+
+// From a terminal there is no Origin or Referer at all — the secret must be
+// enough on its own for DELETE, and ONLY for DELETE.
+DB.set('goodbye@example.com', { userName: 'Jennifer', portrait: 'p' });
+res = await call('DELETE', { query: '?email=goodbye@example.com', headers: { host: 'www.stylestar.app', 'x-admin-secret': 'admin-pass' } });
+ok('curl with the secret and no Origin works', res.status === 200 && !DB.has('goodbye@example.com'), 'got ' + res.status);
+DB.set('goodbye@example.com', { userName: 'Jennifer', portrait: 'p' });
+res = await call('DELETE', { query: '?email=goodbye@example.com', headers: { host: 'www.stylestar.app', 'x-admin-secret': 'wrong' } });
+ok('curl with a wrong secret is refused at the door', res.status === 403 && DB.has('goodbye@example.com'), 'got ' + res.status);
+res = await call('GET', { query: '?email=goodbye@example.com', headers: { host: 'www.stylestar.app', 'x-admin-secret': 'admin-pass' } });
+ok('the secret does NOT open GET (deletion credential, not a master key)', res.status === 403, 'got ' + res.status);
 delete process.env.ADMIN_SECRET;
 delete process.env.MAILERLITE_API_KEY;
 res = await call('DELETE', { query: '?email=x@y.com', headers: { ...GOOD, 'x-admin-secret': 'admin-pass' } });
@@ -347,6 +403,36 @@ res = await call('PUT');
 ok('unsupported method → 405', res.status === 405, 'got ' + res.status);
 res = await call('POST', { body: { email: 'x@y.com' } });
 ok('missing data → 400', res.status === 400, 'got ' + res.status);
+
+// ---------------------------------------------------------------------------
+console.log('\n13. style-ai.js: the forged-Host hole is closed (2026-07-29 backport)');
+process.env.ANTHROPIC_API_KEY = 'fake-anthropic-key';
+const { default: styleAi } = await import('../netlify/functions/style-ai.js');
+function aiCall(h) {
+  const req = new Request('https://www.stylestar.app/.netlify/functions/style-ai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...h },
+    body: JSON.stringify({ messages: [{ role: 'user', content: 'hi' }] })
+  });
+  const clientIp = '10.9.9.' + (++ipSeq);
+  const orig = req.headers.get.bind(req.headers);
+  req.headers.get = (k) => {
+    const lk = k.toLowerCase();
+    if (lk === 'host') return h.host || '';
+    if (lk === 'x-nf-client-connection-ip') return clientIp;
+    return orig(k);
+  };
+  return styleAi(req);
+}
+res = await aiCall({ origin: 'https://evil.com', referer: 'https://evil.com/', host: 'evil.com' });
+ok('forged Host + Origin (the free-Claude-proxy case) → 403', res.status === 403, 'got ' + res.status);
+res = await aiCall({ origin: 'https://netlify.app.evil.com', referer: 'https://netlify.app.evil.com/', host: 'netlify.app.evil.com' });
+ok('netlify.app lookalike domain → 403', res.status === 403, 'got ' + res.status);
+res = await aiCall({ origin: 'https://deploy-preview-42--stylestar.netlify.app', referer: 'https://deploy-preview-42--stylestar.netlify.app/', host: 'deploy-preview-42--stylestar.netlify.app' });
+ok('a real deploy preview still works', res.status === 200, 'got ' + res.status);
+res = await aiCall(GOOD);
+ok('the live site still works', res.status === 200, 'got ' + res.status);
+delete process.env.ANTHROPIC_API_KEY;
 
 console.log('\n' + (fail ? '✗ ' + fail + ' FAILED, ' : '✓ ') + pass + ' passed');
 process.exit(fail ? 1 : 0);

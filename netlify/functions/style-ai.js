@@ -1,5 +1,5 @@
-// Hosts allowed to use this function. The request's own host is always allowed
-// too, so Netlify deploy previews (random-name.netlify.app) keep working.
+// Hosts allowed to use this function. The request's own host is allowed too
+// when it is a *.netlify.app one, so deploy previews keep working.
 const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
 
 // Hard ceiling on response size so no single request can be made expensive.
@@ -54,7 +54,14 @@ function hostOf(value) {
 // abuse without affecting any real visitor.
 function isAllowed(req) {
   const requestHost = (req.headers.get('host') || '').toLowerCase();
-  const allowed = new Set([...ALLOWED_HOSTS, requestHost].filter(Boolean));
+  const allowed = new Set(ALLOWED_HOSTS);
+  // Deploy previews get a random *.netlify.app host, so the request's own host
+  // is allowed — but ONLY when it looks like one of ours. Trusting ANY
+  // self-reported host (as this function did until 2026-07-29) let a
+  // non-browser client set Host and Origin both to its own domain and use this
+  // function as a free Claude proxy on Cath's API key. Backported from
+  // user-data.js; the two checks are identical again.
+  if (/(^|\.)netlify\.app$/.test(requestHost)) allowed.add(requestHost);
   const originHost = hostOf(req.headers.get('origin'));
   const refererHost = hostOf(req.headers.get('referer'));
 
