@@ -9,30 +9,75 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (updated 2026-07-29)
 
-### ⭐ 0. CATH HAS CHOSEN THE NEXT BUILD: THE SAVED LIST. Start here unless she says otherwise.
-Her words, 2026-07-29: **"I def want to build the save thing."** This is the one feature she picked after being
-told plainly that she does not need more ideas, she needs users — so treat it as a deliberate choice, not a
-drift, and **build it rather than re-opening the question.**
-- **What she asked for:** a woman taps "Shop my style", sees something she wants but is not ready to buy, and
-  saves it to a Style Star list to come back to. Her framing: *"a saved cart or list of faves or links she
-  wants to revisit later."*
-- **Most of the machinery exists.** `wardrobeData` already persists to localStorage AND Supabase, so a saved
-  list is an extension of a working system, not a new one. **The gap is WHAT gets saved:** Wardrobe hearts save
-  CATEGORIES ("White tops"); she wants the SPECIFIC card — item name + store + link (+ the search term, so the
-  link can be rebuilt).
-- **Roughly:** a save control on `_shopCard` (it is the one shared card behind all four AI shopping surfaces,
-  so one change covers them all) → a new list on `wardrobeData` → a screen to see it → an entry point from
-  Welcome Back / the Build hub.
-- ⚠️ **Design questions to put to her BEFORE building, not after:** what the list is called in her voice (not
-  "cart" — she is not a shop); whether a saved item shows the store or just the piece; what happens when she
-  has saved nothing yet; and whether saving is the moment to ask for her email (**it is the highest-intent
-  moment in the app**, and email capture on this screen is already on the roadmap).
-- ▶ **Why this one is worth doing before testers:** it is **the only mechanism in the app that gives a woman a
-  reason to come back**, which is also the only thing worth measuring once testers arrive. It also unblocks the
-  long-parked **"Email me my wishlist"** and lands next to **product images** at money-path step 7.
-- ⚠️ **A saved item is only as good as the search behind it** (see her parked question 1 below — the AI does not
-  see real inventory). Saving a link that lands badly is worse than not saving it, so **her homework item 6, the
-  quality gate, gets MORE important the moment this ships**, not less. Say so when it comes up.
+### ⭐ 0. ✅ MY WISHLIST IS BUILT (2026-07-29). Read this before touching either list.
+Cath asked for the saved list and it shipped this session, together with the naming and iconography work it
+forced. **The headline: Style Star now has TWO lists and they must never be conflated again.**
+
+| | **My List** (inside Your Wardrobe) | **My Wishlist** (new screen `s-wishlist`) |
+|---|---|---|
+| Holds | CATEGORIES — "White tops", "The perfect leather jacket" | SPECIFIC pieces — name + store + link |
+| Mark | ⭐ **gold STAR** (`.wdr-star` / `_wdrStar()`) | ♥ **pink HEART** (`.wl-save` / `_wlSaveBtn()`) |
+| Question it answers | "What's missing from my closet?" | "What did I see that I want to buy?" |
+| Lifespan | durable, never expires | transient — she buys it or drops it |
+
+- ▶ **THE NAMING CALL WAS CATH'S AND THE REASONING IS WORTH KEEPING.** She proposed "My Wishlist" for the new
+  feature and "My shopping list" for the checklist. **Her first half was right and shipped; the second half was
+  talked her out of, with her agreement.** Two reasons: (1) "shopping list" and "wishlist" are near-synonyms, so
+  naming two things that way does none of the distinguishing work she wanted; (2) it fights the **brand framing
+  rule** below — the 100 items are a possibility MAP, and "shopping list" is the most requirement-flavoured name
+  available, which is exactly the framing that lands as a bill to a woman on a budget.
+- ▶ **AND THE CHECKLIST DID NOT NEED RENAMING AT ALL** — the surprise of the session. The page was already
+  titled *Your Wardrobe* and the tab already said *My List*. **Neither ever said "wishlist."** Only ~9 supporting
+  strings did, and they were an ACCIDENT: the list once had a have/want toggle, "have" was dropped, everything
+  left was a "want", and the copy drifted into "wishlist" on its own. So this was correcting a leftover, not
+  renaming a considered thing. **Lesson: before renaming a feature, check whether the feature's actual NAME is
+  wrong or just its supporting copy.**
+- ✅ **Copy scrubbed:** "Shop my whole wishlist" → **"Shop my whole list"** (her wording), plus the count line,
+  the reset warning, the loading messages, the star tooltips, the FAQ, `WISHLIST_MSGS`→`LISTSHOP_MSGS`, the
+  load-bearing comments, and the shop-my-list AI prompt. `grep -i wishlist index.html` now returns only the new
+  feature and one unrelated note about her retailer document.
+- ✅ **Hearts became stars on My List** — Cath's own idea, and it was the right one. The heart is the universal
+  "favourite" mark, so it belongs on the thing that IS favourites. **Cost nothing visually: those hearts were
+  already GOLD** (`#E0B84C`), so only the shape changed, and it is now the app's own star (same path as the
+  Build-hub tag and the Mall fixture). ⚠️ **Cath's decorative PINK heart is untouched** — that is her signature
+  in her own voice ("With love, Catherine ♥") and is not a control. Don't confuse the two.
+- **How the feature is built, and the two decisions that matter most:**
+  1. **It lives on `wardrobeData.wishlist`** so it inherits the working localStorage + Supabase persistence
+     (`buildFullUserData()` already ships `wardrobe` whole). No new storage system was invented.
+  2. ▶ **THE URL IS NEVER STORED — only the store + search term.** `getStoreUrl()` rebuilds it on every render.
+     **This means a store-URL fix silently repairs every already-saved item.** Fourteen store URLs have been
+     fixed so far; storing URLs would have left women with a growing pile of links that were right on the day
+     they tapped. **Keep it this way.**
+- **One change covered all four AI shopping surfaces** (`_shopCard` is shared), plus Complete the Look, which
+  has its own row renderer (`_renderShop`) and needed a second edit. ⚠️ **The stylist chat has NO save control
+  and that is deliberate** — its links are linkified inline in prose, so there is no card to hang one on.
+- ⚠️ **A REAL BUG FOUND WHILE BUILDING, and it would have destroyed data.** `wardrobeData` was only loaded from
+  localStorage inside `openWardrobe()`. So a woman who saved a piece from the results screen *before* ever
+  opening Your Wardrobe would have written the empty default over her whole checklist. **Fixed by loading the
+  record once at boot.** A test asserts saving never clears her stars.
+- **Her four design calls, all honoured:** the empty state explains how saving works and offers a way forward
+  (never a dead end); a saved piece shows **the piece AND the store**; there is a ✕ on every row; and the
+  **email ask lives on the page** — but only once she has actually saved something, so it reads as protecting
+  work she has done rather than a toll on the way in. It never blocks the list.
+- **Discoverability, given the lesson from her mom:** the save control is **LABELLED "Save"**, not a bare icon;
+  a toast confirms the save AND says where it went with a **View** button; and there is a **My Wishlist row in
+  the Shop hub on Welcome Back with a live count pill**.
+- **Verified by `scratchpad/wish.js`, 70 checks, all passing** in a real Chromium driving the real app: star vs
+  heart, all the copy, save/unsave from every surface, the same piece syncing across two cards at once,
+  persistence across a reload, delete, the empty state, the email ask appearing and NOT appearing, disclosure
+  contrast against the real painted background, a malformed record being sanitised, no overflow at 390px and
+  360px, and zero JS errors.
+- ⚠️ **THE DISCLOSURE LIST IS NOW SEVEN, NOT SIX.** My Wishlist shows links, so it carries the same line. **It
+  renders only when the list has items** (nothing to disclose on an empty page). Add it to the edit list for
+  Amazon's required sentence at money-path step 7.
+- ▶ **STILL OPEN on this feature, flagged not built:** (1) **"Email me my wishlist"** is now unblocked and is
+  the natural next step — same MailerLite session as the other email work. (2) My Wishlist should join the
+  **one shared footer** when the nav standardisation happens; it currently reuses the Wardrobe's footer exactly
+  so it adds **zero** new footer variants to the eight that already exist. (3) Product images land here at
+  money-path step 7 and would turn it into a real lookbook.
+- ⚠️ **AND SAY THIS TO CATH WHEN IT COMES UP: a saved link is only as good as the search behind it.** The AI
+  still does not see real inventory. Saving a link that lands badly is worse than not saving it, so **her
+  homework item 6 — the quality gate — is now the highest-value thing she can do**, more so than before.
 
 ### 1. Cath's three access items — SHE ASKED FOR THESE FIRST, they make everything else faster
 1. **MailerLite (the one that unblocks real work).** Before the email session, Cath checks whether her plan

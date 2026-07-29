@@ -141,11 +141,11 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 /* Your Wardrobe: its own identity — black frame + linen-white interior + a
    dashed "stitch" line just inside the edge (distinct from the legal pages'
    gold+silver display case, and from the Edit/chat's black+silver+linen). */
-.ss.wardrobe-mirror{position:relative;border-radius:0;border:8px solid #1a1a1a;
+.ss.wardrobe-mirror,.ss.wishlist-mirror{position:relative;border-radius:0;border:8px solid #1a1a1a;
   background-color:#FBFAF7;
   background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);
   box-shadow:0 8px 44px rgba(0,0,0,.16)}
-.ss.wardrobe-mirror::before{content:"";position:absolute;top:7px;right:7px;bottom:7px;left:7px;border:2px dashed #4a453c;pointer-events:none;z-index:3}
+.ss.wardrobe-mirror::before,.ss.wishlist-mirror::before{content:"";position:absolute;top:7px;right:7px;bottom:7px;left:7px;border:2px dashed #4a453c;pointer-events:none;z-index:3}
 /* ===== Your Wardrobe ===== */
 #s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px;text-align:center}
 #s-wardrobe .wdr-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
@@ -184,6 +184,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    Sits in the flow next to the label rather than floating on a corner. */
 .tr-new{display:none;align-items:center;margin-left:7px;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;flex:0 0 auto}
 .tr-new.on{display:inline-flex}
+/* Saved-count pill beside My Wishlist on Welcome Back. Hidden at zero. */
+.wl-pill{display:none;align-items:center;justify-content:center;min-width:16px;margin-left:7px;padding:2px 5px;border-radius:8px;background:#F49AC1;box-shadow:0 0 0 1.5px #FBFAF7;color:#4a1027;font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.03em;flex:0 0 auto}
+.wl-pill.on{display:inline-flex}
 #s-wardrobe .wdr-pane{display:none}
 #s-wardrobe .wdr-pane.on{display:block}
 /* The list reclaims the dead horizontal padding on both sides (nothing lived to
@@ -288,8 +291,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 /* One positive action per row. The heart sits in a fixed right-hand column so she
    can run her thumb straight down the list. No "have" — owning blue jeans never
    meant she didn't want another pair. */
-#s-wardrobe .wdr-heart{flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-heart svg{width:23px;height:23px;display:block}
+#s-wardrobe .wdr-star{flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-star svg{width:23px;height:23px;display:block}
 #s-wardrobe .wdr-expand{flex-basis:100%;min-width:0;margin:4px 0 0;padding:10px 8px 6px;background:#F4EFE4}
 #s-wardrobe .wdr-expand-lbl{font:600 11px/1.3 'Jost',sans-serif;color:#8a6a1e;margin-bottom:8px}
 #s-wardrobe .wdr-expand-lbl a{color:#8a6a1e;cursor:pointer}
@@ -323,7 +326,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-foot span.st{color:#E6C24E;font-size:11px;margin:0 6px}
 /* Bottom-of-list "What's Trending" horizontal teaser (2nd entry point) */
 /* A real page break before What's Trending, so the secondary offer stops
-   reading as part of the main wishlist CTA. Uses the app's curtain stripe
+   reading as part of the main list CTA. Uses the app's curtain stripe
    (Discover backdrop, Mall awning, the keepsakes) rather than a new device;
    the -3px runs it out to the inner edge of the stitched frame and stops there,
    so the stitch stays unbroken (measured: 3px at every width). */
@@ -604,6 +607,82 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    wrapping to three lines in the 128px Wardrobe cards. */
 .shop-link{display:inline-block;font-size:11px;font-weight:600;color:#fff;background:#1a1a1a;padding:8px 10px;border-radius:20px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;transition:opacity 0.2s}
 .shop-link:hover{opacity:0.85}
+/* ===== "Save" — the control that puts a specific piece on My Wishlist =====
+   ⚠️ A HEART on purpose, and it must stay a different shape from Your Wardrobe's
+   STAR. The star marks a CATEGORY she'd like in her closet ("White tops"); the
+   heart saves a SPECIFIC piece, with the store and a rebuildable link. Two
+   lists, two marks -- don't unify them back into one shape.
+   The control is LABELLED rather than a bare icon: real testing (2026-07-26)
+   showed an unlabelled control reads as decoration to a less app-fluent user. */
+.shop-card-act{display:flex;flex-direction:column;align-items:center;gap:7px}
+.wl-save{display:inline-flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#7d7667;padding:4px 9px;border-radius:999px;border:1px solid transparent;-webkit-tap-highlight-color:transparent;transition:color .18s,border-color .18s,background .18s}
+.wl-save svg{width:14px;height:14px;display:block;flex:0 0 auto}
+.wl-save:hover{color:#54503f}
+.wl-save.on{color:#B4436F;border-color:rgba(180,67,111,.3);background:rgba(244,154,193,.09)}
+/* Complete the Look sits on the dark results screen, so the same control needs
+   its own colours there or it disappears into the board. */
+.res-screen .shoprow .wl-save{padding:4px 6px;color:#6b655a}
+.res-screen .shoprow .wl-save .wl-save-t{display:none}
+.res-screen .shoprow .wl-save.on{color:#B4436F;border-color:transparent;background:none}
+
+/* ===== My Wishlist =====
+   Deliberately the same black-and-stitch "room" frame as Your Wardrobe (one
+   frame language for the whole app, per the restraint principle) -- what makes
+   this room its own is the hearts and the tag, not a second frame invention. */
+#s-wishlist .wl-hearts{display:flex;justify-content:center;gap:8px;margin:0 0 8px}
+#s-wishlist .wl-hearts svg{width:12px;height:12px;fill:#F49AC1;opacity:.9;display:block}
+#s-wishlist .wl-hearts svg:nth-child(even){transform:rotate(11deg)}
+#s-wishlist .wl-hearts svg:nth-child(odd){transform:rotate(-9deg)}
+#s-wishlist .wl-logo{display:block;width:56px;height:56px;margin:0 auto 4px}
+#s-wishlist .wl-head{text-align:center;margin-bottom:4px}
+#s-wishlist .wl-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px}
+#s-wishlist .wl-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
+#s-wishlist .wl-count{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:9px}
+#s-wishlist .wl-lead{font:400 13px/1.55 'Jost',sans-serif;color:#5a554c;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:12px 0 0}
+#s-wishlist .wl-lead b{color:#26221c;font-weight:600}
+/* Once per screen and above every link on it, matching every other surface. */
+#s-wishlist .wl-disclosure{font:italic 400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:13px 0 0}
+#s-wishlist .wl-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:4px 12px 6px;margin-top:14px}
+#s-wishlist .wl-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid #efe9dc}
+#s-wishlist .wl-row:first-child{border-top:0}
+#s-wishlist .wl-mark{flex:0 0 auto;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+#s-wishlist .wl-mark svg{width:18px;height:18px;fill:#F49AC1;display:block;transform:rotate(-8deg)}
+#s-wishlist .wl-b{flex:1;min-width:0}
+#s-wishlist .wl-nm{display:block;font:600 14px/1.35 'Jost',sans-serif;color:#26221c}
+#s-wishlist .wl-st{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8272;margin-top:3px}
+#s-wishlist .wl-go{flex:0 0 auto;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
+#s-wishlist .wl-del{flex:0 0 auto;color:#a8a294;font-size:21px;line-height:1;cursor:pointer;padding:2px 3px;-webkit-tap-highlight-color:transparent}
+#s-wishlist .wl-del:hover{color:#6b655a}
+/* Empty state: never a dead end -- it explains the feature AND offers the way in. */
+#s-wishlist .wl-empty{text-align:center;padding:22px 10px 18px}
+#s-wishlist .wl-empty .we-h{width:40px;height:40px;margin:0 auto 12px}
+#s-wishlist .wl-empty .we-h svg{width:100%;height:100%;display:block;fill:none;stroke:#EBBCD2;stroke-width:1.3}
+#s-wishlist .wl-empty h4{font:400 19px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin:0 0 9px}
+#s-wishlist .wl-empty p{font:400 13.5px/1.62 'Jost',sans-serif;color:#5a554c;margin:0 auto 15px;max-width:300px}
+#s-wishlist .wl-empty p .hi{color:#B4436F;font-weight:600}
+#s-wishlist .wl-empty .we-cta{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;text-decoration:none;cursor:pointer;border:none}
+/* Email capture: the highest-intent moment in the app, so it is offered here --
+   but softly, and never blocking. She can use the whole list without it. */
+#s-wishlist .wl-stay{margin-top:16px;background:#F7F1E1;border:1px solid #e4d9bd;padding:15px 14px 14px;text-align:center}
+#s-wishlist .wl-stay .ws-t{font:400 17px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin-bottom:5px}
+#s-wishlist .wl-stay .ws-s{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 10px;max-width:290px}
+#s-wishlist .wl-stay input{border:1.5px solid #e0d6bc;border-radius:2px;padding:11px 16px;font-size:15px;width:100%;max-width:270px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif;margin-bottom:8px}
+#s-wishlist .wl-stay input:focus{outline:none;border-color:#C8A060}
+#s-wishlist .wl-stay .ws-btn{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;border:none;cursor:pointer}
+#s-wishlist .wl-stay .ws-btn[disabled]{opacity:.6}
+#s-wishlist .wl-stay .ws-msg{font:400 12px/1.5 'Jost',sans-serif;color:#777;margin-top:8px;min-height:1px}
+#s-wishlist .wl-stay .ws-ok{font:400 13px/1.5 'Jost',sans-serif;color:#8a6d20}
+#s-wishlist .wl-foot{text-align:center;margin-top:26px;font:400 14px/1 'Jost',sans-serif;color:#6f6a63}
+#s-wishlist .wl-foot .lnk{cursor:pointer;text-decoration:underline;color:#6f6a63}
+#s-wishlist .wl-foot .st{color:#D9BE72;margin:0 9px;font-size:11px;vertical-align:1px}
+/* "Saved" confirmation toast: tells her the piece landed somewhere AND where
+   that somewhere is, so the list is discoverable from the moment she uses it. */
+.wl-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(14px);z-index:9000;display:flex;align-items:center;gap:9px;background:#1a1a1a;color:#fff;border-radius:999px;padding:11px 8px 11px 16px;box-shadow:0 10px 26px -10px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;max-width:calc(100vw - 32px)}
+.wl-toast.on{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.wl-toast .wt-t{font:500 13px/1.3 'Jost',sans-serif;white-space:nowrap}
+.wl-toast .wt-t svg{width:13px;height:13px;fill:#F49AC1;vertical-align:-2px;margin-right:5px}
+.wl-toast .wt-go{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#1a1a1a;background:#EACD68;border-radius:999px;padding:8px 13px;cursor:pointer;flex:0 0 auto}
+@media(prefers-reduced-motion:reduce){.wl-toast{transition:none}}
 .shop-loading{text-align:center;padding:2rem 0;color:#444;font-size:17.5px;font-weight:500}
 .shop-star-wrap{position:relative;width:86px;height:86px;margin:2px auto 14px}
 .shop-star-main{width:86px;height:86px;display:block;filter:drop-shadow(0 2px 5px rgba(224,174,70,.3));animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
@@ -1781,6 +1860,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <div class="wb-row"><span class="wb-chip" style="background:#EACD68;box-shadow:0 3px 7px -3px rgba(201,154,46,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/></svg></span><span class="wb-lbl"><span class="tt"><b>What&rsquo;s Trending</b><span class="tr-new" id="trendNewWb">New</span><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">What&rsquo;s in right now, picked by Catherine</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
+        <div class="wb-item" wb-lift onclick="openWishlist()">
+          <div class="wb-row"><span class="wb-chip" style="background:#F6C9DC;box-shadow:0 3px 7px -3px rgba(198,118,158,.55)"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.4 C10.8 18 8.5 16.3 6.4 14.2 C4.3 12.1 2.9 10.3 2.9 7.9 C2.9 5.3 4.9 3.4 7.4 3.4 C9.6 3.4 11.3 5.1 12 7.3 C12.7 5.1 14.4 3.4 16.6 3.4 C19.1 3.4 21.1 5.3 21.1 7.9 C21.1 10.3 19.7 12.1 17.6 14.2 C15.5 16.3 13.2 18 12 20.4 Z"/></svg></span><span class="wb-lbl"><span class="tt"><b>My Wishlist</b><span class="wl-pill" data-wl-count></span><svg class="wb-arr" style="color:#4a463e" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub" id="wbWishSub">Pieces you saved to come back to</span></span></div>
+          <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
+        </div>
       </div>
       <div class="wb-retake-wrap"><a class="wb-retake" wb-press onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></a></div>
       <!-- Footer — black text + gold-star separators, kept on the mirror's cream so it stays readable -->
@@ -2665,7 +2748,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="wdr-disclosure">Some links may earn us a commission.</div>
 
   <div class="wdr-pane" data-pane="list">
-    <div class="wdr-howto" id="wdrHowto"><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>heart</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span><span class="hw-brief">Tap the <svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg> to add &middot; tap <b>Ideas</b> to shop</span></div>
+    <div class="wdr-howto" id="wdrHowto"><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>star</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span><span class="hw-brief">Tap the <svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1" stroke-linejoin="round"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg> to add &middot; tap <b>Ideas</b> to shop</span></div>
     <div class="wdr-card">
       <div id="wdrListBody"></div>
       <div class="wdr-add">
@@ -2693,6 +2776,26 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="wdr-top" id="wdrTopBtn" role="button" title="Back to top" onclick="wardrobeToTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M5.5 12 12 5.5 18.5 12"/></svg>Top</div>
 </div>
 
+<!-- My Wishlist — the specific pieces she saved to come back to.
+     ⚠️ This is NOT Your Wardrobe's "My List". My List holds CATEGORIES she'd
+     like to add to her closet ("White tops"), marked with a gold STAR. This
+     holds SPECIFIC pieces with a store and a link, marked with a pink HEART.
+     Two lists, two marks, two names -- keep them distinct in copy and in code.
+     The link is rebuilt from the store + search term on every render rather
+     than stored, so a store-URL fix repairs every saved item automatically. -->
+<div class="scr" id="s-wishlist">
+  <div class="top-back-wrap"><button class="top-back" onclick="closeWishlist()">&larr; Back</button></div>
+  <div class="wl-head">
+    <img src="logo-star.png" alt="Style Star" class="wl-logo">
+    <div class="wl-hearts"><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <div class="wl-title">My Wishlist</div>
+    <div class="wl-count" id="wlCount"></div>
+  </div>
+  <div id="wlBody"></div>
+  <div id="wlStay"></div>
+  <div class="wl-foot"><span class="lnk" onclick="showDream()">Edit</span><span class="st">&#9733;</span><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+</div>
+
 <div class="scr" id="s-faq">
   <div class="story-wrap">
     <div class="faq-head">
@@ -2708,7 +2811,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="faq-item"><div class="faq-q">Is my information private?</div><div class="faq-a">Yes. We use your details only to personalize your styling and save your results, we never sell them, and you can read exactly how we handle everything in our <span class="lnk" onclick="showPrivacy()">Privacy Policy</span> and <span class="lnk" onclick="showTerms()">Terms of Service</span>.</div></div>
       <div class="faq-item"><div class="faq-q">Do I have to take the quiz?</div><div class="faq-a">Not at all. You're welcome to chat with your stylist, analyze a photo, or browse and shop anytime. The quiz helps us understand the nuances of your style so everything feels more personal, but it's completely optional.</div></div>
       <div class="faq-item"><div class="faq-q">What is my Style Portrait?</div><div class="faq-a">Your Style Portrait is a snapshot of your personal style from the quiz. It highlights your natural preferences and becomes the foundation for the guidance, shopping ideas, and advice you'll get throughout the app.</div></div>
-      <div class="faq-item"><div class="faq-q">How does Style Star help me build my wardrobe?</div><div class="faq-a">Style Star includes a list feature, called <i>Your Wardrobe</i>, to help you build a complete, well-rounded closet. I took the same checklist I use in my real closet consultations and turned it into an easy wishlist, so you can tap a heart on anything you&rsquo;d love to add and see at a glance what would round out your closet. Then just tap anything you&rsquo;d like for shopping ideas matched to your style, or peek at <i>What&rsquo;s Trending</i> to see what&rsquo;s fresh right now.</div></div>
+      <div class="faq-item"><div class="faq-q">How does Style Star help me build my wardrobe?</div><div class="faq-a">Style Star includes a list feature, called <i>Your Wardrobe</i>, to help you build a complete, well-rounded closet. I took the same checklist I use in my real closet consultations and turned it into an easy list, so you can tap a star on anything you&rsquo;d love to add and see at a glance what would round out your closet. Then just tap anything you&rsquo;d like for shopping ideas matched to your style, or peek at <i>What&rsquo;s Trending</i> to see what&rsquo;s fresh right now.</div></div>
       <div class="faq-item"><div class="faq-q">Can I share my results?</div><div class="faq-a">Yes, and we'd love that! After the quiz, you'll get two beautiful keepsakes to share: your Style Constellation, a star map of your signature style, and your Style Mood Board, a collage of your style vibe. Text either one to a friend or post it on Instagram. It's a fun way to celebrate your style, and to invite the women you love to discover theirs.</div></div>
       <div class="faq-item"><div class="faq-q">Can I upload a photo for style advice?</div><div class="faq-a">Yes. Share an outfit or a piece you're considering, and your stylist will give you thoughtful feedback to elevate the look while keeping it true to you. Your photo is processed in real time and never stored on our servers.</div></div>
       <div class="faq-item"><div class="faq-q">Can I retake the quiz or change my results?</div><div class="faq-a">Yes, as many times as you want. Your style can evolve, and your results can grow right along with it.</div></div>
@@ -2959,12 +3062,12 @@ function show(id,skipHistory){
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
   var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-chat');
   var gf=document.querySelector('.quiz-footer');
-  if(gf)gf.style.display=(ownChrome||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe')?'none':'';
+  if(gf)gf.style.display=(ownChrome||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -2999,6 +3102,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('pref-mirror',id==='s-pref'||id==='s-pref-done');
   // Same gold+silver display-case frame around Your Wardrobe.
   if(card)card.classList.toggle('wardrobe-mirror',id==='s-wardrobe');
+  // My Wishlist reuses the same black-and-stitch room frame -- one frame language.
+  if(card)card.classList.toggle('wishlist-mirror',id==='s-wishlist');
   if(!skipHistory){
     // Passing a path (rather than the old '', which meant "leave the URL alone")
     // is what makes /privacy and /terms real addresses she can paste into an
@@ -3476,7 +3581,7 @@ function _renderShop(items){
     const emoji=photoShopEmoji[it.category]||'✨';
     const why=it.why?' &middot; '+_esc(it.why):'';
     const st=resolveStore(it.store)||it.store||'';
-    return `<div class="shoprow"><div class="si">${emoji}</div><div class="sb"><strong>${_esc(it.name||'')}</strong><span>${_esc(st)}${why}</span></div><a class="go" href="${url}" target="_blank" rel="noopener">${FIND_LABEL}</a></div>`;
+    return `<div class="shoprow"><div class="si">${emoji}</div><div class="sb"><strong>${_esc(it.name||'')}</strong><span>${_esc(st)}${why}</span></div><a class="go" href="${url}" target="_blank" rel="noopener">${FIND_LABEL}</a>${_wlSaveBtn(it)}</div>`;
   }).join('');
 }
 async function runPhotoAnalysis(){
@@ -3956,7 +4061,10 @@ function _shopCard(item,topHtml){
   return '<div class="shop-card"><div>'+(topHtml||'')+
     '<div class="shop-item-name">'+_esc(item.name||'')+'</div>'+
     '<div class="shop-item-store">'+_esc(key||item.store||'')+'</div></div>'+
-    '<a href="'+url+'" target="_blank" rel="noopener" class="shop-link">'+FIND_LABEL+'</a></div>';
+    '<div class="shop-card-act">'+
+    '<a href="'+url+'" target="_blank" rel="noopener" class="shop-link">'+FIND_LABEL+'</a>'+
+    _wlSaveBtn(item)+
+    '</div></div>';
 }
 async function genOutfits(source){
   const sectionId=source==='quiz'?'shopSection':(source==='page'?null:'shopSectionPhoto');
@@ -4310,7 +4418,7 @@ function _openShopStyleNow(mode){
   var subEl=document.querySelector('#s-shopstyle .ss-shop-sub');
   if(subEl){
     if(_shopStyleMode==='look'){subEl.textContent='In the vibe of the look you shared & your style.';}
-    else if(_shopStyleMode==='wantlist'){subEl.textContent='Everything on your wishlist, styled for you.';}
+    else if(_shopStyleMode==='wantlist'){subEl.textContent='Everything on your list, styled for you.';}
     else{var last=parseInt(localStorage.getItem('ss_shop_msg')||'-1',10),si;
       do{si=Math.floor(Math.random()*SHOP_MSGS.length);}while(SHOP_MSGS.length>1&&si===last);
       try{localStorage.setItem('ss_shop_msg',String(si));}catch(e){}
@@ -4323,7 +4431,7 @@ async function _shopStyleGen(){
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
   var _isWL=(_shopStyleMode==='wantlist');
-  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="pinkheart hl" style="width:17px;height:17px;margin-right:5px;vertical-align:-3px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>'+(_isWL?'shopping your wishlist&hellip;':'shopping your style&hellip;');
+  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="pinkheart hl" style="width:17px;height:17px;margin-right:5px;vertical-align:-3px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>'+(_isWL?'shopping your list&hellip;':'shopping your style&hellip;');
   var talk=document.querySelector('#s-shopstyle .ss-shop-talk');if(talk)talk.classList.remove('on');
   var gf=document.querySelector('.quiz-footer');if(gf)gf.style.display='none';
   var bk=document.querySelector('#s-shopstyle .top-back-wrap');if(bk)bk.style.display='none';
@@ -4341,7 +4449,7 @@ async function _shopStyleGen(){
   if(_shopStyleMode==='wantlist'){
     var wl=(_wantListNames||[]);if(wl.length>16){_wlTrunc=wl.length-16;wl=wl.slice(0,16);}
     maxTok=1400;
-    prompt='You are Catherine, a personal stylist. This woman has a wardrobe wishlist. For EACH item on her list, suggest ONE specific shoppable piece she would genuinely love that fits her style.\n\n'+basis+'\n\nHer wishlist:\n'+wl.map(function(w,i){return (i+1)+'. '+w}).join('\n')+'\n\nFor each wishlist item provide:\n- want: the exact wishlist item text it is for\n'+_shopRules()+'\nRULES:\n- Give exactly one pick per wishlist item, in the same order\n- NEVER suggest anything on her never-wear list, in colors she skips, or a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice dress" but "Emerald Linen Midi Wrap Dress"\n\nRespond with ONLY valid JSON:\n{"items":[{"want":"Wishlist item","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. This woman has a wardrobe list. For EACH item on her list, suggest ONE specific shoppable piece she would genuinely love that fits her style.\n\n'+basis+'\n\nHer list:\n'+wl.map(function(w,i){return (i+1)+'. '+w}).join('\n')+'\n\nFor each list item provide:\n- want: the exact list item text it is for\n'+_shopRules()+'\nRULES:\n- Give exactly one pick per list item, in the same order\n- NEVER suggest anything on her never-wear list, in colors she skips, or a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Be very specific in "name", not "a nice dress" but "Emerald Linen Midi Wrap Dress"\n\nRespond with ONLY valid JSON:\n{"items":[{"want":"List item","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
     prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list, in colors she skips, or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Mix categories and price points across the 6 items\n- Be very specific in "name", not "a nice top" but "Ribbed Cream Mock-Neck Tank"\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
@@ -4358,13 +4466,13 @@ async function _shopStyleGen(){
       html+=_shopCard(item,top);
     });
     html+='</div>'+(_wlTrunc?'<div class="shop-trunc">Showing 16 of your '+(_wlTrunc+16)+' wants. Shop the rest anytime from your list.</div>':'')+'<div class="shop-refresh"><button class="shop-refresh-btn" onclick="_shopStyleGen()">&#8635; Show me different options</button></div>';
-    _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent=_isWL?'shop your wishlist':'shop your style';
+    _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent=_isWL?'shop your list':'shop your style';
     cont.innerHTML=html;
     if(talk)talk.classList.add('on');
     if(gf)gf.style.display='';
     if(bk)bk.style.display='';
   }catch(e){
-    _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent=_isWL?'shop your wishlist':'shop your style';
+    _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent=_isWL?'shop your list':'shop your style';
     cont.innerHTML='<div class="shop-loading">Couldn\'t load options right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="_shopStyleGen()" style="max-width:200px">Try again</button></div>';
     if(gf)gf.style.display='';
     if(bk)bk.style.display='';
@@ -5173,10 +5281,23 @@ function _normalizeWardrobe(d){
   if(!d.items||typeof d.items!=='object')d.items={};
   if(!Array.isArray(d.custom))d.custom=[];
   if(!Array.isArray(d.hidden))d.hidden=[];
+  // My Wishlist rides along on this record (localStorage + Supabase for free).
+  // Sanitize hard: one malformed entry -- from a hand-edited record, a partial
+  // sync, or an older shape -- must never be able to break the whole render.
+  if(!Array.isArray(d.wishlist))d.wishlist=[];
+  var _wlSeen={};
+  d.wishlist=d.wishlist.filter(function(x){
+    if(!x||typeof x!=='object'||!x.id||!x.name)return false;
+    if(_wlSeen[x.id])return false;          // same piece saved twice -> keep the first
+    _wlSeen[x.id]=1;return true;
+  }).map(function(x){
+    return {id:String(x.id),name:String(x.name),store:String(x.store||''),
+            search:String(x.search||''),ts:Number(x.ts)||0};
+  });
   if(!d.pretap0){d.items={};d.pretap0=true;}
-  // The list is a wishlist now — "have" is gone. Drop any state that isn't a
+  // The list is want-only now — "have" is gone. Drop any state that isn't a
   // real Want so old records (local or restored from Supabase) can't carry a
-  // dead state into the counts, the chat, or "Shop my whole wishlist".
+  // dead state into the counts, the chat, or "Shop my whole list".
   // Idempotent, so it needs no migration flag.
   Object.keys(d.items).forEach(function(k){if(d.items[k]!=='want')delete d.items[k]});
   d.custom.forEach(function(c){if(c&&c.state!=='want')c.state='unset'});
@@ -5216,7 +5337,7 @@ function _wardrobeGetState(id){
   return c?c.state:'unset';
 }
 // Trend items ("trend{i}") resolve straight from trendItems, not wardrobeData —
-// they're Catherine's curation, not part of her personal wishlist.
+// they're Catherine's curation, not part of her personal list.
 function _wardrobeFindName(id){
   if(id.indexOf('trend')===0){
     const m=id.match(/^trendT?(\d+)$/);
@@ -5229,7 +5350,7 @@ function _wardrobeFindName(id){
   const c=wardrobeData.custom.find(function(x){return x.id===id});
   return c?c.n:'';
 }
-// Tap the heart to add a piece to her wishlist; tap again to take it off.
+// Tap the star to add a piece to her list; tap again to take it off.
 // One positive action, no opposite state to argue with.
 function wardrobeWant(id,isCustom){
   const on=_wardrobeGetState(id)==='want';
@@ -5282,7 +5403,7 @@ function wardrobeShowRemoved(){
   saveWardrobeData();
   renderWardrobeList();
 }
-// Start over on the main checklist: clears her wishlist hearts on the standard
+// Start over on the main checklist: clears her list stars on the standard
 // items. Her own typed-in additions (and any items she removed) are left exactly
 // as they are. Uses a gentle inline confirm, not a browser dialog.
 // Reset sits both above and below the list. Holds WHICH one was tapped ('top' or
@@ -5299,7 +5420,7 @@ function _wdrSyncHowto(){
   if(hw)hw.classList.toggle('brief',_wardrobeWants().length>=3);
 }
 function wardrobeReset(){
-  wardrobeData.items={};      // clear every wishlist heart
+  wardrobeData.items={};      // clear every list star
   wardrobeData.hidden=[];     // full start-over: bring back any removed items
   _wdrResetConfirm=false;
   saveWardrobeData();
@@ -5307,7 +5428,7 @@ function wardrobeReset(){
   _wdrSyncHowto();            // starting over means the full instructions come back
   try{document.getElementById('wdrListBody').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
 }
-// Her wardrobe "wishlist" for the stylist chat: everything she has marked Want,
+// Her wardrobe list for the stylist chat: everything she has marked Want,
 // plus her own additions. Lets the stylist say "I know a vacation dress has been
 // on your list." Reads straight from storage so it works even if she hasn't
 // opened the wardrobe this session.
@@ -5358,11 +5479,17 @@ function wardrobeAddCustom(){
 // instruction paragraph) — narrower, tapered to a point, deeper cleft. One heart
 // shape across the app, in two colours. Kept upright here: the pink one's 12deg
 // tilt is a signature flourish, but ~98 tilted controls in a column read careless.
-var _WDR_HEART_PATH='M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z';
-function _wdrHeart(on){
+// ⚠️ This control is a STAR, not a heart, and the distinction is load-bearing:
+// the HEART now means My Wishlist (a specific piece she saved, with a link), and
+// the STAR means My List (a category she'd like to add to her closet). Two lists,
+// two marks, so neither is mistaken for the other. Same gold as before -- only
+// the shape changed -- and it's the app's own star, matching the hub tag and the
+// Mall fixture. Don't "unify" these two controls back into one shape.
+var _WDR_STAR_PATH='M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z';
+function _wdrStar(on){
   return on
-    ? '<svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1"><path d="'+_WDR_HEART_PATH+'"/></svg>'
-    : '<svg viewBox="0 0 24 24" fill="none" stroke="#c3bba6" stroke-width="1.9"><path d="'+_WDR_HEART_PATH+'"/></svg>';
+    ? '<svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1" stroke-linejoin="round"><path d="'+_WDR_STAR_PATH+'"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="#c3bba6" stroke-width="1.9" stroke-linejoin="round"><path d="'+_WDR_STAR_PATH+'"/></svg>';
 }
 function _wardrobeItemRow(id,name,isCustom,note){
   const want=_wardrobeGetState(id)==='want';
@@ -5374,7 +5501,7 @@ function _wardrobeItemRow(id,name,isCustom,note){
     +delBtn
     +'<div class="'+nameClass+'">'+_esc(name)+noteHtml+'</div>'
     +'<span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')">Ideas &rarr;</span>'
-    +'<span class="wdr-heart" role="button" aria-pressed="'+(want?'true':'false')+'" title="'+(want?'On your wishlist':'Add to wishlist')+'" onclick="wardrobeWant(\''+id+'\','+cust+')">'+_wdrHeart(want)+'</span>'
+    +'<span class="wdr-star" role="button" aria-pressed="'+(want?'true':'false')+'" title="'+(want?'On your list':'Add to my list')+'" onclick="wardrobeWant(\''+id+'\','+cust+')">'+_wdrStar(want)+'</span>'
     +'<div class="wdr-expand" id="wx_'+id+'" style="display:none"></div>'
     +'</div>';
 }
@@ -5422,7 +5549,7 @@ function renderWardrobeList(){
 // confirm. Both copies are identical, so the confirm opens where she tapped.
 function _wdrResetBlock(where){
   if(_wdrResetConfirm===where){
-    return '<div class="wdr-reset-confirm"><b>Start the list over?</b>Clears your whole wishlist and brings back any items you removed. Your additions stay.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
+    return '<div class="wdr-reset-confirm"><b>Start the list over?</b>Clears your whole list and brings back any items you removed. Your additions stay.<div class="wdr-rc-btns"><span class="wdr-rc-yes" onclick="wardrobeReset()">Yes, reset</span><span class="wdr-rc-no" onclick="cancelWardrobeReset()">Cancel</span></div></div>';
   }
   if(_wdrResetConfirm)return '';   // the other copy hides while one confirm is open
   if(!Object.keys(wardrobeData.items).length&&!(wardrobeData.hidden&&wardrobeData.hidden.length))return '';
@@ -5437,12 +5564,12 @@ function _wdrRenderShopEnd(n){
   let html='';
   if(n){
     html+='<div class="wdr-shopend">'
-      +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your wishlist</div>'
+      +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your list</div>'
       +'<div class="wse-sub">Shop them all together,<br>in your style.</div>'
       +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
   }
   // Reset sits below the shop CTA, so the list card can end cleanly on the
-  // "add something" row. Shows on its own if she has marks but no wishlist.
+  // "add something" row. Shows on its own if she has marks but nothing starred.
   html+=_wdrResetBlock('end');
   el.innerHTML=html;
   el.style.display=html?'':'none';
@@ -5473,7 +5600,7 @@ window.addEventListener('scroll',_wdrTopBtnUpdate,{passive:true});
 function _wdrShopBtn(n){
   return '<div class="wdr-shopwants" role="button" onclick="shopWantList()">'
     +'<svg class="wsw-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 7.8h14.8l-1.15 12.05a1.05 1.05 0 0 1-1.05.95H6.8a1.05 1.05 0 0 1-1.05-.95L4.6 7.8Z"/><path d="M8.9 10.4V6.3a3.1 3.1 0 0 1 6.2 0v4.1"/></svg>'
-    +'<span class="wsw-txt">Shop my whole wishlist<span class="wsw-n">'+n+' piece'+(n>1?'s':'')+'</span></span>'
+    +'<span class="wsw-txt">Shop my whole list<span class="wsw-n">'+n+' piece'+(n>1?'s':'')+'</span></span>'
     +'<svg class="wsw-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>'
     +'</div>';
 }
@@ -5623,6 +5750,227 @@ function closeWardrobe(){
   document.querySelector('.quiz-footer').style.display='';
   showBack(wardrobePrevScreen);
 }
+
+// ===== My Wishlist =========================================================
+// The specific pieces she saved while shopping, to come back to later.
+// ⚠️ NOT the same thing as Your Wardrobe's "My List": that holds CATEGORIES she
+// wants in her closet, marked with a gold STAR. This holds SPECIFIC pieces with
+// a store and a link, marked with a pink HEART. Two lists, two marks, two names.
+//
+// It lives on `wardrobeData` on purpose: that record already persists to
+// localStorage AND rides to Supabase inside buildFullUserData(), so the saved
+// list inherits a working two-tier persistence rather than inventing a new one.
+//
+// ▶ The URL is NEVER stored, only the store + search term, and getStoreUrl()
+// rebuilds it on every render. That means a store-URL fix (there have been 14)
+// silently repairs every already-saved item instead of leaving her with a
+// growing pile of links that were correct on the day she tapped them.
+var _WL_HEART_PATH='M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z';
+var _wlReg={};              // id -> {name,store,search}; filled as cards render
+var _wlToastTimer=null,_wlSyncTimer=null;
+var wishlistPrevScreen='s-wb';
+
+function _wlSlug(v){return String(v||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,64)}
+// Content-derived so the same piece is the same entry wherever she meets it --
+// saving a blouse on the Style Portrait shows it already saved in Wardrobe Ideas.
+function _wlMakeId(name,store){return _wlSlug(name)+'~'+_wlSlug(store)}
+function _wlList(){
+  if(!wardrobeData||typeof wardrobeData!=='object')wardrobeData={items:{},custom:[]};
+  if(!Array.isArray(wardrobeData.wishlist))wardrobeData.wishlist=[];
+  return wardrobeData.wishlist;
+}
+function _wlIndexOf(id){var l=_wlList();for(var i=0;i<l.length;i++){if(l[i]&&l[i].id===id)return i}return -1}
+function _wlHas(id){return _wlIndexOf(id)>=0}
+function _wlCount(){return _wlList().length}
+function _wlHeartSvg(on){
+  return on
+    ? '<svg viewBox="0 0 24 24" fill="#F49AC1" stroke="#B4436F" stroke-width="1"><path d="'+_WL_HEART_PATH+'"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="#b0a898" stroke-width="1.9"><path d="'+_WL_HEART_PATH+'"/></svg>';
+}
+function _wlRegister(item){
+  if(!item||!item.name)return '';
+  var store='';
+  try{store=resolveStore(item.store)||item.store||''}catch(e){store=item.store||''}
+  var id=_wlMakeId(item.name,store);
+  if(!id||id==='~')return '';
+  _wlReg[id]={name:String(item.name),store:String(store),search:String(item.search||'')};
+  return id;
+}
+// The control is LABELLED, not a bare icon: her mom's testing (2026-07-26)
+// showed that an unlabelled control reads as decoration, not as something to tap.
+function _wlSaveBtn(item){
+  var id=_wlRegister(item);
+  if(!id)return '';
+  var on=_wlHas(id);
+  return '<span class="wl-save'+(on?' on':'')+'" role="button" tabindex="0" aria-pressed="'+(on?'true':'false')+'"'
+    +' data-wl="'+id+'" title="'+(on?'On your wishlist':'Save to my wishlist')+'"'
+    +' onclick="wishToggle(\''+id+'\')">'+_wlHeartSvg(on)
+    +'<span class="wl-save-t">'+(on?'Saved':'Save')+'</span></span>';
+}
+function wishToggle(id){
+  var i=_wlIndexOf(id),added=false;
+  if(i>=0){_wlList().splice(i,1);}
+  else{
+    var m=_wlReg[id];
+    if(!m)return;                       // a stale button from a re-rendered surface
+    _wlList().unshift({id:id,name:m.name,store:m.store,search:m.search,ts:Date.now()});
+    added=true;
+  }
+  saveWardrobeData();
+  _wlSyncButtons();
+  _wlSyncBadges();
+  var scr=document.getElementById('s-wishlist');
+  if(scr&&scr.classList.contains('act'))renderWishlist();
+  if(added)_wlToast();
+  _wlSyncServer();
+}
+function wishRemove(id){
+  if(_wlIndexOf(id)<0)return;
+  _wlList().splice(_wlIndexOf(id),1);
+  saveWardrobeData();
+  renderWishlist();_wlSyncButtons();_wlSyncBadges();_wlSyncServer();
+}
+// The same piece can be on screen more than once (a carousel and a grid), so
+// every button carrying that id updates together.
+function _wlSyncButtons(){
+  var els=document.querySelectorAll('[data-wl]');
+  for(var i=0;i<els.length;i++){
+    var el=els[i],id=el.getAttribute('data-wl'),on=_wlHas(id);
+    el.classList.toggle('on',on);
+    el.setAttribute('aria-pressed',on?'true':'false');
+    el.setAttribute('title',on?'On your wishlist':'Save to my wishlist');
+    el.innerHTML=_wlHeartSvg(on)+'<span class="wl-save-t">'+(on?'Saved':'Save')+'</span>';
+  }
+}
+function _wlSyncBadges(){
+  var n=_wlCount();
+  var els=document.querySelectorAll('[data-wl-count]');
+  for(var i=0;i<els.length;i++){
+    els[i].textContent=n?String(n):'';
+    els[i].classList.toggle('on',!!n);
+  }
+  var sub=document.getElementById('wbWishSub');
+  if(sub)sub.textContent=n?(n+' piece'+(n>1?'s':'')+' saved for later'):'Pieces you saved to come back to';
+}
+// Saving is silent otherwise, and a woman who does not know where it went has no
+// reason to come back. The toast says what happened AND where to find it.
+function _wlToast(){
+  var t=document.getElementById('wlToast');
+  if(!t)return;
+  var scr=document.getElementById('s-wishlist');
+  var onList=!!(scr&&scr.classList.contains('act'));
+  var go=t.querySelector('.wt-go');
+  if(go)go.style.display=onList?'none':'';   // no "View" while she is already on it
+  t.classList.add('on');
+  if(_wlToastTimer)clearTimeout(_wlToastTimer);
+  _wlToastTimer=setTimeout(function(){t.classList.remove('on')},3600);
+}
+// Quiet background save. syncPrefsToServer() no-ops when we have no email yet,
+// so this costs nothing for a woman who has not given one.
+function _wlSyncServer(){
+  if(_wlSyncTimer)clearTimeout(_wlSyncTimer);
+  _wlSyncTimer=setTimeout(function(){try{syncPrefsToServer()}catch(e){}},1200);
+}
+function _wlEmptyHtml(){
+  return '<div class="wl-card"><div class="wl-empty">'
+    +'<div class="we-h"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg></div>'
+    +'<h4>Nothing saved yet</h4>'
+    +'<p>When you&rsquo;re shopping and something catches your eye, tap <span class="hi">&hearts; Save</span> on it. It will wait for you right here, with the store and the link, so you can come back and buy it whenever you&rsquo;re ready.</p>'
+    +'<span class="we-cta" role="button" onclick="wishlistShopCta()">Shop my style</span>'
+    +'</div></div>';
+}
+function wishlistShopCta(){try{openShopStyle()}catch(e){show('s-wel')}}
+function renderWishlist(){
+  var body=document.getElementById('wlBody');
+  if(!body)return;
+  var list=_wlList().slice();
+  var cnt=document.getElementById('wlCount');
+  if(cnt)cnt.textContent=list.length?(list.length+' piece'+(list.length>1?'s':'')+' saved'):'';
+  if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderStay();return;}
+  // The disclosure rides with the links: it is rendered here, not in the markup,
+  // so it is never shown on an empty page where there is nothing to disclose.
+  var h='<div class="wl-lead">Here&rsquo;s everything you saved. Tap <b>Find it</b> to go shopping, or the <b>&times;</b> to take a piece off your list.</div>'
+   +'<div class="wl-disclosure">Some links may earn us a commission.</div>'
+   +'<div class="wl-card">';
+  list.forEach(function(it){
+    var url='';
+    try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}
+    h+='<div class="wl-row">'
+      +'<span class="wl-mark"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg></span>'
+      +'<div class="wl-b"><span class="wl-nm">'+_esc(it.name)+'</span><span class="wl-st">'+_esc(it.store)+'</span></div>'
+      +(url?'<a class="wl-go" href="'+_esc(url)+'" target="_blank" rel="noopener">Find it &rarr;</a>':'')
+      +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
+      +'</div>';
+  });
+  h+='</div>';
+  body.innerHTML=h;
+  _wlRenderStay();
+}
+// The email ask appears only once she has actually saved something, so it reads
+// as protecting work she has done rather than as a toll on the way in. Never
+// blocking: the whole list works without it.
+function _wlRenderStay(){
+  var el=document.getElementById('wlStay');
+  if(!el)return;
+  if(emailDone||!_wlCount()){el.innerHTML='';el.style.display='none';return;}
+  el.style.display='';
+  el.innerHTML='<div class="wl-stay">'
+    +'<div class="ws-t">Keep your wishlist safe</div>'
+    +'<div class="ws-s">Add your email and we&rsquo;ll save your wishlist for you, so you can come back any time, on any device, and it&rsquo;s all still here waiting.</div>'
+    +'<input id="wlStayEmail" type="email" inputmode="email" autocomplete="email" placeholder="Your email">'
+    +'<input id="wlStayName" type="text" autocomplete="given-name" placeholder="Your first name (optional)">'
+    +'<div><button class="ws-btn" id="wlStayBtn" onclick="saveWishlistEmail()">Save my wishlist</button></div>'
+    +'<div class="ws-msg" id="wlStayMsg"></div>'
+    +'</div>';
+}
+async function saveWishlistEmail(){
+  var eIn=document.getElementById('wlStayEmail'),nIn=document.getElementById('wlStayName');
+  var email=(eIn?eIn.value:'').trim(),nameVal=(nIn?nIn.value:'').trim();
+  var msg=document.getElementById('wlStayMsg'),btn=document.getElementById('wlStayBtn');
+  if(!email||email.indexOf('@')<0){
+    if(msg){msg.style.color='#c0392b';msg.textContent='Please enter a valid email so we can save your wishlist.'}
+    return;
+  }
+  if(msg){msg.style.color='#777';msg.textContent='Saving your wishlist…'}
+  if(btn){btn.disabled=true;btn.textContent='Saving…'}
+  if(nameVal){
+    userName=nameVal.charAt(0).toUpperCase()+nameVal.slice(1);
+    try{var _d=JSON.parse(localStorage.getItem('ss_data'))||{};_d.userName=userName;localStorage.setItem('ss_data',JSON.stringify(_d));}catch(e){}
+  }
+  var full=buildFullUserData();
+  function withTimeout(pr,ms){return Promise.race([pr,new Promise(function(r){setTimeout(r,ms)})])}
+  try{
+    var fd=new URLSearchParams();
+    fd.append('form-name','style-star-emails');fd.append('email',email);fd.append('name',userName||'');
+    fd.append('style-notes',(full.topArchNames||[]).join(', '));
+    await withTimeout(fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}),6000);
+  }catch(e){}
+  try{
+    await withTimeout(fetch('/.netlify/functions/user-data',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,data:full})
+    }),8000);
+  }catch(e){}
+  emailDone=true;
+  try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
+  var el=document.getElementById('wlStay');
+  if(el)el.innerHTML='<div class="wl-stay"><div class="ws-ok">Lovely &mdash; your wishlist is saved. Come back to it any time.</div></div>';
+  // Don't ask again anywhere else.
+  var s1=document.getElementById('staySection');if(s1)s1.style.display='none';
+  var s2=document.getElementById('staySectionPhoto');if(s2)s2.style.display='none';
+  try{hideSavePins()}catch(e){}
+}
+function openWishlist(){
+  var cur=document.querySelector('.scr.act');
+  // Tapping "View" from the toast while already on the list must not make Back
+  // return to the list itself.
+  if(cur&&cur.id!=='s-wishlist')wishlistPrevScreen=cur.id;
+  var t=document.getElementById('wlToast');if(t)t.classList.remove('on');
+  show('s-wishlist');
+  renderWishlist();
+  try{window.scrollTo(0,0)}catch(e){}
+}
+function closeWishlist(){show(wishlistPrevScreen||'s-wb');}
 function wardrobeTab(which){
   document.querySelectorAll('#s-wardrobe .wdr-tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===which)});
   document.querySelectorAll('#s-wardrobe .wdr-pane').forEach(function(p){p.classList.toggle('on',p.dataset.pane===which)});
@@ -6180,11 +6528,11 @@ function refreshWbBadges(){
 var WB_MSGS=['Your own personal stylist,<br>made with love to help you shine.','This is my gift to you:<br>everything I know about style,<br>made clear, easy, and fun.','Made with love, to help you shine<br>your style out to the world.','Built with heart, here to help you<br>shine your light.','I believe style is one of the most<br>beautiful ways to shine your light.','Here to help you feel confident,<br>put-together, and fully you.'];
 var SHOP_MSGS=['Align your style. Shine your light.','Your signature style is coming together.','Here to help you shine your light.','Embracing your unique personal style.','Personalized for you.','Bringing out your most confident you.','Style with intention and heart.'];
 var LOADING_MSGS=['Gathering all the best options for you&hellip;','Looking for pieces you&rsquo;ll love&hellip;','Finding pieces that fit your style story&hellip;','Looking through thousands of options for you&hellip;','Finding pieces that fit your signature style&hellip;','Searching all the latest options, just for you&hellip;'];
-var WISHLIST_MSGS=['Gathering everything on your wishlist&hellip;','Shopping your whole list, just for you&hellip;','Finding a piece for every wish&hellip;','Pulling together your wishlist&hellip;','Looking for pieces you&rsquo;ll love&hellip;'];
+var LISTSHOP_MSGS=['Gathering everything on your list&hellip;','Shopping your whole list, just for you&hellip;','Finding a piece for every one&hellip;','Pulling together your list&hellip;','Looking for pieces you&rsquo;ll love&hellip;'];
 var _lastLoadMsg=-1;
-function _pickLoadMsg(){var arr=(_shopStyleMode==='wantlist')?WISHLIST_MSGS:LOADING_MSGS;var i;do{i=Math.floor(Math.random()*arr.length);}while(arr.length>1&&i===_lastLoadMsg);_lastLoadMsg=i;return arr[i];}
+function _pickLoadMsg(){var arr=(_shopStyleMode==='wantlist')?LISTSHOP_MSGS:LOADING_MSGS;var i;do{i=Math.floor(Math.random()*arr.length);}while(arr.length>1&&i===_lastLoadMsg);_lastLoadMsg=i;return arr[i];}
 // Loader icons for the Shop-your-style waiting spot: the signature spinning
-// star for style shopping, a gently swaying gold shopping bag for wishlist shopping.
+// star for style shopping, a gently swaying gold shopping bag for list shopping.
 var _SHOP_STAR_SVG='<svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>';
 var _SHOP_BAG_SVG='<svg class="shop-bag-main" viewBox="0 0 24 24"><defs><linearGradient id="shopBagG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9E7A6"/><stop offset=".55" stop-color="#EFC85C"/><stop offset="1" stop-color="#E0B341"/></linearGradient></defs><path d="M9 7 V6.2 A3 3 0 0 1 15 6.2 V7" fill="none" stroke="#CDA23A" stroke-width="1.3" stroke-linecap="round"/><path d="M6.4 7 H17.6 L18.5 19.4 A1.3 1.3 0 0 1 17.2 20.8 H6.8 A1.3 1.3 0 0 1 5.5 19.4 Z" fill="url(#shopBagG)" stroke="#C99A2C" stroke-width="0.9" stroke-linejoin="round"/><path d="M12 10.4 L12.9 12.2 L14.9 12.5 L13.45 13.9 L13.8 15.9 L12 15 L10.2 15.9 L10.55 13.9 L9.1 12.5 L11.1 12.2 Z" fill="#fff" opacity=".85"/></svg>';
 // Transform the flat Welcome Back action list into three labeled hubs
@@ -6194,7 +6542,7 @@ function _buildWbHubs(){
   var list=document.querySelector('#s-wb .wb-list');
   if(!list||list.dataset.hubs)return;
   var items=Array.prototype.slice.call(list.querySelectorAll('.wb-item'));
-  if(items.length<8)return; // source: 0 ShopStyle,1 Analyze,2 Ask,3 Edit,4 Portrait,5 Refine,6 Mall,7 Wardrobe
+  if(items.length<8)return; // source: 0 ShopStyle,1 Analyze,2 Ask,3 Edit,4 Portrait,5 Refine,6 Mall,7 Wardrobe,8 Trending,9 Wishlist
   function ic(p){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px">'+p+'</svg>';}
   var ICON={
     0:ic('<path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/>'),
@@ -6205,18 +6553,21 @@ function _buildWbHubs(){
     5:ic('<path d="M2.6 12.4l3.6 3.6 6.2-7.8"/><path d="M15.3 10.6l4.8 5.8M20.1 10.6l-4.8 5.8"/>'),
     4:ic('<rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="currentColor" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/>'),
     7:ic('<path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/>'),
-    8:ic('<path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/>')
+    8:ic('<path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/>'),
+    9:ic('<path d="'+'M12 20.4 C10.8 18 8.5 16.3 6.4 14.2 C4.3 12.1 2.9 10.3 2.9 7.9 C2.9 5.3 4.9 3.4 7.4 3.4 C9.6 3.4 11.3 5.1 12 7.3 C12.7 5.1 14.4 3.4 16.6 3.4 C19.1 3.4 21.1 5.3 21.1 7.9 C21.1 10.3 19.7 12.1 17.6 14.2 C15.5 16.3 13.2 18 12 20.4 Z'+'"/>')
   };
   // Swap each colored tile for a charcoal line icon inside a cream chip, preserving any badge.
   function setIcon(i){var chip=items[i].querySelector('.wb-chip');if(!chip)return;var badge=chip.querySelector('.wb-badge');chip.removeAttribute('style');chip.className='wb-chip wb-chip-line';chip.innerHTML=ICON[i];if(badge)chip.appendChild(badge);}
-  [0,3,6,1,2,5,4,7,8].forEach(setIcon);
+  [0,3,6,1,2,5,4,7,8,9].forEach(setIcon);
   function hub(t){var d=document.createElement('div');d.className='wb-hub';var s=document.createElement('div');s.className='wb-hub-t';var l=document.createElement('span');l.className='wb-hub-lbl';l.textContent=t;s.appendChild(l);d.appendChild(s);return d;}
   list.innerHTML='';
   // Shopping card: awning topper + label + shop items
   var shop=document.createElement('div');shop.className='hub-card hub-shop';
   var awn=document.createElement('div');awn.innerHTML='<div class="awn-rod"></div><div class="awn-face"></div><div class="awn-trim"></div><div class="awn-val"></div>';
   while(awn.firstChild)shop.appendChild(awn.firstChild);
-  shop.appendChild(hub('Shop'));shop.appendChild(items[0]);shop.appendChild(items[3]);shop.appendChild(items[6]);
+  shop.appendChild(hub('Shop'));shop.appendChild(items[0]);
+  if(items[9])shop.appendChild(items[9]);
+  shop.appendChild(items[3]);shop.appendChild(items[6]);
   // Styling card: vanity light bar topper + label + styling items
   var sty=document.createElement('div');sty.className='hub-card hub-style';
   var mbar=document.createElement('div');mbar.className='mbar';var r='<div class="mbar-row">';for(var i=0;i<7;i++)r+='<span class="mbulb"></span>';r+='</div>';mbar.innerHTML=r;
@@ -6262,6 +6613,7 @@ function updateWbScreen(){
   var ctaTxt=document.getElementById('wbPortCtaTxt');
   if(ctaTxt)ctaTxt.textContent=quizTaken?'See your full Style Portrait':'Take our fun style quiz';
   refreshWbBadges();
+  try{_wlSyncBadges();}catch(e){}
 }
 // The star/chain board's "Style Portrait" tap routes to the real portrait for a
 // quiz-taker, or to the quiz itself as a fallback if she somehow lands here without
@@ -6412,6 +6764,11 @@ function maybePlayEntrance(){
 
 // On page load: try the email link first, otherwise normal first-screen logic.
 (function(){
+  // Her wardrobe record (checklist stars AND wishlist) must be in memory before
+  // any screen can write to it -- otherwise the first save from a results screen
+  // would persist the empty default over everything she had already marked.
+  try{wardrobeData=loadWardrobeData();}catch(e){}
+  try{_wlSyncBadges();}catch(e){}
   var hasToken=false;
   try{hasToken=!!new URLSearchParams(location.search).get('r')}catch(e){}
   if(hasToken){
@@ -6968,5 +7325,6 @@ async function doShareVision(){
 function openVisionBoard(){buildVisionBlob(function(blob,imgUrl){if(blob)_openVisionOverlay(blob,imgUrl);});}
 
 </script>
+<div class="wl-toast" id="wlToast" role="status" aria-live="polite"><span class="wt-t"><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>Saved to My Wishlist</span><span class="wt-go" role="button" onclick="openWishlist()">View</span></div>
 </body>
 </html>
