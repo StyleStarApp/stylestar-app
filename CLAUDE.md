@@ -78,6 +78,42 @@ now done; the copy one is the natural next piece of work.
      welcome email we sent you"* — true today. The moment her automation is live it should become *"we've just
      sent you a link."* **Deliberately not written yet**, on the same principle as Amazon's required sentence
      and the Anthropic training claim: never publish a promise that isn't true yet.
+   - ✅ **CATH BUILT THE AUTOMATION (2026-07-29) AND IT IS TESTED END TO END.** She added herself to the group
+     manually, the email arrived, and **the gold button landed her in her Style Portrait**. The whole chain is
+     proven: request → group join → automation → token → restored results.
+   - ⚠️ **MAILERLITE SENDS EACH EMAIL ONLY ONCE PER 24 HOURS PER PERSON**, and says so in the re-entry settings:
+     *"If a customer is set to receive the same email again within 24 hours, they will be removed from the
+     automation."* **This is a platform limit, not a setting** — it cannot be coded around. So a woman who asks
+     twice in a day gets one email. Accepted deliberately: it is sane anti-spam, and the app's copy also points
+     her at the welcome email, which is a real fallback inside that window. ▶ **Consequence for testing: never
+     test the restore email twice in a row** — the second send is suppressed and it looks like the re-entry
+     setting is broken when it isn't. Use the automation's **Test** button instead.
+   - ⚠️ **TWO SETTINGS THAT FAIL SILENTLY, both found only by looking at the real screen:** *Allow subscribers
+     re-enter automation* defaults to **OFF** (so each woman could get a link once, ever), and once ticked,
+     *Time for re-enter* defaults to **"Add delay 1 day"** rather than "As soon as they match the triggers".
+     Both are now correct. Neither would have raised any error.
+   - ⚠️ **PICKING AN EXISTING EMAIL AS THE DESIGN OVERWRITES THE SUBJECT AND THE EMAIL NAME.** Cath set the
+     subject correctly, then chose the welcome email as the starting design, and the first live test arrived
+     titled **"Welcome to Style Star"**. **Re-check the subject AFTER choosing a template, not before.**
+   - **The email body lives in a "Standard hero" block**, whose slots are fixed (heading → text → button). The
+     button cannot be dragged and there is no typing below it. The sign-off goes in the block's
+     **"Additional text"** toggle, which is the slot underneath the button.
+
+### ⭐ 0b-i. ▶ THE "there" PLACEHOLDER — leave it, but the overwrite bug is FIXED (2026-07-29)
+When a woman never gives her first name, `user-data.js` writes the literal word **`there`** into her MailerLite
+name field so the greeting reads *"Hi there,"* rather than *"Hi ,"*. Cath saw this on her own test email and
+asked what to do.
+- **DECISION: leave the behaviour.** *"Hi there,"* is warm and correct for a nameless subscriber, and the
+  alternative (empty name + a MailerLite fallback value on the personalization tag) means editing her one live,
+  working welcome email. Getting that wrong ships *"Hi ,"* to real women. Not worth it for something invisible.
+  ▶ Her own record was simply missing a name; she set it in MailerLite by hand.
+- ⚠️ **BUT A REAL BUG WAS HIDING INSIDE IT, and it is fixed.** Every save wrote the name field, so a save from a
+  screen that didn't know her name would overwrite **`Sarah`** with **`there`** permanently. `nameIsSafeToWrite()`
+  now looks up the existing subscriber and **refuses to let the placeholder replace a real name**; a real name
+  always wins, and the placeholder may still replace an empty field or itself. Five checks cover it.
+- ▶ **The general lesson, worth keeping:** a sentinel value stored in a field meant for real data is a fudge that
+  works until something overwrites the real data with it. If the placeholder ever needs to go, the honest fix is
+  a MailerLite fallback value, not a magic string in the database.
 2. ✅ **The privacy-copy rewrite (the second Cowork brief) — APPLIED, plus CCPA and a real deletion path.**
    The diagnosis was fair and every claim checked out: the copy said *"never stored on our servers"*, *"it never
    touches our servers"*, *"no person at Style Star ever has access"* and *"your details are private (no one

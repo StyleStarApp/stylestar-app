@@ -7,6 +7,9 @@ const MAILERLITE_GROUP_NAME = 'Style Star Signups';
 const MAILERLITE_RESTORE_GROUP_NAME = 'Style Star Restore Requests';
 const ML_BASE = 'https://connect.mailerlite.com/api';
 const mlGroupIds = new Map();
+// Stand-in first name, used only so the greeting reads "Hi there," rather than
+// "Hi ,". See nameIsSafeToWrite() — it must never replace a real name.
+const NAME_PLACEHOLDER = 'there';
 
 // Hosts allowed to use this function. The request's own host is always allowed
 // too, so Netlify deploy previews (random-name.netlify.app) keep working.
@@ -170,6 +173,25 @@ function mlGetGroupId(apiKey) { return mlGroupId(apiKey, MAILERLITE_GROUP_NAME, 
 
 // Add (or update) a subscriber in MailerLite, then assign to the signups group.
 // Create is done first and isolated so the group logic can never block a signup.
+// "there" is the placeholder we send when a woman never gave us her first name,
+// so the welcome email reads "Hi there," rather than "Hi ,". It must never
+// overwrite a real name she gave us on an earlier save — otherwise a save from
+// a screen that doesn't know her name silently turns "Hi Sarah," into
+// "Hi there," for good.
+async function nameIsSafeToWrite(apiKey, email, name) {
+  if (name !== NAME_PLACEHOLDER) return true; // a real name always wins
+  try {
+    const res = await fetch(ML_BASE + '/subscribers/' + encodeURIComponent(email), { headers: mlHeaders(apiKey) });
+    if (!res.ok) return true; // no existing subscriber (or can't tell) — safe to set it
+    const json = await res.json();
+    const existing = json && json.data && json.data.fields && json.data.fields.name;
+    const trimmed = String(existing || '').trim();
+    return !trimmed || trimmed.toLowerCase() === NAME_PLACEHOLDER;
+  } catch (e) {
+    return true;
+  }
+}
+
 async function addToMailerLite(email, name, token) {
   const apiKey = process.env.MAILERLITE_API_KEY;
   if (!apiKey) return; // not configured — skip quietly
@@ -178,7 +200,7 @@ async function addToMailerLite(email, name, token) {
   try {
     const body = { email: email };
     const fields = {};
-    if (name) fields.name = name;
+    if (name && await nameIsSafeToWrite(apiKey, email, name)) fields.name = name;
     if (token) fields.restore_token = token; // populates the welcome-email link
     if (Object.keys(fields).length) body.fields = fields;
     const res = await fetch(ML_BASE + '/subscribers', {
@@ -351,7 +373,7 @@ export default async (req) => {
       // Use "there" when no real name was given (the quiz uses "You" as a placeholder),
       // so the welcome email reads "Hi there," instead of "Hi ,".
       const rawName = String((data && (data.userName || data.name)) || '').trim();
-      const mlName = (!rawName || rawName.toLowerCase() === 'you') ? 'there' : rawName;
+      const mlName = (!rawName || rawName.toLowerCase() === 'you') ? NAME_PLACEHOLDER : rawName;
       const restoreToken = makeToken(key);
       try { await addToMailerLite(key, mlName, restoreToken); } catch (e) {}
 

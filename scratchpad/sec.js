@@ -11,15 +11,24 @@ delete process.env.MAILERLITE_API_KEY; // keep MailerLite out of it entirely
 
 const DB = new Map(); // email -> data object
 const ML = 'https://connect.mailerlite.com/api';
+const ML_SUBS = new Map(); // email -> the name currently on her subscriber record
 let mlCalls = [];
 
 const realFetch = globalThis.fetch;
 globalThis.fetch = async (url, opts = {}) => {
   const u = String(url);
   if (u.startsWith('https://connect.mailerlite.com')) {
-    mlCalls.push(((opts.method || 'GET').toUpperCase()) + ' ' + u.replace(ML, ''));
+    const method = (opts.method || 'GET').toUpperCase();
+    mlCalls.push(method + ' ' + u.replace(ML, '') + (opts.body ? ' ' + opts.body : ''));
     if (u.includes('/groups?')) return new Response(JSON.stringify({ data: [{ id: 'g-signups', name: 'Style Star Signups' }] }), { status: 200 });
     if (u.endsWith('/groups')) return new Response(JSON.stringify({ data: { id: 'g-restore' } }), { status: 200 });
+    // Looking up an existing subscriber by email (used by the name guard).
+    const look = u.match(/\/subscribers\/([^/]+)$/);
+    if (method === 'GET' && look) {
+      const who = decodeURIComponent(look[1]);
+      if (!ML_SUBS.has(who)) return new Response('', { status: 404 });
+      return new Response(JSON.stringify({ data: { id: 'sub-1', fields: { name: ML_SUBS.get(who) } } }), { status: 200 });
+    }
     return new Response(JSON.stringify({ data: { id: 'sub-1' } }), { status: 200 });
   }
   if (u.startsWith('https://fake.supabase.co')) {
@@ -231,7 +240,7 @@ mlCalls = [];
 res = await call('GET', { query: '?email=new@example.com' });
 ok('an existing account gets a 200', res.status === 200);
 ok('a fresh token is written to her subscriber record',
-   mlCalls.some(c => c === 'POST /subscribers'), mlCalls.join(' | '));
+   mlCalls.some(c => c.startsWith('POST /subscribers {') && c.includes('restore_token')), mlCalls.join(' | '));
 const joinIdx = mlCalls.findIndex(c => c === 'POST /subscribers/sub-1/groups/g-restore');
 const leaveIdx = mlCalls.findIndex(c => c === 'DELETE /subscribers/sub-1/groups/g-restore');
 ok('she is added to the restore group (this is what sends the email)', joinIdx !== -1, mlCalls.join(' | '));
@@ -268,6 +277,7 @@ ok("another woman's token cannot delete her record", DB.has('goodbye@example.com
 // Her own link deletes her, in both systems.
 process.env.MAILERLITE_API_KEY = 'fake-ml-key';
 DB.set('goodbye@example.com', { userName: 'Jennifer', portrait: 'p' });
+ML_SUBS.set('goodbye@example.com', 'Jennifer'); // she's on the email list too
 const hers = forgeToken('goodbye@example.com', Date.now());
 mlCalls = [];
 res = await call('DELETE', { query: '?token=' + encodeURIComponent(hers) });
@@ -286,7 +296,51 @@ delete process.env.MAILERLITE_API_KEY;
 res = await call('DELETE', { query: '?email=x@y.com', headers: { ...GOOD, 'x-admin-secret': 'admin-pass' } });
 ok('with no ADMIN_SECRET configured, that header does nothing', res.status === 401, 'got ' + res.status);
 
-console.log('\n11. Shape checks');
+// ---------------------------------------------------------------------------
+console.log('\n11. The "there" placeholder never overwrites a real name');
+process.env.MAILERLITE_API_KEY = 'fake-ml-key';
+const nameOf = () => {
+  const c = mlCalls.find(x => x.startsWith('POST /subscribers {'));
+  if (!c) return '(no subscriber write)';
+  try { return (JSON.parse(c.slice(c.indexOf('{'))).fields || {}).name ?? '(none sent)'; }
+  catch (e) { return '(unparseable)'; }
+};
+
+// A woman who gives her name gets it written.
+DB.delete('sarah@example.com'); ML_SUBS.delete('sarah@example.com');
+mlCalls = [];
+let r = await body(await call('POST', { body: { email: 'sarah@example.com', data: { userName: 'Sarah', portrait: 'p' } } }));
+const sarahTok = r.token;
+ok('a real name is written', nameOf() === 'Sarah', nameOf());
+
+// Now she saves again from a screen that doesn't know her name. (Her own token,
+// so this is a legitimate save, not the 403 path.)
+ML_SUBS.set('sarah@example.com', 'Sarah');
+mlCalls = [];
+await call('POST', { body: { email: 'sarah@example.com', data: { userName: 'You', portrait: 'p2' }, token: sarahTok } });
+ok('"there" does NOT overwrite her real name', nameOf() === '(none sent)', nameOf());
+
+// A brand-new woman with no name still gets the placeholder, so the greeting
+// reads "Hi there," rather than "Hi ,".
+DB.delete('anon@example.com'); ML_SUBS.delete('anon@example.com');
+mlCalls = [];
+r = await body(await call('POST', { body: { email: 'anon@example.com', data: { userName: '', portrait: 'p' } } }));
+const anonTok = r.token;
+ok('a nameless new subscriber still gets "there"', nameOf() === 'there', nameOf());
+
+// And "there" may replace "there" (no harm, keeps the field populated).
+ML_SUBS.set('anon@example.com', 'there');
+mlCalls = [];
+await call('POST', { body: { email: 'anon@example.com', data: { userName: 'You', portrait: 'p2' }, token: anonTok } });
+ok('"there" may replace "there"', nameOf() === 'there', nameOf());
+
+// She later tells us her name — that must win.
+mlCalls = [];
+await call('POST', { body: { email: 'anon@example.com', data: { userName: 'Jennifer', portrait: 'p3' }, token: anonTok } });
+ok('a real name replaces the placeholder', nameOf() === 'Jennifer', nameOf());
+delete process.env.MAILERLITE_API_KEY;
+
+console.log('\n12. Shape checks');
 res = await call('GET');
 ok('no token and no email → 400', res.status === 400, 'got ' + res.status);
 res = await call('PUT');
