@@ -2021,7 +2021,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <div class="shop-title">Shop your style</div>
         <div class="shop-sub">Shopping ideas based on your style portrait</div>
         <div id="shopContent"></div>
-        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn us a small commission,<br>at no extra cost to you.</div>
+        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn us a commission.</div>
       </div>
 
       <!-- Keep-your-portrait save block → existing save flow (_persistSave) -->
@@ -2194,7 +2194,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
             <div class="eng-row"><span class="eng-rule l"></span><span class="eng-lbl">Complete the Look</span><span class="eng-rule r"></span></div>
           </div>
           <div class="shoplist" id="pShopList"></div>
-          <div class="shopdisc">Some links may earn us a small commission,<br>at no extra cost to you.</div>
+          <div class="shopdisc">Some links may earn us a commission.</div>
         </div>
       </div>
     </div>
@@ -2291,7 +2291,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <div class="shop-title">Shop your style</div>
         <div class="shop-sub" id="shopSubPhoto">Shopping ideas picked for you</div>
         <div id="shopContentPhoto"></div>
-        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn us a small commission,<br>at no extra cost to you.</div>
+        <div class="shopdisc" style="text-align:center;margin-top:12px">Some links may earn us a commission.</div>
       </div>
 
       <!-- Save profile (quiz-takers only). FUTURE: "Email me these tips & links" slots in right here. -->
@@ -2379,7 +2379,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="ss-shop-sub">Chosen with you in mind.</div>
   </div>
   <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
-  <div class="shop-disclosure">Some links may earn us a small commission, at no extra cost to you.</div>
+  <div class="shop-disclosure">Some links may earn us a commission.</div>
   <div class="ss-shop-talk">Want to talk it through? <span onclick="openChat()">Ask your stylist &rarr;</span></div>
 </div>
 
@@ -2445,7 +2445,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
     </div>
     <div class="chat-privacy">&#128274; Your messages and photos are private (no one reads them), and never stored on our servers.</div>
-    <div class="chat-disclosure">Some links may earn us a small commission, at no extra cost to you.</div>
+    <div class="chat-disclosure">Some links may earn us a commission.</div>
     <div id="chatFresh" style="text-align:center;margin:-2px 0 4px"><button class="chat-fresh" onclick="askClearChat()">Start a fresh conversation</button></div>
     <div class="chat-input-wrap">
       <button class="chat-photo-btn" onclick="document.getElementById('chatPhotoIn').click()" aria-label="Send a photo">📸</button>
@@ -3938,7 +3938,7 @@ const FIND_LABEL='Find it &rarr;';
 //   style screen, this constant (the Wardrobe "Ideas" carousels), and
 //   `.chat-disclosure` in the stylist chat. The Edit and the Mall have their own,
 //   longer, "nothing here is chosen by AI" version -- leave those alone.
-const AFFIL_NOTE='<div class="shop-disclosure">Some links may earn us a small commission, at no extra cost to you.</div>';
+const AFFIL_NOTE='<div class="shop-disclosure">Some links may earn us a commission.</div>';
 function _shopCard(item,topHtml){
   const key=resolveStore(item.store);
   const url=getStoreUrl(item.store,item.name,item.search);
