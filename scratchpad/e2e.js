@@ -154,6 +154,14 @@ ok('no name in the response', !peek.body.includes('Catherine'), peek.body);
 ok('no portrait in the response', !peek.body.includes('portrait'), peek.body);
 
 console.log('\n5. The in-app "Find my results" box points her at her email');
+// Drive it the way she reaches it: on the welcome screen, form opened via
+// showRestore(). Without this, #restoreForm stays display:none and every
+// visibility assertion below would pass or fail for the wrong reason.
+await page.evaluate(() => {
+  document.querySelectorAll('.scr').forEach(s => s.classList.remove('act'));
+  document.getElementById('s-wel').classList.add('act');
+  window.showRestore();
+});
 await page.evaluate(() => { document.getElementById('restoreEmail').value = 'e2e@example.com'; return window.restoreResults(); });
 await page.waitForTimeout(400);
 const msg = await page.evaluate(() => document.getElementById('restoreMsg').textContent);
@@ -162,6 +170,30 @@ ok('it says a link has just been sent', /just sent you a link/i.test(msg), msg);
 ok('it names the welcome email as a fallback', /welcome email/i.test(msg), msg);
 ok('it still offers the quiz as a way forward', /style quiz/i.test(msg), msg);
 ok('it does not dump her results on screen', !/quietly confident|Updated portrait/i.test(msg));
+// The form has done its job — a big black button above the quiet confirmation
+// is the loudest thing on screen at the moment it means least.
+let askShown = await page.evaluate(() => {
+  const a = document.getElementById('restoreAsk');
+  return !!a && a.offsetParent !== null;
+});
+ok('the email field and button stand down after sending', !askShown);
+ok('but she is offered a way back if she mistyped', /different email/i.test(msg), msg);
+// …and that way back really works.
+await page.evaluate(() => window.restoreAskAgain());
+await page.waitForTimeout(200);
+const backState = await page.evaluate(() => {
+  const a = document.getElementById('restoreAsk');
+  return {
+    shown: !!a && a.offsetParent !== null,
+    value: document.getElementById('restoreEmail').value,
+    msg: document.getElementById('restoreMsg').textContent
+  };
+});
+ok('"Try a different email" brings the form back', backState.shown);
+ok('…cleared, ready for a new address', backState.value === '' && backState.msg === '');
+// Send again so the rest of the section tests the sent state.
+await page.evaluate(() => { document.getElementById('restoreEmail').value = 'e2e@example.com'; return window.restoreResults(); });
+await page.waitForTimeout(300);
 // The message must be identical for an address that has no account — otherwise
 // this box tells a stranger who uses Style Star.
 await page.evaluate(() => { document.getElementById('restoreEmail').value = 'nobody-at-all@example.com'; return window.restoreResults(); });
