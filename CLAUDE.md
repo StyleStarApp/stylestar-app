@@ -725,7 +725,7 @@ not only in the privacy policy.
   2. `.shopdisc` under **Shop your style** on the photo results (`#shopContentPhoto`) — already existed
   3. `.shopdisc` under **Shop your style** on the Style Portrait (`#shopContent`) — added
   4. `.shop-disclosure` on the **Shop your style / wishlist screen** (`s-shopstyle`) — added
-  5. **`AFFIL_NOTE`**, the JS constant, injected under every **Wardrobe "Ideas" carousel** — added
+  5. `.wdr-disclosure` **once at the top of Your Wardrobe**, below the tabs (was per-carousel; see below)
   6. `.chat-disclosure` in the **stylist chat** (the linkifier turns store names in her answers into links,
      so this screen needs one too) — added
   The Edit and the Mall keep their own longer *"nothing here is chosen by AI"* version. **Leave those alone.**
@@ -747,10 +747,30 @@ not only in the privacy policy.
   carousel at her own phone width). Her pick reads most like a quiet footnote precisely because it explains
   least. Verified one line on **all six surfaces at both 390px and 360px** (`scratchpad/fitcheck.js`) — 360px
   matters because that is where Display Zoom users land, and one candidate passed at 390 and failed at 360.
-- ▶ **STILL OPEN, flagged for her not fixed: FREQUENCY, not wording.** In Your Wardrobe the notice appears under
-  **every** carousel she opens, so opening five items shows it five times. That is arguably the real "reminding
-  her so much" problem. Left alone deliberately: keeping the disclosure next to the links is the safe reading of
-  the FTC rule, and thinning it out is a judgment call that is hers to make, not one to make quietly.
+- ✅ **THEN THE FREQUENCY WAS FIXED TOO (same day), because the repetition was the real problem.** Measured
+  first: opening five Wardrobe items leaves **five carousels open at once and five identical notices on one
+  ~7,300px page**. Cath asked for a judgement, worried only about affiliate approval. The answer given, and it
+  is worth reusing: **reviewers check that a disclosure exists and is findable, not how many times it appears.**
+  The norm across approved affiliate sites is one per page. Rejections come from having NONE, thin link-farm
+  content, no privacy policy, or no traffic. And the FTC "repeat it" guidance is about **coverage** (someone
+  landing mid-page on a long page), not about tagging every block of links.
+- **▶ THE DECIDING ARGUMENT, and it generalises: every other screen already showed it once.** Wardrobe repeating
+  was never a compliance decision, it was an accident of the carousel rendering per item. So the change brought
+  the odd screen into line rather than carving out an exception. Now **one line at the top of Your Wardrobe**,
+  and the carousels carry none.
+- ⚠️ **TWO PLACEMENT TRAPS, both real, both hit:**
+  1. **Directly under the "Your Wardrobe" title it read like a TAGLINE for the page** — as if the wardrobe's
+     subtitle were a commission notice. Moved **below the tabs**, next to "Tap either list", where it reads as
+     plain page chrome. Rendered and eyeballed before shipping; the measurement alone would not have caught it.
+  2. **It must NOT go inside `.wdr-howto`.** That block collapses to one line once she has hearted 3+ items, so
+     a disclosure living inside it would silently vanish for exactly the returning users who shop most. It is
+     its own always-present element, and a test asserts it sits **outside both panes and before them**, so one
+     copy covers My List and What's Trending alike.
+- **Tests now assert the fix directly:** open five carousels, confirm five really do open, and confirm **exactly
+  one** notice is visible and that the carousels carry none.
+- ▶ **Trivially reversible** if a network ever asks for more: append a `.shop-disclosure` div to the html
+  `_wardrobeIdeaGen()` builds, right after the `.wdr-swipe-hint`. (The old `AFFIL_NOTE` constant was deleted
+  once every copy became plain markup — all six are now findable by grepping `may earn us a commission`.)
 - ⚠️ **A DISCLOSURE THAT CANNOT BE READ IS NOT A DISCLOSURE.** The chat line was first styled `#9a9a9a` at
   10.5px, one notch quieter than the privacy line above it — which **measured 2.5:1 contrast and failed.** That
   instinct (a legal notice should be the quietest thing on screen) is exactly backwards, and it matters double
