@@ -9,6 +9,145 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (updated 2026-07-29)
 
+### ⭐ 0a. 🔒 `user-data.js` IS LOCKED DOWN (2026-07-29). Read before touching saving or restoring.
+Cath brought two briefs back from a Cowork conversation — a security review of `user-data.js` and a privacy-copy
+rewrite. **Both were accurate, checked line by line against the real code.** The security one was urgent and is
+now done; the copy one is the natural next piece of work.
+- ⚠️ **WHAT WAS WRONG: an email address was treated as a password.** `GET ?email=<anyone>` returned that woman's
+  whole record — name, sizes, fit, shoe width, loved colours, never-wear list, portrait, wardrobe and wishlist —
+  and `Access-Control-Allow-Origin: '*'` meant **any other website's JavaScript could make that call**. `POST`
+  had the same gap in reverse: anyone could overwrite anyone's profile. **Only four people had saved profiles
+  (Cath, her mom, her sister, her friend Jennifer), she confirmed they don't mind, so no notification was owed.**
+  At real scale this would have been a genuine breach.
+- **▶ THE FIX IN ONE LINE: an email now gets you a LINK, never DATA.**
+  - `?token=` returns her results. `?email=` returns **the identical response whether or not the account
+    exists** — otherwise the endpoint stays an enumeration oracle, a way to check who uses Style Star.
+  - `POST` creating a **new** record is open (that's a first save, and it returns a token). `POST` over an
+    **existing** profile needs that token. Softening: a record with no `portrait` was never a finished profile,
+    so a real first save can take it over — that's the squatter case, and it is a `TODO`, not email verification.
+  - Tokens now carry an **issued-at stamp and expire after 30 days**. A forwarded welcome email was previously
+    permanent access. **Legacy tokens (a bare email, pre-timestamp) are still honoured** so links already sitting
+    in sent welcome emails don't break; there's a `TODO` to drop that support around November.
+  - **Rate limiting** on both functions (20/min per IP on `user-data`, 30/min on `style-ai`, in-memory).
+- ⚠️ **ONE DELIBERATE DIFFERENCE FROM `style-ai.js`, and it matters.** Both share the origin check, but
+  `style-ai` allows **any** self-reported `Host` (for deploy previews). Copying that verbatim into `user-data`
+  left a hole: a non-browser client can set `Host` **and** `Origin` to its own domain and walk through.
+  `user-data` now allows a self-host **only when it matches `*.netlify.app`**. **The test caught this, not
+  review** — the first run "passed" the cross-origin check for the wrong reason. Previews still work (tested).
+- ⚠️ **THE ORIGIN CHECK IS A SPEED BUMP, NOT AUTHENTICATION.** `Origin` and `Referer` are trivially forged. It
+  sits **in front of** the token checks, never instead of them. Don't ever let it be the only guard.
+- ▶ **THE ONE REAL BEHAVIOUR CHANGE, tell Cath if she notices it:** typing an email into "Find my results" no
+  longer restores inline. It now says *"Check your email — your link back to your results is in the welcome
+  email we sent you."* **That is true today** because `addToMailerLite` already writes a `restore_token` field
+  on every save and the app already exchanges `?r=<token>`. The message is **identical for an address with no
+  account**, on purpose. Consequence: a woman who deleted her welcome email is stuck until the on-demand send
+  is wired (see 0b).
+- **Client side:** one shared `saveUserRecord()` replaced five hand-rolled POSTs, so the token logic lives in
+  one place. It stores `ss_token` from the first save and sends it on every later save; `autoRestoreFromLink()`
+  writes it too, **so a woman restoring on a new phone can save again immediately** (tested — this was the
+  regression most likely to bite).
+- **Verified by two suites, 78 checks, all passing.** `scratchpad/sec.js` (55) runs the **real handler** with
+  Supabase and MailerLite stubbed: no data by email, identical bodies for existing vs unknown, tampered /
+  truncated / expired / legacy tokens, cross-origin and forged-Host rejection, deploy previews still working,
+  another account's token not unlocking this one, rate limiting per IP. `scratchpad/e2e.js` (23) drives the
+  **real `index.html` in Chromium against the real function**: save → token stored → save again → stranger
+  refused → restore from the emailed link on a fresh browser context → save again from that device → expired
+  link refused → zero JS errors.
+- 🔎 **FOUND WHILE TESTING, pre-existing and deliberately NOT fixed** (the brief asked for a small diff):
+  **`saveUserData()` and `saveUserDataPhoto()` are dead code.** They read `stayInput` / `stayName` / `stayForm`
+  / `staySection`, and **none of those ids exist in the markup any more**; nothing calls either function. They
+  would throw if wired to a button. Worth deleting in a tidy-up session, not in a security diff.
+
+### ⭐ 0b. ▶ STILL OPEN AFTER THE LOCKDOWN — the two follow-ups
+1. ✅ **On-demand restore email — CODE IS BUILT, waiting on ONE thing Cath does in MailerLite.**
+   Cath confirmed her welcome email is triggered by **"when subscriber joins a group"**, which is the most basic
+   MailerLite trigger and settles the whole approach — **no plan upgrade, and no dependency on a field-update
+   trigger.** Her plan (the "Comfort plan", 500–1,000 subscribers, 10,000 emails/month) is far more than enough.
+   - **How it works:** `sendRestoreLink()` writes a fresh `restore_token` onto her subscriber record, then adds
+     her to a **second, separate group `Style Star Restore Requests`** — and that join is what fires the
+     automation. Deliberately NOT the signups group, or asking for a link would re-send the welcome email.
+   - ⚠️ **THE NON-OBVIOUS BIT: she is REMOVED from the group first, then added.** MailerLite fires the trigger
+     on the *join*, so a woman already sitting in the group would ask for a link and **silently get nothing**.
+     Leaving and rejoining makes every request a real join. A test asserts the DELETE happens before the POST,
+     and that asking twice joins twice.
+   - The group is **created via the API if it doesn't exist**, so the first request can't fail on a missing group.
+   - ▶ **WHAT CATH STILL HAS TO DO (the only blocker):** build an automation in MailerLite triggered by joining
+     **`Style Star Restore Requests`**, whose email links to `https://stylestar.app/?r={$restore_token}` — the
+     same field her welcome email already uses.
+   - ⚠️ **AND THEN ONE STRING CHANGES.** The copy currently says *"your link back to your results is in the
+     welcome email we sent you"* — true today. The moment her automation is live it should become *"we've just
+     sent you a link."* **Deliberately not written yet**, on the same principle as Amazon's required sentence
+     and the Anthropic training claim: never publish a promise that isn't true yet.
+   - ✅ **CATH BUILT THE AUTOMATION (2026-07-29) AND IT IS TESTED END TO END.** She added herself to the group
+     manually, the email arrived, and **the gold button landed her in her Style Portrait**. The whole chain is
+     proven: request → group join → automation → token → restored results.
+   - ⚠️ **MAILERLITE SENDS EACH EMAIL ONLY ONCE PER 24 HOURS PER PERSON**, and says so in the re-entry settings:
+     *"If a customer is set to receive the same email again within 24 hours, they will be removed from the
+     automation."* **This is a platform limit, not a setting** — it cannot be coded around. So a woman who asks
+     twice in a day gets one email. Accepted deliberately: it is sane anti-spam, and the app's copy also points
+     her at the welcome email, which is a real fallback inside that window. ▶ **Consequence for testing: never
+     test the restore email twice in a row** — the second send is suppressed and it looks like the re-entry
+     setting is broken when it isn't. Use the automation's **Test** button instead.
+   - ⚠️ **TWO SETTINGS THAT FAIL SILENTLY, both found only by looking at the real screen:** *Allow subscribers
+     re-enter automation* defaults to **OFF** (so each woman could get a link once, ever), and once ticked,
+     *Time for re-enter* defaults to **"Add delay 1 day"** rather than "As soon as they match the triggers".
+     Both are now correct. Neither would have raised any error.
+   - ⚠️ **PICKING AN EXISTING EMAIL AS THE DESIGN OVERWRITES THE SUBJECT AND THE EMAIL NAME.** Cath set the
+     subject correctly, then chose the welcome email as the starting design, and the first live test arrived
+     titled **"Welcome to Style Star"**. **Re-check the subject AFTER choosing a template, not before.**
+   - **The email body lives in a "Standard hero" block**, whose slots are fixed (heading → text → button). The
+     button cannot be dragged and there is no typing below it. The sign-off goes in the block's
+     **"Additional text"** toggle, which is the slot underneath the button.
+
+### ⭐ 0b-i. ▶ THE "there" PLACEHOLDER — leave it, but the overwrite bug is FIXED (2026-07-29)
+When a woman never gives her first name, `user-data.js` writes the literal word **`there`** into her MailerLite
+name field so the greeting reads *"Hi there,"* rather than *"Hi ,"*. Cath saw this on her own test email and
+asked what to do.
+- **DECISION: leave the behaviour.** *"Hi there,"* is warm and correct for a nameless subscriber, and the
+  alternative (empty name + a MailerLite fallback value on the personalization tag) means editing her one live,
+  working welcome email. Getting that wrong ships *"Hi ,"* to real women. Not worth it for something invisible.
+  ▶ Her own record was simply missing a name; she set it in MailerLite by hand.
+- ⚠️ **BUT A REAL BUG WAS HIDING INSIDE IT, and it is fixed.** Every save wrote the name field, so a save from a
+  screen that didn't know her name would overwrite **`Sarah`** with **`there`** permanently. `nameIsSafeToWrite()`
+  now looks up the existing subscriber and **refuses to let the placeholder replace a real name**; a real name
+  always wins, and the placeholder may still replace an empty field or itself. Five checks cover it.
+- ▶ **The general lesson, worth keeping:** a sentinel value stored in a field meant for real data is a fudge that
+  works until something overwrites the real data with it. If the placeholder ever needs to go, the honest fix is
+  a MailerLite fallback value, not a magic string in the database.
+2. ✅ **The privacy-copy rewrite (the second Cowork brief) — APPLIED, plus CCPA and a real deletion path.**
+   The diagnosis was fair and every claim checked out: the copy said *"never stored on our servers"*, *"it never
+   touches our servers"*, *"no person at Style Star ever has access"* and *"your details are private (no one
+   sees them)"* — and none of those survived contact with Supabase, MailerLite, Netlify Forms and a chat
+   history that really does sit in `localStorage.ss_chat`. All seven replacements are in.
+   - ⚠️ **ITS LINE NUMBERS HAD DRIFTED** (it cited 2450 for `.chat-privacy`, really 2547). **Matched on text.**
+     Any future brief from a Cowork conversation should be assumed to have drifted the same way.
+   - ✅ **THE ONE CLAIM IT ASKED US TO CHECK IS TRUE.** Anthropic's commercial terms say *"Anthropic may not
+     train models on Customer Content from Services."* So the FAQ can honestly say her photos and chats are not
+     used to train the AI. **Verified, not assumed** — the brief was right to flag it.
+   - **Its sub-processor list was correct** and is now named in the policy: Anthropic, Supabase, MailerLite,
+     Netlify, Plausible (confirmed live at `index.html` line 26).
+   - ⚠️ **THE EM DASHES WERE CONVERTED TO COMMAS.** The brief's copy is full of them and the house style is no
+     dashes anywhere. Watch for this on every pasted-in draft.
+   - ✅ **Added a California / CCPA section** — and the honest version is *stronger* than boilerplate, because
+     "we do not sell personal information, and we never have, so there is nothing to opt out of" is a real
+     promise rather than a checkbox.
+   - ✅ **DELETION IS NOW A MECHANISM, NOT A PROMISE.** A `DELETE` handler removes the Supabase row **and** the
+     MailerLite subscriber in one call. Two ways in: **her own restore token** (self-service, ready for a button
+     whenever we add one) or an **`x-admin-secret` header** matching a new **`ADMIN_SECRET` Netlify env var**,
+     so Cath can action an emailed request without touching two dashboards. **Never by bare email** — that
+     would let anyone delete anyone. ▶ **Cath has to set `ADMIN_SECRET` in Netlify** for the admin route to do
+     anything; with the variable unset the header is simply ignored (tested).
+   - ▶ **STILL OPEN, deliberately:** there is **no in-app delete button yet**. The policy's promise ("email us")
+     is now backed by one call instead of manual work, which is what the brief asked for. A self-service
+     control is a small follow-up, but it is new UI on a sensitive action and **Cath should see it rendered
+     before it ships**.
+   - **Verified by `scratchpad/copy.js`, 41 checks** in a real Chromium: every retired promise is gone from the
+     whole file, each new section actually *renders and is visible* on the right screen, the policy text is in
+     the **raw served HTML** (a reviewer's bot runs no JS), no mojibake, no overflow at 360px, zero JS errors.
+     ⚠️ **The preferences line is built at runtime by `renderPrefSizes()`**, so a plain `querySelector` finds
+     nothing — the test renders it into a scratch node. An empty string quietly passed the "no longer says…"
+     check before that was fixed, which is the classic false-negative shape.
+
 ### ⭐ 0. ✅ MY WISHLIST IS BUILT (2026-07-29). Read this before touching either list.
 Cath asked for the saved list and it shipped this session, together with the naming and iconography work it
 forced. **The headline: Style Star now has TWO lists and they must never be conflated again.**
