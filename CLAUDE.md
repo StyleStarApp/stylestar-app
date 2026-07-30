@@ -9,10 +9,20 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (updated 2026-07-30, second session)
 
-### ⭐ 0-NEWEST. 🧭 THE NAVIGATION FIX IS BUILT — on `claude/style-star-continue-0m9ty9`, NOT yet merged
+### ⭐ 0-NEWEST. 🧭 THE NAVIGATION FIX IS LIVE — merged as #697 + #698, and CATH LOVES IT
 Cath picked **Option C** from the rendered footer comparison, then mid-build reconsidered the hamburger and
 asked for one **in addition to** the footers ("the footers there is not room to list everything"). All three
-pieces are built, verified and pushed; **she has seen preview images and should tap through live after merge.**
+pieces merged and live. **Her live reaction, verbatim-ish:** *"Oh wowww I LOVE the new menu chip top left...
+so user friendly... One of my concerns has been that she will get stuck or won't see everything we have to
+offer. I love this!!!"* (she liked the drawer font too). That concern — a woman getting stuck / not seeing
+the offering — is the product worry the Menu answers; remember it when weighing future nav ideas.
+- ✅ **HER LIVE TESTING FOUND ONE REAL BUG, fixed + merged same hour (#698):** she left a mid-way quiz via
+  the new Menu and the **"1 of 12" progress bar followed her** onto the Analyze photo screen. The old exits
+  (finish, back out of question 1) each hid the bar BY HAND; the new exits (Menu/logo/footer) sailed past
+  those. **`show()` now owns the bar — visible on s-quiz, hidden everywhere else** — which also brings it
+  back when browser Back returns her into a mid-way quiz. ▶ **The general lesson: adding new EXITS to a
+  flow surfaces every piece of screen state that was only cleaned up by the OLD exits.** menu.js covers her
+  exact repro (56 checks now).
 1. **ONE standard footer everywhere** (replacing the eight sets): `Home ★ Shop ★ My Story ★ FAQ` + a quieter
    `Privacy · Terms` second row. ▶ **Every footer container carries `data-std-foot` and is filled at boot by
    `_stdFootHTML()` — ONE template, so the sets can physically never drift apart again. To change the footer,
