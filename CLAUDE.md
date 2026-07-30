@@ -464,7 +464,16 @@ Altuzarra), each linking to the actual product page.
   feeds (the full ChatGPT experience, gated behind affiliate approvals anyway). Offered, not built: a
   prototype of chat-with-search for a side-by-side comparison whenever she wants to evaluate it.
 
-### ▶ NEW INPUT FOR THE 0c CONVERSATION (2026-07-29, late): a Cowork spec is parked at `docs/curated-catalog-spec.md`
+### ▶ THE FEEDS BUILD PLAN IS WRITTEN AND PARKED AT `docs/product-feeds-plan.md` (2026-07-30, Cath asked for it)
+After the third live search-chat test, Cath asked the core question: *"is there a way for style star to have
+access to the same info chat GPT was able to pull?"* The answer given (and she found it clarifying): **ChatGPT's
+catalog is OpenAI-private — retailers upload feeds directly to them; there is no door for outside apps. But the
+SAME retailers hand the SAME feeds to the affiliate networks, so the affiliate approvals at money-path step 7
+are ALSO the data: one approval, two prizes (commission + catalog).** The plan doc is shovel-ready for approval
+day: nightly feed ingest into Supabase → `product-search` function → chat answers from OUR catalog → cards get
+real photos → "in your size" honestly returns → wishlist gets live prices. Standing rules carried over:
+commission data never ranks, never-wear filters apply, the Edit stays hand-picked. **Trigger: the first
+"you're approved" email from any network.** Until then, the tightened search chat is the floor (see 0-newest).
 Cath brought back a full spec from Cowork — **"Option 3: your own curated catalog"** — real products she picks,
 tagged by 9 style families + attrs/patterns/sizes, hard-filtered by the archetype so never-wear finally becomes
 structural. It references a **companion spreadsheet that was NOT uploaded** (ask her for it if this goes ahead).
