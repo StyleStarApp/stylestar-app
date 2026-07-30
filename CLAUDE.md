@@ -374,6 +374,30 @@ the store audit.
   still does not see real inventory. Saving a link that lands badly is worse than not saving it, so **her
   homework item 6 — the quality gate — is now the highest-value thing she can do**, more so than before.
 
+### ▶ NEW INPUT FOR THE 0c CONVERSATION (2026-07-30): CATH'S ChatGPT COMPARISON, decoded
+Cath photographed a tan suede baguette bag, asked BOTH our stylist chat and ChatGPT to find one like it, and
+shared the ChatGPT link. **Our stylist described the bag well but guessed** (its "Miu Miu Suede Bag" search
+landed on 48 results of loafers at Nordstrom — the documented failure mode, live). **ChatGPT returned real
+products with prices** (Quince $158 "closest overall", Free People $78, MANU Atelier, Parisa Wang, SIMKHAI,
+Altuzarra), each linking to the actual product page.
+- ▶ **HOW, decoded from its link parameters** (`utm_campaign=openai_catalog`, `utm_medium=feed`,
+  `chatgpt_pla_product_feeds`): **OpenAI has built merchant PRODUCT FEEDS as platform infrastructure** —
+  retailers push live catalogs into a shopping database and ChatGPT searches that, plus ordinary web search
+  (it cited a People.com article and searched Reddit; "worked for 17s"). **Not a smarter model — better eyes.**
+  Say this plainly whenever the comparison comes up.
+- ▶ **WHAT OUR SIDE OFFERS (verified against current API docs 2026-07-30):** the Anthropic API has no shopping
+  catalog, but it has a **server-side web search tool ($10 per 1,000 searches = 1¢/search, plus tokens)** and a
+  **web fetch tool (free beyond tokens)**. Both support **`allowed_domains`** — ▶ meaning searches could be
+  restricted to **only Cath's 102 vetted stores**, which enforces the brand at the infrastructure level
+  (ChatGPT searches wherever the feeds point; we would search only where Catherine approved).
+- **Honest trade-offs, told to Cath:** a searching chat answer costs ~5-10¢ instead of ~1¢ and takes 10-20s
+  instead of a few; no product images/stock/size (those still need feeds); but "invented item at plausible
+  store" becomes "real item the model just looked at, real price, real page".
+- ▶ **THE LADDER NOW HAS FOUR RUNGS:** (1) affiliate tags (money only) · (2) **web search in the stylist —
+  NEW middle rung, no approvals needed, entirely in our control** · (3) filtered search URLs · (4) product
+  feeds (the full ChatGPT experience, gated behind affiliate approvals anyway). Offered, not built: a
+  prototype of chat-with-search for a side-by-side comparison whenever she wants to evaluate it.
+
 ### ▶ NEW INPUT FOR THE 0c CONVERSATION (2026-07-29, late): a Cowork spec is parked at `docs/curated-catalog-spec.md`
 Cath brought back a full spec from Cowork — **"Option 3: your own curated catalog"** — real products she picks,
 tagged by 9 style families + attrs/patterns/sizes, hard-filtered by the archetype so never-wear finally becomes
