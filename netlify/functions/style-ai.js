@@ -149,6 +149,16 @@ export default async (req) => {
       max_tokens: maxTokens,
       messages: body.messages
     };
+    const callAnthropic = () => fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify(payload)
+    });
+
     if (search) {
       payload.tools = [{
         type: 'web_search_20260209',
@@ -160,31 +170,42 @@ export default async (req) => {
       // platform's synchronous function time limit, and the page can show
       // "checking your stores" the moment a search actually starts.
       payload.stream = true;
-    }
 
-    const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (search) {
-      if (!anthropicRes.ok || !anthropicRes.body) {
-        // An API error is plain JSON. Hand it back as JSON so the page's
-        // non-stream path shows its normal friendly error.
+      // ⚠️ A store can block Anthropic's crawler (Gucci does, found LIVE on
+      // 2026-07-30), and ONE blocked domain in allowed_domains fails the WHOLE
+      // request with "The following domains are not accessible to our user
+      // agent: [...]". Which stores block is their choice and can change any
+      // day, so it cannot be a hardcoded list: parse the error, prune the
+      // blocked domains, and retry. Search simply doesn't see inside those
+      // stores; every other store keeps working.
+      for (let attempt = 0; ; attempt++) {
+        const anthropicRes = await callAnthropic();
+        if (anthropicRes.ok && anthropicRes.body) {
+          return new Response(anthropicRes.body, {
+            status: 200,
+            headers: { ...headers, 'Content-Type': 'text/event-stream' }
+          });
+        }
+        // An API error is plain JSON. Either prune-and-retry, or hand it back
+        // as JSON so the page's non-stream path shows its friendly error.
         const err = await anthropicRes.json().catch(() => ({}));
-        return new Response(JSON.stringify(err), { status: 200, headers });
+        const msg = (err && err.error && err.error.message) || '';
+        const listMatch = msg.match(/not accessible[^\[]*\[([^\]]*)\]/);
+        if (!listMatch || attempt >= 2) {
+          return new Response(JSON.stringify(err), { status: 200, headers });
+        }
+        const blocked = listMatch[1].split(',')
+          .map(s => s.trim().replace(/^["']|["']$/g, '').toLowerCase());
+        const pruned = payload.tools[0].allowed_domains.filter(d => !blocked.includes(d));
+        // No progress (nothing recognised, or nothing left) → give up honestly.
+        if (!pruned.length || pruned.length === payload.tools[0].allowed_domains.length) {
+          return new Response(JSON.stringify(err), { status: 200, headers });
+        }
+        payload.tools[0].allowed_domains = pruned;
       }
-      return new Response(anthropicRes.body, {
-        status: 200,
-        headers: { ...headers, 'Content-Type': 'text/event-stream' }
-      });
     }
 
+    const anthropicRes = await callAnthropic();
     const data = await anthropicRes.json();
 
     return new Response(JSON.stringify(data), { status: 200, headers });

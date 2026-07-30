@@ -108,6 +108,44 @@ ok('status 200 with JSON error (page shows friendly message)', res.status === 20
 data = await res.json();
 ok('error body intact, no content field', !data.content && data.type === 'error');
 
+console.log('\nA7. A crawler-blocked store is pruned and the call retried (found live: Gucci)');
+const blockedErr = (list) => new Response(JSON.stringify({
+  type: 'error',
+  error: { type: 'invalid_request_error', message: "The following domains are not accessible to our user agent: [" + list.map(d => "'" + d + "'").join(', ') + "]. Read more: https://support.anthropic.com/..." }
+}), { status: 400, headers: { 'Content-Type': 'application/json' } });
+let upstreamCalls = [], replyQueue = [];
+upstreamReply = () => { upstreamCalls.push(lastUpstream.body.tools[0].allowed_domains.slice()); return replyQueue.shift()(); };
+
+// One blocked domain → pruned, retried, streams.
+upstreamCalls = [];
+replyQueue = [() => blockedErr(['gucci.com']),
+              () => new Response(SSE_BODY, { status: 200, headers: { 'Content-Type': 'text/event-stream' } })];
+res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['gucci.com', 'nordstrom.com', 'saks.com'] }));
+ok('retried once', upstreamCalls.length === 2);
+ok('first call carried gucci.com', upstreamCalls[0].includes('gucci.com'));
+ok('retry pruned only the blocked store', JSON.stringify(upstreamCalls[1]) === JSON.stringify(['nordstrom.com', 'saks.com']));
+ok('reply streams through after the prune', (res.headers.get('content-type') || '').includes('text/event-stream') && (await res.text()) === SSE_BODY);
+
+// Two rounds of pruning still succeed.
+upstreamCalls = [];
+replyQueue = [() => blockedErr(['a.com']), () => blockedErr(['b.com']),
+              () => new Response(SSE_BODY, { status: 200, headers: { 'Content-Type': 'text/event-stream' } })];
+res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['a.com', 'b.com', 'c.com'] }));
+ok('two rounds of pruning reach a stream', upstreamCalls.length === 3 && JSON.stringify(upstreamCalls[2]) === JSON.stringify(['c.com']) && (res.headers.get('content-type') || '').includes('text/event-stream'));
+
+// Every domain blocked → honest JSON error, no infinite loop.
+upstreamCalls = [];
+replyQueue = [() => blockedErr(['a.com', 'b.com'])];
+res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['a.com', 'b.com'] }));
+ok('all blocked → JSON error after one call', upstreamCalls.length === 1 && (res.headers.get('content-type') || '').includes('application/json'));
+
+// Retry cap: never more than 3 upstream calls.
+upstreamCalls = [];
+replyQueue = [() => blockedErr(['a.com']), () => blockedErr(['b.com']), () => blockedErr(['c.com']),
+              () => new Response(SSE_BODY, { status: 200, headers: { 'Content-Type': 'text/event-stream' } })];
+res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['a.com', 'b.com', 'c.com', 'd.com'] }));
+ok('capped at 3 upstream calls, then JSON', upstreamCalls.length === 3 && (res.headers.get('content-type') || '').includes('application/json'));
+
 global.fetch = realFetch;
 
 // ===========================================================================
