@@ -14,10 +14,16 @@ After the ChatGPT comparison (see the 0c input below), Cath said *"I definitely 
 trust and more discernment to the stylist chat."* **Built on `claude/style-star-continuation-7ul18d`, verified
 by 40 new checks, NOT yet merged — she should run her suede-bag test live after merging.**
 - **What it is:** the chat request now carries `search:true` + a domain allowlist, and `style-ai.js` adds the
-  Anthropic **web search tool** (`web_search_20260209`, works on the existing `claude-sonnet-4-6`) — so the
+  Anthropic **web search tool** (`web_search_20250305` on the existing `claude-sonnet-4-6`) — so the
   stylist can look at real product pages before recommending. ▶ **Every search is restricted via
   `allowed_domains` to the 102 STORES hostnames** — built client-side by `_searchDomains()` from the real
   STORES table (one source of truth, nothing to drift on a rename), validated + capped server-side.
+- ⚠️ **THE BASIC SEARCH VARIANT IS DELIBERATE — do not "upgrade" it.** The newer `web_search_20260209`
+  (dynamic filtering) writes code-execution rounds between searches; a live run spent 61s in that machinery
+  across 5 searches WITHOUT EVER WRITING A WORD, and ▶ **the streamed function response gets hard-cut at
+  ~60s** (measured twice; stream ends mid-message, `stop_reason` never arrives, page correctly shows the
+  friendly error). Basic search goes query → results → answer; `max_uses` is 3 and the prompt says one
+  search is usually enough, two at most. If answers ever feel slow again, look HERE first.
 - ⚠️ **THE SECURITY SPLIT, keep it:** the client supplies only the domain LIST; the server builds the tool
   config itself, fixes `max_uses: 5`, validates hostnames by regex (a URL or path → 400), and **never forwards
   client-supplied `tools`** (tested). Origin gate + rate limit unchanged. Worst-case forged request = 5

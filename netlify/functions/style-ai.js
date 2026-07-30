@@ -18,7 +18,7 @@ const MAX_TOKENS_CAP = 1536;
 // only accepted as plain hostnames. Client-supplied `tools` are never
 // forwarded. A forged request can therefore spend at most SEARCH_MAX_USES
 // searches per call, inside the same origin + rate-limit gates as every call.
-const SEARCH_MAX_USES = 5;
+const SEARCH_MAX_USES = 3;
 const DOMAIN_RE = /^[a-z0-9][a-z0-9.-]*\.[a-z]{2,}$/i;
 function searchDomains(body) {
   if (body.search !== true) return null;
@@ -160,8 +160,12 @@ export default async (req) => {
     });
 
     if (search) {
+      // ⚠️ The BASIC search variant, deliberately. The newer _20260209 variant
+      // runs code-execution rounds to filter results, and a live run spent 60+
+      // seconds in that machinery without ever writing a word, hitting the
+      // platform's ~60s stream cut. Basic search goes query → results → answer.
       payload.tools = [{
-        type: 'web_search_20260209',
+        type: 'web_search_20250305',
         name: 'web_search',
         max_uses: SEARCH_MAX_USES,
         allowed_domains: search.domains
