@@ -7,13 +7,45 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-07-30, end of day)
+## ▶ NEXT SESSION — START HERE (updated 2026-07-30, second session)
 
-### ⭐ THE AGREED NEXT LEVER: THE NAVIGATION FIX (Cath's explicit yes, 2026-07-30)
-Open the next session by building the **footer + logo-home comparison for her to pick from** (the audit is done,
-see the NAVIGATION AUDIT section: clickable logo goes home everywhere, ONE standard footer, "home" = her hub,
-NOT a dropdown). ⚠️ Apply the mockup lessons: id-scope the mockup CSS, prove variants differ via computed
-styles, one tall labelled image, render BOTH states of anything togglable.
+### ⭐ 0-NEWEST. 🧭 THE NAVIGATION FIX IS BUILT — on `claude/style-star-continue-0m9ty9`, NOT yet merged
+Cath picked **Option C** from the rendered footer comparison, then mid-build reconsidered the hamburger and
+asked for one **in addition to** the footers ("the footers there is not room to list everything"). All three
+pieces are built, verified and pushed; **she has seen preview images and should tap through live after merge.**
+1. **ONE standard footer everywhere** (replacing the eight sets): `Home ★ Shop ★ My Story ★ FAQ` + a quieter
+   `Privacy · Terms` second row. ▶ **Every footer container carries `data-std-foot` and is filled at boot by
+   `_stdFootHTML()` — ONE template, so the sets can physically never drift apart again. To change the footer,
+   change that function and nothing else.** Containers keep their own class for placement only.
+2. **Every brand logo goes home** (`.go-home` + `goHome()`): Welcome Back hub if `ss_data` exists, Welcome if
+   not — the popstate branch, reused. Page-TITLE text logos (Mall sign, Edit title, "shop your style") are
+   deliberately NOT tappable; only the brand marks are.
+3. **The Menu** (her reversal, and it was reasoned, not a whim): the 07-29 audit ruled out a dropdown as a
+   REPLACEMENT for visible nav; as an ADDITION nobody loses a path, and the footer genuinely has no room for
+   all 13 destinations. ▶ **The trigger says "Menu" IN WORDS, never a bare ☰ icon — the mom lesson applied to
+   the fix itself.** Fixed top-left chip (hidden on s-chat + the two loading screens); left drawer grouped in
+   her hub language (Style / Shop / Build / About), Home on top, Privacy · Terms quiet at the end. Style Quiz
+   routes returning women through `retakeQuiz()` (keeps her name, tracks `retake:true`), new visitors through
+   `startQ()`. What's Trending lands straight on the trend tab. Drawer z 9610, deliberately BELOW the
+   entrance curtain (9998). Navigating always closes it (`show()` removes `menu-open`).
+- ⚠️ **Findings fixed during verification, don't undo:** (a) the FAQ/legal column is 248px at 360w and the
+  main row needs 246px — zero headroom, so `[data-std-foot] .sf-row` gap drops to 8px under 375px; (b) a
+  lighter quiet-row grey measured **4.4:1 on the FAQ cream and FAILED** — the quiet row keeps the main ink
+  `#6f6a63` and is quiet through SIZE (12px), ~4.8:1; (c) `.faq-head/.pp-head` step down 40px so the fixed
+  Menu chip never covers the letterhead logo (asserted disjoint at 390 AND 360).
+- **Verified: `scratchpad/nav.js` 55 checks + `scratchpad/menu.js` 50 checks** (both drive the real app in
+  Chromium: every screen's footer identical + visible, all links navigate, both goHome states, both menu
+  states, contrast against real painted backgrounds, browser Back after goHome, zero JS errors), full sweep
+  green (e2e 29 · copy 41 · hubs 34 · followups 37).
+- ▶ **AFTER MERGE, Cath should check on her phone:** the chip position over the boutique screens (it floats
+  over the framed rooms' top-left corner — fine in screenshots, her eye decides), the drawer feel, and the
+  40px letterhead step-down. Any tweak is CSS-only.
+- ▶ **Also this session:** the footer/logo-home comparison mockup that drove her pick lives at
+  `scratchpad/navmock/` (id-scoped CSS, computed-style proof, honest 390px wrap finding on Option D).
+
+### ⭐ STILL THE STANDING NEXT THINGS (unchanged from the morning entry)
+Her live suede-bag re-test of the search chat (now merged and live), then revisit the waiting-message copy
+AND the 15-20s pace question with her; the tester-invite gate stays hers.
 
 ### ▶ THREE DECISIONS FROM THE 2026-07-30 WRAP-UP (recorded verbatim-ish, they gate future work)
 1. **Search-chat pace: 15-20s is acceptable for now** — her words: *"as of right now I don't think 15-20
@@ -1303,7 +1335,7 @@ not only in the privacy policy.
   still resolve through `resolveStore` and that the URL still builds — **a rename is a crash risk**, per the
   alias lesson from 2026-07-27.
 
-### ▶ NAVIGATION AUDIT (2026-07-29) — Cath asked for a Home button; here is what is actually wrong
+### ▶ NAVIGATION AUDIT (2026-07-29) — ✅ BUILT 2026-07-30 (see 0-NEWEST at top; kept for the reasoning)
 She asked for "a home page button that maybe has a drop down menu for all our pages," noting the footers differ
 and some pages need Back buttons to escape. **She was right, and it measures worse than she described.**
 - **EIGHT different footer link sets:** Welcome / Welcome Back / global `.quiz-footer` all say *Shop · My Story ·
