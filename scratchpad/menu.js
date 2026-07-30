@@ -149,6 +149,35 @@ ok('no JS errors (fresh visitor)', fresh.errors.length === 0, fresh.errors.join(
 await fresh.context().close();
 
 // ---------------------------------------------------------------------------
+console.log("\n5b. Cath's catch: leaving a mid-way quiz must take the progress bar with it");
+const pq = await newPage(390, true);
+await pq.evaluate(() => { show('s-wel'); menuOpen(); });
+await pq.click('.menu-row:text-is("Style Quiz")');
+ok('quiz shows its progress bar', await pq.evaluate(() =>
+  getComputedStyle(document.getElementById('pw')).display !== 'none'
+  && document.getElementById('pl').textContent === '1 of 12'));
+await pq.evaluate(() => menuOpen());
+await pq.click('.menu-row:text-is("Analyze an Outfit")');
+ok('leaving via the Menu hides the "1 of 12" bar (her screenshot)', await pq.evaluate(() =>
+  document.querySelector('.scr.act').id === 's-photo'
+  && getComputedStyle(document.getElementById('pw')).display === 'none'));
+for (const [how, go] of [['footer link', () => showFAQ()], ['logo home', () => goHome()]]) {
+  await pq.evaluate(() => { show('s-wel'); menuQuiz(); });
+  await pq.evaluate(go);
+  ok('leaving via ' + how + ' hides it too', await pq.evaluate(() =>
+    getComputedStyle(document.getElementById('pw')).display === 'none'));
+}
+await pq.evaluate(() => { show('s-wel'); menuQuiz(); });
+await pq.evaluate(() => show('s-photo'));
+await pq.goBack();
+await pq.waitForTimeout(150);
+ok('browser Back INTO the mid-way quiz brings the bar back', await pq.evaluate(() =>
+  document.querySelector('.scr.act').id === 's-quiz'
+  && getComputedStyle(document.getElementById('pw')).display !== 'none'));
+ok('no JS errors (progress-bar drive)', pq.errors.length === 0, pq.errors.join(' | '));
+await pq.context().close();
+
+// ---------------------------------------------------------------------------
 console.log('\n6. Readability + fit at 360px');
 const p360 = await newPage(360, true);
 await p360.evaluate(() => { show('s-wel'); menuOpen(); });
