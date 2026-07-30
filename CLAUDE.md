@@ -61,14 +61,27 @@ the offering — is the product worry the Menu answers; remember it when weighin
   the hub behavior, deliberately identical; the first test run flagged it as a failure and it is not one.
   menu.js is now 61 checks (13 rows, both visitor states).
 
-### ⚠️ 0-URGENT. 💳 THE ANTHROPIC API ACCOUNT RAN OUT OF CREDITS (found live 2026-07-30 evening)
+### ⚠️ 0-URGENT. 💳 THE AI SURFACES ARE DOWN: API CREDITS + A TWO-ACCOUNT TANGLE (2026-07-30 evening, UNRESOLVED)
 Cath hit "couldn't load options right now" on Shop your style AND the chat's "I'm having a moment" at once.
 **One live POST to the function answered it: "Your credit balance is too low to access the Anthropic API."**
-Every AI surface shares that key, which is why everything failed together with friendly errors — the app code
-is fine. **Only Cath can fix it: console.anthropic.com → Plans & Billing → buy credits (and consider
-auto-reload so it never silently dies mid-demo again).** ▶ The searching chat costs ~5-10¢ per answer, so her
-own testing spends real money now; worth knowing before the tester circle ever gets invited. ▶ The diagnostic
-pattern (curl the LIVE function with `Origin: https://stylestar.app`) answered in one call again — reuse it.
+Every AI surface shares that key, so everything failed together with friendly errors — the app code is fine.
+- **What happened next, and where it stands:** Cath bought **$20 of credits + set auto-reload ($500 limit,
+  with notifications)** — ✅ good setup — **but the account she funded shows NO API key.** So she has TWO
+  Anthropic accounts: the funded one, and a different (login unknown) one that owns the key in Netlify's
+  `ANTHROPIC_API_KEY`. She was on her phone, understandably overwhelmed, and **chose to stop for the night.
+  The AI features stay down until this is done — that is expected, not a new bug.**
+- ▶ **THE DESK TASK (~10 min, walk her through it gently next time):** (1) console.anthropic.com in the
+  FUNDED account → API Keys → Create Key ("style-star"), copy it, never paste it in chat; (2) Netlify →
+  Site configuration → Environment variables → edit `ANTHROPIC_API_KEY` → paste new value — ⚠️ **keep its
+  production-only scope exactly as is** (that's the deliberate deploy-preview protection); (3) Deploys →
+  Trigger deploy; (4) Claude probes the live function to confirm. The old account's key then just sits
+  unused; tidy it whenever, nothing depends on it.
+- ▶ **Costs told to her (for the tester conversation later):** searching chat answer 5-10¢, everything else
+  ~1¢; her 10-tester circle ≈ $10-20 for a first month; ~100 active users ≈ $30-80/mo; the searching chat
+  is the cost lever if it ever needs tuning. One $100 affiliate purchase (~$3-10 commission) pays for a
+  woman's whole month of AI many times over.
+- ▶ The diagnostic pattern (curl the LIVE function with `Origin: https://stylestar.app`) answered in one
+  call again — reuse it, including to confirm recovery after the key swap.
 
 ### ⭐ STILL THE STANDING NEXT THINGS (unchanged from the morning entry)
 Her live suede-bag re-test of the search chat (now merged and live), then revisit the waiting-message copy
