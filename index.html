@@ -3169,6 +3169,14 @@ function show(id,skipHistory){
   // the chat (its own tight header) and the two loading moments.
   document.body.classList.remove('menu-open');
   document.body.classList.toggle('menu-hidechip',id==='s-chat'||id==='s-load'||id==='s-photo-load');
+  // The quiz progress bar ("1 of 12") belongs to the quiz screen, full stop.
+  // Before the Menu/logo/footer existed, the only exits from a mid-way quiz were
+  // finishing it or backing out of question 1, and each hid the bar by hand; the
+  // new exits sailed past those, so the bar followed Cath onto the photo screen
+  // (her catch, 2026-07-30). Owning it here also brings it BACK when browser
+  // Back returns her into a mid-way quiz.
+  var pw=document.getElementById('pw');
+  if(pw)pw.style.display=(id==='s-quiz')?'block':'none';
   var onWel=(id==='s-wel');
   // Screens with their own built-in footer + logo hide the shared global chrome:
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
