@@ -156,7 +156,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 let fnMode = 'stream';            // 'stream' | 'json' | 'error'
 let lastFnBody = null;
-const REPLY = 'Found it. The Sam Edelman Hazel pump from Nordstrom (~$140) is the closest real match to your photo.';
+const PRODUCT_URL = 'https://www.nordstrom.com/s/hazel-pump/7654321';
+const REPLY = 'Found it. The Sam Edelman Hazel pump from Nordstrom (~$140) [' + PRODUCT_URL + '] is the closest real match to your photo.';
+const VISIBLE = 'Found it. The Sam Edelman Hazel pump from Nordstrom (~$140) is the closest real match to your photo.';
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, ORIGIN);
@@ -236,12 +238,12 @@ await page.waitForFunction(() => {
   return last && last.style.display !== 'none' && last.textContent.indexOf('Found it.') === 0 && last.textContent.length < 90;
 }, null, { timeout: 5000 }).then(() => ok('reply renders progressively mid-stream', true))
   .catch(() => ok('reply renders progressively mid-stream', false));
-await page.waitForFunction((full) => {
+await page.waitForFunction((visible) => {
   const b = document.querySelectorAll('#chatMessages .chat-msg.bot');
   const last = b[b.length - 1];
-  return last && last.textContent === full && last.querySelector('a');
-}, REPLY, { timeout: 8000 }).then(() => ok('final message complete and linkified', true))
-  .catch(() => ok('final message complete and linkified', false));
+  return last && last.textContent === visible && last.querySelector('a');
+}, VISIBLE, { timeout: 8000 }).then(() => ok('final message complete, marker stripped, linkified', true))
+  .catch(() => ok('final message complete, marker stripped, linkified', false));
 const finalState = await page.evaluate(() => {
   const b = document.querySelectorAll('#chatMessages .chat-msg.bot');
   const last = b[b.length - 1];
@@ -254,7 +256,7 @@ const finalState = await page.evaluate(() => {
     lastHist: hist[hist.length - 1] || {}
   };
 });
-ok('a link points at a Nordstrom search', finalState.hrefs.some(h => h.includes('nordstrom.com')));
+ok('the tap target is the EXACT product page the stylist saw', finalState.hrefs.includes(PRODUCT_URL));
 ok('typing indicator removed', finalState.typingGone);
 ok('the live bubble was replaced, none left hidden', finalState.hiddenBubbles === 0);
 ok('reply saved to chat history', finalState.lastHist.role === 'assistant' && String(finalState.lastHist.content).indexOf('Found it.') === 0);
@@ -286,6 +288,55 @@ const stuck = await page.evaluate(() => ({
   hidden: document.querySelectorAll('#chatMessages .chat-msg.bot[style*="display: none"]').length
 }));
 ok('no leftover typing or hidden live bubbles', !stuck.typing && stuck.hidden === 0);
+
+console.log('\nB5. The direct-link pass, case by case');
+const linkCases = await page.evaluate((PU) => {
+  const run = (t) => linkStores(t);
+  const cases = {};
+  // Canonical: exact product URL becomes the href, marker vanishes.
+  let h = run('Try the Hazel pump from Nordstrom (~$140) [' + PU + '] for fall.');
+  cases.canonical = { html: h, ok: h.includes('href="' + PU + '"') && !h.includes('[') && h.includes('(~$140)') };
+  // Subdomain of an allowed store is allowed.
+  h = run('The Nova bag from Nordstrom (~$79) [https://m.nordstrom.com/s/nova/1]');
+  cases.subdomain = h.includes('href="https://m.nordstrom.com/s/nova/1"');
+  // A URL outside the 102 stores: marker stripped, store falls back to a search link.
+  h = run('A tote from Madewell (~$88) [https://evil.example.com/steal] is cute.');
+  cases.offList = !h.includes('evil.example.com') && !h.includes('[') && /href="[^"]*madewell/.test(h);
+  // javascript: smuggled in brackets never becomes a link.
+  h = run('A bag from Madewell (~$88) [javascript:alert(1)] is cute.');
+  cases.jsUrl = !h.includes('javascript:');
+  // Stray marker with no store in front never shows raw brackets.
+  h = run('This one is lovely [https://www.nordstrom.com/s/x/2] I promise.');
+  cases.stray = !h.includes('[') && !h.includes('href="https://www.nordstrom.com/s/x/2"');
+  // Two searched items in one answer both get their own product link.
+  h = run('The A bag from Nordstrom (~$79) [https://www.nordstrom.com/s/a/1] or the B bag from Saks (~$150) [https://www.saksfifthavenue.com/p/b-2]');
+  cases.two = h.includes('href="https://www.nordstrom.com/s/a/1"') && h.includes('href="https://www.saksfifthavenue.com/p/b-2"');
+  // A plain unsearched suggestion still gets the classic search link.
+  h = run('Try a navy linen blazer from Madewell for spring.');
+  cases.classic = /href="[^"]*madewell[^"]*navy/i.test(h) || /href="[^"]*madewell/.test(h);
+  return cases;
+}, PRODUCT_URL);
+ok('canonical marker → exact product href, brackets gone, price kept', linkCases.canonical.ok, linkCases.canonical.html.slice(0, 200));
+ok('subdomain of an allowed store accepted', linkCases.subdomain);
+ok('URL outside the 102 stores rejected, falls back to search link', linkCases.offList);
+ok('javascript: URL never linked', linkCases.jsUrl);
+ok('stray marker stripped, never linked', linkCases.stray);
+ok('two searched items → two product links', linkCases.two);
+ok('unsearched suggestions keep the classic search link', linkCases.classic);
+
+console.log('\nB6. Restored history renders the same direct link');
+await page.reload({ waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => typeof window.openChat === 'function');
+const restored = await page.evaluate((PU) => {
+  openChat();
+  const b = document.querySelectorAll('#chatMessages .chat-msg.bot');
+  for (const el of b) {
+    const a = el.querySelector('a[href="' + PU + '"]');
+    if (a) return { found: true, noBrackets: el.textContent.indexOf('[') < 0 };
+  }
+  return { found: false };
+}, PRODUCT_URL);
+ok('reloaded chat still links straight to the product', restored.found && restored.noBrackets);
 
 ok('zero page errors', errors.length === 0, errors.join(' | '));
 

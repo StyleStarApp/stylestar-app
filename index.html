@@ -6282,14 +6282,40 @@ function _brandSearchUrl(brand,item){
 // Words that get capitalised mid-sentence but are not brands. Without this,
 // "a blazer from Monday" or "pieces from Her closet" would get linked.
 const _NOTBRAND=/^(?:the|her|his|your|my|our|their|this|that|these|those|it|she|he|they|you|i|we|us|me|him|them|there|here|now|then|home|work|scratch|memory|experience|style star|catherine|monday|tuesday|wednesday|thursday|friday|saturday|sunday|january|february|march|april|may|june|july|august|september|october|november|december|spring|summer|fall|autumn|winter)$/i;
+// Only trust a direct product link when it is http(s) INTO one of our own 102
+// store domains. Anything else (another site, a javascript: url, a mangled
+// address) returns '' and the normal search-link passes take over.
+function _chatSafeUrl(u){
+  try{
+    var p=new URL(u);
+    if(p.protocol!=='https:'&&p.protocol!=='http:')return '';
+    var h=p.hostname.toLowerCase().replace(/^www\./,'');
+    var ok=_searchDomains().some(function(d){return h===d||h.slice(-(d.length+1))==='.'+d});
+    return ok?u:'';
+  }catch(e){return ''}
+}
 function linkStores(text){
   // Longest name first so "Saks Off 5th" wins over "Saks", and escape . + & etc.
   const storeNames=Object.keys(STORES).sort(function(a,b){return b.length-a.length})
     .map(function(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}).join('|');
+  // Pass 0: DIRECT PRODUCT LINKS from the searching stylist, written as
+  // "item from StoreName (~$price) [https://...]". The bracketed address is
+  // the exact product page the stylist saw in its search results; it becomes
+  // the tap target and the raw address never reaches her eyes. This is what
+  // lands her ON the bag instead of on a search box that may not find it.
+  let linked=text.replace(new RegExp('(\\s+(?:from|at)\\s+)('+storeNames+')(\\s*\\(~?\\$[^)]{1,14}\\))?\\s*\\[(https?:\\/\\/[^\\]\\s]+)\\]','gi'),function(match,joiner,store,price,url){
+    const cleanStore=resolveStore(store)||store;
+    const safe=_chatSafeUrl(url);
+    if(!safe)return joiner+store+(price||'');
+    return joiner.replace(/\s+$/,' ')+'<a href="'+safe.replace(/"/g,'%22')+'" target="_blank" rel="noopener">'+cleanStore+'</a>'+(price||'');
+  });
+  // A marker that did not fit the shape above (unknown store, stray link, a
+  // non-http scheme like javascript:) must never show as raw brackets in chat.
+  linked=linked.replace(/\s*\[[a-z][a-z0-9+.-]*:[^\]]*\]/gi,'');
   // Keep the stylist's own connector word. Rebuilding the sentence with a
   // hardcoded "from" silently rewrote her wording ("a blazer at Nordstrom"
   // came out as "a blazer from Nordstrom").
-  let linked=text.replace(new RegExp('([\\w\\s,"-]{3,40})(\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,joiner,store){
+  linked=_outsideLinks(linked,new RegExp('([\\w\\s,"-]{3,40})(\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,joiner,store){
     const cleanItem=_searchableItem(item);
     const cleanStore=resolveStore(store)||store;
     if(!cleanItem)return match;
@@ -6573,7 +6599,8 @@ SEARCHING REAL INVENTORY:
 - Do not search for general style advice, occasion guidance, or anything you can answer well from expertise. Most questions need no search.
 - One well chosen search is usually enough, two at most. Search, read the results, then answer. She is waiting, so never keep searching for a perfect result when a genuinely good one is already in front of you.
 - When you do search, recommend ONLY items you actually saw in the results. Use the real product name and the real price from the result, and the store it came from, still formatted as "item from StoreName (~$price)" with the store named exactly as it appears in the store list above.
-- If the results have no genuinely good match, say so honestly and give your best styling direction instead. Never invent an item you did not see, and never pad the answer with weak matches.
+- CRITICAL, THE LINK: after each searched item's price, put the item's exact product page address from the search result in square brackets, like this: the Nova Baguette Bag from Nordstrom (~$79) [https://www.nordstrom.com/s/nova-baguette/8467773]. Copy the address exactly as the result gave it, never build or shorten one yourself. The address becomes her tap target and she never sees it, so an item WITHOUT its bracketed address is a broken suggestion.
+- Hold a high bar for what counts as a match: shape, material and color should genuinely match what she asked for or showed you. ONE excellent match she can buy beats three loose ones. If nothing truly matches, say so plainly and offer your styling direction instead. Never invent an item, never pad with weak matches.
 - Never mention searching, tools, or the internet. You are a stylist who checked, not a search engine.
 
 SHIFT ONE NOTCH:
