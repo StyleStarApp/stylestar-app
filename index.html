@@ -729,6 +729,30 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 @media(max-width:374px){[data-std-foot] .sf-row{gap:8px}}
 /* every brand logo is a way home */
 .go-home{cursor:pointer}
+/* ===== THE MENU (labelled hamburger + left drawer), Cath's ask 2026-07-30 ===
+   The trigger carries the WORD "Menu" — a bare icon fails exactly the way the
+   grey Trending tab failed her mom. Drawer sits below the entrance overlay
+   (z 9998) so the curtain still covers everything on landing. */
+.menu-chip{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:10px;z-index:900;display:flex;align-items:center;gap:6px;background:rgba(251,250,247,.94);border:1px solid rgba(33,30,26,.22);border-radius:999px;padding:8px 13px;cursor:pointer;box-shadow:0 4px 10px -6px rgba(0,0,0,.4);-webkit-tap-highlight-color:transparent}
+.menu-chip svg{display:block}
+.menu-chip span{font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.12em;color:#3a352c;text-transform:uppercase}
+body.menu-hidechip .menu-chip{display:none}
+.menu-veil{display:none;position:fixed;inset:0;z-index:9600;background:rgba(20,17,12,.45)}
+.menu-panel{display:none;position:fixed;top:0;left:0;bottom:0;z-index:9610;width:min(300px,84vw);background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:8px 0 30px rgba(0,0,0,.35);overflow-y:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 22px 26px}
+body.menu-open .menu-veil{display:block}
+body.menu-open .menu-panel{display:block}
+.menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.menu-logo{width:58px;height:auto;display:block}
+.menu-x{background:none;border:none;font-size:17px;color:#6f6a63;cursor:pointer;padding:8px 6px}
+.menu-row{font:400 17px/1.2 'DM Serif Display',Georgia,serif;color:#1a1a1a;padding:11px 2px;border-bottom:1px solid rgba(33,30,26,.08);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.menu-homerow{border-top:1px solid rgba(33,30,26,.08)}
+.menu-grp{font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8a8474;margin:16px 0 3px;padding:0 2px}
+.menu-legal{margin-top:18px;display:flex;align-items:center;gap:8px;padding:0 2px}
+.menu-legal span{font:400 12px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
+.menu-legal i{color:#b0a998;font-style:normal;font-size:11px}
+/* the FAQ / Privacy / Terms letterhead logo sits top-left, exactly under the
+   fixed Menu chip — give those heads room so the two never overlap */
+.faq-head,.pp-head{margin-top:40px}
 .dc-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
 .dc-title{font-family:'DM Serif Display',Georgia,serif;font-size:28px;font-weight:400;color:#1a1a1a;margin-bottom:4px}
 .dc-subtitle{font-size:14px;color:#777;line-height:1.6;margin-bottom:1.5rem;font-style:italic;padding:0 0.5rem}
@@ -1981,6 +2005,40 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
   </div>
 
+<!-- ===== THE MENU (Cath's ask, 2026-07-30): a labelled hamburger, top left,
+     IN ADDITION to the standard footer. The trigger says "Menu" in words, not
+     a bare icon — the lesson from her mom's testing (visible beats clever) —
+     and the drawer lists every destination, which the footer has no room for. -->
+<button class="menu-chip" id="menuChip" onclick="menuOpen()" aria-label="Open menu">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3a352c" stroke-width="2.4" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  <span>Menu</span>
+</button>
+<div class="menu-veil" onclick="menuClose()"></div>
+<div class="menu-panel" id="menuPanel" role="dialog" aria-label="Style Star menu">
+  <div class="menu-head">
+    <img src="logo-star.png" alt="Style Star" class="menu-logo go-home" onclick="menuGo(goHome)">
+    <button class="menu-x" onclick="menuClose()" aria-label="Close menu">&#10005;</button>
+  </div>
+  <div class="menu-row menu-homerow" onclick="menuGo(goHome)">Home</div>
+  <div class="menu-grp">Style</div>
+  <div class="menu-row" onclick="menuGo(menuQuiz)">Style Quiz</div>
+  <div class="menu-row" onclick="menuGo(showPhoto)">Analyze an Outfit</div>
+  <div class="menu-row" onclick="menuGo(openChat)">Stylist Chat</div>
+  <div class="menu-grp">Shop</div>
+  <div class="menu-row" onclick="menuGo(showShop)">Style Star Mall</div>
+  <div class="menu-row" onclick="menuGo(showDream)">Style Star Edit</div>
+  <div class="menu-row" onclick="menuGo(openWishlist)">My Wishlist</div>
+  <div class="menu-grp">Build</div>
+  <div class="menu-row" onclick="menuGo(openWardrobe)">Your Wardrobe</div>
+  <div class="menu-row" onclick="menuGo(function(){openWardrobe('trend')})">What's Trending</div>
+  <div class="menu-grp">About</div>
+  <div class="menu-row" onclick="menuGo(showStory)">My Story</div>
+  <div class="menu-row" onclick="menuGo(showFAQ)">FAQ</div>
+  <div class="menu-legal">
+    <span onclick="menuGo(showPrivacy)">Privacy</span><i>&#183;</i><span onclick="menuGo(showTerms)">Terms</span>
+  </div>
+</div>
+
 <div class="scr" id="s-quiz">
   <div class="q-cat" id="qc"></div>
   <div class="q-tit" id="qt"></div>
@@ -3107,6 +3165,10 @@ function show(id,skipHistory){
   document.getElementById(id).classList.add('act');
   // Keep the What's Trending "New" pills honest wherever they appear.
   try{refreshTrendBadge();}catch(e){}
+  // Navigating always closes the menu drawer; the Menu chip stands down only on
+  // the chat (its own tight header) and the two loading moments.
+  document.body.classList.remove('menu-open');
+  document.body.classList.toggle('menu-hidechip',id==='s-chat'||id==='s-load'||id==='s-photo-load');
   var onWel=(id==='s-wel');
   // Screens with their own built-in footer + logo hide the shared global chrome:
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
@@ -3212,6 +3274,15 @@ function _stdFootHTML(){
     +'</div>';
 }
 document.querySelectorAll('[data-std-foot]').forEach(function(el){el.innerHTML=_stdFootHTML();});
+
+// ===== THE MENU (Cath's ask 2026-07-30) =====
+function menuOpen(){document.body.classList.add('menu-open')}
+function menuClose(){document.body.classList.remove('menu-open')}
+// Close first, then go — so the drawer never lingers over the new screen.
+function menuGo(fn){menuClose();fn()}
+// Style Quiz from the menu: a woman with saved results gets the retake flow
+// (keeps her name, tracks retake:true); a new visitor gets the fresh start.
+function menuQuiz(){if(localStorage.getItem('ss_data'))retakeQuiz();else startQ()}
 
 // Set initial state
 history.replaceState({screen:document.querySelector('.scr.act')?document.querySelector('.scr.act').id:'s-wel'},null,'');
