@@ -53,6 +53,23 @@ the offering — is the product worry the Menu answers; remember it when weighin
 - ▶ **Also this session:** the footer/logo-home comparison mockup that drove her pick lives at
   `scratchpad/navmock/` (id-scoped CSS, computed-style proof, honest 390px wrap finding on Option D).
 
+- ✅ **HER SECOND LIVE PASS ADDED TWO MENU ROWS (#700):** she spotted that Style Portrait and Shop your
+  Style were missing. Both added under the hub-mirroring groups: **Style Portrait uses `wbPortraitTap()`
+  directly** (portrait if she has one, quiz if not) and **Shop your Style gets `menuShopStyle()`** with the
+  same philosophy — a new visitor can't shop HER style before the app knows it, so it honestly routes to
+  the quiz. ⚠️ For an un-refined returning woman, Shop your Style shows the **refine nudge first** — that is
+  the hub behavior, deliberately identical; the first test run flagged it as a failure and it is not one.
+  menu.js is now 61 checks (13 rows, both visitor states).
+
+### ⚠️ 0-URGENT. 💳 THE ANTHROPIC API ACCOUNT RAN OUT OF CREDITS (found live 2026-07-30 evening)
+Cath hit "couldn't load options right now" on Shop your style AND the chat's "I'm having a moment" at once.
+**One live POST to the function answered it: "Your credit balance is too low to access the Anthropic API."**
+Every AI surface shares that key, which is why everything failed together with friendly errors — the app code
+is fine. **Only Cath can fix it: console.anthropic.com → Plans & Billing → buy credits (and consider
+auto-reload so it never silently dies mid-demo again).** ▶ The searching chat costs ~5-10¢ per answer, so her
+own testing spends real money now; worth knowing before the tester circle ever gets invited. ▶ The diagnostic
+pattern (curl the LIVE function with `Origin: https://stylestar.app`) answered in one call again — reuse it.
+
 ### ⭐ STILL THE STANDING NEXT THINGS (unchanged from the morning entry)
 Her live suede-bag re-test of the search chat (now merged and live), then revisit the waiting-message copy
 AND the 15-20s pace question with her; the tester-invite gate stays hers.
