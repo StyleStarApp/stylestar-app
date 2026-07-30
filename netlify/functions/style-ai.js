@@ -9,6 +9,29 @@ const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
 // "Couldn't load options right now". Still a hard bound on abuse.
 const MAX_TOKENS_CAP = 1536;
 
+// --- Web search (stylist chat only) ------------------------------------------
+// The chat can look at real inventory instead of guessing. The client sends
+// search:true plus the domain list built from its own STORES table, so there is
+// ONE source of truth for which stores exist and nothing server-side to drift
+// when Cath adds or renames a store. The server stays the authority on the
+// CAPS: the tool config is built HERE, max_uses is fixed HERE, and the list is
+// only accepted as plain hostnames. Client-supplied `tools` are never
+// forwarded. A forged request can therefore spend at most SEARCH_MAX_USES
+// searches per call, inside the same origin + rate-limit gates as every call.
+const SEARCH_MAX_USES = 5;
+const DOMAIN_RE = /^[a-z0-9][a-z0-9.-]*\.[a-z]{2,}$/i;
+function searchDomains(body) {
+  if (body.search !== true) return null;
+  const list = body.search_domains;
+  if (!Array.isArray(list) || list.length === 0 || list.length > 150) return { error: true };
+  const out = new Set();
+  for (const d of list) {
+    if (typeof d !== 'string' || d.length > 80 || !DOMAIN_RE.test(d)) return { error: true };
+    out.add(d.toLowerCase());
+  }
+  return { domains: [...out] };
+}
+
 // --- Rate limiting -----------------------------------------------------------
 // The origin check is a speed bump, not authentication — Origin and Referer are
 // trivially set by any non-browser client — and every call here costs real money
@@ -116,6 +139,29 @@ export default async (req) => {
 
     const maxTokens = Math.min(parseInt(body.max_tokens, 10) || 500, MAX_TOKENS_CAP);
 
+    const search = searchDomains(body);
+    if (search && search.error) {
+      return new Response(JSON.stringify({ error: 'Invalid request' }), { status: 400, headers });
+    }
+
+    const payload = {
+      model: 'claude-sonnet-4-6',
+      max_tokens: maxTokens,
+      messages: body.messages
+    };
+    if (search) {
+      payload.tools = [{
+        type: 'web_search_20260209',
+        name: 'web_search',
+        max_uses: SEARCH_MAX_USES,
+        allowed_domains: search.domains
+      }];
+      // Streaming does two jobs: a searching answer can run well past the
+      // platform's synchronous function time limit, and the page can show
+      // "checking your stores" the moment a search actually starts.
+      payload.stream = true;
+    }
+
     const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -123,12 +169,21 @@ export default async (req) => {
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: maxTokens,
-        messages: body.messages
-      })
+      body: JSON.stringify(payload)
     });
+
+    if (search) {
+      if (!anthropicRes.ok || !anthropicRes.body) {
+        // An API error is plain JSON. Hand it back as JSON so the page's
+        // non-stream path shows its normal friendly error.
+        const err = await anthropicRes.json().catch(() => ({}));
+        return new Response(JSON.stringify(err), { status: 200, headers });
+      }
+      return new Response(anthropicRes.body, {
+        status: 200,
+        headers: { ...headers, 'Content-Type': 'text/event-stream' }
+      });
+    }
 
     const data = await anthropicRes.json();
 

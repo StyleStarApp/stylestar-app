@@ -7,7 +7,48 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-07-29)
+## ▶ NEXT SESSION — START HERE (updated 2026-07-30)
+
+### ⭐ 0-newest. 🔎 THE STYLIST CHAT CAN SEARCH REAL INVENTORY (built 2026-07-30, Cath's explicit call)
+After the ChatGPT comparison (see the 0c input below), Cath said *"I definitely want to do this. It will add
+trust and more discernment to the stylist chat."* **Built on `claude/style-star-continuation-7ul18d`, verified
+by 40 new checks, NOT yet merged — she should run her suede-bag test live after merging.**
+- **What it is:** the chat request now carries `search:true` + a domain allowlist, and `style-ai.js` adds the
+  Anthropic **web search tool** (`web_search_20260209`, works on the existing `claude-sonnet-4-6`) — so the
+  stylist can look at real product pages before recommending. ▶ **Every search is restricted via
+  `allowed_domains` to the 102 STORES hostnames** — built client-side by `_searchDomains()` from the real
+  STORES table (one source of truth, nothing to drift on a rename), validated + capped server-side.
+- ⚠️ **THE SECURITY SPLIT, keep it:** the client supplies only the domain LIST; the server builds the tool
+  config itself, fixes `max_uses: 5`, validates hostnames by regex (a URL or path → 400), and **never forwards
+  client-supplied `tools`** (tested). Origin gate + rate limit unchanged. Worst-case forged request = 5
+  searches (~5¢) inside the same gates as any AI call.
+- ▶ **SEARCH RESPONSES STREAM (SSE pass-through), and that is load-bearing twice:** (1) a searching answer can
+  run past Netlify's synchronous function time limit — buffered JSON might just time out; (2) the page shows
+  **"Checking your stores for the real thing..."** the moment a `server_tool_use` block arrives, then renders
+  the reply progressively — a 15s answer feels like service, not a hang. Non-search calls (all other AI
+  surfaces) are byte-for-byte unchanged; a JSON response still renders via the old path, so the page degrades
+  gracefully against an old function build (tested).
+- **Prompt rules (chat only):** search only when she wants a real item / something like her photo; recommend
+  ONLY items actually seen, real product name + real price, still "item from StoreName (~$price)" — ▶ which
+  means **the existing linkifier needed zero changes** and search terms become real product names that land.
+  Never invent, never pad with weak matches, never mention searching or tools.
+- ⚠️ **KNOWN LIMITS, told to Cath:** ~5-10¢ and 10-20s for a searching answer; no images/stock/size (feeds
+  territory); rare `pause_turn` (server loop cap) would end an answer early — accepted for v1, revisit if seen.
+  ⚠️ **Live behavior is unverifiable from this sandbox** (deploy previews can't spend the production-scoped
+  key), so the real test is: merge → Cath re-runs the tan-suede-baguette photo test on her phone and compares
+  against the ChatGPT answer saved in the 0c section.
+- **Verified by `scratchpad/searchchat.js`, 40 checks:** Part A runs the REAL function handler in Node with
+  Anthropic stubbed (tool built server-side with fixed caps, domains lowercased/deduped/validated, injected
+  tools dropped, SSE passed through verbatim, API error → JSON, origin gate on the search path); Part B drives
+  the REAL chat UI in Chromium against a genuinely STREAMING fake endpoint (Playwright routes can't drip-feed —
+  the harness http server implements the endpoint): searching status mid-stream, progressive render, final
+  message linkified + saved, JSON fallback, error path, zero JS errors. Full sweep still green
+  (followups 37 · e2e 29 · copy 41 · hubs 34).
+- ✅ **Also this session:** My Wishlist row (live count pill + subtitle) added to the Style Portrait and photo
+  results Shop hubs — Cath's ask from 2026-07-29 — via a shared `[data-wl-sub]`/`[data-wl-count]` sync
+  (`scratchpad/hubs.js`, 34 checks).
+
+## ▶ PREVIOUS SESSION NOTES (2026-07-29)
 
 ### ⭐ 0-new. ✅ THE SECOND COWORK BRIEF SHIPPED (2026-07-29, evening) — 8 follow-ups, two commits
 Cath pasted a second Cowork brief (7 numbered as "seven", actually 8 items). **Every claim was verified against
