@@ -321,9 +321,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
 #s-wardrobe .wdr-tcard .tnf{font:italic 400 13px/1.4 'Fraunces',serif;color:#5c5648;margin-bottom:11px}
 #s-wardrobe .wdr-tcard .tlf{font:600 11.5px/1 'Jost',sans-serif;color:#8a6a1e;cursor:pointer}
-#s-wardrobe .wdr-foot{text-align:center;margin-top:26px;font:400 14px/1 'Jost',sans-serif;color:#6f6a63}
-#s-wardrobe .wdr-foot span.lnk{cursor:pointer}
-#s-wardrobe .wdr-foot span.st{color:#E6C24E;font-size:11px;margin:0 6px}
+#s-wardrobe .wdr-foot{text-align:center;margin-top:26px}
 /* Bottom-of-list "What's Trending" horizontal teaser (2nd entry point) */
 /* A real page break before What's Trending, so the secondary offer stops
    reading as part of the main list CTA. Uses the app's curtain stripe
@@ -684,9 +682,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-stay .ws-btn[disabled]{opacity:.6}
 #s-wishlist .wl-stay .ws-msg{font:400 12px/1.5 'Jost',sans-serif;color:#777;margin-top:8px;min-height:1px}
 #s-wishlist .wl-stay .ws-ok{font:400 13px/1.5 'Jost',sans-serif;color:#8a6d20}
-#s-wishlist .wl-foot{text-align:center;margin-top:26px;font:400 14px/1 'Jost',sans-serif;color:#6f6a63}
-#s-wishlist .wl-foot .lnk{cursor:pointer;text-decoration:underline;color:#6f6a63}
-#s-wishlist .wl-foot .st{color:#D9BE72;margin:0 9px;font-size:11px;vertical-align:1px}
+#s-wishlist .wl-foot{text-align:center;margin-top:26px}
 /* "Saved" confirmation toast: tells her the piece landed somewhere AND where
    that somewhere is, so the list is discoverable from the moment she uses it. */
 .wl-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(14px);z-index:9000;display:flex;align-items:center;gap:9px;background:#1a1a1a;color:#fff;border-radius:999px;padding:11px 8px 11px 16px;box-shadow:0 10px 26px -10px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;max-width:calc(100vw - 32px)}
@@ -713,9 +709,50 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .whatsnext-grid{display:flex;flex-direction:column;align-items:center;gap:8px}
 .share-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:12px}
 .quiz-footer{text-align:center;padding:1.25rem;border-top:1px solid #f0f0f0}
-.quiz-footer span.lnk{cursor:pointer;font:400 14px/1 'Jost',sans-serif;color:#6f6a63}
-.quiz-footer span.star{color:#E6C24E;font-size:12px;line-height:1}
-.quiz-footer-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+/* ===== THE ONE STANDARD FOOTER (Option C, Cath's pick 2026-07-30) =====
+   Every footer container carries data-std-foot and is filled at boot by
+   _initStdFooters() from ONE template (_stdFootHTML), so the links can never
+   drift apart again — that drift is how the app ended up with eight sets.
+   Containers keep their own class for PLACEMENT (margins, band background);
+   everything INSIDE is styled here and only here. */
+[data-std-foot] .sf-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+[data-std-foot] .sf-row .lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer;text-decoration:none}
+[data-std-foot] .sf-row .star{color:#E6C24E;font-size:12px;line-height:1}
+/* the quiet legal row: quiet through SIZE, not a lighter ink — a lighter grey
+   measured 4.4:1 on the FAQ page's cream and failed (the disclosure lesson:
+   a link she can't read isn't a link). Same ink as the main links, ~4.8:1. */
+[data-std-foot] .sf-row2{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:9px}
+[data-std-foot] .sf-row2 .lnk2{font:400 12px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
+[data-std-foot] .sf-row2 .dot{color:#b0a998;font-size:11px;line-height:1}
+/* Display-Zoom phones: the FAQ/legal column is 248px at 360w and the main row
+   needs 246px at gap 10 — zero real headroom, so it wraps. Gap 8 buys 12px. */
+@media(max-width:374px){[data-std-foot] .sf-row{gap:8px}}
+/* every brand logo is a way home */
+.go-home{cursor:pointer}
+/* ===== THE MENU (labelled hamburger + left drawer), Cath's ask 2026-07-30 ===
+   The trigger carries the WORD "Menu" — a bare icon fails exactly the way the
+   grey Trending tab failed her mom. Drawer sits below the entrance overlay
+   (z 9998) so the curtain still covers everything on landing. */
+.menu-chip{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:10px;z-index:900;display:flex;align-items:center;gap:6px;background:rgba(251,250,247,.94);border:1px solid rgba(33,30,26,.22);border-radius:999px;padding:8px 13px;cursor:pointer;box-shadow:0 4px 10px -6px rgba(0,0,0,.4);-webkit-tap-highlight-color:transparent}
+.menu-chip svg{display:block}
+.menu-chip span{font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.12em;color:#3a352c;text-transform:uppercase}
+body.menu-hidechip .menu-chip{display:none}
+.menu-veil{display:none;position:fixed;inset:0;z-index:9600;background:rgba(20,17,12,.45)}
+.menu-panel{display:none;position:fixed;top:0;left:0;bottom:0;z-index:9610;width:min(300px,84vw);background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:8px 0 30px rgba(0,0,0,.35);overflow-y:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 22px 26px}
+body.menu-open .menu-veil{display:block}
+body.menu-open .menu-panel{display:block}
+.menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.menu-logo{width:58px;height:auto;display:block}
+.menu-x{background:none;border:none;font-size:17px;color:#6f6a63;cursor:pointer;padding:8px 6px}
+.menu-row{font:400 17px/1.2 'DM Serif Display',Georgia,serif;color:#1a1a1a;padding:11px 2px;border-bottom:1px solid rgba(33,30,26,.08);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.menu-homerow{border-top:1px solid rgba(33,30,26,.08)}
+.menu-grp{font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8a8474;margin:16px 0 3px;padding:0 2px}
+.menu-legal{margin-top:18px;display:flex;align-items:center;gap:8px;padding:0 2px}
+.menu-legal span{font:400 12px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
+.menu-legal i{color:#b0a998;font-style:normal;font-size:11px}
+/* the FAQ / Privacy / Terms letterhead logo sits top-left, exactly under the
+   fixed Menu chip — give those heads room so the two never overlap */
+.faq-head,.pp-head{margin-top:40px}
 .dc-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}
 .dc-title{font-family:'DM Serif Display',Georgia,serif;font-size:28px;font-weight:400;color:#1a1a1a;margin-bottom:4px}
 .dc-subtitle{font-size:14px;color:#777;line-height:1.6;margin-bottom:1.5rem;font-style:italic;padding:0 0.5rem}
@@ -770,9 +807,6 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .faq-list{text-align:left;margin-top:0.5rem}
 .faq-foot,.pg-foot{text-align:center;padding:1.1rem 0.3rem 0.2rem;margin-top:1.3rem;border-top:1px solid #f0f0f0}
 .mall-foot{text-align:center;padding:0.9rem 0.3rem 0.5rem;margin-top:0.5rem}
-.faq-foot .flinks,.mall-foot .flinks,.pg-foot .flinks{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
-.faq-foot .lnk,.mall-foot .lnk,.pg-foot .lnk{cursor:pointer;font:400 14px/1 'Jost',sans-serif;color:#6f6a63}
-.faq-foot .star,.mall-foot .star,.pg-foot .star{color:#E6C24E;font-size:12px;line-height:1}
 .faq-item{padding:14px 2px;border-bottom:1px solid #eee}
 .faq-item:last-child{border-bottom:none}
 .faq-q{font-family:'DM Serif Display',Georgia,serif;font-size:17px;font-weight:400;color:#1a1a1a;margin-bottom:6px;line-height:1.3}
@@ -780,7 +814,6 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .faq-a a,.faq-a span.lnk{color:#C8971E;text-decoration:underline;cursor:pointer}
 /* Legal-page body links (Terms references the Privacy Policy) */
 #s-terms .story-wrap p .lnk,#s-privacy .story-wrap p .lnk{color:#C8971E;text-decoration:underline;cursor:pointer}
-.faq-foot .lnk,.mall-foot .lnk,.pg-foot .lnk{text-decoration:none}
 .faq-sub{font-weight:600;color:#1a1a1a;margin-top:10px;margin-bottom:2px}
 .faq-steps{margin:2px 0 4px;padding-left:1.25rem}
 .faq-steps li{margin:4px 0}
@@ -1033,9 +1066,7 @@ body.card-fb{padding:0}
 .hm-brk{width:12px;height:9px}
 .hm-brk.l{clip-path:polygon(0 0,100% 0,0 100%);background:linear-gradient(135deg,#eef1f3,#90979d);box-shadow:-1px 1px 2px rgba(0,0,0,.28)}
 .hm-brk.r{clip-path:polygon(0 0,100% 0,100% 100%);background:linear-gradient(225deg,#eef1f3,#90979d);box-shadow:1px 1px 2px rgba(0,0,0,.28)}
-.hm-foot{margin-top:22px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid rgba(33,30,26,.12)}
-.hm-foot span.lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
-.hm-foot span.star{color:#E6C24E;font-size:12px;line-height:1}
+.hm-foot{margin-top:22px;padding-top:14px;border-top:1px solid rgba(33,30,26,.12)}
 #s-wel #restoreForm{max-width:300px;margin:8px auto 0}
 @keyframes ssRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes ssShimmer{0%,100%{opacity:.2}50%{opacity:.95}}
@@ -1164,10 +1195,8 @@ body.card-fb{padding:0}
 #s-wb .wb-retake-wrap{margin-top:16px}
 #s-wb .wb-bulb{animation:none!important}
 #s-wb .wb-acts .wb-sweep{display:none!important}
-/* footer — black text, gold-star separators (reuses .hm-foot layout); sits on the mirror's cream */
-#s-wb .wb-foot{margin-top:12px;padding-top:11px;border-top:1px solid rgba(33,30,26,.10);gap:8px}
-#s-wb .wb-foot span.lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63}
-#s-wb .wb-foot span.star{color:#E6C24E;font-size:12px}
+/* footer placement on Welcome Back — sits on the mirror's cream */
+#s-wb .wb-foot{margin-top:12px;padding-top:11px;border-top:1px solid rgba(33,30,26,.10)}
 /* --- Welcome Back v2: white hub cards on black lacquer, awning + vanity light bar --- */
 #s-wb .hub-card,#s-res .hub-card,#s-photo-res .hub-card{position:relative;background-color:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);border-radius:2px;padding:0 14px 14px;box-shadow:0 12px 26px -14px rgba(0,0,0,.7),inset 0 0 0 1.5px rgba(196,201,207,.95)}
 #s-wb .hub-shop,#s-res .hub-shop,#s-photo-res .hub-shop{margin:16px 2px 12px}
@@ -1651,13 +1680,11 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .style-nudge .sn-go svg path{stroke:#2FA35C}
 .style-nudge .sn-skip{display:block;width:100%;margin-top:12px;padding:6px;background:none;border:none;cursor:pointer;font:600 12px/1 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#8a8478;text-decoration:underline}
 @media (prefers-reduced-motion:reduce){.style-nudge .sn-card{animation:none}}
-.res-screen .foot{margin-top:16px;padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;border-top:1px solid #efece4}
+.res-screen .foot{margin-top:16px;padding-top:14px;border-top:1px solid #efece4}
 /* Style Portrait footer: full-width white band filling the bottom, matching WB */
 #s-res,#s-photo-res{padding-bottom:0}
 #s-res .p3,#s-photo-res .p3{padding-bottom:0}
 #s-res .foot,#s-photo-res .foot{width:100vw;margin:0 calc(50% - 50vw) -24px;padding:22px 12px 52px;background:#FBFAF7;border-top:1.5px solid rgba(196,201,207,.9)}
-.res-screen .foot span.lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
-.res-screen .foot .st{color:#E6C24E;font-size:12px;line-height:1}
 /* DESKTOP FIX: the outfit-results "rooms" use 100vw full-bleed, which is fine on a
    phone (viewport ~= app card) but on a wide laptop window 100vw is the whole screen,
    so the tile CONTENT (centered in that huge width) fell outside the clipped 480px card
@@ -1790,7 +1817,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 </form>
 <div class="ss">
 <div class="hdr">
-  <img src="logo-star.png" alt="Style Star" class="logo-img">
+  <img src="logo-star.png" alt="Style Star — tap for home" class="logo-img go-home" onclick="goHome()">
   <div class="tag">Align your style. <span style="color:#D4AF37">Shine your light.</span></div>
 </div>
 <div class="inner">
@@ -1825,7 +1852,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <path fill="#FEF6D6" stroke="none" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
           <div class="wb-wordmark">
             <svg class="wb-mini-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2C43D" stroke="#B7BCC2" stroke-width="1.3" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
-            <div class="wb-word-wrap"><img class="wb-word-img" src="logo-star-text.png" alt="style Star"></div>
+            <div class="wb-word-wrap"><img class="wb-word-img go-home" src="logo-star-text.png" alt="style Star — tap for home" onclick="goHome()"></div>
           </div>
         </div>
         <div class="wb-port-motto" id="wbPortMotto"></div>
@@ -1878,12 +1905,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         </div>
       </div>
       <div class="wb-retake-wrap"><a class="wb-retake" wb-press onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></a></div>
-      <!-- Footer — black text + gold-star separators, kept on the mirror's cream so it stays readable -->
-      <div class="hm-foot wb-foot">
-        <span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span>
-        <span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span>
-        <span class="lnk" onclick="showFAQ()">FAQ</span>
-      </div>
+      <!-- Standard footer, filled at boot — kept on the mirror's cream so it stays readable -->
+      <div class="hm-foot wb-foot" data-std-foot></div>
     </div>
   </div>
   </div>
@@ -1903,9 +1926,9 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <svg class="hm-hook" width="22" height="30" viewBox="0 0 24 24"><path d="M12 1 C5.5 1 5.5 12 12 12 C18 12 18 22 12 22" fill="none" stroke="#565C62" stroke-width="1.9" stroke-linecap="round"/></svg>
       <div class="hm-star-wrap">
         <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
-        <div class="hm-star-inner">
+        <div class="hm-star-inner go-home" onclick="goHome()">
           <svg width="130" height="130" viewBox="0 0 24 24"><defs><linearGradient id="starHaloHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloHome)" stroke-width="0.55" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/></svg>
-          <img src="logo-star.png" alt="Style Star">
+          <img src="logo-star.png" alt="Style Star — tap for home">
         </div>
       </div>
     </div>
@@ -1962,7 +1985,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
     </div>
 
-    <div class="hm-foot"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+    <div class="hm-foot" data-std-foot></div>
   </div>
   </div>
   </div>
@@ -1981,6 +2004,40 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
     </div>
   </div>
+
+<!-- ===== THE MENU (Cath's ask, 2026-07-30): a labelled hamburger, top left,
+     IN ADDITION to the standard footer. The trigger says "Menu" in words, not
+     a bare icon — the lesson from her mom's testing (visible beats clever) —
+     and the drawer lists every destination, which the footer has no room for. -->
+<button class="menu-chip" id="menuChip" onclick="menuOpen()" aria-label="Open menu">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3a352c" stroke-width="2.4" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  <span>Menu</span>
+</button>
+<div class="menu-veil" onclick="menuClose()"></div>
+<div class="menu-panel" id="menuPanel" role="dialog" aria-label="Style Star menu">
+  <div class="menu-head">
+    <img src="logo-star.png" alt="Style Star" class="menu-logo go-home" onclick="menuGo(goHome)">
+    <button class="menu-x" onclick="menuClose()" aria-label="Close menu">&#10005;</button>
+  </div>
+  <div class="menu-row menu-homerow" onclick="menuGo(goHome)">Home</div>
+  <div class="menu-grp">Style</div>
+  <div class="menu-row" onclick="menuGo(menuQuiz)">Style Quiz</div>
+  <div class="menu-row" onclick="menuGo(showPhoto)">Analyze an Outfit</div>
+  <div class="menu-row" onclick="menuGo(openChat)">Stylist Chat</div>
+  <div class="menu-grp">Shop</div>
+  <div class="menu-row" onclick="menuGo(showShop)">Style Star Mall</div>
+  <div class="menu-row" onclick="menuGo(showDream)">Style Star Edit</div>
+  <div class="menu-row" onclick="menuGo(openWishlist)">My Wishlist</div>
+  <div class="menu-grp">Build</div>
+  <div class="menu-row" onclick="menuGo(openWardrobe)">Your Wardrobe</div>
+  <div class="menu-row" onclick="menuGo(function(){openWardrobe('trend')})">What's Trending</div>
+  <div class="menu-grp">About</div>
+  <div class="menu-row" onclick="menuGo(showStory)">My Story</div>
+  <div class="menu-row" onclick="menuGo(showFAQ)">FAQ</div>
+  <div class="menu-legal">
+    <span onclick="menuGo(showPrivacy)">Privacy</span><i>&#183;</i><span onclick="menuGo(showTerms)">Terms</span>
+  </div>
+</div>
 
 <div class="scr" id="s-quiz">
   <div class="q-cat" id="qc"></div>
@@ -2015,7 +2072,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="board"><span class="lacq"></span><span class="sweep"></span>
         <div class="clamp"><span class="brush"></span><span class="press"></span><span class="rivet l"></span><span class="rivet r"></span><span class="lip"></span></div>
         <div class="page">
-          <img class="logo" src="logo-tight.png" alt="Style Star"/>
+          <img class="logo go-home" src="logo-tight.png" alt="Style Star — tap for home" onclick="goHome()"/>
           <div class="eng pr">
             <div class="eng-row"><span class="eng-rule l"></span><span class="eng-lbl">Your Style Portrait</span><span class="eng-rule r"></span></div>
           </div>
@@ -2140,7 +2197,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
 
       <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button></div>
-      <div class="foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+      <div class="foot" data-std-foot></div>
     </div>
   </div>
 
@@ -2261,7 +2318,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <!-- Her shared photo, clipped to the clipboard like the stylist pinned it up -->
         <div class="clipphoto" id="clipPhoto" onclick="openLightbox(event)"><img id="clipPhotoImg" alt="The outfit you shared"/><span class="clip-pin"></span></div>
         <div class="page">
-          <img class="logo" src="logo-tight.png" alt="Style Star"/>
+          <img class="logo go-home" src="logo-tight.png" alt="Style Star — tap for home" onclick="goHome()"/>
           <!-- DYNAMIC: greeting → #prn -->
           <div class="nm" id="prn"></div>
           <!-- DYNAMIC: occasion tag → #pOcc (empty when none chosen) -->
@@ -2425,7 +2482,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
 
       <div class="retake-wrap"><button class="retake" onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button></div>
-      <div class="foot"><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+      <div class="foot" data-std-foot></div>
     </div>
   </div>
 
@@ -2525,7 +2582,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="story-sig">With love, Catherine <svg class="pinkheart" style="width:18px;height:18px;margin-left:0" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <button class="btn-outline" onclick="closeStory()" style="max-width:260px;margin:1rem auto 0;display:block" id="storyBtn">Back</button>
     <div id="storyQuiz" style="display:none;margin-top:14px;text-align:center"><div style="font-size:14.5px;color:#777">Ready to discover your style?</div><span onclick="storyStartQuiz()" style="display:inline-block;margin-top:3px;font-size:14.5px;color:#B08830;font-weight:600;text-decoration:underline;cursor:pointer">Take the fun quiz &rarr;</span></div>
-    <div class="pg-foot"><div class="flinks"><span class="lnk" onclick="showDream()">Edit</span><span class="star">&#9733;</span><span class="lnk" onclick="storyStartQuiz()">Quiz</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
+    <div class="pg-foot" data-std-foot></div>
   </div>
 </div>
 
@@ -2741,7 +2798,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div id="mallContent"></div>
       <div class="dc-disclosure">Style Star may earn a small commission from some links, at no extra cost to you. We only feature stores we genuinely love.</div>
       <button class="btn-outline" onclick="closeShop()" style="max-width:260px;margin:1.2rem auto 0;display:block">Back</button>
-      <div class="mall-foot"><div class="flinks"><span class="lnk" onclick="showDream()">Edit</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
+      <div class="mall-foot" data-std-foot></div>
     </div>
   </div>
 </div>
@@ -2794,7 +2851,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="wdr-tstack" id="wdrTrendBody"></div>
   </div>
 
-  <div class="wdr-foot"><span class="lnk" onclick="showDream()">Edit</span><span class="st">&#9733;</span><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+  <div class="wdr-foot" data-std-foot></div>
   <div class="wdr-top" id="wdrTopBtn" role="button" title="Back to top" onclick="wardrobeToTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M5.5 12 12 5.5 18.5 12"/></svg>Top</div>
 </div>
 
@@ -2808,20 +2865,20 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-wishlist">
   <div class="top-back-wrap"><button class="top-back" onclick="closeWishlist()">&larr; Back</button></div>
   <div class="wl-head">
-    <img src="logo-star.png" alt="Style Star" class="wl-logo">
+    <img src="logo-star.png" alt="Style Star — tap for home" class="wl-logo go-home" onclick="goHome()">
     <div class="wl-hearts"><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wl-title">My Wishlist</div>
     <div class="wl-count" id="wlCount"></div>
   </div>
   <div id="wlBody"></div>
   <div id="wlStay"></div>
-  <div class="wl-foot"><span class="lnk" onclick="showDream()">Edit</span><span class="st">&#9733;</span><span class="lnk" onclick="showShop()">Shop</span><span class="st">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div>
+  <div class="wl-foot" data-std-foot></div>
 </div>
 
 <div class="scr" id="s-faq">
   <div class="story-wrap">
     <div class="faq-head">
-      <img src="logo-star.png" alt="Style Star" class="faq-lh-logo">
+      <img src="logo-star.png" alt="Style Star — tap for home" class="faq-lh-logo go-home" onclick="goHome()">
       <button class="top-back" onclick="closeFAQ()">&larr; Back</button>
     </div>
     <div class="story-title">Frequently Asked Questions</div>
@@ -2850,14 +2907,14 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="faq-item"><div class="faq-q">What is the heart behind Style Star?</div><div class="faq-a">I believe style has the power to help you shine your light, and when you feel confident in yourself, that light naturally reaches the people around you. 💫<svg class="pinkheart" style="width:15px;height:15px;vertical-align:-2px;margin-left:1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div></div>
     </div>
     <button class="btn-outline" onclick="closeFAQ()" style="max-width:260px;margin:1.5rem auto 0;display:block">Back</button>
-    <div class="faq-foot"><div class="flinks"><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showPrivacy()">Privacy</span><span class="star">&#9733;</span><span class="lnk" onclick="showTerms()">Terms</span></div></div>
+    <div class="faq-foot" data-std-foot></div>
   </div>
 </div>
 
 <div class="scr" id="s-privacy">
   <div class="story-wrap">
     <div class="pp-head">
-      <img src="logo-star.png" alt="Style Star" class="pp-lh-logo">
+      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()">
       <button class="top-back" onclick="closePrivacy()">&larr; Back</button>
     </div>
     <div class="story-title">Privacy Policy</div>
@@ -2887,14 +2944,14 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <p style="margin-top:20px;font-size:11px;color:#bbb">Last updated July 29, 2026</p>
     </div>
     <button class="btn-outline" onclick="closePrivacy()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
-    <div class="pg-foot"><div class="flinks"><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showTerms()">Terms</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
+    <div class="pg-foot" data-std-foot></div>
   </div>
 </div>
 
 <div class="scr" id="s-terms">
   <div class="story-wrap">
     <div class="pp-head">
-      <img src="logo-star.png" alt="Style Star" class="pp-lh-logo">
+      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()">
       <button class="top-back" onclick="closeTerms()">&larr; Back</button>
     </div>
     <div class="story-title">Terms of Service</div>
@@ -2921,12 +2978,12 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <p style="margin-top:20px;font-size:11px;color:#bbb">Last updated July 29, 2026</p>
     </div>
     <button class="btn-outline" onclick="closeTerms()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
-    <div class="pg-foot"><div class="flinks"><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showPrivacy()">Privacy</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
+    <div class="pg-foot" data-std-foot></div>
   </div>
 </div>
 
 </div>
-<div class="quiz-footer"><div class="quiz-footer-links"><span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span><span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span><span class="lnk" onclick="showFAQ()">FAQ</span></div></div>
+<div class="quiz-footer" data-std-foot></div>
 </div>
 
 <div class="sheet-backdrop" id="saveSheet" onclick="if(event.target===this)dismissSaveSheet()">
@@ -3108,6 +3165,10 @@ function show(id,skipHistory){
   document.getElementById(id).classList.add('act');
   // Keep the What's Trending "New" pills honest wherever they appear.
   try{refreshTrendBadge();}catch(e){}
+  // Navigating always closes the menu drawer; the Menu chip stands down only on
+  // the chat (its own tight header) and the two loading moments.
+  document.body.classList.remove('menu-open');
+  document.body.classList.toggle('menu-hidechip',id==='s-chat'||id==='s-load'||id==='s-photo-load');
   var onWel=(id==='s-wel');
   // Screens with their own built-in footer + logo hide the shared global chrome:
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
@@ -3190,6 +3251,38 @@ window.addEventListener('popstate',function(e){
     }
   }
 });
+
+// ===== THE ONE STANDARD FOOTER + HOME (Option C, Cath's pick 2026-07-30) =====
+// "Home" is HER home: the Welcome Back hub when she has saved results, the
+// welcome screen when she's new — the same branch the popstate handler above uses.
+function goHome(){
+  if(localStorage.getItem('ss_data'))show('s-wb');else show('s-wel');
+}
+// Every footer is filled at boot from this ONE template, so the links can never
+// drift apart again (the app once grew eight different footer link sets by accident).
+// To change the footer, change it here and nowhere else.
+function _stdFootHTML(){
+  return '<div class="sf-row">'
+    +'<span class="lnk" onclick="goHome()">Home</span><span class="star">&#9733;</span>'
+    +'<span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span>'
+    +'<span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span>'
+    +'<span class="lnk" onclick="showFAQ()">FAQ</span>'
+    +'</div>'
+    +'<div class="sf-row2">'
+    +'<span class="lnk2" onclick="showPrivacy()">Privacy</span><span class="dot">&#183;</span>'
+    +'<span class="lnk2" onclick="showTerms()">Terms</span>'
+    +'</div>';
+}
+document.querySelectorAll('[data-std-foot]').forEach(function(el){el.innerHTML=_stdFootHTML();});
+
+// ===== THE MENU (Cath's ask 2026-07-30) =====
+function menuOpen(){document.body.classList.add('menu-open')}
+function menuClose(){document.body.classList.remove('menu-open')}
+// Close first, then go — so the drawer never lingers over the new screen.
+function menuGo(fn){menuClose();fn()}
+// Style Quiz from the menu: a woman with saved results gets the retake flow
+// (keeps her name, tracks retake:true); a new visitor gets the fresh start.
+function menuQuiz(){if(localStorage.getItem('ss_data'))retakeQuiz();else startQ()}
 
 // Set initial state
 history.replaceState({screen:document.querySelector('.scr.act')?document.querySelector('.scr.act').id:'s-wel'},null,'');
