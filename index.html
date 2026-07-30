@@ -2021,10 +2021,12 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
   <div class="menu-row menu-homerow" onclick="menuGo(goHome)">Home</div>
   <div class="menu-grp">Style</div>
+  <div class="menu-row" onclick="menuGo(wbPortraitTap)">Style Portrait</div>
   <div class="menu-row" onclick="menuGo(menuQuiz)">Style Quiz</div>
   <div class="menu-row" onclick="menuGo(showPhoto)">Analyze an Outfit</div>
   <div class="menu-row" onclick="menuGo(openChat)">Stylist Chat</div>
   <div class="menu-grp">Shop</div>
+  <div class="menu-row" onclick="menuGo(menuShopStyle)">Shop your Style</div>
   <div class="menu-row" onclick="menuGo(showShop)">Style Star Mall</div>
   <div class="menu-row" onclick="menuGo(showDream)">Style Star Edit</div>
   <div class="menu-row" onclick="menuGo(openWishlist)">My Wishlist</div>
@@ -3291,6 +3293,10 @@ function menuGo(fn){menuClose();fn()}
 // Style Quiz from the menu: a woman with saved results gets the retake flow
 // (keeps her name, tracks retake:true); a new visitor gets the fresh start.
 function menuQuiz(){if(localStorage.getItem('ss_data'))retakeQuiz();else startQ()}
+// Shop your Style from the menu: same philosophy as wbPortraitTap (which the
+// Style Portrait row uses directly) — a new visitor can't shop HER style before
+// the app knows it, so the honest destination is the quiz.
+function menuShopStyle(){if(localStorage.getItem('ss_data'))openShopStyle();else startQ()}
 
 // Set initial state
 history.replaceState({screen:document.querySelector('.scr.act')?document.querySelector('.scr.act').id:'s-wel'},null,'');
