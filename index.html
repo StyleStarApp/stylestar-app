@@ -6364,6 +6364,69 @@ function quickChat(msg){
   sendChat();
 }
 
+// The domain allowlist for the stylist's web search, built from the STORES
+// table at call time so it can never drift from the real store list. Every
+// search the model runs is restricted to these hosts: the stylist looks at
+// real inventory, but only inside the world Catherine approved.
+function _searchDomains(){
+  var seen={},k;
+  for(k in STORES){
+    try{seen[new URL(STORES[k].u).hostname.replace(/^www\./,'')]=1}catch(e){}
+  }
+  return Object.keys(seen);
+}
+
+// Read the streamed (SSE) chat reply. Returns the full reply text.
+// While the model is out searching her stores, the typing line says so; once
+// text starts arriving it renders progressively in a real bot bubble, so a 15
+// second searching answer feels like service rather than a hang. The caller
+// removes liveEl and re-adds the final text through addChatMsg (links + saved
+// history), which replaces it with identical content.
+async function _readChatStream(r,typing,liveEl){
+  var mc=document.getElementById('chatMessages');
+  var text='',raw='';
+  function toBottom(){mc.scrollTop=mc.scrollHeight}
+  function handle(payload){
+    var ev;try{ev=JSON.parse(payload)}catch(e){return}
+    if(ev.type==='error'||(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='refusal'))throw new Error('stream error');
+    if(ev.type==='content_block_start'&&ev.content_block&&ev.content_block.type==='server_tool_use'){
+      typing.textContent='Checking your stores for the real thing...';
+      toBottom();
+    }else if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta'){
+      text+=ev.delta.text;
+      typing.style.display='none';
+      liveEl.style.display='';
+      liveEl.textContent=text;
+      toBottom();
+    }
+  }
+  function handleChunk(chunk){
+    var lines=chunk.split('\n'),i;
+    for(i=0;i<lines.length;i++){
+      var line=lines[i];
+      if(line.indexOf('data:')===0){var p=line.slice(5).trim();if(p)handle(p);}
+    }
+  }
+  if(r.body&&r.body.getReader&&window.TextDecoder){
+    var reader=r.body.getReader(),dec=new TextDecoder();
+    for(;;){
+      var step=await reader.read();
+      if(step.done)break;
+      raw+=dec.decode(step.value,{stream:true});
+      var nl=raw.lastIndexOf('\n');
+      if(nl<0)continue;
+      handleChunk(raw.slice(0,nl));
+      raw=raw.slice(nl+1);
+    }
+    if(raw)handleChunk(raw);
+  }else{
+    // No stream reader (very old browser): the whole SSE body still arrives as
+    // text, so parse it in one go at the end. Slower feel, same answer.
+    handleChunk(await r.text());
+  }
+  return text;
+}
+
 async function sendChat(){
   const input=document.getElementById('chatInput');
   const msg=input.value.trim()||'What do you think of this outfit?';
@@ -6505,6 +6568,13 @@ SHOPPING:
 - Keep responses short and actionable. Lead with the items, not the explanation.
 - When she asks "what should I wear" or "what should I buy," get straight to the specific items. No preamble.
 
+SEARCHING REAL INVENTORY:
+- You can search the web, and every search is restricted to Style Star's own approved stores. Use it when she wants to find or buy a specific piece, wants something like a photo she shared, or asks what is available right now.
+- Do not search for general style advice, occasion guidance, or anything you can answer well from expertise. Most questions need no search.
+- When you do search, recommend ONLY items you actually saw in the results. Use the real product name and the real price from the result, and the store it came from, still formatted as "item from StoreName (~$price)" with the store named exactly as it appears in the store list above.
+- If the results have no genuinely good match, say so honestly and give your best styling direction instead. Never invent an item you did not see, and never pad the answer with weak matches.
+- Never mention searching, tools, or the internet. You are a stylist who checked, not a search engine.
+
 SHIFT ONE NOTCH:
 - Suggest one specific small swap that shifts her style subtly
 
@@ -6553,16 +6623,30 @@ RULES:
   const photoWasSent=!!chatPhotoData;
   clearChatPhoto();
 
+  // The reply streams in when search is on. liveMsg renders the growing text;
+  // addChatMsg then replaces it with the final linkified version.
+  const liveMsg=document.createElement('div');
+  liveMsg.className='chat-msg bot';
+  liveMsg.style.display='none';
+  document.getElementById('chatMessages').appendChild(liveMsg);
+
   try{
-    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:messages})});
-    typing.remove();
+    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:600,messages:messages,search:true,search_domains:_searchDomains()})});
     if(!r.ok)throw new Error('fail');
-    const d=await r.json();
-    if(!d.content)throw new Error('no content');
-    const reply=d.content.map(c=>c.text||'').join('');
+    let reply='';
+    if((r.headers.get('content-type')||'').indexOf('text/event-stream')>=0){
+      reply=await _readChatStream(r,typing,liveMsg);
+    }else{
+      // JSON path: an API error, or a deploy where search isn't live yet.
+      const d=await r.json();
+      if(!d.content)throw new Error('no content');
+      reply=d.content.map(c=>c.text||'').join('');
+    }
+    typing.remove();liveMsg.remove();
+    if(!reply.trim())throw new Error('empty');
     addChatMsg(reply,'bot');
   }catch(e){
-    typing.remove();
+    typing.remove();liveMsg.remove();
     addChatMsg("I'm having a moment. Could you try asking that again? ✨",'bot');
   }
   sendBtn.disabled=false;

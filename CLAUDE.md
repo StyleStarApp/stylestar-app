@@ -7,7 +7,48 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-07-29)
+## ▶ NEXT SESSION — START HERE (updated 2026-07-30)
+
+### ⭐ 0-newest. 🔎 THE STYLIST CHAT CAN SEARCH REAL INVENTORY (built 2026-07-30, Cath's explicit call)
+After the ChatGPT comparison (see the 0c input below), Cath said *"I definitely want to do this. It will add
+trust and more discernment to the stylist chat."* **Built on `claude/style-star-continuation-7ul18d`, verified
+by 40 new checks, NOT yet merged — she should run her suede-bag test live after merging.**
+- **What it is:** the chat request now carries `search:true` + a domain allowlist, and `style-ai.js` adds the
+  Anthropic **web search tool** (`web_search_20260209`, works on the existing `claude-sonnet-4-6`) — so the
+  stylist can look at real product pages before recommending. ▶ **Every search is restricted via
+  `allowed_domains` to the 102 STORES hostnames** — built client-side by `_searchDomains()` from the real
+  STORES table (one source of truth, nothing to drift on a rename), validated + capped server-side.
+- ⚠️ **THE SECURITY SPLIT, keep it:** the client supplies only the domain LIST; the server builds the tool
+  config itself, fixes `max_uses: 5`, validates hostnames by regex (a URL or path → 400), and **never forwards
+  client-supplied `tools`** (tested). Origin gate + rate limit unchanged. Worst-case forged request = 5
+  searches (~5¢) inside the same gates as any AI call.
+- ▶ **SEARCH RESPONSES STREAM (SSE pass-through), and that is load-bearing twice:** (1) a searching answer can
+  run past Netlify's synchronous function time limit — buffered JSON might just time out; (2) the page shows
+  **"Checking your stores for the real thing..."** the moment a `server_tool_use` block arrives, then renders
+  the reply progressively — a 15s answer feels like service, not a hang. Non-search calls (all other AI
+  surfaces) are byte-for-byte unchanged; a JSON response still renders via the old path, so the page degrades
+  gracefully against an old function build (tested).
+- **Prompt rules (chat only):** search only when she wants a real item / something like her photo; recommend
+  ONLY items actually seen, real product name + real price, still "item from StoreName (~$price)" — ▶ which
+  means **the existing linkifier needed zero changes** and search terms become real product names that land.
+  Never invent, never pad with weak matches, never mention searching or tools.
+- ⚠️ **KNOWN LIMITS, told to Cath:** ~5-10¢ and 10-20s for a searching answer; no images/stock/size (feeds
+  territory); rare `pause_turn` (server loop cap) would end an answer early — accepted for v1, revisit if seen.
+  ⚠️ **Live behavior is unverifiable from this sandbox** (deploy previews can't spend the production-scoped
+  key), so the real test is: merge → Cath re-runs the tan-suede-baguette photo test on her phone and compares
+  against the ChatGPT answer saved in the 0c section.
+- **Verified by `scratchpad/searchchat.js`, 40 checks:** Part A runs the REAL function handler in Node with
+  Anthropic stubbed (tool built server-side with fixed caps, domains lowercased/deduped/validated, injected
+  tools dropped, SSE passed through verbatim, API error → JSON, origin gate on the search path); Part B drives
+  the REAL chat UI in Chromium against a genuinely STREAMING fake endpoint (Playwright routes can't drip-feed —
+  the harness http server implements the endpoint): searching status mid-stream, progressive render, final
+  message linkified + saved, JSON fallback, error path, zero JS errors. Full sweep still green
+  (followups 37 · e2e 29 · copy 41 · hubs 34).
+- ✅ **Also this session:** My Wishlist row (live count pill + subtitle) added to the Style Portrait and photo
+  results Shop hubs — Cath's ask from 2026-07-29 — via a shared `[data-wl-sub]`/`[data-wl-count]` sync
+  (`scratchpad/hubs.js`, 34 checks).
+
+## ▶ PREVIOUS SESSION NOTES (2026-07-29)
 
 ### ⭐ 0-new. ✅ THE SECOND COWORK BRIEF SHIPPED (2026-07-29, evening) — 8 follow-ups, two commits
 Cath pasted a second Cowork brief (7 numbered as "seven", actually 8 items). **Every claim was verified against
@@ -373,6 +414,30 @@ the store audit.
 - ⚠️ **AND SAY THIS TO CATH WHEN IT COMES UP: a saved link is only as good as the search behind it.** The AI
   still does not see real inventory. Saving a link that lands badly is worse than not saving it, so **her
   homework item 6 — the quality gate — is now the highest-value thing she can do**, more so than before.
+
+### ▶ NEW INPUT FOR THE 0c CONVERSATION (2026-07-30): CATH'S ChatGPT COMPARISON, decoded
+Cath photographed a tan suede baguette bag, asked BOTH our stylist chat and ChatGPT to find one like it, and
+shared the ChatGPT link. **Our stylist described the bag well but guessed** (its "Miu Miu Suede Bag" search
+landed on 48 results of loafers at Nordstrom — the documented failure mode, live). **ChatGPT returned real
+products with prices** (Quince $158 "closest overall", Free People $78, MANU Atelier, Parisa Wang, SIMKHAI,
+Altuzarra), each linking to the actual product page.
+- ▶ **HOW, decoded from its link parameters** (`utm_campaign=openai_catalog`, `utm_medium=feed`,
+  `chatgpt_pla_product_feeds`): **OpenAI has built merchant PRODUCT FEEDS as platform infrastructure** —
+  retailers push live catalogs into a shopping database and ChatGPT searches that, plus ordinary web search
+  (it cited a People.com article and searched Reddit; "worked for 17s"). **Not a smarter model — better eyes.**
+  Say this plainly whenever the comparison comes up.
+- ▶ **WHAT OUR SIDE OFFERS (verified against current API docs 2026-07-30):** the Anthropic API has no shopping
+  catalog, but it has a **server-side web search tool ($10 per 1,000 searches = 1¢/search, plus tokens)** and a
+  **web fetch tool (free beyond tokens)**. Both support **`allowed_domains`** — ▶ meaning searches could be
+  restricted to **only Cath's 102 vetted stores**, which enforces the brand at the infrastructure level
+  (ChatGPT searches wherever the feeds point; we would search only where Catherine approved).
+- **Honest trade-offs, told to Cath:** a searching chat answer costs ~5-10¢ instead of ~1¢ and takes 10-20s
+  instead of a few; no product images/stock/size (those still need feeds); but "invented item at plausible
+  store" becomes "real item the model just looked at, real price, real page".
+- ▶ **THE LADDER NOW HAS FOUR RUNGS:** (1) affiliate tags (money only) · (2) **web search in the stylist —
+  NEW middle rung, no approvals needed, entirely in our control** · (3) filtered search URLs · (4) product
+  feeds (the full ChatGPT experience, gated behind affiliate approvals anyway). Offered, not built: a
+  prototype of chat-with-search for a side-by-side comparison whenever she wants to evaluate it.
 
 ### ▶ NEW INPUT FOR THE 0c CONVERSATION (2026-07-29, late): a Cowork spec is parked at `docs/curated-catalog-spec.md`
 Cath brought back a full spec from Cowork — **"Option 3: your own curated catalog"** — real products she picks,
