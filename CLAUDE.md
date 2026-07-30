@@ -7,7 +7,27 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-07-30)
+## ▶ NEXT SESSION — START HERE (updated 2026-07-30, end of day)
+
+### ⭐ THE AGREED NEXT LEVER: THE NAVIGATION FIX (Cath's explicit yes, 2026-07-30)
+Open the next session by building the **footer + logo-home comparison for her to pick from** (the audit is done,
+see the NAVIGATION AUDIT section: clickable logo goes home everywhere, ONE standard footer, "home" = her hub,
+NOT a dropdown). ⚠️ Apply the mockup lessons: id-scope the mockup CSS, prove variants differ via computed
+styles, one tall labelled image, render BOTH states of anything togglable.
+
+### ▶ THREE DECISIONS FROM THE 2026-07-30 WRAP-UP (recorded verbatim-ish, they gate future work)
+1. **Search-chat pace: 15-20s is acceptable for now** — her words: *"as of right now I don't think 15-20
+   seconds feels too long"*. ⚠️ **The waiting message "Checking your stores for the real thing..." is NOT
+   confirmed copy** — she's unsure it's right. ▶ **ASK HER AGAIN about both (pace AND wording) after she has
+   tested more.** Do not treat the current string as settled.
+2. **Navigation is the next lever** (above).
+3. **HER TESTER LIST EXISTS — she named the 10 in chat for accountability:** Mom, Ellen (sister), Maryanne
+   (daughter), Jen (best friend), other Jen, Peggy, Danielle, another Jen, Nikki, Jackie. (Three Jens — when
+   the invite list is ever written up, distinguish them properly.) **Her stated gate for actually inviting
+   them:** the searches aren't dialed in enough yet — her mom loved clicking links, but links that land badly
+   would annoy testers who won't "get" that affiliates/feeds come later. That's legitimate sequencing, not
+   avoidance: the gate concretely = search-chat quality proven by her own continued testing (+ eventually
+   feeds). **Honor it, and revisit the invite question when she reports a genuinely good test run.**
 
 ### ⭐ 0-newest. 🔎 THE STYLIST CHAT CAN SEARCH REAL INVENTORY (built 2026-07-30, Cath's explicit call)
 After the ChatGPT comparison (see the 0c input below), Cath said *"I definitely want to do this. It will add
