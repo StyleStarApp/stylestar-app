@@ -34,9 +34,19 @@ by 40 new checks, NOT yet merged — she should run her suede-bag test live afte
   the reply progressively — a 15s answer feels like service, not a hang. Non-search calls (all other AI
   surfaces) are byte-for-byte unchanged; a JSON response still renders via the old path, so the page degrades
   gracefully against an old function build (tested).
+- ⚠️ **CATH'S SECOND TEST EXPOSED THE REAL FLAW (2026-07-30): a store-search link WASTES the search.** The
+  stylist named real-sounding items, but the tap rebuilt a SEARCH for the name — Madewell's box couldn't find
+  "Brioche Mini Shoulder Bag" (6 woven bags), Revolve dumped 904 loose items. Her verdict: *"What chat gpt
+  offered was way superior."* **The fix: the stylist now emits the EXACT product URL it saw, in a marker —
+  "item from StoreName (~$price) [https://...]" — and `linkStores` pass 0 turns it into the tap target**
+  (marker never shown; `_chatSafeUrl` allows only http(s) into the 102 store domains, incl. subdomains;
+  off-list / javascript: / stray markers are stripped; everything else falls back to the classic search link).
+  Restored history renders identically (same choke point). ▶ **Verified LIVE before merging:** 16s, 2
+  searches, ONE excellent match (JW PEI Nova Baguette from Nordstrom ~$79) with the real product page URL,
+  on-list. The prompt now also holds a match bar: shape/material/color must genuinely match, one excellent
+  match beats three loose ones.
 - **Prompt rules (chat only):** search only when she wants a real item / something like her photo; recommend
-  ONLY items actually seen, real product name + real price, still "item from StoreName (~$price)" — ▶ which
-  means **the existing linkifier needed zero changes** and search terms become real product names that land.
+  ONLY items actually seen, real product name + real price, "item from StoreName (~$price) [exact URL]".
   Never invent, never pad with weak matches, never mention searching or tools.
 - ⚠️ **FOUND ONLY LIVE (Cath's first test failed twice, 2026-07-30): A STORE CAN BLOCK ANTHROPIC'S CRAWLER,
   AND ONE BLOCKED DOMAIN IN `allowed_domains` FAILS THE WHOLE REQUEST** — "The following domains are not
