@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts-local.css">
+<style>
+  /* ---- page chrome (not part of any option) ---- */
+  body{margin:0;background:#2a2723;font-family:'Jost',sans-serif;padding:26px 0 40px}
+  .wrap{width:434px;margin:0 auto}
+  h1{font:400 23px/1.25 'DM Serif Display',Georgia,serif;color:#F5EFE2;text-align:center;margin:0 0 4px}
+  .sub{font:400 13.5px/1.5 'Jost',sans-serif;color:#c9c2b4;text-align:center;margin:0 0 22px;padding:0 20px}
+  .panel{margin:0 0 26px}
+  .tag{display:inline-block;background:#E0B84C;color:#211e1a;font:500 12px/1 'Jost',sans-serif;letter-spacing:.14em;padding:6px 12px;border-radius:3px;margin:0 0 6px 4px}
+  .tag.ctx{background:#7a746a;color:#f5efe2}
+  .pname{font:400 18px/1.3 'DM Serif Display',Georgia,serif;color:#F5EFE2;margin:0 0 3px 4px}
+  .pdesc{font:400 13px/1.5 'Jost',sans-serif;color:#c9c2b4;margin:0 0 10px 4px;padding-right:8px}
+  .pdesc b{color:#EACD68;font-weight:500}
+
+  /* a phone-bottom strip: faded page tail + the footer band, exactly app-styled */
+  .phone{width:390px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+  .phone.narrow{width:360px}
+  .tail{padding:16px 18px 6px;background:linear-gradient(180deg,#FBF7EE, #fff)}
+  .tail .ghost{height:9px;border-radius:4px;background:#eee8da;margin:0 0 8px}
+  .tail .ghost.g2{width:70%}
+  .tail .ghost.g3{width:45%;margin-bottom:0}
+  .wlabel{font:400 11px/1 'Jost',sans-serif;color:#a59d8e;text-align:center;margin:6px 0 4px;letter-spacing:.08em}
+
+  /* ---- OPTION A ---- */
+  #vA .foot{text-align:center;padding:14px 12px 18px;border-top:1px solid rgba(33,30,26,.12)}
+  #vA .row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+  #vA .lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
+  #vA .star{color:#E6C24E;font-size:12px;line-height:1}
+
+  /* ---- OPTION B ---- */
+  #vB .foot{text-align:center;padding:14px 12px 18px;border-top:1px solid rgba(33,30,26,.12)}
+  #vB .row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+  #vB .lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
+  #vB .star{color:#E6C24E;font-size:12px;line-height:1}
+
+  /* ---- OPTION C ---- */
+  #vC .foot{text-align:center;padding:14px 12px 14px;border-top:1px solid rgba(33,30,26,.12)}
+  #vC .row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+  #vC .lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
+  #vC .star{color:#E6C24E;font-size:12px;line-height:1}
+  #vC .row2{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:9px}
+  #vC .lnk2{font:400 12px/1 'Jost',sans-serif;color:#9a948a;cursor:pointer}
+  #vC .dot2{color:#c9c2b4;font-size:11px;line-height:1}
+
+  /* ---- OPTION D ---- */
+  #vD .foot,#vD2 .foot{text-align:center;padding:14px 12px 18px;border-top:1px solid rgba(33,30,26,.12)}
+  #vD .row,#vD2 .row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+  #vD .lnk,#vD2 .lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
+  #vD .star,#vD2 .star{color:#E6C24E;font-size:12px;line-height:1}
+
+  /* ---- context panel: the clickable logo ---- */
+  #ctx .phone{padding:14px 0 4px}
+  #ctx .logo{display:block;margin:0 auto;width:74px;height:auto}
+  #ctx .halo{width:110px;margin:0 auto;text-align:center}
+  #ctx .cap{font:400 12px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:4px 14px 12px}
+  #ctx .homes{display:flex;gap:10px;justify-content:center;padding:0 14px 16px}
+  #ctx .home{flex:1;background:#FBF7EE;border:1px solid #eadfc8;border-radius:8px;padding:10px 10px 12px;text-align:center}
+  #ctx .home .hh{font:400 13px/1.3 'DM Serif Display',Georgia,serif;color:#1a1a1a;margin:0 0 3px}
+  #ctx .home .hs{font:400 11.5px/1.45 'Jost',sans-serif;color:#6f6a63}
+  .note{width:390px;margin:8px auto 0;font:400 12px/1.55 'Jost',sans-serif;color:#a59d8e}
+  .note b{color:#d9d2c2;font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>One footer for the whole app</h1>
+  <p class="sub">Today there are eight different footers and no way home. Below: the piece we already agreed (tap the logo to go home), then four footer options to pick from. Every option replaces all eight.</p>
+
+  <!-- context: agreed, not a pick -->
+  <div class="panel" id="ctx">
+    <span class="tag ctx">ALREADY AGREED · FOR CONTEXT</span>
+    <div class="pname">The logo takes her home, on every page</div>
+    <p class="pdesc">Every Style Star logo becomes tappable. "Home" is <b>her</b> home, both states shown:</p>
+    <div class="phone">
+      <div class="halo"><img class="logo" src="logo-star.png" alt="Style Star"></div>
+      <div class="cap">tap anywhere on the logo &#8594; home</div>
+      <div class="homes">
+        <div class="home"><div class="hh">Has saved results</div><div class="hs">lands on her <b>Welcome Back</b> hub, with all her buttons</div></div>
+        <div class="home"><div class="hh">Brand new visitor</div><div class="hs">lands on the <b>Welcome</b> screen with the quiz invitation</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION A -->
+  <div class="panel" id="vA">
+    <span class="tag">OPTION A</span>
+    <div class="pname">Quietest: exactly today's main footer, everywhere</div>
+    <p class="pdesc">Shop &#183; My Story &#183; FAQ, the set already on Welcome, Welcome Back and the Style Portrait. The logo is the only way home. Privacy &amp; Terms stay reachable from the FAQ and the email forms.</p>
+    <div class="phone">
+      <div class="tail"><div class="ghost"></div><div class="ghost g2"></div><div class="ghost g3"></div></div>
+      <div class="foot"><div class="row"><span class="lnk">Shop</span><span class="star">&#9733;</span><span class="lnk">My Story</span><span class="star">&#9733;</span><span class="lnk">FAQ</span></div></div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="panel" id="vB">
+    <span class="tag">OPTION B</span>
+    <div class="pname">Home in plain words</div>
+    <p class="pdesc">Adds <b>Home</b> as the first link, for anyone who would never think to tap a logo (the lesson from your mom: visible beats clever). Still one calm row.</p>
+    <div class="phone">
+      <div class="tail"><div class="ghost"></div><div class="ghost g2"></div><div class="ghost g3"></div></div>
+      <div class="foot"><div class="row"><span class="lnk">Home</span><span class="star">&#9733;</span><span class="lnk">Shop</span><span class="star">&#9733;</span><span class="lnk">My Story</span><span class="star">&#9733;</span><span class="lnk">FAQ</span></div></div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="panel" id="vC">
+    <span class="tag">OPTION C</span>
+    <div class="pname">Complete, on two rows</div>
+    <p class="pdesc">Row one is Option B. Underneath, a quieter small row carries <b>Privacy &#183; Terms</b>, so every page of the app links the legal pages (nice for affiliate reviewers, and nothing is ever more than one tap away).</p>
+    <div class="phone">
+      <div class="tail"><div class="ghost"></div><div class="ghost g2"></div><div class="ghost g3"></div></div>
+      <div class="foot">
+        <div class="row"><span class="lnk">Home</span><span class="star">&#9733;</span><span class="lnk">Shop</span><span class="star">&#9733;</span><span class="lnk">My Story</span><span class="star">&#9733;</span><span class="lnk">FAQ</span></div>
+        <div class="row2"><span class="lnk2">Privacy</span><span class="dot2">&#183;</span><span class="lnk2">Terms</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION D -->
+  <div class="panel" id="vD">
+    <span class="tag">OPTION D</span>
+    <div class="pname">Everything on one row</div>
+    <p class="pdesc">All six links with the gold stars, one row. Shown honestly at both phone widths below, because it wraps.</p>
+    <div class="phone">
+      <div class="tail"><div class="ghost"></div><div class="ghost g2"></div><div class="ghost g3"></div></div>
+      <div class="foot"><div class="row"><span class="lnk">Home</span><span class="star">&#9733;</span><span class="lnk">Shop</span><span class="star">&#9733;</span><span class="lnk">My Story</span><span class="star">&#9733;</span><span class="lnk">FAQ</span><span class="star">&#9733;</span><span class="lnk">Privacy</span><span class="star">&#9733;</span><span class="lnk">Terms</span></div></div>
+    </div>
+    <div class="wlabel">SAME OPTION AT 360px (Display Zoom phones)</div>
+  </div>
+  <div class="panel" id="vD2" style="margin-top:-16px">
+    <div class="phone narrow">
+      <div class="tail"><div class="ghost"></div><div class="ghost g2"></div><div class="ghost g3"></div></div>
+      <div class="foot"><div class="row"><span class="lnk">Home</span><span class="star">&#9733;</span><span class="lnk">Shop</span><span class="star">&#9733;</span><span class="lnk">My Story</span><span class="star">&#9733;</span><span class="lnk">FAQ</span><span class="star">&#9733;</span><span class="lnk">Privacy</span><span class="star">&#9733;</span><span class="lnk">Terms</span></div></div>
+    </div>
+  </div>
+
+  <p class="note"><b>Whichever you pick:</b> the Mall, Wardrobe, Wishlist, Story and legal pages give up their special footers, so the links never move under her. "Shop" opens the Mall, exactly as today. The Edit and the Quiz stay one tap away inside your hubs, where they already live.</p>
+</div>
+</body>
+</html>
