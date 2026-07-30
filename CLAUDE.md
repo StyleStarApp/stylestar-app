@@ -32,6 +32,15 @@ by 40 new checks, NOT yet merged — she should run her suede-bag test live afte
   ONLY items actually seen, real product name + real price, still "item from StoreName (~$price)" — ▶ which
   means **the existing linkifier needed zero changes** and search terms become real product names that land.
   Never invent, never pad with weak matches, never mention searching or tools.
+- ⚠️ **FOUND ONLY LIVE (Cath's first test failed twice, 2026-07-30): A STORE CAN BLOCK ANTHROPIC'S CRAWLER,
+  AND ONE BLOCKED DOMAIN IN `allowed_domains` FAILS THE WHOLE REQUEST** — "The following domains are not
+  accessible to our user agent: ['gucci.com']". **Gucci blocks it today; which stores block is THEIR choice
+  and can change any day, so it must never become a hardcoded exclusion list.** The fix is self-healing:
+  the function parses the blocked domains out of the error, prunes them, and retries (max 3 calls). Search
+  simply cannot see inside a blocking store; the other 101 keep working (verified live). ▶ **Debugging
+  pattern that solved it in minutes: POST to the LIVE function from a script with `Origin:
+  https://stylestar.app` set** — the function passes the real API error through, so the answer was one
+  curl away. Sandbox stubs can never catch this class of failure.
 - ⚠️ **KNOWN LIMITS, told to Cath:** ~5-10¢ and 10-20s for a searching answer; no images/stock/size (feeds
   territory); rare `pause_turn` (server loop cap) would end an answer early — accepted for v1, revisit if seen.
   ⚠️ **Live behavior is unverifiable from this sandbox** (deploy previews can't spend the production-scoped
