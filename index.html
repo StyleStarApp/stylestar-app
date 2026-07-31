@@ -2023,6 +2023,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-grp">Style</div>
   <div class="menu-row" onclick="menuGo(wbPortraitTap)">Style Portrait</div>
   <div class="menu-row" onclick="menuGo(menuQuiz)">Style Quiz</div>
+  <div class="menu-row" onclick="menuGo(menuRefine)">Refine your Preferences</div>
   <div class="menu-row" onclick="menuGo(showPhoto)">Analyze an Outfit</div>
   <div class="menu-row" onclick="menuGo(openChat)">Stylist Chat</div>
   <div class="menu-grp">Shop</div>
@@ -3298,6 +3299,10 @@ function menuQuiz(){if(localStorage.getItem('ss_data'))retakeQuiz();else startQ(
 // Style Portrait row uses directly) — a new visitor can't shop HER style before
 // the app knows it, so the honest destination is the quiz.
 function menuShopStyle(){if(localStorage.getItem('ss_data'))openShopStyle();else startQ()}
+// Refine from the menu (Cath's catch 2026-07-31 — it was on every hub but not
+// here): same honest routing as the other personal rows — preferences refine
+// HER style, so a new visitor's real first step is the quiz.
+function menuRefine(){if(localStorage.getItem('ss_data'))openPrefs();else startQ()}
 // Share the SITE, never her results (Cath's ask 2026-07-31). A plain
 // stylestar.app link carries nothing personal: results live in her own
 // browser + behind the emailed token, so a friend always lands on the fresh
