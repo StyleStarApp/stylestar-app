@@ -183,6 +183,16 @@ honest results but still not as good as what chat came up with."** Screenshots a
   + ~2¢ only on dry runs. ▶ **Watch her next few tests to see if dry runs convert into finds.**
 - ✅ **The waiting message is now "Checking stores..."** (was "Checking your stores for the real thing...")
   — her call, shipped same morning with the searchchat.js assertion updated (55 checks green).
+- ✅ **"Pick up our chat" AMNESIA FIXED (2026-07-31 afternoon, her screenshots).** Tapping the chip after a
+  restored conversation got "I don't have a previous conversation to pick up from, since each chat starts
+  fresh for me." ▶ **The code was innocent, verified by capturing the real payload in Chromium: the
+  restored history WAS in the messages array.** The failure was interpretive: the model read "continue
+  where we left off" as pointing at some OTHER conversation it couldn't see. Fix = a CONTINUITY block in
+  the chat system prompt (history above is real and remembered; never comment on memory or fresh starts;
+  carry the last topic forward). First wording still let it say "this is the start of our conversation" —
+  the shipped version bans ALL memory meta-commentary, verified 3/3 against the LIVE function with a
+  restored-history payload. ▶ **Lesson: when a model misbehaves, capture the real payload first — prompt
+  fixes and code fixes look identical from a screenshot.**
 
 ### ▶ CATH'S TWO NEW ITEMS (2026-07-31, parked by her — "later when I am at my desk")
 1. **📧 Welcome + restore emails: shrink the sub-header line.** Her words: it *"looks too large like it is
