@@ -81,6 +81,37 @@ the offering — is the product worry the Menu answers; remember it when weighin
   her consistency instinct is a legitimate call for an 18-80 audience. The `.menu-legal` markup + CSS are
   GONE; the drawer is 17 rows and menu.js drives Privacy and Terms through the same loop as every other row.
 
+### ⭐ 0-FLOW. 🧭 THE NEW-USER JOURNEY WORK (2026-07-31, from Cath's "what is the perfect flow?" question)
+Her question, verbatim-ish: *"to get her to take the quiz and use the tools and get to the shopping the good
+stuff what is the perfect flow? a new user might not know what to do and in what order."* The agreed journey
+spine: arrive & get it → QUIZ (the foundation) → PORTRAIT (the payoff, email save) → REFINE (the step with
+the least obvious reward but the biggest effect on shopping quality) → the good stuff (Shop your Style,
+Wardrobe, Complete the Look) → the return loop (Analyze, Chat, Trending, Wishlist). ▶ **The app already
+ENFORCES this spine via honest routing; this work makes the path VISIBLE.** She approved all four ideas;
+three are BUILT and live, one is parked for a design session:
+1. ✅ **Menu journey order:** the Style group now reads Style Quiz → Style Portrait → Refine your
+   Preferences → Analyze an Outfit → Stylist Chat.
+2. ✅ **"Start here" pill on Style Quiz** — gold, same family as the New pills (`.menu-start`,
+   `#menuStartPill`), toggled in `menuOpen()`: shows ONLY when no `ss_data`, stands down forever once she
+   has results.
+3. ✅ **First-reveal "what's next" strip on the Style Portrait** (`#refineNext`, under the Save button):
+   "Next step: make it truly yours · Add your sizes, colors and faves, so shopping fits you". Tap →
+   `openPrefs()`; ✕ dismisses; either way sets `ss_refinehint` so it NEVER nags twice, and `_hasRefined()`
+   keeps it away from women who already refined. `show()` owns its visibility (`_syncRefineHint()`), same
+   pattern as the quiz progress bar. ⚠️ The strip's copy is Claude's draft; Cath may reword.
+4. ▶ **PARKED FOR A SESSION WITH HER EYES ON IT: the Welcome-screen "How it works" 1-2-3** (Take the quiz →
+   Meet your Style Portrait → Shop your style). **Do it TOGETHER with the long-parked Sally founder line**
+   (both touch the welcome hero; a stranger should meet the stylist and the path in the same breath).
+   Render options for her before committing — id-scoped mockup CSS, one tall labelled image.
+- **Verified: menu.js is now 75 checks** (journey order asserted, pill on for fresh/off for returning, the
+  strip's full lifecycle: shows un-refined, tap → s-pref, dismiss sticks across visits, refined woman never
+  sees it). nav 55 · e2e 29 · hubs 34 still green. `scratchpad/flowshot.js` renders the preview
+  (`flow-preview.png`) — ⚠️ the portrait's reveal DOORS (grey slabs + gold stars) cover everything until
+  `#s-res` gets class `rv-open`; element screenshots of that screen are meaningless without it.
+- ▶ **Share text still pending Cath's wording** (she is thinking on it): the current prefill repeats what
+  the iMessage link-preview card already shows (her catch). Candidates offered, incl. "You have to try
+  this! Take the quiz and tell me what you get." One string in `menuShare()` when she decides.
+
 ### ✅ 0-RESOLVED. 💳 THE API-CREDIT SCARE IS OVER — THERE WAS NEVER A SECOND ACCOUNT (2026-07-31 morning)
 The 2026-07-30 outage ("credit balance too low", every AI surface down together) ended simply: **Cath had
 logged into console.anthropic.com with the wrong email.** Her real account signs in **through Google**, not

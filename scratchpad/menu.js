@@ -160,6 +160,45 @@ ok('without a share sheet the link is copied instead, and she is told',
   await page.evaluate(() => window._copied && window._copied.indexOf('https://stylestar.app') !== -1 && /copied/i.test(window._alerted)),
   await page.evaluate(() => JSON.stringify({ copied: window._copied, alerted: window._alerted })));
 
+// ---------------------------------------------------------------------------
+console.log("\n4c. Journey order + the Start-here pill (Cath, 2026-07-31)");
+{
+  const order = await page.evaluate(() => [...document.querySelectorAll('.menu-row')].map(r => r.textContent.trim().replace(/Start here$/, '').trim()));
+  const iQuiz = order.indexOf('Style Quiz'), iPort = order.indexOf('Style Portrait'), iRef = order.indexOf('Refine your Preferences');
+  ok('Style group reads in journey order: Quiz, then Portrait, then Refine',
+    iQuiz > -1 && iQuiz < iPort && iPort < iRef, JSON.stringify({ iQuiz, iPort, iRef }));
+  await page.evaluate(() => { show('s-wel'); menuOpen(); });
+  ok('returning woman sees NO Start-here pill', await page.evaluate(() =>
+    !document.getElementById('menuStartPill').classList.contains('on')));
+}
+
+// ---------------------------------------------------------------------------
+console.log("\n4d. First-reveal nudge on the portrait: refine, or wave it off, never nags twice");
+{
+  await page.evaluate(() => { localStorage.removeItem('ss_refinehint'); show('s-res'); });
+  ok('un-refined woman sees the "make it truly yours" strip', await page.evaluate(() => {
+    const n = document.getElementById('refineNext');
+    return n.classList.contains('on') && n.getBoundingClientRect().height > 30 && /sizes, colors and faves/.test(n.textContent);
+  }));
+  await page.click('.rn-body');
+  ok('tapping it opens the preferences flow', await page.evaluate(() =>
+    document.querySelector('.scr.act').id === 's-pref'));
+  ok('...and it never shows again after that', await page.evaluate(() => {
+    show('s-res'); return !document.getElementById('refineNext').classList.contains('on');
+  }));
+  await page.evaluate(() => { localStorage.removeItem('ss_refinehint'); show('s-res'); });
+  await page.click('.rn-x');
+  ok('the ✕ dismisses it for good (stays gone on a later visit)', await page.evaluate(() => {
+    const gone = !document.getElementById('refineNext').classList.contains('on');
+    show('s-wel'); show('s-res');
+    return gone && !document.getElementById('refineNext').classList.contains('on');
+  }));
+  await page.evaluate(() => { localStorage.removeItem('ss_refinehint'); prefs.colorsLove.push('Blush'); show('s-res'); });
+  ok('a woman who already refined never sees it at all', await page.evaluate(() =>
+    !document.getElementById('refineNext').classList.contains('on')));
+  await page.evaluate(() => { prefs.colorsLove.pop(); });
+}
+
 ok('menu quiz for a returning woman restarts at question 1, slider centered (the retake flow)',
   await page.evaluate(() => {
     show('s-wel'); menuQuiz();
@@ -175,7 +214,12 @@ await fresh.evaluate(() => { show('s-faq'); menuOpen(); });
 await fresh.click('.menu-row:text-is("Home")');
 ok('Home → s-wel with no saved data', await fresh.evaluate(() => document.querySelector('.scr.act').id) === 's-wel');
 await fresh.evaluate(() => menuOpen());
-await fresh.click('.menu-row:text-is("Style Quiz")');
+ok('new visitor sees the gold "Start here" pill on Style Quiz', await fresh.evaluate(() => {
+  const p = document.getElementById('menuStartPill');
+  return p.classList.contains('on') && p.closest('.menu-row').textContent.includes('Style Quiz')
+    && p.getBoundingClientRect().width > 0;
+}));
+await fresh.click('.menu-row:has-text("Style Quiz")');
 ok('Style Quiz → s-quiz, question 1', await fresh.evaluate(() =>
   document.querySelector('.scr.act').id === 's-quiz' && document.getElementById('pl').textContent === '1 of 12'));
 for (const label of ['Style Portrait', 'Shop your Style', 'Refine your Preferences']) {
