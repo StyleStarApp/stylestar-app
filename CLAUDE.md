@@ -68,6 +68,18 @@ the offering — is the product worry the Menu answers; remember it when weighin
   `?r=`/token ever rides along. Stays on the current screen; only the drawer closes. menu.js now 65 checks
   (14 rows). ⚠️ The share TEXT is the app tagline; if Cath wants friendlier wording it's one string in
   `menuShare()`.
+- ✅ **A 15th ROW: "Refine your Preferences" (2026-07-31, HER CATCH while testing the share button).** It was
+  a first-class row on every hub ("Add your sizes, colors and faves") and the drawer had simply missed it —
+  an accident, not a decision. `menuRefine()`: `openPrefs()` for a woman with saved data, the quiz for a new
+  visitor (same honest routing as Style Portrait / Shop your Style). menu.js now 67 checks (15 rows, both
+  visitor states). A full audit against every screen id + hub destination found NOTHING ELSE missing:
+  vision board / constellation are share overlays off the portrait (deliberate), "Restore your results"
+  lives on Welcome where the woman who needs it lands anyway. ⚠️ With 15 rows the drawer's tail (Share,
+  Privacy·Terms) sits below the fold on a phone — it scrolls (`overflow-y:auto`), fine, but don't add rows
+  casually. ▶ **OPEN, hers to pick: Privacy·Terms quiet line vs full-size rows** — comparison rendered from
+  the real drawer (`scratchpad/legalmock.js` → `legal-compare.png`, computed-style proof 12px vs 17px);
+  Claude recommended keeping the quiet line (legal chrome, not destinations; B adds two more rows below the
+  fold), her call pending.
 
 ### ✅ 0-RESOLVED. 💳 THE API-CREDIT SCARE IS OVER — THERE WAS NEVER A SECOND ACCOUNT (2026-07-31 morning)
 The 2026-07-30 outage ("credit balance too low", every AI surface down together) ended simply: **Cath had
