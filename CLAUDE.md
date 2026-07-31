@@ -60,6 +60,14 @@ the offering — is the product worry the Menu answers; remember it when weighin
   the quiz. ⚠️ For an un-refined returning woman, Shop your Style shows the **refine nudge first** — that is
   the hub behavior, deliberately identical; the first test run flagged it as a failure and it is not one.
   menu.js is now 61 checks (13 rows, both visitor states).
+- ✅ **A 14th ROW: "Share Style Star" (2026-07-31, her ask — she wanted to send the site to one of her Jens
+  without sharing her constellation/vision board).** `menuShare()` in the About group: native share sheet
+  (`navigator.share`) with the plain `https://stylestar.app` link + the tagline; desktop falls back to
+  clipboard copy + "Link copied!". ▶ **It shares the SITE, never her results** — a plain link carries
+  nothing personal (results live in localStorage + behind the emailed token), and a test asserts no
+  `?r=`/token ever rides along. Stays on the current screen; only the drawer closes. menu.js now 65 checks
+  (14 rows). ⚠️ The share TEXT is the app tagline; if Cath wants friendlier wording it's one string in
+  `menuShare()`.
 
 ### ✅ 0-RESOLVED. 💳 THE API-CREDIT SCARE IS OVER — THERE WAS NEVER A SECOND ACCOUNT (2026-07-31 morning)
 The 2026-07-30 outage ("credit balance too low", every AI surface down together) ended simply: **Cath had

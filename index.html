@@ -2036,6 +2036,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-grp">About</div>
   <div class="menu-row" onclick="menuGo(showStory)">My Story</div>
   <div class="menu-row" onclick="menuGo(showFAQ)">FAQ</div>
+  <div class="menu-row" onclick="menuShare()">Share Style Star</div>
   <div class="menu-legal">
     <span onclick="menuGo(showPrivacy)">Privacy</span><i>&#183;</i><span onclick="menuGo(showTerms)">Terms</span>
   </div>
@@ -3297,6 +3298,17 @@ function menuQuiz(){if(localStorage.getItem('ss_data'))retakeQuiz();else startQ(
 // Style Portrait row uses directly) — a new visitor can't shop HER style before
 // the app knows it, so the honest destination is the quiz.
 function menuShopStyle(){if(localStorage.getItem('ss_data'))openShopStyle();else startQ()}
+// Share the SITE, never her results (Cath's ask 2026-07-31). A plain
+// stylestar.app link carries nothing personal: results live in her own
+// browser + behind the emailed token, so a friend always lands on the fresh
+// welcome experience. Stays on the current screen; only the drawer closes.
+function menuShare(){
+  menuClose();
+  var text='Discover your signature style. Align your style. Shine your light.';
+  var url='https://stylestar.app';
+  if(navigator.share){navigator.share({title:'Style Star',text:text,url:url}).catch(function(){})}
+  else{navigator.clipboard.writeText(text+'\n'+url).then(function(){alert('Link copied!')}).catch(function(){})}
+}
 
 // Set initial state
 history.replaceState({screen:document.querySelector('.scr.act')?document.querySelector('.scr.act').id:'s-wel'},null,'');
