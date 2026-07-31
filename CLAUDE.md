@@ -7,7 +7,42 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-07-30, second session)
+## ▶ NEXT SESSION — START HERE (updated 2026-07-31, end of a big day)
+
+### ⭐ CATH'S FULL TO-DO LAYOUT (written with her before her break, 2026-07-31 — the pick-up index)
+She asked for the whole landscape, big and small, to think on. **Next session: read this index, ask what
+she's been thinking about, pick ONE lever.** The detailed entries live in the sections below.
+1. **🎨 DESIGN SESSIONS (together, renders first):** (a) the Welcome screen — "How it works" 1-2-3 + the
+   Sally FOUNDER LINE, one considered session, probably the highest-impact app work left; (b) the
+   SHAREABLE brainstorm — vision board may go, constellation "not what our app does", she wants a really
+   good on-brand Instagram shareable. Brainstorm only, build nothing first.
+2. **💬 CONVERSATIONS (talk, not build):** wardrobe Ideas CATEGORY BOUNDARIES (her white-tops find; she
+   is the taxonomy authority) · two small her-call flags: quiet brand-home links in chat next to an
+   already-linked item (her Coach observation), and the "My List" tab name if it ever bothers her.
+3. **🖥 DESK DAY (MailerLite):** shrink the "shouting" sub-header in welcome + restore emails · "Email me
+   my wishlist" (unblocked, better now that picks carry real products/prices) · photo-tips email + email
+   capture on the wardrobe page fit the same session.
+4. **📱 HER TESTING (the quality gate only she can run):** keep testing search chat — does the try-harder
+   dial convert dry runs? keep reporting bad search landings · when bored: address-bar checks on the last
+   unverified stores (NORDSTROM first, then Sunglass Hut, Warby Parker, SKIMS, Belk, TJ Maxx, Vuori, Ann
+   Taylor).
+5. **📝 CONTENT (hers, anytime):** more What's Trending items · more Style Star Edit pieces (New pills
+   light automatically) · occasional click-through of Edit links for dead ones.
+6. **⏳ MONEY PATH:** waiting on Almira (official LLC confirmation → TMs → EIN) → then HER two steps
+   (business bank account → affiliate applications, NETWORKS FIRST, Amazon only with real traffic) →
+   then the big unlock (tags, feeds, product images/lookbook, "in your size" returns, swim stores,
+   Amazon sentence).
+7. **🌟 THE GATE SHE OWNS:** tester invites (the 10 named women) once the searches feel dialed in to HER.
+
+### ✅ WHAT SHIPPED 2026-07-31 (one day, PRs #702–#719): the API scare resolved (wrong login email — her
+Anthropic login is GOOGLE SIGN-IN), "Checking stores..." + the try-harder search dial, Share Style Star +
+Refine rows in the Menu, Privacy/Terms full-size, journey-ordered Menu + Start-here pill + first-reveal
+refine nudge, the naming pass (Ask your Stylist / Your Wardrobe List / Your Wishlist + the VOICE RULE),
+hub cards aligned to the Menu (Build stays), chat continuity fixed (no more "starts fresh" amnesia,
+confirmed live by Cath), the Your Wishlist redesign (✕ left, row hearts retired, her B3 badge in the
+Edit-family teal, header polish, honest lead copy) — **and the LLC confirmed ACTIVE on Sunbiz.** 🎉
+
+## ▶ THE REST OF THE 2026-07-30/31 DETAIL (the sections the index above points into)
 
 ### ⭐ 0-NEWEST. 🧭 THE NAVIGATION FIX IS LIVE — merged as #697 + #698, and CATH LOVES IT
 Cath picked **Option C** from the rendered footer comparison, then mid-build reconsidered the hamburger and
