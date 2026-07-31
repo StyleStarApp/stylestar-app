@@ -61,37 +61,51 @@ the offering — is the product worry the Menu answers; remember it when weighin
   the hub behavior, deliberately identical; the first test run flagged it as a failure and it is not one.
   menu.js is now 61 checks (13 rows, both visitor states).
 
-### ⚠️ 0-URGENT. 💳 THE AI SURFACES ARE DOWN: API CREDITS + A TWO-ACCOUNT TANGLE (2026-07-30 evening, UNRESOLVED)
-Cath hit "couldn't load options right now" on Shop your style AND the chat's "I'm having a moment" at once.
-**One live POST to the function answered it: "Your credit balance is too low to access the Anthropic API."**
-Every AI surface shares that key, so everything failed together with friendly errors — the app code is fine.
-- **What happened next, and where it stands:** Cath bought **$20 of credits + set auto-reload ($500 limit,
-  with notifications)** — ✅ good setup — **but the account she funded shows NO API key.** So she has TWO
-  Anthropic accounts: the funded one, and a different (login unknown) one that owns the key in Netlify's
-  `ANTHROPIC_API_KEY`. She was on her phone, understandably overwhelmed, and **chose to stop for the night.
-  The AI features stay down until this is done — that is expected, not a new bug.**
-- ▶ **THE DESK TASK (~10 min, walk her through it gently next time):** (1) console.anthropic.com in the
-  FUNDED account → API Keys → Create Key ("style-star"), copy it, never paste it in chat; (2) Netlify →
-  Site configuration → Environment variables → edit `ANTHROPIC_API_KEY` → paste new value — ⚠️ **keep its
-  production-only scope exactly as is** (that's the deliberate deploy-preview protection); (3) Deploys →
-  Trigger deploy; (4) Claude probes the live function to confirm. The old account's key then just sits
-  unused; tidy it whenever, nothing depends on it.
+### ✅ 0-RESOLVED. 💳 THE API-CREDIT SCARE IS OVER — THERE WAS NEVER A SECOND ACCOUNT (2026-07-31 morning)
+The 2026-07-30 outage ("credit balance too low", every AI surface down together) ended simply: **Cath had
+logged into console.anthropic.com with the wrong email.** Her real account signs in **through Google**, not
+her main email — she'd forgotten, so the freshly funded "account" looked key-less and it seemed like a
+two-account tangle. It wasn't. Once she signed in via Google it was one account: the funded one owns the
+Netlify key. **No key swap ever happened, none was needed** — the live function probe confirmed recovery
+first thing 2026-07-31. ▶ **Remember for any future console task: Cath's Anthropic login is GOOGLE
+SIGN-IN.** Her setup stands: $20 credits + auto-reload with $500 limit and notifications.
 - ▶ **Costs told to her (for the tester conversation later):** searching chat answer 5-10¢, everything else
   ~1¢; her 10-tester circle ≈ $10-20 for a first month; ~100 active users ≈ $30-80/mo; the searching chat
   is the cost lever if it ever needs tuning. One $100 affiliate purchase (~$3-10 commission) pays for a
   woman's whole month of AI many times over.
 - ▶ The diagnostic pattern (curl the LIVE function with `Origin: https://stylestar.app`) answered in one
-  call again — reuse it, including to confirm recovery after the key swap.
+  call again — reuse it any time an AI surface misbehaves.
 
-### ⭐ STILL THE STANDING NEXT THINGS (unchanged from the morning entry)
-Her live suede-bag re-test of the search chat (now merged and live), then revisit the waiting-message copy
-AND the 15-20s pace question with her; the tester-invite gate stays hers.
+### ⭐ 0-LATEST. 🔎 THE SUEDE-BAG RE-TEST HAPPENED (2026-07-31) — honest, not yet ChatGPT-good
+Cath ran the tan-suede-baguette photo test on her phone against the live search chat. **The result was an
+honest dry run:** the stylist searched, could not confirm an exact tan elongated baguette on a real product
+page, SAID SO plainly, and pointed her to the Mango suede collection at Nordstrom + a sensible search
+strategy, ending with "Want me to try a more specific search for one of those brands?" **Her verdict: "more
+honest results but still not as good as what chat came up with."** Screenshots are in the 2026-07-31 chat.
+- **Read on it, told to her:** this is the honesty rule working (no invented Miu Miu this time) — but
+  ChatGPT queries a merchant CATALOG and essentially can't come up dry, while web search on shape+material+
+  color sometimes finds nothing it can verify. The pre-merge live test of the same scenario DID find the
+  JW PEI Nova Baguette (~$79, real Nordstrom URL, 16s) — **runs vary; feeds are what buy consistency.**
+  The gap is structural until product feeds (affiliate approvals). The sequencing she chose stands.
+- ✅ **The "try harder" dial is ON (2026-07-31, her call: "let's do the try harder"):** the chat search
+  prompt now says a dry search should be rephrased and retried — broader shape word, drop the least
+  important detail, or lead with material — up to the server's max_uses of 3. The "genuinely good result
+  in front of you" brake stays, so it only tries harder when it found NOTHING. Costs a few extra seconds
+  + ~2¢ only on dry runs. ▶ **Watch her next few tests to see if dry runs convert into finds.**
+- ✅ **The waiting message is now "Checking stores..."** (was "Checking your stores for the real thing...")
+  — her call, shipped same morning with the searchchat.js assertion updated (55 checks green).
+
+### ⭐ STILL THE STANDING NEXT THINGS
+The tester-invite gate stays hers (see decision 3 below). The suede-bag re-test HAPPENED (2026-07-31, see
+0-latest below); the waiting-message and pace questions are now BOTH settled.
 
 ### ▶ THREE DECISIONS FROM THE 2026-07-30 WRAP-UP (recorded verbatim-ish, they gate future work)
-1. **Search-chat pace: 15-20s is acceptable for now** — her words: *"as of right now I don't think 15-20
-   seconds feels too long"*. ⚠️ **The waiting message "Checking your stores for the real thing..." is NOT
-   confirmed copy** — she's unsure it's right. ▶ **ASK HER AGAIN about both (pace AND wording) after she has
-   tested more.** Do not treat the current string as settled.
+1. ✅ **BOTH SETTLED 2026-07-31 after her live re-test.** Pace: "The wait felt fine not too long." Wording:
+   the message is now **"Checking stores..."** — her call, and the reasoning matters: *"I feel like the 102
+   stores is almost restricting I mean she will want us to search the whole world if she is looking for
+   something."* ▶ **That is a product stance, not just copy: don't SURFACE the 102-store boundary to the
+   user.** The allowlist stays (it's the brand + the money), but the woman shopping shouldn't feel walls.
+   Weigh future copy against this.
 2. **Navigation is the next lever** (above).
 3. **HER TESTER LIST EXISTS — she named the 10 in chat for accountability:** Mom, Ellen (sister), Maryanne
    (daughter), Jen (best friend), other Jen, Peggy, Danielle, another Jen, Nikki, Jackie. (Three Jens — when
@@ -122,7 +136,7 @@ by 40 new checks, NOT yet merged — she should run her suede-bag test live afte
   searches (~5¢) inside the same gates as any AI call.
 - ▶ **SEARCH RESPONSES STREAM (SSE pass-through), and that is load-bearing twice:** (1) a searching answer can
   run past Netlify's synchronous function time limit — buffered JSON might just time out; (2) the page shows
-  **"Checking your stores for the real thing..."** the moment a `server_tool_use` block arrives, then renders
+  **"Checking stores..."** (Cath's wording, 2026-07-31) the moment a `server_tool_use` block arrives, then renders
   the reply progressively — a 15s answer feels like service, not a hang. Non-search calls (all other AI
   surfaces) are byte-for-byte unchanged; a JSON response still renders via the old path, so the page degrades
   gracefully against an old function build (tested).

@@ -6523,7 +6523,7 @@ async function _readChatStream(r,typing,liveEl){
     var ev;try{ev=JSON.parse(payload)}catch(e){return}
     if(ev.type==='error'||(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='refusal'))throw new Error('stream error');
     if(ev.type==='content_block_start'&&ev.content_block&&ev.content_block.type==='server_tool_use'){
-      typing.textContent='Checking your stores for the real thing...';
+      typing.textContent='Checking stores...';
       toBottom();
     }else if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta'){
       text+=ev.delta.text;
@@ -6704,7 +6704,8 @@ SHOPPING:
 SEARCHING REAL INVENTORY:
 - You can search the web, and every search is restricted to Style Star's own approved stores. Use it when she wants to find or buy a specific piece, wants something like a photo she shared, or asks what is available right now.
 - Do not search for general style advice, occasion guidance, or anything you can answer well from expertise. Most questions need no search.
-- One well chosen search is usually enough, two at most. Search, read the results, then answer. She is waiting, so never keep searching for a perfect result when a genuinely good one is already in front of you.
+- One well chosen search is usually enough. Search, read the results, then answer. She is waiting, so never keep searching for a perfect result when a genuinely good one is already in front of you.
+- BUT if a search comes up dry, do not give up after one try: rephrase and search again with different words. Try a broader shape or category word, drop the least important detail, or lead with the material instead of the shape. A second or third search that finds her the piece is always worth the few extra seconds.
 - When you do search, recommend ONLY items you actually saw in the results. Use the real product name and the real price from the result, and the store it came from, still formatted as "item from StoreName (~$price)" with the store named exactly as it appears in the store list above.
 - CRITICAL, THE LINK: after each searched item's price, put the item's exact product page address from the search result in square brackets, like this: the Nova Baguette Bag from Nordstrom (~$79) [https://www.nordstrom.com/s/nova-baguette/8467773]. Copy the address exactly as the result gave it, never build or shorten one yourself.
 - AN ITEM WITHOUT ITS ADDRESS DOES NOT EXIST: if you cannot give an item's exact product page address from the results, do not mention that item at all. No "for a more elevated version" extras without their own address. Every single item you name must carry its bracketed address.
