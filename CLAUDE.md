@@ -87,10 +87,11 @@ honest results but still not as good as what chat came up with."** Screenshots a
   color sometimes finds nothing it can verify. The pre-merge live test of the same scenario DID find the
   JW PEI Nova Baguette (~$79, real Nordstrom URL, 16s) — **runs vary; feeds are what buy consistency.**
   The gap is structural until product feeds (affiliate approvals). The sequencing she chose stands.
-- ▶ **Offered, not yet decided: the "try harder" dial** — prompt currently says one search usually, two at
-  most; could say "if the first search comes up dry, rephrase and try again" (max_uses already 3). A few
-  extra seconds + ~2¢ on dry runs, might convert some into finds. **Ask her if she wants it after more
-  testing.**
+- ✅ **The "try harder" dial is ON (2026-07-31, her call: "let's do the try harder"):** the chat search
+  prompt now says a dry search should be rephrased and retried — broader shape word, drop the least
+  important detail, or lead with material — up to the server's max_uses of 3. The "genuinely good result
+  in front of you" brake stays, so it only tries harder when it found NOTHING. Costs a few extra seconds
+  + ~2¢ only on dry runs. ▶ **Watch her next few tests to see if dry runs convert into finds.**
 - ✅ **The waiting message is now "Checking stores..."** (was "Checking your stores for the real thing...")
   — her call, shipped same morning with the searchchat.js assertion updated (55 checks green).
 
