@@ -95,6 +95,23 @@ honest results but still not as good as what chat came up with."** Screenshots a
 - ✅ **The waiting message is now "Checking stores..."** (was "Checking your stores for the real thing...")
   — her call, shipped same morning with the searchchat.js assertion updated (55 checks green).
 
+### ▶ CATH'S TWO NEW ITEMS (2026-07-31, parked by her — "later when I am at my desk")
+1. **📧 Welcome + restore emails: shrink the sub-header line.** Her words: it *"looks too large like it is
+   shouting."* Both emails get the same slight edit. This is a MAILERLITE EDITOR task, so it needs her at
+   her desk; Claude's role is guidance. ⚠️ Remember the traps from 0b when she does it: re-check the
+   SUBJECT after any template/design step (choosing a design overwrote it once), the hero block's slots
+   are fixed (heading → text → button, sign-off lives in "Additional text"), and **never test the welcome
+   automation with a previously used address — use a fresh `+` alias**, or the automation's Test button.
+2. **👕 Wardrobe "Ideas" searches bleed across categories — she wants to TALK about it, not build yet.**
+   Her live find (quality-gate item 6 doing its job): she put **White tops** on her list and the Ideas
+   carousel offered **dressy going-out tops and tank tops** inside that search. Her point: those belong to
+   ANOTHER category on the checklist, so an item's Ideas should stay in ITS lane. ▶ When this conversation
+   happens, bring the mechanics: the carousel prompt is built by `_wardrobeIdeaGen()` from the item name
+   alone, so "White tops" gives the model the whole tops universe; the checklist's own category structure
+   (the 10 categories) is sitting right there and could scope the prompt ("everyday white tops — not
+   going-out tops or tanks, those are their own list items"). **Get her definition of each category's
+   boundaries first — she is the taxonomy authority, same rule as the store tags.**
+
 ### ⭐ STILL THE STANDING NEXT THINGS
 The tester-invite gate stays hers (see decision 3 below). The suede-bag re-test HAPPENED (2026-07-31, see
 0-latest below); the waiting-message and pace questions are now BOTH settled.
