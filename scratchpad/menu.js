@@ -108,7 +108,7 @@ const ROWS = [
   ['Home', 's-wb'], ['Style Portrait', 's-res'], ['Style Quiz', 's-quiz'], ['Refine your Preferences', 's-pref'], ['Analyze an Outfit', 's-photo'],
   ['Stylist Chat', 's-chat'], ['Shop your Style', 's-shopstyle'], ['Style Star Mall', 's-shop'], ['Style Star Edit', 's-dream'],
   ['My Wishlist', 's-wishlist'], ['Your Wardrobe', 's-wardrobe'], ["What's Trending", 's-wardrobe'],
-  ['My Story', 's-story'], ['FAQ', 's-faq']
+  ['My Story', 's-story'], ['FAQ', 's-faq'], ['Privacy', 's-privacy'], ['Terms', 's-terms']
 ];
 for (const [label, dest] of ROWS) {
   await page.evaluate(() => { show('s-wel'); menuOpen(); });
@@ -127,12 +127,6 @@ for (const [label, dest] of ROWS) {
   }));
   const good = r.act === dest && r.closed && (label !== "What's Trending" || r.trendOn);
   ok('"' + label + '" → ' + dest + (label === "What's Trending" ? ' (trend tab active)' : ''), good, JSON.stringify(r));
-}
-for (const [label, dest] of [['Privacy', 's-privacy'], ['Terms', 's-terms']]) {
-  await page.evaluate(() => { show('s-wel'); menuOpen(); });
-  await page.click('.menu-legal span:text-is("' + label + '")');
-  const act = await page.evaluate(() => document.querySelector('.scr.act').id);
-  ok('quiet "' + label + '" → ' + dest, act === dest, act);
 }
 // ---------------------------------------------------------------------------
 console.log("\n4b. Share Style Star: the SITE goes out, never her results (Cath's ask 2026-07-31)");
@@ -236,7 +230,7 @@ const fit = await p360.evaluate(() => {
 function lum(rgb) { const [r, g, b] = rgb.map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; }
 const ratio = (Math.max(lum(fit.fg), lum([251, 250, 247])) + 0.05) / (Math.min(lum(fit.fg), lum([251, 250, 247])) + 0.05);
 ok('drawer fits inside 360px, no sideways scroll', fit.panelW <= 303 && fit.viewportOk, JSON.stringify(fit));
-ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 15);
+ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 17);
 ok('row text contrast ≥ 4.5:1 (got ' + ratio.toFixed(1) + ':1)', ratio >= 4.5);
 ok('no JS errors @360', p360.errors.length === 0, p360.errors.join(' | '));
 await p360.context().close();

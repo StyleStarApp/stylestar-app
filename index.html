@@ -747,9 +747,6 @@ body.menu-open .menu-panel{display:block}
 .menu-row{font:400 17px/1.2 'DM Serif Display',Georgia,serif;color:#1a1a1a;padding:11px 2px;border-bottom:1px solid rgba(33,30,26,.08);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .menu-homerow{border-top:1px solid rgba(33,30,26,.08)}
 .menu-grp{font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8a8474;margin:16px 0 3px;padding:0 2px}
-.menu-legal{margin-top:18px;display:flex;align-items:center;gap:8px;padding:0 2px}
-.menu-legal span{font:400 12px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
-.menu-legal i{color:#b0a998;font-style:normal;font-size:11px}
 /* the FAQ / Privacy / Terms letterhead logo sits top-left, exactly under the
    fixed Menu chip — give those heads room so the two never overlap */
 .faq-head,.pp-head{margin-top:40px}
@@ -2038,9 +2035,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-row" onclick="menuGo(showStory)">My Story</div>
   <div class="menu-row" onclick="menuGo(showFAQ)">FAQ</div>
   <div class="menu-row" onclick="menuShare()">Share Style Star</div>
-  <div class="menu-legal">
-    <span onclick="menuGo(showPrivacy)">Privacy</span><i>&#183;</i><span onclick="menuGo(showTerms)">Terms</span>
-  </div>
+  <div class="menu-row" onclick="menuGo(showPrivacy)">Privacy</div>
+  <div class="menu-row" onclick="menuGo(showTerms)">Terms</div>
 </div>
 
 <div class="scr" id="s-quiz">
