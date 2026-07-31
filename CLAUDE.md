@@ -835,6 +835,28 @@ this blocks app work; the glow-up continues meanwhile.
   in TM Max) → [Cath] business bank account → [Cath] affiliate applications → **[Claude] wire affiliate links + product
   images + FTC disclosure** (the revenue switch). None of this blocks app work.
 
+### ▶ LEGAL UPDATE (2026-07-31 — 🎉 THE LLC IS ALMOST CERTAINLY APPROVED, revealed by a SCAM TEXT of all things)
+- **What happened:** Cath's HUSBAND received an SMS from an unknown 833 number: *"Style Star By Catherine, Llc is
+  now registered! Getting an EIN is one of the first steps, apply here: www.einservices.org"*. **The text itself is
+  a scam** (EINs are FREE from the IRS; that site is a pay-for-free-thing / data-harvesting operation) — but the
+  robot can only know the LLC name by scraping **Florida's public Sunbiz records**, which strongly implies **the
+  state has approved "Style Star by Catherine, LLC"** and the scrapers simply beat the official channels. Almira
+  has NOT yet confirmed as of the morning of 07-31. **Status: LIKELY APPROVED, awaiting Almira's confirmation.**
+- **Told to Cath:** don't click, don't reply STOP (confirms a live number), just delete/report junk. **Expect a
+  WAVE of these** — fake "Certificate of Status" letters, "annual report filing" services, "labor law poster"
+  invoices, by text AND paper mail, all scraped from the same public filing. **Standing rule she now knows: any
+  LLC-related ask for money that isn't from Almira, the State of Florida directly, or the IRS is junk.** Her EIN
+  comes through the Indie Law TM Max package; she never pays a third party for it.
+- **Why the husband's phone (she asked):** Sunbiz publishes names + ADDRESSES, not phones; data brokers map the
+  filing's address to household phone numbers and his is the top contact for the address. Nothing was hacked or
+  leaked — public-record plumbing only. ▶ **Optional ask for Almira sometime:** what address went on the filing;
+  a registered-agent address can keep the home address out of future public records.
+- ▶ **Cath can self-verify in 30s:** search.sunbiz.org → Search by Entity Name → "Style Star By Catherine" →
+  status "Active" = approved. (Sunbiz is Cloudflare-walled from the sandbox; her browser is the instrument.)
+- ▶ **WHEN ALMIRA CONFIRMS, the chain finally advances:** TMs filed under the LLC → EIN → business bank account →
+  affiliate applications — and remember the Amazon sequencing trap (180-day/3-sales clock starts at APPROVAL;
+  networks first, Amazon only when there's real traffic).
+
 ### ▶ NORTH STAR (2026-07-14, from Sally Hogshead — award-winning marketing expert, author of "How to Fascinate"): DIFFERENTIATION = THE REAL STYLIST BEHIND IT
 Sally (Cath's friend, a marketing/branding genius) gave Cath the single most important strategic note yet:
 **Style Star must clearly, loudly differentiate on the one thing no competitor can copy — that it is built with
