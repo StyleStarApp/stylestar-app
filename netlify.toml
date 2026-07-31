@@ -36,3 +36,11 @@
   from = "/faq"
   to = "/index.html"
   status = 200
+
+# /results opens the Style Portrait on a device that has one saved (results
+# live in the browser + behind the emailed token, so the path itself carries
+# nothing personal; a visitor without saved results lands on the welcome).
+[[redirects]]
+  from = "/results"
+  to = "/index.html"
+  status = 200

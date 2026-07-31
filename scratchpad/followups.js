@@ -66,15 +66,26 @@ await page.evaluate(() => {
 ok('mid-quiz she is on question 5', await page.evaluate(() => cur) === 4);
 // …then leaves without finishing (browser Back / a footer link — anything
 // that isn't prevQ all the way out) and starts the quiz again.
+// 2026-07-31: the restart now RESUMES her fresh unfinished attempt (quiz
+// autosave) instead of wiping it. The original scramble — question 1 on
+// screen while answers were written to slot 5 — stays impossible because
+// cur and the display are restored TOGETHER.
 await page.evaluate(() => { show('s-wel'); startQ(); });
-ok('the restart really shows question 1', await page.evaluate(() =>
-  document.getElementById('pl').textContent) === '1 of 12');
-ok('and cur is reset to 0 (the bug)', await page.evaluate(() => cur) === 0);
+ok('the restart resumes her place (question 5, not a wipe)', await page.evaluate(() =>
+  document.getElementById('pl').textContent) === '5 of 12');
+ok('and cur matches the question on screen (the original bug)', await page.evaluate(() => cur) === 4);
 await page.evaluate(() => { document.getElementById('sl').value = 2; onSl(2); });
-ok('moving the slider writes to answers[0], not answers[4]',
-   await page.evaluate(() => answers[0]) === 2);
-ok("…and question 5's earlier answer is untouched",
-   await page.evaluate(() => answers[4]) !== 2);
+ok('moving the slider writes to answers[4], the question she is on',
+   await page.evaluate(() => answers[4]) === 2);
+// With no autosave (finished, stale, or cleared) the restart is a true fresh start.
+await page.evaluate(() => { show('s-wel'); localStorage.removeItem('ss_quiz'); startQ(); });
+ok('with no autosave, the restart really shows question 1 with cur 0', await page.evaluate(() =>
+  document.getElementById('pl').textContent + '|' + cur) === '1 of 12|0');
+// The real scramble guard: back on question 1, the slider writes to slot 0
+// (startQ has never wiped in-memory answers; only cur and the display matter).
+await page.evaluate(() => { document.getElementById('sl').value = 3; onSl(3); });
+ok('back on question 1, the slider writes to answers[0], not answers[4]',
+   await page.evaluate(() => answers[0] === 3 && answers[4] === 2));
 await page.evaluate(() => { document.getElementById('sl').value = 2; nextQ(); });
 ok('Continue goes to question 2, not question 6', await page.evaluate(() =>
   document.getElementById('pl').textContent) === '2 of 12');
@@ -169,7 +180,7 @@ ok('Complete the Look drops the violation as well', rows.n === 1 && !/leopard/i.
 console.log('\n4. Plausible events (anonymous, no personal data)');
 const ev = () => page.evaluate(() => window._ev);
 let events = await ev();
-ok('Quiz Started fired on both starts', events.filter(e => e[0] === 'Quiz Started').length === 2);
+ok('Quiz Started fired on all three starts', events.filter(e => e[0] === 'Quiz Started').length === 3);
 const qNums = events.filter(e => e[0] === 'Quiz Question').map(e => e[1] && e[1].question);
 ok('each answered question reports its number', JSON.stringify(qNums) === JSON.stringify([1, 2, 3, 4, 1]),
    JSON.stringify(qNums));

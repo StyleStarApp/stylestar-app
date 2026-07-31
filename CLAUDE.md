@@ -98,6 +98,49 @@ max 3, absolute body ceiling 3.5 MB** — bounds abuse, breaks nothing real.
   Full sweep green: cowork3 69 · searchchat 54 · menu 82 · nav 55 · e2e 29 · copy 41 · hubs 34 · followups 37 ·
   sec 89.
 
+### ✅ THE FOURTH COWORK BRIEF SHIPPED (2026-07-31, late — affiliate-readiness + quiz batch, one commit)
+All seven items verified against the real code, then built:
+1. 🏷 **Every outbound product link now carries `rel="sponsored noopener"`** — the 8 JS-template surfaces
+   (chat's four linkStores passes, _shopCard, Complete the Look, Mall cards, wishlist rows) AND the 17
+   hardcoded Edit links (which had NO rel at all). ▶ **NEW STANDING RULE for Edit/Mall additions: every new
+   outbound product link gets `rel="sponsored noopener"`** (added to the rules list below).
+2. 🔗 **The two a.co Amazon shortlinks are canonical now**: `a.co/d/0h2VcwJc` → `amazon.com/dp/B0CWD1RYK3`
+   (the stacking bangles), `a.co/d/04ATQcWA` → `amazon.com/dp/B0DWL5VV8Z` (the PRETTYGARDEN flowy maxi dress).
+   Tracking params stripped per the standing rule. ▶ **Useful discovery: a.co redirects ARE reachable from
+   the sandbox** (`curl -w '%{redirect_url}'` returns the full amazon URL) even though amazon.com itself is
+   walled — future shortlink resolution needs no address-bar round trip.
+3. 📢 **The Edit and Mall disclosures moved ABOVE the products** (Wardrobe's pattern, and the FTC-preferred
+   before-the-links placement affiliate reviewers look for). Wording untouched — both keep their own longer
+   founder-voice versions. Edit's sits after Cath's subtitle, Mall's after the sign, so neither reads as a
+   page tagline (the 2026-07-29 placement trap).
+4. 📦 **`@netlify/blobs` removed from package.json** — nothing ever imported it; `"type":"module"` stays.
+5. 💾 **Quiz autosave (`ss_quiz`)**: every slider move and question change saves `{answers, cur, t}`;
+   restored on quiz entry AND straight back onto her question on a mid-quiz REFRESH (the browser preserves
+   history.state across reload; no entrance curtain, same as deep links). ⚠️ **Resume only while FRESH
+   (30 min)** — a refresh resumes exactly; a woman returning days later gets a clean quiz instead of
+   question 7 of a forgotten attempt. Cleared on completion; a stale/malformed save is dropped on sight.
+   `cur` and `answers` always save TOGETHER, so the old show-q1-write-slot-5 scramble stays impossible
+   (followups.js test 1 updated to assert the new resume behavior, 38 checks).
+6. ⬅️ **Each quiz question owns a history entry**: browser Back steps back one question instead of throwing
+   her out; the on-screen back arrow rides the same stack (`prevQ` → `history.back()`), so the two can never
+   disagree. Entering/resuming rebuilds the chain q0..qcur. Accepted trade-off, flagged: Back from a FRESH
+   portrait now walks back through the questions rather than exiting in one press.
+7. 🔗 **`/results` is a real route** (_ROUTES + netlify.toml, same pattern as the legal pages): with saved
+   results it opens her portrait (strict `_hasQuizData`, honest welcome fallback + URL cleaned to `/`
+   otherwise), and the portrait now shows `/results` in the address bar whenever it's open. ⚠️ Results live
+   in localStorage, so the path only means something on HER device — **the share texts deliberately still
+   link plain stylestar.app** (a friend following /results would land on the welcome). Same standing
+   warning as the other routes: never change the path once it's been shared anywhere.
+   **Bonus fix found by the new tests: browser Back from ANY deep-linked page (privacy/terms/story/faq/
+   results) now lands on her real home** (Welcome Back if she has results) — the boot path restamps the
+   initial history entry after fallbackInitialScreen picks the under-screen.
+- **Verified: new `scratchpad/affq.js`, 36 checks** (static: all 25 outbound anchors carry the rel, ASINs
+  canonical, blobs gone, toml rewrite present — the test server applies the REAL netlify.toml rules; in
+  Chromium: disclosures visible above products, exit-and-return + refresh resume, stale-save fresh start,
+  Back walking questions one at a time and exiting at q1, completion clearing the save, both /results
+  states, in-app URL writing). **followups.js updated to 38.** Full sweep green: affq 36 · followups 38 ·
+  cowork3 69 · searchchat 54 · menu 82 · nav 55 · e2e 29 · copy 41 · hubs 34 · sec 89.
+
 ## ▶ THE REST OF THE 2026-07-30/31 DETAIL (the sections the index above points into)
 
 ### ⭐ 0-NEWEST. 🧭 THE NAVIGATION FIX IS LIVE — merged as #697 + #698, and CATH LOVES IT
@@ -1706,6 +1749,9 @@ questions she wanted understood, plus one feature idea she likes. Resurface when
   When affiliate programs approve, this is also where product images + tagged links land (money-path step 7).
 
 ### ▶ RULES LEARNED / REAFFIRMED THIS SESSION (apply to all future Edit + Mall additions)
+- **▶ EVERY new outbound product link gets `rel="sponsored noopener"`** (2026-07-31, affiliate-readiness
+  pass). The 17 existing Edit links, the Mall cards and all AI shopping surfaces carry it; a new `.dc-item`
+  added by hand must too, or `scratchpad/affq.js` fails on the anchor count/rel check.
 - **▶ ALWAYS TRIM TRACKING PARAMETERS off product links.** Three reasons, the third is the money one: they go
   stale, they make links fragile, and **once affiliate links are live, extra tracking params can interfere with
   commission attribution.** What was stripped this session: Nordstrom `origin=`/`recs_*`/`breadcrumb=`/`color=`;
