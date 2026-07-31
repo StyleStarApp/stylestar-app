@@ -192,7 +192,15 @@ honest results but still not as good as what chat came up with."** Screenshots a
   carry the last topic forward). First wording still let it say "this is the start of our conversation" —
   the shipped version bans ALL memory meta-commentary, verified 3/3 against the LIVE function with a
   restored-history payload. ▶ **Lesson: when a model misbehaves, capture the real payload first — prompt
-  fixes and code fixes look identical from a screenshot.**
+  fixes and code fixes look identical from a screenshot.** ✅ **CATH CONFIRMED IT LIVE same afternoon**
+  ("Ok great that worked"): the stylist resumed with "We were looking at the suede barrel bag options...
+  the Coach Suede Barrel Bag from Nordstrom (~$195) is still my top pick." Her two notes from that run:
+  (1) the bare **Coach** link went to coach.com with no search — that is the deliberate "storefront door"
+  behavior for store names mentioned in prose (the ITEM link was the Nordstrom one, which landed on the
+  right bag); flagged to her that quieting brand-home links next to an already-linked item is a possible
+  polish, her call, not built. (2) **Match precision is still the gap**: a barrel bag is not her photo's
+  elongated baguette, "top pick based on shape" stretched the match bar — same structural story, feeds
+  are the cure. Her verdict stands: "Chat's answer still was way better."
 
 ### ▶ CATH'S TWO NEW ITEMS (2026-07-31, parked by her — "later when I am at my desk")
 1. **📧 Welcome + restore emails: shrink the sub-header line.** Her words: it *"looks too large like it is
