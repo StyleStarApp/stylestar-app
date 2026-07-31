@@ -76,10 +76,10 @@ the offering — is the product worry the Menu answers; remember it when weighin
   vision board / constellation are share overlays off the portrait (deliberate), "Restore your results"
   lives on Welcome where the woman who needs it lands anyway. ⚠️ With 15 rows the drawer's tail (Share,
   Privacy·Terms) sits below the fold on a phone — it scrolls (`overflow-y:auto`), fine, but don't add rows
-  casually. ▶ **OPEN, hers to pick: Privacy·Terms quiet line vs full-size rows** — comparison rendered from
-  the real drawer (`scratchpad/legalmock.js` → `legal-compare.png`, computed-style proof 12px vs 17px);
-  Claude recommended keeping the quiet line (legal chrome, not destinations; B adds two more rows below the
-  fold), her call pending.
+  casually. ✅ **Privacy·Terms are now FULL-SIZE ROWS — Cath picked B from the rendered comparison**
+  (`scratchpad/legalmock.js` → `legal-compare.png`) against Claude's recommendation of the quiet line, and
+  her consistency instinct is a legitimate call for an 18-80 audience. The `.menu-legal` markup + CSS are
+  GONE; the drawer is 17 rows and menu.js drives Privacy and Terms through the same loop as every other row.
 
 ### ✅ 0-RESOLVED. 💳 THE API-CREDIT SCARE IS OVER — THERE WAS NEVER A SECOND ACCOUNT (2026-07-31 morning)
 The 2026-07-30 outage ("credit balance too low", every AI surface down together) ended simply: **Cath had
