@@ -633,12 +633,12 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    Deliberately the same black-and-stitch "room" frame as Your Wardrobe (one
    frame language for the whole app, per the restraint principle) -- what makes
    this room its own is the hearts and the tag, not a second frame invention. */
-#s-wishlist .wl-hearts{display:flex;justify-content:center;gap:8px;margin:0 0 8px}
-#s-wishlist .wl-hearts svg{width:12px;height:12px;fill:#F49AC1;opacity:.9;display:block}
+#s-wishlist .wl-hearts{display:flex;justify-content:center;gap:10px;margin:0 0 8px}
+#s-wishlist .wl-hearts svg{width:17px;height:17px;fill:#F49AC1;opacity:.9;display:block}
 #s-wishlist .wl-hearts svg:nth-child(even){transform:rotate(11deg)}
 #s-wishlist .wl-hearts svg:nth-child(odd){transform:rotate(-9deg)}
 #s-wishlist .wl-logo{display:block;width:56px;height:56px;margin:0 auto 4px}
-#s-wishlist .wl-head{text-align:center;margin-bottom:4px}
+#s-wishlist .wl-head{text-align:center;margin:-30px 0 4px}
 #s-wishlist .wl-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px}
 #s-wishlist .wl-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
 #s-wishlist .wl-count{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:9px}
@@ -649,8 +649,6 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:4px 12px 6px;margin-top:14px}
 #s-wishlist .wl-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid #efe9dc}
 #s-wishlist .wl-row:first-child{border-top:0}
-#s-wishlist .wl-mark{flex:0 0 auto;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
-#s-wishlist .wl-mark svg{width:18px;height:18px;fill:#F49AC1;display:block;transform:rotate(-8deg)}
 #s-wishlist .wl-b{flex:1;min-width:0}
 #s-wishlist .wl-nm{display:block;font:600 14px/1.35 'Jost',sans-serif;color:#26221c}
 #s-wishlist .wl-st{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8272;margin-top:3px}
@@ -6182,14 +6180,13 @@ function renderWishlist(){
     if(pick)url=_wlSafeUrl(it.url);
     else{try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}}
     h+='<div class="wl-row'+(pick?' pick':'')+'">'
-      +'<span class="wl-mark"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg></span>'
+      +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
       +'<div class="wl-b">'
       +(pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_STAR_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
       +'<span class="wl-nm">'+_esc(it.name)+'</span>'
       +'<span class="wl-st">'+_esc(it.store)
       +(pick&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span></div>'
       +(url?'<a class="wl-go" href="'+_esc(url)+'" target="_blank" rel="noopener">'+(pick?'Shop it':'Find it')+' &rarr;</a>':'')
-      +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
       +'</div>';
   });
   h+='</div>';
