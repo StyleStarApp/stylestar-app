@@ -835,7 +835,15 @@ this blocks app work; the glow-up continues meanwhile.
   in TM Max) → [Cath] business bank account → [Cath] affiliate applications → **[Claude] wire affiliate links + product
   images + FTC disclosure** (the revenue switch). None of this blocks app work.
 
-### ▶ LEGAL UPDATE (2026-07-31 — 🎉 THE LLC IS ALMOST CERTAINLY APPROVED, revealed by a SCAM TEXT of all things)
+### ▶ LEGAL UPDATE (2026-07-31 — 🎉 THE LLC IS CONFIRMED ACTIVE — Cath verified it on Sunbiz herself)
+✅ **CONFIRMED, same morning: Cath searched search.sunbiz.org on her phone and saw it with her own eyes:
+"STYLE STAR BY CATHERINE, LLC — Document Number L26000395689 — Status: Active."** Her first-choice name
+cleared after all (the STYLESTAR USA, INC collision that sank "Style Star, LLC" shows as a separate active
+entity on the same results page — both coexist fine). **Almira's official confirmation is still the next
+event to watch for** — she said she'd file the trademarks the moment approval landed, and they're drafted
+and ready. The money path is now genuinely unblocked: TMs → EIN (via Indie Law package) → [Cath] business
+bank account → [Cath] affiliate applications → [Claude] the revenue switch. Screenshot in the 2026-07-31
+chat. *(The section below records how the news first arrived, and the scam-wave warnings that came with it.)*
 - **What happened:** Cath's HUSBAND received an SMS from an unknown 833 number: *"Style Star By Catherine, Llc is
   now registered! Getting an EIN is one of the first steps, apply here: www.einservices.org"*. **The text itself is
   a scam** (EINs are FREE from the IRS; that site is a pay-for-free-thing / data-harvesting operation) — but the
