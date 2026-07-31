@@ -42,6 +42,62 @@ hub cards aligned to the Menu (Build stays), chat continuity fixed (no more "sta
 confirmed live by Cath), the Your Wishlist redesign (✕ left, row hearts retired, her B3 badge in the
 Edit-family teal, header polish, honest lead copy) — **and the LLC confirmed ACTIVE on Sunbiz.** 🎉
 
+### ✅ THE THIRD COWORK BRIEF SHIPPED (2026-07-31, evening — 6 items, one commit, security + bugs)
+Cath pasted a third Cowork brief (security review + bug fixes). All six claims verified against the real code
+first; all six built. **Two of its numbers were deliberately ADAPTED, and the reasoning matters:** the literal
+"8 KB per message" cap would have killed the chat (the chat system prompt alone measures ~13-21 KB) and the
+literal "100 KB body" cap would have killed Analyze an Outfit (photos are up to ~1.5 MB of base64). Shipped
+instead: **100 KB applies to the NON-image part of the body, text blocks cap at 32 KB, images at 2.5 MB each,
+max 3, absolute body ceiling 3.5 MB** — bounds abuse, breaks nothing real.
+1. 🔒 **The search allowlist is SERVER-SIDE now** (`SEARCH_DOMAINS` in `style-ai.js`, 102 hostnames);
+   client-sent `search_domains` is **ignored entirely** (it used to let a forged request search ANY domain on
+   Cath's key). ⚠️ **NEW STANDING RULE: when a store is added/renamed in `STORES` (index.html), its hostname
+   must ALSO be updated in `SEARCH_DOMAINS` in `netlify/functions/style-ai.js`** — nothing breaks if you
+   forget, but search can't see inside that store until it's added. Also new in the function: a **rough global
+   daily spend cap** (estimates each request's cost, refuses politely past `DAILY_SPEND_CAP_USD`, default
+   $20/day; per-instance + in-memory like the rate limiter, a brake not bookkeeping) · a **per-instance memo of
+   crawler-blocked stores** (the Gucci class of failure now costs ONE failed round trip per instance, not one
+   per chat turn) · **`console.error` on search failures** so they finally show in Netlify function logs.
+2. 🔒 **Chat XSS closed: ALL chat text goes through `_esc()` BEFORE `linkStores()`** — live path and
+   restored-history path, plus the restored `photoThumb` attribute (only `data:image/*` reaches `src`; anything
+   else renders a quiet "Photo shared earlier" chip). ⚠️ **`linkStores()` now EXPECTS escaped text** — store
+   names are matched in escaped form ("H&amp;M") and unescaped before `resolveStore`/`getStoreUrl`; every
+   href/label re-escapes on the way into HTML. **Each direct link's URL must now live on the NAMED store's own
+   domain** (`_storeUrlMatches`, registrable-base compare) — "from Nordstrom [amazon.com/...]" discards the URL;
+   the store name falls back to its normal storefront/search link, the foreign URL never becomes a tap target.
+   Wishlist ids are **slug-validated in `_normalizeWardrobe`** (only the exact `slug~slug` shape `_wlMakeId`
+   makes survives into onclick markup).
+3. 🐛 **Routing honesty: ONE strict predicate `_hasQuizData()`** (name + 12 answers + portrait, same as
+   fallbackInitialScreen) now drives `goHome`, `menuQuiz`, `menuShopStyle`, `menuRefine`, the Start-here pill
+   AND the popstate no-state branch — "ss_data exists" was routing a name-only save (wishlist email ask) into a
+   hollow Welcome Back. **`wbChat` and `_openShopStyleNow` only adopt a saved record with 12 real answers** —
+   a name-only record used to overwrite `answers` with undefined, which bricked the chat (Send stayed disabled
+   forever) and hung Shop your Style on an eternal spinner. Both repros are in the tests now.
+4. 🐛 **Stream truncation is honest:** `_readChatStream` tracks `message_stop`; a stream that just ENDS (the
+   ~60s platform cut) shows the fragment plus a quiet note ("That answer got cut off. Ask me to continue and
+   I'll pick it right back up.", `.chat-cutoff`) and **the fragment is never persisted to ss_chat**. The chat
+   fetch has a **75s AbortController timeout** and the Send button re-enables in a `finally`.
+5. 🐛 **ss_chat stores ~10 KB thumbnails, never full photos** (`_chatShrinkThumb`, 160px JPEG, async; the
+   on-screen bubble keeps the full-size image). Legacy full-size photos already sitting in a woman's ss_chat
+   are migrated down on her next chat open. When history mentions a photo that is no longer attached, the
+   system prompt gets an EARLIER PHOTOS note so the stylist asks to see it again instead of inventing details.
+6. 🧭 **Navigation polish:** the self-link guard (showPhoto's pattern) added to the eight functions that lacked
+   it (showStory, showFAQ, showDream, showShop, openWardrobe, showPrivacy, showTerms, openPrefs) — a footer/menu
+   tap to the current page no longer kills its Back button. **The Menu drawer owns a history entry**: hardware
+   Back just closes it; navigating from a row REPLACES the entry (menuGo deliberately does NOT pop first — an
+   async history.back() would race the push); ✕/scrim pops it via `menuClose()`. The popstate handler also
+   skips re-showing the SAME screen (kills a scroll-to-top jump). **"Find my results" disables while in flight
+   and stands down only on a confirmed 200** — a network failure now says "that didn't go through" instead of
+   claiming an email was sent.
+- **Verified: new `scratchpad/cowork3.js`, 69 checks** (Part A runs the real function handler: server list of
+  102 used regardless of client junk, all size-cap cases incl. a 22 KB system prompt and a 1.5 MB photo
+  passing, the $-cap 429, blocked-store memo across requests, console.error firing; Part B in real Chromium:
+  four XSS payloads inert on both render paths, domain cross-check case table, wishlist id fuzz, all name-only
+  routing + the chat-brick and shop-hang repros, cut-off note shown + not saved, thumbnail size measured).
+  **searchchat.js updated for the protocol change (54 checks), menu.js grew the drawer-history drive (82).**
+  Full sweep green: cowork3 69 · searchchat 54 · menu 82 · nav 55 · e2e 29 · copy 41 · hubs 34 · followups 37 ·
+  sec 89.
+
 ## ▶ THE REST OF THE 2026-07-30/31 DETAIL (the sections the index above points into)
 
 ### ⭐ 0-NEWEST. 🧭 THE NAVIGATION FIX IS LIVE — merged as #697 + #698, and CATH LOVES IT
