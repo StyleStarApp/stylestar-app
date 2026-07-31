@@ -747,6 +747,9 @@ body.menu-open .menu-panel{display:block}
 .menu-row{font:400 17px/1.2 'DM Serif Display',Georgia,serif;color:#1a1a1a;padding:11px 2px;border-bottom:1px solid rgba(33,30,26,.08);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .menu-homerow{border-top:1px solid rgba(33,30,26,.08)}
 .menu-grp{font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8a8474;margin:16px 0 3px;padding:0 2px}
+/* "Start here" signpost on Style Quiz, new visitors only (same gold as the New pills) */
+.menu-start{display:none;align-items:center;margin-left:9px;padding:2.5px 6px;border-radius:8px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;vertical-align:2px}
+.menu-start.on{display:inline-flex}
 /* the FAQ / Privacy / Terms letterhead logo sits top-left, exactly under the
    fixed Menu chip — give those heads room so the two never overlap */
 .faq-head,.pp-head{margin-top:40px}
@@ -1536,6 +1539,16 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .res-screen .p3-lead h3{font:400 23px/1.2 'DM Serif Display',serif;color:#211E1A;margin:0}
 .res-screen .p3-lead .rule{display:none}
 .res-screen .savebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:3px;cursor:pointer;border:2px solid #1a1a1a;background:#F5EFE2;color:#1a1a1a;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+/* first-reveal "what's next" nudge — cream + gold to match the hub chips */
+.refine-next{display:none;align-items:center;gap:4px;margin:12px auto 2px;max-width:430px;background:#F5EFE2;border:1px solid #D8C285;border-radius:12px;padding:10px 8px 10px 12px;box-shadow:0 4px 14px rgba(0,0,0,.28);text-align:left}
+.refine-next.on{display:flex}
+.rn-body{display:flex;align-items:center;gap:9px;flex:1;min-width:0;cursor:pointer}
+.rn-star{width:19px;height:19px;flex:0 0 auto}
+.rn-tx{display:flex;flex-direction:column;gap:2.5px;min-width:0}
+.rn-tx b{font:600 13.5px/1.25 'Jost',sans-serif;color:#26221c;letter-spacing:.01em}
+.rn-tx span{font:400 11.5px/1.35 'Jost',sans-serif;color:#6b655a}
+.rn-ar{width:15px;height:15px;flex:0 0 auto}
+.rn-x{flex:0 0 auto;background:none;border:none;color:#6b655a;font-size:13px;cursor:pointer;padding:5px 8px;-webkit-tap-highlight-color:transparent}
 .res-screen .savebtn .hrt{font-size:16px;line-height:1;display:inline-block;transform-origin:center}
 .res-screen .pair{display:flex;gap:9px;margin-top:9px}
 .res-screen .pair .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border:3px solid transparent;border-radius:3px;cursor:pointer;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#F3E3A6,#C89A2C) border-box;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px #9aa1a7}
@@ -2017,9 +2030,12 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <button class="menu-x" onclick="menuClose()" aria-label="Close menu">&#10005;</button>
   </div>
   <div class="menu-row menu-homerow" onclick="menuGo(goHome)">Home</div>
+  <!-- Style rows read in JOURNEY order (Cath, 2026-07-31): quiz first, the
+       portrait it unlocks, then the refine step that makes shopping fit. The
+       "Start here" pill lights only for a visitor with no saved results. -->
   <div class="menu-grp">Style</div>
+  <div class="menu-row" onclick="menuGo(menuQuiz)">Style Quiz<span class="menu-start" id="menuStartPill">Start here</span></div>
   <div class="menu-row" onclick="menuGo(wbPortraitTap)">Style Portrait</div>
-  <div class="menu-row" onclick="menuGo(menuQuiz)">Style Quiz</div>
   <div class="menu-row" onclick="menuGo(menuRefine)">Refine your Preferences</div>
   <div class="menu-row" onclick="menuGo(showPhoto)">Analyze an Outfit</div>
   <div class="menu-row" onclick="menuGo(openChat)">Stylist Chat</div>
@@ -2125,6 +2141,17 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="p3-lead"><h3>What would you like to do?</h3><span class="rule"></span></div>
       <button class="savebtn" id="resSaveBtn" onclick="openSaveSheetManual()">
         <span class="hrt">&#128155;</span>Save my style details</button>
+      <!-- First-reveal "what's next" (Cath approved 2026-07-31): points at the
+           journey step with the least obvious reward. show() owns visibility
+           via _syncRefineHint(); gone once she has preferences or waves it off. -->
+      <div class="refine-next" id="refineNext">
+        <div class="rn-body" onclick="refineNextGo()">
+          <svg class="rn-star" viewBox="0 0 24 24"><path fill="#E0B84C" stroke="#8a6c1c" stroke-width="0.8" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
+          <span class="rn-tx"><b>Next step: make it truly yours</b><span>Add your sizes, colors and faves, so shopping fits you</span></span>
+          <svg class="rn-ar" viewBox="0 0 24 24" fill="none" stroke="#26221c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
+        </div>
+        <button class="rn-x" onclick="refineNextDismiss()" aria-label="Dismiss">&#10005;</button>
+      </div>
       <!-- Action shelves grouped into Shopping / Styling hubs, on a black-lacquer backdrop to match WB -->
       <div class="p3-hubwrap">
       <div class="hub-card hub-shop">
@@ -3165,6 +3192,8 @@ function show(id,skipHistory){
   document.getElementById(id).classList.add('act');
   // Keep the What's Trending "New" pills honest wherever they appear.
   try{refreshTrendBadge();}catch(e){}
+  // The portrait's "what's next → refine" strip stays honest the same way.
+  if(id==='s-res')try{_syncRefineHint();}catch(e){}
   // Navigating always closes the menu drawer; the Menu chip stands down only on
   // the chat (its own tight header) and the two loading moments.
   document.body.classList.remove('menu-open');
@@ -3284,7 +3313,13 @@ function _stdFootHTML(){
 document.querySelectorAll('[data-std-foot]').forEach(function(el){el.innerHTML=_stdFootHTML();});
 
 // ===== THE MENU (Cath's ask 2026-07-30) =====
-function menuOpen(){document.body.classList.add('menu-open')}
+function menuOpen(){
+  document.body.classList.add('menu-open');
+  // The one signpost for a brand-new visitor: Start here, on the quiz. It
+  // stands down the moment she has results.
+  var p=document.getElementById('menuStartPill');
+  if(p)p.classList.toggle('on',!localStorage.getItem('ss_data'));
+}
 function menuClose(){document.body.classList.remove('menu-open')}
 // Close first, then go — so the drawer never lingers over the new screen.
 function menuGo(fn){menuClose();fn()}
@@ -4591,6 +4626,17 @@ function openShopStyle(mode,skipNudge){
   _openShopStyleNow(mode);
 }
 function styleNudgeRefine(){try{localStorage.setItem('ss_stylenudge','1')}catch(e){}var n=document.getElementById('styleNudge');if(n)n.classList.remove('on');openPrefs();}
+// The portrait's first-reveal "what's next" strip (Cath approved 2026-07-31):
+// visible only while she has NO real preferences and hasn't waved it off.
+// Tapping through counts as seen, so it never nags twice.
+function _syncRefineHint(){
+  var n=document.getElementById('refineNext');if(!n)return;
+  var on=false;
+  try{on=!_hasRefined()&&!localStorage.getItem('ss_refinehint')}catch(e){}
+  n.classList.toggle('on',on);
+}
+function refineNextGo(){try{localStorage.setItem('ss_refinehint','1')}catch(e){}openPrefs();}
+function refineNextDismiss(){try{localStorage.setItem('ss_refinehint','1')}catch(e){}var n=document.getElementById('refineNext');if(n)n.classList.remove('on');}
 function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e){}var n=document.getElementById('styleNudge');if(n)n.classList.remove('on');_openShopStyleNow(_nudgeMode);}
 function _openShopStyleNow(mode){
   _shopStyleMode=(mode==='look')?'look':(mode==='wantlist')?'wantlist':'quiz';
