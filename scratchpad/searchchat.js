@@ -229,9 +229,9 @@ console.log('\nB2. A streamed searching answer, end to end');
 await page.evaluate(() => { openChat(); document.getElementById('chatInput').value = 'Find me blush pumps like this'; sendChat(); });
 await page.waitForFunction(() => {
   const t = document.querySelector('.chat-typing');
-  return t && t.textContent.indexOf('Checking your stores') === 0;
-}, null, { timeout: 5000 }).then(() => ok('typing line says "Checking your stores..." while the search runs', true))
-  .catch(() => ok('typing line says "Checking your stores..." while the search runs', false));
+  return t && t.textContent.indexOf('Checking stores') === 0;
+}, null, { timeout: 5000 }).then(() => ok('typing line says "Checking stores..." while the search runs', true))
+  .catch(() => ok('typing line says "Checking stores..." while the search runs', false));
 await page.waitForFunction(() => {
   const b = document.querySelectorAll('#chatMessages .chat-msg.bot');
   const last = b[b.length - 1];

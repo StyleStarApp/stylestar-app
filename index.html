@@ -6523,7 +6523,7 @@ async function _readChatStream(r,typing,liveEl){
     var ev;try{ev=JSON.parse(payload)}catch(e){return}
     if(ev.type==='error'||(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='refusal'))throw new Error('stream error');
     if(ev.type==='content_block_start'&&ev.content_block&&ev.content_block.type==='server_tool_use'){
-      typing.textContent='Checking your stores for the real thing...';
+      typing.textContent='Checking stores...';
       toBottom();
     }else if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta'){
       text+=ev.delta.text;
