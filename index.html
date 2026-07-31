@@ -656,7 +656,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    link with a price, not a search -- so they are marked rather than blended in.
    Hiding the difference would mean one tap lands on the actual shoe and the next
    on 200 search results, with nothing to explain why. */
-#s-wishlist .wl-pick{display:inline-flex;align-items:center;gap:4px;font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#0B6E78;background:#fff;border:1px solid #F49AC1;border-radius:999px;padding:3px 7px 3px 6px;margin-bottom:5px}
+#s-wishlist .wl-pick{display:inline-flex;align-items:center;gap:4px;font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#087E8C;background:#fff;border:1px solid #F49AC1;border-radius:999px;padding:3px 7px 3px 6px;margin-bottom:5px}
 #s-wishlist .wl-pick svg{width:9px;height:9px;fill:#0FA6B6;display:block;flex:0 0 auto}
 #s-wishlist .wl-pr{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E;margin-left:7px;text-transform:none}
 #s-wishlist .wl-go{flex:0 0 auto;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
@@ -6172,7 +6172,7 @@ function renderWishlist(){
   if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderStay();return;}
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
-  var h='<div class="wl-lead">Here&rsquo;s everything you saved. Tap <b>Find it</b> to go shopping, or the <b>&times;</b> to take a piece off your list.</div>'
+  var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. Tap the <b>&times;</b> to take a piece off your list.</div>'
    +'<div class="wl-disclosure">Some links may earn us a commission.</div>'
    +'<div class="wl-card">';
   list.forEach(function(it){
