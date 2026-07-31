@@ -65,7 +65,7 @@ ok('Welcome Back still has exactly one row', rows.wb.length === 1);
 ok('Style Portrait has exactly one row', rows.res.length === 1, JSON.stringify(rows.res));
 ok('Photo results has exactly one row', rows.photo.length === 1, JSON.stringify(rows.photo));
 for (const [k, r] of Object.entries({ wb: rows.wb[0], res: rows.res[0], photo: rows.photo[0] })) {
-  ok(k + ': says My Wishlist', r && /My Wishlist/.test(r.text));
+  ok(k + ': says Your Wishlist', r && /Your Wishlist/.test(r.text));
   ok(k + ': carries the count pill', r && r.pill);
   ok(k + ': default subtitle', r && /Pieces you saved to come back to/.test(r.sub));
 }

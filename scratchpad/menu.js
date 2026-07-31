@@ -106,8 +106,8 @@ ok('tapping the dim veil closes it', await page.evaluate(() => !document.body.cl
 console.log('\n4. Every row goes where it says (returning woman)');
 const ROWS = [
   ['Home', 's-wb'], ['Style Portrait', 's-res'], ['Style Quiz', 's-quiz'], ['Refine your Preferences', 's-pref'], ['Analyze an Outfit', 's-photo'],
-  ['Stylist Chat', 's-chat'], ['Shop your Style', 's-shopstyle'], ['Style Star Mall', 's-shop'], ['Style Star Edit', 's-dream'],
-  ['My Wishlist', 's-wishlist'], ['Your Wardrobe', 's-wardrobe'], ["What's Trending", 's-wardrobe'],
+  ['Ask your Stylist', 's-chat'], ['Shop your Style', 's-shopstyle'], ['Style Star Mall', 's-shop'], ['Style Star Edit', 's-dream'],
+  ['Your Wishlist', 's-wishlist'], ['Your Wardrobe List', 's-wardrobe'], ["What's Trending", 's-wardrobe'],
   ['My Story', 's-story'], ['FAQ', 's-faq'], ['Privacy', 's-privacy'], ['Terms', 's-terms']
 ];
 for (const [label, dest] of ROWS) {
@@ -167,6 +167,13 @@ console.log("\n4c. Journey order + the Start-here pill (Cath, 2026-07-31)");
   const iQuiz = order.indexOf('Style Quiz'), iPort = order.indexOf('Style Portrait'), iRef = order.indexOf('Refine your Preferences');
   ok('Style group reads in journey order: Quiz, then Portrait, then Refine',
     iQuiz > -1 && iQuiz < iPort && iPort < iRef, JSON.stringify({ iQuiz, iPort, iRef }));
+  const iShop = order.indexOf('Shop your Style'), iWl = order.indexOf('Your Wishlist'),
+    iEdit = order.indexOf('Style Star Edit'), iMall = order.indexOf('Style Star Mall');
+  ok('Shop group order: Shop your Style, Your Wishlist, Edit, Mall last (Cath, 2026-07-31)',
+    iShop > -1 && iShop < iWl && iWl < iEdit && iEdit < iMall, JSON.stringify({ iShop, iWl, iEdit, iMall }));
+  const iShare = order.indexOf('Share Style Star'), iStory = order.indexOf('My Story');
+  ok('Share Style Star sits above My Story in About (Cath, 2026-07-31)',
+    iShare > -1 && iShare < iStory, JSON.stringify({ iShare, iStory }));
   await page.evaluate(() => { show('s-wel'); menuOpen(); });
   ok('returning woman sees NO Start-here pill', await page.evaluate(() =>
     !document.getElementById('menuStartPill').classList.contains('on')));

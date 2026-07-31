@@ -108,9 +108,27 @@ three are BUILT and live, one is parked for a design session:
   sees it). nav 55 · e2e 29 · hubs 34 still green. `scratchpad/flowshot.js` renders the preview
   (`flow-preview.png`) — ⚠️ the portrait's reveal DOORS (grey slabs + gold stars) cover everything until
   `#s-res` gets class `rv-open`; element screenshots of that screen are meaningless without it.
-- ▶ **Share text still pending Cath's wording** (she is thinking on it): the current prefill repeats what
-  the iMessage link-preview card already shows (her catch). Candidates offered, incl. "You have to try
-  this! Take the quiz and tell me what you get." One string in `menuShare()` when she decides.
+- ✅ **Share text SETTLED (2026-07-31, her words, her pick #3 of three she drafted):** "Sharing with you
+  this fun style and shopping app, created by a real personal stylist." Sender's voice + the Sally
+  differentiator; the link-preview card already carries the taglines, so the text no longer repeats them.
+
+### ▶ THE NAMING PASS (2026-07-31, Cath's consistency sweep — all live, and the VOICE RULE is the keeper)
+Her observation: My Story is about Catherine, but the user's places were a mix of "My" and "Your". **The
+rule we agreed on: when the APP names a PLACE, it says YOUR (Your Wardrobe List, Your Wishlist); when SHE
+is speaking — buttons that finish "I want to..." — it stays MY ("Save my style details", "Shop my whole
+list", "See my Style Portrait"). My Story stays My because that one really is Catherine speaking.** Apply
+this rule to all future copy.
+- **Renames, everywhere user-facing:** "Stylist Chat" → **"Ask your Stylist"** (menu; matches the hubs) ·
+  "Your Wardrobe" → **"Your Wardrobe List"** (menu, 3 hub rows, page title incl. the personalized
+  "_fn's Wardrobe List", FAQ, privacy policy, the wantlist AI prompt) · "My Wishlist" → **"Your Wishlist"**
+  (menu, 3 hub rows, page title, the save toast "Saved to Your Wishlist").
+- **Menu reorders (hers):** Shop group = Shop your Style → Your Wishlist → Style Star Edit → Style Star
+  Mall (mall last); About group = **Share Style Star on top**, then My Story, FAQ.
+- ⚠️ **Deliberately NOT renamed, flagged to her:** the "My List" tab inside Your Wardrobe List (her voice,
+  claiming her own list — borderline under the rule, her call if it ever bothers her), and the her-voice
+  buttons above. The `wardrobeData.wishlist` storage key and function names are untouched — copy only.
+- **Verified:** menu.js 77 checks (labels + both new order assertions), hubs 34, copy 41, nav 55, e2e 29,
+  followups 37 — all green.
 
 ### ✅ 0-RESOLVED. 💳 THE API-CREDIT SCARE IS OVER — THERE WAS NEVER A SECOND ACCOUNT (2026-07-31 morning)
 The 2026-07-30 outage ("credit balance too low", every AI surface down together) ended simply: **Cath had
