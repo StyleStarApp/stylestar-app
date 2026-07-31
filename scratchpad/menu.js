@@ -134,6 +134,38 @@ for (const [label, dest] of [['Privacy', 's-privacy'], ['Terms', 's-terms']]) {
   const act = await page.evaluate(() => document.querySelector('.scr.act').id);
   ok('quiet "' + label + '" → ' + dest, act === dest, act);
 }
+// ---------------------------------------------------------------------------
+console.log("\n4b. Share Style Star: the SITE goes out, never her results (Cath's ask 2026-07-31)");
+await page.evaluate(() => {
+  window._shared = null;
+  navigator.share = (payload) => { window._shared = payload; return Promise.resolve(); };
+  show('s-dream'); menuOpen();
+});
+await page.click('.menu-row:text-is("Share Style Star")');
+{
+  const r = await page.evaluate(() => ({
+    shared: window._shared,
+    closed: !document.body.classList.contains('menu-open'),
+    act: document.querySelector('.scr.act').id
+  }));
+  ok('tapping Share opens the native share sheet', !!r.shared);
+  ok('shares the plain site link, nothing personal attached', r.shared && r.shared.url === 'https://stylestar.app'
+    && !JSON.stringify(r.shared).match(/[?&](r|token)=/), JSON.stringify(r.shared));
+  ok('drawer closes and she stays on her screen', r.closed && r.act === 's-dream', JSON.stringify(r));
+}
+await page.evaluate(() => {
+  delete navigator.share; // desktop: no share sheet, falls back to copy
+  window._copied = null; window._alerted = null;
+  navigator.clipboard.writeText = (t) => { window._copied = t; return Promise.resolve(); };
+  window.alert = (m) => { window._alerted = m; };
+  menuOpen();
+});
+await page.click('.menu-row:text-is("Share Style Star")');
+await page.waitForFunction(() => window._alerted !== null);
+ok('without a share sheet the link is copied instead, and she is told',
+  await page.evaluate(() => window._copied && window._copied.indexOf('https://stylestar.app') !== -1 && /copied/i.test(window._alerted)),
+  await page.evaluate(() => JSON.stringify({ copied: window._copied, alerted: window._alerted })));
+
 ok('menu quiz for a returning woman restarts at question 1, slider centered (the retake flow)',
   await page.evaluate(() => {
     show('s-wel'); menuQuiz();
@@ -204,7 +236,7 @@ const fit = await p360.evaluate(() => {
 function lum(rgb) { const [r, g, b] = rgb.map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; }
 const ratio = (Math.max(lum(fit.fg), lum([251, 250, 247])) + 0.05) / (Math.min(lum(fit.fg), lum([251, 250, 247])) + 0.05);
 ok('drawer fits inside 360px, no sideways scroll', fit.panelW <= 303 && fit.viewportOk, JSON.stringify(fit));
-ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 13);
+ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 14);
 ok('row text contrast ≥ 4.5:1 (got ' + ratio.toFixed(1) + ':1)', ratio >= 4.5);
 ok('no JS errors @360', p360.errors.length === 0, p360.errors.join(' | '));
 await p360.context().close();
