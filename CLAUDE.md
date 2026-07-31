@@ -111,6 +111,26 @@ three are BUILT and live, one is parked for a design session:
 - ✅ **Share text SETTLED (2026-07-31, her words, her pick #3 of three she drafted):** "Sharing with you
   this fun style and shopping app, created by a real personal stylist." Sender's voice + the Sally
   differentiator; the link-preview card already carries the taglines, so the text no longer repeats them.
+- ✅ **HUB CARDS ALIGNED TO THE MENU (2026-07-31, "let's do exactly what you suggested").** The principle
+  she bought: **the Menu is the MAP (complete, journey-ordered, identical everywhere); the hubs are the
+  CONCIERGE (contextual leads keep their place, but within a group the order matches the Menu).** What
+  moved: portrait Shop card → Shop your style, Your Wishlist, Edit, Mall; portrait Style card → Refine,
+  Analyze, Ask; photo-results Shop card → Your Wishlist, Edit, Mall (the contextual "Pull more in this
+  style" above covers Shop-your-style); Welcome Back Style card (`_buildWbHubs` appends) → Portrait,
+  Refine, Analyze, Ask. Kept: photo page's "Analyze another outfit" lead, WB Shop card (already matched).
+  ▶ **BUILD STAYS, her decision after the analysis:** "build your wardrobe" is stylist differentiation;
+  the answer to it "looking less than" is making it RICHER (the parked trending-items strip; product
+  images at feeds), not dissolving it into Style/Shop. Full sweep green (menu 77 · hubs 34 · nav 55 ·
+  e2e 29 · copy 41 · followups 37).
+
+### ▶ PARKED FOR A BRAINSTORM SESSION (2026-07-31, Cath): THE SHAREABLE — vision board may go
+Her words: the Vision Board *"seems irrelevant"* and she's thinking about DELETING it; the Style
+Constellation is *"sort of cool but it's not a representation of what our app actually does."* She wants
+**a really good, on-brand shareable** that encourages sharing on Instagram and with friends — a session of
+its own, brainstorm first, no building. ▶ When it happens: the shareable should show what the app ACTUALLY
+does (her point) — think portrait/archetype/motto-shaped, not abstract art; it rides the existing
+`buildVisionBlob`-style share plumbing; and remember the share-text lesson (the sender's voice is part of
+the shareable). **Do not delete the vision board until she says so explicitly after the brainstorm.**
 
 ### ▶ THE NAMING PASS (2026-07-31, Cath's consistency sweep — all live, and the VOICE RULE is the keeper)
 Her observation: My Story is about Catherine, but the user's places were a mix of "My" and "Your". **The
@@ -1634,8 +1654,10 @@ So, at that moment, walk her through:
    are small independent brands that may have NO affiliate program, so those two Edit items may earn $0 forever.
    Fine for genuine loves, worth knowing. Big multi-brand retailers are also more DURABLE (a sold-out product on
    Nordstrom still resolves; a small brand's link breaks).
-5. Then: product images on the Edit + Mall + Your Wardrobe (turning them into real lookbooks), and confirm final
-   **FTC disclosure** wording/placement with Almira.
+5. Then: product images on the Edit + Mall + Your Wardrobe List (turning them into real lookbooks), and confirm
+   final **FTC disclosure** wording/placement with Almira. ▶ **Cath asked (2026-07-31) to be REMINDED at this
+   moment: product images are also the answer to the Build hub feeling small** — real photos turn the wardrobe
+   list + trending into a lookbook, which is why Build stayed its own hub. Raise it when feeds land.
 6. ⚠️ **ADD AMAZON'S REQUIRED SENTENCE — deliberately NOT shipped yet, see 2026-07-29 below.** The moment the
    Associates account is approved AND the first Amazon link goes live, the exact string must appear:
    **"As an Amazon Associate I earn from qualifying purchases."** Not a paraphrase — Amazon requires that
