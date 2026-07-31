@@ -287,7 +287,35 @@ ok('no JS errors @360', p360.errors.length === 0, p360.errors.join(' | '));
 await p360.context().close();
 
 // ---------------------------------------------------------------------------
-console.log('\n7. Zero JS errors across the whole drive');
+console.log('\n7. The drawer owns a history entry (hardware Back closes it, 2026-07-31)');
+const ph = await newPage(390, true);
+// Back with the drawer open just closes the drawer and stays on the screen.
+await ph.evaluate(() => { show('s-wardrobe'); menuOpen(); });
+await ph.goBack();
+await ph.waitForTimeout(150);
+let hb = await ph.evaluate(() => ({ open: document.body.classList.contains('menu-open'), scr: document.querySelector('.scr.act').id }));
+ok('hardware Back closes the drawer, stays on the screen', !hb.open && hb.scr === 's-wardrobe');
+// Navigating FROM the drawer replaces its entry: one Back returns to the origin
+// screen, never to a phantom drawer state.
+await ph.evaluate(() => { menuOpen(); menuGo(showFAQ); });
+hb = await ph.evaluate(() => ({ open: document.body.classList.contains('menu-open'), scr: document.querySelector('.scr.act').id }));
+ok('menu navigation lands with the drawer closed', !hb.open && hb.scr === 's-faq');
+await ph.goBack();
+await ph.waitForTimeout(150);
+hb = await ph.evaluate(() => ({ open: document.body.classList.contains('menu-open'), scr: document.querySelector('.scr.act').id }));
+ok('one Back from the destination returns to the origin screen', !hb.open && hb.scr === 's-wardrobe');
+// Closing via the ✕ pops the drawer's entry so Back stays honest afterwards.
+await ph.evaluate(() => { show('s-story'); menuOpen(); menuClose(); });
+await ph.waitForTimeout(150);
+await ph.goBack();
+await ph.waitForTimeout(150);
+hb = await ph.evaluate(() => ({ open: document.body.classList.contains('menu-open'), scr: document.querySelector('.scr.act').id }));
+ok('after open + ✕ close, Back leaves the page normally', !hb.open && hb.scr === 's-wardrobe', JSON.stringify(hb));
+ok('no JS errors (menu history drive)', ph.errors.length === 0, ph.errors.join(' | '));
+await ph.context().close();
+
+// ---------------------------------------------------------------------------
+console.log('\n8. Zero JS errors across the whole drive');
 ok('no page errors', page.errors.length === 0, page.errors.join(' | '));
 
 await browser.close();

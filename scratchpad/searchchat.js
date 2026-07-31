@@ -74,25 +74,29 @@ res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, searc
 const tool = (lastUpstream.body.tools || [])[0] || {};
 ok('web_search tool added (basic variant, no code-exec filtering)', tool.type === 'web_search_20250305' && tool.name === 'web_search');
 ok('max_uses fixed at 3 by the server', tool.max_uses === 3);
-ok('domains lowercased and deduped', JSON.stringify(tool.allowed_domains) === JSON.stringify(['nordstrom.com', 'macys.com', 'shop.mango.com']));
+// 2026-07-31: the allowlist lives SERVER-SIDE now; whatever the client sends
+// is ignored and the tool always carries the server's own 102-store list.
+ok('allowed_domains is the server-side 102-store list', Array.isArray(tool.allowed_domains) && tool.allowed_domains.length === 102 && tool.allowed_domains.includes('nordstrom.com'));
 ok('stream requested upstream', lastUpstream.body.stream === true);
 ok('response is an event stream', (res.headers.get('content-type') || '').includes('text/event-stream'));
 ok('SSE body passes through verbatim', (await res.text()) === SSE_BODY);
 
-console.log('\nA4. Bad domain lists are rejected with 400');
+console.log('\nA4. Client-sent domain lists are ignored entirely (server-side allowlist)');
 for (const [label, domains] of [
   ['not an array', 'nordstrom.com'],
   ['empty array', []],
-  ['over 150 entries', Array.from({ length: 151 }, (_, i) => 'a' + i + '.com')],
   ['a URL, not a hostname', ['https://nordstrom.com']],
-  ['a path smuggled in', ['nordstrom.com/evil']],
-  ['a non-string', [42]],
-  ['no dot (not a domain)', ['localhost']]
+  ['an off-list domain', ['evil.example.com']],
+  ['a non-string', [42]]
 ]) {
   lastUpstream = null;
-  res = await handler(fnReq({ max_tokens: 500, messages: MSGS, search: true, search_domains: domains }));
-  ok(label + ' → 400, nothing sent upstream', res.status === 400 && lastUpstream === null);
+  res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: domains }));
+  const t = lastUpstream && (lastUpstream.body.tools || [])[0];
+  ok(label + ' → ignored, server list used', res.status === 200 && t && t.allowed_domains.length === 102 && !t.allowed_domains.includes('evil.example.com'));
 }
+lastUpstream = null;
+res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true }));
+ok('no search_domains at all → server list used (new client protocol)', res.status === 200 && lastUpstream.body.tools[0].allowed_domains.length === 102);
 
 console.log('\nA5. The origin gate still guards the search path');
 res = await handler(new Request('https://stylestar.app/.netlify/functions/style-ai', {
@@ -115,35 +119,37 @@ const blockedErr = (list) => new Response(JSON.stringify({
 }), { status: 400, headers: { 'Content-Type': 'application/json' } });
 let upstreamCalls = [], replyQueue = [];
 upstreamReply = () => { upstreamCalls.push(lastUpstream.body.tools[0].allowed_domains.slice()); return replyQueue.shift()(); };
+// Prune failures now console.error on purpose (Netlify logs); keep test output clean.
+const quietErr = async (fn) => { const c = console.error; console.error = () => {}; try { return await fn(); } finally { console.error = c; } };
+const SSE_OK = () => new Response(SSE_BODY, { status: 200, headers: { 'Content-Type': 'text/event-stream' } });
 
-// One blocked domain → pruned, retried, streams.
+// One blocked domain → pruned, memoized, retried, streams. (Domains are the
+// SERVER's 102 now; the memo means later requests skip the blocked one, which
+// the counts below account for. Deep memo coverage lives in cowork3.js.)
 upstreamCalls = [];
-replyQueue = [() => blockedErr(['gucci.com']),
-              () => new Response(SSE_BODY, { status: 200, headers: { 'Content-Type': 'text/event-stream' } })];
-res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['gucci.com', 'nordstrom.com', 'saks.com'] }));
+replyQueue = [() => blockedErr(['gucci.com']), SSE_OK];
+res = await quietErr(() => handler(fnReq({ max_tokens: 600, messages: MSGS, search: true })));
 ok('retried once', upstreamCalls.length === 2);
-ok('first call carried gucci.com', upstreamCalls[0].includes('gucci.com'));
-ok('retry pruned only the blocked store', JSON.stringify(upstreamCalls[1]) === JSON.stringify(['nordstrom.com', 'saks.com']));
+ok('first call carried gucci.com', upstreamCalls[0].includes('gucci.com') && upstreamCalls[0].length === 102);
+ok('retry pruned only the blocked store', !upstreamCalls[1].includes('gucci.com') && upstreamCalls[1].length === 101);
 ok('reply streams through after the prune', (res.headers.get('content-type') || '').includes('text/event-stream') && (await res.text()) === SSE_BODY);
 
 // Two rounds of pruning still succeed.
 upstreamCalls = [];
-replyQueue = [() => blockedErr(['a.com']), () => blockedErr(['b.com']),
-              () => new Response(SSE_BODY, { status: 200, headers: { 'Content-Type': 'text/event-stream' } })];
-res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['a.com', 'b.com', 'c.com'] }));
-ok('two rounds of pruning reach a stream', upstreamCalls.length === 3 && JSON.stringify(upstreamCalls[2]) === JSON.stringify(['c.com']) && (res.headers.get('content-type') || '').includes('text/event-stream'));
+replyQueue = [() => blockedErr(['zara.com']), () => blockedErr(['soma.com']), SSE_OK];
+res = await quietErr(() => handler(fnReq({ max_tokens: 600, messages: MSGS, search: true })));
+ok('two rounds of pruning reach a stream', upstreamCalls.length === 3 && !upstreamCalls[2].includes('zara.com') && !upstreamCalls[2].includes('soma.com') && (res.headers.get('content-type') || '').includes('text/event-stream'));
 
-// Every domain blocked → honest JSON error, no infinite loop.
+// An error naming nothing recognisable → honest JSON error, no infinite loop.
 upstreamCalls = [];
-replyQueue = [() => blockedErr(['a.com', 'b.com'])];
-res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['a.com', 'b.com'] }));
-ok('all blocked → JSON error after one call', upstreamCalls.length === 1 && (res.headers.get('content-type') || '').includes('application/json'));
+replyQueue = [() => blockedErr(['never-one-of-ours.net'])];
+res = await quietErr(() => handler(fnReq({ max_tokens: 600, messages: MSGS, search: true })));
+ok('no-progress prune → JSON error after one call', upstreamCalls.length === 1 && (res.headers.get('content-type') || '').includes('application/json'));
 
 // Retry cap: never more than 3 upstream calls.
 upstreamCalls = [];
-replyQueue = [() => blockedErr(['a.com']), () => blockedErr(['b.com']), () => blockedErr(['c.com']),
-              () => new Response(SSE_BODY, { status: 200, headers: { 'Content-Type': 'text/event-stream' } })];
-res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['a.com', 'b.com', 'c.com', 'd.com'] }));
+replyQueue = [() => blockedErr(['belk.com']), () => blockedErr(['loft.com']), () => blockedErr(['izod.com']), SSE_OK];
+res = await quietErr(() => handler(fnReq({ max_tokens: 600, messages: MSGS, search: true })));
 ok('capped at 3 upstream calls, then JSON', upstreamCalls.length === 3 && (res.headers.get('content-type') || '').includes('application/json'));
 
 global.fetch = realFetch;
@@ -261,7 +267,7 @@ ok('typing indicator removed', finalState.typingGone);
 ok('the live bubble was replaced, none left hidden', finalState.hiddenBubbles === 0);
 ok('reply saved to chat history', finalState.lastHist.role === 'assistant' && String(finalState.lastHist.content).indexOf('Found it.') === 0);
 ok('request carried search:true', lastFnBody.search === true);
-ok('request carried the domain allowlist', Array.isArray(lastFnBody.search_domains) && lastFnBody.search_domains.includes('nordstrom.com') && lastFnBody.search_domains.length >= 90);
+ok('request no longer carries a domain list (allowlist is server-side)', !('search_domains' in lastFnBody));
 ok('no other request fields leaked tools', !('tools' in lastFnBody));
 
 console.log('\nB3. JSON fallback still works (old function, API error path)');

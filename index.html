@@ -457,6 +457,11 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .chat-photo-btn:hover{background:#f3f1ec}
 .chat-photo-preview{display:flex;align-items:center;gap:10px;padding:8px 0;margin-top:4px}
 .chat-msg-img{max-width:230px;border-radius:10px;margin-bottom:6px;cursor:zoom-in}
+/* Restored history whose photo is no longer stored full-size: a quiet chip. */
+.chat-imgph{display:inline-block;font-size:11px;color:#8a8a8a;background:#f0ede7;border:1px solid #e2ddd2;border-radius:8px;padding:4px 9px;margin-bottom:6px}
+/* The honest "that got cut off" note under an interrupted streamed reply.
+   #6e6e6e at 11px measures ≥4.5:1 on the chat's white background. */
+.chat-cutoff{align-self:flex-start;font-size:11px;color:#6e6e6e;font-style:italic;padding:0 6px;margin:-2px 0 4px}
 .chat-resume{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 2px 4px}
 .chat-resume span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#a9a293;white-space:nowrap;font-family:'DM Sans',sans-serif}
 .chat-resume::before,.chat-resume::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,#e0dccf)}
@@ -1960,7 +1965,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div id="restoreAsk">
         <div style="font:400 11.5px/1.5 'Jost',sans-serif;color:#6b655a;margin-bottom:8px">Enter the email you saved with and we'll bring your style portrait back.</div>
         <input type="email" class="stay-input" id="restoreEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')restoreResults()">
-        <button class="btn-p" style="margin-top:8px;max-width:280px" onclick="restoreResults()">Find my results</button>
+        <button class="btn-p" id="restoreBtn" style="margin-top:8px;max-width:280px" onclick="restoreResults()">Find my results</button>
       </div>
       <div id="restoreMsg" style="font-size:12px;color:#777;margin-top:8px"></div>
     </div>
@@ -3256,7 +3261,10 @@ function show(id,skipHistory){
     // Passing a path (rather than the old '', which meant "leave the URL alone")
     // is what makes /privacy and /terms real addresses she can paste into an
     // affiliate application. Every screen without its own route reports "/".
-    history.pushState({screen:id},null,_pathForScreen(id));
+    // Navigating out of the open drawer REPLACES the drawer's history entry
+    // (see menuOpen), so Back from the new screen skips the menu state.
+    if(_menuPushed){_menuPushed=false;history.replaceState({screen:id},null,_pathForScreen(id));}
+    else history.pushState({screen:id},null,_pathForScreen(id));
   }
   window.scrollTo(0,0);
 }
@@ -3275,12 +3283,22 @@ function showBack(id){
 }
 
 window.addEventListener('popstate',function(e){
+  // Hardware/browser Back with the drawer open: the menu pushed its own history
+  // entry, so this pop just closes the drawer and stays put.
+  var act=document.querySelector('.scr.act');
+  if(document.body.classList.contains('menu-open')){
+    menuClose(true);
+    if(e.state&&e.state.screen&&act&&act.id===e.state.screen)return;
+  }
   if(e.state&&e.state.screen){
+    // Popping between two entries for the SAME screen (the menu's entry, or a
+    // duplicate push) re-renders nothing — avoids a scroll-to-top jump.
+    if(act&&act.id===e.state.screen)return;
     show(e.state.screen,true);
   }else{
-    // If no state, show welcome or welcome back
-    const hasData=localStorage.getItem('ss_data');
-    if(hasData){
+    // If no state, show welcome or welcome back (strict: a real portrait, not
+    // just "something saved" — same predicate as goHome/fallbackInitialScreen).
+    if(_hasQuizData()){
       show('s-wb',true);
     }else{
       show('s-wel',true);
@@ -3289,10 +3307,21 @@ window.addEventListener('popstate',function(e){
 });
 
 // ===== THE ONE STANDARD FOOTER + HOME (Option C, Cath's pick 2026-07-30) =====
-// "Home" is HER home: the Welcome Back hub when she has saved results, the
+// The ONE "does she really have a Style Portrait" check, shared by every router
+// (goHome, the menu rows, the popstate fallback). Same strict predicate as
+// fallbackInitialScreen: name + 12 answers + a saved portrait. "ss_data exists"
+// is NOT enough — a name-only save (e.g. from the wishlist email ask) used to
+// route to Welcome Back and the retake flow with no real portrait behind them.
+function _hasQuizData(){
+  try{
+    var d=JSON.parse(localStorage.getItem('ss_data'));
+    return !!(d&&d.userName&&d.answers&&d.answers.length===12&&d.portrait&&String(d.portrait).trim());
+  }catch(e){return false}
+}
+// "Home" is HER home: the Welcome Back hub when she has a real portrait, the
 // welcome screen when she's new — the same branch the popstate handler above uses.
 function goHome(){
-  if(localStorage.getItem('ss_data'))show('s-wb');else show('s-wel');
+  if(_hasQuizData())show('s-wb');else show('s-wel');
 }
 // Every footer is filled at boot from this ONE template, so the links can never
 // drift apart again (the app once grew eight different footer link sets by accident).
@@ -3312,27 +3341,47 @@ function _stdFootHTML(){
 document.querySelectorAll('[data-std-foot]').forEach(function(el){el.innerHTML=_stdFootHTML();});
 
 // ===== THE MENU (Cath's ask 2026-07-30) =====
+// The drawer gets its own history entry, so hardware/browser Back with the
+// drawer open just closes it instead of leaving the page (the standard app
+// drawer behavior). show() replaces that entry when she navigates from a row,
+// so the extra entry never lingers in her Back trail.
+var _menuPushed=false;
 function menuOpen(){
   document.body.classList.add('menu-open');
+  if(!_menuPushed){
+    var act=document.querySelector('.scr.act');
+    try{history.pushState({screen:act?act.id:'s-wel'},null,_pathForScreen(act?act.id:'s-wel'));_menuPushed=true;}catch(e){}
+  }
   // The one signpost for a brand-new visitor: Start here, on the quiz. It
-  // stands down the moment she has results.
+  // stands down the moment she has a real portrait (strict check, so a
+  // name-only save still sees the signpost).
   var p=document.getElementById('menuStartPill');
-  if(p)p.classList.toggle('on',!localStorage.getItem('ss_data'));
+  if(p)p.classList.toggle('on',!_hasQuizData());
 }
-function menuClose(){document.body.classList.remove('menu-open')}
-// Close first, then go — so the drawer never lingers over the new screen.
-function menuGo(fn){menuClose();fn()}
-// Style Quiz from the menu: a woman with saved results gets the retake flow
-// (keeps her name, tracks retake:true); a new visitor gets the fresh start.
-function menuQuiz(){if(localStorage.getItem('ss_data'))retakeQuiz();else startQ()}
+// viaPop=true means a popstate already consumed the drawer's history entry;
+// otherwise (the ✕, the scrim, Share) we pop it ourselves so Back stays honest.
+function menuClose(viaPop){
+  document.body.classList.remove('menu-open');
+  if(_menuPushed){
+    _menuPushed=false;
+    if(viaPop!==true){try{history.back()}catch(e){}}
+  }
+}
+// Close the drawer visually and navigate. Deliberately does NOT pop the menu's
+// history entry: fn() lands in show(), which REPLACES that entry with the new
+// screen (popping here would race the async history.back() against the push).
+function menuGo(fn){document.body.classList.remove('menu-open');fn()}
+// Style Quiz from the menu: a woman with a real portrait gets the retake flow
+// (keeps her name, tracks retake:true); everyone else gets the fresh start.
+function menuQuiz(){if(_hasQuizData())retakeQuiz();else startQ()}
 // Shop your Style from the menu: same philosophy as wbPortraitTap (which the
 // Style Portrait row uses directly) — a new visitor can't shop HER style before
 // the app knows it, so the honest destination is the quiz.
-function menuShopStyle(){if(localStorage.getItem('ss_data'))openShopStyle();else startQ()}
+function menuShopStyle(){if(_hasQuizData())openShopStyle();else startQ()}
 // Refine from the menu (Cath's catch 2026-07-31 — it was on every hub but not
 // here): same honest routing as the other personal rows — preferences refine
 // HER style, so a new visitor's real first step is the quiz.
-function menuRefine(){if(localStorage.getItem('ss_data'))openPrefs();else startQ()}
+function menuRefine(){if(_hasQuizData())openPrefs();else startQ()}
 // Share the SITE, never her results (Cath's ask 2026-07-31). A plain
 // stylestar.app link carries nothing personal: results live in her own
 // browser + behind the emailed token, so a friend always lands on the fresh
@@ -4483,13 +4532,26 @@ async function restoreResults(){
     document.getElementById('restoreMsg').textContent='Please enter a valid email.';
     return;
   }
+  // Disabled while the request is in flight (the send takes ~1.2s by design —
+  // the constant-time floor — so a double tap was easy and queued two sends).
+  const btn=document.getElementById('restoreBtn');
+  if(btn)btn.disabled=true;
   document.getElementById('restoreMsg').textContent='One moment...';
   // Typing an email no longer returns anyone's results — it points her at the
   // link in her own inbox. The message is deliberately the SAME whether or not
   // she has an account, so this can't be used to find out who uses Style Star.
+  var sent=false;
   try{
-    await fetch('/.netlify/functions/user-data?email='+encodeURIComponent(email));
+    var r=await fetch('/.netlify/functions/user-data?email='+encodeURIComponent(email));
+    sent=!!(r&&r.ok);
   }catch(e){}
+  if(btn)btn.disabled=false;
+  // Only a confirmed 200 stands the form down. Claiming "we've just sent you a
+  // link" after a network failure would strand her staring at an empty inbox.
+  if(!sent){
+    document.getElementById('restoreMsg').textContent="Hmm, that didn't go through. Please check your connection and try again.";
+    return;
+  }
   // Her email is on its way, so the form has done its job. Stand it down: a big
   // black button shouting FIND MY RESULTS above the quiet "check your email"
   // note is the loudest thing on screen at the moment it means least.
@@ -4596,7 +4658,9 @@ loadPrefs();
 
 function openPrefs(){
   const cur=document.querySelector('.scr.act');
-  prefReturnScreen=cur?cur.id:'s-res';
+  // Self-link guard: Refine can be reached from the menu while already inside
+  // the refine flow; Back must keep pointing at where she originally came from.
+  if(cur&&cur.id&&cur.id!=='s-pref'&&cur.id!=='s-pref-done')prefReturnScreen=cur.id;
   prefStep=0;
   show('s-pref');
   renderPref();
@@ -4643,7 +4707,10 @@ function _openShopStyleNow(mode){
   _shopStyleMode=(mode==='look')?'look':(mode==='wantlist')?'wantlist':'quiz';
   var cur=(document.querySelector('.scr.act')||{}).id;
   if(cur&&cur!=='s-shopstyle')shopStyleFrom=cur;else if(!shopStyleFrom)shopStyleFrom='s-wb';
-  try{var d=JSON.parse(localStorage.getItem('ss_data'));if(d){userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});}}catch(e){}
+  // Same guard as wbChat: only adopt a record that really holds 12 answers.
+  // Overwriting `answers` with undefined made _shopStyleGen throw while building
+  // its prompt, so the loading spinner hung forever on a name-only record.
+  try{var d=JSON.parse(localStorage.getItem('ss_data'));if(d){if(d.userName)userName=d.userName;if(d.answers&&d.answers.length===12){answers=d.answers;topArchNames=getTopArch().map(function(a){return a.n});}}}catch(e){}
   var subEl=document.querySelector('#s-shopstyle .ss-shop-sub');
   if(subEl){
     if(_shopStyleMode==='look'){subEl.textContent='In the vibe of the look you shared & your style.';}
@@ -5245,7 +5312,9 @@ function getPrefsForPrompt(){
 
 function showStory(){
   const cur=document.querySelector('.scr.act');
-  storyPrevScreen=cur?cur.id:'s-wel';
+  // Self-link guard (like showPhoto): a footer/menu tap to the page she is
+  // already on must not make its Back button point at itself.
+  if(cur&&cur.id&&cur.id!=='s-story')storyPrevScreen=cur.id;
   show('s-story');
   document.querySelector('.quiz-footer').style.display='none';
   // Only invite a from-the-home-page visitor to take the quiz.
@@ -5264,7 +5333,7 @@ function closeStory(){
 let faqPrevScreen='s-wel';
 function showFAQ(){
   const cur=document.querySelector('.scr.act');
-  faqPrevScreen=cur?cur.id:'s-wel';
+  if(cur&&cur.id&&cur.id!=='s-faq')faqPrevScreen=cur.id;   // self-link guard
   show('s-faq');
   document.querySelector('.quiz-footer').style.display='none';
 }
@@ -5275,7 +5344,7 @@ function closeFAQ(){
 let dreamPrevScreen='s-wel';
 function showDream(){
   const cur=document.querySelector('.scr.act');
-  dreamPrevScreen=cur?cur.id:'s-wel';
+  if(cur&&cur.id&&cur.id!=='s-dream')dreamPrevScreen=cur.id;   // self-link guard
   show('s-dream');
   markEditSeen();
   try{_wlDecorateEdit();}catch(e){}
@@ -5341,7 +5410,7 @@ function renderMall(){
 let shopPrevScreen='s-wel';
 function showShop(){
   const cur=document.querySelector('.scr.act');
-  shopPrevScreen=cur?cur.id:'s-wel';
+  if(cur&&cur.id&&cur.id!=='s-shop')shopPrevScreen=cur.id;   // self-link guard
   renderMall();
   show('s-shop');
   document.querySelector('.quiz-footer').style.display='none';
@@ -5520,6 +5589,11 @@ function _normalizeWardrobe(d){
   var _wlSeen={};
   d.wishlist=d.wishlist.filter(function(x){
     if(!x||typeof x!=='object'||!x.id||!x.name)return false;
+    // Ids are interpolated into onclick handlers when the list renders, so only
+    // the exact shape _wlMakeId produces is allowed through: two lowercase
+    // slugs joined by "~". Anything else (a hand-edited record, a corrupt
+    // sync) is dropped here rather than trusted into markup.
+    if(!/^[a-z0-9-]{1,64}~[a-z0-9-]{0,64}$/.test(String(x.id)))return false;
     if(_wlSeen[x.id])return false;          // same piece saved twice -> keep the first
     _wlSeen[x.id]=1;return true;
   }).map(function(x){
@@ -5951,7 +6025,7 @@ function wardrobeSeeAllTrending(){
 let wardrobePrevScreen='s-wel';
 function openWardrobe(tab){
   const cur=document.querySelector('.scr.act');
-  wardrobePrevScreen=cur?cur.id:'s-wel';
+  if(cur&&cur.id&&cur.id!=='s-wardrobe')wardrobePrevScreen=cur.id;   // self-link guard
   _teaserNudged=false;_wdrResetConfirm=false;
   _wardrobeUndo=null;if(_wardrobeUndoTimer){clearTimeout(_wardrobeUndoTimer);_wardrobeUndoTimer=null;}
   wardrobeData=loadWardrobeData();
@@ -6264,7 +6338,7 @@ function wardrobeTab(which){
 let privacyPrevScreen='s-wel';
 function showPrivacy(){
   const cur=document.querySelector('.scr.act');
-  privacyPrevScreen=cur?cur.id:'s-wel';
+  if(cur&&cur.id&&cur.id!=='s-privacy')privacyPrevScreen=cur.id;   // self-link guard
   show('s-privacy');
   document.querySelector('.quiz-footer').style.display='none';
 }
@@ -6275,7 +6349,7 @@ function closePrivacy(){
 let termsPrevScreen='s-wel';
 function showTerms(){
   const cur=document.querySelector('.scr.act');
-  termsPrevScreen=cur?cur.id:'s-wel';
+  if(cur&&cur.id&&cur.id!=='s-terms')termsPrevScreen=cur.id;   // self-link guard
   show('s-terms');
   document.querySelector('.quiz-footer').style.display='none';
 }
@@ -6345,10 +6419,19 @@ function openChat(fromLook){
       chatHistory.forEach(m=>{
         const div=document.createElement('div');
         div.className='chat-msg '+(m.role==='assistant'?'bot':'user');
+        // Everything from storage goes through _esc before linkStores — the
+        // restored path must be exactly as strict as the live one (a tampered
+        // ss_chat entry is still a string headed for innerHTML).
         if(m.hasPhoto){
-          div.innerHTML='<img class="chat-msg-img" src="'+m.photoThumb+'" onclick="openChatLightbox(this)"><br>'+linkStores(m.displayText||m.content);
+          // Only a data:image thumbnail is trusted into src; anything else
+          // (an old placeholder, a hand-edited record) shows a quiet chip.
+          var t=(typeof m.photoThumb==='string'&&/^data:image\//.test(m.photoThumb))?m.photoThumb:'';
+          div.innerHTML=(t?'<img class="chat-msg-img" src="'+_esc(t)+'" onclick="openChatLightbox(this)"><br>':'<span class="chat-imgph">Photo shared earlier</span><br>')+linkStores(_esc(m.displayText||m.content));
+          // Migrate a legacy full-size photo (saved before thumbnails) down to
+          // a real thumbnail so ss_chat stops carrying megabytes of base64.
+          if(t&&t.length>30000)_chatShrinkThumb(t,m);
         }else{
-          div.innerHTML=linkStores(m.role==='assistant'?m.content:(m.displayText||m.content));
+          div.innerHTML=linkStores(_esc(m.role==='assistant'?m.content:(m.displayText||m.content)));
         }
         msgContainer.appendChild(div);
       });
@@ -6400,9 +6483,16 @@ function openChatAboutLook(){
   toBottom();requestAnimationFrame(toBottom);setTimeout(toBottom,150);
 }
 function wbChat(){
+  // Adopt the saved record only when it's a REAL quiz result (12 answers).
+  // A name-only save used to blindly overwrite `answers` with undefined and set
+  // quizTaken, and the chat's slider-context build then threw before the reply
+  // ever came back, leaving the Send button dead — a bricked chat.
   try{
     const d=JSON.parse(localStorage.getItem('ss_data'));
-    if(d){userName=d.userName;answers=d.answers;topArchNames=d.topArchNames;if(answers&&answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});quizTaken=true;}
+    if(d){
+      if(d.userName)userName=d.userName;
+      if(d.answers&&d.answers.length===12){answers=d.answers;topArchNames=getTopArch().map(function(a){return a.n});quizTaken=true;}
+    }
   }catch(e){}
   chatPrevScreen='s-wb';
   openChat();
@@ -6460,9 +6550,33 @@ function _chatSafeUrl(u){
     return ok?u:'';
   }catch(e){return ''}
 }
+// Undo _esc for the few places a match from ESCAPED chat text has to be
+// compared against raw data (store keys, URLs). Only the four entities _esc
+// produces — this is not a general HTML decoder.
+function _unesc(s){return String(s).replace(/&(amp|lt|gt|quot);/g,function(m,e){return{'amp':'&','lt':'<','gt':'>','quot':'"'}[e]})}
+// The registrable base of a hostname ("www2.hm.com" → "hm.com"). Every store
+// in the table is a .com, so last-two-labels is exact here.
+function _domBase(h){return String(h||'').toLowerCase().split('.').slice(-2).join('.')}
+// Does this URL really live on the named store's own domain? "the bag from
+// Nordstrom [amazon.com/...]" must NOT render Nordstrom as an Amazon link —
+// on a mismatch the caller renders plain text instead.
+function _storeUrlMatches(storeKey,url){
+  try{
+    if(!STORES[storeKey])return false;
+    return _domBase(new URL(url).hostname)===_domBase(new URL(STORES[storeKey].u).hostname);
+  }catch(e){return false}
+}
+// ⚠️ linkStores expects text ALREADY escaped with _esc() (both chat render
+// paths escape first, so a reply can never smuggle live HTML into innerHTML).
+// Store names are matched in their escaped form ("H&amp;M") and unescaped
+// before hitting resolveStore/getStoreUrl; everything inserted into href/label
+// goes back through _esc.
 function linkStores(text){
   // Longest name first so "Saks Off 5th" wins over "Saks", and escape . + & etc.
-  const storeNames=Object.keys(STORES).sort(function(a,b){return b.length-a.length})
+  // Names are HTML-escaped FIRST (the text they're matched against is), then
+  // regex-escaped.
+  const storeNames=Object.keys(STORES).map(function(s){return _esc(s)})
+    .sort(function(a,b){return b.length-a.length})
     .map(function(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}).join('|');
   // Pass 0: DIRECT PRODUCT LINKS from the searching stylist, written as
   // "item from StoreName (~$price) [https://...]". The bracketed address is
@@ -6470,10 +6584,12 @@ function linkStores(text){
   // the tap target and the raw address never reaches her eyes. This is what
   // lands her ON the bag instead of on a search box that may not find it.
   let linked=text.replace(new RegExp('(\\s+(?:from|at)\\s+)('+storeNames+')(\\s*\\(~?\\$[^)]{1,14}\\))?\\s*\\[(https?:\\/\\/[^\\]\\s]+)\\]','gi'),function(match,joiner,store,price,url){
-    const cleanStore=resolveStore(store)||store;
-    const safe=_chatSafeUrl(url);
-    if(!safe)return joiner+store+(price||'');
-    return joiner.replace(/\s+$/,' ')+'<a href="'+safe.replace(/"/g,'%22')+'" target="_blank" rel="noopener">'+cleanStore+'</a>'+(price||'');
+    const cleanStore=resolveStore(_unesc(store));
+    const safe=_chatSafeUrl(_unesc(url));
+    // No link unless the URL is safe AND actually lives on the named store's
+    // own domain — a mismatched pair renders as plain text, never as a link.
+    if(!safe||!cleanStore||!_storeUrlMatches(cleanStore,safe))return joiner+store+(price||'');
+    return joiner.replace(/\s+$/,' ')+'<a href="'+_esc(safe)+'" target="_blank" rel="noopener">'+_esc(cleanStore)+'</a>'+(price||'');
   });
   // A marker that did not fit the shape above (unknown store, stray link, a
   // non-http scheme like javascript:) must never show as raw brackets in chat.
@@ -6481,42 +6597,67 @@ function linkStores(text){
   // Keep the stylist's own connector word. Rebuilding the sentence with a
   // hardcoded "from" silently rewrote her wording ("a blazer at Nordstrom"
   // came out as "a blazer from Nordstrom").
-  linked=_outsideLinks(linked,new RegExp('([\\w\\s,"-]{3,40})(\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,joiner,store){
-    const cleanItem=_searchableItem(item);
-    const cleanStore=resolveStore(store)||store;
+  linked=_outsideLinks(linked,new RegExp('([\\w\\s,-]{3,40})(\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,joiner,store){
+    const cleanItem=_searchableItem(_unesc(item));
+    const cleanStore=resolveStore(_unesc(store))||_unesc(store);
     if(!cleanItem)return match;
     const url=getStoreUrl(cleanStore,cleanItem);
-    return item.trimEnd()+joiner.replace(/\s+$/,' ')+'<a href="'+url+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
+    return item.trimEnd()+joiner.replace(/\s+$/,' ')+'<a href="'+_esc(url)+'" target="_blank" rel="noopener">'+_esc(cleanStore)+'</a>';
   });
   // Second pass: "item from SomeBrand" where SomeBrand is NOT one of our stores.
   // Runs outside existing links so it cannot touch what the pass above linked.
-  linked=_outsideLinks(linked,new RegExp('([\\w\\s,"-]{3,40})(\\s+(?:from|by)\\s+)([A-Z][\\w&\'\\.]*(?:\\s+[A-Z][\\w&\'\\.]*){0,2})','g'),function(match,item,joiner,brand){
+  linked=_outsideLinks(linked,new RegExp('([\\w\\s,-]{3,40})(\\s+(?:from|by)\\s+)([A-Z][\\w\'\\.]*(?:\\s+[A-Z][\\w\'\\.]*){0,2})','g'),function(match,item,joiner,brand){
     const b=brand.trim();
     if(resolveStore(b))return match;        // a real store, already handled above
     if(_NOTBRAND.test(b))return match;      // not a brand at all
-    const cleanItem=_searchableItem(item);
+    const cleanItem=_searchableItem(_unesc(item));
     if(!cleanItem)return match;
-    return item.trimEnd()+joiner.replace(/\s+$/,' ')+'<a href="'+_brandSearchUrl(b,cleanItem)+'" target="_blank" rel="noopener">'+b+'</a>';
+    return item.trimEnd()+joiner.replace(/\s+$/,' ')+'<a href="'+_esc(_brandSearchUrl(b,cleanItem))+'" target="_blank" rel="noopener">'+_esc(b)+'</a>';
   });
   return _outsideLinks(linked,new RegExp('\\b('+storeNames+')\\b','g'),function(store){
-    const cleanStore=resolveStore(store);
-    if(cleanStore)return'<a href="'+_storeHome(cleanStore)+'" target="_blank" rel="noopener">'+cleanStore+'</a>';
+    const cleanStore=resolveStore(_unesc(store));
+    if(cleanStore)return'<a href="'+_esc(_storeHome(cleanStore))+'" target="_blank" rel="noopener">'+_esc(cleanStore)+'</a>';
     return store;
   });
 }
 
+// Shrink a photo to a small (~10 KB) thumbnail for the SAVED history entry.
+// ss_chat used to hold the full base64 photo (megabytes per image, quietly
+// filling localStorage until saves started failing); the on-screen bubble
+// still shows the full-size photo, only what persists shrinks. Async because
+// an Image has to load; saveChatHistory re-runs once the thumb is ready.
+function _chatShrinkThumb(src,entry){
+  function done(t){entry.photoThumb=t||'';saveChatHistory();}
+  try{
+    var img=new Image();
+    img.onload=function(){
+      try{
+        var max=160,w=img.width,h=img.height;
+        if(w>max||h>max){if(w>h){h=Math.round(h*max/w);w=max}else{w=Math.round(w*max/h);h=max}}
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        done(c.toDataURL('image/jpeg',0.55));
+      }catch(e){done('')}
+    };
+    img.onerror=function(){done('')};
+    img.src=src;
+  }catch(e){done('')}
+}
 function addChatMsg(text,type,photoThumb){
   const div=document.createElement('div');
   div.className='chat-msg '+type;
+  // ALL message text is escaped before linkStores builds its links — on this
+  // live path and the restored-history path alike. A reply (or a tampered
+  // history entry) is data, never markup.
   if(photoThumb&&type==='user'){
-    div.innerHTML='<img class="chat-msg-img" src="'+photoThumb+'" onclick="openChatLightbox(this)"><br>'+linkStores(text);
+    div.innerHTML='<img class="chat-msg-img" src="'+_esc(photoThumb)+'" onclick="openChatLightbox(this)"><br>'+linkStores(_esc(text));
   }else{
-    div.innerHTML=linkStores(text);
+    div.innerHTML=linkStores(_esc(text));
   }
   document.getElementById('chatMessages').appendChild(div);
   document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;
   const entry={role:type==='bot'?'assistant':'user',content:text};
-  if(photoThumb){entry.hasPhoto=true;entry.photoThumb=photoThumb;entry.displayText=text;}
+  if(photoThumb){entry.hasPhoto=true;entry.displayText=text;entry.photoThumb='';_chatShrinkThumb(photoThumb,entry);}
   chatHistory.push(entry);
   saveChatHistory();
 }
@@ -6574,18 +6715,24 @@ function _searchDomains(){
 // second searching answer feels like service rather than a hang. The caller
 // removes liveEl and re-adds the final text through addChatMsg (links + saved
 // history), which replaces it with identical content.
-async function _readChatStream(r,typing,liveEl){
+async function _readChatStream(r,typing,liveEl,state){
   var mc=document.getElementById('chatMessages');
   var text='',raw='';
+  state=state||{};
   function toBottom(){mc.scrollTop=mc.scrollHeight}
   function handle(payload){
     var ev;try{ev=JSON.parse(payload)}catch(e){return}
     if(ev.type==='error'||(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='refusal'))throw new Error('stream error');
+    // A natural end of the reply. Without this the stream just STOPS (the
+    // platform hard-cuts long streams at ~60s), and a cut-off fragment used to
+    // be saved and shown as if it were the whole answer.
+    if(ev.type==='message_stop')state.complete=true;
     if(ev.type==='content_block_start'&&ev.content_block&&ev.content_block.type==='server_tool_use'){
       typing.textContent='Checking stores...';
       toBottom();
     }else if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta'){
       text+=ev.delta.text;
+      state.text=text;
       typing.style.display='none';
       liveEl.style.display='';
       liveEl.textContent=text;
@@ -6801,6 +6948,12 @@ RULES:
   // Attach the manually-picked photo, or the outfit she's styling (kept for the whole
   // conversation) so the stylist keeps seeing the look on every question.
   const imgData=chatPhotoData||chatLookPhoto;
+  // History rebuilds every request as TEXT ONLY, so any photo from an earlier
+  // turn (or a restored visit) is invisible to the model NOW. Say so, or it
+  // reads the photo talk above and invents details it cannot see.
+  const _photoGoneNote=(!imgData&&chatHistory.some(m=>m.hasPhoto))
+    ?'\n\nEARLIER PHOTOS: Any photo she shared earlier in this conversation is no longer attached, so you cannot see it now. Never describe or invent details from an earlier photo. If her question depends on seeing it, warmly ask her to share the photo again.'
+    :'';
   let userContent;
   if(imgData){
     userContent=[
@@ -6820,7 +6973,7 @@ RULES:
   });
   // Remove the last entry (we just added it)
   recentHistory.pop();
-  const messages=[{role:'user',content:systemPrompt+_lookAnalysisBlock()},{role:'assistant',content:'Understood. I am the Style Star stylist ready to help.'},...recentHistory,{role:'user',content:userContent}];
+  const messages=[{role:'user',content:systemPrompt+_lookAnalysisBlock()+_photoGoneNote},{role:'assistant',content:'Understood. I am the Style Star stylist ready to help.'},...recentHistory,{role:'user',content:userContent}];
 
   const photoWasSent=!!chatPhotoData;
   clearChatPhoto();
@@ -6832,27 +6985,59 @@ RULES:
   liveMsg.style.display='none';
   document.getElementById('chatMessages').appendChild(liveMsg);
 
+  // The search allowlist lives server-side now (2026-07-31); the request only
+  // says search:true. A hard 75s timeout backstops the whole exchange — the
+  // platform cuts streams around 60s, so past 75s nothing more is coming and
+  // the Send button must never stay dead.
+  const _ctl=(window.AbortController)?new AbortController():null;
+  const _ctlTimer=_ctl?setTimeout(function(){try{_ctl.abort()}catch(e){}},75000):null;
+  // Progress lives on `st` so the catch block can still see a partial reply
+  // when the stream dies mid-answer (timeout, connection drop, ~60s cut).
+  const st={text:'',complete:false};
+  // A cut-off reply is SHOWN (she watched it stream in) with an honest note,
+  // but never saved to ss_chat: a fragment restored later would read as if the
+  // stylist had answered with half a sentence on purpose.
+  function _showCutoff(frag){
+    const mc=document.getElementById('chatMessages');
+    const div=document.createElement('div');
+    div.className='chat-msg bot';
+    div.innerHTML=linkStores(_esc(frag));
+    mc.appendChild(div);
+    const note=document.createElement('div');
+    note.className='chat-cutoff';
+    note.textContent='That answer got cut off. Ask me to continue and I\'ll pick it right back up.';
+    mc.appendChild(note);
+    mc.scrollTop=mc.scrollHeight;
+  }
   try{
-    const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:600,messages:messages,search:true,search_domains:_searchDomains()})});
+    const fetchOpts={method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:600,messages:messages,search:true})};
+    if(_ctl)fetchOpts.signal=_ctl.signal;
+    const r=await fetch("/.netlify/functions/style-ai",fetchOpts);
     if(!r.ok)throw new Error('fail');
-    let reply='';
+    let reply='',streamed=false;
     if((r.headers.get('content-type')||'').indexOf('text/event-stream')>=0){
-      reply=await _readChatStream(r,typing,liveMsg);
+      streamed=true;
+      reply=await _readChatStream(r,typing,liveMsg,st);
     }else{
       // JSON path: an API error, or a deploy where search isn't live yet.
       const d=await r.json();
       if(!d.content)throw new Error('no content');
       reply=d.content.map(c=>c.text||'').join('');
+      st.complete=true;
     }
     typing.remove();liveMsg.remove();
     if(!reply.trim())throw new Error('empty');
-    addChatMsg(reply,'bot');
+    if(streamed&&!st.complete){_showCutoff(reply);}
+    else addChatMsg(reply,'bot');
   }catch(e){
     typing.remove();liveMsg.remove();
-    addChatMsg("I'm having a moment. Could you try asking that again? ✨",'bot');
+    if(st.text&&st.text.trim()){_showCutoff(st.text);}
+    else addChatMsg("I'm having a moment. Could you try asking that again? ✨",'bot');
+  }finally{
+    if(_ctlTimer)clearTimeout(_ctlTimer);
+    sendBtn.disabled=false;
+    input.focus();
   }
-  sendBtn.disabled=false;
-  input.focus();
 }
 
 // ---- Welcome Back: first-name binding + live badges (Design handoff §3) ----
