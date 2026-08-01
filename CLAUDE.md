@@ -24,8 +24,8 @@ she's been thinking about, pick ONE lever.** The detailed entries live in the se
    capture on the wardrobe page fit the same session.
 4. **📱 HER TESTING (the quality gate only she can run):** keep testing search chat — does the try-harder
    dial convert dry runs? keep reporting bad search landings · when bored: address-bar checks on the last
-   unverified stores (NORDSTROM first, then Sunglass Hut, Warby Parker, SKIMS, Belk, TJ Maxx, Vuori, Ann
-   Taylor).
+   unverified stores (✅ NORDSTROM VERIFIED 2026-08-01 — remaining: Sunglass Hut, Warby Parker, SKIMS, Belk,
+   TJ Maxx, Vuori, Ann Taylor).
 5. **📝 CONTENT (hers, anytime):** more What's Trending items · more Style Star Edit pieces (New pills
    light automatically) · occasional click-through of Edit links for dead ones.
 6. **⏳ MONEY PATH:** waiting on Almira (official LLC confirmation → TMs → EIN) → then HER two steps
@@ -41,6 +41,14 @@ refine nudge, the naming pass (Ask your Stylist / Your Wardrobe List / Your Wish
 hub cards aligned to the Menu (Build stays), chat continuity fixed (no more "starts fresh" amnesia,
 confirmed live by Cath), the Your Wishlist redesign (✕ left, row hearts retired, her B3 badge in the
 Edit-family teal, header polish, honest lead copy) — **and the LLC confirmed ACTIVE on Sunbiz.** 🎉
+
+### ✅ WHAT SHIPPED 2026-08-01 (a light phone session with Cath): the Edit's above-the-products disclosure
+shortened to the standard one-liner ("us" kept over "Style Star" — her question, talked through: matches the
+app's we-voice everywhere else) and the line TUCKED against the first item (5px, measured) on BOTH the Edit
+and Your Wishlist — her call from live screenshots, merged live as **#723**. And **NORDSTROM'S SEARCH URL IS
+VERIFIED** (her address bar + the app's bare `?keyword=` link both confirmed) — the most important store in
+the table, closed. Remaining address-bar asks: Sunglass Hut, Warby Parker, SKIMS, Belk, TJ Maxx, Vuori, Ann
+Taylor.
 
 ### ✅ THE THIRD COWORK BRIEF SHIPPED (2026-07-31, evening — 6 items, one commit, security + bugs)
 Cath pasted a third Cowork brief (security review + bug fixes). All six claims verified against the real code
@@ -890,9 +898,16 @@ curation, and how much should be search — and is option 3 enough to close the 
    reset. It is the sandbox, not a setting she controls. Her address bar is the substitute and it is a good one.
 
 ### 1b. Finish the store URLs — CORRECTION, more is left than the 2026-07-28 wrap-up implied
-That session said "the costly half is closed". **Not true: NORDSTROM has never been verified**, and it sits at
-**25 of 28** exposure, the most suggested store in the app. It fell into the "cannot tell" pile because its search
-renders client-side, and was then assumed fine because it is Nordstrom. That is an assumption, not evidence.
+✅ **NORDSTROM IS VERIFIED (2026-08-01, Cath's address bar, both directions).** Her own search produced
+`nordstrom.com/sr?origin=keywordsearch&keyword=pink%20belted%20dress` — same `/sr?keyword=` shape the app
+builds (`origin=` is their analytics param, correctly omitted per the strip-tracking rule) — AND she tapped
+the app's bare `?keyword=` form and confirmed real pink belted dresses. The most-suggested store in the app
+(25/28 exposure) is closed with evidence. **Remaining address-bar asks: Sunglass Hut, Warby Parker, SKIMS,
+Belk, TJ Maxx, Vuori, Ann Taylor** — the sites are listed in the 2026-08-01 chat; any results-page URL she
+pastes closes one.
+That session said "the costly half is closed". Not true then: NORDSTROM was never verified (now it is, above),
+sitting at **25 of 28** exposure, the most suggested store in the app. It fell into the "cannot tell" pile
+because its search renders client-side, and was then assumed fine because it is Nordstrom.
 **75 of 102 stores are unconfirmed**, but they split usefully: **34 can be verified here** (their search is
 server-rendered, so the vary-the-term size test works — just re-run `scratchpad/sweep.js`), and **41 need Cath's
 address bar**. Do the 34 without troubling her.
