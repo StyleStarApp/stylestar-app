@@ -24,8 +24,8 @@ she's been thinking about, pick ONE lever.** The detailed entries live in the se
    capture on the wardrobe page fit the same session.
 4. **📱 HER TESTING (the quality gate only she can run):** keep testing search chat — does the try-harder
    dial convert dry runs? keep reporting bad search landings · when bored: address-bar checks on the last
-   unverified stores (✅ 2026-08-01: NORDSTROM + WARBY PARKER + BELK VERIFIED, SUNGLASS HUT + SKIMS FIXED —
-   eyewear AND intimates fully closed — remaining: TJ Maxx, Vuori, Ann Taylor).
+   unverified stores (✅ 2026-08-01: NORDSTROM + WARBY PARKER + BELK VERIFIED, SUNGLASS HUT + SKIMS +
+   TJ MAXX FIXED — eyewear AND intimates fully closed — remaining: Vuori, Ann Taylor).
 5. **📝 CONTENT (hers, anytime):** more What's Trending items · more Style Star Edit pieces (New pills
    light automatically) · occasional click-through of Edit links for dead ones.
 6. **⏳ MONEY PATH:** waiting on Almira (official LLC confirmation → TMs → EIN) → then HER two steps
@@ -914,8 +914,13 @@ Sunglass Hut, Warby Parker). ✅ **SKIMS FIXED same day** (the Mejuri shape: her
 `/search?query=`, and she confirmed the app's old `?q=` form shows no results — switched to `?query=`).
 **Intimates is fully closed too: Soma, Spanx, SKIMS.** ✅ **BELK VERIFIED same day** (her search produced
 `/search/?q=<term>&lang=default`; she confirmed the app's bare `?q=` form works WITHOUT `lang=default` —
-unlike Theory, where lang is load-bearing). **Remaining address-bar asks: TJ Maxx, Vuori, Ann Taylor** —
-any results-page URL she pastes closes one.
+unlike Theory, where lang is load-bearing). 🔧 **TJ MAXX FIXED same day, and it needed THREE taps:** the
+app's old `/store/shop/search?q=` guess is DEAD, the main-site `?Ntt=` form would not open from outside,
+and the winner is the MOBILE site her phone's own search produced — `m.tjmaxx.tjx.com/m/shop/?initSubmit=
+search&Ntt=` (term appends after `Ntt=`). ⚠️ Deliberately points at the m. subdomain: shoppers are on
+phones, and it is the only form proven to accept an outside search. Still under `tjmaxx.tjx.com`, so
+`SEARCH_DOMAINS` (which covers subdomains) needed no edit. **Remaining address-bar asks: Vuori, Ann
+Taylor** — any results-page URL she pastes closes one.
 That session said "the costly half is closed". Not true then: NORDSTROM was never verified (now it is, above),
 sitting at **25 of 28** exposure, the most suggested store in the app. It fell into the "cannot tell" pile
 because its search renders client-side, and was then assumed fine because it is Nordstrom.
