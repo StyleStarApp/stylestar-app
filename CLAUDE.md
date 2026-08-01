@@ -24,8 +24,8 @@ she's been thinking about, pick ONE lever.** The detailed entries live in the se
    capture on the wardrobe page fit the same session.
 4. **📱 HER TESTING (the quality gate only she can run):** keep testing search chat — does the try-harder
    dial convert dry runs? keep reporting bad search landings · when bored: address-bar checks on the last
-   unverified stores (✅ 2026-08-01: NORDSTROM + WARBY PARKER + BELK VERIFIED, SUNGLASS HUT + SKIMS +
-   TJ MAXX FIXED — eyewear AND intimates fully closed — remaining: Vuori, Ann Taylor).
+   unverified stores (✅ 2026-08-01: NORDSTROM + WARBY PARKER + BELK + VUORI VERIFIED, SUNGLASS HUT + SKIMS +
+   TJ MAXX FIXED — eyewear AND intimates fully closed — remaining: ANN TAYLOR ONLY).
 5. **📝 CONTENT (hers, anytime):** more What's Trending items · more Style Star Edit pieces (New pills
    light automatically) · occasional click-through of Edit links for dead ones.
 6. **⏳ MONEY PATH:** waiting on Almira (official LLC confirmation → TMs → EIN) → then HER two steps
@@ -919,8 +919,10 @@ app's old `/store/shop/search?q=` guess is DEAD, the main-site `?Ntt=` form woul
 and the winner is the MOBILE site her phone's own search produced — `m.tjmaxx.tjx.com/m/shop/?initSubmit=
 search&Ntt=` (term appends after `Ntt=`). ⚠️ Deliberately points at the m. subdomain: shoppers are on
 phones, and it is the only form proven to accept an outside search. Still under `tjmaxx.tjx.com`, so
-`SEARCH_DOMAINS` (which covers subdomains) needed no edit. **Remaining address-bar asks: Vuori, Ann
-Taylor** — any results-page URL she pastes closes one.
+`SEARCH_DOMAINS` (which covers subdomains) needed no edit. ✅ **VUORI VERIFIED same day, byte-identical**
+(her search produced exactly the app's `vuoriclothing.com/search?q=` form — the Tory Burch shape, no
+confirm tap needed). **Remaining address-bar ask: ANN TAYLOR, the very last one** — one results-page URL
+closes the whole store-URL audit open since July.
 That session said "the costly half is closed". Not true then: NORDSTROM was never verified (now it is, above),
 sitting at **25 of 28** exposure, the most suggested store in the app. It fell into the "cannot tell" pile
 because its search renders client-side, and was then assumed fine because it is Nordstrom.
