@@ -1,0 +1,389 @@
+{
+  "when": "2026-08-01",
+  "results": [
+    {
+      "name": "Abercrombie",
+      "u": "https://www.abercrombie.com/shop/us/search?searchTerm=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Anthropologie",
+      "u": "https://www.anthropologie.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Baltic Born",
+      "u": "https://balticborn.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Bergdorf Goodman",
+      "u": "https://www.bergdorfgoodman.com/search.jsp?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Coach",
+      "u": "https://www.coach.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "COS",
+      "u": "https://www.cos.com/en-us/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Eileen Fisher",
+      "u": "https://www.eileenfisher.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Eloquii",
+      "u": "https://www.eloquii.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 433/433"
+    },
+    {
+      "name": "Express",
+      "u": "https://www.express.com/exp/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Free People",
+      "u": "https://www.freepeople.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Garnet Hill",
+      "u": "https://www.garnethill.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Gucci",
+      "u": "https://www.gucci.com/us/en/search?searchString=",
+      "cls": "BLOCKED",
+      "note": "HTTP 0/0 Command failed: curl -sL --max-time 15 --compressed -A Mozilla/5.0 (iPhone; CPU"
+    },
+    {
+      "name": "H&M",
+      "u": "https://www2.hm.com/en_us/search-results.html?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Kate Spade",
+      "u": "https://www.katespade.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Lululemon",
+      "u": "https://shop.lululemon.com/search?Ntt=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Neiman Marcus",
+      "u": "https://www.neimanmarcus.com/search.jsp?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "NET-A-PORTER",
+      "u": "https://www.net-a-porter.com/en-us/shop/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 0/0 Command failed: curl -sL --max-time 15 --compressed -A Mozilla/5.0 (iPhone; CPU"
+    },
+    {
+      "name": "Saks",
+      "u": "https://www.saksfifthavenue.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 403/403"
+    },
+    {
+      "name": "Torrid",
+      "u": "https://www.torrid.com/search?q=",
+      "cls": "BLOCKED",
+      "note": "HTTP 0/0 Command failed: curl -sL --max-time 15 --compressed -A Mozilla/5.0 (iPhone; CPU"
+    },
+    {
+      "name": "DSW",
+      "u": "https://www.dsw.com/en/us/search?q=",
+      "cls": "CLIENT-SIDE",
+      "note": "term not in HTML, sizes ~equal (4732b vs 4732b)"
+    },
+    {
+      "name": "Tommy Bahama",
+      "u": "https://www.tommybahama.com/search?q=",
+      "cls": "CLIENT-SIDE",
+      "note": "term not in HTML, sizes ~equal (52722b vs 52720b)"
+    },
+    {
+      "name": "Alice + Olivia",
+      "u": "https://www.aliceandolivia.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 54599b"
+    },
+    {
+      "name": "AllSaints",
+      "u": "https://www.allsaints.com/us/search/?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 121073b"
+    },
+    {
+      "name": "Alo Yoga",
+      "u": "https://www.aloyoga.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 86588b"
+    },
+    {
+      "name": "Amazon",
+      "u": "https://www.amazon.com/s?k=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 395510b"
+    },
+    {
+      "name": "Cuyana",
+      "u": "https://www.cuyana.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 57335b"
+    },
+    {
+      "name": "Everlane",
+      "u": "https://www.everlane.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 100773b"
+    },
+    {
+      "name": "Everything But Water",
+      "u": "https://www.everythingbutwater.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 48579b"
+    },
+    {
+      "name": "Faherty",
+      "u": "https://fahertybrand.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 104760b"
+    },
+    {
+      "name": "FARM Rio",
+      "u": "https://farmrio.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 119442b"
+    },
+    {
+      "name": "Frank & Eileen",
+      "u": "https://frankandeileen.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 101619b"
+    },
+    {
+      "name": "Good American",
+      "u": "https://www.goodamerican.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 87765b"
+    },
+    {
+      "name": "Gorjana",
+      "u": "https://gorjana.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 124746b"
+    },
+    {
+      "name": "IZOD",
+      "u": "https://www.izod.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 59121b"
+    },
+    {
+      "name": "J.McLaughlin",
+      "u": "https://www.jmclaughlin.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 127993b"
+    },
+    {
+      "name": "Jenni Kayne",
+      "u": "https://www.jennikayne.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 83714b"
+    },
+    {
+      "name": "Johnny Was",
+      "u": "https://www.johnnywas.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 79695b"
+    },
+    {
+      "name": "LOFT",
+      "u": "https://www.loft.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 135366b"
+    },
+    {
+      "name": "LoveShackFancy",
+      "u": "https://loveshackfancy.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 9540b"
+    },
+    {
+      "name": "M.M.LaFleur",
+      "u": "https://mmlafleur.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 122209b"
+    },
+    {
+      "name": "Marine Layer",
+      "u": "https://www.marinelayer.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 58969b"
+    },
+    {
+      "name": "Nordstrom Rack",
+      "u": "https://www.nordstromrack.com/search?query=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 59822b"
+    },
+    {
+      "name": "NYDJ",
+      "u": "https://www.nydj.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 9513b"
+    },
+    {
+      "name": "Petite Studio",
+      "u": "https://petitestudionyc.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 67789b"
+    },
+    {
+      "name": "Quince",
+      "u": "https://www.quince.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 146907b"
+    },
+    {
+      "name": "Rag & Bone",
+      "u": "https://www.rag-bone.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 133681b"
+    },
+    {
+      "name": "Rails",
+      "u": "https://www.railsclothing.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 76075b"
+    },
+    {
+      "name": "Reformation",
+      "u": "https://www.thereformation.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 76944b"
+    },
+    {
+      "name": "Revolve",
+      "u": "https://www.revolve.com/r/Search.jsp?d=Womens&search=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 97962b"
+    },
+    {
+      "name": "Shopbop",
+      "u": "https://www.shopbop.com/products?searchSuggestion=false&query=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 168830b"
+    },
+    {
+      "name": "Soft Surroundings",
+      "u": "https://www.softsurroundings.com/search.php?q=",
+      "cls": "LIKELY OK",
+      "note": "server-rendered, sizes differ 48505b vs 48213b"
+    },
+    {
+      "name": "Summersalt",
+      "u": "https://www.summersalt.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 22132b"
+    },
+    {
+      "name": "Talbots",
+      "u": "https://www.talbots.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 59509b"
+    },
+    {
+      "name": "Target",
+      "u": "https://www.target.com/s?searchTerm=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 35216b"
+    },
+    {
+      "name": "Tiffany & Co.",
+      "u": "https://www.tiffany.com/search/?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 64495b"
+    },
+    {
+      "name": "Tuckernuck",
+      "u": "https://www.tnuck.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 152800b"
+    },
+    {
+      "name": "Uniqlo",
+      "u": "https://www.uniqlo.com/us/en/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 134312b"
+    },
+    {
+      "name": "Universal Standard",
+      "u": "https://www.universalstandard.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 111452b"
+    },
+    {
+      "name": "Veronica Beard",
+      "u": "https://www.veronicabeard.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 119097b"
+    },
+    {
+      "name": "Vince",
+      "u": "https://www.vince.com/search?q=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 27494b"
+    },
+    {
+      "name": "Zappos",
+      "u": "https://www.zappos.com/search?term=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 96721b"
+    },
+    {
+      "name": "Zara",
+      "u": "https://www.zara.com/us/en/search?searchTerm=",
+      "cls": "LIKELY OK",
+      "note": "term visible in HTML, 86941b"
+    },
+    {
+      "name": "Lane Bryant",
+      "u": "https://www.lanebryant.com/search?q=",
+      "cls": "SUSPECT",
+      "note": "redirects to https://www.lanebryant.com/verify?url=aHR0cHM6Ly93d3cubGFuZWJyeWFudC5jb20vb24vZGVtYW5kd2FyZS5zdG9yZS9TaXRlcy1MYW5lQnJ5YW50LVNpdGUvZGVmYXVsdC9TZWFyY2gtU2hvdz9xPXBpbmslMjBtaWRpJTIwZHJlc3M%3D&frame=1785600082603 (search stripped - the Boden shape)"
+    },
+    {
+      "name": "Saks Off 5th",
+      "u": "https://www.saksoff5th.com/search?q=",
+      "cls": "SUSPECT",
+      "note": "redirects to https://www.saksoff5th.com/ (search stripped - the Boden shape)"
+    }
+  ]
+}
