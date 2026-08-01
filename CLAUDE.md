@@ -24,8 +24,8 @@ she's been thinking about, pick ONE lever.** The detailed entries live in the se
    capture on the wardrobe page fit the same session.
 4. **📱 HER TESTING (the quality gate only she can run):** keep testing search chat — does the try-harder
    dial convert dry runs? keep reporting bad search landings · when bored: address-bar checks on the last
-   unverified stores (✅ 2026-08-01: NORDSTROM + WARBY PARKER VERIFIED, SUNGLASS HUT + SKIMS FIXED — eyewear
-   AND intimates fully closed — remaining: Belk, TJ Maxx, Vuori, Ann Taylor).
+   unverified stores (✅ 2026-08-01: NORDSTROM + WARBY PARKER + BELK VERIFIED, SUNGLASS HUT + SKIMS FIXED —
+   eyewear AND intimates fully closed — remaining: TJ Maxx, Vuori, Ann Taylor).
 5. **📝 CONTENT (hers, anytime):** more What's Trending items · more Style Star Edit pieces (New pills
    light automatically) · occasional click-through of Edit links for dead ones.
 6. **⏳ MONEY PATH:** waiting on Almira (official LLC confirmation → TMs → EIN) → then HER two steps
@@ -912,8 +912,10 @@ confirmed dead by her; now `/?q=`, the form her typed search produced). ✅ **WA
 (the app's exact `/search?q=` form confirmed in her address bar — eyewear is now fully closed: Quay,
 Sunglass Hut, Warby Parker). ✅ **SKIMS FIXED same day** (the Mejuri shape: her typed search produced
 `/search?query=`, and she confirmed the app's old `?q=` form shows no results — switched to `?query=`).
-**Intimates is fully closed too: Soma, Spanx, SKIMS.** **Remaining address-bar asks: Belk, TJ Maxx, Vuori,
-Ann Taylor** — any results-page URL she pastes closes one.
+**Intimates is fully closed too: Soma, Spanx, SKIMS.** ✅ **BELK VERIFIED same day** (her search produced
+`/search/?q=<term>&lang=default`; she confirmed the app's bare `?q=` form works WITHOUT `lang=default` —
+unlike Theory, where lang is load-bearing). **Remaining address-bar asks: TJ Maxx, Vuori, Ann Taylor** —
+any results-page URL she pastes closes one.
 That session said "the costly half is closed". Not true then: NORDSTROM was never verified (now it is, above),
 sitting at **25 of 28** exposure, the most suggested store in the app. It fell into the "cannot tell" pile
 because its search renders client-side, and was then assumed fine because it is Nordstrom.
