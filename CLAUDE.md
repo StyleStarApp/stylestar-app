@@ -49,7 +49,13 @@ shortened to the standard one-liner ("us" kept over "Style Star" — her questio
 app's we-voice everywhere else) and the line TUCKED against the first item (5px, measured) on BOTH the Edit
 and Your Wishlist — her call from live screenshots, merged live as **#723**. And **NORDSTROM'S SEARCH URL IS
 VERIFIED** (her address bar + the app's bare `?keyword=` link both confirmed) — the most important store in
-the table, closed. **LATER SAME DAY: SUNGLASS HUT FIXED TOO** — her address bar produced `sunglasshut.com/?q=` (typed
+the table, closed. **LATER: the MENU chip was covering the "style Star" letterhead on Refine your
+preferences (+ the pref-done screen) and Analyze an Outfit — her screenshots.** Fixed with the FAQ/legal
+pattern (letterhead steps down: `.pref-mast` margin-top 40px, `.ph-mast` top 52px). A full-screen audit
+(`chipaudit` pattern: chip rect vs every visible element, all screens, 390+360) found NOTHING else real —
+the other flags are decorative rods/rails/light-effects that pass behind the chip by design. ▶ **HER
+STANDING OFFER (2026-08-01): she is HAPPY to do more address-bar checks — remind her of the 3 someday-taps
+(Saks Off 5th, DSW, Tommy Bahama) whenever store work comes up.** **LATER SAME DAY: SUNGLASS HUT FIXED TOO** — her address bar produced `sunglasshut.com/?q=` (typed
 search, no dropdown) and she confirmed the app's old `/us/search?q=` is DEAD (the Boden failure shape: path
 retired). Store URL updated to `/?q=`; hostname unchanged so `SEARCH_DOMAINS` needed no edit. **AND WARBY
 PARKER VERIFIED** — her own search leaves a bare `/search` in the address bar (the Sézane accept-but-never-
