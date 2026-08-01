@@ -650,8 +650,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-lead{font:400 13px/1.55 'Jost',sans-serif;color:#5a554c;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:12px 0 0}
 #s-wishlist .wl-lead b{color:#26221c;font-weight:600}
 /* Once per screen and above every link on it, matching every other surface. */
-#s-wishlist .wl-disclosure{font:italic 400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:13px 0 0}
-#s-wishlist .wl-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:4px 12px 6px;margin-top:14px}
+#s-wishlist .wl-disclosure{font:italic 400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:12px 0 0}
+#s-wishlist .wl-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:4px 12px 6px;margin-top:5px}
 #s-wishlist .wl-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid #efe9dc}
 #s-wishlist .wl-row:first-child{border-top:0}
 #s-wishlist .wl-b{flex:1;min-width:0}
@@ -787,8 +787,8 @@ body.menu-open .menu-panel{display:block}
 /* a touch of the entry button's turquoise, and the "not AI" promise */
 .dc-tagline{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
 .dc-tagline::before,.dc-tagline::after{content:"\2605";font-size:14px;color:#0FA6B6}
-#s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:1rem -0.5rem 1.9rem;font-style:italic;font-weight:600;padding:0}
-#s-dream .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin-top:1.5rem;line-height:1.65;font-style:italic}
+#s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:1rem -0.5rem 0.9rem;font-style:italic;font-weight:600;padding:0}
+#s-dream .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65;font-style:italic}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 #s-dream .btn-outline{border-radius:2px;border-width:1.5px;max-width:260px;margin:1.3rem auto 0}
 #s-dream .dc-trend-link{text-align:center;font:600 12.5px/1.4 'Jost',sans-serif;color:#0FA6B6;text-decoration:underline;cursor:pointer;margin-top:12px}
@@ -2670,7 +2670,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="dc-tagline">Curated by Catherine</div>
     <div class="dc-subtitle">Everything here is selected by me. These are pieces I wear myself and recommend to clients. I hope you&rsquo;ll love them too <svg class="pinkheart" style="width:15px;height:15px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
 
-    <div class="dc-disclosure">Some items include affiliate links that support Style Star at no extra cost to you. Nothing in the Style Star Edit is chosen by AI. Every piece is personally selected by our founder because she truly loves it.</div>
+    <div class="dc-disclosure">Some links may earn us a commission.</div>
 
     <div class="dc-item">
       <span class="dc-item-star">⭐</span>
@@ -4383,15 +4383,16 @@ function _shopRules(mode){
 // page. Change the words here and they change everywhere.
 const FIND_LABEL='Find it &rarr;';
 // One shared card so all four grid features stay identical.
-// ▶ THE AFFILIATE DISCLOSURE lives in SIX places, all of them plain markup now,
-//   so grepping for `may earn us a commission` finds every one. That grep is
-//   the edit list for the moment Amazon's required sentence has to be added:
+// ▶ THE AFFILIATE DISCLOSURE lives in SEVEN places, all of them plain markup
+//   now, so grepping for `may earn us a commission` finds every one. That grep
+//   is the edit list for the moment Amazon's required sentence has to be added:
 //   the three `.shopdisc` divs (Complete the Look, Shop your style on the photo
 //   results, Shop your style on the Style Portrait), `.shop-disclosure` on the
-//   Shop your style screen, `.wdr-disclosure` at the top of Your Wardrobe, and
-//   `.chat-disclosure` in the stylist chat. One wording everywhere, and a test
-//   asserts they stay byte-identical. The Edit and the Mall have their own,
-//   longer, "nothing here is chosen by AI" version -- leave those two alone.
+//   Shop your style screen, `.wdr-disclosure` at the top of Your Wardrobe,
+//   `.chat-disclosure` in the stylist chat, and the Edit's `.dc-disclosure`
+//   (shortened to the standard line 2026-08-01, Cath's call -- the long version
+//   read as loud above the products, and her own subtitle already says every
+//   piece is her pick). Only the MALL keeps its longer founder-voice version.
 function _shopCard(item,topHtml){
   const key=resolveStore(item.store);
   const url=getStoreUrl(item.store,item.name,item.search);

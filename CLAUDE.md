@@ -113,6 +113,13 @@ All seven items verified against the real code, then built:
    before-the-links placement affiliate reviewers look for). Wording untouched — both keep their own longer
    founder-voice versions. Edit's sits after Cath's subtitle, Mall's after the sign, so neither reads as a
    page tagline (the 2026-07-29 placement trap).
+   ✅ **UPDATE 2026-08-01, Cath's call from a live screenshot: the EDIT's version is now the standard one-liner**
+   ("Some links may earn us a commission."). The long paragraph read as *"really big and cringey"* above the
+   products — and it was redundant: her own subtitle ("Everything here is selected by me...") already carries
+   the not-chosen-by-AI message in her voice, and "at no extra cost to you" is the same apologetic clause cut
+   everywhere else on 2026-07-29. FTC/reviewers need placement + clarity, not length — placement is unchanged.
+   **Only the MALL still keeps its longer founder-voice version.** The standard wording now lives in SEVEN
+   places (grep `may earn us a commission` — still the edit list for Amazon's sentence at money-path step 7).
 4. 📦 **`@netlify/blobs` removed from package.json** — nothing ever imported it; `"type":"module"` stays.
 5. 💾 **Quiz autosave (`ss_quiz`)**: every slider move and question change saves `{answers, cur, t}`;
    restored on quiz entry AND straight back onto her question on a mid-quiz REFRESH (the browser preserves
