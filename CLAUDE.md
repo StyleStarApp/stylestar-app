@@ -900,9 +900,12 @@ curation, and how much should be search — and is option 3 enough to close the 
    2026-07-19 outage the true cause was one line, "Host key verification failed", and hours went into inferring
    it from outside. Optionally she can switch on **connector suggestions** in her Claude settings, which is
    currently off and blocks `SearchMcpRegistry`; then check whether an official Netlify connector exists.
-3. **Browser access to retail sites — CLOSED, do not spend time here.** Tested three ways on 2026-07-28 (through
-   the proxy, without it, and with `--proxy-server` forced): the requests never even reach the proxy and are
-   reset. It is the sandbox, not a setting she controls. Her address bar is the substitute and it is a good one.
+3. **Browser access to retail sites — REOPENED 2026-08-01, session-dependent.** The 2026-07-28 finding (total
+   network wall, requests reset before the proxy) did NOT hold in the 2026-08-01 session: `curl` fetched real
+   search pages from 45+ retail sites there (see the sweep entry in 1b). So **test reachability fresh each
+   session before assuming either way** — `curl -sL -o /dev/null -w '%{http_code}' https://www.everlane.com/`
+   answers in one call. Bot walls (403s from ~19 stores, Gucci/Coach/Saks class) persist regardless of network;
+   her address bar remains the only instrument for those.
 
 ### 1b. Finish the store URLs — CORRECTION, more is left than the 2026-07-28 wrap-up implied
 ✅ **NORDSTROM IS VERIFIED (2026-08-01, Cath's address bar, both directions).** Her own search produced
@@ -930,6 +933,21 @@ every store on the ask-Cath list is verified or fixed with her own browser as th
 broken (Sunglass Hut dead path, SKIMS wrong param, TJ Maxx dead path — plus the 14 fixed in July), which
 is the whole argument the audit was worth it. Only the deliberately-skipped long tail (below 8/28
 exposure) remains, by design.
+▶ **AND THE TAIL GOT A MACHINE SWEEP same day (2026-08-01, Cath's ask), because of a big environment
+change: THIS SESSION'S SANDBOX CAN REACH RETAIL SITES** — curl fetched real search pages from 45+ stores
+(July's total network wall is gone; the "browser access CLOSED" note below is now stale for curl, though
+bot walls remain). `scratchpad/sweep2.mjs` (committed, rerunnable) fetched every not-human-verified
+store's search URL with two terms. **Results (`sweep2-results.json`): 41 LIKELY OK** (search term visibly
+served in the results HTML — strong evidence, incl. Talbots, Zappos, Target, Amazon, Revolve, Shopbop,
+Zara, Uniqlo, LOFT, Tiffany), **19 bot-walled** (403s: Anthropologie, Free People, Coach, Saks, Neiman,
+Bergdorf, Gucci, H&M, Lululemon etc. — unknowable from any sandbox, most already proven by live use),
+**Lane Bryant OK-shaped** (its bot-check redirect wraps our URL already mapped to their internal search
+with the term intact), **Saks Off 5th serves "Site Offline" to non-browsers** (not a broken link — but
+the only store whose URL has zero evidence either way; one address-bar tap someday), **DSW + Tommy
+Bahama client-side** (can't see inside from curl; both use plausible standard forms). ⚠️ Sweep lesson:
+`-o /dev/stdout` breaks curl under Node execFile (write error, empty download) — let curl write to
+stdout by default. **Net: nothing in the tail needs fixing today; the 3 someday-taps are Saks Off 5th,
+DSW, Tommy Bahama.**
 That session said "the costly half is closed". Not true then: NORDSTROM was never verified (now it is, above),
 sitting at **25 of 28** exposure, the most suggested store in the app. It fell into the "cannot tell" pile
 because its search renders client-side, and was then assumed fine because it is Nordstrom.
