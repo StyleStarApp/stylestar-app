@@ -57,7 +57,16 @@ the FAQ pattern (absolute top:5px right:8px); Analyze Photo keeps `.ph-mast` top
 (`chipaudit` pattern: chip rect vs every visible element, all screens, 390+360) found NOTHING else real —
 the other flags are decorative rods/rails/light-effects that pass behind the chip by design. ▶ **HER
 STANDING OFFER (2026-08-01): she is HAPPY to do more address-bar checks — remind her of the 3 someday-taps
-(Saks Off 5th, DSW, Tommy Bahama) whenever store work comes up.** **LATER SAME DAY: SUNGLASS HUT FIXED TOO** — her address bar produced `sunglasshut.com/?q=` (typed
+(Saks Off 5th, DSW, Tommy Bahama) whenever store work comes up.**
+**EVENING: her critical-eye pass on the Analyze Photo page (#738), three decisions, all hers after honest
+options:** (1) the page keeps **NO title** — "Style Star Photo Analysis" rejected as clinical lab-language;
+the framed "Tap to share your photo" + "I'll style it, just for you" IS the headline and the Sally voice.
+(2) **"Analyze your Outfit"** is now the name everywhere a DESTINATION is named (Menu + all 3 hub rows) —
+the voice rule extended: it matches its group-mates Refine your Preferences / Ask your Stylist / Shop your
+Style. The CTA button stays **"Analyze my outfit"** (her voice) and results keep "Analyze another outfit",
+both deliberate. (3) **The hanging star STAYS** (the only boutique-world charm on that screen; cut decor
+before content, but one still charm is inside the restraint budget). Letterhead tuning ended at `.ph-mast`
+top 44px, Refine `.pref-mast` 17px with Back absolute right:13px — measured, chip-audit clean. **LATER SAME DAY: SUNGLASS HUT FIXED TOO** — her address bar produced `sunglasshut.com/?q=` (typed
 search, no dropdown) and she confirmed the app's old `/us/search?q=` is DEAD (the Boden failure shape: path
 retired). Store URL updated to `/?q=`; hostname unchanged so `SEARCH_DOMAINS` needed no edit. **AND WARBY
 PARKER VERIFIED** — her own search leaves a bare `/search` in the address bar (the Sézane accept-but-never-
