@@ -105,7 +105,7 @@ ok('tapping the dim veil closes it', await page.evaluate(() => !document.body.cl
 // ---------------------------------------------------------------------------
 console.log('\n4. Every row goes where it says (returning woman)');
 const ROWS = [
-  ['Home', 's-wb'], ['Style Portrait', 's-res'], ['Style Quiz', 's-quiz'], ['Refine your Preferences', 's-pref'], ['Analyze an Outfit', 's-photo'],
+  ['Home', 's-wb'], ['Style Portrait', 's-res'], ['Style Quiz', 's-quiz'], ['Refine your Preferences', 's-pref'], ['Analyze your Outfit', 's-photo'],
   ['Ask your Stylist', 's-chat'], ['Shop your Style', 's-shopstyle'], ['Style Star Mall', 's-shop'], ['Style Star Edit', 's-dream'],
   ['Your Wishlist', 's-wishlist'], ['Your Wardrobe List', 's-wardrobe'], ["What's Trending", 's-wardrobe'],
   ['My Story', 's-story'], ['FAQ', 's-faq'], ['Privacy', 's-privacy'], ['Terms', 's-terms']
@@ -247,7 +247,7 @@ ok('quiz shows its progress bar', await pq.evaluate(() =>
   getComputedStyle(document.getElementById('pw')).display !== 'none'
   && document.getElementById('pl').textContent === '1 of 12'));
 await pq.evaluate(() => menuOpen());
-await pq.click('.menu-row:text-is("Analyze an Outfit")');
+await pq.click('.menu-row:text-is("Analyze your Outfit")');
 ok('leaving via the Menu hides the "1 of 12" bar (her screenshot)', await pq.evaluate(() =>
   document.querySelector('.scr.act').id === 's-photo'
   && getComputedStyle(document.getElementById('pw')).display === 'none'));
