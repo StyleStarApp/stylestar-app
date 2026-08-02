@@ -66,7 +66,9 @@ the voice rule extended: it matches its group-mates Refine your Preferences / As
 Style. The CTA button stays **"Analyze my outfit"** (her voice) and results keep "Analyze another outfit",
 both deliberate. (3) **The hanging star STAYS** (the only boutique-world charm on that screen; cut decor
 before content, but one still charm is inside the restraint budget). Letterhead tuning ended at `.ph-mast`
-top 44px, Refine `.pref-mast` 17px with Back absolute right:13px — measured, chip-audit clean. **LATER SAME DAY: SUNGLASS HUT FIXED TOO** — her address bar produced `sunglasshut.com/?q=` (typed
+top 41px (#740, 15px chip clearance), Refine `.pref-mast` 17px with Back absolute right:13px — measured,
+chip-audit clean. **Session ended here (2026-08-01 night, everything merged through #740); she'll open a
+fresh chat next time.** **LATER SAME DAY: SUNGLASS HUT FIXED TOO** — her address bar produced `sunglasshut.com/?q=` (typed
 search, no dropdown) and she confirmed the app's old `/us/search?q=` is DEAD (the Boden failure shape: path
 retired). Store URL updated to `/?q=`; hostname unchanged so `SEARCH_DOMAINS` needed no edit. **AND WARBY
 PARKER VERIFIED** — her own search leaves a bare `/search` in the address bar (the Sézane accept-but-never-
