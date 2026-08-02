@@ -51,7 +51,9 @@ and Your Wishlist — her call from live screenshots, merged live as **#723**. A
 VERIFIED** (her address bar + the app's bare `?keyword=` link both confirmed) — the most important store in
 the table, closed. **LATER: the MENU chip was covering the "style Star" letterhead on Refine your
 preferences (+ the pref-done screen) and Analyze an Outfit — her screenshots.** Fixed with the FAQ/legal
-pattern (letterhead steps down: `.pref-mast` margin-top 40px, `.ph-mast` top 52px). A full-screen audit
+pattern, then TUNED to her eye from the live site (#734): the Refine letterhead sits JUST below the chip
+(`.pref-mast` margin-top 17px, ~6px clearance) with the Back button restored to the tight top-right via
+the FAQ pattern (absolute top:5px right:8px); Analyze Photo keeps `.ph-mast` top 52px. A full-screen audit
 (`chipaudit` pattern: chip rect vs every visible element, all screens, 390+360) found NOTHING else real —
 the other flags are decorative rods/rails/light-effects that pass behind the chip by design. ▶ **HER
 STANDING OFFER (2026-08-01): she is HAPPY to do more address-bar checks — remind her of the 3 someday-taps
