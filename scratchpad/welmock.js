@@ -69,7 +69,7 @@ const VARIANTS = {
   await new Promise(r => server.listen(0, r));
   const base = 'http://127.0.0.1:' + server.address().port;
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 390, height: 1600 } });
+  const page = await browser.newPage({ viewport: { width: 390, height: 1600 }, deviceScaleFactor: 2 });
 
   const shoot = async (inject) => {
     await page.goto(base + '/', { waitUntil: 'load' });
@@ -114,6 +114,20 @@ const VARIANTS = {
   await compose.setContent(`<body style="margin:0;background:#f4f1ea;font-family:Georgia,serif">${panels}<div style="height:16px"></div></body>`);
   await compose.screenshot({ path: path.join(import.meta.dirname, 'welcome-compare.png'), fullPage: true });
   console.log('wrote welcome-compare.png');
+
+  // Also one big labelled image PER option, so they're readable on a phone.
+  const single = await browser.newPage({ viewport: { width: 430, height: 100 }, deviceScaleFactor: 2 });
+  for (const [k, buf] of Object.entries(shots)) {
+    await single.setContent(`<body style="margin:0;background:#f4f1ea;font-family:Georgia,serif">
+      <div style="padding:18px 20px 14px;text-align:center">
+        <div style="font-size:24px;font-weight:bold;margin-bottom:5px">${k === 'CURRENT' ? 'TODAY' : 'OPTION ' + k}</div>
+        <div style="font-size:14px;color:#555;margin:0 auto 12px;max-width:390px">${DESC[k]}</div>
+        <img src="data:image/png;base64,${buf.toString('base64')}" style="width:390px;border:1px solid #bbb;border-radius:8px">
+      </div></body>`);
+    const out = path.join(import.meta.dirname, 'welcome-' + k.toLowerCase() + '.png');
+    await single.screenshot({ path: out, fullPage: true });
+    console.log('wrote', out);
+  }
   await browser.close();
   server.close();
 })();
