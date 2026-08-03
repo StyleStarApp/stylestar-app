@@ -100,7 +100,7 @@ const SEARCH_MAX_USES = 3;
 // adds or renames a store in index.html, add/fix its hostname here too, or the
 // stylist's search simply won't see inside that store (nothing breaks, links
 // still work — search just can't look there). Generated from the real table
-// 2026-07-31; 102 stores.
+// 2026-07-31; 101 stores (Saks Off 5th removed 2026-08-03 — they closed their online store).
 const SEARCH_DOMAINS = [
   'abercrombie.com', 'aliceandolivia.com', 'allsaints.com', 'aloyoga.com',
   'altardstate.com', 'amazon.com', 'anntaylor.com', 'anthropologie.com',
@@ -119,7 +119,7 @@ const SEARCH_DOMAINS = [
   'neimanmarcus.com', 'net-a-porter.com', 'nordstrom.com', 'nordstromrack.com',
   'nydj.com', 'oldnavy.gap.com', 'petitestudionyc.com', 'quayaustralia.com',
   'quince.com', 'rag-bone.com', 'railsclothing.com', 'revolve.com',
-  'saksfifthavenue.com', 'saksoff5th.com', 'samedelman.com', 'sezane.com',
+  'saksfifthavenue.com', 'samedelman.com', 'sezane.com',
   'shop.lululemon.com', 'shop.mango.com', 'shopbop.com', 'skims.com',
   'softsurroundings.com', 'soma.com', 'spanx.com', 'summersalt.com',
   'sunglasshut.com', 'talbots.com', 'target.com', 'theory.com',

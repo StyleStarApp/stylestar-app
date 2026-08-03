@@ -64,19 +64,19 @@ upstreamReply = SSE;
 let res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['evil.example.com'] }));
 let tool = (lastUpstream.body.tools || [])[0] || {};
 ok('search still streams', (res.headers.get('content-type') || '').includes('text/event-stream'));
-ok('allowed_domains is the server list (102 stores)', Array.isArray(tool.allowed_domains) && tool.allowed_domains.length === 102, 'got ' + (tool.allowed_domains || []).length);
+ok('allowed_domains is the server list (101 stores)', Array.isArray(tool.allowed_domains) && tool.allowed_domains.length === 101, 'got ' + (tool.allowed_domains || []).length);
 ok('client-sent domain NOT in the list', !tool.allowed_domains.includes('evil.example.com'));
 ok('the real stores are', ['nordstrom.com', 'www2.hm.com', 'shop.lululemon.com', 'tjmaxx.tjx.com'].every(d => tool.allowed_domains.includes(d)));
 ok('max_uses still fixed at 3', tool.max_uses === 3);
 
 lastUpstream = null;
 res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true }));
-ok('search works with NO search_domains at all (new client protocol)', (res.headers.get('content-type') || '').includes('text/event-stream') && lastUpstream.body.tools[0].allowed_domains.length === 102);
+ok('search works with NO search_domains at all (new client protocol)', (res.headers.get('content-type') || '').includes('text/event-stream') && lastUpstream.body.tools[0].allowed_domains.length === 101);
 
 for (const [label, junk] of [['a string', 'nope'], ['a URL', ['https://x.com']], ['numbers', [42]], ['150+ entries', Array.from({ length: 200 }, (_, i) => 'a' + i + '.com')]]) {
   lastUpstream = null;
   res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: junk }));
-  ok('junk client domains (' + label + ') ignored, not a 400', res.status === 200 && lastUpstream && lastUpstream.body.tools[0].allowed_domains.length === 102);
+  ok('junk client domains (' + label + ') ignored, not a 400', res.status === 200 && lastUpstream && lastUpstream.body.tools[0].allowed_domains.length === 101);
 }
 
 console.log('\nA2. Client-supplied tools are still never forwarded');
@@ -158,7 +158,7 @@ const quietErr = async (fn) => { const c = console.error; console.error = () => 
 upstreamCalls = [];
 replyQueue = [() => blockedErr(['gucci.com']), SSE];
 res = await quietErr(() => handler(fnReq({ max_tokens: 600, messages: MSGS, search: true })));
-ok('blocked store pruned and retried', upstreamCalls.length === 2 && upstreamCalls[0].includes('gucci.com') && !upstreamCalls[1].includes('gucci.com') && upstreamCalls[1].length === 101);
+ok('blocked store pruned and retried', upstreamCalls.length === 2 && upstreamCalls[0].includes('gucci.com') && !upstreamCalls[1].includes('gucci.com') && upstreamCalls[1].length === 100);
 ok('reply streams through after the prune', (res.headers.get('content-type') || '').includes('text/event-stream'));
 
 // THE MEMO: the very next request must skip gucci on its FIRST call — no
@@ -166,7 +166,7 @@ ok('reply streams through after the prune', (res.headers.get('content-type') || 
 upstreamCalls = [];
 replyQueue = [SSE];
 res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true }));
-ok('next request skips the blocked store on the FIRST call (memo)', upstreamCalls.length === 1 && !upstreamCalls[0].includes('gucci.com') && upstreamCalls[0].length === 101);
+ok('next request skips the blocked store on the FIRST call (memo)', upstreamCalls.length === 1 && !upstreamCalls[0].includes('gucci.com') && upstreamCalls[0].length === 100);
 
 // Two rounds of pruning still succeed, and both land in the memo.
 upstreamCalls = [];
@@ -176,7 +176,7 @@ ok('two rounds of pruning reach a stream', upstreamCalls.length === 3 && !upstre
 upstreamCalls = [];
 replyQueue = [SSE];
 await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true }));
-ok('memo now holds all three', upstreamCalls[0].length === 99);
+ok('memo now holds all three', upstreamCalls[0].length === 98);
 
 // An error naming NO recognisable domain → honest JSON error + console.error.
 const errLog2 = []; const realErr2 = console.error; console.error = (...a) => errLog2.push(a.join(' '));
@@ -320,7 +320,7 @@ const links = await page.evaluate(() => {
   // Same-corp subdomain still fine.
   h = linkStores(_esc('A dress from Banana Republic (~$120) [https://bananarepublic.gap.com/browse/product.do?pid=1]'));
   out.subdomain = h.includes('href="https://bananarepublic.gap.com/browse/product.do?pid=1"');
-  // A URL on ANOTHER of our 102 stores is still a mismatch for the named store.
+  // A URL on ANOTHER of our 101 stores is still a mismatch for the named store.
   h = linkStores(_esc('A tote from Madewell (~$88) [https://www.nordstrom.com/s/tote/9]'));
   out.crossStore = !h.includes('href="https://www.nordstrom.com/s/tote/9"');
   return out;
