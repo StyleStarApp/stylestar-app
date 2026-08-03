@@ -137,6 +137,30 @@ Welcome Back (refined? → analyze; analyzed? → chat; etc.), one suggestion at
 plus the existing refine-hint `ss_refinehint` pattern as the template. Render options with her before
 building anything.
 
+### ▶ THE END-OF-DAY BRAINSTORM DECISIONS (2026-08-03, late — all conversation, nothing built yet)
+Cath asked for open ideas ("maybe something we never even talked about"). Outcomes, each her call:
+1. **CHAT SUGGESTION CHIPS ALREADY EXIST** (her memory was right): three of them at chat start —
+   "Shift one notch" / "My essentials" / "Send a photo for advice" (`.chat-chip`, ~line 2672). ▶ The real
+   opportunity identified: they are style-philosophy flavored; the DAILY/OCCASION flavor is missing
+   ("dress me for a wedding", "pack me for a trip", "what goes with X"). **Waiting on HER list of the
+   questions women actually ask her most — stylist taxonomy, do not invent.**
+2. ✅ **"ADD TO HOME SCREEN" HINT APPROVED — "I LOVE this idea yes let's do that."** The app is already a
+   PWA; a quiet one-time hint for returning users puts the star icon on her phone = the daily-habit
+   enabler. **Renders first** (user-facing copy + placement). ⚠️ iOS Safari has NO install prompt API —
+   the hint must gently show the two taps (Share → Add to Home Screen); Android Chrome can use
+   beforeinstallprompt. Design around that asymmetry.
+3. **Plausible walkthrough parked BY HER until after testers** ("It won't tell us anything yet" — right).
+   Resurface at tester time.
+4. **The search-chat "dialed in" bar: she is thinking on it this week** while testing more. Don't push;
+   ask how testing went next session.
+5. **She will nudge Almira this week** (TMs were "drafted and ready" July 27; a status ask is fair).
+   Offered to draft the message if she wants.
+6. ✅ **THE GRADUATION WHISPER IS APPROVED and SHE WANTS TO WRITE THE LINE.** After all five journey stops
+   resolve, ONE final whisper hands her the daily habit (Ask your Stylist), then gone forever. Claude's
+   placeholder ("You've explored it all. Remember I'm here for the everyday too, what to wear, what to
+   pack, which purse. Just ask ♥") is explicitly NOT final — **wait for her line before building.**
+   Mechanically: a 6th _WB_NEXT entry, when = all five done/skipped, tap → openChat() + stamp, ✕ → skip.
+
 ### ✅ WHAT SHIPPED 2026-08-01 (a light phone session with Cath): the Edit's above-the-products disclosure
 shortened to the standard one-liner ("us" kept over "Style Star" — her question, talked through: matches the
 app's we-voice everywhere else) and the line TUCKED against the first item (5px, measured) on BOTH the Edit
