@@ -12,10 +12,13 @@ by email.
 ### ⭐ CATH'S FULL TO-DO LAYOUT (written with her before her break, 2026-07-31 — the pick-up index)
 She asked for the whole landscape, big and small, to think on. **Next session: read this index, ask what
 she's been thinking about, pick ONE lever.** The detailed entries live in the sections below.
-1. **🎨 DESIGN SESSIONS (together, renders first):** (a) the Welcome screen — "How it works" 1-2-3 + the
-   Sally FOUNDER LINE, one considered session, probably the highest-impact app work left; (b) the
-   SHAREABLE brainstorm — vision board may go, constellation "not what our app does", she wants a really
-   good on-brand Instagram shareable. Brainstorm only, build nothing first.
+1. **🎨 DESIGN SESSIONS (together, renders first):** (a) ✅ **the Welcome screen is DONE 2026-08-03** —
+   "How it works" 1-2-3 shipped (her pick, Option B) and the Sally FOUNDER LINE turned out to be already
+   live (see the 08-03 entry); (b) the SHAREABLE brainstorm — vision board may go, constellation "not
+   what our app does", she wants a really good on-brand Instagram shareable. Brainstorm only, build
+   nothing first. **(c) NEW from her 2026-08-03 question: guiding the RETURNING woman** — she wants users
+   to understand the whole app; a state-aware "your next step" idea for Welcome Back is sketched in the
+   08-03 entry, conversation + renders before building.
 2. **💬 CONVERSATIONS (talk, not build):** wardrobe Ideas CATEGORY BOUNDARIES (her white-tops find; she
    is the taxonomy authority) · two small her-call flags: quiet brand-home links in chat next to an
    already-linked item (her Coach observation), and the "My List" tab name if it ever bothers her.
@@ -65,6 +68,32 @@ fixed, or proven by live use. There is no ask-Cath list anymore.** Full sweep gr
 (cowork3 69 · searchchat 54 · menu 82 · nav 55 · e2e 29 · copy 41 · hubs 34 · followups 38 · sec 89 · affq 36;
 affq flaked once on a timing check, clean on rerun). ▶ **Store-scope note for future work: every "102" in the
 history below is now 101** — the standing SEARCH_DOMAINS rule is unchanged.
+**LATER SAME DAY: THE WELCOME-SCREEN DESIGN SESSION HAPPENED — "HOW IT WORKS" 1-2-3 IS LIVE (her pick).**
+▶ **Discovery first: the Sally FOUNDER LINE was ALREADY LIVE** — `.hm-founder` ("Hi, I'm Catherine. I've
+styled women for over 20 years. I created this with love & intention ♥") shipped quietly bundled into #692
+on 2026-07-30; the "parked" note here was stale. So the session was only the path. **Cath picked OPTION B
+from a 4-way render** (`scratchpad/welmock.js` → `welcome-compare.png`; she asked for larger visuals — the
+per-option 2x images `welcome-{current,a,b,c}.png` are the phone-readable format, use it next time): a
+"How It Works" mini-section AFTER her founder line — 1 Take the style quiz · 2 Meet your Style Portrait ·
+3 Shop your style, each with a one-line sub. Built as `.hm-hiw` between `.hm-founder` and `#restoreSection`,
+**header literally reuses the Or Explore divider pieces** (`.hm-divwrap`/`.hm-hair`/`.hm-divlbl`) so the
+two can never drift. Gold-outline number circles (`.hiw-n`), rides the ssRise entrance at .38s. Verified
+390+360 (visible, 3 rows, correct position, no overflow, zero JS errors) + full sweep green. ⚠️ **The three
+sub-lines are Claude's drafts** ("12 quick questions, no wrong answers" · "Your signature style, in words
+made for you" · "Stores and pieces picked to fit it") — **she may reword; one string each in the markup.**
+Note s-wel only shows to women without saved results, so the section naturally targets exactly the stranger
+it's for. ⚠️ affq's B-section flaked once more (timing), green twice on rerun — a pattern now, worth a
+deflake look someday.
+▶ **HER NEXT QUESTION, SAME MESSAGE (product direction, conversation before building): "do we need
+something similar once she has already taken the quiz — on the welcome back page or other places — to keep
+guiding her along? I very much want our users to understand how to use the app and all its features."**
+Assessment given: a surprising amount already exists (journey-ordered Menu, Start-here pill, first-reveal
+refine nudge, honest routing, hub concierge order, the Menu itself born from her "she'll get stuck" worry).
+The real gap named: **the Welcome Back hub treats the 3rd visit like the 30th** — nothing state-aware says
+what she hasn't tried yet. Idea offered, NOT approved/built: ONE quiet state-aware "your next step" row on
+Welcome Back (refined? → analyze; analyzed? → chat; etc.), one suggestion at a time, never a checklist —
+plus the existing refine-hint `ss_refinehint` pattern as the template. Render options with her before
+building anything.
 
 ### ✅ WHAT SHIPPED 2026-08-01 (a light phone session with Cath): the Edit's above-the-products disclosure
 shortened to the standard one-liner ("us" kept over "Style Star" — her question, talked through: matches the
