@@ -84,6 +84,24 @@ made for you" · "Stores and pieces picked to fit it") — **she may reword; one
 Note s-wel only shows to women without saved results, so the section naturally targets exactly the stranger
 it's for. ⚠️ affq's B-section flaked once more (timing), green twice on rerun — a pattern now, worth a
 deflake look someday.
+**THE CONCIERGE ("your next step") IS APPROVED AND HER DISCOVERY ORDER IS RECORDED — renders made,
+awaiting her pick (2026-08-03, evening).** Cath: "i love your concierge ideas, yes let's render those
+versions". ▶ **HER ORDER, verbatim intent — this is stylist taxonomy, protect it:** Refine → Wardrobe List
+→ Shop Your Style → Shop all items on Wishlist → What's Trending. **Analyze an Outfit + Ask your Stylist are
+NOT journey steps — they are DAILY companions** ("always checking outfits... what to wear/what to pack/what
+purse... is a constant daily thing"). Her rationale: shopping comes AFTER defining style, sizes, colors,
+likes/dislikes and checking the list to see what is truly needed; trendy items sprinkle in "when she wants a
+splash of current to look fresh". ▶ Design consequence: the next-step row walks her order; the daily tools
+need their own kind of invitation (habit-flavored, not step-flavored) — open design question for the build.
+**Renders:** `scratchpad/welbmock.js` → `nextstep-{current,a,b,c}.png` (per-option 2x, her preferred format):
+A = slim "NEXT FOR YOU" card between greeting mirror and Shop mirror, with ✕ · B = first row INSIDE the Shop
+mirror with a gold NEXT pill · C = Catherine's whisper, one cream italic line on the dark background under
+the greeting, gold link + pink heart, with ✕. All show the Wardrobe List suggestion (draft copy: "My
+checklist of 100 pieces shows what your closet is missing" / C: "100 pieces a complete closet could hold.
+Heart what yours is missing"). ⚠️ Two render traps hit and fixed in the harness: escaping quotes into
+&quot; inside innerHTML breaks SVG width attrs (icons explode to default size — use inline style widths);
+and anything placed BETWEEN the wb mirrors sits on the DARK background, so ink-colored text is unreadable
+there (C needed cream #E8E2D2). NOT BUILT — waiting on her pick.
 **HEADLINE WIDOW FIXED (her catch from the live page):** "Discover your signature style" was wrapping as
 "Discover your signature / style" — one word stranded. `text-wrap:balance` on `.hm-h1` (the property
 `.hm-body` already used) balances it to "Discover your / signature style" at every width, keeping the
