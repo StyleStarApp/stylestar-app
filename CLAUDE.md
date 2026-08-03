@@ -84,6 +84,10 @@ made for you" · "Stores and pieces picked to fit it") — **she may reword; one
 Note s-wel only shows to women without saved results, so the section naturally targets exactly the stranger
 it's for. ⚠️ affq's B-section flaked once more (timing), green twice on rerun — a pattern now, worth a
 deflake look someday.
+**HEADLINE WIDOW FIXED (her catch from the live page):** "Discover your signature style" was wrapping as
+"Discover your signature / style" — one word stranded. `text-wrap:balance` on `.hm-h1` (the property
+`.hm-body` already used) balances it to "Discover your / signature style" at every width, keeping the
+italic phrase together. Verified 390/360/414.
 ▶ **HER NEXT QUESTION, SAME MESSAGE (product direction, conversation before building): "do we need
 something similar once she has already taken the quiz — on the welcome back page or other places — to keep
 guiding her along? I very much want our users to understand how to use the app and all its features."**
