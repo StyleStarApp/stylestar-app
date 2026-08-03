@@ -1146,6 +1146,15 @@ body.card-fb{padding:0}
 #s-wb .wb-sub{display:block;font:400 14px/1.4 'Jost',sans-serif;color:#453f37;margin-top:3px}
 #s-wb .wb-lbl b{font:600 18px/1.05 'Jost',sans-serif;color:#211E1A;white-space:nowrap}
 #s-wb .wb-arr{width:20px;height:20px;flex:0 0 auto}
+/* Catherine's whisper (the next-step concierge). Cream on the dark boutique
+   background; the gold bold is the tap target's visual cue, the whole line taps. */
+#wbNext{display:none;align-items:flex-start;justify-content:center;gap:8px;margin:10px 22px 2px;text-align:center}
+#wbNext.on{display:flex}
+#wbNext .wbn-t{font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#E8E2D2;cursor:pointer}
+#wbNext .wbn-t b{font-weight:600;color:#F2D889;border-bottom:1px solid rgba(242,216,137,.55);font-style:normal}
+#wbNext .wbn-h{width:11px;height:11px;vertical-align:-1px}
+#wbNext .wbn-x{flex:0 0 auto;padding:3px;margin-top:2px;cursor:pointer}
+#wbNext .wbn-x svg{width:13px;height:13px;display:block;stroke:#a09a8e}
 #s-wb .wb-shadow{position:relative;height:0}
 #s-wb .wb-shadow i{position:absolute;left:6px;bottom:1px;width:33px;height:6px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(20,15,5,.34),rgba(20,15,5,0) 72%);filter:blur(1.5px)}
 #s-wb .wb-bar{height:5px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 6px 10px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
@@ -1881,6 +1890,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <div class="wb-port-motto" id="wbPortMotto"></div>
         <div class="wb-port-cta"><span id="wbPortCtaTxt">See your full Style Portrait</span> <svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></div>
       </div>
+    </div>
+    <!-- Catherine's whisper: the state-aware "your next step" concierge (Cath picked
+         Option C from the rendered comparison, 2026-08-03; all five lines are hers or
+         blessed by her). One suggestion at a time in HER discovery order; _syncWbNext()
+         owns visibility from show(); ✕ skips that one suggestion forever. It sits on the
+         DARK background between the mirrors, so the text must stay cream, never ink. -->
+    <div id="wbNext">
+      <span class="wbn-t" id="wbNextTxt" onclick="wbNextGo()"></span>
+      <span class="wbn-x" onclick="wbNextDismiss()" role="button" aria-label="Dismiss suggestion"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
     </div>
     <!-- Actions mirror -->
     <div class="wb-mirror wb-acts">
@@ -3276,6 +3294,10 @@ function show(id,skipHistory){
   try{refreshTrendBadge();}catch(e){}
   // The portrait's "what's next → refine" strip stays honest the same way.
   if(id==='s-res')try{_syncRefineHint();}catch(e){}
+  // Catherine's whisper: stamp "she's been there" for the concierge steps.
+  // (The whisper itself re-decides inside updateWbScreen, which covers both
+  // the boot path and show('s-wb').)
+  if(id==='s-wardrobe'||id==='s-shopstyle'||id==='s-wishlist')try{localStorage.setItem('ss_seen_'+id.slice(2),'1');}catch(e){}
   // Navigating always closes the menu drawer; the Menu chip stands down only on
   // the chat (its own tight header) and the two loading moments.
   document.body.classList.remove('menu-open');
@@ -4798,6 +4820,62 @@ function _syncRefineHint(){
 }
 function refineNextGo(){try{localStorage.setItem('ss_refinehint','1')}catch(e){}openPrefs();}
 function refineNextDismiss(){try{localStorage.setItem('ss_refinehint','1')}catch(e){}var n=document.getElementById('refineNext');if(n)n.classList.remove('on');}
+
+// ---- Catherine's whisper: the Welcome Back next-step concierge (2026-08-03) ----
+// HER discovery order, verbatim from Cath: Refine → Wardrobe List → Shop your
+// Style → Your Wishlist → What's Trending. Analyze an Outfit and Ask your
+// Stylist are deliberately NOT here — her call: they are daily companions
+// ("what to wear, what to pack, what purse"), not journey steps. One suggestion
+// at a time; a step stands down when she has actually visited the place
+// (ss_seen_* stamped in show()) or tapped ✕ (skipped forever, ss_nextskip).
+// The Wishlist stop only appears once she has saved pieces — inviting her to
+// shop an empty wishlist would be a dead end. A woman who has explored
+// everything sees no whisper at all. All five lines are Cath's own or blessed
+// by her (2026-08-03) — don't reword without her.
+var _WBN_HEART='<svg class="wbn-h" viewBox="0 0 24 24" fill="#F49AC1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
+var _WB_NEXT=[
+  {k:'refine',done:function(){return _hasRefined()},go:function(){openPrefs()},
+   h:'Next, <b>add your sizes, colors and faves</b>. Defining preferences is how we enhance our style '+_WBN_HEART},
+  {k:'wardrobe',done:function(){return !!localStorage.getItem('ss_seen_wardrobe')},go:function(){openWardrobe()},
+   h:'Next, explore <b>my wardrobe checklist</b>, 100 pieces for a well-rounded closet. Star what&rsquo;s missing and build yours like a pro '+_WBN_HEART},
+  {k:'shopstyle',done:function(){return !!localStorage.getItem('ss_seen_shopstyle')},go:function(){openShopStyle()},
+   h:'Next, <b>shop your style</b>. Stores and pieces picked to match your Style Portrait '+_WBN_HEART},
+  {k:'wishlist',when:function(){return !!(wardrobeData&&Array.isArray(wardrobeData.wishlist)&&wardrobeData.wishlist.length)},
+   done:function(){return !!localStorage.getItem('ss_seen_wishlist')},go:function(){openWishlist()},
+   h:'Next, open <b>Your Wishlist</b>, every piece you&rsquo;ve hearted in one place. Shop them all when you&rsquo;re ready '+_WBN_HEART},
+  {k:'trending',done:function(){return localStorage.getItem('ss_trending_seen')!==null},go:function(){openWardrobe('trend')},
+   h:'Next, see <b>What&rsquo;s Trending</b>, my picks of what&rsquo;s in right now. A splash of current keeps your look fresh '+_WBN_HEART}
+];
+var _wbNextCur=null;
+function _wbNextSkips(){try{return JSON.parse(localStorage.getItem('ss_nextskip')||'{}')||{}}catch(e){return{}}}
+function _syncWbNext(){
+  var el=document.getElementById('wbNext');if(!el)return;
+  var skips=_wbNextSkips(),pick=null;
+  for(var i=0;i<_WB_NEXT.length;i++){
+    var s=_WB_NEXT[i];
+    try{
+      if(skips[s.k])continue;
+      if(s.when&&!s.when())continue;
+      if(s.done())continue;
+    }catch(e){continue}
+    pick=s;break;
+  }
+  _wbNextCur=pick?pick.k:null;
+  if(pick){document.getElementById('wbNextTxt').innerHTML=pick.h;el.classList.add('on');}
+  else el.classList.remove('on');
+}
+function wbNextGo(){
+  for(var i=0;i<_WB_NEXT.length;i++)if(_WB_NEXT[i].k===_wbNextCur)return _WB_NEXT[i].go();
+}
+function wbNextDismiss(){
+  if(!_wbNextCur)return;
+  var skips=_wbNextSkips();skips[_wbNextCur]=1;
+  try{localStorage.setItem('ss_nextskip',JSON.stringify(skips))}catch(e){}
+  // Quietly gone for this visit; the NEXT visit offers the following step. An
+  // instant replacement here would feel like the app arguing with her ✕.
+  var el=document.getElementById('wbNext');if(el)el.classList.remove('on');
+  _wbNextCur=null;
+}
 function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e){}var n=document.getElementById('styleNudge');if(n)n.classList.remove('on');_openShopStyleNow(_nudgeMode);}
 function _openShopStyleNow(mode){
   _shopStyleMode=(mode==='look')?'look':(mode==='wantlist')?'wantlist':'quiz';
@@ -7271,6 +7349,10 @@ function _buildWbHubs(){
 }
 function updateWbScreen(){
   _buildWbHubs();
+  // Catherine's whisper re-decides on every Welcome Back appearance — this
+  // covers BOTH routes here: the boot path (which activates s-wb directly,
+  // no show()) and show('s-wb'), which calls updateWbScreen too.
+  try{_syncWbNext();}catch(e){}
   // Portrait hub: "<Name>'s Style" written across the chain, above her personal motto.
   // If she hasn't given a name, leave the label blank and let the star sit higher
   // (via the wb-noname class) instead of showing a generic placeholder. If she has

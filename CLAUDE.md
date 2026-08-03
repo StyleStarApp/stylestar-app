@@ -101,7 +101,27 @@ checklist of 100 pieces shows what your closet is missing" / C: "100 pieces a co
 Heart what yours is missing"). ⚠️ Two render traps hit and fixed in the harness: escaping quotes into
 &quot; inside innerHTML breaks SVG width attrs (icons explode to default size — use inline style widths);
 and anything placed BETWEEN the wb mirrors sits on the DARK background, so ink-colored text is unreadable
-there (C needed cream #E8E2D2). NOT BUILT — waiting on her pick.
+there (C needed cream #E8E2D2).
+✅✅ **SHE PICKED C AND IT IS BUILT + SHIPPED same evening — "CATHERINE'S WHISPER" IS LIVE.** Her catch on
+the render: the wardrobe copy said "Heart what's missing" but **My List uses STARS** (the two-lists rule
+doing its job) — fixed to "Star what's missing". **ALL FIVE LINES ARE FINAL, hers or blessed by her —
+don't reword without her:** 1 Refine "Next, add your sizes, colors and faves. Defining preferences is how
+we enhance our style ♥" (her rewrite) · 2 Wardrobe "Next, explore my wardrobe checklist, 100 pieces for a
+well-rounded closet. Star what's missing and build yours like a pro ♥" (hers) · 3 "Next, shop your style.
+Stores and pieces picked to match your Style Portrait ♥" · 4 "Next, open Your Wishlist, every piece you've
+hearted in one place. Shop them all when you're ready ♥" · 5 "Next, see What's Trending, my picks of
+what's in right now. A splash of current keeps your look fresh ♥" (her phrase "splash of current").
+**Mechanics:** `#wbNext` between the wb mirrors (cream `#E8E2D2` italic, gold bold link `#F2D889`, pink
+heart, ✕); `_WB_NEXT` walks her order; a step is done when she has VISITED the place — `ss_seen_wardrobe/
+shopstyle/wishlist` stamped centrally in `show()`, trending = `ss_trending_seen` exists, refine =
+`_hasRefined()`; ✕ skips that ONE step forever (`ss_nextskip` JSON) and hides the whisper for the visit
+(the next visit offers the following step — instant replacement would feel like arguing with her ✕);
+**the Wishlist stop only appears when wishlist.length > 0** (no dead ends); explored-everything = no
+whisper at all. ⚠️ `_syncWbNext()` is called from `updateWbScreen()` NOT from show('s-wb') — the BOOT path
+activates s-wb directly without show() (first test run caught exactly this). **Analyze + Chat deliberately
+absent** (her daily-companions call) — a habit-flavored invitation for them is an OPEN design conversation.
+Verified: hubs.js grew 34→46 (the full lifecycle: refine → wardrobe → shopstyle → wishlist-gated →
+trending → nothing; ✕ persistence; zero JS errors), full sweep green all ten suites.
 **HEADLINE WIDOW FIXED (her catch from the live page):** "Discover your signature style" was wrapping as
 "Discover your signature / style" — one word stranded. `text-wrap:balance` on `.hm-h1` (the property
 `.hm-body` already used) balances it to "Discover your / signature style" at every width, keeping the

@@ -178,6 +178,72 @@ for (const w of [390, 360]) {
 ok('no JS errors on the main page', page.errors.length === 0, page.errors.join(' | '));
 
 // ---------------------------------------------------------------------------
+// Catherine's whisper: the Welcome Back next-step concierge (2026-08-03).
+// Cath's order: Refine → Wardrobe List → Shop your Style → Wishlist → Trending.
+console.log('\nWHISPER: the next-step concierge');
+const WSEED = {
+  userName: 'Test', answers: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
+  topArchNames: ['Timeless Classic', 'Modern Muse', 'Coastal Chic'],
+  portrait: 'A test portrait.', motto: 'Shine on.'
+};
+const wp = await (async () => {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const p = await ctx.newPage();
+  p.errors = []; p.on('pageerror', e => p.errors.push(String(e)));
+  await p.route('**/.netlify/functions/**', r => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+  await p.route('https://plausible.io/**', r => r.fulfill({ status: 200, body: '' }));
+  await p.addInitScript(d => localStorage.setItem('ss_data', JSON.stringify(d)), WSEED);
+  await p.goto(ORIGIN + '/', { waitUntil: 'domcontentloaded' });
+  await p.waitForFunction(() => typeof window.show === 'function');
+  await p.waitForTimeout(250);
+  return p;
+})();
+const wst = () => wp.evaluate(() => ({
+  on: document.getElementById('wbNext').classList.contains('on'),
+  txt: document.getElementById('wbNextTxt').textContent,
+  vis: (() => { const b = document.getElementById('wbNext').getBoundingClientRect(); return b.width > 0 && b.height > 0; })(),
+}));
+
+let st = await wst();
+ok('un-refined woman sees the refine whisper', st.on && st.vis && st.txt.includes('add your sizes'), st.txt);
+await wp.click('#wbNextTxt');
+ok('tapping the whisper opens Refine', await wp.evaluate(() => document.querySelector('.scr.act').id) === 's-pref');
+await wp.evaluate(() => show('s-wb'));
+st = await wst();
+ok('peeking at Refine without saving keeps the suggestion', st.on && st.txt.includes('add your sizes'));
+
+await wp.evaluate(() => { prefs.colorsLove.push('Blush'); show('s-wb'); });
+st = await wst();
+ok('refined woman moves on to the wardrobe whisper', st.on && st.txt.includes('wardrobe checklist'), st.txt);
+
+await wp.evaluate(() => { openWardrobe(); show('s-wb'); });
+st = await wst();
+ok('after visiting the wardrobe, shop-your-style is next', st.on && st.txt.includes('shop your style'), st.txt);
+
+await wp.evaluate(() => { show('s-shopstyle'); show('s-wb'); });
+st = await wst();
+ok('empty wishlist is skipped, trending is next', st.on && st.txt.includes('Trending'), st.txt);
+
+await wp.evaluate(() => { wardrobeData.wishlist.push({ id: 'a~b', n: 'Test piece', s: 'Nordstrom', q: 'test' }); show('s-wb'); });
+st = await wst();
+ok('with a saved piece, the wishlist stop appears before trending', st.on && st.txt.includes('Your Wishlist'), st.txt);
+
+await wp.click('#wbNext .wbn-x');
+st = await wst();
+ok('the ✕ hides the whisper for this visit', !st.on);
+const skipRec = await wp.evaluate(() => JSON.parse(localStorage.getItem('ss_nextskip') || '{}'));
+ok('the dismissal is recorded per-step', skipRec.wishlist === 1, JSON.stringify(skipRec));
+await wp.evaluate(() => show('s-wb'));
+st = await wst();
+ok('the next visit offers the following step, not the dismissed one', st.on && st.txt.includes('Trending'), st.txt);
+
+await wp.evaluate(() => { openWardrobe('trend'); show('s-wb'); });
+st = await wst();
+ok('a woman who has explored everything sees no whisper at all', !st.on);
+ok('zero JS errors through the whisper lifecycle', wp.errors.length === 0, wp.errors.join(' | '));
+await wp.context().close();
+
+// ---------------------------------------------------------------------------
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 await browser.close();
 server.close();
