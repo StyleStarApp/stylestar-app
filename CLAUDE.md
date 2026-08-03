@@ -26,10 +26,10 @@ she's been thinking about, pick ONE lever.** The detailed entries live in the se
    dial convert dry runs? keep reporting bad search landings · when bored: address-bar checks on the last
    unverified stores — ✅✅ **THE PRIORITY STORE-URL AUDIT IS COMPLETE (2026-08-01, one session, all 8):
    NORDSTROM + WARBY PARKER + BELK + VUORI + ANN TAYLOR VERIFIED, SUNGLASS HUT + SKIMS + TJ MAXX FIXED.**
-   Eyewear and intimates fully closed. ✅ **AND THE TAIL CLOSED 2026-08-03:** Saks Off 5th REMOVED (they
-   shut their online store — table is 101 now), Lane Bryant verified, Tommy Bahama fixed (`?text=`).
-   **ONE tap left in the entire table: DSW** — does `dsw.com/browse/red%20sandals` show sandals? (Her
-   search produced the `+` form; we need to know if our `%20` encoding works too.)
+   Eyewear and intimates fully closed. ✅✅ **AND THE ENTIRE TAIL CLOSED 2026-08-03:** Saks Off 5th REMOVED
+   (they shut their online store — table is 101 now), Lane Bryant verified, Tommy Bahama fixed (`?text=`),
+   DSW fixed (path form `/browse/`, her confirming tap proved `%20` works). **EVERY store in the table is
+   now verified, fixed, or proven by live use. Store-URL work is DONE.**
 5. **📝 CONTENT (hers, anytime):** more What's Trending items · more Style Star Edit pieces (New pills
    light automatically) · occasional click-through of Edit links for dead ones.
 6. **⏳ MONEY PATH:** waiting on Almira (official LLC confirmation → TMs → EIN) → then HER two steps
@@ -56,10 +56,12 @@ blocked stores) moved 101→100 and 99→98 by hand; the first full-sweep run ca
 "Saks Fifth Avenue" (regular Saks) is untouched — Mall, luxury-routing rule, all of it. **The last 3
 someday-taps happened same session:** ✅ **LANE BRYANT VERIFIED** (the app's `?q=` link worked perfectly, her
 words) · 🔧 **TOMMY BAHAMA FIXED** `search?q=` → `search?text=` (the form her typed search produced; hostname
-unchanged so `SEARCH_DOMAINS` needed no edit) · ▶ **DSW is the ONE open store**: her typed search produced the
-path form `dsw.com/browse/red+sandals` with a `+` joiner, and `getStoreUrl` emits `%20` — waiting on ONE
-confirming tap (`/browse/red%20sandals`) before switching; if only `+` works it needs a small special case
-(there is no `+`-joining mechanism today, only the Lacoste `tpl`). Full sweep green after the change
+unchanged so `SEARCH_DOMAINS` needed no edit) · 🔧 **DSW FIXED — the very last store**: her typed search
+produced the path form `dsw.com/browse/red+sandals` with a `+` joiner; since `getStoreUrl` emits `%20`, she
+did ONE confirming tap (`/browse/red%20sandals` → real red sandals) proving both encodings work, so the app
+uses the plain `u:'https://www.dsw.com/browse/'` path form with normal encoding — no special case needed
+(the old `/en/us/search?q=` is retired). ✅✅ **STORE-URL WORK IS COMPLETE: all 101 stores are verified,
+fixed, or proven by live use. There is no ask-Cath list anymore.** Full sweep green after the change
 (cowork3 69 · searchchat 54 · menu 82 · nav 55 · e2e 29 · copy 41 · hubs 34 · followups 38 · sec 89 · affq 36;
 affq flaked once on a timing check, clean on rerun). ▶ **Store-scope note for future work: every "102" in the
 history below is now 101** — the standing SEARCH_DOMAINS rule is unchanged.
@@ -77,7 +79,7 @@ the FAQ pattern (absolute top:5px right:8px); Analyze Photo keeps `.ph-mast` top
 (`chipaudit` pattern: chip rect vs every visible element, all screens, 390+360) found NOTHING else real —
 the other flags are decorative rods/rails/light-effects that pass behind the chip by design. ▶ **HER
 STANDING OFFER (2026-08-01): she is HAPPY to do more address-bar checks — ✅ all 3 someday-taps resolved
-2026-08-03 (see the entry above); only DSW's one confirming tap remains.**
+2026-08-03 (see the entry above); NOTHING remains, the whole table is closed.**
 **EVENING: her critical-eye pass on the Analyze Photo page (#738), three decisions, all hers after honest
 options:** (1) the page keeps **NO title** — "Style Star Photo Analysis" rejected as clinical lab-language;
 the framed "Tap to share your photo" + "I'll style it, just for you" IS the headline and the Sally voice.
