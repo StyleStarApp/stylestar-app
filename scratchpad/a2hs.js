@@ -1,7 +1,7 @@
-// Drives the Add to Home Screen whisper (Cath's Option B + TOP icon + no ✕,
-// 2026-08-05) in real Chromium: iOS instructions with the icon preview,
-// Android "Add it now" via a faked beforeinstallprompt, desktop silence,
-// standalone silence, and the 5-visit self-retirement that replaced the ✕.
+// Drives the Add to Home Screen whisper (Cath's Option B + TOP icon + no ✕ +
+// NO retirement, 2026-08-05) in real Chromium: iOS instructions with the icon
+// preview, Android "Add it now" via a faked beforeinstallprompt, desktop
+// silence, standalone silence, and persistence across visits until installed.
 const chromium = (await import('/opt/node22/lib/node_modules/playwright/index.js')).default.chromium;
 import http from 'http';
 import fs from 'fs';
@@ -48,8 +48,7 @@ const state = (page) => page.evaluate(() => {
   const el = document.getElementById('a2hs');
   const b = el.getBoundingClientRect();
   return { on: el.classList.contains('on'), visible: b.width > 0 && b.height > 0,
-    txt: document.getElementById('a2hsTxt').textContent.trim(),
-    count: localStorage.getItem('ss_a2hs_n') };
+    txt: document.getElementById('a2hsTxt').textContent.trim() };
 });
 
 console.log('1. Desktop browser (no install API, not iOS): whisper stays silent');
@@ -57,7 +56,6 @@ console.log('1. Desktop browser (no install API, not iOS): whisper stays silent'
   const { ctx, page, errors } = await boot({});
   const s = await state(page);
   ok(!s.on && !s.visible, 'hidden on desktop UA with no beforeinstallprompt');
-  ok(s.count === null, 'a silent visit does not consume a show');
   ok(errors.length === 0, 'no JS errors');
   await ctx.close();
 }
@@ -93,26 +91,19 @@ console.log('2. iPhone: the whisper shows with the icon preview, in her wording'
   ok(detail.heart, 'pink heart in the line');
   ok(detail.noTap, 'iOS bold is emphasis only, no dead-link underline');
   ok(detail.block, 'text is block-level so text-wrap:balance applies');
-  ok(s.count === '1', 'first shown visit counts as 1');
-  console.log('3. The 5-visit retirement (no ✕ means it must bow out by itself)');
-  for (let v = 2; v <= 5; v++) {
+  console.log('3. No retirement (her call): it keeps inviting until she installs');
+  for (let v = 2; v <= 7; v++) {
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.evaluate(() => { document.getElementById('ssEntrance')?.remove(); });
     await page.waitForSelector('#s-wb.act');
     await page.waitForTimeout(250);
   }
-  const s5 = await state(page);
-  ok(s5.on && s5.count === '5', 'still showing on the 5th visit, count honest at 5');
+  const s7 = await state(page);
+  ok(s7.on && s7.visible, 'still showing on the 7th visit, no self-retirement');
   await page.evaluate(() => { show('s-quiz'); show('s-wb'); });
   await page.waitForTimeout(200);
   const sSame = await state(page);
-  ok(sSame.count === '5', 're-entering Welcome Back in the SAME visit does not double-count');
-  await page.reload({ waitUntil: 'domcontentloaded' });
-  await page.evaluate(() => { document.getElementById('ssEntrance')?.remove(); });
-  await page.waitForSelector('#s-wb.act');
-  await page.waitForTimeout(250);
-  const s6 = await state(page);
-  ok(!s6.on && s6.count === '5', 'the 6th visit: retired for good, count stays 5');
+  ok(sSame.on, 'survives leaving and re-entering Welcome Back in the same visit');
   ok(errors.length === 0, 'no JS errors on the iOS path');
   await ctx.close();
 }
