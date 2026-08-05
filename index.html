@@ -1148,12 +1148,13 @@ body.card-fb{padding:0}
 #s-wb .wb-arr{width:20px;height:20px;flex:0 0 auto}
 /* Catherine's whisper (the next-step concierge). Cream on the dark boutique
    background; the gold bold is the tap target's visual cue, the whole line taps. */
-#wbNext{display:none;align-items:flex-start;justify-content:center;gap:8px;margin:10px 22px 2px;text-align:center}
-#wbNext.on{display:flex}
-#wbNext .wbn-t{font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#E8E2D2;cursor:pointer}
+/* ✕ out of flow so the whisper centers true — same fix as .refine-next. */
+#wbNext{display:none;position:relative;margin:10px 14px 2px;padding:0 22px;text-align:center}
+#wbNext.on{display:block}
+#wbNext .wbn-t{display:block;font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#E8E2D2;cursor:pointer;text-wrap:balance}
 #wbNext .wbn-t b{font-weight:600;color:#F2D889;border-bottom:1px solid rgba(242,216,137,.55);font-style:normal}
 #wbNext .wbn-h{width:11px;height:11px;vertical-align:-1px}
-#wbNext .wbn-x{flex:0 0 auto;padding:3px;margin-top:2px;cursor:pointer}
+#wbNext .wbn-x{position:absolute;left:0;top:2px;padding:3px;cursor:pointer}
 #wbNext .wbn-x svg{width:13px;height:13px;display:block;stroke:#a09a8e}
 #s-wb .wb-shadow{position:relative;height:0}
 #s-wb .wb-shadow i{position:absolute;left:6px;bottom:1px;width:33px;height:6px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(20,15,5,.34),rgba(20,15,5,0) 72%);filter:blur(1.5px)}
@@ -1562,15 +1563,19 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .res-screen .p3-lead .rule{display:none}
 .res-screen .savebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:3px;cursor:pointer;border:2px solid #1a1a1a;background:#F5EFE2;color:#1a1a1a;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
 /* first-reveal "what's next" nudge — cream + gold to match the hub chips */
-.refine-next{display:none;align-items:center;gap:4px;margin:12px auto 2px;max-width:430px;background:#F5EFE2;border:1px solid #D8C285;border-radius:12px;padding:10px 8px 10px 12px;box-shadow:0 4px 14px rgba(0,0,0,.28);text-align:left}
-.refine-next.on{display:flex}
-.rn-body{display:flex;align-items:center;gap:9px;flex:1;min-width:0;cursor:pointer}
-.rn-star{width:19px;height:19px;flex:0 0 auto}
-.rn-tx{display:flex;flex-direction:column;gap:2.5px;min-width:0}
-.rn-tx b{font:600 13.5px/1.25 'Jost',sans-serif;color:#26221c;letter-spacing:.01em}
-.rn-tx span{font:400 11.5px/1.35 'Jost',sans-serif;color:#6b655a}
-.rn-ar{width:15px;height:15px;flex:0 0 auto}
-.rn-x{flex:0 0 auto;background:none;border:none;color:#6b655a;font-size:13px;cursor:pointer;padding:5px 8px;-webkit-tap-highlight-color:transparent}
+/* The ✕ is absolutely positioned so the text centers in the TRUE middle of the
+   strip (symmetric side padding) — an in-flow ✕ shoved the centering box
+   sideways and the lines sat awkwardly off-center (Cath's catch 2026-08-05). */
+/* Side insets sized so the text box clears the 278px two-line threshold at
+   390w (measured with the real Jost) — Cath wants the refine whisper on TWO
+   lines; narrower phones (360 Display Zoom) fall to three balanced lines. */
+.refine-next{display:none;position:relative;margin:14px 0 2px;padding:0 24px;text-align:center}
+.refine-next.on{display:block}
+.rn-body{display:block;font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#6b655a;cursor:pointer;text-wrap:balance}
+.rn-body b{font-weight:600;color:#A0761B;border-bottom:1px solid rgba(160,118,27,.45);font-style:normal}
+.rn-body .rn-h{width:11px;height:11px;vertical-align:-1px}
+.rn-x{position:absolute;left:0;top:0;background:none;border:none;padding:3px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rn-x svg{width:13px;height:13px;display:block;stroke:#a8a294}
 .res-screen .savebtn .hrt{font-size:16px;line-height:1;display:inline-block;transform-origin:center}
 .res-screen .pair{display:flex;gap:9px;margin-top:9px}
 .res-screen .pair .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px;border:3px solid transparent;border-radius:3px;cursor:pointer;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#EED89A,#D8A93E 40%,#B8831F 60%,#F3E3A6,#C89A2C) border-box;box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px #9aa1a7}
@@ -1896,9 +1901,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
          blessed by her). One suggestion at a time in HER discovery order; _syncWbNext()
          owns visibility from show(); ✕ skips that one suggestion forever. It sits on the
          DARK background between the mirrors, so the text must stay cream, never ink. -->
+    <!-- Dismiss on the LEFT (Cath 2026-08-05) — the Your Wishlist convention. -->
     <div id="wbNext">
-      <span class="wbn-t" id="wbNextTxt" onclick="wbNextGo()"></span>
       <span class="wbn-x" onclick="wbNextDismiss()" role="button" aria-label="Dismiss suggestion"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+      <span class="wbn-t" id="wbNextTxt" onclick="wbNextGo()"></span>
     </div>
     <!-- Actions mirror -->
     <div class="wb-mirror wb-acts">
@@ -2181,14 +2187,14 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <span class="hrt">&#128155;</span>Save my style details</button>
       <!-- First-reveal "what's next" (Cath approved 2026-07-31): points at the
            journey step with the least obvious reward. show() owns visibility
-           via _syncRefineHint(); gone once she has preferences or waves it off. -->
+           via _syncRefineHint(); gone once she has preferences or waves it off.
+           Restyled 2026-08-05 (her call) into the whisper voice to match #wbNext,
+           adapted for this IVORY panel (ink italic + deeper gold, cream would
+           vanish here). Copy = her Welcome Back refine line, word for word.
+           The dismiss lives on the LEFT, the Your Wishlist convention. -->
       <div class="refine-next" id="refineNext">
-        <div class="rn-body" onclick="refineNextGo()">
-          <svg class="rn-star" viewBox="0 0 24 24"><path fill="#E0B84C" stroke="#8a6c1c" stroke-width="0.8" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
-          <span class="rn-tx"><b>Next step: make it truly yours</b><span>Add your sizes, colors and faves, so shopping fits you</span></span>
-          <svg class="rn-ar" viewBox="0 0 24 24" fill="none" stroke="#26221c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
-        </div>
-        <button class="rn-x" onclick="refineNextDismiss()" aria-label="Dismiss">&#10005;</button>
+        <button class="rn-x" onclick="refineNextDismiss()" aria-label="Dismiss suggestion"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <span class="rn-body" onclick="refineNextGo()">Next, <b>add your sizes, colors and faves</b>. Defining preferences is how we enhance our style <svg class="rn-h" viewBox="0 0 24 24" fill="#F49AC1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span>
       </div>
       <!-- Action shelves grouped into Shopping / Styling hubs, on a black-lacquer backdrop to match WB -->
       <div class="p3-hubwrap">

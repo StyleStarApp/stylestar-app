@@ -41,6 +41,35 @@ she's been thinking about, pick ONE lever.** The detailed entries live in the se
    Amazon sentence).
 7. **🌟 THE GATE SHE OWNS:** tester invites (the 10 named women) once the searches feel dialed in to HER.
 
+### ✅ WHAT SHIPPED 2026-08-05 (a short session): THE WHISPER VOICE IS CONSISTENT NOW — her catch, twice over.
+Cath spotted that one "next step" looked different from the others: it was the OLD portrait refine strip
+(`#refineNext`, the gold-star card built 2026-07-31, four days BEFORE the whisper existed). All five Welcome
+Back whispers were verified identical (one template, can't drift). She picked the whisper restyle from a
+2-option render (`scratchpad/rnmock.js` → `refinestrip-{current,whisper}.png`) with two of her own fixes:
+**(1) no stranded "style ♥" line** — fixed with `text-wrap:balance` on BOTH whisper texts (the `.hm-h1`
+headline-widow lever, reused); **(2) the ✕ moves to the LEFT** — the Your Wishlist convention — on the
+portrait strip AND `#wbNext` on Welcome Back, so every whisper matches. ▶ **Key render finding, protect it:
+the portrait's `.p3` panel is IVORY (rgb 252,252,251), NOT lacquer** — the flowshot compose faked a dark
+backdrop, which was misleading; a cream whisper would vanish there. So the portrait whisper is the
+light-adapted voice: ink italic `#6b655a`, deeper gold link `#A0761B`, ✕ grey `#a8a294` (the wishlist ✕
+grey), pink heart unchanged. **Copy = her Welcome Back refine line word for word** ("Next, add your sizes,
+colors and faves. Defining preferences is how we enhance our style ♥") — the old strip's Claude-draft
+wording is retired. Behavior untouched: same `ss_refinehint` never-nag, same `.rn-body`/`.rn-x` handlers
+(menu.js drives them unchanged). **Two more of her catches on the as-built renders, both shipped:**
+(3) the text sat off-center — an in-flow ✕ shoves the centering box sideways, so both ✕s are
+`position:absolute` now with symmetric side padding (proofed centeredPx=0); ⚠️ that un-flexing quietly
+killed the balance — **`text-wrap:balance` only works on BLOCK-level text**, so both whisper spans carry
+`display:block`. (4) she wanted the refine whisper on TWO lines: measured with the real Jost, the
+two-line threshold is **278px**, side insets trimmed to clear it (text boxes 284/286px at 390w); at 360w
+(Display Zoom) it honestly falls to three balanced lines — keeping two would mean shrinking the font on
+the readability audience, deliberately not done. Full sweep green, zero flakes (menu 82 · hubs 46 ·
+nav 55 · e2e 29 · copy 41 · followups 38 · cowork3 69 · searchchat 54 · sec 89 · affq 36). As-built
+renders: `scratchpad/rnfinal.js` → `whisperfinal-{portrait,welcomeback}.png`.
+**Also this session: the Almira follow-up email was drafted and SENT by Cath** (LLC shows Active on Sunbiz,
+Document L26000395689; asks what she needs for the TM filing + timeline to TMs and EIN; Cath cut the
+registered-agent/scam-address question by her own call). ▶ **Watch for Almira's reply — it advances the
+money path.**
+
 ### ✅ WHAT SHIPPED 2026-07-31 (one day, PRs #702–#719): the API scare resolved (wrong login email — her
 Anthropic login is GOOGLE SIGN-IN), "Checking stores..." + the try-harder search dial, Share Style Star +
 Refine rows in the Menu, Privacy/Terms full-size, journey-ordered Menu + Start-here pill + first-reveal
