@@ -55,7 +55,7 @@ const ios = await shoot({ userAgent: IOS_UA, isMobile: true, hasTouch: true }, f
 const android = await shoot({}, true);
 
 const DESC = {
-  iphone: ['ON HER iPHONE — AS BUILT', 'Her wording, whisper voice: the two taps iPhones need, share glyph, pink heart, &#10005; left. Sits above the footer, below Retake.', ios],
+  iphone: ['ON HER iPHONE — AS BUILT', 'Her wording, whisper voice: the app icon previewing above the line, the two taps iPhones need, share glyph, pink heart. No &#10005; (her call) — it retires itself after 5 visits.', ios],
   android: ['ON ANDROID — AS BUILT', 'Same whisper, but Android allows a real install prompt, so the line ends in a tappable gold &ldquo;Add it now&rdquo;.', android],
 };
 const single = await browser.newPage({ viewport: { width: 430, height: 100 }, deviceScaleFactor: 2 });

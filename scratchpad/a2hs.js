@@ -1,6 +1,7 @@
-// Drives the Add to Home Screen whisper (Cath's Option B, 2026-08-05) in real
-// Chromium: iOS instructions, Android "Add it now" via a faked
-// beforeinstallprompt, desktop silence, standalone silence, ✕ persistence.
+// Drives the Add to Home Screen whisper (Cath's Option B + TOP icon + no ✕,
+// 2026-08-05) in real Chromium: iOS instructions with the icon preview,
+// Android "Add it now" via a faked beforeinstallprompt, desktop silence,
+// standalone silence, and the 5-visit self-retirement that replaced the ✕.
 const chromium = (await import('/opt/node22/lib/node_modules/playwright/index.js')).default.chromium;
 import http from 'http';
 import fs from 'fs';
@@ -10,7 +11,9 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const server = http.createServer((req, res) => {
   const f = path.join(ROOT, req.url === '/' ? 'index.html' : decodeURIComponent(req.url.split('?')[0].slice(1)));
   if (!f.startsWith(ROOT) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end(); }
-  res.writeHead(200); fs.createReadStream(f).pipe(res);
+  const ext = path.extname(f);
+  res.writeHead(200, { 'Content-Type': { '.html': 'text/html', '.png': 'image/png' }[ext] || 'application/octet-stream' });
+  fs.createReadStream(f).pipe(res);
 });
 await new Promise(r => server.listen(0, r));
 const base = 'http://127.0.0.1:' + server.address().port;
@@ -45,7 +48,8 @@ const state = (page) => page.evaluate(() => {
   const el = document.getElementById('a2hs');
   const b = el.getBoundingClientRect();
   return { on: el.classList.contains('on'), visible: b.width > 0 && b.height > 0,
-    txt: document.getElementById('a2hsTxt').textContent.trim() };
+    txt: document.getElementById('a2hsTxt').textContent.trim(),
+    count: localStorage.getItem('ss_a2hs_n') };
 });
 
 console.log('1. Desktop browser (no install API, not iOS): whisper stays silent');
@@ -53,11 +57,12 @@ console.log('1. Desktop browser (no install API, not iOS): whisper stays silent'
   const { ctx, page, errors } = await boot({});
   const s = await state(page);
   ok(!s.on && !s.visible, 'hidden on desktop UA with no beforeinstallprompt');
+  ok(s.count === null, 'a silent visit does not consume a show');
   ok(errors.length === 0, 'no JS errors');
   await ctx.close();
 }
 
-console.log('2. iPhone: the two-tap whisper shows, in her wording');
+console.log('2. iPhone: the whisper shows with the icon preview, in her wording');
 {
   const { ctx, page, errors } = await boot({ userAgent: IOS_UA, isMobile: true, hasTouch: true });
   const s = await state(page);
@@ -65,32 +70,49 @@ console.log('2. iPhone: the two-tap whisper shows, in her wording');
   ok(s.txt.startsWith('Add Style Star as a free app to your phone'), 'her line, word for word');
   ok(s.txt.includes('Add to Home Screen'), 'names the Add to Home Screen tap');
   const detail = await page.evaluate(() => {
-    const t = document.getElementById('a2hsTxt');
     const el = document.getElementById('a2hs');
-    const x = el.querySelector('.a2-x').getBoundingClientRect();
-    const tb = t.getBoundingClientRect(), eb = el.getBoundingClientRect();
+    const t = document.getElementById('a2hsTxt');
+    const ico = el.querySelector('.a2-ico');
+    const ib = ico.getBoundingClientRect(), eb = el.getBoundingClientRect();
     const bold = t.querySelector('b');
-    return { share: !!t.querySelector('.a2-sh'), heart: !!t.querySelector('.a2-h'),
-      xLeft: x.left < tb.left, noTap: !bold.classList.contains('tap'),
-      centered: Math.abs((tb.left + tb.right) / 2 - (eb.left + eb.right) / 2) <= 2,
+    return { icon: !!ico && ib.width >= 44 && ib.height >= 44,
+      iconLoaded: ico.complete && ico.naturalWidth > 0,
+      iconCentered: Math.abs((ib.left + ib.right) / 2 - (eb.left + eb.right) / 2) <= 2,
+      rounded: parseFloat(getComputedStyle(ico).borderRadius) >= 10,
+      noX: !el.querySelector('.a2-x'),
+      share: !!t.querySelector('.a2-sh'), heart: !!t.querySelector('.a2-h'),
+      noTap: !bold.classList.contains('tap'),
       block: getComputedStyle(t).display === 'block' };
   });
+  ok(detail.icon, 'the app icon previews above the line at full size');
+  ok(detail.iconLoaded, 'the icon image actually loaded');
+  ok(detail.iconCentered, 'icon centers true');
+  ok(detail.rounded, 'icon corners rounded like a home-screen icon');
+  ok(detail.noX, 'no ✕ anywhere (her call)');
   ok(detail.share, 'share glyph in the line');
   ok(detail.heart, 'pink heart in the line');
-  ok(detail.xLeft, '✕ sits on the LEFT (wishlist convention)');
   ok(detail.noTap, 'iOS bold is emphasis only, no dead-link underline');
-  ok(detail.centered, 'text centers true in the strip');
   ok(detail.block, 'text is block-level so text-wrap:balance applies');
-  console.log('3. ✕ dismisses forever');
-  await page.click('#a2hs .a2-x');
-  const s2 = await state(page);
-  ok(!s2.on, 'hidden after ✕');
+  ok(s.count === '1', 'first shown visit counts as 1');
+  console.log('3. The 5-visit retirement (no ✕ means it must bow out by itself)');
+  for (let v = 2; v <= 5; v++) {
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.evaluate(() => { document.getElementById('ssEntrance')?.remove(); });
+    await page.waitForSelector('#s-wb.act');
+    await page.waitForTimeout(250);
+  }
+  const s5 = await state(page);
+  ok(s5.on && s5.count === '5', 'still showing on the 5th visit, count honest at 5');
+  await page.evaluate(() => { show('s-quiz'); show('s-wb'); });
+  await page.waitForTimeout(200);
+  const sSame = await state(page);
+  ok(sSame.count === '5', 're-entering Welcome Back in the SAME visit does not double-count');
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.evaluate(() => { document.getElementById('ssEntrance')?.remove(); });
   await page.waitForSelector('#s-wb.act');
-  await page.waitForTimeout(300);
-  const s3 = await state(page);
-  ok(!s3.on, 'still hidden after a reload (ss_a2hs persists)');
+  await page.waitForTimeout(250);
+  const s6 = await state(page);
+  ok(!s6.on && s6.count === '5', 'the 6th visit: retired for good, count stays 5');
   ok(errors.length === 0, 'no JS errors on the iOS path');
   await ctx.close();
 }
