@@ -1148,12 +1148,13 @@ body.card-fb{padding:0}
 #s-wb .wb-arr{width:20px;height:20px;flex:0 0 auto}
 /* Catherine's whisper (the next-step concierge). Cream on the dark boutique
    background; the gold bold is the tap target's visual cue, the whole line taps. */
-#wbNext{display:none;align-items:flex-start;justify-content:center;gap:8px;margin:10px 22px 2px;text-align:center}
-#wbNext.on{display:flex}
-#wbNext .wbn-t{font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#E8E2D2;cursor:pointer;text-wrap:balance}
+/* ✕ out of flow so the whisper centers true — same fix as .refine-next. */
+#wbNext{display:none;position:relative;margin:10px 22px 2px;padding:0 26px;text-align:center}
+#wbNext.on{display:block}
+#wbNext .wbn-t{display:block;font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#E8E2D2;cursor:pointer;text-wrap:balance}
 #wbNext .wbn-t b{font-weight:600;color:#F2D889;border-bottom:1px solid rgba(242,216,137,.55);font-style:normal}
 #wbNext .wbn-h{width:11px;height:11px;vertical-align:-1px}
-#wbNext .wbn-x{flex:0 0 auto;padding:3px;margin-top:2px;cursor:pointer}
+#wbNext .wbn-x{position:absolute;left:0;top:2px;padding:3px;cursor:pointer}
 #wbNext .wbn-x svg{width:13px;height:13px;display:block;stroke:#a09a8e}
 #s-wb .wb-shadow{position:relative;height:0}
 #s-wb .wb-shadow i{position:absolute;left:6px;bottom:1px;width:33px;height:6px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(20,15,5,.34),rgba(20,15,5,0) 72%);filter:blur(1.5px)}
@@ -1562,12 +1563,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .res-screen .p3-lead .rule{display:none}
 .res-screen .savebtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:3px;cursor:pointer;border:2px solid #1a1a1a;background:#F5EFE2;color:#1a1a1a;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase}
 /* first-reveal "what's next" nudge — cream + gold to match the hub chips */
-.refine-next{display:none;align-items:flex-start;justify-content:center;gap:8px;margin:14px 22px 2px;text-align:center}
-.refine-next.on{display:flex}
-.rn-body{font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#6b655a;cursor:pointer;text-wrap:balance}
+/* The ✕ is absolutely positioned so the text centers in the TRUE middle of the
+   strip (symmetric side padding) — an in-flow ✕ shoved the centering box
+   sideways and the lines sat awkwardly off-center (Cath's catch 2026-08-05). */
+.refine-next{display:none;position:relative;margin:14px 22px 2px;padding:0 26px;text-align:center}
+.refine-next.on{display:block}
+.rn-body{display:block;font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#6b655a;cursor:pointer;text-wrap:balance}
 .rn-body b{font-weight:600;color:#A0761B;border-bottom:1px solid rgba(160,118,27,.45);font-style:normal}
 .rn-body .rn-h{width:11px;height:11px;vertical-align:-1px}
-.rn-x{flex:0 0 auto;background:none;border:none;padding:3px;margin-top:2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rn-x{position:absolute;left:0;top:0;background:none;border:none;padding:3px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .rn-x svg{width:13px;height:13px;display:block;stroke:#a8a294}
 .res-screen .savebtn .hrt{font-size:16px;line-height:1;display:inline-block;transform-origin:center}
 .res-screen .pair{display:flex;gap:9px;margin-top:9px}

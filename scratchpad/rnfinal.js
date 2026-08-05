@@ -34,7 +34,8 @@ const resProof = await page.evaluate(() => {
   const el = document.getElementById('refineNext'), b = el.getBoundingClientRect();
   const x = el.querySelector('.rn-x').getBoundingClientRect();
   const t = el.querySelector('.rn-body').getBoundingClientRect();
-  return { on: el.classList.contains('on'), visible: b.width > 0 && b.height > 0, xLeftOfText: x.left < t.left };
+  return { on: el.classList.contains('on'), visible: b.width > 0 && b.height > 0, xLeftOfText: x.left < t.left,
+    centeredPx: Math.round(Math.abs((t.left + t.right) / 2 - (b.left + b.right) / 2)) };
 });
 const saveShot = await page.locator('#resSaveBtn').screenshot();
 const stripShot = await page.locator('#refineNext').screenshot();
@@ -49,7 +50,8 @@ const wbProof = await page.evaluate(() => {
   const el = document.getElementById('wbNext'), b = el.getBoundingClientRect();
   const x = el.querySelector('.wbn-x').getBoundingClientRect();
   const t = document.getElementById('wbNextTxt').getBoundingClientRect();
-  return { on: el.classList.contains('on'), visible: b.width > 0 && b.height > 0, xLeftOfText: x.left < t.left };
+  return { on: el.classList.contains('on'), visible: b.width > 0 && b.height > 0, xLeftOfText: x.left < t.left,
+    centeredPx: Math.round(Math.abs((t.left + t.right) / 2 - (b.left + b.right) / 2)) };
 });
 const wbRect = await page.evaluate(() => {
   const top = document.querySelector('.wb-greet').getBoundingClientRect().top + scrollY;
@@ -59,7 +61,8 @@ const wbRect = await page.evaluate(() => {
 const wbShot = await page.screenshot({ clip: { x: 0, y: Math.max(0, wbRect.top - 10), width: 390, height: wbRect.bot - wbRect.top + 24 } });
 
 console.log('proof:', JSON.stringify({ portrait: resProof, welcomeBack: wbProof }));
-if (!resProof.on || !resProof.visible || !resProof.xLeftOfText || !wbProof.on || !wbProof.visible || !wbProof.xLeftOfText) {
+if (!resProof.on || !resProof.visible || !resProof.xLeftOfText || resProof.centeredPx > 2 ||
+    !wbProof.on || !wbProof.visible || !wbProof.xLeftOfText || wbProof.centeredPx > 2) {
   console.log('PROOF FAILED — aborting'); process.exit(1);
 }
 
