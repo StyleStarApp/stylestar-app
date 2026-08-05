@@ -7,7 +7,15 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-07-31, end of a big day)
+## ▶ NEXT SESSION — START HERE (updated 2026-08-05, end of another big day)
+
+**The freshest state is the ✅ 2026-08-05 entry just below the index**: the whisper voice made consistent
+(her 4 catches), the ADD-TO-HOME-SCREEN whisper shipped (her words, her icon idea, no ✕, no retirement),
+and the legal thread moved (LLC docs delivered + inventoried, TM word mark → final action steps, her
+2-ask reply to Indie Law sent: the "Bail"→Bailey name fix + the operating-agreement blanks). ▶ **Watch
+for: Indie Law's reply, the TM signature email (REAL, not scam), then the EIN.** Still waiting on HER
+words: the graduation whisper line + her list of most-asked stylist questions (chat chips). Ask how the
+A2HS whisper feels on her own phone.
 
 ### ⭐ CATH'S FULL TO-DO LAYOUT (written with her before her break, 2026-07-31 — the pick-up index)
 She asked for the whole landscape, big and small, to think on. **Next session: read this index, ask what
@@ -197,11 +205,10 @@ Cath asked for open ideas ("maybe something we never even talked about"). Outcom
    opportunity identified: they are style-philosophy flavored; the DAILY/OCCASION flavor is missing
    ("dress me for a wedding", "pack me for a trip", "what goes with X"). **Waiting on HER list of the
    questions women actually ask her most — stylist taxonomy, do not invent.**
-2. ✅ **"ADD TO HOME SCREEN" HINT APPROVED — "I LOVE this idea yes let's do that."** The app is already a
-   PWA; a quiet one-time hint for returning users puts the star icon on her phone = the daily-habit
-   enabler. **Renders first** (user-facing copy + placement). ⚠️ iOS Safari has NO install prompt API —
-   the hint must gently show the two taps (Share → Add to Home Screen); Android Chrome can use
-   beforeinstallprompt. Design around that asymmetry.
+2. ✅✅ **"ADD TO HOME SCREEN" — BUILT AND SHIPPED 2026-08-05 (#749 + #750), the full render→pick→build
+   cycle in one session.** See the 2026-08-05 entry at the top of this file for everything: her Option B
+   whisper pick, HER wording, the app-icon preview (her idea), no ✕, no retirement (her explicit call),
+   and the iOS/Android asymmetry as built. Nothing left to do here.
 3. **Plausible walkthrough parked BY HER until after testers** ("It won't tell us anything yet" — right).
    Resurface at tester time.
 4. **The search-chat "dialed in" bar: she is thinking on it this week** while testing more. Don't push;
