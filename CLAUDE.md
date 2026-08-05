@@ -65,6 +65,22 @@ two-line threshold is **278px**, side insets trimmed to clear it (text boxes 284
 the readability audience, deliberately not done. Full sweep green, zero flakes (menu 82 · hubs 46 ·
 nav 55 · e2e 29 · copy 41 · followups 38 · cowork3 69 · searchchat 54 · sec 89 · affq 36). As-built
 renders: `scratchpad/rnfinal.js` → `whisperfinal-{portrait,welcomeback}.png`.
+**LATER SAME DAY: THE ADD-TO-HOME-SCREEN WHISPER IS BUILT — she picked Option B from a 3-way render
+(`scratchpad/a2hsmock.js` → `a2hs-{a,b,c}.png`: A card / B whisper / C bottom sheet) and the WORDING IS
+HERS:** "Add Style Star as a free app to your phone. Tap [share glyph] Share, then **Add to Home Screen**
+♥" (she loves the pink heart; "free app" is her value-first framing). Mechanics (`#a2hs`, above the
+Welcome Back footer, below Retake): **iOS gets the two-tap instructions** (no install API exists on
+iPhone; the gold bold is EMPHASIS, deliberately no underline — nothing to tap); **Chrome/Android swaps
+the ending for a tappable gold "Add it now"** once `beforeinstallprompt` fires (captured, prompted on
+tap, accepted → stamped); **desktop Safari etc. see NOTHING** (instructions would be false there);
+never shows in standalone/installed mode (`display-mode` + `appinstalled` stamp); ✕ left (the
+convention) = never again (`ss_a2hs`). Whisper family styling shared: block-level text for
+`text-wrap:balance`, absolute ✕, centered true. `_syncA2hs()` rides `updateWbScreen()` (the boot-path
+lesson). ⚠️ Shows every Welcome Back visit until dismissed/installed — flagged to her, consistent with
+the journey whispers. **Verified: new `scratchpad/a2hs.js`, 23 checks** (desktop silent, iOS wording +
+glyphs + ✕-left + centered + block, ✕ persists across reload, faked beforeinstallprompt → "Add it now"
+→ prompt() called once → accepted stamps + stands down, standalone silent, zero JS errors on all paths)
++ full ten-suite sweep green. As-built: `scratchpad/a2hsfinal.js` → `a2hsfinal-{iphone,android}.png`.
 **Also this session: the Almira follow-up email was drafted and SENT by Cath** (LLC shows Active on Sunbiz,
 Document L26000395689; asks what she needs for the TM filing + timeline to TMs and EIN; Cath cut the
 registered-agent/scam-address question by her own call). ✅ **INDIE LAW REPLIED SAME DAY — see the

@@ -1156,6 +1156,18 @@ body.card-fb{padding:0}
 #wbNext .wbn-h{width:11px;height:11px;vertical-align:-1px}
 #wbNext .wbn-x{position:absolute;left:0;top:2px;padding:3px;cursor:pointer}
 #wbNext .wbn-x svg{width:13px;height:13px;display:block;stroke:#a09a8e}
+/* Add to Home Screen whisper — same voice as #wbNext, sits above the footer.
+   The iOS "Add to Home Screen" bold is EMPHASIS (no underline: nothing to tap);
+   only the Android "Add it now" (b.tap) gets the underline + pointer. */
+#a2hs{display:none;position:relative;margin:12px 14px 14px;padding:0 22px;text-align:center}
+#a2hs.on{display:block}
+#a2hs .a2-t{display:block;font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#E8E2D2;text-wrap:balance}
+#a2hs .a2-t b{font-weight:600;color:#F2D889;font-style:normal}
+#a2hs .a2-t b.tap{border-bottom:1px solid rgba(242,216,137,.55);cursor:pointer}
+#a2hs .a2-sh{width:12px;height:12px;vertical-align:-2px}
+#a2hs .a2-h{width:11px;height:11px;vertical-align:-1px}
+#a2hs .a2-x{position:absolute;left:0;top:2px;padding:3px;cursor:pointer}
+#a2hs .a2-x svg{width:13px;height:13px;display:block;stroke:#a09a8e}
 #s-wb .wb-shadow{position:relative;height:0}
 #s-wb .wb-shadow i{position:absolute;left:6px;bottom:1px;width:33px;height:6px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(20,15,5,.34),rgba(20,15,5,0) 72%);filter:blur(1.5px)}
 #s-wb .wb-bar{height:5px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 6px 10px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
@@ -1953,6 +1965,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
       <div class="wb-retake-wrap"><a class="wb-retake" wb-press onclick="retakeQuiz()"><span class="rt-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h7M15 7h5M4 17h4M12 17h8"/><circle cx="13" cy="7" r="2.1" fill="#fff"/><circle cx="10" cy="17" r="2.1" fill="#fff"/></svg></span>Retake the Quiz<svg class="rt-arr" viewBox="0 0 24 24"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></a></div>
       <!-- Standard footer, filled at boot — kept on the mirror's cream so it stays readable -->
+      <!-- Add to Home Screen whisper (Cath picked Option B 2026-08-05; her wording).
+           _syncA2hs() decides what it says: iOS gets the two taps (no install API
+           exists there), Chrome/Android gets a tappable "Add it now" once
+           beforeinstallprompt fires, anything else (desktop Safari etc.) sees
+           nothing. Hidden forever after ✕ (ss_a2hs) or once actually installed. -->
+      <div id="a2hs">
+        <span class="a2-x" onclick="a2hsDismiss()" role="button" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+        <span class="a2-t" id="a2hsTxt"></span>
+      </div>
       <div class="hm-foot wb-foot" data-std-foot></div>
     </div>
   </div>
@@ -4882,6 +4903,40 @@ function wbNextDismiss(){
   var el=document.getElementById('wbNext');if(el)el.classList.remove('on');
   _wbNextCur=null;
 }
+/* ── Add to Home Screen whisper (Cath's Option B pick + her wording, 2026-08-05) ──
+   iOS has no install API, so the whisper TEACHES the two taps; Chrome/Android
+   fire beforeinstallprompt, so there the whisper ends in a real "Add it now".
+   Never shows when already installed (standalone / appinstalled) or after her ✕. */
+var _a2hsPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_a2hsPrompt=e;try{_syncA2hs();}catch(err){}});
+window.addEventListener('appinstalled',function(){try{localStorage.setItem('ss_a2hs','1')}catch(e){}try{_syncA2hs();}catch(e){}});
+function _a2hsStandalone(){try{return window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}}
+function _a2hsIOS(){return /iPad|iPhone|iPod/.test(navigator.userAgent)}
+var _A2_SHARE='<svg class="a2-sh" viewBox="0 0 24 24" fill="none" stroke="#F2D889" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8.5 7 12 3.5 15.5 7"/><path d="M7 10H5.8C5 10 4.4 10.6 4.4 11.4v8.2c0 .8.6 1.4 1.4 1.4h12.4c.8 0 1.4-.6 1.4-1.4v-8.2c0-.8-.6-1.4-1.4-1.4H17"/></svg>';
+var _A2_HEART='<svg class="a2-h" viewBox="0 0 24 24" fill="#F49AC1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
+function _syncA2hs(){
+  var el=document.getElementById('a2hs');if(!el)return;
+  var off=_a2hsStandalone();
+  try{off=off||!!localStorage.getItem('ss_a2hs')}catch(e){}
+  var txt=document.getElementById('a2hsTxt');
+  if(!off&&_a2hsPrompt){
+    txt.innerHTML='Add Style Star as a free app to your phone. <b class="tap" onclick="a2hsGo()">Add it now</b> '+_A2_HEART;
+    el.classList.add('on');
+  }else if(!off&&_a2hsIOS()){
+    txt.innerHTML='Add Style Star as a free app to your phone. Tap '+_A2_SHARE+' Share, then <b>Add to Home Screen</b> '+_A2_HEART;
+    el.classList.add('on');
+  }else el.classList.remove('on');
+}
+function a2hsGo(){
+  if(!_a2hsPrompt)return;
+  var p=_a2hsPrompt;_a2hsPrompt=null;
+  p.prompt();
+  if(p.userChoice)p.userChoice.then(function(c){
+    if(c&&c.outcome==='accepted'){try{localStorage.setItem('ss_a2hs','1')}catch(e){}}
+    try{_syncA2hs();}catch(e){}
+  });
+}
+function a2hsDismiss(){try{localStorage.setItem('ss_a2hs','1')}catch(e){}var el=document.getElementById('a2hs');if(el)el.classList.remove('on');}
 function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e){}var n=document.getElementById('styleNudge');if(n)n.classList.remove('on');_openShopStyleNow(_nudgeMode);}
 function _openShopStyleNow(mode){
   _shopStyleMode=(mode==='look')?'look':(mode==='wantlist')?'wantlist':'quiz';
@@ -7359,6 +7414,7 @@ function updateWbScreen(){
   // covers BOTH routes here: the boot path (which activates s-wb directly,
   // no show()) and show('s-wb'), which calls updateWbScreen too.
   try{_syncWbNext();}catch(e){}
+  try{_syncA2hs();}catch(e){}
   // Portrait hub: "<Name>'s Style" written across the chain, above her personal motto.
   // If she hasn't given a name, leave the label blank and let the star sit higher
   // (via the wb-noname class) instead of showing a generic placeholder. If she has
