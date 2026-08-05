@@ -67,8 +67,8 @@ nav 55 · e2e 29 · copy 41 · followups 38 · cowork3 69 · searchchat 54 · se
 renders: `scratchpad/rnfinal.js` → `whisperfinal-{portrait,welcomeback}.png`.
 **Also this session: the Almira follow-up email was drafted and SENT by Cath** (LLC shows Active on Sunbiz,
 Document L26000395689; asks what she needs for the TM filing + timeline to TMs and EIN; Cath cut the
-registered-agent/scam-address question by her own call). ▶ **Watch for Almira's reply — it advances the
-money path.**
+registered-agent/scam-address question by her own call). ✅ **INDIE LAW REPLIED SAME DAY — see the
+2026-08-05 legal update near the bottom (LLC docs delivered, TM word mark to final action steps).**
 
 ### ✅ WHAT SHIPPED 2026-07-31 (one day, PRs #702–#719): the API scare resolved (wrong login email — her
 Anthropic login is GOOGLE SIGN-IN), "Checking stores..." + the try-harder search dial, Share Style Star +
@@ -1335,6 +1335,34 @@ chat. *(The section below records how the news first arrived, and the scam-wave 
 - ▶ **WHEN ALMIRA CONFIRMS, the chain finally advances:** TMs filed under the LLC → EIN → business bank account →
   affiliate applications — and remember the Amazon sequencing trap (180-day/3-sales clock starts at APPROVAL;
   networks first, Amazon only when there's real traffic).
+
+### ▶ LEGAL UPDATE (2026-08-05 — Indie Law replied: LLC DOCS DELIVERED, TM word mark → FINAL ACTION STEPS)
+Cath's follow-up email (sent this morning) got a same-day reply from the Indie Client Care Team:
+**"Nothing further is needed from you for the trademark. We're sending your word mark application over for
+the final action steps."** LLC documents delivered in a Google Drive folder (readable via the Drive
+connector; folder id `1Hr9zRw0KnWSEGn7WvlqpgxBxPC2Wrzd_`). **Both documents were read and inventoried:**
+1. **Articles of Organization (filed PDF)** — filed **July 27, 2026** (the state approved 4 days before the
+   scam texts tipped us off), Document L26000395689. ▶ This is the document the BANK will want for the
+   business account. **It answers the registered-agent question Cath cut from her email: she is her OWN
+   registered agent at her home address (1559 Harston Ave, Orlando)** — that's why the scrapers found the
+   household phones. Normal for small LLCs, nothing wrong; a registered-agent service (~$100/yr) can keep
+   the home address off FUTURE public records if the junk mail ever annoys her. Someday-option, zero urgency.
+2. **LLC Operating Agreement (docx)** — ⚠️ **DELIVERED INCOMPLETE: the effective date is blank and §1.2
+   still reads `#Registered Agent Name#` (an unfilled template placeholder); Exhibit A (member name,
+   ownership %, capital contribution) needs confirming.** Flagged to Cath with the suggestion to ask Indie
+   Law to complete it or confirm she should fill + sign it herself. Banks often ask for this document too.
+⚠️ **AND CATH'S OWN CATCH: her middle name is misspelled in the filed Articles** — "CATHERINE BAIL
+ELLSPERMANN" in Articles III + IV (registered agent + member fields), while both signature lines correctly
+say BAILEY. A data-entry truncation, not a validity problem (LLC name is perfect; the TM files under the
+LLC, banks care about LLC name + EIN + her ID) — but it's her legal record, so it goes in the same reply
+to Indie Law: fixable via amendment or the annual report, THEIR fix to make. **A combined 2-ask draft
+reply (name correction + operating-agreement blanks) was given to her 2026-08-05 — check whether she sent
+it and what Indie Law answered.**
+▶ **WHAT TO WATCH NEXT:** (a) the TM word mark "final action steps" email — will need HER signature/
+declaration, and it is REAL (distinguish from the scam wave); (b) the **EIN** (included in the TM Max
+package — she never pays a third party for it); (c) then her two steps: business bank account (bring
+Articles + EIN + operating agreement) → affiliate applications (NETWORKS FIRST, Amazon only with real
+traffic). The money path is genuinely moving now.
 
 ### ▶ NORTH STAR (2026-07-14, from Sally Hogshead — award-winning marketing expert, author of "How to Fascinate"): DIFFERENTIATION = THE REAL STYLIST BEHIND IT
 Sally (Cath's friend, a marketing/branding genius) gave Cath the single most important strategic note yet:
