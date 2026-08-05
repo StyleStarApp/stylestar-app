@@ -55,9 +55,16 @@ light-adapted voice: ink italic `#6b655a`, deeper gold link `#A0761B`, ✕ grey 
 grey), pink heart unchanged. **Copy = her Welcome Back refine line word for word** ("Next, add your sizes,
 colors and faves. Defining preferences is how we enhance our style ♥") — the old strip's Claude-draft
 wording is retired. Behavior untouched: same `ss_refinehint` never-nag, same `.rn-body`/`.rn-x` handlers
-(menu.js drives them unchanged). Full sweep green, zero flakes (menu 82 · hubs 46 · nav 55 · e2e 29 ·
-copy 41 · followups 38 · cowork3 69 · searchchat 54 · sec 89 · affq 36). As-built renders:
-`scratchpad/rnfinal.js` → `whisperfinal-{portrait,welcomeback}.png`.
+(menu.js drives them unchanged). **Two more of her catches on the as-built renders, both shipped:**
+(3) the text sat off-center — an in-flow ✕ shoves the centering box sideways, so both ✕s are
+`position:absolute` now with symmetric side padding (proofed centeredPx=0); ⚠️ that un-flexing quietly
+killed the balance — **`text-wrap:balance` only works on BLOCK-level text**, so both whisper spans carry
+`display:block`. (4) she wanted the refine whisper on TWO lines: measured with the real Jost, the
+two-line threshold is **278px**, side insets trimmed to clear it (text boxes 284/286px at 390w); at 360w
+(Display Zoom) it honestly falls to three balanced lines — keeping two would mean shrinking the font on
+the readability audience, deliberately not done. Full sweep green, zero flakes (menu 82 · hubs 46 ·
+nav 55 · e2e 29 · copy 41 · followups 38 · cowork3 69 · searchchat 54 · sec 89 · affq 36). As-built
+renders: `scratchpad/rnfinal.js` → `whisperfinal-{portrait,welcomeback}.png`.
 **Also this session: the Almira follow-up email was drafted and SENT by Cath** (LLC shows Active on Sunbiz,
 Document L26000395689; asks what she needs for the TM filing + timeline to TMs and EIN; Cath cut the
 registered-agent/scam-address question by her own call). ▶ **Watch for Almira's reply — it advances the
