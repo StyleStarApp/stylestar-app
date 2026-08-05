@@ -1149,7 +1149,7 @@ body.card-fb{padding:0}
 /* Catherine's whisper (the next-step concierge). Cream on the dark boutique
    background; the gold bold is the tap target's visual cue, the whole line taps. */
 /* ✕ out of flow so the whisper centers true — same fix as .refine-next. */
-#wbNext{display:none;position:relative;margin:10px 22px 2px;padding:0 26px;text-align:center}
+#wbNext{display:none;position:relative;margin:10px 14px 2px;padding:0 22px;text-align:center}
 #wbNext.on{display:block}
 #wbNext .wbn-t{display:block;font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#E8E2D2;cursor:pointer;text-wrap:balance}
 #wbNext .wbn-t b{font-weight:600;color:#F2D889;border-bottom:1px solid rgba(242,216,137,.55);font-style:normal}
@@ -1566,7 +1566,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 /* The ✕ is absolutely positioned so the text centers in the TRUE middle of the
    strip (symmetric side padding) — an in-flow ✕ shoved the centering box
    sideways and the lines sat awkwardly off-center (Cath's catch 2026-08-05). */
-.refine-next{display:none;position:relative;margin:14px 22px 2px;padding:0 26px;text-align:center}
+/* Side insets sized so the text box clears the 278px two-line threshold at
+   390w (measured with the real Jost) — Cath wants the refine whisper on TWO
+   lines; narrower phones (360 Display Zoom) fall to three balanced lines. */
+.refine-next{display:none;position:relative;margin:14px 0 2px;padding:0 24px;text-align:center}
 .refine-next.on{display:block}
 .rn-body{display:block;font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#6b655a;cursor:pointer;text-wrap:balance}
 .rn-body b{font-weight:600;color:#A0761B;border-bottom:1px solid rgba(160,118,27,.45);font-style:normal}
