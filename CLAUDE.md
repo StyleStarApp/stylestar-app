@@ -73,18 +73,21 @@ Welcome Back footer, below Retake): **iOS gets the two-tap instructions** (no in
 iPhone; the gold bold is EMPHASIS, deliberately no underline — nothing to tap); **Chrome/Android swaps
 the ending for a tappable gold "Add it now"** once `beforeinstallprompt` fires (captured, prompted on
 tap, accepted → stamped); **desktop Safari etc. see NOTHING** (instructions would be false there);
-never shows in standalone/installed mode (`display-mode` + `appinstalled` stamp). **Her two follow-up
-calls on the renders: (1) the REAL APP ICON previews above the line** (her idea — `apple-touch-icon.png`
-at 46px, rounded 10.5px like the home screen will round it; she picked TOP from a 3-way icon render,
-`scratchpad/a2hsicon.js`); **(2) NO ✕** — so instead the whisper **retires ITSELF after 5 shown visits**
-(`ss_a2hs_n`, counted once per page load, only when actually shown; silent visits don't consume a show).
-A hint, never a nag; there is no way to bring it back after retirement short of clearing storage — say so
-if she ever asks. Whisper family styling shared: block-level text for `text-wrap:balance`, centered true.
-`_syncA2hs()` rides `updateWbScreen()` (the boot-path lesson). **Verified: `scratchpad/a2hs.js`, 29
-checks** (desktop silent + doesn't consume a show, iOS wording + icon loaded/centered/rounded + no-✕ +
-glyphs + block, the full 5-visit lifecycle incl. same-visit re-entry not double-counting and the 6th
-visit retired, faked beforeinstallprompt → "Add it now" → prompt() once → accepted stamps + stands down,
-standalone silent, zero JS errors all paths) + full ten-suite sweep green. As-built:
+never shows in standalone/installed mode (`display-mode` + `appinstalled` stamp). **Her three follow-up
+calls on the renders, all built: (1) the REAL APP ICON previews above the line** (her idea —
+`apple-touch-icon.png` at 46px, rounded 10.5px like the home screen will round it; she picked TOP from a
+3-way icon render, `scratchpad/a2hsicon.js`); **(2) NO ✕**; **(3) NO retirement** — a 5-visit
+self-retirement was built first as the no-✕ backstop, and **she explicitly removed it** ("I don't want
+the retirement"): the whisper keeps gently inviting on every Welcome Back visit until she installs.
+⚠️ Consequence she accepted: on iPhone, Safari can't detect a manual Add-to-Home-Screen install, so a
+woman who installs but keeps visiting in the BROWSER still sees it there (the installed app itself never
+shows it — standalone detection works). Told to her plainly; Apple offers no signal to close this.
+Whisper family styling shared: block-level text for `text-wrap:balance`, centered true. `_syncA2hs()`
+rides `updateWbScreen()` (the boot-path lesson). **Verified: `scratchpad/a2hs.js`, 26 checks** (desktop
+silent, iOS wording + icon loaded/centered/rounded + no-✕ + glyphs + block, still showing on the 7th
+visit + survives same-visit re-entry, faked beforeinstallprompt → "Add it now" → prompt() once →
+accepted stamps + stands down, standalone silent, zero JS errors all paths) + hubs 46 · menu 82 ·
+e2e 29 green after the change (full ten-suite sweep was green at #749). As-built:
 `scratchpad/a2hsfinal.js` → `a2hsfinal-{iphone,android}.png`.
 **Also this session: the Almira follow-up email was drafted and SENT by Cath** (LLC shows Active on Sunbiz,
 Document L26000395689; asks what she needs for the TM filing + timeline to TMs and EIN; Cath cut the
