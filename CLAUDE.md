@@ -143,13 +143,15 @@ styled women for over 20 years. I created this with love & intention ♥") shipp
 on 2026-07-30; the "parked" note here was stale. So the session was only the path. **Cath picked OPTION B
 from a 4-way render** (`scratchpad/welmock.js` → `welcome-compare.png`; she asked for larger visuals — the
 per-option 2x images `welcome-{current,a,b,c}.png` are the phone-readable format, use it next time): a
-"How It Works" mini-section AFTER her founder line — 1 Take the style quiz · 2 Meet your Style Portrait ·
-3 Shop your style, each with a one-line sub. Built as `.hm-hiw` between `.hm-founder` and `#restoreSection`,
+"How It Works" mini-section AFTER her founder line — 1 Take the style quiz · 2 Reveal your Style Portrait
+(✅ REWORDED BY HER 2026-08-07 — was "Meet", which doubled with "Meet your stylist" on the same screen;
+"Reveal" matches the portrait's real reveal-doors moment) · 3 Shop your style, each with a one-line sub. Built as `.hm-hiw` between `.hm-founder` and `#restoreSection`,
 **header literally reuses the Or Explore divider pieces** (`.hm-divwrap`/`.hm-hair`/`.hm-divlbl`) so the
 two can never drift. Gold-outline number circles (`.hiw-n`), rides the ssRise entrance at .38s. Verified
-390+360 (visible, 3 rows, correct position, no overflow, zero JS errors) + full sweep green. ⚠️ **The three
-sub-lines are Claude's drafts** ("12 quick questions, no wrong answers" · "Your signature style, in words
-made for you" · "Stores and pieces picked to fit it") — **she may reword; one string each in the markup.**
+390+360 (visible, 3 rows, correct position, no overflow, zero JS errors) + full sweep green. ⚠️ **Two sub-lines
+remain Claude's drafts** ("12 quick questions, no wrong answers" · "Stores and pieces picked to fit it") —
+**she may reword; one string each in the markup.** ✅ Step 2's sub is HERS now (2026-08-07): "Your
+signature style, made clear for you" — don't reword without her.
 Note s-wel only shows to women without saved results, so the section naturally targets exactly the stranger
 it's for. ⚠️ affq's B-section flaked once more (timing), green twice on rerun — a pattern now, worth a
 deflake look someday.
