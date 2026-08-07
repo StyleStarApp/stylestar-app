@@ -13,7 +13,9 @@ by email.
 (her 4 catches), the ADD-TO-HOME-SCREEN whisper shipped (her words, her icon idea, no ✕, no retirement),
 and the legal thread moved (LLC docs delivered + inventoried, TM word mark → final action steps, her
 2-ask reply to Indie Law sent: the "Bail"→Bailey name fix + the operating-agreement blanks). ▶ **Watch
-for: Indie Law's reply, the TM signature email (REAL, not scam), then the EIN.** Still waiting on HER
+for: Indie Law's substantive reply (UPDATE 2026-08-07: Almira acknowledged the two flagged items, said
+she'll look into it and respond — nothing substantive yet), the TM signature email (REAL, not scam),
+then the EIN.** Still waiting on HER
 words: the graduation whisper line + her list of most-asked stylist questions (chat chips). Ask how the
 A2HS whisper feels on her own phone.
 
@@ -30,9 +32,15 @@ she's been thinking about, pick ONE lever.** The detailed entries live in the se
 2. **💬 CONVERSATIONS (talk, not build):** wardrobe Ideas CATEGORY BOUNDARIES (her white-tops find; she
    is the taxonomy authority) · two small her-call flags: quiet brand-home links in chat next to an
    already-linked item (her Coach observation), and the "My List" tab name if it ever bothers her.
-3. **🖥 DESK DAY (MailerLite):** shrink the "shouting" sub-header in welcome + restore emails · "Email me
-   my wishlist" (unblocked, better now that picks carry real products/prices) · photo-tips email + email
-   capture on the wardrobe page fit the same session.
+3. **🖥 DESK DAY (MailerLite):** ⚠️ **NEW 2026-08-07, HER BUG REPORT — check FIRST: the restore email never
+   arrived.** She entered her email in "Find my results" on the welcome/discovery page; the app confirmed, but
+   no email came. Likely suspects before assuming broken code: the once-per-24h-per-person MailerLite rule
+   (her address has been through the restore automation before), the 5-min per-address cooldown in
+   `sendRestoreLink`, or the leave-then-rejoin group trick failing. **Diagnostic: her subscriber's Activity
+   log in MailerLite** (timestamped joins/sends — solved the 2026-07-29 mystery in seconds). Also: shrink
+   the "shouting" sub-header in welcome + restore emails · "Email me my wishlist" (unblocked, better now
+   that picks carry real products/prices) · photo-tips email + email capture on the wardrobe page fit the
+   same session.
 4. **📱 HER TESTING (the quality gate only she can run):** keep testing search chat — does the try-harder
    dial convert dry runs? keep reporting bad search landings · when bored: address-bar checks on the last
    unverified stores — ✅✅ **THE PRIORITY STORE-URL AUDIT IS COMPLETE (2026-08-01, one session, all 8):
