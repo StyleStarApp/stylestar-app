@@ -166,7 +166,9 @@ await page.evaluate(() => { document.getElementById('restoreEmail').value = 'e2e
 await page.waitForTimeout(400);
 const msg = await page.evaluate(() => document.getElementById('restoreMsg').textContent);
 ok('it says to check her email', /check your email/i.test(msg), msg);
-ok('it says a link has just been sent', /just sent you a link/i.test(msg), msg);
+// wording tightened 2026-08-09 with the Option C card ("we've just sent a link
+// back to your results"); the claim under test is unchanged
+ok('it says a link has just been sent', /just sent (you )?a link/i.test(msg), msg);
 ok('it names the welcome email as a fallback', /welcome email/i.test(msg), msg);
 ok('it still offers the quiz as a way forward', /style quiz/i.test(msg), msg);
 ok('it does not dump her results on screen', !/quietly confident|Updated portrait/i.test(msg));

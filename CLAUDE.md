@@ -46,10 +46,16 @@ she tapped. **A join with no send = MailerLite's 24h-per-person rule** (a platfo
 the automation itself; NO join = the function bailed before the group step**, which points at the cooldown, a
 missing Supabase row for that exact address, or a MailerLite API error. (2) Confirm **which address** she typed
 and that a Supabase row exists for it.
-▶ **OFFERED, NOT BUILT (her call):** add `console.log` breadcrumbs to each early return in `sendRestoreLink`
-(no-row / cooldown / ML non-ok / no subId / no groupId) so **Netlify function logs name the branch**. Leaks
-nothing to the client — the response body stays byte-identical — and would answer this in seconds next time
-instead of costing a desk session. Small diff, high value; say the word.
+✅ **SHE SAID YES, SO THE BREADCRUMBS ARE BUILT AND LIVE (same session).** Every early return in
+`sendRestoreLink` now logs **why** nothing was sent, plus the no-Supabase-row case and a lookup throw, and the
+success path logs `GROUP JOINED — handed off to the MailerLite automation`. ▶ **HOW SHE READS THEM:
+app.netlify.com → her site → Functions → `user-data`**, then tap the button and watch. The line looks like
+`[restore] ca***@icloud.com — NO SEND: within the 5-minute per-address cooldown`. ⚠️ **The address is MASKED
+on purpose** (first two letters + domain) — enough to match against what she typed, without dumping real
+women's emails into a log. **The response body is byte-identical to before**, so the enumeration defense is
+untouched; nothing new is exposed to the client. ▶ **The decisive split: if the log says GROUP JOINED and no
+email arrived, the problem is MailerLite's (the 24h-per-person rule or the automation) — go to her Activity
+log. Any other line names the bug in our own function.**
 
 ### ▶ THE "CHECK YOUR EMAIL" CONFIRMATION — HER DESIGN ASK (2026-08-09, renders made, AWAITING HER PICK)
 Her words: *"the print is so tiny and hard to read and it does not stand out at all."* She asked whether it
@@ -72,6 +78,23 @@ should be a pop-up she can ✕ out of, or be wrapped/highlighted/bolder.
   three sentences before she knows to go look — and demote "it's in your welcome email too" to a quieter line.
   ⚠️ **That fallback line must NOT be cut**: the 24h rule means a second request in a day sends nothing, and
   the welcome email is genuinely her only route back inside that window.
+- ✅✅ **SHE PICKED C AND IT IS BUILT + MERGED LIVE (2026-08-09), against the recommendation of A** — her eye,
+  and the ask was "make it stand out", which is exactly what C does best. As built: cream-to-gold gradient
+  card, **4px gold left accent bar**, envelope glyph + **16px bold "Check your email"**, 13px body, and the
+  welcome-email fallback demoted below a hairline rule. **Every line now clears AA with room** — headline
+  16.98:1, body 11.34:1 (was 4.29), fallback 5.54:1, follow-up links 8.99:1.
+- ▶ **BONUS FIX worth knowing: `#restoreMsg`'s inline `12px #777` was ALSO styling the plain status strings**
+  ("Please enter a valid email", "One moment...", "that didn't go through") — so the error messages were just
+  as unreadable as the confirmation. The inline style is gone; the base rule is now 12.5px `#4a463e` (8.99:1),
+  which lifts all of them at once. ⚠️ **Don't re-quieten `#restoreMsg`** — a confirmation she cannot read is
+  not a confirmation.
+- **Verified: `scratchpad/restorecard.js`, 42 checks** (390 + 360: card renders, headline/body sizes, accent
+  bar, envelope glyph, fallback line kept, ask form stands down, both follow-up links present, all four
+  contrast ratios, "Try a different email" restores the form + clears the card + empties the field, no
+  overflow, no sideways page scroll, zero JS errors). ⚠️ **`e2e.js` test 5 pinned the OLD exact phrase**
+  ("just sent you a link") and failed on the tightened copy — the assertion was widened to `just sent (you )?a
+  link`, the claim under test is unchanged. Full sweep green: sec 89 · e2e 29 · copy 41 · followups 38 ·
+  hubs 46 · menu 82 · nav 55 · cowork3 69 · affq 36. As-built: `scratchpad/restore-built.png`.
 
 ### ✅ WHAT SHIPPED 2026-08-08 (one PR, #752 — five polish items from HER live screenshots, all her calls)
 1. **How It Works step 2 REWORDED BY HER**: "Meet your Style Portrait" → **"Reveal your Style Portrait"**

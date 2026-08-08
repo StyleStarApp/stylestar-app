@@ -1084,6 +1084,23 @@ body.card-fb{padding:0}
 .hm-brk.r{clip-path:polygon(0 0,100% 0,100% 100%);background:linear-gradient(225deg,#eef1f3,#90979d);box-shadow:1px 1px 2px rgba(0,0,0,.28)}
 .hm-foot{margin-top:22px;padding-top:14px;border-top:1px solid rgba(33,30,26,.12)}
 #s-wel #restoreForm{max-width:300px;margin:8px auto 0}
+/* The "check your email" confirmation — Cath picked Option C from the rendered
+   comparison (restore-{current,a,b,c}.png, 2026-08-09). The old version was
+   12px #777, which measures 4.29:1 on this ivory: the only text on the welcome
+   screen under the 4.5:1 AA bar, at the moment it matters most. The base rule
+   below also lifts the plain status strings ("Please enter a valid email") out
+   of that grey. ⚠️ Don't quieten these again — a confirmation she cannot read
+   is not a confirmation. */
+#restoreMsg{font-size:12.5px;color:#4a463e;margin-top:8px}
+#restoreForm .rc-card{background:linear-gradient(180deg,#FDF8EC,#F8F1DE);border:1px solid #D8C285;border-left:4px solid #C8971E;border-radius:8px;padding:14px 14px 13px 15px;text-align:left;box-shadow:0 5px 16px -8px rgba(120,90,20,.5)}
+#restoreForm .rc-h{display:flex;align-items:center;gap:8px;font:700 16px/1.2 'Jost',sans-serif;color:#1A1814;margin-bottom:6px}
+#restoreForm .rc-h svg{width:19px;height:19px;flex:0 0 auto}
+#restoreForm .rc-b{font:400 13px/1.55 'Jost',sans-serif;color:#3b372f}
+/* the welcome-email fallback, quieter but never cut: MailerLite sends only once
+   per person per 24h, so inside that window it is her only route back in */
+#restoreForm .rc-q{display:block;font:400 12px/1.5 'Jost',sans-serif;color:#6b655a;margin-top:7px;padding-top:7px;border-top:1px solid rgba(200,151,30,.25)}
+#restoreForm .rc-alt{font:400 12px/1.55 'Jost',sans-serif;color:#4a463e;margin-top:11px;text-align:center}
+#restoreForm .rc-alt b{color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer}
 @keyframes ssRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes ssShimmer{0%,100%{opacity:.2}50%{opacity:.95}}
 #s-wel [data-press]{transition:transform .13s ease,box-shadow .13s ease;-webkit-tap-highlight-color:transparent}
@@ -2034,7 +2051,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <input type="email" class="stay-input" id="restoreEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')restoreResults()">
         <button class="btn-p" id="restoreBtn" style="margin-top:8px;max-width:280px" onclick="restoreResults()">Find my results</button>
       </div>
-      <div id="restoreMsg" style="font-size:12px;color:#777;margin-top:8px"></div>
+      <div id="restoreMsg"></div>
     </div>
 
     <div class="hm-divwrap"><span class="hm-hair l"></span><span class="hm-divlbl">Or Explore</span><span class="hm-hair r"></span></div>
@@ -4708,7 +4725,13 @@ async function restoreResults(){
   // note is the loudest thing on screen at the moment it means least.
   var ask=document.getElementById('restoreAsk');
   if(ask)ask.style.display='none';
-  document.getElementById('restoreMsg').innerHTML="Check your email &mdash; we've just sent you a link back to your results. Tap the button in it and you'll land right back in your Style Portrait. It's in your original welcome email too, if that's quicker to find.<br><br>Typed the wrong address? <span onclick=\"restoreAskAgain()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">Try a different email</span>.<br><br>Nothing there? You may not have saved your results yet. Want to <span onclick=\"startQ()\" style=\"color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer\">take our fun style quiz</span>?";
+  // Attributes are single-quoted so the apostrophes in the copy stay readable.
+  document.getElementById('restoreMsg').innerHTML="<div class='rc-card'>"
+    +"<div class='rc-h'><svg viewBox='0 0 24 24' fill='none' stroke='#8a6a14' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><rect x='2.5' y='5' width='19' height='14' rx='2.2'/><path d='m3.2 6.4 8.1 6.1a1.2 1.2 0 0 0 1.4 0l8.1-6.1'/></svg>Check your email</div>"
+    +"<div class='rc-b'>We've just sent a link back to your results. Tap the button in it and you'll land right back in your Style Portrait."
+    +"<span class='rc-q'>It's in your welcome email too, if that's quicker.</span></div></div>"
+    +"<div class='rc-alt'>Typed the wrong address? <b onclick='restoreAskAgain()'>Try a different email</b>.</div>"
+    +"<div class='rc-alt'>Nothing there? You may not have saved your results yet. Want to <b onclick='startQ()'>take our fun style quiz</b>?</div>";
 }
 // Bring the form back for a woman who mistyped her address. Never a dead end.
 function restoreAskAgain(){
