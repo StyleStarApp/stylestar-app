@@ -1193,7 +1193,9 @@ body.card-fb{padding:0}
    The real app icon previews above the line, rounded like her home screen will
    round it. The iOS "Add to Home Screen" bold is EMPHASIS (no underline:
    nothing to tap); only the Android "Add it now" (b.tap) gets the underline. */
-#a2hs{display:none;margin:14px 14px 14px;padding:0 22px;text-align:center}
+/* side padding trimmed 22 → 12px (Cath, 2026-08-08) to buy the width that keeps
+   step 2 on ONE line: her wording needs 271px and the old cap left only 262px */
+#a2hs{display:none;margin:14px 14px 14px;padding:0 12px;text-align:center}
 #a2hs.on{display:block}
 #a2hs .a2-ico{display:block;width:46px;height:46px;border-radius:10.5px;margin:0 auto 7px;box-shadow:0 3px 10px rgba(0,0,0,.45);border:1px solid rgba(242,216,137,.35)}
 /* ⚠️ 14px UPRIGHT, not 12.5px italic (Cath's live test, 2026-08-08): italic at
@@ -1205,12 +1207,14 @@ body.card-fb{padding:0}
 #a2hs .a2-lead{display:block;font:600 14.5px/1.4 'Jost',sans-serif;color:#F2D889;margin-bottom:9px;text-wrap:balance}
 /* numbered steps, so the line reads as an INSTRUCTION and not as controls —
    she tapped the icon, the wording and the glyph expecting them to do something */
-#a2hs .a2-step{display:flex;align-items:flex-start;gap:9px;text-align:left;max-width:262px;margin:0 auto 7px}
+#a2hs .a2-step{display:flex;align-items:flex-start;gap:9px;text-align:left;max-width:292px;margin:0 auto 7px}
 #a2hs .a2-n{flex:0 0 auto;width:20px;height:20px;margin-top:1px;border-radius:50%;border:1.2px solid rgba(242,216,137,.6);color:#F2D889;font:600 11px/1 'Jost',sans-serif;display:flex;align-items:center;justify-content:center}
 /* the share glyph sits in a raised "key cap" so it reads as a PICTURE of a
    button somewhere else, never as a button here — on iOS it can never be
    tappable, because Apple exposes no way to trigger Add to Home Screen */
-#a2hs .a2-chip{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:7px;background:rgba(255,255,255,.09);border:1px solid rgba(232,226,210,.28);vertical-align:-8px;margin:0 2px}
+/* ⚠️ vertical-align:middle, NOT a negative offset — the old -8px sat the chip
+   visibly below the line of text (Cath's screenshot, 2026-08-08) */
+#a2hs .a2-chip{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:7px;background:rgba(255,255,255,.09);border:1px solid rgba(232,226,210,.28);vertical-align:middle;position:relative;top:-1.7px;margin:0 2px}
 #a2hs .a2-note{display:block;font:400 12.5px/1.45 'Jost',sans-serif;color:#B9B3A4;margin-top:8px;text-wrap:balance}
 #a2hs .a2-note b{color:#B9B3A4;font-weight:600}
 #a2hs .a2-sh{width:12px;height:12px;vertical-align:-2px}

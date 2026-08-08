@@ -119,6 +119,33 @@ console.log('2. iPhone: the whisper shows with the icon preview, in her wording'
   ok(/View More/.test(fix.note), 'the note warns about View More (the real iOS flow)');
   ok(fix.saysToolbar, 'says "your browser\'s toolbar", never "at the bottom" (the bar can be moved)');
   ok(fix.tappable === 0, 'NOTHING on iOS looks tappable — the platform offers no install API');
+
+  // Her two layout notes from the live screenshot (2026-08-08): the chip sat
+  // below the line of text, and step 2 broke across two lines.
+  const layout = async (pg) => pg.evaluate(() => {
+    const el = document.getElementById('a2hs');
+    const steps = [...el.querySelectorAll('.a2-step')];
+    const lines = steps.map(s => {
+      const t = s.lastElementChild;
+      return Math.round(t.getBoundingClientRect().height / parseFloat(getComputedStyle(t).lineHeight));
+    });
+    const chip = el.querySelector('.a2-chip').getBoundingClientRect();
+    const t1 = steps[0].lastElementChild;
+    const mid = t1.getBoundingClientRect().top + parseFloat(getComputedStyle(t1).lineHeight) / 2;
+    return { lines, off: Math.abs((chip.top + chip.bottom) / 2 - mid),
+      over: Math.max(0, ...[...el.querySelectorAll('*')].map(e => e.getBoundingClientRect().right)) - el.getBoundingClientRect().right };
+  });
+  const L390 = await layout(page);
+  ok(L390.lines.every(n => n === 1), '390: both steps sit on ONE line each', L390.lines.join(','));
+  ok(L390.off <= 1, 'the share chip is centred on its line of text, not sitting low', L390.off.toFixed(1) + 'px off');
+  ok(L390.over <= 0, '390: nothing overflows the whisper', Math.round(L390.over) + 'px');
+  {
+    const narrow = await boot({ userAgent: IOS_UA, isMobile: true, hasTouch: true, viewport: { width: 360, height: 844 } });
+    const L360 = await layout(narrow.page);
+    ok(L360.lines.every(n => n === 1), '360 (Display Zoom): both steps still one line each', L360.lines.join(','));
+    ok(L360.over <= 0, '360: nothing overflows the whisper', Math.round(L360.over) + 'px');
+    await narrow.ctx.close();
+  }
   console.log('3. No retirement (her call): it keeps inviting until she installs');
   for (let v = 2; v <= 7; v++) {
     await page.reload({ waitUntil: 'domcontentloaded' });
