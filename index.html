@@ -1092,13 +1092,18 @@ body.card-fb{padding:0}
    of that grey. ⚠️ Don't quieten these again — a confirmation she cannot read
    is not a confirmation. */
 #restoreMsg{font-size:12.5px;color:#4a463e;margin-top:8px}
-#restoreForm .rc-card{background:linear-gradient(180deg,#FDF8EC,#F8F1DE);border:1px solid #D8C285;border-left:4px solid #C8971E;border-radius:8px;padding:14px 14px 13px 15px;text-align:left;box-shadow:0 5px 16px -8px rgba(120,90,20,.5)}
+/* ⚠️ GOLD, NOT BRONZE (Cath, 2026-08-09): the first build used #C8971E on the
+   bar and #8a6a14 on the envelope and she read both as BROWN on her phone —
+   the documented trap that dark antique golds go brown at small sizes. The card
+   is now all one gold, #D8A52E, the same one she picked for the Mall star.
+   Check any new gold here against #D8A52E / #E0B84C before using it. */
+#restoreForm .rc-card{background:linear-gradient(180deg,#FDF8EC,#F8F1DE);border:1px solid #DFC07A;border-left:4px solid #D8A52E;border-radius:8px;padding:14px 14px 13px 15px;text-align:left;box-shadow:0 5px 16px -8px rgba(120,90,20,.5)}
 #restoreForm .rc-h{display:flex;align-items:center;gap:8px;font:700 16px/1.2 'Jost',sans-serif;color:#1A1814;margin-bottom:6px}
 #restoreForm .rc-h svg{width:19px;height:19px;flex:0 0 auto}
 #restoreForm .rc-b{font:400 13px/1.55 'Jost',sans-serif;color:#3b372f}
 /* the welcome-email fallback, quieter but never cut: MailerLite sends only once
    per person per 24h, so inside that window it is her only route back in */
-#restoreForm .rc-q{display:block;font:400 12px/1.5 'Jost',sans-serif;color:#6b655a;margin-top:7px;padding-top:7px;border-top:1px solid rgba(200,151,30,.25)}
+#restoreForm .rc-q{display:block;font:400 12px/1.5 'Jost',sans-serif;color:#6b655a;margin-top:7px;padding-top:7px;border-top:1px solid rgba(216,165,46,.32)}
 #restoreForm .rc-alt{font:400 12px/1.55 'Jost',sans-serif;color:#4a463e;margin-top:11px;text-align:center}
 #restoreForm .rc-alt b{color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer}
 @keyframes ssRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -4727,7 +4732,7 @@ async function restoreResults(){
   if(ask)ask.style.display='none';
   // Attributes are single-quoted so the apostrophes in the copy stay readable.
   document.getElementById('restoreMsg').innerHTML="<div class='rc-card'>"
-    +"<div class='rc-h'><svg viewBox='0 0 24 24' fill='none' stroke='#8a6a14' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><rect x='2.5' y='5' width='19' height='14' rx='2.2'/><path d='m3.2 6.4 8.1 6.1a1.2 1.2 0 0 0 1.4 0l8.1-6.1'/></svg>Check your email</div>"
+    +"<div class='rc-h'><svg viewBox='0 0 24 24' fill='none' stroke='#D8A52E' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><rect x='2.5' y='5' width='19' height='14' rx='2.2'/><path d='m3.2 6.4 8.1 6.1a1.2 1.2 0 0 0 1.4 0l8.1-6.1'/></svg>Check your email</div>"
     +"<div class='rc-b'>We've just sent a link back to your results. Tap the button in it and you'll land right back in your Style Portrait."
     +"<span class='rc-q'>It's in your welcome email too, if that's quicker.</span></div></div>"
     +"<div class='rc-alt'>Typed the wrong address? <b onclick='restoreAskAgain()'>Try a different email</b>.</div>"
