@@ -7,9 +7,12 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-08-09, a two-item menu tune from her screenshot)
+## ▶ NEXT SESSION — START HERE (updated 2026-08-08 — menu tune, the restore card, and the EMAIL BUG SOLVED)
+⚠️ **Date note: today's stamps are verified against the Netlify function log ("Aug 8") and the environment.**
+The polish session recorded just below as "2026-08-08" was an earlier day (its own entry admits its stamps
+drifted). **Two sections carry 08-08; the one nearer the top is the later one.** Trust the order, not the date.
 
-### ✅ WHAT SHIPPED 2026-08-09 (two menu-drawer items, both her asks off one live screenshot)
+### ✅ WHAT SHIPPED 2026-08-08 (two menu-drawer items, both her asks off one live screenshot)
 1. **Menu drawer narrower again, 250px → `min(220px,70vw)`.** She took the offer from 08-08 ("she can go to
    ~215px before anything wraps"). ▶ **The floor is now MEASURED, not estimated: 213px** — walked the panel
    1px at a time in real Chromium with the real fonts and the "Start here" pill shown (the widest state), and
@@ -31,7 +34,108 @@ by email.
 her most-asked stylist questions (chat chips) · Indie Law's substantive reply (name fix + operating-agreement
 blanks), then the TM signature email, then the EIN.
 
-### ⚠️ 2026-08-09 — THE RESTORE EMAIL FAILED AGAIN (her SECOND report; first was 08-07). Read before the desk day.
+### ✅ THE RESTORE EMAIL WAS REWRITTEN BY HER (2026-08-08, at her desk, in the MailerLite editor)
+Her catch, and it is the honesty rule again: the email claimed **"Your sizes, your colors, your wardrobe
+list, and anything you've added to your wishlist"** — but a restore is triggered by any saved record, and a
+woman may have taken the quiz and saved WITHOUT ever refining. **The email was telling some women about
+things they had never done.** Her rewrite turns the list into an invitation instead of an inventory:
+*"Pick up wherever you like. Build your wardrobe list, refine your preferences, check out what's trending,
+chat with your stylist, add to your wishlist, shop your style and more."*
+- **Header de-shouted (her other ask):** ⭐Your Style Portrait is Waiting⭐ → **"Your Style Portrait is
+  waiting"** — both emoji stars gone, sentence case, size down. It was wrapping to THREE lines on her phone,
+  which was most of the loudness. ▶ **The gold star in the logo directly above it was already doing that job.**
+- ▶ **A COPY RULE THAT CAME OUT OF IT, worth reusing: keep the specific noun on the HEADING and the BUTTON,
+  vary the prose in between.** She asked whether to say "Style Star" instead of "Style Portrait"; the answer
+  was keep Portrait, because the `?r=` link genuinely lands on `showResult()` (the portrait screen), and a
+  button should name its destination. What she was hearing was the phrase appearing THREE times in a short
+  email, so the middle one became "Here's your link back in, just as you asked."
+- ⚠️ **EDITOR TRAPS HIT THIS SESSION, all now known:** (a) she deleted the whole hero block by accident —
+  **Cmd+Z and the editor's revision-history icon both recover it**; (b) **the `{$name}` tag gets deleted with
+  the text** and must be re-inserted (the app writes `fields.name`, so `{$name}` is the correct tag — and
+  **never add a MailerLite fallback**, the app already writes "there" for a nameless woman); (c) **the button
+  cannot be moved and you cannot type below it** — the Standard hero's slots are fixed, so the sign-off went
+  in the body text ABOVE the button, which reads fine; (d) **Enter makes a new PARAGRAPH, Shift+Enter makes a
+  tight line break** — that is the fix for "Founder of Style Star" sitting too far from her name, NOT the
+  line-spacing control, which moves the whole block.
+
+### ▶ HER TWO NEW ITEMS (2026-08-08, added to the list as she moved to her desk — NOTHING BUILT)
+**1. ✅✅ DONE — THE INSTAGRAM LINK IS BUILT AND MERGED (2026-08-08). She picked "Footer A"** from the
+3-way render (`scratchpad/igmock.js` → `ig-{foot-inline,foot-own-line,menu-row}.png`): a **quiet 15px glyph
+on the footer's second row, after Terms**, in the same `#6f6a63` ink as Privacy and Terms. Handle
+**`@style_star.app`**, confirmed by her. **She chose the footer ONLY — the Menu row was offered and not
+taken**, so it is a one-line addition if she ever wants it.
+- ⚠️ **`rel="noopener"`, deliberately NOT `"sponsored"`.** The standing rule tags outbound PRODUCT links as
+  sponsored; her own Instagram is not a paid link, and marking it so would be a false signal to search
+  engines and to any affiliate reviewer reading the page. **`affq.js` enforced sponsored on every
+  `target="_blank"` anchor and would have failed** — it now splits social from product (25 product anchors
+  still asserted, 4 new checks on the social one). **That split was a deliberate test change, not a silence.**
+- ⚠️ **The negative margin on `.ig-a` is load-bearing:** `padding:6px;margin:-6px` gives a **27x27 tap
+  target while the row lays out as if the glyph were a bare 15px** — the main footer row has zero width to
+  spare at 360px, so the link must add nothing. Don't "tidy" it away.
+- **Verified: `nav.js` grew 55 → 67 checks** (present in all 12 footers, href/target/rel/aria-label, glyph
+  size, tap size, sits inside the row, same ink as its neighbours, and no overflow at 390/360/320) + affq 40 ·
+  e2e 29 · copy 41 · menu 82 · hubs 46 · followups 38 green. As-built: `scratchpad/ig-built.png`.
+▶ **The ORIGINAL prep, kept because the width facts still bind any future footer change:**
+⚠️ **The handle could NOT be verified from the sandbox — Instagram answers automated requests with 429** — so
+it was shipped only after **Cath confirmed it opens her profile**. Same rule next time: never ship a social
+link on an unverified URL.
+- **The footer's main row has NO ROOM at 360px.** Measured on 2026-07-30 and still true: the row needs 246px
+  and the FAQ/legal column is 248px, which is why `.sf-row` already drops its gap to 8px under 375px. **A
+  fifth text link ("Instagram") would overflow on Display Zoom phones.** So in the footer it has to be either
+  a small GLYPH on the quiet second row beside Privacy · Terms, or a line of its own.
+- **The Menu is the cheaper home** — one row in the About group next to Share Style Star, which is where a
+  "follow / share" pair belongs. ⚠️ But the drawer is already 17 rows and its tail sits below the fold.
+- ▶ **Recommendation to put to her: BOTH, and they're different jobs** — a glyph in the footer (always
+  present, universal convention, costs no reading) and a row in the Menu (findable by name, the mom lesson).
+  Decide together; render before building either.
+**2. 🧭 THE FOOTER AUDIT — her catch: "on the My Story page we have a My Story footer", and "Privacy and Terms
+sitting below does not look tidy."** ▶ **BOTH CONFIRMED, and the first one is bigger than the one page she
+spotted. Every footer is filled from ONE template (`_stdFootHTML`), so a screen whose own name is in the
+template LINKS TO ITSELF. Eleven screens carry it and SEVEN of them self-link:**
+`s-story`→My Story · `s-faq`→FAQ · `s-privacy`→Privacy · `s-terms`→Terms · `s-shop`→Shop ·
+`s-wel` and `s-wb`→Home. (The other four are clean: `s-res`, `s-photo-res`, `s-wardrobe`, `s-wishlist`. A
+12th footer, the global `.quiz-footer`, sits outside the screens and is fine.)
+⚠️ **These are not broken — the 2026-07-31 self-link guard means tapping one doesn't kill the Back button —
+they are POINTLESS, which is exactly the untidiness she's seeing.** ▶ **The fix that keeps the one-template
+rule intact: `_stdFootHTML()` takes the current screen id and omits (or greys) that one link**, so nothing
+can drift and every page still shows one complete footer. ⚠️ **Watch the width consequence — dropping a link
+makes the row NARROWER, which is good at 360px, but the row must stay centred and not look lopsided.**
+▶ **Open design question for her eye: the `.sf-row2` Privacy · Terms line.** It is a second row of quieter
+12px text under a starred row, and she's right that it reads as an afterthought. Options to render: fold them
+into the main row (needs the width the self-link removal frees up), keep two rows but tighten the gap and
+align the widths, or give them a hairline rule above. **Renders first, her pick, same as always.**
+▶ **When this happens, re-run `scratchpad/nav.js` (55 checks)** — it asserts every screen's footer is
+identical and that all links navigate, so a per-screen omission WILL fail it and those assertions need
+updating deliberately, not silently.
+
+### ✅✅ SOLVED THE SAME DAY — THE RESTORE EMAIL BUG IS FIXED AND CONFIRMED (2026-08-08, at her desk)
+**Root cause: MailerLite's "Allow subscribers re-enter automation" checkbox was UNCHECKED** on the
+`Style Star Restore Requests` automation. Cath entered that automation once on 2026-07-29 during testing,
+exited it, and **every request she made afterwards was silently refused re-entry.** She ticked it, set
+**Time for re-enter = "As soon as they match the triggers"** (NOT the 1-day delay), saved, re-activated —
+**and the email arrived.** 🎉
+- ▶ **THE BREADCRUMBS PAID FOR THEMSELVES ON THE FIRST RUN.** The log said
+  `[restore] ca***@icloud.com — GROUP JOINED — handed off to the MailerLite automation` within two minutes,
+  which **cleared our function entirely** and pointed straight at MailerLite. Three days of guessing became
+  one line. **KEEP THEM.**
+- ▶ **The decisive numbers, and the pattern to reuse:** the automation's Activity hub read **Started 3 /
+  In progress 0 / Completed 3 / Total emails sent 3**. Her join had just fired, so "Started" not moving is
+  what proves the join was received and REFUSED, as opposed to never arriving. **On any future "automation
+  didn't fire" question, read Started first** — it separates "MailerLite never heard us" from "MailerLite
+  heard us and declined".
+- ⚠️ **THIS IS THE SAME SETTING FLAGGED ON 2026-07-29** as defaulting to OFF. It was turned ON then and was
+  OFF again now. Whether an edit reset it or it never saved is unknowable after the fact. ▶ **STANDING RULE:
+  re-check BOTH re-entry settings after ANY edit to an automation** — they fail silently and look identical
+  to working.
+- ⚠️ **IT ONLY EVER BIT REPEAT REQUESTERS.** A woman asking for her results for the FIRST time enters the
+  automation normally and gets her email. That is why nobody else reported it, and why it looked intermittent
+  — Cath is simply the person who has asked most often.
+- ⚠️ **THE DANGEROUS STEP IS THE LAST ONE: the automation must be PAUSED to edit it, then RE-ACTIVATED.**
+  Left paused, NOBODY gets a restore email at all. Always confirm it reads **Active** before leaving.
+- ▶ **Still true and worth remembering: the confirmation on screen can never be a delivery receipt** (the six
+  200-returning no-send branches below). The log is the instrument; the inbox is not.
+
+### ⚠️ 2026-08-08 — THE ORIGINAL REPORT AND THE READING THAT LED TO THE FIX (kept for the reasoning)
 She tapped **Find my results** on `stylestar.netlify.app`, got the confirmation on screen, and **no email ever
 arrived.** ▶ **The code was read this session and there is a structural finding that changes how to debug it:
 the app says "we've just sent you a link" on ANY 200 — and `user-data.js` returns 200 in SIX cases where
@@ -57,7 +161,7 @@ untouched; nothing new is exposed to the client. ▶ **The decisive split: if th
 email arrived, the problem is MailerLite's (the 24h-per-person rule or the automation) — go to her Activity
 log. Any other line names the bug in our own function.**
 
-### ▶ THE "CHECK YOUR EMAIL" CONFIRMATION — HER DESIGN ASK (2026-08-09, renders made, AWAITING HER PICK)
+### ▶ THE "CHECK YOUR EMAIL" CONFIRMATION — HER DESIGN ASK (2026-08-08, renders made, AWAITING HER PICK)
 Her words: *"the print is so tiny and hard to read and it does not stand out at all."* She asked whether it
 should be a pop-up she can ✕ out of, or be wrapped/highlighted/bolder.
 - ▶ **MEASURED, and her instinct is provably right: `#restoreMsg` is 12px `#777`, which is 4.29:1 on the
@@ -78,7 +182,7 @@ should be a pop-up she can ✕ out of, or be wrapped/highlighted/bolder.
   three sentences before she knows to go look — and demote "it's in your welcome email too" to a quieter line.
   ⚠️ **That fallback line must NOT be cut**: the 24h rule means a second request in a day sends nothing, and
   the welcome email is genuinely her only route back inside that window.
-- ✅✅ **SHE PICKED C AND IT IS BUILT + MERGED LIVE (2026-08-09), against the recommendation of A** — her eye,
+- ✅✅ **SHE PICKED C AND IT IS BUILT + MERGED LIVE (2026-08-08), against the recommendation of A** — her eye,
   and the ask was "make it stand out", which is exactly what C does best. As built: cream-to-gold gradient
   card, **4px gold left accent bar**, envelope glyph + **16px bold "Check your email"**, 13px body, and the
   welcome-email fallback demoted below a hairline rule. **Every line now clears AA with room** — headline
@@ -163,15 +267,11 @@ she's been thinking about, pick ONE lever.** The detailed entries live in the se
 2. **💬 CONVERSATIONS (talk, not build):** wardrobe Ideas CATEGORY BOUNDARIES (her white-tops find; she
    is the taxonomy authority) · two small her-call flags: quiet brand-home links in chat next to an
    already-linked item (her Coach observation), and the "My List" tab name if it ever bothers her.
-3. **🖥 DESK DAY (MailerLite):** ⚠️ **NEW 2026-08-07, HER BUG REPORT — check FIRST: the restore email never
-   arrived.** She entered her email in "Find my results" on the welcome/discovery page; the app confirmed, but
-   no email came. Likely suspects before assuming broken code: the once-per-24h-per-person MailerLite rule
-   (her address has been through the restore automation before), the 5-min per-address cooldown in
-   `sendRestoreLink`, or the leave-then-rejoin group trick failing. **Diagnostic: her subscriber's Activity
-   log in MailerLite** (timestamped joins/sends — solved the 2026-07-29 mystery in seconds). Also: shrink
-   the "shouting" sub-header in welcome + restore emails · "Email me my wishlist" (unblocked, better now
-   that picks carry real products/prices) · photo-tips email + email capture on the wardrobe page fit the
-   same session.
+3. **🖥 DESK DAY (MailerLite):** ✅ **THE RESTORE-EMAIL BUG IS SOLVED (2026-08-08) — see the entry at the top
+   of this file.** It was the automation's "Allow subscribers re-enter" checkbox, unticked; fixed and the
+   email confirmed arriving. **Remaining on this list:** shrink the "shouting" sub-header in welcome +
+   restore emails · "Email me my wishlist" (unblocked, better now that picks carry real products/prices) ·
+   photo-tips email + email capture on the wardrobe page fit the same session.
 4. **📱 HER TESTING (the quality gate only she can run):** keep testing search chat — does the try-harder
    dial convert dry runs? keep reporting bad search landings · when bored: address-bar checks on the last
    unverified stores — ✅✅ **THE PRIORITY STORE-URL AUDIT IS COMPLETE (2026-08-01, one session, all 8):

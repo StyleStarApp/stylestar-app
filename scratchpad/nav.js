@@ -232,6 +232,52 @@ for (const scr of ['s-wel', 's-res', 's-wardrobe', 's-faq']) {
 }
 
 // ---------------------------------------------------------------------------
+console.log('\n8b. The Instagram glyph (Cath\'s "Footer A", 2026-08-08)');
+{
+  const ig = await page.evaluate(() => {
+    const links = [...document.querySelectorAll('[data-std-foot] .sf-row2 .ig-a')];
+    const foots = document.querySelectorAll('[data-std-foot]');
+    // measure on a VISIBLE screen — a footer on a hidden .scr reports 0x0
+    show('s-faq');
+    const one = document.querySelector('#s-faq [data-std-foot] .sf-row2 .ig-a');
+    const r = one.getBoundingClientRect();
+    const g = one.querySelector('svg').getBoundingClientRect();
+    const row = one.parentElement.getBoundingClientRect();
+    return {
+      count: links.length, foots: foots.length,
+      href: one.getAttribute('href'), rel: one.getAttribute('rel'),
+      target: one.getAttribute('target'), aria: one.getAttribute('aria-label'),
+      tapW: Math.round(r.width), tapH: Math.round(r.height),
+      glyph: Math.round(g.width),
+      insideRow: r.left >= row.left - 1 && r.right <= row.right + 1,
+      // same ink as the text beside it
+      sameInk: getComputedStyle(one.querySelector('svg')).stroke === getComputedStyle(one.parentElement.querySelector('.lnk2')).color
+    };
+  });
+  ok('appears in every footer (' + ig.foots + ')', ig.count === ig.foots, ig.count + ' of ' + ig.foots);
+  ok('points at her confirmed handle', ig.href === 'https://instagram.com/style_star.app', ig.href);
+  ok('opens in a new tab so the email/page is not lost', ig.target === '_blank');
+  ok('rel is noopener and NOT sponsored (it is not a paid link)', ig.rel === 'noopener', ig.rel);
+  ok('icon-only link carries an aria-label', !!ig.aria, ig.aria);
+  ok('glyph matches the 12px text scale', ig.glyph === 15, ig.glyph + 'px');
+  ok('tap target is comfortably bigger than the glyph', ig.tapW >= 25 && ig.tapH >= 25, ig.tapW + 'x' + ig.tapH);
+  ok('sits inside the quiet row', ig.insideRow);
+  ok('drawn in the same ink as Privacy / Terms', ig.sameInk);
+
+  for (const w of [390, 360, 320]) {
+    await page.setViewportSize({ width: w, height: 844 });
+    await page.waitForTimeout(120);
+    const over = await page.evaluate(() => {
+      const f = document.querySelector('#s-faq [data-std-foot]') || document.querySelector('[data-std-foot]');
+      const r = f.getBoundingClientRect();
+      return Math.round(Math.max(0, ...[...f.querySelectorAll('*')].map(e => e.getBoundingClientRect().right)) - r.right);
+    });
+    ok(w + 'px: the footer still does not overflow', over <= 0, over + 'px');
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+}
+
+// ---------------------------------------------------------------------------
 console.log('\n9. Zero JS errors across the whole drive');
 ok('no page errors', page.errors.length === 0, page.errors.join(' | '));
 

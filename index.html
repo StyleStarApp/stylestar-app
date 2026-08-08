@@ -728,6 +728,13 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 [data-std-foot] .sf-row2{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:9px}
 [data-std-foot] .sf-row2 .lnk2{font:400 12px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
 [data-std-foot] .sf-row2 .dot{color:#b0a998;font-size:11px;line-height:1}
+/* Instagram (Cath's pick "Footer A" from ig-foot-inline.png, 2026-08-08): a quiet
+   glyph on the second row, sized to the 12px text beside it, in the same ink.
+   ⚠️ The negative margin cancels the padding for LAYOUT only, so the row spaces
+   itself as if this were a bare 15px glyph while the tap target stays 27x27 —
+   the main row has no width to spare at 360px and this must not add any. */
+[data-std-foot] .sf-row2 .ig-a{display:flex;align-items:center;padding:6px;margin:-6px;-webkit-tap-highlight-color:transparent}
+[data-std-foot] .sf-row2 .ig-g{width:15px;height:15px;display:block}
 /* Display-Zoom phones: the FAQ/legal column is 248px at 360w and the main row
    needs 246px at gap 10 — zero real headroom, so it wraps. Gap 8 buys 12px. */
 @media(max-width:374px){[data-std-foot] .sf-row{gap:8px}}
@@ -3503,7 +3510,15 @@ function _stdFootHTML(){
     +'</div>'
     +'<div class="sf-row2">'
     +'<span class="lnk2" onclick="showPrivacy()">Privacy</span><span class="dot">&#183;</span>'
-    +'<span class="lnk2" onclick="showTerms()">Terms</span>'
+    +'<span class="lnk2" onclick="showTerms()">Terms</span><span class="dot">&#183;</span>'
+    // Her own Instagram, so rel is "noopener" and NOT "sponsored" — that keyword
+    // marks a paid or affiliate link, and tagging our own account would be a
+    // false signal. aria-label because the link is an icon with no text.
+    +'<a class="ig-a" href="https://instagram.com/style_star.app" target="_blank" rel="noopener" aria-label="Follow Style Star on Instagram">'
+    +'<svg class="ig-g" viewBox="0 0 24 24" fill="none" stroke="#6f6a63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+    +'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/>'
+    +'<circle cx="17.2" cy="6.8" r="1.1" fill="#6f6a63" stroke="none"/></svg>'
+    +'</a>'
     +'</div>';
 }
 document.querySelectorAll('[data-std-foot]').forEach(function(el){el.innerHTML=_stdFootHTML();});
