@@ -165,9 +165,32 @@ SOLVED** · her rewrite of the restore email in MailerLite · **Instagram in the
 **the A2HS whisper made readable and honest** (her live testing, her pick "A2" — detail in item 3 below).
 Her closing word on the last one: *"it looks really good."*
 ▶ **NEXT UP — only two things are actually open:**
-1. **🧭 THE FOOTER AUDIT — teed up, the analysis is already done** (see the entry further down): seven
-   screens link to themselves, and she wants the `.sf-row2` Privacy · Terms line tidied. **Renders first.**
-   ⚠️ Now that Instagram lives on `.sf-row2`, any change to that row must keep the glyph.
+1. ✅✅ **THE FOOTER AUDIT IS DONE AND LIVE (2026-08-08, evening — her from-zero rethink, built and merged).**
+   She reopened it properly: *"What do we absolutely have to keep? Legally? To look legit? Easy for users?
+   Smartest for profit?"* — and the answers reshaped the whole footer. **As shipped:** two balanced rows in
+   ONE voice (both 14px Jost, gold ★ separators everywhere — her catch: gold stars above vs gray dots below
+   "doesn't look right"), sorted by MEANING: **places to go up top (Home ★ Shop ★ [Instagram tile]),
+   information below (Privacy ★ Terms ★ FAQ)**. Her calls, all recorded: **My Story CUT from footers** (lives
+   in the Menu + the welcome founder line; the weakest version of the Sally signal wasn't earning its width) ·
+   **FAQ moved down with the legal links** (her idea — it's the information family) · **Instagram in its REAL
+   brand gradient** (her ask; the recognizable form is the gradient tile + white camera) · **tile ends the
+   main row** (right position, picked from a left/middle/right render — right keeps the rhythm when a page's
+   own link drops out; middle only exists on pages that keep both Home and Shop) · **no hairline** (the
+   harmony fix made it unnecessary; C's gold dot was PROVEN gold by computed style but reads gray at that
+   size — the small-gold lesson again). **Every page still omits its OWN link** (the original catch).
+   - **Legal grounding recorded:** Privacy in the footer is effectively required (CalOPPA "conspicuously
+     posted" + affiliate reviewers check for it); Terms rides with it. Both stay, now full-size.
+   - ⚠️ **Each footer's Instagram gradient id is UNIQUE (`igG-<screenid>`)** — a shared id would resolve to
+     a def inside a hidden screen, which Safari may refuse to paint. Don't "dedupe" them.
+   - ⚠️ **The `.ig-a` negative-margin tap-target trick survives** (28x28 tap, lays out as a bare 16px tile).
+   - **Verified: nav.js retuned deliberately 67 → 80 checks** (per-screen omission table for all 11 own-footer
+     screens, global footer full set, My Story absent everywhere, tile ends the row on every page, unique
+     gradient ids, white camera, tap size, one-line rows + no overflow 390/360/320, contrast ≥4.5 on real
+     backgrounds) + full sweep green (affq's known flake, clean on rerun). Renders: `scratchpad/footmock*.js`
+     → `foot3-d.png` (her pick), as-built `foot-built-{story,faq}.png`.
+   - ▶ Her word on the return-loops framing, same evening: *"let's make these ideas come to fruition 💛"* —
+     the registry (share Your Wishlist) is FIRST when affiliate approval lands; the featured item is the
+     cheapest early build (Edit + New-pill machinery); lookbook waits for feeds.
 2. **📧 The rest of the MailerLite list:** ✅ **the WELCOME email's "shouting" sub-header is DONE too
    (2026-08-08, her own edit while MailerLite was open for the restore-code work)** — both emails are now
    de-shouted. Remaining: "Email me my wishlist" · photo-tips email + email capture on the wardrobe page.

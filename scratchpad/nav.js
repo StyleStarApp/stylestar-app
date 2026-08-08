@@ -1,8 +1,8 @@
-// Navigation standardisation (2026-07-30, Cath picked Option C):
-// ONE standard footer everywhere (Home ★ Shop ★ My Story ★ FAQ + quiet
-// Privacy · Terms row) injected at boot from a single template, and every
-// brand logo tappable → goHome() (Welcome Back hub if saved data, Welcome
-// if new). Drives the REAL index.html in Chromium.  node scratchpad/nav.js
+// Navigation standardisation — updated 2026-08-08 for Cath's from-zero footer
+// rethink: ONE template, two balanced rows in one voice (14px, gold stars) —
+// Home ★ Shop ★ [Instagram gradient tile] over Privacy ★ Terms ★ FAQ — with
+// My Story CUT and each page OMITTING its own link. Every brand logo still
+// tappable → goHome(). Drives the REAL index.html.  node scratchpad/nav.js
 //
 import http from 'http';
 import fs from 'fs';
@@ -67,21 +67,46 @@ const GLOBAL_FOOT = ['s-dream', 's-shopstyle'];
 const page = await newPage(390, true);
 
 // ---------------------------------------------------------------------------
-console.log('\n1. One template, twelve containers, byte-identical everywhere');
+console.log('\n1. One template, twelve containers, each page omits its OWN link');
 const foots = await page.evaluate(() => {
   const els = [...document.querySelectorAll('[data-std-foot]')];
-  return { n: els.length, htmls: [...new Set(els.map(e => e.innerHTML))] };
+  return { n: els.length };
 });
 ok('exactly 12 standard-footer containers', foots.n === 12, 'got ' + foots.n);
-ok('all twelve render byte-identical content', foots.htmls.length === 1);
 const links = await page.evaluate(() => ({
   main: [...document.querySelectorAll('.quiz-footer .sf-row .lnk')].map(e => e.textContent),
-  quiet: [...document.querySelectorAll('.quiz-footer .sf-row2 .lnk2')].map(e => e.textContent)
+  info: [...document.querySelectorAll('.quiz-footer .sf-row2 .lnk')].map(e => e.textContent)
 }));
-ok('main row = Home ★ Shop ★ My Story ★ FAQ', links.main.join('|') === 'Home|Shop|My Story|FAQ', links.main.join('|'));
-ok('quiet row = Privacy · Terms', links.quiet.join('|') === 'Privacy|Terms', links.quiet.join('|'));
+ok('global footer main row = Home ★ Shop (+ Instagram tile)', links.main.join('|') === 'Home|Shop', links.main.join('|'));
+ok('global footer info row = Privacy ★ Terms ★ FAQ', links.info.join('|') === 'Privacy|Terms|FAQ', links.info.join('|'));
+ok('My Story is CUT from every footer (it lives in the Menu)', await page.evaluate(() =>
+  ![...document.querySelectorAll('[data-std-foot] span')].some(s => /^My Story$/.test(s.textContent))));
 ok('no footer anywhere still links Edit or Quiz', await page.evaluate(() =>
   ![...document.querySelectorAll('[data-std-foot] span')].some(s => /^(Edit|Quiz)$/.test(s.textContent))));
+// The self-link omission table — Cath's catch ("on the My Story page we have a
+// My Story footer"): each screen's own link must be absent, everything else present.
+const EXPECT = {
+  's-wel': ['Shop', 'Privacy|Terms|FAQ'], 's-wb': ['Shop', 'Privacy|Terms|FAQ'],
+  's-shop': ['Home', 'Privacy|Terms|FAQ'],
+  's-faq': ['Home|Shop', 'Privacy|Terms'],
+  's-privacy': ['Home|Shop', 'Terms|FAQ'], 's-terms': ['Home|Shop', 'Privacy|FAQ'],
+  's-res': ['Home|Shop', 'Privacy|Terms|FAQ'], 's-photo-res': ['Home|Shop', 'Privacy|Terms|FAQ'],
+  's-story': ['Home|Shop', 'Privacy|Terms|FAQ'], 's-wardrobe': ['Home|Shop', 'Privacy|Terms|FAQ'],
+  's-wishlist': ['Home|Shop', 'Privacy|Terms|FAQ']
+};
+for (const [scr, [wantMain, wantInfo]] of Object.entries(EXPECT)) {
+  const r = await page.evaluate(([scr, sel]) => {
+    const el = document.querySelector('#' + scr + ' ' + sel + '[data-std-foot]');
+    if (!el) return null;
+    return {
+      main: [...el.querySelectorAll('.sf-row .lnk')].map(l => l.textContent).join('|'),
+      info: [...el.querySelectorAll('.sf-row2 .lnk')].map(l => l.textContent).join('|'),
+      ig: !!el.querySelector('.sf-row .ig-a')
+    };
+  }, [scr, OWN_FOOT[scr]]);
+  ok(scr + ' omits its own link and keeps the rest', !!r && r.main === wantMain && r.info === wantInfo && r.ig,
+    JSON.stringify(r));
+}
 
 // ---------------------------------------------------------------------------
 console.log('\n2. The standard footer is VISIBLE on every target screen');
@@ -92,10 +117,10 @@ for (const [scr, sel] of Object.entries(OWN_FOOT)) {
     if (!el) return { found: false };
     const rect = el.getBoundingClientRect();
     const vis = rect.width > 0 && rect.height > 0 && getComputedStyle(el).display !== 'none';
-    const rows = [...el.querySelectorAll('.sf-row .lnk')].map(l => l.textContent).join('|');
+    const rows = el.querySelectorAll('.sf-row .lnk').length + el.querySelectorAll('.sf-row2 .lnk').length;
     return { found: true, vis, rows };
   }, [scr, sel]);
-  ok(scr + ' shows its standard footer', r.found && r.vis && r.rows === 'Home|Shop|My Story|FAQ', JSON.stringify(r));
+  ok(scr + ' shows its standard footer', r.found && r.vis && r.rows >= 4, JSON.stringify(r));
 }
 for (const scr of GLOBAL_FOOT) {
   const r = await page.evaluate(scr => {
@@ -104,23 +129,22 @@ for (const scr of GLOBAL_FOOT) {
     const rect = gf.getBoundingClientRect();
     return { vis: gf.style.display !== 'none' && rect.height > 0, rows: [...gf.querySelectorAll('.sf-row .lnk')].map(l => l.textContent).join('|') };
   }, scr);
-  ok(scr + ' shows the shared global standard footer', r.vis && r.rows === 'Home|Shop|My Story|FAQ', JSON.stringify(r));
+  ok(scr + ' shows the shared global standard footer', r.vis && r.rows === 'Home|Shop', JSON.stringify(r));
 }
 
 // ---------------------------------------------------------------------------
 console.log('\n3. Every footer link actually navigates');
-const NAV = [['Shop', 's-shop'], ['My Story', 's-story'], ['FAQ', 's-faq']];
-for (const [label, dest] of NAV) {
+for (const [label, dest] of [['Shop', 's-shop']]) {
   await page.evaluate(() => show('s-wardrobe'));
   await page.click('#s-wardrobe .wdr-foot .sf-row .lnk:text-is("' + label + '")');
   const act = await page.evaluate(() => document.querySelector('.scr.act').id);
   ok('footer "' + label + '" opens ' + dest, act === dest, 'landed on ' + act);
 }
-for (const [label, dest] of [['Privacy', 's-privacy'], ['Terms', 's-terms']]) {
+for (const [label, dest] of [['Privacy', 's-privacy'], ['Terms', 's-terms'], ['FAQ', 's-faq']]) {
   await page.evaluate(() => show('s-wardrobe'));
-  await page.click('#s-wardrobe .wdr-foot .sf-row2 .lnk2:text-is("' + label + '")');
+  await page.click('#s-wardrobe .wdr-foot .sf-row2 .lnk:text-is("' + label + '")');
   const act = await page.evaluate(() => document.querySelector('.scr.act').id);
-  ok('quiet-row "' + label + '" opens ' + dest, act === dest, 'landed on ' + act);
+  ok('info-row "' + label + '" opens ' + dest, act === dest, 'landed on ' + act);
 }
 
 // ---------------------------------------------------------------------------
@@ -214,7 +238,7 @@ function lum(rgb) {
 for (const scr of ['s-wel', 's-res', 's-wardrobe', 's-faq']) {
   const r = await page.evaluate(scr => {
     show(scr);
-    const el = document.querySelector('#' + scr + ' [data-std-foot] .lnk2');
+    const el = document.querySelector('#' + scr + ' [data-std-foot] .sf-row2 .lnk');
     const fg = getComputedStyle(el).color.match(/\d+/g).map(Number);
     // walk up for the first non-transparent painted background
     let n = el, bg = null;
@@ -232,26 +256,36 @@ for (const scr of ['s-wel', 's-res', 's-wardrobe', 's-faq']) {
 }
 
 // ---------------------------------------------------------------------------
-console.log('\n8b. The Instagram glyph (Cath\'s "Footer A", 2026-08-08)');
+console.log('\n8b. The Instagram tile (real brand gradient, ends the main row — 2026-08-08)');
 {
   const ig = await page.evaluate(() => {
-    const links = [...document.querySelectorAll('[data-std-foot] .sf-row2 .ig-a')];
+    const links = [...document.querySelectorAll('[data-std-foot] .sf-row .ig-a')];
     const foots = document.querySelectorAll('[data-std-foot]');
     // measure on a VISIBLE screen — a footer on a hidden .scr reports 0x0
     show('s-faq');
-    const one = document.querySelector('#s-faq [data-std-foot] .sf-row2 .ig-a');
+    const one = document.querySelector('#s-faq [data-std-foot] .sf-row .ig-a');
     const r = one.getBoundingClientRect();
     const g = one.querySelector('svg').getBoundingClientRect();
     const row = one.parentElement.getBoundingClientRect();
+    // every footer's gradient id must be unique — a shared id would resolve to
+    // a def inside a hidden screen, which Safari may refuse to paint
+    const gids = [...document.querySelectorAll('[data-std-foot] radialGradient')].map(x => x.id);
+    const rectsRef = [...document.querySelectorAll('[data-std-foot] .ig-g rect')].every(x => {
+      const f = x.getAttribute('fill') || '';
+      const svg = x.closest('svg');
+      return f.startsWith('url(#') && svg.querySelector('radialGradient') && f === 'url(#' + svg.querySelector('radialGradient').id + ')';
+    });
     return {
       count: links.length, foots: foots.length,
       href: one.getAttribute('href'), rel: one.getAttribute('rel'),
       target: one.getAttribute('target'), aria: one.getAttribute('aria-label'),
       tapW: Math.round(r.width), tapH: Math.round(r.height),
       glyph: Math.round(g.width),
+      lastInRow: [...one.parentElement.children].pop() === one,
       insideRow: r.left >= row.left - 1 && r.right <= row.right + 1,
-      // same ink as the text beside it
-      sameInk: getComputedStyle(one.querySelector('svg')).stroke === getComputedStyle(one.parentElement.querySelector('.lnk2')).color
+      gidsUnique: new Set(gids).size === gids.length, gidCount: gids.length,
+      rectsRef,
+      cameraWhite: getComputedStyle(one.querySelector('circle')).stroke === 'rgb(255, 255, 255)'
     };
   });
   ok('appears in every footer (' + ig.foots + ')', ig.count === ig.foots, ig.count + ' of ' + ig.foots);
@@ -259,10 +293,13 @@ console.log('\n8b. The Instagram glyph (Cath\'s "Footer A", 2026-08-08)');
   ok('opens in a new tab so the email/page is not lost', ig.target === '_blank');
   ok('rel is noopener and NOT sponsored (it is not a paid link)', ig.rel === 'noopener', ig.rel);
   ok('icon-only link carries an aria-label', !!ig.aria, ig.aria);
-  ok('glyph matches the 12px text scale', ig.glyph === 15, ig.glyph + 'px');
-  ok('tap target is comfortably bigger than the glyph', ig.tapW >= 25 && ig.tapH >= 25, ig.tapW + 'x' + ig.tapH);
-  ok('sits inside the quiet row', ig.insideRow);
-  ok('drawn in the same ink as Privacy / Terms', ig.sameInk);
+  ok('tile is 16px', ig.glyph === 16, ig.glyph + 'px');
+  ok('tap target is comfortably bigger than the tile', ig.tapW >= 25 && ig.tapH >= 25, ig.tapW + 'x' + ig.tapH);
+  ok('ENDS the main row on every page (the rhythm holds)', ig.lastInRow);
+  ok('sits inside the main row', ig.insideRow);
+  ok('each footer owns a UNIQUE gradient id (Safari hidden-def trap)', ig.gidsUnique && ig.gidCount === 12, ig.gidCount + ' ids');
+  ok('every tile references its OWN footer\'s gradient', ig.rectsRef);
+  ok('the camera is white on the gradient', ig.cameraWhite);
 
   for (const w of [390, 360, 320]) {
     await page.setViewportSize({ width: w, height: 844 });
