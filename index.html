@@ -1112,6 +1112,15 @@ body.card-fb{padding:0}
 /* the welcome-email fallback, quieter but never cut: MailerLite sends only once
    per person per 24h, so inside that window it is her only route back in */
 #restoreForm .rc-q{display:block;font:400 12px/1.5 'Jost',sans-serif;color:#6b655a;margin-top:7px;padding-top:7px;border-top:1px solid rgba(216,165,46,.32)}
+#restoreForm .rc-code{margin-top:9px;padding-top:9px;border-top:1px solid rgba(216,165,46,.32)}
+#restoreForm .rc-cl{font:400 12px/1.5 'Jost',sans-serif;color:#4a463e}
+#restoreForm .rc-crow{display:flex;gap:8px;margin-top:7px}
+#restoreForm .rc-crow input{flex:1;min-width:0;font:600 15px/1.2 'Jost',sans-serif;letter-spacing:2px;color:#1A1814;background:#fff;border:1px solid #D8A52E;border-radius:6px;padding:8px 10px;text-align:center}
+#restoreForm .rc-crow input::placeholder{font-weight:400;letter-spacing:0;color:#8a8474}
+#restoreForm .rc-cbtn{font:600 13px/1.2 'Jost',sans-serif;color:#fff;background:#1A1814;border:none;border-radius:6px;padding:8px 14px;cursor:pointer;flex:0 0 auto}
+#restoreForm .rc-cbtn:disabled{opacity:.55}
+#restoreForm #restoreCodeMsg{font:400 12px/1.5 'Jost',sans-serif;color:#4a463e;margin-top:6px}
+#restoreForm #restoreCodeMsg:empty{display:none}
 #restoreForm .rc-alt{font:400 12px/1.55 'Jost',sans-serif;color:#4a463e;margin-top:11px;text-align:center}
 #restoreForm .rc-alt b{color:#1a1a1a;font-weight:600;text-decoration:underline;cursor:pointer}
 @keyframes ssRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -4774,13 +4783,59 @@ async function restoreResults(){
   // note is the loudest thing on screen at the moment it means least.
   var ask=document.getElementById('restoreAsk');
   if(ask)ask.style.display='none';
+  // The address she asked with, for the code exchange below — read here rather
+  // than from the input later, because restoreAskAgain() clears the field.
+  _restoreEmailSent=email;
   // Attributes are single-quoted so the apostrophes in the copy stay readable.
+  // The 6-digit code row is what makes restore work inside the installed
+  // home-screen app, where the email's link can only ever open the browser
+  // (Apple gives home-screen apps their own separate storage, and no email
+  // link can reach into it) — but it works in a browser too, so it isn't
+  // gated to the app. autocomplete/inputmode bring up the right keypad.
   document.getElementById('restoreMsg').innerHTML="<div class='rc-card'>"
     +"<div class='rc-h'><svg viewBox='0 0 24 24' fill='none' stroke='#D8A52E' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><rect x='2.5' y='5' width='19' height='14' rx='2.2'/><path d='m3.2 6.4 8.1 6.1a1.2 1.2 0 0 0 1.4 0l8.1-6.1'/></svg>Check your email</div>"
-    +"<div class='rc-b'>We've just sent a link back to your results. Tap the button in it and you'll land right back in your Style Portrait."
-    +"<span class='rc-q'>It's in your welcome email too, if that's quicker.</span></div></div>"
+    +"<div class='rc-b'>We've just sent a link back to your results. Tap the button in it and you'll land right back in your Style Portrait.</div>"
+    +"<div class='rc-code'><div class='rc-cl'>Or type the 6-digit code from the email here, and your results will appear right away:</div>"
+    +"<div class='rc-crow'><input id='restoreCode' type='text' inputmode='numeric' autocomplete='one-time-code' maxlength='7' placeholder='6-digit code' aria-label='6-digit code from the email' onkeydown=\"if(event.key==='Enter')restoreWithCode()\">"
+    +"<button id='restoreCodeBtn' class='rc-cbtn' onclick='restoreWithCode()'>Restore</button></div>"
+    +"<div id='restoreCodeMsg' role='status'></div>"
+    +"<span class='rc-q'>The link is in your welcome email too, if that's quicker.</span></div></div>"
     +"<div class='rc-alt'>Typed the wrong address? <b onclick='restoreAskAgain()'>Try a different email</b>.</div>"
     +"<div class='rc-alt'>Nothing there? You may not have saved your results yet. Want to <b onclick='startQ()'>take our fun style quiz</b>?</div>";
+}
+// The address the confirmation card was sent for (set by restoreResults).
+var _restoreEmailSent='';
+// Exchange the emailed 6-digit code for her results, right here in this
+// context — the only restore route that works inside the installed app.
+async function restoreWithCode(){
+  var input=document.getElementById('restoreCode');
+  var msg=document.getElementById('restoreCodeMsg');
+  var btn=document.getElementById('restoreCodeBtn');
+  if(!input||!msg)return;
+  var code=String(input.value||'').replace(/\D/g,'');
+  if(code.length!==6){
+    msg.textContent='The code is 6 digits. Check the email and try again.';
+    return;
+  }
+  if(btn)btn.disabled=true;
+  msg.textContent='One moment...';
+  try{
+    var r=await fetch('/.netlify/functions/user-data?email='+encodeURIComponent(_restoreEmailSent)+'&code='+encodeURIComponent(code));
+    var json=null;
+    try{json=await r.json()}catch(e){json=null}
+    if(_applyRestoredRecord(json)){
+      // She's in her portrait now; nothing left for this card to say.
+      msg.textContent='';
+      if(btn)btn.disabled=false;
+      return;
+    }
+    // Same message whatever the server saw (wrong code, expired, unknown
+    // address) — the response is deliberately identical, so the copy is too.
+    msg.textContent="That code didn't match. Check the newest email, or ask for a fresh link below.";
+  }catch(e){
+    msg.textContent="Hmm, that didn't go through. Please check your connection and try again.";
+  }
+  if(btn)btn.disabled=false;
 }
 // Bring the form back for a woman who mistyped her address. Never a dead end.
 function restoreAskAgain(){
@@ -7615,40 +7670,50 @@ async function autoRestoreFromLink(){
   try{
     var res=await fetch('/.netlify/functions/user-data?token='+encodeURIComponent(token));
     var json=await res.json();
-    if(json&&json.success&&json.data){
-      var d=json.data;
-      // The link also hands back a fresh token, so this device can save again.
-      if(json.token)_setSsToken(json.token);
-      userName=d.userName||'You';
-      if(d.prefs)prefs=d.prefs;
-      if(d.wardrobe)wardrobeData=_normalizeWardrobe(d.wardrobe);
-      emailDone=true;
-      try{
-        localStorage.setItem('ss_emailDone','true');
-        if(d.prefs)localStorage.setItem('ss_prefs',JSON.stringify(d.prefs));
-        if(d.wardrobe)localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));
-      }catch(e){}
+    if(_applyRestoredRecord(json)){
       try{history.replaceState({},'',location.pathname)}catch(e){} // drop the token from the URL
-      var hasPortrait=!!(d.portrait&&String(d.portrait).trim());
-      if(hasPortrait){
-        answers=(d.answers&&d.answers.length===12)?d.answers:new Array(12).fill(6);
-        topArchNames=d.topArchNames||[];
-        if(d.answers&&d.answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
-        try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:d.portrait}));}catch(e){}
-        var top3=topArchNames.map(function(n){return {n:n}});
-        userMotto=d.motto||'';
-        showResult(d.portrait,top3,d.motto);
-      }else{
-        // Known saver who hasn't taken the quiz yet — welcome her in to take it.
-        // Her name + preferences are loaded, so the quiz result will be personal
-        // and her saved preferences already apply. (No ss_data written, so a later
-        // visit won't land her on an empty "Welcome Back".)
-        show('s-wel',true);
-      }
       return true;
     }
   }catch(e){}
   return false;
+}
+
+// Apply a restored record — shared by the emailed link (?r=token) and the
+// 6-digit code typed into the installed app. Loads her whole world, persists
+// it to THIS context's storage (which, in the home-screen app, is a separate
+// container from Safari's — the entire reason the code path exists), and lands
+// her in her portrait.
+function _applyRestoredRecord(json){
+  if(!(json&&json.success&&json.data))return false;
+  var d=json.data;
+  // The response also hands back a fresh token, so this device can save again.
+  if(json.token)_setSsToken(json.token);
+  userName=d.userName||'You';
+  if(d.prefs)prefs=d.prefs;
+  if(d.wardrobe)wardrobeData=_normalizeWardrobe(d.wardrobe);
+  emailDone=true;
+  try{
+    localStorage.setItem('ss_emailDone','true');
+    if(d.prefs)localStorage.setItem('ss_prefs',JSON.stringify(d.prefs));
+    if(d.wardrobe)localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));
+  }catch(e){}
+  var hasPortrait=!!(d.portrait&&String(d.portrait).trim());
+  if(hasPortrait){
+    answers=(d.answers&&d.answers.length===12)?d.answers:new Array(12).fill(6);
+    topArchNames=d.topArchNames||[];
+    if(d.answers&&d.answers.length===12)topArchNames=getTopArch().map(function(a){return a.n});
+    try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:d.portrait}));}catch(e){}
+    var top3=topArchNames.map(function(n){return {n:n}});
+    userMotto=d.motto||'';
+    showResult(d.portrait,top3,d.motto);
+  }else{
+    // Known saver who hasn't taken the quiz yet — welcome her in to take it.
+    // Her name + preferences are loaded, so the quiz result will be personal
+    // and her saved preferences already apply. (No ss_data written, so a later
+    // visit won't land her on an empty "Welcome Back".)
+    show('s-wel',true);
+  }
+  return true;
 }
 
 // Home entrance reveal — closet doors swing open onto the home screen. The full
