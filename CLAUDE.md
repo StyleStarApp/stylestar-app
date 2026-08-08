@@ -57,14 +57,17 @@ from inside the app and the gold button "worked" but the app still didn't know h
   hubs 46 · menu 87 · nav 67 · cowork3 69 · searchchat 54 · affq 40 · a2hs 38 · menux 28. ⚠️ sec.js's
   Supabase stub needed `new Response(null,{status:204})` — Node's Response constructor refuses a 204
   with a body; the real Supabase is fine. Same fix baked into restorecode.js from the start.
-- ▶ **WHAT CATH STILL DOES AT HER DESK (the only blockers, both MailerLite):**
-  1. **Create the field:** Subscribers → Fields → add a TEXT field named **`restore_code`** (until it
-     exists, the API refuses it and the function logs the refusal while still sending token-only).
-  2. **Edit the restore email:** add the code near the gold button, e.g. "Using the Style Star app on
-     your phone? Your code is:" + the **`{$restore_code}`** personalization tag, big and bold. Remember
-     the editor traps logged 2026-08-08 (tags get deleted with text; re-check the subject after any
-     design step; test with the automation's Test button, never a reused address).
-  3. Then test on her phone: app icon → Find my results → email arrives → type the code → portrait.
+- ✅✅ **CATH DID BOTH DESK STEPS THE SAME DAY, GUIDED STEP BY STEP, AND THE LIVE TEST PASSED: "This
+  worked!"** — app icon → Find my results → email with the code → typed it → her portrait, IN the app.
+  The whole chain is proven end to end on her own phone. Notes from the guided run: (a) the `restore_code`
+  field was created as name "Restore Code" and MailerLite derived the `{$restore_code}` tag itself;
+  (b) ⚠️ **heading sizes in the email editor are per-PARAGRAPH** — a Shift+Enter line break keeps the
+  sentence and the code in ONE block, so Heading 2 swallowed both; the fix is a real Enter between them,
+  then set the sentence back to Normal text (code line = Heading 2 bold, sentence = normal); (c) ⚠️ **the
+  hero's "Additional text" (the sign-off below the button) VANISHED mid-edit** — recovered via the block's
+  Additional text toggle (it was still ON; a Save settings re-render brought it back). Check below the
+  button before leaving the editor, every time; (d) both re-enter settings survived this edit unchanged —
+  first time ever; still re-check every time.
 - ⚠️ **HONEST EDGE, flagged to her in chat:** a woman who took the quiz but NEVER saved by email has no
   Supabase row — nothing can carry her into the app. The whisper invites install from Welcome Back
   (local results only ≠ emailed). Worth a future conversation: nudge the email save before/alongside the
@@ -135,8 +138,9 @@ Her closing word on the last one: *"it looks really good."*
 1. **🧭 THE FOOTER AUDIT — teed up, the analysis is already done** (see the entry further down): seven
    screens link to themselves, and she wants the `.sf-row2` Privacy · Terms line tidied. **Renders first.**
    ⚠️ Now that Instagram lives on `.sf-row2`, any change to that row must keep the glyph.
-2. **📧 The rest of the MailerLite list:** shrink the "shouting" sub-header in the WELCOME email (the
-   restore one is done) · "Email me my wishlist" · photo-tips email + email capture on the wardrobe page.
+2. **📧 The rest of the MailerLite list:** ✅ **the WELCOME email's "shouting" sub-header is DONE too
+   (2026-08-08, her own edit while MailerLite was open for the restore-code work)** — both emails are now
+   de-shouted. Remaining: "Email me my wishlist" · photo-tips email + email capture on the wardrobe page.
 ▶ **Still waiting on HER WORDS (don't invent either):** the graduation-whisper line · her most-asked stylist
 questions for the chat chips. ▶ **Still waiting on OTHERS:** Indie Law's substantive reply (the Bailey name
 fix + the operating-agreement blanks), then the TM signature email, then the EIN.
