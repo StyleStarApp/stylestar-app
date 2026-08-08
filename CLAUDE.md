@@ -34,9 +34,36 @@ drifted). **Two sections carry 08-08; the one nearer the top is the later one.**
 her most-asked stylist questions (chat chips) · Indie Law's substantive reply (name fix + operating-agreement
 blanks), then the TM signature email, then the EIN.
 
+### ✅ THE RESTORE EMAIL WAS REWRITTEN BY HER (2026-08-08, at her desk, in the MailerLite editor)
+Her catch, and it is the honesty rule again: the email claimed **"Your sizes, your colors, your wardrobe
+list, and anything you've added to your wishlist"** — but a restore is triggered by any saved record, and a
+woman may have taken the quiz and saved WITHOUT ever refining. **The email was telling some women about
+things they had never done.** Her rewrite turns the list into an invitation instead of an inventory:
+*"Pick up wherever you like. Build your wardrobe list, refine your preferences, check out what's trending,
+chat with your stylist, add to your wishlist, shop your style and more."*
+- **Header de-shouted (her other ask):** ⭐Your Style Portrait is Waiting⭐ → **"Your Style Portrait is
+  waiting"** — both emoji stars gone, sentence case, size down. It was wrapping to THREE lines on her phone,
+  which was most of the loudness. ▶ **The gold star in the logo directly above it was already doing that job.**
+- ▶ **A COPY RULE THAT CAME OUT OF IT, worth reusing: keep the specific noun on the HEADING and the BUTTON,
+  vary the prose in between.** She asked whether to say "Style Star" instead of "Style Portrait"; the answer
+  was keep Portrait, because the `?r=` link genuinely lands on `showResult()` (the portrait screen), and a
+  button should name its destination. What she was hearing was the phrase appearing THREE times in a short
+  email, so the middle one became "Here's your link back in, just as you asked."
+- ⚠️ **EDITOR TRAPS HIT THIS SESSION, all now known:** (a) she deleted the whole hero block by accident —
+  **Cmd+Z and the editor's revision-history icon both recover it**; (b) **the `{$name}` tag gets deleted with
+  the text** and must be re-inserted (the app writes `fields.name`, so `{$name}` is the correct tag — and
+  **never add a MailerLite fallback**, the app already writes "there" for a nameless woman); (c) **the button
+  cannot be moved and you cannot type below it** — the Standard hero's slots are fixed, so the sign-off went
+  in the body text ABOVE the button, which reads fine; (d) **Enter makes a new PARAGRAPH, Shift+Enter makes a
+  tight line break** — that is the fix for "Founder of Style Star" sitting too far from her name, NOT the
+  line-spacing control, which moves the whole block.
+
 ### ▶ HER TWO NEW ITEMS (2026-08-08, added to the list as she moved to her desk — NOTHING BUILT)
-**1. 📸 A CLICKABLE INSTAGRAM LINK.** Her ask: footer or the Menu drawer, her call which. ⚠️ **BLOCKED ON ONE
-THING ONLY: her handle** — ask for it, never guess a social account. ▶ **Prep done, so the session is short:**
+**1. 📸 A CLICKABLE INSTAGRAM LINK.** Her ask: footer or the Menu drawer, her call which.
+✅ **UNBLOCKED — HER HANDLE IS `@style_star.app`** → `https://instagram.com/style_star.app` (taken from her
+own MailerLite footer settings, 2026-08-08). ⚠️ **NOT verified from the sandbox — Instagram answers automated
+requests with 429**, so she was asked to confirm it opens her profile in a browser. **Confirm before shipping
+it into the app.** ▶ **Prep done, so the session is short:**
 - **The footer's main row has NO ROOM at 360px.** Measured on 2026-07-30 and still true: the row needs 246px
   and the FAQ/legal column is 248px, which is why `.sf-row` already drops its gap to 8px under 375px. **A
   fifth text link ("Instagram") would overflow on Display Zoom phones.** So in the footer it has to be either
