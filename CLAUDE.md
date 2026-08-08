@@ -7,6 +7,54 @@ by email.
 
 ---
 
+## ▶ NEXT SESSION — START HERE-EST-EST (2026-08-08, night — HER SIX SCREENSHOTS TUNED THE WHOLE SHOP SEARCH)
+
+### ✅ THE SEARCH-TUNING PACKAGE IS BUILT FROM HER LIVE TESTING (2026-08-08, "yes let's do all 5")
+Cath ran real Shop-your-style taps on her phone and sent six screenshots; each got a diagnosis and
+together they produced FIVE fixes, all shipped. ▶ **Her concern, verbatim-ish: the searches "are not
+turning up anything close to what I was hoping for... especially in comparison to what ChatGPT was able
+to search up." The structural gap (search page vs exact product) stays until feeds — everything else was
+fixable now and is fixed.**
+- **Her six examples → the diagnoses:** (1) "Raspberry Belted Midi Wrap Dress" @ Anthropologie → 1 fuzzy
+  blue dress (poetic color + stacked qualifiers = zero matches; stores show junk instead of "no results") ·
+  (2) "Nude Patent Pointed-Toe Kitten Heel Mule" @ Sam Edelman → kitten-heel SANDALS (loose ranking; and
+  the store's own banner was advertising its bestseller MULE — right store, drowned term) · (3) "Hot Pink
+  Fitted Scoop-Neck Cotton Crop Top" @ Abercrombie → pale pink tanks ("hot pink" isn't a retail word) ·
+  (4) "charcoal high rise slim trousers" @ Banana Republic → first result nearly EXACT but a men's suit
+  pant at slot 2 (department bleed) · (5) lululemon royal blue legging → landed great BUT her installed
+  lululemon app captured the tap ("kicked off" — iOS handoff, not ours to fix; the way back is the ◀
+  breadcrumb or the Style Star icon, which now remembers her) · (6) "tan top handle bag" @ Bloomingdales →
+  3,292 items, brown + ivory on top (big catalogs rank by popularity, color is a suggestion).
+- **THE FIVE FIXES, all live:**
+  1. **Retail-plain search words** (prompt, all surfaces): the color word from a store's own filter menu
+     ("pink" never "raspberry"/"hot pink"; "tan" never "cognac"), 2-4 words, color + garment + at most ONE
+     defining word. The TOO LONG example is her real mule case.
+  2. **Honest card names**: name the KIND of piece ("Tan Kitten-Heel Mules"), never an imaginary exact
+     product — ▶ **the name is a PROMISE about what the link shows; a name more detailed than the search
+     lands her on less than promised, and THAT gap is what feels broken.** Every detail in the name must
+     also be in the search. Replaced every "Be very specific in name" line (5 surfaces).
+  3. **Women's-department scoping in `getStoreUrl`**: 42 multi-gender stores carry `w:1` → "womens "
+     prepended to the term; 5 carry a VERIFIED `gp` param (**Amazon `&i=fashion-womens`, Gap family ×4
+     `&department=136`** — both curl-verified serving women's results). Madewell/Mango/Revolve/Lacoste were
+     already URL-scoped; women-only stores untouched. ⚠️ **DSW deliberately unflagged** (path-style
+     /browse/ search might read "womens" as a category — one for her address bar). Because wishlist items
+     store terms and rebuild URLs on render, **every already-saved item got the fix silently**.
+  4. **URL filter research**: done for gender (above). ▶ **Color facets at the big department stores
+     (Bloomingdales/Macy's class, both bot-walled to curl) remain the highest-value ADDRESS-BAR research
+     open** — landing on "top handle bags, filtered: tan" is the department-store cure.
+  5. **Precision-to-store weighting** (prompt): exact-color exact-shape pieces (esp. bags/shoes) go to
+     focused stores whose search can honor them; department stores are for category browsing. ▶ Matches
+     her own July stylist rule (department stores for wardrobe building, boutiques for the piece).
+- **Verified: new `scratchpad/searchtune.js`, 32 checks** (every scoping class incl. saved-wishlist repair,
+  all prompt rules present, 101 stores / 42 w / 5 gp, zero JS errors) + full 15-suite sweep green.
+  **LIVE model check** (captured the real tuned genOutfits prompt from the page, posted to the live
+  function): all 6 items came back 3-4 plain retail words, names matching searches — and the model sent a
+  pink structured bag to Kate Spade over a department store, the tan-bag lesson applied on its own.
+- ▶ **NEXT: Cath re-tests her six searches live.** Then judge: does "tap → a genuinely right results page"
+  feel smooth? The exact-product experience is feeds territory (money-path step 7), said honestly and often.
+- ▶ Parked from this conversation: a one-time "heart it first" tip near the shopping cards (her wording,
+  her call); the store-app handoff behavior watch (Nordstrom/Target/Amazon apps are pushy too).
+
 ## ▶ NEXT SESSION — START HERE-EST (2026-08-08, later same day — HER INSTALL TEST FOUND THE BIG ONE)
 
 ### 🚨 ✅ THE HOME-SCREEN APP COULDN'T REMEMBER ANYONE — THE 6-DIGIT RESTORE CODE IS BUILT (2026-08-08)

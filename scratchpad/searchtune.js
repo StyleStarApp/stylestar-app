@@ -1,0 +1,114 @@
+// Search tuning (2026-08-08) — built from Cath's six live screenshots.
+// Five fixes: retail-plain search words · honest card names · women's-dept
+// scoping · verified URL params (Amazon, Gap family) · precision-to-store
+// weighting. This suite drives the REAL index.html in Chromium and checks the
+// real getStoreUrl + the real prompt builders.  node scratchpad/searchtune.js
+const chromium = (await import('/opt/node22/lib/node_modules/playwright/index.js')).default.chromium;
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
+const ROOT = path.resolve(import.meta.dirname, '..');
+const server = http.createServer((req, res) => {
+  const f = path.join(ROOT, req.url === '/' ? 'index.html' : decodeURIComponent(req.url.split('?')[0].slice(1)));
+  if (!f.startsWith(ROOT) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end(); }
+  res.writeHead(200); fs.createReadStream(f).pipe(res);
+});
+await new Promise(r => server.listen(0, r));
+const base = 'http://127.0.0.1:' + server.address().port;
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+
+let pass = 0, fail = 0;
+const ok = (n, c, x) => { if (c) { pass++; console.log('  ✓ ' + n); } else { fail++; console.log('  ✗ ' + n + (x ? '  → ' + x : '')); } };
+
+const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+const errs = []; page.on('pageerror', e => errs.push(String(e)));
+await page.route('**/.netlify/functions/**', r => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
+await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => typeof window.getStoreUrl === 'function');
+
+// ---------------------------------------------------------------------------
+console.log('\n1. Women\'s scoping in getStoreUrl');
+const urls = await page.evaluate(() => ({
+  br: getStoreUrl('Banana Republic', null, 'charcoal slim trousers'),
+  amazon: getStoreUrl('Amazon', null, 'black flats'),
+  gap: getStoreUrl('Gap', null, 'white tee'),
+  nordstrom: getStoreUrl('Nordstrom', null, 'tan top handle bag'),
+  bloomies: getStoreUrl('Bloomingdales', null, 'tan top handle bag'),
+  zappos: getStoreUrl('Zappos', null, 'kitten heel mules'),
+  lulu: getStoreUrl('Lululemon', null, 'royal blue leggings'),
+  // already scoped in the URL — must NOT get the keyword too
+  madewell: getStoreUrl('Madewell', null, 'white tee'),
+  mango: getStoreUrl('Mango', null, 'white tee'),
+  revolve: getStoreUrl('Revolve', null, 'white tee'),
+  lacoste: getStoreUrl('Lacoste', null, 'white polo'),
+  // women-only stores — nothing to scope
+  anthro: getStoreUrl('Anthropologie', null, 'pink wrap dress'),
+  talbots: getStoreUrl('Talbots', null, 'navy blazer'),
+  samE: getStoreUrl('Sam Edelman', null, 'kitten heel mules'),
+  // deliberately unflagged: DSW's path-style search might read the extra word
+  // as a category — Cath's address bar decides that one
+  dsw: getStoreUrl('DSW', null, 'red sandals'),
+  // unknown store falls to Google Shopping, unscoped
+  unknown: getStoreUrl('Totally Unknown Store', null, 'blue dress')
+}));
+ok('Gap family gets the VERIFIED department param', urls.br.includes('searchText=womens%20charcoal%20slim%20trousers') === false && urls.br.endsWith('&department=136'), urls.br);
+ok('…and the keyword too is fine to skip there', !urls.br.includes('womens'), urls.br);
+ok('Amazon gets i=fashion-womens', urls.amazon.includes('/s?k=black%20flats&i=fashion-womens'), urls.amazon);
+ok('Gap.com same treatment', urls.gap.endsWith('searchText=white%20tee&department=136'), urls.gap);
+ok('Nordstrom gets the womens keyword', urls.nordstrom.includes('keyword=womens%20tan%20top%20handle%20bag'), urls.nordstrom);
+ok('Bloomingdales gets it', urls.bloomies.includes('keyword=womens%20'), urls.bloomies);
+ok('Zappos gets it', urls.zappos.includes('term=womens%20kitten%20heel%20mules'), urls.zappos);
+ok('Lululemon gets it', urls.lulu.includes('Ntt=womens%20'), urls.lulu);
+ok('Madewell already scoped — no double', urls.madewell.includes('r_productGender=women') && !urls.madewell.includes('womens%20'), urls.madewell);
+ok('Mango already scoped — untouched', urls.mango.includes('/search/women?q=white%20tee'), urls.mango);
+ok('Revolve already scoped — untouched', urls.revolve.includes('d=Womens') && !urls.revolve.includes('womens%20'), urls.revolve);
+ok('Lacoste template already women.html — untouched', urls.lacoste.includes('/women.html') && !urls.lacoste.includes('womens%20'), urls.lacoste);
+ok('women-only Anthropologie untouched', urls.anthro.endsWith('search?q=pink%20wrap%20dress'), urls.anthro);
+ok('women-only Talbots untouched', urls.talbots.endsWith('search?q=navy%20blazer'), urls.talbots);
+ok('women-first Sam Edelman untouched', urls.samE.endsWith('#q=kitten%20heel%20mules'), urls.samE);
+ok('DSW deliberately untouched (path-style search)', urls.dsw.endsWith('/browse/red%20sandals'), urls.dsw);
+ok('unknown store → Google fallback, unscoped', urls.unknown.includes('google.com') && !urls.unknown.includes('womens'), urls.unknown);
+
+// ---------------------------------------------------------------------------
+console.log('\n2. The scoping repairs SAVED wishlist items too (URLs rebuild on render)');
+await page.evaluate(() => {
+  wardrobeData.wishlist = [{ id: 'x~y', name: 'Charcoal Slim Trousers', store: 'Banana Republic', search: 'charcoal slim trousers' }];
+  openWishlist();
+});
+await page.waitForTimeout(400);
+const wl = await page.evaluate(() => {
+  const a = document.querySelector('#s-wishlist a[href*="bananarepublic"]');
+  return a ? a.getAttribute('href') : '(no link)';
+});
+ok('a pre-existing saved item now links to the women\'s department', wl.endsWith('&department=136'), wl);
+
+// ---------------------------------------------------------------------------
+console.log('\n3. The tuned prompt rules are really in the prompts');
+const rules = await page.evaluate(() => _shopRules());
+ok('retail-words rule present', rules.includes('USE RETAIL WORDS'), '');
+ok('names the raspberry trap', /never "raspberry" or "hot pink"/.test(rules));
+ok('2-4 word cap (was 2-5)', rules.includes('2 to 4 plain words'));
+ok('color + garment + one word shape', rules.includes('at most ONE defining word'));
+ok('honest-name rule with the mule example', rules.includes('Nude Patent Pointed-Toe Kitten Heel Mule'));
+ok('every name detail must be searchable', rules.includes('Every detail in the name must also be in the search'));
+ok('precision-to-store rule present', rules.includes('MATCH PRECISION TO THE STORE'));
+ok('old too-long example gone', !rules.includes('Blush Silk Charmeuse'));
+const html = await page.content();
+ok('no surface still says "Be very specific in"', !html.includes('Be very specific in'));
+ok('photo prompt carries the retail-color rule', html.includes('"pink" never "raspberry"'));
+ok('all four per-surface name lines are honest now', (html.match(/never an imaginary exact product/g) || []).length >= 5);
+
+// ---------------------------------------------------------------------------
+console.log('\n4. Housekeeping');
+const counts = await page.evaluate(() => ({
+  stores: Object.keys(STORES).length,
+  w: Object.values(STORES).filter(s => s.w).length,
+  gp: Object.values(STORES).filter(s => s.gp).length
+}));
+ok('still 101 stores', counts.stores === 101, String(counts.stores));
+ok('42 keyword-scoped + 5 param-scoped', counts.w === 42 && counts.gp === 5, counts.w + ' / ' + counts.gp);
+ok('zero JS errors', errs.length === 0, errs.join(' | '));
+
+await browser.close(); server.close();
+console.log('\n' + (pass + fail) + ' checks, ' + fail + ' failures');
+process.exit(fail ? 1 : 0);
