@@ -2150,6 +2150,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-row" onclick="menuGo(function(){openWardrobe('trend')})">What's Trending</div>
   <div class="menu-grp">About</div>
   <div class="menu-row" onclick="menuShare()">Share Style Star</div>
+  <div class="menu-row" onclick="menuInstagram()">Follow on Instagram</div>
   <div class="menu-row" onclick="menuGo(showStory)">My Story</div>
   <div class="menu-row" onclick="menuGo(showFAQ)">FAQ</div>
   <div class="menu-row" onclick="menuGo(showPrivacy)">Privacy</div>
@@ -3577,6 +3578,14 @@ function menuShare(){
   var url='https://stylestar.app';
   if(navigator.share){navigator.share({title:'Style Star',text:text,url:url}).catch(function(){})}
   else{navigator.clipboard.writeText(text+'\n'+url).then(function(){alert('Link copied!')}).catch(function(){})}
+}
+// Cath's Instagram (2026-08-08), the named twin of the footer glyph. Same shape
+// as menuShare: the drawer closes, she stays on whatever screen she was reading,
+// and the profile opens in its own tab. 'noopener' so that tab can never reach
+// back into this page.
+function menuInstagram(){
+  menuClose();
+  try{window.open('https://instagram.com/style_star.app','_blank','noopener')}catch(e){}
 }
 
 // Set initial state. The state the browser carried into this load is captured
