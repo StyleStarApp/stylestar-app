@@ -97,10 +97,15 @@ should be a pop-up she can ✕ out of, or be wrapped/highlighted/bolder.
   gold-leaf gradient before choosing** (`scratchpad/restoregold.js` → `gold-{brown,star,mall,leaf}.png`);
   `#E0B84C` washed out at 4px and the gradient bar got clipped by the card's own `overflow`, so `#D8A52E` won
   on presence. ▶ **STANDING: check any new gold against `#D8A52E` / `#E0B84C` FIRST — two of her last three
-  gold complaints have been this same family.** Two test assertions now pin the bar colour and the glyph
-  stroke so an antique gold cannot creep back.
-- **Verified: `scratchpad/restorecard.js`, 46 checks** (390 + 360: card renders, headline/body sizes, accent
-  bar, envelope glyph, fallback line kept, ask form stands down, both follow-up links present, all four
+  gold complaints have been this same family.**
+- ✅ **THEN SHE TOOK THE ACCENT BAR OFF ENTIRELY (same session): "just make it an even thin line all around."**
+  So the card is now a plain **1px `#D8A52E` border on all four sides**, the same gold as the envelope — the
+  4px left bar and the paler `#DFC07A` edge are both gone. ▶ **Her instinct is consistent with the restraint
+  budget:** the bar was a second emphasis device on a card whose headline, tint and icon were already doing
+  the work. ⚠️ **Don't reintroduce a heavier edge.** Four test assertions pin it (all four borders equal, 1px,
+  one colour, glyph matching) so neither the bronze nor the bar can creep back.
+- **Verified: `scratchpad/restorecard.js`, 48 checks** (390 + 360: card renders, headline/body sizes, accent
+  border even + thin + one gold, envelope glyph, fallback line kept, ask form stands down, both links present, all four
   contrast ratios, "Try a different email" restores the form + clears the card + empties the field, no
   overflow, no sideways page scroll, zero JS errors). ⚠️ **`e2e.js` test 5 pinned the OLD exact phrase**
   ("just sent you a link") and failed on the tightened copy — the assertion was widened to `just sent (you )?a
