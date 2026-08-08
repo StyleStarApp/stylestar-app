@@ -62,8 +62,11 @@ chat with your stylist, add to your wishlist, shop your style and more."*
 **1. ✅✅ DONE — THE INSTAGRAM LINK IS BUILT AND MERGED (2026-08-08). She picked "Footer A"** from the
 3-way render (`scratchpad/igmock.js` → `ig-{foot-inline,foot-own-line,menu-row}.png`): a **quiet 15px glyph
 on the footer's second row, after Terms**, in the same `#6f6a63` ink as Privacy and Terms. Handle
-**`@style_star.app`**, confirmed by her. **She chose the footer ONLY — the Menu row was offered and not
-taken**, so it is a one-line addition if she ever wants it.
+**`@style_star.app`**, confirmed by her. **She then asked for the MENU ROW TOO, same session, so BOTH shipped**:
+`menuInstagram()` in the About group, directly under Share Style Star (the share/follow pair belongs
+together). It closes the drawer, opens her profile in a new tab with `noopener`, and leaves her on whatever
+screen she was reading, exactly like `menuShare()`. ⚠️ **The drawer is 18 rows now** — "Follow on Instagram"
+measures 142px, third widest, so the 213px floor is UNCHANGED and 220px still holds every row on one line.
 - ⚠️ **`rel="noopener"`, deliberately NOT `"sponsored"`.** The standing rule tags outbound PRODUCT links as
   sponsored; her own Instagram is not a paid link, and marking it so would be a false signal to search
   engines and to any affiliate reviewer reading the page. **`affq.js` enforced sponsored on every
@@ -72,7 +75,9 @@ taken**, so it is a one-line addition if she ever wants it.
 - ⚠️ **The negative margin on `.ig-a` is load-bearing:** `padding:6px;margin:-6px` gives a **27x27 tap
   target while the row lays out as if the glyph were a bare 15px** — the main footer row has zero width to
   spare at 360px, so the link must add nothing. Don't "tidy" it away.
-- **Verified: `nav.js` grew 55 → 67 checks** (present in all 12 footers, href/target/rel/aria-label, glyph
+- **Verified: `menu.js` grew 82 → 87 checks** (the new row opens the right handle in a new tab with noopener,
+  the drawer closes, she stays put, the row sits between Share and My Story, and all 18 rows are still
+  single-line) and **`nav.js` grew 55 → 67 checks** (present in all 12 footers, href/target/rel/aria-label, glyph
   size, tap size, sits inside the row, same ink as its neighbours, and no overflow at 390/360/320) + affq 40 ·
   e2e 29 · copy 41 · menu 82 · hubs 46 · followups 38 green. As-built: `scratchpad/ig-built.png`.
 ▶ **The ORIGINAL prep, kept because the width facts still bind any future footer change:**

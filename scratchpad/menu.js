@@ -161,6 +161,25 @@ ok('without a share sheet the link is copied instead, and she is told',
   await page.evaluate(() => JSON.stringify({ copied: window._copied, alerted: window._alerted })));
 
 // ---------------------------------------------------------------------------
+console.log("\n4b-ii. Follow on Instagram opens her profile in a new tab, drawer closes");
+{
+  await page.evaluate(() => { show('s-wel'); menuOpen(); });
+  const opened = await page.evaluate(() => {
+    window.__ig = null;
+    const real = window.open;
+    window.open = (u, t, f) => { window.__ig = { u, t, f }; return null; };
+    document.querySelectorAll('.menu-row').forEach(r => {
+      if (r.textContent.trim() === 'Follow on Instagram') r.click();
+    });
+    const got = window.__ig; window.open = real;
+    return { got, drawerClosed: !document.body.classList.contains('menu-open'), screen: (document.querySelector('.scr.act') || {}).id };
+  });
+  ok('opens her confirmed handle', opened.got && opened.got.u === 'https://instagram.com/style_star.app', JSON.stringify(opened.got));
+  ok('in a new tab, with noopener', opened.got && opened.got.t === '_blank' && /noopener/.test(opened.got.f || ''));
+  ok('the drawer closes', opened.drawerClosed);
+  ok('but she stays on the screen she was reading', opened.screen === 's-wel', opened.screen);
+}
+
 console.log("\n4c. Journey order + the Start-here pill (Cath, 2026-07-31)");
 {
   const order = await page.evaluate(() => [...document.querySelectorAll('.menu-row')].map(r => r.textContent.trim().replace(/Start here$/, '').trim()));
@@ -174,6 +193,10 @@ console.log("\n4c. Journey order + the Start-here pill (Cath, 2026-07-31)");
   const iShare = order.indexOf('Share Style Star'), iStory = order.indexOf('My Story');
   ok('Share Style Star sits above My Story in About (Cath, 2026-07-31)',
     iShare > -1 && iShare < iStory, JSON.stringify({ iShare, iStory }));
+  // the share/follow pair belongs together, above the reading rows
+  const iInsta = order.indexOf('Follow on Instagram');
+  ok('Follow on Instagram sits between Share and My Story (Cath, 2026-08-08)',
+    iInsta > -1 && iShare < iInsta && iInsta < iStory, JSON.stringify({ iShare, iInsta, iStory }));
   await page.evaluate(() => { show('s-wel'); menuOpen(); });
   ok('returning woman sees NO Start-here pill', await page.evaluate(() =>
     !document.getElementById('menuStartPill').classList.contains('on')));
@@ -281,7 +304,8 @@ const fit = await p360.evaluate(() => {
 function lum(rgb) { const [r, g, b] = rgb.map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; }
 const ratio = (Math.max(lum(fit.fg), lum([251, 250, 247])) + 0.05) / (Math.min(lum(fit.fg), lum([251, 250, 247])) + 0.05);
 ok('drawer fits inside 360px, no sideways scroll', fit.panelW <= 303 && fit.viewportOk, JSON.stringify(fit));
-ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 17);
+// 18 since "Follow on Instagram" joined the About group (Cath, 2026-08-08)
+ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 18);
 ok('row text contrast ≥ 4.5:1 (got ' + ratio.toFixed(1) + ':1)', ratio >= 4.5);
 ok('no JS errors @360', p360.errors.length === 0, p360.errors.join(' | '));
 await p360.context().close();
