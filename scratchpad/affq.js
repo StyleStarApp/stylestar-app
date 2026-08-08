@@ -30,10 +30,20 @@ const ok = (name, cond, extra) => {
 
 // ===========================================================================
 console.log('\nA1. Every outbound product link carries rel="sponsored noopener"');
-const anchors = [...HTML.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)].map(m => m[0]);
-ok('found the full set of outbound anchors (17 Edit + 8 templates)', anchors.length === 25, 'got ' + anchors.length);
-ok('every one carries sponsored + noopener', anchors.every(a => /rel="sponsored noopener"/.test(a)),
+const allOutbound = [...HTML.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)].map(m => m[0]);
+// ⚠️ Cath's own Instagram link (footer, 2026-08-08) is outbound but is NOT a
+// product link. "sponsored" marks a paid or affiliate link, so tagging her own
+// account with it would be a false signal to search engines and to any affiliate
+// reviewer reading the page. It carries plain noopener and is asserted separately.
+const social = allOutbound.filter(a => /instagram\.com/.test(a));
+const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
+ok('found the full set of outbound PRODUCT anchors (17 Edit + 8 templates)', anchors.length === 25, 'got ' + anchors.length);
+ok('every product link carries sponsored + noopener', anchors.every(a => /rel="sponsored noopener"/.test(a)),
   anchors.filter(a => !/rel="sponsored noopener"/.test(a)).slice(0, 2).join(' '));
+ok('the Instagram link exists', social.length === 1, 'got ' + social.length);
+ok('...points at her real handle', social.every(a => /href="https:\/\/instagram\.com\/style_star\.app"/.test(a)));
+ok('...carries noopener but NOT sponsored', social.every(a => /rel="noopener"/.test(a) && !/sponsored/.test(a)));
+ok('...has an aria-label, being an icon with no text', social.every(a => /aria-label="[^"]+"/.test(a)));
 const editBtns = [...HTML.matchAll(/<a class="dc-item-btn"[^>]*>/g)].map(m => m[0]);
 ok('all 17 hardcoded Edit links included', editBtns.length === 17 && editBtns.every(a => /rel="sponsored noopener"/.test(a)));
 

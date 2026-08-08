@@ -59,11 +59,26 @@ chat with your stylist, add to your wishlist, shop your style and more."*
   line-spacing control, which moves the whole block.
 
 ### ▶ HER TWO NEW ITEMS (2026-08-08, added to the list as she moved to her desk — NOTHING BUILT)
-**1. 📸 A CLICKABLE INSTAGRAM LINK.** Her ask: footer or the Menu drawer, her call which.
-✅ **UNBLOCKED — HER HANDLE IS `@style_star.app`** → `https://instagram.com/style_star.app` (taken from her
-own MailerLite footer settings, 2026-08-08). ⚠️ **NOT verified from the sandbox — Instagram answers automated
-requests with 429**, so she was asked to confirm it opens her profile in a browser. **Confirm before shipping
-it into the app.** ▶ **Prep done, so the session is short:**
+**1. ✅✅ DONE — THE INSTAGRAM LINK IS BUILT AND MERGED (2026-08-08). She picked "Footer A"** from the
+3-way render (`scratchpad/igmock.js` → `ig-{foot-inline,foot-own-line,menu-row}.png`): a **quiet 15px glyph
+on the footer's second row, after Terms**, in the same `#6f6a63` ink as Privacy and Terms. Handle
+**`@style_star.app`**, confirmed by her. **She chose the footer ONLY — the Menu row was offered and not
+taken**, so it is a one-line addition if she ever wants it.
+- ⚠️ **`rel="noopener"`, deliberately NOT `"sponsored"`.** The standing rule tags outbound PRODUCT links as
+  sponsored; her own Instagram is not a paid link, and marking it so would be a false signal to search
+  engines and to any affiliate reviewer reading the page. **`affq.js` enforced sponsored on every
+  `target="_blank"` anchor and would have failed** — it now splits social from product (25 product anchors
+  still asserted, 4 new checks on the social one). **That split was a deliberate test change, not a silence.**
+- ⚠️ **The negative margin on `.ig-a` is load-bearing:** `padding:6px;margin:-6px` gives a **27x27 tap
+  target while the row lays out as if the glyph were a bare 15px** — the main footer row has zero width to
+  spare at 360px, so the link must add nothing. Don't "tidy" it away.
+- **Verified: `nav.js` grew 55 → 67 checks** (present in all 12 footers, href/target/rel/aria-label, glyph
+  size, tap size, sits inside the row, same ink as its neighbours, and no overflow at 390/360/320) + affq 40 ·
+  e2e 29 · copy 41 · menu 82 · hubs 46 · followups 38 green. As-built: `scratchpad/ig-built.png`.
+▶ **The ORIGINAL prep, kept because the width facts still bind any future footer change:**
+⚠️ **The handle could NOT be verified from the sandbox — Instagram answers automated requests with 429** — so
+it was shipped only after **Cath confirmed it opens her profile**. Same rule next time: never ship a social
+link on an unverified URL.
 - **The footer's main row has NO ROOM at 360px.** Measured on 2026-07-30 and still true: the row needs 246px
   and the FAQ/legal column is 248px, which is why `.sf-row` already drops its gap to 8px under 375px. **A
   fifth text link ("Instagram") would overflow on Display Zoom phones.** So in the footer it has to be either
