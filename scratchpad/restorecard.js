@@ -54,8 +54,8 @@ for (const w of [390, 360]) {
       hasCard: !!card && vis(card),
       headline: h ? h.textContent.trim() : '',
       headlineSize: h ? parseFloat(getComputedStyle(h).fontSize) : 0,
-      accent: card ? getComputedStyle(card).borderLeftWidth : '',
-      accentColor: card ? getComputedStyle(card).borderLeftColor : '',
+      borderWidths: ['Top', 'Right', 'Bottom', 'Left'].map(s => parseFloat(getComputedStyle(card)['border' + s + 'Width'])),
+      borderColors: ['Top', 'Right', 'Bottom', 'Left'].map(s => getComputedStyle(card)['border' + s + 'Color']),
       svgStroke: h && h.querySelector('svg') ? h.querySelector('svg').getAttribute('stroke') : '',
       hasSvg: !!(h && h.querySelector('svg')),
       bodySize: parseFloat(getComputedStyle(document.querySelector('#restoreForm .rc-b')).fontSize),
@@ -70,10 +70,12 @@ for (const w of [390, 360]) {
   ok(w + ': the card renders', m.hasCard);
   ok(w + ': headline reads "Check your email"', m.headline === 'Check your email', m.headline);
   ok(w + ': headline is 16px (was 12px body text)', m.headlineSize === 16, m.headlineSize + 'px');
-  ok(w + ': gold accent bar present', parseFloat(m.accent) >= 4, m.accent);
-  // ⚠️ Cath read #C8971E / #8a6a14 as BROWN on her phone. The card is all one
-  // gold now; these two pin it so an antique gold can't creep back in.
-  ok(w + ': accent bar is the #D8A52E gold, not bronze', m.accentColor === 'rgb(216, 165, 46)', m.accentColor);
+  // ⚠️ Cath's two calls on this border: (1) #C8971E / #8a6a14 read BROWN on her
+  // phone, and (2) the heavy left accent bar is gone — one EVEN thin line all
+  // the way round. These pin both so neither can creep back.
+  ok(w + ': the border is even on all four sides', m.borderWidths.every(v => v === m.borderWidths[0]), m.borderWidths.join(' / '));
+  ok(w + ': and thin (1px)', m.borderWidths.every(v => v === 1), m.borderWidths[0] + 'px');
+  ok(w + ': one gold all round, #D8A52E not bronze', m.borderColors.every(c => c === 'rgb(216, 165, 46)'), [...new Set(m.borderColors)].join(' / '));
   ok(w + ': envelope glyph is the same gold', (m.svgStroke || '').toUpperCase() === '#D8A52E', m.svgStroke);
   ok(w + ': envelope glyph rendered', m.hasSvg);
   ok(w + ': body text is 13px', m.bodySize === 13, m.bodySize + 'px');
