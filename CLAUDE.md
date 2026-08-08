@@ -31,6 +31,38 @@ by email.
 her most-asked stylist questions (chat chips) · Indie Law's substantive reply (name fix + operating-agreement
 blanks), then the TM signature email, then the EIN.
 
+### ▶ HER TWO NEW ITEMS (2026-08-09, added to the list as she moved to her desk — NOTHING BUILT)
+**1. 📸 A CLICKABLE INSTAGRAM LINK.** Her ask: footer or the Menu drawer, her call which. ⚠️ **BLOCKED ON ONE
+THING ONLY: her handle** — ask for it, never guess a social account. ▶ **Prep done, so the session is short:**
+- **The footer's main row has NO ROOM at 360px.** Measured on 2026-07-30 and still true: the row needs 246px
+  and the FAQ/legal column is 248px, which is why `.sf-row` already drops its gap to 8px under 375px. **A
+  fifth text link ("Instagram") would overflow on Display Zoom phones.** So in the footer it has to be either
+  a small GLYPH on the quiet second row beside Privacy · Terms, or a line of its own.
+- **The Menu is the cheaper home** — one row in the About group next to Share Style Star, which is where a
+  "follow / share" pair belongs. ⚠️ But the drawer is already 17 rows and its tail sits below the fold.
+- ▶ **Recommendation to put to her: BOTH, and they're different jobs** — a glyph in the footer (always
+  present, universal convention, costs no reading) and a row in the Menu (findable by name, the mom lesson).
+  Decide together; render before building either.
+**2. 🧭 THE FOOTER AUDIT — her catch: "on the My Story page we have a My Story footer", and "Privacy and Terms
+sitting below does not look tidy."** ▶ **BOTH CONFIRMED, and the first one is bigger than the one page she
+spotted. Every footer is filled from ONE template (`_stdFootHTML`), so a screen whose own name is in the
+template LINKS TO ITSELF. Eleven screens carry it and SEVEN of them self-link:**
+`s-story`→My Story · `s-faq`→FAQ · `s-privacy`→Privacy · `s-terms`→Terms · `s-shop`→Shop ·
+`s-wel` and `s-wb`→Home. (The other four are clean: `s-res`, `s-photo-res`, `s-wardrobe`, `s-wishlist`. A
+12th footer, the global `.quiz-footer`, sits outside the screens and is fine.)
+⚠️ **These are not broken — the 2026-07-31 self-link guard means tapping one doesn't kill the Back button —
+they are POINTLESS, which is exactly the untidiness she's seeing.** ▶ **The fix that keeps the one-template
+rule intact: `_stdFootHTML()` takes the current screen id and omits (or greys) that one link**, so nothing
+can drift and every page still shows one complete footer. ⚠️ **Watch the width consequence — dropping a link
+makes the row NARROWER, which is good at 360px, but the row must stay centred and not look lopsided.**
+▶ **Open design question for her eye: the `.sf-row2` Privacy · Terms line.** It is a second row of quieter
+12px text under a starred row, and she's right that it reads as an afterthought. Options to render: fold them
+into the main row (needs the width the self-link removal frees up), keep two rows but tighten the gap and
+align the widths, or give them a hairline rule above. **Renders first, her pick, same as always.**
+▶ **When this happens, re-run `scratchpad/nav.js` (55 checks)** — it asserts every screen's footer is
+identical and that all links navigate, so a per-screen omission WILL fail it and those assertions need
+updating deliberately, not silently.
+
 ### ⚠️ 2026-08-09 — THE RESTORE EMAIL FAILED AGAIN (her SECOND report; first was 08-07). Read before the desk day.
 She tapped **Find my results** on `stylestar.netlify.app`, got the confirmation on screen, and **no email ever
 arrived.** ▶ **The code was read this session and there is a structural finding that changes how to debug it:
