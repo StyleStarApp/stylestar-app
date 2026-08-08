@@ -7,7 +7,94 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-08-08, a light phone-testing session)
+## ▶ NEXT SESSION — START HERE (updated 2026-08-09, a two-item menu tune from her screenshot)
+
+### ✅ WHAT SHIPPED 2026-08-09 (two menu-drawer items, both her asks off one live screenshot)
+1. **Menu drawer narrower again, 250px → `min(220px,70vw)`.** She took the offer from 08-08 ("she can go to
+   ~215px before anything wraps"). ▶ **The floor is now MEASURED, not estimated: 213px** — walked the panel
+   1px at a time in real Chromium with the real fonts and the "Start here" pill shown (the widest state), and
+   **"Refine your Preferences" is the first row to wrap, at 212px** (its content box is 165px + 44px panel
+   padding + 4px row padding = 213px). **220px was chosen deliberately over 213** — 7px of headroom so a
+   webfont that fails to load and falls back to Georgia can't wrap the list. ▶ **If she ever wants the last
+   7px, 213 is the hard floor and there is nothing below it without shrinking the font.**
+   (`scratchpad/menumeasure.js` reruns the measurement any time a row is renamed or added.)
+2. **The ✕ moved up into the top-right CORNER** (her ask; it had been vertically centered against the tall
+   logo, which put it level with the middle of the wordmark). `.menu-head` is `position:relative` and
+   `.menu-x` is now absolute at `top:-6px;right:-12px` — **the negative offsets eat into the panel's own
+   22px padding so the glyph hugs the corner (20px in, 16px down) while the button's padding keeps the tap
+   area at 37x40px**, which matters for the 18-80 audience. Same trick as the FAQ/legal Back button.
+   ⚠️ Don't "tidy" the negative offsets away; they ARE the corner-hugging.
+- **Verified: `scratchpad/menux.js`, 28 checks** (390/360/320 — 17 rows all one line with the pill shown, ✕
+  geometry + tap size + still closes the drawer, nothing overflows the panel sideways, zero JS errors) +
+  menu 82 · nav 55 · hubs 46 · e2e 29 · copy 41 · followups 38 all green. Screenshot: `scratchpad/menu-220.png`.
+▶ **Still open, unchanged from 08-08:** how the A2HS whisper feels on her phone · HER graduation-whisper line ·
+her most-asked stylist questions (chat chips) · Indie Law's substantive reply (name fix + operating-agreement
+blanks), then the TM signature email, then the EIN.
+
+### ⚠️ 2026-08-09 — THE RESTORE EMAIL FAILED AGAIN (her SECOND report; first was 08-07). Read before the desk day.
+She tapped **Find my results** on `stylestar.netlify.app`, got the confirmation on screen, and **no email ever
+arrived.** ▶ **The code was read this session and there is a structural finding that changes how to debug it:
+the app says "we've just sent you a link" on ANY 200 — and `user-data.js` returns 200 in SIX cases where
+nothing was sent.** No Supabase row for that address (deliberate — the enumeration defense) · the **5-minute
+per-address cooldown** inside `sendRestoreLink` · no `MAILERLITE_API_KEY` · a MailerLite non-ok response · no
+subscriber id back · no group id. **All six look identical to success from the client**, and they must: telling
+her "no account here" IS the enumeration oracle closed on 2026-07-29. ⚠️ **So the confirmation can never be a
+true delivery receipt, and no amount of front-end work will diagnose this — it has to be diagnosed SERVER side.**
+▶ **Desk-day order, most likely first:** (1) **her subscriber's Activity log in MailerLite** — the instrument
+that solved the 2026-07-29 mystery in seconds. Look for a `Style Star Restore Requests` **join** at the minute
+she tapped. **A join with no send = MailerLite's 24h-per-person rule** (a platform limit, not a setting) **or
+the automation itself; NO join = the function bailed before the group step**, which points at the cooldown, a
+missing Supabase row for that exact address, or a MailerLite API error. (2) Confirm **which address** she typed
+and that a Supabase row exists for it.
+✅ **SHE SAID YES, SO THE BREADCRUMBS ARE BUILT AND LIVE (same session).** Every early return in
+`sendRestoreLink` now logs **why** nothing was sent, plus the no-Supabase-row case and a lookup throw, and the
+success path logs `GROUP JOINED — handed off to the MailerLite automation`. ▶ **HOW SHE READS THEM:
+app.netlify.com → her site → Functions → `user-data`**, then tap the button and watch. The line looks like
+`[restore] ca***@icloud.com — NO SEND: within the 5-minute per-address cooldown`. ⚠️ **The address is MASKED
+on purpose** (first two letters + domain) — enough to match against what she typed, without dumping real
+women's emails into a log. **The response body is byte-identical to before**, so the enumeration defense is
+untouched; nothing new is exposed to the client. ▶ **The decisive split: if the log says GROUP JOINED and no
+email arrived, the problem is MailerLite's (the 24h-per-person rule or the automation) — go to her Activity
+log. Any other line names the bug in our own function.**
+
+### ▶ THE "CHECK YOUR EMAIL" CONFIRMATION — HER DESIGN ASK (2026-08-09, renders made, AWAITING HER PICK)
+Her words: *"the print is so tiny and hard to read and it does not stand out at all."* She asked whether it
+should be a pop-up she can ✕ out of, or be wrapped/highlighted/bolder.
+- ▶ **MEASURED, and her instinct is provably right: `#restoreMsg` is 12px `#777`, which is 4.29:1 on the
+  welcome ivory — the ONLY text on that screen below the 4.5:1 AA bar.** Its neighbours run 5.5:1 (How It
+  Works subs) to 9-10:1 (founder line, card subs). So it is not merely quiet, it is the lightest and smallest
+  text on the page, at the moment it matters most. For an 18-80 audience with readability as a stated
+  priority, this is a fix regardless of which styling she picks.
+- ▶ **RECOMMENDED AGAINST THE POP-UP, and the reason generalises:** this is a confirmation of something she
+  just did AND an instruction she still has to act on. A modal she ✕'s out of **deletes the instruction** the
+  moment she dismisses it, leaving her on a screen with no record of what happened. It also contradicts her own
+  2026-07-29 principle (once a form has done its job its call to action should STAND DOWN, not shout louder).
+  Highlight in place, don't interrupt.
+- **Three options rendered** (`scratchpad/restoremock.js` → `restore-{current,a,b,c}.png`, 2x, her preferred
+  per-option format; drives the REAL sent state with the fetch stubbed to a 200): **A** bordered cream card +
+  envelope chip, left-aligned · **B** no box, the Or-Explore gold divider reused as a "CHECK YOUR EMAIL"
+  header with the body upsized to 13.5px ink (lightest touch, most restraint) · **C** gold left accent bar,
+  16px bold headline, strongest highlight. **All three also tighten the copy** — the current version spends
+  three sentences before she knows to go look — and demote "it's in your welcome email too" to a quieter line.
+  ⚠️ **That fallback line must NOT be cut**: the 24h rule means a second request in a day sends nothing, and
+  the welcome email is genuinely her only route back inside that window.
+- ✅✅ **SHE PICKED C AND IT IS BUILT + MERGED LIVE (2026-08-09), against the recommendation of A** — her eye,
+  and the ask was "make it stand out", which is exactly what C does best. As built: cream-to-gold gradient
+  card, **4px gold left accent bar**, envelope glyph + **16px bold "Check your email"**, 13px body, and the
+  welcome-email fallback demoted below a hairline rule. **Every line now clears AA with room** — headline
+  16.98:1, body 11.34:1 (was 4.29), fallback 5.54:1, follow-up links 8.99:1.
+- ▶ **BONUS FIX worth knowing: `#restoreMsg`'s inline `12px #777` was ALSO styling the plain status strings**
+  ("Please enter a valid email", "One moment...", "that didn't go through") — so the error messages were just
+  as unreadable as the confirmation. The inline style is gone; the base rule is now 12.5px `#4a463e` (8.99:1),
+  which lifts all of them at once. ⚠️ **Don't re-quieten `#restoreMsg`** — a confirmation she cannot read is
+  not a confirmation.
+- **Verified: `scratchpad/restorecard.js`, 42 checks** (390 + 360: card renders, headline/body sizes, accent
+  bar, envelope glyph, fallback line kept, ask form stands down, both follow-up links present, all four
+  contrast ratios, "Try a different email" restores the form + clears the card + empties the field, no
+  overflow, no sideways page scroll, zero JS errors). ⚠️ **`e2e.js` test 5 pinned the OLD exact phrase**
+  ("just sent you a link") and failed on the tightened copy — the assertion was widened to `just sent (you )?a
+  link`, the claim under test is unchanged. Full sweep green: sec 89 · e2e 29 · copy 41 · followups 38 ·
+  hubs 46 · menu 82 · nav 55 · cowork3 69 · affq 36. As-built: `scratchpad/restore-built.png`.
 
 ### ✅ WHAT SHIPPED 2026-08-08 (one PR, #752 — five polish items from HER live screenshots, all her calls)
 1. **How It Works step 2 REWORDED BY HER**: "Meet your Style Portrait" → **"Reveal your Style Portrait"**

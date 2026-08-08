@@ -271,6 +271,22 @@ async function addToMailerLite(email, name, token) {
   } catch (e) {}
 }
 
+// ▶ WHY THESE LOGS EXIST (2026-08-09, after Cath's second "no email arrived").
+// The response to the client is byte-identical in EVERY outcome below, and has
+// to be: saying "no account here" would turn this endpoint back into a way to
+// find out who uses Style Star (closed 2026-07-29). So the confirmation on
+// screen can never be a delivery receipt, and the Netlify function log is the
+// only place that can name which branch actually ran. Read it at
+// app.netlify.com → Functions → user-data. The address is masked: enough to
+// match against the one she typed, not a plaintext dump of anyone's email.
+function maskEmail(email) {
+  const parts = String(email || '').split('@');
+  return (parts[0] || '').slice(0, 2) + '***@' + (parts[1] || '?');
+}
+function restoreLog(email, outcome) {
+  console.log('[restore] ' + maskEmail(email) + ' — ' + outcome);
+}
+
 // Re-issue a restore link for someone who already has an account.
 //
 // Writes a FRESH token onto her subscriber record (the automation's email builds
@@ -284,31 +300,37 @@ async function addToMailerLite(email, name, token) {
 // can't race with the send it's about to cause.
 async function sendRestoreLink(email) {
   const apiKey = process.env.MAILERLITE_API_KEY;
-  if (!apiKey) return; // not configured — skip quietly
+  if (!apiKey) { restoreLog(email, 'NO SEND: MAILERLITE_API_KEY is not set'); return; }
   // One email per address per 5 minutes, marked BEFORE the send so two
   // simultaneous requests can't both slip past the check.
-  if (restoreOnCooldown(email)) return;
+  if (restoreOnCooldown(email)) { restoreLog(email, 'NO SEND: within the 5-minute per-address cooldown'); return; }
   markRestoreSent(email);
   const token = makeToken(email);
-  if (!token) return;
+  if (!token) { restoreLog(email, 'NO SEND: could not mint a token (RESTORE_SECRET missing?)'); return; }
   try {
     const res = await fetch(ML_BASE + '/subscribers', {
       method: 'POST',
       headers: mlHeaders(apiKey),
       body: JSON.stringify({ email: email, fields: { restore_token: token } })
     });
-    if (!res.ok) return;
+    if (!res.ok) { restoreLog(email, 'NO SEND: MailerLite /subscribers returned ' + res.status); return; }
     const json = await res.json();
     const subId = json && json.data && json.data.id;
-    if (!subId) return;
+    if (!subId) { restoreLog(email, 'NO SEND: MailerLite returned no subscriber id'); return; }
 
     const groupId = await mlGroupId(apiKey, MAILERLITE_RESTORE_GROUP_NAME, true);
-    if (!groupId) return;
+    if (!groupId) { restoreLog(email, 'NO SEND: could not find or create the restore group'); return; }
 
     const groupUrl = ML_BASE + '/subscribers/' + subId + '/groups/' + groupId;
     try { await fetch(groupUrl, { method: 'DELETE', headers: mlHeaders(apiKey) }); } catch (e) {}
-    await fetch(groupUrl, { method: 'POST', headers: mlHeaders(apiKey) });
-  } catch (e) {}
+    const join = await fetch(groupUrl, { method: 'POST', headers: mlHeaders(apiKey) });
+    // Past this line MailerLite owns the outcome: the join fired, so if no email
+    // arrives the answer is in her Activity log (the 24h-per-person rule, or the
+    // automation), not in this function.
+    restoreLog(email, (join && join.ok === false)
+      ? 'NO SEND: group join returned ' + join.status
+      : 'GROUP JOINED — handed off to the MailerLite automation');
+  } catch (e) { restoreLog(email, 'NO SEND: threw ' + (e && e.message ? e.message : e)); }
 }
 
 export default async (req) => {
@@ -474,7 +496,10 @@ export default async (req) => {
           const rows = await look.json();
           // sendRestoreLink itself enforces the per-address cooldown.
           if (rows && rows.length > 0) await sendRestoreLink(key);
-        } catch (e) {}
+          else restoreLog(key, 'NO SEND: no Supabase row for that address');
+        } catch (e) {
+          restoreLog(key, 'NO SEND: the Supabase lookup threw ' + (e && e.message ? e.message : e));
+        }
         const wait = EMAIL_RESPONSE_FLOOR_MS - (Date.now() - started);
         if (wait > 0) await new Promise(r => setTimeout(r, wait));
         return new Response(JSON.stringify({ success: true, sent: true }), { status: 200, headers });
