@@ -55,6 +55,8 @@ for (const w of [390, 360]) {
       headline: h ? h.textContent.trim() : '',
       headlineSize: h ? parseFloat(getComputedStyle(h).fontSize) : 0,
       accent: card ? getComputedStyle(card).borderLeftWidth : '',
+      accentColor: card ? getComputedStyle(card).borderLeftColor : '',
+      svgStroke: h && h.querySelector('svg') ? h.querySelector('svg').getAttribute('stroke') : '',
       hasSvg: !!(h && h.querySelector('svg')),
       bodySize: parseFloat(getComputedStyle(document.querySelector('#restoreForm .rc-b')).fontSize),
       fallback: (document.querySelector('#restoreForm .rc-q') || {}).textContent || '',
@@ -69,6 +71,10 @@ for (const w of [390, 360]) {
   ok(w + ': headline reads "Check your email"', m.headline === 'Check your email', m.headline);
   ok(w + ': headline is 16px (was 12px body text)', m.headlineSize === 16, m.headlineSize + 'px');
   ok(w + ': gold accent bar present', parseFloat(m.accent) >= 4, m.accent);
+  // ⚠️ Cath read #C8971E / #8a6a14 as BROWN on her phone. The card is all one
+  // gold now; these two pin it so an antique gold can't creep back in.
+  ok(w + ': accent bar is the #D8A52E gold, not bronze', m.accentColor === 'rgb(216, 165, 46)', m.accentColor);
+  ok(w + ': envelope glyph is the same gold', (m.svgStroke || '').toUpperCase() === '#D8A52E', m.svgStroke);
   ok(w + ': envelope glyph rendered', m.hasSvg);
   ok(w + ': body text is 13px', m.bodySize === 13, m.bodySize + 'px');
   ok(w + ': welcome-email fallback line kept', /welcome email/.test(m.fallback), m.fallback.trim());

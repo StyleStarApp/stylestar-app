@@ -88,7 +88,18 @@ should be a pop-up she can ✕ out of, or be wrapped/highlighted/bolder.
   as unreadable as the confirmation. The inline style is gone; the base rule is now 12.5px `#4a463e` (8.99:1),
   which lifts all of them at once. ⚠️ **Don't re-quieten `#restoreMsg`** — a confirmation she cannot read is
   not a confirmation.
-- **Verified: `scratchpad/restorecard.js`, 42 checks** (390 + 360: card renders, headline/body sizes, accent
+- ⚠️ **AND HER IMMEDIATE CATCH ON THE LIVE CARD: "I don't like the brown color... especially the line on the
+  left."** The first build used **`#C8971E`** on the 4px bar and **`#8a6a14`** on the envelope — **the exact
+  trap logged on 2026-08-08** (dark antique golds go brown at small sizes; the Analyze Photo hint star was the
+  same lesson). **The card is now ALL ONE GOLD, `#D8A52E`** — bar, envelope and the hairline rule — which is
+  the gold SHE picked for the Mall star the day before, and applying her own "all one color" principle from
+  that same session. Border lifted `#D8C285` → `#DFC07A`. ▶ **Rendered against `#E0B84C` (the star gold) and a
+  gold-leaf gradient before choosing** (`scratchpad/restoregold.js` → `gold-{brown,star,mall,leaf}.png`);
+  `#E0B84C` washed out at 4px and the gradient bar got clipped by the card's own `overflow`, so `#D8A52E` won
+  on presence. ▶ **STANDING: check any new gold against `#D8A52E` / `#E0B84C` FIRST — two of her last three
+  gold complaints have been this same family.** Two test assertions now pin the bar colour and the glyph
+  stroke so an antique gold cannot creep back.
+- **Verified: `scratchpad/restorecard.js`, 46 checks** (390 + 360: card renders, headline/body sizes, accent
   bar, envelope glyph, fallback line kept, ask form stands down, both follow-up links present, all four
   contrast ratios, "Try a different email" restores the form + clears the card + empties the field, no
   overflow, no sideways page scroll, zero JS errors). ⚠️ **`e2e.js` test 5 pinned the OLD exact phrase**
