@@ -97,7 +97,17 @@ SOLVED** · her rewrite of the restore email in MailerLite · **Instagram in the
    - ⚠️ **"your browser's toolbar", NEVER "at the bottom of your screen."** Safari's bar can be moved to the
      top and Chrome on iOS differs. **This also corrected an inconsistency in Claude's own advice** — B was
      argued down for "down here" while A's step 1 said "at the bottom". Same fault, both fixed.
-   - **Verified: `a2hs.js` grew 26 → 33 checks**, pinning the fixes so they can't regress: ≥14px, upright not
+   - ✅ **HER TWO LAYOUT NOTES FROM THE LIVE SCREENSHOT, both fixed same session:** (a) **the share chip sat
+     BELOW the line of text** — it was `vertical-align:-8px`; it is `vertical-align:middle` + `top:-1.7px`
+     now, measured dead level (0.0px off the text line's centre). ⚠️ **Don't go back to a negative
+     vertical-align.** (b) **step 2 wrapped.** ▶ **Measured, not guessed: her wording needs 271px, the step
+     cap was 262px, and 286px was actually AVAILABLE at 390** — the cap was the limiter, not the screen. Cap
+     raised to 292px and `#a2hs` side padding trimmed 22 → 12px, which buys 20px. **Both steps now hold ONE
+     line at 390 AND 360 (Display Zoom).** ⚠️ At 320 they still wrap, deliberately — she said *"I definitely
+     don't want the font any smaller"*, and shrinking type on the readability audience is the wrong trade.
+     ▶ **The alternative if 320 ever matters: "Choose Add to Home Screen" needs only 232px and fits every
+     width** — the "scroll down" wording duplicates the note below it anyway. Offered, not taken.
+   - **Verified: `a2hs.js` grew 26 → 38 checks**, pinning the fixes so they can't regress: ≥14px, upright not
      italic, two numbered steps, the glyph inside a chip, the note naming View More, the toolbar wording, and
      — the important one — **zero elements on the iOS path that look tappable** (no anchor, no onclick, no
      `cursor:pointer`). As-built: `scratchpad/a2hs-built.png`.
