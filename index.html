@@ -742,12 +742,14 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .menu-chip span{font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.12em;color:#3a352c;text-transform:uppercase}
 body.menu-hidechip .menu-chip{display:none}
 .menu-veil{display:none;position:fixed;inset:0;z-index:9600;background:rgba(20,17,12,.45)}
-.menu-panel{display:none;position:fixed;top:0;left:0;bottom:0;z-index:9610;width:min(250px,70vw);background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:8px 0 30px rgba(0,0,0,.35);overflow-y:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 22px 26px}
+.menu-panel{display:none;position:fixed;top:0;left:0;bottom:0;z-index:9610;width:min(220px,70vw);background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:8px 0 30px rgba(0,0,0,.35);overflow-y:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 22px 26px}
 body.menu-open .menu-veil{display:block}
 body.menu-open .menu-panel{display:block}
-.menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.menu-head{position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .menu-logo{width:58px;height:auto;display:block}
-.menu-x{background:none;border:none;font-size:17px;color:#6f6a63;cursor:pointer;padding:8px 6px}
+/* the ✕ sits up in the panel's top-right CORNER (Cath, 2026-08-09) — absolute so
+   it can hug the corner while its tap area still reaches a comfortable ~38x40px */
+.menu-x{position:absolute;top:-6px;right:-12px;background:none;border:none;font-size:18px;line-height:1;color:#6f6a63;cursor:pointer;padding:10px 10px 12px 12px}
 .menu-row{font:400 17px/1.2 'DM Serif Display',Georgia,serif;color:#1a1a1a;padding:11px 2px;border-bottom:1px solid rgba(33,30,26,.08);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .menu-homerow{border-top:1px solid rgba(33,30,26,.08)}
 .menu-grp{font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8a8474;margin:16px 0 3px;padding:0 2px}

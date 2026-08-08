@@ -7,7 +7,29 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-08-08, a light phone-testing session)
+## ▶ NEXT SESSION — START HERE (updated 2026-08-09, a two-item menu tune from her screenshot)
+
+### ✅ WHAT SHIPPED 2026-08-09 (two menu-drawer items, both her asks off one live screenshot)
+1. **Menu drawer narrower again, 250px → `min(220px,70vw)`.** She took the offer from 08-08 ("she can go to
+   ~215px before anything wraps"). ▶ **The floor is now MEASURED, not estimated: 213px** — walked the panel
+   1px at a time in real Chromium with the real fonts and the "Start here" pill shown (the widest state), and
+   **"Refine your Preferences" is the first row to wrap, at 212px** (its content box is 165px + 44px panel
+   padding + 4px row padding = 213px). **220px was chosen deliberately over 213** — 7px of headroom so a
+   webfont that fails to load and falls back to Georgia can't wrap the list. ▶ **If she ever wants the last
+   7px, 213 is the hard floor and there is nothing below it without shrinking the font.**
+   (`scratchpad/menumeasure.js` reruns the measurement any time a row is renamed or added.)
+2. **The ✕ moved up into the top-right CORNER** (her ask; it had been vertically centered against the tall
+   logo, which put it level with the middle of the wordmark). `.menu-head` is `position:relative` and
+   `.menu-x` is now absolute at `top:-6px;right:-12px` — **the negative offsets eat into the panel's own
+   22px padding so the glyph hugs the corner (20px in, 16px down) while the button's padding keeps the tap
+   area at 37x40px**, which matters for the 18-80 audience. Same trick as the FAQ/legal Back button.
+   ⚠️ Don't "tidy" the negative offsets away; they ARE the corner-hugging.
+- **Verified: `scratchpad/menux.js`, 28 checks** (390/360/320 — 17 rows all one line with the pill shown, ✕
+  geometry + tap size + still closes the drawer, nothing overflows the panel sideways, zero JS errors) +
+  menu 82 · nav 55 · hubs 46 · e2e 29 · copy 41 · followups 38 all green. Screenshot: `scratchpad/menu-220.png`.
+▶ **Still open, unchanged from 08-08:** how the A2HS whisper feels on her phone · HER graduation-whisper line ·
+her most-asked stylist questions (chat chips) · the restore-email bug for her next MailerLite desk day · and
+Indie Law's substantive reply (name fix + operating-agreement blanks), then the TM signature email, then the EIN.
 
 ### ✅ WHAT SHIPPED 2026-08-08 (one PR, #752 — five polish items from HER live screenshots, all her calls)
 1. **How It Works step 2 REWORDED BY HER**: "Meet your Style Portrait" → **"Reveal your Style Portrait"**
