@@ -713,31 +713,29 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .whatsnext-grid{display:flex;flex-direction:column;align-items:center;gap:8px}
 .share-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:12px}
 .quiz-footer{text-align:center;padding:1.25rem;border-top:1px solid #f0f0f0}
-/* ===== THE ONE STANDARD FOOTER (Option C, Cath's pick 2026-07-30) =====
-   Every footer container carries data-std-foot and is filled at boot by
-   _initStdFooters() from ONE template (_stdFootHTML), so the links can never
-   drift apart again — that drift is how the app ended up with eight sets.
-   Containers keep their own class for PLACEMENT (margins, band background);
-   everything INSIDE is styled here and only here. */
-[data-std-foot] .sf-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
-[data-std-foot] .sf-row .lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer;text-decoration:none}
-[data-std-foot] .sf-row .star{color:#E6C24E;font-size:12px;line-height:1}
-/* the quiet legal row: quiet through SIZE, not a lighter ink — a lighter grey
-   measured 4.4:1 on the FAQ page's cream and failed (the disclosure lesson:
-   a link she can't read isn't a link). Same ink as the main links, ~4.8:1. */
-[data-std-foot] .sf-row2{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:9px}
-[data-std-foot] .sf-row2 .lnk2{font:400 12px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer}
-[data-std-foot] .sf-row2 .dot{color:#b0a998;font-size:11px;line-height:1}
-/* Instagram (Cath's pick "Footer A" from ig-foot-inline.png, 2026-08-08): a quiet
-   glyph on the second row, sized to the 12px text beside it, in the same ink.
-   ⚠️ The negative margin cancels the padding for LAYOUT only, so the row spaces
-   itself as if this were a bare 15px glyph while the tap target stays 27x27 —
-   the main row has no width to spare at 360px and this must not add any. */
-[data-std-foot] .sf-row2 .ig-a{display:flex;align-items:center;padding:6px;margin:-6px;-webkit-tap-highlight-color:transparent}
-[data-std-foot] .sf-row2 .ig-g{width:15px;height:15px;display:block}
-/* Display-Zoom phones: the FAQ/legal column is 248px at 360w and the main row
-   needs 246px at gap 10 — zero real headroom, so it wraps. Gap 8 buys 12px. */
-@media(max-width:374px){[data-std-foot] .sf-row{gap:8px}}
+/* ===== THE ONE STANDARD FOOTER (Cath's from-zero rethink, 2026-08-08) =====
+   Every footer container carries data-std-foot and is filled at boot from ONE
+   template (_stdFootHTML), so the links can never drift apart again — that
+   drift is how the app once ended up with eight sets. Containers keep their
+   own class for PLACEMENT (margins, band background); everything INSIDE is
+   styled here and only here.
+   Both rows speak with ONE voice — same 14px, gold stars as the only
+   separator (her catch: gold stars above vs gray dots below "doesn't look
+   right"). Places to go up top (Home ★ Shop ★ Instagram), information below
+   (Privacy ★ Terms ★ FAQ). My Story cut; each page omits its own link. */
+[data-std-foot] .sf-row,[data-std-foot] .sf-row2{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+[data-std-foot] .sf-row2{margin-top:9px}
+[data-std-foot] .lnk{font:400 14px/1 'Jost',sans-serif;color:#6f6a63;cursor:pointer;text-decoration:none}
+[data-std-foot] .star{color:#E6C24E;font-size:12px;line-height:1}
+/* Instagram: the REAL brand-gradient tile (her ask — instantly recognizable),
+   ending the main row as its one spot of color.
+   ⚠️ The negative margin cancels the padding for LAYOUT only, so the row
+   spaces itself as if this were a bare 16px tile while the tap target stays
+   28x28 — the rows have no width to spare at 320 and this must not add any. */
+[data-std-foot] .ig-a{display:flex;align-items:center;padding:6px;margin:-6px;-webkit-tap-highlight-color:transparent}
+[data-std-foot] .ig-g{width:16px;height:16px;display:block}
+/* Display-Zoom phones: keep the rows comfortably on one line. */
+@media(max-width:374px){[data-std-foot] .sf-row,[data-std-foot] .sf-row2{gap:8px}}
 /* every brand logo is a way home */
 .go-home{cursor:pointer}
 /* ===== THE MENU (labelled hamburger + left drawer), Cath's ask 2026-07-30 ===
@@ -3525,27 +3523,46 @@ function goHome(){
 // Every footer is filled at boot from this ONE template, so the links can never
 // drift apart again (the app once grew eight different footer link sets by accident).
 // To change the footer, change it here and nowhere else.
-function _stdFootHTML(){
-  return '<div class="sf-row">'
-    +'<span class="lnk" onclick="goHome()">Home</span><span class="star">&#9733;</span>'
-    +'<span class="lnk" onclick="showShop()">Shop</span><span class="star">&#9733;</span>'
-    +'<span class="lnk" onclick="showStory()">My Story</span><span class="star">&#9733;</span>'
-    +'<span class="lnk" onclick="showFAQ()">FAQ</span>'
-    +'</div>'
-    +'<div class="sf-row2">'
-    +'<span class="lnk2" onclick="showPrivacy()">Privacy</span><span class="dot">&#183;</span>'
-    +'<span class="lnk2" onclick="showTerms()">Terms</span><span class="dot">&#183;</span>'
-    // Her own Instagram, so rel is "noopener" and NOT "sponsored" — that keyword
-    // marks a paid or affiliate link, and tagging our own account would be a
-    // false signal. aria-label because the link is an icon with no text.
-    +'<a class="ig-a" href="https://instagram.com/style_star.app" target="_blank" rel="noopener" aria-label="Follow Style Star on Instagram">'
-    +'<svg class="ig-g" viewBox="0 0 24 24" fill="none" stroke="#6f6a63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
-    +'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/>'
-    +'<circle cx="17.2" cy="6.8" r="1.1" fill="#6f6a63" stroke="none"/></svg>'
-    +'</a>'
-    +'</div>';
+// Cath's footer rethink (2026-08-08, from zero — legal/legit/easy/profit):
+// two balanced rows in ONE voice (same size, gold stars throughout), sorted by
+// meaning — places to go up top, information below. My Story is CUT (it lives
+// in the Menu and the welcome founder line). Each page OMITS its own link, so
+// no footer ever links to the page it is on (her catch: "on the My Story page
+// we have a My Story footer").
+function _stdFootHTML(sid){
+  var star='<span class="star">&#9733;</span>';
+  var main=[];
+  if(sid!=='s-wel'&&sid!=='s-wb')main.push('<span class="lnk" onclick="goHome()">Home</span>');
+  if(sid!=='s-shop')main.push('<span class="lnk" onclick="showShop()">Shop</span>');
+  // Her own Instagram, so rel is "noopener" and NOT "sponsored" — that keyword
+  // marks a paid or affiliate link, and tagging our own account would be a
+  // false signal. aria-label because the link is an icon with no text.
+  // The tile is the REAL Instagram gradient (her ask — instantly recognizable)
+  // and always ENDS the main row, so the rhythm holds on every page whichever
+  // link drops out. ⚠️ The gradient id is unique per footer: a shared id would
+  // resolve to a def inside a hidden screen, which Safari may refuse to paint.
+  var gid='igG-'+(sid||'g');
+  main.push('<a class="ig-a" href="https://instagram.com/style_star.app" target="_blank" rel="noopener" aria-label="Follow Style Star on Instagram">'
+    +'<svg class="ig-g" viewBox="0 0 24 24"><defs><radialGradient id="'+gid+'" cx="30%" cy="107%" r="150%">'
+    +'<stop offset="0" stop-color="#FDF497"/><stop offset=".09" stop-color="#FDF497"/>'
+    +'<stop offset=".45" stop-color="#FD5949"/><stop offset=".6" stop-color="#D6249F"/>'
+    +'<stop offset=".9" stop-color="#285AEB"/></radialGradient></defs>'
+    +'<rect x="1.5" y="1.5" width="21" height="21" rx="5.4" fill="url(#'+gid+')"/>'
+    +'<circle cx="12" cy="12" r="4.4" fill="none" stroke="#fff" stroke-width="1.7"/>'
+    +'<circle cx="17.4" cy="6.6" r="1.25" fill="#fff"/></svg></a>');
+  var row2=[];
+  if(sid!=='s-privacy')row2.push('<span class="lnk" onclick="showPrivacy()">Privacy</span>');
+  if(sid!=='s-terms')row2.push('<span class="lnk" onclick="showTerms()">Terms</span>');
+  if(sid!=='s-faq')row2.push('<span class="lnk" onclick="showFAQ()">FAQ</span>');
+  return '<div class="sf-row">'+main.join(star)+'</div>'
+    +'<div class="sf-row2">'+row2.join(star)+'</div>';
 }
-document.querySelectorAll('[data-std-foot]').forEach(function(el){el.innerHTML=_stdFootHTML();});
+// Fill each container for the screen it lives on (the global .quiz-footer has
+// no screen ancestor and gets the full set — its screens have no self-link).
+document.querySelectorAll('[data-std-foot]').forEach(function(el){
+  var scr=el.closest('.scr');
+  el.innerHTML=_stdFootHTML(scr?scr.id:'');
+});
 
 // ===== THE MENU (Cath's ask 2026-07-30) =====
 // The drawer gets its own history entry, so hardware/browser Back with the
