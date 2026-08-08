@@ -58,8 +58,26 @@ chat with your stylist, add to your wishlist, shop your style and more."*
   tight line break** — that is the fix for "Founder of Style Star" sitting too far from her name, NOT the
   line-spacing control, which moves the whole block.
 
-### ▶ HER TWO NEW ITEMS (2026-08-08, added to the list as she moved to her desk — NOTHING BUILT)
-**1. ✅✅ DONE — THE INSTAGRAM LINK IS BUILT AND MERGED (2026-08-08). She picked "Footer A"** from the
+### ▶ WHERE THIS SESSION ENDED — THE SHORT LIST FOR NEXT TIME (2026-08-08)
+**Shipped and confirmed today:** the narrower Menu + corner ✕ · the "Check your email" card (her Option C,
+then her gold fix, then her even-thin-border fix) · the restore-send breadcrumbs · **the restore-email bug
+SOLVED** · her rewrite of the restore email in MailerLite · **Instagram in the footer AND the Menu**.
+▶ **NEXT UP, in the order that looked right when she stopped:**
+1. **🧭 THE FOOTER AUDIT — teed up, the analysis is already done** (see the entry below): seven screens
+   link to themselves, and she wants the `.sf-row2` Privacy · Terms line tidied. **Renders first.**
+   ⚠️ Now that Instagram lives on `.sf-row2`, any change to that row must keep the glyph.
+2. **📧 The rest of the MailerLite list:** shrink the "shouting" sub-header in the WELCOME email (the
+   restore one is done) · "Email me my wishlist" · photo-tips email + email capture on the wardrobe page.
+3. **📱 A2HS question she raised and has NOT answered:** the whisper is Welcome-Back-only, so a first-time
+   visitor never sees it. **Offered as a conversation, not built** — should a woman who just finished her
+   quiz be invited to install too?
+▶ **Still waiting on HER words, unchanged:** the graduation-whisper line · her most-asked stylist questions
+(the chat chips). ▶ **Still waiting on OTHERS:** Indie Law's substantive reply (the Bailey name fix + the
+operating-agreement blanks), then the TM signature email, then the EIN.
+
+### ▶ HER TWO NEW ITEMS (2026-08-08, added to the list as she moved to her desk)
+**1. ✅✅ DONE, AND CONFIRMED LIVE BY CATH (2026-08-08): "I see it on the footers and the link worked."**
+She picked **"Footer A"** from the
 3-way render (`scratchpad/igmock.js` → `ig-{foot-inline,foot-own-line,menu-row}.png`): a **quiet 15px glyph
 on the footer's second row, after Terms**, in the same `#6f6a63` ink as Privacy and Terms. Handle
 **`@style_star.app`**, confirmed by her. **She then asked for the MENU ROW TOO, same session, so BOTH shipped**:
