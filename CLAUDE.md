@@ -13,7 +13,9 @@ by email.
 (her 4 catches), the ADD-TO-HOME-SCREEN whisper shipped (her words, her icon idea, no ✕, no retirement),
 and the legal thread moved (LLC docs delivered + inventoried, TM word mark → final action steps, her
 2-ask reply to Indie Law sent: the "Bail"→Bailey name fix + the operating-agreement blanks). ▶ **Watch
-for: Indie Law's reply, the TM signature email (REAL, not scam), then the EIN.** Still waiting on HER
+for: Indie Law's substantive reply (UPDATE 2026-08-07: Almira acknowledged the two flagged items, said
+she'll look into it and respond — nothing substantive yet), the TM signature email (REAL, not scam),
+then the EIN.** Still waiting on HER
 words: the graduation whisper line + her list of most-asked stylist questions (chat chips). Ask how the
 A2HS whisper feels on her own phone.
 
@@ -30,9 +32,15 @@ she's been thinking about, pick ONE lever.** The detailed entries live in the se
 2. **💬 CONVERSATIONS (talk, not build):** wardrobe Ideas CATEGORY BOUNDARIES (her white-tops find; she
    is the taxonomy authority) · two small her-call flags: quiet brand-home links in chat next to an
    already-linked item (her Coach observation), and the "My List" tab name if it ever bothers her.
-3. **🖥 DESK DAY (MailerLite):** shrink the "shouting" sub-header in welcome + restore emails · "Email me
-   my wishlist" (unblocked, better now that picks carry real products/prices) · photo-tips email + email
-   capture on the wardrobe page fit the same session.
+3. **🖥 DESK DAY (MailerLite):** ⚠️ **NEW 2026-08-07, HER BUG REPORT — check FIRST: the restore email never
+   arrived.** She entered her email in "Find my results" on the welcome/discovery page; the app confirmed, but
+   no email came. Likely suspects before assuming broken code: the once-per-24h-per-person MailerLite rule
+   (her address has been through the restore automation before), the 5-min per-address cooldown in
+   `sendRestoreLink`, or the leave-then-rejoin group trick failing. **Diagnostic: her subscriber's Activity
+   log in MailerLite** (timestamped joins/sends — solved the 2026-07-29 mystery in seconds). Also: shrink
+   the "shouting" sub-header in welcome + restore emails · "Email me my wishlist" (unblocked, better now
+   that picks carry real products/prices) · photo-tips email + email capture on the wardrobe page fit the
+   same session.
 4. **📱 HER TESTING (the quality gate only she can run):** keep testing search chat — does the try-harder
    dial convert dry runs? keep reporting bad search landings · when bored: address-bar checks on the last
    unverified stores — ✅✅ **THE PRIORITY STORE-URL AUDIT IS COMPLETE (2026-08-01, one session, all 8):
@@ -135,13 +143,15 @@ styled women for over 20 years. I created this with love & intention ♥") shipp
 on 2026-07-30; the "parked" note here was stale. So the session was only the path. **Cath picked OPTION B
 from a 4-way render** (`scratchpad/welmock.js` → `welcome-compare.png`; she asked for larger visuals — the
 per-option 2x images `welcome-{current,a,b,c}.png` are the phone-readable format, use it next time): a
-"How It Works" mini-section AFTER her founder line — 1 Take the style quiz · 2 Meet your Style Portrait ·
-3 Shop your style, each with a one-line sub. Built as `.hm-hiw` between `.hm-founder` and `#restoreSection`,
+"How It Works" mini-section AFTER her founder line — 1 Take the style quiz · 2 Reveal your Style Portrait
+(✅ REWORDED BY HER 2026-08-07 — was "Meet", which doubled with "Meet your stylist" on the same screen;
+"Reveal" matches the portrait's real reveal-doors moment) · 3 Shop your style, each with a one-line sub. Built as `.hm-hiw` between `.hm-founder` and `#restoreSection`,
 **header literally reuses the Or Explore divider pieces** (`.hm-divwrap`/`.hm-hair`/`.hm-divlbl`) so the
 two can never drift. Gold-outline number circles (`.hiw-n`), rides the ssRise entrance at .38s. Verified
-390+360 (visible, 3 rows, correct position, no overflow, zero JS errors) + full sweep green. ⚠️ **The three
-sub-lines are Claude's drafts** ("12 quick questions, no wrong answers" · "Your signature style, in words
-made for you" · "Stores and pieces picked to fit it") — **she may reword; one string each in the markup.**
+390+360 (visible, 3 rows, correct position, no overflow, zero JS errors) + full sweep green. ⚠️ **Two sub-lines
+remain Claude's drafts** ("12 quick questions, no wrong answers" · "Stores and pieces picked to fit it") —
+**she may reword; one string each in the markup.** ✅ Step 2's sub is HERS now (2026-08-07): "Your
+signature style, made clear for you" — don't reword without her.
 Note s-wel only shows to women without saved results, so the section naturally targets exactly the stranger
 it's for. ⚠️ affq's B-section flaked once more (timing), green twice on rerun — a pattern now, worth a
 deflake look someday.
