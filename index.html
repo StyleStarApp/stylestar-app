@@ -1417,6 +1417,9 @@ body.card-fb{padding:0}
 #s-photo-res .phub2 .pgo svg.ps{width:15px;height:15px;fill:#1a1a1a}
 /* Portrait hub: 2x2 grid of the four style keepsakes */
 #s-photo-res .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:6px}
+/* With the Mood Board deleted (2026-08-08) the grid holds 3 tiles — the odd last
+   one spans the full row so the layout never shows a hole. */
+#s-photo-res .pgrid .pbtn:last-child:nth-child(odd){grid-column:1/-1}
 #s-photo-res .pbtn{display:flex;flex-direction:column;align-items:center;gap:8px;background:#fff;border:1.5px solid #1a1a1a;border-radius:2px;padding:9px 9px 11px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
 #s-photo-res .pbtn:active{transform:scale(.97);filter:brightness(.98)}
 /* each button shows a mini rendering of the actual keepsake */
@@ -1434,7 +1437,6 @@ body.card-fb{padding:0}
 #s-photo-res .pv-sig .pvs-track{position:relative;flex:1;height:2.5px;border-radius:2px;background:#cdd1d6}
 #s-photo-res .pv-sig .pvs-dot{position:absolute;top:50%;width:7px;height:7px;border-radius:50%;background:#E4B948;border:.6px solid #B7BCC2;transform:translate(-50%,-50%)}
 #s-photo-res .pv-const{background:radial-gradient(120% 100% at 50% 22%,#2a2521,#100d0b)}
-#s-photo-res .pv-mood{background:#faf7f0}
 #s-photo-res .pbtn .pbt{font:400 18px/1.1 'DM Serif Display',serif;color:#1a1a1a}
 /* BUILD — the wardrobe: a linen fabric-label panel pinned to the dark board, with a charcoal topstitch (matches the Your Wardrobe page identity) */
 #s-photo-res .bhub{position:relative;padding:6px 22px 14px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
@@ -1655,11 +1657,11 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .res-screen .pair .t svg{width:22px;height:22px;stroke:#8a6d20;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .res-screen .pair .t span{font:600 13px/1 'Jost',sans-serif;color:#2f2a22}
 .res-screen .pcard{width:346px;max-width:97%;margin:18px auto 0;opacity:0;background-color:#FCFCFB;border-radius:0;box-shadow:0 16px 30px -14px rgba(0,0,0,.6),0 2px 5px rgba(0,0,0,.16);padding:15px 18px 17px;position:relative}
-/* Style Constellation + Mood Board: two thin-gold-framed cards on ONE black/cream striped "curtain" panel */
+/* Style Constellation: a thin-gold-framed card on the black/cream striped "curtain" panel */
 .res-screen .kbwrap{width:346px;max-width:97%;margin:6px auto 0;padding:15px;position:relative;opacity:0;background:repeating-linear-gradient(to bottom,#1c1a15 0 40px,#f2efe8 40px 80px);box-shadow:0 16px 30px -14px rgba(0,0,0,.6)}
 .res-screen .kbwrap .pcard{width:auto;max-width:none;margin:0;opacity:1;animation:none!important;box-shadow:0 0 0 1.5px #c8a44d,0 2px 6px rgba(0,0,0,.28)}
 .res-screen .kbwrap .pcard+.pcard{margin-top:15px}
-.res-screen .kbwrap .pcard::after,.res-screen .kbwrap .pcard.pcard-vb::before{display:none}
+.res-screen .kbwrap .pcard::after{display:none}
 /* Style Portrait: wider, balanced content on the full-bleed black stage, matching the outfit-results boards (Cath, 2026-07-24) */
 #s-res .p1,#s-res .p2,#s-res .p3,#s-res .kbwrap{width:368px;max-width:calc(100% - 12px)}
 /* black gap above the first hub (below "What would you like to do?") = the 16px between-hub gaps */
@@ -2245,22 +2247,16 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </div>
     </div>
 
-    <!-- PIECE 2.5: Style Constellation + Mood Board keepsakes on one striped curtain panel -->
+    <!-- PIECE 2.5: the Style Constellation keepsake on the striped curtain panel.
+         (The Vision/Mood Board that used to share this panel was DELETED 2026-08-08,
+         Cath's call — it didn't lead anywhere and didn't help her style. Its ideas
+         live on in CLAUDE.md's future-features list.) -->
     <div class="kbwrap">
     <div class="pcard">
       <div class="sc-lead"><i class="l"></i>Your Style Constellation<i class="r"></i></div>
       <div class="sc-row" data-shelf onclick="saveStyleCard('quiz')">
         <span class="sc-thumb"><img id="scThumb" alt="Your Style Constellation preview"></span>
         <div class="tx"><div class="sc-tt">See &amp; share your<br>Style Constellation</div><div class="sc-ss">A shareable keepsake of your signature style</div></div>
-        <svg class="sc-ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
-      </div>
-    </div>
-
-    <div class="pcard pcard-vb">
-      <div class="sc-lead"><i class="l"></i>Your Style Mood Board<i class="r"></i></div>
-      <div class="sc-row" data-shelf onclick="openVisionBoard()">
-        <span class="sc-thumb" style="display:flex;align-items:center;justify-content:center;background:#28251F;position:relative"><svg viewBox="0 0 24 24" width="30" height="30" fill="#E9C46A"><path d="M12 3l2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.9 6.4 20.2l1.5-6.2L3 9.6l6.4-.5z"/></svg><img id="vbThumb" alt="Your Style Mood Board preview" style="position:absolute;inset:0;display:none"></span>
-        <div class="tx"><div class="sc-tt">See &amp; share your<br>Mood Board</div><div class="sc-ss">A shareable keepsake of your style vibe</div></div>
         <svg class="sc-ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
       </div>
     </div>
@@ -2602,7 +2598,6 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
             <div class="pbtn" onclick="loadSaved()"><div class="pvis pv-portrait"><svg class="pv-star" viewBox="0 0 24 24"><defs><radialGradient id="pvPortStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#pvPortStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div><span class="pbt">Portrait</span></div>
             <div class="pbtn" onclick="showSignature()"><div class="pvis pv-sig" id="pvSig"></div><span class="pbt">Signature</span></div>
             <div class="pbtn" onclick="saveStyleCard('quiz')"><div class="pvis pv-const"><img id="pvConstImg" alt="Your Style Constellation"></div><span class="pbt">Constellation</span></div>
-            <div class="pbtn" onclick="openVisionBoard()"><div class="pvis pv-mood"><img id="pvMoodImg" alt="Your Style Mood Board"></div><span class="pbt">Mood Board</span></div>
           </div>
         </div>
       </div>
@@ -3049,7 +3044,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="faq-item"><div class="faq-q">Do I have to take the quiz?</div><div class="faq-a">Not at all. You're welcome to chat with your stylist, analyze a photo, or browse and shop anytime. The quiz helps us understand the nuances of your style so everything feels more personal, but it's completely optional.</div></div>
       <div class="faq-item"><div class="faq-q">What is my Style Portrait?</div><div class="faq-a">Your Style Portrait is a snapshot of your personal style from the quiz. It highlights your natural preferences and becomes the foundation for the guidance, shopping ideas, and advice you'll get throughout the app.</div></div>
       <div class="faq-item"><div class="faq-q">How does Style Star help me build my wardrobe?</div><div class="faq-a">Style Star includes a list feature, called <i>Your Wardrobe List</i>, to help you build a complete, well-rounded closet. I took the same checklist I use in my real closet consultations and turned it into an easy list, so you can tap a star on anything you&rsquo;d love to add and see at a glance what would round out your closet. Then just tap anything you&rsquo;d like for shopping ideas matched to your style, or peek at <i>What&rsquo;s Trending</i> to see what&rsquo;s fresh right now.</div></div>
-      <div class="faq-item"><div class="faq-q">Can I share my results?</div><div class="faq-a">Yes, and we'd love that! After the quiz, you'll get two beautiful keepsakes to share: your Style Constellation, a star map of your signature style, and your Style Mood Board, a collage of your style vibe. Text either one to a friend or post it on Instagram. It's a fun way to celebrate your style, and to invite the women you love to discover theirs.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I share my results?</div><div class="faq-a">Yes, and we'd love that! After the quiz, you'll get a beautiful keepsake to share: your Style Constellation, a star map of your signature style. Text it to a friend or post it on Instagram. It's a fun way to celebrate your style, and to invite the women you love to discover theirs.</div></div>
       <div class="faq-item"><div class="faq-q">Can I upload a photo for style advice?</div><div class="faq-a">Yes. Share an outfit or a piece you're considering, and your stylist will give you thoughtful feedback to elevate the look while keeping it true to you. Your photo is sent to our AI to be looked at in the moment, and Style Star never stores it. If you share it in the stylist chat, a copy stays in that conversation on your own device so you can scroll back, and clearing it is as easy as tapping "Start a fresh conversation."</div></div>
       <div class="faq-item"><div class="faq-q">Can I retake the quiz or change my results?</div><div class="faq-a">Yes, as many times as you want. Your style can evolve, and your results can grow right along with it.</div></div>
       <div class="faq-item"><div class="faq-q">How do I get my results back on another device?</div><div class="faq-a">Just your email. You don't need to create a password or remember anything. Simply save your results with your email address and you can pick up right where you left off, on any device.</div></div>
@@ -3691,7 +3686,6 @@ function showResult(txt,top3,motto){
   userMotto=(motto&&String(motto).trim())||'';
   try{localStorage.setItem('ss_data',JSON.stringify({userName:userName,answers:answers,topArchNames:topArchNames,portrait:txt,motto:userMotto}));}catch(e){}
   _renderCardThumb();
-  _renderVisionThumb();
   if(_resNoReveal){_resNoReveal=false;s.classList.remove('rv-compose','rv-open','rv-quick');if(s._rvDone)clearTimeout(s._rvDone);s.classList.add('rv-done');}
   else{_playResReveal(fromCompose);}
   scheduleSaveSheet();
@@ -3722,19 +3716,6 @@ function _renderCardThumb(){
   var imgs=['scThumb','pvConstImg'].map(function(id){return document.getElementById(id)}).filter(Boolean);
   if(!imgs.length)return;
   try{buildCardBlob('quiz',function(blob,url){
-    imgs.forEach(function(img){
-      var old=img.getAttribute('data-u');if(old){try{URL.revokeObjectURL(old)}catch(e){}}
-      img.src=url;img.setAttribute('data-u',url);img.style.display='block';
-    });
-  });}catch(e){}
-}
-// Draw a small preview of the actual Vision Board into its results entry (the gold
-// star stays underneath as the fallback until the collage is ready).
-function _renderVisionThumb(){
-  var imgs=['vbThumb','pvMoodImg'].map(function(id){return document.getElementById(id)}).filter(Boolean);
-  if(!imgs.length)return;
-  try{buildVisionBlob(function(blob,url){
-    if(!blob)return;
     imgs.forEach(function(img){
       var old=img.getAttribute('data-u');if(old){try{URL.revokeObjectURL(old)}catch(e){}}
       img.src=url;img.setAttribute('data-u',url);img.style.display='block';
@@ -4042,8 +4023,8 @@ function _photoSaveArea(on){
   // "See my Style Portrait" only exists for quiz-takers (needs a saved portrait).
   var pp=document.getElementById('photoPortraitHub');if(pp)pp.style.display=quizTaken?'':'none';
   var ptt=document.getElementById('portraitTitle');if(ptt){var _pfn=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';ptt.textContent=_pfn?_pfn+'’s Style':'Your Style';}
-  // Fill the keepsake buttons with real mini renderings of her constellation, mood board + signature.
-  if(quizTaken){try{_renderCardThumb();_renderVisionThumb();_renderSigThumb();}catch(e){}}
+  // Fill the keepsake buttons with real mini renderings of her constellation + signature.
+  if(quizTaken){try{_renderCardThumb();_renderSigThumb();}catch(e){}}
   if(on===false){['resKeepPhoto','resSaveBtnPhoto','photoQuizNudge'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display='none'});return}
   var showSave=quizTaken&&!emailDone;
   ['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display=showSave?'':'none'});
@@ -8116,207 +8097,6 @@ function buildCardBlob(source,callback){
   }
 }
 
-/* ===================== Style Vision Board (shareable mood-board keepsake) ===================== */
-const VISION_IMGS=[];
-(function(){for(let i=1;i<=32;i++)VISION_IMGS.push('vision/v'+String(i).padStart(2,'0')+'.jpg');})();
-
-// small deterministic RNG (mulberry32) seeded from a string, so a given name lays out consistently
-function _visRng(seedStr){
-  let h=1779033703^seedStr.length;
-  for(let i=0;i<seedStr.length;i++){h=Math.imul(h^seedStr.charCodeAt(i),3432918353);h=h<<13|h>>>19;}
-  let a=h>>>0;
-  return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
-}
-// cover-fit an image into a destination rect (center-crop)
-function _visCover(ctx,img,dx,dy,dw,dh){
-  const iw=img.naturalWidth,ih=img.naturalHeight,ir=iw/ih,tr=dw/dh;let sx,sy,sw,sh;
-  if(ir>tr){sh=ih;sw=sh*tr;sx=(iw-sw)/2;sy=0;}else{sw=iw;sh=sw/tr;sx=0;sy=(ih-sh)/2;}
-  ctx.drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh);
-}
-// 5-point star
-function _visStar(ctx,cx,cy,r,rot,fill){
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot||0);ctx.beginPath();
-  for(let i=0;i<10;i++){const rr=i%2?r*0.42:r;const a=-Math.PI/2+i*Math.PI/5;i?ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr);}
-  ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.restore();
-}
-// centered text with manual letter-spacing
-function _visSpaced(ctx,text,cx,y,sp){
-  const chars=[...text];let total=0;for(const c of chars)total+=ctx.measureText(c).width+sp;total-=sp;
-  let x=cx-total/2;const prev=ctx.textAlign;ctx.textAlign='left';
-  for(const c of chars){ctx.fillText(c,x,y);x+=ctx.measureText(c).width+sp;}
-  ctx.textAlign=prev;
-}
-function _visArchWidth(ctx,archs,fs){
-  ctx.font=fs+'px "DM Serif Display",Georgia,serif';let t=0;
-  archs.forEach((a,i)=>{t+=ctx.measureText(a).width;if(i<archs.length-1)t+=ctx.measureText('   ★   ').width;});return t;
-}
-function _visDrawArch(ctx,archs,cx,y,fs){
-  ctx.font=fs+'px "DM Serif Display",Georgia,serif';const total=_visArchWidth(ctx,archs,fs);
-  let x=cx-total/2;const prev=ctx.textAlign;ctx.textAlign='left';
-  archs.forEach((a,i)=>{ctx.fillStyle='#4a3f2c';ctx.fillText(a,x,y);x+=ctx.measureText(a).width;
-    if(i<archs.length-1){const s='   ★   ';ctx.fillStyle='#c8a44d';ctx.fillText(s,x,y);x+=ctx.measureText(s).width;}});
-  ctx.textAlign=prev;
-}
-
-function buildVisionBlob(callback){
-  const ud=(typeof buildFullUserData==='function')?buildFullUserData():{userName:userName,topArchNames:topArchNames};
-  const rawName=(ud.userName&&ud.userName!=='You')?ud.userName:'';
-  const first=rawName?rawName.trim().split(/\s+/)[0]:'';
-  const title=first?(first+'’s Style Vibe'):'Your Style Vibe';
-  const archsFull=(ud.topArchNames||[]).slice(0,3);
-  const archs=archsFull.map(n=>String(n).replace(/^The\s+/i,''));
-  const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;
-  const ctx=canvas.getContext('2d');
-  const rng=_visRng((first||'star')+archs.join('|'));
-  const imgs=VISION_IMGS.slice();
-  for(let i=imgs.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));const t=imgs[i];imgs[i]=imgs[j];imgs[j]=t;}
-  const loaded=imgs.map(src=>{const im=new Image();im.src=src;return im;});
-  const vlogo=new Image();vlogo.src='logo-star.png';
-  const waits=[document.fonts.ready];
-  if(!(vlogo.complete&&vlogo.naturalWidth))waits.push(new Promise(r=>{vlogo.onload=r;vlogo.onerror=r;}));
-  loaded.forEach(im=>{if(!(im.complete&&im.naturalWidth))waits.push(new Promise(r=>{im.onload=r;im.onerror=r;}));});
-  Promise.all(waits).then(draw).catch(draw);
-
-  function draw(){
-    const W=1080,H=1350;
-    // striped "curtain" background (matches home screen)
-    ctx.fillStyle='#28251F';ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='#F2EFE8';for(let y=128;y<H;y+=256)ctx.fillRect(0,y,W,128);
-    const g=ctx.createRadialGradient(W/2,H*0.3,60,W/2,H*0.3,W*0.9);
-    g.addColorStop(0,'rgba(255,244,222,.16)');g.addColorStop(1,'rgba(255,244,222,0)');
-    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    const PX=50,PY=50,PW=980,PH=1250;
-    ctx.fillStyle='#1f1c17';ctx.fillRect(PX,PY,PW,PH);
-    // ---- collage (clipped to panel) ----
-    ctx.save();ctx.beginPath();ctx.rect(PX,PY,PW,PH);ctx.clip();
-    const COLS=5,ROWS=7,cw=PW/COLS,ch=PH/ROWS;let k=0;
-    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
-      const im=loaded[k%loaded.length];k++;
-      const cx=PX+c*cw+cw/2+(rng()-0.5)*64, cy=PY+r*ch+ch/2+(rng()-0.5)*54;
-      const base=cw*(1.3+rng()*0.24), aspect=[0.74,0.8,1.0,1.0,1.32][Math.floor(rng()*5)];
-      let tw=base,th=Math.max(150,Math.min(base/aspect,330));
-      ctx.save();ctx.translate(cx,cy);ctx.rotate((rng()-0.5)*0.24);
-      ctx.shadowColor='rgba(0,0,0,.42)';ctx.shadowBlur=13;ctx.shadowOffsetY=5;
-      ctx.fillStyle='#fff';ctx.fillRect(-tw/2-5,-th/2-5,tw+10,th+10);ctx.shadowColor='transparent';
-      if(im&&im.naturalWidth)_visCover(ctx,im,-tw/2,-th/2,tw,th);
-      ctx.restore();
-    }
-    for(let i=0;i<4;i++)_visStar(ctx,PX+60+rng()*(PW-120),PY+220+rng()*(PH-320),13+rng()*7,(rng()-0.5)*0.6,'#e9c765');
-    ctx.restore();
-    ctx.strokeStyle='#c8a44d';ctx.lineWidth=3;ctx.strokeRect(PX+1.5,PY+1.5,PW-3,PH-3);
-    // ---- linen name card ----
-    const cardW=596,cardX=(W-cardW)/2,cardY=78,cardH=archsFull.length>1?220:186,midX=W/2;
-    ctx.save();ctx.shadowColor='rgba(15,10,4,.5)';ctx.shadowBlur=30;ctx.shadowOffsetY=12;
-    ctx.fillStyle='#fdfbf6';ctx.fillRect(cardX,cardY,cardW,cardH);ctx.restore();
-    ctx.lineWidth=3;ctx.strokeStyle='#fff';ctx.strokeRect(cardX+1.5,cardY+1.5,cardW-3,cardH-3);
-    ctx.lineWidth=1;ctx.strokeStyle='#d9c896';ctx.strokeRect(cardX+0.5,cardY+0.5,cardW-1,cardH-1);
-    ctx.textBaseline='alphabetic';
-    ctx.textAlign='center';
-    if(vlogo&&vlogo.complete&&vlogo.naturalWidth){
-      const lh=60,lw=lh*vlogo.naturalWidth/vlogo.naturalHeight;
-      ctx.drawImage(vlogo,midX-lw/2,cardY+12,lw,lh);
-    }else{
-      ctx.fillStyle='#b78f34';ctx.font='600 14px "Jost",sans-serif';
-      _visSpaced(ctx,'STYLE ★ STAR',midX,cardY+44,5);
-    }
-    ctx.fillStyle='#241f18';ctx.textAlign='center';
-    let nf=44;ctx.font=nf+'px "DM Serif Display",serif';
-    while(ctx.measureText(title).width>cardW-56&&nf>26){nf-=2;ctx.font=nf+'px "DM Serif Display",serif';}
-    ctx.fillText(title,midX,cardY+116);
-    ctx.strokeStyle='#c8a44d';ctx.lineWidth=1;ctx.beginPath();
-    ctx.moveTo(midX-30,cardY+132);ctx.lineTo(midX-9,cardY+132);ctx.moveTo(midX+9,cardY+132);ctx.lineTo(midX+30,cardY+132);ctx.stroke();
-    ctx.fillStyle='#c8a44d';ctx.font='12px "Jost",sans-serif';ctx.textBaseline='middle';ctx.fillText('★',midX,cardY+132);ctx.textBaseline='alphabetic';
-    if(archsFull.length){
-      let pf=27;ctx.font=pf+'px "DM Serif Display",Georgia,serif';
-      while(ctx.measureText(archsFull[0]).width>cardW-56&&pf>16){pf--;ctx.font=pf+'px "DM Serif Display",Georgia,serif';}
-      ctx.fillStyle='#241f18';ctx.textAlign='center';
-      ctx.fillText(archsFull[0],midX,cardY+170);
-      if(archs.length>1){
-        const rest=archs.slice(1),gap=10;
-        function tw(sz){
-          ctx.font=sz+'px "DM Serif Display",Georgia,serif';
-          let w=rest.reduce((a,n)=>a+ctx.measureText(n).width,0);
-          if(rest.length>1){ctx.font=(sz-5)+'px "Jost",sans-serif';w+=gap*2+ctx.measureText('★').width;}
-          return w;
-        }
-        let nf2=24;while(tw(nf2)>cardW-52&&nf2>15)nf2--;
-        let x=midX-tw(nf2)/2;const ny=cardY+202;
-        ctx.textAlign='left';
-        rest.forEach(function(n,i){
-          ctx.font=nf2+'px "DM Serif Display",Georgia,serif';ctx.fillStyle='#4a3f2c';
-          ctx.fillText(n,x,ny);x+=ctx.measureText(n).width;
-          if(i<rest.length-1){
-            x+=gap;ctx.font=(nf2-5)+'px "Jost",sans-serif';ctx.fillStyle='#c8a44d';
-            ctx.fillText('★',x,ny-1);x+=ctx.measureText('★').width+gap;
-          }
-        });
-        ctx.textAlign='center';
-      }
-    }
-    // ---- her personal motto, a linen ribbon above the footer tag ----
-    const vbMotto=(ud.motto&&String(ud.motto).trim())?String(ud.motto).trim():'';
-    if(vbMotto){
-      const mq='\u201C'+vbMotto+'\u201D';
-      let mf=26;ctx.font='italic 600 '+mf+'px "Lora",Georgia,serif';
-      while(ctx.measureText(mq).width>PW-140&&mf>15){mf--;ctx.font='italic 600 '+mf+'px "Lora",Georgia,serif';}
-      const mw=ctx.measureText(mq).width+56,mh=56,mx=(W-mw)/2,my=H-52-34-18-mh;
-      ctx.save();ctx.shadowColor='rgba(15,10,4,.4)';ctx.shadowBlur=16;ctx.shadowOffsetY=6;
-      ctx.fillStyle='#fdfbf6';ctx.fillRect(mx,my,mw,mh);ctx.restore();
-      ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.strokeRect(mx+1,my+1,mw-2,mh-2);
-      ctx.lineWidth=1;ctx.strokeStyle='#d9c896';ctx.strokeRect(mx+0.5,my+0.5,mw-1,mh-1);
-      ctx.fillStyle='#3c3628';ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.font='italic 600 '+mf+'px "Lora",Georgia,serif';
-      ctx.fillText(mq,W/2,my+mh/2+1);ctx.textBaseline='alphabetic';
-    }
-    // ---- footer linen tag ----
-    ctx.font='600 15px "Jost",sans-serif';
-    const label='★  STYLESTAR.APP  ★';
-    let lw=0;for(const c of [...label])lw+=ctx.measureText(c).width+3;
-    const tagW=lw+40,tagH=34,tagX=(W-tagW)/2,tagY=H-52-tagH;
-    ctx.save();ctx.shadowColor='rgba(15,10,4,.4)';ctx.shadowBlur=16;ctx.shadowOffsetY=6;
-    ctx.fillStyle='#fdfbf6';ctx.fillRect(tagX,tagY,tagW,tagH);ctx.restore();
-    ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.strokeRect(tagX+1,tagY+1,tagW-2,tagH-2);
-    ctx.lineWidth=1;ctx.strokeStyle='#d9c896';ctx.strokeRect(tagX+0.5,tagY+0.5,tagW-1,tagH-1);
-    ctx.fillStyle='#3a3226';ctx.textAlign='center';ctx.textBaseline='middle';
-    _visSpaced(ctx,label,W/2,tagY+tagH/2+1,3);ctx.textBaseline='alphabetic';
-    canvas.toBlob(function(blob){if(!blob){callback(null,null);return;}callback(blob,URL.createObjectURL(blob));},'image/png');
-  }
-}
-
-function _openVisionOverlay(blob,imgUrl){
-  const overlay=document.createElement('div');overlay.id='visionPreview';
-  overlay.style.cssText='position:fixed;inset:0;background:rgba(14,11,8,0.94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.2rem;overflow:auto';
-  overlay.innerHTML=`
-    <img src="${imgUrl}" style="width:auto;max-width:92vw;max-height:calc(100vh - 230px);box-shadow:0 12px 44px rgba(0,0,0,.55);opacity:0;transition:opacity .55s ease">
-    <div style="color:#cbb892;font-size:14px;font-family:'Jost',sans-serif;margin-top:16px">Press and hold the image to save</div>
-    <button onclick="doShareVision()" style="display:flex;align-items:center;gap:9px;padding:15px 34px;border:1.5px solid #C79A34;background:#141210;color:#f4efe6;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;cursor:pointer;margin-top:20px">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E9C46E" stroke-width="2.2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-      Share with a friend
-    </button>
-    <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:#bcb097;font-size:14.5px;font-family:'DM Sans',sans-serif;margin-top:13px;text-align:center">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#cbb892" stroke-width="1.9"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.15" fill="#cbb892" stroke="none"/></svg>
-      Text it or share to Instagram
-    </div>
-    <button onclick="closeVisionPreview()" style="margin-top:20px;background:none;border:none;color:#8f8676;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline">Close</button>`;
-  document.body.appendChild(overlay);
-  requestAnimationFrame(()=>{const im=overlay.querySelector('img');if(im)im.style.opacity=1;});
-  window._visBlob=blob;window._visImgUrl=imgUrl;
-}
-function closeVisionPreview(){const el=document.getElementById('visionPreview');if(el){el.remove();if(window._visImgUrl)URL.revokeObjectURL(window._visImgUrl);}}
-async function doShareVision(){
-  const blob=window._visBlob;if(!blob)return;
-  const file=new File([blob],'my-style-vibe.png',{type:'image/png'});
-  const linkText='This is my Style Vibe ✨ Discover yours → https://stylestar.app';
-  if(navigator.canShare&&navigator.canShare({files:[file]})){
-    try{await navigator.share({files:[file],title:'My Style Vibe',text:linkText});closeVisionPreview();return;}
-    catch(e){if(e&&e.name==='AbortError')return;}
-  }
-  try{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='my-style-vibe.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}catch(e){}
-  try{await navigator.clipboard.writeText(linkText);}catch(e){}
-  alert('Your Style Vibe board was saved as an image, and the link was copied. Attach it when you share! ✨');
-  closeVisionPreview();
-}
-function openVisionBoard(){buildVisionBlob(function(blob,imgUrl){if(blob)_openVisionOverlay(blob,imgUrl);});}
 
 </script>
 <div class="wl-toast" id="wlToast" role="status" aria-live="polite"><span class="wt-t"><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>Saved to Your Wishlist</span><span class="wt-go" role="button" onclick="openWishlist()">View</span></div>

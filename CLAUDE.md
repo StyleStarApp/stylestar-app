@@ -73,9 +73,39 @@ from inside the app and the gold button "worked" but the app still didn't know h
   (local results only ≠ emailed). Worth a future conversation: nudge the email save before/alongside the
   install invitation.
 - ▶ **HER TWO NEW LIST ITEMS (2026-08-08, same message):** (1) **revisit the photo-results menu down
-  below** (the hub rows on the Analyze-outfit results screen); (2) **she is leaning toward DELETING the
-  vision board** and tabling the idea for something that fits Style Star better — a conversation first,
-  delete nothing until she says so explicitly (consistent with the 2026-07-31 parked shareable brainstorm).
+  below** (the hub rows on the Analyze-outfit results screen — note the keepsake `pgrid` there is now 3
+  tiles, Constellation spanning the full bottom row, after the deletion below); (2) the vision board —
+  resolved the same evening, next entry.
+
+### ✅ THE VISION BOARD IS DELETED (2026-08-08, evening — her explicit call, same day)
+Her reasoning, verbatim-ish: *"it does not exactly align with style star and seems out of place. Like she
+doesn't know what she is supposed to do with it. And also it does not lead to shopping links and it
+doesn't do anything to help her enhance her style."* That is the product bar stated cleanly — ▶ **every
+feature must either lead to shopping or help her style, and she must know what to DO with it.** Weigh
+future features against it.
+- **What went:** the portrait screen's Mood Board card (the constellation now sits alone on the striped
+  curtain panel), the photo-results Mood Board tile (that `pgrid` is 3 tiles now; the odd last one spans
+  the full row via `:last-child:nth-child(odd)` so there's no hole), `openVisionBoard`/`buildVisionBlob`/
+  `_renderVisionThumb` + all `_vis*` helpers (~200 lines), the `vision/` folder (32 jpgs), the FAQ's
+  share answer now names only the Constellation. The Constellation itself is UNTOUCHED (she never asked
+  for its deletion). All recoverable from git history if ever wanted.
+- **Verified:** full 14-suite sweep green after the delete (affq's known timing flake, clean on rerun);
+  both script blocks parse; zero vision identifiers left.
+- ▶ **HER THREE FUTURE IDEAS, recorded 2026-08-08 (conversations/brainstorms, NOT approved builds):**
+  1. **A LOOKBOOK** — "vision of style ideas for her in a vision board type of way"; maybe an email,
+     maybe a future premium tier (value-first rule applies: premium only after real free value). Not
+     worked out in her head yet. ▶ Natural unlock: product feeds (money-path step 7) — real product
+     images are what turn a collage into a lookbook that leads to shopping.
+  2. **A SHAREABLE "REGISTRY"** — her wishlist, shareable like a bridal registry: birthday/holiday link
+     to her spouse ("here is my wish list, with links"), Style Star earns the affiliate commission on
+     purchases. She noted herself it's "exactly the same as her wish list" — a shareable VIEW of it.
+     ▶ Needs a server-side public wishlist page (share token, list only — never sizes/prefs/anything
+     personal) + the affiliate tags to make it earn. Strongest candidate of the three: it shows what
+     the app actually does (her own bar for shareables) and monetizes other people's high-intent taps.
+  3. **A FEATURED ITEM** — outfit of the day / bag of the week / shoe of the season; email or a menu
+     item with a New pill; "a featured item that would make her curious." Curation is HERS (the Edit
+     rule: Claude never picks products). Cheapest of the three — the Edit + New-pill machinery already
+     exists; a weekly cadence is sustainable, daily is not.
 
 ## ▶ NEXT SESSION — START HERE (updated 2026-08-08 — menu tune, the restore card, and the EMAIL BUG SOLVED)
 ⚠️ **Date note: today's stamps are verified against the Netlify function log ("Aug 8") and the environment.**
