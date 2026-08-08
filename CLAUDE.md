@@ -61,13 +61,22 @@ chat with your stylist, add to your wishlist, shop your style and more."*
 ### ▶ WHERE THIS SESSION ENDED — THE SHORT LIST FOR NEXT TIME (2026-08-08)
 **Shipped and confirmed today:** the narrower Menu + corner ✕ · the "Check your email" card (her Option C,
 then her gold fix, then her even-thin-border fix) · the restore-send breadcrumbs · **the restore-email bug
-SOLVED** · her rewrite of the restore email in MailerLite · **Instagram in the footer AND the Menu**.
-▶ **NEXT UP, in the order that looked right when she stopped:**
-1. **🧭 THE FOOTER AUDIT — teed up, the analysis is already done** (see the entry below): seven screens
-   link to themselves, and she wants the `.sf-row2` Privacy · Terms line tidied. **Renders first.**
+SOLVED** · her rewrite of the restore email in MailerLite · **Instagram in the footer AND the Menu** ·
+**the A2HS whisper made readable and honest** (her live testing, her pick "A2" — detail in item 3 below).
+Her closing word on the last one: *"it looks really good."*
+▶ **NEXT UP — only two things are actually open:**
+1. **🧭 THE FOOTER AUDIT — teed up, the analysis is already done** (see the entry further down): seven
+   screens link to themselves, and she wants the `.sf-row2` Privacy · Terms line tidied. **Renders first.**
    ⚠️ Now that Instagram lives on `.sf-row2`, any change to that row must keep the glyph.
 2. **📧 The rest of the MailerLite list:** shrink the "shouting" sub-header in the WELCOME email (the
    restore one is done) · "Email me my wishlist" · photo-tips email + email capture on the wardrobe page.
+▶ **Still waiting on HER WORDS (don't invent either):** the graduation-whisper line · her most-asked stylist
+questions for the chat chips. ▶ **Still waiting on OTHERS:** Indie Law's substantive reply (the Bailey name
+fix + the operating-agreement blanks), then the TM signature email, then the EIN.
+▶ **One open CONVERSATION, offered and not answered:** the A2HS whisper is Welcome-Back-only, so a
+first-time visitor never sees it. Should a woman who just finished her quiz be invited to install too?
+
+### ▶ DONE THIS SESSION, kept for the reasoning
 3. **📱 ✅✅ THE A2HS WHISPER IS FIXED (2026-08-08) — her live testing found it, she picked "A2".**
    She found the whisper on her phone (normal Safari, not private) and **tried to TAP the app icon, the
    wording AND the inline share glyph**, not realising she had to use Safari's OWN share button. Her other
