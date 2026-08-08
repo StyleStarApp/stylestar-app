@@ -7,6 +7,73 @@ by email.
 
 ---
 
+## ▶ NEXT SESSION — START HERE-EST (2026-08-08, later same day — HER INSTALL TEST FOUND THE BIG ONE)
+
+### 🚨 ✅ THE HOME-SCREEN APP COULDN'T REMEMBER ANYONE — THE 6-DIGIT RESTORE CODE IS BUILT (2026-08-08)
+**Her live test, and it is the most important find since the restore bug:** she installed via the A2HS
+whisper, opened the app icon — **quiz results, name, email all gone.** Then she requested a restore email
+from inside the app and the gold button "worked" but the app still didn't know her.
+- ▶ **ROOT CAUSE IS APPLE, NOT US, and it will hit EVERY iPhone user who installs:** a home-screen web app
+  gets its OWN storage container, completely separate from Safari's. Her results live in Safari's
+  localStorage; the installed app starts empty. **And an email link can only ever open in Safari — iOS
+  gives no way to route a link into an installed web app** — so the restore email restores Safari (which
+  already had her), never the app. Android is UNAFFECTED (installed app shares Chrome's storage).
+- ✅ **THE FIX, her call after plain-terms options ("yes let's go ahead and do the whole thing today
+  6 digits and all"): a 6-digit code in the restore email, typed into the app.** Familiar bank-code
+  pattern; the gold button stays for browser users (front door), the code is the door that reaches
+  inside the app.
+- **Server (`user-data.js`):** the code lives INSIDE the row's data JSON as `_restore:{c,exp,tries}` —
+  **no Supabase schema change needed**. Minted on a restore request, written to a new MailerLite
+  subscriber field **`restore_code`** next to `restore_token`. Exchange = `GET ?email=&code=` → her data
+  + a fresh save-token (same shape as the token path, so the client applies it identically).
+  - ⚠️ **THE 24-HOUR CODE LIFETIME IS LOAD-BEARING, do not "tighten" it:** MailerLite sends the restore
+    email at most once per person per 24h, so a second request in a day produces NO new email — the
+    stored code must stay valid AND IDENTICAL to the emailed one for the whole window. That is also why
+    **a still-valid code is REUSED, not re-minted**, on repeat requests (and why the cooldown is checked
+    BEFORE minting — a request that sends no email must never rotate the code out from under the email
+    she already has). Plaintext in the row on purpose: the DB already holds everything the code protects,
+    and plaintext is what lets the reuse path re-send the same code (self-healing field writes).
+  - **Security posture preserved:** 6 tries then dead, single-use (cleared the moment it works), wrong
+    code / expired code / unknown address are byte-identical 401s behind an 800ms floor (the enumeration
+    defense), constant-time compare, origin gate applies, `_restore` is stripped from every response and
+    deleted from every client save body (unforgeable) while a save from another device carries it
+    forward (a save must not invalidate the code sitting in her email). Breadcrumbs: `[restore] ca***@…
+    — CODE OK / CODE FAIL: wrong code (try 2 of 6) / …` in the same masked log family.
+  - **If MailerLite refuses the `restore_code` field write** (field not created yet), the send retries
+    WITHOUT the code and the log names the fix — a missing field can never kill restore emails.
+- **App (`index.html`):** the apply logic was refactored out of `autoRestoreFromLink` into a shared
+  **`_applyRestoredRecord()`**; the Check-your-email card gained a quiet code row (label, gold-bordered
+  numeric input with `inputmode=numeric` + `autocomplete=one-time-code`, black Restore button) — inside
+  the card, above the welcome-email fallback line, **her even-thin-border rule untouched**. Works in
+  browser too (deliberately not gated to the app). Too-short codes are caught locally; a wrong code says
+  "That code didn't match. Check the newest email…" (one message for all server outcomes, because the
+  server response is deliberately one outcome). Success lands her straight in her portrait, storage
+  written in THE APP's own container — which is the entire point.
+- **Verified: new `scratchpad/restorecode.js`, 72 checks** (real handler: mint/reuse/cooldown-no-rotate,
+  exchange, single-use, 6-tries, 24h expiry, identical-body + floor timing, formatting forgiven,
+  `_restore` never leaked/forgeable/wiped, origin gate; real page: code row renders 390+360, local
+  validation, wrong-code path + AA contrast, right code → portrait + ss_data/ss_token/emailDone in this
+  context, zero JS errors). Full sweep green: sec 89 · restorecard 48 · e2e 29 · copy 41 · followups 38 ·
+  hubs 46 · menu 87 · nav 67 · cowork3 69 · searchchat 54 · affq 40 · a2hs 38 · menux 28. ⚠️ sec.js's
+  Supabase stub needed `new Response(null,{status:204})` — Node's Response constructor refuses a 204
+  with a body; the real Supabase is fine. Same fix baked into restorecode.js from the start.
+- ▶ **WHAT CATH STILL DOES AT HER DESK (the only blockers, both MailerLite):**
+  1. **Create the field:** Subscribers → Fields → add a TEXT field named **`restore_code`** (until it
+     exists, the API refuses it and the function logs the refusal while still sending token-only).
+  2. **Edit the restore email:** add the code near the gold button, e.g. "Using the Style Star app on
+     your phone? Your code is:" + the **`{$restore_code}`** personalization tag, big and bold. Remember
+     the editor traps logged 2026-08-08 (tags get deleted with text; re-check the subject after any
+     design step; test with the automation's Test button, never a reused address).
+  3. Then test on her phone: app icon → Find my results → email arrives → type the code → portrait.
+- ⚠️ **HONEST EDGE, flagged to her in chat:** a woman who took the quiz but NEVER saved by email has no
+  Supabase row — nothing can carry her into the app. The whisper invites install from Welcome Back
+  (local results only ≠ emailed). Worth a future conversation: nudge the email save before/alongside the
+  install invitation.
+- ▶ **HER TWO NEW LIST ITEMS (2026-08-08, same message):** (1) **revisit the photo-results menu down
+  below** (the hub rows on the Analyze-outfit results screen); (2) **she is leaning toward DELETING the
+  vision board** and tabling the idea for something that fits Style Star better — a conversation first,
+  delete nothing until she says so explicitly (consistent with the 2026-07-31 parked shareable brainstorm).
+
 ## ▶ NEXT SESSION — START HERE (updated 2026-08-08 — menu tune, the restore card, and the EMAIL BUG SOLVED)
 ⚠️ **Date note: today's stamps are verified against the Netlify function log ("Aug 8") and the environment.**
 The polish session recorded just below as "2026-08-08" was an earlier day (its own entry admits its stamps

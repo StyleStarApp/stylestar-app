@@ -21,6 +21,56 @@ const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
 // link inside it is permanent access to a woman's whole profile.
 const TOKEN_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
+// --- The 6-digit restore code (2026-08-08) -----------------------------------
+// On iPhone, the home-screen app gets its own storage, completely separate from
+// Safari — and an email link ALWAYS opens in Safari, never inside the installed
+// app. So the restore email's button physically cannot restore a woman's
+// results into the app. The code is the piece that can travel by hand: the
+// restore email shows a 6-digit code next to the gold button, she types it into
+// the app, and the exchange (GET ?email=&code=) returns her results right there.
+//
+// The code lives INSIDE the row's data JSON (data._restore = {c, exp, tries})
+// rather than its own column, so no Supabase schema change is needed. It is
+// server-owned: stripped from every response and from every client save.
+//
+// ⚠️ The 24-hour lifetime is NOT arbitrary: MailerLite sends the restore email
+// at most once per person per 24h (platform rule), so a second request in a day
+// produces NO new email. The stored code must therefore stay valid — and stay
+// IDENTICAL to the one sitting in her most recent email — for that whole
+// window, which is also why a still-valid code is REUSED instead of re-minted.
+// A shorter expiry would strand exactly the woman who asks twice.
+const CODE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+// 6 tries against a million combinations, then the code dies. Generous enough
+// for fat fingers, hopeless for guessing.
+const CODE_MAX_TRIES = 6;
+function mintCode() {
+  return String(crypto.randomInt(0, 1000000)).padStart(6, '0');
+}
+// Still usable: exists, not expired, tries left. (Plaintext in the row on
+// purpose: the DB already holds everything the code protects, so hashing it
+// buys nothing — while plaintext lets a repeat request re-send the SAME code
+// to MailerLite, keeping the emailed code and the stored code in lockstep.)
+function codeUsable(rc) {
+  return !!(rc && rc.c && rc.exp && Date.now() < Number(rc.exp) &&
+    Number(rc.tries || 0) < CODE_MAX_TRIES);
+}
+// Constant-time compare via equal-length digests (same trick as isAdminReq).
+function codeMatches(given, stored) {
+  const a = crypto.createHash('sha256').update(String(given)).digest();
+  const b = crypto.createHash('sha256').update(String(stored)).digest();
+  return crypto.timingSafeEqual(a, b);
+}
+// _restore is the server's own bookkeeping — it must never ride along into a
+// response body or survive inside a client-supplied save.
+function stripServerFields(data) {
+  if (data && typeof data === 'object' && !Array.isArray(data)) {
+    const copy = { ...data };
+    delete copy._restore;
+    return copy;
+  }
+  return data;
+}
+
 // Pull the hostname out of an Origin or Referer header value.
 function hostOf(value) {
   if (!value) return '';
@@ -298,7 +348,7 @@ function restoreLog(email, outcome) {
 // would ask for a link and silently get nothing. Leaving and rejoining makes
 // every request a real join. The removal happens before the trigger, so it
 // can't race with the send it's about to cause.
-async function sendRestoreLink(email) {
+async function sendRestoreLink(email, code) {
   const apiKey = process.env.MAILERLITE_API_KEY;
   if (!apiKey) { restoreLog(email, 'NO SEND: MAILERLITE_API_KEY is not set'); return; }
   // One email per address per 5 minutes, marked BEFORE the send so two
@@ -308,11 +358,29 @@ async function sendRestoreLink(email) {
   const token = makeToken(email);
   if (!token) { restoreLog(email, 'NO SEND: could not mint a token (RESTORE_SECRET missing?)'); return; }
   try {
-    const res = await fetch(ML_BASE + '/subscribers', {
+    // The code rides on the subscriber record next to the token, so the email
+    // template can show it with {$restore_code}. Written on EVERY send — even
+    // when the code was reused — so the field self-heals if an earlier write
+    // failed.
+    const fields = { restore_token: token };
+    if (code) fields.restore_code = code;
+    let res = await fetch(ML_BASE + '/subscribers', {
       method: 'POST',
       headers: mlHeaders(apiKey),
-      body: JSON.stringify({ email: email, fields: { restore_token: token } })
+      body: JSON.stringify({ email: email, fields: fields })
     });
+    // If MailerLite doesn't know the restore_code field yet (it must exist in
+    // Subscribers → Fields before the API will accept it), retry WITHOUT the
+    // code rather than letting the whole restore email die on it. The log
+    // names the fix so the field-missing state can't hide.
+    if (!res.ok && code && res.status >= 400 && res.status < 500) {
+      restoreLog(email, 'restore_code field write refused (' + res.status + ') — create a "restore_code" text field in MailerLite (Subscribers → Fields); sending without the code');
+      res = await fetch(ML_BASE + '/subscribers', {
+        method: 'POST',
+        headers: mlHeaders(apiKey),
+        body: JSON.stringify({ email: email, fields: { restore_token: token } })
+      });
+    }
     if (!res.ok) { restoreLog(email, 'NO SEND: MailerLite /subscribers returned ' + res.status); return; }
     const json = await res.json();
     const subId = json && json.data && json.data.id;
@@ -381,6 +449,10 @@ export default async (req) => {
       }
       const key = email.toLowerCase().trim();
       const saveData = { ...data, updatedAt: new Date().toISOString() };
+      // _restore is server-owned: a client body can never plant its own code
+      // (delete), and a save from another device must not wipe an outstanding
+      // one (carried over from the existing row below).
+      delete saveData._restore;
 
       // Does a record already exist for this email? A first save is open (that's
       // a brand-new user); overwriting an EXISTING profile needs proof of
@@ -409,6 +481,9 @@ export default async (req) => {
         try {
           const d = typeof existingRow.data === 'string' ? JSON.parse(existingRow.data) : existingRow.data;
           hasPortrait = !!(d && d.portrait);
+          // Keep any outstanding restore code alive across the save, so a save
+          // from one device doesn't invalidate the code sitting in her email.
+          if (d && d._restore) saveData._restore = d._restore;
         } catch (e) { hasPortrait = false; }
 
         if (!owns && hasPortrait) {
@@ -462,9 +537,72 @@ export default async (req) => {
       const q = new URL(req.url).searchParams;
       const tokenParam = q.get('token');
       const emailParam = q.get('email');
+      const codeParam = q.get('code');
 
       if (!tokenParam && !emailParam) {
         return new Response(JSON.stringify({ error: 'Email or token required' }), { status: 400, headers });
+      }
+
+      // --- EMAIL + CODE exchanges the emailed 6-digit code for her results. --
+      // This is what makes restore work INSIDE the installed home-screen app,
+      // where the email's link physically cannot reach (it always opens in the
+      // browser). The failure response is IDENTICAL for a wrong code, an
+      // expired code, and an address with no account — and everything waits
+      // out the same floor — so this path is no more an enumeration oracle
+      // than the send path above it.
+      if (!tokenParam && emailParam && codeParam) {
+        const CODE_RESPONSE_FLOOR_MS = 800;
+        const started = Date.now();
+        const key = String(emailParam).toLowerCase().trim();
+        const given = String(codeParam).replace(/\D/g, '');
+        let out = null;
+        try {
+          const look = await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key) + '&select=data', {
+            headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+          });
+          const rows = await look.json();
+          if (rows && rows.length > 0 && rows[0].data) {
+            const data = typeof rows[0].data === 'string' ? JSON.parse(rows[0].data) : rows[0].data;
+            const rc = data && data._restore;
+            if (codeUsable(rc) && given.length === 6 && codeMatches(given, rc.c)) {
+              // Single-use: the code dies the moment it works.
+              delete data._restore;
+              await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
+                method: 'PATCH',
+                headers: {
+                  'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
+                  'Content-Type': 'application/json', 'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({ data: JSON.stringify(data) })
+              });
+              restoreLog(key, 'CODE OK — results restored by code');
+              out = { success: true, data: stripServerFields(data), token: makeToken(key) };
+            } else if (rc && rc.c) {
+              // A wrong try burns one of the code's lives, even when the code
+              // is already expired — cheap, and it keeps the bookkeeping dumb.
+              data._restore = { ...rc, tries: Number(rc.tries || 0) + 1 };
+              await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
+                method: 'PATCH',
+                headers: {
+                  'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
+                  'Content-Type': 'application/json', 'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({ data: JSON.stringify(data) })
+              });
+              restoreLog(key, 'CODE FAIL: ' + (!codeUsable(rc) ? 'code expired or out of tries' : 'wrong code') + ' (try ' + (Number(rc.tries || 0) + 1) + ' of ' + CODE_MAX_TRIES + ')');
+            } else {
+              restoreLog(key, 'CODE FAIL: no code outstanding for that address');
+            }
+          } else {
+            restoreLog(key, 'CODE FAIL: no Supabase row for that address');
+          }
+        } catch (e) {
+          restoreLog(key, 'CODE FAIL: threw ' + (e && e.message ? e.message : e));
+        }
+        const wait = CODE_RESPONSE_FLOOR_MS - (Date.now() - started);
+        if (wait > 0) await new Promise(r => setTimeout(r, wait));
+        if (out) return new Response(JSON.stringify(out), { status: 200, headers });
+        return new Response(JSON.stringify({ success: false, message: 'That code did not match' }), { status: 401, headers });
       }
 
       // --- Reading by EMAIL never returns data. ---------------------------
@@ -490,12 +628,39 @@ export default async (req) => {
         const EMAIL_RESPONSE_FLOOR_MS = 1200;
         const started = Date.now();
         try {
-          const look = await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key) + '&select=email', {
+          const look = await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key) + '&select=data', {
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
           });
           const rows = await look.json();
-          // sendRestoreLink itself enforces the per-address cooldown.
-          if (rows && rows.length > 0) await sendRestoreLink(key);
+          if (rows && rows.length > 0) {
+            // The cooldown is checked BEFORE minting anything: a request that
+            // sends no email must not rotate the code out from under the email
+            // she already has. (sendRestoreLink re-checks it as belt and braces.)
+            if (restoreOnCooldown(key)) {
+              restoreLog(key, 'NO SEND: within the 5-minute per-address cooldown');
+            } else {
+              let rowData = {};
+              try { rowData = (typeof rows[0].data === 'string' ? JSON.parse(rows[0].data) : rows[0].data) || {}; } catch (e) { rowData = {}; }
+              let code = codeUsable(rowData._restore) ? rowData._restore.c : '';
+              if (!code) {
+                // Mint a fresh 6-digit code and store it on her row. Reusing a
+                // still-valid one (the branch above) is what keeps the stored
+                // code identical to the emailed one across MailerLite's
+                // one-email-per-24h window.
+                code = mintCode();
+                rowData._restore = { c: code, exp: Date.now() + CODE_MAX_AGE_MS, tries: 0 };
+                await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
+                  method: 'PATCH',
+                  headers: {
+                    'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
+                    'Content-Type': 'application/json', 'Prefer': 'return=minimal'
+                  },
+                  body: JSON.stringify({ data: JSON.stringify(rowData) })
+                });
+              }
+              await sendRestoreLink(key, code);
+            }
+          }
           else restoreLog(key, 'NO SEND: no Supabase row for that address');
         } catch (e) {
           restoreLog(key, 'NO SEND: the Supabase lookup threw ' + (e && e.message ? e.message : e));
@@ -520,8 +685,9 @@ export default async (req) => {
 
       if (rows && rows.length > 0 && rows[0].data) {
         const data = typeof rows[0].data === 'string' ? JSON.parse(rows[0].data) : rows[0].data;
-        // A fresh token so a restored device can save again.
-        return new Response(JSON.stringify({ success: true, data, token: makeToken(key) }), { status: 200, headers });
+        // A fresh token so a restored device can save again. (_restore stripped:
+        // the outstanding code is server bookkeeping, never response payload.)
+        return new Response(JSON.stringify({ success: true, data: stripServerFields(data), token: makeToken(key) }), { status: 200, headers });
       }
 
       return new Response(JSON.stringify({ success: false, message: 'No results found' }), { status: 404, headers });

@@ -49,13 +49,13 @@ globalThis.fetch = async (url, opts = {}) => {
     }
     if (method === 'PATCH') {
       DB.set(email, JSON.parse(JSON.parse(opts.body).data));
-      return new Response('', { status: 204 });
+      return new Response(null, { status: 204 });
     }
-    if (method === 'DELETE') { DB.delete(email); return new Response('', { status: 204 }); }
+    if (method === 'DELETE') { DB.delete(email); return new Response(null, { status: 204 }); }
     if (method === 'POST') {
       const b = JSON.parse(opts.body);
       DB.set(b.email, JSON.parse(b.data));
-      return new Response('', { status: 204 });
+      return new Response(null, { status: 204 });
     }
   }
   return realFetch(url, opts);
