@@ -7,9 +7,37 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (updated 2026-08-05, end of another big day)
+## ▶ NEXT SESSION — START HERE (updated 2026-08-08, a light phone-testing session)
 
-**The freshest state is the ✅ 2026-08-05 entry just below the index**: the whisper voice made consistent
+### ✅ WHAT SHIPPED 2026-08-08 (one PR, #752 — five polish items from HER live screenshots, all her calls)
+1. **How It Works step 2 REWORDED BY HER**: "Meet your Style Portrait" → **"Reveal your Style Portrait"**
+   (her instinct; the clincher: "Meet" doubled with "Meet your stylist" on the same screen, and "Reveal"
+   matches the portrait's real reveal-doors moment) · sub-line now HERS: **"Your signature style, made
+   clear for you"**. Don't reword either without her. (`scratchpad/hiwcheck.js`, 12 checks.)
+2. **Mall header polish**: sign moved down 13px so the star's tip clears the Menu chip by 8px — measured
+   on the DRAWN path with getPointAtLength, not the rotated bounding box (the box overstates by ~25px;
+   reuse that trick for any rotated-ornament vs chip question) · the star's stroke GRADIENT replaced with
+   one solid gold `#D8A52E` (her call: "all one color") · gaps tightened (sign→disclosure 24→10px,
+   disclosure→first category 27→13px; later categories untouched) · disclosure centered (scoped to
+   #s-shop; the Edit's was already centered via inheritance). (`scratchpad/mallverify.js`, 14 checks.)
+3. **Analyze Photo hint star**: `#C79A34` read BROWN at 11.5px → now `#E0B84C`, the app's true star gold
+   (same as the My List stars). ▶ Lesson: dark antique golds go brown at small sizes; when Cath says a
+   gold looks off, check it against #E0B84C first.
+4. **Portrait screen**: breathing room above Retake the Quiz, wrapper padding-top 4→14px (the rule is
+   shared with #s-photo-res but that screen overrides padding, so only the portrait moved).
+5. **Menu drawer NARROWER, her ask**: `min(300px,84vw)` → **`min(250px,70vw)`**. Measured: the widest row
+   (Refine your Preferences) needs 169px + 44px padding, so every one of the 17 rows keeps one line at
+   390/360/320 (menu suite 82 still green). ▶ **She can go to ~215px before anything wraps** if 250 still
+   feels wide — offered, awaiting her eye on the live page.
+▶ **Session hygiene notes:** portrait-screen harnesses need the rnfinal.js SEED SHAPE (`userName`/
+`answers`/`topArchNames`/`portrait`/`motto` — a `name`/`portrait{}` guess renders a zero-height panel),
+then `show('s-res')` + class `rv-open`. ⚠️ The date stamps written mid-session say 2026-08-07; the session
+was actually 2026-08-08 — same session, don't hunt for a missing day.
+▶ **Still open from this session:** she never answered how the A2HS whisper feels on her phone (asked,
+then testing took over) — ask again. Still waiting on HER graduation-whisper line + her most-asked
+stylist questions (chat chips). And she should eyeball the narrower Menu + Mall header live.
+
+**The next-freshest state is the ✅ 2026-08-05 entry just below the index**: the whisper voice made consistent
 (her 4 catches), the ADD-TO-HOME-SCREEN whisper shipped (her words, her icon idea, no ✕, no retirement),
 and the legal thread moved (LLC docs delivered + inventoried, TM word mark → final action steps, her
 2-ask reply to Indie Law sent: the "Bail"→Bailey name fix + the operating-agreement blanks). ▶ **Watch
