@@ -91,6 +91,34 @@ console.log('2. iPhone: the whisper shows with the icon preview, in her wording'
   ok(detail.heart, 'pink heart in the line');
   ok(detail.noTap, 'iOS bold is emphasis only, no dead-link underline');
   ok(detail.block, 'text is block-level so text-wrap:balance applies');
+
+  // Cath's live test (2026-08-08): she tapped the icon, the wording AND the
+  // share glyph expecting them to work, and found 12.5px italic unreadable.
+  const fix = await page.evaluate(() => {
+    const el = document.getElementById('a2hs');
+    const t = document.getElementById('a2hsTxt');
+    const cs = getComputedStyle(t);
+    const chip = t.querySelector('.a2-chip');
+    return {
+      size: parseFloat(cs.fontSize), italic: cs.fontStyle !== 'normal',
+      steps: t.querySelectorAll('.a2-step').length,
+      numbers: [...t.querySelectorAll('.a2-n')].map(n => n.textContent.trim()).join(','),
+      glyphInChip: !!(chip && chip.querySelector('.a2-sh')),
+      note: (t.querySelector('.a2-note') || {}).textContent || '',
+      saysToolbar: /browser's toolbar/.test(t.textContent),
+      // ⚠️ nothing in here may LOOK tappable on iOS — Apple gives no way to
+      // trigger Add to Home Screen, so any affordance is a broken promise
+      tappable: [...el.querySelectorAll('*')].filter(n =>
+        n.tagName === 'A' || n.getAttribute('onclick') || getComputedStyle(n).cursor === 'pointer').length
+    };
+  });
+  ok(fix.size >= 14, 'text is at least 14px (was 12.5px)');
+  ok(!fix.italic, 'text is upright, not italic (hardest to read at small size)');
+  ok(fix.steps === 2 && fix.numbers === '1,2', 'reads as two NUMBERED steps, not a sentence');
+  ok(fix.glyphInChip, 'the share glyph sits in a key-cap chip, a picture of a button elsewhere');
+  ok(/View More/.test(fix.note), 'the note warns about View More (the real iOS flow)');
+  ok(fix.saysToolbar, 'says "your browser\'s toolbar", never "at the bottom" (the bar can be moved)');
+  ok(fix.tappable === 0, 'NOTHING on iOS looks tappable — the platform offers no install API');
   console.log('3. No retirement (her call): it keeps inviting until she installs');
   for (let v = 2; v <= 7; v++) {
     await page.reload({ waitUntil: 'domcontentloaded' });

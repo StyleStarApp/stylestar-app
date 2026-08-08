@@ -1196,11 +1196,26 @@ body.card-fb{padding:0}
 #a2hs{display:none;margin:14px 14px 14px;padding:0 22px;text-align:center}
 #a2hs.on{display:block}
 #a2hs .a2-ico{display:block;width:46px;height:46px;border-radius:10.5px;margin:0 auto 7px;box-shadow:0 3px 10px rgba(0,0,0,.45);border:1px solid rgba(242,216,137,.35)}
-#a2hs .a2-t{display:block;font:italic 400 12.5px/1.55 'Jost',sans-serif;color:#E8E2D2;text-wrap:balance}
+/* ⚠️ 14px UPRIGHT, not 12.5px italic (Cath's live test, 2026-08-08): italic at
+   that size on this dark panel was the hardest text in the app to read, and
+   readability is a stated priority for the 18-80 audience. */
+#a2hs .a2-t{display:block;font:400 14px/1.55 'Jost',sans-serif;color:#E8E2D2;text-wrap:balance}
 #a2hs .a2-t b{font-weight:600;color:#F2D889;font-style:normal}
 #a2hs .a2-t b.tap{border-bottom:1px solid rgba(242,216,137,.55);cursor:pointer}
+#a2hs .a2-lead{display:block;font:600 14.5px/1.4 'Jost',sans-serif;color:#F2D889;margin-bottom:9px;text-wrap:balance}
+/* numbered steps, so the line reads as an INSTRUCTION and not as controls —
+   she tapped the icon, the wording and the glyph expecting them to do something */
+#a2hs .a2-step{display:flex;align-items:flex-start;gap:9px;text-align:left;max-width:262px;margin:0 auto 7px}
+#a2hs .a2-n{flex:0 0 auto;width:20px;height:20px;margin-top:1px;border-radius:50%;border:1.2px solid rgba(242,216,137,.6);color:#F2D889;font:600 11px/1 'Jost',sans-serif;display:flex;align-items:center;justify-content:center}
+/* the share glyph sits in a raised "key cap" so it reads as a PICTURE of a
+   button somewhere else, never as a button here — on iOS it can never be
+   tappable, because Apple exposes no way to trigger Add to Home Screen */
+#a2hs .a2-chip{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:7px;background:rgba(255,255,255,.09);border:1px solid rgba(232,226,210,.28);vertical-align:-8px;margin:0 2px}
+#a2hs .a2-note{display:block;font:400 12.5px/1.45 'Jost',sans-serif;color:#B9B3A4;margin-top:8px;text-wrap:balance}
+#a2hs .a2-note b{color:#B9B3A4;font-weight:600}
 #a2hs .a2-sh{width:12px;height:12px;vertical-align:-2px}
-#a2hs .a2-h{width:11px;height:11px;vertical-align:-1px}
+#a2hs .a2-chip .a2-sh{width:14px;height:14px;vertical-align:0}
+#a2hs .a2-h{width:13px;height:13px;vertical-align:-2px}
 #s-wb .wb-shadow{position:relative;height:0}
 #s-wb .wb-shadow i{position:absolute;left:6px;bottom:1px;width:33px;height:6px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(20,15,5,.34),rgba(20,15,5,0) 72%);filter:blur(1.5px)}
 #s-wb .wb-bar{height:5px;border-radius:2px;background:linear-gradient(180deg,#FBFCFD 0%,#CBD0D4 22%,#868D93 46%,#EEF0F2 52%,#A1A7AD 62%,#5E646A 86%,#868C92 100%);box-shadow:0 6px 10px -6px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.9)}
@@ -4984,7 +4999,15 @@ function _syncA2hs(){
     txt.innerHTML='Add Style Star as a free app to your phone. <b class="tap" onclick="a2hsGo()">Add it now</b> '+_A2_HEART;
     show=true;
   }else if(!off&&_a2hsIOS()){
-    txt.innerHTML='Add Style Star as a free app to your phone. Tap '+_A2_SHARE+' Share, then <b>Add to Home Screen</b> '+_A2_HEART;
+    // Her wording for the lead, then TWO numbered steps + a quiet note (her pick
+    // "A2", 2026-08-08). ⚠️ The real iOS flow is Share → sometimes View More →
+    // scroll → Add to Home Screen; the old two-step line undercounted it, and an
+    // instruction that undercounts is worse than none. ⚠️ "your browser's
+    // toolbar", NOT "at the bottom" — Safari's bar can be moved to the top.
+    txt.innerHTML='<span class="a2-lead">Add Style Star as a free app to your phone</span>'
+      +'<span class="a2-step"><span class="a2-n">1</span><span>Tap <span class="a2-chip">'+_A2_SHARE+'</span> in your browser\'s toolbar</span></span>'
+      +'<span class="a2-step"><span class="a2-n">2</span><span>Scroll down to <b>Add to Home Screen</b> '+_A2_HEART+'</span></span>'
+      +'<span class="a2-note">It sits a little way down the list, under <b>View More</b> on some phones.</span>';
     show=true;
   }
   el.classList.toggle('on',show);

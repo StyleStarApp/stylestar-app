@@ -68,7 +68,7 @@ SOLVED** · her rewrite of the restore email in MailerLite · **Instagram in the
    ⚠️ Now that Instagram lives on `.sf-row2`, any change to that row must keep the glyph.
 2. **📧 The rest of the MailerLite list:** shrink the "shouting" sub-header in the WELCOME email (the
    restore one is done) · "Email me my wishlist" · photo-tips email + email capture on the wardrobe page.
-3. **📱 THE A2HS WHISPER — HER LIVE TESTING FOUND A REAL FAULT (2026-08-08). Renders made, AWAITING HER PICK.**
+3. **📱 ✅✅ THE A2HS WHISPER IS FIXED (2026-08-08) — her live testing found it, she picked "A2".**
    She found the whisper on her phone (normal Safari, not private) and **tried to TAP the app icon, the
    wording AND the inline share glyph**, not realising she had to use Safari's OWN share button. Her other
    note: *"the print is too small, very tiny hard to read."*
@@ -86,8 +86,22 @@ SOLVED** · her rewrite of the restore email in MailerLite · **Instagram in the
    - ▶ **RECOMMENDED A. ⚠️ ARGUED AGAINST B and the reason is a real correctness point: Safari's toolbar is
      not always at the bottom** (it can be moved to the top, and Chrome on iOS differs), so "down here" would
      be confidently WRONG for some women. C was rated appealing but hides the instructions behind one more tap.
-   - ⚠️ If A is picked, fix step 1's wrap and align the number to the FIRST line, not the block's centre.
-   - **Android is unaffected either way** — it keeps its real, working "Add it now".
+   - ✅ **BUILT AS "A2" (her pick over the 3-step A1): "if you see it sounds a little confusing."** Her ear
+     was right — a conditional inside a numbered step is a wobbly instruction. As built: **her lead line kept
+     in full**, then **1** Tap [share chip] in your browser's toolbar · **2** Scroll down to **Add to Home
+     Screen** ♥, then a quiet grey note: *"It sits a little way down the list, under View More on some
+     phones."*
+   - ▶ **HER SECOND FINDING, and it is why the copy changed at all: the real iOS flow is Share → sometimes
+     View More → SCROLL → Add to Home Screen.** The old two-step line undercounted it. ⚠️ **An instruction
+     that undercounts is worse than none** — she follows it, doesn't see the thing, and concludes it's broken.
+   - ⚠️ **"your browser's toolbar", NEVER "at the bottom of your screen."** Safari's bar can be moved to the
+     top and Chrome on iOS differs. **This also corrected an inconsistency in Claude's own advice** — B was
+     argued down for "down here" while A's step 1 said "at the bottom". Same fault, both fixed.
+   - **Verified: `a2hs.js` grew 26 → 33 checks**, pinning the fixes so they can't regress: ≥14px, upright not
+     italic, two numbered steps, the glyph inside a chip, the note naming View More, the toolbar wording, and
+     — the important one — **zero elements on the iOS path that look tappable** (no anchor, no onclick, no
+     `cursor:pointer`). As-built: `scratchpad/a2hs-built.png`.
+   - **Android is unaffected** — it keeps its real, working "Add it now" button.
 4. **📱 Also still open on the same whisper:** it is Welcome-Back-only, so a first-time visitor never sees it.
    **Offered as a conversation, not built** — should a woman who just finished her quiz be invited too?
 ▶ **Still waiting on HER words, unchanged:** the graduation-whisper line · her most-asked stylist questions
