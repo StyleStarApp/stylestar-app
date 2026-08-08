@@ -68,9 +68,28 @@ SOLVED** · her rewrite of the restore email in MailerLite · **Instagram in the
    ⚠️ Now that Instagram lives on `.sf-row2`, any change to that row must keep the glyph.
 2. **📧 The rest of the MailerLite list:** shrink the "shouting" sub-header in the WELCOME email (the
    restore one is done) · "Email me my wishlist" · photo-tips email + email capture on the wardrobe page.
-3. **📱 A2HS question she raised and has NOT answered:** the whisper is Welcome-Back-only, so a first-time
-   visitor never sees it. **Offered as a conversation, not built** — should a woman who just finished her
-   quiz be invited to install too?
+3. **📱 THE A2HS WHISPER — HER LIVE TESTING FOUND A REAL FAULT (2026-08-08). Renders made, AWAITING HER PICK.**
+   She found the whisper on her phone (normal Safari, not private) and **tried to TAP the app icon, the
+   wording AND the inline share glyph**, not realising she had to use Safari's OWN share button. Her other
+   note: *"the print is too small, very tiny hard to read."*
+   - ▶ **THE FAULT IS OURS, and the lesson generalises: a control-shaped glyph sitting inline in a sentence
+     reads as a BUTTON.** She tapped it because the design invited her to. ⚠️ **On iOS it can NEVER be
+     tappable — Apple exposes no API to trigger Add to Home Screen** (that is exactly why Android gets the
+     real `beforeinstallprompt` button and iPhone gets instructions). **So anything tappable-looking there is
+     a promise the platform cannot keep.**
+   - ▶ **Measured: `.a2-t` is 12.5px ITALIC cream** — italic is the worst case at that size on the dark
+     background, and readability is a stated priority for the 18-80 audience.
+   - **Three options rendered** (`scratchpad/a2hsmock2.js` → `a2hs2-{current,a,b,c}.png`, real iOS UA on the
+     real Welcome Back screen): **A** 14px upright + two numbered steps, the glyph inside a raised "key cap"
+     chip so it reads as a picture of a button ELSEWHERE · **B** bigger + a bobbing arrow pointing down at
+     the real button · **C** "Show me how" expands the steps, honouring the tap she made.
+   - ▶ **RECOMMENDED A. ⚠️ ARGUED AGAINST B and the reason is a real correctness point: Safari's toolbar is
+     not always at the bottom** (it can be moved to the top, and Chrome on iOS differs), so "down here" would
+     be confidently WRONG for some women. C was rated appealing but hides the instructions behind one more tap.
+   - ⚠️ If A is picked, fix step 1's wrap and align the number to the FIRST line, not the block's centre.
+   - **Android is unaffected either way** — it keeps its real, working "Add it now".
+4. **📱 Also still open on the same whisper:** it is Welcome-Back-only, so a first-time visitor never sees it.
+   **Offered as a conversation, not built** — should a woman who just finished her quiz be invited too?
 ▶ **Still waiting on HER words, unchanged:** the graduation-whisper line · her most-asked stylist questions
 (the chat chips). ▶ **Still waiting on OTHERS:** Indie Law's substantive reply (the Bailey name fix + the
 operating-agreement blanks), then the TM signature email, then the EIN.
