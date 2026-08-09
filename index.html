@@ -694,6 +694,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-add .wa-s{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 10px;max-width:300px}
 #s-wishlist .wl-add input{border:1.5px solid #e0d6bc;border-radius:2px;padding:11px 16px;font-size:15px;width:100%;max-width:290px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif;margin-bottom:8px}
 #s-wishlist .wl-add input:focus{outline:none;border-color:#C8A060}
+@media(max-width:374px){#s-wishlist .wl-add input{padding:11px 10px}}
 #s-wishlist .wl-add .wa-hint{font:italic 400 11.5px/1.5 'DM Sans',sans-serif;color:#6e6e6e;margin:0 auto 10px;max-width:290px}
 #s-wishlist .wl-add .wa-btn{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;border:none;cursor:pointer}
 #s-wishlist .wl-add .wa-cancel{display:inline-block;font:500 12px/1 'Jost',sans-serif;color:#8a8474;cursor:pointer;margin-left:14px;padding:6px 2px}
@@ -6854,9 +6855,12 @@ function _wlRenderAdd(){
   el.innerHTML='<div class="wl-add">'
     +'<div class="wa-t">Wishing for something?</div>'
     +'<div class="wa-s">Spotted something perfect, or know exactly what you want? Add it here, from any store.</div>'
-    +'<input id="waName" type="text" maxlength="90" placeholder="The piece, e.g. black studded shoulder bag">'
+    // ⚠️ Placeholders are MEASURED against the input's inner width (230px at
+    // 390, 160px at 320 with the narrow-width padding trim below): her live
+    // catch was "black studded shoulder bag" cut mid-word. Keep them short.
+    +'<input id="waName" type="text" maxlength="90" placeholder="The piece, e.g. tan mules">'
     +'<input id="waStore" type="text" maxlength="60" placeholder="Store (optional)">'
-    +'<input id="waUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="Exact link (optional), paste it here">'
+    +'<input id="waUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="Exact link (optional)">'
     +'<div class="wa-hint">With a link, your list opens that exact piece. Without one, we&rsquo;ll search the store for it.</div>'
     +'<div><button class="wa-btn" onclick="wlAddSubmit()">Add to my wishlist</button><span class="wa-cancel" role="button" onclick="wlAddCancel()">Never mind</span></div>'
     +'<div class="wa-msg" id="waMsg"></div>'
