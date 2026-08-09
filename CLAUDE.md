@@ -39,9 +39,22 @@ fixable now and is fixed.**
      already URL-scoped; women-only stores untouched. ⚠️ **DSW deliberately unflagged** (path-style
      /browse/ search might read "womens" as a category — one for her address bar). Because wishlist items
      store terms and rebuild URLs on render, **every already-saved item got the fix silently**.
-  4. **URL filter research**: done for gender (above). ▶ **Color facets at the big department stores
-     (Bloomingdales/Macy's class, both bot-walled to curl) remain the highest-value ADDRESS-BAR research
-     open** — landing on "top handle bags, filtered: tan" is the department-store cure.
+  4. **URL filter research**: done for gender (above). ✅ **AND THE COLOR-FACET RESEARCH HAPPENED THE
+     SAME NIGHT — her address bar, two stores, both confirmed with stripped/generalized re-pastes:**
+     - **NORDSTROM IS SHIPPED (2026-08-09):** `&filterByColor=<color>` rides the existing `?keyword=`
+       form (her verified paste: `sr?keyword=midi%20dress&filterByColor=pink`). Built with a safety
+       catch: the filter is added ONLY when the search's first word is in `_CF_COLORS` (10 universal
+       retail colors; "pink" human-verified, the rest are the basics every facet carries) — an unknown
+       shade stays a plain search, so the facet can never empty a results page. Nordstrom-only until
+       other stores are verified. Her personal params (postalCode/preferredStore/origin) stripped per
+       the standing rule.
+     - **BLOOMINGDALE'S PATTERN CONFIRMED, BUILD PARKED for a fresh session (it needs care):** filters
+       live in a PATH on the /shop/featured/ form — she proved it generalizes:
+       `bloomingdales.com/shop/featured/<hyphenated-term>/Color_normal/<Color>?ss=true` (e.g.
+       `black-midi-dress/Color_normal/Black`, and note their color VOCABULARY is their own: tan is
+       "Tan/Beige"). Macy's is the same platform — the same dance there would likely cover both.
+       ⚠️ DSW also resolved by her paste: `/browse/womens%20red%20sandals` works → DSW carries `w:1`
+       now (43 keyword-scoped stores; searchtune.js is 44 checks).
   5. **Precision-to-store weighting** (prompt): exact-color exact-shape pieces (esp. bags/shoes) go to
      focused stores whose search can honor them; department stores are for category browsing. ▶ Matches
      her own July stylist rule (department stores for wardrobe building, boutiques for the piece).

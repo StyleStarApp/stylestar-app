@@ -49,7 +49,12 @@ const urls = await page.evaluate(() => ({
   // shows real women's red sandals, so the path form takes the keyword fine
   dsw: getStoreUrl('DSW', null, 'red sandals'),
   // unknown store falls to Google Shopping, unscoped
-  unknown: getStoreUrl('Totally Unknown Store', null, 'blue dress')
+  unknown: getStoreUrl('Totally Unknown Store', null, 'blue dress'),
+  // Nordstrom color facet (her two confirming pastes, 2026-08-09)
+  nordPink: getStoreUrl('Nordstrom', null, 'pink midi dress'),
+  nordTan: getStoreUrl('Nordstrom', null, 'tan top handle bag'),
+  nordNoColor: getStoreUrl('Nordstrom', null, 'kitten heel mules'),
+  otherPink: getStoreUrl('Zappos', null, 'pink flats')
 }));
 ok('Gap family gets the VERIFIED department param', urls.br.includes('searchText=womens%20charcoal%20slim%20trousers') === false && urls.br.endsWith('&department=136'), urls.br);
 ok('…and the keyword too is fine to skip there', !urls.br.includes('womens'), urls.br);
@@ -68,6 +73,10 @@ ok('women-only Talbots untouched', urls.talbots.endsWith('search?q=navy%20blazer
 ok('women-first Sam Edelman untouched', urls.samE.endsWith('#q=kitten%20heel%20mules'), urls.samE);
 ok('DSW scoped too (her address bar proved the path form takes it)', urls.dsw.endsWith('/browse/womens%20red%20sandals'), urls.dsw);
 ok('unknown store → Google fallback, unscoped', urls.unknown.includes('google.com') && !urls.unknown.includes('womens'), urls.unknown);
+ok('Nordstrom: universal color → filterByColor rides along', urls.nordPink.endsWith('keyword=womens%20pink%20midi%20dress&filterByColor=pink'), urls.nordPink);
+ok('Nordstrom: "tan" is not on the safe list → plain search, never an empty filter', !urls.nordTan.includes('filterByColor'), urls.nordTan);
+ok('Nordstrom: no color word → no filter', !urls.nordNoColor.includes('filterByColor'), urls.nordNoColor);
+ok('color facet is Nordstrom-only until other stores are verified', !urls.otherPink.includes('filterByColor'), urls.otherPink);
 
 // ---------------------------------------------------------------------------
 console.log('\n2. The scoping repairs SAVED wishlist items too (URLs rebuild on render)');
