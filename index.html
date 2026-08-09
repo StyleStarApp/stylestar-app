@@ -1406,7 +1406,9 @@ body.card-fb{padding:0}
 #s-photo-res .phub2-studs .ps.l{left:4px;top:38px;bottom:38px;display:flex;flex-direction:column;justify-content:space-between}
 #s-photo-res .phub2-studs .ps.r{right:4px;top:38px;bottom:38px;display:flex;flex-direction:column;justify-content:space-between}
 #s-photo-res .phub2-in{flex:1;position:relative;display:flex;flex-direction:column;justify-content:center;background:transparent;border-radius:1px;padding:5px 18px 14px;text-align:center}
-#s-photo-res .phub2 .plbl{font:400 31px/1.1 'DM Serif Display',serif;letter-spacing:.01em;color:#151515;white-space:nowrap;margin:0 0 8px}
+/* Her call 2026-08-09: same voice as the other hub headers (BUILD etc.) —
+   the serif title was the last piece of the old tile-panel language. */
+#s-photo-res .phub2 .plbl{font:700 21px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#151515;text-align:center;white-space:nowrap;margin:0 0 2px}
 #s-photo-res .phub2 .pbig{font:400 23px/1.15 'DM Serif Display',serif;color:#1c1a16;margin:13px 0 5px}
 #s-photo-res .phub2 .psub{font:400 13px/1.4 'Jost',sans-serif;color:#5b5349;margin-bottom:18px}
 #s-photo-res .phub2 .pgo{display:inline-flex;align-items:center;gap:9px;background:#F5EFE2;color:#1a1a1a;font:700 12px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;border:1.5px solid #1a1a1a;border-radius:2px;padding:13px 22px;cursor:pointer;-webkit-tap-highlight-color:transparent;align-self:center}
@@ -1415,7 +1417,8 @@ body.card-fb{padding:0}
 #s-photo-res .phub2 .pgo svg.ps{width:15px;height:15px;fill:#1a1a1a}
 /* Your Style rows (her pick B, 2026-08-09): the usual hub rows inside the
    pearl panel — the big keepsake tiles are gone. */
-#s-photo-res .ps-rows{margin-top:6px}
+#s-photo-res .ps-rows{margin-top:9px} /* header→first row = 2+9px, same as the hubs */
+#s-photo-res .ps-rows .act:first-child{margin-top:0} /* the generic 18px .act top margin would break the match */
 /* BUILD — the wardrobe: a linen fabric-label panel pinned to the dark board, with a charcoal topstitch (matches the Your Wardrobe page identity) */
 #s-photo-res .bhub{position:relative;padding:6px 22px 14px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
 /* Build room: no outer frame; the stitched patch hugs just the stars */
