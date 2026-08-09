@@ -42,6 +42,24 @@ merge means credits/minutes are out (this case). ⚠️ **Every merge burns buil
 many-small-PRs day like this one (7 merges) costs 7 builds. Not a reason to batch work, just the reason
 the meter ran out today of all days.
 
+### ✅ CATHERINE'S SIGNATURE HEART ON THE THREE "HER" MENU ROWS (2026-08-09, her idea, shipped as rendered)
+Her idea while thinking of Sally's keep-emphasizing-you-built-this note: a tiny tilted pink heart on the
+Menu rows that are HER curation — **Style Star Edit · What's Trending · My Story**. She asked "or is that
+too cutesy?"; the render said no (11px, tilted 11°, `#F49AC1`, 3 of 18 rows — a maker's mark, not a
+sticker) and **she confirmed: "I love it exactly as you did it here."** `.menu-ch` in the static drawer
+markup. ⚠️ Deliberately distinct from the outline SAVE hearts on cards (solid + tilted + decorative); only
+those three rows — don't spread it. menux 28 · menu 87 · nav 80 green.
+- ▶ **HER FRIEND SURVEY, same conversation (real market data, remember it):** everyone she asked uses the
+  AMAZON app (ease, saved payment info); some Nordstrom (free returns). Told to her: **Amazon is the
+  best-behaved store on app-capture attribution** (their app reads their own Associates tag — unlike the
+  lululemon class), 24h window still applies, re-verify at application time. Strengthens eventual-Amazon
+  once traffic is real; sequencing unchanged (networks first).
+- ▶ **HER NEXT TWO LOOKS, queued by her:** (1) the decorative tilted hearts at the top of Your Wishlist
+  (`.wl-hearts`) — "I think we need to change those," screenshot coming; (2) **a consistency audit of the
+  pill iconography** — "Your pick" (gold border, pink heart) vs "Catherine's pick" (pink border, teal
+  star) — "make sure we are being consistent all over." The mark system to audit against: gold star =
+  wardrobe/My List · pink heart = wishlist + her signature · teal = Edit family.
+
 ### ✅ THE MARQUEE PILL GOT ITS BREATHING ROOM — her adjustment, shipped (2026-08-09)
 Her critical-eye pass on the live Welcome Back: the top section felt cramped but she wants the page DENSE
 ("I don't want her to miss a thing" — see-everything is a stated value on this screen; weigh future air

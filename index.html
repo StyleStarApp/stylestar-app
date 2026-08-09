@@ -793,6 +793,12 @@ body.menu-open .menu-panel{display:block}
    underline in the drawer header, so the groups echo the logo above them.
    inline-block keeps the bar hugging the word, never spanning the drawer. */
 .menu-grp::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
+/* Catherine's signature heart (her ask, 2026-08-09, the Sally differentiation
+   note in the navigation): the tiny tilted pink heart marks the three rows
+   that are HER curation — Style Star Edit, What's Trending, My Story. Her
+   decorative signature mark, deliberately distinct from the outline save
+   hearts on cards. Only those three rows; don't spread it. */
+.menu-ch{width:11px;height:11px;margin-left:5px;vertical-align:-1px;transform:rotate(11deg);fill:#F49AC1}
 /* "Start here" signpost on Style Quiz, new visitors only (same gold as the New pills) */
 .menu-start{display:none;align-items:center;margin-left:9px;padding:2.5px 6px;border-radius:8px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;vertical-align:2px}
 .menu-start.on{display:inline-flex}
@@ -2209,15 +2215,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-grp">Shop</div>
   <div class="menu-row" onclick="menuGo(menuShopStyle)">Shop your Style</div>
   <div class="menu-row" onclick="menuGo(openWishlist)">Your Wishlist</div>
-  <div class="menu-row" onclick="menuGo(showDream)">Style Star Edit</div>
+  <div class="menu-row" onclick="menuGo(showDream)">Style Star Edit<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   <div class="menu-row" onclick="menuGo(showShop)">Style Star Mall</div>
   <div class="menu-grp">Build</div>
   <div class="menu-row" onclick="menuGo(openWardrobe)">Your Wardrobe List</div>
-  <div class="menu-row" onclick="menuGo(function(){openWardrobe('trend')})">What's Trending</div>
+  <div class="menu-row" onclick="menuGo(function(){openWardrobe('trend')})">What's Trending<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   <div class="menu-grp">About</div>
   <div class="menu-row" onclick="menuShare()">Share Style Star</div>
   <div class="menu-row" onclick="menuInstagram()">Follow on Instagram</div>
-  <div class="menu-row" onclick="menuGo(showStory)">My Story</div>
+  <div class="menu-row" onclick="menuGo(showStory)">My Story<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   <div class="menu-row" onclick="menuGo(showFAQ)">FAQ</div>
   <div class="menu-row" onclick="menuGo(showPrivacy)">Privacy</div>
   <div class="menu-row" onclick="menuGo(showTerms)">Terms</div>
