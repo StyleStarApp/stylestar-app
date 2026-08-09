@@ -31,6 +31,22 @@ Her screenshot pass on Welcome Back, two catches, both built + merged same sessi
   without landing; the #783 push should carry both — if the live grep still fails, her Netlify dashboard
   (Deploys tab) is the instrument.
 
+### ✅ THE MENU'S GROUP LABELS ARE PROMOTED — her pick "C" + the padding trim (2026-08-09)
+Her two catches on a live drawer screenshot: STYLE/SHOP/BUILD/ABOUT *"too hard to read, too small, don't
+stand out"* (measured: 10.5px `#8a8474` ≈ 3.5:1 on the ivory — the ONLY sub-AA text in the drawer) and
+"Refine your Preferences" wrapping to 2 lines on her phone. **Rendered 4 ways** (`scratchpad/
+menufontmock.js` → `menufont-{current,a,b,c}.png`): A = her font-swap idea (serif groups, Jost items) ·
+B = literal block-letter items (**killed by measurement: REFINE YOUR PREFERENCES needs 195px of 176 and
+wraps**) · C = items KEEP their serif, labels promoted only. **She picked C + the padding trim.**
+- **As shipped:** `.menu-grp` 10.5px→12px, 600 weight, `#8a8474`→`#4a463e` (**3.5:1 → 8.99:1**), margins
+  16/3→18/5; `.menu-panel` side padding 22→18px (content box 176→184px). ⚠️ Don't re-quieten the labels.
+- ▶ **THE REFINE-WRAP MYSTERY, solved by measurement:** the row needs 164px and fits 176 in a standard
+  browser — **it wraps on HER phone because of iOS text zoom** (Page Zoom / Dynamic Type, common in the
+  18-80 audience). The trim buys ~8px headroom; the one-line floor drops 213→205px, drawer width
+  unchanged at min(220px,70vw). ⚠️ menumeasure.js's 213px floor note is superseded by this.
+- Verified: menux 28 · menu 87 · nav 80 green (the ✕-corner geometry survived the trim untouched).
+  As-built: `scratchpad/menufont-built.png`.
+
 ### ✅ "ADD YOUR OWN PIECE" IS BUILT — THE TWO-DOOR WISHLIST ADD (2026-08-09, her ask + her explicit call)
 **Her product catch, and it was a real gap:** *"If she is shopping the mall or just in her head she knows
 exactly what she wants... how can she put it onto her wishlist if it is an item Style Star did not lead her
