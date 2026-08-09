@@ -82,6 +82,25 @@ const pitch = await page.evaluate(() => {
   return { top: { n: t.length, pitch: +avg(gaps(t, 'x')).toFixed(1) }, left: { n: l.length, pitch: +avg(gaps(l, 'y')).toFixed(1) } };
 });
 console.log('pearl pitch — top:', JSON.stringify(pitch.top), 'left:', JSON.stringify(pitch.left));
+// header + row spacing must MATCH the Build hub (her ask)
+const match = await page.evaluate(() => {
+  const cs = e => getComputedStyle(e);
+  const bh = document.querySelector('#s-photo-res .bhub .hlbl');
+  const pl = document.querySelector('#s-photo-res .phub2 .plbl');
+  const gap = (hdr, firstAct) => Math.round(firstAct.getBoundingClientRect().top - hdr.getBoundingClientRect().bottom);
+  const bAct = document.querySelector('#s-photo-res .bhub .act');
+  const pAct = document.querySelector('#s-photo-res .ps-rows .act');
+  const rowGap = acts => { const a = [...acts]; return a.length > 1 ? Math.round(a[1].getBoundingClientRect().top - a[0].getBoundingClientRect().bottom) : null; };
+  return {
+    font: cs(pl).font === cs(bh).font, ls: cs(pl).letterSpacing === cs(bh).letterSpacing,
+    tt: cs(pl).textTransform === cs(bh).textTransform,
+    hdrGapBuild: gap(bh, bAct), hdrGapPearl: gap(pl, pAct),
+    rowGapBuild: rowGap(document.querySelectorAll('#s-photo-res .bhub .act')),
+    rowGapPearl: rowGap(document.querySelectorAll('#s-photo-res .ps-rows .act')),
+    text: pl.textContent
+  };
+});
+console.log('header match:', JSON.stringify(match));
 await shot('pgrid-built.png');
 if (errs.length) console.log('JS ERRORS: ' + errs.join(' | '));
 await browser.close(); server.close();
