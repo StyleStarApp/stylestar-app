@@ -61,7 +61,15 @@ the two-door version, let's build it. Very important that she can put in somethi
   `wladd-{a,b,c,form,empty}.png`, re-rendered in her wording): **A (as built)** gold-outline pill under the
   list card · **B** ghost row inside the card bottom · **C** quiet link up top under the lead. She said
   "I love how you built this" but has not named a letter — A stands unless she says otherwise.
-- **Verified: new `scratchpad/wladd.js`, 58 checks** (the whole lifecycle: empty-state door, both add
+- ✅ **HER LIVE CATCH, fixed same session: the name field's placeholder was CUT OFF** ("The piece, e.g.
+  black studded shoulder bag" needed 287px; the box's inner width is 230px at 390 — it was cut on EVERY
+  phone). Now "The piece, e.g. tan mules" + the link field shortened to "Exact link (optional)" (its
+  "paste it here" tail was quietly cut at 360 too) + a narrow-width padding trim (≤374px: 16→10px) so
+  both fit whole even at 320. ⚠️ wladd.js Part 3 now MEASURES every placeholder against its input's
+  real inner width at 390/360/320 — a future placeholder cannot quietly overflow.
+- **Her live test also proved the Bloomingdale's case:** her real Valentino-bag paste landed as "Your
+  pick" FROM BLOOMINGDALES — the load-bearing `?ID=` param survived the conservative tracker strip.
+- **Verified: new `scratchpad/wladd.js`, 64 checks** (the whole lifecycle: empty-state door, both add
   doors, canonical store naming, tracker strip vs load-bearing params, Saks named from URL, scheme
   forgiveness, javascript: refused + stripped-on-load fallback, dedupe, cancel, heart-tip stamp, email ask,
   disclosure, reload persistence through normalization, remove-all back to empty state, AA contrast on

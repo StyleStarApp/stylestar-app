@@ -312,6 +312,29 @@ for (const w of [390, 360]) {
   await page.close();
 }
 
+// ── PART 3: no placeholder may overflow its box (her live catch, 2026-08-09:
+// "the words are cut off") — measured with the input's real computed font
+// against its real inner width, at every width including 320 ─────────────────
+for (const w of [390, 360, 320]) {
+  const { page, errs } = await boot(w);
+  await page.evaluate(() => { wlAddOpen(); });
+  const bad = await page.evaluate(() => {
+    const out = [];
+    document.querySelectorAll('#wlAdd input').forEach(i => {
+      const cs = getComputedStyle(i);
+      const inner = i.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      const c = document.createElement('canvas').getContext('2d');
+      c.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+      const need = c.measureText(i.getAttribute('placeholder') || '').width;
+      if (need > inner) out.push(i.id + ' needs ' + Math.round(need) + 'px, has ' + Math.round(inner));
+    });
+    return out;
+  });
+  ok(w + ': every placeholder fits its box whole', bad.length === 0, bad.join(' | '));
+  ok(w + ': zero JS errors (placeholder pass)', errs.length === 0);
+  await page.close();
+}
+
 await browser.close();
 server.close();
 console.log('\n' + checks + ' checks, ' + fails + ' failures');
