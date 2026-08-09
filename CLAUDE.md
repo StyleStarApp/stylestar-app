@@ -74,6 +74,17 @@ the two-door version, let's build it. Very important that she can put in somethi
   forgiveness, javascript: refused + stripped-on-load fallback, dedupe, cancel, heart-tip stamp, email ask,
   disclosure, reload persistence through normalization, remove-all back to empty state, AA contrast on
   every new text incl. the 8.5px badge, no overflow 390/360, zero JS errors) + full 15-suite sweep green.
+- ✅ **THE SAVE HEART ON COMPLETE-THE-LOOK IS LABELLED NOW — STACKED, her pick from a 3-way render
+  (2026-08-09, same session):** her catch on a live screenshot: *"I don't think she will intuitively know
+  that's what this heart does."* The heart-tip already teaches this (and had retired for HER — proof it
+  works), but these rows were the ONE place the save control was a bare glyph (`.wl-save-t` was
+  display:none for width). Rendered 3 ways (`scratchpad/heartlabelmock.js` → `heartlabel-{current,inline,
+  stacked}.png`): ⚠️ **inline "♡ SAVE" fits but STEALS name width — item names crumple to four lines.**
+  Stacked (8.5px caption UNDER the heart) labels the control at ZERO width cost — names wrap identically
+  to bare. She picked stacked. Caption flips Save→Saved on tap (already built into `_wlSaveBtn`). ⚠️ Don't
+  "tidy" it back to inline. wladd.js 64 → 76 (label visible/stacked/AA/no overflow/flips to Saved, both
+  widths). ▶ Render lesson: photo-res boards are opacity:0 until the screen carries BOTH `act` AND
+  `rv-open` — element shots without rv-open are black nothing.
 - ▶ **WHY THIS MATTERS BEYOND ITSELF:** it is the foundation stone of her REGISTRY idea (share Your
   Wishlist like a bridal registry) — a registry only works if it can hold everything she wants, not just
   what our cards suggested. The two row kinds ARE the registry grammar: "buy exactly this" + "anything

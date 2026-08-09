@@ -335,6 +335,47 @@ for (const w of [390, 360, 320]) {
   await page.close();
 }
 
+// ── PART 4: the stacked SAVE label on Complete-the-Look rows (her pick,
+// 2026-08-09: the bare heart read as decoration; inline stole name width) ────
+for (const w of [390, 360]) {
+  const { page, errs } = await boot(w);
+  await page.evaluate(() => {
+    document.querySelectorAll('.scr').forEach(s => s.classList.remove('act'));
+    const scr = document.getElementById('s-photo-res');
+    scr.classList.add('act'); scr.classList.add('rv-open');
+    _renderShop([
+      { name: 'Gold Oversized Hoop Earrings', store: 'Kendra Scott', search: 'gold hoop earrings', category: 'jewelry', why: 'Echoes gold buttons' },
+      { name: 'Cream Leather Slim Belt', store: 'Nordstrom', search: 'cream leather belt', category: 'belt', why: 'Defines waist' }
+    ]);
+  });
+  await page.waitForTimeout(2300);
+  await page.evaluate(CONTRAST);
+  const m = await page.evaluate(`(() => { const v = ${vis};
+    const s = document.querySelector('#pShopList .shoprow .wl-save');
+    const t = s.querySelector('.wl-save-t');
+    const heart = s.querySelector('svg').getBoundingClientRect();
+    const cap = t.getBoundingClientRect();
+    const over = Array.from(document.querySelectorAll('#pShopList .shoprow *'))
+      .filter(el => v(el) && el.getBoundingClientRect().right > ${w} + 1).length;
+    return { labelVisible: v(t), text: t.textContent.trim(),
+             stacked: cap.top >= heart.bottom - 2,
+             column: getComputedStyle(s).flexDirection === 'column',
+             ratio: window.__ratio('#pShopList .shoprow .wl-save-t'),
+             over }; })()`);
+  ok(w + ': SAVE caption visible on Complete-the-Look rows', m.labelVisible && m.text === 'Save');
+  ok(w + ': caption stacked UNDER the heart, not beside it', m.stacked && m.column);
+  ok(w + ': caption clears AA', m.ratio >= 4.5, m.ratio + ':1');
+  ok(w + ': rows still fit, nothing overflows', m.over === 0);
+  // toggling flips the caption to "Saved"
+  const t2 = await page.evaluate(() => {
+    document.querySelector('#pShopList .shoprow .wl-save').click();
+    return document.querySelector('#pShopList .shoprow .wl-save .wl-save-t').textContent.trim();
+  });
+  ok(w + ': tapping flips caption to "Saved"', t2 === 'Saved');
+  ok(w + ': zero JS errors (stacked-label pass)', errs.length === 0);
+  await page.close();
+}
+
 await browser.close();
 server.close();
 console.log('\n' + checks + ' checks, ' + fails + ' failures');
