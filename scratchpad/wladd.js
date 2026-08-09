@@ -96,7 +96,7 @@ const vis = `el => { if(!el) return false; const r = el.getBoundingClientRect();
              btn: go.textContent.trim(), href: go.getAttribute('href'),
              expect: getStoreUrl('Sam Edelman', 'Tan kitten-heel mules', ''),
              badge: !!row.querySelector('.wl-own'),
-             count: document.getElementById('wlCount').textContent,
+             countGone: !document.getElementById('wlCount'),
              toast: document.getElementById('wlToast').classList.contains('on'),
              viewHidden: document.querySelector('#wlToast .wt-go').style.display === 'none' };
   });
@@ -104,7 +104,7 @@ const vis = `el => { if(!el) return false; const r = el.getBoundingClientRect();
   ok('door 1: marked as her own, no URL stored', r.own === true && r.url === '');
   ok('door 1: says "Find it" and rebuilds the real store search', /Find it/.test(r.btn) && r.href === r.expect, r.href);
   ok('door 1: no "Your pick" badge on a search row', !r.badge);
-  ok('count updates', /1 piece/.test(r.count));
+  ok('the count line is deleted (her call)', r.countGone);
   ok('toast confirms, View hidden while on the list', r.toast && r.viewHidden);
 
   // 5. Form collapsed after adding; the quiet button appears under the list
@@ -308,6 +308,31 @@ for (const w of [390, 360]) {
     return { h: r.height, fits: r.right <= window.innerWidth && r.left >= 0, sub: (document.querySelector('#wlAdd .wa-s') || { textContent: '' }).textContent };
   });
   ok(w + ': collapsed button holds one line and fits', btn && btn.h < 40 && btn.fits, btn && btn.h + 'px');
+  // The rod + hanging heart header (her design, 2026-08-09)
+  const crown = await page.evaluate(() => {
+    const rod = document.querySelector('#s-wishlist .wl-rod').getBoundingClientRect();
+    const crown = document.querySelector('#s-wishlist .wl-crown');
+    const cr = crown.getBoundingClientRect();
+    const cs = getComputedStyle(crown, '::before');
+    const stringTop = cr.top + 195 * 0 + (cr.height * 0) // anchored via bottom; compute from height
+    const h = parseFloat(cs.height);
+    const stringTopAbs = (cr.top + 8) - h;   // bottom:calc(100% - 8px) => bottom edge is 8px below crown top
+    const mast = document.querySelector('#s-wishlist .wl-mast').getBoundingClientRect();
+    const chip = document.querySelector('.menu-chip').getBoundingClientRect();
+    const ct = document.querySelector('#s-wishlist .wl-ct').getBoundingClientRect();
+    return { rodBottom: rod.bottom, stringTopAbs, heartW: cr.width,
+             titleInside: ct.top > cr.top && ct.bottom < cr.bottom && ct.left > cr.left && ct.right < cr.right,
+             mastClearOfChip: mast.top >= chip.bottom - 2 || mast.right < chip.left,
+             mastLeft: Math.round(mast.left),
+             noTilt: getComputedStyle(document.querySelector('.wl-crownheart')).transform === 'none',
+             countGone: !document.getElementById('wlCount'),
+             discUpright: getComputedStyle(document.querySelector('#wlBody .wl-disclosure')).fontStyle === 'normal' };
+  });
+  ok(w + ': string meets the rod (within 3px)', Math.abs(crown.stringTopAbs - crown.rodBottom) <= 3, Math.round(crown.stringTopAbs) + ' vs rod ' + Math.round(crown.rodBottom));
+  ok(w + ': heart is 195px and untilted', Math.round(crown.heartW) === 195 && crown.noTilt);
+  ok(w + ': stacked title fully inside the heart', crown.titleInside);
+  ok(w + ': mast clear of the MENU chip', crown.mastClearOfChip);
+  ok(w + ': count line gone, disclosure upright', crown.countGone && crown.discUpright);
   ok(w + ': zero JS errors', errs.length === 0, errs.join(' | ').slice(0, 200));
   await page.close();
 }

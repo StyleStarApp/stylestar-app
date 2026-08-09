@@ -146,6 +146,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
   background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);
   box-shadow:0 8px 44px rgba(0,0,0,.16)}
 .ss.wardrobe-mirror::before,.ss.wishlist-mirror::before{content:"";position:absolute;top:7px;right:7px;bottom:7px;left:7px;border:2px dashed #4a453c;pointer-events:none;z-index:3}
+/* the wishlist's stitch starts below the gold rod, so the rail reads as
+   mounted ABOVE the stationery, not through it (2026-08-09) */
+.ss.wishlist-mirror::before{top:16px}
 /* ===== Your Wardrobe ===== */
 #s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px;text-align:center}
 #s-wardrobe .wdr-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
@@ -162,7 +165,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:8px 0 4px}
 /* Page-level affiliate notice, the blog-post convention: quiet, but above every
    link on the screen. #6e6e6e matches the disclosure on every other surface. */
-#s-wardrobe .wdr-disclosure{font:italic 400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:0 0 13px}
+#s-wardrobe .wdr-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:0 0 13px}
 #s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
 /* The arrow sits on its own line under the label, so the label stays centred
@@ -480,7 +483,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    than the line above it: this is a legal notice that has to be legible, and the
    first colour tried (#9a9a9a) measured 2.5:1 against the chat background, which
    fails. #6e6e6e matches .shop-disclosure everywhere else and measures ~5:1. */
-.chat-disclosure{font-size:11px;color:#6e6e6e;text-align:center;padding:0 0 4px;font-style:italic}
+.chat-disclosure{font-size:11px;color:#6e6e6e;text-align:center;padding:0 0 4px}
 .chat-fresh{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:11.5px;color:#8a8a8a;text-decoration:underline;cursor:pointer;padding:2px 4px;transition:color .2s}
 .chat-fresh:hover{color:#EC4899}
 #chatRefineHint button{border-radius:4px!important;border:1.5px solid #1a1a1a!important;color:#1a1a1a!important}
@@ -645,19 +648,28 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    Deliberately the same black-and-stitch "room" frame as Your Wardrobe (one
    frame language for the whole app, per the restraint principle) -- what makes
    this room its own is the hearts and the tag, not a second frame invention. */
-#s-wishlist .wl-hearts{display:flex;justify-content:center;gap:10px;margin:0 0 3px}
-#s-wishlist .wl-hearts svg{width:17px;height:17px;fill:#F49AC1;opacity:.9;display:block}
-#s-wishlist .wl-hearts svg:nth-child(even){transform:rotate(11deg)}
-#s-wishlist .wl-hearts svg:nth-child(odd){transform:rotate(-9deg)}
-#s-wishlist .wl-logo{display:block;width:56px;height:56px;margin:0 auto 4px}
-#s-wishlist .wl-head{text-align:center;margin:-22px 0 4px}
-#s-wishlist .wl-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px}
-#s-wishlist .wl-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
-#s-wishlist .wl-count{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:9px}
+/* THE ROD + HANGING HEART (2026-08-09, her design): the Analyze page's gold
+   rail with the wishlist's heart hanging from it by thread and ring — one
+   dressing-room hardware set for the whole app. "Your / Wishlist" is STACKED
+   inside the heart (her idea: stacking lets a 195px heart fully hold the
+   words). The letterhead is the ph-mast clone, slider dot included, and it
+   goes home like every brand mark. The count line is deleted (her call: the
+   pieces are right below it). */
+#s-wishlist{position:relative;padding-top:18px}
+#s-wishlist .wl-rod{position:absolute;top:0;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+#s-wishlist .wl-mast{position:absolute;top:41px;left:9px;z-index:6;font:400 19px/1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;padding-bottom:7px;display:inline-block;cursor:pointer}
+#s-wishlist .wl-mast::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2px;background:#E0B84C}
+#s-wishlist .wl-mast::before{content:"";position:absolute;bottom:-1.5px;left:50%;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
+#s-wishlist .wl-head{text-align:center;margin:0 0 4px}
+#s-wishlist .wl-crown{position:relative;width:195px;height:195px;margin:44px auto 0}
+#s-wishlist .wl-crown::before{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% - 8px);width:1.8px;height:80px;background:#EACD68}
+#s-wishlist .wl-crown::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 64px);width:6px;height:6px;border-radius:50%;border:1.5px solid #EACD68;background:transparent}
+#s-wishlist .wl-crownheart{position:absolute;inset:0;width:100%;height:100%;display:block}
+#s-wishlist .wl-ct{position:absolute;left:50%;transform:translateX(-50%);top:28%;z-index:2;text-align:center;font:400 25px/1.15 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a}
 #s-wishlist .wl-lead{font:400 13px/1.55 'Jost',sans-serif;color:#5a554c;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:12px 0 0}
 #s-wishlist .wl-lead b{color:#26221c;font-weight:600}
 /* Once per screen and above every link on it, matching every other surface. */
-#s-wishlist .wl-disclosure{font:italic 400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:12px 0 0}
+#s-wishlist .wl-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:12px 0 0}
 #s-wishlist .wl-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:4px 12px 6px;margin-top:5px}
 #s-wishlist .wl-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid #efe9dc}
 #s-wishlist .wl-row:first-child{border-top:0}
@@ -729,7 +741,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-shopstyle .shop-loading{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:190px;padding:8px 0 0;font-size:19.5px}
 .shop-refresh{text-align:center;margin-top:14px}
 .shop-refresh-btn{font-size:15.5px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.03em}
-.shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;font-style:italic;max-width:320px;margin-left:auto;margin-right:auto}
+.shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;max-width:320px;margin-left:auto;margin-right:auto}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
 .whatsnext{margin:1.5rem 0;text-align:center}
@@ -825,7 +837,7 @@ body.menu-open .menu-panel{display:block}
 .dc-item-btn .dc-bag{width:16px;height:16px;flex:0 0 auto}
 .dc-item-btn:hover{background:#000}
 .dc-item-btn:hover .dc-arr{transform:translateX(3px)}
-.dc-disclosure{font-size:11px;color:#888;margin-top:1.5rem;line-height:1.6;font-style:italic}
+.dc-disclosure{font-size:11px;color:#888;margin-top:1.5rem;line-height:1.6}
 /* ===== Style Star Edit — boutique editorial glow-up (scoped to #s-dream) ===== */
 #s-dream{background:#fff}
 #s-dream .dc-wrap{padding:0.5rem 0.5rem 2rem}
@@ -841,7 +853,7 @@ body.menu-open .menu-panel{display:block}
 .dc-tagline::before{transform:rotate(-9deg)}
 .dc-tagline::after{transform:rotate(11deg)}
 #s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:1rem -0.5rem 0.9rem;font-style:italic;font-weight:600;padding:0}
-#s-dream .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65;font-style:italic}
+#s-dream .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 #s-dream .btn-outline{border-radius:2px;border-width:1.5px;max-width:260px;margin:1.3rem auto 0}
 #s-dream .dc-trend-link{text-align:center;font:600 12.5px/1.4 'Jost',sans-serif;color:#0FA6B6;text-decoration:underline;cursor:pointer;margin-top:12px}
@@ -3083,12 +3095,11 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
      The link is rebuilt from the store + search term on every render rather
      than stored, so a store-URL fix repairs every saved item automatically. -->
 <div class="scr" id="s-wishlist">
+  <div class="wl-rod"></div>
+  <div class="wl-mast go-home" onclick="goHome()">style Star</div>
   <div class="top-back-wrap"><button class="top-back" onclick="closeWishlist()">&larr; Back</button></div>
   <div class="wl-head">
-    <img src="logo-star.png" alt="Style Star — tap for home" class="wl-logo go-home" onclick="goHome()">
-    <div class="wl-hearts"><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-    <div class="wl-title">Your Wishlist</div>
-    <div class="wl-count" id="wlCount"></div>
+    <div class="wl-crown"><svg class="wl-crownheart" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FEF6D6" stroke="#EBD9A0" stroke-width=".55" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><div class="wl-ct">Your<br>Wishlist</div></div>
   </div>
   <div id="wlBody"></div>
   <div id="wlAdd"></div>
@@ -6785,8 +6796,6 @@ function renderWishlist(){
   var body=document.getElementById('wlBody');
   if(!body)return;
   var list=_wlList().slice();
-  var cnt=document.getElementById('wlCount');
-  if(cnt)cnt.textContent=list.length?(list.length+' piece'+(list.length>1?'s':'')+' saved'):'';
   if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderStay();return;}
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
