@@ -45,8 +45,8 @@ const urls = await page.evaluate(() => ({
   anthro: getStoreUrl('Anthropologie', null, 'pink wrap dress'),
   talbots: getStoreUrl('Talbots', null, 'navy blazer'),
   samE: getStoreUrl('Sam Edelman', null, 'kitten heel mules'),
-  // deliberately unflagged: DSW's path-style search might read the extra word
-  // as a category — Cath's address bar decides that one
+  // DSW verified by Cath's address bar 2026-08-09: /browse/womens%20red%20sandals
+  // shows real women's red sandals, so the path form takes the keyword fine
   dsw: getStoreUrl('DSW', null, 'red sandals'),
   // unknown store falls to Google Shopping, unscoped
   unknown: getStoreUrl('Totally Unknown Store', null, 'blue dress')
@@ -66,7 +66,7 @@ ok('Lacoste template already women.html — untouched', urls.lacoste.includes('/
 ok('women-only Anthropologie untouched', urls.anthro.endsWith('search?q=pink%20wrap%20dress'), urls.anthro);
 ok('women-only Talbots untouched', urls.talbots.endsWith('search?q=navy%20blazer'), urls.talbots);
 ok('women-first Sam Edelman untouched', urls.samE.endsWith('#q=kitten%20heel%20mules'), urls.samE);
-ok('DSW deliberately untouched (path-style search)', urls.dsw.endsWith('/browse/red%20sandals'), urls.dsw);
+ok('DSW scoped too (her address bar proved the path form takes it)', urls.dsw.endsWith('/browse/womens%20red%20sandals'), urls.dsw);
 ok('unknown store → Google fallback, unscoped', urls.unknown.includes('google.com') && !urls.unknown.includes('womens'), urls.unknown);
 
 // ---------------------------------------------------------------------------
@@ -139,7 +139,7 @@ const counts = await page.evaluate(() => ({
   gp: Object.values(STORES).filter(s => s.gp).length
 }));
 ok('still 101 stores', counts.stores === 101, String(counts.stores));
-ok('42 keyword-scoped + 5 param-scoped', counts.w === 42 && counts.gp === 5, counts.w + ' / ' + counts.gp);
+ok('43 keyword-scoped + 5 param-scoped', counts.w === 43 && counts.gp === 5, counts.w + ' / ' + counts.gp);
 ok('zero JS errors', errs.length === 0, errs.join(' | '));
 
 await browser.close(); server.close();
