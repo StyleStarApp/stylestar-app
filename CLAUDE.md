@@ -65,6 +65,19 @@ fixable now and is fixed.**
   pink structured bag to Kate Spade over a department store, the tan-bag lesson applied on its own.
 - ▶ **NEXT: Cath re-tests her six searches live.** Then judge: does "tap → a genuinely right results page"
   feel smooth? The exact-product experience is feeds territory (money-path step 7), said honestly and often.
+- ⚠️ **HER FIRST RETEST (2026-08-09) FOUND TWO SCOPING EXCEPTIONS, both fixed same day (#775):**
+  (1) **Abercrombie: the "womens" keyword FLIPPED their search to the MEN'S department** (her screenshot
+  showed "Shop By: Men's" active — their parser apparently matches "mens" inside "womens"). Abercrombie
+  is UNSCOPED now; ▶ the proper fix is a department param — ask her to tap "Shop By" → Women's on an
+  A&F results page and paste the URL. (2) **Quay showed nothing** (niche 5-word eyewear search + the
+  keyword = zero at a Shopify-style AND search), so **all three eyewear stores (Quay, Sunglass Hut,
+  Warby Parker) are unscoped as a class** — gender bleed at a sunglasses brand is low-stakes, an empty
+  page is not. **Bonus: Quay MOVED DOMAINS → quay.com** (quayaustralia.com only redirects now; store URL
+  + SEARCH_DOMAINS updated per the standing rule — the Boden redirect-rot lesson). 39 keyword-scoped +
+  5 param-scoped; searchtune.js is 48 checks. ▶ **Lesson for future scoping: the keyword is per-store
+  EVIDENCE, not a blanket** — watch her testing for any other store that misparses it.
+- ✅ Same evening, on the photo-results page: the "Your Style" pearl panel got her three catches — hub
+  rows (pick "B", #772), computed equal pearls (#773), and the header in the hub voice (#774).
 - ▶ Parked from this conversation: a one-time "heart it first" tip near the shopping cards (her wording,
   her call); the store-app handoff behavior watch (Nordstrom/Target/Amazon apps are pushy too).
 
