@@ -153,7 +153,46 @@ ok('the photo analysis now reports "wearing"', lookCopy.schema);
 await page.evaluate(() => { _lookCtx = null; show('s-wb'); });
 
 // ---------------------------------------------------------------------------
-console.log('\n5. Housekeeping');
+console.log('\n5. The heart-it-first tip (her wording + pick A, 2026-08-09)');
+const tip = await page.evaluate(() => {
+  localStorage.removeItem('ss_hearttip');
+  wardrobeData.wishlist = [];
+  _syncHeartTip();
+  const els = [...document.querySelectorAll('[data-hearttip]')];
+  const cs = getComputedStyle(els[0]);
+  return {
+    count: els.length,
+    shownFresh: els.every(e => e.style.display !== 'none'),
+    text: els[0].textContent.trim(),
+    italic: cs.fontStyle === 'italic',
+    boldGold: getComputedStyle(els[0].querySelector('b')).color === 'rgb(160, 118, 27)',
+    heartPink: getComputedStyle(els[0].querySelector('.ht-h')).color === 'rgb(232, 120, 138)',
+    noDash: !els[0].textContent.includes('—') && !els[0].textContent.includes(' - ')
+  };
+});
+ok('the tip lives on both shopping surfaces', tip.count === 2, String(tip.count));
+ok('shown while the habit is new (0 saves)', tip.shownFresh);
+ok('her exact wording', tip.text === 'Tip: heart it first ♡, then explore. Your saves will be waiting in Your Wishlist.', tip.text);
+ok('whisper voice: italic ink + gold bolds + her outline heart in pink', tip.italic && tip.boldGold && tip.heartPink);
+ok('house style: no dashes', tip.noDash);
+const tipGone = await page.evaluate(() => {
+  wardrobeData.wishlist = [{ id: 'a~b' }, { id: 'c~d' }];
+  _syncHeartTip();
+  const hidden = [...document.querySelectorAll('[data-hearttip]')].every(e => e.style.display === 'none');
+  const stamped = localStorage.getItem('ss_hearttip') === '1';
+  // even if she later empties the list, the lesson stays learned
+  wardrobeData.wishlist = [];
+  _syncHeartTip();
+  const stillHidden = [...document.querySelectorAll('[data-hearttip]')].every(e => e.style.display === 'none');
+  localStorage.removeItem('ss_hearttip');
+  return { hidden, stamped, stillHidden };
+});
+ok('retires at her 2nd save', tipGone.hidden);
+ok('…with a permanent stamp', tipGone.stamped);
+ok('and never re-teaches, even if the list empties later', tipGone.stillHidden);
+
+// ---------------------------------------------------------------------------
+console.log('\n6. Housekeeping');
 const counts = await page.evaluate(() => ({
   stores: Object.keys(STORES).length,
   w: Object.values(STORES).filter(s => s.w).length,
