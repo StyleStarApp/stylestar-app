@@ -6813,7 +6813,7 @@ function renderWishlist(){
   if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderStay();return;}
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
-  var h='<div class="wl-lead">Tap the <b>&times;</b> to take an item off your list.</div>'
+  var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. Tap the <b>&times;</b> to take an item off your list.</div>'
    +'<div class="wl-disclosure">Some links may earn us a commission.</div>'
    +'<div class="wl-card">';
   list.forEach(function(it){
