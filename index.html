@@ -666,11 +666,11 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    hanging language), sized in even pixels so it can never straddle a
    half-pixel off the heart's groove. The ring ENCIRCLES the rail (z above
    the rod), a curtain ring, not a floating o. */
-#s-wishlist .wl-chain{position:absolute;left:calc(50% - 4px);bottom:calc(100% - 60px);width:8px;height:106px;z-index:1}
+#s-wishlist .wl-chain{position:absolute;left:calc(50% - 4px);bottom:calc(100% - 60px);width:8px;height:112px;z-index:1}
 /* The ring INTERLOCKS the rail: the full circle sits behind the rod (z5),
    and .wl-ringf repaints only its bottom half in front (z7, clip-path) — the
    curtain-ring illusion, top arc behind the bar, bottom arc in front. */
-#s-wishlist .wl-ring,#s-wishlist .wl-ringf{position:absolute;left:calc(50% - 6px);bottom:calc(100% + 44px);width:12px;height:12px;border-radius:50%;border:2px solid #C89A2C;background:transparent}
+#s-wishlist .wl-ring,#s-wishlist .wl-ringf{position:absolute;left:calc(50% - 6px);bottom:calc(100% + 50px);width:12px;height:12px;border-radius:50%;border:2px solid #C89A2C;background:transparent}
 #s-wishlist .wl-ring{z-index:5}
 #s-wishlist .wl-ringf{z-index:7;clip-path:inset(50% 0 0 0)}
 #s-wishlist .wl-crownheart{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -3108,7 +3108,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="wl-mast go-home" onclick="goHome()">style Star</div>
   <div class="top-back-wrap"><button class="top-back" onclick="closeWishlist()">&larr; Back</button></div>
   <div class="wl-head">
-    <div class="wl-crown"><svg class="wl-chain" viewBox="0 0 8 106" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="wlChainPat" x="0" y="0" width="8" height="16" patternUnits="userSpaceOnUse"><ellipse cx="4" cy="4.5" rx="2.9" ry="4.2" fill="none" stroke="#DDAF3F" stroke-width="1.4"/><ellipse cx="4" cy="12.5" rx="1.2" ry="4.2" fill="none" stroke="#C89A2C" stroke-width="1.4"/></pattern></defs><rect x="0" y="0" width="8" height="106" fill="url(#wlChainPat)"/></svg><span class="wl-ring"></span><span class="wl-ringf"></span><svg class="wl-crownheart" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#C89A2C" stroke-width=".82" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/><path fill="#FEF6D6" stroke="#EBD9A0" stroke-width=".55" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><div class="wl-ct">Your<br>Wishlist</div></div>
+    <div class="wl-crown"><svg class="wl-chain" viewBox="0 0 8 112" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="wlChainPat" x="0" y="0" width="8" height="16" patternUnits="userSpaceOnUse"><ellipse cx="4" cy="4.5" rx="2.9" ry="4.2" fill="none" stroke="#DDAF3F" stroke-width="1.4"/><ellipse cx="4" cy="12.5" rx="1.2" ry="4.2" fill="none" stroke="#C89A2C" stroke-width="1.4"/></pattern></defs><rect x="0" y="0" width="8" height="112" fill="url(#wlChainPat)"/></svg><span class="wl-ring"></span><span class="wl-ringf"></span><svg class="wl-crownheart" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#C89A2C" stroke-width=".82" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/><path fill="#FEF6D6" stroke="#EBD9A0" stroke-width=".55" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><div class="wl-ct">Your<br>Wishlist</div></div>
   </div>
   <div id="wlBody"></div>
   <div id="wlAdd"></div>
