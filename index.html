@@ -2528,7 +2528,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <div class="nextstep" id="photoNextStep">
           <div class="ns-lead">Not sure what&rsquo;s next? I&rsquo;ve got you <svg class="pinkheart" style="width:16px;height:16px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
           <button class="ns-btn ns-pink" onclick="openChatAboutLook()"><span class="ns-ic pink"><svg viewBox="0 0 24 24"><path d="M4 6.5h16a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8H10.5L6 20v-3.5H4a1.8 1.8 0 0 1-1.8-1.8V8.3A1.8 1.8 0 0 1 4 6.5z"/></svg></span><span class="ns-tx"><b>Ask me about this look</b><small>Shoes, layering, one notch more polished? Ask me.</small></span><span class="ns-ar">&rsaquo;</span></button>
-          <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more in this style</b><small>I&rsquo;ll find more pieces that vibe with this look</small></span><span class="ns-ar">&rsaquo;</span></button>
+          <button class="ns-btn ns-gold" onclick="openShopStyle('look')"><span class="ns-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke-linejoin="round"><path d="M12 3.6l2.3 5.5 5.9.5-4.5 3.9 1.4 5.8L12 16.4l-5 3.1 1.4-5.8-4.5-3.9 5.9-.5z"/></svg></span><span class="ns-tx"><b>Pull more in this style</b><small>I&rsquo;ll find more pieces like the ones you&rsquo;re wearing</small></span><span class="ns-ar">&rsaquo;</span></button>
         </div>
         </div>
       </div>
@@ -4079,6 +4079,7 @@ If you CAN see the outfit, give her a real styling session with three parts:
 1. "celebrate": 1-2 sentences naming what is SPECIFICALLY working and why, a genuine earned observation (a color pairing, a proportion, a smart styling choice). Be specific and real; skip generic praise like "you look amazing." If little stands out, honestly credit a good instinct rather than gushing.
 2. "tips": 2-3 finishing touches that genuinely ELEVATE the look, most impactful first. The first is the single change that takes it from nice to striking; then one or two more. Frame as elevation ("to take this further, try / add / swap"), never as fixing a flaw, and be specific about what and why. Each: {"title": 2-4 words, "text": one clear, encouraging sentence}.
 3. "shop": 3-4 specific shoppable pieces that COMPLETE or pair with what she is ALREADY wearing (the jacket, shoes, bag, belt, or jewelry your tips call for). Each: {"category": one of top/bottom/dress/jacket/shoes/bag/jewelry/belt/accessory, "name": color + style + item, e.g. "Camel Structured Blazer" — never an imaginary exact product the search cannot deliver, "search": the 2-4 PLAIN retail words she would type into that store's search box — the color word from a store's own filter menu ("pink" never "raspberry" or "hot pink", "tan" never "cognac") + garment + at most one defining word (e.g. "camel structured blazer", never just "blazer", never a five-word pileup), "store": one from the store list below, "why": 2-4 words on how it helps}.
+4. "wearing": a plain factual list of the 2-4 MAIN pieces she has on, each as a short phrase (color + defining trait + garment, e.g. ["navy floral midi dress", "cream cropped button jacket", "blush kitten heels"]). Just what you see, no styling commentary — this powers "more like this look" shopping later.
 ${occ?'Tailor the finishing touches and the shopping specifically to '+occ+'.\n':''}${getPrefsForPrompt()}
 ${_shopRules()}
 
@@ -4097,7 +4098,7 @@ GUARDRAILS, never break these:
 - If there are multiple people, style only the main woman.
 
 Respond with ONLY valid JSON in this exact format, no other text:
-{"celebrate":"...","tips":[{"title":"...","text":"..."}],"shop":[{"category":"jacket","name":"...","search":"...","store":"...","why":"..."}]}`;
+{"celebrate":"...","tips":[{"title":"...","text":"..."}],"shop":[{"category":"jacket","name":"...","search":"...","store":"...","why":"..."}],"wearing":["...","..."]}`;
 
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:800,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:photoType,data:photoData}},{type:"text",text:prompt}]}]})});
@@ -4134,7 +4135,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
       var _lo=document.getElementById('lookOcc');if(_lo){if(occ){_lo.textContent=occ;_lo.classList.add('on')}else{_lo.textContent='';_lo.classList.remove('on')}}
       var _cp=document.getElementById('clipPhoto');if(_cp){document.getElementById('clipPhotoImg').src=_src;_cp.style.display='block'}
     }
-    _lookCtx={celebrate:parsed.celebrate,tips:parsed.tips||[],shop:parsed.shop||[],occ:occ};  // so the chat remembers this advice
+    _lookCtx={celebrate:parsed.celebrate,tips:parsed.tips||[],shop:parsed.shop||[],wearing:parsed.wearing||[],occ:occ};  // so the chat remembers this advice
     _revealPhotoRes();
   }catch(e){
     document.getElementById('prn').textContent="Let's try that again";
@@ -4876,6 +4877,7 @@ function _lookAnalysisBlock(){
   var t=(_lookCtx.tips||[]).map(function(x){return (x.title?x.title+': ':'')+(x.text||'')}).join(' | ');
   var s=(_lookCtx.shop||[]).map(function(x){return (x.name||'')+(x.store?' ('+x.store+')':'')}).join(', ');
   return '\n\nCONTEXT — you JUST analyzed THIS exact outfit'+(_lookCtx.occ?' for '+_lookCtx.occ.toLowerCase():'')+' and already told her:\n'
+    +((_lookCtx.wearing&&_lookCtx.wearing.length)?'- She is wearing: '+_lookCtx.wearing.join('; ')+'\n':'')
     +'- What is working: '+(_lookCtx.celebrate||'')+'\n'
     +'- Finishing touches you suggested: '+(t||'(none)')+'\n'
     +'- Pieces you recommended to complete the look: '+(s||'(none)')+'\n'
@@ -5108,7 +5110,7 @@ function _openShopStyleNow(mode){
   try{var d=JSON.parse(localStorage.getItem('ss_data'));if(d){if(d.userName)userName=d.userName;if(d.answers&&d.answers.length===12){answers=d.answers;topArchNames=getTopArch().map(function(a){return a.n});}}}catch(e){}
   var subEl=document.querySelector('#s-shopstyle .ss-shop-sub');
   if(subEl){
-    if(_shopStyleMode==='look'){subEl.textContent='In the vibe of the look you shared & your style.';}
+    if(_shopStyleMode==='look'){subEl.textContent='More pieces like the look you shared.';}
     else if(_shopStyleMode==='wantlist'){subEl.textContent='Everything on your list, styled for you.';}
     else{var last=parseInt(localStorage.getItem('ss_shop_msg')||'-1',10),si;
       do{si=Math.floor(Math.random()*SHOP_MSGS.length);}while(SHOP_MSGS.length>1&&si===last);
@@ -5130,8 +5132,17 @@ async function _shopStyleGen(){
   _startShopMsgs();
   var basis;
   if(_shopStyleMode==='look'){
-    var t=((_lookCtx&&_lookCtx.tips)||[]).map(function(x){return (x.title?x.title+': ':'')+(x.text||'')}).join(' | ');
-    basis='She just shared an outfit photo'+((_lookCtx&&_lookCtx.occ)?' for '+_lookCtx.occ.toLowerCase():'')+'. What is working about her look: '+((_lookCtx&&_lookCtx.celebrate)||'her personal style')+'. Finishing touches suggested: '+(t||'elevating the look a notch')+'.'+getPrefsForPrompt();
+    // ▶ "Pull more in this style" means MIRRORS, not accessories (Cath,
+    // 2026-08-08): she wants MORE OF WHAT SHE IS WEARING — more floral midi
+    // dresses, more cream cropped jackets — because her clients build uniform
+    // looks by repeating what they already know they love. The finishing-touch
+    // add-ons are deliberately NOT in this basis: that job belongs to the
+    // Complete-the-Look section on the analysis page, and feeding the tips in
+    // here is exactly what used to turn this button into accessories.
+    var wearing=((_lookCtx&&_lookCtx.wearing)||[]).join('; ');
+    basis='She just shared an outfit photo'+((_lookCtx&&_lookCtx.occ)?' for '+_lookCtx.occ.toLowerCase():'')+'.'
+      +(wearing?' SHE IS WEARING: '+wearing+'.':'')
+      +' What is working about her look: '+((_lookCtx&&_lookCtx.celebrate)||'her personal style')+'.'+getPrefsForPrompt();
   }else{
     var sliderDesc=questions.map(function(q,i){return q.cat+': '+answers[i]+'/11 (1='+q.left+', 6=center, 11='+q.right+')'}).join('\n');
     basis='Her style profile from the Style Star quiz:\n'+sliderDesc+'\nStyle notes: '+topArchNames.join(', ')+getPrefsForPrompt();
@@ -5141,6 +5152,10 @@ async function _shopStyleGen(){
     var wl=(_wantListNames||[]);if(wl.length>16){_wlTrunc=wl.length-16;wl=wl.slice(0,16);}
     maxTok=1400;
     prompt='You are Catherine, a personal stylist. This woman has a wardrobe list. For EACH item on her list, suggest ONE specific shoppable piece she would genuinely love that fits her style.\n\n'+basis+'\n\nHer list:\n'+wl.map(function(w,i){return (i+1)+'. '+w}).join('\n')+'\n\nFor each list item provide:\n- want: the exact list item text it is for\n'+_shopRules()+'\nRULES:\n- Give exactly one pick per list item, in the same order\n- NEVER suggest anything on her never-wear list or a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Name each piece plainly and beautifully, color + style + item, like "Emerald Wrap Midi Dress" — never vague ("a nice dress"), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"want":"List item","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+  }else if(_shopStyleMode==='look'){
+    // MIRROR the look: swaps and repeats of what she is wearing, never add-ons.
+    maxTok=700;
+    prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, color + style + item, like "Blush Floral Midi Dress" — never vague, and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
     prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Mix categories and price points across the 6 items\n- Name each piece plainly and beautifully, color + style + item, like "Cream Mock-Neck Tank" — never vague ("a nice top"), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';

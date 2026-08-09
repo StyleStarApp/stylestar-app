@@ -99,7 +99,40 @@ ok('photo prompt carries the retail-color rule', html.includes('"pink" never "ra
 ok('all four per-surface name lines are honest now', (html.match(/never an imaginary exact product/g) || []).length >= 5);
 
 // ---------------------------------------------------------------------------
-console.log('\n4. Housekeeping');
+console.log('\n4. "Pull more in this style" MIRRORS the look (Cath, 2026-08-08)');
+const lookPrompt = await page.evaluate(async () => {
+  _lookCtx = {
+    celebrate: 'The floral midi with the cream jacket is a lovely proportion.',
+    tips: [{ title: 'Add a belt', text: 'A slim belt would define the waist.' }],
+    shop: [], occ: '',
+    wearing: ['navy floral midi dress', 'cream cropped button jacket', 'blush kitten heels']
+  };
+  return await new Promise(resolve => {
+    const orig = window.fetch;
+    window.fetch = (u, o) => {
+      if (String(u).includes('style-ai')) { window.fetch = orig; resolve(JSON.parse(o.body).messages[0].content); return new Promise(() => {}); }
+      return orig(u, o);
+    };
+    openShopStyle('look');
+  });
+});
+ok('the prompt carries WHAT SHE IS WEARING', lookPrompt.includes('SHE IS WEARING: navy floral midi dress; cream cropped button jacket'), '');
+ok('it asks for MIRRORS of the look', lookPrompt.includes('MIRROR her look'), '');
+ok('swaps and repeats, never add-ons', lookPrompt.includes('NO bags, jewelry, belts or other accessories'), '');
+ok('weighted toward her main piece', lookPrompt.includes('at least 3 of the 6'), '');
+ok('the finishing-touch tips are NOT fed in (they made it accessorize)', !lookPrompt.includes('Finishing touches suggested') && !lookPrompt.includes('A slim belt'), '');
+const lookCopy = await page.evaluate(() => ({
+  sub: document.querySelector('#s-shopstyle .ss-shop-sub').textContent,
+  btn: document.querySelector('#s-photo-res .ns-btn.ns-gold small').textContent,
+  schema: document.documentElement.outerHTML.includes('"wearing": a plain factual list')
+}));
+ok('the page sub promises likeness', /like the look you shared/i.test(lookCopy.sub), lookCopy.sub);
+ok('the button promises likeness', /like the ones/i.test(lookCopy.btn), lookCopy.btn);
+ok('the photo analysis now reports "wearing"', lookCopy.schema);
+await page.evaluate(() => { _lookCtx = null; show('s-wb'); });
+
+// ---------------------------------------------------------------------------
+console.log('\n5. Housekeeping');
 const counts = await page.evaluate(() => ({
   stores: Object.keys(STORES).length,
   w: Object.values(STORES).filter(s => s.w).length,
