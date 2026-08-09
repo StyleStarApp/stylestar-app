@@ -74,9 +74,9 @@ the meter ran out today of all days.
    wl-velvet is removed; wladd's overflow census still exempts `.wl-rod`. Proofs:
    `scratchpad/storyfix-{top,mid}.png` (frame scrolls with words, no white line), `rodfix-top.png`
    (insets 0/0). Verified: wladd 102 · nav 80 · menu 87 · e2e 29 green.
-   - **My Story border thickened 4px → 6px → 8px** (her ask, twice: "slightly thicker", then "a little
-     thicker" again — 8px is her current pick; if she asks once more, render 10 and 12 side by side
-     rather than inching).
+   - **My Story border thickened 4px → 6px → 8px → 11px** (her asks, three rounds; 11px was her own
+     number and matches the Shop mirror's 11px black window frame — the two boutique frames now share
+     one weight).
 3. Same evening micro-rounds, all hers: lead box restored to the full warm sentence with "item"
    wording, centered, tucked -10px under the heart; Back top:6px; **the wishing button is SQUARED and
    says "+ Add anything you're wishing for"** (both surfaces; tracking .04em/padding 8 hold one line at
