@@ -199,8 +199,9 @@ the two-door version, let's build it. Very important that she can put in somethi
   "Add your own piece" and **she caught the flaw — "sounds like something out of her closet that she
   already has,"** i.e. OWNERSHIP, which is Wardrobe List territory, when the meaning is authorship. Four
   directions were offered; **she picked the "wishing" family — the one verb that cannot be misread as her
-  closet, and it rhymes with the page's own name.** As shipped: button + empty-state link **"+ Add a piece
-  you're wishing for"** · form title **"Wishing for something?"** · sub **"Spotted something perfect, or
+  closet, and it rhymes with the page's own name.** As shipped (revised same day, her picks): button + empty-state link **"+ Add anything
+  you're wishing for"** (SQUARED gold-outline button now, matching the squared cards + velvet frame; tracking
+  .04em/padding 8 so it holds one line at 360) · form title **"Wishing for something?"** · sub **"Spotted something perfect, or
   know exactly what you want? Add it here, from any store."** ▶ **Her trim on the sub is a standing-rule
   move:** the draft ended "...even ones we don't carry" and she cut it at "from any store" — the 2026-07-31
   never-surface-the-store-boundary stance, applied by her own ear. ⚠️ Still Claude drafts (she hasn't
