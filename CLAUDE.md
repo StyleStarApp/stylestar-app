@@ -42,6 +42,33 @@ merge means credits/minutes are out (this case). ⚠️ **Every merge burns buil
 many-small-PRs day like this one (7 merges) costs 7 builds. Not a reason to batch work, just the reason
 the meter ran out today of all days.
 
+### ✅✅ THE WISHLIST CROWN IS BUILT — ROD, CHAIN, HANGING HEART, her design through 7 render rounds (2026-08-09, merged #789)
+Grew out of her "change the 5 crown hearts" note into a full header redesign, every step her call from renders:
+**one large STRAIGHT pale-gold heart (196px) hanging from the Analyze page's gold rod by a CHAIN of real
+gold ellipse links, "Your / Wishlist" STACKED inside it** (her idea — stacking lets the heart fully hold
+the words), a darker-gold hairline around the pale frame (her ask), the exact ph-mast letterhead top-left
+(slider dot included, goes home — nav.js now asserts `.wl-mast.go-home` for s-wishlist), **"2 pieces
+saved" DELETED** (her call), and **the stitches OUTSIDE the black frame** — cream dashes on the black band
+(`.wl-stitch`, fixed viewport-inset seam; `.ss.wishlist-mirror::before` is display:none now).
+- ⚠️ **GEOMETRY IS PINNED BY TESTS, don't tune blind:** wladd.js asserts chain-meets-rod ≤3px, chain
+  dead-center ≤0.6px, ring ENCIRCLES the rail, rod full-bleed, title inside heart, mast clear of the MENU
+  chip. The chain/ring offsets are hand-tuned constants (`.wl-chain` height 88px, ring bottom +26px) tied
+  to the crown's margin — **any spacing change re-runs wladd or the chain detaches invisibly** (happened
+  twice this session; the tests caught it both times).
+- **The interlock trick:** `.wl-ring` (full circle, z5, BEHIND the rod) + `.wl-ringf` (same geometry,
+  clip-path bottom half, z7 in FRONT) = curtain-ring around the rail. The rod escapes its inset screen
+  via `left:50%;width:100vw;translateX(-50%)`. Crown is 196px (EVEN) deliberately — 195 put every centered
+  child on a half-pixel and she SAW it ("slightly left of the groove").
+- **Chain lesson:** the heart path's dip sits 58px below its box top — a "string to the box edge" floats
+  in air. The chain runs to `calc(100% - 60px)` INTO the cleft; its pattern is 2 alternating ellipse links
+  per 16px (`#wlChainPat` — unique id per the Safari hidden-defs rule).
+- Also in the merge: **all 7 disclosures upright** (her ask on one, applied everywhere: wl/wdr/chat/shop/
+  dc ×2 — the italic is gone).
+- wladd 92 · nav 80 · hubs 46 · e2e 29 · menu 87 · searchtune 57 green. As-built: `scratchpad/
+  stitchout2.png` (+ the whole crown render series `crownin-*`, `crownstack-*`, `chainzoom`, `ringlock-*`).
+- ▶ **She shipped it to SEE IT LIVE on her phone — expect polish notes next session** (the outer cream
+  stitch especially: it reads best full-bleed on a real phone; the sandbox render underestimates it).
+
 ### ✅✅ THE GOLD MARK SYSTEM IS BUILT — HER untangle, shipped across every surface (2026-08-09)
 Born from her catch: hearts are the UNIVERSAL wishlist symbol on shopping apps, but pink hearts were also
 her voice — "I don't want that to get tangled." **THE CODE, hers, protect it: GOLD = HERS (gold star =
