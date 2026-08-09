@@ -112,6 +112,7 @@ ok('color + garment + one word shape', rules.includes('at most ONE defining word
 ok('honest-name rule with the mule example', rules.includes('Nude Patent Pointed-Toe Kitten Heel Mule'));
 ok('every name detail must be searchable', rules.includes('Every detail in the name must also be in the search'));
 ok('precision-to-store rule present', rules.includes('MATCH PRECISION TO THE STORE'));
+ok('boutique-vocabulary rule with her Kendra Scott case', rules.includes('JEWELRY & SMALL BOUTIQUES') && rules.includes('gold oversized hoops'));
 ok('old too-long example gone', !rules.includes('Blush Silk Charmeuse'));
 const html = await page.content();
 ok('no surface still says "Be very specific in"', !html.includes('Be very specific in'));
