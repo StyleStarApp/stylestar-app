@@ -55,6 +55,28 @@ fixable now and is fixed.**
 - ▶ Parked from this conversation: a one-time "heart it first" tip near the shopping cards (her wording,
   her call); the store-app handoff behavior watch (Nordstrom/Target/Amazon apps are pushy too).
 
+### ✅ "PULL MORE IN THIS STYLE" NOW MIRRORS THE LOOK (2026-08-08, night — her seventh screenshot)
+Her catch on the photo-results next-step button: it returned the SAME accessorize-this-outfit pieces as
+the Complete-the-Look section above it, when what she wants is **"more clothes that look like this — 6
+more midi length floral dresses."** ▶ **Her stylist principle, protect it: clients build UNIFORM looks —
+people imitate what they already own and have photos of.** Mirrors, not add-ons.
+- **Root cause read from the code:** look-mode `_shopStyleGen` fed the analysis's *finishing touches*
+  into the generic mix-categories prompt — the model was literally handed the add-on list and told to
+  vary categories. And the analysis never told shopping WHAT SHE WAS WEARING, only what was working.
+- **Built:** the photo analysis now returns a 4th field **`wearing`** (2-4 plain phrases: "navy floral
+  midi dress", "cream cropped button jacket") stored on `_lookCtx`; look mode gets its own MIRROR prompt
+  — every piece the same KIND of garment as something she has on, ≥3 of 6 echoing the biggest piece,
+  colors varied within her palette ("sisters of her look, not six copies"), **NO bags/jewelry/belts**
+  (completing the look is the other button's job; the tips are deliberately NOT fed in anymore). The
+  chat's look context also gains the wearing line, so "what shoes with this?" knows the dress.
+- **Copy (⚠️ both are Claude drafts, she may reword):** button sub → "I'll find more pieces like the
+  ones you're wearing"; look-mode page sub → "More pieces like the look you shared."
+- **Verified:** searchtune.js grew 32 → 40 (wearing in prompt, mirror rules, tips NOT fed in, copy,
+  schema) + hubs/cowork3/followups/e2e/copy green. **LIVE model test with a floral-midi + cream-jacket
+  look: 4 floral midi dresses, 1 ivory cropped jacket, 1 blush pointed flats, zero accessories.**
+- ▶ Old analyses have no `wearing` (memory-only context, so only mid-session edge): basis falls back to
+  the celebrate line and the mirror rules still apply.
+
 ## ▶ NEXT SESSION — START HERE-EST (2026-08-08, later same day — HER INSTALL TEST FOUND THE BIG ONE)
 
 ### 🚨 ✅ THE HOME-SCREEN APP COULDN'T REMEMBER ANYONE — THE 6-DIGIT RESTORE CODE IS BUILT (2026-08-08)
