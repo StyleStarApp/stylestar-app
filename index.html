@@ -1417,7 +1417,12 @@ body.card-fb{padding:0}
 #s-photo-res .phub2 .pgo svg.ps{width:15px;height:15px;fill:#1a1a1a}
 /* Your Style rows (her pick B, 2026-08-09): the usual hub rows inside the
    pearl panel — the big keepsake tiles are gone. */
-#s-photo-res .ps-rows{margin-top:9px} /* header→first row = 2+9px, same as the hubs */
+#s-photo-res .ps-rows{margin-top:9px}
+/* Heart-it-first tip (her wording + whisper voice, 2026-08-09). Same family as
+   the Welcome Back whispers: italic ink, gold bold, block-level for balance. */
+.ht-tip{display:block;font:italic 400 14px/1.5 'Jost',sans-serif;color:#6b655a;text-align:center;max-width:300px;margin:2px auto 12px;text-wrap:balance}
+.ht-tip b{font-style:italic;color:#A0761B;font-weight:600}
+.ht-tip .ht-h{color:#E8788A;font-style:normal} /* header→first row = 2+9px, same as the hubs */
 #s-photo-res .ps-rows .act:first-child{margin-top:0} /* the generic 18px .act top margin would break the match */
 /* BUILD — the wardrobe: a linen fabric-label panel pinned to the dark board, with a charcoal topstitch (matches the Your Wardrobe page identity) */
 #s-photo-res .bhub{position:relative;padding:6px 22px 14px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
@@ -2488,6 +2493,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <div class="eng si">
             <div class="eng-row"><span class="eng-rule l"></span><span class="eng-lbl">Complete the Look</span><span class="eng-rule r"></span></div>
           </div>
+          <div class="ht-tip" data-hearttip style="display:none">Tip: <b>heart it first</b> <span class="ht-h">&#9825;</span>, then explore. Your saves will be waiting in <b>Your Wishlist</b>.</div>
           <div class="shoplist" id="pShopList"></div>
           <div class="shopdisc">Some links may earn us a commission.</div>
         </div>
@@ -2691,6 +2697,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="ss-shop-logo">shop your style</div>
     <div class="ss-shop-sub">Chosen with you in mind.</div>
   </div>
+  <!-- Heart-it-first tip (Cath's wording + pick A, 2026-08-09, from her
+       app-handoff finds): teaches save-before-explore, retires itself once
+       the wishlist habit exists. _syncHeartTip() owns visibility. -->
+  <div class="ht-tip" data-hearttip style="display:none">Tip: <b>heart it first</b> <span class="ht-h">&#9825;</span>, then explore. Your saves will be waiting in <b>Your Wishlist</b>.</div>
   <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
   <div class="shop-disclosure">Some links may earn us a commission.</div>
   <div class="ss-shop-talk">Want to talk it through? <span onclick="openChat()">Ask your stylist &rarr;</span></div>
@@ -3375,6 +3385,8 @@ function show(id,skipHistory){
   document.getElementById(id).classList.add('act');
   // Keep the What's Trending "New" pills honest wherever they appear.
   try{refreshTrendBadge();}catch(e){}
+  // The heart-it-first tip stands down once the saving habit exists.
+  try{_syncHeartTip();}catch(e){}
   // The portrait's "what's next → refine" strip stays honest the same way.
   if(id==='s-res')try{_syncRefineHint();}catch(e){}
   // Catherine's whisper: stamp "she's been there" for the concierge steps.
@@ -6597,6 +6609,19 @@ function _wlDecorateEdit(){
 }
 // The control is LABELLED, not a bare icon: her mom's testing (2026-07-26)
 // showed that an unlabelled control reads as decoration, not as something to tap.
+// ▶ THE HEART-IT-FIRST TIP (Cath's wording, 2026-08-09). Born from her live
+// finds: store sites and apps are grabby (lululemon, the Nordstrom Rack app),
+// so the lesson is save BEFORE exploring — the wishlist is her anchor no
+// matter where a store drags her. A one-time lesson, not a nag: it shows only
+// until she has 2 saves, then stamps ss_hearttip and retires FOREVER (even if
+// she later empties her wishlist — the lesson was learned, don't re-teach it).
+function _syncHeartTip(){
+  var done=false;try{done=localStorage.getItem('ss_hearttip')==='1'}catch(e){}
+  var n=(wardrobeData&&wardrobeData.wishlist)?wardrobeData.wishlist.length:0;
+  if(!done&&n>=2){done=true;try{localStorage.setItem('ss_hearttip','1')}catch(e){}}
+  var on=!done;
+  document.querySelectorAll('[data-hearttip]').forEach(function(el){el.style.display=on?'':'none'});
+}
 function _wlSaveBtn(item){
   var id=_wlRegister(item);
   if(!id)return '';
@@ -6620,6 +6645,7 @@ function wishToggle(id){
   saveWardrobeData();
   _wlSyncButtons();
   _wlSyncBadges();
+  try{_syncHeartTip();}catch(e){} // her 2nd save is the moment the tip retires
   var scr=document.getElementById('s-wishlist');
   if(scr&&scr.classList.contains('act'))renderWishlist();
   if(added)_wlToast();

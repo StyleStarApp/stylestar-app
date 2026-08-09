@@ -78,8 +78,22 @@ fixable now and is fixed.**
   EVIDENCE, not a blanket** — watch her testing for any other store that misparses it.
 - ✅ Same evening, on the photo-results page: the "Your Style" pearl panel got her three catches — hub
   rows (pick "B", #772), computed equal pearls (#773), and the header in the hub voice (#774).
-- ▶ Parked from this conversation: a one-time "heart it first" tip near the shopping cards (her wording,
-  her call); the store-app handoff behavior watch (Nordstrom/Target/Amazon apps are pushy too).
+- ✅ **THE "HEART IT FIRST" TIP IS BUILT (2026-08-09, her wording, her pick A):** born from her app-handoff
+  finds (lululemon + Nordstrom Rack apps captured taps and dropped her back at their home screens — iOS
+  universal links, not fixable by us; the defense is saving BEFORE tapping out). One quiet Catherine's-whisper
+  line on the two card surfaces (Shop your Style before `#shopStyleContent` + Complete the Look above
+  `#pShopList`): **"Tip: heart it first ♡, then explore. Your saves will be waiting in Your Wishlist."**
+  ⚠️ Her original had an em-dash ("first ♡ — then explore"); converted to a comma per the house no-dash rule
+  and FLAGGED to her — restore the dash if she asks. Mechanics: `_syncHeartTip()` (called from `show()` and
+  `wishToggle()`), `data-hearttip` divs, whisper voice (`.ht-tip`, italic ink + gold bolds + pink outline
+  heart ♡ U+2661 — the wishlist's own mark, not the decorative solid ♥). **Retires permanently at her 2nd
+  wishlist save** (`ss_hearttip` stamp — the lesson is learned even if she later empties the list; the
+  never-nag family). ▶ Rendered 3 ways first (`hearttipmock.js` → `hearttip-{a,b,c}.png`); she picked the
+  whisper + wrote the wording. Verified: searchtune.js 48 → 57 (both surfaces, exact wording, voice colors,
+  no dashes, retires at 2, stamp permanent, never re-teaches) + hubs 46 · e2e 29 · copy 41 · followups 38 ·
+  menu 87 green. As-built: `scratchpad/hearttip-built.png`.
+- ▶ Parked from this conversation: the store-app handoff behavior watch (Nordstrom/Target/Amazon apps are
+  pushy too — the heart-tip is the mitigation, watch her testing for how often handoffs actually bite).
 
 ### ✅ "PULL MORE IN THIS STYLE" NOW MIRRORS THE LOOK (2026-08-08, night — her seventh screenshot)
 Her catch on the photo-results next-step button: it returned the SAME accessorize-this-outfit pieces as
