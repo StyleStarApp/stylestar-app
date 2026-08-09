@@ -279,7 +279,8 @@ for (const w of [390, 360]) {
     const form = document.querySelector('#wlAdd .wl-add');
     const inputs = Array.from(document.querySelectorAll('#wlAdd input'));
     const scr = document.getElementById('s-wishlist');
-    const over = Array.from(scr.querySelectorAll('*')).filter(el => v(el) && el.getBoundingClientRect().right > ${w} + 1).length;
+    // .wl-rod deliberately overhangs both edges (zoom-proof full bleed, clipped by overflow-x:hidden)
+    const over = Array.from(scr.querySelectorAll('*')).filter(el => !el.classList.contains('wl-rod') && v(el) && el.getBoundingClientRect().right > ${w} + 1).length;
     return {
       formVisible: v(form),
       inputsFit: inputs.every(i => i.getBoundingClientRect().right <= ${w} && i.getBoundingClientRect().width > 200),

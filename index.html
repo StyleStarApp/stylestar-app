@@ -152,7 +152,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    with a bright inner highlight and a deep outer shadow line. A gilt-framed
    board on black velvet. The old dashed stitch is retired on this page. */
 .ss.wishlist-mirror::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;border:5px solid #CFA02E;box-shadow:inset 0 0 0 1.5px #F7E4A6,inset 0 0 0 7px rgba(138,106,23,.55);pointer-events:none;z-index:3}
-html.wl-velvet,html.wl-velvet body{background:#1a1a1a}
+html.wl-velvet,html.wl-velvet body{background:#1a1a1a;overflow-x:hidden}
 /* ===== Your Wardrobe ===== */
 #s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px;text-align:center}
 #s-wardrobe .wdr-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
@@ -660,7 +660,10 @@ html.wl-velvet,html.wl-velvet body{background:#1a1a1a}
    goes home like every brand mark. The count line is deleted (her call: the
    pieces are right below it). */
 #s-wishlist{position:relative;padding-top:24px}
-#s-wishlist .wl-rod{position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+/* The rod overhangs 100px past each side and is clipped at the true screen
+   edge (html.wl-velvet overflow-x hidden) — zoom-proof full bleed: vw units
+   shrink under iOS page zoom (her live find), fixed overhang cannot. */
+#s-wishlist .wl-rod{position:absolute;top:0;left:-100px;right:-100px;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 #s-wishlist .wl-mast{position:absolute;top:20px;left:-8px;z-index:6;font:400 19px/1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;padding-bottom:7px;display:inline-block;cursor:pointer}
 #s-wishlist .wl-mast::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2px;background:#E0B84C}
 #s-wishlist .wl-mast::before{content:"";position:absolute;bottom:-1.5px;left:50%;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
