@@ -315,7 +315,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wardrobe .wdr-add .plus{font-size:16px;color:#1a1a1a;font-weight:700}
 #s-wardrobe .wdr-trend-note{font:500 15.5px/1.5 'Fraunces',Georgia,serif;font-style:normal;color:#5c5648;margin:2px 0 16px;text-align:center;text-wrap:balance}
 #s-wardrobe .wdr-trend-by{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin-bottom:10px}
-#s-wardrobe .wdr-trend-by::before,#s-wardrobe .wdr-trend-by::after{content:"\2605";font-size:14px;color:#0FA6B6}
+/* Catherine's signature hearts flank her curation (2026-08-09); teal lettering stays */
+#s-wardrobe .wdr-trend-by::before,#s-wardrobe .wdr-trend-by::after{content:"\2665";font-size:14px;color:#F49AC1;display:inline-block}
+#s-wardrobe .wdr-trend-by::before{transform:rotate(-9deg)}
+#s-wardrobe .wdr-trend-by::after{transform:rotate(11deg)}
 #s-wardrobe .wdr-tstack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
 #s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px;min-width:0}
 #s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
@@ -620,14 +623,13 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .wl-save{display:inline-flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#7d7667;padding:4px 9px;border-radius:999px;border:1px solid transparent;-webkit-tap-highlight-color:transparent;transition:color .18s,border-color .18s,background .18s}
 .wl-save svg{width:14px;height:14px;display:block;flex:0 0 auto}
 .wl-save:hover{color:#54503f}
-.wl-save.on{color:#B4436F;border-color:rgba(180,67,111,.3);background:rgba(244,154,193,.09)}
+.wl-save.on{color:#F2D889;border-color:#C99A2C;background:#1a1a1a}
 /* On the Style Star Edit the control gets its OWN row under "Shop this item":
    that button measures 209px inside a 232px column, so there is no room beside
    it at any phone width. Given it stands alone under a big black button, it
    carries a visible outline so it reads as a real secondary action. */
 #s-dream .dc-save-row{margin-top:11px}
 #s-dream .wl-save{margin-left:0;padding:8px 14px;border-color:#E6D6A8}
-#s-dream .wl-save.on{border-color:rgba(180,67,111,.35)}
 /* Complete the Look sits on the dark results screen, so the same control needs
    its own colours there or it disappears into the board.
    ▶ STACKED label (2026-08-09, her pick from a 3-way render): the heart alone
@@ -637,7 +639,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    the names wrap identically to the bare version. Don't inline it. */
 .res-screen .shoprow .wl-save{padding:2px 4px;color:#6b655a;flex-direction:column;gap:0}
 .res-screen .shoprow .wl-save .wl-save-t{display:block;font-size:8.5px;letter-spacing:.08em;margin-top:2px}
-.res-screen .shoprow .wl-save.on{color:#B4436F;border-color:transparent;background:none}
+.res-screen .shoprow .wl-save.on{padding:4px 7px}
 
 /* ===== My Wishlist =====
    Deliberately the same black-and-stitch "room" frame as Your Wardrobe (one
@@ -667,7 +669,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    Hiding the difference would mean one tap lands on the actual shoe and the next
    on 200 search results, with nothing to explain why. */
 #s-wishlist .wl-pick{display:inline-flex;align-items:center;gap:4px;font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#087E8C;background:#fff;border:1px solid #F49AC1;border-radius:999px;padding:3px 7px 3px 6px;margin-bottom:5px}
-#s-wishlist .wl-pick svg{width:9px;height:9px;fill:#0FA6B6;display:block;flex:0 0 auto}
+/* Her signature heart on her pick (her spec: tilt LEFT, teal words, pink frame) */
+#s-wishlist .wl-pick svg{width:9px;height:9px;fill:#F49AC1;display:block;flex:0 0 auto;transform:rotate(-11deg)}
 #s-wishlist .wl-pr{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E;margin-left:7px;text-transform:none}
 #s-wishlist .wl-go{flex:0 0 auto;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
 #s-wishlist .wl-del{flex:0 0 auto;color:#a8a294;font-size:21px;line-height:1;cursor:pointer;padding:2px 3px;-webkit-tap-highlight-color:transparent}
@@ -675,10 +678,10 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 /* Empty state: never a dead end -- it explains the feature AND offers the way in. */
 #s-wishlist .wl-empty{text-align:center;padding:22px 10px 18px}
 #s-wishlist .wl-empty .we-h{width:40px;height:40px;margin:0 auto 12px}
-#s-wishlist .wl-empty .we-h svg{width:100%;height:100%;display:block;fill:none;stroke:#EBBCD2;stroke-width:1.3}
+#s-wishlist .wl-empty .we-h svg{width:100%;height:100%;display:block;fill:none;stroke:#E8D9A8;stroke-width:1.3}
 #s-wishlist .wl-empty h4{font:400 19px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin:0 0 9px}
 #s-wishlist .wl-empty p{font:400 13.5px/1.62 'Jost',sans-serif;color:#5a554c;margin:0 auto 15px;max-width:300px}
-#s-wishlist .wl-empty p .hi{color:#B4436F;font-weight:600}
+#s-wishlist .wl-empty p .hi{color:#8a6d20;font-weight:600}
 #s-wishlist .wl-empty .we-cta{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;text-decoration:none;cursor:pointer;border:none}
 /* Email capture: the highest-intent moment in the app, so it is offered here --
    but softly, and never blocking. She can use the whole list without it. */
@@ -705,7 +708,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-add .wa-cancel{display:inline-block;font:500 12px/1 'Jost',sans-serif;color:#8a8474;cursor:pointer;margin-left:14px;padding:6px 2px}
 #s-wishlist .wl-add .wa-msg{font:400 12px/1.5 'Jost',sans-serif;color:#4a463e;margin-top:8px;min-height:1px}
 #s-wishlist .wl-own{display:inline-flex;align-items:center;gap:4px;font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#8a6d20;background:#fff;border:1px solid #E0B84C;border-radius:999px;padding:3px 7px 3px 6px;margin-bottom:5px}
-#s-wishlist .wl-own svg{width:9px;height:9px;fill:#F49AC1;display:block;flex:0 0 auto}
+#s-wishlist .wl-own svg{width:9px;height:9px;fill:#E0B84C;display:block;flex:0 0 auto}
 #s-wishlist .wl-empty .we-or{margin-top:12px}
 #s-wishlist .wl-empty .we-addlnk{font:600 12px/1.4 'Jost',sans-serif;color:#8a6d20;cursor:pointer;letter-spacing:.04em;border-bottom:1px solid #E0B84C;padding-bottom:1px}
 #s-wishlist .wl-foot{text-align:center;margin-top:26px}
@@ -714,7 +717,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .wl-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(14px);z-index:9000;display:flex;align-items:center;gap:9px;background:#1a1a1a;color:#fff;border-radius:999px;padding:11px 8px 11px 16px;box-shadow:0 10px 26px -10px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;max-width:calc(100vw - 32px)}
 .wl-toast.on{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
 .wl-toast .wt-t{font:500 13px/1.3 'Jost',sans-serif;white-space:nowrap}
-.wl-toast .wt-t svg{width:13px;height:13px;fill:#F49AC1;vertical-align:-2px;margin-right:5px}
+.wl-toast .wt-t svg{width:13px;height:13px;fill:#E0B84C;vertical-align:-2px;margin-right:5px}
 .wl-toast .wt-go{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#1a1a1a;background:#EACD68;border-radius:999px;padding:8px 13px;cursor:pointer;flex:0 0 auto}
 @media(prefers-reduced-motion:reduce){.wl-toast{transition:none}}
 .shop-loading{text-align:center;padding:2rem 0;color:#444;font-size:17.5px;font-weight:500}
@@ -834,7 +837,9 @@ body.menu-open .menu-panel{display:block}
 .dc-corner-star{position:absolute;top:-34px;left:-55px;width:70px;height:70px;transform:rotate(-57deg);z-index:20;filter:drop-shadow(0 2px 3px rgba(120,90,20,.28))}
 /* a touch of the entry button's turquoise, and the "not AI" promise */
 .dc-tagline{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
-.dc-tagline::before,.dc-tagline::after{content:"\2605";font-size:14px;color:#0FA6B6}
+.dc-tagline::before,.dc-tagline::after{content:"\2665";font-size:14px;color:#F49AC1;display:inline-block}
+.dc-tagline::before{transform:rotate(-9deg)}
+.dc-tagline::after{transform:rotate(11deg)}
 #s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:1rem -0.5rem 0.9rem;font-style:italic;font-weight:600;padding:0}
 #s-dream .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65;font-style:italic}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
@@ -1476,7 +1481,7 @@ body.card-fb{padding:0}
    the Welcome Back whispers: italic ink, gold bold, block-level for balance. */
 .ht-tip{display:block;font:italic 400 14px/1.5 'Jost',sans-serif;color:#6b655a;text-align:center;max-width:300px;margin:2px auto 12px;text-wrap:balance}
 .ht-tip b{font-style:italic;color:#A0761B;font-weight:600}
-.ht-tip .ht-h{color:#E8788A;font-style:normal} /* header→first row = 2+9px, same as the hubs */
+.ht-tip .ht-h{color:#C8971E;font-style:normal} /* the wishlist's mark is GOLD now (2026-08-09) */
 #s-photo-res .ps-rows .act:first-child{margin-top:0} /* the generic 18px .act top margin would break the match */
 /* BUILD — the wardrobe: a linen fabric-label panel pinned to the dark board, with a charcoal topstitch (matches the Your Wardrobe page identity) */
 #s-photo-res .bhub{position:relative;padding:6px 22px 14px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
@@ -6612,10 +6617,15 @@ function _wlList(){
 function _wlIndexOf(id){var l=_wlList();for(var i=0;i<l.length;i++){if(l[i]&&l[i].id===id)return i}return -1}
 function _wlHas(id){return _wlIndexOf(id)>=0}
 function _wlCount(){return _wlList().length}
+// ▶ THE GOLD MARK SYSTEM (2026-08-09, HER untangle): GOLD = hers (gold star =
+// wardrobe category, gold heart = wishlist piece), PINK tilted heart = only
+// ever Catherine's voice, teal = the Edit family's lettering. Saved state is
+// the MARQUEE pill (her pick "B"): gold heart + gold text on black lacquer —
+// saving a piece puts it up in lights. Don't reintroduce pink save hearts.
 function _wlHeartSvg(on){
   return on
-    ? '<svg viewBox="0 0 24 24" fill="#F49AC1" stroke="#B4436F" stroke-width="1"><path d="'+_WL_HEART_PATH+'"/></svg>'
-    : '<svg viewBox="0 0 24 24" fill="none" stroke="#b0a898" stroke-width="1.9"><path d="'+_WL_HEART_PATH+'"/></svg>';
+    ? '<svg viewBox="0 0 24 24" fill="#F2D889" stroke="#C99A2C" stroke-width="1"><path d="'+_WL_HEART_PATH+'"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="#C8971E" stroke-width="1.9"><path d="'+_WL_HEART_PATH+'"/></svg>';
 }
 // Only ever trust an http(s) link into an href. A stored URL comes back out of
 // localStorage, which a determined person can edit by hand.
@@ -6791,7 +6801,7 @@ function renderWishlist(){
     h+='<div class="wl-row'+(pick?' pick':'')+(own?' own':'')+'">'
       +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
       +'<div class="wl-b">'
-      +(pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_STAR_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
+      +(pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
       +(exact?'<span class="wl-own"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Your pick</span>':'')
       +'<span class="wl-nm">'+_esc(it.name)+'</span>'
       +(it.store?'<span class="wl-st">'+_esc(it.store)

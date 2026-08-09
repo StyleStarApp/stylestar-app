@@ -166,14 +166,14 @@ const tip = await page.evaluate(() => {
     text: els[0].textContent.trim(),
     italic: cs.fontStyle === 'italic',
     boldGold: getComputedStyle(els[0].querySelector('b')).color === 'rgb(160, 118, 27)',
-    heartPink: getComputedStyle(els[0].querySelector('.ht-h')).color === 'rgb(232, 120, 138)',
+    heartPink: getComputedStyle(els[0].querySelector('.ht-h')).color === 'rgb(200, 151, 30)',  // GOLD now (2026-08-09): the wishlist's mark
     noDash: !els[0].textContent.includes('—') && !els[0].textContent.includes(' - ')
   };
 });
 ok('the tip lives on both shopping surfaces', tip.count === 2, String(tip.count));
 ok('shown while the habit is new (0 saves)', tip.shownFresh);
 ok('her exact wording', tip.text === 'Tip: heart it first ♡, then explore. Your saves will be waiting in Your Wishlist.', tip.text);
-ok('whisper voice: italic ink + gold bolds + her outline heart in pink', tip.italic && tip.boldGold && tip.heartPink);
+ok('whisper voice: italic ink + gold bolds + the outline heart in GOLD', tip.italic && tip.boldGold && tip.heartPink);
 ok('house style: no dashes', tip.noDash);
 const tipGone = await page.evaluate(() => {
   wardrobeData.wishlist = [{ id: 'a~b' }, { id: 'c~d' }];
