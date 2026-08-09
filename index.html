@@ -146,12 +146,9 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
   background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);
   box-shadow:0 8px 44px rgba(0,0,0,.16)}
 .ss.wardrobe-mirror::before,.ss.wishlist-mirror::before{content:"";position:absolute;top:7px;right:7px;bottom:7px;left:7px;border:2px dashed #4a453c;pointer-events:none;z-index:3}
-/* HER CALL (2026-08-09): the wishlist's stitches run OUTSIDE the black
-   frame — cream thread on the black band itself, stitched around the lapel —
-   so the mirror's own inner stitch is retired here and .wl-stitch (fixed,
-   viewport-inset, cream dashes) draws the outer seam instead. */
+/* The wishlist page carries NO stitch seam (her call, 2026-08-09: the cream
+   outer thread read too faint — deleted; a new framing idea is being chosen). */
 .ss.wishlist-mirror::before{display:none}
-#s-wishlist .wl-stitch{position:fixed;top:4px;left:4px;right:4px;bottom:4px;border:2px dashed #EDE4CE;pointer-events:none;z-index:2}
 /* ===== Your Wardrobe ===== */
 #s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px;text-align:center}
 #s-wardrobe .wdr-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
@@ -510,7 +507,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 /* The screen itself now carries the -16px pull toward the frame (see .wdr-card
    above), so the Back button no longer adds its own or it clips off the edge. */
 #s-wardrobe .top-back-wrap{margin-right:0}
-#s-wishlist .top-back-wrap{margin-right:-14px}
+#s-wishlist .top-back-wrap{position:absolute;top:14px;right:-38px;margin:0;z-index:6}
 #s-dream .top-back-wrap{margin-right:-20px;margin-top:-0.7rem}
 #s-shopstyle .top-back-wrap{margin-right:-20px;margin-top:-0.1rem}
 #s-chat{position:relative}
@@ -664,16 +661,16 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-mast::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2px;background:#E0B84C}
 #s-wishlist .wl-mast::before{content:"";position:absolute;bottom:-1.5px;left:50%;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
 #s-wishlist .wl-head{text-align:center;margin:0 0 4px}
-#s-wishlist .wl-crown{position:relative;width:196px;height:196px;margin:-12px auto 0}
+#s-wishlist .wl-crown{position:relative;width:196px;height:196px;margin:-10px auto 0}
 /* A real CHAIN of alternating gold links (the Welcome Back portrait's own
    hanging language), sized in even pixels so it can never straddle a
    half-pixel off the heart's groove. The ring ENCIRCLES the rail (z above
    the rod), a curtain ring, not a floating o. */
-#s-wishlist .wl-chain{position:absolute;left:calc(50% - 4px);bottom:calc(100% - 60px);width:8px;height:88px;z-index:1}
+#s-wishlist .wl-chain{position:absolute;left:calc(50% - 4px);bottom:calc(100% - 60px);width:8px;height:66px;z-index:1}
 /* The ring INTERLOCKS the rail: the full circle sits behind the rod (z5),
    and .wl-ringf repaints only its bottom half in front (z7, clip-path) — the
    curtain-ring illusion, top arc behind the bar, bottom arc in front. */
-#s-wishlist .wl-ring,#s-wishlist .wl-ringf{position:absolute;left:calc(50% - 6px);bottom:calc(100% + 26px);width:12px;height:12px;border-radius:50%;border:2px solid #C89A2C;background:transparent}
+#s-wishlist .wl-ring,#s-wishlist .wl-ringf{position:absolute;left:calc(50% - 6px);bottom:calc(100% + 4px);width:12px;height:12px;border-radius:50%;border:2px solid #C89A2C;background:transparent}
 #s-wishlist .wl-ring{z-index:5}
 #s-wishlist .wl-ringf{z-index:7;clip-path:inset(50% 0 0 0)}
 #s-wishlist .wl-crownheart{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -682,7 +679,7 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-lead b{color:#26221c;font-weight:600}
 /* Once per screen and above every link on it, matching every other surface. */
 #s-wishlist .wl-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:12px 0 0}
-#s-wishlist .wl-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:4px 12px 6px;margin-top:5px}
+#s-wishlist .wl-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;padding:4px 12px 6px;margin-top:5px}
 #s-wishlist .wl-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid #efe9dc}
 #s-wishlist .wl-row:first-child{border-top:0}
 #s-wishlist .wl-b{flex:1;min-width:0}
@@ -726,8 +723,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-add .wa-s{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 10px;max-width:300px}
 #s-wishlist .wl-add input{border:1.5px solid #e0d6bc;border-radius:2px;padding:11px 16px;font-size:15px;width:100%;max-width:290px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif;margin-bottom:8px}
 #s-wishlist .wl-add input:focus{outline:none;border-color:#C8A060}
-@media(max-width:374px){#s-wishlist .wl-add input{padding:11px 9px}}
-#s-wishlist .wl-add .wa-hint{font:italic 400 11.5px/1.5 'DM Sans',sans-serif;color:#6e6e6e;margin:0 auto 10px;max-width:290px}
+@media(max-width:374px){#s-wishlist .wl-add input{padding:11px 4px}}
+#s-wishlist .wl-add .wa-hint{font:400 11.5px/1.5 'DM Sans',sans-serif;color:#6e6e6e;margin:0 auto 10px;max-width:290px}
 #s-wishlist .wl-add .wa-btn{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;border:none;cursor:pointer}
 #s-wishlist .wl-add .wa-cancel{display:inline-block;font:500 12px/1 'Jost',sans-serif;color:#8a8474;cursor:pointer;margin-left:14px;padding:6px 2px}
 #s-wishlist .wl-add .wa-msg{font:400 12px/1.5 'Jost',sans-serif;color:#4a463e;margin-top:8px;min-height:1px}
@@ -3107,12 +3104,11 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
      The link is rebuilt from the store + search term on every render rather
      than stored, so a store-URL fix repairs every saved item automatically. -->
 <div class="scr" id="s-wishlist">
-  <div class="wl-stitch"></div>
   <div class="wl-rod"></div>
   <div class="wl-mast go-home" onclick="goHome()">style Star</div>
   <div class="top-back-wrap"><button class="top-back" onclick="closeWishlist()">&larr; Back</button></div>
   <div class="wl-head">
-    <div class="wl-crown"><svg class="wl-chain" viewBox="0 0 8 88" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="wlChainPat" x="0" y="0" width="8" height="16" patternUnits="userSpaceOnUse"><ellipse cx="4" cy="4.5" rx="2.9" ry="4.2" fill="none" stroke="#DDAF3F" stroke-width="1.4"/><ellipse cx="4" cy="12.5" rx="1.2" ry="4.2" fill="none" stroke="#C89A2C" stroke-width="1.4"/></pattern></defs><rect x="0" y="0" width="8" height="88" fill="url(#wlChainPat)"/></svg><span class="wl-ring"></span><span class="wl-ringf"></span><svg class="wl-crownheart" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#C89A2C" stroke-width=".82" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/><path fill="#FEF6D6" stroke="#EBD9A0" stroke-width=".55" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><div class="wl-ct">Your<br>Wishlist</div></div>
+    <div class="wl-crown"><svg class="wl-chain" viewBox="0 0 8 66" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="wlChainPat" x="0" y="0" width="8" height="16" patternUnits="userSpaceOnUse"><ellipse cx="4" cy="4.5" rx="2.9" ry="4.2" fill="none" stroke="#DDAF3F" stroke-width="1.4"/><ellipse cx="4" cy="12.5" rx="1.2" ry="4.2" fill="none" stroke="#C89A2C" stroke-width="1.4"/></pattern></defs><rect x="0" y="0" width="8" height="66" fill="url(#wlChainPat)"/></svg><span class="wl-ring"></span><span class="wl-ringf"></span><svg class="wl-crownheart" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#C89A2C" stroke-width=".82" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/><path fill="#FEF6D6" stroke="#EBD9A0" stroke-width=".55" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><div class="wl-ct">Your<br>Wishlist</div></div>
   </div>
   <div id="wlBody"></div>
   <div id="wlAdd"></div>
@@ -6932,7 +6928,7 @@ function _wlRenderAdd(){
     // "item" + "sandals", HER words: "mules" is fashion-people vocabulary.
     +'<input id="waName" type="text" maxlength="90" placeholder="The item, e.g. tan sandals">'
     +'<input id="waStore" type="text" maxlength="60" placeholder="Store (optional)">'
-    +'<input id="waUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="Exact link (optional)">'
+    +'<input id="waUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="Copy &amp; paste link (optional)">'
     +'<div class="wa-hint">With a link, your list opens that exact piece. Without one, we&rsquo;ll search the store for it.</div>'
     +'<div><button class="wa-btn" onclick="wlAddSubmit()">Add to my wishlist</button><span class="wa-cancel" role="button" onclick="wlAddCancel()">Never mind</span></div>'
     +'<div class="wa-msg" id="waMsg"></div>'
