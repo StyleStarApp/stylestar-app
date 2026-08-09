@@ -113,7 +113,7 @@ const vis = `el => { if(!el) return false; const r = el.getBoundingClientRect();
              btn: v(document.querySelector('#wlAdd .wl-addbtn')),
              label: (document.querySelector('#wlAdd .wl-addbtn')||{}).textContent||'' }; })()`);
   ok('form stands down after adding', !r.form);
-  ok('collapsed "wishing for" button appears with items', r.btn && /Add a piece you’re wishing for/.test(r.label));
+  ok('collapsed "wishing for" button appears with items', r.btn && /Add anything you’re wishing for/.test(r.label));
 
   // 6. DOOR 2: the Valentino case — pasted link, trackers stripped, store derived
   await page.evaluate(() => {

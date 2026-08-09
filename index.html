@@ -720,7 +720,7 @@ html.wl-velvet,html.wl-velvet body{background:#1a1a1a}
 #s-wishlist .wl-stay .ws-msg{font:400 12px/1.5 'Jost',sans-serif;color:#777;margin-top:8px;min-height:1px}
 #s-wishlist .wl-stay .ws-ok{font:400 13px/1.5 'Jost',sans-serif;color:#8a6d20}
 #s-wishlist .wl-addwrap{margin-top:12px;text-align:center}
-#s-wishlist .wl-addbtn{display:inline-block;font:600 11.5px/1.4 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#4a463e;background:#fff;border:1px solid #D8A52E;border-radius:999px;padding:9px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wishlist .wl-addbtn{display:inline-block;font:600 11.5px/1.4 'Jost',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#4a463e;background:#fff;border:1px solid #D8A52E;padding:9px 8px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-addbtn .wab-t{display:block;text-wrap:balance}
 #s-wishlist .wl-add{margin-top:12px;background:#FBFAF7;border:1px solid #D8A52E;padding:15px 14px 13px;text-align:center}
 #s-wishlist .wl-add .wa-t{font:400 17px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin-bottom:4px}
@@ -6802,7 +6802,7 @@ function _wlEmptyHtml(){
     +'<h4>Nothing saved yet</h4>'
     +'<p>When you&rsquo;re shopping and something catches your eye, tap <span class="hi">&hearts; Save</span> on it. It will wait for you right here, with the store and the link, so you can come back and buy it whenever you&rsquo;re ready.</p>'
     +'<span class="we-cta" role="button" onclick="wishlistShopCta()">Shop my style</span>'
-    +'<div class="we-or"><span class="we-addlnk" role="button" onclick="wlAddOpen()">Or add a piece you&rsquo;re wishing for &rarr;</span></div>'
+    +'<div class="we-or"><span class="we-addlnk" role="button" onclick="wlAddOpen()">Or add anything you&rsquo;re wishing for &rarr;</span></div>'
     +'</div></div>';
 }
 function wishlistShopCta(){try{openShopStyle()}catch(e){show('s-wel')}}
@@ -6813,7 +6813,7 @@ function renderWishlist(){
   if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderStay();return;}
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
-  var h='<div class="wl-lead">Tap the <b>&times;</b> to take an item off your list.</div>'
+  var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. Tap the <b>&times;</b> to take an item off your list.</div>'
    +'<div class="wl-disclosure">Some links may earn us a commission.</div>'
    +'<div class="wl-card">';
   list.forEach(function(it){
@@ -6917,7 +6917,7 @@ function _wlRenderAdd(){
     // deliberate, same trade as the A2HS whisper: never shrink the font on
     // the readability audience. The .wab-t span is block-level because
     // text-wrap:balance only works on block-level text (the 08-05 lesson).
-    el.innerHTML=_wlCount()?'<div class="wl-addwrap"><button class="wl-addbtn" onclick="wlAddOpen()"><span class="wab-t">+ Add a piece you&rsquo;re wishing for</span></button></div>':'';
+    el.innerHTML=_wlCount()?'<div class="wl-addwrap"><button class="wl-addbtn" onclick="wlAddOpen()"><span class="wab-t">+ Add anything you&rsquo;re wishing for</span></button></div>':'';
     return;
   }
   // ▶ The wording is HERS (2026-08-09): "wishing" cannot be misread as her
