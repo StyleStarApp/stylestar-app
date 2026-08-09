@@ -769,7 +769,11 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 .menu-chip span{font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.12em;color:#3a352c;text-transform:uppercase}
 body.menu-hidechip .menu-chip{display:none}
 .menu-veil{display:none;position:fixed;inset:0;z-index:9600;background:rgba(20,17,12,.45)}
-.menu-panel{display:none;position:fixed;top:0;left:0;bottom:0;z-index:9610;width:min(220px,70vw);background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:8px 0 30px rgba(0,0,0,.35);overflow-y:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 22px 26px}
+/* Side padding 22 → 18 (2026-08-09, with her group-label pick): her phone's
+   iOS text zoom wrapped "Refine your Preferences" even though it fits in a
+   standard browser — the trim buys every row ~8px of zoom headroom. The
+   one-line floor drops 213 → 205px; the drawer stays min(220px,70vw). */
+.menu-panel{display:none;position:fixed;top:0;left:0;bottom:0;z-index:9610;width:min(220px,70vw);background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);box-shadow:8px 0 30px rgba(0,0,0,.35);overflow-y:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 18px 26px}
 body.menu-open .menu-veil{display:block}
 body.menu-open .menu-panel{display:block}
 .menu-head{position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
@@ -779,7 +783,11 @@ body.menu-open .menu-panel{display:block}
 .menu-x{position:absolute;top:-6px;right:-12px;background:none;border:none;font-size:18px;line-height:1;color:#6f6a63;cursor:pointer;padding:10px 10px 12px 12px}
 .menu-row{font:400 17px/1.2 'DM Serif Display',Georgia,serif;color:#1a1a1a;padding:11px 2px;border-bottom:1px solid rgba(33,30,26,.08);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .menu-homerow{border-top:1px solid rgba(33,30,26,.08)}
-.menu-grp{font:500 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8a8474;margin:16px 0 3px;padding:0 2px}
+/* Promoted (2026-08-09, her pick "C" from a 4-way render — "too hard to read,
+   too small, don't stand out"): the old 10.5px #8a8474 measured ~3.5:1 on the
+   ivory, below the AA bar everything else clears. Items keep their serif —
+   the labels were the only problem. Don't re-quieten. */
+.menu-grp{font:600 12px/1 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#4a463e;margin:18px 0 5px;padding:0 2px}
 /* "Start here" signpost on Style Quiz, new visitors only (same gold as the New pills) */
 .menu-start{display:none;align-items:center;margin-left:9px;padding:2.5px 6px;border-radius:8px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;vertical-align:2px}
 .menu-start.on{display:inline-flex}
