@@ -9,6 +9,25 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE-EST-EST-EST (2026-08-09 — THE WISHLIST GOT ITS OWN DOOR, her Valentino question)
 
+### ⏸ WHERE THE 2026-08-09 SESSION PAUSED (her call: "save everything and pause here")
+Everything through **PR #797** is merged and CONFIRMED LIVE (curl-verified): the two-door wishlist add,
+the gold mark system, the crown + velvet + riding rod, the story velvet with the **11px** turquoise
+frame (her number — coincidentally the Shop mirror's exact frame weight, the two boutique frames now
+match). Working tree clean, branch resynced to main. **Her to-do recap, given to her at pause:**
+1. **Her eye/phone:** the rod-rides-scroll feel + the 11px story frame, live now.
+2. **Her screenshots:** the search retests she mentioned at session start never arrived — ask.
+3. **Her one-tap research:** Abercrombie results page → Shop By → Women's → paste the URL (the
+   department param that replaces the misfiring "womens" keyword).
+4. **Waiting on HER words (don't invent):** graduation-whisper line · most-asked stylist questions.
+5. **Waiting on others:** Indie Law (Bailey fix + operating-agreement blanks) → TM signature email
+   (REAL, not scam) → EIN → then her bank account → affiliate applications (networks first).
+6. **Desk day (MailerLite):** "Email me my wishlist" · photo-tips email + wardrobe-page capture.
+7. **Content anytime:** more Trending + Edit items (New pills light automatically).
+8. **Next build sessions parked:** Bloomingdale's color-facet path form (pattern proven, Macy's
+   likely rides along) · the registry/shareable-wishlist (FIRST when affiliate approval lands).
+9. **The gate she owns:** tester invites once searches feel dialed in to her.
+⚠️ Netlify note: today burned ~11 builds; she topped up $10 mid-day — watch the credits.
+
 ### ✅ THE WELCOME BACK MIRROR GOT ITS MARQUEE PILL + THE WHISPERS ARE 14px UPRIGHT (2026-08-09, her two catches)
 Her screenshot pass on Welcome Back, two catches, both built + merged same session:
 1. **The portrait CTA is the MARQUEE PILL now — her pick "A" from a 4-way render** (`scratchpad/
