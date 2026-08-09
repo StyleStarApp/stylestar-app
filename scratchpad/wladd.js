@@ -313,26 +313,28 @@ for (const w of [390, 360]) {
     const rod = document.querySelector('#s-wishlist .wl-rod').getBoundingClientRect();
     const crown = document.querySelector('#s-wishlist .wl-crown');
     const cr = crown.getBoundingClientRect();
-    const cs = getComputedStyle(crown, '::before');
-    const stringTop = cr.top + 195 * 0 + (cr.height * 0) // anchored via bottom; compute from height
-    const h = parseFloat(cs.height);
-    const stringTopAbs = (cr.top + 60) - h;  // bottom:calc(100% - 60px) => the string ends IN the heart's dip
+    const chain = document.querySelector('#s-wishlist .wl-chain').getBoundingClientRect();
+    const ring = document.querySelector('#s-wishlist .wl-ring').getBoundingClientRect();
     const mast = document.querySelector('#s-wishlist .wl-mast').getBoundingClientRect();
     const chip = document.querySelector('.menu-chip').getBoundingClientRect();
     const ct = document.querySelector('#s-wishlist .wl-ct').getBoundingClientRect();
-    const rodR = document.querySelector('#s-wishlist .wl-rod').getBoundingClientRect();
-    return { rodBottom: rod.bottom, stringTopAbs, heartW: cr.width,
-             rodFull: rodR.left <= 1 && rodR.right >= window.innerWidth - 1,
+    const cx = r => r.left + r.width / 2;
+    return { rodBottom: rod.bottom, rodTop: rod.top, chainTop: chain.top,
+             heartW: cr.width,
+             chainCentered: Math.abs(cx(chain) - cx(cr)) <= 0.6,
+             ringWrapsRod: ring.top < rod.top + 1 && ring.bottom > rod.bottom - 1,
+             rodFull: rod.left <= 1 && rod.right >= window.innerWidth - 1,
              titleInside: ct.top > cr.top && ct.bottom < cr.bottom && ct.left > cr.left && ct.right < cr.right,
              mastClearOfChip: mast.top >= chip.bottom - 2 || mast.right < chip.left,
-             mastLeft: Math.round(mast.left),
              noTilt: getComputedStyle(document.querySelector('.wl-crownheart')).transform === 'none',
              countGone: !document.getElementById('wlCount'),
              discUpright: getComputedStyle(document.querySelector('#wlBody .wl-disclosure')).fontStyle === 'normal' };
   });
-  ok(w + ': string meets the rod (within 3px)', Math.abs(crown.stringTopAbs - crown.rodBottom) <= 3, Math.round(crown.stringTopAbs) + ' vs rod ' + Math.round(crown.rodBottom));
+  ok(w + ': chain meets the rod (within 3px)', Math.abs(crown.chainTop - crown.rodBottom) <= 3, Math.round(crown.chainTop) + ' vs rod ' + Math.round(crown.rodBottom));
+  ok(w + ': chain dead-centered on the heart (<=0.6px)', crown.chainCentered);
+  ok(w + ': ring ENCIRCLES the rail', crown.ringWrapsRod);
   ok(w + ': rod spans the full viewport width', crown.rodFull);
-  ok(w + ': heart is 195px and untilted', Math.round(crown.heartW) === 195 && crown.noTilt);
+  ok(w + ': heart is 196px and untilted', Math.round(crown.heartW) === 196 && crown.noTilt);
   ok(w + ': stacked title fully inside the heart', crown.titleInside);
   ok(w + ': mast clear of the MENU chip', crown.mastClearOfChip);
   ok(w + ': count line gone, disclosure upright', crown.countGone && crown.discUpright);
