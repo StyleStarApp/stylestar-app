@@ -7,7 +7,60 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE-EST-EST (2026-08-08, night — HER SIX SCREENSHOTS TUNED THE WHOLE SHOP SEARCH)
+## ▶ NEXT SESSION — START HERE-EST-EST-EST (2026-08-09 — THE WISHLIST GOT ITS OWN DOOR, her Valentino question)
+
+### ✅ "ADD YOUR OWN PIECE" IS BUILT — THE TWO-DOOR WISHLIST ADD (2026-08-09, her ask + her explicit call)
+**Her product catch, and it was a real gap:** *"If she is shopping the mall or just in her head she knows
+exactly what she wants... how can she put it onto her wishlist if it is an item Style Star did not lead her
+to?"* Until now the ONLY way onto Your Wishlist was a heart on a card the app rendered. Then her sharpening
+question — the Valentino scenario: a black studded shoulder bag, exact, to send to her husband to buy —
+"is it going to search, or take him to the exact link every time?" ▶ **Her call, verbatim-ish: "Yes I love
+the two-door version, let's build it. Very important that she can put in something exact."**
+- **THE TWO DOORS, both live on Your Wishlist (`#wlAdd`, under the list card, above the email ask):**
+  1. **Words only** → store + name saved, link REBUILT every render exactly like an AI suggestion
+     ("Find it") — a store-URL fix silently repairs it. Known store resolves to its canonical name
+     ("sam edelman" → Sam Edelman); an unknown store keeps her word for it AND folds it into the search
+     term so the Google Shopping fallback still knows the brand ("Hermes silk scarf"). No store at all →
+     Google Shopping on the piece alone, and no empty store line renders.
+  2. **A pasted product link** → the exact URL stored, **"Your pick" badge** (gold border, pink heart —
+     deliberately NOT the teal "Catherine's pick"), button says **"Shop it"** and lands on THE piece every
+     time. ▶ **This is the SECOND deliberate exception to the never-store-URL rule** (Edit picks were the
+     first, same reasoning: an exact product page cannot be rebuilt from words). Honest trade, told to her:
+     an exact link can die when the piece sells out; a search never was exact. For a registry that is the
+     right trade.
+- **Paste forgiveness + hygiene:** a scheme-less paste ("valentino.com/...") gets https:// prepended;
+  `javascript:` and anything else non-http(s) is refused at entry with a kind message AND stripped on load
+  by `_normalizeWardrobe` (`own:true` entries keep `url` only through `_wlSafeUrl`; a poisoned row falls
+  back to the honest rebuilt search, never an unlinked row). ⚠️ **Tracker stripping is deliberately
+  CONSERVATIVE** (`_wlCleanUrl`: utm_*, fbclid, gclid, srsltid, mc_cid, mc_eid only) — **Bloomingdale's
+  `?ID=` is load-bearing and params like it MUST survive**, so nothing off that list is touched.
+- **Store named from the link** when she leaves the store box empty (`_wlStoreFromUrl`): exact hostname
+  match against STORES wins (each Gap-family store lives on its own subdomain so families resolve right),
+  then registrable-base, then the honest bare hostname ("valentino.com" — her list, her labels).
+- **Mechanics:** entries carry `own:true` (+`url` only when exact); id via `_wlMakeId` so dupes are
+  refused gently ("That piece is already on your list ♡"); own adds count toward the heart-tip retirement;
+  toast fires with View hidden on-list; the form never greets her already open (`openWishlist` resets);
+  "Never mind" cancels; empty state gained **"Or add a piece of your own →"** under Shop-my-style (no
+  collapsed button doubles it there). Everything rides `wardrobeData.wishlist` → localStorage + Supabase.
+- ⚠️ **ALL COPY IS CLAUDE'S DRAFT, she may reword any of it:** "Add your own piece" title, "Something you
+  spotted, or something you simply know you want.", the with-a-link hint, "Add to my wishlist" (her-voice
+  MY per the voice rule), "Never mind", the "Your pick" badge name, all three messages.
+- ▶ **AWAITING HER PICK — entry-point placement, renders made** (`scratchpad/wladdshot.js` →
+  `wladd-{a,b,c,form,empty}.png`): **A (as built)** gold-outline pill under the list card · **B** ghost row
+  inside the card bottom · **C** quiet link up top under the lead. Switching is one small move.
+- **Verified: new `scratchpad/wladd.js`, 56 checks** (the whole lifecycle: empty-state door, both add
+  doors, canonical store naming, tracker strip vs load-bearing params, Saks named from URL, scheme
+  forgiveness, javascript: refused + stripped-on-load fallback, dedupe, cancel, heart-tip stamp, email ask,
+  disclosure, reload persistence through normalization, remove-all back to empty state, AA contrast on
+  every new text incl. the 8.5px badge, no overflow 390/360, zero JS errors) + full 15-suite sweep green.
+- ▶ **WHY THIS MATTERS BEYOND ITSELF:** it is the foundation stone of her REGISTRY idea (share Your
+  Wishlist like a bridal registry) — a registry only works if it can hold everything she wants, not just
+  what our cards suggested. The two row kinds ARE the registry grammar: "buy exactly this" + "anything
+  like this".
+- ▶ **STILL PENDING FROM THIS CONVERSATION: her screenshots** — she said "I have some screenshots to
+  share" (search retests, most likely) and they had not arrived yet when this was written. Ask for them.
+
+## ▶ PREVIOUS — START HERE-EST-EST (2026-08-08, night — HER SIX SCREENSHOTS TUNED THE WHOLE SHOP SEARCH)
 
 ### ✅ THE SEARCH-TUNING PACKAGE IS BUILT FROM HER LIVE TESTING (2026-08-08, "yes let's do all 5")
 Cath ran real Shop-your-style taps on her phone and sent six screenshots; each got a diagnosis and
