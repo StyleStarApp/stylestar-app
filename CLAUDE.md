@@ -42,6 +42,26 @@ merge means credits/minutes are out (this case). ⚠️ **Every merge burns buil
 many-small-PRs day like this one (7 merges) costs 7 builds. Not a reason to batch work, just the reason
 the meter ran out today of all days.
 
+### ✅✅ THE CROWN'S POLISH ROUND + HER VELVET FRAME (2026-08-09, her live catches, merged same day)
+Her phone pass on the live crown produced a second round, all built + shipped:
+1. **Chain 88 → 66px, heart 6px under the rail** (her "hanging too low" catch, twice — the constants
+   moved twice, wladd caught the detached chain both times).
+2. **Back button ABSOLUTE top-right INSIDE the paper** (`top:14px;right:-14px`). ⚠️ The first fix used
+   right:-38 and pushed it into the black band ON HER PHONE — the sandbox-vs-device inset trap AGAIN
+   (third time today: cream stitch, corner hearts, this). **Rule: anything near the page edge must be
+   positioned relative to the PAPER (.ss) or flagged as device-verify.**
+3. **`.wl-card` squared** (radius 0, her consistency call) · **wa-hint upright** · **link placeholder =
+   "Copy & paste link (optional)"** (her wording, measured: fits 390/360; ≤374px padding 9→4 covers 320).
+4. **The cream outer stitch DELETED** ("cannot really see it anyway") — and the corner-hearts frame idea
+   died to the MENU chip covering the left corner.
+5. ✅ **HER FRAME: "E with full-bleed black" — "Yes I love it, build it and ship it all."** As built:
+   `html.wl-velvet` (toggled in show() beside the wishlist-mirror toggle) paints html+body `#1a1a1a` so
+   the black bleeds to EVERY screen edge; `.ss.wishlist-mirror::before` is now the GOLD RAIL BAND (5px
+   `#CFA02E`, inner highlight `#F7E4A6`, deep outer line) framing the paper — a gilt-framed board on
+   black velvet. Mast nudged left:-17→-8 to breathe off the band. wladd 96 (velvet + band asserted).
+- ▶ Framing renders kept: `frame-{a-clean,b-double,c-hearts,d-lip,e-rail,e3-bleed}.png` — D (gilded lip)
+  was the offered runner-up if the velvet ever feels heavy.
+
 ### ✅✅ THE WISHLIST CROWN IS BUILT — ROD, CHAIN, HANGING HEART, her design through 7 render rounds (2026-08-09, merged #789)
 Grew out of her "change the 5 crown hearts" note into a full header redesign, every step her call from renders:
 **one large STRAIGHT pale-gold heart (196px) hanging from the Analyze page's gold rod by a CHAIN of real

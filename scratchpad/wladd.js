@@ -338,6 +338,14 @@ for (const w of [390, 360]) {
   ok(w + ': stacked title fully inside the heart', crown.titleInside);
   ok(w + ': mast clear of the MENU chip', crown.mastClearOfChip);
   ok(w + ': count line gone, disclosure upright', crown.countGone && crown.discUpright);
+  // her frame: full-bleed velvet + the gold rail band on the paper
+  const frame = await page.evaluate(() => ({
+    velvet: getComputedStyle(document.body).backgroundColor === 'rgb(26, 26, 26)',
+    velvetClass: document.documentElement.classList.contains('wl-velvet'),
+    band: getComputedStyle(document.querySelector('.ss.wishlist-mirror'), '::before').borderTopWidth === '5px'
+  }));
+  ok(w + ': velvet bleeds full-bleed black on this page', frame.velvet && frame.velvetClass);
+  ok(w + ': the gold rail band frames the paper', frame.band);
   ok(w + ': zero JS errors', errs.length === 0, errs.join(' | ').slice(0, 200));
   await page.close();
 }
