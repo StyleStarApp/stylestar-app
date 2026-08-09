@@ -42,17 +42,32 @@ merge means credits/minutes are out (this case). ⚠️ **Every merge burns buil
 many-small-PRs day like this one (7 merges) costs 7 builds. Not a reason to batch work, just the reason
 the meter ran out today of all days.
 
-### ✅ MY STORY GOT HER VELVET TOO + THE ROD IS ZOOM-PROOF (2026-08-09, evening, her design)
-1. **My Story velvet, her spec:** signature pink `#F49AC1` bleeds to every screen edge
-   (`html.story-velvet`, toggled in show() beside wl-velvet) with a CLEAN solid turquoise frame
-   (`#s-story .st-frame`, fixed inset 12, 5px `#12A5B6`). ⚠️ **No shadow/highlight lines on the frame —
-   her catch: the dimension details read GRAY against pink** (the small-dark-color trap, teal edition).
+### ✅ MY STORY GOT HER VELVET TOO + THE ROD IS ZOOM-PROOF (2026-08-09, evening, her design — FIXED TWICE, final form below)
+⚠️ **The first ship of both items FAILED ON HER PHONE and the fixes carry the day's two biggest lessons:**
+1. **My Story velvet, FINAL FORM (her words: "Simple"):** signature pink `#F49AC1` bleeds to every
+   screen edge (`html.story-velvet`, toggled in show() beside wl-velvet) and the turquoise frame is the
+   STORY CARD ITSELF — `.ss.story-mirror` simplified to one plain `4px solid #0FA6B6` border, white
+   paper, drop shadow only. The `.st-frame` div is DELETED. ▶ **Why: the first build was a FIXED
+   viewport frame, and on her phone it sat ON TOP of the scrolling words + left a white sliver.** A
+   frame that must never block text has to SCROLL WITH the text — put it on the paper, not the glass.
+   ⚠️ **Her "white line" was pre-existing:** `.ss.story-mirror` already carried white+pink INSET RINGS
+   (`inset 0 0 0 5px #fff, inset 0 0 0 10px #F49AC1`) from an old design — those rings were the line
+   she disliked; they are gone. Don't reintroduce layered edges here. Also her earlier catch stands:
+   **no shadow/highlight lines on teal against pink — they read GRAY** (small-dark-color trap).
    Blush `#F4C7D6` was offered; she picked "the darker pink" (her signature).
-2. **The wishlist rod is ZOOM-PROOF full-bleed now:** 100vw shrinks under iOS page zoom (HER phone
-   showed the rod inset while the sandbox measured full-bleed) — the rod now overhangs `left/right:
-   -100px`, clipped by `overflow-x:hidden` on the velvet page. ⚠️ wladd's overflow census deliberately
-   exempts `.wl-rod`; the no-sideways-scroll assertion still stands. **Lesson (4th time today): vw units
-   and edge-positioning are zoom-fragile — overhang + clip, or position off the paper (.ss), never vw.**
+   - 🚨 **THE SHELL LESSON (cost one broken build, caught by suites before shipping): `.ss` is the
+     APP SHELL, not a decoration.** An attempted `html.story-velvet .ss{display:none}` blanked the
+     ENTIRE app (Menu chip + footer live inside it) — nav 79/80 + menu 86/87 failed instantly.
+     **Never hide or replace `.ss`; restyle it per-page via the `.ss.<page>-mirror` skins.**
+2. **The wishlist rod, FINAL FORM: `position:fixed;top:32px;left:0;right:0`** — pinned to the
+   viewport itself, so it is edge-to-edge on ANY device and ANY zoom. ▶ **Two prior attempts failed on
+   her phone:** 100vw (shrinks under iOS page zoom) and a ±100px overhang clipped by
+   `overflow-x:hidden` (also inset on her device). **Lesson (5th time today): the only edge-to-edge
+   that survives iOS page zoom is viewport-fixed.** Scroll consequence, deliberate: the chain slides
+   beneath the fixed rod like feeding over a rail. The `overflow-x:hidden` on wl-velvet is removed
+   (nothing overhangs anymore); wladd's overflow census still exempts `.wl-rod` (fixed elements sit
+   outside the paper). Proofs: `scratchpad/storyfix-{top,mid}.png` (frame scrolls with words, no white
+   line), `rodfix-top.png` (insets 0/0). Verified: wladd 96 · nav 80 · menu 87 · e2e 29 green.
 3. Same evening micro-rounds, all hers: lead box restored to the full warm sentence with "item"
    wording, centered, tucked -10px under the heart; Back top:6px; **the wishing button is SQUARED and
    says "+ Add anything you're wishing for"** (both surfaces; tracking .04em/padding 8 hold one line at
