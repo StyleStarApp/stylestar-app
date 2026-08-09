@@ -44,6 +44,11 @@ wraps**) · C = items KEEP their serif, labels promoted only. **She picked C + t
   browser — **it wraps on HER phone because of iOS text zoom** (Page Zoom / Dynamic Type, common in the
   18-80 audience). The trim buys ~8px headroom; the one-line floor drops 213→205px, drawer width
   unchanged at min(220px,70vw). ⚠️ menumeasure.js's 213px floor note is superseded by this.
+- ✅ **AND THE GOLD BAR LANDED the same session — her pick "A" from a 3-way render** (`scratchpad/
+  menugrpmock.js` → `menugrp-{a,b,c}.png`): a short 2px `#D8A52E` bar under each group name — the Your
+  Wishlist title's own mark, echoing the wordmark's underline in the drawer header. B (trailing fade
+  hairline) offered; C (full-width rule) argued down as a double rule against the row hairlines.
+  `.menu-grp` is inline-block so the bar hugs the word. menux 28 · menu 87 · nav 80 green again.
 - Verified: menux 28 · menu 87 · nav 80 green (the ✕-corner geometry survived the trim untouched).
   As-built: `scratchpad/menufont-built.png`.
 
