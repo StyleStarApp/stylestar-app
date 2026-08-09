@@ -4189,7 +4189,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
 //   purpose, so do not add them from that list.
 const STORES={
   // Department stores and multi-brand
-  'Nordstrom':{w:1,u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,9,8,7,7,8,8,10,9],c:'almost everything, dresses, shoes, denim'},
+  'Nordstrom':{cf:'&filterByColor=',w:1,u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,9,8,7,7,8,8,10,9],c:'almost everything, dresses, shoes, denim'},
   "Macy's":{w:1,u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[7,5,6,8,6,7,7,6,8,8],c:'everyday, dresses, shoes, handbags'},
   "Dillard's":{w:1,u:'https://www.dillards.com/search-term/',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7,8,5,6,8,7,9,8],c:'dresses, occasion, workwear'},
   'Belk':{w:1,u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[8,5,6,8,5,8,6,5,8,7],c:'everyday, dresses, shoes'},
@@ -4342,6 +4342,15 @@ function resolveStore(name){
 // (e.g. "pink midi dress"); `item` is the pretty descriptive name shown on the
 // card. We always query the SEARCH term, because a full descriptive name typed
 // into a store's search box returns little or nothing.
+// ▶ COLOR FACETS (2026-08-09, from Cath's address bar). A store carrying `cf`
+// can take a color FILTER in its search URL — Nordstrom's &filterByColor=pink,
+// captured and then confirmed by her in its stripped form. The filter is added
+// ONLY when the search's first word is one of these universal retail colors,
+// so an unknown shade can never build a filter that empties the results — it
+// just stays a plain search. "pink" is the human-verified value; the rest are
+// the basics every retail color facet carries. (The new prompt rules put the
+// retail color word FIRST in every search term, which is what makes this work.)
+var _CF_COLORS=['pink','black','white','red','blue','green','brown','purple','yellow','orange'];
 function getStoreUrl(store,item,search){
   var raw=String(search||item||'').trim();
   const key=resolveStore(store);
@@ -4360,13 +4369,19 @@ function getStoreUrl(store,item,search){
     //       (Madewell, Mango, Revolve, Lacoste)
     // Because the wishlist stores terms and rebuilds URLs on every render,
     // this fix silently repairs every already-saved item too.
+    // Color facet is read from the RAW term (before any "womens " prepend).
+    var facet='';
+    if(s.cf){
+      var c0=raw.toLowerCase().split(/\s+/)[0];
+      if(_CF_COLORS.indexOf(c0)>=0)facet=s.cf+c0;
+    }
     if(s.w)raw='womens '+raw;
     const term=encodeURIComponent(raw);
     // Most stores just take the term on the end of `u`. A few cannot: Lacoste
     // wraps it inside a JSON parameter AND repeats it in a hash fragment. Those
     // carry a `tpl` template instead, where {q} is replaced everywhere it appears.
     if(s.tpl)return s.tpl.replace(/\{q\}/g,term);
-    return s.u+term+(s.gp||'');
+    return s.u+term+(s.gp||'')+facet;
   }
   // Unknown store: still get her to real products rather than a web page of links.
   return'https://www.google.com/search?tbm=shop&q='+encodeURIComponent(raw);
