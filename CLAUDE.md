@@ -42,6 +42,22 @@ merge means credits/minutes are out (this case). ⚠️ **Every merge burns buil
 many-small-PRs day like this one (7 merges) costs 7 builds. Not a reason to batch work, just the reason
 the meter ran out today of all days.
 
+### ✅ MY STORY GOT HER VELVET TOO + THE ROD IS ZOOM-PROOF (2026-08-09, evening, her design)
+1. **My Story velvet, her spec:** signature pink `#F49AC1` bleeds to every screen edge
+   (`html.story-velvet`, toggled in show() beside wl-velvet) with a CLEAN solid turquoise frame
+   (`#s-story .st-frame`, fixed inset 12, 5px `#12A5B6`). ⚠️ **No shadow/highlight lines on the frame —
+   her catch: the dimension details read GRAY against pink** (the small-dark-color trap, teal edition).
+   Blush `#F4C7D6` was offered; she picked "the darker pink" (her signature).
+2. **The wishlist rod is ZOOM-PROOF full-bleed now:** 100vw shrinks under iOS page zoom (HER phone
+   showed the rod inset while the sandbox measured full-bleed) — the rod now overhangs `left/right:
+   -100px`, clipped by `overflow-x:hidden` on the velvet page. ⚠️ wladd's overflow census deliberately
+   exempts `.wl-rod`; the no-sideways-scroll assertion still stands. **Lesson (4th time today): vw units
+   and edge-positioning are zoom-fragile — overhang + clip, or position off the paper (.ss), never vw.**
+3. Same evening micro-rounds, all hers: lead box restored to the full warm sentence with "item"
+   wording, centered, tucked -10px under the heart; Back top:6px; **the wishing button is SQUARED and
+   says "+ Add anything you're wishing for"** (both surfaces; tracking .04em/padding 8 hold one line at
+   360 — "anything" makes the from-any-store promise in one word).
+
 ### ✅✅ THE CROWN'S POLISH ROUND + HER VELVET FRAME (2026-08-09, her live catches, merged same day)
 Her phone pass on the live crown produced a second round, all built + shipped:
 1. **Chain 88 → 66px, heart 6px under the rail** (her "hanging too low" catch, twice — the constants
