@@ -63,7 +63,7 @@ the two-door version, let's build it. Very important that she can put in somethi
   "I love how you built this" but has not named a letter — A stands unless she says otherwise.
 - ✅ **HER LIVE CATCH, fixed same session: the name field's placeholder was CUT OFF** ("The piece, e.g.
   black studded shoulder bag" needed 287px; the box's inner width is 230px at 390 — it was cut on EVERY
-  phone). Now "The piece, e.g. tan mules" + the link field shortened to "Exact link (optional)" (its
+  phone). Now "The item, e.g. tan sandals" (her rewording of the fix: "mules" is fashion-people vocabulary, and "item" over "piece") + the link field shortened to "Exact link (optional)" (its
   "paste it here" tail was quietly cut at 360 too) + a narrow-width padding trim (≤374px: 16→10px) so
   both fit whole even at 320. ⚠️ wladd.js Part 3 now MEASURES every placeholder against its input's
   real inner width at 390/360/320 — a future placeholder cannot quietly overflow.
