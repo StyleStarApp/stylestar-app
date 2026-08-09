@@ -686,6 +686,22 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
 #s-wishlist .wl-stay .ws-btn[disabled]{opacity:.6}
 #s-wishlist .wl-stay .ws-msg{font:400 12px/1.5 'Jost',sans-serif;color:#777;margin-top:8px;min-height:1px}
 #s-wishlist .wl-stay .ws-ok{font:400 13px/1.5 'Jost',sans-serif;color:#8a6d20}
+#s-wishlist .wl-addwrap{margin-top:12px;text-align:center}
+#s-wishlist .wl-addbtn{display:inline-block;font:600 11.5px/1.4 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#4a463e;background:#fff;border:1px solid #D8A52E;border-radius:999px;padding:9px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wishlist .wl-addbtn .wab-t{display:block;text-wrap:balance}
+#s-wishlist .wl-add{margin-top:12px;background:#FBFAF7;border:1px solid #D8A52E;padding:15px 14px 13px;text-align:center}
+#s-wishlist .wl-add .wa-t{font:400 17px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin-bottom:4px}
+#s-wishlist .wl-add .wa-s{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 10px;max-width:300px}
+#s-wishlist .wl-add input{border:1.5px solid #e0d6bc;border-radius:2px;padding:11px 16px;font-size:15px;width:100%;max-width:290px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif;margin-bottom:8px}
+#s-wishlist .wl-add input:focus{outline:none;border-color:#C8A060}
+#s-wishlist .wl-add .wa-hint{font:italic 400 11.5px/1.5 'DM Sans',sans-serif;color:#6e6e6e;margin:0 auto 10px;max-width:290px}
+#s-wishlist .wl-add .wa-btn{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;border:none;cursor:pointer}
+#s-wishlist .wl-add .wa-cancel{display:inline-block;font:500 12px/1 'Jost',sans-serif;color:#8a8474;cursor:pointer;margin-left:14px;padding:6px 2px}
+#s-wishlist .wl-add .wa-msg{font:400 12px/1.5 'Jost',sans-serif;color:#4a463e;margin-top:8px;min-height:1px}
+#s-wishlist .wl-own{display:inline-flex;align-items:center;gap:4px;font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#8a6d20;background:#fff;border:1px solid #E0B84C;border-radius:999px;padding:3px 7px 3px 6px;margin-bottom:5px}
+#s-wishlist .wl-own svg{width:9px;height:9px;fill:#F49AC1;display:block;flex:0 0 auto}
+#s-wishlist .wl-empty .we-or{margin-top:12px}
+#s-wishlist .wl-empty .we-addlnk{font:600 12px/1.4 'Jost',sans-serif;color:#8a6d20;cursor:pointer;letter-spacing:.04em;border-bottom:1px solid #E0B84C;padding-bottom:1px}
 #s-wishlist .wl-foot{text-align:center;margin-top:26px}
 /* "Saved" confirmation toast: tells her the piece landed somewhere AND where
    that somewhere is, so the list is discoverable from the moment she uses it. */
@@ -3030,6 +3046,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="wl-count" id="wlCount"></div>
   </div>
   <div id="wlBody"></div>
+  <div id="wlAdd"></div>
   <div id="wlStay"></div>
   <div class="wl-foot" data-std-foot></div>
 </div>
@@ -6058,6 +6075,12 @@ function _normalizeWardrobe(d){
     // Cath's Edit picks are real product links, so they alone keep a stored URL
     // and price. Everything else rebuilds its link from store + search term.
     if(x.pick){o.pick=true;o.url=_wlSafeUrl(x.url);o.price=String(x.price||'');}
+    // A piece SHE added herself (2026-08-09). With a pasted link it is the
+    // second deliberate exception to "never store the URL": an exact product
+    // page cannot be rebuilt from words. Without one it behaves exactly like
+    // an AI suggestion and rebuilds a search. A hand-edited or unsafe URL is
+    // stripped here, and the row honestly falls back to the search link.
+    else if(x.own){o.own=true;var ou=_wlSafeUrl(x.url);if(ou)o.url=ou;}
     return o;
   });
   if(!d.pretap0){d.items={};d.pretap0=true;}
@@ -6704,6 +6727,7 @@ function _wlEmptyHtml(){
     +'<h4>Nothing saved yet</h4>'
     +'<p>When you&rsquo;re shopping and something catches your eye, tap <span class="hi">&hearts; Save</span> on it. It will wait for you right here, with the store and the link, so you can come back and buy it whenever you&rsquo;re ready.</p>'
     +'<span class="we-cta" role="button" onclick="wishlistShopCta()">Shop my style</span>'
+    +'<div class="we-or"><span class="we-addlnk" role="button" onclick="wlAddOpen()">Or add a piece you&rsquo;re wishing for &rarr;</span></div>'
     +'</div></div>';
 }
 function wishlistShopCta(){try{openShopStyle()}catch(e){show('s-wel')}}
@@ -6713,28 +6737,31 @@ function renderWishlist(){
   var list=_wlList().slice();
   var cnt=document.getElementById('wlCount');
   if(cnt)cnt.textContent=list.length?(list.length+' piece'+(list.length>1?'s':'')+' saved'):'';
-  if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderStay();return;}
+  if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderStay();return;}
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
   var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. Tap the <b>&times;</b> to take a piece off your list.</div>'
    +'<div class="wl-disclosure">Some links may earn us a commission.</div>'
    +'<div class="wl-card">';
   list.forEach(function(it){
-    var pick=!!it.pick,url='';
+    var pick=!!it.pick,own=!!it.own,url='',exact=false;
     if(pick)url=_wlSafeUrl(it.url);
-    else{try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}}
-    h+='<div class="wl-row'+(pick?' pick':'')+'">'
+    else if(own&&it.url){url=_wlSafeUrl(it.url);exact=!!url;}
+    if(!pick&&!url){try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}}
+    h+='<div class="wl-row'+(pick?' pick':'')+(own?' own':'')+'">'
       +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
       +'<div class="wl-b">'
       +(pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_STAR_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
+      +(exact?'<span class="wl-own"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Your pick</span>':'')
       +'<span class="wl-nm">'+_esc(it.name)+'</span>'
-      +'<span class="wl-st">'+_esc(it.store)
-      +(pick&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span></div>'
-      +(url?'<a class="wl-go" href="'+_esc(url)+'" target="_blank" rel="sponsored noopener">'+(pick?'Shop it':'Find it')+' &rarr;</a>':'')
+      +(it.store?'<span class="wl-st">'+_esc(it.store)
+      +(pick&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span>':'')+'</div>'
+      +(url?'<a class="wl-go" href="'+_esc(url)+'" target="_blank" rel="sponsored noopener">'+((pick||exact)?'Shop it':'Find it')+' &rarr;</a>':'')
       +'</div>';
   });
   h+='</div>';
   body.innerHTML=h;
+  _wlRenderAdd();
   _wlRenderStay();
 }
 // The email ask appears only once she has actually saved something, so it reads
@@ -6788,12 +6815,135 @@ async function saveWishlistEmail(){
   var s2=document.getElementById('staySectionPhoto');if(s2)s2.style.display='none';
   try{hideSavePins()}catch(e){}
 }
+// ── ADD YOUR OWN PIECE (2026-08-09, Cath's ask) ─────────────────────────────
+// Until now the only way onto the wishlist was a heart on a card Style Star
+// rendered. But a woman browsing the Mall, or one who simply knows what she
+// wants, had no door in. This is her door, and it has two sides:
+//   • words only  -> store + name, link REBUILT every render (Find it), so a
+//     store-URL fix repairs it, exactly like an AI suggestion.
+//   • a pasted product link -> the exact piece, stored (Shop it), marked
+//     "Your pick" — the registry case: send it to your husband and he buys
+//     THE bag, not a search page. Same honest trade as Cath's Edit picks:
+//     an exact link can die when the piece sells out; a search never was exact.
+var _wlAddOpen=false;
+function wlAddOpen(){
+  _wlAddOpen=true;_wlRenderAdd();
+  var f=document.getElementById('waName');
+  if(f)try{f.focus()}catch(e){}
+}
+function wlAddCancel(){_wlAddOpen=false;_wlRenderAdd();}
+function _wlRenderAdd(){
+  var el=document.getElementById('wlAdd');
+  if(!el)return;
+  if(!_wlAddOpen){
+    // Collapsed: a quiet invitation under the list. The empty state carries its
+    // own "Or add a piece of your own" link instead, so nothing doubles up.
+    // ⚠️ Width is MEASURED, not guessed: her wording needs ~257px at the
+    // tightened 12px padding + .05em tracking, which holds ONE line at 390
+    // AND 360 (Display Zoom). At 320 it wraps to two balanced lines —
+    // deliberate, same trade as the A2HS whisper: never shrink the font on
+    // the readability audience. The .wab-t span is block-level because
+    // text-wrap:balance only works on block-level text (the 08-05 lesson).
+    el.innerHTML=_wlCount()?'<div class="wl-addwrap"><button class="wl-addbtn" onclick="wlAddOpen()"><span class="wab-t">+ Add a piece you&rsquo;re wishing for</span></button></div>':'';
+    return;
+  }
+  // ▶ The wording is HERS (2026-08-09): "wishing" cannot be misread as her
+  // closet — "add your own piece" sounded like something she already owns,
+  // which is Wardrobe List territory. Sub ends at "from any store" by her
+  // explicit trim (never surface the store-list boundary to the user).
+  el.innerHTML='<div class="wl-add">'
+    +'<div class="wa-t">Wishing for something?</div>'
+    +'<div class="wa-s">Spotted something perfect, or know exactly what you want? Add it here, from any store.</div>'
+    +'<input id="waName" type="text" maxlength="90" placeholder="The piece, e.g. black studded shoulder bag">'
+    +'<input id="waStore" type="text" maxlength="60" placeholder="Store (optional)">'
+    +'<input id="waUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="Exact link (optional), paste it here">'
+    +'<div class="wa-hint">With a link, your list opens that exact piece. Without one, we&rsquo;ll search the store for it.</div>'
+    +'<div><button class="wa-btn" onclick="wlAddSubmit()">Add to my wishlist</button><span class="wa-cancel" role="button" onclick="wlAddCancel()">Never mind</span></div>'
+    +'<div class="wa-msg" id="waMsg"></div>'
+    +'</div>';
+}
+// Clean a pasted link: https only (a missing scheme is forgiven — phones often
+// copy without one), and the well-known tracking params stripped per the
+// standing rule. ⚠️ Only the universal trackers are stripped — a param like
+// Bloomingdale's ?ID= is load-bearing, so anything not on this list survives.
+function _wlCleanUrl(u){
+  u=String(u||'').trim();
+  if(!u)return'';
+  if(!/^https?:\/\//i.test(u)){
+    if(/^[a-z0-9][a-z0-9.-]*\.[a-z]{2,}([\/?#]|$)/i.test(u))u='https://'+u;
+    else return'';
+  }
+  try{
+    var p=new URL(u);
+    if(p.protocol!=='https:'&&p.protocol!=='http:')return'';
+    var kill=[];
+    p.searchParams.forEach(function(v,k){
+      if(/^utm_/i.test(k)||/^(fbclid|gclid|srsltid|mc_cid|mc_eid)$/i.test(k))kill.push(k);
+    });
+    kill.forEach(function(k){p.searchParams.delete(k)});
+    return p.toString();
+  }catch(e){return''}
+}
+// Name the store from a pasted link when she left the store box empty: an
+// exact hostname match against the STORES table wins (each Gap-family store
+// lives on its own subdomain, so families resolve correctly), then a
+// registrable-base match, then the honest bare hostname ("valentino.com").
+function _wlStoreFromUrl(u){
+  var host='';
+  try{host=new URL(u).hostname.toLowerCase().replace(/^www\./,'')}catch(e){return''}
+  var base=host.split('.').slice(-2).join('.');
+  var keys=Object.keys(STORES),near='';
+  for(var i=0;i<keys.length;i++){
+    var su=STORES[keys[i]].tpl||STORES[keys[i]].u||'',sh='';
+    try{sh=new URL(su).hostname.toLowerCase().replace(/^www\./,'')}catch(e){continue}
+    if(sh===host)return keys[i];
+    if(!near&&sh.split('.').slice(-2).join('.')===base)near=keys[i];
+  }
+  return near||host;
+}
+function wlAddSubmit(){
+  var nEl=document.getElementById('waName'),sEl=document.getElementById('waStore'),uEl=document.getElementById('waUrl');
+  var msg=document.getElementById('waMsg');
+  function say(t,bad){if(msg){msg.style.color=bad?'#c0392b':'#4a463e';msg.textContent=t}}
+  var name=(nEl?nEl.value:'').trim().slice(0,90);
+  var storeIn=(sEl?sEl.value:'').trim().slice(0,60);
+  var urlRaw=(uEl?uEl.value:'').trim();
+  if(!name){say('Tell us the piece first, even a few words is plenty.',true);return;}
+  var url='';
+  if(urlRaw){
+    url=_wlCleanUrl(urlRaw);
+    if(!url){say('That link doesn’t look right. Copy it from your browser’s address bar and paste the whole thing.',true);return;}
+  }
+  var store=storeIn;
+  if(!store&&url)store=_wlStoreFromUrl(url);
+  // A known store gets its canonical name ("sam edelman" -> "Sam Edelman");
+  // an unknown one keeps her word for it — her list, her labels.
+  var rk='';try{rk=resolveStore(store)}catch(e){}
+  if(rk)store=rk;
+  var id=_wlMakeId(name,store);
+  if(!/^[a-z0-9-]{1,64}~[a-z0-9-]{0,64}$/.test(id)){say('Tell us the piece first, even a few words is plenty.',true);return;}
+  if(_wlHas(id)){say('That piece is already on your list ♡');return;}
+  var entry={id:id,name:name,store:store,search:'',ts:Date.now(),own:true};
+  if(url)entry.url=url;
+  // Words at a store we don't carry: fold her store word into the search so
+  // the Google Shopping fallback still knows the brand she named.
+  else if(store&&!rk)entry.search=store+' '+name;
+  _wlList().unshift(entry);
+  _wlAddOpen=false;
+  saveWardrobeData();
+  renderWishlist();
+  _wlSyncButtons();_wlSyncBadges();
+  try{_syncHeartTip()}catch(e){}
+  _wlToast();
+  _wlSyncServer();
+}
 function openWishlist(){
   var cur=document.querySelector('.scr.act');
   // Tapping "View" from the toast while already on the list must not make Back
   // return to the list itself.
   if(cur&&cur.id!=='s-wishlist')wishlistPrevScreen=cur.id;
   var t=document.getElementById('wlToast');if(t)t.classList.remove('on');
+  _wlAddOpen=false;   // the form never greets her already open
   show('s-wishlist');
   renderWishlist();
   try{window.scrollTo(0,0)}catch(e){}
