@@ -30,8 +30,9 @@ const server = http.createServer((req, res) => {
     if (!localStorage.getItem('__seeded')) {
       localStorage.setItem('__seeded', '1');
       localStorage.setItem('ss_wardrobe', JSON.stringify({ pretap0: true, items: {}, wishlist: [
-        { id: 'tan~sandals', n: 'Tan Kitten-Heel Mules', s: 'Sam Edelman', q: 'tan kitten heel mules' },
-        { id: 'own~valentino', n: 'Black studded shoulder bag', s: 'Bloomingdales', own: true, url: 'https://www.bloomingdales.com/shop/product/valentino-bag?ID=123' }
+        { id: 'tan-kitten-heel-mules~sam-edelman', name: 'Tan Kitten-Heel Mules', store: 'Sam Edelman', search: 'tan kitten heel mules', ts: 1 },
+        { id: 'black-studded-shoulder-bag~bloomingdales', name: 'Black studded shoulder bag', store: 'Bloomingdales', search: '', ts: 2, own: true, url: 'https://www.bloomingdales.com/shop/product/valentino-bag?ID=123' },
+        { id: 'pink-midi-dress~nordstrom', name: 'Pink Midi Dress', store: 'Nordstrom', search: 'pink midi dress', ts: 3 }
       ] }));
     }
   });
@@ -80,6 +81,17 @@ const server = http.createServer((req, res) => {
   const ok = rod.rodLeft === 0 && rod.rodRight === 0 && rod.pos === 'fixed' && rod.chainTop <= rod.rodBottom + 3;
   console.log(ok ? 'ROD GEOMETRY OK (edge-to-edge, chain meets rod)' : 'ROD GEOMETRY FAIL');
   await page.screenshot({ path: path.join(__dirname, 'rodfix-top.png') });
+  // the rod rides the scroll with the chain (her call)
+  const ride = await page.evaluate(async () => {
+    const r = document.querySelector('#s-wishlist .wl-rod');
+    const c = document.querySelector('.wl-chain');
+    const b = r.getBoundingClientRect().bottom;
+    window.scrollTo(0, 300); await new Promise(x => setTimeout(x, 200));
+    const m = { rod: r.getBoundingClientRect().bottom, chain: c.getBoundingClientRect().top, y: scrollY };
+    return { moved: Math.abs((b - m.rod) - m.y) <= 1, meets: Math.abs(m.chain - m.rod) <= 3, scrolled: m.y >= 100 };
+  });
+  console.log('ROD RIDES SCROLL:', JSON.stringify(ride));
+  await page.screenshot({ path: path.join(__dirname, 'rodfix-scrolled.png') });
 
   await browser.close();
   server.close();

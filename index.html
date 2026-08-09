@@ -106,7 +106,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
    card — the white and pink inset rings are gone ("no white line") — and the
    page behind it bleeds her signature pink (html.story-velvet). The card
    scrolls with the words, so the frame can never sit on top of them. */
-.ss.story-mirror{position:relative;border-radius:0;border:4px solid #0FA6B6;background:#fff;
+.ss.story-mirror{position:relative;border-radius:0;border:6px solid #0FA6B6;background:#fff;
   box-shadow:0 8px 34px rgba(0,0,0,.16)}
 /* Shop your style: her personal boutique storefront — black store window with a
    slight beveled inner edge, on the Mall's brick wall (body.shop-brick) */
@@ -677,8 +677,9 @@ html.story-velvet,html.story-velvet body{background:#F49AC1}
 #s-wishlist{position:relative;padding-top:24px}
 /* The rod is FIXED to the viewport: left/right 0 of the screen itself, so it
    is edge-to-edge on any device and any zoom (vw units and overhang-clipping
-   both failed on her phone — this cannot). It sits where the screen top sat;
-   scrolling, the chain slides beneath it like feeding over the rail. */
+   both failed on her phone — this cannot). Fixed left/right handles WIDTH
+   only: _wlRodScroll translates it by -scrollY so it rides the page and the
+   hanging heart stays on its rod (her call — they slide together). */
 #s-wishlist .wl-rod{position:fixed;top:32px;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 #s-wishlist .wl-mast{position:absolute;top:20px;left:-8px;z-index:6;font:400 19px/1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;padding-bottom:7px;display:inline-block;cursor:pointer}
 #s-wishlist .wl-mast::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2px;background:#E0B84C}
@@ -7034,6 +7035,13 @@ function wlAddSubmit(){
   _wlToast();
   _wlSyncServer();
 }
+// The rod is position:fixed for its WIDTH (the only edge-to-edge that survives
+// iOS page zoom), but the heart HANGS on it, so it must ride the page scroll
+// with the chain (her call: "they need to slide together"). Translating by
+// -scrollY makes the fixed rod move exactly like page content. Raw scrollY,
+// no clamp, so iOS rubber-banding keeps rod and chain glued too.
+function _wlRodScroll(){var r=document.querySelector('#s-wishlist .wl-rod');if(r)r.style.transform='translateY('+(-window.scrollY)+'px)';}
+window.addEventListener('scroll',_wlRodScroll,{passive:true});
 function openWishlist(){
   var cur=document.querySelector('.scr.act');
   // Tapping "View" from the toast while already on the list must not make Back
@@ -7044,6 +7052,7 @@ function openWishlist(){
   show('s-wishlist');
   renderWishlist();
   try{window.scrollTo(0,0)}catch(e){}
+  _wlRodScroll();   // belt-and-braces: rod starts exactly on its rest position
 }
 function closeWishlist(){show(wishlistPrevScreen||'s-wb');}
 function wardrobeTab(which){
