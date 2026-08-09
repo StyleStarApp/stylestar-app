@@ -4234,7 +4234,7 @@ const STORES={
   // Real pattern, from her address bar. d=Womens scopes it to womenswear, and
   // comes first only so the search term can still be appended at the end.
   'Revolve':{u:'https://www.revolve.com/r/Search.jsp?d=Womens&search=',t:'$$$',a:'Glamorous Luxe, Trendsetter',s:[],d:[2,10,8,2,10,4,10,10,7,9],c:'occasion dresses, vacation, designer contemporary'},
-  'Abercrombie':{w:1,u:'https://www.abercrombie.com/shop/us/search?searchTerm=',t:'$$',a:'Casual Trendy, Elevated Casual',s:['petite','tall'],d:[6,6,7,5,8,9,4,8,8,6],c:'denim, dresses, everyday fashion'},
+  'Abercrombie':{u:'https://www.abercrombie.com/shop/us/search?searchTerm=',t:'$$',a:'Casual Trendy, Elevated Casual',s:['petite','tall'],d:[6,6,7,5,8,9,4,8,8,6],c:'denim, dresses, everyday fashion'},
   'H&M':{w:1,u:'https://www2.hm.com/en_us/search-results.html?q=',t:'$',a:'Trendsetter, Casual Everyday',s:['plus'],d:[7,5,5,3,9,8,4,6,6,8],c:'affordable trends, basics'},
   'Banana Republic':{gp:'&department=136',u:'https://bananarepublic.gap.com/browse/search.do?searchText=',t:'$$',a:'Classic Sophisticate, Modern Minimalist',s:['petite','tall'],d:[4,4,9,9,4,5,9,8,10,4],c:'workwear, elevated basics, tailoring'},
   'Banana Republic Factory':{gp:'&department=136',u:'https://bananarepublicfactory.gapfactory.com/browse/search.do?searchText=',t:'$-$$',a:'Classic Sophisticate',s:['petite','tall'],d:[5,3,7,8,3,7,6,7,9,4],c:'affordable workwear, tailoring, basics'},
@@ -4326,9 +4326,9 @@ const STORES={
   'Tiffany & Co.':{u:'https://www.tiffany.com/search/?q=',t:'$$$$',a:'Luxury Fashion, Classic Sophisticate',s:[],d:[5,6,10,10,4,2,10,5,9,6],c:'fine jewelry, luxury gifts'},
   'Kendra Scott':{u:'https://www.kendrascott.com/search?q=',t:'$$',a:'Playful Chic, Modern Glam',s:[],d:[5,5,7,6,7,7,6,5,5,10],c:'fashion jewelry, gifts, statement earrings'},
   // Eyewear
-  'Sunglass Hut':{w:1,u:'https://www.sunglasshut.com/?q=',t:'$$-$$$$',a:'Universal',s:[],d:[5,5,8,7,8,6,7,5,7,8],c:'designer sunglasses, eyewear'},
-  'Warby Parker':{w:1,u:'https://www.warbyparker.com/search?q=',t:'$$',a:'Modern Minimalist',s:[],d:[5,2,9,9,5,8,4,5,8,6],c:'prescription glasses, sunglasses'},
-  'Quay':{w:1,u:'https://www.quayaustralia.com/search?q=',t:'$$',a:'Trendsetter, Modern Glam',s:[],d:[5,7,6,3,10,8,5,5,6,9],c:'fashion sunglasses'}
+  'Sunglass Hut':{u:'https://www.sunglasshut.com/?q=',t:'$$-$$$$',a:'Universal',s:[],d:[5,5,8,7,8,6,7,5,7,8],c:'designer sunglasses, eyewear'},
+  'Warby Parker':{u:'https://www.warbyparker.com/search?q=',t:'$$',a:'Modern Minimalist',s:[],d:[5,2,9,9,5,8,4,5,8,6],c:'prescription glasses, sunglasses'},
+  'Quay':{u:'https://www.quay.com/search?q=',t:'$$',a:'Trendsetter, Modern Glam',s:[],d:[5,7,6,3,10,8,5,5,6,9],c:'fashion sunglasses'}
 };
 // Kept as a plain name→url map because linkStores() and older callers use it.
 const storeUrls={};Object.keys(STORES).forEach(function(k){storeUrls[k]=STORES[k].u});

@@ -117,7 +117,7 @@ const SEARCH_DOMAINS = [
   'loft.com', 'loveshackfancy.com', 'macys.com', 'madewell.com',
   'marinelayer.com', 'mejuri.com', 'mmlafleur.com', 'naturalizer.com',
   'neimanmarcus.com', 'net-a-porter.com', 'nordstrom.com', 'nordstromrack.com',
-  'nydj.com', 'oldnavy.gap.com', 'petitestudionyc.com', 'quayaustralia.com',
+  'nydj.com', 'oldnavy.gap.com', 'petitestudionyc.com', 'quay.com',
   'quince.com', 'rag-bone.com', 'railsclothing.com', 'revolve.com',
   'saksfifthavenue.com', 'samedelman.com', 'sezane.com',
   'shop.lululemon.com', 'shop.mango.com', 'shopbop.com', 'skims.com',
