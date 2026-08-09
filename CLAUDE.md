@@ -42,6 +42,30 @@ merge means credits/minutes are out (this case). ⚠️ **Every merge burns buil
 many-small-PRs day like this one (7 merges) costs 7 builds. Not a reason to batch work, just the reason
 the meter ran out today of all days.
 
+### ✅✅ THE GOLD MARK SYSTEM IS BUILT — HER untangle, shipped across every surface (2026-08-09)
+Born from her catch: hearts are the UNIVERSAL wishlist symbol on shopping apps, but pink hearts were also
+her voice — "I don't want that to get tangled." **THE CODE, hers, protect it: GOLD = HERS (gold star =
+wardrobe category · gold heart = wishlist piece — one color for mine, two shapes for which list) · PINK
+tilted heart = ONLY Catherine's voice · teal = the Edit family's lettering, an accent not a mark.**
+- **SAVED is the MARQUEE pill — her pick "B" from a 3-way render** (`goldpop-{a,b,c}.png`; A gradient
+  gold "still a polite whisper", C glow "vanishes at phone size"): gold heart + gold text on black
+  lacquer, the app's own black-and-gold action language — saving a piece puts it up in lights. Her
+  reasoning: flat gold-on-gold "doesn't stand out at all... I liked the pop of pink" — the black pill
+  pops HARDER than pink did. ⚠️ Don't re-quieten; don't reintroduce pink save hearts.
+- **As shipped:** `_wlHeartSvg` on=gold fill `#F2D889`/stroke `#C99A2C`, off=gold outline `#C8971E` ·
+  `.wl-save.on` = black `#1a1a1a` + gold rim (base rule; the s-dream pink override deleted, the
+  res-screen transparent exception deleted — rows get the pill too, padding 4/7) · toast heart, empty
+  heart, "♥ Save" span, heart-tip ♡ all → gold family · **"Your pick"** gold heart `#E0B84C` ·
+  **"Catherine's pick"** = HER SPEC: pink frame + pink heart tilted LEFT (-11°) + TURQUOISE lettering
+  kept · Edit + Trending "CURATED BY CATHERINE" flanking ★ → tilted pink ♥ (her signature guards her
+  curation; teal lettering stays). Wardrobe gold stars untouched; whisper/menu/signature hearts pink.
+- ⚠️ **Two deliberate test updates, not silences:** searchtune's tip-heart assertion pink→gold rgb(200,
+  151,30). Verified: searchtune 57 · wladd 76 · hubs 46 · e2e 29 · followups 38 green. As-built:
+  `goldbuilt-{wishlist,rows,edit}.png`.
+- ▶ **CROWN HEARTS PENDING HER PICK:** the 5 pink hearts atop Your Wishlist deliberately untouched —
+  she wants **ONE very large pale heart** ("similar to the large pale yellow/gold star on Welcome
+  Back"); render options next (inline vs backdrop-behind-title).
+
 ### ✅ CATHERINE'S SIGNATURE HEART ON THE THREE "HER" MENU ROWS (2026-08-09, her idea, shipped as rendered)
 Her idea while thinking of Sally's keep-emphasizing-you-built-this note: a tiny tilted pink heart on the
 Menu rows that are HER curation — **Style Star Edit · What's Trending · My Story**. She asked "or is that
