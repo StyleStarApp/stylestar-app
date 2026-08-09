@@ -42,6 +42,16 @@ merge means credits/minutes are out (this case). ⚠️ **Every merge burns buil
 many-small-PRs day like this one (7 merges) costs 7 builds. Not a reason to batch work, just the reason
 the meter ran out today of all days.
 
+### ✅ THE MARQUEE PILL GOT ITS BREATHING ROOM — her adjustment, shipped (2026-08-09)
+Her critical-eye pass on the live Welcome Back: the top section felt cramped but she wants the page DENSE
+("I don't want her to miss a thing" — see-everything is a stated value on this screen; weigh future air
+against it). ▶ **Measured cause: the new lacquer pill sat 6px under the quote vs 19px below — the old
+cream box was too quiet to crowd anything; the imbalance ARRIVED with the pill.** Offered a 2-part air
+package (+12px above the pill, +8px dark gutter); **her adjustment, and it was the better call: air
+INSIDE the card only, the dark gutter before the SHOP awning stays TIGHT** (the marquee and awning read
+as one storefront). As shipped: `.wb-port-cta` margin-top 3 → 12px, total fold cost 12px. Renders:
+`scratchpad/wbair-{before,after,hers}.png`. hubs 46 · e2e 29 green.
+
 ### ✅ THE MENU'S GROUP LABELS ARE PROMOTED — her pick "C" + the padding trim (2026-08-09)
 Her two catches on a live drawer screenshot: STYLE/SHOP/BUILD/ABOUT *"too hard to read, too small, don't
 stand out"* (measured: 10.5px `#8a8474` ≈ 3.5:1 on the ivory — the ONLY sub-AA text in the drawer) and
