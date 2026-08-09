@@ -9,6 +9,28 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE-EST-EST-EST (2026-08-09 — THE WISHLIST GOT ITS OWN DOOR, her Valentino question)
 
+### ✅ THE WELCOME BACK MIRROR GOT ITS MARQUEE PILL + THE WHISPERS ARE 14px UPRIGHT (2026-08-09, her two catches)
+Her screenshot pass on Welcome Back, two catches, both built + merged same session:
+1. **The portrait CTA is the MARQUEE PILL now — her pick "A" from a 4-way render** (`scratchpad/
+   wbctamock.js` → `wbcta-{current,a,b,c}.png`): the old square black-bordered cream box was the only
+   hard-edged rectangle on a screen of bulbs and gold (her words: *"looks very boring, something is off"*).
+   As built: black lacquer pill, gold letters `#F2D889`, gold rim `#C99A2C`, radius 999. ▶ **And the verb
+   is HERS: "READ your full Style Portrait"** — her horoscope framing ("let me look at my 'horoscope'...
+   get in the mood to shop"); one READS a horoscope. ⚠️ The string lives TWICE: markup default + the
+   `updateWbScreen` safety-net rewrite (quiz-less fallback "Take our fun style quiz" unchanged).
+2. **ALL THREE WHISPERS NOW MATCH: 14px/1.6 UPRIGHT** (her catch on #wbNext: *"really small and hard to
+   read"* — the same 12.5px-italic-on-dark worst case the A2HS whisper already escaped on 08-08, her pick
+   "upright 14"). Applied to `#wbNext` AND its sister `.rn-body` (portrait refine strip) — **splitting them
+   would reintroduce the drift she herself caught on 08-05**; hearts 12.5px, ✕ 15px. ▶ **She asked for 2
+   lines; the answer is MEASURED and honest: at 14px her refine sentence holds 557px of text, a 2-line wrap
+   needs the box nearly edge-to-edge and still breaks to 3 on real word boundaries — and the five rotating
+   step-sentences differ in length anyway. 3 balanced lines is the design.** Her one lever if a sentence
+   ever bugs her: trim the words (hers to trim). ⚠️ Don't re-shrink, don't re-italicize.
+- Verified: hubs 46 · menu 87 · e2e 29 · a2hs 38 green (no suite pinned the old text/size). As-built:
+  `scratchpad/wbfinal-built.png`. ⚠️ Deploy note: the #782 (stacked label) Netlify build sat >10min
+  without landing; the #783 push should carry both — if the live grep still fails, her Netlify dashboard
+  (Deploys tab) is the instrument.
+
 ### ✅ "ADD YOUR OWN PIECE" IS BUILT — THE TWO-DOOR WISHLIST ADD (2026-08-09, her ask + her explicit call)
 **Her product catch, and it was a real gap:** *"If she is shopping the mall or just in her head she knows
 exactly what she wants... how can she put it onto her wishlist if it is an item Style Star did not lead her
