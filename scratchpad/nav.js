@@ -178,7 +178,7 @@ const LOGOS = [
   ['s-faq', '#s-faq .faq-lh-logo.go-home'],
   ['s-privacy', '#s-privacy .pp-lh-logo.go-home'],
   ['s-terms', '#s-terms .pp-lh-logo.go-home'],
-  ['s-wishlist', '#s-wishlist .wl-logo.go-home'],
+  ['s-wishlist', '#s-wishlist .wl-mast.go-home'],
   ['s-quiz', '.hdr .logo-img.go-home'],
 ];
 for (const [scr, sel] of LOGOS) {
