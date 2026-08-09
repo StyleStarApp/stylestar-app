@@ -50,6 +50,13 @@ const urls = await page.evaluate(() => ({
   dsw: getStoreUrl('DSW', null, 'red sandals'),
   // unknown store falls to Google Shopping, unscoped
   unknown: getStoreUrl('Totally Unknown Store', null, 'blue dress'),
+  // her live testing 2026-08-09: the womens keyword FLIPPED Abercrombie to the
+  // MEN'S department ("mens" hides inside "womens" for their parser) and risked
+  // zeroing niche eyewear searches — those four are deliberately unscoped
+  abercrombie: getStoreUrl('Abercrombie', null, 'black cropped bomber jacket'),
+  quay: getStoreUrl('Quay', null, 'tortoise round sunglasses'),
+  sunglassHut: getStoreUrl('Sunglass Hut', null, 'black cat eye sunglasses'),
+  warby: getStoreUrl('Warby Parker', null, 'tortoise round glasses'),
   // Nordstrom color facet (her two confirming pastes, 2026-08-09)
   nordPink: getStoreUrl('Nordstrom', null, 'pink midi dress'),
   nordTan: getStoreUrl('Nordstrom', null, 'tan top handle bag'),
@@ -73,6 +80,10 @@ ok('women-only Talbots untouched', urls.talbots.endsWith('search?q=navy%20blazer
 ok('women-first Sam Edelman untouched', urls.samE.endsWith('#q=kitten%20heel%20mules'), urls.samE);
 ok('DSW scoped too (her address bar proved the path form takes it)', urls.dsw.endsWith('/browse/womens%20red%20sandals'), urls.dsw);
 ok('unknown store → Google fallback, unscoped', urls.unknown.includes('google.com') && !urls.unknown.includes('womens'), urls.unknown);
+ok('Abercrombie UNscoped (the keyword flipped it to Men\'s)', !urls.abercrombie.includes('womens'), urls.abercrombie);
+ok('Quay UNscoped and on its NEW domain quay.com', urls.quay.startsWith('https://www.quay.com/search?q=tortoise') && !urls.quay.includes('womens'), urls.quay);
+ok('Sunglass Hut UNscoped (eyewear zero-risk class)', !urls.sunglassHut.includes('womens'), urls.sunglassHut);
+ok('Warby Parker UNscoped (same class)', !urls.warby.includes('womens'), urls.warby);
 ok('Nordstrom: universal color → filterByColor rides along', urls.nordPink.endsWith('keyword=womens%20pink%20midi%20dress&filterByColor=pink'), urls.nordPink);
 ok('Nordstrom: "tan" is not on the safe list → plain search, never an empty filter', !urls.nordTan.includes('filterByColor'), urls.nordTan);
 ok('Nordstrom: no color word → no filter', !urls.nordNoColor.includes('filterByColor'), urls.nordNoColor);
@@ -148,7 +159,7 @@ const counts = await page.evaluate(() => ({
   gp: Object.values(STORES).filter(s => s.gp).length
 }));
 ok('still 101 stores', counts.stores === 101, String(counts.stores));
-ok('43 keyword-scoped + 5 param-scoped', counts.w === 43 && counts.gp === 5, counts.w + ' / ' + counts.gp);
+ok('39 keyword-scoped + 5 param-scoped', counts.w === 39 && counts.gp === 5, counts.w + ' / ' + counts.gp);
 ok('zero JS errors', errs.length === 0, errs.join(' | '));
 
 await browser.close(); server.close();
