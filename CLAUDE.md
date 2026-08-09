@@ -42,13 +42,26 @@ the two-door version, let's build it. Very important that she can put in somethi
   toast fires with View hidden on-list; the form never greets her already open (`openWishlist` resets);
   "Never mind" cancels; empty state gained **"Or add a piece of your own →"** under Shop-my-style (no
   collapsed button doubles it there). Everything rides `wardrobeData.wishlist` → localStorage + Supabase.
-- ⚠️ **ALL COPY IS CLAUDE'S DRAFT, she may reword any of it:** "Add your own piece" title, "Something you
-  spotted, or something you simply know you want.", the with-a-link hint, "Add to my wishlist" (her-voice
-  MY per the voice rule), "Never mind", the "Your pick" badge name, all three messages.
+- ✅ **THE WORDING IS SETTLED AND IT IS HERS (same session, her catch + her pick):** the first draft said
+  "Add your own piece" and **she caught the flaw — "sounds like something out of her closet that she
+  already has,"** i.e. OWNERSHIP, which is Wardrobe List territory, when the meaning is authorship. Four
+  directions were offered; **she picked the "wishing" family — the one verb that cannot be misread as her
+  closet, and it rhymes with the page's own name.** As shipped: button + empty-state link **"+ Add a piece
+  you're wishing for"** · form title **"Wishing for something?"** · sub **"Spotted something perfect, or
+  know exactly what you want? Add it here, from any store."** ▶ **Her trim on the sub is a standing-rule
+  move:** the draft ended "...even ones we don't carry" and she cut it at "from any store" — the 2026-07-31
+  never-surface-the-store-boundary stance, applied by her own ear. ⚠️ Still Claude drafts (she hasn't
+  flagged them): the with-a-link hint, "Add to my wishlist", "Never mind", "Your pick", the three messages.
+- ⚠️ **BUTTON WIDTH IS MEASURED, not guessed:** her wording needs ~257px at the tightened 12px padding +
+  .05em tracking (was 18px/.07em, which wrapped at 360) — **one line at 390 AND 360; at 320 it wraps to two
+  balanced lines, deliberately** (the A2HS trade: never shrink the font on the readability audience). The
+  `.wab-t` span is block-level because text-wrap:balance only works on block-level text. ▶ If 320 ever
+  matters: "+ Wishing for something?" as the button label fits every width — offered, not taken.
 - ▶ **AWAITING HER PICK — entry-point placement, renders made** (`scratchpad/wladdshot.js` →
-  `wladd-{a,b,c,form,empty}.png`): **A (as built)** gold-outline pill under the list card · **B** ghost row
-  inside the card bottom · **C** quiet link up top under the lead. Switching is one small move.
-- **Verified: new `scratchpad/wladd.js`, 56 checks** (the whole lifecycle: empty-state door, both add
+  `wladd-{a,b,c,form,empty}.png`, re-rendered in her wording): **A (as built)** gold-outline pill under the
+  list card · **B** ghost row inside the card bottom · **C** quiet link up top under the lead. She said
+  "I love how you built this" but has not named a letter — A stands unless she says otherwise.
+- **Verified: new `scratchpad/wladd.js`, 58 checks** (the whole lifecycle: empty-state door, both add
   doors, canonical store naming, tracker strip vs load-bearing params, Saks named from URL, scheme
   forgiveness, javascript: refused + stripped-on-load fallback, dedupe, cancel, heart-tip stamp, email ask,
   disclosure, reload persistence through normalization, remove-all back to empty state, AA contrast on

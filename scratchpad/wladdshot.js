@@ -53,7 +53,7 @@ await page.evaluate(() => {
   const row = document.createElement('div');
   row.className = 'wl-row';
   row.style.cssText = 'justify-content:center;cursor:pointer';
-  row.innerHTML = '<span style="font:600 11.5px/1 Jost,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a6d20">+ Add your own piece</span>';
+  row.innerHTML = '<span style="font:600 11.5px/1 Jost,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a6d20">+ Add a piece you’re wishing for</span>';
   card.appendChild(row);
 });
 await snap(page, 'wladd-b.png', 640);
@@ -64,7 +64,7 @@ await page.evaluate(() => {
   const lead = document.querySelector('#wlBody .wl-lead');
   const ln = document.createElement('div');
   ln.style.cssText = 'text-align:center;margin-top:9px';
-  ln.innerHTML = '<span style="font:600 12px/1.4 Jost,sans-serif;color:#8a6d20;border-bottom:1px solid #E0B84C;padding-bottom:1px;cursor:pointer">+ Add a piece of your own</span>';
+  ln.innerHTML = '<span style="font:600 12px/1.4 Jost,sans-serif;color:#8a6d20;border-bottom:1px solid #E0B84C;padding-bottom:1px;cursor:pointer">+ Add a piece you’re wishing for</span>';
   lead.parentNode.insertBefore(ln, lead.nextSibling);
 });
 await snap(page, 'wladd-c.png', 640);

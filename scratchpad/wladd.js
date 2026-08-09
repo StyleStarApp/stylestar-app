@@ -74,7 +74,7 @@ const vis = `el => { if(!el) return false; const r = el.getBoundingClientRect();
              title: (document.querySelector('#wlAdd .wa-t')||{}).textContent || '' }; })()`);
   ok('form opens with all three fields', r.form && r.name && r.store && r.url);
   ok('focus lands on the piece field', r.focused);
-  ok('form title reads "Add your own piece"', r.title.trim() === 'Add your own piece');
+  ok('form title reads "Wishing for something?" (her wording)', r.title.trim() === 'Wishing for something?');
 
   // 3. Empty name refused
   await page.evaluate(() => wlAddSubmit());
@@ -113,7 +113,7 @@ const vis = `el => { if(!el) return false; const r = el.getBoundingClientRect();
              btn: v(document.querySelector('#wlAdd .wl-addbtn')),
              label: (document.querySelector('#wlAdd .wl-addbtn')||{}).textContent||'' }; })()`);
   ok('form stands down after adding', !r.form);
-  ok('collapsed "+ Add your own piece" button appears with items', r.btn && /Add your own piece/.test(r.label));
+  ok('collapsed "wishing for" button appears with items', r.btn && /Add a piece you’re wishing for/.test(r.label));
 
   // 6. DOOR 2: the Valentino case — pasted link, trackers stripped, store derived
   await page.evaluate(() => {
@@ -298,6 +298,16 @@ for (const w of [390, 360]) {
   ok(w + ': status message clears AA', m.msgRatioSetup >= 4.5, m.msgRatioSetup + ':1');
   ok(w + ': "Your pick" badge clears AA', m.badgeRatio >= 4.5, m.badgeRatio + ':1');
   ok(w + ': seeded exact row says Shop it', /Shop it/.test(m.btnText));
+  // Her longer wording must hold ONE line on the collapsed button (close the
+  // form first — the button only renders in the collapsed state).
+  const btn = await page.evaluate(() => {
+    wlAddCancel();
+    const b = document.querySelector('#wlAdd .wl-addbtn');
+    if (!b) return null;
+    const r = b.getBoundingClientRect();
+    return { h: r.height, fits: r.right <= window.innerWidth && r.left >= 0, sub: (document.querySelector('#wlAdd .wa-s') || { textContent: '' }).textContent };
+  });
+  ok(w + ': collapsed button holds one line and fits', btn && btn.h < 40 && btn.fits, btn && btn.h + 'px');
   ok(w + ': zero JS errors', errs.length === 0, errs.join(' | ').slice(0, 200));
   await page.close();
 }
