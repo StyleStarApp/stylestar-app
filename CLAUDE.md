@@ -155,9 +155,13 @@ from inside the app and the gold button "worked" but the app still didn't know h
   Supabase row — nothing can carry her into the app. The whisper invites install from Welcome Back
   (local results only ≠ emailed). Worth a future conversation: nudge the email save before/alongside the
   install invitation.
-- ▶ **HER TWO NEW LIST ITEMS (2026-08-08, same message):** (1) **revisit the photo-results menu down
-  below** (the hub rows on the Analyze-outfit results screen — note the keepsake `pgrid` there is now 3
-  tiles, Constellation spanning the full bottom row, after the deletion below); (2) the vision board —
+- ▶ **HER TWO NEW LIST ITEMS (2026-08-08, same message):** (1) ✅ **the photo-results menu revisit is
+  DONE (2026-08-09, her pick "B" from renders):** the Your Style panel's big keepsake TILES became the
+  app's usual hub rows (chip icon + title + sub + shelf) INSIDE the pearl panel, which keeps its
+  jewel-box identity. Rows: Style Portrait / Style Signature / Style Constellation. The `pgrid`/`pbtn`/
+  `pv-*` CSS and `_renderSigThumb` are deleted; `_renderCardThumb` now feeds only the portrait screen's
+  `scThumb`. ⚠️ The three row SUBS are Claude drafts, she may reword. Trade-off she accepted: the live
+  mini-previews (signature chart, constellation thumb) are gone in row form; (2) the vision board —
   resolved the same evening, next entry.
 
 ### ✅ THE VISION BOARD IS DELETED (2026-08-08, evening — her explicit call, same day)
