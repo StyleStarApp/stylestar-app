@@ -31,6 +31,17 @@ Her screenshot pass on Welcome Back, two catches, both built + merged same sessi
   without landing; the #783 push should carry both — if the live grep still fails, her Netlify dashboard
   (Deploys tab) is the instrument.
 
+### ⚠️ NETLIFY LESSON (2026-08-09): OUT OF BUILD CREDITS = DEPLOYS SILENTLY STALL
+Mid-session, three merged PRs sat un-deployed for ~an hour while the live site served stale code — no
+error reached us, the merges were green, and the site stayed up (serving the last good deploy). **Root
+cause, found by Cath in her dashboard: Netlify build credits were exhausted. She added $10 and the whole
+queue flushed at once.** ▶ **The diagnostic split for any future "merged but not live":** (1) curl the
+live site for a string from the new deploy — if missing after ~5min, (2) it is NEVER the code; send Cath
+to app.netlify.com → site → **Deploys** — a red Failed needs its log pasted; NOTHING NEW since the last
+merge means credits/minutes are out (this case). ⚠️ **Every merge burns build minutes** — a
+many-small-PRs day like this one (7 merges) costs 7 builds. Not a reason to batch work, just the reason
+the meter ran out today of all days.
+
 ### ✅ THE MENU'S GROUP LABELS ARE PROMOTED — her pick "C" + the padding trim (2026-08-09)
 Her two catches on a live drawer screenshot: STYLE/SHOP/BUILD/ABOUT *"too hard to read, too small, don't
 stand out"* (measured: 10.5px `#8a8474` ≈ 3.5:1 on the ivory — the ONLY sub-AA text in the drawer) and
