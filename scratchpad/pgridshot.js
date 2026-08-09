@@ -53,7 +53,8 @@ await page.evaluate(() => {
   document.querySelectorAll('.hm-entrance,.rv-doors,.rv-overlay').forEach(e => e.remove());
   const hub = document.getElementById('photoPortraitHub');
   hub.style.display = '';
-  try { _renderCardThumb(); _renderSigThumb(); } catch (e) {}
+  try { _renderCardThumb(); } catch (e) {}
+  requestAnimationFrame(_syncStuds);
 });
 await page.waitForTimeout(900);
 
@@ -71,7 +72,16 @@ async function shot(name) {
   console.log('saved ' + name);
 }
 
-// as built — the page IS option B now
+// as built — the page IS option B now, with computed equal pearls
+const pitch = await page.evaluate(() => {
+  const c = sel => [...document.querySelectorAll('#photoPortraitHub .phub2-studs ' + sel + ' i')]
+    .map(e => { const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+  const gaps = (pts, axis) => pts.slice(1).map((p, i) => Math.abs(p[axis] - pts[i][axis]));
+  const avg = a => a.reduce((s, v) => s + v, 0) / a.length;
+  const t = c('.ps.t'), l = c('.ps.l');
+  return { top: { n: t.length, pitch: +avg(gaps(t, 'x')).toFixed(1) }, left: { n: l.length, pitch: +avg(gaps(l, 'y')).toFixed(1) } };
+});
+console.log('pearl pitch — top:', JSON.stringify(pitch.top), 'left:', JSON.stringify(pitch.left));
 await shot('pgrid-built.png');
 if (errs.length) console.log('JS ERRORS: ' + errs.join(' | '));
 await browser.close(); server.close();

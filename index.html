@@ -4022,12 +4022,38 @@ function _photoBoards(on){
 }
 // Decide the save area on the outfit screen. A profile save only makes sense once
 // she's taken the quiz; a quiz-skipper sees the "take the quiz" nudge instead.
+// ▶ EQUAL PEARLS (2026-08-09, her ask: "make the pearls equal all around the
+// frame"). The stud counts were hardcoded for the old tall tile panel, and
+// space-between stretched them to whatever the panel measured — so the side
+// pitch never matched the top row's. Now the counts are COMPUTED from the
+// panel's real size so the center-to-center pitch is as equal as rounding
+// allows on all four sides, whatever the panel holds in the future.
+function _syncStuds(){
+  var hub=document.getElementById('photoPortraitHub');if(!hub)return;
+  var studs=hub.querySelector('.phub2-studs');if(!studs)return;
+  var W=hub.clientWidth,H=hub.clientHeight;if(!W||!H)return;
+  var PEARL=13,TARGET=33; // pearl size + the pitch the old top row was designed around
+  function fill(el,len){
+    if(!el)return;
+    var n=Math.max(2,Math.round((len-PEARL)/TARGET)+1);
+    if(el.childElementCount===n)return;
+    var h='';for(var i=0;i<n;i++)h+='<i></i>';
+    el.innerHTML=h;
+  }
+  fill(studs.querySelector('.ps.t'),W-8);       // 4px inset each side
+  fill(studs.querySelector('.ps.b'),W-8);
+  fill(studs.querySelector('.ps.l'),H-76);      // 38px clearance top + bottom
+  fill(studs.querySelector('.ps.r'),H-76);
+}
+// Rotation / window resizing changes the panel's size; hidden panels no-op.
+window.addEventListener('resize',function(){try{_syncStuds()}catch(e){}});
 // Pass false (partial/error) to hide the whole area — nothing to save.
 function _photoSaveArea(on){
   // "Retake the Quiz" only makes sense if she's actually taken it.
   var rt=document.querySelector('#s-photo-res .retake-wrap');if(rt)rt.style.display=quizTaken?'':'none';
   // "See my Style Portrait" only exists for quiz-takers (needs a saved portrait).
   var pp=document.getElementById('photoPortraitHub');if(pp)pp.style.display=quizTaken?'':'none';
+  if(quizTaken)requestAnimationFrame(_syncStuds); // pearls re-count once the panel has its real size
   var ptt=document.getElementById('portraitTitle');if(ptt){var _pfn=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';ptt.textContent=_pfn?_pfn+'’s Style':'Your Style';}
   // Fill the keepsake buttons with real mini renderings of her constellation + signature.
   if(quizTaken){try{_renderCardThumb();}catch(e){}}
