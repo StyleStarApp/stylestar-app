@@ -347,6 +347,26 @@ for (const w of [390, 360]) {
   }));
   ok(w + ': velvet bleeds full-bleed black on this page', frame.velvet && frame.velvetClass);
   ok(w + ': the gold rail band frames the paper', frame.band);
+  // The rod RIDES the scroll (her call: the heart hangs on it, they slide
+  // together) — fixed position handles width only; _wlRodScroll moves it.
+  const ride = await page.evaluate(async () => {
+    const rod = document.querySelector('#s-wishlist .wl-rod');
+    const chain = document.querySelector('#s-wishlist .wl-chain');
+    const before = { rod: rod.getBoundingClientRect().bottom, chain: chain.getBoundingClientRect().top };
+    window.scrollTo(0, 300);
+    await new Promise(r => setTimeout(r, 150));
+    const mid = { rod: rod.getBoundingClientRect().bottom, chain: chain.getBoundingClientRect().top, y: window.scrollY };
+    window.scrollTo(0, 0);
+    await new Promise(r => setTimeout(r, 150));
+    const back = rod.getBoundingClientRect().bottom;
+    return { movedWithPage: Math.abs((before.rod - mid.rod) - mid.y) <= 1,
+             chainStillMeets: Math.abs(mid.chain - mid.rod) <= 3,
+             restored: Math.abs(back - before.rod) <= 1,
+             reallyScrolled: mid.y >= 100 };   // guard: a page too short to scroll passes vacuously
+  });
+  ok(w + ': rod rides the scroll exactly with the page', ride.movedWithPage && ride.reallyScrolled);
+  ok(w + ': chain still meets the rod mid-scroll', ride.chainStillMeets);
+  ok(w + ': rod back on its rest position at top', ride.restored);
   ok(w + ': zero JS errors', errs.length === 0, errs.join(' | ').slice(0, 200));
   await page.close();
 }

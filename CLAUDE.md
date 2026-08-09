@@ -59,15 +59,22 @@ the meter ran out today of all days.
      APP SHELL, not a decoration.** An attempted `html.story-velvet .ss{display:none}` blanked the
      ENTIRE app (Menu chip + footer live inside it) — nav 79/80 + menu 86/87 failed instantly.
      **Never hide or replace `.ss`; restyle it per-page via the `.ss.<page>-mirror` skins.**
-2. **The wishlist rod, FINAL FORM: `position:fixed;top:32px;left:0;right:0`** — pinned to the
-   viewport itself, so it is edge-to-edge on ANY device and ANY zoom. ▶ **Two prior attempts failed on
+2. **The wishlist rod, FINAL FORM: `position:fixed;top:32px;left:0;right:0` + `_wlRodScroll`** —
+   fixed to the viewport for its WIDTH (edge-to-edge on ANY device and ANY zoom), and a passive scroll
+   listener translates it by `-scrollY` so it RIDES the page. ▶ **Two prior width attempts failed on
    her phone:** 100vw (shrinks under iOS page zoom) and a ±100px overhang clipped by
    `overflow-x:hidden` (also inset on her device). **Lesson (5th time today): the only edge-to-edge
-   that survives iOS page zoom is viewport-fixed.** Scroll consequence, deliberate: the chain slides
-   beneath the fixed rod like feeding over a rail. The `overflow-x:hidden` on wl-velvet is removed
-   (nothing overhangs anymore); wladd's overflow census still exempts `.wl-rod` (fixed elements sit
-   outside the paper). Proofs: `scratchpad/storyfix-{top,mid}.png` (frame scrolls with words, no white
-   line), `rodfix-top.png` (insets 0/0). Verified: wladd 96 · nav 80 · menu 87 · e2e 29 green.
+   that survives iOS page zoom is viewport-fixed.** ▶ **And her immediate catch on the fixed rod: it
+   didn't move on scroll — "the heart is supposed to be hanging on it so they need to slide
+   together."** Hence the translate: fixed solves width, JS solves motion; raw scrollY (no clamp) so
+   iOS rubber-banding keeps rod and chain glued too. ⚠️ Don't "simplify" back to pure CSS — every pure
+   CSS position fails one of her two requirements. wladd asserts the ride (moved-by-exactly-scrollY,
+   chain-still-meets mid-scroll, restored at top, WITH a reallyScrolled guard — an unscrollable page
+   passes the delta check vacuously, caught in the proof harness). The `overflow-x:hidden` on
+   wl-velvet is removed; wladd's overflow census still exempts `.wl-rod`. Proofs:
+   `scratchpad/storyfix-{top,mid}.png` (frame scrolls with words, no white line), `rodfix-top.png`
+   (insets 0/0). Verified: wladd 102 · nav 80 · menu 87 · e2e 29 green.
+   - **My Story border thickened 4px → 6px** (her same-message ask: "slightly thicker").
 3. Same evening micro-rounds, all hers: lead box restored to the full warm sentence with "item"
    wording, centered, tucked -10px under the heart; Back top:6px; **the wishing button is SQUARED and
    says "+ Add anything you're wishing for"** (both surfaces; tracking .04em/padding 8 hold one line at
