@@ -1413,29 +1413,9 @@ body.card-fb{padding:0}
 #s-photo-res .phub2 .pgo:active{filter:brightness(.97)}
 #s-photo-res .phub2 .pgo svg.pa{width:16px;height:16px;stroke:#1a1a1a;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
 #s-photo-res .phub2 .pgo svg.ps{width:15px;height:15px;fill:#1a1a1a}
-/* Portrait hub: 2x2 grid of the four style keepsakes */
-#s-photo-res .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:6px}
-/* With the Mood Board deleted (2026-08-08) the grid holds 3 tiles — the odd last
-   one spans the full row so the layout never shows a hole. */
-#s-photo-res .pgrid .pbtn:last-child:nth-child(odd){grid-column:1/-1}
-#s-photo-res .pbtn{display:flex;flex-direction:column;align-items:center;gap:8px;background:#fff;border:1.5px solid #1a1a1a;border-radius:2px;padding:9px 9px 11px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .16s ease}
-#s-photo-res .pbtn:active{transform:scale(.97);filter:brightness(.98)}
-/* each button shows a mini rendering of the actual keepsake */
-#s-photo-res .pvis{width:100%;height:180px;border-radius:2px;overflow:hidden;border:1px solid #d3d7dc}
-#s-photo-res .pvis svg{width:100%;height:100%;display:block}
-#s-photo-res .pvis img{width:100%;height:100%;object-fit:cover;object-position:center 45%;display:block}
-#s-photo-res .pv-portrait{display:flex;align-items:center;justify-content:center;background:linear-gradient(158deg,#fdfbf6,#f4efe4)}
-#s-photo-res .pv-portrait .pv-star{width:120px;height:120px;filter:drop-shadow(0 1px 3px rgba(224,174,70,.3))}
-/* Signature: a real mini of the 12-spectrum chart, gold dots at her actual answers */
-#s-photo-res .pv-sig{background:linear-gradient(158deg,#fdfbf6,#f2f0ea);display:flex;flex-direction:column;justify-content:center;gap:7px;padding:11px 7px}
-#s-photo-res .pv-sig .pvs-row{display:flex;align-items:center;gap:4px}
-#s-photo-res .pv-sig .pvs-l,#s-photo-res .pv-sig .pvs-r{flex:0 0 auto;width:39px;font:600 4.8px/1 'Jost',sans-serif;letter-spacing:.01em;text-transform:uppercase;color:#8a8578;white-space:nowrap;overflow:hidden}
-#s-photo-res .pv-sig .pvs-l{text-align:right}
-#s-photo-res .pv-sig .pvs-r{text-align:left}
-#s-photo-res .pv-sig .pvs-track{position:relative;flex:1;height:2.5px;border-radius:2px;background:#cdd1d6}
-#s-photo-res .pv-sig .pvs-dot{position:absolute;top:50%;width:7px;height:7px;border-radius:50%;background:#E4B948;border:.6px solid #B7BCC2;transform:translate(-50%,-50%)}
-#s-photo-res .pv-const{background:radial-gradient(120% 100% at 50% 22%,#2a2521,#100d0b)}
-#s-photo-res .pbtn .pbt{font:400 18px/1.1 'DM Serif Display',serif;color:#1a1a1a}
+/* Your Style rows (her pick B, 2026-08-09): the usual hub rows inside the
+   pearl panel — the big keepsake tiles are gone. */
+#s-photo-res .ps-rows{margin-top:6px}
 /* BUILD — the wardrobe: a linen fabric-label panel pinned to the dark board, with a charcoal topstitch (matches the Your Wardrobe page identity) */
 #s-photo-res .bhub{position:relative;padding:6px 22px 14px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
 /* Build room: no outer frame; the stitched patch hugs just the stars */
@@ -2592,10 +2572,25 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <span class="phub2-studs"><span class="ps t"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="ps b"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="ps l"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="ps r"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
         <div class="phub2-in">
           <div class="plbl" id="portraitTitle">Your Style</div>
-          <div class="pgrid">
-            <div class="pbtn" onclick="loadSaved()"><div class="pvis pv-portrait"><svg class="pv-star" viewBox="0 0 24 24"><defs><radialGradient id="pvPortStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#pvPortStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div><span class="pbt">Portrait</span></div>
-            <div class="pbtn" onclick="showSignature()"><div class="pvis pv-sig" id="pvSig"></div><span class="pbt">Signature</span></div>
-            <div class="pbtn" onclick="saveStyleCard('quiz')"><div class="pvis pv-const"><img id="pvConstImg" alt="Your Style Constellation"></div><span class="pbt">Constellation</span></div>
+          <!-- Her pick "B" (2026-08-09): the big keepsake tiles became the app's
+               usual hub rows, INSIDE the pearl panel so Your Style keeps its
+               jewel-box identity. Subs are Claude drafts; she may reword. -->
+          <div class="ps-rows">
+            <div class="act" data-shelf onclick="loadSaved()">
+              <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke="#26221c" stroke-width="1.5" stroke-linejoin="round" style="width:23px;height:23px;stroke:#26221c"><path d="M12 2.4l2.4 6.7 7.1.2-5.6 4.3 2 6.8-5.9-4-5.9 4 2-6.8L2.5 9.3l7.1-.2z"/></svg></span>
+              <div class="tx"><div class="tt-row"><span class="tt">Style Portrait</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><span class="actsub" style="display:block">Your portrait, whenever you want it</span></div></div>
+              <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+            </div>
+            <div class="act" data-shelf onclick="showSignature()">
+              <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" style="width:23px;height:23px;stroke:#26221c"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="1.9" fill="#E0B84C" stroke="#26221c" stroke-width="1"/><circle cx="15" cy="12" r="1.9" fill="#E0B84C" stroke="#26221c" stroke-width="1"/><circle cx="7" cy="17" r="1.9" fill="#E0B84C" stroke="#26221c" stroke-width="1"/></svg></span>
+              <div class="tx"><div class="tt-row"><span class="tt">Style Signature</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><span class="actsub" style="display:block">Your 12 style spectrums at a glance</span></div></div>
+              <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+            </div>
+            <div class="act" data-shelf onclick="saveStyleCard('quiz')">
+              <div class="actrow"><span class="chip" style="background:#F5EFE2;border:1px solid #D8C285"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" style="width:23px;height:23px;stroke:#26221c"><path d="M4 17l5-6 4 3 7-9"/><circle cx="4" cy="17" r="1.6" fill="#E0B84C" stroke="none"/><circle cx="9" cy="11" r="1.6" fill="#E0B84C" stroke="none"/><circle cx="13" cy="14" r="1.6" fill="#E0B84C" stroke="none"/><circle cx="20" cy="5" r="1.6" fill="#E0B84C" stroke="none"/></svg></span>
+              <div class="tx"><div class="tt-row"><span class="tt">Style Constellation</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><span class="actsub" style="display:block">Your shareable star-map keepsake</span></div></div>
+              <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -3730,7 +3725,7 @@ function _renderArchNames(names,motto){
 }
 // Draw a small preview of the actual Style Constellation card into the results entry.
 function _renderCardThumb(){
-  var imgs=['scThumb','pvConstImg'].map(function(id){return document.getElementById(id)}).filter(Boolean);
+  var imgs=['scThumb'].map(function(id){return document.getElementById(id)}).filter(Boolean);
   if(!imgs.length)return;
   try{buildCardBlob('quiz',function(blob,url){
     imgs.forEach(function(img){
@@ -3739,14 +3734,8 @@ function _renderCardThumb(){
     });
   });}catch(e){}
 }
-// A real mini of her Style Signature: the 12-spectrum chart with gold dots at her
-// actual answers (mirrors the full signature/buildChart, just tiny).
-function _renderSigThumb(){
-  var el=document.getElementById('pvSig');if(!el)return;
-  if(!answers||answers.length<12){el.innerHTML='';return;}
-  var h='';for(var i=0;i<12;i++){var pct=((answers[i]-1)/10)*100;var q=questions[i]||{left:'',right:''};h+='<span class="pvs-row"><span class="pvs-l">'+q.left+'</span><span class="pvs-track"><span class="pvs-dot" style="left:'+pct+'%"></span></span><span class="pvs-r">'+q.right+'</span></span>';}
-  el.innerHTML=h;
-}
+// (The Style Signature mini-preview died with the keepsake tiles, 2026-08-09 —
+// the Your Style panel is hub rows now, her pick B.)
 // "Keep your portrait" inline save block → shared hardened save core.
 async function saveResKeep(nameId,emailId,msgId){
   nameId=nameId||'keepName';emailId=emailId||'keepEmail';msgId=msgId||'keepMsg';
@@ -4041,7 +4030,7 @@ function _photoSaveArea(on){
   var pp=document.getElementById('photoPortraitHub');if(pp)pp.style.display=quizTaken?'':'none';
   var ptt=document.getElementById('portraitTitle');if(ptt){var _pfn=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';ptt.textContent=_pfn?_pfn+'’s Style':'Your Style';}
   // Fill the keepsake buttons with real mini renderings of her constellation + signature.
-  if(quizTaken){try{_renderCardThumb();_renderSigThumb();}catch(e){}}
+  if(quizTaken){try{_renderCardThumb();}catch(e){}}
   if(on===false){['resKeepPhoto','resSaveBtnPhoto','photoQuizNudge'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display='none'});return}
   var showSave=quizTaken&&!emailDone;
   ['resKeepPhoto','resSaveBtnPhoto'].forEach(function(x){var el=document.getElementById(x);if(el)el.style.display=showSave?'':'none'});
