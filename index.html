@@ -166,15 +166,8 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
   background-color:#FBFAF7;
   background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);
   box-shadow:0 8px 44px rgba(0,0,0,.16)}
-/* Her ask (2026-08-10): the wardrobe frame goes to 11px, the app's boutique
-   weight -- the same as My Story and Shop your Style.
-   ▶ Scoped to the WARDROBE deliberately, even though the rule above is shared.
-   The wishlist's frame is already compound (8px black PLUS the 5px gold rail
-   band inside it, so ~13px of visual frame), which means it already reads at
-   least as thick. Bumping it too would have made it heavier still AND cost 6px
-   of content width on the one surface that cannot spare it -- the empty-state
-   wishing button, measured at only 11px of headroom. */
-.ss.wardrobe-mirror{border-width:11px}
+/* ⚠️ The wardrobe's own 11px frame is gone (see her rethink below); this dashed
+   stitch is shared with the wishlist, which still uses it. */
 .ss.wardrobe-mirror::before,.ss.wishlist-mirror::before{content:"";position:absolute;top:7px;right:7px;bottom:7px;left:7px;border:2px dashed #4a453c;pointer-events:none;z-index:3}
 /* HER FRAME (2026-08-09, "I love it, build it"): the wishlist page goes
    full-bleed BLACK to every screen edge (body.wl-velvet below, toggled in
@@ -212,20 +205,26 @@ html.story-velvet,html.story-velvet body{background:#F49AC1}
 /* Her picks 2026-08-10. The Edit bleeds the EXACT turquoise of its own
    CURATED BY CATHERINE lettering, so page and backdrop speak one colour. */
 html.edit-velvet,html.edit-velvet body{background:#0FA6B6}
-/* Your Wardrobe List flips its whole colour scheme with the tab, so the two
-   lists are mirror images of each other and switching is unmistakable:
-     My List        -> gold bleed, black frame
-     What's Trending-> black bleed, gold frame
-   ▶ The gold is #E0B84C, the exact gold of the stars on this page. The dashed
-   stitch is inset INSIDE the frame, on the paper, so it is untouched by the
-   frame colour -- her "keep the same stitches" comes free. */
-/* Her pick C (2026-08-10): #E0B84C is the app's STAR gold -- an accent colour,
-   doing an accent's job, which read too gold as a full-page backdrop. #EDD98F is
-   drawn from the FAQ frame's own yellow range and sits back where a backdrop
-   belongs, without going so pale the card loses its ground. */
-html.wdr-gold,html.wdr-gold body{background:#EDD98F}
-html.wdr-black,html.wdr-black body{background:#1a1a1a}
-html.wdr-black .ss.wardrobe-mirror{border-color:#E0B84C}
+/* ▶ HER RETHINK (2026-08-10), and the reasoning is the keeper. The Wardrobe List
+   used to flip its whole colour scheme with the tab (gold bleed + black frame,
+   then black bleed + gold frame). She called it "too much muchness" and asked to
+   simplify. Two reasons, and the FIRST IS A PRODUCT RULE, not a taste call:
+   ⭐ A WOMAN WHO DOES NOT LIKE YELLOW SHOULD NOT BE MADE TO SIT IN A YELLOW ROOM
+     WHILE JUDGING GARMENT COLOURS. This page is a working TOOL. A saturated
+     full-screen colour imposes a preference on someone whose whole reason for
+     being here is discovering her OWN palette, and it shifts how she perceives
+     the colours she is about to shop for. Weigh any future full-bleed against
+     this: colour bleeds belong on the pages that are ABOUT CATHERINE (My Story,
+     the Edit), not on the tools.
+   ⭐ And the FLIP was most of the noise by itself: one page with two identities,
+     repainting on a tap.
+   ▶ Also learned here, from the renders: THE FRAME AND THE BLEED WERE ONE EFFECT,
+   NOT TWO. Quieten the bleed and the 11px frame stops reading as a jewel-box
+   edge and starts reading as a heavy black band. So both go together, and the
+   page now sits on the app's own linen like every other working screen.
+   The wishlist keeps its jewel box -- a case suits ONE precious thing, which is
+   what a wishlist is; a 100-row checklist that scrolls for pages is not. */
+.ss.wardrobe-mirror{border:none;box-shadow:none;background:transparent}
 /* Her simplification after the live test: the fixed window-frame BLOCKED the
    scrolling words and left a white sliver. Now the frame lives ON the story
    paper itself (scrolls with the text, frames the whole story), the backdrop
@@ -7215,12 +7214,14 @@ function closeWishlist(){show(wishlistPrevScreen||'s-wb');}
 // The wardrobe's backdrop and frame swap with the tab (her design, 2026-08-10).
 // Driven from BOTH show() and wardrobeTab(), because the screen can be opened
 // straight onto either tab -- openWardrobe('trend') does exactly that.
+// ▶ HER RETHINK (2026-08-10): the per-tab colour flip is GONE. It repainted the
+// entire screen on a tab tap -- gold-on-black becoming black-on-gold -- so one
+// page had two identities, which was most of the "muchness" she was reacting to.
+// The wardrobe now has ONE calm treatment and the tabs change only the content.
+// Kept as a no-op that clears any stale class, because a woman mid-session can
+// still be carrying wdr-gold/wdr-black on <html> from the previous build.
 function _wdrSkin(){
-  var on=(document.querySelector('.scr.act')||{}).id==='s-wardrobe';
-  var t=document.querySelector('#s-wardrobe .wdr-tab.on');
-  var trend=on&&!!t&&t.dataset.tab==='trend';
-  document.documentElement.classList.toggle('wdr-gold',on&&!trend);
-  document.documentElement.classList.toggle('wdr-black',on&&trend);
+  document.documentElement.classList.remove('wdr-gold','wdr-black');
 }
 function wardrobeTab(which){
   document.querySelectorAll('#s-wardrobe .wdr-tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===which)});
