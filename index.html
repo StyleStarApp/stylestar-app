@@ -844,6 +844,17 @@ html.wdr-black .ss.wardrobe-mirror{border-color:#E0B84C}
 .whatsnext-grid{display:flex;flex-direction:column;align-items:center;gap:8px}
 .share-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:12px}
 .quiz-footer{text-align:center;padding:1.25rem;border-top:1px solid #f0f0f0}
+/* ⚠️ HER BUG (2026-08-10): two footers on Your Wishlist, "not every time."
+   The global footer's visibility is driven by JS -- show()'s id list PLUS a
+   hand-written line inside several open/close functions -- so the last one to
+   run wins, and a route nobody thought of can leave it on. It was not
+   reproducible across 13 routes into the wishlist or across all 20 screens, so
+   rather than guess at the route this states the rule in CSS, where no ordering
+   can defeat it: if the screen on show CONTAINS its own footer, the global one
+   is not painted. Belt to the JS braces. (:has() is unsupported on very old
+   iOS; there the JS still does the job, so this degrades safely.)
+   ⚠️ .quiz-footer lives OUTSIDE every .scr, so it can never match itself. */
+body:has(.scr.act [data-std-foot]) .quiz-footer{display:none!important}
 /* ===== THE ONE STANDARD FOOTER (Cath's from-zero rethink, 2026-08-08) =====
    Every footer container carries data-std-foot and is filled at boot from ONE
    template (_stdFootHTML), so the links can never drift apart again — that
@@ -3617,7 +3628,18 @@ function show(id,skipHistory){
   // the welcome screen, Welcome Back, and the redesigned dark Style Portrait (s-res).
   var ownChrome=(onWel||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-chat');
   var gf=document.querySelector('.quiz-footer');
-  if(gf)gf.style.display=(ownChrome||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  // ⚠️ HER BUG (2026-08-10): two footers on Your Wishlist, "not every time."
+  // The hardcoded id list below is the fragile part -- it has to be extended by
+  // hand every time a screen grows its own footer, and several screens also set
+  // this by hand inside their own open/close functions, so the last one to run
+  // wins. ▶ The structural fix: if the screen being shown CONTAINS its own
+  // [data-std-foot], the global one is hidden, whatever the list says and
+  // whoever navigated last. Self-maintaining, and it covers routes the list
+  // never knew about. The explicit ids stay for the screens that have NO footer
+  // of their own but still want the global one hidden (the quiz, preferences).
+  var scrEl=document.getElementById(id);
+  var ownFoot=!!(scrEl&&scrEl.querySelector('[data-std-foot]'));
+  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
