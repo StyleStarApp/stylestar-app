@@ -271,7 +271,11 @@ html.story-velvet,html.story-velvet body{background:#F49AC1}
    link, the shop CTA — stays centred on the card itself. */
 #s-wardrobe .wdr-cat{margin-bottom:16px;margin-left:22px}
 #s-wardrobe .wdr-add{margin-left:22px}
-#s-wardrobe .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;border-bottom:1px solid #e7e0cf;padding-bottom:6px}
+/* Her ask (2026-08-10): underline these the way the Menu's group labels are
+   underlined -- a short 2px gold bar hugging the word, not a full-width rule.
+   inline-block is what makes the bar hug; see .menu-grp, same pattern. */
+#s-wardrobe .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;padding:0 2px 5px;position:relative;display:inline-block}
+#s-wardrobe .wdr-cat-t::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
 #s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #f0ebe0}
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
 #s-wardrobe .wdr-item.want{background:#FAF1DA}
@@ -791,7 +795,7 @@ html.story-velvet,html.story-velvet body{background:#F49AC1}
 #s-shopstyle .shop-loading{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:190px;padding:8px 0 0;font-size:19.5px}
 .shop-refresh{text-align:center;margin-top:14px}
 .shop-refresh-btn{font-size:15.5px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.03em}
-.shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;max-width:320px;margin-left:auto;margin-right:auto}
+.shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;max-width:320px;margin-left:auto;margin-right:auto;text-align:center}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
 .whatsnext{margin:1.5rem 0;text-align:center}
