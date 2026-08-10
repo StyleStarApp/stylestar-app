@@ -170,7 +170,15 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    show()), and the paper is framed in the rod's own gold — a 5px rail band
    with a bright inner highlight and a deep outer shadow line. A gilt-framed
    board on black velvet. The old dashed stitch is retired on this page. */
-.ss.wishlist-mirror::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;border:5px solid #CFA02E;box-shadow:inset 0 0 0 1.5px #F7E4A6,inset 0 0 0 7px rgba(138,106,23,.55);pointer-events:none;z-index:3}
+/* Her call (2026-08-10): the gilt band is gone. It was a 5px #CFA02E rail with
+   a deep rgba(138,106,23,.55) inner shadow line, and that shadow was the brown
+   she kept seeing. The page now carries ONE clean 11px frame in #FEF6D6, the
+   exact pale yellow of the big crown heart above it -- same structure as My
+   Story (11px solid) and the wardrobe, so all three boutique frames agree.
+   ⚠️ Do not reintroduce a layered edge here; it is the same instinct that
+   retired the white+pink inset rings on My Story. */
+.ss.wishlist-mirror{border-width:11px;border-color:#FEF6D6}
+.ss.wishlist-mirror::before{display:none}
 html.wl-velvet,html.wl-velvet body{background:#1a1a1a}
 /* MY STORY'S VELVET (2026-08-09, her design: "I think it will make that page
    look more special"): her signature pink bleeds to every screen edge and a
@@ -244,13 +252,10 @@ html.wdr-black .ss.wardrobe-mirror{border-color:#E0B84C}
    so the row's left edge lands exactly where it did before, keeping the gutter
    the absolutely-positioned remove ✕ hangs in. Net: ~22px more for item names. */
 #s-wardrobe{margin-left:-16px;margin-right:-16px}
-/* Top padding is small now that the sewn "style Star" label has moved up to the
-   masthead instead of straddling this card's top edge. */
+/* Top padding is small now that the brand name lives INSIDE the title itself
+   ("Catherine's style Star Wardrobe List") rather than in a sewn label
+   straddling this card's top edge. */
 #s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:14px 8px 10px;margin-top:14px}
-#s-wardrobe .wdr-tag{position:absolute;top:-15px;left:50%;transform:translateX(-50%);padding:9px 22px 8px;box-shadow:0 3px 8px rgba(0,0,0,.14);text-align:center;white-space:nowrap;background-color:#F7F1E1;background-image:repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 11px),repeating-linear-gradient(90deg,#4a453c 0 6px,transparent 6px 11px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 11px),repeating-linear-gradient(0deg,#4a453c 0 6px,transparent 6px 11px);background-size:100% 2px,100% 2px,2px 100%,2px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat}
-#s-wardrobe .wdr-tag .l1{font:400 17px/1 'DM Serif Display',Georgia,serif;-webkit-text-stroke:.3px #1a1a1a;letter-spacing:0;color:#1a1a1a}
-#s-wardrobe .wdr-tag .l-rule{width:22px;height:1px;background:#4a453c;margin:4px auto}
-#s-wardrobe .wdr-tag .l2{font:500 9.5px/1 'Jost',sans-serif;letter-spacing:.16em;color:#8a8474;margin-top:3px}
 #s-wardrobe .wdr-howto{font:400 13px/1.55 'Jost',sans-serif;color:#5a554c;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0}
 #s-wardrobe .wdr-howto b{color:#26221c;font-weight:600}
 /* Once she has clearly got the hang of it (a few hearts tapped), the how-to
@@ -284,10 +289,6 @@ html.wdr-black .ss.wardrobe-mirror{border-color:#E0B84C}
    that neither line re-wraps on its own. */
 #s-wardrobe .wdr-shopend .wse-sub{font:500 14px/1.45 'Jost',sans-serif;color:#6f6a63;margin:0 auto 14px;max-width:300px}
 #s-wardrobe .wdr-shopend .wdr-shopwrap{margin:0}
-#s-wardrobe .wdr-tagwrap{text-align:center;margin:4px 0 16px}
-/* The sewn brand label as the page's masthead, above the title. */
-#s-wardrobe .wdr-tagtop{margin:0 0 12px}
-#s-wardrobe .wdr-tag-flow{position:static;top:auto;left:auto;transform:none;display:inline-block}
 /* The rows (not the card) carry the left inset, so the remove ✕ still has its
    gutter to hang in while anything centred in the card — the counts, the reset
    link, the shop CTA — stays centred on the card itself. */
@@ -755,7 +756,7 @@ html.wdr-black .ss.wardrobe-mirror{border-color:#E0B84C}
 #s-wishlist .wl-del{flex:0 0 auto;color:#a8a294;font-size:21px;line-height:1;cursor:pointer;padding:2px 3px;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-del:hover{color:#6b655a}
 /* Empty state: never a dead end -- it explains the feature AND offers the way in. */
-#s-wishlist .wl-empty{text-align:center;padding:10px 4px 14px}
+#s-wishlist .wl-empty{text-align:center;padding:10px 0 14px}
 #s-wishlist .wl-empty .we-h{width:30px;height:30px;margin:0 auto 5px}
 #s-wishlist .wl-empty .we-h svg{width:100%;height:100%;display:block;fill:none;stroke:#E8D9A8;stroke-width:1.3}
 #s-wishlist .wl-empty h4{font:400 19px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin:0 0 7px}
@@ -3148,9 +3149,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 
 <div class="scr" id="s-wardrobe">
   <div class="top-back-wrap"><button class="top-back" onclick="closeWardrobe()">&larr; Back</button></div>
-  <div class="wdr-tagwrap wdr-tagtop"><div class="wdr-tag wdr-tag-flow"><div class="l1">style Star</div></div></div>
   <div class="wdr-head">
-    <div class="wdr-title" id="wdrTitle">Your Wardrobe List</div>
+    <div class="wdr-title" id="wdrTitle">style Star Wardrobe List</div>
   </div>
 
   <div class="wdr-tabs">
@@ -6691,7 +6691,23 @@ function openWardrobe(tab){
   const ttl=document.getElementById('wdrTitle');
   if(ttl){
     var _fn=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';
-    ttl.textContent=_fn?(_fn+'’s Wardrobe List'):'Your Wardrobe List';
+    // ⚠️ THE BREAK IS EXPLICIT, AND IT IS LOAD-BEARING, not typography taste.
+    // .wdr-title is inline-block and its gold rule is sized as a PERCENTAGE of
+    // the block. An inline-block that WRAPS takes the full available width, so
+    // with her name the block was 320/305/290px depending on the phone and the
+    // rule came out 269/256/244px -- sized by the SCREEN instead of by the
+    // words, sticking out 60px past the last line. A forced break makes the
+    // block's max-content the widest LINE (222px), so it hugs the text and the
+    // rule is the same length on every phone. Break after "style Star" so the
+    // brand name never splits.
+    ttl.textContent='';
+    if(_fn){
+      ttl.appendChild(document.createTextNode(_fn+'’s style Star'));
+      ttl.appendChild(document.createElement('br'));
+      ttl.appendChild(document.createTextNode('Wardrobe List'));
+    }else{
+      ttl.textContent='style Star Wardrobe List';
+    }
   }
   // The founder's-voice line now opens the single how-to paragraph under the
   // tabs, so there's no separate subtitle up here to fill in.

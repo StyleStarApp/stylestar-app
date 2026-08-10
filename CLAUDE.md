@@ -9,6 +9,38 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE-EST-EST-EST-EST (2026-08-10 — HER SCREENSHOT PASS: the tagline, and the MARKS get sorted)
 
+### ⭐ THE "YOUR vs MY" VOICE RULE IS SETTLED — HER QUESTION, AND IT SHARPENS THE 2026-07-31 RULE (2026-08-10)
+Her catch, and it was a genuinely confusing drift she spotted herself: *"We call it Your Wardrobe List in the HUB
+and on the menu then she arrives on the page and the tab says My List... then it says Shop my whole list. So we
+are using Your and My. I want to be consistent and not confusing and not annoying."*
+- ▶ **THE RULE, and it is a REFINEMENT of the 2026-07-31 naming rule, not a replacement: OUTSIDE the page, the
+  app is POINTING AT A PLACE → "Your." INSIDE the page, SHE OWNS IT → "My."** So the Menu row and the hub rows
+  say **Your Wardrobe List** (the app handing her a door), and once she is standing in it the tab says **My List**
+  and the button says **Shop my whole list** (her voice, claiming her own worksheet). That is not an
+  inconsistency, it is a POINT OF VIEW change, and it is the same rule the whole app already runs on — it just
+  had never been written down as a rule about WHERE the words appear.
+- **So the HEADING needs neither word**, which was her own instinct: it is a title, not a pointer and not her
+  speaking. ▶ **And her better idea replaced the stitched logo tag entirely: work the brand into the title** —
+  **"Catherine's style Star Wardrobe List"**, falling back to **"style Star Wardrobe List"** with no name. One
+  letterhead instead of two competing ones, and the possessive does the "yours" job without the word.
+- ⚠️ **Deliberately NOT changed, her explicit call: the how-to paragraph stays exactly as it is.** It was offered
+  and she declined ("I don't think we need to tweak the how-to").
+- 🚨 **AND HER "check the slider line underneath" CAUGHT A REAL BUG THAT NO CODE CHANGE CREATED.** `.wdr-title`
+  is an `inline-block` and its gold rule is `left:8%;right:8%` — **a percentage OF THE BLOCK.** ▶ **An
+  inline-block that WRAPS takes the full available width**, so the moment the title went to two lines the rule
+  stopped being sized by the WORDS and started being sized by the PHONE: **269px at 390, 256px at 375, 244px at
+  360**, sticking out **60px past the last line**. **Fixed with an explicit break after "style Star"** (built
+  from **text nodes + a `<br>` element, never `innerHTML`** — the name is user input), which makes the block's
+  max-content the widest LINE: **block hugs at 222px, rule 187px, identical on every phone.** The break also
+  stops the brand name splitting across lines, which the browser's own wrap would have done for a longer name.
+  ⚠️ **Don't remove the forced break.** `scratchpad/titlerule.js` asserts block-hugs-widest-line, rule-inside-
+  the-title, and **rule-identical-at-390/375/360** — the last one is what would fail if it regresses.
+- 🚨 **PR #811 (the pale-yellow wishlist frame) MERGED AN EMPTY DIFF, and she was right that it wasn't live.**
+  The commit was made **on `main`** by mistake, the branch the PR was opened from never carried it, and the
+  squash-merge landed a commit message with no code. **Recovered from `git reflog`** (`9da207f`) and shipped
+  properly. ▶ **This is the SECOND time in one day** (see #809). **STANDING: after any PR merges, confirm the
+  code with `git show origin/main:index.html | grep <the new string>` — a green merge proves nothing.**
+
 ### ⏸ WHERE 2026-08-10 ENDED — 13 fixes, 5 builds, ALL MERGED AND CURL-VERIFIED LIVE (#799–#804)
 A pure her-screenshots day. **Her word on the first batch: "All of those came out looking good thank you."**
 Shipped, in order: the tagline on one line + tighter My Story header · red→pink SVG hearts on Trending AND the
