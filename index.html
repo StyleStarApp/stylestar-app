@@ -206,7 +206,11 @@ html.wdr-black .ss.wardrobe-mirror{border-color:#E0B84C}
 
 /* ===== Your Wardrobe ===== */
 #s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px;text-align:center}
-#s-wardrobe .wdr-title::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#E0B84C}
+/* Her call (2026-08-10): the rule runs the FULL width of the words, not inset.
+   It was left/right 8%, which read too short under the no-name title. Because
+   the title block now hugs its widest line (the forced break above), 0/0 means
+   the rule is exactly as wide as the longest line of the heading. */
+#s-wardrobe .wdr-title::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#E0B84C}
 #s-wardrobe .wdr-title::before{content:"";position:absolute;left:63%;bottom:-3px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C)}
 #s-wardrobe .wdr-head{text-align:center;margin-bottom:6px}
 #s-wardrobe .wdr-sub{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:10px}

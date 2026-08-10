@@ -81,7 +81,10 @@ for (const w of [390, 375, 360]) {
     // silently makes the percentage-sized rule a function of the SCREEN.
     const widest = Math.max(...m.lines.map(l => l.w));
     ok(Math.abs(m.box.w - widest) <= 2, `${c.label}: title block hugs its widest line (${m.box.w} vs ${widest})`);
-    ok(m.rule.w < widest, `${c.label}: rule sits inside the title, not past it (${m.rule.w} < ${widest})`);
+    // ⚠️ DELIBERATE CHANGE (her call 2026-08-10): the rule used to be inset 8%
+    // each side and she found it too short under the no-name title. It now runs
+    // the FULL width of the words, so this asserts equality, not "inside".
+    ok(Math.abs(m.rule.w - widest) <= 1, `${c.label}: rule is exactly as wide as the words (${m.rule.w} vs ${widest})`);
     ok(Math.abs((m.bead - m.rule.left) - (m.rule.right - m.bead)) < m.rule.w,
        `${c.label}: bead is on the rule`);
     if (c.name) ruleByWidth.push(m.rule.w);
