@@ -189,6 +189,52 @@ for (const w of [390, 360]) {
   await page.close();
 }
 
+// ---- Heart symmetry, measured in PIXELS (her catch, 2026-08-10) ----
+// ⚠️ Box/Range rects are computed from ADVANCE widths, so they reported the two
+// gaps as identical (10.13/10.13) while the eye saw 12.5 vs 14.67. The cause was
+// letter-spacing:.2em trailing after the last letter. Only rasterising catches
+// it, so this check rasterises.
+{
+  const SCALE = 6;
+  for (const [label, open, sel] of [
+    ['the Edit', 'showDream()', '.dc-tagline'],
+    ['Trending', "openWardrobe('trend')", '#s-wardrobe .wdr-trend-by'],
+  ]) {
+    const page = await browser.newPage({ viewport: { width: 390, height: 900 }, deviceScaleFactor: SCALE });
+    await page.goto(base + '/', { waitUntil: 'load' });
+    await page.waitForTimeout(2600);
+    await page.evaluate(f => eval(f), open);
+    await page.waitForTimeout(500);
+    const b64 = (await (await page.$(sel)).screenshot()).toString('base64');
+    const m = await page.evaluate(async ({ b64, SCALE }) => {
+      const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
+      const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+      const cx = c.getContext('2d'); cx.drawImage(img, 0, 0);
+      const d = cx.getImageData(0, 0, c.width, c.height).data;
+      const pink = [], teal = [];
+      for (let x = 0; x < c.width; x++) {
+        let p = false, t = false;
+        for (let y = 0; y < c.height; y++) {
+          const i = (y * c.width + x) * 4, r = d[i], g = d[i+1], b = d[i+2], a = d[i+3];
+          if (a < 40) continue;
+          if (r > 190 && g > 90 && g < 200 && b > 140 && b < 225 && r - g > 45) p = true;
+          if (b > 120 && g > 110 && r < 140 && b - r > 50) t = true;
+        }
+        if (p) pink.push(x); if (t) teal.push(x);
+      }
+      if (!pink.length || !teal.length) return null;
+      const lhr = Math.max(...pink.filter(x => x < teal[0]));
+      const rhl = Math.min(...pink.filter(x => x > teal[teal.length - 1]));
+      return { L: +((teal[0] - lhr) / SCALE).toFixed(2), R: +((rhl - teal[teal.length - 1]) / SCALE).toFixed(2) };
+    }, { b64, SCALE });
+    console.log(`\n--- heart symmetry, ${label} (rasterised) ---`);
+    ok(m !== null, 'found pink and teal ink to measure');
+    ok(Math.abs(m.L - m.R) <= 0.4, `gaps are symmetric: L=${m.L}px R=${m.R}px`);
+    ok(m.L < 11 && m.R < 11, `hearts sit closer to the words than before (was 12.5 / 14.67)`);
+    await page.close();
+  }
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 await browser.close(); server.close();
 process.exit(fail ? 1 : 0);
