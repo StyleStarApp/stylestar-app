@@ -175,9 +175,22 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
    she kept seeing. The page now carries ONE clean 11px frame in #FEF6D6, the
    exact pale yellow of the big crown heart above it -- same structure as My
    Story (11px solid) and the wardrobe, so all three boutique frames agree.
-   ⚠️ Do not reintroduce a layered edge here; it is the same instinct that
-   retired the white+pink inset rings on My Story. */
-.ss.wishlist-mirror{border-width:11px;border-color:#FEF6D6}
+   AND HER FOLLOW-UP, same day, from the live page: the pale band was "too pale,
+   getting lost." ▶ The cause is VALUE, not hue -- #FEF6D6 is nearly as light as
+   the paper it surrounds, so its INNER edge dissolved into the page and only the
+   outer edge (against the black velvet) read at all. Her pick from a 5-way
+   render: a 1px gold hairline on BOTH edges, which keeps her pale yellow exactly
+   and gives it definition. #C89A2C is the crown heart's OWN outline stroke, so
+   the frame now matches the heart in construction, not just in colour.
+   ⚠️ Drawn with box-shadow, never a second border: an outset ring sits against
+   the velvet and an inset ring sits where the frame meets the paper, at ZERO
+   layout cost -- the empty-state wishing button has only 13px of headroom.
+   ⚠️ The earlier note here said never to layer an edge on this frame. That was
+   about EMPHASIS (the restore card's 4px bar, My Story's white+pink rings, both
+   retired by her). A hairline is DEFINITION -- it is what makes the pale band
+   visible at all. Don't add a third edge; this one is hers and it stays. */
+.ss.wishlist-mirror{border-width:11px;border-color:#FEF6D6;
+  box-shadow:0 8px 44px rgba(0,0,0,.16),0 0 0 1px #C89A2C,inset 0 0 0 1px #C89A2C}
 .ss.wishlist-mirror::before{display:none}
 html.wl-velvet,html.wl-velvet body{background:#1a1a1a}
 /* MY STORY'S VELVET (2026-08-09, her design: "I think it will make that page

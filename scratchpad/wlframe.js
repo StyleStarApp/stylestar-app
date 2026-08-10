@@ -26,7 +26,10 @@ for(const w of [390,375,360]){
     const rg=document.createRange(); rg.selectNodeContents(span);
     const lines=[...new Set([...rg.getClientRects()].map(x=>Math.round(x.top)))].length;
     const cr=card.getBoundingClientRect(), br=btn.getBoundingClientRect();
+    const heartStroke=document.querySelector('#s-wishlist .wl-crownheart path:nth-of-type(1)');
     return {bw:cs.borderTopWidth,bc:cs.borderTopColor,beforeDisplay:before.display,
+      shadow:cs.boxShadow,
+      heartStroke:heartStroke?heartStroke.getAttribute('stroke'):null,
       heartFill:heart?heart.getAttribute('fill'):null,
       bleed:getComputedStyle(document.body).backgroundColor,
       avail,need,head:avail-need,lines,
@@ -37,6 +40,14 @@ for(const w of [390,375,360]){
   ok(r.bc==='rgb(254, 246, 214)',`frame is the crown heart's pale yellow (${r.bc})`);
   ok(r.heartFill==='#FEF6D6','...which is the exact fill of the big heart');
   ok(r.beforeDisplay==='none','the brown gilt band is gone');
+  // Her pick (2026-08-10): a gold hairline on BOTH edges, because the pale band
+  // alone dissolved into the paper. Both rings must survive, and the colour must
+  // stay the crown heart's own outline -- that is the whole point of the choice.
+  const rings=(r.shadow.match(/rgb\(200, 154, 44\)/g)||[]).length;
+  ok(rings===2,`gold hairline on both edges (${rings} rings)`);
+  ok(/inset/.test(r.shadow),'...one of them inset, so the inner edge reads against the paper');
+  ok(r.heartStroke==='#C89A2C','...in the crown heart\'s own outline gold');
+  ok(/44px/.test(r.shadow),'the card\'s drop shadow survived the box-shadow rewrite');
   ok(r.bleed==='rgb(26, 26, 26)','black velvet behind it is untouched');
   ok(r.inside&&!r.over,'nothing overflows');
   if(w>=390) ok(r.lines===1,`wishing button holds one line (${r.avail} avail / ${r.need} need, headroom ${r.head}px)`);
