@@ -166,9 +166,15 @@ html.shop-brick,body.shop-brick{background-size:90px 54px;background-color:#F2EF
   background-color:#FBFAF7;
   background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 2.5px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 2.5px);
   box-shadow:0 8px 44px rgba(0,0,0,.16)}
-/* ⚠️ The wardrobe's own 11px frame is gone (see her rethink below); this dashed
-   stitch is shared with the wishlist, which still uses it. */
-.ss.wardrobe-mirror::before,.ss.wishlist-mirror::before{content:"";position:absolute;top:7px;right:7px;bottom:7px;left:7px;border:2px dashed #4a453c;pointer-events:none;z-index:3}
+/* ⚠️ THE DASHED STITCH IS GONE, her pick (2026-08-10), and the reason is not
+   just "simpler". It used to sit INSIDE a solid frame, where it read as stitching
+   on paper. Once the frame went (her rethink below), it became the only line on
+   the page -- and a 2px dark dashed rectangle around content is the interface
+   convention for AN EMPTY BOX WAITING TO BE FILLED, the drop-a-file-here outline.
+   It stopped reading as couture and started reading as unfinished.
+   Offered and not taken: a 1px soft-taupe version, which does still work if she
+   ever wants a thread of the atelier feeling back. The wishlist's ::before is
+   separately display:none (its gilt band was retired), so nothing needs it now. */
 /* HER FRAME (2026-08-09, "I love it, build it"): the wishlist page goes
    full-bleed BLACK to every screen edge (body.wl-velvet below, toggled in
    show()), and the paper is framed in the rod's own gold — a 5px rail band
