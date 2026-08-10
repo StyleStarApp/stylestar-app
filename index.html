@@ -344,9 +344,9 @@ html.story-velvet,html.story-velvet body{background:#F49AC1}
 #s-wardrobe .wdr-trend-note{font:500 15.5px/1.5 'Fraunces',Georgia,serif;font-style:normal;color:#5c5648;margin:2px 0 16px;text-align:center;text-wrap:balance}
 #s-wardrobe .wdr-trend-by{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin-bottom:10px}
 /* Catherine's signature hearts flank her curation (2026-08-09); teal lettering stays */
-#s-wardrobe .wdr-trend-by::before,#s-wardrobe .wdr-trend-by::after{content:"\2665";font-size:14px;color:#F49AC1;display:inline-block}
-#s-wardrobe .wdr-trend-by::before{transform:rotate(-9deg)}
-#s-wardrobe .wdr-trend-by::after{transform:rotate(11deg)}
+/* Inline SVG, not a text glyph -- see the .dc-tagline note: a bare U+2665
+   renders as the red emoji on iOS. */
+#s-wardrobe .wdr-trend-by .pinkheart{width:14px;height:14px;flex:none}
 #s-wardrobe .wdr-tstack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
 #s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px;min-width:0}
 #s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
@@ -727,11 +727,11 @@ html.story-velvet,html.story-velvet body{background:#F49AC1}
 #s-wishlist .wl-del{flex:0 0 auto;color:#a8a294;font-size:21px;line-height:1;cursor:pointer;padding:2px 3px;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-del:hover{color:#6b655a}
 /* Empty state: never a dead end -- it explains the feature AND offers the way in. */
-#s-wishlist .wl-empty{text-align:center;padding:22px 10px 18px}
-#s-wishlist .wl-empty .we-h{width:40px;height:40px;margin:0 auto 12px}
+#s-wishlist .wl-empty{text-align:center;padding:16px 10px 14px}
+#s-wishlist .wl-empty .we-h{width:30px;height:30px;margin:0 auto 9px}
 #s-wishlist .wl-empty .we-h svg{width:100%;height:100%;display:block;fill:none;stroke:#E8D9A8;stroke-width:1.3}
-#s-wishlist .wl-empty h4{font:400 19px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin:0 0 9px}
-#s-wishlist .wl-empty p{font:400 13.5px/1.62 'Jost',sans-serif;color:#5a554c;margin:0 auto 15px;max-width:300px}
+#s-wishlist .wl-empty h4{font:400 19px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin:0 0 7px}
+#s-wishlist .wl-empty p{font:400 13.5px/1.62 'Jost',sans-serif;color:#5a554c;margin:0 auto 13px;max-width:300px}
 #s-wishlist .wl-empty p .hi{color:#8a6d20;font-weight:600}
 #s-wishlist .wl-empty .we-cta{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;text-decoration:none;cursor:pointer;border:none}
 /* Email capture: the highest-intent moment in the app, so it is offered here --
@@ -760,7 +760,7 @@ html.story-velvet,html.story-velvet body{background:#F49AC1}
 #s-wishlist .wl-add .wa-msg{font:400 12px/1.5 'Jost',sans-serif;color:#4a463e;margin-top:8px;min-height:1px}
 #s-wishlist .wl-own{display:inline-flex;align-items:center;gap:4px;font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#8a6d20;background:#fff;border:1px solid #E0B84C;border-radius:999px;padding:3px 7px 3px 6px;margin-bottom:5px}
 #s-wishlist .wl-own svg{width:9px;height:9px;fill:#E0B84C;display:block;flex:0 0 auto}
-#s-wishlist .wl-empty .we-or{margin-top:12px}
+#s-wishlist .wl-empty .we-or{margin-top:10px}
 #s-wishlist .wl-empty .we-addlnk{font:600 12px/1.4 'Jost',sans-serif;color:#8a6d20;cursor:pointer;letter-spacing:.04em;border-bottom:1px solid #E0B84C;padding-bottom:1px}
 #s-wishlist .wl-foot{text-align:center;margin-top:26px}
 /* "Saved" confirmation toast: tells her the piece landed somewhere AND where
@@ -888,9 +888,12 @@ body.menu-open .menu-panel{display:block}
 .dc-corner-star{position:absolute;top:-34px;left:-55px;width:70px;height:70px;transform:rotate(-57deg);z-index:20;filter:drop-shadow(0 2px 3px rgba(120,90,20,.28))}
 /* a touch of the entry button's turquoise, and the "not AI" promise */
 .dc-tagline{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
-.dc-tagline::before,.dc-tagline::after{content:"\2665";font-size:14px;color:#F49AC1;display:inline-block}
-.dc-tagline::before{transform:rotate(-9deg)}
-.dc-tagline::after{transform:rotate(11deg)}
+/* ⚠️ The flanking hearts are inline SVG (.pinkheart), NOT a text glyph. They
+   were content:"\2665" pseudo-elements and iOS rendered them as the RED emoji,
+   ignoring the CSS colour entirely (her screenshot, 2026-08-10). Every other
+   pink heart in the app is already drawn as SVG for exactly this reason. Do
+   not put a bare U+2665 back. */
+.dc-tagline .pinkheart{width:14px;height:14px;flex:none}
 #s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:1rem -0.5rem 0.9rem;font-style:italic;font-weight:600;padding:0}
 #s-dream .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
@@ -2912,7 +2915,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="dc-wrap">
     <div class="top-back-wrap"><button class="top-back" onclick="closeDream()">&larr; Back</button></div>
     <div class="dc-logo"><svg class="dc-corner-star" viewBox="0 0 24 24"><defs><radialGradient id="editStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#editStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>style Star Edit</div>
-    <div class="dc-tagline">Curated by Catherine</div>
+    <div class="dc-tagline"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>Curated by Catherine</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-subtitle">Everything here is selected by me. These are pieces I wear myself and recommend to clients. I hope you&rsquo;ll love them too <svg class="pinkheart" style="width:15px;height:15px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
 
     <div class="dc-disclosure">Some links may earn us a commission.</div>
@@ -3123,7 +3126,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 
   <div class="wdr-pane" data-pane="trend">
-    <div class="wdr-trend-by">CURATED BY CATHERINE</div>
+    <div class="wdr-trend-by"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>CURATED BY CATHERINE</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wdr-trend-note">Here&rsquo;s what&rsquo;s IN right now. It&rsquo;s always fun to refresh your wardrobe with something current<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wdr-tstack" id="wdrTrendBody"></div>
   </div>
@@ -5290,7 +5293,7 @@ async function _shopStyleGen(){
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
   var _isWL=(_shopStyleMode==='wantlist');
-  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="pinkheart hl" style="width:17px;height:17px;margin-right:5px;vertical-align:-3px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>'+(_isWL?'shopping your list&hellip;':'shopping your style&hellip;');
+  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="shop-load-star" viewBox="0 0 76 76" fill="none" style="width:18px;height:18px;margin-right:5px;vertical-align:-3px"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>'+(_isWL?'shopping your list&hellip;':'shopping your style&hellip;');
   var talk=document.querySelector('#s-shopstyle .ss-shop-talk');if(talk)talk.classList.remove('on');
   var gf=document.querySelector('.quiz-footer');if(gf)gf.style.display='none';
   var bk=document.querySelector('#s-shopstyle .top-back-wrap');if(bk)bk.style.display='none';
