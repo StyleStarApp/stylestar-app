@@ -58,6 +58,45 @@ are using Your and My. I want to be consistent and not confusing and not annoyin
   properly. ▶ **This is the SECOND time in one day** (see #809). **STANDING: after any PR merges, confirm the
   code with `git show origin/main:index.html | grep <the new string>` — a green merge proves nothing.**
 
+### ⭐⭐ HER RETHINK: THE WARDROBE LIST GOES CALM — and it produced a PRODUCT RULE (2026-08-10, late)
+Her words: the gold/yellow bleed and the very gold Trending frame are **"too much muchness"**, and *"I thought
+the velvet black bleed/jewel box look would be beautiful but it's not turning out how I imagined... let's tone
+it down and be more simplified."* She undid her own earlier picks, which is the right instinct and cost only CSS.
+- ⭐ **THE RULE, and it is HERS, and it is a PRODUCT rule not a taste one: A WOMAN WHO DOES NOT LIKE YELLOW
+  SHOULD NOT BE MADE TO SIT IN A YELLOW ROOM WHILE JUDGING GARMENT COLOURS.** Your Wardrobe List is a working
+  TOOL. A saturated full-screen colour there (a) imposes a preference on someone whose whole reason for being in
+  the app is discovering her OWN palette, and (b) genuinely shifts how she perceives the colours she is about to
+  shop for. ▶ **So: colour bleeds belong on the pages that are ABOUT CATHERINE (My Story, the Edit), never on
+  the tools.** Weigh every future full-bleed against this.
+- ⭐ **AND THE PER-TAB FLIP WAS MOST OF THE NOISE BY ITSELF.** Switching tabs repainted the entire screen
+  (gold-on-black becoming black-on-gold) — one page with two identities, changing on a tap. **The flip is gone;
+  the tabs change only the content.** ⚠️ `_wdrSkin()` is kept as a **no-op that CLEARS `wdr-gold`/`wdr-black`**,
+  deliberately rather than deleted, because a woman mid-session can still carry one of those classes on `<html>`
+  from the previous build.
+- ▶ **LEARNED FROM THE RENDERS AND REUSABLE: THE FRAME AND THE BLEED WERE ONE EFFECT, NOT TWO.** Quieten the
+  bleed and the 11px frame stops reading as a jewel-box edge and starts reading as a heavy black band with a
+  strip of colour outside it. That is why every middle option (linen / charcoal / greige bleed **with** the
+  frame kept) looked WORSE than either extreme. **They had to go together.**
+- ▶ **AND WHY THE VELVET DISAPPOINTED HER, worth remembering before proposing another one: a jewel box works
+  when it holds ONE PRECIOUS THING.** Your Wishlist is arguably that. A 100-row checklist that scrolls for pages
+  is not — the velvet became a long dark corridor instead of a case. **The wishlist keeps its jewel box; the
+  wardrobe does not.**
+- **As built (her pick D + her pick C on the stitches):** `.ss.wardrobe-mirror` loses its border, shadow and
+  background, so the page sits on the app's own linen like every other working screen; the dashed stitch is
+  **deleted**. ⚠️ **The stitch had to go for a reason beyond "simpler": it used to sit INSIDE a solid frame,
+  where it read as stitching on paper. Once the frame went it became the only line on the page, and a 2px dark
+  dashed rectangle around content is the interface convention for AN EMPTY BOX WAITING TO BE FILLED** (the
+  drop-a-file-here outline) — it stopped reading as couture and started reading as unfinished. Offered and not
+  taken: a **1px soft-taupe** version, which does still work if she ever wants that thread back.
+- ✅ **BONUS, measured: ZERO item names wrap now at 390 / 375 / 360.** Losing the 11px frame gave the rows 22px
+  back, so the narrow-phone squeeze it had caused is gone. ⚠️ Her own note shipping it: *"I am a little hesitant
+  that it looks so plain, but let's go ahead live and take a look."* **Expect a follow-up either way** — every
+  piece of this is one line to restore.
+- Verified: new `scratchpad/wdrcalmcheck.js` **27 checks** (no frame/shadow/stitch/bleed class at three widths,
+  no sideways scroll, rows keep their gap from the screen edge, and **Trending proven to be the SAME treatment
+  as My List** — the assertion that would fail if the flip ever came back). Renders: `wdrcalm-{list,trend}.png`
+  (the four directions) and `wdrstitch-{list,trend}.png` (the three stitch weights).
+
 ### ⏸ WHERE 2026-08-10 ENDED — 13 fixes, 5 builds, ALL MERGED AND CURL-VERIFIED LIVE (#799–#804)
 A pure her-screenshots day. **Her word on the first batch: "All of those came out looking good thank you."**
 Shipped, in order: the tagline on one line + tighter My Story header · red→pink SVG hearts on Trending AND the
