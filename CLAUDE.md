@@ -9,7 +9,7 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE-EST-EST-EST-EST (2026-08-10 — HER SCREENSHOT PASS: the tagline, and the MARKS get sorted)
 
-### ⏸ WHERE 2026-08-10 ENDED — 11 fixes, 4 builds, ALL MERGED AND CURL-VERIFIED LIVE (#799 · #800 · #801 · #802)
+### ⏸ WHERE 2026-08-10 ENDED — 13 fixes, 5 builds, ALL MERGED AND CURL-VERIFIED LIVE (#799–#804)
 A pure her-screenshots day. **Her word on the first batch: "All of those came out looking good thank you."**
 Shipped, in order: the tagline on one line + tighter My Story header · red→pink SVG hearts on Trending AND the
 Edit · the stylist's pink star on the shopping loader · the wishlist empty state (smaller heart, tighter card) ·
@@ -31,6 +31,33 @@ Menu's gold bar.
   Law (Bailey fix + operating-agreement blanks) → TM signature email → EIN → bank → affiliate applications.
   Parked builds: Bloomingdale's colour-facet path form, and the registry FIRST when affiliate approval lands.
 - ⚠️ **Netlify: 4 builds today on top of yesterday's ~11.** She topped up $10 on 08-09 — watch the meter.
+
+### ✅ THE MENU CHIP CAME TO ASK YOUR STYLIST + MY STORY GOT HER HEART (2026-08-10, her two questions, #804)
+Both started as HER questions, not asks — "I don't remember the reason why we left [the Menu] off there" and
+"do you think we should put a small tilted pink heart next to the header on My Story?"
+1. ▶ **THE CHAT'S MISSING CHIP HAD A STALE REASON, and measuring killed it.** The code comment said the chip
+   stood down on `s-chat` because the chat has "its own tight header". **`scratchpad/chipchat.js` forced it on
+   and found NO collision at all** — clears the pink star by **8px**, never touches the title or Back, at 430
+   down to 320, **with no safe-area inset (the worst case, chip sits highest)**. So it was a product decision
+   masquerading as a layout constraint. **Her call: add it.** ▶ **Why it matters: the chat was the LAST screen
+   with no route to the rest of the app** — from a conversation she could not reach Your Wishlist without
+   backing out. That is precisely the worry that produced the Menu in the first place ("she will get stuck or
+   won't see everything we have to offer"). ⚠️ **Deliberate test change, not a silence: `menu.js` moves
+   `s-chat` from the hides-the-chip list into SHOW_ON**, with the measurement recorded in a comment. The chip
+   now hides ONLY on the two loading screens.
+   - ⚠️ **ONE THING ONLY HER PHONE CAN ANSWER, flagged to her: the chip is `position:fixed` and the chat is the
+     only screen with a TEXT INPUT.** iOS keyboards can misbehave with fixed elements (top-anchored ones are
+     usually fine; the classic failure is bottom-anchored). **If it jumps or floats while she types, the fix is
+     to hide it only while the input is focused.** Watch for her report.
+2. **ONE tilted pink heart trailing the "My Story" title** — same pink, same tilt as the `.menu-ch` heart on the
+   Menu row that already marks that page as hers, and the same TRAILING placement as her "With love, Catherine"
+   sign-off, so **the page now bookends**. ▶ **Deliberately ONE heart, NOT flanking, and the reasoning
+   generalises: flanking marks read as a LABEL announcing authorship** (the Edit's "CURATED BY CATHERINE" earns
+   them because the claim is about who chose the products) — **My Story needs no announcing.** ⚠️ **Scoped to
+   `#s-story`: FAQ, Privacy and Terms share the same `.story-title` class** and are asserted to have no heart.
+- Verified: new `scratchpad/chipheart.js`, **140 checks** (the chip really opens the drawer from inside the
+  chat, all rows reachable, closing leaves her in the conversation, the three legal pages heart-free) + menu 87 ·
+  nav 80 · hubs 46.
 
 ### ✅ THE LAST TWO OF THE DAY (2026-08-10, her fourth screenshot batch)
 1. **"Some links may earn us a commission." was left of centre on Shop your style.** ▶ **The box was ALREADY
