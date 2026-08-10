@@ -168,6 +168,19 @@ html.wl-velvet,html.wl-velvet body{background:#1a1a1a}
    clean solid turquoise frame surrounds the paper — no shadow or highlight
    lines (her catch: the dimension details read GRAY against pink). */
 html.story-velvet,html.story-velvet body{background:#F49AC1}
+/* Her picks 2026-08-10. The Edit bleeds the EXACT turquoise of its own
+   CURATED BY CATHERINE lettering, so page and backdrop speak one colour. */
+html.edit-velvet,html.edit-velvet body{background:#0FA6B6}
+/* Your Wardrobe List flips its whole colour scheme with the tab, so the two
+   lists are mirror images of each other and switching is unmistakable:
+     My List        -> gold bleed, black frame
+     What's Trending-> black bleed, gold frame
+   ▶ The gold is #E0B84C, the exact gold of the stars on this page. The dashed
+   stitch is inset INSIDE the frame, on the paper, so it is untouched by the
+   frame colour -- her "keep the same stitches" comes free. */
+html.wdr-gold,html.wdr-gold body{background:#E0B84C}
+html.wdr-black,html.wdr-black body{background:#1a1a1a}
+html.wdr-black .ss.wardrobe-mirror{border-color:#E0B84C}
 /* Her simplification after the live test: the fixed window-frame BLOCKED the
    scrolling words and left a white sliver. Now the frame lives ON the story
    paper itself (scrolls with the text, frames the whole story), the backdrop
@@ -3622,6 +3635,8 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('wishlist-mirror',id==='s-wishlist');
   document.documentElement.classList.toggle('wl-velvet',id==='s-wishlist');
   document.documentElement.classList.toggle('story-velvet',id==='s-story');
+  document.documentElement.classList.toggle('edit-velvet',id==='s-dream');
+  _wdrSkin();
   if(!skipHistory){
     // Passing a path (rather than the old '', which meant "leave the URL alone")
     // is what makes /privacy and /terms real addresses she can paste into an
@@ -7117,9 +7132,20 @@ function openWishlist(){
   _wlRodScroll();   // belt-and-braces: rod starts exactly on its rest position
 }
 function closeWishlist(){show(wishlistPrevScreen||'s-wb');}
+// The wardrobe's backdrop and frame swap with the tab (her design, 2026-08-10).
+// Driven from BOTH show() and wardrobeTab(), because the screen can be opened
+// straight onto either tab -- openWardrobe('trend') does exactly that.
+function _wdrSkin(){
+  var on=(document.querySelector('.scr.act')||{}).id==='s-wardrobe';
+  var t=document.querySelector('#s-wardrobe .wdr-tab.on');
+  var trend=on&&!!t&&t.dataset.tab==='trend';
+  document.documentElement.classList.toggle('wdr-gold',on&&!trend);
+  document.documentElement.classList.toggle('wdr-black',on&&trend);
+}
 function wardrobeTab(which){
   document.querySelectorAll('#s-wardrobe .wdr-tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===which)});
   document.querySelectorAll('#s-wardrobe .wdr-pane').forEach(function(p){p.classList.toggle('on',p.dataset.pane===which)});
+  _wdrSkin();
   if(which==='trend')markTrendSeen();
 }
 
