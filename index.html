@@ -104,8 +104,19 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#FFFFFF 0%,#C6CACE 15%,#8C9298 34%,#F4F6F8 50%,#9AA0A6 66%,#DFE2E5 84%,#FFFFFF 100%) border-box;
   box-shadow:0 6px 44px rgba(0,0,0,.14),inset 0 0 0 2px rgba(201,161,78,.6)}
 /* Info + Shop pages: bold two-band frame, gold + silver the same thickness (8px each) */
-.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror{position:relative;border-radius:0;border:8px solid transparent;
-  background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#F3E6B8 0%,#DFB94E 32%,#B8891F 62%,#E8CE7E 100%) border-box;
+/* Her catch (2026-08-10): "something about it looks not symmetrical." ▶ She was
+   literally right, and it was construction, not perception: this frame used to be
+   painted with linear-gradient(135deg,#F3E6B8,#DFB94E,#B8891F,#E8CE7E) on
+   border-box, so the top-left ran pale, a dark #B8891F band crossed the middle,
+   and the bottom-right came back light. OPPOSITE SIDES OF THE SAME FRAME WERE
+   DIFFERENT COLOURS. No amount of looking could make that resolve.
+   Now one flat colour, and it is her pick: the LIGHT yellow end of that gradient
+   (#E8CE7E), never the dark #B8891F part. The silver inner band stays -- her
+   call, and it is what gives the pale gold definition against the white paper.
+   ⚠️ Don't reintroduce a gradient on a frame. A frame is a rectangle; a linear
+   gradient across one can never be symmetrical. */
+.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror{position:relative;border-radius:0;border:8px solid #E8CE7E;
+  background:#fff;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
 /* My Story — Catherine's page: a matted jewelry-box frame — turquoise frame (Style Star Edit accent), a white mat, then a delicate soft-pink keyline (her voice). No gray. */
 /* Her simplification (2026-08-09): ONE plain turquoise border on the story
