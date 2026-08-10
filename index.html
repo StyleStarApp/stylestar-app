@@ -837,6 +837,16 @@ html.story-velvet,html.story-velvet body{background:#F49AC1}
 .menu-chip svg{display:block}
 .menu-chip span{font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.12em;color:#3a352c;text-transform:uppercase}
 body.menu-hidechip .menu-chip{display:none}
+/* ⚠️ Her live test 2026-08-10: with the keyboard open on the chat, the fixed
+   chip rode up into the status bar and then popped back. iOS moves
+   position:fixed elements against the VISUAL viewport while the keyboard is up
+   and there is no CSS cure, so the chip stands down for exactly as long as the
+   keyboard is on screen. ▶ Deliberately driven by visualViewport, NOT by focus:
+   openChat() autofocuses the field, so a focus rule hid the chip the moment she
+   arrived, before any keyboard existed. ▶ And deliberately GLOBAL, not chat
+   only -- every screen with an input and the chip has the same latent problem
+   (the wishlist add form, Refine, the restore field). */
+body.kb-open .menu-chip{display:none}
 .menu-veil{display:none;position:fixed;inset:0;z-index:9600;background:rgba(20,17,12,.45)}
 /* Side padding 22 → 18 (2026-08-09, with her group-label pick): her phone's
    iOS text zoom wrapped "Refine your Preferences" even though it fits in a
@@ -2939,9 +2949,6 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <button onclick="clearChatPhoto()" style="background:none;border:none;color:#888;font-size:13px;cursor:pointer;font-weight:600">Remove</button>
     </div>
     <div id="chatRefineHint" style="text-align:center;margin-top:8px"></div>
-    <div style="text-align:center;margin-top:6px">
-      <button onclick="chatDone()" style="background:none;border:none;color:#999;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline;font-weight:600">Done</button>
-    </div>
   </div>
 </div>
 
@@ -7282,7 +7289,24 @@ function wbChat(){
 function closeChat(){chatLookPhoto=null;showBack(chatPrevScreen)}
 // Done → land on the "What would you like to do?" menu; Back → top of the origin
 // (e.g. re-read the outfit analysis and scroll to the shopping links).
-function chatDone(){chatLookPhoto=null;showBack(chatPrevScreen)}
+// The on-screen keyboard shrinks the VISUAL viewport while leaving the layout
+// viewport alone, so the gap between them is roughly the keyboard's height.
+// That is the only honest signal that a keyboard is covering the screen -- focus
+// is not, because a field can be focused with no keyboard (openChat autofocuses)
+// and iOS will not raise a keyboard without a real gesture. Threshold is
+// generous so a URL bar collapsing can never be mistaken for a keyboard.
+(function(){
+  var vv=window.visualViewport; if(!vv)return;
+  function syncKb(){
+    try{
+      var covered=Math.max(0,window.innerHeight-vv.height);
+      document.body.classList.toggle('kb-open',covered>120);
+    }catch(e){}
+  }
+  vv.addEventListener('resize',syncKb);
+  vv.addEventListener('scroll',syncKb);
+})();
+
 function chatBack(){chatLookPhoto=null;showBack(chatPrevScreen)}
 
 // A bare store mention links to the shop front, not an empty search results page.
