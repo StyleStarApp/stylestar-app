@@ -97,6 +97,30 @@ it down and be more simplified."* She undid her own earlier picks, which is the 
   as My List** — the assertion that would fail if the flip ever came back). Renders: `wdrcalm-{list,trend}.png`
   (the four directions) and `wdrstitch-{list,trend}.png` (the three stitch weights).
 
+### ⏸⏸ WHERE THE 2026-08-10 EVENING SESSION PAUSED (her call: "let's pause and I will open new session")
+**Merged and CURL/GREP-VERIFIED ON MAIN, six PRs: #812–#816** (the brand into the wardrobe heading + the title
+rule fix · the full-width rule + the wishlist gold hairline · the double-footer hardening · the softer bleed +
+flat legal frames + letterhead nudge · the whole Wardrobe List rethink). Working tree clean, branch ref matching
+HEAD. Suites at pause: **velvet 26 · wdrcalmcheck 27 · catmark 132 · nav 80 · footcount 21 · titlerule 19 ·
+wlframe 36 · wlfoot 13**, all green.
+- ▶ **THE FIRST THING TO ASK HER: how the live pages look on her phone.** Three are new and unseen by her:
+  (1) **the Wardrobe List, calm** — ⚠️ **she shipped it with a stated hesitation, "I am a little hesitant that it
+  looks so plain, but let's go ahead live and take a look," so EXPECT A FOLLOW-UP.** The gentlest thing to add
+  back is the **1px soft-taupe dashed stitch** (offered, not taken; every piece is one line to restore).
+  (2) the **wishlist frame** with its gold hairline. (3) the **FAQ/Terms/Privacy** frames now that they are flat.
+- ▶ **THE ONE LOOSE THREAD: the double footer she screenshotted on Your Wishlist.** ⚠️ **NOT REPRODUCED** — 13
+  routes into the wishlist and all 20 screens came back with exactly one footer, before AND after the fix. What
+  shipped is a GUARANTEE (show() hides the global footer whenever the screen owns one, plus a `:has()` CSS rule
+  no JS ordering can defeat), not a diagnosis. **If she sees it again, the one useful question is WHICH PAGE SHE
+  CAME FROM just before** — that is the input the sweeps cannot guess.
+- ⚠️ **Netlify burned a LOT of builds today** (~19 across both sessions). She topped up $10 on 08-09; watch the
+  meter, and keep batching picks into one merge the way this session did.
+- ▶ **Everything else on her list is unchanged and mostly waiting on OTHERS or on HER WORDS:** the Abercrombie
+  department-param URL · her search-retest screenshots (asked for three times now) · **her graduation-whisper
+  line** · **her most-asked stylist questions** for the chat chips. Waiting on others: Indie Law (Bailey name fix
+  + operating-agreement blanks) → TM signature email → EIN → bank → affiliate applications. Parked builds:
+  Bloomingdale's colour-facet path form; the registry FIRST when affiliate approval lands.
+
 ### ⏸ WHERE 2026-08-10 ENDED — 13 fixes, 5 builds, ALL MERGED AND CURL-VERIFIED LIVE (#799–#804)
 A pure her-screenshots day. **Her word on the first batch: "All of those came out looking good thank you."**
 Shipped, in order: the tagline on one line + tighter My Story header · red→pink SVG hearts on Trending AND the
