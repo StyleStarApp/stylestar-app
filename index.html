@@ -342,7 +342,9 @@ html.story-velvet,html.story-velvet body{background:#F49AC1}
 #s-wardrobe .wdr-add input::placeholder{color:#a39c8a}
 #s-wardrobe .wdr-add .plus{font-size:16px;color:#1a1a1a;font-weight:700}
 #s-wardrobe .wdr-trend-note{font:500 15.5px/1.5 'Fraunces',Georgia,serif;font-style:normal;color:#5c5648;margin:2px 0 16px;text-align:center;text-wrap:balance}
-#s-wardrobe .wdr-trend-by{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin-bottom:10px}
+#s-wardrobe .wdr-trend-by{display:flex;align-items:center;justify-content:center;gap:7px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin-bottom:10px}
+/* cancels the trailing letter-space -- see the .dc-tagline note */
+#s-wardrobe .wdr-trend-by span{margin-right:-.2em}
 /* Catherine's signature hearts flank her curation (2026-08-09); teal lettering stays */
 /* Inline SVG, not a text glyph -- see the .dc-tagline note: a bare U+2665
    renders as the red emoji on iOS. */
@@ -887,7 +889,13 @@ body.menu-open .menu-panel{display:block}
 /* Style Star Edit: a little jewel star (gold with silver outline) pinned to the top-left corner */
 .dc-corner-star{position:absolute;top:-34px;left:-55px;width:70px;height:70px;transform:rotate(-57deg);z-index:20;filter:drop-shadow(0 2px 3px rgba(120,90,20,.28))}
 /* a touch of the entry button's turquoise, and the "not AI" promise */
-.dc-tagline{display:flex;align-items:center;justify-content:center;gap:10px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
+.dc-tagline{display:flex;align-items:center;justify-content:center;gap:7px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
+/* ⚠️ letter-spacing puts its space after the LAST letter too, so the right
+   heart sat 2.2px farther from the words than the left one -- invisible to
+   every box measurement (they use advance widths) and clearly visible to the
+   eye. Her catch, 2026-08-10. The negative end margin cancels exactly that
+   trailing space so both hearts sit symmetrically. Do not remove it. */
+.dc-tagline span{margin-right:-.2em}
 /* ⚠️ The flanking hearts are inline SVG (.pinkheart), NOT a text glyph. They
    were content:"\2665" pseudo-elements and iOS rendered them as the RED emoji,
    ignoring the CSS colour entirely (her screenshot, 2026-08-10). Every other
