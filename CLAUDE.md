@@ -7,7 +7,68 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE-EST-EST-EST (2026-08-09 — THE WISHLIST GOT ITS OWN DOOR, her Valentino question)
+## ▶ NEXT SESSION — START HERE-EST-EST-EST-EST (2026-08-10 — HER SCREENSHOT PASS: the tagline, and the MARKS get sorted)
+
+### 🚨 THE EMOJI TRAP: A BARE U+2665 RENDERS AS THE **RED EMOJI** ON iOS, IGNORING YOUR CSS COLOUR
+Her screenshot of What's Trending showed **red ❤️ hearts** flanking "CURATED BY CATHERINE" — but the CSS said
+`color:#F49AC1` (her signature pink) with tilts, and had for months. ▶ **Cause: they were `content:"\2665"`
+pseudo-elements. iOS gives U+2665 emoji presentation, which paints its own colour and ignores `color:` entirely.**
+The sandbox renders it as pink text, so **this class of bug is INVISIBLE here and only shows on her phone.**
+- **Fixed on BOTH surfaces** — What's Trending (`.wdr-trend-by`) **and the Style Star Edit (`.dc-tagline`), which
+  had the identical bug she hadn't screenshotted yet.** Both now use the inline SVG `.pinkheart` (`.hl` tilted left
+  + default tilted right), which is what every other pink heart in the app already was. The pseudo-elements are gone.
+- ⚠️ **STANDING RULE: never draw a brand mark with a text glyph.** Hearts and stars that carry meaning are inline
+  SVG — `.pinkheart` for her signature, the `.chat-hdr-star` polygon for the stylist. A glyph is at the mercy of
+  the platform's emoji font. ▶ **Still text glyphs elsewhere and deliberately left alone** (they are decorative
+  inline punctuation inside sentences, and read correctly on her phone today): the `&hearts;` in the wishlist
+  empty state's "♥ Save", the heart-tip `&#9825;` (U+2661 does NOT get emoji presentation), the footer stars.
+  **If she ever reports one of those looking wrong, this is the reason and the SVG is the fix.**
+
+### ✅ THE PINK HEART CAME OFF THE SHOPPING LOADER — HER REASONING SHARPENS THE MARK SYSTEM (2026-08-10)
+Her call on the "♥ shopping your style…" / "♥ shopping your list…" loading titles: **"The virtual stylist is doing
+this shopping, not me, so wanted to take these hearts off."** Replaced with **the pink STAR from Ask your Stylist**
+(same polygon, same `#EC4899`, asserted identical in the tests) at 18px.
+- ▶ **THIS REFINES THE 2026-08-09 GOLD MARK SYSTEM, record it: gold = HERS (star = wardrobe, heart = wishlist) ·
+  PINK TILTED HEART = CATHERINE HERSELF SPEAKING or curating · PINK STAR (#EC4899) = THE STYLIST, the AI persona
+  doing work on her behalf · teal = the Edit family's lettering.** Her signature belongs where SHE is present (My
+  Story, the Edit, Curated by Catherine, her whispers) and NOT on machine output. Weigh future marks against this.
+- ⚠️ **The starred title exists ONLY WHILE LOADING** — lines ~5344/5350 restore the plain "shop your style" when
+  the picks land or the call fails. **A test must sample it synchronously**; see the harness lesson below.
+
+### ✅ THE TAGLINE HOLDS ONE LINE + A TIGHTER MY STORY HEADER (2026-08-10, her two catches)
+"Align your style. Shine your light." was wrapping with **"light." stranded** on its own line, and the gap down to
+"My Story" was too airy.
+- ▶ **MEASURED FIRST, and the margin was the whole story: the tagline needs 277px and `.hdr`'s 2rem side padding
+  left exactly 280px at 390w.** A 3px margin is INSIDE normal browser text-measurement variance — which is why it
+  fit in Chromium and wrapped in Safari on her actual phone, and why it wrapped outright on every phone under 390.
+- **The padding was INVISIBLE:** the tagline is centered and narrower than its box, so that space never showed; it
+  only decided where the line broke. Trimmed **2rem → 0.75rem**, which buys **43px of headroom** at 390 and holds
+  one line at 375 and 360. ⚠️ **Font size and letter-spacing untouched** (the readability rule). At **320 it
+  genuinely cannot fit** (277 needed, 250 available), so `text-wrap:balance` was added: two balanced lines breaking
+  at the SENTENCE SEAM instead of stranding "light." — the `.hm-h1` widow lever, reused.
+- **The gap was 24px from three stacked paddings** (`.hdr` bottom 8 + `.inner` top 8 + `.story-wrap` top 8) →
+  **10px**, scoped to `.ss.story-mirror` / `#s-story` so the tuned Welcome Back spacing is untouched.
+- ▶ **Useful scope finding: the shared `.hdr` is `display:none` on nearly every screen** (each has its own
+  letterhead) — of the screens tested, **only My Story shows it**. Tiny blast radius.
+
+### ✅ YOUR WISHLIST EMPTY STATE: SMALLER OPEN HEART, TIGHTER CARD (2026-08-10, her ask)
+`.we-h` **40x40 → 30x30**, and the card's vertical rhythm trimmed (padding 22/18 → 16/14, heart margin 12 → 9,
+h4 9 → 7, p 15 → 13, `.we-or` 12 → 10). About 30px tighter overall; headline, Shop my style and the wishing link
+all unchanged.
+
+### ⚠️ THREE HARNESS LESSONS FROM THIS SESSION (all cost a failing run, all reusable)
+1. **`Range.getClientRects()` returns a rect per text box AND per element.** The tagline contains a `<span>`, so
+   ONE visual line reported as **three rects** and the first suite "found" 3 lines. **Count UNIQUE rect tops.**
+2. **Never assert against an element that may be `display:none` on that screen.** The same suite failed 29 checks
+   asserting the shared header on welcome/FAQ/privacy/terms, where it is deliberately hidden. **Probe first, skip
+   honestly, and log which screens were skipped** so the skip can't hide a real regression.
+3. **A loading-state element must be sampled SYNCHRONOUSLY, in the same `evaluate()` that triggers it.** The
+   sandbox's AI call fails in ~1s and the error path restores the resting title, so sampling after a `waitForTimeout`
+   reads the RESTORED state and looks exactly like the change never applied. ⚠️ Also: **`openShopStyle()` shows the
+   refine nudge first for an un-refined woman**, so it never reaches the loader — drive `_openShopStyleNow(mode)`.
+4. ⚠️ **Two background runs writing the same output file interleave and produce nonsense totals.** One file per run.
+
+## ▶ PREVIOUS — START HERE-EST-EST-EST (2026-08-09 — THE WISHLIST GOT ITS OWN DOOR, her Valentino question)
 
 ### ⏸ WHERE THE 2026-08-09 SESSION PAUSED (her call: "save everything and pause here")
 Everything through **PR #797** is merged and CONFIRMED LIVE (curl-verified): the two-door wishlist add,
