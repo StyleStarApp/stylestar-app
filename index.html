@@ -34,9 +34,15 @@ html,body{min-height:100%;background:#f5f3ef;font-family:'DM Sans',sans-serif;co
 body{display:flex;align-items:flex-start;justify-content:center;padding:1rem 0.75rem 3rem;min-height:100vh}
 .ss{width:100%;max-width:480px;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 4px 40px rgba(0,0,0,0.08)}
 
-.hdr{text-align:center;padding:0.6rem 2rem 0.5rem;border-bottom:none}
+/* Side padding is deliberately small: the tagline is centered and narrower than
+   its box, so this padding never shows -- it only ever decides where the line
+   WRAPS. At 2rem the tagline needed 277px of 280px at 390w, so any page zoom
+   (or any phone under 390) broke "light." onto its own line. 0.75rem holds one
+   line at 390/375/360; at 320 it falls to two balanced lines at the sentence
+   seam, which is what text-wrap:balance below is for. */
+.hdr{text-align:center;padding:0.6rem 0.75rem 0.5rem;border-bottom:none}
 .logo-img{display:block;margin:2px auto 2px;width:104px;height:auto}
-.tag{font-size:16px;color:#666;letter-spacing:0.08em;margin-top:0;font-weight:500}
+.tag{font-size:16px;color:#666;letter-spacing:0.08em;margin-top:0;font-weight:500;text-wrap:balance}
 
 
 .inner{padding:0.5rem 1.75rem 1.5rem}
@@ -896,6 +902,12 @@ body.menu-open .menu-panel{display:block}
 .story-title{font-size:26px;font-weight:400;color:#1a1a1a;margin-bottom:1rem;font-family:'DM Serif Display',Georgia,serif}
 .ss.story-mirror .logo-img{width:74px}
 .ss.story-mirror .story-title{margin-bottom:0.2rem}
+/* Her ask (2026-08-10): close the gap between the tagline and "My Story". It was
+   24px built from three separate paddings (.hdr bottom 8 + .inner top 8 +
+   .story-wrap top 8). Scoped to the story skin so the tuned spacing on Welcome
+   Back and the rest is untouched. */
+.ss.story-mirror .hdr{padding-bottom:2px}
+#s-story .story-wrap{padding-top:0}
 .story-text{font-size:16px;color:#1a1a1a;line-height:1.75;margin-bottom:1rem;text-align:left;font-family:'DM Sans',sans-serif;font-weight:500}
 .story-sig{font-family:'Dancing Script',cursive;font-size:28px;color:#1a1a1a;font-weight:600;text-align:center;margin-top:0.7rem;line-height:1.2}
 .story-manifesto{font-size:18px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.6;margin-top:0.5rem}
