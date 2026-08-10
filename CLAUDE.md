@@ -9,6 +9,67 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE-EST-EST-EST-EST (2026-08-10 — HER SCREENSHOT PASS: the tagline, and the MARKS get sorted)
 
+### ⏸ WHERE 2026-08-10 ENDED — 11 fixes, 4 builds, ALL MERGED AND CURL-VERIFIED LIVE (#799 · #800 · #801 · #802)
+A pure her-screenshots day. **Her word on the first batch: "All of those came out looking good thank you."**
+Shipped, in order: the tagline on one line + tighter My Story header · red→pink SVG hearts on Trending AND the
+Edit · the stylist's pink star on the shopping loader · the wishlist empty state (smaller heart, tighter card) ·
+the curated-by hearts made symmetric and tucked in · the empty state again (gold SVG heart, tighter heart
+spacing, boxed + bigger wishing button) · the commission line centred · the wardrobe categories given the
+Menu's gold bar.
+- ▶ **THE LESSON OF THE WHOLE DAY, and it is the reusable one: THE CSS WAS CORRECT AND THE MEASUREMENTS AGREED
+  WITH IT, AND HER PHONE WAS STILL RIGHT.** Three times: hearts specified `#F49AC1` rendered RED (iOS emoji
+  substitution) · two gaps that measured *identical* (10.13/10.13) looked plainly uneven (trailing
+  letter-spacing, invisible to advance-width rects) · a disclosure in a centred box read left-of-centre (the box
+  was centred, the text inside it was not). **Every one of them was only findable by counting PAINTED PIXELS.**
+  ▶ When she reports something the numbers say is fine, rasterise before arguing. She has been right every time.
+- ⚠️ **THREE HEART GLYPHS FIXED, TWO DELIBERATELY LEFT** — the heart-tip `&#9825;` (U+2661, no emoji
+  presentation) and the footer stars. They read correctly on her phone today; the SVG swap is the fix if either
+  ever goes off-colour.
+- ▶ **STILL OPEN, unchanged and all waiting on HER:** the Abercrombie department-param URL (results page → Shop
+  By → Women's → paste the URL) · her search-retest screenshots (asked for twice now, never arrived) · **her
+  graduation-whisper line** · **her most-asked stylist questions** for the chat chips. Waiting on others: Indie
+  Law (Bailey fix + operating-agreement blanks) → TM signature email → EIN → bank → affiliate applications.
+  Parked builds: Bloomingdale's colour-facet path form, and the registry FIRST when affiliate approval lands.
+- ⚠️ **Netlify: 4 builds today on top of yesterday's ~11.** She topped up $10 on 08-09 — watch the meter.
+
+### ✅ THE LAST TWO OF THE DAY (2026-08-10, her fourth screenshot batch)
+1. **"Some links may earn us a commission." was left of centre on Shop your style.** ▶ **The box was ALREADY
+   centred** (`max-width:320px` + auto margins) — **the TEXT inside it was left-aligned**, so the words sat at
+   the box's left edge. `text-align:center` on `.shop-disclosure`. ⚠️ **The test now measures the painted TEXT's
+   centre against its container, never the box's** — a centred box full of off-centre words passed before.
+2. **The wardrobe category headers (TOPS, BOTTOMS, …) now carry the MENU's group mark** — a short 2px `#D8A52E`
+   bar hugging the word (her ask, pointing at the Menu screenshot), replacing a pale full-width rule.
+   ⚠️ **`display:inline-block` is what makes the bar hug**; it is `.menu-grp`'s exact pattern. **The test asserts
+   the bar matches the Menu's COMPUTED colour and height**, so restyling one can never silently diverge from the
+   other. Applies to every category incl. "My Additions". Verified: new `scratchpad/catmark.js` 132 checks.
+
+### ✅ THE WISHLIST EMPTY STATE, SECOND ROUND (2026-08-10, her four asks)
+Gold SVG heart replacing the red emoji one in "tap ♥ Save" (**the third emoji-trap catch of the day** — that
+glyph was on the list deliberately left alone that morning; her phone overruled it) · space above the open heart
+16→10px, below 9→5px · the wishing link is now a real **boxed button, 12px → 13.5px, squared 1px `#D8A52E`,
+with a leading +**.
+- ▶ **COPY CALL, FLAGGED TO HER AND HERS TO OVERRULE: "Or" and the trailing arrow are gone**, so it reads
+  **"+ Add anything you're wishing for"** — her own approved wording on the sibling `.wl-addbtn`. "+ Or add…"
+  read awkwardly and an arrow is redundant beside a leading plus. She has not objected.
+- ⚠️ **MEASURED: the label needs 231px.** Trimming `.wl-empty`'s own side padding 10→4px (empty-state only, so
+  the item rows keep their 12px card padding) gives the button **260px at 390 — one line with 11px headroom**.
+  **At 375 and below it falls to two balanced lines DELIBERATELY**: holding 375 would need 13px with ~5px of
+  margin, and the tagline fix the same morning proved a margin that thin fails on real Safari. `scratchpad/
+  btnfit.js` re-runs the sweep if the wording or padding ever changes. Verified: `scratchpad/emptystate.js` 88.
+- ⚠️ **HARNESS TRAP: an element screenshot includes the CARD BACKGROUND behind the glyph**, so counting every
+  opaque pixel as "ink" made a perfectly gold heart read **40% gold**. Only saturated pixels count (max−min ≥ 45).
+
+### ✅ THE CURATED-BY HEARTS MADE SYMMETRIC (2026-08-10, her catch — and the measurements lied)
+Her eye: the RIGHT heart sat farther from the words than the left, on both the Edit and Trending. **Both hearts
+were in identical boxes with an identical flex gap, and every box/range rect reported the two gaps as EXACTLY
+equal (10.13 / 10.13).**
+- ▶ **CAUSE: `letter-spacing:.2em` puts its space after the LAST letter too**, so the right heart was pushed
+  2.2px farther from the final letter. **Box rects are computed from ADVANCE widths and cannot see trailing
+  tracking.** Rasterising the line settled it: **12.5px left vs 14.67px right** — her eye, to the pixel.
+- **Fixed with `span{margin-right:-.2em}`** (cancels exactly the trailing space) + flex gap 10→7px so both sit
+  nearer the words. **Now 9.67px both sides.** ⚠️ Don't remove the negative margin. `marks3.js` grew to 65 with
+  a **rasterised** symmetry assertion — a box-based one would cheerfully confirm the broken version.
+
 ### 🚨 THE EMOJI TRAP: A BARE U+2665 RENDERS AS THE **RED EMOJI** ON iOS, IGNORING YOUR CSS COLOUR
 Her screenshot of What's Trending showed **red ❤️ hearts** flanking "CURATED BY CATHERINE" — but the CSS said
 `color:#F49AC1` (her signature pink) with tilts, and had for months. ▶ **Cause: they were `content:"\2665"`
