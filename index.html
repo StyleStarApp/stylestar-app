@@ -926,6 +926,12 @@ body.menu-open .menu-panel{display:block}
 .story-title{font-size:26px;font-weight:400;color:#1a1a1a;margin-bottom:1rem;font-family:'DM Serif Display',Georgia,serif}
 .ss.story-mirror .logo-img{width:74px}
 .ss.story-mirror .story-title{margin-bottom:0.2rem}
+/* Her signature on her own page (2026-08-10). ONE heart, trailing the
+   title -- the same placement as the Menu row that marks My Story as
+   hers, and as her "With love, Catherine" sign-off below. Deliberately
+   NOT flanking: flanking marks read as a label announcing authorship
+   (the Edit's "CURATED BY CATHERINE"), and this page needs no announcing. */
+#s-story .story-title .st-ch{width:15px;height:15px;margin-left:7px;vertical-align:2px;transform:rotate(11deg);fill:#F49AC1;display:inline-block}
 /* Her ask (2026-08-10): close the gap between the tagline and "My Story". It was
    24px built from three separate paddings (.hdr bottom 8 + .inner top 8 +
    .story-wrap top 8). Scoped to the story skin so the tuned spacing on Welcome
@@ -2851,7 +2857,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-story">
   <div class="story-wrap">
     <div class="top-back-wrap"><button class="top-back" onclick="closeStory()">&larr; Back</button></div>
-    <div class="story-title">My Story</div>
+    <div class="story-title">My Story<svg class="st-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="story-text">
       I'm Catherine, a personal stylist and certified image consultant with over 20 years of styling experience and a lifetime love of shopping. Let's just say I've been shopping since before I could walk. Some of my earliest happy memories are exploring department stores with my mom and playing dress-up with my friends.
     </div>
@@ -3536,9 +3542,15 @@ function show(id,skipHistory){
   // the boot path and show('s-wb').)
   if(id==='s-wardrobe'||id==='s-shopstyle'||id==='s-wishlist')try{localStorage.setItem('ss_seen_'+id.slice(2),'1');}catch(e){}
   // Navigating always closes the menu drawer; the Menu chip stands down only on
-  // the chat (its own tight header) and the two loading moments.
+  // the two loading moments now.
+  // ▶ The chat used to hide it too, on the grounds that it has "its own tight
+  //   header". Measured 2026-08-10 (scratchpad/chipchat.js) and that was simply
+  //   not true: the chip clears the pink star by 8px and never touches the
+  //   title or Back, even with no safe-area inset. Her call to add it -- the
+  //   chat is exactly where a woman lingers, and it was the last screen with no
+  //   route to the rest of the app.
   document.body.classList.remove('menu-open');
-  document.body.classList.toggle('menu-hidechip',id==='s-chat'||id==='s-load'||id==='s-photo-load');
+  document.body.classList.toggle('menu-hidechip',id==='s-load'||id==='s-photo-load');
   // The quiz progress bar ("1 of 12") belongs to the quiz screen, full stop.
   // Before the Menu/logo/footer existed, the only exits from a mid-way quiz were
   // finishing it or backing out of question 1, and each hid the bar by hand; the

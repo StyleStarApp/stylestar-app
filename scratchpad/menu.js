@@ -53,7 +53,11 @@ const page = await newPage(390, true);
 
 // ---------------------------------------------------------------------------
 console.log('\n1. The chip: visible, labelled in WORDS, hidden only where it should be');
-const SHOW_ON = ['s-wel', 's-wb', 's-quiz', 's-res', 's-photo-res', 's-story', 's-shop', 's-dream', 's-shopstyle', 's-wardrobe', 's-wishlist', 's-faq', 's-privacy', 's-terms', 's-photo'];
+// ⚠️ DELIBERATE CHANGE 2026-08-10, her call: 's-chat' moved from the hidden
+// list to this one. The old reason ("the chat has its own tight header") was
+// measured and found untrue -- the chip clears the chat's star by 8px and never
+// touches its title or Back. See scratchpad/chipchat.js.
+const SHOW_ON = ['s-wel', 's-wb', 's-quiz', 's-res', 's-photo-res', 's-story', 's-shop', 's-dream', 's-shopstyle', 's-wardrobe', 's-wishlist', 's-faq', 's-privacy', 's-terms', 's-photo', 's-chat'];
 for (const scr of SHOW_ON) {
   const r = await page.evaluate(scr => {
     show(scr);
@@ -63,12 +67,12 @@ for (const scr of SHOW_ON) {
   }, scr);
   ok(scr + ' shows the Menu chip', r.vis && r.label === 'Menu' && r.cursor === 'pointer', JSON.stringify(r));
 }
-for (const scr of ['s-chat', 's-load', 's-photo-load']) {
+for (const scr of ['s-load', 's-photo-load']) {
   const hidden = await page.evaluate(scr => {
     show(scr);
     return getComputedStyle(document.getElementById('menuChip')).display === 'none';
   }, scr);
-  ok(scr + ' hides the chip (own header / loading moment)', hidden);
+  ok(scr + ' hides the chip (loading moment)', hidden);
 }
 
 // ---------------------------------------------------------------------------
