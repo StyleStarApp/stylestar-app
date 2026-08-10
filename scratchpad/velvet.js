@@ -27,7 +27,13 @@ const skin = () => ({
   cls: document.documentElement.className,
 });
 
-const GOLD = 'rgb(224, 184, 76)', BLACK = 'rgb(26, 26, 26)', TEAL = 'rgb(15, 166, 182)';
+// ⚠️ DELIBERATE UPDATE (her call 2026-08-10), not a silenced test: the My List
+// BLEED moved from the star gold #E0B84C to #EDD98F. #E0B84C is an accent colour
+// doing an accent's job and read too gold as a full-page backdrop. The Trending
+// FRAME keeps the star gold, so the two are no longer exact colour swaps of each
+// other -- that assertion is replaced by one that pins each side on its own.
+const GOLD = 'rgb(224, 184, 76)', BLEED_GOLD = 'rgb(237, 217, 143)',
+      BLACK = 'rgb(26, 26, 26)', TEAL = 'rgb(15, 166, 182)';
 const PLAIN = 'rgb(245, 243, 239)';
 
 for (const w of [390, 360]) {
@@ -51,7 +57,7 @@ for (const w of [390, 360]) {
   await page.evaluate(() => openWardrobe('list'));
   await page.waitForTimeout(700);
   const l = await page.evaluate(skin);
-  ok(l.bleed === GOLD, `My List bleeds gold (${l.bleed})`);
+  ok(l.bleed === BLEED_GOLD, `My List bleeds the softer yellow (${l.bleed})`);
   ok(l.frame === BLACK, `My List frame stays black (${l.frame})`);
   ok(l.stitchStyle === 'dashed', 'the stitch is still dashed');
   const stitchOnList = l.stitch;
@@ -62,14 +68,17 @@ for (const w of [390, 360]) {
   const t = await page.evaluate(skin);
   ok(t.bleed === BLACK, `Trending bleeds black (${t.bleed})`);
   ok(t.frame === GOLD, `Trending frame turns gold (${t.frame})`);
-  ok(t.bleed === l.frame && t.frame === l.bleed, 'the two lists are exact colour opposites of each other');
+  // The two tabs still INVERT (one bleeds dark and frames light, the other the
+  // reverse); they are no longer the same two hex values swapped.
+  ok(t.bleed === l.frame, 'Trending bleeds what My List frames (still inverted)');
+  ok(t.frame !== t.bleed && l.frame !== l.bleed, 'each tab still contrasts its own frame against its own bleed');
   ok(t.stitch === stitchOnList && t.stitchStyle === 'dashed', `the stitches are unchanged (${t.stitch})`);
 
   // switching back
   await page.evaluate(() => wardrobeTab('list'));
   await page.waitForTimeout(400);
   const back = await page.evaluate(skin);
-  ok(back.bleed === GOLD && back.frame === BLACK, 'switching back to My List restores gold/black');
+  ok(back.bleed === BLEED_GOLD && back.frame === BLACK, 'switching back to My List restores yellow/black');
 
   // ⚠️ the screen can be opened STRAIGHT onto trending -- openWardrobe('trend')
   // does that from the Build hub, so the skin must be right without a tab tap.
