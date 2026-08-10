@@ -35,6 +35,23 @@ are using Your and My. I want to be consistent and not confusing and not annoyin
   stops the brand name splitting across lines, which the browser's own wrap would have done for a longer name.
   ⚠️ **Don't remove the forced break.** `scratchpad/titlerule.js` asserts block-hugs-widest-line, rule-inside-
   the-title, and **rule-identical-at-390/375/360** — the last one is what would fail if it regresses.
+- ✅ **HER TWO LIVE CATCHES ON THE SHIPPED VERSION, both built (2026-08-10):** (1) **the rule was too short** on
+  the no-name title — it was inset `left/right:8%`, now **0/0, so it is exactly as wide as the words** (252px
+  under the 252px no-name title, 0px overhang; 222px under the named one, matching its first line). ⚠️
+  `titlerule.js`'s assertion flipped from *rule-inside-the-words* to *rule-equals-the-words* — a deliberate
+  change, recorded here so it can't read as a silenced test. (2) **the pale wishlist frame was "getting lost"**
+  — ▶ **the cause is VALUE, not hue: `#FEF6D6` is nearly as light as the paper it surrounds, so its INNER edge
+  dissolved and only the outer edge (against the black velvet) read at all.** Her pick from a 5-way render
+  (`scratchpad/wlframe2.js` → `wlframe2.png`): **a 1px gold hairline on BOTH edges in `#C89A2C`, the crown
+  heart's OWN outline stroke** — so the frame now matches the heart in CONSTRUCTION, not just colour. Offered
+  and not taken: a black hairline (its outer ring merges with the velvet, redundant) and two
+  deepen-the-yellow-instead options. ⚠️ **Drawn with `box-shadow` (outset ring + inset ring), never a second
+  border — ZERO layout cost**, which matters because the empty-state wishing button has only 13px of headroom.
+  ▶ **AND THIS SHARPENS THE ANTI-LAYERED-EDGE RULE rather than breaking it: her past retirements (the restore
+  card's 4px bar, My Story's white+pink rings) were second EMPHASIS devices on something already loud. A
+  hairline here is DEFINITION — it is what makes the pale band visible at all.** Weigh future edges by that
+  distinction. `wlframe.js` is 24 → 32 checks (both rings present, one inset, colour == the heart's stroke, and
+  the card's own drop shadow surviving the box-shadow rewrite).
 - 🚨 **PR #811 (the pale-yellow wishlist frame) MERGED AN EMPTY DIFF, and she was right that it wasn't live.**
   The commit was made **on `main`** by mistake, the branch the PR was opened from never carried it, and the
   squash-merge landed a commit message with no code. **Recovered from `git reflog`** (`9da207f`) and shipped
