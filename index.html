@@ -931,7 +931,14 @@ body.menu-open .menu-panel{display:block}
    hers, and as her "With love, Catherine" sign-off below. Deliberately
    NOT flanking: flanking marks read as a label announcing authorship
    (the Edit's "CURATED BY CATHERINE"), and this page needs no announcing. */
-#s-story .story-title .st-ch{width:15px;height:15px;margin-left:7px;vertical-align:2px;transform:rotate(11deg);fill:#F49AC1;display:inline-block}
+/* ⚠️ The negative right margin is LOAD-BEARING and is the whole point: it
+   takes the heart out of the line's width, so "My Story" centres on its
+   own and the heart hangs off the end as an add-on. Without it the words
+   sit left of centre by half the heart's width -- her catch, 2026-08-10,
+   the same shape as the trailing-letter-space problem on the curated-by
+   lines. margin-left is the visual gap; margin-right must cancel
+   (margin-left + width) exactly. */
+#s-story .story-title .st-ch{width:15px;height:15px;margin-left:5px;margin-right:-20px;vertical-align:2px;transform:rotate(11deg);fill:#F49AC1;display:inline-block}
 /* Her ask (2026-08-10): close the gap between the tagline and "My Story". It was
    24px built from three separate paddings (.hdr bottom 8 + .inner top 8 +
    .story-wrap top 8). Scoped to the story skin so the tuned spacing on Welcome

@@ -88,7 +88,7 @@ for (const w of [430, 390, 375, 360, 320]) {
     const el = hs[0];
     if (!el) return { n: 0 };
     const cs = getComputedStyle(el);
-    const tr = t.getBoundingClientRect(), er = el.getBoundingClientRect();
+    const tr = t.parentElement.getBoundingClientRect(), er = el.getBoundingClientRect();
     const menuCh = document.querySelector('.menu-ch');
     const mcs = menuCh ? getComputedStyle(menuCh) : null;
     // is it AFTER the words?
@@ -103,6 +103,8 @@ for (const w of [430, 390, 375, 360, 320]) {
       trailing: er.left >= words.right - 1,
       sameLine: Math.abs(er.top - words.top) < 22,
       titleLines: [...new Set([...rg.getClientRects()].map(r => Math.round(r.top)))].length,
+      wordsOffCentre: +(((words.left + words.right) / 2) - ((tr.left + tr.right) / 2)).toFixed(2),
+      heartGap: Math.round(er.left - words.right),
       insideCard: er.left > card.left && er.right < card.right,
       menuChFill: mcs ? mcs.fill : null,
       sigHeartStillThere: !!sig,
@@ -115,6 +117,11 @@ for (const w of [430, 390, 375, 360, 320]) {
   ok(h.fill === h.menuChFill, 'the same pink as the Menu row that marks this page hers');
   ok(h.transform !== 'none', 'it is tilted');
   ok(h.trailing, 'it trails the words, like the Menu row and her sign-off');
+  // ⚠️ HER CATCH: the WORDS must centre on their own, with the heart hanging off
+  // as an add-on. Measure the painted words against the container, never the
+  // title box (which includes the heart and so centres the pair, not the words).
+  ok(Math.abs(h.wordsOffCentre) <= 1.5, `the WORDS "My Story" are centred (off by ${h.wordsOffCentre}px)`);
+  ok(h.heartGap <= 7, `heart sits close to the words (${h.heartGap}px)`);
   ok(h.sameLine, 'it sits on the title line, not below it');
   ok(h.titleLines === 1, `"My Story" still holds one line (${h.titleLines})`);
   ok(h.insideCard, 'inside the card');
