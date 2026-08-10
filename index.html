@@ -733,7 +733,8 @@ html.wdr-black .ss.wardrobe-mirror{border-color:#E0B84C}
    only: _wlRodScroll translates it by -scrollY so it rides the page and the
    hanging heart stays on its rod (her call — they slide together). */
 #s-wishlist .wl-rod{position:fixed;top:32px;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
-#s-wishlist .wl-mast{position:absolute;top:20px;left:-8px;z-index:6;font:400 19px/1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;padding-bottom:7px;display:inline-block;cursor:pointer}
+/* Her nudge (2026-08-10): up 4px, left 3px. top 20 -> 16, left -8 -> -11. */
+#s-wishlist .wl-mast{position:absolute;top:16px;left:-11px;z-index:6;font:400 19px/1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.35px #1a1a1a;padding-bottom:7px;display:inline-block;cursor:pointer}
 #s-wishlist .wl-mast::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2px;background:#E0B84C}
 #s-wishlist .wl-mast::before{content:"";position:absolute;bottom:-1.5px;left:50%;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
 #s-wishlist .wl-head{text-align:center;margin:0 0 4px}
