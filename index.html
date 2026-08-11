@@ -415,6 +415,19 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 /* Explicit two-line break (Cath's call), so the max-width must be wide enough
    that neither line re-wraps on its own. */
 #s-wardrobe .wdr-shopend .wse-sub{font:500 14px/1.45 'Jost',sans-serif;color:#6f6a63;margin:0 auto 14px;max-width:300px}
+/* Her clean list: the starred pieces written out together under the lead, the
+   way a stylist copies the marked items off a worksheet onto one page (Cath's
+   pick "A", 2026-08-12). Left-aligned inside the centred block on purpose —
+   it reads as a written list, not a caption. */
+#s-wardrobe .wdr-mylist{border:1px solid #D6C9A8;background:#fff;margin:12px 0 14px;padding:13px 14px 11px;text-align:left}
+#s-wardrobe .wml-row{display:flex;align-items:baseline;gap:9px;padding:6.5px 0;border-bottom:1px solid #EFEAE0}
+#s-wardrobe .wml-row:last-child{border-bottom:none}
+#s-wardrobe .wml-row svg{flex:none;width:14px;height:14px;align-self:center}
+#s-wardrobe .wml-n{font:500 14.5px/1.3 'Jost',sans-serif;color:#26221c;flex:1}
+/* 10.5px #5f5647 = the worksheet's own SHOP/ADD label spec (the readability
+   floor found 2026-08-11); max-width lets a long category name wrap to two
+   right-aligned lines at narrow widths instead of crushing the item name. */
+#s-wardrobe .wml-c{font:600 10.5px/1.25 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#5f5647;flex:none;max-width:45%;text-align:right}
 #s-wardrobe .wdr-shopend .wdr-shopwrap{margin:0}
 /* The rows (not the card) carry the left inset, so the remove ✕ still has its
    gutter to hang in while anything centred in the card — the counts, the reset
@@ -6818,13 +6831,36 @@ function _wdrResetBlock(where){
 // The end-of-list payoff. Lives outside the list card (below the "add something"
 // row, above What's Trending) so it reads as the closing beat of her list.
 // Hidden entirely until she has hearted something, like the one up top.
+// Her starred pieces in the list's own category order, ready to write out as
+// one clean list. Custom additions ride at the end under "My Additions",
+// exactly where the worksheet itself puts them.
+function _wdrMyListRows(){
+  const hidden=wardrobeData.hidden||[];
+  const byName={};
+  wardrobeItems.forEach(function(c){byName[c.cat]=c});
+  const rows=[];
+  _wardrobeCatOrder().forEach(function(catName){
+    const cat=byName[catName];if(!cat)return;
+    cat.items.forEach(function(it){
+      if(hidden.indexOf(it.id)<0&&!_wardrobeExcluded(it)&&wardrobeData.items[it.id]==='want')rows.push({n:it.n,cat:catName});
+    });
+  });
+  wardrobeData.custom.forEach(function(c){if(c.state==='want')rows.push({n:c.n,cat:'My Additions'});});
+  return rows;
+}
 function _wdrRenderShopEnd(n){
   const el=document.getElementById('wdrShopEnd');
   if(!el)return;
+  const star='<svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1" stroke-linejoin="round" aria-hidden="true"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>';
   let html='';
   if(n){
+    // Custom names are her own typing, so every name goes through _esc.
+    const listHtml=_wdrMyListRows().map(function(r){
+      return '<div class="wml-row">'+star+'<span class="wml-n">'+_esc(r.n)+'</span><span class="wml-c">'+_esc(r.cat)+'</span></div>';
+    }).join('');
     html+='<div class="wdr-shopend">'
       +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your list</div>'
+      +'<div class="wdr-mylist">'+listHtml+'</div>'
       +'<div class="wse-sub">Shop them all together, in your style.</div>'
       +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
   }
