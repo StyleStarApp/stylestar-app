@@ -208,9 +208,20 @@ html.wl-velvet,html.wl-velvet body{background:#1a1a1a}
    clean solid turquoise frame surrounds the paper — no shadow or highlight
    lines (her catch: the dimension details read GRAY against pink). */
 html.story-velvet,html.story-velvet body{background:#F49AC1}
-/* Her picks 2026-08-10. The Edit bleeds the EXACT turquoise of its own
-   CURATED BY CATHERINE lettering, so page and backdrop speak one colour. */
-html.edit-velvet,html.edit-velvet body{background:#0FA6B6}
+/* Her pick "A" from a 4-way render, 2026-08-11 (scratchpad/editteal.js ->
+   editteal-{current,a,b,c}.png). It used to bleed the EXACT #0FA6B6 of its own
+   CURATED BY CATHERINE lettering, on the reasoning that page and backdrop
+   should speak one colour. ▶ HER CATCH, and the mechanism generalises: when the
+   BLEED and the ACCENT are the same colour at the same saturation, the accent
+   stops being an accent -- the turquoise lettering had nothing to stand out
+   from. A deeper bleed is still unmistakably the same colour speaking, and it
+   hands the lettering its job back. ⚠️ The lettering itself stays #0FA6B6.
+   Offered and not taken: a jewel teal #0A5D67 (heads back toward the velvet
+   look her wardrobe rethink retired -- a jewel box holds ONE precious thing,
+   not a list that scrolls) and a pale sea glass #A8D9DE (nearly the same VALUE
+   as the white page inside it, so the page edge dissolves -- the same
+   getting-lost failure she caught on the pale wishlist frame). */
+html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 /* ▶ HER RETHINK (2026-08-10), and the reasoning is the keeper. The Wardrobe List
    used to flip its whole colour scheme with the tab (gold bleed + black frame,
    then black bleed + gold frame). She called it "too much muchness" and asked to
@@ -245,7 +256,23 @@ html.edit-velvet,html.edit-velvet body{background:#0FA6B6}
    the rule is exactly as wide as the longest line of the heading. */
 #s-wardrobe .wdr-title::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#E0B84C}
 #s-wardrobe .wdr-title::before{content:"";position:absolute;left:63%;bottom:-3px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C)}
-#s-wardrobe .wdr-head{text-align:center;margin-bottom:6px}
+#s-wardrobe .wdr-head{text-align:center;margin-bottom:6px;position:relative}
+/* Her pick "A" + her placement call, 2026-08-11: a star on the header, but
+   MOVE NOTHING -- the title, Back and the MENU chip all stay exactly where they
+   are. ⚠️ SO IT MUST BE position:absolute AND COST ZERO LAYOUT. There is only
+   5.6px of true gap above the title (Back's row ends at y42, the title starts
+   at y47.6, identical on every width and in both title states), so an in-flow
+   star would have shoved the whole page down ~40px. Absolute + centred puts it
+   in the same vertical band as Back and the chip while sitting horizontally
+   clear of both: the chip ends at x97.4, the Back button starts past x300, and
+   the star spans roughly x178-212 at 390. pointer-events:none so it can never
+   eat a tap meant for the header.
+   ▶ WHY A STAR EARNS ITS PLACE HERE and this is the reusable part: the how-to
+   paragraph on this very page says "Tap the star on all the items you'd like to
+   add." The mark at the top is the SAME mark she is being taught to tap, so it
+   reads as a legend rather than decoration -- and gold star = wardrobe is
+   already her own mark system. */
+#s-wardrobe .wdr-star{position:absolute;left:50%;top:-30px;width:34px;height:34px;transform:translateX(-50%);pointer-events:none}
 #s-wardrobe .wdr-sub{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:10px}
 #s-wardrobe .wdr-sub b{color:#B08830;font-weight:600}
 #s-wardrobe .wdr-tabs{display:flex;gap:8px;margin:18px 0 0}
@@ -3211,6 +3238,9 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-wardrobe">
   <div class="top-back-wrap"><button class="top-back" onclick="closeWardrobe()">&larr; Back</button></div>
   <div class="wdr-head">
+    <!-- ⚠️ Unique gradient id (wdrHeadStar): a shared id would resolve to a def
+         inside a hidden screen, which Safari may refuse to paint. -->
+    <svg class="wdr-star" viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="wdrHeadStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#wdrHeadStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
     <div class="wdr-title" id="wdrTitle">style Star Wardrobe List</div>
   </div>
 

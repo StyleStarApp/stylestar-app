@@ -36,7 +36,16 @@ const skin = () => ({
 // so the gold constants it used are gone too. What remains is the bleed FAMILY:
 // the Edit's turquoise, My Story's pink, the Wishlist's black. Those are the
 // pages that are ABOUT Catherine; the wardrobe is a tool and now sits on linen.
-const BLACK = 'rgb(26, 26, 26)', TEAL = 'rgb(15, 166, 182)';
+// ⚠️ SECOND DELIBERATE REWRITE (her pick "A", 2026-08-11), and the assertion is
+// INVERTED on purpose, so it must never read as a silenced test. This file used
+// to prove the Edit's bleed was the EXACT colour of its Curated-by lettering.
+// She overturned that: when bleed and accent are the same colour at the same
+// saturation, the accent has nothing to stand out from. The bleed is deeper now
+// (#0E7F8C) while the LETTERING is untouched (#0FA6B6), so the claim under test
+// becomes "same hue family, and the bleed is darker than the ink".
+const BLACK = 'rgb(26, 26, 26)';
+const TEAL_BLEED = 'rgb(14, 127, 140)', TEAL_INK = 'rgb(15, 166, 182)';
+const lum = c => { const [r, g, b] = c.match(/\d+/g).map(Number); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
 const LINEN = 'rgb(245, 243, 239)', PLAIN = LINEN;
 
 for (const w of [390, 360]) {
@@ -53,8 +62,10 @@ for (const w of [390, 360]) {
   await page.waitForTimeout(500);
   const e = await page.evaluate(skin);
   const lettering = await page.evaluate(() => getComputedStyle(document.querySelector('.dc-tagline')).color);
-  ok(e.bleed === TEAL, `Edit bleeds the turquoise (${e.bleed})`);
-  ok(e.bleed === lettering, `it is the EXACT colour of the Curated-by lettering (${lettering})`);
+  ok(e.bleed === TEAL_BLEED, `Edit bleeds the DEEPER turquoise (${e.bleed})`);
+  ok(lettering === TEAL_INK, `the Curated-by lettering is untouched (${lettering})`);
+  ok(e.bleed !== lettering, 'bleed and accent are no longer the same colour (her 2026-08-11 call)');
+  ok(lum(e.bleed) < lum(lettering), `the bleed is darker than the ink, so the ink can read as an accent (${lum(e.bleed).toFixed(0)} vs ${lum(lettering).toFixed(0)})`);
 
   // 2. ▶ HER RETHINK (2026-08-10): the wardrobe's bleed AND frame are GONE, and
   //    so is the per-tab flip. This block used to assert the gold/black mirror;
