@@ -43,10 +43,13 @@ for (const w of [390, 375, 360, 320]) {
       const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
       return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
     const cr = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
-    const sub = document.querySelector('#s-wardrobe .wse-sub');
+    // 2026-08-12, her call: the "Shop them all together" sub was REPLACED by
+    // the Catherine line (.wml-cath) when the clean-list summary landed.
+    const sub = document.querySelector('#s-wardrobe .wml-cath');
     let subLines = null;
     if (sub) { const rg = document.createRange(); rg.selectNodeContents(sub);
       subLines = new Set([...rg.getClientRects()].map(x => Math.round(x.top))).size; }
+    const oldSubGone = !document.querySelector('#s-wardrobe .wse-sub');
     const starred = document.querySelector('#s-wardrobe .wdr-item.want');
     const names = [...document.querySelectorAll('#s-wardrobe .wdr-name')].map(e => {
       const rg = document.createRange(); rg.selectNodeContents(e);
@@ -63,7 +66,7 @@ for (const w of [390, 375, 360, 320]) {
       divider: getComputedStyle(row).borderBottomColor,
       wraps: names.filter(n => n > 1).length, rows: names.length,
       lblSize: parseFloat(lblCs.fontSize), lblContrast: +cr(lblCs.color, cs.backgroundColor).toFixed(2),
-      subLines, subHasBr: !!(sub && sub.querySelector('br')),
+      subLines, subHasBr: !!(sub && sub.querySelector('br')), oldSubGone,
       docW: document.documentElement.scrollWidth, vw: innerWidth, cats: document.querySelectorAll('#s-wardrobe .wdr-cathead').length
     };
   });
@@ -95,9 +98,11 @@ for (const w of [390, 375, 360, 320]) {
   // the two controls do, so they must stay readable. Don't re-quieten them.
   ok(m.lblSize >= 10, `the column labels are readable at ${m.lblSize}px (were 8.5)`);
   ok(m.lblContrast >= 4.5, `and clear AA on the real paper (${m.lblContrast}:1, was 3.79)`);
-  // her ask: the closing line reads as one sentence, not two
-  ok(m.subLines === 1, `"Shop them all together, in your style." holds one line (${m.subLines})`);
-  ok(!m.subHasBr, 'the hardcoded <br> is gone, so it can never re-split');
+  // her ask: the closing line reads as one sentence, not two. The line is the
+  // Catherine line now (her call, 2026-08-12) — same claim, new sentence.
+  ok(m.subLines === 1, `"Piece by piece, a well-rounded wardrobe" holds one line (${m.subLines})`);
+  ok(!m.subHasBr, 'no hardcoded <br>, so it can never re-split');
+  ok(m.oldSubGone, 'the old "Shop them all together" sub stays retired (replaced, not doubled)');
   ok(m.docW <= m.vw, `no sideways scroll (${m.docW} vs ${m.vw})`);
   ok(!errs.length, 'zero JS errors');
 

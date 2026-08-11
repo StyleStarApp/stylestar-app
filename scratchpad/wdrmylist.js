@@ -75,7 +75,9 @@ async function openPage(w, starred, custom) {
     };
   });
   ok(m.card, 'summary card renders inside the shopend block');
-  ok(m.kids.join(',').indexOf('wse-lead,wdr-mylist,wse-sub') === 0, `sits between lead and sub (${m.kids.join(' > ')})`);
+  // Her call 2026-08-12: the Catherine line REPLACED the "Shop them all
+  // together" sub — deliberate test change, not a silence.
+  ok(m.kids.join(',') === 'wse-lead,wdr-mylist,wml-cath,wdr-shopwrap', `lead > card > Catherine line > button, no sub (${m.kids.join(' > ')})`);
   ok(m.names.length === 7, `7 rows: 6 checklist + 1 starred custom (${m.names.length})`);
   ok(m.names[m.names.length - 1].indexOf('Silk scarf') >= 0, 'custom addition rides last');
   ok(m.cats[m.cats.length - 1] === 'My Additions', `custom row labelled My Additions (${m.cats[m.cats.length - 1]})`);
@@ -114,6 +116,16 @@ for (const w of [390, 360, 320]) {
     card.scrollIntoView({ block: 'center' });
     const cr = card.getBoundingClientRect();
     const star = card.querySelector('.wml-row svg').getBoundingClientRect();
+    const h = card.querySelector('.wml-h');
+    const hS = h ? getComputedStyle(h) : null;
+    const hr = h ? h.getBoundingClientRect() : null;
+    const cath = document.querySelector('#wdrShopEnd .wml-cath');
+    const cathS = cath ? getComputedStyle(cath) : null;
+    const heart = cath ? cath.querySelector('svg.pinkheart') : null;
+    const heartS = heart ? getComputedStyle(heart) : null;
+    let cathLines = null;
+    if (cath) { const rg = document.createRange(); rg.selectNodeContents(cath);
+      cathLines = new Set([...rg.getClientRects()].map(x => Math.round(x.top))).size; }
     let outside = 0, wraps = 0;
     card.querySelectorAll('.wml-row').forEach(r => {
       const rr = r.getBoundingClientRect();
@@ -130,9 +142,32 @@ for (const w of [390, 360, 320]) {
       outside, wraps, rows: card.querySelectorAll('.wml-row').length,
       over: document.documentElement.scrollWidth > window.innerWidth,
       nCol: nS.color, cCol: cS.color, cSize: parseFloat(cS.fontSize),
+      hText: h ? h.textContent : null,
+      hBar: hS ? hS.borderBottomWidth + ' ' + hS.borderBottomColor : null,
+      hHugs: h ? hr.width < cr.width * 0.8 : null,
+      subGone: !document.querySelector('#wdrShopEnd .wse-sub'),
+      cathText: cath ? cath.textContent : null,
+      cathItalic: cathS ? cathS.fontStyle : null,
+      cathCol: cathS ? cathS.color : null,
+      cathLines,
+      heartFill: heartS ? heartS.fill : null,
+      heartTilt: heartS ? heartS.transform : null,
+      heartW: heart ? heart.getBoundingClientRect().width : 0,
     };
   });
   ok(Math.abs(m.starW - 14) < 0.5 && Math.abs(m.starH - 14) < 0.5, `star is really 14px (${m.starW}x${m.starH}) — dimension asserted`);
+  ok(m.hText === 'Building my wardrobe', `card title present (${m.hText})`);
+  ok(/^2px rgb\(216, 165, 46\)/.test(m.hBar), `title wears the category-header gold bar (${m.hBar})`);
+  ok(m.hHugs, 'the bar hugs the words (inline-block), not the card width');
+  ok(m.subGone, 'the old "Shop them all together" sub is gone (her call, replaced)');
+  ok(/^Piece by piece, a well-rounded wardrobe/.test(m.cathText || ''), `Catherine line present (${m.cathText})`);
+  ok(m.cathItalic === 'italic', 'Catherine line is italic (her whisper voice)');
+  const heartFill = (m.heartFill.match(/\d+/g) || []).map(Number);
+  ok(heartFill.join() === '244,154,193', `heart is her signature pink (${m.heartFill})`);
+  ok(m.heartTilt !== 'none', `heart is tilted (${m.heartTilt})`);
+  ok(Math.abs(m.heartW - 12) < 3, `heart is really painted at ~12px (${m.heartW.toFixed(1)}) — dimension asserted`);
+  console.log(`  info: Catherine line holds ${m.cathLines} line(s)`);
+  ok(ratio((m.cathCol.match(/\d+/g)).map(Number), [251, 250, 247]) >= 4.5, `Catherine line AA on the paper (${ratio((m.cathCol.match(/\d+/g)).map(Number), [251, 250, 247]).toFixed(2)}:1)`);
   ok(m.outside === 0, 'no row escapes the card');
   ok(!m.over, 'no sideways page scroll');
   console.log(`  info: ${m.rows} rows, ${m.wraps} wrapped name(s)`);

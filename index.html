@@ -412,14 +412,22 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    she built before offering the same action, rather than repeating the button. */
 #s-wardrobe .wdr-shopend{margin:10px 0 4px;text-align:center}
 #s-wardrobe .wdr-shopend .wse-lead{font:400 21px/1.25 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:5px}
-/* Explicit two-line break (Cath's call), so the max-width must be wide enough
-   that neither line re-wraps on its own. */
-#s-wardrobe .wdr-shopend .wse-sub{font:500 14px/1.45 'Jost',sans-serif;color:#6f6a63;margin:0 auto 14px;max-width:300px}
+/* The "Shop them all together" sub is GONE (her call, 2026-08-12) — the
+   Catherine line below the clean list replaced it, so the zone between the
+   card and the marquee button carries exactly one line. Don't re-add a sub. */
 /* Her clean list: the starred pieces written out together under the lead, the
    way a stylist copies the marked items off a worksheet onto one page (Cath's
    pick "A", 2026-08-12). Left-aligned inside the centred block on purpose —
    it reads as a written list, not a caption. */
 #s-wardrobe .wdr-mylist{border:1px solid #D6C9A8;background:#fff;margin:12px 0 14px;padding:13px 14px 11px;text-align:left}
+/* The card's title finishes her worksheet metaphor: the same gold underline
+   bar the category headers (and the Menu's group labels) wear, so the clean
+   list reads as the worksheet's own closing section. */
+#s-wardrobe .wml-h{font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#26221c;display:inline-block;padding-bottom:4px;border-bottom:2px solid #D8A52E;margin:1px 0 5px}
+/* Catherine's line, replacing the old sub — pink tilted heart = her speaking,
+   per the mark system. One line between the card and the button. */
+#s-wardrobe .wml-cath{font:italic 500 13.5px/1.5 'Jost',sans-serif;color:#6b655a;margin:-2px auto 14px;max-width:300px;text-align:center}
+#s-wardrobe .wml-cath .pinkheart{width:12px;height:12px;margin-left:3px;vertical-align:-1.5px}
 #s-wardrobe .wml-row{display:flex;align-items:baseline;gap:9px;padding:6.5px 0;border-bottom:1px solid #EFEAE0}
 #s-wardrobe .wml-row:last-child{border-bottom:none}
 #s-wardrobe .wml-row svg{flex:none;width:14px;height:14px;align-self:center}
@@ -6860,8 +6868,8 @@ function _wdrRenderShopEnd(n){
     }).join('');
     html+='<div class="wdr-shopend">'
       +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your list</div>'
-      +'<div class="wdr-mylist">'+listHtml+'</div>'
-      +'<div class="wse-sub">Shop them all together, in your style.</div>'
+      +'<div class="wdr-mylist"><div class="wml-h">Building my wardrobe</div>'+listHtml+'</div>'
+      +'<div class="wml-cath">Piece by piece, a well-rounded wardrobe<svg class="pinkheart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>'
       +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
   }
   // Reset sits below the shop CTA, so the list card can end cleanly on the
