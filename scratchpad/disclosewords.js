@@ -17,10 +17,12 @@ const base = 'http://127.0.0.1:' + server.address().port;
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 
 const CANDS = [
-  'Some links may earn us a commission.',
-  'Some links may earn me a commission.',
-  'Some links may earn Style Star a commission.',
-  'I may earn a commission from some links.',
+  'Some links may earn us a commission.',              // current
+  'Some links may earn a commission.',                 // A: no pronoun at all
+  'Some links are affiliate links.',                   // B: names the mechanism
+  'Some links may earn a commission, which keeps Style Star free.',  // C: + her value framing
+  'Some links may earn a commission and help keep Style Star free.', // C2
+  'Affiliate links help keep Style Star free.',        // D: warmest, weakest
 ];
 
 for (const w of [390, 360, 320]) {
