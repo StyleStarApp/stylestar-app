@@ -27,6 +27,15 @@ const RETIRED = ['Hand-picked pieces you', 'Browse curated stores', 'Your person
 
 // ---- static: the words exist everywhere and the old ones are gone ----
 const src = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+// 🚨 CSS COMMENT BALANCE. Twice in one day a comment was extended by pasting
+// prose in front of an existing rule, leaving a STRAY `*/` that closed the
+// comment early -- the following paragraph then parsed as CSS and swallowed the
+// rule after it. Both times the symptom was a rule silently not applying (the
+// heart rendered black at the wrong size). A one-line count catches it instantly.
+const css = src.slice(src.indexOf('<style'), src.lastIndexOf('</style>'));
+console.log('\n--- CSS integrity ---');
+ok((css.match(/\/\*/g) || []).length === (css.match(/\*\//g) || []).length,
+  `every CSS comment is balanced (${(css.match(/\/\*/g) || []).length} opens, ${(css.match(/\*\//g) || []).length} closes)`);
 console.log('\n--- the words, across every hub surface ---');
 ok(src.split('Pieces I wear myself and recommend').length - 1 === 4, 'the Edit sub is in all 4 places');
 ok(src.split("Stores I've chosen for you").length - 1 === 3, 'the Mall sub is in all 3 places');

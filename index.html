@@ -1049,8 +1049,15 @@ body.menu-open .menu-panel{display:block}
    sub-lines now say "I" in words, and a mark earns its place most where the
    WORDS don't already carry it. The words do the work; the mark stays rare.
    ⚠️ Same restraint as the Menu (3 of 18 rows there, 2 of 10 here) -- a maker's
-   mark, not a sticker. Don't spread it. */
-.hub-ch{width:11px;height:11px;margin-left:5px;vertical-align:-1px;transform:rotate(11deg);fill:#F49AC1;flex:none}
+   mark, not a sticker. Don't spread it.
+   ⚠️ margin-left is 0, NOT the Menu's 5px, and that is what makes the two MATCH
+   rather than differ. .menu-ch sits in a plain block row, so its 5px margin is
+   the whole gap. These titles are FLEX rows that already carry their own 6-7px
+   gap for the arrow, so a 5px margin stacked on top of it and the mark sat
+   ~11px out -- her catch from the render. Zeroing the margin leaves the flex gap
+   alone at 5-6px, which is the Menu's spacing. ▶ If this ever looks wrong again,
+   measure the PARENT'S gap first; the margin is not the only thing spacing it. */
+.hub-ch{width:11px;height:11px;margin-left:0;vertical-align:-1px;transform:rotate(11deg);fill:#F49AC1;flex:none}
 /* "Start here" signpost on Style Quiz, new visitors only (same gold as the New pills) */
 .menu-start{display:none;align-items:center;margin-left:9px;padding:2.5px 6px;border-radius:8px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;vertical-align:2px}
 .menu-start.on{display:inline-flex}
