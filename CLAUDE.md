@@ -7,7 +7,91 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-11 — HER SCREENSHOT DAY: the hubs get a face, the Wardrobe List becomes a worksheet)
+## ▶ NEXT SESSION — START HERE (2026-08-11, EVENING SESSION — the clean list ships, and HER SEARCH VERDICT is the one blocker)
+⚠️ Date note: this was a second session on 08-11; a few in-code comments from it are stamped 2026-08-12. Same session, no missing day.
+
+### 🚨 THE HEADLINE, HER WORDS, AND IT IS THE WHOLE SHARING QUESTION: THE SEARCHES ARE THE ONLY BLOCKER
+She has done MORE testing on her own (screenshots NOT yet sent — ask for them, again): **"I am not happy with
+the way the searches are turning up. None of them are 'just right'... That is the only thing"** holding her
+back from sharing with friends. **Everything else she is proud of:** *"I am very proud of how it looks and how
+the buttons are all functioning and I don't see anything else like it out in the world and I have searched!
+All the other style apps are so annoying I can't even explain."* She knows affiliate approval → feeds should
+change it and wants to see how that lands first.
+- ▶ **HER OPEN QUESTION, bring the honest answer next session: "do we need to add some ChatGPT capability
+  mixed in to what our search is able to do now?"** The 0c answer still holds and should be RE-GIVEN plainly:
+  ChatGPT's edge is OpenAI's PRIVATE merchant catalog (retailers upload feeds directly; no door for outside
+  apps) — not a smarter model, better eyes. **The same retailers hand the same feeds to the affiliate
+  networks, so approval = the catalog too** (`docs/product-feeds-plan.md` is shovel-ready). Our chat already
+  has the middle rung (web search over her 101 stores). Possible middle steps to DISCUSS, not build unasked:
+  extending search-verification to the card surfaces (measure cost/latency honestly first — a searching call
+  is 5-10¢ and 10-20s, times 6 cards), or her Cowork "Option 3 curated catalog" spec (parked, needs its
+  companion spreadsheet). ⚠️ Do not oversell any of these; feeds are the cure and she knows the sequencing.
+- ▶ **The step-back conversation happened and she AGREED ON ALL POINTS:** testers are the highest-value next
+  thing (gated on the searches, above) · her photo for the bottom of My Story stays the favourite parked item ·
+  the install-without-email-save conversation is parked · **no more visual polish until testers surface
+  something** (her agreement — protect the restraint budget).
+
+### ▶ HER DESK DAY IS THE DAY AFTER THIS SESSION — three things she named
+1. **The Almira follow-up email** — her words: "Seems like I should have heard back from her by now."
+   (The 08-05 two-ask reply — Bailey name fix + operating-agreement blanks — got only an acknowledgment on
+   08-07, nothing substantive since.) Offer to draft it; the TM signature email and EIN sit behind her reply.
+2. **The Cowork spreadsheet she has NOT started** — her words: "cowork told me I need to create a
+   spreadsheet." ⚠️ ASK WHICH ONE: most likely the retailer-intelligence business fields (affiliate status /
+   commission / AI priority — the 2026-07-27 decision that those live in HER spreadsheet, never in the app),
+   or the Option 3 curated-catalog companion sheet. Don't guess; the two have different jobs.
+3. General desk work (MailerLite items remain: "Email me my wishlist" · photo-tips email + wardrobe capture).
+
+### ⭐⭐ THE CLEAN LIST IS LIVE (#828, grep-verified on main) — her design, her clipboard metaphor
+Her brainstorm, verbatim-ish: a clean list of what she starred so the 100-item page ends "more do-able, more
+actually shoppable" — *"That is most like how I would actually do this if I was working with paper and a
+clipboard... I would worksheet it first, then make one clean list at the end. Then get to work looking at
+links."* **Her picks, built in one day: A + B + C.**
+- **A — the end-of-list payoff names her pieces:** the block that said "That's N pieces on your list" now
+  writes them out — gold star · item name · category label per row, in the worksheet's own category order,
+  custom additions LAST under MY ADDITIONS. Live-updating on star taps (the whole block re-renders); names
+  go through `_esc` (custom names are her typing). `_wdrMyListRows()` + `.wdr-mylist` in `_wdrRenderShopEnd`.
+- **B — the card is titled BUILDING MY WARDROBE** (`.wml-h`), wearing the category headers' exact 2px
+  `#D8A52E` gold underline bar, so the clean list reads as the worksheet's own closing page.
+- **C — Catherine's line replaced the sub, HER CALL:** "Shop them all together, in your style." is DELETED
+  (survives only as a CSS comment) and **"Building your well-rounded wardrobe with intention" + her tilted
+  pink `.pinkheart`** sits in its place. ▶ Her wording quietly echoes her own founder line ("created with
+  love & intention ♥") — one voice, two ends of the app. **UPRIGHT 14px, her call** (the whisper readability
+  lesson, re-applied by her own ear). ⚠️ **Measured: 313px in a 300px box → two BALANCED lines at every
+  width, by design** (`text-wrap:balance`); the font was deliberately not shrunk to force one line. The
+  wdrworksheet closing-line assertion now expects exactly 2.
+- ▶ **WHY THIS ANSWERS THE 08-11 TWO-LISTS CONFUSION better than any label tweak:** the star finally has a
+  VISIBLE destination — "ADD" has an answer to "add to what?". She agreed the ADD-label question feels
+  settled ("I agree with you on all points"), but ⚠️ confirm on her phone. **And she affirmed the bridge:**
+  "I do like that items from the wardrobe build list end up on the wishlist when she clicks the heart on the
+  find" — the two-lists architecture stays.
+- ▶ **Her call on the "100 items" question, HER OWN instinct: do NOT state the count at the top.** "It is a
+  talking point but probably don't need to advertise that" — the possibility-map rule, applied by her. The
+  only count on the page is "That's N pieces on YOUR list." Nothing was changed; nothing should be.
+- ⚠️ **Flagged to her, unanswered — watch her phone reaction:** "Building" now appears twice within inches
+  (the card title + her line). Offered alternate if it ever bothers her: "A well-rounded wardrobe, chosen
+  with intention" (title untouched). Also for her eye: the two-line break ("Building your well-rounded /
+  wardrobe with intention ♥") on real Safari.
+- **Bonus, measured: ZERO item names wrap in the summary at 390/360/320** — without the star column and
+  Ideas chip the names get the full card width. The tidiest text on the page.
+- **Offered and NOT taken (renders exist, `mylist-{a,b,c}.png` · `mylist2-{a,b,c}.png`):** B-the-filter (a
+  "My list · 6" toggle collapsing the worksheet — strongest "My List is a real place" version, parked; the
+  naming tension with the MY LIST tab is the wrinkle if ever revisited) · C-up-top (summary card above the
+  worksheet — grows too tall as her list grows) · "on your wardrobe list" in the lead (option 2A).
+- **Verified: new `scratchpad/wdrmylist.js` 65 checks** (order, live update via real handlers, removed-item
+  exclusion, XSS inert, star + heart DIMENSIONS asserted, AA contrast, no overflow, empty state) ·
+  **wdrworksheet 69 → 73** (⚠️ two deliberate updates, not silences: the old sub is asserted GONE so it can't
+  come back doubled, and the closing-line check measures the Catherine line at 2 balanced lines) ·
+  wdrstarplace 144 · catmark 135 · wdrcalmcheck 27 all green. **Netlify: only ONE build this session.**
+
+### 🚨 THE MEASUREMENT LESSON OF THE EVENING — A ROTATED SVG'S RECT INVENTS A PHANTOM LINE
+`Range.getClientRects()` returns a rect per ELEMENT as well as per text box (the 08-10 lesson), **and the
+tilted heart's rect top sits ~2px off the text line's top, so exact top-matching counted it as a second
+line** — wdrworksheet failed 72/73 on a line that provably fit (258px in a 300px box). ▶ **Fix, now in both
+suites: cluster rect tops within 6px — a real wrap moves ~20px (one line-height), an inline mark's skew
+moves ~2px.** Also from the same evening: ⚠️ **piping a suite through `tail`/`grep` eats its exit code AND
+its early output** — the "1 failed" was invisible until re-run unpiped. One file per run, no pipes on suites.
+
+## ▶ PREVIOUS — earlier the same day (2026-08-11 morning — HER SCREENSHOT DAY: the hubs get a face, the Wardrobe List becomes a worksheet)
 
 ### 🚨 PICK UP HERE FIRST — THE TWO LISTS CONFUSED *HER*, WHICH IS THE LOUDEST SIGNAL YET (2026-08-11, her last message)
 Her words at the very end of the session: *"items that I hit star on Wardrobe list page are not showing up
