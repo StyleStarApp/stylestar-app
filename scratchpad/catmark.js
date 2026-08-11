@@ -46,7 +46,15 @@ for (const w of [390, 360, 320]) {
   ok(d !== null, 'disclosure renders on Shop your style');
   ok(d.align === 'center', `text-align is centre (${d.align})`);
   ok(Math.abs(d.textOffCentre) <= 1.5, `the TEXT itself is centred (off by ${d.textOffCentre}px)`);
-  ok(d.text === 'Some links may earn us a commission.', 'wording unchanged');
+  // ⚠️ DELIBERATE WORDING UPDATE (her call 2026-08-11), not a silenced test. The
+  // line lost its pronoun: "Some links may earn us a commission." -> "Some links
+  // may earn a commission." ▶ She rejected both "us" and "me" -- the problem was
+  // never the PRONOUN, it was that the sentence foregrounded her earning money,
+  // and naming her sharpened it. Making the links the subject removes her from
+  // the sentence while the legal fact survives. The claim under test (one exact
+  // shared wording, byte-identical everywhere) is unchanged.
+  ok(d.text === 'Some links may earn a commission.', 'wording is the pronoun-free line');
+  ok(!/\b(us|me|we|I)\b/.test(d.text), 'nobody is named in it');
 
   // ---- wardrobe category underlines ----
   console.log(`\n--- wardrobe category underlines @ ${w} ---`);
