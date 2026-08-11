@@ -271,8 +271,25 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    paragraph on this very page says "Tap the star on all the items you'd like to
    add." The mark at the top is the SAME mark she is being taught to tap, so it
    reads as a legend rather than decoration -- and gold star = wardrobe is
-   already her own mark system. */
-#s-wardrobe .wdr-star{position:absolute;left:50%;top:-30px;width:34px;height:34px;transform:translateX(-50%);pointer-events:none}
+   already her own mark system.
+   🚨 THE CLASS NAME IS `wdr-headstar`, NOT `wdr-star`, AND THAT IS LOAD-BEARING.
+   `.wdr-star` was ALREADY TAKEN by the per-item star button on every wardrobe
+   row (see _wdrStar()), whose rule sits LATER in this file and therefore won
+   the cascade: the header star silently rendered at the row star's 30px instead
+   of the size set here, and every clearance test still passed because they
+   measured position, not size. Never reuse a class name across two different
+   controls on the same screen.
+   ⚠️ 48px IS THE CEILING, and the limit is THE TOP OF THE SCREEN, not the chip
+   or Back (at 48px the star spans x171-219 while the chip ends at x97.4 and
+   Back starts past x300). It has to grow UPWARD -- growing downward lands it on
+   the title's words -- so it runs out of room overhead first: 42px leaves
+   9.6px of headroom, 48px leaves 4.6px, and 56px effectively touches the top
+   edge and fails. Her pick was 48 (scratchpad/wdrstarbig.js reruns the sweep).
+   ▶ WATCH FOR HER REPORT: 4.6px is a thin margin at the screen edge, and thin
+   edge margins are exactly where this sandbox and her real phone have disagreed
+   before (the wishlist Back button, the cream stitch, the corner hearts). If it
+   sits wrong on her device, 42px is the one-number fallback. */
+#s-wardrobe .wdr-headstar{position:absolute;left:50%;top:-43px;width:48px;height:48px;transform:translateX(-50%);pointer-events:none}
 #s-wardrobe .wdr-sub{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:10px}
 #s-wardrobe .wdr-sub b{color:#B08830;font-weight:600}
 #s-wardrobe .wdr-tabs{display:flex;gap:8px;margin:18px 0 0}
@@ -3240,7 +3257,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="wdr-head">
     <!-- ⚠️ Unique gradient id (wdrHeadStar): a shared id would resolve to a def
          inside a hidden screen, which Safari may refuse to paint. -->
-    <svg class="wdr-star" viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="wdrHeadStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#wdrHeadStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
+    <svg class="wdr-headstar" viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="wdrHeadStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#wdrHeadStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
     <div class="wdr-title" id="wdrTitle">style Star Wardrobe List</div>
   </div>
 

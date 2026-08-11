@@ -16,10 +16,10 @@ const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromi
 
 // the measured pre-star baseline (scratchpad/wdrstarfit.js), identical on every width
 const BASE = { backB: 42, titleT: 47.6, chipB: 42 };
+// her final pick: 48px at top:-43px
+const BUILT = { size: 48, top: -43 };
 const TOPS = [
-  { id: 'high', top: -36, label: 'star clear above the words  top:-36px' },
-  { id: 'built', top: -30, label: 'AS BUILT  resting on the header  top:-30px' },
-  { id: 'low', top: -24, label: 'star tucked closer to the words  top:-24px' },
+  { id: 'built', top: BUILT.top, label: 'AS BUILT  48px on the header line' },
 ];
 
 let pass = 0, fail = 0;
@@ -36,14 +36,16 @@ for (const o of TOPS) {
       await page.waitForTimeout(2600);
       const m = await page.evaluate(o => {
         openWardrobe('list');
-        if (o.top !== -30) { const s = document.createElement('style'); s.textContent = `#s-wardrobe .wdr-star{top:${o.top}px}`; document.head.appendChild(s); }
-        const R = s => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return { t: +r.top.toFixed(1), l: +r.left.toFixed(1), r: +r.right.toFixed(1), b: +r.bottom.toFixed(1), w: +r.width.toFixed(1) }; };
+        const R = s => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return { t: +r.top.toFixed(1), l: +r.left.toFixed(1), r: +r.right.toFixed(1), b: +r.bottom.toFixed(1), w: +r.width.toFixed(1), h: +r.height.toFixed(1) }; };
         const chip = (document.querySelector('#menuChip') || document.querySelector('.menu-chip')).getBoundingClientRect();
-        const star = R('#s-wardrobe .wdr-star'), title = R('#s-wardrobe .wdr-title'), backBtn = R('#s-wardrobe .top-back');
-        const cs = getComputedStyle(document.querySelector('#s-wardrobe .wdr-star'));
+        const star = R('#s-wardrobe .wdr-headstar'), title = R('#s-wardrobe .wdr-title'), backBtn = R('#s-wardrobe .top-back');
+        const cs = getComputedStyle(document.querySelector('#s-wardrobe .wdr-headstar'));
         const hit = r => !(r.l > chip.right || r.r < chip.left || r.t > chip.bottom || r.b < chip.top);
         const hitB = r => backBtn && !(r.l > backBtn.r || r.r < backBtn.l || r.t > backBtn.b || r.b < backBtn.t);
-        return { star, title, backBtn, tabs: R('#s-wardrobe .wdr-tabs'), pos: cs.position, pe: cs.pointerEvents,
+        // the row star control -- a DIFFERENT class, and it must stay its own size
+        const rowStar = R('#s-wardrobe .wdr-star');
+        return { star, title, backBtn, rowStar, headIsRowClass: !!document.querySelector('#s-wardrobe .wdr-headstar.wdr-star'),
+          tabs: R('#s-wardrobe .wdr-tabs'), pos: cs.position, pe: cs.pointerEvents,
           chipHit: hit(star), backHit: hitB(star), ruleW: getComputedStyle(document.querySelector('#s-wardrobe .wdr-title'), '::after').width,
           docW: document.documentElement.scrollWidth, vw: innerWidth, centreOff: +((star.l + star.r) / 2 - o.w / 2).toFixed(2) };
       }, { ...o, w });
@@ -52,12 +54,21 @@ for (const o of TOPS) {
         console.log(`\n--- ${tag} ---`);
         ok(m.pos === 'absolute', 'star is absolutely positioned (zero layout cost)');
         ok(m.pe === 'none', 'star cannot eat a tap (pointer-events:none)');
+        // 🚨 THE ASSERTION THAT WAS MISSING, and its absence hid a real bug. The
+        // header star was first written as `.wdr-star`, which is ALREADY the
+        // per-item row star button; that rule sits later in the file and won the
+        // cascade, so the header star silently rendered at the row star's 30px.
+        // Every clearance check still passed because they measured POSITION.
+        // Assert the SIZE, and assert the two controls never share a class.
+        ok(m.star.w === BUILT.size && m.star.h === BUILT.size, `star really renders at ${BUILT.size}px (${m.star.w}x${m.star.h})`);
+        ok(!m.headIsRowClass, 'header star does NOT carry the row star class .wdr-star');
+        ok(m.rowStar && m.rowStar.w === 30, `the row star control is untouched at 30px (${m.rowStar && m.rowStar.w})`);
         ok(Math.abs(m.title.t - BASE.titleT) < 0.5, `title did NOT move (${m.title.t} vs baseline ${BASE.titleT})`);
         ok(Math.abs(m.backBtn.b - BASE.backB) < 0.5, `Back did NOT move (${m.backBtn.b} vs baseline ${BASE.backB})`);
         ok(!m.chipHit, `star clear of the MENU chip (star ${m.star.l}-${m.star.r}, chip ends 97.4)`);
         ok(!m.backHit, `star clear of the Back button (Back starts ${m.backBtn.l})`);
         ok(Math.abs(m.centreOff) < 0.6, `star centred on the screen (off by ${m.centreOff}px)`);
-        ok(m.star.t > 0, `star fully on screen (top ${m.star.t})`);
+        ok(m.star.t >= 4, `star clears the top of the screen (top ${m.star.t}, want >= 4)`);
         ok(Math.abs(parseFloat(m.ruleW) - m.title.w) < 1, `gold rule still equals the words (${m.ruleW} vs ${m.title.w})`);
         ok(m.docW <= m.vw, 'no sideways page scroll');
         ok(!errs.length, 'zero JS errors');

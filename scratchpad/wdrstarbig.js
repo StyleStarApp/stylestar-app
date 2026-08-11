@@ -45,11 +45,11 @@ for (const o of OPTS) {
     const m = await page.evaluate(o => {
       openWardrobe('list');
       const s = document.createElement('style');
-      s.textContent = `#s-wardrobe .wdr-star{width:${o.size}px;height:${o.size}px;top:${o.top}px}`;
+      s.textContent = `#s-wardrobe .wdr-headstar{width:${o.size}px;height:${o.size}px;top:${o.top}px}`;
       document.head.appendChild(s);
       const R = q => { const e = document.querySelector(q); const r = e.getBoundingClientRect(); return { t: +r.top.toFixed(1), l: +r.left.toFixed(1), r: +r.right.toFixed(1), b: +r.bottom.toFixed(1) }; };
       const chip = (document.querySelector('#menuChip') || document.querySelector('.menu-chip')).getBoundingClientRect();
-      const star = R('#s-wardrobe .wdr-star'), title = R('#s-wardrobe .wdr-title'), back = R('#s-wardrobe .top-back');
+      const star = R('#s-wardrobe .wdr-headstar'), title = R('#s-wardrobe .wdr-title'), back = R('#s-wardrobe .top-back');
       return { star, title, back, chipR: +chip.right.toFixed(1), chipT: +chip.top.toFixed(1),
         chipHit: !(star.l > chip.right || star.r < chip.left || star.t > chip.bottom || star.b < chip.top),
         backHit: !(star.l > back.r || star.r < back.l || star.t > back.b || star.b < back.t),
