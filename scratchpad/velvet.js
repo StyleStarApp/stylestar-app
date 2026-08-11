@@ -107,7 +107,20 @@ for (const w of [390, 360]) {
   // and the other velvets still work
   await page.evaluate(() => showStory());
   await page.waitForTimeout(400);
-  ok((await page.evaluate(skin)).bleed === 'rgb(244, 154, 193)', 'My Story pink is untouched');
+  // ⚠️ DELIBERATE UPDATE (her pick "B", 2026-08-11), the same move as the Edit's
+  // teal earlier the same day: the BLEED goes deeper so her signature pink can
+  // read as an accent against it instead of dissolving into it. The pink HEARTS
+  // are untouched at #F49AC1 -- asserted below, because that is the half of the
+  // claim that must NOT change.
+  const storyBleed = (await page.evaluate(skin)).bleed;
+  ok(storyBleed === 'rgb(206, 92, 134)', `My Story bleeds the deeper rose #CE5C86 (${storyBleed})`);
+  ok(storyBleed !== 'rgb(244, 154, 193)', 'the bleed is no longer her signature heart pink');
+  const heartPink = await page.evaluate(() => {
+    const h = document.querySelector('#s-story .pinkheart');
+    return h ? getComputedStyle(h).fill : null;
+  });
+  ok(heartPink === null || heartPink === 'rgb(244, 154, 193)', `the story heart keeps signature #F49AC1 (${heartPink})`);
+  ok(lum(storyBleed) < lum('rgb(244, 154, 193)'), `the bleed is darker than the hearts (${lum(storyBleed).toFixed(0)} vs ${lum('rgb(244, 154, 193)').toFixed(0)})`);
   await page.evaluate(() => openWishlist());
   await page.waitForTimeout(400);
   ok((await page.evaluate(skin)).bleed === BLACK, 'the Wishlist black velvet is untouched');

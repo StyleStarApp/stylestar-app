@@ -207,7 +207,17 @@ html.wl-velvet,html.wl-velvet body{background:#1a1a1a}
    look more special"): her signature pink bleeds to every screen edge and a
    clean solid turquoise frame surrounds the paper — no shadow or highlight
    lines (her catch: the dimension details read GRAY against pink). */
-html.story-velvet,html.story-velvet body{background:#F49AC1}
+/* Her pick "B" from a 4-way render, 2026-08-11 (scratchpad/storypink.js ->
+   storypink-{current,a,b,c}.png). It used to bleed her signature #F49AC1, the
+   exact pink of the hearts. ▶ SAME MOVE AS THE EDIT'S TEAL THE SAME DAY, and
+   the rule is now proven twice: when the BLEED and the ACCENT are the same
+   colour at the same saturation, the accent stops being an accent. Her words:
+   "a pink tone in the same family as our pink hearts but done in a darker way."
+   ⚠️ #CE5C86 sits on the same hue line, and the HEARTS and the turquoise frame
+   are untouched -- only the backdrop moved. Offered and not taken: #E2779F (too
+   small a step to read as a change on a phone) and #B04569 (drifts toward
+   burgundy and away from the heart family). */
+html.story-velvet,html.story-velvet body{background:#CE5C86}
 /* Her pick "A" from a 4-way render, 2026-08-11 (scratchpad/editteal.js ->
    editteal-{current,a,b,c}.png). It used to bleed the EXACT #0FA6B6 of its own
    CURATED BY CATHERINE lettering, on the reasoning that page and backdrop
@@ -266,7 +276,23 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    the rule is exactly as wide as the longest line of the heading. */
 #s-wardrobe .wdr-title::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#E0B84C}
 #s-wardrobe .wdr-title::before{content:"";position:absolute;left:63%;bottom:-3px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C)}
-#s-wardrobe .wdr-head{text-align:center;margin-bottom:6px;position:relative}
+/* ⚠️ THE 8px TOP MARGIN IS THE STAR'S HEADROOM, her pick "B" 2026-08-11, and it
+   is the one thing on this header that is allowed to move. Measured by
+   RASTERISING the title's painted ink directly under the star: the letters
+   begin at y=52.5, and the viewport top is the other wall, so the whole band is
+   52.5px. A 48px star cannot have margin at BOTH ends inside that -- it left
+   2.5px. This 8px pushes the band down so the star gets 8px above and stays
+   clear of the letters below. Her alternative, offered and not taken, was 44px
+   with nothing moving at all (6.5px headroom). If the star is ever resized,
+   re-run scratchpad/wdrstarband.js -- the ink measurement, not the line box, is
+   what bounds it.
+   ⚠️ IT IS padding-top, NOT margin-top, AND THAT IS TWO SEPARATE REASONS.
+   (1) A margin-top here COLLAPSES with the Back row's 0.35rem bottom margin, so
+   an 8px margin moved the title only 2.4px -- the test caught it. (2) Absolute
+   children are positioned against the PADDING BOX, whose top edge padding does
+   not move, so padding lets the title drop while the star's `top` stays an
+   independent number. Change one without disturbing the other. */
+#s-wardrobe .wdr-head{text-align:center;margin-bottom:6px;padding-top:10px;position:relative}
 /* Her pick "A" + her placement call, 2026-08-11: a star on the header, but
    MOVE NOTHING -- the title, Back and the MENU chip all stay exactly where they
    are. ⚠️ SO IT MUST BE position:absolute AND COST ZERO LAYOUT. There is only
@@ -299,7 +325,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    edge margins are exactly where this sandbox and her real phone have disagreed
    before (the wishlist Back button, the cream stitch, the corner hearts). If it
    sits wrong on her device, 42px is the one-number fallback. */
-#s-wardrobe .wdr-headstar{position:absolute;left:50%;top:-43px;width:48px;height:48px;transform:translateX(-50%);pointer-events:none}
+#s-wardrobe .wdr-headstar{position:absolute;left:50%;top:-39px;width:48px;height:48px;transform:translateX(-50%);pointer-events:none}
 #s-wardrobe .wdr-sub{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:10px}
 #s-wardrobe .wdr-sub b{color:#B08830;font-weight:600}
 #s-wardrobe .wdr-tabs{display:flex;gap:8px;margin:18px 0 0}
