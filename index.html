@@ -208,9 +208,20 @@ html.wl-velvet,html.wl-velvet body{background:#1a1a1a}
    clean solid turquoise frame surrounds the paper — no shadow or highlight
    lines (her catch: the dimension details read GRAY against pink). */
 html.story-velvet,html.story-velvet body{background:#F49AC1}
-/* Her picks 2026-08-10. The Edit bleeds the EXACT turquoise of its own
-   CURATED BY CATHERINE lettering, so page and backdrop speak one colour. */
-html.edit-velvet,html.edit-velvet body{background:#0FA6B6}
+/* Her pick "A" from a 4-way render, 2026-08-11 (scratchpad/editteal.js ->
+   editteal-{current,a,b,c}.png). It used to bleed the EXACT #0FA6B6 of its own
+   CURATED BY CATHERINE lettering, on the reasoning that page and backdrop
+   should speak one colour. ▶ HER CATCH, and the mechanism generalises: when the
+   BLEED and the ACCENT are the same colour at the same saturation, the accent
+   stops being an accent -- the turquoise lettering had nothing to stand out
+   from. A deeper bleed is still unmistakably the same colour speaking, and it
+   hands the lettering its job back. ⚠️ The lettering itself stays #0FA6B6.
+   Offered and not taken: a jewel teal #0A5D67 (heads back toward the velvet
+   look her wardrobe rethink retired -- a jewel box holds ONE precious thing,
+   not a list that scrolls) and a pale sea glass #A8D9DE (nearly the same VALUE
+   as the white page inside it, so the page edge dissolves -- the same
+   getting-lost failure she caught on the pale wishlist frame). */
+html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 /* ▶ HER RETHINK (2026-08-10), and the reasoning is the keeper. The Wardrobe List
    used to flip its whole colour scheme with the tab (gold bleed + black frame,
    then black bleed + gold frame). She called it "too much muchness" and asked to
@@ -245,7 +256,40 @@ html.edit-velvet,html.edit-velvet body{background:#0FA6B6}
    the rule is exactly as wide as the longest line of the heading. */
 #s-wardrobe .wdr-title::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#E0B84C}
 #s-wardrobe .wdr-title::before{content:"";position:absolute;left:63%;bottom:-3px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C)}
-#s-wardrobe .wdr-head{text-align:center;margin-bottom:6px}
+#s-wardrobe .wdr-head{text-align:center;margin-bottom:6px;position:relative}
+/* Her pick "A" + her placement call, 2026-08-11: a star on the header, but
+   MOVE NOTHING -- the title, Back and the MENU chip all stay exactly where they
+   are. ⚠️ SO IT MUST BE position:absolute AND COST ZERO LAYOUT. There is only
+   5.6px of true gap above the title (Back's row ends at y42, the title starts
+   at y47.6, identical on every width and in both title states), so an in-flow
+   star would have shoved the whole page down ~40px. Absolute + centred puts it
+   in the same vertical band as Back and the chip while sitting horizontally
+   clear of both: the chip ends at x97.4, the Back button starts past x300, and
+   the star spans roughly x178-212 at 390. pointer-events:none so it can never
+   eat a tap meant for the header.
+   ▶ WHY A STAR EARNS ITS PLACE HERE and this is the reusable part: the how-to
+   paragraph on this very page says "Tap the star on all the items you'd like to
+   add." The mark at the top is the SAME mark she is being taught to tap, so it
+   reads as a legend rather than decoration -- and gold star = wardrobe is
+   already her own mark system.
+   🚨 THE CLASS NAME IS `wdr-headstar`, NOT `wdr-star`, AND THAT IS LOAD-BEARING.
+   `.wdr-star` was ALREADY TAKEN by the per-item star button on every wardrobe
+   row (see _wdrStar()), whose rule sits LATER in this file and therefore won
+   the cascade: the header star silently rendered at the row star's 30px instead
+   of the size set here, and every clearance test still passed because they
+   measured position, not size. Never reuse a class name across two different
+   controls on the same screen.
+   ⚠️ 48px IS THE CEILING, and the limit is THE TOP OF THE SCREEN, not the chip
+   or Back (at 48px the star spans x171-219 while the chip ends at x97.4 and
+   Back starts past x300). It has to grow UPWARD -- growing downward lands it on
+   the title's words -- so it runs out of room overhead first: 42px leaves
+   9.6px of headroom, 48px leaves 4.6px, and 56px effectively touches the top
+   edge and fails. Her pick was 48 (scratchpad/wdrstarbig.js reruns the sweep).
+   ▶ WATCH FOR HER REPORT: 4.6px is a thin margin at the screen edge, and thin
+   edge margins are exactly where this sandbox and her real phone have disagreed
+   before (the wishlist Back button, the cream stitch, the corner hearts). If it
+   sits wrong on her device, 42px is the one-number fallback. */
+#s-wardrobe .wdr-headstar{position:absolute;left:50%;top:-43px;width:48px;height:48px;transform:translateX(-50%);pointer-events:none}
 #s-wardrobe .wdr-sub{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:10px}
 #s-wardrobe .wdr-sub b{color:#B08830;font-weight:600}
 #s-wardrobe .wdr-tabs{display:flex;gap:8px;margin:18px 0 0}
@@ -978,7 +1022,16 @@ body.menu-open .menu-panel{display:block}
 #s-dream{background:#fff}
 #s-dream .dc-wrap{padding:0.5rem 0.5rem 2rem}
 /* the page's own "elongated logo" title (mirrors the stylist-chat title treatment) */
-.dc-logo{font:400 30px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.7px #1a1a1a;display:inline-block;position:relative;padding-bottom:11px;margin:8px 0 0;letter-spacing:.01em}
+/* ⚠️ THE TOP MARGIN IS CHIP CLEARANCE, NOT TASTE (her screenshot, 2026-08-11).
+   The corner star is positioned relative to THIS block, so this one number moves
+   the star and the title together while leaving Back exactly where it is (Back
+   is an earlier sibling in normal flow, and an inline-block's margin does not
+   collapse into it). At the old 8px the star's DRAWN path overlapped the fixed
+   MENU chip -- its tip sat 5.9px above the chip's bottom edge and 35px inside it
+   horizontally, on every width from 320 to 430. 24px puts 10.1px of clear air
+   between them. Measure with scratchpad/editspace.js before changing it, and
+   measure the star's PAINTED PATH, never its rotated bounding box. */
+.dc-logo{font:400 30px/1.05 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.7px #1a1a1a;display:inline-block;position:relative;padding-bottom:11px;margin:24px 0 0;letter-spacing:.01em}
 .dc-logo::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3px;background:#E0B84C}
 .dc-logo::before{content:"";position:absolute;bottom:0.5px;left:67%;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
 /* Style Star Edit: a little jewel star (gold with silver outline) pinned to the top-left corner */
@@ -997,7 +1050,10 @@ body.menu-open .menu-panel{display:block}
    pink heart in the app is already drawn as SVG for exactly this reason. Do
    not put a bare U+2665 back. */
 .dc-tagline .pinkheart{width:14px;height:14px;flex:none}
-#s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:1rem -0.5rem 0.9rem;font-style:italic;font-weight:600;padding:0}
+/* Her ask 2026-08-11: tighten the air between CURATED BY CATHERINE and this
+   paragraph (16px -> 8px). It also pays for half of the 16px the header just
+   moved down, so the first product only shifts 8px. */
+#s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#6b6357;line-height:1.65;margin:8px -0.5rem 0.9rem;font-style:italic;font-weight:600;padding:0}
 #s-dream .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 #s-dream .btn-outline{border-radius:2px;border-width:1.5px;max-width:260px;margin:1.3rem auto 0}
@@ -2225,7 +2281,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="wbPortraitTap()">
-          <div class="wb-row"><span class="wb-chip" style="background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:0 3px 7px -3px rgba(90,96,104,.55),inset 0 1px 0 rgba(255,255,255,.8)"><svg viewBox="0 0 24 24" fill="none" stroke="#B8891F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="#B8891F" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><span class="wb-lbl"><span class="tt"><b>See my Style Portrait</b><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Your signature style, from the quiz</span></span></div>
+          <div class="wb-row"><span class="wb-chip" style="background:linear-gradient(160deg,#EEF1F4,#CDD3D9 55%,#B4BBC2);box-shadow:0 3px 7px -3px rgba(90,96,104,.55),inset 0 1px 0 rgba(255,255,255,.8)"><svg viewBox="0 0 24 24" fill="none" stroke="#B8891F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="#B8891F" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><span class="wb-lbl"><span class="tt"><b>See your Style Portrait</b><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">Your signature style, from the quiz</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
         <div class="wb-item" wb-lift onclick="openPrefs()">
@@ -2919,7 +2975,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <button class="btn-pink" onclick="prefShopNow()" style="max-width:280px"><svg class="hm-cta-seal" viewBox="0 0 24 24"><defs><radialGradient id="prefSeal" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#prefSeal)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg><span>Let's go shopping</span><svg class="lgs-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></button>
       <div class="pref-done-acts">
         <button class="pda" onclick="openChat()"><span class="pda-tile pda-pink-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.6A2.1 2.1 0 0 1 6.1 4.5h11.8A2.1 2.1 0 0 1 20 6.6v6.6a2.1 2.1 0 0 1-2.1 2.1h-6.4L7.2 19.4v-4.1H6.1A2.1 2.1 0 0 1 4 13.2Z"/></svg></span><span>Ask your <span class="sty-u">stylist</span></span></button>
-        <button class="pda" onclick="loadSaved()"><span class="pda-tile pda-dark-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#E3B53E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="#E3B53E" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><span>See my Style Portrait</span></button>
+        <button class="pda" onclick="loadSaved()"><span class="pda-tile pda-dark-tile"><svg viewBox="0 0 24 24" fill="none" stroke="#E3B53E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="1.6"/><rect x="5" y="5" width="14" height="14" rx="1"/><path transform="translate(12 12) scale(0.56) translate(-12 -12)" fill="#E3B53E" stroke="none" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></span><span>See your Style Portrait</span></button>
       </div>
       <div class="pref-anytime">Your preferences are never locked in. <span onclick="openPrefs()">Add or refine them anytime &rarr;</span></div>
       <button class="retake" onclick="prefNotNow()" style="margin-top:8px">Not right now</button>
@@ -3199,6 +3255,9 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-wardrobe">
   <div class="top-back-wrap"><button class="top-back" onclick="closeWardrobe()">&larr; Back</button></div>
   <div class="wdr-head">
+    <!-- ⚠️ Unique gradient id (wdrHeadStar): a shared id would resolve to a def
+         inside a hidden screen, which Safari may refuse to paint. -->
+    <svg class="wdr-headstar" viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="wdrHeadStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#wdrHeadStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
     <div class="wdr-title" id="wdrTitle">style Star Wardrobe List</div>
   </div>
 
@@ -4320,7 +4379,7 @@ window.addEventListener('resize',function(){try{_syncStuds()}catch(e){}});
 function _photoSaveArea(on){
   // "Retake the Quiz" only makes sense if she's actually taken it.
   var rt=document.querySelector('#s-photo-res .retake-wrap');if(rt)rt.style.display=quizTaken?'':'none';
-  // "See my Style Portrait" only exists for quiz-takers (needs a saved portrait).
+  // "See your Style Portrait" only exists for quiz-takers (needs a saved portrait).
   var pp=document.getElementById('photoPortraitHub');if(pp)pp.style.display=quizTaken?'':'none';
   if(quizTaken)requestAnimationFrame(_syncStuds); // pearls re-count once the panel has its real size
   var ptt=document.getElementById('portraitTitle');if(ptt){var _pfn=(userName&&userName!=='You')?String(userName).trim().split(/\s+/)[0]:'';ptt.textContent=_pfn?_pfn+'’s Style':'Your Style';}
