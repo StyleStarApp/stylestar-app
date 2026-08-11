@@ -426,7 +426,14 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    inline-block is what makes the bar hug; see .menu-grp, same pattern. */
 #s-wardrobe .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;padding:0 2px 5px;position:relative;display:inline-block}
 #s-wardrobe .wdr-cat-t::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
-#s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #f0ebe0}
+/* ⚠️ THE DIVIDER COLOUR IS A FIX, NOT A PREFERENCE (her catch, 2026-08-11: two
+   starred rows in a row "sort of merge together looking like one color block").
+   It was #f0ebe0, which measures 1.14:1 against the paper and 1.06:1 against a
+   starred row's #FAF1DA fill -- so between two adjacent starred rows the line
+   effectively DID NOT EXIST. #D6C9A8 measures 1.57:1 and 1.46:1: visible on both
+   backgrounds without turning the worksheet into a grid. Re-measure with
+   scratchpad/wdrsheet.js before changing it. */
+#s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #D6C9A8}
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
 #s-wardrobe .wdr-item.want{background:#FAF1DA}
 /* flex-basis 0, not 120px: with a 120px basis the row's own flex-wrap fired on
@@ -482,6 +489,31 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    real products, wanted or not. */
 #s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;flex:0 0 auto;white-space:nowrap;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-see-star{color:#E6C24E}
+/* ▶ THE WORKSHEET COLUMN HEADING (her pick "C", 2026-08-11). She loves that this
+   page is the worksheet she actually uses in a client's closet, and her problem
+   was that the star's meaning is explained at the TOP but never at the POINT OF
+   USE. A real worksheet has column headings, so this is her own metaphor
+   finishing itself. ⚠️ It repeats at EVERY category deliberately: that re-teaches
+   as she scrolls 100 rows, without printing a caption on all 100 (the objection
+   to the every-row version). It also labels "Ideas", which had never been
+   explained at all. Rendered by _wdrCatHead(). */
+#s-wardrobe .wdr-colhead{display:flex;align-items:center;justify-content:flex-end;gap:0 9px;padding:0 2px 5px;border-bottom:1.5px solid #C9B893;margin-bottom:2px}
+#s-wardrobe .wdr-colhead span{font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f66}
+#s-wardrobe .wdr-colhead .ch-shop{width:52px;text-align:center}
+#s-wardrobe .wdr-colhead .ch-add{width:30px;text-align:center}
+/* Her combo, same session: tapping the star turns it gold AND says ADDED under
+   it. ⚠️ The caption is rendered ONLY on starred rows, which is what keeps the
+   word off the ~90 she has not tapped. MEASURED COST, and it is the honest
+   trade she accepted: a starred row grows 44px -> 53px, so rows BELOW it shift
+   9px on tap. The alternative (reserving the line on all 100 rows so nothing
+   moves) cost +891px of page, ~14% more scrolling. ▶ The 9px is benign because
+   the caption grows INSIDE the tapped row: that row keeps its top edge and
+   nothing moves under her thumb. Don't confuse this with the how-to collapse,
+   which moved ~100px right where she was reading and was deliberately deferred
+   to the next visit. `height:auto` is required -- .wdr-star is otherwise a fixed
+   30px box and the caption would overflow it invisibly. */
+#s-wardrobe .wdr-star.on{flex-direction:column;height:auto;gap:1px}
+#s-wardrobe .wdr-added{font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#8a7f66;display:block}
 #s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
@@ -6654,6 +6686,12 @@ function _wdrStar(on){
     ? '<svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1" stroke-linejoin="round"><path d="'+_WDR_STAR_PATH+'"/></svg>'
     : '<svg viewBox="0 0 24 24" fill="none" stroke="#c3bba6" stroke-width="1.9" stroke-linejoin="round"><path d="'+_WDR_STAR_PATH+'"/></svg>';
 }
+// The worksheet's column heading, repeated at every category so the two controls
+// are labelled wherever she happens to be on a 100-row page. Her words: SHOP over
+// the Ideas link, ADD over the star.
+function _wdrCatHead(){
+  return '<div class="wdr-colhead"><span class="ch-shop">Shop</span><span class="ch-add">Add</span></div>';
+}
 function _wardrobeItemRow(id,name,isCustom,note){
   const want=_wardrobeGetState(id)==='want';
   const nameClass=isCustom?'wdr-name custom':'wdr-name';
@@ -6664,7 +6702,7 @@ function _wardrobeItemRow(id,name,isCustom,note){
     +delBtn
     +'<div class="'+nameClass+'">'+_esc(name)+noteHtml+'</div>'
     +'<span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')">Ideas &rarr;</span>'
-    +'<span class="wdr-star" role="button" aria-pressed="'+(want?'true':'false')+'" title="'+(want?'On your list':'Add to my list')+'" onclick="wardrobeWant(\''+id+'\','+cust+')">'+_wdrStar(want)+'</span>'
+    +'<span class="wdr-star'+(want?' on':'')+'" role="button" aria-pressed="'+(want?'true':'false')+'" title="'+(want?'On your list':'Add to my list')+'" onclick="wardrobeWant(\''+id+'\','+cust+')">'+_wdrStar(want)+(want?'<span class="wdr-added">Added</span>':'')+'</span>'
     +'<div class="wdr-expand" id="wx_'+id+'" style="display:none"></div>'
     +'</div>';
 }
@@ -6692,12 +6730,12 @@ function renderWardrobeList(){
     const cat=byName[catName];if(!cat)return;
     const visible=cat.items.filter(function(it){return !_wardrobeExcluded(it)&&hidden.indexOf(it.id)<0});
     if(!visible.length)return;
-    html+='<div class="wdr-cat"><div class="wdr-cat-t">'+_esc(catName)+'</div>';
+    html+='<div class="wdr-cat"><div class="wdr-cat-t">'+_esc(catName)+'</div>'+_wdrCatHead();
     visible.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,false,it.note)});
     html+='</div>';
   });
   if(wardrobeData.custom.length){
-    html+='<div class="wdr-cat"><div class="wdr-cat-t">My Additions</div>';
+    html+='<div class="wdr-cat"><div class="wdr-cat-t">My Additions</div>'+_wdrCatHead();
     wardrobeData.custom.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,true)});
     html+='</div>';
   }
