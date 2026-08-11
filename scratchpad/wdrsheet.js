@@ -23,6 +23,17 @@ const RULE = '#D6C9A8';   // measured: 1.57:1 on paper, 1.46:1 on a starred row
 const OPTS = [
   { id: 'current', label: 'CURRENT', css: '', head: false, cap: false },
   {
+    id: 'final', label: 'PROPOSED  worksheet headings + ADDED only on starred rows', head: true, cap: 'on',
+    css: `#s-wardrobe .wdr-item{border-bottom:1px solid ${RULE}}
+          #s-wardrobe .wdr-star{flex-direction:column;height:auto;gap:1px}
+          .__cap{font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#8a7f66;display:block}
+          .__hdr{display:flex;align-items:center;justify-content:flex-end;gap:0 9px;padding:0 2px 5px;
+                 border-bottom:1.5px solid #C9B893;margin-bottom:2px}
+          .__hdr span{font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f66}
+          .__hdr .h-ideas{width:52px;text-align:center}
+          .__hdr .h-add{width:30px;text-align:center}`
+  },
+  {
     id: 'a', label: 'A  stronger rules only (the minimal fix)', head: false, cap: false,
     css: `#s-wardrobe .wdr-item{border-bottom:1px solid ${RULE}}`
   },
@@ -78,8 +89,10 @@ for (const o of OPTS) {
     }
     if (o.cap) {
       document.querySelectorAll('#s-wardrobe .wdr-star').forEach(st => {
+        const on = st.getAttribute('aria-pressed') === 'true';
+        if (o.cap === 'on' && !on) return;   // her combo: only the starred rows say it
         const c = document.createElement('span'); c.className = '__cap';
-        c.textContent = st.getAttribute('aria-pressed') === 'true' ? 'Added' : 'Add';
+        c.textContent = on ? 'Added' : 'Add';
         st.appendChild(c);
       });
     }
