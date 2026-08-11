@@ -163,8 +163,9 @@ for (const w of [390, 360, 320]) {
   ok(/^2px rgb\(216, 165, 46\)/.test(m.hBar), `title wears the category-header gold bar (${m.hBar})`);
   ok(m.hHugs, 'the bar hugs the words (inline-block), not the card width');
   ok(m.subGone, 'the old "Shop them all together" sub is gone (her call, replaced)');
-  ok(/^Piece by piece, a well-rounded wardrobe/.test(m.cathText || ''), `Catherine line present (${m.cathText})`);
-  ok(m.cathItalic === 'italic', 'Catherine line is italic (her whisper voice)');
+  ok(/^Building your well-rounded wardrobe with intention/.test(m.cathText || ''), `Catherine line present (${m.cathText})`);
+  // Her call 2026-08-12: upright, not italic — the whisper readability lesson.
+  ok(m.cathItalic === 'normal', 'Catherine line is upright (her call, not italic)');
   const heartFill = (m.heartFill.match(/\d+/g) || []).map(Number);
   ok(heartFill.join() === '244,154,193', `heart is her signature pink (${m.heartFill})`);
   ok(m.heartTilt !== 'none', `heart is tilted (${m.heartTilt})`);

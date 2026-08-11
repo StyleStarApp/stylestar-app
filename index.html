@@ -425,8 +425,10 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    list reads as the worksheet's own closing section. */
 #s-wardrobe .wml-h{font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#26221c;display:inline-block;padding-bottom:4px;border-bottom:2px solid #D8A52E;margin:1px 0 5px}
 /* Catherine's line, replacing the old sub — pink tilted heart = her speaking,
-   per the mark system. One line between the card and the button. */
-#s-wardrobe .wml-cath{font:italic 500 13.5px/1.5 'Jost',sans-serif;color:#6b655a;margin:-2px auto 14px;max-width:300px;text-align:center}
+   per the mark system. UPRIGHT at 14px (her call 2026-08-12, and the whisper
+   readability floor). Her wording runs ~313px, so it balances to two even
+   lines by design — don't force one line by shrinking the font. */
+#s-wardrobe .wml-cath{font:500 14px/1.5 'Jost',sans-serif;color:#6b655a;margin:-2px auto 14px;max-width:300px;text-align:center;text-wrap:balance}
 #s-wardrobe .wml-cath .pinkheart{width:12px;height:12px;margin-left:3px;vertical-align:-1.5px}
 #s-wardrobe .wml-row{display:flex;align-items:baseline;gap:9px;padding:6.5px 0;border-bottom:1px solid #EFEAE0}
 #s-wardrobe .wml-row:last-child{border-bottom:none}
@@ -6869,7 +6871,7 @@ function _wdrRenderShopEnd(n){
     html+='<div class="wdr-shopend">'
       +'<div class="wse-lead">That&rsquo;s '+n+' piece'+(n>1?'s':'')+' on your list</div>'
       +'<div class="wdr-mylist"><div class="wml-h">Building my wardrobe</div>'+listHtml+'</div>'
-      +'<div class="wml-cath">Piece by piece, a well-rounded wardrobe<svg class="pinkheart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>'
+      +'<div class="wml-cath">Building your well-rounded wardrobe with intention<svg class="pinkheart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>'
       +'<div class="wdr-shopwrap">'+_wdrShopBtn(n)+'</div></div>';
   }
   // Reset sits below the shop CTA, so the list card can end cleanly on the

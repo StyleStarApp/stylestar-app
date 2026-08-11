@@ -102,9 +102,11 @@ for (const w of [390, 375, 360, 320]) {
   // the two controls do, so they must stay readable. Don't re-quieten them.
   ok(m.lblSize >= 10, `the column labels are readable at ${m.lblSize}px (were 8.5)`);
   ok(m.lblContrast >= 4.5, `and clear AA on the real paper (${m.lblContrast}:1, was 3.79)`);
-  // her ask: the closing line reads as one sentence, not two. The line is the
-  // Catherine line now (her call, 2026-08-12) — same claim, new sentence.
-  ok(m.subLines === 1, `"Piece by piece, a well-rounded wardrobe" holds one line (${m.subLines})`);
+  // The closing line is the Catherine line now (her call, 2026-08-12). Her
+  // wording needs ~331px in a 300px box, so it BALANCES to two even lines by
+  // design — never one, never a ragged three. Don't "fix" this to one line by
+  // shrinking the font (the readability rule).
+  ok(m.subLines === 2, `"Building your well-rounded wardrobe with intention" balances to two lines (${m.subLines})`);
   ok(!m.subHasBr, 'no hardcoded <br>, so it can never re-split');
   ok(m.oldSubGone, 'the old "Shop them all together" sub stays retired (replaced, not doubled)');
   ok(m.docW <= m.vw, `no sideways scroll (${m.docW} vs ${m.vw})`);
