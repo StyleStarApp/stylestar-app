@@ -9,6 +9,40 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (2026-08-11 — HER SCREENSHOT DAY: the hubs get a face, the Wardrobe List becomes a worksheet)
 
+### 🚨 PICK UP HERE FIRST — THE TWO LISTS CONFUSED *HER*, WHICH IS THE LOUDEST SIGNAL YET (2026-08-11, her last message)
+Her words at the very end of the session: *"items that I hit star on Wardrobe list page are not showing up
+on my wishlist... I thought as soon as we hit the star it adds it to wishlist."* Then, after the
+explanation: **"Yes I got confused with my own lists."**
+- ▶ **IT IS NOT A BUG. `wardrobeWant()` writes only to `wardrobeData.items` and never touches
+  `wardrobeData.wishlist`** — verified in code. That is the TWO-LISTS RULE she set on 2026-07-29 and her
+  reasoning still holds: **My List holds CATEGORIES ("White tops") and answers "what is missing from my
+  closet?"; Your Wishlist holds SPECIFIC PIECES (name + store + link) and answers "what did I see that I
+  want to buy?"** The two are joined by **Ideas**, not by the star: star a category → tap Ideas → heart an
+  actual piece → THAT lands on the wishlist.
+- 🚨 **BUT THE MOST EXPERIENCED USER OF THIS APP, WHO DESIGNED BOTH LISTS HERSELF, EXPECTED THEM TO
+  CONNECT.** If the author's own instinct says the star should feed the wishlist, a first-time woman has no
+  chance. **Treat this as a real finding, not a support answer.**
+- ⚠️ **AND TODAY'S OWN CHANGES PROBABLY FED IT, which is Claude's to own:** the star column had NO label at
+  all until 2026-08-11. It now reads header **ADD**, caption **ADDED**, tooltip *"Add to my list."* The
+  tooltip is technically correct (the tab really is called **My List**), but **"ADD" on its own NAMES NO
+  DESTINATION** — add to what? Before today there was nothing to misread; a label was added that is
+  ambiguous, and she read it the way most people would.
+- ▶ **FOUR DIRECTIONS, NONE BUILT, HER CALL — and they are not equal in size:**
+  1. **Name the destination in the column header** — "MY LIST" instead of "ADD". Most direct. ⚠️ It is a
+     30px column, so it needs measuring (text-align:center means the CENTRE stays aligned even if the text
+     is wider than the box, so alignment survives; crowding is the question).
+  2. **Make the caption say WHERE** — "ON MY LIST" rather than "ADDED".
+  3. **Leave the labels and let the how-to carry it** — it says "add to your closet" today, which is close
+     but never mentions that a second list exists.
+  4. ⚠️ **THE BIG ONE: reconsider whether TWO lists is right at all.** This is a product conversation, not
+     a label tweak, and it reopens a decision she made deliberately. **Do not treat 1-3 as settling it if
+     her instinct keeps pointing the other way.** Bring her the July reasoning (in the 2026-07-29 section
+     below) and let her weigh it against her own lived confusion.
+- ▶ **A USEFUL FRAME FOR THAT CONVERSATION:** the star and the heart are not redundant — a category and a
+  product are genuinely different things, and the wishlist would become meaningless if it filled with
+  "White tops". The honest question is not "merge them" but **"does she ever SEE the bridge?"** Ideas is
+  the bridge and it is one tap away, but nothing on the page says so.
+
 ### ⏸ WHERE 2026-08-11 ENDED (her call: "let's ship that live and then we can save all to the .md and pause")
 **NINE PRs merged and GREP-VERIFIED ON MAIN: #818–#825.** Working tree clean, branch resynced to main.
 Suites at pause: **wdrworksheet 69 (new) · wdrstarplace 144 · catmark 135 · sally 70 (new) · velvet 36 ·
