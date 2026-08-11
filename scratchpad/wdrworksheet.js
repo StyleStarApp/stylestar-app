@@ -37,6 +37,16 @@ for (const w of [390, 375, 360, 320]) {
     const shop = head.querySelector('.ch-shop').getBoundingClientRect();
     const add = head.querySelector('.ch-add').getBoundingClientRect();
     const cs = getComputedStyle(head);
+    const lblCs = getComputedStyle(head.querySelector('.ch-shop'));
+    // contrast of the labels against the paper they actually sit on
+    const lum = c => { const [r, g, b] = c.match(/\d+/g).map(Number);
+      const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+      return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+    const cr = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+    const sub = document.querySelector('#s-wardrobe .wse-sub');
+    let subLines = null;
+    if (sub) { const rg = document.createRange(); rg.selectNodeContents(sub);
+      subLines = new Set([...rg.getClientRects()].map(x => Math.round(x.top))).size; }
     const starred = document.querySelector('#s-wardrobe .wdr-item.want');
     const names = [...document.querySelectorAll('#s-wardrobe .wdr-name')].map(e => {
       const rg = document.createRange(); rg.selectNodeContents(e);
@@ -52,6 +62,8 @@ for (const w of [390, 375, 360, 320]) {
       plainHasAdded: !!document.querySelector('#s-wardrobe .wdr-item:not(.want) .wdr-added'),
       divider: getComputedStyle(row).borderBottomColor,
       wraps: names.filter(n => n > 1).length, rows: names.length,
+      lblSize: parseFloat(lblCs.fontSize), lblContrast: +cr(lblCs.color, cs.backgroundColor).toFixed(2),
+      subLines, subHasBr: !!(sub && sub.querySelector('br')),
       docW: document.documentElement.scrollWidth, vw: innerWidth, cats: document.querySelectorAll('#s-wardrobe .wdr-cathead').length
     };
   });
@@ -78,6 +90,14 @@ for (const w of [390, 375, 360, 320]) {
   // and NO text was shrunk to buy it.
   const wrapCap = w >= 375 ? 3 : (w >= 360 ? 4 : 15);
   ok(m.wraps <= wrapCap, `name wrapping stays contained (${m.wraps} of ${m.rows}, cap ${wrapCap})`);
+  // ⚠️ her catch: the labels were 8.5px at 3.79:1, BELOW the AA bar -- the same
+  // failure as the Menu's group labels. They are the only thing telling her what
+  // the two controls do, so they must stay readable. Don't re-quieten them.
+  ok(m.lblSize >= 10, `the column labels are readable at ${m.lblSize}px (were 8.5)`);
+  ok(m.lblContrast >= 4.5, `and clear AA on the real paper (${m.lblContrast}:1, was 3.79)`);
+  // her ask: the closing line reads as one sentence, not two
+  ok(m.subLines === 1, `"Shop them all together, in your style." holds one line (${m.subLines})`);
+  ok(!m.subHasBr, 'the hardcoded <br> is gone, so it can never re-split');
   ok(m.docW <= m.vw, `no sideways scroll (${m.docW} vs ${m.vw})`);
   ok(!errs.length, 'zero JS errors');
 
