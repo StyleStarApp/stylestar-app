@@ -426,7 +426,14 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    inline-block is what makes the bar hug; see .menu-grp, same pattern. */
 #s-wardrobe .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;padding:0 2px 5px;position:relative;display:inline-block}
 #s-wardrobe .wdr-cat-t::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
-#s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #f0ebe0}
+/* ⚠️ THE DIVIDER COLOUR IS A FIX, NOT A PREFERENCE (her catch, 2026-08-11: two
+   starred rows in a row "sort of merge together looking like one color block").
+   It was #f0ebe0, which measures 1.14:1 against the paper and 1.06:1 against a
+   starred row's #FAF1DA fill -- so between two adjacent starred rows the line
+   effectively DID NOT EXIST. #D6C9A8 measures 1.57:1 and 1.46:1: visible on both
+   backgrounds without turning the worksheet into a grid. Re-measure with
+   scratchpad/wdrsheet.js before changing it. */
+#s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #D6C9A8}
 #s-wardrobe .wdr-item:last-child{border-bottom:none}
 #s-wardrobe .wdr-item.want{background:#FAF1DA}
 /* flex-basis 0, not 120px: with a 120px basis the row's own flex-wrap fired on
@@ -480,8 +487,76 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wardrobe .wdr-expand-lbl a{color:#8a6a1e;cursor:pointer}
 /* Shopping is never gated behind marking the row — every item is one tap from
    real products, wanted or not. */
-#s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;flex:0 0 auto;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+/* ▶ HER PICK "C" (2026-08-11): Ideas becomes a squared chip, and it is a TAP
+   TARGET fix as much as a look. Measured before: the plain link was a
+   46.5 x 11.5px target sitting 9px from the star -- an 11.5px-tall control
+   beside another control, on a 100-row list, for an audience that runs to 80.
+   As a chip it is 68.5 x 23.5px with a 19px gap. ⚠️ SQUARED (radius 2px), not a
+   pill: it matches the squared cards and buttons she has chosen everywhere else,
+   and a filled version was argued down for competing with "Shop my whole list"
+   on the same screen. Cost she accepted: the name column goes 203.5 -> 171.5px
+   and ONE of 100 names wraps. */
+#s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;flex:0 0 auto;white-space:nowrap;-webkit-tap-highlight-color:transparent;margin-right:10px;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff}
 #s-wardrobe .wdr-see-star{color:#E6C24E}
+/* ▶ THE WORKSHEET COLUMN HEADING (her pick "C", 2026-08-11). She loves that this
+   page is the worksheet she actually uses in a client's closet, and her problem
+   was that the star's meaning is explained at the TOP but never at the POINT OF
+   USE. A real worksheet has column headings, so this is her own metaphor
+   finishing itself. ⚠️ It repeats at EVERY category deliberately: that re-teaches
+   as she scrolls 100 rows, without printing a caption on all 100 (the objection
+   to the every-row version). It also labels "Ideas", which had never been
+   explained at all. Rendered by _wdrCatHead(). */
+#s-wardrobe .wdr-colhead{display:flex;align-items:center;justify-content:flex-end;gap:0 9px;padding:0 2px 5px;border-bottom:1.5px solid #C9B893;margin-bottom:2px}
+#s-wardrobe .wdr-colhead span{font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f66}
+/* ⚠️ HER CATCH, and these numbers are LOAD-BEARING: the heading only reads as a
+   heading if it sits directly over its column. SHOP must match the Ideas chip's
+   width AND carry the chip's own 10px right margin, or it drifts right of the
+   control it names the moment the chip moves. ADD matches the 30px star box.
+   The test asserts CENTRE-OVER-CENTRE, so a font change that resizes the chip
+   fails loudly instead of quietly misaligning. */
+#s-wardrobe .wdr-colhead .ch-shop{width:68.5px;margin-right:10px;text-align:center}
+#s-wardrobe .wdr-colhead .ch-add{width:30px;text-align:center}
+/* ▶ THE STICKY WORKSHEET HEADER (her ask 2026-08-11: "anything that makes the
+   list feel more clear and organized to her while she is using it"). The
+   category name AND the column heading travel together, so however far she has
+   scrolled into a 100-row page she can always see WHICH section she is in and
+   WHAT the two controls do. ⚠️ top:46px clears the fixed MENU chip, which ends
+   at y42. ⚠️ The background must be OPAQUE or the rows scroll through it, and it
+   needs the list card's own paper colour, not white. ⚠️ This only works because
+   .ss.wardrobe-mirror lost its overflow:hidden earlier the same day -- a
+   clipping ancestor kills position:sticky silently. */
+#s-wardrobe .wdr-cathead{position:sticky;top:46px;z-index:3;background:#FBFAF7;padding-top:6px}
+/* 🚨 THIS MEDIA BLOCK MUST STAY *AFTER* THE .wdr-see AND .wdr-colhead RULES, and
+   the reason is the one already written above .wdr-tab: A MEDIA QUERY ADDS NO
+   SPECIFICITY. Placed earlier in the file it loses the cascade to the base rules
+   and does exactly nothing -- which is what happened on the first attempt, and
+   the tests reported byte-identical failures as proof.
+   What it does: under 390px the row's own gap drops 9px -> 6px, so the heading's
+   gap and the chip's right margin have to drop with it or SHOP slides 5px off
+   the chip it names. It also trims the chip's padding to give the item names
+   back most of the 32px the chip cost them (wrapping had gone 1 -> 7 rows at
+   360 and 19 at 320). ⚠️ No text is shrunk anywhere: readability beats an even
+   list for this audience, the same call made the last time these names wrapped. */
+@media(max-width:389px){
+  #s-wardrobe .wdr-see{padding:5px 6px;margin-right:6px}
+  /* the row drops its 2px side padding here too, so the heading must, or every
+     label sits 2px right of its column */
+  #s-wardrobe .wdr-colhead{gap:0 6px;padding-left:0;padding-right:0}
+  #s-wardrobe .wdr-colhead .ch-shop{width:60.5px;margin-right:6px}
+}
+/* Her combo, same session: tapping the star turns it gold AND says ADDED under
+   it. ⚠️ The caption is rendered ONLY on starred rows, which is what keeps the
+   word off the ~90 she has not tapped. MEASURED COST, and it is the honest
+   trade she accepted: a starred row grows 44px -> 53px, so rows BELOW it shift
+   9px on tap. The alternative (reserving the line on all 100 rows so nothing
+   moves) cost +891px of page, ~14% more scrolling. ▶ The 9px is benign because
+   the caption grows INSIDE the tapped row: that row keeps its top edge and
+   nothing moves under her thumb. Don't confuse this with the how-to collapse,
+   which moved ~100px right where she was reading and was deliberately deferred
+   to the next visit. `height:auto` is required -- .wdr-star is otherwise a fixed
+   30px box and the caption would overflow it invisibly. */
+#s-wardrobe .wdr-star.on{flex-direction:column;height:auto;gap:1px}
+#s-wardrobe .wdr-added{font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#8a7f66;display:block}
 #s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
@@ -6654,6 +6729,15 @@ function _wdrStar(on){
     ? '<svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1" stroke-linejoin="round"><path d="'+_WDR_STAR_PATH+'"/></svg>'
     : '<svg viewBox="0 0 24 24" fill="none" stroke="#c3bba6" stroke-width="1.9" stroke-linejoin="round"><path d="'+_WDR_STAR_PATH+'"/></svg>';
 }
+// The worksheet's column heading, repeated at every category so the two controls
+// are labelled wherever she happens to be on a 100-row page. Her words: SHOP over
+// the Ideas link, ADD over the star.
+function _wdrCatHead(name){
+  // The category name and the column heading are ONE sticky block, so both stay
+  // on screen together as she works down the list.
+  return '<div class="wdr-cathead"><div class="wdr-cat-t">'+_esc(name)+'</div>'
+    +'<div class="wdr-colhead"><span class="ch-shop">Shop</span><span class="ch-add">Add</span></div></div>';
+}
 function _wardrobeItemRow(id,name,isCustom,note){
   const want=_wardrobeGetState(id)==='want';
   const nameClass=isCustom?'wdr-name custom':'wdr-name';
@@ -6664,7 +6748,7 @@ function _wardrobeItemRow(id,name,isCustom,note){
     +delBtn
     +'<div class="'+nameClass+'">'+_esc(name)+noteHtml+'</div>'
     +'<span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')">Ideas &rarr;</span>'
-    +'<span class="wdr-star" role="button" aria-pressed="'+(want?'true':'false')+'" title="'+(want?'On your list':'Add to my list')+'" onclick="wardrobeWant(\''+id+'\','+cust+')">'+_wdrStar(want)+'</span>'
+    +'<span class="wdr-star'+(want?' on':'')+'" role="button" aria-pressed="'+(want?'true':'false')+'" title="'+(want?'On your list':'Add to my list')+'" onclick="wardrobeWant(\''+id+'\','+cust+')">'+_wdrStar(want)+(want?'<span class="wdr-added">Added</span>':'')+'</span>'
     +'<div class="wdr-expand" id="wx_'+id+'" style="display:none"></div>'
     +'</div>';
 }
@@ -6692,12 +6776,12 @@ function renderWardrobeList(){
     const cat=byName[catName];if(!cat)return;
     const visible=cat.items.filter(function(it){return !_wardrobeExcluded(it)&&hidden.indexOf(it.id)<0});
     if(!visible.length)return;
-    html+='<div class="wdr-cat"><div class="wdr-cat-t">'+_esc(catName)+'</div>';
+    html+='<div class="wdr-cat">'+_wdrCatHead(catName);
     visible.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,false,it.note)});
     html+='</div>';
   });
   if(wardrobeData.custom.length){
-    html+='<div class="wdr-cat"><div class="wdr-cat-t">My Additions</div>';
+    html+='<div class="wdr-cat">'+_wdrCatHead('My Additions');
     wardrobeData.custom.forEach(function(it){html+=_wardrobeItemRow(it.id,it.n,true)});
     html+='</div>';
   }
