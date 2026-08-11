@@ -125,7 +125,10 @@ for (const w of [390, 360, 320]) {
     const heartS = heart ? getComputedStyle(heart) : null;
     let cathLines = null;
     if (cath) { const rg = document.createRange(); rg.selectNodeContents(cath);
-      cathLines = new Set([...rg.getClientRects()].map(x => Math.round(x.top))).size; }
+      // Cluster tops within 6px: the tilted heart's element rect sits a couple
+      // px off the text's top and reads as a phantom line under exact matching.
+      const tops = [...rg.getClientRects()].map(x => x.top).sort((a, b) => a - b);
+      cathLines = tops.reduce((n, t, i) => (i === 0 || t - tops[i - 1] > 6) ? n + 1 : n, 0); }
     let outside = 0, wraps = 0;
     card.querySelectorAll('.wml-row').forEach(r => {
       const rr = r.getBoundingClientRect();

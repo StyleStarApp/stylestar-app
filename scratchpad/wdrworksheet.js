@@ -48,7 +48,11 @@ for (const w of [390, 375, 360, 320]) {
     const sub = document.querySelector('#s-wardrobe .wml-cath');
     let subLines = null;
     if (sub) { const rg = document.createRange(); rg.selectNodeContents(sub);
-      subLines = new Set([...rg.getClientRects()].map(x => Math.round(x.top))).size; }
+      // The tilted heart SVG contributes its own rect a couple px off the
+      // text's top, so exact top-matching invents a phantom second line.
+      // A real wrap moves ~20px (line-height), so cluster within 6px.
+      const tops = [...rg.getClientRects()].map(x => x.top).sort((a, b) => a - b);
+      subLines = tops.reduce((n, t, i) => (i === 0 || t - tops[i - 1] > 6) ? n + 1 : n, 0); }
     const oldSubGone = !document.querySelector('#s-wardrobe .wse-sub');
     const starred = document.querySelector('#s-wardrobe .wdr-item.want');
     const names = [...document.querySelectorAll('#s-wardrobe .wdr-name')].map(e => {
