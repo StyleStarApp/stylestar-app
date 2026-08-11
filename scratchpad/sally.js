@@ -22,7 +22,7 @@ const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromi
 let pass = 0, fail = 0;
 const ok = (c, m) => { c ? (pass++, console.log('  ok  ' + m)) : (fail++, console.log('  FAIL ' + m)); };
 
-const HERS = ['Pieces I wear myself and recommend', "Stores I've chosen for you", 'The checklist I use with clients'];
+const HERS = ['Pieces I wear and recommend', "Stores I've chosen for you", 'The checklist I use with clients'];
 const RETIRED = ['Hand-picked pieces you', 'Browse curated stores', 'Your personal wardrobe checklist'];
 
 // ---- static: the words exist everywhere and the old ones are gone ----
@@ -37,7 +37,14 @@ console.log('\n--- CSS integrity ---');
 ok((css.match(/\/\*/g) || []).length === (css.match(/\*\//g) || []).length,
   `every CSS comment is balanced (${(css.match(/\/\*/g) || []).length} opens, ${(css.match(/\*\//g) || []).length} closes)`);
 console.log('\n--- the words, across every hub surface ---');
-ok(src.split('Pieces I wear myself and recommend').length - 1 === 4, 'the Edit sub is in all 4 places');
+ok(src.split('Pieces I wear and recommend').length - 1 === 4, 'the Edit sub is in all 4 places');
+// ⚠️ Her catch 2026-08-11: the "myself" version wrapped on the Discover page,
+// whose sub container is a FIXED 212px at every screen width. Her "&" idea fit
+// by 0.4px in Chromium -- inside normal text-measurement variance, and the exact
+// margin that wrapped her tagline on real Safari. Dropping "myself" costs
+// emphasis, not meaning ("I wear" already says it is personal) and leaves
+// 29.7px of headroom. Assert the retired version cannot come back.
+ok(!src.includes('Pieces I wear myself'), 'the two-line "myself" version is retired');
 ok(src.split("Stores I've chosen for you").length - 1 === 3, 'the Mall sub is in all 3 places');
 ok(src.split('The checklist I use with clients').length - 1 === 3, 'the Wardrobe sub is in all 3 places');
 RETIRED.forEach(r => ok(!src.includes(r), `the faceless version is gone: "${r}"`));
