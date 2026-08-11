@@ -7,7 +7,190 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE-EST-EST-EST-EST (2026-08-10 — HER SCREENSHOT PASS: the tagline, and the MARKS get sorted)
+## ▶ NEXT SESSION — START HERE (2026-08-11 — HER SCREENSHOT DAY: the hubs get a face, the Wardrobe List becomes a worksheet)
+
+### ⏸ WHERE 2026-08-11 ENDED (her call: "let's ship that live and then we can save all to the .md and pause")
+**NINE PRs merged and GREP-VERIFIED ON MAIN: #818–#825.** Working tree clean, branch resynced to main.
+Suites at pause: **wdrworksheet 69 (new) · wdrstarplace 144 · catmark 135 · sally 70 (new) · velvet 36 ·
+wdrcalmcheck 27 · heartnudge 20 (new) · nav 80 · menu 87 · hubs 46 · titlerule 19 · copy 41 · e2e 29 ·
+affq 40**, all green. ⚠️ **Netlify: NINE builds today**, on top of ~19 across the two 08-10 sessions —
+she topped up $10 on 08-09, **watch the meter**.
+- ▶ **THE FIRST THING TO ASK HER: how the Wardrobe List feels on her phone**, because the last three
+  changes shipped without her seeing them live: the readable column labels, the one-line "Shop them all
+  together, in your style.", and the bigger/darker add-your-own placeholder.
+- ▶ **THE ONE HONEST RISK IN TODAY'S WORK:** the Ideas chip took width from the name column, so item-name
+  wrapping went 0→1 at 390, 1→3 at 360, 11→14 at 320. **No text was shrunk to buy it** (the standing
+  readability call). If she finds it untidy on Display Zoom, the lever is the chip's padding, not the font.
+- ▶ **HER PARKED IDEA, and she wants it:** a small photo of her at the **BOTTOM OF MY STORY** (her
+  husband's suggestion). She does not have the right photo yet. ▶ A face is the strongest possible version
+  of Sally's note — unfakeable in a way no typography is — so raise it when she mentions a photo.
+- ▶ Offered and declined today: a per-category count on the Wardrobe List (`TOPS 2/7`).
+- ▶ **Everything else on her list is unchanged and waiting on OTHERS or on HER WORDS:** the Abercrombie
+  department-param URL · her search-retest screenshots · **her graduation-whisper line** · **her most-asked
+  stylist questions** for the chat chips. Waiting on others: Indie Law (Bailey name fix + operating-agreement
+  blanks) → TM signature email → EIN → bank → affiliate applications. Parked builds: Bloomingdale's
+  colour-facet path form; the registry FIRST when affiliate approval lands.
+
+### ⭐⭐ THE RULE OF THE DAY, PROVEN TWICE ON TWO PAGES: A BLEED AND ITS ACCENT MUST NOT BE THE SAME COLOUR
+The Edit bled the EXACT `#0FA6B6` of its own CURATED BY CATHERINE lettering, and My Story bled the exact
+`#F49AC1` of her hearts, both on the reasoning that page and backdrop should "speak one colour."
+▶ **Her catch, and it generalises to every future full-bleed: when the BLEED and the ACCENT are the same
+colour at the same saturation, THE ACCENT STOPS BEING AN ACCENT** — the lettering has nothing to stand out
+from. As shipped: Edit `#0E7F8C`, My Story `#CE5C86`. **The hearts and the turquoise lettering are
+UNTOUCHED** — only the backdrops moved, and `velvet.js` asserts exactly that split (bleed differs from ink,
+bleed is measurably darker). Offered and not taken each time: a deeper jewel tone (heads back toward the
+velvet look her wardrobe rethink retired) and a pale wash (nearly the same VALUE as the white page inside
+it, so the page edge dissolves — the getting-lost failure she caught on the wishlist frame).
+
+### ⭐⭐ SALLY'S NOTE, ANSWERED: THE HUB ROWS NOW SAY WHO IS BEHIND THEM (her ask, #820/#821)
+Her question: *"In keeping with what Sally advised — what can we add to this to gently emphasize a real
+person is behind this?"*
+- ▶ **THE DIAGNOSIS THAT SHAPED IT, and it is the keeper: of the ten hub sub-lines, exactly ONE named a
+  human.** The other nine described WHAT each feature is and hid WHO made it — and four were actively
+  ambiguous about agency ("Hand-picked pieces you'll love" by whom · "Browse curated stores" by whom ·
+  "Expert guidance" whose · "Upload a photo for feedback" from whom). **Implying a person and then not
+  naming them is exactly how a faceless AI app reads.**
+- **As shipped, on all FOUR hub surfaces** (Discover, Welcome Back, Style Portrait, Analyze results — each
+  sub-line lives on 3-4 of them and all copies changed together, counted by the test):
+  `Hand-picked pieces you'll love` → **`Pieces I wear and recommend`** ·
+  `Browse curated stores` → **`Stores I've chosen for you`** ·
+  `Your personal wardrobe checklist` → **`The checklist I use with clients`**
+  ⚠️ Both new lines are LIFTED FROM HER OWN EXISTING WORDS (her Edit subtitle, her wardrobe how-to) — her
+  voice moved to where it gets read, not new copy.
+- ▶ **THE WORDS ARE THE LEVER, THE MARK IS THE REINFORCEMENT.** A heart is nearly invisible to a stranger
+  who does not know what it means; a sentence with "I" in it is something no faceless app ever says. Her
+  signature pink heart (`.hub-ch`, same pink/11° tilt as `.menu-ch`) went on the **SAME TWO ROWS the Menu
+  marks** — the Edit and What's Trending — so the surfaces can never drift. ⚠️ **Deliberately NOT on the
+  Mall or the Wardrobe List although those are also hers: their sub-lines now say "I" in WORDS, and a mark
+  earns its place most where the words do not already carry it.** 2 of 10 rows here, 3 of 18 in the Menu.
+  A maker's mark, not a sticker.
+- ⚠️ **TWO THINGS DELIBERATELY LEFT ALONE, both her own rules, both asserted so they cannot creep:**
+  (1) **Ask your stylist keeps "Expert guidance, anytime"** — pink heart = Catherine speaking, pink star =
+  the AI stylist working on her behalf; "I" there would claim she personally answers the chat.
+  (2) **What's Trending keeps "picked by Catherine", in the THIRD person** — ▶ **the page needs ONE place
+  that gives a NAME. "I" is intimate but anonymous; a name is the anchor the other lines borrow from.
+  Name her once, use "I" elsewhere.**
+- ⚠️ **The Edit line was SHORTENED the same day** (`Pieces I wear myself and recommend` → `Pieces I wear
+  and recommend`) because it wrapped on Discover, **whose sub container is a FIXED 212px at every screen
+  width**. Her "&" idea fit by **0.4px** in Chromium — inside normal text-measurement variance, and the
+  exact margin that wrapped her tagline on real Safari. **"I wear" already says it is personal, so
+  "myself" was emphasis, not information.**
+- ⚠️ **The mark's `margin-left` is 0, NOT the Menu's 5px, and that is what makes them MATCH.** `.menu-ch`
+  sits in a plain BLOCK row so its margin IS the gap; the hub titles are FLEX rows already carrying a 6-7px
+  gap for the arrow, so 5px stacked on top and the mark sat ~11px out (her catch). ▶ **If a gap ever looks
+  wrong, measure the PARENT'S gap first — the margin is not the only thing spacing it.**
+
+### ⭐⭐ THE WARDROBE LIST IS A WORKSHEET NOW — her favourite page, her design (#823/#824/#825)
+Her words: *"I really love how this page is like a worksheet and it really is the format I use when I am
+looking at a client's closet."* Her two problems: the star's meaning is explained at the TOP but never at
+the POINT OF USE, and two starred rows in a row "sort of merge together looking like one color block."
+1. 🚨 **THE DIVIDER WAS A BUG, NOT A PREFERENCE.** `#f0ebe0` measures **1.14:1** on the paper and
+   **1.06:1** on a starred row's `#FAF1DA` fill — **between two adjacent starred rows the line effectively
+   DID NOT EXIST.** Now `#D6C9A8` (1.57:1 / 1.46:1).
+2. **THE COLUMN HEADING, her own metaphor finishing itself: SHOP over the Ideas control, ADD over the
+   star.** ⚠️ It repeats at EVERY category on purpose — that re-teaches down a 100-row page without
+   printing a caption on all 100 (the objection to the every-row version). It also labels "Ideas", which
+   had never been explained anywhere.
+3. **HER COMBO: the star turns gold AND says ADDED underneath, only on starred rows.** ⚠️ **Measured cost
+   she accepted:** that row grows 44→53px so rows BELOW shift **9px** on tap; reserving the line on all 100
+   rows instead cost **+891px** of page (~14%). ▶ **The 9px is benign because the caption grows INSIDE the
+   tapped row, which keeps its top edge — nothing moves under her thumb.** Not the same as the how-to
+   collapse (~100px, right where she was reading), which was deliberately deferred to the next visit.
+4. **IDEAS IS A SQUARED CHIP.** ▶ **Measuring what she asked about found something bigger: the plain link
+   was a 46.5 × 11.5px TAP TARGET sitting 9px from the star** — an 11.5px-tall control beside another
+   control, on a 100-row list, for an audience that runs to 80. Now **68.5 × 23.5px with a 19px gap.**
+   Squared not pill (matches her squared cards); a filled version was argued down for competing with
+   "Shop my whole list" on the same screen.
+5. ⭐ **THE STICKY WORKSHEET HEADER — Claude's idea, and her verdict: "totally your idea. That turned out
+   fabulous."** The category name AND the column heading travel together (`.wdr-cathead`, `top:46px` to
+   clear the MENU chip), so however deep she has scrolled she can see WHICH section she is in and WHAT the
+   controls do. ⚠️ **It only works because `.ss.wardrobe-mirror` lost its `overflow:hidden` the same day —
+   a clipping ancestor kills `position:sticky` SILENTLY.** Verified by walking 33 scroll positions asking
+   `elementFromPoint` what is actually PAINTED at the pinned header's centre; a row never wins.
+- ⚠️ **HER ALIGNMENT CATCH WAS RIGHT AT A WIDTH SHE HAD NOT LOOKED AT.** At 390 SHOP already sat exactly
+  over the chip; **under 390 the ROW's gap drops 9→6px and it loses its 2px side padding**, while the
+  heading kept both — sliding SHOP 5px off its column on every narrow phone. The heading's gap, padding and
+  the chip's margin now all track the row's, asserted CENTRE-OVER-CENTRE at 390/375/360/320.
+- ⚠️ **THE HONEST COST, no text shrunk anywhere:** the chip takes width from the name column, so wrapping
+  goes 0→1 at 390, 1→3 at 360, 11→14 at 320. A narrow-width padding trim gives most of it back. 320 was
+  always a losing battle on this list (15 before the 2026-07-26 trim). **A proper tap target beats an even
+  list.**
+
+### ⭐ THE DISCLOSURE LOST ITS PRONOUN, AND HOW SHE GOT THERE IS THE LESSON (#822)
+`Some links may earn us a commission.` → **`Some links may earn a commission.`** (8 in-app surfaces).
+She asked whether "Style Star" would read better than "us" — *"honestly there is no us, it's just me."*
+**"me" was recommended** (truer, same two characters, matches the her-voice hub lines shipped the same day,
+and Amazon's mandatory sentence is already first person). **She tried it and said the "me sounds worse than
+us."**
+- ▶ **SHE WAS RIGHT AND THE RECOMMENDATION HAD MISSED HER OBJECTION. She did not have a PRONOUN problem,
+  she had a SUBJECT problem:** the sentence foregrounds her earning money, and naming her sharpens that
+  rather than softening it. Making the LINKS the subject removes her from the sentence while the legal fact
+  survives. ⚠️ **Weigh future copy this way: when someone dislikes a sentence, check what it is ABOUT before
+  rewriting who is in it.**
+- ⚠️ **ARGUED AGAINST AND NOT TAKEN, each for a real reason:** *"Some may earn a commission"* (her ask —
+  "some" has NO ANTECEDENT, and it saves ~30px that was already spare) · *"Some links are affiliate links"*
+  (the FTC has warned many consumers do not know the term, and this audience runs to 80) · *"Affiliate
+  links help keep Style Star free"* (the best WRITING of the lot and the weakest disclosure — it never says
+  a purchase generates a commission) · pairing the fact with her value-first framing (WRAPS below 375px,
+  and a TWO-LINE disclosure is MORE prominent, defeating the purpose).
+- ▶ **THE LINE IS AT THE FLOOR ON ALL THREE LEVERS AND SHOULD BE LEFT ALONE:** wording (shortest
+  unambiguous form), frequency (once per screen carrying links), visual weight (11px at 4.6:1 — a
+  disclosure that cannot be read is not a disclosure). It already had 96px of slack in the tightest
+  container, **so length was never what made it feel loud.** ⚠️ The `_shopCard` comment is updated: SEVEN →
+  EIGHT places, grep `may earn a commission`. Only the MALL keeps its longer founder-voice version.
+
+### ⚠️⚠️ THE MEASUREMENT LESSONS OF 2026-08-11 — FIVE TRAPS, EACH COST REAL TIME, ALL REUSABLE
+1. 🚨 **ASSERT DIMENSIONS, NOT JUST POSITIONS.** The wardrobe header star was written as `.wdr-star` — a
+   class ALREADY TAKEN by the per-item row star button, whose rule sits later in the file and won the
+   cascade — so it silently rendered at **30px instead of 48**. **All 88 checks passed**, because every one
+   measured centring and clearance and not one measured SIZE. ▶ **When a rule sets a dimension, assert the
+   dimension. And check a new class name against the file before using it on a screen that already has one.**
+2. 🚨 **RASTERISE BEFORE TRUSTING RECTS.** Her phone found the same star **CUT OFF at the top**:
+   `.ss.wardrobe-mirror` inherited `overflow:hidden` from the base `.ss` (whose job is clipping to 28px
+   rounded corners) and sliced **11.4px** off its point. **A clipped element's rect is unchanged**, so every
+   geometric check passed — and it was cut in Claude's own renders the day before, unseen.
+3. 🚨 **A MEDIA QUERY ADDS NO SPECIFICITY** (a rule already written above `.wdr-tab` in this file). The
+   Wardrobe List's narrow-width overrides were placed BEFORE the rules they override and did **nothing**,
+   twice. ▶ **The tell is byte-identical failures across two attempts: when a fix changes NOTHING AT ALL,
+   check the cascade before re-reading the values.**
+4. 🚨 **A MEASUREMENT THAT RETURNS EXACTLY ZERO IS USUALLY A BROKEN HARNESS.** The first pass at her
+   ADD/ADDED combo reported "difference 0.0px" for both variants — wrong twice over: `.wdr-star` was
+   `height:30px` FIXED so the caption overflowed invisibly, and the 122px shift it DID report was the
+   "Shop my whole list" button appearing when wantCount goes 0→1, swamping the thing under test.
+5. 🚨 **NEVER ASSERT AGAINST AN ELEMENT THAT MAY BE `display:none`** — hit twice more today. The Menu heart
+   measures **0** unless the drawer is opened first, and hub rows had to be DRIVEN on screen with
+   `show('s-wb')` because **a hidden row yields ZERO range rects, so a "fits (0 lines)" passes the wrap
+   check vacuously.** `visibleRows` and `menuOpenOk` are the guards that make those assertions real.
+6. ⚠️ **CSS COMMENT BALANCE.** Twice in one day a comment was extended by pasting prose in FRONT of an
+   existing rule, leaving a stray `*/` that closed it early; the next paragraph then parsed as CSS and
+   swallowed the rule after it (the heart rendered BLACK at the wrong size). `sally.js` now counts `/*`
+   against `*/` across the whole stylesheet.
+
+### ▶ THE OTHER SMALL FIXES OF 2026-08-11, all from her screenshots
+- **The Edit's corner star was OVERLAPPING the MENU chip** — measured on the DRAWN path (its rotated
+  bounding box overstates by ~25px and would have hidden it): the tip sat **5.9px above the chip's bottom
+  and 35px inside it**, on every width 320-430. `.dc-logo` margin-top 8→24px moves star and title together;
+  **Back is an earlier sibling in normal flow so it does not move** (measured unchanged). Plus her ask to
+  tighten CURATED BY CATHERINE → the paragraph, 16→8px.
+- **"See my Style Portrait" → "See your Style Portrait"** (both places: the Welcome Back hub row and the
+  twin button on the preferences-done screen). Her catch, and it is her own refined naming rule: **outside
+  the page the app is POINTING AT A PLACE, so it says "your"** — even phrased as a verb. The 2026-07-31
+  rule had listed this string as her-voice; **the 2026-08-10 refinement supersedes that for anything that
+  names a destination.**
+- **The wardrobe tab arrows now match the "Shop my whole list" arrow.** ⚠️ They were TEXT GLYPHS
+  (`content:"\2190"`), so "the same size" could never have been reached by changing a font-size — a glyph's
+  weight comes from the font. They are now the IDENTICAL inline SVG (`.wdr-tab-ar`, same path, 2.6 stroke,
+  19px box), the left one mirrored with `scaleX(-1)`. Also brings them under the no-brand-mark-as-a-glyph rule.
+- **Three readability lifts, all below the AA bar and all found by her eye:** the worksheet's SHOP/ADD
+  labels (8.5px `#8a7f66` = **3.79:1** → 10.5px `#5f5647` = 6.92:1) · the add-your-own placeholder
+  (`#a39c8a` = **2.73:1**, the worst text on the page → `#6b6355` = 5.93:1 at 14.5px). ▶ **The pattern is
+  now three-for-three with the Menu's group labels on 08-09: a label small enough to feel like decoration
+  stops being read.** ⚠️ The placeholder matters most of the three — **it is the only thing telling her she
+  can add pieces of her own at all. An invitation, not a hint.**
+- **"Shop them all together, in your style." holds one line** — ▶ it was never wrapping, the break was a
+  **hardcoded `<br>`**, so no amount of width would ever have fixed it. Asserted so it cannot come back.
+
+## ▶ PREVIOUS — START HERE-EST-EST-EST-EST (2026-08-10 — HER SCREENSHOT PASS: the tagline, and the MARKS get sorted)
 
 ### ⭐ THE "YOUR vs MY" VOICE RULE IS SETTLED — HER QUESTION, AND IT SHARPENS THE 2026-07-31 RULE (2026-08-10)
 Her catch, and it was a genuinely confusing drift she spotted herself: *"We call it Your Wardrobe List in the HUB
@@ -676,7 +859,7 @@ people imitate what they already own and have photos of.** Mirrors, not add-ons.
 - ▶ Old analyses have no `wearing` (memory-only context, so only mid-session edge): basis falls back to
   the celebrate line and the mirror rules still apply.
 
-## ▶ NEXT SESSION — START HERE-EST (2026-08-08, later same day — HER INSTALL TEST FOUND THE BIG ONE)
+## ▶ PREVIOUS — START HERE-EST (2026-08-08, later same day — HER INSTALL TEST FOUND THE BIG ONE)
 
 ### 🚨 ✅ THE HOME-SCREEN APP COULDN'T REMEMBER ANYONE — THE 6-DIGIT RESTORE CODE IS BUILT (2026-08-08)
 **Her live test, and it is the most important find since the restore bug:** she installed via the A2HS
@@ -780,7 +963,7 @@ future features against it.
      rule: Claude never picks products). Cheapest of the three — the Edit + New-pill machinery already
      exists; a weekly cadence is sustainable, daily is not.
 
-## ▶ NEXT SESSION — START HERE (updated 2026-08-08 — menu tune, the restore card, and the EMAIL BUG SOLVED)
+## ▶ PREVIOUS (updated 2026-08-08 — menu tune, the restore card, and the EMAIL BUG SOLVED)
 ⚠️ **Date note: today's stamps are verified against the Netlify function log ("Aug 8") and the environment.**
 The polish session recorded just below as "2026-08-08" was an earlier day (its own entry admits its stamps
 drifted). **Two sections carry 08-08; the one nearer the top is the later one.** Trust the order, not the date.
