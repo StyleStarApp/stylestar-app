@@ -7,7 +7,34 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-11, EVENING SESSION — the clean list ships, and HER SEARCH VERDICT is the one blocker)
+## ▶ NEXT SESSION — START HERE (2026-08-12 — ABERCROMBIE'S DEPARTMENT PARAM IS FIXED, the last open store-URL thread)
+Short loose-ends session. Cath sent Almira a follow-up email this morning (awaiting reply) and confirmed the
+Cowork spreadsheet is the **Option 3 curated-catalog companion sheet** — she started the jeans category, more
+to come, no rush. Then she supplied the URL this file had been asking for since 2026-08-09.
+- ✅ **ABERCROMBIE FIXED.** The 2026-08-09 finding was that the "womens" KEYWORD flipped Abercrombie's search
+  to the MEN'S department (their parser matches "mens" inside "womens"), so it had been left deliberately
+  UNSCOPED — a real gap, since Abercrombie is a real multi-gender store with women's-specific results being
+  missed. Cath ran a plain search, tapped **Shop By → Women's**, and pasted the resulting URL:
+  `...search?facet=gender%3A%28%22Women%27s%22%29&filtered=true&...&searchTerm=Dress&...` — confirming the
+  correct department PARAM (`facet=gender:("Women's")&filtered=true`), the same `gp` mechanism already
+  verified for Amazon and the Gap family (2026-08-08). **Built:** Abercrombie's `STORES` entry now carries
+  `gp:'&facet=gender%3A%28%22Women%27s%22%29&filtered=true'` — every search is scoped to women's, no more
+  keyword games, and (per the standing rule) this silently repairs any already-saved wishlist item too.
+  `searchtune.js` updated deliberately, not silenced: the old "Abercrombie UNscoped" assertion replaced with
+  a positive check on the facet param, the housekeeping param-scoped count moved 5 → 6, both comments
+  updated to explain WHY the store moved categories. **57/57 green.**
+- ▶ **STORE-URL WORK IS NOW FULLY CLOSED AGAIN.** The only other open thread was Bloomingdale's color-facet
+  path (already confirmed by her paste on 2026-08-08, just parked for a dedicated build session — no more
+  URLs needed there) and Macy's (same platform, likely same trick, never confirmed, low priority). Nothing
+  outstanding requires her address bar right now.
+- ▶ **STILL THE ONE REAL BLOCKER, unchanged: her search-quality verdict** — "None of them are 'just right.'"
+  Her own retest screenshots still haven't arrived; ask for them again. This Abercrombie fix is a genuine
+  quality improvement on ONE store's scoping, not a fix for the structural search-vs-catalog gap (feeds
+  are still the real cure, per the 2026-08-11 entry below).
+- ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
+  the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline).
+
+## ▶ PREVIOUS — 2026-08-11, EVENING SESSION — the clean list ships, and HER SEARCH VERDICT is the one blocker
 ⚠️ Date note: this was a second session on 08-11; a few in-code comments from it are stamped 2026-08-12. Same session, no missing day.
 
 ### 🚨 THE HEADLINE, HER WORDS, AND IT IS THE WHOLE SHARING QUESTION: THE SEARCHES ARE THE ONLY BLOCKER

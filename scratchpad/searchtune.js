@@ -50,10 +50,13 @@ const urls = await page.evaluate(() => ({
   dsw: getStoreUrl('DSW', null, 'red sandals'),
   // unknown store falls to Google Shopping, unscoped
   unknown: getStoreUrl('Totally Unknown Store', null, 'blue dress'),
-  // her live testing 2026-08-09: the womens keyword FLIPPED Abercrombie to the
-  // MEN'S department ("mens" hides inside "womens" for their parser) and risked
-  // zeroing niche eyewear searches — those four are deliberately unscoped
+  // her live testing 2026-08-09: the womens KEYWORD flipped Abercrombie to the
+  // MEN'S department ("mens" hides inside "womens" for their parser). Fixed
+  // 2026-08-12 with her own confirming paste: a gp department PARAM instead
+  // (facet=gender:("Women's")&filtered=true), same family as Amazon/Gap.
   abercrombie: getStoreUrl('Abercrombie', null, 'black cropped bomber jacket'),
+  // the niche eyewear trio stays unscoped — a 5-word search + a keyword can
+  // zero out at a Shopify-style AND search; low-stakes gender bleed there
   quay: getStoreUrl('Quay', null, 'tortoise round sunglasses'),
   sunglassHut: getStoreUrl('Sunglass Hut', null, 'black cat eye sunglasses'),
   warby: getStoreUrl('Warby Parker', null, 'tortoise round glasses'),
@@ -80,7 +83,7 @@ ok('women-only Talbots untouched', urls.talbots.endsWith('search?q=navy%20blazer
 ok('women-first Sam Edelman untouched', urls.samE.endsWith('#q=kitten%20heel%20mules'), urls.samE);
 ok('DSW scoped too (her address bar proved the path form takes it)', urls.dsw.endsWith('/browse/womens%20red%20sandals'), urls.dsw);
 ok('unknown store → Google fallback, unscoped', urls.unknown.includes('google.com') && !urls.unknown.includes('womens'), urls.unknown);
-ok('Abercrombie UNscoped (the keyword flipped it to Men\'s)', !urls.abercrombie.includes('womens'), urls.abercrombie);
+ok('Abercrombie gets her verified department facet, never the womens keyword', urls.abercrombie.includes('searchTerm=black%20cropped%20bomber%20jacket') && urls.abercrombie.endsWith('&facet=gender%3A%28%22Women%27s%22%29&filtered=true') && !urls.abercrombie.includes('womens%20'), urls.abercrombie);
 ok('Quay UNscoped and on its NEW domain quay.com', urls.quay.startsWith('https://www.quay.com/search?q=tortoise') && !urls.quay.includes('womens'), urls.quay);
 ok('Sunglass Hut UNscoped (eyewear zero-risk class)', !urls.sunglassHut.includes('womens'), urls.sunglassHut);
 ok('Warby Parker UNscoped (same class)', !urls.warby.includes('womens'), urls.warby);
@@ -199,7 +202,9 @@ const counts = await page.evaluate(() => ({
   gp: Object.values(STORES).filter(s => s.gp).length
 }));
 ok('still 101 stores', counts.stores === 101, String(counts.stores));
-ok('39 keyword-scoped + 5 param-scoped', counts.w === 39 && counts.gp === 5, counts.w + ' / ' + counts.gp);
+// 2026-08-12: Abercrombie moved from keyword-scoped-never (it was unscoped)
+// into param-scoped, via her verified gender facet — gp count 5 → 6.
+ok('39 keyword-scoped + 6 param-scoped', counts.w === 39 && counts.gp === 6, counts.w + ' / ' + counts.gp);
 ok('zero JS errors', errs.length === 0, errs.join(' | '));
 
 await browser.close(); server.close();
