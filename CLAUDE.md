@@ -27,9 +27,30 @@ she started the jeans category, more to come, no rush.
      description stay put — only the link moves. No JS/markup changes, CSS-only.
   - Verified in real Chromium at 390/360/320: no overflow, chip never clips (169px, well inside every width),
     zero JS errors, contrast computed not assumed. Screenshot sent to her before shipping.
-  - ⚠️ **The bottom-of-page teaser strip (`.wdr-tt-note`/`.wdr-tt-see`) has the identical pattern and wasn't
-    touched** — she only screenshotted the tab. Same fix is a five-minute follow-up if she wants it there too;
-    flag it to her rather than assuming.
+  - ✅✅ **FOLLOW-UP, SAME SESSION, her yes: the bottom teaser strip AND the arrows, both done.**
+    1. **Teaser strip** (`.wdr-tt-note`/`.wdr-tt-see`, the narrower 205px horizontal-scroll cards at the
+       bottom of My List) got the identical treatment — 12.5px → 13.5px, same darkened `#4a463e` ink, same
+       8.19:1 contrast, chip boxed and moved right. ⚠️ **Different CSS mechanism than the tab fix, and it
+       matters:** `.wdr-tt-card` is `display:flex;flex-direction:column`, so `text-align:right` (the trick
+       used on the plain-block `.wdr-tcard`) would only affect inline content, not the item's own position —
+       `align-self:flex-end` on `.wdr-tt-see` is the correct property for moving a flex ITEM to the cross-axis
+       end. Text wraps to 2 lines inside the narrower chip at this width, which is honest (it was already near
+       wrapping before, unchanged font size, the standing readability-over-evenness rule).
+    2. **All three arrows made thicker/bigger, her ask.** The trailing `&rarr;` was a bare text glyph — same
+       root problem already solved once for the wardrobe TAB arrows back on 2026-08-11 (`.wdr-tab-ar`): a
+       glyph's weight comes from the font, not from font-weight or font-size, so "thicker" was never reachable
+       by styling text. Replaced with a shared inline SVG (`_WDR_ARR`, stroke-width 3.2, `currentColor` so it
+       always matches its button's ink) across all three: My List's `.wdr-see`, the Trending tab's `.tlf`, and
+       the teaser's `.wdr-tt-see`. All three buttons converted to `inline-flex` so icon+text align cleanly.
+       ⚠️ **Deliberately scoped to just these three** — `&rarr;` appears in a couple dozen other places across
+       the app (Shop-this-item buttons, chat links, etc.) that were never part of this conversation; left
+       untouched rather than assumed in scope.
+    - ⚠️ **Verified the one invariant that actually mattered here, directly, not by assumption:** the SHOP
+      column heading is centered over the Ideas chip by design (a hard-won fix from 2026-08-11), and swapping
+      the glyph for a differently-sized SVG changes the chip's total width, which could shift that center.
+      Measured directly at 390/375/360/320: **offset is 0.07px at every width** — the centering survives
+      cleanly. Also confirmed zero overflow at 390/360/320 on both the My List rows (100 of them) and the
+      Trending tab, zero JS errors throughout.
 - ✅ **ABERCROMBIE FIXED.** The 2026-08-09 finding was that the "womens" KEYWORD flipped Abercrombie's search
   to the MEN'S department (their parser matches "mens" inside "womens"), so it had been left deliberately
   UNSCOPED. Cath ran a plain search, tapped **Shop By → Women's**, and pasted the resulting URL, confirming

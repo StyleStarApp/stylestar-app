@@ -519,8 +519,12 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    and a filled version was argued down for competing with "Shop my whole list"
    on the same screen. Cost she accepted: the name column goes 203.5 -> 171.5px
    and ONE of 100 names wraps. */
-#s-wardrobe .wdr-see{font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;flex:0 0 auto;white-space:nowrap;-webkit-tap-highlight-color:transparent;margin-right:10px;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff}
+#s-wardrobe .wdr-see{display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;flex:0 0 auto;white-space:nowrap;-webkit-tap-highlight-color:transparent;margin-right:10px;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff}
 #s-wardrobe .wdr-see-star{color:#E6C24E}
+/* Her ask 2026-08-12: the trailing arrow on all three Ideas/See-ideas buttons
+   made "a little larger/thicker looking" -- shared by .wdr-see, .tlf and
+   .wdr-tt-see, sized to sit comfortably beside 11.5px button text. */
+#s-wardrobe .wdr-see-ar{display:block;width:12.5px;height:12.5px;flex:none}
 /* ▶ THE WORKSHEET COLUMN HEADING (her pick "C", 2026-08-11). She loves that this
    page is the worksheet she actually uses in a client's closet, and her problem
    was that the star's meaning is explained at the TOP but never at the POINT OF
@@ -624,7 +628,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px;min-width:0;text-align:right}
 #s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px;text-align:left}
 #s-wardrobe .wdr-tcard .tnf{font:italic 400 14.5px/1.45 'Fraunces',serif;color:#4a463e;margin-bottom:12px;text-align:left}
-#s-wardrobe .wdr-tcard .tlf{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-tcard .tlf{display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-foot{text-align:center;margin-top:26px}
 /* Bottom-of-list "What's Trending" horizontal teaser (2nd entry point) */
 /* A real page break before What's Trending, so the secondary offer stops
@@ -642,8 +646,13 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wardrobe .wdr-tt-scroll::-webkit-scrollbar{display:none}
 #s-wardrobe .wdr-tt-card{flex:0 0 205px;background:#F5EFE2;border:1px solid #1a1a1a;padding:15px 15px 13px;display:flex;flex-direction:column}
 #s-wardrobe .wdr-tt-n{font:600 15px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
-#s-wardrobe .wdr-tt-note{font:italic 400 12.5px/1.4 'Fraunces',serif;color:#5c5648;margin-bottom:11px;flex:1}
-#s-wardrobe .wdr-tt-see{font:600 11.5px/1 'Jost',sans-serif;color:#8a6a1e;cursor:pointer}
+/* 2026-08-12: same readability fix as the Trending tab's .tnf/.tlf, applied to
+   this narrower 205px teaser card. .wdr-tt-card is a column flex, not plain
+   block flow, so the chip's right-alignment comes from align-self:flex-end,
+   not text-align (which would only affect inline content, not the item's own
+   position on the cross axis). */
+#s-wardrobe .wdr-tt-note{font:italic 400 13.5px/1.42 'Fraunces',serif;color:#4a463e;margin-bottom:11px;flex:1}
+#s-wardrobe .wdr-tt-see{align-self:flex-end;display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;padding:5px 9px;border:1px solid #D8A52E;border-radius:2px;background:#fff;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-tt-all{flex:0 0 132px;align-items:center;justify-content:center;text-align:center;background:#1a1a1a;color:#EACD68;font:600 12.5px/1.3 'Jost',sans-serif;cursor:pointer;padding:15px 12px}
 #s-wardrobe .wdr-teaser-ideas{margin-top:6px}
 /* stitched-tag topper for the Welcome Back / Style Portrait entry hub (matches the room) */
@@ -6790,6 +6799,12 @@ function _wdrStar(on){
     ? '<svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1" stroke-linejoin="round"><path d="'+_WDR_STAR_PATH+'"/></svg>'
     : '<svg viewBox="0 0 24 24" fill="none" stroke="#c3bba6" stroke-width="1.9" stroke-linejoin="round"><path d="'+_WDR_STAR_PATH+'"/></svg>';
 }
+// The Ideas/See-ideas buttons' trailing arrow, her ask 2026-08-12: "a little
+// larger/thicker looking." A bare -> character can never be made thicker by
+// font-weight (a glyph's weight comes from the font, the same lesson already
+// learned for the wardrobe tab arrows, .wdr-tab-ar) -- inline SVG instead,
+// stroke-width driven, currentColor so it always matches its button's ink.
+var _WDR_ARR='<svg class="wdr-see-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>';
 // The worksheet's column heading, repeated at every category so the two controls
 // are labelled wherever she happens to be on a 100-row page. Her words: SHOP over
 // the Ideas link, ADD over the star.
@@ -6808,7 +6823,7 @@ function _wardrobeItemRow(id,name,isCustom,note){
   return '<div class="wdr-item'+(want?' want':'')+'">'
     +delBtn
     +'<div class="'+nameClass+'">'+_esc(name)+noteHtml+'</div>'
-    +'<span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')">Ideas &rarr;</span>'
+    +'<span class="wdr-see" onclick="wardrobeSeeIdeas(\''+id+'\')">Ideas'+_WDR_ARR+'</span>'
     +'<span class="wdr-star'+(want?' on':'')+'" role="button" aria-pressed="'+(want?'true':'false')+'" title="'+(want?'On your list':'Add to my list')+'" onclick="wardrobeWant(\''+id+'\','+cust+')">'+_wdrStar(want)+(want?'<span class="wdr-added">Added</span>':'')+'</span>'
     +'<div class="wdr-expand" id="wx_'+id+'" style="display:none"></div>'
     +'</div>';
@@ -6978,7 +6993,7 @@ function renderWardrobeTrend(){
   let html='';
   trendItems.forEach(function(item,i){
     const tid='trend'+i;
-    html+='<div class="wdr-tcard"><div class="ttf">'+_esc(item.n)+'</div><div class="tnf">'+_esc(item.note)+'</div><span class="tlf" onclick="wardrobeSeeIdeas(\''+tid+'\')">See ideas in your style &rarr;</span><div class="wdr-expand" id="wx_'+tid+'" style="display:none"></div></div>';
+    html+='<div class="wdr-tcard"><div class="ttf">'+_esc(item.n)+'</div><div class="tnf">'+_esc(item.note)+'</div><span class="tlf" onclick="wardrobeSeeIdeas(\''+tid+'\')">See ideas in your style'+_WDR_ARR+'</span><div class="wdr-expand" id="wx_'+tid+'" style="display:none"></div></div>';
   });
   body.innerHTML=html;
   body.dataset.built='1';
@@ -6993,7 +7008,7 @@ function renderWardrobeTeaser(preview){
   let html='';
   list.forEach(function(item,i){
     const tid='trendT'+i;
-    html+='<div class="wdr-tt-card"><div class="wdr-tt-n">'+_esc(item.n)+'</div><div class="wdr-tt-note">'+_esc(item.note)+'</div><span class="wdr-tt-see" onclick="wardrobeSeeIdeas(\''+tid+'\',\'wdrTeaserIdeas\')"><span class="wdr-see-star">&#9733;</span> See ideas in your style &rarr;</span></div>';
+    html+='<div class="wdr-tt-card"><div class="wdr-tt-n">'+_esc(item.n)+'</div><div class="wdr-tt-note">'+_esc(item.note)+'</div><span class="wdr-tt-see" onclick="wardrobeSeeIdeas(\''+tid+'\',\'wdrTeaserIdeas\')"><span class="wdr-see-star">&#9733;</span> See ideas in your style'+_WDR_ARR+'</span></div>';
   });
   if(preview&&trendItems.length>3){
     html+='<div class="wdr-tt-card wdr-tt-all" onclick="wardrobeSeeAllTrending()">See all trending &rarr;</div>';
