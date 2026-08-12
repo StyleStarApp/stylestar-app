@@ -595,6 +595,11 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
 /* Swipe hint + "thinking" loader + one-time nudge */
 #s-wardrobe .wdr-swipe-hint{text-align:right;font:600 11px/1 'Jost',sans-serif;color:#9a9a9a;letter-spacing:.03em;margin:0 4px 6px}
+/* The Refine nudge under "Tops in your favorite colors" Ideas, 2026-08-12,
+   her ask -- quiet, sits AFTER the 4 real ideas so it never gates shopping,
+   readable size per the same lesson as the Trending card fix this session. */
+#s-wardrobe .wdr-colorhint{font:italic 400 13.5px/1.45 'Fraunces',serif;color:#4a463e;text-align:center;max-width:280px;margin:12px auto 0;text-wrap:balance}
+#s-wardrobe .wdr-colorhint span{font-style:italic;color:#A0761B;font-weight:600;cursor:pointer}
 #s-wardrobe .wdr-loading{display:flex;flex-direction:column;align-items:center;gap:9px;padding:16px 0 12px}
 #s-wardrobe .wdr-load-star{width:34px;height:34px;animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
 #s-wardrobe .wdr-load-txt{font:600 12.5px/1.3 'Jost',sans-serif;color:#8a6a1e;text-align:center}
@@ -6961,6 +6966,18 @@ function wardrobeSeeIdeas(id,boxId){
   box.style.display='block';
   _wardrobeIdeaGen(id,boxId);
 }
+// Her 2026-08-12 catch: starring "White tops" pulled tanks and dressy tops
+// into its Ideas, but those already have their own checklist rows in the
+// same Tops category. Maps an item id to the sibling ids its Ideas must NOT
+// bleed into. ⚠️ Reviewed and confirmed by her per item, category by
+// category -- deliberately NOT auto-derived from the checklist structure,
+// because she is the taxonomy authority and a wrong exclusion would silently
+// hide real results. Extend only after talking a category through with her.
+var _WDR_IDEA_EXCLUDE={
+  to1:['to4','to7','to5','to6'], // White tops: not Print/Tank/Blouse/Dressy
+  to2:['to4','to7','to5','to6'], // Black tops: same four
+  to3:['to4','to7','to5','to6']  // Tops in your favorite colors: same four
+};
 async function _wardrobeIdeaGen(id,boxId){
   const box=document.getElementById(boxId||('wx_'+id));
   if(!box)return;
@@ -6969,7 +6986,17 @@ async function _wardrobeIdeaGen(id,boxId){
   if(!name)return;
   box.innerHTML='<div class="wdr-loading"><svg class="wdr-load-star" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E6C24E" stroke="#b8bcc2" stroke-width="0.6"/></svg><div class="wdr-load-txt">Finding ideas for &ldquo;'+_esc(name)+'&rdquo;&hellip;</div></div>';
   const basis=(Array.isArray(answers)&&answers.length===12&&topArchNames.length)?('Her style: '+topArchNames.join(', ')+'.'):'';
-  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Name each piece plainly and beautifully, color + style + item, like "Tan Suede Moto Jacket" — never vague ("a nice jacket"), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
+  const exclNames=(_WDR_IDEA_EXCLUDE[id]||[]).map(_wardrobeFindName).filter(Boolean);
+  const exclLine=exclNames.length?'\n\nShe already has a separate checklist item for each of: '+exclNames.join(', ')+'. Those are covered elsewhere, so do not suggest anything that belongs to those instead. Keep every option specific to just "'+name+'".':'';
+  // "Tops in your favorite colors" is (as of 2026-08-12) the one item on the
+  // checklist whose whole point IS her color preference. When she hasn't
+  // saved any yet, getPrefsForPrompt() below says nothing about color at
+  // all, so the model would be guessing at "her favorite" with zero signal.
+  // Told plainly instead, so it shows honest variety rather than inventing one.
+  const colorDependent=/favorite colors?/i.test(name);
+  const noColorData=colorDependent&&!(prefs.colorsLove&&prefs.colorsLove.length);
+  const colorFallbackLine=noColorData?'\n\nShe has not told us her favorite colors yet. Do not guess at a personal favorite, show a believable spread of different colors across the 4 items instead, not repeats of one color.':'';
+  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+exclLine+colorFallbackLine+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Name each piece plainly and beautifully, color + style + item, like "Tan Suede Moto Jacket" — never vague ("a nice jacket"), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
@@ -6980,6 +7007,11 @@ async function _wardrobeIdeaGen(id,boxId){
       html+=_shopCard(item);
     });
     html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
+    // Her ask 2026-08-12: nudge toward Refine "without getting her off track
+    // from shopping" -- so this sits AFTER the 4 real ideas, never before or
+    // instead of them, and only for the one color-dependent item while she
+    // genuinely has no colors saved yet (self-clears the moment she refines).
+    if(noColorData)html+='<div class="wdr-colorhint">We don\'t know your favorite colors yet, so this is a mix. <span onclick="openPrefs()">Add yours in Refine your Preferences</span> for picks made just for you.</div>';
     box.innerHTML=html;
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
     _swipeHint(_g,_h);_nudgeScroll(_g);

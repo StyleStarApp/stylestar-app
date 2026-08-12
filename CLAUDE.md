@@ -11,6 +11,37 @@ by email.
 Loose-ends session, all store-table work, all her calls. Cath sent Almira a follow-up email this morning
 (awaiting reply) and confirmed the Cowork spreadsheet is the **Option 3 curated-catalog companion sheet** —
 she started the jeans category, more to come, no rush.
+- ✅ **THE WARDROBE-IDEAS CATEGORY-BLEED FIX IS BUILT, the long-parked 2026-07-31 conversation, finally had.**
+  Her original catch: starring "White tops" pulled dressy/going-out tops and tanks into its Ideas carousel —
+  because `_wardrobeIdeaGen()` only ever sent the model the ONE item name, with no idea those are already
+  separate checklist rows in the same Tops category. Walked her through the real Tops category (7 items) and
+  she confirmed the fix for the three color-generic ones:
+  1. **`_WDR_IDEA_EXCLUDE`, a small hand-reviewed map**, id → sibling ids to keep out of its Ideas. White tops,
+     Black tops and Tops in your favorite colors all exclude Print tops, Tank tops/Camisoles, Professional
+     blouses and Dressy or going-out tops. ⚠️ **Deliberately NOT auto-derived from the checklist structure** —
+     she is the taxonomy authority (the same standing rule as the store table) and a wrong auto-exclusion would
+     silently hide real results with no way to notice. Extend it only after talking a category through with
+     her; nothing else in the other 9 categories was touched.
+  2. **The color-fallback gap she spotted herself, unprompted: "if she has not refined, would it pick general
+     popular colors?"** Traced it in the code with her — no, it wouldn't. `getPrefsForPrompt()` only adds a
+     colors line when `prefs.colorsLove` has data; with nothing saved, "Tops in your favorite colors" reached
+     the model with zero color signal, "her favorite" undefined. Now an explicit fallback line fires only in
+     that case: show a believable spread across colors, never guess at a personal favorite.
+  3. **Her ask, and it shaped the whole build: nudge her toward Refine "without getting her off track from
+     shopping."** `.wdr-colorhint`, one quiet italic whisper line, sits AFTER the 4 real Ideas cards inside the
+     expand panel — never before them, never blocking, matching her own value-first product principle (never
+     make her earn the value). Gold-bold "Add yours in Refine your Preferences" link → `openPrefs()`. No
+     dismiss/stamp needed: it just self-clears the moment `colorsLove` has data, so it can never nag past being
+     useful. Sized 13.5px `#4a463e` — the SAME readable ink just established for the Trending card this same
+     session, not a smaller throwaway shade.
+  - Verified live in Chromium, intercepting the real fetch call: White tops' prompt carries all 4 exclusion
+    names and no color line · unrefined "favorite colors" carries the fallback line AND renders the whisper ·
+    refined "favorite colors" carries her real `Colors she loves` line and the whisper is gone. Contrast 8.19:1
+    at 390/360/320, zero overflow, zero JS errors.
+  - ▶ **Nothing else in the checklist was reviewed or changed.** Bottoms/Dresses/Jackets & Layers all look
+    fairly well-separated by name already (jeans vs. trousers vs. skirts; sundresses vs. cocktail dresses) but
+    that's an impression, not her confirmation — ask if she's noticed bleed anywhere else while testing before
+    assuming any of it is fine.
 - ✅ **WHAT'S TRENDING CARD READABILITY FIX, her live catch mid-session** — explicitly flagged against her own
   "stop polishing" pause: *"I know we decided to stop polishing things on the app but something is bothering
   me... the italic words are so small and hard to read."* Right call to raise it anyway: readability is a
