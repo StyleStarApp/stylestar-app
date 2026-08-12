@@ -56,8 +56,28 @@ she started the jeans category, more to come, no rush.
     limitation noted throughout this file; deploy previews can't spend the production key either). The prompt
     CONTENT is verified correct (exclusions + her definition both present, Daytime casual absent), but whether
     the model actually reliably HONORS the stricter definition is unproven until she spot-checks it live.
-    **Ask her to test "Work-appropriate dresses" Ideas on the live site** and report back — same pattern as
-    every other prompt-tuning fix in this file (the six-screenshot search session, the mirror-the-look fix).
+  - 🚨 **AND SHE DID TEST — first version only "a little better": a Bloomingdale's one-shoulder dress,
+    spaghetti straps, satin. All three explicitly against her definition.** ▶ **DIAGNOSIS, and it's a reusable
+    lesson: a rule's PLACEMENT and PHRASING carry real weight, not just its content.** The first version was a
+    descriptive paragraph BEFORE the RULES list ("Work-appropriate means: ..."); the one rule that visibly
+    already works in this same prompt (never-wear) is an imperative NEVER bullet living INSIDE the RULES list,
+    closed with "This rule is absolute." **Rewritten to match that exact shape** — moved into RULES right after
+    the never-wear bullet, and the three violations she actually SAW are now named explicitly (one-shoulder,
+    spaghetti straps, satin) rather than left to fall out of a general "modest neckline" phrase. Re-verified:
+    the new bullet sits immediately after the never-wear rule, carries "This rule is absolute, the same weight
+    as her never-wear list," and names all three violations by word. **Awaiting her SECOND live test.**
+  - ⚠️ **A STRUCTURAL CAVEAT FLAGGED TO HER, worth remembering for any future EXCLUSION-based item:** the
+    "Find it" link runs a short 2-4 word search directly on the STORE's own site — the model's naming and
+    rules only control what gets picked and named, never what the store's search engine actually returns on
+    the results page. "Work-appropriate dresses" is unusually exposed to this because it's defined mostly by
+    EXCLUSIONS (no straps, no satin, no short hems) that a short store-search box cannot encode, unlike most
+    checklist items which are defined by an INCLUSION (a specific color/kind) that transfers cleanly into a
+    search term. So even a flawless model pick can still get undercut by whatever the store's own search
+    surfaces for a generic query. This is the same search-vs-real-inventory ceiling documented elsewhere in
+    this file, just harder-hitting on this one item. ▶ **If her second test still shows violations, the next
+    lever isn't more prompt rules — it's whether the SEARCH TERM itself can carry one more qualifying word
+    (e.g. "sheath" or "knee-length") for exclusion-defined items specifically, trading against the standing
+    "extra words hurt store ranking" rule. Discuss with her before building it, don't guess.**
   - ▶ **Nothing else in the checklist was reviewed or changed.** Bottoms/Jackets & Layers/etc. all look fairly
     well-separated by name already (jeans vs. trousers vs. skirts) but that's an impression, not her
     confirmation — ask if she's noticed bleed anywhere else while testing before assuming any of it is fine.
