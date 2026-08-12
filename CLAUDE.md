@@ -11,6 +11,37 @@ by email.
 Loose-ends session, all store-table work, all her calls. Cath sent Almira a follow-up email this morning
 (awaiting reply) and confirmed the Cowork spreadsheet is the **Option 3 curated-catalog companion sheet** —
 she started the jeans category, more to come, no rush.
+- ⭐⭐ **THE BIGGEST FIND OF THE SESSION: "PRIORITIZE HER COLOR PREFERENCES" WAS QUIETLY HURTING EVERY SHOPPING
+  SURFACE IN THE APP, not just the wardrobe list — her own live testing caught it while we worked through
+  categories.** Once she'd refined and saved loved colors, she noticed searches like "blush midi dress," "royal
+  blue sweatshirt," "hot pink matching athletic set" — a specific favorite color forced into EVERY search, even
+  for items that were never about color at all (a work-appropriate dress, a workout top). Worst case: "red wrap
+  dress" opened to dresses that were neither red nor wrapped. **Her diagnosis, verbatim-ish, and it's exactly
+  right: "if we are looking for a work appropriate dress, the search does not need to limit by color... if she
+  needs specifically a pink dress she can ask stylist chat to find it."** That's a real, correct product
+  distinction — chat is the tool for a precise single ask (it searches, retries, asks questions); the
+  multi-card browsing surfaces (wardrobe Ideas, Shop your style, Complete the Look, wishlist regen) are for
+  possibilities, and forcing an exact unavailable shade into a fast 4-card glance just breaks it.
+  - **Root cause: the bare bullet `"- Prioritize her color preferences"` was duplicated in FIVE separate prompt
+    strings** (`shopMyStyle`, both branches of `_shopStyleGen`, `_wardrobeIdeaGen`), unconditionally pushing one
+    of her exact loved colors into the leading color slot of every search, on every item, regardless of whether
+    that item's own identity had anything to do with color.
+  - **Fixed with ONE new shared function, `_colorPrefRule()`**, replacing all five copies so they can never
+    drift apart again: *"Her loved colors are a LEAN, not a requirement... never force one of her exact colors
+    onto a piece whose real point is something else... never promise a color you are not genuinely confident
+    that store carries... vary colors naturally across your picks instead of repeating one."*
+  - ▶ **Her other idea, considered and NOT taken, for a real reason she agreed with:** renaming "Tops in your
+    favorite colors" to "Tops in popular colors" to depersonalize it. Recommended keeping the personal name
+    instead — "your" is core to the brand's whole differentiation (a real stylist speaking to her, not a trend
+    list) — and fixing the SEARCH BEHAVIOR instead of the item's identity gets her the same result (searches
+    that aren't artificially narrowed) without losing that. She didn't push back.
+  - ⚠️ **The existing `colorFallbackLine`/`noColorData` logic (the whisper + "show a spread when unrefined"
+    fix from earlier this same session) was LEFT AS IS, deliberately** — it solves a different, still-real
+    problem (zero color signal at all for the one color-NAMED item) and is complementary to, not overlapping
+    with, this new general softening. Both apply together for "Tops in your favorite colors" now.
+  - Verified live in Chromium across all four surfaces (`shopMyStyle`'s template-literal prompt included, which
+    needed `${_colorPrefRule()}` interpolation syntax rather than the string-concat form the other three use):
+    the new rule text is present, the old bare bullet is gone everywhere, zero JS errors.
 - ✅ **THE WARDROBE-IDEAS CATEGORY-BLEED FIX IS BUILT, the long-parked 2026-07-31 conversation, finally had.**
   Her original catch: starring "White tops" pulled dressy/going-out tops and tanks into its Ideas carousel —
   because `_wardrobeIdeaGen()` only ever sent the model the ONE item name, with no idea those are already
