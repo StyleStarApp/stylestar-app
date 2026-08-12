@@ -11,6 +11,25 @@ by email.
 Loose-ends session, all store-table work, all her calls. Cath sent Almira a follow-up email this morning
 (awaiting reply) and confirmed the Cowork spreadsheet is the **Option 3 curated-catalog companion sheet** —
 she started the jeans category, more to come, no rush.
+- ✅ **WHAT'S TRENDING CARD READABILITY FIX, her live catch mid-session** — explicitly flagged against her own
+  "stop polishing" pause: *"I know we decided to stop polishing things on the app but something is bothering
+  me... the italic words are so small and hard to read."* Right call to raise it anyway: readability is a
+  stated standing priority for her 18-80 audience, not cosmetic polish. Two things, one screenshot:
+  1. **The italic description (`.tnf`)** was 13px `#5c5648` (technically ~6.4:1 contrast — passes AA, but the
+     established pattern in this file is that italic+small still reads as hard-to-read for this audience even
+     when the number passes, same lesson as the A2HS whisper and Menu group labels). Now **14.5px `#4a463e`**
+     (the file's established readable-ink shade, used 14 other places) — **8.19:1**.
+  2. **"See ideas in your style" (`.tlf`)** was bare colored text on the left. Her ask: bigger, and moved to
+     the right "to be consistent with the other wardrobe list page where the clicking buttons are on the
+     right side" — she meant My List's `.wdr-see` chip (squared, gold-bordered, boxed). Gave `.tlf` the exact
+     same box treatment (border/padding/background, not just color-matched) and right-aligned it on the card
+     via `text-align:right` on `.wdr-tcard` with `.ttf`/`.tnf` explicitly pulled back to the left, so title and
+     description stay put — only the link moves. No JS/markup changes, CSS-only.
+  - Verified in real Chromium at 390/360/320: no overflow, chip never clips (169px, well inside every width),
+    zero JS errors, contrast computed not assumed. Screenshot sent to her before shipping.
+  - ⚠️ **The bottom-of-page teaser strip (`.wdr-tt-note`/`.wdr-tt-see`) has the identical pattern and wasn't
+    touched** — she only screenshotted the tab. Same fix is a five-minute follow-up if she wants it there too;
+    flag it to her rather than assuming.
 - ✅ **ABERCROMBIE FIXED.** The 2026-08-09 finding was that the "womens" KEYWORD flipped Abercrombie's search
   to the MEN'S department (their parser matches "mens" inside "womens"), so it had been left deliberately
   UNSCOPED. Cath ran a plain search, tapped **Shop By → Women's**, and pasted the resulting URL, confirming

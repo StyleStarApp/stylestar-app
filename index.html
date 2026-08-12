@@ -615,10 +615,16 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    renders as the red emoji on iOS. */
 #s-wardrobe .wdr-trend-by .pinkheart{width:14px;height:14px;flex:none}
 #s-wardrobe .wdr-tstack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
-#s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px;min-width:0}
-#s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
-#s-wardrobe .wdr-tcard .tnf{font:italic 400 13px/1.4 'Fraunces',serif;color:#5c5648;margin-bottom:11px}
-#s-wardrobe .wdr-tcard .tlf{font:600 11.5px/1 'Jost',sans-serif;color:#8a6a1e;cursor:pointer}
+/* Cath's live catch 2026-08-12: the italic note read too small/light, and the
+   "See ideas" link was bare text on the left, inconsistent with My List's
+   boxed .wdr-see chip sitting on the right of each row. Fixed both: text-align
+   right on the card (with title/note explicitly pulled back to the left) puts
+   .tlf at the right edge, and it now carries the exact same chip treatment as
+   .wdr-see (border/padding/background), not just a color match. */
+#s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px;min-width:0;text-align:right}
+#s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px;text-align:left}
+#s-wardrobe .wdr-tcard .tnf{font:italic 400 14.5px/1.45 'Fraunces',serif;color:#4a463e;margin-bottom:12px;text-align:left}
+#s-wardrobe .wdr-tcard .tlf{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-foot{text-align:center;margin-top:26px}
 /* Bottom-of-list "What's Trending" horizontal teaser (2nd entry point) */
 /* A real page break before What's Trending, so the secondary offer stops
