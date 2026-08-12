@@ -7,7 +7,49 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-12 — THE DEPARTMENT-STORE COLOR FILTERS ARE BUILT, AND KATE SPADE IS GONE)
+## ▶ NEXT SESSION — START HERE (2026-08-12, LATER SAME DAY — HER SECOND RETEST CAUGHT IT STILL COLOR-LED, AND THE REAL CULPRITS ARE FOUND)
+- 🚨⭐ **HER RETEST SCREENSHOTS PROVED THE "LEAD WITH THE ITEM" REBUILD HADN'T LANDED: wardrobe Ideas still
+  color-led everywhere ("Blush Satin Camisole", "White Silk Professional Blouse", "Hot Pink Sequin Going-Out
+  Blouse" — hot pink = her loved color, on a non-color item), Shop your style partly ("Gold Kitten-Heel Mules",
+  "Blush Fitted Wrap Blouse").** Diagnosis found THREE separate writing bugs, all Claude's own:
+  1. **The naming formula "color + style + item" lived in ALL SEVEN prompt sites** (genOutfits' Complete-the-Look
+     spec, the 6-item genOutfits(source) prompt, shopMyStyle, both _shopStyleGen branches, the mirror branch,
+     _wardrobeIdeaGen) — the model was literally INSTRUCTED to lead every card name with a color, and a
+     color-led name drags the search with it. The SHAPE rule only ever governed the SEARCH.
+  2. **The original bare "If she has color preferences, prioritize those colors" bullet SURVIVED in the
+     genOutfits(source) prompt** (the Style Portrait / photo-results / Shop-your-style 6-card surface) — the
+     2026-08-12 morning replacement caught five copies; this sixth never called `_colorPrefRule()` at all.
+  3. **genOutfits' Complete-the-Look search spec still read "the color word ... + garment"** — color-first,
+     contradicting the new SHAPE rule sitting in the same prompt.
+- ⚠️ **THE 08-12-MORNING NAME/SEARCH COLOR EXCEPTION IS DELIBERATELY RETIRED** (names could carry a color the
+  search dropped): a card promising "Blush Satin Camisole" over a search for "satin camisole" lands on every
+  color — the name-is-a-promise rule and the exception could not coexist. **Now: names lead with the piece
+  (fabric/silhouette + item, "Satin Button-Front Blouse"), and a color belongs in a name ONLY when the search
+  carries the same color.** searchtune's exception assertion was updated deliberately, not silenced (it
+  correctly failed), replaced by four assertions pinning the new parity.
+- ⭐ **`_colorPrefRule()`'s default branch sharpened after a live test showed the model leaning "Pink Satin
+  Blouse" into 1 of 6 general picks: on browsing cards the lean shows in WHICH pieces and stores are chosen,
+  never as a color word in the name or search** — a specific-color ask belongs to stylist chat (her own July
+  framing, now written into the rule). Complete-the-Look keeps a deliberate door open: color allowed when the
+  pairing with her outfit genuinely depends on it.
+- ✅✅ **PROVEN AGAINST THE REAL LIVE MODEL THIS TIME — the thing the morning session couldn't do.** The sandbox
+  has no ANTHROPIC_API_KEY, but the DEPLOYED function does: `scratchpad/nocolor-live.js` captures the real
+  prompts from the edited page (her exact scenario seeded, `prefs.colorsLove=['Hot Pink','Royal Blue']`) and
+  POSTs them to the live function with the Origin header (the 2026-07-30 debugging pattern). **Results: Tank
+  tops/Camisoles, Professional blouses, Dressy or going-out tops, and Shop your style ALL item-led against the
+  real model** ("Ribbed Cotton Tank Top / ribbed tank top", "Satin Button-Front Blouse / satin blouse", "Sequin
+  Going-Out Top / sequin top", "Wrap Midi Dress / wrap midi dress") — zero color-led names or searches, zero
+  loved-color forcing. **And the over-correction check passed too: "Tops in your favorite colors" still leads
+  with Hot Pink / Royal Blue in names with "pink"/"blue" retail words in searches** — which is exactly what
+  fires the real color FILTER at Nordstrom/Macy's. ⚠️ Each run of nocolor-live.js costs a few cents of the
+  production key (4 small live calls) — the same deliberate trade as the 2026-08-08 live checks.
+- **Suites at this point: searchtune 66 (was 62; the retired-exception assertion swapped for 6 new ones) ·
+  searchchat 54 · cowork3 69 · e2e 29, all green.**
+- ▶ **FOR HER NEXT RETEST, the same three questions still apply** — this time the live-model evidence says they
+  should pass: wardrobe Ideas item-led? Shop your style item-led? Her loved colors appearing ONLY on "Tops in
+  your favorite colors"?
+
+## ▶ PREVIOUS — earlier the same day (2026-08-12 — THE DEPARTMENT-STORE COLOR FILTERS ARE BUILT, AND KATE SPADE IS GONE)
 Loose-ends session, all store-table work, all her calls. Cath sent Almira a follow-up email this morning
 (awaiting reply) and confirmed the Cowork spreadsheet is the **Option 3 curated-catalog companion sheet** —
 she started the jeans category, more to come, no rush.
