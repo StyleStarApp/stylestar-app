@@ -124,10 +124,24 @@ ok('2-4 word cap (was 2-5)', rules.includes('2 to 4 plain words'));
 ok('garment + one word shape', rules.includes('at most ONE defining word'));
 ok('honest-name rule with the mule example', rules.includes('Nude Patent Pointed-Toe Kitten Heel Mule'));
 // 2026-08-12, her live catch: "I would never lead with color" -- the SHAPE
-// rule no longer defaults to a color-first search, so name<->search parity
-// now deliberately excludes color (still required for everything else).
+// rule no longer defaults to a color-first search.
+// ⚠️ DELIBERATE UPDATE, same day, after her SECOND retest: the name<->search
+// color exception (names could carry a color the search dropped) is RETIRED.
+// Her cards still read color-first because every naming bullet said
+// "color + style + item"; now names lead with the piece and a name may carry
+// a color ONLY when the search carries the same one. The old assertion pinned
+// the retired exception and correctly failed; these pin the replacement.
 ok('lead with the item, not color (her ask)', rules.includes('lead with the ITEM, not a color'));
-ok('color is the deliberate name<->search exception', rules.includes('color is the one deliberate exception'));
+ok('names lead with the piece, never a color', rules.includes('LEAD WITH THE PIECE, never a color'));
+ok('a name-color must also be in the search', rules.includes('A color belongs in the name ONLY when that same color is in the search'));
+ok('the search default is NO color word', rules.includes('with NO color word at all'));
+ok('the old color-first naming formula is gone from every prompt', await page.evaluate(() => {
+  // check the built page source's prompt strings, not just _shopRules
+  const src = document.documentElement.outerHTML;
+  return !src.includes('color + style + item, like') && !src.includes('color + style + item, e.g.');
+}));
+ok('the stray "prioritize those colors" bullet is gone (the missed 6th copy)', await page.evaluate(() =>
+  !document.documentElement.outerHTML.includes('prioritize those colors')));
 ok('precision-to-store rule present', rules.includes('MATCH PRECISION TO THE STORE'));
 ok('boutique-vocabulary rule with her Kendra Scott case', rules.includes('JEWELRY & SMALL BOUTIQUES') && rules.includes('oversized hoops'));
 ok('jewelry metal is conditional on her saved preference, not forced', rules.includes('JEWELRY METAL') && !rules.includes('gold hoop earrings'));
