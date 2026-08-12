@@ -30,18 +30,37 @@ she started the jeans category, more to come, no rush.
   3. **Her ask, and it shaped the whole build: nudge her toward Refine "without getting her off track from
      shopping."** `.wdr-colorhint`, one quiet italic whisper line, sits AFTER the 4 real Ideas cards inside the
      expand panel — never before them, never blocking, matching her own value-first product principle (never
-     make her earn the value). Gold-bold "Add yours in Refine your Preferences" link → `openPrefs()`. No
-     dismiss/stamp needed: it just self-clears the moment `colorsLove` has data, so it can never nag past being
-     useful. Sized 13.5px `#4a463e` — the SAME readable ink just established for the Trending card this same
-     session, not a smaller throwaway shade.
+     make her earn the value). "Add yours in Refine your Preferences" link → `openPrefs()`. No dismiss/stamp
+     needed: it just self-clears the moment `colorsLove` has data, so it can never nag past being useful. Sized
+     13.5px `#4a463e` — the SAME readable ink just established for the Trending card this same session.
+     ⚠️ **The link started gold, then she asked for green to signal the Refine page — checked contrast before
+     picking one, and none of her four existing Refine-page greens actually cleared 4.5:1 against this card's
+     cream background** (best was her chip-selected text green at 4.47, just short). Shipped `#256b2b`, a
+     modest darkening of that same chip green, same family, 5.69:1.
   - Verified live in Chromium, intercepting the real fetch call: White tops' prompt carries all 4 exclusion
     names and no color line · unrefined "favorite colors" carries the fallback line AND renders the whisper ·
     refined "favorite colors" carries her real `Colors she loves` line and the whisper is gone. Contrast 8.19:1
     at 390/360/320, zero overflow, zero JS errors.
-  - ▶ **Nothing else in the checklist was reviewed or changed.** Bottoms/Dresses/Jackets & Layers all look
-    fairly well-separated by name already (jeans vs. trousers vs. skirts; sundresses vs. cocktail dresses) but
-    that's an impression, not her confirmation — ask if she's noticed bleed anywhere else while testing before
-    assuming any of it is fine.
+  - ✅ **SECOND CATEGORY DONE THE SAME SESSION: Work-appropriate dresses.** Her live-testing catch: its Ideas
+    were surfacing "strapless gowns or too short" pieces. Diagnosed as TWO separate problems, not one:
+    (a) the same sibling-bleed bug as Tops — Cocktail dresses and Formal gowns are the strapless-gown source,
+    Sundresses the too-short/too-casual source, added to `_WDR_IDEA_EXCLUDE['dr3']`. **Daytime casual dresses
+    deliberately NOT excluded, her explicit call** ("Daytime casual is fine for work appropriate"). (b) a
+    DEEPER gap unique to this item: "work-appropriate" is a judgment word, not a description, so the model had
+    no concrete definition to work from at all. **New `_WDR_IDEA_DEFINE` map** (id → her own stylist criteria,
+    condensed from her longer notes into one prompt line): knee-length or below, tailored/never clingy or
+    sheer, modest neckline, wide/standard straps only, no slits above the knee, structured medium-weight
+    fabric, muted/neutral solids or subtle prints, sleeves preferred. Same standing rule as the exclusion map —
+    only items she's personally defined get one; nothing invented for the other 7 Dresses items.
+  - ⚠️ **NO LIVE MODEL TEST WAS POSSIBLE THIS SESSION** — this sandbox has no `ANTHROPIC_API_KEY` (the standing
+    limitation noted throughout this file; deploy previews can't spend the production key either). The prompt
+    CONTENT is verified correct (exclusions + her definition both present, Daytime casual absent), but whether
+    the model actually reliably HONORS the stricter definition is unproven until she spot-checks it live.
+    **Ask her to test "Work-appropriate dresses" Ideas on the live site** and report back — same pattern as
+    every other prompt-tuning fix in this file (the six-screenshot search session, the mirror-the-look fix).
+  - ▶ **Nothing else in the checklist was reviewed or changed.** Bottoms/Jackets & Layers/etc. all look fairly
+    well-separated by name already (jeans vs. trousers vs. skirts) but that's an impression, not her
+    confirmation — ask if she's noticed bleed anywhere else while testing before assuming any of it is fine.
 - ✅ **WHAT'S TRENDING CARD READABILITY FIX, her live catch mid-session** — explicitly flagged against her own
   "stop polishing" pause: *"I know we decided to stop polishing things on the app but something is bothering
   me... the italic words are so small and hard to read."* Right call to raise it anyway: readability is a

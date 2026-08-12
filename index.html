@@ -6981,7 +6981,19 @@ function wardrobeSeeIdeas(id,boxId){
 var _WDR_IDEA_EXCLUDE={
   to1:['to4','to7','to5','to6'], // White tops: not Print/Tank/Blouse/Dressy
   to2:['to4','to7','to5','to6'], // Black tops: same four
-  to3:['to4','to7','to5','to6']  // Tops in your favorite colors: same four
+  to3:['to4','to7','to5','to6'], // Tops in your favorite colors: same four
+  // Work-appropriate dresses: her catch, "strapless gowns or too short" --
+  // Cocktail dresses and Formal gowns are the strapless-gown bleed; Sundresses
+  // the too-short/too-casual bleed. Daytime casual dresses deliberately NOT
+  // excluded -- her explicit call, overlap there is fine.
+  dr3:['dr5','dr9','dr10']
+};
+// Some checklist items are a judgment call, not a plain description -- the
+// model needs HER concrete definition, not its own guess at office norms.
+// Built from her actual words 2026-08-12, condensed to keep the prompt tight.
+// Same rule as the exclusion map: only items she has personally defined.
+var _WDR_IDEA_DEFINE={
+  dr3:'Work-appropriate means: hits at or below the knee, tailored fit (never tight, clingy or sheer), modest neckline (crew, small V or scoop, never plunging), straps wide or standard (no spaghetti straps unless covered), no slits above the knee, structured medium-weight fabric (no shiny, sheer or overly casual knits), solid or subtle prints in muted or neutral tones, sleeves (short, three-quarter or long) preferred, sleeveless only if conservative.'
 };
 async function _wardrobeIdeaGen(id,boxId){
   const box=document.getElementById(boxId||('wx_'+id));
@@ -7001,7 +7013,8 @@ async function _wardrobeIdeaGen(id,boxId){
   const colorDependent=/favorite colors?/i.test(name);
   const noColorData=colorDependent&&!(prefs.colorsLove&&prefs.colorsLove.length);
   const colorFallbackLine=noColorData?'\n\nShe has not told us her favorite colors yet. Do not guess at a personal favorite, show a believable spread of different colors across the 4 items instead, not repeats of one color.':'';
-  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+exclLine+colorFallbackLine+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Name each piece plainly and beautifully, color + style + item, like "Tan Suede Moto Jacket" — never vague ("a nice jacket"), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
+  const defineLine=_WDR_IDEA_DEFINE[id]?'\n\n'+_WDR_IDEA_DEFINE[id]:'';
+  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+exclLine+colorFallbackLine+defineLine+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Prioritize her color preferences\n- Name each piece plainly and beautifully, color + style + item, like "Tan Suede Moto Jacket" — never vague ("a nice jacket"), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
