@@ -264,8 +264,35 @@ she started the jeans category, more to come, no rush.
   real cure, per the 2026-08-11 entry below).
 - ▶ **DEPARTMENT-STORE COLOR FILTERING IS FULLY CLOSED** — Nordstrom, Macy's and Bloomingdale's all
   confirmed live, nothing left open on this thread.
+
+### ⏸ WHERE 2026-08-12 PAUSED (her call: "let's save everything and pause here")
+**Merged and grep-verified on main straight through the session, ending at commit `9ecb8c5`.** Working tree
+clean, branch matches main exactly. In order: Abercrombie's department param · Macy's + Bloomingdale's color
+filters + Kate Spade removed · Trending card readability + teaser strip + thicker arrows · the wardrobe
+category-boundaries walkthrough (Tops sibling-bleed, the color-fallback whisper, Work-appropriate dresses
+exclusions + her definition, strengthened to absolute + named violations after her first retest) · Bottoms/
+Jackets & Layers/Activewear/Foundations/Sleepwear/Shoes all reviewed and confirmed fine as-is, no changes ·
+**then the big one: "Prioritize her color preferences" found to be quietly hurting every shopping surface**,
+replaced with one shared `_colorPrefRule()` — caught still-broken on her own live retest (a writing bug, listing
+"tops" as a color-relevant garment kind), fixed properly · **then her deeper insight: search should lead with
+the ITEM, never a color, unless color is genuinely the point** — the original August SHAPE rule rebuilt, plus
+her jewelry-metal refinement (one metal = absolute constraint, multiple/no-preference = never forced).
+- ▶ **THE FIRST THING TO ASK HER: how her testing went.** She said she'd test and report back; nothing here
+  confirms the color/SHAPE rebuild or the Work-appropriate dresses strengthening actually landed with the
+  model — both are verified correct in the PROMPT, unproven against the real model from this sandbox (no
+  `ANTHROPIC_API_KEY` here, same standing limitation). Ask specifically: does Professional blouses / Tank
+  tops still show hot pink or royal blue? Does a plain search (no color) actually feel more like real
+  shopping? Does Work-appropriate dresses still show strapless/spaghetti-strap/satin pieces?
+- ▶ **CATEGORY REVIEW STATUS: 8 of 10 categories walked through with her, 2 never reached — Bags and Extras &
+  Accessories.** Worth finishing that pass next time, same method: show the category, flag genuine candidates,
+  let her confirm from her own testing rather than guessing from names alone. ⚠️ **Track record this session:
+  guessing from shared words alone was wrong 3 of 4 times** (Bottoms, Jackets & Layers, Foundations all "fine"
+  despite flagged candidates; only Tops and Dresses were real, and both came from HER actual testing, not from
+  pattern-matching) — lead with what she's actually seen go wrong, don't over-flag from category structure.
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
-  the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline).
+  the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
+  her search-quality retest, still the one real blocker to sharing/testers, now with several genuine rounds
+  of improvement behind it since her last verdict.
 
 ## ▶ PREVIOUS — 2026-08-11, EVENING SESSION — the clean list ships, and HER SEARCH VERDICT is the one blocker
 ⚠️ Date note: this was a second session on 08-11; a few in-code comments from it are stamped 2026-08-12. Same session, no missing day.
