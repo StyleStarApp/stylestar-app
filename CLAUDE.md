@@ -31,11 +31,17 @@ she started the jeans category, more to come, no rush.
     to the normal plain `?keyword=` search (unchanged, already proven correct) for everything else — so an
     unrecognized color can never risk an empty filtered page. `_CF_PATH_COLORS` holds the shared 11-word
     map (the 10 universal colors + tan). Both `STORES` entries carry `cfp:true` + their own `cfpBase`.
-  - ⚠️ **Macy's path form is NOT independently proven** — only Bloomingdale's has a real confirmed example
-    URL from months ago (`black-midi-dress/Color_normal/Black`); Macy's is built on the strength of the
-    identical color-panel UI + same parent company, which is strong but not the same as a live URL. Ask her
-    to spot-check ONE Macy's color-filtered link on her phone when she gets a chance — low urgency, easy to
-    revert to plain search if it's ever wrong (just drop `cfp` from its entry).
+  - ✅✅ **MACY'S NOW INDEPENDENTLY CONFIRMED TOO, same session.** She first tested by typing the bare word
+    "Dress" into Macy's search, which Macy's redirected to a CATEGORY browse page
+    (`/shop/womens/clothing/dresses/Color_normal/Black?id=5449&cm_kws=Dress`) rather than a search-results
+    page — a real, different URL shape, and a genuinely useful finding on its own: **a single word that
+    happens to exactly match one of a store's own category names can trigger a silent redirect**, the same
+    family of trap as the Macy's autocomplete-dropdown redirect caught back in July (`cm_kws_ac`). It did
+    confirm the color mechanism (`/Color_normal/Black` as a path segment) works identically on Macy's, but
+    not the exact `/shop/featured/` base our app actually builds. ▶ **She then tested the app's REAL
+    generated URL directly** (`macys.com/shop/featured/womens-black-midi-dress/Color_normal/Black?ss=true`,
+    a multi-word phrase, not a bare category word) and confirmed: **"I checked the link you sent too and it
+    worked."** Both stores are now genuinely proven, not just inferred from matching UI.
   - Verified: `bloomColor` builds to
     `bloomingdales.com/shop/featured/womens-tan-top-handle-bag/Color_normal/Tan%2FBeige?ss=true` — literally
     her own original test case #6 from the six-screenshot session back in August, now finally fixed properly.
@@ -63,9 +69,10 @@ she started the jeans category, more to come, no rush.
   Her own retest screenshots still haven't arrived; ask for them again. Today's fixes are genuine quality
   improvements to specific stores, not a fix for the structural search-vs-catalog gap (feeds are still the
   real cure, per the 2026-08-11 entry below).
+- ▶ **DEPARTMENT-STORE COLOR FILTERING IS FULLY CLOSED** — Nordstrom, Macy's and Bloomingdale's all
+  confirmed live, nothing left open on this thread.
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
-  the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
-  her spot-check of a live Macy's color-filtered link, whenever convenient.
+  the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline).
 
 ## ▶ PREVIOUS — 2026-08-11, EVENING SESSION — the clean list ships, and HER SEARCH VERDICT is the one blocker
 ⚠️ Date note: this was a second session on 08-11; a few in-code comments from it are stamped 2026-08-12. Same session, no missing day.
