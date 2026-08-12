@@ -5081,15 +5081,32 @@ function _shopRules(mode){
     // up empty or loose, and fantasy-specific names promised products the
     // search could never deliver. The name is a PROMISE about what the link
     // shows; the search is what the store's engine can actually honor.
-    '- "name": the descriptive name she reads on the card. Name the KIND of piece, beautifully but honestly: color + style + item, like "Blush Wrap Midi Dress" or "Tan Kitten-Heel Mules". NEVER invent an imaginary exact product ("Nude Patent Pointed-Toe Kitten Heel Mule") — the link runs a search, and a name more detailed than the search lands her on less than she was promised, which feels broken. Every detail in the name must also be in the search.\n'+
+    '- "name": the descriptive name she reads on the card. Name the KIND of piece, beautifully but honestly: a real, specific-sounding item, like "Blush Wrap Midi Dress" or "Tan Kitten-Heel Mules" — color is a natural, honest part of describing a real piece. NEVER invent an imaginary exact product ("Nude Patent Pointed-Toe Kitten Heel Mule") — the link runs a search, and a name more detailed than the search lands her on less than she was promised, which feels broken. Every OTHER detail in the name (style, silhouette, fabric) must also be in the search — color is the one deliberate exception, explained below.\n'+
     '- "search": the 2 to 4 plain words she would type into that store\'s search box. This is what the shopping link searches, so it matters more than the pretty name.\n'+
     '  USE RETAIL WORDS — the words on a store\'s own filter menus. Colors especially: "pink", never "raspberry" or "hot pink" or "fuchsia"; "tan" or "brown", never "cognac" or "camel-toast"; "gold", never "champagne". Store search engines do not know stylist shades; a poetic color finds nothing and the store quietly shows her junk instead.\n'+
-    '  SHAPE: color + garment + at most ONE defining word. Every extra word makes the store rank the right pieces LOWER — the engine treats words as suggestions and drowns precise matches under bestsellers.\n'+
-    '  Good: "black strappy sandals" / "tan top handle bag" / "navy wrap midi dress" / "kitten heel mules".\n'+
+    // ▶ 2026-08-12, her own words: "putting color in the search as the first
+    // thing is not how a stylist would actually search and shop... I would
+    // never lead with color. Always lead with the item, and once she is
+    // inside the store she selects color." A color WORD in free text is
+    // fragile — the store's engine can silently ignore it or rank it loosely
+    // (her "red wrap dress" that opened to neither red nor wrapped dresses).
+    // A real color FILTER, where the store has one, is a genuine constraint —
+    // and getStoreUrl already builds that automatically whenever a search's
+    // first word is a recognized color at a store that supports it (Nordstrom/
+    // Macy's/Bloomingdales), so nothing extra is needed here for that to work.
+    '  SHAPE: lead with the ITEM, not a color. A real stylist does not walk into a store and search by color first — she searches for the piece, then chooses her color from whatever that store actually has. So the search is usually just the garment + at most ONE defining word (occasion, fit, fabric) and does NOT need to repeat whatever color is in the name. Every extra word makes the store rank the right pieces LOWER, so keep it tight.\n'+
+    '  ONLY lead a search with color when color truly is the point: she has asked for a specific color directly, or the piece itself is explicitly about color (like a checklist item built around her favorite colors). Otherwise never guess a color into the search, even a plausible one.\n'+
+    '  Good, no color needed (the normal case): "professional blouse" / "wrap midi dress" / "kitten heel mules" / "top handle bag".\n'+
+    '  Good, color genuinely called for: "black strappy sandals" / "navy wrap midi dress" — only when she is specifically shopping by color.\n'+
     '  TOO VAGUE, never do this: "sandals" / "bag" / "dress".\n'+
     '  TOO LONG, never do this: "nude patent pointed toe kitten heel mule" — the store ignores half the words and buries the mules under sandals.\n'+
-    '  JEWELRY & SMALL BOUTIQUES: their catalogs are small and their search engines are strict — an unmatched word returns NOTHING at all. Use metal/color + the plain category noun ONLY: "gold hoop earrings" (never "gold oversized hoops" — "oversized" indexes nothing and "hoops" may not match "hoop earrings"), "gold chain bracelet", "gold pendant necklace". Size and mood words (oversized, chunky, dainty, layered) live in the name, never the boutique search.\n'+
-    '- MATCH PRECISION TO THE STORE: a giant department-store catalog searches loosely, so when the piece is an exact color of an exact shape (especially bags and shoes), prefer a smaller focused store whose search can honor it. Department stores shine for broader category finds; do not ask a 3,000-item catalog to pin one shade.\n'+
+    // Her insight, 2026-08-12: a metal preference narrowed to ONE metal is a
+    // real constraint (same weight as never-wear); a broad one is not. The
+    // explicit "absolute constraint" / "never force" phrasing comes from
+    // getPrefsForPrompt(), which already did the narrow-vs-broad judgment.
+    '  JEWELRY METAL: if her preferences above say she wears ONLY one metal, that is absolute — always lead jewelry searches with it. If she is open to more than one, never force a metal into the search.\n'+
+    '  JEWELRY & SMALL BOUTIQUES: their catalogs are small and their search engines are strict — an unmatched word returns NOTHING at all. Beyond the metal rule above, use the plain category noun alone: "hoop earrings" (never "oversized hoops" — "oversized" indexes nothing and "hoops" may not match "hoop earrings"), "chain bracelet", "pendant necklace". Size and mood words (oversized, chunky, dainty, layered) live in the name, never the boutique search.\n'+
+    '- MATCH PRECISION TO THE STORE: a giant department-store catalog searches loosely, so when she is genuinely shopping by an exact color of an exact shape (especially bags and shoes), prefer a smaller focused store whose search can honor it. Department stores shine for broader category finds; do not ask a 3,000-item catalog to pin one shade.\n'+
     _sizeGuidance()+
     '- Match the store to her using the tags above.\n'+
     // The app never asks her budget, so this used to promise something it could
@@ -5116,7 +5133,7 @@ function _shopRules(mode){
     // dresses, because the store simply does not stock that colour in that
     // piece. Cath's own reasoning for liking department stores is the fix here:
     // when the odds are long, a big multi-brand store has far better ones.
-    '- If the piece hinges on a specific or unusual COLOUR, send her where that colour actually lives. NEVER choose a store marked "mostly neutrals" for one. Pick a store marked "great for colour", or a large multi-brand store where the odds are far better. A precise colour at a store that stocks neutrals will show her nothing.\n';
+    '- If she is genuinely shopping by a specific or unusual COLOUR (see the color rules above — not every piece is), send her where that colour actually lives. NEVER choose a store marked "mostly neutrals" for one. Pick a store marked "great for colour", or a large multi-brand store where the odds are far better. A precise colour at a store that stocks neutrals will show her nothing.\n';
 }
 // ▶ 2026-08-12, her live-testing catch: the old bare "Prioritize her color
 // preferences" bullet was pushing one of her exact loved colors into EVERY
@@ -6330,7 +6347,20 @@ function getPrefsForPrompt(){
   if(p.neverWear.length)lines.push('Never wear: '+p.neverWear.join(', '));
   if(p.neverPatterns.length)lines.push('Patterns to avoid: '+p.neverPatterns.join(', '));
   if(p.neverOther)lines.push('HARD NO, never suggest these (her exact words): '+p.neverOther);
-  if(p.jewelry)lines.push('Jewelry preference: '+p.jewelry);
+  // 2026-08-12, her insight: a metal preference narrowed to ONE specific
+  // metal is a real constraint (she only wears gold, only wears silver) --
+  // closer to never-wear than to a soft color lean -- and should always lead
+  // a jewelry search. "Mixed metals," "No preference," or multiple metals
+  // selected together is the opposite: never force one metal into the search.
+  // Made explicit here rather than left for the model to infer from a raw
+  // "Gold, Silver" vs "Gold" string.
+  if(p.jewelry){
+    const jset=p.jewelry.split(', ').filter(Boolean);
+    const singleMetal=jset.length===1&&['Gold','Silver','Rose Gold'].indexOf(jset[0])>=0;
+    lines.push(singleMetal
+      ? 'Jewelry: she wears ONLY '+jset[0]+'. This is an absolute constraint, same weight as her never-wear list -- always lead jewelry searches with this metal.'
+      : 'Jewelry: she is open to more than one metal ('+p.jewelry+'). Never force one metal into a jewelry search -- use the plain category noun alone and let her choose.');
+  }
   if(p.dailyShoes)lines.push('Daily shoes: '+p.dailyShoes);
   if(p.bagStyle)lines.push('Bag preference: '+p.bagStyle);
   if(p.otherNotes)lines.push('Other notes: '+p.otherNotes);

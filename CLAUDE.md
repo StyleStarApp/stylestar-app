@@ -61,9 +61,39 @@ she started the jeans category, more to come, no rush.
   - Re-verified live in Chromium with her exact reported colors (`prefs.colorsLove=['hot pink','royal blue']`):
     Tank tops/Camisoles and Professional blouses both now carry "This item is NOT about color" · Tops in your
     favorite colors still correctly carries "Her loved colors are the whole point of this item" · the general
-    surfaces carry the sharpened undefined-branch wording. `searchtune.js` green after the change. **Awaiting
-    her live retest** — same pattern as Work-appropriate dresses: verified correct in code, unproven until she
-    taps through it on the real site.
+    surfaces carry the sharpened undefined-branch wording. `searchtune.js` green after the change.
+  - ⭐⭐ **HER FOLLOW-UP TOOK THIS DEEPER, TO THE ORIGINAL AUGUST SHAPE RULE ITSELF: "putting color in the
+    search as the first thing is not how a stylist would actually search and shop... I would never lead with
+    color. Always lead with the item, and once she is inside the store she selects color."** This is right, and
+    it's a real UX/search-engine insight, not just a preference: a color WORD sitting in free text is fragile —
+    the store's engine can silently ignore it or rank it loosely (her own "red wrap dress" that opened to
+    neither red nor wrapped dresses) — while a real color FILTER is a genuine constraint the engine enforces.
+    **Rebuilt the `SHAPE` rule inside `_shopRules()`** (the shared function behind EVERY shopping surface,
+    unchanged since her original six-screenshot session in August): searches now lead with the ITEM, never a
+    color, UNLESS color is genuinely the point (she's asked for one directly, or the piece itself is explicitly
+    about color). The color-FILTER mechanism (Nordstrom/Macy's/Bloomingdales, built earlier this session) needed
+    no new instruction — `getStoreUrl` already applies it automatically whenever a search's first word happens
+    to be a recognized color, so it "just works" the moment color genuinely belongs in a search.
+  - ⭐ **HER OWN REFINEMENT, and it's a genuinely sharp distinction: a metal preference narrowed to ONE metal
+    (only gold, only silver) is a real constraint, closer to her never-wear list than a soft lean — but "all
+    metals" or "no preference" should show her everything.** Found this ALREADY EXISTS as `prefs.jewelry`
+    (Gold/Silver/Rose Gold/Mixed metals/No preference, multi-select) — just never had this distinction encoded.
+    `getPrefsForPrompt()`'s jewelry line now computes it explicitly rather than leaving the model to infer from
+    a raw string: a single selected metal → "This is an absolute constraint, same weight as her never-wear
+    list"; anything broader → "Never force one metal into a jewelry search."
+  - ⚠️ **A DELIBERATE, NAMED EXCEPTION to the standing "every name detail must be in the search" rule
+    (2026-07-29):** the card NAME can still describe a real piece's actual color (that's honest, not vague) —
+    but the SEARCH now doesn't have to repeat it, since a real stylist doesn't lead a search with color either.
+    Every OTHER name detail (style, silhouette, fabric) still must transfer to the search unchanged.
+  - **Verified: `searchtune.js` Part 3 updated deliberately, not silenced** — two assertions pinned the OLD
+    color-first phrasing and correctly failed on this change; replaced with assertions on the new "lead with the
+    ITEM, not a color" rule, the name/search color exception, and the conditional (not hardcoded) jewelry-metal
+    wording. Re-verified live with `prefs.jewelry='Gold'` (absolute constraint) and `'Gold, Silver'` (never
+    forced) — both render correctly.
+  - ▶ **Same standing caveat as every prompt-tuning change today: no live model test was possible in this
+    sandbox (no `ANTHROPIC_API_KEY`).** Prompt CONTENT is verified correct; whether the model reliably follows
+    the new "lead with the item" default is unproven until she retests live — same pattern as Work-appropriate
+    dresses, which needed a second, stronger pass before it actually landed.
 - ✅ **THE WARDROBE-IDEAS CATEGORY-BLEED FIX IS BUILT, the long-parked 2026-07-31 conversation, finally had.**
   Her original catch: starring "White tops" pulled dressy/going-out tops and tanks into its Ideas carousel —
   because `_wardrobeIdeaGen()` only ever sent the model the ONE item name, with no idea those are already
