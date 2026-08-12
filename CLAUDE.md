@@ -42,6 +42,28 @@ she started the jeans category, more to come, no rush.
   - Verified live in Chromium across all four surfaces (`shopMyStyle`'s template-literal prompt included, which
     needed `${_colorPrefRule()}` interpolation syntax rather than the string-concat form the other three use):
     the new rule text is present, the old bare bullet is gone everywhere, zero JS errors.
+  - 🚨 **AND SHE CAUGHT IT STILL BROKEN THE SAME SESSION — a genuine bug in the rule's own WORDING, hers to
+    find:** she asked "has that gone live yet," tested, and screenshotted Tank tops/Camisoles and Professional
+    blouses Ideas still landing on Hot Pink and Royal Blue — both of which turned out to be HER OWN saved loved
+    colors. ▶ **ROOT CAUSE, and it's Claude's own writing bug, not a model-compliance failure this time:** the
+    first `_colorPrefRule()` literally listed *"tops, dresses, jewelry, accessories"* as garment KINDS where
+    color is "naturally the point" — but Tank tops and Professional blouses ARE tops, so the model correctly
+    followed the rule AS WRITTEN, which was backwards from what was meant. **The reusable lesson: garment KIND
+    was never the right test for whether color matters; whether THAT SPECIFIC ITEM's own identity is about
+    color is.** Fixed two ways: (1) rewrote the rule to say explicitly that being a top or dress does NOT by
+    itself make color the point; (2) `_colorPrefRule()` now takes an optional `itemColorSpecific` argument, and
+    `_wardrobeIdeaGen` — the one caller that already knows per-item whether an item is color-named (`colorDependent`,
+    built earlier this session) — passes it in directly instead of leaving it to inference: `true` for "Tops in
+    your favorite colors" ("lean into them, vary across the 4 picks"), `false` for everything else in the
+    checklist ("do not reach for her exact loved colors on it, no matter what kind of garment it is"). The three
+    general multi-item surfaces (`shopMyStyle`, both `_shopStyleGen` branches) don't know a single item ahead of
+    time, so they keep the sharpened-but-still-general wording.
+  - Re-verified live in Chromium with her exact reported colors (`prefs.colorsLove=['hot pink','royal blue']`):
+    Tank tops/Camisoles and Professional blouses both now carry "This item is NOT about color" · Tops in your
+    favorite colors still correctly carries "Her loved colors are the whole point of this item" · the general
+    surfaces carry the sharpened undefined-branch wording. `searchtune.js` green after the change. **Awaiting
+    her live retest** — same pattern as Work-appropriate dresses: verified correct in code, unproven until she
+    taps through it on the real site.
 - ✅ **THE WARDROBE-IDEAS CATEGORY-BLEED FIX IS BUILT, the long-parked 2026-07-31 conversation, finally had.**
   Her original catch: starring "White tops" pulled dressy/going-out tops and tanks into its Ideas carousel —
   because `_wardrobeIdeaGen()` only ever sent the model the ONE item name, with no idea those are already

@@ -5129,8 +5129,19 @@ function _shopRules(mode){
 // which can search and retry; these lighter multi-card surfaces should lean
 // toward her colors, never force them. ONE shared rule so all five surfaces
 // that used to carry the old bullet can never drift out of sync again.
-function _colorPrefRule(){
-  return '- Her loved colors are a LEAN, not a requirement. Favor them when a piece\'s own identity is naturally about color (tops, dresses, jewelry, accessories), but never force one of her exact colors onto a piece whose real point is something else, like occasion, fit or function (a work-appropriate dress, a workout top). Never promise a color you are not genuinely confident that store carries for that piece. When color isn\'t the point, vary colors naturally across your picks instead of repeating one.\n';
+// ⚠️ 2026-08-12, caught by her SAME session: the first version listed "tops,
+// dresses, jewelry, accessories" as garment KINDS where color is "naturally
+// the point" -- but Tank tops and Professional blouses ARE tops, so the model
+// correctly favored her exact loved colors (hot pink, royal blue) on both,
+// which is precisely what this rule exists to stop. Being a certain kind of
+// GARMENT was never the right test; whether THAT SPECIFIC CHECKLIST ITEM's
+// own name is about color is. Rewritten to say so explicitly, and callers
+// that know which single item they're generating for (wardrobe Ideas) now
+// pass that certainty in directly instead of leaving it to inference.
+function _colorPrefRule(itemColorSpecific){
+  if(itemColorSpecific===false)return '- This item is NOT about color, so do not reach for her exact loved colors on it, no matter what kind of garment it is. Vary colors naturally across the 4 options instead. Never promise a color you are not genuinely confident that store carries.\n';
+  if(itemColorSpecific===true)return '- Her loved colors are the whole point of this item. Lean into them, but vary across the 4 picks rather than repeating one exact shade, and never promise a color you are not genuinely confident that store carries.\n';
+  return '- Her loved colors are a LEAN, not a requirement, and depend on the PIECE, never on what kind of garment it is. Most items (a professional blouse, a tank top, a work-appropriate dress, a workout top) are defined by occasion, fit or function, not color -- being a top or a dress does NOT by itself make color the point, and her favorite pink or blue must not be forced onto those. Never promise a color you are not genuinely confident that store carries. Vary colors naturally across your picks instead of repeating one.\n';
 }
 // ▶ CATH: this is the wording on every shopping button, in ONE place. It says
 // "Find it" rather than "Shop" because the link runs a search at that store, so
@@ -7041,7 +7052,7 @@ async function _wardrobeIdeaGen(id,boxId){
   // match in weight -- a paragraph sitting before RULES read as background
   // information, not an instruction, and her first live test proved it.
   const defineRule=_WDR_IDEA_DEFINE[id]?'\n- '+_WDR_IDEA_DEFINE[id]:'';
-  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+exclLine+colorFallbackLine+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.'+defineRule+'\n'+_colorPrefRule()+'- Name each piece plainly and beautifully, color + style + item, like "Tan Suede Moto Jacket" — never vague ("a nice jacket"), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
+  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+exclLine+colorFallbackLine+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+', so she lands on the right kind of thing\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.'+defineRule+'\n'+_colorPrefRule(colorDependent)+'- Name each piece plainly and beautifully, color + style + item, like "Tan Suede Moto Jacket" — never vague ("a nice jacket"), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
