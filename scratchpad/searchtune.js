@@ -33,7 +33,14 @@ const urls = await page.evaluate(() => ({
   amazon: getStoreUrl('Amazon', null, 'black flats'),
   gap: getStoreUrl('Gap', null, 'white tee'),
   nordstrom: getStoreUrl('Nordstrom', null, 'tan top handle bag'),
-  bloomies: getStoreUrl('Bloomingdales', null, 'tan top handle bag'),
+  bloomies: getStoreUrl('Bloomingdales', null, 'quilted crossbody bag'),
+  // path-style color facet, built 2026-08-12 from Cath's two screenshots
+  // (Macy's + Bloomingdales share byte-identical color panels — same
+  // platform). Falls through to the plain keyword search when the first
+  // word isn't a recognized color.
+  bloomColorPath: getStoreUrl('Bloomingdales', null, 'tan top handle bag'),
+  macyColorPath: getStoreUrl('Macy\'s', null, 'black midi dress'),
+  macyNoColorPath: getStoreUrl('Macy\'s', null, 'quilted crossbody bag'),
   zappos: getStoreUrl('Zappos', null, 'kitten heel mules'),
   lulu: getStoreUrl('Lululemon', null, 'royal blue leggings'),
   // already scoped in the URL — must NOT get the keyword too
@@ -72,6 +79,9 @@ ok('Amazon gets i=fashion-womens', urls.amazon.includes('/s?k=black%20flats&i=fa
 ok('Gap.com same treatment', urls.gap.endsWith('searchText=white%20tee&department=136'), urls.gap);
 ok('Nordstrom gets the womens keyword', urls.nordstrom.includes('keyword=womens%20tan%20top%20handle%20bag'), urls.nordstrom);
 ok('Bloomingdales gets it', urls.bloomies.includes('keyword=womens%20'), urls.bloomies);
+ok('Bloomingdales color term → path form with her verified Tan/Beige mapping', urls.bloomColorPath === 'https://www.bloomingdales.com/shop/featured/womens-tan-top-handle-bag/Color_normal/Tan%2FBeige?ss=true', urls.bloomColorPath);
+ok('Macy\'s color term → same path form, same platform', urls.macyColorPath === 'https://www.macys.com/shop/featured/womens-black-midi-dress/Color_normal/Black?ss=true', urls.macyColorPath);
+ok('Macy\'s non-color term falls through to plain keyword search', urls.macyNoColorPath.includes('keyword=womens%20quilted%20crossbody%20bag') && !urls.macyNoColorPath.includes('featured'), urls.macyNoColorPath);
 ok('Zappos gets it', urls.zappos.includes('term=womens%20kitten%20heel%20mules'), urls.zappos);
 ok('Lululemon gets it', urls.lulu.includes('Ntt=womens%20'), urls.lulu);
 ok('Madewell already scoped — no double', urls.madewell.includes('r_productGender=women') && !urls.madewell.includes('womens%20'), urls.madewell);
@@ -201,7 +211,9 @@ const counts = await page.evaluate(() => ({
   w: Object.values(STORES).filter(s => s.w).length,
   gp: Object.values(STORES).filter(s => s.gp).length
 }));
-ok('still 101 stores', counts.stores === 101, String(counts.stores));
+// 2026-08-12: Kate Spade removed at Cath's own call — a brand she wouldn't
+// recommend to a client has no place in her curated list. 101 → 100.
+ok('now 100 stores (Kate Spade removed, her call)', counts.stores === 100, String(counts.stores));
 // 2026-08-12: Abercrombie moved from keyword-scoped-never (it was unscoped)
 // into param-scoped, via her verified gender facet — gp count 5 → 6.
 ok('39 keyword-scoped + 6 param-scoped', counts.w === 39 && counts.gp === 6, counts.w + ' / ' + counts.gp);

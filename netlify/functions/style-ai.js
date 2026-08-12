@@ -112,7 +112,7 @@ const SEARCH_DOMAINS = [
   'farmrio.com', 'frankandeileen.com', 'freepeople.com', 'gap.com',
   'garnethill.com', 'goodamerican.com', 'gorjana.com', 'gucci.com',
   'izod.com', 'jcrew.com', 'jennikayne.com', 'jjill.com',
-  'jmclaughlin.com', 'johnnywas.com', 'katespade.com', 'kendrascott.com',
+  'jmclaughlin.com', 'johnnywas.com', 'kendrascott.com',
   'lacoste.com', 'landsend.com', 'lanebryant.com', 'levi.com',
   'loft.com', 'loveshackfancy.com', 'macys.com', 'madewell.com',
   'marinelayer.com', 'mejuri.com', 'mmlafleur.com', 'naturalizer.com',

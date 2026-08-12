@@ -4708,10 +4708,10 @@ Respond with ONLY valid JSON in this exact format, no other text:
 const STORES={
   // Department stores and multi-brand
   'Nordstrom':{cf:'&filterByColor=',w:1,u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,9,8,7,7,8,8,10,9],c:'almost everything, dresses, shoes, denim'},
-  "Macy's":{w:1,u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[7,5,6,8,6,7,7,6,8,8],c:'everyday, dresses, shoes, handbags'},
+  "Macy's":{w:1,cfp:true,cfpBase:'https://www.macys.com/shop/featured/',u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[7,5,6,8,6,7,7,6,8,8],c:'everyday, dresses, shoes, handbags'},
   "Dillard's":{w:1,u:'https://www.dillards.com/search-term/',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7,8,5,6,8,7,9,8],c:'dresses, occasion, workwear'},
   'Belk':{w:1,u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[8,5,6,8,5,8,6,5,8,7],c:'everyday, dresses, shoes'},
-  'Bloomingdales':{w:1,u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[6,7,9,8,8,6,9,8,9,8],c:'designer, denim, shoes'},
+  'Bloomingdales':{w:1,cfp:true,cfpBase:'https://www.bloomingdales.com/shop/featured/',u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[6,7,9,8,8,6,9,8,9,8],c:'designer, denim, shoes'},
   'Saks':{w:1,u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],d:[3,9,10,8,9,3,10,9,10,9],c:'designer, bags, occasion'},
   'Neiman Marcus':{w:1,u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[3,9,10,9,8,3,10,9,10,9],c:'designer, evening, shoes'},
   'Bergdorf Goodman':{w:1,u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'$$$$',a:'Luxury Fashion',s:[],d:[2,9,10,10,9,2,10,10,10,9],c:'couture, designer, fine jewelry'},
@@ -4785,7 +4785,6 @@ const STORES={
   'NYDJ':{u:'https://www.nydj.com/search?q=',t:'$$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,3,8,8,3,8,4,8,9,4],c:'premium denim, flattering fit'},
   // Bags and jewelry
   'Coach':{w:1,u:'https://www.coach.com/search?q=',t:'$$$',a:'Classic Sophisticate, Modern Luxe',s:[],d:[5,5,9,9,5,6,8,5,8,7],c:'leather handbags, wallets, accessories'},
-  'Kate Spade':{u:'https://www.katespade.com/search?q=',t:'$$$',a:'Playful Chic, Classic Feminine',s:[],d:[5,5,8,8,7,6,7,5,7,9],c:'handbags, jewelry, colorful accessories'},
   'Gorjana':{u:'https://gorjana.com/search?q=',t:'$$',a:'Elevated Natural, Coastal Chic',s:[],d:[5,3,8,7,6,8,4,5,9,4],c:'everyday jewelry, layering pieces'},
   'Mejuri':{u:'https://mejuri.com/search?query=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[5,2,10,9,5,7,5,5,10,2],c:'fine jewelry, everyday essentials'},
   // Active, swim, foundations, shoes
@@ -4869,6 +4868,13 @@ function resolveStore(name){
 // the basics every retail color facet carries. (The new prompt rules put the
 // retail color word FIRST in every search term, which is what makes this work.)
 var _CF_COLORS=['pink','black','white','red','blue','green','brown','purple','yellow','orange'];
+// Macy's and Bloomingdales (same parent, same platform — confirmed by Cath's
+// two screenshots 2026-08-12, byte-identical color filter panels) don't take
+// a suffix param like Nordstrom. Their color facet lives in the PATH:
+// /shop/featured/<hyphenated-term>/Color_normal/<Color>?ss=true. Reuses the
+// same 10 universal colors above (their names match ours 1:1, just Title
+// Case) plus "tan", which she confirmed maps to their own "Tan/Beige".
+var _CF_PATH_COLORS={pink:'Pink',black:'Black',white:'White',red:'Red',blue:'Blue',green:'Green',brown:'Brown',purple:'Purple',yellow:'Yellow',orange:'Orange',tan:'Tan/Beige'};
 function getStoreUrl(store,item,search){
   var raw=String(search||item||'').trim();
   const key=resolveStore(store);
@@ -4888,6 +4894,19 @@ function getStoreUrl(store,item,search){
     // Because the wishlist stores terms and rebuilds URLs on every render,
     // this fix silently repairs every already-saved item too.
     // Color facet is read from the RAW term (before any "womens " prepend).
+    // PATH-style color facet (Macy's/Bloomingdales) short-circuits everything
+    // else below — it's a different URL shape entirely, not a suffix. Falls
+    // through to the normal plain-keyword flow when the first word isn't a
+    // recognized color, so an unmatched term never risks an empty filtered page.
+    if(s.cfp){
+      var cp0=raw.toLowerCase().split(/\s+/)[0];
+      var cpVal=_CF_PATH_COLORS[cp0];
+      if(cpVal){
+        var slugSrc=(s.w?'womens ':'')+raw;
+        var slug=slugSrc.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
+        return s.cfpBase+slug+'/Color_normal/'+encodeURIComponent(cpVal)+'?ss=true';
+      }
+    }
     var facet='';
     if(s.cf){
       var c0=raw.toLowerCase().split(/\s+/)[0];

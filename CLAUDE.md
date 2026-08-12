@@ -7,32 +7,65 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-12 — ABERCROMBIE'S DEPARTMENT PARAM IS FIXED, the last open store-URL thread)
-Short loose-ends session. Cath sent Almira a follow-up email this morning (awaiting reply) and confirmed the
-Cowork spreadsheet is the **Option 3 curated-catalog companion sheet** — she started the jeans category, more
-to come, no rush. Then she supplied the URL this file had been asking for since 2026-08-09.
+## ▶ NEXT SESSION — START HERE (2026-08-12 — THE DEPARTMENT-STORE COLOR FILTERS ARE BUILT, AND KATE SPADE IS GONE)
+Loose-ends session, all store-table work, all her calls. Cath sent Almira a follow-up email this morning
+(awaiting reply) and confirmed the Cowork spreadsheet is the **Option 3 curated-catalog companion sheet** —
+she started the jeans category, more to come, no rush.
 - ✅ **ABERCROMBIE FIXED.** The 2026-08-09 finding was that the "womens" KEYWORD flipped Abercrombie's search
   to the MEN'S department (their parser matches "mens" inside "womens"), so it had been left deliberately
-  UNSCOPED — a real gap, since Abercrombie is a real multi-gender store with women's-specific results being
-  missed. Cath ran a plain search, tapped **Shop By → Women's**, and pasted the resulting URL:
-  `...search?facet=gender%3A%28%22Women%27s%22%29&filtered=true&...&searchTerm=Dress&...` — confirming the
-  correct department PARAM (`facet=gender:("Women's")&filtered=true`), the same `gp` mechanism already
-  verified for Amazon and the Gap family (2026-08-08). **Built:** Abercrombie's `STORES` entry now carries
-  `gp:'&facet=gender%3A%28%22Women%27s%22%29&filtered=true'` — every search is scoped to women's, no more
-  keyword games, and (per the standing rule) this silently repairs any already-saved wishlist item too.
-  `searchtune.js` updated deliberately, not silenced: the old "Abercrombie UNscoped" assertion replaced with
-  a positive check on the facet param, the housekeeping param-scoped count moved 5 → 6, both comments
-  updated to explain WHY the store moved categories. **57/57 green.**
-- ▶ **STORE-URL WORK IS NOW FULLY CLOSED AGAIN.** The only other open thread was Bloomingdale's color-facet
-  path (already confirmed by her paste on 2026-08-08, just parked for a dedicated build session — no more
-  URLs needed there) and Macy's (same platform, likely same trick, never confirmed, low priority). Nothing
-  outstanding requires her address bar right now.
+  UNSCOPED. Cath ran a plain search, tapped **Shop By → Women's**, and pasted the resulting URL, confirming
+  the correct department PARAM: `facet=gender:("Women's")&filtered=true` — same `gp` mechanism already
+  verified for Amazon and the Gap family. Built into Abercrombie's `STORES` entry; per the standing rule this
+  silently repairs any already-saved wishlist item too.
+- ✅✅ **MACY'S AND BLOOMINGDALE'S GET REAL COLOR FILTERS — her favorite stores, her ask** ("Department
+  stores are my favorites for shopping. I have the best luck in them.") She screenshotted BOTH stores'
+  color-filter panels, unprompted for full URLs — a much lighter ask than the usual address-bar round trip —
+  and they turned out **byte-identical** (same 16 colors, same layout): confirmation the two run on the same
+  platform. All 10 of the app's existing universal colors (pink/black/white/red/blue/green/brown/purple/
+  yellow/orange) map 1:1 by name, no guessing needed, plus the "tan" → "Tan/Beige" mapping she'd already
+  found back in August was visibly confirmed on both panels too.
+  - **Built: a new `cfp` (color-facet-PATH) mechanism**, distinct from Nordstrom's `cf` (a simple suffix
+    param) because these two stores put the color in the URL PATH, not a query string:
+    `bloomingdales.com/shop/featured/<hyphenated-term>/Color_normal/<Color>?ss=true`. `getStoreUrl` now
+    short-circuits to this path form when the search's first word is a recognized color, and falls through
+    to the normal plain `?keyword=` search (unchanged, already proven correct) for everything else — so an
+    unrecognized color can never risk an empty filtered page. `_CF_PATH_COLORS` holds the shared 11-word
+    map (the 10 universal colors + tan). Both `STORES` entries carry `cfp:true` + their own `cfpBase`.
+  - ⚠️ **Macy's path form is NOT independently proven** — only Bloomingdale's has a real confirmed example
+    URL from months ago (`black-midi-dress/Color_normal/Black`); Macy's is built on the strength of the
+    identical color-panel UI + same parent company, which is strong but not the same as a live URL. Ask her
+    to spot-check ONE Macy's color-filtered link on her phone when she gets a chance — low urgency, easy to
+    revert to plain search if it's ever wrong (just drop `cfp` from its entry).
+  - Verified: `bloomColor` builds to
+    `bloomingdales.com/shop/featured/womens-tan-top-handle-bag/Color_normal/Tan%2FBeige?ss=true` — literally
+    her own original test case #6 from the six-screenshot session back in August, now finally fixed properly.
+- ✅ **KATE SPADE REMOVED FROM THE STORE TABLE, her call, without hesitation: "I agree let's take Kate Spade
+  off. It was bugging me a little bit."** She doesn't like the brand and wouldn't recommend it to a client —
+  and since the whole 100-store table is built from HER professional curation (she tagged every store's
+  quality/style/fit herself), a brand she personally wouldn't stand behind has no place recommending itself
+  as if she'd chosen it. This is the same principle as her subscription-box/rental/fast-fashion exclusions
+  from 2026-07-27, applied to one more store. Removed from `STORES` in `index.html` AND from `SEARCH_DOMAINS`
+  in `netlify/functions/style-ai.js` (the standing rule: a store removed from one must come out of both).
+  **Checked before removing: no coverage gap left behind** — 9 stores still carry handbags (Cuyana to Gucci,
+  every price tier) and 5 carry jewelry (Mejuri to Tiffany & Co.), so nothing goes thin.
+- ▶ **STORE COUNT: 100 now** (was 101). Three test suites that assert the store/domain count were updated
+  deliberately, not silenced — `searchtune.js` (60/60 green, incl. new assertions on the path-color mechanism
+  itself), `searchchat.js` (54/54), `cowork3.js` (69/69). One real bug caught along the way: a blind
+  find-replace of "101"→"100" nearly broke the crawler-block-pruning tests, which measure the count AFTER a
+  store is pruned (should be one FEWER than the total, not equal to it) — caught by the tests failing, fixed
+  properly with the right arithmetic, not just adjusted to pass.
+- ▶ **STORE VARIETY, asked and answered:** 100 stores is plenty and deliberately tuned, not just accumulated
+  — every one of the 28 style archetypes has ≥3 stores per price tier and ≥1 store per category (shoes,
+  bags, jewelry, eyewear, swim, activewear, denim, dresses, workwear, foundations, outerwear), tested back in
+  July when the matching system was built. Told her: a felt gap in a SPECIFIC category from her own testing
+  is worth far more than "should we add more in general."
 - ▶ **STILL THE ONE REAL BLOCKER, unchanged: her search-quality verdict** — "None of them are 'just right.'"
-  Her own retest screenshots still haven't arrived; ask for them again. This Abercrombie fix is a genuine
-  quality improvement on ONE store's scoping, not a fix for the structural search-vs-catalog gap (feeds
-  are still the real cure, per the 2026-08-11 entry below).
+  Her own retest screenshots still haven't arrived; ask for them again. Today's fixes are genuine quality
+  improvements to specific stores, not a fix for the structural search-vs-catalog gap (feeds are still the
+  real cure, per the 2026-08-11 entry below).
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
-  the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline).
+  the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
+  her spot-check of a live Macy's color-filtered link, whenever convenient.
 
 ## ▶ PREVIOUS — 2026-08-11, EVENING SESSION — the clean list ships, and HER SEARCH VERDICT is the one blocker
 ⚠️ Date note: this was a second session on 08-11; a few in-code comments from it are stamped 2026-08-12. Same session, no missing day.
