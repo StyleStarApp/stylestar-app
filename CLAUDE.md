@@ -25,13 +25,21 @@ to detail." ⚠️ **Netlify: ~16 builds today — watch the meter.**
 - **Suites at pause, all green:** searchtune 70 · searchchat 57 · cowork3 69 · e2e 29 · hubs 49 ·
   menu 87 · sally 74 · heartnudge 20 · weekstar 23 (new) · chiprot 15 (new) · tabtops 15 (new) ·
   wdrworksheet 73 · wdrcalmcheck 27 · catmark 135 · a2hs 38 · affq 40.
-- ⚠️ **KNOWN-STALE SUITE, deflake next session: wladd.js runs 102 checks with 6 failures — PRE-EXISTING,
-  proven by running it on clean main with no working-tree changes (same 6 fail).** The failing checks
-  (ring-encircles-rail, gold-rail-band-frames-paper, collapsed-button-one-line) pin the 2026-08-09
-  wishlist crown/band design, parts of which the 2026-08-10 rethink deliberately changed (wlframe.js 36
-  is the newer truth for the frame). Nobody ran wladd in the 08-10..08-13 sweeps, so it rotted silently.
-  Reconcile its assertions against the current design deliberately — do NOT "fix" the live wishlist to
-  match the old suite; her phone screenshots today showed the wishlist behaving fine.
+- ✅ **THE STALE wladd.js SUITE IS RECONCILED (2026-08-14): 102 checks, 0 failures — three assertions
+  updated deliberately to the current design, and ONE real 320px bug the suite legitimately caught was
+  fixed.** The reconciliations, each recorded in a comment at the assertion: (1) *ring-encircles-rail* →
+  the ring hangs THREADED over the rail's lower edge since the rod went viewport-fixed (measured: ring
+  33-45px over rod 32-40 — rail passes through it, ringf interlock intact; her screenshots accepted the
+  look). New assertion pins real overlap ≥4px + really hanging below ≥2px. (2) *gold-rail-band* → the
+  08-09 5px band was retired by her 08-10 hairline pick; wladd now asserts the band STAYS retired
+  (::before display:none) + the twin #C89A2C hairlines are present, deferring frame detail to wlframe.js
+  (the deep truth, 36 checks). (3) *collapsed-button-one-line* → width-aware: one line at 390; at 360
+  her wording falls to two BALANCED lines deliberately (the empty-state button's own trade; the old
+  assertion pinned the pre-velvet paper width). (4) **The real bug: "Copy & paste link (optional)"
+  was cut at 320 (needed 183px, had 178)** — fixed with the established narrow-width lever, `.wl-add`
+  side padding 14→6 inside the existing ≤374px media query (font untouched), now 11px of headroom.
+  Verified: wladd 102 · wlframe 36 · wlfoot 13 · e2e 29 · weekstar 23 all green; 320px form render
+  eyeballed clean (`scratchpad/wladd-320-fixed.png` in the session scratchpad).
 - ▶ **THE FIRST THINGS TO ASK HER:**
   1. **The legal thread + her energy.** She ended the session HEATED at Indie Law (rightly — see the
      ⚖️ entry below) and paused before sending the EIN one-liner. **The draft is in the 2026-08-13 chat,
