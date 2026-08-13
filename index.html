@@ -1690,8 +1690,13 @@ body.card-fb{padding:0}
 #wbStar{display:none;margin:12px 14px 2px}
 #wbStar.on{display:block}
 .wks-card{background:#FBF6E9;border:1px solid #D8A52E;padding:14px 16px 13px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.28)}
-.wks-lbl{display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Jost',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.16em;color:#4a463e}
-.wks-lbl svg{width:15px;height:15px;flex:0 0 auto}
+/* Her pick "C" from the 2026-08-13 three-way render: TWIN tilted stars
+   flanking the label — the CURATED BY CATHERINE treatment, in gold. Flanking
+   marks read as a label announcing something, which is exactly what this is. */
+.wks-lbl{display:flex;align-items:center;justify-content:center;gap:7px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:.16em;color:#4a463e}
+.wks-lbl svg{width:17px;height:17px;flex:0 0 auto;filter:drop-shadow(0 0 2px rgba(224,184,76,.6))}
+.wks-lbl svg.l{transform:rotate(-12deg)}
+.wks-lbl svg.r{transform:rotate(12deg)}
 .wks-name{font-family:'DM Serif Display',serif;font-size:17.5px;line-height:1.25;color:#1a1a1a;margin:7px 0 3px;text-wrap:balance}
 .wks-store{font-family:'Jost',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#5f5647;text-transform:uppercase}
 .wks-note{font-family:'Jost',sans-serif;font-style:italic;font-size:13.5px;line-height:1.55;color:#4a463e;margin-top:7px;text-wrap:balance}
@@ -5755,7 +5760,7 @@ var _WB_NEXT=[
    when:function(){var sk=_wbNextSkips();return _WB_NEXT.every(function(s){if(s.k==='grad')return true;try{return !!sk[s.k]||(s.when&&!s.when())||s.done()}catch(e){return true}})},
    done:function(){return !!localStorage.getItem('ss_grad')},
    go:function(){try{localStorage.setItem('ss_grad','1')}catch(e){}openChat()},
-   h:'You&rsquo;ve explored it all. Remember I&rsquo;m here for the everyday too, what to wear, what to pack, which bag. <b>Just ask</b>, and check back for This Week&rsquo;s Star '+_WBN_HEART}
+   h:'You&rsquo;ve explored it all. Remember I&rsquo;m here for the everyday too, what to wear, what to pack, which bag. <b>Just ask</b>, and check back for the Star of the Week '+_WBN_HEART}
 ];
 var _wbNextCur=null;
 function _wbNextSkips(){try{return JSON.parse(localStorage.getItem('ss_nextskip')||'{}')||{}}catch(e){return{}}}
@@ -8666,7 +8671,7 @@ function _renderWeekStar(){
   if(!WEEK_STAR||!WEEK_STAR.n||!_wlSafeUrl(WEEK_STAR.url)){el.classList.remove('on');el.innerHTML='';return;}
   var item={name:WEEK_STAR.n,store:WEEK_STAR.store,pick:true,url:WEEK_STAR.url,price:WEEK_STAR.price};
   el.innerHTML='<div class="wks-card">'
-    +'<div class="wks-lbl"><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E0B84C" stroke="#C89A2C" stroke-width="0.6"/></svg>THIS WEEK&rsquo;S STAR</div>'
+    +'<div class="wks-lbl"><svg class="l" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E0B84C" stroke="#C89A2C" stroke-width="0.6"/></svg>STAR OF THE WEEK<svg class="r" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E0B84C" stroke="#C89A2C" stroke-width="0.6"/></svg></div>'
     +'<div class="wks-name">'+_esc(WEEK_STAR.n)+'</div>'
     +'<div class="wks-store">'+_esc(WEEK_STAR.store)+(WEEK_STAR.price?' &middot; '+_esc(WEEK_STAR.price):'')+'</div>'
     +(WEEK_STAR.note?'<div class="wks-note">'+_esc(WEEK_STAR.note)+' <svg class="wks-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>':'')
