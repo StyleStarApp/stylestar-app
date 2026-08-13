@@ -243,7 +243,8 @@ ok('the next visit offers the following step, not the dismissed one', st.on && s
 // return (This Week's Star), then retires forever on tap or ✕.
 await wp.evaluate(() => { openWardrobe('trend'); show('s-wb'); });
 st = await wst();
-ok('after all five stops, the GRADUATION whisper appears', st.on && st.txt.includes('explored it all'), st.txt);
+// Her trim 2026-08-13: the opening "You've explored it all." is deleted.
+ok('after all five stops, the GRADUATION whisper appears', st.on && st.txt.startsWith('Remember I’m here for the everyday'), st.txt);
 ok('…with her exact everyday trio and the weekly nudge', st.txt.includes('what to wear, what to pack, which bag') && st.txt.includes('Star of the Week'));
 await wp.evaluate(() => { wbNextGo(); });
 const grad = await wp.evaluate(() => ({ chat: document.querySelector('.scr.act').id, stamp: localStorage.getItem('ss_grad') }));

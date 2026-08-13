@@ -487,7 +487,9 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   pack, which bag. Just ask and check back for weekly updates ♥"* — with her explicit invitation to
   polish ("or something similar that nudges her visit us often"). **As built: her line nearly verbatim,
   with ONE offered change — "check back for This Week's Star" instead of "weekly updates"** (naming the
-  concrete reason to return; she can swap it back with one word). Mechanics: the 6th `_WB_NEXT` entry,
+  concrete reason to return; she can swap it back with one word). ⚠️ **HER TRIM, 2026-08-13 late: the
+  opening "You've explored it all." is DELETED (her call)** — the whisper now begins "Remember I'm here
+  for the everyday too...". hubs 49 assertion updated with it. Mechanics: the 6th `_WB_NEXT` entry,
   `k:'grad'`, kept LAST in the array; `when()` = all five journey stops resolved (visited, ✕-skipped, or
   never eligible — checked by KEY, never index); tap = `openChat()` + `ss_grad` stamp (never again);
   ✕ rides the same `ss_nextskip` store. **hubs.js 46 → 49, updated deliberately: the old "explored
