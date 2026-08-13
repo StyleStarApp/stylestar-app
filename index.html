@@ -1061,7 +1061,11 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-add .wa-s{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 10px;max-width:300px}
 #s-wishlist .wl-add input{border:1.5px solid #e0d6bc;border-radius:2px;padding:11px 16px;font-size:15px;width:100%;max-width:290px;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif;margin-bottom:8px}
 #s-wishlist .wl-add input:focus{outline:none;border-color:#C8A060}
-@media(max-width:374px){#s-wishlist .wl-add input{padding:11px 4px}}
+/* Narrow phones: trim the form's side padding too (2026-08-13 — at 320 the
+   "Copy & paste link (optional)" placeholder needed 183px and had 178; the
+   trim gives the inputs 16px back so every placeholder fits whole with real
+   headroom. The font is never shrunk — the standing readability rule.) */
+@media(max-width:374px){#s-wishlist .wl-add input{padding:11px 4px}#s-wishlist .wl-add{padding:15px 6px 13px}}
 #s-wishlist .wl-add .wa-hint{font:400 11.5px/1.5 'DM Sans',sans-serif;color:#6e6e6e;margin:0 auto 10px;max-width:290px}
 #s-wishlist .wl-add .wa-btn{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;border:none;cursor:pointer}
 #s-wishlist .wl-add .wa-cancel{display:inline-block;font:500 12px/1 'Jost',sans-serif;color:#8a8474;cursor:pointer;margin-left:14px;padding:6px 2px}

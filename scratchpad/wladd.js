@@ -299,16 +299,27 @@ for (const w of [390, 360]) {
   ok(w + ': status message clears AA', m.msgRatioSetup >= 4.5, m.msgRatioSetup + ':1');
   ok(w + ': "Your pick" badge clears AA', m.badgeRatio >= 4.5, m.badgeRatio + ':1');
   ok(w + ': seeded exact row says Shop it', /Shop it/.test(m.btnText));
-  // Her longer wording must hold ONE line on the collapsed button (close the
-  // form first — the button only renders in the collapsed state).
+  // The collapsed button (close the form first — it only renders collapsed).
+  // RECONCILED 2026-08-13: one line at 390; at 360 and below her wording falls
+  // to TWO BALANCED lines deliberately — the same trade as the empty-state
+  // wishing button (never shrink the font on the readability audience). The
+  // old one-line-at-360 assertion pinned the pre-velvet paper width.
   const btn = await page.evaluate(() => {
     wlAddCancel();
     const b = document.querySelector('#wlAdd .wl-addbtn');
     if (!b) return null;
     const r = b.getBoundingClientRect();
-    return { h: r.height, fits: r.right <= window.innerWidth && r.left >= 0, sub: (document.querySelector('#wlAdd .wa-s') || { textContent: '' }).textContent };
+    const span = b.querySelector('.wab-t');
+    const rg = document.createRange(); rg.selectNodeContents(span);
+    const tops = [...rg.getClientRects()].map(x => Math.round(x.top));
+    const lines = tops.filter((t, i) => tops.findIndex(u => Math.abs(u - t) <= 6) === i).length;
+    return { h: r.height, lines, fits: r.right <= window.innerWidth && r.left >= 0,
+             balanced: getComputedStyle(span).textWrap === 'balance' };
   });
-  ok(w + ': collapsed button holds one line and fits', btn && btn.h < 40 && btn.fits, btn && btn.h + 'px');
+  const btnLineCap = w >= 390 ? 1 : 2;
+  ok(w + ': collapsed button holds ' + btnLineCap + ' line(s), balanced, and fits',
+     btn && btn.lines <= btnLineCap && btn.fits && btn.balanced,
+     btn && btn.lines + ' line(s), ' + Math.round(btn.h) + 'px');
   // The rod + hanging heart header (her design, 2026-08-09)
   const crown = await page.evaluate(() => {
     const rod = document.querySelector('#s-wishlist .wl-rod').getBoundingClientRect();
@@ -323,7 +334,13 @@ for (const w of [390, 360]) {
     return { rodBottom: rod.bottom, rodTop: rod.top, chainTop: chain.top,
              heartW: cr.width,
              chainCentered: Math.abs(cx(chain) - cx(cr)) <= 0.6,
-             ringWrapsRod: ring.top < rod.top + 1 && ring.bottom > rod.bottom - 1,
+             // RECONCILED 2026-08-13: since the rod went viewport-fixed (top:32)
+             // the ring hangs THREADED over the rail's lower edge (rail passes
+             // through it; the ringf clip-path interlock still paints the front
+             // half) rather than fully encircling it. Her live screenshots
+             // accepted this look. Pin: real overlap onto the rail (>=4px) AND
+             // really hanging below it (>=2px) — a detached ring fails both.
+             ringOnRail: (rod.bottom - ring.top) >= 4 && (ring.bottom - rod.bottom) >= 2,
              rodFull: rod.left <= 1 && rod.right >= window.innerWidth - 1,
              titleInside: ct.top > cr.top && ct.bottom < cr.bottom && ct.left > cr.left && ct.right < cr.right,
              mastClearOfChip: mast.top >= chip.bottom - 2 || mast.right < chip.left,
@@ -333,20 +350,26 @@ for (const w of [390, 360]) {
   });
   ok(w + ': chain meets the rod (within 3px)', Math.abs(crown.chainTop - crown.rodBottom) <= 3, Math.round(crown.chainTop) + ' vs rod ' + Math.round(crown.rodBottom));
   ok(w + ': chain dead-centered on the heart (<=0.6px)', crown.chainCentered);
-  ok(w + ': ring ENCIRCLES the rail', crown.ringWrapsRod);
+  ok(w + ': ring threaded on the rail (overlaps it, hangs below)', crown.ringOnRail);
   ok(w + ': rod spans the full viewport width', crown.rodFull);
   ok(w + ': heart is 196px and untilted', Math.round(crown.heartW) === 196 && crown.noTilt);
   ok(w + ': stacked title fully inside the heart', crown.titleInside);
   ok(w + ': mast clear of the MENU chip', crown.mastClearOfChip);
   ok(w + ': count line gone, disclosure upright', crown.countGone && crown.discUpright);
-  // her frame: full-bleed velvet + the gold rail band on the paper
+  // her frame: full-bleed velvet + the paper's frame.
+  // RECONCILED 2026-08-13: the 2026-08-09 gold rail band (5px ::before) was
+  // deliberately RETIRED by her 2026-08-10 pick — the frame is now the twin
+  // 1px gold hairlines in #C89A2C drawn with box-shadow (zero layout cost).
+  // wlframe.js (36 checks) is the deep truth for that frame; here we assert
+  // only that the band stayed retired and the hairline frame is present.
   const frame = await page.evaluate(() => ({
     velvet: getComputedStyle(document.body).backgroundColor === 'rgb(26, 26, 26)',
     velvetClass: document.documentElement.classList.contains('wl-velvet'),
-    band: getComputedStyle(document.querySelector('.ss.wishlist-mirror'), '::before').borderTopWidth === '5px'
+    bandRetired: getComputedStyle(document.querySelector('.ss.wishlist-mirror'), '::before').display === 'none',
+    hairlines: (getComputedStyle(document.querySelector('.ss.wishlist-mirror')).boxShadow.match(/rgb\(200, 154, 44\)/g) || []).length >= 2
   }));
   ok(w + ': velvet bleeds full-bleed black on this page', frame.velvet && frame.velvetClass);
-  ok(w + ': the gold rail band frames the paper', frame.band);
+  ok(w + ': band retired, gold hairline frame on the paper (wlframe.js pins it)', frame.bandRetired && frame.hairlines);
   // The rod RIDES the scroll (her call: the heart hangs on it, they slide
   // together) — fixed position handles width only; _wlRodScroll moves it.
   const ride = await page.evaluate(async () => {
