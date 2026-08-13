@@ -66,7 +66,7 @@ for (const s of SURFACES) {
   console.log(`  hearts in markup: ${r.hearts}, visible: ${r.visible}   parent display:${r.disp} gap:${r.flexGap} letter-spacing:${r.ls} heart margin-left:${r.ml}`);
   r.gaps.forEach(g => console.log(`    box gap text->heart: ${g.boxGap}px`));
   ok(r.visible >= 1, `her mark is on this surface (${r.visible} visible)`);
-  const hersSubs = r.subs.filter(x => /Pieces I wear and recommend|Stores I've chosen|checklist I use with clients/.test(x));
+  const hersSubs = r.subs.filter(x => /Every item selected by Catherine|Stores I've chosen|checklist I use with clients/.test(x));
   ok(hersSubs.length >= 1, `her-voice sub-lines are here too (${hersSubs.length}: ${hersSubs.join(' | ')})`);
   ok(!/Hand-picked pieces|Browse curated stores|Your personal wardrobe checklist/.test(r.subs.join('|')), 'no faceless leftovers on this surface');
   // her nudge: the mark should sit as close to the words as the Menu's does (5px)

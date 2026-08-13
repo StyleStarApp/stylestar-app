@@ -476,13 +476,17 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   grabbing the teaser's hidden note copy) · searchtune 70 (heart-tip italic assertion updated
   deliberately to the new voice) · wdrworksheet 73 (the Catherine line still balances to exactly 2
   lines in Lora) · weekstar 23 · e2e 29.
-- ▶ **OPEN, awaiting her pick: the Edit hub-row sub-line.** Her catch: "Pieces I wear and recommend"
-  doesn't sound right (the "I" floats far from the name-anchor; "myself" was trimmed for the 212px
-  Discover cap long ago). MEASURED candidates: **"Every item selected by Catherine"** (fits 390+360,
-  one wrap on wb at 320 — recommended: strongest claim, and the two heart-marked rows would both carry
-  her NAME) vs "Hand-picked by Catherine" (fits everywhere). Her longer favorites all wrap on Discover.
-  The "wears myself" story lives on inside the Edit's own subtitle — the row claims, the page tells.
-  Four copies to change when she picks (wb-sub · hm-csub · actsub ×2).
+- ✅ **THE EDIT HUB-ROW SUB-LINE IS HERS NOW: "Every item selected by Catherine" (her pick, 2026-08-13),
+  in all four copies** (wb-sub · hm-csub · actsub ×2). Her catch started it: "Pieces I wear and
+  recommend" didn't sound right — the "I" floated in a different card than the name-anchor. ▶ **THE
+  REFINED NAMING SYSTEM this settles (supersedes the 08-11 "name her once per page" rule): the two
+  heart-marked rows (Edit + Trending) BOTH carry her NAME; the neighbor rows ("Stores I've chosen for
+  you", "The checklist I use with clients") keep "I", borrowing from the visible name beside them.**
+  Candidates were MEASURED first: her longer favorites ("What Catherine recommends and wears herself")
+  wrap on Discover's fixed 212px sub; the winner fits 390+360 and wraps once on wb at 320 only (the
+  standing readability-over-evenness trade). The "wears myself" story lives on inside the Edit's own
+  subtitle — the row claims, the page tells. sally.js 71 → 74 updated deliberately (the ≥3-I-rows
+  assertion became ≥2-I-rows + a two-named-rows check); heartnudge 20 green.
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
   the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
   her search-quality retest, still the one real blocker to sharing/testers, now with several genuine rounds
