@@ -374,6 +374,20 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   2. **"Where do you find so many stylish clothes?"** — "That's why we have the Style Star Mall."
   3. **"I have an event and I don't know what to wear. Can you help me nail the right vibe?"** — the
      clear chat-chip candidate, in her clients' own words.
+  ✅ **AND THE CHIP ROTATION IS BUILT FROM THEM, same session, her picks at every step:** the fresh-chat
+  chips are now `_CHIP_RING` — Dress me for an event → What's in this season? → My essentials → Shift one
+  notch — with TWO ring chips showing per visit (advancing one step each fresh-chat open, `ss_chiprot`)
+  plus the photo chip as the ONE permanent anchor (the door she cannot just type). ▶ **Her call that
+  shaped it: "Shift one notch" STAYS but rides the rotation** — "that is a big part of how I work.
+  Shifting people one standard deviation... always baby steps, never a full makeover." ▶ **Why rotation
+  over a fixed 4/5: MEASURED — five fixed chips stack five rows tall at 360px** (each chip its own row on
+  Display Zoom phones), and rotation keeps today's 3-chip density while keeping every question in play —
+  the same feels-fresh-each-visit instinct as her weekly-loop idea. Return-conversation and photo chip
+  sets untouched. ⚠️ The season chip's fuller sent question ("What's in this season? What trends should I
+  know about?") is a Claude draft she hasn't reworded. Verified: new `scratchpad/chiprot.js`, 15 checks
+  (ring advances + wraps across 5 visits, photo anchor always present, the event chip sends her clients'
+  exact sentence, return-conversation chips unaffected, Start-fresh restores the rotation, no overflow
+  390/360/320, zero JS errors).
   4. ⚠️ **The most common of all, and SHE DOES NOT WANT IT ADDRESSED IN THE APP:** clients' unhappiness/
      insecurity about size/weight — "everyone always always wants outfits that make them look slimmer /
      more flattering silhouettes." **Her explicit boundary — no chip, no feature, no copy about looking
