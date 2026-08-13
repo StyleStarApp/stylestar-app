@@ -435,9 +435,19 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   deliberately: the outbound-anchor census caught the new Shop it anchor exactly as designed (25→26,
   9th JS template)**. ▶ wish.js noted retired (superseded by wladd.js) — its crash in a sweep is not a
   regression.
-- ▶ **THE GRADUATION WHISPER: still waiting on HER LINE, unchanged** — the loop settled (above), so the
-  whisper's job is confirmed as the daily-habit handoff (Ask your Stylist) alone. Claude's draft stands
-  flagged; build is minutes once her words arrive.
+- ✅⭐ **THE GRADUATION WHISPER IS BUILT — HER LINE ARRIVED (2026-08-13, the words waited on since
+  2026-08-03):** *"You've explored it all. Remember I'm here for the everyday too, what to wear, what to
+  pack, which bag. Just ask and check back for weekly updates ♥"* — with her explicit invitation to
+  polish ("or something similar that nudges her visit us often"). **As built: her line nearly verbatim,
+  with ONE offered change — "check back for This Week's Star" instead of "weekly updates"** (naming the
+  concrete reason to return; she can swap it back with one word). Mechanics: the 6th `_WB_NEXT` entry,
+  `k:'grad'`, kept LAST in the array; `when()` = all five journey stops resolved (visited, ✕-skipped, or
+  never eligible — checked by KEY, never index); tap = `openChat()` + `ss_grad` stamp (never again);
+  ✕ rides the same `ss_nextskip` store. **hubs.js 46 → 49, updated deliberately: the old "explored
+  everything → no whisper at all" assertion is superseded** — now asserts grad appears with her exact
+  trio + the weekly nudge, tap lands in chat + stamps, then never again. ⚠️ **Her price arrived too:
+  the first star is $89** (her own Nordstrom screenshot, Color: Black shown — base URL kept showing
+  both colorways; pin black only if she asks). The card's NOTE is still Claude's flagged draft.
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
   the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
   her search-quality retest, still the one real blocker to sharing/testers, now with several genuine rounds

@@ -5740,7 +5740,22 @@ var _WB_NEXT=[
    done:function(){return !!localStorage.getItem('ss_seen_wishlist')},go:function(){openWishlist()},
    h:'Next, open <b>Your Wishlist</b>, every piece you&rsquo;ve hearted in one place. Shop them all when you&rsquo;re ready '+_WBN_HEART},
   {k:'trending',done:function(){return localStorage.getItem('ss_trending_seen')!==null},go:function(){openWardrobe('trend')},
-   h:'Next, see <b>What&rsquo;s Trending</b><svg class="hub-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>, my picks of what&rsquo;s in right now. A splash of current keeps your look fresh '+_WBN_HEART}
+   h:'Next, see <b>What&rsquo;s Trending</b><svg class="hub-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>, my picks of what&rsquo;s in right now. A splash of current keeps your look fresh '+_WBN_HEART},
+  // ▶ THE GRADUATION WHISPER (2026-08-13, HER line — the long-waited words):
+  // after all five journey stops resolve (visited, skipped, or never eligible),
+  // ONE final whisper hands her both habits — the daily companion (Ask your
+  // Stylist, the tap target) and the weekly return (This Week's Star) — then
+  // retires forever: tap stamps ss_grad, ✕ rides the same skip store as the
+  // other five. Her wording almost verbatim; "check back for This Week's
+  // Star" names the concrete reason to return (the "or something similar
+  // that nudges her" she invited — one word from her swaps it back).
+  // NOTE: this entry must stay LAST in the list, and its when() must skip
+  // itself by key, never by index.
+  {k:'grad',
+   when:function(){var sk=_wbNextSkips();return _WB_NEXT.every(function(s){if(s.k==='grad')return true;try{return !!sk[s.k]||(s.when&&!s.when())||s.done()}catch(e){return true}})},
+   done:function(){return !!localStorage.getItem('ss_grad')},
+   go:function(){try{localStorage.setItem('ss_grad','1')}catch(e){}openChat()},
+   h:'You&rsquo;ve explored it all. Remember I&rsquo;m here for the everyday too, what to wear, what to pack, which bag. <b>Just ask</b>, and check back for This Week&rsquo;s Star '+_WBN_HEART}
 ];
 var _wbNextCur=null;
 function _wbNextSkips(){try{return JSON.parse(localStorage.getItem('ss_nextskip')||'{}')||{}}catch(e){return{}}}
@@ -8643,7 +8658,7 @@ var WEEK_STAR={
   n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',
   store:'Nordstrom',
   url:'https://www.nordstrom.com/s/8960533',
-  price:'',   // hers to confirm — shown only when set (never guess a price)
+  price:'$89',   // hers, from her own Nordstrom screenshot 2026-08-13
   note:'A kitten heel is the easiest polish there is. Slide it on and every outfit steps up a notch.' // ⚠️ Claude draft, flagged — Cath rewrites in her voice
 };
 function _renderWeekStar(){
