@@ -5797,7 +5797,7 @@ var _WB_NEXT=[
    when:function(){var sk=_wbNextSkips();return _WB_NEXT.every(function(s){if(s.k==='grad')return true;try{return !!sk[s.k]||(s.when&&!s.when())||s.done()}catch(e){return true}})},
    done:function(){return !!localStorage.getItem('ss_grad')},
    go:function(){try{localStorage.setItem('ss_grad','1')}catch(e){}openChat()},
-   h:'You&rsquo;ve explored it all. Remember I&rsquo;m here for the everyday too, what to wear, what to pack, which bag. <b>Just ask</b>, and check back for the Star of the Week '+_WBN_HEART}
+   h:'Remember I&rsquo;m here for the everyday too, what to wear, what to pack, which bag. <b>Just ask</b>, and check back for the Star of the Week '+_WBN_HEART}
 ];
 var _wbNextCur=null;
 function _wbNextSkips(){try{return JSON.parse(localStorage.getItem('ss_nextskip')||'{}')||{}}catch(e){return{}}}
