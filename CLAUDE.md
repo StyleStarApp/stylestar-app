@@ -10,15 +10,18 @@ by email.
 ## ▶ NEXT SESSION — START HERE (2026-08-13 — THE BIGGEST BUILD DAY YET, ENDED ON HER CALL: "pause here, I will come back on a new chat with fresh energy")
 
 ### ⏸ WHERE 2026-08-13 PAUSED — read this first
-**TEN PRs merged and curl-verified live (#830–#839), working tree clean, branch resynced to main.** In
-order: the item-led search fix proven against the REAL live model (#830) · name-is-the-search parity
+**SIXTEEN PRs merged and curl-verified live (#830–#846), working tree clean, branch resynced to main.**
+In order: the item-led search fix proven against the REAL live model (#830) · name-is-the-search parity
 (#831) · her two stylist vetoes, no skinny jeans / nothing ribbed (#832) · the chat chip rotation from
 her most-asked client questions (#833) · the chat's "makeup for a dress" link bug fixed (#834) · **STAR
 OF THE WEEK built and live** (#835, renamed + twin flanking stars #837) · the graduation whisper in her
-words (#836) · **her voice unified: Lora upright 15.5px everywhere she speaks on light paper** (#838) ·
-the Edit hub rows now say "Every item selected by Catherine" (#839). Her words through the day: "It is
-working better" · "I love love love This Week's Star" · "I love this progress." ⚠️ **Netlify: ~10 builds
-today — watch the meter.**
+words (#836, her trim #846: the opening sentence deleted) · **her voice unified: Lora upright 15.5px
+everywhere she speaks on light paper** (#838, round two #841: seven stragglers) · the Edit hub rows now
+say "Every item selected by Catherine" (#839) · the two wardrobe tabs made true siblings (#842, finished
+#844 after her caught-it-half-done) · the heart-tilt sweep, no heart sits straight (#843) · the wishlist
+count pill gold + 11px (#845) · the pause-notes save (#840). Her words through the day: "It is working
+better" · "I love love love This Week's Star" · "I love this progress" · "I appreciate all the attention
+to detail." ⚠️ **Netlify: ~16 builds today — watch the meter.**
 - **Suites at pause, all green:** searchtune 70 · searchchat 57 · cowork3 69 · e2e 29 · hubs 49 ·
   menu 87 · sally 74 · heartnudge 20 · weekstar 23 (new) · chiprot 15 (new) · tabtops 15 (new) ·
   wdrworksheet 73 · wdrcalmcheck 27 · catmark 135 · a2hs 38 · affq 40.
