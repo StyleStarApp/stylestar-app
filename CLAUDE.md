@@ -536,6 +536,14 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   to Trending's measured visible — the display:none-lies trap hit again and fixed in-harness · brief
   mode hides header · closing line voice/position · one line at 390/360/320, no sideways scroll) ·
   wdrworksheet 73 · wdrcalmcheck 27 · catmark 135.
+- ✅ **THE HEART-TILT SWEEP, her catch on the graduation whisper's STRAIGHT heart ("I think the tilted
+  is sweet and I like consistency sweeps", 2026-08-13, PR #843):** a full census found TWO straight
+  hearts — the journey/graduation whisper's `.wbn-h` AND the A2HS whisper's `.a2-h` — both now tilt
+  12°, and the Star note's `.wks-ch` moved 11°→12° to match its family. ▶ **THE TILT SYSTEM, now a CSS
+  comment at `.wbn-h`: hearts TRAILING a sentence in her voice = 12° (the .pinkheart family) · the
+  maker's-mark hearts on rows/titles (.menu-ch/.hub-ch/.st-ch) = their her-approved 11° · the
+  Catherine's-pick badge = its deliberate LEFT -11° (her spec). No heart sits straight.** Verified by a
+  computed-transform sweep across every heart context + a2hs 38 · weekstar 23 · hubs 49 green.
 - ✅ **THE EDIT HUB-ROW SUB-LINE IS HERS NOW: "Every item selected by Catherine" (her pick, 2026-08-13),
   in all four copies** (wb-sub · hm-csub · actsub ×2). Her catch started it: "Pieces I wear and
   recommend" didn't sound right — the "I" floated in a different card than the name-anchor. ▶ **THE
