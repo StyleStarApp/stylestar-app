@@ -536,6 +536,12 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   to Trending's measured visible — the display:none-lies trap hit again and fixed in-harness · brief
   mode hides header · closing line voice/position · one line at 390/360/320, no sideways scroll) ·
   wdrworksheet 73 · wdrcalmcheck 27 · catmark 135.
+  ⚠️ **AND SHE CAUGHT THE BUILD HALF-DONE on her phone (PR #844): the Trending intro never got its
+  FRAME** — the render showed it boxed but only the header edit shipped — **and the how-to copy sat
+  left-aligned against Trending's centered copy.** Fixed: the intro is wrapped in the SAME
+  `.wdr-howto` card class (`.wdr-trend-intro`, class reuse = never drifts) and the how-to is centered.
+  tabtops 13 → 15 (frame computed-style identity + centered-copy assertions). The lesson: a render is
+  a PROMISE — diff the built page against the picked render before calling an option done.
 - ✅ **THE HEART-TILT SWEEP, her catch on the graduation whisper's STRAIGHT heart ("I think the tilted
   is sweet and I like consistency sweeps", 2026-08-13, PR #843):** a full census found TWO straight
   hearts — the journey/graduation whisper's `.wbn-h` AND the A2HS whisper's `.a2-h` — both now tilt

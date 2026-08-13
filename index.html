@@ -383,7 +383,9 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    ("Catherine's style Star Wardrobe List") rather than in a sewn label
    straddling this card's top edge. */
 #s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:14px 8px 10px;margin-top:14px}
-#s-wardrobe .wdr-howto{font:400 15.5px/1.55 'Lora',Georgia,serif;color:#4a463e;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0}
+#s-wardrobe .wdr-howto{font:400 15.5px/1.55 'Lora',Georgia,serif;color:#4a463e;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0;text-align:center}
+#s-wardrobe .wdr-trend-intro{margin:2px 0 16px}
+#s-wardrobe .wdr-trend-intro .wdr-trend-note{margin:0}
 #s-wardrobe .wdr-howto b{color:#26221c;font-weight:600}
 /* Once she has clearly got the hang of it (a few hearts tapped), the how-to
    steps back to a single quiet reminder line, reclaiming the space on every
@@ -3557,8 +3559,12 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 
   <div class="wdr-pane" data-pane="trend">
+    <!-- The intro wears the SAME framed card as My List's how-to (her catch
+         2026-08-13: the two tab tops must match; class reuse = never drifts). -->
+    <div class="wdr-howto wdr-trend-intro">
     <div class="wdr-trend-by"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>CURATED BY CATHERINE</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wdr-trend-note">Here&rsquo;s what&rsquo;s IN right now. It&rsquo;s always fun to refresh your wardrobe with something current<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    </div>
     <div class="wdr-tstack" id="wdrTrendBody"></div>
     <div class="wdr-trend-end">Check back for trend updates. This list changes with the seasons<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   </div>
