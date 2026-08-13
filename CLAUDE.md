@@ -408,8 +408,15 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   but-loose-results = the structural search-vs-catalog gap, feeds are the cure, don't chase with prompt
   tweaks · (3) searched answers ("Checking stores...") bypass this entirely — exact product URLs.**
   Her framing stands: not getting hung up on link quality until affiliates + her spreadsheet land.
-- ⭐⭐✅ **THIS WEEK'S STAR IS BUILT AND LIVE (2026-08-13, her design, her name, "I love love love This
-  Week's Star"):** the weekly return loop, shipped as a linen card on WELCOME BACK (front door — a return
+- ⭐⭐✅ **THE STAR OF THE WEEK IS BUILT AND LIVE (2026-08-13, her design, her name):** ⚠️ **RENAMED same
+  day, her call: "I like Star of the Week better than This Week's Star"** — card label, graduation
+  whisper and tests all updated; internal names (`WEEK_STAR`, `.wks-*`, `ss_grad`) unchanged. **Her pick
+  "C" from a three-way star render: TWIN tilted gold stars flanking the label** (the CURATED BY
+  CATHERINE treatment, in gold; 17px, ±12°, soft glow) — her ask was "bigger or brighter stars," and her
+  own wisdom capped it there: the real card glow-up is the product PHOTO at feeds, so only the stars
+  turned up now. ✅ **The card's note is BLESSED — her words: "I actually really like the wording... I
+  wouldn't change it."** It reads: "A kitten heel is the easiest polish there is. Slide it on and every
+  outfit steps up a notch." Hers now, don't reword. (Original build notes follow:) the weekly return loop, shipped as a linen card on WELCOME BACK (front door — a return
   habit needs to be seen before she decides where to go) between the greeting mirror and Catherine's
   whisper. Gold star + "THIS WEEK'S STAR" label, item name in DM Serif Display, her one-line note with
   her tilted pink heart (Catherine speaking), black-lacquer + gold "Shop it" pill (the marquee action

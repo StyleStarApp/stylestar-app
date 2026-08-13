@@ -244,7 +244,7 @@ ok('the next visit offers the following step, not the dismissed one', st.on && s
 await wp.evaluate(() => { openWardrobe('trend'); show('s-wb'); });
 st = await wst();
 ok('after all five stops, the GRADUATION whisper appears', st.on && st.txt.includes('explored it all'), st.txt);
-ok('…with her exact everyday trio and the weekly nudge', st.txt.includes('what to wear, what to pack, which bag') && st.txt.includes('This Week’s Star'));
+ok('…with her exact everyday trio and the weekly nudge', st.txt.includes('what to wear, what to pack, which bag') && st.txt.includes('Star of the Week'));
 await wp.evaluate(() => { wbNextGo(); });
 const grad = await wp.evaluate(() => ({ chat: document.querySelector('.scr.act').id, stamp: localStorage.getItem('ss_grad') }));
 ok('tapping it opens Ask your Stylist and stamps the graduation', grad.chat === 's-chat' && grad.stamp === '1');

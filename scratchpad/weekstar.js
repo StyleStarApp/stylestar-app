@@ -26,7 +26,8 @@ const card = await page.evaluate(()=>{
     on: el.classList.contains('on') && el.querySelector('.wks-card')!==null,
     visible: el.getBoundingClientRect().height>40,
     label: el.querySelector('.wks-lbl').textContent.trim(),
-    starSvg: !!el.querySelector('.wks-lbl svg path[fill="#E0B84C"]'),
+    twinStars: el.querySelectorAll('.wks-lbl svg path[fill="#E0B84C"]').length===2
+      && !!el.querySelector('.wks-lbl svg.l') && !!el.querySelector('.wks-lbl svg.r'),
     name: el.querySelector('.wks-name').textContent,
     store: el.querySelector('.wks-store').textContent,
     href: a.getAttribute('href'), rel: a.getAttribute('rel'), tgt: a.getAttribute('target'),
@@ -36,7 +37,9 @@ const card = await page.evaluate(()=>{
   };
 });
 ok('card is on and visible', card.on && card.visible);
-ok('label reads THIS WEEK’S STAR with the gold star', /THIS WEEK.S STAR/.test(card.label) && card.starSvg);
+// Renamed 2026-08-13, her call: "I like Star of the Week better" + her pick C
+// (twin tilted flanking stars) from the three-way render.
+ok('label reads STAR OF THE WEEK flanked by twin gold stars', /STAR OF THE WEEK/.test(card.label) && card.twinStars);
 ok('her first pick: the Tommy Hilfiger Claihre sandal', /Tommy Hilfiger Claihre/.test(card.name));
 ok('store line says Nordstrom', /NORDSTROM/i.test(card.store));
 ok('Shop it = her exact canonical product URL', card.href==='https://www.nordstrom.com/s/8960533');
