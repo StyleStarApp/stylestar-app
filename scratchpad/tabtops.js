@@ -42,6 +42,25 @@ ok('two hearts, left tilted (.hl) + right, exactly like Trending', m.hearts===2 
 ok('header computed style identical to Trending (teal, tracking, gap)', m.same);
 ok('heart transforms and sizes identical to Trending', m.heartsSame);
 
+console.log('1b. The Trending intro wears the same frame, and the copy alignments match (her catch)');
+const fr = await page.evaluate(()=>{
+  openWardrobe();
+  const howto=document.getElementById('wdrHowto');
+  const hcs=getComputedStyle(howto);
+  const centered=hcs.textAlign==='center';
+  openWardrobe('trend');
+  const intro=document.querySelector('.wdr-pane.on .wdr-trend-intro');
+  if(!intro)return{missing:true};
+  const ics=getComputedStyle(intro);
+  const same=['backgroundColor','borderTopWidth','borderTopColor','borderTopStyle','paddingLeft','paddingTop']
+    .every(k=>ics[k]===hcs[k]);
+  openWardrobe();
+  return{same,centered,visible:intro.getBoundingClientRect?true:true,
+    introVisible:true};
+});
+ok('the Trending intro is framed in the SAME card as the how-to', !fr.missing && fr.same);
+ok('the how-to copy is centered like the trend side', fr.centered);
+
 console.log('2. The brief (collapsed) how-to hides the header too');
 const brief = await page.evaluate(()=>{
   document.getElementById('wdrHowto').classList.add('brief');
