@@ -7,9 +7,23 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-13 — THE BIGGEST BUILD DAY YET, ENDED ON HER CALL: "pause here, I will come back on a new chat with fresh energy")
+## ▶ NEXT SESSION — START HERE (2026-08-13 — THE BIGGEST BUILD DAY YET, plus a short evening session the same day)
 
-### ⏸ WHERE 2026-08-13 PAUSED — read this first
+### ⏸ THE SHORT EVENING SESSION OF 2026-08-13 (her call: "Good pausing point... I'll come back on new chat tomorrow 🤗")
+One housekeeping PR, **#848, merged and grep-verified on main; branch resynced, working tree clean.**
+The stale wladd.js suite is reconciled (the ✅ block below has the full detail) — 102/102 green, plus its
+one real catch fixed live: the 320px "Copy & paste link (optional)" placeholder cut. Netlify: 2 builds
+this session (the PR + this pause-note merge). **Her check-ins this session:**
+- **Legal:** still Thursday, no change — she's hoping Almira/Indie wraps everything by FRIDAY 08-15.
+  **If not, she WANTS to send another email — offer the draft first thing Friday** (specific-date ask +
+  both TM filing dates + serial numbers + EIN status + corrected Articles + Operating Agreement). The
+  EIN one-liner draft also still stands. She thanked us for helping her stay calm on this — keep doing that.
+- **Her testing:** "I have done a little more testing on the wardrobe list and things are doing better.
+  Will keep on testing some more." The three retest questions (item-led Ideas? item-led Shop your style?
+  loved colors only on the favorites item?) remain open for her next report.
+- **Sunday is still the Star of the Week swap** — she sends item/store/link/price/one-liner.
+
+### ⏸ WHERE 2026-08-13 (main session) PAUSED
 **SIXTEEN PRs merged and curl-verified live (#830–#846), working tree clean, branch resynced to main.**
 In order: the item-led search fix proven against the REAL live model (#830) · name-is-the-search parity
 (#831) · her two stylist vetoes, no skinny jeans / nothing ribbed (#832) · the chat chip rotation from
@@ -25,7 +39,7 @@ to detail." ⚠️ **Netlify: ~16 builds today — watch the meter.**
 - **Suites at pause, all green:** searchtune 70 · searchchat 57 · cowork3 69 · e2e 29 · hubs 49 ·
   menu 87 · sally 74 · heartnudge 20 · weekstar 23 (new) · chiprot 15 (new) · tabtops 15 (new) ·
   wdrworksheet 73 · wdrcalmcheck 27 · catmark 135 · a2hs 38 · affq 40.
-- ✅ **THE STALE wladd.js SUITE IS RECONCILED (2026-08-14): 102 checks, 0 failures — three assertions
+- ✅ **THE STALE wladd.js SUITE IS RECONCILED (2026-08-13 evening session, shipped as #848): 102 checks, 0 failures — three assertions
   updated deliberately to the current design, and ONE real 320px bug the suite legitimately caught was
   fixed.** The reconciliations, each recorded in a comment at the assertion: (1) *ring-encircles-rail* →
   the ring hangs THREADED over the rail's lower edge since the rod went viewport-fixed (measured: ring
