@@ -1679,6 +1679,27 @@ body.card-fb{padding:0}
 #wbNext .wbn-h{width:12.5px;height:12.5px;vertical-align:-1px}
 #wbNext .wbn-x{position:absolute;left:0;top:2px;padding:3px;cursor:pointer}
 #wbNext .wbn-x svg{width:15px;height:15px;display:block;stroke:#a09a8e}
+/* ⭐ THIS WEEK'S STAR — a linen card on the dark band between the mirrors (ink
+   on that background is unreadable, the whisper lesson; the card brings its own
+   paper). 1px even gold border (her even-thin-border rule), squared corners
+   (her squared-cards preference), black-lacquer + gold "Shop it" pill = the
+   app's own action language on this same screen (the marquee CTA). The note is
+   HER voice, so it carries her tilted pink heart (the mark system: pink tilted
+   heart = Catherine herself speaking). Label + note in the readable ink
+   #4a463e — a gold label at 11px goes brown (the standing small-gold trap). */
+#wbStar{display:none;margin:12px 14px 2px}
+#wbStar.on{display:block}
+.wks-card{background:#FBF6E9;border:1px solid #D8A52E;padding:14px 16px 13px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.28)}
+.wks-lbl{display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Jost',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.16em;color:#4a463e}
+.wks-lbl svg{width:15px;height:15px;flex:0 0 auto}
+.wks-name{font-family:'DM Serif Display',serif;font-size:17.5px;line-height:1.25;color:#1a1a1a;margin:7px 0 3px;text-wrap:balance}
+.wks-store{font-family:'Jost',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#5f5647;text-transform:uppercase}
+.wks-note{font-family:'Jost',sans-serif;font-style:italic;font-size:13.5px;line-height:1.55;color:#4a463e;margin-top:7px;text-wrap:balance}
+.wks-note .wks-ch{width:11px;height:11px;fill:#F49AC1;transform:rotate(11deg);display:inline-block;vertical-align:-1px}
+.wks-act{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:11px}
+.wks-shop{display:inline-flex;align-items:center;gap:6px;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;padding:9px 19px;font-family:'Jost',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.07em;text-decoration:none}
+#wbStar .wl-save{cursor:pointer}
+.wks-disc{font-family:'Jost',sans-serif;font-size:11px;line-height:1.4;color:#CFC9BB;text-align:center;margin-top:7px}
 /* Add to Home Screen whisper — same voice as #wbNext, sits above the footer.
    The real app icon previews above the line, rounded like her home screen will
    round it. The iOS "Add to Home Screen" bold is EMPHASIS (no underline:
@@ -2456,6 +2477,14 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
          owns visibility from show(); ✕ skips that one suggestion forever. It sits on the
          DARK background between the mirrors, so the text must stay cream, never ink. -->
     <!-- Dismiss on the LEFT (Cath 2026-08-05) — the Your Wishlist convention. -->
+    <!-- ⭐ THIS WEEK'S STAR (2026-08-13, her design, her name, "love love love"):
+         Cath's weekly hand-picked item, the return loop that makes "let me check
+         Style Star and see what's new this week" a habit. Rendered from WEEK_STAR
+         by _renderWeekStar() — changing the week's item is ONE const edit. Her
+         stylist insight shapes the default: bags/shoes/accessories fit EVERYONE
+         (no sizes, no body talk), but the pick is always hers, any category.
+         When a new star arrives, the outgoing one rolls into the Style Star Edit. -->
+    <div id="wbStar"></div>
     <div id="wbNext">
       <span class="wbn-x" onclick="wbNextDismiss()" role="button" aria-label="Dismiss suggestion"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
       <span class="wbn-t" id="wbNextTxt" onclick="wbNextGo()"></span>
@@ -5183,9 +5212,11 @@ function _colorPrefRule(itemColorSpecific){
 // page. Change the words here and they change everywhere.
 const FIND_LABEL='Find it &rarr;';
 // One shared card so all four grid features stay identical.
-// ▶ THE AFFILIATE DISCLOSURE lives in EIGHT places, all of them plain markup
-//   now, so grepping for `may earn a commission` finds every one. That grep
-//   is the edit list for the moment Amazon's required sentence has to be added:
+// ▶ THE AFFILIATE DISCLOSURE lives in NINE places — eight in plain markup plus
+//   the This Week's Star card's `.wks-disc` (built by _renderWeekStar, the
+//   first product link on Welcome Back) — so grepping for `may earn a
+//   commission` finds every one. That grep is the edit list for the moment
+//   Amazon's required sentence has to be added:
 // ⚠️ THE WORDING LOST ITS PRONOUN ON 2026-08-11 ("us" -> nothing), and the
 //   reasoning is worth keeping because she arrived at it by rejecting the
 //   obvious fix. Asked whether it should say "Style Star" or "me" instead of
@@ -8598,6 +8629,38 @@ function _buildWbHubs(){
   list.appendChild(shop);list.appendChild(sty);list.appendChild(wdr);
   list.dataset.hubs='1';
 }
+// ⭐ THIS WEEK'S STAR — Cath's weekly hand-picked item (2026-08-13, her design,
+// her name). ▶ HER WEEKLY RITUAL: she sends ONE item (name, store, exact link,
+// price, one line in her voice); this const is the only edit. The OUTGOING
+// star rolls into the Style Star Edit markup at the same time, so one ritual
+// grows two features. ⚠️ The pick, the note and the price are ALWAYS hers —
+// Claude never chooses products (the Edit's standing rule). "This Week's" is
+// a promise with a clock: if she ever wants out of the weekly rhythm, rename
+// the label rather than letting it go quietly stale.
+// URL kept canonical (nordstrom.com/s/<id>, tracking + her personal
+// size/width params stripped per the standing rule).
+var WEEK_STAR={
+  n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',
+  store:'Nordstrom',
+  url:'https://www.nordstrom.com/s/8960533',
+  price:'',   // hers to confirm — shown only when set (never guess a price)
+  note:'A kitten heel is the easiest polish there is. Slide it on and every outfit steps up a notch.' // ⚠️ Claude draft, flagged — Cath rewrites in her voice
+};
+function _renderWeekStar(){
+  var el=document.getElementById('wbStar');if(!el)return;
+  if(!WEEK_STAR||!WEEK_STAR.n||!_wlSafeUrl(WEEK_STAR.url)){el.classList.remove('on');el.innerHTML='';return;}
+  var item={name:WEEK_STAR.n,store:WEEK_STAR.store,pick:true,url:WEEK_STAR.url,price:WEEK_STAR.price};
+  el.innerHTML='<div class="wks-card">'
+    +'<div class="wks-lbl"><svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E0B84C" stroke="#C89A2C" stroke-width="0.6"/></svg>THIS WEEK&rsquo;S STAR</div>'
+    +'<div class="wks-name">'+_esc(WEEK_STAR.n)+'</div>'
+    +'<div class="wks-store">'+_esc(WEEK_STAR.store)+(WEEK_STAR.price?' &middot; '+_esc(WEEK_STAR.price):'')+'</div>'
+    +(WEEK_STAR.note?'<div class="wks-note">'+_esc(WEEK_STAR.note)+' <svg class="wks-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>':'')
+    +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_wlSafeUrl(WEEK_STAR.url))+'" target="_blank" rel="sponsored noopener">Shop it &rarr;</a>'+_wlSaveBtn(item)+'</div>'
+    +'</div>'
+    +'<div class="wks-disc">Some links may earn a commission.</div>';
+  el.classList.add('on');
+  try{_wlSyncButtons()}catch(e){}
+}
 function updateWbScreen(){
   _buildWbHubs();
   // Catherine's whisper re-decides on every Welcome Back appearance — this
@@ -8605,6 +8668,7 @@ function updateWbScreen(){
   // no show()) and show('s-wb'), which calls updateWbScreen too.
   try{_syncWbNext();}catch(e){}
   try{_syncA2hs();}catch(e){}
+  try{_renderWeekStar();}catch(e){}
   // Portrait hub: "<Name>'s Style" written across the chain, above her personal motto.
   // If she hasn't given a name, leave the label blank and let the star sit higher
   // (via the wb-noname class) instead of showing a generic placeholder. If she has
