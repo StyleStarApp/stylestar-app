@@ -237,9 +237,20 @@ await wp.evaluate(() => show('s-wb'));
 st = await wst();
 ok('the next visit offers the following step, not the dismissed one', st.on && st.txt.includes('Trending'), st.txt);
 
+// ⚠️ DELIBERATE UPDATE 2026-08-13: "explored everything → no whisper" is
+// superseded by the GRADUATION WHISPER (her line, the long-waited words) —
+// one final whisper hands her the daily habit (Ask your Stylist) + the weekly
+// return (This Week's Star), then retires forever on tap or ✕.
 await wp.evaluate(() => { openWardrobe('trend'); show('s-wb'); });
 st = await wst();
-ok('a woman who has explored everything sees no whisper at all', !st.on);
+ok('after all five stops, the GRADUATION whisper appears', st.on && st.txt.includes('explored it all'), st.txt);
+ok('…with her exact everyday trio and the weekly nudge', st.txt.includes('what to wear, what to pack, which bag') && st.txt.includes('This Week’s Star'));
+await wp.evaluate(() => { wbNextGo(); });
+const grad = await wp.evaluate(() => ({ chat: document.querySelector('.scr.act').id, stamp: localStorage.getItem('ss_grad') }));
+ok('tapping it opens Ask your Stylist and stamps the graduation', grad.chat === 's-chat' && grad.stamp === '1');
+await wp.evaluate(() => show('s-wb'));
+st = await wst();
+ok('graduated: no whisper ever again', !st.on);
 ok('zero JS errors through the whisper lifecycle', wp.errors.length === 0, wp.errors.join(' | '));
 await wp.context().close();
 
