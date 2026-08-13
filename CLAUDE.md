@@ -487,6 +487,17 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   standing readability-over-evenness trade). The "wears myself" story lives on inside the Edit's own
   subtitle — the row claims, the page tells. sally.js 71 → 74 updated deliberately (the ≥3-I-rows
   assertion became ≥2-I-rows + a two-named-rows check); heartnudge 20 green.
+- ⚖️ **LEGAL THREAD ESCALATED (2026-08-13):** Indie Client Care answered her follow-up with a
+  no-date "we've escalated and will let you know." **Cath sent a firm reply the same day** (already
+  sent, reviewed after the fact): asks for a SPECIFIC date for the corrected documents (Bailey name
+  fix + completed Operating Agreement, open since 08-05) or she books the call; asks whether the TWO
+  trademark applications (word mark + logo) have been FILED, with serial numbers if so ("$2,100 in
+  USPTO fees paid months ago" — her figure); notes it holds up EIN → bank → affiliates → launch. ⚠️
+  Two small date slips in her sent version, both in her favor if challenged: LLC actually active since
+  JULY 27 (not Aug 5 — that's the doc delivery date), TMs drafted since mid-JULY (not June). ▶ **Her
+  inbox check pending: the "final action steps" email for the word mark that Indie said on 08-05 was
+  being sent — if it arrived and awaits her signature, completing it removes their best excuse; if it
+  never arrived, that's the broken commitment.** Watch for Indie's dated answer or the call booking.
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
   the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
   her search-quality retest, still the one real blocker to sharing/testers, now with several genuine rounds
