@@ -7928,10 +7928,18 @@ function _storeHome(key){try{return new URL(STORES[key].u).origin}catch(e){retur
 // it short, because long descriptive phrases return nothing in a search box.
 const _LEADIN=/^(?:try|add|adds|pair|pairing|get|grab|consider|maybe|also|and|or|but|plus|with|the|a|an|some|any|this|that|these|those|your|my|her|it|is|are|would|will|be|look|for|in|of|to|i|we|love|like|really|great|perfect|nice|good|wear|wearing|something|piece|option|even|just|one)$/i;
 function _searchableItem(phrase){
+  // ▶ 2026-08-13, her screenshots: cut a trailing "in <shades>" clause BEFORE
+  // anything else. The stylist writes "Satin slip midi dress in champagne or
+  // blush from Revolve", and the last-4-words heuristic below then made the
+  // COLOR TAIL the whole search — Revolve searched "in champagne or blush"
+  // and matched makeup; Anthropologie searched "in gold or black" and showed
+  // gold sneakers. The garment always precedes "in"; the tail is shades or
+  // variants a search does not need (the standing lead-with-the-item rule).
+  const noTail=String(phrase||'').replace(/\s+\bin\b[\s\S]*$/i,'');
   // Strip punctuation to spaces FIRST. A leading comma used to survive as its
   // own token, and because a comma matches no lead-in word the stripper stopped
   // dead on it, leaving "or the Sicily bag" as the search term.
-  let w=String(phrase||'').replace(/[^\w\s-]+/g,' ').trim().split(/\s+/).filter(Boolean);
+  let w=noTail.replace(/[^\w\s-]+/g,' ').trim().split(/\s+/).filter(Boolean);
   while(w.length>2&&_LEADIN.test(w[0].replace(/[^\w]/g,'')))w.shift();
   if(w.length>4)w=w.slice(-4);          // the item name sits at the end
   return w.join(' ').trim();
@@ -8014,7 +8022,7 @@ function linkStores(text){
   // Keep the stylist's own connector word. Rebuilding the sentence with a
   // hardcoded "from" silently rewrote her wording ("a blazer at Nordstrom"
   // came out as "a blazer from Nordstrom").
-  linked=_outsideLinks(linked,new RegExp('([\\w\\s,-]{3,40})(\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,joiner,store){
+  linked=_outsideLinks(linked,new RegExp('([\\w\\s,-]{3,60})(\\s+(?:from|at|on|via|through)\\s+)('+storeNames+')','gi'),function(match,item,joiner,store){
     const cleanItem=_searchableItem(_unesc(item));
     const cleanStore=resolveStore(_unesc(store))||_unesc(store);
     if(!cleanItem)return match;
@@ -8023,7 +8031,7 @@ function linkStores(text){
   });
   // Second pass: "item from SomeBrand" where SomeBrand is NOT one of our stores.
   // Runs outside existing links so it cannot touch what the pass above linked.
-  linked=_outsideLinks(linked,new RegExp('([\\w\\s,-]{3,40})(\\s+(?:from|by)\\s+)([A-Z][\\w\'\\.]*(?:\\s+[A-Z][\\w\'\\.]*){0,2})','g'),function(match,item,joiner,brand){
+  linked=_outsideLinks(linked,new RegExp('([\\w\\s,-]{3,60})(\\s+(?:from|by)\\s+)([A-Z][\\w\'\\.]*(?:\\s+[A-Z][\\w\'\\.]*){0,2})','g'),function(match,item,joiner,brand){
     const b=brand.trim();
     if(resolveStore(b))return match;        // a real store, already handled above
     if(_NOTBRAND.test(b))return match;      // not a brand at all
