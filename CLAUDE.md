@@ -7,7 +7,39 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-12, LATER SAME DAY — HER SECOND RETEST CAUGHT IT STILL COLOR-LED, AND THE REAL CULPRITS ARE FOUND)
+## ▶ NEXT SESSION — START HERE (2026-08-13 — THE BIGGEST BUILD DAY YET, ENDED ON HER CALL: "pause here, I will come back on a new chat with fresh energy")
+
+### ⏸ WHERE 2026-08-13 PAUSED — read this first
+**TEN PRs merged and curl-verified live (#830–#839), working tree clean, branch resynced to main.** In
+order: the item-led search fix proven against the REAL live model (#830) · name-is-the-search parity
+(#831) · her two stylist vetoes, no skinny jeans / nothing ribbed (#832) · the chat chip rotation from
+her most-asked client questions (#833) · the chat's "makeup for a dress" link bug fixed (#834) · **STAR
+OF THE WEEK built and live** (#835, renamed + twin flanking stars #837) · the graduation whisper in her
+words (#836) · **her voice unified: Lora upright 15.5px everywhere she speaks on light paper** (#838) ·
+the Edit hub rows now say "Every item selected by Catherine" (#839). Her words through the day: "It is
+working better" · "I love love love This Week's Star" · "I love this progress." ⚠️ **Netlify: ~10 builds
+today — watch the meter.**
+- **Suites at pause, all green:** searchtune 70 · searchchat 57 · cowork3 69 · e2e 29 · hubs 49 ·
+  menu 87 · sally 74 · heartnudge 20 · weekstar 23 (new) · chiprot 15 (new) · wdrworksheet 73 · affq 40.
+- ▶ **THE FIRST THINGS TO ASK HER:**
+  1. **The legal thread + her energy.** She ended the session HEATED at Indie Law (rightly — see the
+     ⚖️ entry below) and paused before sending the EIN one-liner. **The draft is in the 2026-08-13 chat,
+     ready to paste: "has my EIN application been submitted yet? If not I will obtain it directly from
+     the IRS myself this week."** If Indie gave no specific date by Friday 08-15, she books the call
+     (amber-quinn HubSpot link) loaded with the question list: corrected Articles date · completed
+     Operating Agreement · word mark filing date · **logo mark filing date (silent since July 16!)** ·
+     serial numbers · EIN status. ▶ **The EIN unlock, told to her: the IRS issues EINs free at irs.gov
+     in ~15 min (LLC legal name + her SSN; the "Bail" typo does NOT block it) — but ONE EIN per entity,
+     so ask Indie first whether they already applied.** EIN + Articles + ID likely opens the bank too.
+  2. **How the live retest keeps going** — the whole search overhaul is now proven against the real
+     model, but her verdict on "dialed in" is still the tester gate.
+  3. **Sunday: the new Star of the Week** — she sends item/store/link/price/one-liner; the Tommy
+     Hilfiger sandal rolls into the Edit at the same moment.
+- ▶ **Everything else on the list is unchanged:** Cowork spreadsheet (jeans started) · MailerLite desk
+  items · more Trending/Edit content · the parked triggers (registry at affiliate approval · her My
+  Story photo · holiday gift guide = Star machinery in November costume).
+
+## ▶ THE DETAIL OF 2026-08-12/13 (the two-day mega-entry the pause block above summarizes)
 - 🚨⭐ **HER RETEST SCREENSHOTS PROVED THE "LEAD WITH THE ITEM" REBUILD HADN'T LANDED: wardrobe Ideas still
   color-led everywhere ("Blush Satin Camisole", "White Silk Professional Blouse", "Hot Pink Sequin Going-Out
   Blouse" — hot pink = her loved color, on a non-color item), Shop your style partly ("Gold Kitten-Heel Mules",
@@ -498,6 +530,17 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   inbox check pending: the "final action steps" email for the word mark that Indie said on 08-05 was
   being sent — if it arrived and awaits her signature, completing it removes their best excuse; if it
   never arrived, that's the broken commitment.** Watch for Indie's dated answer or the call booking.
+  ▶ **SHE THEN SHARED THE FULL JUNE 3 → AUG 13 THREAD and the assessment was given (2026-08-13,
+  end of session): her email was right, the delay is real** — paid IN FULL June 30 ($3,999 + $130 +
+  $2,100), Indie promised to FILE the TMs "on or before July 24" and never did, and SHE discovered her
+  own LLC approval on Sunbiz Aug 5 while they "kept a close eye." New finds from the full thread: **the
+  LOGO mark has been silent since July 16** (Aug 5 named only the word mark — her email's "two
+  applications" ask covers it, listen for both in the answer) · the Aug 13 booking link is amber-quinn,
+  not Almira (case handed around) · her TM search verdict was "proceed but prepare for potential
+  challenges," so every week unfiled is priority-date risk — fair call leverage. **The EIN one-liner
+  draft is written (in chat) and SHE PAUSED before sending it: "I feel heated about this right now...
+  I want to clear this energy."** Honor the pause; the line loses nothing by waiting a day. Her
+  full-thread tone has been impeccable — protect that.
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
   the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
   her search-quality retest, still the one real blocker to sharing/testers, now with several genuine rounds
