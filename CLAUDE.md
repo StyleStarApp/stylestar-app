@@ -362,12 +362,45 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   `ANTHROPIC_API_KEY` here, same standing limitation). Ask specifically: does Professional blouses / Tank
   tops still show hot pink or royal blue? Does a plain search (no color) actually feel more like real
   shopping? Does Work-appropriate dresses still show strapless/spaghetti-strap/satin pieces?
-- ▶ **CATEGORY REVIEW STATUS: 8 of 10 categories walked through with her, 2 never reached — Bags and Extras &
-  Accessories.** Worth finishing that pass next time, same method: show the category, flag genuine candidates,
-  let her confirm from her own testing rather than guessing from names alone. ⚠️ **Track record this session:
-  guessing from shared words alone was wrong 3 of 4 times** (Bottoms, Jackets & Layers, Foundations all "fine"
-  despite flagged candidates; only Tops and Dresses were real, and both came from HER actual testing, not from
-  pattern-matching) — lead with what she's actually seen go wrong, don't over-flag from category structure.
+- ✅ **CATEGORY REVIEW: CLOSED, her call (2026-08-13): "We can cross off [the category review]. I think we
+  are all good on the categories but I will keep testing."** Bags and Extras & Accessories were never
+  walked through and deliberately won't be — the walkthrough track record showed guessing from category
+  structure was wrong 3 of 4 times, and both real finds (Tops, Dresses) came from HER live testing anyway.
+  **The standing method now: her testing IS the category review.** Reopen only if she reports a specific
+  bleed; don't re-offer the walkthrough.
+- ⭐⭐ **HER MOST-ASKED STYLIST QUESTIONS ARRIVED (2026-08-13, the long-waited words — stylist taxonomy,
+  verbatim-ish, do not paraphrase away):**
+  1. **"What is in this season?"** — her note: "That is exactly why we have What's Trending page."
+  2. **"Where do you find so many stylish clothes?"** — "That's why we have the Style Star Mall."
+  3. **"I have an event and I don't know what to wear. Can you help me nail the right vibe?"** — the
+     clear chat-chip candidate, in her clients' own words.
+  ✅ **AND THE CHIP ROTATION IS BUILT FROM THEM, same session, her picks at every step:** the fresh-chat
+  chips are now `_CHIP_RING` — Dress me for an event → What's in this season? → My essentials → Shift one
+  notch — with TWO ring chips showing per visit (advancing one step each fresh-chat open, `ss_chiprot`)
+  plus the photo chip as the ONE permanent anchor (the door she cannot just type). ▶ **Her call that
+  shaped it: "Shift one notch" STAYS but rides the rotation** — "that is a big part of how I work.
+  Shifting people one standard deviation... always baby steps, never a full makeover." ▶ **Why rotation
+  over a fixed 4/5: MEASURED — five fixed chips stack five rows tall at 360px** (each chip its own row on
+  Display Zoom phones), and rotation keeps today's 3-chip density while keeping every question in play —
+  the same feels-fresh-each-visit instinct as her weekly-loop idea. Return-conversation and photo chip
+  sets untouched. ⚠️ The season chip's fuller sent question ("What's in this season? What trends should I
+  know about?") is a Claude draft she hasn't reworded. Verified: new `scratchpad/chiprot.js`, 15 checks
+  (ring advances + wraps across 5 visits, photo anchor always present, the event chip sends her clients'
+  exact sentence, return-conversation chips unaffected, Start-fresh restores the rotation, no overflow
+  390/360/320, zero JS errors).
+  4. ⚠️ **The most common of all, and SHE DOES NOT WANT IT ADDRESSED IN THE APP:** clients' unhappiness/
+     insecurity about size/weight — "everyone always always wants outfits that make them look slimmer /
+     more flattering silhouettes." **Her explicit boundary — no chip, no feature, no copy about looking
+     slimmer or body flattery.** Consistent with her 2026-07-28 rule (never mention her size range back
+     to her while shopping). The app serves flattering fits silently through her styling; it never names
+     bodies. Protect this in every future copy/feature decision.
+- ▶ **THE WEEKLY RETURN LOOP IS BEING BRAINSTORMED (2026-08-13, her push, evolving the parked
+  "featured item" idea):** she wants a "let me check Style Star and see what's new this week" habit —
+  Bag/Accessory/Item of the Week, or a featured brand or hot trend, maybe a holiday gift-guide flavor.
+  ⭐ **Her stylist insight, protect it: bags/shoes/accessories are the perfect weekly item because they
+  fit EVERYONE — "does not matter plus size or petite."** No sizes to promise, no body talk. Graduation
+  whisper deliberately paused while this settles — a one-time retiring whisper can't carry a recurring
+  loop; see the session chat for the shape options offered. Nothing built yet; her picks pending.
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
   the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
   her search-quality retest, still the one real blocker to sharing/testers, now with several genuine rounds

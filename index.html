@@ -5551,6 +5551,41 @@ function _restoreSuggestions(){
   var lbl=document.querySelector('#chatSuggestions .chat-sug-label'),c=document.querySelector('#chatSuggestions .chat-sug-chips');
   if(lbl)lbl.textContent=_defaultSug.label;if(c)c.innerHTML=_defaultSug.chips;
 }
+// ▶ THE FRESH-CHAT CHIP ROTATION (2026-08-13, her design). The ring below is
+// HER stylist taxonomy — the questions clients actually ask her most, in her
+// clients' own words — plus her own method chip. Her calls, all recorded:
+// "Shift one notch" stays because "that is a big part of how I work. Shifting
+// people one standard deviation... always baby steps, never a full makeover" —
+// but it rides the rotation, not an anchored slot. The photo chip is the ONE
+// permanent anchor (the door she cannot just type). Two ring chips show per
+// visit, advancing one step each fresh-chat open, so the chat feels a little
+// fresh every time — the same return-loop instinct as her item-of-the-week.
+// ⚠️ Ring wording is hers or blessed by her; don't reword without her. The
+// onclick reads the message from _CHIP_RING directly so apostrophes in her
+// clients' words never need escaping into the attribute.
+var _CHIP_RING=[
+  {l:'Dress me for an event',m:'I have an event and I don’t know what to wear. Can you help me nail the right vibe?'},
+  {l:'What’s in this season?',m:'What’s in this season? What trends should I know about?'},
+  {l:'My essentials',m:'What are wardrobe essentials I should have based on my style?'},
+  {l:'Shift one notch',m:'Help me shift my style one notch more polished'}
+];
+var _CHIP_PHOTO='<button class="chat-chip" onclick="document.getElementById(\'chatPhotoIn\').click()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><circle cx="12" cy="13.3" r="3.2"/></svg>Send a photo for advice</button>';
+function _rotateDefaultChips(advance){
+  var lbl=document.querySelector('#chatSuggestions .chat-sug-label'),c=document.querySelector('#chatSuggestions .chat-sug-chips');
+  if(!c)return;
+  var i=0;
+  try{i=parseInt(localStorage.getItem('ss_chiprot'),10)||0}catch(e){}
+  if(advance){try{localStorage.setItem('ss_chiprot',String((i+1)%_CHIP_RING.length))}catch(e){}}
+  var a=_CHIP_RING[i%_CHIP_RING.length],b=_CHIP_RING[(i+1)%_CHIP_RING.length];
+  var html='<button class="chat-chip" onclick="quickChat(_CHIP_RING['+(i%_CHIP_RING.length)+'].m)">'+a.l+'</button>'
+    +'<button class="chat-chip" onclick="quickChat(_CHIP_RING['+((i+1)%_CHIP_RING.length)+'].m)">'+b.l+'</button>'
+    +_CHIP_PHOTO;
+  if(lbl)lbl.textContent='Try asking:';
+  c.innerHTML=html;
+  // Keep the cached default in step, so a stray _restoreSuggestions (or the
+  // photo/return sets snapshotting it) always reflects the current rotation.
+  _defaultSug={label:'Try asking:',chips:html};
+}
 // Returning to a real conversation → forward-friendly "continue" chips (she usually wants
 // something new, so lead with fresh starts and keep one gentle "pick up our chat").
 function _setReturnSuggestions(){
@@ -7761,7 +7796,7 @@ function doClearChat(){
   try{clearChatPhoto()}catch(e){}
   const mc=document.getElementById('chatMessages');if(mc)mc.innerHTML='';
   const sugEl=document.getElementById('chatSuggestions');
-  try{_restoreSuggestions()}catch(e){}
+  try{_rotateDefaultChips(true)}catch(e){}
   if(sugEl)sugEl.style.display='block';
   _addGreeting();
   resetFreshLink();
@@ -7774,7 +7809,7 @@ function openChat(fromLook){
   resetFreshLink();
   const sugEl=document.getElementById('chatSuggestions');
   if(sugEl)sugEl.style.display='block';
-  if(!fromLook)_restoreSuggestions();   // general chat → default prompt chips
+  if(!fromLook)_rotateDefaultChips(true);   // general chat → her rotating most-asked chips
   const msgContainer=document.getElementById('chatMessages');
   if(chatHistory.length===0){
     const saved=loadChatHistory();
