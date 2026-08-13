@@ -20,7 +20,15 @@ the Edit hub rows now say "Every item selected by Catherine" (#839). Her words t
 working better" · "I love love love This Week's Star" · "I love this progress." ⚠️ **Netlify: ~10 builds
 today — watch the meter.**
 - **Suites at pause, all green:** searchtune 70 · searchchat 57 · cowork3 69 · e2e 29 · hubs 49 ·
-  menu 87 · sally 74 · heartnudge 20 · weekstar 23 (new) · chiprot 15 (new) · wdrworksheet 73 · affq 40.
+  menu 87 · sally 74 · heartnudge 20 · weekstar 23 (new) · chiprot 15 (new) · tabtops 15 (new) ·
+  wdrworksheet 73 · wdrcalmcheck 27 · catmark 135 · a2hs 38 · affq 40.
+- ⚠️ **KNOWN-STALE SUITE, deflake next session: wladd.js runs 102 checks with 6 failures — PRE-EXISTING,
+  proven by running it on clean main with no working-tree changes (same 6 fail).** The failing checks
+  (ring-encircles-rail, gold-rail-band-frames-paper, collapsed-button-one-line) pin the 2026-08-09
+  wishlist crown/band design, parts of which the 2026-08-10 rethink deliberately changed (wlframe.js 36
+  is the newer truth for the frame). Nobody ran wladd in the 08-10..08-13 sweeps, so it rotted silently.
+  Reconcile its assertions against the current design deliberately — do NOT "fix" the live wishlist to
+  match the old suite; her phone screenshots today showed the wishlist behaving fine.
 - ▶ **THE FIRST THINGS TO ASK HER:**
   1. **The legal thread + her energy.** She ended the session HEATED at Indie Law (rightly — see the
      ⚖️ entry below) and paused before sending the EIN one-liner. **The draft is in the 2026-08-13 chat,
