@@ -22,7 +22,12 @@ const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromi
 let pass = 0, fail = 0;
 const ok = (c, m) => { c ? (pass++, console.log('  ok  ' + m)) : (fail++, console.log('  FAIL ' + m)); };
 
-const HERS = ['Pieces I wear and recommend', "Stores I've chosen for you", 'The checklist I use with clients'];
+// ⚠️ DELIBERATE UPDATE 2026-08-13, her call: the Edit sub now NAMES her
+// ("Every item selected by Catherine") instead of the floating "I" — the "I"
+// sat in a different card than the name-anchor, so it read unclaimed. The two
+// heart-marked rows (Edit + Trending) now both carry her NAME; the "I" rows
+// stay first-person and borrow from the visible name beside them.
+const HERS = ['Every item selected by Catherine', "Stores I've chosen for you", 'The checklist I use with clients'];
 const RETIRED = ['Hand-picked pieces you', 'Browse curated stores', 'Your personal wardrobe checklist'];
 
 // ---- static: the words exist everywhere and the old ones are gone ----
@@ -37,7 +42,7 @@ console.log('\n--- CSS integrity ---');
 ok((css.match(/\/\*/g) || []).length === (css.match(/\*\//g) || []).length,
   `every CSS comment is balanced (${(css.match(/\/\*/g) || []).length} opens, ${(css.match(/\*\//g) || []).length} closes)`);
 console.log('\n--- the words, across every hub surface ---');
-ok(src.split('Pieces I wear and recommend').length - 1 === 4, 'the Edit sub is in all 4 places');
+ok(src.split('Every item selected by Catherine').length - 1 === 4, 'the Edit sub is in all 4 places');
 // ⚠️ Her catch 2026-08-11: the "myself" version wrapped on the Discover page,
 // whose sub container is a FIXED 212px at every screen width. Her "&" idea fit
 // by 0.4px in Chromium -- inside normal text-measurement variance, and the exact
@@ -45,6 +50,7 @@ ok(src.split('Pieces I wear and recommend').length - 1 === 4, 'the Edit sub is i
 // emphasis, not meaning ("I wear" already says it is personal) and leaves
 // 29.7px of headroom. Assert the retired version cannot come back.
 ok(!src.includes('Pieces I wear myself'), 'the two-line "myself" version is retired');
+ok(!src.includes('Pieces I wear and recommend'), 'the floating-I version is retired too (2026-08-13, her call)');
 ok(src.split("Stores I've chosen for you").length - 1 === 3, 'the Mall sub is in all 3 places');
 ok(src.split('The checklist I use with clients').length - 1 === 3, 'the Wardrobe sub is in all 3 places');
 RETIRED.forEach(r => ok(!src.includes(r), `the faceless version is gone: "${r}"`));
@@ -98,9 +104,15 @@ for (const w of [390, 360, 320]) {
   ok(m.chFill === m.menuFill, `the hub heart is the same pink as the Menu's (${m.chFill})`);
   ok(m.menuOpenOk, 'the Menu heart was actually visible when measured (not a 0-width false pass)');
   ok(m.chW === m.menuW, `and the same size (${m.chW} vs ${m.menuW})`);
-  // the her-voice rows carry "I"
+  // ⚠️ DELIBERATE UPDATE 2026-08-13 (her call): the Edit row now NAMES her
+  // instead of saying "I", so the system is: the two heart-marked rows carry
+  // her NAME, and at least two neighbor rows still speak as "I" (borrowing
+  // from the visible name). Was ">= 3 I-rows" before the Edit row moved family.
   const voice = m.rows.filter(r => /\bI\b|I've/.test(r.sub)).map(r => r.title);
-  ok(voice.length >= 3, `at least 3 rows now speak in her voice (${voice.join(' / ')})`);
+  ok(voice.length >= 2, `at least 2 rows still speak as "I" (${voice.join(' / ')})`);
+  const named = m.rows.filter(r => /Catherine/.test(r.sub)).map(r => r.title);
+  ok(named.length >= 2 && named.some(t => /Edit/.test(t)) && named.some(t => /Trending/.test(t)),
+    `the two heart-marked rows both carry her NAME (${named.join(' / ')})`);
   ok(!m.rows.some(r => /stylist/i.test(r.title) && /\bI\b/.test(r.sub)), 'Ask your stylist does NOT claim to be her');
   m.rows.forEach(r => ok(r.lines >= 1 && r.lines <= 2 && !r.overflow, `"${r.sub}" fits (${r.lines} line${r.lines > 1 ? 's' : ''})`));
   ok(m.docW <= m.vw, `no sideways scroll (${m.docW} vs ${m.vw})`);
