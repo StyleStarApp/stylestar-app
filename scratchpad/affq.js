@@ -37,7 +37,10 @@ const allOutbound = [...HTML.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)].map(m 
 // reviewer reading the page. It carries plain noopener and is asserted separately.
 const social = allOutbound.filter(a => /instagram\.com/.test(a));
 const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
-ok('found the full set of outbound PRODUCT anchors (17 Edit + 8 templates)', anchors.length === 25, 'got ' + anchors.length);
+// 26 as of 2026-08-13: This Week's Star's "Shop it" (.wks-shop, built by
+// _renderWeekStar) is the 9th JS template — a deliberate count update, and the
+// check caught the new anchor exactly as designed.
+ok('found the full set of outbound PRODUCT anchors (17 Edit + 9 templates)', anchors.length === 26, 'got ' + anchors.length);
 ok('every product link carries sponsored + noopener', anchors.every(a => /rel="sponsored noopener"/.test(a)),
   anchors.filter(a => !/rel="sponsored noopener"/.test(a)).slice(0, 2).join(' '));
 ok('the Instagram link exists', social.length === 1, 'got ' + social.length);

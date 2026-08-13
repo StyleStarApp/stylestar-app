@@ -408,13 +408,36 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   but-loose-results = the structural search-vs-catalog gap, feeds are the cure, don't chase with prompt
   tweaks · (3) searched answers ("Checking stores...") bypass this entirely — exact product URLs.**
   Her framing stands: not getting hung up on link quality until affiliates + her spreadsheet land.
-- ▶ **THE WEEKLY RETURN LOOP IS BEING BRAINSTORMED (2026-08-13, her push, evolving the parked
-  "featured item" idea):** she wants a "let me check Style Star and see what's new this week" habit —
-  Bag/Accessory/Item of the Week, or a featured brand or hot trend, maybe a holiday gift-guide flavor.
-  ⭐ **Her stylist insight, protect it: bags/shoes/accessories are the perfect weekly item because they
-  fit EVERYONE — "does not matter plus size or petite."** No sizes to promise, no body talk. Graduation
-  whisper deliberately paused while this settles — a one-time retiring whisper can't carry a recurring
-  loop; see the session chat for the shape options offered. Nothing built yet; her picks pending.
+- ⭐⭐✅ **THIS WEEK'S STAR IS BUILT AND LIVE (2026-08-13, her design, her name, "I love love love This
+  Week's Star"):** the weekly return loop, shipped as a linen card on WELCOME BACK (front door — a return
+  habit needs to be seen before she decides where to go) between the greeting mirror and Catherine's
+  whisper. Gold star + "THIS WEEK'S STAR" label, item name in DM Serif Display, her one-line note with
+  her tilted pink heart (Catherine speaking), black-lacquer + gold "Shop it" pill (the marquee action
+  language on that same screen) + Save heart. **Saved stars land on Your Wishlist as "Catherine's pick"
+  with the EXACT product URL** (the Edit-pick machinery, pick:true — the second deliberate never-store-
+  URL exception extended to its third user). `.wks-disc` disclosure under the card — the FIRST product
+  link on s-wb, so the screen needed one (the disclosure list is NINE places now; the _shopCard comment
+  updated). **Mechanics: `WEEK_STAR` const + `_renderWeekStar()` from `updateWbScreen()` — changing the
+  week is ONE const edit; no item set = no card, gracefully.** ▶ **HER WEEKLY RITUAL: she sends one item
+  (name, store, exact link, price, her one-liner); the OUTGOING star rolls into the Style Star Edit at
+  the same time — one ritual grows two features.** ⚠️ The name carries a clock: if she ever wants out of
+  the weekly rhythm, RENAME the label, never let it go stale (the honesty rule). Holiday gift guide =
+  this machinery in November costume, parked. ⭐ **Her stylist insight, protect it: bags/shoes/
+  accessories are the perfect weekly item because they fit EVERYONE — "does not matter plus size or
+  petite."** First star: **Tommy Hilfiger Claihre Kitten Heel Slide Sandal @ Nordstrom** (her link,
+  canonicalized to /s/8960533 — her size/width params stripped; name verified via the live searching
+  chat, Nordstrom's bot wall hides it from curl). ⚠️ **OPEN, waiting on her: the price** (unverifiable
+  from sandbox, never guessed — card shows price only when set) **and the note is a flagged Claude
+  draft** ("A kitten heel is the easiest polish there is...") — she rewrites in her voice. Also flagged:
+  if the specific COLORWAY was her point, say so and the color param goes back. Verified: new
+  `scratchpad/weekstar.js` 23 checks (render, exact-URL save → Catherine's-pick badge, AA contrast, no
+  overflow 390/360/320, graceful absence, zero JS errors) · hubs 46 · e2e 29 · **affq 39→40 updated
+  deliberately: the outbound-anchor census caught the new Shop it anchor exactly as designed (25→26,
+  9th JS template)**. ▶ wish.js noted retired (superseded by wladd.js) — its crash in a sweep is not a
+  regression.
+- ▶ **THE GRADUATION WHISPER: still waiting on HER LINE, unchanged** — the loop settled (above), so the
+  whisper's job is confirmed as the daily-habit handoff (Ask your Stylist) alone. Claude's draft stands
+  flagged; build is minutes once her words arrive.
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
   the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
   her search-quality retest, still the one real blocker to sharing/testers, now with several genuine rounds
