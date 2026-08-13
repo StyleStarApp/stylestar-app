@@ -362,12 +362,12 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   `ANTHROPIC_API_KEY` here, same standing limitation). Ask specifically: does Professional blouses / Tank
   tops still show hot pink or royal blue? Does a plain search (no color) actually feel more like real
   shopping? Does Work-appropriate dresses still show strapless/spaghetti-strap/satin pieces?
-- ▶ **CATEGORY REVIEW STATUS: 8 of 10 categories walked through with her, 2 never reached — Bags and Extras &
-  Accessories.** Worth finishing that pass next time, same method: show the category, flag genuine candidates,
-  let her confirm from her own testing rather than guessing from names alone. ⚠️ **Track record this session:
-  guessing from shared words alone was wrong 3 of 4 times** (Bottoms, Jackets & Layers, Foundations all "fine"
-  despite flagged candidates; only Tops and Dresses were real, and both came from HER actual testing, not from
-  pattern-matching) — lead with what she's actually seen go wrong, don't over-flag from category structure.
+- ✅ **CATEGORY REVIEW: CLOSED, her call (2026-08-13): "We can cross off [the category review]. I think we
+  are all good on the categories but I will keep testing."** Bags and Extras & Accessories were never
+  walked through and deliberately won't be — the walkthrough track record showed guessing from category
+  structure was wrong 3 of 4 times, and both real finds (Tops, Dresses) came from HER live testing anyway.
+  **The standing method now: her testing IS the category review.** Reopen only if she reports a specific
+  bleed; don't re-offer the walkthrough.
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
   the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
   her search-quality retest, still the one real blocker to sharing/testers, now with several genuine rounds
