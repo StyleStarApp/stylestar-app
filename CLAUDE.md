@@ -508,6 +508,19 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   grabbing the teaser's hidden note copy) · searchtune 70 (heart-tip italic assertion updated
   deliberately to the new voice) · wdrworksheet 73 (the Catherine line still balances to exactly 2
   lines in Lora) · weekstar 23 · e2e 29.
+  ✅ **ROUND TWO, her catch on her way out ("These don't look consistent yet?"): SEVEN stragglers her
+  screenshots + a full-stylesheet italic sweep found, all converted (2026-08-13, PR #841):** the trend
+  card notes `.tnf` + teaser notes `.wdr-tt-note` (Fraunces italic → Lora upright 15.5) · the wardrobe
+  how-to box (Jost 13 → Lora 15.5 — it literally begins "the checklist I use in every closet
+  consultation", her voice all along) · the green Refine link inside the color hint (italic dropped) ·
+  the per-item worksheet notes `.wdr-note` (⚠️ the ONE deliberate size deviation: 13px, compact for the
+  dense 100-row tool, but upright Lora in the readable ink now — was faint 12.5 italic #8a7a52) · her
+  Refine philosophy line `.pref-philo` (upright at 19px) · the dead base `.dc-subtitle` italic cleaned.
+  ⚠️ **ONE italic deliberately KEPT, flagged to her: "I'll style it, just for you" on Analyze
+  (`.photo-sub`, pink #EC4899) — that is the STYLIST's voice (pink star register), not Catherine's
+  paper voice; changing it belongs to a stylist-voice conversation if she ever wants one.** UI-state
+  italics (chat typing, loading lines, quiz hint) untouched — machine states, not voices.
+  wdrworksheet 73 · wdrcalmcheck 27 · catmark 135 green after the sweep.
 - ✅ **THE EDIT HUB-ROW SUB-LINE IS HERS NOW: "Every item selected by Catherine" (her pick, 2026-08-13),
   in all four copies** (wb-sub · hm-csub · actsub ×2). Her catch started it: "Pieces I wear and
   recommend" didn't sound right — the "I" floated in a different card than the name-anchor. ▶ **THE
