@@ -27,6 +27,27 @@ by email.
   (fabric/silhouette + item, "Satin Button-Front Blouse"), and a color belongs in a name ONLY when the search
   carries the same color.** searchtune's exception assertion was updated deliberately, not silenced (it
   correctly failed), replaced by four assertions pinning the new parity.
+- ⭐⭐ **HER THIRD CATCH OF THE DAY, on the SHIPPED item-led version: "Satin Button-Front Blouse" opened on a
+  search for just "satin blouse" — lots without button front... it says silk professional blouse and the search
+  says silk blouse so the items shown are not at all professional."** The name and search were still allowed to
+  DIFFER (name got fabric + silhouette, search was capped at ONE defining word), so the name structurally
+  over-promised — and for "Professional blouses" the item's own defining word was the one traded away. ▶ **THE
+  FIX: name and search are ONE THING now — "the name is THE SEARCH WRITTEN BEAUTIFULLY: the same words,
+  properly cased, nothing the search does not carry."** Searches get room for a second defining word when the
+  piece is not itself without it ("button front blouse" is a different blouse than "blouse" — the one-word cap
+  was the structural cause). The wardrobe Ideas prompt now demands the ITEM's own defining word (or a true
+  store-known synonym) in EVERY search, naming her exact failure ("satin blouse" loses the professional part).
+  ⚠️ **The abstract rule alone was NOT enough — the live model still left one word behind per name ("Ruched
+  Bodycon Top" / "ruched going out top") until a WRONG/RIGHT example pair was added naming the violation**
+  (the Work-appropriate-dresses placement lesson, again). After the example pair: word-for-word parity on 17 of
+  18 live items ("Silk Professional Blouse / silk professional blouse", "Woven Button-Front Blouse / woven
+  button front blouse", "Sequin Going-Out Top / sequin going out top"), the 18th a harmless soft word
+  ("structured" on a top-handle bag). ⚠️ **ONE deliberate exception, written into the rule: jewelry mood words
+  ("Statement Hoop Earrings" / "hoop earrings") stay out of boutique searches** — the standing small-catalog
+  rule; full parity there would empty Kendra Scott. nocolor-live.js now asserts the real bar: piece-DEFINING
+  words (button/front/professional/wrap/bodycon/fabrics...) must ALWAYS carry; at most one soft leftover per
+  surface — chasing soft words with more prompt weight risks the 5-word-pileup failure in the other direction.
+  searchtune 66 → 68 (the "at most ONE defining word" assertion updated deliberately — that cap WAS the bug).
 - ⭐ **`_colorPrefRule()`'s default branch sharpened after a live test showed the model leaning "Pink Satin
   Blouse" into 1 of 6 general picks: on browsing cards the lean shows in WHICH pieces and stores are chosen,
   never as a color word in the name or search** — a specific-color ask belongs to stylist chat (her own July

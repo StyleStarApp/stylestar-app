@@ -121,7 +121,13 @@ const rules = await page.evaluate(() => _shopRules());
 ok('retail-words rule present', rules.includes('USE RETAIL WORDS'), '');
 ok('names the raspberry trap', /never "raspberry" or "hot pink"/.test(rules));
 ok('2-4 word cap (was 2-5)', rules.includes('2 to 4 plain words'));
-ok('garment + one word shape', rules.includes('at most ONE defining word'));
+// ⚠️ DELIBERATE UPDATE 2026-08-12 (her third catch): the one-defining-word cap
+// made the search structurally unable to carry everything the name promised
+// ("Satin Button-Front Blouse" / "satin blouse"). Now one or two defining
+// words, and the name is the search written beautifully — same words only.
+ok('garment + one or two defining words', rules.includes('one or two defining words'));
+ok('name IS the search, written beautifully', rules.includes('THE SEARCH WRITTEN BEAUTIFULLY'));
+ok('a second word only when the piece demands it', rules.includes('a different blouse than'));
 ok('honest-name rule with the mule example', rules.includes('Nude Patent Pointed-Toe Kitten Heel Mule'));
 // 2026-08-12, her live catch: "I would never lead with color" -- the SHAPE
 // rule no longer defaults to a color-first search.
