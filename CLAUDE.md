@@ -455,6 +455,34 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   trio + the weekly nudge, tap lands in chat + stamps, then never again. ⚠️ **Her price arrived too:
   the first star is $89** (her own Nordstrom screenshot, Color: Black shown — base URL kept showing
   both colorways; pin black only if she asks). The card's NOTE is still Claude's flagged draft.
+- ⭐⭐✅ **CATHERINE'S VOICE IS ONE VOICE NOW — HER OWN CONSISTENCY AUDIT, BUILT (2026-08-13):** she
+  screenshotted her pink-heart surfaces and caught the drift herself — her voice was wearing THREE fonts
+  (Lora/Fraunces/Jost), italic and upright mixed, five inks, sizes 12.5-15.5px. **THE RULE, hers now,
+  written into the CSS comment at `.hm-founder`: on LIGHT paper her voice is Lora UPRIGHT 15.5px in the
+  readable ink #4a463e — no italics anywhere** ("In general I don't think I like italics" — right call:
+  the pink heart + serif already say "personal"; italics only cost readability on the 18-80 audience).
+  Converted: Edit subtitle + item notes (gold quote marks kept — they carry the "she's speaking" signal
+  without italics), Trending intro + teaser note (Fraunces→Lora), Star of the Week note, heart-tip,
+  wardrobe color hint, My List closing line, portrait refine whisper, and **the Welcome founder line —
+  which was the SMALLEST text of the whole set at 12.5px, on the single most important Sally sentence**
+  (now 15.5, balances to 3 lines). ⚠️ **THE ROOT CAUSE FIND: Lora was loaded ITALIC-ONLY in the Google
+  Fonts URL** — upright faces didn't exist on the page, which is why her voice kept ending up italic;
+  the 0,* weights were added. Don't trim them. ⚠️ **The DARK Welcome Back whispers (#wbNext, #a2hs)
+  deliberately stay cream Jost 14px upright** — her whisper register, tuned by her own 2026-08-09
+  catches; serif thin strokes shimmer on dark at that size. **Two registers, one voice — notes on paper
+  wear Lora, whispers on the dark stage wear cream.** "With love, Catherine" (Dancing Script) exempt:
+  that's her handwriting, not her speaking voice. Verified: computed-style sweep across every surface at
+  390/360/320 (all Lora upright 15.5 #4a463e, zero overflow; the one "missing" flag was the harness
+  grabbing the teaser's hidden note copy) · searchtune 70 (heart-tip italic assertion updated
+  deliberately to the new voice) · wdrworksheet 73 (the Catherine line still balances to exactly 2
+  lines in Lora) · weekstar 23 · e2e 29.
+- ▶ **OPEN, awaiting her pick: the Edit hub-row sub-line.** Her catch: "Pieces I wear and recommend"
+  doesn't sound right (the "I" floats far from the name-anchor; "myself" was trimmed for the 212px
+  Discover cap long ago). MEASURED candidates: **"Every item selected by Catherine"** (fits 390+360,
+  one wrap on wb at 320 — recommended: strongest claim, and the two heart-marked rows would both carry
+  her NAME) vs "Hand-picked by Catherine" (fits everywhere). Her longer favorites all wrap on Discover.
+  The "wears myself" story lives on inside the Edit's own subtitle — the row claims, the page tells.
+  Four copies to change when she picks (wb-sub · hm-csub · actsub ×2).
 - ▶ **Watch for:** Almira's reply (Bailey name fix + operating-agreement blanks, sent again this morning) ·
   the Cowork curated-catalog spreadsheet (jeans category started, in progress, hers on her own timeline) ·
   her search-quality retest, still the one real blocker to sharing/testers, now with several genuine rounds
