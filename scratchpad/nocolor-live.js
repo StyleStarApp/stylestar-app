@@ -90,6 +90,34 @@ function leadsWithColor(s){
       const nameColors = (it.name||'').toLowerCase().split(/[\s-]+/).filter(w => COLOR_WORDS.includes(w));
       return nameColors.every(c => (it.search||'').toLowerCase().includes(c));
     }));
+    // 2026-08-12, her third catch: "Satin Button-Front Blouse" over a search
+    // for just "satin blouse" promised button-front the results never showed.
+    // The name is the search written beautifully — every non-color name word
+    // must survive into the search (stemmed, so "Mules"/"mule" still match).
+    // One deliberate exception mirrors the prompt's own jewelry rule: mood/
+    // size words (statement, chunky, dainty...) live in a jewelry NAME but
+    // never a boutique search, because they empty a strict small catalog.
+    const JEWELRY_MOOD = ['statement','chunky','dainty','oversized','layered','delicate'];
+    // The bar is HER complaint, exactly: a word that changes what the piece IS
+    // (button-front, professional, wrap, bodycon...) must ALWAYS survive into
+    // the search. A soft texture/mood word left behind ("structured" on a bag
+    // that a "top handle bag" search returns anyway) is tolerated at most once
+    // per surface -- chasing those with more prompt weight risks 5-word
+    // searches, the 2026-08-08 failure in the other direction.
+    const STRUCTURAL = ['button','front','professional','work','career','wrap','bodycon','midi','maxi','mini','pencil','wide','high','cropped','sleeveless','strapless','turtleneck','collar','kitten','block','platform','wedge','going','dressy','sequin','lace','satin','silk','linen','denim','leather','suede'];
+    let softLeftovers = 0, structuralLeftover = false;
+    items.forEach(it => {
+      const search = (it.search||'').toLowerCase();
+      const isJewelry = /earring|necklace|bracelet|ring|jewelry/i.test(it.name+' '+(it.category||''));
+      const left = (it.name||'').toLowerCase().split(/[\s-]+/)
+        .filter(w => w && !COLOR_WORDS.includes(w))
+        .filter(w => !(isJewelry && JEWELRY_MOOD.includes(w)))
+        .filter(w => !search.includes(w.replace(/s$/,'')));
+      if (left.some(w => STRUCTURAL.includes(w))) structuralLeftover = true;
+      else if (left.length) softLeftovers++;
+    });
+    okp(labels[i]+': every piece-defining name word is in the search', !structuralLeftover);
+    okp(labels[i]+': at most one soft leftover word across the set', softLeftovers <= 1);
   }
 console.log('\n' + (fails ? fails + ' FAILURES' : 'ALL GREEN'));
 process.exit(fails ? 1 : 0);
