@@ -521,6 +521,21 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
   paper voice; changing it belongs to a stylist-voice conversation if she ever wants one.** UI-state
   italics (chat typing, loading lines, quiz hint) untouched — machine states, not voices.
   wdrworksheet 73 · wdrcalmcheck 27 · catmark 135 green after the sweep.
+- ✅⭐ **THE TWO WARDROBE TABS OPEN AND CLOSE AS SIBLINGS NOW — her pick "B with hearts" from a 3-way
+  render (2026-08-13, PR #842):** My List's how-to card opens with the SAME header construction as
+  Trending's CURATED BY CATHERINE — literal `.wdr-trend-by` class reuse, so the teal caps, tilted twin
+  pink hearts (±12°), gap and trailing-tracking fix can physically never drift apart. ⚠️ **The header
+  reads "MY CLIENT CHECKLIST" — a Claude draft, shortened from the drafted "THE CHECKLIST I USE WITH
+  CLIENTS" because MEASURED: 31 chars wraps at 360/320 while Trending's 20-char header fits; ≤20 chars
+  is the cap. She hasn't blessed the wording — offer "MY CLOSET CHECKLIST" if client reads wrong.**
+  Header hides with the full how-to when the card collapses to brief. **And Trending gained her closing
+  line under the cards (her idea + her wording, lightly set): "Check back for trend updates. This list
+  changes with the seasons ♥"** — bookending both tabs (My List already closes with her intention line)
+  and quietly reinforcing the weekly return loop. Voice spec applied (Lora upright 15.5 #4a463e).
+  Verified: new `scratchpad/tabtops.js` 13 checks (header computed-style + heart transforms IDENTICAL
+  to Trending's measured visible — the display:none-lies trap hit again and fixed in-harness · brief
+  mode hides header · closing line voice/position · one line at 390/360/320, no sideways scroll) ·
+  wdrworksheet 73 · wdrcalmcheck 27 · catmark 135.
 - ✅ **THE EDIT HUB-ROW SUB-LINE IS HERS NOW: "Every item selected by Catherine" (her pick, 2026-08-13),
   in all four copies** (wb-sub · hm-csub · actsub ×2). Her catch started it: "Pieces I wear and
   recommend" didn't sound right — the "I" floated in a different card than the name-anchor. ▶ **THE
