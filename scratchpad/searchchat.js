@@ -320,6 +320,16 @@ const linkCases = await page.evaluate((PU) => {
   // A plain unsearched suggestion still gets the classic search link.
   h = run('Try a navy linen blazer from Madewell for spring.');
   cases.classic = /href="[^"]*madewell[^"]*navy/i.test(h) || /href="[^"]*madewell/.test(h);
+  // 2026-08-13, her screenshots: a trailing "in <shades>" clause must be CUT
+  // from the search — "…midi dress in champagne or blush from Revolve" used to
+  // search "in champagne or blush" (Revolve matched MAKEUP), and "…fitted
+  // midi in gold or black from Anthropologie" searched "in gold or black"
+  // (gold sneakers). The garment, not the color tail, is the search.
+  h = run('Satin slip midi dress in champagne or blush from Revolve (~$180), a great base.');
+  cases.colorTail = { html: h, ok: /href="[^"]*revolve[^"]*satin\+?%?2?0?slip/i.test(h) || /satin%20slip%20midi%20dress/i.test(h) };
+  cases.colorTailNoBlush = !/champagne|blush/i.test((h.match(/href="[^"]*"/)||[''])[0]);
+  h = run('Embellished or sequin fitted midi in gold or black from Anthropologie (~$180), perfect for evening.');
+  cases.goldTail = !/gold\+?%?2?0?or|in%20gold/i.test((h.match(/href="[^"]*"/)||[''])[0]) && /sequin/i.test(decodeURIComponent((h.match(/href="([^"]*)"/)||['',''])[1]));
   return cases;
 }, PRODUCT_URL);
 ok('canonical marker → exact product href, brackets gone, price kept', linkCases.canonical.ok, linkCases.canonical.html.slice(0, 200));
@@ -327,6 +337,9 @@ ok('subdomain of an allowed store accepted', linkCases.subdomain);
 ok('URL outside the 100 stores rejected, falls back to search link', linkCases.offList);
 ok('javascript: URL never linked', linkCases.jsUrl);
 ok('stray marker stripped, never linked', linkCases.stray);
+ok('trailing "in <shades>" cut: the GARMENT is the search, not the color tail', linkCases.colorTail.ok, linkCases.colorTail.html.slice(0, 260));
+ok('…and the shades never reach the href', linkCases.colorTailNoBlush);
+ok('her Anthropologie case: "in gold or black" cut, sequin midi searched', linkCases.goldTail);
 ok('two searched items → two product links', linkCases.two);
 ok('unsearched suggestions keep the classic search link', linkCases.classic);
 

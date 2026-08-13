@@ -394,6 +394,20 @@ her jewelry-metal refinement (one metal = absolute constraint, multiple/no-prefe
      slimmer or body flattery.** Consistent with her 2026-07-28 rule (never mention her size range back
      to her while shopping). The app serves flattering fits silently through her styling; it never names
      bodies. Protect this in every future copy/feature decision.
+- 🚨✅ **THE CHAT'S "MAKEUP FOR A DRESS" LINK BUG — her screenshots, diagnosed and FIXED (2026-08-13).**
+  Her report: chat link searches "not landing the right items... sometimes completely not even close,"
+  with Revolve opening on MAKEUP and Anthropologie on sneakers for two dress recommendations. ▶ **Both
+  screenshots were ONE bug, ours, not the structural feeds gap: `_searchableItem`'s last-4-words
+  heuristic assumed the item name sits at the END of the phrase before "from Store" — but the stylist
+  writes "Satin slip midi dress in champagne or blush from Revolve", so the COLOR TAIL became the whole
+  search** ("in champagne or blush" → Revolve matched blush the cosmetic; "in gold or black" → gold
+  sneakers). **Fix: cut any trailing "in <shades>" clause before extracting** (the garment always
+  precedes "in"), and the capture windows widened 40→60 chars so the full garment survives the cut
+  ("Satin slip midi dress", not "slip midi dress"). searchchat 54 → 57, her two exact sentences as
+  cases. ▶ **The honest split given to her, worth repeating: (1) fragment bug = fixed · (2) right-words-
+  but-loose-results = the structural search-vs-catalog gap, feeds are the cure, don't chase with prompt
+  tweaks · (3) searched answers ("Checking stores...") bypass this entirely — exact product URLs.**
+  Her framing stands: not getting hung up on link quality until affiliates + her spreadsheet land.
 - ▶ **THE WEEKLY RETURN LOOP IS BEING BRAINSTORMED (2026-08-13, her push, evolving the parked
   "featured item" idea):** she wants a "let me check Style Star and see what's new this week" habit —
   Bag/Accessory/Item of the Week, or a featured brand or hot trend, maybe a holiday gift-guide flavor.
