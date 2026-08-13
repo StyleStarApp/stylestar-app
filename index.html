@@ -5120,6 +5120,11 @@ function _shopRules(mode){
     '  JEWELRY & SMALL BOUTIQUES: their catalogs are small and their search engines are strict — an unmatched word returns NOTHING at all. Beyond the metal rule above, use the plain category noun alone: "hoop earrings" (never "oversized hoops" — "oversized" indexes nothing and "hoops" may not match "hoop earrings"), "chain bracelet", "pendant necklace". Size and mood words (oversized, chunky, dainty, layered) live in the name, never the boutique search.\n'+
     '- MATCH PRECISION TO THE STORE: a giant department-store catalog searches loosely, so when she is genuinely shopping by an exact color of an exact shape (especially bags and shoes), prefer a smaller focused store whose search can honor it. Department stores shine for broader category finds; do not ask a 3,000-item catalog to pin one shade.\n'+
     _sizeGuidance()+
+    // Her calls, 2026-08-13, verbatim-ish: skinny jeans are dated, and "I
+    // would never recommend ribbed anything to any of my clients." Enforced
+    // in filterNeverWear too (_STYLIST_VETO), so this line is the model's
+    // instruction and the filter is the guarantee.
+    '- CATHERINE\'S OWN VETOES, absolute, the same weight as her never-wear list: NEVER suggest skinny jeans (a dated silhouette), and NEVER suggest anything ribbed — the word "ribbed" must not appear in any name or search.\n'+
     '- Match the store to her using the tags above.\n'+
     // The app never asks her budget, so this used to promise something it could
     // not do. Worse, the dressier a woman's taste the more her best-matched
@@ -6334,9 +6339,18 @@ function _fitSizes(){
 // name and search words; her free-text hard no's are matched per
 // comma-separated phrase, never word by word — "no crop tops please" must not
 // quietly kill every top in the app.
+// ▶ CATHERINE'S STANDING VETOES (2026-08-13, her words): "skinny jeans are out
+// of style now" and "I would never recommend ribbed anything to any of my
+// clients." The Kate Spade principle applied to garment vocabulary: the whole
+// app is her professional curation, so a piece she would not stand behind has
+// no place being suggested as if she picked it. These apply to EVERY woman,
+// before her personal never-wear list even loads. ⚠️ Extend ONLY on her
+// explicit word — never guess at what else is dated; she is the trend
+// authority (the standing store-tags rule).
+const _STYLIST_VETO=['ribbed','skinny jeans'];
 function filterNeverWear(items){
   if(!Array.isArray(items))return[];
-  const terms=(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
+  const terms=_STYLIST_VETO.concat(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
     .concat(String(prefs.neverOther||'').split(',').map(t=>t.replace(/^\s*(no|never|not)\s+/i,'')))
     .map(t=>String(t).toLowerCase().trim()).filter(t=>t.length>2);
   if(!terms.length)return items;

@@ -126,6 +126,17 @@ ok('2-4 word cap (was 2-5)', rules.includes('2 to 4 plain words'));
 // ("Satin Button-Front Blouse" / "satin blouse"). Now one or two defining
 // words, and the name is the search written beautifully — same words only.
 ok('garment + one or two defining words', rules.includes('one or two defining words'));
+// 2026-08-13, her calls: "skinny jeans are out of style now" and "I would
+// never recommend ribbed anything to any of my clients." Prompt + hard filter.
+ok('her standing vetoes are in the rules', rules.includes("CATHERINE'S OWN VETOES") && rules.includes('skinny jeans') && rules.includes('"ribbed"'));
+ok('the veto filter drops ribbed + skinny jeans even with empty prefs', await page.evaluate(() => {
+  const out = filterNeverWear([
+    {name:'White Ribbed Tank', search:'ribbed tank top'},
+    {name:'High-Rise Skinny Jeans', search:'high rise skinny jeans'},
+    {name:'Wide-Leg Jeans', search:'wide leg jeans'}
+  ]);
+  return out.length === 1 && out[0].name === 'Wide-Leg Jeans';
+}));
 ok('name IS the search, written beautifully', rules.includes('THE SEARCH WRITTEN BEAUTIFULLY'));
 ok('a second word only when the piece demands it', rules.includes('a different blouse than'));
 ok('honest-name rule with the mule example', rules.includes('Nude Patent Pointed-Toe Kitten Heel Mule'));

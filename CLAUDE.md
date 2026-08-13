@@ -64,7 +64,23 @@ by email.
   with Hot Pink / Royal Blue in names with "pink"/"blue" retail words in searches** — which is exactly what
   fires the real color FILTER at Nordstrom/Macy's. ⚠️ Each run of nocolor-live.js costs a few cents of the
   production key (4 small live calls) — the same deliberate trade as the 2026-08-08 live checks.
-- **Suites at this point: searchtune 66 (was 62; the retired-exception assertion swapped for 6 new ones) ·
+- ⭐ **HER FOURTH ROUND (2026-08-13, same retest): "It is working better" — plus TWO STYLIST VETOES, her
+  professional calls, now standing app-wide:** "skinny jeans are out of style now" and "I would never
+  recommend ribbed anything to any of my clients." ▶ **Built as `_STYLIST_VETO` (['ribbed','skinny jeans'])
+  prepended inside `filterNeverWear()`** — applies to EVERY woman before her personal never-wear list even
+  loads, so a non-compliant model output is dropped before render — plus an absolute bullet in `_shopRules()`.
+  **The Kate Spade principle applied to garment vocabulary: the app is her curation, so a piece she wouldn't
+  stand behind has no place being suggested as if she picked it.** ⚠️ **Extend the list ONLY on her explicit
+  word** — a first draft of the rule named "current" denim silhouettes (barrel, bootcut...) and was trimmed
+  the same minute: Claude inventing a trend list violates the she-is-the-trend-authority rule the veto itself
+  rests on. Live-model check on Blue jeans Ideas: "Straight Leg / Wide Leg / Bootcut / High Rise Jeans", zero
+  skinny, zero ribbed, full name/search parity. searchtune 68 → 70.
+- ▶ **STORE-SIDE TRAP SEEN IN HER LEVI'S SCREENSHOT, noted not built:** her "high rise skinny jeans" tap
+  landed on Levi's "Sky High Farm Goods" COLLAB PAGE (10 items, mostly not jeans) — their search engine
+  matched "high" against a collection name and redirected, the same family as the Macy's bare-category-word
+  redirect (2026-08-12). Store-side, not fixable from our end; fewer/plainer search words (already the rule)
+  is the only mitigation. Watch whether it recurs on other stores.
+- **Suites at this point: searchtune 70 (was 62; assertions updated deliberately at each step) ·
   searchchat 54 · cowork3 69 · e2e 29, all green.**
 - ▶ **FOR HER NEXT RETEST, the same three questions still apply** — this time the live-model evidence says they
   should pass: wardrobe Ideas item-led? Shop your style item-led? Her loved colors appearing ONLY on "Tops in
