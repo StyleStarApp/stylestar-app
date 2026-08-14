@@ -42,7 +42,10 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 // check caught the new anchor exactly as designed.
 // 27 as of 2026-08-14: the Tommy Hilfiger kitten heel (the first Star of the
 // Week) rolled into the Edit as the 18th hardcoded item, her call.
-ok('found the full set of outbound PRODUCT anchors (18 Edit + 9 templates)', anchors.length === 27, 'got ' + anchors.length);
+// 27 → 28 updated deliberately 2026-08-14: the curated-catalog card
+// (_curatedCard, the 10th JS template) carries its own outbound "Shop it"
+// anchor with rel="sponsored noopener" — the census caught it as designed.
+ok('found the full set of outbound PRODUCT anchors (18 Edit + 10 templates)', anchors.length === 28, 'got ' + anchors.length);
 ok('every product link carries sponsored + noopener', anchors.every(a => /rel="sponsored noopener"/.test(a)),
   anchors.filter(a => !/rel="sponsored noopener"/.test(a)).slice(0, 2).join(' '));
 ok('the Instagram link exists', social.length === 1, 'got ' + social.length);

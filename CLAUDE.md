@@ -7,7 +7,94 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-14 — THE STAR OF THE WEEK RUNS ITSELF NOW)
+## ▶ NEXT SESSION — START HERE (2026-08-14 evening — THE CURATED CATALOG IS BUILT, ON A BRANCH AWAITING HER WORD)
+
+### ⏸ WHERE THE 2026-08-14 EVENING SESSION PAUSED
+**MERGED as PR #852 on her explicit word ("let's go ahead and merge it") after the full talk-through — all
+five build items + both Cowork docs + renders of the FINAL blended shelf, which she approved ("i like how
+that looks with no badges"). One Netlify build.** The talk-through reshaped the design mid-session; the
+final form below is what shipped. Verify live per the standing rule if anything looks off.
+- 📄 **Drive is the working handoff channel now** (her Desktop was unreachable from the cloud container).
+  Three files arrived: "Style Star - Claude Code handoff.md" + "style-star-products.csv" (21 real products,
+  bo1 Blue jeans ×8 · to5 Professional blouses ×13) + "Style Star - freshness addendum.md".
+- ⭐⭐ **THE HEADLINE DECISION, hers after a full discussion — THE CATALOG IS DELIBERATELY UNATTRIBUTED:**
+  no "Picked by Catherine" on catalog cards, no hand-picked/checked line, no labels dividing her products
+  from AI ideas. Her reasons, recorded in the code comment above `_curatedCard` so this never reads as an
+  accident: (1) she can't promise the spreadsheet stays perfectly current, and her NAME on a stale item
+  breaks trust personally where an anonymous miss costs nothing; (2) a badge on hundreds of items stops
+  being special. Her words: **"It's ok if she thinks the AI stylist is doing the work and it is just a
+  brilliant app."** The Sally real-stylist signal lives at the PAGE level (checklist framing, founder line)
+  and the **Edit + Star of the Week stay fully, visibly hers** — she'll keep building those. Attribution can
+  be turned ON later as an upgrade; removed later it reads as a demotion. ▶ The ONE surviving distinction is
+  functional and unbadged: catalog "Shop it" = exact product page, AI "Find it" = store search.
+- ⭐ **THE BLENDED SHELF (her design, supersedes the built-then-reworked curated-only version):** on a
+  wardrobe Ideas tap, **up to 4 catalog pieces lead, the AI fills the set to 6, one seamless carousel**, and
+  **"+ See more ideas" keeps extending it forever** — her requirement verbatim: *"I want her to be able to
+  sort through tons and tons of options if she wants to... always be able to keep looking."* The button is
+  on EVERY slot (catalogued or not); first tap uses buffered leftovers (instant), later taps fetch 4 more
+  with an already-shown list in the prompt so the model never repeats. AI failure with catalog present →
+  catalog-only shelf, never blank. Slots with no catalog (98 of 100) = today's behavior + the See more door.
+  Cards lead with the BRAND ("L'Agence", not "Nordstrom"), retailer secondary ("at Nordstrom · $385"), her
+  note trimmed to its first sentence(s) (`_wdrTrimNote`, ≤150 chars — full notes made cards very tall).
+- ⭐ **THE FRESHNESS MACHINERY (the addendum, built as amended):** rotation week turns **midnight into
+  Sunday on her local clock, anchor Sunday 2026-08-09 — the Star of the Week's own anchor, keep them in
+  step**. Within a week the shelf is stable; each Sunday it rotates (seeded shuffle: `ss_seed` per device +
+  slot + week). **Staleness is WEEK-scale, prior weeks only** — ⚠️ deliberate deviation from the addendum's
+  letter, which wanted day-scale "shown yesterday sinks hard" AND same-week stability (contradictory; weeks
+  reconcile its own principles). Seen-tracking is `ss_seen` in localStorage (the ss_* pattern), counted once
+  per week, written on render — ⚠️ deliberately NOT the addendum's per-render Supabase write. A **saved**
+  piece is exempt from staleness. **"Not for me"** (`ss_dismissed`) is the one staleness hard-exclusion +
+  fires a Plausible `Not For Me` event → her dashboard learns which pieces to review. ⚠️ Her stance: unsure
+  but willing — "she could swipe past it, we will see." Loosely held; one line to remove if live use says so.
+  ⚠️ **`_wdrHash` is FNV-1a + finalizer, NOT h*31 — the classic hash is order-preserving on p009/p010-style
+  ids and silently reduced the weekly shuffle to plain id order (measured). Don't simplify it.**
+- ✅ **Saves from the shelf land PLAIN on the wishlist** (`exact:true` — real URL + price + "Shop it", NO
+  badge; the third exact-URL row kind after Edit picks and her own added links). wladd 102 still green.
+- 📄 **The rest of the first build round stands as shipped earlier in the session:** the strict converter
+  (`scripts/products-from-csv.js` → `products.json`, slots + store keys parsed OUT of index.html at convert
+  time, fails loudly with row numbers, the Bloomingdale's-apostrophe case caught by name, load-bearing
+  params survive, failed convert never touches products.json; canonical CSV at `data/style-star-products.csv`)
+  · `ARCHETYPE_FAMILY` (28 archetypes → 9 families; ⚠️ SHE CLARIFIED: her archetype NAMES never change —
+  the families are Cowork's sorting vocabulary, the map is hidden plumbing; assignments are still a Claude
+  draft for her eye, esp. Statement Maker→Edgy, Sculpted Chic→Minimal, Free Spirit→Natural) ·
+  `scripts/check-product-urls.js` (7 LOOKS OK · 14 NEEDS HER EYE · 0 BROKEN; bot walls and per-variant
+  "sold out" text are never called broken) · startQ() closed as not-reproducible with `startqguard.js` 9
+  pinning screen==write-slot on every restart path · the handoff's "still open" list verified STALE (all
+  three fixed 2026-07-29, by grep).
+- ▶ **PARKED, her calls:** the "new since you were here" badge + `added` CSV column — future-ideas list. Her
+  insight, keep it: **a "new" badge sets an expectation of weekly newness, so any quiet week suddenly LOOKS
+  stale.** Rotation gives freshness without promising it. Also parked: catalog feeding other surfaces (Shop
+  your Style etc.) — wardrobe Ideas only for now, the pattern is set when she wants more.
+- **Suites, all green:** curated.js **60** (converter strict-mode · blended shelf shape ≤4+fill-to-6 · zero
+  attribution asserted · Shop it vs Find it · plain saves incl. badge-free wishlist row · Classic vs Glam
+  differ · week-stability + cross-week rotation + dismissal-forever + staleness-sinks + saved-exempt +
+  seen-written-once-per-week · price/retailer/note invariants all 28 archetypes · ruffles/no-orange/leopard
+  removals · Tall-only all-AI never-empty · petite-true only · See more appends · no overflow 390/360/320 ·
+  zero JS errors) · startqguard 9 · affq 40 (census 27→28 deliberate: the curated card is the 10th outbound-
+  anchor template) · wdrworksheet 73 · wdrcalmcheck 27 · e2e 29 · hubs 49 · weekstar 35 · wladd 102.
+  Decision renders in scratchpad: `curated-badge-{a,b}.png · curated-more.png · curated-notforme.png ·
+  curated-starved.png` (pre-rework look; regenerate via curatedmock.js if needed).
+- ✅ **Her post-render calls, all in:** no badges look = approved · ARCHETYPE_FAMILY pairings = "those look
+  good" · **the 14 needs-her-eye links = SHE ALREADY CHECKED THEM on the Cowork side** (Cowork keeps a
+  clickable page of all catalog links; they looked good as of 2026-08-14). ▶ **STANDING REMINDER, her ask:
+  nudge her every week or two to re-check the catalog links on that Cowork page** (and rerun
+  `scripts/check-product-urls.js` alongside — the two instruments cover different stores). "Not for me" +
+  "Link broken?" both ship; if the card bottom ever feels busy, "Not for me" is the one to cut (rotation
+  partly substitutes; nothing substitutes for Link broken — users are the only detector for bot-walled
+  stores).
+- ▶ **THE FIRST THINGS NEXT SESSION:**
+  1. **How the live blended shelf feels on her phone** — first real look at Blue jeans + Professional
+     blouses Ideas with her own products leading.
+  2. **Her spreadsheet rhythm:** fill rows in Cowork → export CSV to the Drive folder → say "new export" →
+     converter validates (names bad rows) → commit. Works at 5 rows or 50; no code changes should ever be
+     needed for new rows — if one is, the data model is wrong, say so loudly (the brief's own rule).
+  3. **The legal thread (see below): she never heard back from Almira by Friday 7pm 08-14** — the firmer
+     email draft was given in this chat, ready to send or schedule for Monday morning; the amber-quinn call
+     booking is the alternative. Ask what happened first thing.
+- ▶ Everything from the day session below (Star of the Week autopilot, legal thread, her testing) is
+  unchanged by this work.
+
+## ▶ PREVIOUS — 2026-08-14 day session (THE STAR OF THE WEEK RUNS ITSELF NOW)
 
 ### ⏸ WHERE 2026-08-14 PAUSED (her call: "let's save everything to the .md and pause here")
 **ONE PR this session, #850, merged and CURL-VERIFIED LIVE on stylestar.app; branch resynced to main,
