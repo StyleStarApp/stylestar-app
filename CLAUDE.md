@@ -7,7 +7,70 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-13 — THE BIGGEST BUILD DAY YET, plus a short evening session the same day)
+## ▶ NEXT SESSION — START HERE (2026-08-14 — THE STAR OF THE WEEK RUNS ITSELF NOW)
+
+### ⏸ WHERE 2026-08-14 PAUSED (her call: "let's save everything to the .md and pause here")
+**ONE PR this session, #850, merged and CURL-VERIFIED LIVE on stylestar.app; branch resynced to main,
+working tree clean. ONE Netlify build.** Her words on it: "I love how this is set up" · "This is great.
+I love it." What shipped, all in #850:
+- ⭐⭐ **THE STAR OF THE WEEK ROTATES AUTOMATICALLY EVERY SUNDAY (her ask: "I like the idea of Sunday
+  being the change day... Is that something we can set up as automatic?").** `WEEK_STAR` became
+  **`WEEK_STARS`, a queue of 16**: her kitten heel first, then her 15 approved Edit picks in the Edit's
+  page order (reshuffled for season, below). `_weekStarIndex()` computes the week from the visitor's
+  LOCAL calendar — **anchor Sunday 2026-08-09, load-bearing, don't move it; reorder the queue instead**
+  — so the new star appears at midnight into Sunday on every device with NO deploy and NO build
+  minutes; the queue wraps when it ends (fine pre-launch). ▶ **Her weekly send-an-item ritual is
+  RETIRED pre-launch — nothing manual on Sundays now.** This week's item is always the entry at the
+  current index, still one edit if she ever wants to override. **First automatic swap: Sunday Aug 16
+  (the bangles). She may check her phone Sunday to watch it happen by itself.**
+- 🚫 **HER CONTENT RULE, NEW AND STANDING, pinned in the tests: NO intimates or swim as the Star** —
+  the card is the first thing seen on opening the app, and *"a bra or bikini could be too much muchness
+  at opening glance."* The Felina bra and Seafolly bikini stay in the Edit, deliberately NOT in the
+  queue. Size-fits-everyone (bags/shoes/accessories) remains her general lean, "not a hard rule."
+- ✍️ **STAR NOTES ARE ONE-LINERS trimmed from her own Edit notes (her ask: "help trim the lines...
+  right length and tone")** — her blessed kitten-heel line is the tone model; only her words,
+  condensed, nothing invented. ▶ **Two registers, one voice: the Edit page keeps her FULL notes; only
+  the Star card speaks in one-liners.** She saw the full trim table in chat and approved the setup;
+  she may still reword any single one (one string each in WEEK_STARS).
+- 👠 **THE KITTEN HEEL JOINED THE EDIT (18th item, her call: "let's have it join the Edit and rotation
+  queue")** — last before her sign-off, note = her blessed one-liner. The Edit's New pill lights for
+  returning users automatically (wbEditSig counts items). ⚠️ **affq.js updated deliberately, not
+  silenced: 17→18 hardcoded Edit links, 26→27 outbound product anchors** (the census caught the new
+  anchor exactly as designed).
+- ☀️ **SEASONAL ORDERING, her calls:** the Athleta linen pant and PRETTYGARDEN maxi dress moved up to
+  **Aug 23 / Aug 30** ("summer items... need to be sooner, before we get to fall/winter"), and the
+  espadrille wedge to **Sep 6** (Claude's flag under her own rule, her enthusiastic yes). The calendar
+  now runs: kitten heel (now) → bangles Aug 16 → linen pant → maxi dress → espadrille → sandal → tote →
+  Gucci sunnies → Express trouser → robe → necklace → silk blouse → blazer → jeans → Align pant → claw
+  clip Nov 22 → wraps Nov 29. ▶ The back half runs right into the holidays — the parked gift-guide
+  idea could wear this machinery in November costume.
+- **Suites: weekstar 23 → 35, updated deliberately** (Sunday-midnight boundary Sat-11pm-vs-Sun-00:00,
+  wrap-around, pre-anchor clock clamp, queue integrity incl. safe https URLs + no duplicates, HER
+  no-intimates rule, and EVERY queue item rendered at 390/360/320 with zero overflow; render
+  assertions compare against the live queue index so the suite stays green whichever week it runs in).
+  hubs 49 · e2e 29 · affq 40 green (affq's known timing flake hit once, clean on rerun).
+- ▶ **PARKED WITH A TRIGGER, her question ("when the edit page gets super long... search bar or sort?"):
+  organize the Edit at ~25-30 items — category GROUPING in her stylist vocabulary (the wardrobe list's
+  own gold-bar/sticky-header pattern) over a search bar** (search is inventory language; grouping keeps
+  the organizing job in her hands, curation not chrome). She agreed. ⚠️ Design it properly at the
+  feeds/product-photo redesign moment, with renders — don't build structure the photo redesign would
+  rework. Claude flags it when the Edit approaches the threshold.
+- ▶ **THE OTHER THREADS, checked this session, all still open:**
+  1. **Legal:** no word from Almira as of Friday morning 08-14; Cath is giving Central-time hours
+     before emailing again. **The Friday 08-15 plan stands:** if no specific date arrives, she sends
+     the firmer email or books the amber-quinn call loaded with the question list (corrected Articles ·
+     Operating Agreement · BOTH TM filing dates incl. the logo mark silent since July 16 · serial
+     numbers · EIN status). The EIN one-liner draft is still ready in the 2026-08-13 chat; the
+     irs.gov-in-15-minutes unlock stands (ask Indie first — one EIN per entity).
+  2. **Her testing:** none yet this session, "but I will soon." The three retest questions stand:
+     wardrobe Ideas item-led? Shop your style item-led? loved colors ONLY on the favorites item?
+  3. **Sunday is still launch day — but now it launches itself.** When she comes up with more star
+     items ("I will come up with more"), they slot into the queue, and new Edit additions can join it.
+- ▶ **Everything else unchanged:** Cowork spreadsheet (jeans started) · MailerLite desk items · more
+  Trending/Edit content · parked triggers (registry at affiliate approval · her My Story photo ·
+  holiday gift guide).
+
+## ▶ PREVIOUS — 2026-08-13 (THE BIGGEST BUILD DAY YET, plus a short evening session the same day)
 
 ### ⏸ THE SHORT EVENING SESSION OF 2026-08-13 (her call: "Good pausing point... I'll come back on new chat tomorrow 🤗")
 One housekeeping PR, **#848, merged and grep-verified on main; branch resynced, working tree clean.**
