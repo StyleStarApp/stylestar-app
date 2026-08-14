@@ -7,7 +7,83 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-14 — THE STAR OF THE WEEK RUNS ITSELF NOW)
+## ▶ NEXT SESSION — START HERE (2026-08-14 evening — THE CURATED CATALOG IS BUILT, ON A BRANCH AWAITING HER WORD)
+
+### ⏸ WHERE THE 2026-08-14 EVENING SESSION PAUSED
+**Everything lives on branch `claude/startq-fix-8c9glb`, pushed, NOT merged — deliberately.** This is the
+biggest product change since the wishlist (real products replacing AI guesses on her favorite page) and she
+has not seen a pixel of it; merging is what makes it live, so that is HER call after a look. ⚠️ One Netlify
+build will fire on merge.
+- 📄 **Her handoff brief + the 21-row CSV arrived via Google Drive** ("Style Star - Claude Code handoff.md" +
+  "style-star-products.csv" — the Desktop file was unreachable from the cloud container; Drive is the
+  working handoff channel now). All five build items are DONE, in the brief's own order:
+  1. **The converter:** `scripts/products-from-csv.js` → `products.json` (repo root) + the canonical CSV
+     export kept at `data/style-star-products.csv`. **Validates HARD, fails loudly with the row number**
+     (bad slot / bad retailer incl. the Bloomingdale's-apostrophe case by name / non-numeric price / bad
+     family / empty note / tracking params / http / bad date / duplicate id). ▶ **The valid slots and store
+     keys are parsed OUT OF index.html at convert time** — one source of truth, a rename can never drift.
+     ⚠️ The tracking-param check is the app's own conservative blocklist (+network click-ids) — load-bearing
+     params (Bloomingdale's `?ID=`, Gap `pid=`, Madewell `ccode=`) survive, asserted in tests. A failed
+     convert never touches products.json.
+  2. **`ARCHETYPE_FAMILY`** — all 28 archetypes → the nine families, Beautifully Balanced → `Balanced`,
+     `_herFamily()` reads `topArchNames[0]` (no quiz → Balanced, so curated works pre-quiz). ⚠️ **A Claude
+     draft assigned from each archetype's own slider profile — she has NOT blessed the 28 assignments; each
+     is one word to reassign.** The ones most worth her eye: Sculpted Chic→Minimal, Free Spirit→Natural,
+     Statement Maker→Edgy (its slider profile is max-edgy in neutrals), Modern Trendsetter→Bold,
+     Refined Elegance→Glam, Serene Grace→Romantic.
+  3. **`curatedPicks(slot,prefs,family,count)`** — the brief's four stages in order: hard filters as
+     REMOVALS (active:no · never-wear chips/patterns/free-text incl. the stylist vetoes · size via her
+     fit ranges, Regular keeps all, Petite/Tall/Plus require the product flag · colour no's parsed from
+     `neverOther` free text, NO colorsSkip revival) → family match (Balanced keeps all) → diversity + price
+     spread (≤2 per retailer — ⚠️ the brief's "max 2 items per slot in any one set" is read as the standing
+     per-retailer variety rule inside a one-slot set, since a literal per-slot cap of 2 contradicts the
+     ≥4 threshold; flag if she meant something else — and at most ONE stretch piece 2+ bands above the
+     set's median, verified against the set itself) → rank (loved colours first, then most recently
+     checked). **No budget question exists and price is never a hard filter.**
+  4. **Wired into Your Wardrobe Ideas:** a checklist item with ≥4 surviving curated pieces shows THEM and
+     never calls the AI. Cards **lead with the BRAND** (the trust signal — "L'Agence", not "Nordstrom"),
+     retailer secondary ("at Nordstrom · $385"), her note in quotes (Lora upright 13px, the wdr-note
+     register), badge **"Picked by Catherine"** (the wishlist's exact pick-badge construction), **"Shop it"**
+     exact product URL (`rel="sponsored noopener"`), save heart → wishlist as a Catherine's pick with the
+     exact URL, a **"Link broken?" tap** (stamps `ss_linkflags` + fires a Plausible `Broken Link` event so
+     dead links reach her dashboard with no backend), and an honest **"Hand-picked by Catherine, checked
+     August 2026"** line from the newest `checked` date. **Fewer than 4 survive but the shelf exists** →
+     the constraint is NAMED (size/style/preferences variants, no dashes, ⚠️ Claude drafts in her voice)
+     and the AI ideas render beneath, each labelled **"An idea to explore"** — never an empty screen, never
+     a quietly relaxed filter. Slots with no catalog (98 of 100) behave exactly as before, unlabelled.
+  5. **No new preference fields** — runs entirely on sizes, never-wear, loved colours, free-text notes.
+- 🔍 **`scripts/check-product-urls.js`** (link-rot watchdog, run weekly): current live result **7 LOOKS OK ·
+  14 NEEDS HER EYE · 0 BROKEN**. ⚠️ Two honesty rules baked in: a 403 bot wall is never "broken" (the
+  standing Bloomingdale's curl lesson), and a "sold out" phrase in the page is a NEEDS-HER-EYE flag, never
+  proof — stores print it per size variant on healthy products (first version called 6 fresh links broken;
+  fixed).
+- ✅ **The startQ() item closed as the brief instructed: NOT reproducible, no fix invented.** `startQ()`
+  resets `cur=0`; `_quizRestore()` only moves it with a fresh (<30 min) autosave and then screen and write
+  slot move TOGETHER. New regression suite `scratchpad/startqguard.js` (9 checks) pins the invariant on all
+  three restart paths (fresh resume, stale save, menu retake).
+- ✅ **The brief's "also still open" list was STALE — all three verified already fixed 2026-07-29:**
+  colorsSkip gone (2 historical comments remain), `filterNeverWear()` live on every surface (6 call sites),
+  Plausible events live (7 distinct `track()` calls incl. the quiz funnel). Verified by grep, not redone.
+- **Suites:** new `scratchpad/curated.js` **56 checks** (converter strict-mode incl. apostrophe case ·
+  Classic vs Glam get demonstrably different blouse sets · every family sees ≥3 jeans · price-spread
+  invariant across all 28 archetypes × both slots · ruffles/no-orange/leopard removals · Tall-only starved
+  shelf → named constraint + labelled AI fallback · petite keeps only petite-true · save-as-pick · broken
+  link tap · no overflow 390/360/320 · zero JS errors) + `startqguard.js` 9. Sweep green: **affq 40
+  (⚠️ census 27→28 updated deliberately — the curated card is the 10th JS template with an outbound
+  anchor) · wdrworksheet 73 · wdrcalmcheck 27 · e2e 29 · hubs 49 · weekstar 35.**
+- ▶ **THE FIRST THINGS TO ASK HER NEXT SESSION:**
+  1. **Review + merge call on `claude/startq-fix-8c9glb`** — walk her through a to5 Ideas tap (Classic vs
+     Glam), the card look (brand-led, her note, the badge), and the constraint line wording. Renders on
+     request before merge.
+  2. **The 28 ARCHETYPE_FAMILY assignments** — her taxonomy, one word each to change.
+  3. **The 14 NEEDS-HER-EYE links** from the checker (bot-walled stores; her phone is the instrument).
+  4. Her remaining 8 slots of products land in the spreadsheet → export CSV to Drive → run the converter →
+     commit products.json + data CSV. **No code changes should be needed — if one is, the data model is
+     wrong and say so loudly (the brief's own rule).**
+- ▶ Everything from the day session below (Star of the Week autopilot, legal thread, her testing) is
+  unchanged by this work.
+
+## ▶ PREVIOUS — 2026-08-14 day session (THE STAR OF THE WEEK RUNS ITSELF NOW)
 
 ### ⏸ WHERE 2026-08-14 PAUSED (her call: "let's save everything to the .md and pause here")
 **ONE PR this session, #850, merged and CURL-VERIFIED LIVE on stylestar.app; branch resynced to main,

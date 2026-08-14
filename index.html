@@ -942,6 +942,27 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 .shop-trunc{text-align:center;font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:12px}
 .shop-item-name{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px;line-height:1.3}
 .shop-item-store{font-size:12px;color:#555;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;font-weight:600}
+/* ── Curated-catalog cards (2026-08-14). The badge is the wishlist's own
+   Catherine's-pick construction (pink frame, left-tilted pink heart, the
+   Edit family's teal lettering) so her mark can never drift between the two
+   surfaces. The BRAND leads the card — it is the trust signal she actually
+   reads ("L'Agence", not "Nordstrom"); the retailer line is where to buy it.
+   Her note wears the compact worksheet register: Lora upright 13px in the
+   readable ink (the .wdr-note precedent for dense tools). */
+.wdr-pick{display:inline-flex;align-items:center;gap:4px;font:700 8.5px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#087E8C;background:#fff;border:1px solid #F49AC1;border-radius:999px;padding:3px 7px 3px 6px;margin-bottom:6px}
+.wdr-pick svg{width:9px;height:9px;fill:#F49AC1;display:block;flex:0 0 auto;transform:rotate(-11deg)}
+/* readable ink, not gold: dark antique golds read brown at small sizes (the
+   restore-card lesson) and true golds fail AA as text on this near-white card */
+.shop-item-brand{font:700 11px/1.2 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a463e;margin-bottom:2px}
+.wdr-curated .shop-item-store{text-transform:none;letter-spacing:.02em;font-weight:500;color:#5f5647}
+.wdr-cur-note{font:400 13px/1.45 'Lora',Georgia,serif;color:#4a463e;text-align:left;margin:0 0 10px}
+.wdr-cur-checked{font:400 11px/1.5 'Jost',sans-serif;color:#6e6e6e;text-align:center;margin-top:8px}
+.wdr-cur-empty{font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:290px;margin:2px auto 10px;text-wrap:balance}
+.wdr-ailbl{display:inline-block;font:600 8.5px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#5f5647;background:#F5EFE2;border:1px solid #D6C9A8;border-radius:999px;padding:3px 7px;margin-bottom:6px}
+/* quiet through SIZE, never through sub-AA ink (the three-times-learned
+   label lesson): #6e6e6e is the disclosure ink, 4.6:1 on this card. */
+.wdr-linkflag{display:block;font:400 11px/1.4 'Jost',sans-serif;color:#6e6e6e;text-decoration:underline;text-underline-offset:2px;margin-top:7px;cursor:pointer}
+.wdr-linkflag.flagged{text-decoration:none;color:#5f5647}
 /* nowrap + tighter padding: "Find this" is longer than the old "Shop" and was
    wrapping to three lines in the 128px Wardrobe cards. */
 .shop-link{display:inline-block;font-size:11px;font-weight:600;color:#fff;background:#1a1a1a;padding:8px 10px;border-radius:20px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;transition:opacity 0.2s}
@@ -7226,6 +7247,174 @@ var _WDR_IDEA_EXCLUDE={
 var _WDR_IDEA_DEFINE={
   dr3:'For "Work-appropriate dresses," NEVER suggest one-shoulder or asymmetric necklines, spaghetti straps, strapless or plunging necklines, satin, sequined, shiny, or sheer fabric, or a hemline or slit above the knee. Every option must hit at or below the knee, fit tailored (never tight or clingy), have a modest neckline (crew, small V, or scoop) with wide or standard straps, use structured medium-weight fabric like wool blends, crepe, or ponte, stay in solid or subtle muted or neutral prints, and have short, three-quarter, or long sleeves (sleeveless only if conservative). This rule is absolute, the same weight as her never-wear list.'
 };
+// ═══════════════════════════════════════════════════════════════════════════
+// THE CURATED CATALOG (2026-08-14, from Cath's handoff brief + her 21-product
+// spreadsheet). Real products she picked by hand, served from products.json
+// (built by scripts/products-from-csv.js from her spreadsheet's Products tab —
+// the converter validates hard, see the script). Curated picks show on a
+// wardrobe item's Ideas when enough survive her filters; the AI remains the
+// fallback and is labelled differently ("an idea to explore" vs "picked by
+// Catherine") so the two kinds are never confused.
+// ─────────────────────────────────────────────────────────────────────────────
+// ▶ ARCHETYPE → FAMILY: all 28 quiz archetypes mapped to the catalog's nine
+// style families (Classic, Minimal, Natural, Sporty, Professional, Romantic,
+// Glam, Bold, Edgy) + the special 'Balanced'. Assigned from each archetype's
+// own slider profile (the p[] arrays above). ⚠️ A Claude draft Cath has not
+// individually blessed — each line is one word to reassign if her stylist eye
+// disagrees; changing a line here is the whole edit.
+const ARCHETYPE_FAMILY={
+  'The Timeless Classic':'Classic','The Polished Sophisticate':'Classic','The Sunny Classic':'Classic','The Modern Classic':'Classic',
+  'The Understated Luxury':'Minimal','The Clean Minimalist':'Minimal','The Sculpted Chic':'Minimal',
+  'The Natural Chic':'Natural','The Elevated Casual':'Natural','The Easygoing Natural':'Natural','The Free Spirit':'Natural',
+  'The Sporty Luxe':'Sporty','The Vibrant Athlete':'Sporty',
+  'The Polished Professional':'Professional','The Rising Star':'Professional',
+  'The Romantic Feminine':'Romantic','The Serene Grace':'Romantic',
+  'The Golden Hour':'Glam','The Refined Elegance':'Glam','The Glamorous Maximalist':'Glam','The Soft Glam':'Glam','The Enchantress':'Glam',
+  'The Bold Expressionist':'Bold','The Creative Original':'Bold','The Modern Trendsetter':'Bold','The Pop of Color':'Bold',
+  'The Statement Maker':'Edgy',
+  'The Beautifully Balanced':'Balanced'
+};
+// Her family comes from her primary archetype. A woman with no quiz yet (or an
+// unmapped name, which should never happen) reads as Balanced — the family
+// stage keeps everything, so curated picks still work before the quiz.
+function _herFamily(){return (topArchNames&&topArchNames[0]&&ARCHETYPE_FAMILY[topArchNames[0]])||'Balanced'}
+// products.json is fetched once and cached; any failure leaves the catalog
+// null and every surface falls back to the AI path exactly as before this
+// feature existed — a missing catalog can never break Ideas.
+let _productsCatalog=null,_productsCatalogP=null;
+function _loadProducts(){
+  if(_productsCatalogP)return _productsCatalogP;
+  _productsCatalogP=fetch('products.json').then(function(r){if(!r.ok)throw 0;return r.json()})
+    .then(function(d){if(d&&Array.isArray(d.products))_productsCatalog=d;return _productsCatalog})
+    .catch(function(){return null});
+  return _productsCatalogP;
+}
+// Colour hard-no's live in her free-text neverOther ("no orange please") —
+// deliberately parsed from the words she already gave us. ⚠️ Do NOT
+// reintroduce prefs.colorsSkip or a colours-to-avoid screen (removed
+// 2026-07-29, her call; the handoff brief re-confirms it).
+const _WDR_COLOR_WORDS=['pink','red','orange','yellow','green','blue','navy','purple','lavender','lilac','brown','tan','beige','camel','black','white','ivory','cream','gray','grey','gold','silver','indigo','burgundy','teal','coral'];
+function _wdrNoColors(neverOther){
+  const t=String(neverOther||'').toLowerCase();
+  return _WDR_COLOR_WORDS.filter(function(c){return new RegExp('\\b'+c+'\\b').test(t)});
+}
+const _WDR_BANDS=['$','$$','$$$','$$$$'];
+// curatedPicks(slot, prefs, family, count) — the four stages from the brief,
+// in order. Returns {picks:[...], reason:''|'size'|'style'|'preferences'} —
+// reason names the FIRST constraint that starved the pool below `count`
+// survivors, so the UI can say why honestly instead of showing an empty
+// screen or quietly relaxing a hard filter (both forbidden by the brief).
+function curatedPicks(slot,p,family,count){
+  count=count||6;p=p||prefs;
+  const all=(_productsCatalog&&_productsCatalog.products)||[];
+  let pool=all.filter(function(x){return x.slot===slot&&x.active});
+  const slotTotal=pool.length;
+  if(!slotTotal)return {picks:[],reason:'',slotTotal:0};
+  let reason='';
+  const mark=function(r){if(!reason&&pool.length<count)reason=r};
+  // STAGE 1 — hard filters. Removals, never score penalties.
+  // Never-wear: the same term builder as filterNeverWear (stylist vetoes +
+  // her chips + her free-text phrases), matched against the product's name,
+  // attribute tags and pattern — never her note (Cath's own prose mentions
+  // words like "skinny" while praising the opposite) and never the URL.
+  const terms=_STYLIST_VETO.concat(p.neverWear||[]).concat(p.neverPatterns||[])
+    .concat(String(p.neverOther||'').split(',').map(function(t){return t.replace(/^\s*(no|never|not)\s+/i,'')}))
+    .map(function(t){return String(t).toLowerCase().trim()}).filter(function(t){return t.length>2});
+  pool=pool.filter(function(x){
+    const hay=(x.name+' '+x.attrs.join(' ')+' '+x.pattern).toLowerCase();
+    return !terms.some(function(t){return hay.includes(t)||(t.endsWith('s')&&hay.includes(t.slice(0,-1)))});
+  });
+  mark('preferences');
+  // Colour no's from her free text: "no orange" removes anything orange.
+  const noCols=_wdrNoColors(p.neverOther);
+  if(noCols.length)pool=pool.filter(function(x){
+    return !x.colors.some(function(c){return noCols.some(function(nc){return new RegExp('\\b'+nc+'\\b').test(c.toLowerCase())})});
+  });
+  mark('preferences');
+  // Size: her fit ranges (multi-select). 'Regular' keeps everything (every
+  // catalog product carries a regular run); Petite/Tall/Plus require the
+  // product's own flag when they are the ONLY ranges she shops.
+  const fit=(p.sizes&&p.sizes.fit)||[];
+  if(fit.length)pool=pool.filter(function(x){
+    return fit.indexOf('Regular')>=0||(fit.indexOf('Petite')>=0&&x.petite)||(fit.indexOf('Tall')>=0&&x.tall)||(fit.indexOf('Plus')>=0&&x.plus);
+  });
+  mark('size');
+  // STAGE 2 — family match. Balanced keeps everything.
+  if(family&&family!=='Balanced')pool=pool.filter(function(x){return x.families.indexOf(family)>=0});
+  mark('style');
+  // STAGE 4 first as a SORT (rank: her loved colours, then most recently
+  // checked), then STAGE 3 as the PICK (diversity + price spread).
+  const love=(p.colorsLove||[]).map(function(c){return c.toLowerCase()});
+  const loved=function(x){return x.colors.some(function(c){return love.some(function(l){
+    const base=l.split(' ').pop();return c.toLowerCase().indexOf(base)>=0})})?1:0};
+  pool=pool.slice().sort(function(a,b){
+    return (loved(b)-loved(a))||(b.checked>a.checked?1:b.checked<a.checked?-1:0)||(a.id<b.id?-1:1);
+  });
+  // Price spread: most of the set stays around the band this shelf actually
+  // sells in (the pool's median band — there is deliberately NO budget
+  // question), with AT MOST ONE stretch piece two or more bands above it.
+  // Diversity: no more than two picks from one retailer (the standing
+  // 2026-07-27 variety rule). ⚠️ The brief's "max 2 items per slot in any one
+  // set" can only bind a future multi-slot set — inside one slot's own Ideas
+  // it would cap the set at 2, which contradicts the ≥4 threshold, so it is
+  // read as the per-retailer rule here.
+  const bandIdx=function(x){return _WDR_BANDS.indexOf(x.band)};
+  const sorted=pool.map(bandIdx).sort(function(a,b){return a-b});
+  const med=sorted.length?sorted[Math.floor(sorted.length/2)]:0;
+  const picks=[];const perStore={};let stretch=0;
+  pool.forEach(function(x){
+    if(picks.length>=count)return;
+    if(bandIdx(x)>=med+2){if(stretch>=1)return;stretch++;}
+    if((perStore[x.retailer]||0)>=2)return;
+    perStore[x.retailer]=(perStore[x.retailer]||0)+1;
+    picks.push(x);
+  });
+  // Belt and braces on the brief's own test: measured against the SET's
+  // median (not the pool's), never more than one pick sits 2+ bands above.
+  const setSorted=picks.map(bandIdx).sort(function(a,b){return a-b});
+  const setMed=setSorted.length?setSorted[Math.floor(setSorted.length/2)]:0;
+  let over=picks.filter(function(x){return bandIdx(x)>=setMed+2});
+  while(over.length>1){picks.splice(picks.indexOf(over[over.length-1]),1);over=picks.filter(function(x){return bandIdx(x)>=setMed+2});}
+  if(!reason&&picks.length<count&&picks.length<pool.length)reason='preferences';
+  return {picks:picks,reason:picks.length<4?(reason||'preferences'):'',slotTotal:slotTotal};
+}
+// One curated card. Leads with the BRAND (the trust signal she actually
+// reads — "L'Agence", not "Nordstrom"); the retailer is secondary, where to
+// buy it, not what it is. The link is her exact product URL ("Shop it", the
+// Edit-pick convention — an exact page cannot be rebuilt from words), and the
+// save heart stores it as a Catherine's pick. Her note rides along in her
+// paper voice. "Link broken?" lets users maintain the list: it stamps
+// locally and fires a Plausible event so Cath sees dead links on her
+// dashboard without any backend.
+function _curatedCard(x){
+  const saveItem={name:x.name,store:x.brand+' · '+x.retailer,pick:true,url:x.url,price:'$'+x.price};
+  return '<div class="shop-card wdr-curated"><div>'
+    +'<span class="wdr-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Picked by Catherine</span>'
+    +'<div class="shop-item-brand">'+_esc(x.brand)+'</div>'
+    +'<div class="shop-item-name">'+_esc(x.name)+'</div>'
+    +'<div class="shop-item-store">at '+_esc(x.retailer)+' · $'+_esc(String(x.price))+'</div>'
+    +'<div class="wdr-cur-note">&ldquo;'+_esc(x.note)+'&rdquo;</div></div>'
+    +'<div class="shop-card-act">'
+    +'<a href="'+_esc(x.url)+'" target="_blank" rel="sponsored noopener" class="shop-link">Shop it</a>'
+    +_wlSaveBtn(saveItem)
+    +'</div>'
+    +'<span class="wdr-linkflag" role="button" onclick="_flagBrokenLink(this,\''+_esc(x.id)+'\')">Link broken?</span>'
+    +'</div>';
+}
+function _flagBrokenLink(el,pid){
+  try{var f=JSON.parse(localStorage.getItem('ss_linkflags')||'{}');f[pid]=new Date().toISOString().slice(0,10);localStorage.setItem('ss_linkflags',JSON.stringify(f));}catch(e){}
+  track('Broken Link',{product:pid});
+  if(el)el.outerHTML='<span class="wdr-linkflag flagged">Thank you, we’ll check it ♡</span>';
+}
+// "checked August 2026" — honest freshness from the newest checked date in
+// the set. Never claims live stock (the standing convention: hand-picked and
+// checked, not "in stock now").
+function _curatedCheckedLine(picks){
+  let latest='';picks.forEach(function(x){if(x.checked>latest)latest=x.checked});
+  if(!latest)return'';
+  const m=['January','February','March','April','May','June','July','August','September','October','November','December'][+latest.slice(5,7)-1];
+  return m?'Hand-picked by Catherine, checked '+m+' '+latest.slice(0,4):'';
+}
 async function _wardrobeIdeaGen(id,boxId){
   const box=document.getElementById(boxId||('wx_'+id));
   if(!box)return;
@@ -7233,6 +7422,37 @@ async function _wardrobeIdeaGen(id,boxId){
   const name=_wardrobeFindName(id);
   if(!name)return;
   box.innerHTML='<div class="wdr-loading"><svg class="wdr-load-star" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E6C24E" stroke="#b8bcc2" stroke-width="0.6"/></svg><div class="wdr-load-txt">Finding ideas for &ldquo;'+_esc(name)+'&rdquo;&hellip;</div></div>';
+  // ▶ CURATED FIRST (2026-08-14): if Cath's own catalog covers this slot and
+  // at least 4 pieces survive her filters, the Ideas ARE her picks — real
+  // products, exact links, her notes — and the AI is never called. Fewer than
+  // 4 surviving (but the shelf exists) names the constraint honestly and
+  // falls through to the AI, with those cards labelled "an idea to explore"
+  // so the two kinds can never be confused. A slot with no catalog products
+  // (98 of 100 today) behaves exactly as before this feature existed.
+  let curConstraint='';
+  try{
+    await _loadProducts();
+    const cur=curatedPicks(id,prefs,_herFamily(),6);
+    if(cur.picks.length>=4){
+      let chtml='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> Catherine&rsquo;s picks for &ldquo;'+_esc(name)+'&rdquo;</div><div class="shop-grid hscroll">';
+      cur.picks.forEach(function(x){chtml+=_curatedCard(x)});
+      chtml+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
+      const chk=_curatedCheckedLine(cur.picks);
+      if(chk)chtml+='<div class="wdr-cur-checked">'+chk+'</div>';
+      box.innerHTML=chtml;
+      const _cg=box.querySelector('.shop-grid.hscroll'),_ch=box.querySelector('.wdr-swipe-hint');
+      _swipeHint(_cg,_ch);_nudgeScroll(_cg);
+      return;
+    }
+    // The shelf exists but her filters starved it: never an empty screen,
+    // never a quietly relaxed filter — name the constraint and offer the AI.
+    // ⚠️ Claude-drafted lines in her voice; hers to reword (one string each).
+    if(cur.slotTotal>0){
+      curConstraint=cur.reason==='size'?'Not much on my shelf comes in your size yet, so here are ideas to explore instead ♡'
+        :cur.reason==='style'?'Not much on my shelf fits your style family yet, so here are ideas to explore instead ♡'
+        :'Not much on my shelf clears your preferences yet, so here are ideas to explore instead ♡';
+    }
+  }catch(e){}
   const basis=(Array.isArray(answers)&&answers.length===12&&topArchNames.length)?('Her style: '+topArchNames.join(', ')+'.'):'';
   const exclNames=(_WDR_IDEA_EXCLUDE[id]||[]).map(_wardrobeFindName).filter(Boolean);
   const exclLine=exclNames.length?'\n\nShe already has a separate checklist item for each of: '+exclNames.join(', ')+'. Those are covered elsewhere, so do not suggest anything that belongs to those instead. Keep every option specific to just "'+name+'".':'';
@@ -7254,9 +7474,14 @@ async function _wardrobeIdeaGen(id,boxId){
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
-    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div><div class="shop-grid hscroll">';
+    let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div>';
+    if(curConstraint)html+='<div class="wdr-cur-empty">'+curConstraint+'</div>';
+    html+='<div class="shop-grid hscroll">';
+    // When this slot also has a curated shelf, AI cards carry their own
+    // label so "picked by Catherine" can never be read onto a model guess.
+    const aiLbl=curConstraint?'<span class="wdr-ailbl">An idea to explore</span>':'';
     filterNeverWear(parsed.items).forEach(function(item){
-      html+=_shopCard(item);
+      html+=_shopCard(item,aiLbl);
     });
     html+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
     // Her ask 2026-08-12: nudge toward Refine "without getting her off track

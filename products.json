@@ -1,0 +1,594 @@
+{
+ "products": [
+  {
+   "id": "p001",
+   "slot": "bo1",
+   "name": "The Perfect Vintage Jean",
+   "brand": "Madewell",
+   "retailer": "Madewell",
+   "url": "https://www.madewell.com/p/womens/clothing/jeans/slim-+-skinny-jeans/the-perfect-vintage-jean/NW282/?ccode=DM9401",
+   "price": 128,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Natural",
+    "Minimal",
+    "Professional"
+   ],
+   "sizes": "23-33 + curvy",
+   "petite": true,
+   "tall": true,
+   "plus": true,
+   "colors": [
+    "medium indigo"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A true vintage straight that flatters without squeezing. The curvy fit is excellent if you're waist-small, hip-full.",
+   "checked": "2026-08-13",
+   "active": true
+  },
+  {
+   "id": "p002",
+   "slot": "bo1",
+   "name": "Marilyn Straight Jean",
+   "brand": "NYDJ",
+   "retailer": "NYDJ",
+   "url": "https://nydj.com/products/marilyn-straight-jeans-quinn",
+   "price": 99,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Romantic",
+    "Minimal"
+   ],
+   "sizes": "00-28",
+   "petite": true,
+   "tall": true,
+   "plus": true,
+   "colors": [
+    "deep indigo"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The Lift Tuck panel is real, not marketing — this is the pair I send petite clients and anyone who wants polish without stiffness.",
+   "checked": "2026-08-13",
+   "active": true
+  },
+  {
+   "id": "p003",
+   "slot": "bo1",
+   "name": "Always Fits Good Legs Straight",
+   "brand": "Good American",
+   "retailer": "Good American",
+   "url": "https://www.goodamerican.com/products/always-fits-good-legs-straight-indigo316",
+   "price": 159,
+   "band": "$$$",
+   "families": [
+    "Glam",
+    "Bold",
+    "Sporty",
+    "Edgy"
+   ],
+   "sizes": "00-24 adaptive",
+   "petite": true,
+   "tall": true,
+   "plus": true,
+   "colors": [
+    "medium blue"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "One jean genuinely spans four sizes. Sculpts like shapewear without feeling like it.",
+   "checked": "2026-08-13",
+   "active": true
+  },
+  {
+   "id": "p004",
+   "slot": "bo1",
+   "name": "High-Waisted Wow Straight Jean",
+   "brand": "Old Navy",
+   "retailer": "Old Navy",
+   "url": "https://oldnavy.gap.com/browse/product.do?pid=514553002&vid=3&pcid=3056201&cid=3056360#pdp-page-content",
+   "price": 49,
+   "band": "$",
+   "families": [
+    "Natural",
+    "Sporty",
+    "Classic",
+    "Bold"
+   ],
+   "sizes": "0-30",
+   "petite": true,
+   "tall": true,
+   "plus": true,
+   "colors": [
+    "medium blue"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "My proof that great denim doesn't need three digits — honest stretch, huge size run, and the high waist holds all day.",
+   "checked": "2026-08-13",
+   "active": true
+  },
+  {
+   "id": "p005",
+   "slot": "bo1",
+   "name": "501 Original Fit Jean",
+   "brand": "Levi's",
+   "retailer": "Amazon",
+   "url": "https://www.amazon.com/Levis-501-Original-Jeans-Women/dp/B077T29T24",
+   "price": 72,
+   "band": "$$",
+   "families": [
+    "Bold",
+    "Edgy",
+    "Natural",
+    "Sporty"
+   ],
+   "sizes": "24-34 + plus",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "medium wash"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The original for a reason. reads effortlessly cool with everything from blazers to tanks.",
+   "checked": "2026-08-13",
+   "active": true
+  },
+  {
+   "id": "p006",
+   "slot": "bo1",
+   "name": "High Rise Vintage Slim Jean",
+   "brand": "Gap",
+   "retailer": "Gap",
+   "url": "https://www.gap.com/browse/product.do?pid=660492002",
+   "price": 89,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Minimal",
+    "Natural",
+    "Professional"
+   ],
+   "sizes": "24-35",
+   "petite": true,
+   "tall": true,
+   "plus": false,
+   "colors": [
+    "medium indigo"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The quiet one — slim through the leg without being skinny, and the high rise is genuinely comfortable seated. A workhorse.",
+   "checked": "2026-08-13",
+   "active": true
+  },
+  {
+   "id": "p007",
+   "slot": "bo1",
+   "name": "High Rise Wide Leg Hustler",
+   "brand": "Mother",
+   "retailer": "Bloomingdales",
+   "url": "https://www.bloomingdales.com/shop/product/mother-the-hustler-roller-sneak-jeans-in-homecoming?ID=5576534",
+   "price": 278,
+   "band": "$$$",
+   "families": [
+    "Glam",
+    "Bold",
+    "Edgy",
+    "Romantic"
+   ],
+   "sizes": "23-34",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "dark indigo"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The splurge of the group, and the one that changes your proportions most — a true 70s wide leg with a clean hem, so it reads polished rather than costume. Wear it with a heel you don't have to show.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p008",
+   "slot": "bo1",
+   "name": "We The Free Libre Wide-Leg Jean",
+   "brand": "Free People",
+   "retailer": "Free People",
+   "url": "https://www.freepeople.com/shop/we-the-free-libre-wide-leg-jeans/",
+   "price": 98,
+   "band": "$$",
+   "families": [
+    "Romantic",
+    "Natural",
+    "Glam",
+    "Minimal"
+   ],
+   "sizes": "24-33",
+   "petite": true,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "medium blue"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Soft and high and easy in a way most wide legs aren't — this is the pair for someone who wants the silhouette without the stiffness. The Short fit is a real petite inseam, not a token.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p009",
+   "slot": "to5",
+   "name": "Washable Stretch Silk Notch Collar Blouse",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/silk/silk-notch-collar-blouse",
+   "price": 85,
+   "band": "$$",
+   "families": [
+    "Minimal",
+    "Professional",
+    "Classic"
+   ],
+   "sizes": "XS-XL, 1X-3X",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "ivory",
+    "navy",
+    "black"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Machine-washable silk that doesn't look like a compromise — this is the one I recommend when someone tells me she loves silk but won't dry-clean. The notch collar sits well open or buttoned.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p010",
+   "slot": "to5",
+   "name": "Modern Classic Shirt",
+   "brand": "Talbots",
+   "retailer": "Talbots",
+   "url": "https://www.talbots.com/modern-classic-shirt/P263075445.html",
+   "price": 95,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Natural"
+   ],
+   "sizes": "XS-XL",
+   "petite": true,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "clematis blue"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A proper cotton shirt that comes in misses, petite, plus and plus petite — almost nobody does that last one well. Crisp enough under a blazer, relaxed enough to wear untucked.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p011",
+   "slot": "to5",
+   "name": "Dani Silk Charmeuse Blouse",
+   "brand": "L'Agence",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/lagence-dani-silk-charmeuse-blouse/5371746",
+   "price": 385,
+   "band": "$$$",
+   "families": [
+    "Glam",
+    "Professional",
+    "Classic"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "malachite green",
+    "blue mist",
+    "icy lilac"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Silk charmeuse with enough weight to drape rather than cling — that is the whole difference between a good silk shirt and a shiny one. The three-quarter sleeve is quietly flattering on nearly everyone.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p012",
+   "slot": "to5",
+   "name": "Sara Silk Shirt",
+   "brand": "Boden",
+   "retailer": "Boden",
+   "url": "https://us.boden.com/products/women-sara-silk-shirt-ivory-t2000ivo",
+   "price": 190,
+   "band": "$$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Romantic"
+   ],
+   "sizes": "0-20/22",
+   "petite": true,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "ivory",
+    "black"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Real silk in a semi-fitted shape that ends just above the hip — the proportion that sits under a blazer without bunching. The petite fit is properly redrafted, not just shortened.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p013",
+   "slot": "to5",
+   "name": "Shell Top in Silk Georgette",
+   "brand": "Theory",
+   "retailer": "Theory",
+   "url": "https://www.theory.com/women/tops/shell-top-in-silk-georgette/M0102539_001.html",
+   "price": 195,
+   "band": "$$$",
+   "families": [
+    "Minimal",
+    "Professional",
+    "Glam"
+   ],
+   "sizes": "P, S, L, XL, XXL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "cream",
+    "navy",
+    "camel"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The layering piece I'd buy first. Silk georgette under a jacket does something no cotton shell can — it moves, and it never announces itself as a shell.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p014",
+   "slot": "to5",
+   "name": "Silk Bias Long-Sleeve Blouse",
+   "brand": "Vince",
+   "retailer": "Vince",
+   "url": "https://www.vince.com/product/silk-bias-long-sleeve-blouse-V055413024OFFWHITE.html",
+   "price": 448,
+   "band": "$$$$",
+   "families": [
+    "Glam",
+    "Minimal",
+    "Romantic"
+   ],
+   "sizes": "XXS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "off white"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The splurge, and the one that earns it. Cut on the bias, so it drapes around you rather than hanging off you — you feel the difference the moment it's on.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p015",
+   "slot": "to5",
+   "name": "Pintucked Cotton Blouse",
+   "brand": "COS",
+   "retailer": "COS",
+   "url": "https://www.cos.com/en-us/women/womenswear/tops/blouses/product/pintucked-cotton-blouse-off-white-1348512001",
+   "price": 99,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Minimal",
+    "Natural"
+   ],
+   "sizes": "32-44 (EU)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "off white"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The least fussy shirt in this group, and that's the point — crisp Pima poplin, pintucks at the sleeve, nothing else asking for attention. Machine washable, which for a white blouse matters more than it sounds.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p016",
+   "slot": "to5",
+   "name": "Frances Long Sleeve Fitted Shirt",
+   "brand": "AllSaints",
+   "retailer": "AllSaints",
+   "url": "https://www.allsaints.com/us/women/tops-and-shirts/frances-long-sleeve-fitted-shirt/USW009PF-437.html",
+   "price": 239,
+   "band": "$$$",
+   "families": [
+    "Edgy",
+    "Bold",
+    "Romantic"
+   ],
+   "sizes": "0-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "optic white"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Fitted organic cotton with lace-up ties and a ladder-trimmed placket — the details are what make it, and they read confident rather than sweet. Wear it with something severe on the bottom.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p017",
+   "slot": "to5",
+   "name": "Tie Neck Blouse",
+   "brand": "Ann Taylor",
+   "retailer": "Ann Taylor",
+   "url": "https://www.anntaylor.com/844169.html?dwvar_844169_color=9000",
+   "price": 98,
+   "band": "$$",
+   "families": [
+    "Romantic",
+    "Professional",
+    "Classic"
+   ],
+   "sizes": "XXS-XXL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A tie neck does the work of a necklace, and this one is cotton so it actually washes. The cut is blousy — size down if you want it closer to the body.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p018",
+   "slot": "to5",
+   "name": "Willa Silk Placket Top",
+   "brand": "Alice + Olivia",
+   "retailer": "Neiman Marcus",
+   "url": "https://www.neimanmarcus.com/p/alice-olivia-willa-silk-placket-top-prod291410184",
+   "price": 395,
+   "band": "$$$",
+   "families": [
+    "Glam",
+    "Bold",
+    "Romantic"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "harvest print"
+   ],
+   "attrs": [],
+   "pattern": "floral",
+   "note": "Silk crepe de chine with a concealed placket, so the print runs clean down the front instead of being interrupted by a row of buttons. This is the one you wear when you want the shirt to be the whole outfit.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p019",
+   "slot": "to5",
+   "name": "Easy Care Tailored Shirt",
+   "brand": "Banana Republic Factory",
+   "retailer": "Banana Republic Factory",
+   "url": "https://bananarepublicfactory.gapfactory.com/browse/product.do?pid=872406021",
+   "price": 80,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Minimal",
+    "Sporty"
+   ],
+   "sizes": "0-20",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The workhorse — easy care means it comes out of the wash ready, which for a white shirt you actually wear is the whole point. Sizes run to 20, and it is almost always on sale.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p020",
+   "slot": "to5",
+   "name": "Hestia Blouse",
+   "brand": "Babaton",
+   "retailer": "Aritzia",
+   "url": "https://www.aritzia.com/us/en/product/hestia-blouse/122731.html",
+   "price": 110,
+   "band": "$$",
+   "families": [
+    "Professional",
+    "Glam",
+    "Romantic",
+    "Classic"
+   ],
+   "sizes": "2XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "white"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Matte satin is the trick here — it reads expensive without the shine that makes satin look like eveningwear at ten in the morning. The tie collar does the work, so the rest of the outfit can stay plain.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p021",
+   "slot": "to5",
+   "name": "McKenna Twist Front Top",
+   "brand": "Cinq à Sept",
+   "retailer": "Bloomingdales",
+   "url": "https://www.bloomingdales.com/shop/product/cinq-a-sept-mckenna-twist-front-top?ID=3781150&swatchColor=Black",
+   "price": 295,
+   "band": "$$$",
+   "families": [
+    "Edgy",
+    "Glam",
+    "Professional",
+    "Bold"
+   ],
+   "sizes": "XXS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "ivory",
+    "navy"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The twist at the front is the whole garment — it does what a necklace or a belt would do, structurally, so nothing else has to. Sadie crepe holds the shape rather than draping out of it.",
+   "checked": "2026-08-14",
+   "active": true
+  }
+ ]
+}
