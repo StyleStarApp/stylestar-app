@@ -88,9 +88,13 @@ final form below is what shipped. Verify live per the standing rule if anything 
   2. **Her spreadsheet rhythm:** fill rows in Cowork → export CSV to the Drive folder → say "new export" →
      converter validates (names bad rows) → commit. Works at 5 rows or 50; no code changes should ever be
      needed for new rows — if one is, the data model is wrong, say so loudly (the brief's own rule).
-  3. **The legal thread (see below): she never heard back from Almira by Friday 7pm 08-14** — the firmer
-     email draft was given in this chat, ready to send or schedule for Monday morning; the amber-quinn call
-     booking is the alternative. Ask what happened first thing.
+  3. **The legal thread: SHE BOOKED THE CALL — Monday, August 17, 2026, 12:30 PM (amber-quinn HubSpot,
+     phone), booked Friday night after Indie stayed silent past her deadline.** The booking form's prep box
+     carries the full loaded agenda (both TM filing dates + serial numbers · corrected Articles "Bail"→
+     Bailey + completed Operating Agreement, open since Aug 5 · EIN status with her I-will-get-it-myself
+     line · a written timeline for anything outstanding), so their team must pull answers before the call.
+     The firmer email was deliberately SKIPPED — the booking itself carries the message, the calmer move.
+     ▶ First thing after Monday: ask how the call went and log the dates/serial numbers here.
 - ▶ Everything from the day session below (Star of the Week autopilot, legal thread, her testing) is
   unchanged by this work.
 
