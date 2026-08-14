@@ -1,7 +1,7 @@
 // Affiliate-readiness + quiz batch (2026-07-31, the fourth Cowork brief).
 //
 // Part A is static: every outbound product link carries rel="sponsored
-// noopener" (including the 17 hardcoded Edit links), the a.co shortlinks are
+// noopener" (including the 18 hardcoded Edit links), the a.co shortlinks are
 // canonical amazon.com/dp/ links now, @netlify/blobs is gone, and /results is
 // a real route in BOTH _ROUTES and netlify.toml (the server applies the toml's
 // own rewrite rules, so a typo there fails the test).
@@ -40,7 +40,9 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 // 26 as of 2026-08-13: This Week's Star's "Shop it" (.wks-shop, built by
 // _renderWeekStar) is the 9th JS template — a deliberate count update, and the
 // check caught the new anchor exactly as designed.
-ok('found the full set of outbound PRODUCT anchors (17 Edit + 9 templates)', anchors.length === 26, 'got ' + anchors.length);
+// 27 as of 2026-08-14: the Tommy Hilfiger kitten heel (the first Star of the
+// Week) rolled into the Edit as the 18th hardcoded item, her call.
+ok('found the full set of outbound PRODUCT anchors (18 Edit + 9 templates)', anchors.length === 27, 'got ' + anchors.length);
 ok('every product link carries sponsored + noopener', anchors.every(a => /rel="sponsored noopener"/.test(a)),
   anchors.filter(a => !/rel="sponsored noopener"/.test(a)).slice(0, 2).join(' '));
 ok('the Instagram link exists', social.length === 1, 'got ' + social.length);
@@ -48,7 +50,7 @@ ok('...points at her real handle', social.every(a => /href="https:\/\/instagram\
 ok('...carries noopener but NOT sponsored', social.every(a => /rel="noopener"/.test(a) && !/sponsored/.test(a)));
 ok('...has an aria-label, being an icon with no text', social.every(a => /aria-label="[^"]+"/.test(a)));
 const editBtns = [...HTML.matchAll(/<a class="dc-item-btn"[^>]*>/g)].map(m => m[0]);
-ok('all 17 hardcoded Edit links included', editBtns.length === 17 && editBtns.every(a => /rel="sponsored noopener"/.test(a)));
+ok('all 18 hardcoded Edit links included', editBtns.length === 18 && editBtns.every(a => /rel="sponsored noopener"/.test(a)));
 
 console.log('\nA2. Amazon shortlinks are canonical now');
 ok('no a.co shortlinks remain', !/a\.co\//.test(HTML));
@@ -140,7 +142,7 @@ const editDom = await page.evaluate(() => {
   const links = [...document.querySelectorAll('#s-dream .dc-item-btn')];
   return { n: links.length, rel: links.every(a => a.rel === 'sponsored noopener'), amazon: links.filter(a => a.href.includes('amazon.com/dp/')).length };
 });
-ok('all 17 Edit links carry the rel in the live DOM, 2 canonical Amazon', editDom.n === 17 && editDom.rel && editDom.amazon === 2, JSON.stringify(editDom));
+ok('all 18 Edit links carry the rel in the live DOM, 2 canonical Amazon', editDom.n === 18 && editDom.rel && editDom.amazon === 2, JSON.stringify(editDom));
 await page.close();
 
 console.log('\nB2. Quiz autosave: exit and return keeps her place');
