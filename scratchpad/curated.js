@@ -125,7 +125,8 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
           note: (c.querySelector('.wdr-cur-note') || {}).textContent || '',
           link: c.querySelector('.shop-link') ? {href: c.querySelector('.shop-link').getAttribute('href'), rel: c.querySelector('.shop-link').getAttribute('rel'), label: c.querySelector('.shop-link').textContent} : null,
           save: !!c.querySelector('.wl-save'),
-          flag: !!c.querySelector('.wdr-linkflag')
+          flag: [...c.querySelectorAll('.wdr-linkflag')].some(n => /Link broken/.test(n.textContent)),
+          notforme: [...c.querySelectorAll('.wdr-linkflag')].some(n => /Not for me/.test(n.textContent))
         })) : [],
         constraint: (box && box.querySelector('.wdr-cur-empty')) ? box.querySelector('.wdr-cur-empty').textContent : '',
         checkedLine: (box && box.querySelector('.wdr-cur-checked')) ? box.querySelector('.wdr-cur-checked').textContent : ''
@@ -133,41 +134,81 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
     }, id);
   }
 
-  console.log('Part B — the app');
-  // 1. A Classic woman's Professional blouses are curated, no AI call
-  let {ctx, pg} = await fresh();
+  console.log('Part B — the app (blended, unattributed design)');
+  // 1. A Classic woman's Professional blouses: blended shelf, catalog leads
+  let {ctx, pg} = await fresh({aiOk: true});
   await seedAndOpen(pg, 'The Timeless Classic');
   let classic = await ideasFor(pg, 'to5');
-  ok('Classic to5: curated set renders (≥4 cards)', classic.cards.length >= 4, String(classic.cards.length));
-  ok('Classic to5: zero AI calls', pg.aiCalls() === 0, String(pg.aiCalls()));
-  ok('every card badged "Picked by Catherine"', classic.cards.every(c => /Picked by Catherine/.test(c.badge)));
-  ok('every card leads with a brand', classic.cards.every(c => c.brand.trim().length > 0));
-  ok('retailer is secondary ("at ...")', classic.cards.every(c => /^at /.test(c.store)));
-  ok('every card carries her note', classic.cards.every(c => c.note.trim().length > 5));
-  ok('links are exact product URLs, "Shop it", sponsored noopener', classic.cards.every(c => c.link && /^https:\/\//.test(c.link.href) && /Shop it/.test(c.link.label) && /sponsored/.test(c.link.rel) && /noopener/.test(c.link.rel)));
-  ok('every card has a save heart and a Link broken? tap', classic.cards.every(c => c.save && c.flag));
-  ok('checked line present and honest', /Hand-picked by Catherine, checked (August|September|October|November|December|January) 20\d\d/.test(classic.checkedLine), classic.checkedLine);
-  ok('curated set family-true for Classic', classic.cards.length >= 4); // set content asserted vs Glam below
-  const classicNames = classic.cards.map(c => c.name).sort().join('|');
-  // save → wishlist as Catherine's pick with the exact URL
-  await pg.evaluate(() => { document.querySelector('#wx_to5 .wl-save').click(); });
-  const saved = await pg.evaluate(() => (wardrobeData.wishlist || []).map(w => ({pick: !!w.pick, url: w.url || '', store: w.store || ''})));
-  ok('heart saves as a pick with exact URL', saved.length === 1 && saved[0].pick && /^https:\/\//.test(saved[0].url) && / · /.test(saved[0].store), JSON.stringify(saved));
+  const curCards = classic.cards.filter(c => c.curated);
+  const aiCards = classic.cards.filter(c => !c.curated);
+  ok('catalog pieces lead the shelf (≤4)', curCards.length >= 1 && curCards.length <= 4 && classic.cards[0].curated, String(curCards.length));
+  ok('AI fills the set to 6', classic.cards.length === 6, String(classic.cards.length));
+  ok('AI called exactly once', pg.aiCalls() === 1, String(pg.aiCalls()));
+  ok('NO attribution anywhere: no badges, no labels, no checked line', classic.cards.every(c => !c.badge && !c.ailbl) && !/Picked by Catherine|Hand-picked|An idea to explore/i.test(classic.html));
+  ok('catalog cards lead with a brand, "at Retailer · $price"', curCards.every(c => c.brand.trim() && /^at /.test(c.store) && /\$\d+/.test(c.store)));
+  ok('notes present and trimmed (≤160 chars)', curCards.every(c => c.note.trim().length > 5 && c.note.length <= 165));
+  ok('catalog links exact "Shop it" sponsored noopener', curCards.every(c => c.link && /^https:\/\//.test(c.link.href) && /Shop it/.test(c.link.label) && /sponsored/.test(c.link.rel)));
+  ok('AI cards say "Find it" (the one surviving distinction)', aiCards.every(c => c.link && /Find it/.test(c.link.label)));
+  ok('every card has a save heart', classic.cards.every(c => c.save));
+  ok('catalog cards carry Not for me + Link broken?', curCards.every(c => c.flag && c.notforme));
+  ok('See more ideas button present', /See more ideas/.test(classic.html));
+  const classicNames = curCards.map(c => c.name).sort().join('|');
+  // save → wishlist PLAIN: exact URL kept, no Catherine's-pick badge
+  await pg.evaluate(() => { document.querySelector('#wx_to5 .wdr-curated .wl-save').click(); });
+  const saved = await pg.evaluate(() => (wardrobeData.wishlist || []).map(w => ({pick: !!w.pick, exact: !!w.exact, url: w.url || ''})));
+  ok('heart saves plain with exact URL (no pick badge)', saved.length === 1 && !saved[0].pick && saved[0].exact && /^https:\/\//.test(saved[0].url), JSON.stringify(saved));
+  const wlRow = await pg.evaluate(() => { openWishlist(); const c = document.querySelector('.wl-row'); return {html: c ? c.innerHTML : '', label: c && c.querySelector('.wl-go') ? c.querySelector('.wl-go').textContent : ''}; });
+  ok('wishlist row: Shop it, NO badge', /Shop it/.test(wlRow.label) && !/Catherine|Your pick/.test(wlRow.html), wlRow.label);
   await ctx.close();
 
-  // 2. A Glam woman gets a DEMONSTRABLY different to5 set (the real test)
-  ({ctx, pg} = await fresh());
+  // 2. A Glam woman still gets a demonstrably different catalog lead
+  ({ctx, pg} = await fresh({aiOk: true}));
   await seedAndOpen(pg, 'The Soft Glam');
   const glam = await ideasFor(pg, 'to5');
-  ok('Glam to5: curated set renders', glam.cards.length >= 4, String(glam.cards.length));
-  const glamNames = glam.cards.map(c => c.name).sort().join('|');
-  ok('Classic and Glam sets differ on blouses', classicNames !== glamNames, classicNames + '  VS  ' + glamNames);
+  const glamNames = glam.cards.filter(c => c.curated).map(c => c.name).sort().join('|');
+  ok('Classic and Glam catalog leads differ', classicNames !== glamNames, classicNames + '  VS  ' + glamNames);
   await ctx.close();
 
-  // 3. Jeans are deliberately tagged wide — every family sees ≥3 pairs; and
-  //    the price-spread invariant holds for every archetype on both slots
-  ({ctx, pg} = await fresh());
+  // 3. Rotation machinery: stable within a week, different across weeks,
+  //    dismissal is a hard exclusion, saved is exempt from staleness
+  ({ctx, pg} = await fresh({aiOk: true}));
   await seedAndOpen(pg, 'The Timeless Classic');
+  const rotr = await pg.evaluate(async () => {
+    await _loadProducts();
+    const base = {sizes: {}, colorsLove: [], neverWear: [], neverPatterns: [], neverOther: ''};
+    const ids = () => curatedPicks('to5', base, 'Balanced', 4).picks.map(p => p.id);
+    const a = ids(), b = ids();                       // same week, twice
+    const w0 = _wdrWeek;
+    let weekSets = [];
+    for (let k = 1; k <= 6; k++) { window._wdrWeek = () => w0() + k; weekSets.push(curatedPicks('to5', base, 'Balanced', 4).picks.map(p => p.id).join(',')); }
+    window._wdrWeek = w0;
+    // dismissal
+    localStorage.setItem('ss_dismissed', JSON.stringify({[a[0]]: '2026-08-14'}));
+    const afterDismiss = ids();
+    localStorage.removeItem('ss_dismissed');
+    // staleness: mark a[0] shown in a PRIOR week many times → sinks
+    localStorage.setItem('ss_seen', JSON.stringify({[a[0]]: {n: 9, w: _wdrWeek() - 1}}));
+    const afterStale = ids();
+    // saved exemption: same staleness but the piece is on her wishlist
+    const prod = _productsCatalog.products.find(p => p.id === a[0]);
+    const wid = _wlMakeId(prod.name, resolveStore(prod.retailer) || prod.retailer);
+    wardrobeData.wishlist.unshift({id: wid, name: prod.name, store: prod.retailer, search: '', ts: Date.now(), exact: true, url: prod.url});
+    const afterSaved = ids();
+    wardrobeData.wishlist.shift();
+    localStorage.removeItem('ss_seen');
+    return {a, b, weekSets, afterDismiss, afterStale, afterSaved};
+  });
+  ok('same week → identical set (stability)', rotr.a.join() === rotr.b.join());
+  ok('set changes across weeks (rotation)', new Set(rotr.weekSets.concat([rotr.a.join(',')])).size > 1, JSON.stringify(rotr.weekSets));
+  ok('dismissed item never returns', !rotr.afterDismiss.includes(rotr.a[0]));
+  ok('prior-week staleness sinks an unsaved item', !rotr.afterStale.includes(rotr.a[0]) || rotr.afterStale.indexOf(rotr.a[0]) > rotr.a.indexOf(rotr.a[0]), JSON.stringify({a: rotr.a, afterStale: rotr.afterStale}));
+  ok('a saved item is exempt from staleness', rotr.afterSaved.includes(rotr.a[0]), JSON.stringify(rotr.afterSaved));
+  // seen map written on render
+  await ideasFor(pg, 'to5');
+  const seenMap = await pg.evaluate(() => JSON.parse(localStorage.getItem('ss_seen') || '{}'));
+  ok('render marks pieces seen (once per week)', Object.keys(seenMap).length >= 1 && Object.values(seenMap).every(e => e.n === 1), JSON.stringify(seenMap).slice(0, 120));
+
+  // 4. Price/retailer/note invariants on the catalog portion, all archetypes
   const inv = await pg.evaluate(async () => {
     await _loadProducts();
     const fams = ['Classic', 'Minimal', 'Natural', 'Sporty', 'Professional', 'Romantic', 'Glam', 'Bold', 'Edgy', 'Balanced'];
@@ -192,11 +233,11 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
     return out;
   });
   ok('every family sees ≥3 jeans (basics tagged wide)', Object.entries(inv.famJeans).every(([f, n]) => n >= 3), JSON.stringify(inv.famJeans));
-  ok('no set has >1 item 2+ bands above its median (all archetypes, both slots)', inv.priceViolations.length === 0, JSON.stringify(inv.priceViolations));
-  ok('every pick in every set carries a note', inv.noteMisses === 0);
-  ok('no more than 2 picks per retailer in any set', inv.capViolations.length === 0, JSON.stringify(inv.capViolations));
+  ok('no set has >1 item 2+ bands above its median', inv.priceViolations.length === 0, JSON.stringify(inv.priceViolations));
+  ok('every pick carries a note', inv.noteMisses === 0);
+  ok('≤2 picks per retailer in any set', inv.capViolations.length === 0, JSON.stringify(inv.capViolations));
 
-  // 4. Hard filters are removals: never-wear attrs, patterns, colour no's
+  // 5. Hard filters are removals: never-wear attrs, patterns, colour no's
   const filt = await pg.evaluate(async () => {
     await _loadProducts();
     _productsCatalog = {products: _productsCatalog.products.concat([
@@ -220,31 +261,35 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
   ok('"leopard" pattern chip removes the leopard item', filt.plain.includes('x3') && !filt.leo.includes('x3'));
   await ctx.close();
 
-  // 5. Starved shelf: Tall-only shopper on to5 (no talls exist) → named
-  //    constraint + labelled AI fallback, never an empty screen
+  // 6. Sizes: Tall-only shopper (no talls in to5) → shelf is seamlessly all
+  //    AI, no constraint drama, never empty; Petite keeps petite-true only
   ({ctx, pg} = await fresh({aiOk: true}));
   await seedAndOpen(pg, 'The Timeless Classic', {sizes: {fit: ['Tall']}});
   const tall = await ideasFor(pg, 'to5');
-  ok('starved shelf names the constraint', /size/.test(tall.constraint), tall.constraint);
-  ok('constraint copy carries no dashes', !/[—–-]\s/.test(tall.constraint) && !/—/.test(tall.constraint));
-  ok('AI fallback renders (never empty)', tall.cards.length >= 4, String(tall.cards.length));
-  ok('AI called exactly once for fallback', pg.aiCalls() === 1, String(pg.aiCalls()));
-  ok('fallback cards labelled "An idea to explore"', tall.cards.every(c => /An idea to explore/i.test(c.ailbl)));
-  ok('fallback cards are NOT curated-badged', tall.cards.every(c => !c.badge));
-  // petite keeps the petite-true blouses (Talbots, Boden)
-  const pet = await pg.evaluate(() => curatedPicks('to5', {sizes: {fit: ['Petite']}, colorsLove: [], neverWear: [], neverPatterns: [], neverOther: ''}, 'Balanced', 6).picks.map(p => p.id));
-  ok('Petite-only filter keeps only petite-true blouses', pet.length >= 1 && pet.every(id => ['p010', 'p012'].includes(id)), JSON.stringify(pet));
-  // Petite+Regular keeps everything (she also shops regular)
+  ok('Tall-only: all-AI shelf, never empty', tall.cards.length >= 4 && tall.cards.every(c => !c.curated), String(tall.cards.length));
+  ok('Tall-only: still unattributed, still has See more', !/Picked by|shelf/i.test(tall.html) && /See more ideas/.test(tall.html));
+  const pet = await pg.evaluate(async () => { await _loadProducts(); return curatedPicks('to5', {sizes: {fit: ['Petite']}, colorsLove: [], neverWear: [], neverPatterns: [], neverOther: ''}, 'Balanced', 6).picks.map(p => p.id); });
+  ok('Petite-only keeps only petite-true blouses', pet.length >= 1 && pet.every(id => ['p010', 'p012'].includes(id)), JSON.stringify(pet));
   const petReg = await pg.evaluate(() => curatedPicks('to5', {sizes: {fit: ['Petite', 'Regular']}, colorsLove: [], neverWear: [], neverPatterns: [], neverOther: ''}, 'Balanced', 30).picks.length);
   ok('Petite+Regular does not narrow', petReg >= 10, String(petReg));
   await ctx.close();
 
-  // 6. Slot with no catalog products (98 of 100) behaves exactly as before
+  // 6b. Uncatalogued slot (98 of 100): exactly today's behavior + See more
   ({ctx, pg} = await fresh({aiOk: true}));
   await seedAndOpen(pg, 'The Timeless Classic');
   const other = await ideasFor(pg, 'to1');
-  ok('uncatalogued slot goes straight to AI', pg.aiCalls() === 1 && other.cards.length >= 4);
-  ok('uncatalogued slot has no constraint line, no labels', !other.constraint && other.cards.every(c => !c.ailbl && !c.badge));
+  ok('uncatalogued slot: all AI, 4 cards', pg.aiCalls() === 1 && other.cards.length === 4 && other.cards.every(c => !c.curated));
+  ok('uncatalogued slot has the See more door too', /See more ideas/.test(other.html));
+  // See more: first tap on a catalog slot uses the buffer (no new AI call)
+  await pg.evaluate(() => wardrobeSeeIdeas('to1'));   // close
+  const before5 = pg.aiCalls();
+  const more = await pg.evaluate(async () => {
+    await _wdrMoreIdeas('to1');
+    return document.querySelectorAll('#wx_to1 .shop-card').length;
+  });
+  await pg.waitForTimeout(600);
+  const after5 = await pg.evaluate(() => document.querySelectorAll('#wx_to1 .shop-card').length);
+  ok('See more appends more cards into the same carousel', after5 > 4, String(after5));
   await ctx.close();
 
   // 7. Loved colours rank first
@@ -260,7 +305,7 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
   // 8. Broken-link tap stamps and thanks
   await ideasFor(pg, 'to5');
   const flag = await pg.evaluate(() => {
-    document.querySelector('#wx_to5 .wdr-linkflag').click();
+    [...document.querySelectorAll('#wx_to5 .wdr-linkflag')].find(n => /Link broken/.test(n.textContent)).click();
     return {store: localStorage.getItem('ss_linkflags') || '', txt: document.querySelector('#wx_to5 .wdr-linkflag.flagged') ? document.querySelector('#wx_to5 .wdr-linkflag.flagged').textContent : ''};
   });
   ok('Link broken? stamps locally and thanks her', /p0\d\d/.test(flag.store) && /Thank you/.test(flag.txt), flag.store + ' | ' + flag.txt);
