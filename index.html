@@ -2518,13 +2518,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
          owns visibility from show(); ✕ skips that one suggestion forever. It sits on the
          DARK background between the mirrors, so the text must stay cream, never ink. -->
     <!-- Dismiss on the LEFT (Cath 2026-08-05) — the Your Wishlist convention. -->
-    <!-- ⭐ THIS WEEK'S STAR (2026-08-13, her design, her name, "love love love"):
+    <!-- ⭐ STAR OF THE WEEK (2026-08-13, her design, her name, "love love love"):
          Cath's weekly hand-picked item, the return loop that makes "let me check
-         Style Star and see what's new this week" a habit. Rendered from WEEK_STAR
-         by _renderWeekStar() — changing the week's item is ONE const edit. Her
+         Style Star and see what's new this week" a habit. Rendered by
+         _renderWeekStar() from the WEEK_STARS queue, which rotates AUTOMATICALLY
+         every Sunday on the visitor's local calendar (her ask, 2026-08-14)
+         through her own Edit picks — see the queue's own comment block for the
+         rules (no intimates/swim as the Star; the queue is always hers). Her
          stylist insight shapes the default: bags/shoes/accessories fit EVERYONE
-         (no sizes, no body talk), but the pick is always hers, any category.
-         When a new star arrives, the outgoing one rolls into the Style Star Edit. -->
+         (no sizes, no body talk). -->
     <div id="wbStar"></div>
     <div id="wbNext">
       <span class="wbn-x" onclick="wbNextDismiss()" role="button" aria-label="Dismiss suggestion"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
@@ -8690,25 +8692,75 @@ function _buildWbHubs(){
   list.appendChild(shop);list.appendChild(sty);list.appendChild(wdr);
   list.dataset.hubs='1';
 }
-// ⭐ THIS WEEK'S STAR — Cath's weekly hand-picked item (2026-08-13, her design,
-// her name). ▶ HER WEEKLY RITUAL: she sends ONE item (name, store, exact link,
-// price, one line in her voice); this const is the only edit. The OUTGOING
-// star rolls into the Style Star Edit markup at the same time, so one ritual
-// grows two features. ⚠️ The pick, the note and the price are ALWAYS hers —
-// Claude never chooses products (the Edit's standing rule). "This Week's" is
-// a promise with a clock: if she ever wants out of the weekly rhythm, rename
-// the label rather than letting it go quietly stale.
-// URL kept canonical (nordstrom.com/s/<id>, tracking + her personal
-// size/width params stripped per the standing rule).
-var WEEK_STAR={
-  n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',
-  store:'Nordstrom',
-  url:'https://www.nordstrom.com/s/8960533',
-  price:'$89',   // hers, from her own Nordstrom screenshot 2026-08-13
-  note:'A kitten heel is the easiest polish there is. Slide it on and every outfit steps up a notch.' // ✅ BLESSED by Cath 2026-08-13 ("I actually really like the wording... I wouldn't change it") — hers now, don't reword
-};
+// ⭐ STAR OF THE WEEK — Cath's weekly hand-picked item (2026-08-13, her design,
+// her name). ▶ AUTOMATIC SUNDAY ROTATION (2026-08-14, her ask): pre-launch the
+// star rotates through this QUEUE of her own Style Star Edit picks, advancing
+// every SUNDAY on the visitor's local calendar — no weekly edit, no deploy.
+// When the queue ends it wraps back to the start (fine pre-launch; before real
+// users she plans to grow the list, and post-launch she can resume the manual
+// weekly ritual by editing this array — this week's item is always the entry
+// at the current index, still one edit).
+// ⚠️ THE QUEUE IS ALWAYS HERS — Claude never chooses products (the Edit's
+// standing rule). Order below = her Edit page order, current star first.
+// ⚠️ HER CONTENT RULE (2026-08-14): NO intimates or swim as the Star — the
+// card is the first thing seen on opening the app, and "a bra or bikini could
+// be too much muchness at opening glance." The Felina bra and the Seafolly
+// bikini stay in the Edit but are deliberately NOT in this queue. Size-fits-
+// everyone (bags/shoes/accessories) is her general lean, not a hard rule.
+// Notes are her own Edit notes for each item (her words); she may trim any of
+// them to a one-liner — one string each. URLs are the Edit's own exact product
+// links (canonical, tracking stripped per the standing rule).
+var WEEK_STARS=[
+  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/8960533',price:'$89',
+   note:'A kitten heel is the easiest polish there is. Slide it on and every outfit steps up a notch.'}, // ✅ BLESSED by Cath 2026-08-13 — hers now, don't reword
+  {n:'Gold Stretchy Stacking Bangles',store:'Badu · Amazon',url:'https://www.amazon.com/dp/B0CWD1RYK3',price:'$16.99',
+   note:'These are stretchy, easy to wear, and fit beautifully. Not too big like most bangles. I like to stack 6 of them!'},
+  {n:'J. Reneé Soncino Strappy Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/6770605',price:'$129.95',
+   note:'This shoe is the perfect height to be stylish, but comfy enough to dance all night. The most versatile and chic sandal!'},
+  {n:'MZ Wallace Large Metro Tote Deluxe II',store:'Bloomingdale\'s',url:'https://www.bloomingdales.com/shop/product/mz-wallace-large-metro-tote-deluxe-ii?ID=5956591',price:'~$295',
+   note:'This is the best carry-on travel bag ever. Stylish, lightweight, holds so much stuff and fits under the seat on planes.'},
+  {n:'Gucci 53mm Small Oval Sunglasses',store:'Nordstrom',url:'https://www.nordstrom.com/s/7651301',price:'$295',
+   note:'These look current, but also 90\'s at the same time. Sunnies can be worn every day, so a great category to splurge for luxury!'},
+  {n:'Express Editor High Waisted Flare Trouser — Pitch Black',store:'Express',url:'https://www.express.com/clothing/women/editor-studio-stretch-twill-high-waisted-flare-trouser/pro/07442348/color/Pitch%20Black/e/regular/',price:'~$90',
+   note:'These are ultra flattering high waisted pants. A fantastic basic piece to round out a wardrobe, perfect for work or evenings out.'},
+  {n:'Miss Bunny Robe — White',store:'Sexy Little Robe',url:'https://sexylittlerobe.com/products/miss-bunny-robe',price:'$109',
+   note:'This is the most comfortable and flattering bathrobe ever. Feels like a 5 star hotel experience!'},
+  {n:'14K Gold Signature Name Necklace',store:'Baby Gold',url:'https://www.babygold.com/products/14k-gold-signature-name-necklace',price:'$510',
+   note:'This 14K gold piece is the perfect thing to wear when meeting new people. They can see your name tag right on your necklace!'},
+  {n:'Retreat Linen High Rise Wide Leg Pant — White',store:'Athleta',url:'https://athleta.gap.com/browse/product.do?pid=851038112',price:'~$100',
+   note:'100% linen gives high vibes! Perfect for hot weather and an alternative to wearing shorts.'},
+  {n:'L\'AGENCE Dani Silk Charmeuse Blouse',store:'Nordstrom',url:'https://www.nordstrom.com/s/5371746',price:'~$350',
+   note:'100% silk, beautiful and elegant. Nothing else feels like a silk blouse.'},
+  {n:'PRETTYGARDEN Flowy Maxi Dress — White',store:'Amazon',url:'https://www.amazon.com/dp/B0DWL5VV8Z',price:'$46.99',
+   note:'This can be worn with or without a belt. Day or night. Great affordable dress.'},
+  {n:'Cinq à Sept Le Petit Khloe Blazer — White',store:'Nordstrom',url:'https://www.nordstrom.com/s/8904438?color=WHITE',price:'$395',
+   note:'A cropped modern fit that looks chic over absolutely everything. The piece that makes you look pulled together in one step!'},
+  {n:'Good American Always Fits High Rise Bootcut Jeans',store:'Bloomingdale\'s',url:'https://www.bloomingdales.com/shop/product/good-american-always-fits-good-classic-high-rise-bootcut-jeans-in-indigo446?ID=6139062',price:'$169',
+   note:'Every woman needs a flattering pair of jeans in a modern cut that fits just right. The pair you will reach for constantly!'},
+  {n:'Lucky Brand Mindra Espadrille Wedge',store:'Zappos',url:'https://www.zappos.com/p/womens-lucky-brand-mindra-black/product/9221411/color/3',price:'$79',
+   note:'Espadrilles are my favorite style of sandal. The texture adds that extra stylish element to your outfit.'},
+  {n:'Align Pant — Full Length 28″',store:'Lululemon',url:'https://shop.lululemon.com/p/womens-leggings/Align-Pant-Full-Length-28/_/prod8780551',price:'$98',
+   note:'These are the best leggings. Beautiful fit and soft fabric, in 3 different lengths and lots of colors.'},
+  {n:'Gilded Romance Heart Claw Clip',store:'The Hair Edit · Target',url:'https://www.target.com/p/the-hair-edit-gilded-romance-clip/-/A-94717763',price:'$12.99',
+   note:'The cutest heart shape that makes a casual hair clip look special.'}
+];
+// Which week is it? Whole LOCAL days since the anchor Sunday (2026-08-09, the
+// Sunday before the first star shipped), then whole weeks, wrapped around the
+// queue. Date.UTC over the LOCAL calendar components sidesteps DST hour drift,
+// so the swap lands exactly at local midnight into Sunday on every device.
+// ⚠️ The anchor is load-bearing: moving it shifts which item every visitor
+// sees THIS week. Don't touch it; reorder the queue instead.
+function _weekStarIndex(now){
+  if(!WEEK_STARS||!WEEK_STARS.length)return -1;
+  now=now||new Date();
+  var days=Math.floor((Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())-Date.UTC(2026,7,9))/86400000);
+  if(days<0)days=0; // a device clock set before the anchor just sees the first star
+  return Math.floor(days/7)%WEEK_STARS.length;
+}
+function _weekStar(now){var i=_weekStarIndex(now);return i<0?null:WEEK_STARS[i];}
 function _renderWeekStar(){
   var el=document.getElementById('wbStar');if(!el)return;
+  var WEEK_STAR=_weekStar();
   if(!WEEK_STAR||!WEEK_STAR.n||!_wlSafeUrl(WEEK_STAR.url)){el.classList.remove('on');el.innerHTML='';return;}
   var item={name:WEEK_STAR.n,store:WEEK_STAR.store,pick:true,url:WEEK_STAR.url,price:WEEK_STAR.price};
   el.innerHTML='<div class="wks-card">'
