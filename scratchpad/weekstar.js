@@ -1,5 +1,9 @@
-// ⭐ THIS WEEK'S STAR (2026-08-13, her design, her name): Cath's weekly
+// ⭐ STAR OF THE WEEK (2026-08-13, her design, her name): Cath's weekly
 // hand-picked item on Welcome Back — the return loop. Drives the real app.
+// 2026-08-14: the star ROTATES automatically every Sunday through the
+// WEEK_STARS queue (her ask — her approved Edit picks, no intimates/swim).
+// Render assertions compare against WEEK_STARS[_weekStarIndex()] rather than
+// a hardcoded item, so the suite stays green whichever week it runs in.
 const chromium = (await import('/opt/node22/lib/node_modules/playwright/index.js')).default.chromium;
 import http from 'http'; import fs from 'fs'; import path from 'path';
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -22,6 +26,7 @@ await page.evaluate(()=>{show('s-wb')}); await page.waitForTimeout(300);
 const card = await page.evaluate(()=>{
   const el=document.getElementById('wbStar');
   const a=el.querySelector('.wks-shop');
+  const cur=_weekStar();
   return {
     on: el.classList.contains('on') && el.querySelector('.wks-card')!==null,
     visible: el.getBoundingClientRect().height>40,
@@ -33,30 +38,67 @@ const card = await page.evaluate(()=>{
     href: a.getAttribute('href'), rel: a.getAttribute('rel'), tgt: a.getAttribute('target'),
     note: (el.querySelector('.wks-note')||{textContent:''}).textContent,
     pinkHeart: !!el.querySelector('.wks-note .wks-ch'),
-    disc: (el.querySelector('.wks-disc')||{textContent:''}).textContent.trim()
+    disc: (el.querySelector('.wks-disc')||{textContent:''}).textContent.trim(),
+    curName: cur.n, curStore: cur.store, curUrl: cur.url
   };
 });
 ok('card is on and visible', card.on && card.visible);
 // Renamed 2026-08-13, her call: "I like Star of the Week better" + her pick C
 // (twin tilted flanking stars) from the three-way render.
 ok('label reads STAR OF THE WEEK flanked by twin gold stars', /STAR OF THE WEEK/.test(card.label) && card.twinStars);
-ok('her first pick: the Tommy Hilfiger Claihre sandal', /Tommy Hilfiger Claihre/.test(card.name));
-ok('store line says Nordstrom', /NORDSTROM/i.test(card.store));
-ok('Shop it = her exact canonical product URL', card.href==='https://www.nordstrom.com/s/8960533');
+ok('the rendered item IS this week\'s queue entry', card.name===card.curName);
+ok('store line matches the queue entry', card.store.toUpperCase().indexOf(card.curStore.toUpperCase())===0);
+ok('Shop it = the queue entry\'s exact product URL', card.href===card.curUrl);
 ok('rel sponsored noopener + new tab (the standing link rules)', /sponsored/.test(card.rel) && /noopener/.test(card.rel) && card.tgt==='_blank');
 ok('her note renders with her tilted pink heart (Catherine speaking)', card.note.length>10 && card.pinkHeart);
 ok('the disclosure sits with the first product link on this screen', card.disc==='Some links may earn a commission.');
 
-console.log('2. Saving the star');
+console.log('2. The Sunday rotation (her ask, 2026-08-14 — automatic, local-calendar Sundays)');
+const rot = await page.evaluate(()=>{
+  const i=(y,m,d,h)=>_weekStarIndex(new Date(y,m,d,h||12));
+  const L=WEEK_STARS.length;
+  return {
+    len:L,
+    headIsHers:/Tommy Hilfiger Claihre/.test(WEEK_STARS[0].n), // her first star leads the queue
+    anchorSunday:i(2026,7,9),           // Sun Aug 9 = week 0
+    buildDay:i(2026,7,14),              // Fri Aug 14 (built) → still week 0
+    satNight:i(2026,7,15,23),           // Sat 11pm → still week 0
+    swapSunday:i(2026,7,16,0),          // Sun Aug 16 midnight → week 1
+    weekTwo:i(2026,7,23),               // next Sunday → week 2
+    wraps:i(2026,10,29),                // anchor + L(=16) weeks = Nov 29 → back to 0 (if L=16)
+    preAnchor:i(2026,7,1),              // a mis-set clock before the anchor → first star, no negative index
+    // her content rule: NO intimates or swim as the Star ("a bra or bikini
+    // could be too much muchness at opening glance") — the bar is her call,
+    // pinned here so a future queue edit can't quietly cross it.
+    noIntimates: WEEK_STARS.every(s=>!/\b(bra|bikini|underwire|bandeau|lingerie)\b/i.test(s.n)),
+    // queue integrity: every entry complete, every URL https + safe
+    complete: WEEK_STARS.every(s=>s.n&&s.store&&s.price&&s.note&&_wlSafeUrl(s.url)&&/^https:/.test(s.url)),
+    uniqueUrls: new Set(WEEK_STARS.map(s=>s.url)).size===L
+  };
+});
+ok('queue holds 16 stars (her kitten heel + 15 approved Edit picks)', rot.len===16, 'len='+rot.len);
+ok('her first star leads the queue', rot.headIsHers);
+ok('anchor Sunday Aug 9 = week 0', rot.anchorSunday===0);
+ok('build day (Fri Aug 14) still shows week 0', rot.buildDay===0);
+ok('Saturday 11pm still shows week 0', rot.satNight===0);
+ok('midnight into Sunday Aug 16 swaps to week 1', rot.swapSunday===1);
+ok('the Sunday after that = week 2', rot.weekTwo===2);
+ok('after a full cycle the queue wraps to the start', rot.wraps===0);
+ok('a clock set before the anchor clamps to the first star', rot.preAnchor===0);
+ok('HER RULE: no intimates or swim in the queue', rot.noIntimates);
+ok('every entry complete with a safe https product URL', rot.complete);
+ok('no duplicate items in the queue', rot.uniqueUrls);
+
+console.log('3. Saving the star');
 const save = await page.evaluate(()=>{
   const btn=document.querySelector('#wbStar .wl-save');
   btn.click();
   const wl=(wardrobeData&&wardrobeData.wishlist)||[];
   const e=wl[wl.length-1]||{};
-  return {n:wl.length, pick:!!e.pick, url:e.url, label:btn.textContent.trim(), pressed:btn.classList.contains('on')};
+  return {n:wl.length, pick:!!e.pick, url:e.url, want:_weekStar().url, label:btn.textContent.trim(), pressed:btn.classList.contains('on')};
 });
 ok('heart tap saves it to Your Wishlist', save.n>=1);
-ok('saved as a pick with the exact product URL', save.pick && save.url==='https://www.nordstrom.com/s/8960533');
+ok('saved as a pick with the exact product URL', save.pick && save.url===save.want);
 ok('the control flips to Saved', /Saved/.test(save.label) && save.pressed);
 const row = await page.evaluate(()=>{
   openWishlist();
@@ -67,38 +109,46 @@ ok('the wishlist row wears the Catherine’s pick badge', row.badge);
 ok('and its button says Shop it (exact link, not a search)', row.shopIt);
 await page.evaluate(()=>{const btn=document.querySelector('#wbStar .wl-save'); show('s-wb'); document.querySelector('#wbStar .wl-save').click();});
 
-console.log('3. Readability and layout');
+console.log('4. Readability and layout');
 const contrast = await page.evaluate(()=>{
   const el=document.getElementById('wbStar');
   const bg=getComputedStyle(el.querySelector('.wks-card')).backgroundColor;
   const c=s=>getComputedStyle(el.querySelector(s)).color;
-  const behind=getComputedStyle(document.querySelector('#s-wb .wb-wrap')||document.getElementById('s-wb')).backgroundColor;
-  return {bg,lbl:c('.wks-lbl'),name:c('.wks-name'),note:c('.wks-note'),store:c('.wks-store'),disc:c('.wks-disc'),behind};
+  return {bg,lbl:c('.wks-lbl'),name:c('.wks-name'),note:c('.wks-note'),store:c('.wks-store')};
 });
 ok('label contrast ≥ 4.5', ratio(px(contrast.lbl),px(contrast.bg))>=4.5, contrast.lbl);
 ok('name contrast ≥ 4.5', ratio(px(contrast.name),px(contrast.bg))>=4.5);
 ok('note contrast ≥ 4.5', ratio(px(contrast.note),px(contrast.bg))>=4.5);
 ok('store line contrast ≥ 4.5', ratio(px(contrast.store),px(contrast.bg))>=4.5);
+// Every queue item must lay out cleanly — the longest names are the real risk,
+// so render EACH entry at each width by faking the week, not just this week's.
 for (const w of [390,360,320]) {
   await page.setViewportSize({width:w,height:900});
-  await page.evaluate(()=>{show('s-wel');show('s-wb')}); await page.waitForTimeout(150);
-  const r = await page.evaluate(()=>{
-    const el=document.getElementById('wbStar');
-    const wide=[...el.querySelectorAll('*')].some(n=>n.getBoundingClientRect().right>innerWidth+0.5||n.getBoundingClientRect().left<-0.5);
-    return {wide, pageWide: document.documentElement.scrollWidth>innerWidth+1};
+  const bad = await page.evaluate(()=>{
+    const out=[];
+    const real=_weekStarIndex;
+    for(let k=0;k<WEEK_STARS.length;k++){
+      window._weekStarIndex=()=>k;
+      _renderWeekStar();
+      const el=document.getElementById('wbStar');
+      const wide=[...el.querySelectorAll('*')].some(n=>n.getBoundingClientRect().right>innerWidth+0.5||n.getBoundingClientRect().left<-0.5);
+      if(wide||document.documentElement.scrollWidth>innerWidth+1)out.push(WEEK_STARS[k].n);
+    }
+    window._weekStarIndex=real;_renderWeekStar();
+    return out;
   });
-  ok(w+'px: nothing overflows', !r.wide && !r.pageWide);
+  ok(w+'px: no star in the queue overflows', bad.length===0, bad.join(', '));
 }
 
-console.log('4. Graceful absence');
+console.log('5. Graceful absence');
 const off = await page.evaluate(()=>{
-  const old=WEEK_STAR; WEEK_STAR=null; _renderWeekStar();
+  const old=WEEK_STARS; WEEK_STARS=[]; _renderWeekStar();
   const hidden=!document.getElementById('wbStar').classList.contains('on');
-  WEEK_STAR=old; _renderWeekStar();
+  WEEK_STARS=old; _renderWeekStar();
   return {hidden, back:document.getElementById('wbStar').classList.contains('on')};
 });
-ok('no item set → no card, no error', off.hidden);
-ok('and it comes back when the star returns', off.back);
+ok('empty queue → no card, no error', off.hidden);
+ok('and it comes back when the stars return', off.back);
 ok('zero JS errors', errors.length===0);
 if(errors.length)console.log(errors.slice(0,3));
 
