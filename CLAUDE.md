@@ -10,11 +10,10 @@ by email.
 ## ▶ NEXT SESSION — START HERE (2026-08-14 evening — THE CURATED CATALOG IS BUILT, ON A BRANCH AWAITING HER WORD)
 
 ### ⏸ WHERE THE 2026-08-14 EVENING SESSION PAUSED
-**Everything lives on branch `claude/startq-fix-8c9glb`, pushed, NOT merged — her explicit call: "let's not
-merge anything yet so we can talk through it." The talk-through HAPPENED (all five build items + both Cowork
-docs + renders) and reshaped the design mid-session — the final form below is the one on the branch.** ⚠️ One
-Netlify build fires on merge; merging is what makes it live and is HER call after a look (renders exist,
-walk her through live behavior on request).
+**MERGED as PR #852 on her explicit word ("let's go ahead and merge it") after the full talk-through — all
+five build items + both Cowork docs + renders of the FINAL blended shelf, which she approved ("i like how
+that looks with no badges"). One Netlify build.** The talk-through reshaped the design mid-session; the
+final form below is what shipped. Verify live per the standing rule if anything looks off.
 - 📄 **Drive is the working handoff channel now** (her Desktop was unreachable from the cloud container).
   Three files arrived: "Style Star - Claude Code handoff.md" + "style-star-products.csv" (21 real products,
   bo1 Blue jeans ×8 · to5 Professional blouses ×13) + "Style Star - freshness addendum.md".
@@ -75,14 +74,23 @@ walk her through live behavior on request).
   anchor template) · wdrworksheet 73 · wdrcalmcheck 27 · e2e 29 · hubs 49 · weekstar 35 · wladd 102.
   Decision renders in scratchpad: `curated-badge-{a,b}.png · curated-more.png · curated-notforme.png ·
   curated-starved.png` (pre-rework look; regenerate via curatedmock.js if needed).
+- ✅ **Her post-render calls, all in:** no badges look = approved · ARCHETYPE_FAMILY pairings = "those look
+  good" · **the 14 needs-her-eye links = SHE ALREADY CHECKED THEM on the Cowork side** (Cowork keeps a
+  clickable page of all catalog links; they looked good as of 2026-08-14). ▶ **STANDING REMINDER, her ask:
+  nudge her every week or two to re-check the catalog links on that Cowork page** (and rerun
+  `scripts/check-product-urls.js` alongside — the two instruments cover different stores). "Not for me" +
+  "Link broken?" both ship; if the card bottom ever feels busy, "Not for me" is the one to cut (rotation
+  partly substitutes; nothing substitutes for Link broken — users are the only detector for bot-walled
+  stores).
 - ▶ **THE FIRST THINGS NEXT SESSION:**
-  1. **Her look + merge call on `claude/startq-fix-8c9glb`** — fresh renders of the FINAL blended shelf on
-     request (the committed renders show the pre-rework badges).
-  2. **The 28 ARCHETYPE_FAMILY assignments** — one word each; her taxonomy.
-  3. **The 14 NEEDS-HER-EYE links** (bot-walled stores; her phone is the instrument).
-  4. **Her spreadsheet rhythm:** fill rows in Cowork → export CSV to the Drive folder → say "new export" →
+  1. **How the live blended shelf feels on her phone** — first real look at Blue jeans + Professional
+     blouses Ideas with her own products leading.
+  2. **Her spreadsheet rhythm:** fill rows in Cowork → export CSV to the Drive folder → say "new export" →
      converter validates (names bad rows) → commit. Works at 5 rows or 50; no code changes should ever be
      needed for new rows — if one is, the data model is wrong, say so loudly (the brief's own rule).
+  3. **The legal thread (see below): she never heard back from Almira by Friday 7pm 08-14** — the firmer
+     email draft was given in this chat, ready to send or schedule for Monday morning; the amber-quinn call
+     booking is the alternative. Ask what happened first thing.
 - ▶ Everything from the day session below (Star of the Week autopilot, legal thread, her testing) is
   unchanged by this work.
 
