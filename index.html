@@ -4706,7 +4706,7 @@ function _renderTips(tips){
 }
 function _renderShop(items){
   const c=document.getElementById('pShopList');
-  c.innerHTML=filterNeverWear(items).map(it=>{
+  c.innerHTML=filterNeverWear(items).map(_nameParity).map(it=>{
     const url=getStoreUrl(it.store,it.name,it.search);
     const emoji=photoShopEmoji[it.category]||'✨';
     const why=it.why?' &middot; '+_esc(it.why):'';
@@ -5317,6 +5317,7 @@ const FIND_LABEL='Find it &rarr;';
 //   read as loud above the products, and her own subtitle already says every
 //   piece is her pick). Only the MALL keeps its longer founder-voice version.
 function _shopCard(item,topHtml){
+  item=_nameParity(item);   // the name may not promise what the search drops
   const key=resolveStore(item.store);
   const url=getStoreUrl(item.store,item.name,item.search);
   return '<div class="shop-card"><div>'+(topHtml||'')+
@@ -6507,6 +6508,52 @@ function _fitSizes(){
 // explicit word — never guess at what else is dated; she is the trend
 // authority (the standing store-tags rule).
 const _STYLIST_VETO=['ribbed','skinny jeans'];
+// ▶ THE NAME-IS-THE-SEARCH GUARANTEE (2026-08-15, her catch on a live shelf).
+// Every shopping prompt has said since 2026-08-12 that a card's name is "the
+// search written beautifully -- nothing the search does not carry," and a
+// live re-test of three slots came back word-for-word perfect. Then her White
+// tops shelf offered a "Satin Draped Top" whose search was "white satin top",
+// and Revolve answered with boxy cotton tees. The rule was not wrong, the
+// model DRIFTED -- which is the same shape as the never-wear problem below:
+// a rule the prompt calls absolute, with nothing checking what comes back.
+//
+// So the name is now TRIMMED to what its search can actually deliver, before
+// anything renders. "Satin Draped Top" over "white satin top" becomes "Satin
+// Top". Puffery goes the same way ("Classic White Crewneck Tee" over "white
+// crewneck tee" becomes "White Crewneck Tee") -- if the search cannot deliver
+// the word, the card must not promise it.
+//
+// TWO DELIBERATE ALLOWANCES:
+//  - The search may carry a word the NAME does not (a colour-named row like
+//    "White tops" already promises white in its header; repeating it on all
+//    four cards is redundant, not dishonest).
+//  - Jewellery mood words survive, mirroring the prompt's own rule -- a
+//    boutique's strict search is emptied by "statement", so the name keeps it.
+// If trimming would leave less than two words, the name is rebuilt from the
+// search itself, which is honest by construction ("Refined Blouse" over
+// "professional blouse" becomes "Professional Blouse").
+// ⚠️ A trimmed name changes _wlMakeId, so a piece saved under the old puffed
+// name reads as unsaved on a fresh card. Pre-launch that is noise; if it ever
+// matters, migrate ids in _normalizeWardrobe rather than weakening this.
+const _NAME_MOOD_OK=['statement','chunky','dainty','layered','delicate'];
+function _nameParity(item){
+  if(!item||!item.name||!item.search)return item;
+  const search=String(item.search).toLowerCase();
+  const jewel=/earring|necklace|bracelet|bangle|ring\b|pendant/i.test(item.name);
+  const words=String(item.name).trim().split(/\s+/);
+  const kept=words.filter(function(w){
+    const bare=w.toLowerCase().replace(/[^a-z-]/g,'');
+    if(!bare)return true;
+    if(jewel&&_NAME_MOOD_OK.indexOf(bare)>=0)return true;
+    if(search.indexOf(bare)>=0||search.indexOf(bare.replace(/s$/,''))>=0)return true;
+    // "Button-Front" against a search of "button front blouse"
+    return bare.indexOf('-')>=0&&bare.split('-').every(function(p){return !p||search.indexOf(p)>=0});
+  });
+  if(kept.length===words.length)return item;
+  const name=kept.length>=2?kept.join(' ')
+    :search.trim().split(/\s+/).map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');
+  return Object.assign({},item,{name:name});
+}
 function filterNeverWear(items){
   if(!Array.isArray(items))return[];
   const terms=_STYLIST_VETO.concat(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
