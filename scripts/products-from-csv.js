@@ -18,6 +18,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import crypto from 'crypto';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const csvPath = process.argv[2];
@@ -85,8 +86,122 @@ function parseCsv(text) {
   return rows;
 }
 
+// ---- join the split export -------------------------------------------------
+// ▶ THE CATALOG ARRIVES IN PIECES NOW, PERMANENTLY (2026-08-15, from Cowork):
+// it can upload small files to Drive reliably but not large ones, so the export
+// is split into numbered parts plus a MANIFEST. Point this script at the
+// manifest (or at the folder holding it) and it rebuilds the whole file first.
+// A single CSV path still works exactly as before.
+//
+// ▶ VALIDATION IS THE POINT HERE TOO, and more so: a PARTIAL catalog is far
+// more dangerous than a malformed one, because it converts perfectly and simply
+// loses products. Nothing downstream would notice. So the manifest's own row
+// count and md5 are checked before a single row is parsed, and any failure
+// stops the run without touching products.json.
+// ⚠️ Read the expected values FROM THE MANIFEST, never hardcode them — the
+// counts change with every export, which is the whole reason the manifest ships.
+function readManifest(mPath) {
+  const raw = fs.readFileSync(mPath, 'utf8');
+  const val = key => {
+    // ⚠️ Tolerate backslash-escaped underscores: some tools hand this file back
+    // markdown-escaped ("total\_data\_rows"). Forgiving on the KEY format only;
+    // the VALUES are still matched strictly.
+    const re = new RegExp('^\\s*' + key.replace(/_/g, '\\\\?_') + '\\s*:\\s*(.+?)\\s*$', 'im');
+    const m = raw.match(re);
+    return m ? m[1].replace(/\s+$/, '') : null;
+  };
+  return {
+    parts: val('parts'), order: val('order'),
+    rows: val('total_data_rows'), md5: val('md5_of_joined_file'),
+    columns: val('columns'), endings: val('line_endings')
+  };
+}
+function joinParts(mPath) {
+  const dir = path.dirname(mPath);
+  const man = readManifest(mPath);
+  const die = msg => { console.error('FATAL (catalog join): ' + msg + '\n  manifest: ' + mPath + '\n  NOTHING was written; products.json is untouched.'); process.exit(1); };
+
+  if (!man.order) die('the manifest has no "order:" line, so the part order is unknown.');
+  if (!man.md5) die('the manifest has no "md5_of_joined_file:" line. Refusing to join without a checksum.');
+  if (!man.rows) die('the manifest has no "total_data_rows:" line. Refusing to join without a row count.');
+  const names = man.order.split(',').map(s => s.trim()).filter(Boolean);
+  if (man.parts && Number(man.parts) !== names.length) {
+    die(`the manifest says ${man.parts} parts but "order:" lists ${names.length}.`);
+  }
+  const missing = names.filter(n => !fs.existsSync(path.join(dir, n)));
+  if (missing.length) die('these parts are named in the manifest but not on disk:\n    ' + missing.join('\n    '));
+
+  // Concatenate as BUFFERS, byte for byte, nothing between — the md5 in the
+  // manifest is of the exact bytes, so any re-encoding here would break it.
+  const bufs = names.map(n => fs.readFileSync(path.join(dir, n)));
+  // ⚠️ THE FAILURE MODE WORTH NAMING: if a part does not end in a newline, a
+  // byte-for-byte join silently GLUES its last row onto the next part's first
+  // row. The md5 would catch it, but only as a number mismatch — this says what
+  // actually went wrong, which is what makes it fixable.
+  bufs.forEach((b, i) => {
+    if (i < bufs.length - 1 && b.length && b[b.length - 1] !== 0x0a) {
+      die(`part "${names[i]}" does not end with a newline, so joining it would glue its last row onto the first row of "${names[i + 1]}".`);
+    }
+  });
+  const joined = Buffer.concat(bufs);
+
+  const md5 = crypto.createHash('md5').update(joined).digest('hex');
+  const text = joined.toString('utf8');
+  // Count DATA rows the same way the manifest does: lines minus the header,
+  // ignoring a trailing newline. Counted on the raw text, before parsing, so a
+  // parse bug cannot mask a short file.
+  const lines = text.split('\n');
+  if (lines.length && lines[lines.length - 1] === '') lines.pop();
+  const dataRows = lines.length - 1;
+
+  if (String(dataRows) !== String(man.rows)) {
+    die(`row count mismatch — the manifest expects ${man.rows} data rows, the joined file has ${dataRows}. This is a PARTIAL catalog; it would convert cleanly and quietly lose products.`);
+  }
+  if (md5.toLowerCase() !== String(man.md5).toLowerCase()) {
+    die(`md5 mismatch — the manifest expects ${man.md5}, the joined file is ${md5}. The parts are the wrong versions, out of order, or one is stale.`);
+  }
+  // Cheap sanity checks the manifest also states, worth failing on.
+  if (man.endings && /LF/i.test(man.endings) && /\r/.test(text)) {
+    die('the manifest says LF line endings but the joined file contains CR bytes.');
+  }
+  if (/^\s*id\s*,/i.test(lines[1] || '')) {
+    die('the second line looks like another header row — part 2 appears to carry its own header. The manifest says the header is in part 1 ONLY.');
+  }
+  console.log(`joined ${names.length} parts → ${dataRows} data rows, md5 ${md5} ✓`);
+  return joined;
+}
+
+// The argument may be a single CSV (as before), a manifest, or a folder holding
+// one. Resolving it here keeps every caller and every test on one code path.
+let csvText;
+let joinedFrom = null;
+{
+  const st = fs.existsSync(csvPath) ? fs.statSync(csvPath) : null;
+  if (!st) { console.error('FATAL: no such file or folder: ' + csvPath); process.exit(1); }
+  let manifestPath = null;
+  if (st.isDirectory()) {
+    const hit = fs.readdirSync(csvPath).find(f => /MANIFEST.*\.txt$/i.test(f));
+    if (!hit) { console.error('FATAL: no MANIFEST .txt found in ' + csvPath); process.exit(1); }
+    manifestPath = path.join(csvPath, hit);
+  } else if (/MANIFEST.*\.txt$/i.test(path.basename(csvPath))) {
+    manifestPath = csvPath;
+  }
+  if (manifestPath) {
+    const joined = joinParts(manifestPath);
+    csvText = joined.toString('utf8');
+    joinedFrom = manifestPath;
+    // Write the rebuilt catalog to the canonical path so the repo keeps ONE
+    // readable, diffable CSV — which is what makes a silent reword visible.
+    const canon = path.join(ROOT, 'data', 'style-star-products.csv');
+    fs.writeFileSync(canon, joined);
+    console.log('wrote ' + path.relative(ROOT, canon));
+  } else {
+    csvText = fs.readFileSync(csvPath, 'utf8');
+  }
+}
+
 // ---- validate --------------------------------------------------------------
-const rows = parseCsv(fs.readFileSync(csvPath, 'utf8'));
+const rows = parseCsv(csvText);
 const errors = [];
 const fail = (line, msg) => errors.push(`row ${line}: ${msg}`);
 
@@ -157,6 +272,23 @@ for (let r = 1; r < rows.length; r++) {
 if (errors.length) {
   console.error(`CONVERT FAILED — ${errors.length} problem${errors.length > 1 ? 's' : ''}:\n` + errors.map(e => '  ✗ ' + e).join('\n'));
   process.exit(1);
+}
+
+// ▶ HER STANDING BRAND RULE, CHECKED ON THE WAY IN (2026-08-15): the app never
+// names a woman's body. "Everyone always wants outfits that make them look
+// slimmer" is the most common thing her clients ask, and her explicit boundary
+// is that Style Star serves flattering fits silently and never says so.
+// ▶ WHY A WARNING AND NOT A FAILURE: these are HER notes, written by her, and a
+// false positive must never block a whole catalog. But the spreadsheet lives in
+// another tool, so a phrase deleted here comes BACK on the next export — which
+// happened within the hour on 2026-08-15, to this exact row. Naming it on every
+// run is what makes that visible instead of silent.
+// ⚠️ The fix for anything listed here is in the COWORK SHEET, not in this repo.
+const BODY_TALK = /\b(waist-small|hip-full|slimming|slims you|flatter(s|ing)? (your|the) (figure|body|shape|tummy|hips|thighs)|hides? (your )?(tummy|belly)|minimi[sz]es? (your )?(hips|bust|tummy)|problem area)/i;
+const bodyTalk = products.filter(p => BODY_TALK.test(p.note || ''));
+if (bodyTalk.length) {
+  console.warn(`\n⚠️  ${bodyTalk.length} note${bodyTalk.length > 1 ? 's' : ''} name a body, against her standing rule. Fix these in the Cowork sheet or they return on the next export:`);
+  bodyTalk.forEach(p => console.warn(`     ${p.id} ${p.brand} — ${p.name}\n       "${p.note}"`));
 }
 
 const out = { products: products };

@@ -1,0 +1,13 @@
+Style Star catalog — split CSV manifest
+generated: 2026-08-15
+parts: 3
+order: style-star-products-1of3.csv, style-star-products-2of3.csv, style-star-products-3of3.csv
+header: present in part 1 ONLY; parts 2 and 3 are data rows only
+line_endings: LF
+columns: 24
+total_data_rows: 107
+md5_of_joined_file: 585c84235950ce0394abb68912b1bc0d
+
+To rebuild: concatenate the three parts in the order above, byte for byte, nothing between them.
+The result must have 107 data rows plus 1 header row, and md5 585c84235950ce0394abb68912b1bc0d.
+If either check fails, STOP and report it — do not convert a partial catalog.

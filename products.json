@@ -2781,6 +2781,459 @@
    "note": "Real leather at eighty dollars, in the white low-top shape that goes with everything you already own. The contrast panel is the only detail, and it is enough.",
    "checked": "2026-08-15",
    "active": true
+  },
+  {
+   "id": "p097",
+   "slot": "dr1",
+   "name": "Vintage Wash Tencel Roll Sleeve Tunic Dress",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/vintage-wash-tencel-roll-sleeve-tunic-dress",
+   "price": 60,
+   "band": "$$",
+   "families": [
+    "Minimal",
+    "Natural",
+    "Classic"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "terracotta"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Sixty dollars for a Tencel tunic dress that resists wrinkling, shrinking and static, which is the whole argument for packing it. The collar and half placket give it enough shape to read deliberate rather than thrown on.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p098",
+   "slot": "dr1",
+   "name": "100% European Linen Button Front Dress",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/linen-dress",
+   "price": 64,
+   "band": "$$",
+   "families": [
+    "Natural",
+    "Minimal",
+    "Professional"
+   ],
+   "sizes": "XS-XL, 1X-3X",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "flax",
+    "white",
+    "sand",
+    "deep navy",
+    "black",
+    "french blue",
+    "chambray stripe",
+    "classic mini gingham + 7 more"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Fifteen colours of a proper European linen button-front, and it runs into plus sizes. The belt comes off, so it works cinched at the waist or straight down as a column.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p099",
+   "slot": "dr1",
+   "name": "Naomi Relaxed Jersey Dress",
+   "brand": "Boden",
+   "retailer": "Boden",
+   "url": "https://us.boden.com/products/women-naomi-relaxed-jersey-dress-navy-d1053nav",
+   "price": 99,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Minimal",
+    "Professional"
+   ],
+   "sizes": "0-22 (petite 0-12, long 0-22)",
+   "petite": true,
+   "tall": true,
+   "plus": false,
+   "colors": [
+    "navy",
+    "black",
+    "forest green planted meadows",
+    "storm blue boden spot",
+    "raw umber zebra swirl"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Boden cut this in three separate lengths — petite, regular and long — so the hem lands where it should instead of where it happens to. Cotton-modal jersey, side pockets, a high notch neck: the dress you keep by the door.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p100",
+   "slot": "dr1",
+   "name": "Dune Linen Blend Shirtdress",
+   "brand": "Universal Standard",
+   "retailer": "Universal Standard",
+   "url": "https://www.universalstandard.com/products/dune-linen-blend-shirtdress-black",
+   "price": 158,
+   "band": "$$$",
+   "families": [
+    "Minimal",
+    "Natural",
+    "Edgy"
+   ],
+   "sizes": "00-40",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "black"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Linen with three percent stretch, which is the detail that stops it creasing into a map by lunchtime. Sizes 00 through 40, and the hi-low hem drops well below the knee at the back — worth checking against your height.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p101",
+   "slot": "dr1",
+   "name": "Oasis Midi Dress",
+   "brand": "free-est",
+   "retailer": "Free People",
+   "url": "https://www.freepeople.com/shop/oasis-midi-dress/",
+   "price": 118,
+   "band": "$$",
+   "families": [
+    "Romantic",
+    "Natural",
+    "Bold"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "dawn sky",
+    "ripe mango",
+    "blue starling",
+    "canvas",
+    "sways of palm",
+    "black"
+   ],
+   "widths": [],
+   "attrs": [
+    "ruffles"
+   ],
+   "pattern": "",
+   "note": "A smocked bodice with a tie at the bust does what a zip never can — it adjusts to you across a whole day. Ruffled neckline, so it is tagged accordingly; if you have ruled ruffles out, this one stays hidden.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p102",
+   "slot": "dr1",
+   "name": "Corduroy A-Line Shirtdress",
+   "brand": "Talbots",
+   "retailer": "Talbots",
+   "url": "https://www.talbots.com/corduroy-a-line-shirtdress/P263036444.html",
+   "price": 139,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Natural",
+    "Professional"
+   ],
+   "sizes": "XS-XL, petite/plus/plus petite",
+   "petite": true,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "dark chocolate"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Four separately drafted fits, each with its own finished length — real pattern work rather than grading up. Misses, petite, plus and plus petite. Cotton corduroy, so it has weight and holds an A-line properly.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p103",
+   "slot": "dr1",
+   "name": "Emy Dress",
+   "brand": "Sézane",
+   "retailer": "Sézane",
+   "url": "https://www.sezane.com/us-en/product/emy-dress/navy",
+   "price": 150,
+   "band": "$$",
+   "families": [
+    "Minimal",
+    "Edgy",
+    "Sporty"
+   ],
+   "sizes": "XS-XXL (US 2-14)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "navy",
+    "cream"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "A navy cotton column with side slits and almost nothing else going on. That restraint is the point — it takes whatever shoes and jewellery you put with it and never argues.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p104",
+   "slot": "dr1",
+   "name": "Camila Midi Dress",
+   "brand": "Marine Layer",
+   "retailer": "Marine Layer",
+   "url": "https://www.marinelayer.com/products/camila-midi-dress-4",
+   "price": 158,
+   "band": "$$$",
+   "families": [
+    "Natural",
+    "Romantic",
+    "Sporty"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "sea floral",
+    "medium wash",
+    "black"
+   ],
+   "widths": [],
+   "attrs": [
+    "ruffles"
+   ],
+   "pattern": "floral",
+   "note": "Hemp and Tencel behaves like linen without the creasing, which is the trick this dress is built on. The flutter sleeve means it is tagged for ruffles. Runs small in the bust — size up if you are between.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p105",
+   "slot": "dr1",
+   "name": "Maeve Soren Long-Sleeve Midi Shirtdress",
+   "brand": "Maeve",
+   "retailer": "Anthropologie",
+   "url": "https://www.anthropologie.com/shop/maeve-soren-long-sleeve-midi-shirtdress",
+   "price": 158,
+   "band": "$$$",
+   "families": [
+    "Professional",
+    "Classic",
+    "Minimal"
+   ],
+   "sizes": "XXS-XL + petite + plus",
+   "petite": true,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "blue/white stripe"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "stripe",
+   "note": "The slimmest cut here, and the appliqué buttons down the placket are what lift it above a plain striped shirtdress. Hand wash only, which is unusual for cotton and worth knowing before you buy.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p106",
+   "slot": "dr1",
+   "name": "By Anthropologie Peregrine Puff-Sleeve Midi Dress",
+   "brand": "By Anthropologie",
+   "retailer": "Anthropologie",
+   "url": "https://www.anthropologie.com/shop/by-anthropologie-peregrine-puff-sleeve-midi-dress",
+   "price": 158,
+   "band": "$$$",
+   "families": [
+    "Romantic",
+    "Natural",
+    "Bold"
+   ],
+   "sizes": "XXS-XL + petite + plus",
+   "petite": true,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "brown plaid"
+   ],
+   "widths": [],
+   "attrs": [
+    "puff-sleeve"
+   ],
+   "pattern": "plaid",
+   "note": "Brown plaid with a fully smocked bodice, and it pulls on — no zip, no buttons, nothing to fasten. Puff sleeves, tagged as such. One colourway only, so there is no fallback if it sells through.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p107",
+   "slot": "dr1",
+   "name": "Heidi Jersey Midi Tea Dress",
+   "brand": "Boden",
+   "retailer": "Boden",
+   "url": "https://us.boden.com/products/women-heidi-jersey-midi-tea-dress-olive-floral-field-spaced-d1765grn",
+   "price": 160,
+   "band": "$$$",
+   "families": [
+    "Romantic",
+    "Classic",
+    "Glam"
+   ],
+   "sizes": "0-22 (petite 0-12, long 4-22)",
+   "petite": true,
+   "tall": true,
+   "plus": false,
+   "colors": [
+    "olive floral field spaced",
+    "denim blue delicate trail",
+    "almond milk geo",
+    "french navy flecked garden",
+    "black"
+   ],
+   "widths": [],
+   "attrs": [
+    "puff-sleeve"
+   ],
+   "pattern": "floral",
+   "note": "A proper tea dress — collar, seamed waist, floral, midi — but cut in jersey rather than a woven, so it travels and washes. Puff sleeves are the defining detail, tagged accordingly. Petite and long fits both offered.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p108",
+   "slot": "dr1",
+   "name": "Eyelet Poplin Fit & Flare Dress",
+   "brand": "Talbots",
+   "retailer": "Talbots",
+   "url": "https://www.talbots.com/eyelet-poplin-fit-and-flare-dress/P263036412.html",
+   "price": 169,
+   "band": "$$$",
+   "families": [
+    "Romantic",
+    "Classic",
+    "Professional"
+   ],
+   "sizes": "2-18, petite/plus/plus petite",
+   "petite": true,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "night sky"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Eyelet gives you texture and airflow in the same fabric, which is why it has outlasted a century of hot summers. Sleeveless with a real shoulder rather than a strap, and it comes in four separately drafted fits.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p109",
+   "slot": "dr1",
+   "name": "Evonie Dress",
+   "brand": "Sézane",
+   "retailer": "Sézane",
+   "url": "https://www.sezane.com/us-en/product/evonie-dress/ostia-place-print",
+   "price": 230,
+   "band": "$$$",
+   "families": [
+    "Romantic",
+    "Bold",
+    "Glam"
+   ],
+   "sizes": "2-14",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "ostia place print"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "floral",
+   "note": "Buttoned through it is a shirtdress; worn open with the belt off it is nearly a coat. That double life is what makes the price make sense. Unlined viscose, so it wants a slip in bright light.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p110",
+   "slot": "dr1",
+   "name": "Jardin Stripe Cotton Poplin Mitchell Dress",
+   "brand": "Tuckernuck",
+   "retailer": "Tuckernuck",
+   "url": "https://tnuck.com/products/jardin-stripe-cotton-poplin-mitchell-dress",
+   "price": 248,
+   "band": "$$$",
+   "families": [
+    "Classic",
+    "Romantic",
+    "Professional"
+   ],
+   "sizes": "XXS-XXXL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "jardin stripe"
+   ],
+   "widths": [],
+   "attrs": [
+    "puff-sleeve"
+   ],
+   "pattern": "stripe",
+   "note": "Cotton poplin, fully lined, with a drawstring waist and real pockets — a dress that survives a whole day out. Sized XXS to XXXL, and puff sleeved, tagged accordingly.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p111",
+   "slot": "dr1",
+   "name": "Gardenia Caliope Midi Dress",
+   "brand": "Carolina K.",
+   "retailer": "Tuckernuck",
+   "url": "https://tnuck.com/products/gardenia-caliope-midi-dress",
+   "price": 625,
+   "band": "$$$$",
+   "families": [
+    "Bold",
+    "Glam",
+    "Natural"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "gardenia"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "floral",
+   "note": "The splurge, and unusually it is a linen day dress rather than an occasion piece — hand embroidery and crochet trim on 100% linen. Dry clean only is the real cost of ownership here, so go in knowing that.",
+   "checked": "2026-08-15",
+   "active": true
   }
  ]
 }
