@@ -61,15 +61,32 @@ const fr = await page.evaluate(()=>{
 ok('the Trending intro is framed in the SAME card as the how-to', !fr.missing && fr.same);
 ok('the how-to copy is centered like the trend side', fr.centered);
 
-console.log('2. The brief (collapsed) how-to hides the header too');
-const brief = await page.evaluate(()=>{
-  document.getElementById('wdrHowto').classList.add('brief');
-  const h=document.querySelector('#wdrHowto .wdr-trend-by');
-  const hidden=h.getBoundingClientRect().height===0;
-  document.getElementById('wdrHowto').classList.remove('brief');
-  return hidden;
+// ⚠️ DELIBERATE REVERSAL (2026-08-15, her call). This used to assert that the
+// how-to collapsed to a one-liner once she had starred a few items, taking its
+// MY CLIENT CHECKLIST header with it. She asked for the card to be permanent
+// -- "It would be more consistent with the trending page" -- so the assertion
+// is now that starring cannot make it stand down. Driven through the REAL star
+// handler, not a class, so the retired behaviour cannot return by any route.
+console.log('2. The how-to card is PERMANENT — starring never collapses it');
+const perm = await page.evaluate(()=>{
+  ['to1','to2','to3','to4','to5'].forEach(id=>wardrobeWant(id));
+  _wdrSyncHowto();                      // the one place the collapse used to be decided
+  const hw=document.getElementById('wdrHowto');
+  const hdr=document.querySelector('#wdrHowto .wdr-trend-by');
+  const full=document.querySelector('#wdrHowto .hw-full');
+  return {
+    stars:_wardrobeWants().length,
+    brief:hw.classList.contains('brief'),
+    hdrH:hdr?hdr.getBoundingClientRect().height:0,
+    fullH:full?full.getBoundingClientRect().height:0,
+    words:(full?full.textContent:'').includes('closet consultation')
+  };
 });
-ok('header stands down with the full how-to', brief);
+ok('five items really starred', perm.stars >= 5, String(perm.stars));
+ok('the card never takes the retired brief class', !perm.brief);
+ok('MY CLIENT CHECKLIST header still shown', perm.hdrH > 0, String(perm.hdrH));
+ok('her full paragraph still shown', perm.fullH > 0 && perm.words, JSON.stringify(perm));
+ok('the collapsed copy is gone from the page', await page.evaluate(()=>!document.querySelector('.hw-brief')));
 
 console.log('3. Trending closing line (her voice, bookending the tabs)');
 const end = await page.evaluate(()=>{
@@ -102,6 +119,50 @@ for (const w of [390,360,320]) {
   });
   ok(w+'px: header holds one line, no sideways scroll', r.oneLine && !r.wide);
 }
+// 5. The commission line's position (her call 2026-08-15, from renders): inside
+//    EACH pane, under that tab's intro card, above that tab's first link, with
+//    its own 9px margins owning the gap on both sides so the tabs match. It was
+//    previously a single copy outside both panes, where it crowded her voice.
+//    ⚠️ Nothing pinned this position before, which is how it drifted twice.
+console.log('5. The commission line sits under each intro card, above the links');
+for (const w of [390,360,320]) {
+  await page.setViewportSize({width:w,height:1200});
+  for (const tab of ['list','trend']) {
+    const m = await page.evaluate(t=>{
+      openWardrobe(t==='trend'?'trend':'list');
+      const pane=document.querySelector('.wdr-pane[data-pane="'+t+'"]');
+      const d=pane.querySelector('.wdr-disclosure');
+      if(!d) return null;
+      const intro=pane.querySelector('#wdrHowto, .wdr-trend-intro');
+      const next=d.nextElementSibling;
+      const dr=d.getBoundingClientRect(), ir=intro.getBoundingClientRect(), nr=next.getBoundingClientRect();
+      const visible=[...document.querySelectorAll('.wdr-disclosure')].filter(e=>e.getBoundingClientRect().width>0);
+      const links=[...document.querySelectorAll('#s-wardrobe a[href^="http"], #s-wardrobe .wdr-see, #s-wardrobe .tlf')]
+        .filter(e=>e.getBoundingClientRect().width>0);
+      const firstLink=links.length?Math.min(...links.map(e=>e.getBoundingClientRect().top)):Infinity;
+      return {
+        inPane:!!d.closest('.wdr-pane'),
+        afterIntro:intro.compareDocumentPosition(d)===Node.DOCUMENT_POSITION_FOLLOWING,
+        above:+(dr.top-ir.bottom).toFixed(1),
+        below:+(nr.top-dr.bottom).toFixed(1),
+        copies:visible.length,
+        beforeLinks:dr.bottom<=firstLink,
+        text:d.textContent.trim()
+      };
+    }, tab);
+    ok(`${w}px ${tab}: disclosure lives inside the pane, under the intro card`, m && m.inPane && m.afterIntro);
+    // ⚠️ DELIBERATELY UNEVEN (her call: "lower it down to sit closer to the
+    // line"). Centred, it floated between two cards and belonged to neither.
+    // The claim under test is the RELATIONSHIP -- it must sit down against the
+    // links below it -- not the exact numbers, so this asserts the asymmetry.
+    ok(`${w}px ${tab}: sits down against the list, not floating`, m && m.below <= 4 && m.above >= m.below * 3, m?`above ${m.above} / below ${m.below}`:'missing');
+    ok(`${w}px ${tab}: exactly ONE visible copy on screen`, m && m.copies===1, m?String(m.copies):'-');
+    ok(`${w}px ${tab}: sits above every link (the FTC placement)`, m && m.beforeLinks);
+    ok(`${w}px ${tab}: the shared pronoun-free wording`, m && m.text==='Some links may earn a commission.', m?m.text:'-');
+  }
+}
+await page.setViewportSize({width:390,height:900});
+
 ok('zero JS errors', errors.length===0);
 if(errors.length)console.log(errors.slice(0,3));
 await browser.close(); server.close();

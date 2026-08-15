@@ -334,10 +334,23 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    never realised she could tap it. It now gets a cream fill, darker text and
    an arrow, so both tabs look like buttons: one pressed in, one not. */
 #s-wardrobe .wdr-tab:not(.on){background:#F5EFE2;color:#3a352c;border-color:#C9A44C}
-#s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:8px 0 4px}
+/* Stays BELOW the buttons (her call 2026-08-15, from renders: above, it lands
+   in the page-subtitle slot and reads as describing the page, and it is the
+   only thing telling her the unselected tab is tappable -- her mom's catch).
+   Tightened to sit close under them. */
+#s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:4px 0 2px}
 /* Page-level affiliate notice, the blog-post convention: quiet, but above every
    link on the screen. #6e6e6e matches the disclosure on every other surface. */
-#s-wardrobe .wdr-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:0 0 13px}
+/* Sits under each tab's intro card, directly above that tab's first link. Its
+   OWN margins are the whole gap on both sides -- the neighbours' spacing is
+   zeroed below -- so the two tabs are identical (her ask 2026-08-15).
+   ⚠️ DELIBERATELY UNEVEN, her second call: "lower it down to sit closer to the
+   line." Centred 9/9 it floated between two cards and belonged to neither; sat
+   down against the list it reads as a caption for the links it is actually
+   about, which is the whole reason it moved here. Keep the bottom gap small. */
+#s-wardrobe .wdr-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:16px 0 3px}
+#s-wardrobe .wdr-disclosure+.wdr-card{margin-top:0}
+#s-wardrobe .wdr-disclosure+.wdr-tstack{margin-top:0}
 #s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
 /* The arrow sits on its own line under the label, so the label stays centred
@@ -388,17 +401,13 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    straddling this card's top edge. */
 #s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:14px 8px 10px;margin-top:14px}
 #s-wardrobe .wdr-howto{font:400 15.5px/1.55 'Lora',Georgia,serif;color:#4a463e;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0;text-align:center}
-#s-wardrobe .wdr-trend-intro{margin:2px 0 16px}
+#s-wardrobe .wdr-trend-intro{margin:2px 0 0}   /* the disclosure below it owns the gap now */
 #s-wardrobe .wdr-trend-intro .wdr-trend-note{margin:0}
 #s-wardrobe .wdr-howto b{color:#26221c;font-weight:600}
-/* Once she has clearly got the hang of it (a few hearts tapped), the how-to
-   steps back to a single quiet reminder line, reclaiming the space on every
-   later visit. Decided once per page open so it never collapses under her thumb. */
-#s-wardrobe .wdr-howto .hw-brief{display:none}
-#s-wardrobe .wdr-howto.brief{background:transparent;border:none;padding:5px 2px 0;text-align:center;color:#8a8474;font-size:12.5px}
-#s-wardrobe .wdr-howto.brief .hw-full{display:none}
-#s-wardrobe .wdr-howto.brief .hw-brief{display:inline}
-#s-wardrobe .wdr-howto .hw-brief svg{width:13px;height:13px;vertical-align:-2px}
+/* The how-to used to step back to a one-line reminder once she had starred a
+   few items (built 2026-07-26). RETIRED 2026-08-15, her call: the card and its
+   paragraph are permanent now, so My List and What's Trending open the same
+   way. See the note at _wdrSyncHowto. The .hw-brief span went with it. */
 #s-wardrobe .wdr-plan-wrap{text-align:center;padding:10px 0 16px}
 #s-wardrobe .wdr-plan{display:flex;align-items:center;justify-content:center}
 #s-wardrobe .wp-stat{display:flex;flex-direction:column;align-items:center;padding:0 24px}
@@ -636,7 +645,6 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    card collapses to its brief line. Her closing line under the trend cards
    bookends both tabs (the wdr-trend-end rule below, her voice spec). */
 #s-wardrobe .wdr-howto .wdr-trend-by{margin:1px 0 9px}
-#s-wardrobe .wdr-howto.brief .wdr-trend-by{display:none}
 #s-wardrobe .wdr-trend-end{font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;margin:18px auto 6px;max-width:300px;text-wrap:balance}
 /* Catherine's signature hearts flank her curation (2026-08-09); teal lettering stays */
 /* Inline SVG, not a text glyph -- see the .dc-tagline note: a bare U+2665
@@ -3568,19 +3576,27 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="wdr-tab" data-tab="trend" onclick="wardrobeTab('trend')">What's Trending<svg class="wdr-tab-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg><span class="wdr-tab-badge">New</span></div>
   </div>
   <div class="wdr-tabhint">Tap either list</div>
-  <!-- Once per screen, and placed BELOW the tabs on purpose: directly under the
-       "Your Wardrobe" title it read like a tagline for the page, which is not
-       what a legal notice should look like. Here it is plainly page chrome, and
-       being outside both panes it covers My List AND What's Trending, above
-       every link on the screen. It used to be repeated under every "Ideas"
-       carousel, which stacked up to five identical notices on one page.
-       ⚠️ Deliberately NOT inside .wdr-howto: that block collapses to one line
-       once she has hearted 3+ items, which would quietly hide the disclosure
-       from exactly the returning users who shop the most. -->
-  <div class="wdr-disclosure">Some links may earn a commission.</div>
-
+  <!-- ▶ THE COMMISSION LINE LIVES INSIDE EACH PANE, under that tab's intro card
+       and directly above its first link (her call 2026-08-15, from renders).
+       History, so it does not drift back: it was once repeated under every
+       "Ideas" carousel (up to five identical notices on one page), then moved
+       to a single copy between the tabs and the panes. From there it crowded
+       HER voice -- a legal notice was the last thing read before her checklist
+       paragraph -- and it kept reading like a tagline for the page rather than
+       a caption for the links.
+       ⚠️ TWO COPIES NOW, one per pane, and only one is ever on screen. That is
+       the accepted cost of the position: when Amazon's required sentence is
+       added at approval time, BOTH must change together (grep "may earn a
+       commission" -- the standing edit list). catmark.js pins every copy
+       byte-identical so the wording cannot drift apart.
+       ⚠️ It could NOT have gone here before 2026-08-15: .wdr-howto used to
+       collapse once she had starred 3+ items, so anything next to it risked
+       vanishing for exactly the returning users who shop most. Her call to
+       make that card permanent is what unlocked this spot. If the card is ever
+       made collapsible again, this notice has to move back out. -->
   <div class="wdr-pane" data-pane="list">
-    <div class="wdr-howto" id="wdrHowto"><div class="wdr-trend-by hw-full-hdr"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>MY CLIENT CHECKLIST</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>star</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span><span class="hw-brief">Tap the <svg viewBox="0 0 24 24" fill="#E0B84C" stroke="#C9A02C" stroke-width="1" stroke-linejoin="round"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg> to add &middot; tap <b>Ideas</b> to shop</span></div>
+    <div class="wdr-howto" id="wdrHowto"><div class="wdr-trend-by hw-full-hdr"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>MY CLIENT CHECKLIST</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>star</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span></div>
+    <div class="wdr-disclosure">Some links may earn a commission.</div>
     <div class="wdr-card">
       <div id="wdrListBody"></div>
       <div class="wdr-add">
@@ -3605,6 +3621,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="wdr-trend-by"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>CURATED BY CATHERINE</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wdr-trend-note">Here&rsquo;s what&rsquo;s IN right now. It&rsquo;s always fun to refresh your wardrobe with something current<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     </div>
+    <div class="wdr-disclosure">Some links may earn a commission.</div>
     <div class="wdr-tstack" id="wdrTrendBody"></div>
     <div class="wdr-trend-end">Check back for trend updates. This list changes with the seasons<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   </div>
@@ -7025,13 +7042,19 @@ function wardrobeShowRemoved(){
 var _wdrResetConfirm=false;
 function askWardrobeReset(where){_wdrResetConfirm=where||'top';renderWardrobeList();}
 function cancelWardrobeReset(){_wdrResetConfirm=false;renderWardrobeList();}
-// Show the full how-to on early visits, and step it back to the one-line
-// reminder once she's clearly got the hang of it (a few hearts tapped).
-// Called on page open and after a reset -- deliberately NOT on every heart tap,
-// so the list can never shift under her thumb mid-scroll.
+// ▶ THE HOW-TO CARD IS PERMANENT (her call, 2026-08-15). It used to step back
+// to a one-line reminder once she had starred 3+ items, reclaiming ~100px on
+// every later visit (built 2026-07-26). Her words: "I would like to keep that
+// card/paragraph on there permanently. It would be more consistent with the
+// trending page" -- and she is right that the two tabs are siblings now (the
+// 2026-08-13 work gave them the same header construction and the same framed
+// intro card), so one tab quietly shedding its intro while the other keeps
+// hers broke the pair. The ~100px is a real cost she accepted knowingly.
+// ⚠️ Kept as a no-op that CLEARS the class rather than deleted, the _wdrSkin
+// precedent: the two call sites stay meaningful and any stale class goes.
 function _wdrSyncHowto(){
   var hw=document.getElementById('wdrHowto');
-  if(hw)hw.classList.toggle('brief',_wardrobeWants().length>=3);
+  if(hw)hw.classList.remove('brief');
 }
 function wardrobeReset(){
   wardrobeData.items={};      // clear every list star
@@ -7308,16 +7331,24 @@ var _WDR_IDEA_EXCLUDE={
 // "work-appropriate": "a black top" reads as obvious to a stylist and is
 // wide open to a model, so it needs her concrete definition.
 // ⚠️ The NEVER list is entirely hers (bodysuit, turtleneck, tank/camisole,
-// collared or button-front blouse). The positive half is Claude's draft and
-// SHE HAS NOT BLESSED IT -- reword freely. Satin is deliberately NOT banned
-// (her White tops shelf offered a satin top and she did not object to the
-// fabric, only to the unbacked "draped"). Applied to all three colour-generic
-// basic rows, the same trio that share the sibling exclusions above.
-var _BASIC_TOP='She means a SIMPLE everyday top, nothing more. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, or anything dressy, going-out, sequined or sheer. Every option must be a plain, wearable top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
+// collared or button-front blouse, and satin). The positive half is Claude's
+// draft and SHE HAS NOT BLESSED IT -- reword freely. Applied to all three
+// colour-generic basic rows, the same trio that share the exclusions above.
+// ▶ SATIN ADDED 2026-08-15, her call after seeing it on her White tops shelf:
+// "that is more of a dressy or going out top so let's put it there instead."
+// So it is banned here AND named as belonging on to6 -- a piece she rules out
+// of one row is not rejected, it is filed where a stylist would put it.
+var _BASIC_TOP='She means a SIMPLE everyday top, nothing more. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, satin or any other dressy shiny fabric, or anything going-out, sequined or sheer. Every option must be a plain, wearable top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
 var _WDR_IDEA_DEFINE={
   to1:_BASIC_TOP,   // White tops
   to2:_BASIC_TOP,   // Black tops — her 2026-08-15 catch
   to3:_BASIC_TOP,   // Tops in your favorite colors
+  // The other half of her satin call: banned from the basic rows above and
+  // welcomed HERE, so the fabric lands where she would file it rather than
+  // vanishing from the app. ⚠️ The satin sentence is hers; the rest of this
+  // line is a Claude draft she has not blessed -- keep it short, and do not
+  // grow it into a full definition without talking the row through with her.
+  to6:'Satin belongs here — this is the row for dressy and going-out fabrics, so satin, silk charmeuse, lace, velvet and sequins are all welcome. Every option must genuinely read as a top for an evening out, never a plain everyday tee.',
   dr3:'For "Work-appropriate dresses," NEVER suggest one-shoulder or asymmetric necklines, spaghetti straps, strapless or plunging necklines, satin, sequined, shiny, or sheer fabric, or a hemline or slit above the knee. Every option must hit at or below the knee, fit tailored (never tight or clingy), have a modest neckline (crew, small V, or scoop) with wide or standard straps, use structured medium-weight fabric like wool blends, crepe, or ponte, stay in solid or subtle muted or neutral prints, and have short, three-quarter, or long sleeves (sleeveless only if conservative). This rule is absolute, the same weight as her never-wear list.'
 };
 // ═══════════════════════════════════════════════════════════════════════════
