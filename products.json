@@ -25,7 +25,7 @@
    "widths": [],
    "attrs": [],
    "pattern": "",
-   "note": "A true vintage straight that flatters without squeezing. The curvy fit is excellent if you're waist-small, hip-full.",
+   "note": "A true vintage straight — structured enough to hold its line, soft enough to sit down in all day. The curvy fit is the one to take if you're waist-small and hip-full.",
    "checked": "2026-08-13",
    "active": true
   },
@@ -199,7 +199,7 @@
    "widths": [],
    "attrs": [],
    "pattern": "",
-   "note": "The splurge of the group, and the one that changes your proportions most — a true 70s wide leg with a clean hem, so it reads polished rather than costume. Wear it with a heel you don't have to show.",
+   "note": "The splurge of the group — a true 70s wide leg with a clean hem, so it reads polished rather than costume. It changes your proportions more than anything else here. Wear it with a heel you don't have to show.",
    "checked": "2026-08-14",
    "active": true
   },
@@ -317,7 +317,7 @@
    "widths": [],
    "attrs": [],
    "pattern": "",
-   "note": "Silk charmeuse with enough weight to drape rather than cling — that is the whole difference between a good silk shirt and a shiny one. The three-quarter sleeve is quietly flattering on nearly everyone.",
+   "note": "Silk charmeuse with enough weight to drape rather than cling — that is the whole difference between a good silk shirt and a shiny one. The three-quarter sleeve is the length that works with a watch, a bracelet, or nothing at all.",
    "checked": "2026-08-14",
    "active": true
   },
@@ -1025,7 +1025,7 @@
    "widths": [],
    "attrs": [],
    "pattern": "",
-   "note": "The coat every other trench is quietly measured against — cotton gabardine woven in Yorkshire, leather-wrapped buckles, a slim fit that actually holds a waist. If you buy one coat in your life and keep it thirty years, this is the argument for it.",
+   "note": "The coat every other trench is quietly measured against — cotton gabardine woven in Yorkshire, leather-wrapped buckles, a fit that holds a waist. If you buy one coat in your life and keep it thirty years, this is the argument for it.",
    "checked": "2026-08-14",
    "active": true
   },
@@ -1539,7 +1539,7 @@
    ],
    "attrs": [],
    "pattern": "",
-   "note": "Low, slim, and quietly pretty — a sneaker that doesn't shout. Reformation cut it narrow through the foot, which suits a slimmer shape better than most.",
+   "note": "Low, slim, and quietly pretty — a sneaker that doesn't shout. Reformation cut it narrow through the foot, so take your usual size only if you already know narrow suits you.",
    "checked": "2026-08-14",
    "active": true
   },
@@ -2525,6 +2525,260 @@
    "attrs": [],
    "pattern": "",
    "note": "The most tailored shirt in this slot, and the stretch is why it stays tailored through a day of sitting down. The longer shirttail means it holds a tuck.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p089",
+   "slot": "sh9",
+   "name": "Reebok Club C 85 Vintage Sneakers",
+   "brand": "Reebok",
+   "retailer": "Madewell",
+   "url": "https://www.madewell.com/p/womens/shoes/sneakers/3rd-party-sneaker/reebokreg-club-c-85-vintage-sneakers/NH503/",
+   "price": 90,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Classic",
+    "Minimal"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "chalk/alabaster/glen green"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The Club C is the plainest court sneaker there is, and that is exactly why it works with everything. Leather, low, no branding shouting at you — buy it once and stop thinking about it.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p090",
+   "slot": "sh9",
+   "name": "Ballet sneakers in suede and leather",
+   "brand": "J.Crew",
+   "retailer": "J.Crew",
+   "url": "https://www.jcrew.com/m/womens/categories/shoes/sneakers/ballet-sneakers-in-suede-and-leather/MQ207",
+   "price": 168,
+   "band": "$$$",
+   "families": [
+    "Romantic",
+    "Minimal",
+    "Classic"
+   ],
+   "sizes": "5-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "vivid navy"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A ballet flat and a retro runner met in the middle, and the result is softer than either. The elasticated topline means no gaping at the ankle, and it comes with two sets of laces so you can change its mood.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p091",
+   "slot": "sh9",
+   "name": "Women's Keds Champion Leather Lace Up",
+   "brand": "Keds",
+   "retailer": "Zappos",
+   "url": "https://www.zappos.com/p/womens-keds-champion-leather-lace-up/product/109573",
+   "price": 65,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Natural",
+    "Professional"
+   ],
+   "sizes": "5-13",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black leather",
+    "white leather"
+   ],
+   "widths": [
+    "narrow",
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Four widths, slim through extra-wide, which is rarer than it should be in a leather sneaker. It is flat and unstructured — a clean plimsoll shape done in leather, not a cushioned trainer.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p092",
+   "slot": "sh9",
+   "name": "Women's Sperry Crest Vibe",
+   "brand": "Sperry",
+   "retailer": "Zappos",
+   "url": "https://www.zappos.com/p/womens-sperry-crest-vibe/product/9242194",
+   "price": 60,
+   "band": "$$",
+   "families": [
+    "Natural",
+    "Sporty",
+    "Classic"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "brown",
+    "white"
+   ],
+   "widths": [
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A proper vulcanised plimsoll, so it creases and softens the way canvas is supposed to. The footbed lifts out if you wear an orthotic, and it comes in a true wide.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p093",
+   "slot": "sh9",
+   "name": "Reebok Classic Leather Sneaker",
+   "brand": "Reebok",
+   "retailer": "DSW",
+   "url": "https://www.dsw.com/product/reebok-classic-leather-sneaker---womens/530693",
+   "price": 85,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Bold",
+    "Edgy"
+   ],
+   "sizes": "5.5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "white"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The retro runner with a visible midsole — chunkier than a court shoe, which is the point when you are balancing a wide trouser. Full-grain leather, so it holds its shape rather than collapsing.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p094",
+   "slot": "sh9",
+   "name": "Langley Sneaker",
+   "brand": "Sam Edelman",
+   "retailer": "Sam Edelman",
+   "url": "https://www.samedelman.com/product/womens-langley-sneaker-3029042/vault-blue-grey-nylon-suede-ec0211301",
+   "price": 120,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Bold",
+    "Natural"
+   ],
+   "sizes": "5-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "off white canvas",
+    "black suede",
+    "white/tan/black suede",
+    "deep olive",
+    "french burgundy",
+    "leopard calf hair + 6 more"
+   ],
+   "widths": [
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Twelve colourways of one shape, from plain black suede to leopard, so you choose how much attention it asks for. Medium and wide both, which almost nothing at this price offers.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p095",
+   "slot": "sh9",
+   "name": "The Day Sneaker",
+   "brand": "Everlane",
+   "retailer": "Everlane",
+   "url": "https://www.everlane.com/products/womens-day-sneaker-white",
+   "price": 148,
+   "band": "$$",
+   "families": [
+    "Minimal",
+    "Classic",
+    "Professional"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The cleanest white leather sneaker in this group — tapered toe, low collar, nothing else going on. It runs narrow, so take the next size up if you are between sizes.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p096",
+   "slot": "sh9",
+   "name": "Contrasting panel leather sneakers",
+   "brand": "Mango",
+   "retailer": "Mango",
+   "url": "https://shop.mango.com/us/en/p/women/shoes/leather-shoes/contrasting-panel-leather-sneakers_37081346",
+   "price": 80,
+   "band": "$$",
+   "families": [
+    "Minimal",
+    "Classic",
+    "Romantic"
+   ],
+   "sizes": "EU 35-42 (US 5-10)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Real leather at eighty dollars, in the white low-top shape that goes with everything you already own. The contrast panel is the only detail, and it is enough.",
    "checked": "2026-08-15",
    "active": true
   }
