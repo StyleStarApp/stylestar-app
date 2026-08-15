@@ -72,8 +72,40 @@ single Netlify build while she tested.** Her session was a screenshot pass on th
   link page alongside it. **Sunday deliberately — the app's own change day** (Star of the Week + the
   catalog rotation both turn at midnight into Sunday). ⚠️ Retires the old standing "nudge her every week
   or two" reminder; the Routine IS the nudge now.
-- **Suites at pause, all green:** nameparity **24** (new) · curated **64** · searchtune 70 · wladd 102 ·
-  wdrworksheet 73 · wdrcalmcheck 27 · hubs 49 · affq 40 · e2e 29.
+- ⭐ **SECOND SCREENSHOT PASS, same morning, merged in the same PR (#855):**
+  1. ⚠️ **SATIN IS OUT OF BASIC TOPS AND INTO DRESSY, her call:** *"that is more of a dressy or going out
+     top so let's put it there instead."* Banned on to1/to2/to3 AND named as belonging on **to6** — ▶ **a
+     piece she rules out of one row is not rejected, it is FILED where a stylist would put it.** Proven
+     live, two runs per slot: zero satin on White tops, satin leading Dressy tops both runs. ⚠️ The to6
+     line is minimal and a flagged draft apart from her satin sentence — don't grow it into a full
+     definition without talking the row through with her.
+  2. ⭐ **THE HOW-TO CARD IS PERMANENT, her call** (*"I would like to keep that card/paragraph on there
+     permanently. It would be more consistent with the trending page"*). The 2026-07-26 collapse-to-one-
+     line behaviour is **deleted, not dormant** — markup, CSS and the header-hiding rule all gone;
+     `_wdrSyncHowto` survives as a no-op that clears any stale class (the `_wdrSkin` precedent). ▶ **She
+     is right that the tabs are siblings now** (08-13 gave them the same header construction + framed
+     card), so one shedding its intro broke the pair. **The ~100px is a cost she accepted knowingly.**
+     tabtops' collapse assertion **DELIBERATELY REVERSED**: five real star taps through the real handler,
+     then the card, header and her full paragraph all asserted still standing.
+  3. ⭐ **THE COMMISSION LINE MOVED INSIDE EACH PANE**, under that tab's intro card and directly above its
+     first link (her pick from 4 renders). ▶ **Why: in the old spot a legal notice was the last thing read
+     before HER paragraph, and it kept reading as a tagline for the PAGE rather than a caption for the
+     LINKS.** ⚠️ **TWO COPIES NOW, one per pane** — only one ever on screen, and **BOTH must change when
+     Amazon's sentence lands** (grep `may earn a commission`). ⚠️ **DELIBERATELY UNEVEN spacing, her second
+     call** (*"lower it down to sit closer to the line"*): **16px above / 3px below**, measured identical
+     on both tabs at 390/360/320 — centred at 9/9 it floated between two cards and belonged to neither.
+     ⚠️ **THIS SPOT ONLY BECAME SAFE WITH ITEM 2** — while the how-to could collapse, anything beside it
+     risked vanishing for returning users. **If that card is ever made collapsible again, this notice moves
+     back out** (noted at the markup). **tabtops 15 → 49** — nothing had ever pinned this position, which
+     is how it drifted twice; now asserted per tab per width (inside the pane, after the intro card, the
+     uneven gaps as a RELATIONSHIP not exact numbers, one visible copy, above every link, shared wording).
+  4. ✅ **"Tap either list" STAYS BELOW the buttons, her decision from a 2-way render** — ▶ above, it lands
+     in the page-subtitle slot and reads as describing the PAGE, and **it is the only thing telling her the
+     unselected tab is tappable (her mom's original catch)**. Tightened under them, 8/4 → 4/2.
+- **Suites at pause, all green:** nameparity **24** (new) · curated **64** · **tabtops 49** · searchtune 70 ·
+  wladd 102 · wdrworksheet 73 · wdrcalmcheck 27 · hubs 49 · affq 40 · e2e 29 · catmark 135.
+  ⚠️ **wdrworksheet/wdrcalmcheck/catmark were green BEFORE the final 6px spacing tweak and not re-run
+  after it** (CSS margins at the page top only) — re-run them first thing if anything looks off.
 - ▶ **THE FIRST THINGS NEXT SESSION:**
   1. **How the trimmed names read on her phone** — the honest cost of the parity guarantee is plainer
      card names ("Satin Top", not "Satin Draped Top"). If they feel too bare, the lever is letting the
