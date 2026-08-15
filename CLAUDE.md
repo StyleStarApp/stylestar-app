@@ -7,7 +7,94 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-15 LATE — THE CATALOG QUADRUPLED AND HER ANALYTICS BECAME REAL)
+## ▶ NEXT SESSION — START HERE (2026-08-15 NIGHT — HER PLUS-SIZE TEST FOUND THE APP SAYING "PLUS" BACK TO HER)
+
+### ⏸ WHERE THE 2026-08-15 NIGHT SESSION IS (a short session off HER OWN testing, four screenshots)
+She refined with **ONLY plus sizes saved** and tested Shop your style. Three separate finds, all real, plus
+one design question of hers. ▶ **THE SHAPE OF IT, and it is the reusable lesson: her screenshots showed one
+symptom ("the same items keep coming up") and contained THREE different bugs, one of which she had not
+noticed at all and was the most serious.** Read screenshots for what they SHOW, not only for what she reports.
+- 🚨⭐⭐ **THE APP WAS SAYING HER SIZE RANGE BACK TO HER, ON EVERY CARD — she did not report it, it was
+  sitting in her own screenshots.** "**Plus** Wide Leg Trouser" · "**Plus** Linen Button-Front Blouse" ·
+  "**Plus** Wrap Midi Dress" · "**Wide Width** Loafers". ▶ **That breaks HER OWN standing rule (2026-07-28,
+  reaffirmed 2026-08-13), in her words: "I don't want to remind a plus or petite woman of her sizing in that
+  moment."** Sizing is supposed to pick the STORE and the SEARCH and never appear in the words.
+  ▶ **CAUSE, and it is the interesting part: TWO CORRECT RULES COLLIDING, neither one wrong.**
+  `_sizeGuidance()` says *lead the search term with her size word* (right — "plus wide leg trousers" genuinely
+  filters better at the store) and `_shopRules()` says *the name IS the search written beautifully, same
+  words* (right — that is the name-parity guarantee from 08-15 morning). So the size word entered the search
+  legitimately and parity faithfully copied it onto the card. ⚠️ **`_nameParity` structurally CANNOT catch
+  this: it strips name words the search does not carry, and "plus" IS in the search, so parity passes.**
+  ▶ **Built as `_sizeWordsOut()`, a DELIBERATE SECOND EXCEPTION to name/search parity** (the colour one was
+  the first: the name may read "Hot Pink" while the search says "pink"). ⚠️ **Unlike that one it exists to
+  protect a BRAND rule, not a search behaviour — which is exactly why it is a guarantee in code and not one
+  more line of prompt** (the never-wear and name-parity precedents: a rule nothing checks on the way back
+  drifts). ⚠️ **Runs AFTER `_nameParity`, always** — parity can REBUILD a name from the search, size word and
+  all. ⚠️ **THE SEARCH IS NEVER TOUCHED**, so the store still filters to her size; only the card stops
+  announcing it. ⚠️ **"Wide" and "tall" are also real GARMENT words, so the match is anchored, never loose:
+  a leading size range only, plus the unambiguous "wide/narrow width" phrase. "Wide-Leg Trouser" survives
+  untouched, asserted twice.** Shoe width goes too, on her own 08-15 words: *"I don't want to make a big deal
+  of it."*
+- ✅ **"SHOW ME DIFFERENT PICKS" HAD NO MEMORY — her actual report, confirmed in the code.** Her two
+  screenshots: 5 of 6 items identical after the refresh, only the earrings became a necklace. The refresh
+  buttons re-ran the SAME prompt with no idea what they had just shown, so the model returned its best answer
+  again, correctly. ▶ **THE FIX ALREADY EXISTED IN THE APP: the wardrobe "+ See more ideas" path
+  (`_wdrMoreIdeas`) has always passed the already-shown names in.** Ported as shared `_rememberPicks()` /
+  `_seenPicksLine()` across all four browsing prompts, wording identical to the wardrobe one. ⚠️ **Capped at
+  24 and the cap is load-bearing** — uncapped it would grow the prompt every tap and eventually crowd out her
+  preferences and the store table; oldest fall off so a long session cycles rather than starves.
+- ⭐ **WRAP IS A VETO NOW, HER CALL — AND IT IS A NEW KIND OF LIST, KEPT SEPARATE ON PURPOSE.** Her words:
+  *"unless she is specifically asking for a wrap top or wrap dress we don't need to be searching for it."*
+  Her Anthropologie screenshot is the proof: "Plus Wrap Midi Dress" returned **1 product**, and it was not a
+  wrap dress. The 08-15 morning prompt rule names this exact failure and the model drifted past it — the
+  standing signal to move a rule into code. ▶ **`_SEARCH_VETO` is DELIBERATELY NOT `_STYLIST_VETO`:** the
+  latter is TASTE (a garment she would never put on a client — wrong everywhere, always, no exemption ever,
+  asserted); the new one is about what a store search can RETURN, and she was explicit wrap is not a bad
+  garment. ⚠️ **THREE EXEMPTIONS, all from her one sentence:** (1) **`dr7 "Wrap dresses"` IS ONE OF HER OWN
+  100 CHECKLIST ROWS** — a blanket veto would have silently BLANKED that shelf, caught before shipping;
+  tapping Ideas there IS specifically asking, so the filter waives itself; (2) the same waiver on "Shop my
+  whole list" when she starred that row; (3) **the stylist chat never runs this filter at all**, so asking
+  there just works. ⚠️ **And it deliberately does NOT reach the curated catalog (`curatedPicks`) — her own
+  products carry exact URLs, so no search is run and the whole reason for the veto is absent.**
+  ⚠️ **Also found and fixed: the wantlist prompt's NAMING EXEMPLAR was literally "Wrap Midi Dress"** — the
+  same trap as the 08-15 morning one where the naming bullet held up *wrap* as a model defining word. Grep
+  exemplars whenever a word gets vetoed.
+- ⚠️ **TWO BUGS OF CLAUDE'S OWN THAT ONLY THE TESTS CAUGHT, both worth the pattern:** (1) **`_openShopStyleNow`
+  maps anything not look/wantlist to `'quiz'`, NOT `'style'`** — a hardcoded `'ss-style'` prompt key never
+  matched what `_rememberPicks` wrote, so the memory silently did nothing. **Both sides derive from
+  `_shopStyleMode` now, so the write key and the read key cannot drift.** ▶ **The test drives the real entry
+  point rather than setting the mode by hand, so a future rename fails loudly.** (2) A code comment named
+  `_wdrPickCurated`, **a function that does not exist** (it is `curatedPicks`) — an assertion that greps the
+  real function caught the fiction.
+- ⚠️ **`nameparity.js` FAILED ON ARRIVAL AND IT WAS NOT A REGRESSION — the `curated.js` lesson, one day
+  later.** It pinned "Poplin Top", the 4th AI item in its stub; once to1 White tops gained 12 catalog
+  products the blended shelf gave the AI only 2 of 6 slots and Poplin stopped rendering. **Proved stale by
+  stashing the change and watching it fail identically.** Rewritten to run that claim on a **catalog-free
+  slot** (to2) so catalog growth in any slot can never break it again. ▶ **Always stash-and-rerun before
+  believing a suite failure is yours.**
+- **Suites: `sizeveto.js` 42 (new) · nameparity 25 (was 23, +2 and one deliberate rewrite) · curated 65 ·
+  searchtune 70 · searchchat 57 · cowork3 69 · wladd 102 · storedepth 17 · e2e 29 — all green.**
+- ▶ **NEXT, AND SHE HAS ALREADY APPROVED IT: the "Maybe later" dead end (her find, item 3 of hers).**
+  Finishing Refine without giving an email lands her back on the **portrait she already read**. ▶ **THE
+  DIAGNOSIS THAT SHARPENS HER OWN INSTINCT: the "Let's go shopping" button ALREADY EXISTS on that screen —
+  it lives inside `prefSavedBlock`, `display:none` until she hands over her email.** So a woman who declines
+  loses the JOURNEY, not just the convenience, which inverts her own value-first rule ("never make her earn
+  the value"). ▶ **RECOMMENDED, and it differs from her first framing: do NOT make "Maybe later" navigate to
+  shopping** — a dismissal that secretly takes you somewhere new is surprising, and it should keep meaning
+  what it says. **Put "Let's go shopping" on the screen for EVERYONE, above the email ask**, and let "Maybe
+  later" stay a quiet dismissal. Same destination, visible as a choice; it also fixes the SAVED path, where
+  the email currently reads as a toll gate before the payoff. **She said "let's do 3 when you are ready" —
+  render 2-3 versions for her pick first, per the standing rule.**
+- ▶ **STILL OPEN FROM THE ENTRY BELOW, unchanged:** the Almira call **Monday Aug 17 12:30** · **Sunday Aug 16**
+  first automatic Star swap + first link-check Routine fire · the **5 reworded notes** (⚠️ **only p001/p007/
+  p011 could be diffed — p035/p051's "before" text lived only in her FIRST export, which was never saved.
+  ▶ STANDING: keep the previous CSV before each new one lands so a diff is always possible**) · her own
+  visits stopped counting in Plausible, so a drop is the exclusion working.
+- ⚠️ **CATALOG COVERAGE, CORRECTED: the 92 products sit in NINE slots, not "many"** — sh9 17 · to5 16 ·
+  to1 12 · bo1 8 · ja2 8 · sh7 8 · bg1 8 · ex2 8 · ja6 7. The entry below overstates this. The other 91 slots
+  are still all-AI, which is what to tell her before she goes looking on her phone.
+
+## ▶ PREVIOUS — 2026-08-15 LATE (THE CATALOG QUADRUPLED AND HER ANALYTICS BECAME REAL)
 
 ### ⏸ WHERE THE 2026-08-15 LATE SESSION PAUSED (her call: "let's pause here and save to the .md")
 **THREE PRs merged and curl-verified live: #859 · #860 · #861. Three Netlify builds.** Branch resynced to
