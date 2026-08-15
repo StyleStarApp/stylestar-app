@@ -5242,7 +5242,16 @@ function _shopRules(mode){
     // getPrefsForPrompt(), which already did the narrow-vs-broad judgment.
     '  JEWELRY METAL: if her preferences above say she wears ONLY one metal, that is absolute — always lead jewelry searches with it. If she is open to more than one, never force a metal into the search.\n'+
     '  JEWELRY & SMALL BOUTIQUES: their catalogs are small and their search engines are strict — an unmatched word returns NOTHING at all. Beyond the metal rule above, use the plain category noun alone: "hoop earrings" (never "oversized hoops" — "oversized" indexes nothing and "hoops" may not match "hoop earrings"), "chain bracelet", "pendant necklace". Size and mood words (oversized, chunky, dainty, layered) live in the name, never the boutique search.\n'+
-    '- MATCH PRECISION TO THE STORE: a giant department-store catalog searches loosely, so when she is genuinely shopping by an exact color of an exact shape (especially bags and shoes), prefer a smaller focused store whose search can honor it. Department stores shine for broader category finds; do not ask a 3,000-item catalog to pin one shade.\n'+
+    // ▶ 2026-08-15, her catch: "Print Wrap Top" at Tuckernuck opened on 13
+    // products — a wrap SKIRT, a perfume atomiser, a sarong. The name and the
+    // search matched word for word, so this was not a naming fault; it was the
+    // wrong STORE. A boutique's search cannot honor a piece it does not stock,
+    // and (the 2026-08-08 lesson) a store shows loose junk rather than "no
+    // results". The old rule only ever pushed TOWARD small stores for precise
+    // searches, which is half the truth: precision needs a store that is both
+    // focused AND deep in that category. Her case is the named WRONG example,
+    // because an abstract rule alone has not been enough on this prompt yet.
+    '- MATCH PRECISION TO THE STORE, IN BOTH DIRECTIONS: a giant department-store catalog searches loosely, so when she is genuinely shopping by an exact color of an exact shape (especially bags and shoes), prefer a smaller focused store whose search can honor it. Department stores shine for broader category finds; do not ask a 3,000-item catalog to pin one shade. BUT a small boutique can only honor a search for something it genuinely stocks in depth: send it a specific multi-word piece it does not really carry and its search returns loose junk, never an honest empty page. WRONG: "print wrap top" at Tuckernuck, a small resort-and-occasion boutique — it answered with a wrap skirt and a perfume. Before sending a 3-word specific search to a boutique, check its tags above and ask whether that piece is the kind of thing this store is actually known for. If it is not, send the specific search to a store with real depth in that category, or pick a different piece for that store.\n'+
     _sizeGuidance()+
     // Her calls, 2026-08-13, verbatim-ish: skinny jeans are dated, and "I
     // would never recommend ribbed anything to any of my clients." Enforced
