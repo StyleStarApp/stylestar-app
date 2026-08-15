@@ -30,10 +30,24 @@ function runConv(csvPath) {
 }
 const before = fs.readFileSync(path.join(ROOT, 'products.json'), 'utf8');
 let r = runConv(CSV);
-ok('good CSV converts clean', r.code === 0 && /OK — 21 products/.test(r.out), r.out.slice(0, 200));
+// ⚠️ These three were hardcoded to the first catalog (21 products, bo1:8 to5:13)
+// and failed the moment it grew to 84 on 2026-08-15. Rewritten to derive the
+// expected numbers FROM THE CSV rather than restating them, so they survive
+// every future export -- and it is the stronger assertion either way: it proves
+// the converter dropped nothing, which a fixed count never did.
+const csvRows = fs.readFileSync(CSV, 'utf8').trim().split(/\r?\n/).length - 1; // minus header
+ok('good CSV converts clean', r.code === 0 && new RegExp('OK — ' + csvRows + ' products').test(r.out), r.out.slice(0, 200));
 const pj = JSON.parse(fs.readFileSync(path.join(ROOT, 'products.json'), 'utf8'));
-ok('21 products in products.json', pj.products.length === 21);
-ok('slots bo1:8 to5:13', pj.products.filter(p => p.slot === 'bo1').length === 8 && pj.products.filter(p => p.slot === 'to5').length === 13);
+ok('every CSV row survives into products.json', pj.products.length === csvRows);
+ok('per-slot counts match the CSV exactly', (() => {
+  const want = {}, got = {};
+  fs.readFileSync(CSV, 'utf8').trim().split(/\r?\n/).slice(1)
+    .forEach(l => { const s = l.split(',')[1]; want[s] = (want[s] || 0) + 1; });
+  pj.products.forEach(p => { got[p.slot] = (got[p.slot] || 0) + 1; });
+  const keys = Object.keys(want);
+  return keys.length > 0 && keys.every(k => want[k] === got[k])
+    && Object.keys(got).length === keys.length;
+})());
 ok('every product has non-empty note', pj.products.every(p => p.note && p.note.trim().length > 0));
 ok('every product has ≥1 family', pj.products.every(p => p.families.length >= 1));
 ok('brand and retailer both kept (Levi\'s@Amazon)', (() => { const p = pj.products.find(x => x.id === 'p005'); return p && p.brand === "Levi's" && p.retailer === 'Amazon'; })());
@@ -42,7 +56,17 @@ ok('checked dates survive', pj.products.every(p => /^\d{4}-\d{2}-\d{2}$/.test(p.
 const header = fs.readFileSync(CSV, 'utf8').split('\n')[0];
 function badCase(name, row, wantMsg) {
   const f = path.join(tmp, name.replace(/\W+/g, '_') + '.csv');
-  fs.writeFileSync(f, header + '\n' + row + '\n');
+  // ⚠️ Pad the fixture row out to the header's real column count. These rows
+  // are hand-written to exercise ONE bad field each, and every one of them
+  // broke on 2026-08-15 when `width` made the header 24 columns -- they failed
+  // with "has 23 columns" instead of the fault they were written to catch,
+  // which is a false green in waiting. Deriving the width from the header (the
+  // same one-source-of-truth trick the converter uses on index.html) means the
+  // next column she adds cannot silently invalidate all ten cases.
+  const wantCols = header.split(',').length;
+  const haveCols = row.split(',').length;
+  const padded = row + ','.repeat(Math.max(0, wantCols - haveCols));
+  fs.writeFileSync(f, header + '\n' + padded + '\n');
   const res = runConv(f);
   ok('rejects ' + name, res.code !== 0 && new RegExp(wantMsg).test(res.out), res.out.slice(0, 160));
 }
@@ -59,7 +83,7 @@ badCase('bad checked date', `p900,bo1,X,B,Nordstrom,https://x.com/a,10,$,Classic
 // load-bearing params must SURVIVE (Bloomingdale's ?ID=, Gap pid=, Madewell ccode=)
 ok('load-bearing params kept', pj.products.some(p => /ID=5576534/.test(p.url)) && pj.products.some(p => /ccode=/.test(p.url)));
 const after = fs.readFileSync(path.join(ROOT, 'products.json'), 'utf8');
-ok('failed converts never touch products.json', after.length > 1000 && JSON.parse(after).products.length === 21);
+ok('failed converts never touch products.json', after.length > 1000 && JSON.parse(after).products.length === csvRows);
 // leave the repo state as the good convert
 if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before);
 
@@ -284,21 +308,44 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
   ok('Petite+Regular does not narrow', petReg >= 10, String(petReg));
   await ctx.close();
 
-  // 6b. Uncatalogued slot (98 of 100): exactly today's behavior + See more
+  // 6b. Uncatalogued slot: exactly today's behavior + See more
+  // ⚠️ This used to hardcode 'to1', which was uncatalogued when the catalog
+  // held 21 products and stopped being so at 84 (White tops now has 12) --
+  // the test then failed for the wrong reason entirely. It now ASKS the page
+  // which slot has no catalog products, so it keeps testing the thing it
+  // names however far the catalog grows. If she ever fills all 100 slots,
+  // this skips honestly rather than silently asserting nothing.
   ({ctx, pg} = await fresh({aiOk: true}));
   await seedAndOpen(pg, 'The Timeless Classic');
-  const other = await ideasFor(pg, 'to1');
+  // ⚠️ Computed in NODE, not in the page. `const wardrobeItems` and
+  // `let _productsCatalog` are script-scope declarations, not properties of
+  // window, and an injected evaluate() cannot see them -- an in-page lookup
+  // returned null here and failed for a reason that had nothing to do with
+  // the behaviour under test. Parsing index.html is the same trick the
+  // converter uses, and it cannot go stale.
+  const emptySlot = (() => {
+    const stocked = new Set(pj.products.filter(p => p.active).map(p => p.slot));
+    const wi = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8')
+      .match(/const wardrobeItems=\[([\s\S]*?)\n\];/)[1];
+    const ids = [...wi.matchAll(/id:'([a-z0-9]+)'/g)].map(m => m[1]);
+    return ids.find(id => !stocked.has(id)) || null;
+  })();
+  ok('an uncatalogued slot still exists to test', !!emptySlot, String(emptySlot));
+  const other = await ideasFor(pg, emptySlot);
   ok('uncatalogued slot: all AI, 4 cards', pg.aiCalls() === 1 && other.cards.length === 4 && other.cards.every(c => !c.curated));
   ok('uncatalogued slot has the See more door too', /See more ideas/.test(other.html));
   // See more: first tap on a catalog slot uses the buffer (no new AI call)
-  await pg.evaluate(() => wardrobeSeeIdeas('to1'));   // close
+  await pg.evaluate((s) => wardrobeSeeIdeas(s), emptySlot);   // close
   const before5 = pg.aiCalls();
-  const more = await pg.evaluate(async () => {
-    await _wdrMoreIdeas('to1');
-    return document.querySelectorAll('#wx_to1 .shop-card').length;
-  });
+  // ⚠️ These two evaluates also hardcoded 'to1' and kept querying #wx_to1 after
+  // the slot above became dynamic -- the selector matched nothing and the test
+  // reported 0 cards, looking like a broken carousel rather than a stale id.
+  const more = await pg.evaluate(async (s) => {
+    await _wdrMoreIdeas(s);
+    return document.querySelectorAll('#wx_' + s + ' .shop-card').length;
+  }, emptySlot);
   await pg.waitForTimeout(600);
-  const after5 = await pg.evaluate(() => document.querySelectorAll('#wx_to1 .shop-card').length);
+  const after5 = await pg.evaluate((s) => document.querySelectorAll('#wx_' + s + ' .shop-card').length, emptySlot);
   ok('See more appends more cards into the same carousel', after5 > 4, String(after5));
   await ctx.close();
 

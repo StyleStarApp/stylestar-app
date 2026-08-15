@@ -270,6 +270,40 @@ export default async (req) => {
       max_tokens: maxTokens,
       messages: body.messages
     };
+    // ▶ PROMPT CACHING (2026-08-15). Launch readiness, not a saving today: at
+    // current traffic the 5-minute window expires between visitors and this
+    // does nothing. It starts paying the moment two turns land close together.
+    //
+    // ⚠️ THE HANDOFF SAID "cache the static system-prompt block" AND THERE IS
+    // NO SYSTEM BLOCK TO CACHE. This function never sends a `system` field --
+    // index.html builds one big prompt string and posts it as messages[0].
+    // So the breakpoint has to go on a MESSAGE, which is what top-level
+    // cache_control does: the API places it on the last cacheable block.
+    //
+    // ⚠️ AND IT IS GATED TO MULTI-TURN ON PURPOSE. A cache WRITE costs 1.25x
+    // the normal input price and only pays back on a later READ (~0.1x), so
+    // it breaks even at two requests sharing a prefix. Every single-message
+    // call here is a one-shot generation whose prompt carries that woman's own
+    // preferences -- no second request ever shares its prefix, so caching one
+    // would be a guaranteed 25% surcharge for nothing. Only the stylist chat
+    // resends a growing history, and only from its second turn on.
+    //
+    // ⚠️ THE PRUNING BELOW FIGHTS THIS, KNOWINGLY. Prompt caching is a PREFIX
+    // match and `tools` renders before `messages`, so the first time a store
+    // turns out to block the crawler, allowed_domains shrinks and the whole
+    // cached prefix is invalidated once. It re-warms on the next turn and the
+    // memo is per-instance, so this is a small one-off cost, not a leak --
+    // but it is why cache hits will look ragged rather than perfect.
+    //
+    // Sonnet 4.6's minimum cacheable prefix is 1024 tokens; the chat prompt
+    // runs 13-21 KB (~3.5-5.5K tokens), comfortably above it. Below that
+    // minimum the API silently does not cache -- no error, just no saving.
+    // To confirm it is working, read usage.cache_read_input_tokens on a
+    // second chat turn; a zero there across repeated turns means something in
+    // the prefix is changing between requests.
+    if (Array.isArray(body.messages) && body.messages.length > 1) {
+      payload.cache_control = { type: 'ephemeral' };
+    }
     const callAnthropic = () => fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {

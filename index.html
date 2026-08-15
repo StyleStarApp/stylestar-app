@@ -23,10 +23,27 @@
 <meta name="theme-color" content="#D4AF37">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Dancing+Script:wght@500;600;700&family=Jost:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <!-- Privacy-friendly analytics by Plausible -->
-<script async src="https://plausible.io/js/pa-2isRUQ0QeYxjy54Mf0lSe.js"></script>
 <script>
+  // The queue shim must exist before anything calls plausible(), so it stays first.
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-  plausible.init()
+  // ▶ OWN-VISIT EXCLUSION (2026-08-15, her ask: "I can't tell my own testing
+  // apart from real visitors"). Plausible documents a localStorage flag,
+  // `plausible_ignore=true`, which its script honours -- but that behaviour
+  // lives inside THEIR script, and this site runs the newer pa-*.js build.
+  // Rather than trust that it is honoured there, the flag is enforced HERE by
+  // simply never loading the script: no script means no pageviews AND no
+  // custom events, whatever the script variant happens to do internally.
+  // ⚠️ localStorage is per browser AND per domain, so the flag has to be set
+  // once in each browser she tests in. track() checks the same flag as a
+  // second line of defence.
+  window.__ssNoTrack=false;
+  try{if(localStorage.getItem('plausible_ignore')==='true')window.__ssNoTrack=true}catch(e){}
+  if(!window.__ssNoTrack){
+    var _pa=document.createElement('script');
+    _pa.async=true;_pa.src='https://plausible.io/js/pa-2isRUQ0QeYxjy54Mf0lSe.js';
+    document.head.appendChild(_pa);
+    plausible.init();
+  }
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -3877,7 +3894,7 @@ try{if(localStorage.getItem('ss_emailDone')==='true')emailDone=true}catch(e){}
 // question number, a retailer domain, a screen id). Never her answers, name,
 // email, or anything she typed. The queue shim in <head> means plausible()
 // always exists, even if the script is still loading or blocked.
-function track(name,props){try{window.plausible&&plausible(name,props?{props:props}:undefined)}catch(e){}}
+function track(name,props){if(window.__ssNoTrack)return;try{window.plausible&&plausible(name,props?{props:props}:undefined)}catch(e){}}
 // Outbound product clicks: ONE delegated listener instead of wiring every
 // surface by hand (shop cards, Complete the Look, the Edit, the Mall, the
 // chat's linkified store names) — so any future surface is covered
@@ -3888,7 +3905,14 @@ document.addEventListener('click',function(e){
   var host='';try{host=new URL(a.href).hostname.replace(/^www\./,'').toLowerCase()}catch(err){return}
   if(!host||host==='stylestar.app'||host.endsWith('.stylestar.app'))return; // our own pages
   var scr=document.querySelector('.scr.act');
-  track('Product Click',{retailer:host,surface:(scr&&scr.id)||'unknown'});
+  var p={retailer:host,surface:(scr&&scr.id)||'unknown'};
+  // slot: only the wardrobe Ideas shelf knows which checklist item a card
+  // belongs to, and it stamps data-slot on its own panel (_wardrobeIdeaGen).
+  // Every other surface genuinely has no slot, so the prop is simply absent
+  // there rather than filled with a guess.
+  var sl=a.closest('[data-slot]');
+  if(sl&&sl.getAttribute('data-slot'))p.slot=sl.getAttribute('data-slot');
+  track('Product Click',p);
 });
 // cur=0 matters: backing out of the quiz mid-way (browser Back, a footer link)
 // leaves cur where she stopped, and loadQ(0) shows question 1 without touching
@@ -4302,7 +4326,7 @@ function prevQ(){if(cur>0){try{history.back();return}catch(e){}cur--;loadQ(cur);
 function dist(a,b){return Math.sqrt(a.reduce((s,v,i)=>s+(v-b[i])**2,0))}
 function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)}));scored.sort((a,b)=>a.d-b.d);return scored.slice(0,3)}
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;const delay=(1.7+i*0.05).toFixed(2);c.innerHTML+=`<div class="sig-row"><div class="sig-cat">${q.cat}</div><div class="sig-track"><span class="sig-dot" style="--x:${pct}%;animation-delay:${delay}s"></span><span class="sig-end l">${q.left}</span><span class="sig-end r">${q.right}</span></div></div>`})}
-async function genResult(){_quizClear();track('Quiz Completed');_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=JSON.parse(txt.replace(/^```json?\s*/i,'').replace(/\s*```\s*$/,''));if(j&&j.portrait){ptxt=j.portrait;motto=j.motto||''}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
+async function genResult(){_quizClear();_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);track('Quiz Completed',{archetype:topArchNames[0]||'unknown'});const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=JSON.parse(txt.replace(/^```json?\s*/i,'').replace(/\s*```\s*$/,''));if(j&&j.portrait){ptxt=j.portrait;motto=j.motto||''}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment, and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 // Put a results screen into its "loading" state: closed mirror doors with the
@@ -4622,6 +4646,10 @@ function _commitPhoto(){
 }
 async function analyzePhoto(){
   if(!_commitPhoto())return;
+  // Fires on UPLOAD, deliberately paired with the existing 'Photo Analyzed'
+  // which fires only when a result comes back. The gap between the two counts
+  // is the analysis failure rate, which is not visible from either alone.
+  track('Photo Uploaded');
   _showPhotoLoad();
   await runPhotoAnalysis();
 }
@@ -7028,6 +7056,12 @@ function wardrobeWant(id,isCustom){
   }else{
     delete wardrobeData.items[id];
   }
+  // ⚠️ "Saved to wardrobe" is ambiguous in an app with TWO lists, so both are
+  // instrumented under distinct names rather than guessing which was meant:
+  // 'Wardrobe Star' = a checklist CATEGORY starred on My List (this), and
+  // 'Wishlist Save' = a specific PIECE hearted (wishToggle). A custom row
+  // reports as 'custom' because her own typed name is not ours to send.
+  if(next==='want')track('Wardrobe Star',{slot:isCustom?'custom':id});
   saveWardrobeData();
   renderWardrobeList();
 }
@@ -7636,6 +7670,7 @@ function _wdrMarkSeen(ids){
 async function _wardrobeIdeaGen(id,boxId){
   const box=document.getElementById(boxId||('wx_'+id));
   if(!box)return;
+  box.setAttribute('data-slot',id);   // read by the Product Click listener
   const again="_wardrobeIdeaGen('"+id+"'"+(boxId?",'"+boxId+"'":"")+")";
   const name=_wardrobeFindName(id);
   if(!name)return;
@@ -8010,6 +8045,10 @@ function wishToggle(id){
     else if(m.exact){entry.exact=true;entry.url=m.url;entry.price=m.price;}
     _wlList().unshift(entry);
     added=true;
+    // 'kind' separates the three row types the wishlist can hold, which is the
+    // interesting question here: does she save Catherine's own Edit picks, real
+    // catalog products, or AI suggestions? Un-saving is deliberately not tracked.
+    track('Wishlist Save',{store:m.store||'unknown',kind:m.pick?'edit-pick':(m.exact?'catalog':'ai')});
   }
   saveWardrobeData();
   _wlSyncButtons();
@@ -8790,6 +8829,10 @@ async function sendChat(){
   const msg=input.value.trim()||'What do you think of this outfit?';
   if(!msg&&!chatPhotoData)return;
   input.value='';
+
+  // Counts her side of the conversation only, never the stylist's replies, and
+  // carries NO message text -- only whether a photo rode along.
+  track('Chat Message Sent',{withPhoto:chatPhotoData?'yes':'no'});
 
   const thumbSrc=chatPhotoData?document.getElementById('chatPhotoThumb').src:null;
   addChatMsg(msg,'user',thumbSrc);
