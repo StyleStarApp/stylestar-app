@@ -125,8 +125,11 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
           note: (c.querySelector('.wdr-cur-note') || {}).textContent || '',
           link: c.querySelector('.shop-link') ? {href: c.querySelector('.shop-link').getAttribute('href'), rel: c.querySelector('.shop-link').getAttribute('rel'), label: c.querySelector('.shop-link').textContent} : null,
           save: !!c.querySelector('.wl-save'),
-          flag: [...c.querySelectorAll('.wdr-linkflag')].some(n => /Link broken/.test(n.textContent)),
-          notforme: [...c.querySelectorAll('.wdr-linkflag')].some(n => /Not for me/.test(n.textContent))
+          // Retired 2026-08-15 (her call): a catalog card carries a piece and
+          // two actions, nothing else. Asserted GONE below so neither the
+          // "Not for me" hard exclusion nor the "we'll check it" promise can
+          // creep back in unnoticed.
+          ops: c.querySelectorAll('.wdr-cardops, .wdr-linkflag').length
         })) : [],
         constraint: (box && box.querySelector('.wdr-cur-empty')) ? box.querySelector('.wdr-cur-empty').textContent : '',
         checkedLine: (box && box.querySelector('.wdr-cur-checked')) ? box.querySelector('.wdr-cur-checked').textContent : ''
@@ -150,7 +153,10 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
   ok('catalog links exact "Shop it" sponsored noopener', curCards.every(c => c.link && /^https:\/\//.test(c.link.href) && /Shop it/.test(c.link.label) && /sponsored/.test(c.link.rel)));
   ok('AI cards say "Find it" (the one surviving distinction)', aiCards.every(c => c.link && /Find it/.test(c.link.label)));
   ok('every card has a save heart', classic.cards.every(c => c.save));
-  ok('catalog cards carry Not for me + Link broken?', curCards.every(c => c.flag && c.notforme));
+  // ⚠️ DELIBERATE REVERSAL of the 2026-08-14 assertion (which required both
+  // controls). She removed them 2026-08-15: "she can just swipe past it."
+  ok('no Not for me / Link broken? on catalog cards', curCards.every(c => c.ops === 0));
+  ok('no report controls anywhere on the shelf', !/wdr-linkflag|wdr-cardops|Not for me|Link broken/.test(classic.html));
   ok('See more ideas button present', /See more ideas/.test(classic.html));
   const classicNames = curCards.map(c => c.name).sort().join('|');
   // save → wishlist PLAIN: exact URL kept, no Catherine's-pick badge
@@ -170,7 +176,7 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
   await ctx.close();
 
   // 3. Rotation machinery: stable within a week, different across weeks,
-  //    dismissal is a hard exclusion, saved is exempt from staleness
+  //    an old dismissal no longer excludes, saved is exempt from staleness
   ({ctx, pg} = await fresh({aiOk: true}));
   await seedAndOpen(pg, 'The Timeless Classic');
   const rotr = await pg.evaluate(async () => {
@@ -182,7 +188,9 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
     let weekSets = [];
     for (let k = 1; k <= 6; k++) { window._wdrWeek = () => w0() + k; weekSets.push(curatedPicks('to5', base, 'Balanced', 4).picks.map(p => p.id).join(',')); }
     window._wdrWeek = w0;
-    // dismissal
+    // a dismissal left on a device from the retired control must NOT hide a
+    // piece any more (2026-08-15: the filter came out with the button, so
+    // anything she waved off while testing is back in her rotation)
     localStorage.setItem('ss_dismissed', JSON.stringify({[a[0]]: '2026-08-14'}));
     const afterDismiss = ids();
     localStorage.removeItem('ss_dismissed');
@@ -200,7 +208,9 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
   });
   ok('same week → identical set (stability)', rotr.a.join() === rotr.b.join());
   ok('set changes across weeks (rotation)', new Set(rotr.weekSets.concat([rotr.a.join(',')])).size > 1, JSON.stringify(rotr.weekSets));
-  ok('dismissed item never returns', !rotr.afterDismiss.includes(rotr.a[0]));
+  // ⚠️ DELIBERATE REVERSAL of the 2026-08-14 "dismissed item never returns"
+  // assertion — the hard exclusion was removed with the control it served.
+  ok('a stale ss_dismissed entry no longer hides a piece', rotr.afterDismiss.join() === rotr.a.join(), JSON.stringify({a: rotr.a, afterDismiss: rotr.afterDismiss}));
   ok('prior-week staleness sinks an unsaved item', !rotr.afterStale.includes(rotr.a[0]) || rotr.afterStale.indexOf(rotr.a[0]) > rotr.a.indexOf(rotr.a[0]), JSON.stringify({a: rotr.a, afterStale: rotr.afterStale}));
   ok('a saved item is exempt from staleness', rotr.afterSaved.includes(rotr.a[0]), JSON.stringify(rotr.afterSaved));
   // seen map written on render
@@ -302,13 +312,19 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
   });
   ok('loved colour leads the ranking', /blue/.test(loveRank.anyBlue), loveRank.anyBlue);
 
-  // 8. Broken-link tap stamps and thanks
+  // 8. The retired report controls leave nothing behind (2026-08-15): no
+  //    handlers, no CSS, no storage written, no promise she can tap.
   await ideasFor(pg, 'to5');
-  const flag = await pg.evaluate(() => {
-    [...document.querySelectorAll('#wx_to5 .wdr-linkflag')].find(n => /Link broken/.test(n.textContent)).click();
-    return {store: localStorage.getItem('ss_linkflags') || '', txt: document.querySelector('#wx_to5 .wdr-linkflag.flagged') ? document.querySelector('#wx_to5 .wdr-linkflag.flagged').textContent : ''};
-  });
-  ok('Link broken? stamps locally and thanks her', /p0\d\d/.test(flag.store) && /Thank you/.test(flag.txt), flag.store + ' | ' + flag.txt);
+  const gone = await pg.evaluate(() => ({
+    nodes: document.querySelectorAll('#wx_to5 .wdr-linkflag, #wx_to5 .wdr-cardops').length,
+    fns: ['_flagBrokenLink', '_wdrNotForMe', '_wdrDismissed'].filter(f => typeof window[f] === 'function'),
+    stored: localStorage.getItem('ss_linkflags'),
+    words: /Not for me|Link broken|we’ll check it|we'll check it/.test(document.querySelector('#wx_to5').innerHTML)
+  }));
+  ok('no report controls render on a catalog shelf', gone.nodes === 0);
+  ok('their handlers are gone from the page', gone.fns.length === 0, gone.fns.join());
+  ok('nothing writes ss_linkflags any more', !gone.stored);
+  ok('no "we\'ll check it" promise left on screen', !gone.words);
   await ctx.close();
 
   // 9. No sideways overflow at 390/360/320 with a curated set open

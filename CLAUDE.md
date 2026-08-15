@@ -7,7 +7,85 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-14 evening — THE CURATED CATALOG IS BUILT, ON A BRANCH AWAITING HER WORD)
+## ▶ NEXT SESSION — START HERE (2026-08-15 morning — HER FIRST LIVE TEST OF THE CATALOG SHELF)
+
+### ⏸ WHERE THE 2026-08-15 MORNING SESSION PAUSED
+**ONE PR, #854, merged on her word ("go ahead and merge") — three commits batched deliberately into a
+single Netlify build while she tested.** Her session was a screenshot pass on the live blended shelf.
+- ⭐⭐ **"NOT FOR ME" AND "LINK BROKEN?" ARE DELETED, her call — and it was her instinct at build time
+  too ("she could swipe past it, we will see").** Her words this session: *"I feel like I want to delete
+  the not for me and broken link. It seems like she can just swipe past it?"* **The full reasoning is in
+  a block comment above `_wdrTrimNote` so it never reads as an accident**, incl. two faults found while
+  removing them: (1) ⚠️ **"Not for me" had NO UNDO** — one mis-tap hid a piece from her shelf forever and
+  nothing in the app ever cleared `ss_dismissed`; (2) ⚠️ **"Link broken?" answered "Thank you, we'll check
+  it ♡", true ONLY while the Plausible dashboard is watched** — the standing honesty rule (the "in your
+  size" removal, the restore-email copy) says never promise what the app does not do. Also: both put two
+  tappable-looking words on catalog cards that AI cards lack, breaking her ONE seamless carousel.
+  ▶ **THE DISMISSAL FILTER CAME OUT OF THE PICKER TOO, deliberately — so any piece she waved off while
+  testing is back in her rotation.** ▶ **THE TRIGGER TO REVISIT, written at the code: when the catalog
+  outgrows her own eye (~60+ items, or real users at volume), bring back "Link broken?" ONLY, never "Not
+  for me", and only with a dashboard she actually reads.** curated.js 60 → **64**, four assertions
+  DELIBERATELY REVERSED (the controls asserted GONE: no nodes, no handlers, no storage write, no promise
+  on screen; a stale `ss_dismissed` asserted NOT to hide a piece).
+- ⭐⭐ **THE NAME IS THE SEARCH — NOW GUARANTEED IN CODE, NOT JUST IN THE PROMPT (`_nameParity`).** Her
+  catch: the White tops shelf offered a **"Satin Draped Top" whose search was "white satin top"**, and
+  Revolve answered with boxy cotton tees. Her words: *"it should not promise draped."* The card beside it
+  had the same fault ("Linen Relaxed Top"). ▶ **THE DIAGNOSIS THAT CHANGED THE FIX, and it generalises:
+  the prompt rule was NOT wrong — a live re-test of three slots came back word-for-word perfect ("White
+  Linen Top" ←→ "white linen top"). This was model DRIFT on a rule the prompt calls absolute, which is
+  exactly the never-wear shape: a rule nothing checks on the way back.** So the name is now TRIMMED to
+  what its search can deliver, before render, on all four card surfaces (`_shopCard`) and Complete the
+  Look (`_renderShop`). Puffery goes the same way ("Classic White Crewneck Tee" → "White Crewneck Tee").
+  ⚠️ **THE SEARCH TERM IS NEVER TOUCHED** — every link searches exactly what it did; only the promise
+  moves. **Two deliberate allowances:** the search MAY carry a word the name does not (a colour-named row
+  already promises it in the header — her own reasoning), and jewellery mood words survive (the prompt's
+  small-catalogue rule). ⚠️ **A name is modifier-modifier-NOUN, so when the HEAD NOUN is the word that
+  goes, the name is rebuilt from the search** ("White Scoop Neck Tee" over "white scoop neck top" would
+  otherwise trim to "White Scoop Neck", which names nothing — a real live run produced that pair).
+  ⚠️ A trimmed name changes `_wlMakeId`, so a piece saved under the old puffed name reads as unsaved on a
+  fresh card; pre-launch that is noise, migrate ids in `_normalizeWardrobe` if it ever matters.
+  New `scratchpad/nameparity.js` **24 checks** + `scratchpad/nameparity-live.js` (re-runs the REAL model
+  against the REAL captured prompts; costs a few cents of the production key, the standing trade).
+- ⭐ **A BASIC TOP IS JUST A TOP — her definition, from her catch on the live Black tops shelf** (it
+  offered a "Long Sleeve Bodysuit" and a "Knit Turtleneck Top"). Her words, verbatim and now the rule:
+  *"A black top should just be a black top. Not a tank top, not a collared blouse, just a top."* ▶ **WHY
+  THE EXISTING MACHINERY COULD NOT CATCH IT, worth remembering: `_WDR_IDEA_EXCLUDE` only blocks OTHER ROWS
+  on her checklist, and a bodysuit and a turtleneck are not rows — there was nothing to exclude them
+  from.** Same gap as "work-appropriate": obvious to a stylist, wide open to a model. So it gets a
+  `_WDR_IDEA_DEFINE` entry in the proven shape (imperative NEVER, inside the RULES list, closed with
+  "This rule is absolute" — the placement lesson from her first dresses retest), applied to **to1 White
+  tops · to2 Black tops · to3 Tops in your favorite colors**, the same trio that share the exclusions.
+  ✅ **PROVEN LIVE, TWO RUNS PER SLOT** (the dresses definition needed a second pass, so one clean run
+  proves nothing): all four runs clean — crew/scoop/V necks and sleeve lengths, zero bodysuits,
+  turtlenecks, tanks or blouses. ⚠️ **The NEVER list is entirely HERS; the positive half is a flagged
+  Claude draft she has NOT blessed — reword freely. Satin is deliberately NOT banned** (she objected to
+  "draped", not the fabric) — ▶ ask if a basic top should exclude satin.
+- ✅ **HER NORDSTROM RACK QUESTION, answered and NOT a bug:** her tap landed in the Rack APP on its home
+  page with no search. **iOS universal links** — with the app installed the system hands the tap over
+  before Safari sees the URL, and their app drops the search path. The tell in her own screenshot:
+  "◀ Style Star" top-left + it greeted her as Catherine. **Same family as lululemon (2026-08-08); a woman
+  WITHOUT the app lands on the real results page, and Apple offers no way to force the browser.** The
+  heart-tip is the standing mitigation. Nothing to build.
+- ⭐ **HER SUNDAY LINK-CHECK ROUTINE IS SET UP, her ask** (*"I would like to get into a weekly routine
+  where I check the links with cowork"*): a Routine fires **every Sunday 9:00 AM ET** into a FRESH session
+  that runs `scripts/check-product-urls.js` and hands her the results, so she clicks through her Cowork
+  link page alongside it. **Sunday deliberately — the app's own change day** (Star of the Week + the
+  catalog rotation both turn at midnight into Sunday). ⚠️ Retires the old standing "nudge her every week
+  or two" reminder; the Routine IS the nudge now.
+- **Suites at pause, all green:** nameparity **24** (new) · curated **64** · searchtune 70 · wladd 102 ·
+  wdrworksheet 73 · wdrcalmcheck 27 · hubs 49 · affq 40 · e2e 29.
+- ▶ **THE FIRST THINGS NEXT SESSION:**
+  1. **How the trimmed names read on her phone** — the honest cost of the parity guarantee is plainer
+     card names ("Satin Top", not "Satin Draped Top"). If they feel too bare, the lever is letting the
+     SEARCH carry the extra word instead of cutting it from the name, not weakening the guarantee.
+  2. **Her verdict on the basic-top definition** (the positive half + the satin question above).
+  3. **Sunday Aug 16 is the first automatic Star swap** (kitten heel → bangles) AND the first firing of
+     the link-check Routine. Both should happen with nothing from her.
+  4. **The Almira call: MONDAY, AUGUST 17, 12:30 PM.** Ask how it went and log the TM filing dates +
+     serial numbers here.
+- ▶ Everything from the 2026-08-14 entries below is unchanged by this work.
+
+## ▶ PREVIOUS — 2026-08-14 evening (THE CURATED CATALOG IS BUILT)
 
 ### ⏸ WHERE THE 2026-08-14 EVENING SESSION PAUSED
 **MERGED as PR #852 on her explicit word ("let's go ahead and merge it") after the full talk-through — all

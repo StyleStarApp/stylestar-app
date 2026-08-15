@@ -954,11 +954,8 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 .shop-item-brand{font:700 11px/1.2 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a463e;margin-bottom:2px}
 .wdr-curated .shop-item-store{text-transform:none;letter-spacing:.02em;font-weight:500;color:#5f5647}
 .wdr-cur-note{font:400 13px/1.45 'Lora',Georgia,serif;color:#4a463e;text-align:left;margin:0 0 10px}
-/* quiet through SIZE, never through sub-AA ink (the three-times-learned
-   label lesson): #6e6e6e is the disclosure ink, 4.6:1 on this card. */
-.wdr-cardops{display:flex;gap:14px;justify-content:center;margin-top:7px}
-.wdr-linkflag{display:inline-block;font:400 11px/1.4 'Jost',sans-serif;color:#6e6e6e;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
-.wdr-linkflag.flagged{text-decoration:none;color:#5f5647}
+/* (.wdr-cardops / .wdr-linkflag retired 2026-08-15 with the "Not for me" and
+   "Link broken?" controls -- see the note above _wdrTrimNote for why.) */
 /* "+ See more ideas": the squared gold-outline button language (the wishing
    button's own construction) — she can always keep looking. */
 .wdr-morewrap{text-align:center;margin:12px 0 2px}
@@ -4709,7 +4706,7 @@ function _renderTips(tips){
 }
 function _renderShop(items){
   const c=document.getElementById('pShopList');
-  c.innerHTML=filterNeverWear(items).map(it=>{
+  c.innerHTML=filterNeverWear(items).map(_nameParity).map(it=>{
     const url=getStoreUrl(it.store,it.name,it.search);
     const emoji=photoShopEmoji[it.category]||'✨';
     const why=it.why?' &middot; '+_esc(it.why):'';
@@ -5320,6 +5317,7 @@ const FIND_LABEL='Find it &rarr;';
 //   read as loud above the products, and her own subtitle already says every
 //   piece is her pick). Only the MALL keeps its longer founder-voice version.
 function _shopCard(item,topHtml){
+  item=_nameParity(item);   // the name may not promise what the search drops
   const key=resolveStore(item.store);
   const url=getStoreUrl(item.store,item.name,item.search);
   return '<div class="shop-card"><div>'+(topHtml||'')+
@@ -6510,6 +6508,58 @@ function _fitSizes(){
 // explicit word — never guess at what else is dated; she is the trend
 // authority (the standing store-tags rule).
 const _STYLIST_VETO=['ribbed','skinny jeans'];
+// ▶ THE NAME-IS-THE-SEARCH GUARANTEE (2026-08-15, her catch on a live shelf).
+// Every shopping prompt has said since 2026-08-12 that a card's name is "the
+// search written beautifully -- nothing the search does not carry," and a
+// live re-test of three slots came back word-for-word perfect. Then her White
+// tops shelf offered a "Satin Draped Top" whose search was "white satin top",
+// and Revolve answered with boxy cotton tees. The rule was not wrong, the
+// model DRIFTED -- which is the same shape as the never-wear problem below:
+// a rule the prompt calls absolute, with nothing checking what comes back.
+//
+// So the name is now TRIMMED to what its search can actually deliver, before
+// anything renders. "Satin Draped Top" over "white satin top" becomes "Satin
+// Top". Puffery goes the same way ("Classic White Crewneck Tee" over "white
+// crewneck tee" becomes "White Crewneck Tee") -- if the search cannot deliver
+// the word, the card must not promise it.
+//
+// TWO DELIBERATE ALLOWANCES:
+//  - The search may carry a word the NAME does not (a colour-named row like
+//    "White tops" already promises white in its header; repeating it on all
+//    four cards is redundant, not dishonest).
+//  - Jewellery mood words survive, mirroring the prompt's own rule -- a
+//    boutique's strict search is emptied by "statement", so the name keeps it.
+// If trimming would leave less than two words, the name is rebuilt from the
+// search itself, which is honest by construction ("Refined Blouse" over
+// "professional blouse" becomes "Professional Blouse").
+// ⚠️ A trimmed name changes _wlMakeId, so a piece saved under the old puffed
+// name reads as unsaved on a fresh card. Pre-launch that is noise; if it ever
+// matters, migrate ids in _normalizeWardrobe rather than weakening this.
+const _NAME_MOOD_OK=['statement','chunky','dainty','layered','delicate'];
+function _nameParity(item){
+  if(!item||!item.name||!item.search)return item;
+  const search=String(item.search).toLowerCase();
+  const jewel=/earring|necklace|bracelet|bangle|ring\b|pendant/i.test(item.name);
+  const words=String(item.name).trim().split(/\s+/);
+  const kept=words.filter(function(w){
+    const bare=w.toLowerCase().replace(/[^a-z-]/g,'');
+    if(!bare)return true;
+    if(jewel&&_NAME_MOOD_OK.indexOf(bare)>=0)return true;
+    if(search.indexOf(bare)>=0||search.indexOf(bare.replace(/s$/,''))>=0)return true;
+    // "Button-Front" against a search of "button front blouse"
+    return bare.indexOf('-')>=0&&bare.split('-').every(function(p){return !p||search.indexOf(p)>=0});
+  });
+  if(kept.length===words.length)return item;
+  // A name is "modifier modifier NOUN", so losing the LAST word loses the
+  // garment itself -- "White Scoop Neck Tee" over a search for "white scoop
+  // neck top" would trim to "White Scoop Neck", which names nothing. When the
+  // head noun goes, or too little survives, rebuild from the search, which is
+  // honest by construction and still carries the noun.
+  const headKept=kept.length&&kept[kept.length-1]===words[words.length-1];
+  const name=(kept.length>=2&&headKept)?kept.join(' ')
+    :search.trim().split(/\s+/).map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');
+  return Object.assign({},item,{name:name});
+}
 function filterNeverWear(items){
   if(!Array.isArray(items))return[];
   const terms=_STYLIST_VETO.concat(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
@@ -7248,7 +7298,26 @@ var _WDR_IDEA_EXCLUDE={
 // moved into RULES itself (see defineRule below), plus the three violations
 // she actually saw are now named explicitly, not left to fall out of a
 // general "modest neckline" phrase.
+// ▶ 2026-08-15, her catch on the live Black tops shelf: it offered a "Long
+// Sleeve Bodysuit" and a "Knit Turtleneck Top". Her words, and they are the
+// definition: "A black top should just be a black top. Not a tank top, not a
+// collared blouse, just a top... Definitely not what we want for a basic
+// black top." The sibling-exclusion map could never have caught these -- a
+// bodysuit and a turtleneck are not rows on her checklist, so there was
+// nothing to exclude them FROM. What was missing is the same gap as
+// "work-appropriate": "a black top" reads as obvious to a stylist and is
+// wide open to a model, so it needs her concrete definition.
+// ⚠️ The NEVER list is entirely hers (bodysuit, turtleneck, tank/camisole,
+// collared or button-front blouse). The positive half is Claude's draft and
+// SHE HAS NOT BLESSED IT -- reword freely. Satin is deliberately NOT banned
+// (her White tops shelf offered a satin top and she did not object to the
+// fabric, only to the unbacked "draped"). Applied to all three colour-generic
+// basic rows, the same trio that share the sibling exclusions above.
+var _BASIC_TOP='She means a SIMPLE everyday top, nothing more. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, or anything dressy, going-out, sequined or sheer. Every option must be a plain, wearable top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
 var _WDR_IDEA_DEFINE={
+  to1:_BASIC_TOP,   // White tops
+  to2:_BASIC_TOP,   // Black tops — her 2026-08-15 catch
+  to3:_BASIC_TOP,   // Tops in your favorite colors
   dr3:'For "Work-appropriate dresses," NEVER suggest one-shoulder or asymmetric necklines, spaghetti straps, strapless or plunging necklines, satin, sequined, shiny, or sheer fabric, or a hemline or slit above the knee. Every option must hit at or below the knee, fit tailored (never tight or clingy), have a modest neckline (crew, small V, or scoop) with wide or standard straps, use structured medium-weight fabric like wool blends, crepe, or ponte, stay in solid or subtle muted or neutral prints, and have short, three-quarter, or long sleeves (sleeveless only if conservative). This rule is absolute, the same weight as her never-wear list.'
 };
 // ═══════════════════════════════════════════════════════════════════════════
@@ -7346,11 +7415,10 @@ function curatedPicks(slot,p,family,count){
   // STAGE 2 — family match. Balanced keeps everything.
   if(family&&family!=='Balanced')pool=pool.filter(function(x){return x.families.indexOf(family)>=0});
   mark('style');
-  // Explicit dismissal ("Not for me") is the one staleness signal that IS a
-  // hard exclusion -- the freshness addendum's rule, and the only mechanism
-  // that genuinely renews a small pool.
-  const dism=_wdrDismissed();
-  pool=pool.filter(function(x){return !dism[x.id]});
+  // (The freshness addendum's one HARD exclusion, an explicit "Not for me",
+  // came out with that control on 2026-08-15 -- see the note above
+  // _wdrTrimNote. The weekly rotation is what renews the pool now, and a
+  // piece she waved off while testing is back in her shelf.)
   mark('preferences');
   // STAGE 4 first as a SORT, then STAGE 3 as the PICK (diversity + price
   // spread). Ranking per the freshness addendum, amended to WEEK-scale
@@ -7421,9 +7489,34 @@ function curatedPicks(slot,p,family,count){
 // One catalog card: brand leads (the trust signal she reads -- "L'Agence",
 // not "Nordstrom"), retailer secondary, note trimmed to its first sentence
 // or two. Save keeps the exact URL but lands PLAIN on the wishlist (no
-// badge). "Not for me" hides the piece for her for good and tells Cath's
-// dashboard; "Link broken?" flags rot the same way. Both ride Plausible, no
-// backend.
+// badge). Nothing else. The card carries a piece and two actions.
+//
+// ▶ "NOT FOR ME" AND "LINK BROKEN?" WERE BUILT 2026-08-14 AND REMOVED
+// 2026-08-15, her call, and the reasoning is worth keeping because it decides
+// any future report control:
+//   (1) HER READ, and it was her instinct at build time too: "she can just
+//       swipe past it." A shelf she scrolls does not need a control to say no
+//       -- scrolling IS saying no, and the Sunday rotation renews the set
+//       without her having to file a report.
+//   (2) "Not for me" had NO UNDO. One mis-tap hid that piece from her shelf
+//       forever; nothing in the app cleared ss_dismissed. A permanent,
+//       silent, un-reversible consequence behind an 11px word is the wrong
+//       trade on a browsing surface.
+//   (3) "Link broken?" answered with "Thank you, we'll check it" -- true ONLY
+//       while Cath watches her Plausible dashboard. The app's standing
+//       honesty rule (the "in your size" removal, the restore-email copy)
+//       says never promise what the app does not actually do.
+//   (4) Both put two tappable-looking words on catalog cards that the AI
+//       cards beside them do not have, which quietly broke the ONE seamless
+//       carousel she designed.
+// The catalog stays honest through HER instruments instead: her clickable
+// Cowork link page + scripts/check-product-urls.js, re-run every week or two.
+// ▶ THE TRIGGER TO REVISIT: when the catalog outgrows her own eye (roughly
+// 60+ items, or real users at volume), a report channel earns its place --
+// but bring back "Link broken?" ONLY, never "Not for me", and only with a
+// dashboard she actually reads. The dismissal filter came out of the shelf
+// picker with it, deliberately, so any piece she waved off while testing is
+// back in her rotation.
 function _wdrTrimNote(t){
   t=String(t||'').trim();
   if(t.length<=150)return t;
@@ -7440,26 +7533,8 @@ function _curatedCard(x){
     +'<div class="shop-card-act">'
     +'<a href="'+_esc(x.url)+'" target="_blank" rel="sponsored noopener" class="shop-link">Shop it</a>'
     +_wlSaveBtn(saveItem)
-    +'</div>'
-    +'<div class="wdr-cardops">'
-    +'<span class="wdr-linkflag" role="button" onclick="_wdrNotForMe(this,\''+_esc(x.id)+'\')">&#10005; Not for me</span>'
-    +'<span class="wdr-linkflag" role="button" onclick="_flagBrokenLink(this,\''+_esc(x.id)+'\')">Link broken?</span>'
     +'</div></div>';
 }
-function _flagBrokenLink(el,pid){
-  try{var f=JSON.parse(localStorage.getItem('ss_linkflags')||'{}');f[pid]=new Date().toISOString().slice(0,10);localStorage.setItem('ss_linkflags',JSON.stringify(f));}catch(e){}
-  track('Broken Link',{product:pid});
-  if(el)el.outerHTML='<span class="wdr-linkflag flagged">Thank you, we’ll check it ♡</span>';
-}
-// "Not for me": a hard exclusion from then on -- the one mechanism that
-// genuinely renews a small pool, and free curation signal for Cath (a piece
-// many women wave off is one to review on her dashboard).
-function _wdrNotForMe(el,pid){
-  try{var d=_wdrDismissed();d[pid]=new Date().toISOString().slice(0,10);localStorage.setItem('ss_dismissed',JSON.stringify(d));}catch(e){}
-  track('Not For Me',{product:pid});
-  try{var card=el.closest('.shop-card');if(card)card.remove();}catch(e){}
-}
-function _wdrDismissed(){try{return JSON.parse(localStorage.getItem('ss_dismissed')||'{}')}catch(e){return{}}}
 // ── The freshness machinery (2026-08-14 addendum, amended to week scale) ──
 // The rotation week turns at midnight into Sunday on the woman's own clock,
 // the SAME Sunday-anchored rhythm as the Star of the Week (anchor Sunday
