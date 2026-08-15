@@ -180,6 +180,24 @@ prompt rule was already RIGHT and the model DRIFTED.** Where that happens the an
      beyond her satin sentence.
   5. ▶ **The store MIDDLE TIER** (the revisit trigger above) — Talbots · J.Jill · Lands' End · Boden ·
      J.Crew · Anthropologie · Free People · Athleta. **Ask, never infer.** Nothing is blocked on it.
+- 📊 **HER ANALYTICS ARE HERS-ONLY NOW, and there is ONE STANDING ANSWER she has asked to be reminded of.**
+  Her own testing was being counted as real visitors, so a `plausible_ignore` flag is enforced by simply
+  **never loading the Plausible script** (belt and braces: `track()` checks the same flag). ⚠️ **TWO DOORS,
+  and the second exists because the first is unreachable where she actually tests:** (1) `stylestar.app/?notrack`
+  once per browser, `/?track` to undo — ⚠️ **the ADDRESS is the point, because iPhone Safari has no console and
+  the documented way to set this flag is a console command**; (2) ⭐ **FIVE TAPS on any Style Star brand mark**,
+  which is the only switch reachable from her HOME-SCREEN APP — no address bar, and an installed iOS web app
+  keeps its **own storage container** (the 2026-08-08 restore-code lesson), so a flag set in Safari never
+  reaches it. Taps only COUNT (every tap still navigates home), reset after 3s of quiet, and **toggle BOTH
+  ways** so she can never lock herself out. ✅ **DONE by her on 2026-08-15: the home-screen app AND regular
+  Safari.**
+  ▶▶ **THE REMINDER SHE ASKED FOR, VERBATIM ANSWER — give it whenever she mentions testing as a beginner, a
+  new user, a fresh start, or incognito/private mode:** *"Open private browsing and type
+  **stylestar.app/?notrack** — every time, because private mode forgets it when you close it."* ⚠️ **Do NOT
+  tell her to use the five taps there:** the taps fire AFTER the page has already counted the visit, while the
+  address is read BEFORE the script ever loads, so only the address makes a private session truly invisible.
+  ⚠️ And private mode is the ONE place this can never be made permanent — iPhone throws the flag away with the
+  session. Nothing is broken when she reports it "not sticking" in incognito; that is the platform.
 - ▶ **UNCHANGED AND STILL WAITING:** her Cowork spreadsheet rhythm (new CSV export → "new export" → the
   converter validates → commit; no code changes should EVER be needed for new rows) · MailerLite desk items
   ("Email me my wishlist" · photo-tips email) · more Trending/Edit content · the parked triggers (the
