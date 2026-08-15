@@ -7,9 +7,107 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-15 morning — HER FIRST LIVE TEST OF THE CATALOG SHELF)
+## ▶ NEXT SESSION — START HERE (2026-08-15 LATE — THE CATALOG QUADRUPLED AND HER ANALYTICS BECAME REAL)
 
-### ⏸ WHERE THE 2026-08-15 SESSION PAUSED (her call: "let's save everything to the md and pause here")
+### ⏸ WHERE THE 2026-08-15 LATE SESSION PAUSED (her call: "let's pause here and save to the .md")
+**THREE PRs merged and curl-verified live: #859 · #860 · #861. Three Netlify builds.** Branch resynced to
+main, working tree clean, remote in sync. ▶ **THE SHAPE OF THIS SESSION: it was a COWORK HANDOFF session** —
+she is running a second Claude session (Cowork) that fills the catalog spreadsheet while this one builds the
+code, and **the whole session was about making that handoff work without either side guessing.** The reusable
+lesson is at the top of the list below.
+- ⭐⭐ **THE CATALOG IS 92 PRODUCTS NOW, up from 21** (bo1 Blue jeans 8 · to5 Professional blouses 13 · plus
+  71 new across many slots, incl. **sh9 Fashion sneakers at 17 across 9 retailers** — Cowork's own fix after
+  a first pass put 9 products across only 2 retailers, which the max-2-per-retailer rule would have capped at
+  4 picks with zero slack). ▶ **THE HANDOFF INSTRUMENT THAT MADE IT WORK, and it is the thing to reuse: a
+  written CSV SPEC brief she pastes to Cowork** (`scratchpad/cowork-catalog-brief.md`, sent to her in chat) —
+  the exact header, every column rule, the note-trimming rule, the veto warning, the shelf-quality targets,
+  the three standing store exclusions, **all 100 slot ids and all 100 STORES keys with exact punctuation**.
+  ⚠️ **The spec ends by naming index.html as the final authority**, because the converter parses slots and
+  stores out of it at convert time — a brief that goes stale is worse than none.
+  ⚠️ **DIFF THE EXPORT, NEVER ASSUME IT IS ADDITIVE.** Her second export was diffed row by row: 8 added,
+  **0 removed, and 5 NOTES SILENTLY REWORDED** (p001 · p007 · p011 · p035 · p051 — every one of them removing
+  body-flattery language, which is consistent with her standing rule, but they are HER notes and she has not
+  seen the rewordings). ▶ **Flagged to her, still unanswered: those 5 want her eye.**
+  ⚠️ **Two files named `style-star-products.csv` now exist in her Drive** — sort by modified time on any pull.
+- ⚠️ **THE `width` COLUMN, and the correction that saved it:** the handoff described values like N/S/M/W/WW,
+  and **the real export writes WORDS** ("medium", "narrow, medium, wide"), so a letter-code whitelist would
+  have failed every shoe row. It is carried through verbatim, split on commas like `colors`, **deliberately
+  NOT validated against a vocabulary**, and **nothing filters on it yet** — ▶ **her call, verbatim: "most
+  shoes only come in medium. if a woman truly needs a narrow or a wide I want her to be able to find it but
+  I don't want to make a big deal of it."** So the data is captured and the filtering is not built. Don't
+  build it without her.
+- ⭐ **HER ANALYTICS TELL HER SOMETHING NOW — five new events + the own-visit exclusion.** ⚠️ **Two of the
+  brief's five items were ALREADY BUILT and were recorded rather than rebuilt** (the freshness machinery
+  2026-08-14; six Plausible events since 2026-07-29) — **check before building anything a brief asks for.**
+  New events: **Photo Uploaded** (the gap to Photo Analyzed IS the failure rate) · **Chat Message Sent**
+  (with/without photo, **never the text**) · **Wishlist Save** (store + kind: edit-pick/catalog/ai) ·
+  **Wardrobe Star** (slot). **Quiz Completed now carries her archetype** — ⚠️ the `track` call had to MOVE
+  below `topArchNames`, it was firing before the archetype existed. **Product Click now carries `slot`**, via
+  a `data-slot` attribute on the Ideas box — which is what finally answers "which checklist rows actually
+  convert". ⚠️ **No event ever carries her answers, name, or email**; a test asserts it.
+- ⭐⭐ **THE OWN-VISIT EXCLUSION HAS TWO DOORS, and the second one is the whole lesson.** Full detail in the
+  📊 entry below (incl. **the verbatim incognito answer she asked to be reminded of** — give it whenever she
+  mentions testing as a beginner). ▶ **The reusable shape: a switch is only built when it is reachable ON THE
+  DEVICE SHE USES.** Door 1 (`/?notrack`) exists because iPhone Safari has no console. **Door 2 (FIVE TAPS on
+  any brand mark) exists because her home-screen app has no address bar AND keeps its own storage container**
+  — Claude shipped door 1 first and caught the gap only by asking where she actually tests. ✅ **She has now
+  done both the app and regular Safari and confirmed it worked.** New `scratchpad/notrack.js` **25 checks**.
+- ⚙️ **PROMPT CACHING went in, but SMALLER than the brief asked — and the brief's premise was wrong.** It
+  assumed a static `system` block in `style-ai.js`; **there is no `system` field in that function at all**,
+  every surface builds its prompt into `messages`. And a cache WRITE costs 1.25×, so caching a single-shot
+  call (which every card surface is) would pay a 25% surcharge for a cache nothing ever reads. **So it is
+  gated to `messages.length > 1`, i.e. the chat only**, which is the one genuinely multi-turn surface.
+  ⚠️ Also noted at the code: the `allowed_domains` crawler-block pruning invalidates the prefix once, and
+  Sonnet's minimum cacheable prefix is 1024 tokens.
+- 🧠 **HAIKU FOR STYLIST CHAT: recommended AGAINST, no code changed** (the brief asked for a view only).
+  The chat is the surface carrying her 20-years-of-styling voice and her never-wear guarantees, it is the
+  one place a woman is in conversation, and it is **already the cheapest thing per woman** next to a 5-10¢
+  searching answer. ▶ **The honest framing given to her: the cost lever is the SEARCH tool, not the model.**
+- ⚠️ **TEST-SUITE LESSON, and it cost real time: `curated.js` failed 15 checks when the catalog went 21 → 84,
+  and every one was STALE TEST DATA, not a regression.** Fixed by **deriving every expectation from the data**
+  (row count from the CSV, per-slot counts computed, the empty-slot case FOUND rather than hardcoded as
+  `to1`) — ▶ **a test that restates a number has to be edited every time the data grows; a test that derives
+  it never does.** ⚠️ **And the harness trap underneath it: `const wardrobeItems` / `let _productsCatalog`
+  are script-scope declarations, NOT properties of `window`**, so Playwright's injected `evaluate` cannot see
+  them. Two attempts failed on this before the value was computed in Node instead.
+- **Suites at pause, all green:** **notrack 25** (new) · curated 64 · e2e 29 · nav 80 · menu 87.
+- ▶ **THE FIRST THINGS NEXT SESSION, in order:**
+  1. ⚖️ **THE ALMIRA CALL: MONDAY, AUGUST 17, 12:30 PM.** Unchanged and still the money path — ask how it
+     went and **LOG THE TM FILING DATES + SERIAL NUMBERS HERE.**
+  2. 📱 **Sunday Aug 16: the first automatic Star swap AND the first link-check Routine fire (9:00 AM ET).**
+     Ask whether both happened with nothing from her. ⚠️ **TWO link-check Routines now overlap** — her call,
+     deliberately deferred: *"let's see how the check in routines go this week and we can decide about those
+     next week."* Raise it next week, not before.
+  3. 👀 **How the 92-product shelves feel on her phone** — this is the first time most slots have ANY catalog
+     behind them, so the blended shelf (≤4 catalog leading, AI filling to 6) is newly visible almost
+     everywhere. Watch for retailer repetition and price-band clumping, the two things the shelf rules guard.
+  4. ✍️ **The 5 reworded notes** (p001 · p007 · p011 · p035 · p051) want her eye.
+  5. 📊 **Her Plausible dashboard has real events in it now** — ⚠️ **but her own visits stopped counting the
+     same day**, so a drop in visitor numbers is the exclusion working, NOT a problem. Say this before she
+     reads the dashboard.
+- 📊 **HER ANALYTICS ARE HERS-ONLY NOW, and there is ONE STANDING ANSWER she has asked to be reminded of.**
+  Her own testing was being counted as real visitors, so a `plausible_ignore` flag is enforced by simply
+  **never loading the Plausible script** (belt and braces: `track()` checks the same flag). ⚠️ **TWO DOORS,
+  and the second exists because the first is unreachable where she actually tests:** (1) `stylestar.app/?notrack`
+  once per browser, `/?track` to undo — ⚠️ **the ADDRESS is the point, because iPhone Safari has no console and
+  the documented way to set this flag is a console command**; (2) ⭐ **FIVE TAPS on any Style Star brand mark**,
+  which is the only switch reachable from her HOME-SCREEN APP — no address bar, and an installed iOS web app
+  keeps its **own storage container** (the 2026-08-08 restore-code lesson), so a flag set in Safari never
+  reaches it. Taps only COUNT (every tap still navigates home), reset after 3s of quiet, and **toggle BOTH
+  ways** so she can never lock herself out. ✅ **DONE by her on 2026-08-15: the home-screen app AND regular
+  Safari.**
+  ▶▶ **THE REMINDER SHE ASKED FOR, VERBATIM ANSWER — give it whenever she mentions testing as a beginner, a
+  new user, a fresh start, or incognito/private mode:** *"Open private browsing and type
+  **stylestar.app/?notrack** — every time, because private mode forgets it when you close it."* ⚠️ **Do NOT
+  tell her to use the five taps there:** the taps fire AFTER the page has already counted the visit, while the
+  address is read BEFORE the script ever loads, so only the address makes a private session truly invisible.
+  ⚠️ And private mode is the ONE place this can never be made permanent — iPhone throws the flag away with the
+  session. Nothing is broken when she reports it "not sticking" in incognito; that is the platform.
+- ▶ **Everything from the 2026-08-15 morning entry below is unchanged by this work.**
+
+## ▶ PREVIOUS — 2026-08-15 morning (HER FIRST LIVE TEST OF THE CATALOG SHELF)
+
+### ⏸ WHERE THE 2026-08-15 MORNING SESSION PAUSED (her call: "let's save everything to the md and pause here")
 **FOUR PRs merged on her word and ALL CURL-VERIFIED LIVE: #854 · #855 · #856 · #857. Four Netlify builds
 for the whole day** (commits batched deliberately while she tested). Branch resynced to main, working tree
 clean. ▶ **THE SHAPE OF THE DAY, and it is the reusable lesson: FOUR screenshots that all looked like "the
@@ -180,24 +278,6 @@ prompt rule was already RIGHT and the model DRIFTED.** Where that happens the an
      beyond her satin sentence.
   5. ▶ **The store MIDDLE TIER** (the revisit trigger above) — Talbots · J.Jill · Lands' End · Boden ·
      J.Crew · Anthropologie · Free People · Athleta. **Ask, never infer.** Nothing is blocked on it.
-- 📊 **HER ANALYTICS ARE HERS-ONLY NOW, and there is ONE STANDING ANSWER she has asked to be reminded of.**
-  Her own testing was being counted as real visitors, so a `plausible_ignore` flag is enforced by simply
-  **never loading the Plausible script** (belt and braces: `track()` checks the same flag). ⚠️ **TWO DOORS,
-  and the second exists because the first is unreachable where she actually tests:** (1) `stylestar.app/?notrack`
-  once per browser, `/?track` to undo — ⚠️ **the ADDRESS is the point, because iPhone Safari has no console and
-  the documented way to set this flag is a console command**; (2) ⭐ **FIVE TAPS on any Style Star brand mark**,
-  which is the only switch reachable from her HOME-SCREEN APP — no address bar, and an installed iOS web app
-  keeps its **own storage container** (the 2026-08-08 restore-code lesson), so a flag set in Safari never
-  reaches it. Taps only COUNT (every tap still navigates home), reset after 3s of quiet, and **toggle BOTH
-  ways** so she can never lock herself out. ✅ **DONE by her on 2026-08-15: the home-screen app AND regular
-  Safari.**
-  ▶▶ **THE REMINDER SHE ASKED FOR, VERBATIM ANSWER — give it whenever she mentions testing as a beginner, a
-  new user, a fresh start, or incognito/private mode:** *"Open private browsing and type
-  **stylestar.app/?notrack** — every time, because private mode forgets it when you close it."* ⚠️ **Do NOT
-  tell her to use the five taps there:** the taps fire AFTER the page has already counted the visit, while the
-  address is read BEFORE the script ever loads, so only the address makes a private session truly invisible.
-  ⚠️ And private mode is the ONE place this can never be made permanent — iPhone throws the flag away with the
-  session. Nothing is broken when she reports it "not sticking" in incognito; that is the platform.
 - ▶ **UNCHANGED AND STILL WAITING:** her Cowork spreadsheet rhythm (new CSV export → "new export" → the
   converter validates → commit; no code changes should EVER be needed for new rows) · MailerLite desk items
   ("Email me my wishlist" · photo-tips email) · more Trending/Edit content · the parked triggers (the
