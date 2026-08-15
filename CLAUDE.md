@@ -72,9 +72,33 @@ noticed at all and was the most serious.** Read screenshots for what they SHOW, 
   stashing the change and watching it fail identically.** Rewritten to run that claim on a **catalog-free
   slot** (to2) so catalog growth in any slot can never break it again. ▶ **Always stash-and-rerun before
   believing a suite failure is yours.**
-- **Suites: `sizeveto.js` 42 (new) · nameparity 25 (was 23, +2 and one deliberate rewrite) · curated 65 ·
-  searchtune 70 · searchchat 57 · cowork3 69 · wladd 102 · storedepth 17 · e2e 29 — all green.**
-- ▶ **NEXT, AND SHE HAS ALREADY APPROVED IT: the "Maybe later" dead end (her find, item 3 of hers).**
+- **Suites: `sizeveto.js` 42 (new) · `prefdone.js` 24 (new) · nameparity 25 (was 23, +2 and one deliberate rewrite) · curated 65 ·
+  searchtune 70 · searchchat 57 · cowork3 69 · wladd 102 · storedepth 17 · e2e 29 · hubs 49 · affq 40 — all green.**
+- ✅⭐ **THE "MAYBE LATER" DEAD END IS FIXED — her pick "A" from four renders, built same session.** Finishing
+  Refine without giving an email landed her back on the **portrait she had already read**. ▶ **THE DIAGNOSIS
+  THAT SHARPENED HER OWN INSTINCT: the "Let's go shopping" button ALREADY EXISTED on that screen — inside
+  `prefSavedBlock`, `display:none` until she handed over her email.** So a woman who declined lost the
+  JOURNEY, not just the convenience, which inverts her own value-first rule ("never make her earn the value").
+  ▶ **As built: the button is on the screen for EVERYONE, above the email ask**, with the save ask following
+  under a hairline + "KEEP THEM FOR NEXT TIME". ⚠️ **DELIBERATELY NOT wired to "Maybe later", though that was
+  her first framing** — a dismissal that secretly takes you somewhere new is surprising, so shopping is a
+  visible CHOICE and "Maybe later" still just dismisses (asserted: it must NOT land on s-shopstyle).
+  ⚠️ **TWO COPIES OF THE BUTTON now exist, one per state** — `showPrefDone` shows exactly one, so only one is
+  ever on screen (the commission-line precedent). **BOTH must change together: grep `prefShopNow`.**
+  ⚠️ **The second seal's gradient id is `prefSeal2`, NOT a duplicate `prefSeal`** — the Safari hidden-defs trap.
+  ⚠️ **THE RENDER EARNED ITS KEEP TWICE:** (1) `.hm-cta-seal` **hangs at `top:-32px`**, so the gold star sits
+  ABOVE the button and lands on the sentence above unless given explicit clearance — invisible when reading the
+  CSS, obvious the moment it was drawn; (2) **her own instinct as option C looked wrong once rendered** — with
+  the button below the form and the privacy line, the payoff reads as an afterthought. **She was right about
+  where the woman should END UP; the render is what settled where it goes on screen.**
+  ✍️ **Her catch on the chosen render: "fun" straggled alone on a third line.** Fixed with **`text-wrap:balance`,
+  her standing widow lever** (the `.hm-h1` fix, reused on the tagline and the wardrobe closing line) — NOT
+  margins, which could not have fixed a widow. **Measured 5 words on the last line at 390/375/360/320.**
+  ⚠️ The shortened sub is a **Claude draft** ("Your preferences are set. From here, shopping only gets easier
+  and more fun.") — the old sentence ended by selling the email save, which read oddly once shopping led.
+  **She has not blessed the wording; one string in the markup.** New `scratchpad/prefdone.js` **24 checks**.
+- ▶ **STILL OPEN ON IT, her eye:** how it feels on her phone, and the drafted sub above.
+- ▶ **SUPERSEDED — the original diagnosis, kept for the reasoning:**
   Finishing Refine without giving an email lands her back on the **portrait she already read**. ▶ **THE
   DIAGNOSIS THAT SHARPENS HER OWN INSTINCT: the "Let's go shopping" button ALREADY EXISTS on that screen —
   it lives inside `prefSavedBlock`, `display:none` until she hands over her email.** So a woman who declines
