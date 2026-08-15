@@ -28,9 +28,17 @@ if (!csvPath) {
 
 const FAMILIES = ['Classic', 'Minimal', 'Natural', 'Sporty', 'Professional', 'Romantic', 'Glam', 'Bold', 'Edgy'];
 const BANDS = ['$', '$$', '$$$', '$$$$'];
+// ▶ `width` was added to the spreadsheet 2026-08-15 (shoe widths). It sits LAST,
+// after `active`, which is where her export puts it -- the header check is
+// order-exact, so this list must match the export column for column.
+// ⚠️ It is deliberately NOT validated against a fixed vocabulary. The handoff
+// described values like N/S/M/W/WW/WWW; the real export writes words instead
+// ("medium", "narrow, medium, wide"), so a letter-code whitelist would have
+// failed every shoe row. Carried through verbatim, split on commas like
+// `colors` because it is genuinely multi-valued. Nothing filters on it yet.
 const HEADER = ['id', 'slot', 'name', 'brand', 'retailer', 'url', 'price', 'band',
   'family1', 'family2', 'family3', 'family4', 'sizes', 'petite', 'tall', 'plus',
-  'colors', 'attr1', 'attr2', 'pattern', 'note', 'checked', 'active'];
+  'colors', 'attr1', 'attr2', 'pattern', 'note', 'checked', 'active', 'width'];
 
 // Tracking/affiliate params that must never appear in a catalog URL. This is
 // the app's own conservative list (_wlCleanUrl) plus the affiliate-network
@@ -138,6 +146,7 @@ for (let r = 1; r < rows.length; r++) {
     sizes: o.sizes,
     petite: /^yes$/i.test(o.petite), tall: /^yes$/i.test(o.tall), plus: /^yes$/i.test(o.plus),
     colors: o.colors ? o.colors.split(',').map(s => s.trim()).filter(Boolean) : [],
+    widths: o.width ? o.width.split(',').map(s => s.trim()).filter(Boolean) : [],
     attrs: [o.attr1, o.attr2].filter(Boolean),
     pattern: o.pattern || '',
     note: o.note, checked: o.checked,

@@ -22,9 +22,10 @@
    "colors": [
     "medium indigo"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
-   "note": "A true vintage straight that flatters without squeezing. The curvy fit is excellent if you're waist-small, hip-full.",
+   "note": "A true vintage straight — structured enough to hold its line, soft enough to sit down in all day. The curvy fit is the one to take if you're waist-small and hip-full.",
    "checked": "2026-08-13",
    "active": true
   },
@@ -50,6 +51,7 @@
    "colors": [
     "deep indigo"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "The Lift Tuck panel is real, not marketing — this is the pair I send petite clients and anyone who wants polish without stiffness.",
@@ -78,6 +80,7 @@
    "colors": [
     "medium blue"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "One jean genuinely spans four sizes. Sculpts like shapewear without feeling like it.",
@@ -106,6 +109,7 @@
    "colors": [
     "medium blue"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "My proof that great denim doesn't need three digits — honest stretch, huge size run, and the high waist holds all day.",
@@ -134,6 +138,7 @@
    "colors": [
     "medium wash"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "The original for a reason. reads effortlessly cool with everything from blazers to tanks.",
@@ -162,6 +167,7 @@
    "colors": [
     "medium indigo"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "The quiet one — slim through the leg without being skinny, and the high rise is genuinely comfortable seated. A workhorse.",
@@ -190,9 +196,10 @@
    "colors": [
     "dark indigo"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
-   "note": "The splurge of the group, and the one that changes your proportions most — a true 70s wide leg with a clean hem, so it reads polished rather than costume. Wear it with a heel you don't have to show.",
+   "note": "The splurge of the group — a true 70s wide leg with a clean hem, so it reads polished rather than costume. It changes your proportions more than anything else here. Wear it with a heel you don't have to show.",
    "checked": "2026-08-14",
    "active": true
   },
@@ -218,6 +225,7 @@
    "colors": [
     "medium blue"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "Soft and high and easy in a way most wide legs aren't — this is the pair for someone who wants the silhouette without the stiffness. The Short fit is a real petite inseam, not a token.",
@@ -247,6 +255,7 @@
     "navy",
     "black"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "Machine-washable silk that doesn't look like a compromise — this is the one I recommend when someone tells me she loves silk but won't dry-clean. The notch collar sits well open or buttoned.",
@@ -274,6 +283,7 @@
    "colors": [
     "clematis blue"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "A proper cotton shirt that comes in misses, petite, plus and plus petite — almost nobody does that last one well. Crisp enough under a blazer, relaxed enough to wear untucked.",
@@ -304,9 +314,10 @@
     "blue mist",
     "icy lilac"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
-   "note": "Silk charmeuse with enough weight to drape rather than cling — that is the whole difference between a good silk shirt and a shiny one. The three-quarter sleeve is quietly flattering on nearly everyone.",
+   "note": "Silk charmeuse with enough weight to drape rather than cling — that is the whole difference between a good silk shirt and a shiny one. The three-quarter sleeve is the length that works with a watch, a bracelet, or nothing at all.",
    "checked": "2026-08-14",
    "active": true
   },
@@ -332,6 +343,7 @@
     "ivory",
     "black"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "Real silk in a semi-fitted shape that ends just above the hip — the proportion that sits under a blazer without bunching. The petite fit is properly redrafted, not just shortened.",
@@ -362,6 +374,7 @@
     "navy",
     "camel"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "The layering piece I'd buy first. Silk georgette under a jacket does something no cotton shell can — it moves, and it never announces itself as a shell.",
@@ -389,6 +402,7 @@
    "colors": [
     "off white"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "The splurge, and the one that earns it. Cut on the bias, so it drapes around you rather than hanging off you — you feel the difference the moment it's on.",
@@ -416,6 +430,7 @@
    "colors": [
     "off white"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "The least fussy shirt in this group, and that's the point — crisp Pima poplin, pintucks at the sleeve, nothing else asking for attention. Machine washable, which for a white blouse matters more than it sounds.",
@@ -443,6 +458,7 @@
    "colors": [
     "optic white"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "Fitted organic cotton with lace-up ties and a ladder-trimmed placket — the details are what make it, and they read confident rather than sweet. Wear it with something severe on the bottom.",
@@ -470,6 +486,7 @@
    "colors": [
     "white"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "A tie neck does the work of a necklace, and this one is cotton so it actually washes. The cut is blousy — size down if you want it closer to the body.",
@@ -497,6 +514,7 @@
    "colors": [
     "harvest print"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "floral",
    "note": "Silk crepe de chine with a concealed placket, so the print runs clean down the front instead of being interrupted by a row of buttons. This is the one you wear when you want the shirt to be the whole outfit.",
@@ -525,6 +543,7 @@
    "colors": [
     "white"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "The workhorse — easy care means it comes out of the wash ready, which for a white shirt you actually wear is the whole point. Sizes run to 20, and it is almost always on sale.",
@@ -554,6 +573,7 @@
     "black",
     "white"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "Matte satin is the trick here — it reads expensive without the shine that makes satin look like eveningwear at ten in the morning. The tie collar does the work, so the rest of the outfit can stay plain.",
@@ -584,10 +604,2182 @@
     "ivory",
     "navy"
    ],
+   "widths": [],
    "attrs": [],
    "pattern": "",
    "note": "The twist at the front is the whole garment — it does what a necklace or a belt would do, structurally, so nothing else has to. Sadie crepe holds the shape rather than draping out of it.",
    "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p022",
+   "slot": "ja2",
+   "name": "Classic Double-Weave Blazer",
+   "brand": "Old Navy",
+   "retailer": "Old Navy",
+   "url": "https://oldnavy.gap.com/browse/product.do?pid=766312012",
+   "price": 50,
+   "band": "$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Sporty"
+   ],
+   "sizes": "XS-4X, Regular/Tall/Petite",
+   "petite": true,
+   "tall": true,
+   "plus": true,
+   "colors": [
+    "black"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Fifty dollars, sizes to 4X, and it comes in tall and petite — I kept looking for the catch and there isn't one. Buy it in black and stop thinking about it.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p023",
+   "slot": "ja2",
+   "name": "100% Organic Cotton Knit Blazer",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/knit-blazer?color=black",
+   "price": 80,
+   "band": "$$",
+   "families": [
+    "Natural",
+    "Minimal",
+    "Sporty"
+   ],
+   "sizes": "XS-XL, 1X-3X",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "black",
+    "camel",
+    "ivory",
+    "navy"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Cotton knit, so it moves like a cardigan and reads like a blazer. This is the one for the woman who tells me she can't wear jackets — she usually means she can't wear stiff ones.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p024",
+   "slot": "ja2",
+   "name": "The Ultimate Stretch One-Button Blazer",
+   "brand": "Eloquii",
+   "retailer": "Eloquii",
+   "url": "https://www.eloquii.com/products/the-ultimate-stretch-one-button-blazer/1086364.html",
+   "price": 110,
+   "band": "$$",
+   "families": [
+    "Professional",
+    "Classic",
+    "Glam"
+   ],
+   "sizes": "14-32",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "maritime blue"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Cut for a plus body from the start rather than graded up from a size 8 — you can feel the difference in the shoulder. Compact stretch knit that holds its shape through a whole day.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p025",
+   "slot": "ja2",
+   "name": "Stamford Ponte Blazer",
+   "brand": "Boden",
+   "retailer": "Boden",
+   "url": "https://us.boden.com/products/women-stamford-ponte-blazer-deep-wisteria-u0472prp",
+   "price": 199,
+   "band": "$$$",
+   "families": [
+    "Romantic",
+    "Professional",
+    "Classic"
+   ],
+   "sizes": "XS-XL (2-22)",
+   "petite": true,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "deep wisteria",
+    "black",
+    "navy"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Ponte with real shaping, which is rarer than it sounds — most comfortable blazers give up the waist entirely. The wisteria is worth a look if your whole wardrobe has quietly gone navy.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p026",
+   "slot": "ja2",
+   "name": "Polished Ponte Blazer",
+   "brand": "Talbots",
+   "retailer": "Talbots",
+   "url": "https://www.talbots.com/polished-ponte-blazer/P263079403.html",
+   "price": 229,
+   "band": "$$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Minimal"
+   ],
+   "sizes": "2-18, petite/plus/plus petite",
+   "petite": true,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "black",
+    "rich burgundy"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Misses, petite, plus and plus petite — almost nobody carries that fourth one. The peak lapel is what lifts it above a work basic, and the burgundy is more useful than you would expect.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p027",
+   "slot": "ja2",
+   "name": "Easy Travel Blazer",
+   "brand": "Talbots",
+   "retailer": "Talbots",
+   "url": "https://www.talbots.com/easy-travel-blazer/P263079402.html",
+   "price": 229,
+   "band": "$$$",
+   "families": [
+    "Sporty",
+    "Natural",
+    "Professional"
+   ],
+   "sizes": "2-18, XS-L petite, 1X-3X plus",
+   "petite": true,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "black",
+    "indigo blue"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Machine washable and unlined, so it packs flat and comes out of a suitcase ready to wear. This is the blazer I recommend to anyone who travels for work.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p028",
+   "slot": "ja2",
+   "name": "Aleida Lightweight Tri Blazer",
+   "brand": "AllSaints",
+   "retailer": "AllSaints",
+   "url": "https://www.allsaints.com/us/women/sale/aleida-lightweight-tri-blazer/USW008QZ-5.html",
+   "price": 269,
+   "band": "$$$",
+   "families": [
+    "Edgy",
+    "Minimal",
+    "Bold"
+   ],
+   "sizes": "0-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Lightweight and open-front, so it layers without bulk — the shape does the work instead of the structure. Sharp without looking like it's trying.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p029",
+   "slot": "ja2",
+   "name": "Miller Double Breasted Dickey Jacket",
+   "brand": "Veronica Beard",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/miller-dickey-jacket/6588417",
+   "price": 795,
+   "band": "$$$$",
+   "families": [
+    "Glam",
+    "Classic",
+    "Professional"
+   ],
+   "sizes": "0-14",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "navy"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "The splurge, and it's really a system rather than a jacket — the dickeys zip in and change it completely. If you'll wear it weekly for a decade, the arithmetic works out.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p030",
+   "slot": "ja6",
+   "name": "Weather Proof Rain Trench Coat",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/weatherproof-rain-trench-coat?color=true-black",
+   "price": 90,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Natural",
+    "Minimal"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "dark spruce",
+    "burgundy",
+    "storm blue",
+    "tea green",
+    "frost"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "The one that actually works in rain, which most trenches quietly don't. Cinched waist so it still has a shape, and six colours means you can skip the beige if beige has never suited you.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p031",
+   "slot": "ja6",
+   "name": "Comfort Stretch Trench Coat",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/comfort-stretch-trench-coat?color=light-khaki",
+   "price": 100,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Minimal",
+    "Natural"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "light khaki",
+    "dark khaki",
+    "olive",
+    "navy",
+    "black",
+    "coffee brown"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "A hundred dollars for the classic shape in organic cotton with stretch — the stretch is what stops a trench feeling like armour. The belt comes off if you'd rather wear it open.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p032",
+   "slot": "ja6",
+   "name": "Comfort Stretch Long Trench Coat",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/comfort-stretch-long-trench-coat?color=dark-khaki",
+   "price": 130,
+   "band": "$$",
+   "families": [
+    "Professional",
+    "Minimal",
+    "Glam"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "light khaki",
+    "dark khaki",
+    "olive",
+    "navy",
+    "black",
+    "coffee brown"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "The long version, and the length is the whole point — it changes your line completely and makes everything underneath look deliberate. Belted wrist tabs are a detail you usually pay four figures for.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p033",
+   "slot": "ja6",
+   "name": "Classic Trench Coat with Belt",
+   "brand": "Mango",
+   "retailer": "Mango",
+   "url": "https://shop.mango.com/us/en/p/women/trench-coats-and-parkas/trench-coats/classic-trench-coat-with-belt_17075789",
+   "price": 150,
+   "band": "$$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Romantic"
+   ],
+   "sizes": "XXS-4XL",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "beige",
+    "black"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Proper 100% cotton with epaulettes and a back vent — the details that separate a real trench from a raincoat shape. The size run to 4XL is the widest I found anywhere in this category.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p034",
+   "slot": "ja6",
+   "name": "Classic Trench Coat",
+   "brand": "Abercrombie",
+   "retailer": "Abercrombie",
+   "url": "https://www.abercrombie.com/shop/us/p/classic-trench-coat-60567347",
+   "price": 160,
+   "band": "$$$",
+   "families": [
+    "Classic",
+    "Natural",
+    "Sporty"
+   ],
+   "sizes": "XXS-XL, Petite/Regular/Tall",
+   "petite": true,
+   "tall": true,
+   "plus": false,
+   "colors": [
+    "camel",
+    "brown"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Comes in petite, regular and tall, which for a coat that hits at the knee matters more than it does for anything else you own. Wind and water resistant without looking technical.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p035",
+   "slot": "ja6",
+   "name": "Mid-Length Chelsea Heritage Trench Coat",
+   "brand": "Burberry",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/mid-length-chelsea-heritage-trench-coat/8505767",
+   "price": 2850,
+   "band": "$$$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Glam",
+    "Minimal"
+   ],
+   "sizes": "0-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "The coat every other trench is quietly measured against — cotton gabardine woven in Yorkshire, leather-wrapped buckles, a fit that holds a waist. If you buy one coat in your life and keep it thirty years, this is the argument for it.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p036",
+   "slot": "ja6",
+   "name": "Classic Double-Breasted Belted Trench Coat",
+   "brand": "RISISSIDA",
+   "retailer": "Amazon",
+   "url": "https://www.amazon.com/RISISSIDA-Trench-Breasted-Waterproof-Overcoat/dp/B0D79PZFVS",
+   "price": 75,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Natural",
+    "Sporty"
+   ],
+   "sizes": "XS-3X",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "black",
+    "beige"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Seventy-five dollars for a proper double-breasted trench that runs to 3X — notch lapel, removable belt, actually lined. This is where I'd send someone who wants the shape before she commits to the investment version.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p037",
+   "slot": "sh7",
+   "name": "Tried and True Chelsea Boots",
+   "brand": "Free People",
+   "retailer": "Free People",
+   "url": "https://www.freepeople.com/shop/tried-and-true-chelsea-boots/?color=001",
+   "price": 148,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Natural",
+    "Edgy"
+   ],
+   "sizes": "6-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The lug sole does all the work here. Pull-on, chunky, sturdy enough for a real winter — this is the boot for a woman who wants to stop thinking about her shoes in the morning.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p038",
+   "slot": "sh7",
+   "name": "Italian Leather Heeled Ankle Boot",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/italian-leather-ankle-boot",
+   "price": 150,
+   "band": "$$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Minimal"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "black suede",
+    "espresso",
+    "coffee suede",
+    "merlot"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Italian leather at this price is the kind of thing I check twice. The 2.4 inch stacked heel is the height you can actually stand in all day, and a round toe is far kinder to a wide foot than anything pointed.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p039",
+   "slot": "sh7",
+   "name": "New Frontier Western Bootie",
+   "brand": "Free People",
+   "retailer": "Nordstrom Rack",
+   "url": "https://www.nordstromrack.com/s/new-frontier-western-bootie-women/5117525",
+   "price": 158,
+   "band": "$$$",
+   "families": [
+    "Bold",
+    "Natural",
+    "Edgy"
+   ],
+   "sizes": "6-10",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "coral fusion"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A western bootie is either the best thing in your closet or fancy dress, and the difference is whether the appliqué knows when to stop. This one does — and at Rack prices it is worth the gamble.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p040",
+   "slot": "sh7",
+   "name": "Saige Bootie",
+   "brand": "Sam Edelman",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/sam-edelman-saige-bootie-women/7882840",
+   "price": 170,
+   "band": "$$$",
+   "families": [
+    "Glam",
+    "Professional",
+    "Romantic"
+   ],
+   "sizes": "5-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "cyprus tan",
+    "spiced pecan",
+    "cafe noir",
+    "warm nutmeg"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A demi block heel is the most useful heel there is — it reads dressy and walks like a flat. The square toe keeps it current without dating it to one particular year.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p041",
+   "slot": "sh7",
+   "name": "Misty Moccasin Boots",
+   "brand": "Free People",
+   "retailer": "Free People",
+   "url": "https://www.freepeople.com/shop/misty-moccasin-boots/?color=016",
+   "price": 228,
+   "band": "$$$",
+   "families": [
+    "Natural",
+    "Romantic",
+    "Bold"
+   ],
+   "sizes": "6-9 (larger sizes sold out)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "sunstone sand suede",
+    "driftwood tan",
+    "pearl blush",
+    "olive suede"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Slouchy suede that only gets better as it softens. This is a boot with an opinion, so wear it with something plain and let it do the talking.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p042",
+   "slot": "sh7",
+   "name": "Tish Link Suede Ankle Boots",
+   "brand": "Talbots",
+   "retailer": "Talbots",
+   "url": "https://www.talbots.com/tish-link-suede-ankle-boots/P263041636.html",
+   "price": 229,
+   "band": "$$$",
+   "families": [
+    "Romantic",
+    "Classic",
+    "Professional"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "deep olive green",
+    "light toffee"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The link detail is the whole boot — one piece of jewellery, built in, so you don't have to add any. At an inch and a quarter it is the heel you forget you are wearing.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p043",
+   "slot": "sh7",
+   "name": "Jade Side Zip Comfort Ankle Boot",
+   "brand": "SAS",
+   "retailer": "Zappos",
+   "url": "https://www.zappos.com/p/sas-jade-side-zip-comfort-ankle-boots-black/product/9585016",
+   "price": 249,
+   "band": "$$$",
+   "families": [
+    "Professional",
+    "Classic",
+    "Natural"
+   ],
+   "sizes": "5-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "walnut"
+   ],
+   "widths": [
+    "narrow",
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Six widths, narrow through triple-wide, which almost nothing else in this category offers. If you have spent years being told your foot is the problem, this is the boot that disagrees.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p044",
+   "slot": "sh7",
+   "name": "Newbury Leather Chelsea Boot",
+   "brand": "Rag & Bone",
+   "retailer": "Rag & Bone",
+   "url": "https://www.rag-bone.com/p/newbury-leather-chelsea-boot-RP2O26F501L.html",
+   "price": 498,
+   "band": "$$$$",
+   "families": [
+    "Edgy",
+    "Minimal",
+    "Classic"
+   ],
+   "sizes": "EU 35-41 (US 5-11)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The splurge. A Chelsea boot lives or dies on whether the elastic panel still holds its shape in year five, and this is the one that does. Three inch stacked heel — real height, no wobble.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p045",
+   "slot": "sh9",
+   "name": "Italian Leather & Suede Low Profile Sneaker",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/italian-leather-and-suede-low-profile-sneaker",
+   "price": 94,
+   "band": "$$",
+   "families": [
+    "Minimal",
+    "Natural",
+    "Classic"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "cognac",
+    "birch",
+    "garnet",
+    "shell pink",
+    "electric blue"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Italian leather and suede at ninety-four dollars, in six colours including a proper electric blue. Low profile means it sits under a trouser hem instead of fighting it.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p046",
+   "slot": "sh9",
+   "name": "Medina Sneaker",
+   "brand": "Naturalizer",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/medina-sneaker-women/8093961",
+   "price": 100,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Sporty"
+   ],
+   "sizes": "6-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "warm white/rose gold",
+    "black",
+    "warm silver",
+    "warm taupe"
+   ],
+   "widths": [
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Comes in a true wide, which almost no fashion sneaker does. Naturalizer build the footbed properly — this is the one for a woman who walks all day and refuses to look like she's dressed for the gym.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p047",
+   "slot": "sh9",
+   "name": "530 Sneaker",
+   "brand": "New Balance",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/new-balance-530-sneaker-women/7920916",
+   "price": 110,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Natural",
+    "Bold"
+   ],
+   "sizes": "5-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "raincloud",
+    "rosewood/pink salt",
+    "white/silver",
+    "bisque"
+   ],
+   "widths": [
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The retro runner that goes with everything and asks nothing of you. The muted colourways are the trick — they read considered rather than sporty.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p048",
+   "slot": "sh9",
+   "name": "Lift Platform Sneaker",
+   "brand": "Kate Spade New York",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/kate-spade-new-york-lift-platform-sneaker-women/5572711",
+   "price": 148,
+   "band": "$$",
+   "families": [
+    "Glam",
+    "Romantic",
+    "Bold"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "optic white/pale gold"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A platform buys you height without a heel, and the gold trim is the detail that lets a sneaker go somewhere nice. This is the pair for a woman who wants comfort without giving up on shine.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p049",
+   "slot": "sh9",
+   "name": "Esplar Sneaker",
+   "brand": "Veja",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/esplar-sneaker-women/5081550",
+   "price": 150,
+   "band": "$$$",
+   "families": [
+    "Minimal",
+    "Classic",
+    "Natural"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "extra white",
+    "white/silver",
+    "white/black",
+    "white/sable"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The clean white leather court sneaker, done by the brand that does it best. It will look right with jeans, with a midi skirt, and under a suit on a Friday.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p050",
+   "slot": "sh9",
+   "name": "9060 Sneaker",
+   "brand": "New Balance",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/new-balance-gender-inclusive-9060-sneaker/7714156",
+   "price": 160,
+   "band": "$$$",
+   "families": [
+    "Bold",
+    "Edgy",
+    "Sporty"
+   ],
+   "sizes": "5-12 (runs large, size down a half)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "sea salt/concrete",
+    "mosaic green",
+    "truffle salt",
+    "raincloud"
+   ],
+   "widths": [
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The chunky one, and it is chunky on purpose — it balances a wide-leg trouser the way a delicate shoe never will. Runs large, so take a half size down.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p051",
+   "slot": "sh9",
+   "name": "Terra Sneaker",
+   "brand": "Reformation",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/reformation-terra-sneaker-women/8374602",
+   "price": 198,
+   "band": "$$$",
+   "families": [
+    "Romantic",
+    "Minimal",
+    "Classic"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "midnight satin"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Low, slim, and quietly pretty — a sneaker that doesn't shout. Reformation cut it narrow through the foot, so take your usual size only if you already know narrow suits you.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p052",
+   "slot": "sh9",
+   "name": "Phoenix Sneaker",
+   "brand": "Tory Burch",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/tory-burch-phoenix-sneaker-women/8325238",
+   "price": 200,
+   "band": "$$$",
+   "families": [
+    "Professional",
+    "Classic",
+    "Glam"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "brushed almond",
+    "white",
+    "fuchsia spark",
+    "avola"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A court sneaker with enough polish to wear to an office that permits them. Leather lined, which is why it will still look good after a winter.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p053",
+   "slot": "sh9",
+   "name": "New Ace Sneaker",
+   "brand": "Gucci",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/gucci-new-ace-sneaker-women/4701092",
+   "price": 585,
+   "band": "$$$$",
+   "families": [
+    "Glam",
+    "Bold",
+    "Edgy"
+   ],
+   "sizes": "5-11 (Italian sizing, runs large)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "bianco"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The splurge. The web stripe is instantly legible and that is either exactly what you want or exactly what you don't. Runs large — take a half size down.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p054",
+   "slot": "bg1",
+   "name": "Cordes Canvas Tote",
+   "brand": "Free People",
+   "retailer": "Free People",
+   "url": "https://www.freepeople.com/shop/cordes-canvas-tote/",
+   "price": 88,
+   "band": "$$",
+   "families": [
+    "Natural",
+    "Sporty",
+    "Bold"
+   ],
+   "sizes": "one size (19.7 x 12.6 x 6.3 in)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "natural",
+    "olive",
+    "dark blue"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Cotton canvas, big enough for a laptop and a lunch, and it improves with wear rather than looking tired. The one I'd throw in a car without a second thought.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p055",
+   "slot": "bg1",
+   "name": "Essential Tote Bag",
+   "brand": "Abercrombie",
+   "retailer": "Abercrombie",
+   "url": "https://www.abercrombie.com/shop/us/p/essential-tote-bag-63551319",
+   "price": 95,
+   "band": "$$",
+   "families": [
+    "Minimal",
+    "Sporty",
+    "Professional"
+   ],
+   "sizes": "one size",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "olive",
+    "dark brown",
+    "dark coffee"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "It zips, which sounds obvious until you own three open-top totes and everything falls out. Vegan faux suede, so it takes weather better than real suede would.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p056",
+   "slot": "bg1",
+   "name": "Large Heritage Canvas Tote",
+   "brand": "Tuckernuck",
+   "retailer": "Tuckernuck",
+   "url": "https://tnuck.com/products/natural-canvas-large-tote",
+   "price": 98,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Natural",
+    "Romantic"
+   ],
+   "sizes": "one size (20.75 x 13 x 6.5 in)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "natural"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Water-resistant canvas in the shape that has never gone out of style. This is the bag you monogram and then use for fifteen years.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p057",
+   "slot": "bg1",
+   "name": "The Signature Woven Tote",
+   "brand": "Madewell",
+   "retailer": "Madewell",
+   "url": "https://www.madewell.com/p/womens/accessories/bags/totes/the-signature-woven-tote/NP318",
+   "price": 198,
+   "band": "$$$",
+   "families": [
+    "Natural",
+    "Romantic",
+    "Bold"
+   ],
+   "sizes": "one size (17 x 11 in)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "burnt sienna",
+    "coffee bean",
+    "faded olive",
+    "juniper berry"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Handwoven leather, so it has texture doing the work instead of hardware. Holds a laptop, and the burnt sienna is the colour I'd pick if you already own a black bag.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p058",
+   "slot": "bg1",
+   "name": "Classic Easy Tote",
+   "brand": "Cuyana",
+   "retailer": "Cuyana",
+   "url": "https://cuyana.com/products/classic-easy-tote",
+   "price": 298,
+   "band": "$$$",
+   "families": [
+    "Minimal",
+    "Professional",
+    "Classic"
+   ],
+   "sizes": "one size (20.5 x 12.5 x 5 in)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "cappuccino",
+    "stone",
+    "olive",
+    "chili",
+    "forest"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Italian pebbled leather, unlined, no hardware, twelve colours. The bag for a woman who wants nothing announcing itself — and it takes a 16 inch laptop without bulging.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p060",
+   "slot": "bg1",
+   "name": "Broadway Tote Bag",
+   "brand": "Coach",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/broadway-tote-bag/8561662",
+   "price": 395,
+   "band": "$$$",
+   "families": [
+    "Professional",
+    "Classic",
+    "Edgy"
+   ],
+   "sizes": "one size (15 x 14 in)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "maple"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Fits most 16 inch laptops and still reads as a handbag rather than a briefcase. Coach leather ages properly — it softens instead of cracking.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p061",
+   "slot": "bg1",
+   "name": "Allegra Medium Slouchy Tote",
+   "brand": "Boden",
+   "retailer": "Boden",
+   "url": "https://us.boden.com/products/women-allegra-medium-slouchy-tote-burgundy-a2343srd",
+   "price": 460,
+   "band": "$$$$",
+   "families": [
+    "Romantic",
+    "Glam",
+    "Natural"
+   ],
+   "sizes": "one size (18.9 x 13 x 8.25 in)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "burgundy",
+    "tan"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Suede, slouchy, and the burgundy is genuinely beautiful in a way photographs undersell. This is a bag with a personality — treat it as the outfit, not the afterthought.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p062",
+   "slot": "bg1",
+   "name": "Ophidia Medium Canvas Tote",
+   "brand": "Gucci",
+   "retailer": "NET-A-PORTER",
+   "url": "https://www.net-a-porter.com/en-us/shop/product/gucci/bags/tote-bags/ophidia-medium-leather-trimmed-coated-canvas-jacquard-tote/19325877437137728",
+   "price": 1980,
+   "band": "$$$$",
+   "families": [
+    "Glam",
+    "Bold",
+    "Classic"
+   ],
+   "sizes": "one size",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "brown GG canvas"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "The splurge, and an unapologetic one — coated canvas with the web stripe, which means everyone knows what it is. Buy it because you love it, not as an investment.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p063",
+   "slot": "ex2",
+   "name": "Shell Design Earrings",
+   "brand": "Mango",
+   "retailer": "Mango",
+   "url": "https://shop.mango.com/us/en/p/women/jewellery/earrings/shell-design-earrings/37081343/OR/00",
+   "price": 30,
+   "band": "$",
+   "families": [
+    "Natural",
+    "Romantic",
+    "Bold"
+   ],
+   "sizes": "one size",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "gold"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Thirty dollars to find out whether a big organic shape suits you. That is the right way to test a statement earring — cheaply, before you commit.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p064",
+   "slot": "ex2",
+   "name": "Sculptural Droplet Statement Earrings",
+   "brand": "Madewell",
+   "retailer": "Madewell",
+   "url": "https://www.madewell.com/p/womens/accessories/jewelry/earrings/sculptural-droplet-statement-earrings/NN368/",
+   "price": 38,
+   "band": "$",
+   "families": [
+    "Minimal",
+    "Classic",
+    "Professional"
+   ],
+   "sizes": "one size (8 x 21 mm)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "antique gold"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Nickel-safe with a titanium post, which matters more than the design if your ears have ever objected. A clean sculptural drop that works with a collar or a turtleneck.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p065",
+   "slot": "ex2",
+   "name": "Nautilus Statement Earrings",
+   "brand": "Gorjana",
+   "retailer": "Gorjana",
+   "url": "https://www.gorjana.com/products/nautilus-statement-earrings",
+   "price": 60,
+   "band": "$$",
+   "families": [
+    "Glam",
+    "Romantic",
+    "Natural"
+   ],
+   "sizes": "one size",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "18k gold plated",
+    "silver plated"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "A shell shape that catches light from across a room without being heavy on the lobe. Gorjana's plating holds up far better than the price suggests.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p066",
+   "slot": "ex2",
+   "name": "Carter Statement Hoops",
+   "brand": "Gorjana",
+   "retailer": "Gorjana",
+   "url": "https://www.gorjana.com/products/carter-statement-hoops",
+   "price": 95,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Bold",
+    "Professional"
+   ],
+   "sizes": "multiple sizes",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "18k gold plated"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "The big polished gold hoop, which is the single most useful statement earring there is. If a woman owns one pair of these she is dressed for most things.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p067",
+   "slot": "ex2",
+   "name": "Large Freshwater Cultured Pearl Hoops",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/large-freshwater-cultured-pearl-hoops",
+   "price": 149,
+   "band": "$$",
+   "families": [
+    "Romantic",
+    "Classic",
+    "Glam"
+   ],
+   "sizes": "25mm hoop, 9x12mm pearls",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "gold vermeil"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Gold vermeil over sterling, not plated brass, so it will not turn. Organic pearls mean no two pairs match exactly — which is the point.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p068",
+   "slot": "ex2",
+   "name": "Saucer Statement Earrings",
+   "brand": "Lady Grey",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/saucer-statement-earrings/8610130",
+   "price": 172,
+   "band": "$$$",
+   "families": [
+    "Edgy",
+    "Minimal",
+    "Bold"
+   ],
+   "sizes": "one size",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "gold",
+    "silver"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Architectural, hand-polished, made in the States. A disc this clean is harder to pull off than a hoop and far more interesting when you do.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p069",
+   "slot": "ex2",
+   "name": "Gemini Link Earrings",
+   "brand": "Tory Burch",
+   "retailer": "Tory Burch",
+   "url": "https://www.toryburch.com/en-us/jewelry/earrings/gemini-link-earring/168086.html",
+   "price": 280,
+   "band": "$$$",
+   "families": [
+    "Professional",
+    "Classic",
+    "Edgy"
+   ],
+   "sizes": "1.4 x 0.9 in",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "light brass"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Nickel-free, sharply drawn, and the link shape reads as design rather than decoration. These are the earrings for a woman who wants to look deliberate in a meeting.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p070",
+   "slot": "ex2",
+   "name": "925 Lollipop Small Chandelier Earrings",
+   "brand": "Ippolita",
+   "retailer": "Neiman Marcus",
+   "url": "https://www.neimanmarcus.com/p/ippolita-925-lollipop-small-chandelier-earrings-antico-prod282520257",
+   "price": 995,
+   "band": "$$$$",
+   "families": [
+    "Glam",
+    "Romantic",
+    "Bold"
+   ],
+   "sizes": "1.6 x 0.9 in",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "antico"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "The splurge. Real stones — rock crystal, mother-of-pearl, prasiolite, blue topaz — on sterling, so the colour is depth rather than paint. Chandeliers this size need hair up and nothing at the neck.",
+   "checked": "2026-08-14",
+   "active": true
+  },
+  {
+   "id": "p072",
+   "slot": "to1",
+   "name": "Mini T-Shirt",
+   "brand": "Uniqlo",
+   "retailer": "Uniqlo",
+   "url": "https://www.uniqlo.com/us/en/products/E465760-000/00",
+   "price": 15,
+   "band": "$",
+   "families": [
+    "Minimal",
+    "Sporty",
+    "Edgy",
+    "Classic"
+   ],
+   "sizes": "XXS-XXL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white + 8 others"
+   ],
+   "widths": [],
+   "attrs": [
+    "crop"
+   ],
+   "pattern": "",
+   "note": "Deliberately short and close through the body, which only works over a high waist. Fifteen dollars is exactly the right price to find out whether that proportion suits you.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p073",
+   "slot": "to1",
+   "name": "Puff Short Sleeve Embroidered Tie V-Neck Blouse",
+   "brand": "Universal Thread",
+   "retailer": "Target",
+   "url": "https://www.target.com/p/women-39-s-puff-short-sleeve-embroidered-tie-v-neck-blouse-universal-thread-8482-white-m/-/A-95123356",
+   "price": 28,
+   "band": "$",
+   "families": [
+    "Romantic",
+    "Natural",
+    "Classic"
+   ],
+   "sizes": "XS-4X",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "white",
+    "rust floral"
+   ],
+   "widths": [],
+   "attrs": [
+    "puff-sleeve"
+   ],
+   "pattern": "",
+   "note": "Twenty-eight dollars, sizes to 4X, and the embroidery does enough that nothing else is required. The puff is gentle rather than theatrical — worth knowing if big sleeves usually put you off.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p074",
+   "slot": "to1",
+   "name": "Long Sleeve Scalloped V-Neck Button-Up Blouse",
+   "brand": "Universal Thread",
+   "retailer": "Target",
+   "url": "https://www.target.com/p/women-39-s-long-sleeve-scalloped-v-neck-button-up-blouse-universal-thread-8482-white-m/-/A-95123512",
+   "price": 30,
+   "band": "$",
+   "families": [
+    "Romantic",
+    "Natural",
+    "Classic"
+   ],
+   "sizes": "XS-3X (4X sold out)",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "white",
+    "cream floral"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Tonal embroidery and a scalloped edge, which is what separates this from every other white button-up at the price. Cotton, so it washes instead of going to the dry cleaner.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p075",
+   "slot": "to1",
+   "name": "Everyday V-Neck Pima Cotton Blend T-Shirt",
+   "brand": "Nordstrom",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/everyday-v-neck-pima-cotton-blend-t-shirt/7477837",
+   "price": 35,
+   "band": "$",
+   "families": [
+    "Classic",
+    "Minimal",
+    "Natural",
+    "Sporty"
+   ],
+   "sizes": "XXS-XXL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white",
+    "black",
+    "green chaparral"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Pima cotton is the difference between a white tee that survives a season and one that survives three. This is a foundation, not a feature.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p076",
+   "slot": "to5",
+   "name": "100% European Linen Short Sleeve Shirt",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/linen-short-sleeve-shirt?color=white",
+   "price": 36,
+   "band": "$",
+   "families": [
+    "Natural",
+    "Classic",
+    "Minimal",
+    "Professional"
+   ],
+   "sizes": "XS-XL, 1X-3X",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "white",
+    "flax",
+    "deep navy",
+    "french blue + 9 others"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Thirteen colours, runs to 3X, and costs thirty-six dollars. European linen breathes properly in real heat rather than just looking as though it might.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p078",
+   "slot": "to1",
+   "name": "Organic Textured Cotton Peasant Blouse",
+   "brand": "Quince",
+   "retailer": "Quince",
+   "url": "https://www.quince.com/women/organic-cotton-peasant-blouse?color=white",
+   "price": 50,
+   "band": "$",
+   "families": [
+    "Romantic",
+    "Natural",
+    "Classic"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white",
+    "navy",
+    "true black",
+    "pale custard",
+    "taupe brown",
+    "caper",
+    "cafe au lait"
+   ],
+   "widths": [],
+   "attrs": [
+    "ruffles"
+   ],
+   "pattern": "",
+   "note": "Textured cotton with a ruffled collar and cuff, so it is decidedly romantic rather than a neutral basic. Tagged for ruffles — if you have ruled those out, this is not your blouse.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p079",
+   "slot": "to1",
+   "name": "We The Free Perfect Oversized Long Sleeve Top",
+   "brand": "Free People",
+   "retailer": "Free People",
+   "url": "https://www.freepeople.com/shop/we-the-free-perfect-oversized-long-sleeve-top/",
+   "price": 54,
+   "band": "$$",
+   "families": [
+    "Natural",
+    "Edgy",
+    "Minimal",
+    "Sporty"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white",
+    "black",
+    "forest biome",
+    "dusted cocoa + 4 others"
+   ],
+   "widths": [],
+   "attrs": [
+    "oversized"
+   ],
+   "pattern": "",
+   "note": "Dropped shoulders and soft cotton, cut to slouch on purpose. This is for the woman who finds a fitted tee makes her feel as though she is being inspected.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p080",
+   "slot": "to1",
+   "name": "Pollie Short-Sleeve Swing Blouse",
+   "brand": "By Anthropologie",
+   "retailer": "Anthropologie",
+   "url": "https://www.anthropologie.com/shop/pollie-short-sleeve-swing-blouse",
+   "price": 88,
+   "band": "$$",
+   "families": [
+    "Natural",
+    "Classic",
+    "Romantic"
+   ],
+   "sizes": "XXS-XL + petite",
+   "petite": true,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Box pleats give crisp poplin controlled volume rather than shapelessness. Best with something narrow underneath so the proportion reads deliberate.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p081",
+   "slot": "to1",
+   "name": "Pintuck Blouse",
+   "brand": "NYDJ",
+   "retailer": "Nordstrom",
+   "url": "https://www.nordstrom.com/s/pintuck-blouse/3833447",
+   "price": 89,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Romantic"
+   ],
+   "sizes": "XXS (00) - XXL (20-22)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "optic white",
+    "etched flowers peacoat"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Pintucking draws the eye vertically, which is quietly useful. Optic white rather than cream, so it sits properly against navy and dark denim.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p082",
+   "slot": "to5",
+   "name": "Moore Liquid Jersey Blouse",
+   "brand": "Universal Standard",
+   "retailer": "Universal Standard",
+   "url": "https://www.universalstandard.com/products/moore-liquid-jersey-blouse-white",
+   "price": 94,
+   "band": "$$",
+   "families": [
+    "Professional",
+    "Classic",
+    "Minimal",
+    "Natural"
+   ],
+   "sizes": "00-40",
+   "petite": false,
+   "tall": false,
+   "plus": true,
+   "colors": [
+    "white"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Jersey that reads as a woven blouse, and the drape is what does it. Sizes 00 through 40 — the widest run anywhere in this slot.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p083",
+   "slot": "to1",
+   "name": "Sweet Nothings Blouse",
+   "brand": "Free People",
+   "retailer": "Free People",
+   "url": "https://www.freepeople.com/shop/sweet-nothings-blouse/",
+   "price": 98,
+   "band": "$$",
+   "families": [
+    "Romantic",
+    "Natural",
+    "Bold"
+   ],
+   "sizes": "XS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "ivory"
+   ],
+   "widths": [],
+   "attrs": [
+    "puff-sleeve",
+    "ruffles"
+   ],
+   "pattern": "",
+   "note": "Scoop neck, ruffled trim, unapologetically pretty. Tagged for both puff sleeves and ruffles, so it stays correctly hidden from anyone who has ruled those out.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p084",
+   "slot": "to1",
+   "name": "Pilcro Sleeveless Structured Blouse",
+   "brand": "Pilcro",
+   "retailer": "Anthropologie",
+   "url": "https://www.anthropologie.com/shop/pilcro-sleeveless-structured-blouse2",
+   "price": 98,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Professional",
+    "Minimal",
+    "Edgy"
+   ],
+   "sizes": "XXS-XL + petite (XS sold out)",
+   "petite": true,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "bright white",
+    "elm",
+    "french vanilla"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Structured enough to replace a button-down in August, and sleeveless means no bulk under a jacket. It comes in petite, which sleeveless tops rarely do.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p085",
+   "slot": "to1",
+   "name": "By Anthropologie Short-Sleeve Lace-Trim Swing Blouse",
+   "brand": "By Anthropologie",
+   "retailer": "Anthropologie",
+   "url": "https://www.anthropologie.com/shop/by-anthropologie-short-sleeve-lace-trim-swing-blouse",
+   "price": 128,
+   "band": "$$",
+   "families": [
+    "Romantic",
+    "Natural",
+    "Classic"
+   ],
+   "sizes": "XXS-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "The swing shape moves when you do, and the lace trim stops it reading as a plain cotton top. Easy with jeans because it asks for no styling at all.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p086",
+   "slot": "to1",
+   "name": "By Anthropologie 100% Cotton Eyelet Popover Blouse",
+   "brand": "By Anthropologie",
+   "retailer": "Anthropologie",
+   "url": "https://www.anthropologie.com/shop/by-anthropologie-100-cotton-eyelet-popover-blouse2",
+   "price": 128,
+   "band": "$$",
+   "families": [
+    "Romantic",
+    "Natural",
+    "Classic"
+   ],
+   "sizes": "XXS-L (XL sold out)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "Eyelet gives texture and airflow at the same time, which is why it has survived a century of summers. Feminine without needing a print to get there.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p088",
+   "slot": "to5",
+   "name": "Tenia Long-Sleeve Blouse",
+   "brand": "Theory",
+   "retailer": "Neiman Marcus",
+   "url": "https://www.neimanmarcus.com/p/theory-tenia-long-sleeve-blouse-prod178380218",
+   "price": 245,
+   "band": "$$$",
+   "families": [
+    "Professional",
+    "Minimal",
+    "Classic",
+    "Glam"
+   ],
+   "sizes": "P-XL",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "widths": [],
+   "attrs": [],
+   "pattern": "",
+   "note": "The most tailored shirt in this slot, and the stretch is why it stays tailored through a day of sitting down. The longer shirttail means it holds a tuck.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p089",
+   "slot": "sh9",
+   "name": "Reebok Club C 85 Vintage Sneakers",
+   "brand": "Reebok",
+   "retailer": "Madewell",
+   "url": "https://www.madewell.com/p/womens/shoes/sneakers/3rd-party-sneaker/reebokreg-club-c-85-vintage-sneakers/NH503/",
+   "price": 90,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Classic",
+    "Minimal"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "chalk/alabaster/glen green"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The Club C is the plainest court sneaker there is, and that is exactly why it works with everything. Leather, low, no branding shouting at you — buy it once and stop thinking about it.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p090",
+   "slot": "sh9",
+   "name": "Ballet sneakers in suede and leather",
+   "brand": "J.Crew",
+   "retailer": "J.Crew",
+   "url": "https://www.jcrew.com/m/womens/categories/shoes/sneakers/ballet-sneakers-in-suede-and-leather/MQ207",
+   "price": 168,
+   "band": "$$$",
+   "families": [
+    "Romantic",
+    "Minimal",
+    "Classic"
+   ],
+   "sizes": "5-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "vivid navy"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A ballet flat and a retro runner met in the middle, and the result is softer than either. The elasticated topline means no gaping at the ankle, and it comes with two sets of laces so you can change its mood.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p091",
+   "slot": "sh9",
+   "name": "Women's Keds Champion Leather Lace Up",
+   "brand": "Keds",
+   "retailer": "Zappos",
+   "url": "https://www.zappos.com/p/womens-keds-champion-leather-lace-up/product/109573",
+   "price": 65,
+   "band": "$$",
+   "families": [
+    "Classic",
+    "Natural",
+    "Professional"
+   ],
+   "sizes": "5-13",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black leather",
+    "white leather"
+   ],
+   "widths": [
+    "narrow",
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Four widths, slim through extra-wide, which is rarer than it should be in a leather sneaker. It is flat and unstructured — a clean plimsoll shape done in leather, not a cushioned trainer.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p092",
+   "slot": "sh9",
+   "name": "Women's Sperry Crest Vibe",
+   "brand": "Sperry",
+   "retailer": "Zappos",
+   "url": "https://www.zappos.com/p/womens-sperry-crest-vibe/product/9242194",
+   "price": 60,
+   "band": "$$",
+   "families": [
+    "Natural",
+    "Sporty",
+    "Classic"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "brown",
+    "white"
+   ],
+   "widths": [
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "A proper vulcanised plimsoll, so it creases and softens the way canvas is supposed to. The footbed lifts out if you wear an orthotic, and it comes in a true wide.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p093",
+   "slot": "sh9",
+   "name": "Reebok Classic Leather Sneaker",
+   "brand": "Reebok",
+   "retailer": "DSW",
+   "url": "https://www.dsw.com/product/reebok-classic-leather-sneaker---womens/530693",
+   "price": 85,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Bold",
+    "Edgy"
+   ],
+   "sizes": "5.5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "black",
+    "white"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The retro runner with a visible midsole — chunkier than a court shoe, which is the point when you are balancing a wide trouser. Full-grain leather, so it holds its shape rather than collapsing.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p094",
+   "slot": "sh9",
+   "name": "Langley Sneaker",
+   "brand": "Sam Edelman",
+   "retailer": "Sam Edelman",
+   "url": "https://www.samedelman.com/product/womens-langley-sneaker-3029042/vault-blue-grey-nylon-suede-ec0211301",
+   "price": 120,
+   "band": "$$",
+   "families": [
+    "Sporty",
+    "Bold",
+    "Natural"
+   ],
+   "sizes": "5-12",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "off white canvas",
+    "black suede",
+    "white/tan/black suede",
+    "deep olive",
+    "french burgundy",
+    "leopard calf hair + 6 more"
+   ],
+   "widths": [
+    "medium",
+    "wide"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Twelve colourways of one shape, from plain black suede to leopard, so you choose how much attention it asks for. Medium and wide both, which almost nothing at this price offers.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p095",
+   "slot": "sh9",
+   "name": "The Day Sneaker",
+   "brand": "Everlane",
+   "retailer": "Everlane",
+   "url": "https://www.everlane.com/products/womens-day-sneaker-white",
+   "price": 148,
+   "band": "$$",
+   "families": [
+    "Minimal",
+    "Classic",
+    "Professional"
+   ],
+   "sizes": "5-11",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "The cleanest white leather sneaker in this group — tapered toe, low collar, nothing else going on. It runs narrow, so take the next size up if you are between sizes.",
+   "checked": "2026-08-15",
+   "active": true
+  },
+  {
+   "id": "p096",
+   "slot": "sh9",
+   "name": "Contrasting panel leather sneakers",
+   "brand": "Mango",
+   "retailer": "Mango",
+   "url": "https://shop.mango.com/us/en/p/women/shoes/leather-shoes/contrasting-panel-leather-sneakers_37081346",
+   "price": 80,
+   "band": "$$",
+   "families": [
+    "Minimal",
+    "Classic",
+    "Romantic"
+   ],
+   "sizes": "EU 35-42 (US 5-10)",
+   "petite": false,
+   "tall": false,
+   "plus": false,
+   "colors": [
+    "white"
+   ],
+   "widths": [
+    "medium"
+   ],
+   "attrs": [],
+   "pattern": "",
+   "note": "Real leather at eighty dollars, in the white low-top shape that goes with everything you already own. The contrast panel is the only detail, and it is enough.",
+   "checked": "2026-08-15",
    "active": true
   }
  ]
