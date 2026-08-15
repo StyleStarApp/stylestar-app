@@ -9,9 +9,22 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (2026-08-15 morning — HER FIRST LIVE TEST OF THE CATALOG SHELF)
 
-### ⏸ WHERE THE 2026-08-15 MORNING SESSION PAUSED
-**ONE PR, #854, merged on her word ("go ahead and merge") — three commits batched deliberately into a
-single Netlify build while she tested.** Her session was a screenshot pass on the live blended shelf.
+### ⏸ WHERE THE 2026-08-15 SESSION PAUSED (her call: "let's save everything to the md and pause here")
+**FOUR PRs merged on her word and ALL CURL-VERIFIED LIVE: #854 · #855 · #856 · #857. Four Netlify builds
+for the whole day** (commits batched deliberately while she tested). Branch resynced to main, working tree
+clean. ▶ **THE SHAPE OF THE DAY, and it is the reusable lesson: FOUR screenshots that all looked like "the
+searches are bad" turned out to be FOUR genuinely different causes** — (1) a card NAME promising what its
+search could not deliver, (2) a missing category DEFINITION (a basic top), (3) a search WORD no store
+stocks ("wrap"), (4) the wrong STORE for a specific search. Each needed its own fix; two were only findable
+because she was tapping through on a real phone. ⚠️ **And the honest pattern underneath three of them: the
+prompt rule was already RIGHT and the model DRIFTED.** Where that happens the answer is a guarantee in code
+(`_nameParity`, the `filterNeverWear` precedent), not more prompt wording.
+- **Her words through the day:** *"I feel like I want to delete the not for me and broken link"* · *"it
+  should not promise draped"* · *"A black top should just be a black top"* · *"that is more of a dressy or
+  going out top so let's put it there instead"* · *"I would like to keep that card/paragraph on there
+  permanently"* · *"lower it down to sit closer to the line"* · *"wrap tops are not very popular... it's
+  just not something that is likely to come up in a search"* · *"Revolve is only for someone who likes
+  their clothing very fitted, alluring, trendy, edgy."*
 - ⭐⭐ **"NOT FOR ME" AND "LINK BROKEN?" ARE DELETED, her call — and it was her instinct at build time
   too ("she could swipe past it, we will see").** Her words this session: *"I feel like I want to delete
   the not for me and broken link. It seems like she can just swipe past it?"* **The full reasoning is in
@@ -151,15 +164,27 @@ single Netlify build while she tested.** Her session was a screenshot pass on th
   wladd 102 · wdrworksheet 73 · wdrcalmcheck 27 · hubs 49 · affq 40 · e2e 29 · catmark 135.
   ⚠️ **wdrworksheet/wdrcalmcheck/catmark were green BEFORE the final 6px spacing tweak and not re-run
   after it** (CSS margins at the page top only) — re-run them first thing if anything looks off.
-- ▶ **THE FIRST THINGS NEXT SESSION:**
-  1. **How the trimmed names read on her phone** — the honest cost of the parity guarantee is plainer
-     card names ("Satin Top", not "Satin Draped Top"). If they feel too bare, the lever is letting the
-     SEARCH carry the extra word instead of cutting it from the name, not weakening the guarantee.
-  2. **Her verdict on the basic-top definition** (the positive half + the satin question above).
-  3. **Sunday Aug 16 is the first automatic Star swap** (kitten heel → bangles) AND the first firing of
-     the link-check Routine. Both should happen with nothing from her.
-  4. **The Almira call: MONDAY, AUGUST 17, 12:30 PM.** Ask how it went and log the TM filing dates +
-     serial numbers here.
+- ▶ **THE FIRST THINGS NEXT SESSION, in order:**
+  1. ⚖️ **THE ALMIRA CALL: MONDAY, AUGUST 17, 12:30 PM** (amber-quinn HubSpot, phone). **Ask how it went
+     and LOG THE TM FILING DATES + SERIAL NUMBERS HERE.** The loaded agenda rode the booking form (both
+     filings incl. the logo mark silent since July 16 · corrected Articles "Bail"→Bailey · the completed
+     Operating Agreement, open since Aug 5 · EIN status · a written timeline). This is the money path.
+  2. 📱 **Sunday Aug 16 was the first automatic Star swap** (kitten heel → bangles) **AND the first firing
+     of the link-check Routine, 9:00 AM ET.** Both should have happened with nothing from her — **ask
+     whether they did.** A missed Routine fire or a Star that did not turn is a real bug, not a nothing.
+  3. 👀 **How the TRIMMED NAMES read on her phone.** The honest cost of the parity guarantee is plainer
+     cards ("Satin Top", not "Satin Draped Top"). ▶ **If they feel too bare, the lever is letting the
+     SEARCH carry the extra word, never weakening the guarantee.**
+  4. ✍️ **Her verdict on the two flagged DRAFTS she has not blessed:** the positive half of the basic-top
+     definition (the NEVER list is hers, the crew/scoop/V half is Claude's), and the to6 dressy line
+     beyond her satin sentence.
+  5. ▶ **The store MIDDLE TIER** (the revisit trigger above) — Talbots · J.Jill · Lands' End · Boden ·
+     J.Crew · Anthropologie · Free People · Athleta. **Ask, never infer.** Nothing is blocked on it.
+- ▶ **UNCHANGED AND STILL WAITING:** her Cowork spreadsheet rhythm (new CSV export → "new export" → the
+  converter validates → commit; no code changes should EVER be needed for new rows) · MailerLite desk items
+  ("Email me my wishlist" · photo-tips email) · more Trending/Edit content · the parked triggers (the
+  registry at affiliate approval · her My Story photo · the holiday gift guide as Star machinery in
+  November costume · organising the Edit at ~25-30 items).
 - ▶ Everything from the 2026-08-14 entries below is unchanged by this work.
 
 ## ▶ PREVIOUS — 2026-08-14 evening (THE CURATED CATALOG IS BUILT)
