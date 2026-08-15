@@ -115,7 +115,22 @@ console.log('    White tops shelf: ' + shelf.join(' · '));
 ok('her reported card no longer promises "draped"', !shelf.some(n => /draped/i.test(n)), shelf.join('|'));
 ok('the sibling card no longer promises "relaxed"', !shelf.some(n => /relaxed/i.test(n)), shelf.join('|'));
 ok('"boxy" goes too (the search says only cotton tee)', !shelf.some(n => /boxy/i.test(n)), shelf.join('|'));
-ok('an honest card is untouched', shelf.some(n => /Poplin Top/.test(n)), shelf.join('|'));
+// ⚠️ STALE TEST DATA, FIXED 2026-08-15 (evening) — and it is the curated.js
+// lesson from the day before, hit again. This pinned "Poplin Top", the 4th AI
+// item in the stub. The moment to1 White tops gained 12 catalog products, the
+// blended shelf gave the AI only 2 of its 6 slots (≤4 catalog lead, AI fills to
+// 6), so Poplin stopped rendering at all and the check failed on a claim that
+// was never about the blend. NOT a regression: it failed identically on the
+// pre-change code.
+// ▶ The claim under test is "a name whose search carries every word is left
+// alone", so it now runs on a CATALOG-FREE slot where all four AI items really
+// render. Derived from the shelf rather than restated, so catalog growth in any
+// slot can never break it again.
+await pg2.evaluate(() => wardrobeSeeIdeas('to2'));   // Black tops: no catalog behind it
+await pg2.waitForTimeout(1400);
+const aiOnly = await pg2.evaluate(() => [...document.querySelectorAll('#wx_to2 .shop-card:not(.wdr-curated) .shop-item-name')].map(n => n.textContent));
+ok('an all-AI shelf really renders the full set', aiOnly.length === 4, aiOnly.join('|'));
+ok('an honest card is untouched', aiOnly.some(n => /^Poplin Top$/.test(n)), aiOnly.join('|'));
 ok('the shelf still renders a full set', shelf.length >= 4, String(shelf.length));
 ok('zero JS errors', errs.length === 0, errs.join(' | '));
 await ctx2.close();

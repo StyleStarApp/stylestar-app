@@ -4828,7 +4828,7 @@ function _renderTips(tips){
 }
 function _renderShop(items){
   const c=document.getElementById('pShopList');
-  c.innerHTML=filterNeverWear(items).map(_nameParity).map(it=>{
+  c.innerHTML=filterNeverWear(items).map(_nameParity).map(_sizeWordsOut).map(it=>{
     const url=getStoreUrl(it.store,it.name,it.search);
     const emoji=photoShopEmoji[it.category]||'✨';
     const why=it.why?' &middot; '+_esc(it.why):'';
@@ -5302,6 +5302,34 @@ function _sizeGuidance(){
   }
   return s;
 }
+// ▶ A REFRESH THAT RETURNS THE SAME SIX IS NOT A REFRESH (2026-08-15, her live
+// testing: she tapped "Show me different picks" and five of the six came back
+// identical -- only the earrings became a necklace). The cause was plain once
+// read: the refresh buttons re-ran the SAME prompt with no idea what they had
+// just shown, so the model returned its best answer again, correctly.
+// ▶ THE FIX ALREADY EXISTED IN THIS APP: the wardrobe "+ See more ideas" path
+// (_wdrMoreIdeas) has always passed the already-shown names into the prompt.
+// This is that pattern, shared, so the three browsing surfaces stop repeating.
+// The wording is deliberately identical to the wardrobe one.
+// ⚠️ Capped, and the cap is load-bearing: an uncapped list would grow the
+// prompt on every tap and eventually crowd out her preferences and the store
+// table. Oldest fall off first, so a long session cycles rather than starves.
+const _seenPicks={};
+const _SEEN_CAP=24;
+function _rememberPicks(surface,items){
+  if(!surface||!Array.isArray(items))return;
+  const seen=_seenPicks[surface]||(_seenPicks[surface]=[]);
+  items.forEach(function(it){
+    const n=it&&it.name?String(it.name).trim():'';
+    if(n&&seen.indexOf(n)<0)seen.push(n);
+  });
+  if(seen.length>_SEEN_CAP)seen.splice(0,seen.length-_SEEN_CAP);
+}
+function _seenPicksLine(surface){
+  const seen=_seenPicks[surface]||[];
+  if(!seen.length)return '';
+  return '\nShe has already been shown these, so suggest genuinely different pieces, never a near-duplicate: '+seen.join('; ')+'.\n';
+}
 // One shared block so all six shopping features ask for the same thing and stay
 // consistent. The "search" field is what actually makes the links work.
 // mode 'compare' is for the Wardrobe "Ideas" carousel, where the options are
@@ -5388,6 +5416,14 @@ function _shopRules(mode){
     // in filterNeverWear too (_STYLIST_VETO), so this line is the model's
     // instruction and the filter is the guarantee.
     '- CATHERINE\'S OWN VETOES, absolute, the same weight as her never-wear list: NEVER suggest skinny jeans (a dated silhouette), and NEVER suggest anything ribbed — the word "ribbed" must not appear in any name or search.\n'+
+    // ▶ 2026-08-15, her call after the Anthropologie screenshot: "Plus Wrap
+    // Midi Dress" returned ONE product and it was not a wrap dress. The
+    // mainstream-shape rule above already names this exact case and the model
+    // drifted past it, so wrap moves from guidance to a named veto here and a
+    // guarantee in filterNeverWear (_SEARCH_VETO). Her exemption is the last
+    // clause: the ONE surface that legitimately asks for a wrap is her own
+    // "Wrap dresses" checklist row, and the filter waives itself there.
+    '- NEVER build a search around "wrap" — not wrap dresses, wrap tops or wrap skirts — UNLESS the piece she has specifically asked for is itself a wrap. It is not a bad garment; stores simply do not stock it in numbers, so the search comes back with a wrap skirt and a perfume instead. Reach for a mainstream shape word instead.\n'+
     '- Match the store to her using the tags above.\n'+
     // The app never asks her budget, so this used to promise something it could
     // not do. Worse, the dressier a woman's taste the more her best-matched
@@ -5473,7 +5509,9 @@ const FIND_LABEL='Find it &rarr;';
 //   read as loud above the products, and her own subtitle already says every
 //   piece is her pick). Only the MALL keeps its longer founder-voice version.
 function _shopCard(item,topHtml){
-  item=_nameParity(item);   // the name may not promise what the search drops
+  item=_sizeWordsOut(_nameParity(item));   // the name may not promise what the
+  // search drops, and may never say her size range back to her (order matters:
+  // parity can rebuild the name FROM the search, size words and all)
   const key=resolveStore(item.store);
   const url=getStoreUrl(item.store,item.name,item.search);
   return '<div class="shop-card"><div>'+(topHtml||'')+
@@ -5500,7 +5538,7 @@ async function genOutfits(source){
 Her style profile:
 ${sliderDesc}
 Style notes: ${archNames.join(', ')}${getPrefsForPrompt()}
-
+${_seenPicksLine('outfits-'+(source||''))}
 For each item provide:
 - category: one of "top", "bottom", "dress", "jacket", "shoes", "bag", "jewelry", "activewear"
 ${_shopRules()}
@@ -5525,7 +5563,9 @@ Respond with ONLY valid JSON:
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
     let html='<div class="shop-grid">';
-    filterNeverWear(parsed.items).forEach(item=>{
+    const _keep=filterNeverWear(parsed.items);
+    _rememberPicks('outfits-'+(source||''),_keep);   // the refresh must not repeat
+    _keep.forEach(item=>{
       html+=_shopCard(item,'<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
     });
     html+='</div>';
@@ -5557,7 +5597,7 @@ async function shopMyStyle(){
     sub='Ideas in the vibe of the look you shared';
   }
   var subEl=document.getElementById('shopSubPhoto');if(subEl)subEl.textContent=sub;
-  var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n${_shopRules()}\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute and overrides every other suggestion.\n${_colorPrefRule()}- Mix categories and price points across the 6 items\n- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}`;
+  var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n${_seenPicksLine('photo')}\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n${_shopRules()}\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute and overrides every other suggestion.\n${_colorPrefRule()}- Mix categories and price points across the 6 items\n- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}`;
   var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
     var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:400,messages:[{role:"user",content:prompt}]})});
@@ -5567,7 +5607,9 @@ async function shopMyStyle(){
     var raw=d.content.map(c=>c.text||'').join('');
     var parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
     var html='<div class="shop-grid">';
-    filterNeverWear(parsed.items).forEach(function(item){
+    var _keep=filterNeverWear(parsed.items);
+    _rememberPicks('photo',_keep);   // so the refresh below cannot repeat them
+    _keep.forEach(function(item){
       html+=_shopCard(item,'<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
     });
     html+='</div><div class="shop-refresh"><button class="shop-refresh-btn" onclick="shopMyStyle()">&#8635; Show me different picks</button></div>';
@@ -6118,14 +6160,14 @@ async function _shopStyleGen(){
   if(_shopStyleMode==='wantlist'){
     var wl=(_wantListNames||[]);if(wl.length>16){_wlTrunc=wl.length-16;wl=wl.slice(0,16);}
     maxTok=1400;
-    prompt='You are Catherine, a personal stylist. This woman has a wardrobe list. For EACH item on her list, suggest ONE specific shoppable piece she would genuinely love that fits her style.\n\n'+basis+'\n\nHer list:\n'+wl.map(function(w,i){return (i+1)+'. '+w}).join('\n')+'\n\nFor each list item provide:\n- want: the exact list item text it is for\n'+_shopRules()+'\nRULES:\n- Give exactly one pick per list item, in the same order\n- NEVER suggest anything on her never-wear list or a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Wrap Midi Dress" — never vague ("a nice dress"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"want":"List item","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. This woman has a wardrobe list. For EACH item on her list, suggest ONE specific shoppable piece she would genuinely love that fits her style.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nHer list:\n'+wl.map(function(w,i){return (i+1)+'. '+w}).join('\n')+'\n\nFor each list item provide:\n- want: the exact list item text it is for\n'+_shopRules()+'\nRULES:\n- Give exactly one pick per list item, in the same order\n- NEVER suggest anything on her never-wear list or a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Floral Midi Dress" — never vague ("a nice dress"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"want":"List item","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else if(_shopStyleMode==='look'){
     // MIRROR the look: swaps and repeats of what she is wearing, never add-ons.
     maxTok=700;
-    prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+'- Mix categories and price points across the 6 items\n- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+'- Mix categories and price points across the 6 items\n- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }
   var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
@@ -6134,7 +6176,12 @@ async function _shopStyleGen(){
     var d=await r.json();if(!d.content)throw 0;
     var parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
     var html='<div class="shop-grid">';
-    filterNeverWear(parsed.items).forEach(function(item){
+    // On "Shop my whole list" the things she asked for ARE her list, so a row
+    // she starred herself ("Wrap dresses") waives the search veto for this call.
+    var _keep=filterNeverWear(parsed.items,
+      _shopStyleMode==='wantlist'?(_wantListNames||[]).join(' '):'');
+    _rememberPicks('ss-'+_shopStyleMode,_keep);   // the refresh must not repeat
+    _keep.forEach(function(item){
       var top=(_shopStyleMode==='wantlist')?('<div class="shop-want-for">'+_esc(item.want||'')+'</div>'):('<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
       html+=_shopCard(item,top);
     });
@@ -6664,6 +6711,28 @@ function _fitSizes(){
 // explicit word — never guess at what else is dated; she is the trend
 // authority (the standing store-tags rule).
 const _STYLIST_VETO=['ribbed','skinny jeans'];
+// ▶ HER SEARCH-SHAPE VETO, AND IT IS A DIFFERENT KIND OF LIST FROM THE ONE
+// ABOVE — KEEP THEM SEPARATE (2026-08-15, her call after live testing).
+// _STYLIST_VETO is TASTE: a garment she would never put on a client, so it is
+// wrong everywhere, always, no exceptions. _SEARCH_VETO is about what a store
+// search can RETURN. Her words on wrap, 2026-08-15: "wrap tops are not very
+// popular... it's just not something that is likely to come up in a search",
+// and she was explicit that this is NOT the garment being bad. Her Anthropologie
+// screenshot is the proof: "Plus Wrap Midi Dress" returned ONE product, and it
+// was not a wrap dress. The prompt already names this exact failure and the
+// model drifted anyway, which is the standing signal to move a rule into code.
+// ▶ HER EXEMPTION, IN HER WORDS: "unless she is specifically asking for a wrap
+// top or wrap dress we don't need to be searching for it." So this list is
+// waived whenever the thing she asked for IS that piece — see the askedFor
+// argument below. Two places that matters:
+//   1. dr7 "Wrap dresses" is one of her own 100 checklist rows. Tapping Ideas
+//      on it IS specifically asking, and a blanket veto would blank that shelf.
+//   2. The stylist chat never runs this filter at all, so asking there works.
+// ⚠️ And it deliberately does NOT reach the curated catalog picker
+// (curatedPicks): those are HER hand-picked products with exact product
+// URLs, so no store search is involved and the whole reason for this veto is
+// absent. A wrap dress she chose herself lands on the real piece every time.
+const _SEARCH_VETO=['wrap'];
 // ▶ THE NAME-IS-THE-SEARCH GUARANTEE (2026-08-15, her catch on a live shelf).
 // Every shopping prompt has said since 2026-08-12 that a card's name is "the
 // search written beautifully -- nothing the search does not carry," and a
@@ -6716,9 +6785,67 @@ function _nameParity(item){
     :search.trim().split(/\s+/).map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');
   return Object.assign({},item,{name:name});
 }
-function filterNeverWear(items){
+// ▶ HER SIZE RANGE GUIDES THE SEARCH AND NEVER THE WORDS SHE READS (2026-08-15,
+// her live testing with only plus sizes saved: EVERY card came back "Plus Wide
+// Leg Trouser", "Plus Linen Button-Front Blouse", "Plus Wrap Midi Dress").
+// That breaks her own standing rule, in her words (2026-07-28, reaffirmed
+// 2026-08-13): never mention a woman's size range back to her while she is
+// shopping -- "I don't want to remind a plus or petite woman of her sizing in
+// that moment." Her sizing decides WHICH store and WHICH search; it must never
+// appear in the name.
+// ▶ WHY IT HAPPENED, and it was two CORRECT rules colliding, not a bad one:
+// _sizeGuidance() tells the model to LEAD the search term with her size word
+// (right -- "plus wide leg trousers" genuinely filters better at the store),
+// and _shopRules() tells it the name IS the search written beautifully, same
+// words (also right -- that is the name-parity guarantee). So the size word
+// entered the search legitimately and parity faithfully copied it onto the card.
+// ⚠️ _nameParity CANNOT catch this: it strips name words the search does not
+// carry, and "plus" IS in the search, so parity passes cleanly.
+// ▶ So this is a DELIBERATE, NARROW SECOND EXCEPTION to name/search parity,
+// alongside the colour one (the name may read "Hot Pink" while the search uses
+// the store's plain filter word "pink"). Unlike that one it exists to protect a
+// BRAND rule rather than a search behaviour -- which is exactly why it is a
+// guarantee in code and not another line of prompt. The never-wear and
+// name-parity precedents both say a rule nothing checks on the way back drifts.
+// ⚠️ Runs AFTER _nameParity, always: parity can REBUILD a name from the search,
+// and that rebuilt name would carry the size word straight back in.
+function _sizeWordsOut(item){
+  // No search means the name is doing the search's job (getStoreUrl falls back
+  // to it), so stripping the word would lose the filter as well as the mention.
+  // Same early-out as _nameParity, for the same reason.
+  if(!item||!item.name||!item.search)return item;
+  let name=String(item.name);
+  // "Wide Width", "Narrow Width" -- her shoe width, and "width" is never a
+  // garment word, so this phrase is unambiguous wherever it sits. Her call on
+  // width, 2026-08-15: "if a woman truly needs a narrow or a wide I want her to
+  // be able to find it but I don't want to make a big deal of it." The search
+  // still carries it; the card just stops announcing it.
+  name=name.replace(/\b(?:extra[\s-]?)?(?:wide|narrow|medium)[\s-]?width\b/gi,' ')
+           .replace(/\bwidth\b/gi,' ');
+  // A LEADING size range only. _sizeGuidance tells the model to lead the search
+  // with it, so the front of the name is where it lands.
+  // ⚠️ Deliberately anchored, NOT a loose match: "wide" alone is a silhouette
+  // ("Wide-Leg Trouser") and must survive untouched. Looping covers the rare
+  // stacked case ("Plus Petite ...").
+  for(let i=0;i<3;i++){
+    const next=name.replace(/^[\s,-]*(?:plus[\s-]?size|plus|petite|tall)\b[\s,-]*/i,'');
+    if(next===name)break;
+    name=next;
+  }
+  name=name.replace(/\s{2,}/g,' ').replace(/^[\s,-]+|[\s,-]+$/g,'').trim();
+  // Never render an empty or stub card name: if the size word WAS the name,
+  // keep what the model wrote rather than showing her nothing.
+  if(name.length<2)return item;
+  return name===item.name?item:Object.assign({},item,{name:name});
+}
+// askedFor: the thing she actually asked for, when a surface knows it (a
+// wardrobe checklist row name). It waives a _SEARCH_VETO word that she is
+// plainly asking for by name -- her exemption -- and never waives a taste veto.
+function filterNeverWear(items,askedFor){
   if(!Array.isArray(items))return[];
-  const terms=_STYLIST_VETO.concat(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
+  const asked=String(askedFor||'').toLowerCase();
+  const searchVeto=_SEARCH_VETO.filter(t=>asked.indexOf(t)<0);
+  const terms=_STYLIST_VETO.concat(searchVeto).concat(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
     .concat(String(prefs.neverOther||'').split(',').map(t=>t.replace(/^\s*(no|never|not)\s+/i,'')))
     .map(t=>String(t).toLowerCase().trim()).filter(t=>t.length>2);
   if(!terms.length)return items;
@@ -7794,7 +7921,9 @@ async function _wardrobeIdeaGen(id,boxId){
     // Extra AI ideas beyond the fill wait in a buffer so the first "+ See
     // more ideas" tap is instant; later taps fetch fresh ones.
     curated.forEach(function(x){html+=_curatedCard(x)});
-    const aiItems=filterNeverWear(parsed.items);
+    // `name` is the checklist row she tapped: on dr7 "Wrap dresses" she IS
+    // specifically asking for a wrap, so the search veto stands down. Her rule.
+    const aiItems=filterNeverWear(parsed.items,name);
     const fillN=curated.length?Math.max(0,6-curated.length):aiItems.length;
     aiItems.slice(0,fillN).forEach(function(item){html+=_shopCard(item)});
     _wdrMoreBuf[id]=aiItems.slice(fillN);
@@ -7854,7 +7983,7 @@ async function _wdrMoreIdeas(id,boxId){
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
     const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
-    const items=filterNeverWear(parsed.items);
+    const items=filterNeverWear(parsed.items,name);  // same direct-ask exemption
     if(!items.length)throw 0;
     append(items);
     if(btn){btn.textContent='+ See more ideas';btn.classList.remove('busy');}
