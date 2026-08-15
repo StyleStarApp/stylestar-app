@@ -36,8 +36,44 @@
   // ⚠️ localStorage is per browser AND per domain, so the flag has to be set
   // once in each browser she tests in. track() checks the same flag as a
   // second line of defence.
+  // ▶ HOW SHE TURNS IT ON: stylestar.app/?notrack once per browser, and
+  // /?track to undo. ⚠️ THE ADDRESS IS THE WHOLE POINT -- the documented way
+  // to set this flag is a console command, and iPhone Safari has no console,
+  // so a console-only switch would have been unreachable on the one device
+  // she actually tests on. Per browser AND per device: the flag lives in that
+  // browser's own storage, so her phone and her laptop each need it once.
   window.__ssNoTrack=false;
-  try{if(localStorage.getItem('plausible_ignore')==='true')window.__ssNoTrack=true}catch(e){}
+  window.__ssTrackMsg='';
+  try{
+    // ?notrack is checked first; note [?&]track cannot match inside "?notrack"
+    // (the character before "track" there is an "o"), so the two never collide.
+    if(/[?&]notrack(=|&|$)/.test(location.search)){localStorage.setItem('plausible_ignore','true');window.__ssTrackMsg='off'}
+    else if(/[?&]track(=|&|$)/.test(location.search)){localStorage.removeItem('plausible_ignore');window.__ssTrackMsg='on'}
+    if(localStorage.getItem('plausible_ignore')==='true')window.__ssNoTrack=true;
+  }catch(e){}
+  // Tell her it worked -- a silent switch is one she cannot trust. Built here
+  // rather than in the app so it cannot depend on app boot succeeding.
+  if(window.__ssTrackMsg){
+    // Drop the switch out of the address bar so it is not carried into a
+    // bookmark or a shared link. ⚠️ Deletes ONLY these two params: an ?r=
+    // restore token in the same URL has to survive to the boot path.
+    try{var _u=new URL(location.href);_u.searchParams.delete('notrack');_u.searchParams.delete('track');
+        history.replaceState(history.state,'',_u.pathname+(_u.search||'')+_u.hash)}catch(e){}
+    document.addEventListener('DOMContentLoaded',function(){
+      var d=document.createElement('div');
+      d.id='ssTrackNote';d.setAttribute('role','status');
+      d.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:26px;z-index:99999;'
+        +'max-width:300px;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;padding:14px 16px;'
+        +'font:15px/1.5 Jost,system-ui,-apple-system,sans-serif;text-align:center;'
+        +'box-shadow:0 6px 24px rgba(0,0,0,.32)';
+      d.textContent=window.__ssTrackMsg==='off'
+        ?'This browser is private now. Nothing you do here is counted in your visitor numbers.'
+        :'This browser is being counted in your visitor numbers again.';
+      document.body.appendChild(d);
+      setTimeout(function(){d.style.transition='opacity .6s';d.style.opacity='0';
+        setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d)},700)},7000);
+    });
+  }
   if(!window.__ssNoTrack){
     var _pa=document.createElement('script');
     _pa.async=true;_pa.src='https://plausible.io/js/pa-2isRUQ0QeYxjy54Mf0lSe.js';
