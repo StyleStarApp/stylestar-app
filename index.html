@@ -334,14 +334,21 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    never realised she could tap it. It now gets a cream fill, darker text and
    an arrow, so both tabs look like buttons: one pressed in, one not. */
 #s-wardrobe .wdr-tab:not(.on){background:#F5EFE2;color:#3a352c;border-color:#C9A44C}
-#s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:8px 0 4px}
+/* Stays BELOW the buttons (her call 2026-08-15, from renders: above, it lands
+   in the page-subtitle slot and reads as describing the page, and it is the
+   only thing telling her the unselected tab is tappable -- her mom's catch).
+   Tightened to sit close under them. */
+#s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:4px 0 2px}
 /* Page-level affiliate notice, the blog-post convention: quiet, but above every
    link on the screen. #6e6e6e matches the disclosure on every other surface. */
 /* Sits under each tab's intro card, directly above that tab's first link. Its
    OWN margins are the whole gap on both sides -- the neighbours' spacing is
-   zeroed below -- so the two tabs are identical and the space stays tight
-   (her ask 2026-08-15). Tightened from the old 0/13 + the neighbour's 14. */
-#s-wardrobe .wdr-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:9px 0}
+   zeroed below -- so the two tabs are identical (her ask 2026-08-15).
+   ⚠️ DELIBERATELY UNEVEN, her second call: "lower it down to sit closer to the
+   line." Centred 9/9 it floated between two cards and belonged to neither; sat
+   down against the list it reads as a caption for the links it is actually
+   about, which is the whole reason it moved here. Keep the bottom gap small. */
+#s-wardrobe .wdr-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:16px 0 3px}
 #s-wardrobe .wdr-disclosure+.wdr-card{margin-top:0}
 #s-wardrobe .wdr-disclosure+.wdr-tstack{margin-top:0}
 #s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}

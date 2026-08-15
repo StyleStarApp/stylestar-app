@@ -151,7 +151,11 @@ for (const w of [390,360,320]) {
       };
     }, tab);
     ok(`${w}px ${tab}: disclosure lives inside the pane, under the intro card`, m && m.inPane && m.afterIntro);
-    ok(`${w}px ${tab}: gaps tight and even (9px both sides)`, m && m.above===9 && m.below===9, m?`${m.above}/${m.below}`:'missing');
+    // ⚠️ DELIBERATELY UNEVEN (her call: "lower it down to sit closer to the
+    // line"). Centred, it floated between two cards and belonged to neither.
+    // The claim under test is the RELATIONSHIP -- it must sit down against the
+    // links below it -- not the exact numbers, so this asserts the asymmetry.
+    ok(`${w}px ${tab}: sits down against the list, not floating`, m && m.below <= 4 && m.above >= m.below * 3, m?`above ${m.above} / below ${m.below}`:'missing');
     ok(`${w}px ${tab}: exactly ONE visible copy on screen`, m && m.copies===1, m?String(m.copies):'-');
     ok(`${w}px ${tab}: sits above every link (the FTC placement)`, m && m.beforeLinks);
     ok(`${w}px ${tab}: the shared pronoun-free wording`, m && m.text==='Some links may earn a commission.', m?m.text:'-');
