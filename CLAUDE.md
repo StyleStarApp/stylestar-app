@@ -72,7 +72,7 @@ noticed at all and was the most serious.** Read screenshots for what they SHOW, 
   stashing the change and watching it fail identically.** Rewritten to run that claim on a **catalog-free
   slot** (to2) so catalog growth in any slot can never break it again. ▶ **Always stash-and-rerun before
   believing a suite failure is yours.**
-- **Suites: `sizeveto.js` 42 (new) · `prefdone.js` 24 (new) · nameparity 25 (was 23, +2 and one deliberate rewrite) · curated 65 ·
+- **Suites: `sizeveto.js` 42 (new) · `prefdone.js` 32 (new) · nameparity 25 (was 23, +2 and one deliberate rewrite) · curated 65 ·
   searchtune 70 · searchchat 57 · cowork3 69 · wladd 102 · storedepth 17 · e2e 29 · hubs 49 · affq 40 — all green.**
 - ✅⭐ **THE "MAYBE LATER" DEAD END IS FIXED — her pick "A" from four renders, built same session.** Finishing
   Refine without giving an email landed her back on the **portrait she had already read**. ▶ **THE DIAGNOSIS
@@ -96,7 +96,14 @@ noticed at all and was the most serious.** Read screenshots for what they SHOW, 
   margins, which could not have fixed a widow. **Measured 5 words on the last line at 390/375/360/320.**
   ⚠️ The shortened sub is a **Claude draft** ("Your preferences are set. From here, shopping only gets easier
   and more fun.") — the old sentence ended by selling the email save, which read oddly once shopping led.
-  **She has not blessed the wording; one string in the markup.** New `scratchpad/prefdone.js` **24 checks**.
+  **She has not blessed the wording; one string in the markup.**
+  ✍️ **Her second catch: "Privacy Policy ·" sat alone with "Terms" stranded below it.** Fixed by keeping the
+  two links together (`.priv-links{white-space:nowrap}`) so the line breaks after the SENTENCE instead of
+  between them — ⚠️ **nowrap rather than a hardcoded `<br>`, so a wider container still holds one line**, and
+  applied to **all FOUR copies** of that sentence (grep `never share your email`).
+  ⚠️ **THE RECT-PER-ELEMENT TRAP COST A FALSE FAILURE HERE, third time in this file:** the fix looked broken
+  because `getClientRects()` on the inline span returned THREE rects — one per child box — when all three
+  shared the same `top`. **Count UNIQUE tops, never rects.** New `scratchpad/prefdone.js` **32 checks**.
 - ▶ **STILL OPEN ON IT, her eye:** how it feels on her phone, and the drafted sub above.
 - ▶ **SUPERSEDED — the original diagnosis, kept for the reasoning:**
   Finishing Refine without giving an email lands her back on the **portrait she already read**. ▶ **THE

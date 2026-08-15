@@ -115,6 +115,23 @@ function ok(name, cond, extra) {
     }, [LINES]);
     ok('★ ' + w + ': no straggling last word in the celebration line (' + m.lastLineWords + ' words, ' + m.subLines + ' lines)', m.lastLineWords >= 2, JSON.stringify(m));
     ok(w + ': no sideways page scroll', m.scroll);
+    // ★ Her second catch: "Privacy Policy ·" sat alone with "Terms" beneath it.
+    // ⚠️ COUNT UNIQUE TOPS, NOT RECTS — getClientRects() on an inline element
+    // returns a rect per CHILD box as well, so the three fragments of this span
+    // look like three lines when they are one. That trap cost a false failure
+    // here; it is the same rect-per-element lesson as 2026-08-10/11.
+    const pv = await p2.evaluate(() => {
+      const d = [...document.querySelectorAll('#prefSaveBlock div')]
+        .find(x => /never share your email/.test(x.textContent) && x.children.length);
+      const links = d.querySelector('.priv-links');
+      const tops = [...links.getClientRects()].map(r => Math.round(r.top));
+      const uniq = []; tops.forEach(t => { if (!uniq.some(u => Math.abs(u - t) < 6)) uniq.push(t); });
+      return {lineOfLinks: uniq.length, ws: getComputedStyle(links).whiteSpace,
+              boxW: Math.round(d.getBoundingClientRect().width),
+              linkW: Math.round(links.getBoundingClientRect().width)};
+    });
+    ok('★ ' + w + ': Privacy Policy and Terms sit on ONE line together', pv.lineOfLinks === 1, JSON.stringify(pv));
+    ok(w + ': the links still fit their box (' + pv.linkW + ' of ' + pv.boxW + 'px)', pv.linkW <= pv.boxW, JSON.stringify(pv));
     if (w !== 390) await c2.close();
   }
   await ctx.close();
