@@ -116,6 +116,16 @@ noticed at all and was the most serious.** Read screenshots for what they SHOW, 
   later" stay a quiet dismissal. Same destination, visible as a choice; it also fixes the SAVED path, where
   the email currently reads as a toll gate before the payoff. **She said "let's do 3 when you are ready" —
   render 2-3 versions for her pick first, per the standing rule.**
+- ✅ **THE 5 REWORDED NOTES ARE CLOSED, her call.** Reminded of what they were (Cowork quietly rewrote five of
+  HER product notes between exports), she read the three that could be diffed and kept them — with **one
+  deletion on p001 Madewell Perfect Vintage Jean: the whole sentence "The curvy fit is the one to take if
+  you're waist-small and hip-full" is GONE, her words: "just delete that line."** ▶ **Consistent with her
+  standing boundary — the app never names bodies** (2026-08-13: no copy about slimming or flattery), and the
+  clause was the one piece of body-shape talk left in the catalog. Note is now the first sentence only.
+  ⚠️ **p035/p051 stay undiffable and she is content;** the standing keep-the-previous-export rule stands.
+  ⚠️⚠️ **THE CSV IS DOWNSTREAM OF HER COWORK SHEET, so this edit is fragile: unless she makes the same
+  deletion in Cowork, the sentence RETURNS on her next export.** Flagged to her. ▶ **STANDING: any note edited
+  here must be edited in Cowork too, or the converter will faithfully put it back.**
 - ▶ **STILL OPEN FROM THE ENTRY BELOW, unchanged:** the Almira call **Monday Aug 17 12:30** · **Sunday Aug 16**
   first automatic Star swap + first link-check Routine fire · the **5 reworded notes** (⚠️ **only p001/p007/
   p011 could be diffed — p035/p051's "before" text lived only in her FIRST export, which was never saved.
