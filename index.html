@@ -4856,35 +4856,35 @@ Respond with ONLY valid JSON in this exact format, no other text:
 //   purpose, so do not add them from that list.
 const STORES={
   // Department stores and multi-brand
-  'Nordstrom':{cf:'&filterByColor=',w:1,u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,9,8,7,7,8,8,10,9],c:'almost everything, dresses, shoes, denim'},
-  "Macy's":{w:1,cfp:true,cfpBase:'https://www.macys.com/shop/featured/',u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[7,5,6,8,6,7,7,6,8,8],c:'everyday, dresses, shoes, handbags'},
-  "Dillard's":{w:1,u:'https://www.dillards.com/search-term/',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7,8,5,6,8,7,9,8],c:'dresses, occasion, workwear'},
-  'Belk':{w:1,u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[8,5,6,8,5,8,6,5,8,7],c:'everyday, dresses, shoes'},
-  'Bloomingdales':{w:1,cfp:true,cfpBase:'https://www.bloomingdales.com/shop/featured/',u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[6,7,9,8,8,6,9,8,9,8],c:'designer, denim, shoes'},
-  'Saks':{w:1,u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],d:[3,9,10,8,9,3,10,9,10,9],c:'designer, bags, occasion'},
-  'Neiman Marcus':{w:1,u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[3,9,10,9,8,3,10,9,10,9],c:'designer, evening, shoes'},
+  'Nordstrom':{cf:'&filterByColor=',w:1,u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,9,8,7,7,8,8,10,9],deep:1,c:'almost everything, dresses, shoes, denim'},
+  "Macy's":{w:1,cfp:true,cfpBase:'https://www.macys.com/shop/featured/',u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[7,5,6,8,6,7,7,6,8,8],deep:1,c:'everyday, dresses, shoes, handbags'},
+  "Dillard's":{w:1,u:'https://www.dillards.com/search-term/',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7,8,5,6,8,7,9,8],deep:1,c:'dresses, occasion, workwear'},
+  'Belk':{w:1,u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[8,5,6,8,5,8,6,5,8,7],deep:1,c:'everyday, dresses, shoes'},
+  'Bloomingdales':{w:1,cfp:true,cfpBase:'https://www.bloomingdales.com/shop/featured/',u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[6,7,9,8,8,6,9,8,9,8],deep:1,c:'designer, denim, shoes'},
+  'Saks':{w:1,u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],d:[3,9,10,8,9,3,10,9,10,9],deep:1,c:'designer, bags, occasion'},
+  'Neiman Marcus':{w:1,u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[3,9,10,9,8,3,10,9,10,9],deep:1,c:'designer, evening, shoes'},
   'Bergdorf Goodman':{w:1,u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'$$$$',a:'Luxury Fashion',s:[],d:[2,9,10,10,9,2,10,10,10,9],c:'couture, designer, fine jewelry'},
-  'NET-A-PORTER':{u:'https://www.net-a-porter.com/en-us/shop/search?q=',t:'$$$$',a:'Luxury Fashion, Quiet Luxury',s:[],d:[4,9,10,9,9,3,10,8,10,9],c:'luxury designer clothing, handbags, shoes'},
+  'NET-A-PORTER':{u:'https://www.net-a-porter.com/en-us/shop/search?q=',t:'$$$$',a:'Luxury Fashion, Quiet Luxury',s:[],d:[4,9,10,9,9,3,10,8,10,9],deep:1,c:'luxury designer clothing, handbags, shoes'},
   // searchSuggestion=false stops Shopbop redirecting the term into a suggestion,
   // the way Revolve does. Ordered first so the term still appends at the end.
-  'Shopbop':{u:'https://www.shopbop.com/products?searchSuggestion=false&query=',t:'$$$',a:'Modern Chic, Trendsetter',s:[],d:[5,7,8,6,9,6,8,8,8,8],c:'contemporary designers, denim, shoes'},
-  'Nordstrom Rack':{w:1,u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],d:[8,5,7,7,6,8,6,7,9,8],c:'designer deals, shoes, denim'},
-  'TJ Maxx':{w:1,u:'https://m.tjmaxx.tjx.com/m/shop/?initSubmit=search&Ntt=',t:'$',a:'Treasure Hunter',s:['plus'],d:[8,5,5,5,6,9,5,6,8,8],c:'value finds, handbags, shoes'},
+  'Shopbop':{u:'https://www.shopbop.com/products?searchSuggestion=false&query=',t:'$$$',a:'Modern Chic, Trendsetter',s:[],d:[5,7,8,6,9,6,8,8,8,8],deep:1,c:'contemporary designers, denim, shoes'},
+  'Nordstrom Rack':{w:1,u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],d:[8,5,7,7,6,8,6,7,9,8],deep:1,c:'designer deals, shoes, denim'},
+  'TJ Maxx':{w:1,u:'https://m.tjmaxx.tjx.com/m/shop/?initSubmit=search&Ntt=',t:'$',a:'Treasure Hunter',s:['plus'],d:[8,5,5,5,6,9,5,6,8,8],deep:1,c:'value finds, handbags, shoes'},
   // Contemporary and mainstream
   'J.Crew':{w:1,u:'https://www.jcrew.com/search?term=',t:'$$',a:'Classic Sophisticate, Playful Classic',s:['petite','tall'],d:[5,3,9,10,3,7,8,8,9,6],c:'timeless classics, workwear, denim, dresses'},
-  'Zara':{w:1,u:'https://www.zara.com/us/en/search?searchTerm=',t:'$$',a:'Trendsetter, Modern Chic',s:[],d:[5,7,7,3,10,6,7,9,7,8],c:'fashion-forward trends, statement pieces'},
+  'Zara':{w:1,u:'https://www.zara.com/us/en/search?searchTerm=',t:'$$',a:'Trendsetter, Modern Chic',s:[],d:[5,7,7,3,10,6,7,9,7,8],deep:1,c:'fashion-forward trends, statement pieces'},
   'Mango':{u:'https://shop.mango.com/us/en/search/women?q=',t:'$$',a:'Modern Minimalist, European Chic',s:[],d:[5,6,8,6,8,6,7,8,8,7],c:'workwear, elevated trends, outerwear'},
-  'Target':{w:1,u:'https://www.target.com/s?searchTerm=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[9,3,5,6,6,10,4,5,8,8],c:'affordable fashion, basics, accessories'},
-  'Amazon':{gp:'&i=fashion-womens',u:'https://www.amazon.com/s?k=',t:'$-$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,5,7,6,8,6,6,8,8],c:'almost everything, basics, accessories, shoes'},
+  'Target':{w:1,u:'https://www.target.com/s?searchTerm=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[9,3,5,6,6,10,4,5,8,8],deep:1,c:'affordable fashion, basics, accessories'},
+  'Amazon':{gp:'&i=fashion-womens',u:'https://www.amazon.com/s?k=',t:'$-$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,5,7,6,8,6,6,8,8],deep:1,c:'almost everything, basics, accessories, shoes'},
   'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[8,6,8,6,8,7,7,5,6,9],c:'dresses, occasion, unique pieces'},
   'Express':{w:1,u:'https://www.express.com/exp/search?q=',t:'$$',a:'Modern Glam, Professional Power',s:['petite'],d:[3,8,7,4,8,5,8,10,8,7],c:'going-out looks, workwear, denim'},
   // The old /r/search?query= silently landed on Revolve's homepage (Cath caught
   // it live; Revolve blocks automated checks so it could not be tested here).
   // Real pattern, from her address bar. d=Womens scopes it to womenswear, and
   // comes first only so the search term can still be appended at the end.
-  'Revolve':{u:'https://www.revolve.com/r/Search.jsp?d=Womens&search=',t:'$$$',a:'Glamorous Luxe, Trendsetter',s:[],d:[2,10,8,2,10,4,10,10,7,9],c:'occasion dresses, vacation, designer contemporary'},
+  'Revolve':{u:'https://www.revolve.com/r/Search.jsp?d=Womens&search=',t:'$$$',a:'Glamorous Luxe, Trendsetter',s:[],d:[2,10,8,2,10,4,10,10,7,9],deep:1,c:'occasion dresses, vacation, designer contemporary'},
   'Abercrombie':{gp:'&facet=gender%3A%28%22Women%27s%22%29&filtered=true',u:'https://www.abercrombie.com/shop/us/search?searchTerm=',t:'$$',a:'Casual Trendy, Elevated Casual',s:['petite','tall'],d:[6,6,7,5,8,9,4,8,8,6],c:'denim, dresses, everyday fashion'},
-  'H&M':{w:1,u:'https://www2.hm.com/en_us/search-results.html?q=',t:'$',a:'Trendsetter, Casual Everyday',s:['plus'],d:[7,5,5,3,9,8,4,6,6,8],c:'affordable trends, basics'},
+  'H&M':{w:1,u:'https://www2.hm.com/en_us/search-results.html?q=',t:'$',a:'Trendsetter, Casual Everyday',s:['plus'],d:[7,5,5,3,9,8,4,6,6,8],deep:1,c:'affordable trends, basics'},
   'Banana Republic':{gp:'&department=136',u:'https://bananarepublic.gap.com/browse/search.do?searchText=',t:'$$',a:'Classic Sophisticate, Modern Minimalist',s:['petite','tall'],d:[4,4,9,9,4,5,9,8,10,4],c:'workwear, elevated basics, tailoring'},
   'Banana Republic Factory':{gp:'&department=136',u:'https://bananarepublicfactory.gapfactory.com/browse/search.do?searchText=',t:'$-$$',a:'Classic Sophisticate',s:['petite','tall'],d:[5,3,7,8,3,7,6,7,9,4],c:'affordable workwear, tailoring, basics'},
   'Madewell':{u:'https://www.madewell.com/search-results/?r_productGender=women&q=',t:'$$',a:'Elevated Natural, Casual Classic',s:['petite','plus','tall'],d:[10,3,8,7,5,10,3,5,8,6],c:'denim, casual essentials, leather goods'},
@@ -4963,8 +4963,8 @@ const STORES={
   'Spanx':{u:'https://www.spanx.com/search?q=',t:'$$$',a:'Modern Minimalist, Professional Power',s:['plus'],d:[2,6,9,7,8,7,5,10,9,4],c:'shapewear, leggings, smoothing basics'},
   'SKIMS':{u:'https://skims.com/search?query=',t:'$$$',a:'Modern Glam, Modern Minimalist',s:['plus'],d:[2,10,8,3,10,8,4,10,9,4],c:'shapewear, loungewear, basics'},
   // Shoes
-  'Zappos':{w:1,u:'https://www.zappos.com/search?term=',t:'$$',a:'Universal',s:['wide','narrow'],d:[6,5,7,6,5,9,5,5,7,8],c:'shoes, sneakers, boots, comfort footwear, extended widths'},
-  'DSW':{w:1,u:'https://www.dsw.com/browse/',t:'$$',a:'Universal',s:['wide'],d:[6,5,6,6,6,8,5,5,7,8],c:'shoes, handbags, accessories, extended widths'},
+  'Zappos':{w:1,u:'https://www.zappos.com/search?term=',t:'$$',a:'Universal',s:['wide','narrow'],d:[6,5,7,6,5,9,5,5,7,8],deep:'shoes',c:'shoes, sneakers, boots, comfort footwear, extended widths'},
+  'DSW':{w:1,u:'https://www.dsw.com/browse/',t:'$$',a:'Universal',s:['wide'],d:[6,5,6,6,6,8,5,5,7,8],deep:'shoes',c:'shoes, handbags, accessories, extended widths'},
   'Sam Edelman':{u:'https://www.samedelman.com/search#q=',t:'$$$',a:'Modern Chic, Classic Sophisticate',s:[],d:[5,6,8,7,7,6,8,7,7,7],c:'fashion shoes, boots, sandals'},
   // Designer and jewelry
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
@@ -4974,7 +4974,7 @@ const STORES={
   'Tiffany & Co.':{u:'https://www.tiffany.com/search/?q=',t:'$$$$',a:'Luxury Fashion, Classic Sophisticate',s:[],d:[5,6,10,10,4,2,10,5,9,6],c:'fine jewelry, luxury gifts'},
   'Kendra Scott':{u:'https://www.kendrascott.com/search?q=',t:'$$',a:'Playful Chic, Modern Glam',s:[],d:[5,5,7,6,7,7,6,5,5,10],c:'fashion jewelry, gifts, statement earrings'},
   // Eyewear
-  'Sunglass Hut':{u:'https://www.sunglasshut.com/?q=',t:'$$-$$$$',a:'Universal',s:[],d:[5,5,8,7,8,6,7,5,7,8],c:'designer sunglasses, eyewear'},
+  'Sunglass Hut':{u:'https://www.sunglasshut.com/?q=',t:'$$-$$$$',a:'Universal',s:[],d:[5,5,8,7,8,6,7,5,7,8],deep:'eyewear',c:'designer sunglasses, eyewear'},
   'Warby Parker':{u:'https://www.warbyparker.com/search?q=',t:'$$',a:'Modern Minimalist',s:[],d:[5,2,9,9,5,8,4,5,8,6],c:'prescription glasses, sunglasses'},
   'Quay':{u:'https://www.quay.com/search?q=',t:'$$',a:'Trendsetter, Modern Glam',s:[],d:[5,7,6,3,10,8,5,5,6,9],c:'fashion sunglasses'}
 };
@@ -5160,7 +5160,13 @@ function _storeListForPrompt(){
     // cannot see. Only the informative ends are named; the middle says nothing,
     // which keeps the list short.
     const col=s.d[_DIM_COL]>=8?'; great for colour':(s.d[_DIM_COL]<=4?'; mostly neutrals':'');
-    return k+' ['+s.t+(s.a?'; '+s.a:'')+(s.s.length?'; carries '+s.s.join('/'):'')+col+'; '+s.c+']';
+    // Catalog DEPTH, Cath's own call 2026-08-15 (19 of 100 stores). Same
+    // reasoning as the colour scores above: "prefer a deep store for a
+    // specific search" is an instruction about data the model cannot see
+    // unless it is in the line. Everything unmarked is a store to send what it
+    // is KNOWN FOR, not a niche multi-word search.
+    const deep=s.deep===1?'; DEEP catalog':(s.deep?'; DEEP catalog for '+s.deep:'');
+    return k+' ['+s.t+(s.a?'; '+s.a:'')+(s.s.length?'; carries '+s.s.join('/'):'')+col+deep+'; '+s.c+']';
   }).join('\n');
 }
 // Size ranges are a per-CATEGORY thing, never a global filter. A petite woman
@@ -5260,7 +5266,17 @@ function _shopRules(mode){
     // searches, which is half the truth: precision needs a store that is both
     // focused AND deep in that category. Her case is the named WRONG example,
     // because an abstract rule alone has not been enough on this prompt yet.
-    '- MATCH PRECISION TO THE STORE, IN BOTH DIRECTIONS: a giant department-store catalog searches loosely, so when she is genuinely shopping by an exact color of an exact shape (especially bags and shoes), prefer a smaller focused store whose search can honor it. Department stores shine for broader category finds; do not ask a 3,000-item catalog to pin one shade. BUT a small boutique can only honor a search for something it genuinely stocks in depth: send it a specific multi-word piece it does not really carry and its search returns loose junk, never an honest empty page. WRONG: "print wrap top" at Tuckernuck, a small resort-and-occasion boutique — it answered with a wrap skirt and a perfume. Before sending a 3-word specific search to a boutique, check its tags above and ask whether that piece is the kind of thing this store is actually known for. If it is not, send the specific search to a store with real depth in that category, or pick a different piece for that store.\n'+
+    '- MATCH PRECISION TO THE STORE, IN BOTH DIRECTIONS: a giant department-store catalog searches loosely, so when she is genuinely shopping by an exact color of an exact shape (especially bags and shoes), prefer a smaller focused store whose search can honor it. Department stores shine for broader category finds; do not ask a 3,000-item catalog to pin one shade. BUT a small boutique can only honor a search for something it genuinely stocks in depth: send it a specific multi-word piece it does not really carry and its search returns loose junk, never an honest empty page. WRONG: "print wrap top" at Tuckernuck, a small resort-and-occasion boutique — it answered with a wrap skirt and a perfume. Before sending a 3-word specific search to a boutique, check its tags above and ask whether that piece is the kind of thing this store is actually known for. If it is not, send the specific search to a store with real depth in that category, or pick a different piece for that store. The stores that can take any specific search are marked DEEP catalog in the list above; a few are marked DEEP for one category only, so Zappos can take an exact shoe search but not a dress one.\n'+
+    // ⚠️ HER GUARD, and it is the most important line in this rule (2026-08-15,
+    // on being shown the deep list): "Revolve is only for someone who likes
+    // their clothing very fitted, alluring, trendy, edgy... not for a relaxed,
+    // preppy, natural type." Depth without this would quietly undo the whole
+    // matching system -- every woman pushed toward the biggest catalogs
+    // regardless of whether they suit her, which is worse than the bug it
+    // fixes. Her own dimension scores already rank Revolve 10 alluring /
+    // 10 trendy / 2 classic, so the ordering knows; this stops DEEP from
+    // overriding it.
+    '- FIT BEATS DEPTH, ALWAYS. DEEP is a tie-breaker BETWEEN stores that already suit her, never a reason to reach past the ones that do. A big catalog full of clothes in the wrong spirit is not a good result: Revolve is deep, but it is for a woman who likes her clothes fitted, alluring, trendy and edgy, and it is the wrong door for a relaxed, preppy or natural dresser no matter how much it stocks. Pick the store that suits her FIRST, then let depth decide between the ones that do.\n'+
     _sizeGuidance()+
     // Her calls, 2026-08-13, verbatim-ish: skinny jeans are dated, and "I
     // would never recommend ribbed anything to any of my clients." Enforced
