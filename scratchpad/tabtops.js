@@ -119,6 +119,46 @@ for (const w of [390,360,320]) {
   });
   ok(w+'px: header holds one line, no sideways scroll', r.oneLine && !r.wide);
 }
+// 5. The commission line's position (her call 2026-08-15, from renders): inside
+//    EACH pane, under that tab's intro card, above that tab's first link, with
+//    its own 9px margins owning the gap on both sides so the tabs match. It was
+//    previously a single copy outside both panes, where it crowded her voice.
+//    ⚠️ Nothing pinned this position before, which is how it drifted twice.
+console.log('5. The commission line sits under each intro card, above the links');
+for (const w of [390,360,320]) {
+  await page.setViewportSize({width:w,height:1200});
+  for (const tab of ['list','trend']) {
+    const m = await page.evaluate(t=>{
+      openWardrobe(t==='trend'?'trend':'list');
+      const pane=document.querySelector('.wdr-pane[data-pane="'+t+'"]');
+      const d=pane.querySelector('.wdr-disclosure');
+      if(!d) return null;
+      const intro=pane.querySelector('#wdrHowto, .wdr-trend-intro');
+      const next=d.nextElementSibling;
+      const dr=d.getBoundingClientRect(), ir=intro.getBoundingClientRect(), nr=next.getBoundingClientRect();
+      const visible=[...document.querySelectorAll('.wdr-disclosure')].filter(e=>e.getBoundingClientRect().width>0);
+      const links=[...document.querySelectorAll('#s-wardrobe a[href^="http"], #s-wardrobe .wdr-see, #s-wardrobe .tlf')]
+        .filter(e=>e.getBoundingClientRect().width>0);
+      const firstLink=links.length?Math.min(...links.map(e=>e.getBoundingClientRect().top)):Infinity;
+      return {
+        inPane:!!d.closest('.wdr-pane'),
+        afterIntro:intro.compareDocumentPosition(d)===Node.DOCUMENT_POSITION_FOLLOWING,
+        above:+(dr.top-ir.bottom).toFixed(1),
+        below:+(nr.top-dr.bottom).toFixed(1),
+        copies:visible.length,
+        beforeLinks:dr.bottom<=firstLink,
+        text:d.textContent.trim()
+      };
+    }, tab);
+    ok(`${w}px ${tab}: disclosure lives inside the pane, under the intro card`, m && m.inPane && m.afterIntro);
+    ok(`${w}px ${tab}: gaps tight and even (9px both sides)`, m && m.above===9 && m.below===9, m?`${m.above}/${m.below}`:'missing');
+    ok(`${w}px ${tab}: exactly ONE visible copy on screen`, m && m.copies===1, m?String(m.copies):'-');
+    ok(`${w}px ${tab}: sits above every link (the FTC placement)`, m && m.beforeLinks);
+    ok(`${w}px ${tab}: the shared pronoun-free wording`, m && m.text==='Some links may earn a commission.', m?m.text:'-');
+  }
+}
+await page.setViewportSize({width:390,height:900});
+
 ok('zero JS errors', errors.length===0);
 if(errors.length)console.log(errors.slice(0,3));
 await browser.close(); server.close();

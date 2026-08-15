@@ -337,7 +337,13 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:8px 0 4px}
 /* Page-level affiliate notice, the blog-post convention: quiet, but above every
    link on the screen. #6e6e6e matches the disclosure on every other surface. */
-#s-wardrobe .wdr-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:0 0 13px}
+/* Sits under each tab's intro card, directly above that tab's first link. Its
+   OWN margins are the whole gap on both sides -- the neighbours' spacing is
+   zeroed below -- so the two tabs are identical and the space stays tight
+   (her ask 2026-08-15). Tightened from the old 0/13 + the neighbour's 14. */
+#s-wardrobe .wdr-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:9px 0}
+#s-wardrobe .wdr-disclosure+.wdr-card{margin-top:0}
+#s-wardrobe .wdr-disclosure+.wdr-tstack{margin-top:0}
 #s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
 /* The arrow sits on its own line under the label, so the label stays centred
@@ -388,7 +394,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    straddling this card's top edge. */
 #s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:14px 8px 10px;margin-top:14px}
 #s-wardrobe .wdr-howto{font:400 15.5px/1.55 'Lora',Georgia,serif;color:#4a463e;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0;text-align:center}
-#s-wardrobe .wdr-trend-intro{margin:2px 0 16px}
+#s-wardrobe .wdr-trend-intro{margin:2px 0 0}   /* the disclosure below it owns the gap now */
 #s-wardrobe .wdr-trend-intro .wdr-trend-note{margin:0}
 #s-wardrobe .wdr-howto b{color:#26221c;font-weight:600}
 /* The how-to used to step back to a one-line reminder once she had starred a
@@ -3563,19 +3569,27 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="wdr-tab" data-tab="trend" onclick="wardrobeTab('trend')">What's Trending<svg class="wdr-tab-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg><span class="wdr-tab-badge">New</span></div>
   </div>
   <div class="wdr-tabhint">Tap either list</div>
-  <!-- Once per screen, and placed BELOW the tabs on purpose: directly under the
-       "Your Wardrobe" title it read like a tagline for the page, which is not
-       what a legal notice should look like. Here it is plainly page chrome, and
-       being outside both panes it covers My List AND What's Trending, above
-       every link on the screen. It used to be repeated under every "Ideas"
-       carousel, which stacked up to five identical notices on one page.
-       ⚠️ Deliberately NOT inside .wdr-howto: that block collapses to one line
-       once she has hearted 3+ items, which would quietly hide the disclosure
-       from exactly the returning users who shop the most. -->
-  <div class="wdr-disclosure">Some links may earn a commission.</div>
-
+  <!-- ▶ THE COMMISSION LINE LIVES INSIDE EACH PANE, under that tab's intro card
+       and directly above its first link (her call 2026-08-15, from renders).
+       History, so it does not drift back: it was once repeated under every
+       "Ideas" carousel (up to five identical notices on one page), then moved
+       to a single copy between the tabs and the panes. From there it crowded
+       HER voice -- a legal notice was the last thing read before her checklist
+       paragraph -- and it kept reading like a tagline for the page rather than
+       a caption for the links.
+       ⚠️ TWO COPIES NOW, one per pane, and only one is ever on screen. That is
+       the accepted cost of the position: when Amazon's required sentence is
+       added at approval time, BOTH must change together (grep "may earn a
+       commission" -- the standing edit list). catmark.js pins every copy
+       byte-identical so the wording cannot drift apart.
+       ⚠️ It could NOT have gone here before 2026-08-15: .wdr-howto used to
+       collapse once she had starred 3+ items, so anything next to it risked
+       vanishing for exactly the returning users who shop most. Her call to
+       make that card permanent is what unlocked this spot. If the card is ever
+       made collapsible again, this notice has to move back out. -->
   <div class="wdr-pane" data-pane="list">
     <div class="wdr-howto" id="wdrHowto"><div class="wdr-trend-by hw-full-hdr"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>MY CLIENT CHECKLIST</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div><span class="hw-full">This is the checklist I use in every closet consultation to build a well-rounded beautiful wardrobe. Tap the <b>star</b> on all the items you&rsquo;d like to add to your closet. Then tap <b>Ideas</b> to see them in your style.<svg class="pinkheart" style="width:13px;height:13px;margin-left:4px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span></div>
+    <div class="wdr-disclosure">Some links may earn a commission.</div>
     <div class="wdr-card">
       <div id="wdrListBody"></div>
       <div class="wdr-add">
@@ -3600,6 +3614,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="wdr-trend-by"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>CURATED BY CATHERINE</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wdr-trend-note">Here&rsquo;s what&rsquo;s IN right now. It&rsquo;s always fun to refresh your wardrobe with something current<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     </div>
+    <div class="wdr-disclosure">Some links may earn a commission.</div>
     <div class="wdr-tstack" id="wdrTrendBody"></div>
     <div class="wdr-trend-end">Check back for trend updates. This list changes with the seasons<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   </div>
