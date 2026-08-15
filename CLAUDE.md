@@ -102,7 +102,52 @@ single Netlify build while she tested.** Her session was a screenshot pass on th
   4. ✅ **"Tap either list" STAYS BELOW the buttons, her decision from a 2-way render** — ▶ above, it lands
      in the page-subtitle slot and reads as describing the PAGE, and **it is the only thing telling her the
      unselected tab is tappable (her mom's original catch)**. Tightened under them, 8/4 → 4/2.
-- **Suites at pause, all green:** nameparity **24** (new) · curated **64** · **tabtops 49** · searchtune 70 ·
+- ⭐⭐ **CATALOG DEPTH IS IN THE STORE TABLE NOW, her answers (#857) — and HER GUARD IS THE POINT.** Born from
+  her Tuckernuck screenshot (below): **19 of 100 stores carry `deep`** — the 16 she confirmed (Nordstrom ·
+  Macy's · Dillard's · Belk · Bloomingdales · Saks · Neiman Marcus · NET-A-PORTER · Shopbop · Nordstrom Rack ·
+  TJ Maxx · Target · Amazon · Revolve · Zara · H&M) plus **Zappos + DSW for shoes and Sunglass Hut for
+  eyewear, marked for THAT CATEGORY ONLY** (`deep:'shoes'`). The other 81 are stores to send **what they are
+  KNOWN FOR**, never a niche multi-word search. ⚠️ **Nothing inferred — the list is hers**, and the marker
+  rides in the store LINE (`_storeListForPrompt`), the same reasoning as her colour scores: a rule about data
+  the model cannot see is not a rule. ⚠️ **The apostrophe stores (`"Macy's"`, `"Dillard's"`) use DOUBLE-quoted
+  keys and a naive single-quote pass silently misses them** — the Bloomingdale's-apostrophe lesson, third time.
+  ▶ ⭐ **HER GUARD, verbatim, and it caught a change Claude would otherwise have shipped wrong:** *"Revolve is
+  only for someone who likes their clothing very fitted, alluring, trendy, edgy... not for a relaxed, preppy,
+  natural type."* **A depth signal alone would have pushed EVERY woman toward the biggest catalogs regardless
+  of fit — undoing her whole matching system to fix a smaller bug.** So the rule is **FIT BEATS DEPTH, ALWAYS:
+  depth is a tie-breaker BETWEEN stores that already suit her, never a reason to reach past the ones that do**,
+  with her Revolve sentence named in it. ✅ Her own July dims already rank Revolve 10 alluring/10 trendy/2
+  classic, so the ordering knew; this stops the new signal overriding it. **Proven: a relaxed/classic/natural
+  dresser ranks Revolve past 40th while the woman it suits keeps it top 15** (her top 10 = Eileen Fisher ·
+  Lands' End · J.Jill · Frank & Eileen · Jenni Kayne · Tommy Bahama · Faherty · Quince · Soft Surroundings ·
+  Chico's). Live, 3 runs of Print tops as that dresser: zero Revolve, zero Tuckernuck, zero wrap.
+  New `scratchpad/storedepth.js` **17 checks**.
+  ▶▶ **REVISIT TRIGGER, flagged to her and deliberately NOT built: THE MIDDLE TIER.** The split is binary, so
+  it currently treats **Talbots exactly like Tuckernuck** — a national chain with hundreds of tops filed the
+  same as a small boutique. The live runs made it visible: every pick went to a non-deep store (Talbots ·
+  J.Jill · Lands' End · Boden · Madewell) and they were all good calls, so nothing is broken — but the app
+  cannot yet tell "big enough for a specific search" from "go for what it's known for" in that band.
+  ▶ **The handful to ask her about when she has appetite: Talbots · J.Jill · Lands' End · Boden · J.Crew ·
+  Anthropologie · Free People · Athleta.** ⚠️ **Ask, never infer** — the standing rule (the Garnet Hill
+  keyword-matching error) and her own track record: the walkthroughs guessed wrong 3 of 4 times and every real
+  find came from her live testing. ▶ **The other half of the same question, also parked:** for a FOCUSED store,
+  should its `c:` "known for" line be tightened so the app can send Tuckernuck a specific DRESS search but
+  never a specific TOP one? That is what would actually have caught her screenshot. Her call, one store at a
+  time as her testing surfaces them.
+- ⭐ **SEARCH SHAPES MUST BE ONES STORES STOCK (#856), from her Tuckernuck catch** — "Print Wrap Top" opened on
+  13 products: a wrap SKIRT, a perfume atomiser, a sarong. ⚠️ **The name and search matched WORD FOR WORD, so
+  the parity guarantee worked exactly as built — this was a THIRD, distinct failure class.** Her read found the
+  root: *"wrap tops are not very popular... it's just not something that is likely to come up in a search."*
+  ⚠️ **DELIBERATELY NOT A VETO — she was explicit it is about what a search can RETURN, not about the garment
+  being bad; `_STYLIST_VETO` is untouched and only grows on her express word.** Two fixes: (1) **the naming
+  rule's own exemplar read "(button-front, professional, wrap)"** — the prompt was holding up *wrap* as a model
+  defining word in the one bullet the model leans on for every card it names; swapped for long-sleeve; (2) a new
+  rule naming the mainstream shape words (long/short sleeve, sleeveless, crew/v/scoop neck, button front,
+  cropped, oversized, midi, maxi) — **a niche shape returns a thin page padded with whatever else matched, even
+  at exactly the right store.** Also: **precision-to-store matching now cuts BOTH ways** (it used to push only
+  TOWARD small focused stores for precise searches — half the truth). Live, 3 runs: zero wrap, all mainstream.
+- **Suites at pause, all green:** **storedepth 17** (new) · nameparity **24** (new) · curated **64** ·
+  **tabtops 49** · cowork3 69 · searchchat 57 · searchtune 70 ·
   wladd 102 · wdrworksheet 73 · wdrcalmcheck 27 · hubs 49 · affq 40 · e2e 29 · catmark 135.
   ⚠️ **wdrworksheet/wdrcalmcheck/catmark were green BEFORE the final 6px spacing tweak and not re-run
   after it** (CSS margins at the page top only) — re-run them first thing if anything looks off.
