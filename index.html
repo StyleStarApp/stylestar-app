@@ -6550,7 +6550,13 @@ function _nameParity(item){
     return bare.indexOf('-')>=0&&bare.split('-').every(function(p){return !p||search.indexOf(p)>=0});
   });
   if(kept.length===words.length)return item;
-  const name=kept.length>=2?kept.join(' ')
+  // A name is "modifier modifier NOUN", so losing the LAST word loses the
+  // garment itself -- "White Scoop Neck Tee" over a search for "white scoop
+  // neck top" would trim to "White Scoop Neck", which names nothing. When the
+  // head noun goes, or too little survives, rebuild from the search, which is
+  // honest by construction and still carries the noun.
+  const headKept=kept.length&&kept[kept.length-1]===words[words.length-1];
+  const name=(kept.length>=2&&headKept)?kept.join(' ')
     :search.trim().split(/\s+/).map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');
   return Object.assign({},item,{name:name});
 }
@@ -7292,7 +7298,26 @@ var _WDR_IDEA_EXCLUDE={
 // moved into RULES itself (see defineRule below), plus the three violations
 // she actually saw are now named explicitly, not left to fall out of a
 // general "modest neckline" phrase.
+// ▶ 2026-08-15, her catch on the live Black tops shelf: it offered a "Long
+// Sleeve Bodysuit" and a "Knit Turtleneck Top". Her words, and they are the
+// definition: "A black top should just be a black top. Not a tank top, not a
+// collared blouse, just a top... Definitely not what we want for a basic
+// black top." The sibling-exclusion map could never have caught these -- a
+// bodysuit and a turtleneck are not rows on her checklist, so there was
+// nothing to exclude them FROM. What was missing is the same gap as
+// "work-appropriate": "a black top" reads as obvious to a stylist and is
+// wide open to a model, so it needs her concrete definition.
+// ⚠️ The NEVER list is entirely hers (bodysuit, turtleneck, tank/camisole,
+// collared or button-front blouse). The positive half is Claude's draft and
+// SHE HAS NOT BLESSED IT -- reword freely. Satin is deliberately NOT banned
+// (her White tops shelf offered a satin top and she did not object to the
+// fabric, only to the unbacked "draped"). Applied to all three colour-generic
+// basic rows, the same trio that share the sibling exclusions above.
+var _BASIC_TOP='She means a SIMPLE everyday top, nothing more. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, or anything dressy, going-out, sequined or sheer. Every option must be a plain, wearable top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
 var _WDR_IDEA_DEFINE={
+  to1:_BASIC_TOP,   // White tops
+  to2:_BASIC_TOP,   // Black tops — her 2026-08-15 catch
+  to3:_BASIC_TOP,   // Tops in your favorite colors
   dr3:'For "Work-appropriate dresses," NEVER suggest one-shoulder or asymmetric necklines, spaghetti straps, strapless or plunging necklines, satin, sequined, shiny, or sheer fabric, or a hemline or slit above the knee. Every option must hit at or below the knee, fit tailored (never tight or clingy), have a modest neckline (crew, small V, or scoop) with wide or standard straps, use structured medium-weight fabric like wool blends, crepe, or ponte, stay in solid or subtle muted or neutral prints, and have short, three-quarter, or long sleeves (sleeveless only if conservative). This rule is absolute, the same weight as her never-wear list.'
 };
 // ═══════════════════════════════════════════════════════════════════════════

@@ -41,6 +41,11 @@ const cases = await pg.evaluate(() => [
   {in: {name: 'Kitten-Heel Mules', search: 'kitten heel mule', store: 'Sam Edelman'}, want: 'Kitten-Heel Mules'},
   // trimming below two words rebuilds the name from the search itself
   {in: {name: 'Refined Blouse', search: 'professional blouse', store: 'M.M.LaFleur'}, want: 'Professional Blouse'},
+  // losing the HEAD NOUN rebuilds too — "White Scoop Neck" names nothing.
+  // (A real live run produced exactly this pair, 2026-08-15.)
+  {in: {name: 'White Scoop Neck Tee', search: 'white scoop neck top', store: 'Nordstrom'}, want: 'White Scoop Neck Top'},
+  // a middle word going is fine, the noun still anchors it
+  {in: {name: 'Cotton Boxy Tee', search: 'white cotton tee', store: 'Madewell'}, want: 'Cotton Tee'},
   // jewellery mood words survive (the prompt's own small-catalogue rule)
   {in: {name: 'Statement Hoop Earrings', search: 'hoop earrings', store: 'Kendra Scott'}, want: 'Statement Hoop Earrings'},
   // nothing to compare against → untouched
