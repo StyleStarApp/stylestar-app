@@ -67,6 +67,43 @@ const srv = http.createServer((rq, rs) => {
      await pg.evaluate(() => location.href));
   ok('notrack still stripped', await pg.evaluate(() => !/notrack/.test(location.search)));
 
+  console.log('6. FIVE TAPS ON THE LOGO — the door that works INSIDE the installed app');
+  // Where she really is: no address bar, flag currently cleared by step 4/5's
+  // ?r= visit leaving notrack set — so normalise to counted first.
+  await pg.goto('http://localhost:8099/?track'); await pg.waitForTimeout(800);
+  await pg.goto('http://localhost:8099/'); await pg.waitForTimeout(2600); // entrance curtain
+  const tap = async () => {
+    // Re-query every time: a tap navigates home, so the mark she tapped may
+    // no longer be the visible one.
+    await pg.locator('.go-home').locator('visible=true').first().click({ timeout: 4000 });
+    await pg.waitForTimeout(120);
+  };
+  await tap();
+  ok('one tap does NOT trip the switch', await pg.evaluate(() => localStorage.getItem('plausible_ignore') === null));
+  ok('one tap still goes home', await pg.evaluate(() => {
+    const s = document.querySelector('.scr.on, .scr.active') || [...document.querySelectorAll('.scr')].find(x => x.offsetParent);
+    return !!s && /^s-(wb|wel)$/.test(s.id);
+  }), await pg.evaluate(() => ([...document.querySelectorAll('.scr')].find(x => x.offsetParent) || {}).id));
+  for (let i = 0; i < 4; i++) await tap();
+  ok('five taps set the private flag', await pg.evaluate(() => localStorage.getItem('plausible_ignore') === 'true'));
+  ok('it takes effect immediately, no reload', await pg.evaluate(() => {
+    const before = (window.plausible.q || []).length; window.track('X', { a: 1 });
+    return window.__ssNoTrack === true && (window.plausible.q || []).length === before;
+  }));
+  ok('she sees the same confirmation', await pg.evaluate(() => {
+    const d = document.getElementById('ssTrackNote'); return !!d && /private now/.test(d.textContent);
+  }));
+  hits = []; await pg.goto('http://localhost:8099/'); await pg.waitForTimeout(700);
+  ok('and it sticks: next open loads no script', hits.length === 0, hits.join(','));
+
+  console.log('7. FIVE MORE TAPS UNDO IT');
+  await pg.waitForTimeout(2000);
+  for (let i = 0; i < 5; i++) await tap();
+  ok('flag cleared again', await pg.evaluate(() => localStorage.getItem('plausible_ignore') === null));
+  ok('confirmation says counted again', await pg.evaluate(() => {
+    const d = document.getElementById('ssTrackNote'); return !!d && /counted/.test(d.textContent);
+  }));
+
   ok('zero JS errors across all of it', errs.length === 0, errs.join(' | '));
   await b.close(); srv.close();
   console.log('\n' + pass + ' passed, ' + fail + ' failed');

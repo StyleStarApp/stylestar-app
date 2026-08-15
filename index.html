@@ -36,12 +36,19 @@
   // ⚠️ localStorage is per browser AND per domain, so the flag has to be set
   // once in each browser she tests in. track() checks the same flag as a
   // second line of defence.
-  // ▶ HOW SHE TURNS IT ON: stylestar.app/?notrack once per browser, and
-  // /?track to undo. ⚠️ THE ADDRESS IS THE WHOLE POINT -- the documented way
-  // to set this flag is a console command, and iPhone Safari has no console,
-  // so a console-only switch would have been unreachable on the one device
-  // she actually tests on. Per browser AND per device: the flag lives in that
-  // browser's own storage, so her phone and her laptop each need it once.
+  // ▶ HOW SHE TURNS IT ON, TWO DOORS, and the second one is not a nicety:
+  //   1. stylestar.app/?notrack once per browser, /?track to undo.
+  //   2. FIVE TAPS ON THE STYLE STAR LOGO, anywhere in the app.
+  // ⚠️ THE ADDRESS IS THE WHOLE POINT of door 1 -- the documented way to set
+  // this flag is a console command, and iPhone Safari has no console, so a
+  // console-only switch would have been unreachable on the one device she
+  // actually tests on. ⚠️ AND DOOR 2 EXISTS BECAUSE OF THE SAME CLASS OF
+  // TRAP ONE LEVEL DEEPER: she does most of her testing from the HOME-SCREEN
+  // app, which has no address bar at all, so door 1 cannot be reached there
+  // either -- and an installed iOS web app keeps its OWN storage container
+  // (the 2026-08-08 restore-code lesson), so a flag set in Safari does not
+  // reach it. The taps are the only switch that works inside the app.
+  // Per browser AND per device AND per installed app: each needs it once.
   window.__ssNoTrack=false;
   window.__ssTrackMsg='';
   try{
@@ -53,27 +60,61 @@
   }catch(e){}
   // Tell her it worked -- a silent switch is one she cannot trust. Built here
   // rather than in the app so it cannot depend on app boot succeeding.
-  if(window.__ssTrackMsg){
-    // Drop the switch out of the address bar so it is not carried into a
-    // bookmark or a shared link. ⚠️ Deletes ONLY these two params: an ?r=
-    // restore token in the same URL has to survive to the boot path.
-    try{var _u=new URL(location.href);_u.searchParams.delete('notrack');_u.searchParams.delete('track');
-        history.replaceState(history.state,'',_u.pathname+(_u.search||'')+_u.hash)}catch(e){}
-    document.addEventListener('DOMContentLoaded',function(){
+  window.__ssTrackBanner=function(state){
+    var draw=function(){
+      var old=document.getElementById('ssTrackNote');if(old&&old.parentNode)old.parentNode.removeChild(old);
       var d=document.createElement('div');
       d.id='ssTrackNote';d.setAttribute('role','status');
       d.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:26px;z-index:99999;'
         +'max-width:300px;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;padding:14px 16px;'
         +'font:15px/1.5 Jost,system-ui,-apple-system,sans-serif;text-align:center;'
         +'box-shadow:0 6px 24px rgba(0,0,0,.32)';
-      d.textContent=window.__ssTrackMsg==='off'
+      d.textContent=state==='off'
         ?'This browser is private now. Nothing you do here is counted in your visitor numbers.'
         :'This browser is being counted in your visitor numbers again.';
       document.body.appendChild(d);
       setTimeout(function(){d.style.transition='opacity .6s';d.style.opacity='0';
         setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d)},700)},7000);
-    });
+    };
+    if(document.body)draw();else document.addEventListener('DOMContentLoaded',draw);
+  };
+  if(window.__ssTrackMsg){
+    // Drop the switch out of the address bar so it is not carried into a
+    // bookmark or a shared link. ⚠️ Deletes ONLY these two params: an ?r=
+    // restore token in the same URL has to survive to the boot path.
+    try{var _u=new URL(location.href);_u.searchParams.delete('notrack');_u.searchParams.delete('track');
+        history.replaceState(history.state,'',_u.pathname+(_u.search||'')+_u.hash)}catch(e){}
+    window.__ssTrackBanner(window.__ssTrackMsg);
   }
+  // ▶ DOOR 2 -- five taps on any Style Star brand mark toggles the flag.
+  // ⚠️ It rides the EXISTING .go-home marks and never interferes with them:
+  // the listener only counts, so every tap still navigates home exactly as
+  // before, and the first tap from any screen lands her on Welcome Back --
+  // which carries a mark of its own, so the remaining taps have somewhere to
+  // land. That is why the counter is global rather than per element.
+  // 3s between taps or the count starts over, so ordinary use can never trip
+  // it: five deliberate taps in a row is not something anyone does by accident.
+  // Toggling BOTH ways matters -- a switch she cannot undo on the device she
+  // set it on would silently zero her own numbers forever.
+  (function(){
+    var n=0,last=0;
+    document.addEventListener('click',function(e){
+      var t=e.target&&e.target.closest?e.target.closest('.go-home'):null;
+      if(!t)return;
+      var now=Date.now();
+      n=(now-last<3000)?n+1:1;last=now;
+      if(n<5)return;
+      n=0;
+      var on=false;
+      try{on=localStorage.getItem('plausible_ignore')==='true'}catch(err){}
+      try{if(on)localStorage.removeItem('plausible_ignore');else localStorage.setItem('plausible_ignore','true')}catch(err){}
+      // The plausible script is only loaded at boot, so flipping to private
+      // mid-session cannot unload it -- __ssNoTrack is what actually stops
+      // track() firing, and it takes effect on the very next event.
+      window.__ssNoTrack=!on;
+      window.__ssTrackBanner(on?'on':'off');
+    },true);
+  })();
   if(!window.__ssNoTrack){
     var _pa=document.createElement('script');
     _pa.async=true;_pa.src='https://plausible.io/js/pa-2isRUQ0QeYxjy54Mf0lSe.js';
