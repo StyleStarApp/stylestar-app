@@ -72,7 +72,7 @@ noticed at all and was the most serious.** Read screenshots for what they SHOW, 
   stashing the change and watching it fail identically.** Rewritten to run that claim on a **catalog-free
   slot** (to2) so catalog growth in any slot can never break it again. ▶ **Always stash-and-rerun before
   believing a suite failure is yours.**
-- **Suites: `sizeveto.js` 42 (new) · `prefdone.js` 32 (new) · `csvjoin.js` 27 (new) · nameparity 25 (was 23, +2 and one deliberate rewrite) · curated 65 ·
+- **Suites: `sizeveto.js` 42 (new) · `prefdone.js` 32 (new) · `csvjoin.js` 27 (new) · `wordbudget.js` 23 (new) · nameparity 25 (was 23, +2 and one deliberate rewrite) · curated 65 ·
   searchtune 70 · searchchat 57 · cowork3 69 · wladd 102 · storedepth 17 · e2e 29 · hubs 49 · affq 40 — all green.**
 - ✅⭐ **THE "MAYBE LATER" DEAD END IS FIXED — her pick "A" from four renders, built same session.** Finishing
   Refine without giving an email landed her back on the **portrait she had already read**. ▶ **THE DIAGNOSIS
@@ -158,6 +158,30 @@ noticed at all and was the most serious.** Read screenshots for what they SHOW, 
 - ⚠️ **HARNESS TRAP, and it cost two false failures: `execFileSync` returns ONLY stdout on success**, so a
   `console.warn` (stderr) is invisible unless the command also fails. The body-talk guard was working the
   whole time. **Use `spawnSync` and capture both streams.**
+- 🚨⭐ **THE STORE SCOPING WAS BLOWING THE SEARCH WORD BUDGET — her Zappos screenshot, 2026-08-16.** A search
+  for **"womens narrow width platform heels"** came back with **Birkenstock platform SANDALS**. ▶ **CAUSE, and
+  it is the code breaking the prompt's own rule: `_shopRules` caps a search at "2 to 4 plain words" and the
+  model obeyed** ("narrow width platform heels", 4 words) — **then `getStoreUrl`'s `w:` scoping prepended a
+  FIFTH.** Zappos spent its parsing on the prefixes (its own screenshot shows it made "Womens" and "Shoes"
+  into filters), matched "platform", and **lost "heels"**. ▶ **Fixed with `_alreadyWomens()`: a store's
+  "womens" keyword STANDS DOWN when the term already leads with a size range or shoe width.** Two reasons,
+  the second is the real one: (1) nobody sells "petite trousers" or "narrow width heels" to men, so the word
+  buys nothing; (2) **the garment words are worth more than the department hint.** ⚠️ **DELIBERATELY NARROW —
+  it only stands down for the words `_sizeGuidance` may emit, so the 2026-08-08 men's-suit-pants bug that
+  `w:` exists to fix stays fixed.** ⚠️ **"Wide leg" is a SILHOUETTE and keeps its scoping** (as does "medium
+  wash") — asserted three ways, because a loose match there would resurrect that bug.
+  New `scratchpad/wordbudget.js` **23 checks**.
+- ⚠️ **"NEON GYM BAG" AT REVOLVE, her other screenshot: 914 items, no neon, no gym bags.** Two faults, one
+  mechanical and one drift: **"neon" is a BRIGHTNESS word, not a filter value at any store** (the same family
+  as the retired "raspberry"/"hot pink"), so the retail-plain colour rule now names neon/electric/acid
+  explicitly; and **Revolve does not stock gym bags**, which is the existing precision-to-store rule drifting.
+  ▶ **The store-fit half is prompt-only for now — watch whether it recurs before moving it into code.**
+- ✅ **HER SCREENSHOTS ALSO PROVED ALL THREE OF THE 08-15 NIGHT FIXES LIVE:** zero "Plus" on any card, zero
+  wrap, and the refresh returned a genuinely different six (only the store repeated). **The reported symptom
+  is fixed; what is left is search QUALITY, which is a different problem.**
+- ⚠️ **TEST-HARNESS TRAP: Revolve is URL-scoped (`d=Womens` in its base URL), so asserting "no womens" against
+  the WHOLE URL reads as a keyword prepend that never happened.** Assert against the SEARCH TERM.
+  **Scoping mechanism ≠ search text.**
 - ⚠️ **CATALOG COVERAGE, CORRECTED: the 92 products sit in NINE slots, not "many"** — sh9 17 · to5 16 ·
   to1 12 · bo1 8 · ja2 8 · sh7 8 · bg1 8 · ex2 8 · ja6 7. The entry below overstates this. The other 91 slots
   are still all-AI, which is what to tell her before she goes looking on her phone.
