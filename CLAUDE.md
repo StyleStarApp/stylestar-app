@@ -72,7 +72,7 @@ noticed at all and was the most serious.** Read screenshots for what they SHOW, 
   stashing the change and watching it fail identically.** Rewritten to run that claim on a **catalog-free
   slot** (to2) so catalog growth in any slot can never break it again. ▶ **Always stash-and-rerun before
   believing a suite failure is yours.**
-- **Suites: `sizeveto.js` 42 (new) · `prefdone.js` 32 (new) · nameparity 25 (was 23, +2 and one deliberate rewrite) · curated 65 ·
+- **Suites: `sizeveto.js` 42 (new) · `prefdone.js` 32 (new) · `csvjoin.js` 27 (new) · nameparity 25 (was 23, +2 and one deliberate rewrite) · curated 65 ·
   searchtune 70 · searchchat 57 · cowork3 69 · wladd 102 · storedepth 17 · e2e 29 · hubs 49 · affq 40 — all green.**
 - ✅⭐ **THE "MAYBE LATER" DEAD END IS FIXED — her pick "A" from four renders, built same session.** Finishing
   Refine without giving an email landed her back on the **portrait she had already read**. ▶ **THE DIAGNOSIS
@@ -131,6 +131,33 @@ noticed at all and was the most serious.** Read screenshots for what they SHOW, 
   p011 could be diffed — p035/p051's "before" text lived only in her FIRST export, which was never saved.
   ▶ STANDING: keep the previous CSV before each new one lands so a diff is always possible**) · her own
   visits stopped counting in Plausible, so a drop is the exclusion working.
+- ⭐⭐ **THE CATALOG ARRIVES IN PIECES NOW, PERMANENTLY — AND THE CONVERTER JOINS THEM (2026-08-15 night,
+  from Cowork).** Cowork can upload small files to Drive reliably but not large ones, so every future export
+  is **numbered parts + a MANIFEST** (part count, order, row count, md5 of the joined file). ▶ **Built into
+  `products-from-csv.js`: point it at the manifest OR the folder and it rebuilds, VERIFIES, then converts;
+  a single CSV path still works unchanged.** ⚠️ **Expected values are read FROM THE MANIFEST, never
+  hardcoded** — they change every export, which is the whole reason it ships.
+  ▶ **WHY THE VALIDATION MATTERS MORE HERE THAN ANYWHERE ELSE: a PARTIAL catalog is more dangerous than a
+  malformed one, because it converts perfectly and silently loses products.** Nothing downstream would ever
+  notice. So any failure stops the run and **products.json is left untouched, asserted on every failure case.**
+  ⚠️ **The failure mode worth naming, and the tests pin it: a part missing its trailing newline GLUES its
+  last row onto the next part's first row.** The md5 would catch it as a number; the message says what
+  actually happened. **Wrong ORDER is the other sneaky one — row count still passes, only md5 catches it.**
+  **Pulled live: 92 → 107 products, 10 slots, `dr1` Daytime casual dresses is NEW (15).** md5 verified
+  byte-for-byte against Cowork's manifest. New `scratchpad/csvjoin.js` **27 checks**.
+- 🚨 **AND THE COWORK-OVERWRITES-HER-EDIT CAVEAT PROVED ITSELF WITHIN THE HOUR.** The new export **restored
+  the body-shape sentence she had just deleted** from p001 (Madewell Perfect Vintage Jean) — because the
+  deletion was made in the repo and the CSV is downstream of her Cowork sheet. ▶ **Built a standing guard:
+  the converter now WARNS (never fails) when any note names a body**, listing the row and saying the fix
+  belongs in the Cowork sheet. ⚠️ **A WARNING not a failure, deliberately: these are HER words and a false
+  positive must never block a whole catalog.** Her deletion is re-applied in the canonical CSV.
+  ▶ **STILL NEEDS HER: one edit in Cowork on p001, or it returns on every future export.**
+- ⚠️ **COWORK'S OWN "STILL TO DO" LIST WAS STALE and was checked rather than obeyed** — it asked for
+  Plausible events, prompt caching and the Haiku-vs-Sonnet read, **all three of which shipped on 2026-08-15
+  late.** ▶ **The standing rule, third time now: CHECK BEFORE BUILDING ANYTHING A BRIEF ASKS FOR.**
+- ⚠️ **HARNESS TRAP, and it cost two false failures: `execFileSync` returns ONLY stdout on success**, so a
+  `console.warn` (stderr) is invisible unless the command also fails. The body-talk guard was working the
+  whole time. **Use `spawnSync` and capture both streams.**
 - ⚠️ **CATALOG COVERAGE, CORRECTED: the 92 products sit in NINE slots, not "many"** — sh9 17 · to5 16 ·
   to1 12 · bo1 8 · ja2 8 · sh7 8 · bg1 8 · ex2 8 · ja6 7. The entry below overstates this. The other 91 slots
   are still all-AI, which is what to tell her before she goes looking on her phone.
