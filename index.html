@@ -5171,6 +5171,26 @@ var _CF_COLORS=['pink','black','white','red','blue','green','brown','purple','ye
 // same 10 universal colors above (their names match ours 1:1, just Title
 // Case) plus "tan", which she confirmed maps to their own "Tan/Beige".
 var _CF_PATH_COLORS={pink:'Pink',black:'Black',white:'White',red:'Red',blue:'Blue',green:'Green',brown:'Brown',purple:'Purple',yellow:'Yellow',orange:'Orange',tan:'Tan/Beige'};
+// ▶ THE SEARCH WORD BUDGET IS THE SCARCE RESOURCE, AND THE CODE WAS BLOWING IT
+// (2026-08-16, her Zappos screenshot). The prompt caps a search at "2 to 4
+// plain words" and the model obeyed — "narrow width platform heels", 4 words.
+// Then the w: department scoping below prepended a fifth, and the store's
+// parser spent its guesses on the prefixes: Zappos read "Womens" and "Shoes"
+// as filters, matched "platform", and LOST "heels" — it answered a search for
+// platform heels with Birkenstock platform sandals.
+// ▶ So a store's "womens" keyword stands down when the term ALREADY leads with
+// a size range or a shoe width. Two reasons, and the second is the real one:
+//   1. That language is unambiguously women's-department already — no store
+//      sells "petite trousers" or "narrow width heels" to men — so the word
+//      buys nothing.
+//   2. The garment words are worth more than the department hint. Spending the
+//      budget on "womens" is what pushed the actual piece out of the ranking.
+// ⚠️ Deliberately NARROW: it only stands down for the size words _sizeGuidance
+// is allowed to emit. Every other search keeps its scoping exactly as before,
+// so the 2026-08-08 men's-suit-pants bug that w: exists to fix stays fixed.
+function _alreadyWomens(term){
+  return /^\s*(?:plus[\s-]?size|plus|petite|tall|(?:extra[\s-]?)?(?:wide|narrow|medium)[\s-]?width)\b/i.test(String(term||''));
+}
 function getStoreUrl(store,item,search){
   var raw=String(search||item||'').trim();
   const key=resolveStore(store);
@@ -5198,7 +5218,7 @@ function getStoreUrl(store,item,search){
       var cp0=raw.toLowerCase().split(/\s+/)[0];
       var cpVal=_CF_PATH_COLORS[cp0];
       if(cpVal){
-        var slugSrc=(s.w?'womens ':'')+raw;
+        var slugSrc=(s.w&&!_alreadyWomens(raw)?'womens ':'')+raw;
         var slug=slugSrc.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
         return s.cfpBase+slug+'/Color_normal/'+encodeURIComponent(cpVal)+'?ss=true';
       }
@@ -5208,7 +5228,7 @@ function getStoreUrl(store,item,search){
       var c0=raw.toLowerCase().split(/\s+/)[0];
       if(_CF_COLORS.indexOf(c0)>=0)facet=s.cf+c0;
     }
-    if(s.w)raw='womens '+raw;
+    if(s.w&&!_alreadyWomens(raw))raw='womens '+raw;
     const term=encodeURIComponent(raw);
     // Most stores just take the term on the end of `u`. A few cannot: Lacoste
     // wraps it inside a JSON parameter AND repeats it in a hash fragment. Those
@@ -5400,7 +5420,7 @@ function _shopRules(mode){
     '- "name": the descriptive name she reads on the card, and it is THE SEARCH WRITTEN BEAUTIFULLY: the same words, properly cased, nothing the search does not carry. LEAD WITH THE PIECE, never a color. If a detail is worth promising in the name (button-front, professional, long-sleeve), it must be in the search too; if the search cannot afford a word, the name must not promise it — a name like "Satin Button-Front Blouse" over a search for just "satin blouse" opens on a page full of blouses that are not button-front, and THAT gap is what feels broken. A color belongs in the name ONLY when that same color is in the search (the rules below say when); the color may read as her shade in the name ("Hot Pink") while the search uses the store\'s plain filter word for the same color ("pink"). NEVER invent an imaginary exact product ("Nude Patent Pointed-Toe Kitten Heel Mule").\n'+
     '  WRONG: name "Ruched Bodycon Top" with search "ruched going out top" — "bodycon" is not in the search, so the results page breaks the name\'s promise. RIGHT: name "Ruched Going-Out Top", search "ruched going out top" — the same words. Before you finish an item, check every word of its name against its search and cut any word the search does not carry. The ONE exception: the jewelry mood-word rule below ("Statement Hoop Earrings" may search "hoop earrings", because mood words empty a boutique\'s strict search).\n'+
     '- "search": the 2 to 4 plain words she would type into that store\'s search box. This is what the shopping link searches, so it matters more than the pretty name.\n'+
-    '  USE RETAIL WORDS — the words on a store\'s own filter menus. Colors especially: "pink", never "raspberry" or "hot pink" or "fuchsia"; "tan" or "brown", never "cognac" or "camel-toast"; "gold", never "champagne". Store search engines do not know stylist shades; a poetic color finds nothing and the store quietly shows her junk instead.\n'+
+    '  USE RETAIL WORDS — the words on a store\'s own filter menus. Colors especially: "pink", never "raspberry" or "hot pink" or "fuchsia"; "tan" or "brown", never "cognac" or "camel-toast"; "gold", never "champagne"; a plain color, never a BRIGHTNESS word like "neon", "electric" or "acid" — those are not filter values anywhere. Store search engines do not know stylist shades; a poetic color finds nothing and the store quietly shows her junk instead.\n'+
     // ▶ 2026-08-15, her read on the Tuckernuck screenshot: "wrap tops are not
     // very popular... it's just not something that is likely to come up in a
     // search." ⚠️ Deliberately NOT a veto -- she was explicit that this is
