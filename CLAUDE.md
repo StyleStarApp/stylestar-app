@@ -7,7 +7,45 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-15 NIGHT — HER PLUS-SIZE TEST FOUND THE APP SAYING "PLUS" BACK TO HER)
+## ▶ NEXT SESSION — START HERE (2026-08-15 NIGHT → 08-16 — HER TESTING FOUND FOUR BUGS, ONE OF THEM OURS TWICE OVER)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save to the .md now")
+**FOUR PRs merged and ALL CURL-VERIFIED LIVE: #863 · #864 · #865 · #866.** Branch resynced to main, working
+tree clean, remote in sync. ⚠️ **Four Netlify builds** — watch the meter.
+▶ **THE SHAPE OF IT: every one of the four came from HER OWN SCREENSHOTS, and two were bugs where the CODE
+was breaking a rule the app enforces on the model.** (1) `_nameParity` faithfully copying her size range onto
+every card; (2) `getStoreUrl` prepending a fifth word to a search the prompt caps at four. ▶ **The reusable
+lesson: when a rule is stated to the model AND implemented in code, check the code before blaming drift.**
+- ⭐⭐ **HER NEW WANT, RAISED AT THE PAUSE AND SHE WANTS IT REMEMBERED — THE EMAILABLE WISHLIST.** Her words:
+  *"work on making the wish list email-able. Like how you can share a wedding registry with someone — you can
+  share what gifts you would like to have kind of thing."* ▶ **This REAFFIRMS her 2026-08-08 future-idea #2
+  (the shareable registry, full entry lower in this file) and adds the EMAIL framing, which is new.**
+  ▶ **TWO DIFFERENT FEATURES, and keeping them apart matters:** (a) the long-parked MailerLite desk item
+  **"Email me my wishlist"** sends it to HERSELF; (b) THIS one sends it to SOMEONE ELSE so they can buy from
+  it. Same list, different audience, and (b) is the one she just asked for.
+  ⚠️⚠️ **THE CONSTRAINT THAT SHAPES THE WHOLE BUILD, and it is already recorded elsewhere in this file:
+  AMAZON ASSOCIATES BANS AFFILIATE LINKS IN EMAIL.** So the email can NEVER carry retailer links — it must
+  carry ONE link into a shareable wishlist PAGE in the app, and the retailer links live there. ▶ **That is
+  also the better product: a page can stay current as she adds pieces, where an email freezes.**
+  ⚠️ **The privacy line is already decided (2026-08-08): the shared view is the LIST ONLY — never her sizes,
+  preferences, never anything personal.** ▶ **And the foundation is already built:** the two wishlist row
+  kinds ARE the registry grammar ("buy exactly this" for her own added links and Edit picks, "anything like
+  this" for AI rebuilt searches — the 2026-08-09 wladd entry).
+  ▶ **STILL GATED ON AFFILIATE APPROVAL to actually earn** — the standing sequencing (registry FIRST when
+  approval lands) is unchanged. **Nothing about it is blocked from being DESIGNED now, though; renders first,
+  per the standing rule.**
+- ✅ **The p001 Cowork edit is DONE — she told Cowork to delete the line**, so the body-shape sentence will not
+  return on the next export. The converter's body-talk warning stays as the standing guard.
+- ▶ **THE FIRST THINGS NEXT SESSION:**
+  1. ⚖️ **THE ALMIRA CALL: MONDAY AUG 17, 12:30 PM.** Ask how it went and **LOG THE TM FILING DATES +
+     SERIAL NUMBERS HERE.** Still the money path.
+  2. 📱 **Sunday Aug 16: the first automatic Star swap (kitten heel → bangles) + the first link-check Routine
+     fire (9:00 AM ET).** Both should have happened with nothing from her — **ask whether they did.**
+  3. 🔎 **Her re-tap of the Zappos platform-heels card** — the four-word search is the one fix only a real tap
+     can judge. Same for any repeat of a wrong-store pairing (the gym-bag class), which is deliberately
+     prompt-only and would earn a code veto on a second sighting.
+  4. 👀 **The 107-product catalog on her phone**, incl. the new dr1 Daytime casual dresses shelf.
+  5. ✍️ **Her verdict on the drafted sub on the refine-done screen** (Claude's words, not hers).
 
 ### ⏸ WHERE THE 2026-08-15 NIGHT SESSION IS (a short session off HER OWN testing, four screenshots)
 She refined with **ONLY plus sizes saved** and tested Shop your style. Three separate finds, all real, plus
@@ -151,7 +189,7 @@ noticed at all and was the most serious.** Read screenshots for what they SHOW, 
   the converter now WARNS (never fails) when any note names a body**, listing the row and saying the fix
   belongs in the Cowork sheet. ⚠️ **A WARNING not a failure, deliberately: these are HER words and a false
   positive must never block a whole catalog.** Her deletion is re-applied in the canonical CSV.
-  ▶ **STILL NEEDS HER: one edit in Cowork on p001, or it returns on every future export.**
+  ✅ **DONE 2026-08-16: she told Cowork to delete the line**, so it will not come back. The warning stays.
 - ⚠️ **COWORK'S OWN "STILL TO DO" LIST WAS STALE and was checked rather than obeyed** — it asked for
   Plausible events, prompt caching and the Haiku-vs-Sonnet read, **all three of which shipped on 2026-08-15
   late.** ▶ **The standing rule, third time now: CHECK BEFORE BUILDING ANYTHING A BRIEF ASKS FOR.**
@@ -2297,7 +2335,9 @@ future features against it.
      maybe a future premium tier (value-first rule applies: premium only after real free value). Not
      worked out in her head yet. ▶ Natural unlock: product feeds (money-path step 7) — real product
      images are what turn a collage into a lookbook that leads to shopping.
-  2. **A SHAREABLE "REGISTRY"** — her wishlist, shareable like a bridal registry: birthday/holiday link
+  2. **A SHAREABLE "REGISTRY"** — ⭐ **SHE RAISED THIS AGAIN 2026-08-16 AND WANTS IT REMEMBERED; see the
+     EMAILABLE WISHLIST entry at the top of this file for her newer framing and the Amazon-email
+     constraint.** Her wishlist, shareable like a bridal registry: birthday/holiday link
      to her spouse ("here is my wish list, with links"), Style Star earns the affiliate commission on
      purchases. She noted herself it's "exactly the same as her wish list" — a shareable VIEW of it.
      ▶ Needs a server-side public wishlist page (share token, list only — never sizes/prefs/anything
