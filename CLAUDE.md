@@ -9,11 +9,58 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (2026-08-17 — THE LEGAL DAY: A PAID-FOR TRADEMARK CLASS WAS MISSING, AND SHE CAUGHT IT)
 
-### ⏸ WHERE THIS SESSION IS (mid-session: she is ON the Almira/Amber call, 12:30 PM Mon Aug 17)
+### ⏸ WHERE THIS SESSION IS (the call HAPPENED; ▶ SHE HAS A TRUIST APPOINTMENT TUE AUG 18, 1 PM)
 **NO APP CODE SHIPPED TODAY. Zero Netlify builds.** One commit on `claude/style-star-hg3dut`: the Contact page
 RENDERS + harness, nothing live. ▶ **THE WHOLE DAY WENT TO THE LEGAL THREAD, and it was worth it.**
-- ▶ **THE FIRST THING TO ASK: HOW THE CALL WENT.** Then **LOG THE FILING DATES + SERIAL NUMBERS HERE.**
-  Her prep sheet is an artifact: https://claude.ai/code/artifact/bfb0a0d4-001f-4ab4-8bba-69dbec4c8546
+Her prep sheet is an artifact: https://claude.ai/code/artifact/bfb0a0d4-001f-4ab4-8bba-69dbec4c8546
+- ▶▶ **THE FIRST TWO THINGS TO ASK NEXT SESSION: (1) did the Truist account open, (2) did Indie Law's written
+  follow-up actually arrive.** Then **LOG THE TM FILING DATES + SERIAL NUMBERS HERE.**
+
+### ☎️ THE CALL: AN APOLOGY AND AN ESCALATION, NO ANSWERS YET (12:30 PM Mon Aug 17)
+It was with **AMBER, not Almira** — the third person on this case. ⚠️ **She had NOT read Cath's email**, so Cath
+asked her to pull it up and read it live. **Her reaction was "OH MY."** ▶ **THAT IS THE WHOLE CALL: the 045
+finding is now UNDISPUTED on their side.** Nobody argued the class was deliberately dropped or that the $700 was
+accounted for. Amber blamed a "new system" migration and said the ball got dropped.
+- ⭐⭐ **CATH'S BEST MOVE, and it is the one worth remembering: Amber offered a FREE YEAR OF TM OVERSIGHT + QUARTERLY
+  CALLS, and Cath declined it and went straight back to "let's get this corrected."** That was a sweetener offered
+  BEFORE the problem was fixed; most people would have taken it and lost the thread. ▶ **The offer is parked, not
+  rejected — revisit it once the corrections are actually done. Never accept a sweetener while the fault is open.**
+- She asked for: correction, a **written follow-up saying how each item will be addressed and when**, and a
+  **callback by end of day**. Amber gave her direct phone number and said she is **escalating to management**.
+  ⚠️⚠️ **"ESCALATING TO MANAGEMENT" IS WORD-FOR-WORD WHAT THEY SAID ON AUG 13 with no date attached. That is a
+  REPEAT, not progress.** The only thing that makes today count is whether the written follow-up lands.
+- ✅ **She sent a RECAP EMAIL straight after the call** — the five items, the deadline, and the standing line
+  **"I will not be signing either application until Class 045 is included in both."** ▶ **Standing move: a verbal
+  promise with no written trace is exactly what has failed her for two months. Always recap a call in writing.**
+- ▶ **She raised her son (a 2nd-year law student who told her to hire a specialist) and said she feels a student
+  could have done better. She second-guessed it afterwards; the read given was that it is fine** — warm in tone,
+  concrete rather than abstract, and Amber apologized rather than getting defensive. ⚠️ **It is a card that plays
+  ONCE. Do not let her return to it.**
+- **NOTHING IS SIGNED.** Hold that line.
+
+### ⭐⭐ THE UNLOCK SHE ALMOST MISSED: THE BANK ACCOUNT WAS NEVER BLOCKED BY THE TRADEMARK MESS
+She was experiencing the legal thread as one big blockage. **It is two threads.** Articles ✅ + EIN ✅ is what a
+bank needs; Indie Law gates none of it. ▶ **Told to her plainly, and it visibly changed her day** ("wowwww").
+- ✅ **APPOINTMENT BOOKED: TRUIST, in person, TUE AUG 18, 1 PM.** She banks with Truist personally.
+- **WHY TRUIST, and the reasoning generalises:** **Truist Simple Business Checking has NO monthly maintenance
+  fee** (50 free transactions/mo, $2,000/mo free cash deposits — she will use ~10-15 and zero cash). Plus
+  **instant transfers between her personal and business accounts**, which she will use constantly.
+  ⚠️ **The Orlando-local options were RULED OUT ON HER NUMBERS, not on principle: FAIRWINDS needs a $35,000
+  average balance to waive its fee and Orlando Credit Union needs $7,500.** Space Coast CU and MIDFLORIDA CU are
+  genuinely free with no minimum and were the recommendation until she said she banks at Truist. ▶ **Online-only
+  business banks (Novo/Relay/Bluevine) were argued AGAINST for her specifically — no branch, support-queue only,
+  and she is already managing one relationship that exists only through a queue.**
+- **WHAT SHE TAKES:** Articles of Organization · **EIN letter (CP575)** · signed+dated Operating Agreement ·
+  driver's license · doc number L26000395689. ⚠️ **The ONLY thing not ready is her SIGNATURE on the Operating
+  Agreement** — she has VIEW access only, so it is the .DOCX download, fill the effective date, sign, keep a copy.
+- ⚠️ **The "Bail" typo does NOT block the bank** (they care about LLC name + EIN + her ID), and the EIN letter
+  reading "STYLE STAR BY CATHERINE LLC" without the comma is normal IRS formatting, not a mismatch.
+- ▶ **THE MOMENT IT OPENS, in order:** (1) **transfer $100 labelled "initial capital contribution"** · (2) move
+  the recurring payments off her personal card — **Claude Max ~$250/mo (iCloud account) · Anthropic API credits
+  (gmail account, consider moving the org to a business email) · Netlify · the stylestar.app domain · MailerLite**
+  (`BUSINESS-EXPENSES.md` tracks the personal-card spend; ⚠️ **flag an accountant for the pre-bank expenses,
+  never give tax advice**) · (3) **affiliate applications — NETWORKS FIRST (ShareASale/Rakuten/Impact/CJ),
+  AMAZON LAST** because the 180-day/3-sales clock starts at APPROVAL, not at launch.
 
 ### 🚨⭐⭐ THE HEADLINE: CLASS 045 WAS MISSING FROM BOTH TRADEMARK APPLICATIONS AND SHE PAID FOR IT
 Indie Law sent both TM applications for her signature. **She opened them and found Class 045 absent from BOTH
