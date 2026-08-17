@@ -7,7 +7,125 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-15 NIGHT → 08-16 — HER TESTING FOUND FOUR BUGS, ONE OF THEM OURS TWICE OVER)
+## ▶ NEXT SESSION — START HERE (2026-08-17 — THE LEGAL DAY: A PAID-FOR TRADEMARK CLASS WAS MISSING, AND SHE CAUGHT IT)
+
+### ⏸ WHERE THIS SESSION IS (mid-session: she is ON the Almira/Amber call, 12:30 PM Mon Aug 17)
+**NO APP CODE SHIPPED TODAY. Zero Netlify builds.** One commit on `claude/style-star-hg3dut`: the Contact page
+RENDERS + harness, nothing live. ▶ **THE WHOLE DAY WENT TO THE LEGAL THREAD, and it was worth it.**
+- ▶ **THE FIRST THING TO ASK: HOW THE CALL WENT.** Then **LOG THE FILING DATES + SERIAL NUMBERS HERE.**
+  Her prep sheet is an artifact: https://claude.ai/code/artifact/bfb0a0d4-001f-4ab4-8bba-69dbec4c8546
+
+### 🚨⭐⭐ THE HEADLINE: CLASS 045 WAS MISSING FROM BOTH TRADEMARK APPLICATIONS AND SHE PAID FOR IT
+Indie Law sent both TM applications for her signature. **She opened them and found Class 045 absent from BOTH
+the word mark and the logo.** ▶ **THE EVIDENCE CHAIN IS AIRTIGHT and lives in her Jun 25 → Jul 2 email thread:**
+- **Jun 25** she asked for it in her own words: *"I'd like to add Class 045 (personal stylist / fashion
+  consultancy services). I'm an actively practicing personal stylist and will be operating under the Style Star
+  name."* ⭐ **HER PLAN, RECORD IT: dissolve her personal-shopping SOLE PROPRIETORSHIP and run those services
+  under Style Star.** That is why 045 is not optional for her.
+- **Jun 30** Indie agreed, wrote the 045 description, and quoted: *"For both the word mark and the logo across
+  your selected classes, the total government filing fees come to $2,100."*
+- **Jul 2** she confirmed all three classes in writing and paid $2,100. They replied *"all set to move forward."*
+- **Aug 17** both applications show **2 classes (035 + 042), $700 each**.
+- ⚠️⚠️ **THE ARITHMETIC IS EXACT AND IT IS THE WHOLE ARGUMENT: $2,100 ÷ $350 = SIX class filings (3 classes ×
+  2 marks). The drafts cover FOUR. $700 of her money is unaccounted for — precisely the two missing 045
+  filings.** ▶ **Reuse this move: when a firm quotes a lump sum, divide it by the unit price. The quote itself
+  proves the scope.**
+- ⚠️⚠️ **WHY IT HAD TO STOP BEFORE SIGNING: A CLASS CANNOT BE ADDED TO A TM APPLICATION AFTER FILING** (removed
+  yes, added never). The only route is a NEW application at a LATER PRIORITY DATE — the exact thing she has been
+  protecting since June. **She has not signed. Do not let her sign until 045 is on both.**
+- **She sent a firm email before the call** (her ask: firm tone, and include the pattern). It leads with 045 +
+  the $700, then the Statement of Correction, then the pattern, and asks for: 045 on both before filing · where
+  the $700 sits · a corrected Statement · a specific filing date · **nothing filed without her written approval.**
+
+### ✅ THE EIN EXISTS — THE MONEY PATH IS UNBLOCKED
+**IRS Notice CP575, issued August 4 2026**, sitting in Indie's Drive folder. She was never told; she learned it
+**Aug 17, thirteen days later**, in a subordinate clause. ⚠️ **She had a drafted line ready saying she would get
+the EIN herself from the IRS — sending it would have created a DUPLICATE EIN.** Their silence nearly cost her that.
+- ✅ **Verified clean: it reads CATHERINE ELLSPERMANN, no "BAIL".** Federal record is correct.
+- ✅ **She downloaded and emailed herself a copy.** ⚠️ **STANDING: the IRS issues CP575 ONCE and will not reissue
+  it** (a lost one means phoning for a 147C). Same rule applied to every doc living in the firm's Drive.
+- ▶ **SO THE CHAIN IS NOW: LLC ✅ + EIN ✅ → BUSINESS BANK ACCOUNT → affiliate applications** (networks first;
+  Amazon last, the 180-day/3-sales clock). **Bank wants: Articles + CP575 + her ID (+ maybe the Operating Agreement).**
+
+### 🚨 THE STATEMENT OF CORRECTION CORRECTS NOTHING (Claude's catch, she confirmed by zooming)
+The form meant to fix "Bail" → "Bailey" reads: *incorrectly listed as "Catherine **Bailey** Ellspermann" … the
+correct name is "Catherine **Bailey** Ellspermann"*. **Both fields say Bailey.** As drafted it is a no-op that
+would cost $25 and a trip to Tallahassee. Also: **it addresses ONLY the registered agent, but the typo sits in
+Articles III AND IV** (IV is the MEMBER field, her ownership record). And the cover letter has HER mailing it with
+HER check, while their email said to send it back to them. All three are in her email.
+- ✅ **Answered: the wet signature is genuine** — it is a paper filing mailed to Tallahassee with a physical check.
+- ⭐ **The typo now sits in exactly ONE place: the filed Articles.** EIN clean, Operating Agreement clean. That
+  disagreement between her state filing and her federal record is the real reason to fix it, not the $25.
+
+### ✅ THE OPERATING AGREEMENT IS COMPLETE (the Aug 5 open items are closed)
+§1.2 now reads "Catherine Bailey Ellspermann" (the `#Registered Agent Name#` placeholder is gone), and **Exhibit A
+is filled: 100% ownership, $100 capital contribution.** Only the effective date is blank, correctly — hers to date.
+- ⭐⭐ **NEW ACTION ITEM CREATED BY SIGNING IT, add to the bank-account list: TRANSFER $100 from personal into the
+  business account and label it "initial capital contribution."** It is the first entry in the books and it is what
+  makes Exhibit A true; the liability shield rests on business and personal money being genuinely separate.
+- ⚠️ She only has VIEW access to that Google Doc — she needs the .DOCX download to sign, and her own saved copy.
+
+### ⚠️ THE TRADEMARK APPLICATIONS, EVERYTHING ELSE SEEN
+- **Filing basis is Section 1(b), INTENT TO USE**, on both. Conservative and probably right (app is live but free).
+  ▶ **Consequence: she gets her PRIORITY DATE on filing day, but no registration until a later STATEMENT OF USE
+  with a specimen, which carries another per-class fee.** Ask timing + cost.
+- **The 035 and 042 descriptions are genuinely well drafted** and accurately describe the app. No concerns.
+- ⚠️ **The logo image is BLURRY/low-res** — real concern, she offered to send a high-res file.
+- ⚠️⚠️ **The logo is GREYSCALE, and this is probably CORRECT, not an error — flagged to her so she would not
+  overreach:** a logo filed in black and white with no colour claim is protected **in ANY colour**; filed in
+  colour it is protected only in those colours. **Raised as a question, never an accusation** — a weak point
+  standing next to the airtight 045 point weakens the whole email. ▶ **Reusable: never let a shaky claim ride
+  alongside a certain one.**
+- Principal Register, correct. Two applications total ("STYLE STAR" and "STYLE STAR (LOGO)").
+
+### ▶ THE PATTERN SHE ASKED TO PUT IN WRITING (her call, and the 045 find justified it)
+LLC approved **Jul 27** — she found it herself on Sunbiz **Aug 5** while being told it was monitored. EIN issued
+**Aug 4** — told **Aug 17**. Now a class she asked for, they confirmed, and she paid for is missing from both
+applications. **She has found every one of these herself, having paid $3,999 + $130 + $2,100 = $6,229.**
+⚠️ **Claude first advised keeping the communication complaint for the CALL, not the email. She overruled it and
+she was right** — once it stopped being "poor communication" and became a documented service failure, the pattern
+is context, not grievance. ▶ **Her judgment on her own relationships has been better than Claude's twice now.**
+
+### ⏸ PARKED MID-BUILD: THE CONTACT PAGE (her affiliate-readiness question, renders committed, nothing live)
+She asked whether she needs a **Contact page**, a **For Brand Partners page**, and a **separate affiliate email**.
+- ▶ **THE ANSWERS GIVEN: Contact YES (as a real page with a `/contact` URL, because application forms ask for a
+  pasteable URL) · Brand Partners NO, NOT YET (it is a media-kit page whose job is to show audience numbers she
+  does not have yet; an empty one reads worse than none) · separate email YES.**
+  ⚠️ **REVISIT TRIGGER for the partners page: when she has a few months of real Plausible numbers.** Direct brand
+  deals pay far better than network commissions, and that page is how brands find her.
+- ✅ **DISCOVERED: `hello@stylestar.app` ALREADY EXISTS and works** (FAQ + Privacy + Terms). **stylestar.app mail
+  routes to iCloud** (mx01/mx02.mail.icloud.com; SPF covers icloud + MailerLite), so **adding `partners@` is a
+  settings change, not a new subscription.** ▶ **Recommended `partners@` over `affiliates@`** (covers brand deals
+  later) **as an ALIAS INTO HER NORMAL INBOX** — an address she does not check is worse than one she does, and an
+  Amazon 180-day notice cannot be allowed to sit unread. **SHE ASKED FOR HELP SETTING IT UP — still to do.**
+- ⚠️⚠️ **SEQUENCING RULE: do not publish `partners@` before the alias exists.** A live page with a bouncing
+  address is worse than no page, especially when an affiliate reviewer is the one emailing it.
+- **Three renders made and she likes them** (`scratchpad/contactmock.js` → `contact-{a,b,c}.png`): **A two cards ·
+  B one warm note · C labelled rows. A was recommended** (most obviously a real business; the gold-bordered cream
+  card is already the app's own language). **SHE HAS NOT NAMED A LETTER.**
+- ▶ **HER OPEN QUESTIONS, unanswered:** wording changes she wants · **whether her full legal name and "Style Star
+  by Catherine, LLC" should appear on the page** · whether a date or other official wording belongs there.
+  ⭐ **She was told to ask the lawyer whether the LLC's legal name should appear on the site and where** — Claude's
+  instinct is the **Terms** are the home for the legal entity and the Contact page stays human. **Get her answer.**
+- **Also in scope when it builds:** the email is a clickable link in the FAQ but **plain text in Privacy (×2) and
+  Terms (×1)**, and the privacy deletion sentence says "email us" with no address at all. All to be linked.
+- **Claude drafts, unblessed:** the lead paragraph, "I read every message myself", and "Contact" vs "Get in touch".
+- ⚠️ **The Menu would go to 19 rows** (its tail already sits below the fold). Proposed placement: **after FAQ**,
+  keeping Privacy/Terms as the legal tail. **Measure, do not assume.**
+
+### ⚠️ SESSION HYGIENE NOTES
+- **Playwright is NOT installed in a fresh container.** `npm install playwright`, then launch with
+  `executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'` — the npm package pins a newer build than
+  the pre-installed browser and will otherwise demand a download. ⚠️ **`npm install` also adds itself to
+  package.json — revert that**, it has never been a project dependency. **A `.gitignore` now covers
+  `node_modules/` + `package-lock.json`.**
+- ⚠️ **Two link-check Routines still overlap** (Sunday 9 AM ET fired for the first time **Aug 16, confirmed**;
+  an older Monday one fires 8 AM ET). **She has not read either report yet** — "I did not work on the link check,
+  but need to later." Her decision on which to keep is still open.
+- ✅ **The first automatic Star swap WORKED** — she confirmed the bangles: *"the new Star of the Week looks great!"*
+- ✅ **The refine-done screen sub is BLESSED: "all good."** No longer a flagged draft.
+
+## ▶ PREVIOUS — START HERE (2026-08-15 NIGHT → 08-16 — HER TESTING FOUND FOUR BUGS, ONE OF THEM OURS TWICE OVER)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save to the .md now")
 **FOUR PRs merged and ALL CURL-VERIFIED LIVE: #863 · #864 · #865 · #866.** Branch resynced to main, working
