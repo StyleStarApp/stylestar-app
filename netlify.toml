@@ -37,6 +37,13 @@
   to = "/index.html"
   status = 200
 
+# /contact exists because every affiliate network's application form asks for
+# a contact URL, and reviewers check that a real person can be reached.
+[[redirects]]
+  from = "/contact"
+  to = "/index.html"
+  status = 200
+
 # /results opens the Style Portrait on a device that has one saved (results
 # live in the browser + behind the emailed token, so the path itself carries
 # nothing personal; a visitor without saved results lands on the welcome).

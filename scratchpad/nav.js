@@ -1,6 +1,6 @@
 // Navigation standardisation — updated 2026-08-08 for Cath's from-zero footer
 // rethink: ONE template, two balanced rows in one voice (14px, gold stars) —
-// Home ★ Shop ★ [Instagram gradient tile] over Privacy ★ Terms ★ FAQ — with
+// Home ★ Shop ★ [Instagram gradient tile] over Privacy ★ Terms ★ FAQ ★ Contact — with
 // My Story CUT and each page OMITTING its own link. Every brand logo still
 // tappable → goHome(). Drives the REAL index.html.  node scratchpad/nav.js
 //
@@ -60,7 +60,7 @@ const OWN_FOOT = {
   's-wel': '.hm-foot:not(.wb-foot)', 's-wb': '.wb-foot', 's-res': '.foot',
   's-photo-res': '.foot', 's-story': '.pg-foot', 's-shop': '.mall-foot',
   's-wardrobe': '.wdr-foot', 's-wishlist': '.wl-foot', 's-faq': '.faq-foot',
-  's-privacy': '.pg-foot', 's-terms': '.pg-foot'
+  's-privacy': '.pg-foot', 's-terms': '.pg-foot', 's-contact': '.pg-foot'
 };
 const GLOBAL_FOOT = ['s-dream', 's-shopstyle'];
 
@@ -72,13 +72,13 @@ const foots = await page.evaluate(() => {
   const els = [...document.querySelectorAll('[data-std-foot]')];
   return { n: els.length };
 });
-ok('exactly 12 standard-footer containers', foots.n === 12, 'got ' + foots.n);
+ok('exactly 13 standard-footer containers', foots.n === 13, 'got ' + foots.n);
 const links = await page.evaluate(() => ({
   main: [...document.querySelectorAll('.quiz-footer .sf-row .lnk')].map(e => e.textContent),
   info: [...document.querySelectorAll('.quiz-footer .sf-row2 .lnk')].map(e => e.textContent)
 }));
 ok('global footer main row = Home ★ Shop (+ Instagram tile)', links.main.join('|') === 'Home|Shop', links.main.join('|'));
-ok('global footer info row = Privacy ★ Terms ★ FAQ', links.info.join('|') === 'Privacy|Terms|FAQ', links.info.join('|'));
+ok('global footer info row = Privacy ★ Terms ★ FAQ ★ Contact', links.info.join('|') === 'Privacy|Terms|FAQ|Contact', links.info.join('|'));
 ok('My Story is CUT from every footer (it lives in the Menu)', await page.evaluate(() =>
   ![...document.querySelectorAll('[data-std-foot] span')].some(s => /^My Story$/.test(s.textContent))));
 ok('no footer anywhere still links Edit or Quiz', await page.evaluate(() =>
@@ -86,13 +86,14 @@ ok('no footer anywhere still links Edit or Quiz', await page.evaluate(() =>
 // The self-link omission table — Cath's catch ("on the My Story page we have a
 // My Story footer"): each screen's own link must be absent, everything else present.
 const EXPECT = {
-  's-wel': ['Shop', 'Privacy|Terms|FAQ'], 's-wb': ['Shop', 'Privacy|Terms|FAQ'],
-  's-shop': ['Home', 'Privacy|Terms|FAQ'],
-  's-faq': ['Home|Shop', 'Privacy|Terms'],
-  's-privacy': ['Home|Shop', 'Terms|FAQ'], 's-terms': ['Home|Shop', 'Privacy|FAQ'],
-  's-res': ['Home|Shop', 'Privacy|Terms|FAQ'], 's-photo-res': ['Home|Shop', 'Privacy|Terms|FAQ'],
-  's-story': ['Home|Shop', 'Privacy|Terms|FAQ'], 's-wardrobe': ['Home|Shop', 'Privacy|Terms|FAQ'],
-  's-wishlist': ['Home|Shop', 'Privacy|Terms|FAQ']
+  's-wel': ['Shop', 'Privacy|Terms|FAQ|Contact'], 's-wb': ['Shop', 'Privacy|Terms|FAQ|Contact'],
+  's-shop': ['Home', 'Privacy|Terms|FAQ|Contact'],
+  's-faq': ['Home|Shop', 'Privacy|Terms|Contact'],
+  's-privacy': ['Home|Shop', 'Terms|FAQ|Contact'], 's-terms': ['Home|Shop', 'Privacy|FAQ|Contact'],
+  's-contact': ['Home|Shop', 'Privacy|Terms|FAQ'],
+  's-res': ['Home|Shop', 'Privacy|Terms|FAQ|Contact'], 's-photo-res': ['Home|Shop', 'Privacy|Terms|FAQ|Contact'],
+  's-story': ['Home|Shop', 'Privacy|Terms|FAQ|Contact'], 's-wardrobe': ['Home|Shop', 'Privacy|Terms|FAQ|Contact'],
+  's-wishlist': ['Home|Shop', 'Privacy|Terms|FAQ|Contact']
 };
 for (const [scr, [wantMain, wantInfo]] of Object.entries(EXPECT)) {
   const r = await page.evaluate(([scr, sel]) => {
@@ -297,7 +298,7 @@ console.log('\n8b. The Instagram tile (real brand gradient, ends the main row �
   ok('tap target is comfortably bigger than the tile', ig.tapW >= 25 && ig.tapH >= 25, ig.tapW + 'x' + ig.tapH);
   ok('ENDS the main row on every page (the rhythm holds)', ig.lastInRow);
   ok('sits inside the main row', ig.insideRow);
-  ok('each footer owns a UNIQUE gradient id (Safari hidden-def trap)', ig.gidsUnique && ig.gidCount === 12, ig.gidCount + ' ids');
+  ok('each footer owns a UNIQUE gradient id (Safari hidden-def trap)', ig.gidsUnique && ig.gidCount === 13, ig.gidCount + ' ids');
   ok('every tile references its OWN footer\'s gradient', ig.rectsRef);
   ok('the camera is white on the gradient', ig.cameraWhite);
 
