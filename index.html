@@ -1488,6 +1488,19 @@ body.menu-open .menu-panel{display:block}
    footnote position underneath. Same handwriting as her My Story sign-off. */
 .cc-name{font-family:'Dancing Script',cursive;font-weight:600;font-size:26px;color:#1a1a1a;line-height:1.15;margin-top:4px}
 .cc-llc{font:400 11.5px/1.5 'Jost',sans-serif;color:#6b6355;margin-top:16px;letter-spacing:.02em}
+/* Her signature heart. ⚠️ The negative right margin is LOAD-BEARING: it cancels
+   the heart's own footprint so the WORD "Catherine" centres on the page rather
+   than the word-plus-heart group, which pushed the name 10px left. Same trick
+   as #s-story .story-title .st-ch. The heart then overhangs to the right, which
+   is what a handwritten sign-off does anyway.
+   ⚠️ And the gap she wanted closed was DIAGONAL, not horizontal: the rects said
+   1.4px and the ink measured closer still, but the "e" sits low while the heart
+   sat at mid-height. Dropping it does most of the work. */
+#s-contact .cc-name .pinkheart{margin-left:1px;margin-right:-18px;vertical-align:-6px}
+/* Lift the title: tighter above and a little below (her call). Scoped, so the
+   FAQ and the legal pages keep their own tuned spacing. */
+#s-contact .pp-head{margin-bottom:2px}
+#s-contact .story-title{margin-bottom:10px}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqall{border-radius:0}
 /* Outfit results: drop the app card's side margin so the full-bleed framed rooms reach the true screen edges */
@@ -3864,7 +3877,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <a class="cc-a" href="mailto:partners@stylestar.app">partners@stylestar.app</a>
     </div>
     <div class="cc-sign">I read every message myself.</div>
-    <div class="cc-name">Catherine <svg class="pinkheart" style="width:17px;height:17px;margin-left:3px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <div class="cc-name">Catherine <svg class="pinkheart" style="width:17px;height:17px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="cc-llc">Style Star by Catherine, LLC &middot; Orlando, Florida</div>
     <button class="btn-outline" onclick="closeContact()" style="max-width:260px;margin:1.5rem auto 0;display:block">Back</button>
     <div class="pg-foot" data-std-foot></div>
