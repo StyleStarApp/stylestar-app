@@ -133,7 +133,47 @@ applications. **She has found every one of these herself, having paid $3,999 + $
 she was right** — once it stopped being "poor communication" and became a documented service failure, the pattern
 is context, not grievance. ▶ **Her judgment on her own relationships has been better than Claude's twice now.**
 
-### ⏸ PARKED MID-BUILD: THE CONTACT PAGE (her affiliate-readiness question, renders committed, nothing live)
+### ✅✅ THE CONTACT PAGE SHIPPED — PR #868, MERGED AND CURL-VERIFIED LIVE (2026-08-17)
+**`stylestar.app/contact` is live**, on the same rewrite machinery as /privacy and /terms, so she has a URL to
+paste into every affiliate application form. **One Netlify build.** Branch resynced to main, tree clean.
+- **HER PICKS, every one of them:** two cards · the address as the **BLACK LACQUER + GOLD MARQUEE PILL** ·
+  **SILVER `#9AA0A6` card borders** (the display-case frame's OWN silver, so the page settles into THREE
+  materials instead of gaining a fourth) · her signature + pink heart · the LLC line beneath.
+- ⭐⭐ **THE BRONZE LESSON, and it generalises: a gold dark enough to be READABLE AS TEXT stops looking gold.**
+  #A0761B measured **3.98:1** on the cream card and the AA-passing #8F6410 read brown — the third time she has
+  rejected a dark antique gold. ▶ **THE FIX WAS TO STOP ASKING GOLD TO BE TEXT: on black lacquer it does not
+  have to be, so the marquee pill she already approved (SAVED, the portrait CTA) took over and contrast went
+  3.98 → 12.4:1.** Reuse this whenever a gold has to clear AA.
+- ⭐ **HER CATCH THAT MADE THE PAGE: "I read every message myself" never says who "I" is.** ▶ **The answer is
+  her NAME, not her ENTITY** — the LLC name answers *what company is this*, a different question, and reads cold
+  under a warm sentence. So the page is signed **"Catherine ♥" in Dancing Script with the shared `.pinkheart`**,
+  identical to the My Story and Edit sign-offs, and the LLC line sits below in the footnote position.
+- ⭐ **HER OTHER CATCH: the lead and card one were redundant.** ▶ **The rule that came out of it: THE LEAD
+  INVITES, THE CARDS ROUTE.** Card one was listing what you might write about (the lead's job); it now says who
+  it is for, like card two. A test fails if it ever drifts back.
+- ⭐ **AND SHE CAUGHT THE MISSING FRAME**, which was a real gap not a preference: **`show()` hands every legal
+  page a skin class that paints the display-case frame** and Contact never got one. ⚠️ **Two related
+  inconsistencies fixed with it: `show()` now hides the shared header + global footer for `s-contact` too**,
+  which showContact() had been doing alone.
+- ✅ **THE CLICKABLE-LINK FIX:** the address was a link in the FAQ but PLAIN TEXT in Privacy (×2) and Terms (×1),
+  and the privacy deletion sentence said "email us" naming **no address at all**. All four are mailto links now;
+  the shared legal-page rule covers `<a>` as well as `.lnk` so they cannot render browser-default blue.
+- **Contact is in the Menu after FAQ** (19 rows) **and the footer's information row** (each page still omits its
+  own link). **New `scratchpad/contact.js` 80 checks.** nav 82 + menu 87 updated DELIBERATELY (13 footers, 19
+  rows). copy 41 · affq 40 · e2e 29 · hubs 49 green.
+- ▶ **STILL OPEN:** she has NOT seen it on her phone yet. And **Almira never answered whether the LLC name
+  belongs on the site** — it shipped on the page anyway, which is normal and safe; move it if the lawyer says so.
+- ⭐ **`partners@stylestar.app` EXISTS AND WORKS**, with `hello@`, `partners@` and `catherine@` each routed to
+  their own iCloud folder. ⚠️ **iCloud caps a domain at THREE addresses per person — she is at the cap.**
+  The escape hatch is sharing the domain with another Apple ID. ⚠️ **`catherine@` is deliberately NOT on the
+  site**; it is for her outbound mail. Her email signature is set on both Mac and phone.
+- ⚠️⚠️ **THE `.app` TLD DOES NOT AUTO-LINK.** Her signature's links were dead until written as full
+  `https://stylestar.app` — most link detectors work from a list of known TLDs and `.app` is not on it, and
+  `@style_star.app` reads as an EMAIL ADDRESS to a parser. ▶ **STANDING: anywhere she writes the app's address
+  in plain text — texts, Instagram captions, DMs, tester invitations — use `https://stylestar.app` or the link
+  will not be tappable.** A link that does not turn blue is a visit she does not get.
+
+### ⏸ SUPERSEDED — the parked state of the Contact page, kept for the reasoning
 She asked whether she needs a **Contact page**, a **For Brand Partners page**, and a **separate affiliate email**.
 - ▶ **THE ANSWERS GIVEN: Contact YES (as a real page with a `/contact` URL, because application forms ask for a
   pasteable URL) · Brand Partners NO, NOT YET (it is a media-kit page whose job is to show audience numbers she
