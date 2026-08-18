@@ -95,6 +95,7 @@ const run = async () => {
       heads: cards.map(x => x.querySelector('.cc-h')?.textContent.trim()),
       hrefs: links.map(a => a.getAttribute('href')),
       texts: links.map(a => a.textContent.trim()),
+      whys: cards.map(x => x.querySelector('.cc-w')?.textContent.trim()),
       tap: links.map(a => { const r = a.getBoundingClientRect(); return { w: Math.round(r.width), h: Math.round(r.height) }; }),
     };
   });
@@ -104,6 +105,11 @@ const run = async () => {
   ok(c.sign === 'I read every message myself.', 'her closing line, word for word', c.sign);
   ok(c.cards === 2, 'two cards, one per audience', String(c.cards));
   ok(c.heads[0] === 'Questions & help' && c.heads[1] === 'Brands & partners', 'both card headings', c.heads.join(' | '));
+  // Her catch: the lead INVITES, the cards ROUTE. Card 1 used to restate the
+  // lead's invitation; both cards now answer "which address is mine?".
+  ok(c.whys[0] === 'If you’re using Style Star.', 'card 1 routes by audience, not by topic', c.whys[0]);
+  ok(c.whys[1] === 'Retailers, partnerships, affiliate programs and press.', 'card 2 names affiliate programs for reviewers', c.whys[1]);
+  ok(!/results|saved details|the app itself/i.test(c.whys[0]), 'card 1 no longer echoes the lead', c.whys[0]);
   ok(c.hrefs[0] === 'mailto:hello@stylestar.app', 'hello@ is a real mailto', c.hrefs[0]);
   ok(c.hrefs[1] === 'mailto:partners@stylestar.app', 'partners@ is a real mailto', c.hrefs[1]);
   ok(c.texts[0] === 'hello@stylestar.app' && c.texts[1] === 'partners@stylestar.app', 'addresses shown in full');
