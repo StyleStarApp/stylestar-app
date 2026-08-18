@@ -160,6 +160,27 @@ She asked whether she needs a **Contact page**, a **For Brand Partners page**, a
 - ⚠️ **The Menu would go to 19 rows** (its tail already sits below the fold). Proposed placement: **after FAQ**,
   keeping Privacy/Terms as the legal tail. **Measure, do not assume.**
 
+### 🚨⚠️ THE RENDER TRAP FOUND 2026-08-17: SCREENSHOTS HAVE BEEN USING FALLBACK FONTS
+**Chromium in this sandbox CANNOT reach fonts.googleapis.com** (`ERR_CONNECTION_RESET` direct; with the proxy
+configured it makes NO request at all). So every screenshot silently renders in generic serif/sans, and
+**`'Dancing Script',cursive` comes out as a BOLD SERIF** — which is how her handwriting signature was nearly
+shipped looking wrong. ⚠️ **The tell is subtle: DM Serif Display still looks like a serif and Jost still looks
+like a sans, so a render looks plausible while no real face is loaded.**
+- ⚠️⚠️ **A COMPUTED `font-family` CANNOT CATCH THIS — it returns the DECLARED stack, not the painted face.**
+  The suite asserted `/Dancing Script/` and passed while the browser painted Times. ▶ **The real probe is a
+  WIDTH TEST: render the same string in the target face and in `serif` and assert the widths DIFFER** (90.6 vs
+  111.2 here). `document.fonts.check()` also lies — it returns true for a fallback.
+- ✅ **FIXED, and reusable: `curl` CAN reach Google Fonts even though Chromium cannot.** `scratchpad/fonts/`
+  now holds the real woff2 files + a rewritten `gf.css`, and **`scratchpad/renderfonts.mjs`** serves them by
+  intercepting the page's own stylesheet link. ▶ **USE IT FOR EVERY DESIGN RENDER FROM NOW ON:**
+  `node scratchpad/renderfonts.mjs /contact contact-real 390,320`. It prints `realFontsLoaded:true` and the
+  list of faces, so a silent regression is visible.
+- **To refresh the cache** if the font URL in index.html changes: fetch the css with a browser User-Agent
+  (a bare curl gets ttf, not woff2), then download each `fonts.gstatic.com` URL and sed it to the local name.
+- ▶ **CONSEQUENCE WORTH KNOWING: renders from earlier sessions may have had the same problem.** Layout,
+  spacing, sizes and COLOURS in those renders are trustworthy; the TYPEFACES are not. If a past typography
+  decision ever looks wrong on her phone, this is the first thing to suspect.
+
 ### ⚠️ SESSION HYGIENE NOTES
 - **Playwright is NOT installed in a fresh container.** `npm install playwright`, then launch with
   `executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'` — the npm package pins a newer build than

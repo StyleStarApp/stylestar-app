@@ -50,6 +50,11 @@ const run = async () => {
   {
     const raw = await fetch(`${base}/contact`).then(r => r.text());
     ok(raw.includes('it all reaches me'), 'raw served HTML carries the lead (a reviewer bot runs no JS)');
+    ok(raw.includes('Style Star by Catherine, LLC'), 'raw served HTML names the legal entity');
+    // ⚠️ A computed font-family returns the DECLARED stack, not the painted face,
+    // so it cannot catch a webfont that never loaded. What it CAN catch is the
+    // font URL being trimmed — the Lora italic-only trap, 2026-08-13.
+    ok(/Dancing\+Script/.test(raw), 'the font URL still loads Dancing Script for her signature');
     ok(raw.includes('partners@stylestar.app'), 'raw served HTML carries partners@');
     ok(/from\s*=\s*"\/contact"/.test(toml), 'netlify.toml declares the /contact rewrite');
   }
@@ -96,6 +101,12 @@ const run = async () => {
       hrefs: links.map(a => a.getAttribute('href')),
       texts: links.map(a => a.textContent.trim()),
       whys: cards.map(x => x.querySelector('.cc-w')?.textContent.trim()),
+      name: document.querySelector('#s-contact .cc-name')?.textContent.trim(),
+      nameFont: (() => { const n = document.querySelector('#s-contact .cc-name'); if (!n) return null;
+        const st = getComputedStyle(n); return { f: st.fontFamily, size: st.fontSize }; })(),
+      llc: document.querySelector('#s-contact .cc-llc')?.textContent.trim(),
+      pill: (() => { const a = document.querySelector('#s-contact .cc-a'); const st = getComputedStyle(a);
+        return { bg: st.backgroundColor, color: st.color, radius: st.borderTopLeftRadius, deco: st.textDecorationLine }; })(),
       frame: (() => { const ss = document.querySelector('.ss'); if (!ss) return null; const st = getComputedStyle(ss);
         return { mirror: ss.classList.contains('contact-mirror'), borderWidth: st.borderTopWidth, borderColor: st.borderTopColor }; })(),
       tap: links.map(a => { const r = a.getBoundingClientRect(); return { w: Math.round(r.width), h: Math.round(r.height) }; }),
@@ -103,16 +114,23 @@ const run = async () => {
   });
 
   ok(c.title === 'Contact', 'title reads "Contact"', c.title);
-  ok(c.lead === "I’d love to hear from you. Whether you have a style question, an idea for Style Star, need some help, or just want to say hello, it all reaches me.", 'her lead, word for word', c.lead);
+  ok(c.lead === "I’d love to hear from you. Whether it’s a style question, an idea for Style Star, something you need help with, or just a hello, it all reaches me.", 'her lead, word for word', c.lead);
   ok(c.sign === 'I read every message myself.', 'her closing line, word for word', c.sign);
   ok(c.cards === 2, 'two cards, one per audience', String(c.cards));
-  ok(c.heads[0] === 'Style questions & help' && c.heads[1] === 'Brands & Partners', 'both card headings', c.heads.join(' | '));
+  ok(c.heads[0] === 'Style Questions & Help' && c.heads[1] === 'Brands & Partners', 'both card headings, matched case', c.heads.join(' | '));
   // Her catch: the lead INVITES, the cards ROUTE. Card 1 used to restate the
   // lead's invitation; both cards now answer "which address is mine?".
-  ok(c.whys[0] === 'Questions about Style Star, shopping or your style', 'card 1 line (hers)', c.whys[0]);
+  ok(c.whys[0] === 'Style Star, shopping, or your own style', 'card 1 line (hers, no Questions repeat)', c.whys[0]);
+  ok(!/questions/i.test(c.whys[0]), 'card 1 line does not repeat its own heading', c.whys[0]);
   ok(c.whys[1] === 'Retailers, brand partnerships, affiliate opportunities & press', 'card 2 names affiliate opportunities for reviewers', c.whys[1]);
   ok(!/results|saved details|the app itself/i.test(c.whys[0]), 'card 1 does not echo the lead', c.whys[0]);
   ok(c.frame && c.frame.borderWidth === '8px' && c.frame.mirror, 'the page wears the display-case frame, like Privacy and Terms', JSON.stringify(c.frame));
+  ok(c.name === 'Catherine', 'the page is signed, so "I" has a name', c.name);
+  ok(/Dancing Script/.test(c.nameFont?.f || ''), 'signed in her handwriting, as on My Story', c.nameFont?.f);
+  ok(c.llc === 'Style Star by Catherine, LLC · Orlando, Florida', 'the legal entity sits in the footnote position', c.llc);
+  ok(c.pill.bg === 'rgb(26, 26, 26)', 'the address wears the black lacquer pill', c.pill.bg);
+  ok(c.pill.color === 'rgb(242, 216, 137)', 'in the marquee gold, not a bronze that reads as text', c.pill.color);
+  ok(c.pill.deco === 'none', 'the pill drops the underline (the pill IS the affordance)', c.pill.deco);
   ok(c.hrefs[0] === 'mailto:hello@stylestar.app', 'hello@ is a real mailto', c.hrefs[0]);
   ok(c.hrefs[1] === 'mailto:partners@stylestar.app', 'partners@ is a real mailto', c.hrefs[1]);
   ok(c.texts[0] === 'hello@stylestar.app' && c.texts[1] === 'partners@stylestar.app', 'addresses shown in full');
@@ -139,7 +157,7 @@ const run = async () => {
     const ratio = el => { const fg = parse(getComputedStyle(el).color), bg = bgOf(el);
       const a = lum(fg), b = lum(bg); return +(((Math.max(a, b) + .05) / (Math.min(a, b) + .05)).toFixed(2)); };
     const out = {};
-    for (const [k, s] of [['lead', '.cc-lead'], ['head', '.cc-h'], ['why', '.cc-w'], ['addr', '.cc-a'], ['sign', '.cc-sign'], ['title', '.story-title']])
+    for (const [k, s] of [['lead', '.cc-lead'], ['head', '.cc-h'], ['why', '.cc-w'], ['addr', '.cc-a'], ['sign', '.cc-sign'], ['name', '.cc-name'], ['llc', '.cc-llc'], ['title', '.story-title']])
       out[k] = ratio(document.querySelector('#s-contact ' + s));
     return out;
   });

@@ -1477,11 +1477,17 @@ body.menu-open .menu-panel{display:block}
    Her voice on light paper is Lora upright 15.5px in #4a463e (the 2026-08-13
    rule), so the lead AND the closing line both wear it. */
 .cc-lead{font:400 15.5px/1.65 'Lora',Georgia,serif;color:#4a463e;text-wrap:balance;margin:0 auto 18px;max-width:320px}
-.cc-card{border:1px solid #D8A52E;background:#FDFBF5;padding:15px 14px;margin:0 auto 12px;max-width:320px;text-align:center}
+.cc-card{border:1px solid #D8A52E;background:#fff;padding:15px 14px;margin:0 auto 12px;max-width:320px;text-align:center}
 .cc-h{font:400 17px/1.25 'DM Serif Display',Georgia,serif;color:#1a1a1a;margin-bottom:5px}
 .cc-w{font:400 13.5px/1.5 'Jost',sans-serif;color:#6b6355;margin-bottom:9px}
-.cc-a{display:inline-block;padding:7px 4px;font:600 15.5px/1.3 'Jost',sans-serif;color:#8F6410;text-decoration:underline;word-break:break-word}
+.cc-a{display:inline-block;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;
+  padding:10px 16px;font:600 15px/1 'Jost',sans-serif;letter-spacing:.01em;text-decoration:none;word-break:break-word}
 .cc-sign{font:400 15.5px/1.6 'Lora',Georgia,serif;color:#4a463e;margin-top:18px;text-wrap:balance}
+/* Her catch: "I read every message myself" never says who I is. Her NAME
+   answers that; the LLC name answers a different question and belongs in the
+   footnote position underneath. Same handwriting as her My Story sign-off. */
+.cc-name{font-family:'Dancing Script',cursive;font-weight:600;font-size:26px;color:#1a1a1a;line-height:1.15;margin-top:4px}
+.cc-llc{font:400 11.5px/1.5 'Jost',sans-serif;color:#6b6355;margin-top:16px;letter-spacing:.02em}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqall{border-radius:0}
 /* Outfit results: drop the app card's side margin so the full-bleed framed rooms reach the true screen edges */
@@ -3846,10 +3852,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <button class="top-back" onclick="closeContact()">&larr; Back</button>
     </div>
     <div class="story-title">Contact</div>
-    <div class="cc-lead">I&rsquo;d love to hear from you. Whether you have a style question, an idea for Style Star, need some help, or just want to say hello, it all reaches me.</div>
+    <div class="cc-lead">I&rsquo;d love to hear from you. Whether it&rsquo;s a style question, an idea for Style Star, something you need help with, or just a hello, it all reaches me.</div>
     <div class="cc-card">
-      <div class="cc-h">Style questions &amp; help</div>
-      <div class="cc-w">Questions about Style Star, shopping or your style</div>
+      <div class="cc-h">Style Questions &amp; Help</div>
+      <div class="cc-w">Style Star, shopping, or your own style</div>
       <a class="cc-a" href="mailto:hello@stylestar.app">hello@stylestar.app</a>
     </div>
     <div class="cc-card">
@@ -3858,6 +3864,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <a class="cc-a" href="mailto:partners@stylestar.app">partners@stylestar.app</a>
     </div>
     <div class="cc-sign">I read every message myself.</div>
+    <div class="cc-name">Catherine</div>
+    <div class="cc-llc">Style Star by Catherine, LLC &middot; Orlando, Florida</div>
     <button class="btn-outline" onclick="closeContact()" style="max-width:260px;margin:1.5rem auto 0;display:block">Back</button>
     <div class="pg-foot" data-std-foot></div>
   </div>
