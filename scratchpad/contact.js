@@ -102,6 +102,9 @@ const run = async () => {
       texts: links.map(a => a.textContent.trim()),
       whys: cards.map(x => x.querySelector('.cc-w')?.textContent.trim()),
       name: document.querySelector('#s-contact .cc-name')?.textContent.trim(),
+      heart: (() => { const h = document.querySelector('#s-contact .cc-name .pinkheart'); if (!h) return null;
+        const st = getComputedStyle(h); return { fill: st.fill, transform: st.transform }; })(),
+      cardBorder: getComputedStyle(document.querySelector('#s-contact .cc-card')).borderTopColor,
       nameFont: (() => { const n = document.querySelector('#s-contact .cc-name'); if (!n) return null;
         const st = getComputedStyle(n); return { f: st.fontFamily, size: st.fontSize }; })(),
       llc: document.querySelector('#s-contact .cc-llc')?.textContent.trim(),
@@ -127,6 +130,9 @@ const run = async () => {
   ok(c.frame && c.frame.borderWidth === '8px' && c.frame.mirror, 'the page wears the display-case frame, like Privacy and Terms', JSON.stringify(c.frame));
   ok(c.name === 'Catherine', 'the page is signed, so "I" has a name', c.name);
   ok(/Dancing Script/.test(c.nameFont?.f || ''), 'signed in her handwriting, as on My Story', c.nameFont?.f);
+  ok(c.heart && c.heart.fill === 'rgb(244, 154, 193)', 'her signature pink heart trails the name', JSON.stringify(c.heart));
+  ok(c.heart && /rotate|matrix/.test(c.heart.transform), 'and it is tilted — no heart sits straight', c.heart?.transform);
+  ok(c.cardBorder === 'rgb(154, 160, 166)', 'cards wear the frame\'s own silver, not a fourth colour', c.cardBorder);
   ok(c.llc === 'Style Star by Catherine, LLC · Orlando, Florida', 'the legal entity sits in the footnote position', c.llc);
   ok(c.pill.bg === 'rgb(26, 26, 26)', 'the address wears the black lacquer pill', c.pill.bg);
   ok(c.pill.color === 'rgb(242, 216, 137)', 'in the marquee gold, not a bronze that reads as text', c.pill.color);
