@@ -209,7 +209,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
    call, and it is what gives the pale gold definition against the white paper.
    ⚠️ Don't reintroduce a gradient on a frame. A frame is a rectangle; a linear
    gradient across one can never be symmetrical. */
-.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror{position:relative;border-radius:0;border:8px solid #E8CE7E;
+.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror,.ss.contact-mirror{position:relative;border-radius:0;border:8px solid #E8CE7E;
   background:#fff;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
 /* My Story — Catherine's page: a matted jewelry-box frame — turquoise frame (Style Star Edit accent), a white mat, then a delicate soft-pink keyline (her voice). No gray. */
@@ -1462,10 +1462,32 @@ body.menu-open .menu-panel{display:block}
 .faq-a{font-size:15px;color:#555;line-height:1.65}
 .faq-a a,.faq-a span.lnk{color:#C8971E;text-decoration:underline;cursor:pointer}
 /* Legal-page body links (Terms references the Privacy Policy) */
-#s-terms .story-wrap p .lnk,#s-privacy .story-wrap p .lnk{color:#C8971E;text-decoration:underline;cursor:pointer}
+#s-terms .story-wrap p .lnk,#s-privacy .story-wrap p .lnk,
+#s-terms .story-wrap p a,#s-privacy .story-wrap p a{color:#8A6410;text-decoration:underline;cursor:pointer}
 .faq-sub{font-weight:600;color:#1a1a1a;margin-top:10px;margin-bottom:2px}
 .faq-steps{margin:2px 0 4px;padding-left:1.25rem}
 .faq-steps li{margin:4px 0}
+/* ===== Contact page (2026-08-17) =====
+   Built for affiliate applications: every network's form asks for a contact
+   URL, and a reviewer checks that a real person can be reached. Two cards,
+   one per audience, so a brand never has to read carefully to find which
+   address is theirs. The gold-bordered cream card is the app's own language
+   (the restore card, the wardrobe how-to, the Trending intro), so this reads
+   as a page Style Star already knew how to make.
+   Her voice on light paper is Lora upright 15.5px in #4a463e (the 2026-08-13
+   rule), so the lead AND the closing line both wear it. */
+.cc-lead{font:400 15.5px/1.65 'Lora',Georgia,serif;color:#4a463e;text-wrap:balance;margin:0 auto 18px;max-width:320px}
+.cc-card{border:1px solid #9AA0A6;background:#fff;padding:15px 14px;margin:0 auto 12px;max-width:320px;text-align:center}
+.cc-h{font:400 17px/1.25 'DM Serif Display',Georgia,serif;color:#1a1a1a;margin-bottom:5px}
+.cc-w{font:400 13.5px/1.5 'Jost',sans-serif;color:#6b6355;margin-bottom:9px}
+.cc-a{display:inline-block;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;
+  padding:10px 16px;font:600 15px/1 'Jost',sans-serif;letter-spacing:.01em;text-decoration:none;word-break:break-word}
+.cc-sign{font:400 15.5px/1.6 'Lora',Georgia,serif;color:#4a463e;margin-top:18px;text-wrap:balance}
+/* Her catch: "I read every message myself" never says who I is. Her NAME
+   answers that; the LLC name answers a different question and belongs in the
+   footnote position underneath. Same handwriting as her My Story sign-off. */
+.cc-name{font-family:'Dancing Script',cursive;font-weight:600;font-size:26px;color:#1a1a1a;line-height:1.15;margin-top:4px}
+.cc-llc{font:400 11.5px/1.5 'Jost',sans-serif;color:#6b6355;margin-top:16px;letter-spacing:.02em}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqall{border-radius:0}
 /* Outfit results: drop the app card's side margin so the full-bleed framed rooms reach the true screen edges */
@@ -2876,6 +2898,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-row" onclick="menuInstagram()">Follow on Instagram</div>
   <div class="menu-row" onclick="menuGo(showStory)">My Story<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   <div class="menu-row" onclick="menuGo(showFAQ)">FAQ</div>
+  <div class="menu-row" onclick="menuGo(showContact)">Contact</div>
   <div class="menu-row" onclick="menuGo(showPrivacy)">Privacy</div>
   <div class="menu-row" onclick="menuGo(showTerms)">Terms</div>
 </div>
@@ -3822,6 +3845,32 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 </div>
 
+<div class="scr" id="s-contact">
+  <div class="story-wrap">
+    <div class="pp-head">
+      <img src="logo-star.png" alt="Style Star &mdash; tap for home" class="pp-lh-logo go-home" onclick="goHome()">
+      <button class="top-back" onclick="closeContact()">&larr; Back</button>
+    </div>
+    <div class="story-title">Contact</div>
+    <div class="cc-lead">I&rsquo;d love to hear from you. Whether it&rsquo;s a style question, an idea for Style Star, something you need help with, or just a hello, it all reaches me.</div>
+    <div class="cc-card">
+      <div class="cc-h">Style Questions &amp; Help</div>
+      <div class="cc-w">Style Star, shopping, or your own style</div>
+      <a class="cc-a" href="mailto:hello@stylestar.app">hello@stylestar.app</a>
+    </div>
+    <div class="cc-card">
+      <div class="cc-h">Brands &amp; Partners</div>
+      <div class="cc-w">Retailers, brand partnerships, affiliate opportunities &amp; press</div>
+      <a class="cc-a" href="mailto:partners@stylestar.app">partners@stylestar.app</a>
+    </div>
+    <div class="cc-sign">I read every message myself.</div>
+    <div class="cc-name">Catherine <svg class="pinkheart" style="width:17px;height:17px;margin-left:3px;vertical-align:-1px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <div class="cc-llc">Style Star by Catherine, LLC &middot; Orlando, Florida</div>
+    <button class="btn-outline" onclick="closeContact()" style="max-width:260px;margin:1.5rem auto 0;display:block">Back</button>
+    <div class="pg-foot" data-std-foot></div>
+  </div>
+</div>
+
 <div class="scr" id="s-privacy">
   <div class="story-wrap">
     <div class="pp-head">
@@ -3845,13 +3894,13 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <p style="margin-bottom:12px"><strong>Affiliate links</strong></p>
       <p style="margin-bottom:12px">Some product links on Style Star are affiliate links. When you make a purchase through these links, we may earn a small commission at no extra cost to you. This never influences which items we recommend.</p>
       <p style="margin-bottom:12px"><strong>Your choices</strong></p>
-      <p style="margin-bottom:12px">You can use Style Star without saving your results or providing an email. If you have saved your results and would like them deleted, email us and we will remove them promptly, both from the database that holds your results and from our email list. You can also unsubscribe from any email we send using the link at the bottom of it.</p>
+      <p style="margin-bottom:12px">You can use Style Star without saving your results or providing an email. If you have saved your results and would like them deleted, email us at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a> and we will remove them promptly, both from the database that holds your results and from our email list. You can also unsubscribe from any email we send using the link at the bottom of it.</p>
       <p style="margin-bottom:12px"><strong>If you live in California</strong></p>
-      <p style="margin-bottom:12px">California residents have the right to know what personal information we collect and how we use it (it is all set out above), the right to ask for a copy of it, the right to ask us to delete it, and the right to opt out of its sale. We do not sell personal information, and we never have, so there is nothing to opt out of. We will not treat you differently for exercising any of these rights. To make a request, email us at hello@stylestar.app and we will take care of it.</p>
+      <p style="margin-bottom:12px">California residents have the right to know what personal information we collect and how we use it (it is all set out above), the right to ask for a copy of it, the right to ask us to delete it, and the right to opt out of its sale. We do not sell personal information, and we never have, so there is nothing to opt out of. We will not treat you differently for exercising any of these rights. To make a request, email us at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a> and we will take care of it.</p>
       <p style="margin-bottom:12px"><strong>Children's privacy</strong></p>
       <p style="margin-bottom:12px">Style Star is made for adults and teens. It is not directed to children under 13, and we do not knowingly collect information from them.</p>
       <p style="margin-bottom:12px"><strong>Contact</strong></p>
-      <p style="margin-bottom:12px">Questions about your privacy? Reach us at hello@stylestar.app</p>
+      <p style="margin-bottom:12px">Questions about your privacy? Reach us at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a></p>
       <p style="margin-top:20px;font-size:11px;color:#bbb">Last updated July 29, 2026</p>
     </div>
     <button class="btn-outline" onclick="closePrivacy()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
@@ -3885,7 +3934,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <p style="margin-bottom:12px"><strong>Governing law</strong></p>
       <p style="margin-bottom:12px">These terms are governed by the laws of the State of Florida.</p>
       <p style="margin-bottom:12px"><strong>Contact</strong></p>
-      <p style="margin-bottom:12px">Questions about these terms? Reach us at hello@stylestar.app</p>
+      <p style="margin-bottom:12px">Questions about these terms? Reach us at <a href="mailto:hello@stylestar.app">hello@stylestar.app</a></p>
       <p style="margin-top:20px;font-size:11px;color:#bbb">Last updated July 29, 2026</p>
     </div>
     <button class="btn-outline" onclick="closeTerms()" style="max-width:260px;margin:1rem auto 0;display:block">Back</button>
@@ -4114,7 +4163,7 @@ function retakeQuiz(){
 // pretty path and the router at the bottom of this file opens the right screen.
 // The policy text is NOT duplicated anywhere -- a reviewer sees the real page.
 // WARNING: once a URL is submitted to an affiliate network, never change its path.
-var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-res':'/results'};
+var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-res':'/results'};
 function _pathForScreen(id){return _ROUTES[id]||'/';}
 // The reverse lookup, for someone who lands on one of those paths directly.
 // Tolerates a trailing slash and odd capitalisation, both of which people type.
@@ -4131,6 +4180,7 @@ function _openRoute(id){
   else if(id==='s-terms')showTerms();
   else if(id==='s-story')showStory();
   else if(id==='s-faq')showFAQ();
+  else if(id==='s-contact')showContact();
   else if(id==='s-res'){
     // /results is only meaningful on a device that HAS results (they live in
     // localStorage; a friend following the link lands on the fresh welcome).
@@ -4186,12 +4236,12 @@ function show(id,skipHistory){
   // of their own but still want the global one hidden (the quiz, preferences).
   var scrEl=document.getElementById(id);
   var ownFoot=!!(scrEl&&scrEl.querySelector('[data-std-foot]'));
-  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -4220,6 +4270,9 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('privacy-mirror',id==='s-privacy');
   // And the Terms of Service (same letterhead + display-case frame).
   if(card)card.classList.toggle('terms-mirror',id==='s-terms');
+  // And Contact (her call 2026-08-17: it should be framed exactly like its
+  // siblings, since it belongs to the same family of pages).
+  if(card)card.classList.toggle('contact-mirror',id==='s-contact');
   // Same gold+silver display-case frame around the clean Shop your style page.
   if(card)card.classList.toggle('shop-mirror',id==='s-shopstyle');
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
@@ -4344,6 +4397,7 @@ function _stdFootHTML(sid){
   if(sid!=='s-privacy')row2.push('<span class="lnk" onclick="showPrivacy()">Privacy</span>');
   if(sid!=='s-terms')row2.push('<span class="lnk" onclick="showTerms()">Terms</span>');
   if(sid!=='s-faq')row2.push('<span class="lnk" onclick="showFAQ()">FAQ</span>');
+  if(sid!=='s-contact')row2.push('<span class="lnk" onclick="showContact()">Contact</span>');
   return '<div class="sf-row">'+main.join(star)+'</div>'
     +'<div class="sf-row2">'+row2.join(star)+'</div>';
 }
@@ -6980,6 +7034,17 @@ function showFAQ(){
 function closeFAQ(){
   document.querySelector('.quiz-footer').style.display='';
   showBack(faqPrevScreen);
+}
+let contactPrevScreen='s-wel';
+function showContact(){
+  const cur=document.querySelector('.scr.act');
+  if(cur&&cur.id&&cur.id!=='s-contact')contactPrevScreen=cur.id;   // self-link guard
+  show('s-contact');
+  document.querySelector('.quiz-footer').style.display='none';
+}
+function closeContact(){
+  document.querySelector('.quiz-footer').style.display='';
+  showBack(contactPrevScreen);
 }
 let dreamPrevScreen='s-wel';
 function showDream(){

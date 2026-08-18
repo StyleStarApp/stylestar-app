@@ -1,0 +1,5 @@
+# Playwright is installed fresh each session to run the scratchpad render and
+# verification harnesses. It is a local tool, never a project dependency, so
+# neither it nor its lockfile belongs in the repo.
+node_modules/
+package-lock.json
