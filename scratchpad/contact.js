@@ -49,7 +49,7 @@ const run = async () => {
   console.log('\nPart 1 — the /contact route');
   {
     const raw = await fetch(`${base}/contact`).then(r => r.text());
-    ok(raw.includes('It all reaches me'), 'raw served HTML carries the lead (a reviewer bot runs no JS)');
+    ok(raw.includes('it all reaches me'), 'raw served HTML carries the lead (a reviewer bot runs no JS)');
     ok(raw.includes('partners@stylestar.app'), 'raw served HTML carries partners@');
     ok(/from\s*=\s*"\/contact"/.test(toml), 'netlify.toml declares the /contact rewrite');
   }
@@ -96,20 +96,23 @@ const run = async () => {
       hrefs: links.map(a => a.getAttribute('href')),
       texts: links.map(a => a.textContent.trim()),
       whys: cards.map(x => x.querySelector('.cc-w')?.textContent.trim()),
+      frame: (() => { const ss = document.querySelector('.ss'); if (!ss) return null; const st = getComputedStyle(ss);
+        return { mirror: ss.classList.contains('contact-mirror'), borderWidth: st.borderTopWidth, borderColor: st.borderTopColor }; })(),
       tap: links.map(a => { const r = a.getBoundingClientRect(); return { w: Math.round(r.width), h: Math.round(r.height) }; }),
     };
   });
 
   ok(c.title === 'Contact', 'title reads "Contact"', c.title);
-  ok(c.lead === "I’d love to hear from you. A question about your style, an idea for Style Star, something you need a hand with, or just a hello. It all reaches me.", 'her lead, word for word', c.lead);
+  ok(c.lead === "I’d love to hear from you. Whether you have a style question, an idea for Style Star, need some help, or just want to say hello, it all reaches me.", 'her lead, word for word', c.lead);
   ok(c.sign === 'I read every message myself.', 'her closing line, word for word', c.sign);
   ok(c.cards === 2, 'two cards, one per audience', String(c.cards));
-  ok(c.heads[0] === 'Questions & help' && c.heads[1] === 'Brands & partners', 'both card headings', c.heads.join(' | '));
+  ok(c.heads[0] === 'Style questions & help' && c.heads[1] === 'Brands & Partners', 'both card headings', c.heads.join(' | '));
   // Her catch: the lead INVITES, the cards ROUTE. Card 1 used to restate the
   // lead's invitation; both cards now answer "which address is mine?".
-  ok(c.whys[0] === 'If you’re using Style Star.', 'card 1 routes by audience, not by topic', c.whys[0]);
-  ok(c.whys[1] === 'Retailers, partnerships, affiliate programs and press.', 'card 2 names affiliate programs for reviewers', c.whys[1]);
-  ok(!/results|saved details|the app itself/i.test(c.whys[0]), 'card 1 no longer echoes the lead', c.whys[0]);
+  ok(c.whys[0] === 'Questions about Style Star, shopping or your style', 'card 1 line (hers)', c.whys[0]);
+  ok(c.whys[1] === 'Retailers, brand partnerships, affiliate opportunities & press', 'card 2 names affiliate opportunities for reviewers', c.whys[1]);
+  ok(!/results|saved details|the app itself/i.test(c.whys[0]), 'card 1 does not echo the lead', c.whys[0]);
+  ok(c.frame && c.frame.borderWidth === '8px' && c.frame.mirror, 'the page wears the display-case frame, like Privacy and Terms', JSON.stringify(c.frame));
   ok(c.hrefs[0] === 'mailto:hello@stylestar.app', 'hello@ is a real mailto', c.hrefs[0]);
   ok(c.hrefs[1] === 'mailto:partners@stylestar.app', 'partners@ is a real mailto', c.hrefs[1]);
   ok(c.texts[0] === 'hello@stylestar.app' && c.texts[1] === 'partners@stylestar.app', 'addresses shown in full');

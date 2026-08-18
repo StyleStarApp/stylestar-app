@@ -209,7 +209,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
    call, and it is what gives the pale gold definition against the white paper.
    ⚠️ Don't reintroduce a gradient on a frame. A frame is a rectangle; a linear
    gradient across one can never be symmetrical. */
-.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror{position:relative;border-radius:0;border:8px solid #E8CE7E;
+.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror,.ss.contact-mirror{position:relative;border-radius:0;border:8px solid #E8CE7E;
   background:#fff;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
 /* My Story — Catherine's page: a matted jewelry-box frame — turquoise frame (Style Star Edit accent), a white mat, then a delicate soft-pink keyline (her voice). No gray. */
@@ -3846,15 +3846,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <button class="top-back" onclick="closeContact()">&larr; Back</button>
     </div>
     <div class="story-title">Contact</div>
-    <div class="cc-lead">I&rsquo;d love to hear from you. A question about your style, an idea for Style Star, something you need a hand with, or just a hello. It all reaches me.</div>
+    <div class="cc-lead">I&rsquo;d love to hear from you. Whether you have a style question, an idea for Style Star, need some help, or just want to say hello, it all reaches me.</div>
     <div class="cc-card">
-      <div class="cc-h">Questions &amp; help</div>
-      <div class="cc-w">If you&rsquo;re using Style Star.</div>
+      <div class="cc-h">Style questions &amp; help</div>
+      <div class="cc-w">Questions about Style Star, shopping or your style</div>
       <a class="cc-a" href="mailto:hello@stylestar.app">hello@stylestar.app</a>
     </div>
     <div class="cc-card">
-      <div class="cc-h">Brands &amp; partners</div>
-      <div class="cc-w">Retailers, partnerships, affiliate programs and press.</div>
+      <div class="cc-h">Brands &amp; Partners</div>
+      <div class="cc-w">Retailers, brand partnerships, affiliate opportunities &amp; press</div>
       <a class="cc-a" href="mailto:partners@stylestar.app">partners@stylestar.app</a>
     </div>
     <div class="cc-sign">I read every message myself.</div>
@@ -4228,12 +4228,12 @@ function show(id,skipHistory){
   // of their own but still want the global one hidden (the quiz, preferences).
   var scrEl=document.getElementById(id);
   var ownFoot=!!(scrEl&&scrEl.querySelector('[data-std-foot]'));
-  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -4262,6 +4262,9 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('privacy-mirror',id==='s-privacy');
   // And the Terms of Service (same letterhead + display-case frame).
   if(card)card.classList.toggle('terms-mirror',id==='s-terms');
+  // And Contact (her call 2026-08-17: it should be framed exactly like its
+  // siblings, since it belongs to the same family of pages).
+  if(card)card.classList.toggle('contact-mirror',id==='s-contact');
   // Same gold+silver display-case frame around the clean Shop your style page.
   if(card)card.classList.toggle('shop-mirror',id==='s-shopstyle');
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
