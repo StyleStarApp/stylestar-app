@@ -59,11 +59,23 @@ goal for today would be to submit first affiliate application???"** That is the 
   a dead network. ▶ **The live list is: Rakuten Advertising · Awin · Impact · CJ.** ⚠️ **Awin charges a small
   REFUNDABLE deposit to apply** (reported as $5, more recently $1) — not a scam, it is their spam filter, and
   it is refunded against the first commission. Verify the amount at application time.
-- ⭐⭐ **RAKUTEN IS THE RIGHT FIRST APPLICATION, and it is not a coin toss — it is HER OWN TRAFFIC:**
-  **Nordstrom, Macy's AND Bloomingdale's all run their programs through Rakuten Advertising** (verified this
-  session). **Nordstrom alone lands in the top 20 for 25 of her 28 archetypes**, so no other single approval
-  touches as much of what the app actually recommends. It also matches her own stylist stance that department
-  stores are where a woman builds a wardrobe.
+- 🚨🚨 **CORRECTED THE SAME MORNING, BY HER OWN SEARCH OF THE LIVE DIRECTORY — THE PREMISE WAS WRONG:**
+  Claude recommended Rakuten first because blog sources said **Nordstrom, Macy's and Bloomingdale's** all ran
+  through it. ▶ **In the real advertiser directory: NORDSTROM IS NOT THERE. MACY'S IS NOT THERE.
+  BLOOMINGDALE'S IS**, along with plenty of other stores from her table.
+  ▶▶ **NORDSTROM RUNS ON IMPACT**, via the **Nordstrom Creator Program — https://www.nordstromcreators.com**
+  (verified live). It offers a **curated storefront of favourite Nordstrom products**, which is essentially the
+  Style Star Edit, so it may fit her better than a plain affiliate link. **That is now the highest-value single
+  application left, and it is a separate day's work.** Macy's network is still unidentified — find it before
+  assuming.
+  ⚠️⚠️ **THE STANDING LESSON, and it cost the headline reason for a whole recommendation: AFFILIATE-NETWORK
+  MAPPINGS FROM BLOGS AND DIRECTORIES ARE UNRELIABLE AND GO STALE.** Programs move networks and the write-ups
+  do not follow. ▶ **The ONLY trustworthy source is the network's own advertiser directory, read while logged
+  in.** Never again promise her that a specific store is on a specific network before it has been seen there.
+- ✅ **RAKUTEN IS STILL WORTH HOLDING, on the evidence rather than the pitch:** Bloomingdale's (~2%, **90-day
+  cookie**) plus "lots of other good ones" she recognised from her own store table. The account is live, the
+  payment details are verified, and she now understands the process. **It is probably her SECOND network
+  rather than her first.**
 - **Mechanics worth remembering:** free to apply · **approval in 2-5 business days** · **TWO STAGES** (Rakuten
   approves the PUBLISHER first, then she applies to each advertiser separately, each with its own bar) · the
   form asks for **monthly visitors** · payouts are **direct deposit, held until they reach $25**.
