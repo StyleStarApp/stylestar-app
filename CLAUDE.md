@@ -51,6 +51,45 @@ goal for today would be to submit first affiliate application???"** That is the 
 - ⚠️ **The "Bail" typo does NOT block an application.** A W-9 asks for the LLC's legal NAME + EIN, and both are
   clean (the typo is a middle name inside Articles III/IV only). Do not let it become a reason to wait.
 
+### 💰 THE AFFILIATE RESEARCH, DONE 2026-08-19 — RAKUTEN IS THE FIRST APPLICATION
+▶ **HER PREP SHEET IS AN ARTIFACT:** https://claude.ai/code/artifact/cefa1ee4-ee17-4a5a-987d-ac9ac48e192b
+(the fields to paste, the drafted site description, the two cautions, and the post-approval store order).
+- 🚨 **STANDING-RULE CORRECTION: SHAREASALE NO LONGER EXISTS.** Awin bought it and **closed it at the end of
+  2025**. Every earlier entry in this file that says "NETWORKS FIRST (ShareASale/Rakuten/Impact/CJ)" is naming
+  a dead network. ▶ **The live list is: Rakuten Advertising · Awin · Impact · CJ.** ⚠️ **Awin charges a small
+  REFUNDABLE deposit to apply** (reported as $5, more recently $1) — not a scam, it is their spam filter, and
+  it is refunded against the first commission. Verify the amount at application time.
+- ⭐⭐ **RAKUTEN IS THE RIGHT FIRST APPLICATION, and it is not a coin toss — it is HER OWN TRAFFIC:**
+  **Nordstrom, Macy's AND Bloomingdale's all run their programs through Rakuten Advertising** (verified this
+  session). **Nordstrom alone lands in the top 20 for 25 of her 28 archetypes**, so no other single approval
+  touches as much of what the app actually recommends. It also matches her own stylist stance that department
+  stores are where a woman builds a wardrobe.
+- **Mechanics worth remembering:** free to apply · **approval in 2-5 business days** · **TWO STAGES** (Rakuten
+  approves the PUBLISHER first, then she applies to each advertiser separately, each with its own bar) · the
+  form asks for **monthly visitors** · payouts are **direct deposit, held until they reach $25**.
+  Nordstrom is ~2-11% with a 30-day cookie; Macy's ~6%; Bloomingdale's ~2% with a **90-day** cookie.
+- ⚠️ **THE CARDS BEING IN THE MAIL BLOCK NOTHING.** Affiliate networks pay by **ACH/direct deposit** using the
+  routing + account numbers, which she has had since the account opened. Cards only matter for the recurring-
+  payment migration.
+- ⚠️ **THE ONE FIELD TO GET RIGHT, AND IT IS NOT OURS TO ANSWER: the W-9 entity type for a SINGLE-MEMBER LLC**,
+  and whether the EIN or her SSN belongs in the tax-ID box. ▶ **Told her to ask her accountant, deliberately —
+  the standing rule is never give tax advice**, and this is exactly the case it exists for.
+- ⚠️ **SET HER EXPECTATIONS HONESTLY AND IT WAS DONE IN THE SHEET: her traffic is small, the honest number is
+  the one to give, and NETWORK approval is likely while some individual ADVERTISERS will decline at first.**
+  That costs nothing and is reapplyable. ▶ **A Nordstrom decline in September is not a verdict on the app** —
+  say it that way if it happens.
+- ✅ **She is genuinely ready, and the Contact page is why.** Every field a reviewer looks for exists:
+  legal name · EIN · business bank · https://stylestar.app · **/privacy · /terms · /contact** ·
+  `partners@stylestar.app` · an affiliate disclosure on every surface that carries a link.
+  ⚠️ **The "Bail" typo does NOT block it** — a W-9 wants the LLC's legal NAME + EIN, both clean.
+- ▶ **POST-APPROVAL ORDER, which is just her traffic ranked:** Nordstrom → Macy's → Bloomingdale's → every
+  other Rakuten advertiser that matches her store table.
+- ⭐ **AND THE SECOND PRIZE IS THE REAL ONE: approved publishers can pull PRODUCT FEEDS** (names, prices, stock,
+  sizes). That is what turns a store SEARCH into an actual product and what would let the app honestly say
+  **"in your size"** again. `docs/product-feeds-plan.md` is shovel-ready. **Trigger: the first approval email.**
+- ⚠️ **AMAZON STAYS LAST, unchanged: 3 qualifying sales within 180 days of APPROVAL** or the account closes,
+  and the clock starts at approval, not at launch.
+
 ### ▶ HER OTHER ASKS FROM THIS MESSAGE (all recorded, none started)
 1. 💳 **MOVE THE RECURRING PAYMENTS TO THE BUSINESS CARD — she wants to, but NOT YET** (the cards are still in
    the mail). The list, unchanged: **Claude Max ~$250/mo (iCloud account) · Anthropic API credits (gmail
