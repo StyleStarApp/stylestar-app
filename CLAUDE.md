@@ -7,7 +7,102 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-17 — THE LEGAL DAY: A PAID-FOR TRADEMARK CLASS WAS MISSING, AND SHE CAUGHT IT)
+## ▶ NEXT SESSION — START HERE (2026-08-19 — 🎉 THE BANK IS OPEN AND CLASS 045 IS ON BOTH MARKS)
+
+### ⭐⭐ THE TWO THINGS THAT WERE BLOCKING EVERYTHING BOTH CLEARED (Aug 18)
+**Both of the questions the 08-17 entry said to ask first came back YES.** The money path is genuinely
+unblocked for the first time since June.
+1. ✅✅ **THE TRUIST BUSINESS ACCOUNT IS OPEN** (Tue Aug 18, in person, as planned). ⚠️ **Her debit and
+   credit cards are being MAILED and have not arrived** — ▶ **and that blocks NOTHING that matters today:
+   affiliate networks pay by ACH/direct deposit or check using the ROUTING + ACCOUNT numbers, which she has
+   had since the moment the account opened.** A card is only needed for the recurring-payment migration.
+2. ✅✅ **CLASS 045 IS ON BOTH TRADEMARK APPLICATIONS — SHE WON THE ARGUMENT.** Indie sent CORRECTED
+   three-class applications (035 + 042 + 045) for the word mark AND the logo, and **she has signed both.**
+   ▶ **THE WHOLE 08-17 SESSION IS VINDICATED: she found the missing class herself, refused to sign, did the
+   $2,100 ÷ $350 = SIX filings arithmetic, and got it fixed inside 24 hours.** Reuse the move: when a firm
+   quotes a lump sum, divide it by the unit price — the quote itself proves the scope.
+   ⚠️ **AND THE REASON IT HAD TO BE CAUGHT BEFORE SIGNING STANDS AS A PERMANENT LESSON: a class cannot be
+   ADDED to a trademark application after filing, only removed.** Signing is not filing, so there was still a
+   window — but she never needed it, because she held the line.
+
+### ✅ THE OTHER LEGAL PIECES, ALL SIGNED (Aug 18)
+She signed **everything**: the **Operating Agreement** (which is what Truist wanted, and what makes Exhibit A
+true), the **Statement of Correction** (Bail → Bailey), and **both trademark applications**.
+- ⏳ **THE ONE THING STILL WAITING ON INDIE: the MAILING ADDRESS for the paper correction.** The Statement of
+  Correction is a physical filing to Tallahassee with a physical check, and the cover letter's instructions
+  contradicted their email (it had HER mailing it; the email said send it back to them). **She is waiting on
+  Almira to say where it goes.** ▶ **ASK NEXT SESSION whether that address arrived** — a signed correction
+  sitting in a drawer fixes nothing.
+- ⚠️ **STILL UNLOGGED AND WORTH CHASING: the TM FILING DATES + SERIAL NUMBERS.** Signed ≠ filed. **Log them
+  here the moment they arrive**, and remember the filing basis is **Section 1(b) INTENT TO USE**, so the
+  priority date lands on filing day but registration waits for a later Statement of Use with a specimen and
+  another per-class fee. Ask Indie for that timing and cost.
+- ▶ **AMBER'S PARKED SWEETENER: a free year of TM oversight + quarterly calls.** She declined it on 08-17
+  while the fault was still open, which was the right call. **The corrections are done now, so it can be
+  revisited** — never accept a sweetener while the fault is open, but a settled one is fair game.
+
+### ▶ SO THE CHAIN NOW READS: LLC ✅ → EIN ✅ → BANK ✅ → **AFFILIATE APPLICATIONS** ← WE ARE HERE
+Everything upstream is done. ⭐ **HER STATED GOAL FOR 2026-08-19, in her words: "it feels like an enormous
+goal for today would be to submit first affiliate application???"** That is the right goal and she is ready.
+- ⚠️ **THE SEQUENCING RULE IS UNCHANGED AND LOAD-BEARING: NETWORKS FIRST (ShareASale/Awin · Rakuten · Impact ·
+  CJ), AMAZON LAST.** Amazon Associates requires **3 qualifying sales within 180 days of APPROVAL** or the
+  account closes — and the clock starts at approval, not at launch. Applying to Amazon before there is real
+  traffic burns the window for nothing.
+- ⚠️ **The "Bail" typo does NOT block an application.** A W-9 asks for the LLC's legal NAME + EIN, and both are
+  clean (the typo is a middle name inside Articles III/IV only). Do not let it become a reason to wait.
+
+### ▶ HER OTHER ASKS FROM THIS MESSAGE (all recorded, none started)
+1. 💳 **MOVE THE RECURRING PAYMENTS TO THE BUSINESS CARD — she wants to, but NOT YET** (the cards are still in
+   the mail). The list, unchanged: **Claude Max ~$250/mo (iCloud account) · Anthropic API credits (gmail
+   account, consider moving the org to a business email) · Netlify · the stylestar.app domain · MailerLite.**
+   `BUSINESS-EXPENSES.md` tracks the personal-card spend. ⚠️ **Flag an accountant for the pre-bank expenses;
+   never give tax advice.** ▶ **Also still to do the moment the account is usable: transfer $100 labelled
+   "initial capital contribution"** — the first entry in the books, and what makes Exhibit A true.
+2. ⭐ **THE EMAILABLE WISHLIST — she named it again, third time now.** See the full entry lower in this file
+   (2026-08-16). ⚠️ **The constraint that shapes the whole build: AMAZON ASSOCIATES BANS AFFILIATE LINKS IN
+   EMAIL**, so the email carries ONE link into a shareable wishlist PAGE and the retailer links live there.
+   The privacy line is already decided: the shared view is the **LIST ONLY**, never her sizes or preferences.
+   **Nothing blocks DESIGNING it now; renders first, per the standing rule.**
+3. ⭐ **NEW ASK: AN "ADD STYLE STAR TO YOUR PHONE" PAGE AT THE BOTTOM OF THE MENU.** Her words: *"maybe at the
+   very bottom of our drop down menu we could put an Add Style Star as an app on your phone page and explain
+   how to do that. I know we put it in as a small thing but could be cool to have it in the drop down menu
+   too."* ▶ **This is a genuinely good instinct and it fixes a REAL gap already flagged in this file: the A2HS
+   whisper is WELCOME-BACK-ONLY, so a first-time visitor never sees it at all**, and the whisper is a nudge
+   she can scroll past rather than a place she can go looking for. **A menu row is findable by name — the mom
+   lesson.** ⚠️ **When it is built, reuse the 2026-08-05 wording and the A2HS lessons wholesale:** her own
+   copy, the real app-icon preview, the numbered steps that do NOT undercount the iOS flow (Share → sometimes
+   View More → SCROLL → Add to Home Screen), *"your browser's toolbar"* and NEVER "at the bottom of your
+   screen", and **nothing on the iOS path that looks tappable** (Apple exposes no install API, so a
+   button-shaped thing there is a promise the platform cannot keep). Android keeps its real working button.
+   ⚠️ **The Menu is 19 rows now and its tail already sits below the fold — measure, do not assume.**
+4. ✅ **THE CONTACT PAGE IS BLESSED ON HER PHONE: "looks great on my phone all good there."** The 08-17
+   open item is closed.
+5. ⚠️ **THE TWO LINK-CHECK ROUTINES ARE STILL UNREAD**, third session running. Her decision on which to keep
+   is still open. Do not let it quietly become permanent by neglect.
+
+### ⚠️ FOUR PRs SHIPPED 2026-08-18 THAT THE 08-17 ENTRY NEVER RECORDED (#869 · #870 · #871 · #872)
+All merged to main, branch level with main, tree clean. **A sign-off polish round off her live testing, and
+the diagnosis is the reusable part.**
+- **#869** — her **name was 10px left of centre** on Contact, because the line was centring the word PLUS the
+  heart. **A negative right margin cancels the heart's footprint so the WORD centres and the heart overhangs**,
+  which is what a handwritten sign-off does anyway (the My Story title-mark trick). Measured 0px off now.
+- 🚨⭐ **#870 — BOTH GAPS SHE WANTED TIGHTENED WERE INVISIBLE IN THE MARKUP AND INVISIBLE TO THE OBVIOUS
+  MEASUREMENT, and this is the lesson:** (1) the gap between her name and the heart was mostly a **TRAILING
+  SPACE in the text node**, 6.8px of it — **a box measurement cannot see it because the box INCLUDES the
+  space**, which is why the rects kept reporting 1.4px while her eye saw far more; removing it took the
+  visual gap 7.9px → 2.1px. (2) The white space above the title was **LEADING, not margin** —
+  `line-height:normal` gave DM Serif Display a **36px line box for 17px of cap height**, so 9.5px sat INSIDE
+  the box where no margin change could reach it (which is why cutting the margin to 2px barely moved
+  anything). `line-height:1` took the ink gap 11.5px → 4.5px. ▶ **Add both to the measurement-trap family:
+  when a gap will not close, suspect a trailing space or leading before you touch margins again.**
+- **#871 / #872 — the same trailing space was on My Story (7.3px) and the Style Star Edit (7.8px).** **All
+  three sign-offs now measure 2.1px** and match. ⚠️ **The inline styles are stripped to width/height on all
+  three so the RULE owns the position and cannot silently lose to an inline value; a comment at `.dc-sign`
+  names the grep that finds all three, because they now have to move together.**
+- **`scratchpad/contact.js` is 81 checks**, with the trailing space pinned by exact text-node value so it
+  cannot creep back invisibly.
+
+## ▶ PREVIOUS — 2026-08-17 (THE LEGAL DAY: A PAID-FOR TRADEMARK CLASS WAS MISSING, AND SHE CAUGHT IT)
 
 ### ⏸ WHERE THIS SESSION IS (the call HAPPENED; ▶ SHE HAS A TRUIST APPOINTMENT TUE AUG 18, 1 PM)
 **NO APP CODE SHIPPED TODAY. Zero Netlify builds.** One commit on `claude/style-star-hg3dut`: the Contact page
