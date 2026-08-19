@@ -46,16 +46,13 @@ async function page(w,ua){
       // ⚠️ ASSERT DIMENSIONS, NOT JUST POSITIONS. The heart's size lives under
       // #a2hs (the whisper's scope) and did NOT reach this page: it rendered at
       // the SVG default and was enormous, while every positional check passed.
-      hearts:[...document.querySelectorAll('#s-a2hs .a2-h')].map(h=>{const b=h.getBoundingClientRect();
-        return{w:Math.round(b.width),h:Math.round(b.height),tilt:getComputedStyle(h).transform!=='none'}}),
+      hearts:[...document.querySelectorAll('#s-a2hs .ap-body svg')].filter(x=>/a2-h|pinkheart/.test(x.getAttribute('class')||''))
+        .map(h=>{const b=h.getBoundingClientRect();return{w:Math.round(b.width),h:Math.round(b.height)}}),
       // the title must clear the fixed Menu chip, which drops by the safe-area inset
-      // her standing widow check: the heart must never be alone on a line
-      heartStranded:(()=>{const st=document.querySelectorAll('#s-a2hs .ap-step')[1];
-        if(!st)return null; const sp=st.lastElementChild, h=sp.querySelector('svg');
-        if(!h)return null; const sr=sp.getBoundingClientRect(), hr=h.getBoundingClientRect();
-        const lh=parseFloat(getComputedStyle(sp).lineHeight)||22;
-        const lines=Math.round(sr.height/lh);
-        return lines>1 && hr.top>sr.top+lh*(lines-1)-4 && hr.left<sr.left+40;})(),
+      // the whisper's own heart must survive — only THIS page loses it
+      whisperKeepsHeart:/(<svg|a2-h)/.test((function(){_a2hsPrompt=null;
+        try{_syncA2hs()}catch(e){} var t=document.getElementById('a2hsTxt');
+        return t?t.innerHTML:''})()),
       titleTop:Math.round(document.querySelector('#s-a2hs .story-title').getBoundingClientRect().top),
       chipBottom:Math.round(document.querySelector('.menu-chip').getBoundingClientRect().bottom),
       notes:[...document.querySelectorAll('#s-a2hs .ap-note')].map(x=>x.textContent.replace(/\s+/g,' ').trim()),
@@ -81,10 +78,15 @@ async function page(w,ua){
   ok(r.notes.some(n=>/wallpaper/i.test(n)),'HER ask: the wallpaper explanation is missing');
   ok(r.notes.some(n=>/View More/.test(n)),'the View More note is missing');
   ok(r.tappables.length===0,'iOS path has tappable-looking elements: '+r.tappables.join(', '));
-  ok(r.hearts.length>0&&r.hearts.every(h=>h.w>=10&&h.w<=20&&h.h>=10&&h.h<=20),
-     'heart is not sized on this page: '+JSON.stringify(r.hearts));
-  ok(r.hearts.every(h=>h.tilt),'a heart is sitting straight');
-  ok(r.heartStranded===false,'the pink heart is stranded alone on its own line');
+  // DELIBERATELY REVERSED 2026-08-19, her call: "it's not really my voice here."
+  // Correct by her own mark system — the tilted pink heart means CATHERINE
+  // SPEAKING, and this page is instructions. Asserted ABSENT so it cannot creep
+  // back, and asserted still PRESENT in the Welcome Back whisper, which is her
+  // voice and which she blessed on 2026-08-05.
+  ok(r.hearts.length===0,'a pink heart is back on this page: '+JSON.stringify(r.hearts));
+  ok(r.whisperKeepsHeart,'the Welcome Back whisper lost its heart — that one IS her voice');
+  ok(!/calls it/i.test(r.notes.join(' ')),'"calls it" is back (her ear: it reads like a phone call)');
+  ok(/^Add to Home Screen just means/.test(r.notes[0]||''),'the meaning note should lead with the button name');
   ok(r.titleTop>=r.chipBottom+8,'title only '+(r.titleTop-r.chipBottom)+'px below the Menu chip');
   ok(r.rows.length===20,'menu should be 20 rows, is '+r.rows.length);
   ok(errs.length===0,'JS errors: '+errs.join(' | '));

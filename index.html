@@ -1533,11 +1533,12 @@ body.menu-open .menu-panel{display:block}
    and they merely touch, but on a real iPhone it is ~47px and the chip would
    land on the title. Don't replace this with a flat margin. */
 #s-a2hs .story-title{margin-top:calc(18px + env(safe-area-inset-top,0px));margin-bottom:14px;line-height:1}
-/* ⚠️ _A2_HEART carries class="a2-h", whose size/tilt live under #a2hs — the
-   WHISPER's scope. On this page that rule does not apply, so without this the
-   heart renders at the SVG default size (it did, and it was enormous). Tilted
-   12deg because no heart in this app sits straight. */
-#s-a2hs .a2-h{width:14px;height:14px;vertical-align:-2px;transform:rotate(12deg)}
+/* ⚠️ NO pink heart on this page, her call 2026-08-19: "it's not really my voice
+   here." Correct by her own mark system — the tilted pink heart means CATHERINE
+   SPEAKING, and this page is instructions. The Welcome Back whisper keeps its
+   heart, because that one IS her voice. If a heart ever returns here it needs an
+   explicit size: class="a2-h" is styled only under #a2hs, so unsized it renders
+   at the SVG default, which is enormous. */
 #s-a2hs .ap-body{text-align:center}
 #s-a2hs .ap-home{display:flex;justify-content:center;gap:14px;align-items:flex-start;background:linear-gradient(160deg,#2b2740,#4a4364);border-radius:16px;padding:16px 12px 13px;margin:0 auto 18px;max-width:290px}
 #s-a2hs .ap-slot{width:52px;text-align:center}
@@ -7165,18 +7166,18 @@ function _syncA2hsPage(){
   try{installed=installed||!!localStorage.getItem('ss_a2hs')}catch(e){}
   // ⚠️ The meaning note is the whole reason this page exists in her words:
   // "Add to Home Screen is not intuitive to most users."
-  var meaning='<div class="ap-note">Your phone calls it <b>Add to Home Screen</b>. That just means the screen your apps live on, so nothing about your wallpaper or your photos changes.</div>';
+  var meaning='<div class="ap-note"><b>Add to Home Screen</b> just means the screen your apps live on, so nothing about your wallpaper or your photos changes.</div>';
   if(installed){
-    el.innerHTML='<div class="ap-sub" style="margin-bottom:0">Style Star is already on this phone. Open it from your home screen any time '+_A2_HEART+'</div>';
+    el.innerHTML='<div class="ap-sub" style="margin-bottom:0">Style Star is already on this phone. Open it from your home screen any time.</div>';
   }else if(_a2hsPrompt){
-    el.innerHTML='<span class="ap-btn" role="button" tabindex="0" onclick="a2hsGo()" onkeydown="if(event.key===\'Enter\'||event.key===\' \')a2hsGo()">Add it now '+_A2_HEART+'</span>'+meaning;
+    el.innerHTML='<span class="ap-btn" role="button" tabindex="0" onclick="a2hsGo()" onkeydown="if(event.key===\'Enter\'||event.key===\' \')a2hsGo()">Add it now</span>'+meaning;
   }else if(_a2hsIOS()){
     // ⚠️ "your browser's toolbar", NEVER "at the bottom" — Safari's bar can be
     // moved to the top. And the real flow is Share -> sometimes View More ->
     // scroll -> Add to Home Screen; an instruction that undercounts is worse
     // than none, because she follows it, sees nothing, and concludes it broke.
     el.innerHTML='<div class="ap-step"><span class="ap-n">1</span><span>Tap <span class="ap-chip">'+_A2_SHARE_DARK+'</span> in your browser\'s toolbar</span></div>'
-      +'<div class="ap-step"><span class="ap-n">2</span><span>Scroll down to <b>Add to Home Screen</b> '+_A2_HEART+'</span></div>'
+      +'<div class="ap-step"><span class="ap-n">2</span><span>Scroll down to <b>Add to Home Screen</b></span></div>'
       +meaning
       +'<div class="ap-note">It sits a little way down the list, under <b>View More</b> on some phones.</div>';
   }else{
