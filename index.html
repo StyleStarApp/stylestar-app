@@ -1445,6 +1445,11 @@ body.menu-open .menu-panel{display:block}
 #s-story .story-wrap{padding-top:0}
 .story-text{font-size:16px;color:#1a1a1a;line-height:1.75;margin-bottom:1rem;text-align:left;font-family:'DM Sans',sans-serif;font-weight:500}
 .story-sig{font-family:'Dancing Script',cursive;font-size:28px;color:#1a1a1a;font-weight:600;text-align:center;margin-top:0.7rem;line-height:1.2}
+/* Her heart tucks against the final e, matching the Contact sign-off. The gap
+   was mostly a TRAILING SPACE in the text node (7.3px), invisible in the
+   markup and invisible to a box measurement that includes it. ⚠️ Position
+   lives HERE, never inline, or the stylesheet loses. */
+#s-story .story-sig .pinkheart{margin-left:2px;vertical-align:-6px}
 .story-manifesto{font-size:18px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.6;margin-top:0.5rem}
 .story-heart{font-size:28px;text-align:center;margin:1rem 0}
 /* Letterhead (FAQ + Privacy): small logo top-left, back top-right, title one line */
@@ -3501,7 +3506,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="story-text" style="text-align:center;color:#777;margin-top:0.5rem">
       I'm so glad you're here. ⭐
     </div>
-    <div class="story-sig">With love, Catherine <svg class="pinkheart" style="width:18px;height:18px;margin-left:0" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <div class="story-sig">With love, Catherine<svg class="pinkheart" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <button class="btn-outline" onclick="closeStory()" style="max-width:260px;margin:1rem auto 0;display:block" id="storyBtn">Back</button>
     <div id="storyQuiz" style="display:none;margin-top:14px;text-align:center"><div style="font-size:14.5px;color:#777">Ready to discover your style?</div><span onclick="storyStartQuiz()" style="display:inline-block;margin-top:3px;font-size:14.5px;color:#B08830;font-weight:600;text-decoration:underline;cursor:pointer">Take the fun quiz &rarr;</span></div>
     <div class="pg-foot" data-std-foot></div>
