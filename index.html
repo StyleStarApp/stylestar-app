@@ -1416,6 +1416,11 @@ body.menu-open .menu-panel{display:block}
 #s-dream .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#4a463e;line-height:1.65;margin:8px -0.5rem 0.9rem;font-style:normal;font-weight:600;padding:0}
 #s-dream .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
+/* The third of her three sign-offs, matched to the other two: the gap was a
+   TRAILING SPACE in the text node (7.8px). ⚠️ Position lives HERE, never
+   inline, or the stylesheet loses to it. Grep .pinkheart on .cc-name,
+   .story-sig and .dc-sign — the three must move together. */
+#s-dream .dc-sign .pinkheart{margin-left:2px;vertical-align:-7px}
 #s-dream .btn-outline{border-radius:2px;border-width:1.5px;max-width:260px;margin:1.3rem auto 0}
 #s-dream .dc-trend-link{text-align:center;font:600 12.5px/1.4 'Jost',sans-serif;color:#0FA6B6;text-decoration:underline;cursor:pointer;margin-top:12px}
 .our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#6e6e6e;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
@@ -3712,7 +3717,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <a class="dc-item-btn" href="https://www.nordstrom.com/s/8960533" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
-    <div class="dc-sign">With love, Catherine <svg class="pinkheart" style="width:19px;height:19px;margin-left:0" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-trend-link" onclick="openWardrobe('trend')">Curious what's trending right now? &rarr;</div>
 
     <button class="btn-outline" onclick="closeDream()" style="max-width:260px;margin:1rem auto 0;display:block" id="dreamBtn">Back</button>
