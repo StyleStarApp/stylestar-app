@@ -102,6 +102,7 @@ const run = async () => {
       texts: links.map(a => a.textContent.trim()),
       whys: cards.map(x => x.querySelector('.cc-w')?.textContent.trim()),
       name: document.querySelector('#s-contact .cc-name')?.textContent.trim(),
+      nameRaw: document.querySelector('#s-contact .cc-name')?.firstChild?.textContent,
       heart: (() => { const h = document.querySelector('#s-contact .cc-name .pinkheart'); if (!h) return null;
         const st = getComputedStyle(h); return { fill: st.fill, transform: st.transform }; })(),
       cardBorder: getComputedStyle(document.querySelector('#s-contact .cc-card')).borderTopColor,
@@ -132,6 +133,10 @@ const run = async () => {
   ok(/Dancing Script/.test(c.nameFont?.f || ''), 'signed in her handwriting, as on My Story', c.nameFont?.f);
   ok(c.heart && c.heart.fill === 'rgb(244, 154, 193)', 'her signature pink heart trails the name', JSON.stringify(c.heart));
   ok(c.heart && /rotate|matrix/.test(c.heart.transform), 'and it is tilted — no heart sits straight', c.heart?.transform);
+  // ⚠️ A trailing space in the text node put 6.8px between the name and the
+  // heart, invisible in the markup and invisible to a box measurement that
+  // includes it. Pin the text node exactly so it cannot creep back.
+  ok(c.nameRaw === 'Catherine', 'no trailing space between her name and the heart', JSON.stringify(c.nameRaw));
   ok(c.cardBorder === 'rgb(154, 160, 166)', 'cards wear the frame\'s own silver, not a fourth colour', c.cardBorder);
   ok(c.llc === 'Style Star by Catherine, LLC · Orlando, Florida', 'the legal entity sits in the footnote position', c.llc);
   ok(c.pill.bg === 'rgb(26, 26, 26)', 'the address wears the black lacquer pill', c.pill.bg);
