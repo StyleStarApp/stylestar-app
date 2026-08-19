@@ -90,6 +90,49 @@ goal for today would be to submit first affiliate application???"** That is the 
 - ⚠️ **AMAZON STAYS LAST, unchanged: 3 qualifying sales within 180 days of APPROVAL** or the account closes,
   and the clock starts at approval, not at launch.
 
+### ✅✅ SHE IS A RAKUTEN PUBLISHER — LIVE 2026-08-19, 8:33 AM (the goal, met)
+**Publisher Dashboard is open. Account "Style Star", `SID 4740535`, channel Status ACTIVE.** ▶ **THE CHAIN THAT
+STARTED IN JUNE IS COMPLETE: LLC ✅ → EIN ✅ → BANK ✅ → FIRST AFFILIATE APPLICATION ✅.** Her stated
+"enormous goal for today" was to SUBMIT one; she is through and approved instead.
+- **What she answered:** business set-up **Part of a company** (the LLC, not an individual — the whole reason
+  she waited since June) · category **Shopping/Marketplace** · primary channel **https://stylestar.app** ·
+  social **deliberately SKIPPED** (addable later from ACCOUNT → CHANNELS) · tax ID entered.
+- ⏳ **STILL TO DO, and it is the only thing outstanding: PAYMENT METHOD** (ACCOUNT → PAYMENT METHOD, direct
+  deposit, the Truist routing + account numbers). **They cannot pay her until it is in.** Cards still irrelevant.
+- ▶ **NEXT: ADVERTISERS → apply to NORDSTROM, then MACY'S, then BLOOMINGDALE'S**, in that order, which is just
+  her own traffic ranked. Each has its own bar and some will decline at low traffic; that is free and reapplyable.
+- ⭐ **AND THE REASON TO APPLY NOW RATHER THAN WAIT FOR TRAFFIC: ONE advertiser approval unlocks PRODUCT FEEDS**,
+  which is the thing that turns a store SEARCH into a real product and lets the app honestly say "in your size"
+  again. `docs/product-feeds-plan.md` is shovel-ready. **Trigger: the first approval email.**
+
+### ⚠️ THE THREE TRAPS THAT COST HER AN HOUR ON THAT FORM — ALL REUSABLE
+She hit every one of these in sequence and briefly thought she had ruined the application. **She had not: an
+UNVERIFIED account is not an application, nothing was submitted, and no advertiser ever saw a failed attempt.**
+▶ **Say that first if she ever panics mid-form again** — the reassurance is factual, not comfort.
+1. 🚨 **THE `.com` / `.app` TYPO, AGAIN.** She registered first with `partners@stylestar.com`, which does not
+   exist, so the verification email could never arrive. ▶ **This is the THIRD time `.app` has bitten this
+   project** (the dead signature links, the plain-text auto-link failure). **The dead account is inert — leave
+   it, do not try to delete or recover it.** The fix was to log in to the `.app` account that already existed.
+   ⚠️ **"Email already exists" was GOOD NEWS, not a wall** — it meant the account she wanted was already made.
+2. 🚨 **iOS HANDED HER TO THE INSTAGRAM APP AND KILLED THE FORM.** Tapping the Instagram step on her phone
+   opened the Instagram APP, which threw her out of Rakuten mid-application. ▶ **The exact universal-links
+   behaviour already documented here for lululemon and Nordstrom Rack — not fixable, only avoidable.**
+   ⚠️ **STANDING: do long multi-step forms on the LAPTOP, and skip any social CONNECT step** (a plain text
+   field for a URL is harmless; an OAuth "connect" button is what hijacks). Social is addable later.
+3. 🚨 **RAKUTEN'S URL VERIFIER DOES NOT FOLLOW A REDIRECT.** `http://stylestar.app` failed with "Unable to
+   verify URL" because Netlify answers it with a **301 to https**, and the checker reads the 301 as a failure.
+   **`https://stylestar.app` validates instantly.** ▶ **STANDING: always give any verifier the full `https://`
+   form** — the site is fine, the checker is literal.
+- ⭐⭐ **AND THE ONE THAT WAS CLAUDE'S TO GET WRONG: THE PUBLISHER CATEGORY.** Claude recommended
+  **Creator/Influencer** by inferring Rakuten's taxonomy from general industry usage, and **the recommendation
+  was WRONG — her own first instinct, Shopping/Marketplace, was right.** Rakuten's own `?` tooltip settles it:
+  Shopping/Marketplace is *"browse from a curated selection of products and brands... **hand-selected products**...
+  a **virtual mall experience**... or offer **personal shopping/concierge services**"* and explicitly **NOT** a
+  deals/coupons destination — which is a description of the Style Star **Mall** and **Edit**. Creator/Influencer
+  is defined as content *"created for social media"*; Content & Media is *"editorial content"*. Neither is her.
+  ▶ **THE LESSON, and it generalises past this form: WHEN A FORM SHIPS ITS OWN DEFINITIONS, READ THEM BEFORE
+  REASONING FROM WHAT THE LABEL USUALLY MEANS.** Telling her to tap the `?` is what caught it.
+
 ### ▶ HER OTHER ASKS FROM THIS MESSAGE (all recorded, none started)
 1. 💳 **MOVE THE RECURRING PAYMENTS TO THE BUSINESS CARD — she wants to, but NOT YET** (the cards are still in
    the mail). The list, unchanged: **Claude Max ~$250/mo (iCloud account) · Anthropic API credits (gmail
