@@ -164,7 +164,9 @@ UNVERIFIED account is not an application, nothing was submitted, and no advertis
    EMAIL**, so the email carries ONE link into a shareable wishlist PAGE and the retailer links live there.
    The privacy line is already decided: the shared view is the **LIST ONLY**, never her sizes or preferences.
    **Nothing blocks DESIGNING it now; renders first, per the standing rule.**
-3. ⭐ **NEW ASK: AN "ADD STYLE STAR TO YOUR PHONE" PAGE AT THE BOTTOM OF THE MENU.** Her words: *"maybe at the
+3. ✅✅ **BUILT AND MERGED-READY 2026-08-19 — THE "ADD AS AN APP" PAGE.** See its own entry below.
+   ▶ **ORIGINAL ASK, kept for the reasoning:** an "Add Style Star to your phone" page at the bottom
+   of the Menu.** Her words: *"maybe at the
    very bottom of our drop down menu we could put an Add Style Star as an app on your phone page and explain
    how to do that. I know we put it in as a small thing but could be cool to have it in the drop down menu
    too."* ▶ **This is a genuinely good instinct and it fixes a REAL gap already flagged in this file: the A2HS
@@ -180,6 +182,57 @@ UNVERIFIED account is not an application, nothing was submitted, and no advertis
    open item is closed.
 5. ⚠️ **THE TWO LINK-CHECK ROUTINES ARE STILL UNREAD**, third session running. Her decision on which to keep
    is still open. Do not let it quietly become permanent by neglect.
+
+### ✅✅ THE "ADD AS AN APP" PAGE IS BUILT (2026-08-19, her ask → her picks → shipped same session)
+**`s-a2hs`, reachable from a new Menu row in the About group above Contact. NOT MERGED YET — she has not
+seen it on her phone.** ▶ **Why it exists, and it is a real gap not a nicety: the A2HS whisper is
+WELCOME-BACK-ONLY, so a first-time visitor never meets it at all**, and a whisper is something she scrolls
+past rather than a place she can go looking for.
+- **HER PICKS, all three:** layout **B** of three renders (the app icon shown on a mock home screen, so the
+  page answers "what do I actually get?" with a picture) · row label **"Add as an App"** · and she **agreed
+  the row belongs in the About group beside Share and Instagram, NOT at the literal bottom** — the Menu is
+  20 rows and its tail sits below the fold, so the very bottom is the LEAST visible row on it.
+- ⭐⭐ **HER INSIGHT THAT SHAPED THE WHOLE PAGE, and it is the keeper: "Add to Home Screen is not intuitive
+  to most users... some people might think it's like changing background photo on their phone."** ▶ **So the
+  ROW says "Add as an App" in plain words and the PAGE explains what her phone's own button will say:**
+  *"Add to Home Screen just means the screen your apps live on, so nothing about your wallpaper or your
+  photos changes."* ⚠️ **Her second edit on that line: the first draft opened "Your phone calls it…" and she
+  caught that it reads like a TELEPHONE CALL.** Leading with the button name instead also ties it to step 2.
+- ⭐ **NO PINK HEART ON THIS PAGE, her call: "it's not really my voice here."** ▶ **That is HER OWN MARK
+  SYSTEM applied correctly** (2026-08-10: tilted pink heart = CATHERINE SPEAKING). This page is
+  instructions. **The Welcome Back whisper keeps its heart** — that one IS her voice. Asserted both ways.
+- ⚠️ **FOUR STATES, because a page she navigated to DELIBERATELY must never be blank** — which is why
+  desktop gets a real answer here ("open stylestar.app on your phone") where the whisper correctly shows
+  nothing at all. iOS = steps · Android = a real button off a real `beforeinstallprompt` · already
+  installed = says so. **Her wording from 2026-08-05 is otherwise kept verbatim.**
+- 🚨⭐ **TWO BUGS THE RENDER CAUGHT THAT 53 GREEN CHECKS DID NOT, both reusable:**
+  1. **THE HEART RENDERED ENORMOUS.** `_A2_HEART` carries `class="a2-h"`, whose size lives under **`#a2hs`
+     — the WHISPER's scope** — so on the new page the rule did not apply and the SVG fell back to its
+     default size. ▶ **ASSERT DIMENSIONS, NOT JUST POSITIONS** (the 2026-08-11 lesson, violated the same
+     day it was quoted): the test measured `.ap-step svg` and got the SHARE glyph, and every positional
+     check passed. ⚠️ **A class carries its styling only inside the scope that defines it** — moving markup
+     to a new screen does NOT bring its CSS.
+  2. **REMOVING THE LETTERHEAD LOGO (her call) REMOVED THE CHIP CLEARANCE.** The logo was the only thing
+     holding the title clear of the fixed Menu chip; without it the title sat **0px** below it. ⚠️ **In the
+     sandbox that reads as merely touching — on a real iPhone `env(safe-area-inset-top)` pushes the chip
+     down ~47px and it would land ON the title.** ▶ **The title now borrows the SAME `env()` the chip uses**
+     (`margin-top:calc(18px + env(safe-area-inset-top,0px))`), so the clearance holds on every phone.
+     **Don't replace it with a flat margin.**
+- ⚠️ **The heart was also stranded alone on step 2's second line** — fixed with **`text-wrap:balance`**, her
+  standing widow lever, which ⚠️ **needs `display:block` to work on a flex item**. Moot now the heart is
+  gone, kept because the wording still sits near the width limit. ▶ **"Choose Add to Home Screen" fits one
+  line at every width and was DELIBERATELY NOT TAKEN: it drops "scroll down", and she declined that exact
+  trade on 2026-08-08** — an instruction that undercounts the real iOS flow is worse than none.
+- **Suites: new `scratchpad/a2page.js` 58 checks** (menu row → page, all four states, nothing tappable on
+  the iOS path, the wallpaper explanation present, hearts absent here + still present in the whisper, AA
+  contrast on every text against the real painted paper, no overflow 390/360/320, Back returns, zero JS
+  errors) · **menu 87 · nav 82 · e2e 29 green.** ⚠️ **THREE COUNTS UPDATED DELIBERATELY, NOT SILENCED:**
+  the Menu is **20 rows** and there are **14 standard footers**. ▶ **Verified separately that NOTHING WRAPS
+  before touching the count** — every row measured 43-44px against a 46px threshold, so only the count moved.
+  ⚠️ **`menu.js` and `menux.js` both test single-line by HEIGHT ÷ line-height, and that is the right
+  instrument: rect-top clustering FALSELY flags the four rows carrying inline marks** (the Start here pill,
+  the pink hearts), because `getClientRects` returns a rect per ELEMENT.
+- ▶ **STILL OPEN: she has not seen it on her phone, and it is not merged.**
 
 ### ⚠️ FOUR PRs SHIPPED 2026-08-18 THAT THE 08-17 ENTRY NEVER RECORDED (#869 · #870 · #871 · #872)
 All merged to main, branch level with main, tree clean. **A sign-off polish round off her live testing, and
