@@ -308,10 +308,14 @@ const fit = await p360.evaluate(() => {
 function lum(rgb) { const [r, g, b] = rgb.map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; }
 const ratio = (Math.max(lum(fit.fg), lum([251, 250, 247])) + 0.05) / (Math.min(lum(fit.fg), lum([251, 250, 247])) + 0.05);
 ok('drawer fits inside 360px, no sideways scroll', fit.panelW <= 303 && fit.viewportOk, JSON.stringify(fit));
-// 19 since Contact joined the About group after FAQ (Cath, 2026-08-17); 18 was
-// "Follow on Instagram" (2026-08-08). Deliberate update, not a silence: an
-// explicit count is what makes a row going MISSING fail loudly.
-ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 19);
+// 20 since "Add as an App" joined the About group above Contact (Cath,
+// 2026-08-19 — her ask, so the install invitation has a findable PLACE and not
+// only the Welcome Back whisper, which a first-time visitor never sees). 19 was
+// Contact (2026-08-17); 18 was "Follow on Instagram" (2026-08-08). Deliberate
+// update, not a silence: an explicit count is what makes a row going MISSING
+// fail loudly. ⚠️ Verified separately that nothing WRAPS — every row measured
+// 43-44px against this 46px threshold, so only the count moved.
+ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 20);
 ok('row text contrast ≥ 4.5:1 (got ' + ratio.toFixed(1) + ':1)', ratio >= 4.5);
 ok('no JS errors @360', p360.errors.length === 0, p360.errors.join(' | '));
 await p360.context().close();

@@ -209,7 +209,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
    call, and it is what gives the pale gold definition against the white paper.
    ⚠️ Don't reintroduce a gradient on a frame. A frame is a rectangle; a linear
    gradient across one can never be symmetrical. */
-.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror,.ss.contact-mirror{position:relative;border-radius:0;border:8px solid #E8CE7E;
+.ss.faq-mirror,.ss.privacy-mirror,.ss.terms-mirror,.ss.contact-mirror,.ss.a2hs-mirror{position:relative;border-radius:0;border:8px solid #E8CE7E;
   background:#fff;
   box-shadow:0 7px 40px rgba(0,0,0,.18),inset 0 0 0 8px #9AA0A6}
 /* My Story — Catherine's page: a matted jewelry-box frame — turquoise frame (Style Star Edit accent), a white mat, then a delicate soft-pink keyline (her voice). No gray. */
@@ -1511,6 +1511,60 @@ body.menu-open .menu-panel{display:block}
    FAQ and the legal pages keep their own tuned spacing. */
 #s-contact .pp-head{margin-bottom:0}
 #s-contact .story-title{margin-bottom:6px;line-height:1}
+
+/* ── "Add as an App" page (her ask 2026-08-19, her pick "B" of three renders) ──
+   A findable PLACE for the install invitation. The A2HS whisper only ever shows
+   on WELCOME BACK, so a first-time visitor never meets it at all; a menu row is
+   findable by name (the mom lesson).
+   ⚠️ HER CALL AND IT IS THE COPY THAT MATTERS MOST: "Add to Home Screen" is iOS
+   jargon, and people hear "home screen" and think WALLPAPER. So the menu row
+   says "Add as an App" in plain words, and the page explains what her phone's
+   own button will say and what it actually does.
+   ⚠️ HER CALL: no letterhead logo here. The app icon sits inches below it, and
+   the Menu chip (plus its Home row) still carries navigation.
+   ⚠️ NOTHING on the iOS path may look tappable — Apple exposes NO install API,
+   so a button-shaped thing there is a promise the platform cannot keep. Android
+   alone gets a real button, off a real beforeinstallprompt event. */
+#s-a2hs .pp-head{margin-bottom:0}
+/* ⚠️ Removing the letterhead logo (her call) removed the thing that was holding
+   the title clear of the fixed Menu chip. The chip sits at
+   calc(10px + env(safe-area-inset-top)), so the title borrows the SAME env()
+   and keeps 18px of clearance on every phone — in the sandbox the inset is 0
+   and they merely touch, but on a real iPhone it is ~47px and the chip would
+   land on the title. Don't replace this with a flat margin. */
+#s-a2hs .story-title{margin-top:calc(18px + env(safe-area-inset-top,0px));margin-bottom:14px;line-height:1}
+/* ⚠️ _A2_HEART carries class="a2-h", whose size/tilt live under #a2hs — the
+   WHISPER's scope. On this page that rule does not apply, so without this the
+   heart renders at the SVG default size (it did, and it was enormous). Tilted
+   12deg because no heart in this app sits straight. */
+#s-a2hs .a2-h{width:14px;height:14px;vertical-align:-2px;transform:rotate(12deg)}
+#s-a2hs .ap-body{text-align:center}
+#s-a2hs .ap-home{display:flex;justify-content:center;gap:14px;align-items:flex-start;background:linear-gradient(160deg,#2b2740,#4a4364);border-radius:16px;padding:16px 12px 13px;margin:0 auto 18px;max-width:290px}
+#s-a2hs .ap-slot{width:52px;text-align:center}
+#s-a2hs .ap-slot img,#s-a2hs .ap-blank{width:52px;height:52px;border-radius:12px;display:block;margin:0 auto 5px}
+#s-a2hs .ap-blank{background:rgba(255,255,255,.13)}
+#s-a2hs .ap-cap{font:400 9.5px/1.2 'Jost',sans-serif;color:#fff;display:block}
+#s-a2hs .ap-cap.dim{color:rgba(255,255,255,.35)}
+#s-a2hs .ap-lead{font:600 16px/1.45 'Jost',sans-serif;color:#3a352c;text-wrap:balance;margin:0 0 8px}
+#s-a2hs .ap-sub{font:400 14.5px/1.55 'Jost',sans-serif;color:#4a463e;text-wrap:balance;max-width:300px;margin:0 auto 18px}
+#s-a2hs .ap-step{display:flex;align-items:flex-start;gap:10px;text-align:left;max-width:290px;margin:0 auto 11px;font:400 15px/1.5 'Jost',sans-serif;color:#4a463e}
+#s-a2hs .ap-n{flex:0 0 auto;width:22px;height:22px;margin-top:1px;border-radius:50%;border:1.5px solid #D8A52E;color:#3a352c;font:600 12px/1 'Jost',sans-serif;display:flex;align-items:center;justify-content:center}
+#s-a2hs .ap-step b{font-weight:600;color:#2a2620}
+/* ⚠️ Her standing widow lever, and it needs display:block to work at all —
+   text-wrap:balance only applies to block-level text, and this span is a flex
+   item. Without it the pink heart is stranded alone on step 2's second line at
+   390px. Measured: balance keeps it with the words at every width.
+   ⚠️ "Choose Add to Home Screen" fits one line everywhere and would be the
+   tidier geometry, but it drops "scroll down", which is load-bearing — an
+   instruction that undercounts the real iOS flow is worse than none. She was
+   offered that trade on 2026-08-08 and did not take it. */
+#s-a2hs .ap-step > span:not(.ap-n){display:block;text-wrap:balance}
+#s-a2hs .ap-chip{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:#F1ECE0;border:1px solid #D6C9A8;vertical-align:middle;position:relative;top:-1px;margin:0 1px}
+#s-a2hs .ap-note{font:400 13.5px/1.5 'Jost',sans-serif;color:#6b6355;text-wrap:balance;max-width:296px;margin:15px auto 0}
+#s-a2hs .ap-note b{color:#4a463e;font-weight:600}
+#s-a2hs .ap-note + .ap-note{margin-top:9px}
+/* Android only, and it is a REAL control backed by a real prompt event. */
+#s-a2hs .ap-btn{display:inline-block;margin-top:2px;padding:12px 24px;border-radius:999px;background:#1a1a1a;border:1px solid #C99A2C;color:#F2D889;font:600 14.5px/1 'Jost',sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent}
 /* ===== Analyze-an-outfit upload screen — warm "framed gallery" glow-up ===== */
 .ss.sqall{border-radius:0}
 /* Outfit results: drop the app card's side margin so the full-bleed framed rooms reach the true screen edges */
@@ -2921,6 +2975,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-row" onclick="menuInstagram()">Follow on Instagram</div>
   <div class="menu-row" onclick="menuGo(showStory)">My Story<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   <div class="menu-row" onclick="menuGo(showFAQ)">FAQ</div>
+  <div class="menu-row" onclick="menuGo(showA2hsPage)">Add as an App</div>
   <div class="menu-row" onclick="menuGo(showContact)">Contact</div>
   <div class="menu-row" onclick="menuGo(showPrivacy)">Privacy</div>
   <div class="menu-row" onclick="menuGo(showTerms)">Terms</div>
@@ -3894,6 +3949,27 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 </div>
 
+<div class="scr" id="s-a2hs">
+  <div class="story-wrap">
+    <div class="pp-head">
+      <button class="top-back" onclick="closeA2hsPage()">&larr; Back</button>
+    </div>
+    <div class="story-title">Add as an App</div>
+    <div class="ap-body">
+      <div class="ap-home">
+        <div class="ap-slot"><span class="ap-blank"></span><span class="ap-cap dim">&nbsp;</span></div>
+        <div class="ap-slot"><img src="apple-touch-icon.png" alt="The Style Star icon on a phone home screen"><span class="ap-cap">Style Star</span></div>
+        <div class="ap-slot"><span class="ap-blank"></span><span class="ap-cap dim">&nbsp;</span></div>
+      </div>
+      <div class="ap-lead">Add Style Star as a free app to your phone</div>
+      <div class="ap-sub">It sits with your other apps and opens in one tap. There is no app store and nothing to download.</div>
+      <div id="a2hsPageSteps"></div>
+    </div>
+    <button class="btn-outline" onclick="closeA2hsPage()" style="max-width:260px;margin:1.5rem auto 0;display:block">Back</button>
+    <div class="pg-foot" data-std-foot></div>
+  </div>
+</div>
+
 <div class="scr" id="s-privacy">
   <div class="story-wrap">
     <div class="pp-head">
@@ -4259,12 +4335,12 @@ function show(id,skipHistory){
   // of their own but still want the global one hidden (the quiz, preferences).
   var scrEl=document.getElementById(id);
   var ownFoot=!!(scrEl&&scrEl.querySelector('[data-std-foot]'));
-  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -4296,6 +4372,8 @@ function show(id,skipHistory){
   // And Contact (her call 2026-08-17: it should be framed exactly like its
   // siblings, since it belongs to the same family of pages).
   if(card)card.classList.toggle('contact-mirror',id==='s-contact');
+  // And the Add as an App page, same family, same frame.
+  if(card)card.classList.toggle('a2hs-mirror',id==='s-a2hs');
   // Same gold+silver display-case frame around the clean Shop your style page.
   if(card)card.classList.toggle('shop-mirror',id==='s-shopstyle');
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
@@ -6215,6 +6293,7 @@ window.addEventListener('appinstalled',function(){try{localStorage.setItem('ss_a
 function _a2hsStandalone(){try{return window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}}
 function _a2hsIOS(){return /iPad|iPhone|iPod/.test(navigator.userAgent)}
 var _A2_SHARE='<svg class="a2-sh" viewBox="0 0 24 24" fill="none" stroke="#F2D889" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8.5 7 12 3.5 15.5 7"/><path d="M7 10H5.8C5 10 4.4 10.6 4.4 11.4v8.2c0 .8.6 1.4 1.4 1.4h12.4c.8 0 1.4-.6 1.4-1.4v-8.2c0-.8-.6-1.4-1.4-1.4H17"/></svg>';
+var _A2_SHARE_DARK=_A2_SHARE.replace(/stroke="#F2D889"/,'stroke="#3a352c"').replace(/class="a2-sh"/,'style="width:15px;height:15px"');
 var _A2_HEART='<svg class="a2-h" viewBox="0 0 24 24" fill="#F49AC1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
 function _syncA2hs(){
   var el=document.getElementById('a2hs');if(!el)return;
@@ -7059,6 +7138,51 @@ function closeFAQ(){
   showBack(faqPrevScreen);
 }
 let contactPrevScreen='s-wel';
+/* ── "Add as an App" page ─────────────────────────────────────────────────
+   The whisper on Welcome Back invites; this PAGE is the place she can go
+   looking for. Same wording as the whisper (hers, 2026-08-05) plus the
+   explanation she asked for on 2026-08-19: people hear "home screen" and
+   think WALLPAPER, so the page names what her phone's button will say and
+   what it actually does.
+   ⚠️ Four honest states, and a page she navigated to DELIBERATELY must never
+   be blank — which is why desktop gets a real answer here where the whisper
+   correctly shows nothing at all. */
+var a2hsPrevScreen='s-wb';
+function showA2hsPage(){
+  const cur=document.querySelector('.scr.act');
+  if(cur&&cur.id&&cur.id!=='s-a2hs')a2hsPrevScreen=cur.id;   // self-link guard
+  _syncA2hsPage();
+  show('s-a2hs');
+  document.querySelector('.quiz-footer').style.display='none';
+}
+function closeA2hsPage(){
+  document.querySelector('.quiz-footer').style.display='';
+  showBack(a2hsPrevScreen);
+}
+function _syncA2hsPage(){
+  var el=document.getElementById('a2hsPageSteps');if(!el)return;
+  var installed=_a2hsStandalone();
+  try{installed=installed||!!localStorage.getItem('ss_a2hs')}catch(e){}
+  // ⚠️ The meaning note is the whole reason this page exists in her words:
+  // "Add to Home Screen is not intuitive to most users."
+  var meaning='<div class="ap-note">Your phone calls it <b>Add to Home Screen</b>. That just means the screen your apps live on, so nothing about your wallpaper or your photos changes.</div>';
+  if(installed){
+    el.innerHTML='<div class="ap-sub" style="margin-bottom:0">Style Star is already on this phone. Open it from your home screen any time '+_A2_HEART+'</div>';
+  }else if(_a2hsPrompt){
+    el.innerHTML='<span class="ap-btn" role="button" tabindex="0" onclick="a2hsGo()" onkeydown="if(event.key===\'Enter\'||event.key===\' \')a2hsGo()">Add it now '+_A2_HEART+'</span>'+meaning;
+  }else if(_a2hsIOS()){
+    // ⚠️ "your browser's toolbar", NEVER "at the bottom" — Safari's bar can be
+    // moved to the top. And the real flow is Share -> sometimes View More ->
+    // scroll -> Add to Home Screen; an instruction that undercounts is worse
+    // than none, because she follows it, sees nothing, and concludes it broke.
+    el.innerHTML='<div class="ap-step"><span class="ap-n">1</span><span>Tap <span class="ap-chip">'+_A2_SHARE_DARK+'</span> in your browser\'s toolbar</span></div>'
+      +'<div class="ap-step"><span class="ap-n">2</span><span>Scroll down to <b>Add to Home Screen</b> '+_A2_HEART+'</span></div>'
+      +meaning
+      +'<div class="ap-note">It sits a little way down the list, under <b>View More</b> on some phones.</div>';
+  }else{
+    el.innerHTML='<div class="ap-sub" style="margin-bottom:0">You are on a computer just now. Open <b>https://stylestar.app</b> on your phone and this page will show you how.</div>';
+  }
+}
 function showContact(){
   const cur=document.querySelector('.scr.act');
   if(cur&&cur.id&&cur.id!=='s-contact')contactPrevScreen=cur.id;   // self-link guard
