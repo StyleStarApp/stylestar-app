@@ -72,7 +72,9 @@ const foots = await page.evaluate(() => {
   const els = [...document.querySelectorAll('[data-std-foot]')];
   return { n: els.length };
 });
-ok('exactly 13 standard-footer containers', foots.n === 13, 'got ' + foots.n);
+// 14 since the "Add as an App" page joined the family (Cath, 2026-08-19) and
+// carries the same standard footer as its siblings. Deliberate update.
+ok('exactly 14 standard-footer containers', foots.n === 14, 'got ' + foots.n);
 const links = await page.evaluate(() => ({
   main: [...document.querySelectorAll('.quiz-footer .sf-row .lnk')].map(e => e.textContent),
   info: [...document.querySelectorAll('.quiz-footer .sf-row2 .lnk')].map(e => e.textContent)
@@ -298,7 +300,7 @@ console.log('\n8b. The Instagram tile (real brand gradient, ends the main row â€
   ok('tap target is comfortably bigger than the tile', ig.tapW >= 25 && ig.tapH >= 25, ig.tapW + 'x' + ig.tapH);
   ok('ENDS the main row on every page (the rhythm holds)', ig.lastInRow);
   ok('sits inside the main row', ig.insideRow);
-  ok('each footer owns a UNIQUE gradient id (Safari hidden-def trap)', ig.gidsUnique && ig.gidCount === 13, ig.gidCount + ' ids');
+  ok('each footer owns a UNIQUE gradient id (Safari hidden-def trap)', ig.gidsUnique && ig.gidCount === 14, ig.gidCount + ' ids');
   ok('every tile references its OWN footer\'s gradient', ig.rectsRef);
   ok('the camera is white on the gradient', ig.cameraWhite);
 

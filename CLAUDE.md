@@ -7,7 +7,256 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-17 — THE LEGAL DAY: A PAID-FOR TRADEMARK CLASS WAS MISSING, AND SHE CAUGHT IT)
+## ▶ NEXT SESSION — START HERE (2026-08-19 — 🎉 THE BANK IS OPEN AND CLASS 045 IS ON BOTH MARKS)
+
+### ⭐⭐ THE TWO THINGS THAT WERE BLOCKING EVERYTHING BOTH CLEARED (Aug 18)
+**Both of the questions the 08-17 entry said to ask first came back YES.** The money path is genuinely
+unblocked for the first time since June.
+1. ✅✅ **THE TRUIST BUSINESS ACCOUNT IS OPEN** (Tue Aug 18, in person, as planned). ⚠️ **Her debit and
+   credit cards are being MAILED and have not arrived** — ▶ **and that blocks NOTHING that matters today:
+   affiliate networks pay by ACH/direct deposit or check using the ROUTING + ACCOUNT numbers, which she has
+   had since the moment the account opened.** A card is only needed for the recurring-payment migration.
+2. ✅✅ **CLASS 045 IS ON BOTH TRADEMARK APPLICATIONS — SHE WON THE ARGUMENT.** Indie sent CORRECTED
+   three-class applications (035 + 042 + 045) for the word mark AND the logo, and **she has signed both.**
+   ▶ **THE WHOLE 08-17 SESSION IS VINDICATED: she found the missing class herself, refused to sign, did the
+   $2,100 ÷ $350 = SIX filings arithmetic, and got it fixed inside 24 hours.** Reuse the move: when a firm
+   quotes a lump sum, divide it by the unit price — the quote itself proves the scope.
+   ⚠️ **AND THE REASON IT HAD TO BE CAUGHT BEFORE SIGNING STANDS AS A PERMANENT LESSON: a class cannot be
+   ADDED to a trademark application after filing, only removed.** Signing is not filing, so there was still a
+   window — but she never needed it, because she held the line.
+
+### ✅ THE OTHER LEGAL PIECES, ALL SIGNED (Aug 18)
+She signed **everything**: the **Operating Agreement** (which is what Truist wanted, and what makes Exhibit A
+true), the **Statement of Correction** (Bail → Bailey), and **both trademark applications**.
+- ⏳ **THE ONE THING STILL WAITING ON INDIE: the MAILING ADDRESS for the paper correction.** The Statement of
+  Correction is a physical filing to Tallahassee with a physical check, and the cover letter's instructions
+  contradicted their email (it had HER mailing it; the email said send it back to them). **She is waiting on
+  Almira to say where it goes.** ▶ **ASK NEXT SESSION whether that address arrived** — a signed correction
+  sitting in a drawer fixes nothing.
+- ⚠️ **STILL UNLOGGED AND WORTH CHASING: the TM FILING DATES + SERIAL NUMBERS.** Signed ≠ filed. **Log them
+  here the moment they arrive**, and remember the filing basis is **Section 1(b) INTENT TO USE**, so the
+  priority date lands on filing day but registration waits for a later Statement of Use with a specimen and
+  another per-class fee. Ask Indie for that timing and cost.
+- ▶ **AMBER'S PARKED SWEETENER: a free year of TM oversight + quarterly calls.** She declined it on 08-17
+  while the fault was still open, which was the right call. **The corrections are done now, so it can be
+  revisited** — never accept a sweetener while the fault is open, but a settled one is fair game.
+
+### ▶ SO THE CHAIN NOW READS: LLC ✅ → EIN ✅ → BANK ✅ → **AFFILIATE APPLICATIONS** ← WE ARE HERE
+Everything upstream is done. ⭐ **HER STATED GOAL FOR 2026-08-19, in her words: "it feels like an enormous
+goal for today would be to submit first affiliate application???"** That is the right goal and she is ready.
+- ⚠️ **THE SEQUENCING RULE IS UNCHANGED AND LOAD-BEARING: NETWORKS FIRST (ShareASale/Awin · Rakuten · Impact ·
+  CJ), AMAZON LAST.** Amazon Associates requires **3 qualifying sales within 180 days of APPROVAL** or the
+  account closes — and the clock starts at approval, not at launch. Applying to Amazon before there is real
+  traffic burns the window for nothing.
+- ⚠️ **The "Bail" typo does NOT block an application.** A W-9 asks for the LLC's legal NAME + EIN, and both are
+  clean (the typo is a middle name inside Articles III/IV only). Do not let it become a reason to wait.
+
+### 💰 THE AFFILIATE RESEARCH, DONE 2026-08-19 — RAKUTEN IS THE FIRST APPLICATION
+▶ **HER PREP SHEET IS AN ARTIFACT:** https://claude.ai/code/artifact/cefa1ee4-ee17-4a5a-987d-ac9ac48e192b
+(the fields to paste, the drafted site description, the two cautions, and the post-approval store order).
+- 🚨 **STANDING-RULE CORRECTION: SHAREASALE NO LONGER EXISTS.** Awin bought it and **closed it at the end of
+  2025**. Every earlier entry in this file that says "NETWORKS FIRST (ShareASale/Rakuten/Impact/CJ)" is naming
+  a dead network. ▶ **The live list is: Rakuten Advertising · Awin · Impact · CJ.** ⚠️ **Awin charges a small
+  REFUNDABLE deposit to apply** (reported as $5, more recently $1) — not a scam, it is their spam filter, and
+  it is refunded against the first commission. Verify the amount at application time.
+- 🚨🚨 **CORRECTED THE SAME MORNING, BY HER OWN SEARCH OF THE LIVE DIRECTORY — THE PREMISE WAS WRONG:**
+  Claude recommended Rakuten first because blog sources said **Nordstrom, Macy's and Bloomingdale's** all ran
+  through it. ▶ **In the real advertiser directory: NORDSTROM IS NOT THERE. MACY'S IS NOT THERE.
+  BLOOMINGDALE'S IS**, along with plenty of other stores from her table.
+  ▶▶ **NORDSTROM RUNS ON IMPACT**, via the **Nordstrom Creator Program — https://www.nordstromcreators.com**
+  (verified live). It offers a **curated storefront of favourite Nordstrom products**, which is essentially the
+  Style Star Edit, so it may fit her better than a plain affiliate link. **That is now the highest-value single
+  application left, and it is a separate day's work.** Macy's network is still unidentified — find it before
+  assuming.
+  ⚠️⚠️ **THE STANDING LESSON, and it cost the headline reason for a whole recommendation: AFFILIATE-NETWORK
+  MAPPINGS FROM BLOGS AND DIRECTORIES ARE UNRELIABLE AND GO STALE.** Programs move networks and the write-ups
+  do not follow. ▶ **The ONLY trustworthy source is the network's own advertiser directory, read while logged
+  in.** Never again promise her that a specific store is on a specific network before it has been seen there.
+- ✅ **RAKUTEN IS STILL WORTH HOLDING, on the evidence rather than the pitch:** Bloomingdale's (~2%, **90-day
+  cookie**) plus "lots of other good ones" she recognised from her own store table. The account is live, the
+  payment details are verified, and she now understands the process. **It is probably her SECOND network
+  rather than her first.**
+- **Mechanics worth remembering:** free to apply · **approval in 2-5 business days** · **TWO STAGES** (Rakuten
+  approves the PUBLISHER first, then she applies to each advertiser separately, each with its own bar) · the
+  form asks for **monthly visitors** · payouts are **direct deposit, held until they reach $25**.
+  Nordstrom is ~2-11% with a 30-day cookie; Macy's ~6%; Bloomingdale's ~2% with a **90-day** cookie.
+- ⚠️ **THE CARDS BEING IN THE MAIL BLOCK NOTHING.** Affiliate networks pay by **ACH/direct deposit** using the
+  routing + account numbers, which she has had since the account opened. Cards only matter for the recurring-
+  payment migration.
+- ⚠️ **THE ONE FIELD TO GET RIGHT, AND IT IS NOT OURS TO ANSWER: the W-9 entity type for a SINGLE-MEMBER LLC**,
+  and whether the EIN or her SSN belongs in the tax-ID box. ▶ **Told her to ask her accountant, deliberately —
+  the standing rule is never give tax advice**, and this is exactly the case it exists for.
+- ⚠️ **SET HER EXPECTATIONS HONESTLY AND IT WAS DONE IN THE SHEET: her traffic is small, the honest number is
+  the one to give, and NETWORK approval is likely while some individual ADVERTISERS will decline at first.**
+  That costs nothing and is reapplyable. ▶ **A Nordstrom decline in September is not a verdict on the app** —
+  say it that way if it happens.
+- ✅ **She is genuinely ready, and the Contact page is why.** Every field a reviewer looks for exists:
+  legal name · EIN · business bank · https://stylestar.app · **/privacy · /terms · /contact** ·
+  `partners@stylestar.app` · an affiliate disclosure on every surface that carries a link.
+  ⚠️ **The "Bail" typo does NOT block it** — a W-9 wants the LLC's legal NAME + EIN, both clean.
+- ▶ **POST-APPROVAL ORDER, which is just her traffic ranked:** Nordstrom → Macy's → Bloomingdale's → every
+  other Rakuten advertiser that matches her store table.
+- ⭐ **AND THE SECOND PRIZE IS THE REAL ONE: approved publishers can pull PRODUCT FEEDS** (names, prices, stock,
+  sizes). That is what turns a store SEARCH into an actual product and what would let the app honestly say
+  **"in your size"** again. `docs/product-feeds-plan.md` is shovel-ready. **Trigger: the first approval email.**
+- ⚠️ **AMAZON STAYS LAST, unchanged: 3 qualifying sales within 180 days of APPROVAL** or the account closes,
+  and the clock starts at approval, not at launch.
+
+### ✅✅ SHE IS A RAKUTEN PUBLISHER — LIVE 2026-08-19, 8:33 AM (the goal, met)
+**Publisher Dashboard is open. Account "Style Star", `SID 4740535`, channel Status ACTIVE.** ▶ **THE CHAIN THAT
+STARTED IN JUNE IS COMPLETE: LLC ✅ → EIN ✅ → BANK ✅ → FIRST AFFILIATE APPLICATION ✅.** Her stated
+"enormous goal for today" was to SUBMIT one; she is through and approved instead.
+- **What she answered:** business set-up **Part of a company** (the LLC, not an individual — the whole reason
+  she waited since June) · category **Shopping/Marketplace** · primary channel **https://stylestar.app** ·
+  social **deliberately SKIPPED** (addable later from ACCOUNT → CHANNELS) · tax ID entered.
+- ✅ **PAYMENT METHOD IS IN AND VERIFIED** (direct deposit, Truist). ⚠️ **The form REQUIRED a SWIFT code even
+  with Country US** — Truist's is **BRBTUS33** (from truist.com's own wire documents; BRBTUS3X and SNTRUS3A are
+  also accepted for incoming). ▶ **The pay-to name is the LLC, not her** — ACH bounces when the payee does not
+  match the account title, and the 1099 will be issued to the LLC. **Not tax advice, just plumbing** — say it
+  that way so she does not stall waiting on an accountant for it.
+- ✅✅ **SHE APPLIED TO A LOT OF ADVERTISERS the same morning**, working her own deep-catalog list. **Bloomingdale's
+  confirmed "we will email you."** ⚠️ **MY ADVERTISERS reads "no partnerships at this time" and THAT IS CORRECT:
+  it lists APPROVED partnerships only, and nothing has been reviewed yet.** Pending applications usually sit
+  behind a status filter that defaults to Approved. ▶ **Realistic timeline to give her: a few hours for the
+  auto-approvers, 2-10 business days for most, and some decline silently.** Rakuten also had **scheduled
+  maintenance Fri Aug 21** which may slow the weekend.
+- ⭐ **AND THE REASON TO APPLY NOW RATHER THAN WAIT FOR TRAFFIC: ONE advertiser approval unlocks PRODUCT FEEDS**,
+  which is the thing that turns a store SEARCH into a real product and lets the app honestly say "in your size"
+  again. `docs/product-feeds-plan.md` is shovel-ready. **Trigger: the first approval email.**
+
+### ⚠️ THE THREE TRAPS THAT COST HER AN HOUR ON THAT FORM — ALL REUSABLE
+She hit every one of these in sequence and briefly thought she had ruined the application. **She had not: an
+UNVERIFIED account is not an application, nothing was submitted, and no advertiser ever saw a failed attempt.**
+▶ **Say that first if she ever panics mid-form again** — the reassurance is factual, not comfort.
+1. 🚨 **THE `.com` / `.app` TYPO, AGAIN.** She registered first with `partners@stylestar.com`, which does not
+   exist, so the verification email could never arrive. ▶ **This is the THIRD time `.app` has bitten this
+   project** (the dead signature links, the plain-text auto-link failure). **The dead account is inert — leave
+   it, do not try to delete or recover it.** The fix was to log in to the `.app` account that already existed.
+   ⚠️ **"Email already exists" was GOOD NEWS, not a wall** — it meant the account she wanted was already made.
+2. 🚨 **iOS HANDED HER TO THE INSTAGRAM APP AND KILLED THE FORM.** Tapping the Instagram step on her phone
+   opened the Instagram APP, which threw her out of Rakuten mid-application. ▶ **The exact universal-links
+   behaviour already documented here for lululemon and Nordstrom Rack — not fixable, only avoidable.**
+   ⚠️ **STANDING: do long multi-step forms on the LAPTOP, and skip any social CONNECT step** (a plain text
+   field for a URL is harmless; an OAuth "connect" button is what hijacks). Social is addable later.
+3. 🚨 **RAKUTEN'S URL VERIFIER DOES NOT FOLLOW A REDIRECT.** `http://stylestar.app` failed with "Unable to
+   verify URL" because Netlify answers it with a **301 to https**, and the checker reads the 301 as a failure.
+   **`https://stylestar.app` validates instantly.** ▶ **STANDING: always give any verifier the full `https://`
+   form** — the site is fine, the checker is literal.
+- ⭐⭐ **AND THE ONE THAT WAS CLAUDE'S TO GET WRONG: THE PUBLISHER CATEGORY.** Claude recommended
+  **Creator/Influencer** by inferring Rakuten's taxonomy from general industry usage, and **the recommendation
+  was WRONG — her own first instinct, Shopping/Marketplace, was right.** Rakuten's own `?` tooltip settles it:
+  Shopping/Marketplace is *"browse from a curated selection of products and brands... **hand-selected products**...
+  a **virtual mall experience**... or offer **personal shopping/concierge services**"* and explicitly **NOT** a
+  deals/coupons destination — which is a description of the Style Star **Mall** and **Edit**. Creator/Influencer
+  is defined as content *"created for social media"*; Content & Media is *"editorial content"*. Neither is her.
+  ▶ **THE LESSON, and it generalises past this form: WHEN A FORM SHIPS ITS OWN DEFINITIONS, READ THEM BEFORE
+  REASONING FROM WHAT THE LABEL USUALLY MEANS.** Telling her to tap the `?` is what caught it.
+
+### ▶ HER OTHER ASKS FROM THIS MESSAGE (all recorded, none started)
+1. 💳 **MOVE THE RECURRING PAYMENTS TO THE BUSINESS CARD — she wants to, but NOT YET** (the cards are still in
+   the mail). The list, unchanged: **Claude Max ~$250/mo (iCloud account) · Anthropic API credits (gmail
+   account, consider moving the org to a business email) · Netlify · the stylestar.app domain · MailerLite.**
+   `BUSINESS-EXPENSES.md` tracks the personal-card spend. ⚠️ **Flag an accountant for the pre-bank expenses;
+   never give tax advice.** ▶ **Also still to do the moment the account is usable: transfer $100 labelled
+   "initial capital contribution"** — the first entry in the books, and what makes Exhibit A true.
+2. ⭐ **THE EMAILABLE WISHLIST — she named it again, third time now.** See the full entry lower in this file
+   (2026-08-16). ⚠️ **The constraint that shapes the whole build: AMAZON ASSOCIATES BANS AFFILIATE LINKS IN
+   EMAIL**, so the email carries ONE link into a shareable wishlist PAGE and the retailer links live there.
+   The privacy line is already decided: the shared view is the **LIST ONLY**, never her sizes or preferences.
+   **Nothing blocks DESIGNING it now; renders first, per the standing rule.**
+3. ✅✅ **BUILT AND MERGED-READY 2026-08-19 — THE "ADD AS AN APP" PAGE.** See its own entry below.
+   ▶ **ORIGINAL ASK, kept for the reasoning:** an "Add Style Star to your phone" page at the bottom
+   of the Menu.** Her words: *"maybe at the
+   very bottom of our drop down menu we could put an Add Style Star as an app on your phone page and explain
+   how to do that. I know we put it in as a small thing but could be cool to have it in the drop down menu
+   too."* ▶ **This is a genuinely good instinct and it fixes a REAL gap already flagged in this file: the A2HS
+   whisper is WELCOME-BACK-ONLY, so a first-time visitor never sees it at all**, and the whisper is a nudge
+   she can scroll past rather than a place she can go looking for. **A menu row is findable by name — the mom
+   lesson.** ⚠️ **When it is built, reuse the 2026-08-05 wording and the A2HS lessons wholesale:** her own
+   copy, the real app-icon preview, the numbered steps that do NOT undercount the iOS flow (Share → sometimes
+   View More → SCROLL → Add to Home Screen), *"your browser's toolbar"* and NEVER "at the bottom of your
+   screen", and **nothing on the iOS path that looks tappable** (Apple exposes no install API, so a
+   button-shaped thing there is a promise the platform cannot keep). Android keeps its real working button.
+   ⚠️ **The Menu is 19 rows now and its tail already sits below the fold — measure, do not assume.**
+4. ✅ **THE CONTACT PAGE IS BLESSED ON HER PHONE: "looks great on my phone all good there."** The 08-17
+   open item is closed.
+5. ⚠️ **THE TWO LINK-CHECK ROUTINES ARE STILL UNREAD**, third session running. Her decision on which to keep
+   is still open. Do not let it quietly become permanent by neglect.
+
+### ✅✅ THE "ADD AS AN APP" PAGE IS BUILT (2026-08-19, her ask → her picks → shipped same session)
+**`s-a2hs`, reachable from a new Menu row in the About group above Contact. NOT MERGED YET — she has not
+seen it on her phone.** ▶ **Why it exists, and it is a real gap not a nicety: the A2HS whisper is
+WELCOME-BACK-ONLY, so a first-time visitor never meets it at all**, and a whisper is something she scrolls
+past rather than a place she can go looking for.
+- **HER PICKS, all three:** layout **B** of three renders (the app icon shown on a mock home screen, so the
+  page answers "what do I actually get?" with a picture) · row label **"Add as an App"** · and she **agreed
+  the row belongs in the About group beside Share and Instagram, NOT at the literal bottom** — the Menu is
+  20 rows and its tail sits below the fold, so the very bottom is the LEAST visible row on it.
+- ⭐⭐ **HER INSIGHT THAT SHAPED THE WHOLE PAGE, and it is the keeper: "Add to Home Screen is not intuitive
+  to most users... some people might think it's like changing background photo on their phone."** ▶ **So the
+  ROW says "Add as an App" in plain words and the PAGE explains what her phone's own button will say:**
+  *"Add to Home Screen just means the screen your apps live on, so nothing about your wallpaper or your
+  photos changes."* ⚠️ **Her second edit on that line: the first draft opened "Your phone calls it…" and she
+  caught that it reads like a TELEPHONE CALL.** Leading with the button name instead also ties it to step 2.
+- ⭐ **NO PINK HEART ON THIS PAGE, her call: "it's not really my voice here."** ▶ **That is HER OWN MARK
+  SYSTEM applied correctly** (2026-08-10: tilted pink heart = CATHERINE SPEAKING). This page is
+  instructions. **The Welcome Back whisper keeps its heart** — that one IS her voice. Asserted both ways.
+- ⚠️ **FOUR STATES, because a page she navigated to DELIBERATELY must never be blank** — which is why
+  desktop gets a real answer here ("open stylestar.app on your phone") where the whisper correctly shows
+  nothing at all. iOS = steps · Android = a real button off a real `beforeinstallprompt` · already
+  installed = says so. **Her wording from 2026-08-05 is otherwise kept verbatim.**
+- 🚨⭐ **TWO BUGS THE RENDER CAUGHT THAT 53 GREEN CHECKS DID NOT, both reusable:**
+  1. **THE HEART RENDERED ENORMOUS.** `_A2_HEART` carries `class="a2-h"`, whose size lives under **`#a2hs`
+     — the WHISPER's scope** — so on the new page the rule did not apply and the SVG fell back to its
+     default size. ▶ **ASSERT DIMENSIONS, NOT JUST POSITIONS** (the 2026-08-11 lesson, violated the same
+     day it was quoted): the test measured `.ap-step svg` and got the SHARE glyph, and every positional
+     check passed. ⚠️ **A class carries its styling only inside the scope that defines it** — moving markup
+     to a new screen does NOT bring its CSS.
+  2. **REMOVING THE LETTERHEAD LOGO (her call) REMOVED THE CHIP CLEARANCE.** The logo was the only thing
+     holding the title clear of the fixed Menu chip; without it the title sat **0px** below it. ⚠️ **In the
+     sandbox that reads as merely touching — on a real iPhone `env(safe-area-inset-top)` pushes the chip
+     down ~47px and it would land ON the title.** ▶ **The title now borrows the SAME `env()` the chip uses**
+     (`margin-top:calc(18px + env(safe-area-inset-top,0px))`), so the clearance holds on every phone.
+     **Don't replace it with a flat margin.**
+- ⚠️ **The heart was also stranded alone on step 2's second line** — fixed with **`text-wrap:balance`**, her
+  standing widow lever, which ⚠️ **needs `display:block` to work on a flex item**. Moot now the heart is
+  gone, kept because the wording still sits near the width limit. ▶ **"Choose Add to Home Screen" fits one
+  line at every width and was DELIBERATELY NOT TAKEN: it drops "scroll down", and she declined that exact
+  trade on 2026-08-08** — an instruction that undercounts the real iOS flow is worse than none.
+- **Suites: new `scratchpad/a2page.js` 58 checks** (menu row → page, all four states, nothing tappable on
+  the iOS path, the wallpaper explanation present, hearts absent here + still present in the whisper, AA
+  contrast on every text against the real painted paper, no overflow 390/360/320, Back returns, zero JS
+  errors) · **menu 87 · nav 82 · e2e 29 green.** ⚠️ **THREE COUNTS UPDATED DELIBERATELY, NOT SILENCED:**
+  the Menu is **20 rows** and there are **14 standard footers**. ▶ **Verified separately that NOTHING WRAPS
+  before touching the count** — every row measured 43-44px against a 46px threshold, so only the count moved.
+  ⚠️ **`menu.js` and `menux.js` both test single-line by HEIGHT ÷ line-height, and that is the right
+  instrument: rect-top clustering FALSELY flags the four rows carrying inline marks** (the Start here pill,
+  the pink hearts), because `getClientRects` returns a rect per ELEMENT.
+- ▶ **STILL OPEN: she has not seen it on her phone, and it is not merged.**
+
+### ⚠️ FOUR PRs SHIPPED 2026-08-18 THAT THE 08-17 ENTRY NEVER RECORDED (#869 · #870 · #871 · #872)
+All merged to main, branch level with main, tree clean. **A sign-off polish round off her live testing, and
+the diagnosis is the reusable part.**
+- **#869** — her **name was 10px left of centre** on Contact, because the line was centring the word PLUS the
+  heart. **A negative right margin cancels the heart's footprint so the WORD centres and the heart overhangs**,
+  which is what a handwritten sign-off does anyway (the My Story title-mark trick). Measured 0px off now.
+- 🚨⭐ **#870 — BOTH GAPS SHE WANTED TIGHTENED WERE INVISIBLE IN THE MARKUP AND INVISIBLE TO THE OBVIOUS
+  MEASUREMENT, and this is the lesson:** (1) the gap between her name and the heart was mostly a **TRAILING
+  SPACE in the text node**, 6.8px of it — **a box measurement cannot see it because the box INCLUDES the
+  space**, which is why the rects kept reporting 1.4px while her eye saw far more; removing it took the
+  visual gap 7.9px → 2.1px. (2) The white space above the title was **LEADING, not margin** —
+  `line-height:normal` gave DM Serif Display a **36px line box for 17px of cap height**, so 9.5px sat INSIDE
+  the box where no margin change could reach it (which is why cutting the margin to 2px barely moved
+  anything). `line-height:1` took the ink gap 11.5px → 4.5px. ▶ **Add both to the measurement-trap family:
+  when a gap will not close, suspect a trailing space or leading before you touch margins again.**
+- **#871 / #872 — the same trailing space was on My Story (7.3px) and the Style Star Edit (7.8px).** **All
+  three sign-offs now measure 2.1px** and match. ⚠️ **The inline styles are stripped to width/height on all
+  three so the RULE owns the position and cannot silently lose to an inline value; a comment at `.dc-sign`
+  names the grep that finds all three, because they now have to move together.**
+- **`scratchpad/contact.js` is 81 checks**, with the trailing space pinned by exact text-node value so it
+  cannot creep back invisibly.
+
+## ▶ PREVIOUS — 2026-08-17 (THE LEGAL DAY: A PAID-FOR TRADEMARK CLASS WAS MISSING, AND SHE CAUGHT IT)
 
 ### ⏸ WHERE THIS SESSION IS (the call HAPPENED; ▶ SHE HAS A TRUIST APPOINTMENT TUE AUG 18, 1 PM)
 **NO APP CODE SHIPPED TODAY. Zero Netlify builds.** One commit on `claude/style-star-hg3dut`: the Contact page
