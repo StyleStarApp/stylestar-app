@@ -9,6 +9,38 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (2026-08-19 — 🎉 THE BANK IS OPEN AND CLASS 045 IS ON BOTH MARKS)
 
+### ⏸ WHERE 2026-08-19 PAUSED (her call: "let's go live w this and save all to the .md")
+**ONE PR this session, #873, merged and verified on `origin/main`. ONE Netlify build.** Branch resynced to
+main, working tree clean. ▶ **THE SHAPE OF THE DAY, and it is worth naming: almost none of it was code.**
+The morning went to the money path and it moved further than any day since June — **bank ✅, both trademark
+applications signed with Class 045 on them ✅, and a live Rakuten publisher account with a stack of
+advertiser applications out ✅.** The build came after.
+- ⭐⭐ **HER JUDGMENT BEAT CLAUDE'S REASONING THREE TIMES IN ONE DAY, and the pattern is now unmistakable
+  enough to act on:** (1) the **publisher category** — Claude said Creator/Influencer by inferring Rakuten's
+  taxonomy from general industry usage; her own first instinct, Shopping/Marketplace, was right, and
+  Rakuten's own `?` tooltip settled it. (2) **Nordstrom's network** — Claude promised it was on Rakuten from
+  blog sources; her search of the live directory found it is not (it is on **Impact**). (3) **The wallpaper
+  catch** — "Add to Home Screen is not intuitive to most users," which reshaped the whole page's copy.
+  ▶ **STANDING, and it generalises past today: when a form, a directory or a platform ships its OWN
+  definitions, READ THEM before reasoning from what the label usually means. And never promise her a fact
+  about a third party that has not been SEEN in that party's own system.** Her track record on her own
+  business is better than secondhand sources, every time.
+- ▶ **THE FIRST THINGS NEXT SESSION, in order:**
+  1. 📬 **ANY ADVERTISER APPROVAL EMAILS?** (`partners@stylestar.app`.) ▶ **THE FIRST ONE IS THE TRIGGER FOR
+     TWO SEPARATE JOBS, and keeping them apart matters:** (a) **wrap that store's links in Rakuten's
+     tracking format so they EARN** — one function, `getStoreUrl`, and because the app never stores a URL
+     it repairs every link everywhere including already-saved wishlist rows; (b) **product FEEDS**, which is
+     a real build and the thing that makes links land on an exact product. `docs/product-feeds-plan.md`.
+  2. 📱 **How the "Add as an App" page feels on her phone** — she shipped it unseen.
+  3. 🎯 **NORDSTROM VIA IMPACT** — https://www.nordstromcreators.com, the highest-value application left,
+     and a separate day's work. Their Creator Program offers a **curated storefront**, which is the Edit.
+  4. 📄 **Indie Law:** the MAILING ADDRESS for the Statement of Correction, and the **TM filing dates +
+     serial numbers**. Also Amber's parked free-year-of-oversight sweetener, now fair to revisit.
+  5. 💵 **The $100 "initial capital contribution"** transfer, and the payment migration when the cards land.
+  6. ⭐ **THE EMAILABLE WISHLIST** — named three times now and still not started. Renders first.
+- ⚠️ **STILL UNREAD, fourth session running: the two link-check Routines.** Her decision on which to keep is
+  open. Do not let it become permanent by neglect.
+
 ### ⭐⭐ THE TWO THINGS THAT WERE BLOCKING EVERYTHING BOTH CLEARED (Aug 18)
 **Both of the questions the 08-17 entry said to ask first came back YES.** The money path is genuinely
 unblocked for the first time since June.
@@ -164,7 +196,7 @@ UNVERIFIED account is not an application, nothing was submitted, and no advertis
    EMAIL**, so the email carries ONE link into a shareable wishlist PAGE and the retailer links live there.
    The privacy line is already decided: the shared view is the **LIST ONLY**, never her sizes or preferences.
    **Nothing blocks DESIGNING it now; renders first, per the standing rule.**
-3. ✅✅ **BUILT AND MERGED-READY 2026-08-19 — THE "ADD AS AN APP" PAGE.** See its own entry below.
+3. ✅✅ **DONE AND LIVE 2026-08-19 — THE "ADD AS AN APP" PAGE (PR #873).** See its own entry below.
    ▶ **ORIGINAL ASK, kept for the reasoning:** an "Add Style Star to your phone" page at the bottom
    of the Menu.** Her words: *"maybe at the
    very bottom of our drop down menu we could put an Add Style Star as an app on your phone page and explain
@@ -232,7 +264,8 @@ past rather than a place she can go looking for.
   ⚠️ **`menu.js` and `menux.js` both test single-line by HEIGHT ÷ line-height, and that is the right
   instrument: rect-top clustering FALSELY flags the four rows carrying inline marks** (the Start here pill,
   the pink hearts), because `getClientRects` returns a rect per ELEMENT.
-- ▶ **STILL OPEN: she has not seen it on her phone, and it is not merged.**
+- ✅ **MERGED AS PR #873 on her word ("let's go live w this"), verified on `origin/main`.** ONE Netlify
+  build. Branch resynced to main, tree clean. ▶ **STILL OPEN: she has not seen it on her phone.**
 
 ### ⚠️ FOUR PRs SHIPPED 2026-08-18 THAT THE 08-17 ENTRY NEVER RECORDED (#869 · #870 · #871 · #872)
 All merged to main, branch level with main, tree clean. **A sign-off polish round off her live testing, and
