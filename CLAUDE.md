@@ -7,7 +7,140 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-19 — 🎉 THE BANK IS OPEN AND CLASS 045 IS ON BOTH MARKS)
+## ▶ NEXT SESSION — START HERE (2026-08-19 LATE — TWO NETWORKS IN TWO DAYS, AND IMPACT HAS TWO DOORS)
+
+### ✅✅ THE IMPACT APPLICATION IS IN — SUBMITTED, DOMAIN VERIFIED, IN REVIEW
+**Account "Style Star by Catherine, LLC", ID `7645411`. Status: In Review.** ⭐ **AND THE TIMELINE IS
+SOURCED, NOT GUESSED: Impact emailed her saying it usually takes 72 HOURS**, which lands a response around
+**Friday 22 August.** ▶ **Log both network identities together, support conversations start with them:**
+**Rakuten SID `4740535`** (publisher approved, advertiser applications pending) · **Impact `7645411`** (in review).
+- ▶ **THE CHAIN NOW READS: LLC ✅ → EIN ✅ → BANK ✅ → RAKUTEN ✅ → IMPACT ✅.** Two networks in two days,
+  after two months blocked behind lawyers. **She registered under the exact legal name on her Articles, not
+  "Style Star"** — which is the entire reason she waited from June rather than applying as an individual.
+- ⚠️ **NOTHING IS OWED BY HER NOW. Do not let her sit refreshing the dashboard.** As with Rakuten, the
+  approved-partners list reads empty until something is actually approved; that is correct, not a decline.
+
+### ⭐⭐ THE HEADLINE FINDING: IMPACT HAS TWO FRONT DOORS, AND ONLY ONE FITS STYLE STAR
+Her question was *"let's apply to Impact. I think that is the one that Nordstrom is in?"* **She was right that
+Nordstrom runs on Impact. What could not be seen from outside is that "Impact" names two different products.**
+- **DOOR 1, HERS: Impact as an AFFILIATE PARTNER** (`app.impact.com`). Site-based. Judged on whether you are a
+  legitimate business with a real website. **This is the one she applied to.**
+- **DOOR 2, NOT YET: NORDSTROM CREATORS** (`nordstromcreators.com`). **Impact's CREATOR/INFLUENCER product,
+  running on their Activate platform.** Judged on AUDIENCE SIZE.
+- ▶ **THE EVIDENCE, recorded so this never has to be re-derived:** nordstromcreators.com serves its fonts and
+  logos from **`cdn.impactcreator-go.com`** · its privacy policy points at **`www.impact.com/privacy-policy`** ·
+  it calls Impact's creator API at **`activate.social`** · **the page's own internal class name is literally
+  `InfluencerApplicationPage`** · Instagram (64), Facebook (59) and TikTok (55) appear more than fifty times
+  each in its markup, against twelve mentions of a website.
+- ⭐ **The curated storefront that made Nordstrom Creators sound so much like the Style Star Edit IS REAL and
+  IS worth having** — it sits behind the creator door. ▶ **REVISIT TRIGGER: when her follower count is not the
+  weakest thing she brings.** Nothing is lost by knocking later from a stronger position.
+- 🚨⚠️ **AND THE STANDING RULE WAS HONOURED THIS TIME, ONE DAY AFTER IT COST US: she was NOT told Nordstrom's
+  affiliate programme is in Impact's marketplace.** Yesterday Rakuten was recommended on the basis that it ran
+  Nordstrom and Macy's, she opened the real directory, and **neither was there.** ▶ **THE ONLY TRUSTWORTHY
+  SOURCE IS THE NETWORK'S OWN ADVERTISER DIRECTORY, READ WHILE LOGGED IN.**
+- ▶▶ **STILL OWED, AND IT IS THE FIRST THING TO ASK AFTER APPROVAL: SEARCH IMPACT'S ADVERTISER DIRECTORY**
+  for Nordstrom, Macy's, Bloomingdale's and her store table, and report what is really in it. ⚠️ **It is
+  probably GATED until the partner review clears** — most networks lock the marketplace behind approval, so an
+  empty or greyed directory today is the gate, not a fault. **Told to her that way deliberately.**
+
+### ⭐ HER FOLLOWER ANXIETY, RAISED AND ANSWERED — AND THE TWO-DOORS FINDING IS WHY THE ANSWER HOLDS
+Her words at the start of the session: *"I am a little nervous about this since I only have 16 insta followers
+and did not even list my social media on Rakuten. I am just hoping that doesn't lower my chances."*
+▶ **THE ANSWER TO GIVE, and it is economic rather than reassuring: A CREATOR PROGRAMME PAYS FOR REACH, so an
+audience number is the whole product being bought. AN AFFILIATE PROGRAMME PAYS A COMMISSION ON A SALE THAT
+ALREADY HAPPENED, so the retailer's downside is near zero and the question is legitimacy, not size.**
+- **What she actually brings, and very few 16-follower applicants have any of it:** registered LLC · EIN ·
+  business bank account · live site on its own domain · **/privacy · /terms · /contact** · `partners@stylestar.app` ·
+  an affiliate disclosure on every surface carrying a link.
+- ⭐⭐ **THE PROOF LANDED MID-FORM AND IS WORTH REUSING: Impact's "who promotes primarily through" dropdown
+  offered website(s) / mobile apps / browser extension / newsletters — NO SOCIAL MEDIA OPTION AT ALL.** The
+  partner door does not have a field for a follower count. **Said to her exactly that way and it visibly settled it.**
+- ⚠️⚠️ **AND THE RULE THAT CAME OUT OF IT, apply to every future form: DO NOT VOLUNTEER THE FOLLOWER COUNT
+  WHERE THE FORM HAS NOT ASKED.** Impact's channels step nudges *"Brands prioritize partners with connected
+  channels"* and offers Instagram/TikTok/YouTube/X/Facebook OAuth buttons. **She connected WEBSITE ONLY.**
+  Connecting Instagram would have published her weakest number to every brand browsing the directory, unprompted.
+  ▶ **A connected website IS a connected channel. One is enough.** (It also avoids the OAuth hijack trap.)
+- ▶ **THE HONEST HALF, given and not softened: some individual advertisers WILL decline, and some will be ones
+  she wants.** That is about traffic volume, it is reapplyable, and **"a Nordstrom decline in September is not
+  a verdict on the app, it is a verdict on a visitor count that is three weeks old."**
+
+### ✅ HER FORM ANSWERS, ALL OF THEM (so a re-application or another network can reuse them)
+Impact builds a sentence: **"I am [a publisher] operating as [editorial content] who promotes primarily
+through [website(s)]."**
+- **a publisher** — the partner door, not the creator one.
+- ⭐ **editorial content** — original writing and curation about products, which is exactly the Style Portrait
+  write-ups, the Edit notes, Trending and the checklist. ⚠️ **NOT "product & service reviews"** (a review site
+  rates and compares; she styles) and 🚩 **emphatically NOT "deals / coupon"**, the category networks are most
+  sceptical of and the exact thing **Rakuten's own tooltip went out of its way to say she was not.**
+  ⚠️ She checked and confirmed there were **no options above "editorial content"** before choosing.
+- **website(s)** — not newsletters (MailerLite is real but not primary) and **not mobile apps: Style Star is a
+  website that can be added to a home screen, which is a different thing, and they verify the DOMAIN.**
+- **Profile description (1000 char limit, she pasted a Claude draft at 975).** ⚠️ **STILL A DRAFT SHE HAS NOT
+  REWORDED — editable any time under Settings.** It opens with *"I'm Catherine, a personal stylist of more than
+  twenty years"* (the Sally differentiator in the first line a brand reads), sells **QUALIFICATION rather than
+  reach** (*"Nothing reaches a woman until it suits her style, her sizing and her colours"*), and closes
+  *"I would rather send you fewer, better matched visitors than volume."*
+  ▶ **ONE DELIBERATE JUDGMENT CALL, FLAGGED TO HER AS HERS TO OVERRULE: it does NOT say her traffic is small.**
+  The application form already took the real number and she gave it honestly. **This field is the brand-facing
+  shop window, and there is a difference between being honest and volunteering your weakest fact in the one
+  place designed to attract.** It says *"Style Star launched in 2026"* instead: true, calibrating, not apologetic.
+
+### ✅ stylestar.app IS NOW A VERIFIED DOMAIN — PR #874, MERGED AND CURL-VERIFIED LIVE
+Impact verifies domain ownership before advertisers review a partner, so this was the gate in front of every
+application. **One line in the `<head>` of index.html. Netlify built in ~20 seconds; the tag was confirmed live
+on BOTH the apex and the www redirect before she clicked Verify. It verified first time.**
+⚠️ **DELIBERATE: she was told NOT to click Verify until the deploy was confirmed serving** — a failed check can
+put the property into a state that needs redoing, and a green merge proves nothing about what is live (the
+standing #809/#811 lesson).
+- ⚠️⚠️ **THE TAG IS PASTED VERBATIM AND MUST STAY THAT WAY, with a comment at the markup saying so:**
+  `<meta name='impact-site-verification' value='...'>` — **Impact writes `value=` where every other meta tag on
+  the page writes `content=`, and single quotes where the whole file uses double.** That reads like a mistake
+  and is not one. **Their verifier may match the RAW SOURCE, so "tidying" either could quietly un-verify the
+  site and stall every advertiser application behind it.**
+- 🚨⭐ **THE REAL JUDGMENT CALL, and it generalises to every future verification prompt: THE TRACKING-SCRIPT
+  OPTION WAS REFUSED.** Impact offered five methods; a tracking script would have put a third-party script on
+  every page load. ▶ **`/privacy` NAMES ITS SUB-PROCESSORS BY NAME (Anthropic, Supabase, MailerLite, Netlify,
+  Plausible), so adding a sixth silently would have made a PUBLISHED LEGAL PAGE INACCURATE — on the exact page
+  affiliate reviewers read.** It would also cost load time on every visit for no user benefit. **A meta tag
+  brings no processor at all, so the policy stays true.**
+- ⚠️ Email verification was passed over on a real constraint: those flows usually demand a specific address at
+  the domain (`admin@`, `webmaster@`) and **iCloud caps this domain at THREE addresses, all three in use.**
+- ✅ **Impact pulled her LOGO through automatically**, which is proof their crawler read the site.
+
+### ▶ HER PREP SHEET IS AN ARTIFACT
+https://claude.ai/code/artifact/ab604a44-11c7-4fb8-bc5e-f86a33d0b81e — the two doors and the evidence, the
+fields to paste, the directory-check warning, and the network order. (The Rakuten one is
+https://claude.ai/code/artifact/cefa1ee4-ee17-4a5a-987d-ac9ac48e192b.)
+
+### ✅ THE "ADD AS AN APP" PAGE IS MERGED, LIVE AND BLESSED — the 08-19 morning entry below is STALE on this
+It shipped as **PR #873** and she has now seen it on her phone: **"Add as an app looks great. I am happy with
+how that turned out."** ⚠️ **The 08-19 morning entry lower down described it as unmerged and unseen; both of
+its stale lines are corrected in place, but trust this one.**
+
+### ▶ THE ORDER OF NETWORKS FROM HERE (unchanged, with Impact struck through)
+**Rakuten ✅ · Impact ✅ · then AWIN** (⚠️ small REFUNDABLE deposit to apply, their spam filter, verify the
+amount on the day) **· then CJ** (free) **· then NORDSTROM CREATORS when the followers are not the weak point
+· AMAZON LAST**, because the **3 qualifying sales within 180 days of APPROVAL** clock starts at approval, not
+at launch. 🚨 **ShareASale no longer exists** — Awin closed it at the end of 2025; any entry in this file
+naming it is out of date.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 📬 **Did Impact respond?** Their own email says ~72 hours, so **Friday 22 August**. ⚠️ Silence past that is
+   still not a decline; it is a queue.
+2. 🔎 **THE DIRECTORY SEARCH, the moment Impact approves** — Nordstrom, Macy's, Bloomingdale's, her store
+   table. **This is the highest-value thing she can report**, and it is what settles whether Nordstrom is
+   reachable here at all. Same question stands on Rakuten.
+3. ⭐ **ANY advertiser approval, on EITHER network, is the trigger for PRODUCT FEEDS** —
+   `docs/product-feeds-plan.md` is shovel-ready. That is what turns a store SEARCH into a real product and
+   what would let the app honestly say **"in your size"** again.
+4. 💳 **The recurring payments + the $100 "initial capital contribution"** — still waiting on the cards.
+5. ⏳ **Indie Law: the MAILING ADDRESS for the Statement of Correction**, and the **TM filing dates + serial
+   numbers.** Signed ≠ filed.
+6. ⭐ **The emailable wishlist** — she has named it three times. Nothing blocks DESIGNING it; renders first.
+7. ⚠️ **The two link-check Routines are still unread**, fourth session running.
+
+## ▶ EARLIER THE SAME DAY (2026-08-19 morning — 🎉 THE BANK IS OPEN AND CLASS 045 IS ON BOTH MARKS)
 
 ### ⭐⭐ THE TWO THINGS THAT WERE BLOCKING EVERYTHING BOTH CLEARED (Aug 18)
 **Both of the questions the 08-17 entry said to ask first came back YES.** The money path is genuinely
@@ -184,8 +317,8 @@ UNVERIFIED account is not an application, nothing was submitted, and no advertis
    is still open. Do not let it quietly become permanent by neglect.
 
 ### ✅✅ THE "ADD AS AN APP" PAGE IS BUILT (2026-08-19, her ask → her picks → shipped same session)
-**`s-a2hs`, reachable from a new Menu row in the About group above Contact. NOT MERGED YET — she has not
-seen it on her phone.** ▶ **Why it exists, and it is a real gap not a nicety: the A2HS whisper is
+**`s-a2hs`, reachable from a new Menu row in the About group above Contact. ✅ MERGED AS PR #873 AND
+BLESSED ON HER PHONE 2026-08-19: "Add as an app looks great. I am happy with how that turned out."** ▶ **Why it exists, and it is a real gap not a nicety: the A2HS whisper is
 WELCOME-BACK-ONLY, so a first-time visitor never meets it at all**, and a whisper is something she scrolls
 past rather than a place she can go looking for.
 - **HER PICKS, all three:** layout **B** of three renders (the app icon shown on a mock home screen, so the
@@ -232,7 +365,7 @@ past rather than a place she can go looking for.
   ⚠️ **`menu.js` and `menux.js` both test single-line by HEIGHT ÷ line-height, and that is the right
   instrument: rect-top clustering FALSELY flags the four rows carrying inline marks** (the Start here pill,
   the pink hearts), because `getClientRects` returns a rect per ELEMENT.
-- ▶ **STILL OPEN: she has not seen it on her phone, and it is not merged.**
+- ✅ **CLOSED 2026-08-19: merged as PR #873 and blessed on her phone.** See the late-session entry at the top.
 
 ### ⚠️ FOUR PRs SHIPPED 2026-08-18 THAT THE 08-17 ENTRY NEVER RECORDED (#869 · #870 · #871 · #872)
 All merged to main, branch level with main, tree clean. **A sign-off polish round off her live testing, and
