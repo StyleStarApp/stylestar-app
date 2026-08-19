@@ -109,10 +109,17 @@ STARTED IN JUNE IS COMPLETE: LLC ✅ → EIN ✅ → BANK ✅ → FIRST AFFILIAT
 - **What she answered:** business set-up **Part of a company** (the LLC, not an individual — the whole reason
   she waited since June) · category **Shopping/Marketplace** · primary channel **https://stylestar.app** ·
   social **deliberately SKIPPED** (addable later from ACCOUNT → CHANNELS) · tax ID entered.
-- ⏳ **STILL TO DO, and it is the only thing outstanding: PAYMENT METHOD** (ACCOUNT → PAYMENT METHOD, direct
-  deposit, the Truist routing + account numbers). **They cannot pay her until it is in.** Cards still irrelevant.
-- ▶ **NEXT: ADVERTISERS → apply to NORDSTROM, then MACY'S, then BLOOMINGDALE'S**, in that order, which is just
-  her own traffic ranked. Each has its own bar and some will decline at low traffic; that is free and reapplyable.
+- ✅ **PAYMENT METHOD IS IN AND VERIFIED** (direct deposit, Truist). ⚠️ **The form REQUIRED a SWIFT code even
+  with Country US** — Truist's is **BRBTUS33** (from truist.com's own wire documents; BRBTUS3X and SNTRUS3A are
+  also accepted for incoming). ▶ **The pay-to name is the LLC, not her** — ACH bounces when the payee does not
+  match the account title, and the 1099 will be issued to the LLC. **Not tax advice, just plumbing** — say it
+  that way so she does not stall waiting on an accountant for it.
+- ✅✅ **SHE APPLIED TO A LOT OF ADVERTISERS the same morning**, working her own deep-catalog list. **Bloomingdale's
+  confirmed "we will email you."** ⚠️ **MY ADVERTISERS reads "no partnerships at this time" and THAT IS CORRECT:
+  it lists APPROVED partnerships only, and nothing has been reviewed yet.** Pending applications usually sit
+  behind a status filter that defaults to Approved. ▶ **Realistic timeline to give her: a few hours for the
+  auto-approvers, 2-10 business days for most, and some decline silently.** Rakuten also had **scheduled
+  maintenance Fri Aug 21** which may slow the weekend.
 - ⭐ **AND THE REASON TO APPLY NOW RATHER THAN WAIT FOR TRAFFIC: ONE advertiser approval unlocks PRODUCT FEEDS**,
   which is the thing that turns a store SEARCH into a real product and lets the app honestly say "in your size"
   again. `docs/product-feeds-plan.md` is shovel-ready. **Trigger: the first approval email.**
