@@ -7,7 +7,43 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-17 — THE LEGAL DAY: A PAID-FOR TRADEMARK CLASS WAS MISSING, AND SHE CAUGHT IT)
+## ▶ NEXT SESSION — START HERE (2026-08-17 — THE BIGGEST NON-CODE DAY: EIN, BANK ACCOUNT, A $700 CATCH, AND THE CONTACT PAGE)
+
+### ⏸ WHERE THIS SESSION ENDED (her call: "let's save all to the .md and I will come back on a fresh chat")
+**FIVE PRs merged and ALL CURL-VERIFIED LIVE: #868 · #869 · #870 · #871 · #872.** Branch resynced to main,
+tree clean. ⚠️ **Five Netlify builds.** ▶ **THE SHAPE OF THE DAY: the morning was entirely legal and it was
+worth it; the evening shipped the Contact page and polished it four times on her eye.**
+- ▶▶ **THE FIRST THINGS TO ASK NEXT SESSION, in order:**
+  1. **Did Indie Law send the mailing address** for the signed Statement of Correction? It is printed, signed
+     and sitting with a stamped envelope waiting on that one answer.
+  2. **Have the TM serial numbers + filing date arrived?** They committed to filing the SAME BUSINESS DAY she
+     signed, which she did on Aug 17. **LOG THEM HERE.**
+  3. **How the Contact page looks on her phone**, live.
+  4. ⭐ **SHE ASKED HOW TO APPLY FOR THE FIRST AFFILIATE PROGRAM — the answer is written below, start there.**
+- ⚠️ **HER CLOCK IS EASTERN. The container runs UTC** — do not tell her what time it is for her.
+
+### ⭐⭐ WHERE THE AFFILIATE APPLICATIONS STAND (her question at the pause; answer ready to give)
+**Nothing blocks these any more.** She has: a live site · /privacy · /terms · **/contact (new)** · a disclosure
+on nine surfaces · **Style Star by Catherine, LLC** · **an EIN** · **a business bank account**.
+- ▶ **THE ORDER, and the reasoning: (1) SHAREASALE / AWIN FIRST** — lowest barrier, thousands of merchants,
+  often auto-approval, so it is the right place to learn the SHAPE of these forms before a pickier one.
+  **(2) RAKUTEN ADVERTISING SECOND, and it matters more than its position suggests: NORDSTROM RUNS THROUGH
+  RAKUTEN, and Nordstrom is her most-suggested store by a distance (top-20 for 25 of 28 archetypes).**
+  **(3) CJ AFFILIATE. (4) IMPACT.** ⛔ **AMAZON LAST, always** — the 180-day/3-sales clock starts at APPROVAL.
+- ⚠️⚠️ **SHE ASKED ABOUT GAMING THE AMAZON CLOCK WITH FAMILY PURCHASES (mom, sister, daughter) AND THE ANSWER
+  WAS A CLEAR NO** — Amazon's Participation Requirements forbid purchases by "friends, relatives or
+  associates" through your own links, and the penalty is account termination. ▶ **The framing that landed:
+  the 180-day rule is not a hurdle to clear, it is Amazon saying "come back when you have traffic."**
+  Do not soften this if it comes up again.
+- ▶ **TWO THINGS TO TELL HER BEFORE SHE STARTS: (a) NETWORK approval and MERCHANT approval are different steps
+  — joining is usually easy, individual merchants inside the network look at traffic and some will decline
+  while she is small, which is normal and re-appliable; (b) ANSWER THE TRAFFIC QUESTION HONESTLY.** Inflating
+  it is how accounts get terminated later, and "new site, building an audience" is a legitimate answer.
+- **WHAT THE FORMS ASK FOR:** site URL · privacy URL · **contact URL** · legal business name · **EIN on a W-9**
+  · bank details for ACH · a description of how she promotes. ⭐ **This is why the Contact page stopped being
+  polish and became paperwork.**
+
+## ▶ THE 2026-08-17 DETAIL (the legal thread the block above summarises)
 
 ### ⏸ WHERE THIS SESSION IS (the call HAPPENED; ▶ SHE HAS A TRUIST APPOINTMENT TUE AUG 18, 1 PM)
 **NO APP CODE SHIPPED TODAY. Zero Netlify builds.** One commit on `claude/style-star-hg3dut`: the Contact page
@@ -220,6 +256,31 @@ like a sans, so a render looks plausible while no real face is loaded.**
 - ▶ **CONSEQUENCE WORTH KNOWING: renders from earlier sessions may have had the same problem.** Layout,
   spacing, sizes and COLOURS in those renders are trustworthy; the TYPEFACES are not. If a past typography
   decision ever looks wrong on her phone, this is the first thing to suspect.
+
+### ✅ THE CONTACT PAGE WAS POLISHED FOUR TIMES ON HER EYE (#869 · #870 · #871 · #872)
+Every round found something that was **invisible in the markup and invisible to the obvious measurement.**
+- ⚠️⚠️ **THE TRAILING-SPACE TRAP, and it was in ALL THREE of her sign-offs.** A literal space sat between her
+  name and her heart in the text node — **6.8px on Contact, 7.3px on My Story, 7.8px on the Edit.** ▶ **A BOX
+  MEASUREMENT CANNOT SEE IT, because the box INCLUDES the space**, so the rects kept insisting the heart was
+  1.4px away while her eye plainly saw more. **Her eye was right and the measurement was measuring the wrong
+  edge.** All three now measure **2.1px, identical to the tenth of a pixel.** ▶ **They must move together:
+  grep `.pinkheart` on `.cc-name`, `.story-sig` and `.dc-sign`.** The Edit drops 7px not 6 because it sets
+  30px type; the tuck is proportional so they LOOK alike rather than merely sharing a number.
+- ⚠️⚠️ **AN INLINE `style` BEATS A STYLESHEET RULE, and it cost a whole round.** The first attempt to move the
+  heart changed NOTHING — the tell was measurements coming back byte-identical, the same signature as the
+  media-query specificity trap already in this file. **All three hearts now carry inline width/height ONLY;
+  position lives in the rule.**
+- ⚠️ **THE SPACE ABOVE A TITLE CAN BE LEADING, NOT MARGIN.** `line-height:normal` gave DM Serif Display a 36px
+  line box for 17px of cap height, so **9.5px of the gap sat INSIDE the box** where no margin could reach it —
+  which is why cutting the margin to 2px barely moved it. `line-height:1` halved it.
+- ⭐ **HER OTHER TWO CATCHES, both real:** the lead and the first card were saying the same thing (▶ **THE RULE:
+  THE LEAD INVITES, THE CARDS ROUTE**), and the page was missing the display-case frame because **`show()`
+  hands every legal page a skin class and Contact never got one.**
+- ⚠️ **SHE REPORTED "I don't see the change" AND IT WAS CACHING, NOT THE DEPLOY.** ▶ **Style Star is a SINGLE
+  PAGE APP: all the CSS arrives in ONE page load, so navigating by Menu after a deploy still runs the OLD
+  code.** There is NO service worker and the server sends `must-revalidate`, so nothing needs fixing — she
+  needs a genuine reload (pull-to-refresh, or fully closing the home-screen app). **The installed app and
+  Safari are separate copies.** ▶ **Say this BEFORE she checks anything we just shipped.**
 
 ### ⚠️ SESSION HYGIENE NOTES
 - **Playwright is NOT installed in a fresh container.** `npm install playwright`, then launch with
