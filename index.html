@@ -1995,9 +1995,31 @@ body.card-fb{padding:0}
    HER voice, so it carries her tilted pink heart (the mark system: pink tilted
    heart = Catherine herself speaking). Label + note in the readable ink
    #4a463e — a gold label at 11px goes brown (the standing small-gold trap). */
-#wbStar{display:none;margin:12px 14px 2px}
+/* ⭐ THE GOLD LEAF FRAME (her pick "E" from a two-round render, 2026-08-20).
+   TWO things are load-bearing here and neither is decoration:
+   1. WIDTH. Measured: both mirrors run 16->374 and this card used to run
+      30->360, so it was 28px NARROWER than everything else on the front door
+      and she saw it. The 14px margin is now 7px -- exactly the frame's own
+      thickness -- so the framed OUTER edge lands on 16/374, flush with the
+      mirrors. ▶ If the frame thickness ever changes, THIS MARGIN CHANGES WITH
+      IT or the alignment silently breaks. starframe.js asserts it at four widths.
+   2. THE GOLD IS A GRADIENT, NOT A FLAT FILL, and that is the whole reason it
+      reads as metal. Round one used flat #CFA02E/#8a6a14 and she said it looked
+      "a bit orange or brown" -- the standing antique-gold trap. A flat mid-gold
+      at frame scale ALWAYS reads brown; a highlight-to-shadow ramp reads as
+      gold leaf. This is the wb-chip's own gradient, the brightest gold already
+      on this screen. ▶ NEVER flatten it, and never reach for an antique gold. */
+#wbStar{display:none;margin:12px 7px 2px;position:relative;z-index:0}
 #wbStar.on{display:block}
-.wks-card{background:#fff;border:1px solid #D8A52E;padding:14px 16px 13px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.28)}
+.wks-card{background:#fff;border:1px solid #D8A52E;padding:14px 16px 13px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.28);position:relative}
+/* Drawn as an absolutely positioned ::before at inset:-7px, never as padding or
+   a border, so the frame costs ZERO height -- this is the front door and the
+   fold is ~700px. ⚠️ The z-index:0 lives on #wbStar, the PARENT, deliberately:
+   a negative-z child paints ABOVE its own stacking context's background, so
+   putting it on .wks-card makes the gradient cover the white paper. */
+.wks-card::before{content:'';position:absolute;inset:-7px;z-index:-1;
+  background:linear-gradient(150deg,#FEEF98 0%,#F6CE3E 46%,#E4B02E 78%,#F3DC8B 100%);
+  box-shadow:0 8px 18px rgba(0,0,0,.45)}
 /* Her pick "C" from the 2026-08-13 three-way render: TWIN tilted stars
    flanking the label — the CURATED BY CATHERINE treatment, in gold. Flanking
    marks read as a label announcing something, which is exactly what this is. */
@@ -2012,7 +2034,10 @@ body.card-fb{padding:0}
 .wks-act{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:11px}
 .wks-shop{display:inline-flex;align-items:center;gap:6px;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;padding:9px 19px;font-family:'Jost',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.07em;text-decoration:none}
 #wbStar .wl-save{cursor:pointer}
-.wks-disc{font-family:'Jost',sans-serif;font-size:11px;line-height:1.4;color:#CFC9BB;text-align:center;margin-top:7px}
+/* 14px, not 7: the gold leaf frame spreads 7px BELOW the card and .wks-disc is
+   #wbStar's own next child, so at 7px the disclosure sat exactly ON the frame's
+   bottom edge (measured gap 0 at 390/375/360/320). This buys it 7px of air. */
+.wks-disc{font-family:'Jost',sans-serif;font-size:11px;line-height:1.4;color:#CFC9BB;text-align:center;margin-top:14px}
 /* Add to Home Screen whisper — same voice as #wbNext, sits above the footer.
    The real app icon previews above the line, rounded like her home screen will
    round it. The iOS "Add to Home Screen" bold is EMPHASIS (no underline:
@@ -3830,6 +3855,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <a class="dc-item-btn" href="https://farmrio.com/products/garden-terrace-pink-one-shoulder-maxi-dress" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
+    <div class="dc-item">
+      <img class="dc-item-px" src="https://www.vilebrequin.com/dw/image/v2/BLGH_PRD/on/demandware.static/-/Sites-vilebrequin-catalog-master/default/dwb578af10/images/IAACG200-003/IAACG200-003-front-3240x4050.jpg?sw=800" alt="Vilebrequin long mesh cover-up dress in off white" loading="lazy" decoding="async" onerror="this.remove()">
+      <span class="dc-item-star">⭐</span>
+      <div class="dc-item-name">Vilebrequin Long Mesh Cover-Up Dress &mdash; Off White</div>
+      <div class="dc-item-meta"><span class="dc-store">Vilebrequin</span><span class="dc-price">$405</span></div>
+      <div class="dc-item-note">This is the trending style for beach, pool, and resort. It has adjustable straps, which I love!</div>
+      <a class="dc-item-btn" href="https://www.vilebrequin.com/us/en/product/IAACG200-003" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
+    </div>
+
     <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-trend-link" onclick="openWardrobe('trend')">Curious what's trending right now? &rarr;</div>
 
@@ -5448,7 +5482,7 @@ function _alreadyWomens(term){
 // ⚠️ Never double-wraps, so it is safe to call twice on the same URL -- which
 // happens by design when an Edit href is rewritten and then saved.
 var _AFF_ID='jZNkkinrr1k';
-var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590'};
+var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590','vilebrequin.com':'43322'};
 function _affMid(u){
   try{
     var host=new URL(u).hostname.toLowerCase().replace(/^www\./,'');
@@ -9872,6 +9906,14 @@ function _buildWbHubs(){
 // be too much muchness at opening glance." The Felina bra and the Seafolly
 // bikini stay in the Edit but are deliberately NOT in this queue. Size-fits-
 // everyone (bags/shoes/accessories) is her general lean, not a hard rule.
+// ⭐ REFINED BY HER (2026-08-20) and the line is narrower than "swim": the
+// bar is BIKINI OR LINGERIE, not the swim CATEGORY. Ruling the Vilebrequin
+// mesh cover-up in, her words: "Even though it is a swim-wear type item, this
+// can go on Star of the Week because it is not a bikini or lingerie. It is
+// see-through, but tasteful enough that I deem it ok to go on the welcome back
+// page." ▶ So a cover-up, a kaftan or a resort dress may be the Star; a
+// bikini, a swimsuit or anything intimates may not. HER call every time —
+// never widen or narrow this without asking her.
 // Notes are ONE-LINERS trimmed from her own Edit notes (2026-08-14, her ask:
 // "help trim the lines... right length and tone for the Star of the Week") —
 // her kitten-heel line is the tone model; every trim uses only HER words,
@@ -9925,6 +9967,9 @@ var WEEK_STARS=[
    // ⚠️ px: is honoured ONLY when the store is an approved advertiser — see the
    // licensing note at _wkStarPx. Adding one for an unapproved store shows nothing.
    px:'https://www.dvf.com/cdn/shop/files/A001AMBERYSKTL_A1_2.jpg?v=1776264943&width=800'},
+  {n:'Vilebrequin Long Mesh Cover-Up Dress — Off White',store:'Vilebrequin',url:'https://www.vilebrequin.com/us/en/product/IAACG200-003',price:'$405',
+   note:'The trending style for beach, pool, and resort. The adjustable straps are perfect.',
+   px:'https://www.vilebrequin.com/dw/image/v2/BLGH_PRD/on/demandware.static/-/Sites-vilebrequin-catalog-master/default/dwb578af10/images/IAACG200-003/IAACG200-003-front-3240x4050.jpg?sw=800'},
 ];
 // Which week is it? Whole LOCAL days since the anchor Sunday (2026-08-09, the
 // Sunday before the first star shipped), then whole weeks, wrapped around the
