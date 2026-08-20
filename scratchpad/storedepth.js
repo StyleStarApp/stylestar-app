@@ -1,6 +1,6 @@
 // storedepth.js — catalog DEPTH in the store table (her call 2026-08-15).
 // Born from her Tuckernuck screenshot: "print wrap top" at a small boutique
-// answered with a wrap skirt and a perfume. 19 of her 100 stores are marked
+// answered with a wrap skirt and a perfume. 25 of her 100 stores are marked
 // deep enough to take a specific multi-word search; everything else is a store
 // to send what it is KNOWN FOR.
 //
@@ -30,14 +30,29 @@ const t = await pg.evaluate(() => {
   return {full, cat: cat.map(k => k + ':' + STORES[k].deep), total: Object.keys(STORES).length,
           none: Object.keys(STORES).filter(k => !STORES[k].deep).length};
 });
+// The MIDDLE TIER, her call 2026-08-20, from her own address-bar testing. The
+// split used to be binary, so Talbots (a national chain) was filed exactly like
+// Tuckernuck (a small resort boutique). She searched each store herself:
+// "the rest came up decent". Anthropologie honoured 3 of her 4 words
+// (green/floral/dress) and dropped only the LENGTH word, which is a separate
+// every-store problem, NOT a depth failure. Boden was MEASURED and correctly
+// stays out: "dress" and "floral dress" both return a capped 1000 results, so
+// extra words buy nothing there at all.
+const MIDDLE = ["Talbots", "J.Crew", "Free People", "Anthropologie"];
 const HERS = ["Nordstrom","Macy's","Dillard's","Belk","Bloomingdales","Saks","Neiman Marcus","NET-A-PORTER",
               "Shopbop","Nordstrom Rack","TJ Maxx","Target","Amazon","Revolve","Zara","H&M"];
 ok('store count untouched at 100', t.total === 100, String(t.total));
 ok('the 16 she confirmed are all flagged deep', HERS.every(n => t.full.includes(n)), HERS.filter(n => !t.full.includes(n)).join());
-ok('nothing else was flagged deep', t.full.length === HERS.length, t.full.filter(n => !HERS.includes(n)).join());
+ok('the 4 middle-tier stores she added are flagged', MIDDLE.every(n => t.full.includes(n)), MIDDLE.filter(n => !t.full.includes(n)).join());
+ok('nothing else was flagged deep', t.full.length === HERS.length + MIDDLE.length,
+   t.full.filter(n => !HERS.includes(n) && !MIDDLE.includes(n)).join());
+ok('J.Jill and Boden deliberately stay known-for only', !t.full.includes('J.Jill') && !t.full.includes('Boden'));
 ok('Zappos + DSW deep for shoes, Sunglass Hut for eyewear',
-   t.cat.sort().join(',') === "DSW:shoes,Sunglass Hut:eyewear,Zappos:shoes", t.cat.join());
-ok('the other 81 carry no depth flag', t.none === 81, String(t.none));
+   t.cat.sort().join(',') === "Athleta:activewear,DSW:shoes,Lands' End:swimwear,Sunglass Hut:eyewear,Zappos:shoes", t.cat.join());
+// derived, never restated: a test that hardcodes a number must be edited every
+// time the list grows; a derived one never does (the curated.js lesson).
+ok('every remaining store carries no depth flag', t.none === t.total - t.full.length - t.cat.length,
+   t.none + ' of ' + t.total);
 // the apostrophe stores are the ones a naive pass misses (the Bloomingdale's lesson)
 ok("Macy's and Dillard's really got flagged", t.full.includes("Macy's") && t.full.includes("Dillard's"));
 
@@ -51,6 +66,7 @@ const p = await pg.evaluate(() => {
     zappos: /Zappos \[[^\]]*DEEP catalog for shoes/.test(list),
     tuckernuck: /Tuckernuck \[[^\]]*DEEP/.test(list),
     deepCount: (list.match(/DEEP catalog/g) || []).length,
+    tableDeep: Object.keys(STORES).filter(k => STORES[k].deep).length,
     fitBeats: /FIT BEATS DEPTH, ALWAYS/.test(rules),
     revolveNamed: /Revolve is deep, but it is for a woman/.test(rules),
     tiebreak: /tie-breaker BETWEEN stores that already suit her/.test(rules)
@@ -59,7 +75,7 @@ const p = await pg.evaluate(() => {
 ok('a deep store is marked in the list', p.nordstrom);
 ok('a category-deep store names its category', p.zappos);
 ok('a focused store is NOT marked', !p.tuckernuck);
-ok('all 19 markers reach the prompt', p.deepCount === 19, String(p.deepCount));
+ok('every deep store in the table reaches the prompt', p.deepCount === p.tableDeep, p.deepCount + ' markers vs ' + p.tableDeep + ' in the table');
 ok('the FIT BEATS DEPTH rule is present', p.fitBeats);
 ok('her Revolve example is named in the rule', p.revolveNamed);
 ok('depth is stated as a tie-breaker, not a preference', p.tiebreak);

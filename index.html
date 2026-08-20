@@ -5184,12 +5184,12 @@ const STORES={
   'Nordstrom Rack':{w:1,u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],d:[8,5,7,7,6,8,6,7,9,8],deep:1,c:'designer deals, shoes, denim'},
   'TJ Maxx':{w:1,u:'https://m.tjmaxx.tjx.com/m/shop/?initSubmit=search&Ntt=',t:'$',a:'Treasure Hunter',s:['plus'],d:[8,5,5,5,6,9,5,6,8,8],deep:1,c:'value finds, handbags, shoes'},
   // Contemporary and mainstream
-  'J.Crew':{w:1,u:'https://www.jcrew.com/search?term=',t:'$$',a:'Classic Sophisticate, Playful Classic',s:['petite','tall'],d:[5,3,9,10,3,7,8,8,9,6],c:'timeless classics, workwear, denim, dresses'},
+  'J.Crew':{w:1,u:'https://www.jcrew.com/search?term=',t:'$$',a:'Classic Sophisticate, Playful Classic',s:['petite','tall'],d:[5,3,9,10,3,7,8,8,9,6],deep:1,c:'timeless classics, workwear, denim, dresses'},
   'Zara':{w:1,u:'https://www.zara.com/us/en/search?searchTerm=',t:'$$',a:'Trendsetter, Modern Chic',s:[],d:[5,7,7,3,10,6,7,9,7,8],deep:1,c:'fashion-forward trends, statement pieces'},
   'Mango':{u:'https://shop.mango.com/us/en/search/women?q=',t:'$$',a:'Modern Minimalist, European Chic',s:[],d:[5,6,8,6,8,6,7,8,8,7],c:'workwear, elevated trends, outerwear'},
   'Target':{w:1,u:'https://www.target.com/s?searchTerm=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[9,3,5,6,6,10,4,5,8,8],deep:1,c:'affordable fashion, basics, accessories'},
   'Amazon':{gp:'&i=fashion-womens',u:'https://www.amazon.com/s?k=',t:'$-$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,5,7,6,8,6,6,8,8],deep:1,c:'almost everything, basics, accessories, shoes'},
-  'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[8,6,8,6,8,7,7,5,6,9],c:'dresses, occasion, unique pieces'},
+  'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[8,6,8,6,8,7,7,5,6,9],deep:1,c:'dresses, occasion, unique pieces'},
   'Express':{w:1,u:'https://www.express.com/exp/search?q=',t:'$$',a:'Modern Glam, Professional Power',s:['petite'],d:[3,8,7,4,8,5,8,10,8,7],c:'going-out looks, workwear, denim'},
   // The old /r/search?query= silently landed on Revolve's homepage (Cath caught
   // it live; Revolve blocks automated checks so it could not be tested here).
@@ -5206,7 +5206,7 @@ const STORES={
   'Uniqlo':{w:1,u:'https://www.uniqlo.com/us/en/search?q=',t:'$',a:'Modern Minimalist',s:[],d:[8,2,8,8,5,8,4,5,10,3],c:'basics, layering pieces, outerwear'},
   'Quince':{w:1,u:'https://www.quince.com/search?q=',t:'$$',a:'Quiet Luxury, Elevated Natural',s:['plus'],d:[9,2,9,10,3,8,6,4,10,2],c:'cashmere, linen, silk, luxury basics'},
   'Old Navy':{gp:'&department=136',u:'https://oldnavy.gap.com/browse/search.do?searchText=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[10,2,4,5,4,10,1,3,7,6],c:'budget basics, activewear, family essentials'},
-  "Lands' End":{w:1,u:'https://www.landsend.com/search?q=',t:'$$',a:'Classic Casual',s:['petite','plus','tall'],d:[10,1,6,8,1,10,2,3,9,5],c:'swimwear, outerwear, basics, uniforms'},
+  "Lands' End":{w:1,u:'https://www.landsend.com/search?q=',t:'$$',a:'Classic Casual',s:['petite','plus','tall'],d:[10,1,6,8,1,10,2,3,9,5],deep:'swimwear',c:'swimwear, outerwear, basics, uniforms'},
   'Boden':{w:1,u:'https://us.boden.com/search?q=',t:'$$',a:'Playful Classic',s:['petite','tall'],d:[6,3,8,9,5,6,7,6,6,9],c:'colorful dresses, prints'},
   'FARM Rio':{u:'https://farmrio.com/search?q=',t:'$$$',a:'Playful Chic, Bohemian Chic',s:[],d:[7,7,8,3,10,7,7,5,2,10],c:'colorful dresses, vacation wear, statement prints'},
   'Tommy Bahama':{w:1,u:'https://www.tommybahama.com/search?text=',t:'$$$',a:'Coastal Chic, Elevated Natural',s:[],d:[10,2,8,7,2,10,3,3,7,8],c:'resortwear, vacation clothing, linen'},
@@ -5234,7 +5234,7 @@ const STORES={
   // Romantic / boho
   'Sézane':{u:'https://www.sezane.com/us-en/search?s=',t:'$$$',a:'Parisian Chic, Romantic Feminine',s:[],d:[6,5,9,9,7,6,7,7,8,7],c:'knitwear, blouses, timeless french style'},
   'LoveShackFancy':{u:'https://loveshackfancy.com/search?q=',t:'$$$$',a:'Romantic Feminine, Playful Chic',s:[],d:[7,8,9,6,9,5,9,6,4,10],c:'feminine dresses, occasion, florals'},
-  'Free People':{u:'https://www.freepeople.com/search?q=',t:'$$-$$$',a:'Bohemian Chic, Romantic Feminine',s:['petite'],d:[10,6,6,4,8,10,3,3,5,9],c:'boho fashion, sweaters, dresses'},
+  'Free People':{u:'https://www.freepeople.com/search?q=',t:'$$-$$$',a:'Bohemian Chic, Romantic Feminine',s:['petite'],d:[10,6,6,4,8,10,3,3,5,9],deep:1,c:'boho fashion, sweaters, dresses'},
   'Johnny Was':{u:'https://www.johnnywas.com/search?q=',t:'$$$',a:'Bohemian Chic, Elevated Natural',s:['petite','plus'],d:[10,4,8,5,6,9,4,3,4,10],c:'embroidered tops, resortwear, relaxed luxury'},
   "Altar'd State":{u:'https://www.altardstate.com/search?q=',t:'$$',a:'Romantic Feminine, Bohemian Chic',s:[],d:[7,5,6,6,7,8,5,6,6,8],c:'dresses, casual feminine fashion'},
   'Baltic Born':{u:'https://balticborn.com/search?q=',t:'$$',a:'Romantic Feminine',s:['plus'],d:[6,7,7,6,8,5,8,7,5,9],c:'wedding guest dresses, occasionwear'},
@@ -5257,7 +5257,7 @@ const STORES={
   // Classic and easy-to-wear
   'Ann Taylor':{u:'https://www.anntaylor.com/search?q=',t:'$$',a:'Professional Power, Classic Sophisticate',s:['petite','tall'],d:[3,3,9,10,2,4,8,8,10,3],c:'workwear, dresses, blazers'},
   'LOFT':{u:'https://www.loft.com/search?q=',t:'$$',a:'Casual Classic',s:['petite','plus','tall'],d:[8,3,7,8,3,8,5,5,8,5],c:'relaxed workwear, denim'},
-  'Talbots':{u:'https://www.talbots.com/search?q=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,2,9,10,1,6,7,6,9,5],c:'timeless workwear, knits'},
+  'Talbots':{u:'https://www.talbots.com/search?q=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,2,9,10,1,6,7,6,9,5],deep:1,c:'timeless workwear, knits'},
   'J.Jill':{u:'https://www.jjill.com/SearchDisplay?searchTerm=',t:'$$',a:'Elevated Natural',s:['petite','plus'],d:[10,1,8,8,1,10,2,2,10,3],c:'linen, relaxed essentials'},
   "Chico's":{u:'https://www.chicos.com/store/search?searchTerm=',t:'$$',a:'Relaxed Classic',s:['petite'],d:[9,2,7,8,2,9,3,3,6,8],c:'travel pieces, easy separates'},
   // Size-inclusive specialists
@@ -5269,7 +5269,7 @@ const STORES={
   'Petite Studio':{u:'https://petitestudionyc.com/search?q=',t:'$$$',a:'Modern Minimalist',s:['petite'],d:[4,4,9,8,6,5,8,8,9,4],c:'petite tailoring, dresses'},
   // Activewear and swim
   'Lululemon':{w:1,u:'https://shop.lululemon.com/search?Ntt=',t:'$$$',a:'Elevated Natural, Athletic Luxe',s:[],d:[4,6,8,5,7,10,2,9,7,8],c:'premium activewear, athleisure'},
-  'Athleta':{u:'https://athleta.gap.com/browse/search.do?searchText=',t:'$$',a:'Elevated Natural, Athletic Luxe',s:['petite','plus','tall'],d:[6,3,8,6,5,10,2,7,8,6],c:'activewear, travel, everyday performance'},
+  'Athleta':{u:'https://athleta.gap.com/browse/search.do?searchText=',t:'$$',a:'Elevated Natural, Athletic Luxe',s:['petite','plus','tall'],d:[6,3,8,6,5,10,2,7,8,6],deep:'activewear',c:'activewear, travel, everyday performance'},
   'Alo Yoga':{w:1,u:'https://www.aloyoga.com/search?q=',t:'$$$',a:'Modern Glam, Athletic Luxe',s:[],d:[3,8,8,4,9,10,3,10,7,8],c:'luxury activewear, athleisure'},
   'Everything But Water':{u:'https://www.everythingbutwater.com/search?q=',t:'$$$',a:'Coastal Chic, Glamorous Luxe',s:['plus'],d:[5,8,9,8,7,6,9,8,6,10],c:'designer swimwear, resort fashion'},
   // Foundations
@@ -6096,12 +6096,14 @@ function _restoreSuggestions(){
 // permanent anchor (the door she cannot just type). Two ring chips show per
 // visit, advancing one step each fresh-chat open, so the chat feels a little
 // fresh every time — the same return-loop instinct as her item-of-the-week.
-// ⚠️ Ring wording is hers or blessed by her; don't reword without her. The
+// ⚠️ Ring wording is ALL hers now: the season chip's sent message was trimmed
+// 2026-08-20 to her client's exact question, dropping a Claude-added second
+// sentence that made one chip ask two things. Don't reword without her. The
 // onclick reads the message from _CHIP_RING directly so apostrophes in her
 // clients' words never need escaping into the attribute.
 var _CHIP_RING=[
   {l:'Dress me for an event',m:'I have an event and I don’t know what to wear. Can you help me nail the right vibe?'},
-  {l:'What’s in this season?',m:'What’s in this season? What trends should I know about?'},
+  {l:'What’s in this season?',m:'What’s in this season?'},
   {l:'My essentials',m:'What are wardrobe essentials I should have based on my style?'},
   {l:'Shift one notch',m:'Help me shift my style one notch more polished'}
 ];
@@ -7887,25 +7889,37 @@ var _WDR_IDEA_EXCLUDE={
 // nothing to exclude them FROM. What was missing is the same gap as
 // "work-appropriate": "a black top" reads as obvious to a stylist and is
 // wide open to a model, so it needs her concrete definition.
-// ⚠️ The NEVER list is entirely hers (bodysuit, turtleneck, tank/camisole,
-// collared or button-front blouse, and satin). The positive half is Claude's
-// draft and SHE HAS NOT BLESSED IT -- reword freely. Applied to all three
-// colour-generic basic rows, the same trio that share the exclusions above.
+// ⚠️ EVERY WORD OF THIS IS HERS NOW (blessed 2026-08-20). The NEVER list was
+// always hers (bodysuit, turtleneck, tank/camisole, collared or button-front
+// blouse, satin). The opening sentence is her own from 2026-08-15, "A black top
+// should just be a black top", generalised because one string serves all three
+// colour-generic rows. The positive half was a Claude draft until she approved
+// it verbatim. Applied to the same trio that share the exclusions above.
+// ▶ FABRIC IS DELIBERATELY LEFT OPEN, her call 2026-08-20. It was put to her
+// that satin is banned while nothing says what a basic top SHOULD be, so
+// chiffon or organza would technically comply; she chose to leave it open
+// rather than name cotton/jersey/knit. Do NOT add a fabric list here without
+// her -- it is a decision, not an oversight.
 // ▶ SATIN ADDED 2026-08-15, her call after seeing it on her White tops shelf:
 // "that is more of a dressy or going out top so let's put it there instead."
 // So it is banned here AND named as belonging on to6 -- a piece she rules out
 // of one row is not rejected, it is filed where a stylist would put it.
-var _BASIC_TOP='She means a SIMPLE everyday top, nothing more. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, satin or any other dressy shiny fabric, or anything going-out, sequined or sheer. Every option must be a plain, wearable top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
+var _BASIC_TOP='A top like this should just be a top. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, satin or any other dressy shiny fabric, or anything going-out, sequined or sheer. Every option must be a simple everyday top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
 var _WDR_IDEA_DEFINE={
   to1:_BASIC_TOP,   // White tops
   to2:_BASIC_TOP,   // Black tops — her 2026-08-15 catch
   to3:_BASIC_TOP,   // Tops in your favorite colors
   // The other half of her satin call: banned from the basic rows above and
   // welcomed HERE, so the fabric lands where she would file it rather than
-  // vanishing from the app. ⚠️ The satin sentence is hers; the rest of this
-  // line is a Claude draft she has not blessed -- keep it short, and do not
-  // grow it into a full definition without talking the row through with her.
-  to6:'Satin belongs here — this is the row for dressy and going-out fabrics, so satin, silk charmeuse, lace, velvet and sequins are all welcome. Every option must genuinely read as a top for an evening out, never a plain everyday tee.',
+  // vanishing from the app. ⚠️ The satin sentence is hers, and so are the
+  // two fabric calls made 2026-08-20: SEQUINS REMOVED ("let's take out saying
+  // sequins") and velvet kept but braked ("velvet is ok, but don't want to over
+  // use it") -- hence an explicit frequency limit rather than a bare mention,
+  // the same shape as _colorPrefRule's vary-across-your-picks. Sequins is now
+  // simply unmentioned here, NOT vetoed; it stays banned on the basic rows.
+  // Keep this line short, and do not grow it into a full definition without
+  // talking the row through with her.
+  to6:'Satin belongs here. This is the row for dressy and going-out fabrics, so satin, silk charmeuse and lace are all welcome. Velvet works too, but use it sparingly and never more than one piece in a set. Every option must genuinely read as a top for an evening out, never a plain everyday tee.',
   dr3:'For "Work-appropriate dresses," NEVER suggest one-shoulder or asymmetric necklines, spaghetti straps, strapless or plunging necklines, satin, sequined, shiny, or sheer fabric, or a hemline or slit above the knee. Every option must hit at or below the knee, fit tailored (never tight or clingy), have a modest neckline (crew, small V, or scoop) with wide or standard straps, use structured medium-weight fabric like wool blends, crepe, or ponte, stay in solid or subtle muted or neutral prints, and have short, three-quarter, or long sleeves (sleeveless only if conservative). This rule is absolute, the same weight as her never-wear list.'
 };
 // ═══════════════════════════════════════════════════════════════════════════
