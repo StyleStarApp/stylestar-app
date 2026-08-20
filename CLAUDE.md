@@ -150,13 +150,76 @@ to be white, like on the edit page, instead of that cream color."*
 - **affwrap 23 · affq 40 · e2e 29 · hubs 49** green. ⚠️ affq's documented "results saved" timing flake hit
   once, clean on rerun.
 
+### ⚖️⚖️ ALMIRA ANSWERED THE STATEMENT-OF-USE QUESTIONS — AND ONE ANSWER CREATES REAL WORK
+Her reply arrived the same night, three points, all logged:
+1. ✅ **The signed Statement of Correction is received and escalated for the team to MAIL to the state.**
+   ⚠️ **No date given.** ▶ The drafted reply asks her to confirm once it is mailed AND accepted, so it cannot
+   quietly sit (the pattern this file already documents).
+2. **NOTICE OF ALLOWANCE EXPECTED IN ~7-14 MONTHS**, i.e. roughly **March to October 2027**, then the Statement
+   of Use follows. **USPTO fee $150 per class, per application = $900 total.**
+   ✅ **THE ARITHMETIC CHECKS OUT: $150 × 3 classes × 2 marks = $900.** ⭐ **Her own divide-the-lump-sum-by-the-
+   unit-price habit ran again and this time it CLEARS** — worth telling her, since the same check found $700
+   missing in July.
+   ⚠️⚠️ **BUT NOTICE WHAT THE EMAIL DOES NOT SAY: her wording is "the USPTO filing fee," which is the
+   GOVERNMENT share and is silent on Indie Law's.** ▶ **The reply asks whether preparing and filing the SOUs is
+   inside her existing package or a separate fee.** Same shape as the July gap; ask before signature time.
+3. ⭐ **THE COMPLIMENTARY PROTECTION PLAN IS STILL ON THE TABLE**, taking effect at registration.
+   ▶ **She should take it: the fault is closed now, so the 08-17 reason for declining is gone, and it commits
+   nothing today.** The reply accepts it and asks what it includes + whether it renews into a paid plan.
+
+### 🚨⭐ THE 045 FLAG — THE ONE ANSWER WITH REAL WORK BEHIND IT, AND IT HAS A 2027 DEADLINE NOW
+**Both marks are Section 1(b) INTENT TO USE, so a Statement of Use requires the mark to be IN USE IN COMMERCE
+for EACH class before it can be filed.** That quietly puts a clock on something that does not exist yet.
+- **042 (the technology / website)** — the app is live, looks straightforward.
+- **035 (retail / advertising services)** — her affiliate links now earn, which helps.
+- ⚠️⚠️ **045 (personal styling / fashion consultancy) IS THE EXPOSED ONE.** She fought for this class
+  specifically, in her own June words: *"I'm an actively practicing personal stylist and will be operating
+  under the Style Star name"*, **and her plan was to DISSOLVE THE SOLE PROPRIETORSHIP and run those services
+  under Style Star. THAT HAS NOT HAPPENED YET.** ▶ **The live app alone probably cannot prove 045 — that class
+  is about HER doing styling under the Style Star name.** It would be a bad way to lose the class she refused
+  to sign without.
+- ▶ **The reply asks Almira what a specimen must look like PER CLASS, especially 045, and whether there is
+  anything she should be doing NOW to build proof of use.** ⚠️ **Deliberately asked as a QUESTION FOR THE
+  LAWYER, never answered here — the standing never-give-legal-or-tax-advice rule.**
+- ⚠️ **Mechanics worth knowing so they cannot ambush her: after a Notice of Allowance there are 6 MONTHS to
+  file, extendable in 6-month increments, EACH EXTENSION COSTING A FEE.** And **USPTO fees move over a 1-2 year
+  horizon, so budget the $900 with headroom.** The reply asks how extensions work.
+- ▶▶ **REALISTIC TIMELINE FOR THE ® SWITCH: registration is Notice of Allowance + SOU + examination, so
+  2028 territory.** The ™ line on Terms stays exactly as it is. **The capitals at the markup still stand:
+  NEVER change ™ to ® until Almira confirms registration is GRANTED.**
+
+### ✅ HER REPLY IS DRAFTED AND WAITING (she asked for it; check whether she sent it)
+Three numbered asks mirroring Almira's own three, plus a confirm-when-mailed on the correction. **Deliberately
+says NOTHING about the earlier delays** — that thread is closed, the correction is moving, and it reads better
+as a client planning ahead than one keeping score. ⭐ **Her tone across this whole thread has been impeccable;
+protect it.** The full text is in the 2026-08-20 night chat.
+
+### ✅ THE TRADEMARK LINE WAS ALREADY DONE — she asked, and it was CHECKED not remembered
+**Live at stylestar.app/terms**, under "Our brand and content": *"STYLE STAR and the Style Star logo are
+trademarks of Style Star by Catherine, LLC."* Shipped in #878. ⚠️ It appears in the raw HTML of every route
+because the whole app is one file, but it only RENDERS on Terms. **There is still deliberately NO ™ symbol
+beside the logo — her call, and the reasoning holds** (a floating ™ reads as "we are worried someone will copy
+this", not "we are established").
+
+### ▶ HER NEW BUILD ITEM, PARKED BY HER: A FRAME AROUND THE WHITE STAR CARD
+Her words on the live front door: *"I think this looks amazing and I love it! I think we need to add a frame
+around the white card but we can add that to our list."* ▶ **NOT built, her call to defer.** ⚠️ **When it is
+designed, weigh it against her own anti-layered-edge rule** (2026-08-10: her retirements of the restore card's
+4px bar and My Story's white+pink rings) — the card already carries a **1px `#D8A52E` border and a drop
+shadow** on black velvet, so the question is whether a frame is DEFINITION (which earned the wishlist
+hairline) or a second EMPHASIS device on something already loud. **Renders first, her pick, as always.**
+⚠️ And it is the FRONT DOOR, so anything that adds height is measured against the ~700px iPhone fold.
+
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. ⚖️⚖️ **ALMIRA REPLIED — SHE HAS IT AND WAS BRINGING IT TO A NEW SESSION. ASK FOR IT FIRST.** The open
-   questions were **Statement of Use timing + cost** (both marks are 1(b) intent-to-use) and anything on the
-   Statement of Correction. **Log serial/date details here.**
+1. ⚖️⚖️ **DID SHE SEND THE DRAFTED REPLY TO ALMIRA, and has Almira answered?** The two live questions are
+   **whether $900 is the FULL cost or the USPTO's share only**, and **what a specimen must look like for
+   CLASS 045**. ▶ **045 is the one with real work behind it — see the flag above.** Also watch for
+   confirmation that the Statement of Correction was actually MAILED and ACCEPTED by the state.
 2. 📊 **Ask her to tap the scarf on the live site and check Rakuten REPORTS a day later.** ⚠️ **STILL the only
    unproven link in the money chain, and now it is the Star on the front door, so it is easier than ever.**
-3. 📸 **How the photos feel on her phone** — the Edit's three, and the Star card white at 140px.
+3. ✅ ~~How the photos feel on her phone~~ **BLESSED 2026-08-20 NIGHT on her own screenshot: "I think this
+   looks amazing and I love it!"** ▶ **Her one follow-up is A FRAME AROUND THE WHITE STAR CARD, parked by her
+   — see the entry above before designing it.**
 4. 🔎 **The LINKS ▾ menu in Rakuten — bulk feed export or FTP?** ⚠️ **And now ALSO ask about the LINK BUILDER's
    creative**, which is the properly-licensed source of product images.
 5. 📬 **Impact's support answer, due ~27-29 August.** ⚠️ **It now gates the photos too** — Nordstrom is 6 of
