@@ -39,9 +39,18 @@ const u = await pg.evaluate(() => ({
   nul:      _affUrl(null)
 }));
 ok('publisher id is hers', u.id === 'jZNkkinrr1k', u.id);
-ok('exactly the two approved advertisers', Object.keys(u.mids).sort().join() === 'dvf.com,farmrio.com', Object.keys(u.mids).join());
+// DERIVED, not restated: this named the two advertisers she had at the time and
+// went stale the moment Vilebrequin approved. What actually needs guarding is the
+// SHAPE — a bare registrable host mapping to a numeric MID. A path, a URL or a
+// non-numeric id here silently wraps nothing and no link would ever earn.
+ok('the approved list is non-empty', Object.keys(u.mids).length>0, Object.keys(u.mids).join());
+ok('every advertiser is a bare host mapped to a numeric MID',
+   Object.entries(u.mids).every(([h,m])=>/^[a-z0-9.-]+\.[a-z]{2,}$/.test(h)&&/^\d+$/.test(m)),
+   JSON.stringify(u.mids));
+// the three she has today, pinned individually so a bad edit to one is loud
 ok('FARM Rio mid 44912', u.mids['farmrio.com'] === '44912');
 ok('DVF mid 53590', u.mids['dvf.com'] === '53590');
+ok('Vilebrequin mid 43322', u.mids['vilebrequin.com'] === '43322');
 ok('a DVF url is wrapped', /click\.linksynergy\.com\/deeplink\?id=jZNkkinrr1k&mid=53590&murl=/.test(u.dvf), u.dvf);
 ok('a FARM Rio url is wrapped', /mid=44912&murl=/.test(u.farm), u.farm);
 ok('the destination survives, encoded', decodeURIComponent(u.dvf.split('murl=')[1]) === 'https://www.dvf.com/search?q=wrap%20dress');

@@ -77,6 +77,8 @@ const rot = await page.evaluate(()=>{
   const wrapDate=new Date(2026,7,9); wrapDate.setDate(wrapDate.getDate()+7*L);
   return {
     len:L,
+    // every entry is a real star: a name, a store, an https url and her note
+    allNamed:WEEK_STARS.every(x=>x&&x.n&&x.store&&/^https:\/\//.test(x.url||'')&&x.note),
     headIsHers:/Tommy Hilfiger Claihre/.test(WEEK_STARS[0].n), // her first star leads the queue
     anchorSunday:i(2026,7,9),           // Sun Aug 9 = week 0
     buildDay:i(2026,7,14),              // Fri Aug 14 (built) → still week 0
@@ -99,8 +101,13 @@ const rot = await page.evaluate(()=>{
               names:WEEK_STARS.some(x=>x.n===_pin)};})()
   };
 });
-// 16 → 17 UPDATED DELIBERATELY: the DVF silk scarf joined so it could be pinned.
-ok('queue holds 17 stars (kitten heel + 15 Edit picks + the DVF scarf)', rot.len===17, 'len='+rot.len);
+// DERIVED, not restated (the curated.js lesson, paid for twice now): this used
+// to name a number and had to be edited every time she added a star — 16 → 17
+// for the scarf, 17 → 18 for the Vilebrequin cover-up. The claim worth testing
+// was never the count, it is that the queue is non-empty and that the rotation
+// arithmetic below covers exactly as many weeks as there are stars.
+ok('the queue is non-empty and every entry is a real star',
+   rot.len>0 && rot.allNamed, 'len='+rot.len);
 ok('her first star leads the queue', rot.headIsHers);
 ok('anchor Sunday Aug 9 = week 0', rot.anchorSunday===0);
 ok('build day (Fri Aug 14) still shows week 0', rot.buildDay===0);
