@@ -1375,6 +1375,24 @@ body.menu-open .menu-panel{display:block}
 .dc-subtitle{font-size:14px;color:#777;line-height:1.6;margin-bottom:1.5rem;font-style:normal;padding:0 0.5rem}
 .dc-item{background:#fff;border:1px solid #EFE7D2;border-radius:2px;padding:1.35rem 1.4rem 1.4rem;margin-bottom:1.05rem;text-align:left;position:relative;box-shadow:0 4px 20px rgba(60,50,20,0.055);overflow:hidden}
 .dc-item-star{position:absolute;top:13px;right:14px;font-size:18px;line-height:1}
+/* Her pick 2026-08-20 from four rendered options ("A3 with the 3:4"). INSET and
+   framed rather than full-bleed, so the photo respects the card's own border,
+   which is the display-case language the rest of the app already speaks. 3:4
+   because a SQUARE crop cuts a full-length maxi off at the knee (measured on
+   her own FARM Rio dress) and a card headed "Maxi Dress" must not show a midi.
+   Photos BESIDE the text were rendered and rejected on measurement, not taste:
+   her item names run 46-60 chars and already wrap 3-4 lines at FULL width, so a
+   96-118px photo column pushed one name to seven lines and wrapped the Shop
+   button to three. A photo can sit ABOVE this card's content, never beside it.
+   🚨🚨 LICENSING, AND IT DECIDES WHICH ITEMS MAY CARRY A PHOTO AT ALL: a product
+   photo is the retailer's copyrighted work. What licenses it is an AFFILIATE
+   APPROVAL with that retailer, NEVER the fact that we link to the piece and
+   never the fact that the image is technically fetchable. Those two are almost
+   unrelated: Zappos, Target and Baby Gold all hand over an image to a script,
+   and we have no relationship with any of them. So a photo goes ONLY on an item
+   whose host is a key in _AFF_MID. GREP _AFF_MID BEFORE ADDING ONE. */
+.dc-item-px{display:block;width:100%;margin:0 0 14px;aspect-ratio:3/4;object-fit:cover;
+  object-position:top center;background:#F5EFE2;border:1px solid #EFE7D2;border-radius:2px}
 .dc-item-name{font-family:'DM Serif Display',Georgia,serif;font-size:20px;font-weight:400;color:#1a1a1a;line-height:1.28;margin:0 0 9px;padding-right:32px}
 .dc-item-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 9px;margin-bottom:13px}
 .dc-store{font:700 11px/1.3 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a8172}
@@ -3784,6 +3802,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
 
     <div class="dc-item">
+      <img class="dc-item-px" src="https://www.dvf.com/cdn/shop/files/A001AMBERYSKTL_A1_2.jpg?v=1776264943&amp;width=800" alt="Diane von Furstenberg Flag Scarf in Myrtle Berry" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">Diane von Furstenberg Flag Scarf &mdash; Myrtle Berry</div>
       <div class="dc-item-meta"><span class="dc-store">Diane von Furstenberg</span><span class="dc-price">$198</span></div>
@@ -3792,6 +3811,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
 
     <div class="dc-item">
+      <img class="dc-item-px" src="https://www.dvf.com/cdn/shop/files/D885ATWGRNSLJY_A1_0003.jpg?v=1745423517&amp;width=800" alt="Diane von Furstenberg Jeanne silk jersey wrap dress in green" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">Diane von Furstenberg Jeanne Silk Jersey Wrap Dress</div>
       <div class="dc-item-meta"><span class="dc-store">Diane von Furstenberg</span><span class="dc-price">$678</span></div>
@@ -3800,6 +3820,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
 
     <div class="dc-item">
+      <img class="dc-item-px" src="https://farmrio.com/cdn/shop/files/347964_01_1.jpg?v=1778615230&amp;width=800" alt="FARM Rio Pink Garden Terrace 3D one-shoulder maxi dress" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress</div>
       <div class="dc-item-meta"><span class="dc-store">FARM Rio</span><span class="dc-price">$360</span></div>
@@ -9856,6 +9877,14 @@ function _buildWbHubs(){
 // The Edit page keeps her FULL notes (its own fuller register); only the Star
 // card speaks in one-liners. URLs are the Edit's own exact product links
 // (canonical, tracking stripped per the standing rule).
+/* ⚠️ PINNED, her call 2026-08-20: the Star holds on the DVF silk scarf until she
+   is ready to invite testers, THEN the weekly rotation resumes.
+   ▶ TO RESUME: set WEEK_STAR_PIN back to null. Nothing else to change — the
+   queue and the anchor Sunday are untouched, so rotation simply starts obeying
+   the calendar again. ⚠️ The queue is 17 now, so the week-to-item mapping has
+   shifted (it is week mod 17, not mod 16); ask her whether she wants it
+   reordered at the moment she unpins rather than guessing for her. */
+var WEEK_STAR_PIN='Diane von Furstenberg Flag Scarf — Myrtle Berry';
 var WEEK_STARS=[
   {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/8960533',price:'$89',
    note:'A kitten heel is the easiest polish there is. Slide it on and every outfit steps up a notch.'}, // ✅ BLESSED by Cath 2026-08-13 — hers now, don't reword
@@ -9888,7 +9917,9 @@ var WEEK_STARS=[
   {n:'Align Pant — Full Length 28″',store:'Lululemon',url:'https://shop.lululemon.com/p/womens-leggings/Align-Pant-Full-Length-28/_/prod8780551',price:'$98',
    note:'The best leggings. Beautiful fit, soft fabric, and they come in 3 lengths and lots of colors.'},
   {n:'Gilded Romance Heart Claw Clip',store:'The Hair Edit · Target',url:'https://www.target.com/p/the-hair-edit-gilded-romance-clip/-/A-94717763',price:'$12.99',
-   note:'The cutest heart shape that makes a casual hair clip look special.'}
+   note:'The cutest heart shape that makes a casual hair clip look special.'},
+  {n:'Diane von Furstenberg Flag Scarf — Myrtle Berry',store:'Diane von Furstenberg',url:'https://www.dvf.com/products/flag-scarf-in-myrtle-berry',price:'$198',
+   note:'This is the definition of wearable art. 100% silk, and the floral print is stunning.'},
 ];
 // Which week is it? Whole LOCAL days since the anchor Sunday (2026-08-09, the
 // Sunday before the first star shipped), then whole weeks, wrapped around the
@@ -9898,6 +9929,10 @@ var WEEK_STARS=[
 // sees THIS week. Don't touch it; reorder the queue instead.
 function _weekStarIndex(now){
   if(!WEEK_STARS||!WEEK_STARS.length)return -1;
+  if(WEEK_STAR_PIN){
+    for(var p=0;p<WEEK_STARS.length;p++){if(WEEK_STARS[p].n===WEEK_STAR_PIN)return p;}
+    // a pin naming a piece no longer in the queue falls through to the rotation
+  }
   now=now||new Date();
   var days=Math.floor((Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())-Date.UTC(2026,7,9))/86400000);
   if(days<0)days=0; // a device clock set before the anchor just sees the first star

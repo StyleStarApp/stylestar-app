@@ -1,0 +1,156 @@
+// Photos on the Edit + the pinned Star of the Week.
+// The load-bearing check is PART 2: the licensing sweep. A rule applied by hand
+// at N sites drifts the moment an N+1th appears, so the guarantee lives here.
+import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
+import http from 'http'; import fs from 'fs'; import path from 'path'; import vm from 'vm';
+const ROOT='/home/user/stylestar-app';
+let pass=0,fail=0;
+const ok=(m,c,x='')=>{c?pass++:fail++;console.log((c?'  ok  ':'FAIL  ')+m+(c?'':'   << '+x));};
+
+const src=fs.readFileSync(ROOT+'/index.html','utf8');
+
+/* ---------- PART 1 · static ---------- */
+const blocks=[...src.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
+blocks.forEach((b,i)=>{let e=null;try{new vm.Script(b);}catch(err){e=err.message;}
+  ok(`script block ${i+1} parses`, !e, e||'');});
+
+const items=[...src.matchAll(/<div class="dc-item">([\s\S]*?)<\/div>\s*\n\s*<\/div>|<div class="dc-item">([\s\S]*?)(?=<div class="dc-item">|<div class="dc-sign")/g)];
+ok('Edit still has 21 items', (src.match(/<div class="dc-item">/g)||[]).length===21,
+   (src.match(/<div class="dc-item">/g)||[]).length);
+ok('exactly 3 photos', (src.match(/class="dc-item-px"/g)||[]).length===3,
+   (src.match(/class="dc-item-px"/g)||[]).length);
+ok('every photo is https', !/dc-item-px" src="http:\/\//.test(src));
+ok('every photo has alt text', (src.match(/class="dc-item-px"[^>]*\balt="[^"]{10,}"/g)||[]).length===3);
+ok('every photo degrades on error', (src.match(/class="dc-item-px"[^>]*onerror="this\.remove\(\)"/g)||[]).length===3);
+ok('every photo is lazy', (src.match(/class="dc-item-px"[^>]*loading="lazy"/g)||[]).length===3);
+ok('rule is 3:4, inset (not full-bleed)', /\.dc-item-px\{[^}]*aspect-ratio:3\/4/.test(src)
+   && !/\.dc-item-px\{[^}]*margin:-/.test(src));
+ok('the licensing rule is written at the code', /GREP _AFF_MID BEFORE ADDING ONE/.test(src));
+
+/* queue */
+const q=src.match(/var WEEK_STARS=\[[\s\S]*?\n\];/)[0];
+const names=[...q.matchAll(/\{n:'((?:[^'\\]|\\.)*)'/g)].map(m=>m[1].replace(/\\'/g,"'"));
+ok('queue is 17 (was 16, the scarf joined)', names.length===17, names.length);
+ok('no duplicate in the queue', new Set(names).size===names.length);
+ok('every queue url is https', [...q.matchAll(/url:'([^']+)'/g)].every(m=>m[1].startsWith('https://')));
+ok('HER RULE: no intimates or swim in the queue',
+   !/\b(bra|bras|bralette|bikini|swimsuit|swimwear|lingerie|underwear|thong|panties)\b/i.test(names.join(' ')),
+   names.filter(n=>/\b(bra|bikini|swim|lingerie|underwear)\b/i.test(n)).join());
+ok('the pin names a piece that IS in the queue',
+   names.includes((src.match(/var WEEK_STAR_PIN='([^']*)'/)||[])[1]));
+ok('the resume instruction is written at the code', /TO RESUME: set WEEK_STAR_PIN back to null/.test(src));
+
+/* ---------- PART 2 · live, in the real page ---------- */
+const srv=http.createServer((rq,rs)=>{let p=decodeURIComponent(rq.url.split('?')[0]);if(p==='/')p='/index.html';
+  const f=path.join(ROOT,p); if(!fs.existsSync(f)){rs.writeHead(404);return rs.end();}
+  rs.writeHead(200,{'Content-Type':p.endsWith('.html')?'text/html':'application/octet-stream'});
+  rs.end(fs.readFileSync(f));}).listen(0);
+const PORT=srv.address().port;
+const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'});
+const ctx=await b.newContext({viewport:{width:390,height:900}});
+const pg=await ctx.newPage(); const errs=[];
+pg.on('pageerror',e=>errs.push(e.message));
+await pg.goto(`http://127.0.0.1:${PORT}/`);
+await pg.evaluate(()=>{document.querySelectorAll('.hm-entrance').forEach(e=>e.remove());showDream();});
+await pg.waitForTimeout(1200);
+
+// ⭐ THE SWEEP: no photo may sit on an item we are not approved to photograph.
+const sweep=await pg.evaluate(()=>{
+  const mids=Object.keys(window._AFF_MID||{});
+  const host=u=>{try{return new URL(u,location.href).hostname.toLowerCase().replace(/^www\./,'');}catch(e){return '';}};
+  const licensed=h=>mids.some(d=>h===d||h.endsWith('.'+d));
+  const out={mids,bad:[],withPx:[],unlicensedWithPx:[]};
+  document.querySelectorAll('#s-dream .dc-item').forEach(el=>{
+    const a=el.querySelector('.dc-item-btn'), px=el.querySelector('.dc-item-px');
+    const nm=(el.querySelector('.dc-item-name')||{}).textContent||'';
+    // the href is affiliate-wrapped by now, so read the real destination out of murl
+    let raw=a?a.getAttribute('href'):''; const m=/[?&]murl=([^&]+)/.exec(raw||'');
+    if(m)raw=decodeURIComponent(m[1]);
+    const h=host(raw);
+    if(px){out.withPx.push(nm.trim().slice(0,34)); if(!licensed(h))out.unlicensedWithPx.push(nm+' @ '+h);}
+  });
+  return out;
+});
+ok('_AFF_MID is the approved list', sweep.mids.length===2, sweep.mids.join());
+ok('SWEEP: zero photos on an unapproved retailer', sweep.unlicensedWithPx.length===0, sweep.unlicensedWithPx.join(' | '));
+ok('SWEEP: exactly the 3 approved items carry a photo', sweep.withPx.length===3, sweep.withPx.join(' | '));
+
+// the photos really load (not 404 / not broken)
+// ⚠️ This sandbox's Chromium cannot reach external CDNs (the documented Google
+// Fonts wall), so a load here proves nothing either way — hence the timeout and
+// the honest SKIP. Reachability is proven by curl instead, outside this suite.
+const loaded=await pg.evaluate(()=>Promise.all([...document.querySelectorAll('.dc-item-px')].map(i=>
+  Promise.race([
+    i.complete&&i.naturalWidth>0?Promise.resolve({ok:true,src:i.src}):
+    new Promise(r=>{i.onload=()=>r({ok:true,src:i.src});i.onerror=()=>r({ok:false,src:i.src});}),
+    new Promise(r=>setTimeout(()=>r({ok:false,timeout:true,src:i.src}),4000))
+  ]))));
+const blocked=loaded.filter(l=>l.timeout).length;
+if(blocked===loaded.length){
+  console.log('  skip  photo pixels: sandbox Chromium cannot reach the CDNs (curl proves 200 separately)');
+}else{
+  loaded.forEach(l=>ok('photo loads: '+l.src.split('/').pop().slice(0,28), l.ok, JSON.stringify(l)));
+}
+// what we CAN prove here: the element is real, sized by the rule, and in the card
+const shape=await pg.evaluate(()=>[...document.querySelectorAll('.dc-item-px')].map(i=>{
+  const r=i.getBoundingClientRect(), c=i.closest('.dc-item').getBoundingClientRect();
+  return {w:Math.round(r.width),h:Math.round(r.height),ratio:+(r.width/r.height).toFixed(3),
+          insideCard:r.left>=c.left-0.5&&r.right<=c.right+0.5,
+          aboveName:r.bottom<=i.closest('.dc-item').querySelector('.dc-item-name').getBoundingClientRect().top+0.5};
+}));
+ok('all 3 photo boxes are 3:4', shape.every(s=>Math.abs(s.ratio-0.75)<0.02), JSON.stringify(shape));
+ok('all 3 sit INSIDE the card edge (inset, not bleeding)', shape.every(s=>s.insideCard), JSON.stringify(shape));
+ok('all 3 sit ABOVE the name', shape.every(s=>s.aboveName), JSON.stringify(shape));
+
+// the affiliate wrap still reaches all 21 (adding an <img> must not disturb it)
+const aff=await pg.evaluate(()=>{
+  let wrapped=0,total=0;
+  document.querySelectorAll('#s-dream .dc-item .dc-item-btn').forEach(a=>{
+    total++; if((a.getAttribute('href')||'').includes('click.linksynergy'))wrapped++;});
+  return {wrapped,total};
+});
+ok('affiliate wrap still reaches the 3 approved links', aff.wrapped===3, JSON.stringify(aff));
+ok('all 21 Shop buttons still present', aff.total===21, JSON.stringify(aff));
+
+// Save controls still generated for every item
+ok('Save control still on all 21',
+   (await pg.evaluate(()=>document.querySelectorAll('#s-dream .dc-item .wl-save').length))===21);
+
+// pin behaviour across a year of Sundays
+const pinres=await pg.evaluate(()=>{
+  const out={pinned:new Set(),unpinned:new Set()};
+  for(let d=0;d<364;d+=7){const t=new Date(2026,7,9+d);out.pinned.add(_weekStarIndex(t));}
+  const keep=window.WEEK_STAR_PIN; window.WEEK_STAR_PIN=null;
+  for(let d=0;d<364;d+=7){const t=new Date(2026,7,9+d);out.unpinned.add(_weekStarIndex(t));}
+  window.WEEK_STAR_PIN=keep;
+  return {pinned:[...out.pinned],unpinned:[...out.unpinned].length};
+});
+ok('PINNED: the same star on all 52 weeks', pinres.pinned.length===1, JSON.stringify(pinres.pinned));
+ok('PINNED: and it is the scarf',
+   (await pg.evaluate(()=>_weekStar().n)).includes('Flag Scarf'));
+ok('UNPINNED: rotation resumes across all 17', pinres.unpinned===17, pinres.unpinned);
+
+// the Star card actually renders the scarf on Welcome Back
+const star=await pg.evaluate(()=>{show('s-wb');_renderWeekStar();
+  const el=document.getElementById('wbStar');
+  return {on:el.classList.contains('on'),txt:el.textContent.trim().slice(0,120),
+          href:(el.querySelector('a[href]')||{}).href||''};});
+ok('Star card renders', star.on, JSON.stringify(star).slice(0,120));
+ok('Star card shows the scarf', /Flag Scarf/.test(star.txt), star.txt);
+ok('Star card shows her price', /\$198/.test(star.txt), star.txt);
+ok('Star card link is affiliate-wrapped', star.href.includes('click.linksynergy'), star.href.slice(0,80));
+
+// layout at every width
+for(const w of [390,360,320]){
+  await pg.setViewportSize({width:w,height:900});
+  await pg.evaluate(()=>showDream()); await pg.waitForTimeout(350);
+  const r=await pg.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,
+    over:[...document.querySelectorAll('#s-dream .dc-item, #s-dream .dc-item-px')]
+      .filter(e=>e.getBoundingClientRect().right>document.documentElement.clientWidth+1).length}));
+  ok(`${w}px: no sideways scroll`, r.scroll<=r.client+1, JSON.stringify(r));
+  ok(`${w}px: nothing overflows`, r.over===0, JSON.stringify(r));
+}
+ok('zero JS errors', errs.length===0, errs.join(' | '));
+await b.close(); srv.close();
+console.log(`\n${pass} passed, ${fail} failed`);
+process.exit(fail?1:0);

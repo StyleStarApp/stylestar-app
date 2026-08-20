@@ -48,15 +48,33 @@ ok('card is on and visible', card.on && card.visible);
 ok('label reads STAR OF THE WEEK flanked by twin gold stars', /STAR OF THE WEEK/.test(card.label) && card.twinStars);
 ok('the rendered item IS this week\'s queue entry', card.name===card.curName);
 ok('store line matches the queue entry', card.store.toUpperCase().indexOf(card.curStore.toUpperCase())===0);
-ok('Shop it = the queue entry\'s exact product URL', card.href===card.curUrl);
+// ⚠️ UPDATED DELIBERATELY 2026-08-20, not silenced: since #879 the Star's link is
+// affiliate-wrapped when its host is an approved advertiser, so href is no longer
+// byte-identical to the queue entry. The real invariant is stronger and is what
+// is asserted now: unwrapping murl must give back the exact product URL, so a
+// wrap can never quietly change WHERE the tap lands.
+ok('Shop it lands on the queue entry\'s exact product URL', (()=>{
+  const m=/[?&]murl=([^&]+)/.exec(card.href);
+  return m ? decodeURIComponent(m[1])===card.curUrl : card.href===card.curUrl;
+})(), card.href+' vs '+card.curUrl);
+ok('an approved-advertiser Star IS affiliate-wrapped',
+   !/dvf\.com|farmrio\.com/.test(card.curUrl) || card.href.includes('click.linksynergy'), card.href);
 ok('rel sponsored noopener + new tab (the standing link rules)', /sponsored/.test(card.rel) && /noopener/.test(card.rel) && card.tgt==='_blank');
 ok('her note renders with her tilted pink heart (Catherine speaking)', card.note.length>10 && card.pinkHeart);
 ok('the disclosure sits with the first product link on this screen', card.disc==='Some links may earn a commission.');
 
 console.log('2. The Sunday rotation (her ask, 2026-08-14 — automatic, local-calendar Sundays)');
 const rot = await page.evaluate(()=>{
+  // ⚠️ The Star is PINNED (her call 2026-08-20, holds on the DVF scarf until she
+  // invites testers). The pin deliberately overrides the calendar, so rotation
+  // arithmetic is measured with it cleared and restored afterwards; the pin's own
+  // behaviour is asserted separately below.
+  const _pin=window.WEEK_STAR_PIN; window.WEEK_STAR_PIN=null;
   const i=(y,m,d,h)=>_weekStarIndex(new Date(y,m,d,h||12));
   const L=WEEK_STARS.length;
+  // wrap date DERIVED from L, never restated — the curated.js lesson: a test that
+  // hardcodes a number must be edited every time the queue grows.
+  const wrapDate=new Date(2026,7,9); wrapDate.setDate(wrapDate.getDate()+7*L);
   return {
     len:L,
     headIsHers:/Tommy Hilfiger Claihre/.test(WEEK_STARS[0].n), // her first star leads the queue
@@ -65,7 +83,7 @@ const rot = await page.evaluate(()=>{
     satNight:i(2026,7,15,23),           // Sat 11pm → still week 0
     swapSunday:i(2026,7,16,0),          // Sun Aug 16 midnight → week 1
     weekTwo:i(2026,7,23),               // next Sunday → week 2
-    wraps:i(2026,10,29),                // anchor + L(=16) weeks = Nov 29 → back to 0 (if L=16)
+    wraps:_weekStarIndex(wrapDate),     // anchor + L weeks → back to 0, whatever L is
     preAnchor:i(2026,7,1),              // a mis-set clock before the anchor → first star, no negative index
     // her content rule: NO intimates or swim as the Star ("a bra or bikini
     // could be too much muchness at opening glance") — the bar is her call,
@@ -73,10 +91,16 @@ const rot = await page.evaluate(()=>{
     noIntimates: WEEK_STARS.every(s=>!/\b(bra|bikini|underwire|bandeau|lingerie)\b/i.test(s.n)),
     // queue integrity: every entry complete, every URL https + safe
     complete: WEEK_STARS.every(s=>s.n&&s.store&&s.price&&s.note&&_wlSafeUrl(s.url)&&/^https:/.test(s.url)),
-    uniqueUrls: new Set(WEEK_STARS.map(s=>s.url)).size===L
+    uniqueUrls: new Set(WEEK_STARS.map(s=>s.url)).size===L,
+    // the pin itself, measured after restoring it
+    pinned:(()=>{window.WEEK_STAR_PIN=_pin;
+      const seen=new Set(); for(let d=0;d<364;d+=7){seen.add(_weekStarIndex(new Date(2026,7,9+d)));}
+      return {holds:seen.size===1, isScarf:/Flag Scarf/.test((_weekStar()||{}).n||''),
+              names:WEEK_STARS.some(x=>x.n===_pin)};})()
   };
 });
-ok('queue holds 16 stars (her kitten heel + 15 approved Edit picks)', rot.len===16, 'len='+rot.len);
+// 16 → 17 UPDATED DELIBERATELY: the DVF silk scarf joined so it could be pinned.
+ok('queue holds 17 stars (kitten heel + 15 Edit picks + the DVF scarf)', rot.len===17, 'len='+rot.len);
 ok('her first star leads the queue', rot.headIsHers);
 ok('anchor Sunday Aug 9 = week 0', rot.anchorSunday===0);
 ok('build day (Fri Aug 14) still shows week 0', rot.buildDay===0);
@@ -88,6 +112,10 @@ ok('a clock set before the anchor clamps to the first star', rot.preAnchor===0);
 ok('HER RULE: no intimates or swim in the queue', rot.noIntimates);
 ok('every entry complete with a safe https product URL', rot.complete);
 ok('no duplicate items in the queue', rot.uniqueUrls);
+// HER PIN, 2026-08-20 — the Star holds until she is ready for testers.
+ok('PINNED: the same Star on every week of the year', rot.pinned.holds);
+ok('PINNED: and it is her DVF silk scarf', rot.pinned.isScarf);
+ok('the pin names a piece that really is in the queue', rot.pinned.names);
 
 console.log('3. Saving the star');
 const save = await page.evaluate(()=>{
