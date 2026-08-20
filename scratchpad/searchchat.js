@@ -75,8 +75,8 @@ const tool = (lastUpstream.body.tools || [])[0] || {};
 ok('web_search tool added (basic variant, no code-exec filtering)', tool.type === 'web_search_20250305' && tool.name === 'web_search');
 ok('max_uses fixed at 3 by the server', tool.max_uses === 3);
 // 2026-07-31: the allowlist lives SERVER-SIDE now; whatever the client sends
-// is ignored and the tool always carries the server's own 100-store list.
-ok('allowed_domains is the server-side 100-store list (Kate Spade removed 2026-08-12)', Array.isArray(tool.allowed_domains) && tool.allowed_domains.length === 100 && tool.allowed_domains.includes('nordstrom.com'));
+// is ignored and the tool always carries the server's own 101-store list.
+ok('allowed_domains is the server-side 101-store list (DVF added 2026-08-21)', Array.isArray(tool.allowed_domains) && tool.allowed_domains.length === 101 && tool.allowed_domains.includes('nordstrom.com'));
 ok('stream requested upstream', lastUpstream.body.stream === true);
 ok('response is an event stream', (res.headers.get('content-type') || '').includes('text/event-stream'));
 ok('SSE body passes through verbatim', (await res.text()) === SSE_BODY);
@@ -92,11 +92,11 @@ for (const [label, domains] of [
   lastUpstream = null;
   res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: domains }));
   const t = lastUpstream && (lastUpstream.body.tools || [])[0];
-  ok(label + ' → ignored, server list used', res.status === 200 && t && t.allowed_domains.length === 100 && !t.allowed_domains.includes('evil.example.com'));
+  ok(label + ' → ignored, server list used', res.status === 200 && t && t.allowed_domains.length === 101 && !t.allowed_domains.includes('evil.example.com'));
 }
 lastUpstream = null;
 res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true }));
-ok('no search_domains at all → server list used (new client protocol)', res.status === 200 && lastUpstream.body.tools[0].allowed_domains.length === 100);
+ok('no search_domains at all → server list used (new client protocol)', res.status === 200 && lastUpstream.body.tools[0].allowed_domains.length === 101);
 
 console.log('\nA5. The origin gate still guards the search path');
 res = await handler(new Request('https://stylestar.app/.netlify/functions/style-ai', {
@@ -124,14 +124,14 @@ const quietErr = async (fn) => { const c = console.error; console.error = () => 
 const SSE_OK = () => new Response(SSE_BODY, { status: 200, headers: { 'Content-Type': 'text/event-stream' } });
 
 // One blocked domain → pruned, memoized, retried, streams. (Domains are the
-// SERVER's 100 now; the memo means later requests skip the blocked one, which
+// SERVER's 101 now; the memo means later requests skip the blocked one, which
 // the counts below account for. Deep memo coverage lives in cowork3.js.)
 upstreamCalls = [];
 replyQueue = [() => blockedErr(['gucci.com']), SSE_OK];
 res = await quietErr(() => handler(fnReq({ max_tokens: 600, messages: MSGS, search: true })));
 ok('retried once', upstreamCalls.length === 2);
-ok('first call carried gucci.com', upstreamCalls[0].includes('gucci.com') && upstreamCalls[0].length === 100);
-ok('retry pruned only the blocked store', !upstreamCalls[1].includes('gucci.com') && upstreamCalls[1].length === 99);
+ok('first call carried gucci.com', upstreamCalls[0].includes('gucci.com') && upstreamCalls[0].length === 101);
+ok('retry pruned only the blocked store', !upstreamCalls[1].includes('gucci.com') && upstreamCalls[1].length === 100);
 ok('reply streams through after the prune', (res.headers.get('content-type') || '').includes('text/event-stream') && (await res.text()) === SSE_BODY);
 
 // Two rounds of pruning still succeed.
@@ -305,7 +305,7 @@ const linkCases = await page.evaluate((PU) => {
   // Subdomain of an allowed store is allowed.
   h = run('The Nova bag from Nordstrom (~$79) [https://m.nordstrom.com/s/nova/1]');
   cases.subdomain = h.includes('href="https://m.nordstrom.com/s/nova/1"');
-  // A URL outside the 100 stores: marker stripped, store falls back to a search link.
+  // A URL outside the 101 stores: marker stripped, store falls back to a search link.
   h = run('A tote from Madewell (~$88) [https://evil.example.com/steal] is cute.');
   cases.offList = !h.includes('evil.example.com') && !h.includes('[') && /href="[^"]*madewell/.test(h);
   // javascript: smuggled in brackets never becomes a link.

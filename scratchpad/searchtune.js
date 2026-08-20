@@ -252,7 +252,9 @@ const counts = await page.evaluate(() => ({
 }));
 // 2026-08-12: Kate Spade removed at Cath's own call — a brand she wouldn't
 // recommend to a client has no place in her curated list. 101 → 100.
-ok('now 100 stores (Kate Spade removed, her call)', counts.stores === 100, String(counts.stores));
+// Then 100 → 101 on 2026-08-21: Diane von Furstenberg, added after Rakuten
+// approved her, with every dimension hers.
+ok('now 101 stores (Kate Spade out 08-12, DVF in 08-21)', counts.stores === 101, String(counts.stores));
 // 2026-08-12: Abercrombie moved from keyword-scoped-never (it was unscoped)
 // into param-scoped, via her verified gender facet — gp count 5 → 6.
 ok('39 keyword-scoped + 6 param-scoped', counts.w === 39 && counts.gp === 6, counts.w + ' / ' + counts.gp);
