@@ -6096,12 +6096,14 @@ function _restoreSuggestions(){
 // permanent anchor (the door she cannot just type). Two ring chips show per
 // visit, advancing one step each fresh-chat open, so the chat feels a little
 // fresh every time — the same return-loop instinct as her item-of-the-week.
-// ⚠️ Ring wording is hers or blessed by her; don't reword without her. The
+// ⚠️ Ring wording is ALL hers now: the season chip's sent message was trimmed
+// 2026-08-20 to her client's exact question, dropping a Claude-added second
+// sentence that made one chip ask two things. Don't reword without her. The
 // onclick reads the message from _CHIP_RING directly so apostrophes in her
 // clients' words never need escaping into the attribute.
 var _CHIP_RING=[
   {l:'Dress me for an event',m:'I have an event and I don’t know what to wear. Can you help me nail the right vibe?'},
-  {l:'What’s in this season?',m:'What’s in this season? What trends should I know about?'},
+  {l:'What’s in this season?',m:'What’s in this season?'},
   {l:'My essentials',m:'What are wardrobe essentials I should have based on my style?'},
   {l:'Shift one notch',m:'Help me shift my style one notch more polished'}
 ];
@@ -7887,15 +7889,22 @@ var _WDR_IDEA_EXCLUDE={
 // nothing to exclude them FROM. What was missing is the same gap as
 // "work-appropriate": "a black top" reads as obvious to a stylist and is
 // wide open to a model, so it needs her concrete definition.
-// ⚠️ The NEVER list is entirely hers (bodysuit, turtleneck, tank/camisole,
-// collared or button-front blouse, and satin). The positive half is Claude's
-// draft and SHE HAS NOT BLESSED IT -- reword freely. Applied to all three
-// colour-generic basic rows, the same trio that share the exclusions above.
+// ⚠️ EVERY WORD OF THIS IS HERS NOW (blessed 2026-08-20). The NEVER list was
+// always hers (bodysuit, turtleneck, tank/camisole, collared or button-front
+// blouse, satin). The opening sentence is her own from 2026-08-15, "A black top
+// should just be a black top", generalised because one string serves all three
+// colour-generic rows. The positive half was a Claude draft until she approved
+// it verbatim. Applied to the same trio that share the exclusions above.
+// ▶ FABRIC IS DELIBERATELY LEFT OPEN, her call 2026-08-20. It was put to her
+// that satin is banned while nothing says what a basic top SHOULD be, so
+// chiffon or organza would technically comply; she chose to leave it open
+// rather than name cotton/jersey/knit. Do NOT add a fabric list here without
+// her -- it is a decision, not an oversight.
 // ▶ SATIN ADDED 2026-08-15, her call after seeing it on her White tops shelf:
 // "that is more of a dressy or going out top so let's put it there instead."
 // So it is banned here AND named as belonging on to6 -- a piece she rules out
 // of one row is not rejected, it is filed where a stylist would put it.
-var _BASIC_TOP='She means a SIMPLE everyday top, nothing more. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, satin or any other dressy shiny fabric, or anything going-out, sequined or sheer. Every option must be a plain, wearable top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
+var _BASIC_TOP='A top like this should just be a top. NEVER suggest a bodysuit, a turtleneck or mock neck, a tank top or camisole, a collared or button-front blouse, satin or any other dressy shiny fabric, or anything going-out, sequined or sheer. Every option must be a simple everyday top with a crew, scoop or small V neckline and short, three-quarter or long sleeves. This rule is absolute, the same weight as her never-wear list.';
 var _WDR_IDEA_DEFINE={
   to1:_BASIC_TOP,   // White tops
   to2:_BASIC_TOP,   // Black tops — her 2026-08-15 catch
