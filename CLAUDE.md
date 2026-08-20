@@ -7,7 +7,169 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-20 LATE — 🎉 THE TRADEMARKS ARE FILED AND STYLE STAR EARNS MONEY)
+## ▶ NEXT SESSION — START HERE (2026-08-20 NIGHT — 📸 THE EDIT HAS PHOTOS, AND THE LICENSING RULE IS THE KEEPER)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the .md for now... I just got a reply from almira")
+**THREE PRs merged and ALL CURL-VERIFIED LIVE: #881 · #882 · #883.** Branch resynced to main, tree clean,
+everything at the #883 merge. ⚠️ **Three Netlify builds.**
+▶▶ **THE HEADLINE: STYLE STAR HAS PRODUCT PHOTOS FOR THE FIRST TIME.** Her two DVF pieces and the FARM Rio
+dress carry real photography on the Edit, and **her scarf is the Star of the Week on the front door with its
+photo, on a white card.** Her words: *"I love seeing photos on the Edit... just having something up there
+makes me happy, for now."*
+▶ **AND THE FIRST THING TO ASK: SHE HAS A REPLY FROM ALMIRA and was opening a new session to bring it.**
+Ask for it before anything else.
+
+### 🚨🚨 THE RULE OF THE DAY, AND IT IS THE MOST REUSABLE THING HERE: A PHOTO IS LICENSED BY AN AFFILIATE APPROVAL
+**Her question stopped the build and she was RIGHT to ask it:** *"I am confused about photo usage. I thought
+it was not legal to use product photos? I thought from the beginning of when we built the Edit we purposefully
+didn't put any photos on there because we didn't have any legal affiliate approval to do so?"* **Her memory was
+correct and her original instinct was correct.**
+- ▶ **THE ANSWER, and it should be given in exactly this shape whenever photos come up again: a product photo
+  is the RETAILER'S COPYRIGHTED WORK. What licenses it is an AFFILIATE APPROVAL with that retailer — NEVER the
+  fact that we link to the piece, and NEVER the fact that the image is technically fetchable.** An affiliate
+  programme grants a limited, revocable licence to its creative assets for the purpose of promoting them; that
+  is why affiliate sites carry product photos at all. It generally covers assets served THROUGH the network
+  (the feed, the link builder, the banner library) and does NOT cover scraping the retailer's website.
+- ⚠️⚠️ **THE TRAP, MEASURED, AND IT IS WHY THE RULE HAD TO GO INTO CODE: TECHNICAL ACCESS AND LEGAL PERMISSION
+  ARE ALMOST UNRELATED.** All 21 Edit items were swept for an `og:image`. **7 of 21 gave one up.** But four of
+  those seven are **Zappos, Target, Sexy Little Robe and Baby Gold — stores she has NO relationship with.**
+  Meanwhile Nordstrom (which holds **6** of her items) serves **250KB of JavaScript shell with ZERO `og:` tags**
+  and Amazon returned a **3.7KB bot-block page**. ▶ **So "I can grab it" never means "I may use it."**
+- ▶ **THE REAL COUNT IS 3 OF 21:** the two DVF pieces + the FARM Rio dress, because `_AFF_MID` holds exactly
+  two advertisers. Everything else is Nordstrom ×6 · Bloomingdale's ×2 (pending) · Amazon ×2 · Zappos ·
+  Express · Athleta · Target · lululemon · Everything But Water · Sexy Little Robe · Baby Gold.
+- ⭐⭐ **SO IT IS A GUARANTEE IN CODE, NOT A NOTE — the `filterNeverWear` / `_nameParity` / affwrap-sweep
+  pattern, applied again:** `scratchpad/editpx.js` renders the real Edit and **asserts ZERO photos on an
+  unapproved retailer**, and the Star card's photo is **gated on `_affMid()` itself** — the very function that
+  decides whether a link earns. ▶ **ONE SOURCE OF TRUTH: IF THE LINK CANNOT EARN, THE PHOTO IS NOT OURS TO
+  SHOW.** A future Star given a `px:` url for an unapproved store silently shows no photo rather than a
+  liability. **Written in capitals at the CSS: GREP _AFF_MID BEFORE ADDING ONE.**
+- ⚠️ **CLAUDE GOT THIS WRONG FIRST AND SHE CAUGHT IT.** The advice offered was "paste an image URL per item"
+  for the fourteen we cannot fetch — **bad advice**, because those are exactly the stores with no licence.
+  Corrected to her plainly. ▶ **Weigh any future "just add photos" suggestion against the approval list first.**
+- ▶ **NOT LEGAL ADVICE, AND SHE WAS TOLD SO: the authoritative text is her RAKUTEN PUBLISHER AGREEMENT, READ
+  WHILE LOGGED IN** (her own standing rule, the one the advertiser-directory error taught), **and it is worth
+  a line to Almira** since she is already engaged. ⚠️ **The cleanest version pulls creative from Rakuten's
+  LINK BUILDER rather than the product page — worth adding to the support ticket already open.**
+- ⭐ **THE REFRAME THAT LANDED, and it is true: advertiser approvals are not just commission, they are the
+  VISUAL GLOW-UP.** Every approval converts its items from text cards to photo cards. That is her own Path A /
+  Path B conversation made concrete. ⚠️ **And the dependency is worth naming: SIX of her 21 items are
+  NORDSTROM, which runs on IMPACT — the network that declined her, ticket still open.**
+
+### ⭐⭐ THE PHOTO CARD IS "A3 WITH THE 3:4" — her pick from four rendered options
+**INSET AND FRAMED, not full-bleed**, so the photo respects the card's own border, which is the display-case
+language the rest of the app already speaks. **3:4** because a **SQUARE crop cuts a full-length maxi off at the
+knee** (measured on her own FARM Rio dress) and **a card headed "Maxi Dress" must not show a midi.**
+- 🚨⭐ **PHOTOS BESIDE THE TEXT WERE RENDERED AND REJECTED ON MEASUREMENT, NOT TASTE, and the finding
+  generalises: HER ITEM NAMES RUN 46-60 CHARS AND ALREADY WRAP 3-4 LINES AT FULL WIDTH.** Take 96-118px away
+  for a photo column and "FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress" becomes **SEVEN LINES**, the
+  Shop button wraps to three, and the note clips. ▶ **A photo can sit ABOVE this card's content, never beside
+  it.** Don't re-propose a thumbnail layout.
+- **Heights measured across three cards:** current 1308px · **A3 2217** · square 2116 · full-bleed 3:4 2392.
+- ⚠️ **Images HOTLINK from the retailer CDN over https** (`?v=...&width=800` on Shopify) with
+  **`onerror="this.remove()"`**, so a dead url degrades to exactly today's text card instead of painting a
+  broken-image icon. ⚠️ **`http://` would be blocked as MIXED CONTENT — the og:image comes back http, always
+  upgrade it.**
+- ⭐ **AND THE WORRY CLAUDE RAISED WAS WRONG, said plainly to her: 3 photo cards among 18 text cards DOES NOT
+  look broken.** The seam was rendered (kitten heel into the scarf) and it reads as *the newer pieces have
+  photos*. **She was right to push ahead.** Her words: *"I know it's not ideal for consistency, but just having
+  something up there makes me happy, for now."*
+
+### ⭐ THE STAR OF THE WEEK IS PINNED TO HER SCARF — and she reaffirmed it at the pause
+Her ask: hold the DVF scarf **until she is ready to invite testers / launch**, then resume the Sunday rotation.
+- ▶▶ **`WEEK_STAR_PIN` DOES IT. TO RESUME: SET IT BACK TO `null`. Nothing else to change.** There is **no timer
+  and nothing that can expire it** — it holds until someone edits that one line. Told to her that way.
+- ⭐ **PINNED BY NAME, NOT BY INDEX, and the reason generalises: her queue gets REORDERED FOR SEASON** (the
+  2026-08-14 pass moved four items), **so an index would silently start pointing at a different piece.** A pin
+  naming an item no longer in the queue **falls through to the rotation** rather than blanking the front door.
+- **The scarf joined the queue, 16 → 17**, with her Edit note condensed to a one-liner in her own words
+  ("This is the definition of wearable art. 100% silk, and the floral print is stunning.") per the 2026-08-14
+  rule — only her words, nothing invented.
+- ⚠️⚠️ **AT THE MOMENT SHE UNPINS: THE QUEUE IS 17 NOW, NOT 16, so the week-to-item mapping has SHIFTED**
+  (week mod 17). ▶ **ASK HER whether she wants it reordered rather than guessing** — the queue order is her
+  seasonal calendar.
+
+### ⭐ THE STAR CARD: HER PHOTO AT 140px, AND SHE MADE IT WHITE
+Her ask: *"yes definitely I want it to feature the photo there please"*, then *"I would like for the background
+to be white, like on the edit page, instead of that cream color."*
+- ⭐⭐ **THE SIZE WAS MEASURED AGAINST A DRAWN IPHONE FOLD, and that is the reusable move: the Star card is the
+  FRONT DOOR, so height is more precious there than anywhere.** Baseline: card 212px, whisper ends 604px, fold
+  ~700px — about **96px of headroom**. A full-width photo is **395px tall** and pushes the whisper and the SHOP
+  awning well below the fold, which fights her own stated value for that screen (*"I don't want her to miss a
+  thing"*). **At 190px the fold cut through her note and dropped Shop it below it. At 140px the WHOLE card
+  clears: label, photo, name, price, note, Shop it AND Save.** Two assertions pin it.
+- **`.wks-card` cream `#FBF6E9` → `#fff`**, matching `.dc-item` on the Edit. ⭐ **It also matches the marquee
+  mirror directly above it, so the top of the front door now reads as ONE material instead of two.**
+- ✅ **weekstar's contrast checks read the COMPUTED background, not a hardcoded colour, so they followed the
+  change on their own** — the derived-not-restated lesson paying off again.
+
+### ✅ THE TWO NEW EDIT ITEMS + THE SCARF'S "100% SILK" (#881)
+- **DVF Jeanne Silk Jersey Wrap Dress $678** · **FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress $360**.
+  Both verified BEFORE adding: 200, in stock, real product names matching hers, and **FARM Rio's
+  `compare_at_price` is null so $360 is the REGULAR price, not a sale** (her standing evergreen rule).
+- ⚠️ **THE DVF DRESS DELIBERATELY CARRIES NO COLOUR SUFFIX**, against the usual convention, for two reasons:
+  **her note is ABOUT the colour range** ("comes in lots of colors. My favorites are the green and the chain
+  link black"), so pinning one colourway fights the note; and **measured**, the suffix ran the name to 4/5/6
+  lines at 390/360/320 — the tallest in the Edit — against 3/4/5 without.
+- **The scarf's note now reads "...wearable art. 100% silk, and the floral print is stunning."** — leading with
+  the fabric matches her own two existing notes that open "100% linen gives high vibes!" and "100% silk".
+- ⭐ **Both new hosts were ALREADY in `_AFF_MID`, so both pieces earned from the moment they went live** with
+  no plumbing change.
+
+### ⚠️ SESSION LESSONS
+- 🚨 **A JS ARRAY'S LAST ENTRY HAS NO TRAILING COMMA, so appending to it produces `}{` and a syntax error that
+  takes out THE WHOLE SCRIPT BLOCK.** Cost one broken build. ▶ **The diagnostic that found it in one step:
+  parse `git show HEAD:index.html` AND the working tree and compare** — proving the failure is yours before
+  hunting for it. (A line-by-line bisect is USELESS here: it cuts multi-line string concatenations and blames
+  innocent code — it fingered the Instagram footer, live and untouched for weeks.)
+- 🚨 **AN IDEMPOTENCY GUARD MUST MATCH SOMETHING UNIQUE.** The patch script skipped adding the Star's photo url
+  because it guarded on the substring `'px:'`, which occurs elsewhere in the file — **so the card would have
+  shipped with no photo at all.** ▶ **Found only by CHECKING THE EDIT LANDED rather than trusting the script's
+  own edit count.** Always grep for the new content afterwards.
+- ⚠️ **"A test that fails on a correct value is usually a broken harness" — proven again:** the new suite's
+  no-intimates check matched **"bra" inside "Lucky Brand"**. Word-boundary it. (weekstar's own copy already
+  did, which is why only the new one failed.)
+- 🚨 **THIS SANDBOX'S CHROMIUM CANNOT REACH RETAIL CDNs** (the same wall as fonts.googleapis.com), so an
+  in-browser image-load check **hangs forever** if the promise has no timeout. ▶ **The suite now RACES the load
+  against a 4s timeout and SKIPS HONESTLY, saying so**; reachability is proven by `curl` instead. **For
+  RENDERS, intercept `**/cdn/shop/**` and serve local copies** — the real urls are curl-proven 200.
+- ⚠️ **`sleep` chained after a command is blocked by the harness** — use a background task or an until-loop.
+- ⚠️ **SendUserFile can return a 503; a straight retry worked.**
+
+### ✅ TEST HYGIENE
+- **NEW `scratchpad/editpx.js`, 48 checks** — ⭐ the licensing SWEEP (zero photos on an unapproved retailer),
+  the gate both ways (swap the pinned Star's url to Nordstrom → no photo; swap back → photo), the pin holding
+  across 52 weeks, rotation resuming across all 17 when unpinned, the affiliate wrap still reaching all three
+  links, photo boxes measured 3:4 + inset + above the name, **Shop it and Save proven above a real 390×844
+  fold**, no overflow 390/360/320, zero JS errors.
+- **weekstar 35 → 39, THREE ASSERTIONS UPDATED DELIBERATELY:** the queue count 16 → 17 · **the Star's link is
+  affiliate-wrapped now (#879), so the assertion became STRONGER — unwrap `murl` and require the exact product
+  url, so a wrap can never quietly change where the tap lands** · rotation arithmetic measured with the pin
+  cleared and restored. ⭐ **And the wrap-around date now DERIVES from queue length instead of restating it** —
+  the `curated.js` lesson, so it never needs editing again.
+- **affwrap 23 · affq 40 · e2e 29 · hubs 49** green. ⚠️ affq's documented "results saved" timing flake hit
+  once, clean on rerun.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⚖️⚖️ **ALMIRA REPLIED — SHE HAS IT AND WAS BRINGING IT TO A NEW SESSION. ASK FOR IT FIRST.** The open
+   questions were **Statement of Use timing + cost** (both marks are 1(b) intent-to-use) and anything on the
+   Statement of Correction. **Log serial/date details here.**
+2. 📊 **Ask her to tap the scarf on the live site and check Rakuten REPORTS a day later.** ⚠️ **STILL the only
+   unproven link in the money chain, and now it is the Star on the front door, so it is easier than ever.**
+3. 📸 **How the photos feel on her phone** — the Edit's three, and the Star card white at 140px.
+4. 🔎 **The LINKS ▾ menu in Rakuten — bulk feed export or FTP?** ⚠️ **And now ALSO ask about the LINK BUILDER's
+   creative**, which is the properly-licensed source of product images.
+5. 📬 **Impact's support answer, due ~27-29 August.** ⚠️ **It now gates the photos too** — Nordstrom is 6 of
+   her 21 Edit items and runs on Impact.
+6. ⭐ **ANY new advertiser approval is now a DOUBLE unlock: commission AND photos.** One line in `_AFF_MID`,
+   then a `px:`/`<img class="dc-item-px">` per item at that store.
+7. 📱 **Her search-quality verdict** — still the one blocker on testers, and testers are what releases the pin.
+8. ⭐ **Her three parked ideas, all needing nobody else:** the NEW SHAREABLE, her NEXT INSTAGRAM POST, and the
+   EMAILABLE WISHLIST (named a fourth time).
+9. ⚠️ **The two link-check Routines are STILL unread, seventh session running.**
+
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-20 LATE — 🎉 THE TRADEMARKS ARE FILED AND STYLE STAR EARNS MONEY)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's do the .md save now. I will open up in a new chat with some more items for the Edit")
 **FOUR PRs merged and ALL CURL-VERIFIED LIVE: #876 · #877 · #878 · #879.** Branch resynced to main, tree clean,
@@ -214,8 +376,9 @@ legal name always belonged (Contact stays human, the 08-17 reasoning).
 - ⚠️ **affq's "results saved" check flakes on timing** — clean on rerun, a documented pattern now.
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. 🛍 **SHE IS COMING BACK WITH MORE EDIT ITEMS.** ⭐ **FARM Rio and DVF pieces now EARN from the moment they
-   go live** — worth telling her that before she picks.
+1. 🛍 ~~**SHE IS COMING BACK WITH MORE EDIT ITEMS.**~~ ⚠️ **STALE — DONE 2026-08-20 NIGHT: the DVF Jeanne
+   wrap dress and the FARM Rio maxi are in (#881), the Edit is 21 items, and both earn. See the top of this
+   file.**
 2. 📊 **Ask her to tap the scarf on the live site and check Rakuten REPORTS a day later.** The only unproven
    link in the chain.
 3. 🔎 **The LINKS ▾ menu in Rakuten — is there a bulk feed export or FTP?** The one open feeds question.
