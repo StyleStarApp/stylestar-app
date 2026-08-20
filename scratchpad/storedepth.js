@@ -1,6 +1,6 @@
 // storedepth.js — catalog DEPTH in the store table (her call 2026-08-15).
 // Born from her Tuckernuck screenshot: "print wrap top" at a small boutique
-// answered with a wrap skirt and a perfume. 25 of her 100 stores are marked
+// answered with a wrap skirt and a perfume. 25 of her 101 stores are marked
 // deep enough to take a specific multi-word search; everything else is a store
 // to send what it is KNOWN FOR.
 //
@@ -41,14 +41,20 @@ const t = await pg.evaluate(() => {
 const MIDDLE = ["Talbots", "J.Crew", "Free People", "Anthropologie"];
 const HERS = ["Nordstrom","Macy's","Dillard's","Belk","Bloomingdales","Saks","Neiman Marcus","NET-A-PORTER",
               "Shopbop","Nordstrom Rack","TJ Maxx","Target","Amazon","Revolve","Zara","H&M"];
-ok('store count untouched at 100', t.total === 100, String(t.total));
+// hardcoded ON PURPOSE, unlike the derived counts below: this one's whole job
+// is to notice a store quietly appearing or vanishing. 101 as of 2026-08-21.
+ok('store count is 101 (DVF added 2026-08-21)', t.total === 101, String(t.total));
 ok('the 16 she confirmed are all flagged deep', HERS.every(n => t.full.includes(n)), HERS.filter(n => !t.full.includes(n)).join());
 ok('the 4 middle-tier stores she added are flagged', MIDDLE.every(n => t.full.includes(n)), MIDDLE.filter(n => !t.full.includes(n)).join());
 ok('nothing else was flagged deep', t.full.length === HERS.length + MIDDLE.length,
    t.full.filter(n => !HERS.includes(n) && !MIDDLE.includes(n)).join());
 ok('J.Jill and Boden deliberately stay known-for only', !t.full.includes('J.Jill') && !t.full.includes('Boden'));
-ok('Zappos + DSW deep for shoes, Sunglass Hut for eyewear',
-   t.cat.sort().join(',') === "Athleta:activewear,DSW:shoes,Lands' End:swimwear,Sunglass Hut:eyewear,Zappos:shoes", t.cat.join());
+// The category-deep roster, pinned by name ON PURPOSE. Each entry is a store
+// that can take a specific search inside ONE lane and nowhere else, so the list
+// is a deliberate roll-call rather than a number: DVF returns 363 results for
+// "wrap dress" and a flat 0 for "sneakers".
+ok('the 6 category-deep stores, each in its own lane',
+   t.cat.sort().join(',') === "Athleta:activewear,DSW:shoes,Diane von Furstenberg:dresses,Lands' End:swimwear,Sunglass Hut:eyewear,Zappos:shoes", t.cat.join());
 // derived, never restated: a test that hardcodes a number must be edited every
 // time the list grows; a derived one never does (the curated.js lesson).
 ok('every remaining store carries no depth flag', t.none === t.total - t.full.length - t.cat.length,
