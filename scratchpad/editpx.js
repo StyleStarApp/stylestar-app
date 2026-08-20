@@ -140,6 +140,56 @@ ok('Star card shows the scarf', /Flag Scarf/.test(star.txt), star.txt);
 ok('Star card shows her price', /\$198/.test(star.txt), star.txt);
 ok('Star card link is affiliate-wrapped', star.href.includes('click.linksynergy'), star.href.slice(0,80));
 
+// ---- the Star card's own photo, and its licensing gate ----
+const sp=await pg.evaluate(()=>{
+  const im=document.querySelector('#wbStar .wks-px');
+  if(!im)return {present:false};
+  const r=im.getBoundingClientRect();
+  const lbl=document.querySelector('#wbStar .wks-lbl').getBoundingClientRect();
+  const nm=document.querySelector('#wbStar .wks-n,#wbStar .wks-name');
+  return {present:true,w:Math.round(r.width),ratio:+(r.width/r.height).toFixed(3),
+          belowLabel:r.top>=lbl.bottom-0.5,
+          aboveName:nm?r.bottom<=nm.getBoundingClientRect().top+0.5:true,
+          alt:im.getAttribute('alt')||'',onerr:im.getAttribute('onerror')||'',
+          https:(im.getAttribute('src')||'').startsWith('https://')};
+});
+ok('Star card carries a photo', sp.present);
+ok('Star photo is 140px wide (her pick: keeps Shop it above the fold)', sp.w===140, sp.w);
+ok('Star photo is 3:4', Math.abs(sp.ratio-0.75)<0.02, sp.ratio);
+ok('Star photo sits under the label, above the name', sp.belowLabel&&sp.aboveName, JSON.stringify(sp));
+ok('Star photo is https, has alt, degrades on error',
+   sp.https&&sp.alt.length>10&&/this\.remove\(\)/.test(sp.onerr), JSON.stringify(sp));
+
+// ⭐ THE GATE: a px: url on an UNAPPROVED store must render no photo at all.
+const gate=await pg.evaluate(()=>{
+  const keep=window.WEEK_STAR_PIN, star=WEEK_STARS.find(x=>x.n===keep);
+  const url0=star.url, px0=star.px;
+  star.url='https://www.nordstrom.com/s/8960533';   // not an approved advertiser
+  _renderWeekStar();
+  const unapproved=!!document.querySelector('#wbStar .wks-px');
+  star.url=url0; star.px=px0; _renderWeekStar();
+  const restored=!!document.querySelector('#wbStar .wks-px');
+  return {unapproved,restored};
+});
+ok('GATE: an unapproved store shows NO photo even with a px: url', gate.unapproved===false, JSON.stringify(gate));
+ok('GATE: the approved store shows it again', gate.restored===true, JSON.stringify(gate));
+
+// the whole card still fits above a real iPhone fold
+await pg.setViewportSize({width:390,height:844});
+await pg.evaluate(()=>{show('s-wb');_renderWeekStar();window.scrollTo(0,0);});
+await pg.waitForTimeout(400);
+const fold=await pg.evaluate(()=>{
+  const c=document.querySelector('#wbStar .wks-card').getBoundingClientRect();
+  const btn=document.querySelector('#wbStar .wks-shop,#wbStar a[href]');
+  const sv=document.querySelector('#wbStar .wl-save');
+  return {cardBottom:Math.round(c.bottom+window.scrollY),
+          shopBottom:btn?Math.round(btn.getBoundingClientRect().bottom+window.scrollY):0,
+          saveBottom:sv?Math.round(sv.getBoundingClientRect().bottom+window.scrollY):0};
+});
+ok('Shop it stays above the iPhone fold (700px)', fold.shopBottom>0&&fold.shopBottom<=700, JSON.stringify(fold));
+ok('Save stays above the iPhone fold', fold.saveBottom>0&&fold.saveBottom<=700, JSON.stringify(fold));
+await pg.setViewportSize({width:390,height:900});
+
 // layout at every width
 for(const w of [390,360,320]){
   await pg.setViewportSize({width:w,height:900});
