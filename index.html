@@ -3783,6 +3783,14 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <a class="dc-item-btn" href="https://www.nordstrom.com/s/8960533" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
+    <div class="dc-item">
+      <span class="dc-item-star">⭐</span>
+      <div class="dc-item-name">Diane von Furstenberg Flag Scarf &mdash; Myrtle Berry</div>
+      <div class="dc-item-meta"><span class="dc-store">Diane von Furstenberg</span><span class="dc-price">$198</span></div>
+      <div class="dc-item-note">This is the definition of wearable art. The floral print is stunning. Pieces like this elevate your entire look instantly.</div>
+      <a class="dc-item-btn" href="https://www.dvf.com/products/flag-scarf-in-myrtle-berry" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
+    </div>
+
     <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-trend-link" onclick="openWardrobe('trend')">Curious what's trending right now? &rarr;</div>
 
@@ -5381,6 +5389,42 @@ var _CF_PATH_COLORS={pink:'Pink',black:'Black',white:'White',red:'Red',blue:'Blu
 function _alreadyWomens(term){
   return /^\s*(?:plus[\s-]?size|plus|petite|tall|(?:extra[\s-]?)?(?:wide|narrow|medium)[\s-]?width)\b/i.test(String(term||''));
 }
+// ── RAKUTEN AFFILIATE WRAPPING (2026-08-21) ────────────────────────────────
+// Her first two advertiser approvals: FARM Rio (mid 44912) and Diane von
+// Furstenberg (mid 53590), both verified live -- a deeplink to an arbitrary
+// page 302s to that page with Rakuten's ranMID/ranEAID appended, so SEARCH
+// pages work and not only the pre-listed products.
+//
+// ▶ MATCHED BY HOSTNAME, NOT BY STORE KEY, and that is deliberate: the exact
+// product URLs in this app (her Edit picks, catalog rows, links she pastes
+// herself) do not always carry a resolvable store key -- an Edit pick's store
+// field reads "Badu · Amazon", which is a brand AND a retailer. The hostname
+// is always there and never ambiguous.
+//
+// ⚠️ The publisher id is PUBLIC by necessity: it has to reach the browser for
+// a click to be credited. Every affiliate site exposes one. It is not a secret
+// and must not be treated as one.
+// ⚠️ An unknown host returns the URL UNCHANGED, so the other 99 stores are
+// untouched. Add a store here only when Rakuten has actually approved it.
+// ⚠️ Never double-wraps, so it is safe to call twice on the same URL -- which
+// happens by design when an Edit href is rewritten and then saved.
+var _AFF_ID='jZNkkinrr1k';
+var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590'};
+function _affMid(u){
+  try{
+    var host=new URL(u).hostname.toLowerCase().replace(/^www\./,'');
+    for(var d in _AFF_MID){if(host===d||host.slice(-(d.length+1))==='.'+d)return _AFF_MID[d];}
+  }catch(e){}
+  return '';
+}
+function _affUrl(u){
+  u=String(u||'');
+  if(!/^https?:\/\//i.test(u))return u;
+  if(u.indexOf('click.linksynergy.com')>=0)return u;
+  var mid=_affMid(u);
+  if(!mid)return u;
+  return 'https://click.linksynergy.com/deeplink?id='+_AFF_ID+'&mid='+mid+'&murl='+encodeURIComponent(u);
+}
 function getStoreUrl(store,item,search){
   var raw=String(search||item||'').trim();
   const key=resolveStore(store);
@@ -5410,7 +5454,7 @@ function getStoreUrl(store,item,search){
       if(cpVal){
         var slugSrc=(s.w&&!_alreadyWomens(raw)?'womens ':'')+raw;
         var slug=slugSrc.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
-        return s.cfpBase+slug+'/Color_normal/'+encodeURIComponent(cpVal)+'?ss=true';
+        return _affUrl(s.cfpBase+slug+'/Color_normal/'+encodeURIComponent(cpVal)+'?ss=true');
       }
     }
     var facet='';
@@ -5423,8 +5467,8 @@ function getStoreUrl(store,item,search){
     // Most stores just take the term on the end of `u`. A few cannot: Lacoste
     // wraps it inside a JSON parameter AND repeats it in a hash fragment. Those
     // carry a `tpl` template instead, where {q} is replaced everywhere it appears.
-    if(s.tpl)return s.tpl.replace(/\{q\}/g,term);
-    return s.u+term+(s.gp||'')+facet;
+    if(s.tpl)return _affUrl(s.tpl.replace(/\{q\}/g,term));
+    return _affUrl(s.u+term+(s.gp||'')+facet);
   }
   // Unknown store: still get her to real products rather than a web page of links.
   return'https://www.google.com/search?tbm=shop&q='+encodeURIComponent(raw);
@@ -8157,7 +8201,7 @@ function _curatedCard(x){
     +'<div class="shop-item-store">at '+_esc(x.retailer)+' · $'+_esc(String(x.price))+'</div>'
     +'<div class="wdr-cur-note">&ldquo;'+_esc(_wdrTrimNote(x.note))+'&rdquo;</div></div>'
     +'<div class="shop-card-act">'
-    +'<a href="'+_esc(x.url)+'" target="_blank" rel="sponsored noopener" class="shop-link">Shop it</a>'
+    +'<a href="'+_esc(_affUrl(x.url))+'" target="_blank" rel="sponsored noopener" class="shop-link">Shop it</a>'
     +_wlSaveBtn(saveItem)
     +'</div></div>';
 }
@@ -8526,6 +8570,16 @@ function _wlEditItems(){
 // nothing for her to remember. Idempotent, since the screen is reopened often.
 function _wlDecorateEdit(){
   _wlEditItems().forEach(function(it){
+    // Affiliate-wrap the Edit's hardcoded href at runtime, so a piece she adds
+    // by hand needs nothing done to it. Same self-maintaining reason the Save
+    // control is generated here rather than pasted into each block.
+    // ⚠️ ORDER IS LOAD-BEARING: _wlEditItems() already captured it.url RAW,
+    // above, before this rewrite. So the wishlist stores the plain product URL
+    // and re-wraps at render time, which means a change of affiliate id still
+    // reaches pieces she saved months ago. Storing the wrapped URL would strand
+    // them. _affUrl never double-wraps, so calling it on both sides is safe.
+    var _a=it.el.querySelector('.dc-item-btn');
+    if(_a){var _w=_affUrl(_a.getAttribute('href')||'');if(_w)_a.setAttribute('href',_w);}
     if(it.el.querySelector('.wl-save'))return;
     var btn=it.el.querySelector('.dc-item-btn');
     if(!btn)return;
@@ -8661,8 +8715,8 @@ function renderWishlist(){
     // wardrobe shelf -- real URL and price but deliberately NO badge, her
     // 2026-08-14 call: the catalog is unattributed).
     var pick=!!it.pick,own=!!it.own,catx=!!it.exact,url='',exact=false;
-    if(pick||catx)url=_wlSafeUrl(it.url);
-    else if(own&&it.url){url=_wlSafeUrl(it.url);exact=!!url;}
+    if(pick||catx)url=_affUrl(_wlSafeUrl(it.url));
+    else if(own&&it.url){url=_affUrl(_wlSafeUrl(it.url));exact=!!url;}
     var exactLink=!!url;
     if(!pick&&!url){try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}}
     h+='<div class="wl-row'+(pick?' pick':'')+(own?' own':'')+'">'
@@ -9844,7 +9898,7 @@ function _renderWeekStar(){
     +'<div class="wks-name">'+_esc(WEEK_STAR.n)+'</div>'
     +'<div class="wks-store">'+_esc(WEEK_STAR.store)+(WEEK_STAR.price?' &middot; '+_esc(WEEK_STAR.price):'')+'</div>'
     +(WEEK_STAR.note?'<div class="wks-note">'+_esc(WEEK_STAR.note)+' <svg class="wks-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>':'')
-    +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_wlSafeUrl(WEEK_STAR.url))+'" target="_blank" rel="sponsored noopener">Shop it &rarr;</a>'+_wlSaveBtn(item)+'</div>'
+    +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(WEEK_STAR.url)))+'" target="_blank" rel="sponsored noopener">Shop it &rarr;</a>'+_wlSaveBtn(item)+'</div>'
     +'</div>'
     +'<div class="wks-disc">Some links may earn a commission.</div>';
   el.classList.add('on');

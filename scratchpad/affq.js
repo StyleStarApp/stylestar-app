@@ -1,7 +1,7 @@
 // Affiliate-readiness + quiz batch (2026-07-31, the fourth Cowork brief).
 //
 // Part A is static: every outbound product link carries rel="sponsored
-// noopener" (including the 18 hardcoded Edit links), the a.co shortlinks are
+// noopener" (including every hardcoded Edit link), the a.co shortlinks are
 // canonical amazon.com/dp/ links now, @netlify/blobs is gone, and /results is
 // a real route in BOTH _ROUTES and netlify.toml (the server applies the toml's
 // own rewrite rules, so a typo there fails the test).
@@ -45,7 +45,12 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 // 27 → 28 updated deliberately 2026-08-14: the curated-catalog card
 // (_curatedCard, the 10th JS template) carries its own outbound "Shop it"
 // anchor with rel="sponsored noopener" — the census caught it as designed.
-ok('found the full set of outbound PRODUCT anchors (18 Edit + 10 templates)', anchors.length === 28, 'got ' + anchors.length);
+// ⚠️ DERIVED, not restated: the Edit grows every time she adds a piece (19 as
+// of 2026-08-21, the DVF silk scarf), so a hardcoded total needs editing on
+// every single addition. Only the 10 JS card templates are genuinely fixed.
+const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length;
+ok('found the full set of outbound PRODUCT anchors (every Edit link + 10 templates)',
+   anchors.length === EDIT_N + 10, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');
 ok('every product link carries sponsored + noopener', anchors.every(a => /rel="sponsored noopener"/.test(a)),
   anchors.filter(a => !/rel="sponsored noopener"/.test(a)).slice(0, 2).join(' '));
 ok('the Instagram link exists', social.length === 1, 'got ' + social.length);
@@ -53,7 +58,9 @@ ok('...points at her real handle', social.every(a => /href="https:\/\/instagram\
 ok('...carries noopener but NOT sponsored', social.every(a => /rel="noopener"/.test(a) && !/sponsored/.test(a)));
 ok('...has an aria-label, being an icon with no text', social.every(a => /aria-label="[^"]+"/.test(a)));
 const editBtns = [...HTML.matchAll(/<a class="dc-item-btn"[^>]*>/g)].map(m => m[0]);
-ok('all 18 hardcoded Edit links included', editBtns.length === 18 && editBtns.every(a => /rel="sponsored noopener"/.test(a)));
+ok('every hardcoded Edit link is included and carries the rel',
+   editBtns.length === EDIT_N && editBtns.length >= 19 && editBtns.every(a => /rel="sponsored noopener"/.test(a)),
+   editBtns.length + ' links');
 
 console.log('\nA2. Amazon shortlinks are canonical now');
 ok('no a.co shortlinks remain', !/a\.co\//.test(HTML));
@@ -145,7 +152,13 @@ const editDom = await page.evaluate(() => {
   const links = [...document.querySelectorAll('#s-dream .dc-item-btn')];
   return { n: links.length, rel: links.every(a => a.rel === 'sponsored noopener'), amazon: links.filter(a => a.href.includes('amazon.com/dp/')).length };
 });
-ok('all 18 Edit links carry the rel in the live DOM, 2 canonical Amazon', editDom.n === 18 && editDom.rel && editDom.amazon === 2, JSON.stringify(editDom));
+// ⚠️ 2026-08-21: an Edit href may now be AFFILIATE-WRAPPED in the live DOM
+// (click.linksynergy.com) even though the markup holds the bare product URL,
+// because _wlDecorateEdit rewrites it on render. The rel and the Amazon
+// canonicalisation are what this assertion is really about, so it counts
+// against the derived total rather than a frozen number.
+ok('every Edit link carries the rel in the live DOM, 2 canonical Amazon',
+   editDom.n === EDIT_N && editDom.rel && editDom.amazon === 2, JSON.stringify(editDom));
 await page.close();
 
 console.log('\nB2. Quiz autosave: exit and return keeps her place');
