@@ -7,7 +7,202 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-19 LATE — TWO NETWORKS IN TWO DAYS, AND IMPACT HAS TWO DOORS)
+## ▶ NEXT SESSION — START HERE (2026-08-20 — THE SEARCH TIER, FOUR DRAFTS CLOSED, AND A NEW FAILURE CLASS)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's do the .md save now and then I will come back on new chat")
+**ONE PR, #876, merged and CURL-VERIFIED LIVE on all four strings. ONE Netlify build for the whole batch.**
+Branch resynced to main via the documented force-with-lease, tree clean, everything at `7daf335`.
+▶ **THE SHAPE OF THE DAY: no new features at all — it was a session of CLOSING THINGS.** Four unblessed
+drafts settled, one verification that had been outstanding for eight days finally run, and one parked
+decision (the store middle tier) made. ▶ **Her own words on why that mattered: "I don't want to forget any
+little thing."**
+
+### ⭐⭐ THE HEADLINE FINDING, AND IT IS A THIRD FAILURE CLASS: STORE SEARCHES SILENTLY DROP LENGTH WORDS
+Her own address-bar test, and it is the most reusable thing from the session. She searched Anthropologie for
+**"green floral midi dress"** and got **lots of green floral dresses, none of them midi.**
+- ▶ **THE FAMILY IS NOW THREE, and keeping them apart is what stops the wrong fix being applied:**
+  1. **The NAME promises more than the search** — fixed by `_nameParity` (2026-08-15).
+  2. **The SEARCH asks for something the store cannot return at all** — fixed by the `deep` flag (2026-08-15,
+     her Tuckernuck screenshot: "print wrap top" → a wrap skirt, a sarong and a perfume).
+  3. ⭐ **NEW: the SEARCH asks for something the store's engine silently IGNORES.** ⚠️ **`_nameParity`
+     structurally cannot catch this — "midi" genuinely IS in the search, so parity passes.**
+- ▶ **WHY: a length word is a FILTER at most stores, not a word in the product title.** That is exactly the
+  lesson she taught about colour on 2026-08-12 ("I would never lead with color. Always lead with the item,
+  and once she is inside the store she selects color"). **Length words are the same shape as colour words.**
+- ⚠️ **SILHOUETTE WORDS SURVIVE, LENGTH WORDS DO NOT.** "Sheath", "wide leg", "button front", "tailored" all
+  carry. "Midi", "maxi", "mini", "knee-length", "cropped" are the fragile ones. ▶ **That distinction matters
+  for dr3 — see the retest entry below, where it half-killed the planned fallback.**
+- ▶ **DECIDED: LOG IT, DO NOT CHASE IT.** The landing is still good (green floral dresses when she asked for a
+  green floral midi dress is a fine page to arrive on), and **the real cure is PRODUCT FEEDS picking an actual
+  midi dress rather than a search box being asked to honour the word.** Chasing it with more prompt rules is
+  the exact thing her own standing rule warns against.
+
+### ⭐⭐ THE STORE MIDDLE TIER IS DECIDED — the 2026-08-15 revisit trigger, closed
+The depth split was BINARY, so **Talbots — a national chain with hundreds of tops — was filed exactly like
+Tuckernuck, a small resort boutique.** The app was being over-cautious with stores that can genuinely answer.
+**She tested each store's own search box herself: "the rest came up decent."**
+- **AS SHIPPED, 19 → 25 of 100 deep:** **Talbots · J.Crew · Free People · Anthropologie → `deep:1`** ·
+  **Athleta → `deep:'activewear'`** · **Lands' End → `deep:'swimwear'`** · **J.Jill and Boden UNCHANGED.**
+- ⭐ **THE REFRAME THAT DID THE WORK, and it generalises: DEPTH ONLY HAS TO MEAN "DEEP WITHIN ITS OWN LANE."**
+  Her dimension scores already steer women toward stores that suit them, so Talbots mostly gets asked for
+  classic things and Free People mostly for boho things. "Deep" never had to mean "can answer anything a
+  stranger asks." That lower bar is what made four of these a yes.
+- ⭐ **BODEN WAS MEASURED, NOT JUDGED, and the control is the point:** `dress` → **1000 results**,
+  `floral dress` → **the same 1000**, gibberish → **0**. The control passes, so the numbers are real: **extra
+  words buy nothing at Boden.** Its existing setting was right and is now proven rather than assumed.
+- ⚠️ **ANTHROPOLOGIE WENT IN ON EVIDENCE THAT FIRST LOOKED LIKE A FAILURE.** Her midi test above honoured 3 of
+  4 words and the right category, against Tuckernuck's 0 of 3 and a perfume. ▶ **A strict search returning
+  almost nothing is BETTER behaviour than a loose one padding the page.**
+- ✅ **HER GUARD HELD AND WAS CHECKED, NOT ASSUMED: fit beats depth, always.** The relaxed/classic/natural
+  dresser's top ten came back **byte-identical** to before (Eileen Fisher · Lands' End · J.Jill · Frank &
+  Eileen · Jenni Kayne · Tommy Bahama · Faherty · Quince · Soft Surroundings · Chico's). None of the newly
+  deep stores crowd it.
+- ▶ **STILL PARKED, the other half of the 08-15 question:** should a FOCUSED store's `c:` "known for" line be
+  TIGHTENED so the app can send Tuckernuck a specific DRESS search but never a specific TOP one? Tuckernuck's
+  line currently reads "dresses, polished separates, occasion, resort", and **"polished separates" is vague
+  enough to sound like it covers tops — which is how her screenshot happened.** Store by store as her testing
+  surfaces them, never a sitting.
+
+### ✅✅ THE WORK-APPROPRIATE DRESSES RETEST FINALLY RAN — AND IT PASSES
+**The open item since 2026-08-12: the code was finished and never verified.** Her FIRST test showed a
+Bloomingdale's one-shoulder dress, spaghetti straps and satin, all three against her own definition; the fix
+moved her definition INSIDE the RULES list as an imperative NEVER closed with "This rule is absolute" and
+named those three violations by word. **Then the session ended and the second test never happened.**
+- ✅ **TWO INDEPENDENT LIVE RUNS, EIGHT ITEMS, ZERO VIOLATIONS** of any clause — no one-shoulder or
+  asymmetric, no spaghetti straps, no strapless, no plunging, no satin, no sequins, no sheer, no above-knee
+  hemline, no slits, no bodycon. **The sibling exclusions held too:** no cocktail, gown or sundress bleed.
+  What came back: **Ponte Sheath · Crepe Midi Work · Tailored Midi · Knit Sheath Midi · Knit Workwear** at
+  Ann Taylor, M.M.LaFleur, Banana Republic Factory, Nordstrom and Talbots. **Name and search matched word for
+  word on all eight.** ⚠️ **TWO runs deliberately — her own note says this definition needed a second pass
+  before it landed, so one clean run proves nothing.**
+- ⚠️⚠️ **WHAT IS STILL NOT PROVEN, AND IT IS THE HALF SHE CARES MOST ABOUT: WHAT THE STORE PAGE SHOWS.**
+  ▶ **Three of the four searches lean on "midi" to guarantee the hemline — and length words are exactly what
+  the new finding above says stores drop.** So the knee-length clause rides on the weakest word in the search.
+  The other words (sheath, tailored, ponte, crepe, workwear) survive and carry most of the weight.
+  ▶ **THE DIAGNOSTIC TO GIVE HER: if a bad dress appears it will be on the RESULTS PAGE, not on the card. The
+  cards are proven clean.** Those are two different problems with two different fixes, and only feeds fix the
+  second.
+- 🚨 **AND THE OLD FALLBACK PLAN IS HALF DEAD.** 2026-08-12 said: if violations persist, the next lever is a
+  qualifying word in the SEARCH TERM, "sheath" or "knee-length". ▶ **"knee-length" would be DROPPED like
+  "midi". "Sheath" survives because it is a SILHOUETTE word.** The lever is sheath-shaped, not length-shaped.
+- **New `scratchpad/dr3-live.js`, committed rather than thrown away** — this row is the app's only
+  EXCLUSION-defined item, so it is the most fragile to prompt drift and the most expensive to check by hand.
+  ⚠️ Costs a few cents of the production key per run, the standing trade. **Re-run it after any prompt change
+  near dr3.**
+
+### ✅ ALL FOUR UNBLESSED DRAFTS ARE CLOSED — three shipped, one she had already done
+1. ⭐ **BASIC TOPS (to1/to2/to3) — every word is hers now.** Her own 2026-08-15 sentence opens the rule
+   (**"A black top should just be a black top"**, generalised to "A top like this should just be a top"
+   because one string serves all three colour-generic rows) and she approved the positive half verbatim.
+   ⚠️ "Plain, **wearable** top" lost "wearable" — filler, every top is wearable.
+   ▶▶ **FABRIC IS DELIBERATELY LEFT OPEN, HER CALL, and it is written at the code as a DECISION so a later
+   session does not helpfully close it.** It was put to her that satin is banned while nothing says what a
+   basic top SHOULD be, so chiffon or organza would technically comply; **she chose to leave it open** rather
+   than name cotton/jersey/knit. **Do not add a fabric list here without her.**
+2. ⭐ **DRESSY TOPS (to6) — two fabric calls, both hers.** **Sequins OUT** of the welcome list ("let's take
+   out saying sequins"). **Velvet stays but is BRAKED** ("velvet is ok, but don't want to over use it") —
+   ▶ **a bare mention beside satin and lace invited the model to reach for it as readily as anything else, so
+   it carries an explicit frequency limit instead**, the same shape as `_colorPrefRule`'s vary-across-your-picks.
+   ⚠️ **SEQUINS IS UNMENTIONED HERE, NOT VETOED** — the narrow reading of what she asked for. `_STYLIST_VETO`
+   is TASTE and only ever grows on her express word. Sequins stays banned on the basic rows where she put it.
+3. ⭐ **THE SEASON CHAT CHIP** now sends her client's question and nothing else. The Claude-added second
+   sentence ("What trends should I know about?") **made one chip ask two things, which reads like a form
+   rather than a woman talking.** ▶ **The ring is hers end to end now.**
+   ▶ **PARKED PRODUCT THOUGHT, not a reword: her own note on that question was "That is exactly why we have
+   What's Trending page," and the chip's answer never mentions that page exists.** Should the stylist point
+   her there? Small build, her call.
+4. ✅ **THE IMPACT PROFILE DESCRIPTION IS DONE — she used the Claude draft as written and submitted it.**
+   ⚠️ **The 2026-08-19 entry below calls it "STILL A DRAFT SHE HAS NOT REWORDED" and that is now STALE.**
+   The deliberate judgment inside it stands and was re-offered to her: **it does not say her traffic is
+   small**, because the application form already took the real number honestly and this field is the
+   brand-facing shop window.
+
+### ⭐⭐ THE AMAZON CONVERSATION — SHE RESOLVED TO WAIT, AND THE REASONING IS THE KEEPER
+She opened wanting to apply ("I feel confident we can get [3 sales]... more important I am really wanting to
+see how the app changes with some links wired in, and I wonder if that might help approvals from Rakuten,
+Impact and others?"). **She talked herself out of it, on better grounds than the original rule.**
+- 🚨 **HER REASON 3 DOES NOT HOLD, said plainly: an Amazon approval does NOT help Rakuten or Impact.**
+  Networks do not look at each other, both applications were already submitted, and no form asks whether you
+  are an Associate.
+- 🚨⭐ **HER REASON 2 IS THE CRUX AND IT INVERTS: AMAZON APPROVAL CHANGES NOTHING SHE CAN SEE.** What she gets
+  is a tracking tag — one URL parameter, invisible to a user. ▶▶ **AND THE PRODUCT PHOTOS SHE IS EXCITED
+  ABOUT DO NOT COME FROM AMAZON EITHER: Amazon's images come through the Product Advertising API, which has
+  historically been behind the SAME 3-qualifying-sales gate.** ⚠️ Verify at application time; rules move.
+  ▶ **So Amazon is the SLOWEST route to the visible change, not the fastest. The fast route is already in
+  flight: ONE Rakuten or Impact advertiser approval starts the feeds.**
+- ▶ **MEASURED, and it settled her flooding worry: only 2 of her 107 catalog products are Amazon**, 2 of 18
+  Edit picks, 1 of 100 stores. ⭐⭐ **AND HER OWN JULY SCORING ALREADY PREVENTS THE FLOODING SHE FEARED —
+  she scored Amazon POLISH 5, level with Target, against Nordstrom 9, Bloomingdale's 9, Talbots 9, Neiman 10,
+  NET-A-PORTER 10.** Polish is the refinement tie-break running across every ranking, so **Amazon
+  structurally cannot lead.** Her words: *"I want it to be more department store and mall stores and upscale
+  in general although of course Amazon is great for certain things."* **Her instinct was already in the code.**
+  ▶ **So: more Amazon Edit picks are SAFE and welcome in the affordable-accessories lane** (her existing two
+  are $16.99 bangles and a $46.99 maxi — exactly right), and they serve her every-budget value.
+- ⚠️ **FACTS SHE NEEDED AND DID NOT HAVE:** she **cannot buy through her own links**, and Amazon extends that
+  to her household, so her own and her husband's purchases do not count. **And missing the 3 sales is NOT a
+  lifetime ban** — the account closes and she can reapply. ▶ **The old "burns the window" framing was too
+  heavy and was corrected to her.**
+- ▶▶ **THE HONEST RESOLUTION, and it is hers: "I am just feeling nervous about getting approved. And I don't
+  feel ready to launch it out yet because I'm still not happy with search results."** ⭐ **The approval is not
+  the risk — she passed Rakuten's publisher review, whose bar is HIGHER than Amazon's signup bar, and Amazon's
+  real scrutiny lands at the 3-sale mark, not at the door. The risk is the CLOCK, and she said herself there
+  is nothing to feed it yet.** ▶ **SO AMAZON STAYS LAST — but now for HER reason, not the old rule's.**
+- ⭐ **THE CHAIN TO GIVE HER WHEN IT COMES UP AGAIN:** *search quality is the blocker → feeds fix search
+  quality → one advertiser approval gives feeds → then the searches show real products with photos → then she
+  is happy → then testers → then traffic → then Amazon has something to feed its clock.*
+- ▶ **AND NOTHING IS LOST BY WAITING: every Amazon product she adds to the Edit keeps its URL, and adding the
+  tag later is one find-and-replace.** There is no money on the table today because there is no traffic.
+- ⚠️ **AWIN and CJ have NO CLOCK and cost nothing but an evening** — worth doing any time she is in an
+  applying mood. Still next in her order.
+
+### ⚠️⚠️ THE MEASUREMENT LESSON OF THE DAY: A NONSENSE-WORD CONTROL CAUGHT TWO FALSE READINGS
+Probing the eight middle-tier stores from the sandbox, **two of the five reachable ones gave confidently WRONG
+answers** and only a control exposed them.
+- **Athleta reported "0 items" — even for `leggings`.** **Talbots reported the same string for gibberish as
+  for a real query.** Both were a page SHELL being scraped before its JavaScript drew the results.
+- ▶ **STANDING: when probing a store's search from a script, ALWAYS send a nonsense word too.** If gibberish
+  returns the same shape as a real query, the number is not a result count and the reading is worthless.
+  **Boden was the only clean measurement of the five, precisely because its control returned 0.**
+- ⚠️ **Four of the eight (Lands' End, J.Crew, Anthropologie, Free People) are BOT-WALLED and unmeasurable from
+  any sandbox.** ▶ **Her address bar remains the only instrument, exactly as the standing rule says. Every
+  real find today came from her testing, not from the probe.**
+- ⚠️ **Shell quoting mangled a node -e patch script mid-session** (curly apostrophes + nested quotes).
+  ▶ **Write patch scripts to a FILE and run them, never inline `node -e` for anything with quotes in it.**
+
+### ✅ TEST HYGIENE THIS SESSION
+- **storedepth 17 → 19**, updated DELIBERATELY not silenced: a `MIDDLE` list pins the four additions, a new
+  assertion pins J.Jill and Boden as deliberate exclusions, and ⭐ **TWO COUNTS WERE MADE DERIVED RATHER THAN
+  RESTATED** (the no-flag count and the prompt-marker count now compute from the table) — **the `curated.js`
+  lesson applied before it could bite: a test that restates a number must be edited every time the data
+  grows; a derived one never does.**
+- **searchtune 70 · searchchat 57 · cowork3 69 · chiprot 15 · e2e 29**, all green.
+- ⚠️ **Nothing pinned the changed strings** — `chiprot` asserts the season chip's LABEL, not what it sends,
+  and the "sequin" hits elsewhere are a chat link-extraction test case plus two word lists in the paid
+  live-model scripts. **Checked before assuming, which is why no assertion needed changing.**
+- ⚠️ **Playwright needs no install** — the suites import it from `/opt/node22/lib/node_modules/playwright`
+  and the browser is at `/opt/pw-browsers/chromium`. **package.json was never touched.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 📬 **Did Impact answer?** Due **Friday 22 August** by their own ~72-hour estimate. Silence past that is a
+   queue, not a decline.
+2. ⭐ **ANY Rakuten or Impact advertiser approval is the trigger for PRODUCT FEEDS** — `docs/product-feeds-plan.md`
+   is shovel-ready, and **feeds are what she is actually excited about** (photos, real products, "in your
+   size"). **Ask whether an approval email has landed.**
+3. 🔎 **The advertiser directory search on BOTH networks** — Nordstrom, Macy's, Bloomingdale's, her store
+   table. Still the highest-value thing she can report. Probably gated until approval.
+4. 📱 **HER TESTING, and today's merge went straight at it:** six stores can now take specific searches.
+   ▶ **Ask how the searches feel — it is still the one real blocker on testers, and she named it again today.**
+   Also: **work-appropriate dresses on the RESULTS PAGE** (the cards are proven clean; a bad hemline would be
+   the store dropping "midi").
+5. ⚠️ **The two link-check Routines are STILL unread, fifth session running.** Do not let her decision become
+   permanent by neglect.
+6. ⭐ **THE THREE THINGS SHE RAISED AND PARKED HERSELF TODAY, all needing nobody else:** a **NEW SHAREABLE
+   IDEA** (she did not describe it yet — ask), her **NEXT INSTAGRAM POST**, and the **EMAILABLE WISHLIST**
+   (named a fourth time; nothing blocks designing it, renders first).
+7. 💳 The $100 initial capital contribution, and the recurring payments when the cards arrive.
+8. ⏳ Indie Law: the mailing address for the Statement of Correction, and the TM filing dates + serial numbers.
+
+## ▶ PREVIOUS — 2026-08-19 LATE (TWO NETWORKS IN TWO DAYS, AND IMPACT HAS TWO DOORS)
 
 ### ✅✅ THE IMPACT APPLICATION IS IN — SUBMITTED, DOMAIN VERIFIED, IN REVIEW
 **Account "Style Star by Catherine, LLC", ID `7645411`. Status: In Review.** ⭐ **AND THE TIMELINE IS
@@ -76,8 +271,8 @@ through [website(s)]."**
   ⚠️ She checked and confirmed there were **no options above "editorial content"** before choosing.
 - **website(s)** — not newsletters (MailerLite is real but not primary) and **not mobile apps: Style Star is a
   website that can be added to a home screen, which is a different thing, and they verify the DOMAIN.**
-- **Profile description (1000 char limit, she pasted a Claude draft at 975).** ⚠️ **STILL A DRAFT SHE HAS NOT
-  REWORDED — editable any time under Settings.** It opens with *"I'm Catherine, a personal stylist of more than
+- **Profile description (1000 char limit, she pasted a Claude draft at 975).** ✅ **CLOSED 2026-08-20: she kept
+  the draft as written and it is submitted. The "still a draft" note here was true only until then.** It opens with *"I'm Catherine, a personal stylist of more than
   twenty years"* (the Sally differentiator in the first line a brand reads), sells **QUALIFICATION rather than
   reach** (*"Nothing reaches a woman until it suits her style, her sizing and her colours"*), and closes
   *"I would rather send you fewer, better matched visitors than volume."*
@@ -137,7 +332,8 @@ naming it is out of date.
 4. 💳 **The recurring payments + the $100 "initial capital contribution"** — still waiting on the cards.
 5. ⏳ **Indie Law: the MAILING ADDRESS for the Statement of Correction**, and the **TM filing dates + serial
    numbers.** Signed ≠ filed.
-6. ⭐ **The emailable wishlist** — she has named it three times. Nothing blocks DESIGNING it; renders first.
+6. ⭐ **The emailable wishlist** — she has named it FOUR times now (again 2026-08-20). Nothing blocks
+   DESIGNING it; renders first.
 7. ⚠️ **The two link-check Routines are still unread**, fourth session running.
 
 ## ▶ EARLIER THE SAME DAY (2026-08-19 morning — 🎉 THE BANK IS OPEN AND CLASS 045 IS ON BOTH MARKS)
@@ -1039,7 +1235,8 @@ prompt rule was already RIGHT and the model DRIFTED.** Where that happens the an
      in the page-subtitle slot and reads as describing the PAGE, and **it is the only thing telling her the
      unselected tab is tappable (her mom's original catch)**. Tightened under them, 8/4 → 4/2.
 - ⭐⭐ **CATALOG DEPTH IS IN THE STORE TABLE NOW, her answers (#857) — and HER GUARD IS THE POINT.** Born from
-  her Tuckernuck screenshot (below): **19 of 100 stores carry `deep`** — the 16 she confirmed (Nordstrom ·
+  her Tuckernuck screenshot (below): **19 of 100 stores carry `deep`** ⚠️ **(25 as of 2026-08-20 — the MIDDLE
+  TIER was decided; see the top of this file)** — the 16 she confirmed (Nordstrom ·
   Macy's · Dillard's · Belk · Bloomingdales · Saks · Neiman Marcus · NET-A-PORTER · Shopbop · Nordstrom Rack ·
   TJ Maxx · Target · Amazon · Revolve · Zara · H&M) plus **Zappos + DSW for shoes and Sunglass Hut for
   eyewear, marked for THAT CATEGORY ONLY** (`deep:'shoes'`). The other 81 are stores to send **what they are
