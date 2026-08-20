@@ -7,7 +7,227 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-20 — THE SEARCH TIER, FOUR DRAFTS CLOSED, AND A NEW FAILURE CLASS)
+## ▶ NEXT SESSION — START HERE (2026-08-20 LATE — 🎉 THE TRADEMARKS ARE FILED AND STYLE STAR EARNS MONEY)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's do the .md save now. I will open up in a new chat with some more items for the Edit")
+**FOUR PRs merged and ALL CURL-VERIFIED LIVE: #876 · #877 · #878 · #879.** Branch resynced to main, tree clean,
+everything at `a6b39fa`. ⚠️ **Four Netlify builds — a heavy day, watch the meter.**
+▶▶ **THE HEADLINE, AND SAY IT FIRST BECAUSE THE REJECTIONS WILL CROWD IT OUT: STYLE STAR NOW EARNS MONEY.**
+Two Rakuten advertisers approved her, the affiliate plumbing is built and tested, and her DVF silk scarf is
+the first Edit piece whose link pays her from the moment it went live.
+▶ **AND THE OTHER HEADLINE: BOTH TRADEMARKS ARE FILED, WITH ALL THREE CLASSES.** The thing open since 16 July.
+
+### ✅✅ THE TRADEMARKS ARE FILED — AND SHE WON THE 045 ARGUMENT ON PAPER
+| Mark | Serial | Filed | Classes | Paid |
+|---|---|---|---|---|
+| **STYLE STAR** (word) | **50060992** | 2026-08-20 00:31 ET | 035 · 042 · **045** | $1,050 |
+| **STYLE STAR** (logo) | **50060998** | 2026-08-20 00:45 ET | 035 · 042 · **045** | $1,050 |
+- ⭐⭐ **HER ARITHMETIC FROM 08-17 CLOSED PERFECTLY: 3 classes × $350 × 2 marks = $2,100.** She found four
+  filings where six were paid for, refused to sign, held the line through a call, and **every dollar is now
+  accounted for.** ▶ **Reuse the move: when a firm quotes a lump sum, divide it by the unit price.**
+- ✅ **Both receipts reviewed line by line:** owner is the LLC (not her personally), entity Florida LLC,
+  signature reads **Catherine Bailey Ellspermann** — Bailey spelled correctly, so the "Bail" typo now lives
+  ONLY in the filed Articles. Signed 08/18, filed 08/20. **Priority date is 20 August.**
+- ✅ **HER 08-17 LOGO WORRY IS ANSWERED ON THE RECORD: "Color is not claimed as a feature of the mark."**
+  That is the greyscale question, and it was the right call — no colour claim means protection in ANY colour.
+  **She checked the resolution herself and it is fine**, so the high-res file she offered is not needed.
+- ⚠️ **Filing basis is Section 1(b) INTENT TO USE on all three classes**, so registration still needs a later
+  **Statement of Use** with a specimen and **another per-class fee**. ▶ **She asked Almira for the timing and
+  cost — watch for that answer.**
+- ⚠️⚠️ **HER HOME ADDRESS (1559 Harston Ave) IS NOW IN A PUBLIC FEDERAL DATABASE.** That is the same exposure
+  that produced the scam texts to her husband's phone after the Sunbiz filing. ▶ **EXPECT A WORSE WAVE —
+  USPTO scams are aggressive** (fake publication fees, fake directory listings, real employee names). The
+  receipt itself says trademark directory listings are never necessary. **She decided not to pursue an
+  address change; do not re-raise it unless she does.**
+- ▶ **TSDR (tsdr.uspto.gov) is the independent check** — both marks appear within 5 business days, and the
+  standing advice is to look every 3-4 months so nothing is missed.
+
+### ✅ THE OTHER TWO LEGAL ITEMS CLOSED
+- **The Statement of Correction needs NO mailing and NO check.** Almira: scan it or photograph it and email
+  it. ✅ **SHE SENT IT the same day, signed, attached.** They handle the state filing and payment. That
+  resolves the 08-18 contradiction where the cover letter had her mailing it and the email said otherwise.
+- **The LLC-name-on-the-site question is answered and needs NO action.** Almira: optional, largely
+  preference, the brand name matters more client-facing. **Her Contact page already carries it (shipped
+  08-17), so the answer is leave it.** Question open since 08-17, now closed.
+- ▶ **AMBER'S PARKED SWEETENER (free year of TM oversight + quarterly calls) was offered to her as an
+  optional paragraph in the reply and she did not take it up.** Still available; the fault is fixed so it is
+  fair game whenever she wants it.
+
+### 💰 SHE HAS MONEY PLUMBING NOW — THE $100 AND TWO ADVERTISERS
+- ✅ **THE $100 INITIAL CAPITAL CONTRIBUTION IS TRANSFERRED.** First entry in the books, and **Exhibit A of
+  her Operating Agreement is now a fact rather than a sentence.** Open since 17 August.
+- ✅✅ **TWO RAKUTEN ADVERTISER APPROVALS: FARM Rio and Diane von Furstenberg US** (both joined 2026-08-20).
+  **FARM Rio pays 5% baseline; DVF pays 2% of net sales** (0-2% on monthly tiers). ▶ **Roughly the same per
+  sale — 2% of a $500 DVF dress and 5% of a $200 FARM Rio dress are both about $10.**
+- ⚠️ **SHE ALSO GOT DECLINES: Shopbop on Rakuten, and IMPACT AT NETWORK LEVEL.** See the entry below.
+- ⭐ **FARM Rio was ALREADY in her store table** (`$$$`, Playful Chic + Bohemian Chic, colourful 10, trendy
+  10) — so those links had been running unpaid all along and now earn. **DVF was not, and was added.**
+
+### ⭐⭐ THE AFFILIATE PLUMBING IS BUILT — READ THIS BEFORE ADDING A THIRD ADVERTISER
+**Rakuten does NOT work like Amazon.** Amazon appends a tag; Rakuten WRAPS the destination:
+`https://click.linksynergy.com/deeplink?id=<publisher>&mid=<advertiser>&murl=<encoded destination>`
+- ▶ **THE THREE NUMBERS, LOGGED SO THEY NEVER HAVE TO BE HUNTED AGAIN:**
+  **publisher `id` = `jZNkkinrr1k`** ⚠️ (NOT her SID 4740535 — a different encoded form; the SID appears in
+  Rakuten's own redirect params but is not what goes in a link) · **FARM Rio `mid` = 44912** ·
+  **DVF `mid` = 53590**.
+- ✅ **VERIFIED LIVE BEFORE ANY CODE WAS WRITTEN, and this was the load-bearing test: a deeplink to an
+  ARBITRARY page 302s correctly**, so **SEARCH pages work and not only the pre-listed products.** That
+  mattered because Style Star builds searches, not product URLs. Both MIDs tested, both redirect with
+  `ranMID`/`ranEAID` attached and the query intact.
+- ⭐ **MATCHED BY HOSTNAME, NOT BY STORE KEY, and the reason generalises:** the exact product URLs in this app
+  (Edit picks, catalog rows, links she pastes herself) do NOT always carry a resolvable store key — an Edit
+  pick's store field reads "Badu · Amazon", a brand AND a retailer. **The hostname is always there and never
+  ambiguous**, and one function then covers both kinds of link.
+- **Applied at EVERY place a URL becomes an href:** `getStoreUrl`'s three real-store returns, `_curatedCard`,
+  both exact-URL wishlist rows, the Star of the Week, and **the Edit's hardcoded anchors rewritten at runtime
+  in `_wlDecorateEdit`** — so a piece she adds by hand needs nothing done to it, the same self-maintaining
+  reason the Save control is generated there.
+- ⚠️⚠️ **ORDER IS LOAD-BEARING IN THE EDIT REWRITE:** `_wlEditItems()` captures the RAW url before the href is
+  rewritten, so **the wishlist stores the plain product URL and re-wraps at render.** A change of affiliate id
+  then still reaches pieces saved months ago; storing the wrapped URL would strand them. `_affUrl` never
+  double-wraps, so calling it on both sides is safe and asserted.
+- ⚠️ **An unknown host returns the URL UNCHANGED**, so the other 99 stores are untouched, and **the Google
+  Shopping fallback is deliberately never wrapped.**
+- ⚠️ **The publisher id is PUBLIC BY NECESSITY** — it must reach the browser for a click to be credited. Every
+  affiliate site exposes one. **Written at the code so it is never mistaken for a leak.**
+- ▶▶ **TO ADD A THIRD ADVERTISER: one line in `_AFF_MID`. Nothing else.** Get the MID from the advertiser's
+  page (`/advertisers/<MID>/` in the address bar, or the "Search Advertiser or MID" box).
+- **New `scratchpad/affwrap.js`, 23 checks.** ⭐ **The one that matters is the SWEEP: it renders the real
+  surfaces and asserts ZERO bare links to an approved store escape.** There are ~10 anchor templates and a
+  rule applied by hand at N sites drifts the moment an 11th appears — **the sweep is the guarantee, the same
+  reasoning as `filterNeverWear` and `_nameParity`.**
+- ⚠️ **STILL UNPROVEN, and it is the only thing left: nobody has confirmed a click actually lands in her
+  Rakuten REPORTS.** ▶ **Ask her to tap the scarf on the live site and check Reports a day later.** That
+  closes the chain end to end.
+
+### ⭐ HER DVF SILK SCARF IS THE FIRST PIECE THAT EARNS
+**"Diane von Furstenberg Flag Scarf — Myrtle Berry", $198, her note verbatim. The 19th Edit item.**
+- ✅ **Verified before adding, not after:** both URL forms 200 (**the canonical `/products/` path is used**, so
+  reorganising a collection cannot break it), real product name is "Flag Scarf", price $198, **both
+  availability flags true.** ⚠️ **A "Sold Out" string DOES appear in that page's source and is a Shopify theme
+  label, not this product** — the standing `check-product-urls.js` rule that per-variant sold-out text never
+  means a broken link held again.
+- **The anchor is copied verbatim from an existing item with only the href swapped**, so the bag icon and
+  `rel="sponsored noopener"` cannot drift from the other eighteen.
+- ▶ **Naming follows her own convention:** brand first, then **` — Colour`** when the link pins a colourway
+  (as with "Express Editor High Waisted Flare Trouser — Pitch Black"). ⚠️ **The store field is the RETAILER**,
+  with "Brand · Retailer" only when the brand is not obvious from the retailer. DVF sells direct, so it is
+  just the one name.
+- ⚠️ **Her phrase "100% silk" is NOT currently anywhere on the card** — it read as her describing the piece to
+  Claude rather than as note copy. **Offer to add it if she wants it.**
+
+### 🚨⭐ A STANDING RULE NEEDS REFINING — the luxury routing rule
+**2026-07-28 says luxury goes through OUR retailers, never direct to the brand.** ▶ **But the reason was
+COMMERCIAL, not stylistic: Louis Vuitton and its like sell direct and run no affiliate programme, so a link
+there could never earn.** DVF now HAS a programme and she is approved on it.
+▶▶ **SO THE RULE SHOULD READ: route luxury through a retailer we carry UNLESS the brand itself is an
+approved advertiser.** Linking direct to DVF is not the exception to that rule, it is what the rule was for.
+
+### 🚨 THE IMPACT DECLINE — AND THE EMAIL LISTED NO REASONS AT ALL
+**Impact declined her media partner application (account 7645411) on 2026-08-20**, one day after applying.
+- ⚠️⚠️ **THE EMAIL SAYS "declined for one or more of the reasons listed below" AND THEN LISTS NOTHING.** The
+  only link is to the Partner User Agreement. **She did not miss them — Impact sent a broken email.**
+- ✅ **THE AGREEMENT WAS READ IN FULL AND CONTAINS NO ELIGIBILITY BAR SHE FAILS:** no traffic minimum, no
+  site-age rule, **no AI-content clause of any kind**, and the only excluded categories are under-18s and
+  Impact's own competitors. Its prohibited METHODS are fraud (scraping, fake redirects, bots, cookie
+  stuffing). ▶ **Worth saying to her again if she worries: the app being AI-powered is not a problem there.**
+  ⚠️ **But that document is the CONTRACT, not the acceptance criteria** — it does not explain the decline.
+- ⚠️ **Clause 1.3's "each User utilizes its own unique log-in and password" caused her a scare and is a
+  NOTHING:** "User" means someone she gives access to her Impact ACCOUNT, not visitors to stylestar.app. She
+  is a solo operator with one login and is compliant automatically.
+- ✅ **SHE WAS NOT LOCKED OUT** — the account still works and she filed a support ticket from inside the
+  platform. ⚠️ **Rakuten's auto-reply said 5-7 BUSINESS DAYS, so an answer is due roughly 27-29 August**
+  (Zara Wright acknowledged it). ▶ **The ticket leads with the template fault**, which is factual and gives
+  them something concrete to fix, and asks for the specific reason plus whether reapplication is possible.
+- ▶ **THE HONEST READ TO GIVE HER: the likeliest cause is TRAFFIC**, the one thing on any decline list she
+  could not have fixed. **It is not a verdict on the app.** She passed Rakuten's publisher review two days
+  earlier, and that is the higher bar.
+- ⚠️ **Shopbop also declined on Rakuten. That is ONE advertiser and was predicted in her own prep sheet** —
+  reapplyable, costs nothing, and her publisher status is untouched. **Do not let the two declines be weighed
+  as equal; only the Impact one is network-level.**
+
+### ⭐⭐ THE FEEDS QUESTION IS ANSWERED, AND IT IS BETTER THAN EXPECTED
+Her Rakuten dashboard shows **DVF: Product links (2,752) · Text links (9) · Banners (12)**.
+- ▶ **That is a PRODUCT FEED with a browser on top of it.** Each card carries a **real product photo**, name,
+  price, SKU, product category, and a **structured attribute description**: *"Bandeau neckline Tiered skirt
+  Straight silhouette Maxi length."*
+- ⭐⭐ **THOSE ATTRIBUTES ARE THE STRUCTURAL FIX FOR THE TWO PROBLEMS OF THIS WHOLE WEEK.** "Maxi length" is a
+  FIELD, not a hoped-for search word — so the length-word finding (stores silently drop "midi") stops
+  mattering. And **"Bandeau neckline" would fail her work-appropriate-dresses rule automatically**, which is
+  the exclusion problem a 3-word search box structurally cannot encode.
+- ⚠️ **THE FEED IS NOT CLEAN: "Shipping Protection, $63" is in the catalog.** Real feeds carry warranties,
+  gift cards and shipping add-ons that must be filtered before anything reaches a woman's shelf.
+- ⚠️ **STILL UNKNOWN: whether there is a BULK export or FTP feed file.** Browsing 2,752 products fifteen at a
+  time is not usable. **She had not opened the LINKS ▾ menu when the session paused — that is where to look.**
+
+### ⭐ THE PATH A / PATH B EXPLANATION SHE ASKED FOR — reuse it verbatim
+Her question: *"I am not clear on the differences between path A and B. I feel like I have been wanting the
+full pipeline all along?"*
+▶▶ **THE ANSWER THAT LANDED: A AND B ARE NOT ALTERNATIVES. A IS PART OF B.** A feed product still needs a
+tracking link wrapped around it to earn anything. **B without A is a beautiful shop where the till is not
+plugged in.** · **A (wrap the links)** changes what she EARNS, not what a woman SEES. **B (ingest the feed)**
+changes what a woman SEES, and earns nothing on its own. · **Why B waits: two designer brands is not worth a
+pipeline.** Build it the day a DEPARTMENT STORE approves, and it pays off across the whole app.
+⭐ **AND THE REFRAME SHE LIKED: she is already doing B by hand.** Her Edit and her 107-product catalog ARE
+curated product data with real URLs and prices. **The feed adds scale and photos, not the idea.**
+
+### ✅ THE TRADEMARK CLAIM IS IN TERMS — AND THERE IS NO ™ ON THE LOGO, HER CALL
+One line in the "Our brand and content" section: **"STYLE STAR and the Style Star logo are trademarks of
+Style Star by Catherine, LLC."** It is also **the first place Terms names the entity**, which is where the
+legal name always belonged (Contact stays human, the 08-17 reasoning).
+- ▶ **WHY NO SYMBOL BESIDE THE LOGO, and it is her restraint budget applied again: a floating ™ reads as "we
+  are worried someone will copy this", not "we are established."** Premium brands do not carry it in-app.
+  **What makes her look official is already there** — a named entity on Contact, /privacy, /terms, her own
+  domain, a real founder. A symbol buys none of it.
+- 🚨🚨 **NEVER CHANGE ™ TO ® UNTIL ALMIRA CONFIRMS REGISTRATION IS GRANTED.** Using ® before registration can
+  damage the applications and the marks' enforceability, and both are 1(b) intent-to-use, so registration is
+  a Statement of Use away. **Written in capitals at the markup.**
+
+### ✅ DIANE VON FURSTENBERG IS STORE 101 — nine of ten dimensions are hers verbatim
+`d:[relaxed 5, alluring 7, polish 9, classic 7, trendy 6, casual 4, dressy 9, fitted 8, neutral 4, colorful 10]`
+· `$$$$` · Modern Glam, Romantic Feminine · `deep:'dresses'` · `s:[]`
+- ⚠️ **ALLURING WAS THE ONLY GAP** — her table had no such column, so she was shown the calibration against
+  her own existing scores (Veronica Beard 8, Alice + Olivia 9, Anthropologie 6, Talbots 2) and **set it at 7
+  herself.** Nothing inferred.
+- ⚠️ **`s:[]` IS HER FACT, NOT A GAP**, in her words: *"no petites or tall, XXL and 16 is barely plus."* It
+  means the app steers a petite, tall or plus woman elsewhere for anything length-dependent.
+- ⭐ **`deep:'dresses'` is her read AND measured:** dvf.com returns 363 for "wrap dress", 169 for "silk
+  blouse", 46 for "cashmere sweater", **1 for "handbag", 0 for "sneakers", 0 for gibberish.** ▶ **It narrows
+  honestly and admits what it does not carry — the best-behaved store search measured all week.**
+- ⭐ **A COLLISION WORTH KNOWING: DVF is THE wrap dress house, and "wrap" is in `_SEARCH_VETO`.** Her own
+  exemption for **dr7 "Wrap dresses"** means DVF surfaces exactly where wrap is deliberate and nowhere else.
+- ⚠️ **Store count 100 → 101, and THREE DIFFERENT ARITHMETICS live in the suites** (the full list, the list
+  minus one blocked store, the list minus three memoised ones). **A blind find-replace would have broken two
+  of them** — the 2026-08-03 lesson, paid for twice.
+
+### ⚠️ SESSION LESSONS
+- ⭐ **A NONSENSE-WORD CONTROL IS NOW PROVEN TWICE.** It caught two false store-search readings in the morning
+  and **verified DVF's search URL in the afternoon** (gibberish → 0 results and half the page weight).
+- 🚨 **A STASH-AND-RERUN THAT CHANGES TWO VARIABLES PROVES NOTHING.** `curated.js` failed, the stashed clean
+  tree passed, and the conclusion "the failure is mine" was WRONG — the clean run was also a FRESH SINGLE
+  run, while the failing one came after four browser suites back to back. **Re-run under identical
+  conditions.** It was resource contention; curated is 65/0.
+- ⚠️ **A test that fails on a correct value is usually a broken harness.** `affwrap`'s first Talbots assertion
+  checked a hardcoded character offset and failed on a perfectly good URL.
+- ⚠️ **Write patch scripts to a FILE, never inline `node -e`,** when the content carries quotes. Cost one
+  mangled run again.
+- ⚠️ **affq's "results saved" check flakes on timing** — clean on rerun, a documented pattern now.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 🛍 **SHE IS COMING BACK WITH MORE EDIT ITEMS.** ⭐ **FARM Rio and DVF pieces now EARN from the moment they
+   go live** — worth telling her that before she picks.
+2. 📊 **Ask her to tap the scarf on the live site and check Rakuten REPORTS a day later.** The only unproven
+   link in the chain.
+3. 🔎 **The LINKS ▾ menu in Rakuten — is there a bulk feed export or FTP?** The one open feeds question.
+4. 📬 **Impact's support answer, due ~27-29 August.** Silence past that needs a nudge.
+5. ⭐ **Any DEPARTMENT STORE approval is the real trigger for building feeds** (Bloomingdale's is pending).
+6. 📱 **Her search-quality verdict** — still the one blocker on testers, and six stores changed yesterday.
+7. ⏳ **Almira on Statement of Use timing and cost.** And log the TSDR appearance (~5 business days).
+8. ⭐ **Her three parked ideas, all needing nobody else:** the NEW SHAREABLE, her NEXT INSTAGRAM POST, and the
+   EMAILABLE WISHLIST (named a fourth time).
+9. ⚠️ **The two link-check Routines are STILL unread**, sixth session running.
+
+## ▶ EARLIER THE SAME DAY (2026-08-20 morning — THE SEARCH TIER, FOUR DRAFTS CLOSED, AND A NEW FAILURE CLASS)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's do the .md save now and then I will come back on new chat")
 **ONE PR, #876, merged and CURL-VERIFIED LIVE on all four strings. ONE Netlify build for the whole batch.**
@@ -183,8 +403,8 @@ answers** and only a control exposed them.
   and the browser is at `/opt/pw-browsers/chromium`. **package.json was never touched.**
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. 📬 **Did Impact answer?** Due **Friday 22 August** by their own ~72-hour estimate. Silence past that is a
-   queue, not a decline.
+1. 📬 ~~Did Impact answer?~~ ⚠️ **STALE — ANSWERED 2026-08-20: DECLINED, with no reasons given in the email.
+   A support ticket is filed; see the entry at the top of this file.**
 2. ⭐ **ANY Rakuten or Impact advertiser approval is the trigger for PRODUCT FEEDS** — `docs/product-feeds-plan.md`
    is shovel-ready, and **feeds are what she is actually excited about** (photos, real products, "in your
    size"). **Ask whether an approval email has landed.**
@@ -200,7 +420,9 @@ answers** and only a control exposed them.
    IDEA** (she did not describe it yet — ask), her **NEXT INSTAGRAM POST**, and the **EMAILABLE WISHLIST**
    (named a fourth time; nothing blocks designing it, renders first).
 7. 💳 The $100 initial capital contribution, and the recurring payments when the cards arrive.
-8. ⏳ Indie Law: the mailing address for the Statement of Correction, and the TM filing dates + serial numbers.
+8. ⏳ ~~Indie Law: the mailing address, and the TM filing dates + serial numbers.~~ ⚠️ **STALE — ALL ANSWERED
+   2026-08-20. Both marks filed (50060992 / 50060998), and the correction needs no mailing at all: scan and
+   email it, which she has done. See the top of this file.**
 
 ## ▶ PREVIOUS — 2026-08-19 LATE (TWO NETWORKS IN TWO DAYS, AND IMPACT HAS TWO DOORS)
 
@@ -208,8 +430,9 @@ answers** and only a control exposed them.
 **Account "Style Star by Catherine, LLC", ID `7645411`. Status: In Review.** ⭐ **AND THE TIMELINE IS
 SOURCED, NOT GUESSED: Impact emailed her saying it usually takes 72 HOURS**, which lands a response around
 **Friday 22 August.** ▶ **Log both network identities together, support conversations start with them:**
-**Rakuten SID `4740535`** (publisher approved, advertiser applications pending) · **Impact `7645411`** (in review).
-- ▶ **THE CHAIN NOW READS: LLC ✅ → EIN ✅ → BANK ✅ → RAKUTEN ✅ → IMPACT ✅.** Two networks in two days,
+**Rakuten SID `4740535`** (publisher approved; FARM Rio + DVF approved 08-20, Shopbop declined) ·
+**Impact `7645411`** ⚠️ **(DECLINED 2026-08-20 with no stated reason; support ticket filed).**
+- ▶ **THE CHAIN NOW READS: LLC ✅ → EIN ✅ → BANK ✅ → RAKUTEN ✅ → IMPACT ❌ (declined 08-20).** Two networks in two days,
   after two months blocked behind lawyers. **She registered under the exact legal name on her Articles, not
   "Style Star"** — which is the entire reason she waited from June rather than applying as an individual.
 - ⚠️ **NOTHING IS OWED BY HER NOW. Do not let her sit refreshing the dashboard.** As with Rakuten, the
@@ -314,7 +537,7 @@ how that turned out."** ⚠️ **The 08-19 morning entry lower down described it
 its stale lines are corrected in place, but trust this one.**
 
 ### ▶ THE ORDER OF NETWORKS FROM HERE (unchanged, with Impact struck through)
-**Rakuten ✅ · Impact ✅ · then AWIN** (⚠️ small REFUNDABLE deposit to apply, their spam filter, verify the
+**Rakuten ✅ · Impact ❌ (declined 08-20, appeal pending) · then AWIN** (⚠️ small REFUNDABLE deposit to apply, their spam filter, verify the
 amount on the day) **· then CJ** (free) **· then NORDSTROM CREATORS when the followers are not the weak point
 · AMAZON LAST**, because the **3 qualifying sales within 180 days of APPROVAL** clock starts at approval, not
 at launch. 🚨 **ShareASale no longer exists** — Awin closed it at the end of 2025; any entry in this file
