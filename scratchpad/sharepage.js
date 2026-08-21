@@ -120,6 +120,26 @@ ok('the disclosure is present', /may earn a commission/.test(v.disc || ''));
 ok('no entrance curtain over somebody else\'s page', !v.curtain);
 ok('injected markup is inert text, not nodes', !v.injected && v.rows[3].name.includes('<img'));
 
+console.log('\n2b. Nothing from HER app session leaks onto somebody else\'s page');
+const chrome = await pg.evaluate(() => {
+  const vis = el => !!el && getComputedStyle(el).display !== 'none' && el.getBoundingClientRect().height > 0;
+  const rod = document.querySelector('#s-sharelist .sh-rod').getBoundingClientRect();
+  const ring = document.querySelector('#s-sharelist .sh-ring').getBoundingClientRect();
+  return {
+    hdr: vis(document.querySelector('.hdr')),
+    chip: getComputedStyle(document.body).getPropertyValue('--x') !== null &&
+          document.body.classList.contains('menu-hidechip'),
+    // The ring is a curtain ring: it must really cross the rod, and really hang
+    // below it. Two numbers, because "near it" is what looks wrong.
+    overlap: Math.round((Math.min(ring.bottom, rod.bottom) - Math.max(ring.top, rod.top)) * 10) / 10,
+    below: Math.round((ring.bottom - rod.bottom) * 10) / 10
+  };
+});
+ok('the shared Style Star header is hidden', !chrome.hdr);
+ok('the MENU chip stands down', chrome.chip);
+ok('the ring really crosses the rod', chrome.overlap >= 4, 'overlap ' + chrome.overlap + 'px');
+ok('...and really hangs below it', chrome.below >= 2, 'below ' + chrome.below + 'px');
+
 console.log('\n3. It is read-only, by construction');
 const ro = await pg.evaluate(() => ({
   del: document.querySelectorAll('#s-sharelist .wl-del,#s-sharelist .sh-del').length,

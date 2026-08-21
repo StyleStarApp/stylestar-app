@@ -1173,7 +1173,12 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-row:first-child{border-top:0}
 #s-wishlist .wl-b{flex:1;min-width:0}
 #s-wishlist .wl-nm{display:block;font:600 14px/1.35 'Jost',sans-serif;color:#26221c}
-#s-wishlist .wl-st{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8272;margin-top:3px}
+/* HER CALL 2026-08-22, after the shared page measured the same value and
+   failed: #8a8272 is 3.65:1 on this card and 3.81:1 on white, both under the
+   4.5 AA bar, on the line that names WHERE a piece is sold. #6b6355 is the
+   app's own established readable ink (5.68:1 here). Same family, just dark
+   enough to read on an 18-80 audience. Don't re-quieten it. */
+#s-wishlist .wl-st{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#6b6355;margin-top:3px}
 /* Cath's own Edit picks are a different KIND of saved piece -- a real product
    link with a price, not a search -- so they are marked rather than blended in.
    Hiding the difference would mean one tap lands on the actual shoe and the next
@@ -1250,8 +1255,16 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    browser finds first, and Safari may refuse to paint one that lives inside
    a hidden screen -- the same rule as the per-footer Instagram gradients. */
 #s-sharelist{padding:0 16px 26px}
-#s-sharelist .sh-rod{position:fixed;top:0;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
-#s-sharelist .sh-crown{position:relative;width:196px;height:196px;margin:14px auto 0}
+/* ⚠️ IN FLOW, not viewport-fixed like #s-wishlist .wl-rod. The wishlist's rod
+   is fixed so it reaches the true screen edges under iOS page zoom, and it
+   then needs _wlRodScroll to translate it on every scroll or the crown
+   detaches from it (her catch, 2026-08-09). Here the chain MEETING the rod
+   matters more than the last few pixels of bleed, and a rod in flow gets
+   that for free with no scroll listener at all. Don't 'upgrade' it to
+   fixed without bringing the scroll sync with it. */
+#s-sharelist .sh-rodwrap{position:relative;height:8px;margin:0 -16px}
+#s-sharelist .sh-rod{position:absolute;inset:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+#s-sharelist .sh-crown{position:relative;width:196px;height:196px;margin:6px auto 0}
 #s-sharelist .sh-chain{position:absolute;left:calc(50% - 4px);bottom:calc(100% - 60px);width:8px;height:66px;z-index:1}
 #s-sharelist .sh-ring,#s-sharelist .sh-ringf{position:absolute;left:calc(50% - 6px);bottom:calc(100% + 4px);width:12px;height:12px;border-radius:50%;border:2px solid #C89A2C;background:transparent}
 #s-sharelist .sh-ring{z-index:5}
@@ -4143,7 +4156,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
      hidden here -- they never arrive. The crown is copied verbatim from
      #s-wishlist above (her call), with its own pattern id. -->
 <div class="scr" id="s-sharelist">
-  <div class="sh-rod"></div>
+  <div class="sh-rodwrap"><div class="sh-rod"></div></div>
   <div class="sh-crown">
     <svg class="sh-chain" viewBox="0 0 8 66" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="shChainPat" x="0" y="0" width="8" height="16" patternUnits="userSpaceOnUse"><ellipse cx="4" cy="4.5" rx="2.9" ry="4.2" fill="none" stroke="#DDAF3F" stroke-width="1.4"/><ellipse cx="4" cy="12.5" rx="1.2" ry="4.2" fill="none" stroke="#C89A2C" stroke-width="1.4"/></pattern></defs><rect x="0" y="0" width="8" height="66" fill="url(#shChainPat)"/></svg>
     <span class="sh-ring"></span><span class="sh-ringf"></span>
@@ -4593,7 +4606,12 @@ function show(id,skipHistory){
   //   chat is exactly where a woman lingers, and it was the last screen with no
   //   route to the rest of the app.
   document.body.classList.remove('menu-open');
-  document.body.classList.toggle('menu-hidechip',id==='s-load'||id==='s-photo-load');
+  // ⚠️ s-sharelist is the third: the shared wishlist is somebody ELSE'S page,
+  // reached from a text message. A drawer offering "Refine your Preferences"
+  // and "Your Wardrobe List" to a husband buying a birthday present is
+  // noise, and the chip sits exactly where that page's gold rod hangs. The
+  // footer and the quiz invitation are the routes into the app from there.
+  document.body.classList.toggle('menu-hidechip',id==='s-load'||id==='s-photo-load'||id==='s-sharelist');
   // The quiz progress bar ("1 of 12") belongs to the quiz screen, full stop.
   // Before the Menu/logo/footer existed, the only exits from a mid-way quiz were
   // finishing it or backing out of question 1, and each hid the bar by hand; the
@@ -4627,7 +4645,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
