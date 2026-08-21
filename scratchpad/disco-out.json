@@ -1,0 +1,186 @@
+{
+ "390/none": {
+  "hiw": {
+   "top": 526,
+   "bot": 683,
+   "h": 158
+  },
+  "star": null,
+  "restore": {
+   "top": 685,
+   "bot": 739,
+   "h": 54
+  },
+  "explore": {
+   "top": 786,
+   "bot": 998,
+   "h": 212
+  },
+  "page": 1400,
+  "overflow": false
+ },
+ "390/A": {
+  "hiw": {
+   "top": 526,
+   "bot": 683,
+   "h": 158
+  },
+  "star": {
+   "top": 703,
+   "bot": 836,
+   "h": 133
+  },
+  "restore": {
+   "top": 836,
+   "bot": 890,
+   "h": 54
+  },
+  "explore": {
+   "top": 937,
+   "bot": 1149,
+   "h": 212
+  },
+  "page": 1400,
+  "overflow": false
+ },
+ "390/B": {
+  "hiw": {
+   "top": 526,
+   "bot": 683,
+   "h": 158
+  },
+  "star": {
+   "top": 703,
+   "bot": 1023,
+   "h": 320
+  },
+  "restore": {
+   "top": 1023,
+   "bot": 1077,
+   "h": 54
+  },
+  "explore": {
+   "top": 1124,
+   "bot": 1336,
+   "h": 212
+  },
+  "page": 1466,
+  "overflow": false
+ },
+ "390/C": {
+  "hiw": {
+   "top": 526,
+   "bot": 683,
+   "h": 158
+  },
+  "star": {
+   "top": 703,
+   "bot": 1108,
+   "h": 404
+  },
+  "restore": {
+   "top": 1108,
+   "bot": 1161,
+   "h": 54
+  },
+  "explore": {
+   "top": 1208,
+   "bot": 1420,
+   "h": 212
+  },
+  "page": 1550,
+  "overflow": false
+ },
+ "360/none": {
+  "hiw": {
+   "top": 526,
+   "bot": 683,
+   "h": 158
+  },
+  "star": null,
+  "restore": {
+   "top": 685,
+   "bot": 739,
+   "h": 54
+  },
+  "explore": {
+   "top": 786,
+   "bot": 998,
+   "h": 212
+  },
+  "page": 1400,
+  "overflow": false
+ },
+ "360/A": {
+  "hiw": {
+   "top": 526,
+   "bot": 683,
+   "h": 158
+  },
+  "star": {
+   "top": 703,
+   "bot": 852,
+   "h": 149
+  },
+  "restore": {
+   "top": 852,
+   "bot": 906,
+   "h": 54
+  },
+  "explore": {
+   "top": 953,
+   "bot": 1165,
+   "h": 212
+  },
+  "page": 1400,
+  "overflow": false
+ },
+ "360/B": {
+  "hiw": {
+   "top": 526,
+   "bot": 683,
+   "h": 158
+  },
+  "star": {
+   "top": 703,
+   "bot": 1023,
+   "h": 320
+  },
+  "restore": {
+   "top": 1023,
+   "bot": 1077,
+   "h": 54
+  },
+  "explore": {
+   "top": 1124,
+   "bot": 1336,
+   "h": 212
+  },
+  "page": 1466,
+  "overflow": false
+ },
+ "360/C": {
+  "hiw": {
+   "top": 526,
+   "bot": 683,
+   "h": 158
+  },
+  "star": {
+   "top": 703,
+   "bot": 1108,
+   "h": 404
+  },
+  "restore": {
+   "top": 1108,
+   "bot": 1161,
+   "h": 54
+  },
+  "explore": {
+   "top": 1208,
+   "bot": 1420,
+   "h": 212
+  },
+  "page": 1550,
+  "overflow": false
+ }
+}
