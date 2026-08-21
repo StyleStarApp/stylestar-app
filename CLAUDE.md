@@ -100,6 +100,40 @@ not license this repository to REDISTRIBUTE a copy of the image file.** Technica
 permission, which is her own rule pointed at a surface it had not been pointed at before. **The reasoning is
 written at `.gitignore` and at the top of `starphoto.mjs` so a future session does not helpfully commit it.**
 
+### 🎉🎉 SHE OPENED THE GATE — TESTERS INVITED AND THE LINK IS ON INSTAGRAM (2026-08-21)
+**The blocker she has owned since July is gone, by her own decision, the same hour Bloomingdale's declined:**
+*"I will ask my friends to test now and also I posted on Instagram and put the link on Instagram too."*
+▶ **THIS IS THE THING EVERY OTHER THREAD WAS WAITING ON.** Traffic is what the affiliate declines all named.
+- ⭐ **HER BIO LINK IS TAGGED: `https://stylestar.app/?utm_source=instagram`.** ⚠️ **WHY IT IS TAGGED AND NOT
+  BARE — INSTAGRAM'S IN-APP BROWSER IS INCONSISTENT ABOUT PASSING A REFERRER, so untagged Instagram traffic
+  lands in Plausible as "Direct" and she would have concluded the post did nothing.** Verified safe end to
+  end (`scratchpad/utmcheck.mjs`, run under a real Instagram in-app-browser UA): the app boots clean on that
+  exact URL, the Star and the new line render, the Plausible script fires, tracking is NOT switched off, and
+  **the tag survives because the boot-path URL cleaner deletes ONLY `notrack` and `track`.** Zero JS errors.
+- ⚠️⚠️ **THE ONE REAL TRAP IN INSTAGRAM TRAFFIC, AND IT IS THE 2026-08-08 STORAGE-CONTAINER LESSON POINTED AT
+  A NEW SURFACE: Instagram's in-app browser keeps its OWN localStorage, separate from Safari.** So a woman
+  who taps the bio link, takes the quiz inside Instagram and later opens Safari **finds nothing there.**
+  ▶ **THE CURE ALREADY EXISTS and was built for exactly this class of problem: the email save, the restore
+  link and the 6-digit code.** ▶ **BUT IT MEANS THE EMAIL SAVE MATTERS MUCH MORE FOR INSTAGRAM TRAFFIC THAN
+  FOR ANY OTHER SOURCE.** ⚠️ **Nothing was built for it — she had just gone live and churn was the wrong
+  move.** ▶ **WATCH FOR IT: if testers report losing their results, the lever is making the email save more
+  prominent for in-app-browser traffic, NOT a redesign.**
+- ▶ **GOOGLE ANALYTICS WAS ASKED ABOUT AND ARGUED AGAINST, and the reasons are reusable:** (1) **/privacy
+  NAMES ITS SUB-PROCESSORS** (Anthropic, Supabase, MailerLite, Netlify, Plausible), so adding Google would
+  make a PUBLISHED LEGAL PAGE FALSE on the exact page affiliate reviewers read — **her own 2026-08-19
+  reasoning for refusing Impact's tracking script, applied again**; (2) **no affiliate network requires GA**,
+  they track with their own pixels and the forms ask her to self-report visitors; (3) ⭐ **PLAUSIBLE IS
+  BETTER FOR THE THING SHE ACTUALLY NEEDS: its dashboard can be made PUBLICLY SHAREABLE BY LINK**, so an
+  advertiser asking about traffic gets a live link instead of a number they must take on trust. **That is
+  precisely the ammunition the Bloomingdale's application lacked.**
+- ▶ **HER OWN VISITS: `stylestar.app/?notrack` per browser, or five taps on the logo in the installed app;
+  EVERY TIME in private browsing.** ⚠️ **AND THE INVERSE, which is new and easy to get wrong: DO NOT tell
+  testers to use `?notrack` — their visits are the entire point.**
+- ▶ **SET HER EXPECTATIONS BEFORE SHE READS THE DASHBOARD:** her follower count is small, so the Instagram
+  post may deliver very few; **the ten friends are the real traffic.** A small number is not a failure, and
+  the FUNNEL (Quiz Started → Quiz Question → Quiz Completed → Product Click) is worth far more to her than
+  the visitor count.
+
 ### 🚨⭐⭐ THE CIRCLE THIS DECLINE EXPOSED, AND IT IS THE STRATEGIC FINDING — SAY IT TO HER PLAINLY
 Three doors have now closed and **every one of them named TRAFFIC**: Impact at network level (08-20, no
 reasons given), Shopbop (predicted), and now Bloomingdale's. ▶ **Put her stated sequencing next to that and
@@ -120,9 +154,11 @@ thing she feared (strangers judging a half-built app) is not what a tester circl
   REFUNDABLE deposit on the day. **Macy's network is STILL unidentified — find it before assuming.**
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. ⚠️⚠️ **MERGE THE DISCOVERY-PAGE CHANGE (or don't) — it is built and pushed and NOT live.** Then
-   curl-verify, per the standing #809/#811 lesson that a green merge proves nothing.
-2. 👀 **How it feels on her phone.** ⚠️ She almost never sees that screen — the reminder is her own standing
+1. ✅ ~~Merge the Discovery-page change~~ **DONE — merged as #892 and CURL-VERIFIED LIVE 2026-08-21.**
+   ▶▶ **INSTEAD, THE FIRST THING IS HER DASHBOARD: real visitors are arriving for the first time.** Walk the
+   FUNNEL with her, not the visitor count — where women drop out of the quiz, and what they tap.
+   ⭐ **And the first tester reports are the most valuable feedback this project has ever had.**
+2. 👀 **How the Discovery page feels on her phone.** ⚠️ She almost never sees that screen — the reminder is her own standing
    one: **private browsing, and type `stylestar.app/?notrack`.**
 3. ⭐⭐ **HER THREE ASKS, ALL STILL WAITING AND ALL STILL ACCURATE in the entry below: (1) the EMAILABLE
    WISHLIST, (2) WHICH AFFILIATES NEXT, (3) the LOOSE-ENDS SWEEP.**
