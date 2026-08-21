@@ -7,18 +7,28 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-21 LATEST — ✍️ SHE RETIRED "HOW IT WORKS", AND THE STAR ROSE)
+## ▶ NEXT SESSION — START HERE (2026-08-21 LATEST — 🎉 THE GATE OPENED: TESTERS, INSTAGRAM, AND REAL DATA)
 
-### ⏸ WHERE THIS SESSION IS — ⚠️ BUILT, TESTED, PUSHED, **NOT MERGED**, AWAITING HER WORD
-Branch `claude/style-star-markdown-3rdfdz`, tree clean, **ZERO Netlify builds so far** — nothing is live yet.
-▶ **THE FIRST THING TO DO: ask whether to merge.** One `index.html` change is sitting on the branch.
-▶▶ **WHAT SHE DID, and it is the shape of the session: she stopped a build queue to look at a shipped
-screen critically.** Her words: *"I am not liking how we have HOW IT WORKS and then the sneak peak star of
-the week and then the Explore buttons. Something doesn't feel right with the set up... I wonder if we should
-put the star of the week down at the very bottom OR make it thumbnail size or if we should even need to have
-the HOW IT WORKS - not sure if it is obvious how it works I guess not I probably think that because I already
-know how it works ha."* **Her three asks (the emailable wishlist, the affiliates, the loose ends) are
-UNTOUCHED and all still waiting** — the entry below this one holds them and nothing in it went stale.
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save all of this and then I will open a new chat")
+**TWO PRs merged and CURL-VERIFIED LIVE: #892** (the Discovery page) **plus three CLAUDE.md commits.**
+Branch resynced to main, tree clean, everything at the #892 merge. ⚠️ **ONE Netlify build for the day.**
+▶▶ **THE HEADLINE, AND IT IS THE BIGGEST NON-TECHNICAL THING THAT HAS HAPPENED TO THIS PROJECT: SHE OPENED
+THE TESTER GATE.** Her words: *"I will ask my friends to test now and also I posted on Instagram and put the
+link on Instagram too."* Then she sent the texts. **The blocker she has owned since July is gone, by her own
+decision, on the same day two affiliate doors closed on the exact number testers produce.**
+▶ **HER NEXT SESSION, HER WORDS: "I have some questions and want to review our detailed list."** So open
+with **her three asks** (the emailable wishlist, which affiliates next, the loose-ends sweep) — the entry
+below this one holds them and NOTHING in it went stale.
+
+### ▶ THE SHAPE OF THE DAY, IN ORDER — it swung hard both ways and she kept moving
+1. ✅ **She stopped a build queue to look at a shipped screen critically** and retired How It Works (#892).
+2. ❌ **Bloomingdale's declined.** The nearest trigger for product feeds, gone.
+3. ✅ **She opened the tester gate** — friends texted, Instagram posted, link tagged.
+4. ❌ **Impact answered the ticket: another no**, but with a REASON at last, and an invitation back.
+5. ✅ **She built the instrument that answers the question both rejections asked** — Plausible goals,
+   the public dashboard, and the first honest read of her own numbers.
+▶ **Worth saying to her again, because it is true and she may not see it: EVERY DOOR THAT CLOSED TODAY
+CLOSED ON THE NUMBER THAT STARTED MOVING TODAY.** Followers 16 → 20 → **26** in two days.
 
 ### 🚨⭐⭐ THE DIAGNOSIS, AND IT IS THE REUSABLE HALF: THREE SECTIONS WEARING THE SAME COSTUME
 She could feel it and not name it. **Measured: `─ HOW IT WORKS ─`, `─ ★ STAR OF THE WEEK ★ ─` and
@@ -190,21 +200,86 @@ thing she feared (strangers judging a half-built app) is not what a tester circl
 - ▶ **THE ORDER IS UNCHANGED but the case for it is stronger: AWIN next, then CJ.** ⚠️ Verify AWIN's small
   REFUNDABLE deposit on the day. **Macy's network is STILL unidentified — find it before assuming.**
 
+### 📊⭐⭐ HER ANALYTICS ARE A REAL INSTRUMENT NOW — walked step by step, her ask ("can we go slow")
+- 🚨🚨 **THE TRAP THAT WOULD HAVE MADE EVERY CUSTOM EVENT INVISIBLE, AND IT IS THE MOST REUSABLE THING HERE:
+  PLAUSIBLE DOES NOT SHOW A CUSTOM EVENT ON THE DASHBOARD UNTIL IT IS REGISTERED AS A GOAL.** All ten of the
+  events wired on 2026-08-15 were arriving and being DISCARDED FROM VIEW. ▶ **She would have concluded the
+  tracking did not work.** ⭐ **Plausible auto-detected 8 of them** ("We detected 8 custom events") and added
+  them in one click; **the other three (`Photo Uploaded`, `Chat Message Sent`, `Wardrobe Star`) had to be
+  typed by hand, because auto-detect only lists events it has ACTUALLY SEEN — and those three shipped on
+  2026-08-15, the same day her own visits stopped counting, so no real visitor had ever triggered one.**
+- ✅ **ALL TEN ARE REGISTERED:** Quiz Started · Quiz Question · Quiz Completed · Preferences Saved ·
+  Product Click · Wishlist Save · Wardrobe Star · Photo Uploaded · Photo Analyzed · Chat Message Sent.
+  ⚠️ **Names must match the code EXACTLY, capitals included.** ⚠️ **Display name is optional — leave blank.**
+  ⚠️ **"Add custom property" and "Enable revenue tracking" are BUSINESS-tier and OFF. Do not upgrade.**
+- ⚠️ **`Broken Link` IS A GHOST GOAL** — the "Link broken?" control she had deleted on 2026-08-15. It can
+  never fire again. Harmless; bin it whenever. **Plausible's own four (Form: Submission, File Download,
+  Outbound Link: Click, 404) are automatic — leave them, and Outbound Link: Click earns its keep, below.**
+- ✅ **THE PUBLIC DASHBOARD IS ON: `https://plausible.io/stylestar.app`.** ⚠️ **On her plan there is NO
+  PASSWORD — it is genuinely public** (password-protected shared links and Embed are the paid tier; she was
+  told not to upgrade). ▶ **THIS IS THE AFFILIATE ASSET: every rejection cited traffic, and her only answer
+  was a self-reported number a stranger had to take on trust. In a few weeks it becomes a LIVE LINK.**
+  ⚠️ **It was safe to switch on TODAY only because nothing is pending** — do not leave it showing near-zero
+  while an application is under review.
+- ✅ **HER CHROME LAPTOP IS NOW EXCLUDED TOO** (she ran `?notrack` on it, confirmed). ▶ **The exclusion is
+  per browser AND per device AND per installed app: phone + installed app done 08-15, Chrome done today.**
+  ⚠️⚠️ **AND THE INVERSE, WHICH IS NEW AND EASY TO GET WRONG: NEVER tell a tester to use `?notrack`.**
+
+### 📈 THE FIRST HONEST READ OF HER OWN NUMBERS — and how to read them without misleading her
+- ⚠️⚠️ **SAY THIS BEFORE SHE SEES THE RED ARROWS, EVERY TIME: THE DECLINES ARE THE EXCLUSION WORKING.**
+  28-day window: **81 unique visitors (↓23%) · 176 visits (↓26%) · 780 pageviews (↓63%) · 4.43 views/visit
+  (↓50%) · 19m28s duration (↓54%) · bounce 36% (↓4%, the one that IMPROVED)**. ▶ **Pageviews and duration
+  halving is the signature of removing the heaviest user of the app, which was HER.** Her numbers did not
+  fall; she left the room.
+- ⭐⭐ **THE INSTRUMENT IS VERIFIED, and this is worth doing again after any tracking change: `Outbound Link:
+  Click` (Plausible's OWN automatic capture) and `Product Click` (our custom event) returned IDENTICAL
+  figures — 7 uniques / 49 clicks over 7 days.** ▶ **Two independent measurements agreeing exactly is proof
+  the custom events are accurate.** Keep Plausible's automatic goal for exactly this reason.
+- 🚨⭐ **HOW TO READ THE QUIZ FUNNEL, because the three events fire at DIFFERENT moments and it is easy to
+  misread: `Quiz Started` fires in `startQ()` the instant she taps the button · `Quiz Question` fires in
+  `nextQ()` on every press of NEXT · `Quiz Completed` fires in `genResult()`.** ▶ **So a woman who taps
+  Start, sees question 1 and leaves fires ONLY the first.**
+  **28-day baseline: 12 started → 6 answered at least one question → 5 completed.** ▶ **THE DROP-OFF IS ON
+  THE FIRST SCREEN OF THE QUIZ, NOT INSIDE IT: once she answers one question she almost always finishes
+  (5 of 6).** ⚠️ **HOLD IT LOOSELY — most of that window is HER OWN TESTING** (58 Quiz Started events across
+  12 people is her restarting it while we built). **Baseline, not verdict.**
+- **7-day (post-exclusion, the closest thing to clean):** ~20 visitors · **Safari 65% / Chrome 25% / Mobile
+  App 10%** · **7 people clicked products, 49 clicks** · **1 woman took the quiz and fired 12 Quiz Questions
+  — she answered every one and finished** · 1 wishlist save.
+- ⭐ **THE GAP TO WATCH FIRST NEXT WEEK: 7 people shopped, 1 took the quiz.** If that holds once the testers
+  arrive, women are walking PAST the front door straight into browsing. ⚠️ **Too early to call — some of
+  those 7 are her own Chrome, which was only excluded today.**
+- ⭐ **A LOVELY INFERENCE FROM TOP PAGES, and it answers the Bloomingdale's question from the other side:
+  `/faq` 8 · `/privacy` 6 · `/terms` 5 · `/contact` 2.** ▶ **Real women taking a style quiz do not read
+  Terms of Service. THAT IS THE AFFILIATE REVIEWERS.** Those pages exist BECAUSE reviewers look for them,
+  and the numbers say they looked. **Two Rakuten hostnames appear in Sources too** (`dashboard.linkshare.com`,
+  `publisher.rakutenadvertising.com`) — either an advertiser reviewing her, or her own click from the
+  Rakuten dashboard before Chrome was excluded.
+- ⭐ **"Mobile App — 2" IS THE INSTAGRAM IN-APP BROWSER**, matching Instagram's own 2 visitors exactly.
+  ▶ **So the utm tag works AND the separate-storage-container risk is now measurable, not theoretical.**
+
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. ✅ ~~Merge the Discovery-page change~~ **DONE — merged as #892 and CURL-VERIFIED LIVE 2026-08-21.**
-   ▶▶ **INSTEAD, THE FIRST THING IS HER DASHBOARD: real visitors are arriving for the first time.** Walk the
-   FUNNEL with her, not the visitor count — where women drop out of the quiz, and what they tap.
-   ⭐ **And the first tester reports are the most valuable feedback this project has ever had.**
-2. 👀 **How the Discovery page feels on her phone.** ⚠️ She almost never sees that screen — the reminder is her own standing
-   one: **private browsing, and type `stylestar.app/?notrack`.**
-3. ⭐⭐ **HER THREE ASKS, ALL STILL WAITING AND ALL STILL ACCURATE in the entry below: (1) the EMAILABLE
-   WISHLIST, (2) WHICH AFFILIATES NEXT, (3) the LOOSE-ENDS SWEEP.**
-4. ⚠️ **THE 20 SEPTEMBER PIN** — still the only thing with a real clock. Raise it; do not let it pass.
-5. 🆕 **A STALE ROUTINE FOUND THIS SESSION, add it to the loose-ends sweep: `trig_01SZerTsvKoeUYzeT1HX6iWs`
-   "Style Star — catalog + bank check-in" fires ONCE on 26 AUGUST carrying an Aug-12 brief.** It will ask her
-   about a 6-row jeans catalog (it is 107 products), whether Almira replied (she did) and whether the bank
-   account opened (it did). ▶ **Update or delete it before it wakes her with old news.** (The two link-check
-   Routines are unchanged; the recommendation to keep Sunday and retire Monday still stands, her call.)
+1. ⭐⭐ **HER OWN AGENDA, IN HER WORDS: "I have some questions and want to review our detailed list."**
+   ▶ **Ask what her questions are FIRST, then walk her three asks: (1) the EMAILABLE WISHLIST, (2) WHICH
+   AFFILIATES NEXT, (3) the LOOSE-ENDS SWEEP.** The entry below holds all three and none of it went stale.
+2. 📊 **HER DASHBOARD, once her friends have had a weekend.** ▶ **Read the FUNNEL, never the visitor count**
+   — she was told plainly that a small number is not a failure. **The first question to answer: does the
+   7-shopped-to-1-quizzed gap hold with real testers?**
+3. ⭐⭐ **THE FIRST TESTER REPORTS ARE THE MOST VALUABLE FEEDBACK THIS PROJECT HAS EVER HAD.** ▶ **The job
+   when they land is to separate A REAL PROBLEM from ONE PERSON'S TASTE** — she was promised help with
+   exactly that. ⚠️ **And the follow-up question matters as much as the invitation: people volunteer the
+   good news and have to be ASKED TWICE for the bad.**
+4. 👀 **How the retired-How-It-Works Discovery page feels on her phone.** ⚠️ She almost never sees that
+   screen: **private browsing, and type `stylestar.app/?notrack`.**
+5. ⚠️⚠️ **THE 20 SEPTEMBER PIN** — still the only thing with a real clock. **`WEEK_STAR_PIN` back to `null`
+   is the whole change**, and ASK whether she wants the 18-item queue reordered at that moment.
+   Raise it; do not let it pass.
+6. 🆕 **THE STALE ROUTINE: `trig_01SZerTsvKoeUYzeT1HX6iWs` "Style Star — catalog + bank check-in" fires ONCE
+   on 26 AUGUST carrying an Aug-12 brief.** It will ask about a 6-row jeans catalog (it is 107), whether
+   Almira replied (she did) and whether the bank opened (it did). ▶ **Update or delete it.**
+   (The two link-check Routines are unchanged; keep Sunday, retire Monday, **her call**.)
+7. ⚠️ **DO NOT REAPPLY TO ANY AFFILIATE THIS WEEK** — nothing has changed yet, the answer would be
+   identical, and a second no from the same door is harder to come back from than a first. **3-4 weeks.**
 
 ## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-21 LATE — ⭐ A STRANGER MEETS A REAL GARMENT NOW)
 
