@@ -53,7 +53,12 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 // ⚠️ DERIVED, not restated: the Edit grows every time she adds a piece, so a
 // hardcoded total needs editing on every single addition. Only the JS card
 // templates are genuinely fixed, which is why only that number is written here.
-const TEMPLATES = 11;
+// 11 → 12 updated deliberately 2026-08-22: the shared wishlist page
+// (_shGroup, at /list/<token>) carries its own outbound anchor. It is the
+// commercial point of the whole feature — a piece bought from her shared list
+// is exactly what should earn — so it is affiliate-wrapped and sponsored like
+// every other product link. The census caught the 12th template as designed.
+const TEMPLATES = 12;
 const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length;
 ok('found the full set of outbound PRODUCT anchors (every Edit link + ' + TEMPLATES + ' templates)',
    anchors.length === EDIT_N + TEMPLATES, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');

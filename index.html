@@ -1235,6 +1235,69 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-empty .we-addlnk{display:inline-block;font:600 13.5px/1.35 'Jost',sans-serif;color:#4a463e;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:9px 8px;cursor:pointer;letter-spacing:.03em;-webkit-tap-highlight-color:transparent;max-width:100%}
 #s-wishlist .wl-empty .we-addlnk .wab-t{display:block;text-wrap:balance}
 #s-wishlist .wl-foot{text-align:center;margin-top:26px}
+
+/* --- THE SHARED WISHLIST (2026-08-22) -------------------------------------
+   The page at /list/<token>: her list as something another person can buy
+   from. Read-only by construction -- there is no remove control, no email
+   ask, no add form, and the server never sends anything but the rows.
+
+   ⚠️ THE CROWN IS THE SAME OBJECT AS YOUR WISHLIST'S, deliberately: her call
+   was "copy it exactly so it does not have to be rebuilt". The values below
+   mirror #s-wishlist's, so a change to one must be made to the other --
+   grep wl-crownheart to find both.
+   ⚠️ AND THE CHAIN'S PATTERN ID IS DIFFERENT ON PURPOSE (shChainPat, not
+   wlChainPat). Two elements sharing an SVG id resolve to whichever def the
+   browser finds first, and Safari may refuse to paint one that lives inside
+   a hidden screen -- the same rule as the per-footer Instagram gradients. */
+#s-sharelist{padding:0 16px 26px}
+#s-sharelist .sh-rod{position:fixed;top:0;left:0;right:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+#s-sharelist .sh-crown{position:relative;width:196px;height:196px;margin:14px auto 0}
+#s-sharelist .sh-chain{position:absolute;left:calc(50% - 4px);bottom:calc(100% - 60px);width:8px;height:66px;z-index:1}
+#s-sharelist .sh-ring,#s-sharelist .sh-ringf{position:absolute;left:calc(50% - 6px);bottom:calc(100% + 4px);width:12px;height:12px;border-radius:50%;border:2px solid #C89A2C;background:transparent}
+#s-sharelist .sh-ring{z-index:5}
+#s-sharelist .sh-ringf{z-index:7;clip-path:inset(50% 0 0 0)}
+#s-sharelist .sh-crownheart{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* Her name, in her own handwriting, sitting inside the gold heart like a
+   locket -- her pick over a separate signature line underneath. */
+#s-sharelist .sh-nm{position:absolute;left:50%;transform:translateX(-50%);top:36%;z-index:2;width:150px;text-align:center;font:400 30px/1.1 'Dancing Script',cursive;color:#1f1d19}
+#s-sharelist .sh-lead{font:400 17px/1.5 'Lora',Georgia,serif;color:#3a352c;text-align:center;margin-top:2px;text-wrap:balance}
+/* ⚠️ Pushed lower at her ask, but it CANNOT move below the list: the FTC
+   guidance and every affiliate reviewer expect a disclosure above the links
+   it describes. Its position is the one thing here that is not a taste call. */
+#s-sharelist .sh-disc{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:26px 0 0}
+/* Both group headers reuse HER approved section-header mark: a 2px #D8A52E bar
+   hugging the word, exactly as the wardrobe categories and the Menu groups do.
+   Grep wdr-cat-t before restyling either -- they are meant to match. */
+#s-sharelist .sh-gh{margin:24px 0 0;text-align:center}
+#s-sharelist .sh-gh span{display:inline-block;position:relative;padding:0 2px 6px;font:700 15px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c}
+#s-sharelist .sh-gh span::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
+#s-sharelist .sh-card{background:#fff;border:1px solid #e7e0cf;padding:2px 12px 4px;margin-top:9px}
+#s-sharelist .sh-row{display:flex;align-items:flex-start;gap:10px;padding:14px 0;border-top:1px solid #efe9dc}
+#s-sharelist .sh-row:first-child{border-top:0}
+#s-sharelist .sh-b{flex:1;min-width:0}
+#s-sharelist .sh-name{display:block;font:600 14px/1.35 'Jost',sans-serif;color:#26221c}
+/* ⚠️ #6b6355, NOT the #8a8272 Your Wishlist uses for the same line. That value
+   measures 3.81:1 on white and FAILS AA, and here the retailer name is the
+   thing a gift-buyer most needs to read, on a page a stranger meets cold.
+   #6b6355 is the app's own established readable ink (5.93:1). The same
+   number is worth fixing on #s-wishlist .wl-st, which is a separate change
+   to a screen she has already blessed -- raised with her, not smuggled in. */
+#s-sharelist .sh-store{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#6b6355;margin-top:3px}
+#s-sharelist .sh-price{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E;margin-left:7px;text-transform:none}
+/* HER OWN words about the piece -- size, colour, the occasion. The gold rule
+   marks it as an annotation so it can never read as the retailer's copy. */
+#s-sharelist .sh-note{display:block;font:400 12.5px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:7px;padding-left:9px;border-left:2px solid #E0B84C}
+#s-sharelist .sh-go{flex:0 0 auto;margin-top:2px;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
+#s-sharelist .sh-foot{text-align:center;margin-top:24px}
+#s-sharelist .sh-f1{font:400 11.5px/1.5 'Jost',sans-serif;color:#8a8272}
+#s-sharelist .sh-f1 b{color:#3a352c;font-weight:600}
+#s-sharelist .sh-f2{display:inline-block;margin-top:9px;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#1a1a1a;border:1px solid #D8A52E;padding:9px 14px;text-decoration:none;cursor:pointer}
+/* Waiting, gone and empty are all real states of this page -- somebody arrives
+   here from a text message with no idea what to expect, so none of them may be
+   a blank screen or a raw error. */
+#s-sharelist .sh-wait,#s-sharelist .sh-gone{text-align:center;padding:26px 0 10px}
+#s-sharelist .sh-gone h4{font:400 19px/1.3 'DM Serif Display',Georgia,serif;color:#1f1d19;margin:0 0 8px}
+#s-sharelist .sh-gone p,#s-sharelist .sh-wait{font:400 13.5px/1.6 'Jost',sans-serif;color:#5a554c;margin:0 auto;max-width:300px}
 /* "Saved" confirmation toast: tells her the piece landed somewhere AND where
    that somewhere is, so the list is discoverable from the moment she uses it. */
 .wl-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(14px);z-index:9000;display:flex;align-items:center;gap:9px;background:#1a1a1a;color:#fff;border-radius:999px;padding:11px 8px 11px 16px;box-shadow:0 10px 26px -10px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;max-width:calc(100vw - 32px)}
@@ -4074,6 +4137,23 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="wl-foot" data-std-foot></div>
 </div>
 
+<!-- The shared wishlist, at /list/<token>. A page for SOMEBODY ELSE: whoever
+     she sent the link to. Read-only by construction, and the server sends the
+     rows and nothing else, so her sizes, colours and portrait are not merely
+     hidden here -- they never arrive. The crown is copied verbatim from
+     #s-wishlist above (her call), with its own pattern id. -->
+<div class="scr" id="s-sharelist">
+  <div class="sh-rod"></div>
+  <div class="sh-crown">
+    <svg class="sh-chain" viewBox="0 0 8 66" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="shChainPat" x="0" y="0" width="8" height="16" patternUnits="userSpaceOnUse"><ellipse cx="4" cy="4.5" rx="2.9" ry="4.2" fill="none" stroke="#DDAF3F" stroke-width="1.4"/><ellipse cx="4" cy="12.5" rx="1.2" ry="4.2" fill="none" stroke="#C89A2C" stroke-width="1.4"/></pattern></defs><rect x="0" y="0" width="8" height="66" fill="url(#shChainPat)"/></svg>
+    <span class="sh-ring"></span><span class="sh-ringf"></span>
+    <svg class="sh-crownheart" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#C89A2C" stroke-width=".82" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/><path fill="#FEF6D6" stroke="#EBD9A0" stroke-width=".55" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>
+    <div class="sh-nm" id="shName"></div>
+  </div>
+  <div id="shBody"></div>
+  <div class="wl-foot" data-std-foot></div>
+</div>
+
 <div class="scr" id="s-faq">
   <div class="story-wrap">
     <div class="faq-head">
@@ -4462,7 +4542,11 @@ function retakeQuiz(){
 // The policy text is NOT duplicated anywhere -- a reviewer sees the real page.
 // WARNING: once a URL is submitted to an affiliate network, never change its path.
 var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-res':'/results'};
-function _pathForScreen(id){return _ROUTES[id]||'/';}
+// ⚠️ The shared wishlist's path carries a token, so it cannot live in _ROUTES.
+// Without this branch show() would rewrite the address bar to "/" the moment
+// the page opened -- stripping the token, breaking a reload, and handing
+// nothing to anyone who copies the URL out of the bar.
+function _pathForScreen(id){return (id==='s-sharelist'&&_sharePath)?_sharePath:(_ROUTES[id]||'/');}
 // The reverse lookup, for someone who lands on one of those paths directly.
 // Tolerates a trailing slash and odd capitalisation, both of which people type.
 function _screenForPath(p){
@@ -9113,6 +9197,93 @@ function wlAddSubmit(){
 // no clamp, so iOS rubber-banding keeps rod and chain glued too.
 function _wlRodScroll(){var r=document.querySelector('#s-wishlist .wl-rod');if(r)r.style.transform='translateY('+(-window.scrollY)+'px)';}
 window.addEventListener('scroll',_wlRodScroll,{passive:true});
+// --- THE SHARED WISHLIST (2026-08-22) ------------------------------------
+// Everything below renders a page for somebody who is NOT the owner: she sent
+// them a link, and they came to buy her something. So there is no remove
+// control, no email ask and no add form, and none of it is enforced by hiding
+// things -- the server's response simply has nothing else in it.
+var _sharePath='';
+// base64url, which is the alphabet makeShareToken emits. Tolerates a trailing
+// slash because people type one.
+function _shareTokenFromPath(p){
+  var m=String(p||'').replace(/\/+$/,'').match(/^\/list\/([A-Za-z0-9_-]{16,600})$/);
+  return m?m[1]:'';
+}
+function openSharedList(tok){
+  _sharePath='/list/'+tok;
+  show('s-sharelist',true);
+  try{history.replaceState({screen:'s-sharelist'},null,_sharePath)}catch(e){}
+  var nm=document.getElementById('shName');if(nm)nm.textContent='';
+  var el=document.getElementById('shBody');
+  if(el)el.innerHTML='<div class="sh-wait">Opening this wishlist&hellip;</div>';
+  fetch('/.netlify/functions/user-data?share='+encodeURIComponent(tok))
+    .then(function(r){if(!r.ok)throw new Error('gone');return r.json()})
+    .then(function(d){_renderSharedList(d)})
+    .catch(function(){_renderSharedGone()});
+}
+// A revoked link, a mistyped one and a link to an account that no longer
+// exists are one indistinguishable 404 from the server, so they get one kind
+// answer here. Never a raw error: whoever is reading this was sent it by
+// somebody they know.
+function _renderSharedGone(){
+  var nm=document.getElementById('shName');if(nm)nm.textContent='';
+  var el=document.getElementById('shBody');
+  if(!el)return;
+  el.innerHTML='<div class="sh-gone"><h4>This wishlist isn&rsquo;t here</h4>'
+    +'<p>The link may have been turned off, or it may have a typo in it. '
+    +'Ask whoever sent it to share it again.</p></div>'
+    +'<div class="sh-foot"><div class="sh-f1">Made with <b>Style Star</b></div>'
+    +'<span class="sh-f2" onclick="goHome()">See what Style Star is &rarr;</span></div>';
+}
+function _renderSharedList(d){
+  var el=document.getElementById('shBody');
+  if(!el)return;
+  var name=String((d&&d.name)||'').trim();
+  var list=(d&&Array.isArray(d.list))?d.list:[];
+  var nm=document.getElementById('shName');
+  if(nm)nm.textContent=name;
+  // Her wording. Without a name "my" still has an antecedent -- the link
+  // arrived from a real person -- so it stays first person either way.
+  var lead=name?'This is my shopping wishlist!':'This is my Style Star shopping wishlist!';
+  var h='<div class="sh-lead">'+_esc(lead)+'</div>';
+  if(!list.length){
+    h+='<div class="sh-gone"><p>There&rsquo;s nothing on this wishlist yet. '
+      +'Check back in a little while.</p></div>';
+  }else{
+    // The disclosure rides with the links, and above them.
+    h+='<div class="sh-disc">Some links may earn a commission.</div>';
+    // ▶ HER OWN WORDS for the two groups, and they do real work: a rebuilt
+    //   search link stops being a disappointment ("this only opens a search")
+    //   and becomes a generous instruction ("anything like this is a yes").
+    h+=_shGroup('Buy exactly this',list.filter(function(it){return it&&it.exact}));
+    h+=_shGroup('Anything like this',list.filter(function(it){return it&&!it.exact}));
+  }
+  h+='<div class="sh-foot"><div class="sh-f1">Made with <b>Style Star</b></div>'
+    +'<span class="sh-f2" onclick="goHome()">Take the free style quiz &rarr;</span></div>';
+  el.innerHTML=h;
+}
+function _shGroup(label,rows){
+  if(!rows.length)return '';
+  var h='<div class="sh-gh"><span>'+_esc(label)+'</span></div><div class="sh-card">';
+  rows.forEach(function(it){
+    // An exact row keeps the URL she saved; a search row is REBUILT here, so a
+    // store-URL fix repairs every shared page too. Both are affiliate-wrapped:
+    // a piece bought from her list is exactly what this is meant to earn on.
+    var url='';
+    if(it.exact)url=_affUrl(_wlSafeUrl(it.url));
+    if(!url){try{url=_affUrl(getStoreUrl(it.store,it.name,it.search))}catch(e){url=''}}
+    h+='<div class="sh-row"><div class="sh-b">'
+      +'<span class="sh-name">'+_esc(it.name)+'</span>'
+      +(it.store?'<span class="sh-store">'+_esc(it.store)
+        +(it.exact&&it.price?'<span class="sh-price">'+_esc(it.price)+'</span>':'')+'</span>':'')
+      +(it.note?'<span class="sh-note">'+_esc(it.note)+'</span>':'')
+      +'</div>'
+      +(url?'<a class="sh-go" href="'+_esc(url)+'" target="_blank" rel="sponsored noopener">'
+        +(it.exact?'Shop it':'Find it')+' &rarr;</a>':'')
+      +'</div>';
+  });
+  return h+'</div>';
+}
 function openWishlist(){
   var cur=document.querySelector('.scr.act');
   // Tapping "View" from the toast while already on the list must not make Back
@@ -10397,6 +10568,11 @@ function maybePlayEntrance(){
     // page. fallbackInitialScreen() runs first on purpose: it restores her saved
     // data into memory and sets the screen underneath, so the page's Back button
     // returns her to the right home screen (Welcome Back if she has results).
+    // A shared wishlist is somebody else's page, so it opens on top of the
+    // normal first screen exactly as a legal page does -- which is also what
+    // makes Back land a stranger on the Style Star welcome rather than nowhere.
+    var shTok=_shareTokenFromPath(location.pathname);
+    if(shTok){openSharedList(shTok);return;}
     var deep=_screenForPath(location.pathname);
     if(deep){
       // The initial history entry was stamped before fallbackInitialScreen

@@ -51,3 +51,16 @@
   from = "/results"
   to = "/index.html"
   status = 200
+
+# The shared wishlist: /list/<token> is her registry page, the one she sends to
+# somebody who wants to buy from it. The token is the credential, so the path is
+# dynamic and the router in index.html reads it off location.pathname rather
+# than matching a fixed path.
+#
+# WARNING: the same rule as the pages above -- once a woman has sent one of
+# these links to another person, this path can never change, or every link
+# already out in the world stops working.
+[[redirects]]
+  from = "/list/*"
+  to = "/index.html"
+  status = 200

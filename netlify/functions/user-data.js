@@ -60,12 +60,13 @@ function codeMatches(given, stored) {
   const b = crypto.createHash('sha256').update(String(stored)).digest();
   return crypto.timingSafeEqual(a, b);
 }
-// _restore is the server's own bookkeeping — it must never ride along into a
-// response body or survive inside a client-supplied save.
+// _restore and _share are the server's own bookkeeping — neither may ever ride
+// along into a response body or survive inside a client-supplied save.
 function stripServerFields(data) {
   if (data && typeof data === 'object' && !Array.isArray(data)) {
     const copy = { ...data };
     delete copy._restore;
+    delete copy._share;
     return copy;
   }
   return data;
@@ -214,6 +215,12 @@ function readToken(token) {
   let payload;
   try { payload = JSON.parse(plain); } catch (e) { payload = null; }
 
+  // ⚠️ A SHARE TOKEN MUST NEVER RESTORE AN ACCOUNT. A restore token unlocks a
+  // woman's whole profile; a share link is handed to other people on purpose.
+  // A share payload carries no issued-at, so the clock check at the bottom
+  // would already refuse it — this is the explicit belt in front of the braces.
+  if (payload && typeof payload === 'object' && payload.k === 's') return null;
+
   // Legacy token: the payload is a bare email string, issued before tokens
   // carried a timestamp. Honour it so links in already-sent welcome emails
   // don't break overnight.
@@ -228,6 +235,92 @@ function readToken(token) {
 
   if (!payload.t || (Date.now() - Number(payload.t)) > TOKEN_MAX_AGE_MS) return null;
   return String(payload.e);
+}
+
+// --- The share link (2026-08-22) --------------------------------------------
+// Her wishlist as a page someone else can buy from — the registry she has been
+// asking for since June. Two things make it safe to hand to a stranger:
+//
+//   1. THE TOKEN IS A DIFFERENT KIND FROM A RESTORE TOKEN, and readToken()
+//      refuses it outright. If a share link were a restore token, everyone she
+//      sent her wishlist to could restore her entire profile.
+//   2. THE PUBLIC RESPONSE IS BUILT FIELD BY FIELD (publicList below), never by
+//      stripping. An allowlist cannot leak a field somebody adds later; a
+//      denylist eventually does.
+//
+// Revocation is by REVISION, which is what lets this ship with no schema change
+// and no JSON-path query: the token carries the revision it was minted at, the
+// row keeps the current one (data._share = {r, on}), and "Stop sharing" bumps
+// r so every link minted before that moment stops resolving. Sharing again
+// mints a NEW link, deliberately — a revoked link that can come back to life
+// was never revoked.
+//
+// ⚠️ SHARE LINKS DO NOT EXPIRE, unlike restore tokens. A restore token has a
+// 30-day clock because a forwarded email must not be permanent access to a
+// profile. A registry link that quietly died a month later would just be a
+// broken promise to whoever she gave it to. Revocation is the control instead.
+function makeShareToken(email, rev) {
+  const key = _restoreKey();
+  if (!key || !email) return '';
+  try {
+    const payload = JSON.stringify({ k: 's', e: String(email), r: Number(rev) || 0 });
+    const iv = crypto.randomBytes(12);
+    const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+    const enc = Buffer.concat([cipher.update(payload, 'utf8'), cipher.final()]);
+    return Buffer.concat([iv, cipher.getAuthTag(), enc]).toString('base64url');
+  } catch (e) { return ''; }
+}
+function readShareToken(token) {
+  const key = _restoreKey();
+  if (!key || !token) return null;
+  try {
+    const buf = Buffer.from(String(token), 'base64url');
+    const iv = buf.subarray(0, 12), tag = buf.subarray(12, 28), enc = buf.subarray(28);
+    const d = crypto.createDecipheriv('aes-256-gcm', key, iv);
+    d.setAuthTag(tag);
+    const payload = JSON.parse(Buffer.concat([d.update(enc), d.final()]).toString('utf8'));
+    if (!payload || payload.k !== 's' || !payload.e) return null;
+    return { email: String(payload.e), rev: Number(payload.r) || 0 };
+  } catch (e) { return null; }
+}
+
+// Her own words about a piece — size, colour, the occasion it is for. Capped so
+// one long note can never swamp a row on the shared page.
+const SHARE_NOTE_MAX = 140;
+
+// ⚠️ THE ALLOWLIST IS THE PRIVACY GUARANTEE. Build every field explicitly and
+// never spread the stored entry. Her sizes, colours, never-wear list, portrait
+// and quiz answers are not reachable from here at all — the only personal words
+// on a shared page are the ones she typed into a note herself.
+function publicList(data) {
+  const src = (data && data.wardrobe && Array.isArray(data.wardrobe.wishlist))
+    ? data.wardrobe.wishlist : [];
+  const out = [];
+  for (const it of src) {
+    if (!it || !it.name) continue;
+    // Only ever an http(s) link, matching the app's own _wlSafeUrl rule: a
+    // stored URL comes back out of a woman's localStorage, which she can edit.
+    const url = (typeof it.url === 'string' && /^https?:\/\//i.test(it.url)) ? it.url : '';
+    const row = {
+      name: String(it.name).slice(0, 200),
+      store: String(it.store || '').slice(0, 80),
+      search: String(it.search || '').slice(0, 200),
+      note: String(it.note || '').slice(0, SHARE_NOTE_MAX),
+      exact: !!url
+    };
+    if (url) { row.url = url; row.price = String(it.price || '').slice(0, 24); }
+    out.push(row);
+  }
+  return out;
+}
+// Her first name heads the page. "You" is the quiz's placeholder and "there"
+// is MailerLite's — neither is a name, and both must fall through to the
+// no-name wording rather than greet a reader as You.
+function publicName(data) {
+  const raw = String((data && (data.userName || data.name)) || '').trim();
+  const low = raw.toLowerCase();
+  if (!raw || low === 'you' || low === NAME_PLACEHOLDER) return '';
+  return raw.slice(0, 40);
 }
 
 function mlHeaders(apiKey) {
@@ -443,7 +536,61 @@ export default async (req) => {
 
   try {
     if (req.method === 'POST') {
-      const { email, data, token } = await req.json();
+      const body = await req.json();
+      const { email, data, token } = body;
+
+      // --- Turning the share link on or off --------------------------------
+      // Ownership is proved with her SAVE TOKEN, the same credential that
+      // authorises overwriting her profile. An email address is never enough
+      // here, and it is not enough for this either.
+      if (body.share === 'on' || body.share === 'off') {
+        if (!email) {
+          return new Response(JSON.stringify({ error: 'Email required' }), { status: 400, headers });
+        }
+        const key = String(email).toLowerCase().trim();
+        const owner = token ? readToken(token) : null;
+        if (!owner || String(owner).toLowerCase().trim() !== key) {
+          return new Response(JSON.stringify({ error: 'Not authorized', reason: 'token_required' }), { status: 403, headers });
+        }
+        let rowData = null;
+        try {
+          const look = await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key) + '&select=data', {
+            headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+          });
+          const rows = await look.json();
+          if (rows && rows.length > 0 && rows[0].data) {
+            rowData = typeof rows[0].data === 'string' ? JSON.parse(rows[0].data) : rows[0].data;
+          }
+        } catch (e) { rowData = null; }
+        if (!rowData) {
+          return new Response(JSON.stringify({ error: 'No results found' }), { status: 404, headers });
+        }
+        const cur = (rowData._share && typeof rowData._share === 'object') ? rowData._share : {};
+        // Turning it OFF bumps the revision, which is what kills every link
+        // already out in the world. Turning it back on mints a new one.
+        const next = (body.share === 'on')
+          ? { r: Number(cur.r || 0), on: true }
+          : { r: Number(cur.r || 0) + 1, on: false };
+        rowData._share = next;
+        try {
+          await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
+            method: 'PATCH',
+            headers: {
+              'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
+              'Content-Type': 'application/json', 'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({ data: JSON.stringify(rowData) })
+          });
+        } catch (e) {
+          return new Response(JSON.stringify({ error: 'Could not save' }), { status: 500, headers });
+        }
+        return new Response(JSON.stringify({
+          success: true,
+          sharing: next.on,
+          shareToken: next.on ? makeShareToken(key, next.r) : null
+        }), { status: 200, headers });
+      }
+
       if (!email || !data) {
         return new Response(JSON.stringify({ error: 'Email and data required' }), { status: 400, headers });
       }
@@ -453,6 +600,7 @@ export default async (req) => {
       // (delete), and a save from another device must not wipe an outstanding
       // one (carried over from the existing row below).
       delete saveData._restore;
+      delete saveData._share;
 
       // Does a record already exist for this email? A first save is open (that's
       // a brand-new user); overwriting an EXISTING profile needs proof of
@@ -484,6 +632,9 @@ export default async (req) => {
           // Keep any outstanding restore code alive across the save, so a save
           // from one device doesn't invalidate the code sitting in her email.
           if (d && d._restore) saveData._restore = d._restore;
+          // Likewise the share state: a save from one device must not silently
+          // turn off a link she has already given somebody.
+          if (d && d._share) saveData._share = d._share;
         } catch (e) { hasPortrait = false; }
 
         if (!owns && hasPortrait) {
@@ -538,6 +689,36 @@ export default async (req) => {
       const tokenParam = q.get('token');
       const emailParam = q.get('email');
       const codeParam = q.get('code');
+
+      // --- A SHARED WISHLIST: the list, and nothing else. -------------------
+      // No authentication, by design — the token IS the credential, and it is
+      // unguessable. A dead, revoked or unknown token is one indistinguishable
+      // 404, so the page can say the same kind thing to every one of them.
+      const shareParam = q.get('share');
+      if (shareParam) {
+        const s = readShareToken(shareParam);
+        if (!s) {
+          return new Response(JSON.stringify({ error: 'not_found' }), { status: 404, headers });
+        }
+        const key = s.email.toLowerCase().trim();
+        let data = null;
+        try {
+          const look = await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key) + '&select=data', {
+            headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+          });
+          const rows = await look.json();
+          if (rows && rows.length > 0 && rows[0].data) {
+            data = typeof rows[0].data === 'string' ? JSON.parse(rows[0].data) : rows[0].data;
+          }
+        } catch (e) { data = null; }
+        const sh = data && data._share;
+        if (!sh || !sh.on || Number(sh.r || 0) !== s.rev) {
+          return new Response(JSON.stringify({ error: 'not_found' }), { status: 404, headers });
+        }
+        return new Response(JSON.stringify({
+          success: true, name: publicName(data), list: publicList(data)
+        }), { status: 200, headers });
+      }
 
       if (!tokenParam && !emailParam) {
         return new Response(JSON.stringify({ error: 'Email or token required' }), { status: 400, headers });
