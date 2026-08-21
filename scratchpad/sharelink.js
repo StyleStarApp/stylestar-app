@@ -1,4 +1,4 @@
-// Verification for the shared-wishlist plumbing (2026-08-22).
+// Verification for the shared-wishlist plumbing (2026-08-21).
 // Runs the REAL user-data.js handler with Supabase and MailerLite stubbed, so
 // every check exercises the actual auth and allowlist logic, not a copy.
 //
@@ -80,7 +80,7 @@ let out = await body(r);
 const SHARE1 = out && out.shareToken;
 ok('her own token turns sharing on', r.status === 200 && out.sharing === true && !!SHARE1);
 
-console.log('\n2b. HER REAL BUG (2026-08-22): the token alone must be enough');
+console.log('\n2b. HER REAL BUG (2026-08-21): the token alone must be enough');
 // 🚨 The first person ever to tap "Get my link" got an error, because she had
 // restored her results on that phone: ss_token was set, ss_email was not, and
 // the share call demanded an email the client had no way to know. Asking for an

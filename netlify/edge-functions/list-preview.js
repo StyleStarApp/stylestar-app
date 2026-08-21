@@ -1,4 +1,4 @@
-// The link preview for a shared wishlist (2026-08-22, her catch).
+// The link preview for a shared wishlist (2026-08-21, her catch).
 //
 // 🚨 WHY THIS CANNOT LIVE IN THE APP: iMessage, WhatsApp and every other
 // messenger build their preview card by FETCHING THE URL AND READING THE RAW

@@ -1,4 +1,4 @@
-// Item one of the shareable wishlist: her note on a piece (2026-08-22).
+// Item one of the shareable wishlist: her note on a piece (2026-08-21).
 // Drives the REAL Your Wishlist screen in Chromium with a seeded record.
 //
 //   node scratchpad/wlnote.js
@@ -70,7 +70,7 @@ console.log('\n1. A piece with no note offers one, in words');
 let { ctx, pg } = await open();
 let rows = await rowState(pg);
 ok('both rows show "+ Add a note"', rows.length === 2 && rows.every(r => r.add), JSON.stringify(rows));
-// ⚠️ UPDATED DELIBERATELY 2026-08-22: alignment is no longer scoped to rows
+// ⚠️ UPDATED DELIBERATELY 2026-08-21: alignment is no longer scoped to rows
 // with notes. Every row carries "+ Add a note" and is therefore taller, so a
 // centred × floated mid-row on the note-less ones. The class still marks the
 // row, it just no longer decides the alignment.
