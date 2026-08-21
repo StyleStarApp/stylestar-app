@@ -7,7 +7,114 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-21 LATE — ⭐ A STRANGER MEETS A REAL GARMENT NOW)
+## ▶ NEXT SESSION — START HERE (2026-08-21 LATEST — ✍️ SHE RETIRED "HOW IT WORKS", AND THE STAR ROSE)
+
+### ⏸ WHERE THIS SESSION IS — ⚠️ BUILT, TESTED, PUSHED, **NOT MERGED**, AWAITING HER WORD
+Branch `claude/style-star-markdown-3rdfdz`, tree clean, **ZERO Netlify builds so far** — nothing is live yet.
+▶ **THE FIRST THING TO DO: ask whether to merge.** One `index.html` change is sitting on the branch.
+▶▶ **WHAT SHE DID, and it is the shape of the session: she stopped a build queue to look at a shipped
+screen critically.** Her words: *"I am not liking how we have HOW IT WORKS and then the sneak peak star of
+the week and then the Explore buttons. Something doesn't feel right with the set up... I wonder if we should
+put the star of the week down at the very bottom OR make it thumbnail size or if we should even need to have
+the HOW IT WORKS - not sure if it is obvious how it works I guess not I probably think that because I already
+know how it works ha."* **Her three asks (the emailable wishlist, the affiliates, the loose ends) are
+UNTOUCHED and all still waiting** — the entry below this one holds them and nothing in it went stale.
+
+### 🚨⭐⭐ THE DIAGNOSIS, AND IT IS THE REUSABLE HALF: THREE SECTIONS WEARING THE SAME COSTUME
+She could feel it and not name it. **Measured: `─ HOW IT WORKS ─`, `─ ★ STAR OF THE WEEK ★ ─` and
+`─ OR EXPLORE ─` stacked within 800px at IDENTICAL weight** — same gold, same caps, same hairlines, same
+`.hm-divwrap` construction. ▶ **So the page read as A LIST OF EQUALLY-IMPORTANT SECTIONS instead of a
+journey, and nothing on it said which mattered most.** That was the feeling, not the Star.
+- ⭐⭐ **AND HOW IT WORKS WAS THE ONE TO CUT, because it repeated the page above it.** Pulled apart row by row:
+  **step 1 "Take the style quiz" restated the giant `.hm-cta` 150px above it** · step 2's sub restated the
+  `.hm-h1` ("Discover your **signature** style") · step 3's restated `.hm-body` ("personalized shopping, all
+  in one place"). ▶ **EXACTLY ONE of its six lines said anything new: "12 quick questions, no wrong
+  answers"** — which answers the two silent objections a stranger has (how long, and what if I get it wrong).
+- ▶ **HER SELF-DIAGNOSIS WAS HALF RIGHT AND WORTH SAYING BACK TO HER: she assumed she found it redundant
+  because she already knows how the app works. She found it redundant because it largely WAS.**
+
+### ✅ WHAT SHIPPED — HER PICK "B" FROM FIVE RENDERED OPTIONS
+`.hm-hiw` and its three numbered rows are **deleted**; one quiet line sits under the quiz button instead:
+**"12 quick questions. No wrong answers."** (`.hm-hiwline`, no divider, no numbers, no header — the whole
+point was to stop it competing with the two dividers that remain).
+- ⭐⭐ **THE MEASURED PAYOFF, and it is why B beat cutting the block whole: THE STAR OF THE WEEK ROSE FROM
+  y=702 TO y=560.** It had been sitting ONE PIXEL BELOW a ~700px iPhone fold, so a stranger saw **none** of
+  it without scrolling. **Now ~140px of a REAL GARMENT — the gold frame and the top of the scarf — is on her
+  FIRST screen** (72px even at 320). ▶ **Her two questions turned out to have one answer.**
+- ✅ **The quiz CTA never moved (y=346) and still leads.** That was the thing that actually had to be
+  protected, and a test now holds that line.
+- **Page 1543 → 1401px at 390.**
+- ⚠️ **ONE LINE at 390/375/360, TWO BALANCED lines at 320 (Display Zoom), deliberately.** The font was
+  **NOT** shrunk to force one line — readability beats an even line on an 18-80 audience, and this is the
+  screen a stranger meets first. Her standing trade, applied again.
+
+### ▶ THE TWO OPTIONS SHE RAISED AND DID NOT TAKE — keep the reasons, they will come back
+1. ⚠️ **THUMBNAIL BUYS ALMOST NOTHING, and the number is the argument: 110px photo → 407px card · 96px →
+   388 · 84px → 372. Only 35px between biggest and smallest, BECAUSE THE NOTE AND THE NAME SET THAT CARD'S
+   HEIGHT, NOT THE PICTURE.** So shrinking the photo costs the thing that makes the card hers and saves
+   about twenty pixels. (Her own 08-21 argument for option C over her word "thumbnail" still stands: A and B
+   show a product with a price, which any shop does — only C carries her note.)
+2. ⚠️ **BOTTOM PLACEMENT QUIETLY KILLS IT.** Rendered honestly rather than argued away, and **it reads
+   better than expected** — a nice closing note, and it groups How It Works with the explore cards. **But it
+   lands at y=1015, BELOW THREE TAP-OUT DOORS.** A woman who taps "Meet your stylist" never sees it. ▶ **If
+   it ever goes there, the honest question is not where to put it but whether to keep it.**
+- **Also rendered and not taken: `starup`** (Star above How It Works) — it fixes the fold but keeps all
+  three dividers, so it does not touch the actual problem.
+- **Renders kept:** `scratchpad/disco-{current-full,nohiw,hiwline,starup,starbot,B2,built}.png`, all made by
+  manipulating the REAL page in the browser, so every one is the real thing rather than a mockup.
+
+### ⭐ TEST HYGIENE — one suite DELETED, one assertion deliberately INVERTED
+- 🚨 **`scratchpad/hiwcheck.js` IS DELETED (44 checks), not silenced — its SUBJECT was retired.** Every one
+  of its assertions measured the 1-2-3 rows' leading, widow behaviour and 40px row height. ▶ **Its real job
+  lives on in the successor, `scratchpad/discopage.mjs` (56 checks): hold the quiz reassurance readable and
+  unwrapped at every width, and never shrink the font to get there.** The successor also pins the 1-2-3
+  really gone, her sentence verbatim, **exactly ONE `.hm-divlbl` left besides the Star's own header**, the
+  Star reaching the first screen, the CTA still leading, and the framed edge flush with `.hm-founder`.
+- 🚨🚨 **`discostar` 96 → 104, AND ONE ASSERTION IS DELIBERATELY INVERTED — read the comment before "fixing"
+  it.** It used to demand `star.top >= 690`, i.e. that the Star cost NOTHING above the fold. **That was
+  correct while it sat below How It Works and is now exactly backwards: reaching the first screen IS the
+  point of her change.** It now asserts `star.top < 700` **and** `star.top > cta.bot`, so the gain is pinned
+  without the quiz ever losing the top of the screen.
+- **Green at pause:** discopage 56 (new) · discostar 104 · nav 82 · menu 87 · hubs 49 · e2e · copy · affq 40.
+  ⚠️ affq's documented "results saved" timing flake hit once; clean on rerun, as always.
+
+### ⚠️ THREE LESSONS FROM THIS SESSION, ALL REUSABLE
+1. 🚨 **A PATCH SCRIPT THAT SLICES `s[:a] + s[b:]` SILENTLY DUPLICATES WHEN `b < a`.** The block bound was
+   found with `s.index('<b>Shop your style</b>')` — **and that exact string also lives in the Welcome Back
+   hub row, earlier in the file** — so `b` landed BEFORE `a` and the slice pasted 3.3KB of markup back in
+   instead of removing it. ▶ **ANCHOR EVERY BOUND SEARCH TO THE ONE BEFORE IT (`s.index(x, a)`), and assert
+   `b > a` before slicing.** The tell was a duplicate-count assertion failing on something untouched.
+2. ⚠️ **"A test that fails on a correct value is usually a broken harness" — proven again, same day.** The
+   new suite compared `.dss-wrap`'s raw left against `.hm-founder` and was off by **exactly 7px at every
+   width**, which is the frame's own `inset:-7px` spread. **A constant offset at every width is the
+   signature of a measurement bug, not a layout bug.** `discostar.js` had it right all along.
+3. ⚠️ **THE RENDER WAS MISSING THE PRODUCT PHOTO AND THE FIRST JUDGMENT WOULD HAVE BEEN WRONG.** The harness
+   aborted `**/cdn/shop/**` (this sandbox's Chromium cannot reach retail CDNs), so the Star card rendered
+   145px shorter with a hole where the scarf goes. ▶ **`curl` CAN reach them: fetch once, serve it locally.**
+
+### 🚨⭐ A LICENSING CALL THAT IS NEW, AND IT EXTENDS HER OWN 2026-08-20 RULE
+The render harnesses need a local copy of the Star's photo. **It is fetched on demand by
+`scratchpad/starphoto.mjs` and GITIGNORED, deliberately.** ▶ **THIS REPO IS PUBLIC, and an affiliate
+approval licenses the APP to DISPLAY a retailer's photograph by hotlinking (gated on `_affMid`) — it does
+not license this repository to REDISTRIBUTE a copy of the image file.** Technical access is not legal
+permission, which is her own rule pointed at a surface it had not been pointed at before. **The reasoning is
+written at `.gitignore` and at the top of `starphoto.mjs` so a future session does not helpfully commit it.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⚠️⚠️ **MERGE THE DISCOVERY-PAGE CHANGE (or don't) — it is built and pushed and NOT live.** Then
+   curl-verify, per the standing #809/#811 lesson that a green merge proves nothing.
+2. 👀 **How it feels on her phone.** ⚠️ She almost never sees that screen — the reminder is her own standing
+   one: **private browsing, and type `stylestar.app/?notrack`.**
+3. ⭐⭐ **HER THREE ASKS, ALL STILL WAITING AND ALL STILL ACCURATE in the entry below: (1) the EMAILABLE
+   WISHLIST, (2) WHICH AFFILIATES NEXT, (3) the LOOSE-ENDS SWEEP.**
+4. ⚠️ **THE 20 SEPTEMBER PIN** — still the only thing with a real clock. Raise it; do not let it pass.
+5. 🆕 **A STALE ROUTINE FOUND THIS SESSION, add it to the loose-ends sweep: `trig_01SZerTsvKoeUYzeT1HX6iWs`
+   "Style Star — catalog + bank check-in" fires ONCE on 26 AUGUST carrying an Aug-12 brief.** It will ask her
+   about a 6-row jeans catalog (it is 107 products), whether Almira replied (she did) and whether the bank
+   account opened (it did). ▶ **Update or delete it before it wakes her with old news.** (The two link-check
+   Routines are unchanged; the recommendation to keep Sunday and retire Monday still stands, her call.)
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-21 LATE — ⭐ A STRANGER MEETS A REAL GARMENT NOW)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the claude .md")
 **ONE PR, #890, merged and CURL-VERIFIED LIVE on stylestar.app.** Branch resynced to main, tree clean,
@@ -29,7 +136,8 @@ Two rounds of renders, her pick at every step: **option C** (the full card, WITH
   watches her actually style something. **That is the Sally differentiation shown instead of claimed.**
   She was offered A as completely defensible on height grounds and chose C anyway.
 - ⭐ **PLACEMENT WAS MEASURED, NOT ASSUMED: the block's top lands at y=702 against a ~700px iPhone fold, so
-  it costs NOTHING above the fold at any width.** ▶ **And the reframe that settled her tap worry: the quiz
+  it costs NOTHING above the fold at any width.** ⚠️⚠️ **STALE AS OF LATER THE SAME DAY — she retired How
+  It Works, so the Star now sits at y=560 and DELIBERATELY reaches the first screen. See the entry above.** ▶ **And the reframe that settled her tap worry: the quiz
   CTA sits at y≈390, so a woman who reaches the Star has ALREADY scrolled past the quiz once and not tapped
   it. The Star is not competing with the quiz — it is catching someone already drifting toward the exit.**
 - ⭐ **HEIGHT BY PHOTO SIZE, measured: 110px → 407 · 96px → 388 · 84px → 372.** Only 35px separates the
@@ -119,6 +227,8 @@ Her words on the 320px render: *"the 'you' is all alone on the next line - can t
 - **`hiwcheck` 12 → 44**, widened to 390/375/360/320 and pinning exactly what would silently regress: the sub
   never strands a single word · it is block-level · balance is really on · **the restored leading is intact
   (`3px/3px`)** · the row keeps its original 40px.
+  ⚠️⚠️ **STALE — `hiwcheck.js` WAS DELETED later the same day when she retired the block it tested. Its
+  successor is `scratchpad/discopage.mjs`. See the entry at the top of this file.**
 - **`affq` 38 → 40, UPDATED DELIBERATELY:** its outbound-anchor census caught the **11th** JS template exactly
   as designed. ⭐ **The template count is now a named `TEMPLATES` constant** while the Edit total stays
   DERIVED — so an Edit addition never needs a test edit, and a new anchor template still fails loudly.
