@@ -1848,7 +1848,23 @@ body.card-fb{padding:0}
 .hiw-row{display:flex;align-items:flex-start;gap:11px;text-align:left;margin-top:9px}
 .hiw-n{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:23px;height:23px;border-radius:50%;border:1.3px solid #C8971E;color:#8a6a14;font:600 12px/1 'Jost',sans-serif;background:#FCFAF4}
 .hiw-tx b{display:block;font:600 13px/1.3 'Jost',sans-serif;color:#26231F}
-.hiw-tx span{font:400 11.5px/1.45 'Jost',sans-serif;color:#6b655a}
+/* ⚠️ display:block IS WHAT MAKES text-wrap:balance WORK — the property does
+   nothing on inline text, which is why this span had to become a block
+   (the same lesson as the A2HS whisper and the wardrobe closing line).
+   Her catch 2026-08-21: at 320 (Display Zoom) step 2's sub stranded "you"
+   alone on a second line. Balance splits it evenly instead. ▶ The font was
+   deliberately NOT shrunk: readability beats an even list on an 18-80
+   audience, and this is the screen a stranger meets first.
+   ⚠️⚠️ margin:3px 0 IS NOT COSMETIC — IT PUTS BACK LEADING THAT display:block
+   SILENTLY REMOVED. As an inline, this text sat in an ANONYMOUS BLOCK BOX whose
+   line box was sized by the parent's inherited strut (~23px), not by its own
+   1.45 line-height (~17px). Turning it into a block dropped 6px of invisible
+   air from EVERY row and pulled the whole page up 19px — tightening a screen
+   she had already blessed, as a side effect of a widow fix she asked for.
+   3px above + 3px below restores the row to exactly its old 40px at 390/375/360.
+   ▶ The measurement-trap family again (the 2026-08-18 sign-off lesson): when a
+   gap changes and no margin did, suspect LEADING before you touch margins. */
+.hiw-tx span{display:block;text-wrap:balance;margin:3px 0;font:400 11.5px/1.45 'Jost',sans-serif;color:#6b655a}
 .hm-hair{height:1px;width:34px}
 .hm-hair.l{background:linear-gradient(90deg,transparent,#C9A24E)}
 .hm-hair.r{background:linear-gradient(270deg,transparent,#C9A24E)}
