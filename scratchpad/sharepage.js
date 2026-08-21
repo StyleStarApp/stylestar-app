@@ -229,6 +229,27 @@ ok('...and the GLOBAL footer did not reappear in its place',
    await pg.evaluate(() => { const g = document.querySelector('.quiz-footer');
      return !g || getComputedStyle(g).display === 'none'; }));
 ok('one Mall entry, for a reader who wants to browse', /Style Star Mall/.test(tail.mall));
+// Her ask: the flattened letterhead signs the page off. Asserted as the SAME
+// object the Refine page uses, and by POSITION, so neither can drift.
+const mark = await pg.evaluate(() => {
+  const m = document.querySelector('#s-sharelist .sh-mark .pref-word');
+  if (!m) return { there: false };
+  const r = m.getBoundingClientRect();
+  const btn = document.querySelector('#s-sharelist .sh-f2').getBoundingClientRect();
+  const legal = document.querySelector('#s-sharelist .sh-legal').getBoundingClientRect();
+  const scr = document.querySelector('#s-sharelist').getBoundingClientRect();
+  const cs = getComputedStyle(m);
+  return { there: true, text: m.textContent.replace(/\s+/g, ' ').trim(),
+    below: r.top >= btn.bottom - 1, above: r.bottom <= legal.top + 1,
+    centred: Math.abs(((r.left + r.right) / 2) - ((scr.left + scr.right) / 2)) < 1.5,
+    serif: /DM Serif Display/.test(cs.fontFamily) };
+});
+ok('the letterhead is there', mark.there);
+ok('...reading "style Star"', mark.text === 'style Star', mark.text);
+ok('...in the same serif as the Refine page', mark.serif);
+ok('...below the Mall button', mark.below);
+ok('...above the legal line', mark.above);
+ok('...and centred', mark.centred);
 ok('Privacy and Terms stay reachable on a public page',
    /Privacy/.test(tail.legal) && /Terms/.test(tail.legal));
 await pg.evaluate(() => document.querySelector('#s-sharelist .sh-f2').click());
