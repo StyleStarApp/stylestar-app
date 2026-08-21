@@ -174,12 +174,44 @@ const cr = await pg.evaluate(() => {
 for (const [k, r] of Object.entries(cr)) ok(`${k} clears AA (${r}:1)`, r >= 4.5, String(r));
 await ctx.close();
 
-console.log('\n6. A stranger can get from here into the app');
+console.log('\n6. The tail: one way in, and the legal pair');
 ({ ctx, pg } = await open());
+const tail = await pg.evaluate(() => ({
+  quizBtn: /style quiz/i.test(document.querySelector('#s-sharelist .sh-foot').textContent),
+  stdFoot: document.querySelectorAll('#s-sharelist [data-std-foot]').length,
+  mall: (document.querySelector('#s-sharelist .sh-f2') || {}).textContent || '',
+  legal: (document.querySelector('#s-sharelist .sh-legal') || {}).textContent || ''
+}));
+ok('the quiz button is gone (her call)', !tail.quizBtn);
+ok('the standard two-row footer is gone (her call)', tail.stdFoot === 0);
+// ⚠️ Taking the screen's OWN footer off un-hid the GLOBAL one, because show()
+// hides that via a hardcoded id list plus "does this screen own a footer".
+// Pin the visible outcome, not the mechanism.
+ok('...and the GLOBAL footer did not reappear in its place',
+   await pg.evaluate(() => { const g = document.querySelector('.quiz-footer');
+     return !g || getComputedStyle(g).display === 'none'; }));
+ok('one Mall entry, for a reader who wants to browse', /Style Star Mall/.test(tail.mall));
+ok('Privacy and Terms stay reachable on a public page',
+   /Privacy/.test(tail.legal) && /Terms/.test(tail.legal));
 await pg.evaluate(() => document.querySelector('#s-sharelist .sh-f2').click());
-await pg.waitForTimeout(500);
-ok('the footer CTA lands her on the welcome screen',
-   await pg.evaluate(() => !!document.querySelector('#s-wel.act') || !!document.querySelector('#s-wb.act')));
+await pg.waitForTimeout(600);
+ok('the Mall entry really opens the Mall', await pg.evaluate(() => !!document.querySelector('#s-shop.act')));
+await ctx.close();
+
+console.log('\n6b. Her two layout calls, measured');
+({ ctx, pg } = await open());
+const geo = await pg.evaluate(() => {
+  const ss = document.querySelector('.ss').getBoundingClientRect();
+  const rod = document.querySelector('#s-sharelist .sh-rod').getBoundingClientRect();
+  return {
+    squared: getComputedStyle(document.querySelector('.ss')).borderRadius === '0px',
+    leftGap: Math.round((rod.left - ss.left) * 10) / 10,
+    rightGap: Math.round((ss.right - rod.right) * 10) / 10
+  };
+});
+ok('the card is squared, not rounded', geo.squared);
+ok('the rod reaches the card\'s left edge', Math.abs(geo.leftGap) <= 0.6, geo.leftGap + 'px short');
+ok('...and its right edge', Math.abs(geo.rightGap) <= 0.6, geo.rightGap + 'px short');
 await ctx.close();
 
 console.log('\n7. The three other states are all kind, never blank');

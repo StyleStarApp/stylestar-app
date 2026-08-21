@@ -74,11 +74,12 @@ const foots = await page.evaluate(() => {
 });
 // 14 since the "Add as an App" page joined the family (Cath, 2026-08-19) and
 // carries the same standard footer as its siblings. Deliberate update.
-// 14 → 15 deliberately 2026-08-22: the shared wishlist at /list/<token> carries
-// one too. ⚠️ It is the only footer a NON-USER ever sees, which is exactly why
-// it earns one: Privacy and Terms on a public page are what make it read as a
-// real business rather than a scraped list, and Home is the way in.
-ok('exactly 15 standard-footer containers', foots.n === 15, 'got ' + foots.n);
+// ⚠️ STILL 14, and the round trip is worth recording: the shared wishlist at
+// /list/<token> briefly carried a standard footer, and her call was that a page
+// of app chrome under somebody's personal gift list reads as an advertisement
+// stapled to it. It has its own quiet tail instead -- one Mall entry and an
+// 11px Privacy · Terms line -- so this count is unchanged after all.
+ok('exactly 14 standard-footer containers', foots.n === 14, 'got ' + foots.n);
 const links = await page.evaluate(() => ({
   main: [...document.querySelectorAll('.quiz-footer .sf-row .lnk')].map(e => e.textContent),
   info: [...document.querySelectorAll('.quiz-footer .sf-row2 .lnk')].map(e => e.textContent)

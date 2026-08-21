@@ -1262,7 +1262,12 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    matters more than the last few pixels of bleed, and a rod in flow gets
    that for free with no scroll listener at all. Don't 'upgrade' it to
    fixed without bringing the scroll sync with it. */
-#s-sharelist .sh-rodwrap{position:relative;height:8px;margin:0 -16px}
+/* ⚠️ -44px is MEASURED, not chosen: .scr pads 16px and .inner pads 28px, so
+   44px is exactly what it takes to reach .ss's own edges (12→378 at 390).
+   It lands flush rather than overhanging, which matters because .ss carries
+   overflow:hidden -- anything past the edge is simply clipped away. If either
+   padding ever changes, this number changes with it. */
+#s-sharelist .sh-rodwrap{position:relative;height:8px;margin:0 -44px}
 #s-sharelist .sh-rod{position:absolute;inset:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
 #s-sharelist .sh-crown{position:relative;width:196px;height:196px;margin:6px auto 0}
 #s-sharelist .sh-chain{position:absolute;left:calc(50% - 4px);bottom:calc(100% - 60px);width:8px;height:66px;z-index:1}
@@ -1277,11 +1282,14 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 /* ⚠️ Pushed lower at her ask, but it CANNOT move below the list: the FTC
    guidance and every affiliate reviewer expect a disclosure above the links
    it describes. Its position is the one thing here that is not a taste call. */
-#s-sharelist .sh-disc{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:26px 0 0}
+#s-sharelist .sh-disc{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:13px 0 0}
+/* The first group follows the disclosure and needs less air than the second,
+   which follows a whole card of rows. */
+#s-sharelist .sh-disc+.sh-gh{margin-top:12px}
 /* Both group headers reuse HER approved section-header mark: a 2px #D8A52E bar
    hugging the word, exactly as the wardrobe categories and the Menu groups do.
    Grep wdr-cat-t before restyling either -- they are meant to match. */
-#s-sharelist .sh-gh{margin:24px 0 0;text-align:center}
+#s-sharelist .sh-gh{margin:22px 0 0;text-align:center}
 #s-sharelist .sh-gh span{display:inline-block;position:relative;padding:0 2px 6px;font:700 15px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c}
 #s-sharelist .sh-gh span::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
 #s-sharelist .sh-card{background:#fff;border:1px solid #e7e0cf;padding:2px 12px 4px;margin-top:9px}
@@ -1301,10 +1309,22 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    marks it as an annotation so it can never read as the retailer's copy. */
 #s-sharelist .sh-note{display:block;font:400 12.5px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:7px;padding-left:9px;border-left:2px solid #E0B84C}
 #s-sharelist .sh-go{flex:0 0 auto;margin-top:2px;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
+/* HER CALL 2026-08-22: the quiz button and the full two-row footer are gone.
+   This is somebody's personal wishlist, not the app's front door, and a page
+   of app chrome under it read as an advertisement stapled to a gift list.
+   ▶ What replaces it is HER idea and it is the better one: ONE way in, for a
+   reader who wants to browse rather than buy a named piece. The Mall is
+   exactly that door.
+   ⚠️ The legal pair STAYS, deliberately and against "we don't need any of
+   that here": this is a public page carrying affiliate links and running
+   analytics, and a reachable privacy policy is both ordinary good practice
+   and the specific thing affiliate reviewers look for. It is one 11px line,
+   not a footer. */
 #s-sharelist .sh-foot{text-align:center;margin-top:24px}
-#s-sharelist .sh-f1{font:400 11.5px/1.5 'Jost',sans-serif;color:#8a8272}
-#s-sharelist .sh-f1 b{color:#3a352c;font-weight:600}
-#s-sharelist .sh-f2{display:inline-block;margin-top:9px;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#1a1a1a;border:1px solid #D8A52E;padding:9px 14px;text-decoration:none;cursor:pointer}
+#s-sharelist .sh-f2{display:inline-block;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#1a1a1a;border:1px solid #D8A52E;padding:11px 16px;text-decoration:none;cursor:pointer}
+#s-sharelist .sh-legal{font:400 11px/1.5 'Jost',sans-serif;color:#8a8272;margin-top:14px}
+#s-sharelist .sh-legal .lnk{color:#8a8272;cursor:pointer;text-decoration:none}
+#s-sharelist .sh-legal b{color:#3a352c;font-weight:600}
 /* Waiting, gone and empty are all real states of this page -- somebody arrives
    here from a text message with no idea what to expect, so none of them may be
    a blank screen or a raw error. */
@@ -4164,7 +4184,6 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="sh-nm" id="shName"></div>
   </div>
   <div id="shBody"></div>
-  <div class="wl-foot" data-std-foot></div>
 </div>
 
 <div class="scr" id="s-faq">
@@ -4636,7 +4655,13 @@ function show(id,skipHistory){
   // of their own but still want the global one hidden (the quiz, preferences).
   var scrEl=document.getElementById(id);
   var ownFoot=!!(scrEl&&scrEl.querySelector('[data-std-foot]'));
-  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  // ⚠️ s-sharelist is here for the reason the comment above predicts: it USED to
+  // carry its own [data-std-foot], so ownFoot hid the global one for free.
+  // Taking that footer off (her call) silently un-hid the global footer, and the
+  // render caught it -- two rows of app chrome under somebody's gift list. That
+  // is the hardcoded-list failure mode happening to the very list the comment
+  // warns about, one screen after it was written.
+  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // ⚠️ BOTH call sites are load-bearing: the BOOT path adds .act to s-wel
   // directly, without going through show(), exactly as it does for s-wb. A
@@ -4650,7 +4675,7 @@ function show(id,skipHistory){
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
   // framed pages (no rounded corners).
-  if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-shop');
+  if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-shop'||id==='s-sharelist');
   // Outfit results + the outfit-upload screens: let their full-bleed elements (the framed
   // rooms; the gold rod at the top) bleed to the true screen edges (drop the card's side margin).
   document.body.classList.toggle('res-fb',id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-res');
@@ -9250,8 +9275,7 @@ function _renderSharedGone(){
   el.innerHTML='<div class="sh-gone"><h4>This wishlist isn&rsquo;t here</h4>'
     +'<p>The link may have been turned off, or it may have a typo in it. '
     +'Ask whoever sent it to share it again.</p></div>'
-    +'<div class="sh-foot"><div class="sh-f1">Made with <b>Style Star</b></div>'
-    +'<span class="sh-f2" onclick="goHome()">See what Style Star is &rarr;</span></div>';
+    +_shTail();
 }
 function _renderSharedList(d){
   var el=document.getElementById('shBody');
@@ -9276,9 +9300,17 @@ function _renderSharedList(d){
     h+=_shGroup('Buy exactly this',list.filter(function(it){return it&&it.exact}));
     h+=_shGroup('Anything like this',list.filter(function(it){return it&&!it.exact}));
   }
-  h+='<div class="sh-foot"><div class="sh-f1">Made with <b>Style Star</b></div>'
-    +'<span class="sh-f2" onclick="goHome()">Take the free style quiz &rarr;</span></div>';
+  h+=_shTail();
   el.innerHTML=h;
+}
+// One way in and one quiet legal line -- see the CSS note above for why the
+// quiz button and the full footer came off, and why Privacy and Terms did not.
+function _shTail(){
+  return '<div class="sh-foot">'
+    +'<span class="sh-f2" onclick="showShop()">Browse the Style Star Mall &rarr;</span>'
+    +'<div class="sh-legal"><b>Style Star</b> &middot; '
+    +'<span class="lnk" onclick="showPrivacy()">Privacy</span> &middot; '
+    +'<span class="lnk" onclick="showTerms()">Terms</span></div></div>';
 }
 function _shGroup(label,rows){
   if(!rows.length)return '';
