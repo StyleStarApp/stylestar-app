@@ -80,6 +80,37 @@ let out = await body(r);
 const SHARE1 = out && out.shareToken;
 ok('her own token turns sharing on', r.status === 200 && out.sharing === true && !!SHARE1);
 
+console.log('\n2b. HER REAL BUG (2026-08-22): the token alone must be enough');
+// 🚨 The first person ever to tap "Get my link" got an error, because she had
+// restored her results on that phone: ss_token was set, ss_email was not, and
+// the share call demanded an email the client had no way to know. Asking for an
+// identity the credential already proves is a bug class invented for nothing.
+r = await call('POST', { body: { email: '', share: 'on', token: TOKEN } });
+out = await body(r);
+ok('an EMPTY email still works — the token carries it', r.status === 200 && !!out.shareToken);
+r = await call('POST', { body: { share: 'on', token: TOKEN } });
+out = await body(r);
+ok('...and so does no email field at all', r.status === 200 && !!out.shareToken);
+// ⚠️ NOT byte-identical, and that is correct rather than a fault: makeShareToken
+// encrypts with a fresh random IV every call, so the same {email, revision}
+// produces a different-LOOKING token each time. What idempotence means here is
+// that they all resolve to the same list and all stay alive together — asking
+// twice must never invalidate the link already in somebody's hands.
+let r2 = await call('GET', { query: '?share=' + encodeURIComponent(out.shareToken) });
+let r3 = await call('GET', { query: '?share=' + encodeURIComponent(SHARE1) });
+ok('a re-minted link works AND the earlier one still does',
+   r2.status === 200 && r3.status === 200);
+ok('...and both show the same list',
+   JSON.stringify((await body(r2)).list) === JSON.stringify((await body(r3)).list));
+r = await call('POST', { body: { email: 'someone@else.com', share: 'on', token: TOKEN } });
+ok('but an email that CONTRADICTS the token is still refused', r.status === 403);
+r = await call('POST', { body: { email: 'cath@example.com', share: 'on' } });
+ok('and no token is still refused', r.status === 403);
+// The restore paths must hand the address back, or the device can never learn it.
+r = await call('GET', { query: '?token=' + encodeURIComponent(TOKEN) });
+ok('restoring by token returns the address it belongs to',
+   (await body(r)).email === 'cath@example.com');
+
 console.log('\n3. The shared page gets the list, and only the list');
 r = await call('GET', { query: '?share=' + encodeURIComponent(SHARE1) });
 out = await body(r);

@@ -552,12 +552,21 @@ export default async (req) => {
       // authorises overwriting her profile. An email address is never enough
       // here, and it is not enough for this either.
       if (body.share === 'on' || body.share === 'off') {
-        if (!email) {
-          return new Response(JSON.stringify({ error: 'Email required' }), { status: 400, headers });
-        }
-        const key = String(email).toLowerCase().trim();
+        // 🚨 THE TOKEN CARRIES THE EMAIL, so the client must never be required to
+        // send one. The first version demanded both and refused the request when
+        // the email was missing — which is exactly what happened to the first
+        // real person who tapped "Get my link" (2026-08-22): a woman who
+        // restored her results from the emailed link or the 6-digit code has
+        // ss_token but NO ss_email, because _applyRestoredRecord never wrote it.
+        // ▶ Asking the client for an identity the credential already proves is
+        //   a whole class of bug invented for nothing. Derive it instead.
         const owner = token ? readToken(token) : null;
-        if (!owner || String(owner).toLowerCase().trim() !== key) {
+        if (!owner) {
+          return new Response(JSON.stringify({ error: 'Not authorized', reason: 'token_required' }), { status: 403, headers });
+        }
+        const key = String(owner).toLowerCase().trim();
+        // An email sent alongside must still MATCH — no weaker than before.
+        if (email && String(email).toLowerCase().trim() !== key) {
           return new Response(JSON.stringify({ error: 'Not authorized', reason: 'token_required' }), { status: 403, headers });
         }
         let rowData = null;
@@ -766,7 +775,7 @@ export default async (req) => {
                 body: JSON.stringify({ data: JSON.stringify(data) })
               });
               restoreLog(key, 'CODE OK — results restored by code');
-              out = { success: true, data: stripServerFields(data), token: makeToken(key) };
+              out = { success: true, data: stripServerFields(data), token: makeToken(key), email: key };
             } else if (rc && rc.c) {
               // A wrong try burns one of the code's lives, even when the code
               // is already expired — cheap, and it keeps the bookkeeping dumb.
@@ -877,7 +886,7 @@ export default async (req) => {
         const data = typeof rows[0].data === 'string' ? JSON.parse(rows[0].data) : rows[0].data;
         // A fresh token so a restored device can save again. (_restore stripped:
         // the outstanding code is server bookkeeping, never response payload.)
-        return new Response(JSON.stringify({ success: true, data: stripServerFields(data), token: makeToken(key) }), { status: 200, headers });
+        return new Response(JSON.stringify({ success: true, data: stripServerFields(data), token: makeToken(key), email: key }), { status: 200, headers });
       }
 
       return new Response(JSON.stringify({ success: false, message: 'No results found' }), { status: 404, headers });
