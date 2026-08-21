@@ -2038,6 +2038,71 @@ body.card-fb{padding:0}
    #wbStar's own next child, so at 7px the disclosure sat exactly ON the frame's
    bottom edge (measured gap 0 at 390/375/360/320). This buys it 7px of air. */
 .wks-disc{font-family:'Jost',sans-serif;font-size:11px;line-height:1.4;color:#CFC9BB;text-align:center;margin-top:14px}
+/* ⭐ THE STAR OF THE WEEK ON THE DISCOVERY PAGE — her idea, 2026-08-21:
+   "I am wondering if the Discovery page, for first time users, before she even
+   takes the quiz, could be able to get a peak at the star of the week."
+   ▶ WHY IT EARNS ITS PLACE: the Star card was WELCOME-BACK ONLY, so a stranger
+   never met it at all — and it is the only piece of REAL PRODUCT on that whole
+   screen. Everything else a first-time visitor sees on s-wel is a PROMISE (the
+   tagline, the founder line, How It Works 1-2-3). This is a real garment, a
+   real photo, a real price and Catherine's own note, which is the difference
+   between CLAIMING a stylist is behind this and SHOWING it. It also proves the
+   app is alive: something changed this week.
+   ▶ PLACED AFTER "How It Works", deliberately — the welcome screen's first job
+   is the quiz. MEASURED: the block's top lands at y=703 against a ~700px
+   iPhone fold, so it costs NOTHING above the fold at 390 or 360, and a woman
+   who reaches it has already scrolled past the quiz CTA (y≈390) once.
+   🚨🚨 THE CARD IS WHITE (her call, matching .wks-card since 2026-08-20) AND
+   THE MIRROR'S PAPER IS #FBFAF7, NEAR-WHITE, so the card has almost no value
+   contrast of its own here. ▶▶ THE GOLD LEAF FRAME IS THE ONLY THING
+   SEPARATING IT FROM THE PAGE. On this screen the frame is STRUCTURAL, not
+   decoration: never quieten, flatten or remove it while the card stays white.
+   That is the opposite of the anti-layered-edge rule's usual direction, and it
+   is why: on black velvet the frame is emphasis, on linen it is definition. */
+/* ⚠️ width:100% IS LOAD-BEARING, not decoration. #dsStar is a flex item of
+   .hm-mirror, and AUTO CROSS-AXIS MARGINS DISABLE STRETCH — the item then sizes
+   to fit-content, which the nowrap header below pins to ~264px. At 320 that put
+   the card 24px PAST the mirror's content box. width:100% resolves against the
+   container instead, so the card fills the paper and shrinks with it, exactly
+   like .hm-founder. ▶ Same trap as .hm-hiw, which is why that block renders 236px
+   wide and not its stated 298 — don't use it as an alignment reference. */
+#dsStar{display:none;width:100%;max-width:298px;margin:18px auto 0}
+#dsStar.on{display:block}
+/* The frame spreads 7px, so the wrap is inset by exactly the frame's own
+   thickness and the FRAMED OUTER edge lands flush with .hm-hiw above it (both
+   298px). ⚠️ If the frame thickness ever changes, this margin changes with it
+   or the alignment silently breaks — the same trap as #wbStar's 7px. */
+#dsStar .dss-wrap{position:relative;z-index:0;margin:0 7px}
+/* The header is the welcome screen's OWN divider language (.hm-divwrap's
+   hairlines + gold label), not the front door's .wks-lbl, so the Star reads as
+   part of this page rather than a card imported from another screen. */
+#dsStar .dss-hd{display:flex;align-items:center;justify-content:center;gap:9px;margin:0 0 9px}
+/* flex:0 1 26px, never a fixed width: at 320 the hairlines give their space
+   back so the nowrap label still fits inside the paper instead of pushing
+   the whole header wider than the card. */
+#dsStar .dss-hair{height:1px;flex:0 1 26px;min-width:0}
+#dsStar .dss-hair.l{background:linear-gradient(90deg,transparent,#C9A24E)}
+#dsStar .dss-hair.r{background:linear-gradient(270deg,transparent,#C9A24E)}
+#dsStar .dss-hd b{font:600 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#BC9022;white-space:nowrap}
+#dsStar .dss-hd svg{width:13px;height:13px;flex:0 0 auto}
+/* ⭐ EVERYTHING BELOW IS A SIZE STEP-DOWN ONLY. The card reuses the .wks-*
+   classes literally, so the gold leaf gradient, the paper, the border, the ink,
+   the pink heart and the black-lacquer pill have ONE definition and the two
+   Stars can physically never drift apart on colour or frame. Only the numbers
+   differ. ▶ Photo 96px is her pick from a rendered 110/96/84 (the front door is
+   140px); the note and the name are what set this card's height, so the photo
+   size moves the block only 35px across that whole range. */
+#dsStar .wks-card{padding:13px 15px 12px;box-shadow:0 3px 10px rgba(0,0,0,.16)}
+#dsStar .wks-card::before{box-shadow:0 6px 14px rgba(0,0,0,.24)}
+#dsStar .wks-px{width:96px;margin:9px auto 2px}
+#dsStar .wks-name{font-size:16.5px}
+#dsStar .wks-note{font-size:14px;line-height:1.5}
+#dsStar .wks-act{margin-top:0}
+#dsStar .wks-shop{margin-top:10px}
+/* ⚠️ .wks-disc's #CFC9BB is tuned for BLACK VELVET and measures 1.3:1 on this
+   linen — unreadable. A disclosure that cannot be read is not a disclosure
+   (the 2026-07-29 rule). #6b6459 is 5.6:1 on #FBFAF7. */
+#dsStar .wks-disc{color:#6b6459;margin-top:12px}
 /* Add to Home Screen whisper — same voice as #wbNext, sits above the footer.
    The real app icon previews above the line, rounded like her home screen will
    round it. The iOS "Add to Home Screen" bold is EMPHASIS (no underline:
@@ -2931,6 +2996,12 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="hiw-row"><span class="hiw-n">2</span><div class="hiw-tx"><b>Reveal your Style Portrait</b><span>Your signature style, made clear for you</span></div></div>
       <div class="hiw-row"><span class="hiw-n">3</span><div class="hiw-tx"><b>Shop your style</b><span>Stores and pieces picked to fit it</span></div></div>
     </div>
+
+    <!-- Star of the Week, for a woman who has NOT taken the quiz. Filled by
+         _renderDiscoStar(); empty and display:none until then, so a queue with
+         no usable item leaves no hole on the front page. See the CSS at
+         #dsStar for why it sits here and why its frame is load-bearing. -->
+    <div id="dsStar"></div>
 
     <div id="restoreSection">
       <div class="hm-help first">Already taken the quiz? <b onclick="showRestore()">Restore your results &rarr;</b></div>
@@ -4441,6 +4512,10 @@ function show(id,skipHistory){
   var ownFoot=!!(scrEl&&scrEl.querySelector('[data-std-foot]'));
   if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
   if(id==='s-wb')updateWbScreen();
+  // ⚠️ BOTH call sites are load-bearing: the BOOT path adds .act to s-wel
+  // directly, without going through show(), exactly as it does for s-wb. A
+  // Star wired only here would never appear on a cold landing.
+  if(onWel)try{_renderDiscoStar();}catch(e){}
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
@@ -5871,11 +5946,13 @@ function _colorPrefRule(itemColorSpecific){
 // page. Change the words here and they change everywhere.
 const FIND_LABEL='Find it &rarr;';
 // One shared card so all four grid features stay identical.
-// ▶ THE AFFILIATE DISCLOSURE lives in NINE places — eight in plain markup plus
-//   the This Week's Star card's `.wks-disc` (built by _renderWeekStar, the
-//   first product link on Welcome Back) — so grepping for `may earn a
-//   commission` finds every one. That grep is the edit list for the moment
-//   Amazon's required sentence has to be added:
+// ▶ THE AFFILIATE DISCLOSURE lives in TEN places — eight in plain markup plus
+//   TWO `.wks-disc` copies, one per Star of the Week surface: the Welcome Back
+//   card (_renderWeekStar, the first product link on that screen) and the
+//   Discovery card (_renderDiscoStar, added 2026-08-21, which makes s-wel carry
+//   a product link for the first time). Grepping `may earn a commission` finds
+//   every one. That grep is the edit list for the moment Amazon's required
+//   sentence has to be added:
 // ⚠️ THE WORDING LOST ITS PRONOUN ON 2026-08-11 ("us" -> nothing), and the
 //   reasoning is worth keeping because she arrived at it by rejecting the
 //   obvious fix. Asked whether it should say "Style Star" or "me" instead of
@@ -10009,35 +10086,73 @@ function _weekStarIndex(now){
   return Math.floor(days/7)%WEEK_STARS.length;
 }
 function _weekStar(now){var i=_weekStarIndex(now);return i<0?null:WEEK_STARS[i];}
+// 🚨 THE LICENSING GATE, IN ONE PLACE — both Star surfaces call this and NEITHER
+// inlines it. A product photo is the RETAILER'S copyrighted work, and what
+// licenses it is an AFFILIATE APPROVAL with that retailer, never the fact that
+// we link to the piece and never the fact that the image is fetchable. So the
+// photo is gated on _affMid(), the very function that decides whether the link
+// EARNS. One source of truth: if the link cannot earn, the photo is not ours to
+// show, and a Star given a px: url for an unapproved store silently shows no
+// photo rather than a liability. ▶ GREP _AFF_MID BEFORE ADDING A px: URL.
+// ⚠️ Adding a third Star surface? Call this. Do not re-derive the condition.
+function _wkStarPxTag(S,cls){
+  if(!(S&&S.px&&_affMid(S.url)&&_wlSafeUrl(S.px)))return '';
+  return '<img class="'+cls+'" src="'+_esc(S.px)+'" alt="'+_esc(S.n)+'" '
+    +'loading="eager" decoding="async" onerror="this.remove()">';
+}
+// The twin tilted gold stars (her pick "C", 2026-08-13) and her signature pink
+// heart. Shared constants for the same anti-drift reason as the gate above.
+var _WKS_STAR_SVG='<svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E0B84C" stroke="#C89A2C" stroke-width="0.6"/></svg>';
+var _WKS_HEART_SVG='<svg class="wks-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
 function _renderWeekStar(){
   var el=document.getElementById('wbStar');if(!el)return;
   var WEEK_STAR=_weekStar();
   if(!WEEK_STAR||!WEEK_STAR.n||!_wlSafeUrl(WEEK_STAR.url)){el.classList.remove('on');el.innerHTML='';return;}
   var item={name:WEEK_STAR.n,store:WEEK_STAR.store,pick:true,url:WEEK_STAR.url,price:WEEK_STAR.price};
-  // 🚨 THE SAME LICENSING RULE AS THE EDIT, AND IT IS A GUARANTEE, NOT A CONVENTION:
-  // a product photo is the retailer's copyrighted work, and what licenses it is an
-  // AFFILIATE APPROVAL with that retailer. So the photo is gated on _affMid() — the
-  // very function that decides whether the link earns. One source of truth: if the
-  // link cannot earn, the photo is not ours to show, and a future Star added with a
-  // px: url for an unapproved store silently shows no photo rather than a liability.
+  // The licensing gate lives in _wkStarPxTag — read the note there before
+  // touching photos on either Star surface.
   // Size is her pick 2026-08-20 from three rendered options: 140px keeps the whole
   // card — label, photo, name, price, note, Shop it AND Save — above the iPhone fold.
   // 190px was rendered and rejected because it pushed Shop it below it.
-  var _wkStarPx=(WEEK_STAR.px&&_affMid(WEEK_STAR.url)&&_wlSafeUrl(WEEK_STAR.px))
-    ? '<img class="wks-px" src="'+_esc(WEEK_STAR.px)+'" alt="'+_esc(WEEK_STAR.n)+'" '
-      +'loading="eager" decoding="async" onerror="this.remove()">'
-    : '';
+  var _wkStarPx=_wkStarPxTag(WEEK_STAR,'wks-px');
   el.innerHTML='<div class="wks-card">'
-    +'<div class="wks-lbl"><svg class="l" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E0B84C" stroke="#C89A2C" stroke-width="0.6"/></svg>STAR OF THE WEEK<svg class="r" viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E0B84C" stroke="#C89A2C" stroke-width="0.6"/></svg></div>'
+    +'<div class="wks-lbl">'+_WKS_STAR_SVG.replace('<svg','<svg class="l"')+'STAR OF THE WEEK'+_WKS_STAR_SVG.replace('<svg','<svg class="r"')+'</div>'
     +_wkStarPx
     +'<div class="wks-name">'+_esc(WEEK_STAR.n)+'</div>'
     +'<div class="wks-store">'+_esc(WEEK_STAR.store)+(WEEK_STAR.price?' &middot; '+_esc(WEEK_STAR.price):'')+'</div>'
-    +(WEEK_STAR.note?'<div class="wks-note">'+_esc(WEEK_STAR.note)+' <svg class="wks-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>':'')
+    +(WEEK_STAR.note?'<div class="wks-note">'+_esc(WEEK_STAR.note)+' '+_WKS_HEART_SVG+'</div>':'')
     +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(WEEK_STAR.url)))+'" target="_blank" rel="sponsored noopener">Shop it &rarr;</a>'+_wlSaveBtn(item)+'</div>'
     +'</div>'
     +'<div class="wks-disc">Some links may earn a commission.</div>';
   el.classList.add('on');
   try{_wlSyncButtons()}catch(e){}
+}
+// ⭐ THE SAME STAR, ON THE DISCOVERY PAGE — her idea 2026-08-21. Read the CSS
+// note at #dsStar for why it exists, why it sits after How It Works, and why
+// its gold frame is structural rather than decorative on that near-white paper.
+// ⚠️ DELIBERATELY NO SAVE HEART, unlike the front door's card: a first-time
+// visitor has no wishlist and no context for what a heart would do, and the
+// screen's own job is the quiet one of showing her something real.
+// ⚠️ The photo rides _wkStarPxTag, the SHARED licensing gate. Never inline it.
+// ⚠️ The link is the same target as everywhere else: target="_blank", so the
+// tap opens a new tab and Style Star is never closed behind her (her question,
+// 2026-08-21). rel="sponsored" per the standing outbound-product-link rule.
+function _renderDiscoStar(){
+  var el=document.getElementById('dsStar');if(!el)return;
+  var S=_weekStar();
+  if(!S||!S.n||!_wlSafeUrl(S.url)){el.classList.remove('on');el.innerHTML='';return;}
+  el.innerHTML='<div class="dss-hd"><span class="dss-hair l"></span>'+_WKS_STAR_SVG
+      +'<b>Star of the Week</b>'+_WKS_STAR_SVG+'<span class="dss-hair r"></span></div>'
+    +'<div class="dss-wrap"><div class="wks-card">'
+    +_wkStarPxTag(S,'wks-px')
+    +'<div class="wks-name">'+_esc(S.n)+'</div>'
+    +'<div class="wks-store">'+_esc(S.store)+(S.price?' &middot; '+_esc(S.price):'')+'</div>'
+    +(S.note?'<div class="wks-note">'+_esc(S.note)+' '+_WKS_HEART_SVG+'</div>':'')
+    +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(S.url)))+'" '
+      +'target="_blank" rel="sponsored noopener">Shop it &rarr;</a></div>'
+    +'</div></div>'
+    +'<div class="wks-disc">Some links may earn a commission.</div>';
+  el.classList.add('on');
 }
 function updateWbScreen(){
   _buildWbHubs();
@@ -10134,6 +10249,7 @@ function fallbackInitialScreen(){
     updateWbScreen();
   }else{
     document.getElementById('s-wel').classList.add('act');
+    try{_renderDiscoStar();}catch(e){}   // cold landing: show() never runs here
   }
   // s-wel and Welcome Back both carry their own footer + logo; hide the shared global footer on either.
   var onW=document.getElementById('s-wel').classList.contains('act');
