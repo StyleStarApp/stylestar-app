@@ -237,7 +237,7 @@ function readToken(token) {
   return String(payload.e);
 }
 
-// --- The share link (2026-08-22) --------------------------------------------
+// --- The share link (2026-08-21) --------------------------------------------
 // Her wishlist as a page someone else can buy from — the registry she has been
 // asking for since June. Two things make it safe to hand to a stranger:
 //
@@ -556,7 +556,7 @@ export default async (req) => {
         // 🚨 THE TOKEN CARRIES THE EMAIL, so the client must never be required to
         // send one. The first version demanded both and refused the request when
         // the email was missing — which is exactly what happened to the first
-        // real person who tapped "Get my link" (2026-08-22): a woman who
+        // real person who tapped "Get my link" (2026-08-21): a woman who
         // restored her results from the emailed link or the 6-digit code has
         // ss_token but NO ss_email, because _applyRestoredRecord never wrote it.
         // ▶ Asking the client for an identity the credential already proves is
@@ -614,7 +614,7 @@ export default async (req) => {
       // so on any device where a woman RESTORED her results — token yes,
       // ss_email no — nothing she did ever reached Supabase. Not her wishlist,
       // not her notes, not her preferences. No error, no sign, just a device
-      // quietly saving nothing (found 2026-08-22 when her own shared page came
+      // quietly saving nothing (found 2026-08-21 when her own shared page came
       // up empty while her phone showed a full list).
       // ▶ The token carries the address. Derive it, exactly as the share branch
       //   now does, and stop asking the client for an identity it already proved.

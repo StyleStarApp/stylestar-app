@@ -1,4 +1,4 @@
-// Verification for the shared wishlist PAGE at /list/<token> (2026-08-22).
+// Verification for the shared wishlist PAGE at /list/<token> (2026-08-21).
 // Drives the real index.html in Chromium against a stubbed user-data function,
 // with the server applying the REAL netlify.toml rules -- so the route only
 // works here if the toml really rewrites it.

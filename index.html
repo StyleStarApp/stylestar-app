@@ -1173,7 +1173,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-row:first-child{border-top:0}
 #s-wishlist .wl-b{flex:1;min-width:0}
 #s-wishlist .wl-nm{display:block;font:600 14px/1.35 'Jost',sans-serif;color:#26221c}
-/* HER CALL 2026-08-22, after the shared page measured the same value and
+/* HER CALL 2026-08-21, after the shared page measured the same value and
    failed: #8a8272 is 3.65:1 on this card and 3.81:1 on white, both under the
    4.5 AA bar, on the line that names WHERE a piece is sold. #6b6355 is the
    app's own established readable ink (5.68:1 here). Same family, just dark
@@ -1188,7 +1188,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-pick svg{width:9px;height:9px;fill:#F49AC1;display:block;flex:0 0 auto;transform:rotate(-11deg)}
 #s-wishlist .wl-pr{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E;margin-left:7px;text-transform:none}
 #s-wishlist .wl-go{flex:0 0 auto;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
-/* --- HER NOTE ON A PIECE (2026-08-22) -------------------------------------
+/* --- HER NOTE ON A PIECE (2026-08-21) -------------------------------------
    The affordance is WORDS, not a pencil: "+ Add a note" can't be misread the
    way a grey tab was (her mom, 2026-07-26). Gold ink because it is an
    invitation, not a warning.
@@ -1213,7 +1213,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-nsave{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1a1a1a;border:none;border-radius:999px;padding:8px 13px;cursor:pointer}
 #s-wishlist .wl-ncancel{font:500 11.5px/1 'Jost',sans-serif;color:#8a8272;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
 #s-wishlist .wl-nleft{margin-left:auto;font:500 10.5px/1 'Jost',sans-serif;color:#8a8272}
-/* --- HER OPEN NOTE (2026-08-22) -------------------------------------------
+/* --- HER OPEN NOTE (2026-08-21) -------------------------------------------
    Heading is simply "Notes", her call. It wears HER approved section-header
    mark -- the 2px #D8A52E bar hugging the word -- the same as the wardrobe
    categories, the Menu groups and the shared page's group headers.
@@ -1228,7 +1228,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-lnedit{display:inline-block;font:500 11.5px/1 'Jost',sans-serif;color:#8a6d20;margin-top:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
 #s-wishlist .wl-lnote textarea{width:100%;font:400 12.5px/1.6 'Jost',sans-serif;color:#3a352c;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:9px 10px;resize:none;-webkit-appearance:none}
 #s-wishlist .wl-lnote textarea:focus{outline:none;border-color:#C8A060}
-/* --- SHARING THE LIST (2026-08-22) ---------------------------------------
+/* --- SHARING THE LIST (2026-08-21) ---------------------------------------
    The same cream card as "Keep your wishlist safe", because it is the same
    KIND of thing: a quiet offer under her list, never a demand. */
 #s-wishlist .wl-share{margin-top:16px;background:#F7F1E1;border:1px solid #e4d9bd;padding:15px 14px 14px;text-align:center}
@@ -1299,7 +1299,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-empty .we-addlnk .wab-t{display:block;text-wrap:balance}
 #s-wishlist .wl-foot{text-align:center;margin-top:26px}
 
-/* --- THE SHARED WISHLIST (2026-08-22) -------------------------------------
+/* --- THE SHARED WISHLIST (2026-08-21) -------------------------------------
    The page at /list/<token>: her list as something another person can buy
    from. Read-only by construction -- there is no remove control, no email
    ask, no add form, and the server never sends anything but the rows.
@@ -1371,7 +1371,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    marks it as an annotation so it can never read as the retailer's copy. */
 #s-sharelist .sh-note{display:block;font:400 12.5px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:7px;padding-left:9px;border-left:2px solid #E0B84C}
 #s-sharelist .sh-go{flex:0 0 auto;margin-top:2px;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
-/* HER CALL 2026-08-22: the quiz button and the full two-row footer are gone.
+/* HER CALL 2026-08-21: the quiz button and the full two-row footer are gone.
    This is somebody's personal wishlist, not the app's front door, and a page
    of app chrome under it read as an advertisement stapled to a gift list.
    ▶ What replaces it is HER idea and it is the better one: ONE way in, for a
@@ -7936,7 +7936,7 @@ function _normalizeWardrobe(d){
   }).map(function(x){
     var o={id:String(x.id),name:String(x.name),store:String(x.store||''),
            search:String(x.search||''),ts:Number(x.ts)||0};
-    // HER OWN WORDS about the piece (2026-08-22): size, colour, the occasion.
+    // HER OWN WORDS about the piece (2026-08-21): size, colour, the occasion.
     // Capped here as well as at the input, because this record also arrives
     // from Supabase and from localStorage, both of which can be hand-edited.
     // Escaped at render, never trusted into markup raw.
@@ -7955,7 +7955,7 @@ function _normalizeWardrobe(d){
     else if(x.own){o.own=true;var ou=_wlSafeUrl(x.url);if(ou)o.url=ou;}
     return o;
   });
-  // HER OPEN NOTE (2026-08-22, item two): one paragraph for whoever is shopping
+  // HER OPEN NOTE (2026-08-21, item two): one paragraph for whoever is shopping
   // from the shared list. ▶ It does more work than the per-item notes do: those
   // answer "which one", this answers everything true of the WHOLE list -- her
   // sizes, the colors she loves, the occasion that matters most -- which is
@@ -9059,7 +9059,7 @@ function wishToggle(id){
   if(added)_wlToast();
   _wlSyncServer();
 }
-// --- HER NOTE ON A PIECE (2026-08-22, item one of the shareable wishlist) ---
+// --- HER NOTE ON A PIECE (2026-08-21, item one of the shareable wishlist) ---
 // Her own words about a piece: her size, the colour she wants, the occasion.
 // ▶ WHY IT EARNS ITS PLACE, and it is not really about her own list: a note on
 //   a private wishlist is a memo to herself. A note on a list somebody is
@@ -9120,7 +9120,7 @@ function wlNoteSave(id){
   renderWishlist();
   _wlSyncServer();
 }
-// --- HER OPEN NOTE (2026-08-22, item two of the shareable wishlist) ---------
+// --- HER OPEN NOTE (2026-08-21, item two of the shareable wishlist) ---------
 // One paragraph for whoever is shopping from her list. Her idea, and the more
 // valuable of the two note kinds: a per-item note answers "which one", this
 // answers everything true of the WHOLE list.
@@ -9183,7 +9183,7 @@ function wlListNoteSave(){
   _wlRenderListNote();
   _wlSyncServer();
 }
-// --- SHARING THE LIST (2026-08-22, item three) ------------------------------
+// --- SHARING THE LIST (2026-08-21, item three) ------------------------------
 // Her words for the card, near enough verbatim. ⚠️ The privacy line that was
 // here ("They see your list, and nothing else") is DELETED, her catch: it reads
 // as "that is all they can do", which is false -- they can tap through, buy,
@@ -9604,7 +9604,7 @@ function wlAddSubmit(){
 // no clamp, so iOS rubber-banding keeps rod and chain glued too.
 function _wlRodScroll(){var r=document.querySelector('#s-wishlist .wl-rod');if(r)r.style.transform='translateY('+(-window.scrollY)+'px)';}
 window.addEventListener('scroll',_wlRodScroll,{passive:true});
-// --- THE SHARED WISHLIST (2026-08-22) ------------------------------------
+// --- THE SHARED WISHLIST (2026-08-21) ------------------------------------
 // Everything below renders a page for somebody who is NOT the owner: she sent
 // them a link, and they came to buy her something. So there is no remove
 // control, no email ask and no add form, and none of it is enforced by hiding
@@ -10916,7 +10916,7 @@ function _applyRestoredRecord(json){
   try{
     localStorage.setItem('ss_emailDone','true');
     // ⚠️ ss_email was never written here, and the gap sat unnoticed until the
-    // share link needed it (2026-08-22). A woman who restores from the emailed
+    // share link needed it (2026-08-21). A woman who restores from the emailed
     // link or the 6-digit code has a token and a name and a wardrobe, and no
     // record of WHICH address any of it belongs to. Written from the token's
     // own email, which is the only trustworthy source on this device.

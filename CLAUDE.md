@@ -7,7 +7,218 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-21 LATEST — 🎉 THE GATE OPENED: TESTERS, INSTAGRAM, AND REAL DATA)
+## ▶ NEXT SESSION — START HERE (2026-08-21 NIGHT — 🎁 THE SHAREABLE WISHLIST IS LIVE, AND HER TESTING FOUND THREE REAL BUGS)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "yes let's save everything and I have some feedback to give you from some testers")
+▶▶ **SHE HAS TESTER FEEDBACK WAITING AND HAD NOT GIVEN IT YET WHEN THIS WAS WRITTEN. ASK FOR IT FIRST,
+BEFORE ANYTHING ELSE ON THIS PAGE.** The first tester reports are the most valuable feedback this project
+has ever had, and the standing job is to separate A REAL PROBLEM from ONE PERSON'S TASTE.
+**FOUR PRs merged and ALL CURL-VERIFIED LIVE: #894 · #895 · #896 · #897.** ⚠️ **Six Netlify builds — a heavy
+day, and she should know.** Branch resynced to main after each squash-merge (the documented
+`checkout -B origin/main` + cherry-pick dance; it was needed TWICE).
+▶▶ **THE HEADLINE: HER ASK #1, NAMED SIX TIMES IN THIS FILE SINCE JUNE, IS BUILT AND LIVE — THE SHAREABLE
+WISHLIST.** Her words on the finished thing: *"That worked great and I think it is a really cool feature"*
+and *"That worked perfectly."*
+▶ **AND THE SECOND HEADLINE, WHICH MATTERS MORE: HER OWN TESTING FOUND THREE REAL BUGS IN THE FIRST TWENTY
+MINUTES, AND ONE HAD BEEN SILENTLY LIVE FOR TWO WEEKS.** See the 🚨 entry below — it is the most important
+thing in this session and it was never about the wishlist.
+
+### 🎁 WHAT SHIPPED — `stylestar.app/list/<token>`, HER REGISTRY
+**On Your Wishlist:** **+ Add a note** on any piece (140 chars) · **NOTES**, one paragraph for whoever is
+shopping (600 chars, keeps her line breaks) · **Share your wishlist** with **Get my link**, **Copy** and
+**Stop sharing**.
+**At the link:** her name in the gold heart, her line, the two groups, her notes, her paragraph at the
+bottom, the flattened letterhead, one Mall entry and a quiet Privacy · Terms line.
+- ⭐ **EVERY DESIGN CALL IS HERS, over three rounds of renders.** The split (`BUY EXACTLY THIS` / `ANYTHING
+  LIKE THIS`) · her name INSIDE the heart like a locket · caps headers · squared card · the rod across the
+  full card · the tightened spacing · cutting the quiz button and the whole footer · the letterhead.
+- ⭐⭐ **THE GROUP LABELS ARE HER OWN WORDS FROM JUNE, and they do real work: a rebuilt-search row stops being
+  a disappointment ("this only opens a search") and becomes a generous instruction ("anything in this
+  direction is a yes").** Reuse that move — reframing a limitation as generosity beat every wording tweak.
+- ⚠️ **SHE CHOSE THE SPLIT OVER HER OWN "IT SHOULD ARRIVE AS SHE SEES IT" INSTINCT**, after being shown both
+  rendered. The reason: the split is what warns a gift-buyer that half the links open a SEARCH rather than
+  the piece. **Her instinct was raised, honoured with a render, and she decided against it herself.**
+- 🚨⭐ **HER BEST CATCH OF THE DESIGN, AND IT IS AN HONESTY POINT NOT A WORDING ONE: "They see your list, and
+  nothing else" IS DELETED.** It reads as *that is all they can do*, which is FALSE — they can tap through,
+  buy, and wander into the Mall. ▶ **And the reassurance was answering a question her own design already
+  answered: the open note means SHE chooses what personal detail is on that page.**
+- ⚠️ **THE PRIVACY LINE STAYS against her "we don't need any of that here"** — a public page carrying
+  affiliate links and analytics needs a reachable policy, and it is what affiliate reviewers check for. One
+  11px line, not a footer. **Argued, not assumed; she agreed.**
+
+### 🚨🚨 THE THREE BUGS WERE ONE MISTAKE IN THREE COSTUMES — AND THIS IS THE REUSABLE HALF
+**Every one was THE CLIENT BEING ASKED TO SUPPLY AN IDENTITY THE CREDENTIAL ALREADY PROVED.**
+1. **Share link → demanded an email → 400.** The first person ever to tap *Get my link* got an error.
+2. **Save → demanded an email → SILENT NO-OP.** See below; this is the serious one.
+3. **Restore → never recorded the email → caused both.** `_applyRestoredRecord` wrote `ss_token`,
+   `ss_emailDone`, `ss_prefs` and `ss_wardrobe`, and had NEVER written `ss_email`.
+▶▶ **THE SHALLOW FIX EACH TIME WAS "make the client hunt harder for the email", AND IT WOULD HAVE LEFT THE
+SAME TRAP EVERYWHERE ELSE IT APPEARS. THE REAL FIX IS THAT THE TOKEN CARRIES THE ADDRESS — `readToken()`
+decodes it — so the server DERIVES it and never asks.** An email sent alongside must still MATCH, so it is
+no weaker than before. ⚠️ **Applied to BOTH the share branch and the POST save branch. Grep `readToken` before
+adding any new endpoint that wants an email.**
+
+### 🚨🚨🚨 THE SILENT ONE — TWO WEEKS LIVE, EIGHT SUITES BLIND TO IT, AND IT WAS NEVER A WISHLIST BUG
+**Her shared page came up EMPTY while her phone showed a full list — and the empty page was CORRECT.**
+```
+syncPrefsToServer()
+  reads ss_email
+  if it is missing -> return        ← no error, no sign, nothing saved
+```
+▶ **A woman who RESTORED her results has a token but no `ss_email`, so on that device EVERY SAVE DID
+NOTHING.** Not her wishlist, not her notes, not her preferences. Live since the restore-code work of
+**2026-08-08**. ⚠️ **IT HITS ANY RESTORED DEVICE — a second phone, a laptop, and above all the INSTAGRAM
+IN-APP BROWSER, whose separate storage container makes restoring the normal way in. Fifteen testers arrived
+the same afternoon.**
+- ⭐⭐ **IT SELF-REPAIRS: the save response hands the address back and `saveUserRecord` records it when the
+  device has none.** A phone that restored BEFORE the fix is fixed by its own next save, with nothing asked
+  of her. **Confirmed live on her phone.**
+- 🚨⭐⭐ **WHY SHE FOUND IT AND NOTHING ELSE COULD: HER OWN TESTING HABIT IS PRIVATE BROWSING + `?notrack`,
+  AND PRIVATE MODE THROWS AWAY STORAGE — so she RESTORES every session and lives permanently in the one
+  state the bug needed.** ▶ **The thing that makes her testing awkward is exactly what made it valuable.**
+  ⚠️ **AND A THIRD CONTAINER MATTERS TOO: her INSTALLED HOME-SCREEN APP is separate again from both Safaris.
+  She tested there too and it held.**
+- ⚠️⚠️ **THE LESSON TO KEEP: A WRONG ANSWER ANNOUNCES ITSELF; A SAVE THAT QUIETLY DOES NOTHING LOOKS EXACTLY
+  LIKE A SAVE THAT WORKED.** 486 passing checks never saw it, because every suite started from a device that
+  had SAVED and hers had RESTORED. **Seed the restored state in any future data test.**
+- ⚠️ **SHE ASKED WHETHER `?notrack` CAUSED IT. IT DOES NOT** — `__ssNoTrack` is read in exactly two places
+  (whether to load Plausible, and an early return in `track()`) and touches nothing else. **Checked, not
+  assumed.** But the question pointed straight at the real cause, which was private browsing.
+
+### ⚙️ THE FIRST EDGE FUNCTION IN THIS REPO — AND WHY NOTHING ELSE COULD FIX IT
+Her catch: *"when I texted it to myself the text link looks exactly like the one when I share the whole app.
+Can it say Style Star wishlist instead?"* — with a screenshot of two identical cards.
+- 🚨 **A LINK PREVIEW IS BUILT BY THE MESSENGER FETCHING THE URL AND READING THE RAW HTML. IT NEVER RUNS
+  JAVASCRIPT.** Style Star is ONE FILE served for every address, so `/list/<token>` handed iMessage the
+  homepage's `og:` tags. ▶ **No amount of in-app code can ever change a preview card. It has to change
+  BEFORE the HTML reaches the phone.**
+- **Built as `netlify/edge-functions/list-preview.js`, declared in netlify.toml, SCOPED TO `/list/*` ALONE.**
+  Title and description become **"Style Star Wishlist"** (her wording, and she confirmed **no name**).
+- ⚠️ **`og:image` DELIBERATELY UNTOUCHED** — it is her flattened letterhead, right for a wishlist too, and
+  the same mark now signs the foot of the page so the card and the page match.
+- ⚠️ **VERIFY AN EDGE FUNCTION LIVE, ALWAYS: if the declaration is wrong the page still works and the preview
+  silently stays wrong.** Verified by curl on all three: `/list/` says Style Star Wishlist · the HOMEPAGE
+  still says "Discover your signature style 💫" · the letterhead is on the page.
+  ⚠️ **A wrongly-scoped edge function would have rewritten EVERY link preview on the site, invisibly.**
+- ⭐ **AND THE CACHE WORRY DID NOT BITE: both cards in her thread updated, including the older message.**
+  Apple re-fetched. Expect it to work, but tell a tester to send a fresh link if theirs looks stale.
+
+### 🔒 THE SHARE PLUMBING — read this before touching sharing
+- **A SHARE TOKEN IS A DIFFERENT KIND FROM A RESTORE TOKEN (`k:'s'`), AND `readToken()` REFUSES IT.** A
+  restore token unlocks a whole profile; a share link is handed to other people on purpose. Tested both ways.
+- **THE PUBLIC RESPONSE IS BUILT FIELD BY FIELD (`publicList`), NEVER BY STRIPPING.** Her sizes, colors,
+  never-wear list, portrait and answers are not hidden from that page — **they never arrive at it.** A test
+  plants fake secrets in a profile and asserts none appear anywhere in the response. ⚠️ **An allowlist cannot
+  leak a field somebody adds later; a denylist eventually does.**
+- **REVOCATION IS BY REVISION AND IS PERMANENT.** `_share = {r, on}` in the row's data JSON beside
+  `_restore`, so **no Supabase schema change**. "Stop sharing" bumps `r`; every link already sent dies;
+  sharing again mints a new one. **It is the only irreversible action in the feature, so it is the only one
+  that confirms first.**
+- ⚠️ **SHARE LINKS DO NOT EXPIRE**, unlike restore tokens' 30 days. A registry link that quietly died a month
+  later would be a broken promise to whoever she gave it to. **Revocation is the control instead.**
+- ⚠️ **TURNING IT ON IS IDEMPOTENT BUT NOT BYTE-IDENTICAL:** `makeShareToken` uses a fresh random IV, so the
+  same {email, revision} yields a different-LOOKING token each call. **They all resolve to the same list and
+  stay alive together** — asking twice never invalidates the link in somebody's hands. The client caches
+  `ss_sharelink` so her own device shows a stable link.
+- ⚠️ **`/list/*` IS A PERMANENT PUBLIC PATH NOW.** Once a woman has sent one of these links, it can never
+  change. Same rule as /privacy and /terms.
+
+### ⭐ TEST HYGIENE — one long-standing flake DIAGNOSED AT LAST, and three harness bugs
+- 🚨⭐⭐ **`affq`'s "results saved" FLAKE IS FIXED, AND IT WAS NEVER FLAKY.** This file has called it a timing
+  flake since **2026-07-31** without naming the mechanism. **The mechanism was in the harness:
+  `_resShowCompose()` calls `show('s-res')` to paint the CLOSED DOORS while the /style-ai request is still in
+  flight, so waiting for the screen id returned long before the reply landed and wrote `ss_data`** — and the
+  next line raced a network round trip. Under load the request takes longer and the race is lost more often,
+  which is exactly why it "came and went". ▶ **It now waits for the PORTRAIT TEXT to render (the observable
+  proof the reply landed). 40/0 on repeated runs.**
+  ⚠️⚠️ **AND THE PROCESS LESSON IS BIGGER THAN THE FIX: "known flake" is a story a real bug can hide behind
+  for a month. Nobody had looked.**
+- 🚨 **CLAUDE CLAIMED THE FAILURE WAS ITS OWN AND WAS WRONG.** A clean-tree comparison ran on a QUIETER
+  MACHINE — **two variables changed at once, the exact trap this file already documents from 2026-08-20.**
+  ▶ **State a diagnosis as provisional until the comparison is honest.**
+- ⚠️ **THREE HARNESS BUGS, ALL LOOKING EXACTLY LIKE APP BUGS:** (1) **`addInitScript` runs on EVERY
+  navigation**, so seeding unconditionally WIPED the note a reload was meant to prove had persisted — a test
+  destroying the state it was about to assert; (2) **one missing element threw and killed the whole run**,
+  hiding twenty passing checks below it — clicking now FAILS a check instead of throwing; (3) **a section
+  overwrote `listNote` and the section below asserted the original**, so a dirty fixture read exactly like a
+  code bug. ▶ **WHEN A CHECK FAILS ON BEHAVIOUR YOU CANNOT REPRODUCE BY HAND, SUSPECT THE HARNESS FIRST.**
+- **Green at pause:** sharepage **74** · wlnote **71** · sharelink **54** · nav 82 · menu 87 · hubs 49 ·
+  e2e 29 · affq 40 · sec 89 · restorecode 72 · edgepreview 7 (new, a pure-transform check because an edge
+  function cannot be run locally here).
+- ⚠️ **`e2e` CRASHED MID-RESTORE ON ONE RUN** with a browser-level error under load; clean 29/29 alone.
+  **Established rather than assumed before shipping a change to the restore path.**
+
+### ⚠️ TWO SMALL THINGS FLAGGED TO HER AND LEFT AS SHE DECIDED
+1. **"+ Add a note" and "EDIT" measure 4.69:1** — passing AA by 0.19, the tightest text on that screen. The
+   cause is that they are GOLD, and a gold dark enough to read as text stops looking gold (**the Contact-page
+   bronze trap she rejected three times**). ▶ **Recommendation: leave it. Recorded so the margin is something
+   she decided rather than something she finds later.**
+2. **With no email saved, TWO CREAM CARDS STACK** (Share your wishlist + Keep your wishlist safe). Different
+   asks, and the second vanishes once she saves. ▶ **Left, to watch with testers.**
+- ✅ **The retailer line failed AA at 3.65:1 and is fixed on BOTH screens** (5.68 / 5.93) — the line a
+  gift-buyer most needs to read. **Her call to fix it on Your Wishlist too.**
+- ✅ **`colour` → `color` everywhere a user or the MODEL reads it, HER CALL.** ⚠️ **One pair could not move
+  alone: the store marker `"; great for colour"` and the prompt rule telling the model to pick a store marked
+  `"great for colour"` are a CONTRACT, not a label** — change one and every color-led search quietly stops
+  being steered to a store that stocks color, with nothing on screen looking different. **~50 occurrences in
+  code COMMENTS deliberately NOT swept; raised with her rather than done silently.**
+- ⚠️ **CLAUDE STAMPED 25 CODE COMMENTS `2026-08-22` ALL SESSION. TODAY IS 2026-08-21.** All corrected in the
+  same commit as this entry. **Check the environment date before stamping a comment.**
+
+### 🎉🎉 SHE INVITED FIFTEEN FRIENDS AND POSTED TO INSTAGRAM — THE SAME AFTERNOON
+Her words: *"I am telling you to be accountable!"* ▶ **NAMED, so the list exists:** **Jen, Kere, Ashley,
+Alice, Kathy, other Jen, Lynn, Heather, Natalie, another Jen, Kari, Nikki, Peyton, yet another Jen, Jodi.**
+⚠️ **FOUR JENS now** (this file flagged three in July and asked that they be distinguished; they still are not).
+- 📈 **Instagram, since posting: 40 views · 12 sticker taps · 10 new follows.** ⭐⭐ **READ THE RATES, NOT THE
+  COUNTS, AND SAY SO TO HER: a 30% sticker-tap rate and a 25% follow rate are HIGH.** Her reach is small; her
+  **conversion is not**. That is the good problem — reach is fixable, interest is not. Followers 16 → 26 → ~36
+  across three days.
+- ▶ **THOSE 12 TAPS SHOULD APPEAR IN PLAUSIBLE** as Instagram in Sources and as "Mobile App" if they came
+  through the in-app browser. **Worth checking in a day or two that the utm tag is doing its job.**
+- ⚠️ **AND THE STORAGE TRAP IS NOW REAL, NOT THEORETICAL:** Instagram's in-app browser has its own container,
+  so restoring is the normal path for that traffic — **which is exactly the state the silent bug lived in.
+  It is fixed, but watch for anyone reporting lost results.**
+- ⭐ **THE FOLLOW-UP QUESTION MATTERS AS MUCH AS THE INVITATION: people volunteer the good news and have to be
+  ASKED TWICE for the bad.** The line to give her: *"Be honest — what felt confusing, or what did you tap
+  expecting something else?"* **Confusion is the useful data; "it's beautiful" is not.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **HER TESTER FEEDBACK — SHE HAS IT AND HAD NOT GIVEN IT WHEN THIS WAS WRITTEN. ASK FIRST.**
+   ▶ **The job is separating A REAL PROBLEM from ONE PERSON'S TASTE**, which she was promised help with.
+2. 📧 **STEP 4 OF THE WISHLIST, THE ONLY PIECE LEFT: the MailerLite email.** ⚠️ **The constraint that shapes
+   it is unchanged: AMAZON ASSOCIATES BANS AFFILIATE LINKS IN EMAIL, so the email carries ONE link into the
+   shareable page and the retailer links live there.** **Her desk, her timing.**
+3. 📊 **Her Plausible dashboard, once the friends have had a day or two.** ▶ **Read the FUNNEL, never the
+   visitor count.** The open question from 08-21: does the 7-shopped-to-1-quizzed gap hold with real testers?
+4. ⏰ **26 AUGUST — the stale Routine `trig_01SZerTsvKoeUYzeT1HX6iWs` fires once with an Aug-12 brief.**
+   It will ask about a 6-row jeans catalog (it is 107), whether Almira replied (she did) and whether the bank
+   opened (it did). **Update or delete it.**
+5. ⏰ **28 AUGUST — the recurring-payments Routine.** Her cards have arrived.
+6. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null` is the whole change, and
+   **ASK whether she wants the queue reordered at that moment.** Raise it; do not let it pass.
+7. 💰 **AFFILIATES: nothing this week, by design.** Rakuten Find New is done. **CJ and AWIN in ~3 weeks**,
+   once tester traffic shows in Plausible — ⚠️ **neither has ever declined her, so a first no is worth
+   avoiding.** Then **Impact in 2-3 months WITH the public dashboard link**. **AMAZON LAST.**
+8. 🔎 **THE TEN-MINUTE DESK TASK STILL UNDONE: the NORDSTROM FOOTER CHECK** for Impact's second door — is
+   there an Affiliates / Creator Program link, and does a brand-direct application work after a marketplace
+   decline? ⚠️ **That is a READING of Impact's wording, not a verified mechanism.**
+9. ⭐ **HER PARKED IDEA, AND IT IS A GOOD ONE: the FAVORITE OUTFIT page** — her uniform, her superwoman
+   outfit. ▶▶ **THE ARGUMENT TO GIVE HER AGAIN: it fills a real gap (the app tells her about her STYLE and
+   about PIECES, and nothing says "here is one outfit that is YOURS"), AND IT IS PROBABLY THE SHAREABLE AND
+   THE PINTEREST CONTENT TOO — one thread, not three.** ⚠️ **Version one should give the FORMULA (shapes,
+   proportions, colors), not five exact products: specific pieces are where search is weakest, and a formula
+   is what a real stylist actually hands someone.**
+10. 📌 **PINTEREST, raised by her and worth a real answer:** it is a SEARCH ENGINE for outfit ideas, pins live
+    for months, and it is built to send traffic OUT — the opposite of Instagram. ⚠️⚠️ **BUT THE LICENSING
+    TRAP FIRST: pinning a RETAILER'S photo is REDISTRIBUTION, which is her own 2026-08-21 rule pointed at a
+    new surface. Affiliate approval licenses the APP to hotlink, not her to republish.** ▶ **The safe strong
+    version is pinning what is HERS** — her words, her portrait, screens of the app — **all linking to
+    stylestar.app.** ⚠️ **Mavely is creator-first, so the follower question returns; verify on their own site
+    while logged in (her standing rule).**
+11. 🚨 **CORRECTION SHE SHOULD NOT LOSE: SHAREASALE NO LONGER EXISTS** — Awin closed it end of 2025. The live
+    list is **CJ and AWIN**.
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-21 — 🎉 THE GATE OPENED: TESTERS, INSTAGRAM, AND REAL DATA)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save all of this and then I will open a new chat")
 **TWO PRs merged and CURL-VERIFIED LIVE: #892** (the Discovery page) **plus three CLAUDE.md commits.**

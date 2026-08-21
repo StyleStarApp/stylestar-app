@@ -53,7 +53,7 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 // ⚠️ DERIVED, not restated: the Edit grows every time she adds a piece, so a
 // hardcoded total needs editing on every single addition. Only the JS card
 // templates are genuinely fixed, which is why only that number is written here.
-// 11 → 12 updated deliberately 2026-08-22: the shared wishlist page
+// 11 → 12 updated deliberately 2026-08-21: the shared wishlist page
 // (_shGroup, at /list/<token>) carries its own outbound anchor. It is the
 // commercial point of the whole feature — a piece bought from her shared list
 // is exactly what should earn — so it is affiliate-wrapped and sponsored like
@@ -233,7 +233,7 @@ await page.evaluate(() => {
   startQ();
   for (let i = 0; i < 12; i++) { document.getElementById('sl').value = '7'; onSl(7); nextQ(); }
 });
-// 🚨 THE "results saved" FLAKE, DIAGNOSED AT LAST (2026-08-22). This file has
+// 🚨 THE "results saved" FLAKE, DIAGNOSED AT LAST (2026-08-21). This file has
 // called it a timing flake since 2026-07-31 without naming the mechanism, and
 // the mechanism is HERE, not in the app: _resShowCompose() calls show('s-res')
 // to paint the CLOSED DOORS while the /style-ai request is still in flight. So
