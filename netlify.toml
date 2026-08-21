@@ -64,3 +64,12 @@
   from = "/list/*"
   to = "/index.html"
   status = 200
+
+# The shared wishlist's link preview. iMessage and friends read the RAW HTML and
+# never run JavaScript, so /list/<token> previewed with the homepage's og: tags
+# and every shared wishlist looked exactly like sharing the whole app (her
+# catch, 2026-08-22). This rewrites the title and description for that path
+# alone -- no other page passes through it.
+[[edge_functions]]
+  path = "/list/*"
+  function = "list-preview"

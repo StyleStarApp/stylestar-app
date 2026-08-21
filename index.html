@@ -1390,7 +1390,11 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-sharelist .sh-lnbody{font:400 12.5px/1.6 'Jost',sans-serif;color:#5a554c;padding-left:9px;border-left:2px solid #E0B84C;white-space:pre-line}
 #s-sharelist .sh-foot{text-align:center;margin-top:24px}
 #s-sharelist .sh-f2{display:inline-block;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#1a1a1a;border:1px solid #D8A52E;padding:11px 16px;text-decoration:none;cursor:pointer}
-#s-sharelist .sh-legal{font:400 11px/1.5 'Jost',sans-serif;color:#8a8272;margin-top:14px}
+/* Her ask: the flattened letterhead signs the page off, between the Mall
+   button and the legal line. The mark itself is .pref-word, reused rather than
+   redrawn — grep pref-word before restyling either. */
+#s-sharelist .sh-mark{margin-top:20px;text-align:center}
+#s-sharelist .sh-legal{font:400 11px/1.5 'Jost',sans-serif;color:#8a8272;margin-top:11px}
 #s-sharelist .sh-legal .lnk{color:#8a8272;cursor:pointer;text-decoration:none}
 #s-sharelist .sh-legal b{color:#3a352c;font-weight:600}
 /* Waiting, gone and empty are all real states of this page -- somebody arrives
@@ -9673,7 +9677,8 @@ function _renderSharedList(d){
 function _shTail(){
   return '<div class="sh-foot">'
     +'<span class="sh-f2" onclick="showShop()">Browse the Style Star Mall &rarr;</span>'
-    +'<div class="sh-legal"><b>Style Star</b> &middot; '
+    +'<div class="sh-mark"><span class="pref-word">style <span class="st">Star</span></span></div>'
+    +'<div class="sh-legal">'
     +'<span class="lnk" onclick="showPrivacy()">Privacy</span> &middot; '
     +'<span class="lnk" onclick="showTerms()">Terms</span></div></div>';
 }
