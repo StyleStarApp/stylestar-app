@@ -45,12 +45,18 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 // 27 → 28 updated deliberately 2026-08-14: the curated-catalog card
 // (_curatedCard, the 10th JS template) carries its own outbound "Shop it"
 // anchor with rel="sponsored noopener" — the census caught it as designed.
-// ⚠️ DERIVED, not restated: the Edit grows every time she adds a piece (19 as
-// of 2026-08-21, the DVF silk scarf), so a hardcoded total needs editing on
-// every single addition. Only the 10 JS card templates are genuinely fixed.
+// 10 → 11 updated deliberately 2026-08-21: the Discovery-page Star of the Week
+// (_renderDiscoStar) carries its own outbound "Shop it" anchor — the census
+// caught the 11th template exactly as designed, which is its whole job.
+// ⚠️ It is a SECOND anchor for the same card, not a moved one: the Welcome Back
+// Star (.wks-shop from _renderWeekStar) is untouched and still counted.
+// ⚠️ DERIVED, not restated: the Edit grows every time she adds a piece, so a
+// hardcoded total needs editing on every single addition. Only the JS card
+// templates are genuinely fixed, which is why only that number is written here.
+const TEMPLATES = 11;
 const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length;
-ok('found the full set of outbound PRODUCT anchors (every Edit link + 10 templates)',
-   anchors.length === EDIT_N + 10, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');
+ok('found the full set of outbound PRODUCT anchors (every Edit link + ' + TEMPLATES + ' templates)',
+   anchors.length === EDIT_N + TEMPLATES, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');
 ok('every product link carries sponsored + noopener', anchors.every(a => /rel="sponsored noopener"/.test(a)),
   anchors.filter(a => !/rel="sponsored noopener"/.test(a)).slice(0, 2).join(' '));
 ok('the Instagram link exists', social.length === 1, 'got ' + social.length);
