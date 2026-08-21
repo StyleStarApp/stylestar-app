@@ -7,7 +7,211 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-21 — 💰 STYLE STAR HAS EARNED ITS FIRST MONEY)
+## ▶ NEXT SESSION — START HERE (2026-08-21 LATE — ⭐ A STRANGER MEETS A REAL GARMENT NOW)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the claude .md")
+**ONE PR, #890, merged and CURL-VERIFIED LIVE on stylestar.app.** Branch resynced to main, tree clean,
+everything at `0e0ee9e`. ⚠️ **ONE Netlify build for the whole session** — the renders and the measuring
+harnesses were committed WITHOUT touching index.html, so nothing built until she said go.
+▶▶ **THE HEADLINE: THE STAR OF THE WEEK IS ON THE DISCOVERY PAGE.** A woman who has never taken the quiz
+now meets a real garment, a real photo, a real price and Catherine's own note, right under How It Works.
+Her words on the idea: *"could be able to get a peak at the star of the week."*
+▶ **AND HER THREE ASKS FOR TOMORROW, in her own order: (1) COMPLETE THE EMAIL WISHLIST, (2) decide WHICH
+AFFILIATES TO APPLY TO NEXT, (3) sweep any other LOOSE ENDS.** Each has its own entry below so none of it
+has to be re-derived.
+
+### ⭐⭐ THE DISCOVERY-PAGE STAR — her idea, her picks, shipped the same day
+Two rounds of renders, her pick at every step: **option C** (the full card, WITH her note) · **photo 96px**
+· **card WHITE** to match the Welcome Back change · **gold frame kept** · **tap goes straight to the item**.
+- ▶ **THE ARGUMENT THAT PICKED C OVER HER OWN WORD "thumbnail", and it is the reusable half: A AND B SHOW A
+  PRODUCT WITH A PRICE, WHICH ANY SHOP DOES. ONLY C CARRIES HER NOTE.** Directly above it a stranger reads
+  "Hi, I'm Catherine, I've styled women for over 20 years" — and then, for the first time on that screen,
+  watches her actually style something. **That is the Sally differentiation shown instead of claimed.**
+  She was offered A as completely defensible on height grounds and chose C anyway.
+- ⭐ **PLACEMENT WAS MEASURED, NOT ASSUMED: the block's top lands at y=702 against a ~700px iPhone fold, so
+  it costs NOTHING above the fold at any width.** ▶ **And the reframe that settled her tap worry: the quiz
+  CTA sits at y≈390, so a woman who reaches the Star has ALREADY scrolled past the quiz once and not tapped
+  it. The Star is not competing with the quiz — it is catching someone already drifting toward the exit.**
+- ⭐ **HEIGHT BY PHOTO SIZE, measured: 110px → 407 · 96px → 388 · 84px → 372.** Only 35px separates the
+  largest from the smallest, **because the NOTE and the name set this card's height, not the picture** —
+  so the size was a pure taste call and she gave up nothing by not going smallest.
+- ⭐⭐ **THE CARD REUSES THE `.wks-*` CLASSES LITERALLY and overrides only SIZES.** So the gold leaf gradient,
+  the paper, the border, the ink, the pink heart and the black lacquer pill have ONE definition and the two
+  Stars can physically never drift on colour or frame — the `.wdr-trend-by` class-reuse pattern again.
+- ⭐⭐ **THE LICENSING GATE IS NOW A SHARED `_wkStarPxTag()`, and this is the structural win.** An unapproved
+  retailer's photo is refused on BOTH Star surfaces from ONE implementation, and **a future third Star
+  surface inherits the rule by calling the helper.** ⚠️ **The suite asserts NEITHER renderer re-derives the
+  condition** (`_affMid` must not appear inside either), so the rule cannot be quietly copied and drift.
+- 🚨🚨 **THE FINDING THE RENDER HAD TO PROVE, AND IT INVERTS ONE OF HER OWN RULES: the welcome mirror's paper
+  is `#FBFAF7`, near-white, so a WHITE card has almost NO value contrast of its own there. THE GOLD LEAF
+  FRAME IS THE ONLY THING SEPARATING THE CARD FROM THE PAGE.** ▶ **On this screen the frame is STRUCTURAL,
+  not decoration** — the opposite direction from her anti-layered-edge rule, and the same distinction that
+  earned the wishlist hairline (DEFINITION, not a second EMPHASIS device). **Written in capitals at the CSS:
+  never quieten, flatten or remove it while the card stays white.**
+- ⚠️ **DELIBERATELY NO SAVE HEART**, unlike the front door's card: a first-time visitor has no wishlist and
+  no context for what a heart would do. Asserted, so it cannot be helpfully added later.
+- ⚠️ **`s-wel` CARRIES A PRODUCT LINK FOR THE FIRST TIME, so it carries a disclosure too.** The inventory
+  comment at `_shopCard` is updated **NINE places → TEN**. That grep is still the Amazon-sentence edit list.
+- ⚠️ **BOTH CALL SITES ARE LOAD-BEARING, and the boot-path lesson repeated exactly:** `fallbackInitialScreen`
+  adds `.act` to `s-wel` DIRECTLY without going through `show()`, the same as it does for `s-wb`. **A Star
+  wired only into `show()` would never appear on a cold landing** — which is the only way a stranger arrives.
+
+### ⭐ HER TAP QUESTION, ANSWERED — reuse this verbatim, it is a good answer
+Her words: *"I wonder if she taps to buy if she would come back in... It feels like it should take her
+instantly to the item. But can she find her way back easily?"* **Her instinct was right and the worry was
+smaller than she feared. The three facts, in this order:**
+1. **SHE DOES NOT LOSE THE APP.** `target="_blank"` opens a **new tab**, so Style Star sits right behind it
+   exactly where she left off. Every product link in the app already works this way.
+2. ⚠️ **THE REAL RISK IS NOT THE TAB, IT IS iOS.** With the store's app installed, iOS hands the tap to the
+   APP — the documented lululemon / Nordstrom Rack universal-links behaviour — and the way back is the small
+   **◀ Style Star** breadcrumb. DVF has no app, but the queue rotates through Nordstrom, Amazon, Target and
+   Lululemon, which all do. **Apple offers no way to prevent it.**
+3. ⭐ **AND THE COMMERCIAL HALF: a stranger who taps out and BUYS pays her, whether or not she returns.**
+   That is affiliate doing exactly its job. **A visit that earns $4 and never comes back beats a visit that
+   returns nothing.**
+▶ **DECIDED: no "come back" nudge on the front door** — clutter for a problem the new tab mostly solves.
+**If testers report losing their place, the lever is one quiet line, not a redesign.**
+
+### ⚠️⚠️ THREE MEASUREMENT TRAPS THIS SESSION, ALL REUSABLE, ALL CAUGHT BY TESTS NOT BY EYE
+1. 🚨 **AUTO CROSS-AXIS MARGINS DISABLE FLEX STRETCH.** A flex item with `margin:auto` sizes to
+   **fit-content** and ignores what its container can spare. At 320 the card's own nowrap header pinned that
+   to ~264px and pushed the card **24px past the mirror's content box**. `width:100%` fixes it.
+   ▶▶ **AND THE SAME TRAP EXPLAINS A NUMBER THAT HAD BEEN LYING ALL ALONG: `.hm-hiw` renders 236px wide, NOT
+   the 298px it states**, because it also carries `margin:auto`. **So How It Works is the WRONG alignment
+   reference on that screen.** The suite measures against **`.hm-founder`**, which really does fill the paper.
+2. 🚨🚨 **THE LEADING TRAP, THIRD TIME IN THIS FILE AND THE MOST EXPENSIVE ONE HERE.** Her widow fix needed
+   `text-wrap:balance`, which **does nothing on inline text**, so the span had to become `display:block` —
+   **and that silently TIGHTENED ALL THREE How It Works ROWS BY 6px AND PULLED THE WHOLE PAGE UP 19px.** No
+   margin changed anywhere. ▶ **As an inline, the text sat in an ANONYMOUS BLOCK BOX whose line box was
+   sized by the PARENT'S INHERITED STRUT (~23px), not by its own 1.45 line-height (~17px).** Going block
+   dropped that invisible air. **`margin:3px 0` restores it exactly — rows measure 40px again, identical to
+   before, and the Star's top returns to 702 from 703.**
+   ▶▶ **THE RULE: WHEN A GAP MOVES AND NO MARGIN DID, SUSPECT LEADING.** (Joins the 2026-08-18 sign-off pair:
+   a trailing space and `line-height:normal`.) ⭐ **AND THE SECOND RULE, which is the judgment one: WHEN A FIX
+   SHE ASKED FOR CHANGES SPACING SHE DID NOT ASK ABOUT, RESTORE THE SPACING RATHER THAN SHIP THE SIDE
+   EFFECT.** She has blessed that screen; a 19px shift was never in scope.
+   ⭐ **It was only visible because `discostar` asserts an ABSOLUTE position (the fold). A test measuring
+   position is what turned an invisible side effect into a loud failure.**
+3. ⚠️ **`getClientRects()` ON A BLOCK ELEMENT RETURNS ONE BOX, not one per line** — so the first line-counting
+   harness reported "1 line" for text that was visibly wrapping. **Count lines with a RANGE walk over the
+   words, clustering tops within 6px.** (The rect-per-element trap's mirror image.)
+- ⚠️ **A HARNESS BUG OF CLAUDE'S OWN, and the tell is worth knowing: eight page loads at ~2.4s each blew a
+  2-minute foreground timeout.** Run render sweeps as a BACKGROUND task with a generous `timeout`, never in
+  the foreground.
+
+### ✍️ HER WIDOW CATCH — and it was PRE-EXISTING, not caused by the build
+Her words on the 320px render: *"the 'you' is all alone on the next line - can that be fixed somehow?"*
+- ✅ **Fixed with `text-wrap:balance`, her standing widow lever: at 320 step 2's sub goes `[6,1]` → `[3,4]`.**
+  Every other sub at every width is byte-identical; steps 1 and 3 never change at all.
+- ⚠️ **THE FONT WAS DELIBERATELY NOT SHRUNK** — readability beats an even list on an 18-80 audience, and
+  this is the screen a stranger meets first. Her standing trade, applied again.
+- ▶ **Worth telling her plainly: this widow is ON THE LIVE SITE TODAY and always was.** The Star render is
+  simply the first time 320px (Display Zoom) got looked at closely. **A new feature's render is a free audit
+  of the screen it lands on.**
+
+### ⭐ TEST HYGIENE
+- **NEW `scratchpad/discostar.js`, 96 checks.** ⭐ **The ones that matter are the SWEEP pair: the licensing
+  gate proven across BOTH Star surfaces** (approved shows · unapproved shows on NEITHER · a `javascript:` px
+  url refused · neither renderer re-deriving the condition), plus the frame real at PAINT time with no
+  antique gold, the framed edge flush with the paper at 390/375/360/320, AA contrast on the disclosure
+  against the REAL painted linen, the pin obeyed, empty queue and bad url leaving no hole, and a returning
+  quiz-taker never seeing it.
+- **`hiwcheck` 12 → 44**, widened to 390/375/360/320 and pinning exactly what would silently regress: the sub
+  never strands a single word · it is block-level · balance is really on · **the restored leading is intact
+  (`3px/3px`)** · the row keeps its original 40px.
+- **`affq` 38 → 40, UPDATED DELIBERATELY:** its outbound-anchor census caught the **11th** JS template exactly
+  as designed. ⭐ **The template count is now a named `TEMPLATES` constant** while the Edit total stays
+  DERIVED — so an Edit addition never needs a test edit, and a new anchor template still fails loudly.
+  ⚠️ affq's documented "results saved" timing flake hit once; clean on rerun, as always.
+- **Green at pause:** discostar 96 (new) · hiwcheck 44 · affq 40 · weekstar 39 · starframe 40 · editpx 49 ·
+  affwrap 26 · hubs 49 · e2e 29 · nav 82 · menu 87 · copy 41.
+
+### 📬 THE TWO LINK-CHECK ROUTINES — READ AT LAST, and they do DIFFERENT jobs (ninth session, now answered)
+Both are firing correctly; she has simply never opened the reports. **They are not duplicates:**
+- **`trig_017ShUWoMN8xE12AS3m6tLfr` — Sunday 9:00 AM ET.** Fresh CCR session, runs
+  `scripts/check-product-urls.js` against the repo catalog, reports LOOKS OK / NEEDS HER EYE / BROKEN in
+  chat, and reminds her to click her Cowork link page alongside. **Push notification only.**
+  ⚠️ Its prompt still says "21 products as of setup" — **stale wording, harmless**, since it just runs the
+  script against whatever is there (107 now).
+- **`trig_01UyHJkk8pFNSxbZMptgtJHY` — Monday 8:00 AM ET.** Reads the CSV from her **Google Drive**, fetches
+  every URL itself, and **writes a dated report file back to Drive**. **Push AND email.** It carries its own
+  known-bot-wall list and a do-not-cry-wolf rule.
+- ▶ **THE HONEST RECOMMENDATION FOR HER LOOSE-ENDS SWEEP: KEEP THE SUNDAY ONE, RETIRE THE MONDAY ONE.**
+  Sunday uses the repo script (deterministic, honest about bot walls, no Drive round trip), lands on the
+  app's own change day, and is the one whose instrument this file documents. **The Monday one duplicates the
+  job through a slower path and is the one that emails her, which is why the unread pile feels heavier than
+  it is.** ⚠️ **Her call, not Claude's — put it to her rather than deleting anything.**
+
+### ▶▶ HER ASK #1 FOR TOMORROW — COMPLETE THE EMAILABLE WISHLIST (named a SIXTH time)
+Everything needed is already decided and scattered; **collected here so tomorrow is a build, not a re-derive:**
+- ⚠️⚠️ **THE CONSTRAINT THAT SHAPES THE WHOLE THING: AMAZON ASSOCIATES BANS AFFILIATE LINKS IN EMAIL.** So the
+  email can NEVER carry retailer links. ▶ **It carries ONE link into a shareable wishlist PAGE, and the
+  retailer links live there.** ⭐ **That is also the better product: a page stays current as she adds pieces,
+  where an email freezes.**
+- ⚠️ **TWO DIFFERENT FEATURES, keep them apart:** (a) the long-parked MailerLite desk item **"Email me my
+  wishlist"** sends it to HERSELF; (b) **the SHAREABLE registry** sends it to SOMEONE ELSE to buy from.
+  ▶ **(b) is the one she keeps asking for** — her words: *"Like how you can share a wedding registry with
+  someone."*
+- ⭐ **THE FOUNDATION IS ALREADY BUILT: the two wishlist row kinds ARE the registry grammar** — "buy exactly
+  this" (her own added links + Edit picks, exact URLs) and "anything like this" (AI-rebuilt searches).
+- ⚠️ **THE PRIVACY LINE IS ALREADY DECIDED (2026-08-08): the shared view is the LIST ONLY** — never her
+  sizes, never her preferences, never anything personal.
+- ▶ **WHAT IT NEEDS THAT DOES NOT EXIST YET: a server-side PUBLIC wishlist page behind a share token.** That
+  is genuinely new surface (Supabase + a route), so it is a real build, not a copy edit.
+- ▶ **NOTHING BLOCKS DESIGNING IT NOW. Renders first, her pick, as always.**
+
+### ▶▶ HER ASK #2 FOR TOMORROW — WHICH AFFILIATES TO APPLY TO NEXT (the state, so it is not re-derived)
+- ✅ **RAKUTEN — publisher APPROVED, SID 4740535.** Advertisers approved: **FARM Rio (MID 44912) · Diane von
+  Furstenberg (53590) · Vilebrequin (43322)**. **Shopbop DECLINED** (one advertiser, reapplyable, predicted).
+  **Bloomingdale's still PENDING** — ⭐ **and a department-store approval is the trigger for product feeds.**
+- ❌ **IMPACT — DECLINED at NETWORK level 2026-08-20**, with **no reasons listed in the email** (a broken
+  template, not her mistake). **Support ticket filed; answer due ~27-29 August.** ⚠️ **It gates PHOTOS too —
+  Nordstrom is 6 of her 22 Edit items and runs on Impact.**
+- ▶ **THE ORDER TO PUT TO HER, unchanged and still right: AWIN next** (⚠️ small **REFUNDABLE** deposit to
+  apply — their spam filter, refunded against the first commission; **verify the amount on the day**),
+  **then CJ** (free), **then NORDSTROM CREATORS** when her follower count is not the weakest thing she brings,
+  **AMAZON LAST**.
+- 🚨 **AMAZON'S CLOCK IS THE WHOLE REASON IT IS LAST: 3 qualifying sales within 180 days of APPROVAL, and the
+  clock starts at APPROVAL, not at launch.** ⭐ **And her own 2026-08-20 reasoning still holds and is the
+  better argument: she is not ready for the clock because search quality is still her blocker, and an Amazon
+  approval changes NOTHING a woman can see** (it is one URL parameter; even the product IMAGES sit behind the
+  same 3-sale gate via the Product Advertising API).
+- 🚨 **ShareASale NO LONGER EXISTS** — Awin closed it end of 2025. Any entry naming it is stale.
+- ⭐ **THE REFRAME WORTH REPEATING TO HER: every advertiser approval is a DOUBLE unlock — the link EARNS and
+  the photo becomes LICENSED.** That is why applying broadly is worth an evening even with small traffic.
+
+### ▶ HER ASK #3 — THE LOOSE ENDS, gathered
+1. ⚠️⚠️ **THE PIN, AND IT IS THE ONLY THING WITH A REAL CLOCK: the cover-up dress reaches Star of the Week
+   ONLY IF SHE UNPINS BEFORE 20 SEPTEMBER.** After that it waits for the 18-week cycle — **24 January 2027**.
+   ▶ **`WEEK_STAR_PIN` back to `null` is the whole change.** ⚠️ **And ASK her whether she wants the queue
+   reordered at that moment** — it is 18 items now, so the week-to-item mapping has shifted again.
+2. ⚖️ **ALMIRA — she SENT the reply and there is still NO ANSWER.** Two live questions: **is $900 the FULL
+   cost or the USPTO's share only**, and **what a specimen must look like for CLASS 045**. ▶ **045 has real
+   work behind it and a 2027 deadline** (her styling services still run under the sole proprietorship).
+   Also watch for the Statement of Correction being MAILED and ACCEPTED by the state.
+3. 📊 **Rakuten** — the ~$3.96 DVF commission should move from PENDING to confirmed once the return window
+   closes. ⭐ **Worth telling her plainly: the chain is proven, so from here the only variable is TRAFFIC.**
+4. 📬 **Impact's support answer, due ~27-29 August.**
+5. 🔎 **The LINKS ▾ menu in Rakuten** — bulk feed export or FTP? ⚠️ **And the LINK BUILDER's creative**, the
+   properly-licensed image source. ⭐ **Also still unoffered and free: browsing an advertiser's product links
+   in her dashboard is a REAL WORKFLOW UPGRADE TODAY, no build at all** — she picks Edit pieces from a
+   browsable catalog with photos and prices instead of hunting the retailer's site.
+6. 📱 **Her search-quality verdict** — still the one blocker on testers, and testers release the pin AND
+   produce the next real sale.
+7. ⭐ **Her other two parked ideas:** the NEW SHAREABLE and her NEXT INSTAGRAM POST.
+8. 💳 **The recurring-payments switch** — a Routine fires **28 August** with the full list (Claude Max,
+   Anthropic API credits, Netlify, the domain, MailerLite). Her cards have arrived.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **THE EMAILABLE WISHLIST — her #1, and everything it needs is in the entry above.** Renders first.
+2. ⭐ **THE AFFILIATE CONVERSATION — her #2.** AWIN then CJ; the state is in the entry above so nothing needs
+   re-deriving. ⚠️ Verify AWIN's deposit amount on the day.
+3. ▶ **THE LOOSE-ENDS SWEEP — her #3**, incl. **her call on retiring one of the two link-check Routines**.
+4. ⚠️ **THE 20 SEPTEMBER PIN.** Raise it; do not let it pass silently.
+5. 👀 **How the Discovery Star feels on her phone.** ⚠️ **She almost never sees that screen** — the reminder
+   to give her is her own standing one: **private browsing, and type `stylestar.app/?notrack`.**
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-21 — 💰 STYLE STAR HAS EARNED ITS FIRST MONEY)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "yes let's save everything to the .md")
 **THREE PRs merged and ALL CURL-VERIFIED LIVE: #886 · #887 · #888.** Branch resynced to main, tree clean,
