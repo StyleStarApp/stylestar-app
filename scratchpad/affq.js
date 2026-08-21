@@ -53,7 +53,12 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 // ⚠️ DERIVED, not restated: the Edit grows every time she adds a piece, so a
 // hardcoded total needs editing on every single addition. Only the JS card
 // templates are genuinely fixed, which is why only that number is written here.
-const TEMPLATES = 11;
+// 11 → 12 updated deliberately 2026-08-22: the shared wishlist page
+// (_shGroup, at /list/<token>) carries its own outbound anchor. It is the
+// commercial point of the whole feature — a piece bought from her shared list
+// is exactly what should earn — so it is affiliate-wrapped and sponsored like
+// every other product link. The census caught the 12th template as designed.
+const TEMPLATES = 12;
 const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length;
 ok('found the full set of outbound PRODUCT anchors (every Edit link + ' + TEMPLATES + ' templates)',
    anchors.length === EDIT_N + TEMPLATES, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');
@@ -228,7 +233,22 @@ await page.evaluate(() => {
   startQ();
   for (let i = 0; i < 12; i++) { document.getElementById('sl').value = '7'; onSl(7); nextQ(); }
 });
-await page.waitForFunction(() => document.querySelector('.scr.act') && document.querySelector('.scr.act').id === 's-res', null, { timeout: 8000 });
+// 🚨 THE "results saved" FLAKE, DIAGNOSED AT LAST (2026-08-22). This file has
+// called it a timing flake since 2026-07-31 without naming the mechanism, and
+// the mechanism is HERE, not in the app: _resShowCompose() calls show('s-res')
+// to paint the CLOSED DOORS while the /style-ai request is still in flight. So
+// waiting for the screen id returns almost immediately, long before the reply
+// lands and genResult() writes ss_data -- and the next line then races the
+// round trip. Under load the request takes longer and the race is lost more
+// often, which is exactly why it "comes and goes".
+// ▶ Wait for the OBSERVABLE OUTCOME of the reply (the portrait text actually
+// rendered), then assert the save. The claim under test is unchanged; only the
+// thing we wait for is now the thing we meant.
+await page.waitForFunction(() => {
+  const act = document.querySelector('.scr.act');
+  const rp = document.getElementById('rp');
+  return act && act.id === 's-res' && rp && rp.textContent.trim().length > 20;
+}, null, { timeout: 15000 });
 q = await page.evaluate(() => ({ saved: localStorage.getItem('ss_quiz'), path: location.pathname, data: !!localStorage.getItem('ss_data') }));
 ok('autosave cleared on completion', q.saved === null);
 ok('the portrait now lives at /results in the address bar', q.path === '/results');

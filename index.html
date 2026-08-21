@@ -1173,7 +1173,12 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-row:first-child{border-top:0}
 #s-wishlist .wl-b{flex:1;min-width:0}
 #s-wishlist .wl-nm{display:block;font:600 14px/1.35 'Jost',sans-serif;color:#26221c}
-#s-wishlist .wl-st{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8272;margin-top:3px}
+/* HER CALL 2026-08-22, after the shared page measured the same value and
+   failed: #8a8272 is 3.65:1 on this card and 3.81:1 on white, both under the
+   4.5 AA bar, on the line that names WHERE a piece is sold. #6b6355 is the
+   app's own established readable ink (5.68:1 here). Same family, just dark
+   enough to read on an 18-80 audience. Don't re-quieten it. */
+#s-wishlist .wl-st{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#6b6355;margin-top:3px}
 /* Cath's own Edit picks are a different KIND of saved piece -- a real product
    link with a price, not a search -- so they are marked rather than blended in.
    Hiding the difference would mean one tap lands on the actual shoe and the next
@@ -1183,6 +1188,64 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-pick svg{width:9px;height:9px;fill:#F49AC1;display:block;flex:0 0 auto;transform:rotate(-11deg)}
 #s-wishlist .wl-pr{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E;margin-left:7px;text-transform:none}
 #s-wishlist .wl-go{flex:0 0 auto;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
+/* --- HER NOTE ON A PIECE (2026-08-22) -------------------------------------
+   The affordance is WORDS, not a pencil: "+ Add a note" can't be misread the
+   way a grey tab was (her mom, 2026-07-26). Gold ink because it is an
+   invitation, not a warning.
+   ⚠️ The note itself wears the SAME gold left rule as the shared page's
+   .sh-note, so her words look like her words in both places. Grep sh-note
+   before restyling either -- they are meant to match. */
+/* ⚠️ REVISED once the real screen was rendered: this was scoped to .hasnote,
+   on the reasoning that rows without a note should not change. That reasoning
+   died the moment "+ Add a note" went on EVERY row -- they are all taller now,
+   so a centred × and a centred Shop it float mid-row on the note-less ones and
+   look plainly wrong beside their neighbours. Uniform top alignment. */
+#s-wishlist .wl-row{align-items:flex-start}
+#s-wishlist .wl-row .wl-go{margin-top:2px}
+#s-wishlist .wl-row .wl-del{margin-top:-1px}
+#s-wishlist .wl-addnote{display:inline-block;font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6d20;margin-top:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
+#s-wishlist .wl-note{display:block;font:400 12.5px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:7px;padding-left:9px;border-left:2px solid #E0B84C}
+#s-wishlist .wl-ne{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#8a6d20;margin-left:8px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+#s-wishlist .wl-nedit{margin-top:8px}
+#s-wishlist .wl-nedit textarea{width:100%;font:400 12.5px/1.5 'Jost',sans-serif;color:#3a352c;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:8px 9px;resize:none;-webkit-appearance:none}
+#s-wishlist .wl-nedit textarea:focus{outline:none;border-color:#C8A060}
+#s-wishlist .wl-nrow{display:flex;align-items:center;gap:10px;margin-top:7px}
+#s-wishlist .wl-nsave{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1a1a1a;border:none;border-radius:999px;padding:8px 13px;cursor:pointer}
+#s-wishlist .wl-ncancel{font:500 11.5px/1 'Jost',sans-serif;color:#8a8272;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
+#s-wishlist .wl-nleft{margin-left:auto;font:500 10.5px/1 'Jost',sans-serif;color:#8a8272}
+/* --- HER OPEN NOTE (2026-08-22) -------------------------------------------
+   Heading is simply "Notes", her call. It wears HER approved section-header
+   mark -- the 2px #D8A52E bar hugging the word -- the same as the wardrobe
+   categories, the Menu groups and the shared page's group headers.
+   ⚠️ white-space:pre-line on the body is load-bearing: this is a PARAGRAPH and
+   she may want a line break in it. pre-line renders a newline as a newline
+   while still escaping everything else, so a break is a break and never markup. */
+#s-wishlist .wl-lnote{margin-top:16px;background:#fff;border:1px solid #e7e0cf;padding:13px 13px 12px}
+#s-wishlist .wl-lnh{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#26221c;display:inline-block;position:relative;padding:0 2px 5px;margin-bottom:10px}
+#s-wishlist .wl-lnh::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
+#s-wishlist .wl-lnbody{font:400 12.5px/1.6 'Jost',sans-serif;color:#5a554c;padding-left:9px;border-left:2px solid #E0B84C;white-space:pre-line}
+#s-wishlist .wl-lnph{color:#8a8272}
+#s-wishlist .wl-lnedit{display:inline-block;font:500 11.5px/1 'Jost',sans-serif;color:#8a6d20;margin-top:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
+#s-wishlist .wl-lnote textarea{width:100%;font:400 12.5px/1.6 'Jost',sans-serif;color:#3a352c;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:9px 10px;resize:none;-webkit-appearance:none}
+#s-wishlist .wl-lnote textarea:focus{outline:none;border-color:#C8A060}
+/* --- SHARING THE LIST (2026-08-22) ---------------------------------------
+   The same cream card as "Keep your wishlist safe", because it is the same
+   KIND of thing: a quiet offer under her list, never a demand. */
+#s-wishlist .wl-share{margin-top:16px;background:#F7F1E1;border:1px solid #e4d9bd;padding:15px 14px 14px;text-align:center}
+#s-wishlist .wl-share .wsh-t{font:400 17px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin-bottom:5px}
+#s-wishlist .wl-share .wsh-s{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 11px;max-width:292px}
+#s-wishlist .wl-share .wsh-s b{color:#8a6d20;font-weight:600}
+#s-wishlist .wl-share .wsh-btn{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;border:none;cursor:pointer}
+#s-wishlist .wl-share .wsh-btn:disabled{opacity:.6}
+#s-wishlist .wl-share input{display:block;width:100%;max-width:292px;margin:0 auto 8px;font:400 13.5px/1.4 'Jost',sans-serif;color:#3a352c;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:11px 10px;-webkit-appearance:none}
+#s-wishlist .wl-share input:focus{outline:none;border-color:#C8A060}
+/* ⚠️ The link must never widen the card: a share token is ~90 characters and
+   would push the page sideways. It ellipsises, and Copy is what she uses. */
+#s-wishlist .wl-share .wsh-box{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #D8A52E;padding:9px 10px;margin:0 auto 9px;max-width:292px}
+#s-wishlist .wl-share .wsh-box code{flex:1;min-width:0;font:400 11px/1.4 'DM Sans',sans-serif;color:#3a352c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+#s-wishlist .wl-share .wsh-cp{flex:0 0 auto;font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1a1a1a;border:none;border-radius:999px;padding:8px 11px;cursor:pointer}
+#s-wishlist .wl-share .wsh-stop{display:inline-block;font:500 11.5px/1 'Jost',sans-serif;color:#8a8272;text-decoration:underline;cursor:pointer;margin-top:2px;-webkit-tap-highlight-color:transparent;padding:3px 2px}
+#s-wishlist .wl-share .wsh-msg{font:400 12px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:8px;min-height:1px}
 #s-wishlist .wl-del{flex:0 0 auto;color:#a8a294;font-size:21px;line-height:1;cursor:pointer;padding:2px 3px;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-del:hover{color:#6b655a}
 /* Empty state: never a dead end -- it explains the feature AND offers the way in. */
@@ -1235,6 +1298,107 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-empty .we-addlnk{display:inline-block;font:600 13.5px/1.35 'Jost',sans-serif;color:#4a463e;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:9px 8px;cursor:pointer;letter-spacing:.03em;-webkit-tap-highlight-color:transparent;max-width:100%}
 #s-wishlist .wl-empty .we-addlnk .wab-t{display:block;text-wrap:balance}
 #s-wishlist .wl-foot{text-align:center;margin-top:26px}
+
+/* --- THE SHARED WISHLIST (2026-08-22) -------------------------------------
+   The page at /list/<token>: her list as something another person can buy
+   from. Read-only by construction -- there is no remove control, no email
+   ask, no add form, and the server never sends anything but the rows.
+
+   ⚠️ THE CROWN IS THE SAME OBJECT AS YOUR WISHLIST'S, deliberately: her call
+   was "copy it exactly so it does not have to be rebuilt". The values below
+   mirror #s-wishlist's, so a change to one must be made to the other --
+   grep wl-crownheart to find both.
+   ⚠️ AND THE CHAIN'S PATTERN ID IS DIFFERENT ON PURPOSE (shChainPat, not
+   wlChainPat). Two elements sharing an SVG id resolve to whichever def the
+   browser finds first, and Safari may refuse to paint one that lives inside
+   a hidden screen -- the same rule as the per-footer Instagram gradients. */
+#s-sharelist{padding:0 16px 26px}
+/* ⚠️ IN FLOW, not viewport-fixed like #s-wishlist .wl-rod. The wishlist's rod
+   is fixed so it reaches the true screen edges under iOS page zoom, and it
+   then needs _wlRodScroll to translate it on every scroll or the crown
+   detaches from it (her catch, 2026-08-09). Here the chain MEETING the rod
+   matters more than the last few pixels of bleed, and a rod in flow gets
+   that for free with no scroll listener at all. Don't 'upgrade' it to
+   fixed without bringing the scroll sync with it. */
+/* ⚠️ -44px is MEASURED, not chosen: .scr pads 16px and .inner pads 28px, so
+   44px is exactly what it takes to reach .ss's own edges (12→378 at 390).
+   It lands flush rather than overhanging, which matters because .ss carries
+   overflow:hidden -- anything past the edge is simply clipped away. If either
+   padding ever changes, this number changes with it. */
+#s-sharelist .sh-rodwrap{position:relative;height:8px;margin:0 -44px}
+#s-sharelist .sh-rod{position:absolute;inset:0;height:8px;z-index:6;background:linear-gradient(180deg,#FBF1C2 0%,#EAC24E 40%,#C89A2C 74%,#8a6a17 100%);box-shadow:0 4px 9px -3px rgba(120,90,20,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+#s-sharelist .sh-crown{position:relative;width:196px;height:196px;margin:6px auto 0}
+#s-sharelist .sh-chain{position:absolute;left:calc(50% - 4px);bottom:calc(100% - 60px);width:8px;height:66px;z-index:1}
+#s-sharelist .sh-ring,#s-sharelist .sh-ringf{position:absolute;left:calc(50% - 6px);bottom:calc(100% + 4px);width:12px;height:12px;border-radius:50%;border:2px solid #C89A2C;background:transparent}
+#s-sharelist .sh-ring{z-index:5}
+#s-sharelist .sh-ringf{z-index:7;clip-path:inset(50% 0 0 0)}
+#s-sharelist .sh-crownheart{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* Her name, in her own handwriting, sitting inside the gold heart like a
+   locket -- her pick over a separate signature line underneath. */
+#s-sharelist .sh-nm{position:absolute;left:50%;transform:translateX(-50%);top:36%;z-index:2;width:150px;text-align:center;font:400 30px/1.1 'Dancing Script',cursive;color:#1f1d19}
+#s-sharelist .sh-lead{font:400 17px/1.5 'Lora',Georgia,serif;color:#3a352c;text-align:center;margin-top:2px;text-wrap:balance}
+/* ⚠️ Pushed lower at her ask, but it CANNOT move below the list: the FTC
+   guidance and every affiliate reviewer expect a disclosure above the links
+   it describes. Its position is the one thing here that is not a taste call. */
+/* ⚠️ DELIBERATELY UNEVEN, and it is the same call she made about the commission
+   line on 2026-08-15: centred between two things it belongs to NEITHER. More
+   air above than below attaches it downward, to the list it is describing.
+   Don't 'balance' these two numbers. */
+#s-sharelist .sh-disc{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:10px 0 0}
+/* The first group follows the disclosure and needs less air than the second,
+   which follows a whole card of rows. */
+#s-sharelist .sh-disc+.sh-gh{margin-top:4px}
+/* Both group headers reuse HER approved section-header mark: a 2px #D8A52E bar
+   hugging the word, exactly as the wardrobe categories and the Menu groups do.
+   Grep wdr-cat-t before restyling either -- they are meant to match. */
+#s-sharelist .sh-gh{margin:22px 0 0;text-align:center}
+#s-sharelist .sh-gh span{display:inline-block;position:relative;padding:0 2px 6px;font:700 15px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c}
+#s-sharelist .sh-gh span::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
+#s-sharelist .sh-card{background:#fff;border:1px solid #e7e0cf;padding:2px 12px 4px;margin-top:9px}
+#s-sharelist .sh-row{display:flex;align-items:flex-start;gap:10px;padding:14px 0;border-top:1px solid #efe9dc}
+#s-sharelist .sh-row:first-child{border-top:0}
+#s-sharelist .sh-b{flex:1;min-width:0}
+#s-sharelist .sh-name{display:block;font:600 14px/1.35 'Jost',sans-serif;color:#26221c}
+/* ⚠️ #6b6355, NOT the #8a8272 Your Wishlist uses for the same line. That value
+   measures 3.81:1 on white and FAILS AA, and here the retailer name is the
+   thing a gift-buyer most needs to read, on a page a stranger meets cold.
+   #6b6355 is the app's own established readable ink (5.93:1). The same
+   number is worth fixing on #s-wishlist .wl-st, which is a separate change
+   to a screen she has already blessed -- raised with her, not smuggled in. */
+#s-sharelist .sh-store{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#6b6355;margin-top:3px}
+#s-sharelist .sh-price{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E;margin-left:7px;text-transform:none}
+/* HER OWN words about the piece -- size, colour, the occasion. The gold rule
+   marks it as an annotation so it can never read as the retailer's copy. */
+#s-sharelist .sh-note{display:block;font:400 12.5px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:7px;padding-left:9px;border-left:2px solid #E0B84C}
+#s-sharelist .sh-go{flex:0 0 auto;margin-top:2px;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
+/* HER CALL 2026-08-22: the quiz button and the full two-row footer are gone.
+   This is somebody's personal wishlist, not the app's front door, and a page
+   of app chrome under it read as an advertisement stapled to a gift list.
+   ▶ What replaces it is HER idea and it is the better one: ONE way in, for a
+   reader who wants to browse rather than buy a named piece. The Mall is
+   exactly that door.
+   ⚠️ The legal pair STAYS, deliberately and against "we don't need any of
+   that here": this is a public page carrying affiliate links and running
+   analytics, and a reachable privacy policy is both ordinary good practice
+   and the specific thing affiliate reviewers look for. It is one 11px line,
+   not a footer. */
+/* Her paragraph, at the bottom, wearing exactly what it wears on her own
+   screen. Grep wl-lnbody before restyling either -- they are meant to match. */
+#s-sharelist .sh-lnote{margin-top:22px;background:#fff;border:1px solid #e7e0cf;padding:13px 13px 12px}
+#s-sharelist .sh-lnh{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#26221c;display:inline-block;position:relative;padding:0 2px 5px;margin-bottom:10px}
+#s-sharelist .sh-lnh::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
+#s-sharelist .sh-lnbody{font:400 12.5px/1.6 'Jost',sans-serif;color:#5a554c;padding-left:9px;border-left:2px solid #E0B84C;white-space:pre-line}
+#s-sharelist .sh-foot{text-align:center;margin-top:24px}
+#s-sharelist .sh-f2{display:inline-block;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#1a1a1a;border:1px solid #D8A52E;padding:11px 16px;text-decoration:none;cursor:pointer}
+#s-sharelist .sh-legal{font:400 11px/1.5 'Jost',sans-serif;color:#8a8272;margin-top:14px}
+#s-sharelist .sh-legal .lnk{color:#8a8272;cursor:pointer;text-decoration:none}
+#s-sharelist .sh-legal b{color:#3a352c;font-weight:600}
+/* Waiting, gone and empty are all real states of this page -- somebody arrives
+   here from a text message with no idea what to expect, so none of them may be
+   a blank screen or a raw error. */
+#s-sharelist .sh-wait,#s-sharelist .sh-gone{text-align:center;padding:26px 0 10px}
+#s-sharelist .sh-gone h4{font:400 19px/1.3 'DM Serif Display',Georgia,serif;color:#1f1d19;margin:0 0 8px}
+#s-sharelist .sh-gone p,#s-sharelist .sh-wait{font:400 13.5px/1.6 'Jost',sans-serif;color:#5a554c;margin:0 auto;max-width:300px}
 /* "Saved" confirmation toast: tells her the piece landed somewhere AND where
    that somewhere is, so the list is discoverable from the moment she uses it. */
 .wl-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(14px);z-index:9000;display:flex;align-items:center;gap:9px;background:#1a1a1a;color:#fff;border-radius:999px;padding:11px 8px 11px 16px;box-shadow:0 10px 26px -10px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;max-width:calc(100vw - 32px)}
@@ -4070,8 +4234,26 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
   <div id="wlBody"></div>
   <div id="wlAdd"></div>
+  <div id="wlNote"></div>
+  <div id="wlShare"></div>
   <div id="wlStay"></div>
   <div class="wl-foot" data-std-foot></div>
+</div>
+
+<!-- The shared wishlist, at /list/<token>. A page for SOMEBODY ELSE: whoever
+     she sent the link to. Read-only by construction, and the server sends the
+     rows and nothing else, so her sizes, colours and portrait are not merely
+     hidden here -- they never arrive. The crown is copied verbatim from
+     #s-wishlist above (her call), with its own pattern id. -->
+<div class="scr" id="s-sharelist">
+  <div class="sh-rodwrap"><div class="sh-rod"></div></div>
+  <div class="sh-crown">
+    <svg class="sh-chain" viewBox="0 0 8 66" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="shChainPat" x="0" y="0" width="8" height="16" patternUnits="userSpaceOnUse"><ellipse cx="4" cy="4.5" rx="2.9" ry="4.2" fill="none" stroke="#DDAF3F" stroke-width="1.4"/><ellipse cx="4" cy="12.5" rx="1.2" ry="4.2" fill="none" stroke="#C89A2C" stroke-width="1.4"/></pattern></defs><rect x="0" y="0" width="8" height="66" fill="url(#shChainPat)"/></svg>
+    <span class="sh-ring"></span><span class="sh-ringf"></span>
+    <svg class="sh-crownheart" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#C89A2C" stroke-width=".82" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/><path fill="#FEF6D6" stroke="#EBD9A0" stroke-width=".55" d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>
+    <div class="sh-nm" id="shName"></div>
+  </div>
+  <div id="shBody"></div>
 </div>
 
 <div class="scr" id="s-faq">
@@ -4462,7 +4644,11 @@ function retakeQuiz(){
 // The policy text is NOT duplicated anywhere -- a reviewer sees the real page.
 // WARNING: once a URL is submitted to an affiliate network, never change its path.
 var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-res':'/results'};
-function _pathForScreen(id){return _ROUTES[id]||'/';}
+// ⚠️ The shared wishlist's path carries a token, so it cannot live in _ROUTES.
+// Without this branch show() would rewrite the address bar to "/" the moment
+// the page opened -- stripping the token, breaking a reload, and handing
+// nothing to anyone who copies the URL out of the bar.
+function _pathForScreen(id){return (id==='s-sharelist'&&_sharePath)?_sharePath:(_ROUTES[id]||'/');}
 // The reverse lookup, for someone who lands on one of those paths directly.
 // Tolerates a trailing slash and odd capitalisation, both of which people type.
 function _screenForPath(p){
@@ -4509,7 +4695,12 @@ function show(id,skipHistory){
   //   chat is exactly where a woman lingers, and it was the last screen with no
   //   route to the rest of the app.
   document.body.classList.remove('menu-open');
-  document.body.classList.toggle('menu-hidechip',id==='s-load'||id==='s-photo-load');
+  // ⚠️ s-sharelist is the third: the shared wishlist is somebody ELSE'S page,
+  // reached from a text message. A drawer offering "Refine your Preferences"
+  // and "Your Wardrobe List" to a husband buying a birthday present is
+  // noise, and the chip sits exactly where that page's gold rod hangs. The
+  // footer and the quiz invitation are the routes into the app from there.
+  document.body.classList.toggle('menu-hidechip',id==='s-load'||id==='s-photo-load'||id==='s-sharelist');
   // The quiz progress bar ("1 of 12") belongs to the quiz screen, full stop.
   // Before the Menu/logo/footer existed, the only exits from a mid-way quiz were
   // finishing it or backing out of question 1, and each hid the bar by hand; the
@@ -4534,7 +4725,13 @@ function show(id,skipHistory){
   // of their own but still want the global one hidden (the quiz, preferences).
   var scrEl=document.getElementById(id);
   var ownFoot=!!(scrEl&&scrEl.querySelector('[data-std-foot]'));
-  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  // ⚠️ s-sharelist is here for the reason the comment above predicts: it USED to
+  // carry its own [data-std-foot], so ownFoot hid the global one for free.
+  // Taking that footer off (her call) silently un-hid the global footer, and the
+  // render caught it -- two rows of app chrome under somebody's gift list. That
+  // is the hardcoded-list failure mode happening to the very list the comment
+  // warns about, one screen after it was written.
+  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // ⚠️ BOTH call sites are load-bearing: the BOOT path adds .act to s-wel
   // directly, without going through show(), exactly as it does for s-wb. A
@@ -4543,12 +4740,12 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
   // framed pages (no rounded corners).
-  if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-shop');
+  if(card)card.classList.toggle('sqall',id==='s-wel'||id==='s-wb'||id==='s-res'||id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-shop'||id==='s-sharelist');
   // Outfit results + the outfit-upload screens: let their full-bleed elements (the framed
   // rooms; the gold rod at the top) bleed to the true screen edges (drop the card's side margin).
   document.body.classList.toggle('res-fb',id==='s-photo-res'||id==='s-photo'||id==='s-photo-load'||id==='s-res');
@@ -5752,7 +5949,7 @@ function _storeListForPrompt(){
     // send her somewhere for butter yellow" is an instruction about data the AI
     // cannot see. Only the informative ends are named; the middle says nothing,
     // which keeps the list short.
-    const col=s.d[_DIM_COL]>=8?'; great for colour':(s.d[_DIM_COL]<=4?'; mostly neutrals':'');
+    const col=s.d[_DIM_COL]>=8?'; great for color':(s.d[_DIM_COL]<=4?'; mostly neutrals':'');
     // Catalog DEPTH, Cath's own call 2026-08-15 (19 of 100 stores). Same
     // reasoning as the colour scores above: "prefer a deep store for a
     // specific search" is an instruction about data the model cannot see
@@ -5937,7 +6134,7 @@ function _shopRules(mode){
     // dresses, because the store simply does not stock that colour in that
     // piece. Cath's own reasoning for liking department stores is the fix here:
     // when the odds are long, a big multi-brand store has far better ones.
-    '- If she is genuinely shopping by a specific or unusual COLOUR (see the color rules above — not every piece is), send her where that colour actually lives. NEVER choose a store marked "mostly neutrals" for one. Pick a store marked "great for colour", or a large multi-brand store where the odds are far better. A precise colour at a store that stocks neutrals will show her nothing.\n';
+    '- If she is genuinely shopping by a specific or unusual COLOR (see the color rules above — not every piece is), send her where that color actually lives. NEVER choose a store marked "mostly neutrals" for one. Pick a store marked "great for color", or a large multi-brand store where the odds are far better. A precise color at a store that stocks neutrals will show her nothing.\n';
 }
 // ▶ 2026-08-12, her live-testing catch: the old bare "Prioritize her color
 // preferences" bullet was pushing one of her exact loved colors into EVERY
@@ -7726,6 +7923,11 @@ function _normalizeWardrobe(d){
   }).map(function(x){
     var o={id:String(x.id),name:String(x.name),store:String(x.store||''),
            search:String(x.search||''),ts:Number(x.ts)||0};
+    // HER OWN WORDS about the piece (2026-08-22): size, colour, the occasion.
+    // Capped here as well as at the input, because this record also arrives
+    // from Supabase and from localStorage, both of which can be hand-edited.
+    // Escaped at render, never trusted into markup raw.
+    if(x.note)o.note=String(x.note).slice(0,WL_NOTE_MAX);
     // Cath's Edit picks are real product links, so they alone keep a stored URL
     // and price. Everything else rebuilds its link from store + search term.
     if(x.pick){o.pick=true;o.url=_wlSafeUrl(x.url);o.price=String(x.price||'');}
@@ -7740,6 +7942,14 @@ function _normalizeWardrobe(d){
     else if(x.own){o.own=true;var ou=_wlSafeUrl(x.url);if(ou)o.url=ou;}
     return o;
   });
+  // HER OPEN NOTE (2026-08-22, item two): one paragraph for whoever is shopping
+  // from the shared list. ▶ It does more work than the per-item notes do: those
+  // answer "which one", this answers everything true of the WHOLE list -- her
+  // sizes, the colors she loves, the occasion that matters most -- which is
+  // most of what a person buying for her actually needs.
+  // Capped here as well as at the input: this record also arrives from Supabase
+  // and from localStorage, both of which can be hand-edited.
+  d.listNote=String(d.listNote||'').slice(0,WL_LNOTE_MAX);
   if(!d.pretap0){d.items={};d.pretap0=true;}
   // The list is want-only now — "have" is gone. Drop any state that isn't a
   // real Want so old records (local or restored from Supabase) can't carry a
@@ -8836,6 +9046,262 @@ function wishToggle(id){
   if(added)_wlToast();
   _wlSyncServer();
 }
+// --- HER NOTE ON A PIECE (2026-08-22, item one of the shareable wishlist) ---
+// Her own words about a piece: her size, the colour she wants, the occasion.
+// ▶ WHY IT EARNS ITS PLACE, and it is not really about her own list: a note on
+//   a private wishlist is a memo to herself. A note on a list somebody is
+//   BUYING from is the difference between the right dress and the wrong size.
+//   That is why the share card teaches it a second time.
+// ⚠️ LABELLED IN WORDS ("+ Add a note"), never a bare pencil icon. The mom
+//   lesson, 2026-07-26: a control she cannot read is not a control. The same
+//   reasoning that put the word "Save" under the heart on a product card.
+var WL_NOTE_MAX=140;
+// The id whose note is open for editing, '' when none. Kept as STATE rather
+// than done with DOM surgery, so renderWishlist() stays the single render path
+// -- one place to read, and no half-updated row is possible.
+var _wlNoteOpen='';
+function _wlNoteBlock(it){
+  if(_wlNoteOpen===it.id){
+    return '<div class="wl-nedit">'
+      +'<textarea id="wlNoteIn" maxlength="'+WL_NOTE_MAX+'" rows="2" '
+      +'placeholder="Your size, the color you want, what it&rsquo;s for."'
+      +' oninput="_wlNoteCount()">'+_esc(it.note||'')+'</textarea>'
+      +'<div class="wl-nrow">'
+      +'<button class="wl-nsave" onclick="wlNoteSave(\''+it.id+'\')">Save</button>'
+      +'<span class="wl-ncancel" role="button" onclick="wlNoteCancel()">Cancel</span>'
+      +'<span class="wl-nleft" id="wlNoteLeft"></span>'
+      +'</div></div>';
+  }
+  if(it.note)return '<span class="wl-note">'+_esc(it.note)
+    +'<span class="wl-ne" role="button" onclick="wlNoteEdit(\''+it.id+'\')">Edit</span></span>';
+  return '<span class="wl-addnote" role="button" onclick="wlNoteEdit(\''+it.id+'\')">+ Add a note</span>';
+}
+function _wlNoteCount(){
+  var t=document.getElementById('wlNoteIn'),l=document.getElementById('wlNoteLeft');
+  if(!t||!l)return;
+  var left=WL_NOTE_MAX-t.value.length;
+  // Only speaks up near the end -- a counter running the whole time reads as a
+  // limit being enforced rather than room being offered.
+  l.textContent=left<=30?left+' left':'';
+}
+function wlNoteEdit(id){
+  _wlNoteOpen=id;
+  renderWishlist();
+  var t=document.getElementById('wlNoteIn');
+  if(t){t.focus();try{t.setSelectionRange(t.value.length,t.value.length)}catch(e){}}
+  _wlNoteCount();
+}
+function wlNoteCancel(){_wlNoteOpen='';renderWishlist();}
+function wlNoteSave(id){
+  var t=document.getElementById('wlNoteIn');
+  // Collapse whitespace so a stray newline cannot stretch a row on the shared
+  // page, and cap again here: maxlength does not survive a paste on every browser.
+  var v=t?String(t.value).replace(/\s+/g,' ').trim().slice(0,WL_NOTE_MAX):'';
+  var i=_wlIndexOf(id);
+  if(i>=0){
+    if(v)_wlList()[i].note=v;
+    else delete _wlList()[i].note;   // clearing the box removes the note
+  }
+  _wlNoteOpen='';
+  saveWardrobeData();
+  renderWishlist();
+  _wlSyncServer();
+}
+// --- HER OPEN NOTE (2026-08-22, item two of the shareable wishlist) ---------
+// One paragraph for whoever is shopping from her list. Her idea, and the more
+// valuable of the two note kinds: a per-item note answers "which one", this
+// answers everything true of the WHOLE list.
+// ⚠️ HER CALL: it does NOT appear until something is on the list. An empty
+//   wishlist with a "write a note for whoever is shopping" box on it is asking
+//   her to annotate nothing.
+// ⚠️ HER CALL: the heading is simply "Notes".
+var WL_LNOTE_MAX=600;
+var _wlLNoteOpen=false;
+function _wlRenderListNote(){
+  var el=document.getElementById('wlNote');
+  if(!el)return;
+  if(!_wlCount()){el.innerHTML='';el.style.display='none';_wlLNoteOpen=false;return;}
+  el.style.display='';
+  var cur=(wardrobeData&&wardrobeData.listNote)||'';
+  var h='<div class="wl-lnote"><div class="wl-lnh">Notes</div>';
+  if(_wlLNoteOpen){
+    h+='<textarea id="wlLNoteIn" maxlength="'+WL_LNOTE_MAX+'" rows="5" '
+      +'placeholder="Your sizes, the colors you love, an occasion &mdash; anything you&rsquo;d like '
+      +'whoever is shopping to know."'
+      +' oninput="_wlLNoteCount()">'+_esc(cur)+'</textarea>'
+      +'<div class="wl-nrow"><button class="wl-nsave" onclick="wlListNoteSave()">Save</button>'
+      +'<span class="wl-ncancel" role="button" onclick="wlListNoteCancel()">Cancel</span>'
+      +'<span class="wl-nleft" id="wlLNoteLeft"></span></div>';
+  }else if(cur){
+    h+='<div class="wl-lnbody">'+_esc(cur)+'</div>'
+      +'<span class="wl-lnedit" role="button" onclick="wlListNoteEdit()">Edit</span>';
+  }else{
+    h+='<div class="wl-lnbody wl-lnph">Your sizes, the colors you love, an occasion &mdash; '
+      +'anything you&rsquo;d like whoever is shopping to know.</div>'
+      +'<span class="wl-lnedit" role="button" onclick="wlListNoteEdit()">+ Write a note</span>';
+  }
+  el.innerHTML=h+'</div>';
+}
+function _wlLNoteCount(){
+  var t=document.getElementById('wlLNoteIn'),l=document.getElementById('wlLNoteLeft');
+  if(!t||!l)return;
+  var left=WL_LNOTE_MAX-t.value.length;
+  // Silent until the end is in sight, same as the per-item counter: a number
+  // running the whole time reads as a limit rather than as room.
+  l.textContent=left<=60?left+' left':'';
+}
+function wlListNoteEdit(){
+  _wlLNoteOpen=true;_wlRenderListNote();
+  var t=document.getElementById('wlLNoteIn');
+  if(t){t.focus();try{t.setSelectionRange(t.value.length,t.value.length)}catch(e){}}
+  _wlLNoteCount();
+}
+function wlListNoteCancel(){_wlLNoteOpen=false;_wlRenderListNote();}
+function wlListNoteSave(){
+  var t=document.getElementById('wlLNoteIn');
+  // ⚠️ Newlines are KEPT here, unlike a per-item note: this is a paragraph and
+  // she may well want a line break in it. They are rendered with white-space
+  // pre-line rather than as markup, so a break is a break and nothing else.
+  var v=t?String(t.value).replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim().slice(0,WL_LNOTE_MAX):'';
+  if(!wardrobeData||typeof wardrobeData!=='object')wardrobeData={items:{},custom:[]};
+  if(v)wardrobeData.listNote=v; else delete wardrobeData.listNote;
+  _wlLNoteOpen=false;
+  saveWardrobeData();
+  _wlRenderListNote();
+  _wlSyncServer();
+}
+// --- SHARING THE LIST (2026-08-22, item three) ------------------------------
+// Her words for the card, near enough verbatim. ⚠️ The privacy line that was
+// here ("They see your list, and nothing else") is DELETED, her catch: it reads
+// as "that is all they can do", which is false -- they can tap through, buy,
+// and wander into the Mall. And the reassurance was answering a question her
+// own design already answers: the open note means SHE chooses what personal
+// detail is on that page.
+//
+// ▶ NO LOCAL "am I sharing?" STATE IS NEEDED, because turning it on is
+//   IDEMPOTENT: the server leaves the revision alone, so asking twice returns
+//   the SAME link. The token is cached only so a returning visit can show the
+//   shared state without a round trip.
+var _wlShareAsk=false;   // her email is being asked for inside the share card
+var _wlShareBusy=false;
+function _wlShareLink(){try{return localStorage.getItem('ss_sharelink')||''}catch(e){return''}}
+function _wlShareUrl(t){return 'https://stylestar.app/list/'+t}
+function _wlRenderShare(){
+  var el=document.getElementById('wlShare');
+  if(!el)return;
+  if(!_wlCount()){el.innerHTML='';el.style.display='none';return;}
+  el.style.display='';
+  var tok=_wlShareLink();
+  var h='<div class="wl-share">';
+  if(tok){
+    h+='<div class="wsh-t">Your wishlist is shared</div>'
+      +'<div class="wsh-s">Anyone with this link can see your list. It stays up to date as you add pieces. '
+      +'<b>Add a note to anything you want them to get right.</b></div>'
+      +'<div class="wsh-box"><code id="wlShareUrl">'+_esc(_wlShareUrl(tok))+'</code>'
+      +'<button class="wsh-cp" onclick="wlShareCopy()">Copy</button></div>'
+      +'<div class="wsh-msg" id="wlShareMsg"></div>'
+      +'<span class="wsh-stop" role="button" onclick="wlShareStop()">Stop sharing</span>';
+  }else if(_wlShareAsk){
+    h+='<div class="wsh-t">Share your wishlist</div>'
+      +'<div class="wsh-s">First, save your list with your email &mdash; that&rsquo;s where your link lives, '
+      +'so you can come back to it on any device.</div>'
+      +'<input id="wlShareEmail" type="email" inputmode="email" autocomplete="email" placeholder="Your email">'
+      +'<input id="wlShareName" type="text" autocomplete="given-name" placeholder="Your first name (optional)">'
+      +'<div><button class="wsh-btn" id="wlShareBtn" onclick="wlShareGet()">Save and get my link</button></div>'
+      +'<div class="wsh-msg" id="wlShareMsg"></div>';
+  }else{
+    h+='<div class="wsh-t">Share your wishlist</div>'
+      +'<div class="wsh-s">Just like a gift registry, send one link to anyone so they can see '
+      +'what you really want, and buy it.</div>'
+      +'<div><button class="wsh-btn" id="wlShareBtn" onclick="wlShareGet()">Get my link</button></div>'
+      +'<div class="wsh-msg" id="wlShareMsg"></div>';
+  }
+  el.innerHTML=h+'</div>';
+}
+function _wlShareSay(text,bad){
+  var m=document.getElementById('wlShareMsg');
+  if(!m)return;
+  m.style.color=bad?'#c0392b':'#5a554c';
+  m.textContent=text;
+}
+async function wlShareGet(){
+  if(_wlShareBusy)return;
+  // No saved record means no link to make: her email IS the place it lives.
+  // ▶ Deliberately asked HERE rather than hiding the button until she has
+  //   saved -- she is asking for something specific and being told what it
+  //   costs, which is the opposite of a toll on the way in.
+  if(!_ssToken()&&!_wlShareAsk){_wlShareAsk=true;_wlRenderShare();_wlRenderStay();
+    var f=document.getElementById('wlShareEmail');if(f)f.focus();return;}
+  var btn=document.getElementById('wlShareBtn');
+  if(_wlShareAsk){
+    var eIn=document.getElementById('wlShareEmail'),nIn=document.getElementById('wlShareName');
+    var email=(eIn?eIn.value:'').trim(),nameVal=(nIn?nIn.value:'').trim();
+    if(!email||email.indexOf('@')<0){_wlShareSay('Please enter a valid email so we can save your list.',true);return;}
+    _wlShareBusy=true;
+    if(btn){btn.disabled=true;btn.textContent='Saving…'}
+    _wlShareSay('Saving your list…');
+    if(nameVal){
+      userName=nameVal.charAt(0).toUpperCase()+nameVal.slice(1);
+      try{var _d=JSON.parse(localStorage.getItem('ss_data'))||{};_d.userName=userName;localStorage.setItem('ss_data',JSON.stringify(_d));}catch(e){}
+    }
+    try{await saveUserRecord(email,buildFullUserData())}catch(e){}
+    emailDone=true;
+    try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
+    if(!_ssToken()){
+      _wlShareBusy=false;
+      if(btn){btn.disabled=false;btn.textContent='Save and get my link'}
+      _wlShareSay('That didn’t go through. Please try again in a moment.',true);
+      return;
+    }
+    _wlShareAsk=false;
+  }
+  _wlShareBusy=true;
+  if(btn){btn.disabled=true;btn.textContent='Making your link…'}
+  _wlShareSay('Making your link…');
+  var ok=false;
+  try{
+    var email2='';try{email2=localStorage.getItem('ss_email')||''}catch(e){}
+    var res=await fetch('/.netlify/functions/user-data',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email2,token:_ssToken(),share:'on'})});
+    var d=await res.json();
+    if(res.ok&&d&&d.shareToken){
+      try{localStorage.setItem('ss_sharelink',d.shareToken)}catch(e){}
+      ok=true;
+    }
+  }catch(e){}
+  _wlShareBusy=false;
+  _wlRenderShare();_wlRenderStay();
+  if(!ok)_wlShareSay('That didn’t go through. Please try again in a moment.',true);
+}
+function wlShareCopy(){
+  var t=_wlShareLink();if(!t)return;
+  var url=_wlShareUrl(t);
+  function done(){_wlShareSay('Link copied.')}
+  if(navigator.share){navigator.share({title:'My Style Star wishlist',url:url}).catch(function(){});return;}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(done).catch(function(){_wlShareSay('Copy the link above.',true)});
+  }else{_wlShareSay('Copy the link above.',true)}
+}
+async function wlShareStop(){
+  // ⚠️ THE ONLY IRREVERSIBLE THING IN THIS FEATURE, so it is the only one that
+  // asks first. "Stop sharing" sounds like a pause and is a DELETE: every link
+  // already sent dies, and sharing again mints a different one. The confirm
+  // carries that, because the label cannot.
+  if(!confirm('Turn off this link?\n\nAnyone you’ve already sent it to won’t be able to open it. You can share again any time, but it will be a new link.'))return;
+  if(_wlShareBusy)return;
+  _wlShareBusy=true;
+  _wlShareSay('Turning it off…');
+  try{
+    var email='';try{email=localStorage.getItem('ss_email')||''}catch(e){}
+    await fetch('/.netlify/functions/user-data',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,token:_ssToken(),share:'off'})});
+  }catch(e){}
+  try{localStorage.removeItem('ss_sharelink')}catch(e){}
+  _wlShareBusy=false;
+  _wlRenderShare();_wlRenderStay();
+}
 function wishRemove(id){
   if(_wlIndexOf(id)<0)return;
   _wlList().splice(_wlIndexOf(id),1);
@@ -8897,10 +9363,12 @@ function renderWishlist(){
   var body=document.getElementById('wlBody');
   if(!body)return;
   var list=_wlList().slice();
-  if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderStay();return;}
+  if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderListNote();_wlRenderShare();_wlRenderStay();return;}
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
-  var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. Tap the <b>&times;</b> to take an item off your list.</div>'
+  var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. '
+   +'Tap <b>+ Add a note</b> to say your size, color, etc. '
+   +'Tap the <b>&times;</b> to take an item off your list.</div>'
    +'<div class="wl-disclosure">Some links may earn a commission.</div>'
    +'<div class="wl-card">';
   list.forEach(function(it){
@@ -8913,20 +9381,27 @@ function renderWishlist(){
     else if(own&&it.url){url=_affUrl(_wlSafeUrl(it.url));exact=!!url;}
     var exactLink=!!url;
     if(!pick&&!url){try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}}
-    h+='<div class="wl-row'+(pick?' pick':'')+(own?' own':'')+'">'
+    // ⚠️ Only a row that actually carries a note switches to top alignment.
+    // Doing it to every row would lift the ✕ and the Shop it button on a screen
+    // she has already blessed, to fix a problem those rows do not have.
+    var hasNote=!!(it.note||_wlNoteOpen===it.id);   // marks the row for the tests
+    h+='<div class="wl-row'+(pick?' pick':'')+(own?' own':'')+(hasNote?' hasnote':'')+'">'
       +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
       +'<div class="wl-b">'
       +(pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
       +(exact?'<span class="wl-own"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Your pick</span>':'')
       +'<span class="wl-nm">'+_esc(it.name)+'</span>'
       +(it.store?'<span class="wl-st">'+_esc(it.store)
-      +((pick||catx)&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span>':'')+'</div>'
+      +((pick||catx)&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span>':'')
+      +_wlNoteBlock(it)+'</div>'
       +(url?'<a class="wl-go" href="'+_esc(url)+'" target="_blank" rel="sponsored noopener">'+((pick||exact||(catx&&exactLink))?'Shop it':'Find it')+' &rarr;</a>':'')
       +'</div>';
   });
   h+='</div>';
   body.innerHTML=h;
   _wlRenderAdd();
+  _wlRenderListNote();
+  _wlRenderShare();
   _wlRenderStay();
 }
 // The email ask appears only once she has actually saved something, so it reads
@@ -8935,7 +9410,10 @@ function renderWishlist(){
 function _wlRenderStay(){
   var el=document.getElementById('wlStay');
   if(!el)return;
-  if(emailDone||!_wlCount()){el.innerHTML='';el.style.display='none';return;}
+  // ⚠️ Never two email asks at once: the share card asks for an email of its
+  // own when she has never saved, and this card sitting under it would be the
+  // same request twice, in two different wordings, on one screen.
+  if(emailDone||!_wlCount()||_wlShareAsk){el.innerHTML='';el.style.display='none';return;}
   el.style.display='';
   el.innerHTML='<div class="wl-stay">'
     +'<div class="ws-t">Keep your wishlist safe</div>'
@@ -9113,6 +9591,105 @@ function wlAddSubmit(){
 // no clamp, so iOS rubber-banding keeps rod and chain glued too.
 function _wlRodScroll(){var r=document.querySelector('#s-wishlist .wl-rod');if(r)r.style.transform='translateY('+(-window.scrollY)+'px)';}
 window.addEventListener('scroll',_wlRodScroll,{passive:true});
+// --- THE SHARED WISHLIST (2026-08-22) ------------------------------------
+// Everything below renders a page for somebody who is NOT the owner: she sent
+// them a link, and they came to buy her something. So there is no remove
+// control, no email ask and no add form, and none of it is enforced by hiding
+// things -- the server's response simply has nothing else in it.
+var _sharePath='';
+// base64url, which is the alphabet makeShareToken emits. Tolerates a trailing
+// slash because people type one.
+function _shareTokenFromPath(p){
+  var m=String(p||'').replace(/\/+$/,'').match(/^\/list\/([A-Za-z0-9_-]{16,600})$/);
+  return m?m[1]:'';
+}
+function openSharedList(tok){
+  _sharePath='/list/'+tok;
+  show('s-sharelist',true);
+  try{history.replaceState({screen:'s-sharelist'},null,_sharePath)}catch(e){}
+  var nm=document.getElementById('shName');if(nm)nm.textContent='';
+  var el=document.getElementById('shBody');
+  if(el)el.innerHTML='<div class="sh-wait">Opening this wishlist&hellip;</div>';
+  fetch('/.netlify/functions/user-data?share='+encodeURIComponent(tok))
+    .then(function(r){if(!r.ok)throw new Error('gone');return r.json()})
+    .then(function(d){_renderSharedList(d)})
+    .catch(function(){_renderSharedGone()});
+}
+// A revoked link, a mistyped one and a link to an account that no longer
+// exists are one indistinguishable 404 from the server, so they get one kind
+// answer here. Never a raw error: whoever is reading this was sent it by
+// somebody they know.
+function _renderSharedGone(){
+  var nm=document.getElementById('shName');if(nm)nm.textContent='';
+  var el=document.getElementById('shBody');
+  if(!el)return;
+  el.innerHTML='<div class="sh-gone"><h4>This wishlist isn&rsquo;t here</h4>'
+    +'<p>The link may have been turned off, or it may have a typo in it. '
+    +'Ask whoever sent it to share it again.</p></div>'
+    +_shTail();
+}
+function _renderSharedList(d){
+  var el=document.getElementById('shBody');
+  if(!el)return;
+  var name=String((d&&d.name)||'').trim();
+  var list=(d&&Array.isArray(d.list))?d.list:[];
+  var nm=document.getElementById('shName');
+  if(nm)nm.textContent=name;
+  // Her wording. Without a name "my" still has an antecedent -- the link
+  // arrived from a real person -- so it stays first person either way.
+  var lead=name?'This is my shopping wishlist!':'This is my Style Star shopping wishlist!';
+  var h='<div class="sh-lead">'+_esc(lead)+'</div>';
+  if(!list.length){
+    h+='<div class="sh-gone"><p>There&rsquo;s nothing on this wishlist yet. '
+      +'Check back in a little while.</p></div>';
+  }else{
+    // The disclosure rides with the links, and above them.
+    h+='<div class="sh-disc">Some links may earn a commission.</div>';
+    // ▶ HER OWN WORDS for the two groups, and they do real work: a rebuilt
+    //   search link stops being a disappointment ("this only opens a search")
+    //   and becomes a generous instruction ("anything like this is a yes").
+    h+=_shGroup('Buy exactly this',list.filter(function(it){return it&&it.exact}));
+    h+=_shGroup('Anything like this',list.filter(function(it){return it&&!it.exact}));
+  }
+  // HER CALL, and it is the same "it should arrive as she sees it" principle
+  // that kept the group split: she writes the note at the bottom of her list,
+  // so it is READ at the bottom too.
+  if(d&&d.listNote)h+='<div class="sh-lnote"><div class="sh-lnh">Notes</div>'
+    +'<div class="sh-lnbody">'+_esc(d.listNote)+'</div></div>';
+  h+=_shTail();
+  el.innerHTML=h;
+}
+// One way in and one quiet legal line -- see the CSS note above for why the
+// quiz button and the full footer came off, and why Privacy and Terms did not.
+function _shTail(){
+  return '<div class="sh-foot">'
+    +'<span class="sh-f2" onclick="showShop()">Browse the Style Star Mall &rarr;</span>'
+    +'<div class="sh-legal"><b>Style Star</b> &middot; '
+    +'<span class="lnk" onclick="showPrivacy()">Privacy</span> &middot; '
+    +'<span class="lnk" onclick="showTerms()">Terms</span></div></div>';
+}
+function _shGroup(label,rows){
+  if(!rows.length)return '';
+  var h='<div class="sh-gh"><span>'+_esc(label)+'</span></div><div class="sh-card">';
+  rows.forEach(function(it){
+    // An exact row keeps the URL she saved; a search row is REBUILT here, so a
+    // store-URL fix repairs every shared page too. Both are affiliate-wrapped:
+    // a piece bought from her list is exactly what this is meant to earn on.
+    var url='';
+    if(it.exact)url=_affUrl(_wlSafeUrl(it.url));
+    if(!url){try{url=_affUrl(getStoreUrl(it.store,it.name,it.search))}catch(e){url=''}}
+    h+='<div class="sh-row"><div class="sh-b">'
+      +'<span class="sh-name">'+_esc(it.name)+'</span>'
+      +(it.store?'<span class="sh-store">'+_esc(it.store)
+        +(it.exact&&it.price?'<span class="sh-price">'+_esc(it.price)+'</span>':'')+'</span>':'')
+      +(it.note?'<span class="sh-note">'+_esc(it.note)+'</span>':'')
+      +'</div>'
+      +(url?'<a class="sh-go" href="'+_esc(url)+'" target="_blank" rel="sponsored noopener">'
+        +(it.exact?'Shop it':'Find it')+' &rarr;</a>':'')
+      +'</div>';
+  });
+  return h+'</div>';
+}
 function openWishlist(){
   var cur=document.querySelector('.scr.act');
   // Tapping "View" from the toast while already on the list must not make Back
@@ -10397,6 +10974,11 @@ function maybePlayEntrance(){
     // page. fallbackInitialScreen() runs first on purpose: it restores her saved
     // data into memory and sets the screen underneath, so the page's Back button
     // returns her to the right home screen (Welcome Back if she has results).
+    // A shared wishlist is somebody else's page, so it opens on top of the
+    // normal first screen exactly as a legal page does -- which is also what
+    // makes Back land a stranger on the Style Star welcome rather than nowhere.
+    var shTok=_shareTokenFromPath(location.pathname);
+    if(shTok){openSharedList(shTok);return;}
     var deep=_screenForPath(location.pathname);
     if(deep){
       // The initial history entry was stamped before fallbackInitialScreen
