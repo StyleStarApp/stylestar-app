@@ -36,13 +36,27 @@ async function open(w = 390) {
   const ctx = await browser.newContext({ viewport: { width: w, height: 900 } });
   const pg = await ctx.newPage();
   pg.on('pageerror', e => errs.push(String(e)));
-  await pg.addInitScript(seed => { localStorage.setItem('ss_wardrobe', JSON.stringify(seed)); }, SEED);
+  // ⚠️ SEED ONLY IF ABSENT. addInitScript runs on EVERY navigation in the
+  // context, including a reload -- seeding unconditionally wiped the note the
+  // reload was supposed to prove had persisted, and the "survives a reload"
+  // check failed on perfectly good code. A test that destroys the state it is
+  // about to assert proves nothing.
+  await pg.addInitScript(seed => {
+    if (!localStorage.getItem('ss_wardrobe')) localStorage.setItem('ss_wardrobe', JSON.stringify(seed));
+  }, SEED);
   await pg.goto(`http://localhost:${PORT}/`);
   await pg.waitForTimeout(900);
   await pg.evaluate(() => { const c = document.querySelector('.hm-entrance'); if (c) c.remove(); openWishlist(); });
   await pg.waitForTimeout(400);
   return { ctx, pg };
 }
+// Clicking something that isn't there should fail one check, not kill the run
+// and hide everything below it.
+const tap = (pg, sel) => pg.evaluate(s => {
+  const el = document.querySelector(s);
+  if (!el) return false;
+  el.click(); return true;
+}, '#s-wishlist ' + sel);
 const rowState = pg => pg.evaluate(() => [...document.querySelectorAll('#s-wishlist .wl-row')].map(r => ({
   name: r.querySelector('.wl-nm').textContent,
   add: !!r.querySelector('.wl-addnote'),
@@ -65,7 +79,7 @@ ok('...and still teaches the ×', await pg.evaluate(() =>
    /take an item off your list/.test(document.querySelector('#s-wishlist .wl-lead').textContent)));
 
 console.log('\n2. Writing one');
-await pg.evaluate(() => document.querySelector('#s-wishlist .wl-addnote').click());
+ok('tapped .wl-addnote', await tap(pg, '.wl-addnote'));
 await pg.waitForTimeout(250);
 let ed = await pg.evaluate(() => {
   const t = document.getElementById('wlNoteIn');
@@ -80,7 +94,7 @@ ok('...capped at 140', ed.max === '140');
 ok('...with Save and Cancel', ed.save && ed.cancel);
 ok('...and a placeholder that says what to write', /size|colour|for/i.test(ed.ph || ''));
 await pg.fill('#wlNoteIn', 'Size 8. This is the one for the wedding in June.');
-await pg.evaluate(() => document.querySelector('#s-wishlist .wl-nsave').click());
+ok('tapped .wl-nsave', await tap(pg, '.wl-nsave'));
 await pg.waitForTimeout(250);
 rows = await rowState(pg);
 ok('the note shows on the row', /Size 8\. This is the one for the wedding in June\./.test(rows[0].note || ''), JSON.stringify(rows[0]));
@@ -96,28 +110,25 @@ rows = await rowState(pg);
 ok('her words are still there', /wedding in June/.test(rows[0].note || ''));
 
 console.log('\n4. Editing, clearing and cancelling');
-await pg.evaluate(() => document.querySelector('#s-wishlist .wl-ne').click());
+ok('tapped .wl-ne', await tap(pg, '.wl-ne'));
 await pg.waitForTimeout(250);
 ok('Edit reopens with what she wrote',
    await pg.evaluate(() => /wedding in June/.test(document.getElementById('wlNoteIn').value)));
 await pg.fill('#wlNoteIn', 'Actually the green one.');
-await pg.evaluate(() => document.querySelector('#s-wishlist .wl-ncancel').click());
+ok('tapped .wl-ncancel', await tap(pg, '.wl-ncancel'));
 await pg.waitForTimeout(250);
 rows = await rowState(pg);
 ok('Cancel throws the change away', /wedding in June/.test(rows[0].note || ''));
-await pg.evaluate(() => document.querySelector('#s-wishlist .wl-ne').click());
+ok('tapped .wl-ne', await tap(pg, '.wl-ne'));
 await pg.waitForTimeout(200);
 await pg.fill('#wlNoteIn', '   ');
-await pg.evaluate(() => document.querySelector('#s-wishlist .wl-nsave').click());
+ok('tapped .wl-nsave', await tap(pg, '.wl-nsave'));
 await pg.waitForTimeout(250);
 rows = await rowState(pg);
 ok('emptying the box removes the note', rows[0].add && !rows[0].note && !rows[0].hasnote);
 
 console.log('\n5. Hard cases');
-await pg.evaluate(() => {
-  // Bypass maxlength the way a paste or a hand-edited record can.
-  document.querySelector('#s-wishlist .wl-addnote').click();
-});
+ok('tapped .wl-addnote', await tap(pg, '.wl-addnote'));
 await pg.waitForTimeout(200);
 await pg.evaluate(() => {
   const t = document.getElementById('wlNoteIn');
@@ -127,7 +138,7 @@ await pg.evaluate(() => {
 await pg.waitForTimeout(250);
 ok('a 400-character note is cut to 140',
    await pg.evaluate(() => (JSON.parse(localStorage.getItem('ss_wardrobe')).wishlist[0].note || '').length === 140));
-await pg.evaluate(() => document.querySelector('#s-wishlist .wl-ne').click());
+ok('tapped .wl-ne', await tap(pg, '.wl-ne'));
 await pg.waitForTimeout(200);
 await pg.evaluate(() => {
   const t = document.getElementById('wlNoteIn');
@@ -137,7 +148,7 @@ await pg.evaluate(() => {
 await pg.waitForTimeout(250);
 ok('newlines and runs of spaces collapse',
    await pg.evaluate(() => JSON.parse(localStorage.getItem('ss_wardrobe')).wishlist[0].note === 'line one line two with gaps'));
-await pg.evaluate(() => document.querySelector('#s-wishlist .wl-ne').click());
+ok('tapped .wl-ne', await tap(pg, '.wl-ne'));
 await pg.waitForTimeout(200);
 await pg.evaluate(() => {
   const t = document.getElementById('wlNoteIn');
@@ -177,10 +188,10 @@ await ctx.close();
 console.log('\n7. It holds together on every phone');
 for (const w of [390, 375, 360, 320]) {
   ({ ctx, pg } = await open(w));
-  await pg.evaluate(() => document.querySelector('#s-wishlist .wl-addnote').click());
+  ok('tapped .wl-addnote', await tap(pg, '.wl-addnote'));
   await pg.waitForTimeout(200);
   await pg.fill('#wlNoteIn', 'Size 8. This is the one for the wedding in June, so it matters most.');
-  await pg.evaluate(() => document.querySelector('#s-wishlist .wl-nsave').click());
+  ok('tapped .wl-nsave', await tap(pg, '.wl-nsave'));
   await pg.waitForTimeout(300);
   const m = await pg.evaluate(() => {
     const card = document.querySelector('#s-wishlist .wl-card').getBoundingClientRect();
