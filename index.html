@@ -10901,6 +10901,12 @@ function _applyRestoredRecord(json){
   emailDone=true;
   try{
     localStorage.setItem('ss_emailDone','true');
+    // ⚠️ ss_email was never written here, and the gap sat unnoticed until the
+    // share link needed it (2026-08-22). A woman who restores from the emailed
+    // link or the 6-digit code has a token and a name and a wardrobe, and no
+    // record of WHICH address any of it belongs to. Written from the token's
+    // own email, which is the only trustworthy source on this device.
+    if(json.email)localStorage.setItem('ss_email',String(json.email));
     if(d.prefs)localStorage.setItem('ss_prefs',JSON.stringify(d.prefs));
     if(d.wardrobe)localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));
   }catch(e){}
