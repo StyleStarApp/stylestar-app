@@ -59,7 +59,7 @@ const PROFILE = {
   userName: 'Catherine', portrait: 'SECRETPORTRAIT', answers: [1,2,3],
   motto: 'SECRETMOTTO',
   prefs: { sizes: 'SECRETSIZE', colorsLove: ['SECRETCOLOR'], neverWear: 'SECRETNEVER' },
-  wardrobe: { items: {}, wishlist: WISH }
+  wardrobe: { items: {}, wishlist: WISH, listNote: 'I am a size 8 in dresses.\nNothing red please! SECRETFREE' }
 };
 
 console.log('\n1. Sharing is off until she turns it on');
@@ -101,6 +101,19 @@ const LEAKS = ['SECRETPORTRAIT', 'SECRETMOTTO', 'SECRETSIZE', 'SECRETCOLOR', 'SE
 const found = LEAKS.filter(w => raw.includes(w));
 ok('NOTHING private is anywhere in the response', found.length === 0, 'leaked: ' + found.join(', '));
 ok('the row ids are not published either', !raw.includes('a~b'));
+
+console.log('\n3b. Her open note travels with the list');
+ok('the paragraph comes through', /size 8 in dresses/.test(out.listNote || ''), out.listNote);
+ok('...keeping her line break', (out.listNote || '').includes('\n'));
+r = await call('POST', { body: { email: 'cath@example.com', token: TOKEN,
+  data: { ...PROFILE, wardrobe: { ...PROFILE.wardrobe, listNote: 'z'.repeat(2000) } } } });
+r = await call('GET', { query: '?share=' + encodeURIComponent(SHARE1) });
+ok('a 2000-character note is cut to 600', ((await body(r)).listNote || '').length === 600);
+r = await call('POST', { body: { email: 'cath@example.com', token: TOKEN,
+  data: { ...PROFILE, wardrobe: { items: {}, wishlist: WISH } } } });
+r = await call('GET', { query: '?share=' + encodeURIComponent(SHARE1) });
+ok('no note means an empty string, never undefined in the body',
+   (await body(r)).listNote === '');
 
 console.log('\n4. A share token is not a restore token, and vice versa');
 r = await call('GET', { query: '?token=' + encodeURIComponent(SHARE1) });

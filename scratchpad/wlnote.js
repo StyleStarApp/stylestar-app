@@ -169,15 +169,78 @@ ok('a hand-edited over-long note is cut on LOAD too', await pg.evaluate(async ()
   return wardrobeData.wishlist[0].note.length === 140;
 }));
 
+console.log('\n5b. Her OPEN note (item two)');
+const ln = () => pg.evaluate(() => {
+  const w = document.getElementById('wlNote');
+  const b = w.querySelector('.wl-lnbody');
+  return { shown: !!w && w.style.display !== 'none' && !!w.querySelector('.wl-lnote'),
+           head: (w.querySelector('.wl-lnh')||{}).textContent || null,
+           body: b ? b.textContent : null,
+           placeholder: !!w.querySelector('.wl-lnph'),
+           editing: !!w.querySelector('#wlLNoteIn') };
+});
+let L = await ln();
+ok('it is there once the list has pieces on it', L.shown);
+ok('the heading is simply "Notes" (her call)', L.head === 'Notes', L.head);
+ok('it starts as a placeholder, not an empty box', L.placeholder);
+ok('...saying who will read it', /whoever is shopping/i.test(L.body || ''), L.body);
+ok('tapped + Write a note', await tap(pg, '.wl-lnedit'));
+await pg.waitForTimeout(250);
+L = await ln();
+ok('a box opens', L.editing);
+ok('...focused', await pg.evaluate(() => document.activeElement === document.getElementById('wlLNoteIn')));
+ok('...capped at 600', await pg.evaluate(() => document.getElementById('wlLNoteIn').getAttribute('maxlength') === '600'));
+await pg.fill('#wlLNoteIn', "I'm a size 8 in dresses and a medium in tops.\nI love green, and please nothing red!");
+ok('tapped Save', await tap(pg, '.wl-nsave'));
+await pg.waitForTimeout(250);
+L = await ln();
+ok('her paragraph shows', /size 8 in dresses/.test(L.body || ''), L.body);
+ok('...and her line break survived', (L.body || '').includes('\n'));
+ok('...rendered as a real break, not markup',
+   await pg.evaluate(() => getComputedStyle(document.querySelector('#s-wishlist .wl-lnbody')).whiteSpace === 'pre-line'));
+ok('it persists', await pg.evaluate(() => /size 8 in dresses/.test(JSON.parse(localStorage.getItem('ss_wardrobe')).listNote || '')));
+ok('tapped Edit', await tap(pg, '.wl-lnedit'));
+await pg.waitForTimeout(200);
+await pg.evaluate(() => {
+  const t = document.getElementById('wlLNoteIn');
+  t.value = 'q'.repeat(1500);
+  document.querySelector('#s-wishlist .wl-nsave').click();
+});
+await pg.waitForTimeout(250);
+ok('a 1500-character paste is cut to 600',
+   await pg.evaluate(() => JSON.parse(localStorage.getItem('ss_wardrobe')).listNote.length === 600));
+ok('tapped Edit', await tap(pg, '.wl-lnedit'));
+await pg.waitForTimeout(200);
+await pg.evaluate(() => {
+  const t = document.getElementById('wlLNoteIn');
+  t.value = '<b>bold</b> and <script>alert(3)<\/script>';
+  document.querySelector('#s-wishlist .wl-nsave').click();
+});
+await pg.waitForTimeout(250);
+ok('markup in the open note is inert text', await pg.evaluate(() =>
+   document.querySelectorAll('#s-wishlist .wl-lnbody b, #s-wishlist .wl-lnbody script').length === 0 &&
+   document.querySelector('#s-wishlist .wl-lnbody').textContent.includes('<b>')));
+// ⚠️ HER CALL: an empty wishlist must not ask her to annotate nothing.
+await pg.evaluate(() => { _wlList().slice().forEach(x => wishRemove(x.id)); });
+await pg.waitForTimeout(300);
+ok('it disappears when the list is emptied', !(await ln()).shown);
+
 console.log('\n6. Contrast against the real painted background');
-await pg.evaluate(() => { renderWishlist(); });
+// The open-note section empties the list; put a piece back so the contrast
+// checks have real rows to measure against.
+await pg.evaluate(seed => {
+  wardrobeData.wishlist = JSON.parse(JSON.stringify(seed.wishlist));
+  wardrobeData.wishlist[0].note = 'Size 8, and the green one please.';
+  wardrobeData.listNote = 'A note for whoever is shopping from my list.';
+  saveWardrobeData(); renderWishlist();
+}, SEED);
 await pg.waitForTimeout(200);
 const cr = await pg.evaluate(() => {
   const lum = c => { const [r,g,b] = c.match(/\d+/g).map(Number).map(v => { v/=255; return v <= .03928 ? v/12.92 : Math.pow((v+.055)/1.055, 2.4); }); return .2126*r + .7152*g + .0722*b; };
   const bgOf = el => { let n = el; while (n && n !== document.documentElement) { const c = getComputedStyle(n).backgroundColor; if (c && !/rgba?\(0, 0, 0, 0\)|transparent/.test(c)) return c; n = n.parentElement; } return 'rgb(255,255,255)'; };
   const ratio = el => { const s = getComputedStyle(el); const a = lum(s.color), b = lum(bgOf(el)); return Math.round(((Math.max(a,b)+.05)/(Math.min(a,b)+.05))*100)/100; };
   const out = {};
-  for (const [k, sel] of [['note','.wl-note'], ['edit','.wl-ne'], ['add','.wl-addnote']]) {
+  for (const [k, sel] of [['note','.wl-note'], ['edit','.wl-ne'], ['open note','.wl-lnbody'], ['write a note','.wl-lnedit']]) {
     const e = document.querySelector('#s-wishlist ' + sel); if (e) out[k] = ratio(e);
   }
   return out;

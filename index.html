@@ -1207,6 +1207,21 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-nsave{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1a1a1a;border:none;border-radius:999px;padding:8px 13px;cursor:pointer}
 #s-wishlist .wl-ncancel{font:500 11.5px/1 'Jost',sans-serif;color:#8a8272;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
 #s-wishlist .wl-nleft{margin-left:auto;font:500 10.5px/1 'Jost',sans-serif;color:#8a8272}
+/* --- HER OPEN NOTE (2026-08-22) -------------------------------------------
+   Heading is simply "Notes", her call. It wears HER approved section-header
+   mark -- the 2px #D8A52E bar hugging the word -- the same as the wardrobe
+   categories, the Menu groups and the shared page's group headers.
+   ⚠️ white-space:pre-line on the body is load-bearing: this is a PARAGRAPH and
+   she may want a line break in it. pre-line renders a newline as a newline
+   while still escaping everything else, so a break is a break and never markup. */
+#s-wishlist .wl-lnote{margin-top:16px;background:#fff;border:1px solid #e7e0cf;padding:13px 13px 12px}
+#s-wishlist .wl-lnh{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#26221c;display:inline-block;position:relative;padding:0 2px 5px;margin-bottom:10px}
+#s-wishlist .wl-lnh::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
+#s-wishlist .wl-lnbody{font:400 12.5px/1.6 'Jost',sans-serif;color:#5a554c;padding-left:9px;border-left:2px solid #E0B84C;white-space:pre-line}
+#s-wishlist .wl-lnph{color:#8a8272}
+#s-wishlist .wl-lnedit{display:inline-block;font:500 11.5px/1 'Jost',sans-serif;color:#8a6d20;margin-top:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
+#s-wishlist .wl-lnote textarea{width:100%;font:400 12.5px/1.6 'Jost',sans-serif;color:#3a352c;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:9px 10px;resize:none;-webkit-appearance:none}
+#s-wishlist .wl-lnote textarea:focus{outline:none;border-color:#C8A060}
 #s-wishlist .wl-del{flex:0 0 auto;color:#a8a294;font-size:21px;line-height:1;cursor:pointer;padding:2px 3px;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-del:hover{color:#6b655a}
 /* Empty state: never a dead end -- it explains the feature AND offers the way in. */
@@ -1343,6 +1358,12 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    analytics, and a reachable privacy policy is both ordinary good practice
    and the specific thing affiliate reviewers look for. It is one 11px line,
    not a footer. */
+/* Her paragraph, at the bottom, wearing exactly what it wears on her own
+   screen. Grep wl-lnbody before restyling either -- they are meant to match. */
+#s-sharelist .sh-lnote{margin-top:22px;background:#fff;border:1px solid #e7e0cf;padding:13px 13px 12px}
+#s-sharelist .sh-lnh{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#26221c;display:inline-block;position:relative;padding:0 2px 5px;margin-bottom:10px}
+#s-sharelist .sh-lnh::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
+#s-sharelist .sh-lnbody{font:400 12.5px/1.6 'Jost',sans-serif;color:#5a554c;padding-left:9px;border-left:2px solid #E0B84C;white-space:pre-line}
 #s-sharelist .sh-foot{text-align:center;margin-top:24px}
 #s-sharelist .sh-f2{display:inline-block;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#1a1a1a;border:1px solid #D8A52E;padding:11px 16px;text-decoration:none;cursor:pointer}
 #s-sharelist .sh-legal{font:400 11px/1.5 'Jost',sans-serif;color:#8a8272;margin-top:14px}
@@ -4189,6 +4210,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
   <div id="wlBody"></div>
   <div id="wlAdd"></div>
+  <div id="wlNote"></div>
   <div id="wlStay"></div>
   <div class="wl-foot" data-std-foot></div>
 </div>
@@ -7895,6 +7917,14 @@ function _normalizeWardrobe(d){
     else if(x.own){o.own=true;var ou=_wlSafeUrl(x.url);if(ou)o.url=ou;}
     return o;
   });
+  // HER OPEN NOTE (2026-08-22, item two): one paragraph for whoever is shopping
+  // from the shared list. ▶ It does more work than the per-item notes do: those
+  // answer "which one", this answers everything true of the WHOLE list -- her
+  // sizes, the colors she loves, the occasion that matters most -- which is
+  // most of what a person buying for her actually needs.
+  // Capped here as well as at the input: this record also arrives from Supabase
+  // and from localStorage, both of which can be hand-edited.
+  d.listNote=String(d.listNote||'').slice(0,WL_LNOTE_MAX);
   if(!d.pretap0){d.items={};d.pretap0=true;}
   // The list is want-only now — "have" is gone. Drop any state that isn't a
   // real Want so old records (local or restored from Supabase) can't carry a
@@ -9052,6 +9082,69 @@ function wlNoteSave(id){
   renderWishlist();
   _wlSyncServer();
 }
+// --- HER OPEN NOTE (2026-08-22, item two of the shareable wishlist) ---------
+// One paragraph for whoever is shopping from her list. Her idea, and the more
+// valuable of the two note kinds: a per-item note answers "which one", this
+// answers everything true of the WHOLE list.
+// ⚠️ HER CALL: it does NOT appear until something is on the list. An empty
+//   wishlist with a "write a note for whoever is shopping" box on it is asking
+//   her to annotate nothing.
+// ⚠️ HER CALL: the heading is simply "Notes".
+var WL_LNOTE_MAX=600;
+var _wlLNoteOpen=false;
+function _wlRenderListNote(){
+  var el=document.getElementById('wlNote');
+  if(!el)return;
+  if(!_wlCount()){el.innerHTML='';el.style.display='none';_wlLNoteOpen=false;return;}
+  el.style.display='';
+  var cur=(wardrobeData&&wardrobeData.listNote)||'';
+  var h='<div class="wl-lnote"><div class="wl-lnh">Notes</div>';
+  if(_wlLNoteOpen){
+    h+='<textarea id="wlLNoteIn" maxlength="'+WL_LNOTE_MAX+'" rows="5" '
+      +'placeholder="Your sizes, the colors you love, an occasion &mdash; anything you&rsquo;d like '
+      +'whoever is shopping to know."'
+      +' oninput="_wlLNoteCount()">'+_esc(cur)+'</textarea>'
+      +'<div class="wl-nrow"><button class="wl-nsave" onclick="wlListNoteSave()">Save</button>'
+      +'<span class="wl-ncancel" role="button" onclick="wlListNoteCancel()">Cancel</span>'
+      +'<span class="wl-nleft" id="wlLNoteLeft"></span></div>';
+  }else if(cur){
+    h+='<div class="wl-lnbody">'+_esc(cur)+'</div>'
+      +'<span class="wl-lnedit" role="button" onclick="wlListNoteEdit()">Edit</span>';
+  }else{
+    h+='<div class="wl-lnbody wl-lnph">Your sizes, the colors you love, an occasion &mdash; '
+      +'anything you&rsquo;d like whoever is shopping to know.</div>'
+      +'<span class="wl-lnedit" role="button" onclick="wlListNoteEdit()">+ Write a note</span>';
+  }
+  el.innerHTML=h+'</div>';
+}
+function _wlLNoteCount(){
+  var t=document.getElementById('wlLNoteIn'),l=document.getElementById('wlLNoteLeft');
+  if(!t||!l)return;
+  var left=WL_LNOTE_MAX-t.value.length;
+  // Silent until the end is in sight, same as the per-item counter: a number
+  // running the whole time reads as a limit rather than as room.
+  l.textContent=left<=60?left+' left':'';
+}
+function wlListNoteEdit(){
+  _wlLNoteOpen=true;_wlRenderListNote();
+  var t=document.getElementById('wlLNoteIn');
+  if(t){t.focus();try{t.setSelectionRange(t.value.length,t.value.length)}catch(e){}}
+  _wlLNoteCount();
+}
+function wlListNoteCancel(){_wlLNoteOpen=false;_wlRenderListNote();}
+function wlListNoteSave(){
+  var t=document.getElementById('wlLNoteIn');
+  // ⚠️ Newlines are KEPT here, unlike a per-item note: this is a paragraph and
+  // she may well want a line break in it. They are rendered with white-space
+  // pre-line rather than as markup, so a break is a break and nothing else.
+  var v=t?String(t.value).replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim().slice(0,WL_LNOTE_MAX):'';
+  if(!wardrobeData||typeof wardrobeData!=='object')wardrobeData={items:{},custom:[]};
+  if(v)wardrobeData.listNote=v; else delete wardrobeData.listNote;
+  _wlLNoteOpen=false;
+  saveWardrobeData();
+  _wlRenderListNote();
+  _wlSyncServer();
+}
 function wishRemove(id){
   if(_wlIndexOf(id)<0)return;
   _wlList().splice(_wlIndexOf(id),1);
@@ -9113,7 +9206,7 @@ function renderWishlist(){
   var body=document.getElementById('wlBody');
   if(!body)return;
   var list=_wlList().slice();
-  if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderStay();return;}
+  if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderListNote();_wlRenderStay();return;}
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
   var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. '
@@ -9150,6 +9243,7 @@ function renderWishlist(){
   h+='</div>';
   body.innerHTML=h;
   _wlRenderAdd();
+  _wlRenderListNote();
   _wlRenderStay();
 }
 // The email ask appears only once she has actually saved something, so it reads
@@ -9396,6 +9490,11 @@ function _renderSharedList(d){
     h+=_shGroup('Buy exactly this',list.filter(function(it){return it&&it.exact}));
     h+=_shGroup('Anything like this',list.filter(function(it){return it&&!it.exact}));
   }
+  // HER CALL, and it is the same "it should arrive as she sees it" principle
+  // that kept the group split: she writes the note at the bottom of her list,
+  // so it is READ at the bottom too.
+  if(d&&d.listNote)h+='<div class="sh-lnote"><div class="sh-lnh">Notes</div>'
+    +'<div class="sh-lnbody">'+_esc(d.listNote)+'</div></div>';
   h+=_shTail();
   el.innerHTML=h;
 }

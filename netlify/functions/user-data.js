@@ -287,6 +287,14 @@ function readShareToken(token) {
 // Her own words about a piece — size, colour, the occasion it is for. Capped so
 // one long note can never swamp a row on the shared page.
 const SHARE_NOTE_MAX = 140;
+// Her one paragraph for whoever is shopping (item two). Longer than a per-item
+// note because it carries her sizes, her colors and the occasion at once.
+const SHARE_LIST_NOTE_MAX = 600;
+function publicListNote(data) {
+  const raw = (data && data.wardrobe && typeof data.wardrobe.listNote === 'string')
+    ? data.wardrobe.listNote : '';
+  return raw.slice(0, SHARE_LIST_NOTE_MAX);
+}
 
 // ⚠️ THE ALLOWLIST IS THE PRIVACY GUARANTEE. Build every field explicitly and
 // never spread the stored entry. Her sizes, colours, never-wear list, portrait
@@ -716,7 +724,8 @@ export default async (req) => {
           return new Response(JSON.stringify({ error: 'not_found' }), { status: 404, headers });
         }
         return new Response(JSON.stringify({
-          success: true, name: publicName(data), list: publicList(data)
+          success: true, name: publicName(data),
+          listNote: publicListNote(data), list: publicList(data)
         }), { status: 200, headers });
       }
 

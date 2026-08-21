@@ -27,8 +27,9 @@ const LIST = [
   { name: '<img src=x onerror=alert(1)>Bad', store: '<b>Store</b>', search: 'x', exact: false,
     note: '<script>alert(2)<\/script>' }
 ];
+const LIST_NOTE = "I'm a size 8 in dresses and a medium in tops.\nI love green, and please nothing red!";
 let MODE = 'ok';
-const payload = () => MODE === 'ok'   ? { success: true, name: 'Catherine', list: LIST }
+const payload = () => MODE === 'ok'   ? { success: true, name: 'Catherine', listNote: LIST_NOTE, list: LIST }
                     : MODE === 'noname' ? { success: true, name: '', list: LIST.slice(0, 1) }
                     : MODE === 'empty'  ? { success: true, name: 'Catherine', list: [] } : null;
 
@@ -139,6 +140,28 @@ ok('the shared Style Star header is hidden', !chrome.hdr);
 ok('the MENU chip stands down', chrome.chip);
 ok('the ring really crosses the rod', chrome.overlap >= 4, 'overlap ' + chrome.overlap + 'px');
 ok('...and really hangs below it', chrome.below >= 2, 'below ' + chrome.below + 'px');
+
+console.log('\n2c. Her open note arrives, at the bottom where she wrote it');
+const lnote = await pg.evaluate(() => {
+  const n = document.querySelector('#s-sharelist .sh-lnote');
+  if (!n) return { there: false };
+  const rows = [...document.querySelectorAll('#s-sharelist .sh-card')];
+  const last = rows[rows.length - 1].getBoundingClientRect();
+  const foot = document.querySelector('#s-sharelist .sh-foot').getBoundingClientRect();
+  const b = n.getBoundingClientRect();
+  return { there: true, head: n.querySelector('.sh-lnh').textContent,
+           body: n.querySelector('.sh-lnbody').textContent,
+           preline: getComputedStyle(n.querySelector('.sh-lnbody')).whiteSpace === 'pre-line',
+           afterList: b.top >= last.bottom - 1, beforeFoot: b.bottom <= foot.top + 1 };
+});
+ok('the note is on the page', lnote.there);
+ok('the heading matches her own screen', lnote.head === 'Notes', lnote.head);
+ok('her words are all there', /size 8 in dresses/.test(lnote.body || '') && /nothing red/.test(lnote.body || ''));
+ok('her line break survives as a break', lnote.preline && (lnote.body || '').includes('\n'));
+// ⚠️ HER "it should arrive as she sees it" call: written at the bottom, read at
+// the bottom. Asserted as a POSITION, so moving it would fail loudly.
+ok('it sits after the list', lnote.afterList);
+ok('...and before the tail', lnote.beforeFoot);
 
 console.log('\n3. It is read-only, by construction');
 const ro = await pg.evaluate(() => ({
