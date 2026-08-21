@@ -1195,8 +1195,14 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    ⚠️ The note itself wears the SAME gold left rule as the shared page's
    .sh-note, so her words look like her words in both places. Grep sh-note
    before restyling either -- they are meant to match. */
-#s-wishlist .wl-row.hasnote{align-items:flex-start}
-#s-wishlist .wl-row.hasnote .wl-go{margin-top:2px}
+/* ⚠️ REVISED once the real screen was rendered: this was scoped to .hasnote,
+   on the reasoning that rows without a note should not change. That reasoning
+   died the moment "+ Add a note" went on EVERY row -- they are all taller now,
+   so a centred × and a centred Shop it float mid-row on the note-less ones and
+   look plainly wrong beside their neighbours. Uniform top alignment. */
+#s-wishlist .wl-row{align-items:flex-start}
+#s-wishlist .wl-row .wl-go{margin-top:2px}
+#s-wishlist .wl-row .wl-del{margin-top:-1px}
 #s-wishlist .wl-addnote{display:inline-block;font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6d20;margin-top:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
 #s-wishlist .wl-note{display:block;font:400 12.5px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:7px;padding-left:9px;border-left:2px solid #E0B84C}
 #s-wishlist .wl-ne{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#8a6d20;margin-left:8px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
@@ -1222,6 +1228,24 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-lnedit{display:inline-block;font:500 11.5px/1 'Jost',sans-serif;color:#8a6d20;margin-top:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
 #s-wishlist .wl-lnote textarea{width:100%;font:400 12.5px/1.6 'Jost',sans-serif;color:#3a352c;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:9px 10px;resize:none;-webkit-appearance:none}
 #s-wishlist .wl-lnote textarea:focus{outline:none;border-color:#C8A060}
+/* --- SHARING THE LIST (2026-08-22) ---------------------------------------
+   The same cream card as "Keep your wishlist safe", because it is the same
+   KIND of thing: a quiet offer under her list, never a demand. */
+#s-wishlist .wl-share{margin-top:16px;background:#F7F1E1;border:1px solid #e4d9bd;padding:15px 14px 14px;text-align:center}
+#s-wishlist .wl-share .wsh-t{font:400 17px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin-bottom:5px}
+#s-wishlist .wl-share .wsh-s{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 11px;max-width:292px}
+#s-wishlist .wl-share .wsh-s b{color:#8a6d20;font-weight:600}
+#s-wishlist .wl-share .wsh-btn{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;border:none;cursor:pointer}
+#s-wishlist .wl-share .wsh-btn:disabled{opacity:.6}
+#s-wishlist .wl-share input{display:block;width:100%;max-width:292px;margin:0 auto 8px;font:400 13.5px/1.4 'Jost',sans-serif;color:#3a352c;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:11px 10px;-webkit-appearance:none}
+#s-wishlist .wl-share input:focus{outline:none;border-color:#C8A060}
+/* ⚠️ The link must never widen the card: a share token is ~90 characters and
+   would push the page sideways. It ellipsises, and Copy is what she uses. */
+#s-wishlist .wl-share .wsh-box{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #D8A52E;padding:9px 10px;margin:0 auto 9px;max-width:292px}
+#s-wishlist .wl-share .wsh-box code{flex:1;min-width:0;font:400 11px/1.4 'DM Sans',sans-serif;color:#3a352c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+#s-wishlist .wl-share .wsh-cp{flex:0 0 auto;font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1a1a1a;border:none;border-radius:999px;padding:8px 11px;cursor:pointer}
+#s-wishlist .wl-share .wsh-stop{display:inline-block;font:500 11.5px/1 'Jost',sans-serif;color:#8a8272;text-decoration:underline;cursor:pointer;margin-top:2px;-webkit-tap-highlight-color:transparent;padding:3px 2px}
+#s-wishlist .wl-share .wsh-msg{font:400 12px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:8px;min-height:1px}
 #s-wishlist .wl-del{flex:0 0 auto;color:#a8a294;font-size:21px;line-height:1;cursor:pointer;padding:2px 3px;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-del:hover{color:#6b655a}
 /* Empty state: never a dead end -- it explains the feature AND offers the way in. */
@@ -4211,6 +4235,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div id="wlBody"></div>
   <div id="wlAdd"></div>
   <div id="wlNote"></div>
+  <div id="wlShare"></div>
   <div id="wlStay"></div>
   <div class="wl-foot" data-std-foot></div>
 </div>
@@ -9145,6 +9170,138 @@ function wlListNoteSave(){
   _wlRenderListNote();
   _wlSyncServer();
 }
+// --- SHARING THE LIST (2026-08-22, item three) ------------------------------
+// Her words for the card, near enough verbatim. ⚠️ The privacy line that was
+// here ("They see your list, and nothing else") is DELETED, her catch: it reads
+// as "that is all they can do", which is false -- they can tap through, buy,
+// and wander into the Mall. And the reassurance was answering a question her
+// own design already answers: the open note means SHE chooses what personal
+// detail is on that page.
+//
+// ▶ NO LOCAL "am I sharing?" STATE IS NEEDED, because turning it on is
+//   IDEMPOTENT: the server leaves the revision alone, so asking twice returns
+//   the SAME link. The token is cached only so a returning visit can show the
+//   shared state without a round trip.
+var _wlShareAsk=false;   // her email is being asked for inside the share card
+var _wlShareBusy=false;
+function _wlShareLink(){try{return localStorage.getItem('ss_sharelink')||''}catch(e){return''}}
+function _wlShareUrl(t){return 'https://stylestar.app/list/'+t}
+function _wlRenderShare(){
+  var el=document.getElementById('wlShare');
+  if(!el)return;
+  if(!_wlCount()){el.innerHTML='';el.style.display='none';return;}
+  el.style.display='';
+  var tok=_wlShareLink();
+  var h='<div class="wl-share">';
+  if(tok){
+    h+='<div class="wsh-t">Your wishlist is shared</div>'
+      +'<div class="wsh-s">Anyone with this link can see your list. It stays up to date as you add pieces. '
+      +'<b>Add a note to anything you want them to get right.</b></div>'
+      +'<div class="wsh-box"><code id="wlShareUrl">'+_esc(_wlShareUrl(tok))+'</code>'
+      +'<button class="wsh-cp" onclick="wlShareCopy()">Copy</button></div>'
+      +'<div class="wsh-msg" id="wlShareMsg"></div>'
+      +'<span class="wsh-stop" role="button" onclick="wlShareStop()">Stop sharing</span>';
+  }else if(_wlShareAsk){
+    h+='<div class="wsh-t">Share your wishlist</div>'
+      +'<div class="wsh-s">First, save your list with your email &mdash; that&rsquo;s where your link lives, '
+      +'so you can come back to it on any device.</div>'
+      +'<input id="wlShareEmail" type="email" inputmode="email" autocomplete="email" placeholder="Your email">'
+      +'<input id="wlShareName" type="text" autocomplete="given-name" placeholder="Your first name (optional)">'
+      +'<div><button class="wsh-btn" id="wlShareBtn" onclick="wlShareGet()">Save and get my link</button></div>'
+      +'<div class="wsh-msg" id="wlShareMsg"></div>';
+  }else{
+    h+='<div class="wsh-t">Share your wishlist</div>'
+      +'<div class="wsh-s">Just like a gift registry, send one link to anyone so they can see '
+      +'what you really want, and buy it.</div>'
+      +'<div><button class="wsh-btn" id="wlShareBtn" onclick="wlShareGet()">Get my link</button></div>'
+      +'<div class="wsh-msg" id="wlShareMsg"></div>';
+  }
+  el.innerHTML=h+'</div>';
+}
+function _wlShareSay(text,bad){
+  var m=document.getElementById('wlShareMsg');
+  if(!m)return;
+  m.style.color=bad?'#c0392b':'#5a554c';
+  m.textContent=text;
+}
+async function wlShareGet(){
+  if(_wlShareBusy)return;
+  // No saved record means no link to make: her email IS the place it lives.
+  // ▶ Deliberately asked HERE rather than hiding the button until she has
+  //   saved -- she is asking for something specific and being told what it
+  //   costs, which is the opposite of a toll on the way in.
+  if(!_ssToken()&&!_wlShareAsk){_wlShareAsk=true;_wlRenderShare();_wlRenderStay();
+    var f=document.getElementById('wlShareEmail');if(f)f.focus();return;}
+  var btn=document.getElementById('wlShareBtn');
+  if(_wlShareAsk){
+    var eIn=document.getElementById('wlShareEmail'),nIn=document.getElementById('wlShareName');
+    var email=(eIn?eIn.value:'').trim(),nameVal=(nIn?nIn.value:'').trim();
+    if(!email||email.indexOf('@')<0){_wlShareSay('Please enter a valid email so we can save your list.',true);return;}
+    _wlShareBusy=true;
+    if(btn){btn.disabled=true;btn.textContent='Saving…'}
+    _wlShareSay('Saving your list…');
+    if(nameVal){
+      userName=nameVal.charAt(0).toUpperCase()+nameVal.slice(1);
+      try{var _d=JSON.parse(localStorage.getItem('ss_data'))||{};_d.userName=userName;localStorage.setItem('ss_data',JSON.stringify(_d));}catch(e){}
+    }
+    try{await saveUserRecord(email,buildFullUserData())}catch(e){}
+    emailDone=true;
+    try{localStorage.setItem('ss_email',email);localStorage.setItem('ss_emailDone','true')}catch(e){}
+    if(!_ssToken()){
+      _wlShareBusy=false;
+      if(btn){btn.disabled=false;btn.textContent='Save and get my link'}
+      _wlShareSay('That didn’t go through. Please try again in a moment.',true);
+      return;
+    }
+    _wlShareAsk=false;
+  }
+  _wlShareBusy=true;
+  if(btn){btn.disabled=true;btn.textContent='Making your link…'}
+  _wlShareSay('Making your link…');
+  var ok=false;
+  try{
+    var email2='';try{email2=localStorage.getItem('ss_email')||''}catch(e){}
+    var res=await fetch('/.netlify/functions/user-data',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email2,token:_ssToken(),share:'on'})});
+    var d=await res.json();
+    if(res.ok&&d&&d.shareToken){
+      try{localStorage.setItem('ss_sharelink',d.shareToken)}catch(e){}
+      ok=true;
+    }
+  }catch(e){}
+  _wlShareBusy=false;
+  _wlRenderShare();_wlRenderStay();
+  if(!ok)_wlShareSay('That didn’t go through. Please try again in a moment.',true);
+}
+function wlShareCopy(){
+  var t=_wlShareLink();if(!t)return;
+  var url=_wlShareUrl(t);
+  function done(){_wlShareSay('Link copied.')}
+  if(navigator.share){navigator.share({title:'My Style Star wishlist',url:url}).catch(function(){});return;}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(done).catch(function(){_wlShareSay('Copy the link above.',true)});
+  }else{_wlShareSay('Copy the link above.',true)}
+}
+async function wlShareStop(){
+  // ⚠️ THE ONLY IRREVERSIBLE THING IN THIS FEATURE, so it is the only one that
+  // asks first. "Stop sharing" sounds like a pause and is a DELETE: every link
+  // already sent dies, and sharing again mints a different one. The confirm
+  // carries that, because the label cannot.
+  if(!confirm('Turn off this link?\n\nAnyone you’ve already sent it to won’t be able to open it. You can share again any time, but it will be a new link.'))return;
+  if(_wlShareBusy)return;
+  _wlShareBusy=true;
+  _wlShareSay('Turning it off…');
+  try{
+    var email='';try{email=localStorage.getItem('ss_email')||''}catch(e){}
+    await fetch('/.netlify/functions/user-data',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,token:_ssToken(),share:'off'})});
+  }catch(e){}
+  try{localStorage.removeItem('ss_sharelink')}catch(e){}
+  _wlShareBusy=false;
+  _wlRenderShare();_wlRenderStay();
+}
 function wishRemove(id){
   if(_wlIndexOf(id)<0)return;
   _wlList().splice(_wlIndexOf(id),1);
@@ -9206,11 +9363,11 @@ function renderWishlist(){
   var body=document.getElementById('wlBody');
   if(!body)return;
   var list=_wlList().slice();
-  if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderListNote();_wlRenderStay();return;}
+  if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderListNote();_wlRenderShare();_wlRenderStay();return;}
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
   var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. '
-   +'Tap <b>+ Add a note</b> on any piece to say your size, the color you want, or what it&rsquo;s for. '
+   +'Tap <b>+ Add a note</b> to say your size, color, etc. '
    +'Tap the <b>&times;</b> to take an item off your list.</div>'
    +'<div class="wl-disclosure">Some links may earn a commission.</div>'
    +'<div class="wl-card">';
@@ -9227,7 +9384,7 @@ function renderWishlist(){
     // ⚠️ Only a row that actually carries a note switches to top alignment.
     // Doing it to every row would lift the ✕ and the Shop it button on a screen
     // she has already blessed, to fix a problem those rows do not have.
-    var hasNote=!!(it.note||_wlNoteOpen===it.id);
+    var hasNote=!!(it.note||_wlNoteOpen===it.id);   // marks the row for the tests
     h+='<div class="wl-row'+(pick?' pick':'')+(own?' own':'')+(hasNote?' hasnote':'')+'">'
       +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
       +'<div class="wl-b">'
@@ -9244,6 +9401,7 @@ function renderWishlist(){
   body.innerHTML=h;
   _wlRenderAdd();
   _wlRenderListNote();
+  _wlRenderShare();
   _wlRenderStay();
 }
 // The email ask appears only once she has actually saved something, so it reads
@@ -9252,7 +9410,10 @@ function renderWishlist(){
 function _wlRenderStay(){
   var el=document.getElementById('wlStay');
   if(!el)return;
-  if(emailDone||!_wlCount()){el.innerHTML='';el.style.display='none';return;}
+  // ⚠️ Never two email asks at once: the share card asks for an email of its
+  // own when she has never saved, and this card sitting under it would be the
+  // same request twice, in two different wordings, on one screen.
+  if(emailDone||!_wlCount()||_wlShareAsk){el.innerHTML='';el.style.display='none';return;}
   el.style.display='';
   el.innerHTML='<div class="wl-stay">'
     +'<div class="ws-t">Keep your wishlist safe</div>'

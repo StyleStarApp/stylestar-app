@@ -70,7 +70,14 @@ console.log('\n1. A piece with no note offers one, in words');
 let { ctx, pg } = await open();
 let rows = await rowState(pg);
 ok('both rows show "+ Add a note"', rows.length === 2 && rows.every(r => r.add), JSON.stringify(rows));
-ok('no row is top-aligned yet', rows.every(r => !r.hasnote));
+// ⚠️ UPDATED DELIBERATELY 2026-08-22: alignment is no longer scoped to rows
+// with notes. Every row carries "+ Add a note" and is therefore taller, so a
+// centred × floated mid-row on the note-less ones. The class still marks the
+// row, it just no longer decides the alignment.
+ok('no row carries a note yet', rows.every(r => !r.hasnote));
+ok('every row is top-aligned, notes or not', await pg.evaluate(() =>
+   [...document.querySelectorAll('#s-wishlist .wl-row')]
+     .every(r => getComputedStyle(r).alignItems === 'flex-start')));
 ok('the affordance is a word, not an icon',
    await pg.evaluate(() => document.querySelector('#s-wishlist .wl-addnote').textContent.trim() === '+ Add a note'));
 ok('the lead line teaches it', await pg.evaluate(() =>
