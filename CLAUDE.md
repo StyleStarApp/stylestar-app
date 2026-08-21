@@ -100,6 +100,25 @@ not license this repository to REDISTRIBUTE a copy of the image file.** Technica
 permission, which is her own rule pointed at a surface it had not been pointed at before. **The reasoning is
 written at `.gitignore` and at the top of `starphoto.mjs` so a future session does not helpfully commit it.**
 
+### 🚨⭐⭐ THE CIRCLE THIS DECLINE EXPOSED, AND IT IS THE STRATEGIC FINDING — SAY IT TO HER PLAINLY
+Three doors have now closed and **every one of them named TRAFFIC**: Impact at network level (08-20, no
+reasons given), Shopbop (predicted), and now Bloomingdale's. ▶ **Put her stated sequencing next to that and
+it is a CLOSED LOOP:**
+**search quality is her blocker → feeds fix search quality → feeds need an advertiser approval → approvals
+need traffic → traffic needs testers → and she is holding testers until search quality is fixed.**
+▶▶ **THE WAY OUT OF THE CIRCLE IS TESTERS, NOT FEEDS.** Waiting for feeds to fix search before inviting
+testers is waiting forever, because feeds require the traffic that testers are the only source of.
+⚠️⚠️ **THIS IS HERS TO DECIDE AND HER SOFT-LAUNCH INSTINCT IS PROTECTED (2026-07-14: honour it).** It is
+named here as a FACT SHE SHOULD HAVE, not as pressure, and it should be offered once and then dropped.
+⭐ **And the honest counterweight to give her in the same breath: her ten testers are FRIENDS AND FAMILY, so
+they cost nothing if the searches are imperfect — they are not the audience whose opinion is at risk.** The
+thing she feared (strangers judging a half-built app) is not what a tester circle is.
+- ▶ **FREE AND ACTIONABLE TODAY, no build:** Rakuten **Advertisers > Find New** — apply broadly to everything
+  matching her store table. Each approval is still a DOUBLE unlock (the link earns AND the photo is licensed),
+  and a small advertiser approving costs her nothing but an evening.
+- ▶ **THE ORDER IS UNCHANGED but the case for it is stronger: AWIN next, then CJ.** ⚠️ Verify AWIN's small
+  REFUNDABLE deposit on the day. **Macy's network is STILL unidentified — find it before assuming.**
+
 ### ▶ THE FIRST THINGS NEXT SESSION
 1. ⚠️⚠️ **MERGE THE DISCOVERY-PAGE CHANGE (or don't) — it is built and pushed and NOT live.** Then
    curl-verify, per the standing #809/#811 lesson that a green merge proves nothing.
@@ -273,7 +292,20 @@ Everything needed is already decided and scattered; **collected here so tomorrow
 ### ▶▶ HER ASK #2 FOR TOMORROW — WHICH AFFILIATES TO APPLY TO NEXT (the state, so it is not re-derived)
 - ✅ **RAKUTEN — publisher APPROVED, SID 4740535.** Advertisers approved: **FARM Rio (MID 44912) · Diane von
   Furstenberg (53590) · Vilebrequin (43322)**. **Shopbop DECLINED** (one advertiser, reapplyable, predicted).
-  **Bloomingdale's still PENDING** — ⭐ **and a department-store approval is the trigger for product feeds.**
+- 🚨 **BLOOMINGDALE'S DECLINED 2026-08-21.** ⚠️ **STALE ABOVE/BELOW: every entry calling it "pending" is out
+  of date, and with it the nearest trigger for PRODUCT FEEDS.** Their email lists four possible reasons and
+  does not say which. ▶ **THREE ARE RULED OUT BY MEASUREMENT, done the same hour:** stylestar.app returns
+  **200 to any user agent**, apex and www both 301 correctly, **/privacy /terms /contact /faq all 200**, and
+  — the one that actually mattered for a single-page app — **the page renders FULLY READABLE WITH JAVASCRIPT
+  OFF** (headline, quiz CTA, founder line, explore cards; 103 words of real text, the entrance overlay not
+  covering). `scratchpad/nojs.mjs` re-runs that check; `scratchpad/reviewer-jsoff.png` is the proof.
+  ▶▶ **SO IT IS TRAFFIC, BY ELIMINATION — the same verdict as Impact, and the one thing on the list she
+  could not have fixed by building better.** Content mismatch is implausible: a personal-styling app is close
+  to an ideal partner for a department store.
+  ⚠️ **DO NOT WEIGH IT LIKE THE IMPACT DECLINE.** That one was NETWORK level and gates Nordstrom + photos;
+  this is ONE advertiser, reapplyable, and her publisher status and three earning advertisers are untouched.
+  ▶ **Contacting Bloomingdale's now is LOW VALUE** — if the reason is traffic there is nothing to say yet.
+  **Reapply from a stronger position; it costs nothing.**
 - ❌ **IMPACT — DECLINED at NETWORK level 2026-08-20**, with **no reasons listed in the email** (a broken
   template, not her mistake). **Support ticket filed; answer due ~27-29 August.** ⚠️ **It gates PHOTOS too —
   Nordstrom is 6 of her 22 Edit items and runs on Impact.**
@@ -500,7 +532,9 @@ catching?"*
    is the properly-licensed image source. ⭐ **Also worth offering: browsing an advertiser's product links in
    the dashboard is a REAL WORKFLOW UPGRADE FOR HER TODAY, with no build at all** — she picks Edit pieces
    from a browsable catalog with photos and prices instead of hunting the retailer's website.
-6. ⭐ **PRODUCT FEEDS — her question this session was excellent and the answer should be reused verbatim:**
+6. ⭐ **PRODUCT FEEDS — her question was excellent and the answer should be reused verbatim** (⚠️ **but the
+   trigger named at the end of this item is GONE: Bloomingdale's declined 2026-08-21, so there is no
+   department store in the pipeline at all now. See the entry at the top of this file.**):
    *"once we had affiliate link approval that meant the app could have full access to their info and
    inventory?"* ▶ **SHE IS RIGHT THAT APPROVAL GIVES HER THE DATA. The app simply does not READ it yet.**
    `docs/product-feeds-plan.md` is shovel-ready. ⚠️ **BUT THE HONEST TIMING ANSWER HELD: feeds from DVF,
