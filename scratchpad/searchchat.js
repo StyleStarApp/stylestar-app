@@ -32,6 +32,12 @@ const ok = (name, cond, extra) => {
 // ===========================================================================
 process.env.ANTHROPIC_API_KEY = 'test-key';
 const handler = (await import(path.join(ROOT, 'netlify/functions/style-ai.js'))).default;
+// DERIVED, not restated (the curated.js lesson, and the 2026-08-03 one about
+// THREE different arithmetics living in these suites): SRV_N is read out of
+// style-ai.js itself, so adding a store never makes these stale, while a
+// mismatch between the two lists still fails loudly below.
+const SRV_N = (fs.readFileSync(path.join(ROOT, 'netlify/functions/style-ai.js'), 'utf8')
+  .match(/const SEARCH_DOMAINS\s*=\s*\[([\s\S]*?)\];/)[1].match(/'[^']+'/g) || []).length;
 
 let lastUpstream = null;          // { url, body } of the stubbed Anthropic call
 let upstreamReply = null;         // function returning a Response
@@ -76,7 +82,7 @@ ok('web_search tool added (basic variant, no code-exec filtering)', tool.type ==
 ok('max_uses fixed at 3 by the server', tool.max_uses === 3);
 // 2026-07-31: the allowlist lives SERVER-SIDE now; whatever the client sends
 // is ignored and the tool always carries the server's own 101-store list.
-ok('allowed_domains is the server-side 101-store list (DVF added 2026-08-21)', Array.isArray(tool.allowed_domains) && tool.allowed_domains.length === 101 && tool.allowed_domains.includes('nordstrom.com'));
+ok('allowed_domains is the whole server-side store list', Array.isArray(tool.allowed_domains) && tool.allowed_domains.length === SRV_N && tool.allowed_domains.includes('nordstrom.com'));
 ok('stream requested upstream', lastUpstream.body.stream === true);
 ok('response is an event stream', (res.headers.get('content-type') || '').includes('text/event-stream'));
 ok('SSE body passes through verbatim', (await res.text()) === SSE_BODY);
@@ -92,11 +98,11 @@ for (const [label, domains] of [
   lastUpstream = null;
   res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: domains }));
   const t = lastUpstream && (lastUpstream.body.tools || [])[0];
-  ok(label + ' → ignored, server list used', res.status === 200 && t && t.allowed_domains.length === 101 && !t.allowed_domains.includes('evil.example.com'));
+  ok(label + ' → ignored, server list used', res.status === 200 && t && t.allowed_domains.length === SRV_N && !t.allowed_domains.includes('evil.example.com'));
 }
 lastUpstream = null;
 res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true }));
-ok('no search_domains at all → server list used (new client protocol)', res.status === 200 && lastUpstream.body.tools[0].allowed_domains.length === 101);
+ok('no search_domains at all → server list used (new client protocol)', res.status === 200 && lastUpstream.body.tools[0].allowed_domains.length === SRV_N);
 
 console.log('\nA5. The origin gate still guards the search path');
 res = await handler(new Request('https://stylestar.app/.netlify/functions/style-ai', {
@@ -124,14 +130,14 @@ const quietErr = async (fn) => { const c = console.error; console.error = () => 
 const SSE_OK = () => new Response(SSE_BODY, { status: 200, headers: { 'Content-Type': 'text/event-stream' } });
 
 // One blocked domain → pruned, memoized, retried, streams. (Domains are the
-// SERVER's 101 now; the memo means later requests skip the blocked one, which
+// SERVER's whole list now; the memo means later requests skip the blocked one, which
 // the counts below account for. Deep memo coverage lives in cowork3.js.)
 upstreamCalls = [];
 replyQueue = [() => blockedErr(['gucci.com']), SSE_OK];
 res = await quietErr(() => handler(fnReq({ max_tokens: 600, messages: MSGS, search: true })));
 ok('retried once', upstreamCalls.length === 2);
-ok('first call carried gucci.com', upstreamCalls[0].includes('gucci.com') && upstreamCalls[0].length === 101);
-ok('retry pruned only the blocked store', !upstreamCalls[1].includes('gucci.com') && upstreamCalls[1].length === 100);
+ok('first call carried gucci.com', upstreamCalls[0].includes('gucci.com') && upstreamCalls[0].length === SRV_N);
+ok('retry pruned only the blocked store', !upstreamCalls[1].includes('gucci.com') && upstreamCalls[1].length === SRV_N - 1);
 ok('reply streams through after the prune', (res.headers.get('content-type') || '').includes('text/event-stream') && (await res.text()) === SSE_BODY);
 
 // Two rounds of pruning still succeed.

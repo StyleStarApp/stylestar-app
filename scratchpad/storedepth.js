@@ -42,8 +42,10 @@ const MIDDLE = ["Talbots", "J.Crew", "Free People", "Anthropologie"];
 const HERS = ["Nordstrom","Macy's","Dillard's","Belk","Bloomingdales","Saks","Neiman Marcus","NET-A-PORTER",
               "Shopbop","Nordstrom Rack","TJ Maxx","Target","Amazon","Revolve","Zara","H&M"];
 // hardcoded ON PURPOSE, unlike the derived counts below: this one's whole job
-// is to notice a store quietly appearing or vanishing. 101 as of 2026-08-21.
-ok('store count is 101 (DVF added 2026-08-21)', t.total === 101, String(t.total));
+// is to notice a store quietly appearing or vanishing. 102 as of 2026-08-20
+// (Vilebrequin, after Rakuten approved her). This is the ONE suite that should
+// fail when the table changes — bump it deliberately, never find-and-replace it.
+ok('store count is 102 (Vilebrequin added 2026-08-20)', t.total === 102, String(t.total));
 ok('the 16 she confirmed are all flagged deep', HERS.every(n => t.full.includes(n)), HERS.filter(n => !t.full.includes(n)).join());
 ok('the 4 middle-tier stores she added are flagged', MIDDLE.every(n => t.full.includes(n)), MIDDLE.filter(n => !t.full.includes(n)).join());
 ok('nothing else was flagged deep', t.full.length === HERS.length + MIDDLE.length,
@@ -53,8 +55,11 @@ ok('J.Jill and Boden deliberately stay known-for only', !t.full.includes('J.Jill
 // that can take a specific search inside ONE lane and nowhere else, so the list
 // is a deliberate roll-call rather than a number: DVF returns 363 results for
 // "wrap dress" and a flat 0 for "sneakers".
-ok('the 6 category-deep stores, each in its own lane',
-   t.cat.sort().join(',') === "Athleta:activewear,DSW:shoes,Diane von Furstenberg:dresses,Lands' End:swimwear,Sunglass Hut:eyewear,Zappos:shoes", t.cat.join());
+// Vilebrequin joined 2026-08-20. Her own instruction was to treat it as "a
+// specialty/high-priority retailer for Swim + Resort + Vacation rather than an
+// everyday general apparel store", and a lane-scoped deep flag is exactly that.
+ok('the 7 category-deep stores, each in its own lane',
+   t.cat.sort().join(',') === "Athleta:activewear,DSW:shoes,Diane von Furstenberg:dresses,Lands' End:swimwear,Sunglass Hut:eyewear,Vilebrequin:swimwear and resortwear,Zappos:shoes", t.cat.join());
 // derived, never restated: a test that hardcodes a number must be edited every
 // time the list grows; a derived one never does (the curated.js lesson).
 ok('every remaining store carries no depth flag', t.none === t.total - t.full.length - t.cat.length,

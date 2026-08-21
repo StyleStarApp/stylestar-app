@@ -125,8 +125,8 @@ const SEARCH_DOMAINS = [
   'sunglasshut.com', 'talbots.com', 'target.com', 'theory.com',
   'thereformation.com', 'tiffany.com', 'tjmaxx.tjx.com', 'tnuck.com',
   'tommybahama.com', 'torrid.com', 'toryburch.com', 'uniqlo.com',
-  'universalstandard.com', 'us.boden.com', 'veronicabeard.com', 'vince.com',
-  'vuoriclothing.com', 'warbyparker.com', 'whitehouseblackmarket.com', 'www2.hm.com',
+  'universalstandard.com', 'us.boden.com', 'veronicabeard.com', 'vilebrequin.com',
+  'vince.com', 'vuoriclothing.com', 'warbyparker.com', 'whitehouseblackmarket.com', 'www2.hm.com',
   'zappos.com', 'zara.com',
 ];
 

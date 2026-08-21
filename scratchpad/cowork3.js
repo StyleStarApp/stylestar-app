@@ -37,6 +37,12 @@ const ok = (name, cond, extra) => {
 process.env.ANTHROPIC_API_KEY = 'test-key';
 delete process.env.DAILY_SPEND_CAP_USD;
 const handler = (await import(path.join(ROOT, 'netlify/functions/style-ai.js'))).default;
+// DERIVED, not restated (the curated.js lesson, and the 2026-08-03 one about
+// THREE different arithmetics living in these suites): SRV_N is read out of
+// style-ai.js itself, so adding a store never makes these stale, while a
+// mismatch between the two lists still fails loudly below.
+const SRV_N = (fs.readFileSync(path.join(ROOT, 'netlify/functions/style-ai.js'), 'utf8')
+  .match(/const SEARCH_DOMAINS\s*=\s*\[([\s\S]*?)\];/)[1].match(/'[^']+'/g) || []).length;
 
 let lastUpstream = null;
 let upstreamReply = () => new Response(JSON.stringify({ content: [{ type: 'text', text: 'plain' }] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
@@ -64,19 +70,19 @@ upstreamReply = SSE;
 let res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: ['evil.example.com'] }));
 let tool = (lastUpstream.body.tools || [])[0] || {};
 ok('search still streams', (res.headers.get('content-type') || '').includes('text/event-stream'));
-ok('allowed_domains is the server list (101 stores — DVF added 2026-08-21)', Array.isArray(tool.allowed_domains) && tool.allowed_domains.length === 101, 'got ' + (tool.allowed_domains || []).length);
+ok('allowed_domains is the server list (every store in SEARCH_DOMAINS)', Array.isArray(tool.allowed_domains) && tool.allowed_domains.length === SRV_N, 'got ' + (tool.allowed_domains || []).length);
 ok('client-sent domain NOT in the list', !tool.allowed_domains.includes('evil.example.com'));
 ok('the real stores are', ['nordstrom.com', 'www2.hm.com', 'shop.lululemon.com', 'tjmaxx.tjx.com'].every(d => tool.allowed_domains.includes(d)));
 ok('max_uses still fixed at 3', tool.max_uses === 3);
 
 lastUpstream = null;
 res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true }));
-ok('search works with NO search_domains at all (new client protocol)', (res.headers.get('content-type') || '').includes('text/event-stream') && lastUpstream.body.tools[0].allowed_domains.length === 101);
+ok('search works with NO search_domains at all (new client protocol)', (res.headers.get('content-type') || '').includes('text/event-stream') && lastUpstream.body.tools[0].allowed_domains.length === SRV_N);
 
 for (const [label, junk] of [['a string', 'nope'], ['a URL', ['https://x.com']], ['numbers', [42]], ['150+ entries', Array.from({ length: 200 }, (_, i) => 'a' + i + '.com')]]) {
   lastUpstream = null;
   res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true, search_domains: junk }));
-  ok('junk client domains (' + label + ') ignored, not a 400', res.status === 200 && lastUpstream && lastUpstream.body.tools[0].allowed_domains.length === 101);
+  ok('junk client domains (' + label + ') ignored, not a 400', res.status === 200 && lastUpstream && lastUpstream.body.tools[0].allowed_domains.length === SRV_N);
 }
 
 console.log('\nA2. Client-supplied tools are still never forwarded');
@@ -158,7 +164,7 @@ const quietErr = async (fn) => { const c = console.error; console.error = () => 
 upstreamCalls = [];
 replyQueue = [() => blockedErr(['gucci.com']), SSE];
 res = await quietErr(() => handler(fnReq({ max_tokens: 600, messages: MSGS, search: true })));
-ok('blocked store pruned and retried', upstreamCalls.length === 2 && upstreamCalls[0].includes('gucci.com') && !upstreamCalls[1].includes('gucci.com') && upstreamCalls[1].length === 100);
+ok('blocked store pruned and retried', upstreamCalls.length === 2 && upstreamCalls[0].includes('gucci.com') && !upstreamCalls[1].includes('gucci.com') && upstreamCalls[1].length === SRV_N - 1);
 ok('reply streams through after the prune', (res.headers.get('content-type') || '').includes('text/event-stream'));
 
 // THE MEMO: the very next request must skip gucci on its FIRST call — no
@@ -166,7 +172,7 @@ ok('reply streams through after the prune', (res.headers.get('content-type') || 
 upstreamCalls = [];
 replyQueue = [SSE];
 res = await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true }));
-ok('next request skips the blocked store on the FIRST call (memo)', upstreamCalls.length === 1 && !upstreamCalls[0].includes('gucci.com') && upstreamCalls[0].length === 100);
+ok('next request skips the blocked store on the FIRST call (memo)', upstreamCalls.length === 1 && !upstreamCalls[0].includes('gucci.com') && upstreamCalls[0].length === SRV_N - 1);
 
 // Two rounds of pruning still succeed, and both land in the memo.
 upstreamCalls = [];
@@ -179,7 +185,7 @@ await handler(fnReq({ max_tokens: 600, messages: MSGS, search: true }));
 // total minus the THREE memoised blocked stores. A different arithmetic from
 // the 100 above (total minus one), which is why a blind find-replace on the
 // store count is always wrong here -- the 2026-08-03 lesson, hit again.
-ok('memo now holds all three', upstreamCalls[0].length === 98);
+ok('memo now holds all three', upstreamCalls[0].length === SRV_N - 3);
 
 // An error naming NO recognisable domain → honest JSON error + console.error.
 const errLog2 = []; const realErr2 = console.error; console.error = (...a) => errLog2.push(a.join(' '));
