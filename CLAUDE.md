@@ -7,7 +7,199 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-20 NIGHT — 📸 THE EDIT HAS PHOTOS, AND THE LICENSING RULE IS THE KEEPER)
+## ▶ NEXT SESSION — START HERE (2026-08-21 — 💰 STYLE STAR HAS EARNED ITS FIRST MONEY)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "yes let's save everything to the .md")
+**THREE PRs merged and ALL CURL-VERIFIED LIVE: #886 · #887 · #888.** Branch resynced to main, tree clean,
+everything at `fc0d561`. ⚠️ **Three Netlify builds.**
+▶▶ **THE HEADLINE, AND IT CLOSES THE THING OPEN SINCE THE PLUMBING WENT IN: THE MONEY CHAIN IS PROVEN END TO
+END. Her mother saw the DVF scarf on the front door, tapped Shop it IN THE APP, bought it — and the sale
+appeared in Rakuten Reports.** Click → sale → commission, on a real purchase through the live app.
+Her words on the frame: *"the frame looks good live."*
+▶ **AND HER NEW IDEA, THE FIRST THING TO PICK UP: the STAR OF THE WEEK on the DISCOVERY page, for a woman
+who has not taken the quiz yet.** See its own entry below — it is not built, and it is a good instinct.
+
+### 💰💰 THE MONEY CHAIN IS CLOSED — and how to read it next time
+**3 clicks in Rakuten, then the sale.** ▶ **THE SPLIT THAT MATTERS AND IS WORTH REUSING WHENEVER SHE PANICS
+ABOUT A DASHBOARD: CLICKS ARE LOGGED BY RAKUTEN'S OWN SERVER, so they appear INSTANTLY. A SALE has to come
+the other way — the advertiser reports the transaction back to the network, batched on THEIR schedule, so
+24-48h is normal.** Clicks-but-no-sales on the same day is the expected shape, not a fault.
+- ⚠️ **The commission sits PENDING until DVF's return window closes.** ~$3.96 (2% of $198).
+- ⚠️ **SHE WAS TOLD, AND SHE ALREADY KNEW: do not test this herself, and her husband must not either.**
+  Her words: *"I told my husband he can't buy anything!"* ▶ **Her mother is a separate household, which is
+  a different thing from self-referral — but the authoritative text is her RAKUTEN PUBLISHER AGREEMENT,
+  READ WHILE LOGGED IN** (her own standing rule). Not answered here.
+- ▶ **THE NEXT REAL SIGNAL SHOULD COME FROM SOMEONE UNRELATED TO HER**, which means testers, which means
+  her search-quality verdict. Same gate as always.
+
+### ⭐⭐ THE GOLD LEAF FRAME — her pick "E", and TWO rules came out of it
+Her parked item from 08-20 night, built after **two rounds of renders**. Her first-round verdict killed all
+four options: *"I am not liking any of these."* The two things she said next are the keepers.
+- 🚨⭐ **1. THE WIDTH WAS A REAL BUG AND SHE SPOTTED IT BY EYE.** Her words: *"I would like for it to be the
+  exact width of the other cards on the page rather than a hair more narrow."* **MEASURED: both mirrors run
+  16→374; the Star card ran 30→360.** Inset 14px a side, **28px narrower than everything else on the front
+  door.** `#wbStar`'s margin is now **7px, exactly the frame's own thickness**, so the framed OUTER edge
+  lands on 16/374. ⚠️⚠️ **IF THE FRAME THICKNESS EVER CHANGES, THAT MARGIN CHANGES WITH IT** or the
+  alignment silently breaks — written at the code, asserted at 390/375/360/320.
+  ⭐ **AND THE FIX PAID FOR ITSELF: a wider card wraps her note in TWO lines instead of three, so Save's
+  bottom moved 697 → 673. The frame is free AND the fold is 24px better than before it.**
+- 🚨⭐⭐ **2. THE GOLD WENT BROWN, AND THE REASON GENERALISES.** Her words: *"I don't like how the gold looks
+  - a bit orange or brown."* Round one used `#CFA02E` and `#8a6a14` — **the antique-gold trap already
+  documented in this file, walked into anyway.** ▶▶ **THE RULE, and it is the reusable half: A FLAT
+  MID-GOLD AT FRAME SCALE ALWAYS READS BROWN. A HIGHLIGHT-TO-SHADOW RAMP IS WHAT READS AS METAL.** That is
+  why her marquee bulbs look like gold and a flat band looks like paint. The frame is the **wb-chip's own
+  gradient** (`#FEEF98 → #F6CE3E → #E4B02E → #F3DC8B`), the brightest gold already on that screen.
+  **The suite FAILS if an antique gold appears in it or if the gradient is flattened.**
+- ⚠️ **MECHANICS, all three worth keeping:**
+  1. **A gradient cannot be a box-shadow**, so the frame is an absolutely positioned **`::before` at
+     `inset:-7px`** — still **zero height cost**, which is what made it affordable on the front door.
+  2. 🚨 **A NEGATIVE z-index CHILD PAINTS *ABOVE* ITS OWN STACKING CONTEXT'S BACKGROUND.** Putting
+     `z-index:0` on `.wks-card` made the gradient **cover the white paper**. **The context belongs on the
+     PARENT (`#wbStar`).** Two failed attempts before this landed.
+  3. ⚠️ **The ring spreads 7px BELOW the card onto `.wks-disc`, its own next sibling** — measured gap
+     **exactly 0** at every width. The disclosure sits at 14px now.
+- ⚠️ **RENDER-HARNESS TRAP, new and it made the first comparison worthless: the greeting quote ROTATES
+  through six messages of different heights** (`WB_MSGS`), so five renders of the same screen are not
+  comparable between runs. **Pin it to `WB_MSGS[0]`.**
+- ⚠️ **A HARNESS BUG OF CLAUDE'S OWN THAT HUNG FOR 5 MINUTES: `new Promise(r=>srv.listen(0))` never
+  resolves** — the resolve must be the listen CALLBACK, `srv.listen(0,r)`. The tell was a live node process
+  with no chromium beside it.
+- **New `scratchpad/starframe.js`, 40 checks** — the framed edge flush with BOTH mirrors at four widths, the
+  gradient real at PAINT time, no antique gold, the stacking context on the parent, the disclosure clear,
+  Shop it and Save above a real 700px fold.
+
+### 🚨⭐⭐ VILEBREQUIN: APPROVED, ADDED, AND REMOVED THE SAME DAY — and the removal is the keeper
+Her third Rakuten advertiser (**MID 43322**, joined 2026-08-20). ▶ **A DOUBLE UNLOCK, as expected: the link
+earns AND the photo is licensed by the same approval.** It went into the store table with her own scores,
+and **came back out an hour later on her own testing.** That sequence is the valuable part.
+- ▶▶ **THE RULE THIS SETTLES, AND IT IS A NEW FAILURE CLASS — THE FOURTH: `deep` ASSUMES A STORE'S SEARCH
+  WORKS AND IS MERELY SHALLOW. WHEN A STORE'S SEARCH *LIES*, KEEP THE BRAND FOR CURATION (Edit, Star of the
+  Week) AND OUT OF THE SEARCHABLE TABLE.** Tuckernuck padded a thin page with a perfume — survivable, and a
+  tighter `c:` line fixes it. **Vilebrequin's search told her they DO NOT CARRY COVER-UP DRESSES WHEN THEY
+  DO.** That tells a woman "they don't have it" when they do, and **no prompt rule of ours can reach it.**
+- **HER EVIDENCE, in increasing order of seriousness:** their entire women's range is **~179 pieces (95 swim
+  + 84 clothing)** · `womens linen shirt` **works** (⭐ so the womens keyword is PROVEN GOOD here, unlike
+  Abercrombie) **but returns ELEVEN results** · and the false negative above.
+- ⚠️ **THEIR SITE HAS NO GENDER FILTER ON SEARCH AT ALL.** Refinement attributes are size, motif, collection
+  and sub-category; **gender is expressed as a CATEGORY (`cgid`)**. ▶ **That is why every URL she sent was a
+  category page — she was sending the only thing their site offers, and Claude asked three times for
+  something that does not exist.** The `cgid=women` parameter Claude proposed is **ignored** (her test
+  returned MEN'S). ⚠️ **Their search also DEFAULTS TO MEN'S for an ambiguous term** — they are a men's-swim
+  house historically.
+- 🚨🚨 **THE ASYMMETRY THIS CREATES IS DELIBERATE, INVISIBLE AND FRAGILE — DO NOT "TIDY" IT.** Vilebrequin
+  stays in **`_AFF_MID`** (so its Edit item and Star entry still EARN) while being absent from **`STORES`**
+  and **`SEARCH_DOMAINS`**. ▶ **That works only because `_affUrl` matches by HOSTNAME, never by store key** —
+  the 08-20 design decision paying off. **A future tidy-up that "aligns" `_AFF_MID` with `STORES` would
+  silently stop her being paid on every Vilebrequin tap, with nothing on screen looking any different.**
+  ⭐ **`affwrap` now asserts exactly that: an approved advertiser that is NOT in the store table still earns.**
+- ▶ **HER SCORES ARE KEPT VERBATIM in the comment where the entry used to sit**, so re-adding is one line if
+  their catalog grows: `d:[9,6,7,8,6,8,5,5,3,10]` · `$$$$` · Coastal Chic, Playful Chic · `s:[]` ·
+  `deep:'swimwear and resortwear'` · `w:1`. **Nine of the ten dimensions are hers verbatim; alluring 6 is
+  hers too**, set against her own anchors after she was shown them (the DVF pattern, second time).
+  ⚠️ **`s:[]` IS HER FACT, NOT A GAP:** *"xxs-XXL is their sizing no petites or tall."*
+- ⚠️ **AND THE NONSENSE-WORD CONTROL EARNED ITS KEEP A THIRD TIME:** four candidate search URLs probed from
+  the sandbox all returned a page **byte-identical to gibberish**. Their search renders client-side, so
+  **every number measurable from here was worthless and her address bar was the only instrument.**
+
+### ⭐ THE COVER-UP IS IN THE EDIT AND THE STAR QUEUE — and she refined her own content rule to allow it
+**"Vilebrequin Long Mesh Cover-Up Dress — Off White", $405, the 22nd Edit item, with the 4th photo.**
+- ⭐⭐ **HER RULE, REFINED BY HER, AND IT IS NARROWER THAN IT WAS: the bar for Star of the Week is BIKINI OR
+  LINGERIE, NOT THE SWIM CATEGORY.** Her words: *"Even though it is a swim-wear type item, this can go on
+  Star of the Week because it is not a bikini or lingerie. It is see-through, but tasteful enough that I
+  deem it ok to go on the welcome back page."* ▶ **So a cover-up, a kaftan or a resort dress MAY be the
+  Star; a bikini, a swimsuit or anything intimates may not.** ⚠️ The suite's own regex already encoded
+  exactly that line, so it needed no change — **do NOT add 'cover-up' or 'mesh' to it.**
+- ✅ **VERIFIED BEFORE ADDING, per the standing rules:** 200 · real product name "Women Long Mesh Dress" ·
+  **$405 is the REGULAR price** (pricebook `US-USD-RET`, `priceRanges` min = max, no sale price anywhere —
+  her evergreen rule) · XS-L orderable, XL out.
+- ⚠️ **THE NAME ON THE CARD IS HERS, NOT THE RETAILER'S:** *"they call this Women Long Mesh Dress but I would
+  call it Long Mesh Cover-up Dress."* Her word is the more useful one and this is her Edit.
+- ⭐ **THE PHOTO IS 4:5 AGAINST OUR 3:4 FRAME, WHICH IS LUCKY: the crop takes 6% off the SIDES and keeps FULL
+  HEIGHT**, so a long dress stays full length. **The FARM Rio knee-cut lesson applied before it could bite.**
+  ⚠️ Demandware sizing is `?sw=800` (their equivalent of Shopify's `&width=800`).
+- ⭐ **THE QUEUE MOVE, her call:** *"Definitely want the cover up dress to come into star of the week before
+  December. closer to summer would be best."* ▶ **It SWAPS with the MZ Wallace tote rather than being
+  inserted** — inserting would shift all thirteen items below it a week later and **quietly move her claw
+  clip and her scarf off the Thanksgiving-weekend slots she chose on purpose.** The tote is the one genuinely
+  seasonless piece (a carry-on travel bag) and December is holiday-travel season. **Cover-up Dec 6 → Sep 20 ·
+  tote Sep 20 → Dec 6 · every other item exactly where she put it.** Her verdict: *"all good."*
+- ⚠️⚠️ **THE PIN GOVERNS THIS AND IT IS WORTH SAYING AGAIN: the week is computed from the ACTUAL DATE, not
+  from where the rotation left off. So the cover-up only appears if she UNPINS BEFORE 20 SEPTEMBER** — after
+  that it waits for the 18-week cycle (24 January 2027). ▶ **If testers slip past mid-September, either move
+  it again or pin it to the cover-up for its first week. RAISE THIS, don't let it pass silently.**
+
+### ⭐⭐ TEST DISCIPLINE: THE DERIVED-COUNT LESSON, PAID FOR AND THEN IMMEDIATELY REPAID
+**Eleven assertions across six suites failed on arrival this session and EVERY ONE was a restated count, not
+a regression.** Rather than find-and-replacing numbers again (the 2026-08-03 lesson about THREE different
+arithmetics), they were made **DERIVED**:
+- **`editpx`** — the licensing sweep now asserts a **RELATIONSHIP** ("every photo sits on an approved
+  retailer, and there is at least one") instead of "exactly 3"; the wrap count is **computed from how many
+  items have an approved host**; item counts read from the page.
+- **`weekstar` / `affwrap`** — queue length and the advertiser list assert **SHAPE** (non-empty, well-formed,
+  bare host → numeric MID) rather than a number. The individual MIDs stay pinned so a bad edit is loud.
+- **`searchchat` / `cowork3`** — `SRV_N` is read straight out of `style-ai.js`, **including the pruned-list
+  arithmetic** (`SRV_N-1` after one blocked store, `SRV_N-3` once the memo holds three). ⚠️ **Those two are
+  exactly what a blind find-replace broke in August.**
+- ⭐⭐ **`searchtune`'s restated total was replaced by THE STANDING RULE IT SHOULD ALWAYS HAVE BEEN TESTING:
+  STORES and SEARCH_DOMAINS must agree.** Derived from both files. **A store added to one but not the other
+  is a store the stylist's search cannot see inside, and nothing anywhere complained before.**
+- ⚠️ **`storedepth` KEEPS ITS HARDCODED TOTAL, DELIBERATELY** — its own comment says its whole job is to
+  notice a store quietly appearing or vanishing, so it is the ONE place that SHOULD fail when the table
+  changes. **Bump it by hand; never find-and-replace it.**
+- ▶▶ **AND THE PAYOFF WAS IMMEDIATE AND IS THE ARGUMENT FOR EVER DOING THIS: when Vilebrequin came back OUT
+  an hour later, 102 → 101, the derived suites absorbed it with ZERO EDITS. Only storedepth needed touching.**
+- **Suites at pause, all green:** **starframe 40 (new)** · editpx 49 · weekstar 39 · affwrap 26 ·
+  storedepth 19 · searchtune 70 · searchchat 57 · cowork3 69.
+
+### ▶▶ HER NEW IDEA, RAISED AT THE PAUSE AND NOT BUILT — THE STAR OF THE WEEK ON THE DISCOVERY PAGE
+Her words: *"I am wondering if the Discovery page - for first time users, before she even takes the quiz -
+could be able to get a peak at the star of the week - maybe even a thumbnail version or something eye
+catching?"*
+- ▶ **THIS IS A GOOD INSTINCT AND IT FIXES A REAL GAP, the same shape as the A2HS one she already fixed:
+  the Star card is WELCOME-BACK-ONLY, so a first-time visitor never sees it at all.**
+- ⭐⭐ **THE ARGUMENT FOR IT, and it is the Sally north star made concrete: everything a stranger currently
+  sees on `s-wel` is a PROMISE** — the tagline, the founder line, How It Works 1-2-3. **The Star of the Week
+  is the only piece of REAL PRODUCT on the whole app: a real garment, a real photo, a real price, chosen
+  this week by a real stylist.** It is the difference between *claiming* a person is behind this and
+  *showing* it. It also proves the app is ALIVE (something changed this week), which nothing else on that
+  screen does.
+- ⚠️ **THE TENSIONS TO WEIGH WITH HER, none fatal:** (1) **the welcome screen's first job is the QUIZ** — a
+  product card competing with "Take our fun style quiz" could cost conversions, so placement probably sits
+  AFTER How It Works, not before; (2) **HEIGHT** — that screen already carries hero + tagline + founder line
+  + How It Works + restore, so measure against the fold before choosing full-card vs her thumbnail idea;
+  (3) **the photo is gated on `_affMid()`** and inherits that automatically, so nothing new is owed there.
+- ▶ **RENDERS FIRST, HER PICK, as always** — full card vs thumbnail row vs a teaser strip. **Her own word was
+  "thumbnail", so lead with that.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐ **HER DISCOVERY-PAGE STAR IDEA** — the entry above. Renders first.
+2. ⚖️ **ALMIRA — she SENT the reply and has had NO ANSWER YET.** The two live questions: **is $900 the FULL
+   cost or the USPTO's share only**, and **what must a specimen look like for CLASS 045**. ▶ **045 is the
+   one with real work behind it and a 2027 deadline.** Also watch for the Statement of Correction being
+   MAILED and ACCEPTED by the state.
+3. 📊 **Rakuten again in a few days** — the commission should move from PENDING to confirmed once DVF's
+   return window closes. ⭐ **And it is worth telling her plainly: the chain is proven, so from here the
+   only variable is TRAFFIC.**
+4. 📬 **Impact's support answer, due ~27-29 August.** ⚠️ It gates photos too — Nordstrom is 6 of her 22 Edit
+   items and runs on Impact.
+5. 🔎 **The LINKS ▾ menu in Rakuten — bulk feed export or FTP?** ⚠️ **And the LINK BUILDER's creative**, which
+   is the properly-licensed image source. ⭐ **Also worth offering: browsing an advertiser's product links in
+   the dashboard is a REAL WORKFLOW UPGRADE FOR HER TODAY, with no build at all** — she picks Edit pieces
+   from a browsable catalog with photos and prices instead of hunting the retailer's website.
+6. ⭐ **PRODUCT FEEDS — her question this session was excellent and the answer should be reused verbatim:**
+   *"once we had affiliate link approval that meant the app could have full access to their info and
+   inventory?"* ▶ **SHE IS RIGHT THAT APPROVAL GIVES HER THE DATA. The app simply does not READ it yet.**
+   `docs/product-feeds-plan.md` is shovel-ready. ⚠️ **BUT THE HONEST TIMING ANSWER HELD: feeds from DVF,
+   FARM Rio and Vilebrequin would NOT fix her search-quality complaint, because her frustration is with the
+   BROAD asks (a work dress, a white top, jeans) and three resort/designer brands carry none of that.**
+   ▶ **A DEPARTMENT STORE APPROVAL IS THE TRIGGER — Bloomingdale's is still pending.**
+7. 📱 **Her search-quality verdict** — still the one blocker on testers, and testers are what release the pin
+   AND produce the next real sale.
+8. ⭐ **Her three parked ideas, all needing nobody else:** the NEW SHAREABLE, her NEXT INSTAGRAM POST, and the
+   EMAILABLE WISHLIST (named a fifth time).
+9. ⚠️ **The two link-check Routines are STILL unread, eighth session running.**
+
+## ▶ PREVIOUS — 2026-08-20 NIGHT (📸 THE EDIT HAS PHOTOS, AND THE LICENSING RULE IS THE KEEPER)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the .md for now... I just got a reply from almira")
 **THREE PRs merged and ALL CURL-VERIFIED LIVE: #881 · #882 · #883.** Branch resynced to main, tree clean,
