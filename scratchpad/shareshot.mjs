@@ -20,7 +20,8 @@ const LIST = [
   { name: 'Tan Pointed Ballet Flats', store: 'Nordstrom', search: 'tan ballet flats', exact: false }
 ];
 const MODES = {
-  full:  { success: true, name: 'Catherine', list: LIST },
+  full:  { success: true, name: 'Catherine', list: LIST,
+    listNote: "I'm a size 8 in dresses and a medium in tops.\nI love green and anything with a print, and please nothing red! The FARM Rio dress is for the June wedding, so that one matters most." },
   gone:  null,
   empty: { success: true, name: 'Catherine', list: [] }
 };

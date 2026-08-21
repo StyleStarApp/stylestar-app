@@ -23,9 +23,9 @@ const SEED={pretap0:true,items:{},custom:[],hidden:[],wishlist:[
    search:'maxi dress',exact:true,url:'https://www.farmrio.com/p/1',price:'$360',
    note:'Size 8. This is the one for the wedding in June.'},
   {id:'white-blouse~j-crew',name:'White Linen Button-Front Blouse',store:'J.Crew',search:'white linen blouse'}
-]};
+],listNote:"I'm a size 8 in dresses and a medium in tops.\nI love green and anything with a print, and please nothing red! The FARM Rio dress is for the June wedding, so that one matters most."};
 const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'});
-for(const [name,drive] of [['notes',null],['editing','.wl-addnote']]){
+for(const [name,drive] of [['notes',null],['opennote','.wl-lnedit']]){
   const pg=await b.newPage({viewport:{width:390,height:1200},deviceScaleFactor:2});
   await pg.route('**/fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:css}));
   await pg.addInitScript(s=>{localStorage.setItem('ss_wardrobe',JSON.stringify(s))},SEED);
