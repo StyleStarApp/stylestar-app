@@ -7,18 +7,28 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-21 LATEST — ✍️ SHE RETIRED "HOW IT WORKS", AND THE STAR ROSE)
+## ▶ NEXT SESSION — START HERE (2026-08-21 LATEST — 🎉 THE GATE OPENED: TESTERS, INSTAGRAM, AND REAL DATA)
 
-### ⏸ WHERE THIS SESSION IS — ⚠️ BUILT, TESTED, PUSHED, **NOT MERGED**, AWAITING HER WORD
-Branch `claude/style-star-markdown-3rdfdz`, tree clean, **ZERO Netlify builds so far** — nothing is live yet.
-▶ **THE FIRST THING TO DO: ask whether to merge.** One `index.html` change is sitting on the branch.
-▶▶ **WHAT SHE DID, and it is the shape of the session: she stopped a build queue to look at a shipped
-screen critically.** Her words: *"I am not liking how we have HOW IT WORKS and then the sneak peak star of
-the week and then the Explore buttons. Something doesn't feel right with the set up... I wonder if we should
-put the star of the week down at the very bottom OR make it thumbnail size or if we should even need to have
-the HOW IT WORKS - not sure if it is obvious how it works I guess not I probably think that because I already
-know how it works ha."* **Her three asks (the emailable wishlist, the affiliates, the loose ends) are
-UNTOUCHED and all still waiting** — the entry below this one holds them and nothing in it went stale.
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save all of this and then I will open a new chat")
+**TWO PRs merged and CURL-VERIFIED LIVE: #892** (the Discovery page) **plus three CLAUDE.md commits.**
+Branch resynced to main, tree clean, everything at the #892 merge. ⚠️ **ONE Netlify build for the day.**
+▶▶ **THE HEADLINE, AND IT IS THE BIGGEST NON-TECHNICAL THING THAT HAS HAPPENED TO THIS PROJECT: SHE OPENED
+THE TESTER GATE.** Her words: *"I will ask my friends to test now and also I posted on Instagram and put the
+link on Instagram too."* Then she sent the texts. **The blocker she has owned since July is gone, by her own
+decision, on the same day two affiliate doors closed on the exact number testers produce.**
+▶ **HER NEXT SESSION, HER WORDS: "I have some questions and want to review our detailed list."** So open
+with **her three asks** (the emailable wishlist, which affiliates next, the loose-ends sweep) — the entry
+below this one holds them and NOTHING in it went stale.
+
+### ▶ THE SHAPE OF THE DAY, IN ORDER — it swung hard both ways and she kept moving
+1. ✅ **She stopped a build queue to look at a shipped screen critically** and retired How It Works (#892).
+2. ❌ **Bloomingdale's declined.** The nearest trigger for product feeds, gone.
+3. ✅ **She opened the tester gate** — friends texted, Instagram posted, link tagged.
+4. ❌ **Impact answered the ticket: another no**, but with a REASON at last, and an invitation back.
+5. ✅ **She built the instrument that answers the question both rejections asked** — Plausible goals,
+   the public dashboard, and the first honest read of her own numbers.
+▶ **Worth saying to her again, because it is true and she may not see it: EVERY DOOR THAT CLOSED TODAY
+CLOSED ON THE NUMBER THAT STARTED MOVING TODAY.** Followers 16 → 20 → **26** in two days.
 
 ### 🚨⭐⭐ THE DIAGNOSIS, AND IT IS THE REUSABLE HALF: THREE SECTIONS WEARING THE SAME COSTUME
 She could feel it and not name it. **Measured: `─ HOW IT WORKS ─`, `─ ★ STAR OF THE WEEK ★ ─` and
@@ -100,19 +110,176 @@ not license this repository to REDISTRIBUTE a copy of the image file.** Technica
 permission, which is her own rule pointed at a surface it had not been pointed at before. **The reasoning is
 written at `.gitignore` and at the top of `starphoto.mjs` so a future session does not helpfully commit it.**
 
+### 🎉🎉 SHE OPENED THE GATE — TESTERS INVITED AND THE LINK IS ON INSTAGRAM (2026-08-21)
+**The blocker she has owned since July is gone, by her own decision, the same hour Bloomingdale's declined:**
+*"I will ask my friends to test now and also I posted on Instagram and put the link on Instagram too."*
+▶ **THIS IS THE THING EVERY OTHER THREAD WAS WAITING ON.** Traffic is what the affiliate declines all named.
+- ⭐ **HER BIO LINK IS TAGGED: `https://stylestar.app/?utm_source=instagram`.** ⚠️ **WHY IT IS TAGGED AND NOT
+  BARE — INSTAGRAM'S IN-APP BROWSER IS INCONSISTENT ABOUT PASSING A REFERRER, so untagged Instagram traffic
+  lands in Plausible as "Direct" and she would have concluded the post did nothing.** Verified safe end to
+  end (`scratchpad/utmcheck.mjs`, run under a real Instagram in-app-browser UA): the app boots clean on that
+  exact URL, the Star and the new line render, the Plausible script fires, tracking is NOT switched off, and
+  **the tag survives because the boot-path URL cleaner deletes ONLY `notrack` and `track`.** Zero JS errors.
+- ⚠️⚠️ **THE ONE REAL TRAP IN INSTAGRAM TRAFFIC, AND IT IS THE 2026-08-08 STORAGE-CONTAINER LESSON POINTED AT
+  A NEW SURFACE: Instagram's in-app browser keeps its OWN localStorage, separate from Safari.** So a woman
+  who taps the bio link, takes the quiz inside Instagram and later opens Safari **finds nothing there.**
+  ▶ **THE CURE ALREADY EXISTS and was built for exactly this class of problem: the email save, the restore
+  link and the 6-digit code.** ▶ **BUT IT MEANS THE EMAIL SAVE MATTERS MUCH MORE FOR INSTAGRAM TRAFFIC THAN
+  FOR ANY OTHER SOURCE.** ⚠️ **Nothing was built for it — she had just gone live and churn was the wrong
+  move.** ▶ **WATCH FOR IT: if testers report losing their results, the lever is making the email save more
+  prominent for in-app-browser traffic, NOT a redesign.**
+- ▶ **GOOGLE ANALYTICS WAS ASKED ABOUT AND ARGUED AGAINST, and the reasons are reusable:** (1) **/privacy
+  NAMES ITS SUB-PROCESSORS** (Anthropic, Supabase, MailerLite, Netlify, Plausible), so adding Google would
+  make a PUBLISHED LEGAL PAGE FALSE on the exact page affiliate reviewers read — **her own 2026-08-19
+  reasoning for refusing Impact's tracking script, applied again**; (2) **no affiliate network requires GA**,
+  they track with their own pixels and the forms ask her to self-report visitors; (3) ⭐ **PLAUSIBLE IS
+  BETTER FOR THE THING SHE ACTUALLY NEEDS: its dashboard can be made PUBLICLY SHAREABLE BY LINK**, so an
+  advertiser asking about traffic gets a live link instead of a number they must take on trust. **That is
+  precisely the ammunition the Bloomingdale's application lacked.**
+- ▶ **HER OWN VISITS: `stylestar.app/?notrack` per browser, or five taps on the logo in the installed app;
+  EVERY TIME in private browsing.** ⚠️ **AND THE INVERSE, which is new and easy to get wrong: DO NOT tell
+  testers to use `?notrack` — their visits are the entire point.**
+- ▶ **SET HER EXPECTATIONS BEFORE SHE READS THE DASHBOARD:** her follower count is small, so the Instagram
+  post may deliver very few; **the ten friends are the real traffic.** A small number is not a failure, and
+  the FUNNEL (Quiz Started → Quiz Question → Quiz Completed → Product Click) is worth far more to her than
+  the visitor count.
+
+### 📬 IMPACT ANSWERED THE TICKET — A REASON AT LAST, AND ONE GENUINELY NEW DOOR (2026-08-21)
+**The open item due ~27-29 August arrived early, and it is CLOSED.** ⭐ **HER SUPPORT TICKET WORKED: the
+08-20 decline listed no reasons at all (a broken template); this re-evaluation names one.** Same instinct
+that got Class 045 restored — push factually and firmly, and a real answer comes back.
+- ▶ **THE REASON, in their words: "the traffic on your domain, and/or your business strategies doesn't quite
+  meet the minimum requirements JUST YET."** ⚠️ **"Just yet" appears TWICE — a threshold, not a verdict**,
+  and they explicitly invite reapplication. **They will never give a number:** *"we cannot provide individual
+  feedback or specific selection criteria."* ▶ **Stop hunting for one.**
+- ⚠️ **"and/or your business strategies" IS HEDGING BOILERPLATE, DO NOT LET HER SPIRAL ON IT.** It is paired
+  with the real noun, *traffic on your domain*. **Nothing in the email criticises the app, the content, or
+  the fact that it is AI-powered** — a content-match failure would have been failed as exactly that.
+- 🚨⭐⭐ **THE ONE GENUINELY NEW THING, AND IT IS THEIR OWN ADVICE: "apply to some campaigns DIRECTLY to
+  increase your traffic and marketing presence and then reapply."** ▶▶ **SO THERE ARE TWO DOORS AT IMPACT
+  AND SHE HAS ONLY KNOCKED ON ONE** — this is the third time this file has found an Impact two-door split
+  (the first was partner vs Nordstrom Creators, 2026-08-19). **The MARKETPLACE is the browsable directory
+  and it declined her. A BRAND'S OWN affiliate programme is applied for on the BRAND'S website** (an
+  "Affiliates" / "Creator Program" link in their footer), **and the brand can run it on Impact regardless of
+  her Marketplace status.** ⚠️ **This is a READING of their wording, not a verified mechanism — test it on a
+  retailer she loves before promising it.** ⭐ It may put NORDSTROM back in reach, which matters: it is 6 of
+  her 22 Edit items and gates their photos.
+- ⭐⭐ **AND THE REFRAME THAT SHOULD BE GIVEN WITH IT: SHE IS ALREADY DOING WHAT IMPACT JUST TOLD HER TO DO,
+  ON A NETWORK THAT ALREADY SAID YES.** Rakuten approved her at NETWORK level (the higher bar), so applying
+  to individual Rakuten advertisers IS "applying to campaigns directly" — three have already said yes.
+  ▶ **Rakuten → Advertisers → Find New is free, has no clock, and smaller advertisers approve far more
+  readily than a department store.**
+- ▶ **THE ORDER FROM HERE:** (1) **Rakuten Find New, broadly, this week** · (2) **brand-direct affiliate
+  pages** · (3) **AWIN then CJ** — ⚠️ neither has ever declined her; verify AWIN's small REFUNDABLE deposit
+  on the day · (4) **reapply to Impact in 2-3 months WITH THE PLAUSIBLE SHARED DASHBOARD LINK.**
+- ⭐ **THE ASSET TO BUILD NOW, BEFORE IT IS NEEDED: turn on Plausible's SHAREABLE DASHBOARD** (site settings
+  → visibility; it can be password-protected). ▶ **Every rejection cited traffic, and her only answer today
+  is a self-reported number a stranger must take on trust. In three weeks it becomes a LIVE LINK showing
+  real visitors, a real quiz-completion rate and real product clicks.** That is precisely the gap that cost
+  her Bloomingdale's, and it is a minute's work.
+- ⚠️ **DO NOT REAPPLY ANYWHERE THIS WEEK.** Nothing has changed yet, so the answer would be identical, and a
+  second no from the same door is harder to come back from than a first. **Give it 3-4 weeks of tester
+  traffic.**
+
+### 🚨⭐⭐ THE CIRCLE THIS DECLINE EXPOSED, AND IT IS THE STRATEGIC FINDING — SAY IT TO HER PLAINLY
+Three doors have now closed and **every one of them named TRAFFIC**: Impact at network level (08-20, no
+reasons given), Shopbop (predicted), and now Bloomingdale's. ▶ **Put her stated sequencing next to that and
+it is a CLOSED LOOP:**
+**search quality is her blocker → feeds fix search quality → feeds need an advertiser approval → approvals
+need traffic → traffic needs testers → and she is holding testers until search quality is fixed.**
+▶▶ **THE WAY OUT OF THE CIRCLE IS TESTERS, NOT FEEDS.** Waiting for feeds to fix search before inviting
+testers is waiting forever, because feeds require the traffic that testers are the only source of.
+⚠️⚠️ **THIS IS HERS TO DECIDE AND HER SOFT-LAUNCH INSTINCT IS PROTECTED (2026-07-14: honour it).** It is
+named here as a FACT SHE SHOULD HAVE, not as pressure, and it should be offered once and then dropped.
+⭐ **And the honest counterweight to give her in the same breath: her ten testers are FRIENDS AND FAMILY, so
+they cost nothing if the searches are imperfect — they are not the audience whose opinion is at risk.** The
+thing she feared (strangers judging a half-built app) is not what a tester circle is.
+- ▶ **FREE AND ACTIONABLE TODAY, no build:** Rakuten **Advertisers > Find New** — apply broadly to everything
+  matching her store table. Each approval is still a DOUBLE unlock (the link earns AND the photo is licensed),
+  and a small advertiser approving costs her nothing but an evening.
+- ▶ **THE ORDER IS UNCHANGED but the case for it is stronger: AWIN next, then CJ.** ⚠️ Verify AWIN's small
+  REFUNDABLE deposit on the day. **Macy's network is STILL unidentified — find it before assuming.**
+
+### 📊⭐⭐ HER ANALYTICS ARE A REAL INSTRUMENT NOW — walked step by step, her ask ("can we go slow")
+- 🚨🚨 **THE TRAP THAT WOULD HAVE MADE EVERY CUSTOM EVENT INVISIBLE, AND IT IS THE MOST REUSABLE THING HERE:
+  PLAUSIBLE DOES NOT SHOW A CUSTOM EVENT ON THE DASHBOARD UNTIL IT IS REGISTERED AS A GOAL.** All ten of the
+  events wired on 2026-08-15 were arriving and being DISCARDED FROM VIEW. ▶ **She would have concluded the
+  tracking did not work.** ⭐ **Plausible auto-detected 8 of them** ("We detected 8 custom events") and added
+  them in one click; **the other three (`Photo Uploaded`, `Chat Message Sent`, `Wardrobe Star`) had to be
+  typed by hand, because auto-detect only lists events it has ACTUALLY SEEN — and those three shipped on
+  2026-08-15, the same day her own visits stopped counting, so no real visitor had ever triggered one.**
+- ✅ **ALL TEN ARE REGISTERED:** Quiz Started · Quiz Question · Quiz Completed · Preferences Saved ·
+  Product Click · Wishlist Save · Wardrobe Star · Photo Uploaded · Photo Analyzed · Chat Message Sent.
+  ⚠️ **Names must match the code EXACTLY, capitals included.** ⚠️ **Display name is optional — leave blank.**
+  ⚠️ **"Add custom property" and "Enable revenue tracking" are BUSINESS-tier and OFF. Do not upgrade.**
+- ⚠️ **`Broken Link` IS A GHOST GOAL** — the "Link broken?" control she had deleted on 2026-08-15. It can
+  never fire again. Harmless; bin it whenever. **Plausible's own four (Form: Submission, File Download,
+  Outbound Link: Click, 404) are automatic — leave them, and Outbound Link: Click earns its keep, below.**
+- ✅ **THE PUBLIC DASHBOARD IS ON: `https://plausible.io/stylestar.app`.** ⚠️ **On her plan there is NO
+  PASSWORD — it is genuinely public** (password-protected shared links and Embed are the paid tier; she was
+  told not to upgrade). ▶ **THIS IS THE AFFILIATE ASSET: every rejection cited traffic, and her only answer
+  was a self-reported number a stranger had to take on trust. In a few weeks it becomes a LIVE LINK.**
+  ⚠️ **It was safe to switch on TODAY only because nothing is pending** — do not leave it showing near-zero
+  while an application is under review.
+- ✅ **HER CHROME LAPTOP IS NOW EXCLUDED TOO** (she ran `?notrack` on it, confirmed). ▶ **The exclusion is
+  per browser AND per device AND per installed app: phone + installed app done 08-15, Chrome done today.**
+  ⚠️⚠️ **AND THE INVERSE, WHICH IS NEW AND EASY TO GET WRONG: NEVER tell a tester to use `?notrack`.**
+
+### 📈 THE FIRST HONEST READ OF HER OWN NUMBERS — and how to read them without misleading her
+- ⚠️⚠️ **SAY THIS BEFORE SHE SEES THE RED ARROWS, EVERY TIME: THE DECLINES ARE THE EXCLUSION WORKING.**
+  28-day window: **81 unique visitors (↓23%) · 176 visits (↓26%) · 780 pageviews (↓63%) · 4.43 views/visit
+  (↓50%) · 19m28s duration (↓54%) · bounce 36% (↓4%, the one that IMPROVED)**. ▶ **Pageviews and duration
+  halving is the signature of removing the heaviest user of the app, which was HER.** Her numbers did not
+  fall; she left the room.
+- ⭐⭐ **THE INSTRUMENT IS VERIFIED, and this is worth doing again after any tracking change: `Outbound Link:
+  Click` (Plausible's OWN automatic capture) and `Product Click` (our custom event) returned IDENTICAL
+  figures — 7 uniques / 49 clicks over 7 days.** ▶ **Two independent measurements agreeing exactly is proof
+  the custom events are accurate.** Keep Plausible's automatic goal for exactly this reason.
+- 🚨⭐ **HOW TO READ THE QUIZ FUNNEL, because the three events fire at DIFFERENT moments and it is easy to
+  misread: `Quiz Started` fires in `startQ()` the instant she taps the button · `Quiz Question` fires in
+  `nextQ()` on every press of NEXT · `Quiz Completed` fires in `genResult()`.** ▶ **So a woman who taps
+  Start, sees question 1 and leaves fires ONLY the first.**
+  **28-day baseline: 12 started → 6 answered at least one question → 5 completed.** ▶ **THE DROP-OFF IS ON
+  THE FIRST SCREEN OF THE QUIZ, NOT INSIDE IT: once she answers one question she almost always finishes
+  (5 of 6).** ⚠️ **HOLD IT LOOSELY — most of that window is HER OWN TESTING** (58 Quiz Started events across
+  12 people is her restarting it while we built). **Baseline, not verdict.**
+- **7-day (post-exclusion, the closest thing to clean):** ~20 visitors · **Safari 65% / Chrome 25% / Mobile
+  App 10%** · **7 people clicked products, 49 clicks** · **1 woman took the quiz and fired 12 Quiz Questions
+  — she answered every one and finished** · 1 wishlist save.
+- ⭐ **THE GAP TO WATCH FIRST NEXT WEEK: 7 people shopped, 1 took the quiz.** If that holds once the testers
+  arrive, women are walking PAST the front door straight into browsing. ⚠️ **Too early to call — some of
+  those 7 are her own Chrome, which was only excluded today.**
+- ⭐ **A LOVELY INFERENCE FROM TOP PAGES, and it answers the Bloomingdale's question from the other side:
+  `/faq` 8 · `/privacy` 6 · `/terms` 5 · `/contact` 2.** ▶ **Real women taking a style quiz do not read
+  Terms of Service. THAT IS THE AFFILIATE REVIEWERS.** Those pages exist BECAUSE reviewers look for them,
+  and the numbers say they looked. **Two Rakuten hostnames appear in Sources too** (`dashboard.linkshare.com`,
+  `publisher.rakutenadvertising.com`) — either an advertiser reviewing her, or her own click from the
+  Rakuten dashboard before Chrome was excluded.
+- ⭐ **"Mobile App — 2" IS THE INSTAGRAM IN-APP BROWSER**, matching Instagram's own 2 visitors exactly.
+  ▶ **So the utm tag works AND the separate-storage-container risk is now measurable, not theoretical.**
+
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. ⚠️⚠️ **MERGE THE DISCOVERY-PAGE CHANGE (or don't) — it is built and pushed and NOT live.** Then
-   curl-verify, per the standing #809/#811 lesson that a green merge proves nothing.
-2. 👀 **How it feels on her phone.** ⚠️ She almost never sees that screen — the reminder is her own standing
-   one: **private browsing, and type `stylestar.app/?notrack`.**
-3. ⭐⭐ **HER THREE ASKS, ALL STILL WAITING AND ALL STILL ACCURATE in the entry below: (1) the EMAILABLE
-   WISHLIST, (2) WHICH AFFILIATES NEXT, (3) the LOOSE-ENDS SWEEP.**
-4. ⚠️ **THE 20 SEPTEMBER PIN** — still the only thing with a real clock. Raise it; do not let it pass.
-5. 🆕 **A STALE ROUTINE FOUND THIS SESSION, add it to the loose-ends sweep: `trig_01SZerTsvKoeUYzeT1HX6iWs`
-   "Style Star — catalog + bank check-in" fires ONCE on 26 AUGUST carrying an Aug-12 brief.** It will ask her
-   about a 6-row jeans catalog (it is 107 products), whether Almira replied (she did) and whether the bank
-   account opened (it did). ▶ **Update or delete it before it wakes her with old news.** (The two link-check
-   Routines are unchanged; the recommendation to keep Sunday and retire Monday still stands, her call.)
+1. ⭐⭐ **HER OWN AGENDA, IN HER WORDS: "I have some questions and want to review our detailed list."**
+   ▶ **Ask what her questions are FIRST, then walk her three asks: (1) the EMAILABLE WISHLIST, (2) WHICH
+   AFFILIATES NEXT, (3) the LOOSE-ENDS SWEEP.** The entry below holds all three and none of it went stale.
+2. 📊 **HER DASHBOARD, once her friends have had a weekend.** ▶ **Read the FUNNEL, never the visitor count**
+   — she was told plainly that a small number is not a failure. **The first question to answer: does the
+   7-shopped-to-1-quizzed gap hold with real testers?**
+3. ⭐⭐ **THE FIRST TESTER REPORTS ARE THE MOST VALUABLE FEEDBACK THIS PROJECT HAS EVER HAD.** ▶ **The job
+   when they land is to separate A REAL PROBLEM from ONE PERSON'S TASTE** — she was promised help with
+   exactly that. ⚠️ **And the follow-up question matters as much as the invitation: people volunteer the
+   good news and have to be ASKED TWICE for the bad.**
+4. 👀 **How the retired-How-It-Works Discovery page feels on her phone.** ⚠️ She almost never sees that
+   screen: **private browsing, and type `stylestar.app/?notrack`.**
+5. ⚠️⚠️ **THE 20 SEPTEMBER PIN** — still the only thing with a real clock. **`WEEK_STAR_PIN` back to `null`
+   is the whole change**, and ASK whether she wants the 18-item queue reordered at that moment.
+   Raise it; do not let it pass.
+6. 🆕 **THE STALE ROUTINE: `trig_01SZerTsvKoeUYzeT1HX6iWs` "Style Star — catalog + bank check-in" fires ONCE
+   on 26 AUGUST carrying an Aug-12 brief.** It will ask about a 6-row jeans catalog (it is 107), whether
+   Almira replied (she did) and whether the bank opened (it did). ▶ **Update or delete it.**
+   (The two link-check Routines are unchanged; keep Sunday, retire Monday, **her call**.)
+7. ⚠️ **DO NOT REAPPLY TO ANY AFFILIATE THIS WEEK** — nothing has changed yet, the answer would be
+   identical, and a second no from the same door is harder to come back from than a first. **3-4 weeks.**
 
 ## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-21 LATE — ⭐ A STRANGER MEETS A REAL GARMENT NOW)
 
@@ -273,9 +440,23 @@ Everything needed is already decided and scattered; **collected here so tomorrow
 ### ▶▶ HER ASK #2 FOR TOMORROW — WHICH AFFILIATES TO APPLY TO NEXT (the state, so it is not re-derived)
 - ✅ **RAKUTEN — publisher APPROVED, SID 4740535.** Advertisers approved: **FARM Rio (MID 44912) · Diane von
   Furstenberg (53590) · Vilebrequin (43322)**. **Shopbop DECLINED** (one advertiser, reapplyable, predicted).
-  **Bloomingdale's still PENDING** — ⭐ **and a department-store approval is the trigger for product feeds.**
-- ❌ **IMPACT — DECLINED at NETWORK level 2026-08-20**, with **no reasons listed in the email** (a broken
-  template, not her mistake). **Support ticket filed; answer due ~27-29 August.** ⚠️ **It gates PHOTOS too —
+- 🚨 **BLOOMINGDALE'S DECLINED 2026-08-21.** ⚠️ **STALE ABOVE/BELOW: every entry calling it "pending" is out
+  of date, and with it the nearest trigger for PRODUCT FEEDS.** Their email lists four possible reasons and
+  does not say which. ▶ **THREE ARE RULED OUT BY MEASUREMENT, done the same hour:** stylestar.app returns
+  **200 to any user agent**, apex and www both 301 correctly, **/privacy /terms /contact /faq all 200**, and
+  — the one that actually mattered for a single-page app — **the page renders FULLY READABLE WITH JAVASCRIPT
+  OFF** (headline, quiz CTA, founder line, explore cards; 103 words of real text, the entrance overlay not
+  covering). `scratchpad/nojs.mjs` re-runs that check; `scratchpad/reviewer-jsoff.png` is the proof.
+  ▶▶ **SO IT IS TRAFFIC, BY ELIMINATION — the same verdict as Impact, and the one thing on the list she
+  could not have fixed by building better.** Content mismatch is implausible: a personal-styling app is close
+  to an ideal partner for a department store.
+  ⚠️ **DO NOT WEIGH IT LIKE THE IMPACT DECLINE.** That one was NETWORK level and gates Nordstrom + photos;
+  this is ONE advertiser, reapplyable, and her publisher status and three earning advertisers are untouched.
+  ▶ **Contacting Bloomingdale's now is LOW VALUE** — if the reason is traffic there is nothing to say yet.
+  **Reapply from a stronger position; it costs nothing.**
+- ❌ **IMPACT — DECLINED at NETWORK level 2026-08-20**, no reasons listed (a broken template, not her
+  mistake). ✅ **THE TICKET WAS ANSWERED 2026-08-21 AND THE ITEM IS CLOSED: the reason is TRAFFIC, they
+  invite reapplication, and they point her at applying to campaigns DIRECTLY. See the entry at the top.** ⚠️ **It gates PHOTOS too —
   Nordstrom is 6 of her 22 Edit items and runs on Impact.**
 - ▶ **THE ORDER TO PUT TO HER, unchanged and still right: AWIN next** (⚠️ small **REFUNDABLE** deposit to
   apply — their spam filter, refunded against the first commission; **verify the amount on the day**),
@@ -500,7 +681,9 @@ catching?"*
    is the properly-licensed image source. ⭐ **Also worth offering: browsing an advertiser's product links in
    the dashboard is a REAL WORKFLOW UPGRADE FOR HER TODAY, with no build at all** — she picks Edit pieces
    from a browsable catalog with photos and prices instead of hunting the retailer's website.
-6. ⭐ **PRODUCT FEEDS — her question this session was excellent and the answer should be reused verbatim:**
+6. ⭐ **PRODUCT FEEDS — her question was excellent and the answer should be reused verbatim** (⚠️ **but the
+   trigger named at the end of this item is GONE: Bloomingdale's declined 2026-08-21, so there is no
+   department store in the pipeline at all now. See the entry at the top of this file.**):
    *"once we had affiliate link approval that meant the app could have full access to their info and
    inventory?"* ▶ **SHE IS RIGHT THAT APPROVAL GIVES HER THE DATA. The app simply does not READ it yet.**
    `docs/product-feeds-plan.md` is shovel-ready. ⚠️ **BUT THE HONEST TIMING ANSWER HELD: feeds from DVF,
