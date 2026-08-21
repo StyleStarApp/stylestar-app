@@ -545,7 +545,8 @@ export default async (req) => {
   try {
     if (req.method === 'POST') {
       const body = await req.json();
-      const { email, data, token } = body;
+      const { data, token } = body;
+      let { email } = body;
 
       // --- Turning the share link on or off --------------------------------
       // Ownership is proved with her SAVE TOKEN, the same credential that
@@ -608,6 +609,19 @@ export default async (req) => {
         }), { status: 200, headers });
       }
 
+      // 🚨 THE SAME BUG AS THE SHARE BRANCH, AND FAR WORSE, because it failed
+      // SILENTLY: syncPrefsToServer() returns early when ss_email is missing,
+      // so on any device where a woman RESTORED her results — token yes,
+      // ss_email no — nothing she did ever reached Supabase. Not her wishlist,
+      // not her notes, not her preferences. No error, no sign, just a device
+      // quietly saving nothing (found 2026-08-22 when her own shared page came
+      // up empty while her phone showed a full list).
+      // ▶ The token carries the address. Derive it, exactly as the share branch
+      //   now does, and stop asking the client for an identity it already proved.
+      if (!email && token) {
+        const owner = readToken(token);
+        if (owner) email = owner;
+      }
       if (!email || !data) {
         return new Response(JSON.stringify({ error: 'Email and data required' }), { status: 400, headers });
       }
@@ -698,7 +712,9 @@ export default async (req) => {
       try { await addToMailerLite(key, mlName, restoreToken); } catch (e) {}
 
       // Hand the token back so this device can prove ownership on later saves.
-      return new Response(JSON.stringify({ success: true, token: restoreToken }), { status: 200, headers });
+      // The address rides back so a device that only ever had a token can
+      // record which account it belongs to (see _applyRestoredRecord).
+      return new Response(JSON.stringify({ success: true, token: restoreToken, email: key }), { status: 200, headers });
     }
 
     if (req.method === 'GET') {
