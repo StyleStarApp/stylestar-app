@@ -152,7 +152,22 @@ ok('no form fields', ro.inputs === 0);
 ok('no email ask', ro.stay === 0);
 ok('no save hearts', ro.save === 0);
 
-console.log('\n4. The disclosure sits ABOVE the first link (not a taste call)');
+console.log('\n4. The disclosure belongs to the LIST, not to the space above it');
+const gaps = await pg.evaluate(() => {
+  const r = s => document.querySelector('#s-sharelist ' + s).getBoundingClientRect();
+  const lead = r('.sh-lead'), disc = r('.sh-disc'), hdr = r('.sh-gh');
+  return { above: Math.round((disc.top - lead.bottom) * 10) / 10,
+           below: Math.round((hdr.top - disc.bottom) * 10) / 10 };
+});
+// ⚠️ Her 2026-08-15 call about the commission line, made again here: centred
+// between two things, a caption belongs to neither. Assert the RELATIONSHIP,
+// never the exact pixels, so a font tweak cannot fail it for nothing.
+ok('more air above the disclosure than below it', gaps.above > gaps.below,
+   gaps.above + 'px above / ' + gaps.below + 'px below');
+ok('and the whole cluster stays tight', gaps.above + gaps.below < 26,
+   gaps.above + gaps.below + 'px total');
+
+console.log('\n4b. The disclosure sits ABOVE the first link (not a taste call)');
 const above = await pg.evaluate(() => {
   const d = document.querySelector('#s-sharelist .sh-disc').getBoundingClientRect();
   const a = document.querySelector('#s-sharelist .sh-go').getBoundingClientRect();
