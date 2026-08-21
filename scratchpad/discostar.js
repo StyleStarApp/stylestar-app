@@ -120,7 +120,7 @@ for(const w of [390,375,360,320]){
     const cardCs=getComputedStyle(document.querySelector('#dsStar .wks-card'));
     const wrapCs=getComputedStyle(wrap);
     const wr=wrap.getBoundingClientRect();
-    return {star:R('#dsStar'), hiw:R('#s-wel .hm-hiw'), cta:R('#s-wel .hm-cta'), founder:R('#s-wel .hm-founder'),
+    return {star:R('#dsStar'), hiwline:R('#s-wel .hm-hiwline'), cta:R('#s-wel .hm-cta'), founder:R('#s-wel .hm-founder'),
       restore:R('#restoreSection'), card:R('#dsStar .wks-card'),
       frameBg:cs.backgroundImage, frameInset:[cs.top,cs.left,cs.right,cs.bottom].join(' '),
       cardBg:cardCs.backgroundColor, paper:getComputedStyle(document.querySelector('#s-wel .hm-mirror')).backgroundColor,
@@ -133,18 +133,33 @@ for(const w of [390,375,360,320]){
       pxH:Math.round((document.querySelector('#dsStar .wks-px')||{getBoundingClientRect:()=>({height:0})}).getBoundingClientRect().height),
       overflow:document.documentElement.scrollWidth>window.innerWidth};
   });
-  ok(r.star.top>=r.hiw.bot,`${w}: the Star sits AFTER How It Works (quiz keeps the top of the screen)`);
+  // ⚠️ UPDATED DELIBERATELY 2026-08-21, not silenced. She retired the How It
+  // Works 1-2-3 (her pick "B") after looking at the page critically, so the
+  // block this used to measure against no longer exists. The Star now follows
+  // the FOUNDER LINE. See .hm-hiwline in index.html for her reasoning.
+  ok(r.star.top>=r.founder.bot,`${w}: the Star sits AFTER the founder line`);
+  ok(r.hiwline&&r.hiwline.bot<=r.founder.top,`${w}: the one-line quiz reassurance sits above the founder line`);
   ok(r.star.bot<=r.restore.top,`${w}: the Star sits ABOVE the restore links`);
   ok(r.cta.bot<700,`${w}: the quiz CTA is still above the ~700px fold (${r.cta.bot})`);
-  ok(r.star.top>=690,`${w}: the Star costs NOTHING above the fold (top ${r.star.top})`);
+  // 🚨🚨 THIS ASSERTION IS DELIBERATELY INVERTED, 2026-08-21 — read before
+  // "fixing" it. It used to demand top>=690, i.e. that the Star cost NOTHING
+  // above a ~700px fold, because it sat below How It Works. Retiring that
+  // block raised the Star 702 -> 560, and THAT IS THE POINT OF HER CHANGE:
+  // a stranger now meets a real garment on her FIRST screen instead of
+  // scrolling to find one. The quiz CTA still leads, which is the thing that
+  // actually had to be protected, and the next assertion holds that line.
+  ok(r.star.top<700,`${w}: a REAL GARMENT reaches the first screen (top ${r.star.top})`);
+  ok(r.star.top>r.cta.bot,`${w}: ...but never above the quiz CTA — the screen's first job is untouched`);
   ok(!r.overflow,`${w}: no sideways scroll`);
   // the frame: gradient, real at paint time, never flattened, never antique
   ok(/linear-gradient/.test(r.frameBg),`${w}: the frame is a real GRADIENT at paint time (a flat mid-gold reads brown)`);
   ok(/FEEF98|254, 239, 152/i.test(r.frameBg),`${w}: it is the wb-chip's own bright gold ramp`);
   ok(!/207, 160, 46|138, 106, 20|#CFA02E|#8a6a14/i.test(r.frameBg),`${w}: NO antique gold anywhere in the frame`);
   ok(r.frameInset==='-7px -7px -7px -7px',`${w}: drawn at inset:-7px, so it costs ZERO height, got ${r.frameInset}`);
-  // ⚠️ NOT .hm-hiw: auto cross-axis margins make it a fit-content flex item, so
-  // it renders 236px wide whatever its stated max-width. .hm-founder fills the
+  // ⚠️ MEASURE AGAINST .hm-founder, never a sibling carrying margin:auto or its
+  // own side margin. The retired .hm-hiw rendered 236px against its stated 298
+  // because auto cross-axis margins make a flex item size to fit-content, and
+  // .hm-hiwline carries a 14px side margin of its own. .hm-founder fills the
   // mirror's content box, which is the edge the framed card should track.
   ok(Math.abs(r.framedL-r.founder.l)<=1&&Math.abs(r.framedR-r.founder.r)<=1,
      `${w}: the FRAMED outer edge fills the paper, flush with the founder line (${r.framedL}-${r.framedR} vs ${r.founder.l}-${r.founder.r})`);

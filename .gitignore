@@ -3,3 +3,10 @@
 # neither it nor its lockfile belongs in the repo.
 node_modules/
 package-lock.json
+
+# Retailer product photos pulled down so the render harnesses can serve them
+# locally (this sandbox's Chromium cannot reach retail CDNs). ⚠️ NEVER commit
+# these: the repo is public, and an affiliate approval licenses the APP to
+# display a retailer's photo by hotlinking, not this repo to redistribute a
+# copy of the file. scratchpad/starphoto.mjs re-fetches on demand.
+scratchpad/dvf-scarf.jpg
