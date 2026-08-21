@@ -1188,6 +1188,25 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-pick svg{width:9px;height:9px;fill:#F49AC1;display:block;flex:0 0 auto;transform:rotate(-11deg)}
 #s-wishlist .wl-pr{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E;margin-left:7px;text-transform:none}
 #s-wishlist .wl-go{flex:0 0 auto;font:600 11px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:9px 12px;text-decoration:none;white-space:nowrap}
+/* --- HER NOTE ON A PIECE (2026-08-22) -------------------------------------
+   The affordance is WORDS, not a pencil: "+ Add a note" can't be misread the
+   way a grey tab was (her mom, 2026-07-26). Gold ink because it is an
+   invitation, not a warning.
+   ⚠️ The note itself wears the SAME gold left rule as the shared page's
+   .sh-note, so her words look like her words in both places. Grep sh-note
+   before restyling either -- they are meant to match. */
+#s-wishlist .wl-row.hasnote{align-items:flex-start}
+#s-wishlist .wl-row.hasnote .wl-go{margin-top:2px}
+#s-wishlist .wl-addnote{display:inline-block;font:500 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6d20;margin-top:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
+#s-wishlist .wl-note{display:block;font:400 12.5px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:7px;padding-left:9px;border-left:2px solid #E0B84C}
+#s-wishlist .wl-ne{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#8a6d20;margin-left:8px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+#s-wishlist .wl-nedit{margin-top:8px}
+#s-wishlist .wl-nedit textarea{width:100%;font:400 12.5px/1.5 'Jost',sans-serif;color:#3a352c;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:8px 9px;resize:none;-webkit-appearance:none}
+#s-wishlist .wl-nedit textarea:focus{outline:none;border-color:#C8A060}
+#s-wishlist .wl-nrow{display:flex;align-items:center;gap:10px;margin-top:7px}
+#s-wishlist .wl-nsave{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1a1a1a;border:none;border-radius:999px;padding:8px 13px;cursor:pointer}
+#s-wishlist .wl-ncancel{font:500 11.5px/1 'Jost',sans-serif;color:#8a8272;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:3px 2px}
+#s-wishlist .wl-nleft{margin-left:auto;font:500 10.5px/1 'Jost',sans-serif;color:#8a8272}
 #s-wishlist .wl-del{flex:0 0 auto;color:#a8a294;font-size:21px;line-height:1;cursor:pointer;padding:2px 3px;-webkit-tap-highlight-color:transparent}
 #s-wishlist .wl-del:hover{color:#6b655a}
 /* Empty state: never a dead end -- it explains the feature AND offers the way in. */
@@ -7857,6 +7876,11 @@ function _normalizeWardrobe(d){
   }).map(function(x){
     var o={id:String(x.id),name:String(x.name),store:String(x.store||''),
            search:String(x.search||''),ts:Number(x.ts)||0};
+    // HER OWN WORDS about the piece (2026-08-22): size, colour, the occasion.
+    // Capped here as well as at the input, because this record also arrives
+    // from Supabase and from localStorage, both of which can be hand-edited.
+    // Escaped at render, never trusted into markup raw.
+    if(x.note)o.note=String(x.note).slice(0,WL_NOTE_MAX);
     // Cath's Edit picks are real product links, so they alone keep a stored URL
     // and price. Everything else rebuilds its link from store + search term.
     if(x.pick){o.pick=true;o.url=_wlSafeUrl(x.url);o.price=String(x.price||'');}
@@ -8967,6 +8991,67 @@ function wishToggle(id){
   if(added)_wlToast();
   _wlSyncServer();
 }
+// --- HER NOTE ON A PIECE (2026-08-22, item one of the shareable wishlist) ---
+// Her own words about a piece: her size, the colour she wants, the occasion.
+// ▶ WHY IT EARNS ITS PLACE, and it is not really about her own list: a note on
+//   a private wishlist is a memo to herself. A note on a list somebody is
+//   BUYING from is the difference between the right dress and the wrong size.
+//   That is why the share card teaches it a second time.
+// ⚠️ LABELLED IN WORDS ("+ Add a note"), never a bare pencil icon. The mom
+//   lesson, 2026-07-26: a control she cannot read is not a control. The same
+//   reasoning that put the word "Save" under the heart on a product card.
+var WL_NOTE_MAX=140;
+// The id whose note is open for editing, '' when none. Kept as STATE rather
+// than done with DOM surgery, so renderWishlist() stays the single render path
+// -- one place to read, and no half-updated row is possible.
+var _wlNoteOpen='';
+function _wlNoteBlock(it){
+  if(_wlNoteOpen===it.id){
+    return '<div class="wl-nedit">'
+      +'<textarea id="wlNoteIn" maxlength="'+WL_NOTE_MAX+'" rows="2" '
+      +'placeholder="Your size, the colour you want, what it&rsquo;s for."'
+      +' oninput="_wlNoteCount()">'+_esc(it.note||'')+'</textarea>'
+      +'<div class="wl-nrow">'
+      +'<button class="wl-nsave" onclick="wlNoteSave(\''+it.id+'\')">Save</button>'
+      +'<span class="wl-ncancel" role="button" onclick="wlNoteCancel()">Cancel</span>'
+      +'<span class="wl-nleft" id="wlNoteLeft"></span>'
+      +'</div></div>';
+  }
+  if(it.note)return '<span class="wl-note">'+_esc(it.note)
+    +'<span class="wl-ne" role="button" onclick="wlNoteEdit(\''+it.id+'\')">Edit</span></span>';
+  return '<span class="wl-addnote" role="button" onclick="wlNoteEdit(\''+it.id+'\')">+ Add a note</span>';
+}
+function _wlNoteCount(){
+  var t=document.getElementById('wlNoteIn'),l=document.getElementById('wlNoteLeft');
+  if(!t||!l)return;
+  var left=WL_NOTE_MAX-t.value.length;
+  // Only speaks up near the end -- a counter running the whole time reads as a
+  // limit being enforced rather than room being offered.
+  l.textContent=left<=30?left+' left':'';
+}
+function wlNoteEdit(id){
+  _wlNoteOpen=id;
+  renderWishlist();
+  var t=document.getElementById('wlNoteIn');
+  if(t){t.focus();try{t.setSelectionRange(t.value.length,t.value.length)}catch(e){}}
+  _wlNoteCount();
+}
+function wlNoteCancel(){_wlNoteOpen='';renderWishlist();}
+function wlNoteSave(id){
+  var t=document.getElementById('wlNoteIn');
+  // Collapse whitespace so a stray newline cannot stretch a row on the shared
+  // page, and cap again here: maxlength does not survive a paste on every browser.
+  var v=t?String(t.value).replace(/\s+/g,' ').trim().slice(0,WL_NOTE_MAX):'';
+  var i=_wlIndexOf(id);
+  if(i>=0){
+    if(v)_wlList()[i].note=v;
+    else delete _wlList()[i].note;   // clearing the box removes the note
+  }
+  _wlNoteOpen='';
+  saveWardrobeData();
+  renderWishlist();
+  _wlSyncServer();
+}
 function wishRemove(id){
   if(_wlIndexOf(id)<0)return;
   _wlList().splice(_wlIndexOf(id),1);
@@ -9031,7 +9116,9 @@ function renderWishlist(){
   if(!list.length){body.innerHTML=_wlEmptyHtml();_wlRenderAdd();_wlRenderStay();return;}
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
-  var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. Tap the <b>&times;</b> to take an item off your list.</div>'
+  var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. '
+   +'Tap <b>+ Add a note</b> on any piece to say your size, the colour you want, or what it&rsquo;s for. '
+   +'Tap the <b>&times;</b> to take an item off your list.</div>'
    +'<div class="wl-disclosure">Some links may earn a commission.</div>'
    +'<div class="wl-card">';
   list.forEach(function(it){
@@ -9044,14 +9131,19 @@ function renderWishlist(){
     else if(own&&it.url){url=_affUrl(_wlSafeUrl(it.url));exact=!!url;}
     var exactLink=!!url;
     if(!pick&&!url){try{url=getStoreUrl(it.store,it.name,it.search)}catch(e){url=''}}
-    h+='<div class="wl-row'+(pick?' pick':'')+(own?' own':'')+'">'
+    // ⚠️ Only a row that actually carries a note switches to top alignment.
+    // Doing it to every row would lift the ✕ and the Shop it button on a screen
+    // she has already blessed, to fix a problem those rows do not have.
+    var hasNote=!!(it.note||_wlNoteOpen===it.id);
+    h+='<div class="wl-row'+(pick?' pick':'')+(own?' own':'')+(hasNote?' hasnote':'')+'">'
       +'<span class="wl-del" role="button" title="Remove" aria-label="Remove '+_esc(it.name)+'" onclick="wishRemove(\''+it.id+'\')">&times;</span>'
       +'<div class="wl-b">'
       +(pick?'<span class="wl-pick"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Catherine&rsquo;s pick</span>':'')
       +(exact?'<span class="wl-own"><svg viewBox="0 0 24 24"><path d="'+_WL_HEART_PATH+'"/></svg>Your pick</span>':'')
       +'<span class="wl-nm">'+_esc(it.name)+'</span>'
       +(it.store?'<span class="wl-st">'+_esc(it.store)
-      +((pick||catx)&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span>':'')+'</div>'
+      +((pick||catx)&&it.price?'<span class="wl-pr">'+_esc(it.price)+'</span>':'')+'</span>':'')
+      +_wlNoteBlock(it)+'</div>'
       +(url?'<a class="wl-go" href="'+_esc(url)+'" target="_blank" rel="sponsored noopener">'+((pick||exact||(catx&&exactLink))?'Shop it':'Find it')+' &rarr;</a>':'')
       +'</div>';
   });
