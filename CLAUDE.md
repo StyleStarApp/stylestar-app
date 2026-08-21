@@ -134,6 +134,43 @@ written at `.gitignore` and at the top of `starphoto.mjs` so a future session do
   the FUNNEL (Quiz Started → Quiz Question → Quiz Completed → Product Click) is worth far more to her than
   the visitor count.
 
+### 📬 IMPACT ANSWERED THE TICKET — A REASON AT LAST, AND ONE GENUINELY NEW DOOR (2026-08-21)
+**The open item due ~27-29 August arrived early, and it is CLOSED.** ⭐ **HER SUPPORT TICKET WORKED: the
+08-20 decline listed no reasons at all (a broken template); this re-evaluation names one.** Same instinct
+that got Class 045 restored — push factually and firmly, and a real answer comes back.
+- ▶ **THE REASON, in their words: "the traffic on your domain, and/or your business strategies doesn't quite
+  meet the minimum requirements JUST YET."** ⚠️ **"Just yet" appears TWICE — a threshold, not a verdict**,
+  and they explicitly invite reapplication. **They will never give a number:** *"we cannot provide individual
+  feedback or specific selection criteria."* ▶ **Stop hunting for one.**
+- ⚠️ **"and/or your business strategies" IS HEDGING BOILERPLATE, DO NOT LET HER SPIRAL ON IT.** It is paired
+  with the real noun, *traffic on your domain*. **Nothing in the email criticises the app, the content, or
+  the fact that it is AI-powered** — a content-match failure would have been failed as exactly that.
+- 🚨⭐⭐ **THE ONE GENUINELY NEW THING, AND IT IS THEIR OWN ADVICE: "apply to some campaigns DIRECTLY to
+  increase your traffic and marketing presence and then reapply."** ▶▶ **SO THERE ARE TWO DOORS AT IMPACT
+  AND SHE HAS ONLY KNOCKED ON ONE** — this is the third time this file has found an Impact two-door split
+  (the first was partner vs Nordstrom Creators, 2026-08-19). **The MARKETPLACE is the browsable directory
+  and it declined her. A BRAND'S OWN affiliate programme is applied for on the BRAND'S website** (an
+  "Affiliates" / "Creator Program" link in their footer), **and the brand can run it on Impact regardless of
+  her Marketplace status.** ⚠️ **This is a READING of their wording, not a verified mechanism — test it on a
+  retailer she loves before promising it.** ⭐ It may put NORDSTROM back in reach, which matters: it is 6 of
+  her 22 Edit items and gates their photos.
+- ⭐⭐ **AND THE REFRAME THAT SHOULD BE GIVEN WITH IT: SHE IS ALREADY DOING WHAT IMPACT JUST TOLD HER TO DO,
+  ON A NETWORK THAT ALREADY SAID YES.** Rakuten approved her at NETWORK level (the higher bar), so applying
+  to individual Rakuten advertisers IS "applying to campaigns directly" — three have already said yes.
+  ▶ **Rakuten → Advertisers → Find New is free, has no clock, and smaller advertisers approve far more
+  readily than a department store.**
+- ▶ **THE ORDER FROM HERE:** (1) **Rakuten Find New, broadly, this week** · (2) **brand-direct affiliate
+  pages** · (3) **AWIN then CJ** — ⚠️ neither has ever declined her; verify AWIN's small REFUNDABLE deposit
+  on the day · (4) **reapply to Impact in 2-3 months WITH THE PLAUSIBLE SHARED DASHBOARD LINK.**
+- ⭐ **THE ASSET TO BUILD NOW, BEFORE IT IS NEEDED: turn on Plausible's SHAREABLE DASHBOARD** (site settings
+  → visibility; it can be password-protected). ▶ **Every rejection cited traffic, and her only answer today
+  is a self-reported number a stranger must take on trust. In three weeks it becomes a LIVE LINK showing
+  real visitors, a real quiz-completion rate and real product clicks.** That is precisely the gap that cost
+  her Bloomingdale's, and it is a minute's work.
+- ⚠️ **DO NOT REAPPLY ANYWHERE THIS WEEK.** Nothing has changed yet, so the answer would be identical, and a
+  second no from the same door is harder to come back from than a first. **Give it 3-4 weeks of tester
+  traffic.**
+
 ### 🚨⭐⭐ THE CIRCLE THIS DECLINE EXPOSED, AND IT IS THE STRATEGIC FINDING — SAY IT TO HER PLAINLY
 Three doors have now closed and **every one of them named TRAFFIC**: Impact at network level (08-20, no
 reasons given), Shopbop (predicted), and now Bloomingdale's. ▶ **Put her stated sequencing next to that and
@@ -342,8 +379,9 @@ Everything needed is already decided and scattered; **collected here so tomorrow
   this is ONE advertiser, reapplyable, and her publisher status and three earning advertisers are untouched.
   ▶ **Contacting Bloomingdale's now is LOW VALUE** — if the reason is traffic there is nothing to say yet.
   **Reapply from a stronger position; it costs nothing.**
-- ❌ **IMPACT — DECLINED at NETWORK level 2026-08-20**, with **no reasons listed in the email** (a broken
-  template, not her mistake). **Support ticket filed; answer due ~27-29 August.** ⚠️ **It gates PHOTOS too —
+- ❌ **IMPACT — DECLINED at NETWORK level 2026-08-20**, no reasons listed (a broken template, not her
+  mistake). ✅ **THE TICKET WAS ANSWERED 2026-08-21 AND THE ITEM IS CLOSED: the reason is TRAFFIC, they
+  invite reapplication, and they point her at applying to campaigns DIRECTLY. See the entry at the top.** ⚠️ **It gates PHOTOS too —
   Nordstrom is 6 of her 22 Edit items and runs on Impact.**
 - ▶ **THE ORDER TO PUT TO HER, unchanged and still right: AWIN next** (⚠️ small **REFUNDABLE** deposit to
   apply — their spam filter, refunded against the first commission; **verify the amount on the day**),
