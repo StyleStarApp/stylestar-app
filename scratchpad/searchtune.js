@@ -250,11 +250,16 @@ const counts = await page.evaluate(() => ({
   w: Object.values(STORES).filter(s => s.w).length,
   gp: Object.values(STORES).filter(s => s.gp).length
 }));
-// 2026-08-12: Kate Spade removed at Cath's own call — a brand she wouldn't
-// recommend to a client has no place in her curated list. 101 → 100.
-// Then 100 → 101 on 2026-08-21: Diane von Furstenberg, added after Rakuten
-// approved her, with every dimension hers.
-ok('now 101 stores (Kate Spade out 08-12, DVF in 08-21)', counts.stores === 101, String(counts.stores));
+// This restated a number that has moved four times (Kate Spade out, DVF in,
+// Vilebrequin in...). ▶ The claim actually worth guarding is the STANDING RULE:
+// a store added to STORES must ALSO reach SEARCH_DOMAINS in style-ai.js, or the
+// stylist's search simply cannot see inside it and nothing anywhere complains.
+// Derived from both files, so it never goes stale and it catches the real bug.
+// (storedepth.js keeps a hardcoded total as the deliberate appear/vanish tripwire.)
+const SRV_LIST = (fs.readFileSync(path.join(ROOT, 'netlify/functions/style-ai.js'), 'utf8')
+  .match(/const SEARCH_DOMAINS\s*=\s*\[([\s\S]*?)\];/)[1].match(/'[^']+'/g) || []).length;
+ok('every store in the table also reaches SEARCH_DOMAINS', counts.stores === SRV_LIST,
+   'STORES ' + counts.stores + ' vs SEARCH_DOMAINS ' + SRV_LIST);
 // 2026-08-12: Abercrombie moved from keyword-scoped-never (it was unscoped)
 // into param-scoped, via her verified gender facet — gp count 5 → 6.
 ok('39 keyword-scoped + 6 param-scoped', counts.w === 39 && counts.gp === 6, counts.w + ' / ' + counts.gp);
