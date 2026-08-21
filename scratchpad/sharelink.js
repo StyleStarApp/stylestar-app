@@ -111,6 +111,36 @@ r = await call('GET', { query: '?token=' + encodeURIComponent(TOKEN) });
 ok('restoring by token returns the address it belongs to',
    (await body(r)).email === 'cath@example.com');
 
+console.log('\n2c. THE SILENT ONE: a save with a token but no email must WORK');
+// 🚨 The worse half of the same bug, and the reason her shared page came up
+// empty while her phone showed a full list: syncPrefsToServer() returned early
+// when ss_email was missing, so on a device where she had RESTORED, nothing
+// ever reached Supabase. No error, no sign — a phone quietly saving nothing.
+r = await call('POST', { body: { token: TOKEN, data: { ...PROFILE,
+  wardrobe: { items: {}, wishlist: WISH, listNote: 'saved with no email at all' } } } });
+ok('a save with NO email field succeeds', r.status === 200);
+ok('...and it landed on the right account',
+   (DB.get('cath@example.com').wardrobe.listNote || '') === 'saved with no email at all');
+ok('...and the response hands the address back to the device',
+   (await body(r)).email === 'cath@example.com');
+r = await call('POST', { body: { email: '', token: TOKEN, data: { ...PROFILE,
+  wardrobe: { items: {}, wishlist: WISH, listNote: 'empty email too' } } } });
+ok('an EMPTY email works the same way', r.status === 200 &&
+   DB.get('cath@example.com').wardrobe.listNote === 'empty email too');
+r = await call('POST', { body: { data: PROFILE } });
+ok('but no email AND no token is still refused', r.status === 400);
+r = await call('POST', { body: { token: 'not-a-real-token', data: PROFILE } });
+ok('...and so is a junk token with no email', r.status === 400);
+// ▶ The whole point: what she saves is what her shared page shows.
+r = await call('GET', { query: '?share=' + encodeURIComponent(SHARE1) });
+out = await body(r);
+ok('the shared page shows the list that token-only save wrote',
+   Array.isArray(out.list) && out.list.length === 4, JSON.stringify(out.list && out.list.length));
+// ⚠️ Put the profile back: this section deliberately overwrites listNote, and
+// section 3b below asserts the original. A test that leaves the fixture dirty
+// fails its neighbour and looks like a code bug (it did, on the first run).
+await call('POST', { body: { email: 'cath@example.com', token: TOKEN, data: PROFILE } });
+
 console.log('\n3. The shared page gets the list, and only the list');
 r = await call('GET', { query: '?share=' + encodeURIComponent(SHARE1) });
 out = await body(r);

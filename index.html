@@ -6364,6 +6364,10 @@ function saveUserRecord(email,data){
   }).then(function(res){
     return res.json().then(function(j){
       if(j&&j.token)_setSsToken(j.token);
+      // Backfill the address on a device that never recorded one. This is what
+      // repairs a phone that restored BEFORE the fix shipped: the first save
+      // after it teaches the device which account it is.
+      if(j&&j.email){try{if(!localStorage.getItem('ss_email'))localStorage.setItem('ss_email',String(j.email))}catch(e){}}
       return {ok:res.ok,status:res.status,json:j};
     }).catch(function(){return {ok:res.ok,status:res.status,json:null}});
   });
@@ -6980,7 +6984,12 @@ function _renderPrefRecap(){
 // it stays in sync. Never blocks the UI and never wipes existing data.
 async function syncPrefsToServer(){
   let email='';try{email=localStorage.getItem('ss_email')||''}catch(e){}
-  if(!email||!email.includes('@'))return;
+  // 🚨 THIS RETURN USED TO BE UNCONDITIONAL ON ss_email, AND IT FAILED SILENTLY.
+  // A woman who restored her results has a token but no ss_email, so every
+  // save from that device did nothing at all — no error, no sign. Her wishlist,
+  // her notes and her preferences simply never left the phone. A save token is
+  // proof enough; the server reads the address out of it.
+  if((!email||!email.includes('@'))&&!_ssToken())return;
   try{
     await saveUserRecord(email,buildFullUserData());
   }catch(e){}
