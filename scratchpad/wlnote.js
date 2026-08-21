@@ -92,7 +92,7 @@ ok('a box opens', ed.open);
 ok('...focused, so she can just type', ed.focused);
 ok('...capped at 140', ed.max === '140');
 ok('...with Save and Cancel', ed.save && ed.cancel);
-ok('...and a placeholder that says what to write', /size|colour|for/i.test(ed.ph || ''));
+ok('...and a placeholder that says what to write', /size|color|for/i.test(ed.ph || ''));
 await pg.fill('#wlNoteIn', 'Size 8. This is the one for the wedding in June.');
 ok('tapped .wl-nsave', await tap(pg, '.wl-nsave'));
 await pg.waitForTimeout(250);

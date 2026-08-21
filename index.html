@@ -5902,7 +5902,7 @@ function _storeListForPrompt(){
     // send her somewhere for butter yellow" is an instruction about data the AI
     // cannot see. Only the informative ends are named; the middle says nothing,
     // which keeps the list short.
-    const col=s.d[_DIM_COL]>=8?'; great for colour':(s.d[_DIM_COL]<=4?'; mostly neutrals':'');
+    const col=s.d[_DIM_COL]>=8?'; great for color':(s.d[_DIM_COL]<=4?'; mostly neutrals':'');
     // Catalog DEPTH, Cath's own call 2026-08-15 (19 of 100 stores). Same
     // reasoning as the colour scores above: "prefer a deep store for a
     // specific search" is an instruction about data the model cannot see
@@ -6087,7 +6087,7 @@ function _shopRules(mode){
     // dresses, because the store simply does not stock that colour in that
     // piece. Cath's own reasoning for liking department stores is the fix here:
     // when the odds are long, a big multi-brand store has far better ones.
-    '- If she is genuinely shopping by a specific or unusual COLOUR (see the color rules above — not every piece is), send her where that colour actually lives. NEVER choose a store marked "mostly neutrals" for one. Pick a store marked "great for colour", or a large multi-brand store where the odds are far better. A precise colour at a store that stocks neutrals will show her nothing.\n';
+    '- If she is genuinely shopping by a specific or unusual COLOR (see the color rules above — not every piece is), send her where that color actually lives. NEVER choose a store marked "mostly neutrals" for one. Pick a store marked "great for color", or a large multi-brand store where the odds are far better. A precise color at a store that stocks neutrals will show her nothing.\n';
 }
 // ▶ 2026-08-12, her live-testing catch: the old bare "Prioritize her color
 // preferences" bullet was pushing one of her exact loved colors into EVERY
@@ -9009,7 +9009,7 @@ function _wlNoteBlock(it){
   if(_wlNoteOpen===it.id){
     return '<div class="wl-nedit">'
       +'<textarea id="wlNoteIn" maxlength="'+WL_NOTE_MAX+'" rows="2" '
-      +'placeholder="Your size, the colour you want, what it&rsquo;s for."'
+      +'placeholder="Your size, the color you want, what it&rsquo;s for."'
       +' oninput="_wlNoteCount()">'+_esc(it.note||'')+'</textarea>'
       +'<div class="wl-nrow">'
       +'<button class="wl-nsave" onclick="wlNoteSave(\''+it.id+'\')">Save</button>'
@@ -9117,7 +9117,7 @@ function renderWishlist(){
   // The disclosure rides with the links: it is rendered here, not in the markup,
   // so it is never shown on an empty page where there is nothing to disclose.
   var h='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. '
-   +'Tap <b>+ Add a note</b> on any piece to say your size, the colour you want, or what it&rsquo;s for. '
+   +'Tap <b>+ Add a note</b> on any piece to say your size, the color you want, or what it&rsquo;s for. '
    +'Tap the <b>&times;</b> to take an item off your list.</div>'
    +'<div class="wl-disclosure">Some links may earn a commission.</div>'
    +'<div class="wl-card">';

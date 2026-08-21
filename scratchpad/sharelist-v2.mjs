@@ -23,7 +23,7 @@ const crown = inner => `<div class="wl-crown">
 
 const ROWS = [
   { k:'x', name:'Diane von Furstenberg Flag Scarf — Myrtle Berry', store:'Diane von Furstenberg', price:'$198',
-    note:'Any colour but the red one!' },
+    note:'Any color but the red one!' },
   { k:'x', name:'Black studded shoulder bag', store:'Valentino', price:'$1,890',
     note:'Black hardware if they have it.' },
   { k:'x', name:'FARM Rio Pink Garden Terrace Maxi Dress', store:'FARM Rio', price:'$360',
@@ -72,7 +72,7 @@ const BASE = `*{box-sizing:border-box;margin:0;padding:0}
   .nm{display:block;font:600 14px/1.35 'Jost',sans-serif;color:#26221c}
   .st{display:block;font:500 10.5px/1.35 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8272;margin-top:3px}
   .pr{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#C8971E;margin-left:7px;text-transform:none}
-  /* HER OWN words about the piece: size, colour, occasion. Marked with a gold
+  /* HER OWN words about the piece: size, color, occasion. Marked with a gold
      rule so it reads as an annotation, never as the retailer's copy. */
   .onote{display:block;font:400 12.5px/1.5 'Jost',sans-serif;color:#5a554c;margin-top:7px;
     padding-left:9px;border-left:2px solid #E0B84C}

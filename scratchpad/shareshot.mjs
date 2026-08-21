@@ -11,7 +11,7 @@ const TOK = 'AbCd1234_-EfGh5678ijKlMnOpQrSt';
 const LIST = [
   { name: 'Diane von Furstenberg Flag Scarf — Myrtle Berry', store: 'Diane von Furstenberg',
     search: 'silk scarf', exact: true, url: 'https://dvf.com/products/flag-scarf', price: '$198',
-    note: 'Any colour but the red one!' },
+    note: 'Any color but the red one!' },
   { name: 'FARM Rio Pink Garden Terrace Maxi Dress', store: 'FARM Rio', search: 'maxi dress',
     exact: true, url: 'https://www.farmrio.com/products/maxi-dress', price: '$360',
     note: 'Size 8. This is the one for the wedding in June.' },

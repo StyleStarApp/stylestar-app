@@ -15,7 +15,7 @@ await new Promise(r=>srv.listen(PORT,r));
 const HEART='M12 21s-8.5-5.4-8.5-11A4.7 4.7 0 0 1 12 7a4.7 4.7 0 0 1 8.5 3c0 5.6-8.5 11-8.5 11z';
 const OPEN_NOTE = "I'm a size 8 in dresses and a medium in tops. I love green and anything with a print, and please nothing red! The FARM Rio dress is for the June wedding, so that one matters most.";
 const ROWS=[
-  {n:'Diane von Furstenberg Flag Scarf — Myrtle Berry',s:'Diane von Furstenberg',p:'$198',note:'Any colour but the red one!',x:1},
+  {n:'Diane von Furstenberg Flag Scarf — Myrtle Berry',s:'Diane von Furstenberg',p:'$198',note:'Any color but the red one!',x:1},
   {n:'FARM Rio Pink Garden Terrace Maxi Dress',s:'FARM Rio',p:'$360',note:'Size 8. This is the one for the wedding in June.',x:1},
   {n:'White Linen Button-Front Blouse',s:'J.Crew',note:'Size medium, I like them a little oversized.',x:0},
   {n:'Tan Pointed Ballet Flats',s:'Nordstrom',note:'',x:0}
@@ -88,10 +88,10 @@ const BASE=`*{box-sizing:border-box;margin:0;padding:0}
  .f2{display:inline-block;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#1a1a1a;border:1px solid #D8A52E;padding:11px 16px}
  .legal{font:400 11px/1.5 'Jost',sans-serif;color:#8a8272;margin-top:14px}`;
 
-const lead='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. Tap <b>+ Add a note</b> on any piece to say your size, the colour you want, or what it&rsquo;s for.</div>';
+const lead='<div class="wl-lead">Here&rsquo;s everything you saved, ready when you are. Tap <b>+ Add a note</b> on any piece to say your size, the color you want, or what it&rsquo;s for.</div>';
 const ownList=`<div class="wl-card">${ROWS.map(ownRow).join('')}</div>`;
 const openNoteEmpty=`<div class="onote"><div class="ot">A note for whoever is shopping</div>
-  <div class="ob ph">Sizes, colours, an occasion &mdash; anything you&rsquo;d like them to know.</div>
+  <div class="ob ph">Sizes, colors, an occasion &mdash; anything you&rsquo;d like them to know.</div>
   <span class="oe">+ Write a note</span></div>`;
 const openNoteFull=`<div class="onote"><div class="ot">A note for whoever is shopping</div>
   <div class="ob">${OPEN_NOTE}</div><span class="oe">Edit</span></div>`;
