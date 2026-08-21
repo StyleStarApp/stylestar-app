@@ -36,7 +36,9 @@ const u = await pg.evaluate(() => ({
   empty:    _affUrl(''),
   js:       _affUrl('javascript:alert(1)'),
   junk:     _affUrl('not a url at all'),
-  nul:      _affUrl(null)
+  nul:      _affUrl(null),
+  storeKeys:Object.keys(STORES),
+  offTable: _affUrl('https://www.vilebrequin.com/us/en/product/IAACG200-003')
 }));
 ok('publisher id is hers', u.id === 'jZNkkinrr1k', u.id);
 // DERIVED, not restated: this named the two advertisers she had at the time and
@@ -51,6 +53,16 @@ ok('every advertiser is a bare host mapped to a numeric MID',
 ok('FARM Rio mid 44912', u.mids['farmrio.com'] === '44912');
 ok('DVF mid 53590', u.mids['dvf.com'] === '53590');
 ok('Vilebrequin mid 43322', u.mids['vilebrequin.com'] === '43322');
+// 🚨 THE ASYMMETRY IS DELIBERATE AND FRAGILE, so it is pinned here. Vilebrequin
+// is an approved advertiser that is NOT in the STORES table — her call, because
+// their search returns a false negative on a product they stock — yet its Edit
+// item and its Star of the Week entry must still EARN. That works only because
+// _affUrl matches by HOSTNAME, never by store key. ▶ A future tidy-up that
+// "aligns" _AFF_MID with STORES would silently stop her being paid on every
+// Vilebrequin tap, with nothing on screen looking any different.
+ok('an approved advertiser that is NOT in the store table still earns',
+   !u.storeKeys.includes('Vilebrequin') && /mid=43322&murl=/.test(u.offTable),
+   'inTable=' + u.storeKeys.includes('Vilebrequin') + '  url=' + u.offTable);
 ok('a DVF url is wrapped', /click\.linksynergy\.com\/deeplink\?id=jZNkkinrr1k&mid=53590&murl=/.test(u.dvf), u.dvf);
 ok('a FARM Rio url is wrapped', /mid=44912&murl=/.test(u.farm), u.farm);
 ok('the destination survives, encoded', decodeURIComponent(u.dvf.split('murl=')[1]) === 'https://www.dvf.com/search?q=wrap%20dress');
