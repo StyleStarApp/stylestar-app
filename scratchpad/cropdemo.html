@@ -1,0 +1,34 @@
+<!doctype html><meta charset="utf-8">
+<style>body{margin:0;background:#fff}canvas{display:block}</style>
+<canvas id="out" width="1160" height="2060"></canvas>
+<script>
+const c=document.getElementById('out'),x=c.getContext('2d');
+const img=new Image(); img.src='/scratchpad/share-F-motto-line-silverband-serif-fold-ig916.png';
+img.onload=()=>{
+  x.fillStyle='#fff';x.fillRect(0,0,1160,2060);
+  const X=40,Y=80,W=1080,H=1920;
+  x.drawImage(img,X,Y,W,H);
+
+  // what an Instagram FEED post keeps: the tallest it allows is 4:5, so from a
+  // 1080x1920 card it shows 1080x1350 and throws the rest away
+  const keep=1350, top=Y+(H-keep)/2;
+  x.fillStyle='rgba(255,255,255,.78)';
+  x.fillRect(X,Y,W,top-Y);
+  x.fillRect(X,top+keep,W,Y+H-(top+keep));
+  x.setLineDash([16,12]);x.lineWidth=4;x.strokeStyle='#C0392B';
+  x.strokeRect(X+2,top,W-4,keep);
+  x.setLineDash([]);
+
+  x.fillStyle='#C0392B';x.font='600 30px system-ui,sans-serif';x.textAlign='left';
+  x.fillText('what an Instagram FEED post would keep',X+18,top+44);
+  x.fillStyle='#7a7a7a';x.font='600 28px system-ui,sans-serif';
+  x.fillText('cut off in the feed',X+18,Y+52);
+  x.fillText('cut off in the feed',X+18,Y+H-24);
+
+  x.fillStyle='#111';x.font='700 34px system-ui,sans-serif';x.textAlign='center';
+  x.fillText('The whole card = an Instagram STORY  (1080 x 1920)',580,52);
+  x.fillStyle='#C0392B';x.font='600 30px system-ui,sans-serif';
+  x.fillText('The red box = an Instagram FEED post  (1080 x 1350)',580,2035);
+  window.__ready=true;
+};
+</script>
