@@ -12121,21 +12121,70 @@ function buildCardBlob(source,callback){
 
     ctx.textAlign='center';ctx.textBaseline='alphabetic';
 
-    // ── the tail, laid out BOTTOM-UP ───────────────────────────────────────
-    /* Every collision while designing this came from one mistake: pieces
-       positioned by fixed offsets from the TOP while the foot was pinned to the
-       BOTTOM, so anything that grew in the middle walked through them. The tail
-       is a stack: each row declares its height, the stack lays out from the
-       bottom edge upward, and it reports the ceiling the rest must respect.
-       Overlap is impossible by construction rather than by tuning. */
+    /* ── LAYOUT, IN ONE PASS AND IN THIS ORDER ───────────────────────────────
+       Every collision on this card came from one mistake: pieces positioned by
+       fixed offsets from the TOP while the foot was pinned to the BOTTOM, so
+       anything that grew in the middle walked through them. So: measure the tail,
+       measure the block, work out the air, THEN draw. Nothing is positioned
+       before everything is known, and overlap is impossible by construction.
+
+       ⚠️ AIR IS SPENT ON EVERY SEAM, TOP AND BOTTOM. An earlier version spent it
+       only on the four seams of the upper block, and the card then MEASURED as
+       balanced by centre of mass while READING bottom-heavy — because one huge
+       archetype name balances the WEIGHT while the bottom carries twelve lines of
+       text to the top's five, in less space:
+           top half   5 rows, gaps of 269px and 163px, density 23.5
+           bottom    12 rows, biggest gap 111px,       density 25.8
+       ▶ HEAVINESS IS DENSITY, NOT CENTRE OF MASS. A centroid can sit dead centre
+       while one half breathes and the other is crowded. Measure rows and gaps. */
+    const FOOT_MARGIN=150,TOP_MARGIN=92;   // her call: the logo comes up
+
+    // 1. the tail's natural height
+    ctx.font='italic 400 34px "Lora", serif';
+    const promiseLines=wrap('Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a real personal stylist.',W-240);
+    const promiseH=promiseLines.length*46+18;
+    const tailBase=58+40+promiseH+92+52;
+
+    // 2. the upper block's natural height, with the motto shrinking to fit
+    /* Her generated motto is capped at 95 chars by the prompt and needs 3 lines,
+       but a save from before mottos existed falls back to a portrait excerpt of
+       up to 140 chars, which can run to six. That is the ONE path a real woman
+       could hit that no design render ever did, and a card set a point smaller is
+       far better than one that overlaps. */
+    const LOGO_W=196,LOGO_H=LOGO_W*312/296;
+    const words=arch.split(' ');
+    const head=words[0],rest=words.slice(1).join(' ')||words[0];
+    const fsHead=104;
+    const fs=fitFont(rest,'"DM Serif Display", serif',116,58,W-190);
+    const H_LOGO=LOGO_H+72,H_OVER=54,H_NAME=fsHead*1.02+fs*1.06+34,
+          H_DIV=96,H_NOT=notes.length?(74+notes.length*46):0;
+    const room=H-TOP_MARGIN-FOOT_MARGIN-tailBase;
+    let ms=46,ml,H_MOT,blockH;
+    for(;;){
+      ctx.font='italic 400 '+ms+'px "Lora", serif';
+      ml=wrap('“'+quote+'”',W-300);
+      H_MOT=ml.length*(ms+16)+34;
+      blockH=H_LOGO+H_OVER+H_NAME+H_DIV+H_MOT+H_NOT;
+      if(blockH<=room||ms<=30)break;
+      ms-=2;
+    }
+
+    // 3. the air, shared equally across all eight seams
+    /* ⚠️ Capped at 52px: past that the pieces stop reading as one composition and
+       start reading as eight separate things. Whatever is left over falls into the
+       gap above the tail rule, which is the seam between HER half of the card and
+       the invitation half — the one place a large gap is doing a job. */
+    const SEAMS=8;
+    const AIR=Math.min(52,Math.max(0,room-blockH)/SEAMS);
+
+    // 4. build the tail, each row carrying its share of the air BELOW it
     const rows=[];
     const push=function(h,draw){rows.push({h:h,draw:draw})};
-
     push(58,function(y){
       ctx.fillStyle=BLACK;ctx.font='54px "DM Serif Display", serif';
       ctx.fillText('stylestar.app',W/2,y+46);
     });
-    push(40,function(y){
+    push(40+AIR,function(y){
       ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
       ctx.beginPath();
       ctx.moveTo(W/2-120,y+20);ctx.lineTo(W/2-14,y+20);
@@ -12143,71 +12192,27 @@ function buildCardBlob(source,callback){
       ctx.fillStyle=gold;ctx.beginPath();ctx.arc(W/2,y+20,7,0,7);ctx.fill();
     });
     /* HER SENTENCE, word for word. "of 20 years" was cut on her instruction
-       ("I feel like we already say it a lot") and "a REAL personal stylist" is
-       her own replacement — the stronger claim here, because the objection a
-       stranger brings to a style app is not "is she experienced" but "is this
-       just an algorithm", which is Sally's whole note answered in one word.
+       ("I feel like we already say it a lot") and "a REAL personal stylist" is her
+       own replacement — the stronger claim here, because the objection a stranger
+       brings to a style app is not "is she experienced" but "is this just an
+       algorithm", which is Sally's whole note answered in one word.
        ⚠️ There is deliberately NO separate founder byline: this sentence carries
-       the claim, and running both said "personal stylist" twice in a row.      */
-    ctx.font='italic 400 34px "Lora", serif';
-    const promise=wrap('Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a real personal stylist.',W-240);
-    push(promise.length*46+18,function(y){
+       the claim, and running both said "personal stylist" twice in a row. */
+    push(promiseH+AIR,function(y){
       ctx.fillStyle=BLACK;ctx.font='italic 400 34px "Lora", serif';
-      promise.forEach(function(t,i){ctx.fillText(t,W/2,y+40+i*46)});
+      promiseLines.forEach(function(t,i){ctx.fillText(t,W/2,y+40+i*46)});
     });
-    push(92,function(y){
+    push(92+AIR,function(y){
       ctx.fillStyle=BLACK;ctx.font='54px "DM Serif Display", serif';
       ctx.fillText('What’s your Style Star?',W/2,y+62);
     });
-    push(52,function(y){
+    push(52+AIR,function(y){
       ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
       ctx.beginPath();ctx.moveTo(W/2-110,y+26);ctx.lineTo(W/2+110,y+26);ctx.stroke();
     });
 
-    /* ⚠️ FOOT_MARGIN is not decoration. Measured, the tail was ending 1px off
-       the frame while the logo had 66px of air above it, which is exactly the
-       bottom-heaviness she spotted by eye. */
-    const FOOT_MARGIN=150,TOP_MARGIN=92;   // her call: the logo comes up
-    const tailH=rows.reduce(function(a,r){return a+r.h},0);
-    const ceiling=H-FOOT_MARGIN-tailH;
-
-    // ── the upper block MEASURES ITSELF, then centres in the room left over ──
-    // so the card balances at any height instead of collecting its slack in one
-    // hole in the middle (300px at this size, before the fix)
-    const LOGO_W=196,LOGO_H=LOGO_W*312/296;
-    const words=arch.split(' ');
-    const head=words[0],rest=words.slice(1).join(' ')||words[0];
-    const fsHead=104;
-    const fs=fitFont(rest,'"DM Serif Display", serif',116,58,W-190);
-    /* The motto SHRINKS TO FIT rather than overflowing. Her generated motto is
-       capped at 95 chars by the prompt and needs 3 lines, which leaves ~248px
-       spare — but a save from before mottos existed falls back to a portrait
-       excerpt of up to 140 chars, and that can run to six lines. Without this
-       the block would quietly draw through the tail.
-       ⚠️ A card that overlaps is worse than one set a point smaller, and this
-       is the ONE path a real woman could hit that the design renders never did. */
-    const H_LOGO=LOGO_H+72,H_OVER=54,H_NAME=fsHead*1.02+fs*1.06+34,
-          H_DIV=96,H_NOT=notes.length?(74+notes.length*46):0;
-    let ms=46,ml,H_MOT,blockH;
-    for(;;){
-      ctx.font='italic 400 '+ms+'px "Lora", serif';
-      ml=wrap('“'+quote+'”',W-300);
-      H_MOT=ml.length*(ms+16)+34;
-      blockH=H_LOGO+H_OVER+H_NAME+H_DIV+H_MOT+H_NOT;
-      if(blockH<=ceiling-TOP_MARGIN||ms<=30)break;
-      ms-=2;
-    }
-    /* ⚠️ Her catch: "too much white space above the logo". Centring the block in
-       the leftover room put HALF the slack on top of the logo, which reads as a
-       hole rather than as balance. The logo is anchored high now and the slack is
-       shared out BETWEEN the elements, so the card fills evenly top to bottom.
-       ⚠️ AIR is capped: past ~64px the pieces stop reading as one composition and
-       start reading as six separate things. Any slack left over falls into the
-       gap above the tail rule, which is the seam between HER half of the card and
-       the invitation half, and is the right place for it. */
-    const AIR=Math.min(64,Math.max(0,(ceiling-TOP_MARGIN-blockH)/4));
+    // 5. draw the upper block from the top, spending its four seams
     let y=TOP_MARGIN;
-
     const src=logoCut||logo;
     if(src&&(src.width||src.naturalWidth)){
       const nw=src.width||src.naturalWidth,nh=src.height||src.naturalHeight;
@@ -12242,10 +12247,10 @@ function buildCardBlob(source,callback){
     if(notes.length){
       ctx.fillStyle=TAUPE;ctx.font='600 24px "Jost", sans-serif';
       trackedText('WITH NOTES OF',W/2,y+26,7);
-      /* STACKED, not side by side (her call). It also removes the shrink-to-fit
-         loop's worst case: the two longest names together ran 40 chars and drove
-         the type down to fit one line, where stacked each name gets the full
-         width and holds its size. */
+      /* STACKED, not side by side (her call). It also removed a real weakness:
+         side by side the two longest names ran 40 chars together and drove the
+         shrink-to-fit loop down to keep them on one line; stacked, each gets the
+         full width and holds its size. */
       const short=notes.map(function(n){return String(n).replace(/^The\s+/i,'').toUpperCase()});
       ctx.fillStyle=BLACK;
       let ns=32;ctx.font='600 '+ns+'px "Jost", sans-serif';
@@ -12255,6 +12260,7 @@ function buildCardBlob(source,callback){
       short.forEach(function(n,i){trackedText(n,W/2,y+82+i*46,3)});
     }
 
+    // 6. the tail, from the bottom edge upward
     let ty=H-FOOT_MARGIN;
     rows.forEach(function(r){ty-=r.h;r.draw(ty)});
   }

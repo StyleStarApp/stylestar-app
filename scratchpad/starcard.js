@@ -169,9 +169,23 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     }
     ok(!bleed, name+': no text bleeds into the frame');
 
-    // the address must survive — it is the entire point of the card
-    const footInk=rows.slice(rows.length-260,rows.length-120).reduce((a,v)=>a+v,0);
-    ok(footInk>200, name+': the foot (address + rule) is drawn');
+    /* The address must survive — it is the entire point of the card.
+       ⚠️ DERIVED, NOT A FIXED WINDOW. This used to sample a hardcoded band near
+       the bottom, and it went stale the moment the layout gained air: the probe
+       kept pointing at the same pixels while the content moved, so six of the
+       longest names "lost their address" when nothing of the sort had happened.
+       Every fixed pixel probe in this suite has now broken at least once for
+       exactly this reason. Find the LAST ink band and assert about THAT. */
+    let lastInk=-1;
+    for(let i=rows.length-1;i>=0;i--) if(rows[i]>0){lastInk=i;break}
+    ok(lastInk>-1, name+': the card has ink at all');
+    const bottomGap=rows.length-1-lastInk;
+    ok(bottomGap>=20&&bottomGap<=140,
+       name+': the address sits near the foot, '+bottomGap+'px off the paper edge');
+    let bandTop=lastInk;
+    while(bandTop>0&&rows[bandTop-1]>0)bandTop--;
+    const addressInk=rows.slice(bandTop,lastInk+1).reduce((a,v)=>a+v,0);
+    ok(addressInk>400, name+': the address is fully drawn ('+addressInk+' ink)');
   }
 
   // ── Part 3: the size decision, pinned ─────────────────────────────────────
