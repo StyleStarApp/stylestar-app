@@ -1116,7 +1116,11 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    action would be lying. */
 #s-shopstyle .sa-chev{width:15px;height:15px;vertical-align:-2px;margin-left:5px;display:inline-block}
 #s-shopstyle #ssAsk.open .sa-chev{display:none}
-#s-shopstyle #ssAsk.open .sa-vox{cursor:default;padding-bottom:6px;margin-bottom:6px}
+/* Her call 2026-08-22: once it opens, the box should sit RIGHT under the line it
+   belongs to. Safe to take the bottom padding out here and nowhere else,
+   because in the open state the line is no longer tappable, so the 43px tap
+   target it buys in the CLOSED state is not being spent. */
+#s-shopstyle #ssAsk.open .sa-vox{cursor:default;padding-bottom:0;margin-bottom:1px}
 #s-shopstyle #ssAsk:not(.open) #ssAskIn{display:none}
 #s-shopstyle .sa-star{width:13px;height:13px;vertical-align:-1px;margin-right:5px;display:inline-block}
 /* Her call: the box is BLACK and the chips are silver, which gives the control a
