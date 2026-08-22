@@ -199,6 +199,40 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
   ok(dims.w===1080&&dims.h===1920,
      'the card is Instagram Story size 1080x1920, not the feed 4:5 that cuts off the address (got '+dims.w+'x'+dims.h+')');
 
+  /* ── Part 3b: HER MOTTO IS DRAWN WORD FOR WORD ────────────────────────────
+     Her instruction, and it is the one thing about this card she asked for
+     twice: "I don't want to shorten the words on the motto." So this asserts
+     it directly rather than trusting the reading of a code path - hook
+     fillText, draw a card, and put the words that actually hit the canvas back
+     together. If a future change ever truncates, ellipsises or drops a word to
+     make something fit, this fails and names the missing text.
+     ⚠️ The card DOES shrink the type when a very long motto will not fit, and
+     that is fine - shrinking the FACE is not shortening the WORDS. This test is
+     deliberately blind to font size for exactly that reason. */
+  const mottoCases=[
+    ['a one-liner',  'Ashley, bold is your baseline.'],
+    ['a typical motto','Ashley, you walk in and the room adjusts; your confidence is the accessory.'],
+    ['at the 95-char prompt cap','Ashley, you wear the loudest thing in the room like it was quietly your own idea from the start.'],
+    ['past the cap, four lines','Ashley, you wear the loudest thing in the room like it was quietly your own idea from the very start, and everyone follows.'],
+  ];
+  for(const [label,motto] of mottoCases){
+    const drawn=await page.evaluate(async(m)=>{
+      topArchNames=['The Statement Maker','The Bold Expressionist','The Modern Trendsetter'];
+      userMotto=m;
+      const proto=CanvasRenderingContext2D.prototype, real=proto.fillText;
+      const seen=[];
+      proto.fillText=function(t,x,y){seen.push({t:String(t),f:this.font});return real.apply(this,arguments)};
+      try{ await new Promise(res=>buildCardBlob('quiz',bl=>res(bl))); }
+      finally{ proto.fillText=real; }
+      return seen.filter(s=>/Lora/.test(s.f)).map(s=>s.t);
+    },motto);
+    // the card wraps the motto across lines and wraps it in curly quotes
+    const rebuilt=drawn.join(' ').replace(/[“”]/g,'').replace(/\s+/g,' ').trim();
+    ok(rebuilt===motto, label+': the motto is drawn word for word, nothing trimmed'
+       + (rebuilt===motto?'':' (got "'+rebuilt+'")'));
+    ok(!/…/.test(rebuilt), label+': no ellipsis was added to her words');
+  }
+
   // ── Part 4: the caption carries her archetype and a tappable link ─────────
   const cap=await page.evaluate(()=>{
     const src=buildCardBlob.toString();
