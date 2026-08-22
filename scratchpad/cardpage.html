@@ -567,20 +567,16 @@ function buildTail(TAUPE,BLACK,GOLDF){
                ctx.fillStyle=GOLDF;ctx.beginPath();ctx.arc(W/2,y+20,7,0,7);ctx.fill(); });
 
   if(PROMISE!=='none'){
-    /* HER WORDING, 2026-08-22. Replaces the Claude draft entirely.
-       ⚠️ Her sentence ends "from a personal stylist", which does the job the
-       separate byline was doing, so running both says "personal stylist" twice
-       in adjacent lines. Two ways out, hers to pick:
-         fold  her sentence carrying "of 20 years", no byline (recommended: it
-               keeps the Sally differentiator, which her sentence alone loses)
-         both  her sentence as written, byline kept underneath                */
-    const SENT = BYLINE==='fold'
-      ? 'Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a personal stylist of 20 years.'
-      : 'Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a personal stylist.';
-    if(BYLINE!=='fold'){
-      push(40,y=>{ ctx.fillStyle=TAUPE;ctx.font='500 25px "Jost", sans-serif';
-                   ctx.fillText('Created by a personal stylist of 20 years',W/2,y+28); });
-    }
+    /* HER WORDING, final. Her sentence, plus one word she chose herself.
+       ⚠️ "of 20 years" was CUT ON HER INSTRUCTION: "I feel like we already say it
+       a lot." Replaced with "a REAL personal stylist", her idea, and it is the
+       stronger claim of the two on this particular surface. The objection a
+       stranger brings to a style app is not "is she experienced", it is "is this
+       just an algorithm" — which is Sally's whole note, and "real" answers it in
+       one word. It is also shorter, which this card cares about.
+       ⚠️ The separate byline is GONE. Her sentence now carries the claim, and
+       running both said "personal stylist" twice in adjacent lines.            */
+    const SENT='Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a real personal stylist.';
     ctx.font='italic 400 34px "Lora", serif';
     const pl=wrap(SENT,W-240);
     push(pl.length*46+18,y=>{
