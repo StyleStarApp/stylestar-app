@@ -12195,7 +12195,7 @@ function buildCardBlob(source,callback){
     ctx.font=PROMISE_FONT;
     const promiseLines=wrap('Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a real personal stylist.',W-240);
     const promiseH=promiseLines.length*46+18;
-    const tailBase=58+40+promiseH+92+52;
+    const tailBase=58+promiseH+92+52;
 
     // 2. the upper block's natural height, with the motto shrinking to fit
     /* Her generated motto is capped at 95 chars by the prompt and needs 3 lines,
@@ -12226,8 +12226,9 @@ function buildCardBlob(source,callback){
        start reading as eight separate things. Whatever is left over falls into the
        gap above the tail rule, which is the seam between HER half of the card and
        the invitation half — the one place a large gap is doing a job. */
-    const SEAMS=7;   // logo, notes, divider + the four in the tail. The
-                     // name->notes seam is deliberately NOT one of them.
+    const SEAMS=6;   // logo, notes, divider + the three in the tail. The
+                     // name->notes seam is deliberately NOT one of them, and the
+                     // slider that used to carry a fourth tail seam is gone.
     const AIR=Math.min(52,Math.max(0,room-blockH)/SEAMS);
 
     // 4. build the tail, each row carrying its share of the air BELOW it
@@ -12237,14 +12238,13 @@ function buildCardBlob(source,callback){
       ctx.fillStyle=BLACK;ctx.font='54px "DM Serif Display", serif';
       ctx.fillText('stylestar.app',W/2,y+46);
     });
-    push(40+AIR,function(y){
-      // an echo of the slider under the logo, so it takes the logo's own gold
-      ctx.strokeStyle=LOGO_GOLD;ctx.lineWidth=2.4;
-      ctx.beginPath();
-      ctx.moveTo(W/2-120,y+20);ctx.lineTo(W/2-16,y+20);
-      ctx.moveTo(W/2+16,y+20);ctx.lineTo(W/2+120,y+20);ctx.stroke();
-      ctx.fillStyle=LOGO_GOLD;ctx.beginPath();ctx.arc(W/2,y+20,8,0,7);ctx.fill();
-    });
+    /* THE SLIDER ABOVE THE ADDRESS IS DELETED, her call. It was an echo of the
+       one under the logo, and an echo of a mark is not the mark — it read as a
+       second piece of ornament on a card whose ornament is already the star and
+       the silver frame. The address now sits under the sentence with nothing
+       between them, which is what an address should do.
+       ▶ Its 40px is returned to the layout and it no longer claims an AIR seam,
+       so SEAMS drops with it. Do not re-add one without dropping the other. */
     /* HER SENTENCE, word for word. "of 20 years" was cut on her instruction
        ("I feel like we already say it a lot") and "a REAL personal stylist" is her
        own replacement — the stronger claim here, because the objection a stranger
