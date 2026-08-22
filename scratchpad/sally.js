@@ -54,14 +54,21 @@ ok(!src.includes('Pieces I wear and recommend'), 'the floating-I version is reti
 ok(src.split("Stores I've chosen for you").length - 1 === 3, 'the Mall sub is in all 3 places');
 ok(src.split('The checklist I use with clients').length - 1 === 3, 'the Wardrobe sub is in all 3 places');
 RETIRED.forEach(r => ok(!src.includes(r), `the faceless version is gone: "${r}"`));
-ok(src.split('picked by Catherine').length - 1 === 3, 'What\'s Trending still NAMES her (the page\'s one named credit)');
 // ⚠️ her own honesty rule: the AI stylist must never claim to be Catherine
 ok(/Expert guidance, anytime/.test(src), 'Ask your stylist is deliberately NOT in her first person');
 
+let namedCredits = -1;
 for (const w of [390, 360, 320]) {
   const page = await browser.newPage({ viewport: { width: w, height: 900 }, deviceScaleFactor: 2 });
   const errs = []; page.on('pageerror', e => errs.push(e.message));
   await page.goto(base + '/', { waitUntil: 'load' });
+  /* ⚠️ NOT innerHTML: the whole app's JS is an inline <script> INSIDE <body>,
+     so innerHTML carries the source too and the code comment gets counted all
+     over again. Count LEAF ELEMENTS that actually carry the words — that is the
+     only form of the count that means "what a woman sees". */
+  if (namedCredits < 0) namedCredits = await page.evaluate(() =>
+    Array.from(document.querySelectorAll('body *:not(script):not(style)'))
+      .filter(el => el.children.length === 0 && /picked by Catherine/.test(el.textContent)).length);
   await page.evaluate(() => localStorage.setItem('ss_data', JSON.stringify({ userName: 'Catherine', answers: Array(12).fill(6), topArchNames: ['Timeless Classic'], portrait: 'x', motto: 'y' })));
   await page.reload({ waitUntil: 'load' });
   await page.waitForTimeout(2600);
@@ -127,5 +134,14 @@ for (const w of [390, 360, 320]) {
   }
   await page.close();
 }
+/* ⚠️ UPDATED DELIBERATELY 2026-08-22, and it was STALE, not a regression:
+   verified 5 occurrences in HEAD as well as in the working tree, so nothing
+   today caused it. Two of the five live inside a CODE COMMENT (the 2026-08-14
+   decision that the curated catalog is deliberately unattributed), which this
+   assertion counted as if it were markup. The claim is about what a WOMAN sees,
+   so it now counts RENDERED occurrences and a comment can never break it again.
+   The restated-count trap, third sighting in this project. */
+ok(namedCredits === 3, "What's Trending still NAMES her in all 3 hubs (the page's one named credit), found " + namedCredits);
+
 await browser.close(); server.close();
 console.log(`\n${pass} passed, ${fail} failed`);
