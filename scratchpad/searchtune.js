@@ -224,7 +224,21 @@ const tip = await page.evaluate(() => {
 });
 ok('the tip lives on both shopping surfaces', tip.count === 2, String(tip.count));
 ok('shown while the habit is new (0 saves)', tip.shownFresh);
-ok('her exact wording', tip.text === 'Tip: heart it first ♡, then explore. Your saves will be waiting in Your Wishlist.', tip.text);
+// UPDATED DELIBERATELY 2026-08-22, not silenced: the CLAIM is unchanged ("her
+// exact wording"), only the wording moved. "heart it" -> "save it" is her call,
+// and it was a real defect -- every card's control is labelled "♡ SAVE", so the
+// tip named the action with a word that appeared nowhere else on the screen.
+// UPDATED AGAIN 2026-08-22, deliberately: the ♡ is no longer in textContent
+// because the tip's heart stopped being a U+2661 GLYPH and became the app's own
+// _WL_HEART_PATH inline SVG -- her call ("let's make sure we are using our exact
+// heart shape for consistency"), and the standing never-draw-a-brand-mark-as-a-
+// glyph rule finally reaching the one place left as an exception. The claim is
+// unchanged; the heart is now asserted by SHAPE below, which is stricter.
+ok('her exact wording', tip.text.replace(/\s+/g,' ').trim() === 'Tip: save it first , then explore. Your saves will be waiting in Your Wishlist.'
+   || tip.text.replace(/\s+/g,' ').trim() === 'Tip: save it first, then explore. Your saves will be waiting in Your Wishlist.', tip.text);
+// The word must track the BUTTON. If this ever fails, check what _wlSaveBtn
+// renders before touching the sentence.
+ok('the tip names the action the BUTTON actually offers', /save it first/i.test(tip.text));
 ok('her voice: Lora upright 15.5 + gold bolds + the outline heart in GOLD', tip.voiceOk && tip.boldGold && tip.heartPink);
 ok('house style: no dashes', tip.noDash);
 const tipGone = await page.evaluate(() => {

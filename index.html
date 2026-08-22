@@ -1105,7 +1105,29 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    the full width while the BOX keeps its inset. Without them 17.5px wraps at
    375px specifically, which looks like a bug and is not: the <=374px rule
    already trims that padding, so 360 has a WIDER container than 375. Measured. */
-#s-shopstyle .sa-vox{display:block;width:calc(100% + 28px);margin-left:-14px;margin-right:-14px;background:none;border:0;font:400 17.5px/1.4 'Lora',Georgia,serif;color:#4a463e;text-align:center;padding:9px 0;margin-top:0;margin-bottom:2px;text-wrap:balance;cursor:pointer}
+/* 🚨 HER PICK D, 2026-08-22, AND THE MEASUREMENT THAT PRODUCED IT. She tested on
+   her own phone and the CLOSED line wrapped to two lines while the OPEN one held
+   one. Her screenshots decoded it exactly: iPhone 15, effective viewport ~375px
+   (the ink in her own pixels spans 65.5% of the screen, and 245.9 / 0.655 = 375).
+   ▶▶ At 375 the closed line needed 265.9px of an available 273 -- SEVEN PIXELS of
+   margin, which Chromium holds and real Safari breaks. THIRD SIGHTING of that
+   failure in this file (the tagline's 3px, the A2HS step, now this). A margin
+   under ~10px measured HERE is not a pass; treat it as a wrap.
+   ▶ THE ARITHMETIC IS THE ARGUMENT: the WORDS alone are 228px and there are 45px
+   spare, so the star and the chevron were eating 38 of the 45. Everything she
+   picked survives -- her words, her star, her down chevron -- and each just comes
+   down a hair: type 17.5 -> 17px, star 13 -> 12px, chevron 15 -> 12px, margins
+   5 -> 4 and 5 -> 3. That buys 20.6px at 375 and holds ONE line at 360/375/393/430.
+   ⚠️ 320 still falls to two BALANCED lines, deliberately -- already her accepted
+   trade. Shrinking type further on an 18-to-80 audience is the wrong lever, and
+   the standing rule is that the narrow-phone lever is padding. Here padding is
+   ALREADY SPENT: #ssAsk is full-bleed to the framed screen, which is only 288px
+   wide at a 390px viewport, so there is no width left anywhere to take.
+   ⚠️ THE MARKS' vertical-align WAS RE-MEASURED after shrinking them, never guessed
+   (the A2HS share-chip lesson: a resized inline glyph silently drops off the text
+   line while every positional check still passes). scratchpad/askopts.mjs re-runs
+   the width sweep; scratchpad/askvert.mjs re-runs the alignment. */
+#s-shopstyle .sa-vox{display:block;width:calc(100% + 28px);margin-left:-14px;margin-right:-14px;background:none;border:0;font:400 17px/1.4 'Lora',Georgia,serif;color:#4a463e;text-align:center;padding:9px 0;margin-top:0;margin-bottom:2px;text-wrap:balance;cursor:pointer}
 #s-shopstyle #ssAsk:not(.open) .sa-vox{text-decoration:underline;text-underline-offset:3px}
 /* Her pick from three, 2026-08-22. A DOWN CHEVRON, not the app's right arrow:
    everywhere else that arrow means she is about to be taken somewhere, and
@@ -1114,7 +1136,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    ⚠️ It goes once the box is OPEN, because at that point it is no longer an
    affordance: the line cannot be tapped closed, so a mark still promising an
    action would be lying. */
-#s-shopstyle .sa-chev{width:15px;height:15px;vertical-align:-2px;margin-left:5px;display:inline-block}
+#s-shopstyle .sa-chev{width:12px;height:12px;vertical-align:-1px;margin-left:3px;display:inline-block}
 #s-shopstyle #ssAsk.open .sa-chev{display:none}
 /* Her call 2026-08-22: once it opens, the box should sit RIGHT under the line it
    belongs to. Safe to take the bottom padding out here and nowhere else,
@@ -1122,7 +1144,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    target it buys in the CLOSED state is not being spent. */
 #s-shopstyle #ssAsk.open .sa-vox{cursor:default;padding-bottom:0;margin-bottom:1px}
 #s-shopstyle #ssAsk:not(.open) #ssAskIn{display:none}
-#s-shopstyle .sa-star{width:13px;height:13px;vertical-align:-1px;margin-right:5px;display:inline-block}
+#s-shopstyle .sa-star{width:12px;height:12px;vertical-align:-1px;margin-right:4px;display:inline-block}
 /* Her call: the box is BLACK and the chips are silver, which gives the control a
    hierarchy it did not have when both were gold — the box is the thing to use, the
    chips are helpers. #17171c again, so it matches the card hairline and the frame.
@@ -1553,6 +1575,18 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    it describes. Tight above and loose below made it read as a note about the
    search box; 14/4 attaches it to the pieces underneath. */
 #s-shopstyle .ss-disc-top{font-size:11.5px;margin:9px auto 3px}
+/* HER CALL 2026-08-22: it steps back while the star is spinning. A disclosure
+   belongs NEAR THE LINKS, and while the pieces are still being found there are
+   no links on the screen at all, so it was a commission notice sitting alone
+   under "Searching all the latest options, just for you..." with nothing to
+   disclose. Same reasoning that already keeps it off an EMPTY Your Wishlist.
+   ⚠️ NOTHING is traded away: the pieces and the notice arrive in the same
+   render, so she still cannot reach a FIND IT without passing it, which is the
+   whole point of moving it above the cards in the first place.
+   ⚠️ The spinner is this same screen wearing .thinking, so it is one rule --
+   and it must stay display:none rather than visibility/opacity, or it would
+   still hold its space and leave a gap where the notice used to be. */
+#s-shopstyle.thinking .ss-disc-top{display:none}
 .shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;max-width:320px;margin-left:auto;margin-right:auto;text-align:center}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
@@ -2667,6 +2701,44 @@ body.card-fb{padding:0}
 .ht-tip{display:block;font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:300px;margin:2px auto 12px;text-wrap:balance}
 .ht-tip b{font-style:italic;color:#A0761B;font-weight:600}
 .ht-tip .ht-h{color:#C8971E;font-style:normal} /* the wishlist's mark is GOLD now (2026-08-09) */
+/* ⚠️ The tip's heart is the app's OWN _WL_HEART_PATH now, not the U+2661 glyph
+   it used to be. HER CALL 2026-08-22: "let's make sure we are using our exact
+   heart shape for consistency." She was right, and it was the standing
+   never-draw-a-brand-mark-as-a-glyph rule catching up with the one place that
+   had been left as a deliberate exception -- the glyph is a DIFFERENT SHAPE from
+   the heart on every SAVE control an inch below it. */
+.ht-tip .ht-h svg{width:14px;height:14px;vertical-align:-2px;display:inline-block}
+/* HER PICK B, 2026-08-22 -- the door that replaces the tip once she has saved
+   something. Her paper voice, the same size and slot as the sentence it takes
+   over from, so nothing on the screen moves; it just changes what that line is
+   doing once there is something true to say.
+   ⚠️ NO ITALICS, her explicit call, and it brings this line under her own
+   2026-08-13 voice rule: on light paper her voice is Lora UPRIGHT in #4a463e.
+   (.ht-tip b above is still italic -- a leftover from 2026-08-09, four days
+   older than the rule. Flagged to her, hers to decide, deliberately not swept.)
+   ⚠️ The heart is _wlHeartSvg(true), the SAME function that fills in the heart
+   on the card she just tapped, so the mark on the door and the mark on the
+   control can physically never drift. FILLED, her call -- and it maps: the tip
+   shows the OUTLINE heart (nothing saved yet), the door shows it FILLED, which
+   is exactly what the button itself does. */
+.wl-door{display:block;font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:300px;margin:2px auto 12px;text-wrap:balance}
+.wl-door svg{width:15px;height:15px;vertical-align:-2px;margin-right:6px;display:inline-block}
+/* The link half only. The count is a statement, not a control -- making the
+   whole line tappable would put a tap target around words that do nothing.
+   ⚠️ The padding is the tap target for the 18-to-80 audience, not decoration;
+   the negative margin keeps it from changing the line's height. ~43px.
+   🚨 THE LINK IS THE BODY INK, NOT GOLD, AND THAT IS MEASURED NOT PREFERRED.
+   The obvious choice was #A0761B, the gold the tip's own bolds already use --
+   but on this white paper it measures 4.12:1 and FAILS AA on what is an
+   interactive control, for an audience that runs to 80. The darker golds that
+   would pass are the ones she has now rejected three times as brown (#8F6410
+   is 5.25:1 and reads bronze).
+   ▶ So this is the Contact-page resolution applied again: STOP ASKING GOLD TO
+   BE TEXT. The gold lives in the filled heart beside it, where gold works, and
+   the link is distinguished by WEIGHT AND UNDERLINE instead of colour -- which
+   is exactly how #ssAskNow's "show me a mix instead" already works on this very
+   screen. 9.39:1. ⚠️ Do not "restore" the gold without re-measuring. */
+.wl-door .wl-door-go{color:#4a463e;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:10px 2px;margin:-10px 0;display:inline-block}
 #s-photo-res .ps-rows .act:first-child{margin-top:0} /* the generic 18px .act top margin would break the match */
 /* BUILD — the wardrobe: a linen fabric-label panel pinned to the dark board, with a charcoal topstitch (matches the Your Wardrobe page identity) */
 #s-photo-res .bhub{position:relative;padding:6px 22px 14px;background:#FBFAF7;background-image:repeating-linear-gradient(90deg,rgba(150,140,120,.06) 0 .5px,transparent .5px 3px),repeating-linear-gradient(0deg,rgba(150,140,120,.05) 0 .5px,transparent .5px 3px);border-radius:2px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
@@ -3757,7 +3829,8 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <div class="eng si">
             <div class="eng-row"><span class="eng-rule l"></span><span class="eng-lbl">Complete the Look</span><span class="eng-rule r"></span></div>
           </div>
-          <div class="ht-tip" data-hearttip style="display:none">Tip: <b>heart it first</b> <span class="ht-h">&#9825;</span>, then explore. Your saves will be waiting in <b>Your Wishlist</b>.</div>
+          <div class="ht-tip" data-hearttip style="display:none">Tip: <b>save it first</b> <span class="ht-h"><svg viewBox="0 0 24 24" fill="none" stroke="#C8971E" stroke-width="1.9" aria-hidden="true"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span>, then explore. Your saves will be waiting in <b>Your Wishlist</b>.</div>
+          <div class="wl-door" data-wldoor style="display:none"></div>
           <div class="shoplist" id="pShopList"></div>
           <div class="shopdisc">Some links may earn a commission.</div>
         </div>
@@ -3985,7 +4058,18 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <!-- Heart-it-first tip (Cath's wording + pick A, 2026-08-09, from her
        app-handoff finds): teaches save-before-explore, retires itself once
        the wishlist habit exists. _syncHeartTip() owns visibility. -->
-  <div class="ht-tip" data-hearttip style="display:none">Tip: <b>heart it first</b> <span class="ht-h">&#9825;</span>, then explore. Your saves will be waiting in <b>Your Wishlist</b>.</div>
+  <!-- ⚠️ "save it first", NOT "heart it first" -- HER CALL 2026-08-22, and it was a
+       real defect rather than a preference: every card's control is labelled
+       "♡ SAVE", so the tip taught the action using a word that appears NOWHERE
+       else on the screen. Same shape as every finding of this tester round: a
+       woman pointed at a door that is not quite where she was told. The word must
+       track the BUTTON -- if the button is ever relabelled, this sentence moves
+       with it. ⚠️ TWO COPIES (here and Complete the Look), grep "save it first".
+       ⚠️ "first" is load-bearing and is NOT a stylistic flourish: it is the
+       mitigation for the iOS hand-off, where tapping FIND IT can pass her to the
+       store's own app and she loses her place. The ORDER is the whole sentence. -->
+  <div class="ht-tip" data-hearttip style="display:none">Tip: <b>save it first</b> <span class="ht-h"><svg viewBox="0 0 24 24" fill="none" stroke="#C8971E" stroke-width="1.9" aria-hidden="true"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span>, then explore. Your saves will be waiting in <b>Your Wishlist</b>.</div>
+  <div class="wl-door" data-wldoor style="display:none"></div>
   <!-- THE ASK — her front door for "I already know what I want" (2026-08-21,
        built from three tester reports that were all the same finding: Haley typed
        a price limit into the preferences free-text box because there was no field
@@ -9379,12 +9463,36 @@ function _wlDecorateEdit(){
 // matter where a store drags her. A one-time lesson, not a nag: it shows only
 // until she has 2 saves, then stamps ss_hearttip and retires FOREVER (even if
 // she later empties her wishlist — the lesson was learned, don't re-teach it).
+// ONE switch over two states, HER CALL 2026-08-22, and the gap it closes was
+// only visible once it was rendered: the tip RETIRES PERMANENTLY at her second
+// save, so the only place "Your Wishlist" was ever named on this screen deleted
+// itself at exactly the moment she finally had one worth opening. Nothing else
+// on Shop your style names it, and the tip's mention was never a link, so the
+// only route left was the Menu. Third "door that is not there" of this tester
+// round (Haley's price, her mother's search, the archetype share).
+//   0 saves, still learning  -> THE TIP   (teaching: save it first)
+//   1+ saves                 -> THE DOOR  (a count, and a way to go and look)
+//   0 saves, already learned -> nothing   (unchanged; never re-teach her)
+// ⚠️ The door outranks the tip whenever she has saves, INCLUDING before the tip
+// has retired -- at one save the lesson has landed and the door is the more
+// useful sentence. That is why the tip's own retirement stamp is left exactly
+// as it was: it still governs the 0-save case, so a woman who empties her list
+// months later is not taught the heart again.
 function _syncHeartTip(){
   var done=false;try{done=localStorage.getItem('ss_hearttip')==='1'}catch(e){}
   var n=(wardrobeData&&wardrobeData.wishlist)?wardrobeData.wishlist.length:0;
   if(!done&&n>=2){done=true;try{localStorage.setItem('ss_hearttip','1')}catch(e){}}
-  var on=!done;
-  document.querySelectorAll('[data-hearttip]').forEach(function(el){el.style.display=on?'':'none'});
+  var tip=(n===0)&&!done, door=n>0;
+  document.querySelectorAll('[data-hearttip]').forEach(function(el){el.style.display=tip?'':'none'});
+  // ⚠️ Built with textContent for the count, never innerHTML around it: n comes
+  // from her own stored list and the heart is the app's own markup.
+  document.querySelectorAll('[data-wldoor]').forEach(function(el){
+    el.style.display=door?'':'none';
+    if(!door){el.innerHTML='';return;}
+    el.innerHTML=_wlHeartSvg(true)+'<span class="wl-door-n"></span>'
+      +' &middot; <span class="wl-door-go" role="button" tabindex="0" onclick="openWishlist()">See Your Wishlist &rarr;</span>';
+    el.querySelector('.wl-door-n').textContent=n+' saved';
+  });
 }
 function _wlSaveBtn(item){
   var id=_wlRegister(item);

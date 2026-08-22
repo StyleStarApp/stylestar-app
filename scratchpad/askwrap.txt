@@ -1,0 +1,14 @@
+430px zoom1  CLOSED need  265.9 avail    328 slack   62.1 lines 1  |  OPEN need  245.9 avail    328 slack   82.1 lines 1  | chev 20 maxw 340px fs 17.5px
+430px zoom1.15  CLOSED need  265.9 avail    288 slack   22.1 lines 1  |  OPEN need  245.9 avail    288 slack   42.1 lines 1  | chev 20 maxw 340px fs 17.5px
+414px zoom1  CLOSED need  265.9 avail    312 slack   46.1 lines 1  |  OPEN need  245.9 avail    312 slack   66.1 lines 1  | chev 20 maxw 340px fs 17.5px
+414px zoom1.15  CLOSED need  265.9 avail    274 slack    8.1 lines 1  |  OPEN need  245.9 avail    274 slack   28.1 lines 1  | chev 20 maxw 340px fs 17.5px
+393px zoom1  CLOSED need  265.9 avail    291 slack   25.1 lines 1  |  OPEN need  245.9 avail    291 slack   45.1 lines 1  | chev 20 maxw 340px fs 17.5px
+393px zoom1.15  CLOSED need  265.9 avail    256 slack   -9.9 lines 2  |  OPEN need  245.9 avail    256 slack   10.1 lines 1  | chev 20 maxw 340px fs 17.5px
+390px zoom1  CLOSED need  265.9 avail    288 slack   22.1 lines 1  |  OPEN need  245.9 avail    288 slack   42.1 lines 1  | chev 20 maxw 340px fs 17.5px
+390px zoom1.15  CLOSED need  265.9 avail    253 slack  -12.9 lines 2  |  OPEN need  245.9 avail    253 slack    7.1 lines 1  | chev 20 maxw 340px fs 17.5px
+375px zoom1  CLOSED need  265.9 avail    273 slack    7.1 lines 1  |  OPEN need  245.9 avail    273 slack   27.1 lines 1  | chev 20 maxw 340px fs 17.5px
+375px zoom1.15  CLOSED need  265.9 avail    240 slack  -25.9 lines 2  |  OPEN need  245.9 avail    240 slack   -5.9 lines 2  | chev 20 maxw 340px fs 17.5px
+360px zoom1  CLOSED need  265.9 avail    274 slack    8.1 lines 1  |  OPEN need  245.9 avail    274 slack   28.1 lines 1  | chev 20 maxw 340px fs 17.5px
+360px zoom1.15  CLOSED need  265.9 avail    227 slack  -38.9 lines 2  |  OPEN need  245.9 avail    227 slack  -18.9 lines 2  | chev 20 maxw 340px fs 17.5px
+320px zoom1  CLOSED need  265.9 avail    234 slack  -31.9 lines 2  |  OPEN need  245.9 avail    234 slack  -11.9 lines 2  | chev 20 maxw 340px fs 17.5px
+320px zoom1.15  CLOSED need  265.9 avail    192 slack  -73.9 lines 2  |  OPEN need  245.9 avail    192 slack  -53.9 lines 2  | chev 20 maxw 340px fs 17.5px

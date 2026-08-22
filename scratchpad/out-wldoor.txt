@@ -1,0 +1,59 @@
+1. The switch: tip while learning, door once she has saved
+  ✓ 0 saves: the TIP is showing
+  ✓ ...and its heart is the app's own shape, not the old U+2661 glyph
+  ✓ 1 save: the DOOR replaces it  [1 saved · See Your Wishlist →]
+  ✓ it counts honestly  [1 saved · See Your Wishlist →]
+  ✓ 2 saves: still the door, count moved  [2 saved · See Your Wishlist →]
+  ✓ the tip does NOT come back
+  ✓ her wording  [2 saved · See Your Wishlist →]
+  ✓ emptied again: nothing at all, she is never re-taught
+  ✓ no JS errors  []
+
+2. Her design calls
+  ✓ NO ITALICS, her call  [normal]
+  ✓ her paper voice: Lora 15.5px  [Lora, Georgia, serif 15.5px]
+  ✓ the heart is FILLED gold, her call  [#F2D889]
+  ✓ ...and it is the app's EXACT heart shape (_WL_HEART_PATH)
+  ✓ one line at her width  [lines 1]
+  ✓ the link is a real tap target for an 18-to-80 audience (>=40px)  [43.3px]
+  ✓ no JS errors  []
+
+3. It is a door, and Back comes home
+  ✓ tapping it lands on Your Wishlist  [s-wishlist]
+  ✓ and the piece she saved is really on it  [1]
+  ✓ the way back is Shop your style, not a dead end
+  ✓ no JS errors  []
+
+4. Contrast + no overflow, at every width
+  --- 430px ---
+  ✓ body ink clears AA (4.5:1)  [9.39:1]
+  ✓ the link clears AA against the real painted paper  [9.39:1]
+  ✓ nothing overflows its screen  [L-14 R-14]
+  ✓ no sideways page scroll
+  ✓ no JS errors  []
+  --- 393px ---
+  ✓ body ink clears AA (4.5:1)  [9.39:1]
+  ✓ the link clears AA against the real painted paper  [9.39:1]
+  ✓ nothing overflows its screen  [L0 R0]
+  ✓ no sideways page scroll
+  ✓ no JS errors  []
+  --- 375px ---
+  ✓ body ink clears AA (4.5:1)  [9.39:1]
+  ✓ the link clears AA against the real painted paper  [9.39:1]
+  ✓ nothing overflows its screen  [L0 R0]
+  ✓ no sideways page scroll
+  ✓ no JS errors  []
+  --- 360px ---
+  ✓ body ink clears AA (4.5:1)  [9.39:1]
+  ✓ the link clears AA against the real painted paper  [9.39:1]
+  ✓ nothing overflows its screen  [L0 R0]
+  ✓ no sideways page scroll
+  ✓ no JS errors  []
+  --- 320px ---
+  ✓ body ink clears AA (4.5:1)  [9.39:1]
+  ✓ the link clears AA against the real painted paper  [9.39:1]
+  ✓ nothing overflows its screen  [L0 R0]
+  ✓ no sideways page scroll
+  ✓ no JS errors  []
+
+all 45 checks run, 0 failures
