@@ -466,6 +466,8 @@ window.setDivider=function(d){DIVIDER=d};
 const MIRROR=['#FFFFFF','#C6CACE','#8C9298','#F2F4F6','#9AA0A6','#DFE2E5','#FFFFFF'];
 function mirror(x0,y0,x1,y1){ return diag(x0,y0,x1,y1,MIRROR); }
 
+let CTA='lora';
+window.setCta=function(c){CTA=c};
 let FRAME_STYLE='double';
 window.setFrame=function(f){FRAME_STYLE=f};
 
@@ -581,8 +583,18 @@ function drawTail(TAUPE,BLACK,GOLDF){
     }
   }
 
-  push(72,y=>{ ctx.fillStyle='#7C766A';ctx.font='italic 400 40px "Lora", serif';
-               ctx.fillText('What\u2019s your Style Star?',W/2,y+50); });
+  push(CTA==='serif'?92:88,y=>{
+    if(CTA==='serif'){
+      // DM Serif Display ties it to stylestar.app directly beneath it: the
+      // question and the address become one invitation
+      ctx.fillStyle='#12100E';ctx.font='54px "DM Serif Display", serif';
+    }else if(CTA==='loraDark'){
+      ctx.fillStyle='#3A352C';ctx.font='700 54px "Lora", serif';
+    }else{
+      ctx.fillStyle='#3A352C';ctx.font='600 52px "Lora", serif';
+    }
+    ctx.fillText('What\u2019s your Style Star?',W/2,y+62);
+  });
 
   push(52,y=>{ ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
                ctx.beginPath();ctx.moveTo(W/2-110,y+26);ctx.lineTo(W/2+110,y+26);ctx.stroke(); });

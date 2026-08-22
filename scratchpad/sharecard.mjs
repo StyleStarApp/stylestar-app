@@ -62,7 +62,7 @@ for(const o of OPTS){
   const stress = o.endsWith('!');
   const parts = (stress ? o.slice(0,-1) : o).split('-');
   const key = parts[0];
-  let mode='linen', line='motto', promise='none', size=[1080,1350], frame='double', divider='star';
+  let mode='linen', line='motto', promise='none', size=[1080,1350], frame='double', divider='star', cta='lora';
   for(const v of parts.slice(1)){
     if(v==='motto'||v==='beats'||v==='short') line=v;
     else if(v==='line'||v==='items') promise=v;
@@ -70,10 +70,11 @@ for(const o of OPTS){
     else if(v==='white'||v==='linen'||v==='cream') mode=v;
     else if(['double','stars','band','silverband','silvergold','silverhair'].includes(v)) frame=v;
     else if(v==='nodiv') divider='none';
+    else if(['lora','loraDark','serif'].includes(v)) cta=v;
     else throw new Error('unknown flag "'+v+'" in option "'+o+'" — a silent '
       +'fallthrough here once rendered the LONG motto and looked like a bug in the card');
   }
-  await page.evaluate(([k,st,pm,ln,pr,sz,fr,dv])=>{window.setSize(sz[0],sz[1]);window.setFrame&&window.setFrame(fr);window.setDivider&&window.setDivider(dv);window.setPaper(pm);window.setLine&&window.setLine(ln);window.setPromise&&window.setPromise(pr);window.setStress&&window.setStress(st);window.drawOption(k);}, [key,stress,mode,line,promise,size,frame,divider]);
+  await page.evaluate(([k,st,pm,ln,pr,sz,fr,dv,ct])=>{window.setSize(sz[0],sz[1]);window.setFrame&&window.setFrame(fr);window.setCta&&window.setCta(ct);window.setDivider&&window.setDivider(dv);window.setPaper(pm);window.setLine&&window.setLine(ln);window.setPromise&&window.setPromise(pr);window.setStress&&window.setStress(st);window.drawOption(k);}, [key,stress,mode,line,promise,size,frame,divider,cta]);
   const el = await page.$('#card');
   await el.screenshot({path:`scratchpad/share-${o.replace('!','-stress')}.png`});
   console.log('wrote scratchpad/share-'+o.replace('!','-stress')+'.png');
