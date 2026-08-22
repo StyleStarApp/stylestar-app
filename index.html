@@ -7009,6 +7009,40 @@ function refineNextDismiss(){try{localStorage.setItem('ss_refinehint','1')}catch
 // by her (2026-08-03) — don't reword without her.
 var _WBN_HEART='<svg class="wbn-h" viewBox="0 0 24 24" fill="#F49AC1"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
 var _WB_NEXT=[
+  /* ⭐⭐ THE RESUME, AND IT SITS FIRST ON PURPOSE (2026-08-22, her pick A+B+C).
+     Every other entry below answers "what should I do NEXT?". A woman coming
+     back from Nordstrom is not asking that -- she is asking "where WAS I?", and
+     when both questions are live the second one is the one she actually has.
+     ▶ THE BASELINE THAT PROVED IT: seeded as Kathy (a live conversation about a
+     formal wedding, everywhere already visited), Welcome Back told her "Next,
+     add your sizes, colors and faves". A perfectly good sentence at the worst
+     possible moment. So the resume outranks the journey, and when there is
+     nothing to resume the six below carry on exactly as they did.
+     ⚠️ A, B and C are not three designs, they are the THREE STATES of this one
+     whisper: her pieces, her conversation, or both. h() is a FUNCTION for that
+     reason -- see _syncWbNext, which now accepts either.
+     ⚠️ done() is always false because a resume is never "finished"; when() is
+     what gates it, and _shopPicksWaiting() expires on its own after 6 hours so
+     the sentence cannot outlive its own truth.
+     ⚠️ ITS ✕ MEANS "NOT NOW", NEVER "NEVER" -- wbNextDismiss special-cases it
+     and does NOT persist a skip. A resume she waved off on Tuesday must still
+     be offered on Wednesday; the journey whispers are the ones worth silencing
+     for good. THE WORDINGS ARE CLAUDE DRAFTS, hers to reword. */
+  {k:'resume',
+   when:function(){return !!(_shopPicksWaiting()||_chatWaiting())},
+   done:function(){return false},
+   go:function(){ if(_shopPicksWaiting())resumeShop(); else resumeChat(); },
+   h:function(){
+     var p=!!_shopPicksWaiting(), c=_chatWaiting();
+     // ⚠️ Each bold carries its OWN handler and stops the bubble, or tapping the
+     // word would fire the line's handler too and she would land in the wrong
+     // one of the two places named in the same sentence.
+     var shop='<b onclick="resumeShop(event)">Shop your style</b>',
+         chat='<b onclick="resumeChat(event)">your stylist</b>';
+     if(p&&c)return 'Pick up where you left off, your <b onclick="resumeShop(event)">pieces</b> and your <b onclick="resumeChat(event)">conversation</b> are both still here '+_WBN_HEART;
+     if(p)return shop+' is right where you left it, with the same pieces waiting '+_WBN_HEART;
+     return 'Your conversation with '+chat+' is right where you left it '+_WBN_HEART;
+   }},
   {k:'refine',done:function(){return _hasRefined()},go:function(){openPrefs()},
    h:'Next, <b>add your sizes, colors and faves</b>. Defining preferences is how we enhance our style '+_WBN_HEART},
   {k:'wardrobe',done:function(){return !!localStorage.getItem('ss_seen_wardrobe')},go:function(){openWardrobe()},
@@ -7051,7 +7085,9 @@ function _syncWbNext(){
     pick=s;break;
   }
   _wbNextCur=pick?pick.k:null;
-  if(pick){document.getElementById('wbNextTxt').innerHTML=pick.h;el.classList.add('on');}
+  // ⚠️ h may be a FUNCTION now (the resume has three states); the six journey
+  // whispers are still plain strings and stay that way.
+  if(pick){document.getElementById('wbNextTxt').innerHTML=(typeof pick.h==='function')?pick.h():pick.h;el.classList.add('on');}
   else el.classList.remove('on');
 }
 function wbNextGo(){
@@ -7059,8 +7095,14 @@ function wbNextGo(){
 }
 function wbNextDismiss(){
   if(!_wbNextCur)return;
-  var skips=_wbNextSkips();skips[_wbNextCur]=1;
-  try{localStorage.setItem('ss_nextskip',JSON.stringify(skips))}catch(e){}
+  // ⚠️ THE RESUME IS DISMISSED FOR NOW, NEVER FOR GOOD. Every other whisper is a
+  // step on a journey she can genuinely be done with; a resume is about this
+  // moment, so a ✕ on Tuesday must not hide Wednesday's. It still disappears
+  // for the visit, which is what the ✕ visibly promises.
+  if(_wbNextCur!=='resume'){
+    var skips=_wbNextSkips();skips[_wbNextCur]=1;
+    try{localStorage.setItem('ss_nextskip',JSON.stringify(skips))}catch(e){}
+  }
   // Quietly gone for this visit; the NEXT visit offers the following step. An
   // instant replacement here would feel like the app arguing with her ✕.
   var el=document.getElementById('wbNext');if(el)el.classList.remove('on');
@@ -7259,6 +7301,82 @@ function _askedForRule(){
   if(!_ssAsk)return '';
   return '- SHE HAS ASKED FOR SOMETHING SPECIFIC: "'+_ssAsk+'". Every one of the 6 picks must answer that ask directly, and this outranks mixing categories for variety. If she named a garment, return that garment. If she named a price, stay under it. If she named an occasion, dress her for it, and when that occasion could mean several levels of formality (an event can be a garden party or a black tie gala), COVER THE RANGE across the 6 rather than guessing one point on it. This rule is absolute.\n';
 }
+/* ── THE WAY BACK (2026-08-22) ──────────────────────────────────────────────
+   Two testers, independently, could not get back to what they were doing after
+   tapping a product link. Kathy lost a stylist conversation that had recommended
+   Reformation; Jen wanted to go "back and forth" between a card and the store.
+   ▶▶ THE MEASUREMENT THAT DECIDED THE SHAPE, and it killed the obvious fix:
+   making product links open in the SAME tab so her Back button works sounds
+   right and is wrong. Measured (scratchpad/wayback.mjs): Back does not restore
+   the app, it RELOADS it -- she lands on Welcome Back, the entrance curtain
+   replays, and her six pieces are GONE. Her saves survive (localStorage), her
+   session does not. So the new tab is not the bug, it is the protection, and
+   the real gap is that nothing was ever stored and nothing ever said so.
+   ⚠️ 36 product links stay target="_blank". Do not "fix" them without re-running
+   that harness. And note what none of this can touch: with the store's app
+   installed, iOS hands the tap to the APP before Safari sees it, and her way
+   back is the small breadcrumb. Apple offers no way to prevent that. */
+var _shopResume=null;                 // set by resumeShop(), consumed by _shopStyleGen
+var _SHOP_PICKS_TTL=6*60*60*1000;     // 6 hours
+/* ⚠️ SIX HOURS IS A PROMISE, NOT A CACHE SETTING. The whisper says her pieces
+   are "right where you left it", which stops being true at some point; a
+   fortnight-old set offered as if she had just been looking at it is the app
+   lying quietly. Long enough to cover any real session, short enough to stay
+   honest. Shortening it is safe; lengthening it needs the wording to change. */
+function _saveShopPicks(items){
+  try{
+    if(!items||!items.length)return;
+    localStorage.setItem('ss_shoppicks',JSON.stringify({m:_shopStyleMode,i:items,t:Date.now()}));
+  }catch(e){}
+}
+function _shopPicksWaiting(){
+  try{
+    var v=JSON.parse(localStorage.getItem('ss_shoppicks')||'null');
+    if(!v||!v.i||!v.i.length)return null;
+    if(Date.now()-(v.t||0)>_SHOP_PICKS_TTL)return null;
+    return v;
+  }catch(e){return null}
+}
+/* ⚠️ CHAT HISTORY WAS ALREADY PERSISTED THE WHOLE TIME. Kathy's conversation was
+   never lost -- ss_chat had it, and "Pick up our chat" was waiting INSIDE the
+   chat, which is the one place she could not get to. Nothing new is stored for
+   this half; the app simply says out loud what it already knew. */
+function _chatWaiting(){
+  try{
+    var v=JSON.parse(localStorage.getItem('ss_chat')||'null');
+    if(!(v&&v.length))return false;
+    // 🚨 A CONVERSATION IS HERS ONLY IF SHE SAID SOMETHING. Opening the chat
+    // writes the stylist's own greeting into ss_chat, so without this the app
+    // would offer to resume a conversation that is entirely its own voice --
+    // which is not a conversation, it is an empty room with a hello in it.
+    // ▶ hubs.js found this by failing "graduated: no whisper ever again": the
+    // graduation whisper LANDS her in the chat, so the greeting alone was
+    // enough to make the app start greeting her about it forever after.
+    if(!v.some(function(m){return m&&m.role==='user'}))return false;
+    // 🚨 THE FRESHNESS IS THE WHOLE POINT, and it was missed on the first build.
+    // ss_chat never expires, so without this the resume whisper would appear on
+    // every Welcome Back visit for the rest of her life -- which is a NAG, not a
+    // resume. hubs.js failed on exactly that ("graduated: no whisper ever
+    // again") and was right to. Same 6-hour window as her pieces, deliberately:
+    // one promise, one shelf life.
+    // ⚠️ A conversation from BEFORE this shipped has no stamp. It is treated as
+    // stale rather than fresh, so nobody is greeted about a chat they had weeks
+    // ago; her next message stamps it and the whisper starts working for her.
+    var t=parseInt(localStorage.getItem('ss_chat_t')||'0',10);
+    return !!t&&(Date.now()-t)<=_SHOP_PICKS_TTL;
+  }catch(e){return false}
+}
+function resumeShop(e){
+  if(e&&e.stopPropagation)e.stopPropagation();
+  var v=_shopPicksWaiting();
+  if(!v){openShopStyle();return;}   // never a dead end: fall through to a fresh six
+  _shopResume=v;
+  _openShopStyleNow(v.m||'quiz');
+}
+function resumeChat(e){
+  if(e&&e.stopPropagation)e.stopPropagation();
+  openChat();
+}
 function _openShopStyleNow(mode){
   _shopStyleMode=(mode==='look')?'look':(mode==='wantlist')?'wantlist':'quiz';
   var cur=(document.querySelector('.scr.act')||{}).id;
@@ -7328,10 +7446,23 @@ async function _shopStyleGen(){
     prompt='You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }
   try{
-    var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
-    if(!r.ok)throw 0;
-    var d=await r.json();if(!d.content)throw 0;
-    var parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
+    var parsed;
+    // ⭐ RESUMING. Two testers lost their place after tapping a product link, and
+    // the reason a same-tab link cannot fix it is that Back RELOADS the app: her
+    // six pieces are gone because nothing ever stored them. They are stored now,
+    // and a resume renders THE SAME SIX through THE SAME PATH rather than asking
+    // the model again -- so it is instant, it costs nothing, and the cards cannot
+    // drift from what she was actually looking at. ⚠️ ONE render path on purpose:
+    // a second copy of the card loop would drift the moment either changed.
+    if(_shopResume&&_shopResume.i&&_shopResume.i.length){
+      parsed={items:_shopResume.i};
+      _shopResume=null;          // a resume is spent once used; a refresh re-asks
+    }else{
+      var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
+      if(!r.ok)throw 0;
+      var d=await r.json();if(!d.content)throw 0;
+      parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
+    }
     var html='<div class="shop-grid">';
     // On "Shop my whole list" the things she asked for ARE her list, so a row
     // she starred herself ("Wrap dresses") waives the search veto for this call.
@@ -7344,6 +7475,7 @@ async function _shopStyleGen(){
     var _keep=filterNeverWear(parsed.items,
       _shopStyleMode==='wantlist'?(_wantListNames||[]).join(' '):_ssAsk);
     _rememberPicks('ss-'+_shopStyleMode,_keep);   // the refresh must not repeat
+    _saveShopPicks(_keep);   // so she can come back to exactly this, see _shopResume
     _keep.forEach(function(item){
       // No icon above the name. Emoji are painted by the platform's own font and
       // ignore our colour (the rule she set after the pink heart shipped RED on her
@@ -10255,7 +10387,12 @@ function closeTerms(){
 }
 
 function saveChatHistory(){
-  try{localStorage.setItem('ss_chat',JSON.stringify(chatHistory.slice(-40)))}catch(e){}
+  // ⚠️ The stamp rides alongside, for the resume whisper: "your conversation is
+  // right where you left it" is only true for a while, and ss_chat itself never
+  // expires. Without this the whisper would greet her on EVERY visit forever
+  // (caught by hubs.js's "graduated: no whisper ever again" assertion, which the
+  // resume broke -- the old test was doing real work).
+  try{localStorage.setItem('ss_chat',JSON.stringify(chatHistory.slice(-40)));localStorage.setItem('ss_chat_t',String(Date.now()))}catch(e){}
 }
 function loadChatHistory(){
   try{
