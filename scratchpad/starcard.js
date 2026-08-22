@@ -141,10 +141,11 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     if(p.w!==1080||p.h!==1920){ok(false,name+': card is '+p.w+'x'+p.h+', not 1080x1920');continue}
 
     // every ink row inside the paper, so bands can be found
+    const PAPER_EDGE=64;
     const rows=[];
-    for(let y=60;y<p.h-60;y++){
+    for(let y=PAPER_EDGE+16;y<p.h-PAPER_EDGE-16;y++){
       let ink=0;
-      for(let x=70;x<p.w-70;x+=2) if(lum(p,x,y)<150) ink++;
+      for(let x=PAPER_EDGE+16;x<p.w-PAPER_EDGE-16;x+=2) if(lum(p,x,y)<150) ink++;
       rows.push(ink);
     }
     // a MERGED band is what an overlap looks like from here: two lines of type
@@ -153,15 +154,23 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     for(const v of rows){ run = v>0 ? run+1 : 0; if(run>tallest)tallest=run; }
     ok(tallest<=170, name+': tallest unbroken ink band is '+tallest+'px (an overlap reads as a merged band)');
 
-    // nothing may touch the silver frame: the innermost paper edge is x=46
+    /* Nothing may touch the silver frame.
+       ⚠️ THIS PROBE MUST TRACK THE FRAME'S INNER EDGE. It sampled x=55 when the
+       band ran 24..46; the band was then thickened to 20..64 (her call) and all
+       28 archetypes "failed" at once — because 55 now lands ON THE SILVER, whose
+       dark stop #8C9298 is dark enough to read as ink. The card was fine; the
+       ruler had moved. A whole-suite failure that arrives the moment a constant
+       changes is almost always the harness.
+       PAPER_EDGE mirrors FR_IN in buildCardBlob. If that changes, change this. */
+    const probe=PAPER_EDGE+12;
     let bleed=false;
-    for(let y=70;y<p.h-70;y+=3){
-      if(lum(p,55,y)<150||lum(p,p.w-55,y)<150)bleed=true;
+    for(let y=PAPER_EDGE+20;y<p.h-PAPER_EDGE-20;y+=3){
+      if(lum(p,probe,y)<150||lum(p,p.w-probe,y)<150)bleed=true;
     }
     ok(!bleed, name+': no text bleeds into the frame');
 
     // the address must survive — it is the entire point of the card
-    const footInk=rows.slice(p.h-60-260,p.h-60-120).reduce((a,v)=>a+v,0);
+    const footInk=rows.slice(rows.length-260,rows.length-120).reduce((a,v)=>a+v,0);
     ok(footInk>200, name+': the foot (address + rule) is drawn');
   }
 

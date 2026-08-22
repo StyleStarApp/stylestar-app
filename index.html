@@ -12108,14 +12108,16 @@ function buildCardBlob(source,callback){
 
     paperInset(0);
     // the silver mirror band, her frame
-    ctx.fillStyle=diag(0,0,W,H,MIRROR);ctx.fillRect(24,24,W-48,H-48);
-    paperInset(46);
+    // her call: thicker. 22px band -> 44px.
+    const FR_OUT=20,FR_IN=64;
+    ctx.fillStyle=diag(0,0,W,H,MIRROR);ctx.fillRect(FR_OUT,FR_OUT,W-2*FR_OUT,H-2*FR_OUT);
+    paperInset(FR_IN);
     /* ⚠️ A light silver stop is within 1.04:1 of this paper, so where the frame
        meets the sheet it dissolves and the frame loses its inner edge. These two
        hairlines are what keep it reading as a frame rather than a floating band. */
     ctx.lineWidth=1;
-    ctx.strokeStyle='rgba(90,95,100,.28)';ctx.strokeRect(46.5,46.5,W-93,H-93);
-    ctx.strokeStyle='rgba(90,95,100,.22)';ctx.strokeRect(24.5,24.5,W-49,H-49);
+    ctx.strokeStyle='rgba(90,95,100,.28)';ctx.strokeRect(FR_IN+.5,FR_IN+.5,W-2*FR_IN-1,H-2*FR_IN-1);
+    ctx.strokeStyle='rgba(90,95,100,.22)';ctx.strokeRect(FR_OUT+.5,FR_OUT+.5,W-2*FR_OUT-1,H-2*FR_OUT-1);
 
     ctx.textAlign='center';ctx.textBaseline='alphabetic';
 
@@ -12165,7 +12167,7 @@ function buildCardBlob(source,callback){
     /* ⚠️ FOOT_MARGIN is not decoration. Measured, the tail was ending 1px off
        the frame while the logo had 66px of air above it, which is exactly the
        bottom-heaviness she spotted by eye. */
-    const FOOT_MARGIN=150,TOP_MARGIN=112;
+    const FOOT_MARGIN=150,TOP_MARGIN=92;   // her call: the logo comes up
     const tailH=rows.reduce(function(a,r){return a+r.h},0);
     const ceiling=H-FOOT_MARGIN-tailH;
 
@@ -12185,7 +12187,7 @@ function buildCardBlob(source,callback){
        ⚠️ A card that overlaps is worse than one set a point smaller, and this
        is the ONE path a real woman could hit that the design renders never did. */
     const H_LOGO=LOGO_H+72,H_OVER=54,H_NAME=fsHead*1.02+fs*1.06+34,
-          H_DIV=96,H_NOT=notes.length?120:0;
+          H_DIV=96,H_NOT=notes.length?(74+notes.length*46):0;
     let ms=46,ml,H_MOT,blockH;
     for(;;){
       ctx.font='italic 400 '+ms+'px "Lora", serif';
@@ -12195,14 +12197,23 @@ function buildCardBlob(source,callback){
       if(blockH<=ceiling-TOP_MARGIN||ms<=30)break;
       ms-=2;
     }
-    let y=TOP_MARGIN+Math.max(0,(ceiling-TOP_MARGIN-blockH)/2);
+    /* ⚠️ Her catch: "too much white space above the logo". Centring the block in
+       the leftover room put HALF the slack on top of the logo, which reads as a
+       hole rather than as balance. The logo is anchored high now and the slack is
+       shared out BETWEEN the elements, so the card fills evenly top to bottom.
+       ⚠️ AIR is capped: past ~64px the pieces stop reading as one composition and
+       start reading as six separate things. Any slack left over falls into the
+       gap above the tail rule, which is the seam between HER half of the card and
+       the invitation half, and is the right place for it. */
+    const AIR=Math.min(64,Math.max(0,(ceiling-TOP_MARGIN-blockH)/4));
+    let y=TOP_MARGIN;
 
     const src=logoCut||logo;
     if(src&&(src.width||src.naturalWidth)){
       const nw=src.width||src.naturalWidth,nh=src.height||src.naturalHeight;
       ctx.drawImage(src,W/2-LOGO_W/2,y,LOGO_W,LOGO_W*nh/nw);
     }
-    y+=H_LOGO;
+    y+=H_LOGO+AIR;
 
     ctx.fillStyle=TAUPE;ctx.font='600 27px "Jost", sans-serif';
     trackedText('MY STYLE IS',W/2,y+28,9);
@@ -12213,7 +12224,7 @@ function buildCardBlob(source,callback){
     ctx.fillText(head,W/2,y+fsHead*0.78);
     ctx.font=fs+'px "DM Serif Display", serif';
     ctx.fillText(rest,W/2,y+fsHead*1.02+fs*0.80);
-    y+=H_NAME;
+    y+=H_NAME+AIR;
 
     // her own star, replacing a four-point sparkle nobody could name
     const dy=y+40;
@@ -12222,21 +12233,26 @@ function buildCardBlob(source,callback){
     ctx.moveTo(W/2-190,dy);ctx.lineTo(W/2-40,dy);
     ctx.moveTo(W/2+40,dy);ctx.lineTo(W/2+190,dy);ctx.stroke();
     star(W/2,dy,17,gold);
-    y+=H_DIV;
+    y+=H_DIV+AIR;
 
     ctx.fillStyle=BLACK;ctx.font='italic 400 '+ms+'px "Lora", serif';
     ml.forEach(function(t,i){ctx.fillText(t,W/2,y+ms+i*(ms+16))});
-    y+=H_MOT;
+    y+=H_MOT+AIR;
 
     if(notes.length){
       ctx.fillStyle=TAUPE;ctx.font='600 24px "Jost", sans-serif';
       trackedText('WITH NOTES OF',W/2,y+26,7);
+      /* STACKED, not side by side (her call). It also removes the shrink-to-fit
+         loop's worst case: the two longest names together ran 40 chars and drove
+         the type down to fit one line, where stacked each name gets the full
+         width and holds its size. */
       const short=notes.map(function(n){return String(n).replace(/^The\s+/i,'').toUpperCase()});
-      const joined=short.join('   •   ');
       ctx.fillStyle=BLACK;
-      let ns=30;ctx.font='600 '+ns+'px "Jost", sans-serif';
-      while(trackedWidth(joined,3)>W-160&&ns>19){ns--;ctx.font='600 '+ns+'px "Jost", sans-serif';}
-      trackedText(joined,W/2,y+82,3);
+      let ns=32;ctx.font='600 '+ns+'px "Jost", sans-serif';
+      while(short.some(function(n){return trackedWidth(n,3)>W-200})&&ns>20){
+        ns--;ctx.font='600 '+ns+'px "Jost", sans-serif';
+      }
+      short.forEach(function(n,i){trackedText(n,W/2,y+82+i*46,3)});
     }
 
     let ty=H-FOOT_MARGIN;
