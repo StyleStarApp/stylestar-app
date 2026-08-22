@@ -1,0 +1,8 @@
+
+1. The category emoji are retired
+  ✓ no catEmoji map survives
+  ✓ no photoShopEmoji map survives
+  ✓ no .shop-emoji markup or rule survives
+  ✓ the only sparkles left are toasts and the stylist's chat voice, out of scope by her call
+
+2. At rest — the six still arrive untouched
