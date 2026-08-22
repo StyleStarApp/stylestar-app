@@ -1778,7 +1778,16 @@ body.menu-open .menu-panel{display:block}
 .dc-logo::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3px;background:#E0B84C}
 .dc-logo::before{content:"";position:absolute;bottom:0.5px;left:67%;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
 /* Style Star Edit: a little jewel star (gold with silver outline) pinned to the top-left corner */
-.dc-corner-star{position:absolute;top:-34px;left:-55px;width:70px;height:70px;transform:rotate(-57deg);z-index:20;filter:drop-shadow(0 2px 3px rgba(120,90,20,.28))}
+/* ⚠️ MOVED 2026-08-22, HER CATCH, and it was measured on the DRAWN PATH not the
+   rotated bounding box (which overstates by ~25px at -57deg -- the 2026-08-07
+   lesson). The star's outline reached 10.3px INTO the S. It always overlapped a
+   little, and capitalising "Style Star Edit" made the collision read: a capital
+   is wider AND taller, so the letter grew toward the star from both sides.
+   ▶ Now 10.7px CLEAR. ⚠️ Its two standing constraints were re-checked, not
+   assumed: it still does not touch the fixed MENU chip, and its left edge sits
+   at x=40 with the card's own edge far away. scratchpad/starmove.mjs re-runs
+   the sweep if this ever moves again. */
+.dc-corner-star{position:absolute;top:-40px;left:-67px;width:70px;height:70px;transform:rotate(-57deg);z-index:20;filter:drop-shadow(0 2px 3px rgba(120,90,20,.28))}
 /* a touch of the entry button's turquoise, and the "not AI" promise */
 .dc-tagline{display:flex;align-items:center;justify-content:center;gap:7px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
 /* ⚠️ letter-spacing puts its space after the LAST letter too, so the right
@@ -2121,8 +2130,19 @@ body.card-fb{padding:0}
 #mallContent .mall-cat:first-child{margin-top:.8rem}
 .mall-sign{position:relative;background:#fff;border:3px solid #161616;padding:15px 16px 17px;margin:21px 0 6px;text-align:center;box-shadow:0 11px 26px -15px rgba(20,15,5,.6)}
 /* White+gold-outline star "light fixture", tilted, stuck onto the top-left corner of the sign (absolute, no layout shift) */
-.mall-fixture{position:absolute;top:-30px;left:-16px;width:116px;height:116px;z-index:6;pointer-events:none}
-.mall-fixture .mf-star{position:absolute;top:0;left:0;width:104px;height:104px;z-index:2;transform:rotate(-57deg)}
+/* ⚠️ MOVED AND SHRUNK 2026-08-22, HER CATCH -- "especially Mall", and she was
+   right: measured on the drawn path, this star reached 19.1px into the S, twice
+   the Edit's overlap.
+   🚨 IT COULD NOT SIMPLY MOVE. Going UP hits the fixed MENU chip at the very
+   first step (every vertical candidate collided, measured). Going far enough
+   LEFT alone puts its outline 3px from the screen edge. So the star comes left
+   10px AND down from 104 to 88px, which clears the letter by 9.6px while
+   keeping its left edge at x=17 -- still mounted on the sign's corner like a
+   fixture, which is the whole idea, rather than floating off it.
+   ⚠️ The 116px BOX is unchanged on purpose: it is the positioning frame, and
+   only .mf-star inside it was resized. */
+.mall-fixture{position:absolute;top:-30px;left:-26px;width:116px;height:116px;z-index:6;pointer-events:none}
+.mall-fixture .mf-star{position:absolute;top:0;left:0;width:88px;height:88px;z-index:2;transform:rotate(-57deg)}   /* 104 -> 88, see .mall-fixture above */
 .mall-sign-logo{font-family:'DM Serif Display',Georgia,serif;font-size:29px;color:#1a1a1a;-webkit-text-stroke:.6px #1a1a1a;display:inline-block;position:relative;padding-bottom:5px;letter-spacing:.01em}
 .mall-sign-logo::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:3px;background:#E0B84C}
 .mall-sign-logo::before{content:"";position:absolute;bottom:-1.5px;left:66%;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
