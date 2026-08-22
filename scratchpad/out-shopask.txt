@@ -104,3 +104,14 @@
   ✓ esc clears AA against the real painted background
   ✓ go clears AA against the real painted background
   ✓ now clears AA against the real painted background
+  ✓ 390px: nothing in the ask overflows
+  ✓ 390px: no sideways page scroll
+  ✓ 375px: nothing in the ask overflows
+  ✓ 375px: no sideways page scroll
+  ✓ 360px: nothing in the ask overflows
+  ✓ 360px: no sideways page scroll
+  ✓ 320px: nothing in the ask overflows
+  ✓ 320px: no sideways page scroll
+  ✓ zero JS errors anywhere
+
+all 87 checks passed
