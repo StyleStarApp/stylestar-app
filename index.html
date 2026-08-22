@@ -7342,7 +7342,29 @@ function _shopPicksWaiting(){
    chat, which is the one place she could not get to. Nothing new is stored for
    this half; the app simply says out loud what it already knew. */
 function _chatWaiting(){
-  try{var v=JSON.parse(localStorage.getItem('ss_chat')||'null');return !!(v&&v.length)}catch(e){return false}
+  try{
+    var v=JSON.parse(localStorage.getItem('ss_chat')||'null');
+    if(!(v&&v.length))return false;
+    // 🚨 A CONVERSATION IS HERS ONLY IF SHE SAID SOMETHING. Opening the chat
+    // writes the stylist's own greeting into ss_chat, so without this the app
+    // would offer to resume a conversation that is entirely its own voice --
+    // which is not a conversation, it is an empty room with a hello in it.
+    // ▶ hubs.js found this by failing "graduated: no whisper ever again": the
+    // graduation whisper LANDS her in the chat, so the greeting alone was
+    // enough to make the app start greeting her about it forever after.
+    if(!v.some(function(m){return m&&m.role==='user'}))return false;
+    // 🚨 THE FRESHNESS IS THE WHOLE POINT, and it was missed on the first build.
+    // ss_chat never expires, so without this the resume whisper would appear on
+    // every Welcome Back visit for the rest of her life -- which is a NAG, not a
+    // resume. hubs.js failed on exactly that ("graduated: no whisper ever
+    // again") and was right to. Same 6-hour window as her pieces, deliberately:
+    // one promise, one shelf life.
+    // ⚠️ A conversation from BEFORE this shipped has no stamp. It is treated as
+    // stale rather than fresh, so nobody is greeted about a chat they had weeks
+    // ago; her next message stamps it and the whisper starts working for her.
+    var t=parseInt(localStorage.getItem('ss_chat_t')||'0',10);
+    return !!t&&(Date.now()-t)<=_SHOP_PICKS_TTL;
+  }catch(e){return false}
 }
 function resumeShop(e){
   if(e&&e.stopPropagation)e.stopPropagation();
@@ -10365,7 +10387,12 @@ function closeTerms(){
 }
 
 function saveChatHistory(){
-  try{localStorage.setItem('ss_chat',JSON.stringify(chatHistory.slice(-40)))}catch(e){}
+  // ⚠️ The stamp rides alongside, for the resume whisper: "your conversation is
+  // right where you left it" is only true for a while, and ss_chat itself never
+  // expires. Without this the whisper would greet her on EVERY visit forever
+  // (caught by hubs.js's "graduated: no whisper ever again" assertion, which the
+  // resume broke -- the old test was doing real work).
+  try{localStorage.setItem('ss_chat',JSON.stringify(chatHistory.slice(-40)));localStorage.setItem('ss_chat_t',String(Date.now()))}catch(e){}
 }
 function loadChatHistory(){
   try{

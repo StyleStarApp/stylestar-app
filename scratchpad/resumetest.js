@@ -32,8 +32,9 @@ async function open(seed){
       topArchNames:['Modern Glam'],portrait:'P.',motto:'P.'}));
     localStorage.setItem('ss_prefs',JSON.stringify({sizes:{},colorsLove:[],neverWear:[],neverPatterns:[],neverOther:''}));
     localStorage.setItem('ss_hearttip','1');
-    if(seed&&seed.chat)localStorage.setItem('ss_chat',JSON.stringify([{role:'user',text:'formal wedding?'},
-      {role:'assistant',text:'A long column dress from Reformation.'}]));
+    if(seed&&seed.chat){localStorage.setItem('ss_chat',JSON.stringify([{role:'user',content:'formal wedding?'},
+      {role:'assistant',content:'A long column dress from Reformation.'}]));
+      localStorage.setItem('ss_chat_t',String(Date.now()));}
     if(seed&&seed.seenAll)['ss_seen_wardrobe','ss_seen_shopstyle','ss_seen_wishlist','ss_trending_seen'].forEach(k=>localStorage.setItem(k,'1'));
     const of=window.fetch;window.fetch=function(u){
       if(String(u).indexOf('style-ai')>=0){ window.__aiCall&&window.__aiCall();
@@ -129,6 +130,25 @@ console.log('\n4. It never lies, and it never nags');
     {m:'quiz',i:[{name:'Old Thing',store:'Zara',search:'old'}],t:Date.now()-5*60*60*1000}));});
   ok('a 5-hour-old one still is',
      await pg.evaluate(()=>!!_shopPicksWaiting()));
+  // The chat half needs the SAME shelf life, or the whisper greets her forever:
+  // ss_chat never expires. hubs.js caught this; keep it pinned here too.
+  await pg.evaluate(()=>{localStorage.setItem('ss_chat',JSON.stringify([{role:'user',content:'hi'}]));
+    localStorage.setItem('ss_chat_t',String(Date.now()-7*60*60*1000));});
+  ok('a 7-hour-old CONVERSATION is not offered either',
+     await pg.evaluate(()=>!_chatWaiting()));
+  await pg.evaluate(()=>{localStorage.setItem('ss_chat_t',String(Date.now()));});
+  ok('a fresh one is',await pg.evaluate(()=>!!_chatWaiting()));
+  await pg.evaluate(()=>{localStorage.removeItem('ss_chat_t');});
+  ok('a conversation from BEFORE this shipped (no stamp) is treated as stale, not fresh',
+     await pg.evaluate(()=>!_chatWaiting()));
+  // A room the app said hello in is not a conversation she can resume.
+  await pg.evaluate(()=>{localStorage.setItem('ss_chat',JSON.stringify([{role:'assistant',content:'Hi! I am your stylist.'}]));
+    localStorage.setItem('ss_chat_t',String(Date.now()));});
+  ok('a greeting-only chat is NOT offered -- she never said anything',
+     await pg.evaluate(()=>!_chatWaiting()));
+  await pg.evaluate(()=>{localStorage.setItem('ss_chat',JSON.stringify([{role:'assistant',content:'Hi!'},{role:'user',content:'a dress?'}]));});
+  ok('...and the moment she speaks, it is hers to come back to',
+     await pg.evaluate(()=>!!_chatWaiting()));
   await pg.evaluate(()=>{updateWbScreen&&updateWbScreen();});
   await pg.waitForTimeout(300);
   ok('so the whisper is back',(await whisper(pg)).key==='resume');
