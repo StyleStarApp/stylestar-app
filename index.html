@@ -7087,7 +7087,33 @@ function _syncWbNext(){
   _wbNextCur=pick?pick.k:null;
   // ⚠️ h may be a FUNCTION now (the resume has three states); the six journey
   // whispers are still plain strings and stay that way.
-  if(pick){document.getElementById('wbNextTxt').innerHTML=(typeof pick.h==='function')?pick.h():pick.h;el.classList.add('on');}
+  if(pick){
+    /* ⭐ HER CALL 2026-08-22: THE RESUME SITS ABOVE STAR OF THE WEEK, the journey
+       whispers stay below it. Measured first, because the Star's fold fit was
+       hard-won: the whisper's home is y=704 against a ~700px fold, so a woman
+       coming back from a store LANDED WITHOUT EVER SEEING IT. Moving it up costs
+       55px, which drops the Star's Shop it and Save just under the fold on a
+       shorter screen (both still clear at ~780px, e.g. her own iPhone with the
+       URL bar hidden). The Star's photo, name, price and her note stay above the
+       line either way.
+       ▶ ONLY the resume moves, and that is what makes the trade cheap: a resume
+       is time-critical, a "next step" nudge is not, so the cost lands only on
+       the woman who actually has something to come back to. A first-timer or a
+       browser has nothing to resume, never sees this, and gets the Star exactly
+       as it was. Her words: "I think she will scroll down or at least hit the
+       menu button so I really like the whisper up higher."
+       ⚠️ THE ELEMENT IS MOVED, NEVER DUPLICATED. A second slot would mean a
+       second id, a second copy of every .wbn-* rule and two places to keep in
+       step -- the drift this file keeps paying for. One element, one home per
+       state, restored to its original position for every other whisper. */
+    var star=document.getElementById('wbStar');
+    if(star&&star.parentNode){
+      if(pick.k==='resume'){if(el.nextSibling!==star)star.parentNode.insertBefore(el,star);}
+      else if(star.nextSibling!==el)star.parentNode.insertBefore(el,star.nextSibling);
+    }
+    document.getElementById('wbNextTxt').innerHTML=(typeof pick.h==='function')?pick.h():pick.h;
+    el.classList.add('on');
+  }
   else el.classList.remove('on');
 }
 function wbNextGo(){
