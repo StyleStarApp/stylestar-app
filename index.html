@@ -12134,8 +12134,21 @@ function buildCardBlob(source,callback){
        whole edge pale (measured 1.07:1 against this paper, i.e. invisible).
        The highlight sits in the middle. Do not sort these. */
     const MIRROR=['#FFFFFF','#C6CACE','#8C9298','#F2F4F6','#9AA0A6','#DFE2E5','#FFFFFF'];
-    const LEAF=['#DDA92C','#F5E09A','#C9992B','#EFD07A','#E9BE4A'];
-    const gold=diag(W/2-200,0,W/2+200,H,LEAF);
+    /* ⚠️ THE LOGO'S OWN GOLD, SAMPLED FROM logo-tight.png ITSELF, not guessed:
+       the slider line and dot in the drawn logo are #E0B71B. The card's foot was
+       drawing #C9992B at 55%, which is browner and darker — her catch, and she
+       was looking at the two golds sitting one above the other on the same sheet.
+       ▶ The foot rule and dot are a deliberate ECHO of the logo's slider, so they
+       must be the logo's colour. If the logo art is ever redrawn, re-sample. */
+    const LOGO_GOLD='#E0B71B';
+    /* The gold-leaf ramp that used to live here is DELETED, not commented out.
+       It drew the flanking divider rules, and she retired those so the star could
+       stand alone; the star carries its own gradient and the foot rules take the
+       logo's gold. Nothing was left needing a leaf ramp, and a dead gradient in a
+       drawing function is exactly the sort of thing a later session re-adopts by
+       accident. The ORDER lesson it carried is kept where it still applies, on
+       MIRROR above: a diagonal gradient puts its first stop in the top-left
+       corner, so a highlight at either end leaves that whole edge pale. */
 
     paperInset(0);
     // the silver mirror band, her frame
@@ -12225,11 +12238,12 @@ function buildCardBlob(source,callback){
       ctx.fillText('stylestar.app',W/2,y+46);
     });
     push(40+AIR,function(y){
-      ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
+      // an echo of the slider under the logo, so it takes the logo's own gold
+      ctx.strokeStyle=LOGO_GOLD;ctx.lineWidth=2.4;
       ctx.beginPath();
-      ctx.moveTo(W/2-120,y+20);ctx.lineTo(W/2-14,y+20);
-      ctx.moveTo(W/2+14,y+20);ctx.lineTo(W/2+120,y+20);ctx.stroke();
-      ctx.fillStyle=gold;ctx.beginPath();ctx.arc(W/2,y+20,7,0,7);ctx.fill();
+      ctx.moveTo(W/2-120,y+20);ctx.lineTo(W/2-16,y+20);
+      ctx.moveTo(W/2+16,y+20);ctx.lineTo(W/2+120,y+20);ctx.stroke();
+      ctx.fillStyle=LOGO_GOLD;ctx.beginPath();ctx.arc(W/2,y+20,8,0,7);ctx.fill();
     });
     /* HER SENTENCE, word for word. "of 20 years" was cut on her instruction
        ("I feel like we already say it a lot") and "a REAL personal stylist" is her
@@ -12247,7 +12261,7 @@ function buildCardBlob(source,callback){
       ctx.fillText('What’s your Style Star?',W/2,y+62);
     });
     push(52+AIR,function(y){
-      ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
+      ctx.strokeStyle=LOGO_GOLD;ctx.lineWidth=1.6;
       ctx.beginPath();ctx.moveTo(W/2-110,y+26);ctx.lineTo(W/2+110,y+26);ctx.stroke();
     });
 
