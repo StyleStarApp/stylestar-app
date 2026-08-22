@@ -163,5 +163,35 @@ console.log('\n4. It never lies, and it never nags');
   ok('no JS errors',errs.length===0,errs.join('|'));
   await ctx.close();
 }
+console.log('\n5. Where it sits: the resume leads, the journey whispers do not');
+{
+  const {ctx,pg,errs}=await open({chat:true,seenAll:true});
+  const where=()=>pg.evaluate(()=>{
+    const st=document.getElementById('wbStar'),n=document.getElementById('wbNext');
+    return {key:_wbNextCur, above:!!(st&&n&&(n.compareDocumentPosition(st)&Node.DOCUMENT_POSITION_FOLLOWING)),
+      top:Math.round(n.getBoundingClientRect().top+window.scrollY)};});
+  let w=await where();
+  ok('the RESUME sits above Star of the Week',w.key==='resume'&&w.above,w.key+' top '+w.top);
+  ok('...and it is on her first screen now, not below a 700px fold',w.top<700,'y='+w.top);
+  // now take the resume away: a journey whisper must go back below the Star
+  await pg.evaluate(()=>{localStorage.removeItem('ss_chat');localStorage.removeItem('ss_chat_t');
+    localStorage.removeItem('ss_shoppicks');
+    ['ss_seen_wardrobe','ss_seen_shopstyle','ss_seen_wishlist','ss_trending_seen'].forEach(k=>localStorage.removeItem(k));
+    updateWbScreen&&updateWbScreen();});
+  await pg.waitForTimeout(300);
+  w=await where();
+  ok('a JOURNEY whisper returns to its home below the Star',w.key!=='resume'&&!w.above,w.key);
+  ok('so a woman with nothing to resume gets the Star exactly as it was',w.top>=700,'y='+w.top);
+  // and back again, to prove it moves both ways rather than sticking
+  await pg.evaluate(()=>{localStorage.setItem('ss_chat',JSON.stringify([{role:'user',content:'hi'}]));
+    localStorage.setItem('ss_chat_t',String(Date.now()));updateWbScreen&&updateWbScreen();});
+  await pg.waitForTimeout(300);
+  w=await where();
+  ok('and it moves back up when there is something to resume again',w.key==='resume'&&w.above);
+  ok('exactly one whisper element exists -- moved, never duplicated',
+     await pg.evaluate(()=>document.querySelectorAll('#s-wb [id="wbNext"], #s-wb .wbn-t').length)===2);
+  ok('no JS errors',errs.length===0,errs.join('|'));
+  await ctx.close();
+}
 console.log(`\nall ${checks} checks run, ${fails} failures`);
 await b.close();srv.close();process.exit(fails?1:0);
