@@ -147,5 +147,49 @@ for(const w of [430,393,375,360,320]){
   ok('no JS errors',errs.length===0,errs.join('|'));
   await ctx.close();
 }
+console.log('\n5. Nothing asks her to act while the star is spinning');
+{
+  const ctx=await b.newContext({viewport:{width:375,height:1000},deviceScaleFactor:3});
+  const pg=await ctx.newPage();
+  await pg.route('**/fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:GF}));
+  const errs=[];pg.on('pageerror',e=>errs.push(e.message));
+  // a SLOW reply, so the spinner is genuinely on screen to be measured
+  await pg.addInitScript(picks=>{
+    localStorage.setItem('ss_data',JSON.stringify({userName:'Catherine',answers:[8,7,6,5,9,4,7,6,8,5,7,6],
+      topArchNames:['Modern Glam'],portrait:'P.',motto:'P.'}));
+    localStorage.setItem('ss_prefs',JSON.stringify({sizes:{},colorsLove:[],neverWear:[],neverPatterns:[],neverOther:''}));
+    const of=window.fetch;window.fetch=function(u){if(String(u).indexOf('style-ai')>=0){
+      return new Promise(r=>setTimeout(()=>r(new Response(JSON.stringify({content:[{type:'text',text:JSON.stringify({items:picks})}]}),{status:200,headers:{'Content-Type':'application/json'}})),4000));}
+      if(String(u).indexOf('user-data')>=0)return Promise.resolve(new Response('{}',{status:200}));
+      return of.apply(this,arguments);};},PICKS);
+  await pg.goto('http://localhost:8951/',{waitUntil:'domcontentloaded'});
+  await pg.waitForTimeout(2300);
+  await pg.evaluate(()=>{_shopStyleMode='quiz';_openShopStyleNow('quiz');});
+  await pg.waitForTimeout(1200);
+  const s1=await pg.evaluate(()=>{
+    const q=s=>document.querySelector('#s-shopstyle '+s);
+    const v=e=>!!(e&&e.offsetHeight>0);
+    return {thinking:document.getElementById('s-shopstyle').classList.contains('thinking'),
+      tip:v(q('[data-hearttip]')),door:v(q('[data-wldoor]')),
+      disc:v(q('.ss-disc-top')),ask:v(q('#ssAsk'))};});
+  ok('the spinner really is on screen',s1.thinking);
+  ok('the TIP stands down',!s1.tip);
+  ok('the WISHLIST DOOR stands down -- no way OUT while she waits',!s1.door);
+  ok('the commission notice stands down',!s1.disc);
+  ok('the ask box stands down (as it always has)',!s1.ask);
+  await pg.waitForTimeout(4200);
+  const s2=await pg.evaluate(()=>{
+    const q=s=>document.querySelector('#s-shopstyle '+s);
+    const v=e=>!!(e&&e.offsetHeight>0);
+    return {thinking:document.getElementById('s-shopstyle').classList.contains('thinking'),
+      tip:v(q('[data-hearttip]')),disc:v(q('.ss-disc-top')),ask:v(q('#ssAsk')),
+      cards:document.querySelectorAll('#shopStyleContent .wl-save').length};});
+  ok('once the pieces land the screen comes back',!s2.thinking&&s2.cards>0,'cards '+s2.cards);
+  ok('...the tip is there again',s2.tip);
+  ok('...the notice is there again',s2.disc);
+  ok('...and so is the ask',s2.ask);
+  ok('no JS errors',errs.length===0,errs.join('|'));
+  await ctx.close();
+}
 console.log(`\nall ${checks} checks run, ${fails} failures`);
 await b.close();srv.close();process.exit(fails?1:0);

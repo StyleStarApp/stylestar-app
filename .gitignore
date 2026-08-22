@@ -17,3 +17,12 @@ scratchpad/_mock/
 # render harness intermediates
 scratchpad/_*.png
 scratchpad/_*.html
+
+# Suite run logs. These are REGENERATED on every run and are not a record: the
+# record that matters is the total quoted in the commit message. Tracking them
+# forces a choice between leaving the tree dirty and committing a HALF-WRITTEN
+# log, and a partial log is worse than none -- it shows zero failure marks while
+# proving nothing, which is exactly the false green this project has paid for
+# once already (2026-08-22: a commit made on a run that had crashed on
+# EADDRINUSE). READ THE TOTAL, from a finished run, in the terminal.
+scratchpad/out-*.txt

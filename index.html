@@ -1587,6 +1587,24 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    and it must stay display:none rather than visibility/opacity, or it would
    still hold its space and leave a gap where the notice used to be. */
 #s-shopstyle.thinking .ss-disc-top{display:none}
+/* HER CALL 2026-08-22, off her own live test, and it is the SAME REASONING one
+   step further: while the star is spinning there is nothing on the screen to
+   act on, so nothing should be asking her to act.
+   ▶ THE WISHLIST DOOR IS THE WORST OF THE THREE TO LEAVE STANDING, and that is
+   her point, not a tidiness one: a notice and a tip are inert, but a door is a
+   way OUT, offered at the one moment she is waiting for the payoff. Her words:
+   "she should just wait to see her options during spinning star and not be
+   tempted to click out of it at this moment."
+   ⚠️ THE CODE ALREADY AGREED -- _shopStyleGen has always hidden #ssAsk while
+   thinking, for exactly this reason. This is that rule finally reaching its
+   neighbours; the disclosure and these two were simply left behind.
+   ⚠️ Scoped #s-shopstyle so Complete the Look's own copy of the tip is
+   untouched -- that screen has no spinner state of this kind.
+   ⚠️ CSS rather than more inline style in _syncHeartTip on purpose: that
+   function sets display to '' (removing the inline value) when it wants a line
+   shown, so this rule wins during .thinking and gets out of the way after. */
+#s-shopstyle.thinking [data-hearttip],
+#s-shopstyle.thinking [data-wldoor]{display:none}
 .shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;max-width:320px;margin-left:auto;margin-right:auto;text-align:center}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
