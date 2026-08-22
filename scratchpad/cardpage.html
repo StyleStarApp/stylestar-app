@@ -427,6 +427,74 @@ window.setLine=function(m){LINEMODE=m};
 const BEATS='You don’t follow the room. You set the tone.';
 const SHORT='Ashley, you never follow the room. You set the tone.';
 
+/* ── GOLD, after measuring it on her white linen ──────────────────────────
+   Every gold sits at hue 41-47deg, because gold IS an orange-yellow hue. What
+   makes one read as BROWN PAINT rather than METAL is darkness, not hue:
+     #E0B84C  1.81:1  58.8% light   her star gold, bright, unreadable as text
+     #946D18  4.51:1  33.7% light   the only AA-passing gold, and the brown one
+   So on white paper gold cannot be both readable and not-brown. Her own file
+   settled this twice: "a flat mid-gold at frame scale always reads brown, a
+   highlight-to-shadow ramp is what reads as metal" (2026-08-21) and "the fix was
+   to stop asking gold to be text".
+   Therefore: gold is a RAMP and is DECORATIVE ONLY. Text is ink.
+   ⚠️ Do not flatten these to a single hex, and do not set text in them. */
+// The wb-chip ramp she approved on the Star of the Week card is built for
+// LACQUER: its highlight stop #FEEF98 measured 1.07:1 against white linen, so on
+// paper the frame simply vanished along the top edge. Same ramp shape, floated
+// off the paper: no stop lighter than #F5E09A, none darker than ~47% lightness
+// (below that is where gold starts reading brown, measured).
+// ⚠️ It is still a RAMP, and that is what makes it read as metal. Never flatten
+// it to one hex, and never set text in it.
+// ⚠️ ORDER IS LOAD-BEARING: a diagonal ramp puts its FIRST stop in the top-left
+// corner, so a highlight at either end leaves that whole edge pale (measured 1.07
+// then 1.15:1 against the paper). The highlight sits in the MIDDLE now, so every
+// edge crosses both a light and a dark stop and reads as metal all the way round.
+const LEAF=['#DDA92C','#F5E09A','#C9992B','#EFD07A','#E9BE4A'];
+function leaf(x0,y0,x1,y1){ return diag(x0,y0,x1,y1,LEAF); }
+
+let DIVIDER='star';
+window.setDivider=function(d){DIVIDER=d};
+let FRAME_STYLE='double';
+window.setFrame=function(f){FRAME_STYLE=f};
+
+/* Three frames, one variable. Everything else on the card is held constant. */
+function frameF(){
+  const g=leaf(0,0,W,H);
+  if(FRAME_STYLE==='band'){
+    // the Star of the Week's own gold-leaf band, the treatment she picked on
+    // 2026-08-21. Reused rather than reinvented, so the two can never drift.
+    ctx.fillStyle=g;ctx.fillRect(28,28,W-56,H-56);
+    paperInset(46);
+    ctx.strokeStyle='rgba(120,90,20,.30)';ctx.lineWidth=1;
+    ctx.strokeRect(28.5,28.5,W-57,H-57);
+    return;
+  }
+  if(FRAME_STYLE==='stars'){
+    ctx.strokeStyle=g;ctx.lineWidth=3;ctx.strokeRect(56,56,W-112,H-112);
+    ctx.lineWidth=1.4;ctx.strokeRect(74,74,W-148,H-148);
+    [[56,56],[W-56,56],[56,H-56],[W-56,H-56]].forEach(([x,y])=>{
+      ctx.save();
+      ctx.fillStyle='#FBFAF7';ctx.beginPath();ctx.arc(x,y,21,0,7);ctx.fill();
+      ctx.restore();
+      star(x,y,15,g);
+    });
+    return;
+  }
+  ctx.strokeStyle=g;ctx.lineWidth=3;ctx.strokeRect(34,34,W-68,H-68);
+  ctx.lineWidth=1.4;ctx.strokeRect(52,52,W-104,H-104);
+}
+function paperInset(i){
+  if(PAPERMODE==='white'){ctx.fillStyle='#ffffff';ctx.fillRect(i,i,W-2*i,H-2*i);return;}
+  ctx.fillStyle='#FBFAF7';ctx.fillRect(i,i,W-2*i,H-2*i);
+  const S=2.6;
+  ctx.save();ctx.beginPath();ctx.rect(i,i,W-2*i,H-2*i);ctx.clip();
+  ctx.fillStyle='rgba(150,140,120,.06)';
+  for(let x=i;x<W-i;x+=2.5*S)ctx.fillRect(x,i,0.5*S,H-2*i);
+  ctx.fillStyle='rgba(150,140,120,.05)';
+  for(let y=i;y<H-i;y+=2.5*S)ctx.fillRect(i,y,W-2*i,0.5*S);
+  ctx.restore();
+}
+
 let PROMISE='line';
 window.setPromise=function(p){PROMISE=p};
 
@@ -447,7 +515,7 @@ function drawTail(TAUPE,BLACK,GOLDF){
   const rows=[];
   const push=(h,draw)=>rows.push({h,draw});
 
-  push(58,y=>{ ctx.fillStyle=GOLDF;ctx.font='54px "DM Serif Display", serif';
+  push(58,y=>{ ctx.fillStyle=BLACK;ctx.font='54px "DM Serif Display", serif';
                ctx.fillText('stylestar.app',W/2,y+46); });
 
   push(40,y=>{ ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
@@ -487,19 +555,14 @@ function drawTail(TAUPE,BLACK,GOLDF){
 }
 
 function optF(){
-  const PAPER_F='#F7F6F3';
-  ctx.fillStyle=PAPER_F;ctx.fillRect(0,0,W,H);
-
-  // the double hairline, her frame. Two rules, not one: the outer carries the
-  // weight, the inner is the whisper that makes it read as engraved.
-  ctx.strokeStyle='#C9A227';
-  ctx.lineWidth=3;ctx.strokeRect(34,34,W-68,H-68);
-  ctx.lineWidth=1.4;ctx.strokeRect(52,52,W-104,H-104);
+  paperInset(0);          // her white linen, not the cream
+  frameF();
 
   drawLogo(112,168);
 
   ctx.textAlign='center';
-  const TAUPE='#8A8478', BLACK='#12100E', GOLDF='#C9992B';
+  const TAUPE='#8A8478', BLACK='#12100E';
+  const GOLDF=leaf(W/2-200,0,W/2+200,H);   // a ramp, never a flat hex
 
   ctx.fillStyle=TAUPE;
   ctx.font='600 27px "Jost", sans-serif';ctx.letterSpacing='9px';
@@ -516,10 +579,12 @@ function optF(){
 
   // hairline · sparkle · hairline
   const dy=Math.round(506+fs*1.06)+62;
-  ctx.strokeStyle='rgba(201,153,43,.62)';ctx.lineWidth=1.4;
-  ctx.beginPath();ctx.moveTo(W/2-186,dy);ctx.lineTo(W/2-34,dy);
-  ctx.moveTo(W/2+34,dy);ctx.lineTo(W/2+186,dy);ctx.stroke();
-  sparkle(W/2,dy,15,GOLDF);
+  if(DIVIDER!=='none'){
+    ctx.strokeStyle=GOLDF;ctx.lineWidth=1.6;
+    ctx.beginPath();ctx.moveTo(W/2-190,dy);ctx.lineTo(W/2-40,dy);
+    ctx.moveTo(W/2+40,dy);ctx.lineTo(W/2+190,dy);ctx.stroke();
+  }
+  if(DIVIDER!=='none')star(W/2,dy,17,GOLDF);
 
   const line = LINEMODE==='beats' ? BEATS : (LINEMODE==='short' ? SHORT : D.motto);
   ctx.fillStyle=BLACK;
