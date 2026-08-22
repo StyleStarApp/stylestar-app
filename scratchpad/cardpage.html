@@ -466,6 +466,8 @@ window.setDivider=function(d){DIVIDER=d};
 const MIRROR=['#FFFFFF','#C6CACE','#8C9298','#F2F4F6','#9AA0A6','#DFE2E5','#FFFFFF'];
 function mirror(x0,y0,x1,y1){ return diag(x0,y0,x1,y1,MIRROR); }
 
+let BYLINE='fold';
+window.setByline=function(b){BYLINE=b};
 let CTA='lora';
 window.setCta=function(c){CTA=c};
 let FRAME_STYLE='double';
@@ -552,7 +554,7 @@ window.setPromise=function(p){PROMISE=p};
      FREE            her own value-first rule; it removes the only objection
      THE QUIZ        the thing she is being asked to do, and that it is short
      A REAL STYLIST  the one claim no competitor can copy (the Sally north star) */
-function drawTail(TAUPE,BLACK,GOLDF){
+function buildTail(TAUPE,BLACK,GOLDF){
   const rows=[];
   const push=(h,draw)=>rows.push({h,draw});
 
@@ -565,22 +567,26 @@ function drawTail(TAUPE,BLACK,GOLDF){
                ctx.fillStyle=GOLDF;ctx.beginPath();ctx.arc(W/2,y+20,7,0,7);ctx.fill(); });
 
   if(PROMISE!=='none'){
-    push(40,y=>{ ctx.fillStyle=TAUPE;ctx.font='500 25px "Jost", sans-serif';
-                 ctx.fillText('Created by a personal stylist of 20 years',W/2,y+28); });
-    if(PROMISE==='items'){
-      const items=['THE FREE STYLE QUIZ','YOUR STYLE PORTRAIT','SHOPPING PICKED FOR YOU'];
-      push(items.length*54+14,y=>{
-        ctx.fillStyle=BLACK;ctx.font='600 27px "Jost", sans-serif';ctx.letterSpacing='3.5px';
-        items.forEach((t,i)=>ctx.fillText(t,W/2,y+34+i*54));
-        ctx.letterSpacing='0px';
-      });
-    }else{
-      push(108,y=>{
-        ctx.fillStyle=BLACK;ctx.font='italic 400 34px "Lora", serif';
-        ctx.fillText('Take the free quiz and meet your own Style Portrait,',W/2,y+40);
-        ctx.fillText('with shopping picked to suit you.',W/2,y+86);
-      });
+    /* HER WORDING, 2026-08-22. Replaces the Claude draft entirely.
+       ⚠️ Her sentence ends "from a personal stylist", which does the job the
+       separate byline was doing, so running both says "personal stylist" twice
+       in adjacent lines. Two ways out, hers to pick:
+         fold  her sentence carrying "of 20 years", no byline (recommended: it
+               keeps the Sally differentiator, which her sentence alone loses)
+         both  her sentence as written, byline kept underneath                */
+    const SENT = BYLINE==='fold'
+      ? 'Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a personal stylist of 20 years.'
+      : 'Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a personal stylist.';
+    if(BYLINE!=='fold'){
+      push(40,y=>{ ctx.fillStyle=TAUPE;ctx.font='500 25px "Jost", sans-serif';
+                   ctx.fillText('Created by a personal stylist of 20 years',W/2,y+28); });
     }
+    ctx.font='italic 400 34px "Lora", serif';
+    const pl=wrap(SENT,W-240);
+    push(pl.length*46+18,y=>{
+      ctx.fillStyle=BLACK;ctx.font='italic 400 34px "Lora", serif';
+      pl.forEach((t,i)=>ctx.fillText(t,W/2,y+40+i*46));
+    });
   }
 
   push(CTA==='serif'?92:88,y=>{
@@ -599,67 +605,103 @@ function drawTail(TAUPE,BLACK,GOLDF){
   push(52,y=>{ ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
                ctx.beginPath();ctx.moveTo(W/2-110,y+26);ctx.lineTo(W/2+110,y+26);ctx.stroke(); });
 
-  // lay the stack from the bottom edge upward
-  let y=H-88;
-  for(const r of rows){ y-=r.h; r.draw(y); }
-  return y;                     // the ceiling everything above must respect
+  // ⚠️ FOOT_MARGIN is not decoration. Measured, the tail was ending 1px off the
+  // frame while the logo had 66px of air above it, which is exactly the
+  // bottom-heaviness she spotted by eye. It matches the optical margin at the
+  // top so the card sits on its own feet.
+  const FOOT_MARGIN=150;
+  const total=rows.reduce((a,r)=>a+r.h,0);
+  return {
+    ceiling: H-FOOT_MARGIN-total,          // the highest the tail reaches
+    draw(){ let y=H-FOOT_MARGIN; for(const r of rows){ y-=r.h; r.draw(y); } }
+  };
 }
 
 function optF(){
   paperInset(0);          // her white linen, not the cream
   frameF();
 
-  drawLogo(112,168);
-
   ctx.textAlign='center';
   const TAUPE='#8A8478', BLACK='#12100E';
   const GOLDF=leaf(W/2-200,0,W/2+200,H);   // a ramp, never a flat hex
 
-  ctx.fillStyle=TAUPE;
-  ctx.font='600 27px "Jost", sans-serif';ctx.letterSpacing='9px';
-  ctx.fillText('MY STYLE IS',W/2,392);ctx.letterSpacing='0px';
+  const tail=buildTail(TAUPE,BLACK,GOLDF);
 
+  /* ── MEASURE THE UPPER BLOCK BEFORE PLACING IT ────────────────────────────
+     Everything above the tail used to start at a fixed y, so on a taller card
+     the slack all collected in one hole in the middle (measured ~300px at 9:16)
+     and on a shorter one the blocks overlapped. Now the block is measured first
+     and CENTRED in the room the tail leaves, so the card balances itself at any
+     height. This is what makes the Instagram ratio a free choice.             */
+  const LOGO_W=196, LOGO_H=LOGO_W*312/296;
   const words=D.arch.split(' ');
   const head=words[0], rest=words.slice(1).join(' ');
-  ctx.fillStyle=BLACK;
   ctx.font='104px "DM Serif Display", serif';
-  ctx.fillText(head,W/2,506);
+  const fsHead=104;
   const fs=fitFont(rest,'"DM Serif Display", serif',116,58,W-190);
-  ctx.font=fs+'px "DM Serif Display", serif';
-  ctx.fillText(rest,W/2,506+fs*1.06);
 
-  // hairline · sparkle · hairline
-  const dy=Math.round(506+fs*1.06)+62;
+  const line = LINEMODE==='beats' ? BEATS : (LINEMODE==='short' ? SHORT : D.motto);
+  ctx.font='italic 400 46px "Lora", serif';
+  const ml=wrapSentences(line,W-300);
+
+  const H_LOGO=LOGO_H+72;                 // logo plus its air
+  const H_OVER=54;                        // MY STYLE IS
+  const H_NAME=fsHead*1.02+fs*1.06+34;    // the two lines of the archetype
+  const H_DIV =DIVIDER==='none'?36:96;    // rules and her star
+  const H_MOT =ml.length*62+34;
+  const H_NOT =120;                       // WITH NOTES OF plus the pair
+  const blockH=H_LOGO+H_OVER+H_NAME+H_DIV+H_MOT+H_NOT;
+
+  const TOP_MARGIN=112;
+  const room=tail.ceiling-TOP_MARGIN;
+  let y=TOP_MARGIN+Math.max(0,(room-blockH)/2);
+
+  drawLogo(y,LOGO_W);            y+=H_LOGO;
+
+  ctx.fillStyle=TAUPE;
+  ctx.font='600 27px "Jost", sans-serif';ctx.letterSpacing='9px';
+  ctx.fillText('MY STYLE IS',W/2,y+28);ctx.letterSpacing='0px';
+  y+=H_OVER;
+
+  ctx.fillStyle=BLACK;
+  ctx.font=fsHead+'px "DM Serif Display", serif';
+  ctx.fillText(head,W/2,y+fsHead*0.78);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillText(rest,W/2,y+fsHead*1.02+fs*0.80);
+  y+=H_NAME;
+
   if(DIVIDER!=='none'){
+    const dy=y+40;
     ctx.strokeStyle=GOLDF;ctx.lineWidth=1.6;
     ctx.beginPath();ctx.moveTo(W/2-190,dy);ctx.lineTo(W/2-40,dy);
     ctx.moveTo(W/2+40,dy);ctx.lineTo(W/2+190,dy);ctx.stroke();
+    star(W/2,dy,17,GOLDF);
   }
-  if(DIVIDER!=='none')star(W/2,dy,17,GOLDF);
+  y+=H_DIV;
 
-  const line = LINEMODE==='beats' ? BEATS : (LINEMODE==='short' ? SHORT : D.motto);
   ctx.fillStyle=BLACK;
   ctx.font='italic 400 46px "Lora", serif';
-  const ml=wrapSentences(line,W-300);
-  ml.forEach((t,i)=>ctx.fillText(t,W/2,dy+96+i*62));
-  const after=dy+96+(ml.length-1)*62;
+  ml.forEach((t,i)=>ctx.fillText(t,W/2,y+46+i*62));
+  y+=H_MOT;
 
-  const ceiling = drawTail(TAUPE,BLACK,GOLDF);
-
-  // the notes sit just under the motto, but never below the ceiling the tail
-  // reserved for itself
-  const notesY=Math.min(after+96,ceiling-104);
   ctx.fillStyle=TAUPE;
   ctx.font='600 24px "Jost", sans-serif';ctx.letterSpacing='7px';
-  ctx.fillText('WITH NOTES OF',W/2,notesY);ctx.letterSpacing='0px';
+  ctx.fillText('WITH NOTES OF',W/2,y+26);ctx.letterSpacing='0px';
 
   const short=D.notes.map(n=>n.replace(/^The\s+/i,'').toUpperCase());
   ctx.fillStyle=BLACK;
   let ns=30;ctx.font='600 '+ns+'px "Jost", sans-serif';ctx.letterSpacing='3px';
   const joined=short.join('   \u2022   ');
   while(ctx.measureText(joined).width>W-160&&ns>19){ns--;ctx.font='600 '+ns+'px "Jost", sans-serif';}
-  ctx.fillText(joined,W/2,notesY+56);ctx.letterSpacing='0px';
+  ctx.fillText(joined,W/2,y+82);ctx.letterSpacing='0px';
+
+  tail.draw();
+
+  // an honest alarm rather than a silent overlap: if the block cannot fit above
+  // the tail, the card is being asked for a size it cannot hold.
+  if(blockH>room) console.warn('CARD TOO SHORT: block '+Math.round(blockH)+'px into '+Math.round(room)+'px of room');
 }
+
 // the four-point sparkle from her mockup
 function sparkle(cx,cy,r,fill){
   ctx.save();ctx.fillStyle=fill;ctx.beginPath();
