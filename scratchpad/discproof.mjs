@@ -30,12 +30,19 @@ await pg.addInitScript(picks=>{
 await pg.goto('http://localhost:8947/',{waitUntil:'domcontentloaded'});
 await pg.waitForTimeout(2300);
 await pg.evaluate(()=>{_shopStyleMode='quiz';_openShopStyleNow('quiz');});
+await pg.waitForTimeout(4600);   // let the first six land so she can really save
+await pg.evaluate(()=>{[...document.querySelectorAll('#shopStyleContent .wl-save')].forEach(b=>b.click())});
+await pg.waitForTimeout(400);
+await pg.evaluate(()=>{const t=document.getElementById('wlToast');if(t)t.classList.remove('on');
+  document.querySelector('#s-shopstyle .shop-refresh-btn').click();});   // spin again, WITH saves on the list
 await pg.waitForTimeout(900);
-const spin=await pg.evaluate(()=>{const d=document.querySelector('#s-shopstyle .ss-disc-top');
+const spin=await pg.evaluate(()=>{const q=s=>document.querySelector('#s-shopstyle '+s);
+  const v=e=>!!(e&&e.offsetHeight>0);
   return {thinking:document.getElementById('s-shopstyle').classList.contains('thinking'),
-          discVisible:!!(d&&d.offsetHeight>0), text:d?d.textContent.trim():null};});
+          discVisible:v(q('.ss-disc-top')), door:v(q('[data-wldoor]')), tip:v(q('[data-hearttip]')),
+          saves:(wardrobeData.wishlist||[]).length};});
 await pg.screenshot({path:'scratchpad/disc-spinning.png',clip:{x:0,y:0,width:375,height:560}});
-await pg.waitForTimeout(4200);
+await pg.waitForTimeout(4600);
 const land=await pg.evaluate(()=>{const d=document.querySelector('#s-shopstyle .ss-disc-top');
   const card=document.querySelector('#shopStyleContent .shop-card,#shopStyleContent a');
   return {thinking:document.getElementById('s-shopstyle').classList.contains('thinking'),
