@@ -10422,6 +10422,7 @@ async function _readChatStream(r,typing,liveEl,state){
     }else if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta'){
       text+=ev.delta.text;
       state.text=text;
+      if(state.onText)state.onText();
       typing.style.display='none';
       liveEl.style.display='';
       liveEl.textContent=text;
@@ -10453,6 +10454,60 @@ async function _readChatStream(r,typing,liveEl,state){
     handleChunk(await r.text());
   }
   return text;
+}
+
+// The searching rules above are written for a call that really carries the web
+// search tool. On the no-search RETRY (see sendChat) they are actively harmful:
+// "AN ITEM WITHOUT ITS ADDRESS DOES NOT EXIST" would leave the stylist either
+// naming nothing at all, or inventing a product address she never saw. So the
+// block is SWAPPED for the app's own pre-search behaviour, never just dropped.
+// Keep both branches in one function so they can never drift apart.
+function _chatSearchBlock(on){
+  if(on===false)return `SEARCHING REAL INVENTORY:
+- You cannot look up live inventory in this reply. Never put a product page address in brackets, and never say or imply that you checked a store.
+- Recommend by name and store instead, formatted as "item from StoreName", with the item name kept to 2 to 4 plain searchable words. Style Star turns that into her shopping link.
+- Never mention searching, tools, the internet, or any trouble finding things. You are simply a stylist giving her your recommendation.`;
+  return `SEARCHING REAL INVENTORY:
+- You can search the web, and every search is restricted to Style Star's own approved stores. Use it when she wants to find or buy a specific piece, wants something like a photo she shared, or asks what is available right now.
+- Do not search for general style advice, occasion guidance, or anything you can answer well from expertise. Most questions need no search.
+- One well chosen search is usually enough. Search, read the results, then answer. She is waiting, so never keep searching for a perfect result when a genuinely good one is already in front of you.
+- BUT if a search comes up dry, do not give up after one try: rephrase and search again with different words. Try a broader shape or category word, drop the least important detail, or lead with the material instead of the shape. A second or third search that finds her the piece is always worth the few extra seconds.
+- When you do search, recommend ONLY items you actually saw in the results. Use the real product name and the real price from the result, and the store it came from, still formatted as "item from StoreName (~$price)" with the store named exactly as it appears in the store list above.
+- CRITICAL, THE LINK: after each searched item's price, put the item's exact product page address from the search result in square brackets, like this: the Nova Baguette Bag from Nordstrom (~$79) [https://www.nordstrom.com/s/nova-baguette/8467773]. Copy the address exactly as the result gave it, never build or shorten one yourself.
+- AN ITEM WITHOUT ITS ADDRESS DOES NOT EXIST: if you cannot give an item's exact product page address from the results, do not mention that item at all. No "for a more elevated version" extras without their own address. Every single item you name must carry its bracketed address.
+- COLOR HONESTY: only say an item comes in the color she wants if the result actually said so. Name the color the result showed. If the result did not confirm her color, either skip the item or say plainly which color you confirmed.
+- Hold a high bar for what counts as a match: shape, material and color should genuinely match what she asked for or showed you. ONE excellent match she can buy beats three loose ones. If nothing truly matches, say so plainly and offer your styling direction instead. Never invent an item, never pad with weak matches.
+- Never mention searching, tools, or the internet. You are a stylist who checked, not a search engine.`;
+}
+
+// One fast retry with the search tool OFF, used only when the searching call
+// produced no text at all. Deliberately NOT streamed: it is short, and a plain
+// JSON round trip is the most reliable thing the app does. The system prompt is
+// rebuilt with the no-search rules so the stylist cannot offer an address she
+// never saw. Returns '' on any failure, so the caller still has its apology.
+async function _chatNoSearchReply(messages){
+  const msgs=messages.slice();
+  // Swap the searching rules for the no-search ones. If the block ever stops
+  // matching (someone edits the prompt), the swap would quietly do nothing and
+  // the stylist would still be told every item MUST carry a product address,
+  // with no results to take one from, which is how invented links get made. So
+  // a failed swap is caught here and the no-search rules are appended instead.
+  const sys=String(msgs[0].content);
+  let swapped=sys.split(_chatSearchBlock(true)).join(_chatSearchBlock(false));
+  if(swapped===sys)swapped=sys+'\n\n'+_chatSearchBlock(false);
+  msgs[0]={role:'user',content:swapped};
+  const c=(window.AbortController)?new AbortController():null;
+  const t=c?setTimeout(function(){try{c.abort()}catch(e){}},25000):null;
+  try{
+    const o={method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({max_tokens:600,messages:msgs})};
+    if(c)o.signal=c.signal;
+    const r=await fetch('/.netlify/functions/style-ai',o);
+    if(!r.ok)return '';
+    const d=await r.json();
+    if(!d||!d.content)return '';
+    return d.content.map(function(x){return x.text||''}).join('');
+  }catch(e){return '';}
+  finally{if(t)clearTimeout(t);}
 }
 
 async function sendChat(){
@@ -10605,17 +10660,7 @@ SHOPPING:
 - Keep responses short and actionable. Lead with the items, not the explanation.
 - When she asks "what should I wear" or "what should I buy," get straight to the specific items. No preamble.
 
-SEARCHING REAL INVENTORY:
-- You can search the web, and every search is restricted to Style Star's own approved stores. Use it when she wants to find or buy a specific piece, wants something like a photo she shared, or asks what is available right now.
-- Do not search for general style advice, occasion guidance, or anything you can answer well from expertise. Most questions need no search.
-- One well chosen search is usually enough. Search, read the results, then answer. She is waiting, so never keep searching for a perfect result when a genuinely good one is already in front of you.
-- BUT if a search comes up dry, do not give up after one try: rephrase and search again with different words. Try a broader shape or category word, drop the least important detail, or lead with the material instead of the shape. A second or third search that finds her the piece is always worth the few extra seconds.
-- When you do search, recommend ONLY items you actually saw in the results. Use the real product name and the real price from the result, and the store it came from, still formatted as "item from StoreName (~$price)" with the store named exactly as it appears in the store list above.
-- CRITICAL, THE LINK: after each searched item's price, put the item's exact product page address from the search result in square brackets, like this: the Nova Baguette Bag from Nordstrom (~$79) [https://www.nordstrom.com/s/nova-baguette/8467773]. Copy the address exactly as the result gave it, never build or shorten one yourself.
-- AN ITEM WITHOUT ITS ADDRESS DOES NOT EXIST: if you cannot give an item's exact product page address from the results, do not mention that item at all. No "for a more elevated version" extras without their own address. Every single item you name must carry its bracketed address.
-- COLOR HONESTY: only say an item comes in the color she wants if the result actually said so. Name the color the result showed. If the result did not confirm her color, either skip the item or say plainly which color you confirmed.
-- Hold a high bar for what counts as a match: shape, material and color should genuinely match what she asked for or showed you. ONE excellent match she can buy beats three loose ones. If nothing truly matches, say so plainly and offer your styling direction instead. Never invent an item, never pad with weak matches.
-- Never mention searching, tools, or the internet. You are a stylist who checked, not a search engine.
+${_chatSearchBlock(true)}
 
 SHIFT ONE NOTCH:
 - Suggest one specific small swap that shifts her style subtly
@@ -10682,11 +10727,32 @@ RULES:
   // says search:true. A hard 75s timeout backstops the whole exchange — the
   // platform cuts streams around 60s, so past 75s nothing more is coming and
   // the Send button must never stay dead.
-  const _ctl=(window.AbortController)?new AbortController():null;
-  const _ctlTimer=_ctl?setTimeout(function(){try{_ctl.abort()}catch(e){}},75000):null;
   // Progress lives on `st` so the catch block can still see a partial reply
   // when the stream dies mid-answer (timeout, connection drop, ~60s cut).
   const st={text:'',complete:false};
+  const _ctl=(window.AbortController)?new AbortController():null;
+  const _ctlTimer=_ctl?setTimeout(function(){try{_ctl.abort()}catch(e){}},75000):null;
+  // A SEARCHING reply sends nothing at all down the wire while it searches, so a
+  // hung search looks identical to a dead connection and she just watches a
+  // spinner. Measured 2026-08-22: a healthy answer starts writing around 8s and
+  // finishes by ~20s; the bad ones sent zero text for 75s and then apologised.
+  // So if nothing has been written by STALL_MS we stop waiting and fall back to
+  // a fast no-search answer instead. Text arriving cancels this outright.
+  const _STALL_MS=30000;
+  const _stallTimer=_ctl?setTimeout(function(){if(!st.text)try{_ctl.abort()}catch(e){}},_STALL_MS):null;
+  // And the mirror problem, measured the same day: the reply often finishes
+  // writing (~16-19s) and then the stream simply never closes, so she sat
+  // watching a finished answer with a dead Send button until the 75s abort and
+  // was then told it "got cut off" when it plainly had not. Half the sampled
+  // runs did this. So once text has stopped arriving for IDLE_MS we stop
+  // waiting. Whether it really was cut off is decided by the text itself.
+  const _IDLE_MS=9000;
+  let _idleTimer=null,_idleDone=false;
+  st.onText=function(){
+    if(_idleTimer)clearTimeout(_idleTimer);
+    if(!_ctl)return;
+    _idleTimer=setTimeout(function(){_idleDone=true;try{_ctl.abort()}catch(e){}},_IDLE_MS);
+  };
   // A cut-off reply is SHOWN (she watched it stream in) with an honest note,
   // but never saved to ss_chat: a fragment restored later would read as if the
   // stylist had answered with half a sentence on purpose.
@@ -10724,9 +10790,34 @@ RULES:
     else addChatMsg(reply,'bot');
   }catch(e){
     typing.remove();liveMsg.remove();
-    if(st.text&&st.text.trim()){_showCutoff(st.text);}
-    else addChatMsg("I'm having a moment. Could you try asking that again? ✨",'bot');
+    if(st.text&&st.text.trim()){
+      // An answer that stopped on a finished sentence is finished; the stream
+      // just failed to say so. One that stops mid-word really was cut off, and
+      // she is told so honestly, exactly as before.
+      if(_idleDone&&/[.!?\u2019\u201d")\]]\s*$/.test(st.text.trim()))addChatMsg(st.text,'bot');
+      else _showCutoff(st.text);
+    }
+    else{
+      // NOTHING was ever written. Found 2026-08-22 from Kathy's screenshots: a
+      // searching reply holds the connection open in silence, so a hung search
+      // or a weak signal both land here, and she got an apology after a long
+      // wait with nothing to show for it. A no-search answer comes back in a
+      // couple of seconds and almost never fails, so we simply ask again that
+      // way. She gets a real stylist answer, not an error.
+      const t2=document.createElement('div');
+      t2.className='chat-typing';
+      t2.textContent='Styling your answer...';
+      const mc2=document.getElementById('chatMessages');
+      mc2.appendChild(t2);mc2.scrollTop=mc2.scrollHeight;
+      let fb='';
+      try{fb=await _chatNoSearchReply(messages);}catch(e2){}
+      t2.remove();
+      if(fb&&fb.trim())addChatMsg(fb,'bot');
+      else addChatMsg("I'm having a moment. Could you try asking that again? ✨",'bot');
+    }
   }finally{
+    if(_idleTimer)clearTimeout(_idleTimer);
+    if(_stallTimer)clearTimeout(_stallTimer);
     if(_ctlTimer)clearTimeout(_ctlTimer);
     sendBtn.disabled=false;
     input.focus();
