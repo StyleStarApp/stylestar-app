@@ -7,7 +7,242 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-22 — 🚪 THE FIRST TESTERS ARRIVED, AND THEY ALL WANTED A DOOR THE APP DID NOT HAVE)
+## ▶ NEXT SESSION — START HERE (2026-08-22 LATER — 🚨 A TESTER'S SCREENSHOT WAS A LIVE BUG, NOT UNFINISHED WORK)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the .md so we can pause here")
+**TWO PRs merged and BOTH VERIFIED LIVE: #902 (the chat) · #903 (Shop your style).** ⚠️ **Two Netlify builds.**
+Branch resynced to main, tree clean, everything at `b23ccb4`.
+▶▶ **THE FIRST THING NEXT SESSION IS HERS AND SHE SAID SO: "I have some more texts from friends." ASK FOR
+THEM BEFORE ANYTHING ELSE.** Five testers have now reported and every single one produced something real.
+▶ **THE HEADLINE: KATHY SENT TWO SCREENSHOTS APOLOGISING FOR MENTIONING THEM, ASSUMING THEY WERE THINGS
+CATHERINE WAS "STILL WORKING ON". THEY WERE A LIVE BUG THAT HAD BEEN BREAKING THE STYLIST CHAT.**
+
+### 🚨🚨 THE CHAT BUG — HER SCREENSHOTS, AND THE DIAGNOSIS IS THE REUSABLE HALF
+Both of Kathy's messages came back **"I'm having a moment. Could you try asking that again? ✨"**, which is the
+chat's ERROR path. ⚠️ **One of the two was CATHERINE'S OWN CHAT CHIP** ("I have an event and I don't know what
+to wear. Can you help me nail the right vibe?") — a tester tapped the button Catherine wrote and it failed.
+- ▶ **RULED OUT BY MEASURING, NOT GUESSING, and one of them was Claude's own confident hypothesis:**
+  credits (the plain path answers in 3s) · **the 32KB text cap — the real system prompt, CAPTURED OFF THE REAL
+  PAGE seeded as a fully refined returning woman, is 15,850 chars, less than half the cap** · the rate and
+  daily spend caps. ⭐ **Disproving your own theory before building for it is the point of the exercise.**
+- ▶ **WHAT THE SEARCH PATH REALLY DOES, twelve runs of her exact scenario against the LIVE function:**
+  a healthy answer starts writing at **8-13s** and finishes by **~20s** · some runs sent **no text at all**
+  and died · **HALF the sampled runs finished writing by 16-19s and then held the stream open to the 75s
+  abort.**
+- 🚨 **SO THERE WERE TWO BUGS, AND NOBODY HAD REPORTED THE SECOND ONE.** (1) Zero text ever arrives → the
+  apology. (2) The answer completes, then the app sits with a **DEAD SEND BUTTON for another ~56 seconds** and
+  finally appends **"That answer got cut off"** to a COMPLETE answer. **That one is plausibly hitting testers
+  more often than Kathy's.**
+- ⚠️ **HONEST LIMIT ON THE DIAGNOSIS, stated to her: a SYMPTOM was reproduced, not proof of HER cause.** Her
+  screenshot shows **roughly one bar of signal**, and a searching reply sends nothing down the wire while it
+  searches, so a hung search and a weak connection look identical and land in the same place. **The fix covers
+  both, which is convenient, not evidence.**
+- ⭐⭐ **THE STRUCTURAL FAULT UNDERNEATH: A FAILED EXCHANGE HAD NO FALLBACK.** She waited up to 75 seconds and
+  was offered "try again", which re-runs the same slow path. A NON-SEARCH answer returns in ~3s and almost
+  never fails. **As built: when no text ever arrives, ask once more with search OFF.**
+- 🚨 **AND THE PROMPT HAD TO BE REBUILT FOR THAT RETRY, which is the non-obvious half.** The searching rules
+  say *"AN ITEM WITHOUT ITS ADDRESS DOES NOT EXIST: every item must carry its bracketed address, copied
+  exactly from the result."* **With no results to copy from, that rule leaves the model two options: name
+  nothing, or INVENT A LINK.** So `_chatSearchBlock(on)` holds both branches in one function, and ⚠️ **if the
+  swap ever fails to match, the no-search rules are APPENDED rather than silently leaving the address rule in
+  force.** A test pins that.
+- **The second fix: text stops arriving for 9s → stop waiting.** Whether it was truly cut off is decided by
+  **the text itself** — a finished sentence is shown as the answer, one stopping mid-word still gets the
+  honest note. The apology survives only for when both attempts fail.
+- ⭐ **NEW `scratchpad/chatfallback.js`, 29 checks**, driving the real page against a server that reproduces
+  each failure shape. ⚠️ **Playwright routes cannot drip-feed a stream and the timing IS the test**, so the
+  harness implements the endpoint itself (the 2026-07-31 searchchat lesson).
+- ⚠️⚠️ **WHY EVERY EXISTING SUITE MISSED BOTH: THEY ALL STUB A WELL-BEHAVED ENDPOINT.** Nothing anywhere
+  tested what happens when a stream misbehaves. **Remember this for any future streaming surface.**
+- ▶ **HER TEXT BACK TO KATHY named the bug as a real catch rather than accepting the apology**, because if
+  testers believe failures are expected they stop reporting them. **Her own edits improved it** ("Much
+  appreciated!!!", "encouraging friend"). ▶ **STILL OWED: Kathy's answer to "did the chat do that any other
+  times you didn't screenshot?" — a high number means the real-world failure rate beats the 25% measured
+  here; just those two points at her signal. LOG WHICHEVER SHE GIVES.**
+
+### 🚪 JODI (TESTER FIVE) FOUND THE ONE EMPTY ROW, AND IT IS A KNOWN FAMILY
+Her only criticism, buried in praise: *"The only one that didn't have a lot of options was printed blouses."*
+- ▶ **CHECKED, NOT TAKEN AS MODESTY: `to4 Print tops` is the ONLY row in the whole Tops category with ZERO
+  curated products** — 0 of the 107, against to5 Professional blouses 16 and to1 White tops 12.
+- ⭐⭐ **BUT THE DEEPER CAUSE IS THE REUSABLE HALF, AND IT IS THE THIRD SIGHTING OF ONE FAMILY: "PRINT" IS NOT
+  A RETAIL SEARCH WORD.** Stores filter by the SPECIFIC pattern — floral, striped, gingham, paisley, animal,
+  plaid — never by the abstract word "print". ▶ **Same shape as her own two earlier findings: "raspberry"
+  instead of "pink" (2026-08-08) and stores silently dropping length words like "midi" (2026-08-20).**
+- ▶ **HER OWN TUCKERNUCK CATCH ON 2026-08-15 WAS THIS EXACT ROW** ("print wrap top" → a wrap skirt, a sarong
+  and a perfume). **A second sighting is her own standing trigger to stop treating it as drift and fix it.**
+- ▶ **THE FIX, NOT BUILT, agreed for the list:** for print-based rows the search should name an ACTUAL pattern
+  and vary it across the picks ("floral blouse", "striped blouse") instead of searching the word "print".
+- ⚠️ **A CORRECTION SHE SHOULD NOT LOSE: she told Jodi this was about retail permission for photos and deeper
+  searches. TRUE FOR PHOTOS, NOT FOR THIS.** This thinness is a search-wording problem fixable now, plus a
+  catalog row she could fill in Cowork. **It is not waiting on affiliate approval.**
+- ⭐⭐ **THE MOST VALUABLE SENTENCE IN HER MESSAGE IS NOT THE CRITICISM:** *"I'm not the best shopper and with
+  the info I put in you had different stores that I typically wouldn't have thought about."* ▶ **That is the
+  ten-dimension store table Catherine scored herself, doing the one thing a shop cannot: widening the world of
+  a woman who does not enjoy shopping. No competitor can copy it because it is her professional judgment
+  encoded.** Tell her plainly.
+- ▶ **Jodi also said "Can't wait to subscribe" UNPROMPTED** — market signal for a paid tier, but it does not
+  touch her value-first rule: any paid tier still comes AFTER real free value, never as a gate.
+- ⚠️ **Jodi never mentions the chat, so her clean report does NOT clear Kathy's bug.**
+
+### 🚨⭐⭐ THREE TESTERS TEXTED EACH OTHER THEIR ARCHETYPES, UNPROMPTED — AND IT ANSWERS THE SHAREABLE QUESTION
+A group chat: **"I'm The Statement Maker"** (Ashley) · **"Surprise I'm a pop of color"** (Kere) · **"Romantic
+Feminine 💕"** (Charles). Catherine's reply: "Yes Queen".
+- ▶▶ **THIS IS NOT FEEDBACK, IT IS DISTRIBUTION HAPPENING BY ITSELF**, and it settles the question she has had
+  parked since deleting the vision board on 2026-08-08 (*"the constellation is not a representation of what
+  our app actually does"*).
+- ⭐ **WHAT THEY SHARE IS THE ARCHETYPE NAME, IN THE FIRST PERSON, AS AN IDENTITY CLAIM.** Not the portrait,
+  not a keepsake image. *This is who I am, what are you?* — the personality-test social mechanic, and the one
+  thing in the app short enough to text and specific enough to feel like a verdict about HER.
+- ⭐ **"Surprise" is the best word in that screenshot:** it means the quiz told Kere something she did not
+  already know about herself. **That is the portrait doing real work, not flattery.**
+- 🚨🚨 **AND THE FINDING: THEY HAD TO TYPE IT BY HAND. `shareResults()` EXISTS IN THE CODE AND IS WIRED TO
+  NOTHING** — defined once, ZERO onclick handlers, no button anywhere on the Style Portrait. **Same for
+  `sharePhotoResults()`. Both are dead code.** The only share offered from results is the Style Constellation.
+- ▶▶ **THIRD TIME IN ONE TESTER ROUND, AND IT IS NOW THE PATTERN OF THE WHOLE ROUND: EVERY SINGLE FINDING WAS
+  A WOMAN LOOKING FOR A DOOR THAT DID NOT EXIST.** Haley typed a price limit into the only free-text field ·
+  her mother asked Catherine directly because there was no search · these three retyped an archetype by hand.
+- ⚠️ **THE COST IS MEASURABLE AND INVISIBLE: every one of those messages named Style Star and CARRIED NO
+  LINK.** Friends-of-friends cannot tap through and none of it reaches Plausible.
+- ⚠️ **THE DEAD `shareResults()` WOULD NOT HAVE BEEN USED EVEN IF WIRED:** it produces *"Kere's Style Star
+  results ⭐ My style has notes of Modern Glam, Classic Sophisticate, Coastal Chic"* — app-voice, third person,
+  all three archetypes. **What women actually say is "I'm The Statement Maker."** ⭐ **Her testers have written
+  the copy; it just needs the link attached.**
+- ⚠️ **IT COLLIDES WITH THE EMOJI THREAD:** a shared link's preview card reads *"Style Star | Discover your
+  signature style 💫"* — the `og:title` on her parked audit list, and the emoji Carson said reads as AI. **If
+  the archetype share gets built, that card becomes what friends-of-friends see FIRST.**
+- ▶ **NOT BUILT. Renders first, her pick, as always. Highest-value item on the list.**
+
+### ✅ WHAT SHIPPED ON SHOP YOUR STYLE (#903) — EIGHT CHANGES, EVERY CALL HERS
+▶▶ **HER CATCH WAS AN ORDERING PROBLEM, NOT A WORDING ONE, and she felt it before she could name it:** *"I am
+looking at the page and I feel like typing in that one thing while looking at the variety of things something
+feels off. I might be over thinking it."* **She was not.** The page opened by asking her to HUNT (star, label,
+box) and only then showed the pieces, while her own description puts them the other way round: *"a fun well
+rounded selection of items that suit you that your stylist grabbed to show you"* and THEN the one specific
+thing. ⚠️ **SECOND TIME SHE FELT IT: on 2026-08-21 she moved the escalation link off the top for the same
+reason, removing one of the three things above the first garment. The box was still doing it.**
+1. ⭐ **HER PICK "B" FROM THREE RENDERED ORDERINGS: the ask collapses to ONE findable line, "Looking for
+   something specific?", and the box opens on her tap.**
+   ⚠️⚠️ **WHY B BEAT MOVING THE BOX BELOW THE PIECES, and the argument came from her own tester round: THREE
+   OF FOUR TESTERS ARRIVED ALREADY KNOWING WHAT THEY WANTED, which is the reason the box exists at all.
+   Putting it under six cards makes exactly those women scroll past everything.** A named line is findable
+   (her mother's lesson); a box is merely loud.
+2. **The rotating SHOP_MSGS tagline steps back once the pieces land.** It was set before the star started
+   spinning and NEVER CLEARED, so it sat above the pieces all visit. The spinner is the same screen wearing
+   `.thinking`, so it is one CSS rule. ⚠️ **QUIZ MODE ONLY** — in look and wantlist modes that element names
+   what she is looking at, which is the job she praised in "Showing bags".
+3. **The disclosure LEADS the cards.** It sat below all six, so she could tap FIND IT on the first without
+   ever passing it. ▶ **FTC guidance is clear, conspicuous and near the links, and the Edit and Mall were
+   moved above their products on 2026-07-31 for exactly this reason — this screen was the last one still doing
+   it the old way.** ⚠️ Spacing deliberately uneven (9/3) so it attaches to the pieces, not the box above:
+   the first build had it 2px under the box and read as a caption for the search field.
+   ▶ **HER "is that legal?" ANSWERED HONESTLY: the wording is already at its floor (measured 08-11), so the
+   lever is placement and quietness, not deletion.** ⭐ **The reframe she took: a disclosure placed
+   confidently reads as professional; one hidden at the bottom reads as embarrassed.**
+4. **"Want to talk it through? Ask your stylist →"** — her wording, replacing "Let your stylist search for
+   you", which **contradicted itself because this page IS the stylist searching.** It also fixes a bad wrap.
+5. **A landed line naming the selection was built and CUT the same hour, hers:** *"I think that is going to
+   get redundant... it might be just obvious to land on it and see what is there, especially when we have
+   product photos."* ⚠️ **She had asked for a line to come OUT of that spot an hour earlier and was right that
+   putting a different one back was the same clutter. DO NOT REINTRODUCE IT.**
+6. **The ask line is 17.5px and CENTRED** (her call on both; centred is a change she approved after it was
+   flagged). ⚠️ **IT WRAPPED AT 375px AND THAT LOOKED LIKE A BUG AND WAS NOT: the existing `<=374px` rule
+   already trims the ask's side padding, so 360 has a WIDER container than 375.** Fixed by letting the LINE
+   use the full width while the BOX keeps its inset. One line at 430/390/375/360, two balanced at 320.
+7. **A DOWN CHEVRON, her pick from three.** ▶ **Not the app's right arrow: everywhere else that arrow means
+   she is about to be TAKEN somewhere, and nothing here navigates.** ⚠️ **It disappears once the box is open,
+   because the line cannot be tapped closed and a mark still promising an action would be lying.**
+8. **The box sits 4px under the line, was 15px.** ⚠️ **The bottom padding is removed in the OPEN state only,
+   and that is what makes it safe: closed, that padding IS the 43px tap target for the 18-80 audience; open,
+   the line is not tappable so it buys nothing.**
+
+### ⭐⭐ HER NINE EXAMPLES REPLACE THE ELEVEN, AND "Try:" SURVIVED A MEASUREMENT
+**wedding guest dress · tops under $100 · vacation dress · jeans · work trousers · tan sandals · silk blouse ·
+tote bag · white jeans under $150.** Out went "something for vacation", "something formal", "a floor length
+gown", "weekend casual".
+- ⭐ **HER EDIT KEPT THE THING THAT MATTERS: three one-or-two-word examples ("jeans", "silk blouse", "tote
+  bag").** That is what teaches a woman a SHORT ask works; every Claude draft was a full phrase, which quietly
+  implied she had to write a sentence. **She also traded two vague examples for concrete garments.**
+- ▶ **"Try:" vs "For example:" SETTLED BY MEASUREMENT: "For example:" CLIPS AT EVERY WIDTH** (239px against a
+  box inner width of 192-232px). ⚠️⚠️ **A CLIPPED PLACEHOLDER IS THE NASTIEST OVERFLOW THERE IS: it does not
+  spill or wrap, it is SILENTLY CUT, so it looks right in a screenshot and wrong on a phone.** (The wishlist
+  add-form lesson.) Her longest, "Try: white jeans under $150", needs 178px against 192px at the narrowest.
+- ⚠️ **Her 08-21 reason for the prefix still holds: a bare phrase in the box reads as text already typed.**
+- ⚠️ **No test edit was needed — the suite reads the ring LENGTH out of the code rather than restating it.**
+  The derived-not-restated rule paying off. A device holding an index from the old eleven wraps safely.
+
+### 🚨🚨 TWO REGRESSIONS CAUGHT BEFORE SHIPPING, BOTH CLAUDE'S OWN — AND HOW EACH WAS CAUGHT MATTERS
+1. ⭐⭐ **THE REVEAL AUTO-FOCUSED THE BOX, WHICH WOULD HAVE MADE HER ELEVEN EXAMPLES INVISIBLE TO EVERYONE.**
+   Focusing runs `_ssAskFocus(1)`, which CLEARS the example — so opening the box wiped "Try: silk blouse"
+   before she ever read it. ▶ **CAUGHT BY THE TEST SUITE**, which read empty placeholders. **`_ssAskReveal()`
+   deliberately DOES NOT FOCUS now**; the cost is one more tap to start typing, and clearing the example on
+   HER tap into the field is what she asked for on 08-21. **Written in capitals at the code.**
+2. ⭐⭐ **MAKING THE COLUMNS EVEN BROKE THE STORE NAMES.** Every card became 139px, leaving **105px of inner
+   width against the 116px BLOOMINGDALES needs**, so the overflow safety net fired on ORDINARY stores and
+   rendered **"BLOOMINGDAL / ES"** — worse than the asymmetry it replaced. ▶ **CAUGHT BY LOOKING AT THE
+   RENDER, not by any measurement.** Fixed by giving the width BACK rather than shrinking type on a
+   readability audience: inner width **105 → 117px** (side padding 16→10, store tracking halved), scoped to
+   the two-column grid so the wardrobe's 128px carousel keeps its proportions.
+▶ **THE LESSON PAIR IS THE KEEPER: one was invisible to the eye and caught by a test; the other was invisible
+to every measurement and caught by an eye. Neither instrument would have found both.**
+
+### ⭐ HER CARD-SYMMETRY CATCH WAS BIGGER THAN IT LOOKED
+Her words: *"the two rows of windows are not symmetrical sizing, the left boxes are larger than the ones on
+the right."* ▶ **MEASURED BEFORE TOUCHING ANYTHING: left column 150px against 112.5-128px on the right, a 22
+to 37.5px difference AT EVERY PHONE WIDTH.**
+- 🚨 **CAUSE, and it generalises to any CSS grid: `grid-template-columns:1fr 1fr` carries an automatic minimum
+  of AUTO, so a column holding a long unbreakable word (BLOOMINGDALES) grows past its share and takes the
+  difference out of its neighbour. `minmax(0,1fr)` makes the share the real limit.** Now 0.0px at all widths.
+- ⚠️ **A REAL LIMIT INTRODUCES A REAL RISK, so it was checked rather than assumed:** once a column cannot
+  grow, a long name would simply OVERFLOW. `overflow-wrap:anywhere` is the safety net and a sweep asserts
+  nothing sticks out of its own card at 390/375/360/320.
+- ⚠️ **ONE KNOWN EXCEPTION, HER CALL AND DELIBERATELY NOT CHASED: LOVESHACKFANCY** (the longest single
+  unbreakable token in the 100-store table, 14 chars) needs 121px against 117 and still wraps. **99 of 100 fit
+  with 6px+ to spare.** ▶ **Squeezing the last 4px would leave BLOOMINGDALES on roughly a 1px margin, and the
+  tagline taught this file that a 3px margin fits in Chromium and WRAPS ON REAL SAFARI. One rare store
+  wrapping beats a common one breaking on her phone.** Her words: "that's fine about Loveshackfancy no worries
+  there." **The lever if she ever wants all 100 is the store line at 11px.**
+- ⚠️ **`.shop-grid` IS SHARED with Complete the Look and the wardrobe carousels — this was never a
+  Shop-your-style-only change.** Those suites were run for exactly that reason.
+
+### ⭐ TEST HYGIENE
+- **New `scratchpad/chatfallback.js` 29** · **`shopask.js` 80 → 87** · new render harnesses
+  `scratchpad/shopask2.mjs` and `scratchpad/askorder.mjs` (real typefaces, via the `renderfonts` pattern).
+- **Green at pause:** chatfallback 29 · shopask 87 · searchchat 57 · cowork3 69 · curated 65 · affq 40 · e2e 29.
+- ⭐ **THREE ASSERTIONS UPDATED DELIBERATELY AND TWO REMOVED, with the reason recorded at each site.** The
+  star-leads-the-sentence check measured the mark against the BUTTON's left edge, which measures the centring
+  offset once the line is centred; **it compares against the painted start of the WORDS now — same claim,
+  stricter test.** The two removed pinned the landed line, i.e. **their SUBJECT was retired, they were not
+  failing** (the `hiwcheck.js` precedent).
+- 🚨⚠️ **A PROCESS FAILURE WORTH KEEPING: A SUITE RUN REPORTED "failures: 0" WHILE HAVING ACTUALLY CRASHED ON
+  `EADDRINUSE 8995`, AND A COMMIT WAS MADE ON THAT FALSE GREEN.** The grep counted failure LINES, and a crash
+  produces none. ▶▶ **READ THE TOTAL, NEVER THE ABSENCE OF FAILURES.** ⚠️ **And `grep -i fail` matches "0
+  failed" in a summary line, which produced a second false reading the same session.**
+- ⚠️ **A killed background run HOLDS ITS PORT** (8992/8995), third time in this file. Kill by scanning
+  `/proc/*/cmdline` — ⚠️ **`pkill -f <pattern>` kills its own shell when the pattern is in its command line.**
+- ⚠️ **Chromium in this sandbox CANNOT reach stylestar.app** (the documented wall; `curl` can). So a live
+  browser smoke test is impossible. ▶ **THE STRONGEST AVAILABLE SUBSTITUTE, used on both merges: byte-compare
+  the SERVED file against the tested file.** Identical md5 means the suite's results transfer directly to what
+  testers see. **Reuse this instead of "it merged, so probably."**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **HER MORE TESTER TEXTS — SHE HAS THEM AND SAID SO AT THE PAUSE. ASK FIRST.** ▶ **The job is still
+   separating A REAL PROBLEM from ONE PERSON'S TASTE, and the round so far says look for the DOOR THAT IS
+   NOT THERE: five testers, five findings, every one a woman hunting for something the app did not offer.**
+2. ⭐⭐ **THE ARCHETYPE SHARE — highest value on the list, and her own testers wrote the copy.** Renders first.
+   ⚠️ Weigh the `og:title` emoji with it, since that card becomes the first thing a friend-of-a-friend sees.
+3. ▶ **THE PRINT TOPS FIX** — name a real pattern, never the word "print". Second sighting of the family.
+4. 👀 **HOW THE NEW SHOP YOUR STYLE FEELS ON HER PHONE** — the tap-to-open, the even cards, and ⚠️ **the CHAT
+   FALLBACK, which has never been exercised by a REAL failure, only simulated ones.** Private browsing,
+   `stylestar.app/?notrack`.
+5. 📧 **Kathy's answer on how often the chat failed** (see above) — it calibrates the real failure rate.
+6. 📊 **Her Plausible dashboard.** ▶ Read the FUNNEL. ⭐ **And the new thing: does anyone type in the ask box?**
+7. ⏰ **26 AUGUST — the stale Routine `trig_01SZerTsvKoeUYzeT1HX6iWs`** fires with an Aug-12 brief. Update or delete.
+8. ⏰ **28 AUGUST — the recurring-payments Routine.**
+9. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null`, and ASK about reordering.
+10. 💰 **AFFILIATES: CJ and AWIN in ~3 weeks.** Impact in 2-3 months WITH the Plausible link. **AMAZON LAST.**
+11. ⭐ **HER PARKED IDEA: the FAVORITE OUTFIT page**, and 📧 **STEP 4 OF THE WISHLIST, the MailerLite email.**
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-22 — 🚪 THE FIRST TESTERS ARRIVED, AND THEY ALL WANTED A DOOR THE APP DID NOT HAVE)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save and merge live all of this and put it all on the .md so we can resume tomorrow")
 **THREE PRs merged and ALL CURL-VERIFIED LIVE: #898 · #899 · #901.** ⚠️ **Three Netlify builds.**
@@ -39,6 +274,11 @@ and parked it with a clear condition. See its own entry below.
   cannot be reached by NAME may as well not exist.**
 
 ### 🚪 WHAT SHIPPED — "TELL ME WHAT YOU'RE LOOKING FOR" ON SHOP YOUR STYLE
+⚠️⚠️ **PARTLY STALE, SUPERSEDED THE SAME DAY BY THE ENTRY AT THE TOP OF THIS FILE.** The reasoning here
+still holds and is why the feature exists, but four details are out of date: **the label is now "Looking
+for something specific?" on ONE COLLAPSED LINE with a chevron, not a label above an open box** · the
+**eleven examples are NINE** · the **disclosure moved ABOVE the pieces** · and the escalation reads
+**"Want to talk it through? Ask your stylist"**. ▶ **Read the top entry before touching this screen.**
 Her instinct, verbatim: *"how Shop Your Style automatically starts spinning and presents our users with 6
 items. Seems like there should be a way for her to select through that door what she is looking for
 specifically??"* ▶ **Right door: EIGHT entry points already lead to Shop your style, so anything placed there
