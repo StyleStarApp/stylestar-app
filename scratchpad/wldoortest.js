@@ -135,13 +135,19 @@ for(const w of [430,393,375,360,320]){
       if(c&&!/rgba\(0, 0, 0, 0\)|transparent/.test(c)){bg=c;break}e=e.parentElement}
     const cr=(a,b2)=>{const l1=lum(a),l2=lum(b2);return Math.round(((Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05))*100)/100};
     const r=d.getBoundingClientRect(), scr=document.getElementById('s-shopstyle').getBoundingClientRect();
+    const tb=document.querySelector('#s-shopstyle [data-hearttip] b');
     return {ink:cr(getComputedStyle(d).color,bg), link:cr(getComputedStyle(go).color,bg),
+      linkCol:getComputedStyle(go).color, tipCol:tb?getComputedStyle(tb).color:null,
       overflowL:Math.round(scr.left-r.left), overflowR:Math.round(r.right-scr.right),
       pageScroll:document.documentElement.scrollWidth>document.documentElement.clientWidth};
   });
   console.log(`  --- ${w}px ---`);
   ok('body ink clears AA (4.5:1)',m.ink>=4.5,m.ink+':1');
+  // HER CALL: the link is GOLD again. It only stays honest because the shade was
+  // measured rather than copied -- her #A0761B is 4.12:1 and would fail here.
   ok('the link clears AA against the real painted paper',m.link>=4.5,m.link+':1');
+  ok('the link is gold, her call',m.linkCol==='rgb(148, 109, 24)',m.linkCol);
+  ok("...and the tip's bolds MATCH it exactly, her ask",m.tipCol===m.linkCol,m.tipCol+' vs '+m.linkCol);
   ok('nothing overflows its screen',m.overflowL<=0&&m.overflowR<=0,`L${m.overflowL} R${m.overflowR}`);
   ok('no sideways page scroll',!m.pageScroll);
   ok('no JS errors',errs.length===0,errs.join('|'));
