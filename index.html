@@ -501,7 +501,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    the absolutely-positioned remove ✕ hangs in. Net: ~22px more for item names. */
 #s-wardrobe{margin-left:-16px;margin-right:-16px}
 /* Top padding is small now that the brand name lives INSIDE the title itself
-   ("Catherine's style Star Wardrobe List") rather than in a sewn label
+   ("Catherine's Style Star Wardrobe List") rather than in a sewn label
    straddling this card's top edge. */
 #s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:14px 8px 10px;margin-top:14px}
 #s-wardrobe .wdr-howto{font:400 15.5px/1.55 'Lora',Georgia,serif;color:#4a463e;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0;text-align:center}
@@ -1778,7 +1778,16 @@ body.menu-open .menu-panel{display:block}
 .dc-logo::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:3px;background:#E0B84C}
 .dc-logo::before{content:"";position:absolute;bottom:0.5px;left:67%;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
 /* Style Star Edit: a little jewel star (gold with silver outline) pinned to the top-left corner */
-.dc-corner-star{position:absolute;top:-34px;left:-55px;width:70px;height:70px;transform:rotate(-57deg);z-index:20;filter:drop-shadow(0 2px 3px rgba(120,90,20,.28))}
+/* ⚠️ MOVED 2026-08-22, HER CATCH, and it was measured on the DRAWN PATH not the
+   rotated bounding box (which overstates by ~25px at -57deg -- the 2026-08-07
+   lesson). The star's outline reached 10.3px INTO the S. It always overlapped a
+   little, and capitalising "Style Star Edit" made the collision read: a capital
+   is wider AND taller, so the letter grew toward the star from both sides.
+   ▶ Now 10.7px CLEAR. ⚠️ Its two standing constraints were re-checked, not
+   assumed: it still does not touch the fixed MENU chip, and its left edge sits
+   at x=40 with the card's own edge far away. scratchpad/starmove.mjs re-runs
+   the sweep if this ever moves again. */
+.dc-corner-star{position:absolute;top:-40px;left:-67px;width:70px;height:70px;transform:rotate(-57deg);z-index:20;filter:drop-shadow(0 2px 3px rgba(120,90,20,.28))}
 /* a touch of the entry button's turquoise, and the "not AI" promise */
 .dc-tagline{display:flex;align-items:center;justify-content:center;gap:7px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin:14px 0 0;white-space:nowrap}
 /* ⚠️ letter-spacing puts its space after the LAST letter too, so the right
@@ -2121,8 +2130,19 @@ body.card-fb{padding:0}
 #mallContent .mall-cat:first-child{margin-top:.8rem}
 .mall-sign{position:relative;background:#fff;border:3px solid #161616;padding:15px 16px 17px;margin:21px 0 6px;text-align:center;box-shadow:0 11px 26px -15px rgba(20,15,5,.6)}
 /* White+gold-outline star "light fixture", tilted, stuck onto the top-left corner of the sign (absolute, no layout shift) */
-.mall-fixture{position:absolute;top:-30px;left:-16px;width:116px;height:116px;z-index:6;pointer-events:none}
-.mall-fixture .mf-star{position:absolute;top:0;left:0;width:104px;height:104px;z-index:2;transform:rotate(-57deg)}
+/* ⚠️ MOVED AND SHRUNK 2026-08-22, HER CATCH -- "especially Mall", and she was
+   right: measured on the drawn path, this star reached 19.1px into the S, twice
+   the Edit's overlap.
+   🚨 IT COULD NOT SIMPLY MOVE. Going UP hits the fixed MENU chip at the very
+   first step (every vertical candidate collided, measured). Going far enough
+   LEFT alone puts its outline 3px from the screen edge. So the star comes left
+   10px AND down from 104 to 88px, which clears the letter by 9.6px while
+   keeping its left edge at x=17 -- still mounted on the sign's corner like a
+   fixture, which is the whole idea, rather than floating off it.
+   ⚠️ The 116px BOX is unchanged on purpose: it is the positioning frame, and
+   only .mf-star inside it was resized. */
+.mall-fixture{position:absolute;top:-30px;left:-26px;width:116px;height:116px;z-index:6;pointer-events:none}
+.mall-fixture .mf-star{position:absolute;top:0;left:0;width:88px;height:88px;z-index:2;transform:rotate(-57deg)}   /* 104 -> 88, see .mall-fixture above */
 .mall-sign-logo{font-family:'DM Serif Display',Georgia,serif;font-size:29px;color:#1a1a1a;-webkit-text-stroke:.6px #1a1a1a;display:inline-block;position:relative;padding-bottom:5px;letter-spacing:.01em}
 .mall-sign-logo::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:3px;background:#E0B84C}
 .mall-sign-logo::before{content:"";position:absolute;bottom:-1.5px;left:66%;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C);z-index:1}
@@ -3295,7 +3315,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <path fill="#FEF6D6" stroke="none" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
           <div class="wb-wordmark">
             <svg class="wb-mini-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2C43D" stroke="#B7BCC2" stroke-width="1.3" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
-            <div class="wb-word-wrap"><img class="wb-word-img go-home" src="logo-star-text.png" alt="style Star — tap for home" onclick="goHome()"></div>
+            <div class="wb-word-wrap"><img class="wb-word-img go-home" src="logo-star-text.png" alt="Style Star — tap for home" onclick="goHome()"></div>
           </div>
         </div>
         <div class="wb-port-motto" id="wbPortMotto"></div>
@@ -3484,7 +3504,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <img class="ss-star-logo" src="logo-star.png" alt="Style Star">
       <div class="ss-wordmark">
         <svg class="ss-mini-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2C43D" stroke="#1a1a1a" stroke-width="0.7" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
-        <div class="ss-word-wrap"><img class="ss-word-img" src="logo-star-text.png" alt="style Star"></div>
+        <div class="ss-word-wrap"><img class="ss-word-img" src="logo-star-text.png" alt="Style Star"></div>
       </div>
     </div>
   </div>
@@ -4206,7 +4226,19 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/>
         </svg>
         <div>
-          <div class="chat-hdr-title">style Star Stylist</div>
+          <!-- ⚠️ "Style Star", CAPITALISED, and that is the rule not an oversight. The
+       lowercase wordmark survives where the words stand ALONE as the mark (the
+       Analyze and Wishlist letterheads, the logo images). It breaks the moment
+       they are joined to other title-cased words: "Catherine's style Star
+       Wardrobe List" is four capitalised words with one lowercase one in the
+       middle, and nothing there signals a wordmark, so it just reads as a
+       missed capital. ▶ HER CALL 2026-08-22, from Jen Baxt's husband and teen
+       daughter, who both read it as a typo: "only 1 S was capitalized either
+       both do or neither." Fresh eyes, and they were right about the phrases.
+       It also matches her filed trademarks and the Terms page, which both say
+       Style Star. GREP "style Star" -- anything still lowercase should be a
+       standalone mark. -->
+       <div class="chat-hdr-title">Style Star Stylist</div>
           <div class="chat-hdr-sub">Created with love by a real stylist<br><span class="s2">powered by AI</span></div>
         </div>
       </div>
@@ -4244,7 +4276,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-dream">
   <div class="dc-wrap">
     <div class="top-back-wrap"><button class="top-back" onclick="closeDream()">&larr; Back</button></div>
-    <div class="dc-logo"><svg class="dc-corner-star" viewBox="0 0 24 24"><defs><radialGradient id="editStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#editStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>style Star Edit</div>
+    <div class="dc-logo"><svg class="dc-corner-star" viewBox="0 0 24 24"><defs><radialGradient id="editStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#editStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>Style Star Edit</div>
     <div class="dc-tagline"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>Curated by Catherine</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-subtitle">Everything here is selected by me. These are pieces I wear myself and recommend to clients. I hope you&rsquo;ll love them too <svg class="pinkheart" style="width:15px;height:15px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
 
@@ -4449,7 +4481,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <div class="mall-fixture">
           <svg class="mf-star" viewBox="0 0 24 24"><path fill="#FFFFFF" stroke="#D8A52E" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round" d="M12 1L14.59 8.44L22.46 8.6L16.18 13.36L18.47 20.9L12 16.4L5.53 20.9L7.82 13.36L1.54 8.6L9.41 8.44Z"/></svg>
         </div>
-        <div class="mall-sign-logo">style Star Mall</div>
+        <div class="mall-sign-logo">Style Star Mall</div>
         <div class="mall-sign-sub">Enjoy shopping our favorite stores. These are the places we love, all in one&nbsp;spot.</div>
       </div>
       <div class="dc-disclosure">Style Star may earn a small commission from some links, at no extra cost to you. We only feature stores we genuinely love.</div>
@@ -4466,7 +4498,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <!-- ⚠️ Unique gradient id (wdrHeadStar): a shared id would resolve to a def
          inside a hidden screen, which Safari may refuse to paint. -->
     <svg class="wdr-headstar" viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="wdrHeadStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#wdrHeadStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
-    <div class="wdr-title" id="wdrTitle">style Star Wardrobe List</div>
+    <div class="wdr-title" id="wdrTitle">Style Star Wardrobe List</div>
   </div>
 
   <div class="wdr-tabs">
@@ -5049,7 +5081,7 @@ function show(id,skipHistory){
   if(onWel)try{_renderDiscoStar();}catch(e){}
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
-  // The Style Star Edit shows its own "style Star Edit" logo-title, so hide the shared logo there too.
+  // The Style Star Edit shows its own "Style Star Edit" logo-title, so hide the shared logo there too.
   if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
@@ -9495,15 +9527,15 @@ function openWardrobe(tab){
     // rule came out 269/256/244px -- sized by the SCREEN instead of by the
     // words, sticking out 60px past the last line. A forced break makes the
     // block's max-content the widest LINE (222px), so it hugs the text and the
-    // rule is the same length on every phone. Break after "style Star" so the
+    // rule is the same length on every phone. Break after "Style Star" so the
     // brand name never splits.
     ttl.textContent='';
     if(_fn){
-      ttl.appendChild(document.createTextNode(_fn+'’s style Star'));
+      ttl.appendChild(document.createTextNode(_fn+'’s Style Star'));
       ttl.appendChild(document.createElement('br'));
       ttl.appendChild(document.createTextNode('Wardrobe List'));
     }else{
-      ttl.textContent='style Star Wardrobe List';
+      ttl.textContent='Style Star Wardrobe List';
     }
   }
   // The founder's-voice line now opens the single how-to paragraph under the
