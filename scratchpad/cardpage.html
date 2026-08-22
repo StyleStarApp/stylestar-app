@@ -454,12 +454,51 @@ function leaf(x0,y0,x1,y1){ return diag(x0,y0,x1,y1,LEAF); }
 
 let DIVIDER='star';
 window.setDivider=function(d){DIVIDER=d};
+/* ── SILVER, her call: "I think it needs to be like the silver mirror one" ──
+   Measured on her white linen, and her instinct is structurally right rather
+   than just a preference:
+     silver's darkest stop #8C9298  3.01:1, saturation 5.5%   (neutral grey)
+     gold's darkest usable #C9992B  2.49:1, saturation 64.8%  (orange)
+   So silver is BOTH more present on white paper AND incapable of reading brown,
+   because its shadow is neutral. That is the whole reason gold kept failing here.
+   This is the app's OWN mirror ramp, lifted from the card builder unchanged, so
+   the two can never drift. */
+const MIRROR=['#FFFFFF','#C6CACE','#8C9298','#F2F4F6','#9AA0A6','#DFE2E5','#FFFFFF'];
+function mirror(x0,y0,x1,y1){ return diag(x0,y0,x1,y1,MIRROR); }
+
 let FRAME_STYLE='double';
 window.setFrame=function(f){FRAME_STYLE=f};
 
 /* Three frames, one variable. Everything else on the card is held constant. */
 function frameF(){
   const g=leaf(0,0,W,H);
+  const m=mirror(0,0,W,H);
+
+  if(FRAME_STYLE==='silverband'){
+    ctx.fillStyle=m;ctx.fillRect(24,24,W-48,H-48);
+    paperInset(46);
+    // a hair of shadow where the frame meets the paper, or a light silver stop
+    // dissolves into white linen and the frame loses its inner edge
+    ctx.strokeStyle='rgba(90,95,100,.28)';ctx.lineWidth=1;
+    ctx.strokeRect(46.5,46.5,W-93,H-93);
+    ctx.strokeStyle='rgba(90,95,100,.22)';ctx.strokeRect(24.5,24.5,W-49,H-49);
+    return;
+  }
+  if(FRAME_STYLE==='silvergold'){
+    // the frame the app already ships on this card: silver outside, a thin gold
+    // rule inside. Her "maybe the one we have".
+    ctx.fillStyle=m;ctx.fillRect(20,20,W-40,H-40);
+    ctx.fillStyle=g;ctx.fillRect(44,44,W-88,H-88);
+    paperInset(56);
+    ctx.strokeStyle='rgba(90,95,100,.22)';ctx.lineWidth=1;
+    ctx.strokeRect(20.5,20.5,W-41,H-41);
+    return;
+  }
+  if(FRAME_STYLE==='silverhair'){
+    ctx.strokeStyle=m;ctx.lineWidth=4;ctx.strokeRect(34,34,W-68,H-68);
+    ctx.lineWidth=1.6;ctx.strokeRect(54,54,W-108,H-108);
+    return;
+  }
   if(FRAME_STYLE==='band'){
     // the Star of the Week's own gold-leaf band, the treatment she picked on
     // 2026-08-21. Reused rather than reinvented, so the two can never drift.

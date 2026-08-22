@@ -68,7 +68,7 @@ for(const o of OPTS){
     else if(v==='line'||v==='items') promise=v;
     else if(v==='tall') size=[1080,1620];          // her 2:3, ~190px more height
     else if(v==='white'||v==='linen'||v==='cream') mode=v;
-    else if(v==='double'||v==='stars'||v==='band') frame=v;
+    else if(['double','stars','band','silverband','silvergold','silverhair'].includes(v)) frame=v;
     else if(v==='nodiv') divider='none';
     else throw new Error('unknown flag "'+v+'" in option "'+o+'" — a silent '
       +'fallthrough here once rendered the LONG motto and looked like a bug in the card');
