@@ -1050,6 +1050,16 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 .pref-recap .prc .ck{width:13px;height:13px;flex:none}
 .pref-recap .prc .sw{width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.15);display:inline-block}
 #s-shopstyle .ss-shop-hdr{text-align:center;margin:0 0 18px}
+/* Her call 2026-08-22: the rotating SHOP_MSGS line belongs to the WAITING
+   moment, not to the finished page. It was set before the star started
+   spinning and then simply never cleared, so it sat there all visit adding
+   clutter above the pieces. The spinner is this same screen wearing
+   .thinking, so showing it only then is one rule.
+   ⚠️ QUIZ MODE ONLY. In look and wantlist modes that same element says
+   "More pieces like the look you shared" / "Everything on your list", which
+   NAMES what she is looking at and must survive. */
+#s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-sub{display:none}
+#s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-hdr{margin-bottom:8px}
 #s-shopstyle.thinking .ss-shop-logo{font-size:27px}
 #s-shopstyle.thinking .ss-shop-logo::before{left:calc(69.4% - 5px)}
 #shopLoadMsg{transition:opacity .4s ease;display:block;max-width:310px;margin:0 auto;text-wrap:balance}
@@ -1474,6 +1484,10 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-shopstyle .shop-loading{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:190px;padding:8px 0 0;font-size:19.5px}
 .shop-refresh{text-align:center;margin-top:14px}
 .shop-refresh-btn{font-size:15.5px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.03em}
+/* Uneven ON PURPOSE, her 2026-08-15 rule reapplied: a caption belongs to what
+   it describes. Tight above and loose below made it read as a note about the
+   search box; 14/4 attaches it to the pieces underneath. */
+#s-shopstyle .ss-disc-top{font-size:11.5px;margin:14px auto 4px}
 .shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;max-width:320px;margin-left:auto;margin-right:auto;text-align:center}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
@@ -3955,8 +3969,13 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
          screen. It also names what she is looking at, which nothing else did. -->
     <div id="ssAskNow" style="display:none"></div>
   </div>
+  <!-- ABOVE the pieces, not below. FTC guidance is that a disclosure be clear,
+       conspicuous and near the links; below six cards she can tap FIND IT on the
+       first one without ever passing it. The Edit and the Mall were moved above
+       their products on 2026-07-31 for exactly this reason and this screen was
+       the last one still doing it the old way. Her call 2026-08-22. -->
+  <div class="shop-disclosure ss-disc-top">Some links may earn a commission.</div>
   <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
-  <div class="shop-disclosure">Some links may earn a commission.</div>
   <!-- The escalation sits BELOW the pieces, her call after live testing: with the
        ask above them the top had grown to label + box + link before she saw a single
        garment, and she read it as crowded and confusing.
@@ -3966,7 +3985,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
        already hides it while the star spins and reveals it only once the cards have
        landed, so it can never offer her a way out before there is anything to be out
        of. That is the machinery that was here all along. -->
-  <div class="ss-shop-talk">Not seeing it? <span onclick="openChat()">Let your stylist search for you &rarr;</span></div>
+  <div class="ss-shop-talk">Not seeing it? <span onclick="openChat()">Ask your stylist &rarr;</span></div>
 </div>
 
 <div class="scr" id="s-story">
@@ -7077,6 +7096,8 @@ function _openShopStyleNow(mode){
 async function _shopStyleGen(){
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
+  // Drives the subtitle rule above: only the quiz-mode line is decorative.
+  if(scr)scr.dataset.mode=_isWL?'wantlist':(_shopStyleMode==='look'?'look':'quiz');
   var _isWL=(_shopStyleMode==='wantlist');
   var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="shop-load-star" viewBox="0 0 76 76" fill="none" style="width:18px;height:18px;margin-right:5px;vertical-align:-3px"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>'+(_isWL?'shopping your list&hellip;':'shopping your style&hellip;');
   var talk=document.querySelector('#s-shopstyle .ss-shop-talk');if(talk)talk.classList.remove('on');
