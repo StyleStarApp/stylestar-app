@@ -12075,6 +12075,25 @@ function buildCardBlob(source,callback){
     if(line)lines.push(line);
     return lines;
   }
+  /* text-wrap:balance, for canvas. Plain wrap() is GREEDY: it packs each line as
+     full as it will go and whatever is left over becomes the last line, which is
+     how "stylist." ended up alone at the foot of the card (her catch).
+     ▶ The fix is the same one the app already uses in CSS wherever a widow turns
+     up: find the NARROWEST width that still fits the text in the same number of
+     lines, and wrap to that. The line count never changes and the font never
+     shrinks, so nothing else about the layout moves - the words just distribute
+     evenly instead of piling up at the top.
+     ⚠️ Reads ctx.font, exactly like wrap(). Set the face before calling. */
+  function wrapBalanced(text,maxW){
+    const full=wrap(text,maxW);
+    if(full.length<2)return full;
+    let lo=1,hi=maxW,best=maxW;
+    while(lo<=hi){
+      const mid=(lo+hi)>>1;
+      if(wrap(text,mid).length<=full.length){best=mid;hi=mid-1}else lo=mid+1;
+    }
+    return wrap(text,best);
+  }
   /* HER star, not a generic one: this is _SHOP_STAR_SVG, the shiny gold star
      that spins while Shop your style is thinking — a radial gold gradient with a
      SILVER outline. Her call, and it is the right one twice over: it is already
@@ -12193,7 +12212,12 @@ function buildCardBlob(source,callback){
        is computed against a face that never gets used. */
     const PROMISE_FONT='400 33px "DM Sans", sans-serif';
     ctx.font=PROMISE_FONT;
-    const promiseLines=wrap('Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a real personal stylist.',W-240);
+    /* ⚠️ THE NON-BREAKING SPACE IN "Style\u00a0Portrait" IS DELIBERATE. It is the
+       name of the thing she is offering, so it must not be split across two
+       lines. Balancing alone put the break right through the middle of it; held
+       together it comes out MORE even, not less (524/611/567 against 610/592/501
+       measured in the real face). Do not "tidy" it back to a plain space. */
+    const promiseLines=wrapBalanced('Take the free quiz to discover your Style\u00a0Portrait, and receive shopping tips and ideas from a real personal stylist.',W-240);
     const promiseH=promiseLines.length*46+18;
     const tailBase=58+promiseH+92+52;
 
@@ -12214,7 +12238,7 @@ function buildCardBlob(source,callback){
     let ms=46,ml,H_MOT,blockH;
     for(;;){
       ctx.font='italic 400 '+ms+'px "Lora", serif';
-      ml=wrap('“'+quote+'”',W-300);
+      ml=wrapBalanced('\u201c'+quote+'\u201d',W-300);
       H_MOT=ml.length*(ms+16)+34;
       blockH=H_LOGO+H_OVER+H_NAME+H_DIV+H_MOT+H_NOT;
       if(blockH<=room||ms<=30)break;
