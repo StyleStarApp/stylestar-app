@@ -7,7 +7,215 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-21 NIGHT — 🎁 THE SHAREABLE WISHLIST IS LIVE, AND HER TESTING FOUND THREE REAL BUGS)
+## ▶ NEXT SESSION — START HERE (2026-08-22 — 🚪 THE FIRST TESTERS ARRIVED, AND THEY ALL WANTED A DOOR THE APP DID NOT HAVE)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save and merge live all of this and put it all on the .md so we can resume tomorrow")
+**THREE PRs merged and ALL CURL-VERIFIED LIVE: #898 · #899 · #901.** ⚠️ **Three Netlify builds.**
+▶▶ **THE HEADLINE: THE FIRST REAL TESTER FEEDBACK LANDED, AND FOUR REPORTS TURNED OUT TO BE ONE FINDING.
+THREE OF THE FOUR WOMEN ARRIVED ALREADY KNOWING WHAT THEY WANTED AND WENT HUNTING FOR SOMEWHERE TO SAY IT.**
+The app is architected the other way round — quiz → portrait → here is what suits you. It PUSHES; every one
+of them wanted to PULL. ▶ **Shipped: "Tell me what you're looking for" on Shop your style.**
+▶ **AND THE FIRST THING NEXT SESSION IS HERS: THE EMOJI.** She rejected the line-art replacements outright
+and parked it with a clear condition. See its own entry below.
+
+### 🚨⭐⭐ THE DIAGNOSIS — FOUR TESTERS, ONE FINDING, AND IT IS THE MOST VALUABLE THING IN THIS SESSION
+- **HALEY (20s, via her friend Jen)** wanted a price limit. **Finding no field for it, she typed it into
+  "other things my stylist should know" — AND IT WORKED.** ▶ **That is a woman inventing a search box out of
+  the only free-text field on the screen.** ⭐ **Read the behaviour, not the request: she did not ask for a
+  budget filter, she asked for A PLACE TO SAY SOMETHING.**
+- **CARSON (20s)** said the emoji on Shop your style read as AI to her generation. **Both said the
+  suggestions were about 80% on point, and BOTH ALREADY OWNED A PIECE THE APP SUGGESTED.** ⭐⭐ **That second
+  fact is the strongest validation this project has ever had and she should be told so plainly: the app
+  independently picked something a real woman had already chosen for herself.**
+- **ALICE (a long-time client)** would still use the personal service, but *"could see myself using this if I
+  needed a dress quickly for an event."* ▶ **A SPECIFIC ASK, ON A CLOCK.**
+- **🚨 HER MOTHER, and this is the one that decided the build:** *"I want to look at fancy floor length
+  dresses via StyleStar. How do I let the app know that?"* ⚠️⚠️ **THE ANSWER ALREADY EXISTED — `dr10 Formal
+  gowns` is a wardrobe row with its own Ideas carousel. She was THREE TAPS AWAY and there was no door.**
+  ▶ **Catherine's own read, and it is the right one: "My mom has played with the app A LOT and she did not
+  exactly know how to use it for this specific case so that tells me something too."**
+- ⚠️⚠️ **THE STRUCTURAL FACT UNDERNEATH ALL FOUR: THERE IS NO SEARCH BOX ANYWHERE IN THE APP.** Not on the
+  Edit, not on the Mall, not on the wardrobe list. **Her second mom-lesson, one year on: a feature that
+  cannot be reached by NAME may as well not exist.**
+
+### 🚪 WHAT SHIPPED — "TELL ME WHAT YOU'RE LOOKING FOR" ON SHOP YOUR STYLE
+Her instinct, verbatim: *"how Shop Your Style automatically starts spinning and presents our users with 6
+items. Seems like there should be a way for her to select through that door what she is looking for
+specifically??"* ▶ **Right door: EIGHT entry points already lead to Shop your style, so anything placed there
+is reachable from everywhere she goes.**
+- ⭐ **THE SIX PIECES STILL APPEAR INSTANTLY. Nothing is hidden behind the question** — her own value-first
+  rule, the same mistake she caught on the Refine-done screen where the payoff sat behind the email ask.
+- **The mark is the STYLIST'S PINK STAR, not her pink heart** — her own mark system (heart = Catherine
+  speaking, star = the stylist working), and the loader on that very screen is already a pink star.
+- ⚠️ **QUIZ MODE ONLY, her call.** `look` mode is instructed to MIRROR the outfit she shared and add no
+  accessories, so a typed "I need earrings" contradicts it outright; `wantlist` owes exactly one pick per
+  starred row in order. **A box in either would promise more than the mode can do.**
+- ⚠️ **THE CONTROL LIVES OUTSIDE `#shopStyleContent`**, because that container's innerHTML is replaced on
+  every generate — including her own "Show me different options". An input inside it loses her typing on her
+  own refresh.
+- ⚠️ **THE ASK IS ONE-SHOT: consumed by the next generate, cleared on re-entry.** `_openShopStyleNow` calls
+  `_shopStyleGen()` unconditionally on every entry, so a remembered ask would have "wedding guest dress"
+  quietly colouring her shopping for weeks.
+- 🚨 **THE VETO TRAP, caught by the plumbing sweep BEFORE it shipped: `filterNeverWear(items, askedFor)`
+  takes a second argument that waives `_SEARCH_VETO`, which is `['wrap']`. A woman typing "wrap dress" would
+  have had EVERY PICK DROPPED before render, with nothing on screen explaining why.** Her typed text is
+  passed into that argument now. ⚠️ **`_STYLIST_VETO` (ribbed, skinny jeans) and her never-wear list are
+  NEVER waived** — taste does not bend to a request, and a test asserts it both ways.
+
+### ⭐⭐ THE ELEVEN EXAMPLES ARE HERS, AND WHY HERS BEAT THE DRAFTS IS THE REUSABLE HALF
+The placeholder rotates through a ring (the `_CHIP_RING` pattern, sequential + persisted index, so she
+eventually sees every one). **Her list: wedding guest dress · white tops under $100 · something for vacation ·
+jeans · work outfits · tan sandals · something formal · a floor length gown · weekend casual · silk blouse ·
+tote bag.**
+- ▶▶ **WHY HERS ARE BETTER THAN EVERY DRAFT: THREE OF THEM ARE ONE OR TWO WORDS ("jeans", "silk blouse",
+  "tote bag"), WHICH TEACHES THAT A SHORT ASK WORKS.** Every Claude draft was a full phrase, which quietly
+  implied she had to write a sentence.
+- ⚠️ **THE "Try:" PREFIX STAYS, HER CALL.** A bare phrase sitting in the box reads as text already typed —
+  she taps in expecting to edit it and finds nothing.
+- ⚠️ **ADVANCED IN `_openShopStyleNow`, NEVER IN `_shopStyleGen`**, so tapping refresh cannot shuffle the
+  example under her fingers (the same reasoning that holds the subtitle still on a refresh).
+
+### 🚨🚨 THE CHIPS WERE BUILT, TESTED BY HER, AND DELETED — AND THE REASON IS A STANDING RULE
+Two rows of chips (occasion + category, her own words) were built to her spec and revealed on focus.
+**Her live test killed them in one sentence:** *"I typed something in — white linen dress and then I thought
+I would click on vacation but then vacation replaced white linen dress so that was very confusing."*
+▶▶ **A CONTROL THAT SILENTLY DESTROYS WHAT SHE JUST WROTE IS WORSE THAN NO CONTROL.** ⭐ **And her fix was
+better than teaching them to append: she folded the chip vocabulary INTO THE ROTATING RING** (which is where
+"something for vacation", "work outfits", "weekend casual" and "something formal" come from), so the words
+still teach the range and nothing can overwrite her sentence. **Do not re-propose chips here.**
+
+### 🚨⭐⭐ "BAGS" RETURNED A DRESS — THE BUG, AND IT IS A PROMPT-WRITING LESSON WORTH KEEPING
+Her live test: she typed **bags** and got a dress, trousers, heels, rings and a blazer.
+▶▶ **THE ASK WAS NOT WEAK. IT WAS CONTRADICTED BY THE BULLET DIRECTLY BENEATH IT — `- Mix categories and
+price points across the 6 items`, which had been correct for two years and became a direct contradiction the
+moment an ask existed.** ⚠️ **A rule added to a prompt is not additive: the surrounding rules are still
+being read.** The fix is in three parts and all three were needed:
+1. **The mix-categories bullet is REMOVED when an ask exists**, replaced by *"Vary the price points and the
+   stores across the 6, but every single one must be the thing she asked for."*
+2. **The OPENING SENTENCE is reframed**, not just a rule appended at the bottom: *"This woman is looking for:
+   'bags'. Suggest 6 specific shoppable pieces that are exactly that."*
+3. **A COVER THE RANGE clause** so a broad ask ("something formal") becomes a spread across the six rather
+   than one guessed formality.
+- ✅ **VERIFIED AGAINST THE REAL LIVE MODEL, 2 runs each** (`scratchpad/asklive.mjs` captures the real prompt
+  off the edited page and POSTs it to production): **"bags" → 6 bags · "a floor length gown" → 6 gowns ·
+  "white tops under $100" → 6 white tops · the no-ask control → dress · jacket · shoes · bag · jewelry · top.**
+  ▶ **The control matters as much as the tests: it proves the ordinary six did not become monotonous.**
+
+### 🚨 A DEAD END SHE FOUND BY ASKING A DESIGN QUESTION — AND IT WAS NOT A NICETY
+Her words: *"should we have an option for her to click on variety of items rather than something specific?"*
+▶▶ **INVESTIGATING IT FOUND A REAL DEAD END: once an ask was in force, emptying the box and tapping SHOW ME
+DID NOTHING AT ALL. The only way back to a mixed six was leaving the screen and coming back.**
+- **Fixed BOTH ways, because they are two different women:** the **mechanism** (an empty box now means "show
+  me a variety" whenever an ask is set — and still does nothing when none is, so it cannot spin the star for
+  no reason) and the **control** (one quiet line: **"Showing bags · show me a mix instead"**).
+- ⭐ **PLACEMENT WAS THE REAL DECISION, and it was rendered three ways: it sits UNDER THE BOX, not beside
+  "Show me different options" at the foot of the page.** The question *"why is everything a bag?"* is asked at
+  the TOP, where the word she typed is still on screen — not four cards down beside a refresh button that
+  means something different. ⭐ **It also does a job nothing else did: IT NAMES WHAT SHE IS LOOKING AT.**
+- ⚠️ **It lives inside `#ssAsk`, outside `#shopStyleContent`**, or her own refresh would blink it away.
+
+### ✅ HER OTHER LIVE-TEST FIXES, ALL FROM ONE PASS ON HER PHONE
+1. 🚨 **THE CONTROL WAS VISIBLE WHILE THE STAR WAS SPINNING** — her catch, and **CLAUDE HAD WRITTEN THE
+   REQUIREMENT INTO THE PLAN AND THEN NOT IMPLEMENTED IT.** ▶ **A plan is not a test. Assert the thing the
+   plan promised.**
+2. **The example CLEARS the moment she taps in** and returns if she leaves the box empty. Her words: *"it
+   stays there until I start typing and didn't let me delete it so that felt very awkward."* ⚠️ **A CENTRED
+   placeholder genuinely reads as text already in the box** — the text is left-aligned now for the same reason.
+3. **The box border went lighter (`#b3aea3`) and the placeholder lighter (`#9d968a`)**, her call.
+4. **The escalation moved BACK to the bottom, her call:** *"I think it is too crowded at the top there and
+   confusing maybe."* ▶ **She was right and it reverses a Claude decision: with the ask above the pieces the
+   top had grown to label + box + link before she saw a single garment.** Wording is hers too: **"Not seeing
+   it? Let your stylist search for you →"**.
+5. **The star LEADS the sentence and the box is SQUARED** (her last two asks of the session).
+
+### ⭐ THE CARDS ARE PANES IN A SHOP WINDOW NOW — her reasoning decided the palette
+Her call from five rendered options: **squared, plain, with a near-black hairline. NOT gold.** Her reason,
+and it is the keeper: ***"I am keeping in mind it actually looks like a store window. So I don't want gold."***
+- ⚠️ **THE HAIRLINE IS `#17171c`, WHICH IS NOT A NEW COLOUR: it is already the 11px window frame on
+  `.ss.shop-mirror` AND the awning stripes** — the two structural, window-shaped things on the screen.
+  ⚠️ **`#1a1a1a` is the INK-AND-FILLED-CONTROL black (the logo, the Find it pill) and is a different job.**
+  ▶ **So the hairline reads as muntin bars continuing the frame.** A test asserts it EQUALS the frame's
+  computed colour, so the two can never drift.
+- ⚠️ **A gold-leaf frame WAS rendered and it came out entirely gold — the documented negative-z-index trap
+  (a negative-z child paints ABOVE its own stacking context's background).** Claude flagged the bug as its
+  own and re-rendered rather than letting her judge a broken option. ▶ **Never show her a render you know is
+  wrong; say so and fix it.**
+
+### 🚨🚨 THE EMOJI — SHE REJECTED THE LINE ART OUTRIGHT, AND THIS IS THE FIRST THING NEXT SESSION
+Carson's note was that the category emoji read as AI. Catherine agreed: *"they do look rather tacky compared
+to the rest of how stylish our app looks."* **The emoji on the shopping cards are GONE** (`catEmoji`,
+`photoShopEmoji`, and the ✨ that was the deliberate `accessory` icon on Complete the Look).
+- 🚨 **BUT THE LINE-ART REPLACEMENTS WERE REJECTED IN THE STRONGEST TERMS SHE HAS USED: "Oh no I don't like
+  the way any of this line art looks at all. Let's pause here for a moment."** Three rounds of hand-drawn
+  SVG icons, all rejected. ▶ **Do not re-draw them without a new approach.**
+- ▶▶ **HER CONDITION, VERBATIM, AND IT IS THE DECISION TO PUT TO HER: "I am thinking either we need very
+  good quality line art or we get rid of them?"** ⭐ **They are currently GONE and the cards look right —
+  so the honest recommendation is to leave them gone unless she finds a professional icon set she loves.**
+- ⚠️ **THE WIDER EMOJI AUDIT IS PARKED, HERS TO DECIDE, and the list is here so it is not re-derived:** the
+  camera on Analyze (`index.html:3503`) and the chat composer (3922) · ✨ in four toasts + one alert ·
+  💫 in the chat greeting (9776) **and in the `og:title` (index.html:8, 16)**.
+  ⚠️⚠️ **THE `og:title` ONE IS NOT COSMETIC — IT IS HER LIVE LINK-PREVIEW CARD**, the thing every friend
+  sees when she texts the app. Changing it changes what fifteen testers already have in their threads.
+
+### ⚠️ THINGS SHE DECIDED NOT TO DO, WITH HER REASONS
+1. **NO BUDGET SECTION, her call** despite Haley asking for it: *"For right now I don't want to add a budget
+   section but will watch for more feedback on that."* ⭐ **And she is right that it is already half-solved —
+   Haley typed "under $100" into free text and it worked, which is exactly what the new box now invites.**
+2. **A search bar on the Edit or the Mall is NOT ruled out** — her words: *"I am not opposed to a search bar
+   on the edit or anywhere we need it."* **Parked, not rejected.** ▶ The Edit is 22 items so it does not
+   need one yet (her own ~25-30 trigger for organising it still stands).
+
+### ⭐ TEST HYGIENE
+- **New `scratchpad/shopask.js`, 80 checks** — the whole lifecycle: the six still arrive untouched, the ask
+  reaches the prompt in every mode, the veto waiver both ways, the ring rotating and never repeating, the
+  escape both ways, mode gating, AA contrast against the real painted background, no overflow at
+  390/375/360/320, zero JS errors.
+  ⭐ **The two assertions worth knowing about:** the star's position is measured by **PAINTED POSITION, not
+  DOM order** (a float or a margin could put the mark back on the right while the markup still reads
+  left-first), and **every placeholder is measured against the input's real inner width with canvas
+  `measureText`** — ⚠️ **a too-long placeholder is CLIPPED, not overflowed, so the overflow sweep cannot see
+  it.** (The wishlist add-form lesson: "The piece, e.g. black studded shoulder bag" needed 287px in a 230px
+  box and was cut on EVERY phone.)
+- **New `scratchpad/asklive.mjs`** — the live-model check above. Costs a few cents of the production key.
+- 🚨 **`followups.js` HAD 2 PRE-EXISTING FAILURES AND BOTH WERE STALE TESTS, NOT REGRESSIONS.** ⭐ **Verified
+  on a CLEAN TREE on the SAME MACHINE first — one variable, the 2026-08-20 lesson applied.** One asserted a
+  single `colorsSkip` tombstone comment when a second had been added later; one predated `_STYLIST_VETO`
+  (ribbed). **Fixed deliberately with the reason recorded at each assertion; 38 → 39.**
+- **Green at pause:** shopask **80** · sizeveto 42 · nameparity 25 · followups 39 · e2e 29 · affq 40 ·
+  curated 65 · wladd 102.
+- ⚠️ **HARNESS LESSON, THIRD TIME IN THIS FILE: PIPING A SUITE THROUGH `tail` EATS ITS OUTPUT ENTIRELY** —
+  a run appeared to hang for minutes with an empty output file while it was working perfectly. **Redirect to
+  a file, never pipe.** ⚠️ **And a killed run holds its port: `EADDRINUSE 8995` on the next attempt.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **THE EMOJI DECISION — HER OWN PARKED ITEM, and it is a straight question: professional icon set, or
+   leave them gone?** They are gone from the shopping cards today and the cards look right. **The wider
+   audit list is in the entry above; the `og:title` is the one with real consequences.**
+2. 👀 **HOW THE NEW ASK FEELS ON HER PHONE** — she has not seen the star-left, squared-box, or the
+   "Showing bags · show me a mix instead" line live. ⚠️ **Her standing reminder: private browsing, and type
+   `stylestar.app/?notrack`.**
+3. ⭐⭐ **MORE TESTER FEEDBACK — fifteen friends were invited on 08-21 and only four have reported.**
+   ▶ **The follow-up question is the one that matters: "Be honest, what felt confusing, or what did you tap
+   expecting something else?"** ⚠️ **People volunteer the good news and have to be ASKED TWICE for the bad —
+   and every one of this session's four findings came from a woman describing what she TRIED, not what she
+   wanted.**
+4. 📧 **STEP 4 OF THE WISHLIST: the MailerLite email.** ⚠️ **Amazon Associates bans affiliate links in
+   email, so it carries ONE link into the shareable page.** Her desk, her timing.
+5. 📊 **Her Plausible dashboard** — the testers have had a few days now. ▶ **Read the FUNNEL, never the
+   visitor count.** ⭐ **AND THERE IS A NEW THING TO WATCH: does anyone actually type in the ask box?**
+   It is worth a Plausible event if she wants to know (not built — one line, her call).
+6. ⏰ **26 AUGUST — the stale Routine `trig_01SZerTsvKoeUYzeT1HX6iWs`** fires once with an Aug-12 brief.
+   **Update or delete it.**
+7. ⏰ **28 AUGUST — the recurring-payments Routine.** Her cards have arrived.
+8. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null`, and **ASK whether she
+   wants the queue reordered.** Raise it; do not let it pass.
+9. 💰 **AFFILIATES: CJ and AWIN in ~3 weeks**, once tester traffic shows. **Impact in 2-3 months WITH the
+   Plausible dashboard link. AMAZON LAST.** ⚠️ **ShareASale no longer exists.**
+10. ⭐ **HER PARKED IDEA, still good: the FAVORITE OUTFIT page** — and it is worth noticing that **this
+    session's finding strengthens it.** Testers wanted to say what they were after; a page that hands her
+    ONE outfit formula that is hers is the same instinct answered from the other direction.
+
+## ▶ PREVIOUS — 2026-08-21 NIGHT (🎁 THE SHAREABLE WISHLIST IS LIVE, AND HER TESTING FOUND THREE REAL BUGS)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "yes let's save everything and I have some feedback to give you from some testers")
 ▶▶ **SHE HAS TESTER FEEDBACK WAITING AND HAD NOT GIVEN IT YET WHEN THIS WAS WRITTEN. ASK FOR IT FIRST,
