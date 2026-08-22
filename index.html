@@ -1050,6 +1050,24 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 .pref-recap .prc .ck{width:13px;height:13px;flex:none}
 .pref-recap .prc .sw{width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.15);display:inline-block}
 #s-shopstyle .ss-shop-hdr{text-align:center;margin:0 0 18px}
+/* Her call 2026-08-22: the rotating SHOP_MSGS line belongs to the WAITING
+   moment, not to the finished page. It was set before the star started
+   spinning and then simply never cleared, so it sat there all visit adding
+   clutter above the pieces. The spinner is this same screen wearing
+   .thinking, so showing it only then is one rule.
+   ⚠️ QUIZ MODE ONLY. In look and wantlist modes that same element says
+   "More pieces like the look you shared" / "Everything on your list", which
+   NAMES what she is looking at and must survive. */
+/* The rotating SHOP_MSGS line belongs to the WAITING moment and stands down once
+   the pieces land, her call.
+   ⚠️ A LANDED line naming the selection ("A few pieces I pulled for you") was
+   built here and REMOVED the same day, hers: "I think that is going to get
+   redundant... it might be just obvious to land on it and see what is there,
+   especially when we have product photos." She had asked for a line to come
+   OUT of this spot an hour earlier and was right that putting a different one
+   back was the same clutter. Don't reintroduce it. */
+#s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-sub{display:none}
+#s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-hdr{margin-bottom:3px}
 #s-shopstyle.thinking .ss-shop-logo{font-size:27px}
 #s-shopstyle.thinking .ss-shop-logo::before{left:calc(69.4% - 5px)}
 #shopLoadMsg{transition:opacity .4s ease;display:block;max-width:310px;margin:0 auto;text-wrap:balance}
@@ -1066,8 +1084,44 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    approved on Your Wishlist, and the chips are the squared gold .wdr-see chip.
    ⚠️ Every selector is scoped #s-shopstyle on purpose — .sa-* names are new, but
    the screen scope keeps a future reuse of these classes from leaking here. */
-#s-shopstyle #ssAsk{margin:12px auto 4px;max-width:340px;padding:0 14px}
-#s-shopstyle .sa-vox{font:400 15.5px/1.45 'Lora',Georgia,serif;color:#4a463e;margin-bottom:8px;text-wrap:balance}
+/* Tightened 2026-08-22, her call. The PADDING on .sa-vox is untouched: it is the
+   43px tap target for the 18 to 80 audience, and shrinking it to buy white space
+   would trade a real thing for a cosmetic one. The MARGINS around it moved. */
+#s-shopstyle #ssAsk{margin:3px auto 2px;max-width:340px;padding:0 14px}
+/* HER PICK B, 2026-08-22. The box used to lead the page, so the first thing she
+   read was a DEMAND, and it competed with the six pieces for the same moment.
+   Her own description puts them the other way round: enjoy what your stylist
+   pulled, THEN hunt for the one thing you came in for. So the ask collapses to
+   one line and the box opens on tap.
+   ⚠️ IT STAYS NAMED AT THE TOP, and that is the whole reason B beat moving the
+   box below the pieces: three of the four testers arrived already KNOWING what
+   they wanted, which is why this box exists at all. Hiding it under six cards
+   would make exactly those women scroll past everything. A named line is
+   findable (her mother's lesson); a box is merely loud.
+   ⚠️ It is a real <button>, not a styled div: it must be reachable by keyboard
+   and announced as a control, and anything that looks tappable here must BE
+   tappable (the A2HS lesson, pointed the other way). */
+/* ⚠️ The negative side margins eat #ssAsk's own 14px padding, so the LINE gets
+   the full width while the BOX keeps its inset. Without them 17.5px wraps at
+   375px specifically, which looks like a bug and is not: the <=374px rule
+   already trims that padding, so 360 has a WIDER container than 375. Measured. */
+#s-shopstyle .sa-vox{display:block;width:calc(100% + 28px);margin-left:-14px;margin-right:-14px;background:none;border:0;font:400 17.5px/1.4 'Lora',Georgia,serif;color:#4a463e;text-align:center;padding:9px 0;margin-top:0;margin-bottom:2px;text-wrap:balance;cursor:pointer}
+#s-shopstyle #ssAsk:not(.open) .sa-vox{text-decoration:underline;text-underline-offset:3px}
+/* Her pick from three, 2026-08-22. A DOWN CHEVRON, not the app's right arrow:
+   everywhere else that arrow means she is about to be taken somewhere, and
+   nothing here navigates, the box opens in place. The chevron points at where
+   it will appear.
+   ⚠️ It goes once the box is OPEN, because at that point it is no longer an
+   affordance: the line cannot be tapped closed, so a mark still promising an
+   action would be lying. */
+#s-shopstyle .sa-chev{width:15px;height:15px;vertical-align:-2px;margin-left:5px;display:inline-block}
+#s-shopstyle #ssAsk.open .sa-chev{display:none}
+/* Her call 2026-08-22: once it opens, the box should sit RIGHT under the line it
+   belongs to. Safe to take the bottom padding out here and nowhere else,
+   because in the open state the line is no longer tappable, so the 43px tap
+   target it buys in the CLOSED state is not being spent. */
+#s-shopstyle #ssAsk.open .sa-vox{cursor:default;padding-bottom:0;margin-bottom:1px}
+#s-shopstyle #ssAsk:not(.open) #ssAskIn{display:none}
 #s-shopstyle .sa-star{width:13px;height:13px;vertical-align:-1px;margin-right:5px;display:inline-block}
 /* Her call: the box is BLACK and the chips are silver, which gives the control a
    hierarchy it did not have when both were gold — the box is the thing to use, the
@@ -1112,7 +1166,28 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 .shop-section{margin:1.5rem 0;text-align:center}
 .shop-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:'DM Sans',sans-serif}
 .shop-sub{font-size:15px;color:#444;margin-bottom:1rem;font-weight:500}
-.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* ⚠️ minmax(0,1fr), NOT 1fr. Her catch 2026-08-22: "the two rows of windows are
+   not symmetrical sizing, the left boxes are larger than the ones on the right."
+   Measured: the left column ran 150px against 112.5px on the right, at every
+   phone width. A bare 1fr carries an automatic minimum of AUTO, so a column
+   holding a long unbreakable word (BLOOMINGDALES) grows past its share and
+   steals the difference from its neighbour. minmax(0,1fr) makes the share the
+   real limit and the words wrap instead. Don't simplify it back. */
+.shop-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+/* ...and with a real limit, a long retailer name must be allowed to break or it
+   would simply overflow the card it no longer fits. This is the SAFETY NET, not
+   the plan: the plan is that the real names fit, below. */
+.shop-card{overflow-wrap:anywhere}
+/* ⚠️ MEASURED, 2026-08-22, after the even columns made every card 139px: the
+   card's inner width was 105px while BLOOMINGDALES needs 116 and ANTHROPOLOGIE
+   115, so the safety net above was firing on ORDINARY stores and rendering
+   "BLOOMINGDAL / ES". Rather than shrink the type on an 18 to 80 audience, the
+   cards give the width back: 16px of side padding was generous for a 139px
+   card, and the store line's tracking was costing ~5px it did not need.
+   ⚠️ Scoped to the two-column grid so the wardrobe's 128px horizontal carousel
+   keeps its own tighter proportions. */
+.shop-grid:not(.hscroll) .shop-card{padding-left:10px;padding-right:10px}
+.shop-grid:not(.hscroll) .shop-item-store{letter-spacing:.03em}
 .shop-card{background:#fafafa;border:1px solid #ebebeb;border-radius:14px;padding:1rem;text-align:center;display:flex;flex-direction:column;justify-content:space-between;min-height:140px}
 /* PANES IN A SHOP WINDOW — her reading of this screen, 2026-08-21, and it is what
    decides the colour: "I am keeping in mind it actually looks like a store window.
@@ -1474,6 +1549,10 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-shopstyle .shop-loading{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:190px;padding:8px 0 0;font-size:19.5px}
 .shop-refresh{text-align:center;margin-top:14px}
 .shop-refresh-btn{font-size:15.5px;color:#B08830;cursor:pointer;text-decoration:underline;border:none;background:none;letter-spacing:0.03em}
+/* Uneven ON PURPOSE, her 2026-08-15 rule reapplied: a caption belongs to what
+   it describes. Tight above and loose below made it read as a note about the
+   search box; 14/4 attaches it to the pieces underneath. */
+#s-shopstyle .ss-disc-top{font-size:11.5px;margin:9px auto 3px}
 .shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;max-width:320px;margin-left:auto;margin-right:auto;text-align:center}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
@@ -3929,7 +4008,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <!-- The mark is the stylist's PINK STAR, never Catherine's pink heart. Her own
          mark system: the heart means SHE is speaking, the star means the stylist is
          working — which is why the loading star on this same screen is pink. -->
-    <div class="sa-vox"><svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>Tell me what you&rsquo;re looking for</div>
+    <button type="button" class="sa-vox" onclick="_ssAskReveal()"><svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>Looking for something specific?<svg class="sa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5 12 15.5 18 9.5"/></svg></button>
     <!-- ⚠️ The example clears the moment she taps in, and comes back if she leaves the
          box empty. Her live test, 2026-08-21: "when I put the cursor inside the box to
          start typing I would like the Try: jeans to go away. It stays there until I
@@ -3955,8 +4034,13 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
          screen. It also names what she is looking at, which nothing else did. -->
     <div id="ssAskNow" style="display:none"></div>
   </div>
+  <!-- ABOVE the pieces, not below. FTC guidance is that a disclosure be clear,
+       conspicuous and near the links; below six cards she can tap FIND IT on the
+       first one without ever passing it. The Edit and the Mall were moved above
+       their products on 2026-07-31 for exactly this reason and this screen was
+       the last one still doing it the old way. Her call 2026-08-22. -->
+  <div class="shop-disclosure ss-disc-top">Some links may earn a commission.</div>
   <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
-  <div class="shop-disclosure">Some links may earn a commission.</div>
   <!-- The escalation sits BELOW the pieces, her call after live testing: with the
        ask above them the top had grown to label + box + link before she saw a single
        garment, and she read it as crowded and confusing.
@@ -3966,7 +4050,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
        already hides it while the star spins and reveals it only once the cards have
        landed, so it can never offer her a way out before there is anything to be out
        of. That is the machinery that was here all along. -->
-  <div class="ss-shop-talk">Not seeing it? <span onclick="openChat()">Let your stylist search for you &rarr;</span></div>
+  <div class="ss-shop-talk">Want to talk it through? <span onclick="openChat()">Ask your stylist &rarr;</span></div>
 </div>
 
 <div class="scr" id="s-story">
@@ -6934,16 +7018,14 @@ function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e)
 // bare phrase sitting in the middle of it reads as something already typed.
 var _ASK_RING=[
   'Try: wedding guest dress',
-  'Try: white tops under $100',
-  'Try: something for vacation',
+  'Try: tops under $100',
+  'Try: vacation dress',
   'Try: jeans',
-  'Try: work outfits',
+  'Try: work trousers',
   'Try: tan sandals',
-  'Try: something formal',
-  'Try: a floor length gown',
-  'Try: weekend casual',
   'Try: silk blouse',
-  'Try: tote bag'
+  'Try: tote bag',
+  'Try: white jeans under $150'
 ];
 // Occasion above category, her call ("let's try both rows and see").
 // ▶▶ TAPPING A CHIP FILLS THE BOX, IT DOES NOT RUN A SEARCH. That is precisely
@@ -6976,8 +7058,25 @@ function _syncShopAsk(){
     try{localStorage.setItem('ss_askrot',String((i+1)%_ASK_RING.length))}catch(e){}
     inp.value='';
   }
+  // Collapsed again on re-entry, for the same reason the ask itself is one-shot:
+  // she should meet the pieces first every time, not a box she opened last visit.
+  el.classList.remove('open');
   _ssAskOpen(false);
   _ssAskNow();
+}
+// Opens the box on her tap. Once open it STAYS open for the visit: closing it
+// again under her would risk losing what she had typed.
+function _ssAskReveal(){
+  var el=document.getElementById('ssAsk');if(!el)return;
+  if(!el.classList.contains('open')){
+    el.classList.add('open');
+    // ⚠️ DELIBERATELY DOES NOT FOCUS, and the tests are why. Focusing runs
+    // _ssAskFocus(1), which clears the example — so opening the box would wipe
+    // "Try: silk blouse" before she ever read it, and her eleven examples, the
+    // thing that teaches her that a two word ask works, would be seen by nobody.
+    // The cost is one more tap to start typing. The example is worth it, and
+    // clearing it on HER tap into the field is what she asked for on 2026-08-21.
+  }
 }
 function _ssAskOpen(on){
   var m=document.getElementById('ssAskMore');if(m)m.style.display=on?'':'none';
@@ -7077,6 +7176,8 @@ function _openShopStyleNow(mode){
 async function _shopStyleGen(){
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
+  // Drives the subtitle rule above: only the quiz-mode line is decorative.
+  if(scr)scr.dataset.mode=_isWL?'wantlist':(_shopStyleMode==='look'?'look':'quiz');
   var _isWL=(_shopStyleMode==='wantlist');
   var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="shop-load-star" viewBox="0 0 76 76" fill="none" style="width:18px;height:18px;margin-right:5px;vertical-align:-3px"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>'+(_isWL?'shopping your list&hellip;':'shopping your style&hellip;');
   var talk=document.querySelector('#s-shopstyle .ss-shop-talk');if(talk)talk.classList.remove('on');
