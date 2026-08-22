@@ -12030,7 +12030,7 @@ function buildCardBlob(source,callback){
     if(document.fonts){
       // Explicit per-face loads: document.fonts.ready alone can resolve before a
       // face this canvas needs has been requested by anything on the page.
-      ['104px "DM Serif Display"','italic 400 46px "Lora"','600 27px "Jost"','600 30px "Jost"']
+      ['104px "DM Serif Display"','italic 400 46px "Lora"','600 38px "Jost"','400 33px "DM Sans"']
         .forEach(function(f){try{waits.push(document.fonts.load(f))}catch(e){}});
       if(document.fonts.ready)waits.push(document.fonts.ready);
     }
@@ -12107,9 +12107,11 @@ function buildCardBlob(source,callback){
     g.addColorStop(0,'#FFFCEF');g.addColorStop(.4,'#F9E5A0');
     g.addColorStop(.75,'#F0CB5E');g.addColorStop(1,'#E6B845');
     ctx.fillStyle=g;ctx.fill();
-    // the silver edge firms up a touch so the silhouette reads on paper; it is
-    // the same #B7BCC2, and the same metal as this card's frame
-    ctx.lineJoin='round';ctx.lineWidth=1.5*k;ctx.strokeStyle='#B7BCC2';ctx.stroke();
+    /* Silver edge back to _SHOP_STAR_SVG's own 1.1, exactly. It was firmed to 1.5
+       while the star was small and needed a silhouette; at this size that scaled
+       to a 7px grey rim, heavier than her spinning star ever looks. A big star
+       carries itself, so the rim goes back to being a rim. */
+    ctx.lineJoin='round';ctx.lineWidth=1.1*k;ctx.strokeStyle='#B7BCC2';ctx.stroke();
     ctx.restore();
   }
   // her white linen: #FBFAF7 plus the pref-qcard's own two weave gradients,
@@ -12169,7 +12171,15 @@ function buildCardBlob(source,callback){
     const FOOT_MARGIN=150,TOP_MARGIN=92;   // her call: the logo comes up
 
     // 1. the tail's natural height
-    ctx.font='italic 400 34px "Lora", serif';
+    /* HER CALL: plain, not fancy. DM Sans is the app's own body face — the one
+       every ordinary sentence in Style Star is already set in — so the card's one
+       piece of plain-speaking copy now sounds like the app talking rather than
+       like the card performing. Everything above it stays in the display faces.
+       ⚠️ THE MEASURING FONT AND THE DRAWING FONT MUST MATCH. This line is wrapped
+       here and painted 60 lines later; set one and forget the other and the wrap
+       is computed against a face that never gets used. */
+    const PROMISE_FONT='400 33px "DM Sans", sans-serif';
+    ctx.font=PROMISE_FONT;
     const promiseLines=wrap('Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a real personal stylist.',W-240);
     const promiseH=promiseLines.length*46+18;
     const tailBase=58+40+promiseH+92+52;
@@ -12186,7 +12196,7 @@ function buildCardBlob(source,callback){
     const fsHead=104;
     const fs=fitFont(rest,'"DM Serif Display", serif',116,58,W-190);
     const H_LOGO=LOGO_H+72,H_OVER=68,H_NAME=fsHead*1.02+fs*1.06+6,
-          H_DIV=96,H_NOT=notes.length?(90+notes.length*50):0;
+          H_DIV=128,H_NOT=notes.length?(90+notes.length*50):0;
     const room=H-TOP_MARGIN-FOOT_MARGIN-tailBase;
     let ms=46,ml,H_MOT,blockH;
     for(;;){
@@ -12229,7 +12239,7 @@ function buildCardBlob(source,callback){
        ⚠️ There is deliberately NO separate founder byline: this sentence carries
        the claim, and running both said "personal stylist" twice in a row. */
     push(promiseH+AIR,function(y){
-      ctx.fillStyle=BLACK;ctx.font='italic 400 34px "Lora", serif';
+      ctx.fillStyle=BLACK;ctx.font=PROMISE_FONT;
       promiseLines.forEach(function(t,i){ctx.fillText(t,W/2,y+40+i*46)});
     });
     push(92+AIR,function(y){
@@ -12289,13 +12299,10 @@ function buildCardBlob(source,callback){
     y+=H_NOT+AIR;
 
     // her own star, replacing a four-point sparkle nobody could name
-    const dy=y+40;
-    ctx.strokeStyle=gold;ctx.lineWidth=1.6;
-    ctx.beginPath();
-    ctx.moveTo(W/2-196,dy);ctx.lineTo(W/2-56,dy);
-    ctx.moveTo(W/2+56,dy);ctx.lineTo(W/2+196,dy);ctx.stroke();
-    star(W/2,dy,78);   // her star is delicate on paper; size is the lever that
-                       // does not touch its colours
+    /* Her call: the flanking rules are gone and the star stands alone. It reads
+       better for it — the rules were making a decorative divider out of something
+       that is her actual mark, and a mark does not need underlining. */
+    star(W/2,y+58,112);
     y+=H_DIV+AIR;
 
     ctx.fillStyle=BLACK;ctx.font='italic 400 '+ms+'px "Lora", serif';
