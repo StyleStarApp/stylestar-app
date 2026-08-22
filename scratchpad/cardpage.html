@@ -85,6 +85,11 @@ function fitFont(text,face,start,min,maxW){
   while(ctx.measureText(text).width>maxW&&s>min){s--;ctx.font=s+'px '+face;}
   return s;
 }
+function wrapSentences(text,maxW){
+  const parts=text.split(/(?<=[.!?])\s+/).filter(Boolean);
+  if(parts.length>1&&parts.every(p=>ctx.measureText(p).width<=maxW))return parts;
+  return wrap(text,maxW);
+}
 function wrap(text,maxW){
   const words=text.split(' ');const lines=[];let line='';
   for(const w of words){
@@ -404,6 +409,108 @@ function optE(){
 /* Worst case on record: the longest of the 28 archetype names (25 chars) and a
    motto at the prompt's own 95-char ceiling, with a long first name. If the card
    survives this it survives every woman. */
+/* ══ F — HER OWN DESIGN, rebuilt in the real pipeline ═════════════════
+   From her mockup: no lights, no lacquer. A double gold hairline on cool
+   off-white, the archetype at the size it deserves, a sparkle divider, the two
+   notes on ONE line in caps with the "The" dropped, and her own CTA wording.
+
+   ⚠️ Her mockup is 2:3 (1024x1536); this pipeline is 4:5 (1080x1350), which is
+   the Instagram feed ratio the card already ships at. So the composition is
+   adapted, not copied: there is ~200px less height to spend.
+
+   The one thing her mockup shows that the app cannot yet produce is the LINE.
+   Rendered both ways so she can see the trade, never guessed at:
+     'motto'  her real generated motto, unique to her, up to 95 chars
+     'beats'  the short second-person two-beat line her mockup uses          */
+let LINEMODE='motto';
+window.setLine=function(m){LINEMODE=m};
+const BEATS='You don’t follow the room. You set the tone.';
+const SHORT='Ashley, you never follow the room. You set the tone.';
+
+function optF(){
+  const PAPER_F='#F7F6F3';
+  ctx.fillStyle=PAPER_F;ctx.fillRect(0,0,W,H);
+
+  // the double hairline, her frame. Two rules, not one: the outer carries the
+  // weight, the inner is the whisper that makes it read as engraved.
+  ctx.strokeStyle='#C9A227';
+  ctx.lineWidth=3;ctx.strokeRect(34,34,W-68,H-68);
+  ctx.lineWidth=1.4;ctx.strokeRect(52,52,W-104,H-104);
+
+  drawLogo(112,168);
+
+  ctx.textAlign='center';
+  const TAUPE='#8A8478', BLACK='#12100E', GOLDF='#C9992B';
+
+  ctx.fillStyle=TAUPE;
+  ctx.font='600 27px "Jost", sans-serif';ctx.letterSpacing='9px';
+  ctx.fillText('MY STYLE IS',W/2,392);ctx.letterSpacing='0px';
+
+  const words=D.arch.split(' ');
+  const head=words[0], rest=words.slice(1).join(' ');
+  ctx.fillStyle=BLACK;
+  ctx.font='104px "DM Serif Display", serif';
+  ctx.fillText(head,W/2,506);
+  const fs=fitFont(rest,'"DM Serif Display", serif',116,58,W-190);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillText(rest,W/2,506+fs*1.06);
+
+  // hairline · sparkle · hairline
+  const dy=Math.round(506+fs*1.06)+62;
+  ctx.strokeStyle='rgba(201,153,43,.62)';ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(W/2-186,dy);ctx.lineTo(W/2-34,dy);
+  ctx.moveTo(W/2+34,dy);ctx.lineTo(W/2+186,dy);ctx.stroke();
+  sparkle(W/2,dy,15,GOLDF);
+
+  const line = LINEMODE==='beats' ? BEATS : (LINEMODE==='short' ? SHORT : D.motto);
+  ctx.fillStyle=BLACK;
+  ctx.font='italic 400 46px "Lora", serif';
+  const ml=wrapSentences(line,W-300);
+  ml.forEach((t,i)=>ctx.fillText(t,W/2,dy+96+i*62));
+  const after=dy+96+(ml.length-1)*62;
+
+  // bottom-anchored tail. FOOT_TOP is the highest the tail may ever start, so
+  // the notes block is clamped beneath the motto AND above the rule, and a long
+  // motto shortens the gap instead of colliding with the words.
+  const FOOT_TOP=H-330;
+  const notesY=Math.min(after+96,FOOT_TOP);
+  ctx.fillStyle=TAUPE;
+  ctx.font='600 24px "Jost", sans-serif';ctx.letterSpacing='7px';
+  ctx.fillText('WITH NOTES OF',W/2,notesY);ctx.letterSpacing='0px';
+
+  const short=D.notes.map(n=>n.replace(/^The\s+/i,'').toUpperCase());
+  ctx.fillStyle=BLACK;
+  let ns=30;ctx.font='600 '+ns+'px "Jost", sans-serif';ctx.letterSpacing='3px';
+  const joined=short.join('   •   ');
+  while(ctx.measureText(joined).width>W-160&&ns>19){ns--;ctx.font='600 '+ns+'px "Jost", sans-serif';}
+  ctx.fillText(joined,W/2,notesY+56);ctx.letterSpacing='0px';
+
+  ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(W/2-110,H-268);ctx.lineTo(W/2+110,H-268);ctx.stroke();
+
+  ctx.fillStyle='#7C766A';
+  ctx.font='italic 400 40px "Lora", serif';
+  ctx.fillText('What’s your Style Star?',W/2,H-196);
+
+  ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(W/2-120,H-158);ctx.lineTo(W/2-14,H-158);
+  ctx.moveTo(W/2+14,H-158);ctx.lineTo(W/2+120,H-158);ctx.stroke();
+  ctx.fillStyle=GOLDF;ctx.beginPath();ctx.arc(W/2,H-158,7,0,7);ctx.fill();
+
+  ctx.fillStyle=GOLDF;
+  ctx.font='54px "DM Serif Display", serif';
+  ctx.fillText('stylestar.app',W/2,H-92);
+}
+// the four-point sparkle from her mockup
+function sparkle(cx,cy,r,fill){
+  ctx.save();ctx.fillStyle=fill;ctx.beginPath();
+  ctx.moveTo(cx,cy-r);ctx.quadraticCurveTo(cx+r*.22,cy-r*.22,cx+r,cy);
+  ctx.quadraticCurveTo(cx+r*.22,cy+r*.22,cx,cy+r);
+  ctx.quadraticCurveTo(cx-r*.22,cy+r*.22,cx-r,cy);
+  ctx.quadraticCurveTo(cx-r*.22,cy-r*.22,cx,cy-r);
+  ctx.closePath();ctx.fill();ctx.restore();
+}
+
 window.setPaper=function(m){PAPERMODE=m};
 window.setStress=function(on){
   if(on){
@@ -420,6 +527,6 @@ window.setStress=function(on){
 window.drawOption=function(o){
   ctx.clearRect(0,0,W,H);
   ctx.textBaseline='alphabetic';
-  if(o==='A')optA();else if(o==='B')optB();else if(o==='C')optC();else if(o==='D')optD();else optE();
+  if(o==='A')optA();else if(o==='B')optB();else if(o==='C')optC();else if(o==='D')optD();else if(o==='E')optE();else optF();
 };
 </script>

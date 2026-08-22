@@ -60,8 +60,9 @@ for(const o of OPTS){
   const stress = o.endsWith('!');
   let key = stress ? o.slice(0,-1) : o;
   let mode='linen';
-  const m=key.match(/^([A-Z])-(\w+)$/); if(m){key=m[1];mode=m[2];}
-  await page.evaluate(([k,st,pm])=>{window.setPaper(pm);window.setStress&&window.setStress(st);window.drawOption(k);}, [key,stress,mode]);
+  let line='motto';
+  const m=key.match(/^([A-Z])-(\w+)$/); if(m){key=m[1];const v=m[2];if(v==='motto'||v==='beats'||v==='short')line=v;else mode=v;}
+  await page.evaluate(([k,st,pm,ln])=>{window.setPaper(pm);window.setLine&&window.setLine(ln);window.setStress&&window.setStress(st);window.drawOption(k);}, [key,stress,mode,line]);
   const el = await page.$('#card');
   await el.screenshot({path:`scratchpad/share-${o.replace('!','-stress')}.png`});
   console.log('wrote scratchpad/share-'+o.replace('!','-stress')+'.png');
