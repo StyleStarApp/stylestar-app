@@ -93,6 +93,11 @@ let r = await pg.evaluate(() => {
     heart: !!document.querySelector('#ssAsk .pinkheart'),
     voxFont: getComputedStyle(document.querySelector('#ssAsk .sa-vox')).fontFamily,
     voxStyle: getComputedStyle(document.querySelector('#ssAsk .sa-vox')).fontStyle,
+    escInAsk: !!document.querySelector('#ssAsk .sa-esc'),
+    escBelow: (() => { const t = document.querySelector('#s-shopstyle .ss-shop-talk'),
+      c = document.getElementById('shopStyleContent');
+      return !!t && !!(c.compareDocumentPosition(t) & Node.DOCUMENT_POSITION_FOLLOWING); })(),
+    align: getComputedStyle(document.getElementById('ssAskIn')).textAlign,
   };
 });
 ok('the ask is on screen', r.visible);
@@ -102,10 +107,18 @@ ok('it lives OUTSIDE the container that gets re-rendered', r.outside);
 ok('the chips are hidden until she taps in', r.chipsHidden);
 ok('the placeholder comes from the ring', /^Try: /.test(r.placeholder), r.placeholder);
 ok('the six pieces render without her touching it', r.cards > 0, r.cards + ' cards');
+// Her call after live testing: with the escalation above the pieces the top grew to
+// label + box + link before she saw a single garment, and it read as crowded. Below
+// them it asks "none of these?" at the moment she is actually thinking it.
+ok('the stylist line sits BELOW the pieces, not above them', r.escBelow);
+ok('...and the ask no longer carries one of its own', !r.escInAsk);
 // Her mark system: pink HEART = Catherine speaking, pink STAR = the stylist working.
 // This screen is the stylist working, which is why its loader star is pink too.
 ok('the mark is the stylist PINK STAR', r.star);
 ok('...and NOT her pink heart', !r.heart);
+// A centred placeholder sits in the middle of the field looking like a value, which
+// is precisely why it read to her as text she had to delete.
+ok('the box reads left to right like a field, not centred like a label', r.align === 'left', r.align);
 ok('the sentence is in her light-paper voice (Lora, upright)',
    /Lora/.test(r.voxFont) && r.voxStyle !== 'italic', r.voxFont + ' / ' + r.voxStyle);
 
@@ -117,21 +130,21 @@ r = await pg.evaluate(() => ({
   occ: [...document.querySelectorAll('#ssAskOcc .sa-chip')].map(e => e.textContent),
   cat: [...document.querySelectorAll('#ssAskCat .sa-chip')].map(e => e.textContent),
 }));
-ok('both chip rows appear on focus', r.shown);
-// Her rows, 2026-08-21. "For an event" is deliberately NOT among them: she replaced
-// it with "Something formal", naming the formality instead of the occasion, which is
-// what made the ambiguous chip precise.
-ok('the occasion row is hers, and names formality not occasion',
-   r.occ.join('|') === 'Work|Weekend|Vacation|Casual life|Something formal', r.occ.join('|'));
-ok('no "For an event" chip survives', !r.occ.includes('For an event'));
-ok('the category row is hers', r.cat.join('|') === 'Dresses|Tops|Bottoms|Shoes|Bags|Accessories', r.cat.join('|'));
-await pg.click('#ssAskOcc .sa-chip');
-r = await pg.evaluate(() => ({ v: document.getElementById('ssAskIn').value,
-  focused: document.activeElement && document.activeElement.id === 'ssAskIn' }));
-// A chip FILLS rather than fires, so she can finish the sentence herself instead of
-// the model guessing what she meant.
-ok('the chip fills the box rather than running a search', /^work\s*$/.test(r.v), JSON.stringify(r.v));
-ok('...and focus stays put so the keyboard does not drop', r.focused);
+ok('the SHOW ME button appears on focus', r.shown);
+// The chip rows are GONE, her call after live testing: she typed "white linen dress",
+// tapped Vacation, and the chip OVERWROTE her sentence. A control that silently
+// destroys what she just wrote is worse than no control.
+ok('no chips survive to overwrite what she typed', r.occ.length === 0 && r.cat.length === 0);
+// Her other live catch: a centred placeholder reads as text already in the box.
+r = await pg.evaluate(() => ({ ph: document.getElementById('ssAskIn').placeholder }));
+ok('the example clears the moment she taps in', r.ph === '', JSON.stringify(r.ph));
+await pg.evaluate(() => document.getElementById('ssAskIn').blur());
+await pg.waitForTimeout(150);
+ok('...and comes back if she leaves the box empty',
+   /^Try: /.test(await pg.evaluate(() => document.getElementById('ssAskIn').placeholder)));
+await pg.fill('#ssAskIn', 'white linen dress');
+ok('what she typed is never replaced by anything',
+   (await pg.inputValue('#ssAskIn')) === 'white linen dress');
 
 // ── 4. Her ask reaches the picks ────────────────────────────────────────────
 console.log('\n4. What she types reaches the prompt');
@@ -146,6 +159,15 @@ ok('it is stated as an absolute rule, where the hard rules live', /This rule is 
 // which is what makes "For an event" a good chip instead of a vague one.
 ok('a broad ask is covered as a RANGE, not guessed', /COVER THE RANGE across the 6/.test(p));
 
+// 🚨 Her live test: she typed "bags" and got a dress, trousers, heels, rings and a
+// blazer. The ask was not weak, it was contradicted by the bullet directly beneath it.
+ok('the ask reframes the whole task, not just a rule at the bottom',
+   /is looking for: "floor length gown"\. Suggest 6 specific shoppable pieces that are exactly that/.test(p));
+ok('the contradicting "mix categories" bullet is REMOVED when she asks',
+   !/Mix categories and price points/.test(p));
+ok('...replaced by one that varies price without varying the piece',
+   /every single one must be the thing she asked for/.test(p));
+
 console.log('\n5. The ask survives a refresh but never outlives the visit');
 prompts.length = 0;
 await pg.click('.shop-refresh-btn');
@@ -159,6 +181,12 @@ ok('re-opening the screen clears it', !/floor length gown/.test(prompts.join('\n
 ok('...and the box is empty again', (await pg.inputValue('#ssAskIn')) === '');
 
 // ── 6. The veto trap ────────────────────────────────────────────────────────
+prompts.length = 0;
+await openShop(pg, 'quiz');   // no ask this time
+await pg.waitForTimeout(300);
+ok('with NO ask, the normal mix-categories bullet is back',
+   /Mix categories and price points/.test(prompts.join('\n')));
+
 console.log('\n6. Her own request is not eaten by the search veto');
 // _SEARCH_VETO holds 'wrap'. Without passing her ask into filterNeverWear, a woman
 // typing "wrap dress" would have every pick silently dropped and see an empty shelf.
@@ -273,7 +301,7 @@ const paint = await pg.evaluate(() => {
   const bgOf = el => { let n = el; while (n) { const c = getComputedStyle(n).backgroundColor;
     if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; n = n.parentElement; } return 'rgb(255,255,255)'; };
   const g = s => { const e = document.querySelector(s); return e ? { fg: getComputedStyle(e).color, bg: bgOf(e) } : null; };
-  return { vox: g('#ssAsk .sa-vox'), esc: g('#ssAsk .sa-esc'), chip: g('#ssAsk .sa-chip') };
+  return { vox: g('#ssAsk .sa-vox'), esc: g('#s-shopstyle .ss-shop-talk'), go: g('#ssAsk .sa-go') };
 });
 for (const [k, v] of Object.entries(paint)) {
   if (!v) { ok(k + ' measured', false); continue; }
