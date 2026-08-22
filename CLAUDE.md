@@ -7,7 +7,242 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-22 LATER — 🚨 A TESTER'S SCREENSHOT WAS A LIVE BUG, NOT UNFINISHED WORK)
+## ▶ NEXT SESSION — START HERE (2026-08-22 EVENING — 🚪 SEVEN PRs, AND EVERY ONE CAME FROM A WOMAN ON A REAL PHONE)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the .md and pause here")
+**SEVEN PRs merged and ALL CURL-VERIFIED LIVE: #905 · #906 · #907 · #908 · #909 · #910 · #911.**
+⚠️ **Seven Netlify builds — a heavy day, she should know.** Branch resynced to main, tree clean, `e6319b9`.
+▶▶ **THE HEADLINE: NOT ONE OF THE SEVEN CAME FROM A PLAN. Every single change traced to a specific person
+looking at the app on a phone** — Catherine, Kathy, two Jens, and Jen Baxt's tech-savvy husband and teenage
+daughter. ▶ **The round's pattern held to the end and is now SEVEN findings deep: EVERY ONE WAS A WOMAN
+REACHING FOR A DOOR THAT WAS NOT THERE.**
+
+### 🚨⭐⭐ THE BIGGEST BUILD: "THE WAY BACK", AND THE MEASUREMENT KILLED THE OBVIOUS FIX
+**TWO TESTERS, INDEPENDENTLY, COULD NOT GET BACK TO WHAT THEY WERE DOING AFTER TAPPING A PRODUCT LINK.**
+First finding of the whole round reported by two people who never spoke to each other.
+- **KATHY:** *"How do I keep/find the conversation going on the app? I looked at Nordstrom and Revolve sites…
+  Restore or Restoration was recommended but I couldn't find the conversation to go back to look at that
+  store."* ⭐ **"Restoration" IS REFORMATION** — a real store in her table. The stylist recommended it, she
+  went to look at two other stores, and never found her way back to the recommendation.
+- **JEN:** *"making the links easier to get back to your app to look at back and forth opened up a new tab
+  for me."*
+- 🚨🚨 **THE OBVIOUS FIX IS WRONG AND IT WAS MEASURED, NOT ARGUED.** Making product links open in the SAME
+  tab so her Back button works sounds right. `scratchpad/wayback.mjs` drove it: **Back does not RESTORE the
+  app, it RELOADS it** — she lands on Welcome Back, the entrance curtain replays, and **her six pieces are
+  GONE** (6 → 0). Her saves survive (localStorage); her session does not.
+  ▶▶ **SO THE NEW TAB IS THE PROTECTION, NOT THE BUG.** ⚠️ **36 product links stay `target="_blank"`. Do not
+  change that without re-running that harness.**
+- ▶ **THE REAL GAP, and the app already half-knew: the chat was persisted the whole time** (`ss_chat`, with
+  "Pick up our chat" waiting INSIDE the chat — the one place Kathy could not reach), **and the six pieces
+  were stored nowhere at all.** So one half needed saying out loud and the other needed building.
+- ✅ **BUILT, HER PICK "A+B+C": ONE RESUME WHISPER WITH THREE STATES** — her pieces, her conversation, or
+  both. ⚠️ **A/B/C are not three designs, they are three STATES of one whisper**, which is why `h` became a
+  FUNCTION in `_WB_NEXT` (`_syncWbNext` now accepts either a string or a function).
+  - **Resuming re-renders THE SAME SIX through THE SAME PATH** — instant, **zero AI calls (asserted)**, and
+    the cards cannot drift from what she was looking at. ⚠️ ONE render path on purpose.
+  - **A stored session expires after 6 HOURS** (`_SHOP_PICKS_TTL`). ⚠️ **That is a PROMISE, not a cache
+    setting:** "right where you left it" stops being true at some point. Shortening is safe; lengthening
+    needs the wording to change.
+  - ⚠️ **ITS ✕ MEANS "NOT NOW", NEVER "NEVER"** — a deliberate exception in `wbNextDismiss` (it does NOT
+    persist a skip for `k:'resume'`). Every other whisper is a journey step she can be done with; a resume
+    is about this moment.
+- 🚨⭐⭐ **AN OLD TEST CAUGHT A NAG THE NEW ONE MISSED, AND THIS IS THE KEEPER.** `hubs.js` failed on an
+  assertion written weeks ago — **"graduated: no whisper ever again"** — and was RIGHT. `ss_chat` never
+  expires, so the whisper would have greeted her **on every visit for the rest of her life.** Two rules came
+  out of it:
+  1. **The chat half gets the SAME 6-hour shelf life**, stamped in `ss_chat_t` beside the history. ⚠️ A
+     conversation from BEFORE this shipped has no stamp and is treated as **stale**, so nobody is greeted
+     about a chat from weeks ago; her next message stamps it.
+  2. ⭐⭐ **A CONVERSATION IS HERS ONLY IF SHE SAID SOMETHING.** Opening the chat writes the stylist's own
+     GREETING into `ss_chat`, so the greeting alone was enough to offer a "conversation" that was entirely
+     the app's own voice. **That is not a conversation, it is an empty room with a hello in it.** Now
+     requires at least one entry with `role:'user'`. ▶ **Only found because hubs walks the journey all the
+     way to graduation, which LANDS her in the chat.**
+- ⚠️ **KNOWN LIMIT, UNCHANGED: with the store's app installed, iOS hands the tap to the APP before Safari
+  sees it**, and her way back is the small breadcrumb. Apple offers no way to prevent it. What is fixed is
+  that the return no longer COSTS her anything.
+
+### ⭐ THE RESUME SITS ABOVE STAR OF THE WEEK — her call, and the measurement made it a real question
+▶ **The whisper's home is y=704 against a ~700px fold, so a woman coming back from a store LANDED WITHOUT
+EVER SEEING IT.** The feature was invisible on arrival to exactly the person it was built for.
+- **Moving it up costs 55px**, which drops the Star's **Shop it and Save** just under the fold on a shorter
+  screen. Both still clear at ~780px (her own iPhone with the URL bar hidden). **The Star's photo, name,
+  price and her note stay above the line either way.** Her words: *"I think she will scroll down or at least
+  hit the menu button so I really like the whisper up higher."*
+- ⭐⭐ **ONLY THE RESUME MOVES, and that is what makes the trade cheap.** That slot carries SEVEN sentences:
+  six journey nudges and the resume. **Sentence seven goes above the Star; one through six stay below.** A
+  resume is time-critical, a "next step" nudge is not — so the fold cost lands ONLY on the woman who has
+  something to come back to, and she is not there to browse. **Moving the whole slot would make every woman
+  pay so one could be helped.**
+- ⚠️ **THE ELEMENT IS MOVED, NEVER DUPLICATED.** A second slot means a second id, a second copy of every
+  `.wbn-*` rule and two places to keep in step. One element, one home per state, restored for every other
+  whisper. **A test asserts it moves BOTH ways rather than sticking up top.**
+- ⚠️ **SHE COULD NOT PICTURE IT FROM THE FIRST RENDER AND SAID SO.** The fix was to **draw the fold onto the
+  page as a dashed line** (`scratchpad/wbfold.mjs`) and put the two orderings SIDE BY SIDE rather than
+  stacked. ▶ **When a render fails at its one job, change the instrument, not the argument.**
+
+### ⭐ HER OWN LIVE TESTS PRODUCED THREE MORE FIXES
+1. 🚨 **"LOOKING FOR SOMETHING SPECIFIC?" WRAPPED ON HER PHONE while the OPEN version of the same line held
+   one.** ▶▶ **HER SCREENSHOTS DECODED IT EXACTLY: iPhone 15 (1179×2556), and the ink in her own pixels
+   spans 65.5% of the screen, so 245.9 / 0.655 = an effective viewport of ~375px.** At 375 the closed line
+   needed **265.9px of an available 273 — SEVEN PIXELS**, which Chromium holds and real Safari breaks.
+   ⚠️⚠️ **THIRD SIGHTING OF THAT FAILURE IN THIS FILE** (the tagline's 3px, the A2HS step, now this).
+   ▶▶ **STANDING: A MARGIN UNDER ~10px MEASURED IN THE SANDBOX IS NOT A PASS, TREAT IT AS A WRAP.**
+   ⭐ **The arithmetic was the argument: the WORDS alone are 228px with 45px spare, so the star and chevron
+   were eating 38 of the 45.** Her pick **D** keeps everything she chose (her words, her star, her down
+   chevron) and brings each down a hair: type 17.5→17px, star 13→12px, chevron 15→12px, margins 5→4/3.
+   **7.1px → 20.6px of margin.** ⚠️ **The marks' vertical-align was RE-MEASURED, not guessed** (the A2HS
+   share-chip lesson: a resized inline glyph drops off the text line while every positional check passes).
+2. **THE COMMISSION LINE WAITS FOR THE LINKS.** Her call: it sat alone under the spinner with nothing to
+   disclose. ▶ **Then she pushed it further and was right: "she should just wait to see her options during
+   spinning star and not be tempted to click out of it at this moment."** ⭐⭐ **THE WISHLIST DOOR WAS THE
+   WORST OF THE THREE TO LEAVE STANDING — a notice and a tip are inert, but A DOOR IS A WAY OUT, offered at
+   the one moment she is waiting for the payoff.** All four (notice, tip, door, ask box) now stand down
+   while `.thinking` and return with the pieces. ⚠️ **The code already agreed — `_shopStyleGen` has always
+   hidden `#ssAsk` while thinking. The disclosure fix simply left its neighbours behind.**
+3. **"heart it first" → "SAVE IT FIRST".** ⚠️ A real defect, not a preference: **every card's control is
+   labelled "♡ SAVE", so the tip taught the action with a word that appeared NOWHERE ELSE on the screen.**
+   ⚠️ **"first" is load-bearing** — it is the mitigation for the iOS hand-off, so the ORDER is the sentence.
+
+### 🚪 THE WISHLIST DOOR — the tip becomes a door once she has saved something
+**The gap was only visible once RENDERED: the tip RETIRES PERMANENTLY at her second save**, so the only
+place "Your Wishlist" was ever named on Shop your style **deleted itself at exactly the moment she finally
+had one worth opening.** Nothing else on that screen names it, and the tip's mention was never a link.
+- **0 saves, still learning → the TIP · 1+ saves → the DOOR (`2 saved · See Your Wishlist →`) · 0 saves,
+  already learned → nothing.** Her call on all three states.
+- ⭐ **HER CATCH THAT MATTERED MOST: "let's make sure we are using our exact heart shape for consistency."**
+  ▶ **It found a real inconsistency: the tip's heart was a U+2661 TEXT GLYPH, a genuinely different shape
+  from the heart on every SAVE control an inch below it.** Both are `_WL_HEART_PATH` now, and the door's
+  heart is literally `_wlHeartSvg(true)` — **the same function call that fills in the heart on the card she
+  just tapped**, so the two can never drift. ⚠️ **Outline in the tip (nothing saved yet), FILLED in the door
+  — which is exactly what the button itself does.**
+- 🚨⭐ **THE GOLD WENT TO INK AND CAME BACK, AND THE ANSWER WAS NEITHER OPTION.** `#A0761B` measures
+  **4.12:1** on that white paper — under AA **on a control she taps**, for an 18-to-80 audience. It shipped
+  as body ink for a day. **She overruled that after seeing the number, with a good reason: "that page is
+  actually very gold/yellow looking and I want it to match."** ▶▶ **A RAMP WAS MEASURED between her gold and
+  the bronze she has rejected three times: `#987019` clears 4.5 exactly, so `#946D18` was taken for real
+  margin — 4.71:1, SIX HEX POINTS off her gold and indistinguishable from it.** ⚠️ **`.ht-tip b` MOVED WITH
+  IT** (it sat at the same failing 4.12), so the two MATCH and both are readable. **Grep `#946D18`.**
+  ⭐ **THE LESSON: when a colour fails AA, measure a RAMP before offering her a binary choice.**
+
+### ✍️⭐⭐ THE CAPITALISATION — TWO PASSES, AND THE FIRST RULE WAS WRONG
+**Jen Baxt had her tech-savvy husband (Matt) and teen daughter (Rachel) look at the app.** Their note:
+***"only 1 S was capitalized either both do or neither."*** ⭐ **Fresh eyes on a wordmark she has looked at
+for a year.**
+- ▶ **PASS ONE, and it sounded principled: the lowercase survives where the words stand ALONE as the mark,
+  and breaks only when joined to other title-cased words** ("Catherine's style Star Wardrobe List" is four
+  capitalised words with one lowercase one in the middle). **Five places changed.**
+- 🚨🚨 **PASS TWO, HER QUESTION, AND SHE WAS RIGHT: "should we make that S capital as well" on the flattened
+  logo at the top of Refine, Analyze and Wishlist?** ▶▶ **CHECKING ANSWERED IT: THEY ARE NOT A LOGO.** All
+  three are plain text with **byte-identical styling** (DM Serif Display 19px, `#1a1a1a`, the same .35px
+  stroke) — the two words merely SET IN the logo's typeface. **Nothing on screen marks them as a wordmark,
+  so "style Star" alone is the complaint in its purest form: two words, one capital.**
+- ▶▶ **THE RULE NOW, and it is one line with no exceptions: STYLE STAR IS CAPITALISED EVERYWHERE THE NAME IS
+  TYPED. The only lowercase left in the app is inside the DRAWN LOGO (`logo-star-text.png`).** It also
+  matches her filed trademarks and the Terms page, which both say Style Star.
+- ⚠️ **`.pref-word .st` IS A NO-OP** — identical colour and stroke to its parent, a leftover from an older
+  two-tone treatment. **It was mistaken for a deliberate distinction on the first pass. Read no meaning
+  into it.**
+- ⚠️⚠️ **A SEARCH LESSON SHE FOUND BY ASKING: the Refine masts are written `style <span class="st">Star</span>`,
+  SPLIT ACROSS TWO ELEMENTS, so a plain grep for "style Star" CANNOT SEE THEM.** The census put to her was
+  incomplete and she caught it. ▶ **STANDING: when auditing a brand string, search for the SPLIT form too.**
+- ⚠️ **The chat header was originally her own idea** (lowercase, to mirror the logo). Raised with her before
+  changing; her call. **Deliberately still lowercase: only the logo IMAGE.**
+
+### ⭐ THE STARS COME OFF THE S — her catch, measured on the DRAWN PATH
+Her words: *"the stars on Edit and especially Mall are getting crowded by the S."*
+- ▶ **MEASURED ON THE DRAWN PATH, not the rotated bounding box (which overstates by ~25px at -57° — the
+  2026-08-07 lesson): the outline reached 10.3px into the Edit's S and 19.1px into the Mall's.**
+  **"Especially Mall" was exact.** ⚠️ **Both already overlapped a little — capitalising made the collision
+  READ, because a capital is wider AND taller, so the letter grew toward the star from both sides.**
+- **EDIT:** left and up a touch (`-67/-40`). **15.7px clear.** ⚠️ Both standing constraints re-checked, not
+  assumed: still clear of the fixed MENU chip, left edge at x=40.
+- 🚨 **MALL COULD NOT SIMPLY MOVE.** **Every vertical candidate HIT THE MENU CHIP at the first step**, and
+  going far enough left alone put its outline **3px from the screen edge**. So it comes 10px left AND down
+  from **104px → 88px**: **14.3px clear**, left edge x=17, still mounted on the sign's corner like a fixture
+  rather than floating off it. ⚠️ The 116px positioning box is deliberately unchanged.
+- **Zero path points inside either letter now, where there were 23 and 36.** `scratchpad/starmove.mjs`
+  re-runs the whole sweep (offsets, sizes, chip collision, screen edge).
+
+### 📧 KATHY CLOSED THE CHAT-FAILURE QUESTION, AND OPENED TWO BETTER ONES
+- ✅ **"Those were the only 2 times because I assumed you had not done that part yet."** ▶ **The measured
+  ~25% failure rate matches her real experience; the chat was not failing silently all over the place. THE
+  ITEM IS CLOSED.** ⚠️ **But note the second half: SHE ASSUMED A BROKEN THING WAS AN UNFINISHED THING** —
+  which is why she only mentioned it when pushed. Catherine's instinct to name it as a real catch was right.
+- 🚨 **HER TWO QUESTIONS, BOTH STILL OPEN, and the first has NO MECHANISM AT ALL:**
+  1. ⭐⭐ ***"How do I forward the links back to your app for the stylist to see what I picked out?"***
+     ▶ **Nothing anywhere lets her show the stylist a piece.** ⭐ **Read what is underneath it: she is
+     treating the stylist as A PERSON SHE IS SHOPPING WITH. That is the Sally differentiation landing
+     exactly as intended, and the app cannot answer her.** Fourth missing door of the round.
+  2. **Finding the conversation** — fixed by the resume whisper this session.
+- ▶ **SHE IS MID-TEST: retaking the quiz "as a different person" to see whether the voice holds with
+  different answers, and hunting long dresses for a FORMAL NOVEMBER WEDDING. Screenshots promised.**
+  ⭐ Her own read is worth keeping: *"the Catherine Secret Sauce of embracing individuality and positivity
+  that can build confidence in the person receiving your message."*
+
+### 📧 JEN'S FEEDBACK — three yeses and one real ask
+*"quiz super easy and fun! · my style profile — yup that's me · shopping suggestions — was able to click on
+link and agree with suggestions"* ▶ **AND THE ASK: "i would like outfit suggestions."**
+- ⭐ **THAT IS CATHERINE'S OWN PARKED FAVORITE OUTFIT PAGE, requested independently by a tester.** The app
+  hands her six PIECES; "Complete the Look" only exists after a photo upload. **A stylist gives you
+  outfits.** ▶ **Strong convergence — a tester asked for the thing she has been parking since 08-21.**
+- ⚠️ **AND A FOURTH HAND-MADE SHARE: Jen Baxt screenshotted her Style Portrait and texted "this is me!"**
+  ▶ **A SCREENSHOT CARRIES NO LINK AT ALL.** Four women have now shared their results by hand and not one
+  of those shares can be tapped through.
+
+### ⚠️ HER TWO QUESTIONS ANSWERED AND ARGUED AGAINST, both from Matt and Rachel
+1. **AGE RANGES to tailor clothes to "age appropriate"** — ▶ **argued AGAINST and she did not push.** Her
+   own stated audience is *"literally any woman, 18 to 80+, no age or income bracket"*, and it collides with
+   her 2026-08-13 boundary (**the app never names bodies**). ⭐ **The quiz already does this better: a
+   24-year-old and a 64-year-old who both answer relaxed/classic/natural SHOULD get similar recommendations,
+   because style is taste, not age. Kathy understood it instinctively — she is retaking the quiz as a
+   different PERSON, not a different age.**
+2. **GENDER selection** — ▶ **a positioning question, not a feature.** Every word in the app speaks to a
+   woman. A gender selector is a second version of the whole app: different store table, categories, voice.
+   ⭐ **Being specifically, unapologetically FOR WOMEN is the strength** — Jodi's "stores I typically
+   wouldn't have thought about" comes from judgment tuned to one audience.
+
+### ⭐ TEST HYGIENE
+- **New: `scratchpad/resumetest.js` 38 · `scratchpad/wldoortest.js` 65 · `scratchpad/askvert.mjs` 39.**
+  New harnesses: `wayback.mjs` (the same-tab measurement), `starmove.mjs` (offset/size/collision sweep),
+  `wbfold.mjs` (the fold drawn onto the page), `askopts.mjs`, `measureshot.mjs` (reads HER screenshots'
+  pixels to derive her real viewport).
+- **Green at pause:** resumetest 38 · wldoortest 65 · hubs 49 · shopask 87 · searchtune 71 · askvert 39 ·
+  editpx 49 · mallverify 14 · titlerule 19.
+- 🚨⭐⭐ **`hubs.js` CAUGHT A NAG THE NEW SUITE MISSED — see the way-back entry. An assertion written weeks
+  ago was doing real work. DO NOT retire an old assertion just because a new feature makes it fail.**
+- ⚠️⚠️ **FOUR HARNESS BUGS, ALL THE SAME SHAPE, ALL LOOKING LIKE APP BUGS:** (1) a clone measured OUTSIDE
+  `#s-shopstyle`, so none of the scoped rules applied and every width was wrong; (2) the chevron measured
+  against the FIRST line's box when it sits on the LAST at 320; (3) `[data-wl]` asserted on wishlist rows —
+  **that attribute is on the SAVE CONTROL on a card**, so a perfect save read as "nothing persisted";
+  (4) `.sb strong` asserted on Shop your style — **that is Complete the Look's markup**, `.shop-item-name`
+  is the right one. ▶▶ **"A test that fails on a correct value is usually a broken harness" — four for four
+  this session. SUSPECT THE HARNESS FIRST.**
+- ⚠️ **`git commit -m` broke twice on quotes inside the message.** ▶ **Write it to a FILE and `git commit -F`.**
+- ⚠️ **Suite run logs are UNTRACKED now** (`scratchpad/out-*.txt`): a half-written one shows zero failure
+  marks while proving nothing. **The record that matters is the TOTAL quoted in the commit message.**
+  ▶ **READ THE TOTAL, never the absence of failures** — the 2026-08-22 process failure, respected all day.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **THE ARCHETYPE SHARE — now FOUR hand-made shares and still the highest-value item.**
+   `shareResults()` and `sharePhotoResults()` are written and wired to NOTHING. ⚠️ Weigh the `og:title`
+   emoji with it: that preview card becomes the first thing a friend-of-a-friend sees.
+2. ⭐⭐ **OUTFIT SUGGESTIONS — Jen asked for it independently, and it IS her parked FAVORITE OUTFIT page.**
+   ▶ Version one gives the FORMULA (shapes, proportions, colors), not five exact products.
+3. ⭐ **"SHOW THE STYLIST WHAT I PICKED" — Kathy's, and there is no mechanism at all.** The strongest signal
+   yet that the positioning works: she thinks she is shopping WITH someone.
+4. ▶ **PRINT TOPS** — the only Tops row with zero curated products, and "print" is not a retail search word.
+5. 📧 **KATHY'S SCREENSHOTS** — retaking the quiz as a different person; long dresses for a November wedding.
+6. 👀 **HOW TODAY'S SEVEN FEEL ON HER PHONE**, especially **the resume whisper after a REAL tap-out**, and
+   ⚠️ **the chat fallback, which has still never been exercised by a real failure.**
+7. 📊 **Her Plausible dashboard.** ▶ Read the FUNNEL. ⭐ **And: does anyone type in the ask box?**
+8. ⏰ **26 AUGUST — the stale Routine `trig_01SZerTsvKoeUYzeT1HX6iWs`** fires with an Aug-12 brief.
+9. ⏰ **28 AUGUST — the recurring-payments Routine.**
+10. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null`, and ASK about reordering.
+11. 💰 **AFFILIATES: CJ and AWIN in ~3 weeks.** Impact in 2-3 months WITH the Plausible link. **AMAZON LAST.**
+12. 📧 **STEP 4 OF THE WISHLIST, the MailerLite email.**
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-22 LATER — 🚨 A TESTER'S SCREENSHOT WAS A LIVE BUG, NOT UNFINISHED WORK)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the .md so we can pause here")
 **TWO PRs merged and BOTH VERIFIED LIVE: #902 (the chat) · #903 (Shop your style).** ⚠️ **Two Netlify builds.**
