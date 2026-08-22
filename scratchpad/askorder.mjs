@@ -22,7 +22,7 @@ const PICKS=[
  {name:'Top Handle Bag',store:'Saks',search:'top handle bag'},
  {name:'Wide Leg Trousers',store:'Veronica Beard',search:'wide leg trousers'}];
 
-async function shot(label,tweak,h=980){
+async function shot(label,tweak,h=980,arg){
   const ctx=await b.newContext({viewport:{width:390,height:1500},deviceScaleFactor:2});
   const pg=await ctx.newPage();
   await pg.route('**/fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:GF}));
@@ -43,13 +43,17 @@ async function shot(label,tweak,h=980){
   await pg.waitForTimeout(2600);
   await pg.evaluate(()=>{_shopStyleMode='quiz';_openShopStyleNow('quiz');});
   await pg.waitForTimeout(1700);
-  if(tweak)await pg.evaluate(tweak);
+  if(tweak)await pg.evaluate(tweak,arg);
   await pg.waitForTimeout(250);
   await pg.screenshot({path:`scratchpad/order-${label}.png`,clip:{x:0,y:0,width:390,height:h}});
   await ctx.close();
   console.log('  rendered',label);
 }
 
-await shot('B-built-closed',null,760);
-await shot('B-built-open',()=>{_ssAskReveal();},760);
+const ARR='<svg class="wdr-see-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;vertical-align:-2px;margin-left:5px"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>';
+const CHV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;vertical-align:-2px;margin-left:5px"><path d="M6 9.5 12 15.5 18 9.5"/></svg>';
+await shot('n1-plain',null,470);
+await shot('n2-arrow',a=>{document.querySelector('#s-shopstyle .sa-vox').insertAdjacentHTML('beforeend',a)},470,ARR);
+await shot('n3-chevron',c=>{document.querySelector('#s-shopstyle .sa-vox').insertAdjacentHTML('beforeend',c)},470,CHV);
+// widths at the narrowest phone
 await b.close();srv.close();

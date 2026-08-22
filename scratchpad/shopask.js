@@ -128,8 +128,7 @@ let r = await pg.evaluate(() => {
     voxTag: document.querySelector('#ssAsk .sa-vox').tagName,
     voxUnderlined: /underline/.test(getComputedStyle(document.querySelector('#ssAsk .sa-vox')).textDecorationLine),
     voxTap: Math.round(document.querySelector('#ssAsk .sa-vox').getBoundingClientRect().height),
-    pulled: (document.querySelector('#s-shopstyle .ss-shop-pulled') || {}).textContent || '',
-    pulledShown: !!(document.querySelector('#s-shopstyle .ss-shop-pulled') || {}).offsetHeight,
+    pulledGone: !document.querySelector('#s-shopstyle .ss-shop-pulled'),
     subHidden: getComputedStyle(document.querySelector('#s-shopstyle .ss-shop-sub')).display === 'none',
     nowHidden: getComputedStyle(document.getElementById('ssAskNow')).display === 'none',
   };
@@ -147,10 +146,16 @@ ok('...but the door is still NAMED at the top', /Looking for something specific/
 ok('...and it looks tappable', r.voxUnderlined);
 ok('...and it really is a button, not a styled div', r.voxTag === 'BUTTON', r.voxTag);
 ok('...with a tap target a woman of 80 can hit', r.voxTap >= 36, r.voxTap + 'px');
-// The line that tells her these six were chosen FOR her. The rotating SHOP_MSGS
-// tagline belongs to the WAITING moment and is gone once the pieces land, her call.
-ok('the landed line names what she is looking at', r.pulledShown && r.pulled.trim().length > 0, r.pulled);
-ok('...and the waiting tagline has stood down', r.subHidden);
+// ⚠️ TWO ASSERTIONS REMOVED HERE 2026-08-22, DELIBERATELY, because their SUBJECT
+// was retired and not because they were failing. A landed line naming the
+// selection ("A few pieces I pulled for you") was built and cut the same day,
+// hers: "I think that is going to get redundant... it might be just obvious to
+// land on it and see what is there, especially when we have product photos." The
+// surviving half of the claim is the one that still means something: the
+// WAITING tagline must stand down once the pieces arrive.
+ok('the waiting tagline has stood down once the pieces land', r.subHidden);
+ok('...and no landed line crept back in to replace it', r.pulledGone,
+   'a line under the header is the clutter she removed twice');
 ok('nothing about a filter shows before she has asked for anything', r.nowHidden);
 ok('the ask is on screen', r.visible);
 // It must live outside #shopStyleContent: that container's innerHTML is replaced on
