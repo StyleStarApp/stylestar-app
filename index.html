@@ -1150,7 +1150,17 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 .shop-section{margin:1.5rem 0;text-align:center}
 .shop-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:'DM Sans',sans-serif}
 .shop-sub{font-size:15px;color:#444;margin-bottom:1rem;font-weight:500}
-.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* ⚠️ minmax(0,1fr), NOT 1fr. Her catch 2026-08-22: "the two rows of windows are
+   not symmetrical sizing, the left boxes are larger than the ones on the right."
+   Measured: the left column ran 150px against 112.5px on the right, at every
+   phone width. A bare 1fr carries an automatic minimum of AUTO, so a column
+   holding a long unbreakable word (BLOOMINGDALES) grows past its share and
+   steals the difference from its neighbour. minmax(0,1fr) makes the share the
+   real limit and the words wrap instead. Don't simplify it back. */
+.shop-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+/* ...and with a real limit, a long retailer name must be allowed to break or it
+   would simply overflow the card it no longer fits. */
+.shop-card{overflow-wrap:anywhere}
 .shop-card{background:#fafafa;border:1px solid #ebebeb;border-radius:14px;padding:1rem;text-align:center;display:flex;flex-direction:column;justify-content:space-between;min-height:140px}
 /* PANES IN A SHOP WINDOW — her reading of this screen, 2026-08-21, and it is what
    decides the colour: "I am keeping in mind it actually looks like a store window.
