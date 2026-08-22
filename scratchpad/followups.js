@@ -92,8 +92,13 @@ ok('Continue goes to question 2, not question 6', await page.evaluate(() =>
 
 // ---------------------------------------------------------------------------
 console.log('\n2. colorsSkip is gone everywhere');
-ok('no colorsSkip field in the code (only the tombstone comment)',
-   (HTML.match(/colorsSkip/g) || []).length === 1);
+// Updated 2026-08-21, deliberately, not silenced: this counted occurrences and
+// expected exactly 1, but a SECOND tombstone comment was added later warning a
+// future session not to reintroduce the field. Counting comments was never the
+// claim — the claim is that no LIVE CODE touches colorsSkip — so it now asserts
+// that every occurrence sits on a comment line. That cannot go stale again.
+ok('no colorsSkip field in the code (only tombstone comments)',
+   HTML.split('\n').filter(l => /colorsSkip/.test(l)).every(l => /^\s*(\/\/|\*|\/\*)/.test(l)));
 ok('no prompt claims "colors she skips"', !/colors she skips/i.test(HTML));
 ok('no prompt claims "colors she avoids"', !/colors she avoids/i.test(HTML));
 ok('the dead .color-dot.hate styling is gone', !/color-dot\.hate/.test(HTML));
@@ -161,7 +166,13 @@ const cards = await page.evaluate(() => ({
   n: document.querySelectorAll('#shopContent .shop-card').length,
   txt: document.getElementById('shopContent').textContent
 }));
-ok('the AI sent 3 picks, only 2 render', cards.n === 2, 'rendered ' + cards.n);
+// Updated 2026-08-21, deliberately: this expected 2 because when it was written
+// only her never-wear list filtered picks. _STYLIST_VETO arrived 2026-08-13 with
+// her professional call that she would never put a client in anything ribbed, so
+// the "Ribbed Cream Tank" above is now correctly dropped as well and only the
+// satchel survives. The code got stricter; the test had not caught up.
+ok('the AI sent 3 picks, only the satchel renders', cards.n === 1, 'rendered ' + cards.n);
+ok('the ribbed tank is vetoed too, not just the leopard', !/ribbed/i.test(cards.txt));
 ok('the leopard pumps never reach the screen', !/leopard/i.test(cards.txt));
 
 // Complete the Look (its own renderer) is guarded too.

@@ -1058,6 +1058,41 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-shopstyle .ss-shop-talk{display:none;text-align:center;font-size:14px;color:#6e6e6e;margin:22px auto 4px;line-height:1.6}
 #s-shopstyle .ss-shop-talk.on{display:block}
 #s-shopstyle .ss-shop-talk span{color:#EC4899;font-weight:600;cursor:pointer;text-decoration:underline}
+/* THE ASK. Nothing here is a new language: the sentence is the light-paper voice
+   rule (Lora UPRIGHT 15.5px #4a463e, no italics), the box is the .wl-add input she
+   approved on Your Wishlist, and the chips are the squared gold .wdr-see chip.
+   ⚠️ Every selector is scoped #s-shopstyle on purpose — .sa-* names are new, but
+   the screen scope keeps a future reuse of these classes from leaking here. */
+#s-shopstyle #ssAsk{margin:12px auto 4px;max-width:340px;padding:0 14px}
+#s-shopstyle .sa-vox{font:400 15.5px/1.45 'Lora',Georgia,serif;color:#4a463e;margin-bottom:8px;text-wrap:balance}
+#s-shopstyle .sa-star{width:13px;height:13px;vertical-align:-1px;margin-left:4px;display:inline-block}
+/* Her call: the box is BLACK and the chips are silver, which gives the control a
+   hierarchy it did not have when both were gold — the box is the thing to use, the
+   chips are helpers. #17171c again, so it matches the card hairline and the frame.
+   ⚠️ The focus state is a soft ring, NOT a colour change: a gold focus border on a
+   black box would reintroduce exactly the bronzey clash she took out. */
+#s-shopstyle #ssAskIn{border:1.5px solid #17171c;border-radius:2px;padding:10px 14px;font-size:14.5px;width:100%;text-align:center;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif}
+#s-shopstyle #ssAskIn:focus{outline:none;box-shadow:0 0 0 2px rgba(23,23,28,.13)}
+/* #6b6355 is the readable placeholder ink, not a lighter grey: the 2026-08-11
+   pass found the add-your-own placeholder at 2.73:1 and it was the one thing
+   telling her the field existed. An invitation, not a hint. */
+#s-shopstyle #ssAskIn::placeholder{color:#6b6355}
+#s-shopstyle .sa-row{display:flex;gap:7px;overflow-x:auto;padding:2px 0;flex-wrap:nowrap;margin-top:8px;-webkit-overflow-scrolling:touch}
+/* Her pick from five rendered options, 2026-08-21: the gold chips read "bronzey"
+   and fought the screen — her own store-window reasoning one element further on.
+   #9AA0A6 is the display-case silver already used on the Contact page cards, so it
+   is not a new colour either, and it sits deliberately QUIETER than the black box
+   above: the box is the thing to use, the chips only help her fill it. Label ink
+   11.33:1, against gold's 5.05:1.
+   ⚠️ Outline, NOT filled: solid black chips compete with the SHOW ME button directly
+   beneath them and the Find it pills below that. Rendered and rejected. */
+#s-shopstyle .sa-chip{font:600 12px/1 'Jost',sans-serif;letter-spacing:.03em;color:#3d3a34;padding:7px 11px;border:1px solid #9AA0A6;border-radius:2px;background:#fff;white-space:nowrap;cursor:pointer;flex:0 0 auto;-webkit-tap-highlight-color:transparent}
+#s-shopstyle .sa-go{display:block;margin:10px auto 0;background:#1a1a1a;color:#fff;border:none;border-radius:20px;padding:9px 22px;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.07em;cursor:pointer}
+#s-shopstyle .sa-esc{font-size:12.5px;color:#6e6e6e;margin-top:9px;line-height:1.55}
+#s-shopstyle .sa-esc span{color:#EC4899;font-weight:600;text-decoration:underline;cursor:pointer}
+/* The narrow-phone lever is padding, never font-size — the standing readability
+   trade for an 18-to-80 audience (see the .wl-add media query). */
+@media(max-width:374px){#s-shopstyle #ssAsk{padding:0 6px}#s-shopstyle #ssAskIn{padding:10px 6px}}
 #s-pref-done .btn-p{border:1.5px solid #1a1a1a;background:#F5EFE2;color:#1a1a1a;box-shadow:none}
 #s-pref-done .btn-pink{border:none;background:linear-gradient(180deg,#2b2523,#1c1615);color:#fff;border-radius:0;box-shadow:0 0 0 3px #B4BAC0,0 0 0 6px #ECD070;margin:14px auto 10px;display:inline-flex;align-items:center;justify-content:center;gap:9px}
 #s-pref-done .btn-pink .lgs-ar{width:19px;height:19px;flex:none}
@@ -1070,7 +1105,17 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 .shop-sub{font-size:15px;color:#444;margin-bottom:1rem;font-weight:500}
 .shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .shop-card{background:#fafafa;border:1px solid #ebebeb;border-radius:14px;padding:1rem;text-align:center;display:flex;flex-direction:column;justify-content:space-between;min-height:140px}
-.shop-emoji{font-size:28px;margin-bottom:6px}
+/* PANES IN A SHOP WINDOW — her reading of this screen, 2026-08-21, and it is what
+   decides the colour: "I am keeping in mind it actually looks like a store window.
+   So I don't want gold." #17171c is NOT a new black. It is already the 11px window
+   frame on .ss.shop-mirror and the black stripe of the awning — the two structural,
+   window-shaped things here — so a squared hairline reads as muntin bars continuing
+   that frame. (#1a1a1a is this screen's INK and filled-control black: the logo, the
+   Find it pill. Don't swap them.)
+   ⚠️ Scoped to #s-shopstyle deliberately. The same .shop-card renders the wardrobe
+   Ideas shelf and the curated catalog cards, which are a different screen with no
+   window around them, and she has not seen those changed. Offer before extending. */
+#s-shopstyle .shop-card{border-radius:0;border-color:#17171c}
 .shop-want-for{font:700 10.5px/1.25 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#B08830;margin-bottom:7px}
 .shop-trunc{text-align:center;font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:12px}
 .shop-item-name{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px;line-height:1.3}
@@ -2927,7 +2972,11 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .res-screen .shoplist{text-align:left}
 .res-screen .shoprow{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid rgba(201,162,78,.18)}
 .res-screen .shoprow:first-child{border-top:0;padding-top:2px}
-.res-screen .shoprow .si{flex:0 0 40px;height:40px;border-radius:9px;background:linear-gradient(135deg,#efe3c9,#d6bf8e);display:flex;align-items:center;justify-content:center;font-size:19px}
+/* The 40x40 gold tile on each Complete the Look row is retired with the category
+   emoji it existed to hold (2026-08-21). Nothing renders .shoprow .si any more.
+   ⚠️ Do NOT confuse it with .res-screen .eng.si above, which is a different `si`
+   entirely — a modifier on the engraved section headers, including the "Complete
+   the Look" header one line above this very list. */
 .res-screen .shoprow .sb{flex:1;min-width:0}
 .res-screen .shoprow .sb strong{display:block;font:600 13.5px/1.3 'Jost',sans-serif;color:#211E1A}
 .res-screen .shoprow .sb span{font:400 11.5px/1.35 'Jost',sans-serif;color:#6b655a}
@@ -3849,9 +3898,46 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
        app-handoff finds): teaches save-before-explore, retires itself once
        the wishlist habit exists. _syncHeartTip() owns visibility. -->
   <div class="ht-tip" data-hearttip style="display:none">Tip: <b>heart it first</b> <span class="ht-h">&#9825;</span>, then explore. Your saves will be waiting in <b>Your Wishlist</b>.</div>
+  <!-- THE ASK — her front door for "I already know what I want" (2026-08-21,
+       built from three tester reports that were all the same finding: Haley typed
+       a price limit into the preferences free-text box because there was no field
+       for it; Alice said she would use the app "if I needed a dress quickly for an
+       event"; and Cath's mother, who uses the app constantly, asked "I want to look
+       at fancy floor length dresses via StyleStar. How do I let the app know that?"
+       — the answer already existed as the dr10 Formal gowns row, three taps away).
+       ▶▶ IT NEVER GATES THE SIX PIECES. They render whether or not she touches this,
+       which is her own value-first rule: never make her earn the value.
+       ⚠️ QUIZ MODE ONLY, her call — see _syncShopAsk(). "Pull more in this style" is
+       instructed to MIRROR the outfit she shared and add no accessories, and "Shop my
+       whole list" owes exactly one pick per starred row, so a free-text box in either
+       one would fight the job she just asked for.
+       ⚠️ It lives OUT here rather than inside #shopStyleContent on purpose: that
+       container's innerHTML is replaced on every _shopStyleGen(), including her own
+       "Show me different options", so an input inside it would lose her typing. The
+       cost is that this block owns its own hidden state while `thinking`, the way the
+       Back button and the footer already do. -->
+  <div id="ssAsk" style="display:none">
+    <!-- The mark is the stylist's PINK STAR, never Catherine's pink heart. Her own
+         mark system: the heart means SHE is speaking, the star means the stylist is
+         working — which is why the loading star on this same screen is pink. -->
+    <div class="sa-vox">Tell me what you&rsquo;re looking for<svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg></div>
+    <input id="ssAskIn" type="text" maxlength="80" autocomplete="off" enterkeyhint="go" aria-label="Tell me what you're looking for" onfocus="_ssAskOpen(true)" oninput="_ssAskOpen(true)" onkeydown="if(event.key==='Enter'){event.preventDefault();ssAskGo()}">
+    <div id="ssAskMore" style="display:none">
+      <div class="sa-row" id="ssAskOcc"></div>
+      <div class="sa-row" id="ssAskCat"></div>
+      <button class="sa-go" onclick="ssAskGo()">SHOW ME &rarr;</button>
+    </div>
+    <div class="sa-esc">Can&rsquo;t find it? <span onclick="openChat()">Let your stylist search &rarr;</span></div>
+  </div>
   <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
   <div class="shop-disclosure">Some links may earn a commission.</div>
-  <div class="ss-shop-talk">Want to talk it through? <span onclick="openChat()">Ask your stylist &rarr;</span></div>
+  <!-- The bottom "Want to talk it through? Ask your stylist" line is retired
+       (2026-08-21): the same door now sits at the top of the screen inside the ask,
+       worded as the escalation ("Can't find it? Let your stylist search"), which is
+       where her mother would have needed it. Two invitations to the same place, one
+       of them below the fold, is how the old one got skimmed past.
+       ⚠️ _shopStyleGen still queries .ss-shop-talk and guards with `if(talk)`, so
+       removing the markup is safe; don't "tidy" those guards away. -->
 </div>
 
 <div class="scr" id="s-story">
@@ -5422,7 +5508,9 @@ function _photoSaveArea(on){
   if(showSave){var km=document.getElementById('keepMsgPhoto');if(km)km.textContent=''}
   if(emailDone)hideSavePins();
 }
-const photoShopEmoji={top:'👚',bottom:'👖',dress:'👗',jacket:'🧥',shoes:'👠',bag:'👜',jewelry:'💎',belt:'🎀',accessory:'✨'};
+// The 40x40 gold tile that used to hold a category emoji is gone with it. The
+// sparkle was not a fallback here, it was the deliberate icon for `accessory` --
+// the most recognisable "AI generated" mark in software, on a stylist's app.
 function _renderTips(tips){
   const c=document.getElementById('pTips');
   c.innerHTML=(tips||[]).map((t,i)=>`<div class="tip"><div class="n">${i+1}</div><div class="tb"><strong>${_esc(t.title||'')}</strong><span>${_esc(t.text||'')}</span></div></div>`).join('');
@@ -5431,10 +5519,9 @@ function _renderShop(items){
   const c=document.getElementById('pShopList');
   c.innerHTML=filterNeverWear(items).map(_nameParity).map(_sizeWordsOut).map(it=>{
     const url=getStoreUrl(it.store,it.name,it.search);
-    const emoji=photoShopEmoji[it.category]||'✨';
     const why=it.why?' &middot; '+_esc(it.why):'';
     const st=resolveStore(it.store)||it.store||'';
-    return `<div class="shoprow"><div class="si">${emoji}</div><div class="sb"><strong>${_esc(it.name||'')}</strong><span>${_esc(st)}${why}</span></div><a class="go" href="${url}" target="_blank" rel="sponsored noopener">${FIND_LABEL}</a>${_wlSaveBtn(it)}</div>`;
+    return `<div class="shoprow"><div class="sb"><strong>${_esc(it.name||'')}</strong><span>${_esc(st)}${why}</span></div><a class="go" href="${url}" target="_blank" rel="sponsored noopener">${FIND_LABEL}</a>${_wlSaveBtn(it)}</div>`;
   }).join('');
 }
 async function runPhotoAnalysis(){
@@ -6244,7 +6331,6 @@ ${_colorPrefRule().trim()}
 Respond with ONLY valid JSON:
 {"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}`;
 
-  const catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:400,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw new Error("fail");
@@ -6257,7 +6343,7 @@ Respond with ONLY valid JSON:
     const _keep=filterNeverWear(parsed.items);
     _rememberPicks('outfits-'+(source||''),_keep);   // the refresh must not repeat
     _keep.forEach(item=>{
-      html+=_shopCard(item,'<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
+      html+=_shopCard(item);
     });
     html+='</div>';
     html+='<div class="shop-refresh"><button class="shop-refresh-btn" onclick="genOutfits(\''+source+'\')">↻ Show me different options</button></div>';
@@ -6289,7 +6375,6 @@ async function shopMyStyle(){
   }
   var subEl=document.getElementById('shopSubPhoto');if(subEl)subEl.textContent=sub;
   var prompt=`You are Catherine, a personal stylist. Based on this woman's style, suggest 6 specific shoppable items she would genuinely love and that fit her aesthetic.\n\n${basis}\n${_seenPicksLine('photo')}\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n${_shopRules()}\nRULES:\n- Match her style${quizTaken&&topArchNames.length?' and slider positions':''}\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute and overrides every other suggestion.\n${_colorPrefRule()}- Mix categories and price points across the 6 items\n- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}`;
-  var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
     var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:400,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
@@ -6301,7 +6386,7 @@ async function shopMyStyle(){
     var _keep=filterNeverWear(parsed.items);
     _rememberPicks('photo',_keep);   // so the refresh below cannot repeat them
     _keep.forEach(function(item){
-      html+=_shopCard(item,'<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
+      html+=_shopCard(item);
     });
     html+='</div><div class="shop-refresh"><button class="shop-refresh-btn" onclick="shopMyStyle()">&#8635; Show me different picks</button></div>';
     cont.innerHTML=html;
@@ -6807,6 +6892,104 @@ function a2hsGo(){
   });
 }
 function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e){}var n=document.getElementById('styleNudge');if(n)n.classList.remove('on');_openShopStyleNow(_nudgeMode);}
+// ─── THE ASK: her typed request, and the chips that fill it ─────────────────
+// A SEQUENTIAL ring, not the random-but-not-last of SHOP_MSGS: a ring guarantees
+// she eventually sees every example, which is the whole job of this placeholder.
+// Her catch that produced it: "floor length gown searches are rather rare, though
+// important when they do happen." These four are her testers' actual asks — a
+// price limit, an occasion, a plain everyday need, and the gown.
+// ⭐ ALL SEVEN ARE HERS (2026-08-21) and they beat the drafts they replaced: three
+// are one or two words ("jeans", "silk blouse", "tote bag"), which teaches that a
+// SHORT ask works. Every draft was a full phrase, quietly implying she had to write
+// a sentence. ⚠️ The "Try:" prefix stays, her call: the box centres its text, so a
+// bare phrase sitting in the middle of it reads as something already typed.
+var _ASK_RING=[
+  'Try: wedding guest dress',
+  'Try: white tops under $100',
+  'Try: jeans',
+  'Try: tan sandals',
+  'Try: a floor length gown',
+  'Try: silk blouse',
+  'Try: tote bag'
+];
+// Occasion above category, her call ("let's try both rows and see").
+// ▶▶ TAPPING A CHIP FILLS THE BOX, IT DOES NOT RUN A SEARCH. That is precisely
+// what makes "For an event" safe rather than vague: an event is a garden party
+// or a black-tie gala, so she finishes the sentence instead of the model guessing
+// a formality level. It also keeps one code path instead of two.
+// ⭐ Both rows are hers too. ⚠️ Note what she did to the occasion row: "For an event"
+// is GONE, replaced by "Something formal" — that was the chip flagged as ambiguous
+// (a garden party and a black-tie gala are both events) and she resolved it by naming
+// the FORMALITY instead of the occasion. Sharper than any wording tweak would have
+// been. She also swapped "Jackets" for "Accessories" in the category row.
+var _ASK_OCC=['Work','Weekend','Vacation','Casual life','Something formal'];
+var _ASK_CAT=['Dresses','Tops','Bottoms','Shoes','Bags','Accessories'];
+// ⚠️ SCOPE OF THE ASK, and it matters: it survives "Show me different options"
+// (a refresh of "floor length gown" must return more gowns, not six random
+// things), but it is CLEARED every time the screen is opened. _openShopStyleNow
+// generates unconditionally on entry, so an ask that outlived the visit would
+// quietly colour her shopping for weeks.
+var _ssAsk='';
+function _askClean(s){return String(s||'').replace(/[\r\n"]+/g,' ').replace(/\s+/g,' ').trim().slice(0,80);}
+function _askChipsHtml(a){return a.map(function(c){
+  // onmousedown preventDefault holds focus in the box, so the keyboard does not
+  // drop away the moment she taps a chip and she can carry on typing.
+  return '<span class="sa-chip" data-c="'+_esc(c)+'" onmousedown="event.preventDefault()" onclick="ssAskChip(this.dataset.c)">'+_esc(c)+'</span>';
+}).join('');}
+function _syncShopAsk(){
+  var el=document.getElementById('ssAsk');if(!el)return;
+  _ssAsk='';
+  // Quiz mode only, her call: "Pull more in this style" is told to MIRROR the
+  // outfit she shared and add no accessories, and "Shop my whole list" owes one
+  // pick per starred row in order — a free-text box would fight both.
+  if(_shopStyleMode!=='quiz'){el.style.display='none';return;}
+  el.style.display='';
+  var inp=document.getElementById('ssAskIn');
+  if(inp){
+    var i=0;try{i=parseInt(localStorage.getItem('ss_askrot'),10)||0}catch(e){}
+    i=((i%_ASK_RING.length)+_ASK_RING.length)%_ASK_RING.length;
+    inp.placeholder=_ASK_RING[i];
+    // Advanced HERE, on open, and never in _shopStyleGen — so tapping refresh
+    // cannot shuffle the placeholder under her fingers (the same reasoning that
+    // keeps the subtitle still on a refresh).
+    try{localStorage.setItem('ss_askrot',String((i+1)%_ASK_RING.length))}catch(e){}
+    inp.value='';
+  }
+  _ssAskOpen(false);
+}
+function _ssAskOpen(on){
+  var m=document.getElementById('ssAskMore');if(!m)return;
+  m.style.display=on?'':'none';
+  if(!on)return;
+  var occ=document.getElementById('ssAskOcc'),cat=document.getElementById('ssAskCat');
+  if(occ&&!occ.dataset.built){occ.innerHTML=_askChipsHtml(_ASK_OCC);occ.dataset.built='1';}
+  if(cat&&!cat.dataset.built){cat.innerHTML=_askChipsHtml(_ASK_CAT);cat.dataset.built='1';}
+}
+function ssAskChip(t){
+  var inp=document.getElementById('ssAskIn');if(!inp)return;
+  inp.value=String(t||'').toLowerCase()+' ';
+  try{inp.focus();inp.setSelectionRange(inp.value.length,inp.value.length);}catch(e){}
+}
+function ssAskGo(){
+  var scr=document.getElementById('s-shopstyle');
+  if(scr&&scr.classList.contains('thinking'))return;   // one generate at a time
+  var inp=document.getElementById('ssAskIn');if(!inp)return;
+  var v=_askClean(inp.value);
+  if(!v){try{inp.focus()}catch(e){}return;}
+  _ssAsk=v;
+  try{inp.blur()}catch(e){}
+  _ssAskOpen(false);
+  _shopStyleGen();
+}
+// One helper even though there is one call site today: the _colorPrefRule lesson
+// is that a rule living in more than one prompt gets hand-copied and drifts.
+// ⭐ The range clause is the answer to "is 'for an event' too vague?" — a broad
+// ask is covered ACROSS the six rather than guessed at once, so ambiguity becomes
+// a spread she can choose from instead of a wrong single answer.
+function _askedForRule(){
+  if(!_ssAsk)return '';
+  return '- SHE HAS ASKED FOR SOMETHING SPECIFIC: "'+_ssAsk+'". Every one of the 6 picks must answer that ask directly, and this outranks mixing categories for variety. If she named a garment, return that garment. If she named a price, stay under it. If she named an occasion, dress her for it, and when that occasion could mean several levels of formality (an event can be a garden party or a black tie gala), COVER THE RANGE across the 6 rather than guessing one point on it. This rule is absolute.\n';
+}
 function _openShopStyleNow(mode){
   _shopStyleMode=(mode==='look')?'look':(mode==='wantlist')?'wantlist':'quiz';
   var cur=(document.querySelector('.scr.act')||{}).id;
@@ -6825,6 +7008,7 @@ function _openShopStyleNow(mode){
       subEl.textContent=SHOP_MSGS[si];}
   }
   show('s-shopstyle');
+  _syncShopAsk();   // clears any previous ask and rotates the placeholder
   _shopStyleGen();
 }
 async function _shopStyleGen(){
@@ -6865,9 +7049,8 @@ async function _shopStyleGen(){
     prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+'- Mix categories and price points across the 6 items\n- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+'- Mix categories and price points across the 6 items\n- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }
-  var catEmoji={top:"👚",bottom:"👖",dress:"👗",jacket:"🧥",shoes:"👠",bag:"👜",jewelry:"💎",activewear:"🏃‍♀️"};
   try{
     var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
@@ -6876,11 +7059,21 @@ async function _shopStyleGen(){
     var html='<div class="shop-grid">';
     // On "Shop my whole list" the things she asked for ARE her list, so a row
     // she starred herself ("Wrap dresses") waives the search veto for this call.
+    // 🚨 Her typed ask goes in as `askedFor` for exactly the same reason her starred
+    // rows do. _SEARCH_VETO holds 'wrap', so a woman who types "wrap dress" would
+    // otherwise have every pick silently dropped before render, with nothing on
+    // screen to explain the empty shelf. Asking for a thing waives the SEARCH veto
+    // for that call only; _STYLIST_VETO (ribbed, skinny jeans) and her own
+    // never-wear list are never waived by anything.
     var _keep=filterNeverWear(parsed.items,
-      _shopStyleMode==='wantlist'?(_wantListNames||[]).join(' '):'');
+      _shopStyleMode==='wantlist'?(_wantListNames||[]).join(' '):_ssAsk);
     _rememberPicks('ss-'+_shopStyleMode,_keep);   // the refresh must not repeat
     _keep.forEach(function(item){
-      var top=(_shopStyleMode==='wantlist')?('<div class="shop-want-for">'+_esc(item.want||'')+'</div>'):('<div class="shop-emoji">'+(catEmoji[item.category]||'✨')+'</div>');
+      // No icon above the name. Emoji are painted by the platform's own font and
+      // ignore our colour (the rule she set after the pink heart shipped RED on her
+      // phone), and the fallback here was literally the sparkle -- the AI-slop mark,
+      // on the one app whose whole positioning is a real stylist. The name IS the label.
+      var top=(_shopStyleMode==='wantlist')?('<div class="shop-want-for">'+_esc(item.want||'')+'</div>'):'';
       html+=_shopCard(item,top);
     });
     html+='</div>'+(_wlTrunc?'<div class="shop-trunc">Showing 16 of your '+(_wlTrunc+16)+' wants. Shop the rest anytime from your list.</div>':'')+'<div class="shop-refresh"><button class="shop-refresh-btn" onclick="_shopStyleGen()">&#8635; Show me different options</button></div>';
