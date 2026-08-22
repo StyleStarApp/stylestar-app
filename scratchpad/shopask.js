@@ -53,10 +53,16 @@ async function fresh(w) {
   await pg.evaluate(() => { const c = document.querySelector('.hm-entrance'); if (c) c.remove(); });
   return { ctx, pg };
 }
-const openShop = async (pg, mode) => {
+const openShopRest = async (pg, mode) => {
   await pg.evaluate(m => _openShopStyleNow(m), mode || 'quiz');
   await pg.waitForSelector('#shopStyleContent .shop-card', { timeout: 20000 });
 };
+// HER PICK B, 2026-08-22: the box no longer leads the page. It is collapsed behind
+// a named line, so every section that types into it must OPEN it first, exactly as
+// a woman would. openShopRest is the at-rest view, used where the closed state is
+// the thing under test.
+const reveal = async pg => { await pg.evaluate(() => _ssAskReveal()); await pg.waitForTimeout(140); };
+const openShop = async (pg, mode) => { await openShopRest(pg, mode); await reveal(pg); };
 
 // ── 1. The emoji are gone, at the source ────────────────────────────────────
 console.log('\n1. The category emoji are retired');
@@ -80,7 +86,7 @@ ok('the only sparkles left are toasts and the stylist\'s chat voice, out of scop
 // ── 2. At rest: she gets pieces without touching anything ───────────────────
 console.log('\n2. At rest — the six still arrive untouched');
 let { ctx, pg } = await fresh();
-await openShop(pg);
+await openShopRest(pg);
 let r = await pg.evaluate(() => {
   const a = document.getElementById('ssAsk');
   return {
@@ -91,6 +97,7 @@ let r = await pg.evaluate(() => {
     cards: document.querySelectorAll('#shopStyleContent .shop-card').length,
     star: !!document.querySelector('#ssAsk .sa-star'),
     heart: !!document.querySelector('#ssAsk .pinkheart'),
+    voxText: document.querySelector('#ssAsk .sa-vox').textContent.trim(),
     voxFont: getComputedStyle(document.querySelector('#ssAsk .sa-vox')).fontFamily,
     voxStyle: getComputedStyle(document.querySelector('#ssAsk .sa-vox')).fontStyle,
     escInAsk: !!document.querySelector('#ssAsk .sa-esc'),
@@ -105,8 +112,25 @@ let r = await pg.evaluate(() => {
     starLeads: (() => { const s = document.querySelector('#ssAsk .sa-star'),
       v = document.querySelector('#ssAsk .sa-vox');
       if (!s || !v) return false;
-      const sr = s.getBoundingClientRect(), vr = v.getBoundingClientRect();
-      return sr.left - vr.left < 12; })(),
+      // ⚠️ UPDATED DELIBERATELY 2026-08-22, and the CLAIM is unchanged: the star
+      // still has to lead the sentence. What changed is that the line is centred
+      // now that it stands alone, so measuring the star against the BUTTON's left
+      // edge measured the centring offset rather than the mark. Compared to the
+      // painted start of the words instead, which is the stronger test: a float or
+      // a margin putting the mark after the text still fails.
+      const tn = [...v.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+      if (!tn) return false;
+      const rg = document.createRange(); rg.selectNodeContents(tn);
+      const tr = rg.getBoundingClientRect(), sr = s.getBoundingClientRect();
+      return sr.right <= tr.left + 2; })(),
+    askClosed: !document.getElementById('ssAsk').classList.contains('open'),
+    boxHidden: getComputedStyle(document.getElementById('ssAskIn')).display === 'none',
+    voxTag: document.querySelector('#ssAsk .sa-vox').tagName,
+    voxUnderlined: /underline/.test(getComputedStyle(document.querySelector('#ssAsk .sa-vox')).textDecorationLine),
+    voxTap: Math.round(document.querySelector('#ssAsk .sa-vox').getBoundingClientRect().height),
+    pulled: (document.querySelector('#s-shopstyle .ss-shop-pulled') || {}).textContent || '',
+    pulledShown: !!(document.querySelector('#s-shopstyle .ss-shop-pulled') || {}).offsetHeight,
+    subHidden: getComputedStyle(document.querySelector('#s-shopstyle .ss-shop-sub')).display === 'none',
     nowHidden: getComputedStyle(document.getElementById('ssAskNow')).display === 'none',
   };
 });
@@ -114,6 +138,19 @@ let r = await pg.evaluate(() => {
 // reading, applied to the one control on the screen that was still rounded.
 ok('the box is squared, not rounded', r.boxRadius === '0px', r.boxRadius);
 ok('the pink star LEADS the sentence', r.starLeads);
+// ── HER PICK B: the pieces lead, the hunt is offered ───────────────────────
+// The page used to open with a DEMAND, and the box competed with the six for the
+// same moment. Her words: a well rounded selection her stylist pulled for her to
+// enjoy, and THEN the one specific thing she came in for.
+ok('the box is CLOSED when she lands', r.askClosed && r.boxHidden);
+ok('...but the door is still NAMED at the top', /Looking for something specific/.test(r.voxText || ''), r.voxText);
+ok('...and it looks tappable', r.voxUnderlined);
+ok('...and it really is a button, not a styled div', r.voxTag === 'BUTTON', r.voxTag);
+ok('...with a tap target a woman of 80 can hit', r.voxTap >= 36, r.voxTap + 'px');
+// The line that tells her these six were chosen FOR her. The rotating SHOP_MSGS
+// tagline belongs to the WAITING moment and is gone once the pieces land, her call.
+ok('the landed line names what she is looking at', r.pulledShown && r.pulled.trim().length > 0, r.pulled);
+ok('...and the waiting tagline has stood down', r.subHidden);
 ok('nothing about a filter shows before she has asked for anything', r.nowHidden);
 ok('the ask is on screen', r.visible);
 // It must live outside #shopStyleContent: that container's innerHTML is replaced on
@@ -139,6 +176,7 @@ ok('the sentence is in her light-paper voice (Lora, upright)',
 
 // ── 3. Tapping in reveals the chips; a chip fills the box ───────────────────
 console.log('\n3. Tap in — chips appear, and a chip FILLS the box');
+await reveal(pg);
 await pg.focus('#ssAskIn'); await pg.waitForTimeout(250);
 r = await pg.evaluate(() => ({
   shown: getComputedStyle(document.getElementById('ssAskMore')).display !== 'none',

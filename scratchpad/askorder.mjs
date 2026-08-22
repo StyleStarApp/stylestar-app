@@ -50,31 +50,6 @@ async function shot(label,tweak,h=980){
   console.log('  rendered',label);
 }
 
-// CURRENT (as built): label + box lead, then the pieces
-await shot('now',null);
-
-// A: the picks lead. A line NAMES the gift, the ask moves below the six.
-await shot('A',()=>{
-  const sub=document.querySelector('#s-shopstyle .ss-shop-sub');
-  sub.textContent='A few pieces I pulled for you.';
-  sub.style.display='block';sub.style.fontSize='15px';
-  const ask=document.getElementById('ssAsk');
-  const cont=document.getElementById('shopStyleContent');
-  cont.parentNode.insertBefore(ask,cont.nextSibling);
-  ask.style.marginTop='18px';
-  document.querySelector('#s-shopstyle .sa-vox').lastChild.textContent='Looking for something specific?';
-});
-
-// B: the top stays calm. One quiet findable line; the box opens on tap.
-await shot('B',()=>{
-  const sub=document.querySelector('#s-shopstyle .ss-shop-sub');
-  sub.textContent='A few pieces I pulled for you.';
-  sub.style.display='block';sub.style.fontSize='15px';
-  const ask=document.getElementById('ssAsk');
-  ask.querySelector('#ssAskIn').style.display='none';
-  const v=document.querySelector('#s-shopstyle .sa-vox');
-  v.lastChild.textContent='Looking for something specific?';
-  v.style.textDecoration='underline';v.style.cursor='pointer';v.style.fontSize='15px';
-  ask.style.margin='4px auto 10px';
-});
+await shot('B-built-closed',null,760);
+await shot('B-built-open',()=>{_ssAskReveal();},760);
 await b.close();srv.close();

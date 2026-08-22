@@ -1058,8 +1058,17 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    ⚠️ QUIZ MODE ONLY. In look and wantlist modes that same element says
    "More pieces like the look you shared" / "Everything on your list", which
    NAMES what she is looking at and must survive. */
+/* Two different jobs, so two elements rather than one line that changes
+   meaning. .ss-shop-sub is the WAITING line (the rotating SHOP_MSGS she likes
+   while the star spins). .ss-shop-pulled is the LANDED line, and it does real
+   work: it tells her these six were chosen FOR her, which is the whole feeling
+   of the page. Her words 2026-08-22: "a fun well rounded selection of items
+   that suit you that your stylist grabbed to show you". */
 #s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-sub{display:none}
-#s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-hdr{margin-bottom:8px}
+#s-shopstyle.thinking .ss-shop-pulled{display:none}
+#s-shopstyle:not([data-mode="quiz"]) .ss-shop-pulled{display:none}
+#s-shopstyle .ss-shop-pulled{font:400 15.5px/1.45 'Lora',Georgia,serif;color:#4a463e;margin:2px auto 0;max-width:330px;text-wrap:balance}
+#s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-hdr{margin-bottom:10px}
 #s-shopstyle.thinking .ss-shop-logo{font-size:27px}
 #s-shopstyle.thinking .ss-shop-logo::before{left:calc(69.4% - 5px)}
 #shopLoadMsg{transition:opacity .4s ease;display:block;max-width:310px;margin:0 auto;text-wrap:balance}
@@ -1077,7 +1086,23 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    ⚠️ Every selector is scoped #s-shopstyle on purpose — .sa-* names are new, but
    the screen scope keeps a future reuse of these classes from leaking here. */
 #s-shopstyle #ssAsk{margin:12px auto 4px;max-width:340px;padding:0 14px}
-#s-shopstyle .sa-vox{font:400 15.5px/1.45 'Lora',Georgia,serif;color:#4a463e;margin-bottom:8px;text-wrap:balance}
+/* HER PICK B, 2026-08-22. The box used to lead the page, so the first thing she
+   read was a DEMAND, and it competed with the six pieces for the same moment.
+   Her own description puts them the other way round: enjoy what your stylist
+   pulled, THEN hunt for the one thing you came in for. So the ask collapses to
+   one line and the box opens on tap.
+   ⚠️ IT STAYS NAMED AT THE TOP, and that is the whole reason B beat moving the
+   box below the pieces: three of the four testers arrived already KNOWING what
+   they wanted, which is why this box exists at all. Hiding it under six cards
+   would make exactly those women scroll past everything. A named line is
+   findable (her mother's lesson); a box is merely loud.
+   ⚠️ It is a real <button>, not a styled div: it must be reachable by keyboard
+   and announced as a control, and anything that looks tappable here must BE
+   tappable (the A2HS lesson, pointed the other way). */
+#s-shopstyle .sa-vox{display:block;width:100%;background:none;border:0;font:400 15.5px/1.45 'Lora',Georgia,serif;color:#4a463e;text-align:center;padding:9px 0;margin:0 0 2px;text-wrap:balance;cursor:pointer}
+#s-shopstyle #ssAsk:not(.open) .sa-vox{text-decoration:underline;text-underline-offset:3px}
+#s-shopstyle #ssAsk.open .sa-vox{cursor:default;padding-bottom:6px;margin-bottom:6px}
+#s-shopstyle #ssAsk:not(.open) #ssAskIn{display:none}
 #s-shopstyle .sa-star{width:13px;height:13px;vertical-align:-1px;margin-right:5px;display:inline-block}
 /* Her call: the box is BLACK and the chips are silver, which gives the control a
    hierarchy it did not have when both were gold — the box is the thing to use, the
@@ -3916,6 +3941,9 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="ss-shop-hdr">
     <div class="ss-shop-logo">shop your style</div>
     <div class="ss-shop-sub">Chosen with you in mind.</div>
+    <!-- ⚠️ Claude draft, hers to reword: one string. It is the sentence that
+         tells her these six were chosen FOR her, so it should be her voice. -->
+    <div class="ss-shop-pulled">A few pieces I pulled for you.</div>
   </div>
   <!-- Heart-it-first tip (Cath's wording + pick A, 2026-08-09, from her
        app-handoff finds): teaches save-before-explore, retires itself once
@@ -3943,7 +3971,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <!-- The mark is the stylist's PINK STAR, never Catherine's pink heart. Her own
          mark system: the heart means SHE is speaking, the star means the stylist is
          working — which is why the loading star on this same screen is pink. -->
-    <div class="sa-vox"><svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>Tell me what you&rsquo;re looking for</div>
+    <button type="button" class="sa-vox" onclick="_ssAskReveal()"><svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>Looking for something specific?</button>
     <!-- ⚠️ The example clears the moment she taps in, and comes back if she leaves the
          box empty. Her live test, 2026-08-21: "when I put the cursor inside the box to
          start typing I would like the Try: jeans to go away. It stays there until I
@@ -6995,8 +7023,25 @@ function _syncShopAsk(){
     try{localStorage.setItem('ss_askrot',String((i+1)%_ASK_RING.length))}catch(e){}
     inp.value='';
   }
+  // Collapsed again on re-entry, for the same reason the ask itself is one-shot:
+  // she should meet the pieces first every time, not a box she opened last visit.
+  el.classList.remove('open');
   _ssAskOpen(false);
   _ssAskNow();
+}
+// Opens the box on her tap. Once open it STAYS open for the visit: closing it
+// again under her would risk losing what she had typed.
+function _ssAskReveal(){
+  var el=document.getElementById('ssAsk');if(!el)return;
+  if(!el.classList.contains('open')){
+    el.classList.add('open');
+    // ⚠️ DELIBERATELY DOES NOT FOCUS, and the tests are why. Focusing runs
+    // _ssAskFocus(1), which clears the example — so opening the box would wipe
+    // "Try: silk blouse" before she ever read it, and her eleven examples, the
+    // thing that teaches her that a two word ask works, would be seen by nobody.
+    // The cost is one more tap to start typing. The example is worth it, and
+    // clearing it on HER tap into the field is what she asked for on 2026-08-21.
+  }
 }
 function _ssAskOpen(on){
   var m=document.getElementById('ssAskMore');if(m)m.style.display=on?'':'none';
