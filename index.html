@@ -1067,7 +1067,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    OUT of this spot an hour earlier and was right that putting a different one
    back was the same clutter. Don't reintroduce it. */
 #s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-sub{display:none}
-#s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-hdr{margin-bottom:10px}
+#s-shopstyle:not(.thinking)[data-mode="quiz"] .ss-shop-hdr{margin-bottom:3px}
 #s-shopstyle.thinking .ss-shop-logo{font-size:27px}
 #s-shopstyle.thinking .ss-shop-logo::before{left:calc(69.4% - 5px)}
 #shopLoadMsg{transition:opacity .4s ease;display:block;max-width:310px;margin:0 auto;text-wrap:balance}
@@ -1084,7 +1084,10 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    approved on Your Wishlist, and the chips are the squared gold .wdr-see chip.
    ⚠️ Every selector is scoped #s-shopstyle on purpose — .sa-* names are new, but
    the screen scope keeps a future reuse of these classes from leaking here. */
-#s-shopstyle #ssAsk{margin:12px auto 4px;max-width:340px;padding:0 14px}
+/* Tightened 2026-08-22, her call. The PADDING on .sa-vox is untouched: it is the
+   43px tap target for the 18 to 80 audience, and shrinking it to buy white space
+   would trade a real thing for a cosmetic one. The MARGINS around it moved. */
+#s-shopstyle #ssAsk{margin:3px auto 2px;max-width:340px;padding:0 14px}
 /* HER PICK B, 2026-08-22. The box used to lead the page, so the first thing she
    read was a DEMAND, and it competed with the six pieces for the same moment.
    Her own description puts them the other way round: enjoy what your stylist
@@ -1104,6 +1107,15 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    already trims that padding, so 360 has a WIDER container than 375. Measured. */
 #s-shopstyle .sa-vox{display:block;width:calc(100% + 28px);margin-left:-14px;margin-right:-14px;background:none;border:0;font:400 17.5px/1.4 'Lora',Georgia,serif;color:#4a463e;text-align:center;padding:9px 0;margin-top:0;margin-bottom:2px;text-wrap:balance;cursor:pointer}
 #s-shopstyle #ssAsk:not(.open) .sa-vox{text-decoration:underline;text-underline-offset:3px}
+/* Her pick from three, 2026-08-22. A DOWN CHEVRON, not the app's right arrow:
+   everywhere else that arrow means she is about to be taken somewhere, and
+   nothing here navigates, the box opens in place. The chevron points at where
+   it will appear.
+   ⚠️ It goes once the box is OPEN, because at that point it is no longer an
+   affordance: the line cannot be tapped closed, so a mark still promising an
+   action would be lying. */
+#s-shopstyle .sa-chev{width:15px;height:15px;vertical-align:-2px;margin-left:5px;display:inline-block}
+#s-shopstyle #ssAsk.open .sa-chev{display:none}
 #s-shopstyle #ssAsk.open .sa-vox{cursor:default;padding-bottom:6px;margin-bottom:6px}
 #s-shopstyle #ssAsk:not(.open) #ssAskIn{display:none}
 #s-shopstyle .sa-star{width:13px;height:13px;vertical-align:-1px;margin-right:5px;display:inline-block}
@@ -1159,8 +1171,19 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    real limit and the words wrap instead. Don't simplify it back. */
 .shop-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
 /* ...and with a real limit, a long retailer name must be allowed to break or it
-   would simply overflow the card it no longer fits. */
+   would simply overflow the card it no longer fits. This is the SAFETY NET, not
+   the plan: the plan is that the real names fit, below. */
 .shop-card{overflow-wrap:anywhere}
+/* ⚠️ MEASURED, 2026-08-22, after the even columns made every card 139px: the
+   card's inner width was 105px while BLOOMINGDALES needs 116 and ANTHROPOLOGIE
+   115, so the safety net above was firing on ORDINARY stores and rendering
+   "BLOOMINGDAL / ES". Rather than shrink the type on an 18 to 80 audience, the
+   cards give the width back: 16px of side padding was generous for a 139px
+   card, and the store line's tracking was costing ~5px it did not need.
+   ⚠️ Scoped to the two-column grid so the wardrobe's 128px horizontal carousel
+   keeps its own tighter proportions. */
+.shop-grid:not(.hscroll) .shop-card{padding-left:10px;padding-right:10px}
+.shop-grid:not(.hscroll) .shop-item-store{letter-spacing:.03em}
 .shop-card{background:#fafafa;border:1px solid #ebebeb;border-radius:14px;padding:1rem;text-align:center;display:flex;flex-direction:column;justify-content:space-between;min-height:140px}
 /* PANES IN A SHOP WINDOW — her reading of this screen, 2026-08-21, and it is what
    decides the colour: "I am keeping in mind it actually looks like a store window.
@@ -1525,7 +1548,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 /* Uneven ON PURPOSE, her 2026-08-15 rule reapplied: a caption belongs to what
    it describes. Tight above and loose below made it read as a note about the
    search box; 14/4 attaches it to the pieces underneath. */
-#s-shopstyle .ss-disc-top{font-size:11.5px;margin:14px auto 4px}
+#s-shopstyle .ss-disc-top{font-size:11.5px;margin:9px auto 3px}
 .shop-disclosure{font-size:12.5px;color:#6e6e6e;line-height:1.5;margin-top:12px;max-width:320px;margin-left:auto;margin-right:auto;text-align:center}
 .email-divider{height:1px;background:#ebebeb;margin:1.5rem 0}
 .share-section{margin:1.5rem 0;text-align:center}
@@ -3981,7 +4004,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <!-- The mark is the stylist's PINK STAR, never Catherine's pink heart. Her own
          mark system: the heart means SHE is speaking, the star means the stylist is
          working — which is why the loading star on this same screen is pink. -->
-    <button type="button" class="sa-vox" onclick="_ssAskReveal()"><svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>Looking for something specific?</button>
+    <button type="button" class="sa-vox" onclick="_ssAskReveal()"><svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>Looking for something specific?<svg class="sa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5 12 15.5 18 9.5"/></svg></button>
     <!-- ⚠️ The example clears the moment she taps in, and comes back if she leaves the
          box empty. Her live test, 2026-08-21: "when I put the cursor inside the box to
          start typing I would like the Try: jeans to go away. It stays there until I

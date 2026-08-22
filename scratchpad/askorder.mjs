@@ -50,10 +50,6 @@ async function shot(label,tweak,h=980,arg){
   console.log('  rendered',label);
 }
 
-const ARR='<svg class="wdr-see-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;vertical-align:-2px;margin-left:5px"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>';
-const CHV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;vertical-align:-2px;margin-left:5px"><path d="M6 9.5 12 15.5 18 9.5"/></svg>';
-await shot('n1-plain',null,470);
-await shot('n2-arrow',a=>{document.querySelector('#s-shopstyle .sa-vox').insertAdjacentHTML('beforeend',a)},470,ARR);
-await shot('n3-chevron',c=>{document.querySelector('#s-shopstyle .sa-vox').insertAdjacentHTML('beforeend',c)},470,CHV);
-// widths at the narrowest phone
+await shot('final-closed',null,600);
+await shot('final-open',()=>{_ssAskReveal()},600);
 await b.close();srv.close();
