@@ -12075,13 +12075,42 @@ function buildCardBlob(source,callback){
     if(line)lines.push(line);
     return lines;
   }
-  function star(cx,cy,r,fill){
-    ctx.save();ctx.beginPath();
-    for(let i=0;i<10;i++){
-      const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*0.42:r;
-      ctx[i?'lineTo':'moveTo'](cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);
-    }
-    ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.restore();
+  /* HER star, not a generic one: this is _SHOP_STAR_SVG, the shiny gold star
+     that spins while Shop your style is thinking — a radial gold gradient with a
+     SILVER outline. Her call, and it is the right one twice over: it is already
+     her mark, and its silver edge is the same metal as this card's frame, so the
+     two speak to each other instead of the star sitting there as a flat gold dot.
+     ⚠️ The path, the gradient stops and the silver stroke are copied EXACTLY from
+     _SHOP_STAR_SVG. If that star is ever restyled, restyle this with it. */
+  const _STAR_PATH=[[12,1.6],[14.47,8.6],[21.89,8.79],[15.99,13.3],[18.11,20.41],
+                    [12,16.2],[5.89,20.41],[8.01,13.3],[2.11,8.79],[9.53,8.6]];
+  function star(cx,cy,size){
+    const k=size/24, ox=cx-12*k, oy=cy-12*k;
+    ctx.save();
+    ctx.beginPath();
+    _STAR_PATH.forEach(function(p,i){
+      const x=ox+p[0]*k, y=oy+p[1]*k;
+      if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);
+    });
+    ctx.closePath();
+    /* ⚠️ SAME FOUR COLOURS, TIGHTER HIGHLIGHT, and the reason is measured. The
+       original gradient runs to r=70% of the box, which on the DARK Shop screen
+       reads as glow — that is what it was drawn for. On this white paper the
+       highlight IS the paper: the star's centre measured 1.08:1 against the sheet
+       and the whole thing rendered as a hollow outline. Pulling the ramp in to
+       r=46% makes #F0CB5E and #E6B845 fill the body while #FFFCEF stays as a
+       small specular catch, which is how metal actually behaves on a light
+       ground. No colour was changed and the silver edge is untouched.
+       ▶ Same lesson as the gold-leaf frame earlier: A RAMP BUILT FOR A DARK
+       BACKGROUND LOSES ITS LIGHT HALF ON PAPER. */
+    const g=ctx.createRadialGradient(ox+10.08*k,oy+8.64*k,0,ox+10.08*k,oy+8.64*k,11*k);
+    g.addColorStop(0,'#FFFCEF');g.addColorStop(.4,'#F9E5A0');
+    g.addColorStop(.75,'#F0CB5E');g.addColorStop(1,'#E6B845');
+    ctx.fillStyle=g;ctx.fill();
+    // the silver edge firms up a touch so the silhouette reads on paper; it is
+    // the same #B7BCC2, and the same metal as this card's frame
+    ctx.lineJoin='round';ctx.lineWidth=1.5*k;ctx.strokeStyle='#B7BCC2';ctx.stroke();
+    ctx.restore();
   }
   // her white linen: #FBFAF7 plus the pref-qcard's own two weave gradients,
   // copied so the card and that screen can never drift
@@ -12156,8 +12185,8 @@ function buildCardBlob(source,callback){
     const head=words[0],rest=words.slice(1).join(' ')||words[0];
     const fsHead=104;
     const fs=fitFont(rest,'"DM Serif Display", serif',116,58,W-190);
-    const H_LOGO=LOGO_H+72,H_OVER=54,H_NAME=fsHead*1.02+fs*1.06+34,
-          H_DIV=96,H_NOT=notes.length?(74+notes.length*46):0;
+    const H_LOGO=LOGO_H+72,H_OVER=68,H_NAME=fsHead*1.02+fs*1.06+6,
+          H_DIV=96,H_NOT=notes.length?(90+notes.length*50):0;
     const room=H-TOP_MARGIN-FOOT_MARGIN-tailBase;
     let ms=46,ml,H_MOT,blockH;
     for(;;){
@@ -12221,8 +12250,8 @@ function buildCardBlob(source,callback){
     }
     y+=H_LOGO+AIR;
 
-    ctx.fillStyle=TAUPE;ctx.font='600 27px "Jost", sans-serif';
-    trackedText('MY STYLE IS',W/2,y+28,9);
+    ctx.fillStyle=TAUPE;ctx.font='600 38px "Jost", sans-serif';
+    trackedText('MY STYLE IS',W/2,y+38,12);
     y+=H_OVER;
 
     ctx.fillStyle=BLACK;
@@ -12242,19 +12271,19 @@ function buildCardBlob(source,callback){
        ▶ So do NOT add AIR here. The seam above the divider is where the space
        goes, and that is what keeps the group reading as a group. */
     if(notes.length){
-      ctx.fillStyle=TAUPE;ctx.font='600 24px "Jost", sans-serif';
-      trackedText('WITH NOTES OF',W/2,y+26,7);
+      ctx.fillStyle=TAUPE;ctx.font='600 34px "Jost", sans-serif';
+      trackedText('WITH NOTES OF',W/2,y+34,10);
       /* STACKED, not side by side (her call). It also removed a real weakness:
          side by side the two longest names ran 40 chars together and drove the
          shrink-to-fit loop down to keep them on one line; stacked, each gets the
          full width and holds its size. */
       const short=notes.map(function(n){return String(n).replace(/^The\s+/i,'').toUpperCase()});
       ctx.fillStyle=BLACK;
-      let ns=32;ctx.font='600 '+ns+'px "Jost", sans-serif';
+      let ns=34;ctx.font='600 '+ns+'px "Jost", sans-serif';
       while(short.some(function(n){return trackedWidth(n,3)>W-200})&&ns>20){
         ns--;ctx.font='600 '+ns+'px "Jost", sans-serif';
       }
-      short.forEach(function(n,i){trackedText(n,W/2,y+82+i*46,3)});
+      short.forEach(function(n,i){trackedText(n,W/2,y+98+i*50,3)});
     }
 
     y+=H_NOT+AIR;
@@ -12263,9 +12292,10 @@ function buildCardBlob(source,callback){
     const dy=y+40;
     ctx.strokeStyle=gold;ctx.lineWidth=1.6;
     ctx.beginPath();
-    ctx.moveTo(W/2-190,dy);ctx.lineTo(W/2-40,dy);
-    ctx.moveTo(W/2+40,dy);ctx.lineTo(W/2+190,dy);ctx.stroke();
-    star(W/2,dy,17,gold);
+    ctx.moveTo(W/2-196,dy);ctx.lineTo(W/2-56,dy);
+    ctx.moveTo(W/2+56,dy);ctx.lineTo(W/2+196,dy);ctx.stroke();
+    star(W/2,dy,78);   // her star is delicate on paper; size is the lever that
+                       // does not touch its colours
     y+=H_DIV+AIR;
 
     ctx.fillStyle=BLACK;ctx.font='italic 400 '+ms+'px "Lora", serif';
