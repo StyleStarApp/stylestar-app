@@ -58,8 +58,10 @@ if(bad){console.error('A render in fallback faces looks plausible and is worthle
 const OPTS = (process.argv[2]||'A,B,C').split(',');
 for(const o of OPTS){
   const stress = o.endsWith('!');
-  const key = stress ? o.slice(0,-1) : o;
-  await page.evaluate(([k,st])=>{window.setStress&&window.setStress(st);window.drawOption(k);}, [key,stress]);
+  let key = stress ? o.slice(0,-1) : o;
+  let mode='linen';
+  const m=key.match(/^([A-Z])-(\w+)$/); if(m){key=m[1];mode=m[2];}
+  await page.evaluate(([k,st,pm])=>{window.setPaper(pm);window.setStress&&window.setStress(st);window.drawOption(k);}, [key,stress,mode]);
   const el = await page.$('#card');
   await el.screenshot({path:`scratchpad/share-${o.replace('!','-stress')}.png`});
   console.log('wrote scratchpad/share-'+o.replace('!','-stress')+'.png');
