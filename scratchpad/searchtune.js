@@ -228,7 +228,14 @@ ok('shown while the habit is new (0 saves)', tip.shownFresh);
 // exact wording"), only the wording moved. "heart it" -> "save it" is her call,
 // and it was a real defect -- every card's control is labelled "♡ SAVE", so the
 // tip named the action with a word that appeared nowhere else on the screen.
-ok('her exact wording', tip.text === 'Tip: save it first ♡, then explore. Your saves will be waiting in Your Wishlist.', tip.text);
+// UPDATED AGAIN 2026-08-22, deliberately: the ♡ is no longer in textContent
+// because the tip's heart stopped being a U+2661 GLYPH and became the app's own
+// _WL_HEART_PATH inline SVG -- her call ("let's make sure we are using our exact
+// heart shape for consistency"), and the standing never-draw-a-brand-mark-as-a-
+// glyph rule finally reaching the one place left as an exception. The claim is
+// unchanged; the heart is now asserted by SHAPE below, which is stricter.
+ok('her exact wording', tip.text.replace(/\s+/g,' ').trim() === 'Tip: save it first , then explore. Your saves will be waiting in Your Wishlist.'
+   || tip.text.replace(/\s+/g,' ').trim() === 'Tip: save it first, then explore. Your saves will be waiting in Your Wishlist.', tip.text);
 // The word must track the BUTTON. If this ever fails, check what _wlSaveBtn
 // renders before touching the sentence.
 ok('the tip names the action the BUTTON actually offers', /save it first/i.test(tip.text));
