@@ -1068,13 +1068,13 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    the screen scope keeps a future reuse of these classes from leaking here. */
 #s-shopstyle #ssAsk{margin:12px auto 4px;max-width:340px;padding:0 14px}
 #s-shopstyle .sa-vox{font:400 15.5px/1.45 'Lora',Georgia,serif;color:#4a463e;margin-bottom:8px;text-wrap:balance}
-#s-shopstyle .sa-star{width:13px;height:13px;vertical-align:-1px;margin-left:4px;display:inline-block}
+#s-shopstyle .sa-star{width:13px;height:13px;vertical-align:-1px;margin-right:5px;display:inline-block}
 /* Her call: the box is BLACK and the chips are silver, which gives the control a
    hierarchy it did not have when both were gold — the box is the thing to use, the
    chips are helpers. #17171c again, so it matches the card hairline and the frame.
    ⚠️ The focus state is a soft ring, NOT a colour change: a gold focus border on a
    black box would reintroduce exactly the bronzey clash she took out. */
-#s-shopstyle #ssAskIn{border:1.5px solid #b3aea3;border-radius:2px;padding:10px 14px;font-size:14.5px;width:100%;text-align:left;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif}
+#s-shopstyle #ssAskIn{border:1.5px solid #b3aea3;border-radius:0;padding:10px 14px;font-size:14.5px;width:100%;text-align:left;background:#fff;color:#1a1a1a;font-family:'DM Sans',sans-serif}
 #s-shopstyle #ssAskIn:focus{outline:none;box-shadow:0 0 0 2px rgba(23,23,28,.13)}
 /* Her pick B, 2026-08-21: a very light example, left aligned, in a soft grey box.
    ⚠️ This LOOKS like the mistake the 2026-08-11 pass fixed, where the add-your-own
@@ -1091,6 +1091,13 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    Vacation, and the chip overwrote her sentence. Her call was to drop them rather
    than teach them to append, and to let the rotating example carry the same
    vocabulary instead — which is why the ring now holds occasions and categories. */
+/* Only rendered while an ask is in force. Quieter than the refresh above it,
+   because it is the way OUT of what she asked for, not the main action. */
+/* "Showing bags · show me a mix instead" — quiet, because it is a caption on the box
+   above it and never a second button competing with SHOW ME. The link half is
+   underlined so the tappable words are unmistakable at 12.5px. */
+#s-shopstyle #ssAskNow{font:400 12.5px/1.5 'DM Sans',sans-serif;color:#6e6e6e;margin:6px 0 0;text-align:left}
+#s-shopstyle #ssAskNow span{color:#4a463e;text-decoration:underline;cursor:pointer}
 #s-shopstyle .sa-go{display:block;margin:10px auto 0;background:#1a1a1a;color:#fff;border:none;border-radius:20px;padding:9px 22px;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.07em;cursor:pointer}
 /* The narrow-phone lever is padding, never font-size — the standing readability
    trade for an 18-to-80 audience (see the .wl-add media query). */
@@ -3922,7 +3929,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <!-- The mark is the stylist's PINK STAR, never Catherine's pink heart. Her own
          mark system: the heart means SHE is speaking, the star means the stylist is
          working — which is why the loading star on this same screen is pink. -->
-    <div class="sa-vox">Tell me what you&rsquo;re looking for<svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg></div>
+    <div class="sa-vox"><svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>Tell me what you&rsquo;re looking for</div>
     <!-- ⚠️ The example clears the moment she taps in, and comes back if she leaves the
          box empty. Her live test, 2026-08-21: "when I put the cursor inside the box to
          start typing I would like the Try: jeans to go away. It stays there until I
@@ -3937,6 +3944,16 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div id="ssAskMore" style="display:none">
       <button class="sa-go" onclick="ssAskGo()">SHOW ME &rarr;</button>
     </div>
+    <!-- The way back to a mixed six. Her question, 2026-08-21: "should we have an
+         option for her to click on variety of items rather than something specific?"
+         ▶ It turned out to be a real DEAD END, not just a missing convenience: once
+         an ask was set, emptying the box and tapping SHOW ME did nothing, so the only
+         escape was leaving the screen entirely.
+         ⚠️ It lives HERE, under the box, rather than beside "Show me different
+         options" at the foot of the page — the confusion is "why is everything a bag",
+         and that question is asked at the top, where the word "bags" is still on
+         screen. It also names what she is looking at, which nothing else did. -->
+    <div id="ssAskNow" style="display:none"></div>
   </div>
   <div id="shopStyleContent"><div class="shop-loading"><div class="shop-star-wrap"><svg class="shop-star-main" viewBox="0 0 24 24"><defs><radialGradient id="shopStarG" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#FFFCEF"/><stop offset=".4" stop-color="#F9E5A0"/><stop offset=".75" stop-color="#F0CB5E"/><stop offset="1" stop-color="#E6B845"/></radialGradient></defs><path fill="url(#shopStarG)" stroke="#B7BCC2" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg></div>Finding your perfect pieces&hellip;</div></div>
   <div class="shop-disclosure">Some links may earn a commission.</div>
@@ -6960,9 +6977,18 @@ function _syncShopAsk(){
     inp.value='';
   }
   _ssAskOpen(false);
+  _ssAskNow();
 }
 function _ssAskOpen(on){
   var m=document.getElementById('ssAskMore');if(m)m.style.display=on?'':'none';
+}
+// Names what she is looking at, and offers the way out of it. Only while an ask is
+// in force; _esc because the words are hers.
+function _ssAskNow(){
+  var n=document.getElementById('ssAskNow');if(!n)return;
+  if(!_ssAsk){n.style.display='none';n.innerHTML='';return;}
+  n.style.display='';
+  n.innerHTML='Showing '+_esc(_ssAsk)+' &middot; <span onclick="ssAskClear()">show me a mix instead</span>';
 }
 // The example clears on focus and returns if she leaves the box empty. A centred
 // placeholder reads as text already typed, which is exactly how it felt to her.
@@ -6971,15 +6997,33 @@ function _ssAskFocus(on){
   if(on){inp.dataset.eg=inp.placeholder||inp.dataset.eg||'';inp.placeholder='';_ssAskOpen(true);}
   else if(!inp.value.trim()){inp.placeholder=inp.dataset.eg||'';}
 }
+// The visible half of the same escape. An empty box is a mechanism, not a control:
+// nobody discovers it. This appears only while an ask is in force.
+function ssAskClear(){
+  var scr=document.getElementById('s-shopstyle');
+  if(scr&&scr.classList.contains('thinking'))return;
+  _ssAsk='';
+  var inp=document.getElementById('ssAskIn');
+  if(inp){inp.value='';inp.placeholder=inp.dataset.eg||'';}
+  _ssAskOpen(false);
+  _ssAskNow();
+  _shopStyleGen();
+}
 function ssAskGo(){
   var scr=document.getElementById('s-shopstyle');
   if(scr&&scr.classList.contains('thinking'))return;   // one generate at a time
   var inp=document.getElementById('ssAskIn');if(!inp)return;
   var v=_askClean(inp.value);
-  if(!v){try{inp.focus()}catch(e){}return;}
+  // 🚨 Her catch: once she had asked for bags there was NO WAY BACK to a mixed six
+  // without leaving the screen. Emptying the box and tapping SHOW ME did nothing at
+  // all, which is a dead end rather than a missing nicety. An empty box now means
+  // "show me a variety" whenever an ask is in force.
+  if(!v){ if(_ssAsk){ _ssAsk=''; _ssAskOpen(false); _ssAskNow(); try{inp.blur()}catch(e){} _shopStyleGen(); return; }
+          try{inp.focus()}catch(e){} return; }
   _ssAsk=v;
   try{inp.blur()}catch(e){}
   _ssAskOpen(false);
+  _ssAskNow();
   _shopStyleGen();
 }
 // One helper even though there is one call site today: the _colorPrefRule lesson

@@ -98,8 +98,23 @@ let r = await pg.evaluate(() => {
       c = document.getElementById('shopStyleContent');
       return !!t && !!(c.compareDocumentPosition(t) & Node.DOCUMENT_POSITION_FOLLOWING); })(),
     align: getComputedStyle(document.getElementById('ssAskIn')).textAlign,
+    boxRadius: getComputedStyle(document.getElementById('ssAskIn')).borderTopLeftRadius,
+    // Her call, 2026-08-21: the star leads the sentence rather than trailing it.
+    // Measured by PAINTED POSITION, not by DOM order — a float or a margin could put
+    // the mark on the right while the markup still reads left-first.
+    starLeads: (() => { const s = document.querySelector('#ssAsk .sa-star'),
+      v = document.querySelector('#ssAsk .sa-vox');
+      if (!s || !v) return false;
+      const sr = s.getBoundingClientRect(), vr = v.getBoundingClientRect();
+      return sr.left - vr.left < 12; })(),
+    nowHidden: getComputedStyle(document.getElementById('ssAskNow')).display === 'none',
   };
 });
+// The box is squared like the cards and the chips before it — her store-window
+// reading, applied to the one control on the screen that was still rounded.
+ok('the box is squared, not rounded', r.boxRadius === '0px', r.boxRadius);
+ok('the pink star LEADS the sentence', r.starLeads);
+ok('nothing about a filter shows before she has asked for anything', r.nowHidden);
 ok('the ask is on screen', r.visible);
 // It must live outside #shopStyleContent: that container's innerHTML is replaced on
 // every generate, so an input inside it would lose her typing on her own refresh.
@@ -199,6 +214,54 @@ ok('...while the ribbed piece is STILL vetoed (taste never waives)', !/Ribbed/i.
 await pg.fill('#ssAskIn', 'ribbed knit tank'); await pg.click('.sa-go'); await pg.waitForTimeout(1600);
 txt = await pg.evaluate(() => document.getElementById('shopStyleContent').innerText);
 ok('even asking for ribbed by name does not override her stylist veto', !/Ribbed/i.test(txt));
+
+// ── 6b. The way back to a variety ───────────────────────────────────────────
+// 🚨 Her question — "should we have an option for her to click on variety of items
+// rather than something specific?" — turned out to name a real DEAD END: once an ask
+// was set, emptying the box and tapping SHOW ME did nothing at all, so the only
+// escape was leaving the screen. Both halves are tested: the visible control, and
+// the empty box that a woman would try first.
+console.log('\n6b. Getting back to a mixed six');
+prompts.length = 0;
+await openShop(pg, 'quiz'); await pg.waitForTimeout(300);
+await pg.fill('#ssAskIn', 'bags'); await pg.click('.sa-go'); await pg.waitForTimeout(1600);
+r = await pg.evaluate(() => { const n = document.getElementById('ssAskNow');
+  return { shown: getComputedStyle(n).display !== 'none', txt: n.innerText,
+           link: !!n.querySelector('span'),
+           // It must sit under the BOX, not down with the refresh button: the
+           // question "why is everything a bag" is asked at the top, where the word
+           // she typed is still on screen.
+           underBox: (() => { const i = document.getElementById('ssAskIn');
+             return !!(i.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING)
+                 && document.getElementById('ssAsk').contains(n); })(),
+           // And it must NOT be inside the container that is replaced on every
+           // generate, or it would blink out on her own refresh.
+           safe: !document.getElementById('shopStyleContent').contains(n) };
+});
+ok('once she asks, the screen names what it is showing', r.shown && /Showing bags/.test(r.txt), r.txt);
+ok('...directly under the box, where the confusion is', r.underBox);
+ok('...outside the container that gets re-rendered', r.safe);
+ok('...and it offers the way out', r.link && /mix instead/.test(r.txt));
+prompts.length = 0;
+await pg.click('#ssAskNow span'); await pg.waitForTimeout(1600);
+ok('tapping it brings back a mixed six', /Mix categories and price points/.test(prompts.join('\n')));
+ok('...and her ask is gone from the prompt', !/"bags"/.test(prompts.join('\n')));
+ok('...the box is empty again', (await pg.inputValue('#ssAskIn')) === '');
+ok('...and the filter line stands down',
+   await pg.evaluate(() => getComputedStyle(document.getElementById('ssAskNow')).display === 'none'));
+// The mechanism a woman would try before she found the link.
+prompts.length = 0;
+await pg.fill('#ssAskIn', 'bags'); await pg.click('.sa-go'); await pg.waitForTimeout(1600);
+prompts.length = 0;
+await pg.fill('#ssAskIn', ''); await pg.click('.sa-go'); await pg.waitForTimeout(1600);
+ok('emptying the box and tapping SHOW ME also returns a mix',
+   /Mix categories and price points/.test(prompts.join('\n')));
+// But an empty box with no ask in force must do nothing at all — she has simply not
+// typed anything yet, and firing a generate there would spin the star for no reason.
+prompts.length = 0;
+await pg.focus('#ssAskIn'); await pg.waitForTimeout(200);   // SHOW ME only shows on focus
+await pg.click('.sa-go'); await pg.waitForTimeout(900);
+ok('an empty box with nothing asked does not fire a pointless search', prompts.length === 0);
 
 // ── 7. Mode gating ──────────────────────────────────────────────────────────
 console.log('\n7. Quiz mode only — her call');
@@ -301,7 +364,9 @@ const paint = await pg.evaluate(() => {
   const bgOf = el => { let n = el; while (n) { const c = getComputedStyle(n).backgroundColor;
     if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; n = n.parentElement; } return 'rgb(255,255,255)'; };
   const g = s => { const e = document.querySelector(s); return e ? { fg: getComputedStyle(e).color, bg: bgOf(e) } : null; };
-  return { vox: g('#ssAsk .sa-vox'), esc: g('#s-shopstyle .ss-shop-talk'), go: g('#ssAsk .sa-go') };
+  const n = document.getElementById('ssAskNow'); if (n) { n.style.display = ''; }
+  return { vox: g('#ssAsk .sa-vox'), esc: g('#s-shopstyle .ss-shop-talk'), go: g('#ssAsk .sa-go'),
+           now: g('#ssAskNow') };
 });
 for (const [k, v] of Object.entries(paint)) {
   if (!v) { ok(k + ' measured', false); continue; }
