@@ -12174,7 +12174,8 @@ function buildCardBlob(source,callback){
        start reading as eight separate things. Whatever is left over falls into the
        gap above the tail rule, which is the seam between HER half of the card and
        the invitation half — the one place a large gap is doing a job. */
-    const SEAMS=8;
+    const SEAMS=7;   // logo, notes, divider + the four in the tail. The
+                     // name->notes seam is deliberately NOT one of them.
     const AIR=Math.min(52,Math.max(0,room-blockH)/SEAMS);
 
     // 4. build the tail, each row carrying its share of the air BELOW it
@@ -12229,21 +12230,17 @@ function buildCardBlob(source,callback){
     ctx.fillText(head,W/2,y+fsHead*0.78);
     ctx.font=fs+'px "DM Serif Display", serif';
     ctx.fillText(rest,W/2,y+fsHead*1.02+fs*0.80);
-    y+=H_NAME+AIR;
+    y+=H_NAME;
 
-    // her own star, replacing a four-point sparkle nobody could name
-    const dy=y+40;
-    ctx.strokeStyle=gold;ctx.lineWidth=1.6;
-    ctx.beginPath();
-    ctx.moveTo(W/2-190,dy);ctx.lineTo(W/2-40,dy);
-    ctx.moveTo(W/2+40,dy);ctx.lineTo(W/2+190,dy);ctx.stroke();
-    star(W/2,dy,17,gold);
-    y+=H_DIV+AIR;
-
-    ctx.fillStyle=BLACK;ctx.font='italic 400 '+ms+'px "Lora", serif';
-    ml.forEach(function(t,i){ctx.fillText(t,W/2,y+ms+i*(ms+16))});
-    y+=H_MOT+AIR;
-
+    /* ⚠️ THE NOTES SIT DIRECTLY UNDER THE NAME, WITH NO AIR SEAM BETWEEN THEM
+       (her call: "it feels like WITH NOTES OF and the 2 secondary archetypes
+       should read right underneath the main one"). She is right, and it is a
+       structural improvement rather than a nudge: the three archetypes are ONE
+       statement about her, so they belong in one group. The star divider then
+       separates that statement from her motto, which is a different kind of
+       sentence, instead of separating the primary archetype from its own notes.
+       ▶ So do NOT add AIR here. The seam above the divider is where the space
+       goes, and that is what keeps the group reading as a group. */
     if(notes.length){
       ctx.fillStyle=TAUPE;ctx.font='600 24px "Jost", sans-serif';
       trackedText('WITH NOTES OF',W/2,y+26,7);
@@ -12259,6 +12256,20 @@ function buildCardBlob(source,callback){
       }
       short.forEach(function(n,i){trackedText(n,W/2,y+82+i*46,3)});
     }
+
+    y+=H_NOT+AIR;
+
+    // her own star, replacing a four-point sparkle nobody could name
+    const dy=y+40;
+    ctx.strokeStyle=gold;ctx.lineWidth=1.6;
+    ctx.beginPath();
+    ctx.moveTo(W/2-190,dy);ctx.lineTo(W/2-40,dy);
+    ctx.moveTo(W/2+40,dy);ctx.lineTo(W/2+190,dy);ctx.stroke();
+    star(W/2,dy,17,gold);
+    y+=H_DIV+AIR;
+
+    ctx.fillStyle=BLACK;ctx.font='italic 400 '+ms+'px "Lora", serif';
+    ml.forEach(function(t,i){ctx.fillText(t,W/2,y+ms+i*(ms+16))});
 
     // 6. the tail, from the bottom edge upward
     let ty=H-FOOT_MARGIN;
