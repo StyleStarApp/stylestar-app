@@ -6898,19 +6898,32 @@ function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e)
 // Her catch that produced it: "floor length gown searches are rather rare, though
 // important when they do happen." These four are her testers' actual asks — a
 // price limit, an occasion, a plain everyday need, and the gown.
+// ⭐ ALL SEVEN ARE HERS (2026-08-21) and they beat the drafts they replaced: three
+// are one or two words ("jeans", "silk blouse", "tote bag"), which teaches that a
+// SHORT ask works. Every draft was a full phrase, quietly implying she had to write
+// a sentence. ⚠️ The "Try:" prefix stays, her call: the box centres its text, so a
+// bare phrase sitting in the middle of it reads as something already typed.
 var _ASK_RING=[
-  'Try: a dress for a wedding',
+  'Try: wedding guest dress',
   'Try: white tops under $100',
-  'Try: comfortable work shoes',
-  'Try: a floor length gown'
+  'Try: jeans',
+  'Try: tan sandals',
+  'Try: a floor length gown',
+  'Try: silk blouse',
+  'Try: tote bag'
 ];
 // Occasion above category, her call ("let's try both rows and see").
 // ▶▶ TAPPING A CHIP FILLS THE BOX, IT DOES NOT RUN A SEARCH. That is precisely
 // what makes "For an event" safe rather than vague: an event is a garden party
 // or a black-tie gala, so she finishes the sentence instead of the model guessing
 // a formality level. It also keeps one code path instead of two.
-var _ASK_OCC=['For an event','Work','Weekend','Vacation','Everyday'];
-var _ASK_CAT=['Dresses','Tops','Bottoms','Shoes','Bags','Jackets'];
+// ⭐ Both rows are hers too. ⚠️ Note what she did to the occasion row: "For an event"
+// is GONE, replaced by "Something formal" — that was the chip flagged as ambiguous
+// (a garden party and a black-tie gala are both events) and she resolved it by naming
+// the FORMALITY instead of the occasion. Sharper than any wording tweak would have
+// been. She also swapped "Jackets" for "Accessories" in the category row.
+var _ASK_OCC=['Work','Weekend','Vacation','Casual life','Something formal'];
+var _ASK_CAT=['Dresses','Tops','Bottoms','Shoes','Bags','Accessories'];
 // ⚠️ SCOPE OF THE ASK, and it matters: it survives "Show me different options"
 // (a refresh of "floor length gown" must return more gowns, not six random
 // things), but it is CLEARED every time the screen is opened. _openShopStyleNow

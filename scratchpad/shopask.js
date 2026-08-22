@@ -118,15 +118,19 @@ r = await pg.evaluate(() => ({
   cat: [...document.querySelectorAll('#ssAskCat .sa-chip')].map(e => e.textContent),
 }));
 ok('both chip rows appear on focus', r.shown);
-ok('occasion row first, and it leads with her testers\' words',
-   r.occ[0] === 'For an event', r.occ.join('|'));
-ok('category row present', r.cat.includes('Dresses'), r.cat.join('|'));
+// Her rows, 2026-08-21. "For an event" is deliberately NOT among them: she replaced
+// it with "Something formal", naming the formality instead of the occasion, which is
+// what made the ambiguous chip precise.
+ok('the occasion row is hers, and names formality not occasion',
+   r.occ.join('|') === 'Work|Weekend|Vacation|Casual life|Something formal', r.occ.join('|'));
+ok('no "For an event" chip survives', !r.occ.includes('For an event'));
+ok('the category row is hers', r.cat.join('|') === 'Dresses|Tops|Bottoms|Shoes|Bags|Accessories', r.cat.join('|'));
 await pg.click('#ssAskOcc .sa-chip');
 r = await pg.evaluate(() => ({ v: document.getElementById('ssAskIn').value,
   focused: document.activeElement && document.activeElement.id === 'ssAskIn' }));
-// A chip FILLS rather than fires: an occasion is ambiguous (a garden party and a
-// black-tie gala are both events), so she finishes the sentence, we don't guess.
-ok('the chip fills the box rather than running a search', /^for an event\s*$/.test(r.v), JSON.stringify(r.v));
+// A chip FILLS rather than fires, so she can finish the sentence herself instead of
+// the model guessing what she meant.
+ok('the chip fills the box rather than running a search', /^work\s*$/.test(r.v), JSON.stringify(r.v));
 ok('...and focus stays put so the keyboard does not drop', r.focused);
 
 // ── 4. Her ask reaches the picks ────────────────────────────────────────────
@@ -183,15 +187,45 @@ ok('back on Shop your style it returns', await pg.evaluate(() =>
 
 // ── 8. The placeholder ring ─────────────────────────────────────────────────
 console.log('\n8. The placeholder rotates, and only on open');
+// DERIVED from the ring, never restated: she can add or cut an example without
+// anyone having to edit a number here (the curated.js lesson).
+const RING = await pg.evaluate(() => _ASK_RING.length);
+ok('the ring has real examples in it', RING >= 4, RING + ' entries');
 const seen = [];
-for (let i = 0; i < 5; i++) { await openShop(pg, 'quiz'); seen.push(await pg.evaluate(() => document.getElementById('ssAskIn').placeholder)); }
-ok('a different example on each visit', new Set(seen.slice(0, 4)).size === 4, seen.join(' | '));
-ok('the ring wraps round to the first', seen[4] === seen[0]);
+for (let i = 0; i <= RING; i++) { await openShop(pg, 'quiz'); seen.push(await pg.evaluate(() => document.getElementById('ssAskIn').placeholder)); }
+ok('a different example on every visit until it runs out',
+   new Set(seen.slice(0, RING)).size === RING, seen.slice(0, RING).join(' | '));
+ok('...then it wraps round to the first', seen[RING] === seen[0]);
+ok('every example is prefixed so it reads as a suggestion, not as typed text',
+   seen.every(s => /^Try: /.test(s)));
 const before = await pg.evaluate(() => document.getElementById('ssAskIn').placeholder);
 await pg.click('.shop-refresh-btn'); await pg.waitForTimeout(1500);
 // Advanced in _openShopStyleNow, never in _shopStyleGen, so a refresh cannot shuffle
 // it under her fingers — the same reasoning that holds the subtitle still.
 ok('a refresh does NOT shuffle it', (await pg.evaluate(() => document.getElementById('ssAskIn').placeholder)) === before);
+
+// ── 8b. Every example fits its box, at every width ──────────────────────────
+console.log('\n8b. No example is cut off — measured, not eyeballed');
+// A placeholder that is too long is CLIPPED, not overflowed, so the overflow sweep
+// in section 12 cannot see it. This is the exact failure the wishlist add-form hit:
+// "The piece, e.g. black studded shoulder bag" needed 287px inside a 230px box and
+// was cut on EVERY phone. Measure the painted text against the real inner width.
+for (const w of [390, 375, 360, 320]) {
+  const f = await fresh(w); await openShop(f.pg, 'quiz');
+  const worst = await f.pg.evaluate(() => {
+    const inp = document.getElementById('ssAskIn'), cs = getComputedStyle(inp);
+    const inner = inp.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const c = document.createElement('canvas').getContext('2d');
+    c.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+    let worstName = '', worstOver = -1e9;
+    _ASK_RING.forEach(s => { const over = c.measureText(s).width - inner;
+      if (over > worstOver) { worstOver = over; worstName = s; } });
+    return { name: worstName, over: Math.round(worstOver), inner: Math.round(inner) };
+  });
+  ok(`${w}px: the longest example still fits ("${worst.name}")`, worst.over <= 0,
+     worst.over + 'px too wide in a ' + worst.inner + 'px box');
+  await f.ctx.close();
+}
 
 // ── 9. The card is a pane in a shop window ──────────────────────────────────
 console.log('\n9. The cards read as panes, and carry no icon');
