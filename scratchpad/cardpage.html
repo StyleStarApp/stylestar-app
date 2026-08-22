@@ -10,7 +10,7 @@ document.fonts.ready.then(()=>Promise.all([
   document.fonts.load('500 30px "DM Sans"')
 ])).then(()=>{window.__fontsReady=true});
 
-const W=1080,H=1350;
+let W=1080,H=1350;
 const ctx=document.getElementById('card').getContext('2d');
 
 /* The REAL drawn logo. logo-tight.png is the dark-ink version built for light
@@ -427,6 +427,65 @@ window.setLine=function(m){LINEMODE=m};
 const BEATS='You don’t follow the room. You set the tone.';
 const SHORT='Ashley, you never follow the room. You set the tone.';
 
+let PROMISE='line';
+window.setPromise=function(p){PROMISE=p};
+
+/* ── THE TAIL, LAID OUT BOTTOM-UP ─────────────────────────────────────────
+   Every collision on this card so far came from the same mistake: pieces
+   positioned by fixed offsets from the TOP while the foot was pinned to the
+   BOTTOM, so anything that grew in the middle walked straight through them.
+   The tail is a stack now. Each row declares its own height, the stack is laid
+   from the bottom edge upward, and the function returns the ceiling the rest of
+   the card must stay above. Nothing can overlap by construction.
+
+   ⚠️ ALL PROMISE COPY IS A CLAUDE DRAFT. Three things are load-bearing and
+   should survive any rewording she does:
+     FREE            her own value-first rule; it removes the only objection
+     THE QUIZ        the thing she is being asked to do, and that it is short
+     A REAL STYLIST  the one claim no competitor can copy (the Sally north star) */
+function drawTail(TAUPE,BLACK,GOLDF){
+  const rows=[];
+  const push=(h,draw)=>rows.push({h,draw});
+
+  push(58,y=>{ ctx.fillStyle=GOLDF;ctx.font='54px "DM Serif Display", serif';
+               ctx.fillText('stylestar.app',W/2,y+46); });
+
+  push(40,y=>{ ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
+               ctx.beginPath();ctx.moveTo(W/2-120,y+20);ctx.lineTo(W/2-14,y+20);
+               ctx.moveTo(W/2+14,y+20);ctx.lineTo(W/2+120,y+20);ctx.stroke();
+               ctx.fillStyle=GOLDF;ctx.beginPath();ctx.arc(W/2,y+20,7,0,7);ctx.fill(); });
+
+  if(PROMISE!=='none'){
+    push(40,y=>{ ctx.fillStyle=TAUPE;ctx.font='500 25px "Jost", sans-serif';
+                 ctx.fillText('Created by a personal stylist of 20 years',W/2,y+28); });
+    if(PROMISE==='items'){
+      const items=['THE FREE STYLE QUIZ','YOUR STYLE PORTRAIT','SHOPPING PICKED FOR YOU'];
+      push(items.length*54+14,y=>{
+        ctx.fillStyle=BLACK;ctx.font='600 27px "Jost", sans-serif';ctx.letterSpacing='3.5px';
+        items.forEach((t,i)=>ctx.fillText(t,W/2,y+34+i*54));
+        ctx.letterSpacing='0px';
+      });
+    }else{
+      push(108,y=>{
+        ctx.fillStyle=BLACK;ctx.font='italic 400 34px "Lora", serif';
+        ctx.fillText('Take the free quiz and meet your own Style Portrait,',W/2,y+40);
+        ctx.fillText('with shopping picked to suit you.',W/2,y+86);
+      });
+    }
+  }
+
+  push(72,y=>{ ctx.fillStyle='#7C766A';ctx.font='italic 400 40px "Lora", serif';
+               ctx.fillText('What\u2019s your Style Star?',W/2,y+50); });
+
+  push(52,y=>{ ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
+               ctx.beginPath();ctx.moveTo(W/2-110,y+26);ctx.lineTo(W/2+110,y+26);ctx.stroke(); });
+
+  // lay the stack from the bottom edge upward
+  let y=H-88;
+  for(const r of rows){ y-=r.h; r.draw(y); }
+  return y;                     // the ceiling everything above must respect
+}
+
 function optF(){
   const PAPER_F='#F7F6F3';
   ctx.fillStyle=PAPER_F;ctx.fillRect(0,0,W,H);
@@ -469,11 +528,11 @@ function optF(){
   ml.forEach((t,i)=>ctx.fillText(t,W/2,dy+96+i*62));
   const after=dy+96+(ml.length-1)*62;
 
-  // bottom-anchored tail. FOOT_TOP is the highest the tail may ever start, so
-  // the notes block is clamped beneath the motto AND above the rule, and a long
-  // motto shortens the gap instead of colliding with the words.
-  const FOOT_TOP=H-330;
-  const notesY=Math.min(after+96,FOOT_TOP);
+  const ceiling = drawTail(TAUPE,BLACK,GOLDF);
+
+  // the notes sit just under the motto, but never below the ceiling the tail
+  // reserved for itself
+  const notesY=Math.min(after+96,ceiling-104);
   ctx.fillStyle=TAUPE;
   ctx.font='600 24px "Jost", sans-serif';ctx.letterSpacing='7px';
   ctx.fillText('WITH NOTES OF',W/2,notesY);ctx.letterSpacing='0px';
@@ -481,25 +540,9 @@ function optF(){
   const short=D.notes.map(n=>n.replace(/^The\s+/i,'').toUpperCase());
   ctx.fillStyle=BLACK;
   let ns=30;ctx.font='600 '+ns+'px "Jost", sans-serif';ctx.letterSpacing='3px';
-  const joined=short.join('   •   ');
+  const joined=short.join('   \u2022   ');
   while(ctx.measureText(joined).width>W-160&&ns>19){ns--;ctx.font='600 '+ns+'px "Jost", sans-serif';}
   ctx.fillText(joined,W/2,notesY+56);ctx.letterSpacing='0px';
-
-  ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
-  ctx.beginPath();ctx.moveTo(W/2-110,H-268);ctx.lineTo(W/2+110,H-268);ctx.stroke();
-
-  ctx.fillStyle='#7C766A';
-  ctx.font='italic 400 40px "Lora", serif';
-  ctx.fillText('What’s your Style Star?',W/2,H-196);
-
-  ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
-  ctx.beginPath();ctx.moveTo(W/2-120,H-158);ctx.lineTo(W/2-14,H-158);
-  ctx.moveTo(W/2+14,H-158);ctx.lineTo(W/2+120,H-158);ctx.stroke();
-  ctx.fillStyle=GOLDF;ctx.beginPath();ctx.arc(W/2,H-158,7,0,7);ctx.fill();
-
-  ctx.fillStyle=GOLDF;
-  ctx.font='54px "DM Serif Display", serif';
-  ctx.fillText('stylestar.app',W/2,H-92);
 }
 // the four-point sparkle from her mockup
 function sparkle(cx,cy,r,fill){
@@ -511,6 +554,9 @@ function sparkle(cx,cy,r,fill){
   ctx.closePath();ctx.fill();ctx.restore();
 }
 
+window.setSize=function(w,h){
+  W=w;H=h;const c=document.getElementById('card');c.width=w;c.height=h;
+};
 window.setPaper=function(m){PAPERMODE=m};
 window.setStress=function(on){
   if(on){

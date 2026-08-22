@@ -57,12 +57,21 @@ if(bad){console.error('A render in fallback faces looks plausible and is worthle
 
 const OPTS = (process.argv[2]||'A,B,C').split(',');
 for(const o of OPTS){
+  // An option is KEY plus any number of dash-separated flags, in any order:
+  //   F-short-items-tall   E-white   D-linen   F-motto!   (! = stress case)
   const stress = o.endsWith('!');
-  let key = stress ? o.slice(0,-1) : o;
-  let mode='linen';
-  let line='motto';
-  const m=key.match(/^([A-Z])-(\w+)$/); if(m){key=m[1];const v=m[2];if(v==='motto'||v==='beats'||v==='short')line=v;else mode=v;}
-  await page.evaluate(([k,st,pm,ln])=>{window.setPaper(pm);window.setLine&&window.setLine(ln);window.setStress&&window.setStress(st);window.drawOption(k);}, [key,stress,mode,line]);
+  const parts = (stress ? o.slice(0,-1) : o).split('-');
+  const key = parts[0];
+  let mode='linen', line='motto', promise='none', size=[1080,1350];
+  for(const v of parts.slice(1)){
+    if(v==='motto'||v==='beats'||v==='short') line=v;
+    else if(v==='line'||v==='items') promise=v;
+    else if(v==='tall') size=[1080,1620];          // her 2:3, ~190px more height
+    else if(v==='white'||v==='linen'||v==='cream') mode=v;
+    else throw new Error('unknown flag "'+v+'" in option "'+o+'" — a silent '
+      +'fallthrough here once rendered the LONG motto and looked like a bug in the card');
+  }
+  await page.evaluate(([k,st,pm,ln,pr,sz])=>{window.setSize(sz[0],sz[1]);window.setPaper(pm);window.setLine&&window.setLine(ln);window.setPromise&&window.setPromise(pr);window.setStress&&window.setStress(st);window.drawOption(k);}, [key,stress,mode,line,promise,size]);
   const el = await page.$('#card');
   await el.screenshot({path:`scratchpad/share-${o.replace('!','-stress')}.png`});
   console.log('wrote scratchpad/share-'+o.replace('!','-stress')+'.png');
