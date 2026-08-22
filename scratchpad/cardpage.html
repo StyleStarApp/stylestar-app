@@ -13,6 +13,11 @@ document.fonts.ready.then(()=>Promise.all([
 const W=1080,H=1350;
 const ctx=document.getElementById('card').getContext('2d');
 
+/* The REAL drawn logo. logo-tight.png is the dark-ink version built for light
+   paper; logo-card.png is the cream one for the dark card and would vanish here.
+   ⚠️ The drawn logo is the ONE place "style Star" keeps its lowercase s — that is
+   the whole exception in the 2026-08-22 capitalisation rule. Using the image
+   rather than typing the words is what keeps this card on the right side of it. */
 /* ── her palette, straight from the app ───────────────────────────────── */
 const LACQUER='#1a1a1a';                       // ink + filled controls
 const GOLDLEAF=['#FEEF98','#F6CE3E','#E4B02E','#F3DC8B'];  // the wb-chip ramp
@@ -28,6 +33,40 @@ const D={
   notes:['The Bold Expressionist','The Modern Trendsetter'],
   motto:'Ashley, you walk in and the room adjusts; your confidence is the accessory.'
 };
+
+const LOGO=new Image();LOGO.src='/logo-tight.png';
+let LOGO_CUT=null;
+/* logo-tight.png is RGBA but its background is baked OPAQUE WHITE (sampled: the
+   corners are 255,255,255,255), so dropped straight onto cream paper it paints a
+   visible white box. logo-star-text.png is genuinely transparent but is only the
+   wordmark, with the star cropped off. So the white is knocked out here, which
+   keeps the black letters AND the gold star AND the slider dot.
+   ⚠️ The alpha ramps over the last 30 levels rather than switching at a
+   threshold, or every anti-aliased letter edge gets a hard white fringe. */
+function cutLogo(){
+  const c=document.createElement('canvas');
+  c.width=LOGO.naturalWidth;c.height=LOGO.naturalHeight;
+  const x=c.getContext('2d');x.drawImage(LOGO,0,0);
+  const im=x.getImageData(0,0,c.width,c.height),p=im.data;
+  for(let i=0;i<p.length;i+=4){
+    const lum=Math.min(p[i],p[i+1],p[i+2]);
+    if(lum>=250)p[i+3]=0;
+    else if(lum>220)p[i+3]=Math.round(p[i+3]*(250-lum)/30);
+  }
+  x.putImageData(im,0,0);LOGO_CUT=c;
+}
+window.__logoReady=new Promise(r=>{
+  const go=()=>{try{cutLogo()}catch(e){}r()};
+  if(LOGO.complete&&LOGO.naturalWidth)go();else{LOGO.onload=go;LOGO.onerror=r;}
+});
+function drawLogo(cy,w){
+  const src=LOGO_CUT||LOGO;
+  if(!src||!(src.width||src.naturalWidth))return 0;
+  const nw=src.width||src.naturalWidth, nh=src.height||src.naturalHeight;
+  const h=w*nh/nw;
+  ctx.drawImage(src,W/2-w/2,cy,w,h);
+  return h;
+}
 
 /* ── helpers ─────────────────────────────────────────────────────────── */
 function diag(x0,y0,x1,y1,stops){
@@ -93,6 +132,33 @@ function foot(colorFaint,colorStrong){
   ctx.fillStyle=colorStrong;
   ctx.font='44px "DM Serif Display", serif';
   ctx.fillText('stylestar.app',W/2,H-88);
+}
+
+/* A vanity-mirror bulb. On lacquer a bulb reads by glow alone; on cream there is
+   no darkness for a halo to bloom into, so it needs a drawn RIM and a seated
+   shadow or it flattens into a dot of paint. */
+function bulbOnPaper(x,y,r){
+  const sh=ctx.createRadialGradient(x,y+2,0,x,y+2,r*2.1);
+  sh.addColorStop(0,'rgba(176,134,28,.30)');sh.addColorStop(1,'rgba(176,134,28,0)');
+  ctx.fillStyle=sh;ctx.beginPath();ctx.arc(x,y+2,r*2.1,0,7);ctx.fill();
+  const g=ctx.createRadialGradient(x-r*.3,y-r*.35,r*.15,x,y,r);
+  g.addColorStop(0,'#FFFDF0');g.addColorStop(.45,'#F6D97E');g.addColorStop(1,'#D8A52E');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();
+  ctx.strokeStyle='rgba(155,116,22,.75)';ctx.lineWidth=1.6;
+  ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.stroke();
+}
+function bulbOnDark(x,y,r){
+  const g=ctx.createRadialGradient(x,y,0,x,y,r*3.2);
+  g.addColorStop(0,'rgba(255,248,214,.95)');g.addColorStop(.45,'rgba(242,216,137,.55)');
+  g.addColorStop(1,'rgba(242,216,137,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*3.2,0,7);ctx.fill();
+  ctx.fillStyle='#FFF6D2';ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();
+}
+function ringBulbs(bx,by,bw,bh,step,r,fn){
+  const pts=[];
+  for(let x=bx+34;x<bx+bw-20;x+=step){pts.push([x,by]);pts.push([x,by+bh]);}
+  for(let y=by+40;y<by+bh-20;y+=step){pts.push([bx,y]);pts.push([bx+bw,y]);}
+  pts.forEach(([x,y])=>fn(x,y,r));
 }
 
 /* ══ A — THE MARQUEE: her archetype up in lights ═══════════════════════ */
@@ -224,9 +290,118 @@ function optC(){
   foot('#B9A87C','#E9C46E');
 }
 
+/* ══ D — THE VANITY MIRROR: her lights, her paper, ON the paper ═══════ */
+function optD(){
+  frame(PAPER);
+  const warm=ctx.createRadialGradient(W/2,340,60,W/2,700,900);
+  warm.addColorStop(0,'#FFFDF7');warm.addColorStop(1,'#F4EFE3');
+  ctx.fillStyle=warm;ctx.fillRect(40,40,W-80,H-80);
+  ctx.strokeStyle='#C89A2C';ctx.lineWidth=2;ctx.strokeRect(74,74,W-148,H-148);
+
+  drawLogo(112,196);
+
+  ctx.textAlign='center';
+  // her name, in the app's own caps. Deliberately NOT a handwritten signature:
+  // Dancing Script + a pink heart is CATHERINE speaking, and this card is the
+  // woman speaking. The two marks must never blur.
+  ctx.fillStyle='#B8871C';
+  ctx.font='600 30px "Jost", sans-serif';ctx.letterSpacing='9px';
+  ctx.fillText(D.name.toUpperCase(),W/2,432);ctx.letterSpacing='0px';
+
+  const bx=104,bw=W-208,by=482,bh=268;
+  ringBulbs(bx,by,bw,bh,54,9,bulbOnPaper);
+
+  const words=D.arch.split(' ');
+  const head=words[0], rest=words.slice(1).join(' ');
+  ctx.fillStyle='#7A6F58';
+  ctx.font='44px "DM Serif Display", serif';
+  ctx.fillText(head,W/2,by+96);
+  const fs=fitFont(rest,'"DM Serif Display", serif',96,52,bw-150);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillStyle=INK;
+  ctx.fillText(rest,W/2,by+208);
+
+  ctx.fillStyle=SOFTINK;
+  ctx.font='italic 400 39px "Lora", serif';
+  wrap('“'+D.motto+'”',W-300).forEach((ln,i)=>ctx.fillText(ln,W/2,858+i*58));
+
+  ctx.fillStyle='#9A8E76';
+  ctx.font='600 25px "Jost", sans-serif';ctx.letterSpacing='5px';
+  ctx.fillText('WITH NOTES OF',W/2,1006);ctx.letterSpacing='0px';
+  ctx.fillStyle=SOFTINK;
+  ctx.font='38px "DM Serif Display", serif';
+  D.notes.forEach((n,i)=>ctx.fillText(n,W/2,1064+i*52));
+
+  foot('#8E8474','#B8871C');
+}
+
+/* ══ E — THE LIT SIGN: her paper, with the sign hung on it ════════════ */
+function optE(){
+  frame(PAPER);
+  const warm=ctx.createRadialGradient(W/2,340,60,W/2,700,900);
+  warm.addColorStop(0,'#FFFDF7');warm.addColorStop(1,'#F4EFE3');
+  ctx.fillStyle=warm;ctx.fillRect(40,40,W-80,H-80);
+  ctx.strokeStyle='#C89A2C';ctx.lineWidth=2;ctx.strokeRect(74,74,W-148,H-148);
+
+  drawLogo(112,196);
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#B8871C';
+  ctx.font='600 30px "Jost", sans-serif';ctx.letterSpacing='9px';
+  ctx.fillText(D.name.toUpperCase(),W/2,432);ctx.letterSpacing='0px';
+
+  // the lacquer plate, hung on the paper
+  const bx=104,bw=W-208,by=482,bh=286;
+  ctx.save();
+  ctx.shadowColor='rgba(60,45,15,.30)';ctx.shadowBlur=26;ctx.shadowOffsetY=9;
+  ctx.fillStyle='#1a1a1a';rrect(bx,by,bw,bh,20);ctx.fill();
+  ctx.restore();
+  ctx.strokeStyle=MARQUEE_RIM;ctx.lineWidth=3;rrect(bx,by,bw,bh,20);ctx.stroke();
+  ringBulbs(bx,by,bw,bh,54,5.2,bulbOnDark);
+
+  const words=D.arch.split(' ');
+  const head=words[0], rest=words.slice(1).join(' ');
+  ctx.fillStyle='#C9B37A';
+  ctx.font='44px "DM Serif Display", serif';
+  ctx.fillText(head,W/2,by+100);
+  const fs=fitFont(rest,'"DM Serif Display", serif',96,52,bw-150);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillStyle=diag(W/2-300,by+130,W/2+300,by+240,GOLDLEAF);
+  ctx.shadowColor='rgba(245,220,140,.45)';ctx.shadowBlur=30;
+  ctx.fillText(rest,W/2,by+216);ctx.shadowBlur=0;
+
+  ctx.fillStyle=SOFTINK;
+  ctx.font='italic 400 39px "Lora", serif';
+  wrap('“'+D.motto+'”',W-300).forEach((ln,i)=>ctx.fillText(ln,W/2,876+i*58));
+
+  ctx.fillStyle='#9A8E76';
+  ctx.font='600 25px "Jost", sans-serif';ctx.letterSpacing='5px';
+  ctx.fillText('WITH NOTES OF',W/2,1018);ctx.letterSpacing='0px';
+  ctx.fillStyle=SOFTINK;
+  ctx.font='38px "DM Serif Display", serif';
+  D.notes.forEach((n,i)=>ctx.fillText(n,W/2,1076+i*52));
+
+  foot('#8E8474','#B8871C');
+}
+
+/* Worst case on record: the longest of the 28 archetype names (25 chars) and a
+   motto at the prompt's own 95-char ceiling, with a long first name. If the card
+   survives this it survives every woman. */
+window.setStress=function(on){
+  if(on){
+    D.name='Alexandria';
+    D.arch='The Polished Professional';
+    D.notes=['The Beautifully Balanced','The Understated Luxury'];
+    D.motto='Alexandria, you dress like the decision has already been made in your favor, always.';
+  }else{
+    D.name='Ashley';D.arch='The Statement Maker';
+    D.notes=['The Bold Expressionist','The Modern Trendsetter'];
+    D.motto='Ashley, you walk in and the room adjusts; your confidence is the accessory.';
+  }
+};
 window.drawOption=function(o){
   ctx.clearRect(0,0,W,H);
   ctx.textBaseline='alphabetic';
-  if(o==='A')optA();else if(o==='B')optB();else optC();
+  if(o==='A')optA();else if(o==='B')optB();else if(o==='C')optC();else if(o==='D')optD();else optE();
 };
 </script>

@@ -30,6 +30,7 @@ const page = await browser.newPage({viewport:{width:1200,height:1500},deviceScal
 
 await page.goto(`http://localhost:${PORT}/scratchpad/cardpage.html`);
 await page.waitForFunction(()=>window.__fontsReady===true, null, {timeout:20000});
+await page.evaluate(()=>window.__logoReady);   // a half-loaded logo paints nothing and looks like a design choice
 
 // Prove the real faces painted — a computed font-family returns the DECLARED stack,
 // so it lies. Width against generic serif is the honest probe (2026-08-17).
@@ -54,12 +55,14 @@ for(const [label,a,b] of pairs){
 }
 if(bad){console.error('A render in fallback faces looks plausible and is worthless. Stopping.');process.exit(1);}
 
-const OPTS = ['A','B','C'];
+const OPTS = (process.argv[2]||'A,B,C').split(',');
 for(const o of OPTS){
-  await page.evaluate(o=>window.drawOption(o), o);
+  const stress = o.endsWith('!');
+  const key = stress ? o.slice(0,-1) : o;
+  await page.evaluate(([k,st])=>{window.setStress&&window.setStress(st);window.drawOption(k);}, [key,stress]);
   const el = await page.$('#card');
-  await el.screenshot({path:`scratchpad/share-${o}.png`});
-  console.log('wrote scratchpad/share-'+o+'.png');
+  await el.screenshot({path:`scratchpad/share-${o.replace('!','-stress')}.png`});
+  console.log('wrote scratchpad/share-'+o.replace('!','-stress')+'.png');
 }
 
 await browser.close();
