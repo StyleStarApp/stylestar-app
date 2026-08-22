@@ -93,6 +93,11 @@ let r = await pg.evaluate(() => {
     heart: !!document.querySelector('#ssAsk .pinkheart'),
     voxFont: getComputedStyle(document.querySelector('#ssAsk .sa-vox')).fontFamily,
     voxStyle: getComputedStyle(document.querySelector('#ssAsk .sa-vox')).fontStyle,
+    escInAsk: !!document.querySelector('#ssAsk .sa-esc'),
+    escBelow: (() => { const t = document.querySelector('#s-shopstyle .ss-shop-talk'),
+      c = document.getElementById('shopStyleContent');
+      return !!t && !!(c.compareDocumentPosition(t) & Node.DOCUMENT_POSITION_FOLLOWING); })(),
+    align: getComputedStyle(document.getElementById('ssAskIn')).textAlign,
   };
 });
 ok('the ask is on screen', r.visible);
@@ -102,10 +107,18 @@ ok('it lives OUTSIDE the container that gets re-rendered', r.outside);
 ok('the chips are hidden until she taps in', r.chipsHidden);
 ok('the placeholder comes from the ring', /^Try: /.test(r.placeholder), r.placeholder);
 ok('the six pieces render without her touching it', r.cards > 0, r.cards + ' cards');
+// Her call after live testing: with the escalation above the pieces the top grew to
+// label + box + link before she saw a single garment, and it read as crowded. Below
+// them it asks "none of these?" at the moment she is actually thinking it.
+ok('the stylist line sits BELOW the pieces, not above them', r.escBelow);
+ok('...and the ask no longer carries one of its own', !r.escInAsk);
 // Her mark system: pink HEART = Catherine speaking, pink STAR = the stylist working.
 // This screen is the stylist working, which is why its loader star is pink too.
 ok('the mark is the stylist PINK STAR', r.star);
 ok('...and NOT her pink heart', !r.heart);
+// A centred placeholder sits in the middle of the field looking like a value, which
+// is precisely why it read to her as text she had to delete.
+ok('the box reads left to right like a field, not centred like a label', r.align === 'left', r.align);
 ok('the sentence is in her light-paper voice (Lora, upright)',
    /Lora/.test(r.voxFont) && r.voxStyle !== 'italic', r.voxFont + ' / ' + r.voxStyle);
 
@@ -288,7 +301,7 @@ const paint = await pg.evaluate(() => {
   const bgOf = el => { let n = el; while (n) { const c = getComputedStyle(n).backgroundColor;
     if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; n = n.parentElement; } return 'rgb(255,255,255)'; };
   const g = s => { const e = document.querySelector(s); return e ? { fg: getComputedStyle(e).color, bg: bgOf(e) } : null; };
-  return { vox: g('#ssAsk .sa-vox'), esc: g('#ssAsk .sa-esc'), go: g('#ssAsk .sa-go') };
+  return { vox: g('#ssAsk .sa-vox'), esc: g('#s-shopstyle .ss-shop-talk'), go: g('#ssAsk .sa-go') };
 });
 for (const [k, v] of Object.entries(paint)) {
   if (!v) { ok(k + ' measured', false); continue; }
