@@ -12364,16 +12364,21 @@ function buildCardBlob(source,callback){
        (.sc-thumb and #cardPreview .scCard) carry this ratio and must change with
        it, or the card is silently cropped or squashed. A test asserts them
        against the image's own dimensions, so it will fail loudly. */
-    /* ⚠️ TOP_MARGIN IS 92, NOT 64, AND IT IS NOT SYMMETRICAL WITH THE FOOT ON
-       PURPOSE. The 4:5 pass took this down to 64 with everything else and that
-       was too far: measured, the logo star's tip sat 2px off the frame while the
-       address had 32px below it, which her eye caught immediately. 92 puts the
-       gap above at ~30px, matching the bottom.
-       ▶ The numbers differ because what they measure differs. FOOT_MARGIN is to
-       a BASELINE, so the descenders and the leading eat into it; TOP_MARGIN is
-       to the top edge of an IMAGE, which has no such slack. Equal numbers here
-       would NOT look equal. */
-    const FOOT_MARGIN=88,TOP_MARGIN=92;   // her call: the logo comes up
+    /* ⚠️ TOP_MARGIN IS 76, AND 76 IS A CEILING, NOT A PREFERENCE. The 4:5 pass
+       took it to 64 along with everything else and that was too far: measured,
+       the logo star's tip sat 2px off the frame while the address had 32px below
+       it, which her eye caught at once. 76 puts it at 13px.
+       ▶ WHY NOT FURTHER, since 13 against 32 is still not balanced: every pixel
+       here comes out of the room the motto is laid out in, and past 76 the
+       shrink loop starts firing on ORDINARY mottos - at 80 a 95-character motto
+       (the prompt's own cap) drops from 40px to 38, at 92 to 36. Her instruction
+       was to move the logo and change nothing else, and 76 is the most that can
+       be done without something else paying for it.
+       ▶ IF SHE EVER WANTS THE FULL 30px, it costs one of two things and both are
+       hers to choose: a foot margin of 88, which brings the address up, or a
+       motto 2px smaller on the longest ones. Measured across four motto lengths;
+       do not just raise this number and let the motto quietly shrink. */
+    const FOOT_MARGIN=96,TOP_MARGIN=76;   // her call: the logo comes up
 
     // 1. the tail's natural height
     /* HER CALL: plain, not fancy. DM Sans is the app's own body face — the one
