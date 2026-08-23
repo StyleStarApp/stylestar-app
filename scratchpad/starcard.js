@@ -204,15 +204,35 @@ const CARD_W=1080,CARD_H=1350;
     let lastInk=-1;
     for(let i=rows.length-1;i>=0;i--) if(rows[i]>0){lastInk=i;break}
     ok(lastInk>-1, name+': the card has ink at all');
-    const bottomGap=rows.length-1-lastInk;
-    /* ⚠️ THE LOWER BOUND WAS 20 AND IS NOW 10, UPDATED DELIBERATELY. The card
-       went 4:5 and its foot margin came down with everything else, so the
-       address now sits 16px above this scan's own edge where it used to sit 60.
-       The CLAIM has not been weakened: the scan already starts 16px inside the
-       paper, so anything reaching the frame reads as 0 here. This still fails
-       if the address is clipped, runs onto the silver, or wanders up the card. */
-    ok(bottomGap>=10&&bottomGap<=140,
-       name+': the address sits near the foot, '+bottomGap+'px off the paper edge');
+    /* ⚠️⚠️ THIS ASSERTION HAS BEEN RE-TUNED THREE TIMES, WHICH MEANS IT WAS THE
+       WRONG ASSERTION. It pinned a bare number for the gap under the address, so
+       every change to the foot margin broke it on a correct card - the fourth
+       flavour of the stale-probe trap in this suite.
+       ▶ What she actually cares about is BALANCE, and she proved it: she caught
+       the logo sitting 2px off the frame while the address had 32px below it,
+       from a phone screenshot. So measure BOTH gaps and compare them to each
+       other. That is her eye, written down, and it needs no editing when a
+       margin moves. */
+    /* ⚠️ THE TOP GAP IS MEASURED WITH A WIDER PROBE THAN `rows` USES, and that
+       is the point rather than an inconsistency. `rows` counts DARK ink, which
+       is right for finding overlapping type - but the topmost thing on this card
+       is the pale gold tip of the logo star, which is nowhere near dark. Measured
+       the dark-only way the gap reads 69px; measured the way an eye sees it, 30.
+       She caught this from a phone screenshot, so the probe has to see what she
+       saw: anything that is not paper. */
+    const notPaper=(x,y)=>{
+      const i=(y*p.w+x)*p.bpp,r=p.px[i],g=p.px[i+1],b=p.px[i+2];
+      return (0.2126*r+0.7152*g+0.0722*b)<215||(Math.max(r,g,b)-Math.min(r,g,b))>45;
+    };
+    let firstMark=-1;
+    for(let y=PAPER_EDGE+2;y<p.h/2&&firstMark<0;y++)
+      for(let x=PAPER_EDGE+56;x<p.w-PAPER_EDGE-56;x++) if(notPaper(x,y)){firstMark=y;break}
+    const gapTop=firstMark-PAPER_EDGE;
+    const gapBottom=16+(rows.length-1-lastInk);
+    ok(gapTop>12&&gapBottom>12,
+       name+': neither end crowds the frame (top '+gapTop+'px, bottom '+gapBottom+'px)');
+    ok(Math.abs(gapTop-gapBottom)<=20,
+       name+': the card sits evenly between its edges (top '+gapTop+'px against bottom '+gapBottom+'px)');
     let bandTop=lastInk;
     while(bandTop>0&&rows[bandTop-1]>0)bandTop--;
     const addressInk=rows.slice(bandTop,lastInk+1).reduce((a,v)=>a+v,0);
@@ -246,6 +266,29 @@ const CARD_W=1080,CARD_H=1350;
      ⚠️ The card DOES shrink the type when a very long motto will not fit, and
      that is fine - shrinking the FACE is not shortening the WORDS. This test is
      deliberately blind to font size for exactly that reason. */
+  /* ⚠️ AND NO DASH SURVIVES ONTO THE CARD. Her house style has none, the quiz
+     prompt says so twice, and the model wrote an em dash into a real woman's
+     motto anyway - which is why _noDash exists in code rather than as a firmer
+     instruction. This drives a dashed motto through the real card and reads the
+     words back off the canvas. */
+  {
+    const dashed='Your prints, your colors, your curves — effortless was always the plan.';
+    const drawn=await page.evaluate(async(m)=>{
+      topArchNames=['The Easygoing Natural','The Vibrant Athlete','The Sunny Classic'];
+      userMotto=m;
+      const proto=CanvasRenderingContext2D.prototype, real=proto.fillText;
+      const seen=[];
+      proto.fillText=function(t,x,y){seen.push({t:String(t),f:this.font});return real.apply(this,arguments)};
+      try{ await new Promise(res=>buildCardBlob('quiz',bl=>res(bl))); }
+      finally{ proto.fillText=real; }
+      return seen.filter(s=>/Lora/.test(s.f)).map(s=>s.t).join(' ');
+    },dashed);
+    ok(!/[—–]/.test(drawn),'no em or en dash reaches the card ("'+drawn+'")');
+    ok(!/\s-\s/.test(drawn),'no spaced hyphen reaches the card either');
+    ok(/your curves, effortless/.test(drawn.replace(/[“”]/g,'')),
+       'the dash became a comma rather than being deleted, so the sentence still reads');
+  }
+
   const mottoCases=[
     ['a one-liner',  'Ashley, bold is your baseline.'],
     ['a typical motto','Ashley, you walk in and the room adjusts; your confidence is the accessory.'],
@@ -424,7 +467,10 @@ const CARD_W=1080,CARD_H=1350;
      "...Find your Style Star at", ending on a dangling preposition. Her catch.
      This is the assertion that would have caught it. */
   const asSent=builtCap.replace(/\s*https?:\/\/\S+\s*$/,'').trim();
-  ok(/[.!?]$/.test(asSent),
+  /* … is in the allowed enders because she chose it deliberately (2026-08-23)
+     and is testing how it lands. The claim is unchanged: the message must not be
+     left hanging mid-thought when Messages removes the url. */
+  ok(/[.!?…]$/.test(asSent),
      'the caption still reads as a finished message once Messages takes the url out ("'+asSent+'")');
   ok(!/\b(at|to|from|with|on|for|in|and)[.!?]?$/i.test(asSent),
      'it does not end on a dangling preposition once the url is removed');

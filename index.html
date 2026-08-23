@@ -5374,7 +5374,27 @@ function prevQ(){if(cur>0){try{history.back();return}catch(e){}cur--;loadQ(cur);
 function dist(a,b){return Math.sqrt(a.reduce((s,v,i)=>s+(v-b[i])**2,0))}
 function getTopArch(){let scored=archetypes.map(a=>({n:a.n,d:dist(answers,a.p)}));scored.sort((a,b)=>a.d-b.d);return scored.slice(0,3)}
 function buildChart(){const c=document.getElementById('fpChart');c.innerHTML='';questions.forEach((q,i)=>{const pct=((answers[i]-1)/10)*100;const delay=(1.7+i*0.05).toFixed(2);c.innerHTML+=`<div class="sig-row"><div class="sig-cat">${q.cat}</div><div class="sig-track"><span class="sig-dot" style="--x:${pct}%;animation-delay:${delay}s"></span><span class="sig-end l">${q.left}</span><span class="sig-end r">${q.right}</span></div></div>`})}
-async function genResult(){_quizClear();_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);track('Quiz Completed',{archetype:topArchNames[0]||'unknown'});const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=JSON.parse(txt.replace(/^```json?\s*/i,'').replace(/\s*```\s*$/,''));if(j&&j.portrait){ptxt=j.portrait;motto=j.motto||''}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
+/* ⚠️ THE NO-DASH RULE IS ENFORCED HERE, NOT ONLY ASKED FOR. Her house style has
+   no dashes anywhere, the quiz prompt says so TWICE ("Never use any dashes or
+   hyphens as punctuation anywhere" and "No dashes" on the motto), and the model
+   wrote one into a real woman's motto anyway: "your curves , effortless was
+   always the plan" arrived with an em dash. Her catch on her own card.
+   ▶ This is the filterNeverWear lesson again, and it is the most repeated one in
+   this project: A RULE NOTHING CHECKS ON THE WAY BACK DRIFTS. If it matters,
+   check the output, do not just word the instruction more firmly.
+   ⚠️ WORD HYPHENS SURVIVE. "long-sleeve" and "button-front" are real words and
+   are left alone; only a dash used as PUNCTUATION goes, which means an em or en
+   dash, or a hyphen with space around it. */
+function _noDash(t){
+  return String(t||'')
+    .replace(/\s*[—–]\s*/g,', ')
+    .replace(/(\S)\s+-\s+(\S)/g,'$1, $2')
+    .replace(/,\s*,/g,', ')
+    .replace(/\s*,\s*([.;:!?])/g,'$1')
+    .replace(/\s{2,}/g,' ')
+    .trim();
+}
+async function genResult(){_quizClear();_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);track('Quiz Completed',{archetype:topArchNames[0]||'unknown'});const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=JSON.parse(txt.replace(/^```json?\s*/i,'').replace(/\s*```\s*$/,''));if(j&&j.portrait){ptxt=_noDash(j.portrait);motto=_noDash(j.motto||'')}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment, and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 // Put a results screen into its "loading" state: closed mirror doors with the
@@ -11950,6 +11970,13 @@ async function doShareCard(){
      actually reaches her friend: the logo, the tagline and a big tappable
      target. Move the url into a sentence and that card is very likely replaced
      by a line of blue text, a weaker door.
+     ⚠️ THE ELLIPSIS IS HER CALL, 2026-08-23, and she is trying it live rather
+     than deciding on argument. It was recommended AGAINST for three reasons
+     worth keeping if it comes back off: it reads as trailing off rather than
+     inviting; the preview card below is already the largest thing in the thread
+     and needs no pointing at; and any forward-pointing punctuation is at risk
+     from rule (2) below, since Messages deletes the url the dots point at.
+     A single character, one line, either way.
      (2) THE SENTENCE BEFORE IT MUST BE COMPLETE WITHOUT IT. Messages does not
      just linkify the url, it REMOVES it from the message body - so
      "Find your Style Star at https://stylestar.app" was delivered to her as
@@ -11960,7 +11987,7 @@ async function doShareCard(){
      ⚠️ NO EMOJI, deliberately: Carson (20s) told Cath the emoji on the shopping
      cards "read as AI to her generation", and this is what a friend reads. */
   const linkText=(_arch?'I got '+_arch+' on this free style quiz from a real personal stylist. ':'A free style quiz from a real personal stylist. ')
-    +'Take it and find your Style Star. https://stylestar.app';
+    +'Take it and find your Style Star\u2026 https://stylestar.app';
   // Share the card image WITH the link in the caption text (not as a separate `url:`
   // field — that's what makes iOS swap to a link preview and drop the image). The
   // https:// prefix is needed so iOS's link detector reliably linkifies the newer
@@ -12027,7 +12054,11 @@ function buildCardBlob(source,callback){
   // which is what stops two women with the same archetype getting the same card.
   // Saves from before mottos existed fall back to the first sentence of her
   // portrait.
-  const cardMotto=(source==='quiz'&&typeof userMotto!=='undefined'&&userMotto)?String(userMotto).trim():'';
+  /* ⚠️ CLEANED AGAIN HERE, deliberately, and not because genResult's cleaning is
+     in doubt: a woman who took the quiz BEFORE the fix has a dash sitting in her
+     saved motto, and the card is where she will see it. One helper, two call
+     sites, so an old save is repaired on render. */
+  const cardMotto=(source==='quiz'&&typeof userMotto!=='undefined'&&userMotto)?_noDash(userMotto):'';
   let quote=cardMotto||portrait.replace(/\*/g,'').replace(/\s+/g,' ').trim();
   if(!cardMotto){
     const end=quote.search(/[.!?](\s|$)/);
@@ -12340,7 +12371,21 @@ function buildCardBlob(source,callback){
        (.sc-thumb and #cardPreview .scCard) carry this ratio and must change with
        it, or the card is silently cropped or squashed. A test asserts them
        against the image's own dimensions, so it will fail loudly. */
-    const FOOT_MARGIN=96,TOP_MARGIN=64;   // her call: the logo comes up
+    /* ⚠️ TOP_MARGIN IS 76, AND 76 IS A CEILING, NOT A PREFERENCE. The 4:5 pass
+       took it to 64 along with everything else and that was too far: measured,
+       the logo star's tip sat 2px off the frame while the address had 32px below
+       it, which her eye caught at once. 76 puts it at 13px.
+       ▶ WHY NOT FURTHER, since 13 against 32 is still not balanced: every pixel
+       here comes out of the room the motto is laid out in, and past 76 the
+       shrink loop starts firing on ORDINARY mottos - at 80 a 95-character motto
+       (the prompt's own cap) drops from 40px to 38, at 92 to 36. Her instruction
+       was to move the logo and change nothing else, and 76 is the most that can
+       be done without something else paying for it.
+       ▶ IF SHE EVER WANTS THE FULL 30px, it costs one of two things and both are
+       hers to choose: a foot margin of 88, which brings the address up, or a
+       motto 2px smaller on the longest ones. Measured across four motto lengths;
+       do not just raise this number and let the motto quietly shrink. */
+    const FOOT_MARGIN=96,TOP_MARGIN=76;   // her call: the logo comes up
 
     // 1. the tail's natural height
     /* HER CALL: plain, not fancy. DM Sans is the app's own body face — the one
