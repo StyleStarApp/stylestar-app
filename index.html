@@ -6384,6 +6384,73 @@ function _tierOf(k){return (STORES[k].t.split('-')[0].match(/\$/g)||[]).length}
 // range: true when the occasion genuinely spans several levels of formality, so
 //    the 6 should cover the spread rather than guess one point. A named ROLE
 //    like mother of the bride does not span, it has one answer.
+// ⭐ HER OWN WORDS, 2026-08-23, on funeral, memorial and interview: "the most
+// important thing is closer to professional and more modest (less alluring)
+// fitted-tailored is ok but you know nothing sexy or revealing and darker
+// colors and solids preferred over bright colors and prints. no mini skirts, no
+// spaghetti straps, no jumpsuits, no shorts and preferably closed toe shoes, no
+// flip flops, no sneakers."
+// ⭐ AND HER FABRIC CALL, given after seeing the first live run come back with
+// a "Fitted Satin Blouse" and a "Velvet Midi Dress": "no satin for funerals or
+// interviews. silk is great there, but no satin and no velvet."
+// ▶ Consistent with her dr3 work-appropriate dresses rule, which already bans
+// satin outright, and stricter than to6, where velvet is merely BRAKED. Neither
+// fabric was a violation of what she had written until she wrote this.
+// 🚨🚨 AND THE CORRECTION THAT SHAPED IT IS THE REUSABLE HALF. Her phrase "less
+// alluring" was first read as a STORE rule, because `alluring` is a scored
+// store dimension sitting right there with the same name, and a modesty CAP on
+// the store ranking was measured and nearly shipped. SHE OVERRULED IT:
+//   "I am ok with all of these stores for a glam woman. A glam woman can find a
+//    funeral outfit at Alice & Olivia and definitely at Neiman Marcus. I don't
+//    want to send a glam trendy fitted woman to J. Crew or Talbot's."
+// ▶▶ SO THE RULE IS ABOUT THE GARMENT, NEVER THE STORE, and the cap would have
+// broken her own standing guard (FIT BEATS DEPTH, ALWAYS). The store ranking is
+// deliberately UNTOUCHED for these occasions: the formality override alone is
+// correct, and a glam woman still shops where she shops.
+// ⚠️ Do not re-derive a store-level modesty rule from this text. It was
+// measured, it looked clean, and it was wrong.
+//
+// Written in the shape her Work-appropriate dresses definition (dr3) had to be
+// rewritten into before the model actually obeyed it: an imperative NEVER,
+// inside the RULES list, closed with "This rule is absolute". A descriptive
+// paragraph placed before the rules did NOT land.
+// ⚠️ HONEST LIMIT, told to her: this governs what the stylist PICKS and NAMES,
+// not what the store's results page shows. "Darker colors and solids" steers
+// the pick; the search still leads with the garment (her own 2026-08-12 call),
+// so the page she lands on may show every colour. Feeds are what fix that.
+const _OCC_PROFESSIONAL='Lean professional and modest for this occasion. Fitted and tailored is fine, but NEVER anything sexy or revealing. Prefer darker colors and solid colors over bright colors and prints. Silk is welcome, but NEVER satin and NEVER velvet. NEVER a mini skirt, spaghetti straps, a strapless or plunging neckline, a jumpsuit, or shorts. If you suggest shoes they must be closed-toe, and NEVER flip flops or sneakers. This rule is absolute, the same weight as her never-wear list.';
+// ⭐ HER SECOND DEFINITION, for a religious service (2026-08-23). DELIBERATELY
+// NOT the sombre one: a service is not a funeral, and colour and print are
+// welcome. What carries over is coverage, nothing else.
+// ▶▶ THE SENSITIVE PART, and it was raised with her rather than quietly encoded.
+// She grouped church, synagogue and mosque, and her instinct was right that one
+// rule cannot make religion-SPECIFIC assumptions honestly: norms differ enormously
+// and getting it wrong would embarrass a woman. Her call: "I don't want to make a
+// mistake on anything embarrassing here and don't want to name religions. I feel
+// you are correct about treating it as formality and modesty."
+// ▶ SO: the vocabulary below matches the words a woman actually TYPES, because a
+// woman who types "church" has to be served, and every one of those words carries
+// this IDENTICAL rule. The app never assumes anything different about one faith
+// than another, and none of these words is ever shown to anyone -- the table is
+// internal. That is the distinction that lets both of her wishes hold at once.
+// ⚠️ Never add a religion-specific clause here. If one faith's norms ever need
+// their own handling, that is a conversation with her, not an edit.
+const _OCC_MODEST='Modest coverage matters for this occasion. Covered shoulders, a hemline at or below the knee, and nothing sheer, low-cut, backless or clingy. Color and print are welcome, this is not a sombre occasion. NEVER satin. This rule is absolute, the same weight as her never-wear list.';
+// ⭐ HER THIRD DEFINITION, for game day (2026-08-23), and it came from seeing the
+// live run: "definitely don't want sequin going out top or strappy heeled sandals
+// for a game day. not even for a glam woman[.] mini skirt is ok".
+// ▶▶ WHY FORMALITY ALONE COULD NOT DO IT, and it is the same shape as her funeral
+// finding: sequins are not about DRESSINESS, they are about PRACTICALITY. A glam
+// woman at 0.3 formality was correctly given her own register and came back with a
+// Sequin Going-Out Top and Strappy Heeled Sandals, which is a night out, not a
+// stadium. Nothing in the dimensions can express "you will be standing on
+// bleachers", so it has to be said.
+// ⚠️ SNEAKERS ARE EXPLICITLY WELCOME HERE, which is the exact OPPOSITE of
+// _OCC_PROFESSIONAL, where they are banned. Same word, opposite standing, both
+// hers. Do not "unify" the two.
+// ⚠️ A MINI SKIRT IS EXPLICITLY FINE, her call, so this must never grow the
+// sombre rule's hemline clause.
+const _OCC_GAMEDAY='This is a casual outdoor occasion spent standing, walking and sitting on bleachers, so every piece must be practical to wear for hours. NEVER evening or going-out pieces: no sequins, no strappy heels, nothing she would wear to a club or a party. Shoes must be flat or low and genuinely walkable, and sneakers and boots are welcome here. Layers work well. A mini skirt is fine. This rule is absolute, the same weight as her never-wear list.';
 const _OCCASIONS=[
   {p:'mother of the bride',f:1.0,retail:true},
   {p:'mother of the groom',f:1.0,retail:true},
@@ -6400,14 +6467,49 @@ const _OCCASIONS=[
   {p:'holiday party',f:0.75,retail:false,range:true},
   {p:'engagement party',f:0.7,retail:false},
   {p:'christening',f:0.7,retail:false},
-  {p:'funeral',f:0.7,retail:false},
-  {p:'memorial',f:0.7,retail:false},
-  {p:'interview',f:0.7,retail:false},
+  {p:'funeral',f:0.7,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'memorial',f:0.7,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'interview',f:0.7,retail:false,define:_OCC_PROFESSIONAL},
+  // ⚠️ MULTI-WORD ON PURPOSE. A bare 'court' would match courtside seats,
+  // a tennis court and a food court; the ask box is free text.
+  {p:'court appearance',f:0.75,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'court date',f:0.75,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'courthouse',f:0.75,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'legal appointment',f:0.75,retail:false,define:_OCC_PROFESSIONAL},
   {p:'graduation',f:0.65,retail:false,range:true},
   {p:'bridal shower',f:0.6,retail:false},
   {p:'baby shower',f:0.6,retail:false},
   {p:'date night',f:0.6,retail:false,range:true},
-  {p:'church',f:0.6,retail:false}
+  // ⚠️ A RELIGIOUS SERVICE, matched by the words women really type. See
+  // _OCC_MODEST above before touching this group -- it is the one place in the
+  // table where a careless edit could embarrass someone.
+  // ⚠️ 'mass' is DELIBERATELY ABSENT: substring matching would fire it on
+  // "massage" and "massive". Same reason 'class' is absent from the school
+  // entry below, where it would fire on "classic" and "classy".
+  {p:'church',f:0.6,retail:false,define:_OCC_MODEST},
+  {p:'synagogue',f:0.6,retail:false,define:_OCC_MODEST},
+  {p:'mosque',f:0.6,retail:false,define:_OCC_MODEST},
+  {p:'temple',f:0.6,retail:false,define:_OCC_MODEST},
+  {p:'religious service',f:0.6,retail:false,define:_OCC_MODEST},
+  // ⚠️ Her intent is a college student going to class, and 0.35 is a
+  // DELIBERATE compromise she agreed to: safe for a student AND for a parent at
+  // a school event, and wrong only for a teacher, who needs the professional
+  // rule instead. The word is genuinely ambiguous and no number fixes that.
+  {p:'school',f:0.35,retail:false},
+  {p:'concert',f:0.5,retail:false,range:true},
+  {p:'festival',f:0.45,retail:false,range:true},
+  {p:'picnic',f:0.4,retail:false},
+  // ⚠️ retail:FALSE despite "game day" measuring as a real Dillard's section
+  // (312KB, 263 mentions). Marked true first, and the live run showed why that
+  // is wrong: it forces the phrase into all six searches, so the model returned
+  // Game Day Top, Game Day Shorts, Game Day Jacket, Game Day Sneakers, Game Day
+  // Tote and Game Day Earrings. Six cards with the same two words on them.
+  // ▶▶ THE RULE THIS SETTLES, and it applies to every future retail:true entry:
+  // the phrase belongs in the search when the ask is for ONE KIND of garment,
+  // and NOT when the occasion calls for a whole outfit across categories.
+  // Mother of the bride is the first kind; game day is the second.
+  {p:'game day',f:0.3,retail:false,define:_OCC_GAMEDAY},
+  {p:'tailgate',f:0.3,retail:false,define:_OCC_GAMEDAY}
 ];
 // The longest matching phrase wins, so the table above can be edited in any
 // order and "wedding guest" can never be shadowed by "wedding".
@@ -7560,6 +7662,9 @@ function _askedForRule(){
   r+=o.range
     ? '- That occasion spans several levels of formality, so COVER THE RANGE across the 6 rather than guessing one point on it.\n'
     : '- That occasion has ONE clear level of formality. Dress her for exactly that and do not spread the 6 across dressy and casual: every single piece must be right to wear to it.\n';
+  // Her garment definition for this occasion, when she has written one. See
+  // _OCC_PROFESSIONAL: it constrains the PIECES, never the store.
+  if(o.define)r+='- '+o.define+'\n';
   return r;
 }
 /* ── THE WAY BACK (2026-08-22) ──────────────────────────────────────────────
