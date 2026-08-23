@@ -6438,6 +6438,12 @@ const _OCCASIONS=[
   {p:'funeral',f:0.7,retail:false,define:_OCC_PROFESSIONAL},
   {p:'memorial',f:0.7,retail:false,define:_OCC_PROFESSIONAL},
   {p:'interview',f:0.7,retail:false,define:_OCC_PROFESSIONAL},
+  // ⚠️ MULTI-WORD ON PURPOSE. A bare 'court' would match courtside seats,
+  // a tennis court and a food court; the ask box is free text.
+  {p:'court appearance',f:0.75,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'court date',f:0.75,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'courthouse',f:0.75,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'legal appointment',f:0.75,retail:false,define:_OCC_PROFESSIONAL},
   {p:'graduation',f:0.65,retail:false,range:true},
   {p:'bridal shower',f:0.6,retail:false},
   {p:'baby shower',f:0.6,retail:false},

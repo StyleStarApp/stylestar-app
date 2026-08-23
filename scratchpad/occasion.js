@@ -115,7 +115,8 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
   // Cath, 2026-08-23. ⚠️ The load-bearing assertion here is the LAST one: the
   // store ranking must stay untouched, because she overruled a store-level
   // modesty cap ("a glam woman can find a funeral outfit at Neiman Marcus").
-  for(const ask of ['something for a funeral','a memorial service','job interview outfit']){
+  for(const ask of ['something for a funeral','a memorial service','job interview outfit',
+                    'what to wear to a court appearance','outfit for a legal appointment']){
     const d=await pg.evaluate(a=>{_ssAsk=a;return _askedForRule()},ask);
     ok(d.indexOf('NEVER anything sexy or revealing')>=0, `"${ask}" carries her modesty rule`);
     ok(d.indexOf('darker colors and solid colors')>=0,   `"${ask}" carries her colour preference`);
@@ -123,6 +124,12 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
     ok(d.indexOf('closed-toe')>=0 && d.indexOf('NEVER flip flops or sneakers')>=0, `"${ask}" carries her shoe rule`);
     ok(d.indexOf('This rule is absolute')>=0,            `"${ask}" closes absolute (the dr3 shape)`);
     ok(d.indexOf('Silk is welcome, but NEVER satin and NEVER velvet')>=0, `"${ask}" carries her fabric call`);
+  }
+  for(const [ask,want] of [['courtside seats outfit',false],['a food court lunch',false],
+                           ['court date outfit',true]]){
+    const d=await pg.evaluate(a=>{_ssAsk=a;return _askedForRule()},ask);
+    const hit=d.indexOf('NEVER a mini skirt')>=0;
+    ok(hit===want, `"${ask}" ${want?'DOES':'does NOT'} trip the professional rule`);
   }
   // An occasion she did NOT write a definition for must not inherit one.
   const noDef=await pg.evaluate(()=>{_ssAsk='wedding guest dress';return _askedForRule()});
