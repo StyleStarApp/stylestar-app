@@ -3025,7 +3025,18 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 #s-res .p3-hubwrap{padding-top:16px}
 .res-screen .sc-lead{margin:2px 0 13px;text-align:center;color:#C8971E;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
 .res-screen .sc-lead i{display:none}
-.res-screen .sc-row{display:flex;align-items:center;gap:11px;padding:2px 2px 3px;cursor:pointer;text-align:left}
+/* ⚠️ A COLUMN, NOT A ROW, and the class name is now a small lie kept on purpose:
+   renaming it would touch the markup, the harnesses and starcard.js for nothing.
+   ▶ HER CALL 2026-08-23, "the Style Card should show bigger on the Style Portrait
+   page", picked from four rendered sizes. The side-by-side row it used to be has
+   a HARD CEILING of 134px: past that "Style Star Card" wraps and the title goes
+   to FOUR lines. So bigger than 132 is not a number change, it is a layout
+   change, which is what this is.
+   ▶ WHY BIGGER IS WORTH THE HEIGHT, and it is the whole argument: at 88px the
+   card was a grey rectangle. At 196 her archetype name, her motto and
+   stylestar.app are all legible. The card's only job is to make her want to send
+   it, and it cannot do that job at a size where its words cannot be read. */
+.res-screen .sc-row{display:flex;flex-direction:column;align-items:center;gap:12px;padding:2px 2px 3px;cursor:pointer;text-align:center}
 /* ⚠️ THE BOX MUST MATCH THE CARD'S OWN SHAPE. It was 1080/1350 with
    object-fit:cover, left over from when the card was 4:5, so a 9:16 card
    was being CROPPED in the preview - her catch on her phone, and the part
@@ -3034,11 +3045,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    110px, exactly what 88 x 1350/1080 gave); a taller box would have grown
    the row instead. ▶ If the card's proportions ever change, change this
    with them. */
-.res-screen .sc-thumb{width:88px;flex:0 0 auto;aspect-ratio:1080/1350;border-radius:0;overflow:hidden;background:#141210;box-shadow:0 4px 12px -3px rgba(0,0,0,.6),inset 0 0 0 1px rgba(214,169,70,.5)}
+.res-screen .sc-thumb{width:196px;flex:0 0 auto;aspect-ratio:1080/1350;border-radius:0;overflow:hidden;background:#141210;box-shadow:0 5px 16px -4px rgba(0,0,0,.6)}
 .res-screen .sc-thumb img{width:100%;height:100%;object-fit:contain;display:block}
 .res-screen .sc-tt{font-family:'DM Serif Display',Georgia,serif;font-size:16px;font-weight:400;line-height:1.16;color:#211E1A}
 .res-screen .sc-ss{font:400 13px/1.4 'Jost',sans-serif;color:#453f37;margin-top:4px}
-.res-screen .sc-ar{width:20px;height:20px;margin-left:3px;flex:0 0 auto}
 .res-screen .act{cursor:pointer;margin-top:18px}
 .res-screen .actrow{display:flex;align-items:flex-end;gap:12px;padding:0 4px 3px;text-align:left}
 .res-screen .chip{width:44px;height:44px;border-radius:10px;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
@@ -3548,6 +3558,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-grp">Style</div>
   <div class="menu-row" onclick="menuGo(menuQuiz)">Style Quiz<span class="menu-start" id="menuStartPill">Start here</span></div>
   <div class="menu-row" onclick="menuGo(wbPortraitTap)">Style Portrait</div>
+  <div class="menu-row" onclick="menuGo(menuStyleCard)">Style Star Card</div>
   <div class="menu-row" onclick="menuGo(menuRefine)">Refine your Preferences</div>
   <div class="menu-row" onclick="menuGo(showPhoto)">Analyze your Outfit</div>
   <div class="menu-row" onclick="menuGo(openChat)">Ask your Stylist</div>
@@ -3640,8 +3651,13 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <div class="sc-lead"><i class="l"></i>Your Style Star Card<i class="r"></i></div>
       <div class="sc-row" data-shelf onclick="saveStyleCard('quiz')">
         <span class="sc-thumb"><img id="scThumb" alt="Your Style Star card preview"></span>
-        <div class="tx"><div class="sc-tt">See &amp; share your<br>Style Star Card</div><div class="sc-ss">Your style, ready to send to a friend</div></div>
-        <svg class="sc-ar" style="color:#C8971E" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>
+        <!-- The hardcoded <br> is gone with the side-by-side layout: it forced two
+             lines to fit a narrow text column that no longer exists, and centred
+             under a 196px card the sentence balances on its own. The trailing
+             arrow went with it, her pick: the card itself is now the tap target
+             and it is 196px of it. ⚠️ If it ever stops reading as tappable, the
+             fix is one arrow after the title, not a smaller card. -->
+        <div class="tx"><div class="sc-tt">See &amp; share your Style Star Card</div><div class="sc-ss">Your style, ready to send to a friend</div></div>
       </div>
     </div>
     </div>
@@ -5325,6 +5341,40 @@ function menuShopStyle(){if(_hasQuizData())openShopStyle();else startQ()}
 // here): same honest routing as the other personal rows — preferences refine
 // HER style, so a new visitor's real first step is the quiz.
 function menuRefine(){if(_hasQuizData())openPrefs();else startQ()}
+/* Her card, reachable by NAME (her ask 2026-08-23: "wondering if share style
+   card should be on our drop down menu?").
+   ▶ WHY IT EARNS A ROW when the Menu is already twenty: it was reachable from
+   exactly TWO screens, the Style Portrait and the photo results, so a woman
+   deep in shopping had no route back to it at all. That is her own mother's
+   lesson pointed at the newest feature — a thing you can only find by spotting
+   a panel on one page may as well not exist. And it is the app's only piece of
+   distribution: four women have shared their results by hand and not one of
+   those shares carried a link, while every card that gets sent carries
+   stylestar.app on its face.
+   ⚠️ HONEST ROUTING, the same shape as menuShopStyle and menuRefine above: the
+   card is drawn FROM her quiz answers, so there is nothing to build for a woman
+   who has not taken it, and her real first step is the quiz. _hasQuizData() is
+   the strict predicate on purpose — a name-only saved record would otherwise
+   route her into a card with no archetype and no motto.
+   ⚠️ Deliberately NOT next to "Share Style Star" in the About group, although
+   both share something: that one shares the SITE and this one shares HER. Kept
+   up here beside the portrait it is generated from, so the two never read as
+   duplicates of each other. */
+function menuStyleCard(){
+  /* ⚠️⚠️ THE TWO BRANCHES CLOSE THE DRAWER DIFFERENTLY, AND IT IS NOT A TIDY-UP
+     WAITING TO HAPPEN. menuGo() only strips the menu-open class; it deliberately
+     does NOT pop the drawer's own history entry, because it relies on the
+     destination NAVIGATING and replacing that entry (an async history.back()
+     would race the push). Every other Style row navigates, so menuGo is right
+     for them. This row does not: with a card to show it opens an OVERLAY on top
+     of whatever screen she was reading, exactly like menuShare(), so the drawer's
+     entry has to be popped by menuClose() or her hardware Back press is spent
+     silently on a drawer that is already shut. The quiz branch DOES navigate, so
+     it keeps menuGo. */
+  if(!_hasQuizData()){menuGo(startQ);return}
+  menuClose();
+  saveStyleCard('quiz');
+}
 // Share the SITE, never her results (Cath's ask 2026-07-31). A plain
 // stylestar.app link carries nothing personal: results live in her own
 // browser + behind the emailed token, so a friend always lands on the fresh
@@ -12446,11 +12496,6 @@ function buildCardBlob(source,callback){
   ready().then(render).catch(render);
 
   // ── helpers ───────────────────────────────────────────────────────────────
-  function diag(x0,y0,x1,y1,stops){
-    const g=ctx.createLinearGradient(x0,y0,x1,y1);
-    stops.forEach(function(c,i){g.addColorStop(i/(stops.length-1),c)});
-    return g;
-  }
   /* ⚠️ Tracking is drawn PER CHARACTER rather than with ctx.letterSpacing.
      letterSpacing is unsupported on older Safari, where it is silently ignored —
      so the caps would lose their spacing AND measureText would report a width
@@ -12554,11 +12599,13 @@ function buildCardBlob(source,callback){
 
   function drawCard(){
     const TAUPE='#8A8478',BLACK='#12100E';
-    /* ⚠️ ORDER IS LOAD-BEARING on both ramps: a diagonal gradient puts its FIRST
-       stop in the top-left corner, so a highlight at either end leaves that
-       whole edge pale (measured 1.07:1 against this paper, i.e. invisible).
-       The highlight sits in the middle. Do not sort these. */
-    const MIRROR=['#FFFFFF','#C6CACE','#8C9298','#F2F4F6','#9AA0A6','#DFE2E5','#FFFFFF'];
+    /* The MIRROR ramp that used to live here is DELETED, not commented out, and
+       so is the diag() helper that was its only caller. It filled the frame with
+       ONE diagonal gradient stretched across the whole canvas, which is exactly
+       the fault she caught on 2026-08-23 — see the note at the frame below. A
+       dead gradient left sitting in a drawing function is precisely the sort of
+       thing a later session re-adopts by accident, and this one would bring the
+       shadow back with it. */
     /* ⚠️ THE LOGO'S OWN GOLD, SAMPLED FROM logo-tight.png ITSELF, not guessed:
        the slider line and dot in the drawn logo are #E0B71B. The card's foot was
        drawing #C9992B at 55%, which is browner and darker — her catch, and she
@@ -12574,22 +12621,84 @@ function buildCardBlob(source,callback){
        stand alone; the star carries its own gradient and the foot rules take the
        logo's gold. Nothing was left needing a leaf ramp, and a dead gradient in a
        drawing function is exactly the sort of thing a later session re-adopts by
-       accident. The ORDER lesson it carried is kept where it still applies, on
-       MIRROR above: a diagonal gradient puts its first stop in the top-left
-       corner, so a highlight at either end leaves that whole edge pale. */
+       accident. The ORDER lesson it carried now lives on BEVEL below, where it
+       still applies — and the diagonal-gradient half of it was retired the same
+       way, by her, on 2026-08-23: a single diagonal across a rectangle is what
+       made the frame's four sides four different metals. */
 
-    paperInset(0);
-    // the silver mirror band, her frame
-    // her call: thicker. 22px band -> 44px.
-    const FR_OUT=20,FR_IN=64;
-    ctx.fillStyle=diag(0,0,W,H,MIRROR);ctx.fillRect(FR_OUT,FR_OUT,W-2*FR_OUT,H-2*FR_OUT);
+    /* ── HER SILVER FRAME (2026-08-23) ────────────────────────────────────────
+       Two of her asks in one change, in her words:
+         "On the silver frame I want it to bleed out to the edges, no white
+          around the outer edge of frame."
+         "On the silver I don't like the gradient shadowy look. I don't mind it
+          looks shiny like a mirror but I want all one symmetrical color."
+       ▶ SHE WAS RIGHT, AND THE NUMBER SAYS HOW RIGHT. The old band was ONE
+       diagonal gradient stretched across the whole canvas, so opposite sides of
+       the frame got opposite ends of the ramp. Measured at the same point on
+       each of the four edges: bottom 62, top 49, right 37, LEFT 30. The bottom
+       edge was TWICE as bright as the left. That is not a sheen, it is a shadow
+       lying across a frame that is meant to be one piece of metal.
+       ⚠️⚠️ SECOND SIGHTING OF THIS EXACT FAULT IN THIS FILE — see the note at
+       the top of the stylesheet, where the Info and Shop page frames had it too
+       ("OPPOSITE SIDES OF THE SAME FRAME WERE DIFFERENT COLOURS"). The card
+       walked into it independently, which is what makes it a rule rather than a
+       coincidence:
+       ▶▶ A SINGLE GRADIENT ACROSS A WHOLE RECTANGLE CANNOT DRAW A SYMMETRICAL
+       FRAME. Its first stop lands in one corner and its last in the opposite
+       one, so the four sides are four different metals by construction. Draw
+       the four sides.
+       ▶ SO: a mitred bevel. Each side is a trapezoid filled with the SAME ramp
+       running outer edge -> inner edge, perpendicular to that side, so all four
+       are the identical metal and the corners meet on a 45 degree mitre the way
+       a real frame does. Measured spread across the four sides afterwards: 0.0.
+       ⚠️ AND THE BLEED BUYS MORE THAN TIDINESS, which is worth knowing before
+       anyone puts a margin back: the card's outermost ring used to be white
+       PAPER, which sits at 1.10:1 against a white message bubble — so on a light
+       background the card had no outer edge at all and dissolved into the
+       thread. The bevel's outer ring holds 1.22:1.
+       ⚠️ FR_IN STAYS 64. The frame's INNER edge is where the paper starts, so
+       moving it moves every word on the card. Only the outer margin went. */
+    const FR_OUT=0,FR_IN=64;
+    /* Her pick D of four rendered: the softer of the two bevel profiles,
+       brushed metal rather than chrome.
+       ⚠️ ORDER IS OUTER -> INNER, and it IS the shape of the frame: a lift to a
+       highlight just inside the outer edge, easing down to a shadow where the
+       metal meets the paper, then a small lift on the very inside. Sorting
+       these, or reversing them, is a different frame — reversed it reads as a
+       groove cut into the sheet rather than a frame standing on it. */
+    const BEVEL=['#C2C7CC','#E8EAED','#D5D9DD','#B4BAC0','#A6ACB2','#C9CDD2'];
+    /* ⚠️ A FLAT UNDERCOAT, where this used to be paperInset(0). The frame now
+       reaches the canvas edge, so a full-sheet paper fill would be drawn and
+       then covered completely — and worse, any antialiasing seam where the four
+       mitres meet would show WHITE through the metal. An undercoat in the
+       bevel's own outer tone makes a seam invisible instead. */
+    ctx.fillStyle=BEVEL[0];ctx.fillRect(0,0,W,H);
+    (function(){
+      /* Four trapezoids, written against FR_OUT/FR_IN rather than a computed
+         thickness, so the geometry stays right if the band is ever re-cut. */
+      function side(pts,gx0,gy0,gx1,gy1){
+        ctx.save();ctx.beginPath();ctx.moveTo(pts[0],pts[1]);
+        for(let i=2;i<pts.length;i+=2)ctx.lineTo(pts[i],pts[i+1]);
+        ctx.closePath();ctx.clip();
+        const g=ctx.createLinearGradient(gx0,gy0,gx1,gy1);
+        BEVEL.forEach(function(c,i){g.addColorStop(i/(BEVEL.length-1),c)});
+        ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.restore();
+      }
+      const O=FR_OUT,I=FR_IN;
+      side([O,O, W-O,O, W-I,I, I,I],           0,O,   0,I);      // top
+      side([W-O,O, W-O,H-O, W-I,H-I, W-I,I],   W-O,0, W-I,0);    // right
+      side([O,H-O, W-O,H-O, W-I,H-I, I,H-I],   0,H-O, 0,H-I);    // bottom
+      side([O,O, O,H-O, I,H-I, I,I],           O,0,   I,0);      // left
+    })();
     paperInset(FR_IN);
     /* ⚠️ A light silver stop is within 1.04:1 of this paper, so where the frame
-       meets the sheet it dissolves and the frame loses its inner edge. These two
-       hairlines are what keep it reading as a frame rather than a floating band. */
+       meets the sheet it dissolves and the frame loses its inner edge. This
+       hairline is what keeps it reading as a frame rather than a floating band.
+       ⚠️ THE OUTER HAIRLINE IS GONE ON PURPOSE, and do not put it back: with
+       FR_OUT at 0 it would sit half off the canvas, and there is nothing left
+       for it to define — the edge of the image IS the edge of the frame now. */
     ctx.lineWidth=1;
     ctx.strokeStyle='rgba(90,95,100,.28)';ctx.strokeRect(FR_IN+.5,FR_IN+.5,W-2*FR_IN-1,H-2*FR_IN-1);
-    ctx.strokeStyle='rgba(90,95,100,.22)';ctx.strokeRect(FR_OUT+.5,FR_OUT+.5,W-2*FR_OUT-1,H-2*FR_OUT-1);
 
     ctx.textAlign='center';ctx.textBaseline='alphabetic';
 

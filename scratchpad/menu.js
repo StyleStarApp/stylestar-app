@@ -190,6 +190,13 @@ console.log("\n4c. Journey order + the Start-here pill (Cath, 2026-07-31)");
   const iQuiz = order.indexOf('Style Quiz'), iPort = order.indexOf('Style Portrait'), iRef = order.indexOf('Refine your Preferences');
   ok('Style group reads in journey order: Quiz, then Portrait, then Refine',
     iQuiz > -1 && iQuiz < iPort && iPort < iRef, JSON.stringify({ iQuiz, iPort, iRef }));
+  /* The card sits DIRECTLY below the portrait it is generated from, and that
+     placement is the decision, not an accident: it was deliberately not put in
+     About beside "Share Style Star", because that row shares the SITE and this
+     one shares HER. Next to the portrait the two can never read as duplicates. */
+  const iCard = order.indexOf('Style Star Card');
+  ok('Style Star Card sits directly below Style Portrait, not beside Share Style Star',
+    iCard === iPort + 1, JSON.stringify({ iPort, iCard, iShareRow: order.indexOf('Share Style Star') }));
   const iShop = order.indexOf('Shop your Style'), iWl = order.indexOf('Your Wishlist'),
     iEdit = order.indexOf('Style Star Edit'), iMall = order.indexOf('Style Star Mall');
   ok('Shop group order: Shop your Style, Your Wishlist, Edit, Mall last (Cath, 2026-07-31)',
@@ -256,7 +263,7 @@ ok('new visitor sees the gold "Start here" pill on Style Quiz', await fresh.eval
 await fresh.click('.menu-row:has-text("Style Quiz")');
 ok('Style Quiz → s-quiz, question 1', await fresh.evaluate(() =>
   document.querySelector('.scr.act').id === 's-quiz' && document.getElementById('pl').textContent === '1 of 12'));
-for (const label of ['Style Portrait', 'Shop your Style', 'Refine your Preferences']) {
+for (const label of ['Style Portrait', 'Shop your Style', 'Refine your Preferences', 'Style Star Card']) {
   await fresh.evaluate(() => { show('s-wel'); menuOpen(); });
   await fresh.click('.menu-row:text-is("' + label + '")');
   ok('"' + label + '" with no saved data honestly routes to the quiz', await fresh.evaluate(() =>
@@ -295,6 +302,54 @@ ok('no JS errors (progress-bar drive)', pq.errors.length === 0, pq.errors.join('
 await pq.context().close();
 
 // ---------------------------------------------------------------------------
+console.log("\n5c. Style Star Card — the one row that opens an overlay, not a screen");
+/* Her ask 2026-08-23: "wondering if share style card should be on our drop down
+   menu?" It was reachable from exactly two screens before this, so a woman deep
+   in shopping had no route back to it — her own mother's lesson pointed at the
+   newest feature. */
+const pc = await newPage(390, true);
+await pc.evaluate(() => { show('s-wb'); });
+const histBefore = await pc.evaluate(() => history.length);
+await pc.evaluate(() => menuOpen());
+await pc.click('.menu-row:text-is("Style Star Card")');
+/* ⚠️ WAIT FOR THE THING, NEVER A FIXED DELAY. The card is drawn on a canvas
+   behind a font-loading promise, so how long it takes is a property of the
+   machine, not of the app — a 1600ms sleep passed on one run and failed on the
+   next while the overlay was arriving in ~700ms either way. Waiting on the
+   element is both faster and honest, and a miss FAILS A CHECK rather than
+   throwing, so the twenty assertions below it still get to run. */
+let cardShown = true;
+try { await pc.waitForSelector('#cardPreview', { timeout: 15000 }); }
+catch (e) { cardShown = false; }
+ok('the row opens her card', cardShown);
+ok('the drawer closed behind it', await pc.evaluate(() =>
+  !document.body.classList.contains('menu-open')));
+/* ⚠️⚠️ THE ASSERTION THIS SECTION EXISTS FOR, and it caught a real bug before
+   it shipped. menuGo() deliberately does NOT pop the drawer's own history entry
+   — it relies on the destination NAVIGATING and replacing it. This row does not
+   navigate: it opens an overlay on top of whatever she was reading. Wired
+   through menuGo, the drawer's entry would be left dangling and her first
+   hardware Back press would be spent silently on a drawer that is already shut,
+   with the card still sitting there. menuClose() pops it, so the count returns
+   to where it started. */
+/* ⚠️ MEASURED ON _menuPushed, NOT ON history.length — the first version of this
+   assertion used the length and was simply WRONG about how history works:
+   history.back() moves the pointer, it does not remove the entry, so the length
+   never comes back down and the check failed on a correct fix. _menuPushed is
+   the app's own record of whether the drawer still owes a pop, which is exactly
+   the claim. ▶ Assert the state that means the thing, not a number that
+   correlates with it. */
+ok('the drawer left no dangling history entry to eat her Back press',
+   await pc.evaluate(() => _menuPushed) === false,
+   'history was ' + histBefore + ' before opening the drawer');
+/* And she is returned to where she was, not moved somewhere new: the overlay is
+   a layer, so the screen underneath must be untouched. */
+ok('she is still on the screen she was reading underneath', await pc.evaluate(() =>
+  document.querySelector('.scr.act').id === 's-wb'));
+ok('no JS errors (card from the menu)', pc.errors.length === 0, pc.errors.join(' | '));
+await pc.context().close();
+
+// ---------------------------------------------------------------------------
 console.log('\n6. Readability + fit at 360px');
 const p360 = await newPage(360, true);
 await p360.evaluate(() => { show('s-wel'); menuOpen(); });
@@ -308,14 +363,16 @@ const fit = await p360.evaluate(() => {
 function lum(rgb) { const [r, g, b] = rgb.map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; }
 const ratio = (Math.max(lum(fit.fg), lum([251, 250, 247])) + 0.05) / (Math.min(lum(fit.fg), lum([251, 250, 247])) + 0.05);
 ok('drawer fits inside 360px, no sideways scroll', fit.panelW <= 303 && fit.viewportOk, JSON.stringify(fit));
-// 20 since "Add as an App" joined the About group above Contact (Cath,
+// 21 since "Style Star Card" joined the Style group directly below Style
+// Portrait (her ask, 2026-08-23 — it is the app's only piece of distribution and
+// it was reachable from two screens only). 20 was "Add as an App" (Cath,
 // 2026-08-19 — her ask, so the install invitation has a findable PLACE and not
 // only the Welcome Back whisper, which a first-time visitor never sees). 19 was
 // Contact (2026-08-17); 18 was "Follow on Instagram" (2026-08-08). Deliberate
 // update, not a silence: an explicit count is what makes a row going MISSING
 // fail loudly. ⚠️ Verified separately that nothing WRAPS — every row measured
 // 43-44px against this 46px threshold, so only the count moved.
-ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 20);
+ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 21);
 ok('row text contrast ≥ 4.5:1 (got ' + ratio.toFixed(1) + ':1)', ratio >= 4.5);
 ok('no JS errors @360', p360.errors.length === 0, p360.errors.join(' | '));
 await p360.context().close();

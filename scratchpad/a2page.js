@@ -1,7 +1,15 @@
 // "Add as an App" page — her ask 2026-08-19, her pick B + "Add as an App".
 // ⚠️ Drives the REAL app. Never asserts against a display:none element (the
 // standing trap) — the menu is opened for real and the page navigated to.
-import { chromium } from 'playwright';
+/* ⚠️ THE ABSOLUTE PATH IS LOAD-BEARING, and this suite spent time proving it:
+   playwright is never a project dependency (see .gitignore — node_modules is
+   installed fresh per session, if at all), so a bare `from 'playwright'` throws
+   ERR_MODULE_NOT_FOUND before the suite loads. It had been doing exactly that,
+   which means its 58 checks were protecting nothing while still reading as a
+   suite that exists. ▶ A SUITE THAT CANNOT LOAD IS WORSE THAN NO SUITE: its
+   name in the list implies coverage it is not providing. On the run where this
+   was fixed it immediately caught a stale row count. */
+import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
 import http from 'http'; import fs from 'fs'; import path from 'path';
 const ROOT=path.resolve('.'),PORT=8951;
 const T={'.html':'text/html','.png':'image/png','.js':'text/javascript','.css':'text/css','.woff2':'font/woff2','.json':'application/json','.svg':'image/svg+xml'};
@@ -88,7 +96,12 @@ async function page(w,ua){
   ok(!/calls it/i.test(r.notes.join(' ')),'"calls it" is back (her ear: it reads like a phone call)');
   ok(/^Add to Home Screen just means/.test(r.notes[0]||''),'the meaning note should lead with the button name');
   ok(r.titleTop>=r.chipBottom+8,'title only '+(r.titleTop-r.chipBottom)+'px below the Menu chip');
-  ok(r.rows.length===20,'menu should be 20 rows, is '+r.rows.length);
+  /* 21 since "Style Star Card" joined the Style group below Style Portrait
+     (her ask, 2026-08-23). Deliberate update, not a silence — this is the SECOND
+     row-count assertion in the project and it lives in a suite about a different
+     menu row entirely, which is the whole reason it is worth keeping: a row
+     going MISSING should fail somewhere that was not thinking about it. */
+  ok(r.rows.length===21,'menu should be 21 rows, is '+r.rows.length);
   ok(errs.length===0,'JS errors: '+errs.join(' | '));
   await ctx.close();
 }
