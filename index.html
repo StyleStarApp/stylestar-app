@@ -6327,18 +6327,120 @@ function _tierOf(k){return (STORES[k].t.split('-')[0].match(/\$/g)||[]).length}
 //   a cent per shop. Against Cath's clear priority, that nothing a woman would
 //   actually want gets hidden from her, that is not a trade worth making. The
 //   safest code here is the code that is not written.
-function _rankedStores(){
+// ═══════════════════════════════════════════════════════════════════════════
+// OCCASION VOCABULARY (2026-08-23, from her mother typing "mother of the bride
+// dresses" into the ask box and getting six ordinary midi dresses from casual
+// stores, not one of them a mother-of-the-bride dress).
+//
+// ⚠️ A CLAUDE DRAFT, NOT CATH'S WORDS. Same standing as ARCHETYPE_FAMILY: each
+// line is one edit for her stylist eye, adding or removing an occasion is the
+// whole change, and ORDER DOES NOT MATTER because the longest matching phrase
+// wins, so "wedding guest" beats "wedding" wherever the two happen to sit.
+//
+// f: how formal the occasion is, 0..1. For that ONE request it REPLACES her own
+//    casual/dressy lean in the store ranking, and NOTHING ELSE about her moves.
+//    That is what a stylist actually does: a relaxed woman dresses formally for
+//    her daughter's wedding and is still the same relaxed, unflashy, classic
+//    woman while she does it.
+//    ▶▶ WHY THIS IS SAFE, and it rests entirely on a decision Cath made in July:
+//    her ALLURING score is a DISTANCE penalty (x2.5), not a lean. So being
+//    dressy LIFTS a store, while being too alluring is judged against her
+//    separately and can never be bought back by being formal. Measured
+//    2026-08-23 for a relaxed/classic/natural woman, out of 101 stores:
+//      Revolve         101st today -> 99th with a formal occasion  (stays out)
+//      Alice + Olivia   99th       -> 97th                         (stays out)
+//      Tommy Bahama     10th       -> 31st   (correctly steps back)
+//      Talbots          25th       -> 10th
+//      J.Crew           19th       ->  7th
+//      Nordstrom        36th       -> 14th
+//      Ann Taylor       41st       -> 13th
+//    ⚠️ Her standing guard is respected: FIT BEATS DEPTH, ALWAYS. This never
+//    reaches past the stores that already suit her, it only re-orders them.
+//    scratchpad/formality3.js re-runs the whole sweep.
+//
+// retail: is the phrase a section a store actually STOCKS, so a search may carry
+//    it whole? MEASURED LIVE at Dillard's 2026-08-23 (server-rendered, so the
+//    results are readable), with a gibberish control:
+//      "mother of the bride dress"   707KB, "gown" x1047   <- a real department
+//      "wedding guest dress"         795KB, x630           <- real
+//      "bridesmaid dress"            716KB, x805           <- real
+//      "prom dress"                  661KB, x550           <- real
+//      "cocktail dress"              738KB, x97            <- real
+//      "black tie dress"             122KB, x6             <- THIN
+//      "gala dress"                  122KB, x12            <- THIN
+//      "formal dress"                123KB, x8             <- THIN
+//      control "zqxwvu dress"        668KB, x0   (a junk page, never "no results")
+//      and the search her mother was actually given:
+//      "chiffon midi dress"          597KB, x0             <- zero gowns
+//    ▶▶ THE FINDING, and it is the THIRD sighting of one family: the CONCRETE
+//    role and event words are real retail categories, the ABSTRACT formality
+//    words are not. Same shape as "print" not being a retail search word
+//    (2026-08-22) and stores silently dropping length words like "midi"
+//    (2026-08-20). So retail:true phrases go INTO the search term; retail:false
+//    ones set the ranking, stay OUT of the search, and the garment carries the
+//    formality instead.
+//
+// range: true when the occasion genuinely spans several levels of formality, so
+//    the 6 should cover the spread rather than guess one point. A named ROLE
+//    like mother of the bride does not span, it has one answer.
+const _OCCASIONS=[
+  {p:'mother of the bride',f:1.0,retail:true},
+  {p:'mother of the groom',f:1.0,retail:true},
+  {p:'black tie',f:1.0,retail:false},
+  {p:'gala',f:1.0,retail:false},
+  {p:'formal',f:0.95,retail:false,range:true},
+  {p:'bridesmaid',f:0.9,retail:true},
+  {p:'prom',f:0.9,retail:true},
+  {p:'wedding guest',f:0.85,retail:true},
+  {p:'wedding',f:0.85,retail:true,range:true},
+  {p:'new year',f:0.85,retail:false},
+  {p:'cocktail',f:0.8,retail:true},
+  {p:'rehearsal dinner',f:0.75,retail:false},
+  {p:'holiday party',f:0.75,retail:false,range:true},
+  {p:'engagement party',f:0.7,retail:false},
+  {p:'christening',f:0.7,retail:false},
+  {p:'funeral',f:0.7,retail:false},
+  {p:'memorial',f:0.7,retail:false},
+  {p:'interview',f:0.7,retail:false},
+  {p:'graduation',f:0.65,retail:false,range:true},
+  {p:'bridal shower',f:0.6,retail:false},
+  {p:'baby shower',f:0.6,retail:false},
+  {p:'date night',f:0.6,retail:false,range:true},
+  {p:'church',f:0.6,retail:false}
+];
+// The longest matching phrase wins, so the table above can be edited in any
+// order and "wedding guest" can never be shadowed by "wedding".
+function _askOccasion(ask){
+  const a=String(ask||'').toLowerCase();
+  if(!a)return null;
+  let best=null;
+  for(let i=0;i<_OCCASIONS.length;i++){
+    const o=_OCCASIONS[i];
+    if(a.indexOf(o.p)<0)continue;
+    if(!best||o.p.length>best.p.length)best=o;
+  }
+  return best;
+}
+// The formality of whatever she typed, or null when she typed nothing, or named
+// nothing this table knows. null means the ranking behaves exactly as it did
+// before this feature existed.
+function _askOccF(){const o=_askOccasion(_ssAsk);return o?o.f:null}
+function _rankedStores(occ){
   const keys=Object.keys(STORES);
   // Before the quiz her sliders are all still at the neutral default, so any
   // ranking would be invented. Leave the list alone rather than fake a profile.
   if(!quizTaken)return keys;
   const her=_herDims();
+  // An occasion she NAMED replaces her own casual/dressy lean, for this one
+  // request only. Every other dimension stays hers, which is what keeps a
+  // quiet woman away from Revolve even when she asks for a gown. See _OCCASIONS.
+  if(typeof occ==='number')her.dressy=occ;
   return keys.map(function(k){return {k:k,fit:_storeFit(k,her)}})
     .sort(function(a,b){return b.fit-a.fit})
     .map(function(x){return x.k});
 }
-function _storeListForPrompt(){
-  return _rankedStores().map(function(k){
+function _storeListForPrompt(occ){
+  return _rankedStores(occ).map(function(k){
     const s=STORES[k];
     // Cath's colour scores have to be IN the line or "check the tags before you
     // send her somewhere for butter yellow" is an instruction about data the AI
@@ -6414,10 +6516,11 @@ function _seenPicksLine(surface){
 // consistent. The "search" field is what actually makes the links work.
 // mode 'compare' is for the Wardrobe "Ideas" carousel, where the options are
 // alternatives for ONE piece and she is choosing between them.
-function _shopRules(mode){
+function _shopRules(mode,occ){
   return '\nPICK THE STORE from this list ONLY, using the name exactly as written.'+
     (quizTaken?' The list is already ORDERED by how well each store suits her, closest first, so favour the top of it. Go further down only when the piece needs a specialist that the top of the list does not carry.':'')+
-    '\n'+_storeListForPrompt()+
+    (quizTaken&&typeof occ==='number'?' For THIS request the order also carries the occasion she named, so the dressier end of the stores that genuinely suit her has moved to the top. Trust it: the stores that would be wrong for her at this occasion have already been ranked away.':'')+
+    '\n'+_storeListForPrompt(occ)+
     '\n\nFOR EVERY ITEM GIVE BOTH:\n'+
     // Tuned 2026-08-08 from Cath's six live screenshots: fancy color words
     // ("raspberry", "hot pink") and stacked qualifiers made store searches come
@@ -7407,9 +7510,56 @@ function _askedForLead(){
     ? 'This woman is looking for: "'+_ssAsk+'". Suggest 6 specific shoppable pieces that are exactly that, chosen to suit her style.'
     : 'Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.';
 }
+/* ── THE OCCASION HALF OF HER ASK (2026-08-23) ──────────────────────────────
+   Her mother typed "mother of the bride dresses" and got J.Crew Midi Occasion,
+   Eileen Fisher Linen Midi, Nordstrom Midi Dress Navy, Talbots Shift Midi,
+   Dillard's Chiffon Midi and LOFT Occasion Maxi. All dresses. None of them a
+   mother-of-the-bride dress.
+   ▶▶ AND THE CAUSE WAS THE APP'S OWN RULES, not model drift. _shopRules caps a
+   search at "2 to 4 plain words", names a five-word search as its TOO LONG
+   example, and enumerates the shape words it will accept, a list that includes
+   "midi" and "maxi" and no occasion vocabulary at all. So the app converted her
+   ask into "occasion midi dress" because that is exactly what it asked for.
+   ⚠️ Same shape as the 2026-08-22 "bags returned a dress" bug: a rule that was
+   correct for two years became a contradiction the moment the ask box existed.
+   A rule added to a prompt is not additive, the surrounding rules are still
+   being read.
+   ▶ MEASURED at Dillard's, which was already one of her mother's six stores:
+   "mother of the bride dress" returns 1047 gowns, "chiffon midi dress" returns
+   zero. The STORE was right. The search word was wrong.
+   ⚠️ THE EXEMPTION LIVES HERE ON PURPOSE. _askedForRule returns '' whenever
+   there is no ask, so lifting the word cap physically cannot leak into the
+   other seven shopping surfaces and resurrect the 2026-08-08 failure the cap
+   was written to fix ("nude patent pointed toe kitten heel mule" burying the
+   mules under sandals). Do not move this into _shopRules. */
 function _askedForRule(){
   if(!_ssAsk)return '';
-  return '- SHE HAS ASKED FOR SOMETHING SPECIFIC: "'+_ssAsk+'". Every one of the 6 picks must answer that ask directly, and this outranks mixing categories for variety. If she named a garment, return that garment. If she named a price, stay under it. If she named an occasion, dress her for it, and when that occasion could mean several levels of formality (an event can be a garden party or a black tie gala), COVER THE RANGE across the 6 rather than guessing one point on it. This rule is absolute.\n';
+  const o=_askOccasion(_ssAsk);
+  let r='- SHE HAS ASKED FOR SOMETHING SPECIFIC: "'+_ssAsk+'". Every one of the 6 picks must answer that ask directly, and this outranks mixing categories for variety. If she named a garment, return that garment. If she named a price, stay under it. This rule is absolute.\n';
+  if(!o){
+    // Nothing in _OCCASIONS matched, so behave exactly as before: dress her for
+    // whatever she named and spread the formality rather than guessing.
+    r+='- If she named an occasion, dress her for it, and when that occasion could mean several levels of formality (an event can be a garden party or a black tie gala), COVER THE RANGE across the 6 rather than guessing one point on it.\n';
+    return r;
+  }
+  if(o.retail){
+    // The phrase is a real department-store section (measured, see _OCCASIONS),
+    // so it is worth more than every other word in the search put together.
+    // The WRONG/RIGHT pair is not decoration: the 2026-08-12 name/search rebuild
+    // and the work-appropriate dresses definition both needed a named example
+    // before the model actually obeyed the abstract rule.
+    r+='- SHE HAS NAMED AN OCCASION: "'+o.p+'". That is a real department-store CATEGORY, not a description of one. Nordstrom, Dillard\'s and Macy\'s each have a section by that exact name, and it is the single most valuable thing you can put in a search. So EVERY ONE of the 6 searches must carry the phrase "'+o.p+'" whole and unbroken, and the 2-to-4-word limit above DOES NOT APPLY to it.\n';
+    r+='  RIGHT: "'+o.p+' dress" / "'+o.p+' gown". WRONG: "occasion midi dress" / "chiffon midi dress" / "navy midi dress", which throw away the only words that reach the right department and land her on ordinary everyday dresses instead. Keep the phrase intact and add at most ONE plain garment word after it. Never a color.\n';
+  }else{
+    // The opposite case, and the reason the retail flag exists: these words are
+    // abstract formality, which no store stocks as a section. Measured thin at
+    // Dillard's: "black tie dress" 122KB against 707KB for mother of the bride.
+    r+='- SHE HAS NAMED AN OCCASION: "'+o.p+'". Dress her for it, but keep that word OUT of the search terms. Stores do not stock a "'+o.p+'" section and the word finds almost nothing on its own. Search for the GARMENT that suits the occasion instead ("beaded evening gown", "long chiffon gown", "velvet midi dress") and let the pieces themselves carry the formality.\n';
+  }
+  r+=o.range
+    ? '- That occasion spans several levels of formality, so COVER THE RANGE across the 6 rather than guessing one point on it.\n'
+    : '- That occasion has ONE clear level of formality. Dress her for exactly that and do not spread the 6 across dressy and casual: every single piece must be right to wear to it.\n';
+  return r;
 }
 /* ── THE WAY BACK (2026-08-22) ──────────────────────────────────────────────
    Two testers, independently, could not get back to what they were doing after
@@ -7553,7 +7703,7 @@ async function _shopStyleGen(){
     prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    prompt='You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF())+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }
   try{
     var parsed;
