@@ -348,12 +348,68 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
        'the flat gold marks sit on the yellow side of the stars, never the orange side');
   }
 
+  /* ── Part 3e: THE CARD IS NEVER SHOWN DISTORTED ──────────────────────────
+     Her catch: "the size looks weird when I click on it... after it is texted
+     it looks normal." That split is the whole diagnosis - the FILE was right
+     and our own preview was wrong. Both places that show the card carried an
+     aspect-ratio of 1080/1350, left over from when the card was 4:5:
+       - the thumbnail had object-fit:cover, so it CROPPED, and what it cut was
+         the bottom, i.e. stylestar.app
+       - the overlay had NO object-fit, and an img with a forced aspect-ratio
+         and no object-fit STRETCHES, so her card was painted squashed wide
+     ⚠️ THIS IS ASSERTED AGAINST THE IMAGE'S OWN naturalWidth/naturalHeight, not
+     against 1080/1920 typed a third time. Change the card's proportions and
+     these boxes have to follow or this fails, which is the point. */
+  const boxes=await page.evaluate(async()=>{
+    userName='Ashley'; answers=[6,6,6,6,6,6,6,6,6,6,6,6];
+    topArchNames=['The Statement Maker','The Bold Expressionist','The Modern Trendsetter'];
+    userMotto='Ashley, you walk in and the room adjusts; your confidence is the accessory.';
+    const rp=document.getElementById('rp'); if(rp)rp.textContent='A portrait sentence.';
+    show('s-res'); document.getElementById('s-res').classList.add('rv-open');
+    await new Promise(r=>setTimeout(r,150));
+    const blob=await new Promise(r=>buildCardBlob('quiz',b=>r(b)));
+    const th=document.getElementById('scThumb');
+    th.src=URL.createObjectURL(blob);
+    await new Promise(r=>{th.complete?r():th.onload=r});
+    const t=document.querySelector('.sc-thumb').getBoundingClientRect();
+    saveStyleCard('quiz');
+    await new Promise(r=>setTimeout(r,2200));
+    const img=document.querySelector('#cardPreview .scCard');
+    const o=img.getBoundingClientRect();
+    const nat=img.naturalHeight/img.naturalWidth;
+    const bottom=o.bottom, vh=innerHeight;
+    /* ⚠️ READ EVERY COMPUTED VALUE BEFORE CLOSING. The first version of this
+       closed the overlay and then built the return object, so getComputedStyle
+       ran on a DETACHED element and reported no object-fit at all - a failure
+       on a perfectly correct rule. Several sightings of this shape now. */
+    const out={thumb:t.height/t.width, overlay:o.height/o.width, nat:nat,
+               fit:getComputedStyle(img).objectFit,
+               thumbFit:getComputedStyle(th).objectFit, bottom:bottom, vh:vh};
+    if(typeof closeCardPreview==='function')closeCardPreview();
+    return out;
+  });
+  ok(Math.abs(boxes.overlay-boxes.nat)<0.02,
+     'the overlay shows the card at its own proportions, never stretched (box '+
+     boxes.overlay.toFixed(3)+' against the file’s '+boxes.nat.toFixed(3)+')');
+  ok(Math.abs(boxes.thumb-boxes.nat)<0.02,
+     'the thumbnail box is the card’s shape, so nothing is cropped off it (box '+
+     boxes.thumb.toFixed(3)+' against '+boxes.nat.toFixed(3)+')');
+  /* object-fit:contain on both is the SAFETY NET, not the fix: if the card's
+     proportions ever change and these boxes are not updated, the card
+     letterboxes visibly instead of being silently squashed or trimmed. */
+  ok(boxes.fit==='contain','the overlay letterboxes rather than distorting if the ratio ever drifts');
+  ok(boxes.thumbFit==='contain','the thumbnail letterboxes rather than cropping if the ratio ever drifts');
+  ok(boxes.bottom<=boxes.vh,'the whole card fits on screen above the controls ('+
+     Math.round(boxes.bottom)+'px of '+boxes.vh+')');
+
   // ── Part 4: the caption carries her archetype and a tappable link ─────────
   const cap=await page.evaluate(()=>{
     const src=buildCardBlob.toString();
     return doShareCard.toString();
   });
-  ok(/I'm "\+_arch/.test(cap)||/I'm \"\+_arch/.test(cap),'the caption leads with her archetype in the first person');
+  ok(/_arch/.test(cap),'the caption carries her archetype');
+  ok(/free style quiz/.test(cap),'the caption says what it is, not just what she got');
+  ok(/real personal stylist/.test(cap),'the caption carries the real-stylist difference');
   ok(/https:\/\/stylestar\.app/.test(cap),
      'the caption carries the https:// form — a bare .app is not auto-linked');
   /* ⚠️ HARNESS BUG, caught on the first run and worth the note: this asserted
@@ -364,6 +420,25 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
      a broken harness" — several sightings in this project now. */
   const capLine=(cap.match(/const linkText=[^;]*/)||[''])[0];
   ok(capLine.length>0,'the caption expression was found');
+  /* ⚠️ THE URL MUST BE THE LAST THING IN THE CAPTION, and this is the assertion
+     that matters most about sharing. Messages lifts a TRAILING url out of the
+     message text and renders it as a rich preview card - the logo, the tagline,
+     a big tappable target - which is what actually reaches her friend. Move the
+     url into the middle of a sentence and that card is very likely replaced by
+     a line of blue text, a weaker door. Confirmed on her own phone 2026-08-23,
+     where the first caption produced exactly that card.
+     ▶ It is checked by BUILDING the real caption rather than reading the source,
+     so a change to how the string is assembled cannot slip past it. */
+  const builtCap=await page.evaluate(()=>{
+    topArchNames=['The Modern Trendsetter','The Bold Expressionist'];
+    const _arch=topArchNames[0];
+    const src=doShareCard.toString();
+    const m=src.match(/const linkText=([\s\S]*?);\n/);
+    return m?eval(m[1]):'';
+  });
+  ok(/^https:\/\/stylestar\.app$/.test(builtCap.trim().split(/\s+/).pop()),
+     'the url is the LAST thing in the caption, so Messages renders it as a preview card ("'+builtCap+'")');
+  ok(builtCap.indexOf('The Modern Trendsetter')>-1,'the built caption really names her archetype');
   ok(!/[\u2600-\u27BF\uD83C-\uDBFF]/.test(capLine),'no emoji in the caption a friend receives');
 
   ok(errors.length===0,'zero JS errors ('+errors.join(' | ')+')');
