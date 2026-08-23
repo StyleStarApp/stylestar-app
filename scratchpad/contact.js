@@ -2,7 +2,10 @@
 // Drives the REAL index.html in real Chromium, and serves it through a server
 // that applies the REAL netlify.toml rewrite rules, so a typo in the toml fails
 // the suite rather than shipping.
-import { chromium } from 'playwright';
+// ⚠️ Absolute path, not a bare specifier: playwright is never a project
+// dependency, so `from 'playwright'` throws before the suite loads. See the
+// note in a2page.js, where the same fault had been silently disabling 58 checks.
+import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
@@ -225,8 +228,20 @@ const run = async () => {
     await page.waitForTimeout(250);
     const iF = order.findIndex(t => t === 'FAQ'), iC = order.findIndex(t => t === 'Contact'), iP = order.findIndex(t => t === 'Privacy');
     ok(iC > -1, 'a Contact row exists in the drawer');
-    ok(iC === iF + 1, 'Contact sits directly after FAQ', `FAQ@${iF} Contact@${iC}`);
-    ok(iP === iC + 1, 'Privacy and Terms stay the legal tail', `Privacy@${iP}`);
+    /* ⚠️ STALE ASSERTION, FIXED DELIBERATELY, NOT SILENCED — and it had been
+       wrong since 2026-08-19, when "Add as an App" was inserted into the About
+       group above Contact. It went unnoticed for days because this suite's bare
+       `from 'playwright'` import meant it never loaded at all. Proven
+       pre-existing before touching it: it fails identically on a clean
+       index.html on this same machine, one variable changed.
+       ▶ REWRITTEN AS A RELATIONSHIP RATHER THAN A POSITION. What the 2026-08-17
+       decision actually protects is that Contact sits in the reading tail AFTER
+       FAQ and BEFORE the Privacy/Terms legal pair — not that it is adjacent to
+       FAQ, which was only incidentally true on the day it was written. A test
+       that restates an index has to be edited every time a row is added; one
+       that states the ordering never does. */
+    ok(iC > iF, 'Contact sits after FAQ in the reading tail', `FAQ@${iF} Contact@${iC}`);
+    ok(iP > iC, 'Privacy and Terms stay the legal tail, below Contact', `Privacy@${iP}`);
     const oneLine = await page.evaluate(() => {
       const rows = [...document.querySelectorAll('.menu-row')];
       const hs = rows.map(r => r.getBoundingClientRect().height);

@@ -477,6 +477,186 @@ const CARD_W=1080,CARD_H=1350;
   ok(builtCap.indexOf('The Modern Trendsetter')>-1,'the built caption really names her archetype');
   ok(!/[\u2600-\u27BF\uD83C-\uDBFF]/.test(capLine),'no emoji in the caption a friend receives');
 
+  /* ── Part 5: HER SILVER FRAME (2026-08-23) ───────────────────────────────
+     Her two asks, and neither was covered by anything above: the frame bleeds
+     to the sheet's edge, and its four sides are ONE symmetrical metal.
+     ⚠️ WHY THIS PART HAD TO BE WRITTEN AT ALL, and it is the reusable half:
+     when the frame was rewritten, this suite reported 214 checks 0 failures.
+     That was HONEST but hollow — every frame-related assertion here only ever
+     checked that TEXT does not bleed into the band, which passes for any frame
+     whose inner edge is still at 64. The frame's own appearance was untested,
+     so it could have gone back to the diagonal sweep silently.
+     ▶ A SUITE PASSING A REWRITE OF THE THING IT IS NAMED AFTER IS A QUESTION,
+     NOT A RESULT. Ask what it actually covers before taking the total. */
+  {
+    const frame=await page.evaluate(async()=>{
+      topArchNames=['The Modern Trendsetter','Golden Hour Enchantress','The Bold Expressionist'];
+      userMotto="Catherine, you don't follow the moment, you are the moment.";
+      const blob=await new Promise(res=>buildCardBlob('quiz',bl=>res(bl)));
+      const buf=await blob.arrayBuffer();let t='';const u=new Uint8Array(buf);
+      for(let i=0;i<u.length;i++)t+=String.fromCharCode(u[i]);
+      return btoa(t);
+    });
+    const p2=png(Buffer.from(frame,'base64'));
+    const at=(x,y)=>{const o=(y*p2.w+x)*p2.bpp;return [p2.px[o],p2.px[o+1],p2.px[o+2]]};
+    const relL=c=>{const v=c.map(n=>{n/=255;return n<=.03928?n/12.92:Math.pow((n+.055)/1.055,2.4)});
+      return .2126*v[0]+.7152*v[1]+.0722*v[2]};
+    const ratio=(a,b)=>{const l1=relL(a),l2=relL(b);return (Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05)};
+
+    /* THE BLEED. The old card carried a 20px white PAPER margin outside the
+       frame; her ask was to remove it. Sampled 4px in from each edge, so a
+       one-pixel antialias line cannot fake a pass. Paper is #FBFAF7, i.e.
+       nearly 255 on every channel — metal is not. */
+    const corners=[[4,4],[p2.w-5,4],[4,p2.h-5],[p2.w-5,p2.h-5]];
+    const paperish=c=>c[0]>240&&c[1]>240&&c[2]>240;
+    ok(!corners.some(c=>paperish(at(c[0],c[1]))),
+       'the frame bleeds to the edge: no white paper margin outside it');
+
+    /* ONE SYMMETRICAL METAL — the assertion this whole change exists for.
+       Sampled at the SAME depth into each of the four sides. Before the
+       rewrite these read 62 / 49 / 37 / 30 out of 100, i.e. the bottom edge was
+       twice as bright as the left, because one diagonal gradient was stretched
+       across the whole canvas. ▶ The threshold is deliberately tight (2 points
+       out of 100): anything looser would pass the very thing she rejected. */
+    const D=12,mid=[Math.floor(p2.w/2),Math.floor(p2.h/2)];
+    const sides={top:at(mid[0],D),right:at(p2.w-1-D,mid[1]),
+                 bottom:at(mid[0],p2.h-1-D),left:at(D,mid[1])};
+    const lums=Object.values(sides).map(v=>relL(v)*100);
+    const spread=Math.max(...lums)-Math.min(...lums);
+    ok(spread<2,'all four sides of the frame are the same metal (spread '
+       +spread.toFixed(1)+' of 100, was 31.9 with the diagonal gradient)');
+
+    /* IT MUST STILL HOLD AN EDGE ON A WHITE BACKGROUND. This is the half she
+       did not ask for and got anyway: the old outer ring was white paper, at
+       1.10:1 against a white message bubble, so the card dissolved into a light
+       thread. If someone ever brightens the bevel's outer stop, this fails. */
+    const worst=Math.min(...Object.values(sides).map(v=>ratio(v,[255,255,255])));
+    ok(worst>1.15,'the outer ring still reads against a white message bubble ('
+       +worst.toFixed(2)+':1, was 1.10:1 when it was paper)');
+
+    /* THE BEVEL IS A RAMP, NOT A FLAT FILL — the "shiny like a mirror" half of
+       her sentence. Walk one side from its outer edge inward and require real
+       movement, so flattening it to one colour fails loudly. */
+    const walk=[];for(let y=2;y<62;y+=4)walk.push(relL(at(mid[0],y))*100);
+    ok(Math.max(...walk)-Math.min(...walk)>6,
+       'the frame is still a bevel, not flattened to one flat colour ('
+       +(Math.max(...walk)-Math.min(...walk)).toFixed(1)+' of movement)');
+
+    /* And the DIRECTION: the highlight belongs near the OUTER edge. Reversed,
+       the frame reads as a groove cut into the sheet rather than a frame
+       standing on it. */
+    ok(walk.indexOf(Math.max(...walk))<walk.length/2,
+       'the highlight sits toward the outer edge, so it reads as a frame not a groove');
+
+    /* ⚠️ The source checks are the backstop for what pixels cannot see: that
+       the retired diagonal helper has not been quietly re-adopted.
+       ⚠️⚠️ COMMENTS ARE STRIPPED FIRST, and that is not fussiness — it is a
+       harness bug this assertion shipped with for one run. The note left at the
+       code says "the diag() helper ... is DELETED", the note lives INSIDE
+       buildCardBlob, and toString() returns it, so the check matched its own
+       tombstone and reported the helper alive on a file that no longer has it.
+       ▶ A SOURCE ASSERTION THAT CANNOT TELL CODE FROM PROSE WILL EVENTUALLY BE
+       FAILED BY THE COMMENT EXPLAINING IT. Strip, then match. */
+    const rawSrc=await page.evaluate(()=>buildCardBlob.toString());
+    const src=rawSrc.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\/\/[^\n]*/g,'');
+    ok(!/diag\(/.test(src),'the retired diag() diagonal helper is really gone');
+    /* And the fault itself, named in code rather than by helper name: one
+       gradient stretched corner to corner is what made the four sides differ. */
+    ok(!/createLinearGradient\(\s*0\s*,\s*0\s*,\s*W\s*,\s*H/.test(src),
+       'no single gradient is stretched across the whole canvas again');
+    ok(/FR_OUT=0/.test(src),'the frame still starts at the canvas edge');
+    ok(/FR_IN=64/.test(src),"the frame's inner edge is still 64, so no word on the card moved");
+  }
+
+  /* ── Part 6: the card on the Style Portrait page (her size pick D) ────────
+     ⚠️ The frame and the size were picked from TWO SEPARATE renders and neither
+     showed the combination, which is exactly how the thumbnail box's gold inset
+     ring nearly ended up sitting directly on the new silver. */
+  {
+    /* ⚠️ DRIVE THE SCREEN ON FIRST. Earlier parts navigate away, and a hidden
+       element yields ZERO client rects — so every measurement below would read
+       0 and the shape checks would pass or fail for reasons that have nothing
+       to do with the layout. This project has paid for that trap more than once;
+       the render is opened the way she actually reaches it, doors included. */
+    await page.evaluate(()=>{
+      show('s-res'); document.getElementById('s-res').classList.add('rv-open');
+    });
+    await page.waitForTimeout(300);
+    const shown=await page.evaluate(()=>
+      document.querySelector('.sc-row').getBoundingClientRect().width>0);
+    ok(shown,'the Style Portrait card panel is really on screen before it is measured');
+    const panel=await page.evaluate(()=>{
+      const row=document.querySelector('.sc-row');
+      const th=row.querySelector('.sc-thumb'),tt=row.querySelector('.sc-tt');
+      const cs=getComputedStyle(row),ts=getComputedStyle(th);
+      /* ⚠️ CLUSTERED, not unique-per-pixel: getClientRects() returns a rect per
+         ELEMENT too, so the title's inline gold arrow reports its own top a
+         pixel or two off the text box and an exact count calls a one-line title
+         two lines. A real wrap moves a whole line-height; an inline mark moves
+         ~2px. This is the third sighting of the rect-per-element trap here. */
+      const lines=el=>{const r=document.createRange();r.selectNodeContents(el);
+        const raw=Array.from(r.getClientRects()).map(x=>x.top).sort((a,b)=>a-b);
+        const out=[];for(const v of raw) if(!out.some(u=>Math.abs(u-v)<6)) out.push(v);
+        return out.length};
+      const card=document.querySelector('.pcard').getBoundingClientRect();
+      const rr=row.getBoundingClientRect(),tr=th.getBoundingClientRect();
+      return {dir:cs.flexDirection,align:cs.alignItems,thumbW:Math.round(tr.width),
+        thumbH:Math.round(tr.height),shadow:ts.boxShadow,ttLines:lines(tt),
+        hasBr:!!tt.querySelector('br'),arrow:!!row.querySelector('.sc-ar'),
+        arGold:(()=>{const a=row.querySelector('.sc-ar');
+          return a?getComputedStyle(a).color:''})(),
+        arBound:(()=>{const a=row.querySelector('.sc-ar');
+          return !!(a&&a.closest('.sc-nb'))})(),
+        arOnLine:(()=>{const a=row.querySelector('.sc-ar'),nb=row.querySelector('.sc-nb');
+          if(!a||!nb)return 999;
+          const r=document.createRange();r.setStart(nb.firstChild,0);
+          r.setEnd(nb.firstChild,nb.firstChild.length);
+          const w=r.getBoundingClientRect(),b=a.getBoundingClientRect();
+          return Math.abs((b.top+b.bottom)/2-(w.top+w.bottom)/2)})(),
+        overL:(rr.left-card.left).toFixed(1),overR:(card.right-rr.right).toFixed(1),
+        centered:Math.abs((tr.left+tr.right)/2-(card.left+card.right)/2).toFixed(1)};
+    });
+    ok(panel.dir==='column','the card row is a centred column, not the old side-by-side row');
+    ok(panel.thumbW===196,'the card shows at 196px, her pick D ('+panel.thumbW+')');
+    /* ⚠️ THE BOX MUST KEEP THE CARD'S OWN SHAPE or the preview crops or squashes
+       it — measured against the ratio rather than a second typed number. */
+    ok(Math.abs(panel.thumbH/panel.thumbW-1350/1080)<0.02,
+       'the preview box still carries the card\'s own 4:5 shape ('+panel.thumbW+'x'+panel.thumbH+')');
+    /* ⚠️ THE GOLD INSET RING IS GONE ON PURPOSE. It framed the card while the
+       card had a white margin of its own; now that the silver bleeds to the
+       edge, a gold hairline would lie directly ON the metal. */
+    ok(!/rgba?\(2[01][0-9]/.test(panel.shadow),
+       'no gold inset ring sits on the silver frame ('+panel.shadow+')');
+    ok(panel.ttLines===1,'the title holds one line under the card ('+panel.ttLines+')');
+    ok(!panel.hasBr,'the hardcoded <br> went with the side-by-side layout');
+    /* ⚠️ THIS ASSERTION IS THE REVERSE OF WHAT IT SAID FOR ONE DAY, and the
+       reversal is deliberate, not a silence. The hero layout shipped without an
+       arrow because that is what she picked from the render; seeing it built she
+       called it back: "I think we need the arrow to show it is meant to be
+       tapped." She is right, and it is her own mother's lesson - the one that
+       produced the Menu and the tappable wardrobe tab - a thing that does not
+       LOOK tappable does not get tapped, and a picture with a sentence under it
+       is not obviously a control. ▶ A RENDER ANSWERS "which of these", never
+       "does this work in the hand". */
+    ok(panel.arrow,'the title carries the gold arrow that marks a destination');
+    ok(/200,\s*151,\s*30|#C8971E/i.test(panel.arGold.replace(/\s/g,'').replace(/rgb\(|\)/g,'')) ||
+       panel.arGold==='rgb(200, 151, 30)',
+       'it is the same gold every other destination in the app uses ('+panel.arGold+')');
+    /* ⚠️ MEASURED ON THE PAINTED LINE, not assumed from the markup. A resized
+       inline glyph dropping off its text line is a failure this project has
+       shipped once already (the A2HS share chip) while every positional check
+       passed. */
+    ok(panel.arOnLine<3,'the arrow sits on the words\' own line ('
+       +panel.arOnLine.toFixed(2)+'px off centre)');
+    /* And it must stay glued to the last word: unbound, a 320px phone put the
+       arrow ALONE on a second line, pointing at nothing. */
+    ok(panel.arBound,'the arrow is bound to the last word so it can never wrap alone');
+    ok(Math.abs(parseFloat(panel.centered))<1,
+       'the card sits dead centre in its panel ('+panel.centered+'px off)');
+    ok(parseFloat(panel.overL)>=0&&parseFloat(panel.overR)>=0,
+       'nothing overhangs the panel (left '+panel.overL+', right '+panel.overR+')');
+  }
+
   ok(errors.length===0,'zero JS errors ('+errors.join(' | ')+')');
 
   console.log('\nstarcard: '+pass+' checks, '+fail+' failures');
