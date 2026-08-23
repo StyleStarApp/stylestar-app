@@ -1,0 +1,732 @@
+<!doctype html><meta charset="utf-8">
+<link href="/scratchpad/fonts/gf.css" rel="stylesheet">
+<style>body{margin:0;background:#333}canvas{display:block}</style>
+<canvas id="card" width="1080" height="1350"></canvas>
+<script>
+document.fonts.ready.then(()=>Promise.all([
+  document.fonts.load('72px "DM Serif Display"'),
+  document.fonts.load('italic 400 40px "Lora"'),
+  document.fonts.load('600 30px "Jost"'),
+  document.fonts.load('500 30px "DM Sans"')
+])).then(()=>{window.__fontsReady=true});
+
+let W=1080,H=1350;
+const ctx=document.getElementById('card').getContext('2d');
+
+/* The REAL drawn logo. logo-tight.png is the dark-ink version built for light
+   paper; logo-card.png is the cream one for the dark card and would vanish here.
+   ⚠️ The drawn logo is the ONE place "style Star" keeps its lowercase s — that is
+   the whole exception in the 2026-08-22 capitalisation rule. Using the image
+   rather than typing the words is what keeps this card on the right side of it. */
+/* ── her palette, straight from the app ───────────────────────────────── */
+const LACQUER='#1a1a1a';                       // ink + filled controls
+const GOLDLEAF=['#FEEF98','#F6CE3E','#E4B02E','#F3DC8B'];  // the wb-chip ramp
+const MARQUEE_LETTER='#F2D889', MARQUEE_RIM='#C99A2C';
+const PAPER='#FBFAF7';                         // the welcome mirror's paper
+const INK='#1a1a1a', SOFTINK='#4a463e';
+const GOLD='#D8A52E';
+
+/* ── the woman on the card: Ashley's real archetype, from the group chat ── */
+const D={
+  name:'Ashley',
+  arch:'The Statement Maker',
+  notes:['The Bold Expressionist','The Modern Trendsetter'],
+  motto:'Ashley, you walk in and the room adjusts; your confidence is the accessory.'
+};
+
+const LOGO=new Image();LOGO.src='/logo-tight.png';
+let LOGO_CUT=null;
+/* logo-tight.png is RGBA but its background is baked OPAQUE WHITE (sampled: the
+   corners are 255,255,255,255), so dropped straight onto cream paper it paints a
+   visible white box. logo-star-text.png is genuinely transparent but is only the
+   wordmark, with the star cropped off. So the white is knocked out here, which
+   keeps the black letters AND the gold star AND the slider dot.
+   ⚠️ The alpha ramps over the last 30 levels rather than switching at a
+   threshold, or every anti-aliased letter edge gets a hard white fringe. */
+function cutLogo(){
+  const c=document.createElement('canvas');
+  c.width=LOGO.naturalWidth;c.height=LOGO.naturalHeight;
+  const x=c.getContext('2d');x.drawImage(LOGO,0,0);
+  const im=x.getImageData(0,0,c.width,c.height),p=im.data;
+  for(let i=0;i<p.length;i+=4){
+    const lum=Math.min(p[i],p[i+1],p[i+2]);
+    if(lum>=250)p[i+3]=0;
+    else if(lum>220)p[i+3]=Math.round(p[i+3]*(250-lum)/30);
+  }
+  x.putImageData(im,0,0);LOGO_CUT=c;
+}
+window.__logoReady=new Promise(r=>{
+  const go=()=>{try{cutLogo()}catch(e){}r()};
+  if(LOGO.complete&&LOGO.naturalWidth)go();else{LOGO.onload=go;LOGO.onerror=r;}
+});
+function drawLogo(cy,w){
+  const src=LOGO_CUT||LOGO;
+  if(!src||!(src.width||src.naturalWidth))return 0;
+  const nw=src.width||src.naturalWidth, nh=src.height||src.naturalHeight;
+  const h=w*nh/nw;
+  ctx.drawImage(src,W/2-w/2,cy,w,h);
+  return h;
+}
+
+/* ── helpers ─────────────────────────────────────────────────────────── */
+function diag(x0,y0,x1,y1,stops){
+  const g=ctx.createLinearGradient(x0,y0,x1,y1);
+  stops.forEach((c,i)=>g.addColorStop(i/(stops.length-1),c));return g;
+}
+function rrect(x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+// Fit to width by SHRINKING, never by wrapping mid-name: an archetype name is one
+// unit ("The Polished Professional" is the 25-char worst case).
+function fitFont(text,face,start,min,maxW){
+  let s=start;ctx.font=s+'px '+face;
+  while(ctx.measureText(text).width>maxW&&s>min){s--;ctx.font=s+'px '+face;}
+  return s;
+}
+function wrapSentences(text,maxW){
+  const parts=text.split(/(?<=[.!?])\s+/).filter(Boolean);
+  if(parts.length>1&&parts.every(p=>ctx.measureText(p).width<=maxW))return parts;
+  return wrap(text,maxW);
+}
+function wrap(text,maxW){
+  const words=text.split(' ');const lines=[];let line='';
+  for(const w of words){
+    const t=line?line+' '+w:w;
+    if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=w;}else line=t;
+  }
+  if(line)lines.push(line);return lines;
+}
+function star(cx,cy,r,fill){
+  ctx.save();ctx.beginPath();
+  for(let i=0;i<10;i++){
+    const a=-Math.PI/2+i*Math.PI/5, rr=i%2?r*0.42:r;
+    ctx[i?'lineTo':'moveTo'](cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);
+  }
+  ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.restore();
+}
+// The silver-outside / gold-inside frame is the card family's existing signature.
+// Kept identical across all three so she is judging the FACE, not the frame.
+function frame(faceFill){
+  const T=20;
+  ctx.fillStyle=diag(0,0,W,H,['#FFFFFF','#C6CACE','#8C9298','#F2F4F6','#9AA0A6','#DFE2E5','#FFFFFF']);
+  ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=diag(T,T,W-T,H-T,['#EED89A','#D8A93E','#B8831F','#F3E3A6','#C89A2C','#9C7519']);
+  ctx.fillRect(T,T,W-2*T,H-2*T);
+  ctx.fillStyle=faceFill;ctx.fillRect(2*T,2*T,W-4*T,H-4*T);
+  return 2*T;
+}
+// Small brand mark. NOTE: typed, so it takes the capital — the 2026-08-22 rule
+// (Style Star is capitalised everywhere the name is TYPED; only the drawn logo
+// image keeps the lowercase s).
+function brandmark(y,color){
+  ctx.textAlign='center';
+  star(W/2,y-34,19,color);
+  ctx.fillStyle=color;
+  ctx.font='600 27px "Jost", sans-serif';
+  ctx.letterSpacing='7px';
+  ctx.fillText('STYLE STAR',W/2,y+18);
+  ctx.letterSpacing='0px';
+}
+function foot(colorFaint,colorStrong){
+  ctx.textAlign='center';
+  ctx.fillStyle=colorFaint;
+  ctx.font='italic 400 34px "Lora", serif';
+  ctx.fillText('What’s yours?',W/2,H-152);
+  ctx.fillStyle=colorStrong;
+  ctx.font='44px "DM Serif Display", serif';
+  ctx.fillText('stylestar.app',W/2,H-88);
+}
+
+/* The three papers the app actually owns. The first render read "cream" and she
+   did not like it: the culprit is not the base colour, it is the warm radial
+   ramp down to #F4EFE3 underneath it, which yellows the whole sheet.
+     white  #fff flat        — the Edit's .dc-item and the Star of the Week card,
+                               which is the white she chose on 2026-08-20.
+     linen  #FBFAF7 + weave  — the pref-qcard's own two repeating gradients,
+                               copied exactly so the two can never drift.
+     cream  the first render, kept only for comparison. */
+let PAPERMODE='linen';
+function paper(){
+  if(PAPERMODE==='white'){
+    ctx.fillStyle='#ffffff';ctx.fillRect(40,40,W-80,H-80);return;
+  }
+  if(PAPERMODE==='cream'){
+    const warm=ctx.createRadialGradient(W/2,340,60,W/2,700,900);
+    warm.addColorStop(0,'#FFFDF7');warm.addColorStop(1,'#F4EFE3');
+    ctx.fillStyle=warm;ctx.fillRect(40,40,W-80,H-80);return;
+  }
+  ctx.fillStyle='#FBFAF7';ctx.fillRect(40,40,W-80,H-80);
+  // the weave, scaled from the 1x CSS to this 1080px sheet
+  const S=2.6;
+  ctx.save();ctx.beginPath();ctx.rect(40,40,W-80,H-80);ctx.clip();
+  ctx.fillStyle='rgba(150,140,120,.06)';
+  for(let x=40;x<W-40;x+=2.5*S)ctx.fillRect(x,40,0.5*S,H-80);
+  ctx.fillStyle='rgba(150,140,120,.05)';
+  for(let y=40;y<H-40;y+=2.5*S)ctx.fillRect(40,y,W-80,0.5*S);
+  ctx.restore();
+}
+
+/* A vanity-mirror bulb. On lacquer a bulb reads by glow alone; on cream there is
+   no darkness for a halo to bloom into, so it needs a drawn RIM and a seated
+   shadow or it flattens into a dot of paint. */
+function bulbOnPaper(x,y,r){
+  const sh=ctx.createRadialGradient(x,y+2,0,x,y+2,r*2.1);
+  sh.addColorStop(0,'rgba(176,134,28,.30)');sh.addColorStop(1,'rgba(176,134,28,0)');
+  ctx.fillStyle=sh;ctx.beginPath();ctx.arc(x,y+2,r*2.1,0,7);ctx.fill();
+  const g=ctx.createRadialGradient(x-r*.3,y-r*.35,r*.15,x,y,r);
+  g.addColorStop(0,'#FFFDF0');g.addColorStop(.45,'#F6D97E');g.addColorStop(1,'#D8A52E');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();
+  ctx.strokeStyle='rgba(155,116,22,.75)';ctx.lineWidth=1.6;
+  ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.stroke();
+}
+function bulbOnDark(x,y,r){
+  const g=ctx.createRadialGradient(x,y,0,x,y,r*3.2);
+  g.addColorStop(0,'rgba(255,248,214,.95)');g.addColorStop(.45,'rgba(242,216,137,.55)');
+  g.addColorStop(1,'rgba(242,216,137,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*3.2,0,7);ctx.fill();
+  ctx.fillStyle='#FFF6D2';ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();
+}
+function ringBulbs(bx,by,bw,bh,step,r,fn){
+  const pts=[];
+  for(let x=bx+34;x<bx+bw-20;x+=step){pts.push([x,by]);pts.push([x,by+bh]);}
+  for(let y=by+40;y<by+bh-20;y+=step){pts.push([bx,y]);pts.push([bx+bw,y]);}
+  pts.forEach(([x,y])=>fn(x,y,r));
+}
+
+/* ══ A — THE MARQUEE: her archetype up in lights ═══════════════════════ */
+function optA(){
+  frame(LACQUER);
+  const face=ctx.createRadialGradient(W/2,470,80,W/2,560,900);
+  face.addColorStop(0,'#2b2620');face.addColorStop(.5,'#1c1814');face.addColorStop(1,'#100e0b');
+  ctx.fillStyle=face;ctx.fillRect(40,40,W-80,H-80);
+
+  brandmark(150,'#C9B37A');
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#E8E2D2';
+  ctx.font='italic 400 46px "Lora", serif';
+  ctx.fillText('I’m',W/2,442);
+
+  // the name, in lights
+  const bx=92,bw=W-184,by=488,bh=300;
+  ctx.fillStyle='rgba(0,0,0,.45)';rrect(bx,by,bw,bh,26);ctx.fill();
+  ctx.strokeStyle=MARQUEE_RIM;ctx.lineWidth=3;rrect(bx,by,bw,bh,26);ctx.stroke();
+
+  // marquee bulbs around the rim
+  const bulbs=[];const step=54;
+  for(let x=bx+34;x<bx+bw-20;x+=step){bulbs.push([x,by]);bulbs.push([x,by+bh]);}
+  for(let y=by+40;y<by+bh-20;y+=step){bulbs.push([bx,y]);bulbs.push([bx+bw,y]);}
+  bulbs.forEach(([x,y])=>{
+    const g=ctx.createRadialGradient(x,y,0,x,y,17);
+    g.addColorStop(0,'rgba(255,248,214,.95)');g.addColorStop(.45,'rgba(242,216,137,.55)');
+    g.addColorStop(1,'rgba(242,216,137,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,17,0,7);ctx.fill();
+    ctx.fillStyle='#FFF6D2';ctx.beginPath();ctx.arc(x,y,5.2,0,7);ctx.fill();
+  });
+
+  const words=D.arch.split(' ');
+  const l1=words[0], l2=words.slice(1).join(' ');
+  ctx.fillStyle='#CBB98C';
+  ctx.font='46px "DM Serif Display", serif';
+  ctx.fillText(l1,W/2,by+108);
+  const fs=fitFont(l2,'"DM Serif Display", serif',108,58,bw-96);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillStyle=diag(W/2-300,by+140,W/2+300,by+250,GOLDLEAF);
+  ctx.shadowColor='rgba(245,220,140,.5)';ctx.shadowBlur=34;
+  ctx.fillText(l2,W/2,by+232);
+  ctx.shadowBlur=0;
+
+  // her motto — the part no other woman gets
+  ctx.fillStyle='#DED7C6';
+  ctx.font='italic 400 39px "Lora", serif';
+  wrap('“'+D.motto+'”',W-260).forEach((ln,i)=>ctx.fillText(ln,W/2,912+i*58));
+
+  foot('#B9A87C','#E9C46E');
+}
+
+/* ══ B — THE BOUTIQUE CARD: her name on cream, quietly ═════════════════ */
+function optB(){
+  frame(PAPER);
+  // faint linen warmth so the paper is not flat white
+  const warm=ctx.createRadialGradient(W/2,320,60,W/2,700,900);
+  warm.addColorStop(0,'#FFFDF7');warm.addColorStop(1,'#F4EFE3');
+  ctx.fillStyle=warm;ctx.fillRect(40,40,W-80,H-80);
+
+  // gold hairline inside the frame — DEFINITION, not a second emphasis device
+  ctx.strokeStyle='#C89A2C';ctx.lineWidth=2;
+  ctx.strokeRect(74,74,W-148,H-148);
+
+  brandmark(178,GOLD);
+
+  ctx.textAlign='center';
+  ctx.fillStyle=SOFTINK;
+  ctx.font='italic 400 40px "Lora", serif';
+  ctx.fillText('My style archetype is',W/2,396);
+
+  const fs=fitFont(D.arch,'"DM Serif Display", serif',96,52,W-230);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillStyle=INK;
+  ctx.fillText(D.arch,W/2,516);
+
+  // short rule that hugs the words
+  const nw=ctx.measureText(D.arch).width;
+  ctx.fillStyle=GOLD;ctx.fillRect(W/2-nw/2,552,nw,3);
+
+  ctx.fillStyle=SOFTINK;
+  ctx.font='italic 400 39px "Lora", serif';
+  wrap('“'+D.motto+'”',W-280).forEach((ln,i)=>ctx.fillText(ln,W/2,660+i*58));
+
+  // the supporting two, given their proper name
+  ctx.fillStyle='#9A8E76';
+  ctx.font='600 25px "Jost", sans-serif';ctx.letterSpacing='5px';
+  ctx.fillText('WITH NOTES OF',W/2,908);ctx.letterSpacing='0px';
+  ctx.fillStyle=SOFTINK;
+  ctx.font='40px "DM Serif Display", serif';
+  D.notes.forEach((n,i)=>ctx.fillText(n,W/2,972+i*56));
+
+  foot('#8E8474','#B8871C');
+}
+
+/* ══ C — THE THREE NOTES: her own stylist language, as a fragrance card ═ */
+function optC(){
+  frame(LACQUER);
+  const face=ctx.createRadialGradient(W/2,300,80,W/2,620,980);
+  face.addColorStop(0,'#2e281f');face.addColorStop(.5,'#1d1915');face.addColorStop(1,'#100e0b');
+  ctx.fillStyle=face;ctx.fillRect(40,40,W-80,H-80);
+
+  brandmark(152,'#C9B37A');
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#B7A47A';
+  ctx.font='600 26px "Jost", sans-serif';ctx.letterSpacing='6px';
+  ctx.fillText('MY STYLE HAS NOTES OF',W/2,412);ctx.letterSpacing='0px';
+
+  const fs=fitFont(D.arch,'"DM Serif Display", serif',94,52,W-220);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillStyle=diag(W/2-320,512,W/2+320,602,GOLDLEAF);
+  ctx.fillText(D.arch,W/2,562);
+
+  star(W/2,632,15,'#C89A2C');
+
+  ctx.fillStyle='#DED7C6';
+  ctx.font='52px "DM Serif Display", serif';
+  D.notes.forEach((n,i)=>ctx.fillText(n,W/2,714+i*72));
+
+  // hairline, then her motto
+  ctx.fillStyle='rgba(200,154,44,.55)';ctx.fillRect(W/2-170,838,340,2);
+
+  ctx.fillStyle='#CFC7B4';
+  ctx.font='italic 400 38px "Lora", serif';
+  wrap('“'+D.motto+'”',W-280).forEach((ln,i)=>ctx.fillText(ln,W/2,932+i*56));
+
+  foot('#B9A87C','#E9C46E');
+}
+
+/* ══ D — THE VANITY MIRROR: her lights, her paper, ON the paper ═══════ */
+function optD(){
+  frame(PAPER);
+  paper();
+  ctx.strokeStyle='#C89A2C';ctx.lineWidth=2;ctx.strokeRect(74,74,W-148,H-148);
+
+  drawLogo(112,196);
+
+  ctx.textAlign='center';
+  // her name, in the app's own caps. Deliberately NOT a handwritten signature:
+  // Dancing Script + a pink heart is CATHERINE speaking, and this card is the
+  // woman speaking. The two marks must never blur.
+  const bx=104,bw=W-208,by=436,bh=268;
+  ringBulbs(bx,by,bw,bh,54,9,bulbOnPaper);
+
+  const words=D.arch.split(' ');
+  const head=words[0], rest=words.slice(1).join(' ');
+  ctx.fillStyle='#7A6F58';
+  ctx.font='44px "DM Serif Display", serif';
+  ctx.fillText(head,W/2,by+96);
+  const fs=fitFont(rest,'"DM Serif Display", serif',96,52,bw-150);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillStyle=INK;
+  ctx.fillText(rest,W/2,by+208);
+
+  ctx.fillStyle=SOFTINK;
+  ctx.font='italic 400 39px "Lora", serif';
+  wrap('“'+D.motto+'”',W-300).forEach((ln,i)=>ctx.fillText(ln,W/2,812+i*58));
+
+  ctx.fillStyle='#9A8E76';
+  ctx.font='600 25px "Jost", sans-serif';ctx.letterSpacing='5px';
+  ctx.fillText('WITH NOTES OF',W/2,960);ctx.letterSpacing='0px';
+  ctx.fillStyle=SOFTINK;
+  ctx.font='38px "DM Serif Display", serif';
+  D.notes.forEach((n,i)=>ctx.fillText(n,W/2,1018+i*52));
+
+  foot('#8E8474','#B8871C');
+}
+
+/* ══ E — THE LIT SIGN: her paper, with the sign hung on it ════════════ */
+function optE(){
+  frame(PAPER);
+  paper();
+  ctx.strokeStyle='#C89A2C';ctx.lineWidth=2;ctx.strokeRect(74,74,W-148,H-148);
+
+  drawLogo(112,196);
+
+  ctx.textAlign='center';
+  // the lacquer plate, hung on the paper
+  const bx=104,bw=W-208,by=436,bh=286;
+  ctx.save();
+  ctx.shadowColor='rgba(60,45,15,.30)';ctx.shadowBlur=26;ctx.shadowOffsetY=9;
+  ctx.fillStyle='#1a1a1a';rrect(bx,by,bw,bh,20);ctx.fill();
+  ctx.restore();
+  ctx.strokeStyle=MARQUEE_RIM;ctx.lineWidth=3;rrect(bx,by,bw,bh,20);ctx.stroke();
+  ringBulbs(bx,by,bw,bh,54,5.2,bulbOnDark);
+
+  const words=D.arch.split(' ');
+  const head=words[0], rest=words.slice(1).join(' ');
+  ctx.fillStyle='#C9B37A';
+  ctx.font='44px "DM Serif Display", serif';
+  ctx.fillText(head,W/2,by+100);
+  const fs=fitFont(rest,'"DM Serif Display", serif',96,52,bw-150);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillStyle=diag(W/2-300,by+130,W/2+300,by+240,GOLDLEAF);
+  ctx.shadowColor='rgba(245,220,140,.45)';ctx.shadowBlur=30;
+  ctx.fillText(rest,W/2,by+216);ctx.shadowBlur=0;
+
+  ctx.fillStyle=SOFTINK;
+  ctx.font='italic 400 39px "Lora", serif';
+  wrap('“'+D.motto+'”',W-300).forEach((ln,i)=>ctx.fillText(ln,W/2,830+i*58));
+
+  ctx.fillStyle='#9A8E76';
+  ctx.font='600 25px "Jost", sans-serif';ctx.letterSpacing='5px';
+  ctx.fillText('WITH NOTES OF',W/2,972);ctx.letterSpacing='0px';
+  ctx.fillStyle=SOFTINK;
+  ctx.font='38px "DM Serif Display", serif';
+  D.notes.forEach((n,i)=>ctx.fillText(n,W/2,1030+i*52));
+
+  foot('#8E8474','#B8871C');
+}
+
+/* Worst case on record: the longest of the 28 archetype names (25 chars) and a
+   motto at the prompt's own 95-char ceiling, with a long first name. If the card
+   survives this it survives every woman. */
+/* ══ F — HER OWN DESIGN, rebuilt in the real pipeline ═════════════════
+   From her mockup: no lights, no lacquer. A double gold hairline on cool
+   off-white, the archetype at the size it deserves, a sparkle divider, the two
+   notes on ONE line in caps with the "The" dropped, and her own CTA wording.
+
+   ⚠️ Her mockup is 2:3 (1024x1536); this pipeline is 4:5 (1080x1350), which is
+   the Instagram feed ratio the card already ships at. So the composition is
+   adapted, not copied: there is ~200px less height to spend.
+
+   The one thing her mockup shows that the app cannot yet produce is the LINE.
+   Rendered both ways so she can see the trade, never guessed at:
+     'motto'  her real generated motto, unique to her, up to 95 chars
+     'beats'  the short second-person two-beat line her mockup uses          */
+let LINEMODE='motto';
+window.setLine=function(m){LINEMODE=m};
+const BEATS='You don’t follow the room. You set the tone.';
+const SHORT='Ashley, you never follow the room. You set the tone.';
+
+/* ── GOLD, after measuring it on her white linen ──────────────────────────
+   Every gold sits at hue 41-47deg, because gold IS an orange-yellow hue. What
+   makes one read as BROWN PAINT rather than METAL is darkness, not hue:
+     #E0B84C  1.81:1  58.8% light   her star gold, bright, unreadable as text
+     #946D18  4.51:1  33.7% light   the only AA-passing gold, and the brown one
+   So on white paper gold cannot be both readable and not-brown. Her own file
+   settled this twice: "a flat mid-gold at frame scale always reads brown, a
+   highlight-to-shadow ramp is what reads as metal" (2026-08-21) and "the fix was
+   to stop asking gold to be text".
+   Therefore: gold is a RAMP and is DECORATIVE ONLY. Text is ink.
+   ⚠️ Do not flatten these to a single hex, and do not set text in them. */
+// The wb-chip ramp she approved on the Star of the Week card is built for
+// LACQUER: its highlight stop #FEEF98 measured 1.07:1 against white linen, so on
+// paper the frame simply vanished along the top edge. Same ramp shape, floated
+// off the paper: no stop lighter than #F5E09A, none darker than ~47% lightness
+// (below that is where gold starts reading brown, measured).
+// ⚠️ It is still a RAMP, and that is what makes it read as metal. Never flatten
+// it to one hex, and never set text in it.
+// ⚠️ ORDER IS LOAD-BEARING: a diagonal ramp puts its FIRST stop in the top-left
+// corner, so a highlight at either end leaves that whole edge pale (measured 1.07
+// then 1.15:1 against the paper). The highlight sits in the MIDDLE now, so every
+// edge crosses both a light and a dark stop and reads as metal all the way round.
+const LEAF=['#DDA92C','#F5E09A','#C9992B','#EFD07A','#E9BE4A'];
+function leaf(x0,y0,x1,y1){ return diag(x0,y0,x1,y1,LEAF); }
+
+let DIVIDER='star';
+window.setDivider=function(d){DIVIDER=d};
+/* ── SILVER, her call: "I think it needs to be like the silver mirror one" ──
+   Measured on her white linen, and her instinct is structurally right rather
+   than just a preference:
+     silver's darkest stop #8C9298  3.01:1, saturation 5.5%   (neutral grey)
+     gold's darkest usable #C9992B  2.49:1, saturation 64.8%  (orange)
+   So silver is BOTH more present on white paper AND incapable of reading brown,
+   because its shadow is neutral. That is the whole reason gold kept failing here.
+   This is the app's OWN mirror ramp, lifted from the card builder unchanged, so
+   the two can never drift. */
+const MIRROR=['#FFFFFF','#C6CACE','#8C9298','#F2F4F6','#9AA0A6','#DFE2E5','#FFFFFF'];
+function mirror(x0,y0,x1,y1){ return diag(x0,y0,x1,y1,MIRROR); }
+
+let BYLINE='fold';
+window.setByline=function(b){BYLINE=b};
+let CTA='lora';
+window.setCta=function(c){CTA=c};
+let FRAME_STYLE='double';
+window.setFrame=function(f){FRAME_STYLE=f};
+
+/* Three frames, one variable. Everything else on the card is held constant. */
+function frameF(){
+  const g=leaf(0,0,W,H);
+  const m=mirror(0,0,W,H);
+
+  if(FRAME_STYLE==='silverband'){
+    ctx.fillStyle=m;ctx.fillRect(24,24,W-48,H-48);
+    paperInset(46);
+    // a hair of shadow where the frame meets the paper, or a light silver stop
+    // dissolves into white linen and the frame loses its inner edge
+    ctx.strokeStyle='rgba(90,95,100,.28)';ctx.lineWidth=1;
+    ctx.strokeRect(46.5,46.5,W-93,H-93);
+    ctx.strokeStyle='rgba(90,95,100,.22)';ctx.strokeRect(24.5,24.5,W-49,H-49);
+    return;
+  }
+  if(FRAME_STYLE==='silvergold'){
+    // the frame the app already ships on this card: silver outside, a thin gold
+    // rule inside. Her "maybe the one we have".
+    ctx.fillStyle=m;ctx.fillRect(20,20,W-40,H-40);
+    ctx.fillStyle=g;ctx.fillRect(44,44,W-88,H-88);
+    paperInset(56);
+    ctx.strokeStyle='rgba(90,95,100,.22)';ctx.lineWidth=1;
+    ctx.strokeRect(20.5,20.5,W-41,H-41);
+    return;
+  }
+  if(FRAME_STYLE==='silverhair'){
+    ctx.strokeStyle=m;ctx.lineWidth=4;ctx.strokeRect(34,34,W-68,H-68);
+    ctx.lineWidth=1.6;ctx.strokeRect(54,54,W-108,H-108);
+    return;
+  }
+  if(FRAME_STYLE==='band'){
+    // the Star of the Week's own gold-leaf band, the treatment she picked on
+    // 2026-08-21. Reused rather than reinvented, so the two can never drift.
+    ctx.fillStyle=g;ctx.fillRect(28,28,W-56,H-56);
+    paperInset(46);
+    ctx.strokeStyle='rgba(120,90,20,.30)';ctx.lineWidth=1;
+    ctx.strokeRect(28.5,28.5,W-57,H-57);
+    return;
+  }
+  if(FRAME_STYLE==='stars'){
+    ctx.strokeStyle=g;ctx.lineWidth=3;ctx.strokeRect(56,56,W-112,H-112);
+    ctx.lineWidth=1.4;ctx.strokeRect(74,74,W-148,H-148);
+    [[56,56],[W-56,56],[56,H-56],[W-56,H-56]].forEach(([x,y])=>{
+      ctx.save();
+      ctx.fillStyle='#FBFAF7';ctx.beginPath();ctx.arc(x,y,21,0,7);ctx.fill();
+      ctx.restore();
+      star(x,y,15,g);
+    });
+    return;
+  }
+  ctx.strokeStyle=g;ctx.lineWidth=3;ctx.strokeRect(34,34,W-68,H-68);
+  ctx.lineWidth=1.4;ctx.strokeRect(52,52,W-104,H-104);
+}
+function paperInset(i){
+  if(PAPERMODE==='white'){ctx.fillStyle='#ffffff';ctx.fillRect(i,i,W-2*i,H-2*i);return;}
+  ctx.fillStyle='#FBFAF7';ctx.fillRect(i,i,W-2*i,H-2*i);
+  const S=2.6;
+  ctx.save();ctx.beginPath();ctx.rect(i,i,W-2*i,H-2*i);ctx.clip();
+  ctx.fillStyle='rgba(150,140,120,.06)';
+  for(let x=i;x<W-i;x+=2.5*S)ctx.fillRect(x,i,0.5*S,H-2*i);
+  ctx.fillStyle='rgba(150,140,120,.05)';
+  for(let y=i;y<H-i;y+=2.5*S)ctx.fillRect(i,y,W-2*i,0.5*S);
+  ctx.restore();
+}
+
+let PROMISE='line';
+window.setPromise=function(p){PROMISE=p};
+
+/* ── THE TAIL, LAID OUT BOTTOM-UP ─────────────────────────────────────────
+   Every collision on this card so far came from the same mistake: pieces
+   positioned by fixed offsets from the TOP while the foot was pinned to the
+   BOTTOM, so anything that grew in the middle walked straight through them.
+   The tail is a stack now. Each row declares its own height, the stack is laid
+   from the bottom edge upward, and the function returns the ceiling the rest of
+   the card must stay above. Nothing can overlap by construction.
+
+   ⚠️ ALL PROMISE COPY IS A CLAUDE DRAFT. Three things are load-bearing and
+   should survive any rewording she does:
+     FREE            her own value-first rule; it removes the only objection
+     THE QUIZ        the thing she is being asked to do, and that it is short
+     A REAL STYLIST  the one claim no competitor can copy (the Sally north star) */
+function buildTail(TAUPE,BLACK,GOLDF){
+  const rows=[];
+  const push=(h,draw)=>rows.push({h,draw});
+
+  push(58,y=>{ ctx.fillStyle=BLACK;ctx.font='54px "DM Serif Display", serif';
+               ctx.fillText('stylestar.app',W/2,y+46); });
+
+  push(40,y=>{ ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
+               ctx.beginPath();ctx.moveTo(W/2-120,y+20);ctx.lineTo(W/2-14,y+20);
+               ctx.moveTo(W/2+14,y+20);ctx.lineTo(W/2+120,y+20);ctx.stroke();
+               ctx.fillStyle=GOLDF;ctx.beginPath();ctx.arc(W/2,y+20,7,0,7);ctx.fill(); });
+
+  if(PROMISE!=='none'){
+    /* HER WORDING, final. Her sentence, plus one word she chose herself.
+       ⚠️ "of 20 years" was CUT ON HER INSTRUCTION: "I feel like we already say it
+       a lot." Replaced with "a REAL personal stylist", her idea, and it is the
+       stronger claim of the two on this particular surface. The objection a
+       stranger brings to a style app is not "is she experienced", it is "is this
+       just an algorithm" — which is Sally's whole note, and "real" answers it in
+       one word. It is also shorter, which this card cares about.
+       ⚠️ The separate byline is GONE. Her sentence now carries the claim, and
+       running both said "personal stylist" twice in adjacent lines.            */
+    const SENT='Take the free quiz to discover your Style Portrait, and receive shopping tips and ideas from a real personal stylist.';
+    ctx.font='italic 400 34px "Lora", serif';
+    const pl=wrap(SENT,W-240);
+    push(pl.length*46+18,y=>{
+      ctx.fillStyle=BLACK;ctx.font='italic 400 34px "Lora", serif';
+      pl.forEach((t,i)=>ctx.fillText(t,W/2,y+40+i*46));
+    });
+  }
+
+  push(CTA==='serif'?92:88,y=>{
+    if(CTA==='serif'){
+      // DM Serif Display ties it to stylestar.app directly beneath it: the
+      // question and the address become one invitation
+      ctx.fillStyle='#12100E';ctx.font='54px "DM Serif Display", serif';
+    }else if(CTA==='loraDark'){
+      ctx.fillStyle='#3A352C';ctx.font='700 54px "Lora", serif';
+    }else{
+      ctx.fillStyle='#3A352C';ctx.font='600 52px "Lora", serif';
+    }
+    ctx.fillText('What\u2019s your Style Star?',W/2,y+62);
+  });
+
+  push(52,y=>{ ctx.strokeStyle='rgba(201,153,43,.55)';ctx.lineWidth=1.4;
+               ctx.beginPath();ctx.moveTo(W/2-110,y+26);ctx.lineTo(W/2+110,y+26);ctx.stroke(); });
+
+  // ⚠️ FOOT_MARGIN is not decoration. Measured, the tail was ending 1px off the
+  // frame while the logo had 66px of air above it, which is exactly the
+  // bottom-heaviness she spotted by eye. It matches the optical margin at the
+  // top so the card sits on its own feet.
+  const FOOT_MARGIN=150;
+  const total=rows.reduce((a,r)=>a+r.h,0);
+  return {
+    ceiling: H-FOOT_MARGIN-total,          // the highest the tail reaches
+    draw(){ let y=H-FOOT_MARGIN; for(const r of rows){ y-=r.h; r.draw(y); } }
+  };
+}
+
+function optF(){
+  paperInset(0);          // her white linen, not the cream
+  frameF();
+
+  ctx.textAlign='center';
+  const TAUPE='#8A8478', BLACK='#12100E';
+  const GOLDF=leaf(W/2-200,0,W/2+200,H);   // a ramp, never a flat hex
+
+  const tail=buildTail(TAUPE,BLACK,GOLDF);
+
+  /* ── MEASURE THE UPPER BLOCK BEFORE PLACING IT ────────────────────────────
+     Everything above the tail used to start at a fixed y, so on a taller card
+     the slack all collected in one hole in the middle (measured ~300px at 9:16)
+     and on a shorter one the blocks overlapped. Now the block is measured first
+     and CENTRED in the room the tail leaves, so the card balances itself at any
+     height. This is what makes the Instagram ratio a free choice.             */
+  const LOGO_W=196, LOGO_H=LOGO_W*312/296;
+  const words=D.arch.split(' ');
+  const head=words[0], rest=words.slice(1).join(' ');
+  ctx.font='104px "DM Serif Display", serif';
+  const fsHead=104;
+  const fs=fitFont(rest,'"DM Serif Display", serif',116,58,W-190);
+
+  const line = LINEMODE==='beats' ? BEATS : (LINEMODE==='short' ? SHORT : D.motto);
+  ctx.font='italic 400 46px "Lora", serif';
+  const ml=wrapSentences(line,W-300);
+
+  const H_LOGO=LOGO_H+72;                 // logo plus its air
+  const H_OVER=54;                        // MY STYLE IS
+  const H_NAME=fsHead*1.02+fs*1.06+34;    // the two lines of the archetype
+  const H_DIV =DIVIDER==='none'?36:96;    // rules and her star
+  const H_MOT =ml.length*62+34;
+  const H_NOT =120;                       // WITH NOTES OF plus the pair
+  const blockH=H_LOGO+H_OVER+H_NAME+H_DIV+H_MOT+H_NOT;
+
+  const TOP_MARGIN=112;
+  const room=tail.ceiling-TOP_MARGIN;
+  let y=TOP_MARGIN+Math.max(0,(room-blockH)/2);
+
+  drawLogo(y,LOGO_W);            y+=H_LOGO;
+
+  ctx.fillStyle=TAUPE;
+  ctx.font='600 27px "Jost", sans-serif';ctx.letterSpacing='9px';
+  ctx.fillText('MY STYLE IS',W/2,y+28);ctx.letterSpacing='0px';
+  y+=H_OVER;
+
+  ctx.fillStyle=BLACK;
+  ctx.font=fsHead+'px "DM Serif Display", serif';
+  ctx.fillText(head,W/2,y+fsHead*0.78);
+  ctx.font=fs+'px "DM Serif Display", serif';
+  ctx.fillText(rest,W/2,y+fsHead*1.02+fs*0.80);
+  y+=H_NAME;
+
+  if(DIVIDER!=='none'){
+    const dy=y+40;
+    ctx.strokeStyle=GOLDF;ctx.lineWidth=1.6;
+    ctx.beginPath();ctx.moveTo(W/2-190,dy);ctx.lineTo(W/2-40,dy);
+    ctx.moveTo(W/2+40,dy);ctx.lineTo(W/2+190,dy);ctx.stroke();
+    star(W/2,dy,17,GOLDF);
+  }
+  y+=H_DIV;
+
+  ctx.fillStyle=BLACK;
+  ctx.font='italic 400 46px "Lora", serif';
+  ml.forEach((t,i)=>ctx.fillText(t,W/2,y+46+i*62));
+  y+=H_MOT;
+
+  ctx.fillStyle=TAUPE;
+  ctx.font='600 24px "Jost", sans-serif';ctx.letterSpacing='7px';
+  ctx.fillText('WITH NOTES OF',W/2,y+26);ctx.letterSpacing='0px';
+
+  const short=D.notes.map(n=>n.replace(/^The\s+/i,'').toUpperCase());
+  ctx.fillStyle=BLACK;
+  let ns=30;ctx.font='600 '+ns+'px "Jost", sans-serif';ctx.letterSpacing='3px';
+  const joined=short.join('   \u2022   ');
+  while(ctx.measureText(joined).width>W-160&&ns>19){ns--;ctx.font='600 '+ns+'px "Jost", sans-serif';}
+  ctx.fillText(joined,W/2,y+82);ctx.letterSpacing='0px';
+
+  tail.draw();
+
+  // an honest alarm rather than a silent overlap: if the block cannot fit above
+  // the tail, the card is being asked for a size it cannot hold.
+  if(blockH>room) console.warn('CARD TOO SHORT: block '+Math.round(blockH)+'px into '+Math.round(room)+'px of room');
+}
+
+// the four-point sparkle from her mockup
+function sparkle(cx,cy,r,fill){
+  ctx.save();ctx.fillStyle=fill;ctx.beginPath();
+  ctx.moveTo(cx,cy-r);ctx.quadraticCurveTo(cx+r*.22,cy-r*.22,cx+r,cy);
+  ctx.quadraticCurveTo(cx+r*.22,cy+r*.22,cx,cy+r);
+  ctx.quadraticCurveTo(cx-r*.22,cy+r*.22,cx-r,cy);
+  ctx.quadraticCurveTo(cx-r*.22,cy-r*.22,cx,cy-r);
+  ctx.closePath();ctx.fill();ctx.restore();
+}
+
+window.setSize=function(w,h){
+  W=w;H=h;const c=document.getElementById('card');c.width=w;c.height=h;
+};
+window.setPaper=function(m){PAPERMODE=m};
+window.setStress=function(on){
+  if(on){
+    D.name='Alexandria';
+    D.arch='The Polished Professional';
+    D.notes=['The Beautifully Balanced','The Understated Luxury'];
+    D.motto='Alexandria, you dress like the decision has already been made in your favor, always.';
+  }else{
+    D.name='Ashley';D.arch='The Statement Maker';
+    D.notes=['The Bold Expressionist','The Modern Trendsetter'];
+    D.motto='Ashley, you walk in and the room adjusts; your confidence is the accessory.';
+  }
+};
+window.drawOption=function(o){
+  ctx.clearRect(0,0,W,H);
+  ctx.textBaseline='alphabetic';
+  if(o==='A')optA();else if(o==='B')optB();else if(o==='C')optC();else if(o==='D')optD();else if(o==='E')optE();else optF();
+};
+</script>
