@@ -5953,19 +5953,19 @@ Respond with ONLY valid JSON in this exact format, no other text:
 //   purpose, so do not add them from that list.
 const STORES={
   // Department stores and multi-brand
-  'Nordstrom':{cf:'&filterByColor=',w:1,u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,9,8,7,7,8,8,10,9],deep:1,c:'almost everything, dresses, shoes, denim'},
-  "Macy's":{w:1,cfp:true,cfpBase:'https://www.macys.com/shop/featured/',u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[7,5,6,8,6,7,7,6,8,8],deep:1,c:'everyday, dresses, shoes, handbags'},
-  "Dillard's":{w:1,u:'https://www.dillards.com/search-term/',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7,8,5,6,8,7,9,8],deep:1,c:'dresses, occasion, workwear'},
-  'Belk':{w:1,u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[8,5,6,8,5,8,6,5,8,7],deep:1,c:'everyday, dresses, shoes'},
-  'Bloomingdales':{w:1,cfp:true,cfpBase:'https://www.bloomingdales.com/shop/featured/',u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[6,7,9,8,8,6,9,8,9,8],deep:1,c:'designer, denim, shoes'},
-  'Saks':{w:1,u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],d:[3,9,10,8,9,3,10,9,10,9],deep:1,c:'designer, bags, occasion'},
-  'Neiman Marcus':{w:1,u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[3,9,10,9,8,3,10,9,10,9],deep:1,c:'designer, evening, shoes'},
+  'Nordstrom':{cf:'&filterByColor=',w:1,u:'https://www.nordstrom.com/sr?keyword=',t:'$$-$$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,9,8,7,7,8,8,10,9],deep:1,c:'almost everything, dresses, shoes, denim, jewelry'},
+  "Macy's":{w:1,cfp:true,cfpBase:'https://www.macys.com/shop/featured/',u:'https://www.macys.com/shop/search?keyword=',t:'$$',a:'Classic, Everyday',s:['petite','plus','tall','wide'],d:[7,5,6,8,6,7,7,6,8,8],deep:1,c:'everyday, dresses, shoes, handbags, jewelry'},
+  "Dillard's":{w:1,u:'https://www.dillards.com/search-term/',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,5,7,8,5,6,8,7,9,8],deep:1,c:'dresses, occasion, workwear, jewelry'},
+  'Belk':{w:1,u:'https://www.belk.com/search/?q=',t:'$$',a:'Casual Classic',s:['petite','plus'],d:[8,5,6,8,5,8,6,5,8,7],deep:1,c:'everyday, dresses, shoes, jewelry'},
+  'Bloomingdales':{w:1,cfp:true,cfpBase:'https://www.bloomingdales.com/shop/featured/',u:'https://www.bloomingdales.com/shop/search?keyword=',t:'$$$',a:'Modern Luxe',s:['petite','plus'],d:[6,7,9,8,8,6,9,8,9,8],deep:1,c:'designer, denim, shoes, jewelry'},
+  'Saks':{w:1,u:'https://www.saksfifthavenue.com/search?q=',t:'$$$$',a:'Glamorous Luxe',s:['petite','plus'],d:[3,9,10,8,9,3,10,9,10,9],deep:1,c:'designer, bags, occasion, fine jewelry'},
+  'Neiman Marcus':{w:1,u:'https://www.neimanmarcus.com/search.jsp?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[3,9,10,9,8,3,10,9,10,9],deep:1,c:'designer, evening, shoes, fine jewelry'},
   'Bergdorf Goodman':{w:1,u:'https://www.bergdorfgoodman.com/search.jsp?q=',t:'$$$$',a:'Luxury Fashion',s:[],d:[2,9,10,10,9,2,10,10,10,9],c:'couture, designer, fine jewelry'},
   'NET-A-PORTER':{u:'https://www.net-a-porter.com/en-us/shop/search?q=',t:'$$$$',a:'Luxury Fashion, Quiet Luxury',s:[],d:[4,9,10,9,9,3,10,8,10,9],deep:1,c:'luxury designer clothing, handbags, shoes'},
   // searchSuggestion=false stops Shopbop redirecting the term into a suggestion,
   // the way Revolve does. Ordered first so the term still appends at the end.
   'Shopbop':{u:'https://www.shopbop.com/products?searchSuggestion=false&query=',t:'$$$',a:'Modern Chic, Trendsetter',s:[],d:[5,7,8,6,9,6,8,8,8,8],deep:1,c:'contemporary designers, denim, shoes'},
-  'Nordstrom Rack':{w:1,u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],d:[8,5,7,7,6,8,6,7,9,8],deep:1,c:'designer deals, shoes, denim'},
+  'Nordstrom Rack':{w:1,u:'https://www.nordstromrack.com/search?query=',t:'$-$$',a:'Universal',s:['petite','plus','wide'],d:[8,5,7,7,6,8,6,7,9,8],deep:1,c:'designer deals, shoes, denim, jewelry'},
   'TJ Maxx':{w:1,u:'https://m.tjmaxx.tjx.com/m/shop/?initSubmit=search&Ntt=',t:'$',a:'Treasure Hunter',s:['plus'],d:[8,5,5,5,6,9,5,6,8,8],deep:1,c:'value finds, handbags, shoes'},
   // Contemporary and mainstream
   'J.Crew':{w:1,u:'https://www.jcrew.com/search?term=',t:'$$',a:'Classic Sophisticate, Playful Classic',s:['petite','tall'],d:[5,3,9,10,3,7,8,8,9,6],deep:1,c:'timeless classics, workwear, denim, dresses'},
@@ -6031,6 +6031,7 @@ const STORES={
   'NYDJ':{u:'https://www.nydj.com/search?q=',t:'$$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,3,8,8,3,8,4,8,9,4],c:'premium denim, flattering fit'},
   // Bags and jewelry
   'Coach':{w:1,u:'https://www.coach.com/search?q=',t:'$$$',a:'Classic Sophisticate, Modern Luxe',s:[],d:[5,5,9,9,5,6,8,5,8,7],c:'leather handbags, wallets, accessories'},
+  'Baby Gold':{u:'https://www.babygold.com/search?q=',t:'$$',a:'Universal',s:[],d:[5,4,9,8,7,8,7,5,9,4],c:'solid 14K fine jewelry, personalized names and charms, diamonds'},
   'Gorjana':{u:'https://gorjana.com/search?q=',t:'$$',a:'Elevated Natural, Coastal Chic',s:[],d:[5,3,8,7,6,8,4,5,9,4],c:'everyday jewelry, layering pieces'},
   'Mejuri':{u:'https://mejuri.com/search?query=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[5,2,10,9,5,7,5,5,10,2],c:'fine jewelry, everyday essentials'},
   // Active, swim, foundations, shoes
@@ -6114,7 +6115,7 @@ const storeUrls={};Object.keys(STORES).forEach(function(k){storeUrls[k]=STORES[k
 // punctuation, possessives and spacing ("Bloomingdale's", "J Crew", "LOFT").
 // ⚠️ Every value here must be a real key in STORES. Renaming a store without
 // updating its alias points the alias at a key that no longer exists.
-const _STORE_ALIAS={'dvf':'Diane von Furstenberg','saksfifthavenue':'Saks','netaporter':'NET-A-PORTER','aliceolivia':'Alice + Olivia','aliceandolivia':'Alice + Olivia','marshalls':'TJ Maxx','tjx':'TJ Maxx','alo':'Alo Yoga','landsend':"Lands' End",'jjill':'J.Jill','jcrewfactory':'J.Crew','gapfactory':'Banana Republic Factory','tiffany':'Tiffany & Co.','tiffanyco':'Tiffany & Co.','universalstd':'Universal Standard','bodenusa':'Boden','quayaustralia':'Quay','farmrio':'FARM Rio','sezane':'Sézane','whbm':'White House Black Market','whitehouseblackmkt':'White House Black Market','chicos':"Chico's",'somaintimates':'Soma'};
+const _STORE_ALIAS={'babygold':'Baby Gold','dvf':'Diane von Furstenberg','saksfifthavenue':'Saks','netaporter':'NET-A-PORTER','aliceolivia':'Alice + Olivia','aliceandolivia':'Alice + Olivia','marshalls':'TJ Maxx','tjx':'TJ Maxx','alo':'Alo Yoga','landsend':"Lands' End",'jjill':'J.Jill','jcrewfactory':'J.Crew','gapfactory':'Banana Republic Factory','tiffany':'Tiffany & Co.','tiffanyco':'Tiffany & Co.','universalstd':'Universal Standard','bodenusa':'Boden','quayaustralia':'Quay','farmrio':'FARM Rio','sezane':'Sézane','whbm':'White House Black Market','whitehouseblackmkt':'White House Black Market','chicos':"Chico's",'somaintimates':'Soma'};
 // NFD splits an accented letter into letter + accent mark, so stripping the marks
 // leaves plain ASCII. Without it "Sezane" and "Sezane" (accented) normalise to
 // different strings and one of them silently fails to resolve.

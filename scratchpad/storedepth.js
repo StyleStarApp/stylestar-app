@@ -49,7 +49,7 @@ const HERS = ["Nordstrom","Macy's","Dillard's","Belk","Bloomingdales","Saks","Ne
 // approved advertiser and still earns; see the block comment at its old place in
 // STORES. This is the ONE suite that should fail when the table changes — bump it
 // deliberately, never find-and-replace it.
-ok('store count is 101', t.total === 101, String(t.total));
+ok('store count is 102', t.total === 102, String(t.total));   // +Baby Gold, 2026-08-23 (Cath)
 ok('the 16 she confirmed are all flagged deep', HERS.every(n => t.full.includes(n)), HERS.filter(n => !t.full.includes(n)).join());
 ok('the 4 middle-tier stores she added are flagged', MIDDLE.every(n => t.full.includes(n)), MIDDLE.filter(n => !t.full.includes(n)).join());
 ok('nothing else was flagged deep', t.full.length === HERS.length + MIDDLE.length,
