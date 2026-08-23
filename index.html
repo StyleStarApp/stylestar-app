@@ -12045,6 +12045,29 @@ function buildCardBlob(source,callback){
         }
       }
       logoStarCut=true;
+      /* AND THE SLIDER UNDER THE WORDMARK IS RETUNED TO THE STAR'S GOLD.
+         Her catch, and it is measurable: the drawn slider is #E0B71B at hue
+         47.5°, while the star that now sits above it terminates at #E6B845,
+         hue 42.9°. Nearly five degrees apart is exactly the distance at which
+         two golds on one sheet stop reading as the same gold and start reading
+         as a mismatch, which is what she was seeing.
+         ▶ HOW: the slider is one flat colour painted against white, so every
+         pixel is a MIX of that colour and the paper - the soft ends of the line
+         and the dot's edge are simply lighter mixes. Recover how much colour
+         each pixel carries (the blue channel has the longest run, 27 to 255, so
+         it measures that mix most precisely), then lay the same mix down in the
+         new gold. That keeps every soft edge soft; flooding the pixels with a
+         flat colour instead would leave the line with hard jagged ends. */
+      const SRC_B=27, TGT=[230,184,69];
+      for(let i=0;i<p.length;i+=4){
+        if(!p[i+3])continue;
+        const r=p[i],g=p[i+1],b=p[i+2];
+        if(!(r>=g&&g>b&&(r-b)>28))continue;
+        const t=Math.max(0,Math.min(1,(255-b)/(255-SRC_B)));
+        p[i]=Math.round(255-t*(255-TGT[0]));
+        p[i+1]=Math.round(255-t*(255-TGT[1]));
+        p[i+2]=Math.round(255-t*(255-TGT[2]));
+      }
     }
     x.putImageData(im,0,0);logoCut=c;
   }
@@ -12188,9 +12211,11 @@ function buildCardBlob(source,callback){
        the slider line and dot in the drawn logo are #E0B71B. The card's foot was
        drawing #C9992B at 55%, which is browner and darker — her catch, and she
        was looking at the two golds sitting one above the other on the same sheet.
-       ▶ The foot rule and dot are a deliberate ECHO of the logo's slider, so they
-       must be the logo's colour. If the logo art is ever redrawn, re-sample. */
-    const LOGO_GOLD='#E0B71B';
+       ▶ RETUNED to the star's own #E6B845 (her call): with the shiny star now on
+       the logo too, a slider at hue 47.5° against a star at 42.9° read as two
+       different golds. The drawn slider is remapped to match in cutLogo, and
+       this line follows it, so the whole card carries ONE gold. */
+    const LOGO_GOLD='#E6B845';
     /* The gold-leaf ramp that used to live here is DELETED, not commented out.
        It drew the flanking divider rules, and she retired those so the star could
        stand alone; the star carries its own gradient and the foot rules take the

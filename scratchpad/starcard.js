@@ -303,6 +303,40 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     ok(dh<=2,'both stars are the same gold (hue '+hue(lbest).toFixed(1)+'° vs '+hue(best).toFixed(1)+'°)');
   }
 
+  /* ── Part 3d: ONE GOLD ON THE WHOLE SHEET ────────────────────────────────
+     Her catch that produced this: the drawn slider under the wordmark was
+     #E0B71B at hue 47.5° while the star above it terminates at #E6B845, hue
+     42.9°, and five degrees apart is where two golds stop reading as the same
+     gold. The slider is remapped in cutLogo and the hairline follows it.
+     ▶ HUE, not RGB - the stars are a gradient at two sizes, so their brightest
+     pixels are never byte-identical (the trap Part 3c already fell into). */
+  {
+    const p=png(Buffer.from(logoStar.b64,'base64'));
+    const rgb=(x,y)=>{const i=(y*p.w+x)*p.bpp;return [p.px[i],p.px[i+1],p.px[i+2]]};
+    const hue=c=>{const mx=Math.max(...c),mn=Math.min(...c),d=mx-mn;
+      if(!d)return 0;
+      const h=mx===c[0]?((c[1]-c[2])/d)%6:mx===c[1]?(c[2]-c[0])/d+2:(c[0]-c[1])/d+4;
+      return (h*60+360)%360;};
+    /* Each gold mark named by the band it lives in, and the TRUEST pixel taken
+       from each - the most saturated one, i.e. the mark's own colour rather than
+       an antialiased edge blended toward the paper. */
+    const marks=[['the logo star',100,140],['the logo slider',277,295],
+                 ['the star in the middle',960,1010],['the hairline above the CTA',1330,1345]];
+    const hues=[];
+    for(const [label,y0,y1] of marks){
+      let best=null;
+      for(let y=y0;y<=y1;y++)for(let x=70;x<p.w-70;x++){
+        const c=rgb(x,y),s=Math.max(...c)-Math.min(...c);
+        if(!best||s>best[0])best=[s,c];
+      }
+      ok(best&&best[0]>80,label+' is drawn in a real gold (saturation '+(best?best[0]:0)+')');
+      hues.push([label,hue(best[1])]);
+    }
+    const spread=Math.max(...hues.map(h=>h[1]))-Math.min(...hues.map(h=>h[1]));
+    ok(spread<=2,'every gold on the card is the same gold ('+
+       hues.map(h=>h[0]+' '+h[1].toFixed(1)+'°').join(', ')+')');
+  }
+
   // ── Part 4: the caption carries her archetype and a tappable link ─────────
   const cap=await page.evaluate(()=>{
     const src=buildCardBlob.toString();
