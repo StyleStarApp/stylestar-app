@@ -119,6 +119,17 @@ const swept = await pg.evaluate(async () => {
   };
   // drive every surface that renders an outbound link
   showDream(); await new Promise(r => setTimeout(r, 400)); scan();
+  // THE MALL. It renders 27 hardcoded storefront links and was the one surface
+  // this sweep never covered, which was harmless only for as long as no Mall
+  // store was an approved advertiser. FARM Rio and DVF are both now, so a bare
+  // link here is real money on the floor with nothing on screen looking wrong.
+  showShop(); await new Promise(r => setTimeout(r, 400)); scan();
+  const mall = {};
+  document.querySelectorAll('#s-shop a.mall-card').forEach(a => {
+    const n = (a.querySelector('.mall-store') || {}).textContent || '';
+    mall[n.trim()] = a.getAttribute('href') || '';
+  });
+  const mallCount = document.querySelectorAll('#s-shop a.mall-card').length;
   // a synthetic Edit item pointing at an approved store, to prove the runtime
   // rewrite actually fires (her real Edit has none of these two yet)
   const first = document.querySelector('#s-dream .dc-item .dc-item-btn');
@@ -133,8 +144,23 @@ const swept = await pg.evaluate(async () => {
   scan();
   const cardHref = (holder.querySelector('a.shop-link') || {}).href || '';
   holder.remove();
-  return {bare, wrapped: wrapped.length, editHref, cardHref};
+  return {bare, wrapped: wrapped.length, editHref, cardHref, mall, mallCount};
 });
+ok('the Mall really rendered its cards (so the sweep is not vacuous)',
+   swept.mallCount > 20, String(swept.mallCount));
+ok('the Mall\'s FARM Rio card is wrapped, mid 44912',
+   /click\.linksynergy\.com\/deeplink\?id=jZNkkinrr1k&mid=44912&murl=/.test(swept.mall['FARM Rio'] || ''),
+   swept.mall['FARM Rio']);
+ok('the Mall\'s DVF card is wrapped, mid 53590',
+   /click\.linksynergy\.com\/deeplink\?id=jZNkkinrr1k&mid=53590&murl=/.test(swept.mall['Diane von Furstenberg'] || ''),
+   swept.mall['Diane von Furstenberg']);
+ok('each Mall card still lands on its own storefront',
+   decodeURIComponent((swept.mall['FARM Rio'] || '').split('murl=')[1] || '') === 'https://www.farmrio.com' &&
+   decodeURIComponent((swept.mall['Diane von Furstenberg'] || '').split('murl=')[1] || '') === 'https://www.dvf.com',
+   (swept.mall['FARM Rio'] || '') + ' | ' + (swept.mall['Diane von Furstenberg'] || ''));
+ok('an UNapproved Mall store is untouched (Nordstrom)',
+   (swept.mall['Nordstrom'] || '').indexOf('linksynergy') < 0 && /nordstrom\.com/.test(swept.mall['Nordstrom'] || ''),
+   swept.mall['Nordstrom']);
 ok('the Edit href rewrite fires at runtime', /mid=53590/.test(swept.editHref), swept.editHref);
 ok('a catalog card\'s exact "Shop it" is wrapped', /mid=53590/.test(swept.cardHref), swept.cardHref);
 ok('ZERO bare links to an approved store on any swept surface', swept.bare.length === 0, swept.bare.join(' | '));

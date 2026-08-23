@@ -8842,13 +8842,28 @@ const mallStores=[
     {n:'Madewell',d:'Denim, easy basics, everyday cool',u:'https://www.madewell.com'},
     {n:'J.Crew',d:'Polished classics with a modern edge',u:'https://www.jcrew.com'},
     {n:'Anthropologie',d:'Romantic, boho, statement pieces',u:'https://www.anthropologie.com'},
-    {n:'Aritzia',d:'Elevated everyday and great basics',u:'https://www.aritzia.com'}
+    {n:'Aritzia',d:'Elevated everyday and great basics',u:'https://www.aritzia.com'},
+    /* ⚠️ HER PICK "C", 2026-08-24, and the placement follows HER OWN SCORES
+       rather than taste. FARM Rio and DVF are both colourful 10 - the only
+       dimension where they agree - so grouping them together (option D) would
+       have filed a $$$ playful print house next to NET-A-PORTER. FARM Rio is
+       trendy 10 / classic 3 / casual 7, "colorful dresses, vacation wear,
+       statement prints", which is nearly the sentence already under
+       Anthropologie two cards up. DVF is dressy 9 / polish 9, "wrap dresses,
+       occasion, wedding guest", and sits with Saks where a woman shopping a
+       wedding is already looking.
+       ⚠️ THESE TWO ARE HER ONLY APPROVED ADVERTISERS, so they are the only Mall
+       cards that can earn - which is why the _affUrl wrap above had to land in
+       the same change. ⚠️ The blurbs are CLAUDE DRAFTS condensed from her own
+       c: lines; every other blurb in this list is hers. */
+    {n:'FARM Rio',d:'Bold prints and color, made for vacation',u:'https://www.farmrio.com'}
   ]},
   {cat:'Elevated & Designer',stores:[
     {n:'Saks Fifth Avenue',d:'Luxury and designer labels',u:'https://www.saksfifthavenue.com'},
     {n:"Bloomingdale's",d:'Designer to contemporary in one place',u:'https://www.bloomingdales.com'},
     {n:'Revolve',d:'Trend-forward and going-out looks',u:'https://www.revolve.com'},
-    {n:'NET-A-PORTER',d:'Luxury designer fashion',u:'https://www.net-a-porter.com'}
+    {n:'NET-A-PORTER',d:'Luxury designer fashion',u:'https://www.net-a-porter.com'},
+    {n:'Diane von Furstenberg',d:'Wrap dresses and prints for occasions',u:'https://www.dvf.com'}
   ]},
   {cat:'Value & Basics',stores:[
     {n:'Amazon',d:'Everything, fast, great for basics',u:'https://www.amazon.com/fashion'},
@@ -8880,7 +8895,20 @@ function renderMall(){
   mallStores.forEach(function(group){
     h+='<div class="mall-cat">'+group.cat+'</div><div class="mall-grid">';
     group.stores.forEach(function(s){
-      h+='<a class="mall-card" href="'+s.u+'" target="_blank" rel="sponsored noopener"><div><div class="mall-store">'+s.n+'</div><div class="mall-desc">'+s.d+'</div></div><div class="mall-go">Shop <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div></a>';
+      /* ⚠️⚠️ THE MALL WAS THE ONE SHOPPING SURFACE WHOSE LINKS COULD NEVER EARN.
+         It rendered s.u RAW, so it was the single place a store URL becomes an
+         href without passing through _affUrl -- and affwrap.js, the sweep whose
+         whole job is that "zero bare links to an approved store escape", did not
+         mention the Mall at all. Two gaps that hid each other.
+         ▶ IT COST NOTHING UNTIL NOW ONLY BY ACCIDENT: none of the 25 Mall stores
+         happened to be an approved advertiser. The moment FARM Rio and DVF go in
+         (2026-08-24, her call) that stops being true, and earning is the entire
+         argument for adding them -- so this lands FIRST, in the same change.
+         ⚠️ Same family as the Vilebrequin trap: a store present in one list and
+         absent from another, with nothing on screen looking any different.
+         ⚠️ _affUrl leaves an unapproved host untouched, so the other 25 cards are
+         byte-identical. affwrap.js now sweeps this surface too. */
+      h+='<a class="mall-card" href="'+_affUrl(s.u)+'" target="_blank" rel="sponsored noopener"><div><div class="mall-store">'+s.n+'</div><div class="mall-desc">'+s.d+'</div></div><div class="mall-go">Shop <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div></a>';
     });
     h+='</div>';
   });
