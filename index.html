@@ -6435,7 +6435,22 @@ const _OCC_PROFESSIONAL='Lean professional and modest for this occasion. Fitted 
 // internal. That is the distinction that lets both of her wishes hold at once.
 // ⚠️ Never add a religion-specific clause here. If one faith's norms ever need
 // their own handling, that is a conversation with her, not an edit.
-const _OCC_MODEST='Modest coverage matters for this occasion. Covered shoulders, a hemline at or below the knee, and nothing sheer, low-cut, backless or clingy. Color and print are welcome, this is not a sombre occasion. This rule is absolute, the same weight as her never-wear list.';
+const _OCC_MODEST='Modest coverage matters for this occasion. Covered shoulders, a hemline at or below the knee, and nothing sheer, low-cut, backless or clingy. Color and print are welcome, this is not a sombre occasion. NEVER satin. This rule is absolute, the same weight as her never-wear list.';
+// ⭐ HER THIRD DEFINITION, for game day (2026-08-23), and it came from seeing the
+// live run: "definitely don't want sequin going out top or strappy heeled sandals
+// for a game day. not even for a glam woman[.] mini skirt is ok".
+// ▶▶ WHY FORMALITY ALONE COULD NOT DO IT, and it is the same shape as her funeral
+// finding: sequins are not about DRESSINESS, they are about PRACTICALITY. A glam
+// woman at 0.3 formality was correctly given her own register and came back with a
+// Sequin Going-Out Top and Strappy Heeled Sandals, which is a night out, not a
+// stadium. Nothing in the dimensions can express "you will be standing on
+// bleachers", so it has to be said.
+// ⚠️ SNEAKERS ARE EXPLICITLY WELCOME HERE, which is the exact OPPOSITE of
+// _OCC_PROFESSIONAL, where they are banned. Same word, opposite standing, both
+// hers. Do not "unify" the two.
+// ⚠️ A MINI SKIRT IS EXPLICITLY FINE, her call, so this must never grow the
+// sombre rule's hemline clause.
+const _OCC_GAMEDAY='This is a casual outdoor occasion spent standing, walking and sitting on bleachers, so every piece must be practical to wear for hours. NEVER evening or going-out pieces: no sequins, no strappy heels, nothing she would wear to a club or a party. Shoes must be flat or low and genuinely walkable, and sneakers and boots are welcome here. Layers work well. A mini skirt is fine. This rule is absolute, the same weight as her never-wear list.';
 const _OCCASIONS=[
   {p:'mother of the bride',f:1.0,retail:true},
   {p:'mother of the groom',f:1.0,retail:true},
@@ -6493,8 +6508,8 @@ const _OCCASIONS=[
   // the phrase belongs in the search when the ask is for ONE KIND of garment,
   // and NOT when the occasion calls for a whole outfit across categories.
   // Mother of the bride is the first kind; game day is the second.
-  {p:'game day',f:0.3,retail:false},
-  {p:'tailgate',f:0.3,retail:false}
+  {p:'game day',f:0.3,retail:false,define:_OCC_GAMEDAY},
+  {p:'tailgate',f:0.3,retail:false,define:_OCC_GAMEDAY}
 ];
 // The longest matching phrase wins, so the table above can be edited in any
 // order and "wedding guest" can never be shadowed by "wedding".

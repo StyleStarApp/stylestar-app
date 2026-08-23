@@ -178,6 +178,17 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
   // OUTFIT occasion, not a one-garment one. Marked retail:true first and the
   // live run came back with six items all named "Game Day <something>".
   const gd=await pg.evaluate(()=>{_ssAsk='game day outfit';return _askedForRule()});
+  ok(gd.indexOf('no sequins, no strappy heels')>=0,'game day bans sequins and strappy heels (her call)');
+  ok(gd.indexOf('sneakers and boots are welcome')>=0,'game day WELCOMES sneakers');
+  ok(gd.indexOf('A mini skirt is fine')>=0,'game day allows a mini skirt (her call)');
+  // 🚨 Sneakers are banned in the professional rule and welcomed here. Same word,
+  // opposite standing, both hers. This pins that they never drift together.
+  const iv=await pg.evaluate(()=>{_ssAsk='job interview outfit';return _askedForRule()});
+  ok(iv.indexOf('NEVER flip flops or sneakers')>=0 && gd.indexOf('sneakers and boots are welcome')>=0,
+     'sneakers stay BANNED for an interview and WELCOME for game day');
+  const ch=await pg.evaluate(()=>{_ssAsk='what to wear to church';return _askedForRule()});
+  ok(ch.indexOf('NEVER satin')>=0,'church bans satin (her call)');
+  ok(ch.indexOf('Color and print are welcome')>=0,'church still welcomes colour and print');
   ok(gd.indexOf('whole and unbroken')<0,'game day does NOT force its phrase into every search');
   ok(gd.indexOf('keep that word OUT of the search')>=0,'game day lets the garment carry it instead');
   ok(low.gym===null&&low.pool===null&&low.beach===null,

@@ -43,14 +43,14 @@ async function live(prompt){
   try{return JSON.parse(d.content.map(c=>c.text||'').join('').replace(/```json|```/g,'').trim())}catch(e){return {err:'parse'}}
 }
 // Every word she banned, plus the brights/prints she said to avoid.
-const VIOLATION=/spaghetti|strapless|plunging|sheer|backless|bodycon|cut.?out|mini skirt|micro/i;
+const VIOLATION=/sequin|strappy|stiletto|going.out|club|satin/i;
 const BRIGHT=/neon|hot pink|fuchsia|bright|floral|leopard|animal print|polka|striped|print\b/i;
 // Her fabric call, 2026-08-23: silk yes, satin and velvet never. Both came back
 // on the first live run, before she had written the rule.
 const FABRIC=/zzzznever/i;
 
 for(const [label,ans] of [['GLAM (the hard case, shops Neiman/Saks)',GLAM],['QUIET',QUIET]]){
-  for(const ask of ['game day outfit']){
+  for(const ask of ['game day outfit','what to wear to church']){
     const p=await promptFor(ans,ask);
     console.log(`\n══ ${label} — "${ask}"`);
     console.log('   her definition reached the prompt:', /Covered shoulders|Modest coverage/.test(p)?'yes':'NO');
