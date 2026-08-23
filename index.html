@@ -12011,6 +12011,21 @@ function fallbackInitialScreen(){
     userName=d.userName||userName;
     answers=d.answers;
     topArchNames=getTopArch().map(function(a){return a.n});
+    /* ⚠️ HER MOTTO WAS THE ONE FIELD THIS RESTORE FORGOT, and it shipped a
+       visible bug: her Style Star Card drew EMPTY QUOTE MARKS. Her catch on the
+       live site 2026-08-23, "the first time I clicked on it there was no motto
+       but then I checked again and it was there" — the second time worked
+       because she had visited her portrait in between, which is what used to
+       set this.
+       ▶ THE SHAPE OF IT IS THE REUSABLE PART, and it is the 2026-07-26 lesson
+       running in reverse: adding new EXITS to a flow surfaces every piece of
+       state the old exits cleaned up; adding a new ENTRANCE surfaces every piece
+       of state the old entrances HYDRATED. The Menu row added the same day was
+       the first way to reach the card without passing through the portrait
+       screen, so a latent gap became a bug the same hour.
+       ⚠️ Restore every field the app reads later, not just the ones the landing
+       screen happens to need. */
+    userMotto=d.motto||'';
     quizTaken=true;
   }else if(d&&d.userName&&d.userName!=='You'){
     // She's saved her name (and maybe preferences) without completing the quiz --
@@ -12375,7 +12390,16 @@ async function doShareCard(){
 function buildCardBlob(source,callback){
   const W=1080,H=1350;
   const archNames=source==='quiz'?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
-  const portrait=(document.getElementById(source==='quiz'?'rp':'prp')||{}).textContent||'';
+  /* ⚠️ THE DOM IS NOT A RELIABLE SOURCE HERE. #rp is filled by showResult(), so
+     it is empty until she has actually opened her portrait — and since the Menu
+     row (2026-08-23) the card is reachable without ever doing that. The saved
+     record is the durable copy, so it is the backstop. Belt and braces with the
+     userMotto restore above: this one also covers a woman whose save predates
+     mottos, whose only line IS her portrait's first sentence. */
+  let portrait=(document.getElementById(source==='quiz'?'rp':'prp')||{}).textContent||'';
+  if(!portrait.trim()&&source==='quiz'){
+    try{portrait=(JSON.parse(localStorage.getItem('ss_data'))||{}).portrait||''}catch(e){}
+  }
 
   const arch=(archNames&&archNames[0])||'Your Style';
   const notes=(archNames||[]).slice(1,3);
@@ -12812,8 +12836,16 @@ function buildCardBlob(source,callback){
     let ms=40,ml,H_MOT,blockH;
     for(;;){
       ctx.font='italic 400 '+ms+'px "Lora", serif';
-      ml=wrapBalanced('\u201c'+quote+'\u201d',W-300);
-      H_MOT=ml.length*(ms+13)+26;
+      /* ⚠️ NO QUOTE, NO QUOTE MARKS. The card used to wrap these round whatever
+         it had, so when both her motto and her portrait came back empty it drew
+         a bare pair of curly quotes with nothing inside them — which is what she
+         photographed on 2026-08-23. The two fixes above mean that should now be
+         unreachable; this is the guarantee that it can never be VISIBLE again if
+         it ever becomes reachable, and an empty band is a far cheaper failure
+         than a card that looks broken. Same reasoning as filterNeverWear: a rule
+         nothing checks on the way out eventually ships. */
+      ml=quote?wrapBalanced('\u201c'+quote+'\u201d',W-300):[];
+      H_MOT=ml.length?ml.length*(ms+13)+26:0;
       blockH=H_LOGO+H_OVER+H_NAME+H_DIV+H_MOT+H_NOT;
       if(blockH<=room||ms<=30)break;
       ms-=2;
