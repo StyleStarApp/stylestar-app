@@ -124,6 +124,25 @@ const CARD_W=1080,CARD_H=1350;
      'the dead sharePhotoResults() is deleted');
   ok(await page.evaluate(()=>typeof buildCardBlob==='function'),'buildCardBlob still exists');
 
+  /* ⚠️ THE WORD "ARCHETYPE" NEVER APPEARS IN COPY. Her call 2026-08-23. It is
+     the word the code thinks in - topArchNames, archLines, ARCHETYPE_FAMILY -
+     and that is fine, but a woman reads "MY STYLE IS" on the card and should
+     read the same language everywhere else.
+     ▶ Checked against the MARKUP with scripts and comments stripped, not
+     against innerText: the FAQ answer and the privacy policy live on screens
+     that are hidden until she navigates to them, so innerText cannot see them
+     and the check would pass vacuously. Two of the four places this was found
+     were on exactly those screens. */
+  {
+    const raw=await (await fetch(`http://localhost:${PORT}/`)).text();
+    const copyOnly=raw
+      .replace(/<script[\s\S]*?<\/script>/gi,' ')
+      .replace(/<style[\s\S]*?<\/style>/gi,' ')
+      .replace(/<!--[\s\S]*?-->/g,' ');
+    const hits=(copyOnly.match(/archetype/gi)||[]);
+    ok(hits.length===0,'no copy anywhere says "archetype" ('+hits.length+' found)');
+  }
+
   // ── Part 2: render the card for ALL 28 ARCHETYPES ─────────────────────────
   const names=await page.evaluate(()=>Object.keys(archLines));
   ok(names.length===28,'all 28 archetypes found ('+names.length+')');
