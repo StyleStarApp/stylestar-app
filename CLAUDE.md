@@ -7,7 +7,186 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-22 EVENING — 🚪 SEVEN PRs, AND EVERY ONE CAME FROM A WOMAN ON A REAL PHONE)
+## ▶ NEXT SESSION — START HERE (2026-08-23 — ⭐ THE STYLE STAR CARD REPLACED THE CONSTELLATION, AND HER MOM BROKE THE SEARCH)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**FOUR PRs merged and ALL CURL-VERIFIED LIVE: #913 · #914 · #915 · #916.** ⚠️ **Four Netlify builds.**
+Branch resynced to main after each squash (the documented `checkout -B origin/main` + cherry-pick dance,
+needed THREE times today).
+▶▶ **THE HEADLINE: THE STYLE CONSTELLATION IS GONE AND THE STYLE STAR CARD REPLACED IT.** Kari sent
+Catherine her constellation — the only woman who ever shared one — and Catherine's verdict killed it:
+*"it did not feel on brand to our app and I don't love it. Similar to the vision board idea that we got
+rid of a while back."* **Eight rounds of renders, every design call hers.**
+▶ **AND THE THING TO PICK UP FIRST IS HER MOTHER'S SEARCH. See the 🚨 entry below — it is a structural
+finding, not a wording one.**
+
+### 🚨🚨 HER THREE NEW FINDINGS, ALL FROM HER OWN LIVE TESTING — THIS IS TOMORROW'S WORK
+**1. ⭐⭐ "MOTHER OF THE BRIDE DRESSES" RETURNED ORDINARY MIDI DRESSES FROM CASUAL STORES.** Her mother
+typed it into the ask box. What came back: **J.Crew Midi Occasion · Eileen Fisher Linen Midi · Nordstrom
+Midi Dress Navy · Talbots Shift Midi · Dillard's Chiffon Midi · LOFT Occasion Maxi** — all dresses, and
+**not one of them a mother-of-the-bride dress.** Her words: *"suggested very casual stores and even a
+linen pants from Tommy Bahama. Oh no, none were mother of the bride dresses at all."*
+▶▶ **THE STRUCTURAL CAUSE, FOUND AND VERIFIED IN THE CODE: `_rankedStores()` TAKES NO ARGUMENT.** It
+ranks all 101 stores purely on HER QUIZ DIMENSIONS and knows nothing about what she typed. So her typed
+ask changes **what is searched for** and never **which stores are offered** — and the prompt tells the
+model to favour the top of that list. **A relaxed/natural dresser asking for a formal occasion dress is
+still handed her relaxed, natural stores.** That is exactly what her mother saw.
+⚠️ **This is a DIFFERENT failure from the four already in this file** (name/search parity · the `deep`
+flag · stores silently dropping length words · print not being a retail word). Those are all about the
+SEARCH TERM. This one is about the STORE LIST, and no existing machinery touches it.
+▶ **THE DIRECTION TO PUT TO HER, not built:** an occasion ask implies a FORMALITY, and formality should
+re-weight the store ranking for that request. Her own `dressy` dimension already exists on all 101
+stores and is currently only matched against HER slider. ⚠️ **Weigh it against her own standing guard
+(2026-08-15): FIT BEATS DEPTH, ALWAYS — she was explicit that a depth signal must never override the
+matching. The same caution applies here: a formality signal must not send a relaxed woman somewhere she
+would hate, only rank the FORMAL end of the stores that already suit her.**
+⚠️ **ALSO WORTH CHECKING: whether "mother of the bride" needs to be a known OCCASION at all.** It is a
+retail category with its own sections at Nordstrom, Dillard's and Macy's, and specific houses (Adrianna
+Papell, Alex Evenings, Montage). The app has no notion of occasion vocabulary.
+
+**2. ⭐ KENDRA SCOTT IS IN TOO MANY SHOP-YOUR-STYLE SETS.** Her catch.
+▶ **CAUSE, measured: ONLY FOUR STORES IN THE WHOLE TABLE NAME JEWELRY in their known-for line —
+Gorjana, Mejuri, Tiffany & Co. and Kendra Scott.** Tiffany is `$$$$`, so for most women the real pool is
+THREE, and Kendra Scott's dims (`colorful 10, trendy 7`, Playful Chic / Modern Glam) suit a wide range.
+⚠️ **The max-two-per-store rule is PER SET, so nothing at all limits a store appearing in set after
+set.** ▶ **The honest fix is more jewelry stores, which is HER curation** — and note the department
+stores already in the table (Nordstrom, Macy's, Bloomingdale's, Dillard's, Nordstrom Rack) all carry
+jewelry without saying so in their `c:` line, so the model cannot see it. **Ask her before adding
+anything; the store table is her professional judgment.**
+
+**3. ⭐ SATIN AND SEQUINS COME UP TOO OFTEN.** Her words: *"not popular enough or in style enough to keep
+popping up so many times."*
+▶ **WHERE THEY LIVE, checked:** satin and lace are DELIBERATELY welcome on **to6 Dressy or going-out
+tops** (her own 2026-08-20 call), and satin/sequins are explicitly BANNED on to1/to2/to3 basic tops and
+in the `dr3` work-appropriate definition. **So no rule tells the model to reach for them generally** —
+this is the model's own idea of "dressy fabric" leaking into ordinary shopping.
+▶ **THE LEVER SHE HAS ALREADY USED FOR EXACTLY THIS: the velvet brake.** On 2026-08-20 she said *"velvet
+is ok, but don't want to over use it"* and it got an explicit frequency limit rather than a ban. **Same
+shape here.** ⚠️ **Do NOT add them to `_STYLIST_VETO`** — that list is TASTE, only grows on her express
+word, and she said "not popular enough", not "never".
+
+### ✅ WHAT SHIPPED TODAY — THE STYLE STAR CARD (1080x1350, 4:5)
+Her logo · **MY STYLE IS** · her style · **WITH NOTES OF** + her two secondary names stacked · her own
+shiny gold star · her motto · **What's your Style Star?** · the invitation · `stylestar.app`.
+- ⭐ **EVERY CALL HERS, over eight rounds:** white linen not cream · the silver mirror frame, thicker ·
+  the notes stacked and tucked under the name ("the three are ONE statement about her") · her own
+  `_SHOP_STAR_SVG` star standing alone with no flanking rules · the invitation as a SENTENCE in a plain
+  face · **"a real personal stylist"** rather than "of 20 years", her replacement and the stronger claim ·
+  the slider above the address deleted · **4:5, not the Story 9:16** ("it doesn't need to cover the
+  entire space of an Instagram story").
+- 🚨⭐⭐ **THE SHARE MECHANICS ARE THE REUSABLE HALF, and both rules were learned the hard way:**
+  **(1) THE URL MUST BE THE LAST THING IN THE CAPTION.** Messages lifts a TRAILING url out of the text
+  and renders it as a rich preview card — the logo, the tagline, a big tappable target. Mid-sentence it
+  is very likely just blue text instead.
+  **(2) THE SENTENCE BEFORE IT MUST READ COMPLETE WITHOUT IT.** Messages does not merely linkify the
+  url, it **DELETES it from the message body**. So "Find your Style Star at https://stylestar.app"
+  arrived as *"...Find your Style Star at"* — her catch. **Both are pinned by tests that BUILD the real
+  caption rather than reading the source.**
+- **The caption now:** *"I got <her style> on this free style quiz from a real personal stylist. Take it
+  and find your Style Star…"* ⚠️ **The ellipsis is hers, being tried live** — it was recommended against
+  (reads as trailing off; the preview card needs no pointing at; forward-pointing punctuation is exposed
+  to rule 2). **One character to remove.**
+- **`shareResults()` and `sharePhotoResults()` are DELETED** — dead, and they spoke about her in the
+  third person.
+- **The `og:title` lost its 💫** (her call): that preview card is the first thing a friend-of-a-friend
+  reads. ⚠️ **The rest of her emoji audit is untouched and still hers** — the cameras, the ✨ in four
+  toasts, the 💫 in the chat greeting.
+- **"Archetype" is out of all copy** (her call), now "your style". ⚠️ **Two of the four were on HIDDEN
+  screens** (the FAQ and the privacy policy), which is why the test reads the MARKUP and not `innerText`.
+- **No dash reaches the card.** The prompt says "No dashes" TWICE and the model wrote an em dash into a
+  real motto anyway. ▶ **The `filterNeverWear` lesson again, and the most repeated one in this file: A
+  RULE NOTHING CHECKS ON THE WAY BACK DRIFTS.** `_noDash()` runs at `genResult` AND when the card builds
+  its quote, so a motto SAVED before the fix is repaired on render. ⚠️ **Word hyphens survive.**
+  ⚠️ **Her Style Portrait screen still shows the old dashed motto until she retakes** — only the card
+  self-heals.
+
+### ⚠️ THE DESIGN + MEASUREMENT LESSONS FROM TODAY, ALL REUSABLE
+1. 🚨⭐⭐ **GOLD ON WHITE PAPER IS UNSOLVABLE AS TEXT.** Every gold sits at hue 41-47° and brownness
+   tracks DARKNESS, so the only AA-passing gold is the brownest. **Gold is decorative-only on this card;
+   the address is ink and the frame is silver.**
+2. 🚨⭐⭐ **MATCH A FLAT COLOUR TO WHAT THE EYE INTEGRATES — THE AVERAGE — NEVER TO THE BRIGHTEST OR
+   DEEPEST STOP IN A GRADIENT.** Matching the slider to the star's deepest gold (42.9°) put an ORANGE
+   line on the card; the star READS 45.6° averaged. Her catch. Every gold now sits within 2°.
+3. 🚨 **A RAMP BUILT FOR A DARK BACKGROUND LOSES ITS LIGHT HALF ON PAPER.** Three sightings in one day —
+   it cost the frame, the leaf gold, and the star, whose centre measured **1.08:1** against the sheet and
+   rendered as a hollow outline until the highlight was pulled in.
+4. ⭐ **HEAVINESS IS DENSITY, NOT CENTRE OF MASS.** Her "still bottom heavy" was right while the centroid
+   said otherwise.
+5. ⚠️⚠️ **EVERY FIXED PIXEL PROBE IN A RENDER HARNESS GOES STALE THE FIRST TIME THE LAYOUT MOVES —
+   FIVE SIGHTINGS TODAY**, once taking out ELEVEN assertions at a stroke on a perfectly correct card.
+   ▶ **`starcard.js` now FINDS its marks instead: it scans for gold, clusters the rows into bands, and
+   identifies each one BY SHAPE (a star is tall, a rule is thin).** Nothing needs editing when the card
+   is resized. **The card's own shape lives in ONE constant.**
+6. ⚠️ **AN ASSERTION RE-TUNED THREE TIMES IS THE WRONG ASSERTION.** The gap under the address was pinned
+   as a bare number and broke on every margin change. **It measures BOTH gaps and compares them now,
+   because BALANCE is what she actually caught** — 2px above the logo against 32px below.
+7. ⚠️ **AND ITS PROBE HAD TO BE WIDENED:** the suite counted DARK ink, and the topmost thing on the card
+   is the PALE GOLD TIP of the logo star. Dark-only it read 69px; the way an eye sees it, 13px.
+8. 🚨⭐ **THE SCOPE LESSON, AND IT IS THE ONE TO CARRY:** she asked to move the logo "a little and nothing
+   else". The first attempt moved it 28px, moved the ADDRESS up to pay for it, and let the MOTTO shrink
+   when that was not enough — **two changes she never asked for, to deliver one she did.** Her
+   correction: *"Why is the motto changing? Just move the logo a little and nothing else."*
+   ▶▶ **WHEN A SMALL ASK CANNOT BE MET WITHOUT CHANGING SOMETHING SHE DID NOT ASK ABOUT, THAT IS A
+   QUESTION FOR HER, NOT A TRADE TO MAKE QUIETLY.** ⚠️ `TOP_MARGIN=76` is a CEILING: past it the shrink
+   loop fires on ordinary mottos (at 80 a 95-char motto drops 40px→38). **The full 30px is available and
+   the comment records both ways of paying for it — hers to choose.**
+9. ⚠️ **THE FONT TRAP, FOURTH SIGHTING:** a wrap comparison run on a bare canvas measured everything in
+   FALLBACK DM Sans and confidently reported the wrong answer. **A wrap comparison is a MEASUREMENT —
+   `document.fonts.load()` first, exactly as the card's own `ready()` does.**
+10. ⚠️ **BOTH PREVIEW BOXES MUST CARRY THE CARD'S RATIO**, and they failed in two different ways from one
+    stale value: the thumbnail had `object-fit:cover` so it CROPPED off `stylestar.app`; the overlay had
+    NO `object-fit` so it STRETCHED. **Both are `contain` now, and the test asserts them against the
+    IMAGE'S OWN dimensions rather than a number typed a third time.**
+11. ⭐ **HER DIAGNOSTIC SENTENCE WAS THE WHOLE FIX:** *"the size looks weird when I click on it... after
+    it is texted it looks normal."* **That split says the FILE is right and OUR PREVIEW is wrong**, and
+    it pointed straight at the bug while I was measuring how Messages crops.
+
+### ⭐ TEST HYGIENE
+- **`scratchpad/starcard.js` grew 156 → 214 checks** across the day, and the growth is mostly GUARANTEES
+  rather than coverage: her motto drawn word for word at four lengths, no dash reaching the card, the
+  caption's url proven to be its last token AND the message proven to read without it, both preview boxes
+  measured against the IMAGE'S OWN dimensions, and every gold on the sheet proven to be one gold.
+- **Green at pause:** **starcard 214** · copy 41 · nav 82 · hubs 49 · e2e 29 · edgepreview 7.
+- ⚠️ **TWO PARTS WERE REWRITTEN RATHER THAN RENUMBERED**, and that is the reusable half: when a constant
+  changed and ELEVEN assertions failed at once on a correct card, the answer was not to update eleven
+  numbers. The marks are FOUND now (scan, cluster, identify by shape) and the card's own shape lives in
+  ONE constant. **Nothing in that suite needs editing when the card is resized again.**
+- ⚠️ **FIVE HARNESS BUGS TODAY, EVERY ONE FAILING ON A CORRECT CARD**, which is the standing tell:
+  (1) an assertion on a variable that lives inside a closure, invisible to `page.evaluate`;
+  (2) comparing two gradients' RAW RGB when they are the same ramp at two sizes — hue is what "the same
+  gold" means; (3) `getComputedStyle` read AFTER the element was detached; (4) an ink-band test that
+  cannot see overlapping type, because overlapping lines still leave gaps between them; (5) a density
+  test that cannot see it either, because the archetype name is denser than both texts combined.
+  ▶ **"A test that fails on a correct value is usually a broken harness" — five for five today.**
+- ⚠️ **THE MERGE DANCE WAS NEEDED THREE TIMES** (main moves on every squash). ▶ **The step that makes it
+  safe and that should never be skipped: after replaying the commits, MD5 the file and prove it is
+  byte-identical to what was tested BEFORE force-pushing.** Done on all three.
+- ⚠️ **`git commit -m` still breaks on quotes.** Write the message to a file and `git commit -F`.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 🚨⭐⭐ **HER MOTHER'S "MOTHER OF THE BRIDE DRESSES" SEARCH** — the store-ranking finding above. Biggest
+   item, and the diagnosis is already done.
+2. ⭐ **KENDRA SCOTT / the four-jewelry-store pool**, and ⭐ **the satin + sequins brake.** Both above.
+3. 👀 **HOW THE CARD FEELS ON HER PHONE** — the 13px logo gap (she may want the full 30, and the cost is
+   recorded), **the ellipsis in a real thread**, and whether the 4:5 crops acceptably in Messages.
+4. ⭐⭐ **OUTFIT SUGGESTIONS** — Jen asked independently and it IS her parked Favorite Outfit page.
+5. ⭐ **"SHOW THE STYLIST WHAT I PICKED"** — Kathy's, and there is still no mechanism at all.
+6. ▶ **PRINT TOPS** — `to4` is still the only Tops row with zero curated products.
+7. ⏰ **26 AUGUST — the stale Routine `trig_01SZerTsvKoeUYzeT1HX6iWs`** fires with an Aug-12 brief.
+8. ⏰ **28 AUGUST — the recurring-payments Routine.**
+9. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null`, and ASK about the queue.
+10. 📊 **Her Plausible dashboard** — and there is a NEW thing worth watching: **does anyone open the
+    Style Star Card, and does anyone share it?**
+11. 🔎 **SEO / MARKETING — HER OWN PARKED ITEM, RAISED AT THE START OF TODAY AND NEVER PICKED UP.** Her
+    words: she googled "best styling app", found a broken app called BeautyAI ranking first, and Style
+    Star does not appear at all; 38 Instagram followers; no marketing plan; *"I feel like I am in a
+    chicken and egg situation that I need more users/followers to get affiliate approval but don't know
+    exactly how I am going to do that."* ▶ **She asked whether to write an article. It deserves its own
+    session, not the tail of another one.** Small concrete pieces already identified: `robots.txt` +
+    `sitemap.xml` + per-route titles as one small PR; long-tail articles ("what to wear to a formal
+    November wedding") as a next-year play.
+
+## ▶ PREVIOUS — (2026-08-22 EVENING — 🚪 SEVEN PRs, AND EVERY ONE CAME FROM A WOMAN ON A REAL PHONE)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the .md and pause here")
 **SEVEN PRs merged and ALL CURL-VERIFIED LIVE: #905 · #906 · #907 · #908 · #909 · #910 · #911.**
