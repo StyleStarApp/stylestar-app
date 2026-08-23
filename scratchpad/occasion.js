@@ -144,6 +144,45 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
   ok(glam.loud>=6, 'a glam woman keeps her own loud stores for a funeral ('+glam.loud+' of her top 10) — no store-level modesty cap');
   await pg.evaluate(()=>{answers=[3,2,6,6,3,6,3,6,3,6,3,6]});   // restore the quiet seed
 
+  console.log('\n── PART 5c: a religious service, and the substring traps ──');
+  for(const ask of ['what to wear to church','synagogue outfit','mosque visit','religious service dress']){
+    const d=await pg.evaluate(a=>{_ssAsk=a;return _askedForRule()},ask);
+    ok(d.indexOf('Covered shoulders')>=0,            `"${ask}" carries the modesty rule`);
+    ok(d.indexOf('Color and print are welcome')>=0,  `"${ask}" allows colour (NOT the sombre rule)`);
+    ok(d.indexOf('NEVER a mini skirt')<0,            `"${ask}" does NOT inherit the sombre definition`);
+  }
+  // 🚨 SUBSTRING TRAPS. _askOccasion matches by indexOf, so a short phrase can
+  // fire on an unrelated word. These are the ones that would really happen.
+  for(const [ask,shouldMatch] of [
+      ['a classic black dress',   false],   // 'class' would have fired -> deliberately absent
+      ['something classy',        false],
+      ['massage robe',            false],   // 'mass' would have fired -> deliberately absent
+      ['a massive tote bag',      false],
+      ['courtside seats outfit',  false],
+      ['what to wear to church',  true ],
+      ['school outfit',           true ]]){
+    const got=await pg.evaluate(a=>_askOccasion(a)!==null,ask);
+    ok(got===shouldMatch, `"${ask}" ${shouldMatch?'matches':'matches NOTHING'}`);
+  }
+  // The dress-down end, her new territory.
+  const low=await pg.evaluate(()=>({
+    school:(_askOccasion('school outfit')||{}).f, concert:(_askOccasion('concert outfit')||{}).f,
+    festival:(_askOccasion('festival dress')||{}).f, picnic:(_askOccasion('picnic dress')||{}).f,
+    game:(_askOccasion('game day outfit')||{}).f,
+    gym:_askOccasion('gym clothes'), pool:_askOccasion('pool party'), beach:_askOccasion('beach day')}));
+  ok(low.school===0.35&&low.concert===0.5&&low.festival===0.45&&low.picnic===0.4&&low.game===0.3,
+     'the dress-down band carries her numbers');
+  // 🚨 HER LIST'S OWN FINDING: these three are CATEGORY asks, not occasions, and
+  // adding them would send a quiet woman to Frank & Eileen for activewear.
+  // ⚠️ Game day must NOT force its phrase into all six searches: it is an
+  // OUTFIT occasion, not a one-garment one. Marked retail:true first and the
+  // live run came back with six items all named "Game Day <something>".
+  const gd=await pg.evaluate(()=>{_ssAsk='game day outfit';return _askedForRule()});
+  ok(gd.indexOf('whole and unbroken')<0,'game day does NOT force its phrase into every search');
+  ok(gd.indexOf('keep that word OUT of the search')>=0,'game day lets the garment carry it instead');
+  ok(low.gym===null&&low.pool===null&&low.beach===null,
+     'gym, pool party and beach day are deliberately NOT occasions (see scratchpad/lowform.js)');
+
   console.log('\n── PART 6: an ordinary ask is untouched ──');
   const p=await pg.evaluate(()=>{_ssAsk='tote bag';
     return {rule:_askedForRule(),occ:_askOccF(),rules:_shopRules('',_askOccF())}});
