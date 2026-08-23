@@ -11970,6 +11970,13 @@ async function doShareCard(){
      actually reaches her friend: the logo, the tagline and a big tappable
      target. Move the url into a sentence and that card is very likely replaced
      by a line of blue text, a weaker door.
+     ⚠️ THE ELLIPSIS IS HER CALL, 2026-08-23, and she is trying it live rather
+     than deciding on argument. It was recommended AGAINST for three reasons
+     worth keeping if it comes back off: it reads as trailing off rather than
+     inviting; the preview card below is already the largest thing in the thread
+     and needs no pointing at; and any forward-pointing punctuation is at risk
+     from rule (2) below, since Messages deletes the url the dots point at.
+     A single character, one line, either way.
      (2) THE SENTENCE BEFORE IT MUST BE COMPLETE WITHOUT IT. Messages does not
      just linkify the url, it REMOVES it from the message body - so
      "Find your Style Star at https://stylestar.app" was delivered to her as
@@ -11980,7 +11987,7 @@ async function doShareCard(){
      ⚠️ NO EMOJI, deliberately: Carson (20s) told Cath the emoji on the shopping
      cards "read as AI to her generation", and this is what a friend reads. */
   const linkText=(_arch?'I got '+_arch+' on this free style quiz from a real personal stylist. ':'A free style quiz from a real personal stylist. ')
-    +'Take it and find your Style Star. https://stylestar.app';
+    +'Take it and find your Style Star\u2026 https://stylestar.app';
   // Share the card image WITH the link in the caption text (not as a separate `url:`
   // field — that's what makes iOS swap to a link preview and drop the image). The
   // https:// prefix is needed so iOS's link detector reliably linkifies the newer

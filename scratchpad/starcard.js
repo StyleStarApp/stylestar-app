@@ -467,7 +467,10 @@ const CARD_W=1080,CARD_H=1350;
      "...Find your Style Star at", ending on a dangling preposition. Her catch.
      This is the assertion that would have caught it. */
   const asSent=builtCap.replace(/\s*https?:\/\/\S+\s*$/,'').trim();
-  ok(/[.!?]$/.test(asSent),
+  /* … is in the allowed enders because she chose it deliberately (2026-08-23)
+     and is testing how it lands. The claim is unchanged: the message must not be
+     left hanging mid-thought when Messages removes the url. */
+  ok(/[.!?…]$/.test(asSent),
      'the caption still reads as a finished message once Messages takes the url out ("'+asSent+'")');
   ok(!/\b(at|to|from|with|on|for|in|and)[.!?]?$/i.test(asSent),
      'it does not end on a dangling preposition once the url is removed');
