@@ -3016,8 +3016,16 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .res-screen .sc-lead{margin:2px 0 13px;text-align:center;color:#C8971E;font:700 12.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
 .res-screen .sc-lead i{display:none}
 .res-screen .sc-row{display:flex;align-items:center;gap:11px;padding:2px 2px 3px;cursor:pointer;text-align:left}
-.res-screen .sc-thumb{width:88px;flex:0 0 auto;aspect-ratio:1080/1350;border-radius:0;overflow:hidden;background:#141210;box-shadow:0 4px 12px -3px rgba(0,0,0,.6),inset 0 0 0 1px rgba(214,169,70,.5)}
-.res-screen .sc-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+/* ⚠️ THE BOX MUST MATCH THE CARD'S OWN SHAPE. It was 1080/1350 with
+   object-fit:cover, left over from when the card was 4:5, so a 9:16 card
+   was being CROPPED in the preview - her catch on her phone, and the part
+   it cut was the bottom, i.e. stylestar.app. The width comes down from 88
+   to 62 so the row keeps the same HEIGHT it always had (62 x 1920/1080 =
+   110px, exactly what 88 x 1350/1080 gave); a taller box would have grown
+   the row instead. ▶ If the card's proportions ever change, change this
+   with them. */
+.res-screen .sc-thumb{width:62px;flex:0 0 auto;aspect-ratio:1080/1920;border-radius:0;overflow:hidden;background:#141210;box-shadow:0 4px 12px -3px rgba(0,0,0,.6),inset 0 0 0 1px rgba(214,169,70,.5)}
+.res-screen .sc-thumb img{width:100%;height:100%;object-fit:contain;display:block}
 .res-screen .sc-tt{font-family:'DM Serif Display',Georgia,serif;font-size:16px;font-weight:400;line-height:1.16;color:#211E1A}
 .res-screen .sc-ss{font:400 13px/1.4 'Jost',sans-serif;color:#453f37;margin-top:4px}
 .res-screen .sc-ar{width:20px;height:20px;margin-left:3px;flex:0 0 auto}
