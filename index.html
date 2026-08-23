@@ -6031,6 +6031,7 @@ const STORES={
   'NYDJ':{u:'https://www.nydj.com/search?q=',t:'$$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,3,8,8,3,8,4,8,9,4],c:'premium denim, flattering fit'},
   // Bags and jewelry
   'Coach':{w:1,u:'https://www.coach.com/search?q=',t:'$$$',a:'Classic Sophisticate, Modern Luxe',s:[],d:[5,5,9,9,5,6,8,5,8,7],c:'leather handbags, wallets, accessories'},
+  'Baby Gold':{u:'https://www.babygold.com/search?q=',t:'$$',a:'Universal',s:[],d:[5,4,9,8,7,8,7,5,9,4],c:'solid 14K fine jewelry, personalized names and charms, diamonds'},
   'Gorjana':{u:'https://gorjana.com/search?q=',t:'$$',a:'Elevated Natural, Coastal Chic',s:[],d:[5,3,8,7,6,8,4,5,9,4],c:'everyday jewelry, layering pieces'},
   'Mejuri':{u:'https://mejuri.com/search?query=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[5,2,10,9,5,7,5,5,10,2],c:'fine jewelry, everyday essentials'},
   // Active, swim, foundations, shoes
@@ -6114,7 +6115,7 @@ const storeUrls={};Object.keys(STORES).forEach(function(k){storeUrls[k]=STORES[k
 // punctuation, possessives and spacing ("Bloomingdale's", "J Crew", "LOFT").
 // ⚠️ Every value here must be a real key in STORES. Renaming a store without
 // updating its alias points the alias at a key that no longer exists.
-const _STORE_ALIAS={'dvf':'Diane von Furstenberg','saksfifthavenue':'Saks','netaporter':'NET-A-PORTER','aliceolivia':'Alice + Olivia','aliceandolivia':'Alice + Olivia','marshalls':'TJ Maxx','tjx':'TJ Maxx','alo':'Alo Yoga','landsend':"Lands' End",'jjill':'J.Jill','jcrewfactory':'J.Crew','gapfactory':'Banana Republic Factory','tiffany':'Tiffany & Co.','tiffanyco':'Tiffany & Co.','universalstd':'Universal Standard','bodenusa':'Boden','quayaustralia':'Quay','farmrio':'FARM Rio','sezane':'Sézane','whbm':'White House Black Market','whitehouseblackmkt':'White House Black Market','chicos':"Chico's",'somaintimates':'Soma'};
+const _STORE_ALIAS={'babygold':'Baby Gold','dvf':'Diane von Furstenberg','saksfifthavenue':'Saks','netaporter':'NET-A-PORTER','aliceolivia':'Alice + Olivia','aliceandolivia':'Alice + Olivia','marshalls':'TJ Maxx','tjx':'TJ Maxx','alo':'Alo Yoga','landsend':"Lands' End",'jjill':'J.Jill','jcrewfactory':'J.Crew','gapfactory':'Banana Republic Factory','tiffany':'Tiffany & Co.','tiffanyco':'Tiffany & Co.','universalstd':'Universal Standard','bodenusa':'Boden','quayaustralia':'Quay','farmrio':'FARM Rio','sezane':'Sézane','whbm':'White House Black Market','whitehouseblackmkt':'White House Black Market','chicos':"Chico's",'somaintimates':'Soma'};
 // NFD splits an accented letter into letter + accent mark, so stripping the marks
 // leaves plain ASCII. Without it "Sezane" and "Sezane" (accented) normalise to
 // different strings and one of them silently fails to resolve.

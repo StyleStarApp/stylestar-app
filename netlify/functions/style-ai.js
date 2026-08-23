@@ -104,7 +104,7 @@ const SEARCH_MAX_USES = 3;
 const SEARCH_DOMAINS = [
   'abercrombie.com', 'aliceandolivia.com', 'allsaints.com', 'aloyoga.com',
   'altardstate.com', 'amazon.com', 'anntaylor.com', 'anthropologie.com',
-  'aritzia.com', 'athleta.gap.com', 'balticborn.com', 'bananarepublic.gap.com',
+  'aritzia.com', 'athleta.gap.com', 'babygold.com', 'balticborn.com', 'bananarepublic.gap.com',
   'bananarepublicfactory.gapfactory.com', 'belk.com', 'bergdorfgoodman.com', 'bloomingdales.com',
   'chicos.com', 'coach.com', 'cos.com', 'cuyana.com',
   'dillards.com', 'dsw.com', 'dvf.com', 'eileenfisher.com', 'eloquii.com',
