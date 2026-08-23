@@ -20,7 +20,11 @@ const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/ch
 
 // Her mother-ish: relaxed, classic, natural, casual, neutral. The profile the
 // whole design was measured against.
-const MUM=[3,2,6,6,3,6,3,6,3,6,3];
+// ⚠️ TWELVE answers, not eleven. _hasQuizData requires exactly 12, and an
+// 11-long seed is REJECTED: quizTaken stays false, _rankedStores falls back to
+// raw table order and the occasion ranking never runs. It fails silently and
+// looks exactly like a working test. Cost one wrong measurement on 2026-08-23.
+const MUM=[3,2,6,6,3,6,3,6,3,6,3,6];
 
 async function promptFor(ask){
   const ctx=await b.newContext({viewport:{width:390,height:844}});
@@ -32,6 +36,8 @@ async function promptFor(ask){
     answers:a,topArchNames:['The Easygoing Natural'],portrait:'p',motto:'m'})),MUM);
   await pg.reload(); await pg.waitForTimeout(2300);
   await pg.evaluate(()=>{const c=document.querySelector('.hm-entrance');if(c)c.remove();});
+  // Prove the seed took. A rejected seed is invisible otherwise.
+  if(!await pg.evaluate(()=>quizTaken))throw new Error('SEED REJECTED: quizTaken is false, the ranking is not running');
   await pg.evaluate(()=>_openShopStyleNow('quiz'));
   await pg.waitForTimeout(1200);
   // ⚠️ The ask box COLLAPSED behind "Looking for something specific?" on
@@ -53,6 +59,7 @@ async function live(prompt){
   catch(e){ return {err:'unparseable'}; }
 }
 
+const ONLY=process.env.ONLY;
 const CASES=[
   {ask:'mother of the bride dresses', want:/mother of the bride/i, label:'HER MOTHER — the phrase must be in EVERY search'},
   {ask:'wedding guest dress',         want:/wedding guest/i,       label:'wedding guest — also a real category'},
@@ -60,7 +67,7 @@ const CASES=[
   {ask:'tote bag',                    want:null,                   label:'CONTROL: an ordinary ask, must be unchanged'}
 ];
 
-for(const c of CASES){
+for(const c of CASES.filter(c=>!ONLY||c.ask.includes(ONLY))){
   const p=await promptFor(c.ask);
   console.log('\n══ "'+c.ask+'"  ('+c.label+')');
   for(let run=1;run<=2;run++){
