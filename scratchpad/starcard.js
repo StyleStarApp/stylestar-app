@@ -233,6 +233,76 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     ok(!/…/.test(rebuilt), label+': no ellipsis was added to her words');
   }
 
+  /* ── Part 3c: THE LOGO WEARS THE SAME STAR AS THE MIDDLE ──────────────────
+     Her call: the flat outline star drawn into logo-tight.png is lifted out and
+     the shiny gold one with the silver edge takes its place, at the same size,
+     so the sheet carries one mark used twice instead of two different stars.
+     Two things can go wrong and neither is visible in code review: the surgery
+     can miss and leave a ghost outline behind, or the replacement can land off
+     centre or at the wrong size. Both are measured here. */
+  const logoStar=await page.evaluate(async()=>{
+    topArchNames=['The Statement Maker','The Bold Expressionist','The Modern Trendsetter'];
+    userMotto='Ashley, you walk in and the room adjusts; your confidence is the accessory.';
+    const blob=await new Promise(res=>buildCardBlob('quiz',bl=>res(bl)));
+    const buf=await blob.arrayBuffer();
+    let s='';const u=new Uint8Array(buf);
+    for(let i=0;i<u.length;i++)s+=String.fromCharCode(u[i]);
+    return {b64:btoa(s)};
+  });
+  /* ⚠️ NO ASSERTION ON THE logoStarCut FLAG. It lives inside buildCardBlob's own
+     closure, so page.evaluate cannot see it - the first version of this test
+     asserted on it and failed while the swap was working perfectly. The pixel
+     evidence below is the stronger proof anyway: a flag says the code ran, the
+     filled-not-hollow check says the RESULT is right. */
+  {
+    const p=png(Buffer.from(logoStar.b64,'base64'));
+    const rgb=(x,y)=>{const i=(y*p.w+x)*p.bpp;return [p.px[i],p.px[i+1],p.px[i+2]]};
+    const sat=c=>Math.max(...c)-Math.min(...c);
+    /* Rows 88..140 only: below that the top of the "s" in "style" enters the
+       window and would widen every measurement. ⚠️ Derived from the artwork's
+       own inkTop, not picked by eye - the same stale-probe trap this suite has
+       already been bitten by three times. */
+    let x0=1e9,x1=-1,y0=1e9,y1=-1;
+    for(let y=88;y<=140;y++)for(let x=460;x<=640;x++){
+      const c=rgb(x,y),lum=0.2126*c[0]+0.7152*c[1]+0.0722*c[2];
+      if(sat(c)>45||lum<215){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+    }
+    const wid=x1-x0+1, mid=(x0+x1)/2;
+    /* The star it replaced measured 55px wide, centred on 540. The shiny one
+       comes out 57 because its silver rim strokes OUTSIDE the gold the old
+       outline was made of - so a couple of pixels wider is correct, and a big
+       change is not. */
+    ok(Math.abs(wid-55)<=4,'the logo star kept its size ('+wid+'px against the drawn star’s 55)');
+    ok(Math.abs(mid-540)<=1,'the logo star is centred on the card (centre '+mid+')');
+    /* THE GHOST TEST, and it is the one that matters: the drawn star was an
+       OUTLINE, so its middle was bare paper. The shiny star is FILLED. Sampling
+       the body proves the swap really happened rather than a new star being
+       drawn on top of the old one. */
+    const body=rgb(540,130);
+    ok(sat(body)>45,'the logo star is filled, not the old hollow outline (centre sat '+sat(body)+')');
+    // and it is the SAME gold as the star in the middle of the card
+    let best=[0,0,0],bs=-1;
+    for(let y=960;y<=1010;y++)for(let x=500;x<=580;x++){
+      const c=rgb(x,y);if(sat(c)>bs){bs=sat(c);best=c}
+    }
+    let lbest=[0,0,0],lbs=-1;
+    for(let y=100;y<=140;y++)for(let x=505;x<=575;x++){
+      const c=rgb(x,y);if(sat(c)>lbs){lbs=sat(c);lbest=c}
+    }
+    /* ⚠️ COMPARE HUE, NOT RGB. The two stars are the same radial gradient at two
+       SIZES, so the most-saturated pixel in each lands at a different point on
+       the ramp - the first version of this test demanded the raw values match
+       within 6 and failed on a perfectly correct card (logo 230,184,69 against
+       middle 234,190,77, which is the same gold a little further along). Hue is
+       what "the same gold" actually means, and it survives the scale. */
+    const hue=c=>{const mx=Math.max(...c),mn=Math.min(...c),d=mx-mn;
+      if(!d)return 0;
+      const h=mx===c[0]?((c[1]-c[2])/d)%6:mx===c[1]?(c[2]-c[0])/d+2:(c[0]-c[1])/d+4;
+      return (h*60+360)%360;};
+    const dh=Math.abs(hue(best)-hue(lbest));
+    ok(dh<=2,'both stars are the same gold (hue '+hue(lbest).toFixed(1)+'° vs '+hue(best).toFixed(1)+'°)');
+  }
+
   // ── Part 4: the caption carries her archetype and a tappable link ─────────
   const cap=await page.evaluate(()=>{
     const src=buildCardBlob.toString();

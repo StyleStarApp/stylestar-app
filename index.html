@@ -12004,7 +12004,20 @@ function buildCardBlob(source,callback){
      is the DRAWN logo. Everywhere the name is TYPED it is capitalised (#911). */
   const logo=new Image();
   logo.src='logo-tight.png';
-  let logoCut=null;
+  let logoCut=null,logoStarCut=false;
+  /* WHERE THE DRAWN LOGO'S OWN STAR SITS, MEASURED OFF logo-tight.png ITSELF
+     (296x312): its outline star occupies x 108..189, y 6..84, and NOTHING ELSE
+     lives above the wordmark - every opaque pixel over row 77 is part of it, the
+     top of the "s" in "style" being the first ink at 77. Her call is to swap that
+     flat outline star for the shiny one from the middle of the card, at the same
+     size, so the two stars on the sheet are the same star.
+     ⚠️ These numbers describe ONE PIECE OF ARTWORK. If logo-tight.png is ever
+     redrawn, re-measure them - which is why the surgery below refuses to run
+     unless the image is exactly the size it was measured at. A guard that fails
+     safe leaves the old star showing; a guard that fails open would gouge a hole
+     in a logo nobody meant to touch. */
+  const LOGO_ART_W=296,LOGO_ART_H=312;
+  const LOGO_STAR={x0:108,x1:189,y0:6,y1:84,inkTop:77};
   function cutLogo(){
     const c=document.createElement('canvas');
     c.width=logo.naturalWidth;c.height=logo.naturalHeight;
@@ -12014,6 +12027,24 @@ function buildCardBlob(source,callback){
       const lum=Math.min(p[i],p[i+1],p[i+2]);
       if(lum>=250)p[i+3]=0;
       else if(lum>220)p[i+3]=Math.round(p[i+3]*(250-lum)/30);
+    }
+    // lift the drawn star out, so the shiny one can take its place
+    if(c.width===LOGO_ART_W&&c.height===LOGO_ART_H){
+      for(let yy=0;yy<=LOGO_STAR.y1;yy++){
+        for(let xx=0;xx<c.width;xx++){
+          const i=(yy*c.width+xx)*4;
+          if(!p[i+3])continue;
+          /* Above the wordmark nothing but the star exists, so clear the row
+             outright - that takes the pale antialiased edge with it, which a
+             colour test would leave behind as a faint ghost outline.
+             Where the star's lower points overlap the type (rows 77..84) only
+             the GOLD goes, or the tops of the letters would go with it. */
+          if(yy<LOGO_STAR.inkTop){p[i+3]=0;continue}
+          const r=p[i],g=p[i+1],b=p[i+2];
+          if(r>=g&&g>b&&(r-b)>28)p[i+3]=0;
+        }
+      }
+      logoStarCut=true;
     }
     x.putImageData(im,0,0);logoCut=c;
   }
@@ -12295,6 +12326,28 @@ function buildCardBlob(source,callback){
     if(src&&(src.width||src.naturalWidth)){
       const nw=src.width||src.naturalWidth,nh=src.height||src.naturalHeight;
       ctx.drawImage(src,W/2-LOGO_W/2,y,LOGO_W,LOGO_W*nh/nw);
+      /* HER STAR GOES ON THE LOGO TOO (her call): the same shiny gold star with
+         the silver edge that marks the middle of the card, standing exactly
+         where the drawn outline star stood and at exactly its size, so the two
+         read as one mark used twice rather than two different stars.
+         ▶ EVERY NUMBER HERE IS DERIVED, none typed twice: the size comes from the
+         measured artwork scaled by the logo's own draw width, and the centring
+         comes from _STAR_PATH's real extents. The path is NOT centred in its own
+         24-unit box (it runs y 1.6..20.41, so its middle sits a unit high), and
+         a star nudged up by a unit at this scale is visible - so the offset is
+         computed from the path rather than eyeballed. Restyle _SHOP_STAR_SVG and
+         both stars follow; resize the logo and this follows too. */
+      if(logoStarCut){
+        const sc=LOGO_W/LOGO_ART_W;
+        const px0=W/2-LOGO_W/2+LOGO_STAR.x0*sc, px1=W/2-LOGO_W/2+(LOGO_STAR.x1+1)*sc;
+        const py0=y+LOGO_STAR.y0*sc, py1=y+(LOGO_STAR.y1+1)*sc;
+        const xs=_STAR_PATH.map(function(p){return p[0]}),
+              ys=_STAR_PATH.map(function(p){return p[1]});
+        const pw=Math.max.apply(null,xs)-Math.min.apply(null,xs),
+              pmy=(Math.max.apply(null,ys)+Math.min.apply(null,ys))/2;
+        const size=(px1-px0)*24/pw, k=size/24;
+        star((px0+px1)/2,(py0+py1)/2+(12-pmy)*k,size);
+      }
     }
     y+=H_LOGO+AIR;
 
