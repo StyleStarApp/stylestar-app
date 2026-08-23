@@ -6384,6 +6384,35 @@ function _tierOf(k){return (STORES[k].t.split('-')[0].match(/\$/g)||[]).length}
 // range: true when the occasion genuinely spans several levels of formality, so
 //    the 6 should cover the spread rather than guess one point. A named ROLE
 //    like mother of the bride does not span, it has one answer.
+// ⭐ HER OWN WORDS, 2026-08-23, on funeral, memorial and interview: "the most
+// important thing is closer to professional and more modest (less alluring)
+// fitted-tailored is ok but you know nothing sexy or revealing and darker
+// colors and solids preferred over bright colors and prints. no mini skirts, no
+// spaghetti straps, no jumpsuits, no shorts and preferably closed toe shoes, no
+// flip flops, no sneakers."
+// 🚨🚨 AND THE CORRECTION THAT SHAPED IT IS THE REUSABLE HALF. Her phrase "less
+// alluring" was first read as a STORE rule, because `alluring` is a scored
+// store dimension sitting right there with the same name, and a modesty CAP on
+// the store ranking was measured and nearly shipped. SHE OVERRULED IT:
+//   "I am ok with all of these stores for a glam woman. A glam woman can find a
+//    funeral outfit at Alice & Olivia and definitely at Neiman Marcus. I don't
+//    want to send a glam trendy fitted woman to J. Crew or Talbot's."
+// ▶▶ SO THE RULE IS ABOUT THE GARMENT, NEVER THE STORE, and the cap would have
+// broken her own standing guard (FIT BEATS DEPTH, ALWAYS). The store ranking is
+// deliberately UNTOUCHED for these occasions: the formality override alone is
+// correct, and a glam woman still shops where she shops.
+// ⚠️ Do not re-derive a store-level modesty rule from this text. It was
+// measured, it looked clean, and it was wrong.
+//
+// Written in the shape her Work-appropriate dresses definition (dr3) had to be
+// rewritten into before the model actually obeyed it: an imperative NEVER,
+// inside the RULES list, closed with "This rule is absolute". A descriptive
+// paragraph placed before the rules did NOT land.
+// ⚠️ HONEST LIMIT, told to her: this governs what the stylist PICKS and NAMES,
+// not what the store's results page shows. "Darker colors and solids" steers
+// the pick; the search still leads with the garment (her own 2026-08-12 call),
+// so the page she lands on may show every colour. Feeds are what fix that.
+const _OCC_PROFESSIONAL='Lean professional and modest for this occasion. Fitted and tailored is fine, but NEVER anything sexy or revealing. Prefer darker colors and solid colors over bright colors and prints. NEVER a mini skirt, spaghetti straps, a strapless or plunging neckline, a jumpsuit, or shorts. If you suggest shoes they must be closed-toe, and NEVER flip flops or sneakers. This rule is absolute, the same weight as her never-wear list.';
 const _OCCASIONS=[
   {p:'mother of the bride',f:1.0,retail:true},
   {p:'mother of the groom',f:1.0,retail:true},
@@ -6400,9 +6429,9 @@ const _OCCASIONS=[
   {p:'holiday party',f:0.75,retail:false,range:true},
   {p:'engagement party',f:0.7,retail:false},
   {p:'christening',f:0.7,retail:false},
-  {p:'funeral',f:0.7,retail:false},
-  {p:'memorial',f:0.7,retail:false},
-  {p:'interview',f:0.7,retail:false},
+  {p:'funeral',f:0.7,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'memorial',f:0.7,retail:false,define:_OCC_PROFESSIONAL},
+  {p:'interview',f:0.7,retail:false,define:_OCC_PROFESSIONAL},
   {p:'graduation',f:0.65,retail:false,range:true},
   {p:'bridal shower',f:0.6,retail:false},
   {p:'baby shower',f:0.6,retail:false},
@@ -7560,6 +7589,9 @@ function _askedForRule(){
   r+=o.range
     ? '- That occasion spans several levels of formality, so COVER THE RANGE across the 6 rather than guessing one point on it.\n'
     : '- That occasion has ONE clear level of formality. Dress her for exactly that and do not spread the 6 across dressy and casual: every single piece must be right to wear to it.\n';
+  // Her garment definition for this occasion, when she has written one. See
+  // _OCC_PROFESSIONAL: it constrains the PIECES, never the store.
+  if(o.define)r+='- '+o.define+'\n';
   return r;
 }
 /* ── THE WAY BACK (2026-08-22) ──────────────────────────────────────────────

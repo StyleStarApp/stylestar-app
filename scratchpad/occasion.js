@@ -111,6 +111,31 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
   const wed=await pg.evaluate(()=>{_ssAsk='wedding outfit'; return _askedForRule()});
   ok(wed.indexOf('COVER THE RANGE')>=0,'a genuinely ambiguous occasion still covers the range');
 
+  console.log('\n── PART 5b: her garment definition for the sombre occasions ──');
+  // Cath, 2026-08-23. ⚠️ The load-bearing assertion here is the LAST one: the
+  // store ranking must stay untouched, because she overruled a store-level
+  // modesty cap ("a glam woman can find a funeral outfit at Neiman Marcus").
+  for(const ask of ['something for a funeral','a memorial service','job interview outfit']){
+    const d=await pg.evaluate(a=>{_ssAsk=a;return _askedForRule()},ask);
+    ok(d.indexOf('NEVER anything sexy or revealing')>=0, `"${ask}" carries her modesty rule`);
+    ok(d.indexOf('darker colors and solid colors')>=0,   `"${ask}" carries her colour preference`);
+    ok(d.indexOf('NEVER a mini skirt')>=0,               `"${ask}" carries her exclusion list`);
+    ok(d.indexOf('closed-toe')>=0 && d.indexOf('NEVER flip flops or sneakers')>=0, `"${ask}" carries her shoe rule`);
+    ok(d.indexOf('This rule is absolute')>=0,            `"${ask}" closes absolute (the dr3 shape)`);
+  }
+  // An occasion she did NOT write a definition for must not inherit one.
+  const noDef=await pg.evaluate(()=>{_ssAsk='wedding guest dress';return _askedForRule()});
+  ok(noDef.indexOf('NEVER a mini skirt')<0,'a wedding guest ask does NOT inherit the sombre definition');
+  // 🚨 THE ONE SHE OVERRULED: a glam woman asking for a funeral must still be
+  // ranked to HER stores. No modesty cap on the ranking, ever.
+  const glam=await pg.evaluate(()=>{
+    answers=[10,10,6,6,9,6,8,6,10,6,10,6];
+    const r=_rankedStores(0.7);
+    return {top:r.slice(0,6),loud:r.slice(0,10).filter(k=>STORES[k].d[1]>=7).length};
+  });
+  ok(glam.loud>=6, 'a glam woman keeps her own loud stores for a funeral ('+glam.loud+' of her top 10) — no store-level modesty cap');
+  await pg.evaluate(()=>{answers=[3,2,6,6,3,6,3,6,3,6,3,6]});   // restore the quiet seed
+
   console.log('\n── PART 6: an ordinary ask is untouched ──');
   const p=await pg.evaluate(()=>{_ssAsk='tote bag';
     return {rule:_askedForRule(),occ:_askOccF(),rules:_shopRules('',_askOccF())}});
