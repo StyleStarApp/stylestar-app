@@ -141,6 +141,28 @@ shiny gold star · her motto · **What's your Style Star?** · the invitation ·
     it is texted it looks normal."* **That split says the FILE is right and OUR PREVIEW is wrong**, and
     it pointed straight at the bug while I was measuring how Messages crops.
 
+### ⭐ TEST HYGIENE
+- **`scratchpad/starcard.js` grew 156 → 214 checks** across the day, and the growth is mostly GUARANTEES
+  rather than coverage: her motto drawn word for word at four lengths, no dash reaching the card, the
+  caption's url proven to be its last token AND the message proven to read without it, both preview boxes
+  measured against the IMAGE'S OWN dimensions, and every gold on the sheet proven to be one gold.
+- **Green at pause:** **starcard 214** · copy 41 · nav 82 · hubs 49 · e2e 29 · edgepreview 7.
+- ⚠️ **TWO PARTS WERE REWRITTEN RATHER THAN RENUMBERED**, and that is the reusable half: when a constant
+  changed and ELEVEN assertions failed at once on a correct card, the answer was not to update eleven
+  numbers. The marks are FOUND now (scan, cluster, identify by shape) and the card's own shape lives in
+  ONE constant. **Nothing in that suite needs editing when the card is resized again.**
+- ⚠️ **FIVE HARNESS BUGS TODAY, EVERY ONE FAILING ON A CORRECT CARD**, which is the standing tell:
+  (1) an assertion on a variable that lives inside a closure, invisible to `page.evaluate`;
+  (2) comparing two gradients' RAW RGB when they are the same ramp at two sizes — hue is what "the same
+  gold" means; (3) `getComputedStyle` read AFTER the element was detached; (4) an ink-band test that
+  cannot see overlapping type, because overlapping lines still leave gaps between them; (5) a density
+  test that cannot see it either, because the archetype name is denser than both texts combined.
+  ▶ **"A test that fails on a correct value is usually a broken harness" — five for five today.**
+- ⚠️ **THE MERGE DANCE WAS NEEDED THREE TIMES** (main moves on every squash). ▶ **The step that makes it
+  safe and that should never be skipped: after replaying the commits, MD5 the file and prove it is
+  byte-identical to what was tested BEFORE force-pushing.** Done on all three.
+- ⚠️ **`git commit -m` still breaks on quotes.** Write the message to a file and `git commit -F`.
+
 ### ▶ THE FIRST THINGS NEXT SESSION
 1. 🚨⭐⭐ **HER MOTHER'S "MOTHER OF THE BRIDE DRESSES" SEARCH** — the store-ranking finding above. Biggest
    item, and the diagnosis is already done.
