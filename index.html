@@ -6657,8 +6657,22 @@ function _rankedStores(occ){
     .sort(function(a,b){return b.fit-a.fit})
     .map(function(x){return x.k});
 }
-function _storeListForPrompt(occ){
-  return _rankedStores(occ).map(function(k){
+/* ⚠️⚠️ detailTop EXISTS FOR THE CHAT AND FOR A MEASURED REASON. The chat's system
+   prompt is the biggest in the app, and style-ai.js REFUSES any message over
+   MAX_TEXT_CHARS (32 * 1024) outright — so going over does not degrade the
+   answer, it kills the chat. Measured on the heaviest realistic woman (all 100
+   wardrobe rows starred, every preference and never-wear chip filled, free-text
+   notes): handing the chat the fully detailed list took the prompt to 30,714 of
+   32,768, leaving 2,054 chars — and that is BEFORE a photo analysis block.
+   ▶ SO THE FAR END OF THE LIST IS NAMED BUT NOT DESCRIBED. Nothing is trimmed:
+   all 102 stores are still present and still nameable, which is what keeps her
+   guard intact (the list is RE-ORDERED, never cut) and what keeps every store
+   linkable. The ones she would never be sent to simply do not spend 60 chars
+   each explaining themselves.
+   ⚠️ The card surfaces pass nothing and are byte-identical to before. */
+function _storeListForPrompt(occ,detailTop){
+  return _rankedStores(occ).map(function(k,i){
+    if(detailTop&&i>=detailTop)return k;
     const s=STORES[k];
     // Cath's colour scores have to be IN the line or "check the tags before you
     // send her somewhere for butter yellow" is an instruction about data the AI
@@ -11543,8 +11557,39 @@ SHOPPING:
 - Include an estimated price for every item in parentheses with ~ for approximate.
 - Format each item as: Item name from StoreName (~$price)
 - The store name MUST appear after the word "from" so it becomes a clickable link.
-- Name the store EXACTLY as written in this list, and only these stores, so the link works:
-`+Object.keys(STORES).join(', ')+`
+- Name the store EXACTLY as written in this list, and only these stores, so the link works. Each line below is the store NAME followed by a bracket describing it: use ONLY the name, never the bracket, when you write "from StoreName".
+/* ── HER JUDGMENT REACHES THE CHAT (2026-08-24) ───────────────────────────────
+   This was Object.keys(STORES) joined with commas -- a bare alphabetical dump of
+   102
+   names. Every other shopping surface has always been handed the RANKED list
+   with Cath's own scores; the chat, the surface where a woman is actually in
+   conversation with her stylist, was the one flying on the model's general
+   knowledge of these shops instead of on her professional judgment.
+
+   ▶ HER OWN TEST CASES, and the ranking she built answers both exactly:
+     "a relaxed woman who is very modest should never be sent to Revolve even if
+      she is looking for a cocktail dress, and a glam, alluring, trendy woman
+      should never be sent to J Jill or Chico's even if she is looking for a
+      linen dress."
+   MEASURED (scratchpad/chatrank.js): for the modest relaxed woman Revolve ranks
+   102 OF 102; for the glam woman J.Jill ranks 102 of 102 and Chico's 91. Her
+   judgment was already in the table. The chat simply could not see it.
+
+   ⚠️⚠️ THE "GO FURTHER DOWN FOR A SPECIALIST" CLAUSE IS DELIBERATELY NOT PORTED
+   WITH THE LIST, and that omission is the point of the whole change. That clause
+   is right on the CARD surfaces, which pick six general pieces unprompted. In
+   conversation a woman asks something precise, and it is exactly the escape
+   hatch that sent Kathy to Revolve for long dresses: the model did what it was
+   told. Her FIT BEATS DEPTH rule below is what governs here instead.
+   ⚠️ FIT BEATS DEPTH DOES NOT MEAN "STAY IN THE TOP TEN". The list is ordered,
+   never trimmed, so reaching to Nordstrom at 34 for an occasion dress is right;
+   reaching to Revolve at 102 is not. The rule is about not reaching past the
+   stores that suit her to one that does not.
+   ⚠️ Before the quiz _rankedStores returns raw table order rather than an
+   invented ranking, so a new visitor gets the DETAIL without a false order. */
+`+_storeListForPrompt(null,45)+`
+- The list above is ORDERED by how well each store suits HER, closest first. The ones nearest the top carry a description; the ones past that are the stores that suit her least, and are listed by name only so you can still name them if she asks for one directly.
+- FIT BEATS DEPTH, ALWAYS. A big catalog full of clothes in the wrong spirit is not a good result: Revolve is deep, but it is for a woman who likes her clothes fitted, alluring, trendy and edgy, and it is the wrong door for a relaxed, preppy or natural dresser no matter how much it stocks. The same in reverse: J.Jill and Chico's are the wrong door for a glam, alluring, trendy woman no matter how much linen they carry. Pick a store that genuinely suits HER first, and never reach past the ones that do to one that does not, even when she has asked for something that store is famous for.
 - LUXURY AND DESIGNER, this is how the rule above applies to designer names: say the designer freely, that is real expertise, but the STORE after "from" must still be one of the shops listed above, because that is what she taps to buy. Neiman Marcus, Saks, Bergdorf Goodman, NET-A-PORTER, Nordstrom and Bloomingdales all carry the major houses. Write "the Celine Shopping Tote from Neiman Marcus" or "a Saint Laurent shoulder bag from Saks", never "from Celine" or "from Louis Vuitton". A designer is a brand, not a shop.
 - Keep the item name before "from" short and searchable (2 to 4 plain words like "navy linen blazer"), because that phrase becomes the shopping search.
 - Match the store to her using what you know of her budget and size range. Only mention a size range for things where fit depends on it, never for bags, jewelry or accessories.`+_neverStoreRule().replace(/^ /,'\n- ')+`
