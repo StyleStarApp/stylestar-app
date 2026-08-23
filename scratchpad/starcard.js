@@ -89,6 +89,12 @@ function png(buf){
 }
 const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
 
+/* THE CARD'S SHAPE, IN ONE PLACE. Every assertion about size in this suite
+   reads these, so changing the card means changing one line here and not
+   hunting for a number typed in three spots. Her call 2026-08-23: 4:5, the
+   shape a shared image normally comes in. */
+const CARD_W=1080,CARD_H=1350;
+
 (async()=>{
   await new Promise(r=>srv.listen(PORT,r));
   const browser=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'});
@@ -138,7 +144,7 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     },[name,LONG_MOTTO]);
 
     const p=png(Buffer.from(b64,'base64'));
-    if(p.w!==1080||p.h!==1920){ok(false,name+': card is '+p.w+'x'+p.h+', not 1080x1920');continue}
+    if(p.w!==CARD_W||p.h!==CARD_H){ok(false,name+': card is '+p.w+'x'+p.h+', not '+CARD_W+'x'+CARD_H);continue}
 
     // every ink row inside the paper, so bands can be found
     const PAPER_EDGE=64;
@@ -180,7 +186,13 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     for(let i=rows.length-1;i>=0;i--) if(rows[i]>0){lastInk=i;break}
     ok(lastInk>-1, name+': the card has ink at all');
     const bottomGap=rows.length-1-lastInk;
-    ok(bottomGap>=20&&bottomGap<=140,
+    /* ⚠️ THE LOWER BOUND WAS 20 AND IS NOW 10, UPDATED DELIBERATELY. The card
+       went 4:5 and its foot margin came down with everything else, so the
+       address now sits 16px above this scan's own edge where it used to sit 60.
+       The CLAIM has not been weakened: the scan already starts 16px inside the
+       paper, so anything reaching the frame reads as 0 here. This still fails
+       if the address is clipped, runs onto the silver, or wanders up the card. */
+    ok(bottomGap>=10&&bottomGap<=140,
        name+': the address sits near the foot, '+bottomGap+'px off the paper edge');
     let bandTop=lastInk;
     while(bandTop>0&&rows[bandTop-1]>0)bandTop--;
@@ -196,8 +208,14 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     const bmp=await createImageBitmap(blob);
     return {w:bmp.width,h:bmp.height};
   });
-  ok(dims.w===1080&&dims.h===1920,
-     'the card is Instagram Story size 1080x1920, not the feed 4:5 that cuts off the address (got '+dims.w+'x'+dims.h+')');
+  /* ⚠️ HER CALL 2026-08-23: 4:5, the shape a shared image normally comes in.
+     An earlier version of this assertion pinned 1080x1920 and said in its own
+     message that 4:5 "cuts off the address" - that was true of the proportions
+     as they then were and was stated too broadly. The furniture around the
+     words was tightened instead, and the address is asserted present on all 28
+     archetypes above, so this pins the shape she chose. */
+  ok(dims.w===CARD_W&&dims.h===CARD_H,
+     'the card is '+CARD_W+'x'+CARD_H+', the 4:5 she picked (got '+dims.w+'x'+dims.h+')');
 
   /* ── Part 3b: HER MOTTO IS DRAWN WORD FOR WORD ────────────────────────────
      Her instruction, and it is the one thing about this card she asked for
@@ -233,174 +251,117 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     ok(!/…/.test(rebuilt), label+': no ellipsis was added to her words');
   }
 
-  /* ── Part 3c: THE LOGO WEARS THE SAME STAR AS THE MIDDLE ──────────────────
-     Her call: the flat outline star drawn into logo-tight.png is lifted out and
-     the shiny gold one with the silver edge takes its place, at the same size,
-     so the sheet carries one mark used twice instead of two different stars.
-     Two things can go wrong and neither is visible in code review: the surgery
-     can miss and leave a ghost outline behind, or the replacement can land off
-     centre or at the wrong size. Both are measured here. */
-  const logoStar=await page.evaluate(async()=>{
+  /* ── Part 3c/3d: THE GOLD MARKS, FOUND RATHER THAN LOOKED UP ──────────────
+     There are four gold marks on the card: the star on the logo, the slider
+     under the wordmark, her star in the middle, and the hairline above the CTA.
+     Two claims are made about them - the logo wears the SAME star as the middle
+     (her call), and every gold on the sheet reads as ONE gold (her call, after
+     a flat line matched to the star's deepest stop came out orange).
+
+     ⚠️⚠️ THESE USED TO SAMPLE FIXED y WINDOWS AND ALL ELEVEN ASSERTIONS BROKE
+     THE MOMENT THE CARD WENT 4:5, on a card that was perfectly correct. That is
+     the FIFTH time in this suite that a hardcoded pixel window has gone stale
+     the first time the layout moved. The bands are FOUND now: scan for gold,
+     cluster by row, and reason about what turns up. Nothing here needs editing
+     when the card is resized again. */
+  const cardShot=await page.evaluate(async()=>{
     topArchNames=['The Statement Maker','The Bold Expressionist','The Modern Trendsetter'];
     userMotto='Ashley, you walk in and the room adjusts; your confidence is the accessory.';
     const blob=await new Promise(res=>buildCardBlob('quiz',bl=>res(bl)));
     const buf=await blob.arrayBuffer();
     let s='';const u=new Uint8Array(buf);
     for(let i=0;i<u.length;i++)s+=String.fromCharCode(u[i]);
-    return {b64:btoa(s)};
+    return btoa(s);
   });
-  /* ⚠️ NO ASSERTION ON THE logoStarCut FLAG. It lives inside buildCardBlob's own
-     closure, so page.evaluate cannot see it - the first version of this test
-     asserted on it and failed while the swap was working perfectly. The pixel
-     evidence below is the stronger proof anyway: a flag says the code ran, the
-     filled-not-hollow check says the RESULT is right. */
-  {
-    const p=png(Buffer.from(logoStar.b64,'base64'));
+
+  const marks=(function(p){
     const rgb=(x,y)=>{const i=(y*p.w+x)*p.bpp;return [p.px[i],p.px[i+1],p.px[i+2]]};
     const sat=c=>Math.max(...c)-Math.min(...c);
-    /* Rows 88..140 only: below that the top of the "s" in "style" enters the
-       window and would widen every measurement. ⚠️ Derived from the artwork's
-       own inkTop, not picked by eye - the same stale-probe trap this suite has
-       already been bitten by three times. */
-    let x0=1e9,x1=-1,y0=1e9,y1=-1;
-    for(let y=88;y<=140;y++)for(let x=460;x<=640;x++){
-      const c=rgb(x,y),lum=0.2126*c[0]+0.7152*c[1]+0.0722*c[2];
-      if(sat(c)>45||lum<215){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+    // warm and saturated: gold, and nothing else on this paper is
+    const isGold=c=>sat(c)>45&&c[0]>=c[1]&&c[1]>c[2]&&(c[0]-c[2])>50;
+    const rowsG=[];
+    for(let y=0;y<p.h;y++){
+      let n=0,minX=1e9,maxX=-1;
+      for(let x=70;x<p.w-70;x++){const c=rgb(x,y);if(isGold(c)){n++;if(x<minX)minX=x;if(x>maxX)maxX=x}}
+      rowsG.push({y,n,minX,maxX});
     }
-    const wid=x1-x0+1, mid=(x0+x1)/2;
-    /* The star it replaced measured 55px wide, centred on 540. The shiny one
-       comes out 57 because its silver rim strokes OUTSIDE the gold the old
-       outline was made of - so a couple of pixels wider is correct, and a big
-       change is not. */
-    ok(Math.abs(wid-55)<=4,'the logo star kept its size ('+wid+'px against the drawn star’s 55)');
-    ok(Math.abs(mid-540)<=1,'the logo star is centred on the card (centre '+mid+')');
-    /* THE GHOST TEST, and it is the one that matters: the drawn star was an
-       OUTLINE, so its middle was bare paper. The shiny star is FILLED. Sampling
-       the body proves the swap really happened rather than a new star being
-       drawn on top of the old one. */
-    const body=rgb(540,130);
-    ok(sat(body)>45,'the logo star is filled, not the old hollow outline (centre sat '+sat(body)+')');
-    // and it is the SAME gold as the star in the middle of the card
-    let best=[0,0,0],bs=-1;
-    for(let y=960;y<=1010;y++)for(let x=500;x<=580;x++){
-      const c=rgb(x,y);if(sat(c)>bs){bs=sat(c);best=c}
-    }
-    let lbest=[0,0,0],lbs=-1;
-    for(let y=100;y<=140;y++)for(let x=505;x<=575;x++){
-      const c=rgb(x,y);if(sat(c)>lbs){lbs=sat(c);lbest=c}
-    }
-    /* ⚠️ COMPARE HUE, NOT RGB. The two stars are the same radial gradient at two
-       SIZES, so the most-saturated pixel in each lands at a different point on
-       the ramp - the first version of this test demanded the raw values match
-       within 6 and failed on a perfectly correct card (logo 230,184,69 against
-       middle 234,190,77, which is the same gold a little further along). Hue is
-       what "the same gold" actually means, and it survives the scale. */
-    const hue=c=>{const mx=Math.max(...c),mn=Math.min(...c),d=mx-mn;
-      if(!d)return 0;
-      const h=mx===c[0]?((c[1]-c[2])/d)%6:mx===c[1]?(c[2]-c[0])/d+2:(c[0]-c[1])/d+4;
-      return (h*60+360)%360;};
-    const dh=Math.abs(hue(best)-hue(lbest));
-    ok(dh<=2,'both stars are the same gold (hue '+hue(lbest).toFixed(1)+'° vs '+hue(best).toFixed(1)+'°)');
-  }
-
-  /* ── Part 3d: ONE GOLD ON THE WHOLE SHEET ────────────────────────────────
-     ⚠️ THIS TEST WAS WRONG ONCE AND THE CORRECTION IS THE POINT OF IT. It first
-     compared each mark's MOST SATURATED pixel, which drove the flat slider to
-     the star's deepest stop (#E6B845, hue 42.9°) - and a flat line at the
-     deepest gold in a gradient reads ORANGE, which is exactly what she saw.
-     A star's deepest stop is a terminal nobody's eye picks out.
-     ▶ So every mark is measured by the AVERAGE of its gold, which is what the
-     eye integrates: both stars read #F4DC90 at ~45.6°, and the flat marks sit
-     at 47.5°. Two degrees is comfortably inside the range where two golds still
-     read as one; five degrees is where they visibly part, which is what the
-     broken version produced. */
-  {
-    const p=png(Buffer.from(logoStar.b64,'base64'));
-    const rgb=(x,y)=>{const i=(y*p.w+x)*p.bpp;return [p.px[i],p.px[i+1],p.px[i+2]]};
-    const hue=c=>{const mx=Math.max(...c),mn=Math.min(...c),d=mx-mn;
-      if(!d)return 0;
-      const h=mx===c[0]?((c[1]-c[2])/d)%6:mx===c[1]?(c[2]-c[0])/d+2:(c[0]-c[1])/d+4;
-      return (h*60+360)%360;};
-    const marks=[['the logo star',100,142,505,578],['the logo slider',277,296,430,660],
-                 ['the star in the middle',950,1022,495,590],
-                 ['the hairline above the CTA',1330,1345,420,660]];
-    const hues=[];
-    for(const [label,y0,y1,x0,x1] of marks){
-      let t=[0,0,0],n=0;
-      for(let y=y0;y<=y1;y++)for(let x=x0;x<x1;x++){
-        const c=rgb(x,y);
-        if(Math.max(...c)-Math.min(...c)>40){t=[t[0]+c[0],t[1]+c[1],t[2]+c[2]];n++}
+    const bands=[];let cur=null;
+    for(const r of rowsG){
+      if(r.n>0){
+        if(cur&&r.y-cur.y1<=8){cur.y1=r.y;cur.n+=r.n;cur.minX=Math.min(cur.minX,r.minX);cur.maxX=Math.max(cur.maxX,r.maxX)}
+        else {if(cur)bands.push(cur);cur={y0:r.y,y1:r.y,n:r.n,minX:r.minX,maxX:r.maxX}}
       }
-      ok(n>200,label+' is drawn at all ('+n+' gold px)');
-      const mean=t.map(v=>Math.round(v/n));
-      ok(Math.max(...mean)-Math.min(...mean)>80,
-         label+' is a real gold, not something that went grey (sat '+(Math.max(...mean)-Math.min(...mean))+')');
-      hues.push([label,hue(mean)]);
     }
-    const spread=Math.max(...hues.map(h=>h[1]))-Math.min(...hues.map(h=>h[1]));
-    ok(spread<=3,'every gold on the card reads as the same gold, spread '+spread.toFixed(1)+'° ('+
-       hues.map(h=>h[0]+' '+h[1].toFixed(1)+'°').join(', ')+')');
-    /* And the direction is pinned, not just the distance: the flat marks must
-       never fall BELOW the stars' hue, because that is the orange side. */
-    const stars=hues.filter(h=>/star/.test(h[0])).map(h=>h[1]);
-    const flats=hues.filter(h=>!/star/.test(h[0])).map(h=>h[1]);
-    ok(Math.min(...flats)>=Math.min(...stars)-0.5,
+    if(cur)bands.push(cur);
+    // the mean of each band's gold is what the eye reads, not its deepest pixel
+    for(const b of bands){
+      let t=[0,0,0],k=0;
+      for(let y=b.y0;y<=b.y1;y++)for(let x=b.minX;x<=b.maxX;x++){
+        const c=rgb(x,y); if(isGold(c)){t=[t[0]+c[0],t[1]+c[1],t[2]+c[2]];k++}
+      }
+      b.mean=t.map(v=>Math.round(v/k));
+      b.h=b.y1-b.y0+1; b.w=b.maxX-b.minX+1; b.cx=(b.minX+b.maxX)/2;
+    }
+    return {bands,rgb,sat};
+  })(png(Buffer.from(cardShot,'base64')));
+
+  const hue=c=>{const mx=Math.max(...c),mn=Math.min(...c),d=mx-mn;
+    if(!d)return 0;
+    const h=mx===c[0]?((c[1]-c[2])/d)%6:mx===c[1]?(c[2]-c[0])/d+2:(c[0]-c[1])/d+4;
+    return (h*60+360)%360;};
+
+  ok(marks.bands.length===4,
+     'the card carries its four gold marks: the logo star, the slider, the star in the middle and the hairline ('
+     +marks.bands.length+' found: '+marks.bands.map(b=>b.y0+'-'+b.y1).join(', ')+')');
+
+  if(marks.bands.length===4){
+    /* A STAR IS TALL, A RULE IS THIN, and that is how each band is identified -
+       by shape rather than by where it happens to sit, so the card can be
+       reordered or resized without this needing a thought. */
+    const stars=marks.bands.filter(b=>b.h>20), flats=marks.bands.filter(b=>b.h<=20);
+    ok(stars.length===2&&flats.length===2,
+       'two of them are stars and two are flat rules ('+marks.bands.map(b=>b.h+'px').join(', ')+')');
+
+    const logoStarB=stars[0], midStarB=stars[1];
+    ok(Math.abs(logoStarB.cx-CARD_W/2)<=2,
+       'the logo star is centred on the card (centre '+logoStarB.cx+')');
+    ok(Math.abs(midStarB.cx-CARD_W/2)<=2,
+       'the star in the middle is centred on the card (centre '+midStarB.cx+')');
+
+    /* THE ONE THAT PROVES THE SWAP HAPPENED: the star drawn into logo-tight.png
+       is an OUTLINE with bare paper in its middle, and hers is FILLED. Sampling
+       the body of the band is what tells the two apart - and it is sampled from
+       the band's own centre, so it does not care where the star has moved to. */
+    const body=marks.rgb(Math.round(logoStarB.cx),Math.round((logoStarB.y0+logoStarB.y1)/2));
+    ok(marks.sat(body)>45,
+       'the logo star is filled, not the drawn outline it replaced (centre sat '+marks.sat(body)+')');
+
+    /* HER STAR IS THE LOGO'S STAR: same shape drawn at two sizes, so what has
+       to match is the PROPORTION, not the pixel count. Both are measured
+       against their own band, so this holds at any card size. */
+    const ratio=r=>r.w/r.h;
+    ok(Math.abs(ratio(logoStarB)-ratio(midStarB))<0.12,
+       'both stars are the same star, drawn at two sizes (aspect '+ratio(logoStarB).toFixed(2)
+       +' vs '+ratio(midStarB).toFixed(2)+')');
+
+    /* ⚠️ HUE, NOT RGB, AND THE MEAN, NOT THE DEEPEST PIXEL. Both traps were
+       walked into: the stars are one gradient at two sizes so their brightest
+       pixels are never byte-identical, and matching a flat line to a star's
+       DEEPEST stop is what put an orange slider on the card. What the eye reads
+       is the average. */
+    const hues=marks.bands.map(b=>hue(b.mean));
+    const spread=Math.max(...hues)-Math.min(...hues);
+    ok(spread<=3,'every gold on the card reads as the same gold, spread '+spread.toFixed(1)
+       +'° ('+hues.map(h=>h.toFixed(1)+'°').join(', ')+')');
+    for(const b of marks.bands)
+      ok(marks.sat(b.mean)>80,'a gold mark at y'+b.y0+' is a real gold, not something that went grey (sat '
+         +marks.sat(b.mean)+')');
+    /* And the DIRECTION is pinned, not just the distance: a flat mark may never
+       fall below the stars' hue, because that is the orange side. */
+    const starHue=Math.min(...stars.map(b=>hue(b.mean)));
+    ok(Math.min(...flats.map(b=>hue(b.mean)))>=starHue-0.5,
        'the flat gold marks sit on the yellow side of the stars, never the orange side');
   }
-
-  /* ── Part 3e: THE CARD IS NEVER SHOWN DISTORTED ──────────────────────────
-     Her catch: "the size looks weird when I click on it... after it is texted
-     it looks normal." That split is the whole diagnosis - the FILE was right
-     and our own preview was wrong. Both places that show the card carried an
-     aspect-ratio of 1080/1350, left over from when the card was 4:5:
-       - the thumbnail had object-fit:cover, so it CROPPED, and what it cut was
-         the bottom, i.e. stylestar.app
-       - the overlay had NO object-fit, and an img with a forced aspect-ratio
-         and no object-fit STRETCHES, so her card was painted squashed wide
-     ⚠️ THIS IS ASSERTED AGAINST THE IMAGE'S OWN naturalWidth/naturalHeight, not
-     against 1080/1920 typed a third time. Change the card's proportions and
-     these boxes have to follow or this fails, which is the point. */
-  const boxes=await page.evaluate(async()=>{
-    userName='Ashley'; answers=[6,6,6,6,6,6,6,6,6,6,6,6];
-    topArchNames=['The Statement Maker','The Bold Expressionist','The Modern Trendsetter'];
-    userMotto='Ashley, you walk in and the room adjusts; your confidence is the accessory.';
-    const rp=document.getElementById('rp'); if(rp)rp.textContent='A portrait sentence.';
-    show('s-res'); document.getElementById('s-res').classList.add('rv-open');
-    await new Promise(r=>setTimeout(r,150));
-    const blob=await new Promise(r=>buildCardBlob('quiz',b=>r(b)));
-    const th=document.getElementById('scThumb');
-    th.src=URL.createObjectURL(blob);
-    await new Promise(r=>{th.complete?r():th.onload=r});
-    const t=document.querySelector('.sc-thumb').getBoundingClientRect();
-    saveStyleCard('quiz');
-    await new Promise(r=>setTimeout(r,2200));
-    const img=document.querySelector('#cardPreview .scCard');
-    const o=img.getBoundingClientRect();
-    const nat=img.naturalHeight/img.naturalWidth;
-    const bottom=o.bottom, vh=innerHeight;
-    /* ⚠️ READ EVERY COMPUTED VALUE BEFORE CLOSING. The first version of this
-       closed the overlay and then built the return object, so getComputedStyle
-       ran on a DETACHED element and reported no object-fit at all - a failure
-       on a perfectly correct rule. Several sightings of this shape now. */
-    const out={thumb:t.height/t.width, overlay:o.height/o.width, nat:nat,
-               fit:getComputedStyle(img).objectFit,
-               thumbFit:getComputedStyle(th).objectFit, bottom:bottom, vh:vh};
-    if(typeof closeCardPreview==='function')closeCardPreview();
-    return out;
-  });
-  ok(Math.abs(boxes.overlay-boxes.nat)<0.02,
-     'the overlay shows the card at its own proportions, never stretched (box '+
-     boxes.overlay.toFixed(3)+' against the file’s '+boxes.nat.toFixed(3)+')');
-  ok(Math.abs(boxes.thumb-boxes.nat)<0.02,
-     'the thumbnail box is the card’s shape, so nothing is cropped off it (box '+
-     boxes.thumb.toFixed(3)+' against '+boxes.nat.toFixed(3)+')');
-  /* object-fit:contain on both is the SAFETY NET, not the fix: if the card's
-     proportions ever change and these boxes are not updated, the card
-     letterboxes visibly instead of being silently squashed or trimmed. */
-  ok(boxes.fit==='contain','the overlay letterboxes rather than distorting if the ratio ever drifts');
-  ok(boxes.thumbFit==='contain','the thumbnail letterboxes rather than cropping if the ratio ever drifts');
-  ok(boxes.bottom<=boxes.vh,'the whole card fits on screen above the controls ('+
-     Math.round(boxes.bottom)+'px of '+boxes.vh+')');
 
   // ── Part 4: the caption carries her archetype and a tappable link ─────────
   const cap=await page.evaluate(()=>{

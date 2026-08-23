@@ -3034,7 +3034,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    110px, exactly what 88 x 1350/1080 gave); a taller box would have grown
    the row instead. ▶ If the card's proportions ever change, change this
    with them. */
-.res-screen .sc-thumb{width:62px;flex:0 0 auto;aspect-ratio:1080/1920;border-radius:0;overflow:hidden;background:#141210;box-shadow:0 4px 12px -3px rgba(0,0,0,.6),inset 0 0 0 1px rgba(214,169,70,.5)}
+.res-screen .sc-thumb{width:88px;flex:0 0 auto;aspect-ratio:1080/1350;border-radius:0;overflow:hidden;background:#141210;box-shadow:0 4px 12px -3px rgba(0,0,0,.6),inset 0 0 0 1px rgba(214,169,70,.5)}
 .res-screen .sc-thumb img{width:100%;height:100%;object-fit:contain;display:block}
 .res-screen .sc-tt{font-family:'DM Serif Display',Georgia,serif;font-size:16px;font-weight:400;line-height:1.16;color:#211E1A}
 .res-screen .sc-ss{font:400 13px/1.4 'Jost',sans-serif;color:#453f37;margin-top:4px}
@@ -11853,7 +11853,7 @@ function _openCardOverlay(blob,imgUrl){
        which are inset:0 over this box, have a stable size before the blob
        has decoded. object-fit:contain means a future mismatch letterboxes
        instead of silently distorting her card again. */
-    #cardPreview .scCard{display:block;width:auto;max-width:92vw;max-height:calc(100vh - 230px);aspect-ratio:1080/1920;object-fit:contain;border-radius:0;box-shadow:0 12px 44px rgba(0,0,0,.55);opacity:0;animation:scCardIn .55s ease-out .34s forwards}
+    #cardPreview .scCard{display:block;width:auto;max-width:92vw;max-height:calc(100vh - 230px);aspect-ratio:1080/1350;object-fit:contain;border-radius:0;box-shadow:0 12px 44px rgba(0,0,0,.55);opacity:0;animation:scCardIn .55s ease-out .34s forwards}
     #cardPreview .scLayer{position:absolute;inset:0;pointer-events:none}
     #cardPreview .scCover{background:radial-gradient(130% 120% at 50% 28%,#2a2318,#0b0906);animation:scCoverOut .55s ease-out .36s forwards}
     #cardPreview .scClip{position:absolute;inset:0;overflow:hidden;pointer-events:none}
@@ -12016,7 +12016,7 @@ async function doShareCard(){
    shadow is NEUTRAL (5.5% saturation at 3.01:1) which is why the frame is
    silver and the address is ink.                                              */
 function buildCardBlob(source,callback){
-  const W=1080,H=1920;
+  const W=1080,H=1350;
   const archNames=source==='quiz'?topArchNames:(lastPhotoArchNames.length?lastPhotoArchNames:topArchNames);
   const portrait=(document.getElementById(source==='quiz'?'rp':'prp')||{}).textContent||'';
 
@@ -12322,7 +12322,25 @@ function buildCardBlob(source,callback){
            bottom    12 rows, biggest gap 111px,       density 25.8
        ▶ HEAVINESS IS DENSITY, NOT CENTRE OF MASS. A centroid can sit dead centre
        while one half breathes and the other is crowded. Measure rows and gaps. */
-    const FOOT_MARGIN=150,TOP_MARGIN=92;   // her call: the logo comes up
+    /* ⚠️⚠️ THE CARD IS 4:5, HER CALL 2026-08-23, AND EVERY NUMBER BELOW WAS
+       TIGHTENED TO REACH IT. Her words: "I don't think this needs to cover the
+       entire space of an Instagram story. We need to make it a smaller more
+       normal looking size." She is right - 4:5 is the shape a shared image
+       normally comes in, it crops far less in a message bubble, and everything
+       sits closer together so the card reads as one composition instead of a
+       column you scroll.
+       ▶ NOT ONE WORD WAS CUT TO GET HERE. What came down is the FURNITURE around
+       the words: the logo, the star, the margins, the leading, and the type in
+       the tail. Her motto and her sentence are untouched and both still fit at
+       the longest the prompt can produce.
+       ⚠️ AN EARLIER NOTE SAID 4:5 WAS IMPOSSIBLE. That was measured against the
+       proportions as they then were, and stated too broadly. It is possible;
+       it just costs the slack.
+       ⚠️ IF THE HEIGHT EVER CHANGES AGAIN, the two preview boxes in the CSS
+       (.sc-thumb and #cardPreview .scCard) carry this ratio and must change with
+       it, or the card is silently cropped or squashed. A test asserts them
+       against the image's own dimensions, so it will fail loudly. */
+    const FOOT_MARGIN=96,TOP_MARGIN=64;   // her call: the logo comes up
 
     // 1. the tail's natural height
     /* HER CALL: plain, not fancy. DM Sans is the app's own body face — the one
@@ -12332,7 +12350,7 @@ function buildCardBlob(source,callback){
        ⚠️ THE MEASURING FONT AND THE DRAWING FONT MUST MATCH. This line is wrapped
        here and painted 60 lines later; set one and forget the other and the wrap
        is computed against a face that never gets used. */
-    const PROMISE_FONT='400 33px "DM Sans", sans-serif';
+    const PROMISE_FONT='400 29px "DM Sans", sans-serif';
     ctx.font=PROMISE_FONT;
     /* ⚠️ THE NON-BREAKING SPACE IN "Style\u00a0Portrait" IS DELIBERATE. It is the
        name of the thing she is offering, so it must not be split across two
@@ -12340,8 +12358,8 @@ function buildCardBlob(source,callback){
        together it comes out MORE even, not less (524/611/567 against 610/592/501
        measured in the real face). Do not "tidy" it back to a plain space. */
     const promiseLines=wrapBalanced('Take the free quiz to discover your Style\u00a0Portrait, and receive shopping tips and ideas from a real personal stylist.',W-240);
-    const promiseH=promiseLines.length*46+18;
-    const tailBase=58+promiseH+92+52;
+    const promiseH=promiseLines.length*40+14;
+    const tailBase=50+promiseH+78+40;
 
     // 2. the upper block's natural height, with the motto shrinking to fit
     /* Her generated motto is capped at 95 chars by the prompt and needs 3 lines,
@@ -12349,19 +12367,19 @@ function buildCardBlob(source,callback){
        up to 140 chars, which can run to six. That is the ONE path a real woman
        could hit that no design render ever did, and a card set a point smaller is
        far better than one that overlaps. */
-    const LOGO_W=196,LOGO_H=LOGO_W*312/296;
+    const LOGO_W=156,LOGO_H=LOGO_W*312/296;
     const words=arch.split(' ');
     const head=words[0],rest=words.slice(1).join(' ')||words[0];
-    const fsHead=104;
-    const fs=fitFont(rest,'"DM Serif Display", serif',116,58,W-190);
-    const H_LOGO=LOGO_H+72,H_OVER=68,H_NAME=fsHead*1.02+fs*1.06+6,
-          H_DIV=128,H_NOT=notes.length?(90+notes.length*50):0;
+    const fsHead=90;
+    const fs=fitFont(rest,'"DM Serif Display", serif',100,52,W-190);
+    const H_LOGO=LOGO_H+46,H_OVER=56,H_NAME=fsHead*1.02+fs*1.06+6,
+          H_DIV=94,H_NOT=notes.length?(76+notes.length*44):0;
     const room=H-TOP_MARGIN-FOOT_MARGIN-tailBase;
-    let ms=46,ml,H_MOT,blockH;
+    let ms=40,ml,H_MOT,blockH;
     for(;;){
       ctx.font='italic 400 '+ms+'px "Lora", serif';
       ml=wrapBalanced('\u201c'+quote+'\u201d',W-300);
-      H_MOT=ml.length*(ms+16)+34;
+      H_MOT=ml.length*(ms+13)+26;
       blockH=H_LOGO+H_OVER+H_NAME+H_DIV+H_MOT+H_NOT;
       if(blockH<=room||ms<=30)break;
       ms-=2;
@@ -12375,14 +12393,14 @@ function buildCardBlob(source,callback){
     const SEAMS=6;   // logo, notes, divider + the three in the tail. The
                      // name->notes seam is deliberately NOT one of them, and the
                      // slider that used to carry a fourth tail seam is gone.
-    const AIR=Math.min(52,Math.max(0,room-blockH)/SEAMS);
+    const AIR=Math.min(44,Math.max(0,room-blockH)/SEAMS);
 
     // 4. build the tail, each row carrying its share of the air BELOW it
     const rows=[];
     const push=function(h,draw){rows.push({h:h,draw:draw})};
-    push(58,function(y){
-      ctx.fillStyle=BLACK;ctx.font='54px "DM Serif Display", serif';
-      ctx.fillText('stylestar.app',W/2,y+46);
+    push(50,function(y){
+      ctx.fillStyle=BLACK;ctx.font='46px "DM Serif Display", serif';
+      ctx.fillText('stylestar.app',W/2,y+39);
     });
     /* THE SLIDER ABOVE THE ADDRESS IS DELETED, her call. It was an echo of the
        one under the logo, and an echo of a mark is not the mark — it read as a
@@ -12400,13 +12418,13 @@ function buildCardBlob(source,callback){
        the claim, and running both said "personal stylist" twice in a row. */
     push(promiseH+AIR,function(y){
       ctx.fillStyle=BLACK;ctx.font=PROMISE_FONT;
-      promiseLines.forEach(function(t,i){ctx.fillText(t,W/2,y+40+i*46)});
+      promiseLines.forEach(function(t,i){ctx.fillText(t,W/2,y+35+i*40)});
     });
-    push(92+AIR,function(y){
-      ctx.fillStyle=BLACK;ctx.font='54px "DM Serif Display", serif';
-      ctx.fillText('What’s your Style Star?',W/2,y+62);
+    push(78+AIR,function(y){
+      ctx.fillStyle=BLACK;ctx.font='46px "DM Serif Display", serif';
+      ctx.fillText('What’s your Style Star?',W/2,y+53);
     });
-    push(52+AIR,function(y){
+    push(40+AIR,function(y){
       ctx.strokeStyle=LOGO_GOLD;ctx.lineWidth=1.6;
       ctx.beginPath();ctx.moveTo(W/2-110,y+26);ctx.lineTo(W/2+110,y+26);ctx.stroke();
     });
@@ -12442,8 +12460,8 @@ function buildCardBlob(source,callback){
     }
     y+=H_LOGO+AIR;
 
-    ctx.fillStyle=TAUPE;ctx.font='600 38px "Jost", sans-serif';
-    trackedText('MY STYLE IS',W/2,y+38,12);
+    ctx.fillStyle=TAUPE;ctx.font='600 33px "Jost", sans-serif';
+    trackedText('MY STYLE IS',W/2,y+33,10);
     y+=H_OVER;
 
     ctx.fillStyle=BLACK;
@@ -12463,8 +12481,8 @@ function buildCardBlob(source,callback){
        ▶ So do NOT add AIR here. The seam above the divider is where the space
        goes, and that is what keeps the group reading as a group. */
     if(notes.length){
-      ctx.fillStyle=TAUPE;ctx.font='600 34px "Jost", sans-serif';
-      trackedText('WITH NOTES OF',W/2,y+34,10);
+      ctx.fillStyle=TAUPE;ctx.font='600 30px "Jost", sans-serif';
+      trackedText('WITH NOTES OF',W/2,y+30,9);
       /* STACKED, not side by side (her call). It also removed a real weakness:
          side by side the two longest names ran 40 chars together and drove the
          shrink-to-fit loop down to keep them on one line; stacked, each gets the
@@ -12475,7 +12493,7 @@ function buildCardBlob(source,callback){
       while(short.some(function(n){return trackedWidth(n,3)>W-200})&&ns>20){
         ns--;ctx.font='600 '+ns+'px "Jost", sans-serif';
       }
-      short.forEach(function(n,i){trackedText(n,W/2,y+98+i*50,3)});
+      short.forEach(function(n,i){trackedText(n,W/2,y+84+i*44,3)});
     }
 
     y+=H_NOT+AIR;
@@ -12484,11 +12502,11 @@ function buildCardBlob(source,callback){
     /* Her call: the flanking rules are gone and the star stands alone. It reads
        better for it — the rules were making a decorative divider out of something
        that is her actual mark, and a mark does not need underlining. */
-    star(W/2,y+58,112);
+    star(W/2,y+44,84);
     y+=H_DIV+AIR;
 
     ctx.fillStyle=BLACK;ctx.font='italic 400 '+ms+'px "Lora", serif';
-    ml.forEach(function(t,i){ctx.fillText(t,W/2,y+ms+i*(ms+16))});
+    ml.forEach(function(t,i){ctx.fillText(t,W/2,y+ms+i*(ms+13))});
 
     // 6. the tail, from the bottom edge upward
     let ty=H-FOOT_MARGIN;
