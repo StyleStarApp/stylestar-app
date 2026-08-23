@@ -12058,7 +12058,20 @@ function buildCardBlob(source,callback){
          it measures that mix most precisely), then lay the same mix down in the
          new gold. That keeps every soft edge soft; flooding the pixels with a
          flat colour instead would leave the line with hard jagged ends. */
-      const SRC_B=27, TGT=[230,184,69];
+      /* ⚠️ THE TARGET IS MATCHED TO THE STAR'S PERCEIVED GOLD, NOT ITS DEEPEST
+         PIXEL, and getting that wrong is what put an orange line on the card
+         for one commit. The star's most saturated pixel is #E6B845 at hue 42.9°,
+         but that is a terminal stop nobody's eye picks out - averaged across the
+         whole star body it reads #F4DC90 at 45.6°. Matching the flat line to
+         42.9° made it the most orange thing on the sheet (her catch).
+         ▶ #E6C549 is the logo's ORIGINAL hue, 47.4°, brightened toward the
+         star's lightness. The original was never the problem - at 47.5° it was
+         already nearer the star than the "match" that replaced it. What really
+         differed was VALUE: a flat dark line beside a bright metallic star.
+         ▶ SO THE RULE, and it generalises to any flat mark set beside a
+         gradient: MATCH A FLAT COLOUR TO WHAT THE EYE INTEGRATES, WHICH IS THE
+         AVERAGE, NEVER TO THE BRIGHTEST OR DEEPEST STOP IN THE RAMP. */
+      const SRC_B=27, TGT=[230,197,73];
       for(let i=0;i<p.length;i+=4){
         if(!p[i+3])continue;
         const r=p[i],g=p[i+1],b=p[i+2];
@@ -12211,11 +12224,12 @@ function buildCardBlob(source,callback){
        the slider line and dot in the drawn logo are #E0B71B. The card's foot was
        drawing #C9992B at 55%, which is browner and darker — her catch, and she
        was looking at the two golds sitting one above the other on the same sheet.
-       ▶ RETUNED to the star's own #E6B845 (her call): with the shiny star now on
-       the logo too, a slider at hue 47.5° against a star at 42.9° read as two
-       different golds. The drawn slider is remapped to match in cutLogo, and
-       this line follows it, so the whole card carries ONE gold. */
-    const LOGO_GOLD='#E6B845';
+       ▶ #E6C549 is the logo's own hue brightened toward the star's lightness. It
+       tracks the slider, which cutLogo remaps to the same value, so the card
+       carries ONE gold. See the note at that remap for why this is NOT the
+       star's deepest stop: matching a flat line to the deepest gold in a
+       gradient reads as orange. */
+    const LOGO_GOLD='#E6C549';
     /* The gold-leaf ramp that used to live here is DELETED, not commented out.
        It drew the flanking divider rules, and she retired those so the star could
        stand alone; the star carries its own gradient and the foot rules take the

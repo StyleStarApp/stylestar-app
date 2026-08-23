@@ -304,12 +304,16 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
   }
 
   /* ── Part 3d: ONE GOLD ON THE WHOLE SHEET ────────────────────────────────
-     Her catch that produced this: the drawn slider under the wordmark was
-     #E0B71B at hue 47.5° while the star above it terminates at #E6B845, hue
-     42.9°, and five degrees apart is where two golds stop reading as the same
-     gold. The slider is remapped in cutLogo and the hairline follows it.
-     ▶ HUE, not RGB - the stars are a gradient at two sizes, so their brightest
-     pixels are never byte-identical (the trap Part 3c already fell into). */
+     ⚠️ THIS TEST WAS WRONG ONCE AND THE CORRECTION IS THE POINT OF IT. It first
+     compared each mark's MOST SATURATED pixel, which drove the flat slider to
+     the star's deepest stop (#E6B845, hue 42.9°) - and a flat line at the
+     deepest gold in a gradient reads ORANGE, which is exactly what she saw.
+     A star's deepest stop is a terminal nobody's eye picks out.
+     ▶ So every mark is measured by the AVERAGE of its gold, which is what the
+     eye integrates: both stars read #F4DC90 at ~45.6°, and the flat marks sit
+     at 47.5°. Two degrees is comfortably inside the range where two golds still
+     read as one; five degrees is where they visibly part, which is what the
+     broken version produced. */
   {
     const p=png(Buffer.from(logoStar.b64,'base64'));
     const rgb=(x,y)=>{const i=(y*p.w+x)*p.bpp;return [p.px[i],p.px[i+1],p.px[i+2]]};
@@ -317,24 +321,31 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
       if(!d)return 0;
       const h=mx===c[0]?((c[1]-c[2])/d)%6:mx===c[1]?(c[2]-c[0])/d+2:(c[0]-c[1])/d+4;
       return (h*60+360)%360;};
-    /* Each gold mark named by the band it lives in, and the TRUEST pixel taken
-       from each - the most saturated one, i.e. the mark's own colour rather than
-       an antialiased edge blended toward the paper. */
-    const marks=[['the logo star',100,140],['the logo slider',277,295],
-                 ['the star in the middle',960,1010],['the hairline above the CTA',1330,1345]];
+    const marks=[['the logo star',100,142,505,578],['the logo slider',277,296,430,660],
+                 ['the star in the middle',950,1022,495,590],
+                 ['the hairline above the CTA',1330,1345,420,660]];
     const hues=[];
-    for(const [label,y0,y1] of marks){
-      let best=null;
-      for(let y=y0;y<=y1;y++)for(let x=70;x<p.w-70;x++){
-        const c=rgb(x,y),s=Math.max(...c)-Math.min(...c);
-        if(!best||s>best[0])best=[s,c];
+    for(const [label,y0,y1,x0,x1] of marks){
+      let t=[0,0,0],n=0;
+      for(let y=y0;y<=y1;y++)for(let x=x0;x<x1;x++){
+        const c=rgb(x,y);
+        if(Math.max(...c)-Math.min(...c)>40){t=[t[0]+c[0],t[1]+c[1],t[2]+c[2]];n++}
       }
-      ok(best&&best[0]>80,label+' is drawn in a real gold (saturation '+(best?best[0]:0)+')');
-      hues.push([label,hue(best[1])]);
+      ok(n>200,label+' is drawn at all ('+n+' gold px)');
+      const mean=t.map(v=>Math.round(v/n));
+      ok(Math.max(...mean)-Math.min(...mean)>80,
+         label+' is a real gold, not something that went grey (sat '+(Math.max(...mean)-Math.min(...mean))+')');
+      hues.push([label,hue(mean)]);
     }
     const spread=Math.max(...hues.map(h=>h[1]))-Math.min(...hues.map(h=>h[1]));
-    ok(spread<=2,'every gold on the card is the same gold ('+
+    ok(spread<=3,'every gold on the card reads as the same gold, spread '+spread.toFixed(1)+'° ('+
        hues.map(h=>h[0]+' '+h[1].toFixed(1)+'°').join(', ')+')');
+    /* And the direction is pinned, not just the distance: the flat marks must
+       never fall BELOW the stars' hue, because that is the orange side. */
+    const stars=hues.filter(h=>/star/.test(h[0])).map(h=>h[1]);
+    const flats=hues.filter(h=>!/star/.test(h[0])).map(h=>h[1]);
+    ok(Math.min(...flats)>=Math.min(...stars)-0.5,
+       'the flat gold marks sit on the yellow side of the stars, never the orange side');
   }
 
   // ── Part 4: the caption carries her archetype and a tappable link ─────────
