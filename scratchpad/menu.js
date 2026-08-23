@@ -350,6 +350,65 @@ ok('no JS errors (card from the menu)', pc.errors.length === 0, pc.errors.join('
 await pc.context().close();
 
 // ---------------------------------------------------------------------------
+console.log("\n5d. A conversation is waiting — the pink star + pale yellow row");
+/* Kathy, twice: "it was gone or I couldn't find it." Nothing was ever lost; the
+   resume whisper just lives only on Welcome Back. */
+{
+  const pw = await newPage(390, true);
+  const mark = () => pw.evaluate(() => {
+    menuOpen();
+    const row = [...document.querySelectorAll('.menu-row')].find(r => r.querySelector('.menu-cw'));
+    if (!row) return null;
+    const st = row.querySelector('.menu-cw');
+    const cs = getComputedStyle(row), ss = getComputedStyle(st);
+    return { on: row.classList.contains('cw-on'), starShown: ss.display !== 'none',
+      bg: cs.backgroundColor, fill: st.querySelector('polygon').getAttribute('fill'),
+      label: row.textContent.trim(), h: row.getBoundingClientRect().height };
+  });
+
+  /* ⚠️ THE ASSERTION THAT MATTERS MOST IS THE NEGATIVE ONE. A mark that is
+     always on is not a signal, it is decoration — and worse, it would promise a
+     conversation to a woman who has never had one. The resume whisper learned
+     this by failing hubs.js's "graduated: no whisper ever again". */
+  await pw.evaluate(() => { try{localStorage.removeItem('ss_chat');localStorage.removeItem('ss_chat_t')}catch(e){} });
+  let m = await mark();
+  ok('the row carries the mark markup', m !== null);
+  ok('nothing waiting -> no star, no fill', m && !m.on && !m.starShown, JSON.stringify(m));
+
+  /* A conversation is hers only if SHE said something: opening the chat writes
+     the stylist's own greeting, which is an empty room with a hello in it. */
+  await pw.evaluate(() => {
+    localStorage.setItem('ss_chat', JSON.stringify([{ role: 'assistant', content: 'Hi!' }]));
+    localStorage.setItem('ss_chat_t', String(Date.now()));
+  });
+  m = await mark();
+  ok('the stylist greeting ALONE is not a conversation', m && !m.on, JSON.stringify(m));
+
+  await pw.evaluate(() => {
+    localStorage.setItem('ss_chat', JSON.stringify([
+      { role: 'assistant', content: 'Hi!' }, { role: 'user', content: 'I need a long dress' }]));
+    localStorage.setItem('ss_chat_t', String(Date.now()));
+  });
+  m = await mark();
+  ok('a real conversation -> the star shows', m && m.on && m.starShown, JSON.stringify(m));
+  ok('the row fills pale yellow #F7E9C0', m && m.bg === 'rgb(247, 233, 192)', m && m.bg);
+  /* The SAME pink the chat header's star uses. Her mark system: a pink star is
+     the stylist working, a pink heart is Catherine speaking. */
+  ok('the star is the stylist pink #EC4899', m && m.fill === '#EC4899', m && m.fill);
+  ok('the row still reads "Ask your Stylist"', m && m.label === 'Ask your Stylist', m && m.label);
+  ok('the mark costs the row no height', m && m.h < 46, m && String(m.h));
+
+  /* ⚠️ 6 HOURS, the same shelf life her saved pieces get. ss_chat never expires
+     on its own, so without this the mark would greet her about a conversation
+     she had weeks ago — a nag, not a signal. */
+  await pw.evaluate(() => localStorage.setItem('ss_chat_t', String(Date.now() - 7 * 3600 * 1000)));
+  m = await mark();
+  ok('a conversation older than 6 hours goes quiet again', m && !m.on, JSON.stringify(m));
+  ok('no JS errors (chat-waiting mark)', pw.errors.length === 0, pw.errors.join(' | '));
+  await pw.context().close();
+}
+
+// ---------------------------------------------------------------------------
 console.log('\n6. Readability + fit at 360px');
 const p360 = await newPage(360, true);
 await p360.evaluate(() => { show('s-wel'); menuOpen(); });
