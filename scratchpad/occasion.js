@@ -122,6 +122,7 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
     ok(d.indexOf('NEVER a mini skirt')>=0,               `"${ask}" carries her exclusion list`);
     ok(d.indexOf('closed-toe')>=0 && d.indexOf('NEVER flip flops or sneakers')>=0, `"${ask}" carries her shoe rule`);
     ok(d.indexOf('This rule is absolute')>=0,            `"${ask}" closes absolute (the dr3 shape)`);
+    ok(d.indexOf('Silk is welcome, but NEVER satin and NEVER velvet')>=0, `"${ask}" carries her fabric call`);
   }
   // An occasion she did NOT write a definition for must not inherit one.
   const noDef=await pg.evaluate(()=>{_ssAsk='wedding guest dress';return _askedForRule()});

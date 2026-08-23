@@ -42,6 +42,9 @@ async function live(prompt){
 // Every word she banned, plus the brights/prints she said to avoid.
 const VIOLATION=/\bmini\b|spaghetti|strapless|plunging|jumpsuit|romper|shorts\b|flip.?flop|sneaker|bodycon|cut.?out|sheer|backless|halter/i;
 const BRIGHT=/neon|hot pink|fuchsia|bright|floral|leopard|animal print|polka|striped|print\b/i;
+// Her fabric call, 2026-08-23: silk yes, satin and velvet never. Both came back
+// on the first live run, before she had written the rule.
+const FABRIC=/satin|velvet/i;
 
 for(const [label,ans] of [['GLAM (the hard case, shops Neiman/Saks)',GLAM],['QUIET',QUIET]]){
   for(const ask of ['something for a funeral','job interview outfit']){
@@ -54,11 +57,13 @@ for(const [label,ans] of [['GLAM (the hard case, shops Neiman/Saks)',GLAM],['QUI
       items.forEach(i=>{
         const bad=VIOLATION.test(i.name+' '+i.search)?'  ⚠️ VIOLATION':'';
         const br =BRIGHT.test(i.name+' '+i.search)?'  ⚠️ bright/print':'';
-        console.log(`   ${String(i.store||'?').padEnd(18)} ${String(i.name||'?').padEnd(38)}${bad}${br}`);
+        const fb =FABRIC.test(i.name+' '+i.search)?'  ⚠️ SATIN/VELVET':'';
+        console.log(`   ${String(i.store||'?').padEnd(18)} ${String(i.name||'?').padEnd(38)}${bad}${br}${fb}`);
       });
       const v=items.filter(i=>VIOLATION.test(i.name+' '+i.search)).length;
       const c=items.filter(i=>BRIGHT.test(i.name+' '+i.search)).length;
-      console.log(`   ▶ run ${run}: banned-garment violations ${v}/${items.length} (want 0) · bright-or-print ${c}/${items.length} (want 0)`);
+      const f=items.filter(i=>FABRIC.test(i.name+' '+i.search)).length;
+      console.log(`   ▶ run ${run}: banned garments ${v}/${items.length} · bright-or-print ${c}/${items.length} · satin-or-velvet ${f}/${items.length}  (all want 0)`);
     }
   }
 }
