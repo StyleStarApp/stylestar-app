@@ -11842,7 +11842,18 @@ function _openCardOverlay(blob,imgUrl){
     const st=document.createElement('style');st.id='scRevealCss';
     st.textContent=`
     #cardPreview .scReveal{position:relative;display:inline-block;line-height:0;animation:scRise .42s ease-out both}
-    #cardPreview .scCard{display:block;width:auto;max-width:92vw;max-height:calc(100vh - 230px);aspect-ratio:1080/1350;border-radius:0;box-shadow:0 12px 44px rgba(0,0,0,.55);opacity:0;animation:scCardIn .55s ease-out .34s forwards}
+    /* ⚠️ THE RATIO MUST MATCH THE CARD, AND object-fit IS THE SAFETY NET.
+       This said 1080/1350, left over from when the card was 4:5, and an img
+       with a forced aspect-ratio and no object-fit STRETCHES to fill it - so
+       a 9:16 card was painted squashed wide. Her catch: "the size looks weird
+       when I click on it", while the same card texted and viewed in Messages
+       looked right, which is exactly the signature of the distortion being
+       OURS and not the file's.
+       ▶ The ratio is declared at all so the reveal's cover and burst layers,
+       which are inset:0 over this box, have a stable size before the blob
+       has decoded. object-fit:contain means a future mismatch letterboxes
+       instead of silently distorting her card again. */
+    #cardPreview .scCard{display:block;width:auto;max-width:92vw;max-height:calc(100vh - 230px);aspect-ratio:1080/1920;object-fit:contain;border-radius:0;box-shadow:0 12px 44px rgba(0,0,0,.55);opacity:0;animation:scCardIn .55s ease-out .34s forwards}
     #cardPreview .scLayer{position:absolute;inset:0;pointer-events:none}
     #cardPreview .scCover{background:radial-gradient(130% 120% at 50% 28%,#2a2318,#0b0906);animation:scCoverOut .55s ease-out .36s forwards}
     #cardPreview .scClip{position:absolute;inset:0;overflow:hidden;pointer-events:none}
