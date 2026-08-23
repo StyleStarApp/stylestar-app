@@ -6693,9 +6693,54 @@ function _seenPicksLine(surface){
 // consistent. The "search" field is what actually makes the links work.
 // mode 'compare' is for the Wardrobe "Ideas" carousel, where the options are
 // alternatives for ONE piece and she is choosing between them.
+/* ── HER HARD NO IS A STORE RULE TOO (Kathy, 2026-08-24) ──────────────────────
+   She ticked "Bodycon/tight dresses" as a never-wear and the app sent her to
+   REVOLVE, where every long dress on the landing page was form-fitting. Her
+   words: "all of them were very form fitting, which was one of the things that
+   I had said was a hard no for me."
+
+   ▶ THE RANKING WAS INNOCENT, AND MEASURING IS THE ONLY REASON WE KNOW THAT.
+   Revolve already ranks 102nd of 102 for a woman with her sliders — dead last.
+   The first fix proposed was a fit penalty on the store ranking, and the sweep
+   in scratchpad/fitcap.js killed it: it moved Revolve NOT AT ALL for her (it was
+   already bottom) while taking Bergdorf and Alice + Olivia out of a glam woman's
+   top ten — which is precisely the store-level cap Cath overruled on 2026-08-23
+   ("I am ok with all of these stores for a glam woman"), arriving in a new
+   costume. MEASURE BEFORE BUILDING A RANKING CHANGE. Twice now.
+
+   ▶ WHAT ACTUALLY SENT HER THERE is the sentence directly below in _shopRules:
+   "Go further down only when the piece needs a SPECIALIST that the top of the
+   list does not carry." Revolve is deep:1 and known for occasion dresses, she
+   asked for long dresses, and the model did exactly what it was told. The
+   escape hatch had no awareness of her never-wear list.
+
+   ⚠️ SCOPED TO THE GARMENT, NEVER THE WHOLE STORE, and that scoping is the
+   load-bearing part. A blanket "no fitted stores" rule would strip Spanx, SKIMS,
+   Alo Yoga, Lululemon and Summersalt — all fitted 9+ — so a woman who never
+   wears bodycon DRESSES would quietly lose her leggings, her swimsuit and her
+   shapewear. Her chip says dresses. The rule says dresses.
+   ⚠️ ONLY TWO CHIPS EARN AN ENTRY, and the test is whether the chip describes
+   what a store IS rather than one product it happens to stock. Sequins, ruffles
+   and turtlenecks are details carried alongside everything else, and
+   filterNeverWear already drops them by name. Bodycon and boxy are the character
+   of a whole range. ▶ Do not grow this map without that test. */
+const _NEVER_STORE={
+  'Bodycon/tight dresses':'When the piece is a DRESS, do not send her to a store whose dress range is predominantly body-conscious, tight or bodycon, EVEN IF that store is the obvious specialist for the kind of dress she wants. Choose the next store that genuinely carries the piece in a cut she would actually wear. This does not restrict her activewear, swim or shapewear, where a close fit is the point of the garment.',
+  'Oversized/boxy fits':'Do not send her to a store whose range is predominantly oversized, boxy or loose-draped, EVEN IF that store is the obvious specialist for the piece. This is about the cut a store is known for, not about how comfortable it is.'
+};
+function _neverStoreRule(){
+  var out=[];
+  (prefs.neverWear||[]).forEach(function(c){ if(_NEVER_STORE[c])out.push(_NEVER_STORE[c]) });
+  if(!out.length)return '';
+  /* ⚠️ Placed with the STORE-CHOICE rules, not with her preferences. Her
+     never-wear list already reaches the prompt as an item rule and that is not
+     what failed - the cards Kathy got were fine, it was the shop they pointed
+     at. A rule has to sit where the decision it governs is made. */
+  return ' HER NEVER-WEAR LIST ALSO GOVERNS THIS CHOICE, with the same absolute weight it has over the items themselves: '+out.join(' ');
+}
 function _shopRules(mode,occ){
   return '\nPICK THE STORE from this list ONLY, using the name exactly as written.'+
-    (quizTaken?' The list is already ORDERED by how well each store suits her, closest first, so favour the top of it. Go further down only when the piece needs a specialist that the top of the list does not carry.':'')+
+    (quizTaken?' The list is already ORDERED by how well each store suits her, closest first, so favour the top of it. Go further down only when the piece needs a specialist that the top of the list does not carry.'+_neverStoreRule():'')+
     (quizTaken&&typeof occ==='number'?' For THIS request the order also carries the occasion she named, so the dressier end of the stores that genuinely suit her has moved to the top. Trust it: the stores that would be wrong for her at this occasion have already been ranked away.':'')+
     '\n'+_storeListForPrompt(occ)+
     '\n\nFOR EVERY ITEM GIVE BOTH:\n'+
@@ -11461,7 +11506,7 @@ SHOPPING:
 `+Object.keys(STORES).join(', ')+`
 - LUXURY AND DESIGNER, this is how the rule above applies to designer names: say the designer freely, that is real expertise, but the STORE after "from" must still be one of the shops listed above, because that is what she taps to buy. Neiman Marcus, Saks, Bergdorf Goodman, NET-A-PORTER, Nordstrom and Bloomingdales all carry the major houses. Write "the Celine Shopping Tote from Neiman Marcus" or "a Saint Laurent shoulder bag from Saks", never "from Celine" or "from Louis Vuitton". A designer is a brand, not a shop.
 - Keep the item name before "from" short and searchable (2 to 4 plain words like "navy linen blazer"), because that phrase becomes the shopping search.
-- Match the store to her using what you know of her budget and size range. Only mention a size range for things where fit depends on it, never for bags, jewelry or accessories.
+- Match the store to her using what you know of her budget and size range. Only mention a size range for things where fit depends on it, never for bags, jewelry or accessories.`+_neverStoreRule().replace(/^ /,'\n- ')+`
 - Mix price points
 - When you name several pieces in ONE answer, group them at the same store where you can. She is buying, and one order means one checkout, one shipping charge and one return. A big department store is usually the easiest place to do that.
 - But do not default to the SAME store every time you answer. If every reply you ever give sends her to one shop, she will start going there directly instead of asking you. Vary which store you lean on from answer to answer.
