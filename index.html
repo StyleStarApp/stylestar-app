@@ -11916,7 +11916,23 @@ async function doShareCard(){
      most link detectors work from a list of known TLDs and .app is not on it.
      That has bitten this project three times. */
   const _arch=(typeof topArchNames!=='undefined'&&topArchNames&&topArchNames[0])||'';
-  const linkText=(_arch?"I'm "+_arch+'. ':'')+"What's your Style Star? https://stylestar.app";
+  /* HER PICK, and the reason it reads this way. The first version was just
+     "I'm <archetype>. What's your Style Star?" - the sentence three testers
+     texted each other unprompted - and she was right that it is too thin for
+     someone who has never heard of Style Star: it names a thing they do not
+     know and asks nothing of them. So it now says what it IS (a free style
+     quiz), who is behind it (a real personal stylist, the Sally difference in
+     four words), and what to do.
+     ⚠️⚠️ THE URL MUST STAY THE LAST THING IN THIS STRING. Messages lifts a
+     TRAILING url out of the text and renders it as a rich preview card, which
+     is what actually reaches her friend: the logo, the tagline and a big
+     tappable target. Move the url into the middle of a sentence and that card
+     is very likely replaced by a line of blue text, which is a weaker door.
+     Confirmed on her own phone, 2026-08-23. A test pins it.
+     ⚠️ NO EMOJI, deliberately: Carson (20s) told Cath the emoji on the shopping
+     cards "read as AI to her generation", and this is what a friend reads. */
+  const linkText=(_arch?'I got '+_arch+' on this free style quiz from a real personal stylist. ':'A free style quiz from a real personal stylist. ')
+    +'Find your Style Star at https://stylestar.app';
   // Share the card image WITH the link in the caption text (not as a separate `url:`
   // field — that's what makes iOS swap to a link preview and drop the image). The
   // https:// prefix is needed so iOS's link detector reliably linkifies the newer

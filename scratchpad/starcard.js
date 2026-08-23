@@ -353,7 +353,9 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
     const src=buildCardBlob.toString();
     return doShareCard.toString();
   });
-  ok(/I'm "\+_arch/.test(cap)||/I'm \"\+_arch/.test(cap),'the caption leads with her archetype in the first person');
+  ok(/_arch/.test(cap),'the caption carries her archetype');
+  ok(/free style quiz/.test(cap),'the caption says what it is, not just what she got');
+  ok(/real personal stylist/.test(cap),'the caption carries the real-stylist difference');
   ok(/https:\/\/stylestar\.app/.test(cap),
      'the caption carries the https:// form — a bare .app is not auto-linked');
   /* ⚠️ HARNESS BUG, caught on the first run and worth the note: this asserted
@@ -364,6 +366,25 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
      a broken harness" — several sightings in this project now. */
   const capLine=(cap.match(/const linkText=[^;]*/)||[''])[0];
   ok(capLine.length>0,'the caption expression was found');
+  /* ⚠️ THE URL MUST BE THE LAST THING IN THE CAPTION, and this is the assertion
+     that matters most about sharing. Messages lifts a TRAILING url out of the
+     message text and renders it as a rich preview card - the logo, the tagline,
+     a big tappable target - which is what actually reaches her friend. Move the
+     url into the middle of a sentence and that card is very likely replaced by
+     a line of blue text, a weaker door. Confirmed on her own phone 2026-08-23,
+     where the first caption produced exactly that card.
+     ▶ It is checked by BUILDING the real caption rather than reading the source,
+     so a change to how the string is assembled cannot slip past it. */
+  const builtCap=await page.evaluate(()=>{
+    topArchNames=['The Modern Trendsetter','The Bold Expressionist'];
+    const _arch=topArchNames[0];
+    const src=doShareCard.toString();
+    const m=src.match(/const linkText=([\s\S]*?);\n/);
+    return m?eval(m[1]):'';
+  });
+  ok(/^https:\/\/stylestar\.app$/.test(builtCap.trim().split(/\s+/).pop()),
+     'the url is the LAST thing in the caption, so Messages renders it as a preview card ("'+builtCap+'")');
+  ok(builtCap.indexOf('The Modern Trendsetter')>-1,'the built caption really names her archetype');
   ok(!/[\u2600-\u27BF\uD83C-\uDBFF]/.test(capLine),'no emoji in the caption a friend receives');
 
   ok(errors.length===0,'zero JS errors ('+errors.join(' | ')+')');
