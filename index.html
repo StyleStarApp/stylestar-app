@@ -3048,6 +3048,26 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .res-screen .sc-thumb{width:196px;flex:0 0 auto;aspect-ratio:1080/1350;border-radius:0;overflow:hidden;background:#141210;box-shadow:0 5px 16px -4px rgba(0,0,0,.6)}
 .res-screen .sc-thumb img{width:100%;height:100%;object-fit:contain;display:block}
 .res-screen .sc-tt{font-family:'DM Serif Display',Georgia,serif;font-size:16px;font-weight:400;line-height:1.16;color:#211E1A}
+/* ⚠️ THE VERTICAL ALIGNMENT IS MEASURED, NOT GUESSED. This project has been
+   caught once already by a resized inline glyph quietly dropping off its text
+   line while every positional check still passed (the A2HS share chip). The
+   arrow's centre is asserted against the centre of the WORDS it follows.
+   ⚠️ And it is 17px, not the 20px it was in the old side-by-side row: at 20 the
+   title needs more width than a 320px phone can give it and the sentence breaks
+   in two. 17 holds one line at every width down to 320 - measured, not assumed.
+   Gold #C8971E is the same arrow every other destination in the app carries. */
+.res-screen .sc-tt .sc-ar{width:17px;height:17px;margin-left:6px;vertical-align:middle;position:relative;top:-1px;color:#C8971E;flex:0 0 auto}
+/* ⚠️ THE ARROW IS GLUED TO THE LAST WORD, and it is not decoration to keep it
+   that way. At 320px (Display Zoom, and real for this 18-to-80 audience) the
+   title needs two lines, and left to itself the browser put the ARROW ALONE ON
+   THE SECOND LINE - a gold chevron floating under a sentence, pointing at
+   nothing. Bound to "Card" it breaks as "See & share your Style Star / Card →",
+   which reads as a sentence that happens to wrap.
+   ▶ Same move, and the same reason, as the non-breaking space inside
+   "Style Portrait" in the card's own tail: the browser will break anywhere you
+   let it, so name the places it may not. The font was NOT shrunk to force one
+   line at 320 - readability beats an even line here, her standing trade. */
+.res-screen .sc-tt .sc-nb{white-space:nowrap}
 .res-screen .sc-ss{font:400 13px/1.4 'Jost',sans-serif;color:#453f37;margin-top:4px}
 .res-screen .act{cursor:pointer;margin-top:18px}
 .res-screen .actrow{display:flex;align-items:flex-end;gap:12px;padding:0 4px 3px;text-align:left}
@@ -3653,11 +3673,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <span class="sc-thumb"><img id="scThumb" alt="Your Style Star card preview"></span>
         <!-- The hardcoded <br> is gone with the side-by-side layout: it forced two
              lines to fit a narrow text column that no longer exists, and centred
-             under a 196px card the sentence balances on its own. The trailing
-             arrow went with it, her pick: the card itself is now the tap target
-             and it is 196px of it. ⚠️ If it ever stops reading as tappable, the
-             fix is one arrow after the title, not a smaller card. -->
-        <div class="tx"><div class="sc-tt">See &amp; share your Style Star Card</div><div class="sc-ss">Your style, ready to send to a friend</div></div>
+             under a 196px card the sentence balances on its own.
+             ⚠️ THE ARROW CAME BACK, HER CALL ON SEEING IT BUILT: "I think we need
+             the arrow to show it is meant to be tapped." It was dropped when the
+             row became a hero panel and she was right to want it back - it is her
+             own mother's lesson, the one that produced the Menu and the tappable
+             wardrobe tab: a thing that does not LOOK tappable does not get tapped,
+             and a big picture with a sentence under it is not obviously a control.
+             Every other destination in this app carries this exact gold arrow. -->
+        <div class="tx"><div class="sc-tt">See &amp; share your Style Star <span class="sc-nb">Card<svg class="sc-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span></div><div class="sc-ss">Your style, ready to send to a friend</div></div>
       </div>
     </div>
     </div>

@@ -589,13 +589,30 @@ const CARD_W=1080,CARD_H=1350;
       const row=document.querySelector('.sc-row');
       const th=row.querySelector('.sc-thumb'),tt=row.querySelector('.sc-tt');
       const cs=getComputedStyle(row),ts=getComputedStyle(th);
+      /* ⚠️ CLUSTERED, not unique-per-pixel: getClientRects() returns a rect per
+         ELEMENT too, so the title's inline gold arrow reports its own top a
+         pixel or two off the text box and an exact count calls a one-line title
+         two lines. A real wrap moves a whole line-height; an inline mark moves
+         ~2px. This is the third sighting of the rect-per-element trap here. */
       const lines=el=>{const r=document.createRange();r.selectNodeContents(el);
-        return new Set(Array.from(r.getClientRects()).map(x=>Math.round(x.top))).size};
+        const raw=Array.from(r.getClientRects()).map(x=>x.top).sort((a,b)=>a-b);
+        const out=[];for(const v of raw) if(!out.some(u=>Math.abs(u-v)<6)) out.push(v);
+        return out.length};
       const card=document.querySelector('.pcard').getBoundingClientRect();
       const rr=row.getBoundingClientRect(),tr=th.getBoundingClientRect();
       return {dir:cs.flexDirection,align:cs.alignItems,thumbW:Math.round(tr.width),
         thumbH:Math.round(tr.height),shadow:ts.boxShadow,ttLines:lines(tt),
         hasBr:!!tt.querySelector('br'),arrow:!!row.querySelector('.sc-ar'),
+        arGold:(()=>{const a=row.querySelector('.sc-ar');
+          return a?getComputedStyle(a).color:''})(),
+        arBound:(()=>{const a=row.querySelector('.sc-ar');
+          return !!(a&&a.closest('.sc-nb'))})(),
+        arOnLine:(()=>{const a=row.querySelector('.sc-ar'),nb=row.querySelector('.sc-nb');
+          if(!a||!nb)return 999;
+          const r=document.createRange();r.setStart(nb.firstChild,0);
+          r.setEnd(nb.firstChild,nb.firstChild.length);
+          const w=r.getBoundingClientRect(),b=a.getBoundingClientRect();
+          return Math.abs((b.top+b.bottom)/2-(w.top+w.bottom)/2)})(),
         overL:(rr.left-card.left).toFixed(1),overR:(card.right-rr.right).toFixed(1),
         centered:Math.abs((tr.left+tr.right)/2-(card.left+card.right)/2).toFixed(1)};
     });
@@ -612,7 +629,28 @@ const CARD_W=1080,CARD_H=1350;
        'no gold inset ring sits on the silver frame ('+panel.shadow+')');
     ok(panel.ttLines===1,'the title holds one line under the card ('+panel.ttLines+')');
     ok(!panel.hasBr,'the hardcoded <br> went with the side-by-side layout');
-    ok(!panel.arrow,'no trailing arrow, her pick: the 196px card is the tap target');
+    /* ⚠️ THIS ASSERTION IS THE REVERSE OF WHAT IT SAID FOR ONE DAY, and the
+       reversal is deliberate, not a silence. The hero layout shipped without an
+       arrow because that is what she picked from the render; seeing it built she
+       called it back: "I think we need the arrow to show it is meant to be
+       tapped." She is right, and it is her own mother's lesson - the one that
+       produced the Menu and the tappable wardrobe tab - a thing that does not
+       LOOK tappable does not get tapped, and a picture with a sentence under it
+       is not obviously a control. ▶ A RENDER ANSWERS "which of these", never
+       "does this work in the hand". */
+    ok(panel.arrow,'the title carries the gold arrow that marks a destination');
+    ok(/200,\s*151,\s*30|#C8971E/i.test(panel.arGold.replace(/\s/g,'').replace(/rgb\(|\)/g,'')) ||
+       panel.arGold==='rgb(200, 151, 30)',
+       'it is the same gold every other destination in the app uses ('+panel.arGold+')');
+    /* ⚠️ MEASURED ON THE PAINTED LINE, not assumed from the markup. A resized
+       inline glyph dropping off its text line is a failure this project has
+       shipped once already (the A2HS share chip) while every positional check
+       passed. */
+    ok(panel.arOnLine<3,'the arrow sits on the words\' own line ('
+       +panel.arOnLine.toFixed(2)+'px off centre)');
+    /* And it must stay glued to the last word: unbound, a 320px phone put the
+       arrow ALONE on a second line, pointing at nothing. */
+    ok(panel.arBound,'the arrow is bound to the last word so it can never wrap alone');
     ok(Math.abs(parseFloat(panel.centered))<1,
        'the card sits dead centre in its panel ('+panel.centered+'px off)');
     ok(parseFloat(panel.overL)>=0&&parseFloat(panel.overR)>=0,
