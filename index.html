@@ -11944,16 +11944,23 @@ async function doShareCard(){
      know and asks nothing of them. So it now says what it IS (a free style
      quiz), who is behind it (a real personal stylist, the Sally difference in
      four words), and what to do.
-     ⚠️⚠️ THE URL MUST STAY THE LAST THING IN THIS STRING. Messages lifts a
-     TRAILING url out of the text and renders it as a rich preview card, which
-     is what actually reaches her friend: the logo, the tagline and a big
-     tappable target. Move the url into the middle of a sentence and that card
-     is very likely replaced by a line of blue text, which is a weaker door.
-     Confirmed on her own phone, 2026-08-23. A test pins it.
+     ⚠️⚠️ TWO RULES ABOUT THE URL, AND THE SECOND ONE COST A ROUND TO LEARN.
+     (1) IT MUST BE THE LAST THING IN THIS STRING. Messages lifts a TRAILING
+     url out of the text and renders it as a rich preview card, which is what
+     actually reaches her friend: the logo, the tagline and a big tappable
+     target. Move the url into a sentence and that card is very likely replaced
+     by a line of blue text, a weaker door.
+     (2) THE SENTENCE BEFORE IT MUST BE COMPLETE WITHOUT IT. Messages does not
+     just linkify the url, it REMOVES it from the message body - so
+     "Find your Style Star at https://stylestar.app" was delivered to her as
+     "...Find your Style Star at", ending on a dangling preposition. Her catch.
+     ▶ So the caption has to read as a finished message with the url deleted.
+     Both are confirmed on her own phone, 2026-08-23, and both are pinned by
+     tests that BUILD the real string rather than reading this source.
      ⚠️ NO EMOJI, deliberately: Carson (20s) told Cath the emoji on the shopping
      cards "read as AI to her generation", and this is what a friend reads. */
   const linkText=(_arch?'I got '+_arch+' on this free style quiz from a real personal stylist. ':'A free style quiz from a real personal stylist. ')
-    +'Find your Style Star at https://stylestar.app';
+    +'Take it and find your Style Star. https://stylestar.app';
   // Share the card image WITH the link in the caption text (not as a separate `url:`
   // field — that's what makes iOS swap to a link preview and drop the image). The
   // https:// prefix is needed so iOS's link detector reliably linkifies the newer

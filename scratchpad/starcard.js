@@ -438,6 +438,16 @@ const lum=(p,x,y)=>p.px[(y*p.w+x)*p.bpp];
   });
   ok(/^https:\/\/stylestar\.app$/.test(builtCap.trim().split(/\s+/).pop()),
      'the url is the LAST thing in the caption, so Messages renders it as a preview card ("'+builtCap+'")');
+  /* ⚠️ AND THE MESSAGE MUST STILL READ WHEN THE URL IS GONE. Messages does not
+     merely linkify a trailing url, it REMOVES it from the body and puts it in
+     the preview card - so the first version of this caption arrived as
+     "...Find your Style Star at", ending on a dangling preposition. Her catch.
+     This is the assertion that would have caught it. */
+  const asSent=builtCap.replace(/\s*https?:\/\/\S+\s*$/,'').trim();
+  ok(/[.!?]$/.test(asSent),
+     'the caption still reads as a finished message once Messages takes the url out ("'+asSent+'")');
+  ok(!/\b(at|to|from|with|on|for|in|and)[.!?]?$/i.test(asSent),
+     'it does not end on a dangling preposition once the url is removed');
   ok(builtCap.indexOf('The Modern Trendsetter')>-1,'the built caption really names her archetype');
   ok(!/[\u2600-\u27BF\uD83C-\uDBFF]/.test(capLine),'no emoji in the caption a friend receives');
 
