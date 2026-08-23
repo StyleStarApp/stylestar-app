@@ -1728,6 +1728,35 @@ body.menu-open .menu-panel{display:block}
    measure the PARENT'S gap first; the margin is not the only thing spacing it. */
 .hub-ch{width:11px;height:11px;margin-left:0;vertical-align:-1px;transform:rotate(11deg);fill:#F49AC1;flex:none}
 /* "Start here" signpost on Style Quiz, new visitors only (same gold as the New pills) */
+/* ── A CONVERSATION IS WAITING (Kathy, 2026-08-24) ────────────────────────────
+   Her words, twice now: not "the app lost my chat" but "it was gone or I
+   COULDN'T FIND it." Nothing was ever lost — ss_chat holds her last 40 messages
+   and openChat restores them — but the resume whisper lives ONLY on Welcome
+   Back, so a woman who lands anywhere else has nothing telling her the
+   conversation is still there. iOS discarding the Style Star tab under memory
+   pressure (which is what her "the 3rd or 4th time" points at, as more store
+   tabs pile up) drops her on Welcome Back rather than back in her chat.
+   ▶ HER DESIGN, and the two marks do different jobs: the PINK STAR says WHO —
+   the stylist, per her own mark system where a pink star is the stylist working
+   and a pink heart is Catherine speaking — and the PALE YELLOW FILL says THIS
+   ROW IS LIVE. Together they read at a glance instead of needing to be spotted.
+   ⚠️ THE YELLOW IS MEASURED, NOT BORROWED. Her instinct was the wardrobe's own
+   starred-row fill (#FAF1DA), which is the right family — but that page sits on
+   the app's LINEN, and this drawer's paper is #FBFAF7, near-white, where the
+   same fill reads 1.08:1 and only whispers. #F7E9C0 reads 1.16:1 here. Her pick
+   of four rendered depths.
+   ⚠️ AND THE CONTRAST NUMBER IS NOT A PASS/FAIL, which is worth knowing before
+   anyone "fixes" it against the 4.5:1 bar: this is a FILL, not text. Row ink on
+   it measures 14.4:1. Area also changes perceptibility — a 1px divider at 1.14:1
+   genuinely vanishes (the wardrobe lesson) while a 44px band at 1.08:1 does not.
+   ⚠️ THE FILL BLEEDS WITH A BOX-SHADOW, NOT A NEGATIVE MARGIN, and that is
+   deliberate: the panel has 18px of side padding, and widening the ROW would
+   drag its border-bottom out with it, so this one divider would sit wider than
+   every other row's. The shadow paints the fill to the panel edges while the
+   border stays exactly where its neighbours are. Zero layout cost. */
+.menu-cw{display:none;width:11px;height:11px;margin-left:8px;vertical-align:middle;position:relative;top:-1px}
+.menu-row.cw-on .menu-cw{display:inline-block}
+.menu-row.cw-on{background:#F7E9C0;box-shadow:-18px 0 0 #F7E9C0,18px 0 0 #F7E9C0}
 .menu-start{display:none;align-items:center;margin-left:9px;padding:2.5px 6px;border-radius:8px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;vertical-align:2px}
 .menu-start.on{display:inline-flex}
 /* the FAQ / Privacy / Terms letterhead logo sits top-left, exactly under the
@@ -3581,7 +3610,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-row" onclick="menuGo(menuStyleCard)">Style Star Card</div>
   <div class="menu-row" onclick="menuGo(menuRefine)">Refine your Preferences</div>
   <div class="menu-row" onclick="menuGo(showPhoto)">Analyze your Outfit</div>
-  <div class="menu-row" onclick="menuGo(openChat)">Ask your Stylist</div>
+  <div class="menu-row" onclick="menuGo(openChat)">Ask your Stylist<svg class="menu-cw" viewBox="0 0 76 76" fill="none" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg></div>
   <div class="menu-grp">Shop</div>
   <div class="menu-row" onclick="menuGo(menuShopStyle)">Shop your Style</div>
   <div class="menu-row" onclick="menuGo(openWishlist)">Your Wishlist</div>
@@ -5340,6 +5369,18 @@ function menuOpen(){
   // name-only save still sees the signpost).
   var p=document.getElementById('menuStartPill');
   if(p)p.classList.toggle('on',!_hasQuizData());
+  /* ⚠️ _chatWaiting() IS THE GATE, and reusing it rather than re-deriving one is
+     the point: it already encodes the two rules the resume whisper had to learn
+     the hard way — a conversation is hers only if SHE said something (opening
+     the chat writes the stylist's own greeting, which is an empty room with a
+     hello in it), and it goes stale after the same 6 hours her saved pieces do.
+     A second copy of that logic here would drift from the whisper's, and the two
+     would eventually disagree about whether she has a conversation. */
+  var cw=document.querySelector('.menu-row .menu-cw');
+  if(cw&&cw.parentNode){
+    var on=false; try{on=_chatWaiting()}catch(e){}
+    cw.parentNode.classList.toggle('cw-on',on);
+  }
 }
 // viaPop=true means a popstate already consumed the drawer's history entry;
 // otherwise (the ✕, the scrim, Share) we pop it ourselves so Back stays honest.
@@ -6693,9 +6734,54 @@ function _seenPicksLine(surface){
 // consistent. The "search" field is what actually makes the links work.
 // mode 'compare' is for the Wardrobe "Ideas" carousel, where the options are
 // alternatives for ONE piece and she is choosing between them.
+/* ── HER HARD NO IS A STORE RULE TOO (Kathy, 2026-08-24) ──────────────────────
+   She ticked "Bodycon/tight dresses" as a never-wear and the app sent her to
+   REVOLVE, where every long dress on the landing page was form-fitting. Her
+   words: "all of them were very form fitting, which was one of the things that
+   I had said was a hard no for me."
+
+   ▶ THE RANKING WAS INNOCENT, AND MEASURING IS THE ONLY REASON WE KNOW THAT.
+   Revolve already ranks 102nd of 102 for a woman with her sliders — dead last.
+   The first fix proposed was a fit penalty on the store ranking, and the sweep
+   in scratchpad/fitcap.js killed it: it moved Revolve NOT AT ALL for her (it was
+   already bottom) while taking Bergdorf and Alice + Olivia out of a glam woman's
+   top ten — which is precisely the store-level cap Cath overruled on 2026-08-23
+   ("I am ok with all of these stores for a glam woman"), arriving in a new
+   costume. MEASURE BEFORE BUILDING A RANKING CHANGE. Twice now.
+
+   ▶ WHAT ACTUALLY SENT HER THERE is the sentence directly below in _shopRules:
+   "Go further down only when the piece needs a SPECIALIST that the top of the
+   list does not carry." Revolve is deep:1 and known for occasion dresses, she
+   asked for long dresses, and the model did exactly what it was told. The
+   escape hatch had no awareness of her never-wear list.
+
+   ⚠️ SCOPED TO THE GARMENT, NEVER THE WHOLE STORE, and that scoping is the
+   load-bearing part. A blanket "no fitted stores" rule would strip Spanx, SKIMS,
+   Alo Yoga, Lululemon and Summersalt — all fitted 9+ — so a woman who never
+   wears bodycon DRESSES would quietly lose her leggings, her swimsuit and her
+   shapewear. Her chip says dresses. The rule says dresses.
+   ⚠️ ONLY TWO CHIPS EARN AN ENTRY, and the test is whether the chip describes
+   what a store IS rather than one product it happens to stock. Sequins, ruffles
+   and turtlenecks are details carried alongside everything else, and
+   filterNeverWear already drops them by name. Bodycon and boxy are the character
+   of a whole range. ▶ Do not grow this map without that test. */
+const _NEVER_STORE={
+  'Bodycon/tight dresses':'When the piece is a DRESS, do not send her to a store whose dress range is predominantly body-conscious, tight or bodycon, EVEN IF that store is the obvious specialist for the kind of dress she wants. Choose the next store that genuinely carries the piece in a cut she would actually wear. This does not restrict her activewear, swim or shapewear, where a close fit is the point of the garment.',
+  'Oversized/boxy fits':'Do not send her to a store whose range is predominantly oversized, boxy or loose-draped, EVEN IF that store is the obvious specialist for the piece. This is about the cut a store is known for, not about how comfortable it is.'
+};
+function _neverStoreRule(){
+  var out=[];
+  (prefs.neverWear||[]).forEach(function(c){ if(_NEVER_STORE[c])out.push(_NEVER_STORE[c]) });
+  if(!out.length)return '';
+  /* ⚠️ Placed with the STORE-CHOICE rules, not with her preferences. Her
+     never-wear list already reaches the prompt as an item rule and that is not
+     what failed - the cards Kathy got were fine, it was the shop they pointed
+     at. A rule has to sit where the decision it governs is made. */
+  return ' HER NEVER-WEAR LIST ALSO GOVERNS THIS CHOICE, with the same absolute weight it has over the items themselves: '+out.join(' ');
+}
 function _shopRules(mode,occ){
   return '\nPICK THE STORE from this list ONLY, using the name exactly as written.'+
-    (quizTaken?' The list is already ORDERED by how well each store suits her, closest first, so favour the top of it. Go further down only when the piece needs a specialist that the top of the list does not carry.':'')+
+    (quizTaken?' The list is already ORDERED by how well each store suits her, closest first, so favour the top of it. Go further down only when the piece needs a specialist that the top of the list does not carry.'+_neverStoreRule():'')+
     (quizTaken&&typeof occ==='number'?' For THIS request the order also carries the occasion she named, so the dressier end of the stores that genuinely suit her has moved to the top. Trust it: the stores that would be wrong for her at this occasion have already been ranked away.':'')+
     '\n'+_storeListForPrompt(occ)+
     '\n\nFOR EVERY ITEM GIVE BOTH:\n'+
@@ -11461,7 +11547,7 @@ SHOPPING:
 `+Object.keys(STORES).join(', ')+`
 - LUXURY AND DESIGNER, this is how the rule above applies to designer names: say the designer freely, that is real expertise, but the STORE after "from" must still be one of the shops listed above, because that is what she taps to buy. Neiman Marcus, Saks, Bergdorf Goodman, NET-A-PORTER, Nordstrom and Bloomingdales all carry the major houses. Write "the Celine Shopping Tote from Neiman Marcus" or "a Saint Laurent shoulder bag from Saks", never "from Celine" or "from Louis Vuitton". A designer is a brand, not a shop.
 - Keep the item name before "from" short and searchable (2 to 4 plain words like "navy linen blazer"), because that phrase becomes the shopping search.
-- Match the store to her using what you know of her budget and size range. Only mention a size range for things where fit depends on it, never for bags, jewelry or accessories.
+- Match the store to her using what you know of her budget and size range. Only mention a size range for things where fit depends on it, never for bags, jewelry or accessories.`+_neverStoreRule().replace(/^ /,'\n- ')+`
 - Mix price points
 - When you name several pieces in ONE answer, group them at the same store where you can. She is buying, and one order means one checkout, one shipping charge and one return. A big department store is usually the easiest place to do that.
 - But do not default to the SAME store every time you answer. If every reply you ever give sends her to one shop, she will start going there directly instead of asking you. Vary which store you lean on from answer to answer.

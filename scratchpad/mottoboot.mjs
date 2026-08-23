@@ -14,7 +14,7 @@ const ROOT=process.cwd(),PORT=8991;
 let pass=0,fail=0;
 const ok=(c,m)=>{ if(c){pass++;console.log('  ok   '+m)} else {fail++;console.log('  FAIL '+m)} };
 
-let serveFile='index.html';
+let serveFile=process.env.TARGET||'index.html';
 const srv=http.createServer((q,r)=>{
   let u=decodeURIComponent(q.url.split('?')[0]); if(u==='/')u='/'+serveFile;
   fs.readFile(path.join(ROOT,u.replace(/^\//,'')),(e,b)=>{ if(e){r.writeHead(404);r.end();return}
