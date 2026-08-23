@@ -7,7 +7,217 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-23 — ⭐ THE STYLE STAR CARD REPLACED THE CONSTELLATION, AND HER MOM BROKE THE SEARCH)
+## ▶ NEXT SESSION — START HERE (2026-08-23 LATER — 🗓 HER MOTHER'S SEARCH IS FIXED, AND THE OCCASION VOCABULARY IS BUILT)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's merge these live and write into the .md")
+**THREE PRs merged and ALL CURL-VERIFIED LIVE, byte-identical md5 each time: #918 · #919 · #920.**
+⚠️ **Three Netlify builds.** Branch resynced to main, tree clean, everything at `aadd30c`.
+▶▶ **HER OWN AGENDA FOR NEXT SESSION, IN HER WORDS: "I want to adjust something on the Style Card and
+review our list of things to do next." ASK WHAT SHE WANTS CHANGED ON THE CARD FIRST, then walk the list.**
+▶ **THE HEADLINE: the 🚨 item at the top of the previous entry — her mother typing "mother of the bride
+dresses" and getting six ordinary midi dresses — IS FIXED AND LIVE.** And the diagnosis recorded yesterday
+was only half right; see below, because the correction is the reusable half.
+
+### 🚨⭐⭐ THE DIAGNOSIS CHANGED: IT WAS THE SEARCH WORDS, NOT THE STORE RANKING
+Yesterday's note blamed `_rankedStores()` taking no argument. **That is true and it did contribute, but it
+is NOT what her mother saw.** ▶ **THE PRIMARY CAUSE WAS THE APP'S OWN SEARCH RULES:** `_shopRules` caps a
+search at "2 to 4 plain words", names a five-word search as its `TOO LONG` example, and enumerates the
+shape words it will accept — **a list that includes "midi" and "maxi" and no occasion vocabulary at all.**
+So the app converted her ask into "occasion midi dress" **because that is exactly what it asked for.**
+⚠️ **Same shape as the 2026-08-22 "bags returned a dress" bug: a rule correct for two years became a
+contradiction the moment the ask box existed.**
+- ▶▶ **AND THE STORES WERE ALREADY HALF RIGHT. Nordstrom and Dillard's were both in her mother's six.**
+  **MEASURED LIVE at Dillard's (server-rendered, so readable), with a gibberish control:**
+  `mother of the bride dress` → **707KB, "gown" x1047** · `chiffon midi dress` (the search her mother
+  actually got) → **597KB, x0** · control `zqxwvu dress` → 668KB, x0 (a junk page, never "no results").
+  **The store was right. The search word was wrong.**
+- ⭐⭐ **AND THE FINDING THAT SHAPED THE WHOLE DESIGN, THIRD SIGHTING OF ONE FAMILY: THE CONCRETE ROLE AND
+  EVENT WORDS ARE REAL RETAIL CATEGORIES, THE ABSTRACT FORMALITY WORDS ARE NOT.** At Dillard's:
+  `wedding guest` 795KB/630 gowns · `bridesmaid` 716KB/805 · `prom` 661KB/550 · `cocktail` 738KB/97 —
+  but `black tie` **122KB/6** · `gala` **122KB/12** · `formal` **123KB/8**. ▶ **Same family as "print" not
+  being a retail search word (08-22) and stores silently dropping "midi" (08-20).** So `retail:true`
+  phrases go INTO the search; `retail:false` ones set the ranking and stay OUT, and the garment carries
+  the formality instead.
+- ⚠️ **THE WORD-CAP EXEMPTION LIVES IN `_askedForRule()` ON PURPOSE.** That function returns `''` whenever
+  there is no ask, so lifting the cap **physically cannot leak** into the other seven shopping surfaces and
+  resurrect the 2026-08-08 failure the cap was written to fix ("nude patent pointed toe kitten heel mule"
+  burying the mules under sandals). **Do not move it into `_shopRules`.**
+
+### ⭐ THE RANKING HALF: AN OCCASION REPLACES HER DRESSY LEAN, AND NOTHING ELSE
+`_rankedStores(occ)` / `_storeListForPrompt(occ)` / `_shopRules(mode,occ)` take an optional occasion
+formality; **only the one call site that has an ask passes it**, so every other surface is unchanged by
+construction. For that one request the occasion **replaces her casual/dressy lean** and every other
+dimension stays hers. A stylist does exactly this: a relaxed woman dresses formally for her daughter's
+wedding and is still the same relaxed, unflashy, classic woman while she does it.
+- ▶▶ **WHY IT IS SAFE, AND IT RESTS ENTIRELY ON A DECISION SHE MADE IN JULY: her `alluring` score is a
+  DISTANCE PENALTY (×2.5), not a lean.** Being dressy LIFTS a store; being too alluring is judged against
+  her separately and **cannot be bought back**. Measured for a relaxed/classic/natural woman out of 101:
+  **Revolve 101st → 99th · Alice + Olivia 99th → 97th** (they stay out) while **Tommy Bahama 10th → 31st**
+  and **Talbots 25th → 10th · J.Crew 19th → 7th · Nordstrom 36th → 14th · Ann Taylor 41st → 13th.**
+  **Her guard is respected: FIT BEATS DEPTH. The list is re-ordered, never trimmed.**
+  `scratchpad/formality3.js` re-runs the sweep.
+
+### 🚨🚨 THE CORRECTION OF THE DAY, AND IT IS THE MOST REUSABLE THING HERE: STORE vs GARMENT
+Her note on funeral/memorial/interview said *"closer to professional and more modest (**less alluring**)"*.
+**That was read as a STORE rule, because `alluring` is a scored store dimension sitting right there wearing
+the same word.** A modesty CAP on the ranking was designed, MEASURED, and looked clean — a glam woman
+asking for a funeral gets Bergdorf, Alice + Olivia, Saks, NET-A-PORTER, Gucci and Neiman, all ten of her
+top ten alluring 7+, and the cap replaced them with Nordstrom, Boden, J.Crew and Theory.
+▶▶ **SHE OVERRULED IT: "I am ok with all of these stores for a glam woman. A glam woman can find a funeral
+outfit at Alice & Olivia and definitely at Neiman Marcus. I don't want to send a glam trendy fitted woman
+to J. Crew or Talbot's."** She was right, and the cap would have broken her own standing guard.
+▶ **THE GENERAL LESSON, and it will happen again: A USER'S WORD MATCHING A FIELD NAME IS NOT EVIDENCE THEY
+MEANT THAT FIELD.** "Less alluring" and `d[_DIM_ALL]` shared a label and nothing else.
+⚠️ **The store ranking is deliberately UNTOUCHED for these occasions and a test asserts a glam woman KEEPS
+her loud stores for a funeral. Do not re-derive a store-level modesty rule; it was measured and it was wrong.**
+
+### 📋 `_OCCASIONS` IS 37 ENTRIES WITH THREE GARMENT DEFINITIONS, ALL HER WORDS
+⚠️ **The formality numbers are still a CLAUDE DRAFT she has not line-by-line blessed** (same standing as
+`ARCHETYPE_FAMILY`); the three DEFINITIONS below are hers almost verbatim. Longest phrase wins, so the
+table can be edited in any order.
+1. **`_OCC_PROFESSIONAL`** — funeral · memorial · interview · court appearance · court date · courthouse ·
+   legal appointment. Modest and professional, darker solids over brights and prints, **no minis,
+   spaghetti straps, strapless, jumpsuits or shorts**, closed-toe and **NEVER sneakers**, and her fabric
+   call: **silk welcome, NEVER satin, NEVER velvet.**
+2. **`_OCC_MODEST`** — church · synagogue · mosque · temple · religious service. Covered shoulders, at or
+   below the knee, nothing sheer/low-cut/backless/clingy, **NEVER satin** — and **COLOUR AND PRINT ARE
+   WELCOME, because a service is not a funeral.**
+3. **`_OCC_GAMEDAY`** — game day · tailgate. Practical for standing on bleachers, **no sequins, no strappy
+   heels**, **SNEAKERS AND BOOTS WELCOME**, **a mini skirt is fine.**
+- 🚨 **SNEAKERS ARE BANNED IN THE FIRST AND WELCOMED IN THE THIRD. Same word, opposite standing, both hers.
+  A test pins both at once so they can never be "unified".** ⚠️ **And VELVET now has FOUR standings across
+  the app, every one hers: banned on work dresses (dr3), banned for funeral/interview, ALLOWED at a
+  service, BRAKED on dressy tops (to6). That is a stylist's judgment, not an inconsistency.**
+- ▶ **THE SHAPE THAT MAKES A DEFINITION LAND is her dr3 one: an imperative NEVER, INSIDE the RULES list,
+  closed with "This rule is absolute, the same weight as her never-wear list."** A descriptive paragraph
+  before the rules did not land in August and would not have landed here. **All three went in first pass.**
+
+### 🕌 THE SENSITIVE ONE, AND HOW BOTH OF HER WISHES HOLD AT ONCE
+She grouped church, synagogue and mosque, and her instinct was right that one rule cannot make
+religion-SPECIFIC assumptions honestly. **Her call: *"I don't want to make a mistake on anything
+embarrassing here and don't want to name religions. I feel you are correct about treating it as formality
+and modesty."***
+▶ **SO: the vocabulary matches the words a woman actually TYPES — otherwise a woman who types "church" is
+served nothing at all — and EVERY ONE OF THEM CARRIES THE IDENTICAL RULE.** The app never assumes anything
+different about one faith than another, and **none of those words is ever displayed; the table is internal.**
+⚠️ **NEVER add a religion-specific clause. If one ever seems needed, that is a conversation with her.**
+
+### 🚨 TWO MECHANICAL RULES LEARNED FROM LIVE RUNS, BOTH WORTH KEEPING
+1. ⭐⭐ **`retail:true` BELONGS ON A ONE-GARMENT ASK, NEVER ON A WHOLE-OUTFIT OCCASION.** `game day`
+   measures as a real Dillard's section (312KB, 263 mentions) so the flag looked justified — and the live
+   run returned **Game Day Top, Game Day Shorts, Game Day Jacket, Game Day Sneakers, Game Day Tote, Game
+   Day Earrings.** Six cards wearing the same two words. **Mother of the bride is the first kind; game day
+   is the second.** Now `retail:false`.
+2. ⚠️ **SUBSTRING TRAPS: `_askOccasion` matches by `indexOf`, and TWO WORDS WERE LEFT OUT OF THE TABLE
+   BECAUSE OF IT.** `'mass'` would fire on "massage" and "massive"; **`'class'` would fire on "classic" and
+   "classy", which is fatal in a style ask box.** Bare `'court'` would fire on "courtside seats" and "a
+   food court lunch", so all four court phrases are multi-word. **Six tests pin them.** ▶ **Prefer the
+   phrase a woman would really type whole.**
+
+### 🚨 WHAT HER LIST STOPPED US BUILDING — GYM, POOL PARTY AND BEACH DAY ARE DELIBERATELY NOT OCCASIONS
+She proposed ten new occasions; **three of them are CATEGORY asks wearing an occasion costume, and
+formality selects for DRESSINESS, not category.** ▶ **MEASURED: at formality 0.15 a quiet woman's top six
+is Frank & Eileen, Jenni Kayne, Quince, Everlane, Madewell, Faherty — lovely casual brands that sell
+essentially NO activewear — while Athleta sits at #34 and Alo Yoga at #88.** Adding them would have made
+those asks **WORSE**. They work better as plain searches today, where the search term does the work and
+the existing never-pick-a-store-that-does-not-sell-it rule already applies. `scratchpad/lowform.js`.
+
+### 💍 THE JEWELRY POOL WIDENS 4 → 13, AND BABY GOLD IS STORE 102
+Her Kendra Scott catch from yesterday, both halves.
+- **Only FOUR stores named jewelry in their `c:` line**, three of them `$$$`+, so the real pool was three.
+  ⚠️ **The department stores carried jewelry all along; the model could not SEE it, because
+  `_storeListForPrompt` only shows it the `c:` line.** Same reasoning as her colour scores and the `deep`
+  flag. **Eight lines gained it** (Nordstrom · Macy's · Bloomingdales · Dillard's · Belk · Nordstrom Rack,
+  plus Saks + Neiman as "fine jewelry"). **Five of the thirteen are `$$` or below.** No dimension scores
+  changed. ⚠️ **TJ Maxx deliberately excluded — off-price, not a department store, and that is her word.**
+- ⭐ **BABY GOLD was in her Edit and her Mall for months but never in `STORES`, so it could never be
+  suggested to anyone.** `$$` · `Universal` · `d:[5,4,9,8,7,8,7,5,9,4]` ·
+  `c:'solid 14K fine jewelry, personalized names and charms, diamonds'` · `babygold.com/search?q=`
+  (verified live, gibberish control passed). **Six of the ten dimensions are hers verbatim**; four were
+  placed against her own anchors and shown to her first (the DVF pattern). ⚠️ `fitted 5` is NOT a
+  judgment — all four existing jewelry stores are 5, because jewelry has no fit.
+- 🚨 **TWO FIELDS ARE HER EXPLICIT OVERRULES AND MUST NOT BE "CORRECTED" BACK:**
+  **`t:'$$'`** — *"lower to mid-low end because it is sooo much more affordable than Tiffany."* The honest
+  range is $70 charms to $6,000+ diamond tennis, i.e. `$$-$$$$`. **She overruled that and is right for the
+  reason that matters: the tier string is what the MODEL reads, and a range would tell it this store gets
+  expensive.** **`a:'Universal'`** — *"I would recommend this jewelry to anyone and everyone."* In her
+  documented vocabulary but **no other store had ever used it.**
+- ⭐ **HER CLAIM IS MEASURED: across five opposite women Baby Gold lands #41/#19/#58/#32/#58, a swing of
+  39 — the tightest of the five jewelry stores** (Gorjana 50, Kendra Scott 48, Tiffany 62, Mejuri 67).
+  ⚠️ **Honest flip side, flagged to her: it rarely LEADS.** `scratchpad/bgrank.js`.
+- ⚠️ **`babygold.com` added to `SEARCH_DOMAINS` in the same commit.** A store in one list but not the
+  other is invisible to the stylist's search — the Vilebrequin trap. **Both sides read 102.**
+
+### ⚠️⚠️ THE HARNESS BUG OF THE DAY, AND IT PRODUCED A FINDING THAT HAD TO BE WITHDRAWN
+**`_hasQuizData` requires `answers.length === 12`, and both live harnesses seeded ELEVEN.** The seed was
+**silently REJECTED**, so `quizTaken` stayed false, `_rankedStores` fell back to raw table order, and the
+occasion ranking never entered the prompt at all. **Nothing errored. The run looked perfectly healthy and
+reported confident numbers.**
+- ▶ **THE TELL WAS A NUMBER DISAGREEING WITH AN EARLIER MEASUREMENT:** Revolve came back at #20 when the
+  node sweep had it at 99th. **A rank that contradicts a prior measurement is the same signal as a test
+  failing on a correct value. SUSPECT THE HARNESS FIRST — nine for nine in this file now.**
+- ⚠️ **IT COST A WITHDRAWN FINDING.** A "the model reaches down to Revolve on wedding guest" residual was
+  reported to her and is **WRONG**: with no ranking running the model was handed the table in arbitrary
+  order and understandably reached for stores famous for the occasion. Re-run with a valid seed:
+  **Vince, COS, Quince, J.Crew, Nordstrom, Tuckernuck. No Revolve.** ▶ **Both harnesses now assert
+  `quizTaken` after seeding and THROW if false.**
+- ⚠️ **AND A SECOND ONE THE SAME DAY: a live-deploy poll matched "Baby Gold" on the OLD deploy**, because
+  that string was already in her Edit as a product. It reported LIVE against stale code. **The md5 caught
+  it.** ▶ **POLL ON A STRING THAT EXISTS ONLY IN THE NEW DEPLOY, and always confirm with the md5.**
+
+### ⭐ TEST HYGIENE
+- **New `scratchpad/occasion.js`, 101 checks.** ⭐ **The load-bearing one is PART 1: a woman who has typed
+  NOTHING gets byte-identical behaviour, asserted by comparing the full 101-store ranking string.**
+  Also pins her glam-woman overrule, all six substring traps, and gym/pool/beach staying OUT.
+- **New harnesses:** `formality3.js` (the occasion-override sweep) · `lowform.js` (the dress-down band and
+  the activewear finding) · `bgrank.js` (Baby Gold across five women) · `moblive.mjs` / `sombrelive.mjs` /
+  `newocclive.mjs` (live model checks; a few cents of the production key each, the standing trade).
+- **Green at pause: occasion 101 · shopask 87 · storedepth 19 · searchchat 57 · cowork3 69 · e2e 29 ·
+  hubs 49 · curated 65 = 476 checks, 0 failures.** Plus ~30 live model runs, 0 violations.
+- ⚠️ **`searchtune` shows 1 failure and it is PRE-EXISTING** — the heart-tip font check. **Proven on a
+  CLEAN TREE on the SAME MACHINE first**, one variable, per the 2026-08-20 lesson.
+- ⚠️ **`storedepth`'s hardcoded total was bumped BY HAND 101 → 102, never find-replaced** — its own comment
+  says noticing a store quietly appearing is its whole job. **`searchchat` needed no edit at all: its
+  `SRV_N` is derived from the file.** The derived-not-restated rule paying off again.
+- ⚠️ **`asklive.mjs` was STALE and timed out** — it predates the 2026-08-22 change that collapsed the ask
+  box behind "Looking for something specific?". **A harness must call `_ssAskReveal()` before filling it.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **HER OWN AGENDA, IN HER WORDS: "I want to adjust something on the Style Card and review our list of
+   things to do next." ASK WHAT SHE WANTS CHANGED ON THE CARD FIRST.** ⚠️ Its known parked items from
+   yesterday: **the ellipsis in the caption** (one character, she was trying it live), **the 13px logo gap**
+   (she may want the full 30px; the cost is recorded at `TOP_MARGIN`), and whether the 4:5 crops acceptably
+   in Messages.
+2. ⏰ **26 AUGUST — the Routine `trig_01SZerTsvKoeUYzeT1HX6iWs` fires.** ✅ **UPDATED TODAY** and renamed
+   "Style Star — catalog + Almira check-in": it now knows both TMs are filed, the EIN came, the bank is
+   open, the catalog is 107 and testers are out. It asks her three things she named: **the catalog
+   spreadsheet** (she says it needs more work), **whether Almira's one owed reply landed**, and **whether
+   the bank cards arrived**.
+3. ⏰ **28 AUGUST — the recurring-payments Routine.** Her cards were still in the mail on 08-23.
+4. 👀 **HOW TODAY'S THREE MERGES FEEL ON HER PHONE** — especially **her mother re-running "mother of the
+   bride dresses"**, which is the whole point. ⚠️ Private browsing, `stylestar.app/?notrack`.
+5. ⭐ **THE OCCASION FORMALITY NUMBERS ARE STILL HERS TO ADJUST** — 37 entries, one line each. She has read
+   the list (artifact: https://claude.ai/code/artifact/70419923-9930-436d-be0c-88838faac8d4) and settled
+   the three she was asked about. **Anything MISSING is the half she is most likely to spot.**
+6. ▶ **HER MOTHER'S REAL QUIZ ANSWERS would turn the ranking numbers from predicted to measured.** She
+   blessed the invented profile ("you did a great job guessing Mom's quiz") but it IS an approximation.
+7. ⭐ **SATIN AND SEQUINS GENERALLY — yesterday's item 3 is still open.** Today only banned them for
+   specific occasions. Her original complaint was that they *"keep popping up"* in ordinary shopping, and
+   **the lever she has already used for exactly this is the velvet brake, not a veto.**
+8. ▶ **PRINT TOPS** — `to4` is still the only Tops row with zero curated products.
+9. ⭐⭐ **OUTFIT SUGGESTIONS** — Jen asked independently and it IS her parked Favorite Outfit page.
+10. ⭐ **"SHOW THE STYLIST WHAT I PICKED"** — Kathy's, still no mechanism at all.
+11. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null`. ⚠️ **NOTHING IN THE
+    SYSTEM WILL RAISE THIS** — she was offered a reminder Routine and had not answered. **If it slips, the
+    cover-up dress waits until 24 January 2027.**
+12. ⚠️ **THE TWO LINK-CHECK ROUTINES STILL OVERLAP** (Sunday 9am ET + Monday 8am ET). Standing
+    recommendation since 08-21: **keep Sunday, retire Monday** (the Monday one is the one that emails her).
+    **Her call, still unmade.** ⚠️ The Sunday one's prompt still says "21 products as of setup"; it is 107.
+13. 📊 **Her Plausible dashboard** — and the new thing worth watching: **does anyone type an occasion into
+    the ask box?**
+14. 🔎 **SEO / MARKETING — her own parked item, raised 08-23 morning and still never picked up.**
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-23 — ⭐ THE STYLE STAR CARD REPLACED THE CONSTELLATION, AND HER MOM BROKE THE SEARCH)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **FOUR PRs merged and ALL CURL-VERIFIED LIVE: #913 · #914 · #915 · #916.** ⚠️ **Four Netlify builds.**
@@ -21,7 +231,12 @@ rid of a while back."* **Eight rounds of renders, every design call hers.**
 finding, not a wording one.**
 
 ### 🚨🚨 HER THREE NEW FINDINGS, ALL FROM HER OWN LIVE TESTING — THIS IS TOMORROW'S WORK
-**1. ⭐⭐ "MOTHER OF THE BRIDE DRESSES" RETURNED ORDINARY MIDI DRESSES FROM CASUAL STORES.** Her mother
+**1. ⭐⭐ "MOTHER OF THE BRIDE DRESSES" RETURNED ORDINARY MIDI DRESSES FROM CASUAL STORES.**
+⚠️⚠️ **FIXED AND LIVE 2026-08-23 LATER (#918). AND THE DIAGNOSIS BELOW IS HALF WRONG — read the entry at
+the top of this file first.** The store ranking contributed, but the PRIMARY cause was the app's own
+4-word search cap and its enumerated shape-word list, which includes "midi" and no occasion vocabulary.
+**Nordstrom and Dillard's were ALREADY in her mother's six**; measured live, `mother of the bride dress`
+returns 1047 gowns at Dillard's and `chiffon midi dress` returns zero. Her mother
 typed it into the ask box. What came back: **J.Crew Midi Occasion · Eileen Fisher Linen Midi · Nordstrom
 Midi Dress Navy · Talbots Shift Midi · Dillard's Chiffon Midi · LOFT Occasion Maxi** — all dresses, and
 **not one of them a mother-of-the-bride dress.** Her words: *"suggested very casual stores and even a
@@ -45,6 +260,9 @@ retail category with its own sections at Nordstrom, Dillard's and Macy's, and sp
 Papell, Alex Evenings, Montage). The app has no notion of occasion vocabulary.
 
 **2. ⭐ KENDRA SCOTT IS IN TOO MANY SHOP-YOUR-STYLE SETS.** Her catch.
+⚠️ **FIXED AND LIVE 2026-08-23 LATER (#919):** jewelry added to eight department-store `c:` lines and
+Baby Gold added as store 102 on her own scores. **The pool the model can see went 4 → 13**, five of them
+`$$` or below. ⚠️ **The count below says FOUR stores; it is FIVE — Bergdorf Goodman was missed.**
 ▶ **CAUSE, measured: ONLY FOUR STORES IN THE WHOLE TABLE NAME JEWELRY in their known-for line —
 Gorjana, Mejuri, Tiffany & Co. and Kendra Scott.** Tiffany is `$$$$`, so for most women the real pool is
 THREE, and Kendra Scott's dims (`colorful 10, trendy 7`, Playful Chic / Modern Glam) suit a wide range.
@@ -164,9 +382,9 @@ shiny gold star · her motto · **What's your Style Star?** · the invitation ·
 - ⚠️ **`git commit -m` still breaks on quotes.** Write the message to a file and `git commit -F`.
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. 🚨⭐⭐ **HER MOTHER'S "MOTHER OF THE BRIDE DRESSES" SEARCH** — the store-ranking finding above. Biggest
-   item, and the diagnosis is already done.
-2. ⭐ **KENDRA SCOTT / the four-jewelry-store pool**, and ⭐ **the satin + sequins brake.** Both above.
+1. ✅ **DONE 2026-08-23 LATER (#918), and the diagnosis was CORRECTED in the doing.** See the top entry.
+2. ✅ **KENDRA SCOTT / the jewelry pool: DONE (#919).** ⚠️ **The satin + sequins brake is STILL OPEN** —
+   today only banned them for specific OCCASIONS; her original complaint was ordinary shopping.
 3. 👀 **HOW THE CARD FEELS ON HER PHONE** — the 13px logo gap (she may want the full 30, and the cost is
    recorded), **the ellipsis in a real thread**, and whether the 4:5 crops acceptably in Messages.
 4. ⭐⭐ **OUTFIT SUGGESTIONS** — Jen asked independently and it IS her parked Favorite Outfit page.
