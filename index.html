@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Style Star | Discover your signature style</title>
 <meta name="description" content="A personal stylist at your fingertips. Take our fun quiz to reveal what brings out the best in you, then shop with clarity and confidence.">
+<!-- ⚠️ THE APEX IS THE CANONICAL HOST. Verified live 2026-08-24: www 301s TO
+     stylestar.app, not the other way round, so every address we publish is
+     written without www (robots.txt and sitemap.xml agree).
+     ▶ WHY IT IS HERE AT ALL: this is a single-page app, so /story, /faq,
+     /privacy, /terms and /contact are all REWRITES onto this same file. To a
+     search engine that is six addresses serving identical raw HTML, which is
+     textbook duplicate content -- and left alone Google picks a winner itself
+     and may drop the rest. This names the one page that should rank.
+     ⚠️ og:url and og:image still say www. Left alone DELIBERATELY: they work
+     (a preview fetcher follows the 301), and that card is already sitting in
+     fifteen testers' message threads. Cosmetic inconsistency, not a fault. -->
+<link rel="canonical" href="https://stylestar.app/">
 <!-- ⚠️ THE LINK PREVIEW CARD. This is not decoration: when a woman texts her
      Style Star Card, Messages lifts the trailing url out of her caption and
      renders THIS as a preview card underneath, so these words are the first
@@ -8955,7 +8967,24 @@ const mallStores=[
     {n:"Bloomingdale's",d:'Designer to contemporary in one place',u:'https://www.bloomingdales.com'},
     {n:'Revolve',d:'Trend-forward and going-out looks',u:'https://www.revolve.com'},
     {n:'NET-A-PORTER',d:'Luxury designer fashion',u:'https://www.net-a-porter.com'},
-    {n:'Diane von Furstenberg',d:'Wrap dresses and prints for occasions',u:'https://www.dvf.com'}
+    {n:'Diane von Furstenberg',d:'Wrap dresses and prints for occasions',u:'https://www.dvf.com'},
+    /* Olivela, her fourth Rakuten advertiser (mid 50334), added 2026-08-24 the
+       day it approved. Filed here rather than with the value stores because it
+       is a luxury multi-brand house -- the shelf NET-A-PORTER and Saks are on.
+       ⚠️ THE BLURB DELIBERATELY CARRIES NO NUMBER. Their own live page says
+       "20% of the net proceeds from every purchase supports causes chosen by
+       you" (measured 2026-08-24, gender-equality causes), and that giving-back
+       model is the honest reason a woman would choose them over NET-A-PORTER --
+       but a percentage is a THIRD PARTY'S promise that can change without
+       telling us, and this card would then be lying on her behalf. The fact
+       goes in the blurb; the number stays in this comment.
+       ⚠️ The blurb is a CLAUDE DRAFT, like FARM Rio's and DVF's above. Every
+       other blurb in this list is hers -- one string if she wants her words.
+       ⚠️ Olivela is NOT in the STORES table yet, so the stylist still cannot
+       suggest it: that needs her ten dimension scores, and one confirming tap
+       on the bare search form. The Mall needs neither, which is why this could
+       land today. */
+    {n:'Olivela',d:'Designer labels, and every order gives back',u:'https://www.olivela.com'}
   ]},
   {cat:'Value & Basics',stores:[
     {n:'Amazon',d:'Everything, fast, great for basics',u:'https://www.amazon.com/fashion'},
