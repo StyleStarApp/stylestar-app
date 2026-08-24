@@ -211,10 +211,11 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
   // keyword-matching c: lines, which is how "occasion" came to mean two things.
   console.log('\n── PART 5e: formal gowns, her word and her list ──');
   const GOWN=['Nordstrom',"Dillard's","Macy's",'Bloomingdales','Belk','Saks',
-    'Neiman Marcus','Bergdorf Goodman','NET-A-PORTER','Nordstrom Rack','Alice + Olivia'];
+    'Neiman Marcus','Bergdorf Goodman','NET-A-PORTER','Nordstrom Rack','Alice + Olivia',
+    'Sachin & Babi'];   // +Sachin & Babi 2026-08-24 (Cath): "floor length formal gowns"
   const gs=await pg.evaluate(()=>({list:_GOWN_STORES.slice(),known:_GOWN_STORES.filter(k=>!STORES[k])}));
   ok(gs.known.length===0, 'every gown store is a real key in STORES', gs.known.join());
-  ok(JSON.stringify(gs.list)===JSON.stringify(GOWN), 'her eleven, unchanged', gs.list.join(' | '));
+  ok(JSON.stringify(gs.list)===JSON.stringify(GOWN), 'her twelve, unchanged', gs.list.join(' | '));
   // The three she crossed off, and the three her mother was actually sent to.
   // ⚠️ 'Baltic Born' WAS in this list and is DELETED, not silenced: she removed
   // the store from the table entirely on 2026-08-24, so its SUBJECT is retired
@@ -268,7 +269,7 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
   // Alice + Olivia are both on the GOWN list, so they are the exact stores a
   // careless "reuse the gown list" would have dragged in. Her words on
   // NET-A-PORTER: "not so much for teens".
-  ['NET-A-PORTER','Alice + Olivia','J.Crew','Ann Taylor','Tuckernuck','LoveShackFancy']
+  ['NET-A-PORTER','Alice + Olivia','Sachin & Babi','J.Crew','Ann Taylor','Tuckernuck','LoveShackFancy']
     .forEach(k=>ok(ps.list.indexOf(k)<0, `${k} is NOT a prom store`));
   // The two lists are genuinely different, which is the whole argument for two.
   const both=await pg.evaluate(()=>({
