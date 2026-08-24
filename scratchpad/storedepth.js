@@ -42,14 +42,14 @@ const MIDDLE = ["Talbots", "J.Crew", "Free People", "Anthropologie"];
 const HERS = ["Nordstrom","Macy's","Dillard's","Belk","Bloomingdales","Saks","Neiman Marcus","NET-A-PORTER",
               "Shopbop","Nordstrom Rack","TJ Maxx","Target","Amazon","Revolve","Zara","H&M"];
 // hardcoded ON PURPOSE, unlike the derived counts below: this one's whole job
-// is to notice a store quietly appearing or vanishing. 101 as of 2026-08-20.
+// is to notice a store quietly appearing or vanishing. 101 as of 2026-08-24.
 // ⚠️ Vilebrequin was added and then REMOVED the same day, on her own testing —
 // their search returns a false negative on a product they stock, so the brand is
 // kept for the Edit and the Star and out of the searchable table. It is still an
 // approved advertiser and still earns; see the block comment at its old place in
 // STORES. This is the ONE suite that should fail when the table changes — bump it
 // deliberately, never find-and-replace it.
-ok('store count is 102', t.total === 102, String(t.total));   // +Baby Gold, 2026-08-23 (Cath)
+ok('store count is 101', t.total === 101, String(t.total));   // -Baltic Born, 2026-08-24 (Cath)
 ok('the 16 she confirmed are all flagged deep', HERS.every(n => t.full.includes(n)), HERS.filter(n => !t.full.includes(n)).join());
 ok('the 4 middle-tier stores she added are flagged', MIDDLE.every(n => t.full.includes(n)), MIDDLE.filter(n => !t.full.includes(n)).join());
 ok('nothing else was flagged deep', t.full.length === HERS.length + MIDDLE.length,

@@ -177,7 +177,7 @@ console.log('─'.repeat(70));
 
 const named = ['Revolve','Nordstrom','Neiman Marcus','Saks','Bloomingdale','Dillard','Macy',
                'Reformation','Talbots','Ann Taylor','Eileen Fisher','J.Jill','Anthropologie',
-               'Baltic Born','LoveShackFancy','Alice + Olivia','NET-A-PORTER','Olivela','BHLDN']
+               'LoveShackFancy','Alice + Olivia','NET-A-PORTER','Olivela','BHLDN']
   .filter(s => new RegExp(s, 'i').test(answer));
 console.log('\nSTORES THE STYLIST NAMED:', named.join(', ') || '(none)');
 ok('🚨 KATHY\'S FAILURE: the stylist does NOT send this modest, relaxed woman to Revolve',

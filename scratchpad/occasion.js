@@ -216,7 +216,11 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
   ok(gs.known.length===0, 'every gown store is a real key in STORES', gs.known.join());
   ok(JSON.stringify(gs.list)===JSON.stringify(GOWN), 'her eleven, unchanged', gs.list.join(' | '));
   // The three she crossed off, and the three her mother was actually sent to.
-  ['Revolve','LoveShackFancy','Baltic Born','Anthropologie','Tuckernuck','J.Crew','Ann Taylor','Reformation']
+  // ⚠️ 'Baltic Born' WAS in this list and is DELETED, not silenced: she removed
+  // the store from the table entirely on 2026-08-24, so its SUBJECT is retired
+  // and the assertion would now pass vacuously -- a store that does not exist
+  // cannot be in _GOWN_STORES. (The hiwcheck.js precedent.)
+  ['Revolve','LoveShackFancy','Anthropologie','Tuckernuck','J.Crew','Ann Taylor','Reformation']
     .forEach(k=>ok(gs.list.indexOf(k)<0, `${k} is NOT a formal-gown store`));
   // Which asks carry it, and which deliberately do not.
   for(const [ask,want] of [
