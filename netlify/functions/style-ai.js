@@ -119,7 +119,7 @@ const SEARCH_DOMAINS = [
   'neimanmarcus.com', 'net-a-porter.com', 'nordstrom.com', 'nordstromrack.com',
   'nydj.com', 'oldnavy.gap.com', 'petitestudionyc.com', 'quay.com',
   'quince.com', 'rag-bone.com', 'railsclothing.com', 'revolve.com',
-  'saksfifthavenue.com', 'samedelman.com', 'sezane.com',
+  'sachinandbabi.com', 'saksfifthavenue.com', 'samedelman.com', 'sezane.com',
   'shop.lululemon.com', 'shop.mango.com', 'shopbop.com', 'skims.com',
   'softsurroundings.com', 'soma.com', 'spanx.com', 'summersalt.com',
   'sunglasshut.com', 'talbots.com', 'target.com', 'theory.com',

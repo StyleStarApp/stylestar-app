@@ -6251,6 +6251,32 @@ const STORES={
   'DSW':{w:1,u:'https://www.dsw.com/browse/',t:'$$',a:'Universal',s:['wide'],d:[6,5,6,6,6,8,5,5,7,8],deep:'shoes',c:'shoes, handbags, accessories, extended widths'},
   'Sam Edelman':{u:'https://www.samedelman.com/search#q=',t:'$$$',a:'Modern Chic, Classic Sophisticate',s:[],d:[5,6,8,7,7,6,8,7,7,7],c:'fashion shoes, boots, sandals'},
   // Designer and jewelry
+  /* SACHIN & BABI, added 2026-08-24 -- an OCCASION SPECIALIST, the first one in
+     the table, and she named it herself when the formal-gown work exposed that
+     her list had none. ALL TEN DIMENSIONS ARE HERS, placed against her own
+     anchors and corrected by her (the DVF and Baby Gold pattern).
+     ⚠️ alluring 5 IS HER OVERRULE AND IT IS THE LOAD-BEARING NUMBER. It was
+     drafted at 6; her words: "we can go to 5 because it can truly be for a
+     modest or a glam" woman. alluring is the one dimension scored as a DISTANCE
+     PENALTY (x2.5) rather than a lean, so it cannot be bought back -- a 5 is
+     what lets a modest woman and a glam woman BOTH reach a store that genuinely
+     dresses both. Do not "sharpen" it upward because the clothes look glamorous.
+     ⚠️ s:['plus'] IS HER CALL AND IT BREAKS THE DVF PRECEDENT DELIBERATELY. DVF
+     has s:[] because "XXL and 16 is barely plus"; here her words are "they have
+     a lot of dresses that go up to 3xl so we can put it in as plus". The
+     difference is real: 3XL with depth behind it, not a token top size.
+     ⚠️ neutral 9 / colorful 8 are the BREADTH case, her words: "everything from
+     neutrals and solids and prints". Scored like Nordstrom (10/9) rather than
+     like a house with a palette.
+     ▶ Her pricing note, kept because it is the reason for $$$$: "500-3000 high,
+     but not crazy high for the good quality."
+     ▶ SEARCH URL MEASURED with the standing gibberish control: "black gown"
+     returns 5.25MB and 340 mentions of gown, "zqxwvu" returns 2.98MB and 88.
+     It narrows honestly, which is the best-behaved shape a store search has.
+     ⚠️ NO deep FLAG, deliberately: she has not been asked, and the conservative
+     default sends it what it is KNOWN FOR, which its c: line names exactly.
+     ⚠️ AND IT IS DELIBERATELY OUT OF _PROM_STORES, her call: "not for teens." */
+  'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
   // Diane von Furstenberg, added 2026-08-21 after Rakuten approved her.
   // Every dimension is HERS except alluring, which her own table did not have
@@ -6656,7 +6682,7 @@ const _OCC_GAMEDAY='This is a casual outdoor occasion spent standing, walking an
    lines -- that is the Garnet Hill mistake, and it is exactly how "occasion"
    came to mean two things in the first place.
    ⚠️ THIS GOVERNS THE STORE, NEVER THE GARMENT (the _NEVER_STORE separation).
-   Her ranking still orders these eleven, so FIT BEATS DEPTH is untouched: the
+   Her ranking still orders these twelve, so FIT BEATS DEPTH is untouched: the
    list is re-ordered for her, never re-ordered by us.
    ⚠️ PROM AND HOMECOMING ARE DELIBERATELY NOT HERE, AND THEY HAVE THEIR OWN
    LIST NOW: see _PROM_STORES below. Her call, and it is a third department
@@ -6666,7 +6692,8 @@ const _OCC_GAMEDAY='This is a casual outdoor occasion spent standing, walking an
    find a dress there". NET-A-PORTER is on the gown list and NOT the prom one,
    her words: "not so much for teens". */
 const _GOWN_STORES=['Nordstrom',"Dillard's","Macy's",'Bloomingdales','Belk','Saks',
-  'Neiman Marcus','Bergdorf Goodman','NET-A-PORTER','Nordstrom Rack','Alice + Olivia'];
+  'Neiman Marcus','Bergdorf Goodman','NET-A-PORTER','Nordstrom Rack','Alice + Olivia',
+  'Sachin & Babi'];
 function _gownStoreRule(){
   return '- THIS CALLS FOR A FORMAL GOWN, WHICH IS ITS OWN DEPARTMENT AND NOT SIMPLY A DRESS. '
     +'Only these stores carry it, and every one of the 6 picks must come from this list: '
