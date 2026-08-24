@@ -6309,7 +6309,15 @@ function _alreadyWomens(term){
 // ⚠️ Never double-wraps, so it is safe to call twice on the same URL -- which
 // happens by design when an Edit href is rewritten and then saved.
 var _AFF_ID='jZNkkinrr1k';
-var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590','vilebrequin.com':'43322'};
+var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590','vilebrequin.com':'43322',
+  // Olivela approved 2026-08-24 (mid 50334). ⚠️ INERT UNTIL A LINK EXISTS:
+  // olivela.com appears nowhere in STORES, the Edit or the Star queue yet, so
+  // nothing is wrapped today. It is recorded here so the moment she adds one
+  // (a store entry, an Edit pick, a Star) it earns with no plumbing change.
+  // ⚠️ Its SEARCH URL IS UNVERIFIED -- olivela.com renders search client-side
+  // and answers a gibberish query with the same page as a real one, so no
+  // number measurable from a sandbox means anything. Her address bar only.
+  'olivela.com':'50334'};
 function _affMid(u){
   try{
     var host=new URL(u).hostname.toLowerCase().replace(/^www\./,'');
@@ -12039,14 +12047,25 @@ function _buildWbHubs(){
 // The Edit page keeps her FULL notes (its own fuller register); only the Star
 // card speaks in one-liners. URLs are the Edit's own exact product links
 // (canonical, tracking stripped per the standing rule).
-/* ⚠️ PINNED, her call 2026-08-20: the Star holds on the DVF silk scarf until she
-   is ready to invite testers, THEN the weekly rotation resumes.
-   ▶ TO RESUME: set WEEK_STAR_PIN back to null. Nothing else to change — the
-   queue and the anchor Sunday are untouched, so rotation simply starts obeying
-   the calendar again. ⚠️ The queue is 17 now, so the week-to-item mapping has
-   shifted (it is week mod 17, not mod 16); ask her whether she wants it
-   reordered at the moment she unpins rather than guessing for her. */
-var WEEK_STAR_PIN='Diane von Furstenberg Flag Scarf — Myrtle Berry';
+/* ⚠️ PINNED. Her call 2026-08-24: the Star moves to her FARM Rio Pink Garden
+   Terrace maxi (it was the DVF silk scarf, pinned 2026-08-20 while she waited
+   to invite testers; testers are out now, so the reason that pin existed is
+   spent and only her choice of piece is holding it).
+   ▶ TO RESUME THE ROTATION: set WEEK_STAR_PIN back to null. Nothing else to
+   change — the queue and the anchor Sunday are untouched, so rotation simply
+   starts obeying the calendar again.
+   ⚠️⚠️ AND THE ONE THING WITH A REAL CLOCK, so it cannot pass unnoticed: the
+   Vilebrequin cover-up sits at INDEX 6, which is the week of 20 SEPTEMBER 2026.
+   She asked for it "before December, closer to summer would be best". If she is
+   still pinned on 20 September it does not come up, and the next time index 6
+   comes round is 24 JANUARY 2027. ▶ That is exactly why the FARM Rio entry was
+   inserted AFTER the cover-up rather than before it: adding an item ahead of
+   index 6 would have quietly slid her deadline a week without anyone deciding
+   to. Any future insertion owes the same care.
+   ⚠️ The queue is 19 now, so the week-to-item mapping is week mod 19; ask her
+   whether she wants it reordered at the moment she unpins rather than guessing
+   for her. */
+var WEEK_STAR_PIN='FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress';
 var WEEK_STARS=[
   {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/8960533',price:'$89',
    note:'A kitten heel is the easiest polish there is. Slide it on and every outfit steps up a notch.'}, // ✅ BLESSED by Cath 2026-08-13 — hers now, don't reword
@@ -12063,6 +12082,14 @@ var WEEK_STARS=[
   {n:'Vilebrequin Long Mesh Cover-Up Dress — Off White',store:'Vilebrequin',url:'https://www.vilebrequin.com/us/en/product/IAACG200-003',price:'$405',
    note:'The trending style for beach, pool, and resort. The adjustable straps are perfect.',
    px:'https://www.vilebrequin.com/dw/image/v2/BLGH_PRD/on/demandware.static/-/Sites-vilebrequin-catalog-master/default/dwb578af10/images/IAACG200-003/IAACG200-003-front-3240x4050.jpg?sw=800'},
+  {n:'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',store:'FARM Rio',url:'https://farmrio.com/products/garden-terrace-pink-one-shoulder-maxi-dress',price:'$360',
+   note:'100% linen and as stunning as it is sweet. The 3D flower and asymmetrical look are charming.',
+   // ⚠️ $360 IS THE REGULAR PRICE AND THAT IS DELIBERATE. Measured 2026-08-24:
+   // the page is live at $270 with compare_at_price 36000, i.e. genuinely on
+   // sale. Her standing rule is list the regular price, never the sale price --
+   // a sale expires and this card is evergreen, and arriving to find a piece
+   // CHEAPER than promised feels lucky where the reverse feels misled.
+   px:'https://farmrio.com/cdn/shop/files/347964_01_1.jpg?v=1778615230&width=800'},
   {n:'Gucci 53mm Small Oval Sunglasses',store:'Nordstrom',url:'https://www.nordstrom.com/s/7651301',price:'$295',
    note:'Current but also 90\'s at the same time. Sunnies are worn every day, the perfect place to splurge.'},
   {n:'Express Editor High Waisted Flare Trouser — Pitch Black',store:'Express',url:'https://www.express.com/clothing/women/editor-studio-stretch-twill-high-waisted-flare-trouser/pro/07442348/color/Pitch%20Black/e/regular/',price:'~$90',

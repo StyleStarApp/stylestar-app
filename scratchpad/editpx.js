@@ -33,19 +33,38 @@ ok('the licensing rule is written at the code', /GREP _AFF_MID BEFORE ADDING ONE
 /* queue */
 const q=src.match(/var WEEK_STARS=\[[\s\S]*?\n\];/)[0];
 const names=[...q.matchAll(/\{n:'((?:[^'\\]|\\.)*)'/g)].map(m=>m[1].replace(/\\'/g,"'"));
-// 17 -> 18: the Vilebrequin cover-up joined. ⚠️ Her no-intimates rule was
-// REFINED the same day and the regex below already encodes the new, narrower
-// line exactly: the bar is bikini/lingerie, NOT the swim category, so a
-// cover-up passes on purpose. Don't add 'cover-up' or 'mesh' to that list.
-ok('queue is 18 (the Vilebrequin cover-up joined)', names.length===18, names.length);
+// ⚠️ Her no-intimates rule was REFINED on 2026-08-20 and the regex below
+// encodes the new, narrower line exactly: the bar is bikini/lingerie, NOT the
+// swim category, so a cover-up passes on purpose. Don't add 'cover-up' or
+// 'mesh' to that list.
+// ⚠️ UPDATED DELIBERATELY 2026-08-24, and made STRONGER rather than merely
+// re-numbered. This used to restate the queue length (17, then 18) and went
+// stale every single time she added a star -- the derived-not-restated lesson.
+// What actually has to hold is not a COUNT, it is the one index carrying a real
+// deadline: the Vilebrequin cover-up sits at index 6, which is the week of
+// 20 SEPTEMBER 2026, and she asked for it before December. Inserting any star
+// AHEAD of it silently slides that date by a week. So the queue may now grow
+// freely, and the thing that would actually cost her fails loudly.
+ok('the queue is non-empty', names.length>0, names.length);
+ok('THE 20 SEPT SLOT: the Vilebrequin cover-up is still at index 6',
+   /Vilebrequin/.test(names[6]||''), (names[6]||'(nothing)')+' — queue is '+names.length);
 ok('no duplicate in the queue', new Set(names).size===names.length);
 ok('every queue url is https', [...q.matchAll(/url:'([^']+)'/g)].every(m=>m[1].startsWith('https://')));
 ok('HER RULE: no intimates or swim in the queue',
    !/\b(bra|bras|bralette|bikini|swimsuit|swimwear|lingerie|underwear|thong|panties)\b/i.test(names.join(' ')),
    names.filter(n=>/\b(bra|bikini|swim|lingerie|underwear)\b/i.test(n)).join());
-ok('the pin names a piece that IS in the queue',
-   names.includes((src.match(/var WEEK_STAR_PIN='([^']*)'/)||[])[1]));
-ok('the resume instruction is written at the code', /TO RESUME: set WEEK_STAR_PIN back to null/.test(src));
+const PIN=(src.match(/var WEEK_STAR_PIN='([^']*)'/)||[])[1];
+const PINNED_PRICE=(function(){
+  const m=q.match(new RegExp("\\{n:'"+PIN.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+"'[\\s\\S]*?price:'([^']+)'"));
+  return m?m[1]:'';
+})();
+ok('the pin names a piece that IS in the queue', names.includes(PIN), PIN);
+ok('the pinned piece carries a price', /^[~$]/.test(PINNED_PRICE), PINNED_PRICE);
+// ⚠️ Tolerant of the sentence around it (it reads "TO RESUME THE ROTATION:"
+// since 2026-08-24). The claim under test is that the instruction EXISTS, not
+// its exact prose -- pinning prose is how an assertion starts failing on a
+// correct file.
+ok('the resume instruction is written at the code', /TO RESUME[^:\n]*: set WEEK_STAR_PIN back to null/.test(src));
 
 /* ---------- PART 2 · live, in the real page ---------- */
 const srv=http.createServer((rq,rs)=>{let p=decodeURIComponent(rq.url.split('?')[0]);if(p==='/')p='/index.html';
@@ -160,8 +179,13 @@ const pinres=await pg.evaluate(()=>{
   return {pinned:[...out.pinned],unpinned:[...out.unpinned].length};
 });
 ok('PINNED: the same star on all 52 weeks', pinres.pinned.length===1, JSON.stringify(pinres.pinned));
-ok('PINNED: and it is the scarf',
-   (await pg.evaluate(()=>_weekStar().n)).includes('Flag Scarf'));
+// ⚠️ DERIVED FROM THE PIN, not from a piece name (updated deliberately
+// 2026-08-24, when she moved the pin from the DVF scarf to her FARM Rio maxi).
+// Naming the piece made this fail every time she exercised the feature exactly
+// as designed. The real claim is stronger: whatever WEEK_STAR_PIN names is what
+// the app actually serves.
+ok('PINNED: and the served Star IS the pinned piece',
+   (await pg.evaluate(()=>_weekStar().n))===PIN, PIN);
 // derived from the queue itself, so growing the queue never makes this stale
 ok('UNPINNED: rotation resumes across the WHOLE queue',
    pinres.unpinned===names.length, pinres.unpinned+' of '+names.length);
@@ -172,8 +196,10 @@ const star=await pg.evaluate(()=>{show('s-wb');_renderWeekStar();
   return {on:el.classList.contains('on'),txt:el.textContent.trim().slice(0,120),
           href:(el.querySelector('a[href]')||{}).href||''};});
 ok('Star card renders', star.on, JSON.stringify(star).slice(0,120));
-ok('Star card shows the scarf', /Flag Scarf/.test(star.txt), star.txt);
-ok('Star card shows her price', /\$198/.test(star.txt), star.txt);
+// derived from the pinned entry, so moving the pin can never make these stale
+ok('Star card shows the pinned piece', star.txt.includes(PIN), star.txt);
+ok('Star card shows that piece\'s own price', star.txt.includes(PINNED_PRICE),
+   PINNED_PRICE+' — '+star.txt);
 ok('Star card link is affiliate-wrapped', star.href.includes('click.linksynergy'), star.href.slice(0,80));
 
 // ---- the Star card's own photo, and its licensing gate ----
