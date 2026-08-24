@@ -1,0 +1,189 @@
+{
+ "_why": "Catherine's answers to the 42 risky zeros, given IN CHAT rather than in the file (her words: 'I am not good with downloading and uploading files'). Every entry here is hers; the numeric grade is my reading of her words and is stated back to her each batch so she can correct it. Nothing in this file is a guess about a store she has not spoken about.",
+ "batch1_luggage_travel": {
+  "_her_words": "all of them have travel bags except for Summersalt and Olivela do not. Land's End especially good for boat totes",
+  "Lands' End": {
+   "Luggage & travel": 3,
+   "note": "especially good for boat totes"
+  },
+  "Coach": {
+   "Luggage & travel": 2
+  },
+  "Cuyana": {
+   "Luggage & travel": 2
+  },
+  "Bergdorf Goodman": {
+   "Luggage & travel": 2
+  },
+  "Summersalt": {
+   "Luggage & travel": 0
+  },
+  "Olivela": {
+   "Luggage & travel": 0
+  }
+ },
+ "batch2_bags_shoes": {
+  "_her_words": "Faherty has a very small selection of bags and shoes, I would not route there. Marine Layer has like 2 bags and zero shoes. Universal Standard zero bags or shoes. Petite Studio zero bags or shoes. Uniqlo - no shoes and bags they have are very limited budget friendly nylon bags, not stylish, but practical. Lane Bryant - they have shoes including a lot with wide widths, they do not have bags. i just now noticed they have a good selection of fitness wear | and Lane Bryant also has plus size lingerie",
+  "Faherty": {
+   "Bags": 0,
+   "Shoes": 0
+  },
+  "Marine Layer": {
+   "Bags": 0,
+   "Shoes": 0
+  },
+  "Universal Standard": {
+   "Bags": 0,
+   "Shoes": 0
+  },
+  "Petite Studio": {
+   "Bags": 0,
+   "Shoes": 0
+  },
+  "Uniqlo": {
+   "Shoes": 0,
+   "Bags": 1,
+   "note": "bags are limited, practical nylon rather than stylish"
+  },
+  "Lane Bryant": {
+   "Bags": 0,
+   "Shoes": 3,
+   "Activewear": 3,
+   "note": "shoes incl. a lot of WIDE WIDTHS; good fitness wear; plus-size lingerie",
+   "Bras, underwear, shapewear": 3
+  }
+ },
+ "batch3_jewelry": {
+  "_her_words": "Theory - no jewelry. Vince - none. Gap - they have 129 pieces of jewelry, very low price, nothing exciting. Uniqlo - zero. Faherty - zero. Marine Layer - zero. Universal Standard - zero jewelry and I see they also have good selection of fitness clothes and athleisure and also comfy undergarments. Petite Studio only has a handful of jewelry would not route there for it",
+  "Theory": {
+   "Jewelry": 0
+  },
+  "Vince": {
+   "Jewelry": 0
+  },
+  "Gap": {
+   "Jewelry": 1,
+   "note": "~129 jewelry pieces, very low price, nothing exciting"
+  },
+  "Uniqlo": {
+   "Jewelry": 0
+  },
+  "Faherty": {
+   "Jewelry": 0
+  },
+  "Marine Layer": {
+   "Jewelry": 0
+  },
+  "Universal Standard": {
+   "Jewelry": 0,
+   "Activewear": 3,
+   "Bras, underwear, shapewear": 2,
+   "note": "good fitness/athleisure; comfy undergarments"
+  },
+  "Petite Studio": {
+   "Jewelry": 0,
+   "note": "only a handful of jewelry, do not route"
+  }
+ },
+ "batch4_cocktail": {
+  "_her_words": "Land's End - no cocktail or party dresses, but they are deep on daytime dresses and they also have plus size dresses, would not recommend Land's End to a younger woman or to anyone who is extra fitted or alluring. J. Jill does not have cocktail dresses but they do have day dresses from sizes XSpetite to XLpetite and also they have tall sizes sTall to XLtall and also regular XS up to 4X i did not realize J. Jill had such a wide range of sizing. They are a relaxed fit, more natural look, would not send a younger woman or fitted, trendy, alluring woman here. Garnet Hill - zero cocktail dresses. Lacoste - zero cocktail. Gap - zero cocktail but I noticed Gap does have petite, tall and regular sizes in day dresses. Uniqlo - zero. Faherty and Marine Layer - both zero. Petite Studio - no just day dresses",
+  "Lands' End": {
+   "Cocktail & party dresses": 0,
+   "Everyday dresses": 3,
+   "NEVER send her here for...": "a younger woman, or anyone extra fitted or alluring",
+   "note": "deep on daytime dresses, incl. plus-size dresses"
+  },
+  "J.Jill": {
+   "Cocktail & party dresses": 0,
+   "Everyday dresses": 3,
+   "NEVER send her here for...": "a younger woman, or a fitted, trendy or alluring woman",
+   "note": "day dresses XS-XL petite, S-XL tall, regular XS-4X — a much wider size range than I had"
+  },
+  "Garnet Hill": {
+   "Cocktail & party dresses": 0
+  },
+  "Lacoste": {
+   "Cocktail & party dresses": 0
+  },
+  "Gap": {
+   "Cocktail & party dresses": 0,
+   "note": "petite, tall and regular in day dresses"
+  },
+  "Uniqlo": {
+   "Cocktail & party dresses": 0
+  },
+  "Faherty": {
+   "Cocktail & party dresses": 0
+  },
+  "Marine Layer": {
+   "Cocktail & party dresses": 0
+  },
+  "Petite Studio": {
+   "Cocktail & party dresses": 0,
+   "note": "day dresses only"
+  }
+ },
+ "batch5_final": {
+  "_her_words": "Bergdorf Goodman - they do have some dresses that a teen could wear to homecoming or prom, just that they are on the expensive side, but they do carry gorgeous dresses. Baltic Born - I am looking at their site and I want to take it off our list. I don't like anything I see on here. Olivela - no, they have gorgeous dresses and some are evening but not a teen vibe. Lacoste - too sporty for the office. Soft Surroundings has sizes in petites, misses, tall and womens plus - a lot of relaxed dresses for the older, natural type woman, nobody young, trendy or glam can go to Soft Surroundings, it is too relaxed for a professional office unless it is a very business casual situation. Johnny Was - not for the office, lots of color. LoveShackFancy - yes they have some pajamas and robes, but not very deep, very feminine girly pink vibe. Summersalt - no active wear just swim and cover ups",
+  "Bergdorf Goodman": {
+   "Prom & homecoming": 2,
+   "note": "gorgeous prom/homecoming dresses but expensive"
+  },
+  "Baltic Born": {
+   "_REMOVED_FROM_TABLE": "her call 2026-08-24 -- she looked at the site and did not like anything on it"
+  },
+  "Olivela": {
+   "Prom & homecoming": 0,
+   "note": "gorgeous evening dresses but not a teen vibe"
+  },
+  "Lacoste": {
+   "Workwear / office": 0,
+   "note": "too sporty for the office"
+  },
+  "Soft Surroundings": {
+   "Workwear / office": 1,
+   "NEVER send her here for...": "anyone young, trendy or glam; and not a professional office unless it is very business casual",
+   "note": "petites, misses, TALL and women's plus; relaxed dresses for the older natural woman"
+  },
+  "Johnny Was": {
+   "Workwear / office": 0,
+   "note": "not for the office, lots of color"
+  },
+  "LoveShackFancy": {
+   "Sleepwear & loungewear": 1,
+   "note": "some pyjamas and robes, not deep, very feminine girly pink"
+  },
+  "Summersalt": {
+   "Activewear": 0,
+   "note": "swim and coverups only, no activewear"
+  }
+ },
+ "batch6_prom_list": {
+  "_her_words": "Do we have all the department stores in for prom and homecoming, as well as Revolve Dillard's, Macy's, Nordstrom, Bloomingdale's, Nordstrom Rack, TJ Maxx, Amazon...? those are all good for prom",
+  "_status": "HER LIST, but the trailing '...' means it is not certified exhaustive. Belk is a department store in her table she did not name; the Garnet Hill rule says ASK, never infer. Not built into _PROM_STORES until she confirms.",
+  "Dillard's": {
+   "Prom & homecoming": 3
+  },
+  "Macy's": {
+   "Prom & homecoming": 3
+  },
+  "Nordstrom": {
+   "Prom & homecoming": 3
+  },
+  "Bloomingdales": {
+   "Prom & homecoming": 3
+  },
+  "Nordstrom Rack": {
+   "Prom & homecoming": 3
+  },
+  "TJ Maxx": {
+   "Prom & homecoming": 3
+  },
+  "Amazon": {
+   "Prom & homecoming": 3
+  },
+  "Revolve": {
+   "Prom & homecoming": 3
+  }
+ }
+}

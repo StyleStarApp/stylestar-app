@@ -7,7 +7,321 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-23/24 — 💛 HER CARD, KATHY'S TWO FINDINGS, AND HER MOTHER BROKE THE OCCASION TABLE)
+## ▶ NEXT SESSION — START HERE (2026-08-24 LATER — 🗂 THE SPREADSHEET GOT AI-FILLED, AND ANSWERING IT IN CHAT WORKED BETTER)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the .md and i will open a new chat")
+**THREE PRs merged and ALL VERIFIED LIVE BY MD5 BYTE-COMPARE: #929 · #930 · #931.** ⚠️ **Three Netlify
+builds.** Branch resynced to main, tree clean, everything at `6c49b6a`.
+▶▶ **THE SHAPE OF THE DAY, AND IT IS THE REUSABLE HALF: SHE SET OUT TO BUILD A GIANT SPREADSHEET, IT CAME
+BACK FILLED BY CHATGPT, AND THE RECOVERY PRODUCED BETTER DATA THAN THE FILE EVER WOULD HAVE.** Her own
+verdict: *"I am very glad you pushed back and questioned it and you are correct on all points."*
+▶ **Her closing state: everything she asked for today is live, and NOTHING is half-built.**
+
+### 🚨🚨⭐⭐ THE HEADLINE: A RETURNED SPREADSHEET WAS AI-FILLED, AND HOW IT WAS CAUGHT AND RECOVERED
+Her morning idea was hers and good: *"maybe I need to take a step back. Look very carefully at our list of
+stores… and then make a giant spreadsheet and give rankings."* A 103-row × 28-column grid was built for her
+(every department pre-guessed so she was CORRECTING rather than filling 2,060 blanks). She sent it back
+"FULL 20 PASS" — complete, fast, and **filled in by ChatGPT because she was trying to finish quickly.**
+- ▶▶ **THE TELL WAS NOT A FEELING, IT WAS A DIFF: 60% agreement with my own guesses, and 42 NEW ZEROS in
+  cells where I had put 1 or 2.** A zero is the only value that can silently BREAK a search (it removes a
+  store from a category), so the risky cells were separable from the harmless ones by arithmetic.
+- ⚠️ **THE PART THAT MATTERED MOST WAS NOT THE NUMBERS, IT WAS THE THREE JUDGMENT COLUMNS.** "NEVER send her
+  here for…", "Who is this for" and "Trust their search 0-3" were filled with plausible AI text wearing the
+  authority of her professional judgment. ▶ **`v2.py` CLEARED ALL THREE and kept only what was HERS or
+  MEASURED** (ten NEVER lines traceable to a dated quote or a measurement, nine search-trust scores actually
+  measured). **An allowlist, never a strip — the publicList precedent.**
+- ⭐⭐ **AND THE RECOVERY THAT WORKED IS THE THING TO REUSE: SHE SAID "I am not good with downloading and
+  uploading files but I will do it" — SO WE DID NOT MAKE HER.** The 42 risky cells were grouped into SIX
+  BATCHES and asked IN CHAT, one batch per message, in her own ladder pattern.
+  ▶ **She answered all 42 in six short exchanges, faster than a file round trip, and every answer arrived
+  with her REASONING attached** — which a spreadsheet cell structurally cannot carry.
+- ⭐⭐ **THE MEASURED RESULT, AND IT IS THE ARGUMENT FOR EVER DOING IT THIS WAY: ChatGPT's zeros were MOSTLY
+  RIGHT (roughly 8 in 10 confirmed), AND EVERY SINGLE REAL FINDING CAME FROM WHAT SHE VOLUNTEERED BESIDE
+  THEM — none of it a cell the grid asked about:**
+  **J.Jill carries TALL** · **Lane Bryant carries WIDE** (shoes) · **Soft Surroundings carries TALL** ·
+  **Alice + Olivia mispriced by two tiers** · **Baltic Born removed entirely** · Lands' End boat totes ·
+  Lane Bryant fitness wear + plus lingerie · Universal Standard fitness + undergarments · Gap's 129 cheap
+  jewelry pieces.
+  ▶▶ **SO THE LESSON IS NOT "SPREADSHEETS ARE BAD". IT IS THAT THE GRID'S VALUE WAS AS A PROMPT FOR HER TO
+  GO LOOK AT THE SITES, AND THE LOOKING IS WHERE THE FINDINGS WERE.** Reuse the batch-in-chat shape.
+- ⚠️ **HER ANSWERS ARE PRESERVED IN THE REPO at `scratchpad/store-grid-answers.json`** — every batch with
+  her VERBATIM WORDS beside the numbers, so the reasoning survives the session. The rebuilt workbook is
+  `scratchpad/Style Star - store grid v2.xlsx`. ▶ **All 42 flagged cells are ANSWERED; nothing is pending.**
+- ▶ **STILL OPEN FROM THE GRID, and it is small: the three judgment columns are still mostly empty by
+  design.** "NEVER send her here for…" has ~12 rows, "Trust their search" has 9. **Those two are worth more
+  than the whole numeric grid** and they only ever grow when a store makes her wince. **Ask opportunistically,
+  never as a sitting.**
+
+### 🚨 SIX STORE-TABLE CORRECTIONS, ALL HERS, ALL LIVE
+1. ⭐⭐ **J.JILL GAINS `tall`**, her words: *"they have tall sizes sTall to XLtall and also regular XS up to
+   4X i did not realize J. Jill had such a wide range of sizing."* It carried petite + plus only.
+2. ⭐⭐ **LANE BRYANT GAINS `wide`**, her words: *"they have shoes including a lot with wide widths."*
+   ▶ **Only SEVEN stores in the table carried that token** (Nordstrom, Macy's, Nordstrom Rack, Amazon,
+   Naturalizer, Zappos, DSW), **so it is the first PLUS-SIZE CLOTHING retailer in a genuinely thin pool.**
+3. **SOFT SURROUNDINGS GAINS `tall`** — *"petites, misses, tall and womens plus."*
+   ▶▶ **THREE MISSING TALL/WIDE TAGS IN ONE AFTERNOON IS A PATTERN WORTH NAMING: A MISSING SIZE TAG SHOWS
+   NOTHING ON SCREEN AND SIMPLY MAKES A WOMAN'S WORLD SMALLER.** Cheapest error in that table to make and
+   the hardest to notice. ▶ **Worth a deliberate size-tag pass at some point, store by store, with her.**
+4. 🚨 **ALICE + OLIVIA WAS `$$`, IS NOW `$$$-$$$$`, HER NUMBER.** Her words: *"alice and olivia is on the
+   expensive side of things."* Their dresses run $400-600, so a `$$` tag put them in Old Navy's band for
+   every woman. ⚠️ **The tier string is what the MODEL reads — her own Baby Gold lesson pointed the other
+   way.** ⚠️ **AND `_tierOf` READS THE CHEAPEST END OF A RANGE**, so the range makes it count as `$$$` for
+   the price-spread guarantee, not `$$$$`. It was briefly set to `$$$$` on my reading of her anchors and
+   **she corrected it herself.**
+5. 🚨 **BALTIC BORN IS REMOVED FROM THE TABLE, HER CALL:** *"I am looking at their site and I want to take
+   it off our list. I don't like anything I see on here."* **The Kate Spade precedent (2026-08-12): the
+   store table is HER curation, so a brand she would not stand behind has no business recommending itself.**
+   ⚠️ **REMOVAL IS A THREE-PLACE CHECKLIST and all three were done: the `STORES` entry, the
+   `balticborn.com` hostname in `SEARCH_DOMAINS` (style-ai.js), and the two prose comments that named it.**
+   It had no alias and was not an advertiser. **102 → 101.**
+   ⭐ **COVERAGE WAS CHECKED BEFORE REMOVING, NOT AFTER** — it was the only `$$` occasionwear store carrying
+   plus besides Dillard's. Dillard's ($$, petite+plus) and Anthropologie ($$-$$$, petite+plus) both remain.
+   ⚠️ **AND THAT COVERAGE CLAIM HAD TO BE CORRECTED ONE COMMIT LATER**, because it cited Alice + Olivia as
+   `$$` and the repricing removed that leg. **Read the removal against the corrected version.**
+6. **Bergdorf prom 0 → 2 (expensive but real) · Soft Surroundings office 0 → 1 · LoveShackFancy sleepwear
+   0 → 1 · Gap jewelry 0 → 1** ("129 pieces, very low price, nothing exciting" — the definition of a 1).
+
+### 🎓 PROM AND HOMECOMING HAVE THEIR OWN STORE LIST — step 5 of her ladder, CLOSED (#930)
+`_PROM_STORES`, **twelve, and every name was spoken by her:** Nordstrom · Dillard's · Macy's ·
+Bloomingdales · **Belk** · **Saks** · **Neiman Marcus** · Bergdorf Goodman · Nordstrom Rack · TJ Maxx ·
+Amazon · Revolve.
+- **How the list was got, and it is the Garnet Hill rule working:** she gave eight names and a trailing
+  `"..."`, which was **put back to her rather than guessed at.** Her corrections: **BELK IN** (*"correct i
+  wasn't being exhaustive"*), **SAKS AND NEIMAN IN** (*"a teen who has a big budget can find a dress
+  there"*), **NET-A-PORTER OUT** (*"not so much for teens"*).
+- ▶▶ **WHY IT IS A SECOND LIST RATHER THAN A REUSE OF `_GOWN_STORES`, and this is the load-bearing
+  argument: NINE OF THE TWELVE OVERLAP AND THE THREE THAT DIFFER ARE THE ENTIRE POINT.** Revolve, TJ Maxx
+  and Amazon are wrong for a mother of the bride and right for a seventeen-year-old; **NET-A-PORTER is the
+  exact inverse.** One list could not hold both without being wrong for one of them.
+  ⚠️ **A test asserts the two lists differ in BOTH DIRECTIONS**, so nobody can later "simplify" them into one.
+- ⚠️ **THE TWO RESTRICTIONS CAN NEVER BOTH FIRE.** They name partly contradictory lists, so a prompt
+  carrying both would be incoherent. Pinned directly: a prom ask must NOT pick up the gown restriction.
+- ⭐ **IT NEVER GUESSES HER AGE.** The word "prom" in her own ask is the only signal — which keeps her
+  standing rule that the app never asks a woman how old she is (reaffirmed today over the testers'
+  daughters; see the age entry below).
+- 🚨 **"homecoming" WAS ABSENT FROM `_OCCASIONS` ENTIRELY**, so a girl typing it matched nothing at all — no
+  occasion, no formality, no stores. It takes prom's **0.9** because she names the two together every time.
+  ▶ **`retail:true` IS MEASURED, NOT ASSUMED, with the standing gibberish control: at Dillard's
+  "homecoming dress" returns 146 mentions of homecoming and "prom dress" 262 of prom, while "zqxwvu dress"
+  returns 0 on a page of almost identical weight.** A real retail section, so the word goes IN the search.
+- ⚠️ **A CORRECTION SHE SHOULD NOT LOSE: I told her "Bergdorf is the only prom store in the grid" and it was
+  WRONG** — 24 stores carry a prom number. **But 23 of them are MY guesses; only her twelve are hers.**
+
+### 👗 SACHIN & BABI IS STORE 102 — the first OCCASION SPECIALIST in the table (#930/#931)
+**All ten dimensions are HERS**, drafted against her own anchors and corrected by her (the DVF / Baby Gold
+pattern). `d:[relaxed 6, alluring 5, polish 10, classic 8, trendy 5, casual 1, dressy 10, fitted 8,
+neutral 9, colorful 8]` · `$$$$` · `s:['plus']` · `deep:'evening and occasion dresses'` ·
+`c:'evening gowns, mother of the bride, wedding guest, occasion'`.
+- 🚨⭐⭐ **`alluring 5` IS HER OVERRULE AND IT IS THE LOAD-BEARING NUMBER.** Drafted at 6; her words: *"we can
+  go to 5 because it can truly be for a modest or a glam"* woman. **alluring is the ONE dimension scored as
+  a DISTANCE PENALTY (×2.5) rather than a lean, and it cannot be bought back**, so a 5 is precisely what
+  lets both women reach a store that genuinely dresses both.
+  ▶▶ **AND HER CLAIM IS MEASURED, NOT ASSERTED: ranked at occasion formality, it lands #26 of 102 for a
+  glam/alluring/fitted dresser and #15 for a modest/relaxed/natural one.** It reaches BOTH, and if anything
+  leans to the modest woman. **Her sentence, in numbers.**
+- ⚠️ **`s:['plus']` BREAKS THE DVF PRECEDENT DELIBERATELY.** DVF has `s:[]` because *"XXL and 16 is barely
+  plus"*; here her words are *"they have a lot of dresses that go up to 3xl so we can put it in as plus."*
+  **3XL with depth behind it, not a token top size.**
+- **neutral 9 / colorful 8 are the BREADTH case**, her words *"everything from neutrals and solids and
+  prints"* — scored like Nordstrom (10/9), not like a house with a palette.
+- ⭐ **`deep` IS SCOPED, NOT `deep:1`** — her *"Yes it can go deep"*, in the DVF shape (`deep:'dresses'`).
+  **A single-brand house is deep INSIDE its lane and empty outside it**, which is her own middle-tier
+  reframing. So a specific multi-word EVENING search is allowed and a specific top search never is.
+  ▶ **The flag was EARNED BY MEASUREMENT: "black gown" returns 5.25MB / 340 gowns, gibberish returns
+  2.98MB / 88.** It narrows honestly — the best-behaved shape a store search has.
+- ✅ **THE TWELFTH FORMAL-GOWN STORE**, her yes (*"they have floor length formal gowns"*), and **the first
+  SPECIALIST on a list that was eleven department and luxury stores.**
+- ⚠️ **AND IT IS DELIBERATELY OUT OF `_PROM_STORES`, her call, "not for teens"** — which makes it **the
+  sharpest possible test of the two-list design: a real store on one list and explicitly barred from the
+  other.** Pinned.
+- ⚠️ **HELD OUT OF THE MALL, her call: "Let's hold off on putting it in the mall for now. Maybe later."**
+  **The Mall is separate curation from the store table and always has been; being in one never implied the
+  other.** Do not add it without her.
+
+### ✍️🚨 THE APP CAN SAY "I COULDN'T FIND IT" NOW — her ask, and the cause was STRUCTURAL (#929)
+Her words: *"I agree with you 6 cards for something no store carries is worse than an honest line… can we
+re-direct her or just apologize honestly in that situation"* → *"yes let's do the honest I couldn't find it
+line i think we really need that."*
+- ▶▶ **THE CAUSE WAS NOT MODEL DRIFT, IT WAS THE PROMPT: it DEMANDED six picks with no escape.** A dry ask
+  ("neon gym bags") therefore produced six inventions, because six was the only legal answer.
+- ✅ **BUILT AS `_honestyRule()`, and it is SCOPED TO THE ASK BOX ALONE** — it returns `''` when there is no
+  `_ssAsk`, so it **physically cannot** leak into the other browsing surfaces where a mixed six is correct.
+  The schema became `{"note":"","items":[…]}` so the model can return fewer than six, or none, with a line.
+- ⭐ **HER WORDING, and she edited both drafts:** *"I couldn't find real (neon gym bags) in any stores today.
+  Would you be open to browsing something else?"* and the escalation *"I'm having trouble shopping for that
+  right now. Would you like to talk it through with your stylist?"* ▶ Her verdict: *"I like the way you
+  re-worded that."*
+- ⚠️ **The chat link only appears when there are ZERO cards** — a partial answer is not a failure.
+- **New `scratchpad/honest.js`, 43 checks.** ⚠️ **THREE HARNESS BUGS IN IT, all the documented shape:**
+  seeding `prefs:{}` (a shape the app NEVER produces — it throws on `prefs.sizes.tops` before the try block
+  and looks exactly like a hung fetch); waiting for `.shop-grid` to be VISIBLE when an empty grid has zero
+  height; and asserting her sentences against the SOURCE when they are split across a string concatenation.
+
+### 🌟 THE STAR OF THE WEEK IS THE FARM RIO DRESS, AND HER QUOTE MARKS NOW MATCH (#929/#930)
+- **`WEEK_STAR_PIN` → the FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress**, her call. ⚠️ **The
+  dress is ON SALE and the card shows the REGULAR $360** — her standing evergreen rule.
+- ⭐ **THE STAR IS UN-FROZEN, her call**, and her reason is worth keeping: she froze it originally because
+  *"I love how the scarf looks… I don't think it will look so good on the ones we don't have affiliate
+  approval for"* — i.e. **the freeze was about PHOTOS, not about the scarf.**
+  ▶ **`_wkStarPxTag` gained `ownPx`, a path under `stars/` that BYPASSES the affiliate gate**, because the
+  licensing rule is *an affiliate approval licenses the RETAILER'S photograph* — **a photo SHE takes is hers
+  already.** ⚠️ Her bangles idea (*"I could take my own photo of the amazon bracelets"*) is **PAUSED on her
+  word**; the mechanism is built and waiting.
+- 🚨⭐⭐ **HER QUOTE-MARK CATCH, AND THE CODE AGREED WITH ITSELF AND DISAGREED WITH HER.** Her words: *"The
+  end quote appears to be farther away than the start quote. Something about the way it looks seems off."*
+  **Both margins are a symmetric 1px, so every box measurement says they match. They do. THE INK DOES NOT.**
+  ▶ **MEASURED at 4x, gap from the quote to the nearest TALL ink:**
+  **opening → her first word 3.75px · closing ← a note ending in "." 7.00px · ending in "!" 4.25px ·
+  ending in a letter 3.50px.**
+  ▶▶ **THE CAUSE IS THE PERIOD AND ONLY THE PERIOD: a full stop sits alone on the baseline and fills nothing
+  at CAP HEIGHT, which is where the quote hangs.** The column gap is a healthy 3.25px while the gap the eye
+  reads is 7.00.
+  ⚠️ **SO THE FIX IS CONDITIONAL, NOT A FLAT NEGATIVE MARGIN: 13 of her 20 Star notes end in ".", 6 in "!"
+  and 1 in a letter** — an unconditional pull would have crushed the other seven. `.wks-q-lo` fires only on
+  a low terminal mark.
+  ⚠️ **`-0.088em` WAS TUNED AGAINST THE MEASUREMENT, and the first try (-0.145em) OVERSHOT to 2.25px for a
+  reason worth keeping: the note is CENTRED with `text-wrap:balance`, so changing the closing quote's margin
+  changes the line width and therefore the CENTRING OFFSET. The gap does not move 1:1 with the margin.**
+  **After: 3.75 vs 3.75 on the live card.** ▶ **`scratchpad/quotegap.mjs` re-runs the whole ink measurement**
+  — ⚠️ it **decodes the screenshot INSIDE THE PAGE**, because this sandbox's node has no PNG decoder and the
+  browser has one.
+- ⭐ **ONE BUILDER, `_wksNoteHTML`, now serves BOTH render sites** (Welcome Back + Discovery). A rule applied
+  by hand at two sites drifts the moment a third appears — the `_wkStarPxTag` lesson, applied before it bit.
+- ▶ **THE STAR QUEUE IS 20**, and **two insertions this session both went in AFTER index 6 on purpose** —
+  the Vilebrequin cover-up holds the **20 SEPTEMBER** slot she asked for, and a piece added ahead of it
+  slides her deadline by a week with nobody deciding to. **Every future insertion owes that check.**
+
+### 💎 HER JANE WIN NECKLACE IS THE 23rd EDIT PIECE (#929)
+**"Love Hearts Find Me Pendant Necklace" by Jane Win at Olivela, $278**, her note, her price.
+- ✅ **Verified before adding: 200, in stock, vendor really is "Jane Win", and `compare_at_price` is 0 — so
+  unlike the FARM Rio dress this one is genuinely NOT on sale.**
+- ⭐ **IT EARNS AND ITS PHOTO IS LICENSED FROM DAY ONE**, because **Olivela approved this morning
+  (`mid 50334`)** — the first Edit piece ever to carry a photo on the day it was added. **5th photo.**
+- ⭐ **The crop is the lucky way round: 4:5 source against our 3:4 frame loses its SIDES and keeps FULL
+  HEIGHT** — exactly what a pendant on an 18-inch chain needs. The FARM Rio knee-cut lesson, applied first.
+- ⚠️ **The 💕 she sent came OFF the card, her call, for consistency with the rest of the Edit.**
+- ⚠️ **editpx's assertions were made DERIVED, not renumbered:** "22 items", "exactly 4 photos" and — the
+  three that mattered — "every photo has alt text / degrades on error / is lazy" **all restated ===4**, so a
+  fifth photo failed three assertions about things the new `<img>` did perfectly.
+
+### 🛍 OLIVELA JOINS THE MALL, AND A SHARED WISHLIST STOPS BEING FINDABLE ON GOOGLE (#929)
+- **Olivela in the Mall (Elevated & Designer)**, `'olivela.com':'50334'` in `_AFF_MID`. ⚠️ **Her Mall blurb
+  is a CLAUDE DRAFT** ("Designer labels, and every order gives back") — hers to reword, like FARM Rio's and
+  DVF's. ⚠️ **Olivela is NOT in `STORES`** — it needs her ten dimensions before the stylist can suggest it.
+- 🚨🚨 **A REAL PRIVACY HOLE, FOUND AND CLOSED: every shared wishlist at `/list/<token>` was fully
+  indexable by Google.** The token IS the credential, so a search result would have handed a woman's list to
+  strangers. **The edge function now injects `noindex, nofollow` into `<head>` for `/list/*` only.**
+  ▶ **`robots.txt` DELIBERATELY DOES NOT `Disallow: /list/`, and the reason is in a long comment there: a
+  Disallow is WEAKER, not stronger** — it stops the crawl but not the INDEXING, and it publishes the path.
+  **`noindex` is the tool that actually removes a page.** New `robots.txt` + `sitemap.xml` (6 URLs;
+  `/results` and `/list/*` deliberately absent) + a `<link rel="canonical">`.
+- ⚠️ **`edgepreview.mjs` WAS MEASURING NOTHING AND REPORTED A CLEAN PASS** — it had COPY-PASTED the edge
+  function's replace() calls into the harness, so it proved that a copy did what a copy did, and was
+  structurally blind to the new noindex step. **Rewritten to IMPORT and CALL the real function.**
+
+### 📧 KATHY'S REVOLVE FAILURE IS MEASURED AT LAST — and it does not reproduce (#929)
+The 08-23 fixes (`_NEVER_STORE`, the chat's store ranking) were recorded as *"well-reasoned and NOT measured
+against the actual failure."* **They are measured now.** Catherine retook the quiz pretending to be Kathy
+and the twelve slider values were read off her screenshots BY PIXEL.
+- ▶▶ **REVOLVE RANKS #101 OF 102 FOR THIS WOMAN.** Both fixes provably fire in the real captured prompt, and
+  **two live runs with SEARCH ON sent her to Nordstrom and Bloomingdale's with no Revolve anywhere.**
+- ⚠️ **THE HONEST LIMITS, stated: the profile is an APPROXIMATION** (Kathy has since retaken the quiz as
+  someone else, so her original answers are gone), **it is two runs, and the search came up dry both times**
+  — a good answer, but not the same as finding her a dress.
+- ⚠️⚠️ **TWO HARNESS BUGS IN `kathylive.mjs`, both the dangerous shape:** (1) **`window.quizTaken` is
+  `undefined` on a perfectly seeded page** — top-level `let` bindings live in the global LEXICAL environment
+  and are simply ABSENT from `window`. **Use bare identifiers.** (the `wardrobeItems` trap again). (2) **the
+  rank check PASSED VACUOUSLY by regexing store names out of prose and matching the prompt's own SECTION
+  HEADINGS** ("RULES", "STAY ON TOPIC"), finding five "stores", concluding Revolve was absent. **Rebuilt to
+  call `_rankedStores()` — ask the app, never parse its prose.**
+
+### ⚠️⚠️ THE TESTING LESSON OF THE DAY, TWICE OVER: A NEGATIVE CONTROL CAUGHT WHAT READING COULD NOT
+1. 🚨 **TEN NEW `weekstar` ASSERTIONS PASSED VACUOUSLY.** They were written `ok(condition, name)` when **that
+   suite takes `ok(name, condition, detail)`** — and a non-empty label string is TRUTHY, so the condition was
+   never read. **49 green while measuring nothing.**
+   ▶ **CAUGHT BY DELETING THE CSS RULE AND SEEING "49 passed, 0 failed" ANYWAY.** After the fix the same
+   controls bite: remove the rule → 1 fails, make the pull unconditional → 3 fail.
+2. **The new prom coverage was negative-controlled BEFORE being believed** — unwire the one line that fires
+   the rule and **13 checks fail.**
+▶▶ **STANDING, AND IT EARNED ITS KEEP THREE TIMES TODAY: A SWEEP THAT HAS NEVER BEEN SEEN TO FAIL PROVES
+NOTHING. Break it on purpose before you trust it.**
+- ⚠️ **A PATCH-SCRIPT LESSON: two "negative controls" silently DID NOT APPLY** because the sed/replace found
+  no anchor and nothing asserted it. **Always `assert s.count(old)==1` before writing** — an unapplied
+  control looks exactly like a passing test.
+
+### ⚠️ SESSION HYGIENE
+- **`shopask` DOES NOT FINISH ON THIS MACHINE and it is PRE-EXISTING, PROVEN not assumed:** a clean
+  `origin/main` extracted with `git archive` and run on the SAME machine dies identically — **82 checks,
+  0 failures, same crash at the same `pg.goto` in `fresh()`.** One variable, same result. **It is the
+  harness exhausting browser contexts, not the app.**
+- ⚠️ **The `EADDRINUSE 8995` port-holder trap fired again (5th sighting), and TWICE the holder was a
+  LEFTOVER node from a timed-out earlier run.** ▶ **Kill by scanning `/proc/*/cmdline`; `pkill -f` matches
+  its own shell.** ⚠️ **And a `nohup … &` reported "exit code 0" for a run that had produced 4 checks and
+  died** — **read the TOTAL, never the exit code.**
+- ⚠️ **`editpx` flagged 2 fold failures ONCE and it was FLAKE, established not assumed:** two consecutive
+  clean runs return 55/0 **and** a direct before/after measurement showed the card byte-identical (note 72px,
+  3 lines, card bottom 491). The flaky reading returned cardBottom 726 — a rect read before the scroll settled.
+- ⚠️ **`searchtune` keeps its 1 DOCUMENTED PRE-EXISTING failure** (the heart-tip font check).
+- ⚠️ **THE SQUASH-MERGE DIVERGENCE DANCE WAS NEEDED TWICE**, and the step that makes it safe was done both
+  times: **after replaying commits onto `origin/main`, MD5 the file and prove it is BYTE-IDENTICAL to what
+  was tested before force-pushing.**
+- ⚠️ **`v2.py` hit the apostrophe-store trap (3rd sighting): `'Macy's'` inside single quotes is a
+  SyntaxError.** ⚠️ **`git commit -m` still breaks on quotes — write the message to a file and `git commit -F`.**
+
+### 🧒 THE AGE-RANGE QUESTION — ANSWERED, AND HER BOUNDARY HOLDS
+Jen's teen daughters and another Jen's college-age daughter asked for an age range. **Her own instinct is
+right and it stands: the app never asks a woman her age.**
+- ▶ **THE ARGUMENT GIVEN, and it is reusable: what they actually wanted was CHEAPER and YOUNGER-LOOKING, and
+  the app already has honest levers for both** — the price-spread rule, and now `_PROM_STORES`, which reads
+  "prom" from her own words rather than inferring anything about her.
+- ⭐ **AND THE GRID ANSWERED IT BETTER THAN A DROPDOWN COULD:** her "not for a younger woman" exceptions
+  arrived as SENTENCES with reasons — Lands' End, J.Jill, Soft Surroundings, Olivela, Sachin & Babi — which
+  is more useful than an age field and costs a woman nothing.
+
+### 🔎 SEO — STARTED, AND ONE STEP IS HERS
+`robots.txt`, `sitemap.xml`, a canonical link and the `/list/*` noindex are all LIVE.
+▶ **STILL OWED BY HER, and it is the only blocked step: GOOGLE SEARCH CONSOLE.** She does steps 1-3 from
+the artifact, **sends the verification META TAG**, it gets added and confirmed live by curl, **and only then
+does she click Verify** (a failed check can need redoing — the Impact lesson).
+
+### 📈 HER INSTAGRAM IS AT 41 FOLLOWERS
+She has posted twice and **put the stylestar link on her main page AND her floridapersonalstylist page**,
+plus a story pointing at it. Her words: *"a gentle putting it out there for now."*
+▶ **She does not know what to post next — worth having an idea ready.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **ASK WHAT SHE WANTS FIRST.** She has opened the last six sessions with her own agenda and it has been
+   better than the list every time — today's whole day came from her own spreadsheet idea.
+2. 👀 **HOW THE THREE MERGES FEEL ON HER PHONE** — the FARM Rio Star, **the quote-mark spacing she caught**,
+   and the honest "I couldn't find it" line, which **has never been seen in the wild**. ⚠️ Private browsing,
+   `stylestar.app/?notrack`.
+3. 🔎 **GOOGLE SEARCH CONSOLE — her three steps, then the meta tag to me.** The only thing blocked on her.
+4. ⭐ **OLIVELA NEEDS ITS TEN DIMENSIONS** to enter `STORES`. It is in the Mall and `_AFF_MID` only, so the
+   stylist cannot suggest it yet. ⚠️ **Never invent store tags** — ask, with her own anchors (the DVF pattern).
+5. ⭐ **THREE MALL BLURBS ARE CLAUDE DRAFTS** — FARM Rio, DVF and Olivela. One string each.
+6. ⭐ **A DELIBERATE SIZE-TAG PASS.** Three missing tall/wide tags surfaced by accident today; the honest
+   guess is there are more, and a missing one is invisible on screen.
+7. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null`. ⚠️ **NOTHING IN THE
+   SYSTEM WILL RAISE THIS.** If it slips, the cover-up dress waits until 24 January 2027.
+8. ⚠️ **THE TWO LINK-CHECK ROUTINES STILL OVERLAP.** Standing recommendation since 08-21: keep Sunday,
+   retire Monday. **Her call, still unmade.**
+9. ⏰ **26 AUGUST — the Routine `trig_01SZerTsvKoeUYzeT1HX6iWs` fires** (catalog + Almira check-in).
+10. ⏰ **28 AUGUST — the recurring-payments Routine.**
+11. ⭐ **THE THREE JUDGMENT COLUMNS in the grid** — "NEVER send her here for…" and "Trust their search" are
+    worth more than the whole numeric grid and only grow when a store makes her wince. **Ask opportunistically.**
+12. ⭐ **"SHOW THE STYLIST WHAT I PICKED"** — Kathy's, and **she described the real-world version herself
+    today: a client in a fitting room texts screenshots or FaceTimes for an opinion before buying.** Still no
+    mechanism at all. **Her own framing is the spec: a "maybe rack" she can show her stylist.**
+13. ⭐⭐ **OUTFIT SUGGESTIONS** — Jen asked independently and it IS her parked Favorite Outfit page.
+14. ⭐ **SATIN AND SEQUINS GENERALLY** — open since 08-22, the oldest untouched item on her list.
+15. ▶ **PRINT TOPS** — `to4` is still the only Tops row with zero curated products.
+16. 📊 **Her Plausible dashboard**, and the new question: **does anyone type an occasion into the ask box?**
+17. 💰 **AFFILIATES: Olivela APPROVED today (mid 50334).** Sachin & Babi declined earlier (one advertiser,
+    reapplyable). CJ and AWIN still the next doors, Impact in 2-3 months WITH the Plausible link. **AMAZON
+    LAST** — though she noted today *"maybe we are getting closer to applying for amazon actually."*
+18. 📱 **HER NEXT INSTAGRAM POST** — she asked and has no idea yet.
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-23/24 — 💛 HER CARD, KATHY'S TWO FINDINGS, AND HER MOTHER BROKE THE OCCASION TABLE)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's merge what we have so far? And save all to the MD")
 ▶▶ **THE SESSION RAN PAST MIDNIGHT AND HAS TWO HALVES. The first is the five merged PRs below. The second
