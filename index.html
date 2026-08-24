@@ -2788,6 +2788,18 @@ body.card-fb{padding:0}
 /* Heart-it-first tip (her wording + whisper voice, 2026-08-09). Same family as
    the Welcome Back whispers: italic ink, gold bold, block-level for balance. */
 .ht-tip{display:block;font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:300px;margin:2px auto 12px;text-wrap:balance}
+/* 🚨 THE HONEST LINE when an ask cannot be served (2026-08-24, her wording).
+   Her voice register on light paper: Lora UPRIGHT 15.5 in the readable ink, the
+   one settled 2026-08-13 -- no italics, which cost readability on an 18-to-80
+   audience. Deliberately the SAME type as .ht-tip directly above it, so the two
+   quiet sentences on this screen read as one voice rather than two.
+   ⚠️ NO PINK HEART: a heart means Catherine herself is speaking, and this is the
+   stylist reporting on a search. Her own mark system, applied.
+   ⚠️ The link uses the SAME gold as .ht-tip b (#946D18, measured 4.71:1 on this
+   paper). Do NOT swap it for the brighter #D8A52E, which fails AA here. */
+.shop-honest{display:block;font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:320px;margin:2px auto 14px;text-wrap:balance}
+.shop-honest-go{color:#946D18;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(148,109,24,.42);white-space:nowrap}
+.shop-honest-go:hover,.shop-honest-go:focus-visible{border-bottom-color:#946D18}
 .ht-tip b{font-style:italic;color:#946D18;font-weight:600}   /* moved with .wl-door-go so the two MATCH, her ask; 4.12:1 -> 4.71:1 */
 .ht-tip .ht-h{color:#C8971E;font-style:normal} /* the wishlist's mark is GOLD now (2026-08-09) */
 /* ⚠️ The tip's heart is the app's OWN _WL_HEART_PATH now, not the U+2661 glyph
@@ -7887,6 +7899,47 @@ function _askedForLead(){
     ? 'This woman is looking for: "'+_ssAsk+'". Suggest 6 specific shoppable pieces that are exactly that, chosen to suit her style.'
     : 'Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.';
 }
+/* 🚨 PERMISSION TO COME UP SHORT (2026-08-24, her call: "6 cards for something no
+   store carries is worse than an honest line").
+   ▶▶ THE CAUSE WAS NEVER MODEL DRIFT. The sentence above says "Suggest 6 specific
+   shoppable pieces that are exactly that." SIX. No escape. So when there is
+   nothing honest to say the model has two options -- disobey, or invent -- and it
+   invents, which is how "neon gym bag" returned 914 unrelated items. Exactly the
+   shape of the 2026-08-22 chat bug, where the searching rules said "an item
+   without its address does not exist" with no results to copy an address from,
+   leaving the model a choice between naming nothing and making a link up.
+   ⚠️ SCOPED TO THE ASK BOX ALONE, deliberately. The other four card surfaces are
+   picking from her whole world, where "nothing exists" is essentially never the
+   true answer -- permission to return fewer THERE would just thin good shelves.
+   The ask box is the only place she names a specific thing, so it is the only
+   place the app can be specifically wrong.
+   ⚠️ The bar is set HIGH on purpose. An escape hatch the model enjoys using is
+   worse than none: it would start apologising instead of shopping. Hence "only
+   when you genuinely cannot" and "always prefer showing her what you CAN find".
+   ⚠️ The words below are HERS (2026-08-24), with two edits she approved: her
+   "in any stores" came out, because the app checked HER stores and cannot know
+   what every shop on earth carries; and her "I'm having trouble" came out,
+   because it is almost word for word the chat's ERROR message ("I'm having a
+   moment"), so a woman would read a stylist's judgment as a malfunction.
+   ▶ One string each if she wants them back. */
+function _honestyRule(){
+  if(!_ssAsk)return '';
+  return '\nWHEN YOU GENUINELY CANNOT FIND IT:\n'
+    +'- You do NOT have to return 6. Return only pieces that really are what she asked for.\n'
+    +'- If NOTHING in the store list honestly matches, return an empty items array.\n'
+    +'- Whenever you return fewer than 6, you MUST also return a "note": ONE short'
+    +' sentence in Catherine\'s voice, saying plainly what you could not find and'
+    +' handing her whatever you did find. Never apologise twice, never explain the'
+    +' machinery, never blame her wording.\n'
+    +'- Model the note on these two, adapted to what she asked for:\n'
+    +'    some near things found: "I couldn\'t find real neon gym bags today.'
+    +' Would you be open to browsing something else?"\n'
+    +'    nothing near at all:    "That\'s not something I can shop well for you'
+    +' right now."\n'
+    +'- ⚠️ THIS IS A LAST RESORT, not a shortcut. If you can honestly fill all six,'
+    +' fill all six and send no note. Always prefer showing her what you CAN find'
+    +' over telling her what you cannot.\n';
+}
 /* ── THE OCCASION HALF OF HER ASK (2026-08-23) ──────────────────────────────
    Her mother typed "mother of the bride dresses" and got J.Crew Midi Occasion,
    Eileen Fisher Linen Midi, Nordstrom Midi Dress Navy, Talbots Shift Midi,
@@ -7967,10 +8020,14 @@ var _SHOP_PICKS_TTL=6*60*60*1000;     // 6 hours
    fortnight-old set offered as if she had just been looking at it is the app
    lying quietly. Long enough to cover any real session, short enough to stay
    honest. Shortening it is safe; lengthening it needs the wording to change. */
-function _saveShopPicks(items){
+function _saveShopPicks(items,note){
   try{
     if(!items||!items.length)return;
-    localStorage.setItem('ss_shoppicks',JSON.stringify({m:_shopStyleMode,i:items,t:Date.now()}));
+    // ⚠️ The note rides WITH the picks. A resume re-renders the same six through
+    // the same path (never a second model call), so without this an honest
+    // "I couldn't find X" would silently vanish the moment she came back from a
+    // store -- leaving a short shelf with nothing explaining why it is short.
+    localStorage.setItem('ss_shoppicks',JSON.stringify({m:_shopStyleMode,i:items,n:note||'',t:Date.now()}));
   }catch(e){}
 }
 function _shopPicksWaiting(){
@@ -8087,7 +8144,7 @@ async function _shopStyleGen(){
     prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    prompt='You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF())+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF())+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }
   try{
     var parsed;
@@ -8099,7 +8156,7 @@ async function _shopStyleGen(){
     // drift from what she was actually looking at. ⚠️ ONE render path on purpose:
     // a second copy of the card loop would drift the moment either changed.
     if(_shopResume&&_shopResume.i&&_shopResume.i.length){
-      parsed={items:_shopResume.i};
+      parsed={items:_shopResume.i,note:_shopResume.n||''};
       _shopResume=null;          // a resume is spent once used; a refresh re-asks
     }else{
       var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
@@ -8107,7 +8164,7 @@ async function _shopStyleGen(){
       var d=await r.json();if(!d.content)throw 0;
       parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
     }
-    var html='<div class="shop-grid">';
+    var html='';
     // On "Shop my whole list" the things she asked for ARE her list, so a row
     // she starred herself ("Wrap dresses") waives the search veto for this call.
     // 🚨 Her typed ask goes in as `askedFor` for exactly the same reason her starred
@@ -8119,7 +8176,32 @@ async function _shopStyleGen(){
     var _keep=filterNeverWear(parsed.items,
       _shopStyleMode==='wantlist'?(_wantListNames||[]).join(' '):_ssAsk);
     _rememberPicks('ss-'+_shopStyleMode,_keep);   // the refresh must not repeat
-    _saveShopPicks(_keep);   // so she can come back to exactly this, see _shopResume
+    _saveShopPicks(_keep,parsed.note);   // so she can come back to exactly this, see _shopResume
+    /* 🚨 HER HONEST LINE (2026-08-24). Two ways to reach it and both are real:
+       (a) the model used its escape hatch and sent a note -- see _honestyRule;
+       (b) ⚠️ A PRE-EXISTING HOLE, closed in the same change: filterNeverWear runs
+           AFTER the model answers, so a woman whose never-wear list happened to
+           catch every pick got a completely EMPTY shelf with a refresh button and
+           nothing on screen explaining it. Rare, but it is the same failure she
+           described -- silence where a sentence belongs -- so it gets the same
+           sentence rather than a second design.
+       ⚠️ NO PINK HEART, and that is her own mark system: a heart means CATHERINE
+       is speaking, and this is the STYLIST reporting on a search she just ran.
+       ⚠️ _esc on the note -- it is model output and lands in innerHTML. Capped at
+       240 chars so a runaway answer cannot push the shelf off the screen. */
+    var _note=String((parsed&&parsed.note)||'').trim().slice(0,240);
+    if(!_keep.length&&!_note)_note=_ssAsk
+      ? 'That\'s not something I can shop well for you right now.'
+      : 'I couldn\'t find pieces I\'d stand behind for you today.';
+    if(_note){
+      html+='<div class="shop-honest">'+_esc(_note)
+        // The way onward. A line that only apologises is a dead end, which is the
+        // thing she objected to; the chat can genuinely take the question further.
+        // Offered only when there is nothing on the shelf to look at instead.
+        +(_keep.length?'':' <a class="shop-honest-go" href="#" onclick="openChat();return false">Talk it through with your stylist &rarr;</a>')
+        +'</div>';
+    }
+    html+='<div class="shop-grid">';
     _keep.forEach(function(item){
       // No icon above the name. Emoji are painted by the platform's own font and
       // ignore our colour (the rule she set after the pink heart shipped RED on her
