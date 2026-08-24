@@ -7,9 +7,15 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-23 EVENING — 💛 HER CARD, KATHY'S TWO FINDINGS, AND THE MALL LEARNS TO EARN)
+## ▶ NEXT SESSION — START HERE (2026-08-23/24 — 💛 HER CARD, KATHY'S TWO FINDINGS, AND HER MOTHER BROKE THE OCCASION TABLE)
 
-### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save to the MD")
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's merge what we have so far? And save all to the MD")
+▶▶ **THE SESSION RAN PAST MIDNIGHT AND HAS TWO HALVES. The first is the five merged PRs below. The second
+started when her mother sent ONE screenshot after the pause and produced two findings, both built and merged
+in the same batch.** ▶ **Read the 🚨 mother entry directly below this block first — it is where the live work
+stopped, and step 5 of her own ladder is still open.**
+
+### ⏸ THE FIRST HALF (her earlier call: "Let's save to the MD")
 **FIVE PRs merged and ALL CURL-VERIFIED LIVE: #922 · #923 · #924 · #925 · #926.** ⚠️ **Five Netlify builds.**
 Branch resynced to main, tree clean, everything at `26bf24e`. **The last merge was md5 byte-compared against the
 tested file (`e857ec48…`), so the 433 green checks transfer directly to what her testers see.**
@@ -17,6 +23,102 @@ tested file (`e857ec48…`), so the 433 green checks transfer directly to what h
 Kathy sent two findings mid-session and both were real. ▶ **Her verdict at the pause: "Love this."**
 ▶ **AND THE THING THAT MATTERS MOST NEXT TIME is at the bottom of this entry: her stylist principle about
 Revolve and J.Jill is now in the chat prompt but has NEVER BEEN SEEN TO FAIL OR PASS IN THE WILD.**
+
+### 🚨🚨 HER MOTHER TYPED "GRANDMOTHER OF THE BRIDE" AND WAS TOLD SHE WAS THE MOTHER (2026-08-24, after the pause)
+Her mother's screenshot: six cards, every one named **"Mother of the Bride Dress"**. Two separate findings came
+out of it, one mechanical and one that is pure stylist knowledge. **Both are built; neither is merged yet.**
+▶ **AND THE TIMING QUESTION SHE ASKED WAS ANSWERABLE EXACTLY: none of the day's five merges go near the ask box
+or the occasion table, and the bug reproduced against the LIVE BYTES (`e857ec48…`).** So the screenshot's date
+never mattered. ⭐ **Reuse that move: reproduce against the served file rather than trying to date a screenshot.**
+
+### 🚨⭐⭐ FINDING 1 — THE SUBSTRING TRAP, MIRRORED, WHICH IS WHY THE 08-23 TESTS COULD NOT CATCH IT
+**"grandmother of the bride" CONTAINS "mother of the bride"**, `_askOccasion` matches by `indexOf`, so her word
+was swallowed. `_askedForRule` then puts the TABLE's phrase into every search, and name/search parity prints it
+on every card.
+- ▶▶ **THE SIX CASES PINNED ON 08-23 CATCH THE OPPOSITE DIRECTION** — a SHORT phrase firing inside a longer WORD
+  (`mass` in "massage", `class` in "classic"). **This is a longer WORD swallowing the phrase from the FRONT.**
+  Same family, mirrored, and structurally invisible to the existing tests. **Both directions are pinned now.**
+- ⭐⭐ **THE LINK WAS NEVER WRONG, ONLY THE WORDS — and that reframed the whole fix.** MEASURED: **Dillard's
+  returns a BYTE-IDENTICAL page for both phrases (741,675 bytes, "gown" ×1047)**, and **Macy's serves 398 gowns
+  AND 145 mentions of "grandmother"**, so her word is a real retail phrase, not a narrower guess. ▶ **That is why
+  it goes into the SEARCH as well as onto the card: parity stays intact and the card never promises a word the
+  link does not carry.** ⚠️ **NORDSTROM IS UNMEASURED** (200 but a JS shell) — said at the code, not inferred.
+- **Her two calls: same formality as the mother (1.0), and ALL SIX relations treated identically.**
+  Table **37 → 43**: grandmother / godmother / stepmother × bride and groom. `_askOccasion` is UNCHANGED —
+  longest-phrase-wins already gave them precedence.
+- 🚨 **THE ONE THAT MATTERS MOST IS NOT GRANDMOTHER, IT IS STEPMOTHER.** Being told she is the mother carries real
+  family weight, **nobody would ever report it, she would just close the app.** That is the argument for fixing a
+  bug whose results were already correct.
+- ⭐⭐ **HER MOTHER CLOSED THE OTHER HALF HERSELF, AND IT IS A DECISION NOT A PLEASANTRY.** Claude raised "six
+  identically named cards tell her nothing". Her answer: **"she was fine with it. If she wanted to specify with
+  sleeves she could have."** ▶ **SHE READS THE ASK BOX AS A SEARCH BOX SHE NARROWS HERSELF.** So the
+  name-distinguisher is **deliberately NOT built** — it would have solved a problem the user does not have and
+  fought the name/search parity guarantee. ⚠️ **Do not re-propose it.**
+- **`occasion` 101 → 117.** Negative control: with the six entries removed, **10 checks fail**, including her
+  mother's exact repro.
+
+### 🚨🚨⭐⭐ FINDING 2 — "OCCASION" IS ONE WORD COVERING TWO DEPARTMENTS, AND SHE NAMED IT HERSELF
+Her words: *"Tuckernuck, J Crew, and Ann Taylor do not even have mother of the bride dresses. The department
+stores do and specialty shops like Sachin and Babi."* ▶ **THREE OF HER MOTHER'S SIX CARDS WERE STORES THAT DO
+NOT STOCK THE CATEGORY AT ALL.**
+- ✅ **HER STYLIST KNOWLEDGE, CONFIRMED BY MEASUREMENT: Tuckernuck serves 1.34MB with ZERO gowns** (the
+  padded-thin-page behaviour she caught on 08-15 with "print wrap top"), **Ann Taylor 2.97MB with ZERO gowns**,
+  against Dillard's 1047 and Macy's 470. **J.Crew answers 377 bytes to a sandbox, so her word stands there
+  without a number** — said to her that way rather than dressed up.
+- ▶▶ **THE CAUSE, AND IT IS THE THIRD SIGHTING OF ONE FAMILY: TWELVE STORES NAME "occasion" IN THEIR `c:` LINE
+  AND ONLY THREE MEAN GOWNS.** The other nine mean *a nice dress for a party* (Revolve, Anthropologie,
+  Reformation, Alice + Olivia, LoveShackFancy, Baltic Born, White House Black Market, Tuckernuck, DVF).
+  **Same shape as "print" not being a retail word (08-22) and stores silently dropping "midi" (08-20): an
+  abstract category word the trade does not use the way we do.**
+- ⚠️ **AND IT IS WORSE FOR THE OTHER TWO: J.Crew's `c:` line says "dresses" and Ann Taylor's says "dresses".**
+  She asked for a dress, so the model reasonably concluded they qualify. **Nothing anywhere told it a formal gown
+  is a DIFFERENT DEPARTMENT from a dress.** ⚠️ **Not one store in the whole table says "department store" either.**
+- ⭐⭐ **"FORMAL GOWNS" IS HER WORD AND IT IS BETTER THAN ANY OF THE DRAFTS, for a reason worth reusing: it names
+  the GARMENT rather than the EVENT, so it cannot drift back into meaning a party dress** the way "occasion" and
+  "special occasion" both do.
+- ✅ **BUILT AS `_GOWN_STORES`, ELEVEN STORES, HERS:** Nordstrom · Dillard's · Macy's · Bloomingdales · Belk ·
+  Saks · Neiman Marcus · Bergdorf Goodman · NET-A-PORTER · **Nordstrom Rack** · **Alice + Olivia**.
+  ⚠️⚠️ **THE LIST IS HERS, NOT INFERRED — candidates were put to her AS A GUESS and she corrected them**
+  (Nordstrom Rack and Alice + Olivia IN; Revolve, LoveShackFancy, Baltic Born, Anthropologie OUT).
+  ▶ **Do not grow it by keyword-matching `c:` lines. That is the Garnet Hill mistake, and it is exactly how
+  "occasion" came to mean two things in the first place.**
+- **Attaches to ELEVEN occasions: the eight relations + black tie + gala + formal.** The rule NAMES J.Crew, Ann
+  Taylor and Tuckernuck as the wrong stores — **the WRONG/RIGHT pattern, which is the only thing that has ever
+  made a rule land in this prompt** (dr3, the name/search rebuild).
+- ⚠️ **IT LIVES OUTSIDE THE retail/non-retail BRANCH ON PURPOSE: black tie, gala and formal are `retail:false`
+  and would have SILENTLY lost the restriction.** A test pins exactly that.
+- ⚠️ **FIT BEATS DEPTH SURVIVES INSIDE IT:** the rule hands over the eleven and says *order them by how well each
+  suits her*. **The list is re-ordered FOR her, never re-ordered BY us.** Pinned.
+- ⚠️ **Every store name is asserted to be a real `STORES` key** — a name that does not match fails silently.
+- **`occasion` 117 → 155.** Negative control: with the `gown:true` flags removed, **19 checks fail**.
+
+### ⏸ WHERE THIS STOPPED, AND HER OWN INSTRUCTION MADE IT BETTER
+▶▶ **HER WORDS, AND THEY WERE A CORRECTION: "Ok I want to do this properly. I need to go slower. One step at a
+time."** Claude had put three options and two questions in one message. ▶ **The recovery that worked: put the
+whole ladder in front of her, then ask ONE question per turn.** Steps 1-4 landed in four short exchanges.
+**Name it → which stores → which occasions → build.** ⭐ **Reuse this shape whenever a decision has more than one
+axis: show the ladder so she can see the end, then climb one rung per message.**
+- 🚨 **PROM AND HOMECOMING ARE A THIRD DEPARTMENT AGAIN, HER FINDING: "Revolve is great for prom or homecoming"**
+  while **Sachin & Babi is wrong for teens.** ▶ **So the restriction is not ONE list, it is per-occasion-family.**
+  **Prom currently carries NO store restriction at all, deliberately, and it is recorded that way at the code.**
+- ⚠️ **"HOMECOMING" IS NOT IN THE OCCASION TABLE AT ALL.** A woman typing it today matches nothing.
+- ⚠️ **SACHIN & BABI IS NOT IN `STORES`** — an occasion specialist she named and the table does not have.
+
+### 📉 SACHIN & BABI DECLINED HER ON RAKUTEN, AND THE ANSWER SHE NEEDED IS THAT IT BLOCKS NOTHING
+▶ **ONE advertiser, reapplyable, exactly like Shopbop.** ⭐⭐ **AND THE THING WORTH SAYING EVERY TIME: THE STORE
+TABLE IS CURATION AND `_AFF_MID` IS MONEY, AND THEY ARE DELIBERATELY INDEPENDENT.** Most of the 102 stores are not
+approved advertisers. **So Sachin & Babi can go into `STORES` tomorrow and the stylist can send women there; the
+link simply will not earn until they say yes.** (The inverse of the Vilebrequin case, where the brand stayed in
+`_AFF_MID` and came OUT of `STORES`.)
+
+### ⚠️⚠️ A NEW VARIANT OF THE READ-THE-TOTAL RULE, AND IT NEARLY SHIPPED A FALSE GREEN
+A sweep hung at `shopask` on the **port-holding trap (`EADDRINUSE 8995`, fourth sighting)**, so every suite after
+it never ran — **and the previous sweep's `out-*.txt` files were still sitting there with real, perfect totals
+from 21:44.** They were quoted to her before the timestamps were checked.
+▶▶ **THE STANDING RULE IS NOT ENOUGH ON ITS OWN: "read the TOTAL, never the absence of failures" catches a
+CRASHED run. It cannot catch a run that NEVER STARTED, because the old file looks like a clean pass.**
+▶▶ **SO: `rm -f scratchpad/out-*.txt` BEFORE EVERY SWEEP.** A missing file is honest; a stale one is not.
+⚠️ **And kill a port-holder by scanning `/proc/*/cmdline` for the PID — `pkill -f` kills its own shell.**
 
 ### ⭐⭐ HER STYLE CARD, FOUR ASKS, ALL HERS AND ALL BUILT (#922)
 Her words: *"it should show bigger on the Style Portrait page · on the silver frame I want it to bleed out to the
@@ -205,30 +307,44 @@ new fact that makes it matter more than yesterday: **the Mall now has two cards 
 from that traffic is no longer free for us.
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. ⭐⭐ **ASK HER WHAT SHE WANTS FIRST — she has opened the last four sessions with her own agenda and it has been
-   better than the list every time.**
-2. 👀 **HOW TODAY'S FIVE FEEL ON HER PHONE** — especially **the bigger card and the new silver frame** (she has
-   only seen renders of the frame), the **Style Star Card menu row**, and **the two new Mall cards**.
+1. ⭐⭐ **HER OWN LADDER, STEP 5 — IT IS THE ONLY THING MID-FLIGHT.** Steps 1-4 are built and merged; step 5 is
+   two pieces and both need HER, not measurement:
+   **(a) THE PROM / HOMECOMING STORE LIST.** She has given exactly two data points — **Revolve IN, Sachin & Babi
+   OUT ("not for teens")** — and prom carries NO restriction at all until the list exists.
+   **(b) SACHIN & BABI'S OWN SCORES**, to add it to `STORES` as an occasion specialist. ⚠️ **Never invent store
+   tags** (the Garnet Hill rule) — ask, and offer her own anchors the way the DVF and Baby Gold entries were done.
+   ⚠️ **AND "HOMECOMING" IS NOT IN THE OCCASION TABLE AT ALL** — a woman typing it matches nothing today.
+   ▶ **CLIMB IT THE WAY SHE ASKED: show the whole ladder, then ONE question per message.** It worked.
+2. ⭐⭐ **ASK HER WHAT SHE WANTS FIRST ANYWAY — she has opened the last five sessions with her own agenda and it
+   has been better than the list every time.** Her mother's one screenshot outproduced this entire list.
+3. 👀 **HOW THE SEVEN MERGES FEEL ON HER PHONE** — the bigger card and the new silver frame (she has only seen
+   renders of the frame), the **Style Star Card menu row**, the **two new Mall cards**, and ▶ **her mother
+   re-running "Grandmother of the bride", which is the whole point of the second half.**
    ⚠️ Private browsing, `stylestar.app/?notrack`.
-3. 🚨⭐⭐ **KATHY'S REAL QUIZ ANSWERS.** They are the one thing that would turn the Revolve fix from PREDICTED to
-   MEASURED, and the same ask is open for her mother. **The chat fix has never been exercised by a real woman.**
-4. ⭐ **THE TWO MALL BLURBS ARE CLAUDE DRAFTS** — hers to reword, one string each.
-5. ⭐ **SATIN AND SEQUINS GENERALLY — open since 08-22 and still the oldest untouched item on her list.** Her
-   complaint was ordinary shopping, not occasions. **The lever she has already used for exactly this is the velvet
-   brake, not a veto.**
-6. ▶ **PRINT TOPS** — `to4` is still the only Tops row with zero curated products.
-7. ⭐⭐ **OUTFIT SUGGESTIONS** — Jen asked independently and it IS her parked Favorite Outfit page.
-8. ⭐ **"SHOW THE STYLIST WHAT I PICKED"** — Kathy's, still no mechanism at all.
-9. ⏰ **26 AUGUST — the Routine `trig_01SZerTsvKoeUYzeT1HX6iWs` fires** (catalog + Almira check-in, updated 08-23).
-10. ⏰ **28 AUGUST — the recurring-payments Routine.**
-11. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null`. ⚠️ **NOTHING IN THE SYSTEM
+4. 🚨⭐⭐ **KATHY'S REAL QUIZ ANSWERS.** Still the one thing that would turn the Revolve chat fix from PREDICTED to
+   MEASURED. **The chat fix has never been exercised by a real woman.** Same ask open for her mother.
+5. ⭐ **THE TWO MALL BLURBS ARE CLAUDE DRAFTS** — hers to reword, one string each.
+6. ⭐ **THE `c:` LINES ARE NOW A KNOWN WEAK POINT, and this is new.** Tuckernuck's says "occasion" and it is
+   actively wrong; J.Crew's and Ann Taylor's say "dresses" and are too vague to distinguish a sheath from a gown.
+   ▶ **The gown restriction routes AROUND that hole rather than fixing it. The 08-15 parked question is now
+   overdue: should a FOCUSED store's `c:` line be tightened?** Her call, store by store, never a sitting.
+7. ⭐ **SATIN AND SEQUINS GENERALLY — open since 08-22 and still the oldest untouched item on her list.** Her
+   complaint was ordinary shopping, not occasions. **The lever she has already used is the velvet brake, not a veto.**
+8. ▶ **PRINT TOPS** — `to4` is still the only Tops row with zero curated products.
+9. ⭐⭐ **OUTFIT SUGGESTIONS** — Jen asked independently and it IS her parked Favorite Outfit page.
+10. ⭐ **"SHOW THE STYLIST WHAT I PICKED"** — Kathy's, still no mechanism at all.
+11. ⏰ **26 AUGUST — the Routine `trig_01SZerTsvKoeUYzeT1HX6iWs` fires** (catalog + Almira check-in, updated 08-23).
+12. ⏰ **28 AUGUST — the recurring-payments Routine.**
+13. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null`. ⚠️ **NOTHING IN THE SYSTEM
     WILL RAISE THIS.** If it slips, the cover-up dress waits until 24 January 2027.
-12. ⚠️ **THE TWO LINK-CHECK ROUTINES STILL OVERLAP.** Standing recommendation since 08-21: keep Sunday, retire
+14. ⚠️ **THE TWO LINK-CHECK ROUTINES STILL OVERLAP.** Standing recommendation since 08-21: keep Sunday, retire
     Monday. **Her call, still unmade.**
-13. ⭐ **THE OCCASION FORMALITY NUMBERS ARE STILL HERS TO ADJUST** — 37 entries, one line each.
-14. 📊 **Her Plausible dashboard**, and: **does anyone open the Style Star Card, and does anyone type an occasion
-    into the ask box?**
-15. 🔎 **SEO / MARKETING — her own parked item, raised 08-23 morning and still never picked up.**
+15. ⭐ **THE OCCASION FORMALITY NUMBERS ARE STILL HERS TO ADJUST** — now **43** entries, one line each.
+16. 📊 **Her Plausible dashboard**, and: **does anyone open the Style Star Card, and does anyone type an occasion
+    into the ask box?** ⭐ **That last one is no longer hypothetical — her mother does.**
+17. 🔎 **SEO / MARKETING — her own parked item, raised 08-23 morning and still never picked up.**
+18. 💰 **AFFILIATES: Sachin & Babi declined (one advertiser, reapplyable).** CJ and AWIN still the next doors,
+    Impact in 2-3 months WITH the Plausible link. **AMAZON LAST.**
 
 ## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-23 LATER — 🗓 HER MOTHER'S SEARCH IS FIXED, AND THE OCCASION VOCABULARY IS BUILT)
 
