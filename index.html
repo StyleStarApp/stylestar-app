@@ -6567,8 +6567,41 @@ const _OCC_MODEST='Modest coverage matters for this occasion. Covered shoulders,
 // sombre rule's hemline clause.
 const _OCC_GAMEDAY='This is a casual outdoor occasion spent standing, walking and sitting on bleachers, so every piece must be practical to wear for hours. NEVER evening or going-out pieces: no sequins, no strappy heels, nothing she would wear to a club or a party. Shoes must be flat or low and genuinely walkable, and sneakers and boots are welcome here. Layers work well. A mini skirt is fine. This rule is absolute, the same weight as her never-wear list.';
 const _OCCASIONS=[
+  // 🚨 THE RELATIONS ARE THEIR OWN ENTRIES, AND THEY EXIST BECAUSE HER MOTHER
+  // TYPED "Grandmother of the bride" AND WAS TOLD SHE WAS THE MOTHER, SIX TIMES
+  // OVER (2026-08-24). "grandmother of the bride" CONTAINS "mother of the
+  // bride", _askOccasion matches by indexOf, so her own word was swallowed and
+  // every card came back named "Mother of the Bride Dress".
+  // ▶▶ THE SUBSTRING TRAP AGAIN, BUT MIRRORED, WHICH IS WHY THE SIX TESTS
+  // WRITTEN ON 08-23 COULD NOT CATCH IT: those pin a SHORT phrase firing inside
+  // a longer WORD ('mass' in "massage", 'class' in "classic"). This is a longer
+  // WORD swallowing the phrase from the FRONT. Longest-phrase-wins in
+  // _askOccasion is what makes these entries take precedence; nothing else had
+  // to change.
+  // ▶ THE LINK WAS NEVER WRONG, ONLY THE WORDS. MEASURED: Dillard's returns a
+  // BYTE-IDENTICAL page for both phrases (741,675 bytes, "gown" x1047), and
+  // Macy's is better still - grandmother-of-the-bride serves 398 gowns AND 145
+  // mentions of "grandmother", so it is a real retail phrase with its own
+  // content, not a narrower guess. That is why her word goes into the SEARCH as
+  // well as onto the card: name/search parity stays intact and the card never
+  // promises a word the link does not carry.
+  // ⚠️ NORDSTROM IS UNMEASURED. Both phrases return 200 but it serves a JS
+  // shell, so there is no result count readable from a sandbox. Flagged to her
+  // rather than inferred.
+  // ⚠️ HER CALLS, BOTH OF THEM: same formality as the mother (1.0), and ALL SIX
+  // relations treated identically. ▶ AND THE ONE THAT MATTERS MOST IS NOT
+  // grandmother, it is STEPMOTHER: being told she is the mother carries real
+  // family weight, nobody would ever report it, she would just close the app.
+  // ⚠️ DO NOT collapse these back into one entry "because grandmother is just a
+  // mother". The whole point is that the app says HER word back to her.
   {p:'mother of the bride',f:1.0,retail:true},
   {p:'mother of the groom',f:1.0,retail:true},
+  {p:'grandmother of the bride',f:1.0,retail:true},
+  {p:'grandmother of the groom',f:1.0,retail:true},
+  {p:'godmother of the bride',f:1.0,retail:true},
+  {p:'godmother of the groom',f:1.0,retail:true},
+  {p:'stepmother of the bride',f:1.0,retail:true},
+  {p:'stepmother of the groom',f:1.0,retail:true},
   {p:'black tie',f:1.0,retail:false},
   {p:'gala',f:1.0,retail:false},
   {p:'formal',f:0.95,retail:false,range:true},

@@ -164,6 +164,47 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
     const got=await pg.evaluate(a=>_askOccasion(a)!==null,ask);
     ok(got===shouldMatch, `"${ask}" ${shouldMatch?'matches':'matches NOTHING'}`);
   }
+  // 🚨🚨 THE MIRRORED SUBSTRING TRAP, AND IT IS HER MOTHER'S OWN REPRO
+  // (2026-08-24). She typed "Grandmother of the bride" and every one of the six
+  // cards came back named "Mother of the Bride Dress", because
+  // "grandmother of the bride" CONTAINS "mother of the bride".
+  // ▶ THE CASES ABOVE PIN THE OPPOSITE DIRECTION - a SHORT phrase firing inside
+  // a longer WORD ('mass' in "massage"). This is a longer WORD swallowing the
+  // phrase from the FRONT, which is why those six could not catch it. Keep both
+  // families here so neither direction can regress.
+  console.log('\n── PART 5d: the relations, and her mother\'s repro ──');
+  for(const [ask,want] of [
+      ['Grandmother of the bride',  'grandmother of the bride'],
+      ['grandmother of the groom',  'grandmother of the groom'],
+      ['godmother of the bride',    'godmother of the bride'],
+      ['godmother of the groom',    'godmother of the groom'],
+      ['stepmother of the bride',   'stepmother of the bride'],
+      ['stepmother of the groom',   'stepmother of the groom'],
+      ['mother of the bride',       'mother of the bride'],
+      ['mother of the groom',       'mother of the groom']]){
+    const got=await pg.evaluate(a=>{const o=_askOccasion(a);return o?o.p:null},ask);
+    ok(got===want, `"${ask}" resolves to "${want}"`, got);
+  }
+  // HER TWO CALLS, pinned so neither can drift: identical formality to the
+  // mother, and all six relations treated the same.
+  const rel=await pg.evaluate(()=>['grandmother of the bride','grandmother of the groom',
+      'godmother of the bride','godmother of the groom','stepmother of the bride',
+      'stepmother of the groom','mother of the bride','mother of the groom']
+      .map(p=>{const o=_askOccasion(p);return o?[o.f,o.retail,!!o.range,!!o.define].join():'MISSING'}));
+  ok(rel.every(r=>r===rel[0]), 'all eight relations carry identical formality and flags', rel.join(' | '));
+  ok(rel[0]==='1,true,false,false', 'and that is f=1.0, retail:true, no range, no definition', rel[0]);
+  // ▶ THE POINT OF THE WHOLE FIX: the app says HER word back to her. The prompt
+  // must carry the phrase she typed, and must NOT carry the one she did not.
+  for(const [ask,her,notHers] of [
+      ['Grandmother of the bride dress', 'grandmother of the bride', 'mother of the bride dress'],
+      ['stepmother of the bride dress',  'stepmother of the bride',  'mother of the bride dress']]){
+    const d=await pg.evaluate(a=>{_ssAsk=a;return _askedForRule()},ask);
+    ok(d.indexOf('SHE HAS NAMED AN OCCASION: "'+her+'"')>=0, `"${ask}" puts HER phrase in the prompt`);
+    ok(d.indexOf('RIGHT: "'+notHers)<0, `"${ask}" never holds up "${notHers}" as the model search`);
+    ok(d.indexOf('the 2-to-4-word limit above DOES NOT APPLY')>=0, `"${ask}" keeps the word-cap exemption`);
+  }
+  await pg.evaluate(()=>{_ssAsk=''});
+
   // The dress-down end, her new territory.
   const low=await pg.evaluate(()=>({
     school:(_askOccasion('school outfit')||{}).f, concert:(_askOccasion('concert outfit')||{}).f,
