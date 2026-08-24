@@ -236,6 +236,43 @@ const gate=await pg.evaluate(()=>{
 ok('GATE: an unapproved store shows NO photo even with a px: url', gate.unapproved===false, JSON.stringify(gate));
 ok('GATE: the approved store shows it again', gate.restored===true, JSON.stringify(gate));
 
+/* 📸 HER OWN PHOTOGRAPHS (2026-08-24). `ownPx` deliberately BYPASSES the
+   affiliate gate above, because the licence is hers, not a retailer's — she
+   took the picture of a piece she owns. That is a genuine hole in the gate if
+   it is ever loosened, so the shape of an acceptable path is pinned hard here:
+   a relative file under stars/, never a URL, never a traversal, never an SVG.
+   ▶ The whole reason it exists: only 3 of the 19 stars sit on an approved
+   advertiser, so the rotation would otherwise show a text-only card 16 weeks
+   out of 19 — which is exactly why she froze it in the first place. */
+const own=await pg.evaluate(()=>{
+  const keep=window.WEEK_STAR_PIN, star=WEEK_STARS.find(x=>x.n===keep);
+  const url0=star.url, px0=star.px;
+  const shows=()=>{const im=document.querySelector('#wbStar .wks-px');return im?im.getAttribute('src'):null;};
+  const out={};
+  // her own photo, on a store that could never license one
+  star.url='https://www.nordstrom.com/s/8960533'; delete star.px;
+  star.ownPx='stars/bangles.jpg'; _renderWeekStar(); out.ownOnUnapproved=shows();
+  // ownPx wins when both are present
+  star.px=px0; star.url=url0; _renderWeekStar(); out.ownBeatsPx=shows();
+  // every shape that must render nothing at all
+  out.rejected={};
+  ['https://evil.example/x.jpg','stars/../../etc/passwd','javascript:alert(1)',
+   'stars/x.svg','bangles.jpg','stars/sub/dir.jpg'].forEach(v=>{
+    star.ownPx=v; delete star.px; star.url='https://www.nordstrom.com/s/8960533';
+    _renderWeekStar(); out.rejected[v]=shows();
+  });
+  delete star.ownPx; star.px=px0; star.url=url0; _renderWeekStar();
+  out.restored=!!document.querySelector('#wbStar .wks-px');
+  return out;
+});
+ok('OWN PHOTO: hers shows even where a retailer\'s never could',
+   own.ownOnUnapproved==='stars/bangles.jpg', String(own.ownOnUnapproved));
+ok('OWN PHOTO: hers WINS when both are present',
+   own.ownBeatsPx==='stars/bangles.jpg', String(own.ownBeatsPx));
+ok('OWN PHOTO: every unsafe or malformed path renders NOTHING',
+   Object.values(own.rejected).every(v=>v===null), JSON.stringify(own.rejected));
+ok('OWN PHOTO: the queue is left exactly as it was found', own.restored===true);
+
 // the whole card still fits above a real iPhone fold
 await pg.setViewportSize({width:390,height:844});
 await pg.evaluate(()=>{show('s-wb');_renderWeekStar();window.scrollTo(0,0);});

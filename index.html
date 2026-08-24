@@ -12172,9 +12172,51 @@ function _weekStar(now){var i=_weekStarIndex(now);return i<0?null:WEEK_STARS[i];
 // show, and a Star given a px: url for an unapproved store silently shows no
 // photo rather than a liability. ▶ GREP _AFF_MID BEFORE ADDING A px: URL.
 // ⚠️ Adding a third Star surface? Call this. Do not re-derive the condition.
+/* 📸 HER OWN PHOTOGRAPHS — the shape of a valid `ownPx`, 2026-08-24.
+   Deliberately a STRICT relative path under stars/, never a URL: an arbitrary
+   src here would be a hole, and constraining it also documents where these
+   files live. See the licensing note in _wkStarPxTag directly below. */
+var _OWN_PX_RE=/^stars\/[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp)$/i;
+
+/* 🚨 THE PHOTO LICENSING GATE. Read this before touching photos on EITHER Star
+   surface — the front door and the Discovery page both come through here, from
+   one implementation, so the rule cannot be copied and drift.
+
+   ▶ TWO KINDS OF PHOTO, AND THE DIFFERENCE IS WHO OWNS THE PICTURE:
+
+   `px`     a RETAILER'S photograph, hotlinked. Their copyright. What licenses
+            it is an AFFILIATE APPROVAL with that retailer — never the fact that
+            we link to the piece, and never that the file is fetchable. So it is
+            gated on _affMid, the very function that decides whether a link can
+            EARN: if the link cannot earn, the photo is not ours to show.
+            ⚠️ GREP _AFF_MID BEFORE ADDING ONE.
+
+   `ownPx`  HER OWN photograph of a piece she owns. Her copyright, so there is
+            nobody to ask and no gate to pass — which is the entire point, and
+            it is why this bypasses _affMid rather than working around it.
+            ▶ IT EXISTS BECAUSE THE GATE HAD AN HONEST COST SHE SPOTTED HERSELF
+            (2026-08-24): only 3 of the 19 stars sit on an approved advertiser,
+            so unfreezing the rotation would have shown a text-only card 16
+            weeks out of 19. Her fix was better than mine: "I could take my own
+            photo of the amazon bracelets, actually I have those right here."
+            ⭐ And it is arguably the BETTER picture — a real stylist's own shot
+            of a piece she owns is the Sally differentiation shown rather than
+            claimed, where a retailer's studio shot is what every shop has.
+            ⚠️ These files live in stars/ and ARE committed. That is the exact
+            opposite of scratchpad/dvf-scarf.jpg, which .gitignore refuses
+            precisely because it is a RETAILER'S file in a public repo. Hers is
+            hers; the distinction is ownership, not file type.
+
+   ⚠️ ownPx WINS when both are present: it is always licensed and always hers.
+   ⚠️ A malformed ownPx, or a px on an unapproved store, renders NOTHING rather
+      than a broken image or a liability. Silence is the safe failure here. */
 function _wkStarPxTag(S,cls){
-  if(!(S&&S.px&&_affMid(S.url)&&_wlSafeUrl(S.px)))return '';
-  return '<img class="'+cls+'" src="'+_esc(S.px)+'" alt="'+_esc(S.n)+'" '
+  if(!S)return '';
+  var src='';
+  if(S.ownPx&&_OWN_PX_RE.test(S.ownPx))src=S.ownPx;
+  else if(S.px&&_affMid(S.url)&&_wlSafeUrl(S.px))src=S.px;
+  if(!src)return '';
+  return '<img class="'+cls+'" src="'+_esc(src)+'" alt="'+_esc(S.n)+'" '
     +'loading="eager" decoding="async" onerror="this.remove()">';
 }
 // The twin tilted gold stars (her pick "C", 2026-08-13) and her signature pink
