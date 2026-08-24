@@ -59,8 +59,16 @@ ok('J.Jill and Boden deliberately stay known-for only', !t.full.includes('J.Jill
 // that can take a specific search inside ONE lane and nowhere else, so the list
 // is a deliberate roll-call rather than a number: DVF returns 363 results for
 // "wrap dress" and a flat 0 for "sneakers".
-ok('the 6 category-deep stores, each in its own lane',
-   t.cat.sort().join(',') === "Athleta:activewear,DSW:shoes,Diane von Furstenberg:dresses,Lands' End:swimwear,Sunglass Hut:eyewear,Zappos:shoes", t.cat.join());
+ok('the 7 category-deep stores, each in its own lane',
+   t.cat.sort().join(',') === "Athleta:activewear,DSW:shoes,Diane von Furstenberg:dresses,Lands' End:swimwear,Sachin & Babi:evening and occasion dresses,Sunglass Hut:eyewear,Zappos:shoes", t.cat.join());
+// ⚠️ UPDATED DELIBERATELY 2026-08-24, +Sachin & Babi:'evening and occasion
+// dresses' -- her call, given when asked ("Yes it can go deep"). It is SCOPED
+// rather than deep:1 for the same reason DVF is: a single-brand house is deep
+// inside its lane and empty outside it.
+// ⚠️ AND THE ROLL-CALL STAYS RESTATED HERE ON PURPOSE, unlike almost every
+// other count in these suites. Noticing a store quietly gaining or losing a
+// depth flag is this file's entire job, so this is the one assertion that
+// SHOULD fail when the table changes. Bump it by hand; never find-replace it.
 // derived, never restated: a test that hardcodes a number must be edited every
 // time the list grows; a derived one never does (the curated.js lesson).
 ok('every remaining store carries no depth flag', t.none === t.total - t.full.length - t.cat.length,
