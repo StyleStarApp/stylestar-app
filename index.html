@@ -6566,6 +6566,53 @@ const _OCC_MODEST='Modest coverage matters for this occasion. Covered shoulders,
 // ⚠️ A MINI SKIRT IS EXPLICITLY FINE, her call, so this must never grow the
 // sombre rule's hemline clause.
 const _OCC_GAMEDAY='This is a casual outdoor occasion spent standing, walking and sitting on bleachers, so every piece must be practical to wear for hours. NEVER evening or going-out pieces: no sequins, no strappy heels, nothing she would wear to a club or a party. Shoes must be flat or low and genuinely walkable, and sneakers and boots are welcome here. Layers work well. A mini skirt is fine. This rule is absolute, the same weight as her never-wear list.';
+/* ── FORMAL GOWNS (2026-08-24, HER WORD AND HER LIST) ───────────────────────
+   HER MOTHER'S SECOND FINDING, and it is the half no measurement here could
+   have produced: "Tuckernuck, J Crew, and Ann Taylor do not even have mother of
+   the bride dresses. The department stores do and specialty shops."
+   Her mother's six cards were Nordstrom, Dillard's, Tuckernuck, Macy's, J.Crew
+   and Ann Taylor -- THREE of the six were stores that do not stock the category
+   at all.
+   ▶ MEASURED, and her stylist knowledge was right: Tuckernuck serves 1.34MB
+   with ZERO gowns (the padded-thin-page behaviour she caught on 08-15 with
+   "print wrap top"), Ann Taylor 2.97MB with ZERO gowns, against Dillard's 1047
+   and Macy's 470. J.Crew answers 377 bytes to a sandbox, so her word stands
+   there without a number.
+   ▶▶ THE CAUSE, AND IT IS THE THIRD SIGHTING OF ONE FAMILY: "OCCASION" IS ONE
+   WORD COVERING TWO COMPLETELY DIFFERENT DEPARTMENTS. Twelve stores name it in
+   their c: line and only THREE mean gowns; the other nine mean a nice dress for
+   a party (Revolve, Anthropologie, Reformation, Alice + Olivia, LoveShackFancy,
+   Baltic Born, White House Black Market, Tuckernuck, DVF). Same shape as "print"
+   not being a retail word (08-22) and stores dropping "midi" (08-20).
+   ⚠️ AND IT IS WORSE FOR THE OTHER TWO: J.Crew's c: line says "dresses" and Ann
+   Taylor's says "dresses". She asked for a dress, so the model reasonably
+   concluded they qualify. Nothing anywhere told it a formal gown is a DIFFERENT
+   DEPARTMENT from a dress.
+   ⚠️ "FORMAL GOWNS" IS HER WORD, chosen deliberately over "occasion" or
+   "special occasion" because it names the GARMENT rather than the EVENT, so it
+   cannot drift back into meaning a party dress.
+   ⚠️⚠️ THE LIST IS HERS, NOT INFERRED. Candidates were put to her and she
+   corrected them: Nordstrom Rack and Alice + Olivia IN, Revolve, LoveShackFancy,
+   Baltic Born and Anthropologie OUT. Do not grow it by keyword-matching c:
+   lines -- that is the Garnet Hill mistake, and it is exactly how "occasion"
+   came to mean two things in the first place.
+   ⚠️ THIS GOVERNS THE STORE, NEVER THE GARMENT (the _NEVER_STORE separation).
+   Her ranking still orders these eleven, so FIT BEATS DEPTH is untouched: the
+   list is re-ordered for her, never re-ordered by us.
+   ⚠️ PROM AND HOMECOMING ARE DELIBERATELY NOT HERE. Her call, and it is a third
+   department again: "Revolve is great for prom or homecoming", while a formal
+   gown specialist is wrong for a teenager. That list is her next piece of work;
+   until it exists, prom carries no store restriction at all. */
+const _GOWN_STORES=['Nordstrom',"Dillard's","Macy's",'Bloomingdales','Belk','Saks',
+  'Neiman Marcus','Bergdorf Goodman','NET-A-PORTER','Nordstrom Rack','Alice + Olivia'];
+function _gownStoreRule(){
+  return '- THIS CALLS FOR A FORMAL GOWN, WHICH IS ITS OWN DEPARTMENT AND NOT SIMPLY A DRESS. '
+    +'Only these stores carry it, and every one of the 6 picks must come from this list: '
+    +_GOWN_STORES.join(', ')+'. '
+    +'NEVER a contemporary, workwear, resort or party-dress store however strong its dress range or however well it suits her: '
+    +'J.Crew, Ann Taylor and Tuckernuck do not stock a single formal gown between them, and a store whose range is cocktail and wedding-guest dresses is not the same department. '
+    +'Order the list above by how well each store suits her, closest first, exactly as you would anywhere else.\n';
+}
 const _OCCASIONS=[
   // 🚨 THE RELATIONS ARE THEIR OWN ENTRIES, AND THEY EXIST BECAUSE HER MOTHER
   // TYPED "Grandmother of the bride" AND WAS TOLD SHE WAS THE MOTHER, SIX TIMES
@@ -6594,17 +6641,17 @@ const _OCCASIONS=[
   // family weight, nobody would ever report it, she would just close the app.
   // ⚠️ DO NOT collapse these back into one entry "because grandmother is just a
   // mother". The whole point is that the app says HER word back to her.
-  {p:'mother of the bride',f:1.0,retail:true},
-  {p:'mother of the groom',f:1.0,retail:true},
-  {p:'grandmother of the bride',f:1.0,retail:true},
-  {p:'grandmother of the groom',f:1.0,retail:true},
-  {p:'godmother of the bride',f:1.0,retail:true},
-  {p:'godmother of the groom',f:1.0,retail:true},
-  {p:'stepmother of the bride',f:1.0,retail:true},
-  {p:'stepmother of the groom',f:1.0,retail:true},
-  {p:'black tie',f:1.0,retail:false},
-  {p:'gala',f:1.0,retail:false},
-  {p:'formal',f:0.95,retail:false,range:true},
+  {p:'mother of the bride',f:1.0,retail:true,gown:true},
+  {p:'mother of the groom',f:1.0,retail:true,gown:true},
+  {p:'grandmother of the bride',f:1.0,retail:true,gown:true},
+  {p:'grandmother of the groom',f:1.0,retail:true,gown:true},
+  {p:'godmother of the bride',f:1.0,retail:true,gown:true},
+  {p:'godmother of the groom',f:1.0,retail:true,gown:true},
+  {p:'stepmother of the bride',f:1.0,retail:true,gown:true},
+  {p:'stepmother of the groom',f:1.0,retail:true,gown:true},
+  {p:'black tie',f:1.0,retail:false,gown:true},
+  {p:'gala',f:1.0,retail:false,gown:true},
+  {p:'formal',f:0.95,retail:false,range:true,gown:true},
   {p:'bridesmaid',f:0.9,retail:true},
   {p:'prom',f:0.9,retail:true},
   {p:'wedding guest',f:0.85,retail:true},
@@ -7866,6 +7913,10 @@ function _askedForRule(){
     // Dillard's: "black tie dress" 122KB against 707KB for mother of the bride.
     r+='- SHE HAS NAMED AN OCCASION: "'+o.p+'". Dress her for it, but keep that word OUT of the search terms. Stores do not stock a "'+o.p+'" section and the word finds almost nothing on its own. Search for the GARMENT that suits the occasion instead ("beaded evening gown", "long chiffon gown", "velvet midi dress") and let the pieces themselves carry the formality.\n';
   }
+  // HER STORE RESTRICTION. Deliberately OUTSIDE the retail/non-retail branches
+  // above, because it governs WHICH STORE, not what goes in the search: black
+  // tie and gala are retail:false and still need the gown department.
+  if(o.gown)r+=_gownStoreRule();
   r+=o.range
     ? '- That occasion spans several levels of formality, so COVER THE RANGE across the 6 rather than guessing one point on it.\n'
     : '- That occasion has ONE clear level of formality. Dress her for exactly that and do not spread the 6 across dressy and casual: every single piece must be right to wear to it.\n';
