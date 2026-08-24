@@ -1,0 +1,18 @@
+# Style Star — https://stylestar.app
+#
+# Everything here is meant to be found. The one page that is NOT is the shared
+# wishlist at /list/<token>, and it is deliberately NOT disallowed below.
+#
+# ⚠️ THAT LOOKS BACKWARDS AND IS NOT. "Disallow" tells a crawler not to FETCH a
+# page — which means it never sees the noindex instruction on it, and Google can
+# still list a disallowed URL it found linked somewhere else, showing the bare
+# address. For a wishlist the ADDRESS IS THE CREDENTIAL, so a URL-only listing
+# would be the whole leak. The page is therefore left crawlable and serves
+# "noindex, nofollow" instead (netlify/edge-functions/list-preview.js), which is
+# the instruction that actually removes a page from the index.
+# ▶ Do not "tighten" this by adding Disallow: /list/. It would make it weaker.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://stylestar.app/sitemap.xml

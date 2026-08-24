@@ -97,7 +97,7 @@ const rot = await page.evaluate(()=>{
     // the pin itself, measured after restoring it
     pinned:(()=>{window.WEEK_STAR_PIN=_pin;
       const seen=new Set(); for(let d=0;d<364;d+=7){seen.add(_weekStarIndex(new Date(2026,7,9+d)));}
-      return {holds:seen.size===1, isScarf:/Flag Scarf/.test((_weekStar()||{}).n||''),
+      return {holds:seen.size===1, isPinned:((_weekStar()||{}).n||'')===window.WEEK_STAR_PIN,
               names:WEEK_STARS.some(x=>x.n===_pin)};})()
   };
 });
@@ -121,7 +121,11 @@ ok('every entry complete with a safe https product URL', rot.complete);
 ok('no duplicate items in the queue', rot.uniqueUrls);
 // HER PIN, 2026-08-20 — the Star holds until she is ready for testers.
 ok('PINNED: the same Star on every week of the year', rot.pinned.holds);
-ok('PINNED: and it is her DVF silk scarf', rot.pinned.isScarf);
+// ⚠️ UPDATED DELIBERATELY 2026-08-24: this named the DVF scarf and failed
+// the moment she moved the pin to her FARM Rio maxi -- i.e. it failed on the
+// feature working. Derived from WEEK_STAR_PIN now, which is the stronger
+// claim and survives every future pin move.
+ok('PINNED: and the served Star IS whatever the pin names', rot.pinned.isPinned);
 ok('the pin names a piece that really is in the queue', rot.pinned.names);
 
 console.log('3. Saving the star');

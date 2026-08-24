@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Style Star | Discover your signature style</title>
 <meta name="description" content="A personal stylist at your fingertips. Take our fun quiz to reveal what brings out the best in you, then shop with clarity and confidence.">
+<!-- ⚠️ THE APEX IS THE CANONICAL HOST. Verified live 2026-08-24: www 301s TO
+     stylestar.app, not the other way round, so every address we publish is
+     written without www (robots.txt and sitemap.xml agree).
+     ▶ WHY IT IS HERE AT ALL: this is a single-page app, so /story, /faq,
+     /privacy, /terms and /contact are all REWRITES onto this same file. To a
+     search engine that is six addresses serving identical raw HTML, which is
+     textbook duplicate content -- and left alone Google picks a winner itself
+     and may drop the rest. This names the one page that should rank.
+     ⚠️ og:url and og:image still say www. Left alone DELIBERATELY: they work
+     (a preview fetcher follows the 301), and that card is already sitting in
+     fifteen testers' message threads. Cosmetic inconsistency, not a fault. -->
+<link rel="canonical" href="https://stylestar.app/">
 <!-- ⚠️ THE LINK PREVIEW CARD. This is not decoration: when a woman texts her
      Style Star Card, Messages lifts the trailing url out of her caption and
      renders THIS as a preview card underneath, so these words are the first
@@ -6309,7 +6321,15 @@ function _alreadyWomens(term){
 // ⚠️ Never double-wraps, so it is safe to call twice on the same URL -- which
 // happens by design when an Edit href is rewritten and then saved.
 var _AFF_ID='jZNkkinrr1k';
-var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590','vilebrequin.com':'43322'};
+var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590','vilebrequin.com':'43322',
+  // Olivela approved 2026-08-24 (mid 50334). ⚠️ INERT UNTIL A LINK EXISTS:
+  // olivela.com appears nowhere in STORES, the Edit or the Star queue yet, so
+  // nothing is wrapped today. It is recorded here so the moment she adds one
+  // (a store entry, an Edit pick, a Star) it earns with no plumbing change.
+  // ⚠️ Its SEARCH URL IS UNVERIFIED -- olivela.com renders search client-side
+  // and answers a gibberish query with the same page as a real one, so no
+  // number measurable from a sandbox means anything. Her address bar only.
+  'olivela.com':'50334'};
 function _affMid(u){
   try{
     var host=new URL(u).hostname.toLowerCase().replace(/^www\./,'');
@@ -8947,7 +8967,24 @@ const mallStores=[
     {n:"Bloomingdale's",d:'Designer to contemporary in one place',u:'https://www.bloomingdales.com'},
     {n:'Revolve',d:'Trend-forward and going-out looks',u:'https://www.revolve.com'},
     {n:'NET-A-PORTER',d:'Luxury designer fashion',u:'https://www.net-a-porter.com'},
-    {n:'Diane von Furstenberg',d:'Wrap dresses and prints for occasions',u:'https://www.dvf.com'}
+    {n:'Diane von Furstenberg',d:'Wrap dresses and prints for occasions',u:'https://www.dvf.com'},
+    /* Olivela, her fourth Rakuten advertiser (mid 50334), added 2026-08-24 the
+       day it approved. Filed here rather than with the value stores because it
+       is a luxury multi-brand house -- the shelf NET-A-PORTER and Saks are on.
+       ⚠️ THE BLURB DELIBERATELY CARRIES NO NUMBER. Their own live page says
+       "20% of the net proceeds from every purchase supports causes chosen by
+       you" (measured 2026-08-24, gender-equality causes), and that giving-back
+       model is the honest reason a woman would choose them over NET-A-PORTER --
+       but a percentage is a THIRD PARTY'S promise that can change without
+       telling us, and this card would then be lying on her behalf. The fact
+       goes in the blurb; the number stays in this comment.
+       ⚠️ The blurb is a CLAUDE DRAFT, like FARM Rio's and DVF's above. Every
+       other blurb in this list is hers -- one string if she wants her words.
+       ⚠️ Olivela is NOT in the STORES table yet, so the stylist still cannot
+       suggest it: that needs her ten dimension scores, and one confirming tap
+       on the bare search form. The Mall needs neither, which is why this could
+       land today. */
+    {n:'Olivela',d:'Designer labels, and every order gives back',u:'https://www.olivela.com'}
   ]},
   {cat:'Value & Basics',stores:[
     {n:'Amazon',d:'Everything, fast, great for basics',u:'https://www.amazon.com/fashion'},
@@ -12039,14 +12076,25 @@ function _buildWbHubs(){
 // The Edit page keeps her FULL notes (its own fuller register); only the Star
 // card speaks in one-liners. URLs are the Edit's own exact product links
 // (canonical, tracking stripped per the standing rule).
-/* ⚠️ PINNED, her call 2026-08-20: the Star holds on the DVF silk scarf until she
-   is ready to invite testers, THEN the weekly rotation resumes.
-   ▶ TO RESUME: set WEEK_STAR_PIN back to null. Nothing else to change — the
-   queue and the anchor Sunday are untouched, so rotation simply starts obeying
-   the calendar again. ⚠️ The queue is 17 now, so the week-to-item mapping has
-   shifted (it is week mod 17, not mod 16); ask her whether she wants it
-   reordered at the moment she unpins rather than guessing for her. */
-var WEEK_STAR_PIN='Diane von Furstenberg Flag Scarf — Myrtle Berry';
+/* ⚠️ PINNED. Her call 2026-08-24: the Star moves to her FARM Rio Pink Garden
+   Terrace maxi (it was the DVF silk scarf, pinned 2026-08-20 while she waited
+   to invite testers; testers are out now, so the reason that pin existed is
+   spent and only her choice of piece is holding it).
+   ▶ TO RESUME THE ROTATION: set WEEK_STAR_PIN back to null. Nothing else to
+   change — the queue and the anchor Sunday are untouched, so rotation simply
+   starts obeying the calendar again.
+   ⚠️⚠️ AND THE ONE THING WITH A REAL CLOCK, so it cannot pass unnoticed: the
+   Vilebrequin cover-up sits at INDEX 6, which is the week of 20 SEPTEMBER 2026.
+   She asked for it "before December, closer to summer would be best". If she is
+   still pinned on 20 September it does not come up, and the next time index 6
+   comes round is 24 JANUARY 2027. ▶ That is exactly why the FARM Rio entry was
+   inserted AFTER the cover-up rather than before it: adding an item ahead of
+   index 6 would have quietly slid her deadline a week without anyone deciding
+   to. Any future insertion owes the same care.
+   ⚠️ The queue is 19 now, so the week-to-item mapping is week mod 19; ask her
+   whether she wants it reordered at the moment she unpins rather than guessing
+   for her. */
+var WEEK_STAR_PIN='FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress';
 var WEEK_STARS=[
   {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/8960533',price:'$89',
    note:'A kitten heel is the easiest polish there is. Slide it on and every outfit steps up a notch.'}, // ✅ BLESSED by Cath 2026-08-13 — hers now, don't reword
@@ -12063,6 +12111,14 @@ var WEEK_STARS=[
   {n:'Vilebrequin Long Mesh Cover-Up Dress — Off White',store:'Vilebrequin',url:'https://www.vilebrequin.com/us/en/product/IAACG200-003',price:'$405',
    note:'The trending style for beach, pool, and resort. The adjustable straps are perfect.',
    px:'https://www.vilebrequin.com/dw/image/v2/BLGH_PRD/on/demandware.static/-/Sites-vilebrequin-catalog-master/default/dwb578af10/images/IAACG200-003/IAACG200-003-front-3240x4050.jpg?sw=800'},
+  {n:'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',store:'FARM Rio',url:'https://farmrio.com/products/garden-terrace-pink-one-shoulder-maxi-dress',price:'$360',
+   note:'100% linen and as stunning as it is sweet. The 3D flower and asymmetrical look are charming.',
+   // ⚠️ $360 IS THE REGULAR PRICE AND THAT IS DELIBERATE. Measured 2026-08-24:
+   // the page is live at $270 with compare_at_price 36000, i.e. genuinely on
+   // sale. Her standing rule is list the regular price, never the sale price --
+   // a sale expires and this card is evergreen, and arriving to find a piece
+   // CHEAPER than promised feels lucky where the reverse feels misled.
+   px:'https://farmrio.com/cdn/shop/files/347964_01_1.jpg?v=1778615230&width=800'},
   {n:'Gucci 53mm Small Oval Sunglasses',store:'Nordstrom',url:'https://www.nordstrom.com/s/7651301',price:'$295',
    note:'Current but also 90\'s at the same time. Sunnies are worn every day, the perfect place to splurge.'},
   {n:'Express Editor High Waisted Flare Trouser — Pitch Black',store:'Express',url:'https://www.express.com/clothing/women/editor-studio-stretch-twill-high-waisted-flare-trouser/pro/07442348/color/Pitch%20Black/e/regular/',price:'~$90',
@@ -12116,9 +12172,51 @@ function _weekStar(now){var i=_weekStarIndex(now);return i<0?null:WEEK_STARS[i];
 // show, and a Star given a px: url for an unapproved store silently shows no
 // photo rather than a liability. ▶ GREP _AFF_MID BEFORE ADDING A px: URL.
 // ⚠️ Adding a third Star surface? Call this. Do not re-derive the condition.
+/* 📸 HER OWN PHOTOGRAPHS — the shape of a valid `ownPx`, 2026-08-24.
+   Deliberately a STRICT relative path under stars/, never a URL: an arbitrary
+   src here would be a hole, and constraining it also documents where these
+   files live. See the licensing note in _wkStarPxTag directly below. */
+var _OWN_PX_RE=/^stars\/[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp)$/i;
+
+/* 🚨 THE PHOTO LICENSING GATE. Read this before touching photos on EITHER Star
+   surface — the front door and the Discovery page both come through here, from
+   one implementation, so the rule cannot be copied and drift.
+
+   ▶ TWO KINDS OF PHOTO, AND THE DIFFERENCE IS WHO OWNS THE PICTURE:
+
+   `px`     a RETAILER'S photograph, hotlinked. Their copyright. What licenses
+            it is an AFFILIATE APPROVAL with that retailer — never the fact that
+            we link to the piece, and never that the file is fetchable. So it is
+            gated on _affMid, the very function that decides whether a link can
+            EARN: if the link cannot earn, the photo is not ours to show.
+            ⚠️ GREP _AFF_MID BEFORE ADDING ONE.
+
+   `ownPx`  HER OWN photograph of a piece she owns. Her copyright, so there is
+            nobody to ask and no gate to pass — which is the entire point, and
+            it is why this bypasses _affMid rather than working around it.
+            ▶ IT EXISTS BECAUSE THE GATE HAD AN HONEST COST SHE SPOTTED HERSELF
+            (2026-08-24): only 3 of the 19 stars sit on an approved advertiser,
+            so unfreezing the rotation would have shown a text-only card 16
+            weeks out of 19. Her fix was better than mine: "I could take my own
+            photo of the amazon bracelets, actually I have those right here."
+            ⭐ And it is arguably the BETTER picture — a real stylist's own shot
+            of a piece she owns is the Sally differentiation shown rather than
+            claimed, where a retailer's studio shot is what every shop has.
+            ⚠️ These files live in stars/ and ARE committed. That is the exact
+            opposite of scratchpad/dvf-scarf.jpg, which .gitignore refuses
+            precisely because it is a RETAILER'S file in a public repo. Hers is
+            hers; the distinction is ownership, not file type.
+
+   ⚠️ ownPx WINS when both are present: it is always licensed and always hers.
+   ⚠️ A malformed ownPx, or a px on an unapproved store, renders NOTHING rather
+      than a broken image or a liability. Silence is the safe failure here. */
 function _wkStarPxTag(S,cls){
-  if(!(S&&S.px&&_affMid(S.url)&&_wlSafeUrl(S.px)))return '';
-  return '<img class="'+cls+'" src="'+_esc(S.px)+'" alt="'+_esc(S.n)+'" '
+  if(!S)return '';
+  var src='';
+  if(S.ownPx&&_OWN_PX_RE.test(S.ownPx))src=S.ownPx;
+  else if(S.px&&_affMid(S.url)&&_wlSafeUrl(S.px))src=S.px;
+  if(!src)return '';
+  return '<img class="'+cls+'" src="'+_esc(src)+'" alt="'+_esc(S.n)+'" '
     +'loading="eager" decoding="async" onerror="this.remove()">';
 }
 // The twin tilted gold stars (her pick "C", 2026-08-13) and her signature pink

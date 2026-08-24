@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Style Star's real pages. Every one of these is a rewrite in netlify.toml
+  (status 200) onto the single index.html, so the address is real even though
+  the app is one file.
+
+  ⚠️ DELIBERATELY ABSENT, both of them:
+  · /results   — it opens the Style Portrait on a device that already has one
+                 saved. To a crawler, which has none, it is byte-identical to
+                 the home page, so listing it would offer Google a duplicate.
+  · /list/*    — a woman's shared wishlist. The token IS the credential, so
+                 these must never be advertised. They also carry noindex.
+
+  ⚠️ The canonical host is the APEX, stylestar.app. www 301s to it (verified
+  2026-08-24), so every URL here is written without www.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://stylestar.app/</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://stylestar.app/story</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stylestar.app/faq</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://stylestar.app/contact</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://stylestar.app/privacy</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://stylestar.app/terms</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

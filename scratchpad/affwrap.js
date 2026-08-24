@@ -53,6 +53,7 @@ ok('every advertiser is a bare host mapped to a numeric MID',
 ok('FARM Rio mid 44912', u.mids['farmrio.com'] === '44912');
 ok('DVF mid 53590', u.mids['dvf.com'] === '53590');
 ok('Vilebrequin mid 43322', u.mids['vilebrequin.com'] === '43322');
+ok('Olivela mid 50334', u.mids['olivela.com'] === '50334');
 // 🚨 THE ASYMMETRY IS DELIBERATE AND FRAGILE, so it is pinned here. Vilebrequin
 // is an approved advertiser that is NOT in the STORES table — her call, because
 // their search returns a false negative on a product they stock — yet its Edit
@@ -151,6 +152,13 @@ ok('the Mall really rendered its cards (so the sweep is not vacuous)',
 ok('the Mall\'s FARM Rio card is wrapped, mid 44912',
    /click\.linksynergy\.com\/deeplink\?id=jZNkkinrr1k&mid=44912&murl=/.test(swept.mall['FARM Rio'] || ''),
    swept.mall['FARM Rio']);
+// ⚠️ Olivela approved 2026-08-24 and went straight into the Mall, so it is the
+// third card on that page that can earn. The catch-all sweep below would catch
+// a bare link anyway; this pins the MID so a typo in it is loud rather than
+// silently sending her taps to the wrong advertiser's account.
+ok('the Mall\'s Olivela card is wrapped, mid 50334',
+   /click\.linksynergy\.com\/deeplink\?id=jZNkkinrr1k&mid=50334&murl=/.test(swept.mall['Olivela'] || ''),
+   swept.mall['Olivela']);
 ok('the Mall\'s DVF card is wrapped, mid 53590',
    /click\.linksynergy\.com\/deeplink\?id=jZNkkinrr1k&mid=53590&murl=/.test(swept.mall['Diane von Furstenberg'] || ''),
    swept.mall['Diane von Furstenberg']);
