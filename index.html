@@ -2476,6 +2476,25 @@ body.card-fb{padding:0}
 .wks-store{font-family:'Jost',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#5f5647;text-transform:uppercase}
 .wks-note{font-family:'Lora',Georgia,serif;font-style:normal;font-size:15.5px;line-height:1.55;color:#4a463e;margin-top:7px;text-wrap:balance}
 .wks-note .wks-ch{width:11px;height:11px;fill:#F49AC1;transform:rotate(12deg);display:inline-block;vertical-align:-1px}
+/* 🚨 QUOTE MARKS ON HER STAR NOTE — her ask, 2026-08-24 ("let's put quotes
+   around my comment on Star of the Week"), and the SAME treatment the Style Star
+   Edit already gives her notes: DM Serif Display, gold #DFC271. Matching rather
+   than inventing a second quote style is the whole point -- her voice should look
+   the same wherever she speaks.
+   ⚠️ INLINE HERE, where the Edit's are HANGING, and that is forced by alignment
+   not taste: .dc-item-note is left-aligned so its opening quote is positioned
+   absolutely at left:-2px and hangs into the margin. This note is CENTRED, so an
+   absolute quote would strand itself at the block's left edge, yards from the
+   words it belongs to.
+   ⚠️ THEY WRAP .wks-q, NOT .wks-note, so the closing quote lands after her WORDS
+   and BEFORE her pink heart. The heart is her signature, not part of the
+   sentence -- ::after on the note itself would have put it outside the quotes.
+   ⚠️ line-height:0 keeps a 26px glyph from growing the line box. The Star card's
+   whole design constraint is that it clears the iPhone fold (her 140px pick,
+   2026-08-20), so the note must not gain height. MEASURED after this change.
+   ⚠️ em units, so they scale with #dsStar's smaller 14px note automatically. */
+.wks-q::before{content:"\201C";font-family:'DM Serif Display',Georgia,serif;font-size:1.7em;color:#DFC271;line-height:0;vertical-align:-0.24em;margin-right:1px}
+.wks-q::after{content:"\201D";font-family:'DM Serif Display',Georgia,serif;font-size:1.7em;color:#DFC271;line-height:0;vertical-align:-0.24em;margin-left:1px}
 .wks-act{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:11px}
 .wks-shop{display:inline-flex;align-items:center;gap:6px;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;padding:9px 19px;font-family:'Jost',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.07em;text-decoration:none}
 #wbStar .wl-save{cursor:pointer}
@@ -12321,7 +12340,7 @@ function _renderWeekStar(){
     +_wkStarPx
     +'<div class="wks-name">'+_esc(WEEK_STAR.n)+'</div>'
     +'<div class="wks-store">'+_esc(WEEK_STAR.store)+(WEEK_STAR.price?' &middot; '+_esc(WEEK_STAR.price):'')+'</div>'
-    +(WEEK_STAR.note?'<div class="wks-note">'+_esc(WEEK_STAR.note)+' '+_WKS_HEART_SVG+'</div>':'')
+    +(WEEK_STAR.note?'<div class="wks-note"><span class="wks-q">'+_esc(WEEK_STAR.note)+'</span> '+_WKS_HEART_SVG+'</div>':'')
     +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(WEEK_STAR.url)))+'" target="_blank" rel="sponsored noopener">Shop it &rarr;</a>'+_wlSaveBtn(item)+'</div>'
     +'</div>'
     +'<div class="wks-disc">Some links may earn a commission.</div>';
@@ -12348,7 +12367,7 @@ function _renderDiscoStar(){
     +_wkStarPxTag(S,'wks-px')
     +'<div class="wks-name">'+_esc(S.n)+'</div>'
     +'<div class="wks-store">'+_esc(S.store)+(S.price?' &middot; '+_esc(S.price):'')+'</div>'
-    +(S.note?'<div class="wks-note">'+_esc(S.note)+' '+_WKS_HEART_SVG+'</div>':'')
+    +(S.note?'<div class="wks-note"><span class="wks-q">'+_esc(S.note)+'</span> '+_WKS_HEART_SVG+'</div>':'')
     +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(S.url)))+'" '
       +'target="_blank" rel="sponsored noopener">Shop it &rarr;</a></div>'
     +'</div></div>'
