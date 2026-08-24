@@ -6251,7 +6251,7 @@ const STORES={
   'DSW':{w:1,u:'https://www.dsw.com/browse/',t:'$$',a:'Universal',s:['wide'],d:[6,5,6,6,6,8,5,5,7,8],deep:'shoes',c:'shoes, handbags, accessories, extended widths'},
   'Sam Edelman':{u:'https://www.samedelman.com/search#q=',t:'$$$',a:'Modern Chic, Classic Sophisticate',s:[],d:[5,6,8,7,7,6,8,7,7,7],c:'fashion shoes, boots, sandals'},
   // Designer and jewelry
-  'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
+  'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
   // Diane von Furstenberg, added 2026-08-21 after Rakuten approved her.
   // Every dimension is HERS except alluring, which her own table did not have
   // a column for; she set it at 7 after seeing the calibration against
@@ -6658,10 +6658,13 @@ const _OCC_GAMEDAY='This is a casual outdoor occasion spent standing, walking an
    ⚠️ THIS GOVERNS THE STORE, NEVER THE GARMENT (the _NEVER_STORE separation).
    Her ranking still orders these eleven, so FIT BEATS DEPTH is untouched: the
    list is re-ordered for her, never re-ordered by us.
-   ⚠️ PROM AND HOMECOMING ARE DELIBERATELY NOT HERE. Her call, and it is a third
-   department again: "Revolve is great for prom or homecoming", while a formal
-   gown specialist is wrong for a teenager. That list is her next piece of work;
-   until it exists, prom carries no store restriction at all. */
+   ⚠️ PROM AND HOMECOMING ARE DELIBERATELY NOT HERE, AND THEY HAVE THEIR OWN
+   LIST NOW: see _PROM_STORES below. Her call, and it is a third department
+   again: "Revolve is great for prom or homecoming", while a formal gown
+   specialist is wrong for a teenager. TWO STORES SIT ON BOTH LISTS AND THAT IS
+   HERS TOO -- Saks and Neiman Marcus, because "a teen who has a big budget can
+   find a dress there". NET-A-PORTER is on the gown list and NOT the prom one,
+   her words: "not so much for teens". */
 const _GOWN_STORES=['Nordstrom',"Dillard's","Macy's",'Bloomingdales','Belk','Saks',
   'Neiman Marcus','Bergdorf Goodman','NET-A-PORTER','Nordstrom Rack','Alice + Olivia'];
 function _gownStoreRule(){
@@ -6670,6 +6673,40 @@ function _gownStoreRule(){
     +_GOWN_STORES.join(', ')+'. '
     +'NEVER a contemporary, workwear, resort or party-dress store however strong its dress range or however well it suits her: '
     +'J.Crew, Ann Taylor and Tuckernuck do not stock a single formal gown between them, and a store whose range is cocktail and wedding-guest dresses is not the same department. '
+    +'Order the list above by how well each store suits her, closest first, exactly as you would anywhere else.\n';
+}
+/* ── PROM AND HOMECOMING (2026-08-24, step 5 of her own ladder) ─────────────
+   HER LIST, given in her own words after the grid work: "Do we have all the
+   department stores in for prom and homecoming, as well as Revolve, Dillard's,
+   Macy's, Nordstrom, Bloomingdale's, Nordstrom Rack, TJ Maxx, Amazon...? those
+   are all good for prom." Then the two corrections when the '...' was put back
+   to her: BELK IS IN ("correct i wasn't being exhaustive"), SAKS AND NEIMAN ARE
+   IN ("a teen who has a big budget can find a dress there"), and NET-A-PORTER
+   IS OUT ("not so much for teens"). Bergdorf is in on her earlier answer:
+   "they do have some dresses that a teen could wear to homecoming or prom, just
+   that they are on the expensive side, but they do carry gorgeous dresses."
+   ⚠️⚠️ THE LIST IS HERS AND EVERY NAME ON IT WAS SPOKEN BY HER. Alice + Olivia
+   is on the GOWN list and deliberately NOT here, because she did not name it --
+   the Garnet Hill rule, which is the whole reason "occasion" came to mean two
+   different departments in the first place.
+   ▶ WHY IT IS A SEPARATE LIST RATHER THAN A SECOND USE OF _GOWN_STORES: nine of
+   the twelve overlap, but the three that differ are the entire point. Revolve,
+   TJ Maxx and Amazon are wrong for a mother of the bride and right for a
+   seventeen-year-old; NET-A-PORTER is the exact inverse. One list could not
+   hold both without being wrong for one of them.
+   ⚠️ THIS GOVERNS THE STORE, NEVER THE GARMENT, and it re-orders nothing: FIT
+   BEATS DEPTH still applies, so the twelve are handed over and sorted for her.
+   ⚠️ IT DOES NOT TRY TO GUESS HER AGE. Style Star never asks a woman how old
+   she is (her standing rule, reaffirmed 2026-08-24 over the testers' daughters).
+   The word "prom" in her own ask is the only signal used, which is exactly how
+   a stylist would read it. */
+const _PROM_STORES=['Nordstrom',"Dillard's","Macy's",'Bloomingdales','Belk','Saks',
+  'Neiman Marcus','Bergdorf Goodman','Nordstrom Rack','TJ Maxx','Amazon','Revolve'];
+function _promStoreRule(){
+  return '- THIS IS A PROM OR HOMECOMING DRESS, WHICH IS ITS OWN DEPARTMENT AND NOT THE SAME AS A FORMAL GOWN FOR AN OLDER WOMAN. '
+    +'Only these stores carry it well, and every one of the 6 picks must come from this list: '
+    +_PROM_STORES.join(', ')+'. '
+    +'NEVER an occasion specialist whose range is written for a mother of the bride, however formal it is, and never a contemporary or workwear store however strong its dress range. '
     +'Order the list above by how well each store suits her, closest first, exactly as you would anywhere else.\n';
 }
 const _OCCASIONS=[
@@ -6712,7 +6749,16 @@ const _OCCASIONS=[
   {p:'gala',f:1.0,retail:false,gown:true},
   {p:'formal',f:0.95,retail:false,range:true,gown:true},
   {p:'bridesmaid',f:0.9,retail:true},
-  {p:'prom',f:0.9,retail:true},
+  {p:'prom',f:0.9,retail:true,prom:true},
+  // ⚠️ 'homecoming' WAS ABSENT FROM THIS TABLE ENTIRELY, so a woman typing it
+  // matched nothing at all. She has named prom and homecoming together every
+  // time, so it takes prom's formality rather than an invented gap.
+  // ▶ retail:true IS MEASURED, NOT ASSUMED, with the standing gibberish
+  // control: at Dillard's "homecoming dress" returns 146 mentions of
+  // homecoming, "prom dress" returns 262 of prom, and the control "zqxwvu
+  // dress" returns 0 homecoming on a page of almost identical weight. It is a
+  // real section, so the word belongs IN the search.
+  {p:'homecoming',f:0.9,retail:true,prom:true},
   {p:'wedding guest',f:0.85,retail:true},
   {p:'wedding',f:0.85,retail:true,range:true},
   {p:'new year',f:0.85,retail:false},
@@ -8017,6 +8063,7 @@ function _askedForRule(){
   // above, because it governs WHICH STORE, not what goes in the search: black
   // tie and gala are retail:false and still need the gown department.
   if(o.gown)r+=_gownStoreRule();
+  if(o.prom)r+=_promStoreRule();
   r+=o.range
     ? '- That occasion spans several levels of formality, so COVER THE RANGE across the 6 rather than guessing one point on it.\n'
     : '- That occasion has ONE clear level of formality. Dress her for exactly that and do not spread the 6 across dressy and casual: every single piece must be right to wear to it.\n';

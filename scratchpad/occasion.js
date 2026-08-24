@@ -253,6 +253,60 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
   ok(bt.indexOf('keep that word OUT of the search terms')>=0, 'and still keeps its own retail:false rule');
   await pg.evaluate(()=>{_ssAsk=''});
 
+  // ── PART 5f: PROM AND HOMECOMING, her list (2026-08-24) ──────────────────
+  // Step 5 of her own ladder. The load-bearing claim is that this is a THIRD
+  // department: nine of the twelve overlap with the gown list, and the three
+  // that differ are the entire reason it is a separate list.
+  console.log('\n── PART 5f: prom and homecoming, her twelve ──');
+  const PROM=['Nordstrom',"Dillard's","Macy's",'Bloomingdales','Belk','Saks',
+    'Neiman Marcus','Bergdorf Goodman','Nordstrom Rack','TJ Maxx','Amazon','Revolve'];
+  const ps=await pg.evaluate(()=>({list:_PROM_STORES.slice(),
+    unknown:_PROM_STORES.filter(k=>!STORES[k])}));
+  ok(ps.unknown.length===0, 'every prom store is a real key in STORES', ps.unknown.join());
+  ok(JSON.stringify(ps.list)===JSON.stringify(PROM), 'her twelve, unchanged', ps.list.join(' | '));
+  // ⚠️ NOT vacuous: every name below EXISTS in STORES, and NET-A-PORTER and
+  // Alice + Olivia are both on the GOWN list, so they are the exact stores a
+  // careless "reuse the gown list" would have dragged in. Her words on
+  // NET-A-PORTER: "not so much for teens".
+  ['NET-A-PORTER','Alice + Olivia','J.Crew','Ann Taylor','Tuckernuck','LoveShackFancy']
+    .forEach(k=>ok(ps.list.indexOf(k)<0, `${k} is NOT a prom store`));
+  // The two lists are genuinely different, which is the whole argument for two.
+  const both=await pg.evaluate(()=>({
+    onlyProm:_PROM_STORES.filter(k=>_GOWN_STORES.indexOf(k)<0),
+    onlyGown:_GOWN_STORES.filter(k=>_PROM_STORES.indexOf(k)<0)}));
+  ok(both.onlyProm.length>0&&both.onlyGown.length>0,
+     'the prom and gown lists really do differ in BOTH directions',
+     'prom-only '+both.onlyProm.join()+' / gown-only '+both.onlyGown.join());
+  ok(both.onlyGown.indexOf('NET-A-PORTER')>=0, 'NET-A-PORTER is gown-only, her call');
+  // 🚨 'homecoming' USED TO MATCH NOTHING AT ALL -- it was absent from the table,
+  // so a woman typing it got no occasion, no formality and no store list.
+  const hc=await pg.evaluate(()=>_askOccasion('homecoming dress'));
+  ok(!!hc, 'a woman typing "homecoming" now matches an occasion at all');
+  ok(hc&&hc.f===0.9, 'homecoming carries prom\'s formality, her pairing', hc&&String(hc.f));
+  ok(hc&&hc.retail===true, 'homecoming is retail:true -- MEASURED at Dillard\'s, 146 mentions against 0 on the gibberish control');
+  for(const [ask,want] of [
+      ['prom dress',                     true ],
+      ['homecoming dress',               true ],
+      ['I need a homecoming outfit',     true ],
+      ['mother of the bride dress',      false],
+      ['black tie wedding',              false],
+      ['wedding guest dress',            false],
+      ['cocktail dress',                 false]]){
+    const d=await pg.evaluate(x=>{_ssAsk=x;return _askedForRule()},ask);
+    const has=d.indexOf('THIS IS A PROM OR HOMECOMING DRESS')>=0;
+    ok(has===want, `"${ask}" ${want?'restricts to the prom stores':'is NOT prom-restricted'}`);
+  }
+  // ⚠️ THE TWO RESTRICTIONS MUST NEVER BOTH FIRE: they name different, partly
+  // contradictory store lists, so a prompt carrying both would be incoherent.
+  const pr=await pg.evaluate(()=>{_ssAsk='prom dress';return _askedForRule()});
+  ok(pr.indexOf('THIS CALLS FOR A FORMAL GOWN')<0, 'prom does NOT also get the gown restriction');
+  PROM.forEach(k=>ok(pr.indexOf(k)>=0, `the prom rule offers ${k}`));
+  ok(pr.indexOf('Order the list above by how well each store suits her')>=0,
+     'FIT BEATS DEPTH survives inside the prom restriction too');
+  ok(pr.indexOf('"prom" whole and unbroken')>=0||pr.indexOf('prom dress" / "prom gown')>=0,
+     'and prom keeps its retail:true search rule');
+  await pg.evaluate(()=>{_ssAsk=''});
+
   // The dress-down end, her new territory.
   const low=await pg.evaluate(()=>({
     school:(_askOccasion('school outfit')||{}).f, concert:(_askOccasion('concert outfit')||{}).f,
