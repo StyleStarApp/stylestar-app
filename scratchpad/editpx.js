@@ -18,14 +18,29 @@ const items=[...src.matchAll(/<div class="dc-item">([\s\S]*?)<\/div>\s*\n\s*<\/d
 // 21 -> 22 and 3 -> 4 photos DELIBERATELY: the Vilebrequin mesh cover-up joined
 // on 2026-08-20, and Vilebrequin is an approved advertiser, so it earns AND its
 // photo is licensed. Both counts move together or the sweep below is meaningless.
-ok('Edit has 22 items', (src.match(/<div class="dc-item">/g)||[]).length===22,
-   (src.match(/<div class="dc-item">/g)||[]).length);
-ok('exactly 4 photos', (src.match(/class="dc-item-px"/g)||[]).length===4,
-   (src.match(/class="dc-item-px"/g)||[]).length);
+// ⚠️ UPDATED DELIBERATELY 2026-08-24 and made DERIVED rather than re-numbered.
+// This restated the Edit's length (21, then 22, now 23) and went stale every
+// single time she added a piece -- i.e. it failed on her doing the thing the
+// Edit exists for. The real claim is that the Edit is non-empty and that the
+// count in the SOURCE matches what actually RENDERS, which is what would catch
+// a broken item; the number itself carries nothing.
+const EDIT_N=(src.match(/<div class="dc-item">/g)||[]).length;
+ok('the Edit is non-empty', EDIT_N>0, EDIT_N);
+// ⚠️ ALSO DERIVED NOW. These three restated ===4 as well, so adding a fifth
+// photo failed them all while the new <img> carried alt, onerror and lazy
+// perfectly -- three assertions failing on correct code, for a reason that had
+// nothing to do with what they were testing. EVERY photo must have these, so
+// the honest comparison is against the number of photos, not against 4.
+const PX_N=(src.match(/class="dc-item-px"/g)||[]).length;
+const pxWith=re=>(src.match(re)||[]).length;
+ok('the Edit carries photos at all', PX_N>0, PX_N);
 ok('every photo is https', !/dc-item-px" src="http:\/\//.test(src));
-ok('every photo has alt text', (src.match(/class="dc-item-px"[^>]*\balt="[^"]{10,}"/g)||[]).length===4);
-ok('every photo degrades on error', (src.match(/class="dc-item-px"[^>]*onerror="this\.remove\(\)"/g)||[]).length===4);
-ok('every photo is lazy', (src.match(/class="dc-item-px"[^>]*loading="lazy"/g)||[]).length===4);
+ok('every photo has alt text',
+   pxWith(/class="dc-item-px"[^>]*\balt="[^"]{10,}"/g)===PX_N, `${pxWith(/class="dc-item-px"[^>]*\balt="[^"]{10,}"/g)} of ${PX_N}`);
+ok('every photo degrades on error',
+   pxWith(/class="dc-item-px"[^>]*onerror="this\.remove\(\)"/g)===PX_N);
+ok('every photo is lazy',
+   pxWith(/class="dc-item-px"[^>]*loading="lazy"/g)===PX_N);
 ok('rule is 3:4, inset (not full-bleed)', /\.dc-item-px\{[^}]*aspect-ratio:3\/4/.test(src)
    && !/\.dc-item-px\{[^}]*margin:-/.test(src));
 ok('the licensing rule is written at the code', /GREP _AFF_MID BEFORE ADDING ONE/.test(src));

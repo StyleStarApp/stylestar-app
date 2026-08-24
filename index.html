@@ -2476,6 +2476,25 @@ body.card-fb{padding:0}
 .wks-store{font-family:'Jost',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#5f5647;text-transform:uppercase}
 .wks-note{font-family:'Lora',Georgia,serif;font-style:normal;font-size:15.5px;line-height:1.55;color:#4a463e;margin-top:7px;text-wrap:balance}
 .wks-note .wks-ch{width:11px;height:11px;fill:#F49AC1;transform:rotate(12deg);display:inline-block;vertical-align:-1px}
+/* 🚨 QUOTE MARKS ON HER STAR NOTE — her ask, 2026-08-24 ("let's put quotes
+   around my comment on Star of the Week"), and the SAME treatment the Style Star
+   Edit already gives her notes: DM Serif Display, gold #DFC271. Matching rather
+   than inventing a second quote style is the whole point -- her voice should look
+   the same wherever she speaks.
+   ⚠️ INLINE HERE, where the Edit's are HANGING, and that is forced by alignment
+   not taste: .dc-item-note is left-aligned so its opening quote is positioned
+   absolutely at left:-2px and hangs into the margin. This note is CENTRED, so an
+   absolute quote would strand itself at the block's left edge, yards from the
+   words it belongs to.
+   ⚠️ THEY WRAP .wks-q, NOT .wks-note, so the closing quote lands after her WORDS
+   and BEFORE her pink heart. The heart is her signature, not part of the
+   sentence -- ::after on the note itself would have put it outside the quotes.
+   ⚠️ line-height:0 keeps a 26px glyph from growing the line box. The Star card's
+   whole design constraint is that it clears the iPhone fold (her 140px pick,
+   2026-08-20), so the note must not gain height. MEASURED after this change.
+   ⚠️ em units, so they scale with #dsStar's smaller 14px note automatically. */
+.wks-q::before{content:"\201C";font-family:'DM Serif Display',Georgia,serif;font-size:1.7em;color:#DFC271;line-height:0;vertical-align:-0.24em;margin-right:1px}
+.wks-q::after{content:"\201D";font-family:'DM Serif Display',Georgia,serif;font-size:1.7em;color:#DFC271;line-height:0;vertical-align:-0.24em;margin-left:1px}
 .wks-act{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:11px}
 .wks-shop{display:inline-flex;align-items:center;gap:6px;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;padding:9px 19px;font-family:'Jost',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.07em;text-decoration:none}
 #wbStar .wl-save{cursor:pointer}
@@ -2788,6 +2807,18 @@ body.card-fb{padding:0}
 /* Heart-it-first tip (her wording + whisper voice, 2026-08-09). Same family as
    the Welcome Back whispers: italic ink, gold bold, block-level for balance. */
 .ht-tip{display:block;font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:300px;margin:2px auto 12px;text-wrap:balance}
+/* 🚨 THE HONEST LINE when an ask cannot be served (2026-08-24, her wording).
+   Her voice register on light paper: Lora UPRIGHT 15.5 in the readable ink, the
+   one settled 2026-08-13 -- no italics, which cost readability on an 18-to-80
+   audience. Deliberately the SAME type as .ht-tip directly above it, so the two
+   quiet sentences on this screen read as one voice rather than two.
+   ⚠️ NO PINK HEART: a heart means Catherine herself is speaking, and this is the
+   stylist reporting on a search. Her own mark system, applied.
+   ⚠️ The link uses the SAME gold as .ht-tip b (#946D18, measured 4.71:1 on this
+   paper). Do NOT swap it for the brighter #D8A52E, which fails AA here. */
+.shop-honest{display:block;font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:320px;margin:2px auto 14px;text-wrap:balance}
+.shop-honest-go{color:#946D18;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(148,109,24,.42);white-space:nowrap}
+.shop-honest-go:hover,.shop-honest-go:focus-visible{border-bottom-color:#946D18}
 .ht-tip b{font-style:italic;color:#946D18;font-weight:600}   /* moved with .wl-door-go so the two MATCH, her ask; 4.12:1 -> 4.71:1 */
 .ht-tip .ht-h{color:#C8971E;font-style:normal} /* the wishlist's mark is GOLD now (2026-08-09) */
 /* ⚠️ The tip's heart is the app's OWN _WL_HEART_PATH now, not the U+2661 glyph
@@ -4578,6 +4609,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <a class="dc-item-btn" href="https://www.vilebrequin.com/us/en/product/IAACG200-003" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
+    <div class="dc-item">
+      <img class="dc-item-px" src="https://www.olivela.com/cdn/shop/files/HeartsFindMeonClassicRolo.jpg?v=1783707261&amp;width=800" alt="Jane Win LOVE Hearts Find Me pendant necklace in gold" loading="lazy" decoding="async" onerror="this.remove()">
+      <span class="dc-item-star">&#11088;</span>
+      <div class="dc-item-name">Love Hearts Find Me Pendant Necklace</div>
+      <div class="dc-item-meta"><span class="dc-store">Jane Win &middot; Olivela</span><span class="dc-price">$278</span></div>
+      <div class="dc-item-note">This is the best take I have seen on the coin necklace trend. 18 inch chain, plated 14k gold</div>
+      <a class="dc-item-btn" href="https://www.olivela.com/products/jane-win-love-hearts-find-me-pendant-necklace-gold" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
+    </div>
+
     <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-trend-link" onclick="openWardrobe('trend')">Curious what's trending right now? &rarr;</div>
 
@@ -6127,7 +6167,7 @@ const STORES={
   'Gap':{gp:'&department=136',u:'https://www.gap.com/browse/search.do?searchText=',t:'$-$$',a:'Casual Classic',s:['petite','plus','tall'],d:[10,2,6,7,3,10,2,4,8,4],c:'everyday basics, denim, casualwear'},
   'White House Black Market':{u:'https://www.whitehouseblackmarket.com/store/search?searchTerm=',t:'$$',a:'Professional Power, Modern Glam',s:['petite'],d:[3,7,9,8,6,4,9,9,10,2],c:'sleek workwear, occasion'},
   'Garnet Hill':{u:'https://www.garnethill.com/search?q=',t:'$$',a:'Elevated Natural',s:['petite','plus'],d:[9,2,8,8,2,9,3,3,9,4],c:'natural fibers, sleepwear'},
-  'Soft Surroundings':{u:'https://www.softsurroundings.com/search.php?q=',t:'$$',a:'Relaxed Feminine',s:['petite','plus'],d:[10,2,6,7,1,10,2,2,8,5],c:'soft knits, travel'},
+  'Soft Surroundings':{u:'https://www.softsurroundings.com/search.php?q=',t:'$$',a:'Relaxed Feminine',s:['petite','plus','tall'],d:[10,2,6,7,1,10,2,2,8,5],c:'soft knits, travel'},
   'Tuckernuck':{u:'https://www.tnuck.com/search?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[6,5,9,9,5,5,9,7,8,8],c:'dresses, polished separates, occasion, resort'},
   // Elevated natural / quiet luxury: where a stylist sends this woman first
   'Jenni Kayne':{u:'https://www.jennikayne.com/search?q=',t:'$$$$',a:'Elevated Natural, Quiet Luxury',s:[],d:[10,2,10,10,2,8,5,3,10,2],c:'luxury casualwear, cashmere, sweaters'},
@@ -6148,7 +6188,6 @@ const STORES={
   'Free People':{u:'https://www.freepeople.com/search?q=',t:'$$-$$$',a:'Bohemian Chic, Romantic Feminine',s:['petite'],d:[10,6,6,4,8,10,3,3,5,9],deep:1,c:'boho fashion, sweaters, dresses'},
   'Johnny Was':{u:'https://www.johnnywas.com/search?q=',t:'$$$',a:'Bohemian Chic, Elevated Natural',s:['petite','plus'],d:[10,4,8,5,6,9,4,3,4,10],c:'embroidered tops, resortwear, relaxed luxury'},
   "Altar'd State":{u:'https://www.altardstate.com/search?q=',t:'$$',a:'Romantic Feminine, Bohemian Chic',s:[],d:[7,5,6,6,7,8,5,6,6,8],c:'dresses, casual feminine fashion'},
-  'Baltic Born':{u:'https://balticborn.com/search?q=',t:'$$',a:'Romantic Feminine',s:['plus'],d:[6,7,7,6,8,5,8,7,5,9],c:'wedding guest dresses, occasionwear'},
   'Reformation':{u:'https://www.thereformation.com/search?q=',t:'$$$',a:'Romantic Feminine, Modern Chic',s:['petite','plus'],d:[3,9,9,6,9,5,9,10,7,8],c:'dresses, sustainable fashion, occasion'},
   // Edgy
   'AllSaints':{w:1,u:'https://www.allsaints.com/us/search/?q=',t:'$$$',a:'Edgy Chic, Modern Minimalist',s:[],d:[4,8,9,5,9,6,8,9,9,3],c:'leather jackets, edgy contemporary fashion'},
@@ -6170,13 +6209,13 @@ const STORES={
   'Ann Taylor':{u:'https://www.anntaylor.com/search?q=',t:'$$',a:'Professional Power, Classic Sophisticate',s:['petite','tall'],d:[3,3,9,10,2,4,8,8,10,3],c:'workwear, dresses, blazers'},
   'LOFT':{u:'https://www.loft.com/search?q=',t:'$$',a:'Casual Classic',s:['petite','plus','tall'],d:[8,3,7,8,3,8,5,5,8,5],c:'relaxed workwear, denim'},
   'Talbots':{u:'https://www.talbots.com/search?q=',t:'$$',a:'Classic Sophisticate',s:['petite','plus'],d:[6,2,9,10,1,6,7,6,9,5],deep:1,c:'timeless workwear, knits'},
-  'J.Jill':{u:'https://www.jjill.com/SearchDisplay?searchTerm=',t:'$$',a:'Elevated Natural',s:['petite','plus'],d:[10,1,8,8,1,10,2,2,10,3],c:'linen, relaxed essentials'},
+  'J.Jill':{u:'https://www.jjill.com/SearchDisplay?searchTerm=',t:'$$',a:'Elevated Natural',s:['petite','plus','tall'],d:[10,1,8,8,1,10,2,2,10,3],c:'linen, relaxed essentials'},
   "Chico's":{u:'https://www.chicos.com/store/search?searchTerm=',t:'$$',a:'Relaxed Classic',s:['petite'],d:[9,2,7,8,2,9,3,3,6,8],c:'travel pieces, easy separates'},
   // Size-inclusive specialists
   'Universal Standard':{u:'https://www.universalstandard.com/search?q=',t:'$$',a:'Modern Minimalist',s:['plus'],d:[7,4,8,7,5,7,6,7,9,6],c:'tailoring, elevated basics'},
   'Eloquii':{u:'https://www.eloquii.com/search?q=',t:'$$',a:'Modern Glam',s:['plus'],d:[6,7,8,6,7,5,8,8,7,8],c:'dresses, workwear'},
   'Torrid':{u:'https://www.torrid.com/search?q=',t:'$$',a:'Casual Trendy',s:['plus'],d:[7,8,7,4,8,8,5,8,7,8],c:'denim, everyday, lingerie'},
-  'Lane Bryant':{u:'https://www.lanebryant.com/search?q=',t:'$$',a:'Casual Classic',s:['plus'],d:[8,4,6,6,4,8,4,6,8,7],c:'bras, denim, basics'},
+  'Lane Bryant':{u:'https://www.lanebryant.com/search?q=',t:'$$',a:'Casual Classic',s:['plus','wide'],d:[8,4,6,6,4,8,4,6,8,7],c:'bras, denim, basics'},
   'Good American':{u:'https://www.goodamerican.com/search?q=',t:'$$$',a:'Modern Sexy',s:['plus'],d:[5,8,8,4,8,7,6,10,9,6],c:'premium denim, curve fit'},
   'Petite Studio':{u:'https://petitestudionyc.com/search?q=',t:'$$$',a:'Modern Minimalist',s:['petite'],d:[4,4,9,8,6,5,8,8,9,4],c:'petite tailoring, dresses'},
   // Activewear and swim
@@ -6212,7 +6251,7 @@ const STORES={
   'DSW':{w:1,u:'https://www.dsw.com/browse/',t:'$$',a:'Universal',s:['wide'],d:[6,5,6,6,6,8,5,5,7,8],deep:'shoes',c:'shoes, handbags, accessories, extended widths'},
   'Sam Edelman':{u:'https://www.samedelman.com/search#q=',t:'$$$',a:'Modern Chic, Classic Sophisticate',s:[],d:[5,6,8,7,7,6,8,7,7,7],c:'fashion shoes, boots, sandals'},
   // Designer and jewelry
-  'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
+  'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
   // Diane von Furstenberg, added 2026-08-21 after Rakuten approved her.
   // Every dimension is HERS except alluring, which her own table did not have
   // a column for; she set it at 7 after seeing the calibration against
@@ -6602,7 +6641,7 @@ const _OCC_GAMEDAY='This is a casual outdoor occasion spent standing, walking an
    WORD COVERING TWO COMPLETELY DIFFERENT DEPARTMENTS. Twelve stores name it in
    their c: line and only THREE mean gowns; the other nine mean a nice dress for
    a party (Revolve, Anthropologie, Reformation, Alice + Olivia, LoveShackFancy,
-   Baltic Born, White House Black Market, Tuckernuck, DVF). Same shape as "print"
+   White House Black Market, Tuckernuck, DVF). Same shape as "print"
    not being a retail word (08-22) and stores dropping "midi" (08-20).
    ⚠️ AND IT IS WORSE FOR THE OTHER TWO: J.Crew's c: line says "dresses" and Ann
    Taylor's says "dresses". She asked for a dress, so the model reasonably
@@ -6613,16 +6652,19 @@ const _OCC_GAMEDAY='This is a casual outdoor occasion spent standing, walking an
    cannot drift back into meaning a party dress.
    ⚠️⚠️ THE LIST IS HERS, NOT INFERRED. Candidates were put to her and she
    corrected them: Nordstrom Rack and Alice + Olivia IN, Revolve, LoveShackFancy,
-   Baltic Born and Anthropologie OUT. Do not grow it by keyword-matching c:
+   and Anthropologie OUT. Do not grow it by keyword-matching c:
    lines -- that is the Garnet Hill mistake, and it is exactly how "occasion"
    came to mean two things in the first place.
    ⚠️ THIS GOVERNS THE STORE, NEVER THE GARMENT (the _NEVER_STORE separation).
    Her ranking still orders these eleven, so FIT BEATS DEPTH is untouched: the
    list is re-ordered for her, never re-ordered by us.
-   ⚠️ PROM AND HOMECOMING ARE DELIBERATELY NOT HERE. Her call, and it is a third
-   department again: "Revolve is great for prom or homecoming", while a formal
-   gown specialist is wrong for a teenager. That list is her next piece of work;
-   until it exists, prom carries no store restriction at all. */
+   ⚠️ PROM AND HOMECOMING ARE DELIBERATELY NOT HERE, AND THEY HAVE THEIR OWN
+   LIST NOW: see _PROM_STORES below. Her call, and it is a third department
+   again: "Revolve is great for prom or homecoming", while a formal gown
+   specialist is wrong for a teenager. TWO STORES SIT ON BOTH LISTS AND THAT IS
+   HERS TOO -- Saks and Neiman Marcus, because "a teen who has a big budget can
+   find a dress there". NET-A-PORTER is on the gown list and NOT the prom one,
+   her words: "not so much for teens". */
 const _GOWN_STORES=['Nordstrom',"Dillard's","Macy's",'Bloomingdales','Belk','Saks',
   'Neiman Marcus','Bergdorf Goodman','NET-A-PORTER','Nordstrom Rack','Alice + Olivia'];
 function _gownStoreRule(){
@@ -6631,6 +6673,40 @@ function _gownStoreRule(){
     +_GOWN_STORES.join(', ')+'. '
     +'NEVER a contemporary, workwear, resort or party-dress store however strong its dress range or however well it suits her: '
     +'J.Crew, Ann Taylor and Tuckernuck do not stock a single formal gown between them, and a store whose range is cocktail and wedding-guest dresses is not the same department. '
+    +'Order the list above by how well each store suits her, closest first, exactly as you would anywhere else.\n';
+}
+/* ── PROM AND HOMECOMING (2026-08-24, step 5 of her own ladder) ─────────────
+   HER LIST, given in her own words after the grid work: "Do we have all the
+   department stores in for prom and homecoming, as well as Revolve, Dillard's,
+   Macy's, Nordstrom, Bloomingdale's, Nordstrom Rack, TJ Maxx, Amazon...? those
+   are all good for prom." Then the two corrections when the '...' was put back
+   to her: BELK IS IN ("correct i wasn't being exhaustive"), SAKS AND NEIMAN ARE
+   IN ("a teen who has a big budget can find a dress there"), and NET-A-PORTER
+   IS OUT ("not so much for teens"). Bergdorf is in on her earlier answer:
+   "they do have some dresses that a teen could wear to homecoming or prom, just
+   that they are on the expensive side, but they do carry gorgeous dresses."
+   ⚠️⚠️ THE LIST IS HERS AND EVERY NAME ON IT WAS SPOKEN BY HER. Alice + Olivia
+   is on the GOWN list and deliberately NOT here, because she did not name it --
+   the Garnet Hill rule, which is the whole reason "occasion" came to mean two
+   different departments in the first place.
+   ▶ WHY IT IS A SEPARATE LIST RATHER THAN A SECOND USE OF _GOWN_STORES: nine of
+   the twelve overlap, but the three that differ are the entire point. Revolve,
+   TJ Maxx and Amazon are wrong for a mother of the bride and right for a
+   seventeen-year-old; NET-A-PORTER is the exact inverse. One list could not
+   hold both without being wrong for one of them.
+   ⚠️ THIS GOVERNS THE STORE, NEVER THE GARMENT, and it re-orders nothing: FIT
+   BEATS DEPTH still applies, so the twelve are handed over and sorted for her.
+   ⚠️ IT DOES NOT TRY TO GUESS HER AGE. Style Star never asks a woman how old
+   she is (her standing rule, reaffirmed 2026-08-24 over the testers' daughters).
+   The word "prom" in her own ask is the only signal used, which is exactly how
+   a stylist would read it. */
+const _PROM_STORES=['Nordstrom',"Dillard's","Macy's",'Bloomingdales','Belk','Saks',
+  'Neiman Marcus','Bergdorf Goodman','Nordstrom Rack','TJ Maxx','Amazon','Revolve'];
+function _promStoreRule(){
+  return '- THIS IS A PROM OR HOMECOMING DRESS, WHICH IS ITS OWN DEPARTMENT AND NOT THE SAME AS A FORMAL GOWN FOR AN OLDER WOMAN. '
+    +'Only these stores carry it well, and every one of the 6 picks must come from this list: '
+    +_PROM_STORES.join(', ')+'. '
+    +'NEVER an occasion specialist whose range is written for a mother of the bride, however formal it is, and never a contemporary or workwear store however strong its dress range. '
     +'Order the list above by how well each store suits her, closest first, exactly as you would anywhere else.\n';
 }
 const _OCCASIONS=[
@@ -6673,7 +6749,16 @@ const _OCCASIONS=[
   {p:'gala',f:1.0,retail:false,gown:true},
   {p:'formal',f:0.95,retail:false,range:true,gown:true},
   {p:'bridesmaid',f:0.9,retail:true},
-  {p:'prom',f:0.9,retail:true},
+  {p:'prom',f:0.9,retail:true,prom:true},
+  // ⚠️ 'homecoming' WAS ABSENT FROM THIS TABLE ENTIRELY, so a woman typing it
+  // matched nothing at all. She has named prom and homecoming together every
+  // time, so it takes prom's formality rather than an invented gap.
+  // ▶ retail:true IS MEASURED, NOT ASSUMED, with the standing gibberish
+  // control: at Dillard's "homecoming dress" returns 146 mentions of
+  // homecoming, "prom dress" returns 262 of prom, and the control "zqxwvu
+  // dress" returns 0 homecoming on a page of almost identical weight. It is a
+  // real section, so the word belongs IN the search.
+  {p:'homecoming',f:0.9,retail:true,prom:true},
   {p:'wedding guest',f:0.85,retail:true},
   {p:'wedding',f:0.85,retail:true,range:true},
   {p:'new year',f:0.85,retail:false},
@@ -7887,6 +7972,47 @@ function _askedForLead(){
     ? 'This woman is looking for: "'+_ssAsk+'". Suggest 6 specific shoppable pieces that are exactly that, chosen to suit her style.'
     : 'Based on this woman\'s style, suggest 6 specific shoppable items she would genuinely love.';
 }
+/* 🚨 PERMISSION TO COME UP SHORT (2026-08-24, her call: "6 cards for something no
+   store carries is worse than an honest line").
+   ▶▶ THE CAUSE WAS NEVER MODEL DRIFT. The sentence above says "Suggest 6 specific
+   shoppable pieces that are exactly that." SIX. No escape. So when there is
+   nothing honest to say the model has two options -- disobey, or invent -- and it
+   invents, which is how "neon gym bag" returned 914 unrelated items. Exactly the
+   shape of the 2026-08-22 chat bug, where the searching rules said "an item
+   without its address does not exist" with no results to copy an address from,
+   leaving the model a choice between naming nothing and making a link up.
+   ⚠️ SCOPED TO THE ASK BOX ALONE, deliberately. The other four card surfaces are
+   picking from her whole world, where "nothing exists" is essentially never the
+   true answer -- permission to return fewer THERE would just thin good shelves.
+   The ask box is the only place she names a specific thing, so it is the only
+   place the app can be specifically wrong.
+   ⚠️ The bar is set HIGH on purpose. An escape hatch the model enjoys using is
+   worse than none: it would start apologising instead of shopping. Hence "only
+   when you genuinely cannot" and "always prefer showing her what you CAN find".
+   ⚠️ The words below are HERS (2026-08-24), with two edits she approved: her
+   "in any stores" came out, because the app checked HER stores and cannot know
+   what every shop on earth carries; and her "I'm having trouble" came out,
+   because it is almost word for word the chat's ERROR message ("I'm having a
+   moment"), so a woman would read a stylist's judgment as a malfunction.
+   ▶ One string each if she wants them back. */
+function _honestyRule(){
+  if(!_ssAsk)return '';
+  return '\nWHEN YOU GENUINELY CANNOT FIND IT:\n'
+    +'- You do NOT have to return 6. Return only pieces that really are what she asked for.\n'
+    +'- If NOTHING in the store list honestly matches, return an empty items array.\n'
+    +'- Whenever you return fewer than 6, you MUST also return a "note": ONE short'
+    +' sentence in Catherine\'s voice, saying plainly what you could not find and'
+    +' handing her whatever you did find. Never apologise twice, never explain the'
+    +' machinery, never blame her wording.\n'
+    +'- Model the note on these two, adapted to what she asked for:\n'
+    +'    some near things found: "I couldn\'t find real neon gym bags today.'
+    +' Would you be open to browsing something else?"\n'
+    +'    nothing near at all:    "That\'s not something I can shop well for you'
+    +' right now."\n'
+    +'- ⚠️ THIS IS A LAST RESORT, not a shortcut. If you can honestly fill all six,'
+    +' fill all six and send no note. Always prefer showing her what you CAN find'
+    +' over telling her what you cannot.\n';
+}
 /* ── THE OCCASION HALF OF HER ASK (2026-08-23) ──────────────────────────────
    Her mother typed "mother of the bride dresses" and got J.Crew Midi Occasion,
    Eileen Fisher Linen Midi, Nordstrom Midi Dress Navy, Talbots Shift Midi,
@@ -7937,6 +8063,7 @@ function _askedForRule(){
   // above, because it governs WHICH STORE, not what goes in the search: black
   // tie and gala are retail:false and still need the gown department.
   if(o.gown)r+=_gownStoreRule();
+  if(o.prom)r+=_promStoreRule();
   r+=o.range
     ? '- That occasion spans several levels of formality, so COVER THE RANGE across the 6 rather than guessing one point on it.\n'
     : '- That occasion has ONE clear level of formality. Dress her for exactly that and do not spread the 6 across dressy and casual: every single piece must be right to wear to it.\n';
@@ -7967,10 +8094,14 @@ var _SHOP_PICKS_TTL=6*60*60*1000;     // 6 hours
    fortnight-old set offered as if she had just been looking at it is the app
    lying quietly. Long enough to cover any real session, short enough to stay
    honest. Shortening it is safe; lengthening it needs the wording to change. */
-function _saveShopPicks(items){
+function _saveShopPicks(items,note){
   try{
     if(!items||!items.length)return;
-    localStorage.setItem('ss_shoppicks',JSON.stringify({m:_shopStyleMode,i:items,t:Date.now()}));
+    // ⚠️ The note rides WITH the picks. A resume re-renders the same six through
+    // the same path (never a second model call), so without this an honest
+    // "I couldn't find X" would silently vanish the moment she came back from a
+    // store -- leaving a short shelf with nothing explaining why it is short.
+    localStorage.setItem('ss_shoppicks',JSON.stringify({m:_shopStyleMode,i:items,n:note||'',t:Date.now()}));
   }catch(e){}
 }
 function _shopPicksWaiting(){
@@ -8087,7 +8218,7 @@ async function _shopStyleGen(){
     prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    prompt='You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF())+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    prompt='You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF())+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }
   try{
     var parsed;
@@ -8099,7 +8230,7 @@ async function _shopStyleGen(){
     // drift from what she was actually looking at. ⚠️ ONE render path on purpose:
     // a second copy of the card loop would drift the moment either changed.
     if(_shopResume&&_shopResume.i&&_shopResume.i.length){
-      parsed={items:_shopResume.i};
+      parsed={items:_shopResume.i,note:_shopResume.n||''};
       _shopResume=null;          // a resume is spent once used; a refresh re-asks
     }else{
       var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
@@ -8107,7 +8238,7 @@ async function _shopStyleGen(){
       var d=await r.json();if(!d.content)throw 0;
       parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
     }
-    var html='<div class="shop-grid">';
+    var html='';
     // On "Shop my whole list" the things she asked for ARE her list, so a row
     // she starred herself ("Wrap dresses") waives the search veto for this call.
     // 🚨 Her typed ask goes in as `askedFor` for exactly the same reason her starred
@@ -8119,7 +8250,32 @@ async function _shopStyleGen(){
     var _keep=filterNeverWear(parsed.items,
       _shopStyleMode==='wantlist'?(_wantListNames||[]).join(' '):_ssAsk);
     _rememberPicks('ss-'+_shopStyleMode,_keep);   // the refresh must not repeat
-    _saveShopPicks(_keep);   // so she can come back to exactly this, see _shopResume
+    _saveShopPicks(_keep,parsed.note);   // so she can come back to exactly this, see _shopResume
+    /* 🚨 HER HONEST LINE (2026-08-24). Two ways to reach it and both are real:
+       (a) the model used its escape hatch and sent a note -- see _honestyRule;
+       (b) ⚠️ A PRE-EXISTING HOLE, closed in the same change: filterNeverWear runs
+           AFTER the model answers, so a woman whose never-wear list happened to
+           catch every pick got a completely EMPTY shelf with a refresh button and
+           nothing on screen explaining it. Rare, but it is the same failure she
+           described -- silence where a sentence belongs -- so it gets the same
+           sentence rather than a second design.
+       ⚠️ NO PINK HEART, and that is her own mark system: a heart means CATHERINE
+       is speaking, and this is the STYLIST reporting on a search she just ran.
+       ⚠️ _esc on the note -- it is model output and lands in innerHTML. Capped at
+       240 chars so a runaway answer cannot push the shelf off the screen. */
+    var _note=String((parsed&&parsed.note)||'').trim().slice(0,240);
+    if(!_keep.length&&!_note)_note=_ssAsk
+      ? 'That\'s not something I can shop well for you right now.'
+      : 'I couldn\'t find pieces I\'d stand behind for you today.';
+    if(_note){
+      html+='<div class="shop-honest">'+_esc(_note)
+        // The way onward. A line that only apologises is a dead end, which is the
+        // thing she objected to; the chat can genuinely take the question further.
+        // Offered only when there is nothing on the shelf to look at instead.
+        +(_keep.length?'':' <a class="shop-honest-go" href="#" onclick="openChat();return false">Talk it through with your stylist &rarr;</a>')
+        +'</div>';
+    }
+    html+='<div class="shop-grid">';
     _keep.forEach(function(item){
       // No icon above the name. Emoji are painted by the platform's own font and
       // ignore our colour (the rule she set after the pink heart shipped RED on her
@@ -12111,6 +12267,22 @@ var WEEK_STARS=[
   {n:'Vilebrequin Long Mesh Cover-Up Dress — Off White',store:'Vilebrequin',url:'https://www.vilebrequin.com/us/en/product/IAACG200-003',price:'$405',
    note:'The trending style for beach, pool, and resort. The adjustable straps are perfect.',
    px:'https://www.vilebrequin.com/dw/image/v2/BLGH_PRD/on/demandware.static/-/Sites-vilebrequin-catalog-master/default/dwb578af10/images/IAACG200-003/IAACG200-003-front-3240x4050.jpg?sw=800'},
+  {n:'Love Hearts Find Me Pendant Necklace',store:'Jane Win \u00b7 Olivela',url:'https://www.olivela.com/products/jane-win-love-hearts-find-me-pendant-necklace-gold',price:'$278',
+   note:'This is the best take I have seen on the coin necklace trend. 18 inch chain, plated 14k gold',
+   // ⚠️ HER NOTE IS UNTRIMMED, and that is not an oversight. The Star card speaks
+   // in one-liners condensed from her fuller Edit notes -- but she wrote this one
+   // at 92 characters, inside the queue's own 66-100 range, so there is nothing
+   // to condense. Trimming it would be inventing a shorter sentence than she
+   // wrote, which is the opposite of the rule.
+   // ⚠️ VERIFIED before adding, per the standing rule: 200, in stock, vendor
+   // "Jane Win", and $278 is the REGULAR price (compare_at_price is 0, so it is
+   // genuinely not on sale) -- measured 2026-08-24.
+   // ⚠️ The photo is licensed because Olivela is an approved advertiser (mid
+   // 50334, approved today). Same gate as every other px: see _wkStarPxTag.
+   // ⭐ And the crop is the lucky way round: the source is 1306x1632, i.e. 4:5
+   // against our 3:4 frame, so it loses its SIDES and keeps FULL HEIGHT -- which
+   // is what a long pendant on a chain needs. The FARM Rio knee-cut lesson.
+   px:'https://www.olivela.com/cdn/shop/files/HeartsFindMeonClassicRolo.jpg?v=1783707261&width=800'},
   {n:'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',store:'FARM Rio',url:'https://farmrio.com/products/garden-terrace-pink-one-shoulder-maxi-dress',price:'$360',
    note:'100% linen and as stunning as it is sweet. The 3D flower and asymmetrical look are charming.',
    // ⚠️ $360 IS THE REGULAR PRICE AND THAT IS DELIBERATE. Measured 2026-08-24:
@@ -12239,7 +12411,7 @@ function _renderWeekStar(){
     +_wkStarPx
     +'<div class="wks-name">'+_esc(WEEK_STAR.n)+'</div>'
     +'<div class="wks-store">'+_esc(WEEK_STAR.store)+(WEEK_STAR.price?' &middot; '+_esc(WEEK_STAR.price):'')+'</div>'
-    +(WEEK_STAR.note?'<div class="wks-note">'+_esc(WEEK_STAR.note)+' '+_WKS_HEART_SVG+'</div>':'')
+    +(WEEK_STAR.note?'<div class="wks-note"><span class="wks-q">'+_esc(WEEK_STAR.note)+'</span> '+_WKS_HEART_SVG+'</div>':'')
     +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(WEEK_STAR.url)))+'" target="_blank" rel="sponsored noopener">Shop it &rarr;</a>'+_wlSaveBtn(item)+'</div>'
     +'</div>'
     +'<div class="wks-disc">Some links may earn a commission.</div>';
@@ -12266,7 +12438,7 @@ function _renderDiscoStar(){
     +_wkStarPxTag(S,'wks-px')
     +'<div class="wks-name">'+_esc(S.n)+'</div>'
     +'<div class="wks-store">'+_esc(S.store)+(S.price?' &middot; '+_esc(S.price):'')+'</div>'
-    +(S.note?'<div class="wks-note">'+_esc(S.note)+' '+_WKS_HEART_SVG+'</div>':'')
+    +(S.note?'<div class="wks-note"><span class="wks-q">'+_esc(S.note)+'</span> '+_WKS_HEART_SVG+'</div>':'')
     +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(S.url)))+'" '
       +'target="_blank" rel="sponsored noopener">Shop it &rarr;</a></div>'
     +'</div></div>'
