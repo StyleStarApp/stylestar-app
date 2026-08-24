@@ -164,6 +164,91 @@ const eq=(a,b,m)=>ok(a===b,m+'  (got '+JSON.stringify(a)+')');
     const got=await pg.evaluate(a=>_askOccasion(a)!==null,ask);
     ok(got===shouldMatch, `"${ask}" ${shouldMatch?'matches':'matches NOTHING'}`);
   }
+  // 🚨🚨 THE MIRRORED SUBSTRING TRAP, AND IT IS HER MOTHER'S OWN REPRO
+  // (2026-08-24). She typed "Grandmother of the bride" and every one of the six
+  // cards came back named "Mother of the Bride Dress", because
+  // "grandmother of the bride" CONTAINS "mother of the bride".
+  // ▶ THE CASES ABOVE PIN THE OPPOSITE DIRECTION - a SHORT phrase firing inside
+  // a longer WORD ('mass' in "massage"). This is a longer WORD swallowing the
+  // phrase from the FRONT, which is why those six could not catch it. Keep both
+  // families here so neither direction can regress.
+  console.log('\n── PART 5d: the relations, and her mother\'s repro ──');
+  for(const [ask,want] of [
+      ['Grandmother of the bride',  'grandmother of the bride'],
+      ['grandmother of the groom',  'grandmother of the groom'],
+      ['godmother of the bride',    'godmother of the bride'],
+      ['godmother of the groom',    'godmother of the groom'],
+      ['stepmother of the bride',   'stepmother of the bride'],
+      ['stepmother of the groom',   'stepmother of the groom'],
+      ['mother of the bride',       'mother of the bride'],
+      ['mother of the groom',       'mother of the groom']]){
+    const got=await pg.evaluate(a=>{const o=_askOccasion(a);return o?o.p:null},ask);
+    ok(got===want, `"${ask}" resolves to "${want}"`, got);
+  }
+  // HER TWO CALLS, pinned so neither can drift: identical formality to the
+  // mother, and all six relations treated the same.
+  const rel=await pg.evaluate(()=>['grandmother of the bride','grandmother of the groom',
+      'godmother of the bride','godmother of the groom','stepmother of the bride',
+      'stepmother of the groom','mother of the bride','mother of the groom']
+      .map(p=>{const o=_askOccasion(p);return o?[o.f,o.retail,!!o.range,!!o.define].join():'MISSING'}));
+  ok(rel.every(r=>r===rel[0]), 'all eight relations carry identical formality and flags', rel.join(' | '));
+  ok(rel[0]==='1,true,false,false', 'and that is f=1.0, retail:true, no range, no definition', rel[0]);
+  // ▶ THE POINT OF THE WHOLE FIX: the app says HER word back to her. The prompt
+  // must carry the phrase she typed, and must NOT carry the one she did not.
+  for(const [ask,her,notHers] of [
+      ['Grandmother of the bride dress', 'grandmother of the bride', 'mother of the bride dress'],
+      ['stepmother of the bride dress',  'stepmother of the bride',  'mother of the bride dress']]){
+    const d=await pg.evaluate(a=>{_ssAsk=a;return _askedForRule()},ask);
+    ok(d.indexOf('SHE HAS NAMED AN OCCASION: "'+her+'"')>=0, `"${ask}" puts HER phrase in the prompt`);
+    ok(d.indexOf('RIGHT: "'+notHers)<0, `"${ask}" never holds up "${notHers}" as the model search`);
+    ok(d.indexOf('the 2-to-4-word limit above DOES NOT APPLY')>=0, `"${ask}" keeps the word-cap exemption`);
+  }
+  await pg.evaluate(()=>{_ssAsk=''});
+
+  // 🚨 HER FORMAL-GOWN STORE RESTRICTION (2026-08-24). Her mother's second
+  // finding: three of her six cards were stores that do not stock the category.
+  // ⚠️ THE LIST IS HERS. These assertions exist so it cannot be grown by
+  // keyword-matching c: lines, which is how "occasion" came to mean two things.
+  console.log('\n── PART 5e: formal gowns, her word and her list ──');
+  const GOWN=['Nordstrom',"Dillard's","Macy's",'Bloomingdales','Belk','Saks',
+    'Neiman Marcus','Bergdorf Goodman','NET-A-PORTER','Nordstrom Rack','Alice + Olivia'];
+  const gs=await pg.evaluate(()=>({list:_GOWN_STORES.slice(),known:_GOWN_STORES.filter(k=>!STORES[k])}));
+  ok(gs.known.length===0, 'every gown store is a real key in STORES', gs.known.join());
+  ok(JSON.stringify(gs.list)===JSON.stringify(GOWN), 'her eleven, unchanged', gs.list.join(' | '));
+  // The three she crossed off, and the three her mother was actually sent to.
+  ['Revolve','LoveShackFancy','Baltic Born','Anthropologie','Tuckernuck','J.Crew','Ann Taylor','Reformation']
+    .forEach(k=>ok(gs.list.indexOf(k)<0, `${k} is NOT a formal-gown store`));
+  // Which asks carry it, and which deliberately do not.
+  for(const [ask,want] of [
+      ['Grandmother of the bride dress', true ],
+      ['mother of the groom outfit',     true ],
+      ['stepmother of the bride dress',  true ],
+      ['black tie wedding',              true ],
+      ['gala dress',                     true ],
+      ['formal dress',                   true ],
+      ['prom dress',                     false],   // her call: Revolve is great for prom
+      ['homecoming dress',               false],
+      ['bridesmaid dress',               false],   // J.Crew genuinely does these
+      ['wedding guest dress',            false],
+      ['cocktail dress',                 false]]){
+    const d=await pg.evaluate(a=>{_ssAsk=a;return _askedForRule()},ask);
+    const has=d.indexOf('THIS CALLS FOR A FORMAL GOWN')>=0;
+    ok(has===want, `"${ask}" ${want?'restricts to the gown stores':'is NOT restricted'}`);
+  }
+  // The rule must NAME the failures, which is what makes a rule land here.
+  const gr=await pg.evaluate(()=>{_ssAsk='mother of the bride dress';return _askedForRule()});
+  ['J.Crew','Ann Taylor','Tuckernuck'].forEach(k=>
+    ok(gr.indexOf(k)>=0, `the rule names ${k} as a WRONG store`));
+  GOWN.forEach(k=>ok(gr.indexOf(k)>=0, `the rule offers ${k}`));
+  ok(gr.indexOf('Order the list above by how well each store suits her')>=0,
+     'FIT BEATS DEPTH survives inside the restriction');
+  // ⚠️ black tie / gala / formal are retail:FALSE, so the restriction must live
+  // outside the retail branch or they would silently lose it.
+  const bt=await pg.evaluate(()=>{_ssAsk='black tie gala';return _askedForRule()});
+  ok(bt.indexOf('THIS CALLS FOR A FORMAL GOWN')>=0, 'a retail:false occasion still gets the gown stores');
+  ok(bt.indexOf('keep that word OUT of the search terms')>=0, 'and still keeps its own retail:false rule');
+  await pg.evaluate(()=>{_ssAsk=''});
+
   // The dress-down end, her new territory.
   const low=await pg.evaluate(()=>({
     school:(_askOccasion('school outfit')||{}).f, concert:(_askOccasion('concert outfit')||{}).f,

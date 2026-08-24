@@ -7,7 +7,346 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-23 LATER — 🗓 HER MOTHER'S SEARCH IS FIXED, AND THE OCCASION VOCABULARY IS BUILT)
+## ▶ NEXT SESSION — START HERE (2026-08-23/24 — 💛 HER CARD, KATHY'S TWO FINDINGS, AND HER MOTHER BROKE THE OCCASION TABLE)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's merge what we have so far? And save all to the MD")
+▶▶ **THE SESSION RAN PAST MIDNIGHT AND HAS TWO HALVES. The first is the five merged PRs below. The second
+started when her mother sent ONE screenshot after the pause and produced two findings, both built and merged
+in the same batch.** ▶ **Read the 🚨 mother entry directly below this block first — it is where the live work
+stopped, and step 5 of her own ladder is still open.**
+
+### ⏸ THE FIRST HALF (her earlier call: "Let's save to the MD")
+**FIVE PRs merged and ALL CURL-VERIFIED LIVE: #922 · #923 · #924 · #925 · #926.** ⚠️ **Five Netlify builds.**
+Branch resynced to main, tree clean, everything at `26bf24e`. **The last merge was md5 byte-compared against the
+tested file (`e857ec48…`), so the 433 green checks transfer directly to what her testers see.**
+▶▶ **THE SHAPE OF THE DAY: it opened on her own agenda (the Style Card) and was TAKEN OVER by a tester.**
+Kathy sent two findings mid-session and both were real. ▶ **Her verdict at the pause: "Love this."**
+▶ **AND THE THING THAT MATTERS MOST NEXT TIME is at the bottom of this entry: her stylist principle about
+Revolve and J.Jill is now in the chat prompt but has NEVER BEEN SEEN TO FAIL OR PASS IN THE WILD.**
+
+### 🚨🚨 HER MOTHER TYPED "GRANDMOTHER OF THE BRIDE" AND WAS TOLD SHE WAS THE MOTHER (2026-08-24, after the pause)
+Her mother's screenshot: six cards, every one named **"Mother of the Bride Dress"**. Two separate findings came
+out of it, one mechanical and one that is pure stylist knowledge. **Both are built; neither is merged yet.**
+▶ **AND THE TIMING QUESTION SHE ASKED WAS ANSWERABLE EXACTLY: none of the day's five merges go near the ask box
+or the occasion table, and the bug reproduced against the LIVE BYTES (`e857ec48…`).** So the screenshot's date
+never mattered. ⭐ **Reuse that move: reproduce against the served file rather than trying to date a screenshot.**
+
+### 🚨⭐⭐ FINDING 1 — THE SUBSTRING TRAP, MIRRORED, WHICH IS WHY THE 08-23 TESTS COULD NOT CATCH IT
+**"grandmother of the bride" CONTAINS "mother of the bride"**, `_askOccasion` matches by `indexOf`, so her word
+was swallowed. `_askedForRule` then puts the TABLE's phrase into every search, and name/search parity prints it
+on every card.
+- ▶▶ **THE SIX CASES PINNED ON 08-23 CATCH THE OPPOSITE DIRECTION** — a SHORT phrase firing inside a longer WORD
+  (`mass` in "massage", `class` in "classic"). **This is a longer WORD swallowing the phrase from the FRONT.**
+  Same family, mirrored, and structurally invisible to the existing tests. **Both directions are pinned now.**
+- ⭐⭐ **THE LINK WAS NEVER WRONG, ONLY THE WORDS — and that reframed the whole fix.** MEASURED: **Dillard's
+  returns a BYTE-IDENTICAL page for both phrases (741,675 bytes, "gown" ×1047)**, and **Macy's serves 398 gowns
+  AND 145 mentions of "grandmother"**, so her word is a real retail phrase, not a narrower guess. ▶ **That is why
+  it goes into the SEARCH as well as onto the card: parity stays intact and the card never promises a word the
+  link does not carry.** ⚠️ **NORDSTROM IS UNMEASURED** (200 but a JS shell) — said at the code, not inferred.
+- **Her two calls: same formality as the mother (1.0), and ALL SIX relations treated identically.**
+  Table **37 → 43**: grandmother / godmother / stepmother × bride and groom. `_askOccasion` is UNCHANGED —
+  longest-phrase-wins already gave them precedence.
+- 🚨 **THE ONE THAT MATTERS MOST IS NOT GRANDMOTHER, IT IS STEPMOTHER.** Being told she is the mother carries real
+  family weight, **nobody would ever report it, she would just close the app.** That is the argument for fixing a
+  bug whose results were already correct.
+- ⭐⭐ **HER MOTHER CLOSED THE OTHER HALF HERSELF, AND IT IS A DECISION NOT A PLEASANTRY.** Claude raised "six
+  identically named cards tell her nothing". Her answer: **"she was fine with it. If she wanted to specify with
+  sleeves she could have."** ▶ **SHE READS THE ASK BOX AS A SEARCH BOX SHE NARROWS HERSELF.** So the
+  name-distinguisher is **deliberately NOT built** — it would have solved a problem the user does not have and
+  fought the name/search parity guarantee. ⚠️ **Do not re-propose it.**
+- **`occasion` 101 → 117.** Negative control: with the six entries removed, **10 checks fail**, including her
+  mother's exact repro.
+
+### 🚨🚨⭐⭐ FINDING 2 — "OCCASION" IS ONE WORD COVERING TWO DEPARTMENTS, AND SHE NAMED IT HERSELF
+Her words: *"Tuckernuck, J Crew, and Ann Taylor do not even have mother of the bride dresses. The department
+stores do and specialty shops like Sachin and Babi."* ▶ **THREE OF HER MOTHER'S SIX CARDS WERE STORES THAT DO
+NOT STOCK THE CATEGORY AT ALL.**
+- ✅ **HER STYLIST KNOWLEDGE, CONFIRMED BY MEASUREMENT: Tuckernuck serves 1.34MB with ZERO gowns** (the
+  padded-thin-page behaviour she caught on 08-15 with "print wrap top"), **Ann Taylor 2.97MB with ZERO gowns**,
+  against Dillard's 1047 and Macy's 470. **J.Crew answers 377 bytes to a sandbox, so her word stands there
+  without a number** — said to her that way rather than dressed up.
+- ▶▶ **THE CAUSE, AND IT IS THE THIRD SIGHTING OF ONE FAMILY: TWELVE STORES NAME "occasion" IN THEIR `c:` LINE
+  AND ONLY THREE MEAN GOWNS.** The other nine mean *a nice dress for a party* (Revolve, Anthropologie,
+  Reformation, Alice + Olivia, LoveShackFancy, Baltic Born, White House Black Market, Tuckernuck, DVF).
+  **Same shape as "print" not being a retail word (08-22) and stores silently dropping "midi" (08-20): an
+  abstract category word the trade does not use the way we do.**
+- ⚠️ **AND IT IS WORSE FOR THE OTHER TWO: J.Crew's `c:` line says "dresses" and Ann Taylor's says "dresses".**
+  She asked for a dress, so the model reasonably concluded they qualify. **Nothing anywhere told it a formal gown
+  is a DIFFERENT DEPARTMENT from a dress.** ⚠️ **Not one store in the whole table says "department store" either.**
+- ⭐⭐ **"FORMAL GOWNS" IS HER WORD AND IT IS BETTER THAN ANY OF THE DRAFTS, for a reason worth reusing: it names
+  the GARMENT rather than the EVENT, so it cannot drift back into meaning a party dress** the way "occasion" and
+  "special occasion" both do.
+- ✅ **BUILT AS `_GOWN_STORES`, ELEVEN STORES, HERS:** Nordstrom · Dillard's · Macy's · Bloomingdales · Belk ·
+  Saks · Neiman Marcus · Bergdorf Goodman · NET-A-PORTER · **Nordstrom Rack** · **Alice + Olivia**.
+  ⚠️⚠️ **THE LIST IS HERS, NOT INFERRED — candidates were put to her AS A GUESS and she corrected them**
+  (Nordstrom Rack and Alice + Olivia IN; Revolve, LoveShackFancy, Baltic Born, Anthropologie OUT).
+  ▶ **Do not grow it by keyword-matching `c:` lines. That is the Garnet Hill mistake, and it is exactly how
+  "occasion" came to mean two things in the first place.**
+- **Attaches to ELEVEN occasions: the eight relations + black tie + gala + formal.** The rule NAMES J.Crew, Ann
+  Taylor and Tuckernuck as the wrong stores — **the WRONG/RIGHT pattern, which is the only thing that has ever
+  made a rule land in this prompt** (dr3, the name/search rebuild).
+- ⚠️ **IT LIVES OUTSIDE THE retail/non-retail BRANCH ON PURPOSE: black tie, gala and formal are `retail:false`
+  and would have SILENTLY lost the restriction.** A test pins exactly that.
+- ⚠️ **FIT BEATS DEPTH SURVIVES INSIDE IT:** the rule hands over the eleven and says *order them by how well each
+  suits her*. **The list is re-ordered FOR her, never re-ordered BY us.** Pinned.
+- ⚠️ **Every store name is asserted to be a real `STORES` key** — a name that does not match fails silently.
+- **`occasion` 117 → 155.** Negative control: with the `gown:true` flags removed, **19 checks fail**.
+
+### ⏸ WHERE THIS STOPPED, AND HER OWN INSTRUCTION MADE IT BETTER
+▶▶ **HER WORDS, AND THEY WERE A CORRECTION: "Ok I want to do this properly. I need to go slower. One step at a
+time."** Claude had put three options and two questions in one message. ▶ **The recovery that worked: put the
+whole ladder in front of her, then ask ONE question per turn.** Steps 1-4 landed in four short exchanges.
+**Name it → which stores → which occasions → build.** ⭐ **Reuse this shape whenever a decision has more than one
+axis: show the ladder so she can see the end, then climb one rung per message.**
+- 🚨 **PROM AND HOMECOMING ARE A THIRD DEPARTMENT AGAIN, HER FINDING: "Revolve is great for prom or homecoming"**
+  while **Sachin & Babi is wrong for teens.** ▶ **So the restriction is not ONE list, it is per-occasion-family.**
+  **Prom currently carries NO store restriction at all, deliberately, and it is recorded that way at the code.**
+- ⚠️ **"HOMECOMING" IS NOT IN THE OCCASION TABLE AT ALL.** A woman typing it today matches nothing.
+- ⚠️ **SACHIN & BABI IS NOT IN `STORES`** — an occasion specialist she named and the table does not have.
+
+### 📉 SACHIN & BABI DECLINED HER ON RAKUTEN, AND THE ANSWER SHE NEEDED IS THAT IT BLOCKS NOTHING
+▶ **ONE advertiser, reapplyable, exactly like Shopbop.** ⭐⭐ **AND THE THING WORTH SAYING EVERY TIME: THE STORE
+TABLE IS CURATION AND `_AFF_MID` IS MONEY, AND THEY ARE DELIBERATELY INDEPENDENT.** Most of the 102 stores are not
+approved advertisers. **So Sachin & Babi can go into `STORES` tomorrow and the stylist can send women there; the
+link simply will not earn until they say yes.** (The inverse of the Vilebrequin case, where the brand stayed in
+`_AFF_MID` and came OUT of `STORES`.)
+
+### ⚠️⚠️ A NEW VARIANT OF THE READ-THE-TOTAL RULE, AND IT NEARLY SHIPPED A FALSE GREEN
+A sweep hung at `shopask` on the **port-holding trap (`EADDRINUSE 8995`, fourth sighting)**, so every suite after
+it never ran — **and the previous sweep's `out-*.txt` files were still sitting there with real, perfect totals
+from 21:44.** They were quoted to her before the timestamps were checked.
+▶▶ **THE STANDING RULE IS NOT ENOUGH ON ITS OWN: "read the TOTAL, never the absence of failures" catches a
+CRASHED run. It cannot catch a run that NEVER STARTED, because the old file looks like a clean pass.**
+▶▶ **SO: `rm -f scratchpad/out-*.txt` BEFORE EVERY SWEEP.** A missing file is honest; a stale one is not.
+⚠️ **And kill a port-holder by scanning `/proc/*/cmdline` for the PID — `pkill -f` kills its own shell.**
+
+### ⭐⭐ HER STYLE CARD, FOUR ASKS, ALL HERS AND ALL BUILT (#922)
+Her words: *"it should show bigger on the Style Portrait page · on the silver frame I want it to bleed out to the
+edges, no white around the outer edge · I don't like the gradient shadowy look. I don't mind it looks shiny like a
+mirror but I want all one symmetrical color · Wondering if share style card should be on our drop down menu?"*
+- 🚨⭐⭐ **THE FRAME FINDING IS THE REUSABLE HALF, AND IT IS A RULE: A SINGLE GRADIENT ACROSS A WHOLE RECTANGLE
+  CANNOT DRAW A SYMMETRICAL FRAME.** The old frame was one diagonal ramp painted over the entire canvas, so the
+  top-left of the border got one end of it and the bottom-right got the other — **opposite sides were guaranteed
+  to be different colours.** That is the "gradient shadowy look" she named, and no amount of re-picking colours
+  could have fixed it. ▶ **As built: a MITRED BEVEL — four clipped trapezoids, each with its OWN gradient running
+  outer-edge to inner-edge, so every side reads identically and the highlight always faces out.**
+  **MEASURED: the four sides come back 81 / 81 / 81 / 81, spread 0.0.** `MIRROR` and `diag()` are deleted as dead.
+- ⚠️ **AND THE BLEED WAS A SEPARATE BUG SHE FELT AS ONE THING:** the card had a 1px outer hairline plus white
+  paper showing, measuring **1.10:1 against a white sheet** — invisible, which is exactly why the frame looked
+  like it stopped short. `FR_OUT=0` now, the hairline is gone, and the outer ring measures **1.22:1**.
+- ⭐ **THE CARD ON THE PORTRAIT IS A HERO COLUMN NOW, 196px, her ask.** The row went from a small thumbnail beside
+  text to the card centred above its own line. ⚠️ **The gold inset ring came OFF the thumbnail** — it was a second
+  frame around something that IS a frame.
+- ⭐ **HER FOLLOW-UP THE SAME HOUR: "I think we need the arrow to show it is meant to be tapped."** She was right —
+  centring the card had quietly removed the one signal that the row was a control. ⚠️ **AND THE ARROW STRANDED
+  ITSELF ALONE ON LINE 2 AT 320px**, which reads as a bullet rather than an affordance. Fixed by binding it to the
+  last word (`.sc-nb{white-space:nowrap}`), so "Card→" travels together. **The hardcoded `<br>` came out.**
+- ✅ **THE MENU ROW IS IN, her question answered yes: "Style Star Card".** ⚠️ **It could NOT use the ordinary
+  `menuGo` path and that is the interesting part: `menuGo` leaves the drawer's history entry in place because it is
+  navigating to a SCREEN. The card is an OVERLAY, so the row calls `menuClose()` first** — otherwise her hardware
+  Back would have closed a drawer that was no longer open. **A test asserts `_menuPushed===false` afterwards**,
+  because `history.length` never decrements and would have passed vacuously.
+
+### 🚨🚨 THE MOTTO BUG — HER PHOTOGRAPH, AND THE ROOT CAUSE IS A FAMILY WE HAVE SEEN BEFORE (#923)
+Her report: *"The first time I clicked on it there was no motto but then i checked again and it was there"* — then
+the sentence that solved it: **"It happened when I clicked on it from menu."**
+- ▶▶ **ROOT CAUSE: `fallbackInitialScreen()` never hydrated `userMotto`.** So on a COLD BOOT into Welcome Back her
+  motto existed in `ss_data` and did not exist in memory. Opening the card from the Portrait screen worked, because
+  getting there ran the code that fills it in. **Opening it from the MENU skipped that entirely.**
+- ⭐⭐ **THE FAMILY, AND IT IS THE THIRD SIGHTING: A NEW ENTRANCE SURFACES EVERY PIECE OF STATE THAT ONLY THE OLD
+  ENTRANCES HYDRATED.** Exactly the mirror of the 2026-07-26 lesson, where new EXITS surfaced state only the old
+  exits cleaned up. ▶ **So: whenever a feature gains a new door, ask what the old doors were doing on the way in.**
+  The Menu row shipped one PR earlier and created this within the hour.
+- **Fixed twice over, deliberately:** `fallbackInitialScreen` sets `userMotto` now, AND `buildCardBlob` falls back
+  to reading `ss_data` itself. ⚠️ **Belt and braces on purpose — the card is the thing she SHARES**, so a blank
+  quote is not a cosmetic failure, it is her sending a friend a broken card.
+- ⭐ **AND THE THIRD FIX IS THE ONE THAT GENERALISES: THE CARD NEVER DRAWS EMPTY QUOTES.** It used to draw `""`
+  with nothing between them whenever the motto was missing for any reason. Now `H_MOT` collapses to 0 and the
+  layout closes up. **A missing thing should be absent, never rendered as an empty container.**
+- ⚠️ **THE HARNESS LIED FIRST, and the tell is worth keeping: `mottoboot.mjs` PASSED on the broken file.** It
+  sampled a fixed percentage band of the card — but removing the motto MOVES everything below it, so the band was
+  measuring different content and finding ink either way. ▶ **Rewritten to SCAN for the gold landmarks and identify
+  them BY SHAPE** (the starcard lesson, applied one day later). `PROVE_OLD=1` re-runs the control.
+
+### ✍️ "MY STORY" → "ABOUT"? — SHE ASKED, AND HER OWN ANSWER WAS TO KEEP IT
+Raised by her, argued through, and **her call: "Let's keep as is."** ▶ **The argument that decided it, worth
+reusing: "About" is what a COMPANY page is called; "My Story" is a person speaking, and that page is the single
+strongest piece of the Sally differentiation in the whole app.** Renaming it would have traded her voice for a
+convention. ⚠️ **Do not re-propose this.**
+
+### 📧📧 KATHY'S SECOND REPORT — TWO FINDINGS, BOTH REAL, BOTH FIXED (#924)
+Her words: *"The first few back and forth between the store sites and Style Star, my conversation was there… but
+when I went back maybe the 3rd or 4th time it was gone or I couldn't find it. The Nordstrom site did have the
+dresses that were styled and recommended for me… when I went to the Revolve site, it did have long dresses for me
+to look at but all of them were very form fitting, which was one of the things that I had said was a hard no for me
+in the final question of the quiz."*
+- ⚠️⚠️ **FINDING 1 IS THE SAME COMPLAINT AS 08-22, FROM THE SAME WOMAN, AFTER WE "FIXED" IT.** The resume whisper
+  shipped on 08-22 for exactly this. ▶ **So the whisper is not enough on its own, and the reason is the 6-hour TTL
+  plus the fact that the whisper lives on WELCOME BACK — a woman who comes back INTO the app somewhere else never
+  passes it.** ✅ **BUILT: a chat-waiting mark on the "Ask your Stylist" MENU ROW** — the stylist's own pink star,
+  plus a soft gold wash on the row, shown whenever a real conversation is waiting. **The Menu is reachable from
+  every screen, which the whisper is not.** ⚠️ **Same "at least one `role:'user'` entry" test as the whisper**, so
+  the stylist's own greeting can never light it.
+- 🚨🚨 **FINDING 2 IS THE STRUCTURAL ONE: HER NEVER-WEAR LIST GOVERNED THE ITEMS AND NOT THE STORE.**
+  ▶ **MEASURED, and it is stark: `_storeFit()` reads `prefs` ZERO times.** So "no bodycon" filtered what was
+  suggested and had no opinion whatsoever about WHERE she was sent — and the prompt's specialist escape hatch
+  ("go further down the list for a specialist") had no idea her hard no existed. **Kathy asked for long dresses,
+  the model reached for the dress specialist, and the dress specialist is Revolve.**
+- ✅ **BUILT AS `_NEVER_STORE`, a small hand-written map from her never-wear chips to a STORE-CHOICE rule**, e.g.
+  bodycon → *"do not send her to a store whose dress range is predominantly body-conscious, EVEN IF that store is
+  the obvious specialist."* ⚠️ **Deliberately scoped BY GARMENT: "no bodycon" does not restrict her activewear,
+  swim or shapewear**, where fitted is the point. **Two entries only** (bodycon and oversized/boxy) — ▶ **the rest
+  of her chips are about FABRIC or DETAIL, which a store cannot be characterised by. Do not grow this map without
+  a real sighting.**
+
+### 🚨🚨⭐⭐ THE FIT CAP WAS PROPOSED, MEASURED, AND KILLED — AND THE MEASUREMENT IS THE KEEPER
+The obvious fix for Kathy was a general penalty pushing a modest woman away from alluring stores.
+▶▶ **THE SWEEP KILLED IT IN ONE NUMBER: for a relaxed, modest, natural dresser, REVOLVE ALREADY RANKS 102 OF 102.**
+It is the single worst-matched store in the entire table for exactly the woman who was sent there.
+- ⭐ **SO THE RANKING WAS NEVER BROKEN. The specialist escape hatch was.** A cap would have "fixed" a system that
+  was already right, made every other woman's list worse, and left the actual hole open.
+- ⚠️⚠️ **THIS IS THE SECOND TIME IN TWO DAYS A STORE-LEVEL PENALTY WAS DESIGNED AND MEASURED AWAY** — the funeral
+  modesty cap died the same way on 08-23. ▶ **STANDING: before penalising the store table, measure where the store
+  ALREADY ranks for the woman in the complaint. Twice now the answer has been "last".** `scratchpad/fitcap.js`.
+
+### ⭐⭐ HER STYLIST PRINCIPLE, VERBATIM, AND IT REVERSED A DECISION I HAD ALREADY MADE (#925)
+She wrote it herself and it is the sharpest statement of the rule in this file:
+▶▶ ***"a relaxed woman who is very modest should never be sent to Revolve even if she is looking for a cocktail
+dress and a glam, alluring, trendy woman should never be sent to J Jill or Chico's even if she is looking for a
+linen dress."*** Then the question that mattered: *"not sure if we fixed anything that was broken or if once we get
+affiliate links this will solve itself?"*
+- 🚨 **THE ANSWER, AND IT MEANT ADMITTING I HAD BEEN WRONG AN HOUR EARLIER: THE CHAT HAD NO RANKING AT ALL.** It was
+  handed `Object.keys(STORES).join(', ')` — **all 102 stores in raw table order, with nothing telling it which
+  suited HER.** Every other shopping surface had `_storeListForPrompt()`; the chat never did. ▶ **I had said
+  earlier the same day that I would hold and watch rather than touch the chat. Her principle made that wrong, and
+  I said so.**
+- ✅ **BUILT: the chat gets `_storeListForPrompt(null, 45)`** — her ranked order, closest first, with the top 45
+  carrying their full detail and the tail listed by name only. **Plus the FIT BEATS DEPTH paragraph in her own
+  terms, naming both her examples**: Revolve is the wrong door for a relaxed, preppy or natural dresser however
+  deep it is, and J.Jill and Chico's are the wrong door for a glam, alluring, trendy woman however much linen they
+  carry.
+- ⚠️⚠️ **THE `detailTop=45` IS LOAD-BEARING AND IT IS A CAP, NOT A PREFERENCE.** `style-ai.js` REFUSES a message
+  over `MAX_TEXT_CHARS` (32KB) outright — it does not truncate, it errors. **Full detail on all 102 measured
+  30,714 of 32,768: a 2,054-character margin, i.e. one long conversation from a dead chat.** At 45 it is **25,655,
+  with 7,113 to spare.** ▶ **Anything added to that prompt must be measured against the cap, every time.**
+- ⚠️ **AND THE HONEST ANSWER TO HER AFFILIATE QUESTION: NO, FEEDS WOULD NOT HAVE SOLVED THIS.** A feed changes
+  which ITEM is found; it has no opinion about which STORE a woman belongs in. **This was ours to fix and it is
+  fixed.**
+- 🚨 **HER CONFIDENCE QUESTION, ANSWERED WITHOUT FLATTERING THE WORK: I could not reproduce Kathy's failure in
+  EITHER version.** Eight live runs, before and after, produced no wrong-fit store either way. ⚠️ **AND THE REASON
+  MATTERS: my harness ran with SEARCH OFF and Kathy's real chat had it ON**, which is a different code path and a
+  different prompt budget. ▶ **So the fix is well-reasoned and NOT measured against the actual failure. Treat it as
+  unproven until a real woman exercises it.** ⚠️ **Her own note, and it is the counterweight: "the times I have
+  used the chat it has not been problematic at all."**
+- ▶ **WHAT WOULD TURN THIS FROM PREDICTED TO MEASURED: KATHY'S REAL QUIZ ANSWERS.** Same ask as her mother's. It is
+  the one input no amount of harness work can substitute for.
+
+### 🏬 THE MALL LEARNS TO EARN, AND THE SWEEP THAT SHOULD HAVE CAUGHT IT (#926)
+Her ask: add FARM Rio and DVF to the Mall. Her instruction once the finding surfaced: **"C, and do the wrap and
+sweep first."**
+- 🚨🚨 **THE FINDING: `renderMall()` RENDERED `s.u` RAW — the one place in the app where a store URL becomes an
+  `href` without passing through `_affUrl`.** ▶ **AND `affwrap.js`, the sweep whose entire job is "zero bare links
+  to an approved store escape", DID NOT MENTION THE MALL AT ALL. Two gaps hiding each other.**
+- ⚠️ **IT COST NOTHING UNTIL TODAY PURELY BY ACCIDENT: none of the 25 Mall stores happened to be an approved
+  advertiser.** Adding FARM Rio and DVF ends that silently, with nothing on screen looking different.
+  ▶ **Same family as the Vilebrequin trap: a store present in one list and absent from another.**
+- ⭐ **HER SEQUENCING WAS RIGHT AND IT IS WORTH NAMING: she made the plumbing land BEFORE the thing that would have
+  exploited the gap.** The wrap and the sweep are in the same commit as the stores.
+- ⭐⭐ **THE NEGATIVE CONTROL IS THE PART TO REUSE: the wrap was REMOVED and the suite re-run — 4 failures,
+  including the catch-all, with all four bare links named.** ▶ **A sweep that has never been seen to fail proves
+  nothing.** `affwrap` 26 → **31 checks**.
+- **The two stores, her PICK "C", and the placement follows HER OWN SCORES rather than taste:** FARM Rio closes
+  *Contemporary & Everyday* (trendy 10 / classic 3 / casual 7 — nearly the sentence already under Anthropologie
+  two cards up); **Diane von Furstenberg** closes *Elevated & Designer* (dressy 9 / polish 9, occasion and
+  wedding-guest, beside Saks where a woman shopping a wedding is already looking). ⚠️ **Option D grouped them
+  together and was argued down: their ONLY shared dimension is colorful 10.** Mall is **27 stores, 5 groups**.
+- ⚠️ **The two blurbs are CLAUDE DRAFTS** condensed from the store table's own `c:` lines. **Every other blurb in
+  that list is hers** — one string each if she wants them in her words.
+
+### ⚠️ THE DEPLOY-VERIFICATION TRAP, ONE DAY AFTER THE LAST ONE
+**The live poll for #926 nearly gave a false positive: it matched `farmrio.com`, which was ALREADY on the old
+deploy inside `_AFF_MID`.** ▶ **Identical shape to yesterday's Baby Gold false positive.** It only came out right
+because the poll counted **occurrences ≥ 2** rather than presence, and because the md5 confirmed it.
+▶▶ **STANDING, now twice-burned: POLL ON A STRING THAT EXISTS ONLY IN THE NEW DEPLOY, AND LET THE MD5 SETTLE IT.**
+
+### ⭐ TEST HYGIENE
+- **`starcard` 214 → 236** (Part 5 the frame: bleed, four-side symmetry under 2, the outer edge readable against
+  white, the bevel proven to be a real ramp with the highlight facing out, no `diag(`, no whole-canvas gradient;
+  Part 6 the panel: column layout, 196px, 4:5, no gold ring, one-line title, the arrow present, gold, on the line
+  and bound to the last word). **`menu` 82 → 104** (the Card row + the chat-waiting mark in all four states).
+  **`affwrap` 26 → 31.** New: `mottoboot.mjs` 8 · `chatjudge.mjs` 17 · `fitcap.js` · `chatrank.js` ·
+  `chatjudge-live.mjs` · `mallmock.mjs` · `mallbuilt.mjs`.
+- **Green at pause: affwrap 31 · mallverify 14 · affq 40 · nav 82 · menu 104 · e2e 29 · curated 65 · hubs 49 ·
+  storedepth 19 = 433 checks, 0 failures.** Plus ~30 live model runs.
+- ⚠️ **`searchtune` shows 1 failure and it is PRE-EXISTING — AND IT WAS PROVEN, NOT ASSUMED, THIS TIME.** A clean
+  `origin/main` tree was extracted and the same suite run on the SAME MACHINE, one variable: **identical failure,
+  same assertion** (the heart-tip font check). ▶ **`git archive origin/main | tar -x` into a scratch dir is the
+  cheap way to do this and should be the default whenever a "pre-existing" claim is made.**
+- 🚨⭐ **TWO SUITES WERE NEVER RUNNING AT ALL AND NOBODY KNEW: `a2page.js` and `contact.js` imported Playwright by
+  BARE NAME (`from 'playwright'`) instead of the absolute path.** They failed to load, which reads exactly like
+  "not run today". ▶ **Fixed — and the moment they ran they immediately caught a stale row count and a stale
+  adjacency assertion, both proven pre-existing.** ⚠️ **A suite that cannot load is worse than a failing one: it
+  is silent.** Grep for `from 'playwright'` if a suite ever looks suspiciously quiet.
+- ⚠️⚠️ **FIVE HARNESS BUGS, EVERY ONE FAILING ON CORRECT CODE — the standing tell, now nine-plus sessions running:**
+  (1) the fixed-band motto probe passing on the broken file; (2) a `diag(` source assertion matching its own
+  tombstone COMMENT (strip comments before matching); (3) a line counter counting an inline SVG's rect as a second
+  line, reporting a wrap at every width on words that measure 227px in a 302px box (**cluster rect tops within
+  6px** — the fix went into `starcard.js` too); (4) a live harness typing into `#ssAskIn` when `_openShopStyleNow`
+  clears it and the prompt reads the GLOBAL `_ssAsk` — the ask never reached the prompt and the run looked healthy;
+  (5) two harnesses reading `d.system` when **the chat prompt rides `messages[0].content`** — an empty capture made
+  a NEGATIVE assertion pass vacuously. ▶ **(4) and (5) are the dangerous shape: a harness that measures NOTHING
+  reports a clean pass. Both now abort unless the thing under test is provably present.**
+- ⚠️ **A backtick inside a COMMENT inside a template literal closes the string** ("Unexpected identifier 'Object'").
+  Cost one broken parse. **Scope any backtick check to the real code.**
+- ⚠️ **`wardrobeItems` is script-scope and invisible to `page.evaluate`** (third sighting) — star rows through the
+  real UI. ⚠️ **`prefs.sizes.tops` is an ARRAY, not a string** — a seed that gets this wrong fails silently.
+
+### 📈 HER INSTAGRAM IS AT 38 FOLLOWERS
+She posted again today. ▶ **Worth saying to her the same way as before: read the RATE, not the count.** And the
+new fact that makes it matter more than yesterday: **the Mall now has two cards that can actually earn**, so a tap
+from that traffic is no longer free for us.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **HER OWN LADDER, STEP 5 — IT IS THE ONLY THING MID-FLIGHT.** Steps 1-4 are built and merged; step 5 is
+   two pieces and both need HER, not measurement:
+   **(a) THE PROM / HOMECOMING STORE LIST.** She has given exactly two data points — **Revolve IN, Sachin & Babi
+   OUT ("not for teens")** — and prom carries NO restriction at all until the list exists.
+   **(b) SACHIN & BABI'S OWN SCORES**, to add it to `STORES` as an occasion specialist. ⚠️ **Never invent store
+   tags** (the Garnet Hill rule) — ask, and offer her own anchors the way the DVF and Baby Gold entries were done.
+   ⚠️ **AND "HOMECOMING" IS NOT IN THE OCCASION TABLE AT ALL** — a woman typing it matches nothing today.
+   ▶ **CLIMB IT THE WAY SHE ASKED: show the whole ladder, then ONE question per message.** It worked.
+2. ⭐⭐ **ASK HER WHAT SHE WANTS FIRST ANYWAY — she has opened the last five sessions with her own agenda and it
+   has been better than the list every time.** Her mother's one screenshot outproduced this entire list.
+3. 👀 **HOW THE SEVEN MERGES FEEL ON HER PHONE** — the bigger card and the new silver frame (she has only seen
+   renders of the frame), the **Style Star Card menu row**, the **two new Mall cards**, and ▶ **her mother
+   re-running "Grandmother of the bride", which is the whole point of the second half.**
+   ⚠️ Private browsing, `stylestar.app/?notrack`.
+4. 🚨⭐⭐ **KATHY'S REAL QUIZ ANSWERS.** Still the one thing that would turn the Revolve chat fix from PREDICTED to
+   MEASURED. **The chat fix has never been exercised by a real woman.** Same ask open for her mother.
+5. ⭐ **THE TWO MALL BLURBS ARE CLAUDE DRAFTS** — hers to reword, one string each.
+6. ⭐ **THE `c:` LINES ARE NOW A KNOWN WEAK POINT, and this is new.** Tuckernuck's says "occasion" and it is
+   actively wrong; J.Crew's and Ann Taylor's say "dresses" and are too vague to distinguish a sheath from a gown.
+   ▶ **The gown restriction routes AROUND that hole rather than fixing it. The 08-15 parked question is now
+   overdue: should a FOCUSED store's `c:` line be tightened?** Her call, store by store, never a sitting.
+7. ⭐ **SATIN AND SEQUINS GENERALLY — open since 08-22 and still the oldest untouched item on her list.** Her
+   complaint was ordinary shopping, not occasions. **The lever she has already used is the velvet brake, not a veto.**
+8. ▶ **PRINT TOPS** — `to4` is still the only Tops row with zero curated products.
+9. ⭐⭐ **OUTFIT SUGGESTIONS** — Jen asked independently and it IS her parked Favorite Outfit page.
+10. ⭐ **"SHOW THE STYLIST WHAT I PICKED"** — Kathy's, still no mechanism at all.
+11. ⏰ **26 AUGUST — the Routine `trig_01SZerTsvKoeUYzeT1HX6iWs` fires** (catalog + Almira check-in, updated 08-23).
+12. ⏰ **28 AUGUST — the recurring-payments Routine.**
+13. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** `WEEK_STAR_PIN` back to `null`. ⚠️ **NOTHING IN THE SYSTEM
+    WILL RAISE THIS.** If it slips, the cover-up dress waits until 24 January 2027.
+14. ⚠️ **THE TWO LINK-CHECK ROUTINES STILL OVERLAP.** Standing recommendation since 08-21: keep Sunday, retire
+    Monday. **Her call, still unmade.**
+15. ⭐ **THE OCCASION FORMALITY NUMBERS ARE STILL HERS TO ADJUST** — now **43** entries, one line each.
+16. 📊 **Her Plausible dashboard**, and: **does anyone open the Style Star Card, and does anyone type an occasion
+    into the ask box?** ⭐ **That last one is no longer hypothetical — her mother does.**
+17. 🔎 **SEO / MARKETING — her own parked item, raised 08-23 morning and still never picked up.**
+18. 💰 **AFFILIATES: Sachin & Babi declined (one advertiser, reapplyable).** CJ and AWIN still the next doors,
+    Impact in 2-3 months WITH the Plausible link. **AMAZON LAST.**
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-23 LATER — 🗓 HER MOTHER'S SEARCH IS FIXED, AND THE OCCASION VOCABULARY IS BUILT)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's merge these live and write into the .md")
 **THREE PRs merged and ALL CURL-VERIFIED LIVE, byte-identical md5 each time: #918 · #919 · #920.**
