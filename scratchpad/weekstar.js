@@ -188,6 +188,58 @@ const off = await page.evaluate(()=>{
 });
 ok('empty queue → no card, no error', off.hidden);
 ok('and it comes back when the stars return', off.back);
+// ── HER QUOTE-MARK CATCH, 2026-08-24 ───────────────────────────────────────
+// "The end quote appears to be farther away than the start quote." It did, and
+// only when the note ended in a full stop -- a period sits on the baseline and
+// fills nothing at cap height, so the quote hangs over 7.00px of emptiness
+// against the opening's 3.75. See .wks-q-lo in index.html and the ink
+// measurement in scratchpad/quotegap.mjs.
+// ⚠️ THE CONDITION IS THE WHOLE POINT: 13 of her 20 notes end in ".", 6 in "!"
+// and 1 in a letter, and the other seven were already correct. A flat negative
+// margin would have crushed them, so these assert BOTH directions.
+const qm = await page.evaluate(() => {
+  const cases = [
+    ['ends in a period.',            true ],
+    ['ends in a comma,',             true ],
+    ['ends in a bang!',              false],
+    ['ends in a question?',          false],
+    ['ends in a letter like gold',   false],
+    ['trailing space after a stop. ',true ]];
+  const out = [];
+  for (const [note, want] of cases) {
+    const h = _wksNoteHTML(note);
+    const d = document.createElement('div'); d.innerHTML = h;
+    out.push({ note, want, got: /\bwks-q-lo\b/.test(d.querySelector('.wks-q').className) });
+  }
+  // the correction must be a real negative pull at PAINT time, not a stale rule
+  const probe = document.createElement('div');
+  probe.className = 'wks-note'; probe.style.cssText = 'position:absolute;left:-9999px';
+  probe.innerHTML = _wksNoteHTML('a note that ends in a period.');
+  document.body.appendChild(probe);
+  const ml = getComputedStyle(probe.querySelector('.wks-q'), '::after').marginLeft;
+  probe.remove();
+  return { out, ml, empty: _wksNoteHTML('') };
+});
+// ⚠️ ARGUMENT ORDER IS (name, condition, detail) IN THIS SUITE. Written the
+// other way round first, which made every check here pass VACUOUSLY: a
+// non-empty label string is truthy, so the condition was never read. Caught by
+// the negative control (delete the CSS rule -> still 49 passed), never by
+// reading it. A harness that measures nothing reports a clean pass.
+qm.out.forEach(c => ok(
+  `"${c.note.trim()}" ${c.want ? 'gets' : 'does NOT get'} the low-terminal pull`,
+  c.got === c.want, 'got ' + c.got));
+ok('the pull is really negative at paint time', parseFloat(qm.ml) < 0, qm.ml);
+ok('no note renders no quotes at all, not an empty pair of them', qm.empty === '');
+// ⚠️ ONE BUILDER, TWO SURFACES. The note is rendered on Welcome Back AND on
+// Discovery; a rule applied by hand at two sites drifts the moment a third
+// appears (the _wkStarPxTag lesson). Neither renderer may hand-roll the markup.
+const src = fs.readFileSync(ROOT + '/index.html', 'utf8')
+  .replace(/\/\*[\s\S]*?\*\//g, '');   // strip comments so a tombstone cannot match
+ok('both renderers call the shared note builder',
+   (src.match(/_wksNoteHTML\(/g) || []).length >= 3);
+ok('neither renderer still hand-rolls the note markup',
+   !/<span class="wks-q">'\+_esc/.test(src));
+
 ok('zero JS errors', errors.length===0);
 if(errors.length)console.log(errors.slice(0,3));
 

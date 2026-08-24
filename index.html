@@ -2495,6 +2495,34 @@ body.card-fb{padding:0}
    ⚠️ em units, so they scale with #dsStar's smaller 14px note automatically. */
 .wks-q::before{content:"\201C";font-family:'DM Serif Display',Georgia,serif;font-size:1.7em;color:#DFC271;line-height:0;vertical-align:-0.24em;margin-right:1px}
 .wks-q::after{content:"\201D";font-family:'DM Serif Display',Georgia,serif;font-size:1.7em;color:#DFC271;line-height:0;vertical-align:-0.24em;margin-left:1px}
+/* 🚨 HER CATCH, 2026-08-24: "The end quote appears to be farther away than the
+   start quote." She was right, and the SPECIFIED margins are symmetric (1px
+   each), so a box measurement agrees with the code and disagrees with her eye.
+   The 2026-08-10 curated-by-hearts lesson again: RASTERISE AND COUNT INK.
+   ▶ MEASURED at 4x on the live card, gap from the quote to the nearest TALL ink:
+     opening quote -> her first word            3.75px
+     closing quote <- a note ending in "."      7.00px   <- her eye, exactly
+     closing quote <- a note ending in "!"      4.25px
+     closing quote <- a note ending in a letter 3.50px
+   ▶▶ THE CAUSE IS THE PERIOD, AND IT IS ONLY THE PERIOD. A full stop sits alone
+   on the baseline, so it fills nothing at cap height where the quote hangs --
+   the COLUMN gap is a healthy 3.25px while the gap the EYE reads is 7.00. A "!"
+   or a letter reaches up and closes it without help.
+   ⚠️ SO THE FIX IS CONDITIONAL, NOT A FLAT NEGATIVE MARGIN. 13 of her 20 Star
+   notes end in ".", 6 end in "!" and 1 in a letter -- pulling the quote in
+   unconditionally would crush the other seven. _wksNoteHTML adds .wks-q-lo only
+   when the note ends in a low mark.
+   ⚠️ em, not px, so it scales with #dsStar's smaller 14px note, the same reason
+   the quotes themselves are in em.
+   ⚠️ -0.088em WAS TUNED AGAINST THE MEASUREMENT, NOT PICKED. The first try
+   (-0.145em) OVERSHOT to 2.25px, and the reason is worth knowing: the note is
+   CENTRED with text-wrap:balance, so changing the closing quote's margin changes
+   the line width and therefore the centring offset -- the gap does not move
+   1:1 with the margin. AFTER: a "." ending measures 3.50-3.75px across several
+   notes, against the opening's 3.75 and an unchanged 4.25 for "!" and 3.50 for a
+   letter. All four endings now sit in one band.
+   ▶ scratchpad/quotegap.mjs re-runs the whole measurement. */
+.wks-q.wks-q-lo::after{margin-left:-0.088em}
 .wks-act{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:11px}
 .wks-shop{display:inline-flex;align-items:center;gap:6px;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;padding:9px 19px;font-family:'Jost',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.07em;text-decoration:none}
 #wbStar .wl-save{cursor:pointer}
@@ -12421,6 +12449,14 @@ function _wkStarPxTag(S,cls){
 // The twin tilted gold stars (her pick "C", 2026-08-13) and her signature pink
 // heart. Shared constants for the same anti-drift reason as the gate above.
 var _WKS_STAR_SVG='<svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E0B84C" stroke="#C89A2C" stroke-width="0.6"/></svg>';
+/* One builder for the Star note, because it is rendered on TWO surfaces (the
+   Welcome Back card and the Discovery page) and a rule applied by hand at two
+   sites drifts the moment a third appears. See .wks-q-lo above for the why. */
+function _wksNoteHTML(note){
+  if(!note)return '';
+  var lo=/[.,]\s*$/.test(note) ? ' wks-q-lo' : '';
+  return '<div class="wks-note"><span class="wks-q'+lo+'">'+_esc(note)+'</span> '+_WKS_HEART_SVG+'</div>';
+}
 var _WKS_HEART_SVG='<svg class="wks-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>';
 function _renderWeekStar(){
   var el=document.getElementById('wbStar');if(!el)return;
@@ -12438,7 +12474,7 @@ function _renderWeekStar(){
     +_wkStarPx
     +'<div class="wks-name">'+_esc(WEEK_STAR.n)+'</div>'
     +'<div class="wks-store">'+_esc(WEEK_STAR.store)+(WEEK_STAR.price?' &middot; '+_esc(WEEK_STAR.price):'')+'</div>'
-    +(WEEK_STAR.note?'<div class="wks-note"><span class="wks-q">'+_esc(WEEK_STAR.note)+'</span> '+_WKS_HEART_SVG+'</div>':'')
+    +_wksNoteHTML(WEEK_STAR.note)
     +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(WEEK_STAR.url)))+'" target="_blank" rel="sponsored noopener">Shop it &rarr;</a>'+_wlSaveBtn(item)+'</div>'
     +'</div>'
     +'<div class="wks-disc">Some links may earn a commission.</div>';
@@ -12465,7 +12501,7 @@ function _renderDiscoStar(){
     +_wkStarPxTag(S,'wks-px')
     +'<div class="wks-name">'+_esc(S.n)+'</div>'
     +'<div class="wks-store">'+_esc(S.store)+(S.price?' &middot; '+_esc(S.price):'')+'</div>'
-    +(S.note?'<div class="wks-note"><span class="wks-q">'+_esc(S.note)+'</span> '+_WKS_HEART_SVG+'</div>':'')
+    +_wksNoteHTML(S.note)
     +'<div class="wks-act"><a class="wks-shop" href="'+_esc(_affUrl(_wlSafeUrl(S.url)))+'" '
       +'target="_blank" rel="sponsored noopener">Shop it &rarr;</a></div>'
     +'</div></div>'
