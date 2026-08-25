@@ -7,7 +7,172 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-25 — 🚨 HER OWN TESTING BROKE THE HONEST LINE, AND THE CAUSE WAS A RULE THE STYLIST COULD NOT OBEY)
+## ▶ NEXT SESSION — START HERE (2026-08-25 LATER — 🚨 THE PROMPT'S OWN EXAMPLES WERE TEACHING THE MODEL THE WRONG THING)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "after we merge this live. Save all to the .md and I will open new chat")
+**TWO PRs: #935 merged and VERIFIED BYTE-IDENTICAL LIVE (`md5 db7bd1aa…`), then a second for her Star-label
+round.** ⚠️ **TWO Netlify builds for the whole day** — everything else was batched on her word.
+▶▶ **THE SHAPE OF THE DAY, AND IT IS THE REUSABLE HALF: FOUR SEPARATE PROBLEMS TURNED OUT TO SHARE ONE ROOT
+CAUSE — THE PROMPT WAS TEACHING THE MODEL THE WRONG THING THROUGH ITS OWN EXAMPLES.** Not model drift, not a
+missing rule. The examples.
+▶ **AND THE SECOND HALF WAS HERS ENTIRELY: she looked at one label THREE TIMES and was right every time, on
+things every box measurement said were perfect.**
+
+### 🚨🚨⭐⭐ THE HEADLINE: THE EXEMPLAR TRAP, FOUR SIGHTINGS IN ONE DAY
+Her report, with five screenshots: *"I found too many sequins and satin mentions when I was testing. I don't
+want to ban satin and sequins but they need to be dialed down… There is nothing wrong with sequins or satin,
+it is just that they are not that in."*
+- ⚠️ **HER PREMISE WAS WRONG ABOUT VELVET AND SHE WAS TOLD SO PLAINLY:** *"It looks like velvet did get dialed
+  down."* **It did not.** The 2026-08-20 velvet brake lives ONLY inside `to6` (Dressy tops), so on every other
+  surface velvet was as free as satin. **All three are braked together now.**
+- ▶▶ **THE CAUSE WAS NOT A MISSING RULE, IT WAS THREE EXEMPLARS: the prompt's own naming bullet held up
+  `"Satin Button-Front Blouse" / "satin blouse"` as the model of a good name, and a `"velvet midi dress"` as the
+  model of a good search, ON EVERY SINGLE CALL.** The model was being shown satin and velvet as the archetypal
+  dressy fabrics and doing exactly as taught. **Swapped for linen, crepe and silk.**
+- ✅ **BUILT AS `_BRAKE_FABRICS` + `_fabricBrakeRule(slot)`**, one shared rule so the three can never drift
+  apart again. ⚠️ **`to6` IS EXEMPT, her own 2026-08-15 call** (satin belongs on a dressy top). ⚠️ **And it
+  waives PER FABRIC on an explicit ask** — a woman typing "satin blouse" gets satin, exactly as her own two
+  kinds of no require.
+- ⚠️⚠️ **THE ABSTRACT RULE DID NOT LAND, THIRD TIME THIS FILE HAS SAID IT: at "use at most one" the live model
+  still put the braked fabric in 3 of 4 sets. It only landed once a WRONG/RIGHT PAIR NAMED THE VIOLATION.**
+  ▶ **That pattern is now FOUR-for-four (dr3, the name/search rebuild, the women's-retailer boundary, this).
+  Name the violation or the rule does not land.** New `scratchpad/fabric.js`, **27 checks**.
+
+### ✅ THE HONEST LINE STOPS CLAIMING INVENTORY IT CANNOT SEE — her catch, and she was exactly right
+Her words on the wetsuit answer: *"only thing I would change is that Amazon actually does have wetsuits but
+this is pretty good result."*
+- ▶ **`_honestyRule()` was ASSERTING A FACT ABOUT STOCK: "a wetsuit is not stocked by these retailers."**
+  **We cannot see any retailer's inventory, so that sentence was a guess wearing the costume of a fact** — and
+  she caught it being false. **Deleted**, replaced with a NEVER-claim-inventory bullet and its own WRONG/RIGHT
+  pair, plus a new RIGHT exemplar: *"A wetsuit is not really something I style…"*
+- ⭐ **THE DISTINCTION TO KEEP, and it is the honest one: the app may say what it does NOT STYLE. It may never
+  say what a store does NOT CARRY.** The first is true by definition; the second is unknowable.
+- ⚠️ **MY OWN CLAIM DETECTOR MIS-SCORED THIS TWICE** (a false 0/4, then over-flagging) before it was validated
+  against ten real captured notes. **Validate a detector before quoting a number from it.**
+
+### ⭐ SIX DIFFERENT DRESSES, NOT ONE DRESS IN SIX WINDOWS — her observation became the fix
+Her words: *"I like how on the 2nd and 3rd time the midi dresses got more interesting descriptive words."*
+- ▶ **She was describing the SECOND and THIRD tap. The FIRST was six near-identical black midi dresses**, because
+  `_mixRule()`'s ask branch said to vary the price and the store and said nothing about varying the PIECE.
+- ✅ Rebuilt to demand variety of the garment itself, with a WRONG/RIGHT pair.
+- 🚨⭐ **AND I WALKED STRAIGHT INTO THE EXEMPLAR TRAP MYSELF, WHICH IS THE BEST EVIDENCE IT IS REAL:** my six
+  example words came back COPIED VERBATIM by the live model on every run. ▶ **Trimmed to three plus an explicit
+  "these are ILLUSTRATIONS, NOT A LIST TO COPY" clause.** ⚠️ Plus a word-budget guard, because the first version
+  stacked an eighth word onto her ask: **one defining word, and a 4-word-plus ask is left exactly as she typed
+  it.** New `scratchpad/askvary.js`, **14 checks**.
+
+### 🚨🚨 THE NEAR-MISS THAT NOBODY WOULD HAVE SEEN COMING: THE ASK PROMPT WAS 104 CHARACTERS FROM BREAKING
+Adding the fabric brake, the honesty bullet and the variety rule grew the ask-box prompt from **29,197 to
+32,664 characters against a hard 32,768 cap.**
+- ⚠️⚠️ **`style-ai.js` REFUSES an over-cap message outright — it does not truncate, it errors.** So the next
+  rule anybody added would have turned the ask box into "Couldn't load options right now" for every woman.
+- ✅ **FIXED AS A SHRINK LADDER, NOT A ONE-OFF TRIM**, because the prompt grows at RUNTIME with her ask, her
+  never-wear list and the already-shown picks: build at full detail, and only if it exceeds a 30,000-character
+  safety line rebuild with the store detail capped at 60, then 45, then 30. ⭐ **ALL 103 STORES ARE STILL NAMED
+  at every rung** — the tail simply loses its detail lines, which is the `detailTop=45` design from 08-23.
+- New `scratchpad/promptcap.mjs`, **10 checks**, incl. the worst case proven under the cap with ≥2,000 to spare
+  and every other surface holding ≥3,000 headroom. ▶ **Anything added near that prompt owes this test.**
+
+### ⭐⭐ HER STAR OF THE WEEK LABEL — THREE ROUNDS, AND SHE WAS RIGHT ALL THREE TIMES
+Her ask: *"I would like the font to be much larger, maybe same exact as the word SHOP down below it… And change
+the stars to the prettier ones that I prefer?"* Her pick from renders: **B2**.
+- **As built: `.wks-lbl` 12px/600/.16em → 19px/700/.10em**, star svg 17 → 22px, gap 7 → 6, and a `≤344px`
+  step-down to 15px so it still holds one line on Display Zoom. ✅ **Measured: ONE LINE at 393, 375, 360, 344
+  and 320.**
+- ⭐ **THE FOLD DID NOT MOVE, and that was deliberate:** the taller label costs 9px, so `.wks-card` padding-top
+  came 14 → 10 and `.wks-px` margin 11 → 6, reclaiming exactly 9. **Shop it and Save still clear a 700px fold.**
+- ⚠️ **`_WKS_STAR_SVG` became `_wksStarSvg()`, a FUNCTION**, because the card can render twice on a page and a
+  shared gradient `id` is the documented Safari hidden-defs trap. Each call mints `wksStarG1..N`.
+- 🚨⭐⭐ **THEN SHE LOOKED AT IT TWICE MORE AND FOUND WHAT NO BOX TEST COULD.**
+  **Round 2, her words: "check the spacing, placement and symmetry of the 2 stars. To my eye they don't look
+  even."** Measured on HER OWN SCREENSHOT (iPhone 15, 1179x2556, decoded in the browser): **the two boxes are
+  identical — both 43x44, same top row, same bottom row, side gaps 11.67 and 11.67.** ▶ **But the INK is not:
+  closest approach 12.33 CSS px on the left against 13.33 on the right, and it happens at 28% of cap height on
+  the left and 88% on the right.** The pair is mirrored; **the WORD is not** (it opens on S and closes on K), so
+  a mirrored ornament meets a different letterform on each side and crowds at opposite ends of the letters.
+  **Half a pixel of margin evens it: 0.33 CSS px apart, one device pixel, the measurement floor.**
+  **Round 3, her words: "the star on the right is lower than the one on the left. Just slightly."** Measured:
+  **both stars run y 1073-1130, both 58 device px tall, ink 1591 vs 1593, shapes 99.7% identical, vertical ink
+  centres 0.01 CSS px apart.** Geometrically flawless. ▶▶ **AND SHE WAS STILL RIGHT, BECAUSE ROTATION IS NOT
+  REFLECTION: the star's gradient highlight was off-centre by design (cx 42%), so turning one star -12° and the
+  other +12° carried the SAME off-centre highlight round two different arcs instead of mirroring it.**
+  **The two highlight x positions summed to 88.6% where a mirrored pair sums to 100, and the right star's bright
+  spot sat 0.51 CSS px HIGHER — which drops its visual weight, which is what she was reading as "lower".**
+  ⭐ **Predicted from the rotation matrix BEFORE measuring** (predicted left 38.9/36.0, right 45.5/32.7;
+  measured left 43.0/34.2, right 45.2/31.4), then confirmed on the live page.
+- ✅ **HER PICK "E": `cx` IS 50% NOW.** With the highlight on the star's own centre line, turning and flipping
+  give the same answer, so the pair mirrors at any tilt. **After: highlight sum 100.0%, vertical difference 0.00,
+  closest approach 12.67 / 13.00, and the two boxes byte-identical at 43x43x680.** She chose it over flipping the
+  right star (`scaleX(-1)`), which measured identically. ⚠️ **Do NOT restore `cx` to 42% in `_wksStarSvg`.**
+- ⚠️ **SCOPED TO THE SHARED BUILDER ONLY. FOUR OTHER STARS in the app still carry `cx="42%" cy="34%" r="72%"`
+  and are deliberately untouched** (`snStar`, `qnStar`, `editStar`, `wdrHeadStar`) — **a SINGLE star with an
+  off-centre highlight simply reads as lit from the left, which is fine. Only a MIRRORED PAIR exposes it.**
+- ⭐ **HER FONT CALL: KEEP JOST.** Four alternatives were rendered at her width from faces the app already loads
+  (DM Serif Display, DM Sans bold, Lora semibold, Jost medium) — all four fit on one line. Her answer:
+  *"let's just keep the font as is. No change there."* ⚠️ **Do not re-propose this.**
+
+### ⚠️⚠️ THE TESTING LESSON OF THE DAY, AND IT IS A NEW FAILURE FAMILY: **THE MASK IS THE MEASUREMENT**
+Chasing her star catch, **FOUR different pixel masks each returned a confident answer and each was wrong**:
+1. **gold-only (`r-b>55`) scored the pair at 84% matched** — it rejects the pale highlight, whose blue is 184.
+2. **not-pure-white called 1875 of a 1892-pixel box "ink", i.e. 99%**, which is impossible for a star, and made
+   a mirror test PASS VACUOUSLY at 100%.
+3. **a "bright" test counted the WHITE CARD as highlight** and reported perfect lighting symmetry.
+4. **the same mask merged the entire label into one blob** when splitting it into letters.
+▶▶ **THE RULE THAT FINALLY WORKED, and it is worth reusing on any gold-on-paper measurement: the paper is
+NEUTRAL and pale, the gold is SATURATED, and the outline is neutral but DARK — so the only honest mask is
+`saturated OR dark`.** ⚠️ **THE TELL IN EVERY CASE WAS A NUMBER THAT COULD NOT BE TRUE** (more "bright" pixels
+than "gold" ones; 99% of a box being a star). **Sanity-check the mask against the geometry before believing it.**
+Recorded at the top of `scratchpad/starlit.mjs`.
+
+### ⚠️ SESSION HYGIENE
+- ⭐⭐ **NEGATIVE CONTROLS RAN ON EVERY FIX AND ONE OF THEM CAUGHT A REAL TRAP:** restoring `cx` to 42% asserted
+  `count==1` and **FAILED, because FIVE stars share that exact gradient string** — the anchor was only unique in
+  its 50% form. ▶ **`assert count==1` before writing is what turned an unapplied patch into a loud error rather
+  than a silent no-op.** (The 08-24 lesson, paying for itself again.)
+- ⚠️ **`document.fonts.check()` IS FALSE FOR A FACE THE PAGE HAS NEVER PAINTED.** Webfonts download lazily, so
+  a family the app loads but this screen does not use is simply absent, and a font comparison silently renders in
+  fallback. ▶ **`await document.fonts.load(spec, theExactString)` FIRST, then check.** The guard aborted the run
+  rather than producing four fictional renders.
+- ⚠️ **A BACKGROUND SWEEP CHAIN REPORTED "completed, exit code 0" WHILE `hubs.js` WAS STILL RUNNING**, so three
+  suites never started and their output files did not exist. **Read the TOTAL, and check the FILES EXIST** — the
+  08-24 stale-log rule, one variant further on.
+- ⚠️ **`editpx` looked like a regression (2 of 7 runs failing) and was PROVEN pre-existing** by giving HEAD the
+  same six trials: 1 of 6, the same rate. **One variable, same machine.**
+- ⚠️ **A harness seeded `ss_prefs` and no fetch ever fired** — a shape the app never produces, the documented
+  trap. ⚠️ **`pg.evaluate(()=>document.fonts.ready)` does not wait** (FontFaceSet will not serialise): await it
+  inside an async evaluate. ⚠️ **A font guard that proxies through a DIFFERENT face gives a false green** —
+  assert the face under test. ⚠️ **`git commit -m` still breaks on quotes: write the message to a file.**
+- ⚠️ **HER SCREENSHOT IS DELIBERATELY NOT COMMITTED.** It is hers, and it carries a retailer photograph this
+  PUBLIC repo is not licensed to redistribute (the 2026-08-21 `starphoto.mjs` rule). The harnesses read it from
+  the session scratchpad and say so at the top.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **ASK WHAT SHE WANTS FIRST.** Eight sessions running, her own agenda has beaten the list every time —
+   and today every single finding came from her tapping through on her own phone.
+2. 👀 **HOW THE MERGES FEEL ON HER PHONE:** the satin/sequins brake in ordinary shopping, the honest line on
+   an ask no store carries, six genuinely different dresses, and **the bigger Star of the Week label with the
+   evened stars**, which she has only ever seen as a render. ⚠️ Private browsing, `stylestar.app/?notrack`.
+3. ⭐ **THE WIDER SHINE CLUSTER, flagged to her and NOT built: beaded, embellished, metallic, feather, crystal.**
+   Same family as satin and sequins; only the three she named are braked. **Her call, and only on her word.**
+4. 💰 **AMAZON ASSOCIATES + THE BANGLES PHOTO.** The moment the photo lands: wire `ownPx`, pin the bangles,
+   and it is on the front door. **Her Instagram post is the same week and it IS her next post.**
+5. 🔎 **GOOGLE SEARCH CONSOLE — her three steps, then the meta tag to me.** Still the only blocked step.
+6. ⭐ **TWO OLIVELA VALUES TO OVERRULE IF SHE WANTS:** `casual 4` and the archetype line.
+7. ⭐ **A DELIBERATE SIZE-TAG PASS.** Three missing tall/wide tags surfaced by accident on 08-24 and a missing
+   one is invisible on screen.
+8. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** Her four-week order covers it; **if the bangles slip, so
+   does the cover-up.** ⚠️ **NOTHING IN THE SYSTEM WILL RAISE THIS.**
+9. ⚠️ **THE TWO LINK-CHECK ROUTINES STILL OVERLAP.** Keep Sunday, retire Monday. **Her call, still unmade.**
+10. ⏰ **26 AUGUST — the Routine `trig_01SZerTsvKoeUYzeT1HX6iWs` fires** (catalog + Almira check-in).
+    ⏰ **28 AUGUST — the recurring-payments Routine.**
+11. ⭐⭐ **"SHOW THE STYLIST WHAT I PICKED"** (Kathy's) · **OUTFIT SUGGESTIONS** (Jen's, and her own parked
+    Favorite Outfit page) · **SATIN AND SEQUINS AS A CATEGORY** is now half-answered by the brake — **PRINT TOPS**
+    (`to4`, still the only Tops row with zero curated products) is the oldest untouched item.
+12. 📊 **Her Plausible dashboard** — and the standing question: **does anyone hit the honest line in the wild?**
+13. 💰 **AFFILIATES: Olivela approved (mid 50334).** CJ and AWIN next; Impact in 2-3 months with the
+    Plausible link. **AMAZON is next, by her own decision.**
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-25 — 🚨 HER OWN TESTING BROKE THE HONEST LINE, AND THE CAUSE WAS A RULE THE STYLIST COULD NOT OBEY)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **ONE PR, #933, merged and VERIFIED BYTE-IDENTICAL LIVE** (`md5 2465624d…`, so all 259 green checks
