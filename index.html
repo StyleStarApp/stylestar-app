@@ -7153,7 +7153,14 @@ function _shopRules(mode,occ){
     // would never recommend ribbed anything to any of my clients." Enforced
     // in filterNeverWear too (_STYLIST_VETO), so this line is the model's
     // instruction and the filter is the guarantee.
-    '- CATHERINE\'S OWN VETOES, absolute, the same weight as her never-wear list: NEVER suggest skinny jeans (a dated silhouette), and NEVER suggest anything ribbed — the word "ribbed" must not appear in any name or search.\n'+
+    '- CATHERINE\'S OWN VETOES: never OFFER skinny jeans (a dated silhouette) and never OFFER anything ribbed. Do not reach for them, do not put them in a mix, do not let the word "ribbed" appear in a name or search you chose yourself.\n'+
+    // 🚨 THE EXCEPTION IS HERS AND IT IS THE WHOLE POINT OF THE RULE. See the note
+    // in filterNeverWear: Catherine will not PRESENT a piece she does not love, and
+    // will absolutely FETCH one a woman asks for by name. Without this sentence the
+    // model was left arguing with an absolute rule it could see was wrong for the
+    // client, and it wrote that argument as PROSE ABOVE THE JSON -- which is what
+    // broke the parse and put an error on her screen instead of her jeans.
+    '- BUT IF SHE HAS ASKED FOR ONE BY NAME, find it for her, gladly and without comment. Catherine will not present a piece she does not love; she will always fetch one a woman asks for. Never lecture her about it, never substitute something else you prefer, and never refuse. ⚠️ This exception is Catherine\'s OWN taste only. Anything on HER OWN never-wear list stays absolutely forbidden however she asks.\n'+
     // ▶ 2026-08-15, her call after the Anthropologie screenshot: "Plus Wrap
     // Midi Dress" returned ONE product and it was not a wrap dress. The
     // mainstream-shape rule above already names this exact case and the model
@@ -9067,7 +9074,27 @@ function filterNeverWear(items,askedFor){
   if(!Array.isArray(items))return[];
   const asked=String(askedFor||'').toLowerCase();
   const searchVeto=_SEARCH_VETO.filter(t=>asked.indexOf(t)<0);
-  const terms=_STYLIST_VETO.concat(searchVeto).concat(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
+  /* 🚨⭐ HER STYLIST PRINCIPLE, VERBATIM (2026-08-25), and it draws a line this
+     code did not have: "I would not recommend skinny jeans to my clients. I
+     would not select them or present them to her, in real life or on shop my
+     style or wardrobe list search. HOWEVER any time a client specifically asks
+     for something she wants, even if I don't love it, I will find it for her
+     to try on."
+     ▶▶ SO THERE ARE TWO KINDS OF NO, AND ONLY ONE OF THEM IS ABSOLUTE:
+       HER OWN never-wear list is the WOMAN'S boundary. Never waived, by
+       anything, ever. She said no to this and no is the whole answer.
+       CATHERINE'S VETO is a CURATION preference: it governs what the stylist
+       OFFERS unprompted, not what she will fetch when a woman asks by name.
+     ⚠️ So the stylist veto now waives on an explicit ask, exactly as the search
+     veto already does, and the woman's own list still does not. A stylist who
+     refuses to bring you the jeans you asked for is not protecting your taste,
+     she is overriding it, and that is the opposite of this whole app.
+     ⚠️ MEASURED, and it is the reason to trust this: handed the old absolute
+     rule, the live model argued its way to HER position unprompted -- "the
+     veto is Catherine's styling preference, not the client's. I will honor the
+     client's ask." The model was right and the code was wrong. */
+  const stylistVeto=_STYLIST_VETO.filter(t=>asked.indexOf(t)<0);
+  const terms=stylistVeto.concat(searchVeto).concat(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
     .concat(String(prefs.neverOther||'').split(',').map(t=>t.replace(/^\s*(no|never|not)\s+/i,'')))
     .map(t=>String(t).toLowerCase().trim()).filter(t=>t.length>2);
   if(!terms.length)return items;

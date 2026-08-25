@@ -43,7 +43,7 @@ async function raw(prompt){
   try{ JSON.parse(txt.replace(/```json|```/g,'').trim()); }catch(e){ parses=false; perr=String(e.message).slice(0,90); }
   return {stop, parses, perr, len:txt.length, txt};
 }
-for (const ask of ['Pants for men','Baby gift','Girls shoes size 3','Skinny jeans plus size','Skinny jeans']) {
+for (const ask of ['Skinny jeans','Black midi dress']) {
   const p=await promptFor(ask);
   const res=await raw(p);
   console.log('\n════ "'+ask+'"  (prompt '+p.length+' chars)');
