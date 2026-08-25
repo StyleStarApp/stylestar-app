@@ -6342,6 +6342,38 @@ const STORES={
      own lane. So the stylist may send it a specific multi-word evening search
      and never a specific top or denim one.
      ⚠️ AND IT IS DELIBERATELY OUT OF _PROM_STORES, her call: "not for teens." */
+  /* 💎 OLIVELA, STORE 103 (2026-08-25). Every field below is HERS.
+     Her words: "unique jewelry, bags, shoes, resort wear including some swim
+     wear, beautiful fabrics, some silk sleepwear" and "I would never send a
+     woman on a budget here or to look for jeans, t-shirts, ultra casual wear,
+     this is for a chic woman with a lot of money."
+     ⚠️ THAT LAST SENTENCE IS HER FIRST "NEVER SEND HER HERE FOR" ENTRY and it
+     is recorded here rather than lost: no jeans, no t-shirts, no ultra casual,
+     and never for a woman shopping a budget. The t:'$$$$' tier is what the
+     ranking actually reads, and the c: line is what the model sees, so between
+     them her sentence is enforced; the words are kept because that column is
+     worth more than the whole numeric grid and only ever grows when a store
+     makes her wince.
+     🚨 alluring 6 IS HER OVERRULE. Drafted at 7 from her own slider table (Glam
+     8, Modest-to-Alluring 6); she brought it down to 6 herself. It is the one
+     dimension scored as a DISTANCE PENALTY (x2.5) and it cannot be bought back,
+     so the single point is what decides whether a modest woman ever reaches it.
+     ⚠️ s:[] IS HER FACT, NOT A GAP, exactly as it is for DVF: "xxs-xxl, no
+     petite or tall or plus." So the app steers a petite, tall or plus woman
+     elsewhere for anything length or fit dependent, on her word.
+     ⚠️ casual 4 IS THE ONE NUMBER I MOVED, and it is flagged for her: her
+     slider table implied 3, but resort wear, swimwear and silk sleepwear are
+     not a casual-3 assortment (NET-A-PORTER and Neiman are 3, Shopbop is 6).
+     Hers to overrule.
+     ⚠️ a: is a Claude draft in her vocabulary, like DVF's was. Hers to reword.
+     ⚠️ NO deep FLAG, deliberately. It is a curated marketplace, not a deep
+     catalog, and she named the things it is FOR; a specific multi-word search
+     outside that lane is exactly what she said never to send here.
+     ✅ Search URL VERIFIED from her own address bar, with the standing gibberish
+     control: "silk dress" returns 82 mentions of silk, nonsense returns 0. The
+     options[prefix] parameter her paste carried is Shopify predictive-search
+     plumbing and strips clean. */
+  'Olivela':{u:'https://www.olivela.com/search?q=',t:'$$$$',a:'Luxury Fashion, Glamorous Luxe',s:[],d:[5,6,10,7,7,4,8,6,8,7],c:'unique jewelry, bags, shoes, resort wear, swimwear, silk sleepwear, beautiful fabrics'},
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
   // Diane von Furstenberg, added 2026-08-21 after Rakuten approved her.
@@ -8119,10 +8151,44 @@ function _honestyRule(){
        error she actually saw: six confident cards that cannot deliver. The model
        knew this boundary when asked for men\'s pants and did not apply it to a
        baby, so the boundary is now named rather than left to be inferred. */
-    +'- EVERY store on your list is a WOMEN\'S retailer. Anything for men, for'
-    +' children or babies, or that is simply not clothing, shoes, bags, jewelry'
-    +' or accessories for a woman, is outside what you can shop: send the note,'
-    +' never a search at a women\'s store wearing someone else\'s name.\n'
+    +'- EVERY store on your list is a WOMEN\'S retailer. Anything for MEN, for'
+    +' CHILDREN or for BABIES is for a different person and is outside what you'
+    +' can shop: send the note, never a search at a women\'s store wearing'
+    +' someone else\'s name.\n'
+    /* ⚠️⚠️ THE SECOND HALF IS AS LOAD-BEARING AS THE FIRST, and it exists because
+       the first draft OVER-CORRECTED. Her own test, 2026-08-25: "When I tested for
+       wetsuits it found some on amazon, and the others i clicked showed me swim
+       suits or rash guards which was pretty close." ▶ She TAPPED THROUGH and the
+       near answer was useful. A boundary drawn at "is it exactly a women\'s fashion
+       item" turned that useful page into a flat refusal, which is the opposite of
+       this rule\'s own standing instruction to prefer what you CAN find.
+       ▶ SO THE LINE IS NOT women\'s-fashion-or-not. IT IS: can I still be useful as
+       a stylist here? A wetsuit has a near answer; a baby gift has none. */
+    +'- BUT when she asks for something ADJACENT that these stores genuinely carry a'
+    +' near version of, SHOW HER THE NEAR THING and name it honestly in the note. A'
+    +' wetsuit is not stocked; swimsuits and rash guards at Amazon, Target, Lands\''
+    +' End and Athleta genuinely are, and that is a useful answer where a flat no is'
+    +' not. A near thing, honestly labelled, always beats a refusal.\n'
+    /* ⭐ HER CALL, 2026-08-25, on the stylist naming Roxy, O'Neill and REI in a real
+       reply: "her pointing to competitors by name was also nice, but turning it back
+       to something she can do is probably smarter for the app." She liked the golf
+       answer best -- no clubs, but an offer to build her a golf outfit. */
+    +'- When there is no product answer at all but there IS a STYLING answer, offer'
+    +' that instead AND ACTUALLY GIVE IT TO HER. Golf clubs are not something you'
+    +' can shop; the outfit she wears to the course is, so send the note AND the six'
+    +' pieces.\n'
+    /* 🚨 THE WRONG/RIGHT PAIR IS DELIBERATE AND IT IS THE ONLY SHAPE THAT LANDS.
+       The abstract rule alone was written first and the live model broke it on the
+       very next run, still recommending Roxy, O'Neill and REI by name. Naming the
+       violation in the prompt is what fixed dr3 and the name/search rebuild, and it
+       is what fixes this. ▶ Her call: "turning it back to something she can do is
+       probably smarter for the app." */
+    +'- NEVER name another shop. This rule is absolute.\n'
+    +'    WRONG: "I would point you toward a surf shop like Roxy, O\'Neill or REI."\n'
+    +'    RIGHT: "A true wetsuit is not something these stores carry, but here are'
+    +' swimsuits and rash guards that come close."\n'
+    +'  Sending her somewhere you cannot help her is the one thing you must not do:'
+    +' offer the nearest thing you CAN find, or the styling she can still have.\n'
     /* ⚠️ AND THE ENVELOPE RULE, which is the one that actually broke. See the
        note above _aiJSON: the model wrote its reasoning as PROSE ABOVE the JSON
        and the parse threw, so she got "Couldn\'t load options right now" instead
