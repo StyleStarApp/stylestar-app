@@ -1,0 +1,12 @@
+
+════ "Skinny jeans"  (prompt 23858 chars)
+   stop_reason: end_turn   JSON parses: YES   reply 571 chars
+   RAW: ```json
+        {"items":[{"category":"bottom","name":"Skinny Jeans","search":"skinny jeans","store":"Nordstrom"},{"category":"bottom","name":"High-Rise Skinny Jeans","search":"high rise skinny jeans","store":"Madewell"},{"category":"bottom","name":"Skinny Jeans","search":"skinny jeans","store":"Abercrombie"},{"category":"bottom","name":"Skinny Jeans","search":"skinny jeans","store":"Good American"},{"category":"bottom","name":"Skinny Jeans","search":"skinny jeans","store":"Levi's"},{"category":"bottom","name":"Skinny Jeans","search":"skinny jeans","store":"Express"}]}
+        ```
+
+════ "Black midi dress"  (prompt 23866 chars)
+   stop_reason: end_turn   JSON parses: YES   reply 595 chars
+   RAW: ```json
+        {"items":[{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Nordstrom"},{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Anthropologie"},{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Reformation"},{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Bloomingdales"},{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Zara"},{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Macy's"}]}
+        ```

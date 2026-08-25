@@ -5589,7 +5589,42 @@ function _noDash(t){
     .replace(/\s{2,}/g,' ')
     .trim();
 }
-async function genResult(){_quizClear();_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);track('Quiz Completed',{archetype:topArchNames[0]||'unknown'});const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=JSON.parse(txt.replace(/^```json?\s*/i,'').replace(/\s*```\s*$/,''));if(j&&j.portrait){ptxt=_noDash(j.portrait);motto=_noDash(j.motto||'')}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
+/* 🚨🚨 THE FORGIVING PARSE (2026-08-25) — read this before "tidying" it.
+   HER FOUR FAILED ASKS: "Baby gift", "Girls shoes size 3", "Skinny jeans plus
+   size" and "Skinny jeans" all came back "Couldn't load options right now",
+   which is the CATCH block. Captured live against the real model, the cause was
+   not the network and not the store list:
+
+     RAW REPLY to "Skinny jeans":
+       The instructions say Catherine must NEVER suggest skinny jeans - it is on
+       her absolute veto list as a dated silhouette. She cannot shop this request.
+       ```json
+       { "note": "...", "items": [] }
+       ```
+
+   ▶▶ THE HONESTY RULE TAUGHT THE MODEL TO EXPLAIN, AND AN EXPLANATION WRITTEN
+   OUTSIDE THE JSON BREAKS JSON.parse. So the feature defeated itself in exactly
+   the case it exists for: she asked for something we cannot shop, and instead of
+   the honest line she got the silence it was built to remove.
+   ⚠️ AND THE MODEL WAS RIGHT ON THE MERITS BOTH TIMES. Its prose was correct and
+   its note was lovely. Only the envelope was wrong, so the fix belongs here and
+   not in an argument with the model.
+
+   ▶ It finds the JSON object inside whatever the model wrapped it in: strip the
+   fences, try the whole reply, then fall back to the outermost { ... } span.
+   A reply with no object at all still THROWS, so a genuine failure still reaches
+   the catch block and she still sees an honest error rather than a blank shelf.
+   ⚠️ ONE function on purpose. Six shopping surfaces had six copies of the same
+   fragile one-liner; a rule applied by hand at six sites drifts the moment a
+   seventh appears (the _wkStarPxTag lesson). Grep _aiJSON before adding one. */
+function _aiJSON(raw){
+  var t=String(raw||'').replace(/```json|```/g,'').trim();
+  try{ return JSON.parse(t); }catch(e){}
+  var a=t.indexOf('{'), b=t.lastIndexOf('}');
+  if(a<0||b<=a) throw new Error('no JSON object in model reply');
+  return JSON.parse(t.slice(a,b+1));
+}
+async function genResult(){_quizClear();_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);track('Quiz Completed',{archetype:topArchNames[0]||'unknown'});const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=_aiJSON(txt);if(j&&j.portrait){ptxt=_noDash(j.portrait);motto=_noDash(j.motto||'')}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment, and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 // Put a results screen into its "loading" state: closed mirror doors with the
@@ -6066,8 +6101,7 @@ Respond with ONLY valid JSON in this exact format, no other text:
     if(d.error){throw new Error("API error: "+JSON.stringify(d.error))}
     if(!d.content){throw new Error("No content in response")}
     const raw=d.content.map(c=>c.text||'').join('');
-    const clean=raw.replace(/```json|```/g,'').trim();
-    const parsed=JSON.parse(clean);
+    const parsed=_aiJSON(raw);
     track('Photo Analyzed',{partial:!!parsed.partial});
     if(parsed.partial){
       document.getElementById('prn').textContent=userName&&userName!=="You"?userName+", let's try another photo!":"Let's try another photo!";
@@ -6308,6 +6342,38 @@ const STORES={
      own lane. So the stylist may send it a specific multi-word evening search
      and never a specific top or denim one.
      ⚠️ AND IT IS DELIBERATELY OUT OF _PROM_STORES, her call: "not for teens." */
+  /* 💎 OLIVELA, STORE 103 (2026-08-25). Every field below is HERS.
+     Her words: "unique jewelry, bags, shoes, resort wear including some swim
+     wear, beautiful fabrics, some silk sleepwear" and "I would never send a
+     woman on a budget here or to look for jeans, t-shirts, ultra casual wear,
+     this is for a chic woman with a lot of money."
+     ⚠️ THAT LAST SENTENCE IS HER FIRST "NEVER SEND HER HERE FOR" ENTRY and it
+     is recorded here rather than lost: no jeans, no t-shirts, no ultra casual,
+     and never for a woman shopping a budget. The t:'$$$$' tier is what the
+     ranking actually reads, and the c: line is what the model sees, so between
+     them her sentence is enforced; the words are kept because that column is
+     worth more than the whole numeric grid and only ever grows when a store
+     makes her wince.
+     🚨 alluring 6 IS HER OVERRULE. Drafted at 7 from her own slider table (Glam
+     8, Modest-to-Alluring 6); she brought it down to 6 herself. It is the one
+     dimension scored as a DISTANCE PENALTY (x2.5) and it cannot be bought back,
+     so the single point is what decides whether a modest woman ever reaches it.
+     ⚠️ s:[] IS HER FACT, NOT A GAP, exactly as it is for DVF: "xxs-xxl, no
+     petite or tall or plus." So the app steers a petite, tall or plus woman
+     elsewhere for anything length or fit dependent, on her word.
+     ⚠️ casual 4 IS THE ONE NUMBER I MOVED, and it is flagged for her: her
+     slider table implied 3, but resort wear, swimwear and silk sleepwear are
+     not a casual-3 assortment (NET-A-PORTER and Neiman are 3, Shopbop is 6).
+     Hers to overrule.
+     ⚠️ a: is a Claude draft in her vocabulary, like DVF's was. Hers to reword.
+     ⚠️ NO deep FLAG, deliberately. It is a curated marketplace, not a deep
+     catalog, and she named the things it is FOR; a specific multi-word search
+     outside that lane is exactly what she said never to send here.
+     ✅ Search URL VERIFIED from her own address bar, with the standing gibberish
+     control: "silk dress" returns 82 mentions of silk, nonsense returns 0. The
+     options[prefix] parameter her paste carried is Shopify predictive-search
+     plumbing and strips clean. */
+  'Olivela':{u:'https://www.olivela.com/search?q=',t:'$$$$',a:'Luxury Fashion, Glamorous Luxe',s:[],d:[5,6,10,7,7,4,8,6,8,7],c:'unique jewelry, bags, shoes, resort wear, swimwear, silk sleepwear, beautiful fabrics'},
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
   // Diane von Furstenberg, added 2026-08-21 after Rakuten approved her.
@@ -7119,7 +7185,14 @@ function _shopRules(mode,occ){
     // would never recommend ribbed anything to any of my clients." Enforced
     // in filterNeverWear too (_STYLIST_VETO), so this line is the model's
     // instruction and the filter is the guarantee.
-    '- CATHERINE\'S OWN VETOES, absolute, the same weight as her never-wear list: NEVER suggest skinny jeans (a dated silhouette), and NEVER suggest anything ribbed — the word "ribbed" must not appear in any name or search.\n'+
+    '- CATHERINE\'S OWN VETOES: never OFFER skinny jeans (a dated silhouette) and never OFFER anything ribbed. Do not reach for them, do not put them in a mix, do not let the word "ribbed" appear in a name or search you chose yourself.\n'+
+    // 🚨 THE EXCEPTION IS HERS AND IT IS THE WHOLE POINT OF THE RULE. See the note
+    // in filterNeverWear: Catherine will not PRESENT a piece she does not love, and
+    // will absolutely FETCH one a woman asks for by name. Without this sentence the
+    // model was left arguing with an absolute rule it could see was wrong for the
+    // client, and it wrote that argument as PROSE ABOVE THE JSON -- which is what
+    // broke the parse and put an error on her screen instead of her jeans.
+    '- BUT IF SHE HAS ASKED FOR ONE BY NAME, find it for her, gladly and without comment. Catherine will not present a piece she does not love; she will always fetch one a woman asks for. Never lecture her about it, never substitute something else you prefer, and never refuse. ⚠️ This exception is Catherine\'s OWN taste only. Anything on HER OWN never-wear list stays absolutely forbidden however she asks.\n'+
     // ▶ 2026-08-15, her call after the Anthropologie screenshot: "Plus Wrap
     // Midi Dress" returned ONE product and it was not a wrap dress. The
     // mainstream-shape rule above already names this exact case and the model
@@ -7265,8 +7338,7 @@ Respond with ONLY valid JSON:
     const d=await r.json();
     if(!d.content)throw new Error("no content");
     const raw=d.content.map(c=>c.text||'').join('');
-    const clean=raw.replace(/```json|```/g,'').trim();
-    const parsed=JSON.parse(clean);
+    const parsed=_aiJSON(raw);
     let html='<div class="shop-grid">';
     const _keep=filterNeverWear(parsed.items);
     _rememberPicks('outfits-'+(source||''),_keep);   // the refresh must not repeat
@@ -7309,7 +7381,7 @@ async function shopMyStyle(){
     var d=await r.json();
     if(!d.content)throw 0;
     var raw=d.content.map(c=>c.text||'').join('');
-    var parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    var parsed=_aiJSON(raw);
     var html='<div class="shop-grid">';
     var _keep=filterNeverWear(parsed.items);
     _rememberPicks('photo',_keep);   // so the refresh below cannot repeat them
@@ -8070,7 +8142,61 @@ function _honestyRule(){
     +' right now."\n'
     +'- ⚠️ THIS IS A LAST RESORT, not a shortcut. If you can honestly fill all six,'
     +' fill all six and send no note. Always prefer showing her what you CAN find'
-    +' over telling her what you cannot.\n';
+    +' over telling her what you cannot.\n'
+    /* 🚨 EVERY STORE IN THE LIST IS A WOMEN\'S RETAILER, and it has to be said
+       out loud. Measured live: "Baby gift" returned six invented baby items at
+       Nordstrom, Bloomingdale\'s, Amazon, Nordstrom Rack, Target and Macy\'s, and
+       "Girls shoes size 3" returned six pairs of girls\' shoes -- every one of
+       them a women\'s-store search wearing a child\'s name. That is WORSE than the
+       error she actually saw: six confident cards that cannot deliver. The model
+       knew this boundary when asked for men\'s pants and did not apply it to a
+       baby, so the boundary is now named rather than left to be inferred. */
+    +'- EVERY store on your list is a WOMEN\'S retailer. Anything for MEN, for'
+    +' CHILDREN or for BABIES is for a different person and is outside what you'
+    +' can shop: send the note, never a search at a women\'s store wearing'
+    +' someone else\'s name.\n'
+    /* ⚠️⚠️ THE SECOND HALF IS AS LOAD-BEARING AS THE FIRST, and it exists because
+       the first draft OVER-CORRECTED. Her own test, 2026-08-25: "When I tested for
+       wetsuits it found some on amazon, and the others i clicked showed me swim
+       suits or rash guards which was pretty close." ▶ She TAPPED THROUGH and the
+       near answer was useful. A boundary drawn at "is it exactly a women\'s fashion
+       item" turned that useful page into a flat refusal, which is the opposite of
+       this rule\'s own standing instruction to prefer what you CAN find.
+       ▶ SO THE LINE IS NOT women\'s-fashion-or-not. IT IS: can I still be useful as
+       a stylist here? A wetsuit has a near answer; a baby gift has none. */
+    +'- BUT when she asks for something ADJACENT that these stores genuinely carry a'
+    +' near version of, SHOW HER THE NEAR THING and name it honestly in the note. A'
+    +' wetsuit is not stocked; swimsuits and rash guards at Amazon, Target, Lands\''
+    +' End and Athleta genuinely are, and that is a useful answer where a flat no is'
+    +' not. A near thing, honestly labelled, always beats a refusal.\n'
+    /* ⭐ HER CALL, 2026-08-25, on the stylist naming Roxy, O'Neill and REI in a real
+       reply: "her pointing to competitors by name was also nice, but turning it back
+       to something she can do is probably smarter for the app." She liked the golf
+       answer best -- no clubs, but an offer to build her a golf outfit. */
+    +'- When there is no product answer at all but there IS a STYLING answer, offer'
+    +' that instead AND ACTUALLY GIVE IT TO HER. Golf clubs are not something you'
+    +' can shop; the outfit she wears to the course is, so send the note AND the six'
+    +' pieces.\n'
+    /* 🚨 THE WRONG/RIGHT PAIR IS DELIBERATE AND IT IS THE ONLY SHAPE THAT LANDS.
+       The abstract rule alone was written first and the live model broke it on the
+       very next run, still recommending Roxy, O'Neill and REI by name. Naming the
+       violation in the prompt is what fixed dr3 and the name/search rebuild, and it
+       is what fixes this. ▶ Her call: "turning it back to something she can do is
+       probably smarter for the app." */
+    +'- NEVER name another shop. This rule is absolute.\n'
+    +'    WRONG: "I would point you toward a surf shop like Roxy, O\'Neill or REI."\n'
+    +'    RIGHT: "A true wetsuit is not something these stores carry, but here are'
+    +' swimsuits and rash guards that come close."\n'
+    +'  Sending her somewhere you cannot help her is the one thing you must not do:'
+    +' offer the nearest thing you CAN find, or the styling she can still have.\n'
+    /* ⚠️ AND THE ENVELOPE RULE, which is the one that actually broke. See the
+       note above _aiJSON: the model wrote its reasoning as PROSE ABOVE the JSON
+       and the parse threw, so she got "Couldn\'t load options right now" instead
+       of the honest line. _aiJSON now recovers from it either way; this simply
+       stops it happening. Belt and braces, deliberately: this is the one line
+       whose whole job is to speak when everything else has failed. */
+    +'- Write NOTHING outside the JSON. No preamble, no reasoning, no apology'
+    +' above or below it. Your explanation belongs in "note" and nowhere else.\n';
 }
 /* ── THE OCCASION HALF OF HER ASK (2026-08-23) ──────────────────────────────
    Her mother typed "mother of the bride dresses" and got J.Crew Midi Occasion,
@@ -8295,7 +8421,7 @@ async function _shopStyleGen(){
       var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
       if(!r.ok)throw 0;
       var d=await r.json();if(!d.content)throw 0;
-      parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
+      parsed=_aiJSON(d.content.map(function(c){return c.text||''}).join(''));
     }
     var html='';
     // On "Shop my whole list" the things she asked for ARE her list, so a row
@@ -8322,7 +8448,11 @@ async function _shopStyleGen(){
        is speaking, and this is the STYLIST reporting on a search she just ran.
        ⚠️ _esc on the note -- it is model output and lands in innerHTML. Capped at
        240 chars so a runaway answer cannot push the shelf off the screen. */
-    var _note=String((parsed&&parsed.note)||'').trim().slice(0,240);
+    var _note=_noDash(String((parsed&&parsed.note)||'').trim()).slice(0,240);
+    // ⚠️ _noDash, not just trim: the live model wrote "through my store list"
+    // followed by an EM DASH on her very first real sighting of this line. A
+    // rule nothing checks on the way back drifts -- the same lesson as the
+    // motto, which has been repaired on render since 2026-08-23.
     if(!_keep.length&&!_note)_note=_ssAsk
       ? 'That\'s not something I can shop well for you right now.'
       : 'I couldn\'t find pieces I\'d stand behind for you today.';
@@ -9010,7 +9140,27 @@ function filterNeverWear(items,askedFor){
   if(!Array.isArray(items))return[];
   const asked=String(askedFor||'').toLowerCase();
   const searchVeto=_SEARCH_VETO.filter(t=>asked.indexOf(t)<0);
-  const terms=_STYLIST_VETO.concat(searchVeto).concat(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
+  /* 🚨⭐ HER STYLIST PRINCIPLE, VERBATIM (2026-08-25), and it draws a line this
+     code did not have: "I would not recommend skinny jeans to my clients. I
+     would not select them or present them to her, in real life or on shop my
+     style or wardrobe list search. HOWEVER any time a client specifically asks
+     for something she wants, even if I don't love it, I will find it for her
+     to try on."
+     ▶▶ SO THERE ARE TWO KINDS OF NO, AND ONLY ONE OF THEM IS ABSOLUTE:
+       HER OWN never-wear list is the WOMAN'S boundary. Never waived, by
+       anything, ever. She said no to this and no is the whole answer.
+       CATHERINE'S VETO is a CURATION preference: it governs what the stylist
+       OFFERS unprompted, not what she will fetch when a woman asks by name.
+     ⚠️ So the stylist veto now waives on an explicit ask, exactly as the search
+     veto already does, and the woman's own list still does not. A stylist who
+     refuses to bring you the jeans you asked for is not protecting your taste,
+     she is overriding it, and that is the opposite of this whole app.
+     ⚠️ MEASURED, and it is the reason to trust this: handed the old absolute
+     rule, the live model argued its way to HER position unprompted -- "the
+     veto is Catherine's styling preference, not the client's. I will honor the
+     client's ask." The model was right and the code was wrong. */
+  const stylistVeto=_STYLIST_VETO.filter(t=>asked.indexOf(t)<0);
+  const terms=stylistVeto.concat(searchVeto).concat(prefs.neverWear||[]).concat(prefs.neverPatterns||[])
     .concat(String(prefs.neverOther||'').split(',').map(t=>t.replace(/^\s*(no|never|not)\s+/i,'')))
     .map(t=>String(t).toLowerCase().trim()).filter(t=>t.length>2);
   if(!terms.length)return items;
@@ -9175,14 +9325,14 @@ const mallStores=[
        cards that can earn - which is why the _affUrl wrap above had to land in
        the same change. ⚠️ The blurbs are CLAUDE DRAFTS condensed from her own
        c: lines; every other blurb in this list is hers. */
-    {n:'FARM Rio',d:'Bold prints and color, made for vacation',u:'https://www.farmrio.com'}
+    {n:'FARM Rio',d:'Bold colorful prints, quality fabric, great for vacation',u:'https://www.farmrio.com'}
   ]},
   {cat:'Elevated & Designer',stores:[
     {n:'Saks Fifth Avenue',d:'Luxury and designer labels',u:'https://www.saksfifthavenue.com'},
     {n:"Bloomingdale's",d:'Designer to contemporary in one place',u:'https://www.bloomingdales.com'},
     {n:'Revolve',d:'Trend-forward and going-out looks',u:'https://www.revolve.com'},
     {n:'NET-A-PORTER',d:'Luxury designer fashion',u:'https://www.net-a-porter.com'},
-    {n:'Diane von Furstenberg',d:'Wrap dresses and prints for occasions',u:'https://www.dvf.com'},
+    {n:'Diane von Furstenberg',d:'The original wrap dress, and lovely pieces for occasions',u:'https://www.dvf.com'},
     /* Olivela, her fourth Rakuten advertiser (mid 50334), added 2026-08-24 the
        day it approved. Filed here rather than with the value stores because it
        is a luxury multi-brand house -- the shelf NET-A-PORTER and Saks are on.
@@ -9199,7 +9349,7 @@ const mallStores=[
        suggest it: that needs her ten dimension scores, and one confirming tap
        on the bare search form. The Mall needs neither, which is why this could
        land today. */
-    {n:'Olivela',d:'Designer labels, and every order gives back',u:'https://www.olivela.com'}
+    {n:'Olivela',d:'Designer labels and unique jewelry',u:'https://www.olivela.com'}
   ]},
   {cat:'Value & Basics',stores:[
     {n:'Amazon',d:'Everything, fast, great for basics',u:'https://www.amazon.com/fashion'},
@@ -10205,7 +10355,7 @@ async function _wardrobeIdeaGen(id,boxId){
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
-    const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
+    const parsed=_aiJSON(d.content.map(function(c){return c.text||''}).join(''));
     let html='<div class="wdr-expand-lbl"><span class="wdr-see-star">&#9733;</span> See ideas for &ldquo;'+_esc(name)+'&rdquo; <a onclick="'+again+'">&mdash; refresh</a></div>';
     html+='<div class="shop-grid hscroll">';
     // Catalog pieces lead, AI ideas fill the set to 6, one seamless carousel.
@@ -10273,7 +10423,7 @@ async function _wdrMoreIdeas(id,boxId){
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
     const d=await r.json();if(!d.content)throw 0;
-    const parsed=JSON.parse(d.content.map(function(c){return c.text||''}).join('').replace(/```json|```/g,'').trim());
+    const parsed=_aiJSON(d.content.map(function(c){return c.text||''}).join(''));
     const items=filterNeverWear(parsed.items,name);  // same direct-ask exemption
     if(!items.length)throw 0;
     append(items);

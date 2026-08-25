@@ -1,0 +1,35 @@
+
+════ "Pants for men"  (prompt 23020 chars)
+   stop_reason: end_turn   JSON parses: YES   reply 262 chars
+   RAW: ```json
+        {"note":"Men's pants aren't something I can shop for you through my styling network — these stores are all women's retailers. If you're shopping for a man in your life, I'd point you to somewhere like Nordstrom's menswear floor directly.","items":[]}
+        ```
+
+════ "Baby gift"  (prompt 23012 chars)
+   stop_reason: end_turn   JSON parses: YES   reply 625 chars
+   RAW: ```json
+        {"items":[{"category":"top","name":"Baby Bodysuit Gift Set","search":"baby bodysuit set","store":"Nordstrom"},{"category":"top","name":"Baby Blanket","search":"baby blanket gift","store":"Bloomingdales"},{"category":"top","name":"Baby Milestone Gift Set","search":"baby milestone gift set","store":"Amazon"},{"category":"top","name":"Baby Clothing Gift Set","search":"baby clothing gift set","store":"Nordstrom Rack"},{"category":"top","name":"Baby Muslin Swaddle Set","search":"baby muslin swaddle set","store":"Target"},{"category":"top","name":"Baby Gift Basket","search":"baby gift basket","store":"Macy's"}]}
+        ```
+
+════ "Girls shoes size 3"  (prompt 23030 chars)
+   stop_reason: end_turn   JSON parses: YES   reply 659 chars
+   RAW: ```json
+        {"items":[{"category":"shoes","name":"Girls Sneakers Size 3","search":"girls sneakers size 3","store":"Nordstrom"},{"category":"shoes","name":"Girls Ballet Flats Size 3","search":"girls ballet flats size 3","store":"Nordstrom Rack"},{"category":"shoes","name":"Girls Sandals Size 3","search":"girls sandals size 3","store":"DSW"},{"category":"shoes","name":"Girls Boots Size 3","search":"girls boots size 3","store":"Zappos"},{"category":"shoes","name":"Girls Slip-On Shoes Size 3","search":"girls slip on shoes size 3","store":"Amazon"},{"category":"shoes","name":"Girls Dress Shoes Size 3","search":"girls dress shoes size 3","store":"Macy's"}]}
+        ```
+
+════ "Skinny jeans plus size"  (prompt 23038 chars)
+   stop_reason: end_turn   JSON parses: YES   reply 700 chars
+   RAW: ```json
+        {"items":[{"category":"bottom","name":"Skinny Jeans Plus Size","search":"plus size skinny jeans","store":"Nordstrom"},{"category":"bottom","name":"High-Rise Skinny Jeans Plus Size","search":"plus size high rise skinny jeans","store":"Good American"},{"category":"bottom","name":"Lift & Sculpt Skinny Jeans Plus Size","search":"plus size skinny jeans","store":"Macy's"},{"category":"bottom","name":"Skinny Jeans Plus Size","search":"plus size skinny jeans","store":"Torrid"},{"category":"bottom","name":"Skinny Jeans Plus Size","search":"plus size skinny jeans","store":"NYDJ"},{"category":"bottom","name":"Skinny Jeans Plus Size","search":"plus size skinny jeans","store":"Lane Bryant"}]}
+        ```
+
+════ "Skinny jeans"  (prompt 23018 chars)
+   stop_reason: end_turn   JSON parses: *** NO *** Unexpected token 'T', "The instru"... is not valid JSON   reply 364 chars
+   RAW: The instructions say Catherine must NEVER suggest skinny jeans — it is on her absolute veto list as a dated silhouette. She cannot shop this request.
+        
+        ```json
+        {
+          "note": "Skinny jeans are one I can't recommend in good conscience right now — but I'd love to find you a great pair of slim straight or barrel jeans instead if you're open to it.",
+          "items": []
+        }
+        ```
