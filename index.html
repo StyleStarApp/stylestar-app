@@ -4542,7 +4542,16 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
 
     <div class="dc-item">
-      <img class="dc-item-px" src="https://cdn.shopify.com/s/files/1/0333/8892/0967/files/2608_J26FA0156_MEMORY_LANE_FLAT.png?v=1786608188&amp;width=800" alt="Veronica Beard Crosbie Jean, high-rise wide-leg denim" loading="lazy" decoding="async" onerror="this.remove()">
+      <img class="dc-item-px" style="object-fit:contain" src="https://cdn.shopify.com/s/files/1/0333/8892/0967/files/2608_J26FA0156_MEMORY_LANE_FLAT.png?v=1786608188&amp;width=800" alt="Veronica Beard Crosbie Jean, high-rise wide-leg denim, full length" loading="lazy" decoding="async" onerror="this.remove()">
+      <!-- ⚠️ object-fit:contain, DELIBERATELY overriding the shared .dc-item-px
+           rule (which is cover + top anchor). This source is 2:3 (1000x1500),
+           NARROWER than the card's 3:4 frame -- the opposite of the usual case
+           where a photo loses its SIDES. Here cover+top would crop the BOTTOM,
+           cutting the jean off mid-flare before the hem. Her catch, 2026-08-25.
+           Rendered both ways before shipping (scratchpad session render): the
+           flat-lay's own cream background nearly matches .dc-item-px's own
+           #F5EFE2, so contain reads as a clean full-length shot, not a
+           letterboxed compromise. -->
       <span class="dc-item-star">&#11088;</span>
       <div class="dc-item-name">Veronica Beard Crosbie Jean</div>
       <div class="dc-item-meta"><span class="dc-store">Marissa Collections</span><span class="dc-price">$248</span></div>
@@ -9550,7 +9559,17 @@ const mallStores=[
        suggest it: that needs her ten dimension scores, and one confirming tap
        on the bare search form. The Mall needs neither, which is why this could
        land today. */
-    {n:'Olivela',d:'Designer labels and unique jewelry',u:'https://www.olivela.com'}
+    {n:'Olivela',d:'Designer labels and unique jewelry',u:'https://www.olivela.com'},
+    /* Marissa Collections, her fifth Rakuten advertiser (mid 36537), added
+       2026-08-25 the day it approved. Filed here for the same reason as
+       Olivela and NET-A-PORTER -- a luxury multi-brand boutique, her own
+       words "very upscale lovely store... a lot of very good brands and
+       gorgeous things". ⚠️ Unlike Olivela at the time it was added, Marissa
+       Collections is ALREADY in STORES (store 104, her own ten dimensions),
+       so the stylist can suggest it as well as the Mall pointing to it.
+       ⚠️ The blurb is a CLAUDE DRAFT, like FARM Rio's, DVF's and Olivela's
+       above -- one string if she wants her own words. */
+    {n:'Marissa Collections',d:'Beautiful designer clothing and fine jewelry',u:'https://marissacollections.com'}
   ]},
   {cat:'Value & Basics',stores:[
     {n:'Amazon',d:'Everything, fast, great for basics',u:'https://www.amazon.com/fashion'},
@@ -12661,19 +12680,12 @@ function _buildWbHubs(){
    whether she wants it reordered at the moment she unpins rather than guessing
    for her. */
 var WEEK_STAR_PIN='FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress';
-var WEEK_STARS=[
-  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/8960533',price:'$89',
+var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/8960533',price:'$89',
    note:'A kitten heel is the easiest polish there is. Slide it on and every outfit steps up a notch.'}, // ✅ BLESSED by Cath 2026-08-13 — hers now, don't reword
   {n:'Gold Stretchy Stacking Bangles',store:'Badu · Amazon',url:'https://www.amazon.com/dp/B0CWD1RYK3',price:'$16.99',
    note:'Stretchy, easy to wear, and not too big like most bangles. I like to stack 6 of them!'},
   {n:'Retreat Linen High Rise Wide Leg Pant — White',store:'Athleta',url:'https://athleta.gap.com/browse/product.do?pid=851038112',price:'~$100',
    note:'100% linen gives high vibes! Perfect for hot weather and an alternative to wearing shorts.'},
-  {n:'PRETTYGARDEN Flowy Maxi Dress — White',store:'Amazon',url:'https://www.amazon.com/dp/B0DWL5VV8Z',price:'$46.99',
-   note:'Wear it with or without a belt, day or night. A great affordable dress.'},
-  {n:'Lucky Brand Mindra Espadrille Wedge',store:'Zappos',url:'https://www.zappos.com/p/womens-lucky-brand-mindra-black/product/9221411/color/3',price:'$79',
-   note:'My favorite style of sandal. The texture adds that extra stylish element to your outfit.'},
-  {n:'J. Reneé Soncino Strappy Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/6770605',price:'$129.95',
-   note:'Stylish height, but comfy enough to dance all night. The most versatile and chic sandal!'},
   {n:'Vilebrequin Long Mesh Cover-Up Dress — Off White',store:'Vilebrequin',url:'https://www.vilebrequin.com/us/en/product/IAACG200-003',price:'$405',
    note:'The trending style for beach, pool, and resort. The adjustable straps are perfect.',
    px:'https://www.vilebrequin.com/dw/image/v2/BLGH_PRD/on/demandware.static/-/Sites-vilebrequin-catalog-master/default/dwb578af10/images/IAACG200-003/IAACG200-003-front-3240x4050.jpg?sw=800'},
@@ -12701,6 +12713,23 @@ var WEEK_STARS=[
    // a sale expires and this card is evergreen, and arriving to find a piece
    // CHEAPER than promised feels lucky where the reverse feels misled.
    px:'https://farmrio.com/cdn/shop/files/347964_01_1.jpg?v=1778615230&width=800'},
+  {n:'Diane von Furstenberg Flag Scarf — Myrtle Berry',store:'Diane von Furstenberg',url:'https://www.dvf.com/products/flag-scarf-in-myrtle-berry',price:'$198',
+   note:'This is the definition of wearable art. 100% silk, and the floral print is stunning.',
+   // ⚠️ px: is honoured ONLY when the store is an approved advertiser — see the
+   // licensing note at _wkStarPx. Adding one for an unapproved store shows nothing.
+   px:'https://www.dvf.com/cdn/shop/files/A001AMBERYSKTL_A1_2.jpg?v=1776264943&width=800'},
+  {n:'Veronica Beard Crosbie Jean',store:'Marissa Collections',url:'https://marissacollections.com/products/veronica-beard-crosbie-jean',price:'$248',
+   note:'A high-rise, slim but wide-leg jean with stretch. The all-purpose jean style right now.',
+   px:'https://cdn.shopify.com/s/files/1/0333/8892/0967/files/2608_J26FA0156_MEMORY_LANE_FLAT.png?v=1786608188&width=800'},
+  {n:'Serpui Abigail Handbag — Red',store:'Marissa Collections',url:'https://marissacollections.com/products/serpui-abigail-handbag-red',price:'$414',
+   note:'Wicker and leather, but it\'s really all about the bamboo handles! A unique take on the bag trend.',
+   px:'https://cdn.shopify.com/s/files/1/0333/8892/0967/files/12866-ABIGAIL-WK-_ALL-RED.jpg?v=1740967145&width=800'},
+  {n:'PRETTYGARDEN Flowy Maxi Dress — White',store:'Amazon',url:'https://www.amazon.com/dp/B0DWL5VV8Z',price:'$46.99',
+   note:'Wear it with or without a belt, day or night. A great affordable dress.'},
+  {n:'Lucky Brand Mindra Espadrille Wedge',store:'Zappos',url:'https://www.zappos.com/p/womens-lucky-brand-mindra-black/product/9221411/color/3',price:'$79',
+   note:'My favorite style of sandal. The texture adds that extra stylish element to your outfit.'},
+  {n:'J. Reneé Soncino Strappy Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/6770605',price:'$129.95',
+   note:'Stylish height, but comfy enough to dance all night. The most versatile and chic sandal!'},
   {n:'Gucci 53mm Small Oval Sunglasses',store:'Nordstrom',url:'https://www.nordstrom.com/s/7651301',price:'$295',
    note:'Current but also 90\'s at the same time. Sunnies are worn every day, the perfect place to splurge.'},
   {n:'Express Editor High Waisted Flare Trouser — Pitch Black',store:'Express',url:'https://www.express.com/clothing/women/editor-studio-stretch-twill-high-waisted-flare-trouser/pro/07442348/color/Pitch%20Black/e/regular/',price:'~$90',
@@ -12719,13 +12748,9 @@ var WEEK_STARS=[
    note:'The best leggings. Beautiful fit, soft fabric, and they come in 3 lengths and lots of colors.'},
   {n:'Gilded Romance Heart Claw Clip',store:'The Hair Edit · Target',url:'https://www.target.com/p/the-hair-edit-gilded-romance-clip/-/A-94717763',price:'$12.99',
    note:'The cutest heart shape that makes a casual hair clip look special.'},
-  {n:'Diane von Furstenberg Flag Scarf — Myrtle Berry',store:'Diane von Furstenberg',url:'https://www.dvf.com/products/flag-scarf-in-myrtle-berry',price:'$198',
-   note:'This is the definition of wearable art. 100% silk, and the floral print is stunning.',
-   // ⚠️ px: is honoured ONLY when the store is an approved advertiser — see the
-   // licensing note at _wkStarPx. Adding one for an unapproved store shows nothing.
-   px:'https://www.dvf.com/cdn/shop/files/A001AMBERYSKTL_A1_2.jpg?v=1776264943&width=800'},
   {n:'MZ Wallace Large Metro Tote Deluxe II',store:'Bloomingdale\'s',url:'https://www.bloomingdales.com/shop/product/mz-wallace-large-metro-tote-deluxe-ii?ID=5956591',price:'~$295',
    note:'The best carry-on travel bag ever. Stylish, lightweight, and it fits right under the seat on planes.'},
+
 ];
 // Which week is it? Whole LOCAL days since the anchor Sunday (2026-08-09, the
 // Sunday before the first star shipped), then whole weeks, wrapped around the

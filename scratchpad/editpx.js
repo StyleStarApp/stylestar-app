@@ -52,17 +52,22 @@ const names=[...q.matchAll(/\{n:'((?:[^'\\]|\\.)*)'/g)].map(m=>m[1].replace(/\\'
 // encodes the new, narrower line exactly: the bar is bikini/lingerie, NOT the
 // swim category, so a cover-up passes on purpose. Don't add 'cover-up' or
 // 'mesh' to that list.
-// ⚠️ UPDATED DELIBERATELY 2026-08-24, and made STRONGER rather than merely
-// re-numbered. This used to restate the queue length (17, then 18) and went
-// stale every single time she added a star -- the derived-not-restated lesson.
-// What actually has to hold is not a COUNT, it is the one index carrying a real
-// deadline: the Vilebrequin cover-up sits at index 6, which is the week of
-// 20 SEPTEMBER 2026, and she asked for it before December. Inserting any star
-// AHEAD of it silently slides that date by a week. So the queue may now grow
-// freely, and the thing that would actually cost her fails loudly.
+// ⚠️ UPDATED DELIBERATELY 2026-08-25, and this is a real move not a drift.
+// Her ask: bring every photographed star forward. That deliberately moved
+// Vilebrequin from index 6 to index 3 -- EARLIER, not later, so her deadline
+// (before 20 September) is still honoured, now by more margin: index 3 is the
+// week of 30 AUGUST 2026 (anchor Sun 2026-08-09 + 3*7 days), IF the queue is
+// actually rotating that week. ⚠️ IT IS NOT RIGHT NOW: WEEK_STAR_PIN is set to
+// the FARM Rio dress, which freezes the card on that item regardless of what
+// sits at any index. This assertion checks the DATA is correct -- what index
+// carries Vilebrequin -- not what is currently live, which is a separate,
+// deliberate question for her about the pin.
+// Kept as an index check, not a count: inserting any star AHEAD of index 3
+// would still silently slide this date, so the same guard still applies here,
+// just at its new position.
 ok('the queue is non-empty', names.length>0, names.length);
-ok('THE 20 SEPT SLOT: the Vilebrequin cover-up is still at index 6',
-   /Vilebrequin/.test(names[6]||''), (names[6]||'(nothing)')+' — queue is '+names.length);
+ok('THE 30 AUG SLOT: the Vilebrequin cover-up is now at index 3',
+   /Vilebrequin/.test(names[3]||''), (names[3]||'(nothing)')+' — queue is '+names.length);
 ok('no duplicate in the queue', new Set(names).size===names.length);
 ok('every queue url is https', [...q.matchAll(/url:'([^']+)'/g)].every(m=>m[1].startsWith('https://')));
 ok('HER RULE: no intimates or swim in the queue',
