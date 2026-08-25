@@ -34,13 +34,14 @@ const shot=async()=>{
 };
 const OPTS=[
   ['AS IT IS NOW',''],
-  ['A — same tilt, gaps evened up','.wks-lbl svg.r{margin-left:-.5px!important}'],
-  ['B — stars sit upright, gaps evened up','.wks-lbl svg.l,.wks-lbl svg.r{transform:none!important}.wks-lbl svg.r{margin-left:-1px!important}'],
-  ['C — gentler tilt, gaps evened up','.wks-lbl svg.l{transform:rotate(-6deg)!important}.wks-lbl svg.r{transform:rotate(6deg)!important;margin-left:-.5px!important}'],
+  ['D \u2014 right star truly mirrored  (recommended)','.wks-lbl svg.r{transform:scaleX(-1) rotate(-12deg)!important;margin-left:-.5px!important}'],
+  ['E \u2014 light centred on both stars','.wks-lbl svg.r{margin-left:-.5px!important}',"50%"],
+  ['B \u2014 stars upright, both identical','.wks-lbl svg.l,.wks-lbl svg.r{transform:none!important}.wks-lbl svg.r{margin-left:-1px!important}'],
 ];
+const setGrad=(cx)=>pg.evaluate(v=>{document.querySelectorAll('#wbStar .wks-lbl radialGradient').forEach(g=>g.setAttribute('cx',v))},cx);
 const imgs=[];
-for(const [label,rule] of OPTS){ await setCss(rule); await pg.waitForTimeout(120); imgs.push([label,await shot()]); }
-await setCss('');
+for(const [label,rule,grad] of OPTS){ await setCss(rule); await setGrad(grad||'42%'); await pg.waitForTimeout(140); imgs.push([label,await shot()]); }
+await setCss(''); await setGrad('42%');
 const out=await pg.evaluate(async(imgs)=>{
   const loaded=[]; for(const [t,p] of imgs){const i=new Image();
     await new Promise(r=>{i.onload=r;i.src='data:image/png;base64,'+p}); loaded.push([t,i]);}
@@ -59,6 +60,6 @@ const out=await pg.evaluate(async(imgs)=>{
   }
   return cv.toDataURL('image/png').split(',')[1];
 },imgs);
-fs.writeFileSync('scratchpad/starpick.png',Buffer.from(out,'base64'));
-console.log('wrote scratchpad/starpick.png');
+fs.writeFileSync('scratchpad/starpick2.png',Buffer.from(out,'base64'));
+console.log('wrote scratchpad/starpick2.png');
 await b.close(); srv.close();
