@@ -7103,7 +7103,50 @@ function _neverStoreRule(){
      at. A rule has to sit where the decision it governs is made. */
   return ' HER NEVER-WEAR LIST ALSO GOVERNS THIS CHOICE, with the same absolute weight it has over the items themselves: '+out.join(' ');
 }
-function _shopRules(mode,occ){
+// ▶ 2026-08-25, HER CATCH, with four live refreshes of Shop your style as the
+// evidence: 6 of 23 cards carried satin, sequins or velvet -- TWO EACH -- and
+// every one of the four sets had at least one. Her words: "I don't want to ban
+// satin and sequins but they need to be dialed down... There is nothing wrong
+// with sequins or satin, it is just that they are not that in."
+// ⚠️ SO IT IS A BRAKE, NOT A VETO, and deliberately NOT _STYLIST_VETO: that
+// list is TASTE, a garment she would never put on a client, and she was
+// explicit that these are fine pieces. Same shape as the velvet brake she
+// approved 2026-08-20 ("velvet is ok, but don't want to over use it") and as
+// _colorPrefRule's vary-across-your-picks.
+// 🚨 AND HER PREMISE NEEDED CORRECTING, which is the finding worth keeping:
+// she believed velvet had already been dialed down. IT HAD NOT. That brake
+// lives ONLY inside the to6 wardrobe row and has never reached this surface,
+// which is exactly why her own screenshots show velvet as often as the other
+// two. One brake, in the shared rule, governing all three on every browsing
+// surface at once, so the three can never drift apart again.
+var _BRAKE_FABRICS=[{k:'satin',w:'satin'},{k:'sequin',w:'sequins'},{k:'velvet',w:'velvet'}];
+function _fabricBrakeRule(slot){
+  // to6 "Dressy or going-out tops" is HER deliberate exception (2026-08-15):
+  // satin BELONGS there, and that row already brakes velvet in her own words.
+  // Standing down rather than arguing with it is the _honestyRule shape -- two
+  // rules contradicting each other in one prompt is what broke the parse on
+  // 2026-08-25, so a scoped '' is the safe way to hold both truths.
+  if(slot==='to6')return '';
+  // HER TWO KINDS OF NO (2026-08-25): Catherine's taste governs what the
+  // stylist OFFERS unprompted, never what she FETCHES when a woman asks by
+  // name. A fabric she typed herself drops out of the brake entirely, exactly
+  // as _STYLIST_VETO waives in filterNeverWear. Her OWN never-wear list is
+  // untouched by this and still never waives.
+  var asked=(typeof _ssAsk==='string'?_ssAsk:'').toLowerCase();
+  var f=_BRAKE_FABRICS.filter(function(x){return asked.indexOf(x.k)<0}).map(function(x){return x.w});
+  if(!f.length)return '';
+  var list=f.length===1?f[0]:f.slice(0,-1).join(', ')+' and '+f[f.length-1];
+  // ⚠️ THE ABSTRACT RULE ALONE WAS NOT ENOUGH, measured: at "use at most one"
+  // the live model read the cap as a LICENCE and put a sequin or satin piece in
+  // 3 of 4 sets. Naming the violation with a WRONG/RIGHT pair is the only shape
+  // that has ever made a rule land in this prompt (dr3, the name/search
+  // rebuild, the competitor rule) -- now four for four.
+  return '- FABRICS TO USE SPARINGLY: '+list+'. There is nothing wrong with any of them and none is banned, they are simply not what is in right now. YOUR DEFAULT IS NONE OF THEM: build the set without them first, and only let ONE through when that particular piece genuinely calls for it and nothing else would do. Never more than one in a set, and never as your reflex for making something read dressy.\n'+
+    '  WRONG: reaching for "Sequin Mini Dress", "Sequin Blazer" or "Satin Going-Out Top" as the party piece of a set. Those are the first thing everyone reaches for, and they are exactly what is not in right now.\n'+
+    '  RIGHT: let CUT, STRUCTURE and TEXTURE carry the dressiness instead \u2014 a tailored or cropped blazer, a knife-pleat or column skirt, crepe, ponte, a fine knit, leather, suede, a good drape.\n'+
+    '  If one of these fabrics already appears in the pieces she has been shown above, use none at all this time.\n';
+}
+function _shopRules(mode,occ,slot){
   return '\nPICK THE STORE from this list ONLY, using the name exactly as written.'+
     (quizTaken?' The list is already ORDERED by how well each store suits her, closest first, so favour the top of it. Go further down only when the piece needs a specialist that the top of the list does not carry.'+_neverStoreRule():'')+
     (quizTaken&&typeof occ==='number'?' For THIS request the order also carries the occasion she named, so the dressier end of the stores that genuinely suit her has moved to the top. Trust it: the stores that would be wrong for her at this occasion have already been ranked away.':'')+
@@ -7125,7 +7168,7 @@ function _shopRules(mode,occ){
     // are not button-front and not professional. The name and the search were
     // still allowed to differ (name got fabric + silhouette, search was capped
     // at one defining word), so the name over-promised. Now they are ONE thing.
-    '- "name": the descriptive name she reads on the card, and it is THE SEARCH WRITTEN BEAUTIFULLY: the same words, properly cased, nothing the search does not carry. LEAD WITH THE PIECE, never a color. If a detail is worth promising in the name (button-front, professional, long-sleeve), it must be in the search too; if the search cannot afford a word, the name must not promise it — a name like "Satin Button-Front Blouse" over a search for just "satin blouse" opens on a page full of blouses that are not button-front, and THAT gap is what feels broken. A color belongs in the name ONLY when that same color is in the search (the rules below say when); the color may read as her shade in the name ("Hot Pink") while the search uses the store\'s plain filter word for the same color ("pink"). NEVER invent an imaginary exact product ("Nude Patent Pointed-Toe Kitten Heel Mule").\n'+
+    '- "name": the descriptive name she reads on the card, and it is THE SEARCH WRITTEN BEAUTIFULLY: the same words, properly cased, nothing the search does not carry. LEAD WITH THE PIECE, never a color. If a detail is worth promising in the name (button-front, professional, long-sleeve), it must be in the search too; if the search cannot afford a word, the name must not promise it — a name like "Linen Button-Front Blouse" over a search for just "linen blouse" opens on a page full of blouses that are not button-front, and THAT gap is what feels broken. A color belongs in the name ONLY when that same color is in the search (the rules below say when); the color may read as her shade in the name ("Hot Pink") while the search uses the store\'s plain filter word for the same color ("pink"). NEVER invent an imaginary exact product ("Nude Patent Pointed-Toe Kitten Heel Mule").\n'+
     '  WRONG: name "Ruched Bodycon Top" with search "ruched going out top" — "bodycon" is not in the search, so the results page breaks the name\'s promise. RIGHT: name "Ruched Going-Out Top", search "ruched going out top" — the same words. Before you finish an item, check every word of its name against its search and cut any word the search does not carry. The ONE exception: the jewelry mood-word rule below ("Statement Hoop Earrings" may search "hoop earrings", because mood words empty a boutique\'s strict search).\n'+
     '- "search": the 2 to 4 plain words she would type into that store\'s search box. This is what the shopping link searches, so it matters more than the pretty name.\n'+
     '  USE RETAIL WORDS — the words on a store\'s own filter menus. Colors especially: "pink", never "raspberry" or "hot pink" or "fuchsia"; "tan" or "brown", never "cognac" or "camel-toast"; "gold", never "champagne"; a plain color, never a BRIGHTNESS word like "neon", "electric" or "acid" — those are not filter values anywhere. Store search engines do not know stylist shades; a poetic color finds nothing and the store quietly shows her junk instead.\n'+
@@ -7201,6 +7244,7 @@ function _shopRules(mode,occ){
     // clause: the ONE surface that legitimately asks for a wrap is her own
     // "Wrap dresses" checklist row, and the filter waives itself there.
     '- NEVER build a search around "wrap" — not wrap dresses, wrap tops or wrap skirts — UNLESS the piece she has specifically asked for is itself a wrap. It is not a bad garment; stores simply do not stock it in numbers, so the search comes back with a wrap skirt and a perfume instead. Reach for a mainstream shape word instead.\n'+
+    _fabricBrakeRule(slot)+
     '- Match the store to her using the tags above.\n'+
     // The app never asks her budget, so this used to promise something it could
     // not do. Worse, the dressier a woman's taste the more her best-matched
@@ -8242,7 +8286,7 @@ function _askedForRule(){
     // The opposite case, and the reason the retail flag exists: these words are
     // abstract formality, which no store stocks as a section. Measured thin at
     // Dillard's: "black tie dress" 122KB against 707KB for mother of the bride.
-    r+='- SHE HAS NAMED AN OCCASION: "'+o.p+'". Dress her for it, but keep that word OUT of the search terms. Stores do not stock a "'+o.p+'" section and the word finds almost nothing on its own. Search for the GARMENT that suits the occasion instead ("beaded evening gown", "long chiffon gown", "velvet midi dress") and let the pieces themselves carry the formality.\n';
+    r+='- SHE HAS NAMED AN OCCASION: "'+o.p+'". Dress her for it, but keep that word OUT of the search terms. Stores do not stock a "'+o.p+'" section and the word finds almost nothing on its own. Search for the GARMENT that suits the occasion instead ("beaded evening gown", "long chiffon gown", "crepe midi dress") and let the pieces themselves carry the formality.\n';
   }
   // HER STORE RESTRICTION. Deliberately OUTSIDE the retail/non-retail branches
   // above, because it governs WHICH STORE, not what goes in the search: black
@@ -10350,7 +10394,7 @@ async function _wardrobeIdeaGen(id,boxId){
   // match in weight -- a paragraph sitting before RULES read as background
   // information, not an instruction, and her first live test proved it.
   const defineRule=_WDR_IDEA_DEFINE[id]?'\n- '+_WDR_IDEA_DEFINE[id]:'';
-  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+exclLine+colorFallbackLine+curLine+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+': keep the defining word of the item itself (or a true synonym a store search knows) in EVERY search — for "Professional blouses" a search of just "satin blouse" loses the professional part and lands her on the wrong kind of thing entirely\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.'+defineRule+'\n'+_colorPrefRule(colorDependent)+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Suede Moto Jacket" — never vague ("a nice jacket"), never led by a color unless color is genuinely the point of this item (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
+  const prompt='You are Catherine, a personal stylist. Suggest 4 specific shoppable options for exactly this wardrobe item: "'+name+'".\n\n'+basis+getPrefsForPrompt()+exclLine+colorFallbackLine+curLine+'\n'+_shopRules('compare',null,id)+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must clearly still be a '+name.toLowerCase()+': keep the defining word of the item itself (or a true synonym a store search knows) in EVERY search — for "Professional blouses" a search of just "silk blouse" loses the professional part and lands her on the wrong kind of thing entirely\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.'+defineRule+'\n'+_colorPrefRule(colorDependent)+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Suede Moto Jacket" — never vague ("a nice jacket"), never led by a color unless color is genuinely the point of this item (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
@@ -10418,7 +10462,7 @@ async function _wdrMoreIdeas(id,boxId){
   if(buf.length){_wdrMoreBuf[id]=[];append(buf);return;}
   if(btn){btn.textContent='Looking…';btn.classList.add('busy');}
   const shown=[].slice.call(grid.querySelectorAll('.shop-item-name')).map(function(n){return n.textContent}).join('; ');
-  const prompt='You are Catherine, a personal stylist. Suggest 4 MORE specific shoppable options for exactly this wardrobe item: "'+name+'".\n\nShe has already been shown these, so suggest genuinely different pieces, never a near-duplicate: '+shown+'.\n'+getPrefsForPrompt()+'\n'+_shopRules('compare')+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must keep the defining word of the item itself\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, never led by a color unless color is the point, never promising a detail its own search does not carry\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
+  const prompt='You are Catherine, a personal stylist. Suggest 4 MORE specific shoppable options for exactly this wardrobe item: "'+name+'".\n\nShe has already been shown these, so suggest genuinely different pieces, never a near-duplicate: '+shown+'.\n'+getPrefsForPrompt()+'\n'+_shopRules('compare',null,id)+'\nRULES:\n- All 4 must genuinely be "'+name+'" or a very close match to it\n- Every "search" term must keep the defining word of the item itself\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, never led by a color unless color is the point, never promising a detail its own search does not carry\n\nRespond with ONLY valid JSON:\n{"items":[{"name":"Item Name","search":"short search term","store":"Store Name"}]}';
   try{
     const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:500,messages:[{role:"user",content:prompt}]})});
     if(!r.ok)throw 0;
