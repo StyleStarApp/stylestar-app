@@ -1,0 +1,18 @@
+
+════ "Neon gym bags"  (prompt 23445 chars)
+   stop_reason: end_turn   JSON parses: YES   reply 628 chars
+   RAW: ```json
+        {"items":[{"category":"bag","name":"Neon Yellow Gym Duffel Bag","search":"yellow duffel bag","store":"Nordstrom"},{"category":"bag","name":"Neon Pink Gym Duffel Bag","search":"pink gym duffel bag","store":"Amazon"},{"category":"bag","name":"Neon Green Sports Duffel Bag","search":"green duffel bag","store":"Nordstrom Rack"},{"category":"bag","name":"Neon Gym Duffel Bag","search":"neon duffel bag","store":"Shopbop"},{"category":"bag","name":"Neon Gym Tote Bag","search":"bright gym tote bag","store":"Target"},{"category":"bag","name":"Neon Sport Duffel Bag","search":"bright sport duffel bag","store":"TJ Maxx"}]}
+        ```
+
+════ "A wetsuit"  (prompt 23437 chars)
+   stop_reason: end_turn   JSON parses: YES   reply 255 chars
+   RAW: ```json
+        {"note":"Wetsuits aren't something I can shop for you through the women's retailers I work with — they're not carried in this store network. I'd point you toward a surf or outdoor specialty shop like Roxy, O'Neill, or REI instead.","items":[]}
+        ```
+
+════ "Black midi dress"  (prompt 23451 chars)
+   stop_reason: end_turn   JSON parses: YES   reply 606 chars
+   RAW: ```json
+        {"items":[{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Nordstrom"},{"category":"dress","name":"Black Satin Midi Dress","search":"black satin midi dress","store":"Bloomingdales"},{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Reformation"},{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Anthropologie"},{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Mango"},{"category":"dress","name":"Black Midi Dress","search":"black midi dress","store":"Zara"}]}
+        ```
