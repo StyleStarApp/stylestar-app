@@ -2482,8 +2482,23 @@ body.card-fb{padding:0}
   .wks-lbl{font-size:15px;letter-spacing:.08em;gap:5px}
   .wks-lbl svg{width:18px;height:18px}
 }
+/* HER CATCH, 2026-08-25, twice over. The two stars measured identical to the
+   pixel on her own phone (same top row, same bottom row, 58 device px tall
+   each, shapes 99.7% the same) and she STILL read the right one as sitting
+   lower. She was right, and the cause is that ROTATION IS NOT REFLECTION: the
+   star's gradient highlight is deliberately off-centre (cx 42%), so turning one
+   star -12deg and the other +12deg carries the SAME off-centre highlight round
+   two different arcs instead of mirroring it. Measured: the two highlight x
+   positions summed to 88.6% where a mirrored pair sums to 100, and the right
+   star's bright spot sat 0.51 CSS px HIGHER, which drops its visual weight.
+   ⚠️ SO THE RIGHT STAR IS FLIPPED, NOT TURNED. It looks identical -- same tilt,
+      same shape -- but the light mirrors with it. Do not "simplify" this back
+      to rotate(12deg); that is the bug, and no box measurement can see it.
+   The -.5px is the other half of the same catch: the pair is mirrored and the
+   word is not (it opens on S, closes on K), so the ink came 1 CSS px closer on
+   the left. Re-run scratchpad/starlit.mjs and starlean.mjs after any change. */
 .wks-lbl svg.l{transform:rotate(-12deg)}
-.wks-lbl svg.r{transform:rotate(12deg)}
+.wks-lbl svg.r{transform:scaleX(-1) rotate(-12deg);margin-left:-.5px}
 .wks-name{font-family:'DM Serif Display',serif;font-size:17.5px;line-height:1.25;color:#1a1a1a;margin:7px 0 3px;text-wrap:balance}
 .wks-store{font-family:'Jost',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.13em;color:#5f5647;text-transform:uppercase}
 .wks-note{font-family:'Lora',Georgia,serif;font-style:normal;font-size:15.5px;line-height:1.55;color:#4a463e;margin-top:7px;text-wrap:balance}
