@@ -8137,10 +8137,35 @@ function ssAskGo(){
 // it is an argument. So when there is an ask the bullet is REPLACED, and the task is
 // reframed in the opening sentence too — placement carries as much weight as wording
 // here, the same lesson as the work-appropriate dresses definition.
+/* \u25b6 2026-08-25, HER OBSERVATION on three live refreshes of "Black midi
+   dress": "I like how on the 2nd and 3rd time the midi dresses got more
+   interesting descriptive words."
+   \u25b6\u25b6 THE FINDING IS UNDERNEATH THE COMPLIMENT, and it is the wrong way round:
+   her FIRST set was six cards all named "Black Midi Dress" at six different
+   stores, and only the REFRESHES gave her Mesh / Bandage / Sleeveless / V-Neck
+   / Draped. The flat set is the one every woman sees and most never refresh
+   past, so the best answer was arriving one tap too late.
+   \u25b6 CAUSE, and it is one line: the ask branch of this rule asked only for
+   variety of PRICE and STORE. Nothing asked for variety of the GARMENT, so the
+   model did exactly as told. What produced the sets she liked was a DIFFERENT
+   rule -- _seenPicksLine's "never a near-duplicate" -- which by definition
+   cannot fire until she has already been shown a set. Asking for it up front
+   is the fix.
+   \u26a0\ufe0f THE WORD BUDGET IS THE REAL CONSTRAINT: her ask is already the core of
+   every search, the cap above is 2 to 4 plain words, and every extra word makes
+   a store rank the right pieces LOWER. So ONE defining word, never two, and
+   none at all once what she typed is already long. */
 function _mixRule(){
-  return _ssAsk
-    ? '- Vary the price points and the stores across the 6, but every single one must be the thing she asked for\n'
-    : '- Mix categories and price points across the 6 items\n';
+  if(!_ssAsk)return '- Mix categories and price points across the 6 items\n';
+  return '- VARY THE PIECES, not just the shops. Six of the same dress from six different stores is the weakest answer there is to a specific ask: a stylist pulls six DIFFERENT black midi dresses, not one dress in six windows. Give each pick its own defining word \u2014 a neckline, a sleeve, a silhouette or a fabric \u2014 and make all six different from each other, while every one stays exactly the thing she asked for.\n'
+    +'    WRONG: six cards all named "Black Midi Dress", differing only by store.\n'
+    +'    RIGHT: "V-Neck Black Midi Dress" / "Ruched Black Midi Dress" / "Mesh Black Midi Dress", and three more like them.\n'
+    +'  \u26a0\ufe0f THOSE ARE ILLUSTRATIONS, NOT A LIST TO COPY. Choose the six words that suit HER style and that the store you picked genuinely stocks, and choose different ones next time she asks. A glam, edgy dresser and a quiet classic one should not get the same six words.\n'
+    +'  The defining word must be in that pick\'s SEARCH as well as its name (the parity rule above), and must be a word that store\'s own filter menu would really use.\n'
+    +'  \u26a0\ufe0f ADD ONE DEFINING WORD TO HER ASK, NEVER TWO. And if what she typed is already four words or longer, it is doing that job itself: leave those searches EXACTLY as she typed them and vary the stores and the price points instead. This half of the rule matters more than the variety, because an over-long search is the one thing that reliably buries the right pieces.\n'
+    +'    WRONG, on an ask of "black long sleeve v neck midi dress": searching "cutout black long sleeve v neck midi dress". She already told you the piece in seven words; an eighth makes the store rank it lower and she lands on the wrong page.\n'
+    +'    RIGHT, on that same ask: all six search "black long sleeve v neck midi dress" and differ by store and price.\n'
+    +'- Vary the price points and the stores across the 6 as well.\n';
 }
 function _askedForLead(){
   return _ssAsk
