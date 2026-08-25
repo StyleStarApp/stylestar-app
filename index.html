@@ -7158,11 +7158,11 @@ function _fabricBrakeRule(slot){
     '  RIGHT: let CUT, STRUCTURE and TEXTURE carry the dressiness instead \u2014 a tailored or cropped blazer, a knife-pleat or column skirt, crepe, ponte, a fine knit, leather, suede, a good drape.\n'+
     '  If one of these fabrics already appears in the pieces she has been shown above, use none at all this time.\n';
 }
-function _shopRules(mode,occ,slot){
+function _shopRules(mode,occ,slot,detailTop){
   return '\nPICK THE STORE from this list ONLY, using the name exactly as written.'+
     (quizTaken?' The list is already ORDERED by how well each store suits her, closest first, so favour the top of it. Go further down only when the piece needs a specialist that the top of the list does not carry.'+_neverStoreRule():'')+
     (quizTaken&&typeof occ==='number'?' For THIS request the order also carries the occasion she named, so the dressier end of the stores that genuinely suit her has moved to the top. Trust it: the stores that would be wrong for her at this occasion have already been ranked away.':'')+
-    '\n'+_storeListForPrompt(occ)+
+    '\n'+_storeListForPrompt(occ,detailTop)+
     '\n\nFOR EVERY ITEM GIVE BOTH:\n'+
     // Tuned 2026-08-08 from Cath's six live screenshots: fancy color words
     // ("raspberry", "hot pink") and stacked qualifiers made store searches come
@@ -8500,6 +8500,26 @@ async function _shopStyleGen(){
     basis='Her style profile from the Style Star quiz:\n'+sliderDesc+'\nStyle notes: '+topArchNames.join(', ')+getPrefsForPrompt();
   }
   var prompt,maxTok=400,_wlTrunc=0;
+  /* 🚨🚨 style-ai.js REFUSES any message over MAX_TEXT_CHARS (32KB) OUTRIGHT --
+     it returns an error, it does NOT truncate. So a prompt that grows past the
+     cap does not degrade, it puts "Couldn't load options right now" on her
+     screen: the exact failure she reported on 2026-08-25.
+     ▶ MEASURED that day, worst case on the ASK path (a long occasion phrase, a
+     full 24-item seen-picks memory, a long never-wear list): 29,197 chars before
+     that day's prompt work and 32,664 after. 104 characters of headroom. That is
+     not a margin, it is a coin toss.
+     ▶ SO IT IS A GUARD, NOT A ONE-OFF TRIM, because the prompt grows at RUNTIME
+     (every refresh adds to the seen-picks memory) and the next rule anyone adds
+     would silently spend whatever is left.
+     ⚠️ THE STORE LIST ALWAYS STAYS COMPLETE. Her 2026-07-27 decision was SORT,
+     NEVER TRIM -- "the last thing I want is for her to not get shown something
+     she would actually want" -- so every store keeps its place in the ranking
+     and only the TAIL'S DETAIL is dropped, exactly as the stylist chat has done
+     since 2026-08-23.
+     ⚠️ An ordinary prompt is ~23-28KB and never enters the ladder at all, so the
+     everyday case is byte-identical to full detail. Re-measure with
+     scratchpad/promptcap.mjs after ANY addition to these rules. */
+  var _PROMPT_SAFE=30000;   // 2,768 below the hard cap
   if(_shopStyleMode==='wantlist'){
     var wl=(_wantListNames||[]);if(wl.length>16){_wlTrunc=wl.length-16;wl=wl.slice(0,16);}
     maxTok=1400;
@@ -8510,7 +8530,10 @@ async function _shopStyleGen(){
     prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    prompt='You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF())+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}';
+    var _mkQuiz=function(_dt){ return 'You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF(),null,_dt)+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}'; };
+    // Full detail first. Only a genuinely long prompt walks down the ladder.
+    var _dts=[null,60,45,30];
+    for(var _di=0;_di<_dts.length;_di++){ prompt=_mkQuiz(_dts[_di]); if(prompt.length<=_PROMPT_SAFE) break; }
   }
   try{
     var parsed;

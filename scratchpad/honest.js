@@ -63,7 +63,15 @@ ok('EDIT 2: it never says "having trouble" — that is the CHAT\'S ERROR message
    !/having trouble/i.test(emitted) && /I'm having a moment/.test(HTML));
 
 // scoping: the ask prompt gets it, the four browsing prompts must not
-const askPrompt = (HTML.match(/prompt='You are Catherine, a personal stylist\. '\+_askedForLead\(\)[\s\S]*?';/) || [''])[0];
+// ⚠️ 2026-08-25: this used to anchor on `prompt='You are Catherine...`, and the
+// ask branch became a builder function (_mkQuiz) so the prompt could be rebuilt
+// with less store detail when it approaches style-ai's 32KB hard cap. The regex
+// then matched NOTHING and three assertions failed against an empty string.
+// Anchored on _askedForLead() itself now -- the thing that actually marks this
+// as the ask prompt -- and guarded, because an empty match is the difference
+// between a real failure and a test measuring nothing.
+const askPrompt = (HTML.match(/_mkQuiz\s*=\s*function[\s\S]*?"store":"Store Name"\}\]\}';/) || [''])[0];
+ok('the ASK prompt was actually found (or the three below prove nothing)', askPrompt.length>500, askPrompt.length);
 ok('the ASK prompt calls the rule', /_honestyRule\(\)/.test(askPrompt));
 ok('the ASK prompt\'s schema carries "note"', /\{"note":""/.test(askPrompt));
 ok('the schema tells it note is only for a short answer',
