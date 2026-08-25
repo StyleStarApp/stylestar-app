@@ -1796,7 +1796,7 @@ body.menu-open .menu-panel{display:block}
    and we have no relationship with any of them. So a photo goes ONLY on an item
    whose host is a key in _AFF_MID. GREP _AFF_MID BEFORE ADDING ONE. */
 .wks-px{display:block;width:140px;max-width:100%;aspect-ratio:3/4;object-fit:cover;
-  object-position:top center;margin:11px auto 4px;border:1px solid #E4D3A8;border-radius:2px;background:#F5EFE2}
+  object-position:top center;margin:6px auto 4px;border:1px solid #E4D3A8;border-radius:2px;background:#F5EFE2}
 .dc-item-px{display:block;width:100%;margin:0 0 14px;aspect-ratio:3/4;object-fit:cover;
   object-position:top center;background:#F5EFE2;border:1px solid #EFE7D2;border-radius:2px}
 .dc-item-name{font-family:'DM Serif Display',Georgia,serif;font-size:20px;font-weight:400;color:#1a1a1a;line-height:1.28;margin:0 0 9px;padding-right:32px}
@@ -2456,7 +2456,7 @@ body.card-fb{padding:0}
       on this screen. ▶ NEVER flatten it, and never reach for an antique gold. */
 #wbStar{display:none;margin:12px 7px 2px;position:relative;z-index:0}
 #wbStar.on{display:block}
-.wks-card{background:#fff;border:1px solid #D8A52E;padding:14px 16px 13px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.28);position:relative}
+.wks-card{background:#fff;border:1px solid #D8A52E;padding:10px 16px 13px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.28);position:relative}
 /* Drawn as an absolutely positioned ::before at inset:-7px, never as padding or
    a border, so the frame costs ZERO height -- this is the front door and the
    fold is ~700px. ⚠️ The z-index:0 lives on #wbStar, the PARENT, deliberately:
@@ -2468,8 +2468,17 @@ body.card-fb{padding:0}
 /* Her pick "C" from the 2026-08-13 three-way render: TWIN tilted stars
    flanking the label — the CURATED BY CATHERINE treatment, in gold. Flanking
    marks read as a label announcing something, which is exactly what this is. */
-.wks-lbl{display:flex;align-items:center;justify-content:center;gap:7px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:.16em;color:#4a463e}
-.wks-lbl svg{width:17px;height:17px;flex:0 0 auto;filter:drop-shadow(0 0 2px rgba(224,184,76,.6))}
+.wks-lbl{display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Jost',sans-serif;font-size:19px;font-weight:700;letter-spacing:.10em;color:#4a463e}
+.wks-lbl svg{width:22px;height:22px;flex:0 0 auto;filter:drop-shadow(0 0 2px rgba(224,184,76,.6))}
+/* ⚠️ THE STEP-DOWN IS NOT OPTIONAL. Measured: at 320px (Display Zoom) every size
+   from 16px up wraps to two lines, which strands a star on its own row. 15px is
+   the largest that holds one line there. Her own standing trade elsewhere is to
+   accept a wrap rather than shrink type, but a wrapped caps label with flanking
+   stars breaks the ornament, so this one steps down instead. */
+@media(max-width:344px){
+  .wks-lbl{font-size:15px;letter-spacing:.08em;gap:5px}
+  .wks-lbl svg{width:18px;height:18px}
+}
 .wks-lbl svg.l{transform:rotate(-12deg)}
 .wks-lbl svg.r{transform:rotate(12deg)}
 .wks-name{font-family:'DM Serif Display',serif;font-size:17.5px;line-height:1.25;color:#1a1a1a;margin:7px 0 3px;text-wrap:balance}
@@ -12697,7 +12706,15 @@ function _wkStarPxTag(S,cls){
 }
 // The twin tilted gold stars (her pick "C", 2026-08-13) and her signature pink
 // heart. Shared constants for the same anti-drift reason as the gate above.
-var _WKS_STAR_SVG='<svg viewBox="0 0 24 24"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" fill="#E0B84C" stroke="#C89A2C" stroke-width="0.6"/></svg>';
+var _WKS_STAR_N=0;
+function _wksStarSvg(){
+  var id='wksStarG'+(++_WKS_STAR_N);
+  return '<svg viewBox="0 0 24 24"><defs><radialGradient id="'+id+'" cx="42%" cy="34%" r="72%">'
+    +'<stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/>'
+    +'<stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/>'
+    +'</radialGradient></defs><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" '
+    +'fill="url(#'+id+')" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round"/></svg>';
+}
 /* One builder for the Star note, because it is rendered on TWO surfaces (the
    Welcome Back card and the Discovery page) and a rule applied by hand at two
    sites drifts the moment a third appears. See .wks-q-lo above for the why. */
@@ -12719,7 +12736,7 @@ function _renderWeekStar(){
   // 190px was rendered and rejected because it pushed Shop it below it.
   var _wkStarPx=_wkStarPxTag(WEEK_STAR,'wks-px');
   el.innerHTML='<div class="wks-card">'
-    +'<div class="wks-lbl">'+_WKS_STAR_SVG.replace('<svg','<svg class="l"')+'STAR OF THE WEEK'+_WKS_STAR_SVG.replace('<svg','<svg class="r"')+'</div>'
+    +'<div class="wks-lbl">'+_wksStarSvg().replace('<svg','<svg class="l"')+'STAR OF THE WEEK'+_wksStarSvg().replace('<svg','<svg class="r"')+'</div>'
     +_wkStarPx
     +'<div class="wks-name">'+_esc(WEEK_STAR.n)+'</div>'
     +'<div class="wks-store">'+_esc(WEEK_STAR.store)+(WEEK_STAR.price?' &middot; '+_esc(WEEK_STAR.price):'')+'</div>'
@@ -12744,8 +12761,8 @@ function _renderDiscoStar(){
   var el=document.getElementById('dsStar');if(!el)return;
   var S=_weekStar();
   if(!S||!S.n||!_wlSafeUrl(S.url)){el.classList.remove('on');el.innerHTML='';return;}
-  el.innerHTML='<div class="dss-hd"><span class="dss-hair l"></span>'+_WKS_STAR_SVG
-      +'<b>Star of the Week</b>'+_WKS_STAR_SVG+'<span class="dss-hair r"></span></div>'
+  el.innerHTML='<div class="dss-hd"><span class="dss-hair l"></span>'+_wksStarSvg()
+      +'<b>Star of the Week</b>'+_wksStarSvg()+'<span class="dss-hair r"></span></div>'
     +'<div class="dss-wrap"><div class="wks-card">'
     +_wkStarPxTag(S,'wks-px')
     +'<div class="wks-name">'+_esc(S.n)+'</div>'
