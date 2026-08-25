@@ -31,8 +31,22 @@ const card = await page.evaluate(()=>{
     on: el.classList.contains('on') && el.querySelector('.wks-card')!==null,
     visible: el.getBoundingClientRect().height>40,
     label: el.querySelector('.wks-lbl').textContent.trim(),
-    twinStars: el.querySelectorAll('.wks-lbl svg path[fill="#E0B84C"]').length===2
-      && !!el.querySelector('.wks-lbl svg.l') && !!el.querySelector('.wks-lbl svg.r'),
+    // ⚠️ UPDATED DELIBERATELY, NOT SILENCED (2026-08-25). This pinned the flat
+    // fill "#E0B84C" by literal hex, and HER ASK was to swap that star for the
+    // gradient one her Edit, Wardrobe and Style Signature card already use. So
+    // the SUBJECT changed on her instruction, not the behaviour. The replacement
+    // is STRICTER than what it replaces: it requires both stars to reference a
+    // gradient AND that gradient to actually exist in the document, which the
+    // old hex check could never have caught.
+    twinStars: (()=>{
+      const p=[...el.querySelectorAll('.wks-lbl svg path')];
+      if(p.length!==2) return false;
+      const ids=p.map(x=>(x.getAttribute('fill')||'').match(/^url\(#(.+)\)$/)).map(m=>m&&m[1]);
+      if(ids.some(i=>!i)) return false;
+      if(new Set(ids).size!==2) return false;              // ids must be unique
+      if(ids.some(i=>!document.getElementById(i))) return false;  // and must resolve
+      return !!el.querySelector('.wks-lbl svg.l') && !!el.querySelector('.wks-lbl svg.r');
+    })(),
     name: el.querySelector('.wks-name').textContent,
     store: el.querySelector('.wks-store').textContent,
     href: a.getAttribute('href'), rel: a.getAttribute('rel'), tgt: a.getAttribute('target'),

@@ -124,8 +124,20 @@ function ok(name, cond, extra) {
   });
   ok('wrap dropped when nothing asked for it', veto.noCtx === 'Floral Midi Dress', veto.noCtx);
   ok('wrap KEPT when she asked for "Wrap dresses"', /Wrap Midi Dress/.test(veto.askedWrap) && /Floral Midi Dress/.test(veto.askedWrap), veto.askedWrap);
-  ok('⚠ a TASTE veto is never waived: ribbed stays out even when asked for', !/Ribbed/.test(veto.askedRib), veto.askedRib);
-  ok('⚠ skinny jeans stay out even when asked for', !/Skinny/.test(veto.askedSkin), veto.askedSkin);
+  // ⚠️ THESE TWO ARE DELIBERATELY INVERTED, NOT SILENCED (2026-08-25). They
+  // pinned the OLD absolute reading of _STYLIST_VETO and were superseded the
+  // day before by HER OWN principle, verbatim: "I would not recommend skinny
+  // jeans to my clients... However any time a client specifically asks for
+  // something she wants, even if I don't love it, I will find it for her to
+  // try on." Catherine's veto is a CURATION preference: it governs what the
+  // stylist OFFERS unprompted, never what she FETCHES when a woman asks by
+  // name. They were left failing by the #933 merge and found on 2026-08-25.
+  // ▶ The line that must NOT move is the one directly below: HER OWN
+  // never-wear list is the woman's boundary and is never waived by anything.
+  // scratchpad/vetoask.mjs is the fuller suite for this behaviour (13 checks).
+  ok('⚠ CATHERINE\'S taste veto WAIVES on an explicit ask: ribbed comes back', /Ribbed/.test(veto.askedRib), veto.askedRib);
+  ok('⚠ skinny jeans come back when she asks for them by name', /Skinny/.test(veto.askedSkin), veto.askedSkin);
+  ok('⚠ but a taste veto is still applied when she has NOT asked', !/Ribbed|Skinny/.test(veto.noCtx), veto.noCtx);
   ok('her own never-wear still applies under the exemption', veto.personal === 'Wool Coat', veto.personal);
   ok('the curated catalog picker does NOT run the search veto', veto.catalogSrc === true);
 
