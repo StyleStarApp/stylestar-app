@@ -7,7 +7,189 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-24 LATER — 🗂 THE SPREADSHEET GOT AI-FILLED, AND ANSWERING IT IN CHAT WORKED BETTER)
+## ▶ NEXT SESSION — START HERE (2026-08-25 — 🚨 HER OWN TESTING BROKE THE HONEST LINE, AND THE CAUSE WAS A RULE THE STYLIST COULD NOT OBEY)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**ONE PR, #933, merged and VERIFIED BYTE-IDENTICAL LIVE** (`md5 2465624d…`, so all 259 green checks
+transfer directly to what she sees). **ONE Netlify build for the whole day** — everything was batched on
+her word. Branch resynced to main, tree clean, everything at `222d1a7`.
+▶▶ **THE SHAPE OF THE DAY, AND IT IS THE REUSABLE HALF: SHE TYPED EIGHT ASKS INTO THE BOX AND FOUND FOUR
+SEPARATE REAL THINGS — two of which were invisible from this sandbox.** Her verdict on the best of them:
+*"i love it that the stylist offered a golf outfit instead. that was so smart!"*
+▶ **AND SHE CAUGHT MY OWN OVER-CORRECTION BY TAPPING THROUGH, which is the thing no harness here can do.**
+
+### 🚨🚨⭐⭐ THE HEADLINE: THE HONEST LINE DEFEATED ITSELF, AND THE ROOT WAS A RULE THE STYLIST COULD NOT HONESTLY OBEY
+Four of her asks (`Baby gift`, `Girls shoes size 3`, `Skinny jeans plus size`, `Skinny jeans`) returned
+**"Couldn't load options right now"** — which is the CATCH block, so something THREW. **Captured live
+against the real model rather than guessed.** Her exact reply to `Skinny jeans`:
+> *The instructions say Catherine must NEVER suggest skinny jeans - it is on her absolute veto list as a
+> dated silhouette. She cannot shop this request.* ```json { "note": "…", "items": [] } ```
+- ▶▶ **THE HONESTY RULE TAUGHT THE MODEL TO EXPLAIN, AND AN EXPLANATION WRITTEN OUTSIDE THE JSON BREAKS
+  `JSON.parse`. So the feature defeated itself in exactly the case it exists for:** she asked for something
+  we could not shop and got the silence the line was built to remove.
+- ⚠️ **AND THE MODEL WAS RIGHT ON THE MERITS BOTH TIMES.** Its reasoning was correct and its note was
+  lovely. **Only the envelope was wrong, so the fix went in our code and not into an argument with it.**
+- ✅ **`_aiJSON()`, a SHARED FORGIVING PARSE:** strip fences, try the whole reply, fall back to the
+  outermost `{ … }` span. ⚠️ **A reply with no object still THROWS**, so a genuine failure still reaches the
+  catch and she still gets an honest error rather than a blank shelf. ⚠️ **SEVEN parse sites had seven
+  copies of the same fragile one-liner** — all seven route through one function now, so it cannot drift
+  when an eighth appears. **Grep `_aiJSON` before adding one.**
+- ⭐ **NEGATIVE CONTROL RUN, not assumed: the OLD parse was replayed against her real reply and throws with
+  the exact error her screen reported.** New `scratchpad/aijson.mjs`, **12 checks** (her reply recovers with
+  the note whole, every previously-working shape still works, four no-object replies still throw).
+- ⚠️ **THE EM DASH, third sighting of the family: `_noDash` was NOT applied to the note**, so the very first
+  real honest line she ever saw read *"through my store list — every retailer here…"*. **A rule nothing
+  checks on the way back drifts** — the motto lesson (2026-08-23), one surface later.
+
+### ⭐⭐ HER TWO KINDS OF NO — her stylist principle, verbatim, and it drew a line the code did not have
+Her words: ***"I would not recommend skinny jeans to my clients. I would not select them or present them to
+her, in real life or on shop my style or wardrobe list search. However any time a client specifically asks
+for something she wants, even if I don't love it, I will find it for her to try on."***
+- ▶▶ **HER OWN NEVER-WEAR LIST IS THE WOMAN'S BOUNDARY. Never waived, by anything, ever.**
+  ▶▶ **CATHERINE'S VETO IS A CURATION PREFERENCE: it governs what the stylist OFFERS unprompted, never what
+  she will FETCH when a woman asks by name.** So `_STYLIST_VETO` now waives on an explicit ask exactly as
+  `_SEARCH_VETO` already did, and her own list still does not.
+- ⭐⭐ **THE MEASUREMENT THAT MAKES THIS RIGHT RATHER THAN A PREFERENCE: handed the OLD absolute rule, the
+  live model argued its way to HER POSITION UNPROMPTED, in writing** — *"the veto is Catherine's styling
+  preference, not the client's. I will honor the client's ask."* **The model was right and the code was
+  wrong.** Twenty years of her judgment and a language model landed in the same place independently.
+- 🚨 **AND IT EXPLAINS THE CRASH. Two bugs, one root: a rule the stylist could not honestly obey does not
+  get obeyed quietly, it gets ARGUED WITH — and the argument is what broke the parse.** Weigh this whenever
+  a prompt rule is written as absolute: if the model can see it is wrong for the user, it will say so.
+- **Her own framing of why she tested it:** *"we talked about not suggesting skinny jeans because they are
+  out of style. That's why I wanted to test to see if she actually types it in to request will the search
+  find them for her."* **A well-aimed test at exactly the edge where the rule could fail her.**
+- **New `scratchpad/vetoask.mjs`, 13 checks.** ⭐ **FOUR of them are the line that must not move:** her own
+  never-wear, her patterns and her free-text hard nos all still block **even when she asks by name**.
+  ⚠️ **Negative control run: remove the waiver and exactly 2 checks fail.**
+
+### ⚠️⚠️ THEN HER TESTING RE-SCOPED MY OWN FIX, AND THIS IS THE LESSON TO CARRY
+The first version of the women's-retailer boundary drew the line at *is this exactly a women's fashion
+item*. **Her words killed it:** *"When I tested for wetsuits it found some on amazon, and the others i
+clicked showed me swim suits or rash guards which was pretty close."*
+- ▶▶ **SHE TAPPED THROUGH AND THE NEAR ANSWER WAS USEFUL. My boundary turned that useful page into a flat
+  refusal — the opposite of the rule's OWN standing instruction to prefer what you CAN find.**
+- ▶▶ **SO THE LINE IS NOT WOMEN'S-FASHION-OR-NOT. IT IS: CAN I STILL BE USEFUL AS A STYLIST HERE?**
+  **A wetsuit has a near answer. A baby gift has none.** Men, children and babies stay out (a different
+  person); an adjacent women's category gets the near thing, honestly labelled.
+- ⭐ **HER CALL ON COMPETITORS:** the stylist had been naming Roxy, O'Neill and REI. Her words: *"her
+  pointing to competitors by name was also nice, but turning it back to something she can do is probably
+  smarter for the app. I'll go with your call on that one."*
+  ⚠️⚠️ **THE ABSTRACT RULE FAILED ON THE VERY NEXT LIVE RUN — still Roxy, O'Neill, REI. It only landed once
+  a WRONG/RIGHT PAIR NAMED THE VIOLATION**, which is the same shape that finally fixed dr3 and the
+  name/search rebuild. **That pattern is now three-for-three: name the violation or the rule does not land.**
+- ✅ **VERIFIED LIVE, four asks, after:** `A wetsuit` → honest note + six rash guards / swim tops / UPF
+  pieces, no competitor named · `Golf clubs` → honest note **AND AN ACTUAL SIX-PIECE GOLF OUTFIT** (polo,
+  skort, shorts, shoes, pullover, tote) — her favourite answer, which now DELIVERS instead of only offering
+  · `Baby gift` → honest note turned back to a baby-shower outfit or a push present for the new mother,
+  which really is women's fashion · **control `Black midi dress` → still six black midi dresses.**
+- ⚠️ **`Neon gym bags` STILL RETURNS SIX AND THAT IS FINE — flagged to her, deliberately not chased.** The
+  capture shows the model translated "neon" into real retail colours in the SEARCH (`yellow duffel bag`,
+  `pink gym duffel bag`) while keeping "Neon" on the card. **Her stores genuinely sell bright gym bags, so
+  six is not dishonest** — it is the old name-promises-more-than-the-search family, not this one.
+- ⭐ **HER PRODUCT THOUGHT, worth keeping:** *"even though we are only women's fashion as an app, i was just
+  thinking directing her to amazon or target is not a bad idea for a lot of stuff."* ▶ **The answer given:
+  the line is not the STORE, it is whether she is still STYLING.** Rash guards at Target for a wetsuit ask
+  is a stylist being resourceful; six Amazon cards for a baby gift is Style Star being a worse Amazon with
+  her name on it. **Both stores are already in the table and the wetsuit answer used both.**
+
+### 💎 OLIVELA IS STORE 103 — every field hers
+`$$$$` · **`alluring 6` HER OVERRULE** · `s:[]` · `d:[5,6,10,7,7,4,8,6,8,7]` ·
+`c:'unique jewelry, bags, shoes, resort wear, swimwear, silk sleepwear, beautiful fabrics'` ·
+`u:'https://www.olivela.com/search?q='` · **no `deep` flag, deliberately** (a curated marketplace, and she
+named what it is FOR).
+- 🚨 **`alluring 6` is her overrule of a drafted 7.** It is the one dimension scored as a DISTANCE PENALTY
+  (×2.5) and **cannot be bought back**, so that single point decides whether a modest woman ever reaches it.
+- ⚠️ **`s:[]` IS HER FACT, NOT A GAP** (the DVF precedent): *"xxs-xxl no petite or tall or plus."*
+- ⭐⭐ **HER FIRST "NEVER SEND HER HERE FOR" ENTRY, recorded at the code in her own words:** *"I would never
+  send a woman on a budget here or to look for jeans, t-shirts, ultra casual wear, this is for a chic woman
+  with a lot of money."* **That column is worth more than the whole numeric grid; it only grows when a store
+  makes her wince.**
+- ✅ **Search URL verified from HER ADDRESS BAR with the standing gibberish control:** "silk dress" returns
+  82 mentions of silk, nonsense returns 0. ⚠️ The `options[prefix]=last` her paste carried is Shopify
+  predictive-search plumbing and strips clean.
+- ⚠️ **`olivela.com` added to `SEARCH_DOMAINS` in the same commit** — the Vilebrequin trap. **`storedepth`
+  bumped 102 → 103 BY HAND, never find-replaced** (noticing a store quietly appearing is that suite's job).
+- ▶ **TWO FIELDS ARE CLAUDE DRAFTS AND ARE FLAGGED TO HER:** **`casual 4`** (her slider table implied 3, but
+  resort wear + swim + silk sleepwear is not a casual-3 assortment — NET-A-PORTER and Neiman are 3, Shopbop
+  is 6) and **`a:'Luxury Fashion, Glamorous Luxe'`**. Hers to overrule, one value each.
+- ⚠️⚠️ **AND THE SPREADSHEET LESSON REPEATED, flagged to her at the time: her twelve slider scores arrived
+  as a filled table with a "Why" column, in a voice that was not hers, ANSWERING TWELVE QUESTIONS THAT WERE
+  NOT ASKED AND NONE OF THE FOUR THAT WERE** (price, sizes, beyond-jewelry, never-send-for). ▶ **The recovery
+  that worked is the same one as 08-24: keep the numbers as a DRAFT, ask the four in chat, and she answered
+  all four plus the alluring correction in one message.**
+
+### 🛍 HER THREE MALL BLURBS — the last Claude drafts in the Mall are gone
+**FARM Rio** *"Bold colorful prints, quality fabric, great for vacation"* · **DVF** *"The original wrap
+dress, and lovely pieces for occasions"* · **Olivela** *"Designer labels and unique jewelry"*.
+- ⭐ **Her Olivela line replaced "Designer labels, and every order gives back" and hers is better for a
+  reason worth reusing: the give-back is TRUE but it is THEIR story, not a reason to tap.** Hers names what
+  a woman would actually go there for.
+- **MEASURED at 430/390/375/360/320 with the real typefaces before shipping:** zero overflow, no sideways
+  scroll, and FARM Rio and DVF land at 3 lines at 390 — **the same as Nordstrom's existing blurb**, so the
+  row rhythm is unchanged. New `scratchpad/mallblurb.mjs`, 15 checks.
+
+### 💰⭐ HER AMAZON PLAN — HER OWN, AND THE ANSWER WAS YES WITH ONE SEQUENCING CHANGE (not built)
+Her words: *"for next week star of the week I am thinking I want to photograph my own bangles and put them
+on there for Amazon, but first I want to apply. I think I can get 3 sales from that."* **Her four-week
+order: bangles → cover-up dress → Olivela necklace → DVF dress.**
+- ▶▶ **THE FACT THAT DECOUPLES IT: HER PHOTO WORKS TODAY, WITH OR WITHOUT AMAZON.** `ownPx` bypasses the
+  affiliate gate because a photo she takes is hers. **So the bangles can be Star of the Week whether or not
+  Amazon has answered — do not hold the Star week hostage to an approval email.**
+- ▶ **THE HONEST ARITHMETIC, given to her: 3 qualifying sales within 180 days of APPROVAL** ≈ late February.
+  Her last measured week was ~20 visitors with 7 people clicking products (49 clicks). **Plausible, not
+  certain.** ⭐ What makes it more than a wish: **the bangles are $16.99, the easiest purchase in the app**,
+  and she has fifteen testers who want to support her (**she and her husband are barred; nobody else is**).
+  ⚠️ **Missing is NOT a ban** — the account closes and she reapplies.
+- ⭐⭐ **THE REAL LEVER IS THE INSTAGRAM POST THE SAME WEEK, and it answers her open "what do I post next":
+  her own hand, her own bangles, her own photograph.** 41 followers is small reach but her RATES are high
+  (30% sticker taps, 25% follows). ⚠️ **Re-read the Associates terms at signup; the rules move.**
+- ✅ **AND HER ORDER QUIETLY CLOSES THE ONLY TICKING ITEM: the cover-up dress must run before 20 SEPTEMBER**
+  or it waits until 24 January 2027. **Week two puts it in early September.**
+- ⚠️ **THE QUEUE ALREADY HOLDS ALL FOUR** (bangles #2, cover-up #7, Olivela necklace #8), so her plan is a
+  pin per week or one reorder. `WEEK_STAR_PIN` is still on the FARM Rio dress.
+- ▶ **PHOTO SPEC, told to her: shoot PORTRAIT.** The Star frame is **3:4 and crops the SIDES**, so a wide
+  shot of a wrist loses both ends of it — run the forearm up through the frame. File goes at `stars/<name>.jpg`.
+
+### ⚠️ SESSION HYGIENE
+- 🚨 **THE BARE-NAME PLAYWRIGHT IMPORT BIT AGAIN** (`from 'playwright'` → module not found). **Use the
+  absolute path** `/opt/node22/lib/node_modules/playwright/index.js`. Grep for it if a suite looks quiet.
+- ⚠️ **A GIBBERISH CONTROL FAILED AND SAVED A FALSE READING, fourth sighting:** Madewell's search returned
+  41 "skinny" hits and gibberish returned **37** — those were SIDEBAR FILTER LABELS, not results. **Good
+  American's control passed cleanly (624 vs 4, 90KB heavier) and is the only one of six proven.** The other
+  five (Nordstrom, Express client-side; Levi's, Abercrombie 403) **need her address bar.**
+- ⚠️ **`shopask` still does not finish on this machine — PRE-EXISTING and proven.** **`searchtune` keeps its
+  1 documented pre-existing failure (the heart-tip font check), confirmed BY NAME this time, not by count.**
+- ⚠️ **`rm -f scratchpad/out-*.txt` before every sweep** was honoured; a stale log reads as a clean pass.
+- ⚠️ **`git commit -m` still breaks on quotes — write the message to a file and `git commit -F`.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **ASK WHAT SHE WANTS FIRST.** Seven sessions running, her own agenda has beaten the list every time —
+   today's entire day came from her typing eight things into a box.
+2. 👀 **HOW THE FIVE ASKS FEEL ON HER PHONE**, all live and unseen by her: `Skinny jeans` (six pairs) ·
+   `Golf clubs` (the outfit) · `A wetsuit` (rash guards, no competitors) · `Baby gift` · and the control
+   `Black midi dress`. ⚠️ Private browsing, `stylestar.app/?notrack`.
+3. 💰 **AMAZON ASSOCIATES + THE BANGLES PHOTO.** The moment the photo lands: wire `ownPx`, pin the bangles,
+   and it is on the front door. **Her Instagram post is the same week and it IS her next post.**
+4. 🔎 **GOOGLE SEARCH CONSOLE — her three steps, then the meta tag to me.** Still the only blocked step.
+5. ⭐ **TWO OLIVELA VALUES TO OVERRULE IF SHE WANTS:** `casual 4` and the archetype line.
+6. ⭐ **A DELIBERATE SIZE-TAG PASS.** Three missing tall/wide tags surfaced by accident on 08-24 and a
+   missing one is invisible on screen.
+7. ⏰⏰ **20 SEPTEMBER — the Star of the Week pin.** Her four-week order covers it; **if the bangles slip, so
+   does the cover-up.** ⚠️ **NOTHING IN THE SYSTEM WILL RAISE THIS.**
+8. ⚠️ **THE TWO LINK-CHECK ROUTINES STILL OVERLAP.** Keep Sunday, retire Monday. **Her call, still unmade.**
+9. ⏰ **26 AUGUST — the Routine `trig_01SZerTsvKoeUYzeT1HX6iWs` fires** (catalog + Almira check-in).
+   ⏰ **28 AUGUST — the recurring-payments Routine.**
+10. ⭐ **THE THREE JUDGMENT COLUMNS** — "NEVER send her here for…" gained its first proper entry today
+    (Olivela). **Ask opportunistically, never as a sitting.**
+11. ⭐⭐ **"SHOW THE STYLIST WHAT I PICKED"** (Kathy's) · **OUTFIT SUGGESTIONS** (Jen's, and her own parked
+    Favorite Outfit page) · **SATIN AND SEQUINS** (oldest untouched item, open since 08-22) · **PRINT TOPS**
+    (`to4` still the only Tops row with zero curated products).
+12. 📊 **Her Plausible dashboard** — and the new question: **does anyone hit the honest line in the wild?**
+13. 💰 **AFFILIATES: Olivela approved (mid 50334).** CJ and AWIN next; Impact in 2-3 months with the
+    Plausible link. **AMAZON is no longer last — it is next, by her own decision.**
+
+## ▶ PREVIOUS — (2026-08-24 LATER — 🗂 THE SPREADSHEET GOT AI-FILLED, AND ANSWERING IT IN CHAT WORKED BETTER)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save everything to the .md and i will open a new chat")
 **THREE PRs merged and ALL VERIFIED LIVE BY MD5 BYTE-COMPARE: #929 · #930 · #931.** ⚠️ **Three Netlify
