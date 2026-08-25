@@ -10,8 +10,8 @@ by email.
 ## ▶ NEXT SESSION — START HERE (2026-08-25 LATER — 🚨 THE PROMPT'S OWN EXAMPLES WERE TEACHING THE MODEL THE WRONG THING)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "after we merge this live. Save all to the .md and I will open new chat")
-**TWO PRs: #935 merged and VERIFIED BYTE-IDENTICAL LIVE (`md5 db7bd1aa…`), then a second for her Star-label
-round.** ⚠️ **TWO Netlify builds for the whole day** — everything else was batched on her word.
+**TWO PRs, BOTH MERGED AND BOTH VERIFIED BYTE-IDENTICAL LIVE: #935 (`md5 db7bd1aa…`) and #936
+(`md5 9d1be3c9…`), so every green check transfers directly to what she sees.** ⚠️ **TWO Netlify builds for the whole day** — everything else was batched on her word.
 ▶▶ **THE SHAPE OF THE DAY, AND IT IS THE REUSABLE HALF: FOUR SEPARATE PROBLEMS TURNED OUT TO SHARE ONE ROOT
 CAUSE — THE PROMPT WAS TEACHING THE MODEL THE WRONG THING THROUGH ITS OWN EXAMPLES.** Not model drift, not a
 missing rule. The examples.
