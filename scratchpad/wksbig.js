@@ -52,7 +52,7 @@ const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]
       const c=getComputedStyle(lbl), card=document.querySelector('#wbStar .wks-card');
       const px=document.querySelector('#wbStar .wks-px');
       const shop=document.querySelector('#wbStar .wks-shop');
-      const tn=[...lbl.childNodes].find(n=>n.nodeType===3&&n.textContent.trim());
+      const tn=lbl.querySelector('.wks-lbl-t');
       const rng=document.createRange(); rng.selectNodeContents(tn);
       // ⚠️ cluster rect tops: a rotated inline SVG's rect sits ~2px off the text
       //    line and would count as a phantom second line (the 2026-08-11 trap).
@@ -124,6 +124,62 @@ const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]
   ok('Discovery Star uses the same gradient star', !d.missing && /^url\(#wksStarG\d+\)$/.test(d.fill), d.fill);
   ok('but keeps its OWN 11px label, untouched', d.lblPx===11, d.lblPx);
   ok('and its own 13px star size', d.starW===13, d.starW);
+
+  console.log('\nPART 6 — HER CATCH: the two stars must sit evenly (RASTERISED)');
+  // ⚠️ BOXES CANNOT SETTLE THIS AND MUST NOT BE USED. getBoundingClientRect is
+  //    computed from ADVANCE widths, and letter-spacing adds its space after the
+  //    LAST letter too. That is how the CURATED BY CATHERINE hearts read uneven
+  //    on 2026-08-10 while every box reported 10.13 / 10.13, and how this label
+  //    reached her at 10.75 / 12.00 with every box check green.
+  const sp=await b.newPage({viewport:{width:375,height:860},deviceScaleFactor:4});
+  await sp.route('**/fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:css}));
+  await sp.route(/cdn\.shop|shopify|farmrio|images\./i,r=>r.fulfill({status:200,contentType:'image/png',body:stub}));
+  await sp.addInitScript(a=>localStorage.setItem('ss_data',JSON.stringify({userName:'Catherine',answers:a,
+    topArchNames:['Modern Glam'],portrait:'x',motto:'m'})),[8,8,9,9,9,6,6,4,6,6,6,6]);
+  await sp.goto(`http://localhost:${PORT}/`); await sp.waitForTimeout(2400);
+  await sp.evaluate(async()=>{await document.fonts.ready});
+  const clip=await sp.evaluate(()=>{const r=document.querySelector('#wbStar .wks-lbl').getBoundingClientRect();
+    return {x:r.x-6,y:r.y-6,width:r.width+12,height:r.height+12}});
+  const png=(await sp.screenshot({clip})).toString('base64');
+  // decoded INSIDE the page: this sandbox's node has no PNG decoder, the browser has one
+  const sym=await sp.evaluate(async({png,S})=>{
+    const img=new Image();
+    await new Promise(r=>{img.onload=r;img.src='data:image/png;base64,'+png});
+    const cv=document.createElement('canvas'); cv.width=img.width; cv.height=img.height;
+    const cx=cv.getContext('2d'); cx.drawImage(img,0,0);
+    const d=cx.getImageData(0,0,cv.width,cv.height).data;
+    const gold=[],ink=[];
+    for(let y=0;y<cv.height;y++)for(let x=0;x<cv.width;x++){
+      const i=(y*cv.width+x)*4, r=d[i],g=d[i+1],b2=d[i+2];
+      const sat=Math.max(r,g,b2)-Math.min(r,g,b2);
+      if(r>120&&r-b2>55&&Math.abs(r-g)<70&&sat>60) gold.push([x,y]);
+      else if(r<130&&g<130&&b2<130&&sat<45) ink.push([x,y]);
+    }
+    const bb=p=>p.length?{x0:Math.min(...p.map(q=>q[0])),x1:Math.max(...p.map(q=>q[0])),
+                          y0:Math.min(...p.map(q=>q[1])),y1:Math.max(...p.map(q=>q[1]))}:null;
+    const mid=cv.width/2, L=bb(gold.filter(p=>p[0]<mid)), R=bb(gold.filter(p=>p[0]>mid)), I=bb(ink);
+    const u=v=>+(v/S).toFixed(2);
+    return L&&R&&I?{
+      gapLeft:u(I.x0-L.x1), gapRight:u(R.x0-I.x1),
+      wL:u(L.x1-L.x0), wR:u(R.x1-R.x0), hL:u(L.y1-L.y0), hR:u(R.y1-R.y0),
+      vL:u((L.y0+L.y1)/2-(I.y0+I.y1)/2), vR:u((R.y0+R.y1)/2-(I.y0+I.y1)/2),
+      padL:u(L.x0), padR:u(cv.width-1-R.x1)
+    }:null;
+  },{png,S:4});
+  await sp.close();
+  ok('the ink was actually found (or every check below is vacuous)', !!sym);
+  if(sym){
+    // 0.25px is the quantum at 4x -- every margin from .066 to .085em lands there,
+    // it only flips sign. Anything below 0.5px is even to any eye.
+    ok('inner gaps even to within half a pixel', Math.abs(sym.gapLeft-sym.gapRight)<=0.5,
+       sym.gapLeft+' vs '+sym.gapRight);
+    ok('and NOT the 1.25px she caught', Math.abs(sym.gapLeft-sym.gapRight)<1.0,
+       Math.abs(sym.gapLeft-sym.gapRight));
+    ok('both stars paint the same size', sym.wL===sym.wR && sym.hL===sym.hR,
+       sym.wL+'x'+sym.hL+' vs '+sym.wR+'x'+sym.hR);
+    ok('both sit level with the words', Math.abs(sym.vL-sym.vR)<=0.3, sym.vL+' vs '+sym.vR);
+    ok('the pair stays centred in the card', Math.abs(sym.padL-sym.padR)<=1, sym.padL+' vs '+sym.padR);
+  }
 
   await b.close(); srv.close();
   console.log('\n'+(pass+fail)+' checks, '+fail+' failures');

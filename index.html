@@ -2470,6 +2470,9 @@ body.card-fb{padding:0}
    marks read as a label announcing something, which is exactly what this is. */
 .wks-lbl{display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Jost',sans-serif;font-size:19px;font-weight:700;letter-spacing:.10em;color:#4a463e}
 .wks-lbl svg{width:22px;height:22px;flex:0 0 auto;filter:drop-shadow(0 0 2px rgba(224,184,76,.6))}
+/* Cancels the trailing letter-space so the two stars sit the same distance from
+   the words. In em so it tracks the step-down below. See the note at the markup. */
+.wks-lbl-t{margin-right:-.066em}
 /* ⚠️ THE STEP-DOWN IS NOT OPTIONAL. Measured: at 320px (Display Zoom) every size
    from 16px up wraps to two lines, which strands a star on its own row. 15px is
    the largest that holds one line there. Her own standing trade elsewhere is to
@@ -12736,7 +12739,7 @@ function _renderWeekStar(){
   // 190px was rendered and rejected because it pushed Shop it below it.
   var _wkStarPx=_wkStarPxTag(WEEK_STAR,'wks-px');
   el.innerHTML='<div class="wks-card">'
-    +'<div class="wks-lbl">'+_wksStarSvg().replace('<svg','<svg class="l"')+'STAR OF THE WEEK'+_wksStarSvg().replace('<svg','<svg class="r"')+'</div>'
+    +'<div class="wks-lbl">'+_wksStarSvg().replace('<svg','<svg class="l"')+'<span class="wks-lbl-t">STAR OF THE WEEK</span>'+_wksStarSvg().replace('<svg','<svg class="r"')+'</div>'
     +_wkStarPx
     +'<div class="wks-name">'+_esc(WEEK_STAR.n)+'</div>'
     +'<div class="wks-store">'+_esc(WEEK_STAR.store)+(WEEK_STAR.price?' &middot; '+_esc(WEEK_STAR.price):'')+'</div>'
