@@ -8,11 +8,16 @@
 <!-- ⚠️ THE APEX IS THE CANONICAL HOST. Verified live 2026-08-24: www 301s TO
      stylestar.app, not the other way round, so every address we publish is
      written without www (robots.txt and sitemap.xml agree).
-     ▶ WHY IT IS HERE AT ALL: this is a single-page app, so /story, /faq,
-     /privacy, /terms and /contact are all REWRITES onto this same file. To a
-     search engine that is six addresses serving identical raw HTML, which is
-     textbook duplicate content -- and left alone Google picks a winner itself
-     and may drop the rest. This names the one page that should rank.
+     ▶ THIS TAG IS THE HOMEPAGE'S OWN CANONICAL, and it points at itself. It
+     used to also stand in for /story, /faq, /privacy, /terms and /contact,
+     because before 2026-08-25 those five rewrites served this exact raw HTML
+     with no title or description of their own -- six addresses, one page as
+     far as a crawler could tell, so naming the homepage as the one true URL
+     was the honest move. ⚠️ THAT IS NO LONGER TRUE FOR THOSE FIVE: each now
+     gets its own title, description and SELF-referencing canonical, rewritten
+     before this tag ever reaches them by netlify/edge-functions/page-titles.js
+     (see netlify.toml). Pointing them here now would tell Google not to index
+     them on their own, which is the opposite of what that file is for.
      ⚠️ og:url and og:image still say www. Left alone DELIBERATELY: they work
      (a preview fetcher follows the 301), and that card is already sitting in
      fifteen testers' message threads. Cosmetic inconsistency, not a fault. -->

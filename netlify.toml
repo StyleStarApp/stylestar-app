@@ -73,3 +73,29 @@
 [[edge_functions]]
   path = "/list/*"
   function = "list-preview"
+
+# Per-route titles for the five real pages (2026-08-25, her ask). Until now
+# every one of these rewrites served the identical raw <title> and
+# <meta name="description"> as the homepage, which is invisible to a search
+# engine or a link-preview bot -- neither runs the JavaScript that would
+# otherwise tell them apart. Five separate blocks, not one glob, because the
+# paths share no common prefix. See netlify/edge-functions/page-titles.js.
+[[edge_functions]]
+  path = "/story"
+  function = "page-titles"
+
+[[edge_functions]]
+  path = "/faq"
+  function = "page-titles"
+
+[[edge_functions]]
+  path = "/contact"
+  function = "page-titles"
+
+[[edge_functions]]
+  path = "/privacy"
+  function = "page-titles"
+
+[[edge_functions]]
+  path = "/terms"
+  function = "page-titles"
