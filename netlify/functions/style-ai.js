@@ -115,7 +115,7 @@ const SEARCH_DOMAINS = [
   'jmclaughlin.com', 'johnnywas.com', 'kendrascott.com',
   'lacoste.com', 'landsend.com', 'lanebryant.com', 'levi.com',
   'loft.com', 'loveshackfancy.com', 'macys.com', 'madewell.com',
-  'marinelayer.com', 'mejuri.com', 'mmlafleur.com', 'naturalizer.com',
+  'marinelayer.com', 'marissacollections.com', 'mejuri.com', 'mmlafleur.com', 'naturalizer.com',
   'neimanmarcus.com', 'net-a-porter.com', 'nordstrom.com', 'nordstromrack.com',
   'olivela.com',
   'nydj.com', 'oldnavy.gap.com', 'petitestudionyc.com', 'quay.com',
