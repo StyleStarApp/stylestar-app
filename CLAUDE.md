@@ -142,7 +142,21 @@ key, so that asymmetry is safe. **No code changed — the existing design was al
 4. 💰 **AMAZON ASSOCIATES + THE BANGLES PHOTO.** Still open: the moment her own photo of the bangles
    lands, wire `ownPx`, and the bangles become eligible to JOIN `WEEK_STAR_PHOTO_ORDER` for the first
    time. Her Instagram post is the same week.
-5. 🔎 **GOOGLE SEARCH CONSOLE — her three steps, then the meta tag to me.** Still the only blocked step.
+5. 🔎 **GOOGLE SEARCH CONSOLE — THE META TAG IS LIVE (`e569254`, 2026-08-25), so the "only blocked step"
+   wording is STALE and SHE CAUGHT IT HERSELF on 08-26.** ⚠️ **Every earlier entry in this file still says
+   "her three steps, then the meta tag to me" — read THIS line instead, they were never struck.**
+   ▶ **WHAT IS ACTUALLY LEFT, and only one of the three is work:** (a) confirm she clicked **Verify** and it
+   came back green — ⚠️ **unknowable from here, the tag serving proves the door is unlocked, not that she
+   opened it. ASK.** (b) **submit the sitemap**: Search Console → Sitemaps → type `sitemap.xml` → Submit,
+   expect Success + 6 URLs. (c) **URL Inspection → `https://stylestar.app/` → Request Indexing**, once, to
+   queue the front door. Then it is days-to-weeks of waiting, with nothing owed by either of us.
+   ⚠️⚠️ **SAY THE HONEST PART EVERY TIME THIS COMES UP: SEARCH CONSOLE IS AN INSTRUMENT, NOT A LEVER.** It
+   reports what Google already thinks and cannot make her rank. ▶ **The lever is the long-tail article idea
+   she parked on 08-23** ("what to wear to a formal November wedding") — **six pages, five of them legal and
+   FAQ, will not outrank anyone.** That deserves its own session, not the tail of another one. It is also
+   what finally answers her own "best styling app returns a broken BeautyAI and not me" complaint.
+   ✅ **RE-VERIFIED LIVE 2026-08-26:** the tag, `robots.txt` (pointing at the sitemap), `sitemap.xml` (6 URLs,
+   `/results` and `/list/*` correctly absent) and the canonical link are all serving correctly.
 6. ⭐ **TWO OLIVELA VALUES TO OVERRULE IF SHE WANTS:** `casual 4` and the archetype line.
 7. ⭐ **A DELIBERATE SIZE-TAG PASS.** Three missing tall/wide tags surfaced by accident on 08-24 and a
    missing one is invisible on screen.
