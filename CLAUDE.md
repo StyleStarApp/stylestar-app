@@ -167,6 +167,37 @@ Search Console → URL Inspection → paste the new URL → Request Indexing. **
 - ✅ **Status right now: article #1 AND the `/journal` hub have both had Request Indexing run.** Nothing
   currently owed on the Google side. The next thing that will need it is article #2, the moment it ships.
 
+### ⏰ THE TWO CATALOG-LINK ROUTINES ARE BOTH ON MONDAY NOW, HER CALL
+She asked to stop splitting them across Sunday and Monday: *"I would like to schedule those for Mondays,
+both on Monday, instead of one on Sunday and another on Monday."* ▶ **DONE: `trig_017ShUWoMN8xE12AS3m6tLfr`
+moved from Sunday 9:00 AM ET → Monday 9:00 AM ET** (renamed "Style Star — Monday catalog link check (repo
+script)" so it stops saying Sunday). It now lands about an hour after the OTHER Monday routine
+(`trig_01UyHJkk8pFNSxbZMptgtJHY`, 8:00 AM ET), so both check-ins arrive the same morning, an hour apart.
+⚠️ **They are DELIBERATELY NOT ONE ROUTINE** — this file has said so before and it is still true: one runs
+`check-product-urls.js` straight from the repo (push notification only), the other reads the CSV off her
+Google Drive, fetches every URL itself, and writes a dated report file back to Drive (push AND email). Two
+different instruments checking the same catalog, not a duplicate.
+- 🚨 **FOUND WHILE MOVING IT, worth her knowing: the OTHER Monday routine's last run status is
+  `ABANDONED`, not succeeded** (fired 2026-08-24, never completed). That is the signal this file's own
+  tooling gives for "not doing its job." ▶ **NOT INVESTIGATED YET — flag it to her and offer to dig in
+  next session if she wants**, since it may simply mean nobody read that particular Monday's report.
+
+### 💎 SHE GOT APPROVED BY ETSY, VIA RAKUTEN — a real find, not yet wired in
+Her words: *"We just got approved by Etsy via Rakuten."* ▶ **This is the "double unlock" pattern this file
+has documented for every prior approval** (FARM Rio, DVF, Vilebrequin, Olivela, Marissa Collections, Fleur
+du Mal): the moment a link exists, it can EARN, and its photos become LICENSED to show. **Nothing is wired
+yet on purpose** — `_AFF_MID` needs Etsy's real **MID** (merchant id, found the same way as every other one:
+her Rakuten dashboard → Advertisers → Etsy → the MID in the URL or the advertiser page), and **never
+guessed or invented.**
+- ▶ **TWO SEPARATE QUESTIONS FOR HER, don't conflate them:** (1) **the MID**, needed the moment ANY Etsy
+  link is added anywhere (an Edit pick, a Star, a Mall entry) so it earns from day one — the mechanical
+  half; (2) **whether Etsy belongs in the `STORES` table at all**, which is a bigger, real decision. Unlike
+  the single-brand approvals above, Etsy is a whole MARKETPLACE spanning nearly every category (handmade,
+  vintage, jewelry, home) — a genuinely different kind of store than anything else in the table. ⚠️ **If she
+  wants it added as a general shopping destination, it needs her own ten dimension scores like every other
+  store** (the standing rule: never invent a store's tags, ask her, the Garnet Hill lesson). Her call
+  entirely — it could also just sit ready in `_AFF_MID` for one-off Edit picks without ever joining `STORES`.
+
 ### ▶ THE FIRST THINGS NEXT SESSION
 1. ⭐⭐ **PICK THE SECOND ARTICLE'S TOPIC.** ⚠️ **No wedding-guest angle, her standing rule (see above).**
    Candidates already on the table, none chosen: holiday party dressing, a fall capsule wardrobe, Thanksgiving
@@ -187,6 +218,12 @@ Search Console → URL Inspection → paste the new URL → Request Indexing. **
 6. ⚠️ **A REAL BUT LOW-PRIORITY FLAG: the app's clickable rows (Menu drawer, and now the Journal hub) are not
    keyboard/screen-reader accessible.** Her call: not urgent. If it's ever picked up, it's a whole-app pass,
    not a single-row patch — see the entry above.
+7. 💎 **ETSY (via Rakuten): get the MID from her dashboard, and ask whether it joins `STORES`** with her own
+   ten dimension scores or stays a one-off `_AFF_MID` entry. See the entry above — don't invent either answer.
+8. ⏰ **THE OTHER MONDAY ROUTINE'S LAST RUN SHOWS `ABANDONED`, not succeeded.** Worth a look next session —
+   see the entry above. Both catalog-check routines now fire Monday morning, an hour apart.
+9. ⚖️ **Almira/Indie Law still has not replied** (as of 2026-08-26 evening) to the combined name-correction +
+   operating-agreement-blanks email. Nothing to do but wait; nudge only if it stretches into another week.
 
 ---
 
