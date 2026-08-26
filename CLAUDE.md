@@ -103,19 +103,72 @@ Checked whether the FAQ or other pages needed the same correction as the article
   computed style before shipping** (font-size/color/margin all unchanged) — a class selector does not care
   what tag it's attached to, but this was proven with a driven-browser check rather than assumed.
 
+### 🚨✅ HER FIRST LIVE-PHONE TEST FOUND TWO REAL THINGS, BOTH FIXED SAME SESSION
+She texted herself the `/journal` link and screenshotted it live. Two catches, both real, both shipped:
+1. **THE LOGO SHOWED A BROKEN-IMAGE ICON on her phone** (weak signal at the time). The file was never
+   missing — every hotlinked PRODUCT photo in the app already degrades gracefully on a failed load
+   (`onerror="this.remove()"`, so a dead link just leaves a clean gap instead of a broken-image box), but
+   **the app's OWN logo had never gotten the same treatment anywhere.** ▶ **FIXED APP-WIDE: all 12
+   `logo-star.png`/`logo-star-text.png` `<img>` tags** — the shared header, the entrance curtain, the menu
+   drawer, and all six page letterheads — **now carry the identical `onerror="this.remove()"`.** A failed
+   logo load is now silent, never an ugly blue box. Verified by forcing every logo request to fail: zero
+   broken-image elements survive, zero JS errors.
+2. **THE HUB PAGE'S FOOTER SAT TOO HIGH, WITH A WIDE DEAD GAP OF WHITE SPACE BELOW IT** — with only one
+   article, the card is far shorter than a phone screen, so the footer (which already draws its own hairline
+   just above itself) crowded up against the article list instead of reading as the bottom of a properly
+   filled page. Fixed in two passes, both from her screenshots: first, `.jhub-list` gained a real
+   `margin-bottom` so the list's own hairline and the footer's hairline stopped stacking on top of each
+   other; then, on her second catch ("that would look better lower down on this page"), **`#s-journal-hub
+   .story-wrap` became a flex column with `min-height:65vh` and the footer got `margin-top:auto`**, which
+   carries it down to sit near the bottom of a properly-sized card instead of floating high with dead space
+   beneath it. ⚠️ **SELF-RETIRING BY DESIGN: scoped to the hub alone (never the article/FAQ/legal pages,
+   which already have enough real content to fill a screen), and once enough articles exist that the list
+   itself clears 65vh, the rule does nothing at all** — nobody has to remember to revisit it as the Journal
+   grows. Also caught and fixed in the same pass: the intro paragraph ("Notes on style, from Catherine...")
+   was splitting the brand name across two lines and stranding "Star." alone on a third — the standard
+   widow, fixed with `text-wrap:balance` like everywhere else in the app.
+- ⚠️ **SHE ALSO ASKED ABOUT KEYBOARD/SCREEN-READER ACCESSIBILITY on the hub's article row** (it's a plain
+  clickable `<div>`, unreachable by Tab and invisible to a screen reader — unlike the article's own CTA
+  button, which has proper `role="button" tabindex="0"` + a key handler). **Checked and it is NOT unique to
+  this row** — it is how nearly every row in the Menu drawer already works app-wide, so patching just this
+  one row would not make the app meaningfully more accessible. **Her call: not urgent, leave it.** ▶ **FLAGGED
+  FOR THE FUTURE, not forgotten: if a real accessibility pass is ever wanted, it is a whole-app initiative**
+  (every plain `onclick` div across the app, not a five-minute fix), not something to patch piecemeal.
+
+### 🔎🔎 STANDING GOAL, HER WORDS: "I WANT TO BE SEARCHABLE" — REQUEST INDEXING ON EVERY NEW PAGE
+She confirmed she's done the Request Indexing step for `/journal` (the new hub page), and asked for this to
+become a **standing habit, not a one-off**: *"I want to be certain we do that every time we have a new
+reason to — new page or new article. Please remind me when needed I want to be searchable."*
+▶▶ **THE RULE: EVERY TIME A NEW REAL URL SHIPS — a new Journal article, a new standalone page, anything that
+gets its own address — REMIND HER TO DO THE SAME 30-SECOND GOOGLE SEARCH CONSOLE STEP SHE ALREADY KNOWS:**
+Search Console → URL Inspection → paste the new URL → Request Indexing. **Do not wait for her to ask.**
+- ⚠️ This is IN ADDITION TO, not instead of, the mechanical SEO steps already baked into the 4-step article
+  recipe above (sitemap.xml line, page-titles.js entry, real headings). Those make a page indexable; Request
+  Indexing is the nudge that gets Google to actually look at it sooner rather than waiting for its own crawl
+  schedule.
+- ✅ **Status right now: article #1 AND the `/journal` hub have both had Request Indexing run.** Nothing
+  currently owed on the Google side. The next thing that will need it is article #2, the moment it ships.
+
 ### ▶ THE FIRST THINGS NEXT SESSION
 1. ⭐⭐ **PICK THE SECOND ARTICLE'S TOPIC.** ⚠️ **No wedding-guest angle, her standing rule (see above).**
    Candidates already on the table, none chosen: holiday party dressing, a fall capsule wardrobe, Thanksgiving
    host/guest dressing, the "I don't know my size anymore" frustration, dressing for a video call, shop-your-
-   closet-first. **Use the 4-step recipe above once a topic is picked — it should now be genuinely fast.**
+   closet-first. **Use the 4-step recipe above once a topic is picked — it should now be genuinely fast, AND
+   remind her to Request Indexing on it once it's live (see the standing goal above).**
 2. ⭐ **THE STITCH FIX COMPARISON ARTICLE — she wants to discuss it further before writing it**, including
    sharing her own personal story of trying Stitch Fix herself. Confirm Stitch Fix is the right comparison
    (it read as the obvious one but was never fully talked through) before drafting.
 3. 👀 **Ask how the shipped byline, the free/no-signup line, and the FAQ headings feel to her on her own
-   phone** — none of this session's work has been seen by her live yet outside screenshots/renders.
+   phone** — the ORIGINAL round of this session's work has still not been seen by her live outside
+   screenshots/renders (the logo + spacing fixes HAVE been checked against her own screenshots and shipped).
 4. ⭐ **STANDING REMINDERS FOR ANY FUTURE COPY, both confirmed this session:** never phrase the free/no-signup
    claim as conditional ("free to start") — it must read as a permanent fact. And no dashes in body copy,
    the house style, unchanged.
+5. 🔎 **STANDING GOAL: Request Indexing on every new page/article, proactively, without her having to ask**
+   (see the entry above). Nothing owed right now; the trigger is article #2.
+6. ⚠️ **A REAL BUT LOW-PRIORITY FLAG: the app's clickable rows (Menu drawer, and now the Journal hub) are not
+   keyboard/screen-reader accessible.** Her call: not urgent. If it's ever picked up, it's a whole-app pass,
+   not a single-row patch — see the entry above.
 
 ---
 

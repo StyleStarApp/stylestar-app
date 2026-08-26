@@ -2024,6 +2024,17 @@ body.menu-open .menu-panel{display:block}
   border-bottom:1px solid rgba(33,30,26,.1);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .jhub-row-title{font:400 18px/1.3 'DM Serif Display',Georgia,serif;color:#1a1a1a}
 .jhub-row-arrow{flex:0 0 auto;color:#8A6410;font:600 15px/1 'Jost',sans-serif}
+/* Her catch, same session, her own screenshot: with just ONE article the card
+   is much shorter than the phone screen, so the footer sat high with a wide
+   dead gap of blank white beneath it before the frame's own bottom edge. A
+   flex column + min-height gives the card real presence on a short page, and
+   margin-top:auto on the footer is what carries it down into that space --
+   scoped to the hub alone, since the story/legal/article pages already have
+   enough real content to fill a screen without any help. ⚠️ SELF-RETIRING BY
+   DESIGN: once enough articles exist that the list alone clears 65vh, this
+   rule does nothing at all -- nobody needs to remember to revisit it. */
+#s-journal-hub .story-wrap{display:flex;flex-direction:column;min-height:65vh}
+#s-journal-hub .pg-foot{margin-top:auto}
 
 /* ── "Add as an App" page (her ask 2026-08-19, her pick "B" of three renders) ──
    A findable PLACE for the install invitation. The A2HS whisper only ever shows
