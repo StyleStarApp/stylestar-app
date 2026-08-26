@@ -9,11 +9,14 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (2026-08-26 EVENING — 📓 THE STYLE JOURNAL IS LIVE, AND ADDING ARTICLE #2 IS NOW A SHORT RECIPE)
 
-### ⏸ WHERE THIS SESSION PAUSED (her question: "next time I write an article is it in the memory notes what needs to happen?" — this entry is the answer)
-**THREE COMMITS THIS SESSION, ALL PUSHED TO `main` AND CURL-VERIFIED LIVE.** ▶▶ **THE SHAPE OF IT: she took a
-ChatGPT interview transcript and turned it into the FIRST Style Journal article, then asked for a real SEO
-pass on it, then asked whether the whole thing would need repeating by hand for every future article — and
-the honest answer was yes, so this session's second half rebuilt it so that stops being true.**
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Ok let's save everything to the Md and I will open new chat")
+**SIX COMMITS THIS SESSION, ALL PUSHED TO `main` AND CURL-VERIFIED LIVE.** ▶▶ **THE SHAPE OF IT, in order: she
+took a ChatGPT interview transcript and turned it into the FIRST Style Journal article, asked for a real SEO
+pass on it, then asked whether the whole thing would need repeating by hand for every future article (it
+would have, so the second half of the session rebuilt it so that stops being true) — and THEN her own live
+phone test of the finished page found a real logo bug, a fix for that bug that made things WORSE, a real fix
+for the real fix, a routine-scheduling cleanup, a new affiliate approval, and one more wording trim she asked
+for on her way out.** Read top to bottom; nothing here is stale.
 
 ### 📖 ARTICLE #1 IS LIVE: "How to Find Your Personal Style" at `stylestar.app/journal/how-to-find-your-personal-style`
 Her own words, restructured with real SEO subheadings (each one phrased as a real question — "How Do I Find
@@ -153,6 +156,24 @@ She texted herself the `/journal` link and screenshotted it live. Two catches, b
   FOR THE FUTURE, not forgotten: if a real accessibility pass is ever wanted, it is a whole-app initiative**
   (every plain `onclick` div across the app, not a five-minute fix), not something to patch piecemeal.
 
+### ✂️ THE HUB'S INTRO LINE IS GONE — HER CALL, END OF SESSION
+Looking at the hub page again after the logo/spacing fixes, she asked to cut the one remaining sentence on
+it: *"Can we delete 'Notes on style…Style Star' it already says my name when you click on the article. I
+don't want to over-do my name."* ▶ **Right call and consistent with a standing instinct she's shown before
+in this file — she doesn't want her own name repeated across a page when it's already said once where it
+counts** (the article's own byline). The hub's job is to be a clean list of articles, not a second place to
+introduce her.
+- **Removed:** the `<p class="jhub-intro">Notes on style, from Catherine, personal stylist and founder of
+  Style Star.</p>` line that sat between the `<h1>Style Journal</h1>` and the article list. The `.jhub-intro`
+  CSS rule (which had picked up a `text-wrap:balance` fix earlier this same session for a widow it no longer
+  has any reason to have) is deleted along with it — dead CSS for a dead element.
+- **Spacing preserved on purpose:** losing the paragraph would have left the list sitting too close under the
+  h1, so `.jhub-list` picked up `margin-top:18px` directly (previously margin-bottom only) to hold the same
+  breathing room the paragraph used to provide, without a paragraph-shaped gap left over from nothing.
+- ✅ **Verified live**: curled the deployed page — the phrase is gone from the served HTML, `margin-top:18px`
+  present on `.jhub-list`, and the earlier footer-anchoring fix (`min-height:65vh` / `margin-top:auto`,
+  scoped to `#s-journal-hub`) is untouched and still doing its job with one shorter card above it.
+
 ### 🔎🔎 STANDING GOAL, HER WORDS: "I WANT TO BE SEARCHABLE" — REQUEST INDEXING ON EVERY NEW PAGE
 She confirmed she's done the Request Indexing step for `/journal` (the new hub page), and asked for this to
 become a **standing habit, not a one-off**: *"I want to be certain we do that every time we have a new
@@ -209,7 +230,8 @@ guessed or invented.**
    (it read as the obvious one but was never fully talked through) before drafting.
 3. 👀 **Ask how the shipped byline, the free/no-signup line, and the FAQ headings feel to her on her own
    phone** — the ORIGINAL round of this session's work has still not been seen by her live outside
-   screenshots/renders (the logo + spacing fixes HAVE been checked against her own screenshots and shipped).
+   screenshots/renders (the logo fix, the footer fix, and the intro-line removal HAVE all been checked
+   against her own screenshots or live curl and shipped — nothing to re-verify on the hub page itself).
 4. ⭐ **STANDING REMINDERS FOR ANY FUTURE COPY, both confirmed this session:** never phrase the free/no-signup
    claim as conditional ("free to start") — it must read as a permanent fact. And no dashes in body copy,
    the house style, unchanged.
