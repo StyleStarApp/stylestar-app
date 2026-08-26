@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:'DM Serif Display';src:url('fonts/f18.woff2') format('woff2');font-weight:400;font-style:normal}
+@font-face{font-family:'Jost';src:url('fonts/f7.woff2') format('woff2');font-weight:400;font-style:normal}
+@font-face{font-family:'Jost';src:url('fonts/f5.woff2') format('woff2');font-weight:600;font-style:normal}
+body{margin:0;background:#eee;font-family:sans-serif}
+.opt{background:#fff;border-bottom:16px solid #eee;padding:26px 24px 30px;max-width:390px;margin:0 auto}
+.label{font:700 11px/1 sans-serif;color:#c33;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;text-align:center}
+.story-title{font:400 34px/1.15 'DM Serif Display',Georgia,serif;color:#1a1a1a;text-align:center;margin:0 0 14px}
+.jrnl-p-preview{font:400 15.5px/1.7 Georgia,serif;color:#4a463e;text-align:left;margin-top:16px}
+
+/* A: current shipped (balanced, full text, link inline) */
+.byline-a{font:400 13px/1.5 'Jost',sans-serif;color:#6b6355;text-align:center;letter-spacing:.01em;text-wrap:balance}
+.byline-a .lnk{color:#8A6410;text-decoration:underline}
+
+/* B: shortened to one line, drop "and Founder of Style Star", link inline */
+.byline-b{font:400 13px/1.5 'Jost',sans-serif;color:#6b6355;text-align:center;letter-spacing:.01em}
+.byline-b .lnk{color:#8A6410;text-decoration:underline;white-space:nowrap}
+
+/* C: two-tier stack -- credential as its own centered block, link as a separate smaller line below with real air */
+.byline-c-cred{font:400 13.5px/1.55 'Jost',sans-serif;color:#6b6355;text-align:center;letter-spacing:.01em;text-wrap:balance}
+.byline-c-link{font:600 12px/1 'Jost',sans-serif;color:#8A6410;text-align:center;margin-top:10px}
+.byline-c-link .lnk{text-decoration:underline}
+
+/* D: name on its own line (slightly larger, warmer), credential+link stacked smaller beneath -- editorial masthead shape */
+.byline-d-name{font:600 15px/1.3 'Jost',sans-serif;color:#3a352c;text-align:center;letter-spacing:.02em}
+.byline-d-role{font:400 12.5px/1.5 'Jost',sans-serif;color:#8a8172;text-align:center;margin-top:3px;letter-spacing:.03em}
+.byline-d-link{font:600 12px/1 'Jost',sans-serif;color:#8A6410;text-align:center;margin-top:9px}
+.byline-d-link .lnk{text-decoration:underline}
+</style></head>
+<body>
+
+<div class="opt">
+  <div class="label">A -- currently live (balanced, one sentence)</div>
+  <div class="story-title">How to Find Your<br>Personal Style</div>
+  <div class="byline-a">By Catherine Ellspermann, Personal Stylist and Founder of Style Star &middot; <span class="lnk">Read my story &rarr;</span></div>
+  <div class="jrnl-p-preview">If you are trying to figure out your personal style&hellip;</div>
+</div>
+
+<div class="opt">
+  <div class="label">B -- shortened to fit one line</div>
+  <div class="story-title">How to Find Your<br>Personal Style</div>
+  <div class="byline-b">By Catherine Ellspermann, Personal Stylist &middot; <span class="lnk">Read my story &rarr;</span></div>
+  <div class="jrnl-p-preview">If you are trying to figure out your personal style&hellip;</div>
+</div>
+
+<div class="opt">
+  <div class="label">C -- two tiers: credential, then a small link line below</div>
+  <div class="story-title">How to Find Your<br>Personal Style</div>
+  <div class="byline-c-cred">By Catherine Ellspermann, Personal Stylist and Founder of Style Star</div>
+  <div class="byline-c-link"><span class="lnk">Read my story &rarr;</span></div>
+  <div class="jrnl-p-preview">If you are trying to figure out your personal style&hellip;</div>
+</div>
+
+<div class="opt">
+  <div class="label">D -- masthead: name, then role, then link</div>
+  <div class="story-title">How to Find Your<br>Personal Style</div>
+  <div class="byline-d-name">By Catherine Ellspermann</div>
+  <div class="byline-d-role">PERSONAL STYLIST &amp; FOUNDER OF STYLE STAR</div>
+  <div class="byline-d-link"><span class="lnk">Read my story &rarr;</span></div>
+  <div class="jrnl-p-preview">If you are trying to figure out your personal style&hellip;</div>
+</div>
+
+</body></html>
