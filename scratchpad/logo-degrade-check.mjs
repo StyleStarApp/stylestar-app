@@ -27,11 +27,15 @@ async function check(route, label) {
   pg.setDefaultNavigationTimeout(6000);
   await pg.route('**/fonts.googleapis.com/**', r => r.fulfill({ status: 200, contentType: 'text/css', body: '' }));
   // Simulate a bad connection: every logo-*.png request fails outright.
-  await pg.route('**/logo-star*.png', r => r.abort('connectionreset'));
+  // The retry cache-busts with a ?r= query string, so the pattern must match
+  // past ".png" too, or a retry silently evades this simulated failure.
+  await pg.route('**/logo-star*.png*', r => r.abort('connectionreset'));
   const errors = [];
   pg.on('pageerror', e => errors.push(String(e)));
   await pg.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'domcontentloaded' });
-  await pg.waitForTimeout(1200);
+  // The logo now retries twice (up to ~2.1s of backoff) before giving up --
+  // give it room to finish rather than reading it mid-retry.
+  await pg.waitForTimeout(4000);
   const remaining = await pg.evaluate(() =>
     [...document.querySelectorAll('img[src*="logo-star"]')].filter(el => el.closest('.scr.act')).length
   );

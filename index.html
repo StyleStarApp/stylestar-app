@@ -177,6 +177,34 @@
     document.head.appendChild(_pa);
     plausible.init();
   }
+  // Our OWN logo (never a hotlinked retailer photo) failing to load once, on a
+  // weak connection, used to just show a broken-image box forever -- fixed
+  // 2026-08-26 by removing it on error, matching the product-photo pattern.
+  // ⚠️ THAT WAS TOO AGGRESSIVE, her catch the same day: this is a SINGLE-PAGE
+  // APP, so once an <img> is removed from the DOM it is gone for the REST OF
+  // HER SESSION, on every screen -- there is no page reload to bring it back.
+  // A retailer's photo failing once is genuinely disposable and worth giving
+  // up on fast; the app's OWN logo, same-origin and same server as the page
+  // that just loaded, deserves a real second chance before that. So: retry up
+  // to twice with a short, growing delay and a cache-busting query string (in
+  // case the failure was a transient blip, not a truly dead file), and only
+  // remove it if it STILL fails after that. Never applied to hotlinked photos
+  // -- those keep the simple onerror="this.remove()" they already had.
+  // ⚠️ DEFINED HERE, IN THE FIRST SCRIPT BLOCK, ON PURPOSE: every logo <img>
+  // sits in the markup BETWEEN this block and the second, much later one --
+  // a proven race in testing showed an instant failure (a fast connection
+  // reset) could fire onerror before the second block ever ran, throwing
+  // "_logoRetry is not defined". Defining it here, before any <img> tag has
+  // even been parsed, closes that race for good. Don't move it back down.
+  window._logoRetry=function(img){
+    var n=(parseInt(img.dataset.retry||'0',10))+1;
+    img.dataset.retry=n;
+    if(n>2){img.remove();return}
+    setTimeout(function(){
+      var base=img.getAttribute('src').split('?')[0];
+      img.src=base+'?r='+Date.now();
+    },n*700);
+  };
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -3594,7 +3622,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 </form>
 <div class="ss">
 <div class="hdr">
-  <img src="logo-star.png" alt="Style Star — tap for home" class="logo-img go-home" onclick="goHome()" onerror="this.remove()">
+  <img src="logo-star.png" alt="Style Star — tap for home" class="logo-img go-home" onclick="goHome()" onerror="_logoRetry(this)">
   <div class="tag">Align your style. <span style="color:#D4AF37">Shine your light.</span></div>
 </div>
 <div class="inner">
@@ -3629,7 +3657,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
           <path fill="#FEF6D6" stroke="none" stroke-linejoin="round" stroke-linecap="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
           <div class="wb-wordmark">
             <svg class="wb-mini-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2C43D" stroke="#B7BCC2" stroke-width="1.3" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
-            <div class="wb-word-wrap"><img class="wb-word-img go-home" src="logo-star-text.png" alt="Style Star — tap for home" onclick="goHome()" onerror="this.remove()"></div>
+            <div class="wb-word-wrap"><img class="wb-word-img go-home" src="logo-star-text.png" alt="Style Star — tap for home" onclick="goHome()" onerror="_logoRetry(this)"></div>
           </div>
         </div>
         <div class="wb-port-motto" id="wbPortMotto"></div>
@@ -3748,7 +3776,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
         <svg width="8" height="11" viewBox="0 0 8 11" style="display:block;margin:0 auto"><ellipse cx="4" cy="3.4" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/><ellipse cx="4" cy="7.6" rx="2" ry="2.8" fill="none" stroke="#C8971E" stroke-width="1"/></svg>
         <div class="hm-star-inner go-home" onclick="goHome()">
           <svg width="130" height="130" viewBox="0 0 24 24"><defs><linearGradient id="starHaloHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#starHaloHome)" stroke-width="0.55" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/></svg>
-          <img src="logo-star.png" alt="Style Star — tap for home" onerror="this.remove()">
+          <img src="logo-star.png" alt="Style Star — tap for home" onerror="_logoRetry(this)">
         </div>
       </div>
     </div>
@@ -3826,10 +3854,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <div class="ss-starwrap">
       <svg class="ss-glow" viewBox="0 0 200 200"><defs><radialGradient id="ssGlowG" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFFDF8" stop-opacity=".9"/><stop offset="45%" stop-color="#FAEFCE" stop-opacity=".32"/><stop offset="100%" stop-color="#FAEFCE" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="100" fill="url(#ssGlowG)"/></svg>
       <svg class="ss-star-svg" viewBox="0 0 24 24"><defs><linearGradient id="ssStarHalo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E199"/><stop offset=".5" stop-color="#D8A52E"/><stop offset="1" stop-color="#C8971E"/></linearGradient></defs><path fill="#FFFFFF" stroke="url(#ssStarHalo)" stroke-width="0.4" stroke-linejoin="round" stroke-linecap="round" d="M12 1L15.04 7.82L22.46 8.6L16.92 13.6L18.47 20.9L12 17.17L5.53 20.9L7.08 13.6L1.54 8.6L8.96 7.82Z"/></svg>
-      <img class="ss-star-logo" src="logo-star.png" alt="Style Star" onerror="this.remove()">
+      <img class="ss-star-logo" src="logo-star.png" alt="Style Star" onerror="_logoRetry(this)">
       <div class="ss-wordmark">
         <svg class="ss-mini-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2C43D" stroke="#1a1a1a" stroke-width="0.7" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
-        <div class="ss-word-wrap"><img class="ss-word-img" src="logo-star-text.png" alt="Style Star" onerror="this.remove()"></div>
+        <div class="ss-word-wrap"><img class="ss-word-img" src="logo-star-text.png" alt="Style Star" onerror="_logoRetry(this)"></div>
       </div>
     </div>
   </div>
@@ -3845,7 +3873,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="menu-veil" onclick="menuClose()"></div>
 <div class="menu-panel" id="menuPanel" role="dialog" aria-label="Style Star menu">
   <div class="menu-head">
-    <img src="logo-star.png" alt="Style Star" class="menu-logo go-home" onclick="menuGo(goHome)" onerror="this.remove()">
+    <img src="logo-star.png" alt="Style Star" class="menu-logo go-home" onclick="menuGo(goHome)" onerror="_logoRetry(this)">
     <button class="menu-x" onclick="menuClose()" aria-label="Close menu">&#10005;</button>
   </div>
   <div class="menu-row menu-homerow" onclick="menuGo(goHome)">Home</div>
@@ -4999,7 +5027,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-faq">
   <div class="story-wrap">
     <div class="faq-head">
-      <img src="logo-star.png" alt="Style Star — tap for home" class="faq-lh-logo go-home" onclick="goHome()" onerror="this.remove()">
+      <img src="logo-star.png" alt="Style Star — tap for home" class="faq-lh-logo go-home" onclick="goHome()" onerror="_logoRetry(this)">
       <button class="top-back" onclick="closeFAQ()">&larr; Back</button>
     </div>
     <h1 class="story-title">Frequently Asked Questions</h1>
@@ -5035,7 +5063,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-contact">
   <div class="story-wrap">
     <div class="pp-head">
-      <img src="logo-star.png" alt="Style Star &mdash; tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="this.remove()">
+      <img src="logo-star.png" alt="Style Star &mdash; tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="_logoRetry(this)">
       <button class="top-back" onclick="closeContact()">&larr; Back</button>
     </div>
     <h1 class="story-title">Contact</h1>
@@ -5061,7 +5089,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-journal-hub">
   <div class="story-wrap" style="text-align:left">
     <div class="pp-head">
-      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="this.remove()">
+      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="_logoRetry(this)">
       <button class="top-back" onclick="closeJournalHub()">&larr; Back</button>
     </div>
     <h1 class="story-title" style="text-align:center">Style Journal</h1>
@@ -5074,7 +5102,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-journal">
   <div class="story-wrap" style="text-align:left">
     <div class="pp-head">
-      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="this.remove()">
+      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="_logoRetry(this)">
       <button class="top-back" onclick="closeJournalArticle()">&larr; Back</button>
     </div>
     <h1 class="story-title" style="text-align:center">How to Find Your Personal Style</h1>
@@ -5161,7 +5189,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-privacy">
   <div class="story-wrap">
     <div class="pp-head">
-      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="this.remove()">
+      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="_logoRetry(this)">
       <button class="top-back" onclick="closePrivacy()">&larr; Back</button>
     </div>
     <h1 class="story-title">Privacy Policy</h1>
@@ -5198,7 +5226,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-terms">
   <div class="story-wrap">
     <div class="pp-head">
-      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="this.remove()">
+      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()" onerror="_logoRetry(this)">
       <button class="top-back" onclick="closeTerms()">&larr; Back</button>
     </div>
     <h1 class="story-title">Terms of Service</h1>
@@ -5961,6 +5989,8 @@ function _aiJSON(raw){
 async function genResult(){_quizClear();_resShowCompose();const top3=getTopArch();topArchNames=top3.map(a=>a.n);track('Quiz Completed',{archetype:topArchNames[0]||'unknown'});const sliderDesc=questions.map((q,i)=>`${q.cat}: ${answers[i]}/11 (where 1=${q.left}, 6=balanced center, 11=${q.right})`).join('\n');const prompt=`You are Catherine, a warm, intuitive personal stylist with 20 years of experience helping women feel confident and like themselves. ${userName&&userName!=='You'?'A woman named '+userName:'A woman'} just took the Style Star quiz.\n\nCRITICAL RULES:\n- NEVER imply that one end of any slider is better, higher, or more desirable than the other. Classic is equally beautiful as Trendy. Modest is equally valid as Alluring. Casual is just as right as Dressy. There are no high or low scores — only where she lands on each spectrum. Both ends are equally wonderful.\n- Describe WHERE she lands on the spectrums, not HOW she scored. Say things like "you gravitate toward..." or "you lean into..." — never "you scored high" or "you scored low."\n- Write directly to her using "you"${userName&&userName!=='You'?' and use her name once naturally':''}.\n- Be warm, specific to her unique combination, and celebrating.\n- Make it feel like a personal stylist sitting across from her, telling her what she sees.\n- Never suggest she needs to change anything.\n- End with something empowering about her unique style identity.\n- Never use any dashes or hyphens as punctuation anywhere. Use commas, periods, or semicolons instead.\n- Keep the portrait to exactly 3-4 sentences.\n\nALSO write her a MOTTO: one short sentence (under 95 characters) speaking directly to her, capturing how SHE specifically embodies her primary archetype. It will appear in quotation marks under her archetype name. Make it hers alone; two women with the same archetype must never get the same motto. You may use her name. No dashes.\n\nRespond with ONLY valid JSON, no markdown fences: {\"motto\":\"...\",\"portrait\":\"...\"}\n\nHer quiz results:\n${sliderDesc}\n\nHer style archetype: ${topArchNames[0]}${topArchNames.length>1?', with notes of '+topArchNames.slice(1).join(' and '):''}.\nArchetype essences (flavor only, never quote them verbatim): ${topArchNames.map(n=>n+': '+(archLines[n]||'')).join(' | ')}`;try{const r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:450,messages:[{role:"user",content:prompt}]})});const d=await r.json();const txt=d.content.map(c=>c.text||'').join('');let ptxt=txt,motto='';try{const j=_aiJSON(txt);if(j&&j.portrait){ptxt=_noDash(j.portrait);motto=_noDash(j.motto||'')}}catch(e2){}showResult(ptxt,top3,motto)}catch(e){showResult(genFallback(),top3)}}
 function genFallback(){let p=userName!=="You"?userName+", your":"Your";p+=" style tells a beautiful story. ";if(answers[0]<=4)p+="You gravitate toward timeless, classic pieces that feel grounded and enduring. ";else if(answers[0]>=8)p+="You have a natural pull toward what feels current and fresh. ";else p+="You blend classic foundations with modern touches in a way that's completely your own. ";if(answers[1]<=4&&answers[4]<=4)p+="Ease and natural beauty guide your choices, and that effortlessness is your signature. ";else if(answers[1]>=8||answers[4]>=8)p+="You enjoy the art of getting dressed and bring real intention to how you present yourself. ";else p+="You move fluidly between relaxed and polished depending on the moment, and both feel right on you. ";p+="That combination is uniquely yours, and it works beautifully.";return p}
 function _esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+// _logoRetry lives in the FIRST script block, before any logo <img> tag in
+// the markup -- see the comment there. Do not redefine it here.
 // Put a results screen into its "loading" state: closed mirror doors with the
 // two gold stars spinning, boards hidden. Used while the /style-ai request is in flight.
 var _resNoReveal=false;
