@@ -214,27 +214,77 @@ const PAGES = {
     title: 'Terms of Service | Style Star',
     desc: 'The terms and conditions for using Style Star, including your rights, our affiliate disclosures, and how the service works.',
   },
-  '/journal/how-to-find-your-personal-style': {
-    // Both trimmed to fit Google's real display budget (~60 chars for a
-    // title, ~155-160 for a description) -- the first versions were 72 and
-    // 178 chars and would have been truncated mid-sentence in the result.
-    title: 'How to Find Your Personal Style | Style Star',
-    desc: 'How to find your personal style, from a personal stylist of 20+ years. Start with the outfit you already love, then take the free Style Star quiz.',
-    // Article schema (2026-08-26): tells Google who wrote this and when, the
-    // same authorship signal Google's own E-E-A-T guidance looks for. Kept as
-    // a per-page field here, injected below, rather than in index.html --
-    // index.html is shared by every screen, so an Article schema block
-    // written there would claim to describe the WHOLE app, not this one page.
-    schema: {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: 'How to Find Your Personal Style',
-      description: 'How to find your personal style, from a personal stylist of 20+ years.',
-      author: { '@type': 'Person', name: 'Catherine Ellspermann', jobTitle: 'Personal Stylist', url: 'https://stylestar.app/story' },
-      publisher: { '@type': 'Organization', name: 'Style Star', url: 'https://stylestar.app' },
-      datePublished: '2026-08-26',
-      dateModified: '2026-08-26',
-      mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://stylestar.app/journal/how-to-find-your-personal-style' },
+};
+
+// ── Style Journal (2026-08-26, her ask: "each time we post another article
+// do we need to update this?") ──────────────────────────────────────────
+//
+// One small ARTICLES list, and everything else -- each article's own PAGES
+// entry (title/desc/Article schema) AND the hub page's ItemList -- is BUILT
+// from it below. An edge function is its own bundle and cannot import from
+// index.html, so a new article still needs an entry HERE as well as its
+// matching entry in JOURNAL_ARTICLES in index.html. But that is now the
+// ONLY other place it needs touching: no more hand-typed schema block, no
+// hub-listing edit, no second title/description to keep in sync by hand.
+//
+// Both title and description are trimmed to Google's real display budget
+// (~60 chars for a title, ~155-160 for a description) before they are
+// written here -- a longer one gets truncated mid-sentence in the result.
+const ARTICLES = [
+  {
+    slug: 'how-to-find-your-personal-style',
+    title: 'How to Find Your Personal Style',
+    description: 'How to find your personal style, from a personal stylist of 20+ years.',
+    metaTitle: 'How to Find Your Personal Style | Style Star',
+    metaDesc: 'How to find your personal style, from a personal stylist of 20+ years. Start with the outfit you already love, then take the free Style Star quiz.',
+    datePublished: '2026-08-26',
+    dateModified: '2026-08-26',
+  },
+];
+
+// Article schema: tells Google who wrote this and when, the same authorship
+// signal Google's own E-E-A-T guidance looks for. Lives here, one article at
+// a time, rather than in index.html -- index.html is shared by every screen,
+// so a schema block written there would claim to describe the WHOLE app,
+// not this one page.
+function articleSchema(a) {
+  const path = '/journal/' + a.slug;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: a.title,
+    description: a.description,
+    author: { '@type': 'Person', name: 'Catherine Ellspermann', jobTitle: 'Personal Stylist', url: 'https://stylestar.app/story' },
+    publisher: { '@type': 'Organization', name: 'Style Star', url: 'https://stylestar.app' },
+    datePublished: a.datePublished,
+    dateModified: a.dateModified,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://stylestar.app' + path },
+  };
+}
+
+for (const a of ARTICLES) {
+  PAGES['/journal/' + a.slug] = { title: a.metaTitle, desc: a.metaDesc, schema: articleSchema(a) };
+}
+
+// The hub, /journal: lists every article, so it carries a real ItemList --
+// another thing Google can pull straight into a search result, and the one
+// entry a brand-new article should never be left out of.
+PAGES['/journal'] = {
+  title: 'Style Journal | Style Star',
+  desc: 'Style notes and articles from Catherine, personal stylist and founder of Style Star.',
+  schema: {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Style Journal',
+    url: 'https://stylestar.app/journal',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: ARTICLES.map((a, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: 'https://stylestar.app/journal/' + a.slug,
+        name: a.title,
+      })),
     },
   },
 };

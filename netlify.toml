@@ -46,10 +46,18 @@
 
 # Style Journal, her long-tail SEO articles (2026-08-26, her ask). Nested under
 # /journal/ rather than flat like the pages above, because this is meant to
-# grow into several articles and they all deserve one consistent home. Same
-# WARNING as every path above: once this is indexed, it never moves.
+# grow into several articles and they all deserve one consistent home. A
+# WILDCARD, the same shape as /list/* below, so a new article never needs a
+# netlify.toml edit -- see JOURNAL_ARTICLES in index.html, which is the only
+# place a new article's slug has to be written. Same WARNING as every path
+# above: once an article's URL is indexed, it never moves.
 [[redirects]]
-  from = "/journal/how-to-find-your-personal-style"
+  from = "/journal"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/journal/*"
   to = "/index.html"
   status = 200
 
@@ -83,12 +91,12 @@
   path = "/list/*"
   function = "list-preview"
 
-# Per-route titles for the five real pages (2026-08-25, her ask). Until now
-# every one of these rewrites served the identical raw <title> and
+# Per-route titles for the real pages (2026-08-25, her ask). Until now every
+# one of these rewrites served the identical raw <title> and
 # <meta name="description"> as the homepage, which is invisible to a search
 # engine or a link-preview bot -- neither runs the JavaScript that would
-# otherwise tell them apart. Five separate blocks, not one glob, because the
-# paths share no common prefix. See netlify/edge-functions/page-titles.js.
+# otherwise tell them apart. Separate blocks, not one glob, because the paths
+# share no common prefix. See netlify/edge-functions/page-titles.js.
 [[edge_functions]]
   path = "/story"
   function = "page-titles"
@@ -109,6 +117,13 @@
   path = "/terms"
   function = "page-titles"
 
+# The Journal DOES get a wildcard here (unlike the five above) because it is
+# the one family meant to grow -- see JOURNAL_ARTICLES in index.html and the
+# PAGES map in page-titles.js. A new article needs no netlify.toml edit.
 [[edge_functions]]
-  path = "/journal/how-to-find-your-personal-style"
+  path = "/journal"
+  function = "page-titles"
+
+[[edge_functions]]
+  path = "/journal/*"
   function = "page-titles"

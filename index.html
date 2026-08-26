@@ -2005,7 +2005,17 @@ body.menu-open .menu-panel{display:block}
 .jrnl-h2:first-of-type{margin-top:8px}
 .jrnl-cta{display:block;text-align:center;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;
   padding:14px 20px;font:600 15px/1.35 'Jost',sans-serif;letter-spacing:.01em;text-decoration:none;margin:34px auto 0;max-width:340px;cursor:pointer}
-#s-journal .story-title{text-wrap:balance}
+#s-journal .story-title,#s-journal-hub .story-title{text-wrap:balance}
+
+/* Style Journal hub (built 2026-08-26): the article list is generated in JS
+   from JOURNAL_ARTICLES, so adding an article is one entry in that array --
+   never a second row hand-typed here. */
+.jhub-intro{font:400 15.5px/1.72 'Lora',Georgia,serif;color:#4a463e;text-align:center;margin:0 0 26px}
+.jhub-list{border-top:1px solid rgba(33,30,26,.1)}
+.jhub-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 2px;
+  border-bottom:1px solid rgba(33,30,26,.1);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.jhub-row-title{font:400 18px/1.3 'DM Serif Display',Georgia,serif;color:#1a1a1a}
+.jhub-row-arrow{flex:0 0 auto;color:#8A6410;font:600 15px/1 'Jost',sans-serif}
 
 /* ── "Add as an App" page (her ask 2026-08-19, her pick "B" of three renders) ──
    A findable PLACE for the install invitation. The A2HS whisper only ever shows
@@ -3842,7 +3852,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   <div class="menu-row" onclick="menuShare()">Share Style Star</div>
   <div class="menu-row" onclick="menuInstagram()">Follow on Instagram</div>
   <div class="menu-row" onclick="menuGo(showStory)">My Story<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-  <div class="menu-row" onclick="menuGo(showJournal)">Style Journal<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+  <div class="menu-row" onclick="menuGo(openJournalHub)">Style Journal<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   <div class="menu-row" onclick="menuGo(showFAQ)">FAQ</div>
   <div class="menu-row" onclick="menuGo(showA2hsPage)">Add as an App</div>
   <div class="menu-row" onclick="menuGo(showContact)">Contact</div>
@@ -4491,7 +4501,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 <div class="scr" id="s-story">
   <div class="story-wrap">
     <div class="top-back-wrap"><button class="top-back" onclick="closeStory()">&larr; Back</button></div>
-    <div class="story-title">My Story<svg class="st-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <h1 class="story-title">My Story<svg class="st-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></h1>
     <div class="story-text">
       I'm Catherine, a personal stylist and certified image consultant with over 20 years of styling experience and a lifetime love of shopping. Let's just say I've been shopping since before I could walk. Some of my earliest happy memories are exploring department stores with my mom and playing dress-up with my friends.
     </div>
@@ -4973,7 +4983,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <img src="logo-star.png" alt="Style Star — tap for home" class="faq-lh-logo go-home" onclick="goHome()">
       <button class="top-back" onclick="closeFAQ()">&larr; Back</button>
     </div>
-    <div class="story-title">Frequently Asked Questions</div>
+    <h1 class="story-title">Frequently Asked Questions</h1>
     <div class="faq-list">
       <div class="faq-item"><div class="faq-q">What is Style Star?</div><div class="faq-a">Style Star combines the insight and care of a real personal stylist with the brilliance of modern technology. All in one place, you can take our fun style quiz, ask questions, get styling advice and honest photo feedback, and follow shopping links straight to the good stuff, making it all fun and easy. It's designed to align your style, so you can step out and shine your light.</div></div>
       <div class="faq-item"><div class="faq-q">What if I don't know what my style is?</div><div class="faq-a">That's exactly why Style Star exists. You don't need to have it all figured out. That's our job. We help you discover what suits your personality, lifestyle, and preferences, so shopping feels easier, getting dressed feels faster, and every piece you bring home brings out the best in you. Your discernment, combined with our expertise, is where your style comes to life.</div></div>
@@ -5009,7 +5019,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <img src="logo-star.png" alt="Style Star &mdash; tap for home" class="pp-lh-logo go-home" onclick="goHome()">
       <button class="top-back" onclick="closeContact()">&larr; Back</button>
     </div>
-    <div class="story-title">Contact</div>
+    <h1 class="story-title">Contact</h1>
     <div class="cc-lead">I&rsquo;d love to hear from you. Whether it&rsquo;s a style question, an idea for Style Star, something you need help with, or just a hello, it all reaches me.</div>
     <div class="cc-card">
       <div class="cc-h">Style Questions &amp; Help</div>
@@ -5029,11 +5039,24 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   </div>
 </div>
 
+<div class="scr" id="s-journal-hub">
+  <div class="story-wrap" style="text-align:left">
+    <div class="pp-head">
+      <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()">
+      <button class="top-back" onclick="closeJournalHub()">&larr; Back</button>
+    </div>
+    <h1 class="story-title" style="text-align:center">Style Journal</h1>
+    <p class="jhub-intro">Notes on style, from Catherine, personal stylist and founder of Style Star.</p>
+    <div id="journalHubList" class="jhub-list"></div>
+    <div class="pg-foot" data-std-foot></div>
+  </div>
+</div>
+
 <div class="scr" id="s-journal">
   <div class="story-wrap" style="text-align:left">
     <div class="pp-head">
       <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()">
-      <button class="top-back" onclick="closeJournal()">&larr; Back</button>
+      <button class="top-back" onclick="closeJournalArticle()">&larr; Back</button>
     </div>
     <h1 class="story-title" style="text-align:center">How to Find Your Personal Style</h1>
     <div class="jrnl-by-name">By Catherine Ellspermann</div>
@@ -5089,6 +5112,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <p class="jrnl-p" style="margin-bottom:0">That is the power of personal style. And I believe every woman deserves to feel it.</p>
 
     <span class="jrnl-cta" role="button" tabindex="0" onclick="startQ()" onkeydown="if(event.key==='Enter'||event.key===' ')startQ()">Take the Free Style Star Quiz</span>
+    <div style="text-align:center;margin-top:20px"><span class="jrnl-lnk" onclick="openJournalHub()">More from the Style Journal &rarr;</span></div>
 
     <div class="pg-foot" data-std-foot></div>
   </div>
@@ -5121,7 +5145,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()">
       <button class="top-back" onclick="closePrivacy()">&larr; Back</button>
     </div>
-    <div class="story-title">Privacy Policy</div>
+    <h1 class="story-title">Privacy Policy</h1>
     <div style="font-size:14px;color:#555;line-height:1.8;text-align:left">
       <p style="margin-bottom:12px">Your privacy matters to us. This policy explains what information Style Star collects, how we use it, and your choices.</p>
       <p style="margin-bottom:12px"><strong>What we collect</strong></p>
@@ -5158,7 +5182,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()">
       <button class="top-back" onclick="closeTerms()">&larr; Back</button>
     </div>
-    <div class="story-title">Terms of Service</div>
+    <h1 class="story-title">Terms of Service</h1>
     <div style="font-size:14px;color:#555;line-height:1.8;text-align:left">
       <p style="margin-bottom:12px">Welcome to Style Star. These terms explain how you can use our app and what you can expect from us. By using Style Star, you agree to them. We have written them clearly and kindly, the way we do everything here.</p>
       <p style="margin-bottom:12px"><strong>Using Style Star</strong></p>
@@ -5419,17 +5443,49 @@ function retakeQuiz(){
 // pretty path and the router at the bottom of this file opens the right screen.
 // The policy text is NOT duplicated anywhere -- a reviewer sees the real page.
 // WARNING: once a URL is submitted to an affiliate network, never change its path.
-var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-res':'/results','s-journal':'/journal/how-to-find-your-personal-style'};
+var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-res':'/results'};
+// ---- Style Journal: a REGISTRY, not one hand-added route per article ------
+// Her ask (2026-08-26): after building article #1's routing by hand -- a
+// netlify.toml block, a page-titles.js entry, a _ROUTES line, an _openRoute
+// branch, a pair of open/close functions, three hide-list edits, a menu row
+// -- she asked "each time we post another article do we need to update
+// this?" The honest answer was yes, and that it should not stay that way.
+// ▶ NOW: writing article #2 means (1) its own <div class="scr"> with real
+// <h1>/<h2> tags, (2) ONE LINE below in JOURNAL_ARTICLES, (3) one entry in
+// page-titles.js's PAGES map (articleSchema() keeps that short), (4) one
+// line in sitemap.xml, (5) her Request Indexing click. Nothing else --
+// no netlify.toml edit (see the /journal/* wildcard there), no new
+// function, no menu row (the hub lists every article by reading this same
+// array, so it can never go stale).
+// ⚠️ id MUST start with "s-journal" -- the hide-lists and the skin-toggle
+// below match on that PREFIX so a new article never needs touching them.
+var JOURNAL_ARTICLES=[
+  {slug:'how-to-find-your-personal-style', id:'s-journal', title:'How to Find Your Personal Style'},
+];
+function _journalPath(slug){return '/journal/'+slug;}
+function _journalBySlug(slug){for(var i=0;i<JOURNAL_ARTICLES.length;i++){if(JOURNAL_ARTICLES[i].slug===slug)return JOURNAL_ARTICLES[i];}return null;}
+function _journalById(id){for(var i=0;i<JOURNAL_ARTICLES.length;i++){if(JOURNAL_ARTICLES[i].id===id)return JOURNAL_ARTICLES[i];}return null;}
 // ⚠️ The shared wishlist's path carries a token, so it cannot live in _ROUTES.
 // Without this branch show() would rewrite the address bar to "/" the moment
 // the page opened -- stripping the token, breaking a reload, and handing
 // nothing to anyone who copies the URL out of the bar.
-function _pathForScreen(id){return (id==='s-sharelist'&&_sharePath)?_sharePath:(_ROUTES[id]||'/');}
+function _pathForScreen(id){
+  if(id==='s-sharelist'&&_sharePath)return _sharePath;
+  if(id==='s-journal-hub')return '/journal';
+  var art=_journalById(id);
+  if(art)return _journalPath(art.slug);
+  return _ROUTES[id]||'/';
+}
 // The reverse lookup, for someone who lands on one of those paths directly.
 // Tolerates a trailing slash and odd capitalisation, both of which people type.
 function _screenForPath(p){
   p=String(p||'').replace(/\/+$/,'').toLowerCase();
   if(!p)return '';
+  if(p==='/journal')return 's-journal-hub';
+  if(p.indexOf('/journal/')===0){
+    var art=_journalBySlug(p.slice('/journal/'.length));
+    if(art)return art.id;
+  }
   for(var id in _ROUTES){if(_ROUTES[id]===p)return id;}
   return '';
 }
@@ -5441,7 +5497,8 @@ function _openRoute(id){
   else if(id==='s-story')showStory();
   else if(id==='s-faq')showFAQ();
   else if(id==='s-contact')showContact();
-  else if(id==='s-journal')showJournal();
+  else if(id==='s-journal-hub')openJournalHub();
+  else if(_journalById(id))openJournalArticle(id);
   else if(id==='s-res'){
     // /results is only meaningful on a device that HAS results (they live in
     // localStorage; a friend following the link lands on the fresh welcome).
@@ -5508,7 +5565,7 @@ function show(id,skipHistory){
   // render caught it -- two rows of app chrome under somebody's gift list. That
   // is the hardcoded-list failure mode happening to the very list the comment
   // warns about, one screen after it was written.
-  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-journal'||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
+  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id.indexOf('s-journal')===0||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // ⚠️ BOTH call sites are load-bearing: the BOOT path adds .act to s-wel
   // directly, without going through show(), exactly as it does for s-wb. A
@@ -5517,7 +5574,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "Style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id==='s-journal'||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id.indexOf('s-journal')===0||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -5551,8 +5608,10 @@ function show(id,skipHistory){
   if(card)card.classList.toggle('contact-mirror',id==='s-contact');
   // And the Add as an App page, same family, same frame.
   if(card)card.classList.toggle('a2hs-mirror',id==='s-a2hs');
-  // Style Journal: same letterhead + display-case frame family (2026-08-26).
-  if(card)card.classList.toggle('journal-mirror',id==='s-journal');
+  // Style Journal (hub + every article): same letterhead + display-case
+  // frame family (2026-08-26). Prefix match, so a new article id ("s-journal-…")
+  // gets the frame for free -- see JOURNAL_ARTICLES above.
+  if(card)card.classList.toggle('journal-mirror',id.indexOf('s-journal')===0);
   // Same gold+silver display-case frame around the clean Shop your style page.
   if(card)card.classList.toggle('shop-mirror',id==='s-shopstyle');
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
@@ -9702,16 +9761,43 @@ function closeContact(){
   document.querySelector('.quiz-footer').style.display='';
   showBack(contactPrevScreen);
 }
+// Style Journal (built 2026-08-26): ONE registry drives routing, the hub
+// list, and every screen's own self-link guard. Adding an article is one
+// entry in JOURNAL_ARTICLES + its own <div class="scr" id="..."> -- nothing
+// else here needs a second hand-typed line.
 let journalPrevScreen='s-wel';
-function showJournal(){
+let journalArticleFromHub=false;
+function _renderJournalHub(){
+  const el=document.getElementById('journalHubList');
+  if(!el)return;
+  el.innerHTML=JOURNAL_ARTICLES.map(function(a){
+    return '<div class="jhub-row" onclick="openJournalArticle(\''+a.id+'\')">'
+      +'<span class="jhub-row-title">'+_esc(a.title)+'</span>'
+      +'<span class="jhub-row-arrow">&rarr;</span></div>';
+  }).join('');
+}
+function openJournalHub(){
   const cur=document.querySelector('.scr.act');
-  if(cur&&cur.id&&cur.id!=='s-journal')journalPrevScreen=cur.id;   // self-link guard
-  show('s-journal');
+  if(cur&&cur.id&&cur.id.indexOf('s-journal')!==0)journalPrevScreen=cur.id;   // self-link guard
+  _renderJournalHub();
+  show('s-journal-hub');
   document.querySelector('.quiz-footer').style.display='none';
 }
-function closeJournal(){
+function closeJournalHub(){
   document.querySelector('.quiz-footer').style.display='';
   showBack(journalPrevScreen);
+}
+function openJournalArticle(id){
+  const cur=document.querySelector('.scr.act');
+  journalArticleFromHub=!!(cur&&cur.id==='s-journal-hub');
+  if(cur&&cur.id&&cur.id.indexOf('s-journal')!==0)journalPrevScreen=cur.id;   // self-link guard
+  show(id);
+  document.querySelector('.quiz-footer').style.display='none';
+}
+function closeJournalArticle(){
+  document.querySelector('.quiz-footer').style.display='';
+  if(journalArticleFromHub)openJournalHub();      // came from the hub -> back to the hub, not past it
+  else showBack(journalPrevScreen);
 }
 let dreamPrevScreen='s-wel';
 function showDream(){
