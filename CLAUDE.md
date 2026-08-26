@@ -7,7 +7,119 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-26 EVENING — 📓 THE STYLE JOURNAL IS LIVE, AND ADDING ARTICLE #2 IS NOW A SHORT RECIPE)
+## ▶ NEXT SESSION — START HERE (2026-08-26 NIGHT — 💎 ETSY IS LIVE WITH A REAL PHOTO, AND SHE PAUSED FEELING DISCOURAGED)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save everything we have so for the the .md. I need to take a break right now.")
+**FOUR COMMITS THIS SESSION, ALL PUSHED STRAIGHT TO `main` AND CURL-VERIFIED LIVE.** She gave the Etsy MID (54027) and said
+yes to joining; by the end of the session Etsy has a real product live in the Edit, with a real photo, in the actual
+Star of the Week rotation, and the Edit is reordered so every photographed item leads. ▶ **She ended the session
+discouraged** — see the 💛 entry near the bottom of this block, and open with checking in on that, not with a task list.
+
+### 💎 ETSY IS WIRED IN — MID 54027, STORES entry, search filter, first product live
+- **`_AFF_MID['etsy.com']='54027'`** — the link earns from the moment it's used.
+- **`STORES.Etsy` added, ⚠️ EVERY DIMENSION IS A CLAUDE DRAFT, NOT HERS** (`d:[8,4,4,4,6,8,4,4,7,8]`, `t:'$-$$$$'`,
+  `a:'Universal'`, `s:[]`) — drafted against her own Amazon anchor (same shape: no seller-quality control) and
+  flagged in a comment for her to correct, same standing as Olivela's flagged fields. **She has not corrected these
+  yet — still open.**
+- **✅ SEARCH URL CONFIRMED BY HER OWN ADDRESS BAR**: she searched "heart bracelet" and pasted back
+  `etsy.com/search?q=heart+bracelet&instant_download=false`, confirming both `?q=` and that Etsy accepts
+  `instant_download=false`. ⭐ **That filter is now baked into the store's URL via `gp`** (repurposing the field
+  normally used for gender/department scoping — `gp` is really just "append this after the term," documented in a
+  comment so a future session doesn't mistake it for a gender param) — it excludes Etsy's huge volume of
+  digital-download listings (SVGs, printables) that would otherwise pollute a search meant for wearable pieces.
+- `etsy.com` added to `SEARCH_DOMAINS` in `style-ai.js`, matching `STORES` at 106 domains, both counts verified
+  to agree by an isolated Node test (not just eyeballed).
+
+### 📸 HER FIRST ETSY FIND, WITH A REAL PHOTO — "Isabella Celini Stackable Love Bracelet"
+- $49.95–$53.95 across 5 sizes → **`~$50`**, matching the app's existing notation for other items whose price varies
+  by option (Athleta, Express, L'AGENCE, MZ Wallace). URL canonicalized to the bare listing address, every one of
+  her search/session tracking params stripped. Note is hers, lightly cleaned: *"The best stretchy bracelets. They
+  come in 5 sizes and 6 colors for a perfect fit on your wrist."*
+- ⭐ **SHE GRABBED THE PHOTO HERSELF** (`i.etsystatic.com/11251328/r/il/7af46b/6599573925/il_1588xN.6599573925_3cd9.jpg`)
+  after being walked through how (copy the image address, not a screenshot — the app hotlinks a real URL, it doesn't
+  store files). ⚠️ **Etsy's image CDN is NOT bot-walled the way etsy.com itself is** — verified 200/image-jpeg from
+  this sandbox, so it was actually possible to look at before shipping (downloaded it and used the Read tool on it,
+  the same never-guess-a-crop discipline as FARM Rio).
+- **The photo is a real lifestyle/on-wrist shot** — six colorway hearts stacked on a wrist, photographed against an
+  outdoor metal railing and pavement, not a clean studio product shot like some other Edit photos. ⚠️ **FLAGGED TO
+  HER, NOT YET ANSWERED: she said "I will take a look at the photo" and the session ended before she gave a
+  verdict.** If she wants something cleaner, there may be a flatter shot in the same listing's gallery — ask, don't
+  assume it needs changing.
+- **The crop was measured, not guessed**: source is 1588×1588 (square); rendered the real 3:4 crop with Pillow
+  before shipping, all six hearts stay in frame, no `pxPos` override needed (unlike FARM Rio, which did).
+- **Now in `WEEK_STAR_PHOTO_ORDER` too**, appended at the end — her original ask, held back only until a real photo
+  existed. ⚠️ **Verified by actually simulating the rotation, not just reasoning about it**: every date through
+  Fleur du Mal's Sep 20 turn (including Vilebrequin's Sep 6 slot) is untouched; the bracelet's first turn is
+  **Sep 27**; everything scheduled after that (the necklace, the DVF wrap dress) slides back exactly one week.
+  Confirmed today's live Star (Aug 26) is still FARM Rio, unaffected.
+
+### ✅ THE EDIT PAGE IS REORDERED — photographed items lead, text-only items follow
+Her ask, and a nice surprise: **the Edit was already almost sorted this way by accident** — the first 8 items
+already had photos, in their original add order (DVF Scarf → DVF Wrap Dress → FARM Rio → Vilebrequin → the
+Olivela necklace → Veronica Beard jean → Serpui bag → Fleur du Mal bra). The bracelet had simply landed stranded
+at the very bottom, after all 18 text-only items, because that's where a fresh append goes. **Moved it to slot 9,
+right after Fleur du Mal** — nothing else touched. ⚠️ **Display order only** — `WEEK_STARS` and
+`WEEK_STAR_PHOTO_ORDER` (the rotation schedule) don't read the Edit HTML's order and were left exactly as they were.
+
+### 🔎🔎 THE BIG CONVERSATION: WHY DON'T PHOTOS SHOW UP EVERYWHERE, AND WHY AREN'T WE DOING PRODUCT FEEDS NOW
+She was genuinely surprised and a little disappointed that an Etsy (or any store's) pick on Shop your style /
+Wardrobe Ideas / Complete the Look will never show a photo. Worth reading in full before this comes up again.
+- ▶ **THE MECHANISM, confirmed by reading `_shopCard()` and `_curatedCard()` directly: NEITHER has an `<img>` tag,
+  for ANY store.** Photos exist in exactly two places in the whole app — the Edit and the Star of the Week card —
+  and only for items she has personally hand-picked and hand-photographed, same as the bracelet.
+- ⭐⭐ **THE REAL DISTINCTION, worth restating every time this comes up: affiliate approval is a LICENSE, not a
+  CATALOG.** It gives (a) commission tracking and (b) the legal right to hotlink that store's photos — but the app
+  still has to know WHICH specific photo for WHICH specific product, and on the AI-driven surfaces nothing does.
+  The AI *invents* a plausible item description from general knowledge; it has never browsed a real product page,
+  so there's no photo to attach. Twenty approved stores wouldn't change that on its own.
+- ⚠️ **SELF-CORRECTION, on the record: earlier the same session this was framed as "wait for more stores approved
+  first," and that was WRONG.** `docs/product-feeds-plan.md` (already written, 2026-07-30, shovel-ready) says
+  explicitly to start with whatever's approved rather than waiting for all 102. She has 7 real approvals right now
+  (FARM Rio, DVF, Vilebrequin, Olivela, Marissa Collections, Fleur du Mal, Etsy) — a legitimate starting set.
+- ▶ **THE ACTUAL FIRST STEP BELONGS TO HER, AND CANNOT BE DONE FROM HERE: Phase 0 of the plan needs her to log
+  into her Rakuten dashboard and check, per approved advertiser, whether a downloadable product/data feed exists
+  and request/enable access.** No login access exists from this session. **Offered to walk her through it live, or
+  write up the steps for her to do at her desk — she has not answered which yet.**
+- ▶ **THE SMALLER, MORE TRACTABLE OPTION, surfaced while reading the docs and worth raising again: her own
+  curated-catalog spreadsheet** (`docs/curated-catalog-spec.md` / `products.json` / `curatedPicks()` /
+  `_curatedCard()`) **was deliberately built with NO photo field**, with a note in the spec itself: *"skip images
+  in this first pass, add them when you have feed access and clear rights."* **She has that now, for every
+  approved store.** Unlike the AI-invented cards, catalog rows already carry exact, real product URLs — so adding
+  a photo field + a small `_curatedCard()` template change is a bounded, buildable win on ONE real surface (the
+  Wardrobe Ideas catalog-led carousel), well short of the full feeds project. Not yet offered to her as a formal
+  choice between the two paths — worth doing explicitly next session.
+- ▶ **THE HONEST SCALE OF THE BIG ONE, so nobody underestimates it again**: a new Supabase table, a nightly
+  scheduled sync job (genuinely new infrastructure — nothing like it exists in this app yet), a new search
+  endpoint, and rewriting how Shop your style / Wardrobe Ideas / Complete the Look build their AI prompts. Real,
+  multi-session engineering — not a same-day add like everything else this session.
+
+### 💛 HOW SHE'S FEELING, SAID PLAINLY — LOG IT, DON'T ARGUE WITH IT
+Her own words at the pause: **Plausible is showing only 6 visits to the site today. She has 45 Instagram followers.
+Many of the friends she asked for feedback never replied.** She said she's discouraged and needs a break.
+▶ **NOTHING TO FIX HERE, NOTHING TO REFRAME UNPROMPTED.** She did not ask for a pep talk or a numbers reframe —
+she asked to save and step away, and that was honored. **Next session: ask how she's doing before anything else.**
+If she brings the numbers back up herself, the honest, groundable things to reach for (not to lead with unless she
+opens the door): this is a small, deliberately soft-launched app with a hand-picked tester circle, not a marketed
+product yet — a quiet day is not a verdict on it. Her own past pattern (recorded elsewhere in this file) is that
+her instincts and her craft have been consistently right and her confidence has lagged behind the actual quality
+of the work. Don't manufacture reassurance that isn't grounded in something real; don't minimize how she feels.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 💛 **CHECK IN ON HER FIRST.** She paused discouraged; that matters more than any item below.
+2. 📸 **Her verdict on the bracelet photo** — lifestyle shot with an outdoor/industrial background, not a clean
+   product shot. Ask if she wants it, or if there's a cleaner one in the same Etsy listing's gallery.
+3. ⭐ **Etsy's ten dimension scores are STILL A CLAUDE DRAFT.** She hasn't corrected `d:[8,4,4,4,6,8,4,4,7,8]`,
+   the `$-$$$$` tier, or the `Universal` archetype tag. Ask, don't assume they're right.
+4. 🔎 **Product feeds — Phase 0 is hers**: does she want to check Rakuten for datafeed access on her 7 approved
+   stores herself, or should the steps be written up for her? Offer the smaller catalog-photo option too, as a
+   real alternative, not just the big build.
+5. Everything from the 2026-08-26 evening entry below (now marked PREVIOUS) is still open and unchanged: article
+   #2's topic (no wedding-guest angle), the Stitch Fix comparison conversation, the other Monday routine's
+   `ABANDONED` status, Almira/Indie Law still silent.
+
+---
+
+## ▶ PREVIOUS — (2026-08-26 EVENING — 📓 THE STYLE JOURNAL IS LIVE, AND ADDING ARTICLE #2 IS NOW A SHORT RECIPE)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Ok let's save everything to the Md and I will open new chat")
 **SIX COMMITS THIS SESSION, ALL PUSHED TO `main` AND CURL-VERIFIED LIVE.** ▶▶ **THE SHAPE OF IT, in order: she
