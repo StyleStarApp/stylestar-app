@@ -57,8 +57,27 @@ const PAGES = {
     desc: 'The terms and conditions for using Style Star, including your rights, our affiliate disclosures, and how the service works.',
   },
   '/journal/how-to-find-your-personal-style': {
-    title: "How to Find Your Personal Style: A Personal Stylist's Guide | Style Star",
-    desc: 'A personal stylist of 20+ years explains how to find your personal style, starting with the outfit you already love. Take the free Style Star quiz to see your own Style Portrait.',
+    // Both trimmed to fit Google's real display budget (~60 chars for a
+    // title, ~155-160 for a description) -- the first versions were 72 and
+    // 178 chars and would have been truncated mid-sentence in the result.
+    title: 'How to Find Your Personal Style | Style Star',
+    desc: 'How to find your personal style, from a personal stylist of 20+ years. Start with the outfit you already love, then take the free Style Star quiz.',
+    // Article schema (2026-08-26): tells Google who wrote this and when, the
+    // same authorship signal Google's own E-E-A-T guidance looks for. Kept as
+    // a per-page field here, injected below, rather than in index.html --
+    // index.html is shared by every screen, so an Article schema block
+    // written there would claim to describe the WHOLE app, not this one page.
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: 'How to Find Your Personal Style',
+      description: 'How to find your personal style, from a personal stylist of 20+ years.',
+      author: { '@type': 'Person', name: 'Catherine Ellspermann', jobTitle: 'Personal Stylist', url: 'https://stylestar.app/story' },
+      publisher: { '@type': 'Organization', name: 'Style Star', url: 'https://stylestar.app' },
+      datePublished: '2026-08-26',
+      dateModified: '2026-08-26',
+      mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://stylestar.app/journal/how-to-find-your-personal-style' },
+    },
   },
 };
 
@@ -89,6 +108,10 @@ export default async (request, context) => {
   html = setMeta(html, 'name', 'twitter:title', page.title);
   html = html.replace(/<link rel="canonical" href="[^"]*">/i,
     '<link rel="canonical" href="https://stylestar.app' + path + '">');
+  if (page.schema) {
+    html = html.replace('</head>',
+      '<script type="application/ld+json">' + JSON.stringify(page.schema) + '</script></head>');
+  }
 
   // Rebuild the headers rather than reusing them: the body length changed, so a
   // carried-over content-length would be wrong.

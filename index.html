@@ -1989,8 +1989,15 @@ body.menu-open .menu-panel{display:block}
    in #4a463e, no italics anywhere on light paper. This article is literally
    her speaking in first person, so it gets the same register as the Contact
    page's lead/sign-off rather than a separate "editorial" typeface. */
-.jrnl-byline{font:400 13px/1.5 'Jost',sans-serif;color:#6b6355;text-align:center;margin:-6px 0 26px;letter-spacing:.01em;text-wrap:balance}
-.jrnl-byline .jrnl-lnk{color:#8A6410;text-decoration:underline;cursor:pointer;white-space:nowrap}
+/* Her catch, 2026-08-26: the byline as one flowing sentence kept wrapping
+   mid-clause no matter where the line broke, because it was carrying three
+   separate jobs at once (who wrote it, two credentials, a link elsewhere).
+   Her pick "D" from a 4-way render -- a real masthead, name/role/link each on
+   their own line -- so it never depends on finding the right break point in
+   a sentence at all. */
+.jrnl-by-name{font:600 15px/1.3 'Jost',sans-serif;color:#3a352c;text-align:center;letter-spacing:.02em;margin-top:2px}
+.jrnl-by-role{font:400 12.5px/1.5 'Jost',sans-serif;color:#8a8172;text-align:center;margin-top:3px;letter-spacing:.03em}
+.jrnl-by-link{font:600 12px/1 'Jost',sans-serif;text-align:center;margin:9px 0 26px}
 .jrnl-p{font:400 15.5px/1.72 'Lora',Georgia,serif;color:#4a463e;text-align:left;margin:0 0 18px}
 .jrnl-p b{font-weight:700;color:#3a352c}
 .jrnl-lnk{color:#8A6410;text-decoration:underline;cursor:pointer}
@@ -5012,51 +5019,53 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <img src="logo-star.png" alt="Style Star — tap for home" class="pp-lh-logo go-home" onclick="goHome()">
       <button class="top-back" onclick="closeJournal()">&larr; Back</button>
     </div>
-    <div class="story-title" style="text-align:center">How to Find Your Personal Style</div>
-    <div class="jrnl-byline">By Catherine Ellspermann, Personal Stylist and Founder of Style Star &middot; <span class="jrnl-lnk" onclick="showStory()">Read my story &rarr;</span></div>
+    <h1 class="story-title" style="text-align:center">How to Find Your Personal Style</h1>
+    <div class="jrnl-by-name">By Catherine Ellspermann</div>
+    <div class="jrnl-by-role">Personal Stylist &amp; Founder of Style Star</div>
+    <div class="jrnl-by-link"><span class="jrnl-lnk" onclick="showStory()">Read my story &rarr;</span></div>
 
     <p class="jrnl-p">If you are trying to figure out your personal style, here is the first thing I want you to know: you already have one.</p>
     <p class="jrnl-p">Your personal style has been there all along. It is in the colors you are naturally drawn to, the silhouettes you feel best wearing, the level of polish you prefer, the fabrics you love, the amount of detail that feels right to you, and the outfits you reach for again and again.</p>
     <p class="jrnl-p">After more than 20 years of working with women as a personal stylist, I have learned that finding your personal style is not about choosing a label or trying to become someone new. It is about recognizing what already feels like you and bringing it into the light.</p>
 
-    <div class="jrnl-h2">How Do I Find My Personal Style? Start With the Outfit You Already Love</div>
+    <h2 class="jrnl-h2">How Do I Find My Personal Style? Start With the Outfit You Already Love</h2>
     <p class="jrnl-p">When I work with someone who is unsure about her personal style, I like to start with something very simple. I ask her to show me one outfit she loves.</p>
     <p class="jrnl-p">Not necessarily her fanciest outfit or the most expensive thing in her closet. I want to see the outfit she puts on and thinks, <b>&ldquo;Yes. This feels like me.&rdquo;</b></p>
     <p class="jrnl-p">That outfit tells me so much. I look at the silhouette. Is it relaxed or fitted? I look at the colors. Are they soft and neutral or bold and expressive? I notice the fabric, the level of detail, the modesty, the accessories, and how casual or polished the overall look feels.</p>
     <p class="jrnl-p">Maybe she loves prints. Maybe she feels best in beautiful solids. Maybe she loves simplicity. Maybe she feels most herself with an interesting piece of jewelry or a fabulous shoe. These are all clues.</p>
     <p class="jrnl-p">Your favorite outfit is a wonderful place to start because instead of asking yourself what your style should be, you are looking at evidence of what your style already is.</p>
 
-    <div class="jrnl-h2">How Do I Stop Buying Things Just Because Everyone Else Has Them?</div>
+    <h2 class="jrnl-h2">How Do I Stop Buying Things Just Because Everyone Else Has Them?</h2>
     <p class="jrnl-p">We are surrounded by fashion. We see what our friends are wearing. We see certain brands everywhere. We scroll past countless outfits, ads, influencers, and lists telling us what is in style and what we absolutely must have. After seeing something enough times, it is easy to start thinking we love it.</p>
     <p class="jrnl-p">So I think one of the most valuable questions you can ask yourself when you are shopping is: <b>&ldquo;Do I really love this for me?&rdquo;</b> Would I be drawn to this if I had not seen everyone else wearing it? Does it feel like me when I put it on?</p>
     <p class="jrnl-p">There is nothing wrong with loving trends. Fashion should be fun, and seeing what is new is part of the fun. But being stylish does not require becoming a copy of someone else. The goal is to take inspiration from what is happening in fashion and filter it through your own personal style.</p>
 
-    <div class="jrnl-h2">Does My Personal Style Have to Match My Everyday Life?</div>
+    <h2 class="jrnl-h2">Does My Personal Style Have to Match My Everyday Life?</h2>
     <p class="jrnl-p">Personal style is not just about what you find beautiful. It also needs to work for the life you actually live.</p>
     <p class="jrnl-p">We all need clothes for ordinary days, pieces that are comfortable, appropriate, and easy to wear while still making us feel good. But I also believe in having a well-rounded, fully functioning wardrobe. Life happens. There are lunches, dinners, meetings, celebrations, services, vacations, and unexpected invitations. Your wardrobe should support you through all of it.</p>
     <p class="jrnl-p">That does not mean you need an enormous amount of clothing. It means you need the right clothing. I want women to be able to open their closets when an invitation arrives and feel a sense of possibility instead of panic. A wardrobe works best when it reflects both who you are and where your life actually takes you.</p>
 
-    <div class="jrnl-h2">How Do I Update My Style Without Losing Myself?</div>
+    <h2 class="jrnl-h2">How Do I Update My Style Without Losing Myself?</h2>
     <p class="jrnl-p">This is one of my favorite principles of personal styling: <b>going one notch.</b></p>
     <p class="jrnl-p">When I look at an outfit, I can often see one small change that would make the entire look feel fresher. Maybe it is changing the shoe to something just as comfortable but a little more current. Maybe it is updating the shape of your jeans. Maybe it is adding a sleek bag, trying trousers instead of shorts, wearing a monochromatic color combination, or introducing a beautiful new color. Sometimes all an outfit needs is one piece of jewelry, or what I call the third piece, a jacket, scarf, or statement necklace that takes a simple outfit and makes it feel finished.</p>
     <p class="jrnl-p">You do not need to dress like someone you are not in order to be more stylish. In fact, I think the opposite is true. The best style evolution happens when you still feel completely like yourself, just a little more current, polished, and confident.</p>
 
-    <div class="jrnl-h2">Do I Have to Pick One Style &ldquo;Type&rdquo;?</div>
+    <h2 class="jrnl-h2">Do I Have to Pick One Style &ldquo;Type&rdquo;?</h2>
     <p class="jrnl-p">I have never believed that every woman can be neatly placed into one style category, classic, trendy, romantic, edgy, minimal, glamorous. Real personal style is much more nuanced than that.</p>
     <p class="jrnl-p">I think of style almost like a fingerprint. No two of us are exactly alike. We each land at different places along a continuum of preferences. You might lean classic but still enjoy something modern. You might love an easy, relaxed silhouette but prefer a very polished handbag. You might dress mostly in neutrals but adore one unexpected burst of color. It is the combination that makes your style yours, a melody of preferences.</p>
     <p class="jrnl-p">That melody can shift. Your style may look slightly different on vacation than it does at home. It can evolve as your lifestyle changes or as fashion changes over time. But underneath those shifts, there is usually a range where you consistently feel most like yourself. Finding that range gives you clarity.</p>
 
-    <div class="jrnl-h2">Why I Built a Personal Style Quiz With Sliders, Not a Single Style &ldquo;Type&rdquo;</div>
+    <h2 class="jrnl-h2">Why I Built a Personal Style Quiz With Sliders, Not a Single Style &ldquo;Type&rdquo;</h2>
     <p class="jrnl-p">This idea became the foundation for the <span class="jrnl-lnk" onclick="startQ()">Style Star personal style quiz</span>. Instead of asking you to choose one style personality and putting you into a box, Style Star uses sliding scales to help map where your individual preferences fall.</p>
     <p class="jrnl-p">The goal is not to tell you who you are. It is to help you see more clearly what you already know instinctively about yourself. Your results create a Style Portrait that shows the mix of preferences that make your personal style unique.</p>
     <p class="jrnl-p">And that clarity becomes incredibly useful when you shop. Instead of looking at thousands of choices and wondering what you are supposed to buy, you can begin asking a much better question: <b>&ldquo;Is this right for me?&rdquo;</b></p>
 
-    <div class="jrnl-h2">Why Shopping Feels So Overwhelming (and What Actually Helps)</div>
+    <h2 class="jrnl-h2">Why Shopping Feels So Overwhelming (and What Actually Helps)</h2>
     <p class="jrnl-p">Women love new outfits. We love the feeling of putting something on and knowing we look great. We enjoy seeing what is new and finding fresh ways to wear things.</p>
     <p class="jrnl-p">But shopping today can be overwhelming. There are endless choices online, enormous stores, new brands, social media posts, advertisements, and messages telling us what to buy now. More choice does not always make getting dressed easier.</p>
     <p class="jrnl-p">I believe women are looking for something simpler. We want wardrobes that function. We want clothes that work for our actual lives. We want to feel stylish without feeling overdone. We want to spend our money on pieces we will really wear and love, whether they come from an affordable retailer or a beautiful designer. We do not need to chase every trend or own an enormous amount of clothing. We need clarity about what makes us feel our best.</p>
 
-    <div class="jrnl-h2">Your Style Is Already There</div>
+    <h2 class="jrnl-h2">Your Style Is Already There</h2>
     <p class="jrnl-p">Finding your personal style is not about transforming yourself into someone else. It is about paying attention.</p>
     <p class="jrnl-p">Look at the outfit you already love. Notice the colors, silhouettes, and details that make you feel good. Pay attention to what works for your lifestyle. Be open to what is new, but give yourself permission to leave behind what does not feel like you.</p>
     <p class="jrnl-p">Then try going one notch. One fresher shoe. One updated silhouette. One beautiful accessory. One small shift that makes you stand a little taller when you look in the mirror.</p>
