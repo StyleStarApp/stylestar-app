@@ -100,7 +100,8 @@ const SEARCH_MAX_USES = 3;
 // adds or renames a store in index.html, add/fix its hostname here too, or the
 // stylist's search simply won't see inside that store (nothing breaks, links
 // still work — search just can't look there). Generated from the real table
-// 2026-07-31; 101 stores (Saks Off 5th removed 2026-08-03 — they closed their online store).
+// 2026-07-31; 102 stores (Saks Off 5th removed 2026-08-03 — they closed their
+// online store; Fleur du Mal added 2026-08-26).
 const SEARCH_DOMAINS = [
   'abercrombie.com', 'aliceandolivia.com', 'allsaints.com', 'aloyoga.com',
   'altardstate.com', 'amazon.com', 'anntaylor.com', 'anthropologie.com',
@@ -109,7 +110,7 @@ const SEARCH_DOMAINS = [
   'chicos.com', 'coach.com', 'cos.com', 'cuyana.com',
   'dillards.com', 'dsw.com', 'dvf.com', 'eileenfisher.com', 'eloquii.com',
   'everlane.com', 'everythingbutwater.com', 'express.com', 'fahertybrand.com',
-  'farmrio.com', 'frankandeileen.com', 'freepeople.com', 'gap.com',
+  'farmrio.com', 'fleurdumal.com', 'frankandeileen.com', 'freepeople.com', 'gap.com',
   'garnethill.com', 'goodamerican.com', 'gorjana.com', 'gucci.com',
   'izod.com', 'jcrew.com', 'jennikayne.com', 'jjill.com',
   'jmclaughlin.com', 'johnnywas.com', 'kendrascott.com',
