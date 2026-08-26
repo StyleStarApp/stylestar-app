@@ -6565,6 +6565,25 @@ const STORES={
   'Mango':{u:'https://shop.mango.com/us/en/search/women?q=',t:'$$',a:'Modern Minimalist, European Chic',s:[],d:[5,6,8,6,8,6,7,8,8,7],c:'workwear, elevated trends, outerwear'},
   'Target':{w:1,u:'https://www.target.com/s?searchTerm=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[9,3,5,6,6,10,4,5,8,8],deep:1,c:'affordable fashion, basics, accessories'},
   'Amazon':{gp:'&i=fashion-womens',u:'https://www.amazon.com/s?k=',t:'$-$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,5,7,6,8,6,6,8,8],deep:1,c:'almost everything, basics, accessories, shoes'},
+  // Etsy approved via Rakuten 2026-08-26 (mid 54027), her yes. ⚠️ EVERY NUMBER
+  // BELOW IS A CLAUDE DRAFT, NOT HERS -- flagged, not shipped as her judgment.
+  // Drafted against her own Amazon anchor (a broad, mixed-quality marketplace)
+  // since Etsy is the same shape of store: no seller-quality control, so
+  // polish is scored low like Amazon's rather than a curated boutique's.
+  // Where it was drafted to differ from Amazon: lower alluring (craft/vintage/
+  // eclectic, not a glam destination), higher relaxed and colorful (handmade
+  // skews boho and expressive), lower fitted (not a tailored-fashion place),
+  // t:'$-$$$$' because a marketplace can run from a $4 sticker to a $2,000
+  // custom piece -- wider than Amazon's own range. s:[] because sizing is
+  // set per independent seller with no house standard to promise against.
+  // ⚠️ deep:1 was DELIBERATELY NOT SET: Etsy's own on-site search is famous
+  // for surfacing specific, niche queries well, but that is a guess and not
+  // measured -- the search URL below could not be verified either (Etsy
+  // 403s every request from this sandbox, the same wall as Vilebrequin and
+  // Olivela). Her address bar is the only instrument for both.
+  // ▶ HERS TO CORRECT: all ten numbers, the price tier, the archetype tags,
+  // and whether `deep` should be set once she has tested the search herself.
+  'Etsy':{u:'https://www.etsy.com/search?q=',t:'$-$$$$',a:'Universal',s:[],d:[8,4,4,4,6,8,4,4,7,8],c:'handmade goods, vintage finds, personalized jewelry and gifts, independent makers, home decor, art'},
   'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[8,6,8,6,8,7,7,5,6,9],deep:1,c:'dresses, occasion, unique pieces'},
   'Express':{w:1,u:'https://www.express.com/exp/search?q=',t:'$$',a:'Modern Glam, Professional Power',s:['petite'],d:[3,8,7,4,8,5,8,10,8,7],c:'going-out looks, workwear, denim'},
   // The old /r/search?query= silently landed on Revolve's homepage (Cath caught
@@ -6893,7 +6912,10 @@ var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590','vilebrequin.com':'43322',
   // Fleur du Mal approved 2026-08-26 (mid 50739). Live in STORES from day
   // one (see the entry there), so this earns immediately -- no waiting on a
   // link to be added later, unlike the two above.
-  'fleurdumal.com':'50739'};
+  'fleurdumal.com':'50739',
+  // Etsy approved via Rakuten 2026-08-26 (mid 54027). Live in STORES from day
+  // one (see the entry there), so this earns immediately.
+  'etsy.com':'54027'};
 function _affMid(u){
   try{
     var host=new URL(u).hostname.toLowerCase().replace(/^www\./,'');
