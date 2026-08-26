@@ -90,23 +90,34 @@ const rot = await page.evaluate(()=>{
   const _realPin=window.WEEK_STAR_PIN;
   const _testPin=WEEK_STARS[Math.min(5,WEEK_STARS.length-1)].n;
   window.WEEK_STAR_PIN=null;
-  const i=(y,m,d,h)=>_weekStarIndex(new Date(y,m,d,h||12));
+  const nameAt=(y,m,d,h)=>{const idx=_weekStarIndex(new Date(y,m,d,h||12));return idx<0?null:WEEK_STARS[idx].n;};
   const L=WEEK_STARS.length;
-  // wrap date DERIVED from L, never restated — the curated.js lesson: a test that
-  // hardcodes a number must be edited every time the queue grows.
-  const wrapDate=new Date(2026,7,9); wrapDate.setDate(wrapDate.getDate()+7*L);
+  // ⚠️ REWRITTEN 2026-08-26, her "photos-only for now" call: the rotation no
+  // longer cycles the WHOLE queue, it cycles _weekStarPhotoPool() -- a
+  // deadline-aware ORDER over just the photographed entries (see the
+  // function's own comment). So the cadence tests below check by NAME against
+  // that pool, derived live, rather than asserting a raw WEEK_STARS index of
+  // 0/1/2 -- which was only ever true while the whole array rotated in place.
+  // The 7-day/local-midnight-Sunday cadence itself is UNCHANGED; only which
+  // pool it walks changed. wrap DERIVED from the pool's length, never restated.
+  const pool=_weekStarPhotoPool().map(x=>x.n);
+  const P=pool.length;
+  const wrapDate=new Date(2026,7,9); wrapDate.setDate(wrapDate.getDate()+7*P);
   const __r = {
     len:L,
     // every entry is a real star: a name, a store, an https url and her note
     allNamed:WEEK_STARS.every(x=>x&&x.n&&x.store&&/^https:\/\//.test(x.url||'')&&x.note),
     headIsHers:/Tommy Hilfiger Claihre/.test(WEEK_STARS[0].n), // her first star leads the queue
-    anchorSunday:i(2026,7,9),           // Sun Aug 9 = week 0
-    buildDay:i(2026,7,14),              // Fri Aug 14 (built) → still week 0
-    satNight:i(2026,7,15,23),           // Sat 11pm → still week 0
-    swapSunday:i(2026,7,16,0),          // Sun Aug 16 midnight → week 1
-    weekTwo:i(2026,7,23),               // next Sunday → week 2
-    wraps:_weekStarIndex(wrapDate),     // anchor + L weeks → back to 0, whatever L is
-    preAnchor:i(2026,7,1),              // a mis-set clock before the anchor → first star, no negative index
+    poolLen:P,
+    anchorSunday:nameAt(2026,7,9)===pool[0],             // Sun Aug 9 = pool[0]
+    buildDay:nameAt(2026,7,14)===pool[0],                // Fri Aug 14 (built) → still pool[0]
+    satNight:nameAt(2026,7,15,23)===pool[0],             // Sat 11pm → still pool[0]
+    swapSunday:nameAt(2026,7,16,0)===pool[1],            // Sun Aug 16 midnight → pool[1]
+    weekTwo:nameAt(2026,7,23)===pool[2],                 // next Sunday → pool[2]
+    todayIsFarmRio:nameAt(2026,7,26)==='FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress', // her explicit ask
+    vilebrequinSafe:nameAt(2026,7,30)==='Vilebrequin Long Mesh Cover-Up Dress — Off White', // before her 20 Sept deadline
+    wraps:nameAt(wrapDate.getFullYear(),wrapDate.getMonth(),wrapDate.getDate())===pool[0], // anchor + P weeks → back to pool[0]
+    preAnchor:nameAt(2026,7,1)===pool[0],                 // a mis-set clock before the anchor → first star, no negative index
     // her content rule: NO intimates or swim as the Star ("a bra or bikini
     // could be too much muchness at opening glance") — the bar is her call,
     // pinned here so a future queue edit can't quietly cross it.
@@ -136,13 +147,21 @@ const rot = await page.evaluate(()=>{
 ok('the queue is non-empty and every entry is a real star',
    rot.len>0 && rot.allNamed, 'len='+rot.len);
 ok('her first star leads the queue', rot.headIsHers);
-ok('anchor Sunday Aug 9 = week 0', rot.anchorSunday===0);
-ok('build day (Fri Aug 14) still shows week 0', rot.buildDay===0);
-ok('Saturday 11pm still shows week 0', rot.satNight===0);
-ok('midnight into Sunday Aug 16 swaps to week 1', rot.swapSunday===1);
-ok('the Sunday after that = week 2', rot.weekTwo===2);
-ok('after a full cycle the queue wraps to the start', rot.wraps===0);
-ok('a clock set before the anchor clamps to the first star', rot.preAnchor===0);
+// ⚠️ These now assert by NAME against the live-computed photo pool (see the
+// evaluate block's own comment) — derived, so growing WEEK_STAR_PHOTO_ORDER
+// or the eligible-photo set can never make these stale.
+ok('anchor Sunday Aug 9 = pool[0]', rot.anchorSunday);
+ok('build day (Fri Aug 14) still shows pool[0]', rot.buildDay);
+ok('Saturday 11pm still shows pool[0]', rot.satNight);
+ok('midnight into Sunday Aug 16 swaps to pool[1]', rot.swapSunday);
+ok('the Sunday after that = pool[2]', rot.weekTwo);
+ok('after a full cycle the pool wraps to the start', rot.wraps, 'poolLen='+rot.poolLen);
+ok('a clock set before the anchor clamps to the first star', rot.preAnchor);
+// HER EXPLICIT ASK, 2026-08-26: "I want the star of this week to still be
+// the farm Rio dress. Not the linen pant. We are doing only the photograph
+// ones first." Both pinned by name so they can never silently drift back.
+ok('TODAY (26 Aug) shows the FARM Rio dress, her explicit ask', rot.todayIsFarmRio);
+ok('Vilebrequin\'s turn (30 Aug) lands well before her 20 Sept deadline', rot.vilebrequinSafe);
 ok('HER RULE: no intimates or swim in the queue', rot.noIntimates);
 ok('every entry complete with a safe https product URL', rot.complete);
 ok('no duplicate items in the queue', rot.uniqueUrls);

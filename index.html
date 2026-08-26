@@ -12782,22 +12782,62 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
    note:'The best carry-on travel bag ever. Stylish, lightweight, and it fits right under the seat on planes.'},
 
 ];
+/* PHOTOS-ONLY ROTATION, her call 2026-08-26: seeing the Athleta linen pant
+   (no photo) live, she said "I want the star of this week to still be the
+   farm Rio dress. Not the linen pant. We are doing only the photograph ones
+   first." Two layers, deliberately separate:
+   1. THE SET is self-maintaining — any WEEK_STARS entry carrying a px: is
+      eligible, full stop. The moment she adds a photo to another piece it is
+      IN, nothing here to touch.
+   2. THE ORDER, for the six that exist today, is hand-placed, because this
+      rotation has a REAL DEADLINE riding on it (see the Vilebrequin note a
+      few lines up): position 2 (this week, the bucket below) is FARM Rio,
+      her explicit ask; Vilebrequin sits at position 3, which lands NEXT WEEK
+      (30 Aug) — comfortably ahead of the 20 September cutoff, not behind it.
+      ⚠️ Positions 0-1 are "already past" for the CURRENT cycle relative to
+      today's bucket, so their next turn is bucket 6 (20 Sept) and bucket 7 —
+      that is exactly why nothing urgent sits there.
+   ▶ ANY photographed item NOT named in WEEK_STAR_PHOTO_ORDER is simply
+   APPENDED at the end of the pool by _weekStarPhotoPool — visible, never
+   silently dropped, just without a deliberately-placed slot until someone
+   gives it one. */
+var WEEK_STAR_PHOTO_ORDER=[
+  'Love Hearts Find Me Pendant Necklace',
+  'Serpui Abigail Handbag — Red',
+  'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',
+  'Vilebrequin Long Mesh Cover-Up Dress — Off White',
+  'Diane von Furstenberg Flag Scarf — Myrtle Berry',
+  'Veronica Beard Crosbie Jean'
+];
+function _weekStarPhotoPool(){
+  var eligible=WEEK_STARS.filter(function(s){return !!s.px;});
+  var ordered=WEEK_STAR_PHOTO_ORDER.map(function(n){
+    return eligible.filter(function(s){return s.n===n;})[0];
+  }).filter(Boolean);
+  eligible.forEach(function(s){if(ordered.indexOf(s)<0)ordered.push(s);});
+  return ordered;
+}
 // Which week is it? Whole LOCAL days since the anchor Sunday (2026-08-09, the
 // Sunday before the first star shipped), then whole weeks, wrapped around the
-// queue. Date.UTC over the LOCAL calendar components sidesteps DST hour drift,
-// so the swap lands exactly at local midnight into Sunday on every device.
+// current pool (see _weekStarPhotoPool above — photos-only for now, so the
+// cycle length is that pool's, not the whole queue's). Date.UTC over the
+// LOCAL calendar components sidesteps DST hour drift, so the swap lands
+// exactly at local midnight into Sunday on every device.
 // ⚠️ The anchor is load-bearing: moving it shifts which item every visitor
-// sees THIS week. Don't touch it; reorder the queue instead.
+// sees THIS week. Don't touch it; reorder WEEK_STAR_PHOTO_ORDER instead.
 function _weekStarIndex(now){
   if(!WEEK_STARS||!WEEK_STARS.length)return -1;
   if(WEEK_STAR_PIN){
     for(var p=0;p<WEEK_STARS.length;p++){if(WEEK_STARS[p].n===WEEK_STAR_PIN)return p;}
     // a pin naming a piece no longer in the queue falls through to the rotation
   }
+  var pool=_weekStarPhotoPool();
+  if(!pool.length)pool=WEEK_STARS; // never strand her with an empty rotation
   now=now||new Date();
   var days=Math.floor((Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())-Date.UTC(2026,7,9))/86400000);
   if(days<0)days=0; // a device clock set before the anchor just sees the first star
-  return Math.floor(days/7)%WEEK_STARS.length;
+  var item=pool[Math.floor(days/7)%pool.length];
+  return WEEK_STARS.indexOf(item);
 }
 function _weekStar(now){var i=_weekStarIndex(now);return i<0?null:WEEK_STARS[i];}
 // 🚨 THE LICENSING GATE, IN ONE PLACE — both Star surfaces call this and NEITHER

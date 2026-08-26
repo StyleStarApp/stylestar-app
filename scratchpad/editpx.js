@@ -108,6 +108,20 @@ const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/ch
 const ctx=await b.newContext({viewport:{width:390,height:900}});
 const pg=await ctx.newPage(); const errs=[];
 pg.on('pageerror',e=>errs.push(e.message));
+// ⚠️ REAL FONTS, INTERCEPTED — this sandbox's Chromium cannot reach
+// fonts.googleapis.com at all (ERR_CONNECTION_RESET), so every note falls
+// back to plain serif with different line-wrap metrics than Lora. Proven
+// live 2026-08-26: the Star card's own iPhone-fold checks flip pass/fail
+// depending on which item's note happens to wrap differently under the
+// fallback vs the real face — a sandbox artifact, not a layout regression
+// (measured: 'serif' and 'Lora' render the same note at byte-identical
+// widths here without this). Reuses the same local cache + rewrite as
+// scratchpad/renderfonts.mjs.
+if(fs.existsSync(ROOT+'/scratchpad/fonts/gf.css')){
+  const gfCss=fs.readFileSync(ROOT+'/scratchpad/fonts/gf.css','utf8')
+    .replace(/url\((f\d+\.woff2)\)/g,`url(http://127.0.0.1:${PORT}/scratchpad/fonts/$1)`);
+  await pg.route('**/fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:gfCss}));
+}
 await pg.goto(`http://127.0.0.1:${PORT}/`);
 await pg.evaluate(()=>{document.querySelectorAll('.hm-entrance').forEach(e=>e.remove());showDream();});
 await pg.waitForTimeout(1200);
@@ -219,14 +233,20 @@ const pinres=await pg.evaluate((testPin)=>{
   for(let d=0;d<364;d+=7){const t=new Date(2026,7,9+d);out.unpinned.add(_weekStarIndex(t));}
   const servedWhilePinned=(function(){window.WEEK_STAR_PIN=testPin;return _weekStar().n;})();
   window.WEEK_STAR_PIN=keep;
-  return {pinned:[...out.pinned],unpinned:[...out.unpinned].length,servedWhilePinned};
+  // ⚠️ poolLen DERIVED live 2026-08-26, her "photos-only for now" call: the
+  // unpinned rotation no longer cycles the WHOLE queue, it cycles
+  // _weekStarPhotoPool() -- see that function's own comment. Reading its
+  // length here (rather than restating 6) means widening the pool later
+  // needs no edit here either.
+  const poolLen=_weekStarPhotoPool().length;
+  return {pinned:[...out.pinned],unpinned:[...out.unpinned].length,servedWhilePinned,poolLen};
 },TEST_PIN);
 ok('PINNED: the same star on all 52 weeks', pinres.pinned.length===1, JSON.stringify(pinres.pinned));
 // derived from the test pin, so this can never go stale whichever piece it is
 ok('PINNED: and the served Star IS the pinned piece', pinres.servedWhilePinned===TEST_PIN, TEST_PIN);
-// derived from the queue itself, so growing the queue never makes this stale
-ok('UNPINNED: rotation resumes across the WHOLE queue',
-   pinres.unpinned===names.length, pinres.unpinned+' of '+names.length);
+// derived from the live photo pool, not the whole queue — see the comment above
+ok('UNPINNED: rotation resumes across the photos-only pool',
+   pinres.unpinned===pinres.poolLen, pinres.unpinned+' of '+pinres.poolLen);
 
 // the Star card renders on Welcome Back IN HER ACTUAL CURRENT STATE (whatever
 // WEEK_STAR_PIN really is right now, pinned or rotating) — proven correct by
@@ -334,18 +354,41 @@ ok('OWN PHOTO: every unsafe or malformed path renders NOTHING',
    Object.values(own.rejected).every(v=>v===null), JSON.stringify(own.rejected));
 ok('OWN PHOTO: the queue is left exactly as it was found', own.restored===true);
 
-// the whole card still fits above a real iPhone fold
+// the whole card still fits above a real iPhone fold, IN WHATEVER ITEM IS
+// CURRENTLY SERVED — today (2026-08-26) that is the FARM Rio dress, per her
+// photos-only-rotation call.
+// ⚠️ REAL FONTS, on purpose (see the interception block above): without it
+// this check silently measured against fallback serif and gave a false
+// reading either way. With Lora genuinely loaded and confirmed settled
+// (forced via document.fonts.load + .ready, verified stable across repeat
+// runs, not a timing race), FARM Rio's own 92-char note runs the card a
+// handful of px past 700 -- against the DVF scarf's 84-char note, which is
+// what this check has historically been proven clean against. ▶ NOT fixed
+// here: whether that is a real, tiny pre-existing tightness in the 700px
+// budget for THIS specific note, or a residual gap between this sandbox's
+// cached font file and what a real device renders, cannot be told apart
+// from here -- and the app's own `.wks-card`/`.wks-note` were NOT touched by
+// anything in today's session (the photos-only rotation only changes WHICH
+// item is served, never how the card is built). Flagged to her rather than
+// silently loosened or silently "fixed" by editing her note.
 await pg.setViewportSize({width:390,height:844});
 await pg.evaluate(()=>{show('s-wb');_renderWeekStar();window.scrollTo(0,0);});
-await pg.waitForTimeout(400);
+try{await pg.evaluate(async()=>{await document.fonts.load("400 15.5px 'Lora'");await document.fonts.ready;});}catch(e){}
+await pg.waitForTimeout(500);
 const fold=await pg.evaluate(()=>{
   const c=document.querySelector('#wbStar .wks-card').getBoundingClientRect();
   const btn=document.querySelector('#wbStar .wks-shop,#wbStar a[href]');
   const sv=document.querySelector('#wbStar .wl-save');
-  return {cardBottom:Math.round(c.bottom+window.scrollY),
+  return {servedItem:(_weekStar()||{}).n||'',
+          cardBottom:Math.round(c.bottom+window.scrollY),
           shopBottom:btn?Math.round(btn.getBoundingClientRect().bottom+window.scrollY):0,
           saveBottom:sv?Math.round(sv.getBoundingClientRect().bottom+window.scrollY):0};
 });
+if(fold.shopBottom>700||fold.saveBottom>700){
+  console.log('  note  Star card runs '+(fold.shopBottom-700)+'-'+(fold.saveBottom-700)
+    +'px past the 700px fold for "'+fold.servedItem+'" ('+JSON.stringify(fold)+') -- '
+    +'flagged to her, not auto-fixed; see the comment above this block.');
+}
 ok('Shop it stays above the iPhone fold (700px)', fold.shopBottom>0&&fold.shopBottom<=700, JSON.stringify(fold));
 ok('Save stays above the iPhone fold', fold.saveBottom>0&&fold.saveBottom<=700, JSON.stringify(fold));
 await pg.setViewportSize({width:390,height:900});
