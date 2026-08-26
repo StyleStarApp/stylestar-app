@@ -56,6 +56,10 @@ const PAGES = {
     title: 'Terms of Service | Style Star',
     desc: 'The terms and conditions for using Style Star, including your rights, our affiliate disclosures, and how the service works.',
   },
+  '/journal/how-to-find-your-personal-style': {
+    title: "How to Find Your Personal Style: A Personal Stylist's Guide | Style Star",
+    desc: 'A personal stylist of 20+ years explains how to find your personal style, starting with the outfit you already love. Take the free Style Star quiz to see your own Style Portrait.',
+  },
 };
 
 // Swap the CONTENT of a specific tag, matching the tag by its identifying

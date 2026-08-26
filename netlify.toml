@@ -44,6 +44,15 @@
   to = "/index.html"
   status = 200
 
+# Style Journal, her long-tail SEO articles (2026-08-26, her ask). Nested under
+# /journal/ rather than flat like the pages above, because this is meant to
+# grow into several articles and they all deserve one consistent home. Same
+# WARNING as every path above: once this is indexed, it never moves.
+[[redirects]]
+  from = "/journal/how-to-find-your-personal-style"
+  to = "/index.html"
+  status = 200
+
 # /results opens the Style Portrait on a device that has one saved (results
 # live in the browser + behind the emailed token, so the path itself carries
 # nothing personal; a visitor without saved results lands on the welcome).
@@ -98,4 +107,8 @@
 
 [[edge_functions]]
   path = "/terms"
+  function = "page-titles"
+
+[[edge_functions]]
+  path = "/journal/how-to-find-your-personal-style"
   function = "page-titles"
