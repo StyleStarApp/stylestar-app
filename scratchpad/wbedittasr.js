@@ -84,6 +84,52 @@ const base = await pg.evaluate(() => {
 ok('the strip is on', base.on, JSON.stringify(base));
 ok('label reads "More from the Edit"', /more from the edit/i.test(base.labelText), base.labelText);
 ok('the Star card\'s own item is never duplicated in the strip', !base.starInStrip, base.starName);
+
+console.log('\n1b. Her live catch: label color matches "Read your full Style Portrait", and a swipe hint');
+const colorHint = await pg.evaluate(() => {
+  // DERIVED against the real button, never a hardcoded hex — so if that
+  // button's own color is ever retuned, this stays honest instead of silently
+  // drifting apart from what she actually asked to match.
+  const ctaColor = getComputedStyle(document.querySelector('#s-wb .wb-port-cta span')).color;
+  const lblColor = getComputedStyle(document.querySelector('#wbEditTeaser .wet-lbl')).color;
+  const hint = document.getElementById('wbEditTeaserSwipe');
+  return {
+    ctaColor, lblColor, matches: ctaColor === lblColor,
+    hintExists: !!hint, hintText: hint ? hint.textContent.trim() : '',
+    hintVisibleAt390: hint ? getComputedStyle(hint).display !== 'none' : false
+  };
+});
+ok('the label now matches the Read-your-Style-Portrait button\'s own color',
+   colorHint.matches, `${colorHint.lblColor} vs ${colorHint.ctaColor}`);
+ok('a swipe hint exists and reads "Swipe for more"', colorHint.hintExists && /swipe for more/i.test(colorHint.hintText), colorHint.hintText);
+ok('at 390px the strip overflows, so the hint is showing', colorHint.hintVisibleAt390);
+// NOT a static label -- it is driven by real overflow, the same _swipeHint()
+// mechanism already proven on What's Trending. Prove the gate really gates,
+// against the SAME shared function _renderEditTeaser() calls (never a
+// duplicated copy): a scroll box narrower than its own content shows the
+// hint, and shrinking the content until it fits turns the hint off again.
+// ⚠️ #wbEditTeaser's own .hm-room ancestor caps content width at 400px
+// regardless of viewport, so widening the PAGE cannot force a no-overflow
+// state here -- this drives the shared function directly against a
+// purpose-built pair of boxes instead, which is what actually isolates the
+// claim under test (the function's own overflow arithmetic) from this
+// screen's particular width budget.
+const gate = await pg.evaluate(async () => {
+  const wrap = document.createElement('div'); wrap.style.cssText = 'width:120px;overflow-x:auto;position:absolute;left:-9999px';
+  const hint = document.createElement('span'); hint.style.display = 'none';
+  document.body.appendChild(wrap); document.body.appendChild(hint);
+  const settle = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  wrap.innerHTML = '<div style="width:400px;height:10px"></div>'; // wider than the box
+  _swipeHint(wrap, hint); await settle();
+  const overflowsShows = getComputedStyle(hint).display !== 'none';
+  wrap.innerHTML = '<div style="width:60px;height:10px"></div>'; // fits inside the box
+  _swipeHint(wrap, hint); await settle();
+  const fitsHides = getComputedStyle(hint).display === 'none';
+  wrap.remove(); hint.remove();
+  return { overflowsShows, fitsHides };
+});
+ok('GATE: a box narrower than its content shows the hint', gate.overflowsShows, JSON.stringify(gate));
+ok('GATE: shrinking the content until it fits turns the hint back off', gate.fitsHides, JSON.stringify(gate));
 // ⚠️ THE ABOVE PROVES NOTHING ON ITS OWN if today's rotation happens not to
 // overlap with a photographed Edit piece (true right now: Athleta's Retreat
 // Linen pant has no photo). So force a REAL overlap by pinning to a known

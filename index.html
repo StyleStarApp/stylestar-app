@@ -2576,14 +2576,27 @@ body.card-fb{padding:0}
    The Edit items slide sideways... have the Star of the week on the front
    page and the rest slide over as Edit pages"). Her pick "A" from a 3-way
    render: this sits BELOW the untouched Star card, on the same dark Shop
-   mirror background #wbStar's own .wks-disc already lives on, so the label
-   reuses .hm-divlbl's exact gold (#BC9022) — already proven readable here —
-   rather than inventing a new one. Cards reuse the .wdr-tt-* proportions
-   from What's Trending's own teaser strip, just narrower (108px, five at a
-   time reads better than three at this card's simpler content). */
+   mirror background #wbStar's own .wks-disc already lives on. Cards reuse
+   the .wdr-tt-* proportions from What's Trending's own teaser strip, just
+   narrower (108px, five at a time reads better than three at this card's
+   simpler content).
+   ⚠️ THE LABEL WAS FIRST SHIPPED AT .hm-divlbl's gold (#BC9022) — readable
+   here, but her live catch: "let's make it match the same color as the
+   button that says Read your full Style Portrait. It is a brighter gold,
+   less brown." Now #F2D889, the .wb-port-cta button's own text color
+   (13.92:1 on this #0c0c0e background, up from 6.65:1 — brighter AND still
+   comfortably AA either way, so the swap cost nothing on readability).
+   ⚠️ AND THE SWIPE HINT: her ask, same message — "add an arrow so she knows
+   that row slides." Reuses the house pattern already proven on What's
+   Trending's own teaser strip rather than inventing a new one: _swipeHint()
+   shows "Swipe for more →" ONLY when the strip actually overflows (so it
+   never lies on a wide screen where every card already fits), and
+   _nudgeScroll() gives it one gentle physical nudge on first render. */
 #wbEditTeaser{display:none;margin:14px 7px 0}
 #wbEditTeaser.on{display:block}
-#wbEditTeaser .wet-lbl{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#BC9022;margin:0 2px 8px}
+#wbEditTeaser .wet-hd{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 2px 8px}
+#wbEditTeaser .wet-lbl{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#F2D889;margin:0}
+#wbEditTeaser .wet-swipe{font:600 10px/1 'Jost',sans-serif;letter-spacing:.02em;color:#D8B96C;white-space:nowrap}
 #wbEditTeaser .wet-scroll{display:flex;overflow-x:auto;gap:10px;padding:2px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #wbEditTeaser .wet-scroll::-webkit-scrollbar{display:none}
 #wbEditTeaser .wet-card{flex:0 0 108px;background:#fff;border:1px solid #EFE7D2;text-align:left;text-decoration:none;display:block;-webkit-tap-highlight-color:transparent}
@@ -12979,7 +12992,9 @@ function _renderEditTeaser(){
     return {name:it.name,price:it.price,url:it.url,src:img.getAttribute('src')||'',alt:img.getAttribute('alt')||it.name};
   });
   if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
-  el.innerHTML='<div class="wet-lbl">More from the Edit</div><div class="wet-scroll">'
+  el.innerHTML='<div class="wet-hd"><div class="wet-lbl">More from the Edit</div>'
+    +'<span class="wet-swipe" id="wbEditTeaserSwipe" style="display:none">Swipe for more &rarr;</span></div>'
+    +'<div class="wet-scroll" id="wbEditTeaserScroll">'
     +items.map(function(it){
       return '<a class="wet-card" href="'+_esc(_affUrl(it.url))+'" target="_blank" rel="sponsored noopener">'
         +'<img src="'+_esc(it.src)+'" alt="'+_esc(it.alt)+'" loading="lazy" decoding="async" onerror="this.closest(\'.wet-card\').remove()">'
@@ -12988,6 +13003,8 @@ function _renderEditTeaser(){
     +'<div class="wet-card wet-all" role="button" tabindex="0" onclick="showDream()" onkeydown="if(event.key===\'Enter\')showDream()">See the full Edit &rarr;</div>'
     +'</div>';
   el.classList.add('on');
+  var _scrollEl=document.getElementById('wbEditTeaserScroll'),_hintEl=document.getElementById('wbEditTeaserSwipe');
+  _swipeHint(_scrollEl,_hintEl);_nudgeScroll(_scrollEl);
 }
 // ⭐ THE SAME STAR, ON THE DISCOVERY PAGE — her idea 2026-08-21. Read the CSS
 // note at #dsStar for why it exists, why it sits after the founder line, and why
