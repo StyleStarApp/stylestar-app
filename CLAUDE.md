@@ -7,7 +7,155 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-25 LATER — 🚨 THE PROMPT'S OWN EXAMPLES WERE TEACHING THE MODEL THE WRONG THING)
+## ▶ NEXT SESSION — START HERE (2026-08-26 — ⭐ THE STAR OF THE WEEK ROTATES ON PHOTOGRAPHED PIECES NOW, AND "MORE FROM THE EDIT" SLIDES OFF IT)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "That looks fabulous. Thank you. Let's save everything to the .md and I will open new chat")
+**SEVEN COMMITS, ALL PUSHED DIRECTLY TO `main` AND CURL-VERIFIED LIVE BYTE-FOR-BYTE** (`d268edf`
+through `3845ff8` — this session pushes straight to main, no PR step). ⚠️ **Seven Netlify builds.**
+▶▶ **THE SHAPE OF THE DAY: one feature idea, rendered and picked from options, then TWO ROUNDS OF HER
+OWN LIVE TESTING found three more real things** — the wrong Star showing, a photo crop with the feet cut
+off, and a label color/missing affordance on the thing just shipped. Every fix landed the same session.
+
+### ⭐⭐ "MORE FROM THE EDIT" IS LIVE — her idea, her pick "A", built on Welcome Back only
+Her question: *"would it be possible to have The Edit items slide sideways like that from the...
+Welcome Back page and have the Star of the week on the front page and the rest slide over as Edit
+pages... what is your opinion on that and is it possible?"* She scoped it herself before anything was
+built: *"let's do it on welcome back"* (not the Discovery page) and *"not the entire thing let's see a
+render and then decide."* **Three options rendered, her pick: "A" — the Star card stays completely
+untouched; a separate, labelled horizontal-scroll strip sits below it.**
+- **`#wbEditTeaser`, built by `_renderEditTeaser()`, called from `updateWbScreen()`** right after
+  `_renderWeekStar()`. ⭐ **SELF-MAINTAINING BY DESIGN, the Edit New-pill reasoning applied again:** it
+  reads `#s-dream`'s real markup via `_wlEditItems()` at render time — never a second hand-kept list — so
+  a piece she adds to the Edit with a photo appears here with **zero code touched**. Proven by a live test
+  that injects a mock photographed item and confirms it shows up unassisted.
+- **Never repeats whatever the Star card above is already showing** (`it.url!==star.url`), and the
+  affiliate wrap reaches every card here exactly as it does on the Edit itself. Tail card: **"See the full
+  Edit →"** opens `s-dream`.
+- Verified: new `scratchpad/wbedittasr.js`, **23 checks** (self-maintains, dedupe forced via a real
+  overlap pin, affiliate wrap, tail nav, the Star card proven untouched in the DOM, AA contrast, no
+  page overflow 390/360/320).
+
+### ✅ HER TWO LIVE-TEST CATCHES ON THAT SAME STRIP, BOTH FIXED SAME SESSION
+Her words, verbatim: *"The gold color that says MORE FROM THE EDIT — let's make it match the same color
+as the button that says Read your full Style Portrait. It is a brighter gold, less brown. Also let's add
+an arrow so she knows that row slides."*
+- **`.wet-lbl` is `#F2D889` now** (was `#BC9022`) — literally `.wb-port-cta`'s own text color, **derived
+  in the test** (`getComputedStyle` on the real button, never a hardcoded hex) so the two can never
+  quietly drift apart again. 13.92:1 contrast, up from 6.65:1.
+- **A "Swipe for more →" hint** sits in the header row, right-aligned. ⚠️ **NOT a static arrow — it
+  reuses the house `_swipeHint()`/`_nudgeScroll()` mechanism already proven on What's Trending's own
+  teaser strip**, so it only shows when the row genuinely overflows and gives one gentle physical nudge
+  on first render. A static arrow would have lied on a screen wide enough that nothing needs swiping.
+- **Both negative-controlled.** Suite grew to 23 checks, including two GATE assertions proving the
+  overflow logic actually gates (a box narrower than its content shows the hint; shrinking the content
+  until it fits turns it back off) — driven against the real shared function, not a duplicate copy.
+
+### 🚨 HER FIRST LIVE-TEST CATCH: THE WRONG STAR WAS SHOWING, AND IT BECAME A STANDING POLICY
+After the strip shipped, she opened the live app and reported the Athleta linen pant (no photo) as this
+week's Star. **Her instruction, verbatim: "I want the star of this week to still be the farm Rio dress.
+Not the linen pant. We are doing only the photograph ones first."** Two things, in order:
+1. ✅ **Rebuilt `_weekStarPhotoPool()` and `WEEK_STAR_PHOTO_ORDER`**: the rotation now cycles ONLY
+   photographed `WEEK_STARS` entries, in an order she effectively set by which piece needs to show when.
+   Unphotographed pieces (the bangles, the Athleta pant, most of the older Edit picks) stay in `WEEK_STARS`
+   — still real data, still eligible once photographed — but are simply not in the pool.
+2. ⚠️ **FIRST VERSION HAD A REAL BUG, AND SHE CAUGHT IT HERSELF THE SAME SESSION.** V1 auto-included ANY
+   entry carrying a `.px`, using `WEEK_STAR_PHOTO_ORDER` only to reorder the ones it named — so an item
+   left OFF the list simply fell to the back and would eventually rotate back in anyway. Her next
+   message: *"Since the scarf was last week I don't want to to come back up as Star of the week again.
+   Maybe you meant to say dvf dress?"* — the scarf had just finished its run as the (formerly pinned) Star
+   and under v1's design it would have silently resurfaced. **Rebuilt as a strict WHITELIST:
+   `WEEK_STAR_PHOTO_ORDER` IS the whole pool now — nothing rotates unless its name is explicitly listed
+   there.** The `.px` check is a safety net (a renamed/broken entry drops out silently) never a second
+   door in.
+   ▶ **THE FIX: the scarf stays in `WEEK_STARS`** (still visible in the Edit and "More from the Edit")
+   **but is deliberately off the order list** — and the DVF Jeanne Silk Jersey Wrap Dress, a different,
+   already-photographed Edit piece that had never been in the Star queue at all, took its old rotation
+   slot instead, with a one-liner note condensed from her own Edit description.
+   ⚠️ **New regression test added and negative-controlled: a photographed-but-unlisted item (the scarf)
+   can never appear in the pool across a full year of Sundays** — proven to fail against the old v1
+   design, proven to pass against the whitelist.
+- **Live queue today (pool order): FARM Rio (this week, 26 Aug) → Vilebrequin (30 Aug, well ahead of her
+  20 September deadline) → DVF wrap dress (6 Sep) → Veronica Beard jean (13 Sep) → the pendant necklace
+  (20 Sep) → the Serpui bag (27 Sep) → wraps back to FARM Rio.** ▶ **This SUPERSEDES the older "four-week
+  order" note from earlier in this file (bangles → cover-up → Olivela necklace → DVF dress) — that plan
+  predates the photos-only restriction. Vilebrequin's Sept-20 deadline is now handled automatically by
+  the live pool; nothing further needs doing for it.**
+- Verified: `weekstar.js` grew to **55 checks** (the whitelist regression, both by-name cadence
+  assertions derived live against `_weekStarPhotoPool()`, `todayIsFarmRio`/`vilebrequinSafe` pinned by
+  name). ⚠️ **Also caught and fixed while running the sweep: `discostar.js`'s pin-mechanism assertion was
+  stale** — it compared `_weekStar().n` against the LIVE `WEEK_STAR_PIN`, which broke the moment she
+  unpinned earlier this session (see below). Rewritten on a neutral test pin, same pattern as
+  `weekstar.js`/`editpx.js` were already fixed for. 104/104 after.
+
+### 🚨 HER SECOND LIVE-TEST CATCH: THE FARM RIO PHOTO WAS CROPPED WRONG
+*"the model's feet are cut off at the bottom and there is empty space at the top - can that be adjusted
+to fit better?"* ▶ **Measured against the real 800×1200 source, not guessed:** the shared `.wks-px`/
+`.dc-item-px` default (`object-position:top center`) only ever shows the top 88.9% of a source this much
+taller than the 3:4 box, so the last ~11% — her sandals — fell outside the frame. Pillow content-bounds
+analysis (strong-threshold): her hairline sits at ~9.6% of the frame, sandals end at ~92%.
+- **Built as a per-item override, `pxPos:'center 60%'`, NOT a change to the shared class** — `.wks-px`/
+  `.dc-item-px` serve every photographed item, most of which crop fine with the existing default;
+  retuning the class globally would fix this one dress and risk breaking whichever crop already suits
+  another. `_wkStarPxTag()` emits an inline `object-position` only when an entry carries `pxPos`.
+- **Validated with a six-way render** (`50%/0%` through `center 70%`) before picking `center 60%` — full
+  sandals visible, balanced margin top and bottom, hair untouched.
+- **The same photo appears twice** (the Star card AND the Edit's own static `.dc-item-px`), so both got
+  the identical inline fix — same source image, same crop math, same problem.
+- Verified live on all THREE surfaces the photo can appear on (Welcome Back Star card, the Discovery-page
+  star, the Edit page) — all three render `object-position:50% 60%` correctly. New assertions in
+  `weekstar.js` prove the fix reaches the real `<img>` AND that an item with no `pxPos` keeps the shared
+  default untouched with zero inline style — so this can never quietly become a class-wide change.
+  Negative-controlled both ways.
+
+### ⚖️ HER VILEBREQUIN QUESTION — ASKED FOR AND GIVEN A DIRECT OPINION
+*"Do you think we should put Vilebrequin back into the general stores table - search domains? what is
+your opinion on that?"* ▶ **Recommended AGAINST, and she agreed** ("I had forgotten why we left it out
+that makes sense"): Vilebrequin's own store search returns FALSE NEGATIVES — it told her they don't
+stock cover-up dresses when they do — which is a different, worse failure than a store merely being
+shallow. The 2026-08-09 reasoning stands: Vilebrequin stays IN `_AFF_MID` (its Edit item and Star turn
+still earn) and OUT of `STORES`/`SEARCH_DOMAINS`, because `_affUrl` matches by hostname, never by store
+key, so that asymmetry is safe. **No code changed — the existing design was already right.**
+
+### ⚠️ SESSION HYGIENE
+- ⚠️ **THIS SESSION PUSHES DIRECTLY TO `main`, no PR/merge-commit step** — noted so a future session
+  doesn't go looking for open PRs that don't exist. Confirmed by commit history pattern at session start.
+- ⚠️ **Pillow was not installed in this sandbox; `pip install Pillow` got it in one call.** Used for the
+  FARM Rio content-bounds analysis — no other image tooling (ImageMagick, `convert`) is present.
+- ⚠️ **`git checkout -- <file>` DESTROYS uncommitted work** — hit this early in a related earlier segment
+  of today's session (recorded in the summarized portion) and the fix was disciplined from then on:
+  every temporary breakage for a negative control used `cp` to a `/tmp` backup, restored via `cp` back,
+  and verified with `diff` showing byte-identical before proceeding. **Never `git checkout` a file with
+  uncommitted edits, ever, even to "restore" it.**
+- ⚠️ **Widening the Playwright viewport does NOT widen `#wbEditTeaser`'s available width** — `.hm-room`
+  caps content at `max-width:400px` regardless of viewport, so a "prove the overflow gate turns off"
+  test needs a purpose-built narrow/wide DOM pair driven directly against `_swipeHint()`, not a viewport
+  resize. Cost one failed first attempt, fixed cleanly the second time.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **ASK WHAT SHE WANTS FIRST.** Her own agenda has beaten the list every session running, and today
+   was entirely her own idea plus her own live testing finding every real thing.
+2. 👀 **HOW TODAY'S THREE MERGES FEEL ON HER PHONE** — "More from the Edit" with the brighter gold and
+   the swipe hint, the corrected Star rotation (FARM Rio → Vilebrequin → the DVF wrap dress), and the
+   fixed FARM Rio photo crop. ⚠️ Private browsing, `stylestar.app/?notrack`.
+3. ⭐ **THE WIDER SHINE CLUSTER, still flagged, still NOT built:** beaded, embellished, metallic, feather,
+   crystal — same family as the satin/sequins brake, only those three are braked. Her call, her word only.
+4. 💰 **AMAZON ASSOCIATES + THE BANGLES PHOTO.** Still open: the moment her own photo of the bangles
+   lands, wire `ownPx`, and the bangles become eligible to JOIN `WEEK_STAR_PHOTO_ORDER` for the first
+   time. Her Instagram post is the same week.
+5. 🔎 **GOOGLE SEARCH CONSOLE — her three steps, then the meta tag to me.** Still the only blocked step.
+6. ⭐ **TWO OLIVELA VALUES TO OVERRULE IF SHE WANTS:** `casual 4` and the archetype line.
+7. ⭐ **A DELIBERATE SIZE-TAG PASS.** Three missing tall/wide tags surfaced by accident on 08-24 and a
+   missing one is invisible on screen.
+8. ⚠️ **THE TWO LINK-CHECK ROUTINES STILL OVERLAP.** Keep Sunday, retire Monday. **Her call, still unmade.**
+9. ⏰ **28 AUGUST — the recurring-payments Routine.**
+10. ⭐⭐ **"SHOW THE STYLIST WHAT I PICKED"** (Kathy's) · **OUTFIT SUGGESTIONS** (Jen's, and her own parked
+    Favorite Outfit page) · **SATIN AND SEQUINS AS A CATEGORY** half-answered by the brake · **PRINT TOPS**
+    (`to4`, still the only Tops row with zero curated products) is the oldest untouched item.
+11. 📊 **Her Plausible dashboard** — and the standing question: **does anyone hit the honest line in the wild?**
+12. 💰 **AFFILIATES: Olivela approved (mid 50334).** CJ and AWIN next; Impact in 2-3 months with the
+    Plausible link. **AMAZON is next, by her own decision.**
+
+## ▶ PREVIOUS — (2026-08-25 LATER — 🚨 THE PROMPT'S OWN EXAMPLES WERE TEACHING THE MODEL THE WRONG THING)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "after we merge this live. Save all to the .md and I will open new chat")
 **TWO PRs, BOTH MERGED AND BOTH VERIFIED BYTE-IDENTICAL LIVE: #935 (`md5 db7bd1aa…`) and #936
