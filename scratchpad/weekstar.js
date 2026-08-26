@@ -116,6 +116,25 @@ const rot = await page.evaluate(()=>{
     weekTwo:nameAt(2026,7,23)===pool[2],                 // next Sunday → pool[2]
     todayIsFarmRio:nameAt(2026,7,26)==='FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress', // her explicit ask
     vilebrequinSafe:nameAt(2026,7,30)==='Vilebrequin Long Mesh Cover-Up Dress — Off White', // before her 20 Sept deadline
+    // ⚠️ THE WHITELIST REGRESSION TEST (2026-08-26). The FIRST design of
+    // _weekStarPhotoPool() auto-included any WEEK_STARS entry carrying a px:,
+    // and only used WEEK_STAR_PHOTO_ORDER to REORDER the ones it named — so a
+    // photographed piece left off that list simply fell to the back rather
+    // than staying OUT. That is exactly the bug she caught: the DVF scarf had
+    // just finished its run as the (formerly pinned) Star and she said "I
+    // don't want it to come back up as Star of the Week again" — under the
+    // old design it would have, silently, the moment nothing named it. This
+    // proves the fix directly: a real WEEK_STARS entry that carries a photo
+    // AND is NOT named in WEEK_STAR_PHOTO_ORDER must never appear in the
+    // pool, on any date, across a full year of Sundays.
+    scarfHasPhotoButIsExcluded:(()=>{
+      const scarf=WEEK_STARS.filter(x=>/Flag Scarf/.test(x.n))[0];
+      if(!scarf||!scarf.px)return false; // the premise of the test itself
+      if(WEEK_STAR_PHOTO_ORDER.includes(scarf.n))return false; // must stay off the list
+      const seen=new Set();
+      for(let d=0;d<364;d++){seen.add(nameAt(2026,7,9+d,12));}
+      return !seen.has(scarf.n);
+    })(),
     wraps:nameAt(wrapDate.getFullYear(),wrapDate.getMonth(),wrapDate.getDate())===pool[0], // anchor + P weeks → back to pool[0]
     preAnchor:nameAt(2026,7,1)===pool[0],                 // a mis-set clock before the anchor → first star, no negative index
     // her content rule: NO intimates or swim as the Star ("a bra or bikini
@@ -162,6 +181,7 @@ ok('a clock set before the anchor clamps to the first star', rot.preAnchor);
 // ones first." Both pinned by name so they can never silently drift back.
 ok('TODAY (26 Aug) shows the FARM Rio dress, her explicit ask', rot.todayIsFarmRio);
 ok('Vilebrequin\'s turn (30 Aug) lands well before her 20 Sept deadline', rot.vilebrequinSafe);
+ok('THE SCARF (photographed, but off the order list) never rotates back in, all year', rot.scarfHasPhotoButIsExcluded);
 ok('HER RULE: no intimates or swim in the queue', rot.noIntimates);
 ok('every entry complete with a safe https product URL', rot.complete);
 ok('no duplicate items in the queue', rot.uniqueUrls);

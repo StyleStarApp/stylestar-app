@@ -12748,6 +12748,18 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
    // ⚠️ px: is honoured ONLY when the store is an approved advertiser — see the
    // licensing note at _wkStarPx. Adding one for an unapproved store shows nothing.
    px:'https://www.dvf.com/cdn/shop/files/A001AMBERYSKTL_A1_2.jpg?v=1776264943&width=800'},
+  // ⚠️ REMAINS IN THE QUEUE (the Edit and "More from the Edit" both still
+  // show it) but deliberately OUT of WEEK_STAR_PHOTO_ORDER, her call
+  // 2026-08-26: "the scarf was last week [it was pinned as Star from
+  // 2026-08-20], I don't want it to come back up as Star of the Week
+  // again." Left as real data, not deleted -- her call was about TIMING,
+  // not the piece itself.
+  {n:'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',store:'Diane von Furstenberg',url:'https://www.dvf.com/products/jeanne-wrap-dress-in-twigs-green',price:'$678',
+   // Condensed from her Edit note (172 chars) to the one-liner budget, her
+   // words only, nothing invented -- same as every other Star note. A
+   // Claude draft like the rest: she may reword.
+   note:'The classic silhouette Diane brought to life in the \'70s. Silk jersey, comes in lots of colors.',
+   px:'https://www.dvf.com/cdn/shop/files/D885ATWGRNSLJY_A1_0003.jpg?v=1745423517&width=800'},
   {n:'Veronica Beard Crosbie Jean',store:'Marissa Collections',url:'https://marissacollections.com/products/veronica-beard-crosbie-jean',price:'$248',
    note:'A high-rise, slim but wide-leg jean with stretch. The all-purpose jean style right now.',
    px:'https://cdn.shopify.com/s/files/1/0333/8892/0967/files/2608_J26FA0156_MEMORY_LANE_FLAT.png?v=1786608188&width=800'},
@@ -12785,37 +12797,42 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
 /* PHOTOS-ONLY ROTATION, her call 2026-08-26: seeing the Athleta linen pant
    (no photo) live, she said "I want the star of this week to still be the
    farm Rio dress. Not the linen pant. We are doing only the photograph ones
-   first." Two layers, deliberately separate:
-   1. THE SET is self-maintaining — any WEEK_STARS entry carrying a px: is
-      eligible, full stop. The moment she adds a photo to another piece it is
-      IN, nothing here to touch.
-   2. THE ORDER, for the six that exist today, is hand-placed, because this
-      rotation has a REAL DEADLINE riding on it (see the Vilebrequin note a
-      few lines up): position 2 (this week, the bucket below) is FARM Rio,
-      her explicit ask; Vilebrequin sits at position 3, which lands NEXT WEEK
-      (30 Aug) — comfortably ahead of the 20 September cutoff, not behind it.
-      ⚠️ Positions 0-1 are "already past" for the CURRENT cycle relative to
-      today's bucket, so their next turn is bucket 6 (20 Sept) and bucket 7 —
-      that is exactly why nothing urgent sits there.
-   ▶ ANY photographed item NOT named in WEEK_STAR_PHOTO_ORDER is simply
-   APPENDED at the end of the pool by _weekStarPhotoPool — visible, never
-   silently dropped, just without a deliberately-placed slot until someone
-   gives it one. */
+   first."
+   🚨 REWRITTEN THE SAME DAY, and it matters: the FIRST version auto-included
+   ANY WEEK_STARS entry carrying a px:, with WEEK_STAR_PHOTO_ORDER only
+   ordering the ones it named — so leaving a piece OUT of this list did
+   NOTHING to keep it out of rotation, it just fell to the back. That is
+   exactly the shape of the very next thing she caught: the DVF scarf had
+   just finished a run as the (formerly pinned) Star, she said "I don't want
+   it to come back up as Star of the Week again," and under the old design
+   it would have — silently, the moment it stopped being named explicitly.
+   ▶ NOW: WEEK_STAR_PHOTO_ORDER IS THE WHOLE POOL, not a sort hint over a
+   wider auto-set. A photographed piece rotates ONLY when she puts its name
+   here — same as WEEK_STARS itself has always worked ("the queue is always
+   hers"). Adding a photo to a new Edit piece no longer enrolls it on its
+   own; it earns a slot when she decides it should have one.
+   ⚠️ THE DEADLINE MATH IS UNCHANGED and still governs the order: position 2
+   (this week, the bucket below) is FARM Rio, her explicit ask; Vilebrequin
+   sits at position 3, landing NEXT WEEK (30 Aug) — comfortably ahead of the
+   20 September cutoff. Positions 0-1 are "already past" for the CURRENT
+   cycle relative to today's bucket, so their next turn is bucket 6
+   (20 Sept) and bucket 7 — nothing urgent belongs there. */
 var WEEK_STAR_PHOTO_ORDER=[
   'Love Hearts Find Me Pendant Necklace',
   'Serpui Abigail Handbag — Red',
   'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',
   'Vilebrequin Long Mesh Cover-Up Dress — Off White',
-  'Diane von Furstenberg Flag Scarf — Myrtle Berry',
+  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',
   'Veronica Beard Crosbie Jean'
 ];
 function _weekStarPhotoPool(){
-  var eligible=WEEK_STARS.filter(function(s){return !!s.px;});
-  var ordered=WEEK_STAR_PHOTO_ORDER.map(function(n){
-    return eligible.filter(function(s){return s.n===n;})[0];
-  }).filter(Boolean);
-  eligible.forEach(function(s){if(ordered.indexOf(s)<0)ordered.push(s);});
-  return ordered;
+  // WHITELIST, not a sort hint: only a name she has actually put here can
+  // ever rotate. The .px check is a safety net (a name that has lost its
+  // photo, or was mistyped, drops out silently rather than crashing),
+  // never a second way IN.
+  return WEEK_STAR_PHOTO_ORDER.map(function(n){
+    return WEEK_STARS.filter(function(s){return s.n===n;})[0];
+  }).filter(function(s){return s&&!!s.px;});
 }
 // Which week is it? Whole LOCAL days since the anchor Sunday (2026-08-09, the
 // Sunday before the first star shipped), then whole weeks, wrapped around the
