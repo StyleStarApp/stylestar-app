@@ -2572,6 +2572,30 @@ body.card-fb{padding:0}
    #wbStar's own next child, so at 7px the disclosure sat exactly ON the frame's
    bottom edge (measured gap 0 at 390/375/360/320). This buys it 7px of air. */
 .wks-disc{font-family:'Jost',sans-serif;font-size:11px;line-height:1.4;color:#CFC9BB;text-align:center;margin-top:14px}
+/* MORE FROM THE EDIT (2026-08-26, her idea — "would it be possible to have
+   The Edit items slide sideways... have the Star of the week on the front
+   page and the rest slide over as Edit pages"). Her pick "A" from a 3-way
+   render: this sits BELOW the untouched Star card, on the same dark Shop
+   mirror background #wbStar's own .wks-disc already lives on, so the label
+   reuses .hm-divlbl's exact gold (#BC9022) — already proven readable here —
+   rather than inventing a new one. Cards reuse the .wdr-tt-* proportions
+   from What's Trending's own teaser strip, just narrower (108px, five at a
+   time reads better than three at this card's simpler content). */
+#wbEditTeaser{display:none;margin:14px 7px 0}
+#wbEditTeaser.on{display:block}
+#wbEditTeaser .wet-lbl{font:600 10.5px/1 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#BC9022;margin:0 2px 8px}
+#wbEditTeaser .wet-scroll{display:flex;overflow-x:auto;gap:10px;padding:2px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#wbEditTeaser .wet-scroll::-webkit-scrollbar{display:none}
+#wbEditTeaser .wet-card{flex:0 0 108px;background:#fff;border:1px solid #EFE7D2;text-align:left;text-decoration:none;display:block;-webkit-tap-highlight-color:transparent}
+#wbEditTeaser .wet-card img{width:108px;height:135px;object-fit:cover;display:block;background:#F5EFE2}
+#wbEditTeaser .wet-t{padding:6px 7px 8px}
+#wbEditTeaser .wet-n{font:600 12px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#wbEditTeaser .wet-p{font:400 11px/1 'Jost',sans-serif;color:#8a6a1e}
+#wbEditTeaser .wet-all{flex:0 0 92px;align-items:center;justify-content:center;text-align:center;display:flex;background:#1a1a1a;color:#EACD68;font:600 11px/1.3 'Jost',sans-serif;padding:12px 10px;cursor:pointer}
+@media(max-width:374px){
+  #wbEditTeaser .wet-card,#wbEditTeaser .wet-card img{flex-basis:98px;width:98px}
+  #wbEditTeaser .wet-all{flex-basis:84px}
+}
 /* ⭐ THE STAR OF THE WEEK ON THE DISCOVERY PAGE — her idea, 2026-08-21:
    "I am wondering if the Discovery page, for first time users, before she even
    takes the quiz, could be able to get a peak at the star of the week."
@@ -3528,6 +3552,17 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
          stylist insight shapes the default: bags/shoes/accessories fit EVERYONE
          (no sizes, no body talk). -->
     <div id="wbStar"></div>
+    <!-- MORE FROM THE EDIT (2026-08-26, her idea — "would it be possible to
+         have The Edit items slide sideways... have the Star of the week on
+         the front page and the rest slide over as Edit pages"). Her pick
+         "A" from a 3-way render: the Star card above is completely untouched,
+         and this is a SEPARATE, labelled horizontal-scroll strip underneath
+         it, reusing the .wdr-tt-* pattern already proven on What's Trending.
+         Rendered by _renderEditTeaser() straight from #s-dream's own live
+         markup — see that function for why nothing here needs updating when
+         she adds an Edit item. Welcome Back ONLY, her explicit scope; the
+         Discovery page's #dsStar is untouched. -->
+    <div id="wbEditTeaser"></div>
     <div id="wbNext">
       <span class="wbn-x" onclick="wbNextDismiss()" role="button" aria-label="Dismiss suggestion"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
       <span class="wbn-t" id="wbNextTxt" onclick="wbNextGo()"></span>
@@ -12864,6 +12899,39 @@ function _renderWeekStar(){
   el.classList.add('on');
   try{_wlSyncButtons()}catch(e){}
 }
+/* MORE FROM THE EDIT (2026-08-26, her idea, her pick "A" — Welcome Back only,
+   her explicit scope; the Discovery page is untouched).
+   ⭐ SELF-MAINTAINING ON PURPOSE, the same reasoning as the Edit's own New
+   pill (wbEditSig): reads #s-dream's OWN live markup at render time rather
+   than a second hand-kept list, so a piece she adds to the Edit needs
+   NOTHING done here to appear — the moment it carries a photo, it's in.
+   ⚠️ _wlEditItems() captures .url RAW, before _wlDecorateEdit() may have
+   already rewritten the href to its affiliate-wrapped form (if she's opened
+   the Edit this session) or left it plain (if she hasn't). _affUrl never
+   double-wraps, so calling it here is correct and safe either way — same
+   reasoning as _wlDecorateEdit's own comment on this exact point. */
+function _renderEditTeaser(){
+  var el=document.getElementById('wbEditTeaser');if(!el)return;
+  var star=_weekStar();
+  var items=_wlEditItems().filter(function(it){
+    var img=it.el.querySelector('.dc-item-px');
+    // never repeat whatever the Star card above is already showing this week
+    return img && (!star||it.url!==star.url);
+  }).map(function(it){
+    var img=it.el.querySelector('.dc-item-px');
+    return {name:it.name,price:it.price,url:it.url,src:img.getAttribute('src')||'',alt:img.getAttribute('alt')||it.name};
+  });
+  if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
+  el.innerHTML='<div class="wet-lbl">More from the Edit</div><div class="wet-scroll">'
+    +items.map(function(it){
+      return '<a class="wet-card" href="'+_esc(_affUrl(it.url))+'" target="_blank" rel="sponsored noopener">'
+        +'<img src="'+_esc(it.src)+'" alt="'+_esc(it.alt)+'" loading="lazy" decoding="async" onerror="this.closest(\'.wet-card\').remove()">'
+        +'<div class="wet-t"><div class="wet-n">'+_esc(it.name)+'</div><div class="wet-p">'+_esc(it.price)+'</div></div></a>';
+    }).join('')
+    +'<div class="wet-card wet-all" role="button" tabindex="0" onclick="showDream()" onkeydown="if(event.key===\'Enter\')showDream()">See the full Edit &rarr;</div>'
+    +'</div>';
+  el.classList.add('on');
+}
 // ⭐ THE SAME STAR, ON THE DISCOVERY PAGE — her idea 2026-08-21. Read the CSS
 // note at #dsStar for why it exists, why it sits after the founder line, and why
 // its gold frame is structural rather than decorative on that near-white paper.
@@ -12899,6 +12967,7 @@ function updateWbScreen(){
   try{_syncWbNext();}catch(e){}
   try{_syncA2hs();}catch(e){}
   try{_renderWeekStar();}catch(e){}
+  try{_renderEditTeaser();}catch(e){}
   // Portrait hub: "<Name>'s Style" written across the chain, above her personal motto.
   // If she hasn't given a name, leave the label blank and let the star sit higher
   // (via the wb-noname class) instead of showing a generic placeholder. If she has
