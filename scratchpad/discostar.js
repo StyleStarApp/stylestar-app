@@ -193,8 +193,17 @@ for(const w of [390,375,360,320]){
     out.badUrl=!document.getElementById('dsStar').classList.contains('on');
     WEEK_STARS[_weekStarIndex()].url=realUrl; _renderDiscoStar();
     out.back=document.getElementById('dsStar').classList.contains('on');
-    // the pin governs both surfaces identically
-    out.pinned=_weekStar().n===WEEK_STAR_PIN;
+    // the pin governs both surfaces identically -- proven on a NEUTRAL test
+    // pin, never by reading whatever WEEK_STAR_PIN happens to be live right
+    // now. ⚠️ REWRITTEN 2026-08-26: the old version compared _weekStar().n
+    // against the LIVE WEEK_STAR_PIN, which only ever proved the mechanism
+    // while she happened to have a real pin set, and broke outright the
+    // moment she unpinned ("yes, let's go ahead and unpin") -- exactly the
+    // staleness weekstar.js and editpx.js were already rewritten for.
+    const _keepPin=window.WEEK_STAR_PIN;
+    window.WEEK_STAR_PIN=WEEK_STARS[0].n;
+    out.pinned=_weekStar().n===WEEK_STARS[0].n;
+    window.WEEK_STAR_PIN=_keepPin;
     // s-wel owns exactly ONE Star block, s-wb owns its own
     out.oneEach=document.querySelectorAll('#s-wel #dsStar').length===1
       && document.querySelectorAll('#s-wb #wbStar').length===1;

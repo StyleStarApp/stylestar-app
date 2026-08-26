@@ -4563,7 +4563,10 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     </div>
 
     <div class="dc-item">
-      <img class="dc-item-px" src="https://farmrio.com/cdn/shop/files/347964_01_1.jpg?v=1778615230&amp;width=800" alt="FARM Rio Pink Garden Terrace 3D one-shoulder maxi dress" loading="lazy" decoding="async" onerror="this.remove()">
+      <!-- object-position matches the Star of the Week card's pxPos for this
+           exact photo -- her catch, 2026-08-26: sandals cut off, empty space
+           above her head. Same source image, same 3:4 crop math, same fix. -->
+      <img class="dc-item-px" style="object-position:center 60%" src="https://farmrio.com/cdn/shop/files/347964_01_1.jpg?v=1778615230&amp;width=800" alt="FARM Rio Pink Garden Terrace 3D one-shoulder maxi dress" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress</div>
       <div class="dc-item-meta"><span class="dc-store">FARM Rio</span><span class="dc-price">$360</span></div>
@@ -12755,7 +12758,13 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
    // sale. Her standing rule is list the regular price, never the sale price --
    // a sale expires and this card is evergreen, and arriving to find a piece
    // CHEAPER than promised feels lucky where the reverse feels misled.
-   px:'https://farmrio.com/cdn/shop/files/347964_01_1.jpg?v=1778615230&width=800'},
+   // ⚠️ pxPos, her catch 2026-08-26: "the model's feet are cut off at the
+   // bottom and there is empty space at the top." See the note at
+   // _wkStarPxTag for the full crop math -- 'top center' put the whole
+   // 88.9%-of-frame window at the top of a source that is proportionally
+   // taller than the 3:4 box, so the last ~11% (her sandals) fell outside it.
+   px:'https://farmrio.com/cdn/shop/files/347964_01_1.jpg?v=1778615230&width=800',
+   pxPos:'center 60%'},
   {n:'Diane von Furstenberg Flag Scarf — Myrtle Berry',store:'Diane von Furstenberg',url:'https://www.dvf.com/products/flag-scarf-in-myrtle-berry',price:'$198',
    note:'This is the definition of wearable art. 100% silk, and the floral print is stunning.',
    // ⚠️ px: is honoured ONLY when the store is an approved advertiser — see the
@@ -12923,7 +12932,23 @@ function _wkStarPxTag(S,cls){
   if(S.ownPx&&_OWN_PX_RE.test(S.ownPx))src=S.ownPx;
   else if(S.px&&_affMid(S.url)&&_wlSafeUrl(S.px))src=S.px;
   if(!src)return '';
-  return '<img class="'+cls+'" src="'+_esc(src)+'" alt="'+_esc(S.n)+'" '
+  // ⚠️ pxPos, OPTIONAL and PER ITEM: her catch on the FARM Rio dress, 2026-08-26
+  // -- "the model's feet are cut off at the bottom and there is empty space at
+  // the top." .wks-px's shared default (object-position:top center) is right
+  // for most of these photos, but a FULL-LENGTH garment photographed with real
+  // headroom above the model needs its own crop, and .wks-px/.dc-item-px are
+  // reused by every photographed item -- retuning the CLASS default would fix
+  // this one dress and quietly break whichever crop already suits another.
+  // So this is an inline override, only present on entries that asked for it,
+  // never a change to the shared rule. Measured against the real 800x1200
+  // source (Pillow, strong-content threshold): her hairline sits at ~9.6% of
+  // the frame, her sandals end at ~92%, and the box only ever shows 88.9% of
+  // the source -- "top center" (Y:0%) puts that whole window at the top,
+  // trimming the sandals; "center 60%" centers it on her, sandals fully in
+  // frame with a small margin either side. ⚠️ VALIDATED AGAINST A SIX-WAY
+  // RENDER (scratchpad has the comparison), not guessed.
+  var posAttr=S.pxPos?' style="object-position:'+_esc(S.pxPos)+'"':'';
+  return '<img class="'+cls+'" src="'+_esc(src)+'" alt="'+_esc(S.n)+'"'+posAttr+' '
     +'loading="eager" decoding="async" onerror="this.remove()">';
 }
 // The twin tilted gold stars (her pick "C", 2026-08-13) and her signature pink

@@ -77,6 +77,32 @@ ok('rel sponsored noopener + new tab (the standing link rules)', /sponsored/.tes
 ok('her note renders with her tilted pink heart (Catherine speaking)', card.note.length>10 && card.pinkHeart);
 ok('the disclosure sits with the first product link on this screen', card.disc==='Some links may earn a commission.');
 
+console.log('1b. Her catch: the FARM Rio photo had feet cut off, empty space at top');
+const crop = await page.evaluate(()=>{
+  const keep=window.WEEK_STAR_PIN;
+  // FARM Rio carries pxPos:'center 60%' -- prove the actual rendered <img>'s
+  // object-position really is her fix, not just that the data field exists.
+  window.WEEK_STAR_PIN='FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress';
+  _renderWeekStar();
+  const farmRioPos=getComputedStyle(document.querySelector('#wbStar .wks-px')).objectPosition;
+  // A star with NO pxPos must fall back to the shared class default untouched
+  // -- this is a per-item override, never a change to how every other photo
+  // crops. The DVF wrap dress carries a photo but no pxPos.
+  window.WEEK_STAR_PIN='Diane von Furstenberg Jeanne Silk Jersey Wrap Dress';
+  _renderWeekStar();
+  const noOverridePos=getComputedStyle(document.querySelector('#wbStar .wks-px')).objectPosition;
+  const noOverrideInlineStyle=document.querySelector('#wbStar .wks-px').getAttribute('style');
+  window.WEEK_STAR_PIN=keep;
+  _renderWeekStar();
+  return {farmRioPos, noOverridePos, noOverrideInlineStyle};
+});
+ok('FARM Rio\'s photo carries her fix (object-position: 50% 60%, not the top-aligned default)',
+   crop.farmRioPos==='50% 60%', crop.farmRioPos);
+ok('a star with no pxPos keeps the shared class default untouched (top-aligned)',
+   crop.noOverridePos==='50% 0%', crop.noOverridePos);
+ok('and it carries no inline style at all -- this is a PER-ITEM override, not a class change',
+   crop.noOverrideInlineStyle===null, String(crop.noOverrideInlineStyle));
+
 console.log('2. The Sunday rotation (her ask, 2026-08-14 — automatic, local-calendar Sundays)');
 const rot = await page.evaluate(()=>{
   // ⚠️ REWRITTEN 2026-08-25, her unpin ("yes, let's go ahead and unpin"). The
