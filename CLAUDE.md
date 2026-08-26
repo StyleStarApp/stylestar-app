@@ -127,6 +127,24 @@ She texted herself the `/journal` link and screenshotted it live. Two catches, b
    grows. Also caught and fixed in the same pass: the intro paragraph ("Notes on style, from Catherine...")
    was splitting the brand name across two lines and stranding "Star." alone on a third — the standard
    widow, fixed with `text-wrap:balance` like everywhere else in the app.
+- 🚨🚨 **AND THEN THE FIX ITSELF MISFIRED, SAME DAY: she texted herself the link and the logo was gone
+  EVERYWHERE in the app, not just the one screen — a much bigger regression than the original bug.**
+  ▶▶ **THE REAL MECHANISM, and it is a standing lesson for this whole app: it is a SINGLE-PAGE APP, so
+  removing an `<img>` from the DOM on one failed load removes it PERMANENTLY for the rest of that browser
+  session** — there is no page reload between screens to bring it back. A hotlinked retailer photo failing
+  once is genuinely disposable; the app's OWN logo, same server as the page that just loaded, deserves a
+  real second chance before giving up. ✅ **FIXED: all 12 logo `<img>` tags now RETRY up to twice (with a
+  cache-busting query string, in case it was a transient blip) before finally removing the element** — a
+  weak-signal moment now gets a real second and third chance instead of one miss costing the whole visit.
+  ⚠️ **A SECOND BUG SURFACED WHILE TESTING THE FIX, worth remembering for this file's own two-script-block
+  structure: the retry function was first defined in the SECOND, much-later `<script>` block, but every
+  logo `<img>` tag in the markup sits BETWEEN the two blocks** — so an unusually fast failure could fire
+  `onerror` before the function was ever defined, throwing `_logoRetry is not defined`. **Moved the
+  definition into the FIRST script block**, which runs before any body markup exists, closing the race.
+  **Her exact question, answered: most real visitors (Google search, a shared link, any normal connection)
+  were never at risk — the logo loads on the first try same as always.** The exposure was narrowly a flaky
+  connection at the precise moment of page load, and it is now a real retry instead of an instant,
+  session-long give-up.
 - ⚠️ **SHE ALSO ASKED ABOUT KEYBOARD/SCREEN-READER ACCESSIBILITY on the hub's article row** (it's a plain
   clickable `<div>`, unreachable by Tab and invisible to a screen reader — unlike the article's own CTA
   button, which has proper `role="button" tabindex="0"` + a key handler). **Checked and it is NOT unique to
