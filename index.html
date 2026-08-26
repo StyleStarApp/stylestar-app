@@ -12661,25 +12661,20 @@ function _buildWbHubs(){
 // The Edit page keeps her FULL notes (its own fuller register); only the Star
 // card speaks in one-liners. URLs are the Edit's own exact product links
 // (canonical, tracking stripped per the standing rule).
-/* ⚠️ PINNED. Her call 2026-08-24: the Star moves to her FARM Rio Pink Garden
-   Terrace maxi (it was the DVF silk scarf, pinned 2026-08-20 while she waited
-   to invite testers; testers are out now, so the reason that pin existed is
-   spent and only her choice of piece is holding it).
-   ▶ TO RESUME THE ROTATION: set WEEK_STAR_PIN back to null. Nothing else to
-   change — the queue and the anchor Sunday are untouched, so rotation simply
-   starts obeying the calendar again.
-   ⚠️⚠️ AND THE ONE THING WITH A REAL CLOCK, so it cannot pass unnoticed: the
-   Vilebrequin cover-up sits at INDEX 6, which is the week of 20 SEPTEMBER 2026.
-   She asked for it "before December, closer to summer would be best". If she is
-   still pinned on 20 September it does not come up, and the next time index 6
-   comes round is 24 JANUARY 2027. ▶ That is exactly why the FARM Rio entry was
-   inserted AFTER the cover-up rather than before it: adding an item ahead of
-   index 6 would have quietly slid her deadline a week without anyone deciding
-   to. Any future insertion owes the same care.
-   ⚠️ The queue is 19 now, so the week-to-item mapping is week mod 19; ask her
-   whether she wants it reordered at the moment she unpins rather than guessing
-   for her. */
-var WEEK_STAR_PIN='FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress';
+/* ⚠️ UNPINNED 2026-08-25, her call: "yes, let's go ahead and unpin." The pin
+   held on her FARM Rio maxi from 2026-08-24; that reason (waiting on the item
+   she wanted showing) is spent, so rotation resumes on the calendar.
+   ▶ TO RE-PIN: set WEEK_STAR_PIN to an exact item name from the queue below.
+   ⚠️ THE QUEUE WAS REORDERED THE SAME DAY (photo items brought forward, 2
+   Marissa Collections pieces added) — 19 → 22 items, so the week-to-item
+   mapping is week mod 22 now, different from any date written down before.
+   ⚠️⚠️ THE ONE THING WITH A REAL CLOCK, so it cannot pass unnoticed: the
+   Vilebrequin cover-up now sits at INDEX 3, the week of 30 AUGUST 2026 — well
+   inside her "before December, closer to summer would be best" ask, and safer
+   than its old slot (index 6, 20 September) which was cutting it close. The
+   reorder was deliberately built to bring it EARLIER, not later — check the
+   date math again before any future insertion shifts anything ahead of it. */
+var WEEK_STAR_PIN=null;
 var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'Nordstrom',url:'https://www.nordstrom.com/s/8960533',price:'$89',
    note:'A kitten heel is the easiest polish there is. Slide it on and every outfit steps up a notch.'}, // ✅ BLESSED by Cath 2026-08-13 — hers now, don't reword
   {n:'Gold Stretchy Stacking Bangles',store:'Badu · Amazon',url:'https://www.amazon.com/dp/B0CWD1RYK3',price:'$16.99',

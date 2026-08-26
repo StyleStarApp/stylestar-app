@@ -79,17 +79,23 @@ ok('the disclosure sits with the first product link on this screen', card.disc==
 
 console.log('2. The Sunday rotation (her ask, 2026-08-14 — automatic, local-calendar Sundays)');
 const rot = await page.evaluate(()=>{
-  // ⚠️ The Star is PINNED (her call 2026-08-20, holds on the DVF scarf until she
-  // invites testers). The pin deliberately overrides the calendar, so rotation
-  // arithmetic is measured with it cleared and restored afterwards; the pin's own
-  // behaviour is asserted separately below.
-  const _pin=window.WEEK_STAR_PIN; window.WEEK_STAR_PIN=null;
+  // ⚠️ REWRITTEN 2026-08-25, her unpin ("yes, let's go ahead and unpin"). The
+  // old version measured the PIN mechanism against whatever WEEK_STAR_PIN
+  // happened to be live -- which meant it only ever tested one of the two
+  // states, and broke outright the moment the real state went from a pinned
+  // name to null. The mechanism is proven here on a NEUTRAL test pin (an
+  // arbitrary real queue member, not whatever she currently has set), so it
+  // stays true whether she is pinned, unpinned, or repins to something else
+  // next week. Her ACTUAL current pin state is asserted separately, below.
+  const _realPin=window.WEEK_STAR_PIN;
+  const _testPin=WEEK_STARS[Math.min(5,WEEK_STARS.length-1)].n;
+  window.WEEK_STAR_PIN=null;
   const i=(y,m,d,h)=>_weekStarIndex(new Date(y,m,d,h||12));
   const L=WEEK_STARS.length;
   // wrap date DERIVED from L, never restated — the curated.js lesson: a test that
   // hardcodes a number must be edited every time the queue grows.
   const wrapDate=new Date(2026,7,9); wrapDate.setDate(wrapDate.getDate()+7*L);
-  return {
+  const __r = {
     len:L,
     // every entry is a real star: a name, a store, an https url and her note
     allNamed:WEEK_STARS.every(x=>x&&x.n&&x.store&&/^https:\/\//.test(x.url||'')&&x.note),
@@ -108,12 +114,19 @@ const rot = await page.evaluate(()=>{
     // queue integrity: every entry complete, every URL https + safe
     complete: WEEK_STARS.every(s=>s.n&&s.store&&s.price&&s.note&&_wlSafeUrl(s.url)&&/^https:/.test(s.url)),
     uniqueUrls: new Set(WEEK_STARS.map(s=>s.url)).size===L,
-    // the pin itself, measured after restoring it
-    pinned:(()=>{window.WEEK_STAR_PIN=_pin;
+    // the MECHANISM, proven on the neutral test pin — never mind what she has
+    // set live right now
+    pinned:(()=>{window.WEEK_STAR_PIN=_testPin;
       const seen=new Set(); for(let d=0;d<364;d+=7){seen.add(_weekStarIndex(new Date(2026,7,9+d)));}
-      return {holds:seen.size===1, isPinned:((_weekStar()||{}).n||'')===window.WEEK_STAR_PIN,
-              names:WEEK_STARS.some(x=>x.n===_pin)};})()
+      return {holds:seen.size===1, isPinned:((_weekStar()||{}).n||'')===_testPin};})(),
+    // HER ACTUAL LIVE STATE — either a real pin naming a real queue member,
+    // or explicitly null. Both are honest outcomes; note which one it is.
+    realState:_realPin?{isPinned:true,names:WEEK_STARS.some(x=>x.n===_realPin)}:{isPinned:false}
   };
+  // restore her real live state before the function returns to Node — the
+  // mechanism test above deliberately overwrote WEEK_STAR_PIN twice.
+  window.WEEK_STAR_PIN=_realPin;
+  return __r;
 });
 // DERIVED, not restated (the curated.js lesson, paid for twice now): this used
 // to name a number and had to be edited every time she added a star — 16 → 17
@@ -133,14 +146,16 @@ ok('a clock set before the anchor clamps to the first star', rot.preAnchor===0);
 ok('HER RULE: no intimates or swim in the queue', rot.noIntimates);
 ok('every entry complete with a safe https product URL', rot.complete);
 ok('no duplicate items in the queue', rot.uniqueUrls);
-// HER PIN, 2026-08-20 — the Star holds until she is ready for testers.
+// THE PIN MECHANISM, proven on a neutral test pin — true whichever way she
+// currently has the real WEEK_STAR_PIN set.
 ok('PINNED: the same Star on every week of the year', rot.pinned.holds);
-// ⚠️ UPDATED DELIBERATELY 2026-08-24: this named the DVF scarf and failed
-// the moment she moved the pin to her FARM Rio maxi -- i.e. it failed on the
-// feature working. Derived from WEEK_STAR_PIN now, which is the stronger
-// claim and survives every future pin move.
 ok('PINNED: and the served Star IS whatever the pin names', rot.pinned.isPinned);
-ok('the pin names a piece that really is in the queue', rot.pinned.names);
+// ⚠️ REWRITTEN 2026-08-25, her unpin: either she is currently pinned (and
+// that pin had better name a real queue member), or she is unpinned and the
+// mechanism above is all that needs proving. Both are correct outcomes.
+ok('HER LIVE STATE: unpinned, or pinned to a real queue member',
+   !rot.realState.isPinned || rot.realState.names,
+   JSON.stringify(rot.realState));
 
 console.log('3. Saving the star');
 const save = await page.evaluate(()=>{

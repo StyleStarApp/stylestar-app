@@ -73,18 +73,30 @@ ok('every queue url is https', [...q.matchAll(/url:'([^']+)'/g)].every(m=>m[1].s
 ok('HER RULE: no intimates or swim in the queue',
    !/\b(bra|bras|bralette|bikini|swimsuit|swimwear|lingerie|underwear|thong|panties)\b/i.test(names.join(' ')),
    names.filter(n=>/\b(bra|bikini|swim|lingerie|underwear)\b/i.test(n)).join());
+// ⚠️ EITHER a pinned name or a bare `null` — WEEK_STAR_PIN moved to the second
+// shape 2026-08-25 when she unpinned ("yes, let's go ahead and unpin"), so the
+// pin-specific checks below only run when a pin is actually set. The claim
+// under test either way is that the variable is coherent with the queue, not
+// which of the two states it happens to be in right now.
 const PIN=(src.match(/var WEEK_STAR_PIN='([^']*)'/)||[])[1];
-const PINNED_PRICE=(function(){
-  const m=q.match(new RegExp("\\{n:'"+PIN.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+"'[\\s\\S]*?price:'([^']+)'"));
-  return m?m[1]:'';
-})();
-ok('the pin names a piece that IS in the queue', names.includes(PIN), PIN);
-ok('the pinned piece carries a price', /^[~$]/.test(PINNED_PRICE), PINNED_PRICE);
-// ⚠️ Tolerant of the sentence around it (it reads "TO RESUME THE ROTATION:"
-// since 2026-08-24). The claim under test is that the instruction EXISTS, not
-// its exact prose -- pinning prose is how an assertion starts failing on a
-// correct file.
-ok('the resume instruction is written at the code', /TO RESUME[^:\n]*: set WEEK_STAR_PIN back to null/.test(src));
+if(PIN){
+  const PINNED_PRICE=(function(){
+    const m=q.match(new RegExp("\\{n:'"+PIN.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+"'[\\s\\S]*?price:'([^']+)'"));
+    return m?m[1]:'';
+  })();
+  ok('the pin names a piece that IS in the queue', names.includes(PIN), PIN);
+  ok('the pinned piece carries a price', /^[~$]/.test(PINNED_PRICE), PINNED_PRICE);
+} else {
+  ok('WEEK_STAR_PIN is explicitly null when unpinned', /var WEEK_STAR_PIN=null;/.test(src));
+}
+// ⚠️ Tolerant of the sentence around it — the wording changed 2026-08-25 (was
+// "TO RESUME THE ROTATION: set WEEK_STAR_PIN back to null"). The claim under
+// test is that an instruction for reversing the CURRENT state exists, not its
+// exact prose — pinning prose is how an assertion starts failing on a correct
+// file.
+ok('the re-pin/resume instruction is written at the code',
+   /TO RE-PIN: set WEEK_STAR_PIN to an exact item name/.test(src) ||
+   /TO RESUME[^:\n]*: set WEEK_STAR_PIN back to null/.test(src));
 
 /* ---------- PART 2 · live, in the real page ---------- */
 const srv=http.createServer((rq,rs)=>{let p=decodeURIComponent(rq.url.split('?')[0]);if(p==='/')p='/index.html';
@@ -189,38 +201,67 @@ ok('the affiliate wrap reaches exactly the approved links, no more and no fewer'
 ok('Save control still generated for EVERY item',
    (await pg.evaluate(()=>document.querySelectorAll('#s-dream .dc-item .wl-save').length))===editCount);
 
-// pin behaviour across a year of Sundays
-const pinres=await pg.evaluate(()=>{
+// pin behaviour across a year of Sundays — exercised on a NEUTRAL test pin
+// (an arbitrary queue member, not whatever she currently has the real pin
+// set to) so this proves the MECHANISM works whether she is pinned, unpinned,
+// or repins to a different piece next week. ⚠️ REWRITTEN 2026-08-25 when she
+// unpinned: the old version read the page's OWN live WEEK_STAR_PIN, so it only
+// ever tested whichever state she happened to be in, and broke outright the
+// moment that state was null. Testing the mechanism directly means neither
+// state can ever leave this block silently untested again.
+const TEST_PIN=names[Math.min(5,names.length-1)];
+const pinres=await pg.evaluate((testPin)=>{
   const out={pinned:new Set(),unpinned:new Set()};
+  const keep=window.WEEK_STAR_PIN;
+  window.WEEK_STAR_PIN=testPin;
   for(let d=0;d<364;d+=7){const t=new Date(2026,7,9+d);out.pinned.add(_weekStarIndex(t));}
-  const keep=window.WEEK_STAR_PIN; window.WEEK_STAR_PIN=null;
+  window.WEEK_STAR_PIN=null;
   for(let d=0;d<364;d+=7){const t=new Date(2026,7,9+d);out.unpinned.add(_weekStarIndex(t));}
+  const servedWhilePinned=(function(){window.WEEK_STAR_PIN=testPin;return _weekStar().n;})();
   window.WEEK_STAR_PIN=keep;
-  return {pinned:[...out.pinned],unpinned:[...out.unpinned].length};
-});
+  return {pinned:[...out.pinned],unpinned:[...out.unpinned].length,servedWhilePinned};
+},TEST_PIN);
 ok('PINNED: the same star on all 52 weeks', pinres.pinned.length===1, JSON.stringify(pinres.pinned));
-// ⚠️ DERIVED FROM THE PIN, not from a piece name (updated deliberately
-// 2026-08-24, when she moved the pin from the DVF scarf to her FARM Rio maxi).
-// Naming the piece made this fail every time she exercised the feature exactly
-// as designed. The real claim is stronger: whatever WEEK_STAR_PIN names is what
-// the app actually serves.
-ok('PINNED: and the served Star IS the pinned piece',
-   (await pg.evaluate(()=>_weekStar().n))===PIN, PIN);
+// derived from the test pin, so this can never go stale whichever piece it is
+ok('PINNED: and the served Star IS the pinned piece', pinres.servedWhilePinned===TEST_PIN, TEST_PIN);
 // derived from the queue itself, so growing the queue never makes this stale
 ok('UNPINNED: rotation resumes across the WHOLE queue',
    pinres.unpinned===names.length, pinres.unpinned+' of '+names.length);
 
-// the Star card actually renders the scarf on Welcome Back
+// the Star card renders on Welcome Back IN HER ACTUAL CURRENT STATE (whatever
+// WEEK_STAR_PIN really is right now, pinned or rotating) — proven correct by
+// checking it against whatever _weekStar() itself says it is serving, never
+// against a hardcoded piece name.
 const star=await pg.evaluate(()=>{show('s-wb');_renderWeekStar();
   const el=document.getElementById('wbStar');
   return {on:el.classList.contains('on'),txt:el.textContent.trim().slice(0,120),
-          href:(el.querySelector('a[href]')||{}).href||''};});
+          href:(el.querySelector('a[href]')||{}).href||'',servedName:_weekStar().n,
+          approved:!!_affMid(_weekStar().url)};});
 ok('Star card renders', star.on, JSON.stringify(star).slice(0,120));
-// derived from the pinned entry, so moving the pin can never make these stale
-ok('Star card shows the pinned piece', star.txt.includes(PIN), star.txt);
-ok('Star card shows that piece\'s own price', star.txt.includes(PINNED_PRICE),
-   PINNED_PRICE+' — '+star.txt);
-ok('Star card link is affiliate-wrapped', star.href.includes('click.linksynergy'), star.href.slice(0,80));
+ok('Star card shows the currently-served piece', star.txt.includes(star.servedName), star.txt);
+const servedPrice=(function(){
+  const m=q.match(new RegExp("\\{n:'"+star.servedName.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+"'[\\s\\S]*?price:'([^']+)'"));
+  return m?m[1]:'';
+})();
+ok('Star card shows that piece\'s own price', star.txt.includes(servedPrice), servedPrice+' — '+star.txt);
+// ⚠️ DERIVED from whether the currently-served store is actually approved,
+// not a hardcoded assumption — the unpinned rotation can land on a piece
+// (e.g. Athleta) that genuinely doesn't earn yet, and the honest, correct
+// behaviour is to serve a plain link rather than fake a wrap. The mechanism
+// itself is already proven above (PINNED: the served Star IS the pinned
+// piece, run against a known-approved test pin).
+ok('Star card link is affiliate-wrapped exactly when the store is approved',
+   star.href.includes('click.linksynergy')===star.approved, JSON.stringify(star));
+
+// ---- everything below needs a KNOWN photo-and-affiliate item pinned, not
+// whatever she currently has live (unpinned rotation may be sitting on a
+// piece with neither) — so pin to one on purpose for this block only, and
+// put the real state back before the layout sweep at the bottom. ⚠️ Rewritten
+// 2026-08-25: the old version relied on window.WEEK_STAR_PIN already being
+// set live, which broke the instant she unpinned.
+const REAL_PIN=await pg.evaluate(()=>window.WEEK_STAR_PIN);
+const PHOTO_TEST_PIN='FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress';
+await pg.evaluate((p)=>{window.WEEK_STAR_PIN=p;_renderWeekStar();},PHOTO_TEST_PIN);
 
 // ---- the Star card's own photo, and its licensing gate ----
 const sp=await pg.evaluate(()=>{
@@ -308,6 +349,9 @@ const fold=await pg.evaluate(()=>{
 ok('Shop it stays above the iPhone fold (700px)', fold.shopBottom>0&&fold.shopBottom<=700, JSON.stringify(fold));
 ok('Save stays above the iPhone fold', fold.saveBottom>0&&fold.saveBottom<=700, JSON.stringify(fold));
 await pg.setViewportSize({width:390,height:900});
+// put her real state back — the photo-block tests above pinned to a KNOWN
+// item on purpose; leave the page exactly as it actually is live.
+await pg.evaluate((p)=>{window.WEEK_STAR_PIN=p;},REAL_PIN);
 
 // layout at every width
 for(const w of [390,360,320]){
