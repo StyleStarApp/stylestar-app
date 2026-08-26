@@ -4896,10 +4896,15 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
          $53.95 (largest of the 5 sizes), so it carries the same ~$ notation
          as the other Edit items whose price genuinely varies by option
          (Athleta, Express, L'AGENCE, MZ Wallace) rather than a fixed number
-         that would be wrong for some shoppers. No px: -- Etsy blocks image
-         fetching from this sandbox, so there is no verified photo to show;
-         see the WEEK_STARS entry below for the same reasoning. -->
+         that would be wrong for some shoppers.
+         ✅ PHOTO ADDED same day, she grabbed it herself: i.etsystatic.com,
+         the Etsy image CDN, is NOT bot-walled the way etsy.com itself is --
+         reachable and verified 200/image-jpeg from this sandbox. Source is
+         1588x1588 (square); the shared 3:4 crop centers on it cleanly (all
+         six colorway hearts stay in frame, checked with a rendered preview
+         before shipping) so no pxPos override is needed, unlike FARM Rio. -->
     <div class="dc-item">
+      <img class="dc-item-px" src="https://i.etsystatic.com/11251328/r/il/7af46b/6599573925/il_1588xN.6599573925_3cd9.jpg" alt="Isabella Celini Stackable Love Bracelet" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">Isabella Celini Stackable Love Bracelet</div>
       <div class="dc-item-meta"><span class="dc-store">Etsy</span><span class="dc-price">~$50</span></div>
@@ -13182,16 +13187,25 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
   // 54027, approved the same day -- see STORES and _AFF_MID). She gave the
   // listing directly: price $49.95-$53.95 across 5 sizes, hence ~$50, same
   // notation as the other varies-by-option Edit items.
-  // ⚠️ NO px:, AND THAT IS DELIBERATE, NOT AN OMISSION. Two reasons stack:
-  // (1) Etsy 403s every request from this sandbox, so there is no verified
-  // image URL to add -- the standing rule is never guess one; (2) even with
-  // a real photo, this piece is IN WEEK_STARS but NOT in
-  // WEEK_STAR_PHOTO_ORDER below, so it cannot enter the actual Star of the
-  // Week rotation yet -- her own rule from 2026-08-26: "we are doing only
-  // the photograph ones first." It is real data, on the Edit, ready to join
-  // the rotation the moment a real product photo exists.
+  // ✅ PHOTO ADDED same day -- she grabbed the image address herself off the
+  // listing (i.etsystatic.com, Etsy's image CDN, is not bot-walled the way
+  // etsy.com is; verified 200/image-jpeg from this sandbox). Source is
+  // 1588x1588 square; rendered the actual 3:4 crop before shipping and it
+  // centers cleanly, all six colorway hearts stay in frame -- no pxPos
+  // override needed. It is a real lifestyle/on-wrist shot (not a flat
+  // product photo), background is an outdoor railing/pavement rather than
+  // studio-clean -- flagged to her, her call if she'd rather swap it.
+  // ▶ NOW ALSO IN WEEK_STAR_PHOTO_ORDER, her original ask. Appended at the
+  // END, which is deliberately the safe place: every current week number
+  // below 7 (i.e. everything through Fleur du Mal's Sep 20 turn) maps to
+  // the exact same index whether the pool is 7 items or 8, so NONE of the
+  // near-term dates move, incl. Vilebrequin's Sep 6 turn well ahead of its
+  // Sep 20 deadline. The only effect is every item currently scheduled from
+  // Sep 27 onward (Love Hearts Necklace and later) slides back exactly one
+  // week to make room -- nothing time-sensitive sits there.
   {n:'Isabella Celini Stackable Love Bracelet',store:'Etsy',url:'https://www.etsy.com/listing/1223444750/heart-pendant-stackable-love-bracelet',price:'~$50',
-   note:'The best stretchy bracelets. They come in 5 sizes and 6 colors for a perfect fit on your wrist.'},
+   note:'The best stretchy bracelets. They come in 5 sizes and 6 colors for a perfect fit on your wrist.',
+   px:'https://i.etsystatic.com/11251328/r/il/7af46b/6599573925/il_1588xN.6599573925_3cd9.jpg'},
 
 ];
 /* PHOTOS-ONLY ROTATION, her call 2026-08-26: seeing the Athleta linen pant
@@ -13223,13 +13237,21 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
 // jewelry, dress. ⚠️ Vilebrequin's Sept-20 deadline is UNCHANGED and still
 // safe -- it now lands 6 Sep, even earlier than before.
 var WEEK_STAR_PHOTO_ORDER=[
-  'Love Hearts Find Me Pendant Necklace',                         // Sep 27, unchanged
-  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 4, was the red bag's slot
+  'Love Hearts Find Me Pendant Necklace',                         // Oct 4, pushed back a week -- see below
+  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 11, pushed back a week -- see below
   'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',      // Aug 26 (this week), unchanged
   'Serpui Abigail Handbag — Red',                                  // Aug 30, was Vilebrequin's slot
   'Vilebrequin Long Mesh Cover-Up Dress — Off White',              // Sep 6, was DVF's slot
   'Veronica Beard Crosbie Jean',                                   // Sep 13, unchanged
-  'Fleur du Mal Sculpt Molded Sports Bra'                          // Sep 20, unchanged
+  'Fleur du Mal Sculpt Molded Sports Bra',                         // Sep 20, unchanged
+  // Isabella Celini Stackable Love Bracelet, added 2026-08-26 with a real
+  // photo -- her original ask, held back only until the photo existed. Added
+  // at the END on purpose: every date ABOVE this line (through Fleur du
+  // Mal's Sep 20 turn) is completely unaffected by an 8th item -- the index
+  // math is identical for pool lengths 7 and 8 until week 7. Only what was
+  // scheduled Sep 27 onward slides back one week (see the two updated
+  // comments above); nothing time-sensitive lived there.
+  'Isabella Celini Stackable Love Bracelet'                        // Sep 27, the bracelet's first turn
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can
