@@ -4891,6 +4891,22 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       <a class="dc-item-btn" href="https://www.nordstrom.com/s/8960533" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
+    <!-- Isabella Celini Stackable Love Bracelet, added 2026-08-26. Her Etsy
+         listing, direct from her paste: price runs $49.95 (base size) to
+         $53.95 (largest of the 5 sizes), so it carries the same ~$ notation
+         as the other Edit items whose price genuinely varies by option
+         (Athleta, Express, L'AGENCE, MZ Wallace) rather than a fixed number
+         that would be wrong for some shoppers. No px: -- Etsy blocks image
+         fetching from this sandbox, so there is no verified photo to show;
+         see the WEEK_STARS entry below for the same reasoning. -->
+    <div class="dc-item">
+      <span class="dc-item-star">⭐</span>
+      <div class="dc-item-name">Isabella Celini Stackable Love Bracelet</div>
+      <div class="dc-item-meta"><span class="dc-store">Etsy</span><span class="dc-price">~$50</span></div>
+      <div class="dc-item-note">The best stretchy bracelets. They come in 5 sizes and 6 colors for a perfect fit on your wrist.</div>
+      <a class="dc-item-btn" href="https://www.etsy.com/listing/1223444750/heart-pendant-stackable-love-bracelet" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
+    </div>
+
     <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-trend-link" onclick="openWardrobe('trend')">Curious what's trending right now? &rarr;</div>
 
@@ -6578,12 +6594,21 @@ const STORES={
   // set per independent seller with no house standard to promise against.
   // ⚠️ deep:1 was DELIBERATELY NOT SET: Etsy's own on-site search is famous
   // for surfacing specific, niche queries well, but that is a guess and not
-  // measured -- the search URL below could not be verified either (Etsy
-  // 403s every request from this sandbox, the same wall as Vilebrequin and
-  // Olivela). Her address bar is the only instrument for both.
+  // measured.
+  // ✅ SEARCH VERIFIED 2026-08-26, her own address bar: she searched "heart
+  // bracelet" and confirmed real matching results at
+  // etsy.com/search?q=heart+bracelet&instant_download=false. The `?q=` param
+  // is right, and `&instant_download=false` is carried in `gp` on purpose --
+  // it excludes Etsy's huge volume of DIGITAL-ONLY listings (SVGs, printables,
+  // PDF templates) that would otherwise pollute a search meant to land on
+  // wearable, buyable pieces. ⚠️ `gp` is the generic append-after-term slot
+  // (`s.u+term+(s.gp||'')`) -- reused here for a NON-gender filter, same
+  // mechanism as Amazon's i=fashion-womens, just a different job. No other
+  // store in the table needs this; Etsy is the only marketplace-of-
+  // independent-sellers in it.
   // ▶ HERS TO CORRECT: all ten numbers, the price tier, the archetype tags,
-  // and whether `deep` should be set once she has tested the search herself.
-  'Etsy':{u:'https://www.etsy.com/search?q=',t:'$-$$$$',a:'Universal',s:[],d:[8,4,4,4,6,8,4,4,7,8],c:'handmade goods, vintage finds, personalized jewelry and gifts, independent makers, home decor, art'},
+  // and whether `deep` should be set once she has tested more searches.
+  'Etsy':{gp:'&instant_download=false',u:'https://www.etsy.com/search?q=',t:'$-$$$$',a:'Universal',s:[],d:[8,4,4,4,6,8,4,4,7,8],c:'handmade goods, vintage finds, personalized jewelry and gifts, independent makers, home decor, art'},
   'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[8,6,8,6,8,7,7,5,6,9],deep:1,c:'dresses, occasion, unique pieces'},
   'Express':{w:1,u:'https://www.express.com/exp/search?q=',t:'$$',a:'Modern Glam, Professional Power',s:['petite'],d:[3,8,7,4,8,5,8,10,8,7],c:'going-out looks, workwear, denim'},
   // The old /r/search?query= silently landed on Revolve's homepage (Cath caught
@@ -13153,6 +13178,20 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
   {n:'Fleur du Mal Sculpt Molded Sports Bra',store:'Fleur du Mal',url:'https://fleurdumal.com/products/sculpt-molded-sports-bra-black',price:'$98',
    note:'Actual bra sizing with adjustable straps, for better support and comfort. And it looks stylish!',
    px:'https://fleurdumal.com/cdn/shop/files/sculpt_sports_bra_black.jpg?v=1775576790&width=800'},
+  // Isabella Celini Stackable Love Bracelet, added 2026-08-26 (Etsy, mid
+  // 54027, approved the same day -- see STORES and _AFF_MID). She gave the
+  // listing directly: price $49.95-$53.95 across 5 sizes, hence ~$50, same
+  // notation as the other varies-by-option Edit items.
+  // ⚠️ NO px:, AND THAT IS DELIBERATE, NOT AN OMISSION. Two reasons stack:
+  // (1) Etsy 403s every request from this sandbox, so there is no verified
+  // image URL to add -- the standing rule is never guess one; (2) even with
+  // a real photo, this piece is IN WEEK_STARS but NOT in
+  // WEEK_STAR_PHOTO_ORDER below, so it cannot enter the actual Star of the
+  // Week rotation yet -- her own rule from 2026-08-26: "we are doing only
+  // the photograph ones first." It is real data, on the Edit, ready to join
+  // the rotation the moment a real product photo exists.
+  {n:'Isabella Celini Stackable Love Bracelet',store:'Etsy',url:'https://www.etsy.com/listing/1223444750/heart-pendant-stackable-love-bracelet',price:'~$50',
+   note:'The best stretchy bracelets. They come in 5 sizes and 6 colors for a perfect fit on your wrist.'},
 
 ];
 /* PHOTOS-ONLY ROTATION, her call 2026-08-26: seeing the Athleta linen pant
