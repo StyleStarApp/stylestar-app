@@ -7,7 +7,119 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-26 LATER — 🔎 SEARCHABLE OUTSIDE INSTAGRAM: THE TITLE IS FIXED, FLEUR DU MAL IS STORE 102, AND THE STAR NEVER RUNS 3 DRESSES IN A ROW)
+## ▶ NEXT SESSION — START HERE (2026-08-26 EVENING — 📓 THE STYLE JOURNAL IS LIVE, AND ADDING ARTICLE #2 IS NOW A SHORT RECIPE)
+
+### ⏸ WHERE THIS SESSION PAUSED (her question: "next time I write an article is it in the memory notes what needs to happen?" — this entry is the answer)
+**THREE COMMITS THIS SESSION, ALL PUSHED TO `main` AND CURL-VERIFIED LIVE.** ▶▶ **THE SHAPE OF IT: she took a
+ChatGPT interview transcript and turned it into the FIRST Style Journal article, then asked for a real SEO
+pass on it, then asked whether the whole thing would need repeating by hand for every future article — and
+the honest answer was yes, so this session's second half rebuilt it so that stops being true.**
+
+### 📖 ARTICLE #1 IS LIVE: "How to Find Your Personal Style" at `stylestar.app/journal/how-to-find-your-personal-style`
+Her own words, restructured with real SEO subheadings (each one phrased as a real question — "How Do I Find
+My Personal Style?", "Do I Have to Pick One Style 'Type'?" — because that is what a woman actually types into
+Google, and Google can pull a well-phrased subheading straight into a featured-answer result).
+- ⚠️ **HER STANDING RULE FOR EVERY FUTURE ARTICLE, SET THIS SESSION: no wedding-guest-dress topic, ever** —
+  her own daughter is getting married in November (a formal wedding) and she does not want family or friends
+  reading unsolicited style advice through the app right when it would land closest to home. This is a
+  durable rule, not a one-off, so rule OUT wedding-guest angles when brainstorming future topics, not just
+  the immediate one.
+- ⭐ **THE BYLINE WENT THROUGH THREE REAL ROUNDS BEFORE IT LANDED, and the lesson is worth keeping: when a
+  fix does not satisfy her twice, stop re-tuning the same CSS property and render real alternatives instead.**
+  Round 1 (`text-wrap:balance` on one flowing sentence) she initially accepted, then came back with "I still
+  don't like how this looks any other ideas." ▶ **Four real options were rendered rather than guessed at
+  again**, and she picked **Option D, a masthead**: name on its own line, credential on the next, the "Read
+  my story →" link on a third — because a masthead never depends on finding the right BREAK POINT in a
+  sentence carrying three separate jobs (who wrote it, two credentials, a link elsewhere) at once.
+- ✅ **"Sliders Instead of Style Types" was a factual overclaim and she caught it**: the app DOES give a real
+  archetype (plus two secondary ones), so a headline implying "no types at all" was wrong. Reworded to "Why I
+  Built a Personal Style Quiz With Sliders, Not a Single Style 'Type'" — narrower, true, still SEO-shaped.
+- ⭐⭐ **THE FREE/NO-SIGNUP MESSAGING, and her wording correction is a standing rule now**: she wanted to say
+  Style Star is free with no subscription and no signup, worried it might "cheapen" the app, and reacted
+  specifically against **"Free to start"** — her words: *"sounds like we are going to charge later."*
+  ▶▶ **STANDING RULE: never phrase the free/no-signup messaging as conditional or temporary** (no "to start",
+  no "free trial," nothing implying a future paywall) — **Style Star has no paid tier, so the wording must
+  state a permanent fact, not a starting condition.** Shipped: **"Always free, no signup required."** replacing
+  the old "12 quick questions, no wrong answers." line under the quiz CTA on Discover. ⚠️ That old line was
+  itself an unblessed Claude draft per this file's own history, so nothing blessed was lost by replacing it.
+- 🚨 **A CTA OVERFLOW BUG SHE HAD NEVER SEEN, found while rendering at 320px for the messaging work**: the
+  "START MY STYLE QUIZ" button's arrow icon spilled up to 16px past its own frame at narrow widths — **this
+  was invisible in every past session's renders because of the standing font-loading sandbox limitation**
+  (real Jost is wider than the fallback font this environment silently substitutes when it can't reach Google
+  Fonts), so nobody, including past sessions, ever actually measured it with the real typeface until now.
+  Fixed with a `@media(max-width:330px)` block that reclaims space from padding/gaps/icon size — **never from
+  the label's own font size**, per the standing readability-over-evenness rule for this 18-80 audience.
+- ✅ **FAQPage schema is live on `/faq`** — all 18 real Q&A pairs, extracted programmatically off the live
+  page's own `.textContent` (never hand-typed) so it can never silently drift from what a visitor actually
+  reads. ⚠️ **If a question is ever added/edited/removed in the FAQ, this schema block must be regenerated
+  the same way** — read it live with a headless browser, don't hand-edit the JSON.
+- ✅ **She walked through Google Search Console's Request Indexing flow herself** (briefly landed on the AMP
+  section by mistake — harmless, just the wrong tab) and successfully requested indexing on the article URL.
+  Nothing else owed on the Google side for article #1; the schema, the per-page title/description, the
+  canonical tag and the sitemap entry were all already in place going into that step.
+- ⭐ **"Founder" beats "Creator" for consistency, and this was decided, not just used**: the app already says
+  "Founder of Style Star" in the app's own Menu/Contact/My Story voice, so the byline matches rather than
+  introducing a second word for the same role.
+
+### ⭐⭐ THE REAL ANSWER TO HER QUESTION: A NEW ARTICLE IS NOW A SHORT, WRITTEN-DOWN RECIPE
+Her question at the end of the SEO work — **"each time we post another article do we need to update this?"**
+— got an honest "yes" at first, and that was the trigger for the second half of the session: replacing the
+by-hand plumbing built for article #1 with a small **registry** that everything else reads from. **Adding
+article #2 needs exactly these four steps, and nothing else:**
+1. **Write the article's own screen markup** in `index.html` — a `<div class="scr" id="s-journal-...">` (id
+   MUST start with `s-journal`, that prefix is how the shared frame/hide-list machinery finds it automatically)
+   with a real `<h1>` headline and real `<h2>` subheadings, same shape as article #1.
+2. **Add ONE LINE to `JOURNAL_ARTICLES`** in `index.html` (slug, screen id, title). This one line is what
+   makes the article show up on the `/journal` hub page, resolve its own URL, and get a working Back button —
+   nothing else in `index.html` needs touching.
+3. **Add ONE ENTRY to `ARTICLES`** in `netlify/edge-functions/page-titles.js` (slug, title, a short plain-
+   language `description`, the trimmed `metaTitle`/`metaDesc` for Google's display budget — ~60 chars for the
+   title, ~155-160 for the description — and today's date). A small `articleSchema()` helper turns that into
+   the full Article structured-data block automatically; nothing is hand-typed twice.
+4. **Add ONE LINE to `sitemap.xml`** for the new article's URL.
+▶ **THAT IS THE WHOLE LIST.** No netlify.toml edit (a `/journal/*` wildcard already covers any slug, the same
+pattern already proven on `/list/*` for the wishlist), no new open/close function, no Menu row edit, no
+hub-page listing edit — the hub's own list AND its ItemList schema both read live off the same two small
+lists above, so they can never go stale or need a fifth step.
+- ⚠️ **The one thing that genuinely cannot be automated away: an edge function is its own separate bundle and
+  cannot import from `index.html`**, so the slug has to be named in BOTH `JOURNAL_ARTICLES` (index.html) and
+  `ARTICLES` (page-titles.js) — step 2 and step 3 above are two different files, not one. Everything past
+  naming it twice is now automatic.
+- ⚠️ **`/journal` itself (the hub page listing every article) is a real, separate indexable page now, not a
+  Menu dropdown.** She asked specifically whether all articles should live under one Style Journal Menu tab
+  with a dropdown by title, and the hub page answers that better than a dropdown would: it has its own real
+  crawlable URL (`stylestar.app/journal`), so Google can index the LISTING page too, not just each article —
+  a dropdown inside the Menu drawer would be invisible to search engines entirely. The Menu's "Style Journal"
+  row now opens that hub page.
+
+### ✅ SHE ALSO ASKED TO BE THOROUGH ON THE REST OF THE SITE, SAME SESSION
+Checked whether the FAQ or other pages needed the same correction as the article, and they did:
+- **My Story, FAQ, Contact, Privacy and Terms were all using a styled `<div class="story-title">`** for what
+  reads visually as a page headline — a search engine cannot read a `<div>` as a heading no matter how large
+  or bold the CSS makes it look. All five converted to real `<h1>`.
+- **THE FAQ'S OWN 18 QUESTIONS had the identical problem one level down**: each was `<div class="faq-q">`,
+  exactly the phrasing a woman would type into Google, and none of them were crawlable as headings. Converted
+  all 18 to real `<h3 class="faq-q">`, subordinate to the page's own `<h1>`. ⚠️ **Verified byte-identical
+  computed style before shipping** (font-size/color/margin all unchanged) — a class selector does not care
+  what tag it's attached to, but this was proven with a driven-browser check rather than assumed.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **PICK THE SECOND ARTICLE'S TOPIC.** ⚠️ **No wedding-guest angle, her standing rule (see above).**
+   Candidates already on the table, none chosen: holiday party dressing, a fall capsule wardrobe, Thanksgiving
+   host/guest dressing, the "I don't know my size anymore" frustration, dressing for a video call, shop-your-
+   closet-first. **Use the 4-step recipe above once a topic is picked — it should now be genuinely fast.**
+2. ⭐ **THE STITCH FIX COMPARISON ARTICLE — she wants to discuss it further before writing it**, including
+   sharing her own personal story of trying Stitch Fix herself. Confirm Stitch Fix is the right comparison
+   (it read as the obvious one but was never fully talked through) before drafting.
+3. 👀 **Ask how the shipped byline, the free/no-signup line, and the FAQ headings feel to her on her own
+   phone** — none of this session's work has been seen by her live yet outside screenshots/renders.
+4. ⭐ **STANDING REMINDERS FOR ANY FUTURE COPY, both confirmed this session:** never phrase the free/no-signup
+   claim as conditional ("free to start") — it must read as a permanent fact. And no dashes in body copy,
+   the house style, unchanged.
+
+---
+
+## ▶ PREVIOUS — (2026-08-26 LATER — 🔎 SEARCHABLE OUTSIDE INSTAGRAM: THE TITLE IS FIXED, FLEUR DU MAL IS STORE 102, AND THE STAR NEVER RUNS 3 DRESSES IN A ROW)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save all of this to the .md and I will open new chat")
 **FIVE COMMITS, ALL PUSHED DIRECTLY TO `main` AND CURL-VERIFIED LIVE BYTE-FOR-BYTE** — this session
