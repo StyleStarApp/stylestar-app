@@ -7,7 +7,170 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-26 — ⭐ THE STAR OF THE WEEK ROTATES ON PHOTOGRAPHED PIECES NOW, AND "MORE FROM THE EDIT" SLIDES OFF IT)
+## ▶ NEXT SESSION — START HERE (2026-08-26 LATER — 🔎 SEARCHABLE OUTSIDE INSTAGRAM: THE TITLE IS FIXED, FLEUR DU MAL IS STORE 102, AND THE STAR NEVER RUNS 3 DRESSES IN A ROW)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save all of this to the .md and I will open new chat")
+**FIVE COMMITS, ALL PUSHED DIRECTLY TO `main` AND CURL-VERIFIED LIVE BYTE-FOR-BYTE** — this session
+pushes straight to main, no PR step, same as every recent one. ⚠️ **Five Netlify builds.**
+▶▶ **THE SHAPE OF THE DAY: it opened as a Google-verification double-check and became a real SEO pass, then
+pivoted into a new store approval and two of her own Edit/Star reorders — all in one sitting, all her calls,
+all shipped and confirmed live.**
+
+### ✅✅ GOOGLE SEARCH CONSOLE, RE-CONFIRMED — AND SHE FOUND THE STALE NOTE HERSELF
+She asked "didn't we do that yesterday?" about the CLAUDE.md item claiming GSC was still blocked on her —
+**she was right, the file was stale** (the meta tag went live 08-25, `e569254`, and the note was never struck).
+Fixed in two commits before anything else happened this session. Then she asked to double-check it PROPERLY,
+step by step — her own two screenshots settled it for good: **Settings → Ownership verification: "You are a
+verified owner"** (green check) · **Sitemaps: `/sitemap.xml`, Status Success, 6 discovered pages, 0 videos** ·
+**URL Inspection on `https://stylestar.app/`: "URL is on Google," Page indexing "Page is indexed," HTTPS good.**
+Request Indexing was offered and was not even needed — the home page beat her to it. **CLOSED, nothing left
+on either side.** ⚠️ **The honest line said plainly while she had the screen open, and it matters for next
+session too: being indexed only means Google has the page, it says nothing about where it ranks.**
+
+### ⭐⭐ THE HOMEPAGE TITLE + DESCRIPTION — A REAL SEO PASS, HERS AND ITERATED LIVE
+Her question that started it: *"is there anything we can do for keywords or that description to be more
+searchable? I think we need to be findable outside of Instagram."* ▶ **Cleared up the "keywords" myth first —
+Google stopped reading the literal `<meta name="keywords">` tag in 2009, and the site correctly has none.**
+The real lever is the actual `<title>` + `<meta name="description">`, which Google shows as the blue link and
+grey snippet — and hers was pure tagline (*"Style Star | Discover your signature style"*), containing **zero**
+words a stranger would type.
+- **Iterated together, live, several rounds, each a real reasoning step, not just taste:**
+  1. Keyword-first over brand-name-first in the title — nobody searches "Style Star" yet, so the highest-
+     weighted position should carry words with real search demand instead.
+  2. **"Personal Stylist" over "Style Quiz" as the LEAD word** — quiz is a crowded, low-differentiation
+     phrase (BuzzFeed-style quizzes own it); personal stylist is both less crowded AND is the actual thing
+     that makes her un-copyable (Sally's north star, restated here for a totally different reason: SEO).
+  3. 🚨⭐ **HER OWN CATCH, the sharpest edit of the day: "Real Personal Stylist" was cut for "Personal
+     Stylist App."** Her words: *"even though I am real, the app stylist chat is AI so trying to be careful
+     with wording."* "Real" implies a live human on the other end; "App" is honest about what it is AND
+     targets the right searcher (someone looking for a styling app, not to hire a human stylist locally).
+     The true differentiator moved into the DESCRIPTION instead, where there is room to say it properly.
+  4. **"Free" moved to the very front**, her instinct, refined to keep "Style Quiz" whole (not bare "Quiz",
+     too generic) and to say it only once (covers both nouns).
+- **SHIPPED AND LIVE, verified byte-identical on stylestar.app:**
+  **Title:** `Free Personal Stylist App & Style Quiz — Style Star`
+  **Description:** `Take a free style quiz to discover your signature style, built by a real personal
+  stylist, not just an algorithm. Shop with clarity and confidence.`
+  ⚠️ **`og:title`/`og:description` (the link-preview card a friend sees in a text) are DELIBERATELY
+  UNTOUCHED** — same reasoning as her 08-23 emoji call on that same card: a cold Google searcher and a
+  friend already trusting a text are different audiences with different jobs. Recorded as a comment in the
+  markup so a future session does not "fix" the two into matching.
+
+### 📓 THE STYLE JOURNAL — PLANNED IN DEPTH, NOTHING BUILT YET
+She confirmed she wants to write the long-tail article and asked the real launch questions in one message.
+Answers given, none built:
+- **Name: "Style Journal"** — her own instinct, validated (warm, on-brand, a real recognizable genre).
+  Alternative offered and not taken: "Style Notes" (reuses the word "note" already used constantly in-app).
+- **Cadence — the honest tension stated plainly: one article a quarter will not move search traffic much
+  on its own; Google rewards sustained volume, not a single great page.** Recommended: ship one first, see
+  how the actual process feels, decide pace from there. Not committed to a schedule.
+- **Placement: under About, near My Story, for now** — real content carrying her expertise, not a generic
+  utility page. ⚠️ **Needs its own real crawlable URL + title/description**, exactly the pattern already
+  proven for /story, /faq, /contact (netlify.toml rewrite + `page-titles.js` edge function) — reuse it
+  directly. Once there are 3+ articles, it earns its own index/hub page (the same "promote once it's
+  earned it" pattern as My List).
+- **Byline: recommended yes, a short "By Catherine [surname], Personal Stylist" line + a link to My Story**,
+  rather than a duplicate bio block. ⚠️ **Checked and confirmed: her legal surname (Ellspermann) appears
+  NOWHERE in the live app today** — the in-app voice is deliberately first-name-only and should stay that
+  way; a byline on a public article aimed at strangers is a different job (Google weighs author credibility
+  on advice content, and it reinforces the real-person differentiation). Her call how much of her name to use.
+- **Photo: not blocking.** Connects to the already-parked My Story photo idea from 2026-08-01 — one good
+  photo would serve both places.
+- **Other findability levers for when it ships:** link to it from somewhere in the app (helps Google find it
+  fast, helps real users too) · structure it around real subheadings a woman would type as a question
+  ("What to wear to a formal November wedding") — Google can pull a well-structured subheading directly
+  into results as a featured answer.
+
+### ▶▶ HER STANDING QUESTION FOR NEXT SESSION, ANSWERED HERE SO IT DOES NOT NEED RE-DERIVING
+Her exact words: *"one thing I want to make sure we remember/talk about again is if we need to add another
+page or index... to the google search console thing? not sure after we build the Style Journal page and
+post articles."* ▶ **THE ANSWER, recorded now: NO NEW REGISTRATION OR PAGE gets created INSIDE Search
+Console itself for a new article — Search Console does not work like a page-by-page registry.** What
+actually needs doing, each time a new article goes live:
+1. **Add its URL as a new `<url>` entry in the existing `sitemap.xml`** (the same file already submitted
+   and connected — nothing to resubmit from scratch, Google re-reads a sitemap it already knows about).
+2. **Optionally, `URL Inspection → paste the new article's URL → Request Indexing`** — the same one-click
+   nudge used on the home page, to speed up that one page's discovery.
+3. **Link to the article from somewhere in the app** — real crawl paths help independently of the sitemap.
+▶ **So this is entirely within our own control, nothing waiting on her or on Google** — the three steps
+above are the whole checklist, and they're small enough to fold into the same PR that ships each article.
+▶ **She also wants to keep exploring MORE ideas for findability generally** — an open invitation for a
+future brainstorm, not a specific pending task. Good candidates already on the table from this session:
+backlinks (a slower, longer-term lever, not urgent), and making sure the Journal's own internal linking is
+real once it exists.
+
+### 💎 FLEUR DU MAL IS STORE 102 — her Rakuten approval, her scores, verified not guessed
+**MID 50739**, a lingerie/sleepwear specialist. Her own words became the dimension scores almost entirely:
+*"very alluring, glam, not for comfort — definitely for style... very trend forward, fitted, not at all for
+a relaxed or modest or casual woman."* `d:[1,10,8,1,10,2,4,10,6,6]` · `$$$-$$$$` (measured off real prices,
+$56–$598, not guessed) · `s:[]` — **her confirmed FACT, not a gap: "no plus, petite or tall. XS-XL."** ·
+`deep:'lingerie and sleepwear'`, **earned by measurement**: real term "silk slip" → 19 real matches on a
+1.24MB page; gibberish → a clean "No results" on 599KB. Added to `STORES`, `_STORE_ALIAS`, `_AFF_MID`, and
+`SEARCH_DOMAINS` in `style-ai.js` — closes the loop so the stylist chat can actually search inside the store.
+⚠️ **A URL she pasted with Shopify's `resources[options][fields]=...` predictive-search params was tested
+and found to be inert plumbing** — same result with or without it, byte-for-byte the same real matches. The
+clean `?q=` form is what shipped.
+
+### ⭐⭐ HER FIRST FLEUR DU MAL PICK, AND A REAL EXCEPTION TO A STANDING RULE
+**Fleur du Mal Sculpt Molded Sports Bra, $98** (verified: 200, real product name, `compare_at_price:0` so
+genuinely not on sale). Her ask, verbatim: *"can we use the photo of just the bra — not the model — that way
+we can use it on star of the week and it won't look too alluring."*
+- 🚨 **THIS IS A DELIBERATE EXCEPTION TO "NO BRA AS STAR" (the Felina precedent, 2026-08-something earlier),
+  and it is the same SHAPE as the Vilebrequin refinement: the bar was never the literal word "bra," it is
+  whether the PHOTO reads as bikini/lingerie at a glance.** A sports bra is activewear (their own product
+  type field literally says "Activewear"), and a plain flat product shot with no model reads as an athletic
+  product photo, not intimate photography.
+- ⚠️ **A NAMING TRAP CAUGHT BEFORE SHIPPING: the product image filename containing "-flat" (`013_GA
+  _260306_0068_campaign-flat.jpg`) was actually a FULL MODEL CAMPAIGN SHOT** (boxing gloves, lace leggings,
+  heels) — "flat" in a Shopify filename is not a reliable signal. **The real flat/product-only shot was
+  found by actually opening and looking at the candidate images**, not by filename guessing:
+  `sculpt_sports_bra_black.jpg`, confirmed as one of the store's own catalog images (position 3 of 8 in
+  their media set). ▶ **Lesson: never trust a filename's apparent meaning for a photo-content judgment call
+  this sensitive — open and look.**
+- Added to `WEEK_STARS` (with the photo), the Edit, and the `WEEK_STAR_PHOTO_ORDER` whitelist.
+
+### ✅ TWO REORDERS, BOTH HER CALLS, BOTH SHIPPED
+1. **Edit page: the sports bra moved up** to sit right after the Serpui red handbag and before the Amazon
+   bangles — her stated preference, *"I like having the photographed ones up higher."*
+2. **Star rotation reordered to break up "3 dresses in a row"** (FARM Rio → Vilebrequin → DVF had landed on
+   three straight weeks). **New order, category now alternates (dress, bag, dress, bottoms, bra, jewelry,
+   dress):** FARM Rio (this week, 26 Aug) → Serpui red bag (30 Aug) → Vilebrequin (6 Sep) → Veronica Beard
+   jean (13 Sep) → Fleur du Mal sports bra (20 Sep) → pendant necklace (27 Sep) → DVF wrap dress (4 Oct).
+   ⚠️ **Vilebrequin's 20 September deadline is UNCHANGED and even safer than before** — it now lands 6
+   September, earlier than its prior 30 August slot would have suggested at first glance, and well clear of
+   the cutoff either way.
+- Both verified live via curl + md5 byte-compare against the committed file, same as every change this
+  session.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 🔎 **HER STANDING QUESTION — answered above, re-read it before she asks again:** no new Search Console
+   registration needed for the Style Journal; the checklist is sitemap.xml entry + optional Request
+   Indexing + real internal links, each time an article ships.
+2. 📓 **THE STYLE JOURNAL — nothing built yet.** Next concrete step: pick the FIRST article topic (candidates
+   on the table: formal November wedding guest, work holiday party, fall capsule wardrobe) and start
+   drafting in her voice, using the /story-style real-URL pattern.
+3. 🔎 **MORE FINDABILITY IDEAS, her open invitation** — she wants to keep exploring beyond the Journal.
+   Nothing specific queued; a genuine brainstorm whenever she's ready.
+4. 👀 **How the new Star order and the moved-up sports bra feel on her phone**, and whether Fleur du Mal
+   shows up sensibly when a woman with an alluring/glam profile browses "Beautiful underwear" / "Special
+   lingerie" on Your Wardrobe List.
+5. ⭐ **THE WIDER SHINE CLUSTER, still flagged, still NOT built:** beaded, embellished, metallic, feather,
+   crystal — same family as the satin/sequins brake, only those three are braked. Her call, her word only.
+6. 💰 **AMAZON ASSOCIATES + THE BANGLES PHOTO.** Still open: the moment her own photo of the bangles lands,
+   wire `ownPx`, and the bangles become eligible to JOIN `WEEK_STAR_PHOTO_ORDER` for the first time.
+7. ⭐ **TWO OLIVELA VALUES TO OVERRULE IF SHE WANTS:** `casual 4` and the archetype line.
+8. ⭐ **A DELIBERATE SIZE-TAG PASS.** Three missing tall/wide tags surfaced by accident on 08-24 and a
+   missing one is invisible on screen.
+9. ⚠️ **THE TWO LINK-CHECK ROUTINES STILL OVERLAP.** Keep Sunday, retire Monday. **Her call, still unmade.**
+10. ⏰ **28 AUGUST — the recurring-payments Routine.**
+11. ⭐⭐ **"SHOW THE STYLIST WHAT I PICKED"** (Kathy's) · **OUTFIT SUGGESTIONS** (Jen's, and her own parked
+    Favorite Outfit page) · **SATIN AND SEQUINS AS A CATEGORY** half-answered by the brake · **PRINT TOPS**
+    (`to4`, still the only Tops row with zero curated products) is the oldest untouched item.
+12. 📊 **Her Plausible dashboard** — and the standing question: **does anyone hit the honest line in the wild?**
+13. 💰 **AFFILIATES: Olivela approved (mid 50334), Marissa Collections approved (mid 36537), Fleur du Mal
+    approved (mid 50739).** CJ and AWIN next; Impact in 2-3 months with the Plausible link.
+
+## ▶ PREVIOUS — (2026-08-26 — ⭐ THE STAR OF THE WEEK ROTATES ON PHOTOGRAPHED PIECES NOW, AND "MORE FROM THE EDIT" SLIDES OFF IT)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "That looks fabulous. Thank you. Let's save everything to the .md and I will open new chat")
 **SEVEN COMMITS, ALL PUSHED DIRECTLY TO `main` AND CURL-VERIFIED LIVE BYTE-FOR-BYTE** (`d268edf`
