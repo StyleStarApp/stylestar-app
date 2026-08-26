@@ -2290,6 +2290,22 @@ body.card-fb{padding:0}
 .hm-cta .hm-cta-tile svg{width:23px;height:23px}
 .hm-cta .hm-cta-body{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:9px}
 .hm-cta .lbl{position:relative;font:700 13.5px/1 'Jost',sans-serif;letter-spacing:.015em;text-transform:uppercase;color:#241d0c;white-space:nowrap}
+/* ⚠️ MEASURED, NOT ASSUMED, 2026-08-26: at 320px (Display Zoom) the arrow's
+   right edge sat 16px PAST the button's own frame -- the label needs 152px
+   and the flex box for label+gap+arrow only had 121px. 375/360 are fine (the
+   content still fits inside the outer button even though it's tight), so
+   this is scoped to 320-class widths alone, never touched above 330px.
+   Fixed by reclaiming space from CHROME (side inset, icon tile, gaps,
+   padding), never from the label's own size -- a 4-word all-caps CTA label
+   is exactly the kind of text worth shrinking last, not first. */
+@media(max-width:330px){
+  .hm-cta{width:calc(100% - 6px);padding:11px 7px 11px 4px;gap:4px}
+  .hm-cta .hm-cta-tile{width:34px;height:34px}
+  .hm-cta .hm-cta-tile svg{width:18px;height:18px}
+  .hm-cta .hm-cta-body{gap:4px}
+  .hm-cta .lbl{letter-spacing:0}
+  .hm-cta-arr{width:15px;height:15px}
+}
 .hm-cta .hm-cta-arr{flex:0 0 auto;width:18px;height:18px;color:#D2AF48}
 .hm-cta-seal{position:absolute;top:-32px;right:-18px;width:61px;height:61px;transform:rotate(-10deg);filter:drop-shadow(0 0 6px rgba(244,208,102,.6)) drop-shadow(0 3px 4px rgba(120,90,20,.4));z-index:3;transform-origin:center;animation:ssSealPop 1.1s cubic-bezier(.34,1.56,.64,1) 1s 1 both,ssSealShimmer 2.7s ease-in-out 2.3s infinite}
 @keyframes ssSealPop{0%{transform:rotate(-10deg) scale(0);opacity:0}55%{transform:rotate(-2deg) scale(1.22);opacity:1}78%{transform:rotate(-15deg) scale(.94)}100%{transform:rotate(-10deg) scale(1);opacity:1}}
