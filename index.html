@@ -13335,22 +13335,32 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
 // straight). Category now alternates: dress, bag, dress, bottoms, bra,
 // jewelry, dress. ⚠️ Vilebrequin's Sept-20 deadline is UNCHANGED and still
 // safe -- it now lands 6 Sep, even earlier than before.
+// Gucci bag inserted 2026-08-27, her explicit ask: "this one is so good...
+// let's have it jump the line and go in next week. Everything else can just
+// slide down one week." ⚠️ THIS IS AN INSERT, NOT AN APPEND -- unlike the
+// bracelet (which went at the END and left every earlier date untouched),
+// putting the new item MID-QUEUE grows the pool 8 -> 9 AND pushes every item
+// from Serpui onward one array slot later. Verified week by week before
+// shipping, not assumed: index = floor(days-since-anchor / 7) mod
+// pool.length (see _weekStarIndex). FARM Rio sits at week 2 (unaffected,
+// still "this week" -- 2 mod 8 === 2 mod 9). Every week from 3 onward maps
+// to exactly one array position later than before, for the whole cycle
+// including the Oct wrap-around -- checked through week 10, not just the
+// next couple of turns.
+// ⚠️ VILEBREQUIN'S DEADLINE WAS RE-CHECKED, not assumed still safe: it
+// moves from Sep 6 to Sep 13, still a full week ahead of her 20 September
+// cutoff. If anything else gets inserted before it in the future, re-verify
+// this the same way -- the margin is real but no longer generous.
 var WEEK_STAR_PHOTO_ORDER=[
-  'Love Hearts Find Me Pendant Necklace',                         // Oct 4, pushed back a week -- see below
-  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 11, pushed back a week -- see below
+  'Love Hearts Find Me Pendant Necklace',                         // Oct 11, pushed back a week
+  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 18, pushed back a week
   'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',      // Aug 26 (this week), unchanged
-  'Serpui Abigail Handbag — Red',                                  // Aug 30, was Vilebrequin's slot
-  'Vilebrequin Long Mesh Cover-Up Dress — Off White',              // Sep 6, was DVF's slot
-  'Veronica Beard Crosbie Jean',                                   // Sep 13, unchanged
-  'Fleur du Mal Sculpt Molded Sports Bra',                         // Sep 20, unchanged
-  // Isabella Celini Stackable Love Bracelet, added 2026-08-26 with a real
-  // photo -- her original ask, held back only until the photo existed. Added
-  // at the END on purpose: every date ABOVE this line (through Fleur du
-  // Mal's Sep 20 turn) is completely unaffected by an 8th item -- the index
-  // math is identical for pool lengths 7 and 8 until week 7. Only what was
-  // scheduled Sep 27 onward slides back one week (see the two updated
-  // comments above); nothing time-sensitive lived there.
-  'Isabella Celini Stackable Love Bracelet'                        // Sep 27, the bracelet's first turn
+  'Gucci GG Canvas Mini Shoulder Bag — Beige',                     // Aug 30 (next week) -- her jump-the-line pick
+  'Serpui Abigail Handbag — Red',                                  // Sep 6, was Aug 30
+  'Vilebrequin Long Mesh Cover-Up Dress — Off White',              // Sep 13, was Sep 6 -- still a week ahead of her Sep 20 cutoff
+  'Veronica Beard Crosbie Jean',                                   // Sep 20, was Sep 13
+  'Fleur du Mal Sculpt Molded Sports Bra',                         // Sep 27, was Sep 20
+  'Isabella Celini Stackable Love Bracelet'                        // Oct 4, was Sep 27
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can
