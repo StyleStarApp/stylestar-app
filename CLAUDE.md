@@ -12,10 +12,13 @@ by email.
 ### ⏸ WHERE THIS SESSION IS (no code shipped — a planning session, on her explicit ask)
 **She checked in as doing well** — "just needed to regroup" after the discouraged pause. ▶ **She wants a comprehensive, growing master list, not just a task queue** — her words: "I want to continue making sure we have a detailed list of items that need to get completed, also add to it more ideas." That is the job of this whole file; treat every session's new threads as additions to it, not a replacement.
 
-### 💎 MYTHERESA IS APPROVED — a real, high-value get
-Approved via Rakuten. Designer/luxury multi-brand — exactly the shape of retailer her 2026-07-28 luxury-routing rule was built for (route a glam/alluring woman's purchase through an approved multi-brand retailer, never straight to a house that sells direct). ▶ **TWO FOLLOW-UPS, both flagged to her, neither done yet:**
-1. **Needs her own ten dimension scores before it can join `STORES`** (the standing rule: never invent a store's tags — draft against her own anchors the way Olivela was done, then she corrects).
-2. **Check whether Mytheresa offers a product feed through Rakuten** — an 8th Phase-0 candidate alongside her existing 7 (FARM Rio, DVF, Vilebrequin, Olivela, Marissa Collections, Fleur du Mal, Etsy).
+### 💎 MYTHERESA — APPROVED, SCORED, MID WIRED IN. ONE THING LEFT: THE SEARCH URL
+Approved via Rakuten, **MID 43172**. Designer/luxury multi-brand — exactly the shape of retailer her 2026-07-28 luxury-routing rule was built for (route a glam/alluring woman's purchase through an approved multi-brand retailer, never straight to a house that sells direct).
+- ✅ **PRODUCT FEED CONFIRMED (2026-08-27), her own screenshot: Rakuten's Links tab shows "Product Links → See all 290,667 results."** A real, large feed — bigger than DVF's 2,752. An 8th Phase-0 candidate alongside her existing 7 (FARM Rio, DVF, Vilebrequin, Olivela, Marissa Collections, Fleur du Mal, Etsy), and the strongest one yet.
+- ✅ **HER TEN DIMENSION SCORES ARE BLESSED (2026-08-27):** `d:[3,8,10,7,9,2,10,8,9,9]`
+  (relaxed 3 · alluring 8 · polish 10 · **classic 7** — her one correction, drafted at 6 · trendy 9 · casual 2 · dressy 10 · fitted 8 · neutral 9 · colorful 9). Drafted against Neiman Marcus/Bergdorf/NET-A-PORTER as anchors, archetype tag **"Glamorous Luxe, Trendsetter"** (more directional/trend-led than NET-A-PORTER's "Quiet Luxury," which is why classic sits below those three even after her correction), known-for **"directional designer ready-to-wear, statement shoes and bags, cult and emerging luxury labels."** Price tier `$$$$` only. Sizes assumed no petite/tall/plus (matching NET-A-PORTER/DVF's honest gap) — **unverified, flagged, not yet asked.**
+- ✅ **`_AFF_MID['mytheresa.com']='43172'` IS LIVE** (committed) — same "inert until a link exists" posture as Olivela/Marissa Collections. Earns the moment a link is added anywhere.
+- 🚨 **THE ONE THING STILL BLOCKING THE `STORES` ENTRY: the search URL.** Tried from the sandbox first — `curl` reaches mytheresa.com (200), but `/us/en/search?q=` renders client-side: a real term and a gibberish term come back within **1 byte** of each other (10151 vs 10152), the exact "cannot verify from here" signature seen on Nordstrom, Olivela and others. ▶ **NEXT: ask her to search mytheresa.com for something simple (e.g. "black dress") on her own phone/browser and paste back the resulting address-bar URL** — the same method that closed Nordstrom, Sézane, Madewell and a dozen others. The moment that lands, add the full `STORES` entry (dims already locked) + `mytheresa.com` to `SEARCH_DOMAINS` in `netlify/functions/style-ai.js` in one commit.
 
 ### 📱 THE FIVERR SOCIAL MEDIA HIRE — due back **Sept 15**
 She hired someone off Fiverr to build marketing content/Instagram posts. ▶ **A ready-to-send brief was written for her, leaning on her two named differentiators (free, no signup ever + a real practicing stylist behind every recommendation, not just AI) — see the artifact/note below. Ask whether she sent it, and whether it changed their brief.**
@@ -63,7 +66,7 @@ A short note was written for her to paste to the Fiverr contractor, leading with
 ### ▶ THE FIRST THINGS NEXT SESSION
 1. 💛 **Nothing urgent emotionally this time** — she's regrouped. Still worth a light check-in.
 2. 📸 **Her verdict on the bracelet Star-of-the-Week photo is STILL UNANSWERED** — she didn't address it in her 2026-08-27 reply either. Ask again directly: keep the lifestyle shot, or is there a cleaner one in the same Etsy listing?
-3. 💎 **Mytheresa: get her ten dimension scores, and check for a Rakuten product feed.**
+3. 💎 **Mytheresa: get her address-bar search URL** (dims blessed, feed confirmed, MID wired in — this is the last piece before the `STORES` entry ships).
 4. 📱 **Did she send the Fiverr brief? What came back (due Sept 15 either way)?**
 5. ⚖️ **Almira — any reply yet?**
 6. 🔎 **The four strategy threads above are all "keep thinking, not yet decided."** Ask which one she wants to actually start building: the catalog-photo extension (achievable now), an Etsy-style feed check on a specific store, an SEO/Instagram action, or something else.
