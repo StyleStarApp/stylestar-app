@@ -7,7 +7,73 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-26 NIGHT — 💎 ETSY IS LIVE WITH A REAL PHOTO, AND SHE PAUSED FEELING DISCOURAGED)
+## ▶ NEXT SESSION — START HERE (2026-08-27 — 🧭 THE BIG-PICTURE SESSION: FINDABILITY, AFFILIATES, THE REAL SHAPE OF SEARCH, AND WHY THE CACHING FIX GOT PARKED)
+
+### ⏸ WHERE THIS SESSION IS (no code shipped — a planning session, on her explicit ask)
+**She checked in as doing well** — "just needed to regroup" after the discouraged pause. ▶ **She wants a comprehensive, growing master list, not just a task queue** — her words: "I want to continue making sure we have a detailed list of items that need to get completed, also add to it more ideas." That is the job of this whole file; treat every session's new threads as additions to it, not a replacement.
+
+### 💎 MYTHERESA IS APPROVED — a real, high-value get
+Approved via Rakuten. Designer/luxury multi-brand — exactly the shape of retailer her 2026-07-28 luxury-routing rule was built for (route a glam/alluring woman's purchase through an approved multi-brand retailer, never straight to a house that sells direct). ▶ **TWO FOLLOW-UPS, both flagged to her, neither done yet:**
+1. **Needs her own ten dimension scores before it can join `STORES`** (the standing rule: never invent a store's tags — draft against her own anchors the way Olivela was done, then she corrects).
+2. **Check whether Mytheresa offers a product feed through Rakuten** — an 8th Phase-0 candidate alongside her existing 7 (FARM Rio, DVF, Vilebrequin, Olivela, Marissa Collections, Fleur du Mal, Etsy).
+
+### 📱 THE FIVERR SOCIAL MEDIA HIRE — due back **Sept 15**
+She hired someone off Fiverr to build marketing content/Instagram posts. ▶ **A ready-to-send brief was written for her, leaning on her two named differentiators (free, no signup ever + a real practicing stylist behind every recommendation, not just AI) — see the artifact/note below. Ask whether she sent it, and whether it changed their brief.**
+
+### ⚖️ ALMIRA — STILL SILENT
+No reply since her last note; she still owes the name-correction answer. Nothing to do but wait; nudge if it stretches further.
+
+### 🚨🚨 THE ANTHROPIC CACHING EMAIL — INVESTIGATED, AND THE "QUICK FIX" TURNED OUT TO BE THE WRONG CALL
+She forwarded a real (non-scam) Anthropic billing-admin email: her org's prompt-cache hit rate is low, direct-API spend could drop up to 48% with caching. ▶▶ **FIRST PASS (given to her in chat) RECOMMENDED A FIX. SECOND PASS, READING THE ACTUAL CODE, REVERSED THAT RECOMMENDATION — logged here so this doesn't get proposed again without re-deriving why it was dropped.**
+- **Confirmed in `netlify/functions/style-ai.js`:** caching is wired ONLY for the stylist chat (`body.messages.length>1`, top-level automatic `cache_control`), exactly as the 2026-08-15 code comment there describes. Every single-shot AI surface (`shopMyStyle`, both `_shopStyleGen` branches, `_wardrobeIdeaGen`, `_wdrMoreIdeas`, `genOutfits`) sends one plain string with no marker.
+- ▶▶ **WHY IT CANNOT BE FIXED WITH A MARKER ALONE, confirmed by reading each function: her personal content (profile basis, prefs, which item she's browsing, already-shown list) is interleaved from the FIRST sentence of the prompt, not appended at the end.** A cache breakpoint only reuses a byte-identical PREFIX — with personal content this early, virtually no two calls (even the same woman's repeat taps) share one, because the "already shown" list or the item name changes the string from very early on. Real cross-request savings would need REORDERING each prompt so the shared rules come first and her personal details come last.
+- 🚨 **AND THAT REORDER IS A REAL, DOCUMENTED RISK, NOT A HYPOTHETICAL ONE.** `_wardrobeIdeaGen`'s own code comment records a proven live-test finding: a per-item rule (`_WDR_IDEA_DEFINE`) had to be moved to sit **inside** the RULES bullet list, immediately after the never-wear rule, because sitting BEFORE the rules as a descriptive paragraph made the live model treat it as background information rather than an instruction — her own first live test caught it failing. **Reordering for caching would push exactly this kind of rule OUT of its proven position.** That is not a guess; it is the same failure this codebase already suffered and fixed once.
+- ⚠️ **AND IT CANNOT BE VERIFIED FROM THIS SANDBOX** — there is no production API key here, and every other prompt change in this project's whole history has shipped only after a live-model check (frequently Cath's own real taps). Shipping an unverified reorder of five different live shopping prompts, in the same breath as everything else asked for today, was judged not worth the risk.
+- ▶▶ **DECISION: LEFT AS IS. Do not remove the `messages.length>1` gate and do not reorder these prompts without a dedicated session that ends in live verification** (hers, on the real site, the same way virtually every other prompt change in this file's history got proven). Revisit only once real spend actually justifies the careful work — which the new monthly check-in (below) will surface if it happens.
+- ⭐ **Her actual worry — not losing money — is still answered honestly: current spend is small because traffic is still small, the one place caching WAS worth wiring (the chat) already works, and growing real traffic (the findability work below) matters more to her bill right now than a risky prompt rewrite would.**
+
+### ✅ MONTHLY COST CHECK-IN ROUTINE CREATED (2026-08-27)
+`trig_01WPxMYe8Um8iVXZaw2A8Egr`, **fires the 1st of every month, 9am ET, into this same session.** Asks her to glance at her Anthropic Console spend (+ Netlify/MailerLite if anything felt off), compares against whatever's logged here from the last check-in, and flags only if spend is climbing faster than her traffic would explain. First fire: **2026-09-01.** ▶ **No spend logged yet — log the first real number here after the first firing.**
+
+### 🧭 THE BIG STRATEGY CONVERSATION — her four threads, all opened, none fully closed
+She named four things she wants worked through carefully before committing to anything: **findability (SEO + Instagram), a bigger affiliate-approval push, a clear-eyed understanding of what the search actually does today vs. what full retail approval would change, and not losing money / not being surprised.** The full reasoning for all four is written out in the 2026-08-27 chat session (this file's summary below is the compressed version — reread the chat if a decision here needs the "why" restated to her).
+
+**1. What the app's search really does today, stated plainly (for reuse whenever she asks again):**
+Only THREE places show a real photo of a real, verified product: the **Style Star Edit** (her own picks), **Star of the Week**, and the **curated catalog** (~107 products, ~10 category slots, built with Cowork). Everywhere else (Shop your style, Wardrobe Ideas, Complete the Look) the AI **invents** a plausible item and builds a store SEARCH url — no stock check, no size check, no photo, because there's no real product to attach one to. The stylist **chat** is the one exception: it can run a real, store-restricted web search before answering, so it's genuinely looking at real pages (costs more, ~5-10¢/10-20s, still no photo).
+
+**2. What more affiliate approvals do and don't unlock:**
+An approval is a **license** (commission + the legal right to hotlink a store's photo for something SHE has personally picked and verified), **not a catalog.** It does not, by itself, give the AI a searchable database of that store's products. **Product feeds** are the thing that would — real files of name/price/photo/stock pulled from the network into a real database, so the AI-guessed surfaces could search real inventory instead of inventing. That's a genuine multi-session build (already scoped in `docs/product-feeds-plan.md`), gated on two separate things: the retailer approving her (in progress), AND that retailer actually offering a downloadable feed (checked per-store, in her Rakuten dashboard — Phase 0, still hers to do or hand off).
+- ⚠️ **THE HONEST CEILING, told to her directly: even a fully-fed version of her CURRENT approvals (Mytheresa, FARM Rio, DVF, Vilebrequin, Olivela, Marissa Collections, Fleur du Mal, Etsy) is boutique/resort/luxury-leaning.** Her stated pain point has been BROAD everyday asks (a work dress, jeans, a white top) — those need a big department store (Nordstrom/Macy's/Bloomingdale's) actually approved, and THAT category has been the hardest to get (declined before, specifically for lack of traffic). **So the full vision really is sequenced behind traffic she doesn't have yet — not a quick unlock. Said to her so she isn't blindsided by the timeline, which is exactly what she asked for.**
+- ▶ **Achievable sooner, no waiting on any of the above:** extend the curated-catalog approach (hand-picked, real photos, already proven live on Wardrobe Ideas) to more categories with her already-approved stores — a bounded, buildable step, not a rebuild. Parked from an earlier session (add a photo field to her curated-catalog spreadsheet + a small template change); worth picking up as the next concrete "make search look better" move.
+
+**3. Findability strategy — anchored on her own two named differentiators (always free/no signup + a real stylist behind it, not just AI):**
+Already in place: tuned meta title/description, sitemap, FAQPage schema, the Style Journal (article #1 live), Search Console verified + indexed. **New ideas added to the list, none built yet:**
+- Backlinks from "free AI tools" / personal-styling-blog roundups — low effort, free, real SEO value.
+- A local-Orlando press angle — she is a real practicing stylist there; "local stylist builds a free AI styling app" is a genuine, human, differentiator-led local-news pitch.
+- Instagram content that says the differentiators OUT LOUD (a Reel: "free style quiz, built by an actual stylist, not just AI") rather than generic outfit posts.
+- Reviving the parked **archetype-share** mechanic — three of her own testers already texted each other their quiz archetypes unprompted ("I'm The Statement Maker!"), real proof a shareable-result card would work as a growth loop.
+- Brief the Fiverr hire around these two pillars explicitly (see the note below) before Sept 15.
+
+**4. Affiliate strategy — concrete near-term moves:**
+Keep applying broadly through **Rakuten's Find New** (free, no clock, Mytheresa proves it's working) → **AWIN** (small refundable deposit) → **CJ** (free) → **reapply to Impact** once real traffic exists (their own stated advice), trying direct brand-program applications in the meantime → **department stores** are the real prize for the everyday-search problem and are the ones most gated on traffic, which is why the findability push isn't just vanity metrics → **Amazon stays last** (the 180-day/3-sales clock starts at approval, so applying early just burns the window).
+
+### 📋 THE FIVERR BRIEF — sent to her, ready to forward
+A short note was written for her to paste to the Fiverr contractor, leading with the two differentiators (always free/no signup, a real practicing stylist behind every pick — not just AI) and a few concrete content angles. **Ask whether she sent it and what came back.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 💛 **Nothing urgent emotionally this time** — she's regrouped. Still worth a light check-in.
+2. 📸 **Her verdict on the bracelet Star-of-the-Week photo is STILL UNANSWERED** — she didn't address it in her 2026-08-27 reply either. Ask again directly: keep the lifestyle shot, or is there a cleaner one in the same Etsy listing?
+3. 💎 **Mytheresa: get her ten dimension scores, and check for a Rakuten product feed.**
+4. 📱 **Did she send the Fiverr brief? What came back (due Sept 15 either way)?**
+5. ⚖️ **Almira — any reply yet?**
+6. 🔎 **The four strategy threads above are all "keep thinking, not yet decided."** Ask which one she wants to actually start building: the catalog-photo extension (achievable now), an Etsy-style feed check on a specific store, an SEO/Instagram action, or something else.
+7. 💰 **The monthly cost check-in fires 2026-09-01.** Log the first real spend number here when it lands.
+8. ⚠️ **Etsy's ten dimension scores are STILL a Claude draft** (unresolved from the prior session, unchanged): `d:[8,4,4,4,6,8,4,4,7,8]`, `$-$$$$`, `Universal` archetype tag.
+9. Everything from the 2026-08-26 night entry below (now marked PREVIOUS) that wasn't touched this session is still open and unchanged: article #2's topic (no wedding-guest angle), the Stitch Fix comparison conversation, the other Monday routine's `ABANDONED` status, Almira/Indie Law (see above), and the product-feeds Phase 0 choice (do it herself vs. written-up steps).
+
+---
+
+## ▶ PREVIOUS — (2026-08-26 NIGHT — 💎 ETSY IS LIVE WITH A REAL PHOTO, AND SHE PAUSED FEELING DISCOURAGED)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save everything we have so for the the .md. I need to take a break right now.")
 **FOUR COMMITS THIS SESSION, ALL PUSHED STRAIGHT TO `main` AND CURL-VERIFIED LIVE.** She gave the Etsy MID (54027) and said
