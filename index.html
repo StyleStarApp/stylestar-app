@@ -6818,6 +6818,36 @@ const STORES={
      whether a specific multi-word search actually returns well -- ask before
      adding it, the same standing rule as every other store's `deep` flag. */
   'Marissa Collections':{u:'https://marissacollections.com/pages/search-results-page?q=',t:'$$$$',a:'Glamorous Luxe',s:[],d:[3,8,10,8,8,3,10,8,9,9],c:'designer dresses, fine jewelry, shoes, sunglasses, jackets and coats'},
+  /* Mytheresa, her sixth Rakuten advertiser (mid 43172), approved 2026-08-27.
+     Already live in the Mall (Elevated & Designer) and in _AFF_MID; this is
+     what lets the stylist actually SUGGEST it, not just link to it.
+     ⚠️ HER DIMENSIONS ARE BREADTH, NOT A LEAN -- and that is her own correction,
+     twice over, of a first draft that guessed a "Glamorous Luxe, Trendsetter"
+     lean from comparing it to NET-A-PORTER/Neiman/Bergdorf. Her words: "their
+     selection is broad... main factor is more price than trendy or classic or
+     glam... something for all of the spectrums... fitted and relaxed both have
+     a lot of range." So classic/trendy and relaxed/fitted all sit high
+     (strong on BOTH ends of each pair, the same shape as a department store's
+     breadth, not a moderate compromise number) -- and alluring came DOWN from
+     an 8 draft to 5, the same correction as Olivela's, for the same reason:
+     alluring is the one dimension that PENALIZES distance and cannot be
+     bought back, so a high number would have wrongly gated the modest woman
+     she says Mytheresa can also serve. Polish stays 10 and casual stays 2 --
+     price and polish are the real gate, not style, and even a broad range of
+     designer pieces is never casual.
+     ⚠️ `deep` deliberately NOT set -- her search URL is confirmed (below) but
+     whether a specific multi-word search actually narrows well is unmeasured,
+     same standing rule as every other store's `deep` flag.
+     ⚠️ SIZES ARE HER CONFIRMED FACT, NOT A GAP: "No petite or tall they have
+     XXS - XL and a few XXL."
+     ⚠️ THE SEARCH URL NEEDS A `tpl`, THE LACOSTE SHAPE: her own address-bar
+     paste (https://www.mytheresa.com/us/en/women/search/Black%20dress
+     ?source=search&term=Black+dress) puts the term in the PATH and repeats it
+     in the query string -- a store where the term must be substituted in more
+     than one place, not appended once to `u`. Built from her real link
+     exactly, not guessed; `u` is the safe fallback `getStoreUrl` never
+     actually reaches once `tpl` exists. */
+  'Mytheresa':{u:'https://www.mytheresa.com/us/en/women/',tpl:'https://www.mytheresa.com/us/en/women/search/{q}?source=search&term={q}',t:'$$$$',a:'Luxury Fashion, Universal',s:[],d:[9,5,10,9,9,2,10,9,9,9],c:'designer fashion across every style, bags, shoes and jewelry, very polished, very pricey'},
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
   // Diane von Furstenberg, added 2026-08-21 after Rakuten approved her.
@@ -9992,16 +10022,16 @@ const mallStores=[
        full-range luxury multi-brand house, the same shelf as NET-A-PORTER,
        Olivela and Marissa Collections, and that is exactly the peer group her
        own dimension scores were built against.
-       ⚠️ The blurb draws on her own words ("lots of bags, shoes, accessories,
-       jewelry") rather than being a pure Claude invention, but it is still
-       hers to reword -- one string, like FARM Rio's, DVF's, Olivela's and
-       Marissa Collections' above.
-       ⚠️ Mytheresa is NOT in the STORES table yet -- the Mall needs neither a
-       search URL nor SEARCH_DOMAINS, which is why this could land today. The
-       stylist still cannot suggest it until her address-bar search URL
-       arrives (her ten dimensions are already blessed and waiting: see the
-       _AFF_MID comment above and CLAUDE.md). */
-    {n:'Mytheresa',d:'Directional designer fashion with fantastic bags, shoes and jewelry',u:'https://www.mytheresa.com'}
+       ⚠️ THE BLURB WAS "Directional designer fashion..." AND SHE CORRECTED
+       THE WHOLE PREMISE THE SAME DAY: her selection is broad, not a lean --
+       "something for all of the spectrums... main factor is more price than
+       trendy or classic or glam." Reworded to match; still a Claude draft,
+       hers to reword, like FARM Rio's, DVF's, Olivela's and Marissa
+       Collections' above.
+       ⚠️ Now also LIVE in STORES (see the entry there) with the corrected
+       breadth-not-lean dimensions, so the stylist can suggest it as well as
+       the Mall pointing to it. */
+    {n:'Mytheresa',d:'Every style of designer fashion, bags, shoes and jewelry, pricey and polished',u:'https://www.mytheresa.com'}
   ]},
   {cat:'Value & Basics',stores:[
     {n:'Amazon',d:'Everything, fast, great for basics',u:'https://www.amazon.com/fashion'},
