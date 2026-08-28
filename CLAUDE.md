@@ -9,8 +9,22 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (2026-08-28 — ⚖️ INDIE LAW: A FIRMER EMAIL SENT, AN UNSIGNED REPLY, AND HER SON'S "REPORT IT TO THE BAR")
 
+### ✅ ETSY JOINED THE MALL (2026-08-28, her ask, same session — one Netlify build, curl-verified live)
+Her question first: **"is it already in our list of searchable stores?"** Yes — Etsy has been in
+`SEARCH_DOMAINS` in `style-ai.js` since 2026-08-26, so the stylist chat's web search can already see
+inside it. It was also already in `STORES` (her own draft dimension scores) and in `_AFF_MID` (mid
+54027, approved Rakuten advertiser) — it was only ever missing from the **Mall**. Added under **Shoes,
+Bags & Jewelry**, next to Baby Gold — the closest fit, since her one live Edit pick from Etsy is jewelry
+(the stackable bracelet), though Etsy's real range (handmade, vintage, art, home decor) is much broader
+than that shelf. ⚠️ **Flagged as a judgment call, not something she specified — move it if she'd rather
+it sit elsewhere or stand alone.** The card earns automatically (no new wiring needed, it rides the
+existing `_affUrl` wrap). Blurb is a **Claude draft** condensed from her own `c:` line in `STORES`:
+*"Handmade, vintage finds and personalized jewelry & gifts."* ⚠️ **Her ten dimension scores for Etsy are
+STILL a Claude draft, unresolved for many sessions now** (`d:[8,4,4,4,6,8,4,4,7,8]`, `$-$$$$`,
+`Universal`) — this Mall addition doesn't depend on them, but they still need her eye.
+
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save everything as you suggested")
-**NO APP CODE TOUCHED THIS SESSION. Zero Netlify builds.** The whole session was the Indie Law thread —
+**ONE APP CODE CHANGE THIS SESSION** (Etsy → the Mall, above). Otherwise the session was the Indie Law thread —
 drafting, correcting, and sending a firmer follow-up email. ▶ **Her own words at the pause, keep them
 exact, they are the emotional throughline for next time: "I really just want to be done with them. I
 want my legal filings to be done properly and I just want to grow my business and not think about that
