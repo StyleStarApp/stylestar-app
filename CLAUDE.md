@@ -58,11 +58,27 @@ list**, not one link to the whole thing.
   it's shared by the other two share-card states (already-shared, asking-for-email), which have no
   arrow line under them; tightening it would have quietly cramped those two states for no reason.
   The new spacing lives entirely on `.wsh-use`.
-- ⚠️ **The down arrow is a real emoji (⬇️, U+2B07 + variation selector), typed by her, kept as-is** —
-  deliberately NOT a brand-colored SVG glyph like the app's hearts/stars, because it's meant to read
-  as a plain directional pointer, not a signature mark. The iOS emoji-recoloring trap that bit the
-  pink hearts (2026-08-23) doesn't apply here since nothing expects this arrow to carry a specific
-  brand color.
+- ⚠️ **ROUND 3, SAME DAY: she didn't like the emoji arrow after all** ("I don't want to use the
+  emoji for the arrow. Can you make a better looking arrow for that.") ▶ **Reversed the round-2 note
+  above — the emoji is GONE.** Replaced with a real inline SVG, reusing the exact chevron construction
+  the app already uses elsewhere (`_WDR_ARR`, the wardrobe tab arrows / "See ideas" links: `viewBox
+  0 0 24 24`, `stroke-width 3.2`, round caps), just rotated 90° to point down instead of right, class
+  `.wsh-arr`. Colored `#8a6d20` — the SAME gold already used for the bold word inside `.wsh-s`
+  (`.wsh-s b`) — so it reads as this card's own accent color, not a foreign platform glyph. 13×13px,
+  sits inline right after "Use this link". Verified in Chromium at 390/360/320: no overflow, arrow
+  renders as a clean thin chevron, computed color confirmed `rgb(138,109,32)`.
+  ⚠️ **This also retires the emoji-recoloring caveat from round 2** — moot now that it's a real SVG,
+  which is immune to the iOS emoji-substitution trap that bit the pink hearts (2026-08-23) by
+  construction, not by luck.
+- **She also asked whether "Get my link" is the right button label, unsure herself.**
+  ▶ **Recommendation given, kept as-is: leave it.** It shares the word "link" with "Use this link"
+  right above it, so the sentence + arrow + button read as one instruction even though "get" comes
+  before "use" out of real-world order — the repeated noun is what makes the arrow's target obvious
+  without her having to think about it. Alternatives considered and not proposed as changes:
+  "Create My List Link" / "Get Shareable Link" (add words, no clarity) · "Share My List" (undersells
+  the tap — nothing is shared yet, it only generates the link). ▶ **One low-priority idea flagged,
+  not built:** "GET MY LINK" → "GET MY LIST LINK" if a tester is ever actually confused about what
+  the link is for — not needed today, since the card's own heading + sentence already carry that.
 - Verified in a real Chromium render (seeded wishlist, real `openWishlist()` boot path) before
   shipping: both lines present, spacing reads as one group pointing at the button, no wrap on the
   arrow line and no overflow at 390/360/320. Both `<script>` blocks parse clean. **✅ CONFIRMED LIVE,
