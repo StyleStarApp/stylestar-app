@@ -32,24 +32,41 @@ Her pick, added 2026-08-27 the same day Mytheresa joined `STORES` and the Mall. 
 - ✅✅ **EVERYTHING FROM TODAY'S SESSION IS MERGED TO `main` AND CONFIRMED LIVE ON stylestar.app** (curl-verified: Mytheresa in the Mall, the Gucci bag's photo, the corrected name, all present). ⚠️ **Session note: all of today's work had been sitting on the feature branch only, not `main`, which is why she didn't see Mytheresa in the Mall at first — nothing was broken, it just hadn't been pushed to the deploying branch yet.** Fixed by resetting local `main` to `origin/main` (it had gone stale/diverged — a known recurring issue in this repo, see the "squash-merge divergence dance" precedent elsewhere in this file) and fast-forwarding it with the session's commits.
 - 🚨 **A MECHANICAL LESSON FOR FUTURE SESSIONS, not her problem: inserting a new Edit item between two EXISTING ones is a classic off-by-one trap.** The neighboring item's own `<a class="dc-item-btn">` link sits AFTER its note div and BEFORE its closing `</div>` — an Edit `old_string` that stops at the note div (to insert "after this item") will silently orphan that neighbor's own link into the new block if not careful. Hit once (Tommy Hilfiger's own Nordstrom link got orphaned this way), caught and fixed the same session via a div-balance + dc-item-count-equals-link-count check. **Always re-run that same two-number check after any hand-edit near `.dc-item` blocks.**
 
-### ✏️✅ THE WISHLIST SHARE CARD WORDING FIXED — her catch, her own rewrite
+### ✏️✅ THE WISHLIST SHARE CARD WORDING — TWO ROUNDS, HER OWN WORDS BOTH TIMES, NOW CLOSED
 She screenshotted the live "Your Wishlist" page and caught a real ambiguity in the not-yet-shared
 state of the Share card: *"Just like a gift registry, send one link to anyone so they can see what
 you really want, and buy it."* Her problem, exactly right: **"one link" reads as one item off the
-list**, not one link to the whole thing. ▶ **She then wrote her own fix rather than pick from
-options offered: "Just like a gift registry, share your whole list with this link, so they can buy
-exactly what you want."** Shipped as written — putting "your whole list" directly after "this link"
-closes the ambiguity without the word "one" at all, which was her real objection to it. Also reads
-more like an active registry ("buy exactly what you want") than the old "see... and buy it."
-- **Where it lives:** `index.html`, the `_wlShareBoxHTML`-family render function around line 11615,
-  the `.wsh-s` line in the default (no-token, not-yet-asking) branch of the share card. ⚠️ **This is
-  the state BEFORE she's tapped "Get my link"** — no link is on screen yet, only the button below it.
-  "This link" is a forward reference to what tapping that button produces; reads fine in context
-  because the button sits directly under the sentence, but flag it if a future redesign ever moves
-  them apart.
-- Verified both `<script>` blocks still parse clean (`new Function`) before shipping — pure
-  string-literal change, no logic touched. **✅ CONFIRMED LIVE, curl-verified on stylestar.app**
-  (the new sentence is present in the served HTML). Nothing left open on this.
+list**, not one link to the whole thing.
+- **Round 1, her wording, shipped, then reversed by her the same session:** *"Just like a gift
+  registry, share your whole list with this link, so they can buy exactly what you want."* She came
+  back after seeing it live and said *"I changed my mind on this. The wording is not exactly
+  right."*
+- ✅ **Round 2, her final wording, is what's LIVE NOW.** She split it into two pieces rather than
+  cramming everything into one sentence: a plain description, then a short line pointing straight at
+  the button. **The sentence:** *"Just like a gift registry, share this whole list so they can see
+  and buy exactly what you want."* **Then, its own line, sitting right above the button:** *"Use
+  this link ⬇️"* — a literal down-arrow pointing at "GET MY LINK".
+  ▶ **Why the two-part version is the better fix, worth remembering: it stops asking one sentence to
+  both EXPLAIN the mechanic and LABEL the button.** Round 1 packed "share whole list" + "with this
+  link" + the button's own job into one run-on clause; round 2 lets the sentence just describe what
+  happens, and hands the button-pointing job to its own short line, which is a job an arrow does
+  better than a preposition anyway.
+- **Where it lives:** `index.html`, `_wlRenderShare()` around line 11613, the default (no-token,
+  not-yet-asking) branch of the share card. New CSS class `.wsh-use` (quiet, 12.5px Jost, sits with a
+  small negative top margin so it reads as glued to the sentence above it and pointed down at the
+  button below, not floating evenly between the two). ⚠️ **`.wsh-s`'s own margin was NOT touched** —
+  it's shared by the other two share-card states (already-shared, asking-for-email), which have no
+  arrow line under them; tightening it would have quietly cramped those two states for no reason.
+  The new spacing lives entirely on `.wsh-use`.
+- ⚠️ **The down arrow is a real emoji (⬇️, U+2B07 + variation selector), typed by her, kept as-is** —
+  deliberately NOT a brand-colored SVG glyph like the app's hearts/stars, because it's meant to read
+  as a plain directional pointer, not a signature mark. The iOS emoji-recoloring trap that bit the
+  pink hearts (2026-08-23) doesn't apply here since nothing expects this arrow to carry a specific
+  brand color.
+- Verified in a real Chromium render (seeded wishlist, real `openWishlist()` boot path) before
+  shipping: both lines present, spacing reads as one group pointing at the button, no wrap on the
+  arrow line and no overflow at 390/360/320. Both `<script>` blocks parse clean. **✅ CONFIRMED LIVE,
+  curl-verified on stylestar.app.** Nothing left open on this.
 
 ### 📱 THE FIVERR SOCIAL MEDIA HIRE — due back **Sept 15**
 She hired someone off Fiverr to build marketing content/Instagram posts. ▶ **A ready-to-send brief was written for her, leaning on her two named differentiators (free, no signup ever + a real practicing stylist behind every recommendation, not just AI) — see the artifact/note below. Ask whether she sent it, and whether it changed their brief.**
