@@ -319,6 +319,23 @@ const PAGES = {
 // what trimScreens() below keeps when serving this article's raw HTML. A
 // third place a new article's identity has to be typed by hand, for the
 // same reason the slug already is: this file cannot import from index.html.
+//
+// ⚠️ `faq` (added 2026-08-28, the route-rendering fix -- Cowork's own brief
+// called this "the single highest-value item" in the whole audit): every
+// H2 in the article whose text genuinely ends in "?" -- a real question --
+// paired verbatim with the paragraph text that follows it, up to the next
+// H2. EXTRACTED PROGRAMMATICALLY off the real article markup in index.html,
+// never hand-typed or paraphrased, the same discipline as the FAQ page's own
+// schema above (see its own comment). Of this article's 8 headings, 4 are
+// genuine questions; the other 4 (an intro heading combining a question with
+// a directive, and three narrative/concluding headings with no "?") are
+// deliberately excluded -- Google's FAQPage guidelines require the marked-up
+// content to actually be question-and-answer content, and marking up a
+// heading that only sounds vaguely like a question risks the rich result
+// being disabled, or worse on a pattern of misuse.
+// ⚠️ IF THE ARTICLE'S QUESTIONS EVER CHANGE: regenerate this array the same
+// way (walk the real H2/paragraph pairs, keep only headings ending in "?"),
+// never hand-edit it out of sync with what a reader actually sees.
 const ARTICLES = [
   {
     slug: 'how-to-find-your-personal-style',
@@ -329,6 +346,12 @@ const ARTICLES = [
     metaDesc: 'How to find your personal style, from a personal stylist of 20+ years. Start with the outfit you already love, then take the free Style Star quiz.',
     datePublished: '2026-08-26',
     dateModified: '2026-08-26',
+    faq: [
+      { q: 'How Do I Stop Buying Things Just Because Everyone Else Has Them?', a: 'We are surrounded by fashion. We see what our friends are wearing. We see certain brands everywhere. We scroll past countless outfits, ads, influencers, and lists telling us what is in style and what we absolutely must have. After seeing something enough times, it is easy to start thinking we love it. So I think one of the most valuable questions you can ask yourself when you are shopping is: “Do I really love this for me?” Would I be drawn to this if I had not seen everyone else wearing it? Does it feel like me when I put it on? There is nothing wrong with loving trends. Fashion should be fun, and seeing what is new is part of the fun. But being stylish does not require becoming a copy of someone else. The goal is to take inspiration from what is happening in fashion and filter it through your own personal style.' },
+      { q: 'Does My Personal Style Have to Match My Everyday Life?', a: 'Personal style is not just about what you find beautiful. It also needs to work for the life you actually live. We all need clothes for ordinary days, pieces that are comfortable, appropriate, and easy to wear while still making us feel good. But I also believe in having a well-rounded, fully functioning wardrobe. Life happens. There are lunches, dinners, meetings, celebrations, services, vacations, and unexpected invitations. Your wardrobe should support you through all of it. That does not mean you need an enormous amount of clothing. It means you need the right clothing. I want women to be able to open their closets when an invitation arrives and feel a sense of possibility instead of panic. A wardrobe works best when it reflects both who you are and where your life actually takes you.' },
+      { q: 'How Do I Update My Style Without Losing Myself?', a: 'This is one of my favorite principles of personal styling: going one notch. When I look at an outfit, I can often see one small change that would make the entire look feel fresher. Maybe it is changing the shoe to something just as comfortable but a little more current. Maybe it is updating the shape of your jeans. Maybe it is adding a sleek bag, trying trousers instead of shorts, wearing a monochromatic color combination, or introducing a beautiful new color. Sometimes all an outfit needs is one piece of jewelry, or what I call the third piece, a jacket, scarf, or statement necklace that takes a simple outfit and makes it feel finished. You do not need to dress like someone you are not in order to be more stylish. In fact, I think the opposite is true. The best style evolution happens when you still feel completely like yourself, just a little more current, polished, and confident.' },
+      { q: 'Do I Have to Pick One Style “Type”?', a: 'I have never believed that every woman can be neatly placed into one style category, classic, trendy, romantic, edgy, minimal, glamorous. Real personal style is much more nuanced than that. I think of style almost like a fingerprint. No two of us are exactly alike. We each land at different places along a continuum of preferences. You might lean classic but still enjoy something modern. You might love an easy, relaxed silhouette but prefer a very polished handbag. You might dress mostly in neutrals but adore one unexpected burst of color. It is the combination that makes your style yours, a melody of preferences. That melody can shift. Your style may look slightly different on vacation than it does at home. It can evolve as your lifestyle changes or as fashion changes over time. But underneath those shifts, there is usually a range where you consistently feel most like yourself. Finding that range gives you clarity.' },
+    ],
   },
 ];
 
@@ -354,8 +377,31 @@ function articleSchema(a) {
   };
 }
 
+// FAQPage schema for an article's genuine questions (see the long comment
+// above ARTICLES). Returns null when an article carries no `faq` entries,
+// so a future article without any real questions in it simply gets the
+// Article schema alone -- never an empty, meaningless FAQPage block.
+function articleFaqSchema(a) {
+  if (!a.faq || !a.faq.length) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: a.faq.map(item => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  };
+}
+
 for (const a of ARTICLES) {
-  PAGES['/journal/' + a.slug] = { title: a.metaTitle, desc: a.metaDesc, schema: articleSchema(a), scrId: a.id };
+  const faqSchema = articleFaqSchema(a);
+  PAGES['/journal/' + a.slug] = {
+    title: a.metaTitle,
+    desc: a.metaDesc,
+    schema: faqSchema ? [articleSchema(a), faqSchema] : articleSchema(a),
+    scrId: a.id,
+  };
 }
 
 // The hub, /journal: lists every article, so it carries a real ItemList --
