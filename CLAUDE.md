@@ -9,8 +9,9 @@ by email.
 
 ## ▶ NEXT SESSION — START HERE (2026-08-27 — 🧭 THE BIG-PICTURE SESSION: FINDABILITY, AFFILIATES, THE REAL SHAPE OF SEARCH, AND WHY THE CACHING FIX GOT PARKED)
 
-### ⏸ WHERE THIS SESSION IS (no code shipped — a planning session, on her explicit ask)
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save all we have done so far to the .md and I will open new chat")
 **She checked in as doing well** — "just needed to regroup" after the discouraged pause. ▶ **She wants a comprehensive, growing master list, not just a task queue** — her words: "I want to continue making sure we have a detailed list of items that need to get completed, also add to it more ideas." That is the job of this whole file; treat every session's new threads as additions to it, not a replacement.
+**ONE code change shipped and curl-verified live this session** (the rest was planning + a store add): the wishlist share-card wording fix, below. Mytheresa + the Gucci Edit piece were already closed out and live before this session's pause note was written (see their own sections). ⚠️ **Netlify: 1 build this session.**
 
 ### 💎✅ MYTHERESA IS FULLY LIVE — approved, scored, in the Mall, in STORES, feed confirmed. CLOSED.
 Approved via Rakuten, **MID 43172**. Designer/luxury multi-brand — exactly the shape of retailer her 2026-07-28 luxury-routing rule was built for (route a glam/alluring woman's purchase through an approved multi-brand retailer, never straight to a house that sells direct). Every piece landed the same day (2026-08-27):
@@ -47,7 +48,8 @@ more like an active registry ("buy exactly what you want") than the old "see... 
   because the button sits directly under the sentence, but flag it if a future redesign ever moves
   them apart.
 - Verified both `<script>` blocks still parse clean (`new Function`) before shipping — pure
-  string-literal change, no logic touched.
+  string-literal change, no logic touched. **✅ CONFIRMED LIVE, curl-verified on stylestar.app**
+  (the new sentence is present in the served HTML). Nothing left open on this.
 
 ### 📱 THE FIVERR SOCIAL MEDIA HIRE — due back **Sept 15**
 She hired someone off Fiverr to build marketing content/Instagram posts. ▶ **A ready-to-send brief was written for her, leaning on her two named differentiators (free, no signup ever + a real practicing stylist behind every recommendation, not just AI) — see the artifact/note below. Ask whether she sent it, and whether it changed their brief.**
