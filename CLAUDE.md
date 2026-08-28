@@ -77,16 +77,20 @@ normal business/legal voice for a company page (even a solo LLC), not the same c
 stores I personally love," so it doesn't have the same inconsistency. Only raise it if she wants to open
 that as its own, bigger question later.
 
-### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save everything as you suggested")
-**FOUR APP CODE CHANGES THIS SESSION** (Etsy → the Mall, her corrected Etsy scores, the Mall tidy-up, and
-the Mall's "we"→"I" copy fix, all above; the bracelet photo is a decision, not a code change). Otherwise
-the session was the Indie Law thread —
-drafting, correcting, and sending a firmer follow-up email. ▶ **Her own words at the pause, keep them
-exact, they are the emotional throughline for next time: "I really just want to be done with them. I
-want my legal filings to be done properly and I just want to grow my business and not think about that
-stuff ever again but I am annoyed. I paid a lot of money and I think they have done a sloppy job."**
-That is not "fix the wording" energy anymore — it is closer to "I am evaluating whether to keep this
-firm." Hold that read next session; don't downplay it into a one-off complaint.
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's close this out and save to the .md. I will open up on new chat")
+**FOUR APP CODE CHANGES THIS SESSION, ALL LIVE AND CURL-VERIFIED** (Etsy → the Mall, her corrected Etsy
+scores, the Mall tidy-up, and the Mall's "we"→"I" copy fix, all above; the bracelet photo is a decision,
+not a code change). Otherwise the session was the Indie Law thread — drafting, correcting, and sending a
+firmer follow-up email. ▶ **Her own words earlier in the session, keep them exact, they are the emotional
+throughline for next time: "I really just want to be done with them. I want my legal filings to be done
+properly and I just want to grow my business and not think about that stuff ever again but I am annoyed.
+I paid a lot of money and I think they have done a sloppy job."** That is not "fix the wording" energy
+anymore — it is closer to "I am evaluating whether to keep this firm." Hold that read next session;
+don't downplay it into a one-off complaint.
+
+▶ **SHE ENDED ON A GOOD NOTE, PRACTICAL WORK GOT DONE, AND SHE HAS SOMETHING NEW COMING: "I have
+something from Cowork that will help next."** She did not say what it is — ask her to bring it to the
+next session and walk through it together before assuming what it covers.
 
 ### 🚨 THE HEADLINE: A REAL EMAIL DISCREPANCY, PLUS A SIGNATURE THAT WASN'T THERE
 She pasted the actual live thread (not summarized from memory — a real correction to an earlier draft
@@ -176,26 +180,27 @@ Every one of these was caught by HER, not reported to her, until she asked direc
 catches it, not them" is the actual problem, and it's what's wearing her down** — not any one filing.
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. 💛 **Check in on how she's feeling about Indie Law before anything else.** She's "annoyed," feels
-   she's paid a lot for sloppy work, and wants to just grow her business without thinking about this —
-   that's closer to a firm-confidence question than a paperwork one. Don't rush her toward a decision.
-2. ⚖️ **Did Almira (or anyone) reply to the firmer email?** Two things to check for specifically: (a)
+1. 📥 **She has something from Cowork to bring — ask for it first, before assuming what it's about.**
+   She said it "will help next" but didn't say with what.
+2. 💛 **Check in on how she's feeling about Indie Law before anything else app-related.** She's "annoyed,"
+   feels she's paid a lot for sloppy work, and wants to just grow her business without thinking about this
+   — that's closer to a firm-confidence question than a paperwork one. Don't rush her toward a decision.
+3. ⚖️ **Did Almira (or anyone) reply to the firmer email?** Two things to check for specifically: (a)
    did they actually reconcile the IRS-vs-state contradiction with a real answer, not a restatement,
    and (b) is Almira now signing her own updates personally. **If the reply is another vague
    team-signed non-answer, or nothing arrives by ~Sept 4 (her own "this week"), that's the moment to
    put "do you want to look at switching firms" on the table plainly** — not before, and not decided by
    us either way.
-3. 📸 **Etsy Star-of-the-Week bracelet photo — SETTLED, her call: keep the current photo as-is** (she
-   owns the bracelet in one color and likes that the photo shows all of them). **What's still open: pick
-   a second item from Etsy** — that part never got started this session.
-4. 📱 **The Fiverr social-media hire — UPDATE: she sent the brief, they replied with a thank-you but no
+4. 📸 **Pick a second item from Etsy** — the bracelet photo is settled (keeping it as-is); this is what's
+   still open, and it never got started this session.
+5. 📱 **The Fiverr social-media hire — UPDATE: she sent the brief, they replied with a thank-you but no
    concrete plans yet. Still due Sept 15.** Check back closer to that date rather than nagging now.
-5. 🔎 **The four big-picture strategy threads (findability/SEO, affiliate push, what search really does
+6. 🔎 **The four big-picture strategy threads (findability/SEO, affiliate push, what search really does
    today, cost control) — she wants to discuss further, explicitly AFTER the Almira thread settles
    down.** Don't lead with these next time; let her raise them.
-6. ⚖️ **Almira never answered the OLDER standing question either (the name-correction status) — now
+7. ⚖️ **Almira never answered the OLDER standing question either (the name-correction status) — now
    folded into the same firmer email, so it's one open thread, not two.**
-7. 💰 **The monthly cost check-in Routine fires 2026-09-01** — log the first real spend number here
+8. 💰 **The monthly cost check-in Routine fires 2026-09-01** — log the first real spend number here
    when it lands (still nothing logged yet).
 
 ---
