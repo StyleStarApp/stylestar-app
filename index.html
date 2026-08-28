@@ -1460,6 +1460,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wishlist .wl-share .wsh-t{font:400 17px/1.25 'DM Serif Display',Georgia,serif;color:#1f1d19;margin-bottom:5px}
 #s-wishlist .wl-share .wsh-s{font:400 12.5px/1.55 'Jost',sans-serif;color:#5a554c;margin:0 auto 11px;max-width:292px}
 #s-wishlist .wl-share .wsh-s b{color:#8a6d20;font-weight:600}
+#s-wishlist .wl-share .wsh-use{font:500 12.5px/1.4 'Jost',sans-serif;color:#5a554c;margin:-4px auto 12px}
 #s-wishlist .wl-share .wsh-btn{display:inline-block;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:#1a1a1a;border-radius:999px;padding:12px 20px;border:none;cursor:pointer}
 #s-wishlist .wl-share .wsh-btn:disabled{opacity:.6}
 #s-wishlist .wl-share input{display:block;width:100%;max-width:292px;margin:0 auto 8px;font:400 13.5px/1.4 'Jost',sans-serif;color:#3a352c;background:#fff;border:1px solid #D8A52E;border-radius:0;padding:11px 10px;-webkit-appearance:none}
@@ -11612,8 +11613,9 @@ function _wlRenderShare(){
       +'<div class="wsh-msg" id="wlShareMsg"></div>';
   }else{
     h+='<div class="wsh-t">Share your wishlist</div>'
-      +'<div class="wsh-s">Just like a gift registry, share your whole list with this link, '
-      +'so they can buy exactly what you want.</div>'
+      +'<div class="wsh-s">Just like a gift registry, share this whole list '
+      +'so they can see and buy exactly what you want.</div>'
+      +'<div class="wsh-use">Use this link ⬇️</div>'
       +'<div><button class="wsh-btn" id="wlShareBtn" onclick="wlShareGet()">Get my link</button></div>'
       +'<div class="wsh-msg" id="wlShareMsg"></div>';
   }
