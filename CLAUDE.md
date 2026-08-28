@@ -46,9 +46,23 @@ bracelet herself but only in one color, so a cleaner single-color shot would hav
 about the current one. **Decision: keep the current lifestyle photo, no change.** This closes an item that
 had been open and unanswered since 2026-08-26. **Nothing to do here — do not re-raise it.**
 
+### ✅ MALL TIDY-UP — Madewell out, Bloomingdale's moved up, Baby Gold reworded (2026-08-28, same session)
+Her ask, plain and small: *"delete Madewell and move Bloomingdale's to where the Madewell spot was."*
+**Contemporary & Everyday** now reads Nordstrom → **Bloomingdale's** (moved here from Elevated & Designer)
+→ J.Crew → Anthropologie → Aritzia → FARM Rio. **Elevated & Designer** loses Bloomingdale's, unchanged
+otherwise. ⚠️ **Madewell is ONLY removed from the Mall** — still in `STORES`, still searchable, still a
+real store the stylist can suggest. She said she may add different stores here later; nothing else
+touched. **Baby Gold's blurb** is now **"14K gold and personalized jewelry"** (her wording, capitalized
+"14K" to match how it's written everywhere else in the app). Live, curl-verified.
+
+### ▶ SHE WANTS TO PICK A SECOND ETSY ITEM — NOT STARTED, HELD FOR NEXT TIME
+Her own words: *"I want to pick the second Etsy item later so please add that to list."* Nothing chosen
+yet — this is a fresh browse-and-pick with her, same as the bracelet was.
+
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save everything as you suggested")
-**TWO APP CODE CHANGES THIS SESSION** (Etsy → the Mall, and her corrected Etsy scores, both above; the
-bracelet photo is a decision, not a code change). Otherwise the session was the Indie Law thread —
+**THREE APP CODE CHANGES THIS SESSION** (Etsy → the Mall, her corrected Etsy scores, and the Mall
+tidy-up, all above; the bracelet photo is a decision, not a code change). Otherwise the session was the
+Indie Law thread —
 drafting, correcting, and sending a firmer follow-up email. ▶ **Her own words at the pause, keep them
 exact, they are the emotional throughline for next time: "I really just want to be done with them. I
 want my legal filings to be done properly and I just want to grow my business and not think about that
