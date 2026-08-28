@@ -6617,20 +6617,28 @@ const STORES={
   'Mango':{u:'https://shop.mango.com/us/en/search/women?q=',t:'$$',a:'Modern Minimalist, European Chic',s:[],d:[5,6,8,6,8,6,7,8,8,7],c:'workwear, elevated trends, outerwear'},
   'Target':{w:1,u:'https://www.target.com/s?searchTerm=',t:'$',a:'Casual Everyday',s:['petite','plus','tall'],d:[9,3,5,6,6,10,4,5,8,8],deep:1,c:'affordable fashion, basics, accessories'},
   'Amazon':{gp:'&i=fashion-womens',u:'https://www.amazon.com/s?k=',t:'$-$$$',a:'Universal',s:['petite','plus','tall','wide'],d:[8,5,5,7,6,8,6,6,8,8],deep:1,c:'almost everything, basics, accessories, shoes'},
-  // Etsy approved via Rakuten 2026-08-26 (mid 54027), her yes. ⚠️ EVERY NUMBER
-  // BELOW IS A CLAUDE DRAFT, NOT HERS -- flagged, not shipped as her judgment.
-  // Drafted against her own Amazon anchor (a broad, mixed-quality marketplace)
-  // since Etsy is the same shape of store: no seller-quality control, so
-  // polish is scored low like Amazon's rather than a curated boutique's.
-  // Where it was drafted to differ from Amazon: lower alluring (craft/vintage/
-  // eclectic, not a glam destination), higher relaxed and colorful (handmade
-  // skews boho and expressive), lower fitted (not a tailored-fashion place),
-  // t:'$-$$$$' because a marketplace can run from a $4 sticker to a $2,000
-  // custom piece -- wider than Amazon's own range. s:[] because sizing is
-  // set per independent seller with no house standard to promise against.
-  // ⚠️ deep:1 was DELIBERATELY NOT SET: Etsy's own on-site search is famous
-  // for surfacing specific, niche queries well, but that is a guess and not
-  // measured.
+  // Etsy approved via Rakuten 2026-08-26 (mid 54027), her yes.
+  // ✅ HER OWN CORRECTED SCORES, 2026-08-28 -- superseding the Claude draft
+  // this originally shipped with (drafted against the Amazon anchor: a
+  // broad marketplace with no seller-quality control). Walked through each
+  // pair with her; her corrections:
+  //  - relaxed/casual/colorful (8/8/8) CONFIRMED, her words: "more boho
+  //    expressive laid back" -- though she noted some higher-end custom
+  //    items exist too, which is why breadth wasn't widened further.
+  //  - alluring (4) CONFIRMED, her own framing: "not a high glam
+  //    destination but definitely artistic and unique."
+  //  - polish (5, was 4) RAISED TO ACTUALLY MATCH AMAZON, her words: "not
+  //    super polished same as Amazon -- you can find polished things but
+  //    not known for that."
+  //  - classic/trendy (3/7, was 4/6) MOVED FURTHER TOWARD TRENDY, her
+  //    words: "more trendy than classic... they have some trendy items
+  //    for sure."
+  //  - archetype tag "Universal" CONFIRMED as-is.
+  // t:'$-$$$$' (a $4 sticker to a $2,000 custom piece) and s:[] (sizing set
+  // per independent seller, no house standard) were not revisited -- left as
+  // originally drafted, not contradicted.
+  // ⚠️ deep:1 still DELIBERATELY NOT SET -- Etsy's on-site search behavior
+  // for specific niche queries has not been measured.
   // ✅ SEARCH VERIFIED 2026-08-26, her own address bar: she searched "heart
   // bracelet" and confirmed real matching results at
   // etsy.com/search?q=heart+bracelet&instant_download=false. The `?q=` param
@@ -6642,9 +6650,7 @@ const STORES={
   // mechanism as Amazon's i=fashion-womens, just a different job. No other
   // store in the table needs this; Etsy is the only marketplace-of-
   // independent-sellers in it.
-  // ▶ HERS TO CORRECT: all ten numbers, the price tier, the archetype tags,
-  // and whether `deep` should be set once she has tested more searches.
-  'Etsy':{gp:'&instant_download=false',u:'https://www.etsy.com/search?q=',t:'$-$$$$',a:'Universal',s:[],d:[8,4,4,4,6,8,4,4,7,8],c:'handmade goods, vintage finds, personalized jewelry and gifts, independent makers, home decor, art'},
+  'Etsy':{gp:'&instant_download=false',u:'https://www.etsy.com/search?q=',t:'$-$$$$',a:'Universal',s:[],d:[8,4,5,3,7,8,4,4,7,8],c:'handmade goods, vintage finds, personalized jewelry and gifts, independent makers, home decor, art'},
   'Anthropologie':{u:'https://www.anthropologie.com/search?q=',t:'$$-$$$',a:'Romantic Feminine, Bohemian Chic',s:['petite','plus'],d:[8,6,8,6,8,7,7,5,6,9],deep:1,c:'dresses, occasion, unique pieces'},
   'Express':{w:1,u:'https://www.express.com/exp/search?q=',t:'$$',a:'Modern Glam, Professional Power',s:['petite'],d:[3,8,7,4,8,5,8,10,8,7],c:'going-out looks, workwear, denim'},
   // The old /r/search?query= silently landed on Revolve's homepage (Cath caught
