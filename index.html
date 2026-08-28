@@ -71,6 +71,14 @@
      verification succeeds. Google re-checks this tag stays in place to keep
      the property verified, it does not just check it once at signup. -->
 <meta name="google-site-verification" content="F4Y49X9Q5EcdEbp2rgmS06JQzp27W6lbx5nOySfgsfc" />
+<!-- Sitewide Organization schema (2026-08-28, from the route-rendering audit).
+     Lives here, static, because it's the same on every route -- unlike the
+     per-page schema in page-titles.js, which has to be edge-rewritten because
+     it differs by path. jobTitle matches her own established wording exactly
+     (the journal byline, articleSchema() in page-titles.js): "Personal
+     Stylist" -- no unverified credential added here that isn't already
+     confirmed elsewhere in the app. -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Style Star","url":"https://stylestar.app","logo":"https://stylestar.app/logo-star.png","description":"A free personal style quiz and styling app, built by a personal stylist with over 20 years of experience.","founder":{"@type":"Person","name":"Catherine Ellspermann","jobTitle":"Personal Stylist"}}</script>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2027,6 +2035,10 @@ body.menu-open .menu-panel{display:block}
    a sentence at all. */
 .jrnl-by-name{font:600 15px/1.3 'Jost',sans-serif;color:#3a352c;text-align:center;letter-spacing:.02em;margin-top:2px}
 .jrnl-by-role{font:400 12.5px/1.5 'Jost',sans-serif;color:#8a8172;text-align:center;margin-top:3px;letter-spacing:.03em}
+/* Same treatment as .jrnl-by-role on purpose (2026-08-28) -- reusing an
+   already-shipped, already-readable color/size rather than picking a new one
+   for one more line of quiet byline metadata. */
+.jrnl-by-date{font:400 12.5px/1.5 'Jost',sans-serif;color:#8a8172;text-align:center;margin-top:2px;letter-spacing:.03em}
 .jrnl-by-link{font:600 12px/1 'Jost',sans-serif;text-align:center;margin:9px 0 26px}
 .jrnl-p{font:400 15.5px/1.72 'Lora',Georgia,serif;color:#4a463e;text-align:left;margin:0 0 18px}
 .jrnl-p b{font-weight:700;color:#3a352c}
@@ -5159,6 +5171,7 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
     <h1 class="story-title" style="text-align:center">How to Find Your Personal Style</h1>
     <div class="jrnl-by-name">By Catherine Ellspermann</div>
     <div class="jrnl-by-role">Personal Stylist &amp; Founder of Style Star</div>
+    <div class="jrnl-by-date">Published August 26, 2026</div>
     <div class="jrnl-by-link"><span class="jrnl-lnk" onclick="showStory()">Read my story &rarr;</span></div>
 
     <p class="jrnl-p">If you are trying to figure out your personal style, here is the first thing I want you to know: you already have one.</p>
@@ -5549,12 +5562,22 @@ var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq
 // -- she asked "each time we post another article do we need to update
 // this?" The honest answer was yes, and that it should not stay that way.
 // ▶ NOW: writing article #2 means (1) its own <div class="scr"> with real
-// <h1>/<h2> tags, (2) ONE LINE below in JOURNAL_ARTICLES, (3) one entry in
+// <h1>/<h2> tags AND a "Published <date>" line in its byline (.jrnl-by-date,
+// matching datePublished below EXACTLY -- 2026-08-28 addition, for AI/search
+// crawlers that never run the JS which would otherwise reveal a date nowhere
+// in raw HTML), (2) ONE LINE below in JOURNAL_ARTICLES, (3) one entry in
 // page-titles.js's PAGES map (articleSchema() keeps that short), (4) one
 // line in sitemap.xml, (5) her Request Indexing click. Nothing else --
 // no netlify.toml edit (see the /journal/* wildcard there), no new
 // function, no menu row (the hub lists every article by reading this same
 // array, so it can never go stale).
+// ⚠️ IF AN ARTICLE IS EVER GENUINELY REVISED: add a second ".jrnl-by-date"
+// line reading "Updated <date>" and bump dateModified in page-titles.js to
+// match -- never bump either just to look freshly maintained. Both dates
+// here have to be typed by hand in TWO places (this file's byline text and
+// page-titles.js's ARTICLES entry) because an edge function is its own
+// bundle and cannot import from index.html -- the same reason a new
+// article's slug already has to be named in both places.
 // ⚠️ id MUST start with "s-journal" -- the hide-lists and the skin-toggle
 // below match on that PREFIX so a new article never needs touching them.
 var JOURNAL_ARTICLES=[

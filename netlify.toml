@@ -2,6 +2,20 @@
   publish = "."
   functions = "netlify/functions"
 
+# www -> apex, matching the canonical host everywhere else on the site.
+# robots.txt, sitemap.xml and every <link rel="canonical"> already point at
+# the bare domain (see the comment above that tag in index.html) -- but until
+# now www.stylestar.app served the whole site directly with no redirect at
+# all, so Google saw two live copies of every page. This has to come FIRST,
+# before the path-based rewrites below, or a hit on www.stylestar.app/faq
+# would match the /faq rewrite first and rewrite in place without ever
+# changing the host.
+[[redirects]]
+  from = "https://www.stylestar.app/*"
+  to = "https://stylestar.app/:splat"
+  status = 301
+  force = true
+
 # Real URLs for the pages that need one.
 #
 # Style Star is a single-page app: every "page" is a hidden div that JavaScript
