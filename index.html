@@ -1616,7 +1616,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-sharelist .sh-lnh::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
 #s-sharelist .sh-lnbody{font:400 12.5px/1.6 'Jost',sans-serif;color:#5a554c;padding-left:9px;border-left:2px solid #E0B84C;white-space:pre-line}
 #s-sharelist .sh-foot{text-align:center;margin-top:24px}
-#s-sharelist .sh-f2{display:inline-block;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#1a1a1a;border:1px solid #D8A52E;padding:11px 16px;text-decoration:none;cursor:pointer}
+#s-sharelist .sh-f2{display:inline-block;font:600 11px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#1a1a1a;border:1px solid #D8A52E;padding:11px 16px;text-decoration:none;cursor:pointer;margin:5px}
 /* Her ask: the flattened letterhead signs the page off, between the Mall
    button and the legal line. The mark itself is .pref-word, reused rather than
    redrawn — grep pref-word before restyling either. */
@@ -12069,6 +12069,11 @@ function _renderSharedList(d){
 // quiz button and the full footer came off, and why Privacy and Terms did not.
 function _shTail(){
   return '<div class="sh-foot">'
+    +'<span class="sh-f2" onclick="showDream()">Browse the Style Star Edit<svg class="pinkheart" '
+    +'style="width:12px;height:12px;margin-left:5px;vertical-align:-1px" viewBox="0 0 24 24">'
+    +'<path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 '
+    +'C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 '
+    +'18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span>'
     +'<span class="sh-f2" onclick="showShop()">Browse the Style Star Mall &rarr;</span>'
     +'<div class="sh-mark"><span class="pref-word">Style <span class="st">Star</span></span></div>'
     +'<div class="sh-legal">'
