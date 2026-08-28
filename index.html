@@ -74,11 +74,13 @@
 <!-- Sitewide Organization schema (2026-08-28, from the route-rendering audit).
      Lives here, static, because it's the same on every route -- unlike the
      per-page schema in page-titles.js, which has to be edge-rewritten because
-     it differs by path. jobTitle matches her own established wording exactly
-     (the journal byline, articleSchema() in page-titles.js): "Personal
-     Stylist" -- no unverified credential added here that isn't already
-     confirmed elsewhere in the app. -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Style Star","url":"https://stylestar.app","logo":"https://stylestar.app/logo-star.png","description":"A free personal style quiz and styling app, built by a personal stylist with over 20 years of experience.","founder":{"@type":"Person","name":"Catherine Ellspermann","jobTitle":"Personal Stylist"}}</script>
+     it differs by path. jobTitle is "Personal Stylist & Certified Image
+     Consultant" -- confirmed accurate by her directly, and already her own
+     established wording (her My Story opening line, and the /story page's
+     own meta description in page-titles.js both already say it). The "Role &
+     Role" join matches her house style for combining two titles (the journal
+     byline: "Personal Stylist & Founder of Style Star"). -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Style Star","url":"https://stylestar.app","logo":"https://stylestar.app/logo-star.png","description":"A free personal style quiz and styling app, built by a personal stylist with over 20 years of experience.","founder":{"@type":"Person","name":"Catherine Ellspermann","jobTitle":"Personal Stylist & Certified Image Consultant"}}</script>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">

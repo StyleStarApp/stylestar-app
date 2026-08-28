@@ -344,7 +344,9 @@ function articleSchema(a) {
     '@type': 'Article',
     headline: a.title,
     description: a.description,
-    author: { '@type': 'Person', name: 'Catherine Ellspermann', jobTitle: 'Personal Stylist', url: 'https://stylestar.app/story' },
+    // jobTitle confirmed accurate by her directly (2026-08-28) -- matches
+    // her own My Story opening line and this file's own /story description.
+    author: { '@type': 'Person', name: 'Catherine Ellspermann', jobTitle: 'Personal Stylist & Certified Image Consultant', url: 'https://stylestar.app/story' },
     publisher: { '@type': 'Organization', name: 'Style Star', url: 'https://stylestar.app' },
     datePublished: a.datePublished,
     dateModified: a.dateModified,
