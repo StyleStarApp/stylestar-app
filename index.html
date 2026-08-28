@@ -5566,11 +5566,13 @@ var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq
 // matching datePublished below EXACTLY -- 2026-08-28 addition, for AI/search
 // crawlers that never run the JS which would otherwise reveal a date nowhere
 // in raw HTML), (2) ONE LINE below in JOURNAL_ARTICLES, (3) one entry in
-// page-titles.js's PAGES map (articleSchema() keeps that short), (4) one
-// line in sitemap.xml, (5) her Request Indexing click. Nothing else --
-// no netlify.toml edit (see the /journal/* wildcard there), no new
-// function, no menu row (the hub lists every article by reading this same
-// array, so it can never go stale).
+// page-titles.js's ARTICLES array -- slug, id (MUST equal this article's own
+// screen id below, it's what the body trim keeps -- 2026-08-28 addition),
+// title, description, metaTitle, metaDesc, both dates -- (4) one line in
+// sitemap.xml, (5) her Request Indexing click. Nothing else -- no netlify.toml
+// edit (see the /journal/* wildcard there), no new function, no menu row (the
+// hub lists every article by reading this same array, so it can never go
+// stale).
 // ⚠️ IF AN ARTICLE IS EVER GENUINELY REVISED: add a second ".jrnl-by-date"
 // line reading "Updated <date>" and bump dateModified in page-titles.js to
 // match -- never bump either just to look freshly maintained. Both dates
@@ -5628,7 +5630,54 @@ function _openRoute(id){
     else try{history.replaceState({screen:'s-wel'},null,'/')}catch(e){}
   }
 }
+// Self-heal for the trimmed content pages (2026-08-28, the route-rendering
+// fix). /story, /faq, /contact, /privacy, /terms, /journal and /journal/*
+// are now served with EVERY OTHER SCREEN stripped out of the raw HTML, so a
+// crawler reading one of them sees only that page, not the whole app --
+// exactly what fixed Google indexing the wrong page for a search that was
+// about the journal article (her own catch, a real live example). A real
+// woman landing cold on one of those from a search result still needs to be
+// able to tap Home, the Menu, or a link inside the article itself, and
+// every one of those calls show() -- so this fetches the real, complete
+// /index.html (a literal filename: none of the pretty-path rewrites or
+// edge functions in netlify.toml are scoped to it, so it always returns the
+// untouched full file, never a trimmed one) and merges in whichever .scr
+// screens are missing, before she can reach a broken one.
+// ⚠️ Idempotent and cheap on every OTHER page: `#s-wel` always exists there,
+// so this resolves instantly and never fetches anything.
+var _healPromise=null;
+function _selfHealScreens(){
+  if(document.getElementById('s-wel'))return Promise.resolve(true);
+  if(_healPromise)return _healPromise;
+  _healPromise=fetch('/index.html').then(function(r){return r.text();}).then(function(html){
+    var doc=new DOMParser().parseFromString(html,'text/html');
+    var host=document.querySelector('.inner');
+    if(!host)return false;
+    doc.querySelectorAll('.scr').forEach(function(full){
+      if(!document.getElementById(full.id))host.appendChild(document.importNode(full,true));
+    });
+    return true;
+  }).catch(function(e){
+    // A failed fetch must never crash the page it exists to protect -- worst
+    // case she's stuck on the one screen she landed on, same as before this
+    // existed. Reset the shared promise so a later tap (maybe her connection
+    // recovered) gets a fresh try instead of replaying this same failure.
+    try{console.error('[self-heal] could not recover the full app:',e);}catch(e2){}
+    _healPromise=null;
+    return false;
+  });
+  return _healPromise;
+}
 function show(id,skipHistory){
+  // On a trimmed page, every id but the current screen's is missing until
+  // the fetch above lands. Heal, then replay this exact call once it does,
+  // rather than crashing on a null element.
+  if(!document.getElementById(id)){
+    _selfHealScreens().then(function(){
+      if(document.getElementById(id))show(id,skipHistory);
+    });
+    return;
+  }
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
   document.getElementById(id).classList.add('act');
   // Keep the What's Trending "New" pills honest wherever they appear.
@@ -13737,17 +13786,25 @@ function fallbackInitialScreen(){
   if(d&&d.prefs)prefs=d.prefs;
   if(d&&d.wardrobe){wardrobeData=_normalizeWardrobe(d.wardrobe);try{localStorage.setItem('ss_wardrobe',JSON.stringify(wardrobeData));}catch(e){}}
   document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('act')});
+  // ⚠️ NULL-GUARDED (2026-08-28, the route-rendering fix): on one of the
+  // trimmed content pages neither s-wb nor s-wel exists yet, and this must
+  // not crash OR wait for the self-heal fetch -- _openRoute() runs right
+  // after this and shows the route's OWN screen (which does exist)
+  // immediately, with no network dependency. This block simply has nothing
+  // to mark active there; the state restored above (userName/answers/
+  // prefs/wardrobeData) still lands in memory correctly regardless.
+  var wbEl=document.getElementById('s-wb'), welEl=document.getElementById('s-wel');
   if(hasQuiz){
-    document.getElementById('s-wb').classList.add('act');
-    document.getElementById('pw').style.display='none';
+    if(wbEl)wbEl.classList.add('act');
+    var pwEl=document.getElementById('pw');if(pwEl)pwEl.style.display='none';
     updateWbScreen();
   }else{
-    document.getElementById('s-wel').classList.add('act');
+    if(welEl)welEl.classList.add('act');
     try{_renderDiscoStar();}catch(e){}   // cold landing: show() never runs here
   }
   // s-wel and Welcome Back both carry their own footer + logo; hide the shared global footer on either.
-  var onW=document.getElementById('s-wel').classList.contains('act');
-  var onWB=document.getElementById('s-wb').classList.contains('act');
+  var onW=!!(welEl&&welEl.classList.contains('act'));
+  var onWB=!!(wbEl&&wbEl.classList.contains('act'));
   var gf=document.querySelector('.quiz-footer');
   if(gf)gf.style.display=(onW||onWB)?'none':'';
   // Both s-wel and Welcome Back show their own hanging star, so hide the shared global header logo on either.
@@ -13856,6 +13913,17 @@ function maybePlayEntrance(){
 
 // On page load: try the email link first, otherwise normal first-screen logic.
 (function(){
+  // Fire the self-heal fetch NOW, in the background, never awaited here.
+  // ⚠️ DELIBERATELY NOT BLOCKING BOOT ON THIS. The current route's own
+  // screen (e.g. s-faq on /faq) is ALREADY in the trimmed page -- it needs
+  // no fetch to render, and making her wait for a network round trip before
+  // showing content she already has would be a real regression on a slow
+  // connection. This just warms the cache: on any normal connection it is
+  // very likely done before she taps anything, and show()'s own backstop
+  // (see above) is what actually guarantees correctness if she taps before
+  // it lands. fallbackInitialScreen() below has its own null-guards for the
+  // same reason -- it must not wait either.
+  _selfHealScreens();
   // Her wardrobe record (checklist stars AND wishlist) must be in memory before
   // any screen can write to it -- otherwise the first save from a results screen
   // would persist the empty default over everything she had already marked.

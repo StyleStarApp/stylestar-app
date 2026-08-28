@@ -35,14 +35,94 @@
 // homepage). /list/* has its own edge function already, and a shared wishlist
 // must never be told it's indexable — see list-preview.js.
 
+// ── Body trim (2026-08-28, the route-rendering audit) ─────────────────────
+//
+// 🚨 UNTIL THIS, EVERY ROUTE SERVED THE SAME BODY. Style Star ships as one
+// static index.html with all ~25 screens' markup always present -- the app
+// shows one at a time client-side, but nothing server- or edge-side ever
+// trimmed the RAW HTML, so a crawler that doesn't run JavaScript (most AI
+// crawlers, and the first pass any search engine does) read the journal
+// article's page as mostly Terms of Service and FAQ text with the real
+// article buried in the middle. Proven live: she Googled her own name and
+// Google's synthesized title read "Style Journal | Style Star - Discover
+// your signature..." -- stitched from two different screens on the SAME
+// document, because as far as Google could tell they were the same page.
+//
+// ▶ THE FIX: for every route below, strip every OTHER screen's markup out
+// of the body before it's served, keeping only that route's own screen(s)
+// (named in `scrId`) plus everything that ISN'T a screen at all -- the
+// Menu, the entrance curtain, the shared footer, every CSS rule, every
+// line of JS. None of those live inside a `.scr` div (confirmed by reading
+// the real markup, not assumed), so this never touches them.
+//
+// ⚠️ A REAL HUMAN LANDING HERE COLD STILL NEEDS TO BE ABLE TO TAP ANYWHERE
+// ELSE IN THE APP. index.html's own `_selfHealScreens()` + a guard inside
+// `show()` handle that: the moment she taps something needing a screen
+// that got trimmed out, the app quietly fetches the real, untouched
+// /index.html (that literal filename bypasses every rewrite and this
+// function -- neither is scoped to it) and merges the missing screens
+// back in before the tap completes. Ship the two together; the trim alone
+// would break navigation for a real visitor. See index.html for that half.
+//
+// ⚠️ NEVER LET A TRIM BUG TAKE DOWN THE PAGE. trimScreens() below is
+// wrapped in try/catch at its one call site -- any failure serves the full,
+// untrimmed (but still correctly titled) body instead, exactly what every
+// route already served before today.
+function findDivEnd(html, openTagStart) {
+  const gt = html.indexOf('>', openTagStart);
+  if (gt === -1) throw new Error('no > for opening tag at ' + openTagStart);
+  let depth = 1, pos = gt + 1;
+  while (depth > 0) {
+    const nextOpen = html.indexOf('<div', pos);
+    const nextClose = html.indexOf('</div>', pos);
+    if (nextClose === -1) throw new Error('unbalanced <div> near ' + pos);
+    if (nextOpen !== -1 && nextOpen < nextClose) { depth++; pos = nextOpen + 4; }
+    else { depth--; pos = nextClose + 6; }
+  }
+  return pos;
+}
+// ⚠️ BOUNDED TO THE REAL SCREENS REGION ONLY -- <body> up to the first real
+// <script> tag. A search over the WHOLE document also matches a code
+// COMMENT elsewhere that happens to contain the literal text
+// `<div class="scr" id="...">` as a written-out example (found the hard
+// way, prototyping this against the real file before it ever touched this
+// function) -- that "block" has no real closing tag and would throw.
+// Confirmed separately: zero <script> tags exist inside any real screen, so
+// this bound can never clip a genuine block short.
+function findScrBlocks(html) {
+  const bodyStart = html.indexOf('<body>');
+  const scriptStart = html.indexOf('<script', bodyStart);
+  if (bodyStart === -1 || scriptStart === -1) throw new Error('could not bound the screens region');
+  const re = /<div class="scr[^"]*" id="([^"]+)"/g;
+  re.lastIndex = bodyStart;
+  const blocks = [];
+  let m;
+  while ((m = re.exec(html)) && m.index < scriptStart) {
+    const start = m.index, id = m[1];
+    blocks.push({ id, start, end: findDivEnd(html, start) });
+  }
+  return blocks;
+}
+function trimScreens(html, keepIds) {
+  const blocks = findScrBlocks(html);
+  let out = html;
+  for (let i = blocks.length - 1; i >= 0; i--) {
+    const b = blocks[i];
+    if (!keepIds.includes(b.id)) out = out.slice(0, b.start) + out.slice(b.end);
+  }
+  return out;
+}
+
 const PAGES = {
   '/story': {
     title: 'Meet Catherine, Your Personal Stylist | Style Star',
     desc: 'Meet Catherine, a personal stylist and certified image consultant with 20+ years of experience, and the story behind Style Star.',
+    scrId: 's-story',
   },
   '/faq': {
     title: 'Frequently Asked Questions | Style Star',
     desc: "Answers about Style Star: what it is, how the AI stylist works alongside real styling expertise, and how your privacy is handled.",
+    scrId: 's-faq',
     // FAQPage schema (2026-08-26): all 18 real Q&A pairs, pulled straight off
     // the live page with a headless browser reading .textContent (not typed
     // by hand) so this can never drift from what a visitor actually sees.
@@ -205,14 +285,17 @@ const PAGES = {
   '/contact': {
     title: 'Contact Style Star — Get in Touch with Catherine',
     desc: "I'd love to hear from you. Whether it's a style question, an idea for Style Star, or something you need help with, reach out.",
+    scrId: 's-contact',
   },
   '/privacy': {
     title: 'Privacy Policy | Style Star',
     desc: 'How Style Star collects, uses and protects your personal information, including your quiz answers, photos and account details.',
+    scrId: 's-privacy',
   },
   '/terms': {
     title: 'Terms of Service | Style Star',
     desc: 'The terms and conditions for using Style Star, including your rights, our affiliate disclosures, and how the service works.',
+    scrId: 's-terms',
   },
 };
 
@@ -230,9 +313,16 @@ const PAGES = {
 // Both title and description are trimmed to Google's real display budget
 // (~60 chars for a title, ~155-160 for a description) before they are
 // written here -- a longer one gets truncated mid-sentence in the result.
+//
+// ⚠️ `id` (added 2026-08-28, the route-rendering fix) MUST match this
+// article's screen id in index.html's OWN JOURNAL_ARTICLES exactly -- it's
+// what trimScreens() below keeps when serving this article's raw HTML. A
+// third place a new article's identity has to be typed by hand, for the
+// same reason the slug already is: this file cannot import from index.html.
 const ARTICLES = [
   {
     slug: 'how-to-find-your-personal-style',
+    id: 's-journal',
     title: 'How to Find Your Personal Style',
     description: 'How to find your personal style, from a personal stylist of 20+ years.',
     metaTitle: 'How to Find Your Personal Style | Style Star',
@@ -263,7 +353,7 @@ function articleSchema(a) {
 }
 
 for (const a of ARTICLES) {
-  PAGES['/journal/' + a.slug] = { title: a.metaTitle, desc: a.metaDesc, schema: articleSchema(a) };
+  PAGES['/journal/' + a.slug] = { title: a.metaTitle, desc: a.metaDesc, schema: articleSchema(a), scrId: a.id };
 }
 
 // The hub, /journal: lists every article, so it carries a real ItemList --
@@ -272,6 +362,7 @@ for (const a of ARTICLES) {
 PAGES['/journal'] = {
   title: 'Style Journal | Style Star',
   desc: 'Style notes and articles from Catherine, personal stylist and founder of Style Star.',
+  scrId: 's-journal-hub',
   schema: {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -319,6 +410,18 @@ export default async (request, context) => {
   if (page.schema) {
     html = html.replace('</head>',
       '<script type="application/ld+json">' + JSON.stringify(page.schema) + '</script></head>');
+  }
+  // The body trim (see the long comment above trimScreens): never allowed to
+  // take the page down. A failure here still ships everything above --
+  // correct title, description, canonical, schema -- just with the body every
+  // route has always served, exactly today's behavior. Logged so a real
+  // failure is never silent.
+  if (page.scrId) {
+    try {
+      html = trimScreens(html, [page.scrId]);
+    } catch (e) {
+      try { console.error('[page-titles] body trim failed for', path, e); } catch (e2) {}
+    }
   }
 
   // Rebuild the headers rather than reusing them: the body length changed, so a
