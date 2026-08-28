@@ -7,7 +7,131 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-27 — 🧭 THE BIG-PICTURE SESSION: FINDABILITY, AFFILIATES, THE REAL SHAPE OF SEARCH, AND WHY THE CACHING FIX GOT PARKED)
+## ▶ NEXT SESSION — START HERE (2026-08-28 — ⚖️ INDIE LAW: A FIRMER EMAIL SENT, AN UNSIGNED REPLY, AND HER SON'S "REPORT IT TO THE BAR")
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save everything as you suggested")
+**NO APP CODE TOUCHED THIS SESSION. Zero Netlify builds.** The whole session was the Indie Law thread —
+drafting, correcting, and sending a firmer follow-up email. ▶ **Her own words at the pause, keep them
+exact, they are the emotional throughline for next time: "I really just want to be done with them. I
+want my legal filings to be done properly and I just want to grow my business and not think about that
+stuff ever again but I am annoyed. I paid a lot of money and I think they have done a sloppy job."**
+That is not "fix the wording" energy anymore — it is closer to "I am evaluating whether to keep this
+firm." Hold that read next session; don't downplay it into a one-off complaint.
+
+### 🚨 THE HEADLINE: A REAL EMAIL DISCREPANCY, PLUS A SIGNATURE THAT WASN'T THERE
+She pasted the actual live thread (not summarized from memory — a real correction to an earlier draft
+this session that was built off the CLAUDE.md summary instead of her real inbox; **lesson for any future
+correspondence: always ask her to paste the real thread, never draft from this file's summary alone**).
+The thread, in order:
+- **Aug 20, 4:01pm — Cath asked four things**: confirm once the Statement of Correction is mailed AND
+  accepted by the state · is $900 the full cost or the USPTO's share only · what a specimen needs to
+  look like per class, especially **045** · yes to the complimentary protection plan, what does it
+  include and does it renew into a paid plan.
+- **Aug 24, 11:10am — Indie Client Care answered all four**, itemized 1-4, and **signed "Big smiles,
+  Almira"** above the generic footer: (1) the Statement of Correction was **mailed 08/20**, waiting on
+  the state to confirm receipt · (2) the $900 is strictly the USPTO filing fee, preparing/filing the
+  Statement of Use is covered in her package · (3) real specimen guidance for all three classes,
+  **045 named explicitly** (personal stylist / fashion consulting services — a website, landing page or
+  marketing material showing the mark in relation to the service description qualifies; asked her to
+  send what she has so far) · (4) pointed her at the protection-plan page, said they'll flag her before
+  any renewal decision is needed.
+- **Aug 25, 9:00am — a second, much shorter update, signed ONLY "Warmly, Indie Client Care Team," no
+  individual name**: *"your Statement of Correction was successfully delivered to the IRS on August 24."*
+  ▶▶ **THIS CONTRADICTS THE AUG 24 EMAIL OUTRIGHT.** The Statement of Correction is a **Florida Division
+  of Corporations filing** (it fixes a typo in her Articles of Organization), not an IRS matter — the
+  IRS has nothing to do with it. One email said "mailed to the state, awaiting their confirmation";
+  the next, one day later, said "delivered to the IRS." **Both cannot be true, and only one of them is
+  even the right agency.**
+- **Cath's own reply (sent before this session)** asked which is accurate, noted the state-not-IRS
+  point herself, and offered the live site (`https://stylestar.app`) for the specimen review Almira had
+  asked for. **No reply to that came before this session started.**
+
+### 🚨🚨 HER OWN CATCH: THE MOST RECENT UPDATE WASN'T SIGNED — AND AMBER HAD JUST TOLD HER OTHERWISE
+Cath had a phone call with **Amber** (not Almira — the same person who called after the missing-045
+finding back on 2026-08-17) and asked directly who is actually handling her case. **Amber assured her
+it has been escalated to Almira personally, not a general team member.** Then Cath re-read the emails
+and noticed: **the Aug 24 email (the detailed, correct one) is signed "Almira"; the Aug 25 email (the
+short, contradictory one) is signed only "Indie Client Care Team."** ▶ **Verified directly against the
+actual pasted thread, not assumed — her read was exactly right.** That is a real, observable
+inconsistency between what she was told on the phone and what showed up in her inbox the next day, and
+it is worth taking seriously rather than smoothing over.
+
+### ✅ THE FIRMER EMAIL IS DRAFTED AND SENT (her explicit ask: "I want it firmer please")
+Two drafts were offered before this one; she asked for firmer, and this is what went out:
+> Subject: Following up — Statement of Correction (IRS vs. state) and who is handling my file
+>
+> I'm following up because my last email hasn't been answered, and I need clarity on two things.
+> First, the Statement of Correction: I received two conflicting updates... I need to know
+> definitively where it actually is right now, not which version is more convenient to report.
+> Second, I spoke with Amber on the phone, who assured me my case has been escalated to you
+> personally... The August 25 update was signed only "Indie Client Care Team," with no individual
+> name, unlike your earlier notes. I'd like direct confirmation that you are the one personally
+> managing my file going forward, and I'd appreciate your name on future updates...
+> I'd like a clear answer on both points this week.
+
+She confirmed: **"Thank you. I sent that one."** ▶ **She set a one-week clock herself ("this week") —
+worth tracking. If nothing real comes back by roughly Sept 4, that is the trigger to revisit switching
+firms, not before.**
+
+### 🚨 HER SON'S WORD, "THE BAR" — LOGGED, NOT ACTED ON, AND SHOULDN'T BE BY US EITHER
+She told her son (2nd-year law student, previously the one who told her to hire a specialist back when
+this all started) about the pattern of mistakes. **His reaction: this was bad and honestly could be
+reported to the state bar.** ▶ **Handled correctly in the moment and should be handled the same way
+next time: this is not ours to weigh in on.** Whether a pattern of sloppy service/miscommunication rises
+to a bar-complaint-worthy violation is a real legal judgment — her son, or an independent attorney, is
+who should make that call, never Claude. What WAS offered, and stands: give the firm the chance to
+answer what she just sent; keep every email, date and fee breakdown exactly as she has it, since a clean
+paper trail is the whole case either way (switching firms, requesting a fee adjustment, or an actual
+complaint); log the full pattern here once it resolves one way or another.
+
+### 📋 THE FULL PATTERN, FOR CONTINUITY — SO IT ISN'T SCATTERED ACROSS SESSIONS
+Every one of these was caught by HER, not reported to her, until she asked directly:
+1. **LLC name "Style Star, LLC" rejected by Florida** (2026-07-16, a real state collision with an
+   existing entity, not their fault) → renamed, approved as "Style Star by Catherine, LLC," **filed
+   July 27** — but Cath found the Active status on Sunbiz herself, days before any confirmation, after
+   a scam-text wave tipped her off (2026-07-31/08-05).
+2. **EIN issued August 4, she was told August 17 — thirteen days of silence**, in a subordinate clause
+   of an unrelated email. She had a draft ready to request one herself from the IRS, which would have
+   created a duplicate EIN — their silence nearly caused a real problem.
+3. **The single biggest one: Class 045 (personal stylist services) was missing from BOTH trademark
+   applications**, despite her asking for it in writing, them confirming it in writing, and her paying
+   for it — **$2,100 ÷ $350 = six filings; the drafts covered four, $700 unaccounted for.** She caught
+   this herself by dividing the quote by the unit price, refused to sign, and it took a phone call
+   (with Amber) plus a firm written recap before corrected applications arrived with 045 included on
+   both (2026-08-17/08-18).
+4. **The Statement of Correction** (fixing "Bail" → "Bailey," a typo in the filed Articles she also
+   found herself) — now the thread above: mailed Aug 20 per one email, "delivered to the IRS" per the
+   next, unsigned.
+▶ **The read to keep: no single mistake here is catastrophic on its own, but the CONSISTENCY of "Cath
+catches it, not them" is the actual problem, and it's what's wearing her down** — not any one filing.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 💛 **Check in on how she's feeling about Indie Law before anything else.** She's "annoyed," feels
+   she's paid a lot for sloppy work, and wants to just grow her business without thinking about this —
+   that's closer to a firm-confidence question than a paperwork one. Don't rush her toward a decision.
+2. ⚖️ **Did Almira (or anyone) reply to the firmer email?** Two things to check for specifically: (a)
+   did they actually reconcile the IRS-vs-state contradiction with a real answer, not a restatement,
+   and (b) is Almira now signing her own updates personally. **If the reply is another vague
+   team-signed non-answer, or nothing arrives by ~Sept 4 (her own "this week"), that's the moment to
+   put "do you want to look at switching firms" on the table plainly** — not before, and not decided by
+   us either way.
+3. 📸 **Etsy Star-of-the-Week bracelet photo — she wants to look at it again, AND pick a second item
+   from Etsy.** Both still open, neither started this session.
+4. 📱 **The Fiverr social-media hire — UPDATE: she sent the brief, they replied with a thank-you but no
+   concrete plans yet. Still due Sept 15.** Check back closer to that date rather than nagging now.
+5. 🔎 **The four big-picture strategy threads (findability/SEO, affiliate push, what search really does
+   today, cost control) — she wants to discuss further, explicitly AFTER the Almira thread settles
+   down.** Don't lead with these next time; let her raise them.
+6. ⚖️ **Almira never answered the OLDER standing question either (the name-correction status) — now
+   folded into the same firmer email, so it's one open thread, not two.**
+7. 💰 **The monthly cost check-in Routine fires 2026-09-01** — log the first real spend number here
+   when it lands (still nothing logged yet).
+8. ⚠️ **Etsy's ten dimension scores are STILL a Claude draft**, unresolved for several sessions now:
+   `d:[8,4,4,4,6,8,4,4,7,8]`, `$-$$$$`, `Universal` archetype tag. Ask if it ever comes up naturally.
+
+---
+
+## ▶ PREVIOUS — (2026-08-27 — 🧭 THE BIG-PICTURE SESSION: FINDABILITY, AFFILIATES, THE REAL SHAPE OF SEARCH, AND WHY THE CACHING FIX GOT PARKED)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save all we have done so far to the .md and I will open new chat")
 **She checked in as doing well** — "just needed to regroup" after the discouraged pause. ▶ **She wants a comprehensive, growing master list, not just a task queue** — her words: "I want to continue making sure we have a detailed list of items that need to get completed, also add to it more ideas." That is the job of this whole file; treat every session's new threads as additions to it, not a replacement.
