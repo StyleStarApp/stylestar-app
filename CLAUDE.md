@@ -77,10 +77,19 @@ normal business/legal voice for a company page (even a solo LLC), not the same c
 stores I personally love," so it doesn't have the same inconsistency. Only raise it if she wants to open
 that as its own, bigger question later.
 
+### ✅ ONE MORE, RIGHT AFTER: A TRAILING PINK HEART ON THE MALL TAGLINE (2026-08-28, she came back with a screenshot)
+She sent a live screenshot of the Mall and asked, unprompted: *"Should we put a tilted pink heart right
+after '...all in one spot'?"* ▶ **Yes, and it lands exactly on her own established mark system** — a
+single trailing tilted pink heart marks a sentence spoken in her own voice (the My Story sign-off, the
+welcome founder line), and the tagline had just become exactly that kind of sentence with the "we"→"I"
+fix above. Added at 13px, matching the tagline's 13.5px body text, reusing the identical `.pinkheart` SVG
+used everywhere else — never redrawn. Live, curl-verified. **Nothing left open on the Mall from today.**
+
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's close this out and save to the .md. I will open up on new chat")
-**FOUR APP CODE CHANGES THIS SESSION, ALL LIVE AND CURL-VERIFIED** (Etsy → the Mall, her corrected Etsy
-scores, the Mall tidy-up, and the Mall's "we"→"I" copy fix, all above; the bracelet photo is a decision,
-not a code change). Otherwise the session was the Indie Law thread — drafting, correcting, and sending a
+**FIVE APP CODE CHANGES THIS SESSION, ALL LIVE AND CURL-VERIFIED** (Etsy → the Mall, her corrected Etsy
+scores, the Mall tidy-up, the Mall's "we"→"I" copy fix, and the trailing pink heart on the tagline, all
+above; the bracelet photo is a decision, not a code change). Otherwise the session was the Indie Law
+thread — drafting, correcting, and sending a
 firmer follow-up email. ▶ **Her own words earlier in the session, keep them exact, they are the emotional
 throughline for next time: "I really just want to be done with them. I want my legal filings to be done
 properly and I just want to grow my business and not think about that stuff ever again but I am annoyed.
