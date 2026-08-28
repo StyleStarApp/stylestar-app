@@ -7,7 +7,186 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-28 — ⚖️ INDIE LAW: A FIRMER EMAIL SENT, AN UNSIGNED REPLY, AND HER SON'S "REPORT IT TO THE BAR")
+## ▶ NEXT SESSION — START HERE (2026-08-28, later same day — 🔎 THE ROUTE-RENDERING FIX: EVERY PAGE WAS SERVING EVERY OTHER PAGE'S TEXT, AND NOW IT DOESN'T)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "I want to be able to do every detail on this... save all to the .md")
+**FOUR PRs this session, all merged to main and CURL-VERIFIED LIVE.** She brought a brief from a Cowork
+conversation (`stylestar-route-rendering-fix.md`) diagnosing a real, serious SEO problem; it got fixed
+properly, in stages, with real bugs caught along the way by testing rather than assumed away. ▶ **ONE
+genuine loose end remains, and it needs HER WORDS, not code — see the very top of the next-session list.**
+
+### 🚨🚨 THE HEADLINE: EVERY "PAGE" ON STYLESTAR.APP WAS SERVING THE SAME BODY — THE WHOLE APP, EVERY TIME
+Style Star is one static `index.html` file containing **all ~25 screens' markup, always** — the wardrobe
+list, the chat, the FAQ, Privacy, the journal article, all of it, sitting in the document at once. JS shows
+one at a time client-side. Until today, **nothing server- or edge-side ever trimmed the raw HTML** — a
+Netlify Edge Function (`page-titles.js`) rewrote only the `<title>`/description/canonical/schema tags per
+route, and left the identical, full body untouched underneath. A crawler that never runs JavaScript (most
+AI crawlers, and the first pass any search engine does) read the journal article's page as mostly Terms of
+Service and FAQ text with the real article buried in the middle.
+- 🚨 **SHE PROVED IT LIVE, HERSELF, WITH A REAL SEARCH — the single best piece of evidence in this whole
+  thread.** She Googled **"Catherine Ellspermann style star"** and the one result's title read
+  **"Style Journal | Style Star - Discover your signature…"** — a title Google had stitched together from
+  TWO DIFFERENT SCREENS on the same document (the Journal hub's real title + the homepage's own headline),
+  because as far as Google could tell reading the raw page, they were the same page. Her tap landed on the
+  **hub**, not the article, for a search that was clearly about the article.
+- 🎁 **A genuine bonus find from that same screenshot**: the search snippet quoted *"a personal stylist and
+  certified image consultant with over 20 years…"* — a real, accurate credential of hers, and its origin
+  was a small mystery for a moment (she first guessed it came from her Instagram bio). **It didn't — it was
+  already on Style Star all along**, in her own My Story opening line and the `/story` page's own meta
+  description. It only showed up in a search snippet for the *journal article* URL because, before today's
+  fix, /journal's raw HTML contained the ENTIRE app, My Story included. **A second, independent piece of
+  live proof the diagnosis was right.**
+
+### ✅ STEP 1 — THREE SAFE ITEMS, SHIPPED FIRST, ZERO RISK (her call: "let's knock out the 3 safe items now")
+Before touching anything structural: three pure additions, no behavior change, no navigation risk.
+1. **Sitewide `Organization` JSON-LD**, added static in `index.html`'s real `<head>` (not edge-rewritten,
+   since it's identical on every route). Name, url, logo, founder (Catherine).
+2. **A visible "Published August 26, 2026" line** on the journal article's byline (`.jrnl-by-date`, same
+   quiet styling as the existing role line) — so an AI crawler reading raw HTML, with no JS, can see when
+   it was written, not just the JSON-LD a human never sees.
+3. **`www.stylestar.app` now 301s to the apex, on every path.** It had been serving the whole site directly
+   with **no redirect at all** — despite an old code comment claiming this was "verified live 2026-08-24."
+   ▶ Either that verification was wrong at the time, or something changed since; either way it's now
+   enforced explicitly in `netlify.toml` rather than resting on an unverified assumption.
+- All three curl-verified live same session. `scratchpad/trim-proto.mjs` and friends (this session's
+  scratchpad scripts, in `/tmp`, not committed) are throwaway verification tools, not part of the app.
+
+### 🚨🚨 STEP 2 — THE REAL FIX: EACH OF THE 7 ROUTES WITH A REAL ADDRESS NOW SERVES ONLY ITS OWN CONTENT
+`/story · /faq · /contact · /privacy · /terms · /journal · /journal/how-to-find-your-personal-style`.
+Two matched pieces, built and reasoned through carefully, shipped together on purpose — **the first alone
+would have been a real regression.**
+1. **`page-titles.js` now trims the body**, stripping every OTHER screen's `<div class="scr" id="...">`
+   block out of the raw HTML before serving, keeping only the current route's own screen. Everything that
+   ISN'T inside a screen div — the Menu, the entrance curtain, the shared footer, every line of CSS and
+   JS — was **confirmed by reading the real markup, not assumed**, to live outside every screen, so none of
+   it is ever touched.
+   - ⚠️ **A REAL TRAP FOUND WHILE PROTOTYPING, before it ever touched the edge function**: a naive scan for
+     `.scr` blocks across the WHOLE file also matches a JS **comment**, elsewhere, that happens to contain
+     the literal descriptive text `<div class="scr" id="...">` as a written-out example — that "block" has
+     no real closing tag and crashed the extraction. Fixed by bounding the search strictly to the real
+     screens region (`<body>` up to the first genuine `<script>` tag; confirmed separately that zero
+     `<script>` tags live inside any real screen, so this bound can never clip a real block short).
+   - A trim failure can never take the page down — wrapped in try/catch, falls back to today's full body.
+2. **`index.html` can now recover from landing on a trimmed page.** `_selfHealScreens()` fetches the real,
+   untouched `/index.html` (that literal filename bypasses every rewrite and edge function — none are
+   scoped to it) and merges the missing screens back into the live DOM. `show()` itself got a defensive
+   null-check: if the screen it's asked for isn't there, it heals and retries once, rather than crashing.
+- 🚨 **TWO REAL BUGS CAUGHT ONLY BY ACTUALLY TESTING, NOT BY REASONING ABOUT IT:**
+  1. **`fallbackInitialScreen()` — the function that ALWAYS runs first at boot, before any routing —
+     directly touches `#s-wb`/`#s-wel` with no null-check.** On a trimmed page neither exists, so this
+     would have crashed before the routing logic ever got a chance to show the (present) current screen.
+     Fixed with null-guards on both `.act`-setting lines.
+  2. ⚠️⚠️ **THE FIRST VERSION OF THE FIX MADE THE ENTIRE PAGE WAIT FOR THE SELF-HEAL FETCH BEFORE SHOWING
+     ANYTHING — even content that needed no fetch at all.** Found by deliberately testing on a simulated
+     slow connection: the FAQ page would sit BLANK for over a second on a slow connection, when the FAQ
+     content was already sitting right there in the raw HTML. ▶ **Fixed: self-heal now fires in the
+     background, never blocking the current route's own render. Only navigating AWAY to a screen that got
+     trimmed out ever waits**, and even then only until the (usually near-instant, same-origin) fetch lands.
+- **Verified thoroughly before shipping, not just "it looks right":** the trim algorithm proven against the
+  real file in isolated prototypes first; a full Playwright test serving both a genuinely trimmed page and
+  the real `/index.html` from one local server proved cold-load renders instantly + self-heal completes +
+  real navigation to two different destinations (the quiz, My Story) all succeed with zero JS errors, under
+  BOTH normal and artificially slowed network conditions; the actual, unmodified `page-titles.js` file was
+  imported and driven directly (never a reimplementation) with a mocked Netlify context — **99/99 checks**;
+  the project's own existing `nav.js`/`menu.js`/`hubs.js` regression suites were re-run, and the 3 failures
+  they showed were proven, via an isolated `git worktree` (not a stash — see the lesson below), to be
+  **100% pre-existing stale counts** (a footer count and a menu-row count last calibrated before recent
+  pages were added), not caused by this work. Live curl confirmed exact byte-level content on every route
+  after deploy.
+- ⚠️ **PROCESS LESSON, logged so it isn't repeated: `git stash` followed by a slow command in ONE chained
+  Bash call risks losing the stash if the whole call times out** (`git stash pop` never runs). Hit this
+  once, caught it immediately via `git status`, recovered cleanly with `git stash pop`. **From now on, use
+  `git worktree add` for any "is this pre-existing" comparison that might take a while** — it can never
+  put the working tree's uncommitted changes at risk, because they're never touched.
+
+### ✅ STEP 3 — THE FAQPage SCHEMA ON THE ARTICLE (Cowork's brief called this "the single highest-value item")
+Missed on the first pass, caught because **she asked "I don't think we finished with the Cowork file?"** —
+a real, correct catch. Re-read the brief phase by phase against what had actually shipped and found this
+one genuine gap (plus confirmed Phase 2, one H1 per page, was already satisfied as a natural byproduct of
+the trim — my own quick verification of that briefly flagged a false "2 H1s" reading, which turned out to
+be my own code COMMENT containing the text "<h1>" as an example, not a real second heading; confirmed
+directly, only one real H1 per route).
+- **Extracted programmatically from the article's real H2/paragraph pairs** in `index.html`, same
+  never-hand-type discipline as the FAQ page's own existing schema. Of the article's **8 H2 headings, only
+  4 genuinely end in "?"** and read as real questions; the other 4 (an intro heading that pairs a question
+  with a directive and doesn't itself end in "?", plus three narrative/concluding headings) were
+  **deliberately left out** — Google's FAQPage guidelines require the marked-up content to actually be
+  question-and-answer content, and marking up a heading that only sounds vaguely like one risks the rich
+  result being disabled.
+- The article page now serves **two JSON-LD blocks**: the sitewide Organization schema, and an array of
+  `[Article, FAQPage]` — both standard, spec-supported patterns. Live-verified: `"@type":"FAQPage"` present,
+  4 real questions, first one confirmed by name.
+- ⚠️ **IF THE ARTICLE'S QUESTIONS EVER CHANGE, regenerate this the same way** — walk the real H2/paragraph
+  pairs again, keep only headings ending in "?". Never hand-edit it out of sync with the real page. A future
+  article #2 needs its own `faq` array (or none, if it has no genuine question-headings) in the same
+  `ARTICLES` entry in `page-titles.js`.
+
+### ⭐⭐ THE CERTIFIED IMAGE CONSULTANT CREDENTIAL — ADDED, QUESTIONED, EXPLAINED, CONFIRMED
+The Organization schema's `founder.jobTitle` and the Article schema's `author.jobTitle` were shipped as the
+plain "Personal Stylist" (deliberately conservative — I hadn't seen the fuller credential confirmed
+anywhere). She confirmed it's real and accurate, and it turned out to already be established Style Star
+copy (see the "genuine bonus find" above). **Updated both to "Personal Stylist & Certified Image
+Consultant"** — matching her own house style for combining two titles (the journal byline: "Personal
+Stylist & Founder of Style Star"). Live-verified on both the homepage's Organization block and the article's
+Article block.
+- ▶ **SHE THEN QUESTIONED IT** — "Wait I think we want it to say Founder of Style Star?? ... We want style
+  star to be found" — a completely fair worry, and worth restating the reasoning here so it's never
+  re-litigated from scratch:
+  1. **"Founder of Style Star" is already conveyed structurally** in the Organization schema — the
+     `Organization.founder = Catherine` relationship itself IS that statement. Restating it as her jobTitle
+     would be redundant with the data's own shape.
+  2. **For the article specifically**, the jobTitle field is squarely an E-E-A-T signal (Google's own
+     framework for judging content trustworthiness) — a real professional credential is the stronger answer
+     to "should this styling advice be trusted" than "she runs the company that published this."
+  3. **Nothing about Style Star's own findability is touched either way** — the Organization's `name` and
+     `url` do that job, untouched. And "Founder of Style Star" is still right there, visibly, in her own
+     byline on the actual page — the schema and the visible text don't have to say the same thing.
+  ▶ **Her decision, after hearing this: keep the credential, on both fields.** Settled, live, no further
+  action. **Do not re-litigate this without a real new reason.**
+
+### ▶ THE ONE GENUINE LOOSE END — NEEDS HER WORDS, DELIBERATELY NOT BUILT
+**Phase 4 of the brief**: one plain-text sentence, as VISIBLE BODY COPY (not just a meta tag), on the
+**homepage AND the FAQ**, stating plainly that Style Star is free, needs no signup, and was built by a real
+personal stylist, not just an algorithm. The brief's own suggested wording: *"Style Star is completely
+free. No sign-up, no email required. It was built by a personal stylist with over twenty years of
+experience — not just an algorithm."*
+- ⚠️ **Similar sentiments already exist scattered around** (the homepage already has "Always free, no
+  signup required." · the FAQ's "What makes Style Star different?" answer already says "It's not a
+  faceless algorithm...") **but not this exact combined framing, in these two specific places, as one
+  sentence.** That's a wording decision and belongs to her, the same standing rule as every other piece of
+  copy in this app — never paste in someone else's suggested marketing language without her blessing.
+- ▶ **NEXT SESSION: draft this together with her, in her voice, then ship it in both places.** Small,
+  quick, no architecture involved — the only reason it's still open is that it needed her words, not more
+  engineering.
+
+### ▶ HOUSEKEEPING SHE SHOULD DO, MATCHING HER OWN STANDING RULE
+**Request re-indexing in Google Search Console for `/faq` and the journal article** — both genuinely
+changed today (trimmed body, new FAQPage schema on the article), and her own standing rule (set 2026-08-26)
+is to do this proactively on anything new or changed. Same 30-second URL Inspection → Request Indexing
+step she already knows. ▶ **Remind her if she hasn't by next session.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **THE PHASE 4 COPY LINE — draft it together, her words, ship it on the homepage and the FAQ.** The
+   only structural/content item left open from today's whole thread.
+2. 🔎 **Ask whether she's requested re-indexing on `/faq` and the journal article yet.**
+3. 📸 **Pick a second item from Etsy** — still open, still never started (see the entry below this one for
+   the full standing context — the bracelet photo is settled, this is the only piece left).
+4. ⚖️ **Indie Law** — she wants to talk it over with her son first; no reply yet on the firmer email (too
+   soon to expect one). Check in gently, don't push toward a decision. Her own one-week clock runs to
+   roughly Sept 4 — see the full entry below for the complete thread.
+5. 📱 **The Fiverr social-media hire** — check back closer to **Sept 15**, not before.
+6. 💰 **The monthly cost check-in Routine fires 2026-09-01** — log the first real spend number here once
+   it lands.
+7. 🔎 **The four big-picture strategy threads** (findability/SEO, affiliate push, what search really does
+   today, cost control) — she wants these discussed further, but explicitly after the Almira thread
+   settles. Don't lead with them; let her raise them.
+8. ⚠️ Everything else from the 2026-08-28 entry directly below (now marked PREVIOUS) that isn't listed
+   above is still open and unchanged — the full Indie Law email thread, the pattern of five caught mistakes,
+   her son's "report it to the bar" comment (logged, not acted on, not ours to weigh in on).
+
+---
+
+## ▶ PREVIOUS — (2026-08-28 — ⚖️ INDIE LAW: A FIRMER EMAIL SENT, AN UNSIGNED REPLY, AND HER SON'S "REPORT IT TO THE BAR")
 
 ### ✅ ETSY JOINED THE MALL (2026-08-28, her ask, same session — one Netlify build, curl-verified live)
 Her question first: **"is it already in our list of searchable stores?"** Yes — Etsy has been in
