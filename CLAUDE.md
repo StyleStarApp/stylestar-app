@@ -59,10 +59,28 @@ touched. **Baby Gold's blurb** is now **"14K gold and personalized jewelry"** (h
 Her own words: *"I want to pick the second Etsy item later so please add that to list."* Nothing chosen
 yet — this is a fresh browse-and-pick with her, same as the bracelet was.
 
+### ✅ THE MALL'S "WE" BECAME "I" — her own catch, matching the rest of the app (2026-08-28, same session)
+Her question: *"is this correct/consistent? The truth is there is no we, it is just me here."* It was
+inconsistent, and worth fixing:
+- **The tagline** was *"Enjoy shopping our favorite stores. These are the places we love..."* — now
+  **"Enjoy shopping my favorite stores. These are the places I love..."**, matching every other
+  personal-curation line in the app (the Edit's "selected by me," My Story, Contact's "I read every
+  message myself").
+- **The disclosure** used to be its own longer holdout — *"Style Star may earn a small commission from
+  some links, at no extra cost to you. We only feature stores we genuinely love."* — mixing third-person
+  "Style Star" and first-person "We" in the same sentence. Now it's the plain **"Some links may earn a
+  commission,"** word-for-word identical to the other twelve copies of this line across the app (the
+  wording every other surface already switched to back when she found "we"/"us"/"me" all felt off on the
+  short disclosure). The Mall was the one place that never got that update.
+▶ **Left alone, and told to her why:** the FAQ, Privacy Policy and Terms still say "we"/"our" — that's
+normal business/legal voice for a company page (even a solo LLC), not the same claim as "these are the
+stores I personally love," so it doesn't have the same inconsistency. Only raise it if she wants to open
+that as its own, bigger question later.
+
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save everything as you suggested")
-**THREE APP CODE CHANGES THIS SESSION** (Etsy → the Mall, her corrected Etsy scores, and the Mall
-tidy-up, all above; the bracelet photo is a decision, not a code change). Otherwise the session was the
-Indie Law thread —
+**FOUR APP CODE CHANGES THIS SESSION** (Etsy → the Mall, her corrected Etsy scores, the Mall tidy-up, and
+the Mall's "we"→"I" copy fix, all above; the bracelet photo is a decision, not a code change). Otherwise
+the session was the Indie Law thread —
 drafting, correcting, and sending a firmer follow-up email. ▶ **Her own words at the pause, keep them
 exact, they are the emotional throughline for next time: "I really just want to be done with them. I
 want my legal filings to be done properly and I just want to grow my business and not think about that
