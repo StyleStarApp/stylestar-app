@@ -84,6 +84,34 @@ list**, not one link to the whole thing.
   arrow line and no overflow at 390/360/320. Both `<script>` blocks parse clean. **✅ CONFIRMED LIVE,
   curl-verified on stylestar.app.** Nothing left open on this.
 
+### 💌✅ THE PUBLIC SHARED-LIST PAGE GAINED A SECOND BUTTON — "Browse the Style Star Edit"
+Her ask, from a real screenshot of the recipient-facing page at `/list/<token>` (the page a woman
+gets sent, NOT the owner's Your Wishlist screen — different surface, `_shTail()` renders it): *"Let's
+also add a button that says Browse the Style Star Edit 💓."* That page already had one button,
+"Browse the Style Star Mall →".
+- **Built as a second `.sh-f2` span, `showDream()` on tap** (self-link-guarded already), placed
+  **ABOVE** the Mall button — matches the app's own standing Menu ordering (Shop your Style → Your
+  Wishlist → **Style Star Edit → Style Star Mall**, set 2026-07-31), so this page's button order now
+  agrees with every other place the two are named together.
+- ⚠️ **She typed a 💓 emoji; shipped as the real `.pinkheart` SVG instead, not the emoji.** Same call
+  as the arrow swap earlier this session — and better-justified here, since the tilted pink heart is
+  ALREADY the established mark for "this is Catherine's own curation" (the Edit's own "CURATED BY
+  CATHERINE" heading already flanks itself with this exact heart). Using the real mark instead of a
+  platform emoji makes the button consistent with how the Edit signs itself everywhere else in the
+  app, not just avoiding the emoji-rendering risk. **No arrow on this button, deliberately** — the
+  heart stands in for it, so the two buttons now read as differently: Mall ends in → (a general
+  directory), Edit ends in ♥ (her personal picks). Reuses the SAME SVG path as `.pinkheart` everywhere
+  else (12×12px here, sized to match the button's own line-height).
+- ⚠️ **`.sh-f2` gained `margin:5px`** (was 0) so the two buttons don't sit flush against each other
+  when they wrap to separate lines — they always do on a phone, since each button's own full text is
+  wider than the card. Verified at 390/360/320: neither button ever overflows or cuts text; each one's
+  OWN trailing glyph (arrow or heart) is what drops to its own line at the tightest width, never a
+  mid-word break — the standing readability-over-evenness trade, not a bug.
+- Verified with a real Chromium render, stubbing the `/.netlify/functions/user-data?share=` fetch to
+  return a real-shaped payload (both list kinds + a note) so `_renderSharedList` actually runs: both
+  buttons present with the right onclick, heart SVG confirmed inside the Edit button (not the emoji),
+  no overflow at 390/360/320, zero JS errors. **✅ CONFIRMED LIVE, curl-verified on stylestar.app.**
+
 ### 📱 THE FIVERR SOCIAL MEDIA HIRE — due back **Sept 15**
 She hired someone off Fiverr to build marketing content/Instagram posts. ▶ **A ready-to-send brief was written for her, leaning on her two named differentiators (free, no signup ever + a real practicing stylist behind every recommendation, not just AI) — see the artifact/note below. Ask whether she sent it, and whether it changed their brief.**
 
