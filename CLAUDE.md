@@ -23,8 +23,32 @@ existing `_affUrl` wrap). Blurb is a **Claude draft** condensed from her own `c:
 STILL a Claude draft, unresolved for many sessions now** (`d:[8,4,4,4,6,8,4,4,7,8]`, `$-$$$$`,
 `Universal`) — this Mall addition doesn't depend on them, but they still need her eye.
 
+### ✅ ETSY'S TEN DIMENSION SCORES ARE HERS NOW — no longer a stale Claude draft (2026-08-28, same session)
+Walked through every pair with her, using Amazon as the anchor (the same one the original draft was
+scored against). **Her corrections, exact words kept:**
+- **Relaxed/casual/colorful (8/8/8) CONFIRMED** — *"Yes it is more boho expressive laid back but it does
+  have some higher end custom items too."* (Breadth wasn't widened further because of that caveat.)
+- **Alluring (4) CONFIRMED**, her own framing — *"It is not a high glam destination but definitely
+  artistic and unique."*
+- **Polish (5, was 4) RAISED to actually match Amazon** — her words: *"Agree not super polished same as
+  Amazon you can find polished things but not known for that."* The original draft was a hair below
+  Amazon's own 5; corrected to match what she actually said.
+- **Classic/Trendy (3/7, was 4/6) MOVED FURTHER TOWARD TRENDY** — *"I think it is more trendy than
+  classic... They have some trendy items for sure."*
+- **Archetype tag "Universal" CONFIRMED as-is.**
+`t:'$-$$$$'` and `s:[]` (sizing set per independent seller) weren't revisited — left as originally drafted,
+not contradicted. `deep` stays unset (search behavior for niche queries still unmeasured). **CLOSED —
+nothing left open on Etsy's scores.** Live, curl-verified on stylestar.app.
+
+### 📸 THE ETSY BRACELET PHOTO — SETTLED, HER CALL: KEEP IT
+She looked again: **"it's not the greatest photo but I like that it shows all the colors."** She owns the
+bracelet herself but only in one color, so a cleaner single-color shot would have lost the thing she likes
+about the current one. **Decision: keep the current lifestyle photo, no change.** This closes an item that
+had been open and unanswered since 2026-08-26. **Nothing to do here — do not re-raise it.**
+
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save everything as you suggested")
-**ONE APP CODE CHANGE THIS SESSION** (Etsy → the Mall, above). Otherwise the session was the Indie Law thread —
+**TWO APP CODE CHANGES THIS SESSION** (Etsy → the Mall, and her corrected Etsy scores, both above; the
+bracelet photo is a decision, not a code change). Otherwise the session was the Indie Law thread —
 drafting, correcting, and sending a firmer follow-up email. ▶ **Her own words at the pause, keep them
 exact, they are the emotional throughline for next time: "I really just want to be done with them. I
 want my legal filings to be done properly and I just want to grow my business and not think about that
@@ -129,8 +153,9 @@ catches it, not them" is the actual problem, and it's what's wearing her down** 
    team-signed non-answer, or nothing arrives by ~Sept 4 (her own "this week"), that's the moment to
    put "do you want to look at switching firms" on the table plainly** — not before, and not decided by
    us either way.
-3. 📸 **Etsy Star-of-the-Week bracelet photo — she wants to look at it again, AND pick a second item
-   from Etsy.** Both still open, neither started this session.
+3. 📸 **Etsy Star-of-the-Week bracelet photo — SETTLED, her call: keep the current photo as-is** (she
+   owns the bracelet in one color and likes that the photo shows all of them). **What's still open: pick
+   a second item from Etsy** — that part never got started this session.
 4. 📱 **The Fiverr social-media hire — UPDATE: she sent the brief, they replied with a thank-you but no
    concrete plans yet. Still due Sept 15.** Check back closer to that date rather than nagging now.
 5. 🔎 **The four big-picture strategy threads (findability/SEO, affiliate push, what search really does
@@ -140,8 +165,6 @@ catches it, not them" is the actual problem, and it's what's wearing her down** 
    folded into the same firmer email, so it's one open thread, not two.**
 7. 💰 **The monthly cost check-in Routine fires 2026-09-01** — log the first real spend number here
    when it lands (still nothing logged yet).
-8. ⚠️ **Etsy's ten dimension scores are STILL a Claude draft**, unresolved for several sessions now:
-   `d:[8,4,4,4,6,8,4,4,7,8]`, `$-$$$$`, `Universal` archetype tag. Ask if it ever comes up naturally.
 
 ---
 
