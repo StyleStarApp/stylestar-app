@@ -5658,6 +5658,10 @@ function _selfHealScreens(){
     doc.querySelectorAll('.scr').forEach(function(full){
       if(!document.getElementById(full.id))host.appendChild(document.importNode(full,true));
     });
+    // Every screen just merged in arrived with its own [data-std-foot] div
+    // empty (raw, unprocessed markup) — refill them all now, not just the
+    // one screen show() actually asked for.
+    try{_fillFooters();}catch(e2){}
     return true;
   }).catch(function(e){
     // A failed fetch must never crash the page it exists to protect -- worst
@@ -5914,10 +5918,20 @@ function _stdFootHTML(sid){
 }
 // Fill each container for the screen it lives on (the global .quiz-footer has
 // no screen ancestor and gets the full set — its screens have no self-link).
-document.querySelectorAll('[data-std-foot]').forEach(function(el){
-  var scr=el.closest('.scr');
-  el.innerHTML=_stdFootHTML(scr?scr.id:'');
-});
+// ⚠️ A NAMED, RE-RUNNABLE FUNCTION, not a one-shot boot script (2026-08-29,
+// Cath's catch: footers going missing on screens reached after landing on a
+// trimmed route). _selfHealScreens() imports raw, unprocessed .scr nodes
+// straight from a freshly fetched index.html — their [data-std-foot] divs are
+// exactly as authored, empty — and nothing else ever refilled them, so every
+// screen merged in that way stayed footer-less forever. Idempotent: safe to
+// call as many times as screens get healed in.
+function _fillFooters(){
+  document.querySelectorAll('[data-std-foot]').forEach(function(el){
+    var scr=el.closest('.scr');
+    el.innerHTML=_stdFootHTML(scr?scr.id:'');
+  });
+}
+_fillFooters();
 
 // ===== THE MENU (Cath's ask 2026-07-30) =====
 // The drawer gets its own history entry, so hardware/browser Back with the
