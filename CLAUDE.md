@@ -7,7 +7,101 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-29 LATER — 🔎 PHASE 4 IS CLOSED, EVERY REAL PAGE GOT RE-INDEXED, AND BING IS UP NEXT)
+## ▶ NEXT SESSION — START HERE (2026-08-29 EVENING — 🚨 TWO REAL SELF-HEAL BUGS FOUND FROM HER OWN SCREENSHOTS, BOTH FIXED AND CONFIRMED LIVE)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Ok great thank you.")
+**Merged fast-forward to `main` and MD5-VERIFIED LIVE** (`4a9fed4`, byte-identical local vs
+`curl`'d production — the standing "never trust a green merge" discipline, done). ⚠️ **One Netlify
+build.** ▶ **She opened wanting Bing/Instagram/Almira from the prior session's list, but instead
+brought FIVE screenshots of things looking wrong while "just looking around the site"** — footers
+missing on some pages, then (a session later, same conversation) a footer rendering ABOVE the status
+bar plus an empty hero star plus a squished CTA button. **Every one of the footer/screen findings
+traced to the SAME family of bug: the 2026-08-28 route-rendering-fix's self-heal mechanism, which
+silently reintroduces raw, unprocessed markup.** Nothing from the standing next-session list
+(Bing/Instagram/Almira/Etsy) was touched — it's all still exactly where it was.
+
+### 🚨🚨 BUG 1 — SELF-HEALED SCREENS CAME BACK WITH PERMANENTLY EMPTY FOOTERS
+**Her evidence: five screenshots** — the Mall, Privacy, Terms, FAQ and Contact pages all showing the
+footer's `border-top` hairline with **nothing below it**, no Home/Shop/Privacy/Terms links at all.
+▶ **ROOT CAUSE, and it's the reusable half: the footer-filling code (`document.querySelectorAll(
+'[data-std-foot]').forEach(...)`) ran EXACTLY ONCE, at initial script parse, against whatever
+screens existed in the DOM at that moment.** On one of the seven now-trimmed routes (`/faq`,
+`/privacy`, `/terms`, `/contact`, `/story`, `/journal`, `/journal/*` — the 2026-08-28 SEO fix), only
+the ONE screen she landed on exists at boot, so only ITS footer gets filled. The moment she navigates
+anywhere else, `_selfHealScreens()` fetches the real untouched `/index.html` and merges every missing
+screen straight in — but that merge never re-ran the footer fill, so **every screen reached that way
+came back with a permanently empty footer div.** Landing on plain `/` never broke (everything loads
+untrimmed there), which is exactly why it read as random to her.
+- ✅ **FIXED: the fill became a named, re-runnable function `_fillFooters()`**, called once at boot as
+  before, **and again inside `_selfHealScreens()` every time it merges screens in.** Idempotent, cheap
+  (~17 elements).
+- ⭐ **VERIFIED BOTH WAYS, not just fixed-and-hoped**: built `scratchpad/footfix.mjs` (not committed,
+  session scratchpad) — served a REAL trimmed page (a `<script>` injected between the app's two
+  `<script>` blocks strips every `.scr` but one, the same shape the edge function produces) plus the
+  REAL `/index.html` for self-heal to fetch. **Reproduced her exact bug on the pre-fix code first**
+  (`git stash` to the prior commit): every self-healed footer came back `len 0`. **Then confirmed the
+  fix**: all of them (Mall, Contact, Privacy, Terms, Journal) filled correctly, each still honestly
+  self-omitting its own page's link.
+
+### 🚨🚨 BUG 2 — SELF-HEAL ALSO BROUGHT s-wel BACK ALREADY "ACTIVE", STACKING TWO FULL SCREENS
+Found while double-checking bug 1's fix, not from a screenshot directly — but it explains her SECOND
+round of screenshots (a footer rendering above the iOS status bar, alongside an empty star and a
+squished CTA, all at "5:49"/"5:51" with a single bar of signal).
+▶ **`s-wel` (the Welcome screen) is hardcoded `class="scr act"` in the raw file** — deliberate, so
+something shows before any JS runs. `_selfHealScreens()` imports missing screens **verbatim** via
+`document.importNode(full,true)`, so whenever `s-wel` was among the trimmed-away screens, it came back
+**already marked active**, and nothing ever cleared that unless she happened to tap something that
+called `show()` (which unconditionally clears `.act` from every screen first). Until then, **the page
+she actually landed on and the ENTIRE Welcome screen were both `display:block` at once, stacked in one
+continuous document** — which is consistent with a footer or hero from one of them turning up in an
+unexpected place depending on where the page happened to be scrolled.
+- ⭐⭐ **MEASURED, not assumed: `scratchpad/doubleact.mjs` confirmed it precisely.** Landing fresh on a
+  trimmed page (before ANY tap) showed **`['s-faq','s-wel']` both active simultaneously** on the
+  pre-fix code. ✅ **After the fix: only `['s-faq']`**, and `document.getElementById('s-wel')` measures
+  **0 height, `.act` absent** — genuinely hidden, not just visually incidental. Total page `scrollHeight`
+  matched one screen, not two stacked.
+- ✅ **FIXED: `.classList.remove('act')` on every freshly-imported node before appending it.** Only
+  `show()` gets to decide what's active now; anything self-heal brings back starts hidden like every
+  other inactive screen, matching a normal untrimmed page load.
+- ⚠️ **The empty star and the squished CTA in her second round of screenshots were NOT touched, and
+  told to her as such**: both line up with ordinary poor-signal behavior (a logo image and a webfont
+  each loading over the network, both showing a bare/fallback state until they land — no code fault,
+  self-corrects). **Watch for either recurring on a normal, strong connection** — if it does, that's a
+  real second thread, not a network hiccup, and needs its own look.
+
+### ▶ SESSION HYGIENE, worth keeping for the next time self-heal is touched
+- **`_fillFooters()` and the `.act`-stripping fix live in the same `<script>` block as `_selfHealScreens`
+  and `show()`** (function declarations are hoisted, so definition order inside that block doesn't
+  matter — verified both script blocks still `new Function()`-parse clean after each edit).
+- ⚠️ **Simulating a "trimmed route" by hand-parsing nested `<div>` blocks is error-prone and was
+  abandoned mid-session** (a naive char-scanner left `s-wel` in the "trimmed" page by mistake, silently
+  invalidating the first test run). **The reliable way: inject a real `<script>` between the app's two
+  `<script>` tags that removes every `.scr` but the one you want, using the actual browser DOM** — no
+  div-counting bugs possible, and it's exactly what a crawler/visitor sees on a real trimmed route.
+- ⚠️ **A killed-and-restarted self-heal fetch is gated by the shared `_healPromise`** — any test that
+  calls `_selfHealScreens()` directly AND expects `show()` to also trigger it needs to account for that
+  single shared promise, or a second call just returns the first one's result.
+
+### ▶ THE FIRST THINGS NEXT SESSION — unchanged from before this session, nothing here was touched
+1. 🔎 **BING WEBMASTER TOOLS** — walk her through it, try the import-from-Google-Search-Console path
+   first since it may skip verification entirely; fall back to a meta-tag or file verification if not.
+2. 📱 **INSTAGRAM LINK REVIEW** — ask her to paste or screenshot the current bio/link-in-bio text from
+   both `@style_star.app` and her Florida Personal Stylist account (still can't fetch Instagram directly
+   from here — 429 last time).
+3. ⚖️ **Almira — still no word back as of last check.** Check whether she's replied to the 3-point
+   follow-up (correction actually PROCESSED not just received, which application the site review
+   covers, whether she'll keep signing updates herself).
+4. 📸 **Pick a second item from Etsy** — still open, still never started.
+5. 👀 **Ask how the two fixes above feel on her phone** — specifically whether browsing around (in and
+   out of a trimmed page like FAQ or Privacy, back to Home) now looks clean with no stray content in
+   odd places, and whether the empty-star/squished-CTA pair ever shows up again on strong signal.
+6. Everything else standing (Fiverr check-in ~Sept 15, the monthly cost Routine firing 2026-09-01, the
+   four big-picture strategy threads, Indie Law's overall thread) is unchanged — see the entry directly
+   below for full detail.
+
+---
+
+## ▶ PREVIOUS — (2026-08-29 LATER — 🔎 PHASE 4 IS CLOSED, EVERY REAL PAGE GOT RE-INDEXED, AND BING IS UP NEXT)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "I need to take a break right now... save all of this to the .md and open up with the Bing and the Instagram check as our next items")
 **TWO COMMITS THIS SESSION, BOTH LIVE:** `fd53c82` (the FAQ answer) and `54103e6` (the homepage founder
