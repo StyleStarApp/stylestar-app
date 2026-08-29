@@ -7,7 +7,128 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-28, later same day — 🔎 THE ROUTE-RENDERING FIX: EVERY PAGE WAS SERVING EVERY OTHER PAGE'S TEXT, AND NOW IT DOESN'T)
+## ▶ NEXT SESSION — START HERE (2026-08-29 — ⚖️ ALMIRA REPLIED: THE IRS/STATE MIXUP RESOLVED, HER NAME ON IT, A NEW REPLY SENT)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "log it to the Md and next time I will start us up on a new chat")
+**No app code touched this session — entirely the Indie Law legal thread.** Almira replied to Cath's Aug 28
+firmer email (the one demanding a specific date + her name on updates), Cath and Claude worked through the
+reply together, a new follow-up went out, and now they're waiting. ▶ **Next session: check whether Almira
+answered the 3-point email below before anything else.**
+
+### 📧 ALMIRA'S REPLY, IN FULL — the actual text, for the record
+> Hi Catherine,
+>
+> Thank you for flagging this, and I'm sorry for the mixed message. Answering both points directly.
+>
+> **1. Statement of Correction - where it actually is**
+> The accurate status: the correction was mailed to the Florida Division of Corporations on August 20, 2026
+> via mail and based on our tracking, the mail was received by the state of Florida last August 24, 2026
+> 12:04 PM
+>
+> **2. Who is handling your file**
+> I am. I took your file over personally on August 17 and that has not changed. I've notified the team
+> again that I'll be the one working on your matter.
+>
+> **3. Your website as evidence of use**
+> Thank you for sending over your live website. It's currently with our legal team for review, and I'll
+> follow up next week with an update once that's finalized.
+>
+> Warmly, Almira
+
+### ✅ THE READ ON IT — genuinely better than the last two, given plainly to her
+- **It's signed "Almira"** — the exact thing the firmer email demanded after the unsigned Aug 25 note.
+- **The IRS/state contradiction has a plausible, checkable explanation, not a dodge:** mailed Aug 20
+  (matches what she already knew), received by the state Aug 24 at 12:04 PM — a specific timestamp that
+  reads like real tracking info, not an invented story. ▶ **Read given: the Aug 25 email likely just typed
+  "IRS" when it meant "the state," sloppy wording rather than a genuinely different account.**
+- **Directly confirms what Amber told her on the phone** — took the file over Aug 17, still hers,
+  re-notified the team. Exactly what the firmer email asked her to put in writing.
+- **A genuinely new, unprompted development: the live site is "with our legal team for review" as evidence
+  of use.** Almost certainly the specimen review for **Class 045** (the personal-styling-services class she
+  fought to include, and the one flagged in this file as the exposed one — real evidence work happening,
+  not stalling.
+- ⚠️ **One soft spot, flagged not fixed:** "received" by the state isn't the same as "accepted/processed."
+  The name fix (Bail → Bailey) doesn't take effect until Florida actually processes it. She can also
+  independently check this later on Sunbiz herself, the same way she found her LLC's Active status.
+
+### ⭐ HER SHARP CATCH: "I took your file over personally" right next to "it's with our legal team"
+Her words: *"she said she is taking over file and then right after said the team is looking???"* A real,
+fair catch — not paranoia, sharpened by exactly the ambiguity that started this whole thread (Amber's
+phone assurance vs. the unsigned team email).
+- ▶ **The balanced read given: this split is normal firm structure and not necessarily bad faith.** One
+  person can own the file/communication while a specialized review (evidence going to the USPTO) routes
+  through the firm's broader legal team — that's arguably a GOOD sign, a second set of eyes on something
+  being submitted federally, not evidence of neglect.
+- ▶ **The real test isn't whether she personally touches every document — it's whether SHE stays the one
+  who reports back.** That's what closing the loophole with a direct question (below) is for, rather than
+  treating the sentence itself as proof of anything.
+
+### 🚨 HER INSTINCT TO CALL IT OUT HARDER — COUNSELED AGAINST, FOR NOW, WITH REASONING
+Her words: *"I feel like I should flag her on talking out of both sides of her mouth!!"* ▶ **Advised
+against sending that framing this round, and the reasoning is worth keeping for next time this comes up:**
+1. **It accuses bad faith when the likelier explanation is ordinary firm structure.** If it turns out to be
+   normal and not duplicity, real credibility gets spent on something that wasn't actually a lie — right
+   when she'd just given the most substantive, signed answer of the whole thread.
+2. **The pattern that's been WORKING is precise and factual, not accusatory** — the Class 045 arithmetic,
+   the firmer email, this reply itself. An accusation of duplicity risks making the next answer more
+   guarded and lawyered, not more honest.
+3. **The thing she actually wants (her name on updates) doesn't need her to admit duplicity to get it** —
+   a plain expectation-setting question gets the same paper trail without the accusation.
+- ▶ **THE ACTUAL TEST, and it's worth remembering: if next week's specimen update comes back unsigned or
+  vague again, THAT is the moment "you're saying two different things" is earned** — a demonstrated
+  pattern with a direct question already on record, not one ambiguous sentence in an otherwise responsive
+  email. **Watch for that specifically when Almira's next reply lands.**
+
+### ✅ THE "IRS" EMAIL SHE FLAGGED — CONFIRMED, NOT A NEW INCIDENT, NO ACTION NEEDED
+She asked whether to ask who sent an email saying the IRS received the correction. ▶ **Checked before
+assuming, per the standing rule of always reading the real thread: it's the SAME Aug 25 unsigned email
+already on record** (the one the original firmer email was written about), not a fresh recurrence of the
+mistake. Nothing further to ask on this one — it's already superseded by Almira's clarification above.
+
+### ✅ THE REPLY THAT WAS SENT — verbatim, now on record
+> Hi Almira,
+>
+> Thank you for the clarity, and for tracking down the exact date the state received the correction —
+> that's helpful.
+>
+> A few quick follow-ups:
+> 1. Once the correction is actually accepted and processed by the state (not just received), could you
+>    confirm that for me?
+> 2. Which application is my website being reviewed for as evidence of use, and roughly what day next week
+>    should I expect to hear back?
+> 3. When that update comes, will it come from you directly as well?
+>
+> Thank you,
+> Catherine
+
+### ⏳ STATUS AT PAUSE: SENT, NO REPLY YET — NORMAL, DON'T WATCH THE INBOX
+Confirmed to her that same-day silence is completely expected right after sending; nothing to read into it
+yet. ▶ **Her own one-week clock (set 2026-08-28) still runs to roughly Sept 4** — this reply doesn't reset
+that, it's a data point feeding into it.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⚖️ **Indie Law — check whether Almira answered the 3-point email above.** Three things to look for
+   specifically: (a) does she confirm the correction is actually PROCESSED, not just received, (b) does she
+   name which application the site review covers + a real date, (c) **is that reply signed by her too, or
+   does it slip back to unsigned/"the team"** — if it does, that's the moment for the firmer "both sides of
+   her mouth" framing that was held back this round; see the reasoning above, don't re-derive it.
+2. ⭐⭐ **THE PHASE 4 COPY LINE — draft it together, her words, ship it on the homepage and the FAQ.** Still
+   the only structural/content item open from the route-rendering-fix session.
+3. 🔎 **Ask whether she's requested re-indexing on `/faq` and the journal article yet.**
+4. 📸 **Pick a second item from Etsy** — still open, still never started.
+5. 📱 **The Fiverr social-media hire** — check back closer to **Sept 15**, not before.
+6. 💰 **The monthly cost check-in Routine fires 2026-09-01** — log the first real spend number here once
+   it lands.
+7. 🔎 **The four big-picture strategy threads** (findability/SEO, affiliate push, what search really does
+   today, cost control) — she wants these discussed further, but explicitly after the Almira thread
+   settles. Don't lead with them; let her raise them.
+8. ⚠️ Everything else from the 2026-08-28 entry directly below (now marked PREVIOUS) that isn't listed
+   above is still open and unchanged — the pattern of five caught mistakes, her son's "report it to the
+   bar" comment (logged, not acted on, not ours to weigh in on).
+
+---
+
+## ▶ PREVIOUS — (2026-08-28, later same day — 🔎 THE ROUTE-RENDERING FIX: EVERY PAGE WAS SERVING EVERY OTHER PAGE'S TEXT, AND NOW IT DOESN'T)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "I want to be able to do every detail on this... save all to the .md")
 **FOUR PRs this session, all merged to main and CURL-VERIFIED LIVE.** She brought a brief from a Cowork
