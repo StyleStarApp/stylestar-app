@@ -7,7 +7,120 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-29 — ⚖️ ALMIRA REPLIED: THE IRS/STATE MIXUP RESOLVED, HER NAME ON IT, A NEW REPLY SENT)
+## ▶ NEXT SESSION — START HERE (2026-08-29 LATER — 🔎 PHASE 4 IS CLOSED, EVERY REAL PAGE GOT RE-INDEXED, AND BING IS UP NEXT)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "I need to take a break right now... save all of this to the .md and open up with the Bing and the Instagram check as our next items")
+**TWO COMMITS THIS SESSION, BOTH LIVE:** `fd53c82` (the FAQ answer) and `54103e6` (the homepage founder
+line), pushed straight to `main` per this project's standing pattern, both curl-verified serving on
+stylestar.app. ▶ **THE WHOLE SHAPE OF THE DAY: she asked me to slow down twice, and both times she was
+right to.** First on whether "not an algorithm" is really something people search for; then, sharper
+still, on whether it's even TRUE that the app has no algorithm. Both questions improved the work.
+
+### ✅✅ PHASE 4 IS DONE — THE LAST OPEN ITEM FROM THE COWORK ROUTE-RENDERING BRIEF, NOW FULLY CLOSED
+Before touching anything, a full re-check of the whole Cowork brief against what's actually live confirmed
+**Phases 1 through 3 were genuinely intact** (the sitewide Organization schema, the `www` redirect, the
+per-route body trim + self-heal, the journal article's byline date and FAQPage schema). **Phase 4 — one
+plain sentence, as real body copy, stating free + no-signup + real-stylist-not-an-algorithm, on the
+homepage AND the FAQ — was the one genuine gap, and it's shipped now.** ▶ **This closes the Cowork thread
+entirely. Nothing from that brief is still open.**
+- **FAQ, "Is Style Star free?"** now reads: *"Yes, Style Star is completely free to use, no sign-up or
+  credit card required. If you shop through some of our links, we may earn a small commission at no extra
+  cost to you, and that's what helps keep it free."* ⚠️ **CLAUDE'S OWN MISTAKE, worth remembering: this
+  question already existed** and Claude first told her it didn't, having only read the first six of
+  eighteen FAQ items before answering. **She caught it and asked to double check — right instinct, real
+  correction.** The fix was surgical: one clause added to an existing, already-good answer, nothing else
+  touched.
+- **Homepage founder line, her own words, chosen after real back-and-forth:** *"Hi, I'm Catherine, a real
+  personal stylist who's styled women for over 20 years. Style Star is not a faceless algorithm. I created
+  this with love & intention 💕"* replacing the old *"Hi, I'm Catherine. I've styled women for over 20
+  years. I created this with love & intention 💕"* ⚠️ **"20 years" stays spelled out, never "20+"** — that
+  exact phrase ("over 20 years") is the one already used everywhere else on the site (My Story, the
+  journal article, the Organization schema, even the AI's own system prompt); "20+" appears nowhere and
+  would have been the one inconsistent spot.
+
+### 🚨🚨 THE HONESTY CHECK SHE ASKED FOR, AND IT'S WORTH KEEPING VERBATIM FOR NEXT TIME THIS COMES UP
+Her question, and it was the sharpest one of the day: **"is that a phrase potential customers are
+searching for? And also for honesty purposes do our AI searches use an algorithm??"**
+- ▶ **On searchability: corrected on the spot.** "Not a faceless algorithm" is NOT a keyword anyone types.
+  It's a **positioning/differentiation statement** — its real job is answering a comparison question
+  ("what makes Style Star different"), which is exactly the kind of thing an AI answer engine might get
+  asked and go looking at the site to answer. Real, but a different kind of real than search volume, and
+  Claude had filed it under the wrong bucket at first.
+- 🚨 **On honesty: the flat claim "not an algorithm" would be FALSE if pushed on.** Everything here runs on
+  algorithms in the literal sense — the AI stylist runs on Claude (a machine-learning model), and the
+  store-ranking system is explicitly a scoring formula (weighted distance penalties, tie-breaks). ▶ **THE
+  DISTINCTION THAT HOLDS UP: "algorithm" as a consumer complaint means "no real human judgment in here," not
+  "there is no code running."** That IS false of Style Star — her actual professional judgment (never-wear
+  rules, store scores from her own anchors, what counts as work-appropriate) is what shapes the AI's
+  behavior, not the AI freelancing alone. **So the honest wording is "not JUST an algorithm" or "not a
+  FACELESS algorithm" — never a flat "not an algorithm."** The qualifier is what makes the claim true.
+  ▶ **STANDING: apply this same test to any future claim about the AI vs. a "real person" — never let the
+  qualifier get dropped for punch.**
+
+### ✅ THE GOOGLE SNIPPET ALREADY SAYS THIS — CHECKED, NOT ASSUMED
+The homepage's real `<title>` and `<meta name="description">` (the actual text Google shows as the blue
+link + grey snippet) already read: *"Free Personal Stylist App & Style Quiz — Style Star"* / *"Take a free
+style quiz to discover your signature style, built by a real personal stylist, not just an algorithm. Shop
+with clarity and confidence."* **So today's changes make the ON-PAGE copy match what Google was already
+telling people, not introduce something new.** ⚠️ **Deliberately did NOT add "no signup" to the meta
+description** — it's already close to Google's display-length budget (~155-160 chars) and risks truncation.
+Left alone on purpose.
+
+### ✅✅ EVERY REAL PAGE ON THE SITE HAS NOW BEEN THROUGH REQUEST INDEXING
+Walked her through Search Console one URL at a time, her laptop open, live: **homepage, `/faq`, `/story`,
+`/contact`, `/privacy`, `/terms`** — all six requested fresh this session. `/journal` and the journal
+article were already indexed back on 2026-08-26 (confirmed still in `sitemap.xml`, both dated 2026-08-26;
+they simply fell off the short "recent" dropdown once six newer URLs pushed them out — nothing wrong,
+nothing to redo). ▶ **That is the full, complete list of every real, stable page the app has — all eight
+are in `sitemap.xml` and all eight have now had the individual nudge, not just the passive sitemap
+listing.** The interactive/personalized screens (the quiz, Shop your Style, Your Wardrobe List, chat,
+Analyze an Outfit) are deliberately NOT separate indexable pages — no stable content a stranger would land
+on, correctly excluded, not a gap.
+
+### ▶▶ HER NEW QUESTION, ANSWERED, NOT YET ACTED ON: BING AND OTHER SEARCH ENGINES
+Her question: **"Do we need to do this on Bing or any other sites as well?"** ▶ **THE ANSWER SHE GOT, AND
+IT'S WHY BING IS NOW A REAL PRIORITY, NOT A NICE-TO-HAVE:**
+- **Bing — yes, worth doing.** Small slice of direct search on its own, but it matters more than that for
+  her stated AI-discoverability priority specifically: **Microsoft Copilot runs on Bing's index, and Bing's
+  search data has historically been the backend behind ChatGPT's own web-browsing/search feature.** Getting
+  into Bing's index touches more than "a second search engine."
+- **DuckDuckGo — no separate action.** Draws most of its results from Bing, so doing Bing covers it.
+- **Yandex, Baidu — skip.** Wrong audience (Russia/China); her audience is English-speaking US women.
+- **AI crawlers that read the site directly** (GPTBot, Anthropic's crawler, PerplexityBot, etc.) —
+  **already covered, nothing to do.** `robots.txt` already says `Allow: /` for everything, and the sitemap
+  is public and linked right there.
+- ⭐ **Bing Webmaster Tools has a one-click "import from Google Search Console" option**, using the same
+  Google account — likely skips a separate verification step entirely. Worth trying first.
+
+### 📱 INSTAGRAM LINK REVIEW — STARTED, BLOCKED, STILL OPEN
+Earlier in the session she asked for help reviewing the links on her Instagram pages (Style Star's
+`@style_star.app` and her personal Florida Personal Stylist account). **`WebFetch` on the Instagram profile
+returned a 429 (rate-limited/blocked)** — this sandbox cannot see her bio links directly. ▶ **Needs her to
+paste the current bio text/links from both accounts (or screenshot them) next session** before any real
+review can happen.
+
+### ▶ THE FIRST THINGS NEXT SESSION, HER OWN ORDER
+1. 🔎 **BING WEBMASTER TOOLS** — walk her through it, try the import-from-Google-Search-Console path first
+   since it may skip verification entirely; fall back to a meta-tag or file verification (same pattern as
+   the Impact affiliate-site verification) if the import option isn't available.
+2. 📱 **INSTAGRAM LINK REVIEW** — ask her to paste or screenshot the current bio/link-in-bio text from
+   both `@style_star.app` and her Florida Personal Stylist account, since it can't be fetched directly.
+3. ⚖️ **Almira — still no word back as of this session.** Check whether she's replied to the 3-point
+   follow-up (confirm the correction is actually PROCESSED not just received, name which application the
+   site review covers, confirm she'll keep signing updates herself).
+4. 📸 **Pick a second item from Etsy** — she said "will do later," still open, still never started.
+5. 📱 **The Fiverr social-media hire** — check back closer to **Sept 15**, not before.
+6. 💰 **The monthly cost check-in Routine fires 2026-09-01** — log the first real spend number here once
+   it lands.
+7. 🔎 **The four big-picture strategy threads** (findability/SEO, affiliate push, what search really does
+   today, cost control) — still parked until the Almira thread settles; don't lead with them.
+8. ⚠️ Everything else from the 2026-08-29 entry directly below (now marked PREVIOUS) is unchanged and
+   still open — the pattern of five caught mistakes with Indie Law, her son's "report it to the bar"
+   comment (logged, not acted on, not ours to weigh in on).
+
+---
+
+## ▶ PREVIOUS — (2026-08-29 — ⚖️ ALMIRA REPLIED: THE IRS/STATE MIXUP RESOLVED, HER NAME ON IT, A NEW REPLY SENT)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "log it to the Md and next time I will start us up on a new chat")
 **No app code touched this session — entirely the Indie Law legal thread.** Almira replied to Cath's Aug 28
