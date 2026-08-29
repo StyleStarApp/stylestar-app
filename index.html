@@ -5656,7 +5656,20 @@ function _selfHealScreens(){
     var host=document.querySelector('.inner');
     if(!host)return false;
     doc.querySelectorAll('.scr').forEach(function(full){
-      if(!document.getElementById(full.id))host.appendChild(document.importNode(full,true));
+      if(document.getElementById(full.id))return;
+      var node=document.importNode(full,true);
+      // s-wel is hardcoded class="scr act" in the raw file, on purpose --
+      // it's what a visitor sees before any JS has run. A screen merged in
+      // here is raw, unprocessed markup too, so it arrives carrying that
+      // same baked-in "act" — and unlike the very first page load, nothing
+      // is about to run show() to sort out which screen actually belongs
+      // active. Left alone this stacks s-wel (hero, CTA, its own footer,
+      // everything) directly underneath whatever screen she actually landed
+      // on, both fully visible at once, forever, until she happens to tap
+      // something that calls show(). Only show() gets to decide what's
+      // active; anything freshly imported starts hidden like everyone else.
+      node.classList.remove('act');
+      host.appendChild(node);
     });
     // Every screen just merged in arrived with its own [data-std-foot] div
     // empty (raw, unprocessed markup) — refill them all now, not just the
