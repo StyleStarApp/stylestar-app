@@ -168,6 +168,17 @@
   to = "/?utm_source=instagram&utm_campaign=personal"
   status = 301
 
+# She swapped her personal account over to this one, her own name reading
+# better there than the role-based label above. /ig-personal is left in
+# place rather than removed -- it already sat live in that bio for a while,
+# and the standing rule above is to never delete a short link once it might
+# still be sitting in someone's profile. Both point at the same campaign tag,
+# so Plausible keeps counting this account as "personal" either way.
+[[redirects]]
+  from = "/ig-cath"
+  to = "/?utm_source=instagram&utm_campaign=personal"
+  status = 301
+
 [[redirects]]
   from = "/ig-pro"
   to = "/?utm_source=instagram&utm_campaign=stylist"
