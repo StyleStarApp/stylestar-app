@@ -141,3 +141,39 @@
 [[edge_functions]]
   path = "/journal/*"
   function = "page-titles"
+
+# Instagram bio short links (2026-08-30, her catch). A UTM-tagged link
+# (?utm_source=instagram&utm_campaign=...) is what lets Plausible tell her
+# four Instagram accounts apart -- but Instagram's own bio display truncates
+# ANY link that carries a query string down to "domain/?", showing nothing
+# after the "?" no matter how long or short the real link is. Pasted into a
+# bio it reads as a broken, unfinished link, even though it works perfectly.
+#
+# These are real 301s (not the 200 rewrites above), because the point here is
+# the opposite of those: the address bar SHOULD change, to the fully tagged
+# URL, once the visitor has already tapped through. Instagram only ever
+# displays the short path itself, which carries no query string and so can
+# never show a "?".
+#
+# WARNING: once one of these is pasted into a live bio, don't repoint it to a
+# different destination without updating the bio too -- and never delete one
+# outright while it might still be sitting in someone's Instagram profile.
+[[redirects]]
+  from = "/ig"
+  to = "/?utm_source=instagram&utm_campaign=brand"
+  status = 301
+
+[[redirects]]
+  from = "/ig-personal"
+  to = "/?utm_source=instagram&utm_campaign=personal"
+  status = 301
+
+[[redirects]]
+  from = "/ig-pro"
+  to = "/?utm_source=instagram&utm_campaign=stylist"
+  status = 301
+
+[[redirects]]
+  from = "/ig-3d"
+  to = "/?utm_source=instagram&utm_campaign=3d"
+  status = 301
