@@ -4821,26 +4821,38 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
          PRICE: she gave a $42-$48 range across 7 custom lengths, so it
          carries the same ~$ notation as every other Edit item whose price
          genuinely varies by option -- same shape as the bracelet's ~$50.
+         NOTE is hers verbatim, 2026-08-30.
          PHOTO, measured before shipping, not guessed: source is 794x640,
          LANDSCAPE -- a flat-lay showing BOTH colorways (gold heart left,
-         silver heart right) side by side on marble, a much wider ratio than
-         the shared 3:4 crop and unlike every other Etsy photo so far.
-         Simulated the crop with Pillow at five horizontal positions before
-         picking one: centered (the class default) clips the gold heart's
-         left tip AND the silver chain's corner at once; the two
-         in-between positions each cut straight through the OFF-screen
-         heart's loop, which reads as a broken pendant rather than a
-         deliberate crop. Left-aligned (pxPos below) is the only position
-         that keeps ONE heart genuinely whole -- gold, matching "Gold or
-         Silver" in her own words, gold said first -- with just a hint of
-         the silver one at the frame edge instead of a mangled partial
-         heart in frame. -->
+         silver heart right) side by side on marble, much wider than the
+         shared 3:4 crop and unlike every other Etsy photo so far.
+         FIRST SHIP used plain object-position:left, which keeps the gold
+         heart whole but still shows a sliver of silver at the frame's right
+         edge -- Pillow content-bounds analysis found silver's real content
+         starts around x=460 of 794, and the crop window plain object-fit
+         needs is 480px wide, so there was no position that shows zero
+         silver without extra zoom (794*0.75/1 aspect math leaves no slack).
+         ⚠️ HER CALL, 2026-08-30: center the gold one, no silver at all.
+         Plain object-position can't narrow the window further -- the fix is
+         a small extra zoom, which object-fit alone has no lever for. Built
+         as a WRAPPER + transform:scale, the standard technique for this:
+         the wrapper carries every box-model property .dc-item-px normally
+         carries (size, aspect-ratio, background, border, radius) PLUS
+         overflow:hidden, so the img can be transform-scaled 1.15x from a
+         20%-from-left origin with nothing bleeding into the card text below
+         -- verified rendered in real Chromium at 320/390/430px before
+         shipping, not guessed. onerror now removes the WRAPPER
+         (parentElement), not just the img, so a dead link still collapses
+         cleanly to nothing rather than leaving an empty cream box behind.
+         ⚠️ Every OTHER Edit photo is a plain <img class="dc-item-px">; this
+         is the only one using this wrapper shape, because it's the only
+         source photo wide enough to need it. -->
     <div class="dc-item">
-      <img class="dc-item-px" style="object-position:left center" src="https://i.etsystatic.com/7720739/r/il/8b7e04/3606550162/il_794xN.3606550162_ca87.jpg" alt="Open Heart Necklace in gold and silver" loading="lazy" decoding="async" onerror="this.remove()">
+      <div style="display:block;position:relative;width:100%;margin:0 0 14px;aspect-ratio:3/4;overflow:hidden;background:#F5EFE2;border:1px solid #EFE7D2;border-radius:2px"><img style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left center;transform:scale(1.15);transform-origin:20% center" src="https://i.etsystatic.com/7720739/r/il/8b7e04/3606550162/il_794xN.3606550162_ca87.jpg" alt="Open Heart Necklace in gold" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></div>
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">Open Heart Necklace</div>
       <div class="dc-item-meta"><span class="dc-store">Etsy</span><span class="dc-price">~$45</span></div>
-      <div class="dc-item-note">Comes in gold or silver, with 7 custom lengths so you can get the perfect fit.</div>
+      <div class="dc-item-note">Comes in sterling silver or gold fill. Lovely conversation piece. Comes in 7 different lengths. Open your heart!</div>
       <a class="dc-item-btn" href="https://www.etsy.com/listing/849636969/open-heart-necklace-14k-gold-fill" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
