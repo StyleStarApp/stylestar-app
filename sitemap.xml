@@ -13,53 +13,65 @@
 
   ⚠️ The canonical host is the APEX, stylestar.app. www 301s to it (verified
   2026-08-24), so every URL here is written without www.
+
+  ⚠️⚠️ KEEP <lastmod> HONEST — IT IS THE ONE FIELD THE CRAWLERS ACTUALLY USE.
+  Google ignores changefreq and priority outright; lastmod is what tells it a
+  page is worth re-crawling. Found stale on 2026-08-31: the home page and /faq
+  still claimed 2026-08-24 after a week of real edits, which quietly argued
+  AGAINST the re-index we were requesting by hand in Search Console.
+  ▶ WHEN A PAGE'S CONTENT CHANGES, BUMP ITS DATE IN THE SAME COMMIT.
+  ⚠️ And only the pages that really changed — bumping all eight to today is a
+  false signal, and a sitemap that cries wolf gets trusted less, not more.
+  (2026-08-28 is the route-trim + sitewide Organization schema, which changed
+  the served HTML of every route. 2026-08-31 is the "brilliance of AI" sentence
+  on the home page and in the FAQ, plus the reworked founder line.)
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://stylestar.app/</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://stylestar.app/story</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://stylestar.app/faq</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stylestar.app/contact</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://stylestar.app/journal</loc>
-    <lastmod>2026-08-26</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://stylestar.app/journal/how-to-find-your-personal-style</loc>
-    <lastmod>2026-08-26</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://stylestar.app/privacy</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://stylestar.app/terms</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
