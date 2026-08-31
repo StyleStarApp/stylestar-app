@@ -1,0 +1,18 @@
+[
+ {
+  "key": "live",
+  "label": "CURRENT (live now):  tilt -20,  centred gradient"
+ },
+ {
+  "key": "a",
+  "label": "A:  tilt -26,  dimensional gradient restored"
+ },
+ {
+  "key": "b",
+  "label": "B:  tilt -32,  dimensional gradient restored"
+ },
+ {
+  "key": "c",
+  "label": "C:  tilt -38,  dimensional gradient restored"
+ }
+]
