@@ -180,6 +180,63 @@ homepages (Stylio, WISHI, MOSSO), two App Store / Google Play listings, and two 
   broken app called BeautyAI ranking first, and Style Star does not appear at all"*). **It was never about
   the app being worse. Somebody wrote a listicle and she had not.**
 
+### ✉️ THE THREE PITCH DRAFTS, VERBATIM — she has not sent them yet
+⚠️ **Recorded here because they existed only in chat.** Same standing rule as the Indie Law emails:
+**Claude drafts, SHE sends**, and she should skim each target's actual article for thirty seconds first so
+anything specific reads as true. **Send from `catherine@stylestar.app`, one at a time, never BCC.**
+⚠️ **No dashes, per house style.** ⚠️ **No contact addresses were invented** — finding them is hers.
+
+**1. PANARIUM — the strongest fit** (their piece: "13 Best FREE Personal Stylist Apps You Need To Try").
+Subject: *A free styling app built by a working stylist*
+> Hi,
+> Your list of the 13 best free personal stylist apps came up while I was looking at what is out there in
+> this category. I would love you to consider one that is not on it.
+> I am a personal stylist and I have been dressing women for over 20 years. I built Style Star because I
+> could only ever help one closet at a time. It gives you a style quiz and a written style portrait, a
+> wardrobe checklist of the pieces a well rounded closet holds, outfit feedback from a photo, and a
+> stylist you can actually chat with.
+> It is genuinely free. No signup, no email required, and no paid tier at all. Affiliate links on the
+> shopping suggestions are what keep it that way, and I say so plainly on the site.
+> One thing to be upfront about, it is a web app you add to your home screen rather than an App Store
+> download.
+> stylestar.app if you want a look. Happy to answer anything.
+> Catherine Ellspermann / Personal stylist and founder, Style Star
+
+**2. iTECHNOLABS** (their piece: "Top 10+ Free Personal Stylist Apps: AI Styling App [2026]"). A software
+company's content blog, so it leads on the product being real and featureful.
+Subject: *Style Star, for your free AI styling apps roundup*
+> Hi,
+> I came across your roundup of free personal stylist apps and wanted to put one forward that is not
+> included.
+> Style Star is at stylestar.app. The quick version, it is an AI styling app built by an actual personal
+> stylist rather than by a tech team guessing at what a stylist does. I have been dressing women for over
+> 20 years and the app runs on my own rules about fit, colour and what suits whom.
+> What is in it: a 12 question style quiz that produces a written style portrait, a stylist chat that can
+> search real stores, outfit analysis from a photo, a 100 piece wardrobe checklist, and shopping
+> suggestions matched to your style and sizing.
+> Free with no signup and no paid tier. It is funded by affiliate links, disclosed on the site. It is a
+> web app you add to your home screen, not an App Store download.
+> Glad to answer any questions.
+> Catherine Ellspermann / Personal stylist and founder, Style Star
+
+**3. ALTA (altadaily.com) AND INDYX (myindyx.com)** — ⚠️ **COMPETITORS' OWN BLOGS, so this is a long shot
+and she was told so plainly.** They wrote those roundups partly to rank for the category and adding a
+rival is not obviously in their interest. Worth two minutes only because it costs nothing.
+**⚠️ Silence here is not a verdict on Style Star.**
+Subject: *One more for your personal stylist apps list*
+> Hi,
+> I found your ranked list of personal stylist apps while researching the category, and it is a more
+> careful piece than most.
+> I am a personal stylist of over 20 years and I built Style Star, at stylestar.app. It is free with no
+> signup and no paid tier, and it covers a style quiz and portrait, a wardrobe checklist, photo outfit
+> feedback and a stylist chat.
+> If you ever expand the list I would be glad to be considered. And either way, it is nice to see someone
+> reviewing this category properly.
+> Catherine Ellspermann / Style Star
+
+▶ **EXPECTATIONS SET WITH HER: cold outreach reply rates are low even when the pitch is good. Two of five
+answering is a normal result, not a poor one.**
+
 ### 📋 THE MONDAY CATALOG CHECK RAN TODAY AND NOBODY HAS ACTED ON IT — 3 REAL DECISIONS WAITING
 Both Monday Routines fired 2026-08-31 and both SUCCEEDED. The Drive report
 (**"Style Star link check - 2026-08-31"**) was read this session because these historically go unopened.
