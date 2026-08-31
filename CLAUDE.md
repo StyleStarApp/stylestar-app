@@ -161,8 +161,15 @@ homepages (Stylio, WISHI, MOSSO), two App Store / Google Play listings, and two 
      engineering, and is pure outreach.** ⭐ **And it is the single most direct lever on her
      AI-discoverability goal: when someone asks ChatGPT or Copilot "what is a good personal stylist app",
      those models lean on exactly these roundup pages.**
-     ▶ **NOT STARTED. When it does start, the pitch writes itself from what she already has and it should
-     lead with the differentiator, not the ask:** a real practicing stylist of 20+ years built it, it is
+     ▶ **DRAFTED 2026-08-31, AWAITING HER SEND. Three pitches written in chat: panaprium, itechnolabs,
+     and a shorter collegial one for the competitor blogs (altadaily, myindyx).** ⚠️ **THE ODDS ARE NOT
+     EQUAL AND SHE WAS TOLD SO: panaprium and itechnolabs are NEUTRAL third parties and are the real
+     shots; Alta and Indyx are COMPETITORS' OWN BLOGS, so those are long shots worth sending only because
+     they cost nothing.** ⚠️ **She still has to find the contact addresses herself — none were invented.**
+     ⚠️ **The drafts disclose plainly that Style Star is a WEB app added to a home screen, not an App
+     Store download** — some roundups only list native apps, and it is far better to say so up front than
+     to have them discover it. ▶ **Ask whether she sent them and what came back.**
+     ▶ **The pitch leads with the differentiator, not the ask:** a real practicing stylist of 20+ years built it, it is
      **genuinely free with no signup**, and it is a live product with real pages (/faq, /story, the
      Journal) rather than a landing page. ⚠️ **Include the honest caveat that affiliate links are how it
      stays free** — these roundups get pitched constantly and the ones that get answered are the ones
