@@ -144,10 +144,19 @@ homepages (Stylio, WISHI, MOSSO), two App Store / Google Play listings, and two 
      exactly the trust that is her whole differentiation. **The honest version — "a working stylist
      reviews the styling apps, including her own" — is BETTER content than what is ranking and nobody
      else can write it.**
-  2. **GET INTO OTHER PEOPLE'S ROUNDUPS** — panaprium, itechnolabs, altadaily already rank with these
-     lists. **Pitching them is free, needs no engineering, and is pure outreach.** ⭐ **And it is the
-     single most direct lever on her AI-discoverability goal: when someone asks ChatGPT or Copilot "what
-     is a good personal stylist app", those models lean on exactly these roundup pages.**
+  2. ✅✅ **GET INTO OTHER PEOPLE'S ROUNDUPS — HER CHOICE, 2026-08-31: "let's do play 2."** panaprium,
+     itechnolabs and altadaily already rank with these lists. **Pitching them is free, needs no
+     engineering, and is pure outreach.** ⭐ **And it is the single most direct lever on her
+     AI-discoverability goal: when someone asks ChatGPT or Copilot "what is a good personal stylist app",
+     those models lean on exactly these roundup pages.**
+     ▶ **NOT STARTED. When it does start, the pitch writes itself from what she already has and it should
+     lead with the differentiator, not the ask:** a real practicing stylist of 20+ years built it, it is
+     **genuinely free with no signup**, and it is a live product with real pages (/faq, /story, the
+     Journal) rather than a landing page. ⚠️ **Include the honest caveat that affiliate links are how it
+     stays free** — these roundups get pitched constantly and the ones that get answered are the ones
+     that read like a person, not a press release. ⚠️ **Claude drafts, SHE sends** — same rule as the
+     Indie Law emails. ▶ **Play 1 (writing her own roundup) is NOT rejected, just second** — see above for
+     the honesty framing that is the whole game on it.
 - ⚠️ **This also retires the mystery in the 2026-08-23 entry** (*"she googled 'best styling app', found a
   broken app called BeautyAI ranking first, and Style Star does not appear at all"*). **It was never about
   the app being worse. Somebody wrote a listicle and she had not.**
@@ -178,9 +187,10 @@ was touched:**
 ### ▶ THE FIRST THINGS NEXT SESSION
 1. ▶▶ **THE GOOGLE SEARCH CONSOLE RE-REQUEST — she never did it, and it is the one where we KNOW the
    indexed copy is out of date.** Two URLs, one at a time. See the entry above.
-2. ⭐⭐ **HER "apps write their own articles" FINDING — the two plays.** Ask which she wants: writing her
-   own honest roundup, or pitching the three that already rank. **Both are cheap; the outreach one needs
-   no build at all.** ⚠️ The honesty framing is the whole game on the first one.
+2. ⭐⭐ **PLAY 2 IS HER CHOICE AND IT IS THE NEXT REAL PIECE OF WORK: pitch the roundups that already
+   rank** (panaprium, itechnolabs, altadaily). **No build, no engineering — Claude drafts, she sends.**
+   See the entry above for what the pitch leads with and why. **Play 1 (her own honest roundup) is
+   parked, not rejected.**
 3. 📓 **ARTICLE #2: Florida / warm-climate fall dressing**, written for the RESIDENT. The only weak field
    of four. ⚠️ Worth a quick sanity check on Google too before writing — Bing ≠ Google, though the
    competitive weakness is likely similar.
