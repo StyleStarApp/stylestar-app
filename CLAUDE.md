@@ -186,7 +186,7 @@ homepages (Stylio, WISHI, MOSSO), two App Store / Google Play listings, and two 
 anything specific reads as true. **Send from `catherine@stylestar.app`, one at a time, never BCC.**
 ⚠️ **No dashes, per house style.** ⚠️ **No contact addresses were invented** — finding them is hers.
 
-**1. PANARIUM — the strongest fit** (their piece: "13 Best FREE Personal Stylist Apps You Need To Try").
+**1. PANAPRIUM — the strongest fit** (their piece: "13 Best FREE Personal Stylist Apps You Need To Try").
 Subject: *A free styling app built by a working stylist*
 > Hi,
 > Your list of the 13 best free personal stylist apps came up while I was looking at what is out there in
