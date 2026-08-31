@@ -53,9 +53,21 @@ She submitted the whole site through **URL Submission**, not just the two change
 - ⚠️ **The yellow "Legacy SOAP and POX APIs will be retired" banner is irrelevant to her** — she talks to
   Bing through no API. Told to her so it would not worry her.
 
-### ▶▶ STILL OPEN AND IT IS THE ONE WITH A KNOWN-WRONG COPY: THE GOOGLE SIDE
-**She has NOT yet done the Google Search Console half** — she went to Keyword Research instead and the
-session ran there. ⚠️ **ASK FIRST NEXT SESSION.**
+### ✅✅ THE GOOGLE SIDE IS DONE TOO — both URLs re-requested 2026-08-31, same session
+**She ran URL Inspection on `https://stylestar.app/` and `https://stylestar.app/faq` and hit Request
+Indexing on both.** ▶ **So BOTH engines have now been asked by hand to re-crawl the two pages that
+changed, and the sitemap underneath them is finally telling the truth. The indexing thread is CLOSED.**
+⚠️ **Do not re-raise it** — nothing further is owed on either dashboard, and tomorrow's check-in is an
+observation, not a task.
+- ⚠️ **She landed on the AMP tab by mistake first — the SECOND time that has happened** (also 2026-08-26).
+  ▶ **The instruction that works: the grey search bar ACROSS THE VERY TOP is URL Inspection**, not
+  anything in the left menu. AMP is a legacy format she does not use; "Get started with AMP" is a wrong
+  turn and she was told so.
+- ⚠️ **The "Last crawl" date was never read back** — it was offered as a way for her to prove the stale
+  copy herself, she went ahead and requested indexing instead, and it no longer matters now both are
+  queued. **Not a gap, just an unspent nicety.**
+
+### ▶ THE ORIGINAL REASONING, kept because it is why this mattered
 - ▶ **Google is the STRONGER case of the two, not the weaker: her last Request Indexing on the home page
   and /faq was 2026-08-29, and the AI sentence shipped 2026-08-31 at 16:57 UTC.** So Google's most
   recently requested crawl definitively predates the change. **With Bing it was a coin flip; with Google
@@ -185,28 +197,26 @@ was touched:**
   Routine's known-blocker list.** Worth adding so it stops being reported as unverifiable.
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. ▶▶ **THE GOOGLE SEARCH CONSOLE RE-REQUEST — she never did it, and it is the one where we KNOW the
-   indexed copy is out of date.** Two URLs, one at a time. See the entry above.
-2. ⭐⭐ **PLAY 2 IS HER CHOICE AND IT IS THE NEXT REAL PIECE OF WORK: pitch the roundups that already
+1. ⭐⭐ **PLAY 2 IS HER CHOICE AND IT IS THE NEXT REAL PIECE OF WORK: pitch the roundups that already
    rank** (panaprium, itechnolabs, altadaily). **No build, no engineering — Claude drafts, she sends.**
    See the entry above for what the pitch leads with and why. **Play 1 (her own honest roundup) is
    parked, not rejected.**
-3. 📓 **ARTICLE #2: Florida / warm-climate fall dressing**, written for the RESIDENT. The only weak field
+2. 📓 **ARTICLE #2: Florida / warm-climate fall dressing**, written for the RESIDENT. The only weak field
    of four. ⚠️ Worth a quick sanity check on Google too before writing — Bing ≠ Google, though the
    competitive weakness is likely similar.
-4. 📋 **THE THREE CATALOG DECISIONS** (Old Navy / Everlane / Mango) — hers, nothing touched.
-5. ⚖️⚖️ **ALMIRA IS DUE ON OR BEFORE SEPTEMBER 4** — her own one-week clock AND the date Almira put in
+3. 📋 **THE THREE CATALOG DECISIONS** (Old Navy / Everlane / Mango) — hers, nothing touched.
+4. ⚖️⚖️ **ALMIRA IS DUE ON OR BEFORE SEPTEMBER 4** — her own one-week clock AND the date Almira put in
    writing. **Watch for: (a) an actual COPY of the correction confirmation, not another status line,
    (b) WHICH application and class the website covers, (c) whether it comes from Almira herself.**
    ▶ **If it slips or comes back vague again, THAT is the moment the firmer framing held back on
    2026-08-29 is finally earned** — the reasoning is in that entry, don't re-derive it.
-6. ⭐⭐ **THE CLASS 045 SITE ADDITION IS STILL GATED ON ALMIRA'S ANSWER** — one honest present-tense
+5. ⭐⭐ **THE CLASS 045 SITE ADDITION IS STILL GATED ON ALMIRA'S ANSWER** — one honest present-tense
    sentence offering private one-on-one styling. **Do not build it before her answer.**
-7. ⏰ **The Google + Bing indexing check fires 2026-09-01 21:44 UTC.** The **monthly cost Routine** fires
+6. ⏰ **The Google + Bing indexing check fires 2026-09-01 21:44 UTC.** The **monthly cost Routine** fires
    2026-09-01 13:02 UTC — log the first real spend number.
-8. ✅ **Bing setup, Instagram, and the two bio wording fixes are CLOSED.** So are the star and the founder
+7. ✅ **Bing setup, Instagram, and the two bio wording fixes are CLOSED.** So are the star and the founder
    line, blessed this session. **Do not re-raise any of them.**
-9. ⚠️ **Untouched this session:** the Fiverr check-in (~Sept 15) and the four big-picture strategy threads.
+8. ⚠️ **Untouched this session:** the Fiverr check-in (~Sept 15) and the four big-picture strategy threads.
 
 ---
 
