@@ -7,7 +7,251 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-30 — 📸 INSTAGRAM AUDIT + CLEAN SHORT LINKS, THE FOUNDER LINE REWORKED THROUGH A REAL HONESTY TEST, HER SECOND ETSY PICK WITH A NEW PHOTO-CROP TECHNIQUE — ALL SHIPPED, ALL VERIFIED LIVE)
+## ▶ NEXT SESSION — START HERE (2026-08-31 — 🔎 BING IS DONE, THE HOMEPAGE SAYS "AI" AT LAST, AND THE SEAL STAR TOOK THREE ROUNDS BECAUSE I BROKE IT MYSELF)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Ok let's pause here and save everything to the .md so we can resume on a new chat")
+**SIX COMMITS MERGED STRAIGHT TO `main`, EVERY ONE CURL + MD5-VERIFIED LIVE**, plus one commit pushed to
+the branch ONLY (the render harness — deliberately kept off `main` so it wouldn't burn a Netlify build for
+tooling with no user-facing change). Branch `claude/style-star-markdown-mzpo45`; same no-PR
+fast-forward-to-`main` convention as always. ⚠️ **Six Netlify builds.**
+▶ **THE SHAPE OF THE DAY: her three standing questions got answered in the first two minutes, then it
+became a searchability session, then a legal-education session, then Bing (closed for good), and finally a
+three-round fight with one decorative star that I lost twice before winning.**
+
+### ✅✅ HER THREE STANDING QUESTIONS — ALL CLOSED, DO NOT RE-RAISE
+1. **The Instagram short links are DONE, all four accounts.** Her words: *"Yes Instagram links done and all
+   good."* The 2026-08-30 note asking us to confirm each one individually is now closed.
+2. ⚠️ **THE TWO WORDING FIXES ARE CLOSED BY HER DECISION, NOT BY BEING DONE.** She could not fit the extra
+   words in the bios (`"20+ years"` → `"over 20 years"`, and adding "free" to floridapersonalstylist):
+   *"I wasn't able to fit the extra words in but I think it all looks good for now."* ▶ **Her call. Don't
+   re-offer these.**
+3. **The founder line and the Open Heart Necklace both looked right to her on her phone** — the 08-30
+   entry's "she hasn't seen these live" flag is discharged.
+
+### ⭐⭐ THE HEADLINE FINDING: THE HOMEPAGE NEVER SAID THE WORD "AI", ANYWHERE
+Her question is what found it: *"do you think that is the best wording we can do on that entire home page
+for the searchability we talked about?"* ▶ **A full audit of every crawlable surface** (the `<title>`, the
+meta description, both `og:` tags, the Organization JSON-LD, the H1/sub/body, and the FAQ's own
+differentiation answer) **turned up one real gap: every AI-related claim on the page was a NEGATION** —
+"not a faceless algorithm," "not just an algorithm" — **so the page positively claimed the AI category
+nowhere at all.** Someone searching "AI personal stylist app," or an answer engine asked what Style Star
+is, had nothing on the homepage to match against.
+- ⭐ **HER INSTINCT SOLVED IT BETTER THAN MY FIRST DRAFTS DID.** I offered two invented lines ("powered by
+  AI" / "AI-powered style guidance"); **she went and got the FAQ's own existing sentence instead** —
+  *"Style Star combines the insight and care of a real personal stylist with the brilliance of modern
+  technology"* — and asked how to word THAT for the front page. **That is the one-word-bank rule applied by
+  her, and it beat starting from scratch.**
+- ▶ **THE ONE CHANGE THAT MATTERED: "the brilliance of modern technology" → "the brilliance of AI."**
+  Warm, still hers, but "modern technology" is vague where the entire point was naming the searchable
+  thing. ⚠️ **"Brilliance of AI" was chosen over "power of AI" deliberately** — "power of AI" is the phrase
+  every SaaS landing page uses and reads generic; "brilliance" was already her own word.
+- ⭐⭐ **AND IT IS THE IDENTICAL SENTENCE IN BOTH PLACES ON PURPOSE, her decision after asking whether that
+  was right.** The reasoning, and it is the same one that already governs "not a faceless algorithm"
+  (which appears verbatim in the founder line AND the FAQ): **a claim repeated word-for-word across two
+  pages reads as a stable fact worth citing; the same claim in two different phrasings a few clicks apart
+  reads as two different claims.** ▶ **So: `.hm-body` on the homepage and the FAQ's "What is Style Star?"
+  opener now carry the same sentence, byte for byte.** ⚠️ **If one is ever reworded, reword both.**
+- ⚠️ **WHAT THE HOMEPAGE BODY LINE GAVE UP, flagged to her and accepted:** the old line ("Expert style
+  guidance and personalized shopping, all in one place") was the only visible mention of *shopping* in
+  that spot. Judged a fair trade — shopping is covered everywhere else and the CTA sits directly below.
+- ▶ **DELIBERATELY NOT TOUCHED, and this is a standing decision, not an oversight: the H1 ("Discover your
+  signature style") stays pure brand voice.** That trade was made in an earlier session so the emotional
+  headline isn't sacrificed to SEO the meta title/description already carry. **Don't re-propose it.**
+
+### ✍️✍️ THE FOUNDER LINE TOOK FOUR ROUNDS AND THE LESSON IS ABOUT WHEN TO STOP GUESSING
+Round 1 was hers and good: *"who's styled women for over 20 years"* → *"who's been helping women feel
+confident in what they wear for over 20 years"* — ▶ **leads with the OUTCOME instead of a credential, and
+it ties to her own stated stance ("help you recognize what feels beautiful to you").** Shipped.
+- 🚨 **THEN THREE ROUNDS MISSED IN A ROW, and two of them were mine.** She proposed *"It's a fun app created
+  with all my love"*; I argued against it (the "fun app" pivot deflates the seriousness "guided by my real
+  expertise, not a faceless algorithm" just built, one sentence earlier) — **that reasoning still holds.**
+  She asked for an alternative, I shipped *"with love, intention, and a little fun"*, **she rejected it.**
+  I reverted to the previously-blessed *"with love & intention"* — **she rejected that too.**
+- ▶▶ **THE PROCESS LESSON: AT THREE MISSES, STOP DRAFTING AND ASK.** I stopped guessing a fourth variant and
+  put three concrete options to her (cut it / keep it short / you write it). **She wrote it herself, and
+  hers is better than anything I had offered.**
+- ✅ **FINAL, LIVE, HER WORDS:** *"Hi, I'm Catherine, a personal stylist helping women feel confident in
+  what they wear for over 20 years. Style Star is an app guided by my real expertise, not a faceless
+  algorithm. I created this with all my love & intention 💕"*
+- ⭐ **TWO REAL GAINS IN HER VERSION, beyond taste:** **"Style Star is an app"** puts the word *app* into
+  visible body copy for the FIRST time (it had lived only in the meta title) — a genuine searchability win
+  on top of the AI work above; and **"all my love & intention"** finally resolves the tension she had been
+  circling for three rounds — she gets the warmth of "all my love" WITHOUT losing "intention," which is the
+  word that backs up the expertise claim.
+- ⚠️ **ONE THING FLAGGED AND SHIPPED ANYWAY, hers to reverse:** dropping "who's been" makes *"a personal
+  stylist helping women... for over 20 years"* slightly looser grammatically (the duration attaches less
+  cleanly). It reads fine and it is tighter, so it shipped as she wrote it. **Say the word and "who's
+  been" goes back.**
+
+### 🔎✅✅ BING WEBMASTER TOOLS IS DONE AND FULLY CLOSED — the standing item since 2026-08-29
+Walked her through it live from her screenshots. ⭐ **The import-from-Google-Search-Console path worked
+exactly as hoped and skipped verification entirely** ("No site verification required" is on the button
+itself), which is why that path was tried first.
+- **THE RESULT, checked rather than assumed:** stylestar.app added · **1 known sitemap, 0 errors, 0
+  warnings** · **8 URLs discovered**, crawled 8/31/2026, Status **Success**.
+  ⭐ **8 is exactly right and worth recording as a sanity check: homepage + `/faq` + `/story` + `/contact` +
+  `/privacy` + `/terms` + `/journal` + the journal article.** Nothing missing, nothing extra.
+- ⚠️ **The dashboard's "submit your sitemap" banner is generic boilerplate** — it shows even though the
+  import already brought the sitemap in. **Check the Sitemaps page before believing it**, which is what we
+  did.
+- ⚠️ **"Data and reports may take up to 48 hours to reflect" is normal**, not a fault.
+- ▶ **The honest caveat given to her, same as with Google: being indexed means Bing HAS the pages, not that
+  they rank.** And the reason this mattered beyond Bing itself, worth restating: **Microsoft Copilot runs
+  on Bing's index, and Bing's data has historically fed ChatGPT's own web-browsing/search.**
+
+### 🚨🚨⭐⭐ THE SEAL STAR: THREE ROUNDS, AND THE MIDDLE ONE WAS MY OWN WRONG FIX
+Her screenshot: the gold seal star on the quiz button was crowding the word "AI." ▶ **CAUSE, and it is
+worth remembering as a pattern: it was a side effect of MY OWN change earlier the same session** — the new,
+longer `.hm-body` line wraps differently than the short line the star's position had been tuned against.
+**A copy change moved a decorative element's clearance.**
+1. **ROUND 1 — the mechanical finding, and it is load-bearing.** ⚠️⚠️ **THE STAR'S RESTING TILT IS
+   HARD-CODED IN FIVE PLACES, NOT ONE:** the base `.hm-cta-seal` rule, `ssSealPop`'s `0%` AND `100%`
+   keyframes, and `ssSealShimmer`'s `0%,100%` AND `50%` keyframes. **Editing only the base rule has ZERO
+   visible effect** — `ssSealPop` runs once on load and settles at its own `100%` value, then
+   `ssSealShimmer` holds its own rotation forever. **All five must move together or the star snaps back to
+   the old tilt the instant the page loads.** (The two transient bounce values, `55%` at `-2deg` and `78%`
+   at `-15deg`, are the pop-in wobble and are deliberately left alone.)
+2. 🚨🚨 **ROUND 2 — I MADE IT WORSE AND SHE CAUGHT IT: "bring the shimmer back, it looks flat."**
+   She said the star had "lost its shine," and I reached for this file's own documented `_wksStarSvg`
+   precedent (where an off-centre gradient highlight was CENTRED to fix a mirrored pair) and centred
+   `hmSeal`'s highlight, `cx 42%/cy 36%` → `50%/50%`. ▶▶ **THAT WAS THE WRONG LESSON APPLIED TO THE WRONG
+   CASE. A centred radial gradient is a SYMMETRIC BULLSEYE, which reads as FLAT AND MATTE. The off-centre
+   highlight IS the dimension — it is what makes the star read as a lit object.** ⚠️ **This file even says
+   so, and I read past it: "A SINGLE star with an off-centre highlight simply reads as lit from the left,
+   which is fine. Only a MIRRORED PAIR exposes it." The seal star is a single star. It never had the
+   problem the centring fixes.**
+3. ✅ **ROUND 3 — THE ACTUAL FIX, and it keeps BOTH properties.** The highlight lives in the star's OWN
+   rotating coordinate space, so a deeper tilt carries it round and dulls the shine — which is the real
+   mechanism behind her original "lost its shine." ▶ **So the highlight is restored off-centre AND
+   COUNTER-ROTATED: `cx="47%" cy="34%"`, which is the original offset vector rotated back by the tilt
+   delta so it still lands upper-left at `-38deg`.** Dimension restored, and the shine no longer degrades
+   as the tilt deepens. ⚠️⚠️ **THOSE TWO NUMBERS ARE TIED TO THE -38deg TILT. If the tilt ever changes
+   again, they change with it.** Written in capitals at the gradient itself.
+- ✅ **FINAL, LIVE: `top:-24px`, `rotate(-38deg)` in all five places, `hmSeal` at `cx 47% / cy 34%`.**
+  Her pick was option C from a rendered comparison.
+
+### ⭐ SHE ASKED FOR A RENDER BEFORE GOING LIVE, AND THAT SHOULD PROBABLY BE THE DEFAULT HERE
+Her words after two misses: *"can you show a render before you go live with it?"* ▶ **Two rounds of
+guess-ship-and-ask had already been spent; a render settled it in one.** ⚠️ **For anything decorative or
+visual, offer the render FIRST rather than shipping a guess** — this project's whole history says so and
+this session paid the price for forgetting it.
+- **BUILT: `scratchpad/sealtilt.mjs`** (committed), which renders the seal at several tilts and stacks them
+  into one labelled image via `scratchpad/sealcompose.py`. **Three things it does deliberately, all
+  recorded at the top of the file:**
+  1. **Serves the real typefaces locally** — the documented sandbox limitation (this Chromium cannot reach
+     fonts.googleapis.com, so an uncorrected render silently falls back to generic faces).
+  2. ⭐ **FREEZES the star at its shimmer RESTING state** (`animation:none` + the shimmer `0%` filter
+     applied statically). **Otherwise each variant is captured at a random point in the brightness pulse
+     and the comparison is meaningless.** A still cannot show a pulse; it can show a resting state fairly.
+  3. **Prints each variant's computed `transform`**, so the variants are PROVEN to differ rather than
+     assumed to — the id-scoped-mockup lesson from 2026-07-26, where five "different" options rendered
+     identically and she had to say so.
+- ⭐ **AND THE BUILT PAGE WAS DIFFED AGAINST THE PICKED RENDER BEFORE PUSHING** (rendered the real edited
+  file, not the injected mock). **A render is a PROMISE** — the 2026-08-13 lesson where she caught a build
+  that was only half of what she picked.
+
+### 🔧 TWO TOOLING BUGS FIXED, BOTH THE "SILENT" KIND
+- 🚨 **`scratchpad/renderfonts.mjs` COULD NOT LOAD AT ALL and nobody knew.** It imported Playwright by bare
+  name (`from 'playwright'`), which does not resolve in this sandbox — **so the shared render harness
+  simply crashed every time, which looks exactly like a harness nobody ran.** ⚠️ **The fix is BOTH halves:
+  the absolute path `/opt/node22/lib/node_modules/playwright/index.js` AND a DEFAULT import destructured
+  (`import pw from ...; const {chromium}=pw`), because the package is CommonJS and a named import fails
+  too.** This file already warned about the bare name; the CommonJS half is new.
+- ⚠️ **Pillow was not installed** (again); `pip install Pillow` in one call, same as 2026-08-26.
+
+### ⚖️⚖️ THE ALMIRA THREAD MOVED — SHE REPLIED, AND THE READ IS "ONE OF THREE"
+Cath pasted the full thread. **Almira answered the 3-point follow-up from 2026-08-29.** Her answers, scored
+against exactly what was asked:
+1. **Is the correction PROCESSED, not just received?** ▶ **NOT ANSWERED.** *"We reviewed the Florida State
+   today and there is no new update in their system"* says nothing changed — it does not say whether the
+   correction is accepted, pending, or anything else. **A non-answer dressed as an update.**
+2. **Which application is the website being reviewed for?** ▶ **NOT ANSWERED.** She gave a DATE
+   (**on or before September 4**) instead of naming the application. **Cath asked "which," Almira answered
+   "when."**
+3. **Will the update come from her directly?** ✅ **ANSWERED CLEANLY:** *"All communications will be coming
+   from me as I am reviewing your matter with the legal team internally."* Consistent with what she
+   committed to last time.
+- ▶ **THE READ GIVEN: one real answer out of three, and it is the easiest one to give.** ⚠️ **But this is
+  VAGUE, not CONTRADICTORY the way the IRS/state mixup was, so it was NOT called the moment for the firmer
+  "both sides of her mouth" framing** — that trigger (set 2026-08-29) still requires an unsigned or
+  genuinely contradictory reply. **This one is signed and internally consistent. Hold the line as written.**
+- ⚠️ **Worth noting without over-reading it: September 4 is essentially her own one-week clock** (set
+  2026-08-28, running to ~Sept 4). Whether Almira is tracking that deadline or landing on its edge, **it is
+  now in writing from her.**
+
+### ✅ THE REPLY SHE SENT — and the two rewrites are the reusable part
+It went through three drafts, and **both of her corrections made it materially better:**
+- ⭐ **HER FIRST CORRECTION: don't offer to check it herself.** My draft asked *"will I receive confirmation
+  from you, or should I check for it myself?"* — **she wants the firm to do their job**, so the self-check
+  option came out entirely.
+- ⭐⭐ **HER SECOND CORRECTION IS THE SHARP ONE, AND IT GENERALISES: *"should I ask for something in writing?
+  I feel like she could just say again oh they received it, but that is not the same as the fix actually
+  being fixed."*** ▶▶ **A STATUS QUESTION CAN ALWAYS BE ANSWERED WITH ANOTHER SHRUG. A REQUEST FOR A
+  SPECIFIC DOCUMENT CANNOT.** So the ask became: *"could you send me a copy of the confirmation or updated
+  filing showing the correction went through?"* **Reuse this move on any future ask to this firm.**
+- **AS SENT** (she confirmed sending it): asks (1) for a copy of the confirmation/updated filing once the
+  Bail→Bailey correction is actually accepted and processed, and (2) which application AND which class the
+  website is being reviewed for, **flagging explicitly that the app has no way to book one-on-one sessions
+  with her** and asking whether the site is enough on its own for that class or whether she should be
+  doing something more, e.g. invoicing her one-on-one clients under the Style Star name.
+
+### 🚨⭐⭐ CLASS 045 — SHE ASKED THE RIGHT QUESTION AND IT EXPOSED A REAL GAP ON THE SITE
+Her question: *"the app does not have a place for a client to book an in person styling session with me...
+Will this be a problem in regards to that class? or if I just start using the name Style Star and using my
+new bank account for one on one clients does that suffice?"*
+- ▶ **WHAT WAS EXPLAINED (and it is worth reusing verbatim, she found it clarifying): this is NOT a tax
+  matter at all.** Her applications are **Section 1(b) intent-to-use**, so before the USPTO will REGISTER
+  the marks she must file a **Statement of Use** with a **specimen** proving the mark is genuinely used for
+  **each class**. **Proof owed to the trademark office, not to any tax authority.** If a class cannot be
+  proven, **that class can be refused even though the other two register fine** — she would have paid for
+  three and be protected on two.
+- 🚨 **AND THE SITE WAS ACTUALLY CHECKED RATHER THAN GUESSED AT, which found the gap: My Story describes
+  her styling career in the PAST TENSE, as backstory** (*"I turned that passion into a career doing closet
+  consultations, shopping trips, and custom boutique try-on sessions"*), **and the Contact page offers
+  "Style Questions & Help" but never offers to BOOK her.** ▶ **So nothing on the live site currently OFFERS
+  one-on-one personal styling under the Style Star name in the present tense.** Against Indie Law's own
+  earlier specimen guidance (*"a website, landing page or marketing material showing the mark in relation
+  to the service description"*), **a page that says she USED TO do this may read as biography rather than
+  an active offer of the service.**
+- ▶ **ON THE BANK ACCOUNT, general principle given, clearly labelled as not a ruling: a bank account is
+  internal bookkeeping, invisible to the public, and by itself is unlikely to be an acceptable service-mark
+  specimen.** What generally does work is **public-facing** proof — an invoice or receipt given to a real
+  client, a contract, a business card, an email signature — **showing the mark in connection with actually
+  rendering the service.** ▶ **So invoicing her one-on-one clients under "Style Star" would likely help far
+  more than the bank account alone.**
+- ▶▶ **AN IDEA OFFERED AND DELIBERATELY NOT BUILT: add one honest, present-tense sentence to Contact or My
+  Story actually offering private one-on-one styling under the Style Star name** ("I also offer private
+  one-on-one styling sessions, reach out to book"). **That would turn the site from backstory into a
+  current service offer, which is a much cleaner specimen.** ⚠️ **NOT built on purpose — get Almira's read
+  on what she actually needs first rather than guessing at a legal requirement.** **This is the single most
+  actionable thing waiting on Almira's answer.**
+- ⚠️ **The standing rule was honoured throughout: general mechanics explained, never a ruling on her
+  specific facts.** Every "does X suffice" question went into the email to her lawyer.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 👀 **How the star and her founder line look on her phone.** The `-38deg` tilt is her own pick from a
+   render, but she has not seen the SHIPPED version live yet. ⚠️ **And if the star still ever looks
+   lifeless, the one thing left to rule out is iOS Reduce Motion** — `prefers-reduced-motion:reduce`
+   disables the shimmer animation by design, and no CSS change here can override that.
+2. ⚖️⚖️ **ALMIRA IS DUE ON OR BEFORE SEPTEMBER 4 — that is two things at once:** her own one-week clock
+   AND the date Almira put in writing. **Watch for: (a) an actual COPY of the correction confirmation,
+   not another status line, (b) WHICH application and class the website covers, and (c) whether it comes
+   from Almira herself.** ▶ **If it slips or comes back vague again, THAT is the moment the firmer framing
+   held back on 2026-08-29 is finally earned** — the reasoning is in that entry, don't re-derive it.
+3. ⭐⭐ **THE CLASS 045 SITE ADDITION, gated on Almira's answer** — see the entry above. If she confirms the
+   site needs to show a current one-on-one offer, it is one sentence and a small build; **do not build it
+   before her answer.**
+4. ✅ **Bing is CLOSED. Instagram is CLOSED. The two bio wording fixes are CLOSED by her decision.** Do not
+   re-raise any of the three.
+5. 📊 **Bing data populates within 48 hours of 8/31** — worth a look, with the same honest framing as
+   Google (indexed ≠ ranking).
+6. ⚠️ Everything else standing is untouched: the **Fiverr check-in (~Sept 15)**, the **monthly cost Routine
+   (fired 2026-09-01, log the first real spend number)**, and the **four big-picture strategy threads**.
+   None of it was touched this session.
+
+---
+
+## ▶ PREVIOUS — (2026-08-30 — 📸 INSTAGRAM AUDIT + CLEAN SHORT LINKS, THE FOUNDER LINE REWORKED THROUGH A REAL HONESTY TEST, HER SECOND ETSY PICK WITH A NEW PHOTO-CROP TECHNIQUE — ALL SHIPPED, ALL VERIFIED LIVE)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Ok let's save everything to the .md and I will open a new chat")
 **FIVE COMMITS THIS SESSION, ALL MERGED STRAIGHT TO `main` AND CURL+MD5-VERIFIED LIVE** — this session ran
