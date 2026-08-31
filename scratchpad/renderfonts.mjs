@@ -9,7 +9,12 @@
 //
 // Refresh the font cache with the curl loop recorded in CLAUDE.md if the
 // font URL in index.html ever changes.
-import { chromium } from 'playwright';
+// ⚠️ Absolute path + DEFAULT import: the bare name `from 'playwright'` does not
+// resolve in this sandbox (the documented trap), and the package is CommonJS so
+// a named import fails too. A harness that cannot load looks exactly like one
+// that was never run.
+import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+const { chromium } = pw;
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
