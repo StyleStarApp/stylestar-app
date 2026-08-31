@@ -7,7 +7,200 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-31 — 🔎 BING IS DONE, THE HOMEPAGE SAYS "AI" AT LAST, AND THE SEAL STAR TOOK THREE ROUNDS BECAUSE I BROKE IT MYSELF)
+## ▶ NEXT SESSION — START HERE (2026-08-31 LATER — 🔎 SHE LEARNED TO READ A SEARCH RESULTS PAGE, AND SHE FOUND HOW THE COMPETITION ACTUALLY RANKS)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Yes let's save all of that")
+**ONE COMMIT, merged straight to `main` and CURL + MD5-VERIFIED LIVE** (the sitemap's stale `lastmod`
+dates). ⚠️ **One Netlify build.** Branch `claude/resume-style-star-markdown-dor1bo`, same no-PR
+fast-forward convention as always.
+▶ **THE SHAPE OF IT: it started as "submit two URLs to Bing" and turned into her learning to read a
+results page — and then SHE found the thing that explains a complaint she has had since 2026-08-23.**
+
+### ✅✅ THE STAR AND THE FOUNDER LINE ARE BLESSED — CLOSED, DO NOT RE-RAISE
+Her words on the shipped `-38deg` seal star and her reworked founder line: **"The star and new line look
+great. All good there."** The 08-31 morning entry's "she has not seen these live yet" flag is discharged.
+
+### 🚨⭐ THE SITEMAP WAS ARGUING AGAINST US — found while answering her question, fixed and live
+Her question was the right one: *"since we updated the home page and faq should we also go back to google
+console and make an update there too?"* ▶ **Checking it found something neither of us was looking for: the
+sitemap still claimed the home page and /faq were last modified 2026-08-24**, a week stale, after the
+founder-line rework (08-30), the "brilliance of AI" sentence (08-31) and the route-trim (08-28).
+- ▶▶ **WHY IT MATTERS, and it is the reusable half: `lastmod` is the ONE field the crawlers actually
+  weigh. Google ignores `changefreq` and `priority` outright.** So the sitemap was quietly telling both
+  engines "nothing has changed here" at the exact moment we were asking them by hand to re-crawl.
+  **A stale date is not cosmetic; it is a contradicting signal.**
+- ✅ **As shipped: `/` and `/faq` → 2026-08-31** (the AI sentence + founder line), **the other six →
+  2026-08-28** (the route-trim + sitewide Organization schema, which changed the served HTML of every
+  route). ⚠️ **DELIBERATELY NOT all eight bumped to today** — only the pages that really changed. **A
+  sitemap that cries wolf gets trusted less, not more.**
+- **The standing rule is written into `sitemap.xml` itself**, in capitals: when a page's content changes,
+  bump its date IN THE SAME COMMIT. ▶ **Add it to the 4-step article recipe** — a new article already gets
+  a sitemap line; an EDITED page needs its date moved.
+
+### ✅ BING: ALL EIGHT URLS SUBMITTED — and the reasoning is worth keeping
+She submitted the whole site through **URL Submission**, not just the two changed pages.
+- ▶ **WHY ALL EIGHT WAS RIGHT: "8 URLs discovered" only means Bing read them out of the sitemap. It does
+  NOT mean Bing has fetched and indexed each one.** A URL submission is the strongest "come get this now"
+  signal available, and for a site with no backlinks Bing may otherwise crawl slowly.
+- ⚠️ **Her quota is 100 A DAY**, not the handful assumed — so this cost nothing. Verified on her screen.
+- ⚠️ **DELIBERATELY EXCLUDED and she was told why: the Instagram short links** (`/ig`, `/ig-pro`,
+  `/ig-cath`, `/ig-3d`) — 301 redirects, not pages; submitting them asks Bing to index a signpost —
+  **and `/results` + `/list/*`**, which are kept out of the sitemap on purpose (duplicate / private token).
+- ⚠️ **The Bing welcome email is pure boilerplate.** Of its four cards only **Submit URLs** was worth
+  acting on. Submit Sitemap was already done by the import; **URL Submission API** (IndexNow) is for sites
+  publishing constantly and is real engineering for zero gain on 8 stable pages; User Management is for
+  teammates. ▶ **Do not let a vendor's onboarding email set the work list.**
+- ⚠️ **The yellow "Legacy SOAP and POX APIs will be retired" banner is irrelevant to her** — she talks to
+  Bing through no API. Told to her so it would not worry her.
+
+### ▶▶ STILL OPEN AND IT IS THE ONE WITH A KNOWN-WRONG COPY: THE GOOGLE SIDE
+**She has NOT yet done the Google Search Console half** — she went to Keyword Research instead and the
+session ran there. ⚠️ **ASK FIRST NEXT SESSION.**
+- ▶ **Google is the STRONGER case of the two, not the weaker: her last Request Indexing on the home page
+  and /faq was 2026-08-29, and the AI sentence shipped 2026-08-31 at 16:57 UTC.** So Google's most
+  recently requested crawl definitively predates the change. **With Bing it was a coin flip; with Google
+  it is near-certain the indexed copy lacks the AI wording.**
+- **The step, one at a time:** Search Console → the search bar at the very top (URL Inspection) → paste
+  `https://stylestar.app/` → Request Indexing → repeat for `https://stylestar.app/faq`.
+- ⚠️ **Do NOT resubmit the sitemap on either engine.** Both already know it and re-read it on their own;
+  it is now telling them the right dates, which was the part that was broken.
+
+### ⏰ THE ROUTINE WAS STALE AND IS NOW REPLACED — fires 2026-09-01, 21:44 UTC (5:44pm ET)
+Found on arrival: a one-shot Routine "Check Google Search Console indexing" carrying a **2026-08-25**
+brief, due to fire the next day and nag her about something closed on 08-26 and re-checked on 08-29.
+- ✅ **Her call: fold Bing in.** New Routine **`trig_013x8yTKFuYH4to7jEhPhDBd` — "Style Star — Google +
+  Bing indexing check"**, same fire time, covering BOTH dashboards, carrying the baselines (GSC verified
+  08-25 + all 8 request-indexed by 08-29; Bing imported 08-31, 1 sitemap / 0 errors / 8 URLs / Success)
+  so it can tell a real problem from a quiet start, **plus the honest framing in writing: indexed ≠
+  ranking, and a small number this early is not a failure.**
+- ⚠️⚠️ **A MECHANICAL LESSON WORTH KEEPING: `update_trigger` CANNOT edit the prompt of a Routine bound to
+  a DIFFERENT session** ("editing the prompt of a routine whose fires deliver into a session that is not
+  your own is not available"). Name, schedule and enabled state change freely; the prompt does not.
+  ▶ **The safe workaround here was delete-and-recreate ONLY because it was a one-shot that had never
+  fired, so there was no run history to lose.** Never do that to a Routine with a real run history.
+- ⚠️ The replacement fires a FRESH session (so it reads CLAUDE.md) and **carries no MCP connectors** — it
+  asks her to look and report, which needs none.
+
+### ⭐⭐⭐ THE HEADLINE: SHE LEARNED TO READ A RESULTS PAGE, AND THE METHOD BEATS THE VOLUME NUMBER
+She opened Bing's **Keyword Research** and asked "should I do anything with this?" Four searches later she
+had a repeatable method. ▶ **THIS IS THE REUSABLE PART AND IT SHOULD GOVERN EVERY FUTURE ARTICLE TOPIC.**
+- 🚨 **"Bing doesn't have enough data to show trend" is about the GRAPH ONLY.** It is not a verdict on the
+  topic, and Bing's keyword data is genuinely thinner than Google's. **Do not let a blank talk her out of
+  a good topic.** (The Question keywords tab returned **0 rows** on two of the four phrases.)
+- ⭐⭐ **THE INSTRUMENT THAT ACTUALLY WORKS IS "TOP 10 URL RANKING ON THIS KEYWORD", NOT THE VOLUME
+  FIGURE.** It answers the two questions that really decide a topic, and neither is "how many people
+  search this": **(1) what does the search engine think this phrase MEANS** (split intent = unwinnable at
+  any volume) and **(2) who would she have to beat.**
+- ▶▶ **THE FOUR SEARCHES, and the pattern is clean:**
+  | Phrase | Top 10 said | Verdict |
+  |---|---|---|
+  | `how to build a wardrobe` | **4 of 10 are CARPENTRY** — Instructables, DIY plans, a YouTube "fitted wardrobe tutorial for DIYers", and **Pro Tool Guide, a power-tool site** | ❌ split intent |
+  | `fall capsule wardrobe` | **Harper's Bazaar, Glamour, The Everygirl, The Everymom**, plus `capsulewardrobestyle.com` (exact-match domain) | ❌ magazines |
+  | `fall capsule wardrobe for warm weather` | **5 of 10 IDENTICAL to the head term**, plus People.com, plus two who already wrote the warm-climate angle | ❌ qualifier bought nothing |
+  | `what to wear in florida in the fall` | a **real-estate blog**, **three travel/packing sites**, small blogs, one from **2023**. Zero magazines. | ✅ **ALIVE** |
+- ⭐⭐ **THE RULE THAT CAME OUT OF IT: THE QUALIFIER THAT WORKED WAS A PLACE, NOT A DESCRIPTION.**
+  "Florida" is a proper noun and it genuinely changed what Bing thought was being asked, producing an
+  entirely different results page. **"Warm weather" is a descriptor and Bing folded it straight back into
+  the head term.** ▶ **NOT EVERY QUALIFIER MAKES A LONG-TAIL PHRASE. It only counts if the engine treats
+  it as a different question — and the Top 10 is how you check.**
+- ⚠️ **A PREDICTION OF CLAUDE'S THAT WAS WRONG, on the record:** "fall capsule wardrobe for warm weather"
+  was proposed as the likely winner (head-term demand + her unfakeable angle) and the results page killed
+  it. **Said plainly to her rather than narrated around.**
+- ⭐ **ALSO WORTH REUSING: run her OWN existing article's topic as a CONTROL** (`how to find your personal
+  style`) to calibrate what a reachable number looks like. Offered; the session went elsewhere first.
+
+### 📓 ARTICLE #2 HAS A REAL CANDIDATE NOW: FLORIDA / WARM-CLIMATE FALL DRESSING
+The only weak field of the four, and it is authentically hers — **she is a practicing stylist in Orlando,
+and every fall article on the internet assumes sweaters, boots and layering.**
+- ▶ **THE HONEST CAVEAT, raised BEFORE she writes it: the intent skews TOURIST.** The titles are full of
+  *Vacation · Packing List · Travel Tips · What to Wear and Pack · Crowds, Things to Do*. A woman flying
+  in for six days does not take a style quiz and build a wardrobe.
+- ▶ **THE RESOLUTION GIVEN, and Claude walked back its own over-weighting of that worry: write it for the
+  woman who LIVES there.** Florida has 23 million residents, and Arizona, Texas and Southern California
+  have the identical problem. **The tourists who land on it are a bonus, not the target.** Her competition
+  is a real-estate blog and two packing lists; a working stylist's guide for residents beats that on
+  merit. ▶ **One winnable page beats three perfect topics she cannot rank for.**
+- ⚠️ **The standing rule holds regardless of any number: NO WEDDING-GUEST ANGLE** (her daughter's November
+  wedding). ⚠️ And the 4-step article recipe still applies, **now with the sitemap `lastmod` step.**
+
+### 🚨🚨⭐⭐ HER OWN FINDING, AND IT EXPLAINS A COMPLAINT SHE HAS HAD SINCE 2026-08-23
+Her words: *"when I type in personal stylist app it seems the apps are writing their own articles."*
+▶▶ **SHE IS EXACTLY RIGHT, AND IT IS THE MECHANISM BEHIND HER OLD 'best styling app returns a broken
+BeautyAI and not me' FRUSTRATION.** The `personal stylist app` top 10:
+**Indyx** (an app) ranks with *"Best Personal Stylist Apps 2024: Compared & Ranked"* on its own blog, and
+**Alta** (an app) ranks with *"Best Personal Stylist Apps in 2025 (Ranked & Reviewed)"*. The rest are app
+homepages (Stylio, WISHI, MOSSO), two App Store / Google Play listings, and two third-party roundups
+(panaprium, itechnolabs).
+- ▶ **WHY IT WORKS: someone typing "personal stylist app" is in DISCOVERY mode — they want a LIST to
+  choose from, not one product. So the engines serve listicles.** An app's own homepage can only ever rank
+  for its own name plus the bare category; **a roundup ranks for the DECISION query, and whoever writes
+  the list controls the frame and naturally puts themselves on it.**
+- ▶▶ **TWO SEPARATE PLAYS, and they are both cheap. NEITHER IS BUILT — her call:**
+  1. **WRITE HER OWN ROUNDUP** on the Style Journal. ⭐ **Her advantage here is genuinely unfair and
+     nobody on that page has it: she is a REAL PRACTICING STYLIST OF 20 YEARS reviewing tools in her own
+     field.** Indyx and Alta are companies reviewing competitors. ⚠️⚠️ **BUT IT ONLY WORKS IF IT IS
+     HONEST, and that is a brand question, not an SEO one: disclose plainly that she built one of them,
+     and review the others fairly.** The dishonest version (posing as a neutral reviewer) would cost
+     exactly the trust that is her whole differentiation. **The honest version — "a working stylist
+     reviews the styling apps, including her own" — is BETTER content than what is ranking and nobody
+     else can write it.**
+  2. **GET INTO OTHER PEOPLE'S ROUNDUPS** — panaprium, itechnolabs, altadaily already rank with these
+     lists. **Pitching them is free, needs no engineering, and is pure outreach.** ⭐ **And it is the
+     single most direct lever on her AI-discoverability goal: when someone asks ChatGPT or Copilot "what
+     is a good personal stylist app", those models lean on exactly these roundup pages.**
+- ⚠️ **This also retires the mystery in the 2026-08-23 entry** (*"she googled 'best styling app', found a
+  broken app called BeautyAI ranking first, and Style Star does not appear at all"*). **It was never about
+  the app being worse. Somebody wrote a listicle and she had not.**
+
+### 📋 THE MONDAY CATALOG CHECK RAN TODAY AND NOBODY HAS ACTED ON IT — 3 REAL DECISIONS WAITING
+Both Monday Routines fired 2026-08-31 and both SUCCEEDED. The Drive report
+(**"Style Star link check - 2026-08-31"**) was read this session because these historically go unopened.
+**107 active products, 84 completely clean, ZERO dead links.** ▶ **But three send a woman to a page she
+cannot buy the catalogued item from, and they need HER decision — the catalog is her curation and nothing
+was touched:**
+- **p004 Old Navy, High-Waisted Wow Straight Jean, $49** — ⚠️ **the URL now serves a DIFFERENT product**
+  ("Extra High-Waisted Wide-Leg Jeans", $59.99), confirmed on three fetches; the PID was reassigned. Old
+  Navy restructured the Wow line, so **there is no clean swap** — the full-length straight survives only
+  as an out-of-stock clearance colourway. Either re-source it or move the entry to the ankle cut and
+  change the price and the note.
+- **p095 Everlane, The Day Sneaker, $148** — every size sold out, 70% off, marked FINAL SALE. **A run-out,
+  not a restock.** Recommend removing.
+- **p033 Mango, Classic Trench Coat, $150** — every size XXS-4XL waitlist only, both colourways.
+  ⚠️ **This was the widest size run in the trench slot, so it is worth REPLACING rather than deleting.**
+- **Plus 13 drifted** (p034 Abercrombie regular price $160→$170 and the page now reads as a different
+  coat; p090 J.Crew reworked the ballet sneaker under the same style code so the name AND note need
+  rewriting; p084 Pilcro is down to XL and lost the petite run **that its note sells it on**; sold-out
+  p002/p070/p094; colours dropped on p011/p031/p079/p101; sizes reduced on p080/p086/p107)
+  **and 7 could not be verified** behind bot walls.
+- ▶ **ONE MAINTENANCE NOTE FROM THE REPORT ITSELF: NET-A-PORTER 403'd twice and is not yet on that
+  Routine's known-blocker list.** Worth adding so it stops being reported as unverifiable.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ▶▶ **THE GOOGLE SEARCH CONSOLE RE-REQUEST — she never did it, and it is the one where we KNOW the
+   indexed copy is out of date.** Two URLs, one at a time. See the entry above.
+2. ⭐⭐ **HER "apps write their own articles" FINDING — the two plays.** Ask which she wants: writing her
+   own honest roundup, or pitching the three that already rank. **Both are cheap; the outreach one needs
+   no build at all.** ⚠️ The honesty framing is the whole game on the first one.
+3. 📓 **ARTICLE #2: Florida / warm-climate fall dressing**, written for the RESIDENT. The only weak field
+   of four. ⚠️ Worth a quick sanity check on Google too before writing — Bing ≠ Google, though the
+   competitive weakness is likely similar.
+4. 📋 **THE THREE CATALOG DECISIONS** (Old Navy / Everlane / Mango) — hers, nothing touched.
+5. ⚖️⚖️ **ALMIRA IS DUE ON OR BEFORE SEPTEMBER 4** — her own one-week clock AND the date Almira put in
+   writing. **Watch for: (a) an actual COPY of the correction confirmation, not another status line,
+   (b) WHICH application and class the website covers, (c) whether it comes from Almira herself.**
+   ▶ **If it slips or comes back vague again, THAT is the moment the firmer framing held back on
+   2026-08-29 is finally earned** — the reasoning is in that entry, don't re-derive it.
+6. ⭐⭐ **THE CLASS 045 SITE ADDITION IS STILL GATED ON ALMIRA'S ANSWER** — one honest present-tense
+   sentence offering private one-on-one styling. **Do not build it before her answer.**
+7. ⏰ **The Google + Bing indexing check fires 2026-09-01 21:44 UTC.** The **monthly cost Routine** fires
+   2026-09-01 13:02 UTC — log the first real spend number.
+8. ✅ **Bing setup, Instagram, and the two bio wording fixes are CLOSED.** So are the star and the founder
+   line, blessed this session. **Do not re-raise any of them.**
+9. ⚠️ **Untouched this session:** the Fiverr check-in (~Sept 15) and the four big-picture strategy threads.
+
+---
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-08-31 — 🔎 BING IS DONE, THE HOMEPAGE SAYS "AI" AT LAST, AND THE SEAL STAR TOOK THREE ROUNDS BECAUSE I BROKE IT MYSELF)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Ok let's pause here and save everything to the .md so we can resume on a new chat")
 **SIX COMMITS MERGED STRAIGHT TO `main`, EVERY ONE CURL + MD5-VERIFIED LIVE**, plus one commit pushed to
