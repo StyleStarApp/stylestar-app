@@ -7,7 +7,145 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-29 EVENING — 🚨 TWO REAL SELF-HEAL BUGS FOUND FROM HER OWN SCREENSHOTS, BOTH FIXED AND CONFIRMED LIVE)
+## ▶ NEXT SESSION — START HERE (2026-08-30 — 📸 INSTAGRAM AUDIT + CLEAN SHORT LINKS, THE FOUNDER LINE REWORKED THROUGH A REAL HONESTY TEST, HER SECOND ETSY PICK WITH A NEW PHOTO-CROP TECHNIQUE — ALL SHIPPED, ALL VERIFIED LIVE)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Ok let's save everything to the .md and I will open a new chat")
+**FIVE COMMITS THIS SESSION, ALL MERGED STRAIGHT TO `main` AND CURL+MD5-VERIFIED LIVE** — this session ran
+on the harness-assigned branch `claude/style-star-markdown-iqjxpy` (a Claude Code Remote session, not the
+usual interactive Cowork chat), pushed to that branch, then fast-forward-merged directly to `main` each
+time, matching this repo's own long-standing no-PR convention. ⚠️ **Five Netlify builds.**
+▶ **THE SHAPE OF THE DAY: it opened as an Instagram bio critique and became real infrastructure** (a
+permanent short-link system in `netlify.toml`), then a homepage sentence she'd shipped the day before got
+a proper honesty audit and came out the other side better AND more searchable, then she picked her second
+Etsy Edit item and its photo needed a genuinely new technique to crop correctly.
+
+### 📱 THE INSTAGRAM AUDIT — critical review given, and it surfaced a real bug in how the link looked
+She has **four accounts**: `style_star.app` (56 followers, the dedicated brand account, best-written bio),
+`floridapersonalstylist` (289 followers, verified, her real professional credentials — but the one bio
+that never says "free"), `cath_ellspermann` (705 followers, personal, already clean), and
+`3dpersonalstylist` (131 followers, 0 posts, a dormant future-project account that had never linked Style
+Star at all). ▶ **Full critique given per-account in chat** (not reproduced here — re-read the exchange if
+she wants it again). **Two small wording fixes were OFFERED AND NEVER CONFIRMED DONE, still open:**
+style_star.app's bio says **"20+ years"** where the rest of the site always says **"over 20 years"**
+(the established consistency rule); floridapersonalstylist's bio never says **"free"**. ▶ **Ask next
+session whether she wants those two edited, or has already fixed them herself in the app.**
+- **Drafted for the 3D account, offered, NEVER CONFIRMED PASTED IN:** the line *"Also creator of
+  @style_star.app Take the free style quiz ↓"* plus its short link `stylestar.app/ig-3d`. ▶ **Ask whether
+  she actually added this — it was never shown back to her live, unlike the other three accounts.**
+
+### 🚨🚨⭐⭐ THE "?" WASN'T A BROKEN LINK — IT WAS INSTAGRAM'S OWN DISPLAY, AND SHE WAS RIGHT TO PUSH BACK ANYWAY
+She pasted a UTM-tagged link (`?utm_source=instagram&utm_campaign=personal`) into her bio and it displayed
+as **`stylestar.app/?`** — nothing after the question mark. ▶ **Diagnosed correctly: Instagram truncates
+ANY bio link carrying a query string down to `domain/?`, no matter how long or short what follows is. The
+full tagged URL was saved and worked fine underneath.** First answer given was "nothing to fix, it's
+cosmetic" — **and she was right to reject that as too easy: it LOOKS broken to any stranger glancing at her
+bio, and that's a real problem even though nothing was technically wrong.**
+- ✅ **BUILT: a permanent short-link system, live in `netlify.toml`** — `/ig`, `/ig-personal`, `/ig-pro`,
+  `/ig-3d` and (her own later call, see below) `/ig-cath`, each a real **301 redirect** to the fully tagged
+  homepage URL (`?utm_source=instagram&utm_campaign=<account>`). ⚠️ **These are DELIBERATELY 301s, not the
+  200 rewrites the rest of the app's routes use** — the address bar is SUPPOSED to change to the tagged URL
+  once she's already tapped through; Instagram only ever displays the short path itself, which carries no
+  query string and therefore can never show a "?". **WARNING written into the file itself: once one of
+  these is live in a bio, never repoint it without updating the bio too, and never delete one outright.**
+- ⭐ **HER OWN FOLLOW-UP CALL: `/ig-cath` over `/ig-personal` for her personal account** — she preferred her
+  own name there over the role-based label, purely on taste. Built as an ADDITIONAL redirect to the exact
+  same `utm_campaign=personal` tag (Plausible attribution unaffected); `/ig-personal` was left defined
+  rather than removed, per the standing "never pull a link that might already be live somewhere" rule.
+- **All five short links verified live** (301 → correct tagged destination → 200 on the final page).
+  **THE PASTE TABLE SHE WAS GIVEN:** style_star.app → `/ig` · floridapersonalstylist → `/ig-pro` ·
+  cath_ellspermann → `/ig-cath` · 3dpersonalstylist → `/ig-3d` (once she adds the line above).
+  ⚠️ **She confirmed doing this for cath_ellspermann specifically ("Ok all of that is done... looks much
+  better") — whether the other three accounts actually got their short links pasted in is UNCONFIRMED.**
+  Ask next session, don't assume.
+
+### ⭐⭐⭐ THE FOUNDER-LINE REWORD — a real honesty audit, and the reusable lessons are the point
+She'd shipped *"Style Star is not a faceless algorithm"* on the homepage the day before (2026-08-29, Phase
+4) and came back the next day saying it sounded like it was **"protesting too much."** ▶ **She was right,
+and the mechanism generalises: a denial only reads as confident when it answers something the reader
+already raised.** The FAQ's identical claim works because it directly answers *"What makes Style Star
+different?"* — someone asked. The homepage version was an unprompted declaration, its own full sentence,
+denying an accusation nobody had made yet.
+- 🚨 **SHE CAUGHT A REAL MISTAKE MID-CONVERSATION: Claude's first instinct was to just cut the sentence,
+  and she reminded Claude it was placed there ON PURPOSE for the Phase 4 AI-searchability goal** (so an AI
+  crawler reading the raw homepage, not just the FAQ, would have plain text confirming "real stylist, not
+  an algorithm" for a comparison question). ▶ **RESOLUTION, worth reusing whenever a UX/tone fix and a
+  strategic/SEO fix seem to conflict: restructure, don't remove.** The exact phrase "not a faceless
+  algorithm" survives word-for-word (nothing lost for crawlability) but moved from being its OWN standalone
+  declarative sentence into a trailing clause on an affirmative sentence — which is what actually removes
+  the defensive feel, since the negation is no longer the thing being announced, a positive claim is.
+- ⚠️ **TWO ACCURACY CATCHES ALONG THE WAY, both reusable tests for any future "real person vs AI" claim:**
+  (1) her own draft used **"reflects my real styling judgment"** — flagged as an overclaim, because most of
+  what the app suggests is AI-generated WITHIN her rules (never-wear list, store scoring, category
+  definitions), not personally hand-picked by her the way the Edit and Star of the Week are. **"Guided by"**
+  holds up under scrutiny either way; "reflects" implies she personally reviewed that specific item, which
+  isn't true for most surfaces. This is the same honesty test the 2026-08-29 FAQ work already established
+  ("not JUST an algorithm," never drop the qualifier) — applied here to a verb, not just a noun. (2) **she
+  didn't want "judgment"** — it reads as *judging people*, which cuts directly against the brand's own
+  stated stance ("I'm not here to tell you what's beautiful, I'm here to help you recognize what feels
+  beautiful to you"). **"Expertise" replaced it, deliberately reusing the FAQ's own existing word for the
+  same claim** rather than inventing new vocabulary — one word bank across the site, not two.
+- ⭐ **HER FINAL ROUND: swap "Everything here" for "Style Star" as the subject**, asking if it's better for
+  BOTH tone and the searchability goal. **Answer was yes to both, and the searchability half is the sharper
+  point worth remembering: naming the entity directly next to the claim ("Style Star is guided by...")
+  is more directly extractable/quotable by an AI answer engine than a sentence needing pronoun resolution
+  ("Everything here is..." → has to resolve "here" = Style Star first).** Apply this "name the entity, don't
+  pronoun it" heuristic to any future homepage/landing copy meant to be crawled.
+- ✅ **FINAL, LIVE, verified byte-for-byte: "Hi, I'm Catherine, a personal stylist who's styled women for
+  over 20 years. Style Star is guided by my real expertise, not a faceless algorithm. I created this with
+  love & intention 💕"** Three shipped rounds to get here, each one hers to approve, none guessed at.
+
+### 💎 HER SECOND ETSY EDIT PICK — Open Heart Necklace, and its photo needed a technique nothing else uses
+**Open Heart Necklace, Gold or Silver / sterling silver or gold fill, $42-$48 across 7 custom lengths →
+`~$45`** (the standing notation for genuinely variable-price items, same shape as the bracelet's `~$50`).
+Etsy's listing page is bot-walled from this sandbox as always (403); the image CDN (i.etsystatic.com) is
+not, so the photo was verified reachable but the name/price are her own reported info, same standing
+pattern as every other Etsy item. Her pasted URL's `?ref=share_ios_native_control` tracking param stripped.
+Inserted at the end of the photographed cluster (after the Gucci bag, before the first text-only item), per
+the standing display-order rule. **NOT added to the Star of the Week rotation** — that's always its own
+separate, explicit call from her, and she didn't make it this time.
+- 🚨🚨⭐⭐ **THE PHOTO IS A FLAT-LAY SHOWING BOTH COLORWAYS SIDE BY SIDE — the first Etsy/Edit photo that's
+  genuinely landscape (794x640) against the shared 3:4 portrait card crop, unlike every prior photo which
+  was square or portrait.** First ship used plain `object-position:left`, the only lever a bare `object-fit`
+  crop offers — kept the gold heart whole but left a visible sliver of silver at the frame edge.
+  **She asked to center gold and show zero silver.** ▶ **MEASURED, not guessed: Pillow content-bounds
+  analysis on the real pixels found silver's real content starts around x=460 of 794, and the crop window a
+  plain `object-fit:cover` 3:4 box needs is 480px wide — mathematically WIDER than the 460px of clean space
+  before silver starts. No `object-position` value alone can reach zero silver on this photo.**
+  ✅ **BUILT: the first Edit item to use a WRAPPER + `transform:scale()` instead of a bare `<img
+  class="dc-item-px">`.** The wrapper carries every box-model property the shared class normally provides
+  (size, aspect-ratio, background, border, radius) PLUS `overflow:hidden`, so the inner img can be
+  `transform:scale(1.15)`'d in from a `20%`-from-left origin with nothing bleeding into the card text below.
+  `onerror` now clears the WRAPPER (`this.parentElement.remove()`), not just the img, so a dead link still
+  collapses to nothing cleanly instead of leaving a bare cream box behind.
+  ⭐⭐ **VERIFIED, not assumed: built a real Playwright/Chromium test harness, rendered the technique at
+  320/390/430px, then rendered it AGAIN inside the real page's own full CSS** (swapping in a locally
+  downloaded copy of the photo only for the test, to work around this sandbox's documented inability to
+  have headless Chromium reach external CDNs directly — curl can, Chromium here can't; the live site and
+  real visitors' browsers have no such restriction). **Confirmed clean at every width before shipping.**
+  ⚠️ **Every OTHER Edit photo is still a plain `<img class="dc-item-px">` — this is the only item built this
+  way, because it's the only source photo wide enough to need it.** Don't copy this pattern onto a normal
+  portrait/square photo; it's more markup than the standard single-`<img>` approach and should stay rare.
+- **NOTE IS HERS, VERBATIM:** *"Comes in sterling silver or gold fill. Lovely conversation piece. Comes in
+  7 different lengths. Open your heart!"* Both the recrop and the note shipped in the same commit, curl +
+  md5 verified live, and re-confirmed live again later in the session when she asked.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 📱 **Confirm the Instagram short-link paste-in.** She confirmed cath_ellspermann → `/ig-cath`; style_star.app
+   (`/ig`), floridapersonalstylist (`/ig-pro`) and 3dpersonalstylist (`/ig-3d` + its new bio line) were
+   never individually shown back to her live. Ask, don't assume all four are done.
+2. ✍️ **The two small Instagram wording fixes, offered and never confirmed:** style_star.app's "20+ years"
+   → "over 20 years" (consistency with the rest of the site), and adding "free" to floridapersonalstylist's
+   bio. Offer to draft/ship them if she hasn't done them herself.
+3. 👀 **Ask how the reworded founder line and the Open Heart Necklace card look on her own phone** — both
+   were verified live via curl/md5 from here, neither has been seen by her live yet this session.
+4. ⚠️ Everything standing from BEFORE this session is untouched and still open — see the entry directly
+   below (now marked PREVIOUS) for the full list: Bing Webmaster Tools, Almira/Indie Law's reply, the
+   Fiverr Sept 15 check-in, the monthly cost Routine, the four big-picture strategy threads. This session
+   didn't touch any of them.
+
+---
+
+## ▶ PREVIOUS — (2026-08-29 EVENING — 🚨 TWO REAL SELF-HEAL BUGS FOUND FROM HER OWN SCREENSHOTS, BOTH FIXED AND CONFIRMED LIVE)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Ok great thank you.")
 **Merged fast-forward to `main` and MD5-VERIFIED LIVE** (`4a9fed4`, byte-identical local vs
