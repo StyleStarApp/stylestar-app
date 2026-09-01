@@ -175,11 +175,20 @@ corner"** · **"lift the star up higher. it is crowding the arrow."**
   a value tuned for a screen that lacks the thing it now collides with.
   ⚠️ **MEASURED ON THE DRAWN PATH** (`getPointAtLength` through `getScreenCTM`), never the rotated
   bounding rect, which overstates this star by ~11px — the Mall-sign technique, reused.
-  **Every 4px of lift buys exactly 4px of clearance: -40 → 2px, -44 → 6px, -48 → 9.6px, -52 → 13.6px.**
-  ▶ **-48 WAS TRIED AND THE SUITE REJECTED IT at 9.6px**, because this project's standing rule is that a
-  margin under ~10px in the sandbox is a collision on real Safari. **Shipped `-52px`.**
+  **Every 4px of lift buys exactly 4px of clearance: -36 touches, -40 → 2px, -44 → 6px, -48 → 9.6px,
+  -52 → 13.6px.** ⭐ **HER PICK IS `-44px`, from a five-way labelled render** — it sits MOUNTED ON THE
+  CORNER the way the home page star does, which is what she asked for originally, while keeping real
+  daylight from the arrow.
+  🚨⭐ **`-52px` SHIPPED FIRST AND SHE REJECTED IT IN THREE WORDS: "star is too high."** ▶▶ **THE CAUSE WAS
+  MISAPPLYING THIS FILE'S OWN ~10px SANDBOX FLOOR, and the correction generalises: THAT FLOOR EXISTS
+  BECAUSE *TEXT* MEASURES DIFFERENTLY IN CHROMIUM THAN IN REAL SAFARI.** The star and the arrow are two
+  fixed-size SVG shapes with no text metrics anywhere in the measurement, so 6px really is 6px on her
+  phone. **Holding 10 here bought nothing and cost the look.** ⚠️ The suite's threshold is **5px** now,
+  with that reasoning written at the assertion.
   ⚠️ **Do NOT solve this by pushing the star RIGHT: horizontal was never the constraint** (46px of room to
   the screen edge), and moving right walks it toward the edge for nothing.
+  ⚠️ **AND THE RENDER IS WHAT SETTLED IT, not the numbers** — a five-option stack in ONE labelled image
+  (the standing rule). Every measurement said -52 was the safest and her eye said it floated.
 - 🚨 **AND THE ELEMENT SWAP SILENTLY TOOK 28px OF SPACING SHE NEVER ASKED ABOUT.** The retired `.jrnl-cta`
   had `margin:34px auto 0` and no ring; `.hm-cta`'s outermost box-shadow spreads 10px, so inheriting its
   16px left **6px** of visible air above the button (measured) and cost 10px below.
@@ -215,8 +224,8 @@ link, and removing the article from the registry each fail BY NAME.**
 ### ▶ THE FIRST THINGS NEXT SESSION
 1. 👀 **HOW ARTICLE #2 AND THE NEW QUIZ BUTTON READ ON HER PHONE.** She has seen renders of the bullets and
    of the lifted star, but not the live page. ⚠️ Private browsing, `stylestar.app/?notrack`.
-   ▶ **The one thing only her eye can settle: whether the star at `-52px` now reads as SEPARATE from the
-   button rather than mounted on its corner.** It is one number if she wants it back down.
+   ▶ **The star's height went through TWO rounds and `-44px` is her pick** — one number if she ever wants
+   it moved again (-48 is the middle, -40 the lowest that still clears).
 2. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
    **Do not insert anything mid-queue ahead of it.**
 3. ⚖️ **ALMIRA: still watching for the COPY of the correction confirmation** (she promised only "an

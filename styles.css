@@ -1896,14 +1896,19 @@ body.menu-open .menu-panel{display:block}
    rect, which overstates the star by ~11px here), the star's ink and the arrow's
    ink genuinely OVERLAPPED. The home page has no arrow under its star, which is
    why -24px is right there and wrong here.
-   Every 4px of lift buys exactly 4px of clearance: -40 gives 2px, -44 gives 6px,
-   -48 gives 9.6px, -52 gives 13.6px. -48 WAS TRIED AND THE SUITE REJECTED IT at
-   9.6px: this project's standing rule is that a margin under ~10px in the sandbox
-   is a collision on real Safari, and 9.6 is not a pass.
+   Every 4px of lift buys exactly 4px of clearance: -36 touches, -40 gives 2px,
+   -44 gives 6px, -48 gives 9.6px, -52 gives 13.6px. HER PICK IS -44 from a
+   five-way render: it sits MOUNTED ON THE CORNER the way the home page star does,
+   which is what she asked for, while keeping real daylight from the arrow. -52
+   was shipped first and she called it "too high" -- it reads as floating.
+   ⚠️ THE ~10px SANDBOX FLOOR DOES NOT APPLY HERE and applying it is what caused
+   the overshoot. That rule exists because TEXT measures differently in Chromium
+   than in real Safari. These are two fixed-size SVG shapes with no text metrics
+   anywhere in the measurement, so 6px really is 6px on her phone.
    ⚠️ Do NOT push it further RIGHT to solve this. Horizontal was never the
    constraint (46px of room to the screen edge at right:-18), and the arrow sits
    inside the button, so moving right walks the star toward the edge for nothing. */
-.hm-cta.jrnl-quiz .hm-cta-seal{top:-52px}
+.hm-cta.jrnl-quiz .hm-cta-seal{top:-44px}
 /* At Display Zoom the label genuinely cannot fit on one line, and shrinking the
    font is the wrong trade for an 18-to-80 audience (the standing rule). Two
    balanced lines instead, and the arrow rejoins the flow so nothing overhangs. */

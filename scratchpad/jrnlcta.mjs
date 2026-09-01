@@ -89,9 +89,12 @@ for(const w of [430,390,375,360,320]){
   fills[sid]=r.sealFill;
   // Her catch: "lift the star up higher, it is crowding the arrow". At the home
   // page's own top:-24px the two inks genuinely OVERLAPPED (the home page has no
-  // arrow under its star). 10px is this project's floor: under ~10px in the
-  // sandbox is a collision on real Safari.
-  ok(tag+': star ink CLEARS the arrow ink by 10px+', !r.starArrowOverlap && r.starArrowClear>=10,
+  // arrow under its star). Her pick from a five-way render is -44px, 6px of ink.
+  // ⚠️ 5px, NOT this project's usual ~10px sandbox floor. That floor exists because
+  // TEXT measures differently in Chromium than in real Safari; these are two
+  // fixed-size SVG shapes with no text metrics in the measurement at all. Holding
+  // 10 here is what pushed the star to -52 and made her call it "too high".
+  ok(tag+': star ink CLEARS the arrow ink by 5px+', !r.starArrowOverlap && r.starArrowClear>=5,
      r.starArrowOverlap?'OVERLAPPING':(r.starArrowClear+'px'));
   ok(tag+': arrow after the words', r.arrowAfterWords);
   ok(tag+': arrow inside the button', r.arrowInside>=-1, r.arrowInside+'px');
