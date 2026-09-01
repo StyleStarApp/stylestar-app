@@ -7,7 +7,188 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-01 LATEST — 🚪 THE HOMEPAGE STOPPED SERVING EVERY OTHER PAGE, AND THE JOURNAL FINALLY HAS A LINK A CRAWLER CAN FOLLOW)
+## ▶ NEXT SESSION — START HERE (2026-09-01 LAST — 📓 ARTICLE #2 IS LIVE, AND A MEASURING TOOL "FOUND" 11 h1 TAGS THAT DO NOT EXIST)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**THREE COMMITS, merged FAST-FORWARD to `main` and CURL + MD5-VERIFIED LIVE** (`a43edc2` the article ·
+`85cc97f` the title + button · `f8d6eb2` the bullets). Branch `claude/style-star-article-lm1hkr`, same
+no-PR convention; branch, `main` and the remote all sit on `f8d6eb2`, tree clean. ⚠️ **One Netlify build.**
+▶ **THE SHAPE OF IT: her Cowork brief opened by disputing last session's homepage trim, and the dispute
+was the most useful thing in it — because proving the tool wrong produced a reusable diagnosis. Then the
+article itself went in cleanly, and BOTH real bugs found were things only a SECOND article could expose.**
+
+### ⭐⭐ WHAT SHIPPED: `stylestar.app/journal/how-to-dress-for-fall-in-florida`
+**"How to Dress for Fall in Florida When It's Still 90 Degrees", her words, article #2.** Verified on the
+REAL site, not locally: **1,412 rendered words · 1 real `<h1>` · 1 screen served · title, canonical and
+visible publish date correct · Organization + Article + FAQPage schema with 12 questions · ALL 12 SCHEMA
+ANSWERS PRESENT VERBATIM.** The hub lists both articles as real `<a href>` rows. The homepage is untouched
+(2,293-ish words, 1 h1, article #2 correctly absent). Sitemap is 9 URLs. **md5 identical local vs live on
+`index.html`, `styles.css` AND `sitemap.xml`.**
+- ▶ **The 4-step recipe held perfectly and needed NO netlify.toml edit** — `/journal/*` is already a
+  wildcard, and `_pathForScreen` / `_screenForPath` / `_openRoute` are all registry-driven, so ONE line in
+  `JOURNAL_ARTICLES` bought routing, the reverse lookup and the deep-link open. ⭐ **The hide-lists and the
+  skin toggle are PREFIX matches (`id.indexOf('s-journal')===0`), so `s-journal-fall-florida` was picked
+  up with nothing added.** ⚠️ `/journal`'s `lastmod` was ALREADY 2026-09-01 from last session, so there
+  was nothing to bump — checked rather than assumed.
+- **Her four decisions, all hers:** bullets **option B** (plain dot) from a 3-way render · her rewording
+  **"Three that work, exactly as written:" → "Three ideas that work:"** (the old line read like an
+  instruction to a designer, not to a reader) · **metaTitle shortened 67 → 59 chars** so Google stops
+  truncating it · **both articles' CTAs now read "Take the Free Style Star Quiz"** (her preference, and
+  the right call: it is literally the same button in two places).
+
+### 🚨⭐⭐ THE HEADLINE, AND IT IS THE MOST REUSABLE THING HERE: `wc -w` COUNTS SOURCE CODE AS CONTENT
+Cowork's external re-check reported the homepage still serving **the full Privacy Policy, Terms, FAQ and
+article, with 11 `<h1>` tags**, and asked for `curl -s https://stylestar.app/ | wc -w`, expecting "low
+thousands".
+- ▶▶ **THAT COMMAND CANNOT RETURN LOW THOUSANDS ON ANY VERSION OF THIS PAGE. It returns 90,918 — and
+  74,146 of those tokens are inside three `<script>` blocks** (639 KB of inline JavaScript that stays
+  inline by design). **It would have read ~91k before the trim and ~91k after: it was never able to
+  detect the change in either direction.**
+- ⭐⭐ **AND THE FABRICATION MECHANISM WAS NAMEABLE, which is what actually closed the argument: a plain
+  string count of `<h1` on `/` returns 9, not 1, because THE APP'S OWN JAVASCRIPT CONTAINS THAT STRING —
+  it BUILDS that markup at runtime.** On `/index.html` the same naive count gives 16. Same reason it
+  "saw" the legal pages: the JS references those screens by id whether or not their markup shipped.
+- ✅ **THE REAL NUMBERS, measured with script/style/comments stripped, WITH A CONTROL:**
+  | | `/` | `/index.html` (control) |
+  |---|---|---|
+  | rendered words | **2,400** | 6,528 |
+  | real `<h1>` | **1** | 8 |
+  | screen divs | **18** | 25 |
+  | `<body>` | `data-ss-trimmed="1"` | plain |
+  | Privacy · Terms · FAQ · Story · Contact · hub · article | **all absent** | all present |
+  ▶ **Same script, two URLs, opposite answers — which is what proves the trim is real and route-scoped
+  rather than an artifact of the measurement.** ⚠️ **A CONTROL URL IS NOT OPTIONAL IN THIS ARGUMENT.**
+- ⚠️ **Cowork owned it well and named its own cause: "a summarizing fetch tool being treated as a
+  measuring instrument."** ▶ **Keep that sentence — it is the general lesson, not just this incident.**
+- ⚠️ **A first curl returned `status 000` and the retry gave a clean 200** — the documented artifact,
+  second sighting. **Never report a single failed fetch as a site fault.**
+
+### ⭐ WHAT'S TRENDING HAS NO URL — answered definitively, and it opened a REAL opportunity
+The brief asked: is it a route or a view? ▶ **A VIEW. It is a TAB inside `s-wardrobe`, opened by
+`openWardrobe('trend')` / `wardrobeTab('trend')`. No `_ROUTES` entry, no netlify.toml redirect, no screen
+div of its own — which is exactly why it is absent from `sitemap.xml`.**
+- ⚠️ **BUT THE BRIEF'S QUESTION WAS BINARY AND THE ANSWER IS NOT: an in-app TAP link works fine, and
+  there is precedent — two existing FAQ answers link to Privacy and Terms exactly that way.** Cowork
+  accepted the correction ("functional for a real visitor is the right bar for an in-article link").
+  **Built as `<span class="lnk" onclick="openWardrobe('trend')">`, and VERIFIED IN A REAL BROWSER on the
+  TRIMMED article route** — it survives the body trim and self-heal and lands on the trend tab with real
+  cards showing.
+- ▶▶ **THE PARKED OPPORTUNITY, AND SHE WANTS IT — her words: "I would love for what's trending to be
+  searchable, that is something that even I would google often."** Cowork's framing is right: that
+  content is **completely invisible to search**, and *"what's trending this fall"* is a query with real
+  recurring demand. ⚠️ **It is a REAL build, not a link** — the page needs its own URL, its own screen
+  (it is currently a pane inside another screen), a PAGES entry, a sitemap line and crawlable content.
+  **Its own session.** ▶ **And weigh one thing when it happens: trend content goes STALE, so a
+  `lastmod` that never moves is its own crying-wolf problem. It only works if she keeps it current.**
+
+### 🚨⭐ TWO REAL BUGS, AND ONLY A SECOND ARTICLE COULD HAVE EXPOSED EITHER
+1. **THE HUB'S SERVER AND CLIENT MARKUP STOPPED BEING BYTE IDENTICAL.** `page-titles.js`'s `esc()`
+   escapes `'` as `&#39;`; `index.html`'s `_esc()` does not. **Her title has an apostrophe in it**, so
+   the two renderers diverged the moment article #2 existed. ⚠️ **Nothing re-flowed** (both parse to the
+   same glyph) **but the byte-for-byte rule the two halves depend on had quietly stopped being true.**
+   ✅ Fixed with `escLikeClient()` in the edge function, used ONLY for the hub rows — ⚠️ **deliberately
+   NOT by changing `_esc()`, which is shared all over the app, and NOT by changing `esc()`, which is
+   right for meta tags.** Written at the code: do not "simplify" it back.
+2. ⭐⭐ **THE FAQ EXTRACTOR ONLY READ PARAGRAPHS, so the moment her three outfits became a `<ul>` it
+   SILENTLY DROPPED THEM from that answer.** The page would have looked perfect while the schema
+   promised strictly LESS than the visible text. ▶ **Same family as the `/faq` drift on 2026-09-01, and
+   it is the argument for the regenerate-from-the-rendered-page discipline: a hand-typed schema would
+   never have noticed.** ✅ Extractor now reads `.jrnl-p` AND `.jrnl-ul`; regenerated; all three outfits
+   are back.
+
+### ⭐⭐ THE GUARD THAT SHOULD HAVE EXISTED SINCE THE `/faq` DRIFT — schema ANSWERS, not just questions
+`article2.mjs` asserted the 12 schema QUESTIONS appeared verbatim on the page. ▶ **But it was the
+ANSWERS that drifted on `/faq`** (a snapshot taken once, two copy edits landed after it, nobody
+regenerated). **Now both halves are checked verbatim against the served page.** ⚠️ **Negative-controlled
+by drifting ONE answer exactly the way the real one drifted — it fails and names the question.**
+▶ **Any future article owes this check; it is the only thing standing between a copy edit and a Google
+structured-data violation.**
+
+### ⚠️⚠️ FIVE HARNESS BUGS THIS SESSION, EVERY ONE FAILING ON CORRECT CODE — the tell is now N-for-N
+1. 🚨 **THE COMMENT TRAP, SEVENTH SIGHTING, and it bit TWICE in one session:** a screen count of 27 where
+   there are 26 (the phantom is `id="..."` in a code comment showing an example screen div), and a hub
+   row count of 3 where there are 2 (the third is the row TEMPLATE inside `_renderJournalHub`'s own doc
+   comment). ▶ **STRIP `<!-- -->` AND `<script>` AND `<style>` BEFORE COUNTING ANY MARKUP. Every time.**
+2. 🚨 **`data-ss-trimmed` APPEARS IN THE JAVASCRIPT, because `_selfHealScreens()` READS it.** A bare
+   string test called the untrimmed `index.html` "trimmed". ▶ **Test the `<body>` TAG, not the string.**
+3. ⭐ **READING `.innerHTML` BACK GIVES THE BROWSER'S RE-SERIALISATION, NOT THE SOURCE** (`→` where the
+   source said `&rarr;`, `'` where it said `&#39;`). Comparing server SOURCE against client innerHTML can
+   never match. ▶▶ **AND THE NORMALISATION THAT FIXED IT ERASED THE VERY BUG IT WAS MEANT TO CATCH — the
+   negative control passed with the escaping bug reintroduced.** ✅ **The fix is to capture the string the
+   client ASSIGNS, by temporarily swapping `document.getElementById` for a sink object.** Both
+   comparisons are kept: normalised (no visible reflow) AND source-level (no silent divergence).
+4. ⚠️ **TWO ELEMENTS CARRY `.wdr-trend-by`** — the My List how-to header and the trend pane — so a bare
+   `querySelector` grabbed the one on the INACTIVE pane and reported height 0. **Scope to the pane.**
+5. ⚠️ **`/index.html` IS NOT ROUTED THROUGH THE EDGE FUNCTION** (netlify.toml scopes it to `/` EXACTLY,
+   deliberately, because self-heal fetches that file). Calling the handler on that path tests something
+   production cannot do. ▶ **The honest control is the RAW file plus an assertion on the scoping itself.**
+
+### 🧹 THREE SUITES CARRIED RESTATED COUNTS THIS CHANGE LEGITIMATELY MOVED
+- **`hometrim` ("8 h1s", "one row") and `hometrimlive` ("rows === 1") are DERIVED now**, computed from
+  `JOURNAL_ARTICLES` in index.html, **so article #3 needs no edit to either.** ⭐ The h1 assertion's real
+  CLAIM was "the trim removes h1s", never "the number is 8" — it says that now.
+- ⚠️ **`nav`'s footer count stays HARDCODED on purpose** (its own comment: noticing a screen quietly
+  gaining or losing a footer is its whole job) and was bumped **16 → 17 only after measuring the real
+  DOM**, exactly as that comment instructs: 17 containers, the 17th is the article, **no screen carries
+  two, all 17 gradient ids unique.** The comment's own inventory list was updated with it.
+
+### ✍️⭐ THE EXCERPT-CARD RULE IS CORRECTED — do NOT carry the old reasoning forward
+Cowork pushed back on the 2026-09-01 decision, and **it is right: "a 2-3 sentence excerpt isn't
+meaningful duplication; every blog index has them."**
+▶ **SO: the DECISION to skip it then still stands** (it was a visual change she had not asked for, and
+the LINK was the real mechanism) — **but the second reason given for it, that a summary duplicates the
+article's language onto a second URL, was OVER-CAUTIOUS and must not become a rule.**
+▶ **Revisit at article #3, for the READER, and a proper index with excerpts is worth building around
+then.** ⚠️ **Her own instinct on the byline still governs the wording** — she cut the hub's intro line
+herself ("I don't want to over-do my name").
+
+### ⚠️ TWO THINGS THE BRIEF GOT WRONG, and the standing rule paid off for the SIXTH time
+1. **The attached article file (`fall-in-florida-FINAL.md`) DID NOT EXIST** — not in the message, the
+   repo, the scratchpad or Drive. **Checked all four before saying so; she pasted the text instead.**
+2. **The FAQ placement instruction did not match the site.** It said "second to last, immediately before
+   the quiz one" — the site FAQ's last three are *for every body/age/budget · how do I get in touch ·
+   what is the heart behind Style Star*, and its two quiz questions sit at **#6 and #11**.
+   ⭐ **CAUSE WAS HER OWN AMBIGUITY, and she said so plainly: she meant the ARTICLE'S OWN FAQ block, not
+   the site's `/faq` page.** ▶▶ **THAT REMOVED WORK RATHER THAN ADDING IT: no `/faq` edit, and no
+   regeneration of that page's schema, which is the exact thing that drifted last session.**
+   ⚠️ **`how-to-measure-this-site.md` lives in her Claude project, not the repo — it cannot be read from
+   here.** Its short version: strip script/style/comments before counting, and always run a control URL.
+
+### ✅ GREEN AT PAUSE
+**menu 104 · nav 82 · pagetitles 71 · hometrim 67 · hometrimlive 64 · hubs 49 · copy 41 ·
+article2 31 (new) · e2e 29 · article2live 20 (new) · cssextract 20 · edgepreview 12.**
+⭐ **Both new suites are negative-controlled three ways: reverting the escape fix, breaking the trending
+link, and removing the article from the registry each fail BY NAME.**
+
+### ✅✅ INDEXING IS DONE — BOTH ENGINES, DO NOT RE-ASK
+**She requested indexing on the new article in Google Search Console AND Bing (2026-09-01).**
+- ⭐ **A useful fact from her GSC screenshot: Googlebot crawled the article at 3:09 PM ET, EIGHT MINUTES
+  after it went live.** "URL is not on Google / Crawled – currently not indexed" is the normal waiting
+  room for a ten-minute-old page, **not a rejection.** ⚠️ **"No referring sitemaps detected" and
+  "Referring page: None detected" are also normal on day one** — Google re-reads `sitemap.xml` on its own
+  schedule and had not yet re-crawled `/journal` to see the new link. **Both resolve themselves; neither
+  needs anything from her.** ▶ **Only worth worrying about if it still says "crawled, not indexed" in a
+  couple of weeks.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 👀 **HOW ARTICLE #2 READS ON HER PHONE.** She has seen renders of the bullets but not the live page.
+   ⚠️ Private browsing, `stylestar.app/?notrack`.
+2. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
+   **Do not insert anything mid-queue ahead of it.**
+3. ⚖️ **ALMIRA: still watching for the COPY of the correction confirmation** (she promised only "an
+   update"; Cath re-pinned the document request in writing). ✅ **Class 045 is CLOSED.**
+4. ✉️ **PLAY 2: what came back from panaprium, and did itechnolabs / altadaily go out?**
+5. ⭐⭐ **WHAT'S TRENDING AS A REAL PAGE — her own enthusiasm, and it is the biggest SEO lever left.**
+   See the ⭐ entry above for what it actually needs. **Its own session.**
+6. 📋 **THE THREE CATALOG DECISIONS** (Old Navy p004 / Everlane p095 / Mango p033) — hers, nothing touched.
+7. 📓 **ARTICLE #3 when she has one** — the recipe is proven twice now and cost no plumbing the second
+   time. ▶ **Revisit the excerpt card THEN, for the reader** (see the ✍️ entry).
+8. ⚠️ **DELIBERATELY NOT DONE:** the 626 KB of inline JavaScript stays inline. ▶ **The honest next lever
+   if page weight matters again is DEAD CSS.**
+
+---
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-09-01 — 🚪 THE HOMEPAGE STOPPED SERVING EVERY OTHER PAGE, AND THE JOURNAL FINALLY HAS A LINK A CRAWLER CAN FOLLOW)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **ONE COMMIT (`1b58cdb`), merged FAST-FORWARD to `main` and CURL + MD5-VERIFIED LIVE** (`index.html`
