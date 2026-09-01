@@ -188,6 +188,22 @@ corner"** · **"lift the star up higher. it is crowding the arrow."**
   a value tuned for a screen that lacks the thing it now collides with.
   ⚠️ **MEASURED ON THE DRAWN PATH** (`getPointAtLength` through `getScreenCTM`), never the rotated
   bounding rect, which overstates this star by ~11px — the Mall-sign technique, reused.
+- 🚨⭐⭐ **AND A ROUND LATER SHE SET THE FINAL POSITION FROM THE LIVE PAGE: "the star on the buttons needs
+  to go down 3px and right 3px." SHIPPED AS `top:-41px; right:-21px`**, which measures **~2.6px** of ink
+  separation (down from 6px). ▶▶ **THE SUITE'S MINIMUM-GAP NUMBER IS GONE ENTIRELY — it now asserts only
+  that the two inks DO NOT OVERLAP.** Holding a minimum is what produced the -52 overshoot she rejected;
+  **the position is HERS and the test's job is to catch a real collision, not to second-guess her eye.**
+  ⚠️ **Do NOT reintroduce a minimum without her asking.** Written at the assertion.
+- 🚨⭐ **HER TITLE WRAPPED BADLY AND IT WAS A REAL BUG: `text-wrap:balance` LISTS JOURNAL SCREENS BY NAME
+  (`#s-journal`, `#s-journal-hub`) AND ARTICLE #2 WAS NEVER ADDED**, so article #1 balanced fine while
+  hers stranded "Degrees" alone on a third line. Fixed; measured at 390px it goes **1 word on the last
+  line → 4, three even lines.** ▶▶ **THIS IS THE ONE JOURNAL RULE THE `JOURNAL_ARTICLES` REGISTRY DOES
+  NOT DRIVE — a new article MUST be added to that selector by hand.** Written at the rule, and it belongs
+  in the 4-step article recipe as a fifth thing to check.
+- ⭐ **HER QUESTION "did we keep 90 degrees instead of the shorter Hot title?" — ANSWERED, NOTHING WAS
+  REVERSED, and keep the distinction: THE VISIBLE `<h1>` IS HER FULL TITLE** ("...When It's Still 90
+  Degrees") **and ONLY the `metaTitle` Google displays is the shorter "When It's Hot" form**, because 67
+  characters is truncated in search. **Two titles, two jobs.** Verified live on the served bytes.
   **Every 4px of lift buys exactly 4px of clearance: -36 touches, -40 → 2px, -44 → 6px, -48 → 9.6px,
   -52 → 13.6px.** ⭐ **HER PICK IS `-44px`, from a five-way labelled render** — it sits MOUNTED ON THE
   CORNER the way the home page star does, which is what she asked for originally, while keeping real
