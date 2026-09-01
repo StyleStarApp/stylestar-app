@@ -1862,11 +1862,60 @@ body.menu-open .menu-panel{display:block}
 .jrnl-ul{list-style:none;margin:0 0 18px;padding:0}
 .jrnl-ul li{font:400 15.5px/1.72 'Lora',Georgia,serif;color:#4a463e;text-align:left;margin:0 0 12px;padding-left:18px;position:relative}
 .jrnl-ul li::before{content:"";position:absolute;left:2px;top:11px;width:5px;height:5px;border-radius:50%;background:#4a463e}
+/* The Journal's quiz button IS the home page CTA (.hm-cta), her call 2026-09-01,
+   with two deliberate differences and one hard constraint.
+   ⚠️ NO .hm-cta-tile here (her call): the sliders icon belongs to the front door.
+   ⚠️ It therefore has ~44px MORE room than the home page button, which is the
+      only reason a 24-character label fits at all -- MEASURED, not assumed:
+      "Take the Free Style Quiz" needs 188px.
+   ⚠️ THE TIGHTER WIDTH/PADDING APPLIES AT EVERY WIDTH, not behind the 374px
+      media query the home page uses. At exactly 375px the base padding left
+      only 2px of margin, and this project has learned that a margin under
+      ~10px in the sandbox is a WRAP on real Safari, not a pass.
+   ⚠️ TWO-CLASS SELECTOR (.hm-cta.jrnl-quiz) is load-bearing: a single .jrnl-quiz
+      ties with .hm-cta on specificity and LOSES on source order, so the padding
+      silently did nothing. And the padding must be SYMMETRIC: .hm-cta's own
+      7px/13px was offsetting the content box by 3px, which showed up as the
+      words sitting 3px left of centre.
+   ⚠️ The arrow carries a NEGATIVE right margin equal to its own width plus the
+      gap, so the WORDS centre in the button and the arrow overhangs -- her
+      "center the words and then add the arrow". Same trick as the Contact page
+      signature. If the arrow or gap size changes, this number changes with it. */
+.hm-cta.jrnl-quiz{width:calc(100% - 6px);padding:14px 8px;text-decoration:none;margin:44px auto 10px}
+/* ⚠️ THE 44px/10px MARGINS RESTORE SPACING THE ELEMENT SWAP TOOK AWAY, they are not
+   taste. The retired .jrnl-cta had margin:34px auto 0 and NO ring; .hm-cta's outermost
+   box-shadow spreads 10px, so inheriting its 16px left only 6px of visible air above
+   the button (measured) and cost 10px below. 44 minus 10 is the same 34px she already
+   had, and the 10px bottom gives back what the ring ate. If the ring's spread changes,
+   these change with it. She asked for the button to LOOK like the home page CTA, not
+   for the page to reflow around it. */
+.hm-cta.jrnl-quiz .hm-cta-arr{margin-right:-27px}
+/* ⚠️ THE STAR SITS HIGHER HERE THAN ON THE HOME PAGE (her call: "lift the star up
+   higher, it is crowding the arrow"). It was not merely crowding: MEASURED on the
+   DRAWN path (getPointAtLength through getScreenCTM, never the rotated bounding
+   rect, which overstates the star by ~11px here), the star's ink and the arrow's
+   ink genuinely OVERLAPPED. The home page has no arrow under its star, which is
+   why -24px is right there and wrong here.
+   Every 4px of lift buys exactly 4px of clearance: -40 gives 2px, -44 gives 6px,
+   -48 gives 9.6px, -52 gives 13.6px. -48 WAS TRIED AND THE SUITE REJECTED IT at
+   9.6px: this project's standing rule is that a margin under ~10px in the sandbox
+   is a collision on real Safari, and 9.6 is not a pass.
+   ⚠️ Do NOT push it further RIGHT to solve this. Horizontal was never the
+   constraint (46px of room to the screen edge at right:-18), and the arrow sits
+   inside the button, so moving right walks the star toward the edge for nothing. */
+.hm-cta.jrnl-quiz .hm-cta-seal{top:-52px}
+/* At Display Zoom the label genuinely cannot fit on one line, and shrinking the
+   font is the wrong trade for an 18-to-80 audience (the standing rule). Two
+   balanced lines instead, and the arrow rejoins the flow so nothing overhangs. */
+@media(max-width:330px){
+  .hm-cta.jrnl-quiz .lbl{white-space:normal;text-wrap:balance;line-height:1.25;text-align:center}
+  .hm-cta.jrnl-quiz .hm-cta-arr{margin-right:0}
+}
 .jrnl-lnk{color:#8A6410;text-decoration:underline;cursor:pointer}
 .jrnl-h2{font:400 20px/1.32 'DM Serif Display',Georgia,serif;color:#1a1a1a;text-align:left;margin:32px 0 12px}
 .jrnl-h2:first-of-type{margin-top:8px}
-.jrnl-cta{display:block;text-align:center;background:#1a1a1a;color:#F2D889;border:1px solid #C99A2C;border-radius:999px;
-  padding:14px 20px;font:600 15px/1.35 'Jost',sans-serif;letter-spacing:.01em;text-decoration:none;margin:34px auto 0;max-width:340px;cursor:pointer}
+/* .jrnl-cta RETIRED 2026-09-01: the Journal quiz button became the home page CTA
+   (her call: same squared frame, star, arrow). Rule deleted rather than left dead. */
 #s-journal .story-title,#s-journal-hub .story-title{text-wrap:balance}
 
 /* Style Journal hub (built 2026-08-26): the article list is generated in JS

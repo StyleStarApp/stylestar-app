@@ -154,9 +154,51 @@ herself ("I don't want to over-do my name").
    ⚠️ **`how-to-measure-this-site.md` lives in her Claude project, not the repo — it cannot be read from
    here.** Its short version: strip script/style/comments before counting, and always run a control URL.
 
+### ⭐⭐ THE JOURNAL QUIZ BUTTON IS THE HOME PAGE CTA NOW — her design, four rounds, and the star was OVERLAPPING
+Her ask, from a live screenshot: *"these buttons need arrows and I would rather the buttons look the same
+as the CTA button on home page squared frames edges with a star on it."* Then three refinements, each one
+hers: **"I like B, but without the slider icon, and the words need to fit inside the button"** ·
+**"TAKE THE FREE STYLE QUIZ, center the words and then add the arrow and then add the star to top right
+corner"** · **"lift the star up higher. it is crowding the arrow."**
+- **As built, on BOTH articles:** the real `.hm-cta` construction (squared frame, silver + gold rings,
+  gold seal star) with **no slider tile** (her call), the label **centred**, the arrow AFTER the words and
+  overhanging, and the star lifted clear at the top-right. The old `.jrnl-cta` pill is **deleted**, with a
+  tombstone comment where it sat.
+- ⚠️⚠️ **HER LABEL COULD NOT BE "Take the Free Style Star Quiz" AND FIT, and that was MEASURED, not
+  assumed: it needs 226px.** "Take the Free Style Quiz" needs **188px** and fits 390/375/360 once the
+  tile's width is reclaimed. **At 320 (Display Zoom) it genuinely cannot**, so a `≤330px` rule lets it fall
+  to two balanced lines. ▶ **The font was NOT shrunk** — the standing readability-over-evenness trade for
+  an 18-to-80 audience.
+- 🚨⭐⭐ **HER "crowding the arrow" WAS AN UNDERSTATEMENT AND THE MEASUREMENT PROVED IT: at the home page's
+  own `top:-24px` the star's ink and the arrow's ink genuinely OVERLAPPED.** ▶ **The home page has no
+  arrow under its star, which is exactly why -24 is right there and wrong here** — a shared class carried
+  a value tuned for a screen that lacks the thing it now collides with.
+  ⚠️ **MEASURED ON THE DRAWN PATH** (`getPointAtLength` through `getScreenCTM`), never the rotated
+  bounding rect, which overstates this star by ~11px — the Mall-sign technique, reused.
+  **Every 4px of lift buys exactly 4px of clearance: -40 → 2px, -44 → 6px, -48 → 9.6px, -52 → 13.6px.**
+  ▶ **-48 WAS TRIED AND THE SUITE REJECTED IT at 9.6px**, because this project's standing rule is that a
+  margin under ~10px in the sandbox is a collision on real Safari. **Shipped `-52px`.**
+  ⚠️ **Do NOT solve this by pushing the star RIGHT: horizontal was never the constraint** (46px of room to
+  the screen edge), and moving right walks it toward the edge for nothing.
+- 🚨 **AND THE ELEMENT SWAP SILENTLY TOOK 28px OF SPACING SHE NEVER ASKED ABOUT.** The retired `.jrnl-cta`
+  had `margin:34px auto 0` and no ring; `.hm-cta`'s outermost box-shadow spreads 10px, so inheriting its
+  16px left **6px** of visible air above the button (measured) and cost 10px below.
+  ▶ **`margin:44px auto 10px` restores the 34px she already had.** **When a small ask changes something
+  she did not ask about, restore it rather than ship the side effect** — the standing rule, applied.
+
 ### ✅ GREEN AT PAUSE
-**menu 104 · nav 82 · pagetitles 71 · hometrim 67 · hometrimlive 64 · hubs 49 · copy 41 ·
-article2 31 (new) · e2e 29 · article2live 20 (new) · cssextract 20 · edgepreview 12.**
+**jrnlcta 128 (new) · nav 82 · pagetitles 71 · hometrim 67 · hometrimlive 64 · hubs 49 ·
+article2 31 · cssextract 20 · article2live 20 · edgepreview 12.**
+⭐ **`jrnlcta` is negative-controlled BOTH ways: putting the star back at the home page's own
+`top:-24px` fails 10 checks by name ("OVERLAPPING"), and giving both buttons the SAME gradient id
+fails 5.** ⚠️ **That second control exposed a real gap in my own suite first: it asserted the fill
+MATCHED `jrnlSeal[12]`, which passes happily when BOTH say `jrnlSeal1` — the exact Safari
+hidden-defs trap it was meant to catch. It asserts the two ids DIFFER now.**
+⚠️⚠️ **AND A SWEEP TRAP WORTH KNOWING: `scratchpad/cssextract.mjs` IS THE ONE-TIME MIGRATION
+SCRIPT that performed the extraction, not the suite — the suite is `cssextract.js`.** Globbing
+`.mjs` first ran the migration, which throws "unclosed `<style>`" because index.html's own comment
+about the *former* `<style>` blocks is all it can find. **Established as pre-existing in a
+`git worktree` at HEAD, byte-identical failure. The real suite is 20/0.**
 ⭐ **Both new suites are negative-controlled three ways: reverting the escape fix, breaking the trending
 link, and removing the article from the registry each fail BY NAME.**
 
@@ -171,8 +213,10 @@ link, and removing the article from the registry each fail BY NAME.**
   couple of weeks.**
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. 👀 **HOW ARTICLE #2 READS ON HER PHONE.** She has seen renders of the bullets but not the live page.
-   ⚠️ Private browsing, `stylestar.app/?notrack`.
+1. 👀 **HOW ARTICLE #2 AND THE NEW QUIZ BUTTON READ ON HER PHONE.** She has seen renders of the bullets and
+   of the lifted star, but not the live page. ⚠️ Private browsing, `stylestar.app/?notrack`.
+   ▶ **The one thing only her eye can settle: whether the star at `-52px` now reads as SEPARATE from the
+   button rather than mounted on its corner.** It is one number if she wants it back down.
 2. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
    **Do not insert anything mid-queue ahead of it.**
 3. ⚖️ **ALMIRA: still watching for the COPY of the correction confirmation** (she promised only "an
