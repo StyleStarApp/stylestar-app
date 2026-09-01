@@ -7,7 +7,192 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-01 LATEST — ✍️ HER WORDING EDIT ON ARTICLE #2, AND THE SCHEMA GUARD EARNED ITS KEEP ON THE FIRST REAL COPY EDIT)
+## ▶ NEXT SESSION — START HERE (2026-09-01 LATEST — ⭐⭐ WHAT'S TRENDING IS A REAL, SEARCHABLE PAGE, AND THE BUG THAT MATTERED WAS FOUND BY REPRODUCING IT)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**ONE COMMIT (`ae42cc5`), merged FAST-FORWARD to `main`, ONE Netlify build, CURL + MD5-VERIFIED LIVE.**
+Branch `claude/style-star-continue-r8bpnh`, same no-PR convention; branch, `main` and the remote all sit on
+**`ae42cc5`**, tree clean. ✅ **md5 IDENTICAL local vs live on `index.html`, `styles.css` AND `sitemap.xml`**,
+so every green check transfers to what she sees.
+▶ **THE SHAPE OF IT: her item #5, built end to end in one session. She picked the URL and the tab behaviour;
+everything else was engineering. The load-bearing work was NOT the routing — it was that the page had no
+crawlable content at all.**
+
+### ⭐⭐ WHAT SHIPPED: `stylestar.app/trending`
+Her ask, verbatim: *"I would love for what's trending to be searchable, that is something that even I would
+google often."* **Verified on the REAL site: 200 · `What's Trending in Women's Fashion Right Now | Style
+Star` · self-referencing canonical · 1 real `<h1>` ("What's Trending") · 1 screen served · 15 cards · 399
+rendered words · ItemList schema with all 15 items, Butter Yellow through Chunky Gold Jewelry.**
+✅ **And the homepage is unchanged in every way that matters: `<body data-ss-trimmed="1">`, 18 screens,
+still exactly ONE `<h1>`, 2,320 words, ZERO trend cards.**
+- **HER TWO DECISIONS:** the URL is **`/trending`** (short, keyword-carrying, reads well pasted anywhere),
+  and **the wardrobe's tab bar looks exactly as it did but the "What's Trending" tab NAVIGATES** rather than
+  switching a pane. ▶ **Nothing visually changed on the wardrobe, every discovery route her mother's testing
+  produced survives, and the tab's arrow now literally means "takes you somewhere".**
+
+### 🚨⭐⭐ THE LOAD-BEARING FINDING, AND IT IS WHY THIS WAS A BUILD AND NOT A ROUTE
+**The trend cards were built CLIENT-SIDE by `renderWardrobeTrend()` into an empty `<div>`.** So /trending
+could have shipped with a perfect title, a perfect canonical, a perfect sitemap line — **and a completely
+EMPTY page as far as GPTBot, ClaudeBot, PerplexityBot and Google's first pass are concerned.**
+▶ **Same bug the Journal hub had on 2026-09-01, where the only route to the article was `sitemap.xml`.**
+▶▶ **THE FIX, AND IT IS THE SAME DISCIPLINE AS THE STYLE STAR EDIT: the fifteen cards are STATIC MARKUP now
+and are the only source of truth.** The app reads them back out (`_trendItems()`) for the teaser strip and
+the "See ideas" lookup, and **`_decorateTrendCards()` adds the tappable parts at runtime — literally the
+`_wlDecorateEdit()` pattern.** The `const trendItems=[...]` array is GONE.
+▶▶ **SO WHEN SHE UPDATES THE TRENDS SHE EDITS ONE LIST, IN THE MARKUP, AND NOTHING ELSE.** A card added
+there appears in the teaser, in the "New" pill count and in the ItemList schema on its own.
+⚠️ **`_trendItems()` CACHES ONLY A NON-EMPTY READ, and that is load-bearing:** on a trimmed route
+`#s-trending` is stripped out, so it legitimately returns `[]` until self-heal runs. Caching that empty
+answer would leave the teaser and the pill blank for the rest of the visit. **`markTrendSeen()` likewise
+never stamps a zero.**
+
+### 🚨⭐⭐ THE REAL BUG, FOUND BY REPRODUCING RATHER THAN READING — and this project had already written the rule in capitals
+With the card decoration and the "New" stamp inside `openTrending()`, **a woman who landed on a journal
+article from a search result and tapped through to Trending BEFORE the self-heal fetch landed got the page
+with all fifteen cards and ZERO "See ideas in your style" links**, and the New pill never stood down.
+▶ **CAUSE: `show()` RETURNS EARLY on a trimmed route and replays itself after the heal, so everything after
+it in the entry function ran against a screen that was not on the page yet.**
+▶▶ **THE RULE WAS ALREADY THERE, IN CAPITALS, FROM 2026-08-29: "Any future screen whose content is BUILT AT
+RUNTIME must be refilled from `show()`, never from its own entry function." It was written and then walked
+past.** ✅ Both moved into `show()`, which covers the direct path AND the healed replay.
+- ⚠️ **MEASURED ON A DELIBERATELY SLOW `/index.html` (3s), not argued: before, `{cards:15, decorated:0,
+  stamped:null}`; after, `{15, 15, '15'}`.** ▶ **That repro is a permanent assertion now** — the harness
+  serves a slow self-heal source and taps through immediately.
+- ▶ **THE GENERAL LESSON, sharper than the old one: A NEW PAGE ON A TRIMMED ROUTE HAS TWO ENTRY MOMENTS, not
+  one — the tap, and the replay. Anything that hydrates content has to survive both.**
+
+### ⚠️⭐ EVERY `#s-wardrobe` CSS RULE GAINED A `#s-trending` TWIN — mechanically, all 147 selector parts
+All of What's Trending's styling was written scoped to `#s-wardrobe`, so moving the markup to its own screen
+stripped it. ▶ **That is exactly the trap that rendered the A2HS heart at default size on 2026-08-05: A CLASS
+CARRIES ITS STYLING ONLY INSIDE THE SCOPE THAT DEFINES IT.**
+- ⭐⭐ **THE NEGATIVE CONTROL PROVES IT WAS REAL, not theoretical: without the twins the page's title falls
+  back to DM Sans and the cards render TRANSPARENT.**
+- ▶ **Done to ALL 147, not just the ~35 the page visibly uses. Completeness beats tidiness here: a rule
+  missed inside a media query is invisible in the sandbox and shows up as a subtle wrong-spacing bug on her
+  phone.** A twin whose class never appears simply never matches.
+- ⚠️ **Written as a DUPLICATED selector, NOT `:is(#s-wardrobe,#s-trending)`.** Same specificity either way,
+  but an unsupported selector invalidates the WHOLE rule, which would take the wardrobe page down with it.
+- ▶ **IF A NEW `#s-wardrobe` RULE IS ADDED: give it a twin unless the class only ever appears on My List.**
+  `scratchpad/trending.js` asserts the two stay in step.
+
+### ⭐ THE ItemList SCHEMA IS GENERATED FROM THE SERVED PAGE, NEVER TYPED INTO THE EDGE FUNCTION
+An edge function cannot import from index.html, which is why an article's slug and title have to be named in
+both files. **But the trend list changes every season, so a hand-copied schema block would drift the FIRST
+time she updated it** — the `/faq` drift exactly. ▶ **So `trendSchema(html)` parses the real cards out of the
+HTML it is about to serve.** A new `schemaFrom` hook in page-titles.js, wrapped in try/catch (a schema block
+is a bonus and must never take a page down). **A test asserts the trend names appear NOWHERE in
+page-titles.js**, so nobody can "helpfully" paste them in later.
+
+### ⚠️ THE STALENESS QUESTION, ANSWERED RATHER THAN PARKED
+The 09-01 flag was: *trend content goes stale, so a `lastmod` that never moves is crying wolf in a new
+costume.* ▶▶ **THE ANSWER, and it inverts the worry: /trending is the ONE page on this site where a MOVING
+lastmod is the point.** A magazine publishes a new trend article each season and the old one goes stale;
+**she has one page that stays current, and freshness is precisely what a trend query rewards.** No one-off
+article can match that.
+- ⚠️ **SO: BUMP `/trending`'s `<lastmod>` IN THE SAME COMMIT AS ANY TREND EDIT** — written into sitemap.xml
+  and into the markup comment. **And never bump it just to look maintained**, which is the crying-wolf rule.
+- ⚠️ **AND THE PAGE MAKES A PROMISE: "Check back for trend updates. This list changes with the seasons."
+  That is only true while it is true.**
+- ⚠️ **XML COMMENTS CANNOT CONTAIN `--`** (it is an invalid token and makes the whole sitemap unparseable).
+  Caught immediately by validating; same family as the HTML double-hyphen trap from 09-01. **Sitemap is 10
+  URLs and parses.**
+
+### ⚠️⭐ THE HONEST SEO READ, GIVEN TO HER BEFORE ANY CODE — and it shapes what she writes next
+**The page is ~230 words of her own copy (15 names + a one-line note each), now 399 rendered.** ▶ **Getting
+it a URL was necessary and is done, but "what's trending this fall" is a STRONG field** — every magazine
+publishes that article every season — **where her Florida article beat a real-estate blog and two packing
+lists on merit.**
+▶▶ **THE TWO LEVERS, BOTH HERS AND BOTH COPY:** a real intro paragraph in her voice (her stylist read on the
+season, not just the one-line note), and notes with two or three sentences instead of one. **That triples the
+word count and is more useful to read.**
+⭐ **AND IT COSTS HER NOTHING EXTRA: she said herself the trends need updating soon. Written richer as she
+refreshes them, the SEO work comes free.** Raise this when she brings the new trends.
+
+### ▶ TWO THINGS DELIBERATELY NOT BUILT, both flagged to her
+1. **A visible "Updated <month>" line on the page.** It would genuinely help — it tells a reader and a
+   crawler the list is current, which is the page's whole competitive advantage. **Held back because it is
+   new design she has not seen AND it creates an upkeep obligation.** Her call.
+2. **A longer `<h1>`.** It reads "What's Trending", her own name for the page; the keyword-carrying title
+   Google displays lives in `metaTitle`. ▶ **Two titles, two jobs — the same split as journal article #2.**
+   A longer h1 is available if she wants it, but it would change a look she has blessed.
+⚠️ **The title and description are CLAUDE DRAFTS she has not reworded.** One string each in page-titles.js.
+
+### ✅ GREEN AT PAUSE
+**trending 76 (new) · jrnlcta 128 · menu 104 · nav 82 · wdrworksheet 73 · pagetitles 71 · hometrim 69 ·
+wdrmylist 65 · hometrimlive 64 · hubs 49 · tabtops 49 · copy 41 · article2 31 · e2e 29 · wdrcalmcheck 27 ·
+cssextract 20 · edgepreview 12 — all 0 failed.**
+⚠️ **`catmark` stays 132/3 and it is PRE-EXISTING, PROVEN not assumed:** a clean HEAD in a `git worktree`,
+same machine, one variable, gave **byte-identical failures with identical offsets** (a Shop-your-style
+text-centring probe whose range collapses to zero — the offset is exactly half the viewport at every width,
+the signature of a broken measurement). **Nothing to do with this work; worth a look someday.**
+⭐⭐ **`trending.js` IS NEGATIVE-CONTROLLED THREE WAYS, and every control bit by name:** putting the cards
+back behind JavaScript fails the raw-HTML and schema checks · removing the CSS twins fails the twin check
+AND the two computed-style checks (DM Sans fallback, transparent cards) · letting the homepage keep
+`s-trending` takes its `<h1>` count 1 → 2 and leaks all 15 notes.
+
+### 🧹 FIVE SUITES UPDATED DELIBERATELY, NOT SILENCED
+- **`nav` 17 → 18 footers.** The new screen has one, exactly like every other page with a real URL. **This
+  assertion caught it on the first run, which is the system working** — and its sibling checks (unique
+  gradient id per footer, every tile referencing its own) both pass at 18, so no screen gained a second.
+- ⭐ **`hometrim`'s h1 control is FULLY DERIVED now.** It read `7 + N_ARTICLES`, and that 7 was itself a
+  restated number that went stale the moment an eighth page got its own URL. **The real claim is stronger:
+  every screen the homepage drops carries exactly one h1, and the homepage keeps exactly its own.** A new
+  page with its own URL now needs no edit there at all. Its `DROPPED` list is derived for articles too.
+- **`menu`**: the What's Trending row's destination is `s-trending` at `/trending`, not the wardrobe's tab.
+- **`hubs`**: the graduation walk drives `openTrending()` (which is what stamps `ss_trending_seen`).
+- ⭐ **`tabtops` was REPOINTED, NOT RETIRED, and the distinction matters.** Its claims — the two tab tops
+  must look like siblings, the disclosure sits under each intro card above its links — **still hold, because
+  a woman still meets the two one tap apart. Only their address moved.** (Contrast `hiwcheck.js`, deleted on
+  08-21 because its SUBJECT was genuinely retired.) 49/0 across two screens now.
+
+### ⚠️ FOUR HARNESS TRAPS THIS SESSION, every one failing on correct code — the tell is N-for-N again
+1. 🚨 **THE LINK IS ON THE JOURNAL ARTICLE, NOT ON `/faq`.** The suite hunted for the "See what's trending"
+   link in `#s-faq` and reported "no link" on perfectly correct code. ▶ **Her 2026-09-01 FAQ addition went
+   into ARTICLE #2's OWN FAQ block, not the site's FAQ page — a distinction this file already records, and
+   the harness had simply not read it.** ⭐ **The corrected test is BETTER: it lands cold on the article
+   route and taps through, which is the real shape of a search visitor's journey.**
+2. ⚠️ **`.wdr-tt-all` IS ALSO A `.wdr-tt-card`**, so the teaser strip is 4 cards of which one is the tail.
+   A first run asserted 3 and failed on a correct strip.
+3. ⚠️ **BOTH STATIC CHECKS COUNTED THEIR OWN EXPLANATORY COMMENTS.** The CSS-twin check and the
+   no-second-list check both matched selector names inside the long comments describing them — **equal
+   totals, different lists, a false pass.** ▶ **Strip comments before counting, in CSS and in JS.**
+4. ⚠️ **THE DOM IS THE WRONG INSTRUMENT FOR "was this route trimmed".** Self-heal has usually already run by
+   the time `networkidle` fires, so a DOM check reports the screen present on a route that really was served
+   without it. ▶ **Assert on the served BYTES.**
+⚠️ **AND ONE MORE, non-harness: `scratchpad/fonts/gf.css` points at LOCAL names (`f1.woff2` …), not gstatic
+URLs** — a render harness that rewrites the gstatic host does nothing and the fonts then fail. **Rewrite
+`url(fN.woff2)`, the way `renderfonts.mjs` does.**
+⚠️ **`status 000` / an EMPTY body on a live curl, FIFTH sighting** — `styles.css` came back as the md5 of an
+empty string once and matched on three clean retries. **Never report a single failed fetch as a site fault.**
+⚠️ **The local `main` was a stale clone artifact again (`refusing to merge unrelated histories`), THIRD
+sighting.** ▶ `git fetch origin main` → `git checkout -B main origin/main` → fast-forward.
+
+### ▶ THE FIRST THINGS NEXT SESSION — HER LIST, NOTHING DROPPED
+1. 👀 **`/trending` ON HER PHONE**, and **the wardrobe page**, to confirm the tab still feels right now that
+   it navigates. ⚠️ Private browsing, `stylestar.app/?notrack`. **She also has not yet seen article #2's two
+   wording edits live** (the cut sentence and the off white outfit idea) — that was her plan when this
+   session started.
+2. 🔎⭐ **REQUEST INDEXING ON `/trending`, GOOGLE AND BING.** ▶ **This one is genuinely owed, unlike the
+   article edits: it is a BRAND NEW URL that has never been crawled.** Her own standing rule (2026-08-26) is
+   to do this on every new page. Search Console → the grey bar across the very top (URL Inspection, NOT the
+   left menu, NOT the AMP tab) → paste → Request Indexing. Then Bing URL Inspection.
+3. ✍️⭐⭐ **THE NEW TRENDS, WRITTEN RICHER.** She said they need updating soon. See the ⚠️ SEO read above:
+   **the words are the ranking lever, and the refresh and the SEO work are the same job.** ▶ Editing is now
+   ONE list in the markup; bump `/trending`'s `lastmod` in the same commit.
+4. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
+   **Do not insert anything mid-queue ahead of it.**
+5. ⚖️ **ALMIRA: still NO REPLY as of 2026-09-01.** Watching for the **COPY of the correction confirmation**.
+   ✅ **Class 045 is CLOSED.**
+6. ✉️ **PLAY 2: panaprium has NOT replied.** ▶ **Still to send: itechnolabs and altadaily.**
+7. 📋 **THE THREE CATALOG DECISIONS** (Old Navy p004 / Everlane p095 / Mango p033) — hers, nothing touched.
+8. 📓 **ARTICLE #3 when she has one.** ⚠️ **The recipe is FIVE steps** — the fifth is adding the new screen
+   to the `text-wrap:balance` selector in styles.css. ▶ **Revisit the excerpt card THEN, for the READER.**
+9. ⚠️ **DELIBERATELY NOT DONE:** the "Updated <month>" line and a longer `<h1>` on /trending (both flagged
+   above, both hers) · the 626 KB of inline JavaScript stays inline · **`catmark`'s 3 pre-existing failures.**
+
+---
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-09-01 — ✍️ HER WORDING EDIT ON ARTICLE #2, AND THE SCHEMA GUARD EARNED ITS KEEP ON THE FIRST REAL COPY EDIT)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **TWO COMMITS, merged FAST-FORWARD to `main`, ONE Netlify build, CURL + MD5-VERIFIED LIVE** — `d22ddeb`
