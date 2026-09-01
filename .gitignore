@@ -26,3 +26,8 @@ scratchpad/_*.html
 # once already (2026-08-22: a commit made on a run that had crashed on
 # EADDRINUSE). READ THE TOTAL, from a finished run, in the terminal.
 scratchpad/out-*.txt
+
+# Before/after render sweeps for the CSS extraction (scratchpad/cssextract-render.mjs).
+# ~170 MB of PNGs, regenerated on demand by running that harness twice -- and the
+# comparison is the point, not the images. Same reasoning as the suite logs above.
+scratchpad/cssx/

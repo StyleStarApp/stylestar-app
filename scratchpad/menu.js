@@ -431,7 +431,13 @@ ok('drawer fits inside 360px, no sideways scroll', fit.panelW <= 303 && fit.view
 // update, not a silence: an explicit count is what makes a row going MISSING
 // fail loudly. ⚠️ Verified separately that nothing WRAPS — every row measured
 // 43-44px against this 46px threshold, so only the count moved.
-ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 21);
+// ⚠️ 21 -> 22 on 2026-09-01, updated DELIBERATELY, not silenced: this suite was
+// already failing on a clean tree before that day's CSS extraction (proved in a
+// git worktree at HEAD, same machine, one variable), so a 22nd row had been
+// added at some point and this restated count was never moved with it. Measured
+// again at the drawer width before touching it: 22 rows, tallest 44.4px against
+// the 46px threshold, so nothing wraps and only the number was wrong.
+ok('all ' + fit.rowCount + ' rows are single-line at the drawer width', fit.oneLine && fit.rowCount === 22);
 ok('row text contrast ≥ 4.5:1 (got ' + ratio.toFixed(1) + ':1)', ratio >= 4.5);
 ok('no JS errors @360', p360.errors.length === 0, p360.errors.join(' | '));
 await p360.context().close();
