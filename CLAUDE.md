@@ -7,7 +7,185 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-01 — 🚨 A COWORK BRIEF ASKED FOR THREE THINGS; TWO WERE ALREADY DONE AND THE THIRD FOUND REAL SCHEMA DRIFT)
+## ▶ NEXT SESSION — START HERE (2026-09-01 LATER — ⭐⭐ THE CSS EXTRACTION IS BUILT AND LIVE, AND IT IS INVISIBLE)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**ONE COMMIT, merged fast-forward to `main` and CURL + MD5-VERIFIED LIVE** — the 317 KB of CSS moved out
+of `index.html` into `/styles.css`. ⚠️ **One Netlify build.** Branch `claude/style-star-continue-aqm4hw`,
+same no-PR fast-forward convention.
+▶ **THE SHAPE OF IT: her own #1 from the last session, built exactly as scoped. Every number in the plan
+held, the change is provably invisible, and the honest cost turned out to be far SMALLER than this file
+predicted.**
+
+### ⚠️ A SESSION-START TRAP THAT WILL RECUR: THE LOCAL `origin/main` REF WAS STALE AGAIN
+`git rev-list --left-right --count HEAD...origin/main` said **50/50 diverged** on a branch that was
+actually IDENTICAL to the real remote main. ▶ **`git ls-remote --heads origin main` is the instrument** —
+it asks the server rather than the container's clone. The local ref was pointing at a 26 Aug commit.
+**Fetch and check ls-remote FIRST, before believing any divergence count.** (Third sighting; the 08-31
+entry warned about it and it still cost a minute.)
+
+### ⭐⭐ WHAT SHIPPED, AND THE NUMBERS ARE MEASURED THROUGH THE REAL EDGE FUNCTION
+| | before | after |
+|---|---|---|
+| **homepage** | 1,166,124 B | **848,080 B** ✅ under Bing's 1 MB soft limit |
+| `/faq` | 992,141 B | **674,097 B** |
+| `/story` | 980,337 B | **662,293 B** |
+| **bytes above `<body>`** | 332,193 (**29%** of the doc) | **15,311 (1.8%)** |
+- **A 3-page visit downloads 634,147 B LESS**, because the CSS is fetched once instead of being re-sent
+  inside the HTML of every route.
+- ⭐ **THE PRE-CHECKS ALL PASSED, AND ONE WAS BETTER NEWS THAN EXPECTED: the three `<style>` blocks were
+  IMMEDIATELY ADJACENT** (separated only by a newline, the third ending right at `</head>`), and **all
+  three sat in the `<head>`, above `<body>`**. So the cascade order is safe by construction, and the edge
+  function **provably cannot touch them** — its trim is bounded to `<body>` through the first `<script>`.
+- ⭐ **The CSS turned out to be 100% portable: zero `@import`, zero `@font-face`, zero relative paths.**
+  ⚠️ **A SCARE WORTH RECORDING: 4 `url(%23g)` references looked like CSS fragment URLs**, which are a real
+  cross-browser trap when a stylesheet moves to its own file (some engines resolve them against the
+  STYLESHEET, not the document, which would have broken the gold gradients). **They are inside the two
+  `data:` URIs, self-contained.** Checked in context rather than trusted to a regex count.
+
+### 🚨⭐⭐ THE COLD-START COST IS MUCH SMALLER THAN THIS FILE PREDICTED — correct the framing
+The 08-31 entry warned "an external stylesheet is render-blocking, so a COLD first paint is marginally
+later." **Measured, it is nearly free:**
+- **Because the `<link>` sits only 15 KB into the document, the browser finds it almost immediately.**
+  First paint needs **335,245 B where it used to need 333,346 B — +1,899 bytes and one round trip**, NOT
+  320 KB of waiting. The old inline CSS had to arrive too; it just arrived inside the HTML stream.
+- ▶▶ **AND THE REPEAT VISIT IS THE REAL PRIZE: first paint needs 15,260 B instead of 333,346 B**, because
+  the stylesheet is cached across every route. **That is the weak-signal-on-her-own-phone problem answered**
+  — which was always her actual reason, not SEO.
+- ✅ **THE CACHING IS CONFIRMED EMPIRICALLY, NOT ASSUMED: `cache-control: public,max-age=0,must-revalidate`
+  + an etag, and a conditional request really returns `304` with `size_download: 0`.**
+  ⚠️ **NETLIFY'S DEFAULT WAS DELIBERATELY LEFT ALONE.** A longer `max-age` would need a VERSIONED FILENAME
+  for cache-busting, i.e. remembering to bump a version string on every CSS edit — a real footgun in a
+  hand-edited single-file app. Revalidation already saves the whole 320 KB download. **Do not "optimise"
+  this without solving cache-busting first.**
+
+### ⭐⭐ THE PROOF IT IS INVISIBLE, AND THE HARNESS LESSON IS THE REUSABLE HALF
+**38 before/after screenshots, 19 screens at 390 and 320, with the REAL typefaces: ALL 38 PIXEL-IDENTICAL.**
+`scratchpad/cssextract-render.mjs` (`--tag=before|after`) + `scratchpad/cssextract-diff.py`.
+- 🚨 **THE FIRST DIFF SHOWED 6 SCREENS DIFFERING AND EVERY ONE WAS THE HARNESS.** Established, not assumed:
+  **running the SAME file twice produced 9 differing pairs** — a superset, same bboxes, same magnitudes.
+  ▶▶ **TWO SOURCES OF NONDETERMINISM, and both will bite any future render diff in this project:**
+  1. **ANIMATIONS.** The seal star shimmers forever and several screens fade in, so two captures land at
+     different points in the same animation. **Frozen with `animation:none;transition:none`, applied
+     identically to both sides.** (A still cannot show a pulse; it can show a resting state — the
+     `sealtilt.mjs` lesson, generalised.)
+  2. ⭐ **OFF-ORIGIN REQUESTS CHANGE PAGE HEIGHT.** Retail photo CDNs are unreachable from this sandbox, so
+     each hotlinked `<img>` fails and `onerror`-removes itself at a slightly different moment — **the Edit
+     page's full-page height varied by 644px between runs.** Aborting every off-origin request up front
+     makes each `onerror` fire immediately and identically.
+- ⭐⭐ **NEGATIVE-CONTROLLED BOTH WAYS, because a sweep that has never failed proves nothing:**
+  **(a) rebuilding `styles.css` as 1,3,2 changed the Style Portrait's rendered height by 16px** — so the
+  order rule is REAL and the sweep can see it; **(b) making the href RELATIVE left the journal article with
+  `cssRules: 0`** — that page would have shipped completely unstyled.
+- ⚠️ **A COVERAGE GAP CAUGHT IN MY OWN HARNESS, worth remembering: `addInitScript` RE-SEEDS ON EVERY
+  NAVIGATION**, so "clear localStorage and reload" to capture a fresh visitor silently put the seed straight
+  back — the welcome and Welcome Back captures came out BYTE-IDENTICAL, which is what exposed it. **A fresh
+  visitor needs its own unseeded browser context.**
+
+### 🚨⭐ THE ABSOLUTE HREF IS LOAD-BEARING, AND IT IS THE ONE THING THAT WOULD BREAK THIS SILENTLY
+`href="/styles.css"`, **never `href="styles.css"`.** The app is one page served at `/faq`, `/story` and
+`/journal/<slug>`, so a relative href resolves to **`/journal/styles.css`** on an article route, 404s, and
+leaves that page **completely unstyled** — while the markup still looks perfectly valid.
+▶ **New `scratchpad/cssextract.js`, 18 checks**, pinning exactly the two things that would break it
+silently: **the absolute href** and **the section order** (byte-compared against the three original blocks
+pulled from the pre-extraction commit). It also asserts the stylesheet is **loaded AND parsed** on three
+routes including the nested article, because a stylesheet that 404s still leaves a valid `<link>`.
+- ⚠️ **It deliberately serves files with NO `Content-Type`**, which is what several of this project's own
+  harnesses do (`copy.js`, `hubs.js`, `nav.js` all `res.writeHead(200)` bare). **Chromium still applies the
+  stylesheet** — checked rather than inferred, because if it ever refused, every layout and contrast
+  assertion in every other suite would silently be measuring an unstyled page.
+- ⚠️ **THE COMMENT-MATCHING TRAP, FOURTH SIGHTING, and it failed my own first test run:** `index.html` now
+  carries a comment ABOUT the former `<style>` blocks, so `/<style[^>]*>/` matches the COMMENT.
+  **Strip `<!-- -->` before matching.** (Same family as the `<h1>`-in-a-comment false positives on 08-28
+  and 08-31.) Also: **there are TWO stylesheet links** — ours and Google Fonts — so "exactly one" is wrong.
+  Both failures were my harness, not the code. **Suspect the harness first; it is now N-for-N in this file.**
+
+### 🚨 SIX SUITES ARE RED AND EVERY ONE IS PRE-EXISTING — PROVEN, NOT ASSUMED
+Run in a **`git worktree` at HEAD, same machine, one variable** (never `git stash` before a slow command,
+never `git checkout` over uncommitted work). **Byte-identical counts and messages both sides:**
+**discostar 101/3 · weekstar 53/2 · editpx 44/11 · affq 39/1 · discopage 47/9 · nav 80/2.**
+▶ **TWO DISTINCT CAUSES, and only one of them is fixable here:**
+1. ⚠️⚠️ **MOST OF THEM ARE PHOTO ASSERTIONS THAT CANNOT PASS WHILE THIS SANDBOX HAS NO ROUTE TO THE RETAIL
+   CDNs** ("photo is her 96px pick, got 0" — the `onerror` removed it). **Network reachability VARIES BY
+   SESSION** (08-01 could reach 45+ retail sites; this session could not). ▶ **So these are not a
+   regression and re-running them on a different day may well turn them green with nothing changed.**
+   **The fix, if wanted, is the trick this session's render harness already uses: fetch the photos with
+   `curl` once and serve them locally.**
+2. **STALE RESTATED COUNTS AND ONE EXPIRED DATE:** `nav` expects **14** footers and finds **16**; `affq`
+   expects a smaller anchor census than the 29 Edit links now produce; `weekstar` still asserts
+   **"Vilebrequin's turn (30 Aug)"** — a date that has PASSED and that two deliberate reorders moved anyway.
+▶ **WORTH ITS OWN SHORT CLEANUP SESSION.** ⚠️ **A permanently-red suite trains everyone to ignore
+failures, which is exactly how the 08-22 false green happened.**
+- ✅ **ONE WAS FIXED THIS SESSION, deliberately and not silenced: `menu.js`'s row count 21 → 22.** It was
+  **already failing on a clean tree at HEAD**, so a 22nd row had been added and the restated count never
+  moved with it. **Measured before touching it: 22 rows, tallest 44.4px against the 46px threshold, so
+  NOTHING WRAPS** — only the number was wrong. **menu is 104/0 now.** Its hardcoded-count design is kept
+  on purpose (its job is to fail loudly when a row is added).
+
+### ✅ GREEN AT PAUSE
+**cssextract 18 (new) · menu 104 · wladd 102 · curated 65 · pagetitles 61 · hubs 49 · copy 41 ·
+faqverify 36/36 · e2e 29 · edgepreview 12.**
+Plus: **`scripts/products-from-csv.js` still parses `index.html` and produced BYTE-IDENTICAL
+`products.json` (107 products)** — it reads `wardrobeItems` and `STORES` out of the script blocks, which
+were untouched. Checked rather than assumed.
+
+### ✅ VERIFIED LIVE, THE FULL CHAIN
+**`md5` identical local vs live on BOTH files** (`index.html` `3205eb4a…`, `styles.css` `ef60045c…`), so
+the 38/38 pixel-identical result transfers directly to what she sees. ⚠️ **This sandbox's Chromium cannot
+reach stylestar.app, so an md5 byte-compare remains the strongest available live proof** (the standing
+substitute). Also confirmed on the real site: `/styles.css` **200, `text/css; charset=UTF-8`, 319,985 B** ·
+**ZERO real `<style>` elements** in the served homepage · the absolute link present on **all 9 routes** ·
+**15,311 bytes above `<body>`** · a conditional request returns **304 with 0 bytes**.
+
+### ⏰⭐ CHECKED WHILE HERE, BECAUSE A RED SUITE POINTED AT A REAL DEADLINE: THE STAR ROTATION IS ON TRACK
+Computed from the live pool and the real `_weekStarIndex` anchor, not from the comments:
+| week of | Star of the Week |
+|---|---|
+| **Aug 30** | Gucci GG Canvas Mini Shoulder Bag ← **live now** |
+| Sep 6 | Serpui Abigail Handbag — Red |
+| **Sep 13** | **Vilebrequin Long Mesh Cover-Up Dress** ← her **20 September** cutoff, met with **one week** to spare |
+| Sep 20 | Veronica Beard Crosbie Jean |
+⚠️⚠️ **THE MARGIN IS ONE WEEK AND NO LONGER GENEROUS. Anything inserted MID-QUEUE ahead of Vilebrequin
+pushes it past the cutoff, and then it waits until 24 January 2027.** The 08-27 Gucci insert already spent
+a week of that margin. **Append to the END, or re-verify the whole schedule the way this entry did.**
+
+### ▶ A JUDGMENT CALL MADE AND WORTH KNOWING: THE SITEMAP `lastmod` WAS DELIBERATELY NOT BUMPED
+The standing rule (08-31) is to bump a page's `lastmod` in the same commit **when its CONTENT changes**.
+▶ **Here the visible content is byte-identical — only the DELIVERY changed** — so bumping would be the
+sitemap crying wolf, which that same rule exists to prevent. **Left alone, on purpose.**
+▶ **BUT there IS a Bing follow-up worth doing, and it is different: Bing's homepage inspection flagged
+"HTML size is too long" against its 1 MB soft limit, and that flag can only clear on a re-crawl.** So in a
+few days it is worth her running **Bing URL Inspection on the homepage** to watch the size flag disappear.
+**Nothing is owed on the Google side** — Google has no HTML-size limit and the content did not change.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 👀 **HOW THE LIVE SITE FEELS ON HER PHONE.** The render proof is as strong as it can be from here
+   (38/38 pixel-identical, md5-verified live), but **she has not looked yet.** ⚠️ **The one thing a
+   sandbox genuinely cannot test is the COLD-START feel on a real weak connection**, which is the entire
+   reason she wanted this. **Ask specifically about a first load on bad signal, and about a SECOND page
+   after that** — the second one should feel noticeably quicker.
+2. 📏 **BING: re-inspect the homepage in a few days** and watch the "HTML size is too long" flag clear.
+   ⚠️ **Do NOT bump the sitemap** — see the judgment call above.
+3. 🧹 **THE SIX RED SUITES.** Worth a short session: serve the retail photos locally (the trick is already
+   written in `scratchpad/cssextract-render.mjs`) and move the three stale counts/dates. **None of it is
+   urgent and none of it is a regression.**
+4. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her cutoff. **Do not insert
+   anything mid-queue ahead of it.**
+5. ⚖️ **ALMIRA: still watching for the COPY of the correction confirmation** (she promised only "an
+   update"; Cath re-pinned the document request in writing). **The Florida correction is still NOT
+   processed.** ✅ **Class 045 is CLOSED — do not re-raise, do not build the site addition.**
+6. ✉️ **PLAY 2: what came back from panaprium, and did itechnolabs / altadaily go out?**
+7. 📓 **ARTICLE #2: Florida / warm-climate fall dressing**, written for the RESIDENT.
+8. 📋 **THE THREE CATALOG DECISIONS** (Old Navy p004 / Everlane p095 / Mango p033) — hers, nothing touched.
+9. ⚠️ **DELIBERATELY NOT DONE, and the reasoning stands: THE 626 KB OF JAVASCRIPT STAYS INLINE.** CSS
+   alone cleared the limit. Moving the JS means hoisting, scope and execution order across ~77 inline
+   functions **for no additional benefit against the size limit**. ▶ **The honest next lever if page weight
+   ever matters again is DEAD CSS, which is newly measurable now that the stylesheet is its own file** —
+   317 KB is a lot, and per-route coverage is now something a tool can actually report.
+
+---
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-09-01 — 🚨 A COWORK BRIEF ASKED FOR THREE THINGS; TWO WERE ALREADY DONE AND THE THIRD FOUND REAL SCHEMA DRIFT)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **ONE COMMIT, merged fast-forward to `main` and CURL-VERIFIED LIVE** (the `/faq` schema regeneration).
