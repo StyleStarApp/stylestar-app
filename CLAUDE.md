@@ -7,15 +7,16 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-01 LAST — 📓 ARTICLE #2 IS LIVE, AND A MEASURING TOOL "FOUND" 11 h1 TAGS THAT DO NOT EXIST)
+## ▶ NEXT SESSION — START HERE (2026-09-01 LAST — 📓 ARTICLE #2 IS LIVE, A MEASURING TOOL "FOUND" 11 h1 TAGS THAT DO NOT EXIST, AND HER QUIZ BUTTON BECAME THE HOME PAGE CTA)
 
 ### ⏸ WHERE THIS SESSION PAUSED
-**SEVEN COMMITS, all merged FAST-FORWARD to `main` and CURL + MD5-VERIFIED LIVE** — `a43edc2` the article ·
+**NINE COMMITS, all merged FAST-FORWARD to `main` and CURL + MD5-VERIFIED LIVE** — `a43edc2` the article ·
 `85cc97f` the title + button · `f8d6eb2` the bullets · then the quiz-button round: `d01becd` + `dea3b84`
 (renders and the corrected label measurement, tooling only) · `52065a8` the star lift + restored spacing ·
-`202c1f1` the star down to her pick. Branch `claude/style-star-article-lm1hkr`, same no-PR convention;
-branch, `main` and the remote all sit on `202c1f1`, tree clean. ⚠️ **TWO Netlify builds.**
-✅ **VERIFIED ON THE REAL SITE AFTER THE SECOND DEPLOY, WITH THE CONTROL URL:** `index.html`, `styles.css`
+`202c1f1` the star down to her first pick · `75d3a68` the live record · `654cccd` the title balance + her
+final star position · `a4d206f` this log. Branch `claude/style-star-article-lm1hkr`, same no-PR convention;
+branch, `main` and the remote all sit on **`a4d206f`**, tree clean. ⚠️ **FOUR Netlify builds today.**
+✅ **VERIFIED ON THE REAL SITE AFTER EACH DEPLOY, WITH THE CONTROL URL:** `index.html`, `styles.css`
 AND `sitemap.xml` all **md5-identical local vs live**, so the 128 green checks transfer directly ·
 `/` **2,410 words / 1 h1 / 18 screens / ZERO quiz buttons** against `/index.html` **7,792 / 9 / 26 / 2** ·
 both articles **1 h1, 1 screen, exactly 1 button and 1 seal** · ⭐ **the two seals carry DIFFERENT gradient
@@ -29,6 +30,11 @@ never the exact attribute string** — and the tell was the number disagreeing w
 ▶ **THE SHAPE OF IT: her Cowork brief opened by disputing last session's homepage trim, and the dispute
 was the most useful thing in it — because proving the tool wrong produced a reusable diagnosis. Then the
 article itself went in cleanly, and BOTH real bugs found were things only a SECOND article could expose.**
+▶▶ **AND THE SECOND HALF WAS ENTIRELY HER EYE ON THE LIVE PAGE, four rounds of it, and the pattern is
+worth naming: EVERY TIME THE ARITHMETIC AND THE LOOK DISAGREED, THE LOOK WAS RIGHT.** The suite said the
+star was safest at -52 and she said it floated. The measurement said her label fit and it was clipped
+(a `nowrap` overflow a LINE COUNT structurally cannot see). ▶ **Render it and show her; do not argue
+from numbers about how something looks.**
 
 ### ⭐⭐ WHAT SHIPPED: `stylestar.app/journal/how-to-dress-for-fall-in-florida`
 **"How to Dress for Fall in Florida When It's Still 90 Degrees", her words, article #2.** Verified on the
@@ -37,7 +43,13 @@ visible publish date correct · Organization + Article + FAQPage schema with 12 
 ANSWERS PRESENT VERBATIM.** The hub lists both articles as real `<a href>` rows. The homepage is untouched
 (2,293-ish words, 1 h1, article #2 correctly absent). Sitemap is 9 URLs. **md5 identical local vs live on
 `index.html`, `styles.css` AND `sitemap.xml`.**
-- ▶ **The 4-step recipe held perfectly and needed NO netlify.toml edit** — `/journal/*` is already a
+- 🚨⭐ **THE RECIPE IS FIVE STEPS NOW, NOT FOUR — a fifth was found the hard way this session:
+  `text-wrap:balance` ON THE ARTICLE TITLE LISTS JOURNAL SCREENS BY NAME** (`#s-journal`,
+  `#s-journal-hub`, and now `#s-journal-fall-florida` in styles.css). **It is the ONE journal rule the
+  `JOURNAL_ARTICLES` registry does NOT drive**, so article #2 shipped with an unbalanced title that
+  stranded "Degrees" on a line of its own while article #1 was fine. ▶ **ADD THE NEW SCREEN TO THAT
+  SELECTOR whenever an article is added**, or its headline wraps badly and nothing will fail.
+- ▶ **The other 4 steps held perfectly and needed NO netlify.toml edit** — `/journal/*` is already a
   wildcard, and `_pathForScreen` / `_screenForPath` / `_openRoute` are all registry-driven, so ONE line in
   `JOURNAL_ARTICLES` bought routing, the reverse lookup and the deep-link open. ⭐ **The hide-lists and the
   skin toggle are PREFIX matches (`id.indexOf('s-journal')===0`), so `s-journal-fall-florida` was picked
@@ -225,8 +237,8 @@ corner"** · **"lift the star up higher. it is crowding the arrow."**
   she did not ask about, restore it rather than ship the side effect** — the standing rule, applied.
 
 ### ✅ GREEN AT PAUSE
-**jrnlcta 128 (new) · nav 82 · pagetitles 71 · hometrim 67 · hometrimlive 64 · hubs 49 ·
-article2 31 · cssextract 20 · article2live 20 · edgepreview 12.**
+**jrnlcta 128 (new) · nav 82 · pagetitles 71 · hometrim 67 · hometrimlive 64 · hubs 49 · copy 41 ·
+prefdone 32 · article2 31 · e2e 29 · cssextract 20 · article2live 20 · edgepreview 12.**
 ⭐ **`jrnlcta` is negative-controlled BOTH ways: putting the star back at the home page's own
 `top:-24px` fails 10 checks by name ("OVERLAPPING"), and giving both buttons the SAME gradient id
 fails 5.** ⚠️ **That second control exposed a real gap in my own suite first: it asserted the fill
@@ -240,6 +252,28 @@ about the *former* `<style>` blocks is all it can find. **Established as pre-exi
 ⭐ **Both new suites are negative-controlled three ways: reverting the escape fix, breaking the trending
 link, and removing the article from the registry each fail BY NAME.**
 
+### ⚠️⚠️ FIVE MEASUREMENT TRAPS FROM THE BUTTON ROUND, every one costing a real detour
+1. 🚨⭐⭐ **A PIXEL COUNT COULD NOT SEPARATE THE STAR FROM ITS BACKGROUND: a "star only" screenshot
+   returned 71,651 saturated pixels spanning the whole clip** for a 61px star. ▶ **THE RIGHT INSTRUMENT
+   IS THE DRAWN PATH — `getPointAtLength` through `getScreenCTM`** (the Mall-sign technique). The rotated
+   bounding RECT is also wrong: it overstates this star by ~11px. **Never measure a rotated ornament by
+   its rect, and never by a colour mask on a page that has other gold on it.**
+2. 🚨 **A BRANCH-CONDITIONAL "gap" FORMULA PRODUCED NONSENSE** (negative gaps that moved the wrong way as
+   the star rose) **and a "distance to the paragraph above" column that was meaningless**, because an
+   absolutely positioned star legitimately overlaps flow content. ▶ **A number that disagrees with the
+   geometry is a broken harness, not a broken page — re-derive before believing it.**
+3. ⚠️⚠️ **PIPING A SUITE THROUGH `tail` ATE ITS FAILURES, AGAIN.** A run reported "120 passed, 8 failed"
+   with **zero FAIL lines visible**, because `| tail -25` cut the earlier widths. ▶ **Redirect to a file,
+   never pipe a suite.** (Third sighting; it is in this file twice already.)
+4. ⚠️ **`pkill -f "<pattern>"` KILLED ITS OWN SHELL** (exit 144) because the pattern was in its own
+   command line, silently dropping a CSS edit that had to be re-applied. **Never pkill on a
+   self-matching pattern.**
+5. ⚠️ **A ZERO-SCALE TRANSFORM REPORTS A ZERO-SIZE RECT.** `ssSealPop` starts at `scale(0)`, so measuring
+   straight after `show()` reported the star MISSING on a perfectly good button — **and on the home
+   page's own, which is how it was caught.** ▶ **Navigate the way a visitor does, then WAIT.**
+⚠️ **AND ONE IN THE MARKUP: A DOUBLE HYPHEN INSIDE AN HTML COMMENT CLOSES IT EARLY.** A comment reading
+"tilt -- see" terminated at the `--`, collapsing the star to 0x0. **No `--` anywhere inside `<!-- -->`.**
+
 ### ✅✅ INDEXING IS DONE — BOTH ENGINES, DO NOT RE-ASK
 **She requested indexing on the new article in Google Search Console AND Bing (2026-09-01).**
 - ⭐ **A useful fact from her GSC screenshot: Googlebot crawled the article at 3:09 PM ET, EIGHT MINUTES
@@ -251,10 +285,11 @@ link, and removing the article from the registry each fail BY NAME.**
   couple of weeks.**
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. 👀 **HOW ARTICLE #2 AND THE NEW QUIZ BUTTON READ ON HER PHONE.** She has seen renders of the bullets and
-   of the lifted star, but not the live page. ⚠️ Private browsing, `stylestar.app/?notrack`.
-   ▶ **The star's height went through TWO rounds and `-44px` is her pick** — one number if she ever wants
-   it moved again (-48 is the middle, -40 the lowest that still clears).
+1. 👀 **HOW THE FINISHED ARTICLE READS ON HER PHONE.** ⚠️ Private browsing, `stylestar.app/?notrack`.
+   ▶ **She has now signed off the bullets, the button, the star position and the title wrap live**, so
+   this is a last look rather than an open question. **The star ended at `top:-41px; right:-21px`, HER
+   numbers, set from the live page** — one line if she ever wants it moved again, and the suite no longer
+   enforces a minimum gap so it will not fight her.
 2. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
    **Do not insert anything mid-queue ahead of it.**
 3. ⚖️ **ALMIRA: still watching for the COPY of the correction confirmation** (she promised only "an
