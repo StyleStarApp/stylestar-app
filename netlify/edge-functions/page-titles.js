@@ -123,15 +123,19 @@ const PAGES = {
     title: 'Frequently Asked Questions | Style Star',
     desc: "Answers about Style Star: what it is, how the AI stylist works alongside real styling expertise, and how your privacy is handled.",
     scrId: 's-faq',
-    // FAQPage schema (2026-08-26): all 18 real Q&A pairs, pulled straight off
+    // FAQPage schema (regenerated 2026-09-01): all 18 real Q&A pairs, pulled
     // the live page with a headless browser reading .textContent (not typed
     // by hand) so this can never drift from what a visitor actually sees.
     // Google can render an FAQ's questions as expandable results directly in
     // the search listing -- real estate no other page on the site can get.
     // ⚠️ If a question is ever added/edited/removed in index.html, this
     // block must be regenerated the same way, not hand-edited -- see the
-    // extraction method in CLAUDE.md dated 2026-08-26.
-    schema:     {
+    // extraction method in CLAUDE.md, and scratchpad/faqschema.mjs which
+    // re-runs it. REGENERATED 2026-09-01 because two answers had silently
+    // drifted: the 08-29 free/no-signup clause and the 08-31 "brilliance of
+    // AI" rewording both edited the page and left this block behind, which
+    // is exactly the mismatch Google's structured-data guidelines penalise.
+    schema: {
           "@context": "https://schema.org",
           "@type": "FAQPage",
           "mainEntity": [
@@ -140,7 +144,7 @@ const PAGES = {
                       "name": "What is Style Star?",
                       "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Style Star combines the insight and care of a real personal stylist with the brilliance of modern technology. All in one place, you can take our fun style quiz, ask questions, get styling advice and honest photo feedback, and follow shopping links straight to the good stuff, making it all fun and easy. It's designed to align your style, so you can step out and shine your light."
+                            "text": "Style Star combines the insight and care of a real personal stylist with the brilliance of AI. All in one place, you can take our fun style quiz, ask questions, get styling advice and honest photo feedback, and follow shopping links straight to the good stuff, making it all fun and easy. It's designed to align your style, so you can step out and shine your light."
                       }
                 },
                 {
@@ -164,7 +168,7 @@ const PAGES = {
                       "name": "Is this a real stylist or AI, and does anyone see what I share?",
                       "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "It's both. I'm Catherine, and I built Style Star's AI stylist to think the way I do, my approach and my philosophy, written into how it works. The AI itself is Claude, made by Anthropic. Your photos and chats are sent there to be understood in the moment, and are not used to train it.Your chats and photos are never stored by Style Star, and no one here reads them. The details you choose to save, your name, email, sizes, colors, likes and dislikes, are kept in a secure database so your results can follow you from your phone to your laptop. I run Style Star, so I can reach that database if I need to fix something or delete your information when you ask. I don't browse it, I never sell it, and it never goes to anyone who wants to market to you."
+                            "text": "It's both. I'm Catherine, and I built Style Star's AI stylist to think the way I do, my approach and my philosophy, written into how it works. The AI itself is Claude, made by Anthropic. Your photos and chats are sent there to be understood in the moment, and are not used to train it. Your chats and photos are never stored by Style Star, and no one here reads them. The details you choose to save, your name, email, sizes, colors, likes and dislikes, are kept in a secure database so your results can follow you from your phone to your laptop. I run Style Star, so I can reach that database if I need to fix something or delete your information when you ask. I don't browse it, I never sell it, and it never goes to anyone who wants to market to you."
                       }
                 },
                 {
@@ -196,7 +200,7 @@ const PAGES = {
                       "name": "How does Style Star help me build my wardrobe?",
                       "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Style Star includes a list feature, called Your Wardrobe List, to help you build a complete, well-rounded closet. I took the same checklist I use in my real closet consultations and turned it into an easy list, so you can tap a star on anything you\u2019d love to add and see at a glance what would round out your closet. Then just tap anything you\u2019d like for shopping ideas matched to your style, or peek at What\u2019s Trending to see what\u2019s fresh right now."
+                            "text": "Style Star includes a list feature, called Your Wardrobe List, to help you build a complete, well-rounded closet. I took the same checklist I use in my real closet consultations and turned it into an easy list, so you can tap a star on anything you’d love to add and see at a glance what would round out your closet. Then just tap anything you’d like for shopping ideas matched to your style, or peek at What’s Trending to see what’s fresh right now."
                       }
                 },
                 {
@@ -212,7 +216,7 @@ const PAGES = {
                       "name": "Can I upload a photo for style advice?",
                       "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes. Share an outfit or a piece you're considering, and your stylist will give you thoughtful feedback to elevate the look while keeping it true to you. Your photo is sent to our AI to be looked at in the moment, and Style Star never stores it. If you share it in the stylist chat, a copy stays in that conversation on your own device so you can scroll back, and clearing it is as easy as tapping \"Start a fresh conversation.\"."
+                            "text": "Yes. Share an outfit or a piece you're considering, and your stylist will give you thoughtful feedback to elevate the look while keeping it true to you. Your photo is sent to our AI to be looked at in the moment, and Style Star never stores it. If you share it in the stylist chat, a copy stays in that conversation on your own device so you can scroll back, and clearing it is as easy as tapping \"Start a fresh conversation.\""
                       }
                 },
                 {
@@ -236,7 +240,7 @@ const PAGES = {
                       "name": "Can I add Style Star to my phone like an app?",
                       "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes! You can add Style Star to your home screen so it opens full-screen with its own icon, just like an app. No app store needed. On an iPhone (using Safari): Open stylestar.app in Safari. Tap the Share icon at the bottom of the screen (the square with an arrow pointing up). Scroll down and tap \"Add to Home Screen.\" Tap \"Add\" in the top right. On an Android phone (using Chrome): Open stylestar.app in Chrome. Tap the menu (the three dots in the top right). Tap \"Add to Home screen,\" then \"Add.\"."
+                            "text": "Yes! You can add Style Star to your home screen so it opens full-screen with its own icon, just like an app. No app store needed. 📲 On an iPhone (using Safari): Open stylestar.app in Safari. Tap the Share icon at the bottom of the screen (the square with an arrow pointing up). Scroll down and tap \"Add to Home Screen.\" Tap \"Add\" in the top right. On an Android phone (using Chrome): Open stylestar.app in Chrome. Tap the menu (the three dots in the top right). Tap \"Add to Home screen,\" then \"Add.\""
                       }
                 },
                 {
@@ -244,7 +248,7 @@ const PAGES = {
                       "name": "Is Style Star free?",
                       "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes, Style Star is free to use. If you shop through some of our links, we may earn a small commission at no extra cost to you, and that's what helps keep it free."
+                            "text": "Yes, Style Star is completely free to use, no sign-up or credit card required. If you shop through some of our links, we may earn a small commission at no extra cost to you, and that's what helps keep it free."
                       }
                 },
                 {
@@ -276,7 +280,7 @@ const PAGES = {
                       "name": "What is the heart behind Style Star?",
                       "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "I believe style has the power to help you shine your light, and when you feel confident in yourself, that light naturally reaches the people around you."
+                            "text": "I believe style has the power to help you shine your light, and when you feel confident in yourself, that light naturally reaches the people around you. 💫"
                       }
                 }
           ]
