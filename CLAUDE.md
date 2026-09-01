@@ -262,20 +262,23 @@ all 25 screens and a plain `<body>`.**
 substitute** — and it is strong here, because the 58-check browser suite ran against byte-identical bytes.
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. 📌⭐ **REMIND HER TO REQUEST INDEXING ON `/` AND `/journal`, IN BOTH ENGINES — SHE ASKED TO BE
-   REMINDED, EXPLICITLY, THIS SESSION.** Google Search Console → the grey search bar ACROSS THE VERY TOP
-   (URL Inspection, NOT anything in the left menu, and NOT the AMP tab — she has landed there twice) →
-   paste the URL → Request Indexing. Then the same in **Bing URL Inspection**. ▶ **Both pages genuinely
-   changed for a crawler, which is exactly what her standing 08-26 rule is for.**
+1. ✅✅ **DONE, DO NOT RE-ASK: SHE REQUESTED INDEXING ON `/` AND `/journal` IN BOTH GOOGLE AND BING**
+   (2026-09-01, after the trim was already live). ⚠️ **And do not suggest re-requesting** — nothing a
+   crawler reads changed afterwards except one alt attribute, so a second request is the sitemap
+   crying-wolf problem in a different costume. **Bing discovered the site on 31 Aug and crawls a young
+   site slowly; a week or two is a fair look, not a day.** ▶ **The whole search/indexing thread from this
+   session is CLOSED. Nothing is owed on either dashboard.**
 2. ✅ **BING WAS RE-INSPECTED THE SAME DAY AND THE SIZE FLAG IS GONE.** The homepage's Live URL test no
    longer lists "HTML size is too long" — the CSS extraction cleared it (1,166 KB → 815 KB). **The h1 and
    alt flags it DID show were both fixed the same session; see the 🔧 entry below.** ⚠️ **She has already
    pressed Request Indexing on `/` and `/journal` in BOTH Google and Bing (2026-09-01). Do not re-ask.**
-3. 👀 **ONE SPECIFIC THING TO TEST ON HER PHONE, and only she can:** open the app, then **Menu → Privacy,
-   Menu → FAQ, Menu → My Story.** They should appear instantly, exactly as before. **The homepage now
-   leans on self-heal, which has run the other seven routes since 08-28 but has never carried the front
-   door.** ▶ Also still unasked from the CSS extraction: **how a COLD first load feels on weak signal, and
-   whether a SECOND page after it feels quicker.**
+3. ✅⭐ **THE PHONE TEST PASSED — HER WORDS: "I clicked around those buttons on my phone and all the
+   pages came up instantly."** That discharges the one real risk in the homepage trim: the front door now
+   leans on `_selfHealScreens()`, which had run the other seven routes since 08-28 but had never carried
+   `/` before. **Confirmed on her own device, on her own connection. Do not re-raise it.**
+   ▶ **STILL UNASKED, and it is the older question from the CSS extraction: how a COLD FIRST LOAD feels
+   on weak signal, and whether a SECOND page after it feels quicker.** That is the one thing no sandbox
+   can answer and the actual reason the CSS was moved out.
 4. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
    **Do not insert anything mid-queue ahead of it.**
 5. ⚖️ **ALMIRA: still watching for the COPY of the correction confirmation** (she promised only "an
