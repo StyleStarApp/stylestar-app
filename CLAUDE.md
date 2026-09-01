@@ -7,7 +7,112 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-08-31 LATER — 🔎 SHE LEARNED TO READ A SEARCH RESULTS PAGE, AND SHE FOUND HOW THE COMPETITION ACTUALLY RANKS)
+## ▶ NEXT SESSION — START HERE (2026-09-01 — 🚨 A COWORK BRIEF ASKED FOR THREE THINGS; TWO WERE ALREADY DONE AND THE THIRD FOUND REAL SCHEMA DRIFT)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**ONE COMMIT, merged fast-forward to `main` and CURL-VERIFIED LIVE** (the `/faq` schema regeneration).
+⚠️ **One Netlify build.** Branch `claude/style-star-markdown-qpyd5v`, same no-PR convention.
+▶ **THE SHAPE OF IT: she brought a Cowork brief with three tasks. Its verification step was the whole
+value — TWO of the three were already shipped and their premises were stale, and the third turned up a
+real problem nobody was looking for.**
+
+### ⭐⭐ THE HEADLINE: THE FAQ SCHEMA HAD SILENTLY DRIFTED FROM THE PAGE, AND IT IS THE RULE THIS FILE
+ALREADY WROTE DOWN
+The brief's Task 3 asked whether JSON-LD had ever shipped. **It had — all three blocks, server-rendered.**
+But checking all 22 Q&A pairs against the served text found **2 of the 18 FAQ answers no longer matched
+what a visitor reads:**
+- **"What is Style Star?"** — schema said *"the brilliance of **modern technology**"*, page says
+  *"the brilliance of **AI**"* (reworded 2026-08-31).
+- **"Is Style Star free?"** — schema said *"free to use"*, page says *"**completely** free to use, **no
+  sign-up or credit card required**"* (the Phase 4 clause added 2026-08-29).
+- ▶▶ **ROOT CAUSE, and it is the standing rule being violated rather than a new bug: the FAQ schema is a
+  SNAPSHOT extracted on 2026-08-26. Two copy edits landed after it and neither regenerated the block.**
+  The rule was already written at the code in capitals (*"If a question is ever added/edited/removed,
+  this block must be regenerated the same way, not hand-edited"*) — it just was not followed.
+- ⚠️ **WHY IT MATTERED MORE THAN TIDINESS: schema that does not match the visible text is a Google
+  structured-data guidelines violation and can earn a MANUAL PENALTY.** And the first one bit hardest —
+  *"the brilliance of AI"* is the sentence deliberately made byte-identical on the homepage and the FAQ
+  on 08-31, **so the stale schema was contradicting the exact claim that consistency existed for.**
+- ✅ **FIXED: regenerated from the RENDERED page, never hand-edited.** New `scratchpad/faqschema.mjs`
+  re-runs the extraction; new `scratchpad/faqverify.mjs` asserts all 36 strings appear verbatim.
+  **Verified live: `/faq` 36/36, the journal article 8/8, the homepage's Organization block intact.**
+
+### 🚨⚠️ TWO EXTRACTION FAULTS IN THE 2026-08-26 PASS, FIXED AT THE SAME TIME — both are reusable traps
+1. ⭐⭐ **`textContent` WELDS BLOCK ELEMENTS TOGETHER WITH NO SEPARATOR.** The phone answer contains
+   `<div class="faq-sub">` and `<ol class="faq-steps"><li>`, so textContent produced **"Open
+   stylestar.app in Safari.Tap the Share icon"** — a missing space. ▶ **USE `innerText`, which respects
+   rendered block boundaries — AND THAT IS EXACTLY WHY THE SCREEN MUST BE SHOWN FIRST (`showFAQ()`):
+   `innerText` returns EMPTY for a `display:none` element.** The suite asserts `offsetHeight > 0` before
+   trusting a single string. (The never-assert-against-a-hidden-element rule, one more sighting.)
+2. ⚠️ **The 08-26 extractor appended a trailing `.` to every answer**, which produced `...conversation.".`
+   on the two answers ending in a quoted sentence. **Take the page's text exactly as it reads; never
+   "helpfully" punctuate it.**
+- ⭐ **Two emoji (📲, 💫) that live on the page were missing from the old schema and are now included** —
+  the bar is VERBATIM, so what a visitor sees is what the schema says.
+- ⭐⭐ **THE VERIFIER IS NEGATIVE-CONTROLLED, not assumed:** reverting one answer to the stale wording
+  makes it fail 35/36 by name, and restoring returns 36/36 byte-identical. **A sweep that has never been
+  seen to fail proves nothing** — and this one is the instrument that would have caught the original drift.
+
+### ✅ THE OTHER TWO TASKS WERE ALREADY DONE AND THE BRIEF'S PREMISES WERE STALE
+▶ **THE STANDING RULE PAID OFF AGAIN, FOURTH COWORK BRIEF RUNNING: CHECK EVERY CLAIM AGAINST THE REAL
+CODE BEFORE BUILDING ANYTHING A BRIEF ASKS FOR.**
+- **Task 2 (www → apex 301): SHIPPED 2026-08-28, and it passes its own acceptance tests live today** —
+  `www/faq` → 301 to the apex, `www/ig-pro` keeps its query string across 2 hops, apex root still 200
+  with 0 redirects, no loop. The brief's "on 31 August www served the site directly" does not match the
+  server. ⚠️ **AND A MEASUREMENT TRAP WORTH KEEPING: through this sandbox's HTTPS proxy, `curl -D-` prints
+  `HTTP/1.1 200 Connection Established` as the FIRST line — the PROXY's CONNECT response, not the site's.**
+  Reading line 1 reports a false 200 on a real 301. **Use `-w '%{http_code}'`, or read past the CONNECT.**
+- **Task 1 (Instagram attribution): the diagnosis is half right and the conclusion is WRONG.** The
+  observation (Plausible's Entry Pages shows `/`, not `/ig`) is correct and is simply what a 301 does.
+  But **the UTMs already exist and all four accounts are already distinguishable**:
+  `/ig`→`utm_campaign=brand` · `/ig-pro`→`stylist` · `/ig-3d`→`3d` · `/ig-cath`→`personal`.
+  ▶ **They report under Campaigns → UTM *campaign*. The brief looked under UTM *content*, which is empty
+  because nothing writes it. Different drawer, not a missing feature.**
+  ⚠️ **DELIBERATELY NOT CHANGED, her call: adopting the brief's `utm_medium=bio&utm_content=*` scheme
+  would rename a working setup and RESET the campaign history already accumulating, for no functional
+  gain.** ⚠️ **And her bios never needed re-editing, which the brief itself set as a hard constraint.**
+- ✅ **HER HANDLE CONFIRMED: `cath_ellspermann` (underscore).** The brief wrote `cath.ellspermann`; it is
+  wrong. `/ig-personal` also survives as a legacy alias to the same destination, deliberately.
+
+### ⚠️ SESSION HYGIENE
+- 🚨 **THE LOCAL `main` BRANCH WAS A STALE CLONE ARTIFACT and `git merge --ff-only` died with "refusing to
+  merge unrelated histories."** `origin/main` had been force-updated since the container cloned, so local
+  `main` held 50 commits the remote had replaced. ▶ **THE FIX, and check it before believing a divergence
+  is real: `git fetch origin main`, confirm the branch is `origin/main` + N with
+  `git rev-list --left-right --count`, then `git checkout -B main origin/main` and fast-forward.**
+  ⚠️ **A stale `origin/main` ref also made a clean branch look 50/50 diverged at session start — fetch
+  FIRST, always, before reading any divergence count.**
+- ⚠️ **`journal-verify.mjs` and `faq-h3-check.mjs` DO NOT RUN — the documented bare-name Playwright import
+  (`from 'playwright'`).** Pre-existing, nothing to do with this change (they die at import before app
+  code loads). ▶ **20 suites in `scratchpad/` still carry that latent breakage and are SILENT, not
+  failing.** Worth a sweep someday: the absolute path is
+  `/opt/node22/lib/node_modules/playwright/index.js` **with a DEFAULT import destructured** (CommonJS).
+- ⚠️ **The chromium path moved: `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`** (a bare
+  `chromium/` directory exists and is NOT the binary).
+- **Green at pause:** faqverify 36/36 (new) · edgepreview 12 · pagetitles 61 · copy 41 · e2e 29.
+  ⚠️ `nav.js` timed out in the FOREGROUND reaching external CDNs — **run sweeps in the background**, and
+  it cannot touch a JSON blob in the edge function anyway.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 🔎 **SHE STILL OWES ONE 30-SECOND STEP: Request Indexing on `https://stylestar.app/faq`** in Search
+   Console (the grey bar ACROSS THE VERY TOP is URL Inspection — ⚠️ not the left menu, which is where she
+   landed on AMP by mistake twice). **Only that one page changed.** Bing needs nothing; it re-crawls from
+   the sitemap. **Do not resubmit the sitemap on either engine.**
+   ⚠️ **`/faq`'s `lastmod` was deliberately LEFT at 2026-08-31** — the edit changed invisible markup only,
+   and a sitemap that cries wolf gets trusted less. Hers to overrule.
+2. ⭐⭐ **PLAY 2 IS STILL THE NEXT REAL PIECE OF WORK: pitch the roundups that already rank** (panaprium,
+   itechnolabs, altadaily). Drafts are saved verbatim below. **Ask whether she sent them.**
+3. 📓 **ARTICLE #2: Florida / warm-climate fall dressing**, written for the RESIDENT.
+4. 📋 **THE THREE CATALOG DECISIONS** (Old Navy / Everlane / Mango) — hers, nothing touched.
+5. ⚖️⚖️ **ALMIRA IS DUE ON OR BEFORE SEPTEMBER 4.**
+6. ⏰ **Both Routines fire 2026-09-01** — the monthly cost one at 13:02 UTC (log the first real spend
+   number) and the Google + Bing indexing check at 21:44 UTC.
+7. ✅ **Instagram is CLOSED for real now** — links, tags and reporting all verified working this session.
+   **Nothing to change on the site or in Plausible. Do not re-raise it.**
+
+---
+
+## ▶ PREVIOUS — (2026-08-31 LATER — 🔎 SHE LEARNED TO READ A SEARCH RESULTS PAGE, AND SHE FOUND HOW THE COMPETITION ACTUALLY RANKS)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Yes let's save all of that")
 **ONE COMMIT, merged straight to `main` and CURL + MD5-VERIFIED LIVE** (the sitemap's stale `lastmod`
