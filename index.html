@@ -4671,7 +4671,13 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
       </button>
     </div>
     <div class="chat-photo-preview" id="chatPhotoPreview" style="display:none">
-      <img id="chatPhotoThumb" style="width:60px;height:60px;object-fit:cover;border-radius:8px">
+      <!-- alt="" on purpose: this thumbnail is decorative. The span right
+           beside it already announces "Photo attached", so a screen reader
+           reading BOTH would say the same thing twice. An empty alt is the
+           correct WCAG treatment for an image that duplicates adjacent text,
+           and it still satisfies a crawler checking the attribute exists.
+           ⚠️ Do not "helpfully" fill this in with a description. -->
+      <img id="chatPhotoThumb" alt="" style="width:60px;height:60px;object-fit:cover;border-radius:8px">
       <span style="font-size:13px;color:#666">Photo attached</span>
       <button onclick="clearChatPhoto()" style="background:none;border:none;color:#888;font-size:13px;cursor:pointer;font-weight:600">Remove</button>
     </div>

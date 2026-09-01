@@ -74,6 +74,50 @@ CODE BEFORE BUILDING ANYTHING A BRIEF ASKS FOR.**
 - ✅ **HER HANDLE CONFIRMED: `cath_ellspermann` (underscore).** The brief wrote `cath.ellspermann`; it is
   wrong. `/ig-personal` also survives as a legacy alias to the same destination, deliberately.
 
+### 🔎⭐⭐ BING'S LIVE URL TEST GAVE HER A FREE AUDIT, AND BOTH FINDINGS TRACE TO ONE CAUSE
+She requested indexing on `/faq` in BOTH engines (Google Search Console + Bing URL Inspection →
+Request indexing). ⚠️ **AND THE ADVICE CHANGED MID-CONVERSATION, on the record: Bing was first called
+"needs nothing" and that was too dismissive** — Bing's index feeds Microsoft Copilot, and one of the two
+corrected answers is literally the *"brilliance of AI"* sentence, so the Bing refresh is arguably worth
+MORE to her AI-discoverability goal than the Google one. **Do both on any future schema change.**
+- **Bing said "Discovered but not crawled — URL cannot appear on Bing", discovered 31 Aug.** ▶ **NOT a
+  fault and NOT alarming: it is Bing's crawl QUEUE, one day after the sitemap import.** Verified rather
+  than assumed — `robots.txt` is `Allow: /`, `/faq` returns **200 to a real bingbot user agent**, no
+  `noindex`, correct canonical, correct title. **Bing is simply further back than Google** (which has had
+  the site since 08-25). Her **Live URL** tab then said **"URL can be indexed by Bing"** with a green check.
+- ⚠️ **The red "has some issues which are preventing indexation" text NAMES NO ISSUE because there is
+  none — it is Bing's generic boilerplate for any not-yet-indexed URL.** Do not read it as a defect.
+- 🚨⭐⭐ **THE REAL FINDING, and it is architectural: Bing's Live URL test RUNS JAVASCRIPT, so it sees the
+  page AFTER `_selfHealScreens()` has merged every other screen back into the DOM.** Hence its two flags:
+  **"More than one h1 tag — 8 instances"** and **"Alt attribute missing — 1 instance"** (the latter is
+  `#chatPhotoThumb`, which lives on `s-chat` and is not on the FAQ page at all).
+  ▶▶ **MEASURED, THREE WAYS, so the cause is proven and not guessed:**
+  | condition | h1 in DOM |
+  |---|---|
+  | **raw served HTML** (what most crawlers read) | **1** ✅ |
+  | rendered, self-heal **blocked** | **1** ✅ |
+  | rendered, self-heal **allowed** | **8** (only 1 VISIBLE) |
+  ⚠️ **The raw file greps as "2" and that is a FALSE POSITIVE — the second is `<h1>/<h2>` inside a code
+  COMMENT.** Same trap that fooled a check on 2026-08-28. **Match real tags, never the bare string.**
+- ▶▶ **DECISION: LEAVE THE h1 ALONE, and BING'S OWN REMEDIATION TEXT IS THE ARGUMENT.** It says *"Remove
+  redundant `<h1>` tags **from the page source**"* — **her page source already has exactly one, so their
+  stated fix is already satisfied.** The 8 exist only in the rendered DOM. Their stated harm (*"might
+  confuse search engine bots **and website's users**"*) also does not apply: only one h1 is ever visible.
+  **Multiple h1s is not a ranking penalty; Google has said so publicly.** ⚠️ **And most AI crawlers
+  (GPTBot, ClaudeBot, PerplexityBot) do not execute JS, so they see the clean single-h1 version — which
+  is the audience she actually cares about.**
+  ⚠️ **THE FIX WAS COSTED AND REJECTED, not overlooked:** demoting imported `h1`s to `h2` inside
+  `_selfHealScreens()` would work (styling rides the `.story-title` class, and a direct fetch of `/story`
+  still serves its own real h1) — **but it means editing the self-heal machinery, which produced TWO
+  serious bugs on 2026-08-29 (empty footers sitewide, then two screens rendering at once).** Real risk to
+  silence a cosmetic flag. **Hers to overrule; do not re-propose without a new reason.**
+- ✅ **THE ALT WAS FIXED, because it is a genuine accessibility gap rather than an SEO one** (Bing types
+  it **Notice**, its lowest severity). ⚠️ **Shipped as `alt=""`, DELIBERATELY** — the span immediately
+  beside it already announces "Photo attached", so a descriptive alt would make a screen reader say the
+  same thing twice. **An empty alt is the correct WCAG treatment for an image duplicating adjacent text,
+  and it still satisfies a crawler checking the attribute exists.** A capitalised comment at the markup
+  says so, so a future session does not "helpfully" fill it in.
+
 ### ⚠️ SESSION HYGIENE
 - 🚨 **THE LOCAL `main` BRANCH WAS A STALE CLONE ARTIFACT and `git merge --ff-only` died with "refusing to
   merge unrelated histories."** `origin/main` had been force-updated since the container cloned, so local
