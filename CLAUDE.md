@@ -7,7 +7,112 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-01 LAST — 📓 ARTICLE #2 IS LIVE, A MEASURING TOOL "FOUND" 11 h1 TAGS THAT DO NOT EXIST, AND HER QUIZ BUTTON BECAME THE HOME PAGE CTA)
+## ▶ NEXT SESSION — START HERE (2026-09-01 LATEST — ✍️ HER WORDING EDIT ON ARTICLE #2, AND THE SCHEMA GUARD EARNED ITS KEEP ON THE FIRST REAL COPY EDIT)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**TWO COMMITS, merged FAST-FORWARD to `main`, ONE Netlify build, CURL + MD5-VERIFIED LIVE** — `d22ddeb`
+(the deleted sentence) and `3650c5f` (off white + its schema). Branch
+`claude/style-star-latest-markdown-4qsiww`, same no-PR convention; branch, `main` and the remote all sit on
+**`3650c5f`**, tree clean.
+▶ **THE SHAPE OF IT: a short session, entirely her eye on the live article — and a routine wording change
+turned out to be the first real test of the schema discipline built the day before. It passed.**
+
+### ✍️ WHAT CHANGED, both her calls
+1. **DELETED: "A sleeveless chocolate brown dress reads completely as fall at 88 degrees."** Her two reasons,
+   verbatim and worth keeping as curation facts: ***"I did not like the 88 degrees and I don't like a brown
+   sleeveless dress."*** ⚠️ **The 88 was a real inconsistency — her own title says 90 degrees.**
+2. ⭐ **SHE PICKED "B" FROM TWO OPTIONS, AND IT WAS THE BETTER CALL: cut ONLY that sentence and KEEP
+   "Same temperature. Same amount of clothing. Completely different feeling."** ▶ **The reasoning, because it
+   generalises to any copy cut: that three-beat line is the ONLY place the section PROVES its claim instead of
+   asserting it** — everything else tells her what to do, and that line is the beat where a reader goes *oh, I
+   see*. **And it survives the cut because the paragraph above already establishes keep-the-clothes-change-the-
+   colour, so it attaches directly with nothing dangling.** Cutting both would have read perfectly well and
+   been flatter.
+3. ✅ **HER QUESTION ANSWERED — NO GAP, no bridge sentence needed.** The colour list hands off cleanly to
+   *"If you're wondering where to start…"*. Nothing was written to fill a hole, because there was no hole.
+4. ⭐⭐ **AND HER SECOND REASON PRODUCED THE FIND OF THE SESSION: "I don't like a brown sleeveless dress"
+   applied to a SECOND place she had not mentioned** — the first of her three outfit ideas read
+   **"A chocolate brown sleeveless midi"**. ▶ **FLAGGED, NEVER SILENTLY FIXED — the Edit is her curation and
+   the standing rule is ask, don't assume.** Her call: *"let's change it to off white."*
+   ⚠️ **THE ARTICLE HAD TO CHANGE WITH IT: "A chocolate brown" → "An off white."**
+   ⭐ **Off white is already on her own fall colour list in the paragraph directly above**, so the article stays
+   consistent with its own logic — and **chocolate brown now appears only in the colour list and the short FAQ,
+   which is LESS repetition and was her original objection.**
+
+### ⚠️ ONE THING SHE ACCEPTED DELIBERATELY — DO NOT "FIX" IT
+The change made idea 1 open **"An off white…"** while idea 2 opens **"The white jeans…"** — two whites in
+consecutive bullets, the same shape of repetition she caught with the brown. ▶ **Flagged to her with camel and
+navy offered as the two unused colours from her own list. Her answer: "I think it is great as is."**
+**So it is a decision, not an oversight. Do not re-propose it.**
+
+### 🚨⭐⭐ THE SCHEMA GUARD EARNED ITS KEEP ON THE VERY FIRST COPY EDIT — this is the headline
+**BOTH edits landed inside FAQPage answers.** The deleted sentence sat in **answer 1**; the outfit idea sits in
+**answer 4** — and that one lives inside the `<ul>`, **which is exactly the case the extractor was taught to
+read on 2026-09-01 when it silently dropped her three outfits.**
+▶▶ **SO A HAND-TYPED SCHEMA WOULD HAVE DRIFTED ON AN ORDINARY WORDING CHANGE, ON THE SECOND DAY OF THE
+ARTICLE'S LIFE. That is the `/faq` drift exactly, and it is the whole argument for regenerate-from-the-
+rendered-page rather than hand-editing.**
+- **Regenerated with `scratchpad/faq2extract.mjs`, never hand-edited. MEASURED: answer 1 739 → 664 chars,
+  answer 4 746 → 741, the other TEN byte-identical, all 12 questions identical and in order.**
+- ✅ **VERIFIED ON THE SERVED PAGE, not locally: all 12 questions AND all 12 answers appear verbatim.**
+- ▶ **ANY future copy edit to an article owes this check.** It is one command and it is the only thing standing
+  between a wording tweak and a Google structured-data violation.
+
+### ⭐⭐ THE RE-INDEXING ANSWER — kept verbatim because she will ask it again
+Her question: *"will we also need to re-index if we change a few sentences?"* ▶ **NO. Three reasons, and the
+third is the one that actually settles it:**
+1. A few sentences of wording is not a change of substance.
+2. Re-requesting a page she requested yesterday is the **crying-wolf problem** — the same reason we did not
+   re-request after the alt-attribute fix.
+3. ⭐⭐ **THE ARTICLE IS NOT IN THE INDEX YET.** Google's own 09-01 report was *"Crawled – currently not
+   indexed"*, the waiting room. **So there is no stale indexed copy to correct — whenever Google does index
+   it, it reads whatever is live at that moment.** ▶ **Nothing is owed on either dashboard.**
+⚠️ **AND THE SITEMAP NEEDED NO TOUCH:** the article's `lastmod` already read **2026-09-01**, i.e. today, as did
+its `dateModified`. ▶ **Both WOULD need bumping in the same commit if an edit ever lands on a LATER day** —
+the standing rule, and easy to miss precisely because it was a no-op this time.
+
+### ⚠️ A HARNESS TRAP, and it is the documented family one more time
+A live check flagged **FAQ answer 11 as a mismatch on a page that was perfectly correct.**
+▶ **CAUSE: the visible markup writes `&rarr;` while the JSON-LD carries the real `→`.** Same glyph to a reader
+and to Google; the checking script had simply not decoded the entity.
+▶ **SUSPECT THE HARNESS FIRST — N-for-N in this file — and the tell was sharp: the failing answer was one of
+the TEN that had not been touched.** ⚠️ **Decode `&rarr;` (and `&#39;`, `&amp;`, `&quot;`, `&nbsp;`) before
+comparing schema text against served markup.**
+⚠️ **Second sighting in the same minute: a grep for the answer's tail matched THE JSON-LD BLOCK ITSELF before
+the visible text.** ▶ **Strip `<script>` before grepping for visible copy** — the standing rule, again.
+
+### ✅ GREEN AT PAUSE
+**jrnlcta 128 · pagetitles 71 · hometrim 67 · hubs 49 · copy 41 · article2 31 · cssextract 20 ·
+article2live 20 · edgepreview 12 — all 0 failed.**
+✅ **md5 IDENTICAL local vs live on `index.html`, `styles.css` AND `sitemap.xml`**, so every green check
+transfers directly to what she sees. Article still serves **1 real `<h1>`**.
+⚠️ **One `status 000` on the first live poll, clean on the retry — the documented proxy artifact, FOURTH
+sighting. Never report a single failed fetch as a site fault.**
+
+### ▶ THE FIRST THINGS NEXT SESSION — THE COMPLETE LIST, HER ASK, NOTHING DROPPED
+1. 👀 **THE ARTICLE ON HER PHONE.** ⚠️ Private browsing, `stylestar.app/?notrack`. She has signed off the
+   bullets, the button, the star and the title wrap live — **but she has NOT seen today's two edits live**
+   (the cut sentence and the off white outfit idea).
+2. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
+   **Do not insert anything mid-queue ahead of it.**
+3. ⚖️ **ALMIRA: still NO REPLY as of 2026-09-01.** Watching for the **COPY of the correction confirmation**
+   (she promised only "an update"; Cath re-pinned the document request in writing). ✅ **Class 045 is CLOSED.**
+4. ✉️ **PLAY 2: panaprium has NOT replied as of 2026-09-01.** ▶ **Still to send: itechnolabs and altadaily.**
+   ⚠️ Expectations already set with her: two of five answering is a normal result, silence is not a verdict.
+5. ⭐⭐ **WHAT'S TRENDING AS A REAL PAGE — her own enthusiasm, and the biggest SEO lever left.** It is a TAB
+   inside `s-wardrobe` today with no URL at all, so it is invisible to search. **A real build (its own screen,
+   a PAGES entry, a sitemap line, crawlable content), its own session.** ⚠️ **Weigh the staleness problem:
+   trend content goes stale, so a `lastmod` that never moves is crying wolf in a new costume.**
+6. 📋 **THE THREE CATALOG DECISIONS** (Old Navy p004 / Everlane p095 / Mango p033) — hers, nothing touched.
+7. 📓 **ARTICLE #3 when she has one.** ⚠️ **The recipe is FIVE steps, not four** — the fifth is adding the new
+   screen to the `text-wrap:balance` selector in styles.css, the ONE journal rule the `JOURNAL_ARTICLES`
+   registry does not drive. ▶ **Revisit the excerpt card THEN, for the READER.**
+8. ⚠️ **DELIBERATELY NOT DONE:** the 626 KB of inline JavaScript stays inline. ▶ **The honest next lever if
+   page weight matters again is DEAD CSS.**
+
+---
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-09-01 — 📓 ARTICLE #2 IS LIVE, A MEASURING TOOL "FOUND" 11 h1 TAGS THAT DO NOT EXIST, AND HER QUIZ BUTTON BECAME THE HOME PAGE CTA)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **NINE COMMITS, all merged FAST-FORWARD to `main` and CURL + MD5-VERIFIED LIVE** — `a43edc2` the article ·
