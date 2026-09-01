@@ -10,9 +10,22 @@ by email.
 ## ▶ NEXT SESSION — START HERE (2026-09-01 LAST — 📓 ARTICLE #2 IS LIVE, AND A MEASURING TOOL "FOUND" 11 h1 TAGS THAT DO NOT EXIST)
 
 ### ⏸ WHERE THIS SESSION PAUSED
-**THREE COMMITS, merged FAST-FORWARD to `main` and CURL + MD5-VERIFIED LIVE** (`a43edc2` the article ·
-`85cc97f` the title + button · `f8d6eb2` the bullets). Branch `claude/style-star-article-lm1hkr`, same
-no-PR convention; branch, `main` and the remote all sit on `f8d6eb2`, tree clean. ⚠️ **One Netlify build.**
+**SEVEN COMMITS, all merged FAST-FORWARD to `main` and CURL + MD5-VERIFIED LIVE** — `a43edc2` the article ·
+`85cc97f` the title + button · `f8d6eb2` the bullets · then the quiz-button round: `d01becd` + `dea3b84`
+(renders and the corrected label measurement, tooling only) · `52065a8` the star lift + restored spacing ·
+`202c1f1` the star down to her pick. Branch `claude/style-star-article-lm1hkr`, same no-PR convention;
+branch, `main` and the remote all sit on `202c1f1`, tree clean. ⚠️ **TWO Netlify builds.**
+✅ **VERIFIED ON THE REAL SITE AFTER THE SECOND DEPLOY, WITH THE CONTROL URL:** `index.html`, `styles.css`
+AND `sitemap.xml` all **md5-identical local vs live**, so the 128 green checks transfer directly ·
+`/` **2,410 words / 1 h1 / 18 screens / ZERO quiz buttons** against `/index.html` **7,792 / 9 / 26 / 2** ·
+both articles **1 h1, 1 screen, exactly 1 button and 1 seal** · ⭐ **the two seals carry DIFFERENT gradient
+ids in the LIVE bytes** (`jrnlSeal1` vs `jrnlSeal2`, each fill resolving to its own — the Safari
+hidden-defs trap confirmed avoided in production, not assumed) · the dead `.jrnl-cta` rule gone from the
+served stylesheet. ⚠️ **Two curls returned a connection reset and succeeded on the retry** — the documented
+proxy artifact, third sighting. **Never report a single failed fetch as a site fault.**
+⚠️ **A MEASUREMENT SLIP WORTH KEEPING, caught by the record: a screen count of `<div class="scr"` returned
+14/22 where the truth is 18/26, because live screens render `class="scr act"`.** ▶ **Match the CLASS LIST,
+never the exact attribute string** — and the tell was the number disagreeing with this file's own history.
 ▶ **THE SHAPE OF IT: her Cowork brief opened by disputing last session's homepage trim, and the dispute
 was the most useful thing in it — because proving the tool wrong produced a reusable diagnosis. Then the
 article itself went in cleanly, and BOTH real bugs found were things only a SECOND article could expose.**
