@@ -118,6 +118,37 @@ MORE to her AI-discoverability goal than the Google one. **Do both on any future
   and it still satisfies a crawler checking the attribute exists.** A capitalised comment at the markup
   says so, so a future session does not "helpfully" fill it in.
 
+### 📏⭐⭐ A THIRD BING FINDING ON THE HOMEPAGE: "HTML SIZE IS TOO LONG" — REAL, MEASURED, NOT BUILT
+Her homepage inspection turned up one the FAQ does not have. ⚠️ **AND CLAUDE'S FIRST READ WAS WRONG AND
+WAS CORRECTED ON THE RECORD: it was called "well within limits" before reading Bing's own panel, which
+names a SOFT LIMIT OF 1 MB.** The homepage is **over it**.
+| page | raw HTML | vs Bing's 1 MB soft limit | on the wire (Brotli) |
+|---|---|---|---|
+| homepage | **1,160,663 B** | **OVER by ~112 KB** | 351 KB |
+| `/faq` | 992,141 B | just under | 293 KB |
+- ⭐ **WHERE THE WEIGHT IS, measured, and it exonerates the route trimming entirely:**
+  homepage = **JS 635 KB (55%) · CSS 317 KB (27%) · markup 209 KB (18%)**;
+  `/faq` = **JS 642 KB (65%) · CSS 317 KB (32%) · markup 27.6 KB (2.8%)**.
+  ▶▶ **The trim cut `/faq`'s MARKUP by 87% and is working exactly as designed. The problem is that 82% of
+  every page is inline CSS + JS, which the trim cannot touch** — an SPA needs all of it on any route.
+- ▶▶ **BING'S DIAGNOSIS FITS THE PAGE PRECISELY: "extraneous code can push the content down in the page
+  source." MEASURED: 332,193 bytes — 29% of the whole document — sits ABOVE any visible content**, because
+  three `<style>` blocks totalling 317 KB fill the head and `<body>` does not begin until the 29% mark.
+- ⭐⭐ **THE FIX IS HALF THE SIZE IT FIRST LOOKED. CSS ALONE IS ENOUGH:**
+  **homepage 1,166 KB → 849 KB (UNDER the limit) · `/faq` 992 KB → 675 KB.**
+  ▶ **So do NOT move the 626 KB of JavaScript** — that means hoisting, scope and execution order across
+  ~77 inline functions. **Moving the CSS is mechanical** (concatenate the three blocks IN THE SAME ORDER —
+  the cascade is order-dependent — and link one file), and it is the exact thing Bing's panel names
+  ("styles at the top of the page"). Browsers then CACHE those 317 KB across every route.
+- ⚠️ **HONEST RISKS TO WEIGH BEFORE BUILDING IT, none fatal:** an external stylesheet is render-blocking,
+  so a COLD first paint is marginally later (repeat visits get faster, which is the trade); the three
+  `<style>` blocks must keep their relative order; and **confirm first that the edge function's string
+  surgery never touches `<style>`** (it rewrites title/meta/canonical/`</head>` and screen divs).
+- ▶ **NOT BUILT, DELIBERATELY — it is a real architectural change to a deliberately single-file app and
+  deserves its own session with renders and tests, not the tail of a schema fix.** ⚠️ **And the strongest
+  argument for it is NOT SEO: she has already had real weak-signal failures** (the broken logo on her own
+  phone at one bar, 2026-08-26), **and 350 KB is slow on a bad connection.** Her audience is on the move.
+
 ### ⚠️ SESSION HYGIENE
 - 🚨 **THE LOCAL `main` BRANCH WAS A STALE CLONE ARTIFACT and `git merge --ff-only` died with "refusing to
   merge unrelated histories."** `origin/main` had been force-updated since the container cloned, so local
@@ -133,6 +164,13 @@ MORE to her AI-discoverability goal than the Google one. **Do both on any future
   `/opt/node22/lib/node_modules/playwright/index.js` **with a DEFAULT import destructured** (CommonJS).
 - ⚠️ **The chromium path moved: `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`** (a bare
   `chromium/` directory exists and is NOT the binary).
+- 🚨⚠️ **A DEPLOY-VERIFICATION FALSE ALARM, AND THE TRAP IS NEW: a live poll for the alt fix ran 29 times
+  reporting "not yet" and Netlify was FINE the whole time — SHE said so and she was right.** The poll
+  watched `/faq` for `<img id="chatPhotoThumb">`, **but that element lives on `s-chat`, which the route
+  trim REMOVES from `/faq`.** It could never match at any deploy state. ▶▶ **THE RULE, sharper than the
+  old one: poll on a string that exists only in the new deploy AND on a route that actually SERVES it.
+  On a trimmed route, check `/` or `/index.html`.** ⚠️ The bare id still greps 2 hits on `/faq` because
+  the JS references it — **match the ELEMENT (`<img id="..."`), never the bare id.**
 - **Green at pause:** faqverify 36/36 (new) · edgepreview 12 · pagetitles 61 · copy 41 · e2e 29.
   ⚠️ `nav.js` timed out in the FOREGROUND reaching external CDNs — **run sweeps in the background**, and
   it cannot touch a JSON blob in the edge function anyway.
