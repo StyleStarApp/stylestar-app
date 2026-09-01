@@ -54,7 +54,13 @@ const TWT   = h => tag(h, /<meta name="twitter:title" content="([^"]*)"/i);
 const CANON = h => tag(h, /<link rel="canonical" href="([^"]*)"/i);
 const LD    = h => (h.match(/application\/ld\+json/g) || []).length;
 
-const DROPPED = ['s-story','s-faq','s-contact','s-privacy','s-terms','s-journal-hub','s-journal'];
+// ⚠️ DERIVED FOR ARTICLES, and 's-trending' joined on 2026-09-01 when What's
+// Trending got its own URL. Every id here names a screen whose full text lives
+// at its own address, which is the whole rule for what the homepage drops.
+const ARTICLE_IDS = [...(/var JOURNAL_ARTICLES=\[([\s\S]*?)\];/.exec(RAW)||[,''])[1]
+  .matchAll(/id:'([^']+)'/g)].map(m => m[1]);
+const DROPPED = ['s-story','s-faq','s-contact','s-privacy','s-terms','s-journal-hub','s-trending']
+  .concat(ARTICLE_IDS);
 const KEPT    = ['s-wel','s-wb','s-quiz','s-load','s-res','s-photo','s-photo-res','s-pref',
                  's-shopstyle','s-chat','s-dream','s-shop','s-wardrobe','s-wishlist','s-a2hs'];
 
@@ -89,8 +95,15 @@ console.log('\n── PART 3 · NEGATIVE CONTROL (a sweep never seen to fail pro
 // no-op, the page must still ship, and this suite must SEE the difference.
 // The CLAIM is that the trim really removes h1s, not that the number is 8 --
 // every new article adds one to the untrimmed page.
+// ⚠️ FULLY DERIVED NOW (2026-09-01). This read `7 + N_ARTICLES`, and that 7
+// was itself a restated number -- it went stale the moment What's Trending
+// became the eighth screen with its own URL and its own <h1>. The real claim,
+// and it is a stronger one: every screen the homepage drops carries EXACTLY
+// ONE h1, and the homepage keeps exactly its own. A new page with its own URL
+// now needs no edit here at all.
 ok('untrimmed homepage has MANY h1s, so PART 2 is measuring something',
-   h1s(RAW) > 1 && h1s(RAW) === 7 + N_ARTICLES, h1s(RAW) + ' with ' + N_ARTICLES + ' articles');
+   h1s(RAW) > 1 && h1s(RAW) === h1s(home) + DROPPED.length,
+   h1s(RAW) + ' raw, ' + h1s(home) + ' trimmed, ' + DROPPED.length + ' dropped');
 ok('untrimmed homepage really carries the article text', RAW.includes('Do I Have to Pick One Style'));
 
 console.log('\n── PART 4 · /journal now carries a real, crawlable link ──');

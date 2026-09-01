@@ -111,7 +111,11 @@ console.log('\n4. Every row goes where it says (returning woman)');
 const ROWS = [
   ['Home', 's-wb'], ['Style Portrait', 's-res'], ['Style Quiz', 's-quiz'], ['Refine your Preferences', 's-pref'], ['Analyze your Outfit', 's-photo'],
   ['Ask your Stylist', 's-chat'], ['Shop your Style', 's-shopstyle'], ['Style Star Mall', 's-shop'], ['Style Star Edit', 's-dream'],
-  ['Your Wishlist', 's-wishlist'], ['Your Wardrobe List', 's-wardrobe'], ["What's Trending", 's-wardrobe'],
+  ['Your Wishlist', 's-wishlist'], ['Your Wardrobe List', 's-wardrobe'],
+  // ⚠️ 's-wardrobe' -> 's-trending', updated DELIBERATELY 2026-09-01: What's
+  // Trending is its own page at /trending now, not a tab on the wardrobe. The
+  // row itself is unchanged; only where it lands is.
+  ["What's Trending", 's-trending'],
   ['My Story', 's-story'], ['FAQ', 's-faq'], ['Privacy', 's-privacy'], ['Terms', 's-terms']
 ];
 for (const [label, dest] of ROWS) {
@@ -127,10 +131,12 @@ for (const [label, dest] of ROWS) {
   const r = await page.evaluate(() => ({
     act: document.querySelector('.scr.act').id,
     closed: !document.body.classList.contains('menu-open'),
-    trendOn: !!document.querySelector('#s-wardrobe .wdr-tab[data-tab="trend"].on')
+    // It used to have to land on the wardrobe with the trend TAB active; now
+    // it has to land on the Trending screen at its own address.
+    trendOn: location.pathname === '/trending'
   }));
   const good = r.act === dest && r.closed && (label !== "What's Trending" || r.trendOn);
-  ok('"' + label + '" → ' + dest + (label === "What's Trending" ? ' (trend tab active)' : ''), good, JSON.stringify(r));
+  ok('"' + label + '" → ' + dest + (label === "What's Trending" ? ' (its own /trending address)' : ''), good, JSON.stringify(r));
 }
 // ---------------------------------------------------------------------------
 console.log("\n4b. Share Style Star: the SITE goes out, never her results (Cath's ask 2026-07-31)");

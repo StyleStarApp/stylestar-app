@@ -89,7 +89,13 @@ const foots = await page.evaluate(() => {
 // gradient ids are unique. (16 -> 17 on 2026-09-01, article #2.) The
 // hardcoded count is kept on purpose: noticing a screen quietly gaining or
 // losing a footer is this assertion's whole job.
-ok('exactly 17 standard-footer containers', foots.n === 17, 'got ' + foots.n);
+// ⚠️ 17 -> 18, updated DELIBERATELY 2026-09-01: What's Trending became its own
+// screen (s-trending) and carries its own footer, exactly like every other page
+// with a real URL. This assertion caught it on the first run, which is the
+// system working. Verified before the number moved: the two sibling checks
+// below (unique gradient id per footer, every tile referencing its own) both
+// pass at 18, so no screen gained a second footer and no id is shared.
+ok('exactly 18 standard-footer containers', foots.n === 18, 'got ' + foots.n);
 const links = await page.evaluate(() => ({
   main: [...document.querySelectorAll('.quiz-footer .sf-row .lnk')].map(e => e.textContent),
   info: [...document.querySelectorAll('.quiz-footer .sf-row2 .lnk')].map(e => e.textContent)

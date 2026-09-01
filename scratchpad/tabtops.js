@@ -1,6 +1,14 @@
 // The two wardrobe tabs open (and close) as siblings (her pick "B", 2026-08-13):
 // My List's how-to card carries the same header construction as Trending's
 // CURATED BY CATHERINE, and Trending gains her closing line under the cards.
+//
+// ⚠️ REPOINTED 2026-09-01, NOT RETIRED. What's Trending moved out of the
+// wardrobe screen and onto its own page at /trending, so every "trend" half of
+// this suite now measures #s-trending instead of .wdr-pane[data-pane="trend"].
+// The CLAIMS are unchanged and still worth holding -- the two tab tops must
+// still look like siblings, because a woman still meets them one tap apart --
+// only where they live moved. (Contrast hiwcheck.js, which was deleted on
+// 2026-08-21 because its SUBJECT was genuinely retired.)
 const chromium = (await import('/opt/node22/lib/node_modules/playwright/index.js')).default.chromium;
 import http from 'http'; import fs from 'fs'; import path from 'path';
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -23,8 +31,8 @@ const m = await page.evaluate(()=>{
   // measure the how-to header while ITS pane is visible…
   const hMeas={cs:cs(h),hearts:hearts.map(hs)};
   // …and Trending's while THAT pane is visible (a display:none element lies)
-  openWardrobe('trend');
-  const t=document.querySelector('.wdr-pane.on .wdr-trend-by');
+  openTrending();
+  const t=document.querySelector('#s-trending .wdr-trend-by');
   const th=[...t.querySelectorAll('.pinkheart')];
   const tMeas={cs:cs(t),hearts:th.map(hs)};
   openWardrobe();
@@ -48,8 +56,8 @@ const fr = await page.evaluate(()=>{
   const howto=document.getElementById('wdrHowto');
   const hcs=getComputedStyle(howto);
   const centered=hcs.textAlign==='center';
-  openWardrobe('trend');
-  const intro=document.querySelector('.wdr-pane.on .wdr-trend-intro');
+  openTrending();
+  const intro=document.querySelector('#s-trending .wdr-trend-intro');
   if(!intro)return{missing:true};
   const ics=getComputedStyle(intro);
   const same=['backgroundColor','borderTopWidth','borderTopColor','borderTopStyle','paddingLeft','paddingTop']
@@ -58,7 +66,7 @@ const fr = await page.evaluate(()=>{
   return{same,centered,visible:intro.getBoundingClientRect?true:true,
     introVisible:true};
 });
-ok('the Trending intro is framed in the SAME card as the how-to', !fr.missing && fr.same);
+ok('the Trending intro is framed in the SAME card as the how-to (across two screens now)', !fr.missing && fr.same);
 ok('the how-to copy is centered like the trend side', fr.centered);
 
 // ⚠️ DELIBERATE REVERSAL (2026-08-15, her call). This used to assert that the
@@ -90,8 +98,8 @@ ok('the collapsed copy is gone from the page', await page.evaluate(()=>!document
 
 console.log('3. Trending closing line (her voice, bookending the tabs)');
 const end = await page.evaluate(()=>{
-  openWardrobe('trend');
-  const e=document.querySelector('#s-wardrobe .wdr-trend-end');
+  openTrending();
+  const e=document.querySelector('#s-trending .wdr-trend-end');
   if(!e)return{missing:true};
   const c=getComputedStyle(e);
   return{text:e.textContent, lora:/Lora/.test(c.fontFamily), up:c.fontStyle==='normal',
@@ -112,7 +120,7 @@ for (const w of [390,360,320]) {
     const oneLine=(()=>{const rg=document.createRange();rg.selectNodeContents(h);
       const tops=[...rg.getClientRects()].map(x=>Math.round(x.top));
       const u=[];tops.forEach(t=>{if(!u.some(v=>Math.abs(v-t)<6))u.push(t)});return u.length===1})();
-    openWardrobe('trend');
+    openTrending();
     const wide=document.documentElement.scrollWidth>innerWidth+1;
     openWardrobe();
     return {oneLine,wide};
@@ -129,19 +137,22 @@ for (const w of [390,360,320]) {
   await page.setViewportSize({width:w,height:1200});
   for (const tab of ['list','trend']) {
     const m = await page.evaluate(t=>{
-      openWardrobe(t==='trend'?'trend':'list');
-      const pane=document.querySelector('.wdr-pane[data-pane="'+t+'"]');
+      // ⚠️ The trend side is its own SCREEN now; the list side is still a pane.
+      const scope=t==='trend'?'#s-trending':'#s-wardrobe';
+      if(t==='trend')openTrending(); else openWardrobe('list');
+      const pane=t==='trend'?document.getElementById('s-trending')
+                            :document.querySelector('.wdr-pane[data-pane="list"]');
       const d=pane.querySelector('.wdr-disclosure');
       if(!d) return null;
       const intro=pane.querySelector('#wdrHowto, .wdr-trend-intro');
       const next=d.nextElementSibling;
       const dr=d.getBoundingClientRect(), ir=intro.getBoundingClientRect(), nr=next.getBoundingClientRect();
       const visible=[...document.querySelectorAll('.wdr-disclosure')].filter(e=>e.getBoundingClientRect().width>0);
-      const links=[...document.querySelectorAll('#s-wardrobe a[href^="http"], #s-wardrobe .wdr-see, #s-wardrobe .tlf')]
+      const links=[...document.querySelectorAll(scope+' a[href^="http"], '+scope+' .wdr-see, '+scope+' .tlf')]
         .filter(e=>e.getBoundingClientRect().width>0);
       const firstLink=links.length?Math.min(...links.map(e=>e.getBoundingClientRect().top)):Infinity;
       return {
-        inPane:!!d.closest('.wdr-pane'),
+        inPane:t==='trend'?!!d.closest('#s-trending'):!!d.closest('.wdr-pane'),
         afterIntro:intro.compareDocumentPosition(d)===Node.DOCUMENT_POSITION_FOLLOWING,
         above:+(dr.top-ir.bottom).toFixed(1),
         below:+(nr.top-dr.bottom).toFixed(1),
@@ -150,7 +161,7 @@ for (const w of [390,360,320]) {
         text:d.textContent.trim()
       };
     }, tab);
-    ok(`${w}px ${tab}: disclosure lives inside the pane, under the intro card`, m && m.inPane && m.afterIntro);
+    ok(`${w}px ${tab}: disclosure lives inside its own screen/pane, under the intro card`, m && m.inPane && m.afterIntro);
     // ⚠️ DELIBERATELY UNEVEN (her call: "lower it down to sit closer to the
     // line"). Centred, it floated between two cards and belonged to neither.
     // The claim under test is the RELATIONSHIP -- it must sit down against the

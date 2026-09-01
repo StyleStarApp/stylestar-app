@@ -496,6 +496,67 @@ PAGES['/journal'] = {
 
 PAGES['/journal'].hubList = true;
 
+
+// ── What's Trending (2026-09-01, her ask: "I would love for what's trending
+// to be searchable, that is something that even I would google often") ─────
+//
+// It was a TAB inside the wardrobe screen until today -- no URL, so no title,
+// no description, no sitemap line, and nothing for a crawler to land on. Now
+// it is #s-trending, its own screen, and the trim below serves that screen
+// alone.
+//
+// ⚠️ THE ITEM LIST IS READ OFF THE SERVED HTML, NOT RETYPED HERE. An edge
+// function cannot import from index.html, which is why an article's slug and
+// title have to be named in both files -- but the trend list changes every
+// season, and a schema block hand-copied here would silently drift from the
+// page the first time she updated it. That is exactly the /faq drift of
+// 2026-09-01 (a snapshot taken once, two copy edits landing after it), and
+// the standing rule that came out of it is: regenerate schema FROM the
+// rendered page, never hand-maintain a second copy.
+// ▶ So this parses the real cards out of the HTML it is about to serve. She
+// edits the markup; the schema follows on its own, always in step, forever.
+function unescHtml(s) {
+  return String(s)
+    .replace(/&rsquo;/g, '\u2019').replace(/&lsquo;/g, '\u2018')
+    .replace(/&rdquo;/g, '\u201d').replace(/&ldquo;/g, '\u201c')
+    .replace(/&hellip;/g, '\u2026').replace(/&mdash;/g, '\u2014')
+    .replace(/&ndash;/g, '\u2013').replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
+}
+function trendSchema(html) {
+  // Matches the card shape written in index.html. If that markup is ever
+  // restructured this returns null and the page simply ships without the
+  // ItemList -- never a broken block, and never a stale one.
+  const re = /<div class="wdr-tcard"><div class="ttf">([^<]*)<\/div><div class="tnf">([^<]*)<\/div>/g;
+  const items = [];
+  let m;
+  while ((m = re.exec(html))) items.push({ name: unescHtml(m[1]), desc: unescHtml(m[2]) });
+  if (!items.length) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: "What's Trending",
+    url: 'https://stylestar.app/trending',
+    mainEntity: {
+      '@type': 'ItemList',
+      name: "What's trending in women's fashion right now",
+      itemListElement: items.map((it, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: it.name,
+        description: it.desc,
+      })),
+    },
+  };
+}
+PAGES['/trending'] = {
+  title: "What's Trending in Women's Fashion Right Now | Style Star",
+  desc: "What's in style right now, chosen by a personal stylist of over 20 years. See what's current and decide what's worth adding to what you already own.",
+  scrId: 's-trending',
+  schemaFrom: trendSchema,
+};
+
 // ── The homepage (2026-09-01, Cowork's rendering audit) ───────────────────
 // `/` is the app itself, so it keeps every screen a woman can reach without a
 // fetch -- the quiz, her portrait, shopping, the wardrobe, the chat, all of
@@ -520,7 +581,12 @@ PAGES['/journal'].hubList = true;
 // head). Every head rewrite below is conditional so this entry cannot touch
 // them. Do not "helpfully" add a title here.
 PAGES['/'] = {
-  dropIds: ['s-story', 's-faq', 's-contact', 's-privacy', 's-terms', 's-journal-hub']
+  // ⚠️ 's-trending' joined this list on 2026-09-01, the day What's Trending got
+  // its own URL, and for the same reason as every other id here: its full text
+  // now lives at /trending, and it carries a real <h1>. Leaving it on the
+  // homepage would put the same words at two addresses AND undo the 8 -> 1 h1
+  // win. Anything trimmed is merged straight back by _selfHealScreens().
+  dropIds: ['s-story', 's-faq', 's-contact', 's-privacy', 's-terms', 's-journal-hub', 's-trending']
     .concat(ARTICLES.map((a) => a.id)),
 };
 
@@ -562,6 +628,16 @@ export default async (request, context) => {
   if (page.schema) {
     html = html.replace('</head>',
       '<script type="application/ld+json">' + JSON.stringify(page.schema) + '</script></head>');
+  }
+  // A schema BUILT FROM THE PAGE ITSELF rather than typed here (What's
+  // Trending -- see trendSchema above). Wrapped, because a schema block is a
+  // bonus and must never be able to take a page down.
+  if (page.schemaFrom) {
+    try {
+      const dyn = page.schemaFrom(html);
+      if (dyn) html = html.replace('</head>',
+        '<script type="application/ld+json">' + JSON.stringify(dyn) + '</script></head>');
+    } catch (e) { /* ship the page without it */ }
   }
   // The body trim (see the long comment above trimScreens): never allowed to
   // take the page down. A failure here still ships everything above --

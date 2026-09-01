@@ -78,6 +78,16 @@
 # /results opens the Style Portrait on a device that has one saved (results
 # live in the browser + behind the emailed token, so the path itself carries
 # nothing personal; a visitor without saved results lands on the welcome).
+# What's Trending (2026-09-01, her ask). It was a TAB inside the wardrobe
+# screen with no address of its own, which is why it was invisible to search
+# -- no title, no description, no sitemap line, nothing to land on. It is its
+# own screen now. Same WARNING as every path above: once this URL is indexed,
+# it never moves.
+[[redirects]]
+  from = "/trending"
+  to = "/index.html"
+  status = 200
+
 [[redirects]]
   from = "/results"
   to = "/index.html"
@@ -148,6 +158,10 @@
 # The Journal DOES get a wildcard here (unlike the five above) because it is
 # the one family meant to grow -- see JOURNAL_ARTICLES in index.html and the
 # PAGES map in page-titles.js. A new article needs no netlify.toml edit.
+[[edge_functions]]
+  path = "/trending"
+  function = "page-titles"
+
 [[edge_functions]]
   path = "/journal"
   function = "page-titles"

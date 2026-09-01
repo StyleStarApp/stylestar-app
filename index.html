@@ -341,7 +341,7 @@
           <div class="wb-row"><span class="wb-chip" style="background:#EACD68;box-shadow:0 3px 7px -3px rgba(201,154,46,.6)"><span class="wb-badge tag" id="wbTrendBadge">New</span><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><span class="wb-lbl"><span class="tt"><b>Your Wardrobe List</b><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">The checklist I use with clients</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
-        <div class="wb-item" wb-lift onclick="openWardrobe('trend')">
+        <div class="wb-item" wb-lift onclick="openTrending()">
           <div class="wb-row"><span class="wb-chip" style="background:#EACD68;box-shadow:0 3px 7px -3px rgba(201,154,46,.6)"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/></svg></span><span class="wb-lbl"><span class="tt"><b>What&rsquo;s Trending</b><svg class="hub-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span class="tr-new" id="trendNewWb">New</span><svg class="wb-arr" style="color:#B8891F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></span><span class="wb-sub">What&rsquo;s in right now, picked by Catherine</span></span></div>
           <div class="wb-shadow"><i></i></div><div class="wb-bar"></div><div class="wb-brks"><span class="wb-brk l"></span><span class="wb-brk r"></span></div>
         </div>
@@ -511,7 +511,7 @@
   <div class="menu-row" onclick="menuGo(showShop)">Style Star Mall</div>
   <div class="menu-grp">Build</div>
   <div class="menu-row" onclick="menuGo(openWardrobe)">Your Wardrobe List</div>
-  <div class="menu-row" onclick="menuGo(function(){openWardrobe('trend')})">What's Trending<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+  <div class="menu-row" onclick="menuGo(function(){openTrending()})">What's Trending<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
   <div class="menu-grp">About</div>
   <div class="menu-row" onclick="menuShare()">Share Style Star</div>
   <div class="menu-row" onclick="menuInstagram()">Follow on Instagram</div>
@@ -670,7 +670,7 @@
         <div class="actrow"><span class="chip" style="background:#EACD68;border:1px solid #C9A44C"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe List</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">The checklist I use with clients</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
-      <div class="act" data-shelf onclick="openWardrobe('trend')">
+      <div class="act" data-shelf onclick="openTrending()">
         <div class="actrow"><span class="chip" style="background:#EACD68;border:1px solid #C9A44C"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px"><path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">What&rsquo;s Trending</span><svg class="hub-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span class="tr-new" id="trendNewRes">New</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">What&rsquo;s in right now, picked by Catherine</div></div></div>
         <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
       </div>
@@ -932,7 +932,7 @@
           <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><path d="M4 6l1.3 1.3L7.8 4.8"/><path d="M4 12l1.3 1.3L7.8 9.8"/><path d="M4 18l1.3 1.3L7.8 15.8"/><path d="M11 6h9M11 12h9M11 18h9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">Your Wardrobe List</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">The checklist I use with clients</div></div></div>
           <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
         </div>
-        <div class="act" data-shelf onclick="openWardrobe('trend')">
+        <div class="act" data-shelf onclick="openTrending()">
           <div class="actrow"><span class="chip"><svg viewBox="0 0 24 24"><path d="M3.2 15.6 9 9.8l3.4 3.4 5.1-5.6"/><path d="M14.4 7.6h3.9v3.9"/></svg></span><div class="tx"><div class="tt-row"><span class="tt">What&rsquo;s Trending</span><svg class="hub-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span class="tr-new" id="trendNewPhoto">New</span><svg class="ar" style="color:#26221c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div><div class="actsub">What&rsquo;s in right now, picked by Catherine</div></div></div>
           <div class="shelf"></div><div class="brk-row"><span class="brk l"></span><span class="brk r"></span></div>
         </div>
@@ -1611,7 +1611,7 @@
     </div>
 
     <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-    <div class="dc-trend-link" onclick="openWardrobe('trend')">Curious what's trending right now? &rarr;</div>
+    <div class="dc-trend-link" onclick="openTrending()">Curious what's trending right now? &rarr;</div>
 
     <button class="btn-outline" onclick="closeDream()" style="max-width:260px;margin:1rem auto 0;display:block" id="dreamBtn">Back</button>
   </div>
@@ -1648,7 +1648,15 @@
 
   <div class="wdr-tabs">
     <div class="wdr-tab" data-tab="list" onclick="wardrobeTab('list')">My List<svg class="wdr-tab-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div>
-    <div class="wdr-tab" data-tab="trend" onclick="wardrobeTab('trend')">What's Trending<svg class="wdr-tab-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg><span class="wdr-tab-badge">New</span></div>
+    <!-- ⚠️ THIS TAB NAVIGATES, it no longer switches a pane (2026-09-01).
+       What's Trending is its own screen at /trending now, because a pane
+       inside another screen can have no URL of its own. Keeping the SAME
+       words at BOTH addresses is what the homepage trim exists to prevent,
+       so the pane is gone rather than duplicated.
+       ▶ Her call was to keep the bar looking exactly as it does: nothing
+       visually changes, every discovery route her mother's testing produced
+       survives, and the arrow now literally means "takes you somewhere". -->
+    <div class="wdr-tab" data-tab="trend" onclick="openTrending()">What's Trending<svg class="wdr-tab-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg><span class="wdr-tab-badge">New</span></div>
   </div>
   <div class="wdr-tabhint">Tap either list</div>
   <!-- ▶ THE COMMISSION LINE LIVES INSIDE EACH PANE, under that tab's intro card
@@ -1689,20 +1697,77 @@
     </div>
   </div>
 
-  <div class="wdr-pane" data-pane="trend">
-    <!-- The intro wears the SAME framed card as My List's how-to (her catch
-         2026-08-13: the two tab tops must match; class reuse = never drifts). -->
-    <div class="wdr-howto wdr-trend-intro">
-    <div class="wdr-trend-by"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>CURATED BY CATHERINE</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-    <div class="wdr-trend-note">Here&rsquo;s what&rsquo;s IN right now. It&rsquo;s always fun to refresh your wardrobe with something current<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-    </div>
-    <div class="wdr-disclosure">Some links may earn a commission.</div>
-    <div class="wdr-tstack" id="wdrTrendBody"></div>
-    <div class="wdr-trend-end">Check back for trend updates. This list changes with the seasons<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-  </div>
-
   <div class="wdr-foot" data-std-foot></div>
   <div class="wdr-top" id="wdrTopBtn" role="button" title="Back to top" onclick="wardrobeToTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M5.5 12 12 5.5 18.5 12"/></svg>Top</div>
+</div>
+
+<!-- ===== What's Trending =====================================================
+     ⚠️⚠️ THIS CONTENT LIVES IN THE MARKUP, NOT IN A JS ARRAY, AND THAT IS THE
+     WHOLE POINT OF THIS SCREEN (2026-09-01, her ask: "I would love for what's
+     trending to be searchable").
+     Until today What's Trending was a PANE inside #s-wardrobe with no URL at
+     all, and its cards were BUILT CLIENT-SIDE by renderWardrobeTrend() into an
+     empty <div>. So even once it had an address of its own, a crawler that
+     never runs JavaScript -- GPTBot, ClaudeBot, PerplexityBot, and Google's
+     own first pass -- would have fetched /trending and found an EMPTY PAGE.
+     That is exactly the bug the Journal hub had on 2026-09-01, where the only
+     route to the article was sitemap.xml.
+     ▶ THE FIX, and it is the same discipline as the Style Star Edit: the
+     fifteen cards below ARE the content and the only source of truth. The app
+     reads them back out of this markup (_trendItems()) for the teaser strip on
+     My List and for the "See ideas" lookup, and _decorateTrendCards() adds the
+     tappable bits at runtime -- exactly the _wlDecorateEdit() pattern.
+     ▶▶ SO WHEN THE TRENDS CHANGE, EDIT THIS LIST AND NOTHING ELSE. A card
+     added here appears in the teaser, in the "New" pill count and in the
+     ItemList schema on its own, with no second list to keep in step.
+     ⚠️ ORDER MATTERS: the teaser strip at the bottom of My List shows only the
+     FIRST THREE, and that strip is a main way people find this page. Lead with
+     whatever is most seasonal, and re-sort when the weather turns.
+     ⚠️ AND BUMP /trending's <lastmod> IN sitemap.xml IN THE SAME COMMIT. This
+     is the ONE page on the site where a moving lastmod is honest and valuable:
+     freshness is what a trend page competes on. It is also the one page that
+     can go stale in a way a reader notices -- the closing line below promises
+     "check back for trend updates", and that promise is only true while it is.
+     ⚠️ There is exactly ONE <h1> here, and it must stay that way -- the whole
+     screen is what /trending serves after the body trim. Her own name for the
+     page is the h1; the longer, keyword-carrying title Google displays lives
+     in page-titles.js as metaTitle. Two titles, two jobs -- the same split as
+     journal article #2. -->
+<div class="scr" id="s-trending">
+  <div class="top-back-wrap"><button class="top-back" onclick="closeTrending()">&larr; Back</button></div>
+  <div class="wdr-head">
+    <!-- ⚠️ Unique gradient id (trendHeadStar): a shared id would resolve to a
+         def inside a hidden screen, which Safari may refuse to paint. -->
+    <svg class="wdr-headstar" viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="trendHeadStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#trendHeadStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>
+    <h1 class="wdr-title">What's Trending</h1>
+  </div>
+
+  <div class="wdr-howto wdr-trend-intro">
+    <div class="wdr-trend-by"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>CURATED BY CATHERINE</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <div class="wdr-trend-note">Here&rsquo;s what&rsquo;s IN right now. It&rsquo;s always fun to refresh your wardrobe with something current<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+  </div>
+  <div class="wdr-disclosure">Some links may earn a commission.</div>
+  <div class="wdr-tstack" id="wdrTrendBody">
+    <div class="wdr-tcard"><div class="ttf">Butter Yellow</div><div class="tnf">The soft buttery yellow everyone is wearing. Beautiful with white and denim.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Romantic Flowy Dresses</div><div class="tnf">Soft, easy, and they move beautifully. Feminine without any fuss.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Linen Everything</div><div class="tnf">Nothing looks more expensive in the heat. Wrinkles are part of the charm.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Straw and Basket Bags</div><div class="tnf">The easiest way to make a simple summer outfit look considered.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Wide-Leg Jeans</div><div class="tnf">Softer than skinny, still polished. The easiest swap if your denim feels dated.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Statement Earrings</div><div class="tnf">The single easiest way to feel current without changing a thing about your style.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Ballet Flats</div><div class="tnf">Back, and better than ever. Comfortable enough for anywhere.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Suede</div><div class="tnf">Soft, rich, and it makes even a simple jacket feel special.</div></div>
+    <div class="wdr-tcard"><div class="ttf">A Great Trench</div><div class="tnf">A quiet trend that never really left. Instant polish over anything.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Belted Shirt Dresses</div><div class="tnf">One piece and a belt, and you are done. It defines the waist beautifully.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Asymmetrical Hem Skirts</div><div class="tnf">One angled hem turns a simple skirt into something designed.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Military Inspired Jackets</div><div class="tnf">A little structure, a little edge. Gorgeous thrown over something soft.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Large Cuff Bracelets</div><div class="tnf">One bold cuff is the whole accessory. Nothing else needed.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Preppy Loafers</div><div class="tnf">Comfortable enough for all day, appropriate for work or casual.</div></div>
+    <div class="wdr-tcard"><div class="ttf">Chunky Gold Jewelry</div><div class="tnf">Bigger, bolder gold. One piece is enough to feel finished.</div></div>
+  </div>
+  <div class="wdr-trend-end">Check back for trend updates. This list changes with the seasons<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+
+  <div class="wdr-foot" data-std-foot></div>
+  <div class="wdr-top" id="trendTopBtn" role="button" title="Back to top" onclick="wardrobeToTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M5.5 12 12 5.5 18.5 12"/></svg>Top</div>
 </div>
 
 <!-- My Wishlist — the specific pieces she saved to come back to.
@@ -1946,7 +2011,7 @@
     <div class="faq-item"><h3 class="faq-q">Can I wear sandals in the fall?</h3><div class="faq-a">Of course. But if you want an outfit to feel more seasonal, a closed-toe shoe is the fastest way there. A loafer or a ballet flat shifts the whole look without costing you any comfort.</div></div>
     <div class="faq-item"><h3 class="faq-q">What should I wear to a fall event in Florida?</h3><div class="faq-a">A dress in a deeper shade, a closed-toe flat or low heel, and one leather or suede accessory. If the venue will be cold, add a lightweight layer that the outfit doesn't depend on.</div></div>
     <div class="faq-item"><h3 class="faq-q">Do I need to buy a separate fall wardrobe if I live somewhere warm?</h3><div class="faq-a">Not usually. Most warm-weather wardrobes already contain plenty of fall. It's a matter of which pieces get worn together, and which shoes and accessories they're worn with.</div></div>
-    <div class="faq-item"><h3 class="faq-q">How do I know what's actually in style this fall?</h3><div class="faq-a">That's what the What's Trending page is for. I keep it updated with the pieces I'm seeing everywhere right now, so you can see what's current and decide what's worth adding to what you already have. <span class="lnk" onclick="openWardrobe('trend')">See what's trending &rarr;</span></div></div>
+    <div class="faq-item"><h3 class="faq-q">How do I know what's actually in style this fall?</h3><div class="faq-a">That's what the What's Trending page is for. I keep it updated with the pieces I'm seeing everywhere right now, so you can see what's current and decide what's worth adding to what you already have. <span class="lnk" onclick="openTrending()">See what's trending &rarr;</span></div></div>
     <div class="faq-item"><h3 class="faq-q">How do I find some easy ideas on what to add to my fall wardrobe?</h3><div class="faq-a">The <span class="lnk" onclick="startQ()">free Style Star quiz</span> will tell you where your style already sits, and show you plenty of options that suit it. It takes a few minutes, it's completely free, and there's no sign-up required.</div></div>
 
     <h2 class="jrnl-h2">One Last Thing</h2>
@@ -2283,7 +2348,7 @@ function retakeQuiz(){
 // pretty path and the router at the bottom of this file opens the right screen.
 // The policy text is NOT duplicated anywhere -- a reviewer sees the real page.
 // WARNING: once a URL is submitted to an affiliate network, never change its path.
-var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-res':'/results'};
+var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-trending':'/trending','s-res':'/results'};
 // ---- Style Journal: a REGISTRY, not one hand-added route per article ------
 // Her ask (2026-08-26): after building article #1's routing by hand -- a
 // netlify.toml block, a page-titles.js entry, a _ROUTES line, an _openRoute
@@ -2350,6 +2415,7 @@ function _openRoute(id){
   else if(id==='s-story')showStory();
   else if(id==='s-faq')showFAQ();
   else if(id==='s-contact')showContact();
+  else if(id==='s-trending')openTrending();
   else if(id==='s-journal-hub')openJournalHub();
   else if(_journalById(id))openJournalArticle(id);
   else if(id==='s-res'){
@@ -2480,6 +2546,17 @@ function show(id,skipHistory){
   // ENTRANCE surfaces every piece of state only the old entrances hydrated.
   if(id==='s-journal-hub')try{_renderJournalHub();}catch(e){}
   if(id==='s-story')try{_syncStoryQuiz();}catch(e){}
+  // ⚠️ WHAT'S TRENDING BELONGS HERE FOR EXACTLY THE REASON ABOVE, and it was
+  // caught by reproducing it rather than by reading (2026-09-01): with these
+  // two lines inside openTrending() instead, a woman who landed on a journal
+  // article from a search result and tapped through to Trending BEFORE the
+  // self-heal fetch landed got the page with all fifteen cards and ZERO "See
+  // ideas in your style" links -- show() had returned early, so everything
+  // after it ran against a screen that did not exist yet -- and the "New" pill
+  // never stood down. Measured on a deliberately slow /index.html: 15 cards,
+  // 0 links, no stamp. From here both are covered, because show() replays
+  // itself once the fetch lands.
+  if(id==='s-trending'){try{_decorateTrendCards();}catch(e){}try{markTrendSeen();}catch(e){}}
   // Catherine's whisper: stamp "she's been there" for the concierge steps.
   // (The whisper itself re-decides inside updateWbScreen, which covers both
   // the boot path and show('s-wb').)
@@ -2529,7 +2606,7 @@ function show(id,skipHistory){
   // render caught it -- two rows of app chrome under somebody's gift list. That
   // is the hardcoded-list failure mode happening to the very list the comment
   // warns about, one screen after it was written.
-  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id.indexOf('s-journal')===0||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
+  if(gf)gf.style.display=(ownChrome||ownFoot||id==='s-trending'||id==='s-shop'||id==='s-quiz'||id==='s-faq'||id==='s-pref'||id==='s-story'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id.indexOf('s-journal')===0||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
   if(id==='s-wb')updateWbScreen();
   // ⚠️ BOTH call sites are load-bearing: the BOOT path adds .act to s-wel
   // directly, without going through show(), exactly as it does for s-wb. A
@@ -2538,7 +2615,7 @@ function show(id,skipHistory){
   // Hide the shared global header logo on those screens — each shows its own instead.
   var hd=document.querySelector('.hdr');
   // The Style Star Edit shows its own "Style Star Edit" logo-title, so hide the shared logo there too.
-  if(hd)hd.style.display=(ownChrome||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id.indexOf('s-journal')===0||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
+  if(hd)hd.style.display=(ownChrome||id==='s-trending'||id==='s-dream'||id==='s-pref'||id==='s-pref-done'||id==='s-shopstyle'||id==='s-shop'||id==='s-faq'||id==='s-privacy'||id==='s-terms'||id==='s-contact'||id==='s-a2hs'||id.indexOf('s-journal')===0||id==='s-wardrobe'||id==='s-wishlist'||id==='s-sharelist')?'none':'';
   var card=document.querySelector('.ss');
   // Square the full card on the curtain/dark full-bleed screens and the
   // framed outfit-upload screen so their backgrounds match the squared
@@ -2581,7 +2658,9 @@ function show(id,skipHistory){
   // Silver+gold chrome mirror around Refine Preferences + its "all set" screen.
   if(card)card.classList.toggle('pref-mirror',id==='s-pref'||id==='s-pref-done');
   // Same gold+silver display-case frame around Your Wardrobe.
-  if(card)card.classList.toggle('wardrobe-mirror',id==='s-wardrobe');
+  // What's Trending wears the same frame -- it was a tab on this page until
+  // 2026-09-01 and should still look like part of the same room.
+  if(card)card.classList.toggle('wardrobe-mirror',id==='s-wardrobe'||id==='s-trending');
   // My Wishlist reuses the same black-and-stitch room frame -- one frame language.
   if(card)card.classList.toggle('wishlist-mirror',id==='s-wishlist');
   document.documentElement.classList.toggle('wl-velvet',id==='s-wishlist');
@@ -5285,7 +5364,7 @@ var _WB_NEXT=[
   {k:'wishlist',when:function(){return !!(wardrobeData&&Array.isArray(wardrobeData.wishlist)&&wardrobeData.wishlist.length)},
    done:function(){return !!localStorage.getItem('ss_seen_wishlist')},go:function(){openWishlist()},
    h:'Next, open <b>Your Wishlist</b>, every piece you&rsquo;ve hearted in one place. Shop them all when you&rsquo;re ready '+_WBN_HEART},
-  {k:'trending',done:function(){return localStorage.getItem('ss_trending_seen')!==null},go:function(){openWardrobe('trend')},
+  {k:'trending',done:function(){return localStorage.getItem('ss_trending_seen')!==null},go:function(){openTrending()},
    h:'Next, see <b>What&rsquo;s Trending</b><svg class="hub-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg>, my picks of what&rsquo;s in right now. A splash of current keeps your look fresh '+_WBN_HEART},
   // ▶ THE GRADUATION WHISPER (2026-08-13, HER line — the long-waited words):
   // after all five journey stops resolve (visited, skipped, or never eligible),
@@ -7174,29 +7253,31 @@ const wardrobeItems=[
     {id:'ex6',n:'Hair accessories',common:false}
   ]}
 ];
-// Seasonal trend picks — Catherine's own curation (not AI), same spirit as the
-// Style Star Edit. Update this list whenever trends change; nothing here is
-// pulled from a live feed.
-// Order matters: the teaser strip at the bottom of My List shows only the FIRST
-// THREE, and that strip is a main way people discover this tab. So lead with
-// whatever is most seasonal, and re-sort when the weather turns.
-const trendItems=[
-  {n:'Butter Yellow',note:"The soft buttery yellow everyone is wearing. Beautiful with white and denim."},
-  {n:'Romantic Flowy Dresses',note:"Soft, easy, and they move beautifully. Feminine without any fuss."},
-  {n:'Linen Everything',note:"Nothing looks more expensive in the heat. Wrinkles are part of the charm."},
-  {n:'Straw and Basket Bags',note:"The easiest way to make a simple summer outfit look considered."},
-  {n:'Wide-Leg Jeans',note:"Softer than skinny, still polished. The easiest swap if your denim feels dated."},
-  {n:'Statement Earrings',note:"The single easiest way to feel current without changing a thing about your style."},
-  {n:'Ballet Flats',note:"Back, and better than ever. Comfortable enough for anywhere."},
-  {n:'Suede',note:"Soft, rich, and it makes even a simple jacket feel special."},
-  {n:'A Great Trench',note:"A quiet trend that never really left. Instant polish over anything."},
-  {n:'Belted Shirt Dresses',note:"One piece and a belt, and you are done. It defines the waist beautifully."},
-  {n:'Asymmetrical Hem Skirts',note:"One angled hem turns a simple skirt into something designed."},
-  {n:'Military Inspired Jackets',note:"A little structure, a little edge. Gorgeous thrown over something soft."},
-  {n:'Large Cuff Bracelets',note:"One bold cuff is the whole accessory. Nothing else needed."},
-  {n:'Preppy Loafers',note:"Comfortable enough for all day, appropriate for work or casual."},
-  {n:'Chunky Gold Jewelry',note:"Bigger, bolder gold. One piece is enough to feel finished."}
-];
+// ⚠️⚠️ THE TREND LIST LIVES IN THE MARKUP NOW, NOT IN AN ARRAY HERE
+// (2026-09-01, when What's Trending became its own page at /trending).
+// It used to be a `const trendItems=[...]` right here, rendered client-side
+// into an empty div -- which meant the raw HTML a crawler reads contained NO
+// trend content at all. See the long comment above <div id="s-trending">.
+// ▶ This reads the fifteen cards back out of that markup, so there is still
+// exactly ONE place to edit when the trends change: the markup itself, the
+// same as the Style Star Edit. Never reintroduce a second list up here.
+// ⚠️ THE CACHE ONLY FILLS ON A NON-EMPTY READ, and that is load-bearing: on a
+// trimmed route (/faq, /story, an article...) #s-trending has been stripped
+// out of the served HTML, so this legitimately returns [] until
+// _selfHealScreens() merges it back. Caching that empty answer would leave the
+// teaser strip and the "New" pill permanently blank for the rest of the visit.
+var _trendCache=null;
+function _trendItems(){
+  if(_trendCache&&_trendCache.length)return _trendCache;
+  var out=[];
+  document.querySelectorAll('#s-trending .wdr-tstack .wdr-tcard').forEach(function(c){
+    var n=c.querySelector('.ttf'),d=c.querySelector('.tnf');
+    if(!n)return;
+    out.push({n:(n.textContent||'').trim(),note:d?(d.textContent||'').trim():''});
+  });
+  if(out.length)_trendCache=out;
+  return out;
+}
 let wardrobeData={items:{},custom:[]};
 // Make any wardrobe record safe to use: guarantee the shape, and enforce the
 // zero-pre-tap model. Old saved records (local OR from Supabase/restore) may hold
@@ -7293,12 +7374,13 @@ function _wardrobeGetState(id){
   const c=wardrobeData.custom.find(function(x){return x.id===id});
   return c?c.state:'unset';
 }
-// Trend items ("trend{i}") resolve straight from trendItems, not wardrobeData —
+// Trend items ("trend{i}") resolve straight from _trendItems(), not wardrobeData —
 // they're Catherine's curation, not part of her personal list.
 function _wardrobeFindName(id){
   if(id.indexOf('trend')===0){
     const m=id.match(/^trendT?(\d+)$/);
-    if(m&&trendItems[+m[1]])return trendItems[+m[1]].n;
+    var _ti=_trendItems();
+    if(m&&_ti[+m[1]])return _ti[+m[1]].n;
   }
   for(let i=0;i<wardrobeItems.length;i++){
     const found=wardrobeItems[i].items.find(function(it){return it.id===id});
@@ -7584,6 +7666,16 @@ function _wdrRenderShopEnd(n){
 // Back-to-top, shown once she's a screenful or so into the list. Guarded on the
 // screen being active so the fixed button can never linger over another screen.
 function _wdrTopBtnUpdate(){
+  // What's Trending is its own screen now and wants the same button, so this
+  // drives BOTH. Each is guarded on ITS screen being active, so a fixed button
+  // can never linger over the other one.
+  const bt=document.getElementById('trendTopBtn'),ts=document.getElementById('s-trending');
+  if(bt&&ts){
+    let tblocked=false;
+    const te=document.querySelector('#s-trending .wdr-trend-end');
+    if(te&&te.offsetParent)tblocked=te.getBoundingClientRect().top<window.innerHeight-52;
+    bt.classList.toggle('on',ts.classList.contains('act')&&window.scrollY>620&&!tblocked);
+  }
   const b=document.getElementById('wdrTopBtn'),s=document.getElementById('s-wardrobe');
   if(!b||!s)return;
   // Stand down once What's Trending reaches the button's row — otherwise it
@@ -8063,30 +8155,45 @@ async function _wdrMoreIdeas(id,boxId){
     if(btn){btn.textContent='+ See more ideas';btn.classList.remove('busy');}
   }
 }
-function renderWardrobeTrend(){
+// The cards are already in the markup (that is what makes them crawlable), so
+// this only adds the parts that need JavaScript: the "See ideas in your style"
+// link and the empty box its carousel opens into. Exactly the pattern
+// _wlDecorateEdit() uses on the Style Star Edit -- markup is the source, the
+// app decorates it -- so a trend added by hand gets its link automatically.
+function _decorateTrendCards(){
   const body=document.getElementById('wdrTrendBody');
-  if(!body||body.dataset.built)return;
-  let html='';
-  trendItems.forEach(function(item,i){
+  if(!body||body.dataset.decorated)return;
+  const cards=body.querySelectorAll('.wdr-tcard');
+  cards.forEach(function(c,i){
+    if(c.querySelector('.tlf'))return;
     const tid='trend'+i;
-    html+='<div class="wdr-tcard"><div class="ttf">'+_esc(item.n)+'</div><div class="tnf">'+_esc(item.note)+'</div><span class="tlf" onclick="wardrobeSeeIdeas(\''+tid+'\')">See ideas in your style'+_WDR_ARR+'</span><div class="wdr-expand" id="wx_'+tid+'" style="display:none"></div></div>';
+    const lnk=document.createElement('span');
+    lnk.className='tlf';
+    lnk.setAttribute('onclick',"wardrobeSeeIdeas('"+tid+"')");
+    lnk.innerHTML='See ideas in your style'+_WDR_ARR;
+    c.appendChild(lnk);
+    const box=document.createElement('div');
+    box.className='wdr-expand';box.id='wx_'+tid;box.style.display='none';
+    c.appendChild(box);
   });
-  body.innerHTML=html;
-  body.dataset.built='1';
+  // ⚠️ Only stamp when there was really something to decorate, so a call that
+  // lands before self-heal has restored the screen does not lock this out.
+  if(cards.length)body.dataset.decorated='1';
 }
 // Bottom-of-Her-List horizontal teaser — a 2nd entry point into the same
-// trendItems. preview=true shows the first 3 + a "See all trending" card that
+// the same markup. preview=true shows the first 3 + a "See all trending" card that
 // jumps to the full tab; preview=false shows every trend item.
 function renderWardrobeTeaser(preview){
   const body=document.getElementById('wdrTeaserBody');
   if(!body)return;
-  const list=preview?trendItems.slice(0,3):trendItems;
+  const all=_trendItems();
+  const list=preview?all.slice(0,3):all;
   let html='';
   list.forEach(function(item,i){
     const tid='trendT'+i;
     html+='<div class="wdr-tt-card"><div class="wdr-tt-n">'+_esc(item.n)+'</div><div class="wdr-tt-note">'+_esc(item.note)+'</div><span class="wdr-tt-see" onclick="wardrobeSeeIdeas(\''+tid+'\',\'wdrTeaserIdeas\')"><span class="wdr-see-star">&#9733;</span> See ideas in your style'+_WDR_ARR+'</span></div>';
   });
-  if(preview&&trendItems.length>3){
+  if(preview&&all.length>3){
     html+='<div class="wdr-tt-card wdr-tt-all" onclick="wardrobeSeeAllTrending()">See all trending &rarr;</div>';
   }
   body.innerHTML=html;
@@ -8130,10 +8237,7 @@ function _observeTeaserNudge(){
     io.observe(el);
   }catch(e){_teaserNudged=true;_nudgeScroll(el)}
 }
-function wardrobeSeeAllTrending(){
-  wardrobeTab('trend');
-  try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}
-}
+function wardrobeSeeAllTrending(){openTrending();}
 let wardrobePrevScreen='s-wel';
 function openWardrobe(tab){
   const cur=document.querySelector('.scr.act');
@@ -8171,22 +8275,42 @@ function openWardrobe(tab){
   refreshTrendBadge();
   wardrobeTab(tab||'list');
   renderWardrobeList();
-  renderWardrobeTrend();
   renderWardrobeTeaser(true);
   _wdrTopBtnUpdate();   // sync back-to-top with wherever the page has landed
 }
 function closeWardrobe(){
-  // If she's on the Trending tab (reached via the toggle or the bottom-of-list
-  // "See all trending" card), Back steps her to Her List first rather than
-  // exiting the whole page. A second Back then leaves.
-  const trendPane=document.querySelector('#s-wardrobe .wdr-pane[data-pane="trend"]');
-  if(trendPane&&trendPane.classList.contains('on')){
-    wardrobeTab('list');
-    try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}
-    return;
-  }
+  // ⚠️ This used to step her from the Trending TAB back to My List before
+  // leaving the page. That branch is gone with the pane: Trending is its own
+  // screen now, so its own Back (closeTrending) does that job properly, and
+  // the browser's Back walks the real history instead of a pane toggle.
   document.querySelector('.quiz-footer').style.display='';
   showBack(wardrobePrevScreen);
+}
+
+// ===== What's Trending, its own screen (2026-09-01) =========================
+// Her ask: "I would love for what's trending to be searchable, that is
+// something that even I would google often." It could not be, as a pane inside
+// the wardrobe: a pane has no address, so it had no title, no description, no
+// sitemap line and nothing for a crawler to land on.
+// ⚠️ EVERY ENTRY POINT ROUTES THROUGH HERE -- the wardrobe tab, the Menu row,
+// three Build hub rows, the Edit's link, the FAQ answer, the Welcome Back
+// whisper, and the teaser strip's "See all trending" card. Nine doors, one
+// function: grep openTrending before adding a tenth.
+var trendingPrevScreen='s-wb';
+function openTrending(){
+  const cur=document.querySelector('.scr.act');
+  if(cur&&cur.id&&cur.id!=='s-trending')trendingPrevScreen=cur.id;   // self-link guard
+  // ⚠️ THE CARDS AND THE "New" PILL ARE HYDRATED IN show(), NOT HERE. See the
+  // capitalised comment at that call site: on a trimmed route show() returns
+  // early and replays after the heal, so anything done here would run against
+  // a screen that is not on the page yet.
+  show('s-trending');
+  document.querySelector('.quiz-footer').style.display='none';
+  _wdrTopBtnUpdate();
+}
+function closeTrending(){
+  document.querySelector('.quiz-footer').style.display='';
+  showBack(trendingPrevScreen);
 }
 
 // ===== My Wishlist =========================================================
@@ -9039,7 +9163,8 @@ function openWishlist(){
 function closeWishlist(){show(wishlistPrevScreen||'s-wb');}
 // The wardrobe's backdrop and frame swap with the tab (her design, 2026-08-10).
 // Driven from BOTH show() and wardrobeTab(), because the screen can be opened
-// straight onto either tab -- openWardrobe('trend') does exactly that.
+// straight onto My List. (What's Trending left this screen on 2026-09-01 --
+// it is openTrending() and its own address now, not a tab on this one.)
 // ▶ HER RETHINK (2026-08-10): the per-tab colour flip is GONE. It repainted the
 // entire screen on a tab tap -- gold-on-black becoming black-on-gold -- so one
 // page had two identities, which was most of the "muchness" she was reacting to.
@@ -9053,7 +9178,10 @@ function wardrobeTab(which){
   document.querySelectorAll('#s-wardrobe .wdr-tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===which)});
   document.querySelectorAll('#s-wardrobe .wdr-pane').forEach(function(p){p.classList.toggle('on',p.dataset.pane===which)});
   _wdrSkin();
-  if(which==='trend')markTrendSeen();
+  // ⚠️ No trend branch any more -- the "What's Trending" tab NAVIGATES to
+  // /trending (openTrending), it does not switch a pane. Only 'list' is a real
+  // pane on this screen now; the toggling above is what keeps the two tabs
+  // looking right when she is standing on My List.
 }
 
 let privacyPrevScreen='s-wel';
@@ -9961,14 +10089,18 @@ function markEditSeen(){
 // Same pattern for What's Trending: when Catherine adds a trend, returning
 // users see a gold NEW pill until they open the Trending tab. Signature = the
 // number of trend items, so adding one is all it takes to light it up again.
-function wbTrendSig(){return trendItems.length;}
+function wbTrendSig(){return _trendItems().length;}
 function wbTrendHasNew(){
   var sig=wbTrendSig();if(!sig)return false;
   var seen=null;try{seen=localStorage.getItem('ss_trending_seen');}catch(e){}
   return seen===null||Number(seen)<sig;
 }
 function markTrendSeen(){
-  try{localStorage.setItem('ss_trending_seen',String(wbTrendSig()));}catch(e){}
+  // ⚠️ NEVER STAMP A ZERO. wbTrendSig() reads the markup, which is legitimately
+  // absent on a trimmed route until self-heal runs; stamping 0 there would make
+  // the pill light up again the moment the real fifteen came back.
+  var sig=wbTrendSig();
+  if(sig)try{localStorage.setItem('ss_trending_seen',String(sig));}catch(e){}
   refreshWbBadges();
 }
 // The pill on the Trending tab itself (the Welcome Back entry pill is handled

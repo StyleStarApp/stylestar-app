@@ -267,13 +267,34 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    her signature pink, one clean turquoise border. */
 
 /* ===== Your Wardrobe ===== */
-#s-wardrobe .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px;text-align:center}
+/* ⚠️⚠️ EVERY #s-wardrobe RULE IN THIS FILE CARRIES A #s-trending TWIN, AND THAT
+   IS DELIBERATE (2026-09-01, when What's Trending became its own page).
+   What's Trending used to be a PANE inside #s-wardrobe, so all of its styling
+   was written scoped to that id. The moment its markup moved to its own screen
+   -- which it had to, to get a real URL of its own -- every one of those rules
+   stopped applying to it. That is the exact trap that rendered the A2HS heart
+   at default size on 2026-08-05: A CLASS CARRIES ITS STYLING ONLY INSIDE THE
+   SCOPE THAT DEFINES IT, and moving markup to a new screen does NOT bring its
+   CSS along.
+   ▶ So the twins were added MECHANICALLY, to all 147 selector parts, not just
+   to the ~35 the trending page visibly uses. Completeness beats tidiness here:
+   a rule missed in a media query is invisible in the sandbox and shows up as a
+   subtle wrong-size, wrong-spacing bug on her phone. A twin whose class never
+   appears on #s-trending simply never matches, and costs nothing.
+   ⚠️ Written as a duplicated selector, NOT :is(#s-wardrobe,#s-trending). Same
+   specificity either way, but an unsupported selector invalidates the WHOLE
+   rule -- which would take the wardrobe page down with it. Plain duplication
+   cannot fail anywhere.
+   ▶ IF YOU ADD A NEW #s-wardrobe RULE: give it a #s-trending twin unless you
+   are certain the class only ever appears on My List. scratchpad/trending.js
+   asserts the two stay in step. */
+#s-wardrobe .wdr-title,#s-trending .wdr-title{font:400 26px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;display:inline-block;position:relative;padding-bottom:4px;text-align:center}
 /* Her call (2026-08-10): the rule runs the FULL width of the words, not inset.
    It was left/right 8%, which read too short under the no-name title. Because
    the title block now hugs its widest line (the forced break above), 0/0 means
    the rule is exactly as wide as the longest line of the heading. */
-#s-wardrobe .wdr-title::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#E0B84C}
-#s-wardrobe .wdr-title::before{content:"";position:absolute;left:63%;bottom:-3px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C)}
+#s-wardrobe .wdr-title::after,#s-trending .wdr-title::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#E0B84C}
+#s-wardrobe .wdr-title::before,#s-trending .wdr-title::before{content:"";position:absolute;left:63%;bottom:-3px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#F8EEC0,#DFB94E 58%,#AF811C)}
 /* ⚠️ THE 8px TOP MARGIN IS THE STAR'S HEADROOM, her pick "B" 2026-08-11, and it
    is the one thing on this header that is allowed to move. Measured by
    RASTERISING the title's painted ink directly under the star: the letters
@@ -290,7 +311,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    children are positioned against the PADDING BOX, whose top edge padding does
    not move, so padding lets the title drop while the star's `top` stays an
    independent number. Change one without disturbing the other. */
-#s-wardrobe .wdr-head{text-align:center;margin-bottom:6px;padding-top:10px;position:relative}
+#s-wardrobe .wdr-head,#s-trending .wdr-head{text-align:center;margin-bottom:6px;padding-top:10px;position:relative}
 /* Her pick "A" + her placement call, 2026-08-11: a star on the header, but
    MOVE NOTHING -- the title, Back and the MENU chip all stay exactly where they
    are. ⚠️ SO IT MUST BE position:absolute AND COST ZERO LAYOUT. There is only
@@ -323,20 +344,20 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    edge margins are exactly where this sandbox and her real phone have disagreed
    before (the wishlist Back button, the cream stitch, the corner hearts). If it
    sits wrong on her device, 42px is the one-number fallback. */
-#s-wardrobe .wdr-headstar{position:absolute;left:50%;top:-39px;width:48px;height:48px;transform:translateX(-50%);pointer-events:none}
-#s-wardrobe .wdr-sub{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:10px}
-#s-wardrobe .wdr-sub b{color:#B08830;font-weight:600}
-#s-wardrobe .wdr-tabs{display:flex;gap:8px;margin:18px 0 0}
+#s-wardrobe .wdr-headstar,#s-trending .wdr-headstar{position:absolute;left:50%;top:-39px;width:48px;height:48px;transform:translateX(-50%);pointer-events:none}
+#s-wardrobe .wdr-sub,#s-trending .wdr-sub{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;margin-top:10px}
+#s-wardrobe .wdr-sub b,#s-trending .wdr-sub b{color:#B08830;font-weight:600}
+#s-wardrobe .wdr-tabs,#s-trending .wdr-tabs{display:flex;gap:8px;margin:18px 0 0}
 /* The unselected tab used to be transparent with light grey text, which reads
    as "disabled" rather than "the other option" -- real testing showed a user
    never realised she could tap it. It now gets a cream fill, darker text and
    an arrow, so both tabs look like buttons: one pressed in, one not. */
-#s-wardrobe .wdr-tab:not(.on){background:#F5EFE2;color:#3a352c;border-color:#C9A44C}
+#s-wardrobe .wdr-tab:not(.on),#s-trending .wdr-tab:not(.on){background:#F5EFE2;color:#3a352c;border-color:#C9A44C}
 /* Stays BELOW the buttons (her call 2026-08-15, from renders: above, it lands
    in the page-subtitle slot and reads as describing the page, and it is the
    only thing telling her the unselected tab is tappable -- her mom's catch).
    Tightened to sit close under them. */
-#s-wardrobe .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:4px 0 2px}
+#s-wardrobe .wdr-tabhint,#s-trending .wdr-tabhint{font:400 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;margin:4px 0 2px}
 /* Page-level affiliate notice, the blog-post convention: quiet, but above every
    link on the screen. #6e6e6e matches the disclosure on every other surface. */
 /* Sits under each tab's intro card, directly above that tab's first link. Its
@@ -346,18 +367,18 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    line." Centred 9/9 it floated between two cards and belonged to neither; sat
    down against the list it reads as a caption for the links it is actually
    about, which is the whole reason it moved here. Keep the bottom gap small. */
-#s-wardrobe .wdr-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:16px 0 3px}
-#s-wardrobe .wdr-disclosure+.wdr-card{margin-top:0}
-#s-wardrobe .wdr-disclosure+.wdr-tstack{margin-top:0}
-#s-wardrobe .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
+#s-wardrobe .wdr-disclosure,#s-trending .wdr-disclosure{font:400 11.5px/1.4 'DM Sans',sans-serif;color:#6e6e6e;text-align:center;margin:16px 0 3px}
+#s-wardrobe .wdr-disclosure+.wdr-card,#s-trending .wdr-disclosure+.wdr-card{margin-top:0}
+#s-wardrobe .wdr-disclosure+.wdr-tstack,#s-trending .wdr-disclosure+.wdr-tstack{margin-top:0}
+#s-wardrobe .wdr-tab,#s-trending .wdr-tab{flex:1;text-align:center;padding:10px 0;font:600 12.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid #d8c285;color:#8a8474;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-tab.on,#s-trending .wdr-tab.on{background:#1a1a1a;color:#EACD68;border-color:#1a1a1a}
 /* The arrow sits on its own line under the label, so the label stays centred
    (inline it pushed the words off centre) and both tabs carry a matching gold
    arrow pointing out to its own side. The fixed-height ::after keeps the two
    tabs exactly the same height whichever one is selected.
    NOTE: these must stay AFTER the base .wdr-tab rule above -- same specificity,
    so an earlier padding would be silently overridden by it. */
-#s-wardrobe .wdr-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:9px 0 8px}
+#s-wardrobe .wdr-tab,#s-trending .wdr-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:9px 0 8px}
 /* Her ask 2026-08-11: make these arrows the same size as the one on "Shop my
    whole list". ⚠️ They used to be TEXT GLYPHS (content:"\2190"/"\2192") at 16px,
    so "the same size" could never have been achieved by changing a font-size --
@@ -369,13 +390,13 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    ▶ This also brings the tabs under the standing no-brand-mark-as-a-glyph rule.
    The fixed 19px box keeps both tabs the same height whichever is selected,
    which is the job the old fixed-height ::after was doing. */
-#s-wardrobe .wdr-tab-ar{display:block;width:19px;height:19px;flex:none;color:#C9A44C}
-#s-wardrobe .wdr-tab[data-tab="list"] .wdr-tab-ar{transform:scaleX(-1)}
-#s-wardrobe .wdr-tab.on .wdr-tab-ar{color:#EACD68}
+#s-wardrobe .wdr-tab-ar,#s-trending .wdr-tab-ar{display:block;width:19px;height:19px;flex:none;color:#C9A44C}
+#s-wardrobe .wdr-tab[data-tab="list"] .wdr-tab-ar,#s-trending .wdr-tab[data-tab="list"] .wdr-tab-ar{transform:scaleX(-1)}
+#s-wardrobe .wdr-tab.on .wdr-tab-ar,#s-trending .wdr-tab.on .wdr-tab-ar{color:#EACD68}
 /* Gold "New" pill on the Trending tab, matching the Style Star Edit's pill. */
-#s-wardrobe .wdr-tab{position:relative}
-#s-wardrobe .wdr-tab-badge{position:absolute;top:-6px;right:3px;display:none;align-items:center;justify-content:center;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;z-index:2}
-#s-wardrobe .wdr-tab-badge.on{display:flex}
+#s-wardrobe .wdr-tab,#s-trending .wdr-tab{position:relative}
+#s-wardrobe .wdr-tab-badge,#s-trending .wdr-tab-badge{position:absolute;top:-6px;right:3px;display:none;align-items:center;justify-content:center;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;z-index:2}
+#s-wardrobe .wdr-tab-badge.on,#s-trending .wdr-tab-badge.on{display:flex}
 /* Inline "New" pill beside the What's Trending button in the Build hubs.
    Sits in the flow next to the label rather than floating on a corner. */
 .tr-new{display:none;align-items:center;margin-left:7px;padding:2px 5px;border-radius:7px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7,0 0 6px 1px rgba(233,180,80,.7);color:#3a2c07;font:700 7px/1 'Jost',sans-serif;letter-spacing:.05em;text-transform:uppercase;animation:wbNew 2.4s ease-in-out infinite;flex:0 0 auto}
@@ -387,44 +408,44 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    state, not news) -- and grew 8.5px -> 11px for readability. */
 .wl-pill{display:none;align-items:center;justify-content:center;min-width:19px;margin-left:7px;padding:2.5px 6px;border-radius:9px;background:radial-gradient(circle at 40% 35%,#FCE9AC,#E7BE52 62%,#C69214);box-shadow:0 0 0 1.5px #FBFAF7;color:#3a2c07;font:700 11px/1 'Jost',sans-serif;letter-spacing:.03em;flex:0 0 auto}
 .wl-pill.on{display:inline-flex}
-#s-wardrobe .wdr-pane{display:none}
-#s-wardrobe .wdr-pane.on{display:block}
+#s-wardrobe .wdr-pane,#s-trending .wdr-pane{display:none}
+#s-wardrobe .wdr-pane.on,#s-trending .wdr-pane.on{display:block}
 /* The list reclaims the dead horizontal padding on both sides (nothing lived to
    the right of the heart). The left inset is rebuilt inside the card as padding
    so the row's left edge lands exactly where it did before, keeping the gutter
    the absolutely-positioned remove ✕ hangs in. Net: ~22px more for item names. */
-#s-wardrobe{margin-left:-16px;margin-right:-16px}
+#s-wardrobe,#s-trending{margin-left:-16px;margin-right:-16px}
 /* Top padding is small now that the brand name lives INSIDE the title itself
    ("Catherine's Style Star Wardrobe List") rather than in a sewn label
    straddling this card's top edge. */
-#s-wardrobe .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:14px 8px 10px;margin-top:14px}
-#s-wardrobe .wdr-howto{font:400 15.5px/1.55 'Lora',Georgia,serif;color:#4a463e;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0;text-align:center}
-#s-wardrobe .wdr-trend-intro{margin:2px 0 0}   /* the disclosure below it owns the gap now */
-#s-wardrobe .wdr-trend-intro .wdr-trend-note{margin:0}
-#s-wardrobe .wdr-howto b{color:#26221c;font-weight:600}
+#s-wardrobe .wdr-card,#s-trending .wdr-card{position:relative;background:#FBFAF7;border:1px solid #e7e0cf;border-radius:2px;padding:14px 8px 10px;margin-top:14px}
+#s-wardrobe .wdr-howto,#s-trending .wdr-howto{font:400 15.5px/1.55 'Lora',Georgia,serif;color:#4a463e;background:#f7f6f3;border:1px solid #e4e1d9;padding:11px 14px;margin:2px 0 0;text-align:center}
+#s-wardrobe .wdr-trend-intro,#s-trending .wdr-trend-intro{margin:2px 0 0}   /* the disclosure below it owns the gap now */
+#s-wardrobe .wdr-trend-intro .wdr-trend-note,#s-trending .wdr-trend-intro .wdr-trend-note{margin:0}
+#s-wardrobe .wdr-howto b,#s-trending .wdr-howto b{color:#26221c;font-weight:600}
 /* The how-to used to step back to a one-line reminder once she had starred a
    few items (built 2026-07-26). RETIRED 2026-08-15, her call: the card and its
    paragraph are permanent now, so My List and What's Trending open the same
    way. See the note at _wdrSyncHowto. The .hw-brief span went with it. */
-#s-wardrobe .wdr-plan-wrap{text-align:center;padding:10px 0 16px}
-#s-wardrobe .wdr-plan{display:flex;align-items:center;justify-content:center}
-#s-wardrobe .wp-stat{display:flex;flex-direction:column;align-items:center;padding:0 24px}
-#s-wardrobe .wp-num{font:400 30px/1 'Fraunces',Georgia,serif;color:#E0B84C}
-#s-wardrobe .wp-lbl{font:600 10.5px/1.3 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8474;margin-top:5px}
-#s-wardrobe .wp-div{width:1px;height:40px;background:linear-gradient(180deg,transparent,#e0cfa0 50%,transparent)}
+#s-wardrobe .wdr-plan-wrap,#s-trending .wdr-plan-wrap{text-align:center;padding:10px 0 16px}
+#s-wardrobe .wdr-plan,#s-trending .wdr-plan{display:flex;align-items:center;justify-content:center}
+#s-wardrobe .wp-stat,#s-trending .wp-stat{display:flex;flex-direction:column;align-items:center;padding:0 24px}
+#s-wardrobe .wp-num,#s-trending .wp-num{font:400 30px/1 'Fraunces',Georgia,serif;color:#E0B84C}
+#s-wardrobe .wp-lbl,#s-trending .wp-lbl{font:600 10.5px/1.3 'Jost',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#8a8474;margin-top:5px}
+#s-wardrobe .wp-div,#s-trending .wp-div{width:1px;height:40px;background:linear-gradient(180deg,transparent,#e0cfa0 50%,transparent)}
 /* Same recipe as the app's other shopping CTAs (the pref-done "Let's go
    shopping"): dark fill, squared, silver ring inside a gold one. Centred. */
-#s-wardrobe .wdr-shopwrap{text-align:center;margin:10px 0 22px}
-#s-wardrobe .wdr-shopwants{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(180deg,#2b2523,#1c1615);border:none;border-radius:0;box-shadow:0 0 0 3px #B4BAC0,0 0 0 6px #ECD070;color:#F5EFE2;padding:13px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative;text-align:left}
-#s-wardrobe .wdr-shopwants:hover{filter:brightness(1.06)}
-#s-wardrobe .wdr-shopwants .wsw-bag{width:21px;height:21px;flex:none;color:#E0B84C}
-#s-wardrobe .wdr-shopwants .wsw-txt{font:600 15px/1.15 'Jost',sans-serif;letter-spacing:.01em}
-#s-wardrobe .wdr-shopwants .wsw-n{display:block;font:500 12px/1.2 'Jost',sans-serif;color:#E0B84C;margin-top:2px;letter-spacing:.02em}
-#s-wardrobe .wdr-shopwants .wsw-ar{width:19px;height:19px;flex:none;color:#E0B84C}
+#s-wardrobe .wdr-shopwrap,#s-trending .wdr-shopwrap{text-align:center;margin:10px 0 22px}
+#s-wardrobe .wdr-shopwants,#s-trending .wdr-shopwants{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(180deg,#2b2523,#1c1615);border:none;border-radius:0;box-shadow:0 0 0 3px #B4BAC0,0 0 0 6px #ECD070;color:#F5EFE2;padding:13px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative;text-align:left}
+#s-wardrobe .wdr-shopwants:hover,#s-trending .wdr-shopwants:hover{filter:brightness(1.06)}
+#s-wardrobe .wdr-shopwants .wsw-bag,#s-trending .wdr-shopwants .wsw-bag{width:21px;height:21px;flex:none;color:#E0B84C}
+#s-wardrobe .wdr-shopwants .wsw-txt,#s-trending .wdr-shopwants .wsw-txt{font:600 15px/1.15 'Jost',sans-serif;letter-spacing:.01em}
+#s-wardrobe .wdr-shopwants .wsw-n,#s-trending .wdr-shopwants .wsw-n{display:block;font:500 12px/1.2 'Jost',sans-serif;color:#E0B84C;margin-top:2px;letter-spacing:.02em}
+#s-wardrobe .wdr-shopwants .wsw-ar,#s-trending .wdr-shopwants .wsw-ar{width:19px;height:19px;flex:none;color:#E0B84C}
 /* The end-of-list payoff: she has just been down all ~98 pieces, so name what
    she built before offering the same action, rather than repeating the button. */
-#s-wardrobe .wdr-shopend{margin:10px 0 4px;text-align:center}
-#s-wardrobe .wdr-shopend .wse-lead{font:400 21px/1.25 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:5px}
+#s-wardrobe .wdr-shopend,#s-trending .wdr-shopend{margin:10px 0 4px;text-align:center}
+#s-wardrobe .wdr-shopend .wse-lead,#s-trending .wdr-shopend .wse-lead{font:400 21px/1.25 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:5px}
 /* The "Shop them all together" sub is GONE (her call, 2026-08-12) — the
    Catherine line below the clean list replaced it, so the zone between the
    card and the marquee button carries exactly one line. Don't re-add a sub. */
@@ -432,36 +453,36 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    way a stylist copies the marked items off a worksheet onto one page (Cath's
    pick "A", 2026-08-12). Left-aligned inside the centred block on purpose —
    it reads as a written list, not a caption. */
-#s-wardrobe .wdr-mylist{border:1px solid #D6C9A8;background:#fff;margin:12px 0 14px;padding:13px 14px 11px;text-align:left}
+#s-wardrobe .wdr-mylist,#s-trending .wdr-mylist{border:1px solid #D6C9A8;background:#fff;margin:12px 0 14px;padding:13px 14px 11px;text-align:left}
 /* The card's title finishes her worksheet metaphor: the same gold underline
    bar the category headers (and the Menu's group labels) wear, so the clean
    list reads as the worksheet's own closing section. */
-#s-wardrobe .wml-h{font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#26221c;display:inline-block;padding-bottom:4px;border-bottom:2px solid #D8A52E;margin:1px 0 5px}
+#s-wardrobe .wml-h,#s-trending .wml-h{font:700 11px/1 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#26221c;display:inline-block;padding-bottom:4px;border-bottom:2px solid #D8A52E;margin:1px 0 5px}
 /* Catherine's line, replacing the old sub — pink tilted heart = her speaking,
    per the mark system. UPRIGHT at 14px (her call 2026-08-12, and the whisper
    readability floor). Her wording runs ~313px, so it balances to two even
    lines by design — don't force one line by shrinking the font. */
-#s-wardrobe .wml-cath{font:500 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;margin:-2px auto 14px;max-width:300px;text-align:center;text-wrap:balance}
-#s-wardrobe .wml-cath .pinkheart{width:12px;height:12px;margin-left:3px;vertical-align:-1.5px}
-#s-wardrobe .wml-row{display:flex;align-items:baseline;gap:9px;padding:6.5px 0;border-bottom:1px solid #EFEAE0}
-#s-wardrobe .wml-row:last-child{border-bottom:none}
-#s-wardrobe .wml-row svg{flex:none;width:14px;height:14px;align-self:center}
-#s-wardrobe .wml-n{font:500 14.5px/1.3 'Jost',sans-serif;color:#26221c;flex:1}
+#s-wardrobe .wml-cath,#s-trending .wml-cath{font:500 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;margin:-2px auto 14px;max-width:300px;text-align:center;text-wrap:balance}
+#s-wardrobe .wml-cath .pinkheart,#s-trending .wml-cath .pinkheart{width:12px;height:12px;margin-left:3px;vertical-align:-1.5px}
+#s-wardrobe .wml-row,#s-trending .wml-row{display:flex;align-items:baseline;gap:9px;padding:6.5px 0;border-bottom:1px solid #EFEAE0}
+#s-wardrobe .wml-row:last-child,#s-trending .wml-row:last-child{border-bottom:none}
+#s-wardrobe .wml-row svg,#s-trending .wml-row svg{flex:none;width:14px;height:14px;align-self:center}
+#s-wardrobe .wml-n,#s-trending .wml-n{font:500 14.5px/1.3 'Jost',sans-serif;color:#26221c;flex:1}
 /* 10.5px #5f5647 = the worksheet's own SHOP/ADD label spec (the readability
    floor found 2026-08-11); max-width lets a long category name wrap to two
    right-aligned lines at narrow widths instead of crushing the item name. */
-#s-wardrobe .wml-c{font:600 10.5px/1.25 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#5f5647;flex:none;max-width:45%;text-align:right}
-#s-wardrobe .wdr-shopend .wdr-shopwrap{margin:0}
+#s-wardrobe .wml-c,#s-trending .wml-c{font:600 10.5px/1.25 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#5f5647;flex:none;max-width:45%;text-align:right}
+#s-wardrobe .wdr-shopend .wdr-shopwrap,#s-trending .wdr-shopend .wdr-shopwrap{margin:0}
 /* The rows (not the card) carry the left inset, so the remove ✕ still has its
    gutter to hang in while anything centred in the card — the counts, the reset
    link, the shop CTA — stays centred on the card itself. */
-#s-wardrobe .wdr-cat{margin-bottom:16px;margin-left:22px}
-#s-wardrobe .wdr-add{margin-left:22px}
+#s-wardrobe .wdr-cat,#s-trending .wdr-cat{margin-bottom:16px;margin-left:22px}
+#s-wardrobe .wdr-add,#s-trending .wdr-add{margin-left:22px}
 /* Her ask (2026-08-10): underline these the way the Menu's group labels are
    underlined -- a short 2px gold bar hugging the word, not a full-width rule.
    inline-block is what makes the bar hug; see .menu-grp, same pattern. */
-#s-wardrobe .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;padding:0 2px 5px;position:relative;display:inline-block}
-#s-wardrobe .wdr-cat-t::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
+#s-wardrobe .wdr-cat-t,#s-trending .wdr-cat-t{font:700 12px/1 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#26221c;margin-bottom:8px;padding:0 2px 5px;position:relative;display:inline-block}
+#s-wardrobe .wdr-cat-t::after,#s-trending .wdr-cat-t::after{content:"";position:absolute;left:2px;right:-2px;bottom:0;height:2px;background:#D8A52E}
 /* ⚠️ THE DIVIDER COLOUR IS A FIX, NOT A PREFERENCE (her catch, 2026-08-11: two
    starred rows in a row "sort of merge together looking like one color block").
    It was #f0ebe0, which measures 1.14:1 against the paper and 1.06:1 against a
@@ -469,58 +490,58 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    effectively DID NOT EXIST. #D6C9A8 measures 1.57:1 and 1.46:1: visible on both
    backgrounds without turning the worksheet into a grid. Re-measure with
    scratchpad/wdrsheet.js before changing it. */
-#s-wardrobe .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #D6C9A8}
-#s-wardrobe .wdr-item:last-child{border-bottom:none}
-#s-wardrobe .wdr-item.want{background:#FAF1DA}
+#s-wardrobe .wdr-item,#s-trending .wdr-item{position:relative;display:flex;align-items:center;flex-wrap:wrap;padding:10px 2px;gap:0 9px;border-bottom:1px solid #D6C9A8}
+#s-wardrobe .wdr-item:last-child,#s-trending .wdr-item:last-child{border-bottom:none}
+#s-wardrobe .wdr-item.want,#s-trending .wdr-item.want{background:#FAF1DA}
 /* flex-basis 0, not 120px: with a 120px basis the row's own flex-wrap fired on
    narrow phones and dropped the heart onto a second line, stranded under the
    name. Basis 0 keeps name + Ideas + heart on one line at any width. */
-#s-wardrobe .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 0;min-width:0}
+#s-wardrobe .wdr-name,#s-trending .wdr-name{font:500 14.5px/1.3 'Jost',sans-serif;color:#2b2620;flex:1 1 0;min-width:0}
 /* On narrow phones (and anyone using Display Zoom) a few of the longer item
    names wrapped to two lines. Reclaiming a little row padding and gap fixes
    most of them WITHOUT shrinking the text -- readability matters more here
    than a perfectly even list. Wider phones are untouched. */
-@media(max-width:389px){#s-wardrobe .wdr-item{gap:0 6px;padding-left:0;padding-right:0}}
+@media(max-width:389px){#s-wardrobe .wdr-item,#s-trending .wdr-item{gap:0 6px;padding-left:0;padding-right:0}}
 /* Catherine's line on anchor pieces — the "oh, I really need that" moment. Only
    ~20 items carry one, so they read as her speaking up, not as page furniture. */
-#s-wardrobe .wdr-note{display:block;font:400 13px/1.4 'Lora',Georgia,serif;color:#4a463e;margin-top:3px;padding-right:4px}
-#s-wardrobe .wdr-name.custom::before{content:"\2605 ";color:#E6C24E;font-size:11px}
-#s-wardrobe .wdr-del{position:absolute;left:-34px;top:4px;color:#8a8272;font-size:22px;line-height:1;cursor:pointer;padding:2px 6px;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-del:hover,#s-wardrobe .wdr-del:active{color:#c0392b;background:#f3ede0}
-#s-wardrobe .wdr-undo{display:flex;align-items:center;justify-content:space-between;gap:10px;font:500 13px/1.4 'Jost',sans-serif;color:#6f6a63;background:#f3ede0;border:1px dashed #cfc6b2;padding:8px 12px;margin:2px 0 12px}
-#s-wardrobe .wdr-undo-btn{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;padding:2px 4px}
-#s-wardrobe .wdr-removed{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;padding:12px 0 2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-removed:hover{color:#1a1a1a}
-#s-wardrobe .wdr-reset-wrap{text-align:center;padding:2px 0 8px}
-#s-wardrobe .wdr-reset-wrap.end{padding:14px 0 4px}
+#s-wardrobe .wdr-note,#s-trending .wdr-note{display:block;font:400 13px/1.4 'Lora',Georgia,serif;color:#4a463e;margin-top:3px;padding-right:4px}
+#s-wardrobe .wdr-name.custom::before,#s-trending .wdr-name.custom::before{content:"\2605 ";color:#E6C24E;font-size:11px}
+#s-wardrobe .wdr-del,#s-trending .wdr-del{position:absolute;left:-34px;top:4px;color:#8a8272;font-size:22px;line-height:1;cursor:pointer;padding:2px 6px;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-del:hover,#s-trending .wdr-del:hover,#s-wardrobe .wdr-del:active,#s-trending .wdr-del:active{color:#c0392b;background:#f3ede0}
+#s-wardrobe .wdr-undo,#s-trending .wdr-undo{display:flex;align-items:center;justify-content:space-between;gap:10px;font:500 13px/1.4 'Jost',sans-serif;color:#6f6a63;background:#f3ede0;border:1px dashed #cfc6b2;padding:8px 12px;margin:2px 0 12px}
+#s-wardrobe .wdr-undo-btn,#s-trending .wdr-undo-btn{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;padding:2px 4px}
+#s-wardrobe .wdr-removed,#s-trending .wdr-removed{font:500 12.5px/1.4 'Jost',sans-serif;color:#8a8474;text-align:center;padding:12px 0 2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-removed:hover,#s-trending .wdr-removed:hover{color:#1a1a1a}
+#s-wardrobe .wdr-reset-wrap,#s-trending .wdr-reset-wrap{text-align:center;padding:2px 0 8px}
+#s-wardrobe .wdr-reset-wrap.end,#s-trending .wdr-reset-wrap.end{padding:14px 0 4px}
 /* The top copy is a quiet link, not a button: resetting is the last thing she
    wants on arrival, and a full button there competed with the shop CTA and sat
    between her instructions and the list. The bottom copy stays a real button. */
-#s-wardrobe .wdr-reset-wrap.top{padding:0 0 10px}
-#s-wardrobe .wdr-reset-wrap.top .wdr-reset{border:none;background:none;padding:4px 6px;font-size:12.5px;font-weight:500;color:#8a8474;text-decoration:underline}
-#s-wardrobe .wdr-reset-wrap.top .wdr-reset:hover,#s-wardrobe .wdr-reset-wrap.top .wdr-reset:active{color:#1a1a1a}
+#s-wardrobe .wdr-reset-wrap.top,#s-trending .wdr-reset-wrap.top{padding:0 0 10px}
+#s-wardrobe .wdr-reset-wrap.top .wdr-reset,#s-trending .wdr-reset-wrap.top .wdr-reset{border:none;background:none;padding:4px 6px;font-size:12.5px;font-weight:500;color:#8a8474;text-decoration:underline}
+#s-wardrobe .wdr-reset-wrap.top .wdr-reset:hover,#s-trending .wdr-reset-wrap.top .wdr-reset:hover,#s-wardrobe .wdr-reset-wrap.top .wdr-reset:active,#s-trending .wdr-reset-wrap.top .wdr-reset:active{color:#1a1a1a}
 /* Back to top — the list is ~98 items. Deliberately quiet: a utility, not a CTA,
    so it borrows the dark/gold palette but stays small. Pinned to the app column
    (not the window) so it doesn't drift off to the right on a desktop screen. */
-#s-wardrobe .wdr-top{position:fixed;bottom:20px;left:max(24px,calc(50% - 216px));z-index:40;display:inline-flex;align-items:center;gap:5px;background:linear-gradient(180deg,#2b2523,#1c1615);color:#F5EFE2;border-radius:0;box-shadow:0 0 0 2px #ECD070,0 5px 15px rgba(0,0,0,.3);font:600 12px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;padding:10px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .22s ease,transform .22s ease}
-#s-wardrobe .wdr-top svg{width:14px;height:14px;color:#ECD070}
-#s-wardrobe .wdr-top.on{opacity:1;pointer-events:auto;transform:none}
-@media (prefers-reduced-motion:reduce){#s-wardrobe .wdr-top{transition:none}}
-#s-wardrobe .wdr-reset{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 'Jost',sans-serif;letter-spacing:.02em;color:#4a453c;border:1.5px solid #b3ada0;background:#fff;padding:10px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-reset:hover,#s-wardrobe .wdr-reset:active{border-color:#1a1a1a;color:#1a1a1a}
-#s-wardrobe .wdr-reset-confirm{text-align:center;padding:6px 0 10px;margin:0 -13px;font:500 12.5px/1.55 'Jost',sans-serif;color:#6f6a63}
-#s-wardrobe .wdr-reset-confirm b{display:block;color:#2b2620;font-weight:600;font-size:13.5px;margin-bottom:4px}
-#s-wardrobe .wdr-rc-btns{margin-top:8px;display:flex;justify-content:center;gap:18px}
-#s-wardrobe .wdr-rc-yes{color:#2E9E4F;font-weight:700;text-decoration:underline;cursor:pointer;padding:3px 6px;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-rc-no{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;padding:3px 6px;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-top,#s-trending .wdr-top{position:fixed;bottom:20px;left:max(24px,calc(50% - 216px));z-index:40;display:inline-flex;align-items:center;gap:5px;background:linear-gradient(180deg,#2b2523,#1c1615);color:#F5EFE2;border-radius:0;box-shadow:0 0 0 2px #ECD070,0 5px 15px rgba(0,0,0,.3);font:600 12px/1 'Jost',sans-serif;letter-spacing:.09em;text-transform:uppercase;padding:10px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .22s ease,transform .22s ease}
+#s-wardrobe .wdr-top svg,#s-trending .wdr-top svg{width:14px;height:14px;color:#ECD070}
+#s-wardrobe .wdr-top.on,#s-trending .wdr-top.on{opacity:1;pointer-events:auto;transform:none}
+@media (prefers-reduced-motion:reduce){#s-wardrobe .wdr-top,#s-trending .wdr-top{transition:none}}
+#s-wardrobe .wdr-reset,#s-trending .wdr-reset{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 'Jost',sans-serif;letter-spacing:.02em;color:#4a453c;border:1.5px solid #b3ada0;background:#fff;padding:10px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-reset:hover,#s-trending .wdr-reset:hover,#s-wardrobe .wdr-reset:active,#s-trending .wdr-reset:active{border-color:#1a1a1a;color:#1a1a1a}
+#s-wardrobe .wdr-reset-confirm,#s-trending .wdr-reset-confirm{text-align:center;padding:6px 0 10px;margin:0 -13px;font:500 12.5px/1.55 'Jost',sans-serif;color:#6f6a63}
+#s-wardrobe .wdr-reset-confirm b,#s-trending .wdr-reset-confirm b{display:block;color:#2b2620;font-weight:600;font-size:13.5px;margin-bottom:4px}
+#s-wardrobe .wdr-rc-btns,#s-trending .wdr-rc-btns{margin-top:8px;display:flex;justify-content:center;gap:18px}
+#s-wardrobe .wdr-rc-yes,#s-trending .wdr-rc-yes{color:#2E9E4F;font-weight:700;text-decoration:underline;cursor:pointer;padding:3px 6px;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-rc-no,#s-trending .wdr-rc-no{color:#1a1a1a;font-weight:700;text-decoration:underline;cursor:pointer;padding:3px 6px;-webkit-tap-highlight-color:transparent}
 /* One positive action per row. The heart sits in a fixed right-hand column so she
    can run her thumb straight down the list. No "have" — owning blue jeans never
    meant she didn't want another pair. */
-#s-wardrobe .wdr-star{flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-star svg{width:23px;height:23px;display:block}
-#s-wardrobe .wdr-expand{flex-basis:100%;min-width:0;margin:4px 0 0;padding:10px 8px 6px;background:#F4EFE4}
-#s-wardrobe .wdr-expand-lbl{font:600 11px/1.3 'Jost',sans-serif;color:#8a6a1e;margin-bottom:8px}
-#s-wardrobe .wdr-expand-lbl a{color:#8a6a1e;cursor:pointer}
+#s-wardrobe .wdr-star,#s-trending .wdr-star{flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-star svg,#s-trending .wdr-star svg{width:23px;height:23px;display:block}
+#s-wardrobe .wdr-expand,#s-trending .wdr-expand{flex-basis:100%;min-width:0;margin:4px 0 0;padding:10px 8px 6px;background:#F4EFE4}
+#s-wardrobe .wdr-expand-lbl,#s-trending .wdr-expand-lbl{font:600 11px/1.3 'Jost',sans-serif;color:#8a6a1e;margin-bottom:8px}
+#s-wardrobe .wdr-expand-lbl a,#s-trending .wdr-expand-lbl a{color:#8a6a1e;cursor:pointer}
 /* Shopping is never gated behind marking the row — every item is one tap from
    real products, wanted or not. */
 /* ▶ HER PICK "C" (2026-08-11): Ideas becomes a squared chip, and it is a TAP
@@ -532,12 +553,12 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    and a filled version was argued down for competing with "Shop my whole list"
    on the same screen. Cost she accepted: the name column goes 203.5 -> 171.5px
    and ONE of 100 names wraps. */
-#s-wardrobe .wdr-see{display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;flex:0 0 auto;white-space:nowrap;-webkit-tap-highlight-color:transparent;margin-right:10px;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff}
-#s-wardrobe .wdr-see-star{color:#E6C24E}
+#s-wardrobe .wdr-see,#s-trending .wdr-see{display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;flex:0 0 auto;white-space:nowrap;-webkit-tap-highlight-color:transparent;margin-right:10px;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff}
+#s-wardrobe .wdr-see-star,#s-trending .wdr-see-star{color:#E6C24E}
 /* Her ask 2026-08-12: the trailing arrow on all three Ideas/See-ideas buttons
    made "a little larger/thicker looking" -- shared by .wdr-see, .tlf and
    .wdr-tt-see, sized to sit comfortably beside 11.5px button text. */
-#s-wardrobe .wdr-see-ar{display:block;width:12.5px;height:12.5px;flex:none}
+#s-wardrobe .wdr-see-ar,#s-trending .wdr-see-ar{display:block;width:12.5px;height:12.5px;flex:none}
 /* ▶ THE WORKSHEET COLUMN HEADING (her pick "C", 2026-08-11). She loves that this
    page is the worksheet she actually uses in a client's closet, and her problem
    was that the star's meaning is explained at the TOP but never at the POINT OF
@@ -546,22 +567,22 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    as she scrolls 100 rows, without printing a caption on all 100 (the objection
    to the every-row version). It also labels "Ideas", which had never been
    explained at all. Rendered by _wdrCatHead(). */
-#s-wardrobe .wdr-colhead{display:flex;align-items:center;justify-content:flex-end;gap:0 9px;padding:0 2px 5px;border-bottom:1.5px solid #C9B893;margin-bottom:2px}
+#s-wardrobe .wdr-colhead,#s-trending .wdr-colhead{display:flex;align-items:center;justify-content:flex-end;gap:0 9px;padding:0 2px 5px;border-bottom:1.5px solid #C9B893;margin-bottom:2px}
 /* ⚠️ HER CATCH ("hard to see"), and it was BELOW THE AA BAR, not merely small:
    8.5px #8a7f66 measures 3.79:1 on the paper -- the same failure she found in
    the Menu's group labels on 2026-08-09, which were the only sub-AA text in the
    drawer. 10.5px #5f5647 is 6.92:1. ⚠️ These are the only labels on the page
    telling her what the two controls DO, so they are the last thing that should
    be hard to read for an 18-80 audience. Don't re-quieten them. */
-#s-wardrobe .wdr-colhead span{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#5f5647}
+#s-wardrobe .wdr-colhead span,#s-trending .wdr-colhead span{font:700 10.5px/1 'Jost',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#5f5647}
 /* ⚠️ HER CATCH, and these numbers are LOAD-BEARING: the heading only reads as a
    heading if it sits directly over its column. SHOP must match the Ideas chip's
    width AND carry the chip's own 10px right margin, or it drifts right of the
    control it names the moment the chip moves. ADD matches the 30px star box.
    The test asserts CENTRE-OVER-CENTRE, so a font change that resizes the chip
    fails loudly instead of quietly misaligning. */
-#s-wardrobe .wdr-colhead .ch-shop{width:68.5px;margin-right:10px;text-align:center}
-#s-wardrobe .wdr-colhead .ch-add{width:30px;text-align:center}
+#s-wardrobe .wdr-colhead .ch-shop,#s-trending .wdr-colhead .ch-shop{width:68.5px;margin-right:10px;text-align:center}
+#s-wardrobe .wdr-colhead .ch-add,#s-trending .wdr-colhead .ch-add{width:30px;text-align:center}
 /* ▶ THE STICKY WORKSHEET HEADER (her ask 2026-08-11: "anything that makes the
    list feel more clear and organized to her while she is using it"). The
    category name AND the column heading travel together, so however far she has
@@ -571,7 +592,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    needs the list card's own paper colour, not white. ⚠️ This only works because
    .ss.wardrobe-mirror lost its overflow:hidden earlier the same day -- a
    clipping ancestor kills position:sticky silently. */
-#s-wardrobe .wdr-cathead{position:sticky;top:46px;z-index:3;background:#FBFAF7;padding-top:6px}
+#s-wardrobe .wdr-cathead,#s-trending .wdr-cathead{position:sticky;top:46px;z-index:3;background:#FBFAF7;padding-top:6px}
 /* 🚨 THIS MEDIA BLOCK MUST STAY *AFTER* THE .wdr-see AND .wdr-colhead RULES, and
    the reason is the one already written above .wdr-tab: A MEDIA QUERY ADDS NO
    SPECIFICITY. Placed earlier in the file it loses the cascade to the base rules
@@ -584,11 +605,11 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    360 and 19 at 320). ⚠️ No text is shrunk anywhere: readability beats an even
    list for this audience, the same call made the last time these names wrapped. */
 @media(max-width:389px){
-  #s-wardrobe .wdr-see{padding:5px 6px;margin-right:6px}
+  #s-wardrobe .wdr-see,#s-trending .wdr-see{padding:5px 6px;margin-right:6px}
   /* the row drops its 2px side padding here too, so the heading must, or every
      label sits 2px right of its column */
-  #s-wardrobe .wdr-colhead{gap:0 6px;padding-left:0;padding-right:0}
-  #s-wardrobe .wdr-colhead .ch-shop{width:60.5px;margin-right:6px}
+  #s-wardrobe .wdr-colhead,#s-trending .wdr-colhead{gap:0 6px;padding-left:0;padding-right:0}
+  #s-wardrobe .wdr-colhead .ch-shop,#s-trending .wdr-colhead .ch-shop{width:60.5px;margin-right:6px}
 }
 /* Her combo, same session: tapping the star turns it gold AND says ADDED under
    it. ⚠️ The caption is rendered ONLY on starred rows, which is what keeps the
@@ -601,29 +622,29 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    which moved ~100px right where she was reading and was deliberately deferred
    to the next visit. `height:auto` is required -- .wdr-star is otherwise a fixed
    30px box and the caption would overflow it invisibly. */
-#s-wardrobe .wdr-star.on{flex-direction:column;height:auto;gap:1px}
-#s-wardrobe .wdr-added{font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#8a7f66;display:block}
-#s-wardrobe .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-#s-wardrobe .shop-grid.hscroll::-webkit-scrollbar{display:none}
-#s-wardrobe .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
+#s-wardrobe .wdr-star.on,#s-trending .wdr-star.on{flex-direction:column;height:auto;gap:1px}
+#s-wardrobe .wdr-added,#s-trending .wdr-added{font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#8a7f66;display:block}
+#s-wardrobe .shop-grid.hscroll,#s-trending .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#s-wardrobe .shop-grid.hscroll::-webkit-scrollbar,#s-trending .shop-grid.hscroll::-webkit-scrollbar{display:none}
+#s-wardrobe .shop-grid.hscroll .shop-card,#s-trending .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
 /* Swipe hint + "thinking" loader + one-time nudge */
-#s-wardrobe .wdr-swipe-hint{text-align:right;font:600 11px/1 'Jost',sans-serif;color:#9a9a9a;letter-spacing:.03em;margin:0 4px 6px}
+#s-wardrobe .wdr-swipe-hint,#s-trending .wdr-swipe-hint{text-align:right;font:600 11px/1 'Jost',sans-serif;color:#9a9a9a;letter-spacing:.03em;margin:0 4px 6px}
 /* The Refine nudge under "Tops in your favorite colors" Ideas, 2026-08-12,
    her ask -- quiet, sits AFTER the 4 real ideas so it never gates shopping,
    readable size per the same lesson as the Trending card fix this session. */
-#s-wardrobe .wdr-colorhint{font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:280px;margin:12px auto 0;text-wrap:balance}
+#s-wardrobe .wdr-colorhint,#s-trending .wdr-colorhint{font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:280px;margin:12px auto 0;text-wrap:balance}
 /* Her ask: green instead of gold, to signal the Refine page it links to.
    Not a literal reuse -- every established Refine green (#2FA35C link,
    #4CAF50 pip, #2e7d32 chip text, #3a9b3f checkmark) measured under 4.5:1
    against THIS card's cream background (best was 4.47, just short). #256b2b
    is a modest darkening of the chip-text green, same family, 5.69:1. */
-#s-wardrobe .wdr-colorhint span{font-style:normal;color:#256b2b;font-weight:600;cursor:pointer}
-#s-wardrobe .wdr-loading{display:flex;flex-direction:column;align-items:center;gap:9px;padding:16px 0 12px}
-#s-wardrobe .wdr-load-star{width:34px;height:34px;animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
-#s-wardrobe .wdr-load-txt{font:600 12.5px/1.3 'Jost',sans-serif;color:#8a6a1e;text-align:center}
-@media(prefers-reduced-motion:reduce){#s-wardrobe .wdr-load-star{animation:none}}
-#s-wardrobe .wdr-add{display:flex;align-items:center;gap:8px;margin:14px 2px 4px;padding:11px 12px;background:#fff;border:2px dashed #4a453c}
-#s-wardrobe .wdr-add input{border:none;outline:none;font:400 14.5px 'Jost',sans-serif;flex:1;color:#2b2620;background:transparent}
+#s-wardrobe .wdr-colorhint span,#s-trending .wdr-colorhint span{font-style:normal;color:#256b2b;font-weight:600;cursor:pointer}
+#s-wardrobe .wdr-loading,#s-trending .wdr-loading{display:flex;flex-direction:column;align-items:center;gap:9px;padding:16px 0 12px}
+#s-wardrobe .wdr-load-star,#s-trending .wdr-load-star{width:34px;height:34px;animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
+#s-wardrobe .wdr-load-txt,#s-trending .wdr-load-txt{font:600 12.5px/1.3 'Jost',sans-serif;color:#8a6a1e;text-align:center}
+@media(prefers-reduced-motion:reduce){#s-wardrobe .wdr-load-star,#s-trending .wdr-load-star{animation:none}}
+#s-wardrobe .wdr-add,#s-trending .wdr-add{display:flex;align-items:center;gap:8px;margin:14px 2px 4px;padding:11px 12px;background:#fff;border:2px dashed #4a453c}
+#s-wardrobe .wdr-add input,#s-trending .wdr-add input{border:none;outline:none;font:400 14.5px 'Jost',sans-serif;flex:1;color:#2b2620;background:transparent}
 /* ⚠️ Her catch 2026-08-11, and it was the WORST-CONTRAST text on the page:
    #a39c8a on the white input measures 2.73:1, well under the 4.5:1 AA bar and
    below even the 3.79:1 the column labels had. A placeholder is an INVITATION --
@@ -631,60 +652,60 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    the last text that should fade out. #6b6355 is 5.93:1, and 13.5 -> 14.5px
    matches the item names it sits under. It still reads as a placeholder because
    entered text is #2b2620 (much darker); the two are not confusable. */
-#s-wardrobe .wdr-add input::placeholder{color:#6b6355}
-#s-wardrobe .wdr-add .plus{font-size:16px;color:#1a1a1a;font-weight:700}
-#s-wardrobe .wdr-trend-note{font:500 15.5px/1.5 'Lora',Georgia,serif;font-style:normal;color:#4a463e;margin:2px 0 16px;text-align:center;text-wrap:balance}
-#s-wardrobe .wdr-trend-by{display:flex;align-items:center;justify-content:center;gap:7px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin-bottom:10px}
+#s-wardrobe .wdr-add input::placeholder,#s-trending .wdr-add input::placeholder{color:#6b6355}
+#s-wardrobe .wdr-add .plus,#s-trending .wdr-add .plus{font-size:16px;color:#1a1a1a;font-weight:700}
+#s-wardrobe .wdr-trend-note,#s-trending .wdr-trend-note{font:500 15.5px/1.5 'Lora',Georgia,serif;font-style:normal;color:#4a463e;margin:2px 0 16px;text-align:center;text-wrap:balance}
+#s-wardrobe .wdr-trend-by,#s-trending .wdr-trend-by{display:flex;align-items:center;justify-content:center;gap:7px;font:700 11px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#0FA6B6;margin-bottom:10px}
 /* cancels the trailing letter-space -- see the .dc-tagline note */
-#s-wardrobe .wdr-trend-by span{margin-right:-.2em}
+#s-wardrobe .wdr-trend-by span,#s-trending .wdr-trend-by span{margin-right:-.2em}
 /* B, her pick 2026-08-13: My List's how-to card opens with the SAME header
    construction as Trending's CURATED BY CATHERINE (class reuse: identical
    tilts, gap, trailing-tracking fix). Hidden with the full how-to once the
    card collapses to its brief line. Her closing line under the trend cards
    bookends both tabs (the wdr-trend-end rule below, her voice spec). */
-#s-wardrobe .wdr-howto .wdr-trend-by{margin:1px 0 9px}
-#s-wardrobe .wdr-trend-end{font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;margin:18px auto 6px;max-width:300px;text-wrap:balance}
+#s-wardrobe .wdr-howto .wdr-trend-by,#s-trending .wdr-howto .wdr-trend-by{margin:1px 0 9px}
+#s-wardrobe .wdr-trend-end,#s-trending .wdr-trend-end{font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;margin:18px auto 6px;max-width:300px;text-wrap:balance}
 /* Catherine's signature hearts flank her curation (2026-08-09); teal lettering stays */
 /* Inline SVG, not a text glyph -- see the .dc-tagline note: a bare U+2665
    renders as the red emoji on iOS. */
-#s-wardrobe .wdr-trend-by .pinkheart{width:14px;height:14px;flex:none}
-#s-wardrobe .wdr-tstack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+#s-wardrobe .wdr-trend-by .pinkheart,#s-trending .wdr-trend-by .pinkheart{width:14px;height:14px;flex:none}
+#s-wardrobe .wdr-tstack,#s-trending .wdr-tstack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
 /* Cath's live catch 2026-08-12: the italic note read too small/light, and the
    "See ideas" link was bare text on the left, inconsistent with My List's
    boxed .wdr-see chip sitting on the right of each row. Fixed both: text-align
    right on the card (with title/note explicitly pulled back to the left) puts
    .tlf at the right edge, and it now carries the exact same chip treatment as
    .wdr-see (border/padding/background), not just a color match. */
-#s-wardrobe .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px;min-width:0;text-align:right}
-#s-wardrobe .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px;text-align:left}
-#s-wardrobe .wdr-tcard .tnf{font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;margin-bottom:12px;text-align:left}
-#s-wardrobe .wdr-tcard .tlf{display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-foot{text-align:center;margin-top:26px}
+#s-wardrobe .wdr-tcard,#s-trending .wdr-tcard{background:#F5EFE2;border:1px solid #1a1a1a;padding:16px 16px 14px;min-width:0;text-align:right}
+#s-wardrobe .wdr-tcard .ttf,#s-trending .wdr-tcard .ttf{font:600 15.5px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px;text-align:left}
+#s-wardrobe .wdr-tcard .tnf,#s-trending .wdr-tcard .tnf{font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;margin-bottom:12px;text-align:left}
+#s-wardrobe .wdr-tcard .tlf,#s-trending .wdr-tcard .tlf{display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;padding:5px 10px;border:1px solid #D8A52E;border-radius:2px;background:#fff;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-foot,#s-trending .wdr-foot{text-align:center;margin-top:26px}
 /* Bottom-of-list "What's Trending" horizontal teaser (2nd entry point) */
 /* A real page break before What's Trending, so the secondary offer stops
    reading as part of the main list CTA. Uses the app's curtain stripe
    (Discover backdrop, Mall awning, the keepsakes) rather than a new device;
    the -3px runs it out to the inner edge of the stitched frame and stops there,
    so the stitch stays unbroken (measured: 3px at every width). */
-#s-wardrobe .wdr-teaser{margin-top:0;padding-top:2px}
+#s-wardrobe .wdr-teaser,#s-trending .wdr-teaser{margin-top:0;padding-top:2px}
 /* The stripe tile is itself mirror-symmetric (cream | black | cream) and is
    centred, so the band reads the same from either end instead of the repeat
    starting at the left edge and landing mid-stripe on the right. */
-#s-wardrobe .wdr-teaser::before{content:"";display:block;height:26px;margin:26px -3px 22px;background-color:#f4efe5;background-image:linear-gradient(90deg,#f4efe5 0 10px,#17171c 10px 30px,#f4efe5 30px 40px);background-size:40px 100%;background-repeat:repeat-x;background-position:center}
-#s-wardrobe .wdr-teaser-t{text-align:center;font:400 22px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:4px}
-#s-wardrobe .wdr-tt-scroll{display:flex;overflow-x:auto;gap:12px;padding:4px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-#s-wardrobe .wdr-tt-scroll::-webkit-scrollbar{display:none}
-#s-wardrobe .wdr-tt-card{flex:0 0 205px;background:#F5EFE2;border:1px solid #1a1a1a;padding:15px 15px 13px;display:flex;flex-direction:column}
-#s-wardrobe .wdr-tt-n{font:600 15px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
+#s-wardrobe .wdr-teaser::before,#s-trending .wdr-teaser::before{content:"";display:block;height:26px;margin:26px -3px 22px;background-color:#f4efe5;background-image:linear-gradient(90deg,#f4efe5 0 10px,#17171c 10px 30px,#f4efe5 30px 40px);background-size:40px 100%;background-repeat:repeat-x;background-position:center}
+#s-wardrobe .wdr-teaser-t,#s-trending .wdr-teaser-t{text-align:center;font:400 22px/1.1 'DM Serif Display',Georgia,serif;color:#1a1a1a;-webkit-text-stroke:.3px #1a1a1a;margin-bottom:4px}
+#s-wardrobe .wdr-tt-scroll,#s-trending .wdr-tt-scroll{display:flex;overflow-x:auto;gap:12px;padding:4px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#s-wardrobe .wdr-tt-scroll::-webkit-scrollbar,#s-trending .wdr-tt-scroll::-webkit-scrollbar{display:none}
+#s-wardrobe .wdr-tt-card,#s-trending .wdr-tt-card{flex:0 0 205px;background:#F5EFE2;border:1px solid #1a1a1a;padding:15px 15px 13px;display:flex;flex-direction:column}
+#s-wardrobe .wdr-tt-n,#s-trending .wdr-tt-n{font:600 15px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:6px}
 /* 2026-08-12: same readability fix as the Trending tab's .tnf/.tlf, applied to
    this narrower 205px teaser card. .wdr-tt-card is a column flex, not plain
    block flow, so the chip's right-alignment comes from align-self:flex-end,
    not text-align (which would only affect inline content, not the item's own
    position on the cross axis). */
-#s-wardrobe .wdr-tt-note{font:400 15.5px/1.45 'Lora',Georgia,serif;color:#4a463e;margin-bottom:11px;flex:1}
-#s-wardrobe .wdr-tt-see{align-self:flex-end;display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;padding:5px 9px;border:1px solid #D8A52E;border-radius:2px;background:#fff;-webkit-tap-highlight-color:transparent}
-#s-wardrobe .wdr-tt-all{flex:0 0 132px;align-items:center;justify-content:center;text-align:center;background:#1a1a1a;color:#EACD68;font:600 12.5px/1.3 'Jost',sans-serif;cursor:pointer;padding:15px 12px}
-#s-wardrobe .wdr-teaser-ideas{margin-top:6px}
+#s-wardrobe .wdr-tt-note,#s-trending .wdr-tt-note{font:400 15.5px/1.45 'Lora',Georgia,serif;color:#4a463e;margin-bottom:11px;flex:1}
+#s-wardrobe .wdr-tt-see,#s-trending .wdr-tt-see{align-self:flex-end;display:inline-flex;align-items:center;gap:3px;font:600 11.5px/1 'Jost',sans-serif;letter-spacing:.03em;color:#8a6a1e;cursor:pointer;padding:5px 9px;border:1px solid #D8A52E;border-radius:2px;background:#fff;-webkit-tap-highlight-color:transparent}
+#s-wardrobe .wdr-tt-all,#s-trending .wdr-tt-all{flex:0 0 132px;align-items:center;justify-content:center;text-align:center;background:#1a1a1a;color:#EACD68;font:600 12.5px/1.3 'Jost',sans-serif;cursor:pointer;padding:15px 12px}
+#s-wardrobe .wdr-teaser-ideas,#s-trending .wdr-teaser-ideas{margin-top:6px}
 /* stitched-tag topper for the Welcome Back / Style Portrait entry hub (matches the room) */
 #s-wb .tag-topper,#s-res .tag-topper{position:relative;text-align:center;height:auto;margin-bottom:8px}
 /* five gold stars above the BUILD tag (matches the outfit-results Build room) */
@@ -843,7 +864,7 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-pref .top-back-wrap,#s-pref-done .top-back-wrap{margin-right:-16px}
 /* The screen itself now carries the -16px pull toward the frame (see .wdr-card
    above), so the Back button no longer adds its own or it clips off the edge. */
-#s-wardrobe .top-back-wrap{margin-right:0}
+#s-wardrobe .top-back-wrap,#s-trending .top-back-wrap{margin-right:0}
 #s-wishlist .top-back-wrap{position:absolute;top:6px;right:-14px;margin:0;z-index:6}
 #s-dream .top-back-wrap{margin-right:-20px;margin-top:-0.7rem}
 #s-shopstyle .top-back-wrap{margin-right:-20px;margin-top:-0.1rem}

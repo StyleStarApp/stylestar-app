@@ -241,7 +241,10 @@ ok('the next visit offers the following step, not the dismissed one', st.on && s
 // superseded by the GRADUATION WHISPER (her line, the long-waited words) —
 // one final whisper hands her the daily habit (Ask your Stylist) + the weekly
 // return (This Week's Star), then retires forever on tap or ✕.
-await wp.evaluate(() => { openWardrobe('trend'); show('s-wb'); });
+// ⚠️ openWardrobe('trend') -> openTrending(), updated DELIBERATELY 2026-09-01:
+// What's Trending is its own screen now, and visiting it is what stamps
+// ss_trending_seen. The whisper's own step is unchanged.
+await wp.evaluate(() => { openTrending(); show('s-wb'); });
 st = await wst();
 // Her trim 2026-08-13: the opening "You've explored it all." is deleted.
 ok('after all five stops, the GRADUATION whisper appears', st.on && st.txt.startsWith('Remember I’m here for the everyday'), st.txt);

@@ -51,6 +51,22 @@
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
+  <!-- ⚠️ THE ONE PAGE ON THIS SITE WHERE A MOVING <lastmod> IS THE POINT.
+       What's Trending competes on FRESHNESS: a magazine publishes a new trend
+       article each season and the old one goes stale, while this is one page
+       that stays current. That only works if the date tells the truth.
+       ▶ BUMP THIS IN THE SAME COMMIT AS ANY TREND EDIT, and never bump it
+       just to look freshly maintained, which is the crying-wolf problem the
+       rule at the top of this file exists to prevent. changefreq is weekly
+       here for the same reason; the crawlers ignore it, but it is honest.
+       ⚠️ NO DOUBLE HYPHEN ANYWHERE INSIDE AN XML COMMENT: it is an invalid
+       token and makes the whole sitemap unparseable. -->
+  <url>
+    <loc>https://stylestar.app/trending</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://stylestar.app/journal</loc>
     <lastmod>2026-09-01</lastmod>
