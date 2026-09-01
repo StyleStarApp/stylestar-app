@@ -101,7 +101,13 @@ async function page(w,ua){
      row-count assertion in the project and it lives in a suite about a different
      menu row entirely, which is the whole reason it is worth keeping: a row
      going MISSING should fail somewhere that was not thinking about it. */
-  ok(r.rows.length===21,'menu should be 21 rows, is '+r.rows.length);
+  // ⚠️ 21 -> 22 on 2026-09-01. NOT a silence: menu.js had this exact count
+  // corrected to 22 (a 22nd row had been added and the restated number never
+  // moved with it) and MEASURED at the time -- tallest row 44.4px against a
+  // 46px threshold, so nothing wraps. This file restates the same number
+  // independently and was simply missed in that pass. menu.js is 104/0 with
+  // 22 rows, which is the cross-check.
+  ok(r.rows.length===22,'menu should be 22 rows, is '+r.rows.length);
   ok(errs.length===0,'JS errors: '+errs.join(' | '));
   await ctx.close();
 }

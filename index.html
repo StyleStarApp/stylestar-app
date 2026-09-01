@@ -2302,7 +2302,20 @@ function _openRoute(id){
 // so this resolves instantly and never fetches anything.
 var _healPromise=null;
 function _selfHealScreens(){
-  if(document.getElementById('s-wel'))return Promise.resolve(true);
+  // ⚠️⚠️ THE SERVER SAYS WHETHER THIS PAGE WAS TRIMMED. IT IS NOT INFERRED.
+  // This used to read `if(document.getElementById('s-wel'))return` -- using
+  // the welcome screen's presence as a PROXY for "nothing was trimmed off
+  // this page". That held only because the seven route pages all trim s-wel
+  // away. The homepage trim (2026-09-01) keeps s-wel and drops seven OTHER
+  // screens, so the proxy quietly reported "already whole" and self-heal
+  // never ran at all -- every legal page, My Story, Contact and the whole
+  // Journal became unreachable from the front door. Caught only by driving
+  // it in a real browser; every byte-level check passed.
+  // page-titles.js stamps data-ss-trimmed on <body> whenever it actually
+  // removes a screen, so this can never drift from what was really served.
+  // ⚠️ An absent attribute means untrimmed, which is right for /index.html
+  // (the file this very function fetches) and for any unscoped route.
+  if(!document.body.hasAttribute('data-ss-trimmed'))return Promise.resolve(true);
   if(_healPromise)return _healPromise;
   _healPromise=fetch('/index.html').then(function(r){return r.text();}).then(function(html){
     var doc=new DOMParser().parseFromString(html,'text/html');
@@ -2358,6 +2371,18 @@ function show(id,skipHistory){
   try{_syncHeartTip();}catch(e){}
   // The portrait's "what's next → refine" strip stays honest the same way.
   if(id==='s-res')try{_syncRefineHint();}catch(e){}
+  // ⚠️⚠️ A SCREEN WHOSE CONTENT IS BUILT AT RUNTIME MUST BE REFILLED HERE,
+  // NOT BY ITS OWN ENTRY FUNCTION (2026-09-01, the homepage trim). On a
+  // trimmed route the screen does not exist yet when the entry function
+  // runs, so the fill silently finds nothing, _selfHealScreens() merges the
+  // empty markup back in, and show() replays -- landing her on a Style
+  // Journal with no articles on it, or a My Story with the wrong CTA state.
+  // Putting both in show() covers the direct path AND the healed replay,
+  // because show() calls itself again once the fetch lands. Exactly the
+  // family of bug _fillFooters() was pulled out for on 2026-08-29: a new
+  // ENTRANCE surfaces every piece of state only the old entrances hydrated.
+  if(id==='s-journal-hub')try{_renderJournalHub();}catch(e){}
+  if(id==='s-story')try{_syncStoryQuiz();}catch(e){}
   // Catherine's whisper: stamp "she's been there" for the concierge steps.
   // (The whisper itself re-decides inside updateWbScreen, which covers both
   // the boot path and show('s-wb').)
@@ -6615,8 +6640,16 @@ function showStory(){
   if(cur&&cur.id&&cur.id!=='s-story')storyPrevScreen=cur.id;
   show('s-story');
   document.querySelector('.quiz-footer').style.display='none';
-  // Only invite a from-the-home-page visitor to take the quiz.
-  document.getElementById('storyQuiz').style.display=(storyPrevScreen==='s-wel')?'block':'none';
+}
+// Only invite a from-the-home-page visitor to take the quiz. ⚠️ #storyQuiz
+// lives INSIDE s-story, which is trimmed off the homepage -- reading it
+// straight from showStory() threw on a null element there. show() calls this
+// instead, so it also re-runs after a self-heal. Reads storyPrevScreen,
+// which showStory() has always set before calling show().
+function _syncStoryQuiz(){
+  const q=document.getElementById('storyQuiz');
+  if(!q)return;
+  q.style.display=(storyPrevScreen==='s-wel')?'block':'none';
 }
 // "Take the quiz" from My Story: start the quiz. If she backs out of question 1
 // she returns to My Story (where she launched it), not the Discover page, which
@@ -6704,17 +6737,29 @@ let journalArticleFromHub=false;
 function _renderJournalHub(){
   const el=document.getElementById('journalHubList');
   if(!el)return;
+  // ⚠️ A REAL <a href>, NOT a clickable div (2026-09-01). Two reasons, and
+  // the first is the load-bearing one: until this, NOTHING on the whole site
+  // linked to a journal article in a way a crawler could follow -- this list
+  // was built client-side into an empty div, and each row was a bare
+  // onclick, so the only route to the article was sitemap.xml. Most AI
+  // crawlers do not run JavaScript at all. Second, it is what makes the row
+  // reachable by Tab and announced by a screen reader.
+  // `return false` keeps the tap on the in-app route (no page reload), while
+  // the real href still lets a long-press or cmd-click open it properly.
+  // ⚠️ The SAME markup is server-rendered into the raw HTML by
+  // netlify/edge-functions/page-titles.js (renderHubList) -- if the shape
+  // here changes, change it there too, or the page will visibly re-flow on
+  // load as the two versions swap.
   el.innerHTML=JOURNAL_ARTICLES.map(function(a){
-    return '<div class="jhub-row" onclick="openJournalArticle(\''+a.id+'\')">'
+    return '<a class="jhub-row" href="'+_esc(_journalPath(a.slug))+'" onclick="openJournalArticle(\''+a.id+'\');return false;">'
       +'<span class="jhub-row-title">'+_esc(a.title)+'</span>'
-      +'<span class="jhub-row-arrow">&rarr;</span></div>';
+      +'<span class="jhub-row-arrow">&rarr;</span></a>';
   }).join('');
 }
 function openJournalHub(){
   const cur=document.querySelector('.scr.act');
   if(cur&&cur.id&&cur.id.indexOf('s-journal')!==0)journalPrevScreen=cur.id;   // self-link guard
-  _renderJournalHub();
-  show('s-journal-hub');
+  show('s-journal-hub');   // show() fills the list, so a healed screen fills too
   document.querySelector('.quiz-footer').style.display='none';
 }
 function closeJournalHub(){

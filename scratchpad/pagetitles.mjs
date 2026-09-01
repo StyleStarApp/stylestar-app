@@ -57,10 +57,32 @@ for (const path of PAGES) {
      idx > html.indexOf('<head') && idx < html.indexOf('</head>'));
 }
 
-// ---- untouched surfaces --------------------------------------------------
+// ---- the homepage --------------------------------------------------------
+// ⚠️ UPDATED DELIBERATELY 2026-09-01, and it CORRECTLY caught the change that
+// prompted it. This asserted the whole homepage document came back byte for
+// byte, which was true while `/` had no PAGES entry at all. It has one now:
+// the seven screens whose full text already lives at its own real URL are
+// trimmed out of `/`, which took it from 6,403 rendered words and eight <h1>
+// tags to 2,293 and one.
+// ▶ The claim underneath the old assertion has not been dropped, it has been
+// SHARPENED into the two halves that actually matter, and the first half is
+// the load-bearing one: THE HOMEPAGE'S <head> IS STILL BYTE-IDENTICAL. Its
+// og:title/og:description are deliberately DIFFERENT from its Google-facing
+// title/description (the link-preview card a friend sees when Cath texts the
+// app), and an unconditional rewrite would have silently collapsed them.
 const home = await handler(new Request('https://stylestar.app/'), ctxFor());
 const homeHtml = await home.text();
-ok('the homepage itself is untouched', homeHtml === before);
+const headOf = h => h.slice(0, h.indexOf('</head>'));
+ok('the homepage <head> is byte-for-byte untouched', headOf(homeHtml) === headOf(before));
+ok('  ...so og:title still diverges from <title>',
+   grab(homeHtml, /<meta property="og:title" content="([^"]*)"/) !== baseTitle);
+ok('the homepage BODY is trimmed', homeHtml.length < before.length);
+for (const id of ['s-story','s-faq','s-contact','s-privacy','s-terms','s-journal-hub','s-journal'])
+  ok('  ...' + id + ' is gone from the homepage',
+     !new RegExp('<div class="scr[^"]*" id="' + id + '"').test(homeHtml));
+ok('the screens the app needs at boot are all still there',
+   ['s-wel','s-wb','s-quiz','s-res','s-shopstyle','s-wardrobe','s-wishlist','s-chat','s-dream']
+     .every(id => new RegExp('<div class="scr[^"]*" id="' + id + '"').test(homeHtml)));
 
 const results = await handler(new Request('https://stylestar.app/results'), ctxFor());
 ok('/results is untouched (deliberately outside PAGES)', (await results.text()) === before);

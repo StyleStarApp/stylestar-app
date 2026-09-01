@@ -111,6 +111,20 @@
 # engine or a link-preview bot -- neither runs the JavaScript that would
 # otherwise tell them apart. Separate blocks, not one glob, because the paths
 # share no common prefix. See netlify/edge-functions/page-titles.js.
+# The HOMEPAGE (2026-09-01, Cowork's rendering audit). Unlike the routes
+# below it keeps almost every screen -- it IS the app -- and only drops the
+# seven whose full text already lives at its own real URL (Privacy, Terms,
+# FAQ, Contact, My Story, the Journal hub and every journal article). Before
+# this, `/` served 6,403 words and eight <h1> tags, so the article's full text
+# sat at two addresses and Google had to pick one. See PAGES['/'] in
+# page-titles.js for the whole argument.
+# ⚠️ SCOPED TO "/" EXACTLY, and that is load-bearing: `/index.html` must stay
+# untrimmed, because it is the file _selfHealScreens() fetches to put the
+# missing screens back. Never widen this to a wildcard.
+[[edge_functions]]
+  path = "/"
+  function = "page-titles"
+
 [[edge_functions]]
   path = "/story"
   function = "page-titles"

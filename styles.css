@@ -1879,8 +1879,16 @@ body.menu-open .menu-panel{display:block}
    margin-bottom here is what gives the footer room to read as its own
    separate block, not one more line crowded onto the list. */
 .jhub-list{border-top:1px solid rgba(33,30,26,.1);margin-bottom:30px;margin-top:18px}
+/* ⚠️ .jhub-row IS AN <a> (2026-09-01), not the plain onclick div it used to
+   be -- a crawler needs a real href to find the article at all (there was no
+   crawlable link to it ANYWHERE on the site before this; the only route in
+   was sitemap.xml, which is no route at all for GPTBot/ClaudeBot/
+   PerplexityBot, none of which run JavaScript). text-decoration + color are
+   what keep an anchor from rendering browser-default blue and underlined --
+   NOTHING about this row changed visually. Do not remove them. */
 .jhub-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 2px;
-  border-bottom:1px solid rgba(33,30,26,.1);cursor:pointer;-webkit-tap-highlight-color:transparent}
+  border-bottom:1px solid rgba(33,30,26,.1);cursor:pointer;-webkit-tap-highlight-color:transparent;
+  text-decoration:none;color:inherit}
 .jhub-row-title{font:400 18px/1.3 'DM Serif Display',Georgia,serif;color:#1a1a1a}
 .jhub-row-arrow{flex:0 0 auto;color:#8A6410;font:600 15px/1 'Jost',sans-serif}
 /* Her catch, same session, her own screenshot: with just ONE article the card

@@ -103,14 +103,41 @@ function findScrBlocks(html) {
   }
   return blocks;
 }
-function trimScreens(html, keepIds) {
+// Two modes, and the second is the homepage's (2026-09-01). A ROUTE page
+// names the one screen it keeps (`scrId`); the HOMEPAGE is the app itself, so
+// it names the handful of screens it DROPS (`dropIds`) and keeps the other
+// eighteen. Same machinery either way -- do not fork it.
+function trimScreens(html, keepIds, dropIds) {
   const blocks = findScrBlocks(html);
   let out = html;
   for (let i = blocks.length - 1; i >= 0; i--) {
     const b = blocks[i];
-    if (!keepIds.includes(b.id)) out = out.slice(0, b.start) + out.slice(b.end);
+    const drop = dropIds ? dropIds.includes(b.id) : !keepIds.includes(b.id);
+    if (drop) out = out.slice(0, b.start) + out.slice(b.end);
   }
   return out;
+}
+
+// The Journal hub's article list is built client-side into an empty div, so
+// the RAW HTML carried no link to any article at all -- the only route in was
+// sitemap.xml, which is no route at all for the crawlers that do not run
+// JavaScript (GPTBot, ClaudeBot, PerplexityBot, and Google's own first pass).
+// ⚠️ THIS MARKUP MUST MATCH _renderJournalHub() IN index.html BYTE FOR BYTE,
+// or the page visibly re-flows on load as the client version replaces it.
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+const HUB_LIST = '<div id="journalHubList" class="jhub-list"></div>';
+function renderHubList(html) {
+  if (html.indexOf(HUB_LIST) === -1) throw new Error('hub list anchor not found');
+  const rows = ARTICLES.map((a) =>
+    '<a class="jhub-row" href="/journal/' + esc(a.slug) +
+    '" onclick="openJournalArticle(\'' + esc(a.id) + '\');return false;">' +
+    '<span class="jhub-row-title">' + esc(a.title) + '</span>' +
+    '<span class="jhub-row-arrow">&rarr;</span></a>').join('');
+  return html.replace(HUB_LIST,
+    '<div id="journalHubList" class="jhub-list">' + rows + '</div>');
 }
 
 const PAGES = {
@@ -432,6 +459,36 @@ PAGES['/journal'] = {
   },
 };
 
+PAGES['/journal'].hubList = true;
+
+// ── The homepage (2026-09-01, Cowork's rendering audit) ───────────────────
+// `/` is the app itself, so it keeps every screen a woman can reach without a
+// fetch -- the quiz, her portrait, shopping, the wardrobe, the chat, all of
+// it. What it does NOT need is the full text of the seven pages that already
+// have their own real URLs. Before this the homepage served 6,403 words and
+// EIGHT <h1> tags, because it carried the whole Privacy Policy, the whole
+// Terms, the whole FAQ and the whole journal article inside it. That put the
+// article's text at two addresses and left Google to pick one, and it is why
+// Bing's "more than one h1" flag was never actually satisfied here (our own
+// note claimed the page source had one -- true of /faq, not of /).
+// After: 2,293 words, ONE h1.
+//
+// Anything trimmed away is merged straight back by _selfHealScreens() the
+// moment she taps toward it -- the same bet the other seven routes have been
+// making since 2026-08-28.
+// ⚠️ THE ARTICLE IDS ARE DERIVED FROM ARTICLES, never restated: a second
+// article must not quietly start serving its full text on the homepage again.
+// ⚠️ NOTE THIS ENTRY DELIBERATELY CARRIES NO title OR desc. The homepage's
+// own <title>/<meta description> are already written for Google, and its
+// og:title/og:description are deliberately DIFFERENT (the link-preview card a
+// friend sees when Cath texts the app -- see the long comment in index.html's
+// head). Every head rewrite below is conditional so this entry cannot touch
+// them. Do not "helpfully" add a title here.
+PAGES['/'] = {
+  dropIds: ['s-story', 's-faq', 's-contact', 's-privacy', 's-terms', 's-journal-hub']
+    .concat(ARTICLES.map((a) => a.id)),
+};
+
 // Swap the CONTENT of a specific tag, matching the tag by its identifying
 // attribute so the replacement cannot wander onto a different meta tag.
 function setMeta(html, attr, name, value) {
@@ -452,11 +509,19 @@ export default async (request, context) => {
   if (!page || !type.includes('text/html')) return res;
 
   let html = await res.text();
-  html = html.replace(/<title>[\s\S]*?<\/title>/i, '<title>' + page.title + '</title>');
-  html = setMeta(html, 'name', 'description', page.desc);
-  html = setMeta(html, 'property', 'og:title', page.title);
-  html = setMeta(html, 'property', 'og:description', page.desc);
-  html = setMeta(html, 'name', 'twitter:title', page.title);
+  // ⚠️ CONDITIONAL ON PURPOSE (2026-09-01): a PAGES entry with no title/desc
+  // leaves the head exactly as index.html wrote it. That is what lets the
+  // homepage be trimmed without its deliberately-divergent og: tags being
+  // overwritten by its Google-facing title.
+  if (page.title) {
+    html = html.replace(/<title>[\s\S]*?<\/title>/i, '<title>' + page.title + '</title>');
+    html = setMeta(html, 'property', 'og:title', page.title);
+    html = setMeta(html, 'name', 'twitter:title', page.title);
+  }
+  if (page.desc) {
+    html = setMeta(html, 'name', 'description', page.desc);
+    html = setMeta(html, 'property', 'og:description', page.desc);
+  }
   html = html.replace(/<link rel="canonical" href="[^"]*">/i,
     '<link rel="canonical" href="https://stylestar.app' + path + '">');
   if (page.schema) {
@@ -468,11 +533,27 @@ export default async (request, context) => {
   // correct title, description, canonical, schema -- just with the body every
   // route has always served, exactly today's behavior. Logged so a real
   // failure is never silent.
-  if (page.scrId) {
+  if (page.scrId || page.dropIds) {
     try {
-      html = trimScreens(html, [page.scrId]);
+      html = trimScreens(html, page.scrId ? [page.scrId] : null, page.dropIds);
+      // ⚠️ STAMPED ONLY ON A SUCCESSFUL TRIM, and only AFTER it: findScrBlocks
+      // bounds itself with html.indexOf('<body>'), so stamping first would
+      // break the bound and throw. _selfHealScreens() in index.html reads
+      // this to know it is looking at a partial page -- it used to infer that
+      // from a missing s-wel, which the homepage trim silently invalidated.
+      html = html.replace('<body>', '<body data-ss-trimmed="1">');
     } catch (e) {
       try { console.error('[page-titles] body trim failed for', path, e); } catch (e2) {}
+    }
+  }
+  // Same rule as the trim: a failure here ships the page as it is today
+  // (an empty list the client fills on load), never a broken page. Logged so
+  // a silently-vanished anchor cannot go unnoticed.
+  if (page.hubList) {
+    try {
+      html = renderHubList(html);
+    } catch (e) {
+      try { console.error('[page-titles] hub list render failed for', path, e); } catch (e2) {}
     }
   }
 
