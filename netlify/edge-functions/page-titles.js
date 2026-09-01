@@ -400,7 +400,7 @@ const ARTICLES = [
     id: 's-journal-fall-florida',
     title: 'How to Dress for Fall in Florida When It\'s Still 90 Degrees',
     description: 'How to dress for fall in Florida when it is still 90 degrees, from a personal stylist of 20+ years.',
-    metaTitle: 'How to Dress for Fall in Florida (When It\'s Still Hot) | Style Star',
+    metaTitle: 'How to Dress for Fall in Florida When It\'s Hot | Style Star',
     metaDesc: 'How to dress for fall in Florida when it\'s still 90 degrees, from a personal stylist of 20+ years. Keep your summer clothes, just wear them differently.',
     datePublished: '2026-09-01',
     dateModified: '2026-09-01',

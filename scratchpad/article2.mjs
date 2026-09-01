@@ -33,7 +33,14 @@ ok('the screen is the article', a.includes('id="s-journal-fall-florida"'));
 ok('article #1 is NOT served here', !a.includes('id="s-journal">'));
 ok('exactly one real <h1>', (strip(a).match(/<h1[ >]/g)||[]).length===1);
 ok('body carries data-ss-trimmed', /<body data-ss-trimmed="1">/.test(a));
-ok('<title> is the metaTitle', a.includes("<title>How to Dress for Fall in Florida (When It's Still Hot) | Style Star</title>"));
+// DERIVED from the edge function's own entry, so re-wording the title needs no
+// test edit -- the claim is "the served <title> IS the configured metaTitle".
+const PT = fs.readFileSync('netlify/edge-functions/page-titles.js','utf8');
+const entry = PT.slice(PT.indexOf("slug: 'how-to-dress-for-fall-in-florida'"));
+const META_TITLE = /metaTitle: '((?:[^'\\]|\\.)*)'/.exec(entry)[1].replace(/\\'/g,"'");
+ok('<title> is exactly the configured metaTitle', a.includes('<title>'+META_TITLE+'</title>'), META_TITLE);
+// Google truncates around 60 characters; a longer one loses "| Style Star".
+ok('metaTitle fits Google\'s display budget (<=60 chars)', META_TITLE.length<=60, META_TITLE.length+' chars');
 ok('canonical is the article URL', a.includes('<link rel="canonical" href="https://stylestar.app'+P+'"'));
 ok('meta description present', a.includes('Keep your summer clothes, just wear them differently.'));
 ok('visible publish date in raw HTML', a.includes('Published September 1, 2026'));
