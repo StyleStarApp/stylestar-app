@@ -1908,7 +1908,7 @@ body.menu-open .menu-panel{display:block}
    ⚠️ Do NOT push it further RIGHT to solve this. Horizontal was never the
    constraint (46px of room to the screen edge at right:-18), and the arrow sits
    inside the button, so moving right walks the star toward the edge for nothing. */
-.hm-cta.jrnl-quiz .hm-cta-seal{top:-44px}
+.hm-cta.jrnl-quiz .hm-cta-seal{top:-41px;right:-21px}
 /* At Display Zoom the label genuinely cannot fit on one line, and shrinking the
    font is the wrong trade for an 18-to-80 audience (the standing rule). Two
    balanced lines instead, and the arrow rejoins the flow so nothing overhangs. */
@@ -1921,7 +1921,12 @@ body.menu-open .menu-panel{display:block}
 .jrnl-h2:first-of-type{margin-top:8px}
 /* .jrnl-cta RETIRED 2026-09-01: the Journal quiz button became the home page CTA
    (her call: same squared frame, star, arrow). Rule deleted rather than left dead. */
-#s-journal .story-title,#s-journal-hub .story-title{text-wrap:balance}
+/* ⚠️ EVERY JOURNAL SCREEN, and the list is the bug: article #2 (s-journal-fall-florida)
+   was missing here, so its title wrapped with one word stranded on a third line while
+   article #1's balanced fine. A new article MUST be added to this selector -- it is the
+   one journal rule that is NOT driven by the JOURNAL_ARTICLES registry. */
+#s-journal .story-title,#s-journal-hub .story-title,
+#s-journal-fall-florida .story-title{text-wrap:balance}
 
 /* Style Journal hub (built 2026-08-26): the article list is generated in JS
    from JOURNAL_ARTICLES, so adding an article is one entry in that array --

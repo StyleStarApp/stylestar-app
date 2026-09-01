@@ -87,15 +87,20 @@ for(const w of [430,390,375,360,320]){
   ok(tag+': star hangs off the TOP-RIGHT corner', r.sealTopRight, 'top '+r.sealTop+' rightOut '+r.sealRight);
   ok(tag+': star uses its OWN gradient id', /jrnlSeal[12]/.test(r.sealFill), r.sealFill);
   fills[sid]=r.sealFill;
-  // Her catch: "lift the star up higher, it is crowding the arrow". At the home
-  // page's own top:-24px the two inks genuinely OVERLAPPED (the home page has no
-  // arrow under its star). Her pick from a five-way render is -44px, 6px of ink.
-  // ⚠️ 5px, NOT this project's usual ~10px sandbox floor. That floor exists because
-  // TEXT measures differently in Chromium than in real Safari; these are two
-  // fixed-size SVG shapes with no text metrics in the measurement at all. Holding
-  // 10 here is what pushed the star to -52 and made her call it "too high".
-  ok(tag+': star ink CLEARS the arrow ink by 5px+', !r.starArrowOverlap && r.starArrowClear>=5,
-     r.starArrowOverlap?'OVERLAPPING':(r.starArrowClear+'px'));
+  // ⚠️⚠️ THIS CHECK ASSERTS *NO OVERLAP*, AND DELIBERATELY DOES NOT ENFORCE A
+  // MINIMUM GAP. The position is HERS, set at top:-41px right:-21px from the LIVE
+  // page on her own phone ("the star on the buttons needs to go down 3px and right
+  // 3px"), and it measures ~2.6px of ink separation at 375-430.
+  // ▶ THE HISTORY IS THE REASON: at the home page's own top:-24px the two inks
+  // genuinely OVERLAPPED, so a real check is needed. But I then held this project's
+  // ~10px SANDBOX FLOOR here, which pushed the star to -52 and she rejected it in
+  // three words ("star is too high"). That floor exists because TEXT measures
+  // differently in Chromium than in real Safari; these are two fixed-size SVG
+  // shapes with NO text metrics in the measurement, so it never applied.
+  // ▶ SO: this catches a genuine collision and leaves the aesthetic to her.
+  // Do NOT reintroduce a minimum-gap number without her asking for one.
+  ok(tag+': star ink does not OVERLAP the arrow ink', !r.starArrowOverlap,
+     r.starArrowOverlap?'OVERLAPPING':(r.starArrowClear+'px clear'));
   ok(tag+': arrow after the words', r.arrowAfterWords);
   ok(tag+': arrow inside the button', r.arrowInside>=-1, r.arrowInside+'px');
   if(w>330) ok(tag+': WORDS centred in the button', Math.abs(r.wordsOffCentre)<=2, r.wordsOffCentre+'px off');
