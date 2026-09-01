@@ -251,6 +251,54 @@ const seed = async ctx => ctx.addInitScript(() => {
   await ctx.close();
 }
 
+// --- ⚠️ THE PAIR MUST WORK BOTH WAYS (her catch on the live page)
+// It shipped one-way: the wardrobe could reach Trending, Trending could only
+// go Back. The two tabs had read as a two-way switch for months.
+{
+  const { ctx, pg, errs } = await page();
+  await seed(ctx);
+  await pg.goto('http://localhost:8994/trending', { waitUntil: 'networkidle' });
+  await pg.waitForTimeout(700);
+  const bar = await pg.evaluate(() => {
+    const tabs = [...document.querySelectorAll('#s-trending .wdr-tab')];
+    return {
+      n: tabs.length,
+      labels: tabs.map(t => t.textContent.trim()),
+      activeIs: (tabs.find(t => t.classList.contains('on')) || {}).dataset,
+      badges: document.querySelectorAll('#s-trending .wdr-tab-badge').length,
+      hint: (document.querySelector('#s-trending .wdr-tabhint') || {}).textContent,
+      // both arrows point out to their own side, exactly as on the wardrobe
+      leftFlipped: getComputedStyle(
+        document.querySelector('#s-trending .wdr-tab[data-tab="list"] .wdr-tab-ar')).transform,
+    };
+  });
+  ok('B: Trending carries the same two-tab bar', bar.n === 2, String(bar.n));
+  ok('B: with What\'s Trending as the ACTIVE one', bar.activeIs && bar.activeIs.tab === 'trend',
+     JSON.stringify(bar.activeIs));
+  ok('B: and My List as the other door', /MY LIST|My List/i.test(bar.labels[0]), JSON.stringify(bar.labels));
+  ok('B: the My List arrow is mirrored to point left', /matrix\(-1/.test(bar.leftFlipped), bar.leftFlipped);
+  ok('B: it carries the same "Tap either list" hint', /Tap either list/.test(bar.hint || ''), String(bar.hint));
+  // ⚠️ No "New" pill here: reaching the page is what stands it down.
+  ok('B: no New pill on this copy of the tab', bar.badges === 0, String(bar.badges));
+
+  const backToList = await pg.evaluate(async () => {
+    document.querySelector('#s-trending .wdr-tab[data-tab="list"]').click();
+    await new Promise(r => setTimeout(r, 600));
+    return { act: (document.querySelector('.scr.act') || {}).id, path: location.pathname,
+             listOn: !!document.querySelector('#s-wardrobe .wdr-pane[data-pane="list"].on') };
+  });
+  ok('B: tapping My List returns to the wardrobe', backToList.act === 's-wardrobe', String(backToList.act));
+  ok('B: ...on My List, at the app root', backToList.listOn && backToList.path === '/', backToList.path);
+  const roundTrip = await pg.evaluate(async () => {
+    document.querySelector('#s-wardrobe .wdr-tab[data-tab="trend"]').click();
+    await new Promise(r => setTimeout(r, 600));
+    return (document.querySelector('.scr.act') || {}).id;
+  });
+  ok('B: and the round trip goes back the other way', roundTrip === 's-trending', String(roundTrip));
+  ok('B: zero JS errors across the round trip', errs.length === 0, errs.join(' | '));
+  await ctx.close();
+}
+
 // --- every other door
 {
   const { ctx, pg, errs } = await page();

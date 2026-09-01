@@ -1742,6 +1742,24 @@
     <h1 class="wdr-title">What's Trending</h1>
   </div>
 
+  <!-- ⚠️ THE PAIR HAS TO WORK BOTH WAYS (her catch on the live page, 2026-09-01:
+       "I can't toggle back to Wardrobe list. But from wardrobe list I can toggle
+       to Trends"). She was right, and it was an omission, not a decision: this
+       screen shipped with only a Back button, so the two tabs that had looked
+       like a two-way switch for months had become one-way.
+       ▶ Same construction as the wardrobe's bar, deliberately -- class reuse, so
+       the two can never drift -- with THIS tab active and "My List" the one that
+       navigates. Both arrows still point out to their own side, which is what
+       makes each one read as a door.
+       ⚠️ NO "New" pill on this copy: she is standing on the page, and reaching
+       it is what stands the pill down. refreshTrendBadge() only ever looks for
+       the badge inside #s-wardrobe, so there is nothing to keep in sync here. -->
+  <div class="wdr-tabs">
+    <div class="wdr-tab" data-tab="list" onclick="openWardrobe('list')">My List<svg class="wdr-tab-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div>
+    <div class="wdr-tab on" data-tab="trend">What's Trending<svg class="wdr-tab-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg></div>
+  </div>
+  <div class="wdr-tabhint">Tap either list</div>
+
   <div class="wdr-howto wdr-trend-intro">
     <div class="wdr-trend-by"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>CURATED BY CATHERINE</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="wdr-trend-note">Here&rsquo;s what&rsquo;s IN right now. It&rsquo;s always fun to refresh your wardrobe with something current<svg class="pinkheart" style="width:14px;height:14px;margin-left:4px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
