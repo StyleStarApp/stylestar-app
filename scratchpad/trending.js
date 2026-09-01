@@ -169,10 +169,27 @@ async function page(width = 390) {
   pg.on('pageerror', e => errs.push(String(e)));
   return { ctx, pg, errs };
 }
+// ⚠️ SEED SHAPE, corrected 2026-09-01: _hasQuizData() reads d.userName, NOT
+// d.name, so the old seed here saved without error and was read as a woman who
+// had NEVER taken the quiz. Nothing in this suite rested on it (these tests are
+// about navigation, not quiz state), but it is the documented "a shape the app
+// never produces" trap and a future assertion would have inherited a false
+// premise. The real shape is written at genResult().
 const seed = async ctx => ctx.addInitScript(() => {
-  localStorage.setItem('ss_data', JSON.stringify({ name: 'Cath', answers: new Array(12).fill(6),
-    topArchNames: ['Classic Sophisticate'], portrait: 'x', motto: 'y' }));
+  localStorage.setItem('ss_data', JSON.stringify({ userName: 'Cath', answers: new Array(12).fill(6),
+    topArchNames: ['Classic Sophisticate'], portrait: 'A real portrait sentence.', motto: 'Shine.' }));
 });
+
+// --- the seed really is read as a quiz-taker (guards the shape trap above)
+{
+  const { ctx, pg } = await page();
+  await seed(ctx);
+  await pg.goto('http://localhost:8994/', { waitUntil: 'networkidle' });
+  await pg.waitForTimeout(700);
+  ok('B: the seeded woman really reads as a quiz-taker',
+     await pg.evaluate(() => _hasQuizData()) === true);
+  await ctx.close();
+}
 
 // --- landing cold on /trending, the way a search result does
 {
