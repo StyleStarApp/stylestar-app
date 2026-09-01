@@ -82,13 +82,14 @@ const foots = await page.evaluate(() => {
 // ⚠️ 14 -> 16, updated DELIBERATELY 2026-09-01 and not silenced. This was
 // already failing on a clean tree before that day's CSS extraction, so screens
 // had gained footers and the restated count never moved with them. Verified in
-// the real DOM before touching the number: 16 containers, one each for s-wb,
+// the real DOM before touching the number: 17 containers, one each for s-wb,
 // s-wel, s-res, s-photo-res, s-story, s-shop, s-wardrobe, s-wishlist, s-faq,
-// s-contact, s-journal-hub, s-journal, s-a2hs, s-privacy, s-terms, plus the
-// global one — NO screen carries two, and all 16 gradient ids are unique. The
+// s-contact, s-journal-hub, s-journal, s-journal-fall-florida, s-a2hs,
+// s-privacy, s-terms, plus the global one — NO screen carries two, and all 17
+// gradient ids are unique. (16 -> 17 on 2026-09-01, article #2.) The
 // hardcoded count is kept on purpose: noticing a screen quietly gaining or
 // losing a footer is this assertion's whole job.
-ok('exactly 16 standard-footer containers', foots.n === 16, 'got ' + foots.n);
+ok('exactly 17 standard-footer containers', foots.n === 17, 'got ' + foots.n);
 const links = await page.evaluate(() => ({
   main: [...document.querySelectorAll('.quiz-footer .sf-row .lnk')].map(e => e.textContent),
   info: [...document.querySelectorAll('.quiz-footer .sf-row2 .lnk')].map(e => e.textContent)

@@ -115,7 +115,10 @@ const hub = await pg.evaluate(() => {
            title: a ? a.innerText.trim() : null,
            deco: a ? getComputedStyle(a).textDecorationLine : null };
 });
-ok('the healed hub actually LISTS the article (not an empty page)', hub.rows === 1, 'rows: ' + hub.rows);
+// DERIVED from the registry (2026-09-01): the claim is one row PER ARTICLE and
+// a non-empty list, never the literal number 1.
+const N_ART = ((/var JOURNAL_ARTICLES=\[([\s\S]*?)\];/.exec(fs.readFileSync(ROOT + '/index.html','utf8'))||[,''])[1].match(/\{\s*slug:/g)||[]).length;
+ok('the healed hub actually LISTS every article (not an empty page)', hub.rows === N_ART && N_ART > 0, 'rows: ' + hub.rows + ' for ' + N_ART + ' articles');
 ok('the row is a real anchor', hub.isAnchor);
 ok('with the right href', hub.href === '/journal/how-to-find-your-personal-style', hub.href);
 ok('showing the article title', (hub.title || '').includes('How to Find Your Personal Style'), hub.title);

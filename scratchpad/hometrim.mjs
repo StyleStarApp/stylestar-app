@@ -14,6 +14,11 @@ import handler from '/home/user/stylestar-app/netlify/edge-functions/page-titles
 
 const ROOT = '/home/user/stylestar-app';
 const RAW  = fs.readFileSync(ROOT + '/index.html', 'utf8');
+// DERIVED, never restated: how many articles the Journal registry holds.
+// (2026-09-01: two assertions below hardcoded "8 h1s" and "one row", and both
+// went stale the moment article #2 shipped. A derived count cannot.)
+const N_ARTICLES = ((/var JOURNAL_ARTICLES=\[([\s\S]*?)\];/.exec(RAW)||[,''])[1]
+  .match(/\{\s*slug:/g) || []).length;
 
 let pass = 0, fail = 0;
 const ok = (n, c, x) => { c ? (pass++, console.log('  ✓ ' + n))
@@ -82,7 +87,10 @@ console.log('     ▶ HOMEPAGE BYTES: ' + Buffer.byteLength(RAW) + ' before, ' +
 console.log('\n── PART 3 · NEGATIVE CONTROL (a sweep never seen to fail proves nothing) ──');
 // Feed the function a body whose screens cannot be found: the trim must
 // no-op, the page must still ship, and this suite must SEE the difference.
-ok('untrimmed homepage really has 8 h1s (so PART 2 is measuring something)', h1s(RAW) === 8, h1s(RAW));
+// The CLAIM is that the trim really removes h1s, not that the number is 8 --
+// every new article adds one to the untrimmed page.
+ok('untrimmed homepage has MANY h1s, so PART 2 is measuring something',
+   h1s(RAW) > 1 && h1s(RAW) === 7 + N_ARTICLES, h1s(RAW) + ' with ' + N_ARTICLES + ' articles');
 ok('untrimmed homepage really carries the article text', RAW.includes('Do I Have to Pick One Style'));
 
 console.log('\n── PART 4 · /journal now carries a real, crawlable link ──');
@@ -93,7 +101,8 @@ ok('a REAL <a href> to the article is in the raw HTML',
    bodyOf(j).includes('<a class="jhub-row" href="/journal/how-to-find-your-personal-style"'));
 ok('the link carries the article title as its text',
    /jhub-row-title">How to Find Your Personal Style</.test(bodyOf(j)));
-ok('one row per article', (bodyOf(j).match(/class="jhub-row"/g) || []).length === 1, (bodyOf(j).match(/class="jhub-row"/g)||[]).length);
+ok('one row per article', (bodyOf(j).match(/class="jhub-row"/g) || []).length === N_ARTICLES,
+   (bodyOf(j).match(/class="jhub-row"/g)||[]).length + ' rows for ' + N_ARTICLES + ' articles');
 ok('the row still routes in-app (return false)', bodyOf(j).includes("openJournalArticle('s-journal');return false;"));
 ok('title + canonical intact', TITLE(j) === 'Style Journal | Style Star' && CANON(j) === 'https://stylestar.app/journal');
 ok('CollectionPage/ItemList schema still injected', LD(j) === 2 && j.includes('"ItemList"'));

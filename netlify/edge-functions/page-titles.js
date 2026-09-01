@@ -129,12 +129,23 @@ function esc(s) {
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 const HUB_LIST = '<div id="journalHubList" class="jhub-list"></div>';
+// ⚠️ MUST match index.html's _esc() CHARACTER FOR CHARACTER, which is why this
+// exists instead of reusing esc() above: esc() also escapes ' as &#39;, and
+// _esc() does not. The moment an article title contained an apostrophe (article
+// #2, 2026-09-01) the server and client markup stopped being byte identical --
+// invisible to the eye here, because both render as the same glyph, but the
+// byte-for-byte rule below is what a future title with a real difference would
+// rely on. Do not "simplify" this back to esc().
+function escLikeClient(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 function renderHubList(html) {
   if (html.indexOf(HUB_LIST) === -1) throw new Error('hub list anchor not found');
   const rows = ARTICLES.map((a) =>
-    '<a class="jhub-row" href="/journal/' + esc(a.slug) +
-    '" onclick="openJournalArticle(\'' + esc(a.id) + '\');return false;">' +
-    '<span class="jhub-row-title">' + esc(a.title) + '</span>' +
+    '<a class="jhub-row" href="/journal/' + escLikeClient(a.slug) +
+    '" onclick="openJournalArticle(\'' + escLikeClient(a.id) + '\');return false;">' +
+    '<span class="jhub-row-title">' + escLikeClient(a.title) + '</span>' +
     '<span class="jhub-row-arrow">&rarr;</span></a>').join('');
   return html.replace(HUB_LIST,
     '<div id="journalHubList" class="jhub-list">' + rows + '</div>');
@@ -382,6 +393,30 @@ const ARTICLES = [
       { q: 'Does My Personal Style Have to Match My Everyday Life?', a: 'Personal style is not just about what you find beautiful. It also needs to work for the life you actually live. We all need clothes for ordinary days, pieces that are comfortable, appropriate, and easy to wear while still making us feel good. But I also believe in having a well-rounded, fully functioning wardrobe. Life happens. There are lunches, dinners, meetings, celebrations, services, vacations, and unexpected invitations. Your wardrobe should support you through all of it. That does not mean you need an enormous amount of clothing. It means you need the right clothing. I want women to be able to open their closets when an invitation arrives and feel a sense of possibility instead of panic. A wardrobe works best when it reflects both who you are and where your life actually takes you.' },
       { q: 'How Do I Update My Style Without Losing Myself?', a: 'This is one of my favorite principles of personal styling: going one notch. When I look at an outfit, I can often see one small change that would make the entire look feel fresher. Maybe it is changing the shoe to something just as comfortable but a little more current. Maybe it is updating the shape of your jeans. Maybe it is adding a sleek bag, trying trousers instead of shorts, wearing a monochromatic color combination, or introducing a beautiful new color. Sometimes all an outfit needs is one piece of jewelry, or what I call the third piece, a jacket, scarf, or statement necklace that takes a simple outfit and makes it feel finished. You do not need to dress like someone you are not in order to be more stylish. In fact, I think the opposite is true. The best style evolution happens when you still feel completely like yourself, just a little more current, polished, and confident.' },
       { q: 'Do I Have to Pick One Style “Type”?', a: 'I have never believed that every woman can be neatly placed into one style category, classic, trendy, romantic, edgy, minimal, glamorous. Real personal style is much more nuanced than that. I think of style almost like a fingerprint. No two of us are exactly alike. We each land at different places along a continuum of preferences. You might lean classic but still enjoy something modern. You might love an easy, relaxed silhouette but prefer a very polished handbag. You might dress mostly in neutrals but adore one unexpected burst of color. It is the combination that makes your style yours, a melody of preferences. That melody can shift. Your style may look slightly different on vacation than it does at home. It can evolve as your lifestyle changes or as fashion changes over time. But underneath those shifts, there is usually a range where you consistently feel most like yourself. Finding that range gives you clarity.' },
+    ],
+  },
+  {
+    slug: 'how-to-dress-for-fall-in-florida',
+    id: 's-journal-fall-florida',
+    title: 'How to Dress for Fall in Florida When It\'s Still 90 Degrees',
+    description: 'How to dress for fall in Florida when it is still 90 degrees, from a personal stylist of 20+ years.',
+    metaTitle: 'How to Dress for Fall in Florida (When It\'s Still Hot) | Style Star',
+    metaDesc: 'How to dress for fall in Florida when it\'s still 90 degrees, from a personal stylist of 20+ years. Keep your summer clothes, just wear them differently.',
+    datePublished: '2026-09-01',
+    dateModified: '2026-09-01',
+    faq: [
+      { q: 'How Do I Make Summer Clothes Feel Like Fall?', a: 'Start with color. It\'s the single easiest shift, and it costs you nothing in comfort. Keep the lightweight dresses, the sleeveless tops, the breathable fabrics you\'ve been living in, and move toward richer shades and colors that evoke the feeling of fall. Chocolate brown. Burgundy. Olive. Camel. Navy. Deep green. Orange tones. Off white. A sleeveless chocolate brown dress reads completely as fall at 88 degrees. Same temperature. Same amount of clothing. Completely different feeling. If you\'re wondering where to start, look at what you already reach for. Most women own more fall colors than they realize. They\'re just hanging in the summer half of the closet, worn with summer shoes, so they\'ve been reading as summer all along.' },
+      { q: 'Which Shoes Make an Outfit Feel Like Fall?', a: 'A closed toe. That\'s really the whole trick. Shoes change the entire personality of an outfit, and you don\'t have to leap from sandals straight into tall boots. A loafer, a ballet flat, a slingback, a clean sneaker, a good closed-toe flat, any one of them will move a summer dress into fall on its own. This is something I tell my clients constantly. You don\'t always need a new outfit. Sometimes you just need to move one piece. If you\'re not sure which of these suits you, that\'s exactly what the Style Star quiz is for. It takes a few minutes and tells you where your style already sits, so you\'re choosing from the shoes that are actually you.' },
+      { q: 'How Do I Get Fall Texture Without the Heat?', a: 'Put it in your accessories, not your layers. Fall makes all of us think about suede, leather, denim and knits. In a warm climate, you can have every one of those without adding a degree of warmth. You just move them off your body and onto the things you\'re carrying. A suede handbag with a linen dress. A leather belt. A cognac loafer. A darker denim than you wore in July. Gold jewelry with a little more weight to it than your summer pieces. You get the whole feeling of the season without dressing for weather that hasn\'t shown up yet.' },
+      { q: 'Can I Still Wear My Summer Dresses in Fall?', a: 'Yes. A great dress is a great dress. Before you pack anything away, look at each one for its color, its print, its overall feeling rather than its sleeve length. A surprising number will move straight into October with nothing more than a different shoe, a different bag, or a piece of jewelry with more presence. Three that work, exactly as written: A chocolate brown sleeveless midi, tan leather loafers, and a suede crossbody. Nothing about that outfit is warm, and all of it reads as fall. The white jeans you\'ve worn all summer, an olive linen button-down with the sleeves rolled, and flat leather slides in cognac. A burgundy or deep green sundress, a slim leather belt at the waist, and a closed-toe flat. The belt is doing more work than you\'d think.' },
+      { q: 'What Should I Wear for Florida Air Conditioning?', a: 'Something you can take off in one motion, and an outfit underneath that still works without it. If you live here, you know the peculiar experience of crossing a parking lot in 90 degrees and walking into a restaurant that\'s approximately 59. This is where a lightweight layer finally earns its keep: a cotton cardigan, an unlined jacket, an easy button-down worn open, and my favorite, a pashmina. The part that matters is what\'s underneath. If the outfit only works with the layer on, you\'ll be uncomfortable outside. If it only works with the layer off, you\'ll be uncomfortable inside. Build it so both versions are complete.' },
+      { q: 'Do I Have to Dress for Fall Just Because It\'s September?', a: 'No. Let the calendar inspire you, don\'t let it boss you around. This might be my strongest opinion in this whole piece. What you wear should make sense for where you\'re going, what you\'re doing, and the life you\'re actually living. If it\'s October and still hot, you don\'t owe anyone boots and a sweater to prove you know what month it is. Wear the sleeveless dress. Just make it burgundy. That one small shift is usually all it takes.' },
+      { q: 'What colors work best for fall in hot weather?', a: 'Chocolate brown, burgundy, olive, camel, navy, deep green, orange tones and warm neutrals. They read as autumn regardless of what the thermometer says, and they work in linen and cotton just as well as in wool.' },
+      { q: 'Can I wear sandals in the fall?', a: 'Of course. But if you want an outfit to feel more seasonal, a closed-toe shoe is the fastest way there. A loafer or a ballet flat shifts the whole look without costing you any comfort.' },
+      { q: 'What should I wear to a fall event in Florida?', a: 'A dress in a deeper shade, a closed-toe flat or low heel, and one leather or suede accessory. If the venue will be cold, add a lightweight layer that the outfit doesn\'t depend on.' },
+      { q: 'Do I need to buy a separate fall wardrobe if I live somewhere warm?', a: 'Not usually. Most warm-weather wardrobes already contain plenty of fall. It\'s a matter of which pieces get worn together, and which shoes and accessories they\'re worn with.' },
+      { q: 'How do I know what\'s actually in style this fall?', a: 'That\'s what the What\'s Trending page is for. I keep it updated with the pieces I\'m seeing everywhere right now, so you can see what\'s current and decide what\'s worth adding to what you already have. See what\'s trending →' },
+      { q: 'How do I find some easy ideas on what to add to my fall wardrobe?', a: 'The free Style Star quiz will tell you where your style already sits, and show you plenty of options that suit it. It takes a few minutes, it\'s completely free, and there\'s no sign-up required.' },
     ],
   },
 ];
