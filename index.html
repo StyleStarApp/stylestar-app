@@ -361,7 +361,7 @@
            nothing. Hidden forever once actually installed (standalone /
            appinstalled / accepted prompt). -->
       <div id="a2hs">
-        <img class="a2-ico" src="apple-touch-icon.png" alt="">
+        <img class="a2-ico" src="apple-touch-icon.png" alt="The Style Star icon on a phone home screen">
         <span class="a2-t" id="a2hsTxt"></span>
       </div>
       <div class="hm-foot wb-foot" data-std-foot></div>
@@ -2335,6 +2335,28 @@ function _selfHealScreens(){
       // something that calls show(). Only show() gets to decide what's
       // active; anything freshly imported starts hidden like everyone else.
       node.classList.remove('act');
+      // ⚠️ AN IMPORTED SCREEN'S <h1> BECOMES AN <h2>, AND THIS IS PURELY
+      // SEMANTIC -- nothing moves by a pixel. Every heading in this app is
+      // sized and spaced by its CLASS (.story-title, .hm-h1) and the sheet's
+      // universal `*{margin:0}` reset kills the UA default that would
+      // otherwise differ between h1 and h2 (0.67em vs 0.83em). MEASURED
+      // before and after, all eight headings byte-identical on font, weight,
+      // family, both margins and painted box: scratchpad/h1demote.mjs.
+      // ▶ WHY: this document already serves its OWN page's real <h1>. Every
+      // screen merged in here belongs to a DIFFERENT url, which serves its
+      // own <h1> when visited directly -- so a second, third and eighth <h1>
+      // in this one DOM is describing pages the reader is not on. Bing flags
+      // it as an Error; it is also genuinely worse for a screen reader, where
+      // eight <h1>s make heading navigation meaningless.
+      // ⚠️ The CURRENT screen is never touched: it was served in the raw HTML
+      // and is not imported, so its <h1> stays an <h1>. That is what leaves
+      // exactly one, on every route AND on the homepage.
+      node.querySelectorAll('h1').forEach(function(o){
+        var n2=document.createElement('h2');
+        for(var i=0;i<o.attributes.length;i++)n2.setAttribute(o.attributes[i].name,o.attributes[i].value);
+        n2.innerHTML=o.innerHTML;
+        o.parentNode.replaceChild(n2,o);
+      });
       host.appendChild(node);
     });
     // Every screen just merged in arrived with its own [data-std-foot] div

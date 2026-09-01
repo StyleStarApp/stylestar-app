@@ -173,6 +173,64 @@ green happened).
    cascade is order-dependent — a 1,3,2 rebuild moved the Style Portrait's height by 16px on 09-01).
    16/2 → **20/0**.
 
+### 🔧⭐ HER BING RE-INSPECTION, AND A STANDING "DO NOT RE-PROPOSE" THAT IS NOW REVERSED
+She ran Bing's Live URL test on `/` and `/journal` the same day. ✅ **THE "HTML SIZE IS TOO LONG" FLAG IS
+GONE** — the CSS extraction cleared it. Two remained, and both were fixed:
+1. 🚨⭐⭐ **"More than one h1 tag — 8 instances" IS FIXED, AND THIS REVERSES THE 08-31 DECISION.** That
+   entry said the fix was costed and rejected because it means editing `_selfHealScreens()`, "which
+   produced TWO serious bugs on 2026-08-29", and told a future session **not to re-propose it without a
+   new reason.** ▶▶ **THE NEW REASON IS REAL: that machinery now has a 58-check browser suite around it
+   (built this same session), so the risk argument the rejection rested on had genuinely weakened.**
+   ▶ **As built: a screen merged in by self-heal has its `<h1>` rewritten to `<h2>`, attributes and inner
+   HTML copied across, BEFORE it is appended.** The CURRENT screen is never touched — it came from the raw
+   HTML and is not imported — so exactly one `<h1>` survives, on every route AND on the homepage.
+   ⚠️⚠️ **THE TRAP THAT NEARLY MADE THIS VISIBLE, and it is the reusable half: the BROWSER'S OWN UA
+   STYLESHEET gives `h1` and `h2` DIFFERENT default margins (0.67em vs 0.83em), and `.story-title` sets
+   font-size and margin-BOTTOM but NOT margin-top.** ▶ **It is saved by the sheet's universal
+   `*,*::before,*::after{margin:0;padding:0}` at styles.css:30, which kills the UA default entirely** —
+   established by reading the reset AND by measuring, never assumed. **`scratchpad/h1demote.mjs` measures
+   all eight headings' tag, font-size, weight, family, both margins and painted box, before and after:
+   the ONLY differences in the whole diff are seven `H1`→`H2` and the count 8→1. Nothing moved a pixel.**
+   ⚠️ **Also checked before writing a line: ZERO bare `h1` tag selectors exist in styles.css** (every
+   heading is styled by `.story-title` or `.hm-h1`) **and no JavaScript anywhere queries `h1`.**
+   ⭐ **It is arguably an ACCESSIBILITY GAIN too, not just a Bing flag: eight `<h1>`s in one DOM make a
+   screen reader's heading navigation meaningless.**
+2. **"Alt attribute for images is missing — 1 instance" IS FIXED.** ▶ **MEASURED FIRST: zero images were
+   actually missing the attribute** — three carried `alt=""`, and Bing counts an empty alt as missing.
+   The one it flagged is `.a2-ico`, the app-icon preview in the Welcome Back whisper, the only one of the
+   three with a real loaded `src`. ⭐ **And Bing had a point independent of Bing: that icon is NOT
+   decorative, its whole job is showing her what will land on her home screen.** It now reads
+   `alt="The Style Star icon on a phone home screen"` — **wording lifted verbatim from the `/a2hs` page's
+   own icon, which already said exactly that.** ⚠️ **THE OTHER TWO `alt=""` ARE CORRECT AND MUST STAY:**
+   `#chatPhotoThumb` (the span beside it already says "Photo attached", so a descriptive alt makes a
+   screen reader say it twice — the deliberate 09-01 call) and `#alPhoto` (the lightbox, `src=""` until
+   she opens it).
+- ⚠️⚠️ **AND THE THING TO REMEMBER ABOUT THE INSTRUMENT: BING'S LIVE URL TEST RUNS JAVASCRIPT, so it
+  reads the post-self-heal DOM. It would have said 8 h1s before AND after the homepage trim — it is NOT
+  the instrument that measures the raw-source win.** That one shows up only for the crawlers that do not
+  run JS, which is the audience she cares about.
+- ⭐ **`hometrimlive.mjs` grew 58 → 64** pinning both (one h1 and it is the page she is on, the merged
+  screens keeping their CLASS with only the rank changed, no image missing alt, the icon's real alt, and
+  the two deliberate `alt=""` still exactly two). **Negative-controlled: removing both fixes fails 4
+  checks by name; restoring returns 64/0.**
+
+### 📬 THE `/journal` "DISCOVERED BUT NOT CRAWLED" SCARE — NOT A FAULT, SECOND SIGHTING
+Her Bing Index tab on `/journal` read **"Discovered but not crawled — URL cannot appear on Bing"**,
+discovered 31 Aug, with red text about "issues which are preventing indexation."
+▶ **IDENTICAL to the `/faq` case on 2026-09-01, and the same answer: it is Bing's crawl QUEUE, and the
+red paragraph NAMES NO ISSUE because there is none — it is generic boilerplate for any not-yet-indexed
+URL.** ⚠️ **The two tabs answer DIFFERENT questions: Bing Index is what Bing has actually DONE (nothing
+yet); Live URL is what would happen if it fetched now — and that said "URL can be indexed by Bing" with a
+green check.** ⭐ **The clincher is on her own screen: the same page showed "2 SEO/GEO issues found" AND
+"URL can be indexed" at once, which proves those issues are not blockers.**
+- **Verified as a REAL bingbot user agent, not from a browser: `/journal` 200, no redirects, no
+  `noindex`, correct canonical, correct title; `robots.txt` `Allow: /`.** Nothing is blocking it.
+- ⚠️ **A MEASUREMENT ARTIFACT WORTH KNOWING: one curl in that check returned `status 000` on the homepage
+  and the script printed the PREVIOUS page's canonical and title beneath it** (the output file was reused).
+  It looked briefly like the homepage was down to bingbot. **Three clean retries: 200 every time.**
+  ▶ **Never report a single failed fetch as a site fault, and never let a reused output file speak for a
+  request that did not happen.**
+
 ### ✅ GREEN AT PAUSE
 **menu 104 · nav 82 · pagetitles 71 · hometrim 67 (new) · hometrimlive 58 (new) · a2page 58 · hubs 49 ·
 copy 41 · e2e 29 · cssextract 20 · edgepreview 12.**
@@ -197,10 +255,10 @@ substitute** — and it is strong here, because the 58-check browser suite ran a
    (URL Inspection, NOT anything in the left menu, and NOT the AMP tab — she has landed there twice) →
    paste the URL → Request Indexing. Then the same in **Bing URL Inspection**. ▶ **Both pages genuinely
    changed for a crawler, which is exactly what her standing 08-26 rule is for.**
-2. 📏 **BING, the same trip: re-inspect the HOMEPAGE.** Two things should now clear — the **"HTML size is
-   too long"** flag (the CSS extraction, 1,166 KB → 815 KB) **and the "more than one h1" flag on the page
-   SOURCE** (8 → 1). ⚠️ Its JS-rendered DOM will still show 8; that is `_selfHealScreens()` and is
-   deliberately left alone.
+2. ✅ **BING WAS RE-INSPECTED THE SAME DAY AND THE SIZE FLAG IS GONE.** The homepage's Live URL test no
+   longer lists "HTML size is too long" — the CSS extraction cleared it (1,166 KB → 815 KB). **The h1 and
+   alt flags it DID show were both fixed the same session; see the 🔧 entry below.** ⚠️ **She has already
+   pressed Request Indexing on `/` and `/journal` in BOTH Google and Bing (2026-09-01). Do not re-ask.**
 3. 👀 **ONE SPECIFIC THING TO TEST ON HER PHONE, and only she can:** open the app, then **Menu → Privacy,
    Menu → FAQ, Menu → My Story.** They should appear instantly, exactly as before. **The homepage now
    leans on self-heal, which has run the other seven routes since 08-28 but has never carried the front

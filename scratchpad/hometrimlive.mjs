@@ -146,6 +146,31 @@ ok('the article screen is the only one showing', art.act.length === 1 && art.act
 ok('the tap stayed in-app (no full page load to a raw url)', art.path === '/journal/how-to-find-your-personal-style', art.path);
 ok('the byline is on the article', art.byline);
 
+console.log('\n── one <h1> in the RENDERED DOM, and the alt attribute ──');
+// ⚠️ This is what Bing's Live URL test actually reads: it runs JavaScript, so
+// it sees the page AFTER self-heal has merged every screen back. The raw HTML
+// already had one h1; this is the other half.
+const sem = await pg.evaluate(() => {
+  const h1 = [...document.querySelectorAll('h1')];
+  const demoted = [...document.querySelectorAll('h2.story-title')];
+  const imgs = [...document.querySelectorAll('img')];
+  const ico = document.querySelector('.a2-ico');
+  return { h1: h1.length, h1text: h1.map(h => (h.innerText || '').trim().slice(0, 34)),
+           demoted: demoted.length, imgs: imgs.length,
+           noAlt: imgs.filter(i => !i.hasAttribute('alt')).length,
+           emptyAlt: imgs.filter(i => i.getAttribute('alt') === '').length,
+           icoAlt: ico ? ico.getAttribute('alt') : null };
+});
+ok('exactly ONE <h1> survives in the rendered DOM', sem.h1 === 1, sem.h1 + ': ' + sem.h1text.join(' / '));
+ok('  ...and it is the page she is actually on', sem.h1text[0] === 'Discover your signature style', sem.h1text[0]);
+ok('the merged screens kept their heading CLASS, only the rank changed',
+   sem.demoted >= 6, 'h2.story-title found: ' + sem.demoted);
+ok('no image is missing its alt attribute', sem.noAlt === 0, sem.noAlt + ' of ' + sem.imgs);
+ok('the app-icon preview has a REAL alt, not an empty one',
+   sem.icoAlt === 'The Style Star icon on a phone home screen', JSON.stringify(sem.icoAlt));
+ok('the two deliberate alt="" images are still deliberate (chat thumb + lightbox)',
+   sem.emptyAlt === 2, sem.emptyAlt);
+
 ok('ZERO JavaScript errors through all of it', errs.length === 0, errs.slice(0, 3).join(' | '));
 
 await browser.close(); srv.close();
