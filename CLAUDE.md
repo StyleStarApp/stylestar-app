@@ -10,12 +10,17 @@ by email.
 ## ▶ NEXT SESSION — START HERE (2026-09-01 LATER — ⭐⭐ THE CSS EXTRACTION IS BUILT AND LIVE, AND IT IS INVISIBLE)
 
 ### ⏸ WHERE THIS SESSION PAUSED
-**ONE COMMIT, merged fast-forward to `main` and CURL + MD5-VERIFIED LIVE** — the 317 KB of CSS moved out
-of `index.html` into `/styles.css`. ⚠️ **One Netlify build.** Branch `claude/style-star-continue-aqm4hw`,
-same no-PR fast-forward convention.
-▶ **THE SHAPE OF IT: her own #1 from the last session, built exactly as scoped. Every number in the plan
-held, the change is provably invisible, and the honest cost turned out to be far SMALLER than this file
-predicted.**
+**THREE COMMITS, all merged fast-forward to `main`** (`3900b8e` the extraction · `083ba55` its notes ·
+`c369d9a` the red-suite cleanup). Branch `claude/style-star-continue-aqm4hw`, same no-PR convention;
+branch, `main` and the remote all sit on `c369d9a`, tree clean.
+▶ **ONLY THE FIRST TOUCHED THE APP.** The 317 KB of CSS moved out of `index.html` into `/styles.css`,
+**CURL + MD5-VERIFIED LIVE**. The other two are notes and test tooling — `index.html`, `styles.css` and
+`netlify/` are byte-identical to what is deployed.
+▶ **THE SHAPE OF IT: her own #1 from the last session, built exactly as scoped, then her follow-up
+("On the other items it seems we need to fix those?") turned into a full red-suite cleanup. Every number
+in the plan held, the change is provably invisible, the honest cost turned out to be far SMALLER than
+this file predicted — and the cleanup found a silent failure the extraction had created in the test
+tooling, which is the most valuable thing in the whole day. See the 🧹 and 🚨🚨 entries below.**
 
 ### ⚠️ A SESSION-START TRAP THAT WILL RECUR: THE LOCAL `origin/main` REF WAS STALE AGAIN
 `git rev-list --left-right --count HEAD...origin/main` said **50/50 diverged** on a branch that was
