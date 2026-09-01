@@ -149,6 +149,51 @@ names a SOFT LIMIT OF 1 MB.** The homepage is **over it**.
   argument for it is NOT SEO: she has already had real weak-signal failures** (the broken logo on her own
   phone at one bar, 2026-08-26), **and 350 KB is slow on a bad connection.** Her audience is on the move.
 
+### ⚖️✅✅ ALMIRA ANSWERED, AND CLASS 045 IS CONFIRMED SUFFICIENT — THE LONGEST-RUNNING LEGAL WORRY IS CLOSED
+Her reply landed 2026-09-01, ahead of the September 4 date she had put in writing. **The best reply from
+Indie Law in this whole thread.**
+1. **The Statement of Correction:** *"we're waiting on the State of Florida to accept and process the
+   correction to your middle name."* ▶ **An honest, clear status at last: NOT processed yet, waiting on
+   the state.** Better than the previous "no new update in their system".
+2. ⭐⭐ **THE REAL NEWS: the website was reviewed for BOTH marks (STYLE STAR and STYLE STAR LOGO) across
+   ALL THREE classes, and *"the legal team finds your website to be sufficient on all 3 classes based on
+   the USPTO's criteria and requirements."*** She quoted the full 035 / 042 / **045** descriptions.
+- ▶▶ **THIS CLOSES THE CLASS 045 SITE ADDITION PERMANENTLY. DO NOT BUILD IT.** The parked "one honest
+  present-tense sentence offering private one-on-one styling" was gated on exactly this answer, and the
+  answer is that it is not needed. ⚠️ **If she ever adds it, it must be because she WANTS THE BUSINESS,
+  never for the trademark.**
+- 🚨⭐ **AND CLAUDE'S OWN EARLIER READ WAS MORE PESSIMISTIC THAN THE LAWYER'S — recorded honestly.** This
+  file flagged 045 as "THE EXPOSED ONE" on 2026-08-31, arguing that My Story's PAST TENSE and Contact's
+  lack of a booking offer meant nothing on the site offers one-on-one styling in the present tense. **The
+  person with the actual USPTO criteria disagrees.** ▶ **The likely reason, and it is worth keeping: the
+  045 wording as filed describes WHAT THE APP DOES, not only what she does in a client's closet** —
+  *"evaluating the physical attributes, lifestyle, and fashion styles of others and recommending clothing
+  and accessories to achieve the personal image desired by the client"* is the quiz, the Style Portrait
+  and the shopping, almost line for line. **The live site is a natural specimen for it.**
+- ⚠️ **TWO THINGS TO KEEP IN MIND, neither urgent:** (a) the firm's "sufficient" is a PROFESSIONAL
+  ASSESSMENT, not the USPTO's ruling — the examiner decides at Statement of Use time, roughly March to
+  October 2027; (b) ▶ **THE SITE AS IT STANDS TODAY IS WHAT WAS BLESSED, so the styling-services framing
+  on My Story and Contact is now load-bearing.** A casual rewrite of either deserves a moment's thought.
+  **That is a NEW flag on two pages that did not have one before.**
+- ⚠️ **SHE SLID OFF THE ONE ASK THAT MATTERED, and Cath caught it: she promised "I'll follow up with an
+  UPDATE" where Cath had asked for A COPY of the confirmation or updated filing.** That is the exact
+  loophole Cath closed on 2026-08-31 (*"she could just say oh they received it, but that is not the same
+  as the fix actually being fixed"*). ✅ **Cath re-pinned it in a short reply and SENT it**, asking for the
+  document itself rather than a status line, for her records.
+- ⭐⭐ **HER STANDING PRINCIPLE, stated this session and worth honouring in every future draft: "I want to
+  stay on top of the details with her and keep everything in writing."** ▶ **So: keep replying in writing,
+  keep re-pinning specific documents rather than accepting status lines, and keep her tone as it has been
+  — it has been impeccable through the whole thread and it is working.**
+
+### ✉️ PLAY 2 HAS STARTED — THE PANAPRIUM PITCH IS SENT (2026-09-01)
+She sent the panaprium email, which is the strongest of the three drafts and the best-matched target
+(their piece is literally "13 Best FREE Personal Stylist Apps"). ▶ **STILL TO SEND: itechnolabs (the
+other genuine neutral third party) and the shorter collegial one for altadaily / myindyx (competitors'
+own blogs, long shots, worth two minutes because they cost nothing).** All three drafts are saved
+verbatim further down this file. ⚠️ **Expectations already set with her: cold outreach reply rates are
+low, two of five answering is a normal result, and silence is not a verdict on Style Star.**
+▶ **Ask what came back from panaprium.**
+
 ### ⚠️ SESSION HYGIENE
 - 🚨 **THE LOCAL `main` BRANCH WAS A STALE CLONE ARTIFACT and `git merge --ff-only` died with "refusing to
   merge unrelated histories."** `origin/main` had been force-updated since the container cloned, so local
@@ -176,21 +221,39 @@ names a SOFT LIMIT OF 1 MB.** The homepage is **over it**.
   it cannot touch a JSON blob in the edge function anyway.
 
 ### ▶ THE FIRST THINGS NEXT SESSION
-1. 🔎 **SHE STILL OWES ONE 30-SECOND STEP: Request Indexing on `https://stylestar.app/faq`** in Search
-   Console (the grey bar ACROSS THE VERY TOP is URL Inspection — ⚠️ not the left menu, which is where she
-   landed on AMP by mistake twice). **Only that one page changed.** Bing needs nothing; it re-crawls from
-   the sitemap. **Do not resubmit the sitemap on either engine.**
-   ⚠️ **`/faq`'s `lastmod` was deliberately LEFT at 2026-08-31** — the edit changed invisible markup only,
-   and a sitemap that cries wolf gets trusted less. Hers to overrule.
-2. ⭐⭐ **PLAY 2 IS STILL THE NEXT REAL PIECE OF WORK: pitch the roundups that already rank** (panaprium,
-   itechnolabs, altadaily). Drafts are saved verbatim below. **Ask whether she sent them.**
-3. 📓 **ARTICLE #2: Florida / warm-climate fall dressing**, written for the RESIDENT.
-4. 📋 **THE THREE CATALOG DECISIONS** (Old Navy / Everlane / Mango) — hers, nothing touched.
-5. ⚖️⚖️ **ALMIRA IS DUE ON OR BEFORE SEPTEMBER 4.**
-6. ⏰ **Both Routines fire 2026-09-01** — the monthly cost one at 13:02 UTC (log the first real spend
-   number) and the Google + Bing indexing check at 21:44 UTC.
-7. ✅ **Instagram is CLOSED for real now** — links, tags and reporting all verified working this session.
-   **Nothing to change on the site or in Plausible. Do not re-raise it.**
+1. ⭐⭐⭐ **HER DECISION, AND IT IS THE FIRST THING: BUILD THE CSS EXTRACTION.** Her words: *"I would like
+   to do the CSS extraction. I think it sounds like it is worth doing. Let's start with that when we pick
+   up in new chat."* **Everything needed is measured and written up in the 📏 section above — do not
+   re-derive it.** The starting facts:
+   - **THREE `<style>` blocks: 193,854 + 79,788 + 43,618 bytes (317 KB total)**, sitting at 1% / 18% / 25%
+     into the document. ⚠️⚠️ **CONCATENATE THEM IN EXACTLY THAT ORDER — the cascade is order-dependent and
+     a wrong order silently changes how things look.**
+   - **Target: homepage 1,166 KB → 849 KB (under Bing's 1 MB soft limit) · `/faq` 992 KB → 675 KB.**
+   - ⚠️ **DO NOT MOVE THE 626 KB OF JAVASCRIPT.** CSS alone clears the limit; moving the JS means hoisting,
+     scope and execution order across ~77 inline functions, for no additional benefit against the limit.
+   - ▶ **CHECK FIRST, BEFORE EDITING ANYTHING: does `netlify/edge-functions/page-titles.js` ever touch a
+     `<style>` block?** It rewrites title / meta / canonical / `</head>` and screen divs; confirm `<style>`
+     is untouched or the trim breaks.
+   - ⚠️ **Also check which test suites read CSS out of `index.html`** — several assert computed styles and
+     may need the harness to load the new external file.
+   - ⚠️ **THE HONEST TRADE, already explained to her and accepted: an external stylesheet is
+     render-blocking, so a COLD first paint is marginally later; every repeat visit is faster because the
+     browser caches 317 KB across every route.** ▶ **Her real reason is not SEO — it is that she has had
+     genuine weak-signal failures on her own phone, and her audience is on the move.**
+   - ⭐ **RENDER BEFORE AND AFTER AND DIFF THEM.** This change must be invisible to a human; a render
+     comparison is the only thing that proves it.
+2. ⚖️ **ALMIRA: watch for the COPY of the correction confirmation** (she promised only "an update"; Cath
+   re-pinned the document request in writing). **The correction is still NOT processed — Florida has it.**
+   ✅ **Class 045 is CLOSED and the site addition is NOT needed — do not re-raise either.**
+3. ✉️ **PLAY 2: ask what panaprium said, and whether she sent itechnolabs and altadaily.**
+4. 📓 **ARTICLE #2: Florida / warm-climate fall dressing**, written for the RESIDENT.
+5. 📋 **THE THREE CATALOG DECISIONS** (Old Navy / Everlane / Mango) — hers, nothing touched.
+6. ⏰ **Log the first real monthly spend number** if the 2026-09-01 cost Routine produced one, and read
+   whatever the Google + Bing indexing check turned up.
+7. ✅ **CLOSED, do not re-raise: Instagram** (links, tags and Plausible reporting all verified working) ·
+   **the `/faq` schema** (regenerated, live, 36/36 verbatim) · **the alt attribute** · **Class 045**.
+   ⚠️ **The Bing "more than one h1" flag is DELIBERATELY LEFT** — her page source already has exactly one,
+   which is what Bing's own remediation text asks for. **Do not re-propose without a new reason.**
 
 ---
 
