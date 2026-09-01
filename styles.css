@@ -1859,6 +1859,9 @@ body.menu-open .menu-panel{display:block}
 .jrnl-by-link{font:600 12px/1 'Jost',sans-serif;text-align:center;margin:9px 0 26px}
 .jrnl-p{font:400 15.5px/1.72 'Lora',Georgia,serif;color:#4a463e;text-align:left;margin:0 0 18px}
 .jrnl-p b{font-weight:700;color:#3a352c}
+.jrnl-ul{list-style:none;margin:0 0 18px;padding:0}
+.jrnl-ul li{font:400 15.5px/1.72 'Lora',Georgia,serif;color:#4a463e;text-align:left;margin:0 0 12px;padding-left:18px;position:relative}
+.jrnl-ul li::before{content:"";position:absolute;left:2px;top:11px;width:5px;height:5px;border-radius:50%;background:#4a463e}
 .jrnl-lnk{color:#8A6410;text-decoration:underline;cursor:pointer}
 .jrnl-h2{font:400 20px/1.32 'DM Serif Display',Georgia,serif;color:#1a1a1a;text-align:left;margin:32px 0 12px}
 .jrnl-h2:first-of-type{margin-top:8px}

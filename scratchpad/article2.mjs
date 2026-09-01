@@ -62,6 +62,18 @@ faq.mainEntity.forEach(q=>{
   if(has) verb++; else miss.push(qt.slice(0,45));
 });
 ok('all 12 schema QUESTIONS appear verbatim on the page', verb===12, miss.join(' | '));
+// ⚠️ The ANSWERS are what drifted on /faq (2026-09-01): a snapshot taken once,
+// then two copy edits landed and nobody regenerated it. Schema that contradicts
+// the visible text is a Google structured-data violation. Check both halves.
+let averb=0, amiss=[];
+{ const hay=strip(a).replace(/<[^>]+>/g,' ').replace(/&rarr;/g,'→').replace(/&amp;/g,'&')
+    .replace(/&[a-z]+;/g,' ').replace(/\s+/g,' ').trim();
+  faq.mainEntity.forEach(q=>{
+    const at=q.acceptedAnswer.text.replace(/\s+/g,' ').trim();
+    if(hay.includes(at)) averb++; else amiss.push(q.name.slice(0,40));
+  });
+}
+ok('all 12 schema ANSWERS appear verbatim on the page', averb===12, amiss.join(' | '));
 ok('rendered words in a sane range (900-1600)', words(a)>900&&words(a)<1600, words(a)+' words');
 console.log('   rendered words: '+words(a));
 

@@ -33,7 +33,13 @@ const out=await pg.evaluate(()=>{
     if(!q.endsWith('?')) return;                    // skip "Frequently Asked Questions" / "One Last Thing"
     const parts=[];
     let n=h.nextElementSibling;
-    while(n && !/^H2$/.test(n.tagName)){ if(n.classList.contains('jrnl-p')) parts.push(n.innerText.trim()); n=n.nextElementSibling; }
+    // ⚠️ Reads .jrnl-p AND .jrnl-ul: once the three outfits became a real list
+    // (2026-09-01, her pick), a paragraph-only extractor silently dropped them
+    // from this answer -- the schema would have promised less than the page shows.
+    while(n && !/^H2$/.test(n.tagName)){
+      if(n.classList.contains('jrnl-p')) parts.push(n.innerText.trim());
+      else if(n.classList.contains('jrnl-ul')) parts.push([...n.querySelectorAll('li')].map(li=>li.innerText.trim()).join(' '));
+      n=n.nextElementSibling; }
     pairs.push({q,a:parts.join(' '),src:'h2'});
   });
   // (b) the explicit FAQ block
