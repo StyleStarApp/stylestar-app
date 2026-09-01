@@ -46,6 +46,21 @@ there appears in the teaser, in the "New" pill count and in the ItemList schema 
 answer would leave the teaser and the pill blank for the rest of the visit. **`markTrendSeen()` likewise
 never stamps a zero.**
 
+### 🚨⭐ HER CATCH ON THE LIVE PAGE, FIXED THE SAME HOUR — the pair has to work BOTH ways
+Her words: *"What looks different is that I can't toggle back to Wardrobe list. But from wardrobe list I can
+toggle to Trends. Is that what I am supposed to see?"* ▶ **It was, and it was an OMISSION not a decision:
+the new screen shipped with only a Back button, so two tabs that had read as a two-way switch for months had
+quietly become one-way.** ✅ **The Trending page carries the SAME tab bar now** (class reuse, so the two can
+never drift), with What's Trending as the ACTIVE tab and My List as the door out, both arrows still pointing
+out to their own side.
+- ⚠️ **NO "New" pill on this copy, deliberately:** reaching the page is what stands the pill down, and
+  `refreshTrendBadge()` only ever looks for the badge inside `#s-wardrobe`, so there is nothing to sync.
+- ⚠️ **`wardrobeTab()` is scoped to `#s-wardrobe`**, so it can never touch the trending copy's active state.
+- ▶ **THE LESSON, and it is the same family as the 2026-08-29 footers: A SCREEN SPLIT IN TWO INHERITS ONLY
+  THE HALF OF THE NAVIGATION YOU REMEMBER TO REBUILD.** Her eye caught it in under a minute on her phone;
+  76 green checks did not, because not one of them asked whether the pair worked in both directions.
+  **trending 76 → 86**, with the round trip now driven both ways through the real handlers.
+
 ### 🚨⭐⭐ THE REAL BUG, FOUND BY REPRODUCING RATHER THAN READING — and this project had already written the rule in capitals
 With the card decoration and the "New" stamp inside `openTrending()`, **a woman who landed on a journal
 article from a search result and tapped through to Trending BEFORE the self-heal fetch landed got the page
@@ -118,7 +133,7 @@ refreshes them, the SEO work comes free.** Raise this when she brings the new tr
 ⚠️ **The title and description are CLAUDE DRAFTS she has not reworded.** One string each in page-titles.js.
 
 ### ✅ GREEN AT PAUSE
-**trending 76 (new) · jrnlcta 128 · menu 104 · nav 82 · wdrworksheet 73 · pagetitles 71 · hometrim 69 ·
+**trending 86 (new) · jrnlcta 128 · menu 104 · nav 82 · wdrworksheet 73 · pagetitles 71 · hometrim 69 ·
 wdrmylist 65 · hometrimlive 64 · hubs 49 · tabtops 49 · copy 41 · article2 31 · e2e 29 · wdrcalmcheck 27 ·
 cssextract 20 · edgepreview 12 — all 0 failed.**
 ⚠️ **`catmark` stays 132/3 and it is PRE-EXISTING, PROVEN not assumed:** a clean HEAD in a `git worktree`,
@@ -168,14 +183,16 @@ empty string once and matched on three clean retries. **Never report a single fa
 sighting.** ▶ `git fetch origin main` → `git checkout -B main origin/main` → fast-forward.
 
 ### ▶ THE FIRST THINGS NEXT SESSION — HER LIST, NOTHING DROPPED
-1. 👀 **`/trending` ON HER PHONE**, and **the wardrobe page**, to confirm the tab still feels right now that
-   it navigates. ⚠️ Private browsing, `stylestar.app/?notrack`. **She also has not yet seen article #2's two
-   wording edits live** (the cut sentence and the off white outfit idea) — that was her plan when this
-   session started.
-2. 🔎⭐ **REQUEST INDEXING ON `/trending`, GOOGLE AND BING.** ▶ **This one is genuinely owed, unlike the
-   article edits: it is a BRAND NEW URL that has never been crawled.** Her own standing rule (2026-08-26) is
-   to do this on every new page. Search Console → the grey bar across the very top (URL Inspection, NOT the
-   left menu, NOT the AMP tab) → paste → Request Indexing. Then Bing URL Inspection.
+1. 🔎⭐⭐ **REQUEST INDEXING ON `/trending`, GOOGLE AND BING — SHE ASKED TO BE REMINDED.** Her words:
+   *"let's hold the indexing because I am not at my desk right now but don't let me forget."* ▶ **RAISE THIS
+   FIRST, unprompted.** It is genuinely owed, unlike the article edits: a BRAND NEW URL that has never been
+   crawled, and her own standing rule (2026-08-26) is to do this on every new page. Search Console → the grey
+   bar across the very top (URL Inspection, NOT the left menu, NOT the AMP tab) → paste → Request Indexing.
+   Then Bing URL Inspection.
+2. 👀 **THE TAB BAR ON HER PHONE** — she has seen `/trending` live and caught the one-way toggle; the fix
+   shipped straight after and **she has not seen it yet.** ⚠️ Private browsing, `stylestar.app/?notrack`.
+   **She also has not yet seen article #2's two wording edits live** (the cut sentence and the off white
+   outfit idea) — that was her plan when this session started.
 3. ✍️⭐⭐ **THE NEW TRENDS, WRITTEN RICHER.** She said they need updating soon. See the ⚠️ SEO read above:
    **the words are the ranking lever, and the refresh and the SEO work are the same job.** ▶ Editing is now
    ONE list in the markup; bump `/trending`'s `lastmod` in the same commit.
