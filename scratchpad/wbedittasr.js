@@ -11,10 +11,11 @@ const ROOT = '/home/user/stylestar-app';
 let pass = 0, fail = 0;
 const ok = (l, c, x) => { console.log((c ? '  ok  ' : 'FAIL  ') + l + (!c && x ? '   << ' + x : '')); c ? pass++ : fail++; };
 
+import { routePhotos } from './photocache.mjs';
 const srv = http.createServer((rq, rs) => {
   let p = decodeURIComponent(rq.url.split('?')[0]); if (p === '/') p = '/index.html';
   const f = path.join(ROOT, p); if (!fs.existsSync(f)) { rs.writeHead(404); return rs.end(); }
-  rs.writeHead(200, { 'Content-Type': p.endsWith('.html') ? 'text/html' : 'application/octet-stream' });
+  rs.writeHead(200, { 'Content-Type': p.endsWith('.html') ? 'text/html' : p.endsWith('.css') ? 'text/css' : 'application/octet-stream' });
   rs.end(fs.readFileSync(f));
 }).listen(0);
 const PORT = srv.address().port;
@@ -32,20 +33,15 @@ pg.on('pageerror', e => errs.push(e.message));
 // own history already documents. scratchpad/wbcarousel-mock.js downloaded
 // these six once; reused here.
 const IMG_DIR = '/tmp/wbcarousel-img';
-const HOST_FILE = { 'dvf.com': 'dvf-scarf.jpg', 'farmrio.com': 'farmrio.jpg', 'vilebrequin.com': 'vilebrequin.jpg', 'olivela.com': 'olivela.jpg' };
-if (fs.existsSync(IMG_DIR)) {
-  await pg.route(/https?:\/\/([a-z0-9-]+\.)?(dvf|farmrio|vilebrequin|olivela)\.com\/.*|https?:\/\/cdn\.shopify\.com\/.*/, r => {
-    const url = r.request().url();
-    let file = null;
-    for (const host in HOST_FILE) if (url.includes(host)) file = HOST_FILE[host];
-    if (!file) file = url.includes('MEMORY_LANE') ? 'jean.png' : url.includes('ABIGAIL') ? 'serpui.jpg' : null;
-    const full = file && path.join(IMG_DIR, file);
-    if (full && fs.existsSync(full)) {
-      return r.fulfill({ status: 200, contentType: file.endsWith('.png') ? 'image/png' : 'image/jpeg', body: fs.readFileSync(full) });
-    }
-    r.continue();
-  });
-}
+// ⚠️ 2026-09-01: was a hand-maintained host→file map covering four brands, gated
+// on a photo directory that is gitignored and so usually absent. It missed
+// mytheresa, etsy and fleurdumal entirely — and once the CSS extraction meant
+// this harness finally served a STYLED page, the uncovered photos loaded, failed,
+// and `onerror="this.remove()"` stripped them, leaving "More from the Edit" (which
+// only shows PHOTOGRAPHED pieces) completely empty. photocache reads every photo
+// URL out of index.html at run time, so it covers all of them and cannot go stale
+// when she adds an Edit piece.
+await routePhotos(pg, { allow: () => false });
 // ⚠️ SEEDED VIA addInitScript, NOT goto-then-reload. This sandbox's Chromium
 // cannot reach the real Edit photos' retail CDNs at all (the documented wall)
 // -- every dc-item-px carries onerror="this.remove()", so once the browser's

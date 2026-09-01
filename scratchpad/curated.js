@@ -94,7 +94,7 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
     let p = req.url.split('?')[0]; if (p === '/') p = '/index.html';
     const f = path.join(ROOT, decodeURIComponent(p));
     if (fs.existsSync(f) && fs.statSync(f).isFile()) {
-      res.setHeader('content-type', p.endsWith('.html') ? 'text/html' : p.endsWith('.json') ? 'application/json' : 'application/octet-stream');
+      res.setHeader('content-type', p.endsWith('.html') ? 'text/html' : p.endsWith('.json') ? 'application/json' : p.endsWith('.css') ? 'text/css' : 'application/octet-stream');
       res.end(fs.readFileSync(f));
     } else { res.statusCode = 404; res.end('nf'); }
   });

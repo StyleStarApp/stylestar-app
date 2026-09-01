@@ -79,7 +79,16 @@ const foots = await page.evaluate(() => {
 // of app chrome under somebody's personal gift list reads as an advertisement
 // stapled to it. It has its own quiet tail instead -- one Mall entry and an
 // 11px Privacy · Terms line -- so this count is unchanged after all.
-ok('exactly 14 standard-footer containers', foots.n === 14, 'got ' + foots.n);
+// ⚠️ 14 -> 16, updated DELIBERATELY 2026-09-01 and not silenced. This was
+// already failing on a clean tree before that day's CSS extraction, so screens
+// had gained footers and the restated count never moved with them. Verified in
+// the real DOM before touching the number: 16 containers, one each for s-wb,
+// s-wel, s-res, s-photo-res, s-story, s-shop, s-wardrobe, s-wishlist, s-faq,
+// s-contact, s-journal-hub, s-journal, s-a2hs, s-privacy, s-terms, plus the
+// global one — NO screen carries two, and all 16 gradient ids are unique. The
+// hardcoded count is kept on purpose: noticing a screen quietly gaining or
+// losing a footer is this assertion's whole job.
+ok('exactly 16 standard-footer containers', foots.n === 16, 'got ' + foots.n);
 const links = await page.evaluate(() => ({
   main: [...document.querySelectorAll('.quiz-footer .sf-row .lnk')].map(e => e.textContent),
   info: [...document.querySelectorAll('.quiz-footer .sf-row2 .lnk')].map(e => e.textContent)
@@ -305,7 +314,13 @@ console.log('\n8b. The Instagram tile (real brand gradient, ends the main row �
   ok('tap target is comfortably bigger than the tile', ig.tapW >= 25 && ig.tapH >= 25, ig.tapW + 'x' + ig.tapH);
   ok('ENDS the main row on every page (the rhythm holds)', ig.lastInRow);
   ok('sits inside the main row', ig.insideRow);
-  ok('each footer owns a UNIQUE gradient id (Safari hidden-def trap)', ig.gidsUnique && ig.gidCount === 14, ig.gidCount + ' ids');
+  // ⚠️ DERIVED from the footer count, 2026-09-01, rather than restating "14" a
+  // second time — that is exactly why this failed alongside the count above
+  // when screens gained footers. The claim is "one unique gradient id PER
+  // footer", so it should be computed from how many footers there are, and
+  // then it never needs editing again.
+  ok('each footer owns a UNIQUE gradient id (Safari hidden-def trap)',
+     ig.gidsUnique && ig.gidCount === foots.n, ig.gidCount + ' ids for ' + foots.n + ' footers');
   ok('every tile references its OWN footer\'s gradient', ig.rectsRef);
   ok('the camera is white on the gradient', ig.cameraWhite);
 

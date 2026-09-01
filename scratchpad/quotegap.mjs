@@ -7,7 +7,7 @@ import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
 const ROOT='/home/user/stylestar-app', PORT=8987;
 const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]);if(p==='/')p='/index.html';
  const f=path.join(ROOT,p); if(!fs.existsSync(f)||fs.statSync(f).isDirectory()){r.writeHead(404);return r.end('x')}
- r.writeHead(200,{'content-type':p.endsWith('.html')?'text/html':'application/octet-stream'});fs.createReadStream(f).pipe(r)});
+ r.writeHead(200,{'content-type':p.endsWith('.html')?'text/html':p.endsWith('.css') ? 'text/css' : 'application/octet-stream'});fs.createReadStream(f).pipe(r)});
 await new Promise(r=>srv.listen(PORT,r));
 const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'});
 const ctx=await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:4});

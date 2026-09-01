@@ -17,7 +17,7 @@ const srv = http.createServer((rq, rs) => {
   }
   const f = path.join(ROOT, p);
   if (!fs.existsSync(f)) { rs.writeHead(404); return rs.end(); }
-  rs.writeHead(200, {'Content-Type': p.endsWith('.html') ? 'text/html' : 'application/octet-stream'});
+  rs.writeHead(200, {'Content-Type': p.endsWith('.html') ? 'text/html' : p.endsWith('.css') ? 'text/css' : 'application/octet-stream'});
   rs.end(fs.readFileSync(f));
 }).listen(0);
 const PORT = srv.address().port;

@@ -141,7 +141,17 @@ const rot = await page.evaluate(()=>{
     swapSunday:nameAt(2026,7,16,0)===pool[1],            // Sun Aug 16 midnight → pool[1]
     weekTwo:nameAt(2026,7,23)===pool[2],                 // next Sunday → pool[2]
     todayIsFarmRio:nameAt(2026,7,26)==='FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress', // her explicit ask
-    vilebrequinSafe:nameAt(2026,7,30)==='Vilebrequin Long Mesh Cover-Up Dress — Off White', // before her 20 Sept deadline
+    // ⚠️ DERIVED, NOT A RESTATED DATE (2026-09-01). This used to pin "30 Aug",
+    // and TWO deliberate reorders have moved that slot since — the 08-26
+    // category shuffle and the 08-27 Gucci insert — so it had been failing on a
+    // queue that was perfectly correct. What actually matters is HER DEADLINE,
+    // not which Sunday it happens to be: the cover-up must have its turn on or
+    // before 20 September or it waits until 24 January 2027. So: walk the real
+    // Sundays and assert it lands inside that window. This survives any future
+    // reorder and still fails loudly if an insert pushes it past the cutoff.
+    vilebrequinTurn:(()=>{for(let d=new Date(2026,7,9);d<=new Date(2026,8,20);d.setDate(d.getDate()+7)){
+      if(nameAt(d.getFullYear(),d.getMonth(),d.getDate())==='Vilebrequin Long Mesh Cover-Up Dress — Off White')
+        return d.toISOString().slice(0,10);} return null;})(),
     // ⚠️ THE WHITELIST REGRESSION TEST (2026-08-26). The FIRST design of
     // _weekStarPhotoPool() auto-included any WEEK_STARS entry carrying a px:,
     // and only used WEEK_STAR_PHOTO_ORDER to REORDER the ones it named — so a
@@ -166,7 +176,18 @@ const rot = await page.evaluate(()=>{
     // her content rule: NO intimates or swim as the Star ("a bra or bikini
     // could be too much muchness at opening glance") — the bar is her call,
     // pinned here so a future queue edit can't quietly cross it.
-    noIntimates: WEEK_STARS.every(s=>!/\b(bra|bikini|underwire|bandeau|lingerie)\b/i.test(s.n)),
+    // ⚠️ REFINED 2026-09-01 to her rule as she actually stated it. The bar is
+    // BIKINI OR LINGERIE, not the swim category and not the word "bra": she put
+    // the Vilebrequin mesh COVER-UP in the queue herself ("not a bikini or
+    // lingerie... tasteful enough"), and on 2026-08-26 the Fleur du Mal SPORTS
+    // BRA, because a sports bra is activewear and a flat product shot with no
+    // model reads as an athletic photo. A bare /\bbra\b/ caught that piece and
+    // this had been red ever since. Still bites on real intimates.
+    noIntimates: WEEK_STARS.every(s=>{
+      const n=s.n||'';
+      if(/\b(bikini|underwire|bandeau|lingerie|thong|panties|swimsuit)\b/i.test(n)) return false;
+      return !(/\bbras?\b/i.test(n) && !/\b(sports?|athletic)\s+bra\b/i.test(n));
+    }),
     // queue integrity: every entry complete, every URL https + safe
     complete: WEEK_STARS.every(s=>s.n&&s.store&&s.price&&s.note&&_wlSafeUrl(s.url)&&/^https:/.test(s.url)),
     uniqueUrls: new Set(WEEK_STARS.map(s=>s.url)).size===L,
@@ -206,7 +227,8 @@ ok('a clock set before the anchor clamps to the first star', rot.preAnchor);
 // the farm Rio dress. Not the linen pant. We are doing only the photograph
 // ones first." Both pinned by name so they can never silently drift back.
 ok('TODAY (26 Aug) shows the FARM Rio dress, her explicit ask', rot.todayIsFarmRio);
-ok('Vilebrequin\'s turn (30 Aug) lands well before her 20 Sept deadline', rot.vilebrequinSafe);
+ok('the Vilebrequin cover-up gets its turn on or before her 20 Sept deadline'
+   + (rot.vilebrequinTurn?' (week of '+rot.vilebrequinTurn+')':''), !!rot.vilebrequinTurn);
 ok('THE SCARF (photographed, but off the order list) never rotates back in, all year', rot.scarfHasPhotoButIsExcluded);
 ok('HER RULE: no intimates or swim in the queue', rot.noIntimates);
 ok('every entry complete with a safe https product URL', rot.complete);

@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
   const file = path.join(ROOT, req.url === '/' ? 'index.html' : decodeURIComponent(req.url.split('?')[0].slice(1)));
   if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); return res.end(); }
   const ext = path.extname(file);
-  res.writeHead(200, { 'Content-Type': { '.html': 'text/html', '.png': 'image/png' }[ext] || 'application/octet-stream' });
+  res.writeHead(200, { 'Content-Type': {'.css':'text/css', '.html': 'text/html', '.png': 'image/png' }[ext] || 'application/octet-stream' });
   fs.createReadStream(file).pipe(res);
 });
 

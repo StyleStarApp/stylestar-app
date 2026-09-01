@@ -58,7 +58,13 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 // commercial point of the whole feature — a piece bought from her shared list
 // is exactly what should earn — so it is affiliate-wrapped and sponsored like
 // every other product link. The census caught the 12th template as designed.
-const TEMPLATES = 12;
+// 12 → 13 updated deliberately 2026-09-01: "More from the Edit" (.wet-card,
+// built by _renderEditTeaser on Welcome Back, her idea 2026-08-26) carries its
+// own outbound anchor, affiliate-wrapped and sponsored like every other product
+// link. The census caught the 13th template exactly as designed — this suite
+// had been red since that strip shipped, which is a fair trade for an assertion
+// whose whole job is to notice a new way out of the app.
+const TEMPLATES = 13;
 const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length;
 ok('found the full set of outbound PRODUCT anchors (every Edit link + ' + TEMPLATES + ' templates)',
    anchors.length === EDIT_N + TEMPLATES, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');

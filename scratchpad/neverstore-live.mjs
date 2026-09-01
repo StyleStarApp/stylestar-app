@@ -18,7 +18,7 @@ import http from 'http'; import fs from 'fs'; import path from 'path';
 const ROOT=process.cwd(),PORT=8993;
 const srv=http.createServer((q,r)=>{let u=decodeURIComponent(q.url.split('?')[0]);if(u==='/')u='/index.html';
  fs.readFile(path.join(ROOT,u.replace(/^\//,'')),(e,b)=>{if(e){r.writeHead(404);r.end();return}
- r.writeHead(200,{'Content-Type':{'.html':'text/html','.png':'image/png','.json':'application/json'}[path.extname(u)]||'application/octet-stream'});r.end(b)})});
+ r.writeHead(200,{'Content-Type':{'.css':'text/css','.html':'text/html','.png':'image/png','.json':'application/json'}[path.extname(u)]||'application/octet-stream'});r.end(b)})});
 
 /* Kathy as best we can model her: relaxed, modest, and the bodycon chip ticked.
    ⚠️ These sliders are an APPROXIMATION - her real answers would turn this from

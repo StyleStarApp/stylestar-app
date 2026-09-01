@@ -3,16 +3,35 @@
 // at N sites drifts the moment an N+1th appears, so the guarantee lives here.
 import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
 import http from 'http'; import fs from 'fs'; import path from 'path'; import vm from 'vm';
+import { routePhotos } from './photocache.mjs';
 const ROOT='/home/user/stylestar-app';
 let pass=0,fail=0;
 const ok=(m,c,x='')=>{c?pass++:fail++;console.log((c?'  ok  ':'FAIL  ')+m+(c?'':'   << '+x));};
 
-const src=fs.readFileSync(ROOT+'/index.html','utf8');
+const srcRaw=fs.readFileSync(ROOT+'/index.html','utf8');
+// ⚠️ STRIP HTML COMMENTS BEFORE COUNTING MARKUP. The Open Heart Necklace's
+// wrapper is documented with a comment that writes out `<img class="dc-item-px">`
+// as an example, so a bare match counts 11 photos where there are 10 — and then
+// "every photo has alt text" fails at 10 of 11 on markup that is perfectly fine.
+// Fifth sighting of this trap in this project (the <h1>-in-a-comment false
+// positives on 08-28 and 08-31, and the <style> one on 09-01).
+const src=srcRaw.replace(/<!--[\s\S]*?-->/g,'');
+// ⚠️ THE CSS LIVES IN styles.css SINCE 2026-09-01. Any rule assertion has to
+// read it from there; grepping index.html for a selector now silently finds
+// nothing and fails on correct code.
+const css=fs.readFileSync(ROOT+'/styles.css','utf8');
 
 /* ---------- PART 1 · static ---------- */
-const blocks=[...src.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
-blocks.forEach((b,i)=>{let e=null;try{new vm.Script(b);}catch(err){e=err.message;}
-  ok(`script block ${i+1} parses`, !e, e||'');});
+// ⚠️ 2026-09-01: this used to throw EVERY inline <script> at the JS parser,
+// including the sitewide Organization JSON-LD block added 2026-08-28 — which is
+// JSON, not JavaScript, so it failed on "Unexpected token ':'" and had been red
+// ever since. A structured-data block still deserves checking, just with the
+// right parser: JSON.parse for ld+json, vm.Script for real code.
+const blocks=[...src.matchAll(/<script((?![^>]*\bsrc=)[^>]*)>([\s\S]*?)<\/script>/g)]
+  .map(m=>({attrs:m[1],body:m[2],json:/ld\+json/.test(m[1])}));
+blocks.forEach((b,i)=>{let e=null;
+  try{ b.json ? JSON.parse(b.body) : new vm.Script(b.body); }catch(err){e=err.message;}
+  ok(`script block ${i+1} parses${b.json?' (JSON-LD)':''}`, !e, e||'');});
 
 const items=[...src.matchAll(/<div class="dc-item">([\s\S]*?)<\/div>\s*\n\s*<\/div>|<div class="dc-item">([\s\S]*?)(?=<div class="dc-item">|<div class="dc-sign")/g)];
 // 21 -> 22 and 3 -> 4 photos DELIBERATELY: the Vilebrequin mesh cover-up joined
@@ -41,8 +60,8 @@ ok('every photo degrades on error',
    pxWith(/class="dc-item-px"[^>]*onerror="this\.remove\(\)"/g)===PX_N);
 ok('every photo is lazy',
    pxWith(/class="dc-item-px"[^>]*loading="lazy"/g)===PX_N);
-ok('rule is 3:4, inset (not full-bleed)', /\.dc-item-px\{[^}]*aspect-ratio:3\/4/.test(src)
-   && !/\.dc-item-px\{[^}]*margin:-/.test(src));
+ok('rule is 3:4, inset (not full-bleed)', /\.dc-item-px\{[^}]*aspect-ratio:3\/4/.test(css)
+   && !/\.dc-item-px\{[^}]*margin:-/.test(css));
 ok('the licensing rule is written at the code', /GREP _AFF_MID BEFORE ADDING ONE/.test(src));
 
 /* queue */
@@ -70,9 +89,19 @@ ok('THE 30 AUG SLOT: the Vilebrequin cover-up is now at index 3',
    /Vilebrequin/.test(names[3]||''), (names[3]||'(nothing)')+' — queue is '+names.length);
 ok('no duplicate in the queue', new Set(names).size===names.length);
 ok('every queue url is https', [...q.matchAll(/url:'([^']+)'/g)].every(m=>m[1].startsWith('https://')));
-ok('HER RULE: no intimates or swim in the queue',
-   !/\b(bra|bras|bralette|bikini|swimsuit|swimwear|lingerie|underwear|thong|panties)\b/i.test(names.join(' ')),
-   names.filter(n=>/\b(bra|bikini|swim|lingerie|underwear)\b/i.test(n)).join());
+// ⚠️ REFINED 2026-09-01 to match the rule she actually stated, not a broader
+// reading of it. Her bar for Star of the Week is BIKINI OR LINGERIE, not the
+// swim CATEGORY: on 2026-08-20 she put the Vilebrequin mesh COVER-UP in the
+// queue herself ("not a bikini or lingerie... tasteful enough"), and on
+// 2026-08-26 the Fleur du Mal SPORTS BRA, on the grounds that a sports bra is
+// activewear and a flat product shot with no model reads as an athletic photo.
+// A bare /\bbra\b/ caught that piece and had been failing ever since. The rule
+// still bites on real intimates and on swimwear proper.
+const INTIMATE=/\b(bralette|bikini|swimsuit|swimwear|lingerie|underwear|thong|panties)\b/i;
+const BARE_BRA=/\bbras?\b/i, ATHLETIC=/\b(sports?|athletic)\s+bra\b/i;
+const offends=n=>INTIMATE.test(n)||(BARE_BRA.test(n)&&!ATHLETIC.test(n));
+ok('HER RULE: no bikini or lingerie in the queue (a sports bra is activewear, her call)',
+   !names.some(offends), names.filter(offends).join());
 // ⚠️ EITHER a pinned name or a bare `null` — WEEK_STAR_PIN moved to the second
 // shape 2026-08-25 when she unpinned ("yes, let's go ahead and unpin"), so the
 // pin-specific checks below only run when a pin is actually set. The claim
@@ -101,7 +130,7 @@ ok('the re-pin/resume instruction is written at the code',
 /* ---------- PART 2 · live, in the real page ---------- */
 const srv=http.createServer((rq,rs)=>{let p=decodeURIComponent(rq.url.split('?')[0]);if(p==='/')p='/index.html';
   const f=path.join(ROOT,p); if(!fs.existsSync(f)){rs.writeHead(404);return rs.end();}
-  rs.writeHead(200,{'Content-Type':p.endsWith('.html')?'text/html':'application/octet-stream'});
+  rs.writeHead(200,{'Content-Type':p.endsWith('.html')?'text/html':p.endsWith('.css') ? 'text/css' : 'application/octet-stream'});
   rs.end(fs.readFileSync(f));}).listen(0);
 const PORT=srv.address().port;
 const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'});
@@ -117,11 +146,18 @@ pg.on('pageerror',e=>errs.push(e.message));
 // (measured: 'serif' and 'Lora' render the same note at byte-identical
 // widths here without this). Reuses the same local cache + rewrite as
 // scratchpad/renderfonts.mjs.
-if(fs.existsSync(ROOT+'/scratchpad/fonts/gf.css')){
-  const gfCss=fs.readFileSync(ROOT+'/scratchpad/fonts/gf.css','utf8')
-    .replace(/url\((f\d+\.woff2)\)/g,`url(http://127.0.0.1:${PORT}/scratchpad/fonts/$1)`);
-  await pg.route('**/fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:gfCss}));
-}
+const gfCss=fs.existsSync(ROOT+'/scratchpad/fonts/gf.css')
+  ? fs.readFileSync(ROOT+'/scratchpad/fonts/gf.css','utf8')
+      .replace(/url\((f\d+\.woff2)\)/g,`url(http://127.0.0.1:${PORT}/scratchpad/fonts/$1)`)
+  : null;
+// ⚠️ 2026-09-01: this suite had NO photo interception at all, so every photo
+// assertion measured a 0x0 box — the hotlinked images simply fail in a sandbox
+// with no route to the retail CDNs. photocache serves locally cached copies and
+// reads the URL list out of index.html, so a rotation cannot strand it.
+await routePhotos(pg,{allow:(u,r)=>{
+  if(gfCss&&u.includes('fonts.googleapis.com')){r.fulfill({status:200,contentType:'text/css',body:gfCss});return true;}
+  if(u.includes('fonts.gstatic.com')){r.continue();return true;}
+  return false;}});
 await pg.goto(`http://127.0.0.1:${PORT}/`);
 await pg.evaluate(()=>{document.querySelectorAll('.hm-entrance').forEach(e=>e.remove());showDream();});
 await pg.waitForTimeout(1200);
@@ -161,6 +197,14 @@ ok('SWEEP: every photo sits on an approved retailer, and there is at least one',
 // ⚠️ This sandbox's Chromium cannot reach external CDNs (the documented Google
 // Fonts wall), so a load here proves nothing either way — hence the timeout and
 // the honest SKIP. Reachability is proven by curl instead, outside this suite.
+// ⚠️ 2026-09-01: force the lazy images to start. Every .dc-item-px is
+// loading="lazy" (this suite asserts that two checks below), so the ones far
+// below the fold never begin loading at all — neither onload nor onerror ever
+// fires and the race below times out on a photo that is perfectly fine. That
+// read as "4 photos failed" the moment the cache made the others succeed.
+await pg.evaluate(()=>{document.querySelectorAll('.dc-item-px').forEach(i=>{
+  if(!(i.complete&&i.naturalWidth>0)){i.loading='eager';const s=i.src;i.src='';i.src=s;}});});
+await pg.waitForTimeout(900);
 const loaded=await pg.evaluate(()=>Promise.all([...document.querySelectorAll('.dc-item-px')].map(i=>
   Promise.race([
     i.complete&&i.naturalWidth>0?Promise.resolve({ok:true,src:i.src}):
@@ -371,11 +415,29 @@ ok('OWN PHOTO: the queue is left exactly as it was found', own.restored===true);
 // anything in today's session (the photos-only rotation only changes WHICH
 // item is served, never how the card is built). Flagged to her rather than
 // silently loosened or silently "fixed" by editing her note.
-await pg.setViewportSize({width:390,height:844});
-await pg.evaluate(()=>{show('s-wb');_renderWeekStar();window.scrollTo(0,0);});
-try{await pg.evaluate(async()=>{await document.fonts.load("400 15.5px 'Lora'");await document.fonts.ready;});}catch(e){}
-await pg.waitForTimeout(500);
-const fold=await pg.evaluate(()=>{
+// ⚠️ RE-MEASURED ON A FRESH, SEEDED PAGE, 2026-09-01 — and the "handful of px
+// past 700" above turns out NOT to be FARM Rio's note. Two things were wrong
+// with taking this reading on `pg`: (a) by this point the suite has pinned a
+// Star, swapped a px: url to an unapproved retailer and re-rendered the card
+// several times, and (b) `pg` was never seeded, so Welcome Back renders a
+// DIFFERENT amount of content above the card than a real returning woman sees
+// — and this check measures ABSOLUTE page position, so everything above it
+// moves the number. Measured clean, EVERY item in the queue lands its Shop it
+// between 666 and 687, comfortably inside the budget (FARM Rio at 687, and the
+// Gucci bag that is actually live at 666). The claim is about her real front
+// door, so it is measured on one.
+const fp=await b.newPage({viewport:{width:390,height:844}});
+await fp.addInitScript(()=>{localStorage.setItem('ss_data',JSON.stringify({userName:'Catherine',
+  answers:[6,4,7,5,3,8,6,5,4,7,3,6],topArchNames:['Classic Sophisticate'],portrait:'x',motto:'y'}));});
+await routePhotos(fp,{allow:(u,r)=>{
+  if(gfCss&&u.includes('fonts.googleapis.com')){r.fulfill({status:200,contentType:'text/css',body:gfCss});return true;}
+  if(u.includes('fonts.gstatic.com')){r.continue();return true;}
+  return false;}});
+await fp.goto(`http://127.0.0.1:${PORT}/`);
+await fp.evaluate(()=>{document.querySelectorAll('.hm-entrance').forEach(e=>e.remove());show('s-wb');_renderWeekStar();window.scrollTo(0,0);});
+try{await fp.evaluate(async()=>{await document.fonts.load("400 15.5px 'Lora'");await document.fonts.ready;});}catch(e){}
+await fp.waitForTimeout(800);
+const fold=await fp.evaluate(()=>{
   const c=document.querySelector('#wbStar .wks-card').getBoundingClientRect();
   const btn=document.querySelector('#wbStar .wks-shop,#wbStar a[href]');
   const sv=document.querySelector('#wbStar .wl-save');
@@ -397,10 +459,29 @@ await pg.setViewportSize({width:390,height:900});
 await pg.evaluate((p)=>{window.WEEK_STAR_PIN=p;},REAL_PIN);
 
 // layout at every width
+// ⚠️ ON A FRESH PAGE, 2026-09-01, and this matters. Everything above
+// deliberately MUTATES the live objects to test the licensing gate: it pins a
+// Star, swaps a px: url to an unapproved retailer, re-renders, swaps back. That
+// leaves injected and re-rendered <img> elements behind. While this sandbox had
+// no route to the retail CDNs every one of them collapsed to nothing, so this
+// check passed VACUOUSLY; the moment photos actually load (photocache) the
+// residue becomes measurable and it looked like a layout regression. It is not
+// — a fresh page measures 0 overflow at all three widths, verified twice
+// independently. The claim under test is "her real Edit page does not overflow",
+// so it belongs on a page in her real state, not on the wreckage of eleven
+// earlier mutations.
+const lay=await b.newPage({viewport:{width:390,height:900}});
+await routePhotos(lay,{allow:(u,r)=>{
+  if(gfCss&&u.includes('fonts.googleapis.com')){r.fulfill({status:200,contentType:'text/css',body:gfCss});return true;}
+  if(u.includes('fonts.gstatic.com')){r.continue();return true;}
+  return false;}});
+await lay.goto(`http://127.0.0.1:${PORT}/`);
+await lay.evaluate(()=>{document.querySelectorAll('.hm-entrance').forEach(e=>e.remove());showDream();});
+await lay.waitForTimeout(1200);
 for(const w of [390,360,320]){
-  await pg.setViewportSize({width:w,height:900});
-  await pg.evaluate(()=>showDream()); await pg.waitForTimeout(350);
-  const r=await pg.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,
+  await lay.setViewportSize({width:w,height:900});
+  await lay.evaluate(()=>showDream()); await lay.waitForTimeout(450);
+  const r=await lay.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,
     over:[...document.querySelectorAll('#s-dream .dc-item, #s-dream .dc-item-px')]
       .filter(e=>e.getBoundingClientRect().right>document.documentElement.clientWidth+1).length}));
   ok(`${w}px: no sideways scroll`, r.scroll<=r.client+1, JSON.stringify(r));

@@ -137,6 +137,104 @@ substitute). Also confirmed on the real site: `/styles.css` **200, `text/css; ch
 **ZERO real `<style>` elements** in the served homepage · the absolute link present on **all 9 routes** ·
 **15,311 bytes above `<body>`** · a conditional request returns **304 with 0 bytes**.
 
+### 🧹⭐⭐ THE RED SUITES ARE ALL GREEN NOW (six she was told about, and a seventh found on the way) — and the cleanup found something bigger than stale counts
+Her call, straight after the extraction went live: *"On the other items it seems we need to fix those?"*
+**Every one is fixed.** ▶ **AND THE HEADLINE IS NOT THE COUNTS — IT IS A SILENT FAILURE THE EXTRACTION
+CREATED IN THE TEST TOOLING, which would have quietly invalidated future layout work.**
+
+### 🚨🚨⭐⭐ THE BIG ONE: 34 HARNESSES SERVED THE NEW STYLESHEET AS `application/octet-stream`
+**Chromium REFUSES a stylesheet served with a wrong MIME type**, so those harnesses rendered a completely
+UNSTYLED page — images at natural size, every layout and contrast number meaningless — while still
+reporting a tidy pass/fail. `editpx` was the tell: a page whose `document.styleSheets` entry for
+`styles.css` had **`cssRules: 0`**, producing a 2,168px-wide "overflow" that was really just an
+unstyled 2160px photo.
+- ▶▶ **THE DISTINCTION THAT MATTERS, and I had only proved half of it on 09-01: NO `Content-Type` AT ALL
+  IS FINE (Chromium sniffs and applies it) — an explicitly WRONG one is REFUSED.** `cssextract.js` tested
+  the no-header case and passed, which is exactly why this was missed. **Both cases are now covered.**
+- ✅ **Fixed in all 34** by adding `.css → text/css` to each harness's own static server (the correct
+  behaviour for any static server, and the minimal fix). All 34 re-verified to parse.
+- ⚠️ **THIS IS THE PERMANENT LESSON FOR THIS PROJECT: while the CSS was inline, a harness could serve
+  index.html with any content type at all and still measure a correctly styled page. That is no longer
+  true.** Any NEW harness must send `text/css`, or it is silently measuring an unstyled app.
+
+### ⭐⭐ `scratchpad/photocache.mjs` — the photo cache that cannot go stale, and why the old one did
+`starphoto.mjs` pinned ONE hardcoded URL (the DVF scarf) and the suites intercepted `**/cdn/shop/**`.
+▶ **The Star of the Week ROTATES, so the moment the Gucci bag came round that pattern stopped matching
+at all — mytheresa serves from `/image/`, not `/cdn/shop/`** — the photo silently failed and three suites
+began asserting against a card with no photo in it. **A harness pinned to one item cannot survive a
+rotating feature.** The replacement reads every external photo URL out of `index.html` at run time (11
+today), curl-fetches them once, and serves them locally, so a new Edit piece or a re-order needs no edit.
+⚠️ **`scratchpad/photos/` is GITIGNORED and must stay that way** — the repo is public and an affiliate
+approval licenses the APP to hotlink a retailer's photograph, not this repo to redistribute the file.
+⚠️ **curl COULD reach all 11 CDNs this session; Chromium still could not.** That asymmetry is the whole
+reason the cache exists, and reachability varies by session — a miss is reported and skipped, never thrown.
+
+### ⚠️⭐ `discostar` HAD BEEN MEASURING IN FALLBACK FONTS ALL ALONG
+Its 320px fold check failed on correct code because it `r.continue()`'d the Google Fonts request, which
+**cannot be reached from this sandbox** — so every measurement was taken in fallback metrics, which wrap
+the homepage differently. **Fallback put the Star's top at 712; the real faces put it at 694.** Now serves
+the local faces like `discopage` does. ▶ **The documented font trap, one more sighting: a computed
+`font-family` reports the DECLARED stack, not the painted face, so this never announces itself.**
+
+### ⚠️ TWO ASSERTIONS WERE MEASURING THE WRECKAGE OF THEIR OWN SUITE
+`editpx` deliberately mutates live objects to test the licensing gate — it pins a Star, swaps a `px:` url
+to an unapproved retailer, re-renders, swaps back. **While no photo could load, all that residue collapsed
+to nothing and two checks passed VACUOUSLY.** The moment photos really loaded, the leftovers became
+measurable and read as a layout regression. ▶ **Both now run on a FRESH page in her real state** (the
+fold check seeded, because it measures ABSOLUTE page position and an unseeded Welcome Back renders a
+different amount of content above the card). **Measured clean: every item in the queue lands its "Shop
+it" between 666 and 687px, comfortably inside the 700px budget — the live Gucci bag at 666.** ▶ **So the
+earlier note in that file guessing FARM Rio's own note ran "a handful of px past 700" is WITHDRAWN: FARM
+Rio measures 687 on a clean page. It was the mutation residue, not her note.**
+- ⚠️ **Also: `.dc-item-px` is `loading="lazy"`, so photos below the fold never START loading** and a
+  load-check races to a timeout on a perfectly good photo. Forced eager before checking.
+
+### ⚠️ THE COMMENT-MATCHING TRAP, FIFTH SIGHTING, and this time it cost four assertions
+`editpx` counted **11** `dc-item-px` photos where there are **10** — the 11th is the string
+`<img class="dc-item-px">` written out inside the HTML COMMENT that documents the Open Heart Necklace's
+wrapper. That one phantom failed *every photo has alt text (10 of 11)*, *degrades on error* and *is lazy*.
+▶ **STRIP `<!-- -->` BEFORE COUNTING MARKUP. Every time.** (08-28 `<h1>`, 08-31 `<h1>`, 09-01 `<style>`.)
+- ⚠️ **And a genuine extraction consequence in the same suite: `rule is 3:4, inset` grepped `index.html`
+  for a CSS selector.** ▶ **ANY suite asserting on a CSS rule must read `styles.css` now** — grepping
+  index.html silently finds nothing and fails on correct code.
+
+### ✅ THE STALE COUNTS AND DATES, each verified against reality BEFORE the number moved
+- **`weekstar`'s date assertion is DERIVED now, not restated.** It pinned *"Vilebrequin's turn (30 Aug)"*,
+  a date TWO deliberate reorders had already moved. ▶ **It walks the real Sundays and asserts HER ACTUAL
+  DEADLINE — the cover-up gets a turn on or before 20 September — and prints the week it found (currently
+  2026-09-13). That survives any future reorder and still fails loudly if an insert pushes it past.**
+- ⭐ **HER "no intimates or swim" RULE WAS ENCODED TOO BROADLY in two suites.** A bare `/\bbra\b/` caught
+  the **Fleur du Mal Sports Bra**, which she put in the queue herself on 2026-08-26 — *"a sports bra is
+  activewear"*, a flat product shot with no model. ▶ **Her actual bar is BIKINI OR LINGERIE, not the swim
+  category and not the word "bra".** Both suites now encode that; they still bite on real intimates.
+- **`nav` 14 → 16 footers.** Verified in the real DOM first: 16 containers, one per screen plus the global
+  one, **no screen carries two, and all 16 gradient ids are unique.** ⭐ **And the sibling assertion that
+  restated "14" a second time is now DERIVED from the footer count, so it never needs editing again.**
+- **`affq` 12 → 13 templates.** The 13th is **`.wet-card`, "More from the Edit"** (her idea, 2026-08-26),
+  which correctly carries its own affiliate-wrapped `rel="sponsored noopener"` anchor. The census caught a
+  new way out of the app exactly as designed.
+- **`menu` 21 → 22 rows** (measured: tallest 44.4px against a 46px threshold, nothing wraps).
+- **`editpx`'s script-block check** threw the sitewide Organization JSON-LD at the JavaScript parser and
+  had been red since that block shipped on 08-28. **JSON-LD is validated with `JSON.parse` now.**
+
+### ⭐ A SEVENTH RED SUITE TURNED UP MID-CLEANUP, AND IT IS THE SAME STORY
+`wbedittasr` (the "More from the Edit" strip) was **not in the original six because it was never run**.
+Baseline established in a worktree at the PRE-extraction commit: **20/3, byte-identical messages**, so it
+was already red. ⚠️ **But its failure MODE changed once the MIME fix made it serve a styled page** — with
+CSS finally applying, the photos it did not cover loaded, failed, and `onerror="this.remove()"` stripped
+them, so a strip that only shows PHOTOGRAPHED pieces came back EMPTY and the suite crashed on a null.
+▶ **Cause: its own hand-maintained host→file map covered four brands and missed mytheresa, etsy and
+fleurdumal, gated on a gitignored directory that is usually absent.** Replaced with photocache: **23/0.**
+▶▶ **THE MORAL, and it is the argument for the whole cleanup: a suite that has been red for a while stops
+being read, and then a real change to it looks like noise.**
+
+### ✅ GREEN AFTER THE CLEANUP
+**menu 104 · discostar 104 · wladd 102 · nav 82 · editpx 65 · curated 65 · pagetitles 61 · discopage 56 ·
+weekstar 55 · hubs 49 · honest 44 · sizeveto 43 · copy 41 · affq 40 · faqverify 36/36 · prefdone 32 ·
+e2e 29 · wordbudget 23 · wbedittasr 23 · cssextract 18 · edgepreview 12.** ⚠️ **`shopask` still does not finish on this machine — PRE-EXISTING and proven since 08-25**,
+nothing to do with any of this. ⚠️ **The app itself was NOT touched in this round** — `index.html`,
+`styles.css` and `netlify/` are byte-identical to the live deploy; every change is test tooling.
+
 ### ⏰⭐ CHECKED WHILE HERE, BECAUSE A RED SUITE POINTED AT A REAL DEADLINE: THE STAR ROTATION IS ON TRACK
 Computed from the live pool and the real `_weekStarIndex` anchor, not from the comments:
 | week of | Star of the Week |
@@ -166,9 +264,10 @@ few days it is worth her running **Bing URL Inspection on the homepage** to watc
    after that** — the second one should feel noticeably quicker.
 2. 📏 **BING: re-inspect the homepage in a few days** and watch the "HTML size is too long" flag clear.
    ⚠️ **Do NOT bump the sitemap** — see the judgment call above.
-3. 🧹 **THE SIX RED SUITES.** Worth a short session: serve the retail photos locally (the trick is already
-   written in `scratchpad/cssextract-render.mjs`) and move the three stale counts/dates. **None of it is
-   urgent and none of it is a regression.**
+3. ✅ **THE SIX RED SUITES ARE DONE — all green, same day (her ask).** See the 🧹 entry above.
+   ▶ **The one thing to carry forward from it: any NEW harness must serve `.css` as `text/css`.** While
+   the CSS was inline a harness could send any content type and still measure a styled page; it cannot
+   now, and a wrong type fails SILENTLY as a fully unstyled render.
 4. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her cutoff. **Do not insert
    anything mid-queue ahead of it.**
 5. ⚖️ **ALMIRA: still watching for the COPY of the correction confirmation** (she promised only "an

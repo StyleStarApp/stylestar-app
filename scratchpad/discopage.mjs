@@ -5,7 +5,8 @@
 //   (their leading, their widow behaviour, their 40px row height), and she
 //   retired that block. Its real job — hold the quiz reassurance readable and
 //   unwrapped at every width, and never shrink the font to get there — lives
-//   on here against .hm-hiwline, the one sentence that survived.
+//   on here against .hm-hiwline, the one sentence that survived (her
+//   free/no-signup line since 2026-08-26).
 //
 // Asserts the promises made when she picked option "B" from the renders:
 // the 1-2-3 is really gone, her sentence is verbatim, ONE gold divider label
@@ -13,7 +14,11 @@
 // screen without the quiz CTA ever losing the top of it.
 import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
 import http from 'http'; import fs from 'fs'; import path from 'path';
-import { starPhoto } from './starphoto.mjs';
+// ⚠️ photocache, not the old one-URL starPhoto(): the Star of the Week ROTATES,
+// so a helper pinned to the DVF scarf silently stopped matching the moment the
+// Gucci bag came round (mytheresa serves from /image/, not /cdn/shop/), and
+// this suite began asserting against a card with no photo in it.
+import { routePhotos } from './photocache.mjs';
 const ROOT=path.resolve('.'); const PORT=8968;
 const T={'.html':'text/html','.js':'text/javascript','.png':'image/png','.json':'application/json','.svg':'image/svg+xml','.jpg':'image/jpeg','.css':'text/css','.woff2':'font/woff2'};
 const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]);if(p==='/')p='/index.html';
@@ -22,14 +27,18 @@ const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]
   r.writeHead(200,{'content-type':T[path.extname(f)]||'application/octet-stream'});fs.createReadStream(f).pipe(r);});
 await new Promise(r=>srv.listen(PORT,r));
 const css=fs.readFileSync('scratchpad/fonts/gf.css','utf8').replace(/url\((f\d+\.woff2)\)/g,`url(http://localhost:${PORT}/scratchpad/fonts/$1)`);
-const photo=starPhoto();
 let pass=0, fail=0; const ok=(c,m)=>{c?pass++:(fail++,console.log('  ✗ '+m));};
 const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'});
 for(const w of [390,375,360,320]){
   const pg=await b.newPage({viewport:{width:w,height:844},deviceScaleFactor:2});
   const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
-  await pg.route('**/fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:css}));
-  await pg.route('**/cdn/shop/**',r=>r.fulfill({status:200,contentType:'image/jpeg',body:photo}));
+  // One interception for everything off-origin: cached product photos are
+  // served from disk, the font stylesheet is stubbed, anything else is aborted
+  // so it fails instantly and identically on every run.
+  await routePhotos(pg,{allow:(u,r)=>{
+    if(u.includes('fonts.googleapis.com')){r.fulfill({status:200,contentType:'text/css',body:css});return true;}
+    if(u.includes('fonts.gstatic.com')){r.continue();return true;}
+    return false;}});
   await pg.goto(`http://localhost:${PORT}/`); await pg.waitForTimeout(2500);
   await pg.evaluate(()=>{const c=document.querySelector('.hm-entrance');if(c)c.remove();});
   try{await pg.evaluate(()=>document.fonts.ready);}catch{}
@@ -65,10 +74,21 @@ for(const w of [390,375,360,320]){
   console.log(`  star visible above a ${FOLD}px fold: ${m.star.top<FOLD?Math.min(FOLD-m.star.top,m.star.h)+'px':'NONE'}`);
   console.log(`  dividers on the page: ${JSON.stringify(m.dividers)} + star header "${m.starHdText}"`);
   ok(m.hiwGone, `${w}: the 1-2-3 block is really gone`);
-  ok(m.line.text==='12 quick questions. No wrong answers.', `${w}: her sentence, verbatim`);
+  // ⚠️ UPDATED 2026-09-01, deliberately and not silenced: this pinned
+  // "12 quick questions. No wrong answers." and she REPLACED that line on
+  // 2026-08-26 with the free/no-signup message, which is the one governed by
+  // her standing rule that it must never read as conditional ("free to start"
+  // implies a paywall later, and there is no paid tier). The page was right and
+  // this assertion had simply never moved with it. Verified against the LIVE
+  // site, not just the local file, before changing it.
+  ok(m.line.text==='Always free, no signup required.', `${w}: her sentence, verbatim`);
   ok(m.line.size>=13, `${w}: line is >=13px (not shrunk to force one line) — got ${m.line.size}`);
   ok(m.line.style==='normal', `${w}: upright, not italic`);
-  ok(m.line.lines === (w>=360?1:2), `${w}: expected ${w>=360?1:2} line(s), got ${m.line.lines}`);
+  // ⚠️ Was `w>=360?1:2`, which was calibrated against the LONGER old sentence
+  // that genuinely wrapped at 320. Her current line is shorter and holds ONE
+  // line at every width, so this is now a STRICTER assertion than it was, not
+  // a relaxed one — measured at 390/375/360/320 before changing it.
+  ok(m.line.lines === 1, `${w}: expected 1 line, got ${m.line.lines}`);
   ok(m.line.top>m.cta.top && m.line.top<m.founder.top, `${w}: line sits between the quiz button and the founder line`);
   ok(m.cta.top<FOLD, `${w}: the quiz CTA is still the first thing, above the fold`);
   ok(m.starOn && m.starPhotoShown, `${w}: the Star still renders, with its photo`);

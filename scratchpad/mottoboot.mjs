@@ -18,7 +18,7 @@ let serveFile=process.env.TARGET||'index.html';
 const srv=http.createServer((q,r)=>{
   let u=decodeURIComponent(q.url.split('?')[0]); if(u==='/')u='/'+serveFile;
   fs.readFile(path.join(ROOT,u.replace(/^\//,'')),(e,b)=>{ if(e){r.writeHead(404);r.end();return}
-    r.writeHead(200,{'Content-Type':{'.html':'text/html','.png':'image/png','.json':'application/json','.woff2':'font/woff2'}[path.extname(u)]||'application/octet-stream'});r.end(b)});
+    r.writeHead(200,{'Content-Type':{'.css':'text/css','.html':'text/html','.png':'image/png','.json':'application/json','.woff2':'font/woff2'}[path.extname(u)]||'application/octet-stream'});r.end(b)});
 });
 
 function png(buf){let pos=8,idat=Buffer.alloc(0),w=0,h=0,ct=0;

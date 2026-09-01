@@ -12,7 +12,7 @@ import http from 'http'; import fs from 'fs'; import path from 'path';
 const ROOT=process.cwd(),PORT=8997;
 const srv=http.createServer((q,r)=>{let u=decodeURIComponent(q.url.split('?')[0]);if(u==='/')u='/index.html';
  fs.readFile(path.join(ROOT,u.replace(/^\//,'')),(e,b)=>{if(e){r.writeHead(404);r.end();return}
- r.writeHead(200,{'Content-Type':{'.html':'text/html','.png':'image/png','.json':'application/json'}[path.extname(u)]||'application/octet-stream'});r.end(b)})});
+ r.writeHead(200,{'Content-Type':{'.css':'text/css','.html':'text/html','.png':'image/png','.json':'application/json'}[path.extname(u)]||'application/octet-stream'});r.end(b)})});
 const rel=c=>{const v=c.map(n=>{n/=255;return n<=.03928?n/12.92:Math.pow((n+.055)/1.055,2.4)});
   return .2126*v[0]+.7152*v[1]+.0722*v[2]};
 const ratio=(a,b)=>{const l1=rel(a),l2=rel(b);return (Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05)};

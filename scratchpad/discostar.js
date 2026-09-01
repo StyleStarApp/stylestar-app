@@ -13,7 +13,14 @@ const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]
   r.writeHead(200,{'content-type':T[path.extname(f)]||'application/octet-stream'});fs.createReadStream(f).pipe(r);});
 await new Promise(r=>srv.listen(0,r));
 const PORT=srv.address().port;
-const scarf=fs.readFileSync(ROOT+'/scratchpad/px/scarf.jpg');
+// ⚠️ 2026-09-01: was a single hardcoded scarf.jpg served for every
+// `**/cdn/shop/**` request. The Star of the Week ROTATES, and the moment the
+// Gucci bag came round that pattern stopped matching at all (mytheresa serves
+// from /image/, not /cdn/shop/), so the card rendered with no photo and three
+// assertions here failed on perfectly good code. photocache reads every photo
+// URL out of index.html at run time, so a rotation or a new Edit piece can
+// never strand it again.
+import { routePhotos } from './photocache.mjs';
 
 let pass=0,fail=0; const bad=[];
 const ok=(c,m)=>{if(c){pass++}else{fail++;bad.push(m)}};
@@ -24,10 +31,22 @@ const ratio=(a,b)=>{const [x,y]=[lum(a),lum(b)].sort((p,q)=>q-p);return (x+.05)/
 
 const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'});
 const errs=[];
+const gfCss=fs.readFileSync(ROOT+'/scratchpad/fonts/gf.css','utf8')
+  .replace(/url\((f\d+\.woff2)\)/g,`url(http://localhost:${PORT}/scratchpad/fonts/$1)`);
 const newPage=async w=>{
   const pg=await b.newPage({viewport:{width:w,height:844}});
   pg.on('pageerror',e=>errs.push(w+': '+e.message));
-  await pg.route('**/cdn/shop/**',r=>r.fulfill({status:200,contentType:'image/jpeg',body:scarf}));
+  // ⚠️ SERVE THE REAL TYPEFACES, 2026-09-01. This used to r.continue() the
+  // Google Fonts request, which CANNOT be reached from this sandbox — so every
+  // measurement here was silently taken in FALLBACK fonts, whose metrics wrap
+  // the homepage differently. That is what made the 320px fold check fail on
+  // correct code: fallback put the Star's top at 712, the real faces put it at
+  // 694. The documented font trap (a computed font-family reports the DECLARED
+  // stack, not the painted face), one more sighting.
+  await routePhotos(pg,{allow:(u,r)=>{
+    if(u.includes('fonts.googleapis.com')){r.fulfill({status:200,contentType:'text/css',body:gfCss});return true;}
+    if(u.includes('fonts.gstatic.com')){r.continue();return true;}
+    return false;}});
   await pg.goto(`http://localhost:${PORT}/`); await pg.waitForTimeout(900);
   await pg.evaluate(()=>{const c=document.querySelector('.hm-entrance');if(c)c.remove()});
   return pg;
@@ -221,7 +240,7 @@ for(const w of [390,375,360,320]){
 {
   const pg=await b.newPage({viewport:{width:390,height:844}});
   pg.on('pageerror',e=>errs.push('wb: '+e.message));
-  await pg.route('**/cdn/shop/**',r=>r.fulfill({status:200,contentType:'image/jpeg',body:scarf}));
+  await routePhotos(pg,{allow:(u,r)=>{if(/fonts\.(googleapis|gstatic)\.com/.test(u)){r.continue();return true;}return false;}});
   await pg.addInitScript(()=>{localStorage.setItem('ss_data',JSON.stringify({
     userName:'Cath',answers:new Array(12).fill(6),portrait:'A test portrait.',motto:'x'}));});
   await pg.goto(`http://localhost:${PORT}/`); await pg.waitForTimeout(1100);

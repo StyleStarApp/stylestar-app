@@ -31,3 +31,9 @@ scratchpad/out-*.txt
 # ~170 MB of PNGs, regenerated on demand by running that harness twice -- and the
 # comparison is the point, not the images. Same reasoning as the suite logs above.
 scratchpad/cssx/
+
+# Retailer product photos cached by scratchpad/photocache.mjs so the render
+# harnesses can serve them locally. ⚠️ NEVER commit these: the repo is public,
+# and an affiliate approval licenses the APP to hotlink a photo, not this repo
+# to redistribute a copy of the file. Re-fetched on demand.
+scratchpad/photos/
