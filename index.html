@@ -7749,6 +7749,24 @@ var _WDR_IDEA_EXCLUDE={
   // excluded -- her explicit call, overlap there is fine.
   dr3:['dr5','dr9','dr10']
 };
+// ⚠️ THE COLD-VISITOR INVITATION (2026-09-01, her catch: "see ideas in your
+// style" means she would have had to take the quiz for us to know her style).
+// MEASURED FIRST, not assumed: a woman who has never taken the quiz taps that
+// link today and gets four REAL cards with four working links -- nothing is
+// gated, the prompt simply omits the "Her style: X" line. So this is not a bug
+// fix, it is the missed opportunity underneath it: she gets real value from a
+// search result and is never told it could be personal.
+// ▶ VALUE FIRST, HER OWN RULE: this sits at the very BOTTOM of the box, after
+// the ideas and after "+ See more ideas" -- never before them, never instead
+// of them. Same position and same quiet voice as the colour hint above it.
+// ⚠️ AND IT SUPERSEDES THE COLOUR HINT when both would apply. A woman with no
+// quiz at all also has no saved colours, and two stacked whispers is clutter;
+// the quiz is the earlier and bigger step, so it wins and Refine waits.
+function _wdrQuizInvite(){
+  if(_hasQuizData())return '';
+  return '<div class="wdr-colorhint">I don\'t know your style yet, so these are a general mix. '
+       + '<span onclick="startQ()">Take the free style quiz</span> for picks made just for you.</div>';
+}
 // Some checklist items are a judgment call, not a plain description -- the
 // model needs HER concrete definition, not its own guess at office norms.
 // Built from her actual words 2026-08-12, condensed to keep the prompt tight.
@@ -8117,7 +8135,9 @@ async function _wardrobeIdeaGen(id,boxId){
     // from shopping" -- so this sits AFTER the real ideas, never before or
     // instead of them, and only for the one color-dependent item while she
     // genuinely has no colors saved yet (self-clears the moment she refines).
-    if(noColorData)html+='<div class="wdr-colorhint">We don\'t know your favorite colors yet, so this is a mix. <span onclick="openPrefs()">Add yours in Refine your Preferences</span> for picks made just for you.</div>';
+    const _inv=_wdrQuizInvite();
+    if(_inv)html+=_inv;
+    else if(noColorData)html+='<div class="wdr-colorhint">We don\'t know your favorite colors yet, so this is a mix. <span onclick="openPrefs()">Add yours in Refine your Preferences</span> for picks made just for you.</div>';
     box.innerHTML=html;
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
     _swipeHint(_g,_h);_nudgeScroll(_g);
@@ -8129,6 +8149,7 @@ async function _wardrobeIdeaGen(id,boxId){
       curated.forEach(function(x){chtml+=_curatedCard(x)});
       chtml+='</div><div class="wdr-swipe-hint">Swipe for more &rarr;</div>';
       chtml+='<div class="wdr-morewrap"><span class="wdr-more" role="button" onclick="_wdrMoreIdeas(\''+id+'\''+(boxId?',\''+boxId+'\'':'')+')">+ See more ideas</span></div>';
+      chtml+=_wdrQuizInvite();   // the AI-failed shelf gets it too, or it drifts
       box.innerHTML=chtml;
       const _g2=box.querySelector('.shop-grid.hscroll'),_h2=box.querySelector('.wdr-swipe-hint');
       _swipeHint(_g2,_h2);_nudgeScroll(_g2);
