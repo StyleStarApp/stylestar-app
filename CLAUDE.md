@@ -7,7 +7,222 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-01 LATER — ⭐⭐ THE CSS EXTRACTION IS BUILT AND LIVE, AND IT IS INVISIBLE)
+## ▶ NEXT SESSION — START HERE (2026-09-01 LATEST — 🚪 THE HOMEPAGE STOPPED SERVING EVERY OTHER PAGE, AND THE JOURNAL FINALLY HAS A LINK A CRAWLER CAN FOLLOW)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**ONE COMMIT (`1b58cdb`), merged FAST-FORWARD to `main` and CURL + MD5-VERIFIED LIVE** (`index.html`
+`025719ac…`, `styles.css` `df8f24f6…`, both byte-identical local vs live). Branch
+`claude/style-star-resume-mxc18n`, same no-PR convention; branch, `main` and the remote all sit on
+`1b58cdb`, tree clean. ⚠️ **One Netlify build.**
+▶ **THE SHAPE OF IT: she brought a Cowork brief with two rendering fixes. The standing rule paid off for
+the FIFTH brief running — TWO OF ITS THREE PREMISES DID NOT MATCH THE SITE. One fix was already shipped,
+the other was real but its headline number was nearly 3x too big. And checking the one that was already
+done turned up the most valuable finding of the day, which the brief never asked for.**
+
+### ⭐⭐ THE HEADLINE NUMBERS, MEASURED LIVE BEFORE AND AFTER
+| | before | after |
+|---|---|---|
+| **homepage rendered words** | 6,403 | **2,293** |
+| **homepage real `<h1>` tags** | **8** | **1** |
+| homepage bytes | 848,080 | 815,222 |
+| homepage screens served | all 25 | 18 |
+- **The homepage now drops the SEVEN screens whose full text already lives at its own real URL** —
+  Privacy, Terms, FAQ, Contact, My Story, the Journal hub and every journal article. Everything trimmed
+  is merged straight back by `_selfHealScreens()` **in the background at boot, before she can tap
+  anything** (asserted in a real browser, not assumed).
+- ⚠️⚠️ **AND THAT 8 → 1 CORRECTS OUR OWN RECORD. The 09-01 entry argued Bing's "more than one h1" flag
+  could be left alone because "her page source already has exactly one." THAT WAS MEASURED ON `/faq`.
+  The homepage had EIGHT.** Bing's own remediation text ("Remove redundant `<h1>` tags from the page
+  source") was NOT already satisfied there. It is now. ▶ **The 08-31 decision to leave the RENDERED-DOM
+  h1 count alone still stands** — that one is `_selfHealScreens()` merging screens back, only one is ever
+  visible, and editing the self-heal machinery is the thing that produced two serious bugs on 08-29.
+
+### 🚨⭐⭐ THE BIG ONE, AND IT IS THE MOST REUSABLE THING HERE: `_selfHealScreens()` WAS GUESSING
+Its first line was **`if(document.getElementById('s-wel'))return Promise.resolve(true);`** — using the
+presence of the WELCOME SCREEN as a **PROXY** for *"nothing was trimmed off this page."*
+▶▶ **That held only because the seven route pages all trim `s-wel` AWAY. The homepage KEEPS it and drops
+seven OTHER screens — so self-heal reported "already whole" and NEVER RAN. Every legal page, My Story,
+Contact and the whole Journal became UNREACHABLE FROM THE FRONT DOOR.**
+- ⚠️⚠️ **EVERY BYTE-LEVEL CHECK PASSED. 67/67 on the edge function.** It was caught only by driving the
+  real app in a real browser. ▶ **A proxy for a fact is fine until something changes the fact without
+  changing the proxy. Ask the server, do not infer.**
+- ✅ **FIXED PROPERLY: `page-titles.js` now stamps `data-ss-trimmed="1"` on `<body>` whenever it really
+  removes a screen**, and the client reads that instead of guessing. ⚠️ **Stamped ONLY AFTER the trim** —
+  `findScrBlocks()` bounds itself with `html.indexOf('<body>')`, so stamping first breaks the bound and
+  throws. ⚠️ **An absent attribute means untrimmed, which is CORRECT for `/index.html`** (the file
+  self-heal itself fetches) **and for any unscoped route.**
+- **Verified live: `/` serves `<body data-ss-trimmed="1">` with 18 of 25 screens; `/index.html` serves a
+  plain `<body>` with ALL 25.** The self-heal source is intact.
+
+### 🚨 TWO MORE BUGS THE TRIM WOULD HAVE CAUSED — the same 2026-08-29 family
+**"A new ENTRANCE surfaces every piece of state that only the OLD entrances hydrated."** Third sighting.
+1. **`openJournalHub()` filled the article list BEFORE `show()`.** On a trimmed page `#journalHubList`
+   does not exist yet, `_renderJournalHub()` has an `if(!el)return`, so it silently did nothing and
+   self-heal merged the EMPTY markup back — landing her on a Style Journal with no articles on it.
+2. **`showStory()` read `#storyQuiz`**, which lives INSIDE the screen it was about to heal → TypeError on
+   a null element.
+▶ **BOTH MOVED INTO `show()`**, which already owns cross-screen sync (the quiz progress bar, the trend
+badges, the heart tip, the refine hint) **and which replays itself after a heal.** `_syncStoryQuiz()` is
+now a named, null-guarded function. ⚠️ **Any future screen whose content is BUILT AT RUNTIME must be
+refilled from `show()`, never from its own entry function.** Written in capitals at the code.
+
+### ⭐⭐ THE FINDING NOBODY ASKED FOR: THERE WAS NO CRAWLABLE LINK TO THE ARTICLE, ANYWHERE
+The brief's FIX 1 was already done (see below), but checking it found this: the hub's article list is
+built client-side into an **empty `<div id="journalHubList">`**, and each row was a **clickable `<div>`
+with an `onclick`, not an `<a href>`.**
+▶▶ **So the ONLY route to the article was `sitemap.xml` — which is no route at all for GPTBot, ClaudeBot
+and PerplexityBot, none of which run JavaScript, and they are the audience she cares most about.**
+- ✅ **BUILT BOTH WAYS: `_renderJournalHub()` now emits a real `<a href="/journal/<slug>">`, AND the edge
+  function SERVER-RENDERS the same rows into the raw HTML** (`renderHubList`, gated on a `hubList` flag).
+  ⚠️ **THE TWO MARKUPS MUST MATCH BYTE FOR BYTE** or the page visibly re-flows on load as the client
+  version replaces the server one. Said in capitals in both files.
+- ⚠️ **`return false` on the onclick keeps the tap on the in-app route** (no page reload) while the real
+  href still allows a long-press or cmd-click. **Nothing changed visually** — `.jhub-row` gained
+  `text-decoration:none;color:inherit`, which is the only thing standing between an `<a>` and
+  browser-default blue. **Do not remove them.**
+- ⭐ **It also quietly closes the keyboard/screen-reader gap on that row** (the 08-26 accessibility flag,
+  which she correctly called not-urgent because every Menu row shares it). This one row is fixed because
+  the SEO fix required it, not as a piecemeal patch — the whole-app pass is still a separate question.
+- ▶ **NO NEW SEARCH-ENGINE WORK IS OWED ON THE HUB ITSELF. See the ✍️ decision below.**
+
+### ✅ WHAT THE BRIEF GOT WRONG, AND IT IS THE FIFTH TIME — CHECK BEFORE BUILDING
+1. **FIX 1 ("/journal renders the full article; its H1 says the article title") WAS ALREADY DONE.**
+   `/journal` serves **148 words, ONE screen, and its H1 already read "Style Journal"** — the route trim
+   did that on 2026-08-28. Nothing to change.
+2. **FIX 2's number was nearly 3x too big.** The homepage renders **6,403 words, not 18,500**, and the
+   article's text sat at **TWO** URLs, not three.
+3. ▶ **THE UNDERLYING DIAGNOSIS WAS STILL RIGHT AND WORTH ACTING ON**, which is the honest read to give
+   her: a brief can be wrong on the facts and right on the direction. **Verify the facts, keep the
+   direction.**
+
+### ✍️⭐ HER QUESTION ON THE EXCERPT CARD, ANSWERED AND DELIBERATELY NOT BUILT — do not re-propose
+Cowork also wanted the hub row to carry a **byline, publish date and a 2-3 sentence summary**. She asked
+the right question: *"Is there a benefit to searchability to have that byline and summary there?"*
+▶▶ **THE HONEST ANSWER, kept here so it is not re-litigated: the benefit is SMALL, it lands on the WRONG
+PAGE, and part of it works AGAINST her.**
+- **The byline on a LISTING page adds nothing Google weighs.** E-E-A-T is judged on the ADVICE content,
+  and the byline is already on the article, visibly AND in the `Article` schema's `author.jobTitle`.
+- **The date helps humans, not crawlers** — Google reads it off the article, where it already is.
+- ⚠️ **The summary puts a chunk of the article's own language back onto a SECOND URL, which is a mild
+  version of the exact problem the brief was written to fix.** Standard blog practice, handled fine, but
+  it is not a GAIN for the article, and the article is the page she wants ranking.
+- ▶ **The only real beneficiary is `/journal` itself (154 words, genuinely thin) — and ask what it would
+  rank FOR: brand terms she already owns. It will never rank for "how to find your personal style" and we
+  specifically do not want it to.**
+- ⭐ **THE INTERNAL LINK WAS THE REAL WIN AND IT IS BUILT. A link whose anchor text is the exact article
+  title is about as strong an internal signal as exists.**
+- ▶ **REVISIT TRIGGER: article #3, and then FOR THE READER, not the crawler.** One or two bare titles is
+  perfectly clear; at five or six, summaries are how someone chooses. ⚠️ **And it is her call on wording
+  when it happens — she CUT the hub's intro line herself on 08-26** (*"it already says my name when you
+  click on the article, I don't want to over-do my name"*), so adding a byline back there runs against
+  her own instinct.
+- ⚠️ **"Standard blog index pattern" is a DESIGN CONVENTION, not an SEO mechanism.** Said to her that way.
+
+### ▶ A JUDGMENT CALL MADE, AND IT DIFFERS FROM LAST SESSION'S — THE SITEMAP WAS BUMPED THIS TIME
+`/` and `/journal` moved to **2026-09-01**; the other six left alone. ⚠️ **Deliberately the OPPOSITE call
+to the CSS extraction earlier the same day**, and the distinction is the point: **after the CSS move a
+crawler saw the SAME WORDS (only the delivery changed, so bumping would have been the sitemap crying
+wolf). Here the CRAWLABLE CONTENT of those two pages really changed** — 6,403 words to 2,293 on one, a
+new link on the other — **and a re-crawl is the entire point of the exercise.** She was told and did not
+object. One line to revert.
+
+### ⚠️⚠️ THE HARNESS LESSON OF THE DAY: STRIP SCRIPT BLOCKS BEFORE COUNTING MARKUP
+The new suite reported **every h1 count exactly ONE too high on EVERY route, untouched ones included** —
+and `class="jhub-row"` as 2 where there is 1.
+▶ **A CONSTANT OFFSET ACROSS EVERY CASE IS THE SIGNATURE OF A BROKEN MEASUREMENT, NEVER A BROKEN PAGE**
+(the 2026-08-21 lesson, paying out again). **Cause: the app's own JavaScript contains the literal strings
+`<h1` and `class="jhub-row"` because it BUILDS that markup**, so a counter reading the script blocks
+counts source code as rendered content.
+⚠️ **THE COMMENT-STRIPPING RULE IS NOT ENOUGH ON ITS OWN — SIXTH SIGHTING OF THAT FAMILY** (08-28 `<h1>`,
+08-31 `<h1>`, 09-01 `<style>`, 09-01 `dc-item-px`, this). **Strip `<!-- -->` AND `<script>` AND `<style>`
+before counting any markup.**
+
+### ⭐ TWO NEW SUITES, BOTH NEGATIVE-CONTROLLED
+- **`scratchpad/hometrim.mjs`, 67 checks** — IMPORTS AND CALLS the real edge function (never a copy of
+  its transforms, the 08-24 lesson). ⭐ **The load-bearing one: THE HOMEPAGE'S `<head>` IS ASSERTED BYTE
+  IDENTICAL**, because its `og:title`/`og:description` are deliberately DIFFERENT from its Google-facing
+  title (the link-preview card a friend sees when she texts the app) and an unconditional rewrite would
+  have silently collapsed them.
+- **`scratchpad/hometrimlive.mjs`, 58 checks** — drives the REAL app in Chromium: boot, every trimmed
+  screen healing with REAL content and a FILLED footer, only ever ONE active screen, the hub listing the
+  article after a heal, `#storyQuiz` correct, tapping through to the article, zero JS errors.
+  ⚠️ **Serves `.css` as `text/css`** (the 09-01 rule — a WRONG content type makes Chromium refuse the
+  stylesheet and silently render an unstyled page) **and serves `/index.html` UNTRIMMED on purpose**,
+  because trimming it there would fake a passing test.
+- ⭐⭐ **BOTH CONTROLS BITE HARD: barely trimming the homepage fails 7 checks; restoring the old `s-wel`
+  proxy fails 44. Undoing both returns 67/0 and 58/0.** ⚠️ Controls were done by `cp` to `/tmp` and back,
+  verified byte-identical with `cmp` — **never `git checkout` over uncommitted work.**
+
+### 🧹 THREE SUITES WERE ALREADY RED BEFORE ANY OF THIS — proven, then fixed
+**Established in a `git worktree` at HEAD, same machine, one variable — byte-identical failures both
+sides.** All three now green rather than left to rot (a permanently-red suite is how the 08-22 false
+green happened).
+1. ⭐ **`pagetitles.mjs` CORRECTLY CAUGHT THIS CHANGE** — it asserted the whole homepage document came
+   back byte for byte, which was true while `/` had no PAGES entry. **Updated DELIBERATELY into the two
+   halves that actually matter: the `<head>` is byte-identical, and the BODY is trimmed.** 60/1 → **71/0**.
+2. **`a2page.js` restated the menu row count as 21** when `menu.js` had already been corrected to 22 on
+   09-01 (measured then: tallest row 44.4px against a 46px threshold, nothing wraps). It restates the
+   same number independently and was simply missed. 57/1 → **58/0**.
+3. ⚠️⚠️ **`cssextract.js` walked a FIXED FOUR-COMMIT WINDOW hunting for the pre-extraction commit, so it
+   went red the moment three commits landed on top of the extraction — nothing to do with the CSS.**
+   ▶ **A FIXED LOOKBACK IS A RESTATED NUMBER WEARING A DIFFERENT HAT.** Now derived: ask git which commit
+   ADDED `styles.css` and read its parent. ⭐ **Its byte-compare was ALSO a one-time proof in the costume
+   of a standing check** — it could only ever hold until the first legitimate CSS edit, and mine was the
+   first. **Split in two: the extraction's faithfulness is checked against the commit that MADE it (true
+   forever), and the LIVING property is that the three sections are still in their original order** (the
+   cascade is order-dependent — a 1,3,2 rebuild moved the Style Portrait's height by 16px on 09-01).
+   16/2 → **20/0**.
+
+### ✅ GREEN AT PAUSE
+**menu 104 · nav 82 · pagetitles 71 · hometrim 67 (new) · hometrimlive 58 (new) · a2page 58 · hubs 49 ·
+copy 41 · e2e 29 · cssextract 20 · edgepreview 12.**
+
+### ✅ VERIFIED LIVE, EVERY ROUTE
+| route | words | screens | h1 |
+|---|---|---|---|
+| **/** | **2,293** | 18 | **1** |
+| /journal | 154 | 1 | 1 |
+| /journal/how-to-find-your-personal-style | 1,567 | 1 | 1 |
+| /faq · /privacy · /terms · /story · /contact | 1,284 · 766 · 509 · 639 · 212 | 1 each | 1 each |
+Plus: the real `<a href="/journal/how-to-find-your-personal-style">` present in the served `/journal` ·
+all eight titles + canonicals + descriptions correct · the homepage's `og:` tags still diverging from its
+`<title>` · `robots.txt` 200 · sitemap 8 urls with the two bumped dates · **`/index.html` still carrying
+all 25 screens and a plain `<body>`.**
+⚠️ **This sandbox's Chromium cannot reach stylestar.app, so the md5 byte-compare remains the standing
+substitute** — and it is strong here, because the 58-check browser suite ran against byte-identical bytes.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 📌⭐ **REMIND HER TO REQUEST INDEXING ON `/` AND `/journal`, IN BOTH ENGINES — SHE ASKED TO BE
+   REMINDED, EXPLICITLY, THIS SESSION.** Google Search Console → the grey search bar ACROSS THE VERY TOP
+   (URL Inspection, NOT anything in the left menu, and NOT the AMP tab — she has landed there twice) →
+   paste the URL → Request Indexing. Then the same in **Bing URL Inspection**. ▶ **Both pages genuinely
+   changed for a crawler, which is exactly what her standing 08-26 rule is for.**
+2. 📏 **BING, the same trip: re-inspect the HOMEPAGE.** Two things should now clear — the **"HTML size is
+   too long"** flag (the CSS extraction, 1,166 KB → 815 KB) **and the "more than one h1" flag on the page
+   SOURCE** (8 → 1). ⚠️ Its JS-rendered DOM will still show 8; that is `_selfHealScreens()` and is
+   deliberately left alone.
+3. 👀 **ONE SPECIFIC THING TO TEST ON HER PHONE, and only she can:** open the app, then **Menu → Privacy,
+   Menu → FAQ, Menu → My Story.** They should appear instantly, exactly as before. **The homepage now
+   leans on self-heal, which has run the other seven routes since 08-28 but has never carried the front
+   door.** ▶ Also still unasked from the CSS extraction: **how a COLD first load feels on weak signal, and
+   whether a SECOND page after it feels quicker.**
+4. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
+   **Do not insert anything mid-queue ahead of it.**
+5. ⚖️ **ALMIRA: still watching for the COPY of the correction confirmation** (she promised only "an
+   update"; Cath re-pinned the document request in writing). ✅ **Class 045 is CLOSED — do not re-raise,
+   do not build the site addition.**
+6. ✉️ **PLAY 2: what came back from panaprium, and did itechnolabs / altadaily go out?**
+7. 📓 **ARTICLE #2: Florida / warm-climate fall dressing**, written for the RESIDENT. ⭐ **This is now the
+   highest-value SEO lever on the board** — the hub link is built, so more articles is what actually
+   compounds.
+8. 📋 **THE THREE CATALOG DECISIONS** (Old Navy p004 / Everlane p095 / Mango p033) — hers, nothing touched.
+9. ⚠️ **DELIBERATELY NOT DONE:** the excerpt card (see the ✍️ entry above — revisit at article #3, for the
+   reader) and **the 626 KB of inline JavaScript, which stays inline.** ▶ **The honest next lever if page
+   weight matters again is DEAD CSS**, newly measurable now the stylesheet is its own file.
+
+---
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-09-01 LATER — ⭐⭐ THE CSS EXTRACTION IS BUILT AND LIVE, AND IT IS INVISIBLE)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **THREE COMMITS, all merged fast-forward to `main`** (`3900b8e` the extraction · `083ba55` its notes ·
