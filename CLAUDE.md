@@ -173,6 +173,18 @@ green happened).
    cascade is order-dependent — a 1,3,2 rebuild moved the Style Portrait's height by 16px on 09-01).
    16/2 → **20/0**.
 
+### ✅✅ CONFIRMED BY BING ITSELF, SAME DAY: "No SEO/GEO issues found" ON THE HOMEPAGE
+Her Live URL test at 13:00 came back **clean — zero issues**, down from three that morning (HTML size,
+more-than-one-h1, missing alt). ▶▶ **AND THAT SCREENSHOT IS BETTER EVIDENCE THAN ANYTHING THIS SANDBOX
+CAN PRODUCE, which is worth remembering as a technique: BING'S LIVE URL TEST RUNS JAVASCRIPT ON THE REAL
+SITE, so it verified the h1 demotion in the RENDERED DOM on production** — the exact thing our own
+Chromium cannot check, because it cannot reach stylestar.app (the standing limitation, whose usual
+substitute is only an md5 byte-compare). **When a fix lives in the rendered DOM rather than the raw HTML,
+her Bing Live URL test is the closest thing to a production browser we have. Use it.**
+⚠️ **Do NOT re-request indexing for this** — she pressed those buttons AFTER the trim was already live,
+and nothing a crawler reads changed afterwards except one alt attribute. **The Live URL test is a
+different button from Request Indexing; re-running it is free and re-requesting is crying wolf.**
+
 ### 🔧⭐ HER BING RE-INSPECTION, AND A STANDING "DO NOT RE-PROPOSE" THAT IS NOW REVERSED
 She ran Bing's Live URL test on `/` and `/journal` the same day. ✅ **THE "HTML SIZE IS TOO LONG" FLAG IS
 GONE** — the CSS extraction cleared it. Two remained, and both were fixed:
