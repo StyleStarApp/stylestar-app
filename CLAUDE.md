@@ -7,7 +7,140 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-01 LATEST — ⭐⭐ WHAT'S TRENDING IS A REAL, SEARCHABLE PAGE, AND THE BUG THAT MATTERED WAS FOUND BY REPRODUCING IT)
+## ▶ NEXT SESSION — START HERE (2026-09-02 LATEST — ✍️ HER THREE EDITS ON THE QUIZ INVITATION, AND THE LINK WAS ALREADY BREAKING IN HALF)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**Her verdict on the live /trending page first: "it looks great and it toggles properly."** ▶ **That
+discharges the 09-01 flag — she had not seen the one-way-toggle fix, and it is blessed now. The Journal
+also "looks good."**
+▶ **THE SHAPE OF IT: a short, precise round of her own edits on the cold-visitor invitation, and the
+useful finding came from measuring something she did NOT ask about.**
+
+### ✍️ WHAT SHIPPED — HER THREE EDITS, ALL OF THEM HERS
+Her words: *"Let's add to that at the beginning the pink star, the one we use on style star chat, and
+also Take the free style quiz needs to be underlined plus an arrow so it looks obviously tappable there."*
+1. **THE STYLIST'S PINK STAR LEADS THE LINE.** `_QI_STAR`, byte-identical polygon and `#EC4899` to the
+   chat header's own star. ⭐ **A test EXTRACTS both point strings and asserts they MATCH**, so restyling
+   the chat star can never silently leave this one behind.
+   ▶ **It is the right mark under her own system: pink STAR = the stylist working on her behalf; the pink
+   HEART is Catherine speaking.** An invitation to be styled is the stylist, not Catherine.
+2. **THE LINK IS UNDERLINED AND CARRIES THE HOUSE ARROW.** ⚠️ **The arrow is `_WDR_ARR` ITSELF, never a
+   copy of its path**, so it cannot drift; only its LAYOUT is overridden (inline here, block inside the
+   `.wdr-see` chip). The override wins on specificity, so the chip's own arrow is untouched.
+3. ✍️ **HER WORDING, and she offered two: "for personalized shopping" or "for picks that suit you best."**
+   ▶ **RECOMMENDED AND SHIPPED: "for picks that suit you best."** Three reasons, and the second is the one
+   that decided it: **SUIT is a stylist's own word where "personalized" is software vocabulary** ·
+   **"personalized shopping" is RETIRED homepage copy** (it was the `.hm-body` line replaced by the
+   "brilliance of AI" sentence on 2026-08-31, so it would drag back vocabulary she moved away from) ·
+   and it is the truer claim, because **the app CHOOSES picks that suit her, it does not MAKE them.**
+   ⚠️ One string; hers to swap.
+
+### 🚨⭐⭐ THE FINDING SHE DID NOT ASK FOR: THE LINK WAS ALREADY BREAKING IN HALF
+Measuring her edit found that **the link was ALREADY splitting across two lines before it** — "Take the
+free style / quiz" at 390 AND 360, live, and she had looked straight at it without complaining.
+▶▶ **BUT THE UNDERLINE CHANGED WHAT IT COSTS. Plain coloured text got away with breaking; an UNDERLINED
+link split in two, with the arrow stranded on the second half, reads as two things and works directly
+against the affordance she asked for.** So the fix was owed by her own edit even though her edit did not
+cause the break.
+- ✅ **`white-space:nowrap` on the tappable half.** **MEASURED, not assumed: the whole link is 167px
+  inside a 280px box, so it can never overflow** — even at 320. One line at 390, 360 AND 320.
+- ⚠️ **THE COST, weighed and accepted: one extra line at 360.** Free, because the whisper sits at the very
+  BOTTOM of the ideas box — nothing above the fold moves.
+- ▶ **THE GENERAL LESSON: AN AFFORDANCE CHANGE CAN MAKE A PRE-EXISTING FLAW EXPENSIVE.** Before/after was
+  measured on a `git stash` of the two files rather than guessed, which is what separated "her edit broke
+  this" from "her edit made this matter."
+
+### ⭐⭐ HER SECOND LOOK: THE LINK OWNS ITS OWN LINE NOW — and the obvious fix was WRONG
+Her words on the first render: *"seems like it would look better to put the word for down on the bottom
+line with picks that suit you best so the button is all on one line?"* **She was right — "for" dangling
+after the arrow is worse than either alternative.**
+- 🚨 **THE OBVIOUS FIX WAS TRIED AND THE RENDER REJECTED IT: a `<br>` after the link moved "for" down, and
+  then `text-wrap:balance` REBALANCED THE LEAD AND PUSHED "mix." UP ONTO THE LINK'S LINE** — the same
+  crowding, one word over, from the other side. **Only a render caught it; every measurement said the
+  `<br>` had worked.**
+- ✅ **AS BUILT: the link is `display:block`.** The parent is already `text-align:center`, so it centres
+  itself, and `text-wrap:balance` then applies to the lead and the tail as their own anonymous blocks —
+  which is what produces her four clean lines. ⚠️ **`white-space:nowrap` stays**, or a block link would
+  wrap internally.
+- ⭐ **THE ASSERTION IS THE GENERAL CLAIM, NOT THE MECHANISM: `linkAlone` walks every text node OUTSIDE
+  the link and fails if ANY painted rect sits on the link's line.** ▶ **So it catches crowding from
+  EITHER SIDE** — which is exactly why the `<br>` version fails it too. **Negative-controlled both ways.**
+
+### ⚠️ THE LINK KEEPS ITS GREEN, AND THE NUMBER IS THE ARGUMENT
+She asked for a pink STAR and said nothing about the link colour. **Pink text measures ~3.1:1 on that
+card and FAILS AA** on an 18-to-80 audience; the green `#256b2b` is 5.69:1. ▶ **And the affordance she
+actually asked for is the UNDERLINE and the ARROW, not a colour** — those solve it without spending
+readability. ⚠️ **`quizinvite.js` already asserted `linkInk >= 4.5`, so a pink link would have failed the
+suite** — the guard was there before the question was asked.
+- ▶ **ONE SMALL INCONSISTENCY FLAGGED TO HER, NOT FIXED: that green was chosen in August to SIGNAL THE
+  REFINE PAGE**, and this link goes to the QUIZ. It inherited the colour by sharing `.wdr-colorhint`.
+  **Her call; one line either way.**
+
+### ⚠️ THE STAR AND ARROW HANG OFF `.wdr-qi`, NEVER `.wdr-colorhint`
+That class is **SHARED with the Refine colour hint**, which points at Refine and is neither the stylist
+nor a call to action. ▶ **A star there would be the wrong mark AND a second whisper wearing a CTA's
+clothes.** A test asserts the colour hint gains neither.
+⚠️ **All three new rules are TWINNED for `#s-trending`** (duplicated selector, never `:is()`).
+
+### ⭐⭐ NEGATIVE-CONTROLLED FIVE WAYS, EVERY CONTROL BITING BY NAME
+**quizinvite 50 → 79 checks.** Removing `nowrap` fails 3 · dropping the star fails 6 · making the star
+GOLD instead of the stylist pink fails 3 · stripping the underline fails 4 · **and dropping the
+`#s-trending` twins fails TEN** — ⭐ **with the star rendering at 280x280, the raw SVG default, and the
+arrow back to `display:block` across 3 line boxes.** ▶ **That is the 2026-09-01 twin lesson reproduced
+exactly: a class carries its styling only inside the scope that defines it.**
+
+### ⚠️ FOUR HARNESS TRAPS THIS SESSION, every one failing on correct code — the tell is N-for-N again
+1. 🚨 **A "the retired wording cannot creep back" check searched THE WHOLE FILE**, and the COLOUR hint
+   legitimately still says "for picks made just for you" — she never asked for that one to change.
+   ▶ **Scope a retired-string check to the function that retired it.**
+2. 🚨 **`sp.getBoundingClientRect().top` ON A WRAPPING INLINE SPAN REPORTS ITS FIRST LINE**, so a
+   perfectly placed arrow at the end of the LAST line read as "wrong line." ▶ **Measure against
+   `getClientRects()`'s LAST box.** (The rect-per-element family, one more sighting.)
+2b. 🚨 **AND THE SAME FAMILY BIT AGAIN THE MOMENT THE LINK WENT `display:block`: its BOX spans the full
+   280px container while its CENTRED TEXT does not**, so "is the arrow at the end?" failed on a correct
+   render. ▶ **Measure a trailing mark against THE WORDS (a Range over the last text node), never against
+   the element's box.**
+3. 🚨⭐ **TWO BACKGROUND SWEEPS WROTE THE SAME `out-*.txt` FILES AND INTERLEAVED**, producing truncated
+   logs with no totals — and a monitor watching for FAIL lines reported **"SWEEP CLEAN."**
+   ▶▶ **THE STANDING RULE SAVED IT: READ THE TOTAL, NEVER THE ABSENCE OF FAILURES.** Four suites had
+   produced no total at all. ⚠️ **And never let two sweeps share an output path.**
+4. ⚠️ **A wait loop keyed on `[ -s file ]` fires on the FIRST BYTE, not on completion** — it declared a
+   suite finished mid-run. ▶ **Wait for the TOTAL line, never for the file to exist.**
+⚠️ **`hometrim` and `jrnlcta` are `.mjs`, not `.js`** — a `for s in ...; node scratchpad/$s.js` loop dies
+with MODULE_NOT_FOUND, which looks exactly like a suite nobody ran. **Check the extension.**
+⚠️ **`nav.js` HANGS reaching external CDNs** (documented) and blocks a sequential sweep behind it. Kill it
+by scanning `/proc/*/cmdline` — **`pkill -f` matches its own command line.**
+
+### ✅ GREEN AT PAUSE
+**trending 87 · quizinvite 79 · nav 82 · wdrworksheet 73 · wdrmylist 65 · tabtops 49 · jrnlcta 128 · menu 104 · hometrim 69 · hubs 49 — all 0 failed.**
+Renders with the REAL typefaces: `scratchpad/qi-{390,360,320}.png` via new `scratchpad/qishot.mjs`.
+
+### ▶ THE FIRST THINGS NEXT SESSION — HER LIST, NOTHING DROPPED
+1. 📸⭐⭐ **A PHOTO ON EACH JOURNAL ARTICLE — HER NEXT TOPIC, raised at the end of this session and NOT
+   yet discussed.** ▶ **THE FACTS GATHERED FOR IT, so they need no re-deriving:** the `Article` schema in
+   `page-titles.js` has **NO `image` field** (Google lists it as recommended) · **both articles share ONE
+   site-wide `og:image`**, her letterhead, so neither has its own share card · and there is **NO `robots`
+   meta anywhere**, so Google defaults to `max-image-preview:standard` — **a small thumbnail, and it
+   limits Google Discover eligibility.** ⚠️ **THE SOURCING IS THE REAL QUESTION AND IT IS HERS: her own
+   photos are the only option that is both free of licence risk and ON BRAND** (a real stylist's real
+   work). **AI-generated art would undercut the "not a faceless algorithm" north star**, and stock is
+   generic. ⚠️ **The article recipe would go from FIVE steps to six.**
+2. ✍️⭐⭐ **THE FALL TREND REFRESH — HERS, AND STILL THE NEXT BUILD.** She has her take on the season and
+   knows which summer items to cut. ▶ **Editing is ONE list in the markup.** ⚠️ **Bump `/trending`'s
+   `lastmod` in the SAME commit**, and remember the SEO read: **richer notes are the ranking lever.**
+3. 🔎 **THEN REQUEST INDEXING ON `/trending`, GOOGLE AND BING** — hers, at her desk, **AFTER the refresh.**
+4. 🚪 **THE WARDROBE LIST GETS ITS OWN URL**, then 📓 **THE "WARDROBE HOLES" ARTICLE.**
+5. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13.** Do not insert anything mid-queue ahead of it.
+6. ⚖️ **ALMIRA: still NO REPLY.** Watching for the **COPY of the correction confirmation.**
+7. ✉️ **PLAY 2: panaprium has NOT replied.** ▶ **Still to send: itechnolabs and altadaily.**
+8. 📋 **THE THREE CATALOG DECISIONS** (Old Navy p004 / Everlane p095 / Mango p033).
+9. ⚠️ **DELIBERATELY NOT DONE:** the "Updated <month>" line and a longer `<h1>` on /trending · the quiz
+   link's green-means-Refine inconsistency (flagged above, her call) · **`catmark`'s 3 pre-existing
+   failures.**
+
+---
+
+## ▶ PREVIOUS — (2026-09-01 LATEST — ⭐⭐ WHAT'S TRENDING IS A REAL, SEARCHABLE PAGE, AND THE BUG THAT MATTERED WAS FOUND BY REPRODUCING IT)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **ONE COMMIT (`ae42cc5`), merged FAST-FORWARD to `main`, ONE Netlify build, CURL + MD5-VERIFIED LIVE.**

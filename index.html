@@ -7566,6 +7566,15 @@ function _wdrStar(on){
 // learned for the wardrobe tab arrows, .wdr-tab-ar) -- inline SVG instead,
 // stroke-width driven, currentColor so it always matches its button's ink.
 var _WDR_ARR='<svg class="wdr-see-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>';
+// THE STYLIST'S PINK STAR, for the cold-visitor quiz invitation below.
+// ⚠️ The polygon and the #EC4899 are BYTE-IDENTICAL to the chat header's star
+// (#s-chat .chat-hdr-star) on purpose -- that is the app's mark for "the
+// stylist is working on your behalf", and this line is the stylist offering.
+// quizinvite.js asserts the two point strings MATCH, so restyling the chat
+// star can never silently leave this one behind.
+// ⚠️ It is NOT the pink HEART: the heart is Catherine speaking in her own
+// voice, the star is the stylist. Do not swap one for the other.
+var _QI_STAR='<svg class="wdr-qi-star" viewBox="0 0 76 76" fill="none" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>';
 // The worksheet's column heading, repeated at every category so the two controls
 // are labelled wherever she happens to be on a 100-row page. Her words: SHOP over
 // the Ideas link, ADD over the star.
@@ -7762,10 +7771,29 @@ var _WDR_IDEA_EXCLUDE={
 // ⚠️ AND IT SUPERSEDES THE COLOUR HINT when both would apply. A woman with no
 // quiz at all also has no saved colours, and two stacked whispers is clutter;
 // the quiz is the earlier and bigger step, so it wins and Refine waits.
+// ▶ HER THREE EDITS 2026-09-02, from the live page on her own phone:
+//   (1) the stylist's PINK STAR leads the line, so the invitation reads as
+//       the stylist offering rather than an anonymous notice.
+//   (2) the tappable half is UNDERLINED and carries the house arrow. Her
+//       words: it "needs to be underlined plus an arrow so it looks obviously
+//       tappable there" -- coloured text alone did not read as a control.
+//   (3) "for picks made just for you" -> "for picks that suit you best".
+//       SUIT is a stylist's own word, and it is the truer claim: the app
+//       CHOOSES picks that suit her, it does not MAKE them for her.
+// ⚠️ THE STAR AND THE ARROW HANG OFF .wdr-qi, NEVER .wdr-colorhint, which is
+// SHARED with the colour hint. That hint points at Refine, not at the
+// stylist, so a star there would be the wrong mark AND a second whisper
+// wearing a call-to-action's clothes. A test asserts it gains neither.
+// ⚠️ The arrow is _WDR_ARR ITSELF, not a copy of its path, so the house arrow
+// can never drift; only its LAYOUT is overridden (inline here, block inside
+// the .wdr-see chip). Same reasoning as the star's byte-identical polygon.
+// ⚠️ The link keeps its #256b2b GREEN, deliberately: pink text measures ~3.1:1
+// on this card and fails AA on an 18-to-80 audience, and the affordance she
+// actually asked for is the underline and the arrow, not a colour.
 function _wdrQuizInvite(){
   if(_hasQuizData())return '';
-  return '<div class="wdr-colorhint">I don\'t know your style yet, so these are a general mix. '
-       + '<span onclick="startQ()">Take the free style quiz</span> for picks made just for you.</div>';
+  return '<div class="wdr-colorhint wdr-qi">'+_QI_STAR+'I don\'t know your style yet, so these are a general mix. '
+       + '<span onclick="startQ()">Take the free style quiz'+_WDR_ARR+'</span> for picks that suit you best.</div>';
 }
 // Some checklist items are a judgment call, not a plain description -- the
 // model needs HER concrete definition, not its own guess at office norms.
