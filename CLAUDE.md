@@ -214,9 +214,15 @@ December? ▶ **YES for the PARAGRAPH, NO for the HEADING, and the split is the 
   "This season" underneath it becomes genuinely vague with nothing anchoring it.** Change both or neither.
 - ▶▶ **HER STANDING ASK, VERBATIM: "the part about the dates and seasons please remind me of that when it
   matters or when it is time to update."** ▶ **SO RAISE IT UNPROMPTED whenever the trend list is touched,
-  AND whenever a season turns.** ⚠️ **HONEST LIMIT, told to her: this file catches it on any session that
-  opens the page, but NOTHING IN THE SYSTEM WILL RAISE THE CALENDAR ITSELF** — same shape as the 20 September
-  Star pin. **A seasonal Routine was OFFERED and is hers to accept; do not build it unasked.**
+  AND whenever a season turns.**
+- ✅ **AND THE CALENDAR HALF IS SOLVED — SHE SAID YES, SO THE ROUTINE EXISTS:
+  `trig_01GV9y6sZNVf1LUeFaMv5gND` "Style Star — seasonal trend refresh reminder", FRESH SESSION, PUSH
+  notification, fires 14:00 UTC on 15 FEB / 15 MAY / 15 AUG / 15 NOV. First fire 2026-11-15.**
+  ▶ **The dates are deliberate: ~six weeks BEFORE each season really lands, so she has time to write rather
+  than being caught out.** ⚠️ **This closes the gap the 20 September Star pin still has** — a note in this
+  file only fires if somebody opens a session, and nothing here can raise a calendar on its own.
+  ⚠️ **Its prompt sends the fresh session to THIS SECTION as the authority** and tells it not to push if she
+  says not now. **It carries no MCP connectors** (none to pass through), which it does not need.
 - ⚠️ **AND THE PAGE'S OWN PROMISE IS PART OF THIS: "Check back for trend updates. This list changes with the
   seasons." That is only true while it is true**, and the dated heading is what makes it checkable.
 
