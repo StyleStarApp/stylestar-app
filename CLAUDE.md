@@ -7,7 +7,116 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-02 EVENING — 🖼 THE TWO SHARE CARDS ARE NOW VISIBLE ON THE PAGE, AND A REAL BUG SURFACED IN HOW SHE'S TESTING IT)
+## ▶ NEXT SESSION — START HERE (2026-09-02 NIGHT — 🚨 THE PHONE BUG IS SOLVED: EVERY IMAGE ON THE SITE HAD A RELATIVE PATH, AND /journal/<slug> WAS THE FIRST TWO-SEGMENT ROUTE THIS SITE HAS EVER HAD)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**Her four screenshots CRACKED IT.** She texted herself both article links and sent four screenshots of what
+she actually saw. Two of them (both of "How to Find Your Personal Style" open in real Safari, at 6:40 and
+6:42) show a **broken-image placeholder** (the blue "?" box) sitting exactly where the in-page share-card
+photo belongs — that is her "photo not appearing," caught live, on the real page, not a preview-card problem
+at all. ▶ **ONE COMMIT, verified against a fresh live-navigation test (not the render harnesses that have been
+verifying this page for a week), full regression sweep green. Ready to merge and confirm live.**
+
+### 🚨🚨 THE ROOT CAUSE: EVERY RELATIVE IMAGE PATH ON THE WHOLE SITE, AND A ROUTE SHAPE THAT NEVER EXISTED BEFORE
+**Every `<img src="...">` in the entire app — the masthead logo, both journal hero images, the apple-touch-icon,
+even one canvas-drawn logo in the Style Star Card generator — was written as a BARE FILENAME with no leading
+slash** (`src="logo-star.png"`, not `src="/logo-star.png"`). So was `<link rel="manifest">` and
+`<link rel="apple-touch-icon">` in `<head>`.
+- ▶ **A relative path resolves against the CURRENT DOCUMENT ADDRESS, stripping only its FINAL path segment.**
+  On `/` that strips to `/`. On EVERY single-segment route this site has ever had (`/faq`, `/story`, `/privacy`,
+  `/terms`, `/journal`, `/trending`…) stripping the one segment ALSO leaves `/` — so a bare `logo-star.png` has
+  always, by pure accident, resolved correctly, every single time, on every route that ever existed.
+- 🚨🚨 **`/journal/<slug>` IS THE FIRST TWO-SEGMENT ROUTE THIS SITE HAS EVER SHIPPED.** Stripping only the
+  slug leaves `/journal/`, so `logo-star.png` resolved to `.../journal/logo-star.png` — a real 404, on every
+  relative asset the page carries, the instant it is opened by a real, full navigation (exactly what tapping a
+  shared link does). ▶ **`/list/<token>`, the shared-wishlist page, is the ONLY OTHER two-segment route in the
+  whole app and carries the identical letterhead logo — it was silently broken too, never reported, now fixed
+  as a bonus.**
+- ⚠️⚠️ **WHY EVERY RENDER HARNESS THAT HAS TOUCHED THIS PAGE FOR A WEEK MISSED IT, and it is the sharpest
+  version yet of the "the render is a promise, prove it against the real thing" family: every single one of
+  them — `measure2.mjs`, `measure3.mjs`, `article2.mjs`, the lot — loads the app at ROOT and then calls
+  `openJournalArticle()` via JavaScript, i.e. a client-side SPA transition.** A `pushState` call changes the
+  address bar but does **not** re-resolve `<img>` elements that are already sitting in the DOM — they were
+  parsed, and their relative paths already resolved, against `/` the moment the page first loaded. **So every
+  test that has ever exercised this page tested the ONE navigation path that could never expose the bug**, and
+  a REAL visitor tapping a shared link does the other one: a full, fresh navigation straight to the two-segment
+  URL, which is exactly what her own phone did.
+- ⭐ **AND THE LESSON WAS ALREADY WRITTEN DOWN IN THIS CODEBASE, one file over, and never generalised.**
+  `styles.css`'s own header comment (2026-09-01) already says, almost verbatim: *"this href must stay ABSOLUTE,
+  a relative one 404s on `/journal/<slug>` and every nested route."* That rule was applied to the ONE
+  stylesheet link and never carried over to the dozens of `<img>` tags sitting right next to it. **The standing
+  lesson, worth keeping for the next asset added anywhere: a rule proven true for one tag on the page is not
+  automatically true for its neighbour — check every tag of the same shape, not just the one that prompted the
+  rule.**
+
+### ✅ THE FIX — 22 occurrences, one leading slash each, nothing else touched
+Every relative image/asset reference in `index.html` now starts with `/`:
+`logo-star.png` (10×) · `logo-star-text.png` (2×) · `logo-tight.png` (2× in markup + 1× in the Style Star
+Card's canvas-drawing JS, `logo.src='logo-tight.png'`) · `apple-touch-icon.png` (3× `<img>` + the `<head>`
+`<link rel="apple-touch-icon">`) · `<link rel="manifest" href="manifest.json">` · both journal hero images,
+`og-journal-personal-style.png` and `og-journal-fall-florida.png`.
+- ⚠️ **The `_logoRetry()` failed-load handler needed no change** — it reads `img.getAttribute('src')` (the raw
+  attribute, now correctly `/logo-star.png`) and appends a cache-busting query string, so once the base
+  attribute carries the leading slash its retries are automatically root-relative too.
+- Both `<script>` blocks still parse clean after the sitewide edit (verified with `new Function()` on each).
+
+### ⭐⭐ THE NEW TEST — the first one to actually navigate to the two-segment URL, not SPA-transition to it
+**`scratchpad/imgpath.mjs`**, built specifically because every existing harness tests the one path that cannot
+show this bug. A local server mimics Netlify's real rewrite (two-segment `/journal/<slug>` paths serve the raw
+`index.html` bytes while the browser's OWN address bar stays on that two-segment URL — never a redirect), and
+Playwright does a genuine `page.goto()` straight to it, the same thing a tapped link does.
+- Confirms, on the REAL current file: both journal hero images and the masthead logo on both article screens
+  now resolve to the ROOT file (not `/journal/...`), actually load (`naturalWidth > 0`), and produce zero
+  404s. Confirms the root path (`/`) is untouched either way.
+- 🚨 **NEGATIVE-CONTROLLED, and the control caught a real harness-authoring mistake of its own, worth keeping
+  as a lesson:** the control reverts the fix in a scratch buffer (never the real file) and re-runs the exact
+  same navigation. The FIRST version of this test asserted the SAME "resolves correctly" condition for the
+  control and expected the test framework to report it as a failure — which is backwards; a negative control
+  has to assert the INVERSE (**"this resolves WRONG, which is what proves the harness can see the bug"**) and
+  count THAT as a pass. Fixed before shipping.
+- ⚠️ **AND THE FIRST DRAFT OF THIS VERY TEST HIT THE SAME "HARNESS LIES" FAMILY THIS PROJECT KEEPS
+  RECORDING.** A bare `document.querySelector('.jrnl-img')` on the fall-florida route returned the
+  **personal-style article's image** — not a real bug, but this test's own local server serving the RAW,
+  UNTRIMMED `index.html` for every `/journal/*` path, unlike the real edge function which trims the body
+  server-side to exactly one screen (proven separately in `article2.mjs`). With both `#s-journal` and
+  `#s-journal-fall-florida` present at once, the bare class selector grabbed whichever came first in DOM
+  order. **Fixed by scoping every selector to the screen id the route actually opens**
+  (`#s-journal-fall-florida .jrnl-img`), which is what a real visitor's genuinely-trimmed page would contain.
+- **Full regression sweep re-run after the sitewide edit, all green, nothing else moved:** ogimage.mjs (33) ·
+  pagetitles.mjs (71) · article2.mjs (31) · copy.js (41) · hometrim.mjs (69) · hubs.js (49).
+
+### ✅ CHECKED, NOT FOUND: whether a routing bug explains her SECOND symptom (the wrong destination)
+Her original report also said sharing the Fall article opened the WRONG article. **`_screenForPath()` and
+`_journalBySlug()` were read directly, looking specifically for a substring/`startsWith` collision between the
+two slugs** (`how-to-find-your-personal-style` vs `how-to-dress-for-fall-in-florida`) given the fresh
+DOM-order false-positive this test itself just produced. **Found nothing: `_journalBySlug` does exact string
+equality, never a prefix or substring match, and the two slugs share no meaningful prefix anyway.** ▶ **So the
+wrong-destination half of her report is still most likely explained by the standing fact recorded last
+session: the actual tap destination is always exactly the literal URL string sitting in that one message, and
+the app has no in-app article-specific share button (`menuShare()` shares only the bare homepage URL) — so
+whatever URL landed in that message came from typing or copying it some other way.** Ask her directly, as
+already planned, how she gets each article's link into the text message.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. **Merge this fix and verify it live** — curl won't show it (curl doesn't resolve relative URLs the way a
+   browser does), so verification has to be `imgpath.mjs`-style: an actual browser doing a real navigation to
+   the live `/journal/<slug>` URL, or simply Cath reloading the article on her phone.
+2. 👀 **Ask her to open a FRESH, never-before-tested link to each article on her phone** (not reload an old
+   message's cached preview — Apple caches previews per exact URL string) **and confirm both the masthead logo
+   and the hero photo now show, on the live page itself.**
+3. 🔎 **Then ask the standing question from last session: how is she getting each article's link into the text
+   message** (typed from memory, copied from Safari's address bar after navigating in-app, something else) —
+   that is what will settle whether the wrong-destination report was a stale/cached preview or a genuinely
+   mistyped link, now that the image half is provably fixed.
+4. ⚠️ **Do not re-suggest the Facebook Sharing Debugger** unless she asks for it again (per her stated
+   confusion last session) — lead with the one-sentence "free public tool unrelated to having a Facebook
+   account" framing if it ever comes up.
+5. Everything else on her list (the Fall Trend Refresh, the wardrobe/checklist article, the various
+   affiliate/legal threads) is unchanged and still open — see the entry below.
+
+---
+
+## ▶ PREVIOUS — (2026-09-02 EVENING — 🖼 THE TWO SHARE CARDS ARE NOW VISIBLE ON THE PAGE, AND A REAL BUG SURFACED IN HOW SHE'S TESTING IT)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **ONE COMMIT (`0bf84f0`), fast-forward merged to `main`, ONE Netlify build, CURL-VERIFIED LIVE.**
