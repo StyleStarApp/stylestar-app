@@ -7,7 +7,74 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-02 LATEST — ✍️ HER THREE EDITS ON THE QUIZ INVITATION, AND THE LINK WAS ALREADY BREAKING IN HALF)
+## ▶ NEXT SESSION — START HERE (2026-09-02 LATER — 📸 EACH JOURNAL ARTICLE HAS ITS OWN SHARE CARD)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**ONE COMMIT (`f84dc5f`), fast-forward merged to `main`, ONE Netlify build, CURL + MD5-VERIFIED LIVE.**
+Branch `claude/style-star-markdown-x2pmcv`, same no-PR convention; branch, `main` and the remote all sit
+on `f84dc5f`, tree clean.
+▶ **THE SHAPE OF IT: item #1 from her own list ("a photo on each Journal article") turned out to be
+answerable WITHOUT the sourcing question this file had flagged — she brought two ready-made SHARE-CARD
+graphics from a Cowork brief, which sidesteps the licensing/on-brand question entirely** (they're drawn
+from the app's own quiz UI and her own fall-color list, not a photo of anyone). **The actual body-photo
+idea (a picture of her, or of a look, inside the article text) is UNTOUCHED and still open** — see below.
+
+### 📸 WHAT SHIPPED: BOTH ARTICLES GET THEIR OWN LINK-PREVIEW CARD, NOT THE HOMEPAGE'S
+Her brief asked for `og:image`/`width`/`height`/`alt` + `twitter:card` per article, and to confirm each
+article's `og:title`/`og:description`/`og:url` are its own rather than inherited. **Checked against the
+real code before building anything:** `og:title`/`og:description` were ALREADY correctly overridden per
+route (`page-titles.js`'s `setMeta` calls, since 2026-09-01) — nothing to do there. **`og:url` was the real
+gap: it was never touched at all, so every article was claiming the homepage's own `https://www.stylestar.app`
+to a link-preview fetcher.** And there was no `og:image:alt` anywhere in the file, on any page.
+- ⚠️ **THE TWO PNGs NEVER ARRIVED AS FILES — Drive and GitHub both disconnected mid-session, and a pasted
+  chat image carries no bytes I can write to disk.** Rather than wait on a file transfer, they were REBUILT
+  from scratch as clean HTML/CSS renders using the app's own real tokens (DM Serif Display + Jost, the
+  established gold `#D8A52E`/`#C89A2C`, the paper `#FBFAF7`, the pale-gold card border `#D8C285`) and real
+  webfonts (fetched fresh via curl — Chromium here still can't reach Google Fonts, the documented sandbox
+  wall — and cached locally, the standing `renderfonts.mjs` pattern). **Rendered at exactly 1200×630,
+  side-by-side against her pasted images, and they read as the same cards.** `scratchpad/ogcards/` keeps
+  both HTML sources + the render script, committed, so either can be regenerated or tweaked later.
+- **Card 1** (`og-journal-personal-style.png`): "You already have a *style*. Let's put words to it." plus
+  the three quiz spectrums (Classic↔Trendy, Natural↔Glam, Understated↔Statement) as a simple line-and-dot
+  graphic. **Card 2** (`og-journal-fall-florida.png`): "Fall colors that work at *90 degrees*" plus the
+  eight-color band (chocolate brown, burgundy, rust, camel, olive, deep green, navy, off white).
+- ✅ **`og:url` now moves with the title/description whenever a route has its own `page.title`** — same
+  reasoning already written into the file for those two tags, extended to a third. The homepage's own
+  `og:url` is UNTOUCHED, still `www`, still deliberate (documented reason unchanged: the preview card
+  already sits in testers' threads).
+- ✅ **`og:image:alt` + `twitter:image:alt` are real tags now, site-wide.** The homepage (and any future
+  page with no image override) gets a plain, honest default describing its own actual card (the logo +
+  "Align your style. Shine your light."); each article overrides both with her own alt text, verbatim.
+- ⚠️ **`og:image:width`/`height` were NOT touched** — both new cards are the site's own 1200×630, so the
+  existing site-wide values already read true. Confirmed, not assumed.
+- **Verified: new `scratchpad/ogimage.mjs`, 33 checks**, importing and calling the REAL `page-titles.js`
+  handler against the real `index.html` (never a copy of its transforms — the standing `edgepreview.mjs`
+  lesson) — homepage untouched save the new default alt, each article's five image tags + `og:url` +
+  `og:title`/`description`/canonical all its own, no duplicate tags, both PNGs proven exactly 1200×630 by
+  reading their own PNG header. Existing `pagetitles.mjs` (71) · `edgepreview.mjs` (12) · `copy.js` (41) all
+  still green. **Live curl + md5: both images byte-identical local vs served, all six new/changed meta tags
+  present exactly as built on both article routes, homepage's own tags otherwise unchanged.**
+
+### ▶ STILL OPEN — HER LIST, IN HER ORDER
+1. 📸 **THE ORIGINAL BODY-PHOTO QUESTION IS STILL UNANSWERED.** Share cards solve the link-preview problem;
+   they do nothing for a photo INSIDE the article itself (the `Article` schema still has no `image` field,
+   and Google Discover eligibility is still capped by the missing `robots` meta / default
+   `max-image-preview:standard`). **The sourcing question is still hers alone: her own photos (free, on
+   brand, a real stylist's real work) vs. stock (generic) vs. AI-generated (undercuts the "not a faceless
+   algorithm" north star).** Nothing built here; ask her directly next session.
+2. ✍️⭐⭐ **THE FALL TREND REFRESH — still hers, and still the next actual build.** She has her take on the
+   season and knows which summer items to cut. Bump `/trending`'s `lastmod` in the same commit; richer
+   notes are the ranking lever.
+3. 🔎 **THEN request indexing on `/trending`, Google and Bing — after the refresh, at her desk.**
+4. 🚪 **Wardrobe list gets its own URL**, then the "Wardrobe Holes" article.
+5. ⏰ Vilebrequin cover-up runs the week of Sep 13 — nothing to do, don't insert anything ahead of it.
+6. ⚖️ Almira — still no reply.
+7. ✉️ Play 2 — itechnolabs and altadaily still unsent.
+8. 📋 The three catalog decisions (Old Navy / Everlane / Mango) — hers.
+
+---
+
+## ▶ PREVIOUS — (2026-09-02 — ✍️ HER THREE EDITS ON THE QUIZ INVITATION, AND THE LINK WAS ALREADY BREAKING IN HALF)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **Her verdict on the live /trending page first: "it looks great and it toggles properly."** ▶ **That
