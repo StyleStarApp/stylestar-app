@@ -177,6 +177,49 @@ exactly the traffic `/trending` was built to catch.
   sits past the viewport edge and the overflow census flagged all of them. ▶ **Measure only what does NOT
   live inside the scroller.**
 
+### 🔒 THE FALL INTRO IS LOCKED (2026-09-02, her words + her call, NOT YET IN THE MARKUP)
+She brought her fall draft and asked for a real edit. **The intro is settled and blessed; the 18 items are
+still being worked one at a time.** ▶ **DELIBERATELY NOT BUILT YET: an intro reading "This season is full of
+rich details, glam fabrics and feminine accents" sitting above butter yellow and straw bags is actively
+wrong, and shipping it alone would also cost a second Netlify build. INTRO AND ITEMS GO IN ONE COMMIT.**
+As locked, verbatim:
+
+> **Here's What's IN for Fall 2026**
+>
+> This season is full of rich details, glam fabrics and feminine accents. The colors go deeper, the fabrics
+> get plush, and a defined waist is giving outfits a fresh silhouette.
+>
+> You don't need all of it, and you don't need to start over. Choose the ones that feel like you and let
+> them do the work with what you already own 💕
+
+- ⭐⭐ **THE EDIT THAT MATTERED, and it generalises to any list page: HER FIRST DRAFT'S INTRO NAMED 16 OF THE
+  18 ITEMS, so a reader read the whole list twice** — once compressed, once expanded. ▶ **An intro must do
+  the job the list structurally CANNOT (say what the season MEANS), never preview it.** She had already
+  written that sentence herself ("rich details, glam fabrics and feminine accents"); the rest was inventory.
+  ⚠️ **The restructure adds NO claim she did not make — she is the trend authority, the standing rule.**
+- ⚠️ **IT IS SHORTER (84 → 51 words) AND THAT IS CORRECT: an intro that restates the list adds words without
+  adding value, and Google is not fooled by restatement.** The word count belongs in the NOTES.
+
+### ⚠️⚠️ THE DATE / SEASON PAIRING — SHE ASKED TO BE REMINDED OF THIS, SO RAISE IT
+Her question: should the paragraph say "This season" instead of "Fall 2026" so it does not look dated in
+December? ▶ **YES for the PARAGRAPH, NO for the HEADING, and the split is the point:**
+- **The HEADING keeps the date** (`Here's What's IN for Fall 2026`). *"fall 2026 trends"* is a phrase women
+  actually type, so the date earns real search value there. ▶▶ **AND A DATED HEADING IS THE HONEST ONE:
+  "This season" does not remove the staleness problem, it HIDES it.** Chunky knits and faux fur in June are
+  stale whichever way it is worded; a date tells a reader plainly when it was written, while a vague phrase
+  quietly implies currency the page may not have. **Same principle as every other honesty call in this app.**
+- **The PARAGRAPH goes evergreen** ("This season is full of…"), so it never needs touching when the season
+  turns — only the heading and the items do. **It was saying Fall 2026 twice in four words anyway.**
+- ⚠️⚠️ **THEY ARE A PAIR AND THE DEPENDENCY IS LOAD-BEARING: if the date ever comes OUT of the heading,
+  "This season" underneath it becomes genuinely vague with nothing anchoring it.** Change both or neither.
+- ▶▶ **HER STANDING ASK, VERBATIM: "the part about the dates and seasons please remind me of that when it
+  matters or when it is time to update."** ▶ **SO RAISE IT UNPROMPTED whenever the trend list is touched,
+  AND whenever a season turns.** ⚠️ **HONEST LIMIT, told to her: this file catches it on any session that
+  opens the page, but NOTHING IN THE SYSTEM WILL RAISE THE CALENDAR ITSELF** — same shape as the 20 September
+  Star pin. **A seasonal Routine was OFFERED and is hers to accept; do not build it unasked.**
+- ⚠️ **AND THE PAGE'S OWN PROMISE IS PART OF THIS: "Check back for trend updates. This list changes with the
+  seasons." That is only true while it is true**, and the dated heading is what makes it checkable.
+
 ### ▶ THE ORDER SHE ACCEPTED FOR WHAT FOLLOWS (her ask: "You tell me what steps in what order")
 1. ✅ **THE QUIZ INVITATION** — done, her wording A.
 2. ✍️⭐⭐ **THE FALL TREND REFRESH — HERS, AND IT IS NEXT.** She has her take on the season and knows which
