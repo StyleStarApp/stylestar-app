@@ -43,12 +43,12 @@ export default async (request, context) => {
   let html = await res.text();
   html = html.replace(/<title>[\s\S]*?<\/title>/i, '<title>' + TITLE + '</title>');
 
-  // 🚨 KEEP A WOMAN'S WISHLIST OUT OF GOOGLE (2026-08-24). Until now /list/<token>
-  // returned a real, fully indexable page: verified live, 200 with no robots
-  // directive anywhere on it. Nobody has been harmed by that -- these links get
-  // sent by text, so a crawler has no way to find one -- but discovery only has
-  // to happen ONCE (she posts hers publicly, a link ends up on a forum) and then
-  // her list, and the token that opens it, is a search result.
+  // 🚨 KEEP A WOMAN'S WISHLIST OUT OF GOOGLE (2026-08-24). /list/<token> would
+  // otherwise be a real, fully indexable page. Nobody has been harmed by that --
+  // these links get sent by text, so a crawler has no way to find one -- but
+  // discovery only has to happen ONCE (she posts hers publicly, a link ends up
+  // on a forum) and then her list, and the token that opens it, is a search
+  // result.
   //
   // ⚠️ THE TOKEN IS THE CREDENTIAL, which is why noindex is the right tool and
   // robots.txt is NOT. A Disallow would stop the crawl, so the crawler would
@@ -62,8 +62,12 @@ export default async (request, context) => {
   // there is no reason to hand a crawler a trail out from a private page.
   // ⚠️ Messenger previews are UNAFFECTED. iMessage reads og: tags and does not
   // care about robots directives, so her share card looks exactly as before.
-  html = html.replace(/<head(\s[^>]*)?>/i,
-    '$&\n<meta name="robots" content="noindex, nofollow">');
+  // ⚠️ 2026-09-02: index.html now carries its OWN site-wide robots tag
+  // (index,follow,max-image-preview:large, for Google Discover). This SWAPS
+  // that tag's content rather than inserting a second one -- the same
+  // pattern setMeta() already uses for every other tag below. Never go back
+  // to a bare head-insert, or a page ends up with two robots tags fighting.
+  html = setMeta(html, 'name', 'robots', 'noindex, nofollow');
   html = setMeta(html, 'property', 'og:title', TITLE);
   html = setMeta(html, 'property', 'og:description', DESC);
   html = setMeta(html, 'name', 'twitter:title', TITLE);

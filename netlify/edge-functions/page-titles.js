@@ -435,7 +435,7 @@ const ARTICLES = [
 // not this one page.
 function articleSchema(a) {
   const path = '/journal/' + a.slug;
-  return {
+  const schema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: a.title,
@@ -448,6 +448,13 @@ function articleSchema(a) {
     dateModified: a.dateModified,
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://stylestar.app' + path },
   };
+  // 2026-09-02: Google lists `image` as a recommended field for Article rich
+  // results, and it was empty on both articles until now. Same file the
+  // og:image tag already points at (see the ARTICLES entry) -- never a
+  // second image, and it's simply absent (not a broken empty string) on any
+  // future article that has no ogImage yet.
+  if (a.ogImage) schema.image = ['https://stylestar.app/' + a.ogImage];
+  return schema;
 }
 
 // FAQPage schema for an article's genuine questions (see the long comment

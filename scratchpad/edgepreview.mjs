@@ -57,8 +57,19 @@ ok('...and nofollow, so no crawler trail leads out of a private page',
 ok('the robots tag really is inside <head>',
    html.indexOf('name="robots"') > html.indexOf('<head') &&
    html.indexOf('name="robots"') < html.indexOf('</head>'));
-ok('the ORDINARY app carries no robots tag — only /list/* is hidden',
-   !/<meta name="robots"/i.test(before));
+// ⚠️ UPDATED DELIBERATELY 2026-09-02, not silenced: index.html now carries its
+// OWN site-wide robots tag (index,follow,max-image-preview:large, for Google
+// Discover eligibility on the two Journal share cards) — so "the ordinary app
+// carries NO robots tag at all" stopped being the real claim. The real claim
+// is stronger: the ORDINARY page's tag stays index/follow, list-preview.js
+// SWAPS that same tag's content to noindex/nofollow rather than adding a
+// second one, and there is never more than one robots tag on either page.
+ok('the ordinary raw page carries its own index/follow robots tag',
+   /<meta name="robots" content="index, follow/i.test(before));
+ok('the ordinary raw page has exactly one robots tag',
+   (before.match(/<meta name="robots"/gi) || []).length === 1);
+ok('the shared wishlist has exactly one robots tag, not two',
+   (html.match(/<meta name="robots"/gi) || []).length === 1);
 
 // ---- the app itself must survive the rewrite --------------------------------
 ok('the app body still parses as one document',

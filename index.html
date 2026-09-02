@@ -19,6 +19,15 @@
      that way. -->
 <title>Free Personal Stylist App &amp; Style Quiz — Style Star</title>
 <meta name="description" content="Take a free style quiz to discover your signature style, built by a real personal stylist, not just an algorithm. Shop with clarity and confidence.">
+<!-- 2026-09-02: Google Discover eligibility needs max-image-preview:large --
+     without it Google defaults to max-image-preview:standard, a small
+     thumbnail, on every page including the two Journal articles that now
+     carry real share images. index/follow are the defaults anyway, written
+     out so this tag is self-explanatory. ⚠️ A SHARED WISHLIST (/list/<token>)
+     OVERRIDES this to noindex,nofollow -- netlify/edge-functions/list-preview.js
+     swaps this tag's CONTENT for that one route rather than adding a second
+     robots tag, so there is only ever one on any page. -->
+<meta name="robots" content="index, follow, max-image-preview:large">
 <!-- ⚠️ THE APEX IS THE CANONICAL HOST. Verified live 2026-08-24: www 301s TO
      stylestar.app, not the other way round, so every address we publish is
      written without www (robots.txt and sitemap.xml agree).
@@ -1919,6 +1928,13 @@
     <div class="jrnl-by-date">Published August 26, 2026</div>
     <div class="jrnl-by-link"><span class="jrnl-lnk" onclick="showStory()">Read my story &rarr;</span></div>
 
+    <!-- ⚠️ ALT TEXT MUST MATCH ogImageAlt for this article in
+         netlify/edge-functions/page-titles.js -- same words, two files,
+         same reason the slug/title pair already has to be kept in sync by
+         hand there (an edge function cannot import from index.html). This
+         is the SAME FILE the og:image tag points at, never a second copy. -->
+    <img class="jrnl-img" src="og-journal-personal-style.png" alt="Three of the Style Star quiz spectrums: Classic to Trendy, Natural to Glam, and Understated to Statement, each with a marker placed along the line.">
+
     <p class="jrnl-p">If you are trying to figure out your personal style, here is the first thing I want you to know: you already have one.</p>
     <p class="jrnl-p">Your personal style has been there all along. It is in the colors you are naturally drawn to, the silhouettes you feel best wearing, the level of polish you prefer, the fabrics you love, the amount of detail that feels right to you, and the outfits you reach for again and again.</p>
     <p class="jrnl-p">After more than 20 years of working with women as a personal stylist, I have learned that finding your personal style is not about choosing a label or trying to become someone new. It is about recognizing what already feels like you and bringing it into the light.</p>
@@ -1985,6 +2001,12 @@
     <div class="jrnl-by-role">Personal Stylist &amp; Founder of Style Star</div>
     <div class="jrnl-by-date">Published September 1, 2026</div>
     <div class="jrnl-by-link"><span class="jrnl-lnk" onclick="showStory()">Read my story &rarr;</span></div>
+
+    <!-- ⚠️ ALT TEXT MUST MATCH ogImageAlt for this article in
+         netlify/edge-functions/page-titles.js -- same words, two files, same
+         reason the slug/title pair already has to be kept in sync by hand
+         there. Same file the og:image tag points at, never a second copy. -->
+    <img class="jrnl-img" src="og-journal-fall-florida.png" alt="Eight fall colors that work in hot weather: chocolate brown, burgundy, rust, camel, olive, deep green, navy and off white.">
 
     <p class="jrnl-p">Here's the short answer: you don't have to change what you wear. You can just change the way you wear it.</p>
     <p class="jrnl-p">Richer colors, a different shoe, one good touch of leather or suede, and you can give an outfit an entirely different feeling.</p>
