@@ -53,9 +53,16 @@
 <meta property="og:image" content="https://www.stylestar.app/og-image.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<!-- og:image:alt (and twitter's own copy below) were missing entirely until
+     2026-09-02, the day the two Journal articles got their own share cards
+     and needed one each. Site-wide default describes the homepage's actual
+     card (the logo + "Align your style. Shine your light."); page-titles.js
+     overrides both for any route with its own image. -->
+<meta property="og:image:alt" content="The Style Star logo, a gold star above the wordmark, with the tagline Align your style. Shine your light.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Style Star | Discover your signature style">
 <meta name="twitter:image" content="https://www.stylestar.app/og-image.png?v=2">
+<meta name="twitter:image:alt" content="The Style Star logo, a gold star above the wordmark, with the tagline Align your style. Shine your light.">
 <!-- Impact affiliate network: proof we control this domain, checked by their
      crawler against the live homepage. Added 2026-08-19 for the publisher
      application. It renders nothing and loads nothing.

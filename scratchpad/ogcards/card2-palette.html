@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<style>
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;src:url(fonts/og1.woff2) format('woff2');}
+@font-face{font-family:'DM Serif Display';font-style:normal;font-weight:400;src:url(fonts/og6.woff2) format('woff2');}
+@font-face{font-family:'DM Serif Display';font-style:italic;font-weight:400;src:url(fonts/og3.woff2) format('woff2');}
+@font-face{font-family:'Jost';font-style:normal;font-weight:400;src:url(fonts/og8.woff2) format('woff2');}
+@font-face{font-family:'Jost';font-style:normal;font-weight:600;src:url(fonts/og8.woff2) format('woff2');}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;background:#FBFAF7;font-family:'DM Sans',sans-serif;overflow:hidden}
+.card{width:1200px;height:630px;background:#FBFAF7;border:1px solid #D8C285;position:relative;overflow:hidden}
+.top{position:absolute;top:44px;left:64px;right:64px;display:flex;justify-content:space-between;align-items:baseline}
+.lbl-l{font-family:'Jost';font-weight:600;font-size:15px;letter-spacing:.14em;color:#C89A2C;text-transform:uppercase}
+.lbl-r{font-family:'Jost';font-weight:400;font-size:15px;letter-spacing:.1em;color:#a39c8e;text-transform:uppercase}
+.headline{position:absolute;top:118px;left:64px;right:64px;font-family:'DM Serif Display',serif;font-weight:400;font-size:58px;color:#1a1a1a;line-height:1.1}
+.headline i{font-style:italic;color:#a9791b}
+.sub{position:absolute;top:236px;left:64px;font-family:'DM Sans',sans-serif;font-size:19px;color:#6f6a63}
+.bands{position:absolute;top:308px;left:0;right:0;bottom:0;display:flex}
+.band{flex:1;display:flex;align-items:flex-end;padding:0 0 26px 22px}
+.band-label{font-family:'Jost';font-weight:600;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;line-height:1.35}
+</style></head>
+<body>
+<div class="card">
+  <div class="top"><span class="lbl-l">Style Star &middot; Style Journal</span><span class="lbl-r">stylestar.app</span></div>
+  <h1 class="headline">Fall colors that work at <i>90 degrees</i></h1>
+  <div class="sub">The same clothes you've worn all summer. Deeper shades. Nothing heavier.</div>
+  <div class="bands">
+    <div class="band" style="background:#3E2A1E"><span class="band-label" style="color:#F0E9DC">Chocolate<br>Brown</span></div>
+    <div class="band" style="background:#6E2439"><span class="band-label" style="color:#F0E9DC">Burgundy</span></div>
+    <div class="band" style="background:#B5602E"><span class="band-label" style="color:#F7EFE3">Rust</span></div>
+    <div class="band" style="background:#C6A472"><span class="band-label" style="color:#3a2f1e">Camel</span></div>
+    <div class="band" style="background:#7A7D4A"><span class="band-label" style="color:#F0EEDC">Olive</span></div>
+    <div class="band" style="background:#2C4A3A"><span class="band-label" style="color:#EAF0EA">Deep<br>Green</span></div>
+    <div class="band" style="background:#1E2D45"><span class="band-label" style="color:#E9EDF4">Navy</span></div>
+    <div class="band" style="background:#EDE7DC"><span class="band-label" style="color:#4a463e">Off<br>White</span></div>
+  </div>
+</div>
+</body></html>

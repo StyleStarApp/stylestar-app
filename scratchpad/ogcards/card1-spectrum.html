@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<style>
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;src:url(fonts/og1.woff2) format('woff2');}
+@font-face{font-family:'DM Serif Display';font-style:normal;font-weight:400;src:url(fonts/og6.woff2) format('woff2');}
+@font-face{font-family:'DM Serif Display';font-style:italic;font-weight:400;src:url(fonts/og3.woff2) format('woff2');}
+@font-face{font-family:'Jost';font-style:normal;font-weight:400;src:url(fonts/og8.woff2) format('woff2');}
+@font-face{font-family:'Jost';font-style:normal;font-weight:500;src:url(fonts/og8.woff2) format('woff2');}
+@font-face{font-family:'Jost';font-style:normal;font-weight:600;src:url(fonts/og8.woff2) format('woff2');}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;background:#FBFAF7;font-family:'DM Sans',sans-serif;overflow:hidden}
+.card{width:1200px;height:630px;background:#FBFAF7;border:1px solid #D8C285;position:relative}
+.top{position:absolute;top:44px;left:64px;right:64px;display:flex;justify-content:space-between;align-items:baseline}
+.lbl-l{font-family:'Jost';font-weight:600;font-size:15px;letter-spacing:.14em;color:#C89A2C;text-transform:uppercase}
+.lbl-r{font-family:'Jost';font-weight:400;font-size:15px;letter-spacing:.1em;color:#a39c8e;text-transform:uppercase}
+.headline{position:absolute;top:118px;left:64px;right:64px;font-family:'DM Serif Display',serif;font-weight:400;font-size:64px;color:#1a1a1a;line-height:1.08}
+.headline i{font-style:italic;color:#a9791b}
+.sub{position:absolute;top:238px;left:64px;font-family:'DM Sans',sans-serif;font-size:20px;color:#6f6a63}
+.sliders{position:absolute;top:340px;left:64px;right:64px}
+.slider{margin-bottom:56px}
+.slider:last-child{margin-bottom:0}
+.slabel{font-family:'Jost';font-weight:600;font-size:12.5px;letter-spacing:.13em;color:#C89A2C;text-transform:uppercase;margin-bottom:10px}
+.srow{display:flex;align-items:center}
+.sword{font-family:'Jost';font-weight:500;font-size:17px;letter-spacing:.06em;color:#2a2620;text-transform:uppercase;white-space:nowrap}
+.sword.left{margin-right:24px}
+.sword.right{margin-left:24px}
+.track{flex:1;height:1px;background:#E4DCC8;position:relative}
+.tick{position:absolute;top:-4px;width:1px;height:9px;background:#E4DCC8}
+.dot{position:absolute;top:-7px;width:15px;height:15px;border-radius:50%;background:#C89A2C;transform:translateX(-50%)}
+</style></head>
+<body>
+<div class="card">
+  <div class="top"><span class="lbl-l">Style Star &middot; Style Journal</span><span class="lbl-r">stylestar.app</span></div>
+  <h1 class="headline">You already have a <i>style</i></h1>
+  <div class="sub">Let's put words to it.</div>
+  <div class="sliders">
+    <div class="slider">
+      <div class="slabel">Style Direction</div>
+      <div class="srow">
+        <span class="sword left">Classic</span>
+        <div class="track"><span class="tick" style="left:25%"></span><span class="tick" style="left:50%"></span><span class="tick" style="left:75%"></span><span class="dot" style="left:33%"></span></div>
+        <span class="sword right">Trendy</span>
+      </div>
+    </div>
+    <div class="slider">
+      <div class="slabel">Overall Vibe</div>
+      <div class="srow">
+        <span class="sword left">Natural</span>
+        <div class="track"><span class="tick" style="left:25%"></span><span class="tick" style="left:50%"></span><span class="tick" style="left:75%"></span><span class="dot" style="left:63%"></span></div>
+        <span class="sword right">Glam</span>
+      </div>
+    </div>
+    <div class="slider">
+      <div class="slabel">Presence</div>
+      <div class="srow">
+        <span class="sword left">Understated</span>
+        <div class="track"><span class="tick" style="left:25%"></span><span class="tick" style="left:50%"></span><span class="tick" style="left:75%"></span><span class="dot" style="left:47%"></span></div>
+        <span class="sword right">Statement</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

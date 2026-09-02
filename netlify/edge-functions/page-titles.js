@@ -388,6 +388,11 @@ const ARTICLES = [
     metaDesc: 'How to find your personal style, from a personal stylist of 20+ years. Start with the outfit you already love, then take the free Style Star quiz.',
     datePublished: '2026-08-26',
     dateModified: '2026-08-26',
+    // Its own share card (2026-09-02, her ask): both articles were sharing the
+    // homepage's og:image (the logo card), so texting either one showed the
+    // same preview regardless of which article it actually was.
+    ogImage: 'og-journal-personal-style.png',
+    ogImageAlt: 'Three of the Style Star quiz spectrums: Classic to Trendy, Natural to Glam, and Understated to Statement, each with a marker placed along the line.',
     faq: [
       { q: 'How Do I Stop Buying Things Just Because Everyone Else Has Them?', a: 'We are surrounded by fashion. We see what our friends are wearing. We see certain brands everywhere. We scroll past countless outfits, ads, influencers, and lists telling us what is in style and what we absolutely must have. After seeing something enough times, it is easy to start thinking we love it. So I think one of the most valuable questions you can ask yourself when you are shopping is: “Do I really love this for me?” Would I be drawn to this if I had not seen everyone else wearing it? Does it feel like me when I put it on? There is nothing wrong with loving trends. Fashion should be fun, and seeing what is new is part of the fun. But being stylish does not require becoming a copy of someone else. The goal is to take inspiration from what is happening in fashion and filter it through your own personal style.' },
       { q: 'Does My Personal Style Have to Match My Everyday Life?', a: 'Personal style is not just about what you find beautiful. It also needs to work for the life you actually live. We all need clothes for ordinary days, pieces that are comfortable, appropriate, and easy to wear while still making us feel good. But I also believe in having a well-rounded, fully functioning wardrobe. Life happens. There are lunches, dinners, meetings, celebrations, services, vacations, and unexpected invitations. Your wardrobe should support you through all of it. That does not mean you need an enormous amount of clothing. It means you need the right clothing. I want women to be able to open their closets when an invitation arrives and feel a sense of possibility instead of panic. A wardrobe works best when it reflects both who you are and where your life actually takes you.' },
@@ -404,6 +409,8 @@ const ARTICLES = [
     metaDesc: 'How to dress for fall in Florida when it\'s still 90 degrees, from a personal stylist of 20+ years. Keep your summer clothes, just wear them differently.',
     datePublished: '2026-09-01',
     dateModified: '2026-09-01',
+    ogImage: 'og-journal-fall-florida.png',
+    ogImageAlt: 'Eight fall colors that work in hot weather: chocolate brown, burgundy, rust, camel, olive, deep green, navy and off white.',
     faq: [
       { q: 'How Do I Make Summer Clothes Feel Like Fall?', a: 'Start with color. It\'s the single easiest shift, and it costs you nothing in comfort. Keep the lightweight dresses, the sleeveless tops, the breathable fabrics you\'ve been living in, and move toward richer shades and colors that evoke the feeling of fall. Chocolate brown. Burgundy. Olive. Camel. Navy. Deep green. Orange tones. Off white. Same temperature. Same amount of clothing. Completely different feeling. If you\'re wondering where to start, look at what you already reach for. Most women own more fall colors than they realize. They\'re just hanging in the summer half of the closet, worn with summer shoes, so they\'ve been reading as summer all along.' },
       { q: 'Which Shoes Make an Outfit Feel Like Fall?', a: 'A closed toe. That\'s really the whole trick. Shoes change the entire personality of an outfit, and you don\'t have to leap from sandals straight into tall boots. A loafer, a ballet flat, a slingback, a clean sneaker, a good closed-toe flat, any one of them will move a summer dress into fall on its own. This is something I tell my clients constantly. You don\'t always need a new outfit. Sometimes you just need to move one piece. If you\'re not sure which of these suits you, that\'s exactly what the Style Star quiz is for. It takes a few minutes and tells you where your style already sits, so you\'re choosing from the shoes that are actually you.' },
@@ -467,6 +474,8 @@ for (const a of ARTICLES) {
     desc: a.metaDesc,
     schema: faqSchema ? [articleSchema(a), faqSchema] : articleSchema(a),
     scrId: a.id,
+    ogImage: a.ogImage,
+    ogImageAlt: a.ogImageAlt,
   };
 }
 
@@ -618,10 +627,26 @@ export default async (request, context) => {
     html = html.replace(/<title>[\s\S]*?<\/title>/i, '<title>' + page.title + '</title>');
     html = setMeta(html, 'property', 'og:title', page.title);
     html = setMeta(html, 'name', 'twitter:title', page.title);
+    // ⚠️ og:url MOVES TOO, same reasoning as the title tags above: the
+    // homepage's own og:url is left at www deliberately (see index.html), but
+    // a page with its own title has genuinely stopped being the homepage, and
+    // must stop claiming the homepage's address to a preview fetcher.
+    html = setMeta(html, 'property', 'og:url', 'https://stylestar.app' + path);
   }
   if (page.desc) {
     html = setMeta(html, 'name', 'description', page.desc);
     html = setMeta(html, 'property', 'og:description', page.desc);
+  }
+  // A page with its own SHARE CARD (2026-09-02): og:image:width/height are
+  // untouched -- both cards are the site's own 1200x630, so the site-wide
+  // values already read true. Only the image itself and its alt text (both
+  // properties AND Twitter's separate copies of each) need to change.
+  if (page.ogImage) {
+    const imgUrl = 'https://stylestar.app/' + page.ogImage;
+    html = setMeta(html, 'property', 'og:image', imgUrl);
+    html = setMeta(html, 'property', 'og:image:alt', page.ogImageAlt);
+    html = setMeta(html, 'name', 'twitter:image', imgUrl);
+    html = setMeta(html, 'name', 'twitter:image:alt', page.ogImageAlt);
   }
   html = html.replace(/<link rel="canonical" href="[^"]*">/i,
     '<link rel="canonical" href="https://stylestar.app' + path + '">');
