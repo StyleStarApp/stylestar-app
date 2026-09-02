@@ -7,7 +7,108 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-02 LATER — 📸 EACH JOURNAL ARTICLE HAS ITS OWN SHARE CARD)
+## ▶ NEXT SESSION — START HERE (2026-09-02 EVENING — 🖼 THE TWO SHARE CARDS ARE NOW VISIBLE ON THE PAGE, AND A REAL BUG SURFACED IN HOW SHE'S TESTING IT)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**ONE COMMIT (`0bf84f0`), fast-forward merged to `main`, ONE Netlify build, CURL-VERIFIED LIVE.**
+Branch `claude/style-star-markdown-x2pmcv`, same no-PR convention; branch, `main` and the remote all sit
+on `0bf84f0`, tree clean.
+▶ **THE SHAPE OF IT: Cowork corrected its own earlier brief ("no visual changes" was wrong, now
+withdrawn) and asked for the two share-card images to actually SHOW on their article pages, not just
+ride invisibly in `og:image`. Built, measured, screenshotted, shipped. Two small proactive additions
+went in alongside it. And a live bug report from her phone is STILL OPEN — server-side is clean on
+every check, so the next step is finding out what's actually in the message she sent herself.**
+
+### 🖼 WHAT SHIPPED: BOTH SHARE-CARD IMAGES NOW RENDER ON THE ARTICLE PAGE ITSELF
+**`<img class="jrnl-img">`, directly below the byline + "Read my story →" link, above the first
+paragraph, full width of the text column** — on both `#s-journal` and `#s-journal-fall-florida`.
+**Same file that `og:image` already points at, never a second copy** (`og-journal-personal-style.png` /
+`og-journal-fall-florida.png`), exactly as Cowork's correction asked. One CSS rule in `styles.css`
+(`.jrnl-img{display:block;width:100%;height:auto;margin:0 0 24px}`) — a plain block child of
+`.story-wrap` needed no width math of its own, it fills the same box every `.jrnl-p` already sits in.
+- ✅ **MEASURED, not eyeballed, on BOTH articles at 390px: 278px wide (100% of the column), 145.9375px
+  tall (the true 1200:630 ratio preserved), 26px above from the link's own margin, 24px below from the
+  image's own margin-bottom.** Screenshotted both (`scratchpad/artimg/after-390.png`,
+  `after-fall-390.png`) — both read as attractive, correctly placed cards above real body copy.
+- ⚠️ **Alt text on the `<img>` is written to MATCH the `ogImageAlt` in `page-titles.js` word for word,
+  on purpose, with a comment at each saying so** — same reason the slug/title pair already has to be
+  kept in sync by hand across the two files (an edge function can't import from index.html).
+
+### ⭐ TWO SMALL PROACTIVE ADDITIONS, VOLUNTEERED RATHER THAN WAITED-ON (her explicit ask, see below)
+While explaining Discover eligibility to her, two gaps I'd already NAMED turned out to be one-line
+fixes with no design risk, so they went in the same commit instead of sitting on a list:
+1. **A site-wide `<meta name="robots" content="index, follow, max-image-preview:large">`.** There was
+   no robots tag anywhere on the site before this, which meant Google defaulted to
+   `max-image-preview:standard` — a small thumbnail — on every page, including the two articles that
+   now have real share images worth showing large. ⚠️ **The shared wishlist (`/list/<token>`) still
+   needs `noindex,nofollow`** — `netlify/edge-functions/list-preview.js` was rewritten to SWAP that one
+   tag's content (the same `setMeta`-style pattern it already uses for every other tag) rather than
+   inserting a second robots tag, so there is still only ever one on any page.
+2. **`image` added to the Article schema** (`articleSchema()` in `page-titles.js`) on both articles,
+   pulled from the same `ogImage` file. It's one of Google's own recommended fields for Article rich
+   results and was empty on both.
+- **Verified live on both routes**, plus the wishlist route confirmed still `noindex, nofollow` with
+  exactly one robots tag (never two). `edgepreview.mjs` grew 12→14 checks, **three assertions updated
+  DELIBERATELY**: the old claim was "the ordinary app carries no robots tag at all," which stopped being
+  true the moment the site-wide tag was added — the real, stronger claim now pinned is that the ordinary
+  page's tag stays `index, follow` and the wishlist's handler swaps it, never duplicates it.
+- **Full sweep green:** ogimage.mjs 33 · edgepreview.mjs 14 · pagetitles.mjs 71 · article2.mjs 31 ·
+  copy.js 41 · hometrim.mjs 69 · hubs.js 49.
+
+### ⭐⭐ HER FEEDBACK, TAKEN SERIOUSLY: SURFACE IMPORTANT CONTEXT AS WE GO, NOT AFTER SHE ASKS
+Her words, kept verbatim because this is a standing instruction now, not a one-off: *"please tell me
+things like this from the get-go... I am asking for help and ideas. Please tell me things like this as
+we are working along, so we can make the smartest choices going forward."* This was in direct response
+to being told, only after she asked, that Google Discover eligibility genuinely requires
+`max-image-preview:large` + 1200px+ images — something already known and already true before this
+session, that should have been said proactively when the image-card work first came up, not held back
+until she happened to ask the right question. ▶ **STANDING RULE GOING FORWARD: when a decision or a
+build touches something with a known SEO/searchability consequence — good or bad — say so plainly, in
+the moment, before she has to ask. Don't wait to be asked "does this help or hurt."**
+
+### 🚨 STILL OPEN — HER LIVE BUG REPORT, SERVER CHECKS OUT CLEAN EVERY TIME, CAUSE NOT YET FOUND
+Her report, from texting herself both article links: sharing "How to find your personal style" showed
+the OLD homepage tagline ("Discover your signature style") in the preview but opened the CORRECT
+article, with "the logo not showing"; sharing the Fall article showed BOTH the image AND the destination
+for the OTHER (personal-style) article.
+- ✅ **RULED OUT, checked directly in the code, not assumed:** the Journal hub's own article links
+  (`_renderJournalHub()`) build each href from `_journalPath(a.slug)` per article — correct, distinct,
+  no shared state. `_pathForScreen()`/`_screenForPath()` map every article id to its own slug and back,
+  correctly. The app has **no article-specific share button anywhere** — `menuShare()` (the one native
+  share sheet in the app) always shares the plain homepage URL, never an article link, so she is not
+  hitting an in-app bug when she shares an article; she must be getting each link some other way
+  (typing it, or copying it out of Safari's address bar after navigating to the article in-app).
+- ✅ **Server itself re-verified clean via curl FOUR separate times across the session**, including this
+  latest commit's own deploy: every fresh request for each article route came back with its own correct
+  title, image, description and destination, every single time, no exceptions.
+- ▶ **THE ONE FACT THAT SHOULD SETTLE THIS, given to her plainly: the destination a link opens to is
+  ALWAYS exactly the URL typed or pasted into that specific message — nothing else (not a preview card,
+  not iMessage, not the server) can make it go anywhere else.** So if a message's DESTINATION was wrong,
+  the URL text sitting in that one message was wrong, which points at how the link got into the message
+  in the first place, not at the server. **NEXT SESSION: ask her directly how she is getting each
+  article's link into the text message** (typing it from memory, copying it from Safari's address bar
+  after opening the article in-app, or something else) — that answer will very likely explain both
+  reports at once. Also worth trying together: open Safari fresh, TYPE the article URL herself directly
+  into the address bar (no message, no cache, no third-party tool), and see what loads — the simplest
+  possible test, no jargon, no accounts.
+- ⚠️ **DELIBERATELY DID NOT re-suggest Facebook's Sharing Debugger this session** — she was confused
+  about why Facebook was involved at all (she's never used it) when it was only ever meant as "a free
+  public tool that shows what any site's link-preview tags say, unrelated to whether she has an account
+  there." Told her so plainly. If it comes up again, lead with that one sentence before naming the tool.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 🚨 **Her phone bug — ask the one clarifying question above** (how is she getting each link into the
+   message), and/or do the direct-Safari-address-bar test together. Don't re-litigate the Facebook tool
+   unless she asks for a second, independent check.
+2. 👀 **Ask how the two new on-page images look on her own phone** — this is new, unseen-by-her work.
+3. ✍️⭐⭐ **THE FALL TREND REFRESH — still hers, still the next actual build**, per the entry below.
+4. ⚠️ **Deliberately not done this session, and it's hers to weigh whenever she wants:** the article
+   recipe is still five steps in the older entries below; whether a sixth "share-card + on-page image"
+   step belongs in that recipe for a future article #3 is worth deciding once article #3 exists.
+
+---
+
+## ▶ PREVIOUS — (2026-09-02 LATER — 📸 EACH JOURNAL ARTICLE HAS ITS OWN SHARE CARD)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **ONE COMMIT (`f84dc5f`), fast-forward merged to `main`, ONE Netlify build, CURL + MD5-VERIFIED LIVE.**
