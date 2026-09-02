@@ -393,7 +393,12 @@ sighting. Never report a single failed fetch as a site fault.**
 (renders and the corrected label measurement, tooling only) · `52065a8` the star lift + restored spacing ·
 `202c1f1` the star down to her first pick · `75d3a68` the live record · `654cccd` the title balance + her
 final star position · `a4d206f` this log. Branch `claude/style-star-article-lm1hkr`, same no-PR convention;
-branch, `main` and the remote all sit on **`a4d206f`**, tree clean. ⚠️ **FOUR Netlify builds today.**
+branch, `main` and the remote all sit on **`5c0c8c1`**, tree clean.
+⚠️⚠️ **FIVE NETLIFY BUILDS IN THE BUTTON ROUND ALONE, on top of the article's own — and THREE OF THE FIVE
+WERE CLAUDE.md-ONLY PUSHES.** ▶ **A DOCS COMMIT ON `main` STILL BURNS A BUILD.** The 2026-08-31 session
+already knew this (it kept a render harness on the branch deliberately for exactly this reason) and it was
+forgotten there. ▶ **KEEP NOTES AND TOOLING ON THE BRANCH, or batch them into the next code merge** — the
+app files are what need deploying, and this file is not one of them.
 ✅ **VERIFIED ON THE REAL SITE AFTER EACH DEPLOY, WITH THE CONTROL URL:** `index.html`, `styles.css`
 AND `sitemap.xml` all **md5-identical local vs live**, so the 128 green checks transfer directly ·
 `/` **2,410 words / 1 h1 / 18 screens / ZERO quiz buttons** against `/index.html` **7,792 / 9 / 26 / 2** ·
