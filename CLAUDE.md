@@ -132,8 +132,74 @@ refreshes them, the SEO work comes free.** Raise this when she brings the new tr
    A longer h1 is available if she wants it, but it would change a look she has blessed.
 ⚠️ **The title and description are CLAUDE DRAFTS she has not reworded.** One string each in page-titles.js.
 
+### ⭐⭐ THE COLD VISITOR IS INVITED IN NOW — her catch, and the finding underneath it was NOT the obvious one
+Her question on the shipped page: *"'see ideas in your style' means she would have had to take the quiz for
+us to know her style but if she lands there we could still show her 'ideas'."*
+▶▶ **MEASURED BEFORE BUILDING ANYTHING, AND IT INVERTED THE TASK: NOTHING WAS EVER GATED.** A woman who has
+never taken the quiz taps that link today and gets **four real cards with four working links** — the prompt
+simply omits the "Her style: X" line and the model picks on the trend alone. **So there was no bug to fix.**
+▶ **The real finding is the missed opportunity underneath it: she arrives from a search result, gets
+genuine value, and is never told it could be personal.** That is a conversion gap, not a defect — and it is
+exactly the traffic `/trending` was built to catch.
+- ⭐ **HER PICK, "A", FROM THREE RENDERED IN THE REAL BOX:** *"I don't know your style yet, so these are a
+  general mix. **Take the free style quiz** for picks made just for you."* ▶ **B ("not for you yet… and I'll
+  make them yours") was RECOMMENDED and she chose A** — the honest-explanation one over the promise one.
+  ⚠️ **A render is a promise: all three were the REAL page with only the string swapped**, real typefaces via
+  the renderfonts pattern (`scratchpad/inviteshot.mjs`), never a mockup.
+- ▶▶ **VALUE FIRST, HER OWN RULE, ENFORCED BY TESTS: it sits at the very BOTTOM of the ideas box, after the
+  four cards AND after "+ See more ideas."** Never before them, never instead of them. **An offer under real
+  value, never a toll gate** — the same principle that moved the shopping button above the email ask on the
+  refine-done screen.
+- ⚠️ **IT SUPERSEDES THE COLOUR HINT RATHER THAN STACKING WITH IT, and the reasoning generalises: a woman
+  with no quiz has no saved colours either**, so both whispers would have fired at once on "Tops in your
+  favorite colors" and read as two asks in a row. **The quiz is the earlier and bigger step, and it produces
+  the colours anyway, so it wins and Refine waits.** ⚠️ **The colour hint is NOT retired** — a woman who HAS
+  quizzed and has no colours still gets it, and a test pins both directions.
+- ⚠️ **WIRED INTO BOTH RENDER PATHS, including the AI-failed catalog-only shelf** — a rule applied by hand at
+  one of two sites drifts the first time the model has a bad minute. **Asserted in both.**
+- ⭐ **It reuses `.wdr-colorhint`, so it inherits the established whisper voice AND the `#s-trending` CSS
+  twin for free.** Lora upright 15.5px `#4a463e`, green `#256b2b` tappable span; **measured 8.19:1 and
+  5.69:1 against the real painted card** — the readability rule, not assumed.
+- **New `scratchpad/quizinvite.js`, 50 checks**, ⭐ **and the FIRST assertions are that the ideas still
+  arrive in full for her** — if a future change ever makes them conditional on the quiz, this suite fails.
+  ⭐⭐ **NEGATIVE-CONTROLLED THREE WAYS, every control biting by name:** removing the `_hasQuizData()` gate
+  fails 3 (it nags a woman already in) · letting it stack with the colour hint fails 3 · moving it above the
+  ideas fails 8.
+- 🚨⚠️ **AND IT CAUGHT A SEED BUG IN `trending.js`: `_hasQuizData()` READS `d.userName`, NOT `d.name`.** That
+  suite's "seeded returning woman" saved without error and was read as someone who had never taken the quiz.
+  **Nothing in it rested on that** (its claims are about navigation), **but it is the documented "a shape the
+  app never produces" trap and a future assertion would have inherited a false premise.** Fixed, plus a new
+  assertion that PROVES the seed reads as a quiz-taker so it cannot rot back. **trending 86 → 87.**
+  ▶ **The real shape is written at `genResult()`: `{userName, answers, topArchNames, portrait, motto}`.**
+- ⚠️ **TWO HARNESS BUGS IN MY OWN SUITE, both failing on correct code, both the documented tell:** the card
+  class is **`.shop-card`, not `.shop-item`** (so a perfect shelf read as zero cards), and **`.shop-grid.hscroll`
+  is a HORIZONTAL SCROLLER by design** (`overflow-x:auto`, cards `flex:0 0 128px`), so every card legitimately
+  sits past the viewport edge and the overflow census flagged all of them. ▶ **Measure only what does NOT
+  live inside the scroller.**
+
+### ▶ THE ORDER SHE ACCEPTED FOR WHAT FOLLOWS (her ask: "You tell me what steps in what order")
+1. ✅ **THE QUIZ INVITATION** — done, her wording A.
+2. ✍️⭐⭐ **THE FALL TREND REFRESH — HERS, AND IT IS NEXT.** She has her take on the season and knows which
+   summer items to cut. ▶ **Editing is ONE list in the markup now; the teaser, the New pill and the ItemList
+   schema all follow on their own.** ⚠️ **Bump `/trending`'s `lastmod` in the SAME commit** (the one page
+   where a moving date is honest), and see the ⚠️ SEO read above: **richer notes are the ranking lever, and
+   the refresh and the SEO work are the same job.**
+3. 🔎 **REQUEST INDEXING ON `/trending`** — hers, at her desk, **AFTER step 2**. ▶ **The order is deliberate
+   and it corrects my own earlier advice: asking Google to crawl a page you are about to rewrite spends the
+   request on the old words.**
+4. 🚪 **THE WARDROBE LIST GETS ITS OWN URL** — same build pattern as `/trending` (it is also built
+   client-side into an empty div, so a crawler sees nothing). ⚠️ **HONEST READ GIVEN TO HER: 100 item names
+   is only ~188 words, so the URL earns its place for SHAREABILITY and as the article's destination, NOT for
+   ranking.** The words are what would rank, and the words live in the article.
+5. 📓 **THE "WARDROBE HOLES" ARTICLE — her own idea and a genuinely good one**, because the 100-item list is
+   ORIGINAL and she uses it in real closet consultations. ▶ **Run her own Bing Top-10 method FIRST** on
+   `wardrobe essentials list` · `what's missing from my closet` · `wardrobe gaps` · `wardrobe checklist` —
+   the 2026-08-31 lesson: the Top 10 tells you what the engine thinks the phrase MEANS and who she would
+   have to beat, and it killed a topic that looked strong on volume. ⚠️ **AND THE STANDING FLAG: once "100"
+   is public the list is PINNED at 100** — every future addition needs a matching cut.
+
 ### ✅ GREEN AT PAUSE
-**trending 86 (new) · jrnlcta 128 · menu 104 · nav 82 · wdrworksheet 73 · pagetitles 71 · hometrim 69 ·
+**trending 87 · quizinvite 50 (new) · jrnlcta 128 · menu 104 · nav 82 · wdrworksheet 73 · pagetitles 71 · hometrim 69 ·
 wdrmylist 65 · hometrimlive 64 · hubs 49 · tabtops 49 · copy 41 · article2 31 · e2e 29 · wdrcalmcheck 27 ·
 cssextract 20 · edgepreview 12 — all 0 failed.**
 ⚠️ **`catmark` stays 132/3 and it is PRE-EXISTING, PROVEN not assumed:** a clean HEAD in a `git worktree`,
@@ -183,28 +249,33 @@ empty string once and matched on three clean retries. **Never report a single fa
 sighting.** ▶ `git fetch origin main` → `git checkout -B main origin/main` → fast-forward.
 
 ### ▶ THE FIRST THINGS NEXT SESSION — HER LIST, NOTHING DROPPED
-1. 🔎⭐⭐ **REQUEST INDEXING ON `/trending`, GOOGLE AND BING — SHE ASKED TO BE REMINDED.** Her words:
-   *"let's hold the indexing because I am not at my desk right now but don't let me forget."* ▶ **RAISE THIS
-   FIRST, unprompted.** It is genuinely owed, unlike the article edits: a BRAND NEW URL that has never been
-   crawled, and her own standing rule (2026-08-26) is to do this on every new page. Search Console → the grey
-   bar across the very top (URL Inspection, NOT the left menu, NOT the AMP tab) → paste → Request Indexing.
-   Then Bing URL Inspection.
-2. 👀 **THE TAB BAR ON HER PHONE** — she has seen `/trending` live and caught the one-way toggle; the fix
+1. ✍️⭐⭐ **THE FALL TREND REFRESH — HERS, AND SHE HAS IT READY.** Her words: *"I have some thoughts on
+   updates to trending to add my take on the season and fall fashion updates to the list and the summer
+   things we might delete."* ▶ **ASK FOR THEM FIRST.** Editing is ONE list in the markup; the teaser, the New
+   pill and the ItemList schema all follow on their own. ⚠️ **Bump `/trending`'s `lastmod` in the SAME
+   commit.** See the ⚠️ SEO read above: richer notes are the ranking lever.
+2. 🔎⭐⭐ **THEN REQUEST INDEXING ON `/trending`, GOOGLE AND BING — SHE ASKED TO BE REMINDED.** Her words:
+   *"let's hold the indexing because I am not at my desk right now but don't let me forget."* It is genuinely
+   owed: a BRAND NEW URL that has never been crawled, and her own standing rule (2026-08-26) is to do this on
+   every new page. Search Console → the grey bar across the very top (URL Inspection, NOT the left menu, NOT
+   the AMP tab) → paste → Request Indexing. Then Bing URL Inspection. ⚠️⚠️ **AFTER THE REFRESH, NOT BEFORE,
+   and this corrects my own earlier advice: asking Google to crawl a page you are about to rewrite spends the
+   request on the old words.**
+3. 👀 **THE TAB BAR ON HER PHONE** — she has seen `/trending` live and caught the one-way toggle; the fix
    shipped straight after and **she has not seen it yet.** ⚠️ Private browsing, `stylestar.app/?notrack`.
    **She also has not yet seen article #2's two wording edits live** (the cut sentence and the off white
    outfit idea) — that was her plan when this session started.
-3. ✍️⭐⭐ **THE NEW TRENDS, WRITTEN RICHER.** She said they need updating soon. See the ⚠️ SEO read above:
-   **the words are the ranking lever, and the refresh and the SEO work are the same job.** ▶ Editing is now
-   ONE list in the markup; bump `/trending`'s `lastmod` in the same commit.
-4. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
+4. 🚪⭐ **THE WARDROBE LIST GETS ITS OWN URL, then 📓 THE "WARDROBE HOLES" ARTICLE** — steps 4 and 5 of the
+   order she accepted; the full reasoning and the honest ~188-word caveat are in the ▶ ORDER section above.
+5. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
    **Do not insert anything mid-queue ahead of it.**
-5. ⚖️ **ALMIRA: still NO REPLY as of 2026-09-01.** Watching for the **COPY of the correction confirmation**.
+6. ⚖️ **ALMIRA: still NO REPLY as of 2026-09-01.** Watching for the **COPY of the correction confirmation**.
    ✅ **Class 045 is CLOSED.**
-6. ✉️ **PLAY 2: panaprium has NOT replied.** ▶ **Still to send: itechnolabs and altadaily.**
-7. 📋 **THE THREE CATALOG DECISIONS** (Old Navy p004 / Everlane p095 / Mango p033) — hers, nothing touched.
-8. 📓 **ARTICLE #3 when she has one.** ⚠️ **The recipe is FIVE steps** — the fifth is adding the new screen
+7. ✉️ **PLAY 2: panaprium has NOT replied.** ▶ **Still to send: itechnolabs and altadaily.**
+8. 📋 **THE THREE CATALOG DECISIONS** (Old Navy p004 / Everlane p095 / Mango p033) — hers, nothing touched.
+9. 📓 **ARTICLE #3 when she has one.** ⚠️ **The recipe is FIVE steps** — the fifth is adding the new screen
    to the `text-wrap:balance` selector in styles.css. ▶ **Revisit the excerpt card THEN, for the READER.**
-9. ⚠️ **DELIBERATELY NOT DONE:** the "Updated <month>" line and a longer `<h1>` on /trending (both flagged
+10. ⚠️ **DELIBERATELY NOT DONE:** the "Updated <month>" line and a longer `<h1>` on /trending (both flagged
    above, both hers) · the 626 KB of inline JavaScript stays inline · **`catmark`'s 3 pre-existing failures.**
 
 ---
@@ -884,7 +955,7 @@ substitute** — and it is strong here, because the 58-check browser suite ran a
    ▶ **STILL UNASKED, and it is the older question from the CSS extraction: how a COLD FIRST LOAD feels
    on weak signal, and whether a SECOND page after it feels quicker.** That is the one thing no sandbox
    can answer and the actual reason the CSS was moved out.
-4. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
+6. ⏰ **THE VILEBREQUIN COVER-UP RUNS THE WEEK OF SEP 13**, one week inside her 20 September cutoff.
    **Do not insert anything mid-queue ahead of it.**
 5. ⚖️ **ALMIRA: still watching for the COPY of the correction confirmation** (she promised only "an
    update"; Cath re-pinned the document request in writing). ✅ **Class 045 is CLOSED — do not re-raise,
