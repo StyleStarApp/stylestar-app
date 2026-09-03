@@ -7,7 +7,194 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-02 NIGHT — 🚨 THE PHONE BUG IS SOLVED: EVERY IMAGE ON THE SITE HAD A RELATIVE PATH, AND /journal/<slug> WAS THE FIRST TWO-SEGMENT ROUTE THIS SITE HAS EVER HAD)
+## ▶ NEXT SESSION — START HERE (2026-09-03 — 🖼 BOTH SHARE-CARD IMAGES FIXED FOR READABILITY, AND 🚨 THE BIG ONE: SHARING NEVER UPDATED THE TITLE/PHOTO AFTER IN-APP NAVIGATION — NOW FIXED ON EVERY ROUTED PAGE)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save this to the claude.md and I will open new chat")
+**FOUR PRs merged and ALL CURL/MD5-VERIFIED LIVE, same session, same branch
+(`claude/style-star-resume-q9pg7y`), same no-PR fast-forward-to-`main` convention:**
+`0c76765` (illegible share-card text fixed + the fall-florida sub-line corrected) ·
+`b93c040` (the uneven color bands fixed by dropping the swatch labels, her call) ·
+`cd1cc6f` (a second, much bigger legibility pass after her second look) ·
+`116cff8` (**the share/title-sync fix** — the session's real find). ⚠️ **Four
+Netlify builds.** Branch and `main` both sit on `116cff8`, tree clean.
+▶ **HER NEXT SESSION IS ALREADY NAMED: "I will open new chat to talk about the
+fall trend update."** That is the long-parked **Fall Trend Refresh** — see the
+▶ FIRST THINGS list at the bottom of this entry and the many earlier entries
+below still describing it as "hers, and still the next actual build."
+
+### 🖼 THE TWO SHARE-CARD IMAGES, FIXED IN THREE ROUNDS FROM HER OWN LIVE LOOKS
+Session opened with her three concrete complaints on the two article share
+cards (`og-journal-personal-style.png` / `og-journal-fall-florida.png`,
+generated from `scratchpad/ogcards/card{1,2}-*.html` via
+`scratchpad/ogcards/render.mjs`, Playwright at 1200×630):
+1. **Card 1 ("You already have a style")**: the headline was readable, but the
+   top eyebrow, the sub-line and all three slider rows (STYLE DIRECTION/
+   CLASSIC↔TRENDY etc.) were too small. **Card 2 (fall/Florida)**: same
+   illegibility, PLUS the sub-line was flat-out wrong — it read *"The same
+   clothes you've worn all summer. Deeper shades. Nothing heavier."* and had
+   to become her real line, **"No heavy fabrics. No coats. Just deeper,
+   richer colors."**
+   - ▶ **THE MEASUREMENT THAT MATTERED: these cards render at 1200×630 but
+     DISPLAY on the article page at ~278px wide** (the story column's own
+     width) — a ~4.3× downscale. A round of legibility fixes was verified
+     ONLY by rendering full-size, then resizing the PNG to 278px with Pillow
+     and actually looking at that image, not the big preview. First pass
+     bumped every secondary size ~1.5-2× (labels 12.5-19px, slider words
+     17-29px, subs 19/20→31/35px, card 2's band labels 13.5→24px) and had to
+     re-derive the slider block's vertical spacing to stop the third slider
+     clipping off the bottom of the 630px card (measured with a Playwright
+     `getBoundingClientRect` script, not guessed).
+2. **Her second look, same session: "the top labels... are still way too
+   tiny... the other words need to be bigger too."** A first-pass bump
+   wasn't aggressive enough. ▶ **Second round went much bigger** (top labels
+   19→30px, card 1 sub 35→44px, slider labels 19→28px, slider words 29→40px,
+   card 2 sub 31→40px) and again needed the slider block's spacing
+   re-measured and tightened (not the text shrunk) to keep all three sliders
+   inside the card with ~10px to spare. Re-verified at the real 278px display
+   size both times before shipping — this is the second time in one session
+   the first legibility guess undershot what she actually needed; the
+   working instrument was always "resize the real PNG down and look at it,"
+   never trusting the full-size preview.
+3. **Her third catch: "chocolate brown and burgundy are wider than the other
+   colors... We can just take the words off. People already know the names."**
+   ▶ **Root cause, confirmed by measuring, not assumed: flex items default to
+   `min-width:auto`, so the two bands whose uppercase labels ("CHOCOLATE",
+   "BURGUNDY") were WIDER than an equal 1/8 share were being forced past it** —
+   174px and 160px against 144px for the other six. **Her fix — delete the
+   labels entirely — is the right one and not just easier: it also matches
+   what she'd already decided about the app itself, that a possibility map
+   should not spell out things the reader already knows.** All eight band
+   `<div>`s are now bare color blocks, verified equal at 149.75px each.
+   ⚠️ **The color NAMES are still preserved for accessibility** — they never
+   depended on the visible label; the `<img>`'s `alt` text
+   ("chocolate brown, burgundy, rust, camel, olive, deep green, navy and off
+   white") was always separate and untouched.
+- **Every round was shipped only after the actual live bytes were pulled back
+  from `stylestar.app` and md5-compared to the local file** — no round was
+  called done on the strength of a green merge alone. `scratchpad/ogcards/`
+  still holds the HTML sources + `render.mjs`; the intermediate PNGs and a
+  throwaway `measure*.mjs`/`verify_widths.mjs` were deleted after each round,
+  never committed (only the two `.html` sources + the two production PNGs at
+  repo root are tracked).
+
+### 🚨🚨 THE REAL FIND: SHARING NEVER UPDATED THE TITLE/PHOTO AFTER IN-APP NAVIGATION
+Her report, in her own words: *"sometimes it comes up as Discover your
+signature style but then when I click on it, it does land on the article
+page... sometimes I try to text from one article, but the other one gets
+sent. I think this happens when I am moving around on the app and I use the
+back buttons."* ▶ **She was exactly right, and it was one bug wearing three
+faces, not three separate ones.**
+- **ROOT CAUSE, confirmed by grepping the WHOLE file for `document.title=`
+  and finding ZERO hits before this session:** Style Star is one page.
+  Tapping around inside it (Journal hub → an article, article → article, any
+  routed page) never triggers a real reload, so `<title>`/`og:title`/
+  `og:description`/`og:image`/`og:url`/the canonical link only ever get set
+  **once**, by `netlify/edge-functions/page-titles.js`, at whatever URL
+  genuinely loaded fresh. Nothing anywhere updated them again on client-side
+  navigation. **`_pathForScreen()`/`pushState` were ALREADY keeping the real
+  address-bar URL correct on every navigation** (confirmed separately, this
+  was never broken) — only the PREVIEW CARD lagged behind it, frozen on
+  whatever page last truly loaded.
+  ▶ **Her "wrong article gets sent" report is the SAME bug, not a second
+  one:** she's genuinely looking at the article she means to share, the link
+  itself is correct, but the preview card still carries the PREVIOUS article's
+  title/photo (from before she hit the in-app or hardware back button), which
+  reads as "the wrong one got sent" even when the destination is right.
+- **THE FIX: `_syncShareMeta(id)`, called from inside `show()`** (index.html,
+  right after the `.act` class toggle) **on EVERY screen change, including
+  `skipHistory` / popstate calls — that last part is what makes the back
+  button work**, since a real or in-app "back" is exactly the path that used
+  to leave a stale previous page's info sitting in the DOM.
+  - **A new `_PAGE_META` map, hand-typed to mirror `page-titles.js`'s
+    `PAGES`/`ARTICLES`** — the same "typed by hand in two places" pattern
+    already established for `JOURNAL_ARTICLES`' title/dates, for the same
+    reason (an edge function is its own bundle and cannot import from
+    index.html). **Covers ALL NINE routed screens**, not just the two
+    articles: `s-story` (My Story) · `s-faq` · `s-contact` · `s-privacy` ·
+    `s-terms` · `s-trending` · `s-journal-hub` · both journal articles.
+  - **Any screen with NO route resets to the homepage's own defaults**
+    (`_DEFAULT_META`) — correct by construction, because `_pathForScreen()`
+    already reports `/` for every one of those screens too, so this matches
+    exactly what a stranger fetching that bare URL would actually see.
+  - ⚠️ **`s-sharelist` (a shared wishlist, reached from someone else's link)
+    is DELIBERATELY EXCLUDED**, not defaulted — its own separate edge
+    function (`list-preview.js`) already gets its title/image right on the
+    fresh load that always precedes it, and it has almost no way to
+    navigate elsewhere and back while "on" it (the Menu chip is already
+    hidden there). A real but low-risk judgment call made without asking her
+    first; flagged to her, she can ask for it re-checked any time.
+  - ⚠️ **`s-res` (`/results`) is deliberately ABSENT from `_PAGE_META`, not an
+    oversight** — `page-titles.js` never touches that route either (it's
+    device-dependent: a stranger with no saved results should see the plain
+    homepage), so falling through to the default case here matches the real
+    server behavior exactly.
+- **VERIFIED, HER EXACT REPRO, in real Chromium:** article A → hub → article
+  B → real browser `goBack()` ×2 → `goForward()` ×2. At every single step the
+  title/og:title/description/image/url/canonical now correctly match
+  whichever screen is actually active — the back-button case (her "test 2")
+  was reproduced FIRST as broken (confirmed against her real-world report
+  live: *"using the back button, and then the article I meant to text ended
+  up being the previous one instead"*), then confirmed fixed by the same
+  script after shipping. Also verified: navigating to an unrouted screen
+  (the quiz) correctly resets every tag to the homepage's own values, and —
+  after she asked "does this work on Contact and What's Trending too?" —
+  **a live in-app-navigation drive confirmed all nine routed pages sync
+  correctly**, not just the two articles the bug was originally reported on.
+- **Full regression sweep, all green, zero JS errors:** nav 82 · hubs 49 ·
+  menu 104 · e2e 29. ⚠️ **`menu.js` crashed once mid-run with "Target page,
+  context or browser has been closed"** when run back-to-back with the other
+  three suites — re-ran ALONE and got a clean 104/104. **Established as
+  browser-context resource contention from four heavy Playwright suites in a
+  row, not a real regression**, the same family of sandbox flakiness this
+  file has documented before (never trust one crashed run in a chain without
+  re-running the suspect suite in isolation first).
+- ⚠️ **STANDING MAINTENANCE NOTE, told to her plainly: adding a new routed
+  page later now needs ONE MORE SPOT updated than before** — `netlify.toml` +
+  a `page-titles.js` PAGES/ARTICLES entry + (for a journal article)
+  `JOURNAL_ARTICLES` in index.html, and now ALSO `_PAGE_META` in index.html,
+  or that new page's own sharing will silently fall back to the homepage's
+  defaults instead of its own. Same "typed in two places" pattern this file
+  already tracks for journal articles, just one file longer.
+- ⚠️ **APPLE'S OWN LINK-PREVIEW CACHING IS SEPARATE AND STILL TRUE, told to
+  her explicitly:** any message thread where she'd ALREADY texted herself a
+  link before this session may keep showing the OLD, wrong preview if she
+  scrolls back to look at that old message — that's Apple holding a stale
+  snapshot of that exact URL string, not the bug recurring. A genuinely
+  fresh share (new message, or a link not sent before) is the real test.
+- ✅ **SHE TESTED IT LIVE AND CONFIRMED: "i tested that and it seems to be
+  working beautifully now... it looks like it also works on all of the pages
+  including contact, what's trending etc."** Closed, nothing further owed.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ✍️⭐⭐ **THE FALL TREND REFRESH — her own words at the very start of this
+   pause: "I will open new chat to talk about the fall trend update."** This
+   is the long-parked item every recent session's own "first things" list has
+   named as **hers, and still the next actual build** — she has her own take
+   on the season and knows which summer items to cut. Editing is ONE list in
+   the markup; the teaser, the New pill and the ItemList schema all follow on
+   their own (see `_trendItems()` / `_decorateTrendCards()` in index.html).
+   ⚠️ **Bump `/trending`'s `lastmod` in the SAME commit** (in both
+   `sitemap.xml` and the markup comment) — the standing rule, and the one
+   page on the whole site where a moving `lastmod` is honest rather than
+   crying wolf, because trend content is genuinely meant to go stale and get
+   refreshed. See the ⚠️ SEO read in the entries below: richer notes (2-3
+   sentences instead of one) are the real ranking lever, and the refresh and
+   the SEO work are the same job — raise this with her when she brings the
+   new trends.
+2. 🔎 **THEN request indexing on `/trending`, Google and Bing** — her own
+   standing rule, but only AFTER the refresh lands (asking a crawler to index
+   a page you're about to rewrite spends the request on the old words).
+3. ⚠️ **Nothing else is currently open from the sharing/title-sync thread** —
+   see the entry above; she tested it live and confirmed it's closed.
+4. Everything else on her list is unchanged from the entries below: the
+   wardrobe list's own URL + the "Wardrobe Holes" article · Almira / Indie
+   Law (still no reply as of the last check) · Play 2 outreach (itechnolabs
+   and altadaily still unsent) · the three catalog decisions (Old Navy /
+   Everlane / Mango).
+
+---
+
+## ▶ PREVIOUS — (2026-09-02 NIGHT — 🚨 THE PHONE BUG IS SOLVED: EVERY IMAGE ON THE SITE HAD A RELATIVE PATH, AND /journal/<slug> WAS THE FIRST TWO-SEGMENT ROUTE THIS SITE HAS EVER HAD)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 **Her four screenshots CRACKED IT.** She texted herself both article links and sent four screenshots of what
