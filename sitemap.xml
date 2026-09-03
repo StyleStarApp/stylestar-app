@@ -63,7 +63,7 @@
        token and makes the whole sitemap unparseable. -->
   <url>
     <loc>https://stylestar.app/trending</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
