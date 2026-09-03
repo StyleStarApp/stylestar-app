@@ -2454,6 +2454,89 @@ function _screenForPath(p){
   for(var id in _ROUTES){if(_ROUTES[id]===p)return id;}
   return '';
 }
+// ── Client-side title/share-card sync (2026-09-03, her ask) ────────────────
+// WHY THIS EXISTS: Style Star is one page. Tapping around inside it (Journal
+// hub -> an article, article -> article, any routed page) never reloads the
+// page, so <title>/og:title/og:description/og:image/og:url/canonical only
+// ever get set ONCE, by page-titles.js, at whatever URL genuinely loaded
+// fresh. Nothing updated them again on client-side navigation -- confirmed by
+// grepping the whole file for `document.title=` and finding zero hits before
+// this. Her report: sharing an article she'd reached by tapping around
+// showed the HOMEPAGE's own preview card ("Discover your signature style"),
+// even though the link itself (_pathForScreen/pushState DO stay correct on
+// every navigation, checked separately) opened the right article.
+// ▶ THE FIX: every time show() lands on a screen, rewrite the same tags the
+// edge function would set for a fresh request to that path -- and on a
+// screen with NO route (the quiz, the chat, the wardrobe...), restore the
+// homepage's own values, because that screen's real shareable URL IS "/"
+// (_pathForScreen returns "/" for it too, so this matches what a stranger
+// fetching that bare URL would actually see).
+// ⚠️ MUST STAY IN SYNC WITH page-titles.js BY HAND -- an edge function is its
+// own bundle and cannot import from this file, the same reason
+// JOURNAL_ARTICLES's title/dates are already typed in both places. A new
+// routed page, or a changed title/description/image, needs the SAME edit
+// made in both PAGES/ARTICLES over there and _PAGE_META below.
+// ⚠️ s-sharelist is deliberately EXCLUDED, not defaulted: its path carries a
+// token and its title/image are already set correctly by its OWN edge
+// function (list-preview.js) on the fresh load that always precedes it --
+// resetting it to the homepage's tags here would introduce the exact
+// mismatch this whole fix exists to remove.
+// ⚠️ s-res (/results) is deliberately ABSENT from _PAGE_META, not an
+// oversight: page-titles.js never touches that route either (it's
+// device-dependent, so a stranger with no saved results sees the plain
+// homepage) -- falling through to the default case here matches that.
+var _DEFAULT_META={
+  title:'Free Personal Stylist App & Style Quiz — Style Star',
+  desc:'Take a free style quiz to discover your signature style, built by a real personal stylist, not just an algorithm. Shop with clarity and confidence.',
+  ogTitle:'Style Star | Discover your signature style',
+  ogDesc:'A personal stylist at your fingertips. Take our fun quiz to reveal what brings out the best in you, then shop with clarity and confidence.',
+  ogUrl:'https://www.stylestar.app',
+  ogImage:'https://www.stylestar.app/og-image.png?v=2',
+  ogImageAlt:'The Style Star logo, a gold star above the wordmark, with the tagline Align your style. Shine your light.',
+  canonical:'https://stylestar.app/'
+};
+var _PAGE_META={
+  's-story':{title:'Meet Catherine, Your Personal Stylist | Style Star',desc:"Meet Catherine, a personal stylist and certified image consultant with 20+ years of experience, and the story behind Style Star."},
+  's-faq':{title:'Frequently Asked Questions | Style Star',desc:"Answers about Style Star: what it is, how the AI stylist works alongside real styling expertise, and how your privacy is handled."},
+  's-contact':{title:'Contact Style Star — Get in Touch with Catherine',desc:"I'd love to hear from you. Whether it's a style question, an idea for Style Star, or something you need help with, reach out."},
+  's-privacy':{title:'Privacy Policy | Style Star',desc:'How Style Star collects, uses and protects your personal information, including your quiz answers, photos and account details.'},
+  's-terms':{title:'Terms of Service | Style Star',desc:'The terms and conditions for using Style Star, including your rights, our affiliate disclosures, and how the service works.'},
+  's-trending':{title:"What's Trending in Women's Fashion Right Now | Style Star",desc:"What's in style right now, chosen by a personal stylist of over 20 years. See what's current and decide what's worth adding to what you already own."},
+  's-journal-hub':{title:'Style Journal | Style Star',desc:'Style notes and articles from Catherine, personal stylist and founder of Style Star.'},
+  // Each article's metaTitle/metaDesc/ogImage — matches page-titles.js's
+  // ARTICLES entries exactly (that file builds its PAGES rows FROM those
+  // fields, never from JOURNAL_ARTICLES' shorter on-page `title` above).
+  's-journal':{title:'How to Find Your Personal Style | Style Star',desc:'How to find your personal style, from a personal stylist of 20+ years. Start with the outfit you already love, then take the free Style Star quiz.',ogImage:'og-journal-personal-style.png',ogImageAlt:'Three of the Style Star quiz spectrums: Classic to Trendy, Natural to Glam, and Understated to Statement, each with a marker placed along the line.'},
+  's-journal-fall-florida':{title:"How to Dress for Fall in Florida When It's Hot | Style Star",desc:"How to dress for fall in Florida when it's still 90 degrees, from a personal stylist of 20+ years. Keep your summer clothes, just wear them differently.",ogImage:'og-journal-fall-florida.png',ogImageAlt:'Eight fall colors that work in hot weather: chocolate brown, burgundy, rust, camel, olive, deep green, navy and off white.'}
+};
+function _setMetaTag(sel,val){
+  var el=document.querySelector(sel);
+  if(el)el.setAttribute(el.hasAttribute('content')?'content':'value',val);
+}
+function _syncShareMeta(id){
+  if(id==='s-sharelist')return;
+  var m=_PAGE_META[id];
+  var path=_pathForScreen(id);
+  var title=m?m.title:_DEFAULT_META.title;
+  var ogTitle=m?m.title:_DEFAULT_META.ogTitle;
+  var desc=m?m.desc:_DEFAULT_META.desc;
+  var ogDesc=m?m.desc:_DEFAULT_META.ogDesc;
+  var ogUrl=m?('https://stylestar.app'+path):_DEFAULT_META.ogUrl;
+  var ogImage=(m&&m.ogImage)?('https://stylestar.app/'+m.ogImage):_DEFAULT_META.ogImage;
+  var ogImageAlt=(m&&m.ogImage)?m.ogImageAlt:_DEFAULT_META.ogImageAlt;
+  document.title=title;
+  _setMetaTag('meta[name="description"]',desc);
+  _setMetaTag('meta[property="og:title"]',ogTitle);
+  _setMetaTag('meta[name="twitter:title"]',ogTitle);
+  _setMetaTag('meta[property="og:description"]',ogDesc);
+  _setMetaTag('meta[property="og:url"]',ogUrl);
+  _setMetaTag('meta[property="og:image"]',ogImage);
+  _setMetaTag('meta[name="twitter:image"]',ogImage);
+  _setMetaTag('meta[property="og:image:alt"]',ogImageAlt);
+  _setMetaTag('meta[name="twitter:image:alt"]',ogImageAlt);
+  var canon=document.querySelector('link[rel="canonical"]');
+  if(canon)canon.setAttribute('href',m?ogUrl:_DEFAULT_META.canonical);
+}
 // Open a deep-linked page through its normal function, so it sets its own
 // "where did she come from" variable and its Back button behaves correctly.
 function _openRoute(id){
@@ -2575,6 +2658,12 @@ function show(id,skipHistory){
   }
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
   document.getElementById(id).classList.add('act');
+  // Keep the share-card title/description/image honest for whatever screen
+  // is actually on screen now — runs on EVERY show(), skipHistory included,
+  // because a back-button pop (real or in-app) is exactly the path that used
+  // to leave a stale, previous page's info sitting there. See the long
+  // comment above _syncShareMeta.
+  try{_syncShareMeta(id);}catch(e){}
   // Keep the What's Trending "New" pills honest wherever they appear.
   try{refreshTrendBadge();}catch(e){}
   // The heart-it-first tip stands down once the saving habit exists.
