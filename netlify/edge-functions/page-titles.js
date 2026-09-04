@@ -726,7 +726,7 @@ function wardrobeSchema() {
 }
 PAGES['/wardrobe'] = {
   title: 'The 100-Piece Wardrobe Checklist | Style Star',
-  desc: 'The wardrobe checklist a stylist of 20+ years uses with real clients. Tap any of the 100 pieces for shopping ideas matched to your style.',
+  desc: 'The wardrobe checklist a stylist of 20+ years uses with real clients. Tap any of the 100 pieces for real shopping ideas.',
   scrId: 's-wardrobe',
   schema: wardrobeSchema(),
   wardrobeList: true,
