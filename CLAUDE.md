@@ -7,7 +7,164 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-03 — 🖼 BOTH SHARE-CARD IMAGES FIXED FOR READABILITY, AND 🚨 THE BIG ONE: SHARING NEVER UPDATED THE TITLE/PHOTO AFTER IN-APP NAVIGATION — NOW FIXED ON EVERY ROUTED PAGE)
+## ▶ NEXT SESSION — START HERE (2026-09-04 — 🍂 THE FALL TREND REFRESH SHIPPED, YOUR WARDROBE LIST GOT ITS OWN URL, AND BOTH ARE NOW INDEXED ON GOOGLE AND BING)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Should we save this session to the .md and move to the next chat with a fresh list of things to do?")
+**SIX COMMITS, ALL SHIPPED TO `main` AND VERIFIED LIVE**, same no-PR
+fast-forward convention: `f719162` (the Fall Trend Refresh) · `36cf9d0` (her
+copy-edit pass on the fall notes) · `3e42536` (the Valentino sunglasses added
+to the Edit) · `4873fff` (the sunglasses' photo + a stale `_AFF_MID` comment
+corrected) · `e3b7a5e` (**Your Wardrobe List gets its own URL,**
+`stylestar.app/wardrobe`) · `fafe3a5` (its search description trimmed).
+`main` and this branch both sit on `fafe3a5`, tree clean.
+▶ **THE SHAPE OF IT: the long-parked Fall Trend Refresh finally happened, a
+new Edit piece went in, the Wardrobe List got the URL she'd been wanting to
+give it since June, and the session closed with a real SEO catch of hers plus
+a full indexing pass on both search engines.**
+
+### 🍂 THE FALL TREND REFRESH IS LIVE — her 23-item fall list replaces summer's
+Her keep/cut pass on the old What's Trending list, then her full **"Here's
+What's IN for Fall 2026"** roster layered on top: **Bomber Jackets** replaces
+Military Inspired Jackets, **Trench Coats** replaces A Great Trench,
+**Loafers** replaces Preppy Loafers, **Statement Jewelry** replaces Statement
+Earrings + Chunky Gold Jewelry. **Wide-Leg Jeans keeps its slot**, wording
+she'd held off on before now. **12 brand-new items** round out the list.
+- **Ordered to mirror her own opening line** — colors, then fabrics, then
+  silhouette — widening out to outerwear, shoes, bags and jewelry.
+  ⚠️ **Chocolate Brown, Faux Fur and Wide-Leg Jeans lead by her request**, so
+  the teaser strip (which only ever shows the first three) isn't all color.
+- **Opening trimmed to her shortened paragraph, pink heart back.**
+- ✅ **/trending's `lastmod` bumped in the SAME commit** (2026-09-03 in
+  sitemap.xml), per the page's own standing rule — the one page where a
+  moving date is honest.
+- **Her own copy-edit pass, same session:** "emphasizes belts are in" got its
+  missing "that", Suede's note got the "it" it needed, three spots picked up
+  the Oxford comma to match the rest of the list, and Leopard Print's
+  "fashionistas" became **"stylists"** in her own voice.
+
+### 👓 THE EDIT GAINED A NEW PIECE — Valentino Square Oversized Sunglasses
+Her pick, from **Marissa Collections** — already an approved Rakuten
+advertiser, and her THIRD live link there, not the first (the Veronica Beard
+Crosbie Jean and the Serpui Abigail Handbag have both been live and earning
+since the store's 2026-08-25 approval). ⚠️ **A stale `_AFF_MID` comment
+claiming the store was "inert until a link exists" was corrected the same
+session — it wasn't true and hadn't been for weeks.**
+- ✅ **Verified before adding, per the standing rule:** 200, real product name
+  matches hers, **$465 confirmed as the REGULAR price** (`compare_at_price`
+  is null, not a sale). Tracking param stripped from her pasted URL.
+- **Note reworded to tie it to two of the trends just shipped**: the
+  statement gold hardware and the oversized shape.
+- **Her photo landed later the same session** — moved into the photographed
+  cluster right after the Open Heart Necklace, plain `object-fit` crop (her
+  photo is a clean centered flat shot, no wrapper/scale needed).
+
+### 🚪 YOUR WARDROBE LIST HAS ITS OWN URL NOW — `stylestar.app/wardrobe`
+She asked to be reminded of two half-forgotten threads: giving the 100-item
+checklist its own shareable URL (tied to a future **"Wardrobe Holes"**
+article), and a **"Favorite Outfit" page** concept (her signature outfit as a
+reusable formula, doubling as shareable/Pinterest content). ▶ **She approved
+building the URL now** ("should we start by giving it its own URL? i am
+comfortable with pinning it at 100 items") **and explicitly deferred the
+Favorite Outfit brainstorm to later** — nothing built there, don't start it
+unasked.
+- ⭐ **Her own SEO instinct, worth keeping: the differentiator isn't the
+  list, it's that it's INTERACTIVE** — a stranger can tap any of the 100
+  items for a real shopping idea instantly, which a static competitor
+  listicle can't offer.
+- **Built exactly on the `/trending`+Journal-hub precedent**: `netlify.toml`
+  redirect + edge-function block, `_ROUTES`/`_openRoute`/`_PAGE_META` in
+  index.html, and a new `PAGES['/wardrobe']` entry in `page-titles.js` with a
+  real server-rendered `renderWardrobeChecklist()` (the previously-empty
+  `#wdrListBody` div now carries real static markup for crawlers, matching
+  the client's own fresh-visitor output byte-for-byte so there's no re-flow).
+- ⚠️ **`page-titles.js` can't import from `index.html`** (the standing
+  constraint), so a minimal `WARDROBE_ITEMS` (id+name+category only) is
+  duplicated there purely for the crawler render + schema — the same
+  accepted pattern as `JOURNAL_ARTICLES`. **Verified byte-for-byte identical
+  to the real `wardrobeItems` array** via a Node script (`vm.runInNewContext`
+  extracting both, flattened and compared). `wardrobeItems` itself, the
+  interactive source of truth, was untouched.
+- ⚠️ **Her "will she lose her place or get confused" worry was checked, not
+  assumed away.** The cold-visitor invitation mechanism (`_wdrQuizInvite()`,
+  built for What's Trending on 2026-09-01) already covers it: ANY visitor
+  gets real shop cards; if she hasn't quizzed, one soft, non-blocking line
+  appears at the bottom only — never before or instead of real content.
+  Verified live in two Playwright scenarios (never-quizzed and already-quizzed)
+  — **nothing needed building**, only the SEO copy did (below).
+- ✅ **She tested it live on her phone, including a text-share** — confirmed
+  working before the description fix.
+
+### ✍️ HER SEO CATCH: "matched to your style" over-promised for a cold visitor
+Same instinct she'd already applied to Trending. A stranger landing on
+`/wardrobe` fresh off a search hasn't quizzed — the old description promised
+shopping ideas **"matched to your style"**, which wasn't true for her yet
+(she'd see the same honest general mix everyone gets pre-quiz).
+- ✅ **Shipped:** *"The wardrobe checklist a stylist of 20+ years uses with
+  real clients. Tap any of the 100 pieces for real shopping ideas."* True for
+  every visitor, quizzed or not.
+- ⚠️ **The FAQ answer at line 1890** ("How does Style Star help me build my
+  wardrobe?") carries the same phrase in Catherine's own first-person voice.
+  **Deliberately LEFT ALONE, her call after hearing the reasoning**: a meta
+  description is a cold-search promise to a stranger deciding whether to
+  click; the FAQ answer is read by someone already exploring the app, who can
+  verify it herself in the next tap, and it's describing the feature at its
+  best rather than misleading anyone about what she'll see right now.
+  ▶ **If she ever wants it airtight too**, it needs the FAQ's JSON-LD schema
+  regenerated alongside it (never hand-typed, or the schema and the visible
+  answer drift — the standing rule).
+
+### 🔎 INDEXED ON BOTH ENGINES — and the "am I doing this right" question answered
+She requested indexing on `/wardrobe` in **Google Search Console** (URL
+Inspection → Request Indexing) and then asked two good questions about Bing:
+1. **"Do I need to request indexing AND submit the URL?"** → No, one is
+   enough. **Bing URL Inspection → Request Indexing** mirrors exactly what
+   she'd just done on Google. The separate **"Submit URLs"** bulk tool is for
+   pushing several pages at once; doing both for one page is redundant, not
+   harmful, but unnecessary.
+2. **She sent a screenshot of Bing's URL Inspection history** (7 rows —
+   `/wardrobe`, `/`, both journal articles, `/trending`, `/journal`×2,
+   `/faq`) and asked if pages were missing.
+   ▶ **They weren't — the screen just isn't what it looks like.** It's a log
+   of URLs individually typed into that one inspect box, **not a full site
+   inventory.** Checked directly, not assumed: `/story`, `/contact`,
+   `/privacy`, `/terms` and the first journal article don't appear there
+   because they were already given to Bing two other ways — the sitemap
+   (which lists all 11 real pages and Bing re-reads on its own schedule) and
+   the one-time bulk **URL Submission** she ran back on **2026-08-31**,
+   which covered the original 8 pages at once. None of those five have
+   changed since, so nothing needed re-requesting — repeatedly re-submitting
+   an unchanged page is noise, not help. The `/journal` vs `/journal/`
+   duplicate is the same page logged under two spellings (confirmed both
+   resolve identically in `netlify.toml`), harmless.
+   ▶ **What WAS on the list made sense on its own**: `/wardrobe` (brand new,
+   today) and `/`/`/trending`/the fall article (all had real content changes
+   the day before) — exactly the cases that deserve a fresh request.
+- ⚠️ **Bing's history confirms `/trending` was already re-requested there
+  (yesterday, 23:01)** as part of the Fall Trend Refresh's own follow-through
+  — but whether the equivalent **Google** request was made for `/trending`
+  is unconfirmed from here. Worth a quick check next session.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 📓 **THE "WARDROBE HOLES" ARTICLE is unblocked now that the URL exists** —
+   the second half of her own original plan. ⚠️ **Run her own Bing Top-10
+   method FIRST** on `wardrobe essentials list` · `what's missing from my
+   closet` · `wardrobe gaps` · `wardrobe checklist` before committing to
+   write it — that method has killed a topic that looked strong on volume
+   before (see the earlier 2026-08-31 entry in this file for the full
+   reasoning). ⚠️ **The 100-item list is now PUBLIC and PINNED** — any future
+   addition needs a matching cut.
+2. ⭐ **THE FAVORITE OUTFIT PAGE** — her own idea, explicitly parked for a
+   later brainstorm session. Don't start it unasked; wait for her to raise it.
+3. 🔎 **Confirm whether `/trending`'s Google indexing request was actually
+   made** alongside the Bing one — quick to check, quick to do if not.
+4. ⚖️ **Almira / Indie Law** — still no reply as of the last check.
+5. ✉️ **Play 2 outreach** — itechnolabs and altadaily still unsent.
+6. 📋 **The three catalog decisions** (Old Navy / Everlane / Mango) — hers,
+   nothing touched.
+
+---
+
+## ▶ PREVIOUS — (2026-09-03 — 🖼 BOTH SHARE-CARD IMAGES FIXED FOR READABILITY, AND 🚨 THE BIG ONE: SHARING NEVER UPDATED THE TITLE/PHOTO AFTER IN-APP NAVIGATION — NOW FIXED ON EVERY ROUTED PAGE)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "let's save this to the claude.md and I will open new chat")
 **FOUR PRs merged and ALL CURL/MD5-VERIFIED LIVE, same session, same branch
