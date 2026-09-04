@@ -7,7 +7,117 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-04 — 🍂 THE FALL TREND REFRESH SHIPPED, YOUR WARDROBE LIST GOT ITS OWN URL, AND BOTH ARE NOW INDEXED ON GOOGLE AND BING)
+## ▶ NEXT SESSION — START HERE (2026-09-04 evening — 💰 AWIN IS FULLY LIVE: PROFILE, TAX, AND BANK DETAILS ALL SET, PLUS 3 ADVERTISER APPLICATIONS PENDING)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save all of this to the .md for now and I will open up new chat with email from Rakuten about product catalogs")
+**No app code touched this session — entirely affiliate-network administration**, walked
+step by step on her real browser. ▶ **THE HEADLINE: AWIN, THE SECOND NETWORK IN HER
+SEQUENCE, IS FULLY SET UP AND SHE'S ALREADY APPLIED TO THREE ADVERTISERS.** She opens her
+next chat with a **Rakuten email about product catalogs** — see the flag at the bottom,
+this is the real prize the whole affiliate sequence has been building toward.
+
+### 💰💰 AWIN — APPROVED SAME SESSION, PUBLISHER ID 3074863, "Style Star by Catherine, LLC"
+Full 4-step signup (Account Setup → Promotional Type → Promotional Space → Verification),
+**$5 refundable deposit**, approved fast — same evening. ⚠️ **The "English (UK)" label on
+the success page and AWIN LTD's UK footer text on emails are both cosmetic/company-registration
+artifacts, unrelated to her account's actual US status** — confirmed by the dashboard's own
+`/us` URL. Don't let either worry her again if it comes up.
+- ✅ **Profile completed**: her logo uploaded (after several failed attempts — see the
+  profile-picture note below), the "About Style Star" description was **auto-generated well
+  and needed no editing** (opens "Style Star is a styling app connecting women with fashion
+  tailored to their style, size, and budget... Created by a personal stylist with 20+ years'
+  experience... built with love and intention" — the Sally differentiation, present and
+  correct, unprompted).
+- 🚨 **Profile picture upload is a genuine PLATFORM BUG, abandoned deliberately.** Tried
+  multiple times, including a fresh clean 512×512 PNG sent directly to her — it would show,
+  then vanish the moment she switched tabs or hit Save. **Not her fault, not a file problem.
+  Does not block anything that matters** (approval, earning, advertiser applications all work
+  without it). Told her plainly to stop trying. Revisit only if she wants to, no urgency ever.
+- ✅ **Tax Details — SSN, not EIN**, per the IRS disregarded-entity rule (a single-member LLC
+  with no S-corp/C-corp election reports under the OWNER's SSN, not the LLC's own EIN — a
+  federal tax-reporting distinction, separate from the LLC's legal/liability status). ⚠️ **The
+  standing project rule was honored throughout: never give definitive tax advice** — general,
+  sourced IRS guidance was shared as informational context, and she was pointed to her
+  accountant for the actual call. She got that answer and applied it.
+- 🚨⭐ **A REAL CROSS-PLATFORM INCONSISTENCY SURFACED AND SHE RESOLVED IT HERSELF.** Checking
+  Rakuten's existing tax settings (her own initiative — "I don't remember doing this on the
+  Rakuten site") found Rakuten had her **LLC's EIN** entered with Business Classification =
+  LLC, a different design choice by that platform. Told her honestly this made the earlier
+  confident SSN framing incomplete, and that ONE consolidated answer from her real accountant
+  should govern every platform, not per-network judgment calls from here. ▶ **She got that
+  answer and updated BOTH platforms to personal SSN — consistent now across Rakuten and AWIN.**
+- ✅ **A real, freshly downloaded IRS Form W-9 was filled out field by field on her screen**
+  (Line 1 name, Line 3a "Individual/sole proprietor" — correct for a disregarded-entity
+  single-member LLC without undermining the LLC's legal reality, Part I = SSN not EIN,
+  signed + dated), then uploaded as her Tax Verification Document.
+- ✅ **Bank Details saved**: Payment Frequency Twice Monthly, Payment Method ACH, **Payment
+  Threshold $50** (her call — high enough to avoid tiny payouts, low enough not to hold
+  balance too long), Account Holder "Style Star by Catherine LLC", ABA + Account Number
+  entered. **AWIN account is now fully complete end to end** — approved, profiled, tax
+  verified, bank details saved.
+- ⚠️ **A navigation correction made mid-session, worth remembering:** the "Documents" tab
+  under Profile is for OPTIONAL supplementary files (media kits, campaign stats), NOT payment/
+  tax info — that lives under the top-level **Account** nav → **Payment Details**.
+
+### 🛍 THE ADVERTISER DIRECTORY — a genuinely different animal from Rakuten's, and that's fine
+Her question, and it's the right one to ask on every future network: *"now that we are in the
+AWIN system how do we get stores like we did on Rakuten?"*
+- 🚨⭐ **THE PROFILE'S "Select Preferred Advertisers" WIDGET IS NOT THE REAL DIRECTORY — a
+  dead end, correctly abandoned.** It returned zero results for Nordstrom, Gap, AND Levi's.
+  ▶ **The real equivalent of Rakuten's "Find New" is the top-level `Advertisers → Join
+  Programs` tab** — a searchable/filterable list of **1000+ programs**, with a `+ Join` button
+  on each row and columns for Conversion Rate, Approval Rate, Payment Status, **Product Feed
+  (Yes/No)**, and Link Status.
+- ⚠️ **EVEN THE REAL DIRECTORY CAME UP EMPTY FOR NORDSTROM, GAP, AND LEVI'S** on a direct name
+  search. ▶ **THE HONEST READ, and it's worth keeping for any future network: AWIN's US
+  directory does not carry the big department stores / mainstream brands — they run their own
+  direct programs or use different networks entirely (same pattern already seen on Impact and
+  Rakuten). What AWIN IS full of is smaller, independent, and boutique brands** (Twenty
+  Compass Jewelry, Nylora, Sloan's Formals & Boutique, etc.) — the same category of find as
+  some of her best Rakuten approvals (Etsy, Marissa Collections, Fleur du Mal). **The way to
+  use this directory well is cherry-picking by browsing a filtered category list, not hunting
+  for names she already knows.**
+- ✅ **She filtered to Retail & Shopping → Clothing, Clothing Accessories, Jewellery, Shoes,
+  Womenswear** and applied to **THREE, all now Pending, all Product Feed: Yes**:
+  **Jackie Mack Designs · TERI JON · Under Armour US.** ⭐ **Under Armour is a genuine, real
+  find** — a legitimate major brand, and it slots straight into her existing activewear/athletic
+  coverage (Athleta, Vuori, lululemon already in the store table).
+- **The "just click Join" mechanics, given to her for reuse on every future advertiser:** costs
+  nothing, commits to nothing (can leave anytime from My Programs), some approve instantly some
+  take days; before joining, sanity-check the business looks real, prefer **Product Feed: Yes**
+  (the real prize — a live catalog once approved), and green Payment Status beats orange/red.
+
+### ⭐⭐ WHAT SHE'S BRINGING TO THE NEXT SESSION: A RAKUTEN EMAIL ABOUT PRODUCT CATALOGS
+▶ **THIS IS THE BIG ONE. Read `docs/product-feeds-plan.md` before anything else next
+session** — it's shovel-ready and has been waiting exactly for this trigger. Per the standing
+money-path logic (recorded throughout this file since 2026-07-30): **an affiliate approval is
+TWO prizes, not one — commission, AND a real product feed.** A feed is what turns a store
+SEARCH into an actual product: real photos, real prices, real stock, and it's what would let
+the app honestly say **"in your size"** again (removed from four places back on 2026-07-27
+because a store search can't filter). ▶ **Do not assume what the email says — read it fresh
+with her next session and treat it as the possible start of the real build**, not just another
+account-admin task like this whole session was.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. ⭐⭐ **HER RAKUTEN PRODUCT-CATALOG EMAIL — read it together, first thing.** If it's a real
+   feed-access offer, this is the trigger for the feeds build (`docs/product-feeds-plan.md`).
+2. 💰 **Watch the 3 pending AWIN applications** (Jackie Mack Designs, TERI JON, Under Armour US)
+   — when any approve, wire them into `_AFF_MID` the same way the 8 Rakuten advertisers were,
+   and check whether they hand over that Product Feed.
+3. 🛍 **Optional, her own pace: keep browsing AWIN's Join Programs list** for more boutique
+   finds in Clothing/Jewellery/Shoes/Womenswear — cherry-pick, don't hunt for known names.
+4. 💰 **CJ (Commission Junction) is still next in the sequence**, free to apply, not yet started.
+5. ⚠️ **Impact stays on hold** (declined at network level in August) until more traffic or a
+   real first commission — per the standing plan, don't reapply prematurely.
+6. ⚠️ **Amazon stays deliberately last** — the 180-day/3-sale clock starts at APPROVAL, and
+   there still isn't meaningful traffic to feed it.
+7. Everything else on the standing list (Wardrobe Holes article, the three catalog decisions,
+   Almira/Indie Law, Favorite Outfit page) is unchanged and untouched this session — see the
+   entry directly below for the full detail.
+
+---
+
+## ▶ PREVIOUS — (2026-09-04 — 🍂 THE FALL TREND REFRESH SHIPPED, YOUR WARDROBE LIST GOT ITS OWN URL, AND BOTH ARE NOW INDEXED ON GOOGLE AND BING)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Should we save this session to the .md and move to the next chat with a fresh list of things to do?")
 **SIX COMMITS, ALL SHIPPED TO `main` AND VERIFIED LIVE**, same no-PR
