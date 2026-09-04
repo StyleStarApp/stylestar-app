@@ -88,6 +88,16 @@
   to = "/index.html"
   status = 200
 
+# Your Wardrobe List, her 100-item closet-consultation checklist (2026-09-04,
+# her ask -- "should we start by giving it its own URL?"). Same story as
+# Trending: a tab with no address of its own, built entirely client-side, so
+# a crawler read nothing here at all. Same WARNING as every path above: once
+# this URL is indexed, it never moves.
+[[redirects]]
+  from = "/wardrobe"
+  to = "/index.html"
+  status = 200
+
 [[redirects]]
   from = "/results"
   to = "/index.html"
@@ -160,6 +170,10 @@
 # PAGES map in page-titles.js. A new article needs no netlify.toml edit.
 [[edge_functions]]
   path = "/trending"
+  function = "page-titles"
+
+[[edge_functions]]
+  path = "/wardrobe"
   function = "page-titles"
 
 [[edge_functions]]

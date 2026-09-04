@@ -2425,7 +2425,7 @@ function retakeQuiz(){
 // pretty path and the router at the bottom of this file opens the right screen.
 // The policy text is NOT duplicated anywhere -- a reviewer sees the real page.
 // WARNING: once a URL is submitted to an affiliate network, never change its path.
-var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-trending':'/trending','s-res':'/results'};
+var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-trending':'/trending','s-wardrobe':'/wardrobe','s-res':'/results'};
 // ---- Style Journal: a REGISTRY, not one hand-added route per article ------
 // Her ask (2026-08-26): after building article #1's routing by hand -- a
 // netlify.toml block, a page-titles.js entry, a _ROUTES line, an _openRoute
@@ -2532,6 +2532,7 @@ var _PAGE_META={
   's-privacy':{title:'Privacy Policy | Style Star',desc:'How Style Star collects, uses and protects your personal information, including your quiz answers, photos and account details.'},
   's-terms':{title:'Terms of Service | Style Star',desc:'The terms and conditions for using Style Star, including your rights, our affiliate disclosures, and how the service works.'},
   's-trending':{title:"What's Trending in Women's Fashion Right Now | Style Star",desc:"What's in style right now, chosen by a personal stylist of over 20 years. See what's current and decide what's worth adding to what you already own."},
+  's-wardrobe':{title:'The 100-Piece Wardrobe Checklist | Style Star',desc:'The wardrobe checklist a stylist of 20+ years uses with real clients. Tap any of the 100 pieces for shopping ideas matched to your style.'},
   's-journal-hub':{title:'Style Journal | Style Star',desc:'Style notes and articles from Catherine, personal stylist and founder of Style Star.'},
   // Each article's metaTitle/metaDesc/ogImage — matches page-titles.js's
   // ARTICLES entries exactly (that file builds its PAGES rows FROM those
@@ -2576,6 +2577,7 @@ function _openRoute(id){
   else if(id==='s-faq')showFAQ();
   else if(id==='s-contact')showContact();
   else if(id==='s-trending')openTrending();
+  else if(id==='s-wardrobe')openWardrobe('list');
   else if(id==='s-journal-hub')openJournalHub();
   else if(_journalById(id))openJournalArticle(id);
   else if(id==='s-res'){

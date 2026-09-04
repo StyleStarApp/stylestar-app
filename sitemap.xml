@@ -67,6 +67,19 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Your Wardrobe List, her 100-item closet-consultation checklist, given
+       its own URL 2026-09-04. This lastmod moves rarely on purpose, since
+       she pinned the list at 100 items the same day, so it should not need
+       touching often. Bump it only if an item is genuinely added, removed
+       or renamed (which also needs the matching edit in index.html's
+       wardrobeItems AND page-titles.js's WARDROBE_ITEMS, see the comment
+       above that constant). -->
+  <url>
+    <loc>https://stylestar.app/wardrobe</loc>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <url>
     <loc>https://stylestar.app/journal</loc>
     <lastmod>2026-09-01</lastmod>

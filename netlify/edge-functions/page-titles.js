@@ -573,6 +573,165 @@ PAGES['/trending'] = {
   schemaFrom: trendSchema,
 };
 
+// ── Your Wardrobe List (2026-09-04, her ask: "should we start by giving it
+// its own URL?" -- after being reminded of the parked idea from her own
+// 100-item closet-consultation checklist) ──────────────────────────────────
+//
+// Same story as What's Trending: a tab with no address of its own, built
+// entirely client-side into an empty div (#wdrListBody in index.html), so a
+// crawler read nothing here at all -- no title, no schema, nothing to land
+// on from a search result or a shared link.
+//
+// ⚠️ UNLIKE TRENDING, THIS LIST IS DUPLICATED HERE, NOT PARSED OFF THE
+// SERVED HTML. Trending's cards became plain static markup and stayed that
+// way -- nothing else in the app needed trendItems to be a JS array anymore.
+// The wardrobe checklist can't make that same move without a much bigger
+// refactor: wardrobeItems (the JS array in index.html) is still what the
+// star/Ideas/hidden/custom-item machinery is keyed off in dozens of places,
+// so it stays a real array there, doing real interactive work.
+// ▶ So this is the SAME pattern as JOURNAL_ARTICLES: a second, hand-kept
+// copy, for the one reason an edge function ever needs one -- it is its own
+// bundle and cannot import from index.html.
+// ⚠️ SHE PINNED THIS LIST AT 100 ITEMS (2026-09-04), so this should rarely
+// need touching again -- but if an item is ever renamed in index.html's
+// wardrobeItems, the SAME rename belongs here too, or this page and its
+// schema silently drift from what a real visitor sees in the app. That is
+// exactly the /faq drift this whole project has a standing rule against.
+const WARDROBE_ITEMS = [
+  {cat:'Tops',items:[
+    {id:'to3',n:'Tops in your favorite colors'},{id:'to1',n:'White tops'},
+    {id:'to2',n:'Black tops'},{id:'to4',n:'Print tops'},
+    {id:'to7',n:'Tank tops/Camisoles'},{id:'to5',n:'Professional blouses'},
+    {id:'to6',n:'Dressy or going-out tops'},
+  ]},
+  {cat:'Bottoms',items:[
+    {id:'bo1',n:'Blue jeans'},{id:'bo2',n:'White jeans'},
+    {id:'bo7',n:'Casual pants'},{id:'bo8',n:'Wide-leg pants'},
+    {id:'bo3',n:'Black trousers'},{id:'bo4',n:'Linen pants'},
+    {id:'bo9',n:'Pencil skirt'},{id:'bo10',n:'Flowy skirt'},
+    {id:'bo11',n:'Denim skirt'},{id:'bo6',n:'Shorts'},
+  ]},
+  {cat:'Dresses',items:[
+    {id:'dr1',n:'Daytime casual dresses'},{id:'dr3',n:'Work-appropriate dresses'},
+    {id:'dr5',n:'Sundresses'},{id:'dr6',n:'Maxi dresses'},
+    {id:'dr7',n:'Wrap dresses'},{id:'dr8',n:'Sweater dresses'},
+    {id:'dr9',n:'Cocktail dresses'},{id:'dr10',n:'Formal gowns'},
+  ]},
+  {cat:'Jackets & Layers',items:[
+    {id:'ja1',n:'Cardigans'},{id:'ja5',n:'Sweaters'},
+    {id:'ja8',n:'Light casual jackets'},{id:'ja10',n:'Cropped jackets'},
+    {id:'ja2',n:'Blazers'},{id:'ja6',n:'Belted trench'},
+    {id:'ja9',n:'Raincoats'},{id:'ja3',n:'The perfect leather jacket'},
+    {id:'ja4',n:'Wool coats'},{id:'ja11',n:'Puffer coats'},
+  ]},
+  {cat:'Activewear',items:[
+    {id:'ac1',n:'Leggings'},{id:'ac2',n:'Joggers'},
+    {id:'to8',n:'Sweatshirts'},{id:'ac3',n:'Athletic shorts'},
+    {id:'ac12',n:'Tennis skirts'},{id:'ac4',n:'Supportive sports bras'},
+    {id:'ac11',n:'Matching athletic sets'},{id:'ac5',n:'Workout tanks'},
+    {id:'ac6',n:'Workout tees'},{id:'ac7',n:'Workout long-sleeve tops'},
+    {id:'ac8',n:'Athletic jackets'},{id:'ac13',n:'Athletic socks'},
+    {id:'ac9',n:'Swimsuits'},{id:'ac10',n:'Swim coverups'},
+  ]},
+  {cat:'Sleepwear',items:[
+    {id:'sl1',n:'Pajamas'},{id:'sl2',n:'Nightgowns'},
+    {id:'sl4',n:'Loungewear sets'},{id:'sl3',n:'Robes'},
+  ]},
+  {cat:'Foundations',items:[
+    {id:'fo1',n:'Perfectly fitting bras'},{id:'fo4',n:'Strapless bras'},
+    {id:'fo2',n:'Comfortable underwear'},{id:'fo3',n:'Beautiful underwear'},
+    {id:'fo6',n:'Shapewear'},{id:'fo5',n:'Special lingerie'},
+  ]},
+  {cat:'Shoes',items:[
+    {id:'sh1',n:'Flat sandals'},{id:'sh11',n:'Flip flops'},
+    {id:'sh12',n:'Slides'},{id:'sh13',n:'Loafers'},
+    {id:'sh2',n:'Closed-toe flats'},{id:'sh9',n:'Fashion sneakers'},
+    {id:'sh10',n:'Athletic sneakers'},{id:'sh5',n:'Wedges'},
+    {id:'sh6',n:'Espadrilles'},{id:'sh14',n:'Kitten heels'},
+    {id:'sh15',n:'Block heel sandals'},{id:'sh4',n:'High heel sandals'},
+    {id:'sh3',n:'Dressy pumps'},{id:'sh8',n:'Tall boots'},
+    {id:'sh7',n:'Ankle boots'},{id:'sh16',n:'Slippers'},
+  ]},
+  {cat:'Bags',items:[
+    {id:'bg7',n:'Shoulder bags'},{id:'bg8',n:'Top handle bags'},
+    {id:'bg3',n:'Crossbody bags'},{id:'bg1',n:'Tote bags'},
+    {id:'bg9',n:'Laptop bags'},{id:'bg4',n:'Belt bags'},
+    {id:'bg2',n:'Evening bags'},{id:'bg10',n:'Clutches'},
+    {id:'bg11',n:'Wallets'},{id:'bg12',n:'Cosmetic bags'},
+    {id:'bg6',n:'Gym bags'},{id:'bg13',n:'Overnight bags'},
+    {id:'bg14',n:'Suitcases'},
+  ]},
+  {cat:'Extras & Accessories',items:[
+    {id:'ex1',n:'Hoop earrings'},{id:'ex9',n:'Stud earrings'},
+    {id:'ex2',n:'Statement earrings'},{id:'ex7',n:'Bracelets'},
+    {id:'ex8',n:'Necklaces'},{id:'ex12',n:'Rings'},
+    {id:'ex4',n:'Sunglasses'},{id:'ex10',n:'Sun hats'},
+    {id:'ex11',n:'Cold-weather hats'},{id:'ex5',n:'Belts'},
+    {id:'ex3',n:'Scarves/Pashminas'},{id:'ex6',n:'Hair accessories'},
+  ]},
+];
+// The two small SVGs every row carries -- copied verbatim from index.html's
+// own _WDR_ARR constant and _wdrStar(false), so a crawler-visible row and a
+// real in-app row are pixel-identical, not just textually similar.
+const WDR_ARR_SVG = '<svg class="wdr-see-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13"/><path d="M12 6.5 18.5 12 12 17.5"/></svg>';
+const WDR_STAR_OFF_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="#c3bba6" stroke-width="1.9" stroke-linejoin="round"><path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>';
+const WDR_LIST_BODY = '<div id="wdrListBody"></div>';
+// ⚠️ THIS MARKUP MUST MATCH _wardrobeItemRow()/_wdrCatHead() IN index.html
+// BYTE FOR BYTE FOR A FRESH VISITOR (no stars, no hidden items, no custom
+// additions -- the zero-pre-tap state every new visitor and every crawler
+// alike actually has), the same rule as renderHubList() above and for the
+// same reason: openWardrobe() calls the client's own renderWardrobeList()
+// the instant JS runs, so a mismatch would visibly re-flow on load.
+function renderWardrobeChecklist(html) {
+  if (html.indexOf(WDR_LIST_BODY) === -1) throw new Error('wardrobe list anchor not found');
+  const catsHtml = WARDROBE_ITEMS.map((cat) => {
+    const rows = cat.items.map((it) =>
+      '<div class="wdr-item">' +
+      '<span class="wdr-del" role="button" title="Remove" onclick="wardrobeRemove(\'' + it.id + '\',false)">&times;</span>' +
+      '<div class="wdr-name">' + escLikeClient(it.n) + '</div>' +
+      '<span class="wdr-see" onclick="wardrobeSeeIdeas(\'' + it.id + '\')">Ideas' + WDR_ARR_SVG + '</span>' +
+      '<span class="wdr-star" role="button" aria-pressed="false" title="Add to my list" onclick="wardrobeWant(\'' + it.id + '\',false)">' + WDR_STAR_OFF_SVG + '</span>' +
+      '<div class="wdr-expand" id="wx_' + it.id + '" style="display:none"></div>' +
+      '</div>').join('');
+    return '<div class="wdr-cat"><div class="wdr-cathead"><div class="wdr-cat-t">' +
+      escLikeClient(cat.cat) + '</div><div class="wdr-colhead"><span class="ch-shop">Shop</span>' +
+      '<span class="ch-add">Add</span></div></div>' + rows + '</div>';
+  }).join('');
+  return html.replace(WDR_LIST_BODY, '<div id="wdrListBody">' + catsHtml + '</div>');
+}
+// A flat ItemList, name + category, generated from the same WARDROBE_ITEMS
+// above so it can never drift from what actually renders -- built once at
+// module load, never per-request, since there is no served HTML to parse
+// this one out of.
+function wardrobeSchema() {
+  const items = [];
+  WARDROBE_ITEMS.forEach((cat) => cat.items.forEach((it) => items.push({ name: it.n, cat: cat.cat })));
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Your Wardrobe List',
+    url: 'https://stylestar.app/wardrobe',
+    mainEntity: {
+      '@type': 'ItemList',
+      name: 'The Style Star wardrobe checklist',
+      numberOfItems: items.length,
+      itemListElement: items.map((it, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: it.name,
+        description: it.cat,
+      })),
+    },
+  };
+}
+PAGES['/wardrobe'] = {
+  title: 'The 100-Piece Wardrobe Checklist | Style Star',
+  desc: 'The wardrobe checklist a stylist of 20+ years uses with real clients. Tap any of the 100 pieces for shopping ideas matched to your style.',
+  scrId: 's-wardrobe',
+  schema: wardrobeSchema(),
+  wardrobeList: true,
+};
+
 // ── The homepage (2026-09-01, Cowork's rendering audit) ───────────────────
 // `/` is the app itself, so it keeps every screen a woman can reach without a
 // fetch -- the quiz, her portrait, shopping, the wardrobe, the chat, all of
@@ -697,6 +856,15 @@ export default async (request, context) => {
       html = renderHubList(html);
     } catch (e) {
       try { console.error('[page-titles] hub list render failed for', path, e); } catch (e2) {}
+    }
+  }
+  // Same rule again: a failure here ships the page as it is today (an empty
+  // list the client fills on load), never a broken page.
+  if (page.wardrobeList) {
+    try {
+      html = renderWardrobeChecklist(html);
+    } catch (e) {
+      try { console.error('[page-titles] wardrobe checklist render failed for', path, e); } catch (e2) {}
     }
   }
 
