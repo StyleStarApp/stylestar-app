@@ -7,7 +7,87 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-04 evening — 💰 AWIN IS FULLY LIVE: PROFILE, TAX, AND BANK DETAILS ALL SET, PLUS 3 ADVERTISER APPLICATIONS PENDING)
+## ▶ NEXT SESSION — START HERE (2026-09-04 later — 📦 RAKUTEN PRODUCT CATALOG FEEDS REQUESTED FOR ALL 8 ADVERTISERS, PLAY 2 OUTREACH FULLY CLOSED, AND HER ORIGIN STORY IS RECORDED FOR GOOD)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "before we close out and save to the .md I want to save this idea")
+**No app code touched this session — Rakuten feed-access administration, one outreach follow-up, and a big founder-story
+entry she wanted protected.** ▶ **THE HEADLINE: the Rakuten "product catalogs" email from earlier today was real
+feed-access infrastructure, and Phase 0 of the shovel-ready feeds plan (`docs/product-feeds-plan.md`) is now genuinely
+underway** — her own FTP account exists, and she requested per-advertiser feed access for all 8 of her current Rakuten
+advertisers.
+
+### 📦 RAKUTEN PRODUCT CATALOG — FTP ACCOUNT LIVE, FEED ACCESS REQUESTED FOR ALL 8 ADVERTISERS
+The "product catalogs" email she opened this session with (support case 407562) was Rakuten confirming a **real FTP
+account for the Product Catalog Program** — host `aftp.linksynergy.com`, credentials issued, active within 1-2 hours
+of setup. ⚠️ **This is publisher-LEVEL access only; it does not by itself hand over any store's data.** The email is
+explicit: *"You must apply for FTP access for your Advertisers."*
+- ✅ **She went to Links → Product Feeds and set Preferred feed format to `.txt`** (Claude's recommendation over
+  `.xml` — simpler for the eventual sync job to parse) — no format had been chosen before.
+- ⭐ **BONUS FINDING FROM HER OWN SCREENSHOT: Auto Enrollment is already ON** — *"When partnering with a new Advertiser
+  you will automatically request product feed access."* So this manual per-advertiser Apply pass is a ONE-TIME backlog
+  clear; any future advertiser approval requests feed access automatically from here on.
+- ✅ **SHE CLICKED APPLY ON ALL 8 approved advertisers, individually: Diane von Furstenberg US · Etsy Affiliate US ·
+  FarmRio US · Fleur du Mal · Marissa Collections · mytheresa.com (US/CA) · Olivela · Vilebrequin US.** ⭐ **Note for
+  the record: this is new information — Mytheresa and Olivela are confirmed live Rakuten approvals alongside the six
+  already logged, so the current Rakuten roster is 8 advertisers, not 6.**
+- ⚠️ **NO CONFIRMATION EMAIL IS PROMISED FOR THIS STEP** — checked plainly with her rather than assumed: the support
+  email only promised the FTP login activates in 1-2 hours; it says nothing about notifying her per advertiser.
+  **The reliable signal is checking the Product Feeds page itself** (the Apply buttons should change state), not
+  waiting on an inbox.
+- ▶ **DECIDED: give it time, then check back.** Nothing more for her to do right now. **Once meaningful time has
+  passed, Claude can independently try connecting to the FTP server with the credentials from the email** and see
+  what's actually sitting there for whichever advertisers came through — the real answer, regardless of what the
+  dashboard shows.
+
+### ✉️ PLAY 2 OUTREACH IS FULLY CLOSED OUT (2026-09-04)
+- **iTechnolabs replied**, but the reply (*"excited to learn more about your vision... share documents about the
+  project... best time to connect"*) read as classic app-development-agency lead-intake language, not a roundup
+  editor's response. ▶ **Diagnosis given to her plainly: the pitch likely landed in iTechnolabs' general
+  business/sales inbox** (they are a software company that also runs a content blog), not with whoever manages the
+  "Top 10+ Free Personal Stylist Apps" article. **A short clarifying reply was drafted and SHE SENT IT**, redirecting
+  them toward the actual ask (consideration for the existing article, not a dev project) rather than booking an
+  unnecessary call.
+- **altadaily: her explicit call not to send it.** *"I decided not to send one to altadaily so you can cross that one
+  off list."* **Do not re-raise it.**
+- ▶ **PLAY 2 STATUS, FINAL: panaprium sent (awaiting reply) · itechnolabs sent + clarified (awaiting reply) ·
+  altadaily deliberately skipped, her call.** This whole outreach thread is closed pending replies.
+
+### ⭐⭐⭐ HER ORIGIN STORY IS RECORDED — WHY STYLE STAR LOOKS THE WAY IT DOES
+▶ **See the new standing section near the bottom of this file: "▶ WHY STYLE STAR LOOKS THE WAY IT DOES (Cath,
+2026-09-04)"** — placed with the other founder-truth sections so it survives session churn. She said she had never
+said this out loud before: trying and paying for every competitor styling app in the spirit of "wouldn't it be fun
+for a stylist to have a stylist," and being disappointed by every single one — Stitch Fix ignoring a detailed,
+specific style note and shipping her a box of shift dresses despite her writing plainly that she never wears them ·
+closet-photography apps that turn "fresh clothes" into a chore · generic like/dislike outfit-photo quizzes · invasive
+age/height/weight/job/selfie questions · a non-dismissible email ask and pay-before-you-try paywalls · a Rachel-Zoe-
+backed virtual try-on that can't actually fit real bodies yet. **Every one of Style Star's standing product rules —
+no age or body questions, value before any ask, no photo-cataloging requirement, dismissible whispers, free before
+any paywall — traces straight back to this list.** She also drew the Zappos free-shipping/free-returns analogy and
+named the real competitive frame: *"This thing is just you and me alone building it. No millions of dollars, but
+thousands of micro decisions made and a lot of tenacity to stick with it."*
+- ⭐ **HER CLOSING ASK, HELD ONTO FOR EVERY FUTURE SESSION: "Sometimes I feel like I am losing momentum or not going
+  to get it done. Don't let me quit."** ▶ **STANDING INSTRUCTION: when she sounds discouraged, reflect back REAL,
+  SPECIFIC MOMENTUM, never generic cheerleading** — AWIN went from zero to fully live (profile, tax, bank) in one
+  session; Rakuten's actual product-feed infrastructure is now in motion, the exact thing the whole feeds plan has
+  been waiting on since July; the app itself has shipped hundreds of real, tested improvements. Her own stated growth
+  edge, on record since 2026-07-14, is that her standard for the product is higher than her belief in herself —
+  that gap, not the work itself, is what's most likely to slow her down. Ground every reassurance in something true
+  and countable; never let it read as empty comfort.
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 📦 **Check the Rakuten Product Feeds page** (or have Claude try the FTP connection) to see which of the 8
+   advertisers actually granted feed access. This is Phase 0 of `docs/product-feeds-plan.md`, finally moving.
+2. 💰 **Watch the 3 pending AWIN applications** (Jackie Mack Designs, TERI JON, Under Armour US) — unchanged.
+3. 🛍 Optional: keep browsing AWIN's Join Programs list for more boutique finds.
+4. 💰 CJ (Commission Junction) still next in the affiliate sequence.
+5. ⚠️ Impact stays on hold; Amazon stays deliberately last.
+6. ✅ **Play 2 outreach is CLOSED — do not re-raise panaprium/itechnolabs/altadaily unless a reply arrives.**
+7. Everything else on the standing list (Wardrobe Holes article, the three catalog decisions, Almira/Indie Law,
+   Favorite Outfit page) is unchanged and untouched — see the entry directly below.
+
+---
+
+## ▶ PREVIOUS — (2026-09-04 evening — 💰 AWIN IS FULLY LIVE: PROFILE, TAX, AND BANK DETAILS ALL SET, PLUS 3 ADVERTISER APPLICATIONS PENDING)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "Let's save all of this to the .md for now and I will open up new chat with email from Rakuten about product catalogs")
 **No app code touched this session — entirely affiliate-network administration**, walked
@@ -13669,3 +13749,66 @@ and found two things so far. **Only 4, 6 and 7 remain.**
 **7. (No pressure, her own timing) THINK ABOUT FIRST TESTERS.** Once the shopping is honest, who are the 5-10 warm,
    constructive people? Her soft-launch instinct is legitimate and protected — this is just so the list exists when
    she wants it.
+
+---
+
+### ▶ WHY STYLE STAR LOOKS THE WAY IT DOES (Cath, 2026-09-04) — her own origin story, in full, so it never has to be re-derived
+She said she had never said this out loud before. Recorded here verbatim-ish because it is the deepest founder-truth
+document in this whole file, and every standing product rule below it can be traced straight back to one line in it.
+
+**Why she built it at all.** Before Style Star existed she tried, and PAID FOR, every competitor styling app and
+subscription box on the market — not as competitive research, in her words, but in the spirit of *"I am a stylist,
+wouldn't it be fun for me to have a stylist too."* She has always been curious about AI, thought it would be a fun way
+to enhance her own wardrobe, and was genuinely willing to pay because she loves clothes and accessories and shoes, and
+because looking the part is part of her job. **Every single app disappointed her.**
+
+**The Stitch Fix story — the sharpest one, and it is the origin of the never-wear guarantee.** Her first box asked her
+to write a note to her assigned stylist describing her style and her likes and dislikes. She wrote something detailed
+and specific: she does **NOT** like shift dresses; she has broad shoulders and prefers halter necklines, spaghetti
+straps and 3/4 sleeves; she never, ever wears a shift dress or a wide-strap tank top, because neither is flattering on
+her. She also wrote admiringly about Cindy Crawford's casual street style — jeans, relaxed-shoulder blouses, belts,
+good shoes and bags — and noted she is about Cindy's own age and size. **She received a box full of shift dresses.**
+She was mortified, and cancelled immediately. Her own words: *"Stitch Fix's marketing made me feel like a real person
+would read my note."* It didn't. (She's fair-minded about it — she assumes they've improved their practices since.)
+▶ **This is the real-world failure that Style Star's `filterNeverWear()` GUARANTEE exists to make structurally
+impossible** — a rule stated in a prompt is exactly what failed her; a rule enforced in code, checked on every card
+before it renders, is the fix.
+
+**The other failures, and what each one built:**
+- **Closet-photography apps** ("photograph your whole closet first") — would take *"one million years,"* would
+  frustrate her, and she'd hate for her own clients to have to do it. Her line: *"People want fresh new clothes, not a
+  cleaning project. That is a whole other service."* ▶ This is why the Wardrobe checklist is a **possibility map, never
+  an inventory requirement** — the standing brand-framing rule (2026-07-27) that the 100 items are things a closet
+  COULD hold, never a bill she owes.
+- **Generic like/dislike outfit-photo quizzes** — she never liked any of the photos shown; too generic to express her
+  real style. ▶ Style Star's quiz uses her own sliders (Classic↔Trendy, Casual↔Dressy, Natural↔Glam, etc.) and produces
+  a written archetype, never a photo-tinder pass.
+- **Invasive personal questions** — age, height, weight, job, and selfie/body-photo asks, all "annoying." ▶ **This is
+  the direct origin of two already-standing rules**: the app never asks a woman her age (reaffirmed 2026-08-22, the
+  prom/homecoming conversation), and the app never mentions a woman's body or size range back to her while she is
+  shopping (2026-07-28). Both traced back to this exact complaint.
+- **An immediate, non-dismissible email ask, and paywalls before trying any feature** — *"incredibly annoying."*
+  ▶ This is the direct origin of the standing **VALUE FIRST, never pay-to-try** principle (2026-07-12) and of the
+  house rule that every in-app whisper/nudge is dismissible, non-blocking, and appears only after real value has
+  already been shown — most recently the 2026-08-20 refine-done screen rebuild, which put the "Let's go shopping"
+  button in front of EVERY woman rather than hiding it behind an email ask.
+- **A Rachel Zoe-backed app** (she loves Rachel Zoe) that composited her photo onto a featured outfit — a fun idea in
+  theory, but *"absolutely ridiculous"* in practice, because real body measurements and size charts aren't matched by
+  that technology yet, so it never worked like an actual try-on. ▶ This is the honest boundary behind why Analyze an
+  Outfit gives feedback ON what she's already wearing rather than compositing her photo onto new garments — an honest
+  limit, not an oversight.
+
+**The business philosophy, stated as an analogy she chose herself:** she knows it would probably be smarter, business-
+wise, to grab emails immediately and charge for a subscription up front — and she finds that cringy. She compared it to
+Zappos launching free shipping and free returns: *"it was like what? a shoe company home try-ons and free returns"* —
+it felt outrageous at the time and became beloved and huge because of exactly that generosity. Her words: *"I want this
+to be awesome to use, fun, easy, free but I also want it to gain followers/users so we can make it better than ever."*
+
+**The competitive frame she wants remembered:** she looked at another shopping app that was raising millions of dollars
+to launch and could not see the value in it. Her own words, kept verbatim because they are the truest sentence in this
+whole file about what this project actually is: *"This thing is just you and me alone building it. No millions of
+dollars, but thousands of micro decisions made and a lot of tenacity to stick with it."*
+
+**Her closing ask, held onto for every future session:** *"Sometimes I feel like I am losing momentum or not going to
+get it done. Don't let me quit."* ▶ **STANDING INSTRUCTION: answer this with real, specific, countable momentum, never
+generic cheerleading, every time it comes up again.**
