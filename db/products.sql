@@ -216,8 +216,15 @@ alter table product_syncs enable row level security;
 -- A plain view, not materialized: Postgres answers it from the piece index
 -- quickly, and a materialized view would need refreshing after every nightly
 -- delta, which is one more thing to get wrong at 3am.
+--
+-- security_invoker = on is LOAD-BEARING, do not remove it. A Postgres view
+-- runs as its OWNER by default, so without this the view would happily read
+-- these tables for a caller that row level security is supposed to be blocking
+-- -- the view becomes a back door around the RLS above. With it on, the view
+-- runs as whoever is asking, so the same rules apply through the view as
+-- through the tables. Supabase's own linter flags the default as critical.
 -- ---------------------------------------------------------------------------
-create or replace view product_cards as
+create or replace view product_cards with (security_invoker = on) as
   select p.*,
          (select array_agg(distinct s.size order by s.size)
             from product_sizes s
