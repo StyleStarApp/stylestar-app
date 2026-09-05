@@ -241,6 +241,7 @@ def main():
             examples = {}
             desc_chars = other_chars = 0
             sized_rows = 0
+            feed_stamp = ""
 
             # ---------------- PASS 1: parse, measure, build the garments --------
             with gzip.open(tmp.name, "rt", encoding="utf-8", errors="replace") as fh:
@@ -248,6 +249,15 @@ def main():
                     rec, why = parse_line(line, mid)
                     if rec is None:
                         reasons[why] += 1
+                        # The HDR line carries the moment RAKUTEN BUILT THE FILE
+                        # (field 3, MM/DD/YYYY HH:MM:SS). Logging it is what turns
+                        # "when should the nightly job run?" from a guess into a
+                        # measurement: a feed we grab an hour after it is written
+                        # is fresh, one we grab twenty-three hours after is a day
+                        # stale, and only this line tells the difference.
+                        if why == "header" and not feed_stamp:
+                            hp = line.rstrip("\n").split("|")
+                            feed_stamp = hp[3].strip() if len(hp) > 3 else ""
                         continue
                     kept += 1
                     if not rec["image_url"]:
@@ -320,6 +330,8 @@ def main():
                     row.pop("_np", None)
 
             total = kept + sum(reasons.values())
+            if feed_stamp:
+                log(f"  feed built {feed_stamp} (merchant's own stamp)")
             log(f"  {total:,} lines -> {kept:,} kept")
             for why, n in reasons.most_common():
                 log(f"      dropped {n:>7,}  {why}")
