@@ -43,3 +43,9 @@ scratchpad/photos/
 *.txt.gz
 *.xml.gz
 feeds/
+
+# Python bytecode cache. Regenerated on every run of the feed scripts, so a
+# tracked copy leaves the tree dirty after each test run and churns the diff
+# for nothing. One got committed by accident in 37942a3 and is removed here.
+__pycache__/
+*.pyc
