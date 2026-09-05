@@ -217,7 +217,9 @@
   "name": [
    "tank",
    "camisole",
-   "cami "
+   "cami ",
+   "sleeveless top",
+   "sleeveless crop"
   ],
   "not": [
    "dress",
@@ -1310,7 +1312,8 @@
   "name": [
    "flip flop",
    "flip-flop",
-   "thong sandal"
+   "thong sandal",
+   "havaiana"
   ],
   "not": [
    "heel",

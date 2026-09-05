@@ -471,6 +471,49 @@ data at all** — one category value, no breadcrumb, no colour, no material, no 
   `upper: bovine leather, sole: rubber`). Useful as a SUBSTRING for her never-wear
   fabrics; useless as a category.
 
+### 🎯 THE MATCHER — HER 100 ROWS, MEASURED THREE TIMES (2026-09-05)
+`data/slot-rules.json` translates each merchant's vocabulary into her own checklist rows;
+`scripts/slot_match.py` applies it **at ingest**, storing the answer in `products.slots`.
+▶ **Stored, not derived at read time, and that is the one real design decision here:** a
+shelf could re-derive the match in the JavaScript that serves it, but then one rule would
+live in two programs and drift, which this project has paid for repeatedly (the store
+table vs `SEARCH_DOMAINS`, the eight footers, five copies of the colour bullet). The cost
+is that a rules change lands on the next nightly run rather than instantly — at most a
+day, against a class of bug that then cannot happen.
+
+🚨🚨 **AND THE REPORT EARNED ITS KEEP ON THE FIRST RUN. THE TRAP: THE LADDER IS `cat OR
+name`, SO A DEPARTMENT-WIDE CATEGORY TERM ON A ROW THAT IS ONLY A SUBSET OF THAT
+DEPARTMENT MATCHES THE WHOLE DEPARTMENT.** Every row looked healthy — 95% of the catalog
+matched something and not one row was empty — and the SAMPLES showed it was nonsense:
+- `sl3 Robes` was full of **pyjama sets** · `fo6 Shapewear` held **ski socks and tights** ·
+  `sl2 Nightgowns` held a **cropped cotton top** (`chemise` is French for shirt) ·
+  `ac*` gave one pair of leggings a place on **ten activewear rows at once** ·
+  `ex1/ex9/ex2` made one pair of hoops also a stud **and** a statement earring.
+- ⚠️ **`bo1 Blue jeans` MEANT "ANY JEANS", and the mechanism is worth keeping: `denim` sat
+  in BOTH its colour list and its name terms, and the colour haystack includes the name —
+  so the gate always passed.** A gate whose words its own row guarantees is not a gate.
+▶▶ **THE RULE, now enforced by `scripts/test_slot_match.py` rather than trusted: a `cat`
+term must be AS SPECIFIC AS THE ROW.** Use the merchant's leaf (`sandals>flat sandals`),
+never the department. **The one honest exception is a row whose COLOUR or PATTERN gate is
+its discriminator** — *White tops* really is every top narrowed by colour — and the test
+knows that difference.
+- ⚠️ **A SECOND ROUND FOUND MORE, AND ONLY THE SAMPLES COULD:** `ja9 Raincoats` held a
+  **waterproof EYELINER** (`waterproof` alone was a name term) · `to8 Sweatshirts` held a
+  **hooded parka** · `ac11` held a **tracksuit midi skirt**, which is one piece · and
+  "Short Kimono Wrap" landed on **Shorts**, because de-pluralizing makes the noun and the
+  adjective the same word. ▶ **A count cannot see any of this. Three sample names can.**
+
+**FOUR DEFAULTS SET INSIDE HER TAXONOMY, flagged rather than assumed** — in each case her
+other rows in that family name themselves, so the unmarked case is the remaining one:
+a plain **Sandal** is a flat sandal · a plain **Boot** is an ankle boot · a plain **Hat**
+is a sun hat · a plain **Skirt** is a flowy skirt.
+
+⚠️ **AND THE GAPS ARE HERS TO DECIDE, NOT OURS TO INVENT** (the standing store-tag rule).
+The leftovers repeatedly show things her checklist has no row for: **mini skirts** (FARM
+Rio carries many), **jumpsuits and rompers** (DVF and FARM Rio), **gloves**, **clogs**, and
+**bags named only "Bag"** with no type — guessing which of her fourteen bag rows those
+belong on would put a clutch on the tote shelf. They stay unmatched until she says.
+
 ### ▶ NEXT, IN ORDER
 1. ✅ **Run it for real — DONE.** 78,278 garments, 77 seconds, all seven clean.
 2. ✅ **Put it on a nightly schedule — DONE.** See above: full feed, 21:37 UTC.
