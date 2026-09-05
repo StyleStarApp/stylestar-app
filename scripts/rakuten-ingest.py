@@ -189,6 +189,11 @@ def main():
             # the set of fields that DISAGREED across its rows. One dict serves the
             # write and the shape measurement; see the report block below.
             pieces = {}
+            # One concrete before/after pair per disagreeing field. The counts alone
+            # say a merchant's size rows differ; only an EXAMPLE says whether that
+            # matters -- "same page, different size anchor" is harmless, "the size is
+            # baked into the product NAME" would put "Size Small" on a shelf card.
+            examples = {}
             desc_chars = other_chars = 0
             sized_rows = 0
 
@@ -221,16 +226,16 @@ def main():
                         row["_diff"] = set()
                         pieces[pk] = row
                     else:
-                        if rec["url"] != par["url"]:
-                            par["_diff"].add("url")
-                        if (rec["image_url"] or None) != par["image_url"]:
-                            par["_diff"].add("image")
-                        if rec["price"] != par["price"]:
-                            par["_diff"].add("price")
-                        if (rec["color"] or None) != par["color"]:
-                            par["_diff"].add("color")
-                        if rec["name"] != par["name"]:
-                            par["_diff"].add("name")
+                        def differs(fld, a, b):
+                            if a == b:
+                                return
+                            par["_diff"].add(fld)
+                            examples.setdefault(fld, (a, b))
+                        differs("url", par["url"], rec["url"])
+                        differs("image", par["image_url"], rec["image_url"] or None)
+                        differs("price", par["price"], rec["price"])
+                        differs("color", par["color"], rec["color"] or None)
+                        differs("name", par["name"], rec["name"])
                         par["_sizes"].add(rec["size"])
                         # 🚨 THE GARMENT'S PRICE IS THE LOWEST OF ITS SIZES, because
                         # sizes really can be priced differently and a card that
@@ -284,6 +289,11 @@ def main():
                 big = max(multi, key=lambda x: len(x["_sizes"]))
                 log(f"         most sizes on one piece: {len(big['_sizes'])}"
                     f"  ({', '.join(sorted(x for x in big['_sizes'] if x)[:12])})")
+                for fld in ("name", "url", "price", "image", "color"):
+                    if fld in examples:
+                        a, b = examples[fld]
+                        log(f"         {fld} e.g. {str(a)[:96]}")
+                        log(f"         {fld}  vs {str(b)[:96]}")
             if kept:
                 log(f"  bytes: description {desc_chars/1e6:.1f}MB of"
                     f" {other_chars/1e6:.1f}MB total"
@@ -374,7 +384,7 @@ def main():
         if grand[why]:
             log(f"  dropped {grand[why]:>8,}  {why}")
     log()
-    log("Nothing was written to the repository.")
+    log("No feed data was written into the repository — only into Supabase.")
     # A store that failed must fail the job, or a silently half-empty catalog
     # looks exactly like a healthy one in the Actions list.
     return 1 if failures else 0
