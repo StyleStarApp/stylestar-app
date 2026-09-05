@@ -1,0 +1,41 @@
+# What vocabulary do the seven catalogs actually use?
+#
+# READ-ONLY and manual only. It downloads the feeds, prints each merchant's own
+# taxonomy, and writes nothing anywhere -- no database, no repository. It needs
+# only the FTP password, deliberately NOT the Supabase key: a report has no
+# business holding a key that can write.
+#
+# ⭐ Run this BEFORE writing or changing how garments are matched to the 100-row
+# wardrobe checklist. The feed knows each merchant's categories, not her rows,
+# so the matching has to be designed against the words the merchants really use.
+# Every expensive mistake in this pipeline came from building against an assumed
+# shape instead of a measured one.
+name: Rakuten category shape
+
+on:
+  workflow_dispatch:
+    inputs:
+      top:
+        description: 'How many values to list per column'
+        type: string
+        default: '30'
+
+permissions:
+  contents: read
+
+jobs:
+  shape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Report the taxonomy of all seven catalogs
+        env:
+          RAKUTEN_FTP_USER: rkp_4740535
+          RAKUTEN_SID: '4740535'
+          RAKUTEN_FTP_PASSWORD: ${{ secrets.RAKUTEN_FTP_PASSWORD }}
+          TOP: ${{ inputs.top }}
+        run: python3 scripts/rakuten-categories.py
