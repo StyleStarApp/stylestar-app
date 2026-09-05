@@ -46,56 +46,73 @@ approved on enough stores that ingesting all of them costs something.
 
 ### Phase 1 — Ingestion (Claude, the real build)
 
-**▶ THE TRANSPORT QUESTION IS ANSWERED (2026-09-05), and the answer is better than any
-of the three fallbacks that were anticipated.** The open flag was whether a scheduled
-job could reach `aftp.linksynergy.com` on port 21 at all, given that this dev sandbox
-cannot. Measured rather than assumed:
+**▶ THE TRANSPORT QUESTION IS ANSWERED (2026-09-05): run the job on GitHub Actions.**
+The open flag was whether a scheduled job could reach `aftp.linksynergy.com` at all,
+given that this dev sandbox cannot. Measured rather than assumed:
 
-| port | from this sandbox | notes |
-|---|---|---|
-| 21 (FTP) | blocked | proxy is HTTPS-only; a hard environment policy |
-| 22 (SFTP) | blocked | same |
-| 990 (FTPS) | blocked | same |
-| **443 (HTTPS)** | **OPEN and authenticating** | see below |
+| port | from this dev sandbox |
+|---|---|
+| 21 (FTP) | blocked |
+| 22 (SFTP) | blocked |
+| 990 (FTPS) | blocked |
+| 443 (HTTPS) | open, but see the correction below |
 
-⚠️ **DNS was never the problem** — `aftp.linksynergy.com` resolves fine (69.46.3.107),
-and resolves to the **same IP as `products.linksynergy.com`**. That host answers on 443
-with `Server: Rakuten S3 Gateway`, `X-Amz-Request-Id` headers, an `<HostId>sftpgo-rakutenN</HostId>`
-in its error bodies (so Rakuten runs **SFTPGo** behind it), and a valid TLS certificate
-whose SAN is `aftp.linksynergy.com` itself.
+⚠️ **DNS was never the problem** — `aftp.linksynergy.com` resolves fine (69.46.3.107).
+The block is this sandbox's HTTPS-only proxy, a hard environment policy. It is NOT a
+property of Netlify or GitHub Actions.
 
-▶▶ **AND IT REALLY AUTHENTICATES, proven not inferred: an unauthenticated request
-returns `AccessDenied`, while a request signed with a DELIBERATELY BOGUS AWS SigV4 key
-returns `InvalidAccessKeyId` — "The Access Key Id you provided does not exist in our
-records."** The error changing shape with credentials is what proves the endpoint is a
-live credential-accepting S3 API rather than a wall. Confirmed on three consecutive
-attempts (the standing never-trust-one-fetch rule). `/api/v2/user/folders` also answers
-in SFTPGo's own JSON (`{"status":"fail","message":"access_denied"}`), so the SFTPGo REST
-API is exposed too.
+🚨 **A CORRECTION, recorded because the wrong version was briefly written into this very
+file and it is the kind of error that would have cost a day.** A first pass found that
+`aftp.linksynergy.com` shares an IP with `products.linksynergy.com`, that the latter
+answers on 443 as a `Rakuten S3 Gateway` running SFTPGo, and that it really authenticates
+(unauthenticated → `AccessDenied`; a deliberately bogus AWS SigV4 key → `InvalidAccessKeyId`,
+confirmed on three consecutive attempts). That was all true, **and all beside the point:
+`aftp.linksynergy.com` itself does NOT answer on 443 (three consecutive attempts, all
+connection failures), so the S3 gateway is a different Rakuten service that merely shares
+a machine.** It is not proven to serve her publisher feeds, and there is no reason to
+think her FTP credentials work against it. ▶ **THE LESSON, and it is this project's own
+oldest one: a working door into a building nearby is not a door into YOUR building.
+Verify against the exact host that holds the files, not a neighbour.**
 
-**CONSEQUENCES, and they shape the whole build:**
-1. **No raw FTP is needed anywhere.** Feeds are reachable over ordinary HTTPS on 443.
-2. **The pipeline can be built AND TESTED from this sandbox**, not written blind and
-   hoped for in production. That is worth a great deal on a data pipeline.
-3. ⚠️ **Rakuten's own published guidance still says SFTP is strongly recommended and
-   plain FTP is merely "currently supported"** — so SFTP (port 22) is the documented,
-   supported path and HTTPS is the undocumented one. **Build the fetch layer so the
-   transport is swappable**, and prefer SFTP in production if it proves equally easy.
-   Do not hard-wire the S3 gateway as if it were a promise Rakuten has made.
+▶ **SO THE ANSWER IS THE PLAIN ONE, and it was available without any of that cleverness:
+use the documented FTP/SFTP path, and run the job on GITHUB ACTIONS**, whose runners have
+unrestricted outbound egress and can therefore reach ports 21 and 22 that this sandbox
+cannot. Also free on this repo (so it never touches the Netlify build minutes this project
+watches), and its 6-hour ceiling comfortably fits large compressed feeds where Netlify's
+function timeouts (~30s sync, 15 min background) would be tight.
+⚠️ **Consequence to plan around: the fetch cannot be tested from this sandbox at all.**
+Every connection test has to run as a real GitHub Actions job. Budget for that loop being
+slower than local iteration, and make the recon job print enough to be useful in one run.
 
-**▶ RUN THE JOB ON GITHUB ACTIONS, not a Netlify scheduled function.** Reasons, in
-order: GitHub Actions runners have unrestricted outbound egress, so **all three
-transports work there** and the choice above stays reversible; it is free on this public
-repo, so it does not touch the Netlify build minutes this project already watches; and
-its 6-hour ceiling comfortably fits large compressed feeds where Netlify's function
-timeouts (~30s sync, 15 min background) would be tight.
-
-🚨 **STANDING RULE, and it is the 2026-08-21 photo-cache rule pointed at a new surface:
-THIS REPO IS PUBLIC. Feed data must NEVER be committed to it.** An affiliate approval
-licenses the APP to use a retailer's product data; it does not license this repository
-to redistribute their catalog. Ingested rows go to Supabase and nowhere else; any local
-working copy is gitignored. Credentials live in GitHub Secrets (masked in logs), never
-in the repo and never in chat.
+### What the support email settled (case 407562, 2026-09-04)
+- **Host** `aftp.linksynergy.com` · **username** `rkp_4740535` · password issued separately
+  (**GitHub Secret only — never the repo, never chat**).
+- **Her SID is `4740535`**, which matches the Rakuten publisher SID already recorded in
+  CLAUDE.md. Good consistency check.
+- ⚠️ **Files are GZIP-COMPRESSED; transfer mode must be BINARY.** Rakuten warns explicitly
+  that ASCII mode silently corrupts the file rather than failing loudly.
+- ⚠️ **NEVER OPEN MORE THAN FIVE CONCURRENT CONNECTIONS.** Rakuten states this as a hard
+  limit for automated downloads. With 8 advertisers the job must cap concurrency at 5, or
+  fetch serially. Do not "optimise" this away.
+- **File naming, with `MID` = advertiser and `SID` = 4740535:**
+  | purpose | filename |
+  |---|---|
+  | complete product file | `MID_SID_mp.txt.gz` |
+  | **delta (changes only)** | `MID_SID_mp_delta.txt.gz` |
+  | category list | `MID/MID_category_list.txt` |
+  | category product file | `MID/MID_SID_categoryID_cmp.txt.gz` |
+  | template | `MID_SID_mp_template.txt.gz` |
+  | delta template | `MID_SID_mp_deltatemplate.txt.gz` |
+  So FARM Rio's full file is `44912_4740535_mp.txt.gz`.
+- ⭐ **THE DELTA FILES ARE THE PRIZE AND SHOULD SHAPE THE DESIGN.** Mytheresa alone has
+  ~290,667 products; pulling every full catalog nightly is a lot of bytes for a handful of
+  changes. Take the full file once to seed, then ride the deltas. Re-seed from the full
+  file periodically (weekly) so a missed delta cannot silently rot the table.
+- ⚠️ **The column layout is still UNKNOWN.** Rakuten's guidelines PDF sits behind a
+  Cloudflare wall that this sandbox cannot pass, and the public feed spec on
+  rakutenadvertising.com is the ADVERTISER-side upload spec, not the publisher-side
+  download format. ▶ **Do not write the parser against a guess — read the header row off a
+  real downloaded file first.** That is the whole job of the recon workflow.
 
 - A scheduled nightly job (**GitHub Action**, per the finding above) downloads each
   enabled store's feed.
