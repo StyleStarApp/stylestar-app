@@ -156,6 +156,18 @@ create table if not exists products (
 --   have carried for months unread.
 -- ---------------------------------------------------------------------------
 
+-- ---------------------------------------------------------------------------
+-- ⚠️ EARLY MIGRATIONS — columns added after the tables first shipped.
+--    These MUST run before the indexes and the view below, because those
+--    reference the columns. `create table if not exists` above is skipped
+--    entirely on an existing database, so it never adds them.
+--    MEASURED 2026-09-05 on a real Postgres 16 reproducing Cath's database:
+--    without this, an existing database fails with
+--    `ERROR: 42703: column "slots" does not exist`.
+-- ---------------------------------------------------------------------------
+alter table products add column if not exists slots text[] not null default '{}';
+
+
 create index if not exists products_search_idx on products using gin (search);
 create index if not exists products_store_idx  on products (store);
 create index if not exists products_price_idx  on products (price);
@@ -254,7 +266,14 @@ alter table product_syncs enable row level security;
 -- runs as whoever is asking, so the same rules apply through the view as
 -- through the tables. Supabase's own linter flags the default as critical.
 -- ---------------------------------------------------------------------------
-create or replace view product_cards with (security_invoker = on) as
+-- ⚠️ DROP then CREATE, never `create or replace`. Adding a column to `products`
+--    changes the column ORDER this view returns (it selects p.*), and Postgres
+--    refuses to rename a view column in place:
+--    `ERROR: 42P16: cannot change name of view column "sizes" to "slots"`.
+--    A view holds no data, so dropping it costs nothing. The grant below
+--    re-grants it, and must stay AFTER this.
+drop view if exists product_cards;
+create view product_cards with (security_invoker = on) as
   select p.*,
          (select array_agg(distinct s.size order by s.size)
             from product_sizes s
