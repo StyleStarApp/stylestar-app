@@ -160,6 +160,16 @@ export default async (req) => {
   let body = {};
   try { body = await req.json(); } catch (e) { body = {}; }
   const slot = String(body.slot || '').trim().toLowerCase();
+  // ⭐ WHY A DIAGNOSTIC FLAG EXISTS AT ALL. Every failure below answers with an
+  // EMPTY POOL, on purpose, so a broken catalog falls back to the AI path
+  // rather than showing a woman an error. The cost is that "no credentials",
+  // "the database refused the query" and "that row genuinely has nothing" are
+  // indistinguishable from outside -- and a silent nothing is the worst failure
+  // this pipeline can have. `diag:true` adds a `why` field saying which it was.
+  // 🔒 IT NEVER RETURNS A KEY, A URL, OR ANY DATABASE TEXT: only whether
+  //    credentials were configured, and the numeric upstream status. That is
+  //    the same much a 500 would tell you, and nothing a leak could use.
+  const diag = body.diag === true;
   if (!SLOT_RE.test(slot)) {
     return new Response(JSON.stringify({ error: 'Unknown slot' }), { status: 400, headers });
   }
@@ -185,7 +195,10 @@ export default async (req) => {
     // An empty pool, never an error: a missing catalog must fall back to the
     // AI path exactly as it did before this feature existed. A woman tapping
     // Ideas still gets ideas.
-    return new Response(JSON.stringify({ products: [], slot }), { status: 200, headers });
+    return new Response(JSON.stringify({ products: [], slot,
+      ...(diag ? { why: 'no-credentials',
+                   haveUrl: !!SUPABASE_URL, haveKey: !!KEY } : {}) }),
+      { status: 200, headers });
   }
 
   // product_cards is the view: a garment with its in-stock sizes gathered, so
@@ -206,15 +219,20 @@ export default async (req) => {
     if (!r.ok) {
       const detail = (await r.text()).slice(0, 300);
       console.error(`[product-search] ${slot}: Supabase ${r.status} ${detail}`);
-      return new Response(JSON.stringify({ products: [], slot }), { status: 200, headers });
+      return new Response(JSON.stringify({ products: [], slot,
+        ...(diag ? { why: 'upstream', upstream: r.status } : {}) }),
+        { status: 200, headers });
     }
-    const rows = await r.json();
+      const rows = await r.json();
     const products = (Array.isArray(rows) ? rows : [])
       .filter(x => x && x.piece_key && x.name && x.url && x.price)
       .map(x => shape(x, slot));
-    return new Response(JSON.stringify({ products, slot }), { status: 200, headers });
+    return new Response(JSON.stringify({ products, slot,
+      ...(diag ? { why: 'ok', returned: Array.isArray(rows) ? rows.length : 0 } : {}) }),
+      { status: 200, headers });
   } catch (e) {
     console.error(`[product-search] ${slot}: ${e && e.message}`);
-    return new Response(JSON.stringify({ products: [], slot }), { status: 200, headers });
+    return new Response(JSON.stringify({ products: [], slot,
+      ...(diag ? { why: 'threw' } : {}) }), { status: 200, headers });
   }
 };
