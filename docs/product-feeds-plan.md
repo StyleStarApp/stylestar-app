@@ -199,22 +199,53 @@ on 2026-08-21. Its ~156 women's rows are the real prize there, not the 528.
 negative-controlled) · `scripts/rakuten-ingest.py` (dry run today, writes later).
 **A full pass over all seven catalogs takes 24 SECONDS on a GitHub Actions runner.**
 
-| store | feed rows | kept for women | dropped |
-|---|---|---|---|
-| FARM Rio | 4,683 | **4,681** | — |
-| Diane von Furstenberg | 2,874 | **2,872** | — |
-| Vilebrequin | 529 | **188** | 301 menswear · 38 kids |
-| Olivela | 12,825 | **12,803** | 20 menswear |
-| Marissa Collections | 8,731 | **8,729** | — |
-| Mytheresa | 296,522 | **233,524** | 37,491 menswear · 25,505 kids |
-| Fleur du Mal | 3,671 | **3,571** | 98 menswear |
-| **total** | **329,835** | **266,368** | 37,910 menswear · 25,543 kids |
+| store | feed rows | kept rows | **distinct pieces** | share |
+|---|---|---|---|---|
+| FARM Rio | 4,683 | 4,681 | 1,089 | 1.4% |
+| Diane von Furstenberg | 2,874 | 2,872 | 598 | 0.8% |
+| Vilebrequin | 529 | 188 | 188 | 0.2% |
+| Olivela | 12,825 | 12,803 | 3,883 | 5.0% |
+| Marissa Collections | 8,731 | 8,729 | 8,729 | 11.1% |
+| **Mytheresa** | 296,522 | 233,524 | **63,024** | **80.5%** |
+| Fleur du Mal | 3,671 | 3,571 | 788 | 1.0% |
+| **total** | **329,835** | **266,368** | **78,299** | |
 
-⭐ **Data quality is excellent and better than the plan assumed: across all 266,368 kept
-rows there are ZERO missing images, ZERO missing prices and ZERO duplicate ids.** The
-plan's warning that "feed quality varies by network and store" turns out not to bite here.
-⭐ **DVF keeps 2,872 of 2,874 — the blank-gender rule working exactly as intended.** Under
-the naive keep-only-Female rule that number would be 0.
+Dropped: 37,910 menswear · 25,543 kids.
+⭐ **Zero missing images, zero missing prices, zero duplicate ids across all 266,368 rows.**
+⭐ **DVF keeps 2,872 of 2,874** — the blank-gender rule working. Under keep-only-Female: 0.
+
+🚨 **THE CATALOG IS 78,299 PIECES, NOT 266,368 — AND THE WRONG NUMBER WAS REPORTED TWICE
+BEFORE THE PARENT SKU WAS MEASURED.** The feed carries **one row per size**, so Mytheresa's
+233,524 rows are 63,024 garments at ~3.7 sizes each. ⚠️ Merchants differ: Marissa
+Collections and Vilebrequin file **one row per piece** (1.0 sizes each) while Mytheresa,
+Olivela, FARM Rio and Fleur du Mal break sizes out. ▶ **So `parent_sku` (column 28) is the
+grouping key, and any count of "products" that does not group by it is wrong.** This is
+good news, not bad: per-size rows are exactly what makes an honest **"in your size"**
+possible again, the promise removed on 2026-07-27.
+
+### 🚨 MYTHERESA IS 80.5% OF THE CATALOG — the store-variety problem, in numbers
+▶ **HER FRAMING, 2026-09-05, and it is the clearest statement of this principle yet:
+"it is the style star app not the mytheresa app."** It is the same worry she raised on
+2026-07-27 (*"if Style Star gives every single suggestion at Nordstrom she might think
+well I can just go straight to Nordstrom.com and skip this"*), now measurable.
+
+**AS DECIDED (her call: "let's go with your best recommendation"):**
+1. ⚠️ **DO NOT CAP WHAT IS INGESTED.** A piece that exists should be findable; capping
+   storage means a woman searching for something specific cannot find it even though the
+   store carries it. ▶ **This is deliberately the same call as 2026-07-27's "SORT, DO NOT
+   TRIM"** — sorting did all the quality work there and trimming only ever saved money.
+2. ⭐ **ORDER CATALOG RESULTS BY `_storeFit`, HER OWN STORE SCORES — never by store size.**
+   The ranking machinery she built in July already knows which stores suit which woman.
+   Reuse it rather than inventing a second notion of relevance.
+3. **Apply her existing shelf rules to catalog results, unchanged:** no more than two
+   picks from one store in a set, and include a smaller store where it honestly fits.
+⚠️ **HONEST LIMIT, flagged: a per-store cap cannot fix genuine scarcity.** If only
+Mytheresa carries what she asked for, she gets Mytheresa, and that is correct — the cap
+prevents crowding, not honest answers.
+▶ **Her hope that this eases as more stores are approved is right in direction**, but
+worth holding loosely: Mytheresa is a genuinely large multi-brand retailer, so it may stay
+the biggest for a long while. **That is fine if the ordering is by fit rather than volume**,
+which is exactly why point 2 matters more than point 3.
 
 ### 🚨 A SECOND SILENT-FAILURE COLUMN, found by the dry run contradicting itself
 The first dry run reported **"0 without a price"** while printing **`?`** for the price of
@@ -223,11 +254,17 @@ four stores. Those cannot both be true, and the contradiction was the bug.
 Collections, Mytheresa and Fleur du Mal leave column 10 EMPTY and put the number in
 column 13.** Reading column 10 alone loses the price for **four of the seven stores**, and
 loses it quietly.
-⚠️ **So never read a raw price column. Resolve through `price`**, which also honours her
-standing Edit rule (2026-07-26): **a discounted piece shows its REGULAR price, never the
-sale price** — sales expire, and arriving to find something cheaper than listed feels
-lucky while the reverse feels misled. `list_price`, `current_price` and `on_sale` are all
-kept alongside so the app can present it honestly.
+⚠️ **So never read a raw price column. Resolve through `price`.**
+▶ **HER DECISION 2026-09-05, AND IT SUPERSEDES THE EDIT'S REGULAR-PRICE RULE FOR FEED
+PRODUCTS ONLY: show the CURRENT price, markdown or not**, *"whether it is sale or
+regular."* The regular-price rule (2026-07-26) exists because **the Edit is hand-maintained
+and evergreen** — a sale price typed into it once sits there for months and goes stale. A
+nightly feed cannot go stale that way, so the reason for the rule evaporates.
+⚠️ **THE EDIT KEEPS ITS OWN RULE. Two mechanisms, two rules, each tracking its own reason
+— do not "unify" them.**
+⭐ **AND MARKED-DOWN CARDS SHOW BOTH PRICES, her call: "shoppers love that."** `list_price`
+is retained so a discounted piece can render its original crossed out beside the new one;
+`on_sale` says when that is honest.
 ▶ **THE REUSABLE LESSON: a report that disagrees with its own sample output is a bug, not
 a display quirk.** Both feed bugs found today were of this shape — a rule that looked
 right and quietly deleted data.
@@ -243,11 +280,18 @@ right and quietly deleted data.
    and prices on the shopping cards, then "in your size", then the wishlist.
 4. ▶ **ETSY IS DEFERRED, NOT DROPPED — her call, 2026-09-05.** Its own conversation once
    the seven work.
-5. ⭐ **A QUESTION FOR HER, FLAGGED NOT DECIDED: should VILEBREQUIN COME BACK INTO
-   `STORES`?** It was removed 2026-08-21 because the store's own search returned false
-   negatives. **A feed does not use their search at all**, so the reason for the removal
-   may simply no longer apply — and its 188 women's rows are real products with real
-   photos. **The store table is her curation; never re-add a store without her.**
+5. ⭐ **VILEBREQUIN GOES BACK INTO `STORES` — HER DECISION 2026-09-05, WITH A CONDITION
+   ATTACHED THAT IS NOT YET MET.** Her words: *"as long as it can be properly searched,
+   there is now no reason to leave it out."*
+   ⚠️ **That condition is precisely the part that is still false today.** `STORES` is not
+   only the catalog's store list: it also drives `getStoreUrl()`, which builds search
+   links on the STORE'S OWN SITE, and it feeds `SEARCH_DOMAINS` for the stylist chat's
+   web search. **A feed fixes neither of those paths.** Re-adding it now would restore the
+   exact bug it was removed for on 2026-08-21 — a woman told Vilebrequin has no cover-up
+   dresses when they do.
+   ▶ **SO: add it back at the moment the catalog actually powers the shopping surfaces**,
+   so it is reached through the feed rather than through their search box. Same decision,
+   correct sequencing. Its 188 women's pieces are ingested meanwhile.
 
 - Normalize into one `products` table in Supabase (which we already run):
   `store, brand, name, category, color, sizes, price, sale_price, in_stock,
