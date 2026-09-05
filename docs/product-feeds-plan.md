@@ -116,6 +116,84 @@ slower than local iteration, and make the recon job print enough to be useful in
 
 - A scheduled nightly job (**GitHub Action**, per the finding above) downloads each
   enabled store's feed.
+### ✅ MEASURED AGAINST THE REAL FEEDS (2026-09-05, two GitHub Actions recon runs)
+`scripts/rakuten-recon.py` + `scripts/rakuten-format.py`, both manual-dispatch workflows.
+**Plain FTP on port 21 works from a GitHub Actions runner on the first try** (`220 SFTPGo
+2.0.4 ready`). No SFTP fallback was needed. ▶ **8 of 8 advertisers have a full product
+file waiting** — Phase 0 is now confirmed independently, not just on Cath's word.
+
+| store | MID | full file | delta | rows |
+|---|---|---|---|---|
+| Vilebrequin | 43322 | 122 KB | 4 KB | 528 |
+| Diane von Furstenberg | 53590 | 209 KB | 4 KB | 2,873 |
+| Fleur du Mal | 50739 | 442 KB | 6 KB | 3,670 |
+| FARM Rio | 44912 | 554 KB | 54 KB | — |
+| Olivela | 50334 | 1 MB | 2 KB | — |
+| Marissa Collections | 36537 | 2 MB | 91 KB | — |
+| Mytheresa | 43172 | 23 MB | 269 KB | — |
+| **Etsy** | 54027 | **5 GB** | **1 GB** | — |
+
+🚨 **ETSY IS A 5 GB OUTLIER AND MUST BE EXCLUDED FROM THE FIRST BUILD.** It is 200× the
+next largest store, its *delta alone* is 1 GB, and it is a marketplace of millions of
+independent-seller listings rather than a curated store. The other seven total ~27 MB
+combined, which is trivial. ▶ **Ingest the seven, ship something that works, and treat
+Etsy as its own separate problem later** (streaming filter, never storing the whole
+thing). Her Edit currently contains exactly one Etsy piece, so the cost of deferring is
+near zero.
+
+### The file format — CONFIRMED, not inferred
+Pipe-delimited (`|`), no quoting, gzip, **38 columns, and NO COLUMN-NAME ROW**.
+⚠️ **The file is wrapped in a header and a trailer record, and the parser MUST skip both.**
+Line 1 is `HDR|MID|Merchant Name|MM/DD/YYYY HH:MM:SS`; the last line is a short trailer.
+The recon proved this by measuring column counts across every row: **`[2, 38]`** — one row
+in each file has 2 columns, not 38. A parser that assumes every line has 38 fields will
+crash or insert garbage on the very first and last line of every feed.
+
+| # | field | # | field |
+|---|---|---|---|
+| 0 | product id (MID+GTIN) | 20 | manufacturer |
+| 1 | product name | 22 | **availability** (`in-stock`) |
+| 2 | GTIN | 23 | UPC |
+| 3 | primary category | 24 | (60 — constant, unidentified) |
+| 4 | secondary category (`~~` separated) | 25 | currency (`USD`) |
+| 5 | ⭐ **affiliate product URL** | 27 | tracking pixel URL |
+| 6 | image URL | 28 | parent SKU |
+| 8 / 9 | description (short / long) | 29 | merchant category breadcrumb |
+| 10 | price | 30 | **size** |
+| 11 / 12 | discount type / amount | 31 | material |
+| 13 | sale price | 32 | **color** |
+| 16 | brand | 33 | **gender** |
+| 19 | SKU | 34 | pattern |
+| | | 35 | **age group** (`Adult` / `Kids`) |
+
+⭐⭐ **COLUMN 5 ARRIVES ALREADY AFFILIATE-TAGGED WITH HER REAL PUBLISHER ID**
+(`click.linksynergy.com/link?id=jZNkkinrr1k&...`), which is byte-identical to the id
+already in the app's own `_affUrl`. ▶ **So feed products EARN THE MOMENT THEY ARE SHOWN,
+with no wrapping step at all.** Use column 5 verbatim; do not pass it through `_affUrl`
+and do not rebuild it. (The `_template.txt.gz` files are the same data with `<LSN EID>`
+placeholders instead of her id — they are a sample, NOT a column-name key.)
+
+### 🚨 THE FILTERING TRAP, and it would have silently deleted a whole store
+Style Star is womenswear for adults, so the obvious ingest rule is "keep gender = Female".
+**Measured, that rule is wrong and expensive:**
+
+| store | gender column |
+|---|---|
+| Fleur du Mal | 3,571 Female · 98 Male |
+| Vilebrequin | **301 Male · 156 Female · 70 Unisex** |
+| Diane von Furstenberg | **BLANK on all 2,873 rows** |
+
+▶ **A blanket `gender == 'Female'` filter would drop DVF's ENTIRE CATALOG — 2,873 products
+from a womenswear house — and nothing would look broken.** That is precisely the silent
+class of failure this project has been bitten by before. **So: DROP rows explicitly marked
+`Male`, KEEP `Female`, `Unisex` and BLANK.** Blank means "the merchant did not say", not
+"not for women".
+⚠️ **And filter `age group` too** — Vilebrequin's feed carries `Kids` rows (a girls'
+swimsuit was in the first three sampled). Keep `Adult` and blank; drop `Kids`.
+⚠️ **Vilebrequin being 57% menswear is not a surprise** — it is a men's-swim house
+historically, which is the same fact that got it removed from the searchable store table
+on 2026-08-21. Its ~156 women's rows are the real prize there, not the 528.
+
 - Normalize into one `products` table in Supabase (which we already run):
   `store, brand, name, category, color, sizes, price, sale_price, in_stock,
   product_url (with affiliate tag), image_url, updated_at`.
