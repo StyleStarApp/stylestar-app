@@ -101,6 +101,46 @@ already rank the stores.
 nameparity 25 · e2e 29 · askvary 14 — all 0 failed.** `searchtune` 71/1, the documented pre-existing
 heart-tip font check.
 
+### 🚨🚨 THE ONE THING BLOCKING HER SHELVES: NETLIFY'S SUPABASE KEY IS BEING REJECTED (2026-09-05)
+**The catalog is perfect and the shelves are still empty, and the cause is NOT in anything built this
+session.** ▶ **PROVEN, not inferred: `product-search` asks Supabase and gets back HTTP 401.** That is an
+AUTHENTICATION refusal, which happens before any table, policy or row is considered — so it is not the
+grants, not the RLS, not the schema, and not the slot matching.
+- ✅ **EVERYTHING ELSE IS MEASURED HEALTHY.** The nightly ingest wrote **78,261 garments** and
+  **69,988 of them (89%) carry a checklist slot**. The EXACT shelf query the app sends, byte for byte,
+  returns real rows when it runs with the ingest's own key — dr1, to3, dr3, sh9 and bg1 all answered
+  with real garments, real prices and real photos. **Both sides report the same project fingerprint
+  `c156fa1e`, so they are talking to the same database.**
+- ▶▶ **SO THE ONE THING FOR HER: copy the current API key out of Supabase into Netlify.**
+  **Supabase → Project Settings → API Keys** → copy the **publishable / `anon` key** →
+  **Netlify → Site configuration → Environment variables** → update **`SUPABASE_KEY`** → **redeploy**.
+  ⚠️ **The `anon`/publishable one, NEVER the service role key** — that is the whole 2026-09-05 security
+  decision, and it is why the catalog carries a read-only rule for the ordinary key instead.
+- 🚨🚨 **AND THE PART THAT MATTERS MORE THAN THE SHELVES, FLAGGED HONESTLY AS REASONED NOT PROVEN:
+  `user-data.js` READS THE SAME `SUPABASE_KEY`**, with byte-identical headers and the same URL. A 401 is
+  table-agnostic, so **saving results and restoring them by email are very probably failing too.**
+  ⚠️ **AND THE SAVE PATH RETURNS `success: true` REGARDLESS** — its Supabase write sits inside a
+  `catch (e) {}` — so a woman would be told her results were saved when they were not, and would then
+  get a welcome email whose restore link finds no row. ▶ **This was NOT proven, deliberately: the only
+  decisive test writes a junk row into her real `users` table and sends a real welcome email.** ▶ **The
+  same one key fixes both if it is the cause. Check a real save right after updating it.**
+- ⚠️ **A SEPARATE BUG WORTH FIXING WHEN SHE HAS APPETITE, not fixed tonight because it changes the save
+  path on a live app: that silent `success: true`.** An honest failure is better than a false promise,
+  and this is the exact "silent nothing" family this file already keeps warning about.
+- ⭐⭐ **THE INSTRUMENT THAT FOUND IT, AND THE REASON IT EXISTS: every failure inside `product-search`
+  answers with an EMPTY POOL on purpose**, so a broken catalog falls back to the AI path rather than
+  showing a woman an error. **The cost is that "no credentials", "the database refused this" and "that
+  row genuinely has nothing" look identical from outside.** Two things now tell them apart, and both are
+  permanent:
+  1. **`POST {"slot":"dr1","diag":true}` to `/.netlify/functions/product-search`** adds a `why` field
+     (`no-credentials` · `upstream` + the numeric status · `threw` · `ok`). 🔒 **It never returns a key,
+     a URL or any database text.**
+  2. **Actions → Catalog health** (`catalog-health.yml`, read-only, manual) asks Supabase directly how
+     many garments exist, how many are tagged, and runs the real shelf query. **Run it first whenever a
+     shelf looks thin.**
+  ▶ **Without these two, tonight's answer was unreachable — the app cannot tell you why it is empty, by
+  design.**
+
 ### ✅ THE ONE THING FOR HER IS DONE (2026-09-05)
 She ran `db/products.sql` in the Supabase SQL Editor herself and confirmed both checks:
 `select count(*) from product_cards;` → **78,278** (the catalog is readable by the ordinary key) and
@@ -124,11 +164,12 @@ ingest runs). **Nothing was added to Netlify, by design.**
 ### ▶ THEN, IN ORDER
 1. ✅ **Merged to main.** The ingest's slot matcher is on the default branch now, so the nightly run
    (21:37 UTC) will fill `slots` on its own.
-2. ⏳ **Run Actions → Rakuten feed ingest once by hand** so `slots` fills without waiting for tonight.
-   **Her call was to skip the before/after look and just see the finished thing.**
-3. 👀 **Her eye on Wardrobe Ideas, on her real phone.** ⚠️ Private browsing, `stylestar.app/?notrack`.
+2. ✅ **The ingest has run.** 78,261 garments, 69,988 tagged to a checklist row.
+3. 🚨 **UPDATE `SUPABASE_KEY` IN NETLIFY — nothing appears on a shelf until this is done.** See the
+   entry above; it is two screens and it may also be quietly breaking saved results.
+4. 👀 **Her eye on Wardrobe Ideas, on her real phone.** ⚠️ Private browsing, `stylestar.app/?notrack`.
    Watch for: does the shelf feel like her? do her own picks being rare bother her (see the flag above)?
-4. ✅ **Vilebrequin is back in `STORES`** (2026-09-05, her word: *"Yes go ahead and include it"*), with
+5. ✅ **Vilebrequin is back in `STORES`** (2026-09-05, her word: *"Yes go ahead and include it"*), with
    its own hostname added to `SEARCH_DOMAINS` per the standing rule. ⚠️ **Its `deep` flag was
    DELIBERATELY NOT restored** — the feed only powers Wardrobe Ideas, so the stylist chat and Shop your
    Style still hit Vilebrequin's own search, which is what returned the false negative on cover-up
