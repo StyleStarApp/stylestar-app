@@ -296,7 +296,12 @@
   "not": [
    "dress",
    "jacket",
-   "zip-up coat"
+   "coat",
+   "parka",
+   "anorak",
+   "vest",
+   "puffer",
+   "bag"
   ]
  },
  "bo1": {
@@ -457,12 +462,18 @@
    "maxi skirt",
    "midi skirt",
    "pleated skirt",
-   "a-line skirt"
+   "a-line skirt",
+   "skirt"
   ],
   "not": [
    "dress",
    "pencil",
-   "mini"
+   "mini",
+   "denim",
+   "jean",
+   "tennis",
+   "skort",
+   "bag"
   ]
  },
  "bo11": {
@@ -492,7 +503,20 @@
    "dress",
    "sleeve",
    "boot",
-   "sock"
+   "sock",
+   "kimono",
+   "robe",
+   "jacket",
+   "coat",
+   "cardigan",
+   "blazer",
+   "sweater",
+   "top",
+   "shirt",
+   "skirt",
+   "sandal",
+   "bag",
+   "hair"
   ]
  },
  "dr1": {
@@ -758,7 +782,10 @@
    "rain coat",
    "anorak",
    "parka",
-   "waterproof"
+   "rain jacket",
+   "waterproof coat",
+   "waterproof jacket",
+   "waterproof parka"
   ],
   "not": [
    "dress"
@@ -920,7 +947,14 @@
    "swim",
    "bikini",
    "jewelry",
-   "earring"
+   "earring",
+   "skirt",
+   "pant",
+   "legging",
+   "short",
+   "jacket",
+   "bra",
+   "bag"
   ]
  },
  "ac5": {
@@ -1073,13 +1107,19 @@
   "n": "Nightgowns",
   "cat": [
    "nightgowns",
-   "nightwear>nightgowns"
+   "sleepwear>nightgowns",
+   "nightwear>nightgowns",
+   "chemises"
   ],
   "name": [
    "nightgown",
    "night gown",
    "nightdress",
-   "night dress"
+   "night dress",
+   "negligee",
+   "sleep dress",
+   "sleep shirt",
+   "nightie"
   ],
   "not": [
    "robe",
@@ -1876,12 +1916,20 @@
    "bucket hat",
    "panama",
    "visor",
-   "raffia hat"
+   "raffia hat",
+   "hat",
+   "cap"
   ],
   "not": [
    "beanie",
    "wool hat",
-   "cashmere hat"
+   "cashmere hat",
+   "knit hat",
+   "fur hat",
+   "trapper",
+   "bag",
+   "shoe",
+   "cape"
   ]
  },
  "ex11": {
