@@ -1,0 +1,32 @@
+# Is the catalog readable the way a wardrobe shelf reads it?
+#
+# READ-ONLY and manual only. It asks Supabase the three questions the app itself
+# cannot, because product-search.js answers every failure with an empty pool --
+# deliberately, so a broken catalog falls back to the AI path instead of showing
+# an error. That is right for a woman tapping Ideas and useless for diagnosis.
+#
+# ⭐ RUN THIS whenever a wardrobe shelf looks thin or empty. It separates
+# "the catalog is empty" from "nothing is tagged to that row" from "the database
+# is refusing the query", and those three have completely different fixes.
+name: Catalog health
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ask the catalog three questions
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python3 scripts/catalog_health.py
