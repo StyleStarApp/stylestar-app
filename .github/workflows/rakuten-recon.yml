@@ -1,0 +1,31 @@
+# Rakuten Product Catalog — recon. MANUAL ONLY (workflow_dispatch), never on a schedule.
+#
+# This exists because the dev sandbox cannot reach aftp.linksynergy.com on ports 21 or 22
+# (hard HTTPS-only proxy policy), so every connection test has to run here as a real job.
+#
+# Safe on a PUBLIC repo: the password lives in a GitHub Secret, which Actions masks in
+# logs, and secrets are not exposed to pull requests from forks. No feed data is ever
+# written into the repository — see scripts/rakuten-recon.py.
+name: Rakuten feed recon
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Look at what is actually on the feed server
+        env:
+          RAKUTEN_FTP_USER: rkp_4740535
+          RAKUTEN_SID: '4740535'
+          RAKUTEN_FTP_PASSWORD: ${{ secrets.RAKUTEN_FTP_PASSWORD }}
+        run: python3 scripts/rakuten-recon.py
