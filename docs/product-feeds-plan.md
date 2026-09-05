@@ -357,10 +357,41 @@ across every surface at once.
    - **A failed store fails the job**, so a half-empty catalog cannot look healthy in the
      Actions list.
 
+### 📏 WHAT THE FIRST REAL RUNS MEASURED (2026-09-05, three runs, all seven stores)
+**78,278 garments and 265,774 sizes, written in 77 seconds.** Zero without an image,
+zero without a price, zero duplicate ids. The shape report earned its keep immediately,
+and every finding below came from a CONCRETE EXAMPLE rather than a count — the counts
+only said the rows differed, which would have been easy to wave away.
+
+1. 🚨 **THREE MERCHANTS BAKE THE SIZE INTO THE PRODUCT NAME.** Fleur du Mal:
+   *"Collared Bodysuit with Dotted Tulle Black Size Small"* vs *"... Size Medium"*, on
+   **646 of 791** pieces. FARM Rio does it too, with the colour: *"Red Fish Top Maxi
+   Dress, RED / XXS"*, **873** pieces. The garment row keeps whichever size came first,
+   so a shelf card would have read "Size Small" as though it were part of the piece.
+   ▶ **`tidy_name()` recovers the garment from the common prefix of its size rows.**
+   ⚠️ It cuts back to a word boundary ONLY when the prefix really stops mid-word — bra
+   sizes 30A and 30B share *"... Size 30"* — and never otherwise, or *"Silk Dress"*
+   beside *"Silk Dress Long"* comes back as *"Silk"*. Both pinned by tests.
+2. 🚨 **EVERY SIZE HAS ITS OWN PRODUCT URL** at Mytheresa (100% of 42,726 multi-size
+   pieces), Olivela, DVF, FARM Rio and Fleur du Mal — the Rakuten `offerid` differs per
+   row. And some merchants **price sizes differently** (Fleur du Mal $18 vs $24 on one
+   piece; FARM Rio $50 vs $100). The garment shows the LOWEST price, so **the link and
+   the photo now come from that same row**, or a card offering $18 would have sent her
+   to the $24 size's page.
+   ▶ **The per-size URLs are deliberately NOT stored.** Repeating a 157-byte affiliate
+   URL 266,000 times is the whole thing the split design avoids (+42 MB), and the
+   promise "in your size" is about FILTERING what she is shown, not deep-linking to one
+   size — every retailer lets her pick the size on the page she lands on.
+3. ⚠️ **A REAL GAP FOR "IN YOUR SIZE", NOT YET SOLVED: FARM Rio leaves the size COLUMN
+   EMPTY on 2,968 of its 4,475 rows and writes the size only into the name**
+   (*"FARMLAB HAVAIANAS SANDALS, FARMLAB / 6"*, size column blank). Marissa Collections
+   names no size at all on any of its 8,755 rows, which is honest — it is mostly jewelry.
+   ▶ **So a size filter will be blind to those pieces.** Recovering the size from the
+   name is possible but store-specific and speculative; **decide it when the size filter
+   is actually built**, against what a shelf looks like, not now.
+
 ### ▶ NEXT, IN ORDER
-1. **Run it for real** (Actions → Rakuten feed ingest → Run workflow) and watch 78,299
-   garments land. The workflow runs the offline tests first, so a broken writer never
-   reaches the database.
+1. ✅ **Run it for real — DONE.** 78,278 garments, 77 seconds, all seven clean.
 2. **Put it on a nightly schedule.** ⚠️ Seed from the full files once, then ride the
    **delta** files (a few KB each against 27 MB) — which means setting `FEED_KIND=delta`,
    the one line that stops the sweep — and re-seed weekly so a missed delta cannot
