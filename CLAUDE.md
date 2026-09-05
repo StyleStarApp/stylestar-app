@@ -7,7 +7,103 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-04 later — 📦 RAKUTEN PRODUCT CATALOG FEEDS REQUESTED FOR ALL 8 ADVERTISERS, PLAY 2 OUTREACH FULLY CLOSED, AND HER ORIGIN STORY IS RECORDED FOR GOOD)
+## ▶ NEXT SESSION — START HERE (2026-09-05 — 👖 THE BELT IS SETTLED, AND ALL 8 RAKUTEN PRODUCT FEEDS ARE CONFIRMED REAL WITH ACTUAL FILES ON THE SERVER, PHASE 0 IS DONE)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "the belt looks good now. we can check that off the list. let's save everything to the claude.md and I will open a new session to begin work on the phase 1 build")
+**Two threads this session, both closed out.** A new Style Star Edit item that took three rounds to land right, and
+the FTP verification that Phase 0 of `docs/product-feeds-plan.md` was actually waiting on. ▶ **THE HEADLINE: she has
+now seen, with her own eyes on her own Mac, real product files sitting on Rakuten's FTP server for all 8 of her
+approved advertisers. Phase 0 is genuinely, verifiably done. Her own next move: open a fresh session and start
+Phase 1, the real ingestion pipeline.**
+
+### 👖 THE VALENTINO BELT IS LIVE AND SETTLED, AFTER THREE ROUNDS
+**Valentino Garavani VLOGO Signature Reversible Leather Belt, $570, Mytheresa, added to the Style Star Edit this
+session.** Her note, verbatim: *"Belts are in more than ever this season. This one is reversible, and every good
+shopper knows reversible means half off (girl math!)."* Her pasted Mytheresa URL carried a pile of Facebook ad
+tracking parameters, all stripped per the standing rule; the canonical product URL is what shipped.
+- **The photo went through three attempts before it settled, and every round was her own live reaction, not a
+  guess.** She provided the real Mytheresa CDN image URL directly (their product pages bot-wall this sandbox, so the
+  name/price were her own reported facts and the image had to come from her "Copy Image Address," never guessed;
+  several guessed URL patterns were tried first and all correctly failed as the bot-block page before she sent the
+  real one, confirming the pattern of asking rather than guessing paid off again).
+  1. **First render round:** she asked to center the belt's photo the way the neighboring Valentino sunglasses photo
+     sits centered. Four crop options were rendered (a wrapper plus `transform:scale` technique, the same shape
+     already used elsewhere in the Edit for the Open Heart Necklace); she picked "800."
+  2. **She rejected it once shipped:** *"It's not looking right... let's go back to the original image you had and
+     somehow frame it differently or add padding around it."* Same message, she also caught a real regression: the
+     belt had silently dropped out of the "More from the Edit" horizontal swipe strip. ⚠️ **Root cause: the wrapper
+     technique doesn't carry the exact class `_renderEditTeaser()`'s filter looks for
+     (`.dc-item-px` on the `<img>` itself), so the belt was invisible to that strip even though it had a real photo.**
+     Fixed by switching to a plain `<img class="dc-item-px" style="object-fit:contain;...">`, the same override
+     pattern already used on the Veronica Beard Crosbie Jean flat-lay, which restored the strip AND showed the full,
+     uncropped belt. The letterbox background was matched to the photo's own sampled corner color (`#EEEFF3`)
+     rather than the shared card cream, which removed a visible seam a first render revealed.
+  3. **Even with that fix, it still read wrong beside the sunglasses.** Rather than chase the crop further, she said
+     plainly: *"I think what is bothering me is that it looks so off center compared to the sunglasses next to the
+     belt. Let's move the belt to after the jeans and before the red bag."* Moved (extraction and reinsertion
+     verified with a script, not a hand edit) to sit between the Veronica Beard Crosbie Jean and the Serpui Abigail
+     Handbag, both Marissa Collections items it now keeps company with. **Her verdict on the result: "the belt looks
+     good now. we can check that off the list."**
+- ⚠️ **The reusable lesson, worth keeping: when a photo keeps reading wrong against a specific neighbor no matter how
+  it's cropped, the fix may not be the crop at all. Moving it away from that neighbor solved what three rounds of
+  crop tuning could not.** Don't assume the next complaint about a photo is always asking for more crop work.
+- All verification done before each push: item count held at 31 through every reorder, the belt's own anchor href
+  appears exactly once, div balance checked on the belt block and both its neighbors individually, both real
+  `<script>` blocks parse clean with `node --check`, no mojibake. Every change pushed straight to `main` (no PR, the
+  repo's standing convention) and confirmed live via curl polling before moving on.
+
+### 📦📦 RAKUTEN FTP, VERIFIED FOR REAL: ALL 8 ADVERTISER FOLDERS HOLD ACTUAL FILES
+The open question from the prior session was whether the "product catalogs" email was real feed infrastructure or
+just a promise. ▶ **It's real, and it's now been seen directly, not inferred from a dashboard.**
+- ⚠️ **Raw FTP is categorically unreachable from this sandbox.** `curl ftp://aftp.linksynergy.com/` timed out after
+  20 seconds; the cause is a hard environment policy, not a credentials problem or a Rakuten outage: the sandbox's
+  proxy supports HTTPS (port 443) only, and `/root/.ccr/README.md` explicitly lists raw FTP as unsupported. This was
+  reported to her honestly as an environment limit rather than something to work around, and she was guided to check
+  it herself instead.
+- ⚠️ **Her first attempt, Finder, failed silently** ("Ok I clicked on the password but I don't see where it went?").
+  Apple's built in FTP support in Finder is unreliable on modern macOS and can connect without any visible
+  confirmation. **Cyberduck was the fallback that worked cleanly**, and her screenshots confirmed it: real folders
+  for all 8 MID numbers, each with actual files inside, plus `ADDITIONAL` and `GLOBAL` folders at the top level.
+- **The 8 confirmed MID folders, matched to her approved advertisers:** FARM Rio (44912), Diane von Furstenberg
+  (53590), Vilebrequin (43322), Olivela (50334), Marissa Collections (36537), Mytheresa (43172), Fleur du Mal
+  (50739), Etsy (54027).
+- ▶ **So Phase 0 of `docs/product-feeds-plan.md` is not just administratively started, it is CONFIRMED: real product
+  feed files exist on Rakuten's server for every one of her 8 approved advertisers, today.** That was the one
+  outstanding fact the previous session's "give it time, then check back" was waiting on.
+- ⚠️ **ONE REAL OPEN QUESTION FOR THE PHASE 1 BUILD, flagged rather than assumed either way: this sandbox's raw FTP
+  block is a property of THIS development environment's proxy, not necessarily of Netlify's serverless runtime.**
+  The plan doc calls for "a scheduled nightly job (GitHub Action or Netlify scheduled function)" to download each
+  feed. Whether that job's own network egress can reach `aftp.linksynergy.com` on port 21 is genuinely unverified
+  and should be checked EARLY in the Phase 1 build, before designing around it. **If it also can't reach raw FTP,
+  the fallback options to weigh are:** an FTP client library that can tunnel over a proxy, checking whether Rakuten
+  offers an HTTPS-based feed URL alongside the FTP one (worth asking their support, the same channel that issued the
+  FTP credentials), or a small non-Netlify worker whose only job is fetching the feed and handing it off over HTTPS.
+  **Don't assume either way. Test it first.**
+
+### ▶ THE FIRST THINGS NEXT SESSION
+1. 🏗️ **START PHASE 1 OF `docs/product-feeds-plan.md`, her stated plan.** Read the plan doc fresh (it's short and
+   shovel-ready) before writing anything. First real technical question to settle, per the flag above: **can the
+   scheduled job actually reach Rakuten's FTP server, or does the fetch need a different path?** Answer that before
+   building the rest of the pipeline around an assumption.
+2. **Phase 0's starting store set is still an open decision, per the plan doc itself:** "begin with the 15 to 25
+   stores that carry the most suggestion traffic... rather than all 102 on day one." She only has 8 approved
+   advertisers right now (all of them Rakuten), so in practice Phase 1 likely starts with all 8 rather than picking
+   a subset, but confirm that reading with her rather than assuming it.
+3. **Standing rules that must carry into the pipeline, already written into the plan and worth re-reading before
+   coding:** commission data never influences ranking (stays out of the app entirely, her 2026-07-27 rule), the
+   Style Star Edit stays 100% her own picks and is never auto-filled from feeds, never-wear filtering must apply to
+   catalog results exactly as it does to AI suggestions today, and price-spread and store-variety rules apply to
+   whatever the catalog surfaces show.
+4. 👖 **The belt is closed, don't re-raise it.** She confirmed it live and asked to check it off the list.
+5. ⚠️ Everything else standing and untouched this session: the 3 pending AWIN applications (Jackie Mack Designs,
+   TERI JON, Under Armour US), CJ next in the affiliate sequence, Impact on hold, Amazon deliberately last, the
+   Wardrobe Holes article, the three catalog decisions (Old Navy / Everlane / Mango), Almira / Indie Law (no reply
+   as of the last check), and Play 2 outreach, which is closed pending replies (do not re-raise panaprium or
+   itechnolabs unless a reply arrives).
+
+---
+
+## ▶ PREVIOUS — (2026-09-04 later — 📦 RAKUTEN PRODUCT CATALOG FEEDS REQUESTED FOR ALL 8 ADVERTISERS, PLAY 2 OUTREACH FULLY CLOSED, AND HER ORIGIN STORY IS RECORDED FOR GOOD)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "before we close out and save to the .md I want to save this idea")
 **No app code touched this session — Rakuten feed-access administration, one outreach follow-up, and a big founder-story
