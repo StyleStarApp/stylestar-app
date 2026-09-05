@@ -330,13 +330,41 @@ across every surface at once.
 | Stylist chat | web search, ~5-10¢, 10-20s | queries our own catalog: faster, cheaper, exact |
 | Your Wishlist | rebuilt search links | real prices, re-checked nightly |
 
+### ✅ DONE 2026-09-05 — THE TABLES AND THE WRITER
+1. ✅ **The tables exist**, `db/products.sql`, run by Cath in the Supabase SQL editor.
+   ⭐ **The grain was MEASURED, not argued**: 54,056 realistic rows loaded into a real
+   local Postgres 16 showed **flat 266 MB vs split 90 MB**, so a garment table plus a
+   narrow sizes table won and it was not close. The first draft was the flat design on
+   reasoning that turned out to be wrong. **The piece key is `mid : parent_sku : colour`**
+   because whether a merchant's parent_sku is per-style or per-colourway is unmeasured
+   and varies — keying on the pair is identical where it is already per-colour and
+   correct where it is not.
+2. ✅ **Two GitHub Secrets added** (`SUPABASE_URL`, `SUPABASE_SERVICE_KEY`).
+   🚨 **It is the SERVICE/SECRET key, not the publishable one.** RLS is on with no
+   policies, so the publishable key can read and write nothing here — which is the point.
+3. ✅ **The ingest WRITES.** `scripts/supabase_io.py` (stdlib only, so the workflow still
+   installs nothing) upserts through PostgREST; `rakuten-ingest.py` writes garments, then
+   sizes, then sweeps what the feed no longer carries, then records a `product_syncs` row
+   per store. ⚠️ **Ordering is load-bearing** — a size references its garment, so garments
+   go first; the offline test enforces the foreign key exactly as the database does.
+   ▶ **Three guards worth knowing, because each protects against an expensive night:**
+   - **The sweep only runs on a FULL feed.** A delta carries only what changed, so
+     sweeping after one would read the other 99% as "gone" and delete the whole store.
+   - **The sweep refuses** when a feed accounts for under 60% of what we already hold
+     AND at least 500 rows would go. ⚠️ **Both conditions, because proportion alone is
+     wrong for a small store**: Vilebrequin's 188 pieces can move 40% in an ordinary
+     week, and a brake that jams on it stays jammed every night after.
+   - **A failed store fails the job**, so a half-empty catalog cannot look healthy in the
+     Actions list.
+
 ### ▶ NEXT, IN ORDER
-1. **The Supabase `products` table.** Now designable against real numbers rather than a
-   guess: ~266k rows, every one with an image and a price. Needs two more GitHub Secrets
-   (`SUPABASE_URL`, `SUPABASE_KEY`) — she already has both as Netlify env vars.
-2. **Switch the ingest from `DRY_RUN` to writing**, then put it on a nightly schedule.
-   ⚠️ Seed from the full files once, then ride the **delta** files (a few KB each against
-   27 MB), and re-seed weekly so a missed delta cannot silently rot the table.
+1. **Run it for real** (Actions → Rakuten feed ingest → Run workflow) and watch 78,299
+   garments land. The workflow runs the offline tests first, so a broken writer never
+   reaches the database.
+2. **Put it on a nightly schedule.** ⚠️ Seed from the full files once, then ride the
+   **delta** files (a few KB each against 27 MB) — which means setting `FEED_KIND=delta`,
+   the one line that stops the sweep — and re-seed weekly so a missed delta cannot
+   silently rot the table.
 3. **Then the surfaces**, in the plan's own order: stylist chat first, then real photos
    and prices on the shopping cards, then "in your size", then the wishlist.
 4. ▶ **ETSY IS DEFERRED, NOT DROPPED — her call, 2026-09-05.** Its own conversation once

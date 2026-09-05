@@ -1,31 +1,55 @@
-# Rakuten Product Catalog — recon. MANUAL ONLY (workflow_dispatch), never on a schedule.
+# Rakuten Product Catalog — the nightly ingest.
 #
-# This exists because the dev sandbox cannot reach aftp.linksynergy.com on ports 21 or 22
-# (hard HTTPS-only proxy policy), so every connection test has to run here as a real job.
+# This exists here rather than in the dev sandbox because that sandbox cannot reach
+# aftp.linksynergy.com on ports 21 or 22 (hard HTTPS-only proxy policy), so every real
+# run has to happen on a runner.
 #
-# Safe on a PUBLIC repo: the password lives in a GitHub Secret, which Actions masks in
-# logs, and secrets are not exposed to pull requests from forks. No feed data is ever
-# written into the repository — see scripts/rakuten-ingest.py.
-name: Rakuten feed ingest (dry run)
+# Safe on a PUBLIC repo: both secrets live in GitHub Secrets, which Actions masks in
+# logs, and secrets are not exposed to pull requests from forks. The scripts redact them
+# a second time on every error path rather than trusting that. No feed data is ever
+# written into the repository -- an affiliate approval lets the APP use a retailer's
+# catalog, it does not let us republish it.
+name: Rakuten feed ingest
 
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Report only, write nothing'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
+# Two of these running at once would fight over the same rows, and Rakuten's own limit
+# is five concurrent FTP connections. One at a time, and a queued run waits.
+concurrency:
+  group: rakuten-ingest
+  cancel-in-progress: false
+
 jobs:
-  recon:
+  ingest:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Download, parse and report all seven catalogs
+      # The offline tests need no network and take a second. Running them here means a
+      # broken writer never reaches the real database.
+      - name: Test the parser and the ingest offline first
+        run: |
+          python3 scripts/test_rakuten_feed.py
+          python3 scripts/test_rakuten_ingest.py
+      - name: Download, parse and write all seven catalogs
         env:
           RAKUTEN_FTP_USER: rkp_4740535
           RAKUTEN_SID: '4740535'
           RAKUTEN_FTP_PASSWORD: ${{ secrets.RAKUTEN_FTP_PASSWORD }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+          FEED_KIND: full
         run: python3 scripts/rakuten-ingest.py

@@ -1,7 +1,8 @@
 # The product catalog database — setup
 
-Two things to do, both at a desk, both about ten minutes. After that the nightly
-ingest can run and nothing here needs touching again.
+✅ **Both steps below were done by Cath on 2026-09-05.** They are kept because they
+are the recipe for the next project, or for rebuilding this one — not because
+anything is outstanding.
 
 ---
 
@@ -24,10 +25,19 @@ screen where `RAKUTEN_FTP_PASSWORD` already lives.
 
 | Secret name | Where to find it |
 |---|---|
-| `SUPABASE_URL` | Supabase → Project Settings → **API** → *Project URL*. Looks like `https://abcdefgh.supabase.co` |
-| `SUPABASE_SERVICE_KEY` | Supabase → Project Settings → **API** → **`service_role`** key |
+| `SUPABASE_URL` | The project home page → **Copy** → *Project URL*. Looks like `https://abcdefgh.supabase.co` |
+| `SUPABASE_SERVICE_KEY` | **Settings → API Keys → Secret keys** → the `sb_secret_…` one |
 
-### 🚨 It must be the `service_role` key, not the `anon` key
+⚠️ **The screens have been renamed.** Supabase now calls these *publishable* and
+*secret* keys rather than `anon` and `service_role`; the old pair still exists
+under a **Legacy anon, service_role API keys** tab. Either naming works — the
+distinction below is what matters, not the label.
+
+⚠️ **Copying the secret name out of a set of instructions overwrites your
+clipboard**, which is a genuinely easy way to lose the value you just copied.
+Copy the value, then **type** the name.
+
+### 🚨 It must be the secret (`service_role`) key, not the publishable (`anon`) one
 
 This is the one thing likely to go wrong, so it is worth being clear about.
 
@@ -48,9 +58,16 @@ bypasses every security rule in the database, including on the `users` table, so
 it could read every woman's saved results. It is safe in a GitHub Secret
 (GitHub masks secrets in logs, and secrets are never given to pull requests from
 forks), the workflows here only run manually or on a schedule, and the ingest
-script never prints it. But it is not a value to paste into a chat, an email, or
-anywhere else. If it is ever exposed, Supabase → Project Settings → API →
-**Reset** issues a new one and the old one dies instantly.
+script never prints it. But it is not a value to put into a chat, an email, or
+anywhere else — **and a screenshot counts.**
+
+▶ **If it is ever exposed, rotate it rather than reasoning about who might have
+seen it.** Settings → API Keys → **+ New secret key** → copy it → update the
+GitHub secret → delete the old key from its `⋮` menu. Two minutes, and it makes
+every copy of the old key inert wherever it ended up. Deleting the message that
+exposed it does not, because the value has already travelled.
+⚠️ *This happened once, on 2026-09-05, from a screenshot of the GitHub form. It
+was rotated the same hour.*
 
 ---
 
@@ -65,11 +82,22 @@ anywhere else. If it is ever exposed, Supabase → Project Settings → API →
 Plus a view, `product_cards`, which is a garment with its sizes already gathered,
 so one query fills a carousel.
 
-**Measured size of the whole thing: about 144 MB.** Supabase's free tier allows
-500 MB for the entire database, so there is comfortable room for Etsy and for
-more stores as they approve. The reasoning behind every column, and the two
+**Measured size of the whole thing: about 144 MB**, on a real local Postgres 16
+loaded with 54,056 realistic rows and extrapolated — not estimated. This project
+is on Supabase **Pro**, which includes 8 GB, so the catalog is under 2% of what
+is already paid for, with comfortable room for Etsy and for every store still to
+approve. The reasoning behind every column, and the two
 silent-failure traps the design protects against, are written into
 `db/products.sql` itself.
+
+---
+
+## Filling it
+
+**Actions → Rakuten feed ingest → Run workflow.** It runs the offline tests
+first, so a broken writer never reaches the database, then downloads all seven
+catalogs, writes the garments, writes their sizes, and removes anything the
+feeds no longer carry.
 
 ---
 
