@@ -7,7 +7,122 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-05 LATER — 🚚 PHASE 1 IS BUILT AND PROVEN: 78,299 REAL PRODUCTS ARE READABLE FROM RAKUTEN, NIGHTLY, AND THE PIPELINE RUNS)
+## ▶ NEXT SESSION — START HERE (2026-09-05 NIGHT — 👗 THE FEED IS ON HER WARDROBE SHELVES, THROUGH HER OWN PICKER, AND HER NEVER-WEAR LIST HAD A BUG)
+
+### ⏸ WHERE THIS SESSION PAUSED
+**FOUR COMMITS on `claude/bold-hamilton-fujej7`, pushed, NOT merged to main** (this session's branch
+instruction forbids pushing to main without her word — see the ▶ ONE THING FOR HER below).
+▶▶ **THE HEADLINE: the nightly catalog now reaches Wardrobe Ideas, and it goes through
+`curatedPicks()` — the SAME picker as her 107 hand-picks — so her never-wear list, colour no's, size
+ranges, price spread, max-two-per-retailer and the Sunday rotation apply to a feed garment by the
+identical code that applies them to hers. Two sources, ONE picker.**
+▶ **Wardrobe Ideas ONLY, deliberately.** Her eye on a real phone before this reaches Shop your Style,
+Complete the Look or the stylist chat.
+
+### 🚨🚨⭐⭐ THE FIND OF THE SESSION: HER NEVER-WEAR LIST HAD A PLURAL BUG, AND IT WAS LIVE EVERYWHERE
+Her words, and they are why this matters more than anything else built today: *"the never-wear list is
+very important to me. very very important. When someone says no shift dresses, that means absolutely no
+shift dresses."*
+- ▶ **THE BUG: `hay.includes(t) || (t.endsWith('s') && hay.includes(t.slice(0,-1)))` strips ONE trailing
+  letter.** So `"shift dresses"` became `"shift dresse"` — **which matches nothing** — and a product
+  called **"Shift Dress" sailed straight onto her shelf.** Anything she typed as a plural ending in
+  `-sses`, `-ies`, `-ches`, `-shes` was equally broken.
+- ⚠️⚠️ **IT WAS NOT A FEED BUG. The identical line was in BOTH `filterNeverWear()` (every AI shopping
+  surface) and `curatedPicks()` (her own 107 hand-picks), so it was live on every surface in the app and
+  had been for as long as those lists existed.** Found only because the new feed suite seeded a garment
+  named "Shift Dress Blouse 1" against `neverWear:['shift dresses']` and watched it survive.
+- ✅ **FIXED as ONE shared `_nwHit()`/`_nwForms()`, used by both paths.** A rule this important living in
+  two implementations is exactly how it drifts, and this bug is what that looks like.
+- ⚠️ **SUBSTRING, NOT WORD-BOUNDARY, AND KEPT DELIBERATELY:** "boots" also matches "bootcut", which is
+  over-eager. ▶ **On a never-wear list over-matching drops a garment she might have liked; under-matching
+  shows her a garment she said no to. Only one of those is a broken promise.** Written at the code so a
+  future session does not "tighten" it.
+
+### 🔒⭐⭐ THE SECURITY CALL, AND IT REPLACED A DESK ASK I WAS ABOUT TO MAKE
+I was about to ask her to copy the **`service_role` key into Netlify** so the shelves could read the
+catalog. ▶ **That key bypasses every rule in the database INCLUDING on `users`, so it can read every
+woman's name, email, sizes, portrait and wishlist.** A master key in a second platform so a function can
+look up product names is the wrong trade.
+- ✅ **INSTEAD: the two catalog tables carry a READ-ONLY rule for the ordinary key Netlify already
+  holds**, and `product-search.js` **prefers** that key — so if the service key is ever added to Netlify
+  for another reason this function will not quietly start using it (pinned by a test, both directions).
+  **Writing is still refused, so the ingest still needs the service key and still keeps it in a GitHub
+  Secret and nowhere else.** `product_syncs` deliberately gets no policy.
+- 🚨⭐⭐ **PROVEN ON A REAL POSTGRES 16, AND IT CAUGHT TWO THINGS THAT WOULD EACH HAVE SHIPPED AS A
+  SILENTLY EMPTY SHELF:** (1) **a policy alone is not enough — SQL privileges are checked BEFORE
+  policies**, so a permissive policy with no `GRANT` still returns *permission denied*; (2) **granting
+  the two tables is not enough either — `product_cards` is a separate object and needs its OWN grant**,
+  even though `security_invoker` means the caller also needs the tables. **Both lines are required.**
+  ▶ **And because a failure is deliberately an EMPTY POOL rather than an error, either would have looked
+  exactly like "the feed has nothing for this row" — a silent nothing, the worst failure this pipeline
+  can have.** So the SQL grants explicitly rather than trusting Supabase's defaults.
+- **Measured as `anon`, eight ways:** reads the view · runs the real slot lookup · sees the gathered
+  sizes · insert, update and delete all refused · `product_syncs` refused.
+
+### ⚠️ FLAGGED AND DELIBERATELY NOT DECIDED: HER 107 HAND-PICKS GET NO HEAD START
+The sort's last tie-break is **by id, not array order**, so a hand-pick competes with a feed garment on
+loved colour, staleness and the weekly rotation and nothing else. ▶ **With ~107 of hers against tens of
+thousands of feed pieces, HERS WILL APPEAR RARELY on a well-stocked row.** That is a curation question
+for her the first time she sees a real shelf, not one to settle in code — **and the lever is one term at
+the FRONT of the sort (`(b.feed?0:1)-(a.feed?0:1)`), recorded at the code.** ⚠️ It is a real consequence
+for something she spent real time building; raise it when she reports back.
+
+### ⚠️ A FEED GARMENT IS EXEMPT FROM THE STYLE-FAMILY FILTER, and that is a decision
+Her hand-picks carry a family **she** judged. **Nobody has judged 78,000 feed pieces, and inventing that
+judgment is exactly what the standing store-tag rule forbids** (never invent a store's tags, ask her —
+the Garnet Hill lesson). For these the **STORE is the style signal**, and her own ten dimension scores
+already rank the stores.
+
+### ✅ ALSO FIXED, EACH IN ITS OWN COMMIT SO IT COULD NOT HIDE IN THE FEATURE DIFF
+- **`scratchpad/curated.js` routed `**/.netlify/**` with ONE counter**, which now catches `product-search`
+  as well as `style-ai` — so "AI called exactly once" saw 2, and the feed request was fulfilled with an AI
+  response body. **Routed separately, the way `feedshelf.js` does. 65/0.**
+- **`searchtune` had been RED since August on a stale restated count** ("39 keyword-scoped + 6
+  param-scoped"). **Measured first: it is 39 and 7 — the 7th is ETSY**, whose `instant_download=false`
+  filter rides the same `gp` field (added 2026-08-28) and whose count was never bumped with it. ⚠️ **A
+  permanently-red suite is how the 2026-08-22 false green happened, and this one already cost a
+  diagnostic detour today.** 71/2 → 71/1, the remaining one being the documented heart-tip font check.
+
+### ⚠️ THREE HARNESS TRAPS, ALL DOCUMENTED FAMILIES, ALL HIT AGAIN
+1. **`e2e` and `followups` printed "no total" and I nearly treated them as not-run.** They print
+   **`✓ N passed`**, not `N passed, M failed`. ▶ **A suite's total is only missing if you know its
+   format — grep for the FORMAT, not one phrasing.** Both were green (29 and 39). `searchtune` prints a
+   third format again (`71 checks, 2 failures`).
+2. **A foreground loop and a background sweep both ran `honest.js` and wrote the same output file** —
+   interleaved output, one crashed on `EADDRINUSE 8996`, and the file contained both a stack trace and a
+   clean 44/0. ▶ **One suite, one output path, never two runners.** Clean alone: 44/0.
+3. **A `/proc` scan to kill the port-holder killed its own shell** (exit 129) because my own command line
+   contained the pattern. ▶ **The `pkill -f` self-match trap, generalised: skip `$$` and match the
+   `node…` command, not the script path.**
+
+### ✅ GREEN AT PAUSE
+**feedshelf 49 (new) · curated 65 · wdrmylist 65 · honest 44 · sizeveto 43 · followups 39 · fabric 27 ·
+nameparity 25 · e2e 29 · askvary 14 — all 0 failed.** `searchtune` 71/1, the documented pre-existing
+heart-tip font check.
+
+### ▶▶ ONE THING FOR HER, AND IT IS TWO MINUTES IN ONE SCREEN
+**Supabase → SQL Editor → run `db/products.sql` again.** Safe to run any number of times. It does two
+things now: adds the `slots` column (which of her 100 checklist rows each garment belongs on) and grants
+the app read-only access to the catalog. **Nothing to add to Netlify.** ▶ **Then, to check it worked, a
+new query: `set local role anon;  select count(*) from product_cards;` — a NUMBER means the shelves can
+draw** (it will read 0 until the first ingest run, which is fine; a number is what she is looking for).
+
+### ▶ THEN, IN ORDER
+1. **Merge to main** — ⚠️ **the ingest's slot matcher lives on this branch, so the NIGHTLY run will not
+   fill `slots` until it reaches main.** Her call; this session's instructions forbid pushing there.
+2. **Run Actions → Rakuten feed ingest** once by hand so `slots` fills without waiting for 21:37 UTC.
+3. 👀 **Her eye on Wardrobe Ideas, on her real phone.** ⚠️ Private browsing, `stylestar.app/?notrack`.
+   Watch for: does the shelf feel like her? do her own picks being rare bother her (see the flag above)?
+4. 👖 **Vilebrequin back into `STORES`** — her 2026-09-05 decision, timed for exactly this moment.
+5. ▶ **THE TAXONOMY GAPS THAT ARE HERS TO DECIDE, none invented:** mini skirts · jumpsuits/rompers ·
+   gloves · clogs · wellingtons · bags named only "Bag". **Plus four defaults I set and should confess:**
+   a plain "Sandal" → Flat sandals · a plain "Boot" → Ankle boots · a plain "Hat" → Sun hats · a plain
+   "Skirt" → Flowy skirt. **And two rows that are honestly EMPTY:** `ac11` Matching athletic sets and
+   `sl2` Nightgowns.
+
+---
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-09-05 LATER — 🚚 PHASE 1 IS BUILT AND PROVEN: 78,299 REAL PRODUCTS ARE READABLE FROM RAKUTEN, NIGHTLY, AND THE PIPELINE RUNS)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "okay this is a great discussion. I feel like you have considered it from all angles of detail.")
 **No app code touched — this was the ingestion pipeline, end to end.** ▶ **THE HEADLINE: the one genuinely
