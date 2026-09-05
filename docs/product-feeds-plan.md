@@ -269,6 +269,67 @@ is retained so a discounted piece can render its original crossed out beside the
 a display quirk.** Both feed bugs found today were of this shape — a rule that looked
 right and quietly deleted data.
 
+### 🚨 WHAT THIS ACTUALLY CHANGES FOR A WOMAN USING THE APP (2026-09-05 discussion)
+Her question, and it was the right one: *"will she be receiving a mix of stores based on
+her quiz results and refinements... so chances are she may or may not see one of these
+stores depending on her style and preferences? seems like if that is the case then we
+don't need to worry about mytheresa overwhelming her shopping suggestions."*
+
+✅ **SHE IS RIGHT, and the mechanism confirms it.** `_rankedStores()` already orders all
+102 stores by how well they suit HER, on the ten dimensions Cath scored herself in July,
+and `_shopRules()` tells the model to favour the top. So Mytheresa's 80.5% share of the
+catalog does NOT become 80.5% of any woman's shelf — a relaxed, casual, budget dresser's
+top stores are Talbots, J.Jill, Lands' End and Quince, none of which are fed. **The
+store-crowding worry is genuinely smaller than it looked, and it was already solved in
+July.**
+
+🚨🚨 **BUT CHECKING IT INVERTED THE WORRY, AND THIS IS THE REAL FINDING: EVERY FED STORE
+IS `$$$` OR `$$$$`.**
+Mytheresa `$$$$` · DVF `$$$$` · Olivela `$$$$` · Marissa Collections `$$$$` · Vilebrequin
+`$$$$` · Fleur du Mal `$$$-$$$$` · FARM Rio `$$$`. **The only one spanning affordable is
+Etsy `$-$$$$`, and Etsy is the one deferred.**
+▶▶ **SO THE DIVIDE IS NOT BY STYLE, IT IS BY BUDGET. A woman who dresses up and can spend
+gets a visibly richer app with real photos and prices. A woman on a budget gets today's
+experience, unchanged.** ⚠️ **That runs directly against Cath's own founding value:
+"literally any woman, 18 to 80+, no age or income bracket."**
+⚠️ **AND A SUBTLER SECOND-ORDER EFFECT: her price-spread rule still fires, so a shelf
+still includes something affordable — but THE AFFORDABLE PICKS WILL SYSTEMATICALLY BE THE
+TEXT-ONLY ONES**, because the cheap stores have no feed. A shelf reads as two beautiful
+photo cards at $600 and $400 beside four plain cards at $60. ▶ **The app would quietly
+look more expensive than it is.** Watch for this the first time it is live.
+
+▶▶ **THIS RESHAPES THE AFFILIATE PRIORITY, and it is the most actionable thing here:
+another LUXURY approval adds almost nothing to the experience. A MID-MARKET or AFFORDABLE
+approval is now worth far more than a designer one.** That makes **Under Armour** (one of
+the three pending AWIN applications) more valuable than it looked, and it is a reason to
+get to **CJ**. Weigh future applications by what they add to the CHEAP end of the shelf,
+not by brand prestige.
+
+### The mixed photo/no-photo shelf — the pattern already exists and she has blessed it
+Feed products will sit beside AI-guessed ones, so some cards carry a real photograph and
+price while others are text with a "Find it" search link. ⭐ **That design is already
+built and already approved: the blended shelf from 2026-08-14** — up to 4 catalog pieces
+lead, the AI fills the set to 6, ONE seamless carousel, **no badges and no attribution**
+(her call then, and her words on the render: *"i like how that looks with no badges"*).
+It is live in `_wardrobeIdeaGen` today for her hand-built 107-product catalog. **The feed
+catalog rides the same machinery** — wiring, not new design.
+⚠️ **ONE DIFFERENCE TO EXPECT: at 107 products the catalog rarely filled all four slots,
+so it read as mostly-AI with a few real pieces. At 78,299 it will fill them constantly for
+the women it suits, so the look flips to MOSTLY REAL.** Better, but the visual seam she
+accepted at low volume becomes the dominant impression. ▶ **Her eye on a real phone, not
+a judgement made here.**
+▶ **RECOMMENDED ROLLOUT ORDER, agreed: Wardrobe Ideas FIRST** (the blend already exists
+and she has seen it), **look at it on her phone, then widen.** Do not ship the mixed shelf
+across every surface at once.
+
+| surface | today | after |
+|---|---|---|
+| Wardrobe Ideas | blend already built | real photos fill it — biggest immediate change |
+| Shop your Style | all AI-guessed | needs the same blend added |
+| Complete the Look | all AI-guessed | same |
+| Stylist chat | web search, ~5-10¢, 10-20s | queries our own catalog: faster, cheaper, exact |
+| Your Wishlist | rebuilt search links | real prices, re-checked nightly |
+
 ### ▶ NEXT, IN ORDER
 1. **The Supabase `products` table.** Now designable against real numbers rather than a
    guess: ~266k rows, every one with an image and a price. Needs two more GitHub Secrets
