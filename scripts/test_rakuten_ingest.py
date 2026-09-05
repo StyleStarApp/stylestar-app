@@ -180,7 +180,20 @@ def storeD(n):
     out.append(f"TRL|{n}")
     return out
 
-FEEDS = {"111": A, "222": B, "333": C, "444": storeD(600)}
+# store E: the Fleur du Mal shape -- the SIZE is baked into the product NAME, each
+# size has its own URL, and the sizes are priced differently.
+E = ["HDR|555|Store E|01/01/2026 00:00:00"]
+for sz, pr in (("Small","80"), ("Medium","60"), ("Large","90")):
+    E.append(row({0:"e-"+sz, 28:"ep", 30:sz, 13:pr,
+                  1:"Collared Bodysuit with Dotted Tulle Black Size " + sz,
+                  5:"https://click.linksynergy.com/e-" + sz}))
+# and a bra, whose sizes share a prefix INSIDE the size word (30A / 30B)
+for sz in ("30A","30B"):
+    E.append(row({0:"e2-"+sz, 28:"ep2", 30:sz,
+                  1:"Lace Balconette Bra Size " + sz}))
+E.append("TRL|5")
+
+FEEDS = {"111": A, "222": B, "333": C, "444": storeD(600), "555": E}
 
 class FakeFTP:
     def __init__(self): pass
@@ -213,7 +226,7 @@ def load(dry, kind="full", mids=("111", "222", "333")):
     # and `m.MID_TO_STORE = {...}` would only rebind the ingest's name -- leaving the
     # rows written with a store of "222" while the sweep looked for "Store B".
     m.MID_TO_STORE.update({"111": "Store A", "222": "Store B",
-                           "333": "Store C", "444": "Store D"})
+                           "333": "Store C", "444": "Store D", "555": "Store E"})
     import supabase_io
     supabase_io.time.sleep = lambda *_: None      # keep the retry test instant
     return m
@@ -271,6 +284,8 @@ ck("B collapsed to one garment", len(bpiece) == 1)
 ck("garment price is the LOWEST size price", bpiece and float(bpiece[0]["price"]) == 100.0)
 bsizes = [s for s in DB_.sizes.values() if s["piece_key"] == bpiece[0]["piece_key"]]
 ck("per-size prices kept in full", sorted(float(s["price"]) for s in bsizes) == [100.0, 110.0, 120.0])
+ck("the link follows the cheapest size, not the first row",
+   bpiece and bpiece[0]["url"] == "https://click.linksynergy.com/S")
 cpieces = [p for p in DB_.products.values() if p["store"] == "Store C"]
 ck("one parent, two colourways -> TWO garments", len(cpieces) == 2)
 ck("colourways kept distinct", sorted(p["color"] for p in cpieces) == ["Blue", "Red"])
@@ -374,6 +389,40 @@ ck("failure is visible in the table", "FAILED" in text)
 ck("the healthy stores still wrote", len(DB_.products) == 3)   # A 1, C 2
 ck("the failure is recorded in product_syncs",
    any(not s["ok"] for s in DB_.syncs))
+
+# ===========================================================================
+print("\n=== 10. A SIZE BAKED INTO THE PRODUCT NAME IS TAKEN BACK OUT ===")
+ing = load(dry=False)
+t = ing.tidy_name
+ck("trailing 'Size Small' stripped",
+   t("Collared Bodysuit Black Size ", "Collared Bodysuit Black Size Small")
+   == "Collared Bodysuit Black")
+ck("a half-finished size word goes too (30A vs 30B)",
+   t("Lace Balconette Bra Size 30", "Lace Balconette Bra Size 30A")
+   == "Lace Balconette Bra")
+ck("a trailing dash is tidied", t("Silk Slip Dress - ", "Silk Slip Dress - S")
+   == "Silk Slip Dress")
+ck("names that differ for another reason fall back, never truncate",
+   t("", "Red Wrap Dress") == "Red Wrap Dress")
+ck("an implausibly short prefix falls back",
+   t("Red ", "Red Wrap Dress in Silk") == "Red Wrap Dress in Silk")
+ck("a name with no size suffix is left alone",
+   t("Cashmere Crew Neck Sweater", "Cashmere Crew Neck Sweater")
+   == "Cashmere Crew Neck Sweater")
+
+DB_.reset()
+rc, text = run(mids=("555",))
+names = sorted(p["name"] for p in DB_.products.values())
+ck("end to end: two garments", len(names) == 2)
+ck("end to end: no size left in either name",
+   names == ["Collared Bodysuit with Dotted Tulle Black", "Lace Balconette Bra"])
+ck("the tidy-up is reported", "had their size stripped" in text)
+ck("the sizes themselves are still kept",
+   sorted(s["size"] for s in DB_.sizes.values()) == ["30A","30B","Large","Medium","Small"])
+bodysuit = [p for p in DB_.products.values() if p["name"].startswith("Collared")][0]
+ck("cheapest size sets the price", float(bodysuit["price"]) == 60.0)
+ck("and the link points at that same size",
+   bodysuit["url"] == "https://click.linksynergy.com/e-Medium")
 
 print()
 print("ALL PASS" if not fails else "FAILURES: " + ", ".join(fails))

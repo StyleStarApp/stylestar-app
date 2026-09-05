@@ -84,6 +84,51 @@ def piece_key(rec):
     return f"{rec['mid']}:{pid}:{(rec['color'] or '').strip().lower()}"
 
 
+_NAME_TAIL = ("size", "sz")
+_NAME_SEPS = " \t-\u2013\u2014,:;/|(["
+
+def tidy_name(prefix, fallback):
+    """Recover the garment's own name from the common prefix of its size rows.
+
+    🚨 MEASURED 2026-09-05: Fleur du Mal bakes the size INTO the product name on
+    646 of its 791 pieces -- "Collared Bodysuit with Dotted Tulle Black Size Small"
+    vs "... Size Medium". The garment row keeps whichever size happened to come
+    first in the file, so without this a shelf card would read "Size Small" as if
+    that were part of the piece. It is not; it is the row's own size, which lives
+    in product_sizes where it belongs.
+
+    The common prefix of the size rows is the garment. ⚠️ It has to be cut back to
+    a WORD BOUNDARY first: bra sizes 30A and 30B share the prefix "... Size 30",
+    and stopping there would leave "Size 30" on the card, which is worse than the
+    problem it fixes. Then trailing separators and a dangling "Size" come off.
+
+    ▶ Falls back to the untouched first name whenever the prefix is implausibly
+    short, because names can differ for reasons that are not a size suffix, and a
+    truncated name is a worse failure than a slightly long one.
+    """
+    p = prefix
+    # Cut back to a word boundary ONLY when the prefix really does stop in the
+    # middle of a word ("... Size 30" out of "... Size 30A"). Cutting whenever it
+    # merely fails to end in a space would truncate an honest shorter name --
+    # "Silk Dress" beside "Silk Dress Long" would come back as "Silk".
+    if (p and not p[-1].isspace() and " " in p
+            and len(p) < len(fallback) and not fallback[len(p)].isspace()):
+        p = p[:p.rfind(" ") + 1]
+    for _ in range(3):
+        p = p.rstrip(_NAME_SEPS)
+        low = p.lower()
+        for tail in _NAME_TAIL:
+            if low.endswith(" " + tail):
+                p = p[: -(len(tail) + 1)]
+                break
+        else:
+            break
+    p = p.strip()
+    if len(p) >= 12 and len(p) >= 0.5 * len(fallback):
+        return p
+    return fallback
+
+
 def product_row(rec, now):
     return {
         "piece_key": piece_key(rec),
@@ -224,6 +269,7 @@ def main():
                         row = product_row(rec, now)
                         row["_sizes"] = {rec["size"]}
                         row["_diff"] = set()
+                        row["_np"] = rec["name"]     # shrinking common prefix
                         pieces[pk] = row
                     else:
                         def differs(fld, a, b):
@@ -246,8 +292,32 @@ def main():
                             par["price"] = rec["price"]
                             par["list_price"] = rec["list_price"]
                             par["on_sale"] = bool(rec["on_sale"])
+                            # ⚠️ AND THE LINK AND PHOTO MOVE WITH IT. Merchants give
+                            # each size its own product URL (Mytheresa: 100% of
+                            # multi-size pieces, Fleur du Mal too), so a card showing
+                            # the cheapest price while linking to a dearer size's page
+                            # sends her somewhere that contradicts the card she tapped.
+                            par["url"] = rec["url"]
+                            if rec["image_url"]:
+                                par["image_url"] = rec["image_url"]
+                        if par["_np"] and rec["name"] != par["_np"]:
+                            i = 0
+                            a, b = par["_np"], rec["name"]
+                            while i < len(a) and i < len(b) and a[i] == b[i]:
+                                i += 1
+                            par["_np"] = a[:i]
                     if len(samples) < 2:
                         samples.append(rec)
+
+            tidied = 0
+            for row in pieces.values():
+                if "name" in row["_diff"]:
+                    fixed = tidy_name(row.pop("_np"), row["name"])
+                    if fixed != row["name"]:
+                        row["name"] = fixed
+                        tidied += 1
+                else:
+                    row.pop("_np", None)
 
             total = kept + sum(reasons.values())
             log(f"  {total:,} lines -> {kept:,} kept")
@@ -294,6 +364,9 @@ def main():
                         a, b = examples[fld]
                         log(f"         {fld} e.g. {str(a)[:96]}")
                         log(f"         {fld}  vs {str(b)[:96]}")
+            if tidied:
+                log(f"  names: {tidied:,} garments had their size stripped out of the"
+                    f" product name")
             if kept:
                 log(f"  bytes: description {desc_chars/1e6:.1f}MB of"
                     f" {other_chars/1e6:.1f}MB total"
