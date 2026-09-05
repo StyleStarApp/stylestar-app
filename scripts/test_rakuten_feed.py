@@ -90,8 +90,12 @@ d3, _ = parse_line(row(c33="Female", c10="", c13="295.00"), "43172")
 ok("price resolves when ONLY column 13 is filled (4 of 7 stores)", d3["price"] == 295.0, d3["price"])
 # And her standing rule: show the REGULAR price, never the sale price.
 d4, _ = parse_line(row(c33="Female", c10="200.00", c12="50.00", c13="150.00"), "43172")
-ok("a discounted item shows the REGULAR price, not the sale price", d4["price"] == 200.0, d4["price"])
-ok("but the sale is still recorded", d4["on_sale"] is True and d4["current_price"] == 150.0)
+# HER DECISION 2026-09-05: feed products show the CURRENT price, markdown or not,
+# because a nightly feed cannot go stale the way the hand-maintained Edit can.
+ok("a discounted item shows the CURRENT price", d4["price"] == 150.0, d4["price"])
+ok("the original is kept for the crossed-out price", d4["list_price"] == 200.0, d4["list_price"])
+ok("and the markdown is flagged", d4["on_sale"] is True)
+ok("parent sku is captured (the per-size grouping key)", d4["parent_sku"] == "SK3B8138", d4["parent_sku"])
 ok("size is read", d["size"] == "43-44", d["size"])
 ok("color is read", d["color"] == "Blue", d["color"])
 ok("image url is read", d["image_url"].startswith("https://"), d["image_url"])

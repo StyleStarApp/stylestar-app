@@ -22,7 +22,7 @@ C_DESC_SHORT, C_DESC_LONG = 8, 9
 C_PRICE, C_DISCOUNT_AMT, C_SALE_PRICE = 10, 12, 13
 C_BRAND, C_SKU = 16, 19
 C_AVAILABILITY, C_CURRENCY = 22, 25
-C_MERCHANT_CAT = 29
+C_PARENT_SKU, C_MERCHANT_CAT = 28, 29
 C_SIZE, C_MATERIAL, C_COLOR = 30, 31, 32
 C_GENDER, C_PATTERN, C_AGE = 33, 34, 35
 N_COLS = 38
@@ -124,11 +124,16 @@ def parse_line(line, mid):
     current = _money(f[C_SALE_PRICE])        # what it costs today; the reliable one
     discount = _money(f[C_DISCOUNT_AMT]) or 0.0
     on_sale = bool(discount > 0 and list_price and current and current < list_price)
-    # ⚠️ CATH'S STANDING EDIT RULE (2026-07-26): SHOW THE REGULAR PRICE, NEVER THE SALE
-    # PRICE. Sales expire, and arriving to find something cheaper than listed feels lucky
-    # while the reverse feels misled -- only one of those is recoverable. So when a piece
-    # really is discounted we surface the LIST price; otherwise the two agree anyway.
-    price = (list_price if on_sale else (current or list_price))
+    # ⚠️ HER DECISION, 2026-09-05, AND IT SUPERSEDES THE EDIT'S REGULAR-PRICE RULE *HERE
+    # ONLY*: feed products show the CURRENT price, markdown or not.
+    # The regular-price rule (2026-07-26) exists because the STYLE STAR EDIT IS
+    # HAND-MAINTAINED AND EVERGREEN -- a sale price typed into it once sits there for
+    # months and goes stale. A feed refreshes nightly, so "current" really is current and
+    # the reason for the rule evaporates. ▶ Two mechanisms, two rules, each tracking its
+    # own reason. THE EDIT KEEPS THE REGULAR-PRICE RULE; do not "unify" them.
+    # `list_price` is kept so a marked-down card can show the crossed-out original beside
+    # the new price -- her call: "shoppers love that."
+    price = current or list_price
     url = _clean(f[C_URL])
     if not url.startswith("http"):
         return None, "no-url"
@@ -161,6 +166,11 @@ def parse_line(line, mid):
         "gender": _clean(f[C_GENDER]),
         "age_group": _clean(f[C_AGE]),
         "sku": _clean(f[C_SKU]),
+        # The feed carries ONE ROW PER SIZE, so the same garment appears many times.
+        # Column 28 is the parent SKU shared by every size of a piece: it is the grouping
+        # key that stops a shelf showing the same t-shirt six times, and it is what makes
+        # an honest "in your size" possible. See the distinct-product counts in the plan.
+        "parent_sku": _clean(f[C_PARENT_SKU]),
         "gtin": _clean(f[C_GTIN]),
         "in_stock": True,
     }, None

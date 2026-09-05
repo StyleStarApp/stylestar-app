@@ -77,6 +77,7 @@ def main():
             kept = 0
             no_image = no_price = 0
             seen_ids = set()
+            seen_pieces = set()      # distinct garments, not per-size rows
             dupes = 0
             samples = []
 
@@ -95,6 +96,7 @@ def main():
                         dupes += 1
                     else:
                         seen_ids.add(rec["product_id"])
+                    seen_pieces.add(rec["parent_sku"] or rec["product_id"])
                     if len(samples) < 2:
                         samples.append(rec)
 
@@ -104,6 +106,11 @@ def main():
                 log(f"      dropped {n:>7,}  {why}")
             # The plan doc asks for a data-quality report per store on every sync, because
             # feed quality genuinely varies by merchant. This is it.
+            # ⚠️ `kept` counts ROWS, and the feed carries one row PER SIZE. The number
+            # that matters for what a woman actually sees on a shelf is the DISTINCT
+            # PIECE count. Reporting only rows overstated the catalog badly (twice).
+            pieces = len(seen_pieces)
+            log(f"  => {pieces:,} distinct pieces ({kept/max(pieces,1):.1f} sizes each)")
             log(f"  quality: {no_image:,} without an image · {no_price:,} without a price"
                 f" · {dupes:,} duplicate ids")
             for s in samples:
@@ -111,7 +118,7 @@ def main():
                 pr = f"${s['price']:.0f}" if s["price"] else "?"
                 log(f"    e.g. {nm}  {pr}  {s['color'] or '-'} / {s['size'] or '-'}")
 
-            per_store.append((store, total, kept, no_image, no_price))
+            per_store.append((store, total, kept, pieces, no_price))
             grand["lines"] += total
             grand["kept"] += kept
             for why, n in reasons.items():
@@ -131,10 +138,11 @@ def main():
     log("=" * 70)
     log("TOTAL ACROSS THE SEVEN")
     log("=" * 70)
-    log(f"  {'store':<24}{'lines':>10}{'kept':>10}{'no img':>9}{'no price':>10}")
-    for store, total, kept, ni, np_ in per_store:
-        log(f"  {store:<24}{total:>10,}{kept:>10,}{ni:>9,}{np_:>10,}")
-    log(f"  {'':<24}{grand['lines']:>10,}{grand['kept']:>10,}")
+    log(f"  {'store':<24}{'lines':>10}{'kept rows':>11}{'PIECES':>10}{'share':>8}")
+    tot_pieces = sum(p for _, _, _, p, _ in per_store) or 1
+    for store, total, kept, pieces, np_ in per_store:
+        log(f"  {store:<24}{total:>10,}{kept:>11,}{pieces:>10,}{pieces/tot_pieces*100:>7.1f}%")
+    log(f"  {'':<24}{grand['lines']:>10,}{grand['kept']:>11,}{tot_pieces:>10,}")
     log()
     for why in ("menswear", "kids", "out-of-stock", "no-url", "malformed"):
         if grand[why]:
