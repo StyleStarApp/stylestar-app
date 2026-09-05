@@ -7,7 +7,262 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-05 LATER — 🚚 PHASE 1 IS BUILT AND PROVEN: 78,299 REAL PRODUCTS ARE READABLE FROM RAKUTEN, NIGHTLY, AND THE PIPELINE RUNS)
+## ▶ NEXT SESSION — START HERE (2026-09-05 LATEST — 🗄 THE CATALOG IS IN SUPABASE, IT REFRESHES EVERY NIGHT BY ITSELF, AND EVERY GARMENT IS MATCHED TO ONE OF HER 100 CHECKLIST ROWS)
+
+### ⚠️⚠️ FIRST, THE HOUSEKEEPING FACT THAT PRODUCED THIS ENTRY: THE LAST SESSION RAN OUT OF CONTEXT BEFORE IT COULD SAVE, AND **FIFTEEN COMMITS OF REAL WORK WERE NEVER WRITTEN DOWN HERE.**
+Nothing was lost — **every one of them is committed AND pushed** (`2d8ab30` … `62e9d0b`, all on
+`origin/main`, tree clean) — but for a few hours this file described a pipeline that only
+*reported* while the code had already gone on to *write, schedule and match*. ▶ **THE LESSON,
+worth keeping: THE COMMITS ARE THE TRUTH AND CLAUDE.md IS THE SUMMARY, so when a session dies
+mid-flight the recovery is `git log <last CLAUDE.md commit>..HEAD` and reading the commit
+BODIES — this project writes long ones precisely so that works.** ⚠️ **AND THE HABIT THAT MADE
+IT CHEAP: save to CLAUDE.md at natural pauses, not only at the end.** Fifteen commits is a lot
+to reconstruct; three would have been nothing.
+- ▶ **THE APP ITSELF WAS NOT TOUCHED IN ANY OF IT.** `index.html`, `styles.css` and `netlify/`
+  are byte-identical to the last deploy. **Zero Netlify builds this whole stretch.** Everything
+  below is `scripts/`, `db/`, `data/`, `docs/` and `.github/workflows/`. **So there is nothing
+  for her to look at on her phone yet, and that is by design** — the shelves do not read from
+  the catalog until step 3 below.
+
+### 🗄🗄 THE HEADLINE: THE THREE THINGS THE 09-05 EARLIER ENTRY LISTED AS "NEXT" ARE ALL DONE
+That entry's list read: build the Supabase table · add the secrets · switch off `DRY_RUN` and
+schedule it. **All three shipped, plus a fourth nobody had scoped yet (the checklist matcher).**
+| | then | now |
+|---|---|---|
+| the catalog | a dry-run report | **78,278 garments + 265,774 sizes, in Supabase** |
+| the run | manual, `workflow_dispatch` | **nightly, 21:37 UTC, unattended** |
+| a garment's shelf | unknown | **matched to one of her 100 checklist rows, stored on the row** |
+| the app | reads nothing | **still reads nothing — deliberately, see step 3** |
+**77 seconds for all seven stores. Zero garments without an image, zero without a price.**
+
+### ⭐⭐ THE FOUR PIECES, AND THE LOAD-BEARING DECISION INSIDE EACH
+1. 🗄 **`db/products.sql` — TWO TABLES, NOT ONE, AND THE GRAIN WAS MEASURED RATHER THAN ARGUED.**
+   54,056 realistic rows were loaded into a real Postgres 16 both ways: **flat (one row per feed
+   row) costs 266 MB for the full catalog; garments split from their sizes costs 144 MB.** The
+   flat table repeats a 157-byte affiliate URL, a 77-byte image URL and a 240-byte search vector
+   ~3.4 times over. ▶▶ **SUPABASE'S FREE TIER IS 500 MB FOR THE WHOLE DATABASE, so that
+   difference is the difference between comfortable and at risk.** ⚠️ **The first draft was the
+   flat design and its reasoning was WRONG** ("a delta file is per-row, so feed grain makes a
+   delta a plain upsert") — a delta row carries the garment's fields too, so it upserts both
+   tables just as easily.
+   - ⚠️⚠️ **THE PIECE KEY IS `parent_sku` PLUS COLOUR, NEVER `parent_sku` ALONE.** Whether a
+     merchant's `parent_sku` means *this style* or *this style in this colour* **is not known
+     and varies by merchant**. Keying on the pair is identical where it is already per-colour
+     and correct where it is not, so **it costs nothing to be right in both cases — and getting
+     it wrong would have shown one colourway and silently hidden the rest.**
+   - 🔒 **ROW LEVEL SECURITY IS ON WITH NO POLICIES**, so only the `service_role` key reaches
+     these tables and no browser can query them directly. ⚠️ **`db/README.md` says so explicitly
+     because it matters: THE ANON KEY SITTING IN NETLIFY TODAY IS THE WRONG ONE TO COPY.**
+   - ⚠️ **`db/products.sql` HAS A MIGRATIONS SECTION AT THE BOTTOM AND IT IS NOT DECORATION:**
+     `create table if not exists` sees an existing table and stops, so **it cannot add a column
+     introduced later.** `slots` was the first such column. **Any future column goes there too.**
+2. ✍️ **`scripts/supabase_io.py` — the smallest possible PostgREST client, standard library
+   only** (so the workflow still installs nothing). ⚠️ **It retries timeouts, resets and 5xx with
+   backoff and DELIBERATELY DOES NOT RETRY A 4xx OTHER THAN 429** — those mean the request is
+   wrong, and retrying hides a bug behind four identical failures. Every error goes through
+   `redact()` before it is logged.
+   ▶ **`rakuten-ingest.py` now writes garments → their sizes → sweeps what the feed no longer
+   carries → records a `product_syncs` row per store.** It **parses the downloaded file TWICE**
+   rather than holding ~100 MB of size rows in memory (the passes have to be separate anyway: a
+   size references its garment, so the garment must exist first).
+   ⚠️⚠️ **THREE GUARDS, EACH AGAINST AN EXPENSIVE NIGHT — do not "simplify" any of them:**
+   (a) **the sweep only runs on a FULL feed**, because a delta carries only what changed and
+   sweeping after one would read the untouched 99% as gone and **delete the store**;
+   (b) **the sweep REFUSES when a feed accounts for under 60% of what we already hold AND at
+   least 500 rows would go** — ▶ **both conditions, because proportion alone is wrong for a small
+   store: Vilebrequin's 188 pieces can move 40% in an ordinary week, and a brake that jams on it
+   stays jammed every night after**;
+   (c) **a failed store fails the whole job**, so a half-empty catalog cannot sit in the Actions
+   list looking healthy.
+3. ⏰ **NIGHTLY, 21:37 UTC, AND BOTH HALVES OF THAT ARE MEASURED.**
+   ⭐ **THE HOUR CAME FROM A LINE THE PARSER HAD BEEN THROWING AWAY:** every feed's first line
+   (HDR, field 3) carries **the merchant's own build timestamp**, and it had been discarded as
+   "header" since the parser was written. Kept and printed, the seven read **03:23, 05:00, 06:02,
+   07:01, 10:45, 13:02 and 14:13** — so the last lands early afternoon.
+   ⚠️⚠️ **THAT CLOCK IS US EASTERN, NOT UTC, AND AN ACCIDENT PINNED IT: FARM Rio's catalog
+   changed between a 14:43 UTC run and an 18:30 UTC one while still stamped 13:02.** Impossible
+   if 13:02 were UTC (it would predate both); exactly right if it is Eastern, i.e. 17:02 UTC,
+   between the two. **So the last build is ~18:13 UTC and the job runs three hours after it.**
+   ⚠️ **`:37` rather than `:00` ON PURPOSE — GitHub delays and sometimes DROPS scheduled runs
+   when load spikes, and load spikes at the top of every hour.** An odd minute is the cheapest
+   way out of that queue.
+   ▶▶ **AND IT PULLS THE FULL FEED EVERY NIGHT, WHICH REVERSES THE PLAN DOC.** The doc said seed
+   once then ride the tiny delta files; that rested on *"pulling every full catalog nightly is a
+   lot of bytes"*, **written before anyone had measured a run. It is 27 MB and 77 seconds for all
+   seven, on a public repo where Actions minutes are free.**
+   ⭐ **The full feed buys the one thing a delta cannot: THE SWEEP** — the thing that removes a
+   garment the merchant has stopped carrying. **On deltas the catalog is only corrected at the
+   weekly re-seed, so a sold-out piece can sit on a shelf card for SEVEN DAYS. Nightly full: one
+   day at most.** For an app whose whole promise is honest shopping, that is the trade.
+   ▶ Three smaller reasons agree: **the delta format has never actually been read** (building
+   against an unread format is the mistake this project keeps paying for), a dropped scheduled
+   run costs one stale day where a missed delta silently rots the table, and it is one code path
+   instead of two. ⚠️ **`FEED_KIND` STAYS and still gates the sweep — deltas become genuinely
+   necessary the day ETSY joins, where the question is 5 GB against 1 GB rather than 27 MB.**
+4. 👗👗 **THE CHECKLIST MATCHER — the bridge nobody had scoped, and it is the piece that makes a
+   shelf possible.** The feed knows each MERCHANT'S taxonomy; the app's shelves are **Catherine's
+   own 100 checklist rows**. `data/slot-rules.json` (100 rows + a readme key) holds the rules,
+   `scripts/slot_match.py` applies them, **at INGEST time rather than read time**, and the answer
+   is stored on the garment as a `slots text[]` with a GIN index.
+   ▶ **So the shelf query is `slots @> '{to1}'` — one indexed lookup — instead of the matching
+   rules being written a SECOND time in the JavaScript that serves the shelf, where the two
+   copies would drift. This project has paid for that exact drift before** (the `/faq` schema).
+   ⚠️ **The rules are a LADDER (merchant category → feed taxonomy → product name), not a column,
+   because NO SINGLE COLUMN IS FILLED IN AT EVERY STORE** — see the taxonomy findings below.
+   ⚠️ **Her category boundaries are TRANSCRIBED, NOT INVENTED** — White tops excludes tanks and
+   blouses, work dresses exclude gowns and strapless, **exactly as `_WDR_IDEA_EXCLUDE` already
+   says in index.html.** ▶ **If those ever change in the app, they change here too.**
+   ⚠️ **Rules are normalized ONCE at load** — doing it inside the match loop meant tens of
+   millions of redundant regex splits against 266,000 rows a night.
+
+### 🚨⭐⭐ THE MEASURED TAXONOMY OF ALL SEVEN CATALOGS — the report that made the matcher possible
+`scripts/rakuten-categories.py` is **read-only, manual, and deliberately WITHOUT the Supabase
+key — a report has no business holding a key that can write.** It counts **DISTINCT GARMENTS,
+not feed rows**, because the feed carries one row per size and counting rows would weight a
+deeply-sized piece ten times and skew every vocabulary toward it.
+⭐⭐ **AND IT REPORTS HOW OFTEN EACH COLUMN IS *EMPTY* AS PROMINENTLY AS WHAT IS IN IT** — ▶ **a
+filter written against a column four merchants leave blank fails SILENTLY, which is the shape of
+every bad bug this pipeline has had: the gender rule that would have deleted DVF, the price
+column empty at four stores, the size baked into a product name.**
+- 🚨 **`category_secondary` is EMPTY at DVF and Fleur du Mal** and a single meaningless value at
+  Marissa Collections. **`merchant_category` is EMPTY at Marissa Collections.** ▶ **Marissa
+  Collections has NO structured data at all — 11% of the catalog, matchable only by product
+  name.** That is the DVF trap in a new hat.
+- ⭐ **Mytheresa's breadcrumb is a near one-to-one map onto the 100-row checklist AND IT IS 80%
+  OF THE CATALOG.**
+- ⭐ **`pattern` is a clean 17-value column** (floral · striped · embroidered · animal-print ·
+  checked · polka dots …) — ▶ **that is what can finally fill `to4 Print tops`, the one Tops row
+  that has NEVER had a product** (open since 2026-08-22, and the reason was always that "print"
+  is not a retail search word).
+- ⚠️ **TWO TRAPS: `colour` is 663 values, case-inconsistent, and at FARM Rio it is a PRINT NAME
+  rather than a colour** (so colour must be matched loosely and lowercased, never compared
+  exactly). **`material` is 25,209 distinct free-text values** (`100% Cotton`, `100%cotton`,
+  `100% COTTON`, `upper: bovine leather, sole: rubber`) — **usable as a SUBSTRING for her
+  never-wear fabrics, useless as a category.**
+
+### 🚨🚨⭐⭐ TWO COVERAGE RUNS, TWO SETS OF REAL FAULTS — AND NEITHER WAS VISIBLE FROM A COUNT
+`scripts/rakuten-slots.py` reports what each row would actually hold **with three real sample
+names**, and that is the whole point: ▶▶ **AN EMPTY ROW IS VISIBLE AND A WRONG ROW IS NOT.**
+- **RUN 1 found the matcher's one real DESIGN trap, and it is worth generalising: the ladder is
+  `category OR name`, so A DEPARTMENT-WIDE CATEGORY TERM ON A ROW THAT IS ONLY A SUBSET OF THAT
+  DEPARTMENT MATCHES THE ENTIRE DEPARTMENT.** Measured: **"sleepwear" on Robes made every pyjama
+  set a robe** · **"activewear" on ten rows made one pair of leggings ALSO a sports bra, a workout
+  tee and an athletic sock** · "earrings" on three rows made one pair of hoops also a stud and a
+  statement earring · "underwear" on Shapewear pulled in ski socks and tights · and **"denim" sat
+  in BOTH the colour list and the name terms of Blue jeans, so that colour gate always passed and
+  the row quietly meant "any jeans"**. ▶ **53 rules now use the merchant's specific leaf instead.**
+  ⚠️ **THE ONE HONEST EXCEPTION: a row whose COLOUR or PATTERN gate IS its discriminator —
+  "White tops" really is every top, narrowed by colour — and the tests ENFORCE that distinction
+  rather than trusting it.**
+- **RUN 2 found five more, every one from a sample rather than a count:** **Raincoats held a
+  WATERPROOF EYELINER** (because `waterproof` alone was a name term — a raincoat has to say
+  *coat*) · **Sweatshirts held a hooded parka** (`hooded`) · **Matching athletic sets held a
+  tracksuit midi SKIRT**, which is one piece · **Nightgowns matched NOTHING AT ALL**, because
+  cutting `chemise` (French for shirt, and it was pulling in cropped cotton tops) took the whole
+  row with it · and ⚠️ **a garment named "Short Kimono Wrap" landed on Shorts, because
+  de-pluralizing makes the noun and the adjective one word.**
+- ▶▶ **THE REUSABLE LESSON, and it is the sharpest version this project has produced: A COUNT
+  SAYS A ROW IS FULL. ONLY A SAMPLE SAYS IT IS RIGHT.** Both runs passed every count.
+- ⚠️ **FOUR JUDGMENT CALLS INSIDE HER TAXONOMY, ALL FLAGGED RATHER THAN ASSUMED SILENTLY — hers
+  to overrule:** a sandal named with no heel word goes on **Flat sandals** · a boot with no length
+  word goes on **Ankle boots** (merchants often say only "Sandal", and leaving those unmatched
+  loses real product) · a plain **"Hat" is a sun hat** · a plain **"Skirt" is a flowy skirt**. ▶
+  **The reasoning in both of the last two: her other rows in that family NAME themselves (beanie,
+  wool; pencil, denim, tennis), so the unmarked case is the remaining one.**
+  ⚠️ **MINI SKIRTS STAY UNMATCHED ON PURPOSE — she has no row for them, and inventing one is
+  HERS to decide.** ▶ **ASK HER.**
+
+### 🚨 THREE FINDINGS FROM THE FIRST REAL RUNS, all from a concrete example not a count
+1. ⚠️⚠️ **THREE MERCHANTS BAKE THE SIZE INTO THE PRODUCT NAME** — **646 of Fleur du Mal's 791
+   pieces**, 873 FARM Rio: *"Collared Bodysuit with Dotted Tulle Black Size Small"* beside
+   *"... Size Medium"*. The garment row keeps whichever size came first, so **a shelf card would
+   have read "Size Small" as though that were part of the piece.** `tidy_name()` recovers the
+   garment from the COMMON PREFIX of its size rows.
+   ⚠️ **THE PREFIX HAS TO BE CUT BACK TO A WORD BOUNDARY, BUT ONLY WHEN IT GENUINELY STOPS
+   MID-WORD:** bra sizes 30A and 30B share `"... Size 30"`, and stopping there leaves "Size 30" on
+   the card, **which is worse than the problem**. Cutting unconditionally is worse still —
+   *"Silk Dress"* beside *"Silk Dress Long"* would come back as **"Silk"**. **Both cases are
+   pinned by tests**, and anything implausibly short falls back to the untouched name.
+   ⚠️⚠️ **AND THE MATCHER RUNS ON THE TIDIED NAME, NOT THE RAW ONE** — the first match sees
+   "…Size Small" and only the tidied name says what the garment actually is. **Matching the
+   unfixed name would mostly work and quietly sometimes not.**
+2. ⚠️ **EVERY SIZE CARRIES ITS OWN PRODUCT URL** (Mytheresa and Olivela: 100% of multi-size
+   pieces) **and some merchants price sizes differently.** The garment shows the LOWEST price, so
+   **its link and photo now come from that same cheapest row** — otherwise a card offering $18
+   sent her to the $24 size's page, contradicting the card she tapped. ▶ **The per-size URLs are
+   deliberately NOT stored** (that 157-byte repeat is the whole grain argument).
+3. ⚠️ **FARM Rio LEAVES THE SIZE COLUMN EMPTY ON 2,968 OF 4,475 ROWS** and writes the size only
+   into the name. ▶ **So a future "in your size" filter will be BLIND to those pieces.**
+   **Deliberately left unsolved:** recovering a size from a name is store-specific guesswork, and
+   **the right time to decide it is when the filter is built against a real shelf.**
+
+### ✅ TESTS AT PAUSE
+`scripts/test_rakuten_ingest.py` **65 checks** (the name tidy-up unit by unit, then end to end
+through a fixture in Fleur du Mal's real shape, plus the cheapest-size link asserted on store B —
+⭐ **whose fixture deliberately DISAGREES on price and URL across sizes, so the test proves the
+report can SEE that rather than only passing on well-behaved data**) · `scripts/test_slot_match.py`
+**the matcher, including the subset-of-a-department trap and the colour-gated exception** ·
+`scripts/test_rakuten_feed.py` **32 checks** (the parser) · **the schema runs clean AND TWICE on
+Postgres 16**, with full-text search, the in-your-size filter, the `product_cards` view, colourway
+separation, delta-style upsert and cascade delete all checked.
+
+### ▶ THE FIRST THINGS NEXT SESSION, IN ORDER
+1. ⏰ **CONFIRM THE FIRST UNATTENDED NIGHTLY RUN ACTUALLY FIRED** (21:37 UTC). ▶ **Her Actions tab
+   is the instrument.** A green run with seven stores and a sane garment count is the whole check.
+   ⚠️ **AND THE ONE THAT WILL BITE SOMEDAY, written into the workflow itself: GITHUB DISABLES A
+   SCHEDULED WORKFLOW AFTER 60 DAYS WITH NO COMMITS to the repository, and emails the owner.**
+   This repo is worked on most days so it should never happen — **but if the catalog ever goes
+   quietly stale after a long break, look THERE first, not at the code.**
+2. 👗👗 **THE ROW REVIEW WITH HER — the highest-value thing she can do and only she can do it.**
+   Run `rakuten-slots.py`, put the three sample names per row in front of her, and get her verdict
+   on the four flagged defaults above **plus the mini-skirt question (no row exists).** ▶ **Two
+   coverage runs have already found ten real faults this way; a third with HER eye on the samples
+   will find the ones only a stylist can see.** ⚠️ **She is the taxonomy authority — the standing
+   Garnet Hill rule — so ASK, never infer.**
+3. 👗👗 **THEN THE SURFACES, AND THE ORDER IS ALREADY AGREED: WARDROBE IDEAS FIRST, AND ONLY
+   THAT.** ⚠️ **Her eye on a real phone before it goes anywhere else** (Shop your Style, Complete
+   the Look, the stylist chat, the wishlist). **The blended shelf pattern already exists in
+   `curatedPicks()` / `_wdrDecorate` — this is FEEDING it, not rebuilding it.**
+   ▶ **The shelf query is now trivial by design: `slots @> '{to1}'`, one indexed lookup.** What
+   it still needs is **a `product-search` Netlify function** (Phase 2 in the plan doc: origin
+   check, rate limit, no client-supplied SQL) — ⚠️ **and it must use the SERVICE_ROLE key, since
+   RLS is on with no policies and the anon key in Netlify today CANNOT read these tables.**
+   ⚠️ **STILL TO BUILD on the card itself: the crossed-out was-price** (her 09-05 decision, feed
+   cards show the CURRENT price, sale or regular — **and that does NOT touch the Edit's evergreen
+   regular-price rule; two surfaces, two rules, both correct, do not "unify" them**).
+4. 👖 **VILEBREQUIN GOES BACK INTO `STORES` AT THAT SAME MOMENT, NOT BEFORE** — her decision, and
+   ⚠️ **the condition she attached ("as long as it can be properly searched") IS STILL FALSE
+   TODAY.** `STORES` also drives `getStoreUrl()` (search links on the store's OWN site) and
+   `SEARCH_DOMAINS` (the chat's web search); **a feed fixes neither path.** Adding it now would
+   restore the exact false-negative it was removed for on 2026-08-21. **Its 188 women's pieces are
+   being ingested meanwhile. Her scores are kept verbatim in the comment where the entry sat.**
+5. ⭐ **`to4 PRINT TOPS` CAN FINALLY BE FILLED** — the clean 17-value `pattern` column is the
+   answer to the oldest untouched item on her list.
+6. 🛒 **ETSY IS DEFERRED, NOT DROPPED (her call)** — 5 GB, independent sellers, no consistent
+   sizing, huge non-fashion range. **Its own conversation once the seven work.** ⚠️ **It is also
+   the one store that would make DELTAS genuinely necessary.**
+7. ⚠️ **EVERYTHING ELSE STANDING AND UNTOUCHED:** the 3 pending AWIN applications (Jackie Mack
+   Designs, TERI JON, **Under Armour US — still the most valuable of the three, because every fed
+   store today is `$$$` or `$$$$` and the photo/no-photo divide will otherwise fall along PRICE**)
+   · CJ next in the affiliate sequence · Impact on hold · **Amazon deliberately last** · the
+   Wardrobe Holes article · the three catalog decisions (Old Navy / Everlane / Mango) ·
+   Almira / Indie Law · Play 2 outreach (closed pending replies).
+
+### ⚠️ SESSION HYGIENE
+- ⚠️ **THIS SANDBOX CANNOT REACH `aftp.linksynergy.com` ON PORT 21 OR 22** (hard HTTPS-only proxy
+  policy), which is why every real run happens on a GitHub runner and why
+  `test_rakuten_ingest.py` **fakes the FTP end to end.** Don't try to debug a feed locally.
+- ⚠️ **THE REPO IS PUBLIC AND FEED DATA MUST NEVER BE COMMITTED** — an affiliate approval licenses
+  the APP to use a retailer's catalog, not this repository to redistribute it. `.gitignore` covers
+  `*.txt.gz`, `*.xml.gz` and `feeds/`; the scripts write only to temp files they unlink.
+- ⚠️ **BOTH SECRETS LIVE IN GITHUB SECRETS** (`RAKUTEN_FTP_PASSWORD`, plus `SUPABASE_URL` /
+  `SUPABASE_KEY`), which Actions masks in logs and does not expose to fork pull requests — **and
+  every script calls `redact()` on every error path rather than trusting that.**
+- ⚠️ **A `.pyc` was picked up once by a broad `git add scripts/`.** `.gitignore` covers it now.
+
+---
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-09-05 LATER — 🚚 PHASE 1 IS BUILT AND PROVEN: 78,299 REAL PRODUCTS ARE READABLE FROM RAKUTEN, NIGHTLY, AND THE PIPELINE RUNS)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "okay this is a great discussion. I feel like you have considered it from all angles of detail.")
 **No app code touched — this was the ingestion pipeline, end to end.** ▶ **THE HEADLINE: the one genuinely
