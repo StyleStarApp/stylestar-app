@@ -19,16 +19,79 @@ restricted to the 102 stores Catherine vetted, with her affiliate tag on every l
 
 ## What each phase unlocks
 
-### Phase 0 — Approval day inventory (Cath + Claude, ~an hour)
-- List which of the 102 stores are available through each network she is approved on.
-- Enable "product feed" / "datafeed" access in each network dashboard (usually a
-  checkbox or a request button; some networks grant it automatically).
-- Record per-network feed format (most are CSV/TSV over HTTPS or FTP; some have APIs).
-- Decide the starting store set: begin with the 15 to 25 stores that carry the most
-  suggestion traffic (the `_storeFit` top ranks) rather than all 102 on day one.
+### Phase 0 — Approval day inventory ✅ DONE 2026-09-04/05
+- Rakuten Product Catalog FTP account issued (support case 407562), preferred feed
+  format set to `.txt`, Auto Enrollment already ON so future advertiser approvals
+  request feed access automatically.
+- Feed access applied for on all 8 approved Rakuten advertisers, and **confirmed
+  visually**: Cath opened the server in Cyberduck and saw real files in all 8 MID
+  folders, plus `ADDITIONAL` and `GLOBAL` at the top level.
+- **The 8 MIDs:** FARM Rio 44912 · Diane von Furstenberg 53590 · Vilebrequin 43322 ·
+  Olivela 50334 · Marissa Collections 36537 · Mytheresa 43172 · Fleur du Mal 50739 ·
+  Etsy 54027.
+
+**▶ STARTING STORE SET = ALL 8, and this SUPERSEDES the original "15 to 25 stores"
+line.** That line assumed she would be approved on the high-traffic department stores;
+she is not, and her call (2026-09-05) is to do the best possible job with what she
+actually has. Her words: *"we are changing that because I have not been approved for
+those, and want to do the best we can with what we have so far."* So Phase 1 ingests
+all 8, not a subset. The `_storeFit` top-ranks selection returns only if she is ever
+approved on enough stores that ingesting all of them costs something.
 
 ### Phase 1 — Ingestion (Claude, the real build)
-- A scheduled nightly job (GitHub Action or Netlify scheduled function) downloads each
+
+**▶ THE TRANSPORT QUESTION IS ANSWERED (2026-09-05), and the answer is better than any
+of the three fallbacks that were anticipated.** The open flag was whether a scheduled
+job could reach `aftp.linksynergy.com` on port 21 at all, given that this dev sandbox
+cannot. Measured rather than assumed:
+
+| port | from this sandbox | notes |
+|---|---|---|
+| 21 (FTP) | blocked | proxy is HTTPS-only; a hard environment policy |
+| 22 (SFTP) | blocked | same |
+| 990 (FTPS) | blocked | same |
+| **443 (HTTPS)** | **OPEN and authenticating** | see below |
+
+⚠️ **DNS was never the problem** — `aftp.linksynergy.com` resolves fine (69.46.3.107),
+and resolves to the **same IP as `products.linksynergy.com`**. That host answers on 443
+with `Server: Rakuten S3 Gateway`, `X-Amz-Request-Id` headers, an `<HostId>sftpgo-rakutenN</HostId>`
+in its error bodies (so Rakuten runs **SFTPGo** behind it), and a valid TLS certificate
+whose SAN is `aftp.linksynergy.com` itself.
+
+▶▶ **AND IT REALLY AUTHENTICATES, proven not inferred: an unauthenticated request
+returns `AccessDenied`, while a request signed with a DELIBERATELY BOGUS AWS SigV4 key
+returns `InvalidAccessKeyId` — "The Access Key Id you provided does not exist in our
+records."** The error changing shape with credentials is what proves the endpoint is a
+live credential-accepting S3 API rather than a wall. Confirmed on three consecutive
+attempts (the standing never-trust-one-fetch rule). `/api/v2/user/folders` also answers
+in SFTPGo's own JSON (`{"status":"fail","message":"access_denied"}`), so the SFTPGo REST
+API is exposed too.
+
+**CONSEQUENCES, and they shape the whole build:**
+1. **No raw FTP is needed anywhere.** Feeds are reachable over ordinary HTTPS on 443.
+2. **The pipeline can be built AND TESTED from this sandbox**, not written blind and
+   hoped for in production. That is worth a great deal on a data pipeline.
+3. ⚠️ **Rakuten's own published guidance still says SFTP is strongly recommended and
+   plain FTP is merely "currently supported"** — so SFTP (port 22) is the documented,
+   supported path and HTTPS is the undocumented one. **Build the fetch layer so the
+   transport is swappable**, and prefer SFTP in production if it proves equally easy.
+   Do not hard-wire the S3 gateway as if it were a promise Rakuten has made.
+
+**▶ RUN THE JOB ON GITHUB ACTIONS, not a Netlify scheduled function.** Reasons, in
+order: GitHub Actions runners have unrestricted outbound egress, so **all three
+transports work there** and the choice above stays reversible; it is free on this public
+repo, so it does not touch the Netlify build minutes this project already watches; and
+its 6-hour ceiling comfortably fits large compressed feeds where Netlify's function
+timeouts (~30s sync, 15 min background) would be tight.
+
+🚨 **STANDING RULE, and it is the 2026-08-21 photo-cache rule pointed at a new surface:
+THIS REPO IS PUBLIC. Feed data must NEVER be committed to it.** An affiliate approval
+licenses the APP to use a retailer's product data; it does not license this repository
+to redistribute their catalog. Ingested rows go to Supabase and nowhere else; any local
+working copy is gitignored. Credentials live in GitHub Secrets (masked in logs), never
+in the repo and never in chat.
+
+- A scheduled nightly job (**GitHub Action**, per the finding above) downloads each
   enabled store's feed.
 - Normalize into one `products` table in Supabase (which we already run):
   `store, brand, name, category, color, sizes, price, sale_price, in_stock,
@@ -79,6 +142,7 @@ restricted to the 102 stores Catherine vetted, with her affiliate tag on every l
   apply there only once real traffic exists.
 
 ## The trigger
-This plan starts the day Cath forwards the first "you're approved" email from any
-affiliate network. Until then the gate is: Florida LLC → trademarks → EIN → business
-bank → network applications.
+~~This plan starts the day Cath forwards the first "you're approved" email from any
+affiliate network.~~ **TRIGGERED. Phase 0 is complete and Phase 1 is the live build as
+of 2026-09-05.** The whole upstream gate (Florida LLC → trademarks → EIN → business
+bank → network applications) is cleared.
