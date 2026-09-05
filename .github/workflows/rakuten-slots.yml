@@ -1,0 +1,51 @@
+# Does the checklist matching actually work against the real catalog?
+#
+# READ-ONLY and manual only. It downloads the feeds, applies data/slot-rules.json,
+# and prints what each of Catherine's 100 wardrobe rows would hold. It writes
+# nothing anywhere -- no database, no repository -- and needs only the FTP
+# password, deliberately NOT the Supabase key: a report has no business holding a
+# key that can write.
+#
+# ⭐ RUN THIS AFTER EVERY CHANGE TO data/slot-rules.json, before the change reaches
+# a shelf. A matching rule fails two ways and only one is visible: an empty row
+# shows an empty carousel and somebody notices, while a wrong row shows a full,
+# confident, WRONG carousel that nobody notices until Cath opens it on her phone.
+# The report turns the second kind into a number and three sample product names.
+name: Rakuten checklist coverage
+
+on:
+  workflow_dispatch:
+    inputs:
+      samples:
+        description: 'Sample product names to show per row'
+        type: string
+        default: '3'
+      leftovers:
+        description: 'Unmatched garments to sample at the end'
+        type: string
+        default: '40'
+
+permissions:
+  contents: read
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # The rules are data, so a typo in them is a data error, and it costs a
+      # second to catch here rather than three minutes into an FTP download.
+      - name: Check the rules and the matcher offline first
+        run: python3 scripts/test_slot_match.py
+      - name: Report what each of the 100 rows would hold
+        env:
+          RAKUTEN_FTP_USER: rkp_4740535
+          RAKUTEN_SID: '4740535'
+          RAKUTEN_FTP_PASSWORD: ${{ secrets.RAKUTEN_FTP_PASSWORD }}
+          SAMPLES: ${{ inputs.samples }}
+          LEFTOVERS: ${{ inputs.leftovers }}
+        run: python3 scripts/rakuten-slots.py
