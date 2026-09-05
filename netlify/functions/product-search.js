@@ -170,6 +170,19 @@ export default async (req) => {
   //    credentials were configured, and the numeric upstream status. That is
   //    the same much a 500 would tell you, and nothing a leak could use.
   const diag = body.diag === true;
+  // A short, one-way fingerprint of which Supabase project this function is
+  // pointed at. 🔒 NOT the URL and NOT a key -- eight hex characters of a hash,
+  // which reveals nothing and cannot be reversed into an endpoint. It exists to
+  // answer one question that is otherwise unanswerable from outside: is the app
+  // talking to the SAME project the nightly ingest writes to? A mismatched
+  // url-and-key pair authenticates against nothing and returns 401, which looks
+  // exactly like a bad key.
+  const fp = async (v) => {
+    if (!v) return null;
+    const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
+    return Array.from(new Uint8Array(b)).slice(0, 4)
+      .map(x => x.toString(16).padStart(2, '0')).join('');
+  };
   if (!SLOT_RE.test(slot)) {
     return new Response(JSON.stringify({ error: 'Unknown slot' }), { status: 400, headers });
   }
@@ -220,7 +233,8 @@ export default async (req) => {
       const detail = (await r.text()).slice(0, 300);
       console.error(`[product-search] ${slot}: Supabase ${r.status} ${detail}`);
       return new Response(JSON.stringify({ products: [], slot,
-        ...(diag ? { why: 'upstream', upstream: r.status } : {}) }),
+        ...(diag ? { why: 'upstream', upstream: r.status,
+                     project: await fp(SUPABASE_URL) } : {}) }),
         { status: 200, headers });
     }
       const rows = await r.json();

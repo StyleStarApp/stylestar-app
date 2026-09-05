@@ -48,9 +48,17 @@ def main():
     if not URL or not KEY:
         log("FAIL: SUPABASE_URL / key not set"); return 1
 
+    import hashlib
+    # 🔒 A short one-way fingerprint of the project, never the URL itself --
+    # these logs are public. It exists so the app and the ingest can be compared
+    # without either revealing an endpoint: if product-search reports a
+    # different fingerprint, the two are talking to different databases, and a
+    # url-and-key pair from different projects authenticates as nothing (401).
     log("=" * 66)
     log("CATALOG HEALTH")
     log("=" * 66)
+    log(f"  project fingerprint         : "
+        f"{hashlib.sha256(URL.encode()).hexdigest()[:8]}")
 
     # 1. Is there a catalog at all?
     n, err = count("products?in_stock=is.true")
