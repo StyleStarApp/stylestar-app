@@ -7,7 +7,135 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-05 — 👖 THE BELT IS SETTLED, AND ALL 8 RAKUTEN PRODUCT FEEDS ARE CONFIRMED REAL WITH ACTUAL FILES ON THE SERVER, PHASE 0 IS DONE)
+## ▶ NEXT SESSION — START HERE (2026-09-05 LATER — 🚚 PHASE 1 IS BUILT AND PROVEN: 78,299 REAL PRODUCTS ARE READABLE FROM RAKUTEN, NIGHTLY, AND THE PIPELINE RUNS)
+
+### ⏸ WHERE THIS SESSION PAUSED (her call: "okay this is a great discussion. I feel like you have considered it from all angles of detail.")
+**No app code touched — this was the ingestion pipeline, end to end.** ▶ **THE HEADLINE: the one genuinely
+unverified thing in the whole plan (can a scheduled job actually reach Rakuten's FTP?) is ANSWERED YES, and the
+pipeline now downloads, parses, filters and reports all seven non-Etsy catalogs in 24 seconds. 78,299 distinct
+pieces with real photos, real current prices, real sizes and colors.** Nothing is saved to a database yet, by
+design — the run is still `DRY_RUN`, so it reports rather than writes.
+- **What is on `main`:** `scripts/rakuten_feed.py` (the parser) · `scripts/test_rakuten_feed.py` (32 checks) ·
+  `scripts/rakuten-ingest.py` (the dry run) · two recon scripts · three GitHub Actions workflows ·
+  `.gitignore` rules that keep feed data out of this PUBLIC repo. **`docs/product-feeds-plan.md` carries every
+  measurement and decision** — read it before writing any Phase 1 code, it is no longer a plan, it is a record.
+
+### 🚨⭐⭐ THE BIG UNKNOWN IS RESOLVED, AND THE ANSWER WAS A DIFFERENT ROOM: GITHUB ACTIONS
+The 09-05 flag said the sandbox's raw-FTP block might or might not apply to the scheduled job. ▶ **It does not.
+GitHub Actions has unrestricted egress and connected on the FIRST TRY** (`220 SFTPGo 2.0.4 ready`). So the whole
+"tunnel over a proxy / ask Rakuten for an HTTPS feed / build a separate worker" branch of the plan is DEAD and
+was deleted rather than left lying around.
+- ⚠️⚠️ **AND CLAUDE OVERCLAIMED ONCE ON THE WAY, ON THE RECORD, because the lesson generalises: I found that
+  `products.linksynergy.com` authenticates on port 443 and wrote into the plan that "no raw FTP is needed
+  anywhere." Then I measured `aftp.linksynergy.com` itself — IT DOES NOT ANSWER ON 443.** ▶ **A working door
+  into a building NEARBY is not a door into YOUR building.** Corrected in the doc the same hour.
+- ▶ **THE ONE THING SHE HAD TO DO, and it took her about a minute: add the FTP password as a GitHub SECRET**
+  (`RAKUTEN_FTP_PASSWORD`, Settings → Secrets and variables → Actions). ⚠️ **The password lives ONLY there —
+  never in the repo, never in chat.** She deleted the password line before pasting Rakuten's email, which was
+  exactly right. Every script has a `redact()` helper so it cannot leak into an error message either.
+- ⚠️ **A GITHUB LINK "404" IS USUALLY A PERMISSIONS ANSWER, NOT A BROKEN LINK** — GitHub 404s pages you cannot
+  see. Her screenshot (signed in, Settings tab visible) settled it in one exchange. Ask for the screenshot early.
+
+### 📦 THE NUMBERS, MEASURED NOT ESTIMATED (the full dry run, 24 seconds, all seven stores)
+| store | rows in feed | kept | **distinct pieces** | share |
+|---|---|---|---|---|
+| FARM Rio | 4,683 | 4,681 | 1,089 | 1.4% |
+| Diane von Furstenberg | 2,874 | 2,872 | 598 | 0.8% |
+| Vilebrequin | 529 | 188 | 188 | 0.2% |
+| Olivela | 12,825 | 12,803 | 3,883 | 5.0% |
+| Marissa Collections | 8,731 | 8,729 | 8,729 | 11.1% |
+| **Mytheresa** | 296,522 | 233,524 | **63,024** | **80.5%** |
+| Fleur du Mal | 3,671 | 3,571 | 788 | 1.0% |
+| **TOTAL** | 329,835 | 266,368 | **78,299** | |
+**Dropped on purpose: 37,910 menswear, 25,543 kids.** Zero missing images, zero missing prices, zero duplicate
+ids. ⚠️ **A FEED CARRIES ONE ROW PER SIZE**, so the row count is not the catalog size — the honest number is
+DISTINCT PIECES, via `parent_sku` (column 28). **I reported 266,368 twice before catching this myself.**
+
+### 🚨 TWO SILENT-FAILURE TRAPS FOUND BY MEASURING, both would have shipped bad data quietly
+1. **THE DVF GENDER TRAP.** Diane von Furstenberg leaves the `gender` column BLANK on every row. A filter written
+   as "keep only rows that say female" would have thrown away that entire store while reporting success. ▶ **The
+   rule is inverted on purpose: DROP what is explicitly menswear or kidswear, KEEP everything else.** A test pins
+   the DVF case by name so nobody can "tidy" it into a whitelist.
+2. **THE PRICE-COLUMN TRAP.** Vilebrequin and FARM Rio populate column 10 (list price); **Olivela, Marissa
+   Collections, Mytheresa and Fleur du Mal leave it EMPTY and use column 13.** The first dry run reported
+   "0 without a price" while PRINTING `?` for four stores. ▶ **A REPORT THAT DISAGREES WITH ITS OWN SAMPLE
+   OUTPUT IS A BUG, NOT A DISPLAY QUIRK.** Fixed by resolving a computed `price` (current first, list as
+   fallback) with an `on_sale` flag beside it.
+- ⚠️ **Rakuten's own operating limits are baked in and must NOT be optimised away: BINARY transfer mode** (ASCII
+  silently corrupts the gzip) **and NEVER more than five concurrent connections** (the scripts open exactly one,
+  serially). ⚠️ Also fixed en route: `except (ftplib.all_errors, socket.error)` is INVALID — `all_errors` is
+  already a tuple, so nesting it let connection failures escape as tracebacks. Found by testing the failure path.
+
+### ⭐⭐ HER THREE DECISIONS THIS SESSION, all recorded in the plan doc
+1. ✅ **THE 8-STORE SET REPLACES "the 15 to 25 highest-traffic stores."** Her words: *"we are changing that
+   because I have not been approved for those, and want to do the best we can with what we have so far."*
+2. ✅ **FEED CARDS SHOW THE CURRENT PRICE, SALE OR REGULAR** — *"if these feeds are updating info nightly I would
+   prefer it to show the current price"* and *"yes, definitely show the markdown prices on the cards. Shoppers
+   love that."* ⚠️ **THIS DOES NOT TOUCH THE EDIT.** The evergreen regular-price rule exists because her Edit is
+   hand-maintained and a sale expires behind her back; **a feed refreshed nightly cannot go stale that way**, so
+   the reasoning genuinely does not apply. Two surfaces, two rules, both correct. **Do not "unify" them.**
+   ▶ **STILL TO BUILD: the crossed-out was-price on the card.**
+3. ✅ **VILEBREQUIN GOES BACK INTO `STORES`** — *"as long as it can be properly searched, there is now no reason
+   to leave it out."* ⚠️ **TIMING IS LOAD-BEARING: add it AT THE MOMENT the catalog powers the shopping
+   surfaces, not before.** It was removed on 2026-08-21 because its own SEARCH lies (told her it had no cover-up
+   dresses when it does). The feed replaces the search — so the fix arrives with the catalog, and adding it
+   early would resurrect the exact false-negative that got it removed. **Her scores are kept verbatim in the
+   comment where the entry used to sit; it is one line to restore.**
+
+### 🚨⭐⭐ THE FINDING SHE DID NOT ASK FOR, AND IT INVERTS THE WORRY SHE DID ASK ABOUT
+Her question was whether Mytheresa (80.5% of the catalog) would swamp the shopping surfaces. ▶ **Her own mental
+model was right and it answers itself: `_rankedStores()` already sorts all 102 stores by how well each suits HER,
+so a woman Mytheresa does not suit never sees it — the catalog's SHAPE is not the SHELF's shape.** Her words:
+*"it is the style star app not the mytheresa app."*
+- ▶▶ **BUT MEASURING IT SURFACED THE REAL PROBLEM, WHICH IS BUDGET, NOT BRAND DOMINANCE: EVERY SINGLE FED STORE
+  IS `$$$` OR `$$$$`.** Mytheresa, DVF, Olivela, Marissa Collections and Vilebrequin are `$$$$`; Fleur du Mal
+  `$$$-$$$$`; FARM Rio `$$$`. **Only the deferred Etsy spans `$-$$$$`.** ▶ **So the app's photo/no-photo divide
+  will fall along PRICE, and it runs straight against her founding value — "literally any woman, 18 to 80+, no
+  age or income bracket."**
+- ▶ **THE SECOND-ORDER EFFECT, worth naming before she sees it on her phone: the AFFORDABLE picks will
+  systematically be the plain text cards and the expensive ones will carry the photos, which makes the whole app
+  LOOK dearer than it is.** The price-spread rule still puts affordable pieces on the shelf; they will just look
+  quieter beside a real photograph.
+- ▶▶ **SO THE AFFILIATE PRIORITY IS REFRAMED: a MID-MARKET or AFFORDABLE approval is now worth MORE than another
+  luxury one.** That makes the pending **AWIN Under Armour** application more valuable than it looked, and it is
+  the honest argument for chasing a department store next.
+- ⭐ **The mixed shelf itself is not new and she has already blessed it** — the blended catalog/AI carousel
+  shipped 2026-08-14 and her verdict was *"i like how that looks with no badges."* **What changes is its
+  CHARACTER: from mostly-AI-with-a-few-real to mostly-real.**
+
+### ▶ THE FIRST THINGS NEXT SESSION, in order
+1. 🗄 **BUILD THE SUPABASE `products` TABLE** — now designable against real numbers instead of guesses (78,299
+   pieces, 38 known columns, sizes as separate rows to collapse). Schema is not written yet.
+2. 🔐 **SHE ADDS TWO MORE GITHUB SECRETS: `SUPABASE_URL` and `SUPABASE_KEY`.** ⚠️ **She already has both in
+   Netlify** (Site configuration → Environment variables), and she now knows where the GitHub Secrets screen is.
+3. 🔁 **Switch `rakuten-ingest.py` from `DRY_RUN` to writing, then put it on a nightly schedule** — seed from the
+   full files, ride the deltas, re-seed weekly (the delta/template filenames are in the plan doc).
+4. 👗 **WIRE THE CATALOG INTO THE BLENDED SHELF — WARDROBE IDEAS FIRST, AND ONLY THAT.** ⚠️ **Her eye on a real
+   phone before it goes anywhere else** (Shop your Style, Complete the Look, the stylist chat, the wishlist).
+   The pattern already exists in `curatedPicks()` / `_wardrobeIdeaGen`; this is feeding it, not rebuilding it.
+5. 👖 **Vilebrequin back into `STORES` at that same moment**, per her decision above. Not before.
+6. 🛒 **ETSY IS ITS OWN CONVERSATION** — a 5GB feed and a completely different kind of store (independent
+   sellers, no consistent sizing, huge non-fashion range). Deliberately deferred; nothing is blocked by it.
+7. ⚠️ **Everything else standing and untouched this session:** the 3 pending AWIN applications (Jackie Mack
+   Designs, TERI JON, **Under Armour US — now the most valuable of the three**), CJ next in the affiliate
+   sequence, Impact on hold, Amazon deliberately last, the Wardrobe Holes article, the three catalog decisions
+   (Old Navy / Everlane / Mango), Almira / Indie Law, and Play 2 outreach (closed pending replies).
+
+### ⚠️ SESSION HYGIENE
+- 🚨 **A NOTE IN THIS FILE WAS WRONG AND SHE CORRECTED IT: the 09-05 entry said Finder's FTP is unreliable and
+  Cyberduck was the fallback that worked. Her words: "I never opened Cyberduck... you explained to me how to do
+  it through finder."** ▶ **THE ADVICE IS WITHDRAWN — Finder worked.** Phase 0 stands confirmed either way.
+  **Lesson: a tool named in these notes is only reliable if SHE said she used it.**
+- ⚠️ **Workflows must be on the DEFAULT BRANCH for `workflow_dispatch` to appear**, so `main` was fast-forwarded
+  for each code change rather than at the end. All three workflows are manual-only (`workflow_dispatch`), with
+  `permissions: contents: read`.
+- ⚠️ **THIS REPO IS PUBLIC AND FEED DATA MUST NEVER BE COMMITTED** — an affiliate approval licenses the APP to
+  use a retailer's catalog, not this repository to redistribute it (the same rule as `scratchpad/photos/`).
+  `.gitignore` covers `*.txt.gz`, `*.xml.gz` and `feeds/`; the scripts write only to temp files they unlink.
+
+---
+
+## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-09-05 — 👖 THE BELT IS SETTLED, AND ALL 8 RAKUTEN PRODUCT FEEDS ARE CONFIRMED REAL WITH ACTUAL FILES ON THE SERVER, PHASE 0 IS DONE)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "the belt looks good now. we can check that off the list. let's save everything to the claude.md and I will open a new session to begin work on the phase 1 build")
 **Two threads this session, both closed out.** A new Style Star Edit item that took three rounds to land right, and
