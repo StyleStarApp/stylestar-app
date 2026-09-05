@@ -194,6 +194,61 @@ swimsuit was in the first three sampled). Keep `Adult` and blank; drop `Kids`.
 historically, which is the same fact that got it removed from the searchable store table
 on 2026-08-21. Its ~156 women's rows are the real prize there, not the 528.
 
+### ✅ THE PARSER IS BUILT AND RUN AGAINST ALL SEVEN (2026-09-05)
+`scripts/rakuten_feed.py` (parse + filter) · `scripts/test_rakuten_feed.py` (30 checks,
+negative-controlled) · `scripts/rakuten-ingest.py` (dry run today, writes later).
+**A full pass over all seven catalogs takes 24 SECONDS on a GitHub Actions runner.**
+
+| store | feed rows | kept for women | dropped |
+|---|---|---|---|
+| FARM Rio | 4,683 | **4,681** | — |
+| Diane von Furstenberg | 2,874 | **2,872** | — |
+| Vilebrequin | 529 | **188** | 301 menswear · 38 kids |
+| Olivela | 12,825 | **12,803** | 20 menswear |
+| Marissa Collections | 8,731 | **8,729** | — |
+| Mytheresa | 296,522 | **233,524** | 37,491 menswear · 25,505 kids |
+| Fleur du Mal | 3,671 | **3,571** | 98 menswear |
+| **total** | **329,835** | **266,368** | 37,910 menswear · 25,543 kids |
+
+⭐ **Data quality is excellent and better than the plan assumed: across all 266,368 kept
+rows there are ZERO missing images, ZERO missing prices and ZERO duplicate ids.** The
+plan's warning that "feed quality varies by network and store" turns out not to bite here.
+⭐ **DVF keeps 2,872 of 2,874 — the blank-gender rule working exactly as intended.** Under
+the naive keep-only-Female rule that number would be 0.
+
+### 🚨 A SECOND SILENT-FAILURE COLUMN, found by the dry run contradicting itself
+The first dry run reported **"0 without a price"** while printing **`?`** for the price of
+four stores. Those cannot both be true, and the contradiction was the bug.
+▶ **Vilebrequin and FARM Rio populate column 10 (list price). Olivela, Marissa
+Collections, Mytheresa and Fleur du Mal leave column 10 EMPTY and put the number in
+column 13.** Reading column 10 alone loses the price for **four of the seven stores**, and
+loses it quietly.
+⚠️ **So never read a raw price column. Resolve through `price`**, which also honours her
+standing Edit rule (2026-07-26): **a discounted piece shows its REGULAR price, never the
+sale price** — sales expire, and arriving to find something cheaper than listed feels
+lucky while the reverse feels misled. `list_price`, `current_price` and `on_sale` are all
+kept alongside so the app can present it honestly.
+▶ **THE REUSABLE LESSON: a report that disagrees with its own sample output is a bug, not
+a display quirk.** Both feed bugs found today were of this shape — a rule that looked
+right and quietly deleted data.
+
+### ▶ NEXT, IN ORDER
+1. **The Supabase `products` table.** Now designable against real numbers rather than a
+   guess: ~266k rows, every one with an image and a price. Needs two more GitHub Secrets
+   (`SUPABASE_URL`, `SUPABASE_KEY`) — she already has both as Netlify env vars.
+2. **Switch the ingest from `DRY_RUN` to writing**, then put it on a nightly schedule.
+   ⚠️ Seed from the full files once, then ride the **delta** files (a few KB each against
+   27 MB), and re-seed weekly so a missed delta cannot silently rot the table.
+3. **Then the surfaces**, in the plan's own order: stylist chat first, then real photos
+   and prices on the shopping cards, then "in your size", then the wishlist.
+4. ▶ **ETSY IS DEFERRED, NOT DROPPED — her call, 2026-09-05.** Its own conversation once
+   the seven work.
+5. ⭐ **A QUESTION FOR HER, FLAGGED NOT DECIDED: should VILEBREQUIN COME BACK INTO
+   `STORES`?** It was removed 2026-08-21 because the store's own search returned false
+   negatives. **A feed does not use their search at all**, so the reason for the removal
+   may simply no longer apply — and its 188 women's rows are real products with real
+   photos. **The store table is her curation; never re-add a store without her.**
+
 - Normalize into one `products` table in Supabase (which we already run):
   `store, brand, name, category, color, sizes, price, sale_price, in_stock,
   product_url (with affiliate tag), image_url, updated_at`.
