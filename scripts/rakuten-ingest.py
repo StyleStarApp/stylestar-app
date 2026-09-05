@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rakuten_feed import parse_line, MID_TO_STORE, BUILD_MIDS
 from supabase_io import Supabase, SupabaseError, eq, lt, like_prefix
+from slot_match import load_rules, match as match_slots
 
 HOST = "aftp.linksynergy.com"
 USER = os.environ.get("RAKUTEN_FTP_USER", "rkp_4740535")
@@ -129,7 +130,7 @@ def tidy_name(prefix, fallback):
     return fallback
 
 
-def product_row(rec, now):
+def product_row(rec, now, rules=None):
     return {
         "piece_key": piece_key(rec),
         "mid": rec["mid"],
@@ -152,6 +153,10 @@ def product_row(rec, now):
         "material": rec["material"] or None,
         "pattern": rec["pattern"] or None,
         "gender": rec["gender"] or None,
+        # ⭐ Which of her 100 checklist rows this belongs on, decided here rather
+        # than when a shelf is drawn -- see the column comment in db/products.sql.
+        # Empty is normal: the catalog carries plenty the checklist has no row for.
+        "slots": match_slots(rec, rules) if rules else [],
         "in_stock": True,        # the parser drops anything not in stock
         "updated_at": now,
     }
@@ -171,6 +176,14 @@ def size_row(rec, now):
 def main():
     if not PASSWORD:
         log("FAIL: RAKUTEN_FTP_PASSWORD not set."); return 1
+
+    # Her 100 checklist rows. Loaded once, before anything is downloaded, so a
+    # broken rules file fails in a second rather than three minutes in.
+    try:
+        rules = load_rules()
+    except Exception as e:
+        log(f"FAIL: could not read data/slot-rules.json: {e}"); return 1
+    log(f"{len(rules)} checklist rows loaded")
 
     supa = None
     if not DRY_RUN:
@@ -276,7 +289,7 @@ def main():
                     pk = piece_key(rec)
                     par = pieces.get(pk)
                     if par is None:
-                        row = product_row(rec, now)
+                        row = product_row(rec, now, rules)
                         row["_sizes"] = {rec["size"]}
                         row["_diff"] = set()
                         row["_np"] = rec["name"]     # shrinking common prefix
@@ -326,6 +339,14 @@ def main():
                     if fixed != row["name"]:
                         row["name"] = fixed
                         tidied += 1
+                        # ⚠️ RE-MATCH, because the checklist rules read the name and
+                        # the name has just changed. Fleur du Mal bakes the size into
+                        # 646 of its 791 product names, so the row was first matched
+                        # against "Collared Bodysuit ... Size Small" and only now
+                        # knows the garment is a "Collared Bodysuit". Matching the
+                        # unfixed name would mostly work and quietly sometimes not,
+                        # which is the worst kind of nearly-right.
+                        row["slots"] = match_slots(row, rules)
                 else:
                     row.pop("_np", None)
 

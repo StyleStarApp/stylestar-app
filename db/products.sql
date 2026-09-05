@@ -5,6 +5,13 @@
 --     supabase.com -> your project -> SQL Editor -> New query -> paste -> Run
 -- Safe to run twice; everything is IF NOT EXISTS.
 --
+-- ⚠️ IF THE TABLES ALREADY EXIST, `create table if not exists` will NOT add a
+--    column that was introduced later -- it sees the table and stops. Anything
+--    added after the first run therefore also needs an `alter table` below, and
+--    those live at the very bottom of this file under MIGRATIONS. Running the
+--    whole file again is always safe and always brings an old database up to
+--    date.
+--
 -- Written 2026-09-05 against MEASURED numbers, never a guess. The seven approved
 -- Rakuten stores deliver 329,835 feed lines, 266,368 kept after the womenswear
 -- filter, 78,299 distinct garments, with zero missing images, zero missing
@@ -103,6 +110,23 @@ create table if not exists products (
   -- womenswear house. Worth six bytes a row never to relearn that.
   gender              text,
 
+  -- ⭐ WHICH OF CATHERINE'S 100 CHECKLIST ROWS THIS GARMENT BELONGS ON, computed
+  -- by the ingest from data/slot-rules.json (scripts/slot_match.py) and stored
+  -- rather than re-derived when a shelf is drawn.
+  -- ▶ WHY STORED. The shelf could instead ask "give me things that look like a
+  --   white top" on every tap -- but then the rules would exist twice, once in
+  --   Python and once in the JavaScript that serves the shelf, and a rule in two
+  --   places drifts. Computing it once nightly makes the live read a single
+  --   indexed lookup (`slots @> '{to1}'`) that cannot disagree with the report
+  --   that measured it.
+  -- ⚠️ It is an ARRAY because a garment honestly belongs on more than one row:
+  --    a white silk shirt is both "Professional blouses" and "Dressy tops".
+  --    Empty is normal and expected -- the catalog carries plenty the checklist
+  --    has no row for.
+  -- ⚠️ THE COST: a rules change reaches the shop on the next nightly run, not
+  --    instantly. At most a day, against a class of bug that then cannot happen.
+  slots               text[] not null default '{}',
+
   in_stock            boolean not null default true,
   updated_at          timestamptz not null default now(),
 
@@ -139,6 +163,9 @@ create index if not exists products_brand_idx  on products (brand);
 -- The sweep after each store's sync removes rows the feed no longer carries, by
 -- (store, updated_at). This makes that a scan of one store, never the whole table.
 create index if not exists products_store_seen_idx on products (store, updated_at);
+-- The shelf query is `slots @> '{to1}'`, so it needs a GIN index or it becomes a
+-- scan of 78,000 rows every time a woman taps a checklist row.
+create index if not exists products_slots_idx on products using gin (slots);
 
 
 -- ============================ ONE ROW PER SIZE ==============================
@@ -233,3 +260,15 @@ create or replace view product_cards with (security_invoker = on) as
              and coalesce(s.size, '') <> '') as sizes
     from products p
    where p.in_stock;
+
+
+-- ============================== MIGRATIONS ==================================
+-- Columns added after the tables were first created. `create table if not
+-- exists` above cannot add them to an existing table, so they are repeated here
+-- as alters. Every one is IF NOT EXISTS, so running this file again is safe.
+-- ---------------------------------------------------------------------------
+
+-- 2026-09-05 — the checklist match, computed at ingest. See the column comment
+-- in the products table above for why it is stored rather than derived.
+alter table products add column if not exists slots text[] not null default '{}';
+create index if not exists products_slots_idx on products using gin (slots);
