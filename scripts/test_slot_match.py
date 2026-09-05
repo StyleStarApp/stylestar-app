@@ -9,10 +9,10 @@ turning up as a strange shelf on Cath's phone.
 ⭐ THE CASES BELOW ARE REAL PRODUCT NAMES AND REAL CATEGORY PATHS lifted from the
 seven feeds, not invented ones. An invented fixture tests the fixture.
 """
-import os, re, sys
+import json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from slot_match import load_rules, match, norm
+from slot_match import load_rules, match, norm, RULES_PATH
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 INDEX = os.path.join(HERE, "..", "index.html")
@@ -52,13 +52,72 @@ if block:
     bad = [k for k in rules if k in items and rules[k].get("n") != items[k]]
     ok("rule names match the checklist", not bad, f"mismatched {bad}")
 
-for slot, r in rules.items():
+# The RAW file, because that is where a typo would be. load_rules() normalizes
+# every term into a padded tuple for speed, so checking its output would be
+# checking the normalizer rather than the rules.
+raw = {k: v for k, v in json.load(open(RULES_PATH, encoding="utf-8")).items()
+       if not k.startswith("_")}
+ok("raw file and loaded rules agree", set(raw) == set(rules))
+for slot, r in raw.items():
     ok(f"{slot} can be matched at all", bool(r.get("cat") or r.get("name")),
        "a rule with neither cat nor name can never match anything")
+    ok(f"{slot} names its row", bool(r.get("n")))
     for key in ("cat", "name", "not", "color", "pattern"):
         if key in r:
-            ok(f"{slot}.{key} is a non-empty list",
-               isinstance(r[key], list) and all(isinstance(t, str) and t.strip() for t in r[key]))
+            ok(f"{slot}.{key} is a non-empty list of non-empty strings",
+               isinstance(r[key], list) and bool(r[key])
+               and all(isinstance(t, str) and t.strip() for t in r[key]))
+    for key in r:
+        ok(f"{slot} has no unknown key '{key}'",
+           key in ("n", "cat", "name", "not", "color", "pattern"),
+           "a misspelled key is silently ignored by the matcher")
+
+# ------------------------------------------------------- the catch-all trap ----
+# 🚨 THE BUG THIS EXISTS TO STOP, found by the coverage report on 2026-09-05 and
+# invisible any other way: the ladder is `cat OR name`, so a DEPARTMENT-WIDE
+# category term on a row that is only a SUBSET of that department matches the
+# whole department. 'sleepwear' on Robes made every pyjama set a robe;
+# 'activewear' on ten rows made one pair of leggings also a sports bra, a workout
+# tee and an athletic sock; 'earrings' on three rows made one pair of hoops also
+# a stud and a statement earring; 'underwear' on Shapewear pulled in ski socks.
+# ▶ A department name belongs in `cat` ONLY on the row that IS that department.
+DEPARTMENT_DEFAULT = {
+    # department word : the one row allowed to claim all of it, or None for none
+    "sleepwear": None, "underwear": None, "lingerie": None, "activewear": None,
+    "earrings": None, "sandals": None, "boots": "sh7", "jackets": None,
+    "coats": None, "outerwear": None, "bags": None, "luggage": None,
+    "hats": None, "skirts": None, "shorts": "bo6", "socks": "ac13",
+    "dresses": "dr1", "jeans": None, "pants": "bo7", "trousers": "bo7",
+    # ⭐ These four rows ARE their department, on purpose:
+    #   to3 is "tops in your favourite colours" -- the colours are HERS and
+    #   change per woman, so the row cannot carry a static colour list and is
+    #   correctly every top; dr1 is the default dress row; bo6/bo7 likewise.
+    "tops": "to3", "shirts & tops": "to3", "clothing tops": "to3",
+}
+for slot, r in raw.items():
+    for term in r.get("cat", []):
+        owner = DEPARTMENT_DEFAULT.get(term.strip().lower(), "n/a")
+        if owner == "n/a":
+            continue
+        # A colour or pattern gate IS a discriminator, so a row that has one may
+        # honestly take the whole department: "White tops" really is every top,
+        # narrowed by colour. Without a gate it is just a catch-all.
+        gated = bool(r.get("color") or r.get("pattern"))
+        ok(f"{slot} does not claim the whole '{term}' department",
+           owner == slot or gated,
+           "a subset row with a department-wide cat term matches the department")
+
+# The three rows whose colour or pattern gate IS their discriminator are allowed
+# a broad `tops` category -- but only because that gate really is present.
+for slot in ("to1", "to2"):
+    ok(f"{slot} is gated by colour", bool(raw[slot].get("color")))
+ok("to4 is gated by pattern", bool(raw["to4"].get("pattern")))
+# ...and a colour gate is only a gate if its words are not already guaranteed by
+# the row's own name terms. 'denim' in both made "Blue jeans" mean "any jeans".
+for slot, r in raw.items():
+    overlap = set(t.lower() for t in r.get("color", [])) & set(t.lower() for t in r.get("name", []))
+    ok(f"{slot} colour gate is not cancelled by its own name terms", not overlap,
+       f"{sorted(overlap)} appears in both, so the colour gate always passes")
 
 # ------------------------------------------------------------- de-pluralizing --
 # Both sides get the same treatment, so these have to meet in the middle.
@@ -113,7 +172,7 @@ ok("a printed top with the pattern column filled lands on Print tops",
    "to4" in match(g("Silk Shirt", "women>clothing>tops", pattern="printed"), rules))
 ok("a plain top with no pattern column does NOT land on Print tops",
    "to4" not in match(g("Silk Shirt", "women>clothing>tops"), rules))
-patterned = [s for s, r in rules.items() if r.get("pattern")]
+patterned = [s for s, r in raw.items() if r.get("pattern")]
 ok("pattern gates only a handful of rows", len(patterned) <= 6, f"gates {patterned}")
 
 # Nothing should match everything.

@@ -64,13 +64,31 @@ def norm(text):
 
 
 def _has(hay, terms):
-    return any((" " + norm(t).strip() + " ") in hay for t in terms)
+    return any(t in hay for t in terms)
 
 
 def load_rules(path=RULES_PATH):
+    """Read the rules and normalize every term ONCE.
+
+    ⚠️ Not a micro-optimization. This runs against ~266,000 feed rows a night,
+    against 100 rules, each with several terms -- normalizing a term inside the
+    match loop meant tens of millions of redundant regex splits and turned a
+    77-second job into a many-minute one. Measured, not guessed: the first
+    version of this file did it the slow way and the coverage report showed it.
+    """
     with open(path, "r", encoding="utf-8") as fh:
         raw = json.load(fh)
-    return {k: v for k, v in raw.items() if not k.startswith("_")}
+    out = {}
+    for slot, r in raw.items():
+        if slot.startswith("_"):
+            continue
+        rule = {"n": r.get("n", slot)}
+        for key in ("cat", "name", "not", "color", "pattern"):
+            if r.get(key):
+                # Padded, so a plain `in` test is a word-boundary test.
+                rule[key] = tuple(norm(t) for t in r[key])
+        out[slot] = rule
+    return out
 
 
 def cat_path(rec):
@@ -101,13 +119,13 @@ def match(rec, rules):
     out = []
     for slot, r in rules.items():
         # ---- the ladder: a category hit, or failing that the garment's name ---
-        if not (_has(hay_cat, r.get("cat", [])) or _has(hay_name, r.get("name", []))):
+        if not (_has(hay_cat, r.get("cat", ())) or _has(hay_name, r.get("name", ()))):
             continue
         # ---- her boundaries. Checked against BOTH, because a merchant can put
         # the disqualifying word in either place: Mytheresa says
         # 'women>clothing>swimwear', Marissa Collections only ever says 'Bikini
         # Top' in the name.
-        if _has(hay_all, r.get("not", [])):
+        if _has(hay_all, r.get("not", ())):
             continue
         # ---- colour: loose on purpose. 663 distinct values, 15% blank,
         # inconsistent capitals, and at FARM Rio the field is a PRINT NAME

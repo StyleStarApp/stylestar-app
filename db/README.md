@@ -4,6 +4,21 @@
 are the recipe for the next project, or for rebuilding this one — not because
 anything is outstanding.
 
+> ⚠️ **ONE SMALL THING TO RE-RUN (2026-09-05).** The catalog gained a `slots`
+> column — which of the 100 wardrobe checklist rows each garment belongs on. The
+> tables already exist, and `create table if not exists` sees an existing table
+> and stops, so it cannot add a new column on its own. **Open the SQL Editor and
+> run `db/products.sql` again** (safe, everything is `if not exists`), or just
+> these two lines from the bottom of it:
+>
+> ```sql
+> alter table products add column if not exists slots text[] not null default '{}';
+> create index if not exists products_slots_idx on products using gin (slots);
+> ```
+>
+> The next nightly run fills it in. Until then the column is simply empty and
+> nothing else changes.
+
 ---
 
 ## 1. Create the tables
@@ -79,6 +94,14 @@ was rotated the same hour.*
 | `product_sizes` | **size** of a garment — what makes "in your size" honest | 266,000 |
 | `product_syncs` | one store, one nightly run — the data-quality record | 7 a night |
 
+Each garment also carries **`slots`** — the list of Catherine's own checklist rows
+it belongs on (`{to1, to5}` for a white silk blouse, empty for the many things
+the checklist has no row for). It is worked out during the nightly run rather
+than when a shelf is drawn, so the rules live in exactly one place. Changing a
+rule means editing `data/slot-rules.json` and waiting for the next run — and
+running **Actions → Rakuten checklist coverage** first, which prints what every
+row would hold with three real sample product names.
+
 Plus a view, `product_cards`, which is a garment with its sizes already gathered,
 so one query fills a carousel.
 
@@ -125,4 +148,13 @@ select pg_size_pretty(pg_total_relation_size('products')
 -- what is actually in there, per store?
 select store, count(*) as garments, min(price) as cheapest, max(price) as dearest
   from products group by store order by garments desc;
+
+-- which checklist rows have something to show, and which are empty?
+select slot, count(*) as garments
+  from products, unnest(slots) as slot
+ group by slot order by garments desc;
+
+-- one row's shelf, the way the app will ask for it
+select store, brand, name, price from products
+ where slots @> '{to1}' order by price limit 20;
 ```

@@ -24,6 +24,17 @@
   "is genuinely all there is, so any row that cannot be matched by name is a row",
   "that silently loses a ninth of the shop.",
   "",
+  "🚨 A `cat` TERM MUST BE AS SPECIFIC AS THE ROW. The ladder is cat OR name, so a",
+  "DEPARTMENT-WIDE term on a row that is only a SUBSET of that department matches",
+  "the whole department. Measured on 2026-09-05: 'sleepwear' on Robes made every",
+  "pyjama set a robe, 'activewear' on ten rows made one pair of leggings also a",
+  "sports bra and an athletic sock, 'earrings' on three rows made one pair of hoops",
+  "also a stud, and 'underwear' on Shapewear pulled in ski socks and tights.",
+  "▶ Use the merchant's specific leaf ('sandals>flat sandals'), not the department.",
+  "  The one exception is a row with a COLOUR or PATTERN gate, which really is the",
+  "  whole department narrowed by that gate -- and scripts/test_slot_match.py",
+  "  enforces exactly that distinction so the trap cannot come back.",
+  "",
   "not     -- rejects, checked against the category path AND the name. This is where",
   "           her category-boundary rules live (White tops must not be a tank, a",
   "           blouse or a going-out top -- her own 2026-08-15 finding).",
@@ -221,7 +232,7 @@
   "cat": [
    "blouses",
    "tops>shirts",
-   "shirts & tops"
+   "tops>blouses"
   ],
   "name": [
    "blouse",
@@ -245,10 +256,9 @@
  "to6": {
   "n": "Dressy or going-out tops",
   "cat": [
-   "tops",
-   "shirts & tops",
-   "clothing tops",
-   "bodysuits"
+   "tops>evening",
+   "bodysuits",
+   "corsets"
   ],
   "name": [
    "satin",
@@ -302,9 +312,7 @@
   "color": [
    "blue",
    "indigo",
-   "denim",
-   "navy",
-   "wash"
+   "navy"
   ],
   "not": [
    "skirt",
@@ -385,8 +393,8 @@
  "bo3": {
   "n": "Black trousers",
   "cat": [
-   "pants",
-   "trousers"
+   "pants>tailored",
+   "trousers>tailored"
   ],
   "name": [
    "pant",
@@ -409,8 +417,7 @@
  "bo4": {
   "n": "Linen pants",
   "cat": [
-   "pants",
-   "trousers"
+   "pants>linen"
   ],
   "name": [
    "linen"
@@ -461,7 +468,7 @@
  "bo11": {
   "n": "Denim skirt",
   "cat": [
-   "skirts"
+   "skirts>denim"
   ],
   "name": [
    "denim skirt",
@@ -516,9 +523,7 @@
  "dr3": {
   "n": "Work-appropriate dresses",
   "cat": [
-   "dresses>work",
-   "dresses>midi",
-   "dresses"
+   "dresses>work"
   ],
   "name": [
    "dress"
@@ -542,9 +547,7 @@
  "dr5": {
   "n": "Sundresses",
   "cat": [
-   "dresses>summer",
-   "dresses>day",
-   "dresses"
+   "dresses>summer"
   ],
   "name": [
    "sundress",
@@ -582,7 +585,7 @@
  "dr7": {
   "n": "Wrap dresses",
   "cat": [
-   "dresses"
+   "dresses>wrap"
   ],
   "name": [
    "wrap dress"
@@ -596,8 +599,8 @@
  "dr8": {
   "n": "Sweater dresses",
   "cat": [
-   "dresses",
-   "knitwear"
+   "dresses>knitted",
+   "knitwear>dresses"
   ],
   "name": [
    "sweater dress",
@@ -679,7 +682,7 @@
   "n": "Light casual jackets",
   "cat": [
    "jackets>lightweight",
-   "jackets"
+   "jackets>casual"
   ],
   "name": [
    "jacket",
@@ -702,7 +705,8 @@
  "ja10": {
   "n": "Cropped jackets",
   "cat": [
-   "jackets"
+   "jackets>cropped",
+   "jackets>bomber"
   ],
   "name": [
    "cropped jacket",
@@ -732,8 +736,7 @@
  "ja6": {
   "n": "Belted trench",
   "cat": [
-   "coats",
-   "outerwear"
+   "coats>trench"
   ],
   "name": [
    "trench"
@@ -746,8 +749,9 @@
  "ja9": {
   "n": "Raincoats",
   "cat": [
-   "coats",
-   "outerwear"
+   "coats>rain",
+   "jackets>rain",
+   "parkas"
   ],
   "name": [
    "raincoat",
@@ -780,8 +784,8 @@
  "ja4": {
   "n": "Wool coats",
   "cat": [
-   "coats",
-   "outerwear"
+   "coats>wool",
+   "coats>cashmere"
   ],
   "name": [
    "wool coat",
@@ -802,8 +806,9 @@
  "ja11": {
   "n": "Puffer coats",
   "cat": [
-   "coats",
-   "outerwear"
+   "coats>puffer",
+   "jackets>down",
+   "jackets>puffer"
   ],
   "name": [
    "puffer",
@@ -820,7 +825,7 @@
   "n": "Leggings",
   "cat": [
    "leggings",
-   "activewear"
+   "activewear>leggings"
   ],
   "name": [
    "legging"
@@ -833,8 +838,9 @@
  "ac2": {
   "n": "Joggers",
   "cat": [
-   "pants",
-   "activewear"
+   "joggers",
+   "track pants",
+   "sweatpants"
   ],
   "name": [
    "jogger",
@@ -848,8 +854,8 @@
  "ac3": {
   "n": "Athletic shorts",
   "cat": [
-   "shorts",
-   "activewear"
+   "activewear>shorts",
+   "shorts>running"
   ],
   "name": [
    "running short",
@@ -867,8 +873,8 @@
  "ac12": {
   "n": "Tennis skirts",
   "cat": [
-   "skirts",
-   "activewear"
+   "skirts>tennis",
+   "activewear>skirts"
   ],
   "name": [
    "tennis skirt",
@@ -882,8 +888,8 @@
  "ac4": {
   "n": "Supportive sports bras",
   "cat": [
-   "activewear",
-   "bras"
+   "sports bras",
+   "activewear>bras"
   ],
   "name": [
    "sports bra",
@@ -899,12 +905,15 @@
  "ac11": {
   "n": "Matching athletic sets",
   "cat": [
-   "activewear"
+   "tracksuits",
+   "activewear>sets"
   ],
   "name": [
-   "set",
    "tracksuit",
-   "matching"
+   "matching set",
+   "athletic set",
+   "co-ord",
+   "two-piece set"
   ],
   "not": [
    "dress",
@@ -917,8 +926,7 @@
  "ac5": {
   "n": "Workout tanks",
   "cat": [
-   "activewear",
-   "tank tops"
+   "activewear>tops"
   ],
   "name": [
    "training tank",
@@ -935,7 +943,7 @@
  "ac6": {
   "n": "Workout tees",
   "cat": [
-   "activewear"
+   "activewear>tops"
   ],
   "name": [
    "training top",
@@ -953,7 +961,7 @@
  "ac7": {
   "n": "Workout long-sleeve tops",
   "cat": [
-   "activewear"
+   "activewear>tops"
   ],
   "name": [
    "long-sleeve training",
@@ -970,8 +978,7 @@
  "ac8": {
   "n": "Athletic jackets",
   "cat": [
-   "activewear",
-   "jackets"
+   "activewear>jackets"
   ],
   "name": [
    "track jacket",
@@ -991,7 +998,7 @@
   "n": "Athletic socks",
   "cat": [
    "socks",
-   "activewear"
+   "activewear>socks"
   ],
   "name": [
    "sock"
@@ -1048,8 +1055,9 @@
  "sl1": {
   "n": "Pajamas",
   "cat": [
-   "sleepwear",
-   "pajamas"
+   "pajamas",
+   "pyjamas",
+   "sleepwear>pajamas"
   ],
   "name": [
    "pajama",
@@ -1064,14 +1072,14 @@
  "sl2": {
   "n": "Nightgowns",
   "cat": [
-   "sleepwear"
+   "nightgowns",
+   "nightwear>nightgowns"
   ],
   "name": [
    "nightgown",
    "night gown",
    "nightdress",
-   "chemise",
-   "slip dress"
+   "night dress"
   ],
   "not": [
    "robe",
@@ -1081,12 +1089,14 @@
  "sl4": {
   "n": "Loungewear sets",
   "cat": [
-   "loungewear",
-   "sleepwear"
+   "loungewear"
   ],
   "name": [
-   "lounge",
-   "loungewear"
+   "lounge set",
+   "loungewear",
+   "lounge pant",
+   "lounge short",
+   "lounge top"
   ],
   "not": [
    "robe",
@@ -1097,7 +1107,7 @@
   "n": "Robes",
   "cat": [
    "robes",
-   "sleepwear"
+   "sleepwear>robes"
   ],
   "name": [
    "robe",
@@ -1113,8 +1123,7 @@
   "n": "Perfectly fitting bras",
   "cat": [
    "lingerie>bras",
-   "bras",
-   "underwear"
+   "bras"
   ],
   "name": [
    "bra"
@@ -1149,8 +1158,8 @@
   "n": "Comfortable underwear",
   "cat": [
    "underpants",
-   "underwear",
-   "lingerie"
+   "briefs",
+   "knickers"
   ],
   "name": [
    "brief",
@@ -1171,8 +1180,8 @@
   "n": "Beautiful underwear",
   "cat": [
    "underpants",
-   "underwear",
-   "lingerie"
+   "briefs",
+   "knickers"
   ],
   "name": [
    "lace brief",
@@ -1190,8 +1199,7 @@
  "fo6": {
   "n": "Shapewear",
   "cat": [
-   "shapewear",
-   "underwear"
+   "shapewear"
   ],
   "name": [
    "shapewear",
@@ -1202,13 +1210,19 @@
   ],
   "not": [
    "swim",
-   "dress"
+   "dress",
+   "tight",
+   "sock",
+   "stocking",
+   "hosiery"
   ]
  },
  "fo5": {
   "n": "Special lingerie",
   "cat": [
-   "lingerie"
+   "lingerie>bodysuits",
+   "corsets",
+   "garters"
   ],
   "name": [
    "garter",
@@ -1229,26 +1243,29 @@
   "n": "Flat sandals",
   "cat": [
    "sandals>flat sandals",
-   "sandals"
+   "sandals>flat"
   ],
   "name": [
    "flat sandal",
    "thong sandal",
-   "strappy flat"
+   "strappy flat",
+   "sandal"
   ],
   "not": [
    "heel",
    "wedge",
    "espadrille",
    "slide",
-   "flip"
+   "flip",
+   "platform",
+   "boot"
   ]
  },
  "sh11": {
   "n": "Flip flops",
   "cat": [
-   "sandals",
-   "slides"
+   "flip flops",
+   "flip-flops"
   ],
   "name": [
    "flip flop",
@@ -1331,8 +1348,8 @@
  "sh10": {
   "n": "Athletic sneakers",
   "cat": [
-   "sneakers",
-   "activewear"
+   "sneakers>running",
+   "running shoes"
   ],
   "name": [
    "running shoe",
@@ -1349,7 +1366,7 @@
   "n": "Wedges",
   "cat": [
    "wedges",
-   "sandals"
+   "sandals>wedge"
   ],
   "name": [
    "wedge"
@@ -1362,8 +1379,7 @@
  "sh6": {
   "n": "Espadrilles",
   "cat": [
-   "espadrilles",
-   "sandals"
+   "espadrilles"
   ],
   "name": [
    "espadrille"
@@ -1391,11 +1407,12 @@
  "sh15": {
   "n": "Block heel sandals",
   "cat": [
-   "sandals>heeled",
-   "sandals"
+   "sandals>block",
+   "sandals>mid-heel"
   ],
   "name": [
-   "block heel"
+   "block heel",
+   "block-heel"
   ],
   "not": [
    "boot",
@@ -1411,6 +1428,7 @@
   ],
   "name": [
    "heeled sandal",
+   "heel sandal",
    "high-heel sandal",
    "stiletto sandal"
   ],
@@ -1419,7 +1437,8 @@
    "flat",
    "wedge",
    "espadrille",
-   "block heel"
+   "block heel",
+   "block-heel"
   ]
  },
  "sh3": {
@@ -1445,7 +1464,9 @@
  "sh8": {
   "n": "Tall boots",
   "cat": [
-   "boots"
+   "boots>knee-high",
+   "boots>over-the-knee",
+   "boots>tall"
   ],
   "name": [
    "knee-high boot",
@@ -1567,7 +1588,7 @@
   "n": "Laptop bags",
   "cat": [
    "briefcases",
-   "bags"
+   "laptop bags"
   ],
   "name": [
    "laptop",
@@ -1584,7 +1605,8 @@
   "n": "Belt bags",
   "cat": [
    "fanny packs",
-   "bags"
+   "belt bags",
+   "bags>belt"
   ],
   "name": [
    "belt bag",
@@ -1600,9 +1622,9 @@
  "bg2": {
   "n": "Evening bags",
   "cat": [
-   "bags>clutches",
-   "clutches",
-   "bags"
+   "bags>evening",
+   "evening bags",
+   "minaudieres"
   ],
   "name": [
    "evening bag",
@@ -1668,8 +1690,9 @@
  "bg6": {
   "n": "Gym bags",
   "cat": [
-   "bags",
-   "luggage"
+   "duffel bags",
+   "gym bags",
+   "luggage>duffel"
   ],
   "name": [
    "gym bag",
@@ -1687,8 +1710,9 @@
  "bg13": {
   "n": "Overnight bags",
   "cat": [
-   "luggage",
-   "bags"
+   "luggage>weekend bags",
+   "weekend bags",
+   "travel bags"
   ],
   "name": [
    "weekender",
@@ -1706,7 +1730,8 @@
   "n": "Suitcases",
   "cat": [
    "suitcases",
-   "luggage"
+   "luggage>suitcases",
+   "trolleys"
   ],
   "name": [
    "suitcase",
@@ -1723,7 +1748,8 @@
  "ex1": {
   "n": "Hoop earrings",
   "cat": [
-   "earrings"
+   "earrings>hoops",
+   "hoop earrings"
   ],
   "name": [
    "hoop"
@@ -1738,7 +1764,8 @@
  "ex9": {
   "n": "Stud earrings",
   "cat": [
-   "earrings"
+   "earrings>studs",
+   "stud earrings"
   ],
   "name": [
    "stud"
@@ -1753,7 +1780,8 @@
  "ex2": {
   "n": "Statement earrings",
   "cat": [
-   "earrings"
+   "earrings>drop",
+   "statement earrings"
   ],
   "name": [
    "chandelier",
@@ -1838,7 +1866,9 @@
  "ex10": {
   "n": "Sun hats",
   "cat": [
-   "hats"
+   "hats>sun",
+   "sun hats",
+   "straw hats"
   ],
   "name": [
    "sun hat",
@@ -1857,7 +1887,8 @@
  "ex11": {
   "n": "Cold-weather hats",
   "cat": [
-   "hats"
+   "hats>beanies",
+   "beanies"
   ],
   "name": [
    "beanie",
