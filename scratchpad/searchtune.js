@@ -276,7 +276,14 @@ ok('every store in the table also reaches SEARCH_DOMAINS', counts.stores === SRV
    'STORES ' + counts.stores + ' vs SEARCH_DOMAINS ' + SRV_LIST);
 // 2026-08-12: Abercrombie moved from keyword-scoped-never (it was unscoped)
 // into param-scoped, via her verified gender facet — gp count 5 → 6.
-ok('39 keyword-scoped + 6 param-scoped', counts.w === 39 && counts.gp === 6, counts.w + ' / ' + counts.gp);
+// 2026-09-05: bumped 6 → 7, DELIBERATELY and after measuring, not silenced. The
+// 7th is ETSY, whose verified instant_download=false filter rides the same `gp`
+// field (added 2026-08-28); this restated number was simply never bumped with
+// it, so the suite had been red ever since for a reason unrelated to searching.
+// ⚠️ A permanently-red suite is how a false green happens — the standing rule.
+// Measured before touching it: 39 w, 7 gp (Amazon, Etsy, Abercrombie, Banana
+// Republic, Banana Republic Factory, Old Navy, Gap). Only the number was wrong.
+ok('39 keyword-scoped + 7 param-scoped', counts.w === 39 && counts.gp === 7, counts.w + ' / ' + counts.gp);
 ok('zero JS errors', errs.length === 0, errs.join(' | '));
 
 await browser.close(); server.close();
