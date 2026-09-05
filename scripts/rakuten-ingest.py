@@ -77,9 +77,14 @@ def main():
             kept = 0
             no_image = no_price = 0
             seen_ids = set()
-            seen_pieces = set()      # distinct garments, not per-size rows
             dupes = 0
             samples = []
+            # parent_sku -> what the FIRST row of that garment said, plus every size seen
+            # and a set of the fields that DISAGREED across its rows. This is the whole
+            # shape measurement: see the report block below for why it decides the table.
+            parents = {}
+            desc_chars = other_chars = 0
+            sized_rows = 0
 
             with gzip.open(tmp.name, "rt", encoding="utf-8", errors="replace") as fh:
                 for line in fh:
@@ -96,7 +101,30 @@ def main():
                         dupes += 1
                     else:
                         seen_ids.add(rec["product_id"])
-                    seen_pieces.add(rec["parent_sku"] or rec["product_id"])
+                    if rec["size"]:
+                        sized_rows += 1
+                    desc_chars += len(rec["description"])
+                    other_chars += sum(len(str(v)) for v in rec.values() if v is not None)
+                    pk = rec["parent_sku"] or rec["product_id"]
+                    par = parents.get(pk)
+                    if par is None:
+                        parents[pk] = {
+                            "url": rec["url"], "img": rec["image_url"],
+                            "price": rec["price"], "color": rec["color"],
+                            "name": rec["name"], "sizes": {rec["size"]}, "diff": set(),
+                        }
+                    else:
+                        if rec["url"] != par["url"]:
+                            par["diff"].add("url")
+                        if rec["image_url"] != par["img"]:
+                            par["diff"].add("image")
+                        if rec["price"] != par["price"]:
+                            par["diff"].add("price")
+                        if rec["color"] != par["color"]:
+                            par["diff"].add("color")
+                        if rec["name"] != par["name"]:
+                            par["diff"].add("name")
+                        par["sizes"].add(rec["size"])
                     if len(samples) < 2:
                         samples.append(rec)
 
@@ -109,14 +137,45 @@ def main():
             # ⚠️ `kept` counts ROWS, and the feed carries one row PER SIZE. The number
             # that matters for what a woman actually sees on a shelf is the DISTINCT
             # PIECE count. Reporting only rows overstated the catalog badly (twice).
-            pieces = len(seen_pieces)
+            pieces = len(parents)
             log(f"  => {pieces:,} distinct pieces ({kept/max(pieces,1):.1f} sizes each)")
             log(f"  quality: {no_image:,} without an image · {no_price:,} without a price"
                 f" · {dupes:,} duplicate ids")
-            for s in samples:
-                nm = s["name"][:58]
-                pr = f"${s['price']:.0f}" if s["price"] else "?"
-                log(f"    e.g. {nm}  {pr}  {s['color'] or '-'} / {s['size'] or '-'}")
+            for smp in samples:
+                nm = smp["name"][:58]
+                pr = f"${smp['price']:.0f}" if smp["price"] else "?"
+                log(f"    e.g. {nm}  {pr}  {smp['color'] or '-'} / {smp['size'] or '-'}")
+
+            # ---- SHAPE: the measurement the products table is designed against -------
+            # The feed carries one row per SIZE. So the table can either keep every size
+            # row (266k rows) or collapse each garment to ONE row with its sizes in an
+            # array (78k rows). Collapsing is only honest if every size row of a garment
+            # agrees on url, image, price, colour and name -- if sizes are priced
+            # differently, or each size links to its own page, collapsing silently throws
+            # that away. Nobody has measured it, so this counts it rather than assuming.
+            multi = [x for x in parents.values() if len(x["sizes"] - {""}) > 1]
+            log(f"  shape: {len(multi):,} of {pieces:,} pieces carry more than one size"
+                f" · {sized_rows:,}/{kept:,} rows name a size")
+            if multi:
+                dis = collections.Counter()
+                for x in multi:
+                    for fld in x["diff"]:
+                        dis[fld] += 1
+                if dis:
+                    log("         multi-size pieces whose rows DISAGREE on: " + " · ".join(
+                        f"{fld} {n:,} ({n/len(multi)*100:.0f}%)" for fld, n in dis.most_common()))
+                else:
+                    log("         every multi-size piece agrees on url, image, price,"
+                        " colour and name")
+                big = max(multi, key=lambda x: len(x["sizes"]))
+                log(f"         most sizes on one piece: {len(big['sizes'])}"
+                    f"  ({', '.join(sorted(x for x in big['sizes'] if x)[:12])})")
+            # Storage: descriptions are by far the largest field, and Supabase's free
+            # tier is 500MB. Measure the split before deciding whether to store them.
+            if kept:
+                log(f"  bytes: description {desc_chars/1e6:.1f}MB of"
+                    f" {other_chars/1e6:.1f}MB total"
+                    f" · mean description {desc_chars/kept:.0f} chars")
 
             per_store.append((store, total, kept, pieces, no_price))
             grand["lines"] += total
