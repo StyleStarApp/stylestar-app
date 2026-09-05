@@ -89,7 +89,7 @@ def main():
                     kept += 1
                     if not rec["image_url"]:
                         no_image += 1
-                    if rec["price"] is None and rec["sale_price"] is None:
+                    if rec["price"] is None:
                         no_price += 1
                     if rec["product_id"] in seen_ids:
                         dupes += 1

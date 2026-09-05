@@ -82,7 +82,16 @@ d, _ = parse_line(row(c33="Female"), "43322")
 ok("store name resolves from the MID", d["store"] == "Vilebrequin", d["store"])
 ok("affiliate id survives verbatim in the url", "jZNkkinrr1k" in d["url"])
 ok("price parses as a number", d["price"] == 39.0, d["price"])
-ok("sale price parses separately", d["sale_price"] == 39.0, d["sale_price"])
+ok("list price is kept", d["list_price"] == 39.0, d["list_price"])
+ok("not flagged on sale when the discount is 0.00", d["on_sale"] is False)
+# THE FOUR-STORE BUG: Olivela, Marissa, Mytheresa and Fleur du Mal leave column 10 blank
+# and put the number in column 13. Reading column 10 alone loses their prices silently.
+d3, _ = parse_line(row(c33="Female", c10="", c13="295.00"), "43172")
+ok("price resolves when ONLY column 13 is filled (4 of 7 stores)", d3["price"] == 295.0, d3["price"])
+# And her standing rule: show the REGULAR price, never the sale price.
+d4, _ = parse_line(row(c33="Female", c10="200.00", c12="50.00", c13="150.00"), "43172")
+ok("a discounted item shows the REGULAR price, not the sale price", d4["price"] == 200.0, d4["price"])
+ok("but the sale is still recorded", d4["on_sale"] is True and d4["current_price"] == 150.0)
 ok("size is read", d["size"] == "43-44", d["size"])
 ok("color is read", d["color"] == "Blue", d["color"])
 ok("image url is read", d["image_url"].startswith("https://"), d["image_url"])

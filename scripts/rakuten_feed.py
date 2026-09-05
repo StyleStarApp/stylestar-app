@@ -19,7 +19,7 @@ C_ID, C_NAME, C_GTIN = 0, 1, 2
 C_CAT1, C_CAT2 = 3, 4
 C_URL, C_IMAGE = 5, 6            # C_URL already carries her affiliate id -- see below
 C_DESC_SHORT, C_DESC_LONG = 8, 9
-C_PRICE, C_SALE_PRICE = 10, 13
+C_PRICE, C_DISCOUNT_AMT, C_SALE_PRICE = 10, 12, 13
 C_BRAND, C_SKU = 16, 19
 C_AVAILABILITY, C_CURRENCY = 22, 25
 C_MERCHANT_CAT = 29
@@ -114,13 +114,21 @@ def parse_line(line, mid):
     if not keep:
         return None, why
 
-    price = _money(f[C_PRICE])
-    sale = _money(f[C_SALE_PRICE])
-    # Feeds put the CURRENT price in the sale column and the list price in the price
-    # column, and sometimes repeat the same number in both. Cath's standing Edit rule is
-    # to show the REGULAR price, never a sale price, because sales expire and arriving to
-    # find something cheaper feels lucky while the reverse feels misled. Both are kept so
-    # the app can honour that rule rather than having the choice made for it here.
+    # 🚨 THE PRICE COLUMNS ARE USED INCONSISTENTLY ACROSS MERCHANTS, measured 2026-09-05.
+    # Vilebrequin and FARM Rio fill column 10 (list). Olivela, Marissa Collections,
+    # Mytheresa and Fleur du Mal leave column 10 EMPTY and put the number in column 13.
+    # So reading column 10 alone yields NO PRICE for four of the seven stores -- and it
+    # does so quietly, which is exactly the silent-failure shape this project keeps
+    # getting bitten by. Always resolve through `price`, never a raw column.
+    list_price = _money(f[C_PRICE])          # regular/list price, often blank
+    current = _money(f[C_SALE_PRICE])        # what it costs today; the reliable one
+    discount = _money(f[C_DISCOUNT_AMT]) or 0.0
+    on_sale = bool(discount > 0 and list_price and current and current < list_price)
+    # ⚠️ CATH'S STANDING EDIT RULE (2026-07-26): SHOW THE REGULAR PRICE, NEVER THE SALE
+    # PRICE. Sales expire, and arriving to find something cheaper than listed feels lucky
+    # while the reverse feels misled -- only one of those is recoverable. So when a piece
+    # really is discounted we surface the LIST price; otherwise the two agree anyway.
+    price = (list_price if on_sale else (current or list_price))
     url = _clean(f[C_URL])
     if not url.startswith("http"):
         return None, "no-url"
@@ -141,8 +149,10 @@ def parse_line(line, mid):
         "url": url,
         "image_url": _clean(f[C_IMAGE]),
         "description": _clean(f[C_DESC_LONG]) or _clean(f[C_DESC_SHORT]),
-        "price": price,
-        "sale_price": sale,
+        "price": price,               # the one to display -- see the rule above
+        "list_price": list_price,
+        "current_price": current,
+        "on_sale": on_sale,
         "currency": _clean(f[C_CURRENCY]) or "USD",
         "size": _clean(f[C_SIZE]),
         "color": _clean(f[C_COLOR]),
