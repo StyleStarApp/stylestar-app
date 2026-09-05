@@ -34,7 +34,11 @@ def get(path, prefer=None):
 def count(path):
     st, body, hdrs = get(path + ("&" if "?" in path else "?") + "select=count",
                          prefer="count=exact")
-    if st != 200:
+    # ⚠️ 206 IS SUCCESS HERE, NOT AN ERROR. PostgREST answers a counted query
+    #    with 206 Partial Content whenever it returns a range, which a count
+    #    always is. Treating it as a failure made this tool report ERROR beside
+    #    a perfectly good number -- a harness that lies is worse than no harness.
+    if st not in (200, 206):
         return None, f"HTTP {st} {body[:200]}"
     try:
         return int(json.loads(body)[0]["count"]), None
