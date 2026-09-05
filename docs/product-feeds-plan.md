@@ -23,14 +23,15 @@ restricted to the 102 stores Catherine vetted, with her affiliate tag on every l
 - Rakuten Product Catalog FTP account issued (support case 407562), preferred feed
   format set to `.txt`, Auto Enrollment already ON so future advertiser approvals
   request feed access automatically.
-- Feed access applied for on all 8 approved Rakuten advertisers.
-  🚨 **DISPUTED, DO NOT TREAT AS CONFIRMED.** The 2026-09-04 session notes record Cath
-  opening the server in Cyberduck and sending screenshots of real files in all 8 MID
-  folders (plus `ADDITIONAL` and `GLOBAL`). **On 2026-09-05 she said plainly: "I never
-  opened Cyberduck."** The disagreement is unresolved and not worth resolving, because
-  either way **nobody on this side has independently seen the files**. ▶ Treat the feeds
-  as UNVERIFIED until the pipeline itself connects and lists them. Do not build on the
-  assumption that all 8 folders have data in them.
+- Feed access applied for on all 8 approved Rakuten advertisers, and **confirmed
+  visually by Cath**: she connected to the server and saw real files in all 8 MID
+  folders, plus `ADDITIONAL` and `GLOBAL` at the top level.
+  ⚠️ **CORRECTION 2026-09-05: she connected through macOS FINDER, not Cyberduck.** The
+  2026-09-04 notes say Finder failed silently and Cyberduck was the working fallback;
+  her own account is the reverse, and hers is the one to trust. **So the "Finder is
+  unreliable for this, use Cyberduck" lesson recorded on 2026-09-04 is WITHDRAWN** —
+  do not repeat that advice, and do not send her to install anything. Finder worked.
+  ▶ The substance is unchanged and stands: the files are really there.
 - **The 8 MIDs:** FARM Rio 44912 · Diane von Furstenberg 53590 · Vilebrequin 43322 ·
   Olivela 50334 · Marissa Collections 36537 · Mytheresa 43172 · Fleur du Mal 50739 ·
   Etsy 54027.
