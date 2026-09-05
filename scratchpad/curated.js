@@ -112,7 +112,16 @@ if (before !== after) fs.writeFileSync(path.join(ROOT, 'products.json'), before)
     const pg = await ctx.newPage();
     pg.on('pageerror', e => errs.push('pageerror: ' + e.message));
     let aiCalled = 0;
-    await pg.route('**/.netlify/**', r2 => {
+    // ⚠️ ROUTE THE TWO ENDPOINTS SEPARATELY. A single '**/.netlify/**' pattern
+    // used to be enough, but since 2026-09-05 _wardrobeIdeaGen also asks
+    // /product-search for the feed's garments for this row -- so one shared
+    // pattern counted TWO calls where the assertion means "the AI ran once",
+    // and fulfilled the feed request with an AI response body. This suite is
+    // about the CATALOG path, so the feed is stubbed empty and the counter
+    // watches style-ai alone. (scratchpad/feedshelf.js covers the feed path.)
+    await pg.route('**/.netlify/functions/product-search', r2 =>
+      r2.fulfill({status: 200, contentType: 'application/json', body: JSON.stringify({products: []})}));
+    await pg.route('**/.netlify/functions/style-ai', r2 => {
       aiCalled++;
       if (opts.aiOk) r2.fulfill({status: 200, contentType: 'application/json', body: JSON.stringify({content: [{text: JSON.stringify(AI_ITEMS)}]})});
       else r2.fulfill({status: 500, body: '{}'});

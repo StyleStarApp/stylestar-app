@@ -6948,6 +6948,34 @@ function _sizeWordsOut(item){
 // askedFor: the thing she actually asked for, when a surface knows it (a
 // wardrobe checklist row name). It waives a _SEARCH_VETO word that she is
 // plainly asking for by name -- her exemption -- and never waives a taste veto.
+/* 🚨⭐⭐ HER NEVER-WEAR LIST IS THE ONE ABSOLUTE RULE IN THIS APP, and until
+   2026-09-05 it had a plural bug that quietly let things through. Her words:
+   "when someone says no shift dresses, that means absolutely no shift dresses."
+   The old test was `hay.includes(t) || (t.endsWith('s') && hay.includes(t.slice(0,-1)))`,
+   which strips ONE trailing letter -- so "shift dresses" became "shift dresse"
+   and MATCHED NOTHING, while a product called "Shift Dress" sailed onto her
+   shelf. Found by a test on the feed catalog; it was equally live on the AI
+   path and on her own hand-picks, i.e. everywhere.
+   ▶ ONE implementation, used by BOTH filterNeverWear (the AI path) and
+     curatedPicks (the catalog path). A rule this important living in two
+     places is how it drifts, and this bug is what that looks like. */
+function _nwForms(t){
+  const f=[t];
+  if(/ies$/.test(t))f.push(t.slice(0,-3)+'y');            // booties -> booty
+  if(/(ses|xes|zes|ches|shes)$/.test(t))f.push(t.slice(0,-2)); // dresses -> dress
+  if(/s$/.test(t)&&!/ss$/.test(t))f.push(t.slice(0,-1));  // boots -> boot
+  return f.filter(function(x){return x.length>2});
+}
+// ⚠️ SUBSTRING, NOT WORD-BOUNDARY, AND DELIBERATELY SO. "boots" also matches
+//    "bootcut", which is over-eager -- but on a never-wear list over-matching
+//    drops a garment she might have liked, and under-matching shows her a
+//    garment she said no to. Only one of those is a broken promise. (This was
+//    the old behaviour too; keeping it is a decision, not an oversight.)
+function _nwHit(hay,terms){
+  return terms.some(function(t){
+    return _nwForms(t).some(function(f){return hay.indexOf(f)>=0});
+  });
+}
 function filterNeverWear(items,askedFor){
   if(!Array.isArray(items))return[];
   const asked=String(askedFor||'').toLowerCase();
@@ -6978,7 +7006,7 @@ function filterNeverWear(items,askedFor){
   if(!terms.length)return items;
   return items.filter(it=>{
     const hay=((it.name||'')+' '+(it.search||'')).toLowerCase();
-    return !terms.some(t=>hay.includes(t)||(t.endsWith('s')&&hay.includes(t.slice(0,-1))));
+    return !_nwHit(hay,terms);
   });
 }
 function getPrefsForPrompt(){
@@ -8081,6 +8109,36 @@ function _loadProducts(){
     .catch(function(){return null});
   return _productsCatalogP;
 }
+// ---------------------------------------------------------------------------
+// THE FEED CATALOG — ~78,000 real garments from her seven approved Rakuten
+// stores, refreshed nightly. Fetched ONE CHECKLIST ROW AT A TIME, because the
+// whole catalog obviously cannot live in a phone: /product-search hands back a
+// pool for one slot, shaped exactly like a row of products.json.
+//
+// ⭐⭐ AND THAT SHAPE IS THE WHOLE DESIGN. The pool is CONCATENATED onto her own
+// hand-picks and the SAME curatedPicks() runs over both, so her never-wear
+// list, her colour no's, her size ranges, the price spread, the max-two-per-
+// retailer variety rule and the Sunday rotation all apply to a feed garment by
+// the identical code that applies them to hers. Two sources, ONE picker.
+// ▶ It matters most for the never-wear list. Her words, 2026-09-05: "when
+//   someone says no shift dresses, that means absolutely no shift dresses."
+//   A second filter on the server would be a second implementation of that
+//   rule, and a rule in two places drifts.
+//
+// ⚠️ A FAILURE IS ALWAYS AN EMPTY POOL, NEVER AN ERROR. No catalog, no network,
+//    no Supabase key: the shelf falls back to her hand-picks plus the AI,
+//    exactly as it behaved before this existed. Ideas can never break.
+// ⚠️ Cached per slot for the visit, so tapping a row twice costs one request.
+const _feedBySlot={},_feedP={};
+function _loadFeed(slot){
+  if(_feedP[slot])return _feedP[slot];
+  _feedP[slot]=fetch('/.netlify/functions/product-search',{method:'POST',
+      headers:{'Content-Type':'application/json'},body:JSON.stringify({slot:slot})})
+    .then(function(r){return r.ok?r.json():null})
+    .then(function(d){_feedBySlot[slot]=(d&&Array.isArray(d.products))?d.products:[];return _feedBySlot[slot]})
+    .catch(function(){_feedBySlot[slot]=[];return []});
+  return _feedP[slot];
+}
 // Colour hard-no's live in her free-text neverOther ("no orange please") —
 // deliberately parsed from the words she already gave us. ⚠️ Do NOT
 // reintroduce prefs.colorsSkip or a colours-to-avoid screen (removed
@@ -8098,7 +8156,17 @@ const _WDR_BANDS=['$','$$','$$$','$$$$'];
 // screen or quietly relaxing a hard filter (both forbidden by the brief).
 function curatedPicks(slot,p,family,count){
   count=count||6;p=p||prefs;
-  const all=(_productsCatalog&&_productsCatalog.products)||[];
+  // Her own hand-picks and the nightly feed, in ONE pool. Everything after this
+  // point treats them identically -- which is the guarantee, not a convenience.
+  // ⚠️ AND THAT MEANS HERS GET NO HEAD START. The sort's last tie-break is by
+  //    id, not by array order, so a hand-pick competes with a feed garment on
+  //    loved colour, staleness and the weekly rotation and nothing else. With
+  //    ~107 of hers against tens of thousands of feed pieces, hers will appear
+  //    RARELY on a well-stocked row. ▶ That is deliberately NOT decided here:
+  //    it is a curation question for Cath, flagged for the first time she sees
+  //    a real shelf on her phone. If she wants hers to lead, it is one term at
+  //    the FRONT of the sort below ((b.feed?0:1)-(a.feed?0:1)), not a filter.
+  const all=((_productsCatalog&&_productsCatalog.products)||[]).concat(_feedBySlot[slot]||[]);
   let pool=all.filter(function(x){return x.slot===slot&&x.active});
   const slotTotal=pool.length;
   if(!slotTotal)return {picks:[],reason:'',slotTotal:0};
@@ -8114,7 +8182,7 @@ function curatedPicks(slot,p,family,count){
     .map(function(t){return String(t).toLowerCase().trim()}).filter(function(t){return t.length>2});
   pool=pool.filter(function(x){
     const hay=(x.name+' '+x.attrs.join(' ')+' '+x.pattern).toLowerCase();
-    return !terms.some(function(t){return hay.includes(t)||(t.endsWith('s')&&hay.includes(t.slice(0,-1)))});
+    return !_nwHit(hay,terms);
   });
   mark('preferences');
   // Colour no's from her free text: "no orange" removes anything orange.
@@ -8132,7 +8200,13 @@ function curatedPicks(slot,p,family,count){
   });
   mark('size');
   // STAGE 2 — family match. Balanced keeps everything.
-  if(family&&family!=='Balanced')pool=pool.filter(function(x){return x.families.indexOf(family)>=0});
+  // ⚠️ A FEED GARMENT IS EXEMPT, and that is a decision rather than an
+  //    oversight. Her 107 hand-picks carry a style family SHE judged; nobody
+  //    has judged 78,000 feed pieces, and inventing that judgment is exactly
+  //    what the standing store-tag rule forbids (never invent a store's tags,
+  //    ask her -- the Garnet Hill lesson). For these the STORE is the style
+  //    signal, and her own ten dimension scores already rank the stores.
+  if(family&&family!=='Balanced')pool=pool.filter(function(x){return x.feed||x.families.indexOf(family)>=0});
   mark('style');
   // (The freshness addendum's one HARD exclusion, an explicit "Not for me",
   // came out with that control on 2026-08-15 -- see the note above
@@ -8305,7 +8379,10 @@ async function _wardrobeIdeaGen(id,boxId){
   // products is simply all AI, exactly as before this feature existed.
   let curated=[];
   try{
-    await _loadProducts();
+    // Both catalogs, in parallel: her 107 hand-picks (one fetch, cached for the
+    // visit) and this row's slice of the nightly feed. Either can come back
+    // empty without the shelf noticing -- the AI fills whatever is missing.
+    await Promise.all([_loadProducts(),_loadFeed(id)]);
     curated=curatedPicks(id,prefs,_herFamily(),4).picks;
     if(curated.length)_wdrMarkSeen(curated.map(function(x){return x.id}));
   }catch(e){curated=[];}
