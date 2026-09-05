@@ -109,7 +109,7 @@ const SEARCH_DOMAINS = [
   'bananarepublicfactory.gapfactory.com', 'belk.com', 'bergdorfgoodman.com', 'bloomingdales.com',
   'chicos.com', 'coach.com', 'cos.com', 'cuyana.com',
   'dillards.com', 'dsw.com', 'dvf.com', 'eileenfisher.com', 'eloquii.com',
-  'etsy.com', 'everlane.com', 'everythingbutwater.com', 'express.com', 'fahertybrand.com',
+  'etsy.com', 'everlane.com', 'everythingbutwater.com', 'vilebrequin.com', 'express.com', 'fahertybrand.com',
   'farmrio.com', 'fleurdumal.com', 'frankandeileen.com', 'freepeople.com', 'gap.com',
   'garnethill.com', 'goodamerican.com', 'gorjana.com', 'gucci.com',
   'izod.com', 'jcrew.com', 'jennikayne.com', 'jjill.com',

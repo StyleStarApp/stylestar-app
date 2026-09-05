@@ -283,7 +283,11 @@ ok('every store in the table also reaches SEARCH_DOMAINS', counts.stores === SRV
 // ⚠️ A permanently-red suite is how a false green happens — the standing rule.
 // Measured before touching it: 39 w, 7 gp (Amazon, Etsy, Abercrombie, Banana
 // Republic, Banana Republic Factory, Old Navy, Gap). Only the number was wrong.
-ok('39 keyword-scoped + 7 param-scoped', counts.w === 39 && counts.gp === 7, counts.w + ' / ' + counts.gp);
+// 2026-09-05: 39 -> 40. ✅ Vilebrequin is back in STORES (her call, the nightly
+// feed replaces the search that lied) and it carries w:1 REQUIRED, not optional:
+// they are historically a men's swim house and their search defaults to MEN'S on
+// an ambiguous term. Dropping w:1 there sends women to menswear.
+ok('40 keyword-scoped + 7 param-scoped', counts.w === 40 && counts.gp === 7, counts.w + ' / ' + counts.gp);
 ok('zero JS errors', errs.length === 0, errs.join(' | '));
 
 await browser.close(); server.close();

@@ -49,7 +49,14 @@ const HERS = ["Nordstrom","Macy's","Dillard's","Belk","Bloomingdales","Saks","Ne
 // approved advertiser and still earns; see the block comment at its old place in
 // STORES. This is the ONE suite that should fail when the table changes — bump it
 // deliberately, never find-and-replace it.
-ok('store count is 104', t.total === 104, String(t.total));   // +Marissa Collections, 2026-08-25 (Cath)
+ok('store count is 108', t.total === 108, String(t.total));
+// 104 -> 107: three stores were added over Aug/Sep without this count being
+//   bumped, so this suite sat red. Caught and corrected 2026-09-05.
+// 107 -> 108: ✅ VILEBREQUIN IS BACK, her call 2026-09-05 — "as long as it can
+//   be properly searched, there is now no reason to leave it out." The nightly
+//   feed replaces the search that lied. The ⚠️ note above is now HISTORY, not
+//   current state; see the block comment at its entry in STORES for why it
+//   returns WITHOUT its `deep` flag.
 // ⚠️ BUMPED BY HAND, never find-replaced. This suite's whole job is to notice a
 // store quietly appearing or vanishing, so it is the ONE place that SHOULD fail
 // when the table changes.
@@ -62,8 +69,16 @@ ok('J.Jill and Boden deliberately stay known-for only', !t.full.includes('J.Jill
 // that can take a specific search inside ONE lane and nowhere else, so the list
 // is a deliberate roll-call rather than a number: DVF returns 363 results for
 // "wrap dress" and a flat 0 for "sneakers".
-ok('the 7 category-deep stores, each in its own lane',
-   t.cat.sort().join(',') === "Athleta:activewear,DSW:shoes,Diane von Furstenberg:dresses,Lands' End:swimwear,Sachin & Babi:evening and occasion dresses,Sunglass Hut:eyewear,Zappos:shoes", t.cat.join());
+ok('the 8 category-deep stores, each in its own lane',
+   t.cat.sort().join(',') === "Athleta:activewear,DSW:shoes,Diane von Furstenberg:dresses,Fleur du Mal:lingerie and sleepwear,Lands' End:swimwear,Sachin & Babi:evening and occasion dresses,Sunglass Hut:eyewear,Zappos:shoes", t.cat.join());
+// ⚠️ UPDATED DELIBERATELY 2026-09-05, +Fleur du Mal:'lingerie and sleepwear' --
+// it earned that scoped flag on 2026-08-26 (measured: "silk slip" returns 19
+// real mentions, gibberish returns a clean "No results") and this roll-call was
+// never updated, so this suite sat red. Caught 2026-09-05.
+// ⚠️ VILEBREQUIN IS DELIBERATELY ABSENT from this roster even though it is back
+// in STORES today: it returns WITHOUT `deep`, because the feed only covers
+// Wardrobe Ideas so far and its own search still lies on the other surfaces.
+// It joins this list the day `deep:'swimwear and resortwear'` is restored.
 // ⚠️ UPDATED DELIBERATELY 2026-08-24, +Sachin & Babi:'evening and occasion
 // dresses' -- her call, given when asked ("Yes it can go deep"). It is SCOPED
 // rather than deep:1 for the same reason DVF is: a single-brand house is deep
