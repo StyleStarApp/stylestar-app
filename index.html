@@ -1503,21 +1503,24 @@
 
     <!-- Photo: her own pasted CDN url, 1094x1237 (0.884 aspect), verified a
          real image (200/image-jpeg), not Mytheresa's bot-block page.
-         ⚠️ HER CALL, live-tested: the plain default crop (top center, no
-         zoom) shows the FULL image height, and a coiled belt's own content
-         sits low in that frame (measured at 58-75% down) because the belt
-         is much wider than it is tall -- there is no vertical crop room to
-         "shift" without also narrowing the width, unlike a normal object-
-         position fix. Rendered 4 crop options at real trim amounts before
-         asking; she picked "800" (trims ~147px off each end of the coil,
-         content now sits 52-71% down, a real lift without touching the
-         buckle or visibly clipping the loop). Built as a WRAPPER +
-         transform:scale, the Open Heart Necklace's own technique: scale
-         and origin SOLVED algebraically from the exact crop math (not
-         eyeballed), verified forward against the same numbers before
-         shipping. onerror removes the WRAPPER, not just the img. -->
+         ⚠️ HER CALL, SUPERSEDES an earlier crop-and-zoom attempt: she didn't
+         like it live and asked to go back to the ORIGINAL image with padding
+         instead. Fixed as object-fit:CONTAIN (the same override the
+         Veronica Beard flat-lay above uses, and for the same reason: the
+         source is a shape the shared cover+top rule doesn't suit). Contain
+         shows the FULL uncropped belt at 84.8% of the box height; with
+         object-position staying "top" (the class default, untouched), all
+         the leftover space collects at the BOTTOM, which lifts the belt's
+         own content from 58-75% down to 49-63% down -- close to centered,
+         zero cropping. background:#EEEFF3 is the photo's OWN sampled
+         corner colour (238,239,243), not the shared card cream #F5EFE2 --
+         rendered both ways first, the shared cream left a visible seam
+         where the letterbox met the photo; the matched colour has none.
+         ⚠️ Kept class="dc-item-px" (not a wrapper) on purpose: that class is
+         what _renderEditTeaser's swipe-strip filter looks for, and the
+         wrapper version had silently dropped out of "More from the Edit". -->
     <div class="dc-item">
-      <div style="display:block;position:relative;width:100%;margin:0 0 14px;aspect-ratio:3/4;overflow:hidden;background:#F5EFE2;border:1px solid #EFE7D2;border-radius:2px"><img style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;transform:scale(1.16);transform-origin:50% 100%" src="https://www.mytheresa.com/image/1094/1238/100/33/P01182366.jpg" alt="Valentino Garavani VLOGO Signature Reversible Leather Belt in black, reversible to tan" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></div>
+      <img class="dc-item-px" style="object-fit:contain;background:#EEEFF3" src="https://www.mytheresa.com/image/1094/1238/100/33/P01182366.jpg" alt="Valentino Garavani VLOGO Signature Reversible Leather Belt in black, reversible to tan" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">Valentino Garavani VLOGO Signature Reversible Leather Belt</div>
       <div class="dc-item-meta"><span class="dc-store">Mytheresa</span><span class="dc-price">$570</span></div>
