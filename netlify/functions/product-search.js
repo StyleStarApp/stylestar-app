@@ -13,10 +13,14 @@
 //   Running that filter server-side as well would be a second implementation
 //   of it, and a rule in two places drifts. One implementation, on every pick.
 //
-// 🔒 The catalog tables have row level security ON with no policies, so the
-// anon key reads NOTHING and only the service key gets through. That is why
-// this is a server function and not a fetch from the page: no browser ever
-// touches these tables, and no client-supplied filter reaches the database.
+// 🔒 The catalog tables have row level security on, and carry exactly ONE rule:
+// the ordinary key may SELECT the two product tables. No writing, no ops
+// record, and no access at all to `users`. Writing still needs the service
+// role key, which lives in a GitHub Secret and nowhere else.
+// ▶ It is still a server function rather than a fetch from the page, for the
+//   reason that has not changed: no client-supplied filter reaches the
+//   database. The slot id is validated here against a strict pattern before it
+//   is ever put into a query.
 
 const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
 
@@ -161,13 +165,21 @@ export default async (req) => {
   }
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
-  // ⚠️ THE SERVICE KEY, not the one user-data.js uses. Row level security is on
-  // with no policies, so the publishable key reads zero rows from these tables
-  // -- and reads zero rows QUIETLY, as an empty list rather than an error,
-  // which would look exactly like an empty catalog. Falling back to
-  // SUPABASE_KEY is deliberate so the shelf still works if only that is set,
-  // and the log below says which key answered.
-  const KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_KEY;
+  // ⭐ THE ORDINARY KEY ON PURPOSE — the same one user-data.js already uses, and
+  // deliberately PREFERRED over the service key rather than the other way
+  // round. The catalog tables carry a read-only rule for it (db/products.sql,
+  // 2026-09-05 migration), so this function can read product names and nothing
+  // else: no writes, no ops record, and no access whatsoever to `users`.
+  // ▶ The alternative was to put the SERVICE ROLE key into Netlify. That key
+  //   bypasses every rule in the database including on `users`, so it can read
+  //   every woman's name, email, sizes, portrait and wishlist. A master key in
+  //   a second platform, so that a function can look up some product names, is
+  //   the wrong trade.
+  // ⚠️ SO THE ORDER HERE IS LOAD-BEARING, do not "tidy" it back. If the service
+  //    key is ever added to Netlify for some other reason, this function must
+  //    NOT quietly start using it. It falls back to it only when nothing else
+  //    is set, so the shelf still works in a stripped environment.
+  const KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_SERVICE_KEY;
   if (!SUPABASE_URL || !KEY) {
     console.error('[product-search] no Supabase credentials configured');
     // An empty pool, never an error: a missing catalog must fall back to the

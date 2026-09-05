@@ -4,20 +4,35 @@
 are the recipe for the next project, or for rebuilding this one — not because
 anything is outstanding.
 
-> ⚠️ **ONE SMALL THING TO RE-RUN (2026-09-05).** The catalog gained a `slots`
-> column — which of the 100 wardrobe checklist rows each garment belongs on. The
-> tables already exist, and `create table if not exists` sees an existing table
-> and stops, so it cannot add a new column on its own. **Open the SQL Editor and
-> run `db/products.sql` again** (safe, everything is `if not exists`), or just
-> these two lines from the bottom of it:
+> ⚠️ **ONE SMALL THING TO RE-RUN (2026-09-05).** **Open the SQL Editor and run
+> `db/products.sql` again.** It is safe to run any number of times — everything
+> in it is `if not exists`, and re-running is exactly how it is meant to be
+> updated.
+>
+> It does two things this time:
+>
+> 1. **Adds a `slots` column** — which of your 100 wardrobe checklist rows each
+>    garment belongs on. The tables already exist, and `create table if not
+>    exists` sees an existing table and stops, so it cannot add a new column on
+>    its own. The next nightly run fills it in; until then it is simply empty
+>    and nothing else changes.
+> 2. **Lets the app read the catalog** — read only, and only the catalog. This
+>    is what makes the shelves actually draw. Without it the wardrobe carousels
+>    keep working exactly as they do today, they just never show a feed garment.
+>
+> ▶ **To check it worked**, start a new query and run:
 >
 > ```sql
-> alter table products add column if not exists slots text[] not null default '{}';
-> create index if not exists products_slots_idx on products using gin (slots);
+> set local role anon;  select count(*) from product_cards;
 > ```
 >
-> The next nightly run fills it in. Until then the column is simply empty and
-> nothing else changes.
+> A number means the app can draw shelves. An error or `0 rows` means it cannot.
+> (It will read `0` until the first nightly run, which is fine — a *number* is
+> what you are looking for, not a big one.)
+>
+> ✅ **And nothing needs adding to Netlify.** That was the other way of doing
+> this, and it would have meant copying the powerful `service_role` key into a
+> second place. See *Why the app reads with the ordinary key* below.
 
 ---
 
@@ -83,6 +98,23 @@ every copy of the old key inert wherever it ended up. Deleting the message that
 exposed it does not, because the value has already travelled.
 ⚠️ *This happened once, on 2026-09-05, from a screenshot of the GitHub form. It
 was rotated the same hour.*
+
+### Why the app reads with the ordinary key
+
+The wardrobe shelves are drawn by a small Netlify function, and Netlify already
+holds the ordinary `SUPABASE_KEY`. So the catalog tables now carry a **read-only
+rule** that lets that key read them, and only them, and only read.
+
+The alternative was to copy the `service_role` key into Netlify as well. That
+key bypasses every rule in the database **including on the `users` table**, so
+it can read every woman's name, email, sizes, portrait and wishlist. Putting a
+master key in a second place so a function can look up some product names is the
+wrong trade — a read-only rule on two catalog tables is a far smaller door.
+
+What that rule exposes, exactly: product names, brands, prices, images and
+affiliate links. **No personal data at all** — the `users` table is untouched by
+it. Writing is still refused, which is why the nightly ingest still needs the
+`service_role` key and still keeps it in a GitHub Secret and nowhere else.
 
 ---
 

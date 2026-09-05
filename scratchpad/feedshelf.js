@@ -37,10 +37,11 @@ function req(body, over) {
     json: async () => body,
   };
 }
-let lastUrl = '';
+let lastUrl = '', lastHeaders = {};
 function stubSupabase(rows, status) {
-  global.fetch = async (u) => {
+  global.fetch = async (u, opts) => {
     lastUrl = String(u);
+    lastHeaders = (opts && opts.headers) || {};
     return { ok: (status || 200) < 400, status: status || 200,
              json: async () => rows, text: async () => JSON.stringify(rows) };
   };
@@ -96,6 +97,25 @@ delete process.env.SUPABASE_SERVICE_KEY; delete process.env.SUPABASE_KEY;
 res = await handler(req({ slot: 'to5' }));
 ok('no credentials is an empty pool', res.status === 200 && !JSON.parse(await res.text()).products.length);
 process.env.SUPABASE_SERVICE_KEY = savedKey; if (savedKey2) process.env.SUPABASE_KEY = savedKey2;
+
+// ⭐ LEAST PRIVILEGE, AND THE ORDER IS THE POINT (2026-09-05). The catalog
+// tables carry a read-only rule for the ORDINARY key, so this function must
+// read with that and never reach for the service role key -- which bypasses
+// every rule in the database including on `users`. If the service key is ever
+// added to Netlify for some other reason, this function must not quietly start
+// using it. That is a one-word change to break, so it is pinned here.
+process.env.SUPABASE_KEY = 'ordinary-key';
+stubSupabase([row()]);
+await handler(req({ slot: 'to5' }));
+ok('reads with the ORDINARY key when both are set',
+   lastHeaders.apikey === 'ordinary-key', String(lastHeaders.apikey));
+ok('…and never reaches for the service role key',
+   String(lastHeaders.Authorization || '').indexOf('service-key') < 0, String(lastHeaders.Authorization));
+delete process.env.SUPABASE_KEY;
+stubSupabase([row()]);
+await handler(req({ slot: 'to5' }));
+ok('falls back to the service key only when nothing else is set',
+   lastHeaders.apikey === 'service-key', String(lastHeaders.apikey));
 
 stubSupabase([row()]);
 ok('cross-origin refused', (await handler(req({ slot: 'to5' }, { headers: { origin: 'https://evil.example' } }))).status === 403);

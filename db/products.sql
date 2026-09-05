@@ -222,16 +222,19 @@ create index if not exists product_syncs_run_idx on product_syncs (run_at desc);
 -- 🔒 ROW LEVEL SECURITY — enabled, with NO policies, on purpose.
 --
 -- RLS on with no policy means the anon and authenticated roles can read
--- NOTHING. Only the service_role key gets through, which is exactly right:
---   * the ingest writes with the service_role key (a GitHub Actions secret);
---   * the future product-search Netlify function reads server-side, behind the
---     same origin check and rate limit as every other function in this app;
---   * no browser ever queries these tables directly, so no browser needs access.
+-- NOTHING, until a policy says otherwise. The ingest writes with the
+-- service_role key (a GitHub Actions secret), which bypasses RLS entirely.
 -- It also honours the standing rule that no client-supplied SQL reaches the DB.
 --
 -- ⚠️ THE CONSEQUENCE, and it is the thing most likely to trip up setup: THE ANON
 --    KEY CANNOT WRITE TO THESE TABLES. The ingest must use the SERVICE ROLE key.
 --    See db/README.md — it is a different key from the one in Netlify today.
+--
+-- ▶ ONE POLICY WAS ADDED LATER, on 2026-09-05, and it is READ ONLY: the app's
+--   own Netlify function draws the wardrobe shelves with the ordinary key, so
+--   that key may SELECT the two catalog tables and do nothing else. The full
+--   reasoning, and why that beats putting the service_role key into Netlify,
+--   is in the MIGRATIONS section at the bottom of this file.
 -- ---------------------------------------------------------------------------
 alter table products      enable row level security;
 alter table product_sizes enable row level security;
@@ -272,3 +275,60 @@ create or replace view product_cards with (security_invoker = on) as
 -- in the products table above for why it is stored rather than derived.
 alter table products add column if not exists slots text[] not null default '{}';
 create index if not exists products_slots_idx on products using gin (slots);
+
+
+-- ---------------------------------------------------------------------------
+-- 2026-09-05 — LET THE APP READ THE CATALOG, AND ONLY READ, AND ONLY THIS.
+--
+-- ⚠️ THIS SOFTENS THE no-policies STANCE ABOVE ON PURPOSE, AND THE REASON IS
+--    LEAST PRIVILEGE, NOT CONVENIENCE. The wardrobe shelves are drawn by a
+--    Netlify function (product-search), and Netlify holds SUPABASE_KEY. The
+--    alternative was to put the SERVICE ROLE key into Netlify as well -- and
+--    that key bypasses every rule in this database, including on the `users`
+--    table, so it can read every woman's name, email, sizes, portrait and
+--    wishlist. Copying it into a second platform to let a function read some
+--    product names is the wrong trade. A read-only policy on two catalog
+--    tables is a far smaller door than a master key.
+--
+-- What this grants, exactly: SELECT on the two catalog tables. Nothing else.
+-- No insert, no update, no delete -- the ingest still needs the service role
+-- key, which is why it lives in a GitHub Secret and nowhere else. And
+-- product_syncs deliberately gets NO policy: it is the ops record, the app
+-- never reads it, so it stays sealed.
+--
+-- ⚠️ product_cards inherits this rather than needing its own policy, because
+--    the view is security_invoker = on. That is the flag doing the work; if
+--    anyone ever removes it the view becomes a back door instead.
+--
+-- ▶ WHAT IS NOW READABLE BY A LEAKED PUBLISHABLE KEY: product names, brands,
+--   prices, images and affiliate links. Not a single row of anyone's personal
+--   data -- `users` is untouched by this and keeps whatever it had. The honest
+--   residual risk is that the retailer catalog itself is licensed to the APP
+--   rather than for redistribution (the same rule that keeps feed data out of
+--   this public repo), so it is a licensing exposure, not a privacy one.
+--
+-- To verify in the SQL editor after running this:
+--     set local role anon;  select count(*) from product_cards;
+--   -- a number = the app can draw shelves.  0 rows or an error = it cannot.
+--   (Then just start a new query; `set local` only lasts the transaction.)
+-- ---------------------------------------------------------------------------
+-- ⚠️ THE GRANT IS NOT OPTIONAL, AND THIS WAS PROVEN ON A REAL POSTGRES 16, NOT
+--    ASSUMED. A policy is checked AFTER the ordinary SQL privileges, so a role
+--    with a permissive policy and no GRANT still gets "permission denied for
+--    view product_cards". Supabase normally grants this by default on new
+--    tables, so it may already be in place -- but if it were not, the function
+--    would fail and, because a failure is deliberately an EMPTY POOL rather
+--    than an error, the shelves would just quietly look like they did before.
+--    A silent nothing is the worst failure this pipeline can have, so the file
+--    grants it explicitly instead of hoping. Re-granting is harmless.
+-- ⚠️ AND THE VIEW NEEDS ITS OWN GRANT. Granting the underlying tables is not
+--    enough -- product_cards is a separate object, and without this line the
+--    shelf query still gets "permission denied for view product_cards" even
+--    though every table behind it is readable. Also measured, not assumed.
+--    Both grants are required: security_invoker = on means the caller needs
+--    SELECT on the view AND on the tables it reads.
+grant select on products, product_sizes, product_cards to anon, authenticated;
+drop policy if exists products_read      on products;
+drop policy if exists product_sizes_read on product_sizes;
+create policy products_read      on products      for select to anon, authenticated using (true);
+create policy product_sizes_read on product_sizes for select to anon, authenticated using (true);
