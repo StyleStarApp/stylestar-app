@@ -424,6 +424,53 @@ spikes, and load spikes at the top of every hour.
 emails the owner. Unlikely here, but if the catalog ever goes quietly stale after a long
 break, look there before looking at the code.
 
+### 🗂 THE TAXONOMY, MEASURED (2026-09-05, `scripts/rakuten-categories.py`)
+Her shelves are her own 100-row checklist; the feed knows only each merchant's own
+categories. So every garment has to be matched to a row, and the matching had to be
+designed against the words the merchants really use. `Rakuten category shape` is the
+read-only workflow that reports them.
+
+🚨🚨 **THE HEADLINE, AND IT IS THE DVF TRAP WEARING A NEW HAT: NO SINGLE COLUMN IS
+POPULATED AT EVERY STORE.** A matcher built on any one of them fails silently at some
+merchant — which is exactly how a whole womenswear house nearly got deleted in the
+first place.
+
+| store | garments | `category_secondary` | `merchant_category` | `pattern` |
+|---|---|---|---|---|
+| Mytheresa | 62,888 | 37 values, 11% blank | ⭐ **213 values, 3% blank** | 14 values |
+| Marissa Collections | 8,755 | 🚨 **ONE value for all of them** | 🚨 **100% blank** | 🚨 **100% blank** |
+| Olivela | 3,999 | 34 values, 0% blank | 74 values | 🚨 100% blank |
+| FARM Rio | 1,049 | — | — | 🚨 100% blank |
+| Fleur du Mal | 791 | 🚨 **100% blank** | ⭐ 62 full Google paths | 🚨 100% blank |
+| Diane von Furstenberg | 599 | 🚨 **100% blank** | 7 values, 21% blank | 🚨 100% blank |
+| Vilebrequin | 188 | 18 values, 0% blank | 33 values | 5 values |
+
+▶▶ **SO THE MATCHER MUST BE A LADDER, NOT A COLUMN:** `merchant_category` → then
+`category_secondary` → then `category_primary` → then **the product NAME**, which has to
+work standing alone, because **Marissa Collections (11% of the catalog) has no structured
+data at all** — one category value, no breadcrumb, no colour, no material, no pattern.
+- ⭐⭐ **MYTHERESA'S BREADCRUMB IS A NEAR ONE-TO-ONE MAP ONTO HER CHECKLIST, and it is 80%
+  of the catalog:** `women>clothing>skirts>pencil` (511) is *Pencil skirt* ·
+  `women>clothing>jackets>blazers` (994) is *Blazers* · `women>shoes>loafers` (702) is
+  *Loafers* · `women>bags>top-handle bags` (910) is *Top handle bags* ·
+  `women>clothing>dresses>work` (329) is *Work-appropriate dresses* ·
+  `women>clothing>beachwear>cover-ups` (330) is *Swim coverups*. Her taxonomy and a
+  luxury retailer's turn out to be the same taxonomy, which is a quiet compliment to hers.
+- ⚠️ **DVF has ONLY `category_primary`, in its own vocabulary** (Dresses 279, Shirts &
+  Tops 95, Pants & Shorts 50, Skirts 32…). Match it there or lose the whole house again.
+- ⭐ **`pattern` IS A CLEAN 17-VALUE COLUMN** (plain · embellished · printed · patterned ·
+  floral · striped · embroidered · animal-print · checked · polka dots …). ▶ **That is
+  what finally fills `to4 Print tops`, the one Tops row that has never had a single
+  product** and the gap a tester named in August. ⚠️ **But only at Mytheresa and
+  Vilebrequin** — blank at the other five, so it can rank and it must never gate.
+- ⚠️ **COLOUR IS MESSIER THAN IT LOOKS: 663 values, 15% blank, and case-inconsistent**
+  (`Gold` and `gold` are separate). **FARM Rio's colour column is a PRINT NAME, not a
+  colour** — *"TROPICAL GROOVE BLUE"*, *"EDENS BLOOM LIGHT PINK"*. So `bo1 Blue jeans` and
+  `to1 White tops` need the colour matched loosely and lowercased, never compared exactly.
+- ⚠️ **MATERIAL IS FREE TEXT, 25,209 distinct** (`100% Cotton`, `100%cotton`, `100% COTTON`,
+  `upper: bovine leather, sole: rubber`). Useful as a SUBSTRING for her never-wear
+  fabrics; useless as a category.
+
 ### ▶ NEXT, IN ORDER
 1. ✅ **Run it for real — DONE.** 78,278 garments, 77 seconds, all seven clean.
 2. ✅ **Put it on a nightly schedule — DONE.** See above: full feed, 21:37 UTC.
