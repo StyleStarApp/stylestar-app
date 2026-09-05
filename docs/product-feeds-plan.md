@@ -390,12 +390,43 @@ only said the rows differed, which would have been easy to wave away.
    name is possible but store-specific and speculative; **decide it when the size filter
    is actually built**, against what a shelf looks like, not now.
 
+### 🕗 THE NIGHTLY SCHEDULE — 21:37 UTC, AND IT RUNS THE **FULL** FEED
+🚨 **THIS REVERSES THIS DOCUMENT'S OWN "ride the deltas" INSTRUCTION, and the reason is
+that the instruction was written before anything had been measured.** It rested on
+*"pulling every full catalog nightly is a lot of bytes"*. It is **27 MB and 77 seconds**
+for all seven, on a public repo where Actions minutes are free. That premise was wrong.
+- ▶▶ **AND THE FULL FEED BUYS THE ONE THING A DELTA CANNOT: THE SWEEP.** The sweep is
+  what removes a garment the merchant has stopped carrying, and it is deliberately
+  disabled on a delta (a delta lists only what changed, so sweeping after one would read
+  the untouched 99% as gone and delete the store). On deltas the catalog is only
+  corrected at the weekly re-seed — **up to seven days of shelf cards pointing at
+  sold-out pieces. Nightly full: at most one.** For an app whose whole promise is honest
+  shopping, that is the trade, and it is not close.
+- ▶ Three smaller reasons, all pointing the same way: **the delta format has never been
+  read** (building against an unread format is the mistake this project keeps paying
+  for) · **GitHub can DROP a scheduled run under load**, and a missed full run costs one
+  stale day while a missed delta silently rots the table · one code path, not two.
+- ⚠️ **KEEP THE DELTA MACHINERY.** `FEED_KIND` still gates the sweep, and deltas become
+  genuinely necessary the day **Etsy** joins — 5 GB full against 1 GB delta is a
+  different question from 27 MB.
+
+⭐ **THE HOUR IS MEASURED TOO.** Every feed's first line carries the merchant's own build
+stamp, which the parser had been discarding as "header" since it was written. Kept and
+logged, the seven read **03:23 · 05:00 · 06:02 · 07:01 · 10:45 · 13:02 · 14:13**, so the
+last lands early afternoon.
+⚠️ **That clock is US EASTERN, not UTC, and an accident pinned it: FARM Rio's catalog
+changed between a 14:43 UTC run and an 18:30 UTC one while still stamped 13:02.**
+Impossible if 13:02 were UTC — it predates both. Exactly right at 17:02 UTC. So the last
+build is ~18:13 UTC and the job runs three hours later.
+⚠️ **`:37`, never `:00`** — GitHub delays and sometimes drops scheduled runs when load
+spikes, and load spikes at the top of every hour.
+⚠️ **GitHub disables a scheduled workflow after 60 days with no commits** to the repo. It
+emails the owner. Unlikely here, but if the catalog ever goes quietly stale after a long
+break, look there before looking at the code.
+
 ### ▶ NEXT, IN ORDER
 1. ✅ **Run it for real — DONE.** 78,278 garments, 77 seconds, all seven clean.
-2. **Put it on a nightly schedule.** ⚠️ Seed from the full files once, then ride the
-   **delta** files (a few KB each against 27 MB) — which means setting `FEED_KIND=delta`,
-   the one line that stops the sweep — and re-seed weekly so a missed delta cannot
-   silently rot the table.
+2. ✅ **Put it on a nightly schedule — DONE.** See above: full feed, 21:37 UTC.
 3. **Then the surfaces**, in the plan's own order: stylist chat first, then real photos
    and prices on the shopping cards, then "in your size", then the wishlist.
 4. ▶ **ETSY IS DEFERRED, NOT DROPPED — her call, 2026-09-05.** Its own conversation once

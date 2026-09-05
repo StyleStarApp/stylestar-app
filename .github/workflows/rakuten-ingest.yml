@@ -9,9 +9,32 @@
 # a second time on every error path rather than trusting that. No feed data is ever
 # written into the repository -- an affiliate approval lets the APP use a retailer's
 # catalog, it does not let us republish it.
+#
+# ⚠️ GITHUB DISABLES A SCHEDULED WORKFLOW AFTER 60 DAYS WITH NO COMMITS to the
+# repository, and emails the owner when it does. This repo is worked on most days
+# so it should never happen -- but if the catalog ever goes quietly stale after a
+# long break, look here first rather than at the code.
 name: Rakuten feed ingest
 
 on:
+  # ---------------------------------------------------------------------------
+  # 21:37 UTC daily -- 5:37pm New York, 2:37pm Los Angeles.
+  #
+  # ⭐ THE HOUR IS MEASURED, NOT PICKED. Every feed's first line carries the
+  # moment the merchant built it, and on 2026-09-05 the seven read 03:23, 05:00,
+  # 06:02, 07:01, 10:45, 13:02 and 14:13 -- so the LAST of them lands early
+  # afternoon and a run after that catches all seven on the same day.
+  # ⚠️ That clock is US EASTERN, not UTC, and it was pinned by an accident worth
+  #    keeping: FARM Rio's catalog changed between a 14:43 UTC run and an 18:30
+  #    UTC one while still stamped 13:02. Impossible if 13:02 were UTC (it would
+  #    predate both); exactly right if it is Eastern, i.e. 17:02 UTC, between the
+  #    two. So the last build is ~18:13 UTC and this runs three hours later.
+  # ⚠️ :37 rather than :00 on purpose. GitHub says scheduled runs are delayed --
+  #    and can be dropped entirely -- when load spikes, and load spikes at the
+  #    top of every hour. An odd minute is the cheapest way out of that queue.
+  # ---------------------------------------------------------------------------
+  schedule:
+    - cron: '37 21 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -50,6 +73,39 @@ jobs:
           RAKUTEN_FTP_PASSWORD: ${{ secrets.RAKUTEN_FTP_PASSWORD }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          # On the nightly schedule there are no inputs, so this is '0' and the
+          # run writes. Only a hand-dispatched run can ask for a dry one.
           DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+          # ---------------------------------------------------------------------
+          # 🚨 THE FULL FEED, EVERY NIGHT -- AND THIS REVERSES WHAT THE PLAN SAID.
+          #
+          # docs/product-feeds-plan.md says to seed from the full files once and
+          # then ride the tiny delta files, re-seeding weekly. That was written
+          # before anyone had measured a real run, on the fear that "pulling every
+          # full catalog nightly is a lot of bytes". Measured, it is 27 MB and 77
+          # seconds for all seven, on a public repo where Actions minutes are free.
+          # "A lot of bytes" was simply wrong.
+          #
+          # ▶ AND THE FULL FEED BUYS THE ONE THING DELTAS CANNOT: THE SWEEP.
+          #   The sweep is what removes a garment the merchant has stopped
+          #   carrying, and it is deliberately disabled on a delta (a delta lists
+          #   only what changed, so sweeping after one would read the untouched
+          #   99% as gone and delete the store). On deltas the catalog would only
+          #   be corrected at the weekly re-seed -- up to seven days of shelf
+          #   cards pointing at sold-out pieces. Nightly full: at most one.
+          #   For an app whose whole promise is honest shopping, that is the trade.
+          #
+          # ▶ Three more reasons, each smaller but all pointing the same way:
+          #   * The delta FORMAT has never been read. Building against an unread
+          #     format is exactly the mistake this project keeps paying for.
+          #   * GitHub can DROP a scheduled run under load. A missed full run
+          #     costs one stale day; a missed delta silently rots the table until
+          #     someone notices, which is the worse failure by far.
+          #   * One code path instead of two, and no second weekly cron to keep.
+          #
+          # ⚠️ KEEP THE DELTA MACHINERY ANYWAY. FEED_KIND still gates the sweep,
+          #    and deltas become genuinely necessary the day Etsy joins: 5 GB full
+          #    against 1 GB delta is a different question entirely from 27 MB.
+          # ---------------------------------------------------------------------
           FEED_KIND: full
         run: python3 scripts/rakuten-ingest.py

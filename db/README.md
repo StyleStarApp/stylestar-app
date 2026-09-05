@@ -94,10 +94,18 @@ silent-failure traps the design protects against, are written into
 
 ## Filling it
 
-**Actions → Rakuten feed ingest → Run workflow.** It runs the offline tests
-first, so a broken writer never reaches the database, then downloads all seven
-catalogs, writes the garments, writes their sizes, and removes anything the
-feeds no longer carry.
+**It fills itself, every night at 21:37 UTC** (5:37pm New York). The job runs the
+offline tests first, so a broken writer never reaches the database, then
+downloads all seven catalogs, writes the garments, writes their sizes, and
+removes anything the feeds no longer carry. About 80 seconds.
+
+To run it by hand — after adding a store, or to check something — go to
+**Actions → Rakuten feed ingest → Run workflow**. Tick **Report only, write
+nothing** for a dry run that touches nothing.
+
+⚠️ **If a night fails, GitHub emails the repository owner.** Worth not filing
+those away unread: the catalog quietly going stale looks exactly like the
+catalog being fine.
 
 ---
 
