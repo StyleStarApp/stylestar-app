@@ -3622,3 +3622,19 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .fc-yes::before{content:'\2713\00a0'}
 .fc-no,.fc-diff{color:#8a5a00;background:#fbf4e7}
 .find-disc{font-size:11px;color:#6e6e6e;padding:2px 2px 0}
+
+/* ⭐ THE WAITING STAR — Cath, 2026-09-06: "something that shows the stylist is
+   actively shopping and nothing is broken."
+   ⚠️ SAME `spin` KEYFRAME AND SAME REVERSE DIRECTION as .shop-star-main and
+   .wdr-load-star, so every wait in the app turns the same way. It is one signal
+   wearing three sizes, never three different loaders. */
+.chat-typing{display:flex;align-items:center;gap:8px}
+.chat-typing-star{width:18px;height:18px;flex:0 0 18px;animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
+.find-status{display:flex;align-items:center;gap:8px}
+.find-load-star{width:18px;height:18px;flex:0 0 18px;animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
+/* ⚠️ Respect a woman who has asked her phone to stop moving things. The star
+   still shows, it simply stops turning — the reassurance is the star being
+   there, and motion is not the only way to give it. */
+@media (prefers-reduced-motion:reduce){
+  .chat-typing-star,.find-load-star{animation:none;opacity:.75}
+}

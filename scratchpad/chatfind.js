@@ -211,6 +211,44 @@ const prod = (o) => Object.assign({
        /fabric not confirmed/i.test(html));
   }
 
+  console.log('\nPART 3e — the waiting star: one signal, not a fourth loader');
+  {
+    const css = fs.readFileSync(path.join(ROOT, 'styles.css'), 'utf8');
+    const src = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+    // ⭐ Cath, 2026-09-06: "something that shows the stylist is actively shopping
+    //    and nothing is broken." She named the Shop-my-style star herself, so the
+    //    answer is to REUSE it, never to draw a fourth one.
+    ok('the star is the SAME path the rest of the app already draws',
+       src.includes('M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z'));
+    ok('and it turns the same way as .shop-star-main and .wdr-load-star',
+       /\.chat-typing-star\{[^}]*animation:spin 1\.7s linear infinite reverse/.test(css) &&
+       /\.find-load-star\{[^}]*animation:spin 1\.7s linear infinite reverse/.test(css));
+    // ▶ It goes on BOTH waits: the reply (~16-20s) is the longer one, and text
+    //   alone there was the actual complaint.
+    ok('the stylist THINKING bubble carries it', /_chatTyping\(/.test(src));
+    ok('the product SEARCH line carries it', /_starSpin\(\)\+'<span class="find-status-txt">/.test(src));
+    // ⚠️ The stream swaps the words mid-flight; textContent there would wipe the star.
+    // ⚠️ Assert the BEHAVIOUR, not a comment. The stream swaps "Checking
+    //    stores..." into the bubble mid-flight, and a bare textContent there
+    //    would delete the star along with the words.
+    ok('the mid-stream word swap targets the span, so the star survives',
+       /const _t=typing\.querySelector\('span'\);/.test(src) &&
+       /if\(_t\)_t\.textContent='Checking stores\.\.\.'/.test(src));
+    ok('a woman who asked her phone to stop moving things is respected',
+       /prefers-reduced-motion:reduce/.test(css));
+
+    // And it really renders, in a real browser, with the star inside it.
+    const html = await pg.evaluate(async () => {
+      window.fetch = () => new Promise(() => {});     // hang, so the line stays up
+      document.getElementById('chatMessages').innerHTML = '';
+      _findRun({item: 'dress'});
+      await new Promise(r => setTimeout(r, 1100));    // past the 700ms delay
+      return document.getElementById('chatMessages').innerHTML;
+    });
+    ok('the status line really shows a star, not just text', /find-load-star/.test(html));
+    ok('with her words beside it', /Looking through your shops/.test(html));
+  }
+
   console.log('\nPART 4 — nothing is claimed that was not confirmed');
   {
     const html = await pg.evaluate(async () => {

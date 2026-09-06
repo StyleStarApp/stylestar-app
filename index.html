@@ -10282,7 +10282,9 @@ async function _readChatStream(r,typing,liveEl,state){
     // be saved and shown as if it were the whole answer.
     if(ev.type==='message_stop')state.complete=true;
     if(ev.type==='content_block_start'&&ev.content_block&&ev.content_block.type==='server_tool_use'){
-      typing.textContent='Checking stores...';
+      /* ⚠️ textContent here would WIPE THE STAR. Only the words may change. */
+      const _t=typing.querySelector('span');
+      if(_t)_t.textContent='Checking stores...'; else typing.textContent='Checking stores...';
       toBottom();
     }else if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta'){
       text+=ev.delta.text;
@@ -10397,6 +10399,31 @@ async function _chatNoSearchReply(messages){
    It should search when finding real products is actually NEEDED TO ANSWER what
    she is asking." A shopping search costs real money per call, so the model is
    told plainly when NOT to emit one. */
+/* ⭐ THE SPINNING STAR, AND IT IS THE SAME ONE THE REST OF THE APP ALREADY USES.
+   Cath, 2026-09-06: "we have the spinning star on shop my style that lets her
+   know it is thinking and coming soon. We need a way for her to know it is
+   taking a little more time... something that shows the stylist is actively
+   shopping and nothing is broken."
+   ⚠️ SO THIS IS A REUSE, NOT A NEW LOADER. Byte-identical path and colours to
+   the `.wdr-load-star` on Wardrobe and Trending, so a woman meets ONE waiting
+   signal everywhere instead of three that nearly match. Adding a fourth spinner
+   of its own would be the same mistake as a second copy of a rule.
+   ▶ IT GOES ON BOTH WAITS. The reply itself takes ~16-20s and the product
+     search ~5-8s alongside it, so the LONGER wait is the stylist writing --
+     text alone there was the actual complaint. */
+function _starSpin(cls){
+  return '<svg class="'+(cls||'find-load-star')+'" viewBox="0 0 24 24" aria-hidden="true">'+
+    '<path d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z" '+
+    'fill="#E6C24E" stroke="#b8bcc2" stroke-width="0.6"/></svg>';
+}
+/* The stylist's own "thinking" bubble, star included. Built in one place because
+   sendChat raises it twice (the main path and the no-search retry). */
+function _chatTyping(text){
+  const el=document.createElement('div');
+  el.className='chat-typing';
+  el.innerHTML=_starSpin('chat-typing-star')+'<span>'+_esc(text||'Styling your answer...')+'</span>';
+  return el;
+}
 const _FIND_RE=/<<\s*FIND\s+([^>]*)>>/i;
 /* 🚨🚨 HER WORDS ONLY. THIS IS A CODE RULE BECAUSE A PROMPT RULE ALREADY FAILED.
    Cath's live test, 2026-09-06: "I have a wedding in Napa in October and nothing
@@ -10478,8 +10505,12 @@ function _findStatus(mc){
   mc.appendChild(el);
   let i=0,shown=false;
   /* ⚠️ THE LINE REPLACES ITSELF, IT NEVER STACKS. Three messages piling up is a
-     progress bar wearing a dress. */
-  const paint=function(){el.textContent=_FIND_STEPS[Math.min(i,_FIND_STEPS.length-1)]};
+     progress bar wearing a dress. Only the WORDS change; the star keeps turning
+     without restarting, which is what reads as one continuous act rather than
+     three separate ones. */
+  el.innerHTML=_starSpin()+'<span class="find-status-txt"></span>';
+  const txt=el.querySelector('.find-status-txt');
+  const paint=function(){txt.textContent=_FIND_STEPS[Math.min(i,_FIND_STEPS.length-1)]};
   const t0=setTimeout(function(){shown=true;el.style.display='';paint();mc.scrollTop=mc.scrollHeight},_FIND_SHOW_AFTER);
   const t1=setInterval(function(){i++;if(shown)paint()},3500);
   return{done:function(){clearTimeout(t0);clearInterval(t1);el.remove()}};
@@ -10624,9 +10655,7 @@ async function sendChat(){
   const sendBtn=document.getElementById('chatSend');
   sendBtn.disabled=true;
 
-  const typing=document.createElement('div');
-  typing.className='chat-typing';
-  typing.textContent='Styling your answer...';
+  const typing=_chatTyping('Styling your answer...');
   document.getElementById('chatMessages').appendChild(typing);
   document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight;
 
@@ -10962,9 +10991,7 @@ RULES:
       // wait with nothing to show for it. A no-search answer comes back in a
       // couple of seconds and almost never fails, so we simply ask again that
       // way. She gets a real stylist answer, not an error.
-      const t2=document.createElement('div');
-      t2.className='chat-typing';
-      t2.textContent='Styling your answer...';
+      const t2=_chatTyping('Styling your answer...');
       const mc2=document.getElementById('chatMessages');
       mc2.appendChild(t2);mc2.scrollTop=mc2.scrollHeight;
       let fb='';
