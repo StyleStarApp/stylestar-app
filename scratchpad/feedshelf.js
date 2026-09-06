@@ -206,7 +206,68 @@ async function shelf(opts) {
 let s = await shelf({ feed: [feedItem(1), feedItem(2), feedItem(3), feedItem(4), feedItem(5)] });
 ok('the shelf asked for this row’s feed', s.feedCalls === 1);
 let fed = s.cards.filter(c => /Silk Blouse [1-5]/.test(c.name));
-ok('feed garments reach the shelf', fed.length >= 3, JSON.stringify(s.cards.map(c => c.name)));
+// ⚠️⚠️ THIS ASSERTION CHANGED ON 2026-09-06, AND THE CHANGE IS A REAL INTENT
+// CHANGE, NOT A TEST BENT TO FIT A REGRESSION. It used to demand `>= 3` of the
+// six cards be feed garments -- written when the feed was allowed to fill the
+// row. Cath then saw a real shelf as herself and asked for the opposite:
+// "I don't want those 7 stores showing up on every line." She chose "feed as a
+// garnish" from four measured options, so a row of 4 now admits ONE feed
+// garment while non-feed candidates remain. Demanding 3 would now assert the
+// bug she reported.
+// ▶ Kept as a hard assertion rather than deleted, because "the feed reaches
+// the shelf at all" is still the thing that must never silently stop working.
+ok('feed garments still reach the shelf', fed.length >= 1, JSON.stringify(s.cards.map(c => c.name)));
+// This scenario seeds 5 feed garments against only 2 catalog blouses, so the
+// ceiling CANNOT bind: 1 feed + 2 catalog is 3, short of the 4 the row asks
+// for, and the no-starve top-up hands a held-back feed garment back. Two is
+// therefore the correct answer here, and it is what proves the top-up runs.
+ok('the ceiling never starves the row — it tops back up from the feed',
+   s.cards.length >= 4 && fed.length === 2, JSON.stringify(s.cards.map(c => c.name)));
+
+
+// ═══ THE FEED CEILING, DRIVEN DIRECTLY (2026-09-06) ═══════════════════════
+// The scenario above cannot prove the ceiling BINDS, because only 2 of Cath's
+// 16 to5 blouses survive that shelf's style filter, so there are never enough
+// non-feed candidates for the cap to matter. Rather than tune archetypes until
+// the numbers happen to line up -- which would make the test measure the
+// fixture, not the rule -- this drives curatedPicks with a pool we control.
+{
+  const ctx2 = await b.newContext({ viewport: { width: 390, height: 844 } });
+  const pg2 = await ctx2.newPage();
+  pg2.on('pageerror', e => errs.push('pageerror(ceiling): ' + e.message));
+  await pg2.route('**/.netlify/functions/**', r => r.fulfill({ status: 200, body: '{}' }));
+  await pg2.goto('http://localhost:8947/');
+  await pg2.waitForTimeout(2600);
+  const r = await pg2.evaluate(() => {
+    const mk = (n, feed) => ({
+      id: n, slot: 'to5', active: true, feed: feed, brand: 'B', name: n,
+      retailer: feed ? ('Store' + n) : ('Shop' + n), url: 'https://x/' + n,
+      image: '', price: 200, band: '$$$', colors: ['Black'], pattern: '',
+      attrs: [], families: [], slots: ['to5'], sizes: ['M'], note: feed ? '' : 'note',
+      petite: false, tall: false, plus: false,
+    });
+    // 6 of hers, 6 from the feed -- plenty of both, so the cap must bind.
+    _productsCatalog = { products: [1,2,3,4,5,6].map(i => mk('Hers' + i, false)) };
+    _feedBySlot['to5'] = [1,2,3,4,5,6].map(i => mk('Feed' + i, true));
+    quizTaken = true;
+    const four = curatedPicks('to5', prefs, null, 4).picks;
+    // and with NOTHING of hers, the row must still fill from the feed
+    _productsCatalog = { products: [] };
+    const noneOfHers = curatedPicks('to5', prefs, null, 4).picks;
+    return {
+      four: four.map(x => x.name), fourFeed: four.filter(x => x.feed).length,
+      bare: noneOfHers.map(x => x.name), bareFeed: noneOfHers.filter(x => x.feed).length,
+    };
+  });
+  await ctx2.close();
+  ok('the ceiling binds: 1 feed garment in a row of 4 when hers are available',
+     r.four.length === 4 && r.fourFeed === 1, JSON.stringify(r.four));
+  ok('the other three slots go to non-feed', r.four.length - r.fourFeed === 3, JSON.stringify(r.four));
+  // ⚠️ The half that could bite. A ceiling that empties a row would be a new
+  // bug introduced in the name of a curation preference.
+  ok('with none of hers, the feed still fills the whole row (no starve)',
+     r.bare.length === 4 && r.bareFeed === 4, JSON.stringify(r.bare));
+}
 ok('the AI still fills the set to 6', s.cards.length === 6, String(s.cards.length));
 ok('a feed card links straight to the product, verbatim', fed[0] && fed[0].href.includes('jZNkkinrr1k'));
 ok('a feed card says Shop it, not Find it', fed[0] && /shop it/i.test(fed[0].label), fed[0] && fed[0].label);
