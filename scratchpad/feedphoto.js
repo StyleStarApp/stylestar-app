@@ -163,7 +163,18 @@ async function shelf(feed) {
 console.log('A feed garment (photo, no note)');
 let r = await shelf([1, 2, 3, 4].map(i => feedItem(i)));
 let fed = FEED(r);
-ok('feed garments reached the shelf', fed.length >= 2, String(fed.length));
+// ⚠️ COUNTS RELAXED FROM 2 TO 1, 2026-09-06. These were written when the feed
+// could take a whole row. Cath then chose "feed as a garnish" and the ceiling
+// admits ONE feed garment per row while her own picks are available, so `>= 2`
+// now asserts the behaviour she reported as the bug.
+// ▶ THE EVIDENCE THIS IS A COUNT CHANGE AND NOT A COVER-UP: on the run that
+// failed, every BEHAVIOURAL check passed untouched -- the photo really decoded,
+// it was 3:4 and not stretched, a 404 hid rather than leaving a torn icon, a
+// non-https url produced no <img> at all, a photo-less piece got no phantom
+// image, and the card measured 128px wide, a whole card. Only the counts moved.
+// ⚠️ The width assertion (cw > 100) is the one that actually guards the card,
+// and it is deliberately KEPT on every line below.
+ok('feed garments reached the shelf', fed.length >= 1, String(fed.length));
 ok('every feed card carries an <img>', fed.every(c => c.hasImgEl));
 ok('…flagged with wdr-haspic', fed.every(c => c.haspic));
 ok('…pointing at the catalog photo', fed.every(c => /pic\.png$/.test(c.src)));
@@ -191,7 +202,7 @@ console.log('One of her 107 hand-picks (note, no photo) — no regression');
 r = await shelf([1, 2, 3, 4].map(i =>
   feedItem(i, { image: '', note: 'A quiet silk that reads expensive. Wear it with everything.' })));
 fed = FEED(r);
-ok('a note-carrying, photo-less piece reaches the shelf', fed.length >= 2, String(fed.length));
+ok('a note-carrying, photo-less piece reaches the shelf', fed.length >= 1, String(fed.length));
 ok('no <img> is invented for a piece with no photo', fed.every(c => !c.hasImgEl));
 ok('…and no wdr-haspic class', fed.every(c => !c.haspic));
 ok('the note still shows, in quotes', fed.every(c => c.noteEl && /reads expensive/.test(c.noteTxt)),
@@ -209,7 +220,7 @@ r = await shelf([1, 2, 3, 4].map(i => feedItem(i, { image: PIC_404 })));
 fed = FEED(r);
 ok('the broken image is hidden, not left as a torn icon', fed.every(c => !c.shown),
    JSON.stringify(fed.map(c => c.shown)));
-ok('…and the card is still a whole card', fed.length >= 2 && fed.every(c => c.cw > 100), JSON.stringify(fed.map(c => c.cw)));
+ok('…and the card is still a whole card', fed.length >= 1 && fed.every(c => c.cw > 100), JSON.stringify(fed.map(c => c.cw)));
 ok('…with no sideways scroll', !r.overflow);
 
 // ── 4. The url is catalog data: it never gets to choose its own scheme ────
@@ -223,7 +234,7 @@ r = await shelf([
 fed = FEED(r);
 ok('no <img> at all for a non-https url', fed.every(c => !c.hasImgEl),
    JSON.stringify(fed.map(c => c.src)));
-ok('…and those cards still render fully', fed.length >= 2 && fed.every(c => c.cw > 100), String(fed.length));
+ok('…and those cards still render fully', fed.length >= 1 && fed.every(c => c.cw > 100), String(fed.length));
 
 ok('zero JS errors throughout', errs.length === 0, errs.join(' | '));
 
