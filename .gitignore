@@ -49,3 +49,16 @@ feeds/
 # for nothing. One got committed by accident in 37942a3 and is removed here.
 __pycache__/
 *.pyc
+
+# Render-harness screenshots. Every .png under scratchpad/ is OUTPUT -- produced
+# by one of the ~180 page.screenshot() calls in the harnesses beside it, which
+# ARE tracked and regenerate the image on demand. 559 of them (129 MB) had been
+# committed by 2026-09-06, which is 94% of the repo and dwarfs the app itself.
+# They cost nothing in context but they are downloaded into every session, so
+# they are removed and ignored from here. ⚠️ The .woff2 files in this directory
+# are the opposite -- real INPUTS, embedded so a width measurement uses the true
+# font -- and must stay tracked. Root app assets (logo*.png, icon-*.png,
+# og-*.png, apple-touch-icon.png) are not in scratchpad and are untouched.
+# Need to keep one deliberately? git add -f <file>.
+scratchpad/**/*.png
+scratchpad/**/*.jpg
