@@ -7,7 +7,7 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-05 NIGHT — 👗 THE FEED IS ON HER WARDROBE SHELVES, THROUGH HER OWN PICKER, AND HER NEVER-WEAR LIST HAD A BUG)
+## ▶ NEXT SESSION — START HERE (2026-09-06 — 🎉 THE SHELVES ARE LIVE AND SHOWING REAL GARMENTS WITH REAL PHOTOGRAPHS)
 
 ### ⏸ WHERE THIS SESSION PAUSED
 ✅ **MERGED TO MAIN 2026-09-05 on her word** (`62e9d0b..e2986ac`, seven commits, clean fast-forward,
@@ -101,7 +101,72 @@ already rank the stores.
 nameparity 25 · e2e 29 · askvary 14 — all 0 failed.** `searchtune` 71/1, the documented pre-existing
 heart-tip font check.
 
-### 🚨🚨 THE ONE THING BLOCKING HER SHELVES: NETLIFY'S SUPABASE KEY IS BEING REJECTED (2026-09-05)
+### 🚨⭐ THE FIRST THING SHE SAW ON A LIVE SHELF: NO PHOTOGRAPHS, AND A PAIR OF EMPTY QUOTE MARKS
+Her report, minutes after the key landed: *"They did come up but with no photos."* **Both faults were in
+one function, `_curatedCard()`, and both are the SAME cause — it was written for her 107 hand-picks and
+a feed garment is their mirror image.**
+- ▶▶ **THE SHAPE OF THE TWO CATALOGS, measured not assumed, and this is the fact to keep: her 107 have a
+  NOTE and no photo (she wrote the notes; nobody photographed the products). The ~78,000 feed garments
+  have a PHOTO and no note (the retailer supplies the image; nobody has written 78,000 notes and nobody
+  ever will). 107/107 hers have a note and 0 an image; 200/200 of a live feed slot have an image and 0 a
+  note.** ⚠️ **So NEITHER half of that card may ever be rendered unconditionally.**
+- ✅ **FIXED: the photo renders when there is one; the note renders when there is one.** The photo is
+  full-bleed — the card is only 128px wide, so keeping the 1rem padding would leave a 96px stamp, and a
+  96px stamp of a dress is not a product photograph. A negative margin cancels the padding instead,
+  3:4 (`object-fit:cover`, because a stretched dress is worse than a cropped one), `loading="lazy"`.
+- ⚠️ **A BROKEN PHOTO MUST NEVER BECOME A TORN ICON.** 78,000 urls will contain dead ones. `onerror`
+  hides the image, and because the photo's own negative margin is what pulls it flush, hiding it
+  restores the ordinary card exactly — no other rule has to know.
+- 🔒 **The image url is CATALOG DATA, so it does not get to choose its own scheme: https:// only.** An
+  href-shaped field reaching the DOM is never trusted. (Production is https anyway, so an http image
+  would be blocked as mixed content regardless — the guard costs nothing and closes the rest.)
+- **Verified by `scratchpad/feedphoto.js`, 24 checks, all green**, driving the real app in Chromium: the
+  photo really DECODES and occupies real pixels, sits flush inside the card's own hairline, is 3:4, no
+  empty quotes, her hand-picks unchanged on the same shelf, a 404 leaves a whole card, a non-https url
+  renders no `<img>` at all, zero JS errors. Plus feedshelf 49/0 and curated 65/0 unchanged.
+
+#### ⚠️⚠️ FOUR TESTING TRAPS IN ONE HOUR, and the first two are the ones that matter
+1. 🚨⭐⭐ **A HAND-TYPED PNG WITH BAD CRCs made every photo check read as a code failure.** Chromium
+   fetched it (200), refused to decode it, fired `onerror` — so the card looked broken and the code was
+   fine the whole time. ▶ **When the instrument is "an image that really loads", VERIFY THE INSTRUMENT
+   FIRST.** Generate the PNG, never type one.
+2. 🚨⭐ **`.wdr-curated` IS BOTH CATALOGS.** The test only stubbed `product-search`, so the app really
+   fetched her 107 from `products.json` and a shelf legitimately mixed both — filtering on the shared
+   class swept her real notes into the feed assertions. ▶ **Assert on each source BY NAME, never on the
+   class they share.** (That the shelf blends is the design, not a bug; it also means a 4-item feed
+   rarely takes all four slots, so `>= 4` is the wrong expectation.)
+3. **An https-only guard CANNOT be exercised over http.** A plain http test server would have silently
+   measured the `onerror` branch and reported a false green. The harness serves over HTTPS with a
+   throwaway self-signed cert (`ignoreHTTPSErrors`) so it matches production. **And the image itself is
+   fulfilled by Playwright, not by that server — serving it locally reset the connection under four
+   concurrent requests (ERR_CONNECTION_RESET on three of four).**
+4. ⚠️ **THE "ONE SUITE, TWO RUNNERS" TRAP AGAIN, hit within an hour of reading the warning about it.**
+   A backgrounded run still held port 8951 when the next one started → `EADDRINUSE`. The `/proc` sweep
+   that clears it must skip `$$` and match the `node …` command, exactly as this file already says.
+- ⚠️ **Retail CDN images (cdn.shopify.com, img.mytheresa.com) load fine via `curl` from here but NOT in
+  the sandbox's Chromium.** To see a real shelf, curl the photos down and serve them locally over the
+  test HTTPS server. Both hosts serve 200 with correct content-type and no hotlink protection.
+
+### ✅✅ RESOLVED 2026-09-06 — SHE UPDATED THE KEY AND THE SHELVES CAME ALIVE THE SAME MINUTE
+**Cath copied the publishable/`anon` key from Supabase into Netlify's `SUPABASE_KEY` and redeployed.**
+Measured immediately after, on the live site: `dr1`, `to3`, `sh9` and `bg1` each returned **200 real
+garments** with `"why":"ok"` — the 401 is gone. **She then saved her results on her phone and the welcome
+email arrived**, which also settles the flagged-but-unproven half: `user-data.js` reads the same key, so
+saving results really had been failing silently too, and the one key fixed both.
+- ⚠️ **HER OWN SCREEN CARRIED THE CONFIRMATION: the variable read "updated 3 months ago."** A stale key,
+  exactly as diagnosed. ▶ **Worth checking that timestamp FIRST next time a Supabase call 401s.**
+- ⚠️ **THE `success: true` BUG IS STILL THERE AND IS STILL WORTH FIXING.** `user-data.js` wraps its
+  Supabase write in `catch (e) {}` and answers `{success:true}` regardless, so for as long as the key was
+  stale a woman was told her results were saved when they were not. **The key being fixed does not fix
+  the lie; it only stops it being told today.** An honest failure beats a false promise.
+- ⭐ **WHAT ACTUALLY FOUND IT, and both instruments are permanent and were built for exactly this:** the
+  `diag:true` flag on `product-search` (`no-credentials` · `upstream`+status · `threw` · `ok`) and the
+  read-only **Actions → Catalog health** workflow. Every failure in that function is an EMPTY POOL by
+  design, so from outside "no key", "the database refused this" and "that row has nothing" look
+  identical. **Without those two the answer was unreachable. Run them first when a shelf looks thin.**
+- 📎 **The original diagnosis is kept below, unedited, because the EVIDENCE CHAIN is the reusable part.**
+
+#### The diagnosis as it stood, 2026-09-05 (kept for the method)
 **The catalog is perfect and the shelves are still empty, and the cause is NOT in anything built this
 session.** ▶ **PROVEN, not inferred: `product-search` asks Supabase and gets back HTTP 401.** That is an
 AUTHENTICATION refusal, which happens before any table, policy or row is considered — so it is not the
@@ -165,10 +230,21 @@ ingest runs). **Nothing was added to Netlify, by design.**
 1. ✅ **Merged to main.** The ingest's slot matcher is on the default branch now, so the nightly run
    (21:37 UTC) will fill `slots` on its own.
 2. ✅ **The ingest has run.** 78,261 garments, 69,988 tagged to a checklist row.
-3. 🚨 **UPDATE `SUPABASE_KEY` IN NETLIFY — nothing appears on a shelf until this is done.** See the
-   entry above; it is two screens and it may also be quietly breaking saved results.
-4. 👀 **Her eye on Wardrobe Ideas, on her real phone.** ⚠️ Private browsing, `stylestar.app/?notrack`.
-   Watch for: does the shelf feel like her? do her own picks being rare bother her (see the flag above)?
+3. ✅ **`SUPABASE_KEY` updated in Netlify (2026-09-06) and the shelves came alive.** Saving results and
+   the welcome email were quietly broken by the same key, and are working again too.
+4. ✅ **She has seen a real shelf on her real phone** and it produced the photo bug above, now fixed.
+   ▶▶ **STILL OPEN AND IT IS THE IMPORTANT ONE: her verdict on whether the shelf FEELS LIKE HER.** She
+   deliberately answered the quiz as a luxury shopper to force feed pieces up, so she has not yet judged
+   it as herself. ⚠️ Private browsing, `stylestar.app/?notrack`.
+4b. ⚠️⚠️ **RAISE THE AFFORDABILITY QUESTION WITH HER, unprompted, the moment she reports back.** Every
+   fed store is `$$$`/`$$$$`, and a live "Professional blouses" shelf came back Joseph $295, Rick Owens
+   $1,020, Magda Butrym $1,290, Asceno $350. **That runs straight against her founding value — "literally
+   any woman, 18 to 80+, no age or income bracket."** Two existing entries below bear directly on it and
+   should be read together: the spreadsheet-freeze decision (her 107 are the app's ONLY affordable
+   real-product inventory, and a mid-market approval is therefore worth MORE than another luxury one)
+   and the flag that **her hand-picks get no head start in the sort**, so on a well-stocked row the
+   affordable half will rarely appear. ▶ **The lever is one term at the FRONT of the sort,
+   `(b.feed?0:1)-(a.feed?0:1)`, and it is a curation call that is HERS, not one to settle in code.**
 5. ✅ **Vilebrequin is back in `STORES`** (2026-09-05, her word: *"Yes go ahead and include it"*), with
    its own hostname added to `SEARCH_DOMAINS` per the standing rule. ⚠️ **Its `deep` flag was
    DELIBERATELY NOT restored** — the feed only powers Wardrobe Ideas, so the stylist chat and Shop your
