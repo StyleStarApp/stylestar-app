@@ -217,12 +217,19 @@ let fed = s.cards.filter(c => /Silk Blouse [1-5]/.test(c.name));
 // ▶ Kept as a hard assertion rather than deleted, because "the feed reaches
 // the shelf at all" is still the thing that must never silently stop working.
 ok('feed garments still reach the shelf', fed.length >= 1, JSON.stringify(s.cards.map(c => c.name)));
-// This scenario seeds 5 feed garments against only 2 catalog blouses, so the
-// ceiling CANNOT bind: 1 feed + 2 catalog is 3, short of the 4 the row asks
-// for, and the no-starve top-up hands a held-back feed garment back. Two is
-// therefore the correct answer here, and it is what proves the top-up runs.
-ok('the ceiling never starves the row — it tops back up from the feed',
-   s.cards.length >= 4 && fed.length === 2, JSON.stringify(s.cards.map(c => c.name)));
+// ⚠️ REWRITTEN 2026-09-06 (second time today, and the reason is worth the
+// space). This first asserted that curatedPicks RETURNS a certain number --
+// an internal count, and the wrong question. Measuring a real shelf showed the
+// row was never at risk of being thin: _wardrobeIdeaGen fills to SIX with AI
+// ideas whatever curatedPicks hands back, so a smaller catalog set simply
+// gives more slots to the AI, which is the affordable, store-diverse source.
+// ▶ So assert what a woman actually SEES: a full shelf, with the feed as a
+// garnish. Both halves matter and neither is safe alone -- "the shelf is full"
+// without the cap is today's bug, and "the feed is capped" without the fullness
+// check would pass on an empty shelf.
+ok('the shelf still fills to six', s.cards.length === 6, JSON.stringify(s.cards.map(c => c.name)));
+ok('and the feed is a garnish on it, never more than a third',
+   fed.length <= 2, JSON.stringify(s.cards.map(c => c.name)));
 
 
 // ═══ THE FEED CEILING, DRIVEN DIRECTLY (2026-09-06) ═══════════════════════
@@ -263,10 +270,18 @@ ok('the ceiling never starves the row — it tops back up from the feed',
   ok('the ceiling binds: 1 feed garment in a row of 4 when hers are available',
      r.four.length === 4 && r.fourFeed === 1, JSON.stringify(r.four));
   ok('the other three slots go to non-feed', r.four.length - r.fourFeed === 3, JSON.stringify(r.four));
-  // ⚠️ The half that could bite. A ceiling that empties a row would be a new
-  // bug introduced in the name of a curation preference.
-  ok('with none of hers, the feed still fills the whole row (no starve)',
-     r.bare.length === 4 && r.bareFeed === 4, JSON.stringify(r.bare));
+  // ⚠️ REWRITTEN 2026-09-06. This asserted "the feed still fills the WHOLE row",
+  // which is literally the bug Cath reported -- it is what put Rick Owens
+  // $1,005, Chloé $1,050 and Tom Ford $1,705 into all four slots of three real
+  // rows. I wrote it an hour earlier believing a full curatedPicks set was the
+  // thing to protect; the real-shelf measurement showed the AI fills to six
+  // regardless, so the protection was only ever taking slots from the cheap
+  // half to give to the dear one.
+  // ▶ The floor is 2, and it exists for ONE reason: the AI call can fail, and
+  // its catch path renders only what curatedPicks returned. Two keeps that
+  // honest without handing the row back to the feed.
+  ok('with none of hers, the feed fills to the floor of 2 and no further',
+     r.bare.length === 2 && r.bareFeed === 2, JSON.stringify(r.bare));
 }
 ok('the AI still fills the set to 6', s.cards.length === 6, String(s.cards.length));
 ok('a feed card links straight to the product, verbatim', fed[0] && fed[0].href.includes('jZNkkinrr1k'));
