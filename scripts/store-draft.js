@@ -26,45 +26,12 @@
 import fs from 'fs';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import {loadStores} from './lib/stores.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HTML = path.join(ROOT, 'index.html');
 
 const DIMS = ['relaxed','alluring','polish','classic','trendy','casual','dressy','fitted','neutral','colorful'];
-
-// ⚠️ Read ONLY the STORES table out of index.html, never the whole file into a
-// summary. The file is ~905KB; this pulls the one object literal it needs.
-function loadStores() {
-  const src = fs.readFileSync(HTML, 'utf8');
-  const start = src.indexOf('const STORES=');
-  if (start < 0) throw new Error('STORES table not found in index.html');
-  // Walk braces from the first { after the '=' to find the literal's end.
-  // ⚠️⚠️ COMMENTS MUST BE SKIPPED, NOT JUST STRINGS. The STORES table is full of
-  // Cath's prose, and one apostrophe in a comment ("don't", "Cath's") opens a
-  // string that never closes, so the walker runs to the end of a 905KB file and
-  // returns garbage. Found the first time this ran.
-  let i = src.indexOf('{', start), depth = 0, end = -1, inStr = null, esc = false, inLine = false, inBlock = false;
-  for (let j = i; j < src.length; j++) {
-    const c = src[j], n = src[j + 1];
-    if (inLine) { if (c === '\n') inLine = false; continue; }
-    if (inBlock) { if (c === '*' && n === '/') { inBlock = false; j++; } continue; }
-    if (inStr) {
-      if (esc) { esc = false; continue; }
-      if (c === '\\') { esc = true; continue; }
-      if (c === inStr) inStr = null;
-      continue;
-    }
-    if (c === '/' && n === '/') { inLine = true; j++; continue; }
-    if (c === '/' && n === '*') { inBlock = true; j++; continue; }
-    if (c === '"' || c === "'" || c === '`') { inStr = c; continue; }
-    if (c === '{') depth++;
-    else if (c === '}') { depth--; if (depth === 0) { end = j; break; } }
-  }
-  if (end < 0) throw new Error('could not find the end of the STORES literal');
-  const literal = src.slice(i, end + 1);
-  // eslint-disable-next-line no-new-func
-  return new Function('return (' + literal + ')')();
-}
 
 function median(nums) {
   const a = nums.slice().sort((x, y) => x - y);
