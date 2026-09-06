@@ -182,6 +182,14 @@ H('PART 8 — queries: several pooled, and size/width kept OUT of the words');
   ok('every query is scoped to women', qs.every(q => /women/i.test(q)), JSON.stringify(qs));
   ok('the narrow query she typed is still one of them',
      qs.some(q => /red/.test(q) && /leather/.test(q)));
+  // 🚨 CATH'S NAPA REQUEST, AFTER THE HER-WORDS GUARD STRIPS THE STYLIST'S OWN
+  //    INVENTED COLOUR AND FABRIC, IS EXACTLY THIS: an item and nothing else.
+  //    An earlier version built ZERO queries here, searched for nothing, and
+  //    told her it could not find anything -- convincingly and wrongly.
+  const bare = buildQueries({item: 'dress'});
+  ok('a request with ONLY an item still builds a query', bare.length >= 1, JSON.stringify(bare));
+  ok('and that query is scoped to women', bare.every(q => /women/i.test(q)), JSON.stringify(bare));
+  ok('an empty request builds nothing at all', buildQueries({}).length === 0);
 }
 
 H('PART 9 — the store allowlist, and resale');

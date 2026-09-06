@@ -137,7 +137,16 @@ export function buildQueries(req) {
   //   piling size and width into the words pushed Google to eBay and Poshmark,
   //   and that search scored 8/40 against 30/40 for a plain one. They are
   //   VERIFIED on the offer instead, which is where they are true anyway.
-  return [...new Set(qs.filter(q => q && q !== gendered.toLowerCase()))].slice(0, 4);
+  // ⚠️⚠️ DEDUPE ONLY — NEVER EXCLUDE THE PLAIN ITEM. An earlier version dropped
+  //    any query equal to the bare "women's <item>", and on a request carrying
+  //    ONLY an item (which is exactly what the her-words guard leaves behind
+  //    when the stylist's own invented colour and fabric are stripped) all four
+  //    candidates collapse to that one string and it built ZERO QUERIES. It then
+  //    searched for nothing and reported "I could not find that in your shops",
+  //    which is the most convincing way possible to be wrong.
+  // ▶ THE INVARIANT: a request with an item ALWAYS produces at least one query.
+  const out = [...new Set(qs.filter(Boolean))].slice(0, 4);
+  return out.length ? out : [gendered];
 }
 
 // ---------------------------------------------------------------------------

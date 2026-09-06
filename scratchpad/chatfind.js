@@ -135,6 +135,82 @@ const prod = (o) => Object.assign({
     ok('the wrap dress she asked for survives the veto', /Wrap Dress/.test(html));
   }
 
+  console.log('\nPART 3c — HER WORDS ONLY: the stylist cannot invent a requirement');
+  {
+    // 🚨 CATH'S OWN LIVE TEST, 2026-09-06, AND IT RETURNED NOTHING.
+    //    She typed: "I have a wedding in Napa in October and nothing to wear."
+    //    The stylist answered "a rich jewel tone or a warm metallic is exactly
+    //    right for you" -- good styling -- then put JEWEL TONE and METALLIC into
+    //    the search as if she had required them. She said neither word, so the
+    //    app looked for a dress confirmed jewel-toned AND metallic and found
+    //    none. An offline test on the same request had found 16 real dresses.
+    const napa = 'I have a wedding in Napa in October and nothing to wear';
+    const req = await pg.evaluate((m) => {
+      const r = _findParse('<<FIND item=dress; colour=jewel tone; fabric=metallic>>');
+      const dropped = _findKeepHerWords(r, m);
+      return {r, dropped};
+    }, napa);
+    ok('an invented COLOUR is dropped', !req.r.colour, JSON.stringify(req.r));
+    ok('an invented FABRIC is dropped', !req.r.fabric, JSON.stringify(req.r));
+    ok('the ITEM survives — a stylist may read "nothing to wear" as a dress',
+       req.r.item === 'dress');
+    ok('and it says which ones it dropped', req.dropped.length === 2, JSON.stringify(req.dropped));
+
+    // ▶ And the mirror: words she DID say must survive untouched, or the guard
+    //   would quietly destroy every precise request she makes.
+    const hers = await pg.evaluate(() => {
+      const r = _findParse('<<FIND item=dress; colour=blush; fabric=silk; cut=wrap>>');
+      _findKeepHerWords(r, 'Find me a blush silk wrap dress');
+      return r;
+    });
+    ok('blush survives, because she said it', hers.colour === 'blush');
+    ok('silk survives, because she said it', hers.fabric === 'silk');
+    ok('wrap survives, because she said it', hers.cut === 'wrap');
+
+    // Her SAVED preferences are not in the sentence and must not be stripped.
+    const saved = await pg.evaluate(() => {
+      const r = _findParse('<<FIND item=boot; size=6; width=wide>>');
+      _findKeepHerWords(r, 'I need new boots for the autumn');
+      return r;
+    });
+    ok('size and width survive — they come from her saved prefs, not the sentence',
+       saved.size === '6' && saved.width === 'wide', JSON.stringify(saved));
+    // A light stem, so a plural in her sentence still matches a singular value.
+    const stem = await pg.evaluate(() => {
+      const r = _findParse('<<FIND item=boot; colour=red>>');
+      _findKeepHerWords(r, 'do you have red boots');
+      return r;
+    });
+    ok('a plural in her sentence still matches ("red boots" keeps red)', stem.colour === 'red');
+  }
+
+  console.log('\nPART 3d — a released requirement that MATCHED is never called "different"');
+  {
+    // 🚨 CATH'S LIVE TEST AGAIN: the Phase Eight Julissa WRAP DRESS came back
+    //    labelled "different cut" on an answer to "blush silk WRAP dress".
+    //    Releasing a requirement means we stop REQUIRING it. It never means we
+    //    stop noticing that a piece has it anyway.
+    const html = await pg.evaluate(async () => {
+      prefs.neverWear = [];
+      window.fetch = async () => ({ok: true, json: async () => ({exact: [], doors: [{
+        release: ['fabric', 'cut'], softenedTo: null, keeps: ['colour'],
+        products: [{id: 'j', title: 'Phase Eight Julissa Wrap Dress', store: "Macy's",
+          price: '$220.00', url: 'https://e/j', image: '',
+          name: 'Phase Eight Julissa Wrap Dress', search: 'Phase Eight Julissa Wrap Dress',
+          checks: {colour: 'confirmed', stock: 'confirmed'}, unconfirmed: [],
+          // it IS a wrap, and the fabric genuinely could not be verified
+          differs: {cut: 'confirmed', fabric: 'unknown'}}],
+      }]})});
+      document.getElementById('chatMessages').innerHTML = '';
+      await _findRun({item: 'dress', colour: 'blush', fabric: 'silk', cut: 'wrap'});
+      return document.getElementById('chatMessages').innerHTML;
+    });
+    ok('a wrap dress is NOT called "different cut"', !/different cut/i.test(html));
+    ok('it is ticked as a match instead', /fc-yes[^>]*>\s*style/i.test(html) || /✓/.test(html));
+    ok('and the fabric it truly could not verify is still said plainly',
+       /fabric not confirmed/i.test(html));
+  }
+
   console.log('\nPART 4 — nothing is claimed that was not confirmed');
   {
     const html = await pg.evaluate(async () => {

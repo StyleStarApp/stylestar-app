@@ -10398,6 +10398,47 @@ async function _chatNoSearchReply(messages){
    she is asking." A shopping search costs real money per call, so the model is
    told plainly when NOT to emit one. */
 const _FIND_RE=/<<\s*FIND\s+([^>]*)>>/i;
+/* 🚨🚨 HER WORDS ONLY. THIS IS A CODE RULE BECAUSE A PROMPT RULE ALREADY FAILED.
+   Cath's live test, 2026-09-06: "I have a wedding in Napa in October and nothing
+   to wear." The stylist replied "a rich jewel tone or a warm metallic is exactly
+   right for you" -- good styling -- and then put JEWEL TONE and METALLIC into the
+   search as though SHE had required them. She had said neither word. The app
+   went looking for a dress confirmed jewel-toned AND confirmed metallic, found
+   none, and correctly told her so. An offline test on the same request had found
+   16 real dresses from $25 to $498.
+   ⚠️ THE PROMPT ALREADY SAID "never invent a requirement she did not give". The
+   model broke it because it had just recommended those things itself.
+   ▶▶ SO IT IS ENFORCED HERE INSTEAD, and that is the whole Stitch Fix lesson:
+      a rule stated in a prompt is what failed her; a rule checked in code before
+      it can reach a card is the fix.
+   ▶ WHAT IS ALLOWED TO BE INFERRED, deliberately: ITEM (she said "nothing to
+     wear"; a stylist may reasonably read that as a dress) and SIZE/WIDTH (those
+     come from her saved preferences, not from the sentence she just typed).
+   ▶ WHAT MUST BE HERS: COLOUR, FABRIC and CUT -- the three that NARROW a search
+     and therefore the three that can silently empty it. */
+const _FIND_HER_WORDS=['colour','fabric','cut'];
+function _findHerText(msg){
+  return ' '+String(msg||'').toLowerCase().replace(/[^a-z0-9]+/g,' ')+' ';
+}
+function _findKeepHerWords(req,msg){
+  const hay=_findHerText(msg);
+  const dropped=[];
+  _FIND_HER_WORDS.forEach(function(k){
+    const v=req[k];
+    if(!v)return;
+    /* Every word of the value must be in her sentence. "wrap" passes on
+       "blush silk wrap dress"; "jewel tone" fails on the Napa sentence. */
+    const ok=String(v).split(/\s+/).filter(Boolean).every(function(w){
+      if(w.length<3)return true;                    /* short joiners, ignore */
+      /* a light stem so "boots" matches "boot" and "fitted" matches "fit" */
+      const stem=w.replace(/(ing|ed|es|s)$/,'');
+      return hay.indexOf(' '+w+' ')>=0||hay.indexOf(stem)>=0;
+    });
+    if(!ok){dropped.push(k);delete req[k];}
+  });
+  return dropped;
+}
+
 /* Parse one marker into the request the finder takes. Unknown keys are dropped
    rather than passed on: everything here ends up in an outbound search. */
 function _findParse(text){
@@ -10461,7 +10502,20 @@ function _findCard(p,opts){
   if(opts.differs)Object.keys(opts.differs).forEach(function(k){
     /* ▶ She let go of "silk". She did not ask to stop being TOLD it is chiffon. */
     if(bits.some(function(b){return b.indexOf(_findLabel(k,p))>=0}))return;
-    bits.push('<span class="fc-diff">different '+_esc(k==='colour'?'shade':k)+'</span>');
+    /* ⚠️⚠️ A RELEASED REQUIREMENT THAT ACTUALLY MATCHED IS A MATCH, NOT A MISS.
+       Cath's live test, 2026-09-06: the Phase Eight Julissa WRAP DRESS was
+       labelled "different cut" on an answer to "blush silk WRAP dress". It is a
+       wrap. Releasing a requirement means we stop REQUIRING it; it never means
+       we stop noticing when a piece has it anyway. ▶ The app was understating
+       itself and telling her something untrue in the same breath. */
+    const before=opts.differs[k];
+    if(before==='confirmed'){
+      bits.push('<span class="fc-yes">'+_esc(_findLabel(k,p))+'</span>');
+      return;
+    }
+    bits.push('<span class="fc-'+(before==='rejected'?'diff':'no')+'">'+
+      (before==='rejected'?'different '+_esc(k==='colour'?'shade':k)
+                          :_esc(_findLabel(k,p))+' not confirmed')+'</span>');
   });
   const img=p.image?'<img class="fc-img" src="'+_esc(p.image)+'" alt="" loading="lazy">':'';
   return '<a class="find-card" href="'+_esc(p.url)+'" target="_blank" rel="sponsored noopener">'+
@@ -10823,6 +10877,8 @@ RULES:
     const req=_findParse(t);
     if(!req)return;
     st.findFired=true;
+    /* ⚠️ HER SENTENCE IS THE AUTHORITY, not the stylist's own suggestion. */
+    _findKeepHerWords(req,msg);
     _findRun(req);
   };
   const _ctl=(window.AbortController)?new AbortController():null;
@@ -10882,7 +10938,7 @@ RULES:
     typing.remove();liveMsg.remove();
     /* The JSON path (no stream) gets the whole reply at once, so the marker has
        not been seen yet. Same latch, so a streamed answer never fires twice. */
-    if(!st.findFired){const _mk=_findParse(reply);if(_mk){st.findFired=true;_findRun(_mk);}}
+    if(!st.findFired){const _mk=_findParse(reply);if(_mk){st.findFired=true;_findKeepHerWords(_mk,msg);_findRun(_mk);}}
     /* ⚠️ STRIPPED BEFORE IT IS SHOWN *AND* BEFORE IT IS SAVED. A marker restored
        from ss_chat on her next visit would be read back as stylist prose. */
     reply=_findStrip(reply);

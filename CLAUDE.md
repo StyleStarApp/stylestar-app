@@ -428,6 +428,56 @@ find-products.js` (the finder) · `netlify/functions/lib/store-domains.js` (gene
 `scripts/build-store-domains.js` · `scripts/lib/stores.js` (the ONE STORES reader) ·
 `scratchpad/findprod.js` **51** · `scratchpad/chatfind.js` **39** · `scratchpad/findlive.js` (live bench).
 
+### 🚨🚨🚨 STEP 3 HAPPENED THE SAME EVENING — SHE TESTED IT ON HER PHONE AND FOUND THREE FAULTS
+✅ **ALL THREE OF HER TEST CASES RAN LIVE ON stylestar.app, 2026-09-06 ~17:40.**
+| Her message | Result |
+|---|---|
+| *"I have a wedding in Napa in October and nothing to wear"* | ✅ **SEARCHED** (no product word in it) · ❌ **found nothing** |
+| *"Find me a blush silk wrap dress"* | ✅ honest "no exact match" + doors · ⚠️ clumsy wording, one mislabelled card |
+| *"What do you think of navy on me?"* | ✅✅ **STAYED QUIET** |
+⭐⭐ **THE HARDEST HALF OF HER TRIGGER RULE WORKS. "What do you think of navy on me?" is a shopping
+TOPIC — the reply even names a navy midi dress and a navy blazer — and it did NOT search.** NEED, not
+TOPIC, in the wild. **And the Napa sentence, which names no product at all, DID search.** Both directions.
+⭐ **The reply quality is hers:** *"warm during the day and cool in the evening, so a fitted midi in a
+rich jewel tone"* — it used her sliders (fitted, colourful) without ever naming a slider.
+
+**🚨 FAULT 1 — HER FLAGSHIP CASE RETURNED NOTHING, AND THE CAUSE IS THE STITCH FIX LESSON AGAIN.**
+The stylist answered *"a rich jewel tone or a warm metallic is exactly right for you"* — good styling —
+**and then put JEWEL TONE and METALLIC into the search as if SHE had required them.** She said neither
+word. The app looked for a dress confirmed jewel-toned AND confirmed metallic, found none, and told her
+so convincingly. **An offline test of the same request had found 16 dresses, $25-$498.**
+⚠️⚠️ **THE PROMPT ALREADY SAID "NEVER invent a requirement she did not give". THE MODEL BROKE IT**,
+because it had just recommended those things itself one sentence earlier.
+▶▶ **SO IT IS NOW A CODE RULE, NOT A PROMPT RULE — `_findKeepHerWords()`. THAT IS EXACTLY THE STITCH FIX
+LESSON: a rule stated in a prompt is what failed her; a rule checked in code before it can reach a card
+is the fix.** COLOUR, FABRIC and CUT must appear in HER OWN SENTENCE or they are dropped — those three
+NARROW a search and so those three can silently empty it. ▶ **ITEM may still be inferred** (a stylist may
+read *"nothing to wear"* as a dress) **and SIZE/WIDTH come from her saved prefs, not the sentence.**
+
+**🚨 FAULT 2 — AND MY OWN FIX FOR FAULT 1 EXPOSED IT, WHICH IS WHY IT MATTERS MOST.**
+`buildQueries` EXCLUDED any query equal to the bare `women's <item>`. On a request carrying **ONLY an
+item** — which is precisely what the new guard leaves behind — all four candidates collapse to that one
+string and it **built ZERO QUERIES, searched for nothing, and reported "I could not find that in your
+shops."** ▶▶ **THE MOST CONVINCING WAY POSSIBLE TO BE WRONG: a confident honest-sounding no, with no
+search behind it.** ⚠️ **THE INVARIANT NOW PINNED: a request with an item ALWAYS produces at least one
+query.** ✅ **Re-run live afterwards, her Napa request returns real dresses from $39.97 to $160.**
+
+**⚠️ FAULT 3 — IT CALLED A WRAP DRESS "A DIFFERENT CUT".** The Phase Eight Julissa **Wrap Dress** came
+back labelled *"different cut"* on an answer to *"blush silk WRAP dress"*. ▶ **Releasing a requirement
+means we stop REQUIRING it. It never means we stop noticing a piece has it anyway.** The card now ticks
+it. **The app was understating itself and saying something untrue in the same breath.**
+
+**▶ FAULT 4 IS HERS TO WORD, AND IT IS THE COPY LEFT OPEN ON PURPOSE.** The two-step door reads
+*"keep the fabric, and look at other shades of pink and look at another style?"* — two "look at"s, and
+it assembles rather than speaks. ⭐ **HER OWN LINE IS STILL THE BEST VERSION ANYONE HAS WRITTEN:**
+*"Would you like me to keep the blush and look at satin, or keep the silk and look at other shades of
+pink?"* **Hers offers a CHOICE BETWEEN TWO DOORS; the built one reads as one door with a list bolted on.**
+▶ **ASK HER HOW SHE WOULD WORD IT WHEN TWO THINGS HAVE TO GIVE AT ONCE.** Not a code question.
+⚠️ **ALSO SEEN: a DVF print slipped through labelled "colour not confirmed" rather than rejected**,
+because that listing carried no colour data at all. Same family as the tiger-print lesson: **absent data
+is UNKNOWN, and unknown is honest — but a door named "other shades of pink" holding an unknown colour is
+the copy problem above wearing a different hat.**
+
 ### ▶ STEP 3 IS HERS: LOOK AT IT ON HER PHONE
 1. ⚠️ **SHE MUST ADD `SERPAPI_KEY` TO NETLIFY** or nothing appears. Nothing breaks either.
 2. ▶ **THE FIRST THING TO JUDGE IS THE COPY, and it is the one thing deliberately left open:** a door
