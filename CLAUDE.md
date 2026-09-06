@@ -245,24 +245,57 @@ actually verify it.**
    ▶ **And when nothing is found, the status line resolves straight into her own sentence from item 6**
    — *"I couldn't find an exact match today…"* — **so the honest answer arrives in the same place the
    good news would have.**
-8. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
+8. ✅✅✅ **THE PRECISION TEST WAS RUN, 2026-09-06, AND IT ANSWERED THE QUESTION: PRECISION IS
+   ACHIEVABLE, AND IT COMES FROM THE SECOND CALL.** 19 of 250 searches used, 231 left. Still no code.
+   ⭐ **BOTH OF HER STYLIST OBJECTIONS ARE DETECTABLE IN REAL DATA, AND ONLY ON THE SECOND CALL:**
+   the Kensie *"Blouson **Wrap** Dress"* carries `95% polyester, 5% spandex` in its description (**not
+   silk**) and Dillard's own offer title calls it a *"Self-Tie Waist **FAUX WRAP** Blouson Dress"*
+   (**not a wrap**). **Google's title says "Wrap Dress" and would have passed it.** Hobbs Ariel says
+   *"Pure silk"* in its description ✓ but its colour is **"Yellowmulti"** — correctly rejected.
+   🚨🚨🚨 **AND THE FINDING THAT MATTERS MOST, BECAUSE IT CORRECTS ME AND NOT HER: THE DVF SHE APPROVED
+   IS NOT BLUSH. IT IS A TIGER PRINT.** The second call gives the real colourway:
+   *"Jeanne Long Sleeve Silk Wrap Dress in **PALACE TIGER PINK**"* (Nordstrom Rack $123.72), and the
+   other colourways are **Chain Link Medium Black · Fuji Dusk Blue · Giant Snow Leopard Tobacco ·
+   Heritage Snow Cheetah · Twigs Green**. **Silk ✓, wrap ✓, blush ✗ — not one colourway is.**
+   ▶▶ **IT WAS PUT IN FRONT OF HER LABELLED AS THE RIGHT ANSWER, ON THE STRENGTH OF ITS TITLE, AND THE
+   TITLE FOOLED CLAUDE EXACTLY AS IT WOULD HAVE FOOLED A WOMAN USING THE APP.** That is the entire case
+   for verifying on the offer rather than the title, made accidentally and at her expense.
+   ▶▶ **SO THE HONEST ANSWER TO "blush silk wrap dress" ACROSS ALL 110 SHOPS TODAY IS ZERO EXACT
+   MATCHES — INCLUDING THE ONE SHE APPROVED.** Her rule was right and stricter than anyone was being.
+   ⭐⭐ **AND HER WIDENING DESIGN WORKS ON REAL DATA. The candidate exists: MISS CIRCLE ODELLE,
+   Nordstrom $249 — real wrap ✓, TULIP PINK ✓, crinkle CHIFFON not silk.** That is exactly *"keep the
+   blush, open on the fabric"*, in stock, in her shops. **Her design is not theoretical.**
+   ⚠️⚠️ **"SEARCH BROAD, NARROW AFTER" NEEDS A CORRECTION — IT IS NOT FREE.** The broad query
+   *"women's silk wrap dress"* returned 13 of her shops but **DID NOT RETURN THE DVF AT ALL**, which the
+   original narrow query did find. **Broadening changes the pool, it does not merely enlarge it.** ▶ The
+   real shape is **SEVERAL queries (broad AND narrow), pooled, then verified** — not one broad query
+   replacing one narrow one. Across both broad searches **not a single result was silk AND a true wrap.**
+   ✅ **THE NAPA SENTENCE WORKED IMMEDIATELY AND NEEDED NO PRECISION WORK AT ALL: 16 of 40 from her
+   shops, $25-$498** — Adrianna Papell · JS Collections · Dress the Population · Betsy & Adam · Old Navy
+   at $24.99. Real occasion brands across every budget. ▶▶ **THE VAGUE FEELING-LED REQUEST OUTPERFORMED
+   THE PRECISE ONE**, because broad asks are what a shopping index is good at. **So the hard case is the
+   NARROW request, not the conversational one — the opposite of the worry.**
+   🚨 **THE CONSEQUENCE FOR THE BUILD, AND IT RESIZES THE WORK: "NOTHING EXACT" IS A MAIN PATH, NOT AN
+   EDGE CASE.** If a request as ordinary as *blush silk wrap dress* returns zero, the widening flow will
+   run often. ▶ **It must be as beautiful and as finished as the results screen itself.**
+9. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
    second-hand · verify per-offer · **route through `curatedPicks()`, never a second copy of her rules.**
-9. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
+10. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER — SUPERSEDED BY ITEM 8, WHICH RAN THE TEST:** the fault is the AI's SEARCH WORDS, not the service. Also
    cheaply testable, 239 searches remain.
-10. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
+11. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
    is not applied.** It needs a ledger row and a test BEFORE it ships, not after.
-11. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
+12. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
    product file with **exact variant size + stock**, no API and no cost — real width/size truth for the
    DTC half of her list. **Nobody has counted yet.**
-12. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
+13. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
    SerpApi's motion to dismiss**, striking the DMCA claim for results with no copyrighted content, with
    no leave to refile. Google amended in August, narrowed to *licensed* content (Reddit snippets in
    Knowledge Panels). ▶ **Product listings are facts — the strongest side of a ruling that already went
    against Google.** Still live litigation. **Mitigation: keep the integration behind ONE small swappable
    piece so changing vendor is an afternoon.** ⚠️ SerpApi's legal shield does NOT cover the $25/$75 tiers.
-13. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
+14. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
    search QUALITY matters more than volume while she has no users.
-14. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
+15. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
    results: **178 (44%) already came from her 108.** ⭐ **KOHL'S ALONE IS +28 AND APPEARED IN 8 OF THE 10
    SEARCHES** — one store worth as much as the next nine candidates combined. Zara is +4 and was flagged
    as an anomaly (**H&M was on her list and Zara was not**; she confirmed it should be). ▶ **Both still
