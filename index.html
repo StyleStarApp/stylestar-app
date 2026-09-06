@@ -8345,12 +8345,28 @@ function curatedPicks(slot,p,family,count){
     picks.push(x);
   };
   pool.forEach(function(x){take(x,false)});
-  // ⚠️⚠️ THE CEILING IS A PREFERENCE, NEVER A STARVE. If there were not enough
-  // non-feed candidates to fill the row, the held-back feed garments come back
-  // in. A capped shelf must never be THINNER than an uncapped one would have
-  // been -- a thin shelf is the silent nothing this file keeps warning about,
-  // and it would be a bug introduced in the name of a curation preference.
-  if(picks.length<count)deferred.forEach(function(x){take(x,true)});
+  // ⚠️⚠️ THE TOP-UP, AND ITS TARGET IS THE WHOLE POINT (corrected 2026-09-06,
+  // same evening, after MEASURING a real shelf instead of trusting the unit
+  // tests). It first topped up to `count`, which was wrong and defeated the
+  // ceiling on exactly the rows that needed it: measured against her real
+  // catalog and the real live feed, "Tops in your favourite colours", "Black
+  // tops" and "Flat sandals" came back 4 FEED / 0 HERS -- Rick Owens $1,005,
+  // Chloé $1,050, Tom Ford $1,705 -- because she has no eligible hand-picks in
+  // those rows, so every held-back luxury garment came straight back.
+  // ▶▶ AND THE PROTECTION WAS GUARDING NOTHING: _wardrobeIdeaGen fills the
+  // shelf to SIX with AI ideas (`fillN = 6 - curated.length`), so returning
+  // FEWER picks never thins the shelf -- it hands those slots to the AI, which
+  // is the AFFORDABLE, store-diverse source (all 108 stores, no affiliate
+  // approval needed to search). Topping up to `count` was taking slots away
+  // from the cheap half to give them to the dear one.
+  // ▶ SO THE FLOOR IS 2, NOT `count`. The one real risk is the AI CALL FAILING:
+  // its catch path renders whatever curatedPicks returned, so a floor of 1
+  // could leave a one-card shelf. Two keeps that honest.
+  // ⭐ AND IT LANDS ON EXACTLY WHAT CATH CHOSE: a row she sees is 6 cards, so a
+  // row with none of her picks is 2 feed + 4 AI -- a third, "feed as a
+  // garnish" -- while a row that does have her picks is 1 feed + 3 hers + 2 AI.
+  const floor=Math.min(count,2);
+  if(picks.length<floor)deferred.forEach(function(x){if(picks.length<floor)take(x,true)});
   // Belt and braces on the brief's own test: measured against the SET's
   // median (not the pool's), never more than one pick sits 2+ bands above.
   const setSorted=picks.map(bandIdx).sort(function(a,b){return a-b});
