@@ -99,6 +99,47 @@ ok('and it hands back her address too, so the retry knows who she is',
 
 globalThis.fetch = realFetch;
 
+// ───────── Part A2: DELETION — the one promise that must be literal ─────────
+// 🚨 The same swallow lived on the delete path, which is worse: a woman
+// exercising her right to be deleted could be told her data was gone while it
+// sat in the table. The Privacy Policy is the one page that must be true.
+console.log('Part A2 — deletion');
+async function del(email) {
+  process.env.RESTORE_SECRET = 'test-secret-for-this-suite-only';
+  const tok = mod.__makeTokenForTests ? mod.__makeTokenForTests(email) : null;
+  // No test hook, so prove it through the ADMIN door instead, which is the
+  // other way in and exercises the identical delete branch.
+  process.env.ADMIN_SECRET = process.env.ADMIN_SECRET || 'admin-test-secret';
+  const req = new Request('https://stylestar.app/.netlify/functions/user-data?email=' + encodeURIComponent(email), {
+    method: 'DELETE',
+    headers: {
+      'host': 'stylestar.app', 'origin': 'https://stylestar.app',
+      'x-admin-secret': process.env.ADMIN_SECRET
+    }
+  });
+  const res = await handler(req);
+  let j = null; try { j = await res.clone().json(); } catch (e) {}
+  return {status: res.status, j};
+}
+globalThis.fetch = stubFetch;
+mode = 'ok';
+let d = await del('deleteme@example.com');
+if (d.status === 403) {
+  ok('deletion path reachable for testing (admin door)', false, 'got 403 — admin secret name may differ');
+} else {
+  ok('a deletion that WORKED reports success', d.status === 200 && d.j && d.j.success === true, JSON.stringify(d.j));
+  mode = 'reject';
+  d = await del('deleteme2@example.com');
+  ok('a REFUSED delete (4xx — fetch resolves) reports failure', d.j && d.j.success === false, JSON.stringify(d.j));
+  ok('and it says her data was NOT removed', d.j && d.j.dataRemoved === false);
+  ok('and it points her at a human rather than dead-ending',
+    d.j && /email us|a person/i.test(String(d.j.message || '')), String(d.j && d.j.message));
+  mode = 'throw';
+  d = await del('deleteme3@example.com');
+  ok('a THROWN delete reports failure too', d.j && d.j.success === false, JSON.stringify(d.j));
+}
+globalThis.fetch = realFetch;
+
 // ───────────────── Part B: what SHE is told ─────────────────
 (async () => {
   console.log('Part B — the front end half');

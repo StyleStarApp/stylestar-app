@@ -965,12 +965,30 @@ export default async (req) => {
       }
 
       // 1) Remove her saved results.
+      //
+      // 🚨🚨 THE SAME FAULT AS THE SAVE PATH, AND THE WORST PLACE IN THE APP TO
+      // HAVE IT. This swallowed everything and still answered success:true, so a
+      // woman exercising her right to be deleted could be told her data was gone
+      // while it sat in the table. That is the one promise the Privacy Policy has
+      // to keep literally, and it is the promise the comment below ASSUMED —
+      // "the results, which are the sensitive part, are already gone" — while
+      // nothing checked. A described safeguard is not a safeguard.
+      // ⚠️ And the same second hole: fetch RESOLVES on a 4xx, so a refused
+      // DELETE never threw at all.
+      // ▶ A deletion we cannot confirm is reported as a FAILURE, never as a
+      // success. She must be able to ask again, or ask a human.
+      let dataRemoved = false, delDetail = '';
       try {
-        await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
+        const d = await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
           method: 'DELETE',
           headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
         });
-      } catch (e) {}
+        dataRemoved = !!(d && d.ok);
+        if (!dataRemoved) delDetail = 'supabase ' + (d && d.status);
+      } catch (e) {
+        dataRemoved = false;
+        delDetail = 'network';
+      }
 
       // 2) Remove her from the email list (best effort — a MailerLite hiccup
       //    must not make the request look like it failed when the results,
@@ -991,7 +1009,17 @@ export default async (req) => {
         }
       } catch (e) {}
 
-      return new Response(JSON.stringify({ success: true, mailRemoved }), { status: 200, headers });
+      // ⚠️ mailRemoved stays a separate, softer signal: her RESULTS are the
+      // sensitive part, and a MailerLite hiccup must not make a real deletion
+      // look failed. But the results themselves are now load-bearing.
+      if (!dataRemoved) {
+        return new Response(JSON.stringify({
+          success: false, dataRemoved: false, mailRemoved,
+          message: 'We could not confirm your results were deleted. Please try the link again, or email us and a person will do it.',
+          detail: delDetail
+        }), { status: 502, headers });
+      }
+      return new Response(JSON.stringify({ success: true, dataRemoved: true, mailRemoved }), { status: 200, headers });
     }
 
     return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
