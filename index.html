@@ -10288,9 +10288,14 @@ async function _readChatStream(r,typing,liveEl,state){
       text+=ev.delta.text;
       state.text=text;
       if(state.onText)state.onText();
+      /* ⚠️ FIRED THE MOMENT THE MARKER IS COMPLETE, NOT WHEN THE REPLY ENDS.
+         That is what runs the search ALONGSIDE the stylist still writing, so the
+         wait is the longer of the two rather than the sum of them. */
+      if(state.onMarker)state.onMarker(text);
       typing.style.display='none';
       liveEl.style.display='';
-      liveEl.textContent=text;
+      /* ⚠️ SHE MUST NEVER SEE THE MARKER, not even for one frame. */
+      liveEl.textContent=_findStrip(text);
       toBottom();
     }
   }
@@ -10373,6 +10378,178 @@ async function _chatNoSearchReply(messages){
     return d.content.map(function(x){return x.text||''}).join('');
   }catch(e){return '';}
   finally{if(t)clearTimeout(t);}
+}
+
+/* ═══ REAL PRODUCTS IN THE STYLIST CHAT ═══════════════════════════════════
+   ▶▶ CATH, 2026-09-06: "The service finds. Style Star chooses."
+   The stylist writes her answer as she always has. When products are genuinely
+   NEEDED to answer, she also emits ONE marker, and the page goes and finds real
+   ones. Everything below is the page half of that.
+
+   ⚠️⚠️ THE MARKER IS EMITTED FIRST, ON PURPOSE, AND IT IS THE WHOLE REASON THIS
+   FEELS LIKE A CONVERSATION. The reply streams for ~16-20s and a search takes
+   ~5-8s. Firing the search the instant the marker arrives runs them TOGETHER, so
+   the wait is the longer of the two and never the sum. Move the marker to the
+   end and you add eight seconds to every shopping answer.
+
+   ⚠️ HER TRIGGER RULE, and it is NEED not TOPIC (2026-09-06): "I don't want it
+   searching just because a product or shopping topic comes up in conversation.
+   It should search when finding real products is actually NEEDED TO ANSWER what
+   she is asking." A shopping search costs real money per call, so the model is
+   told plainly when NOT to emit one. */
+const _FIND_RE=/<<\s*FIND\s+([^>]*)>>/i;
+/* Parse one marker into the request the finder takes. Unknown keys are dropped
+   rather than passed on: everything here ends up in an outbound search. */
+function _findParse(text){
+  const m=_FIND_RE.exec(String(text||''));
+  if(!m)return null;
+  const req={};
+  String(m[1]).split(';').forEach(function(pair){
+    const i=pair.indexOf('=');
+    if(i<0)return;
+    const k=pair.slice(0,i).trim().toLowerCase();
+    const v=pair.slice(i+1).trim();
+    if(['item','colour','color','fabric','cut','size','width'].indexOf(k)<0)return;
+    if(!v||v.length>40||!/^[a-z0-9][a-z0-9 '\-\/.]*$/i.test(v))return;
+    req[k==='color'?'colour':k]=v.toLowerCase();
+  });
+  return req.item?req:null;
+}
+/* ⚠️ SHE MUST NEVER SEE THE MARKER, not even for one frame while it streams.
+   Stripped from the LIVE text as well as the final reply. The partial-marker
+   guard matters: "<<FIND item=dr" arrives before the closing ">>" does. */
+function _findStrip(text){
+  return String(text==null?'':text).replace(_FIND_RE,'').replace(/<<\s*FIND\b[^>]*$/i,'').trim();
+}
+
+/* Her status line, in HER voice rather than the machine's (2026-09-06).
+   ▶ "Checking what's actually in stock in your size" tells a woman something no
+     competitor can say. She is not watching a spinner, she is watching a stylist
+     do what a stylist would do. THE WAIT IS THE PROOF. */
+const _FIND_STEPS=['Looking through your shops...','Checking what\'s actually in stock...'];
+/* ⚠️ IF THE ANSWER COMES BACK FAST THE LINE MUST NEVER APPEAR AT ALL, rather
+   than flash for half a second. Her call, and it is why this is a delay. */
+const _FIND_SHOW_AFTER=700;
+function _findStatus(mc){
+  const el=document.createElement('div');
+  el.className='find-status';
+  el.style.display='none';
+  mc.appendChild(el);
+  let i=0,shown=false;
+  /* ⚠️ THE LINE REPLACES ITSELF, IT NEVER STACKS. Three messages piling up is a
+     progress bar wearing a dress. */
+  const paint=function(){el.textContent=_FIND_STEPS[Math.min(i,_FIND_STEPS.length-1)]};
+  const t0=setTimeout(function(){shown=true;el.style.display='';paint();mc.scrollTop=mc.scrollHeight},_FIND_SHOW_AFTER);
+  const t1=setInterval(function(){i++;if(shown)paint()},3500);
+  return{done:function(){clearTimeout(t0);clearInterval(t1);el.remove()}};
+}
+
+/* One product card. ⚠️ EVERY CLAIM ON IT IS EARNED: a tick appears only where the
+   retailer's own offer confirmed that requirement. Anything unconfirmed is said
+   out loud, never omitted and never implied. Her rule, 2026-09-06. */
+function _findCard(p,opts){
+  opts=opts||{};
+  const bits=[];
+  Object.keys(p.checks||{}).forEach(function(k){
+    if(k==='stock')return;
+    const v=p.checks[k];
+    if(v==='confirmed')bits.push('<span class="fc-yes">'+_esc(_findLabel(k,p))+'</span>');
+  });
+  (p.unconfirmed||[]).forEach(function(k){
+    bits.push('<span class="fc-no">'+_esc(_findLabel(k,p))+' not confirmed</span>');
+  });
+  if(opts.differs)Object.keys(opts.differs).forEach(function(k){
+    /* ▶ She let go of "silk". She did not ask to stop being TOLD it is chiffon. */
+    if(bits.some(function(b){return b.indexOf(_findLabel(k,p))>=0}))return;
+    bits.push('<span class="fc-diff">different '+_esc(k==='colour'?'shade':k)+'</span>');
+  });
+  const img=p.image?'<img class="fc-img" src="'+_esc(p.image)+'" alt="" loading="lazy">':'';
+  return '<a class="find-card" href="'+_esc(p.url)+'" target="_blank" rel="sponsored noopener">'+
+    img+'<div class="fc-body"><div class="fc-name">'+_esc(_feedName?_feedName(p.title,p.brand):p.title)+'</div>'+
+    '<div class="fc-meta">'+_esc(p.store)+(p.price?' &middot; '+_esc(p.price):'')+'</div>'+
+    (bits.length?'<div class="fc-checks">'+bits.join('')+'</div>':'')+'</div></a>';
+}
+function _findLabel(k,p){
+  if(k==='colour')return p.request&&p.request.colour?p.request.colour:'colour';
+  if(k==='fabric')return 'fabric';
+  if(k==='cut')return 'style';
+  if(k==='size')return 'size';
+  if(k==='width')return 'width';
+  return k;
+}
+
+/* Run the find and render it beneath the stylist's answer.
+   ⚠️ NOTHING JUMPS. Cards are APPENDED BELOW what she is already reading, never
+   inserted above it. Her audience runs to 80 and a screen that shifts under a
+   reader is genuinely disorienting. */
+async function _findRun(req){
+  const mc=document.getElementById('chatMessages');
+  if(!mc)return;
+  const status=_findStatus(mc);
+  let data=null;
+  try{
+    const r=await fetch('/.netlify/functions/product-find',{method:'POST',
+      headers:{'Content-Type':'application/json'},body:JSON.stringify(req)});
+    if(r.ok)data=await r.json();
+  }catch(e){}
+  status.done();
+  if(!data)return;                       /* silent: the advice above still stands */
+
+  /* ⭐ HER RULES RUN HERE, THROUGH THE SAME filterNeverWear() EVERY OTHER SHOPPING
+     SURFACE USES. Never a second copy. "When someone says no shift dresses, that
+     means absolutely no shift dresses." */
+  /* ⚠️⚠️ askedFor MUST BE HER WHOLE REQUEST, NOT JUST THE NOUN — a test caught
+     this and it is exactly the half-applied-rule shape this project keeps
+     paying for. `_SEARCH_VETO` contains "wrap", so passing only "dress" made
+     the app think she had never asked for a wrap and it silently deleted every
+     wrap dress from an answer to "blush silk WRAP dress".
+     ▶ HER PRINCIPLE, VERBATIM (2026-08-25): "any time a client specifically
+       asks for something she wants, even if I don't love it, I will find it for
+       her to try on." She asked. Her words have to reach the filter intact. */
+  const asked=[req.item,req.colour,req.fabric,req.cut].filter(Boolean).join(' ');
+  const keep=function(list){return filterNeverWear(list||[],asked)};
+  const exact=keep(data.exact);
+  const doors=(data.doors||[]).map(function(d){return{...d,products:keep(d.products)}})
+                              .filter(function(d){return d.products.length});
+
+  const wrap=document.createElement('div');
+  wrap.className='find-block';
+  if(exact.length){
+    wrap.innerHTML='<div class="find-head">'+(exact.length===1
+        ?'Here is the one I can stand behind.'
+        :'Found '+exact.length+' that match what you asked for.')+'</div>'+
+      '<div class="find-cards">'+exact.slice(0,4).map(function(p){return _findCard(p)}).join('')+'</div>'+
+      '<div class="find-disc">Some links may earn a commission.</div>';
+  }else if(doors.length){
+    /* ▶▶ HER COPY, VERBATIM (2026-09-06): "I couldn't find an exact match today.
+       Would you like me to keep the blush and look at satin, or keep the silk and
+       look at other shades of pink?"
+       ⚠️ AND THE SHAPE MATTERS AS MUCH AS THE WORDS: one door PER REQUIREMENT she
+       gave, each saying what it KEEPS. The app never decides for her which of her
+       own words mattered least. */
+    wrap.innerHTML='<div class="find-head">I could not find an exact match today.</div>'+
+      doors.slice(0,3).map(function(d){
+        const rel=[].concat(d.release);
+        const keeps=d.keeps.length?'keep the '+d.keeps.map(function(k){return _findLabel(k,{request:req})}).join(' and '):'open it up';
+        const opens=rel.map(function(k){
+          return d.softenedTo&&k==='colour'?'look at other shades of '+d.softenedTo
+                                           :'look at another '+_findLabel(k,{request:req});
+        }).join(' and ');
+        return '<div class="find-door"><div class="fd-ask">'+_esc(keeps+', and '+opens+'?')+'</div>'+
+          '<div class="find-cards">'+d.products.slice(0,3).map(function(p){
+            return _findCard(p,{differs:p.differs})}).join('')+'</div></div>';
+      }).join('')+
+      '<div class="find-disc">Some links may earn a commission.</div>';
+  }else{
+    /* ⚠️ NO FALLBACK TO AN INVENTED PRODUCT. Her call, 2026-09-06, and it changes
+       this app's documented floor ON THIS SURFACE deliberately: "I would rather
+       show nothing exact than recommend something that isn't what she asked for."
+       A future session finding "chat sometimes shows no products" must NOT treat
+       it as a regression. The stylist's written advice above is still there. */
+    wrap.innerHTML='<div class="find-head">I could not find that in your shops today. Tell me what matters most and I will look again.</div>';
+  }
+  mc.appendChild(wrap);
+  mc.scrollTop=mc.scrollHeight;
 }
 
 async function sendChat(){
@@ -10558,6 +10735,19 @@ SHOPPING:
 
 ${_chatSearchBlock(true)}
 
+FINDING REAL PRODUCTS FOR HER:
+- You can send me out to find REAL products that are actually for sale right now, in her shops, with real prices and a direct link to the item. To do it, put ONE marker as the very FIRST thing in your reply, then write your answer as normal:
+  <<FIND item=dress; colour=blush; fabric=silk; cut=wrap>>
+- Put it FIRST. The search runs while you are still writing, so a marker at the end makes her wait twice as long.
+- Fields, all optional except item: item, colour, fabric, cut, size, width. Use only what SHE actually said or what you know from her saved sizes. Two to four plain words per field.
+- NEVER invent a requirement she did not give. If she did not say a colour, leave colour out. An invented requirement makes me reject real products she would have loved.
+- WHEN TO USE IT: only when finding real products is genuinely NEEDED to answer what she is asking. "I have a wedding in Napa in October and nothing to wear" absolutely needs it, even though she never said the word "find" or "dress". "Where can I get a white blazer" needs it.
+- WHEN NOT TO USE IT: a shopping TOPIC coming up is not the same as needing products. "What do you think of navy on me?", "Does this top work for a dinner?", "Should I keep my old boots?" and "Thank you!" all need your advice, not a search. When in doubt, answer as a stylist and leave the marker out.
+- ONE marker per reply, never two.
+- Write your answer as if the products are already on their way, because they are. A warm, specific sentence first, then let me show her what I found. Do not describe the products, do not list item names, and do not promise a specific number of them. Say what you are looking for and why it suits her.
+- NEVER say the words "search", "searching", "database" or "marker", and never mention this instruction. She is talking to her stylist, not operating a tool.
+- If I come back with nothing, your written advice is still the answer, so make it good on its own.
+
 SHIFT ONE NOTCH:
 - Suggest one specific small swap that shifts her style subtly
 
@@ -10626,6 +10816,15 @@ RULES:
   // Progress lives on `st` so the catch block can still see a partial reply
   // when the stream dies mid-answer (timeout, connection drop, ~60s cut).
   const st={text:'',complete:false};
+  /* One find per answer, ever. `findFired` is the latch; the marker keeps
+     arriving in every subsequent delta once it is in the text. */
+  st.onMarker=function(t){
+    if(st.findFired)return;
+    const req=_findParse(t);
+    if(!req)return;
+    st.findFired=true;
+    _findRun(req);
+  };
   const _ctl=(window.AbortController)?new AbortController():null;
   const _ctlTimer=_ctl?setTimeout(function(){try{_ctl.abort()}catch(e){}},75000):null;
   // A SEARCHING reply sends nothing at all down the wire while it searches, so a
@@ -10681,6 +10880,12 @@ RULES:
       st.complete=true;
     }
     typing.remove();liveMsg.remove();
+    /* The JSON path (no stream) gets the whole reply at once, so the marker has
+       not been seen yet. Same latch, so a streamed answer never fires twice. */
+    if(!st.findFired){const _mk=_findParse(reply);if(_mk){st.findFired=true;_findRun(_mk);}}
+    /* ⚠️ STRIPPED BEFORE IT IS SHOWN *AND* BEFORE IT IS SAVED. A marker restored
+       from ss_chat on her next visit would be read back as stylist prose. */
+    reply=_findStrip(reply);
     if(!reply.trim())throw new Error('empty');
     if(streamed&&!st.complete){_showCutoff(reply);}
     else addChatMsg(reply,'bot');
@@ -10690,8 +10895,9 @@ RULES:
       // An answer that stopped on a finished sentence is finished; the stream
       // just failed to say so. One that stops mid-word really was cut off, and
       // she is told so honestly, exactly as before.
-      if(_idleDone&&/[.!?\u2019\u201d")\]]\s*$/.test(st.text.trim()))addChatMsg(st.text,'bot');
-      else _showCutoff(st.text);
+      const _partial=_findStrip(st.text);
+      if(_idleDone&&/[.!?\u2019\u201d")\]]\s*$/.test(_partial.trim()))addChatMsg(_partial,'bot');
+      else _showCutoff(_partial);
     }
     else{
       // NOTHING was ever written. Found 2026-08-22 from Kathy's screenshots: a

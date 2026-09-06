@@ -376,6 +376,65 @@ products whose colour is UNKNOWN rather than confirmed pink. **The per-product l
 but **the door's own wording must not imply more than it delivers** — that is a copy decision on the
 chat screen, and it is hers.
 
+### ✅✅✅ STEP 2 IS BUILT: THE STYLIST CHAT CAN FIND REAL PRODUCTS
+⚠️ **THIS IS THE FIRST STEP THAT CHANGED `index.html`.** It is on the branch, **not merged**, and it
+does nothing at all in production until **`SERPAPI_KEY` is set in Netlify** (see the Backend section).
+**Without the key the chat behaves exactly as it does today** — advice, no cards, no error.
+
+**HOW IT WORKS, and the one clever bit is the ordering:** the stylist emits ONE marker as the FIRST
+thing in her reply — `<<FIND item=dress; colour=blush; fabric=silk; cut=wrap>>` — then writes her answer
+normally. ▶▶ **THE MARKER IS FIRST ON PURPOSE: the reply streams for ~16-20s and a search takes ~5-8s,
+so firing on the marker runs them TOGETHER and the wait is the LONGER of the two, never the sum.** Move
+it to the end and every shopping answer gains eight seconds.
+⚠️ **SHE NEVER SEES IT** — stripped from the live stream (including the half-arrived `<<FIND item=dr`),
+from the shown reply, and from what is saved to `ss_chat`, so a restored visit cannot read it back as
+stylist prose.
+
+**HER SEVEN DECISIONS, EACH NOW A LINE OF CODE AND A TEST:**
+| Her decision | Where it lives |
+|---|---|
+| Search on **NEED, not topic** | the prompt block `FINDING REAL PRODUCTS FOR HER`, with her Napa sentence named as a MUST and "a shopping topic" named as a must-not |
+| Warm reply first, then a quiet line | marker fires early; `_findStatus` waits **700ms** so a fast answer shows NO line |
+| The line in **her voice** | *"Looking through your shops…"* → *"Checking what's actually in stock…"* |
+| Show the one true match | `exact` first, `doors` only when there are none |
+| **She** chooses what to release | one door per requirement, each naming what it KEEPS |
+| Nothing found → say so | **no invented fallback**, ever |
+| Commission never ranks | `product-find.js` has no commission data to rank by |
+
+🚨🚨 **A REAL BUG WAS CAUGHT BY THE TESTS AND IT IS THE SAME SHAPE AS EVERY OTHER ONE: `_SEARCH_VETO`
+CONTAINS "wrap".** `filterNeverWear(items, askedFor)` was being handed only the NOUN (`"dress"`), so the
+app believed she had never asked for a wrap and **silently deleted every wrap dress from her own answer
+to "blush silk WRAP dress."** ▶ **Fixed by passing her WHOLE request** (`item + colour + fabric + cut`).
+⭐ **HER PRINCIPLE IS WHY IT MATTERS, verbatim 2026-08-25:** *"any time a client specifically asks for
+something she wants, even if I don't love it, I will find it for her to try on."* **Her words have to
+reach the filter intact.** ⚠️ **AND THE VETO IS RIGHT WHEN SHE DID NOT ASK** — a wrap appearing unasked
+is still removed, and `chatfind` PART 3 vs PART 3b pin both directions.
+
+⭐ **HER RULES RUN ON THE PAGE, THROUGH THE SAME `filterNeverWear()` EVERY OTHER SHOPPING SURFACE USES.**
+`product-find.js` deliberately holds NO copy of her brief. **It finds; the page chooses.** ▶ **This is
+the third picker and it was given the rule ledger BEFORE it shipped, not after she found a fault on her
+phone — which is the whole lesson of 2026-09-06 finally applied in the right order.**
+
+⚠️ **THE GENERATED STORE LIST IS A JS MODULE, NOT JSON** (`netlify/functions/lib/store-domains.js`), and
+that is deliberate: **JSON import syntax changed twice across Node versions (`assert` → `with`) and a
+serverless runtime on the wrong one fails at DEPLOY time, which no test here would catch.** A plain
+module import works everywhere. `node scripts/build-store-domains.js --check` fails if it is stale.
+
+▶ **THE FILES:** `netlify/functions/product-find.js` (server, holds the key) · `netlify/functions/lib/
+find-products.js` (the finder) · `netlify/functions/lib/store-domains.js` (generated) ·
+`scripts/build-store-domains.js` · `scripts/lib/stores.js` (the ONE STORES reader) ·
+`scratchpad/findprod.js` **51** · `scratchpad/chatfind.js` **39** · `scratchpad/findlive.js` (live bench).
+
+### ▶ STEP 3 IS HERS: LOOK AT IT ON HER PHONE
+1. ⚠️ **SHE MUST ADD `SERPAPI_KEY` TO NETLIFY** or nothing appears. Nothing breaks either.
+2. ▶ **THE FIRST THING TO JUDGE IS THE COPY, and it is the one thing deliberately left open:** a door
+   reading *"keep the fabric and cut, and look at other shades of pink"* can hold products whose colour
+   is **UNKNOWN** rather than confirmed pink. **The card says so; the DOOR'S OWN WORDING may still
+   promise more than it delivers.** Her call, and it needs her ear, not more code.
+3. ▶ **THEN: does the stylist search when she should, and stay quiet when she should not?** The trigger
+   is a judgment and only real conversations show whether it lands.
+4. ▶ **THEN SHOP YOUR STYLE**, which she called *"an enormous difference."*
+
 ### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT — every one of these is still open
 1. ✅✅ **HER TWELVE SLIDER POSITIONS — RECORDED 2026-09-08, THE ASK IS CLOSED.** She sent her Style
    Signature screenshot. **Read off the pixels, not estimated:** the track spans x=368..1040 on the
@@ -595,6 +654,20 @@ Two serverless functions in `netlify/functions/`:
   adds the signup to **MailerLite** (group "Style Star Signups", looked up by name)
   so the list can be emailed — requires env var `MAILERLITE_API_KEY`. The MailerLite
   call is wrapped so a failure never blocks the Supabase save.
+
+- **`product-search.js`** — one wardrobe checklist row's worth of feed products
+  out of Supabase. Takes a SLOT ID only. Requires `SUPABASE_URL` + `SUPABASE_KEY`.
+- **`product-find.js`** — **NEW 2026-09-06.** Real products for a request a woman
+  typed in her own words, out of the live shopping index, restricted to her own
+  108 stores. Called from the stylist chat.
+  🚨🚨 **IT NEEDS `SERPAPI_KEY` SET IN NETLIFY AND CATH HAS TO ADD IT.** Netlify →
+  Site configuration → Environment variables. **Until it is set the chat simply
+  gives ordinary stylist advice with no product cards — no error, no broken
+  screen** (the function returns an empty pool on purpose).
+  ⚠️ **THIS IS THE APP'S FIRST PER-USE COST.** ~15¢ a shopping question. The
+  function caps itself at **4 searches + 6 product look-ups per request**, rate
+  limits to **8 requests/minute per IP** (tighter than every other function here,
+  because this one spends money), and caches for 30 minutes on a warm instance.
 
 There is also a hidden Netlify Forms form (`name="style-star-emails"`) in
 `index.html` as a backup email-capture mechanism.

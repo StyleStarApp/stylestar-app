@@ -17,7 +17,7 @@ import {fileURLToPath} from 'url';
 import {loadStores, storeHost} from './lib/stores.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const OUT = path.join(ROOT, 'data', 'store-domains.json');
+const OUT = path.join(ROOT, 'netlify', 'functions', 'lib', 'store-domains.js');
 
 export function buildDomains() {
   const stores = loadStores();
@@ -36,24 +36,27 @@ export function buildDomains() {
   return out;
 }
 
-const payload = () => JSON.stringify({
-  _readme: 'GENERATED from the STORES table in index.html by scripts/build-store-domains.js. Do not edit by hand.',
-  stores: buildDomains(),
-}, null, 1) + '\n';
+// ⚠️ A JS MODULE, NOT JSON, AND THAT IS DELIBERATE: JSON import syntax has
+//    changed twice across Node versions (`assert` then `with`), and a serverless
+//    runtime on the wrong one fails at DEPLOY time, not in any test here. A plain
+//    module import works on every version there is.
+const payload = () => '// GENERATED from the STORES table in index.html by\n' +
+  '// scripts/build-store-domains.js. DO NOT EDIT BY HAND — run the script.\n' +
+  '// `node scripts/build-store-domains.js --check` fails if this is stale.\n' +
+  'export default ' + JSON.stringify(buildDomains(), null, 1) + ';\n';
 
 if (process.argv[1] && process.argv[1].endsWith('build-store-domains.js')) {
   const next = payload();
   if (process.argv.includes('--check')) {
     const cur = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
     if (cur !== next) {
-      console.error('✗ data/store-domains.json is STALE. Run: node scripts/build-store-domains.js');
+      console.error('✗ netlify/functions/lib/store-domains.js is STALE. Run: node scripts/build-store-domains.js');
       process.exit(1);
     }
-    console.log('✓ data/store-domains.json is in sync with index.html');
+    console.log('✓ store-domains.js is in sync with index.html');
   } else {
     fs.mkdirSync(path.dirname(OUT), {recursive: true});
     fs.writeFileSync(OUT, next);
-    const n = Object.keys(JSON.parse(next).stores).length;
-    console.log(`✓ wrote data/store-domains.json — ${n} stores`);
+    console.log(`✓ wrote netlify/functions/lib/store-domains.js — ${Object.keys(buildDomains()).length} stores`);
   }
 }

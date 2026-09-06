@@ -200,9 +200,9 @@ H('PART 9 — the store allowlist, and resale');
 
 H('PART 10 — the generated domain file cannot drift from index.html');
 {
-  const file = path.join(ROOT, 'data', 'store-domains.json');
-  ok('data/store-domains.json exists', fs.existsSync(file));
-  const onDisk = JSON.parse(fs.readFileSync(file, 'utf8')).stores;
+  const file = path.join(ROOT, 'netlify', 'functions', 'lib', 'store-domains.js');
+  ok('the generated store module exists', fs.existsSync(file));
+  const onDisk = (await import('../netlify/functions/lib/store-domains.js')).default;
   const fresh = buildDomains();
   ok('and it is byte-identical to a fresh build',
      JSON.stringify(onDisk) === JSON.stringify(fresh),
