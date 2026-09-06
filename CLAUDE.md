@@ -88,7 +88,33 @@ gender-NEUTRAL so the two rules stay independently testable. ▶ **A shared fixt
 property under test is a trap; when a new rule turns old tests red, read them before "fixing" them.**
 
 ### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT — every one of these is still open
-1. ▶ **Her twelve slider positions** (see above). **Write them down the moment they arrive.**
+1. ✅✅ **HER TWELVE SLIDER POSITIONS — RECORDED 2026-09-08, THE ASK IS CLOSED.** She sent her Style
+   Signature screenshot. **Read off the pixels, not estimated:** the track spans x=368..1040 on the
+   retina screenshot and **every one of the twelve knobs lands within 0.025 of a whole slider stop**,
+   which is what proves the scale is right rather than merely plausible.
+   ```
+   answers = [8, 7, 6, 9, 7, 6, 7, 7, 8, 10, 7, 9]
+   ```
+   | # | Slider | Her value |
+   |---|---|---|
+   | 0 | Style direction · Classic→Trendy | **8** leaning trendy |
+   | 1 | Overall vibe · Natural→Glam | **7** slightly glam |
+   | 2 | Style flavor · Preppy→Edgy | **6** a mix of both |
+   | 3 | Outfit complexity · Simple→Detailed | **9** mostly detailed |
+   | 4 | Dress level · Casual→Dressy | **7** slightly dressy |
+   | 5 | Lifestyle · Sporty→Professional | **6** a blend of both |
+   | 6 | Color preference · Neutral→Colorful | **7** slightly colorful |
+   | 7 | Pattern preference · Solids→Prints | **7** slightly print-forward |
+   | 8 | Fit preference · Relaxed→Fitted | **8** leaning fitted |
+   | 9 | Style priority · Comfort→Style | **10** very style-driven |
+   | 10 | Modesty level · Modest→Alluring | **7** slightly alluring |
+   | 11 | Presence · Understated→Statement | **9** strong presence |
+   ▶ **Her derived matching profile, through the app's own formulas** (`_herDims()`):
+   **alluring 6.40 · trendy 0.70 · dressy 0.60 · fitted 0.70 · color 0.60.**
+   ⭐ **THIS IS THE PROFILE TO MEASURE GATE 2 AND ANY STORE RANKING AGAINST FROM NOW ON.** The five
+   profiles used in the 2026-09-07 Gate 2 measurement were Claude's approximations; **these are hers.**
+   ⚠️ **NEVER ARCHIVE THIS.** It is a fact she supplied, not a build that happened — and it was asked
+   for twice before because nobody wrote it down. **Re-ask only if she says she has retaken the quiz.**
 2. ⚠️ **STILL TRUE AND FIXED BY NO CODE: the prices.** Every fed store is `$$$`/`$$$$`. Live medians:
    **dresses $398 · tops $260 · shoes $790 · bags $1,490**; 0 of 200 dresses under $100. **No filter
    makes Mytheresa affordable — only an affordable or mid-market affiliate does.** Watch the AWIN Under
@@ -108,9 +134,13 @@ property under test is a trap; when a new rule turns old tests red, read them be
    her. **Draft all twelve from stores she already scored, show the neighbours, she corrects.**
    ⚠️ **This does NOT break "never invent a store's tags" — the Garnet Hill lesson was about inventing
    SILENTLY. A draft she approves is not an invention.**
-6. ▶ **VILEBREQUIN IS A QUESTION FOR HER, NOT A BUG.** Its feed is majority menswear (301 Male / 156
-   Female / 70 Unisex; 529 rows in, 188 kept). The name guard stops the leak, **but a store that is
-   mostly men's may simply not earn its place on a women's shelf.** Her call, never mine.
+6. ✅ **VILEBREQUIN STAYS — HER DECISION, 2026-09-08.** Her words: ***"I think it is fine to keep
+   Vilebrequin. It should not come often but since they approved us I think it is fine to keep them in
+   our mix."*** ▶ **So this is settled and is NOT to be reopened as a bug.** Its feed is majority
+   menswear (301 Male / 156 Female / 70 Unisex; 529 rows in, **188 kept**), and the womenswear guard now
+   holds on both the column and the name. ⚠️ **"It should not come often" is already how the shelf
+   behaves** — the feed ceiling caps the feed at a third of any row and `_storeCap('compare')` allows
+   ONE card per store — **so nothing further is needed, and nothing should be added to suppress it.**
 7. ⚠️ **SHOPBOP AND BLOOMINGDALE'S ARE STILL BEING SHOWN AS STORES, AND BOTH REJECTED HER.** Those taps
    earn **$0** today. ▶ **NOT A BUG — commission data stays OUT of the app on purpose** so picks are
    never biased by what pays best (standing rule, 2026-07-27). Recorded so nobody "fixes" it, and so she
