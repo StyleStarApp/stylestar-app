@@ -4890,6 +4890,24 @@ function _fabricBrakeRule(slot){
     '  RIGHT: let CUT, STRUCTURE and TEXTURE carry the dressiness instead \u2014 a tailored or cropped blazer, a knife-pleat or column skirt, crepe, ponte, a fine knit, leather, suede, a good drape.\n'+
     '  If one of these fabrics already appears in the pieces she has been shown above, use none at all this time.\n';
 }
+/* ═══ STORE VARIETY: ONE CAP, AND BOTH HALVES READ IT ══════════════════════
+   Cath, 2026-07-27, and the rules differ by surface ON PURPOSE:
+   · 'compare' — the Wardrobe Ideas carousel. The 4 options are alternatives for
+     ONE piece she is choosing between, so EVERY ONE must be a different store.
+     "Four white blouses at one store tells her nothing she could not have
+     found herself."
+   · default  — Shop your style, wishlist, Complete the Look. No more than TWO
+     picks at the same store.
+
+   🚨 THE COMPARE RULE REACHED ONLY THE PROMPT. curatedPicks, which fills the
+   very same carousel, used a hardcoded 2 -- the DEFAULT surface's number, on a
+   compare surface. Measured 2026-09-06 on her real catalog: 2 of the 10 rows
+   holding her picks showed two cards from one shop, which is exactly the "two
+   cards from the same store" she photographed on 2026-09-06.
+   ▶▶ So the number lives HERE, once, and both halves read it. Changing a
+   surface's variety rule is now one edit, not two that can disagree. */
+const _STORE_CAP={compare:1,default:2};
+function _storeCap(mode){return _STORE_CAP[mode]||_STORE_CAP.default}
 function _shopRules(mode,occ,slot,detailTop){
   return '\nPICK THE STORE from this list ONLY, using the name exactly as written.'+
     (quizTaken?' The list is already ORDERED by how well each store suits her, closest first, so favour the top of it. Go further down only when the piece needs a specialist that the top of the list does not carry.'+_neverStoreRule():'')+
@@ -5003,7 +5021,7 @@ function _shopRules(mode,occ,slot,detailTop){
     // ALL one big store is not.
     (mode==='compare'
       ? '- EVERY option must come from a DIFFERENT store. She is comparing versions of the same piece, so four of them at one store tells her nothing she could not have found herself.\n'
-      : '- VARY THE STORES. Never put more than two picks at the same store. A list she could have gotten by walking into one shop is a list she did not need.\n'+
+      : '- VARY THE STORES. Never put more than '+_storeCap('default')+' picks at the same store. A list she could have gotten by walking into one shop is a list she did not need.\n'+
         '- Big stores are genuinely useful and she likes them, so one or two belong here. Alongside them include at least one smaller or specialist store whenever one honestly suits that piece better.\n')+
     // A variety rule with no brake produces its own bug: reaching for a
     // different name and landing on a store that does not sell that kind of
@@ -8217,8 +8235,12 @@ const _WDR_BANDS=['$','$$','$$$','$$$$'];
 // reason names the FIRST constraint that starved the pool below `count`
 // survivors, so the UI can say why honestly instead of showing an empty
 // screen or quietly relaxing a hard filter (both forbidden by the brief).
-function curatedPicks(slot,p,family,count){
-  count=count||6;p=p||prefs;
+// ⚠️ `mode` picks the STORE-VARIETY rule, and it defaults to 'compare' because
+// the Wardrobe Ideas carousel is this function's only caller and is a compare
+// surface. A future caller on a NON-compare surface must pass its own mode --
+// see _STORE_CAP, which is the same table the AI prompt reads.
+function curatedPicks(slot,p,family,count,mode){
+  count=count||6;p=p||prefs;mode=mode||'compare';
   // Her own hand-picks and the nightly feed, in ONE pool. Everything after this
   // point treats them identically -- which is the guarantee, not a convenience.
   // ⚠️ AND THAT MEANS HERS GET NO HEAD START. The sort's last tie-break is by
@@ -8365,8 +8387,10 @@ function curatedPicks(slot,p,family,count){
   // Price spread: most of the set stays around the band this shelf actually
   // sells in (the pool's median band — there is deliberately NO budget
   // question), with AT MOST ONE stretch piece two or more bands above it.
-  // Diversity: no more than two picks from one retailer (the standing
-  // 2026-07-27 variety rule). ⚠️ The brief's "max 2 items per slot in any one
+  // Diversity: _storeCap(mode) picks from one retailer — the SAME table the AI
+  // prompt is built from (see _STORE_CAP above _shopRules). On this carousel
+  // that is ONE, which is her compare rule; it used to be a hardcoded two, the
+  // wrong surface's number. ⚠️ The brief's "max 2 items per slot in any one
   // set" can only bind a future multi-slot set — inside one slot's own Ideas
   // it would cap the set at 2, which contradicts the ≥4 threshold, so it is
   // read as the per-retailer rule here.
@@ -8404,7 +8428,7 @@ function curatedPicks(slot,p,family,count){
     // Held back rather than dropped, so the top-up below can still reach it.
     if(x.feed&&!capOff&&feedTaken>=feedCap){deferred.push(x);return;}
     if(bandIdx(x)>=med+2){if(stretch>=1)return;stretch++;}
-    if((perStore[x.retailer]||0)>=2)return;
+    if((perStore[x.retailer]||0)>=_storeCap(mode))return;
     perStore[x.retailer]=(perStore[x.retailer]||0)+1;
     if(x.feed)feedTaken++;
     picks.push(x);
@@ -8583,10 +8607,24 @@ async function _wardrobeIdeaGen(id,boxId){
     // visit) and this row's slice of the nightly feed. Either can come back
     // empty without the shelf noticing -- the AI fills whatever is missing.
     await Promise.all([_loadProducts(),_loadFeed(id)]);
-    curated=curatedPicks(id,prefs,_herFamily(),4).picks;
+    curated=curatedPicks(id,prefs,_herFamily(),4,'compare').picks;
     if(curated.length)_wdrMarkSeen(curated.map(function(x){return x.id}));
   }catch(e){curated=[];}
-  const curLine=curated.length?'\n\nThese pieces are already being shown to her for this item, so suggest DIFFERENT things, never a near-duplicate: '+curated.map(function(x){return x.brand+' '+x.name}).join('; ')+'.':'';
+  // ⚠️⚠️ THE STORES ALREADY TAKEN, AND WHY THIS LINE EXISTS (2026-09-06).
+  // _shopRules('compare') tells the model "EVERY option must come from a
+  // DIFFERENT store" -- Cath's rule for this exact surface, because four
+  // versions of one piece at one shop tells her nothing she could not have
+  // found herself. But the model only ever saw its OWN four. The curated half
+  // had already placed up to four cards on the same shelf and never said
+  // where from, so the two halves could and did land on the same store.
+  // ▶ SAME DISEASE AS THE REST OF THIS DAY: both halves hold a store-variety
+  // rule and neither knows what the other picked. This is the sentence that
+  // introduces them. It is ADDITIVE -- it removes nothing and cannot empty a
+  // shelf, it just stops the model reaching for a store already on screen.
+  const curStores=curated.map(function(x){try{return resolveStore(x.retailer)||x.retailer}catch(e){return x.retailer}})
+    .filter(function(v,i,a){return v&&a.indexOf(v)===i});
+  const curLine=(curated.length?'\n\nThese pieces are already being shown to her for this item, so suggest DIFFERENT things, never a near-duplicate: '+curated.map(function(x){return x.brand+' '+x.name}).join('; ')+'.':'')
+    +(curStores.length?'\nThose are already on this shelf from: '+curStores.join(', ')+'. Do not use any of those stores again — every option you add must come from a store not in that list.':'');
   const basis=(Array.isArray(answers)&&answers.length===12&&topArchNames.length)?('Her style: '+topArchNames.join(', ')+'.'):'';
   const exclNames=(_WDR_IDEA_EXCLUDE[id]||[]).map(_wardrobeFindName).filter(Boolean);
   const exclLine=exclNames.length?'\n\nShe already has a separate checklist item for each of: '+exclNames.join(', ')+'. Those are covered elsewhere, so do not suggest anything that belongs to those instead. Keep every option specific to just "'+name+'".':'';

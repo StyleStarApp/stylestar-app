@@ -7,113 +7,120 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-06 evening — SHE TESTED IT AS HERSELF AND IT FAILED HER. FIXED, NOT YET MERGED)
+## ▶ NEXT SESSION — START HERE (2026-09-07 — THE RULE SWEEP STARTED, AND FOUND TWO MORE HALF-APPLIED RULES)
 
-### 🚨🚨⭐⭐ HER VERDICT, AND SHE WAS RIGHT ON EVERY POINT
-She switched back to her real Style Star profile (not the luxury shopper she had used to force feed
-pieces up), opened **"Tops in your favorite colors"**, and got: **a Fleur du Mal THONG, a garter belt,
-a Balenciaga HANDBAG, a $2,490 Balmain top, a wool sweater, and two cards from the same store.**
-▶ **Her words, and they are the design brief: *"I wanted those items only to show up as a shopping
-suggestion where those particular items made sense for the shopper. Not for those 7 stores to be
-prioritized as the top picks. Only for them to be picked when it made absolute sense."***
-⚠️ **She asked whether she needs to switch to OpenAI or rethink the whole app.** ▶ **THE HONEST ANSWER,
-GIVEN WITH FILE NAMES SO SHE COULD CHECK IT: not one of the faults involved the AI.** The thong and the
-handbag were `scripts/slot_match.py`, a word match. The sweater was `data/slot-rules.json`, a taxonomy
-list. The 7 stores everywhere was one `||` in `index.html`. The prices are which Rakuten programs she is
-approved for. **No model is consulted anywhere in that path, so changing providers would have fixed
-none of it.** Say it plainly and checkably if it comes up again; never as a plea.
+### ✅ FIRST, THE THING THAT WAS STALE AND IS NOW TRUE: EVERYTHING FROM 2026-09-06 IS MERGED AND LIVE
+The previous entry said "NOT merged". It landed. `git log origin/main..HEAD` is empty, `main` is at
+`9012d1f`, and Netlify auto-deploys from `main`. **The matcher fix, both gates, the feed ceiling and
+the sweater rule are on stylestar.app.** ▶ The blank cards are fixed too (`35e3192`: the carousel is a
+flex row and stretched every card to the tallest, so a photo-less AI card became a tall empty box;
+`align-items:flex-start` lets each card take its own height).
+✅ **The ingest was run early on 2026-09-06 at 16:11 UTC rather than waiting for 21:37**, so the feed was
+re-tagged with the new matcher the same day: **78,171 pieces** across her seven stores, 3 minutes,
+green. ▶ **The thong and the handbag leave her Tops shelf on a re-tag, not on the merge — remember the
+distinction, it is why "merged" did not mean "fixed on her phone".**
 
-### ⭐⭐⭐ THE ONE STRUCTURAL CAUSE, AND IT IS THE LESSON OF THE WHOLE SESSION
-**It was not three bugs. It was ONE fault with three faces: the feed path was built ALONGSIDE the AI
-path and inherits NONE of the guardrails built on the AI path.**
-1. **`_WDR_IDEA_EXCLUDE`** — her own hand-reviewed sibling map (White/Black/colour Tops exclude Print
-   tops, Tank tops, Professional blouses, Dressy tops), which **she confirmed herself in August**. It
-   was referenced in **exactly one place, `_wardrobeIdeaGen`, which builds the AI PROMPT.** The feed
-   never goes near the model, so it never saw the rule.
-2. **The style-family filter** — `pool.filter(x => x.feed || ...)`. Her 107 must match her family; the
-   78,000 feed garments skipped the check outright.
-3. **Category sanity** — the model knows a thong is not a top. The Python matcher did not.
-▶▶ **AND THE COMMENT ABOVE THAT FILTER CLAIMED A SAFEGUARD THAT DID NOT EXIST.** It said the STORE was
-the style signal for feed pieces instead. **Measured: `_storeFit`, which scores a store using CATH'S OWN
-ten dimension tables, was called in exactly ONE place in the whole app and it was not that one.**
-🚨 **A described safeguard is not a safeguard. Grep for the call site before believing a comment.**
-⚠️ **This is the SAME DISEASE as the never-wear plural bug**, whose own note in this file says *"a rule
-this important living in two implementations is exactly how it drifts."* It drifted again, in a new
-direction, five weeks later. ▶ **When a second path is added to a rule, the rule must MOVE to somewhere
-both paths call. Adding a second copy is the bug.**
+### ⭐⭐ WHAT THIS SESSION DID: THE SWEEP SHE ASKED FOR, AND IT IMMEDIATELY FOUND TWO MORE
+**Both are the same shape as 2026-09-06: a rule of hers written out correctly on the AI half and never
+wired into the shelf.** Neither was invented; both are her own words, already in this file.
 
-### ⭐ SHE ASKED WHETHER HER INTENTION IS BEING LOST IN SESSION COMPACTION. IT IS NOT — AND THAT MATTERS
-**Her Tops rule was in the archive, correctly written, and took thirty seconds to find.** The notes did
-their job. ▶ **The intention is lost in the gap between a COMMENT and a LINE OF CODE, not in the notes.**
-Answer her this way if she worries again, and answer it with the grep, not with reassurance.
+**1. 🚨 SIZE RANGE PER CATEGORY — a petite woman lost every bag, shoe and earring.** Her rule
+(2026-07-27): *"short clients still wear regular-length dresses, athletic wear, bags and accessories, so
+let's make sure our special sizing ladies don't get fewer pickings because of that."* `_sizeGuidance`
+spelled it out in full for the AI. **`curatedPicks` filtered every row alike with no category test.**
+▶ **MEASURED on her real 107, not estimated — a woman who shops Petite and not Regular lost:** Tote bags
+8→**0** · Statement earrings 8→**0** · Ankle boots 8→**0** · Fashion sneakers 17→**0**. That is 100% of
+the hand-picked bags, shoes and accessories, plus every fed bag and necklace, **because a handbag carries
+no petite flag and never will.**
+⚠️⚠️ **AND SAVED USERS WERE ENROLLED WITHOUT CHOOSING IT:** `_fitSizes()` migrates the old pants-length
+answer *"I often need shorter/cropped lengths"* to `['Petite']` **with no `'Regular'` beside it**. So a
+woman hit this without ever picking the word.
+⭐ **Her call, asked directly and answered: Sleepwear, Foundations and athletic socks are ALSO exempt —
+"err toward showing more."** Shoes stay exempt from petite/tall/plus and keep width, which is her
+written rule.
 
-### ✅ WHAT WAS BUILT (3 commits, branch `claude/resume-style-star-vx3tc4`, NOT merged)
-- **`3486cf4` the matcher.** **The CATEGORY now WINS whenever a garment carries one** — the rung test
-  used to be `cat OR name`, so a bag arriving with `women>bags>top-handle bags` was still asked whether
-  its name contained "top". It did. ⚠️ **"Carries a category" deliberately means "carries one THESE
-  RULES RECOGNISE"**, not "the column is non-empty" — a breadcrumb of just `Women` would otherwise
-  silently empty a shelf. Plus **`_family_not` in `slot-rules.json`**, whole-family exclusions merged at
-  load time. ▶▶ **KEYED BY FAMILY, NEVER GLOBALLY, and this is the part to protect: every excluded word
-  is CORRECT somewhere.** `thong` is a real sandal (`sh1`) AND real underwear (`fo`); `top-handle` is a
-  real bag row (`bg2`). A global block list breaks all three.
-- **Her taxonomy call: A SWEATER IS NOT A TOP.** She keeps `ja5` Sweaters and `ja1` Cardigans, so a knit
-  on Tops duplicates a row she already has. Applied to the **whole** Tops family — a "Lace Knit Sweater"
-  was still reaching Dressy tops via the word "lace".
-- **`c3ba5ad` the two gates in `curatedPicks`.** GATE 1 honours `_WDR_IDEA_EXCLUDE` on the feed (needed
-  `slots` added to the `product-search` select and to the card). GATE 2 requires a feed garment's store
-  to clear **her own median** across all 108 stores, scored with her dimension tables.
-  ⚠️ **RELATIVE, NEVER ABSOLUTE** (a fixed cutoff means a different thing for every woman and would
-  silently empty the feed for some) · ⚠️ **NOT BEFORE THE QUIZ** (`answers` sits at neutral until she
-  moves a slider) · ⚠️ **HER 107 ARE EXEMPT — she already judged those** · ⚠️ **an unresolvable retailer
-  KEEPS its place**, because dropping a garment over our own lookup failure is the silent nothing.
+**2. 🚨 STORE VARIETY — "two cards from the same store", which she photographed.** Her rule
+(2026-07-27) for the Ideas carousel: *"every one must be a different store."* The prompt obeyed it.
+**`curatedPicks` used a hardcoded 2 — the DEFAULT surface's number, on a compare surface.** Measured:
+**2 of the 10 rows** holding her picks showed two cards from one shop.
+▶▶ **AND THE WORSE HALF, which is the cleanest example of the disease yet: the AI was told "EVERY option
+must come from a DIFFERENT store" while having no idea which stores were already on the shelf.**
+`_wardrobeIdeaGen` passed the curated cards' NAMES into the prompt so the model would not repeat an
+item, and never their STORES. **Both halves held a store-variety rule and neither knew what the other
+had picked.** Now one added sentence names the taken stores; it is additive and cannot empty a shelf.
+⚠️ **A MEASUREMENT CORRECTION WORTH KEEPING: the first number was 5 of 10 and it was WRONG** — measured
+with `count:6` when the real call site passes `4`. Re-measured at 2 of 10. ▶ **Measure with the
+parameters the app actually uses, not the ones the function will accept.**
 
-### 📏 THE GATE 2 MEASUREMENT — THIS IS THE NUMBER TO SHOW HER
-Fed stores passing her bar, by profile: **classic/relaxed/neutral/modest → 1 of 7 (Mytheresa only)** ·
-classic + a little dressy → 2 · middle of the road → 7 · trendy/colourful → 6 · **glam/dressy/alluring
-→ 7 of 7**.
-▶▶ **A woman who dresses the way Cath describes HERSELF (Cindy Crawford, jeans, relaxed blouses) now
-sees ONE of the seven fed stores** — the rest of her shelf returns to her 107 and the AI. **And Fleur du
-Mal passes ONLY for the glam/alluring profile**, which is exactly right for a lingerie house.
-⭐ **This also solves the affordability problem from the right end, and it is BETTER than what I proposed
-in the morning.** I suggested giving her 107 a head start in the sort; **she pushed back, correctly, that
-the spreadsheet is frozen and temporary and should not be leaned on harder.** Gate 2 means her picks win
-on MERIT — the luxury stores simply stop qualifying for a woman they do not suit. ▶ **Her framing beat
-mine. The lever `(b.feed?0:1)-(a.feed?0:1)` is still recorded at the code and is still NOT used.**
-⚠️ **Those five profiles are Claude's approximations, not her real saved answers.** Offer to run her
-actual slider positions.
+### ✅ GREEN, AND EVERY NEW TEST PROVEN RED FIRST
+**sizefit 38/0** (new) · **storecap 15/0** (new) · **curated 65/0** · **feedshelf 54/0** ·
+**slot_match 1,087/0**.
+▶▶ **BOTH NEW SUITES WERE PROVEN TO FAIL WITHOUT THE FIX, which is the only thing that makes a green
+suite mean anything:** reverting just the `_fitApplies` call fails **9 of 38**; reverting the store cap
+and the prompt line fails **4 of 15**, and the failure names the real offender (`to1:Anthropologie`).
+⭐ **Each suite carries a DRIFT GUARD** — it mutates the shared table in the page and asserts the AI's
+own sentence changes with it. **If someone ever re-hardcodes one of these lists, the guard goes red.**
+⚠️ **A HARNESS BUG WORTH REMEMBERING: `_wardrobeIdeaGen` returns immediately when its DOM box
+(`wx_<slot>`) does not exist**, so a whole test section passed while asserting nothing. **Create the box,
+or the test is theatre.**
 
-### ✅ GREEN, MEASURED NOT ASSUMED
-**slot_match 1,087/0** (19 new regression tests, **every case a real product name off the live feed**,
-asserting BOTH directions — a thong is not a top AND thong sandals are still sandals, a thong is still
-underwear, a top-handle bag is still a bag, "Sweatshirt" is untouched by the "sweater" exclusion) ·
-**feedshelf 49/0** · **curated 65/0**. Ingest timing unchanged (~20s for a 266,000-row night).
-**No shelf emptied:** White tops 200→177 · Black tops 200→149 · Tops/colours 200→159 · Blue jeans 200→180.
+### ▶▶ WHAT IS LEFT OF THE SWEEP — the ledger below is the map; these rows still need their test
+The RULE LEDGER section is written and is never archived. **Nine of thirteen rules are now verified on
+both halves with a named test.** Still to do: the four rows marked ▶ in that table.
 
-### ▶▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT
-1. ⚠️⚠️ **NOTHING IS MERGED.** Her call. **And the matcher fix changes TAGGING ONLY — the thong does not
-   leave her shelf until the ingest re-runs (nightly 21:37 UTC).** The two gates take effect on merge.
-2. ▶ **Her real slider positions**, so Gate 2 can be measured on her own profile rather than a guess.
-3. ▶ **THE BLANK CARDS in her first screenshot** — AI cards carry no photo, and the carousel appears to
-   stretch every card to the tallest, so a photo-less card becomes a tall empty box next to a feed card.
-   **Diagnosed by eye from her screenshot, NOT yet confirmed in code.** Likely a regression from the
-   2026-09-06 photo change.
-4. ⚠️ **STILL TRUE AND NOT FIXED BY ANY OF THIS: the prices.** Every fed store is `$$$`/`$$$$`. Live
-   medians measured this morning: **dresses $398 · tops $260 · shoes $790 · bags $1,490**; 0 of 200
-   dresses under $100. **No filter makes Mytheresa affordable — only an affordable or mid-market
-   affiliate does.** Watch the AWIN Under Armour application and any department store.
-5. ⚠️ **THE `success: true` BUG IS STILL THERE.** `user-data.js` wraps its Supabase write in `catch(e){}`
-   and answers `{success:true}` regardless, so a woman can be told her results were saved when they were
-   not. The key being fixed stopped it being told today; it did not fix the lie.
-6. ▶ **THE TAXONOMY GAPS THAT ARE HERS TO DECIDE, none invented:** mini skirts · jumpsuits/rompers ·
-   gloves · clogs · wellingtons · bags named only "Bag". **Plus four defaults I set and should confess:**
+### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT
+1. ▶ **Her real slider positions**, so Gate 2 can be measured on her own profile rather than a guess.
+   The five profiles in the Gate 2 measurement are Claude's approximations, not her saved answers.
+2. ⚠️ **STILL TRUE AND FIXED BY NO CODE: the prices.** Every fed store is `$$$`/`$$$$`. Live medians:
+   **dresses $398 · tops $260 · shoes $790 · bags $1,490**; 0 of 200 dresses under $100. **No filter
+   makes Mytheresa affordable — only an affordable or mid-market affiliate does.** Watch the AWIN Under
+   Armour application and any department store.
+3. ⚠️ **THE `success: true` BUG IS STILL THERE, and it is slightly worse than previously written.**
+   `netlify/functions/user-data.js:704` swallows the Supabase error in `catch(e){}` **and never checks
+   whether the write was accepted** — `fetch` resolves on a 4xx, so even a cleanly rejected write
+   reports success at line 717. **A woman can be told her results were saved when they were not.**
+4. ▶ **THE TAXONOMY GAPS THAT ARE HERS TO DECIDE, none invented:** mini skirts · jumpsuits/rompers ·
+   gloves · clogs · wellingtons · bags named only "Bag". **Plus four defaults set for her and confessed:**
    a plain "Sandal" → Flat sandals · a plain "Boot" → Ankle boots · a plain "Hat" → Sun hats · a plain
    "Skirt" → Flowy skirt. **And two rows that are honestly EMPTY:** `ac11` Matching athletic sets and
    `sl2` Nightgowns.
-7. ▶ **Repo/context housekeeping done this session:** 559 render-harness screenshots (129 MB, 94% of the
-   repo) removed and git-ignored — they are OUTPUT, regenerated by the harnesses beside them, and the
-   38 `.woff2` files stay because they are real INPUTS. `CLAUDE.md` archived 14 finished builds
-   (~32,000 → ~23,000 tokens). **And the rule that matters most is now written down: NEVER READ
-   `index.html` WHOLE** — see the section of that name. **Nothing was deleted, only moved.**
+5. ▶ **Shoe WIDTH is dead data on the shelf.** The CSV carries a `width` column and `_sizeGuidance` uses
+   width for shoes on the AI half; **`curatedPicks` never reads it.** Nothing is wrongly removed, so this
+   is a gap rather than a fault — but a wide-width woman's hand-picked wide shoes are not preferred for
+   her. Her call whether that is worth building.
+
+## 🚨🚨🚨 THE RULE LEDGER — EVERY RULE SHE HAS GIVEN, BOTH HALVES, AND THE TEST THAT GUARDS IT
+▶▶ **THIS SECTION NEVER ARCHIVES. It is the answer to her question of 2026-09-06:** *"The confusion of
+one half of the app following some rules and the other half not — I do not understand how this happened
+because the overall intent and goal of this whole app is very clear."*
+⚠️⚠️ **THE SENTENCE TO KEEP: A RULE APPLIED TO ONE HALF IS NOT APPLIED.**
+▶ **THE TWO HALVES.** The **AI path**: `_shopRules`, `_sizeGuidance`, `_wardrobeIdeaGen`, `sendChat`.
+The **feed/shelf path**: `curatedPicks`, `scripts/slot_match.py`, `data/slot-rules.json`,
+`netlify/functions/product-search.js`.
+▶ **WHEN A NEW PICKER IS ADDED, IT MUST CALL THESE, NEVER COPY THEM.** Adding a second copy IS the bug —
+that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
+
+| Her rule | AI half | Shelf/feed half | Test | State |
+|---|---|---|---|---|
+| Never-wear list | `filterNeverWear` + prompt | `curatedPicks`, **same `_nwHit`** | curated · feedshelf | ✅ one shared implementation |
+| Colour no's | `neverOther` verbatim in prompt | `_wdrNoColors` | curated | ✅ both |
+| **Size range PER CATEGORY** | `_sizeGuidance`, built from `_FIT_FAMILIES` | `_fitApplies()` | **sizefit 38** | ✅ **fixed 2026-09-07** |
+| A sweater is not a top | `_WDR_IDEA_EXCLUDE` | `data/slot-rules.json` | slot_match · feedshelf | ✅ both |
+| The sibling-row map | `_WDR_IDEA_EXCLUDE` in prompt | Gate 1 in `curatedPicks` | feedshelf | ✅ both |
+| **Store variety per surface** | `_shopRules` from `_STORE_CAP` | `_storeCap(mode)` | **storecap 15** | ✅ **fixed 2026-09-07** |
+| Price spread | prompt line (`index.html:5015`) | band logic + feed ceiling | curated | ✅ both |
+| Luxury via her retailers | `sendChat` prompt | n/a — feed links ARE her affiliates | ▶ none | ✅ verified by reading |
+| Store-pool eligibility | `STORES` table only | **all 7 feed stores resolve, all have her dimensions** | ▶ none | ✅ measured 2026-09-07 |
+| Never invent a store's tags | — | Gate 2 uses her own tables | ▶ none | ✅ by design |
+| Never name her body/size back | prompts | n/a — the feed writes no prose | ▶ none | ✅ AI-only rule |
+| Never ask her age | app-wide, no age question | n/a | ▶ none | ✅ |
+| Checklist is a possibility map | copy + framing | n/a | ▶ none | ✅ copy-only rule |
+⚠️ **The rows marked ▶ have no test yet.** Four of them are genuinely AI-only or copy-only rules where a
+shelf-side test would assert nothing; **"store-pool eligibility" is the one worth a real test**, because
+it becomes load-bearing the moment an eighth merchant is wired in.
+⚠️ **`_storeFit` is now called in TWO places** (Gate 2 and the store ranking). It was called in exactly
+one when a comment claimed it was the feed's style safeguard. **Grep for the call site before believing
+a comment — a described safeguard is not a safeguard.**
 
 ## 📁 Where the history went
 The session-by-session build history lives in **`CLAUDE-archive.md`** — **moved in two waves,

@@ -3620,6 +3620,114 @@ written, so `CLAUDE.md` stops growing instead of needing rescuing.
 
 ---
 
+## ▶ PREVIOUS — (2026-09-06 evening — SHE TESTED IT AS HERSELF AND IT FAILED HER. FIXED, NOT YET MERGED)
+
+### 🚨🚨⭐⭐ HER VERDICT, AND SHE WAS RIGHT ON EVERY POINT
+She switched back to her real Style Star profile (not the luxury shopper she had used to force feed
+pieces up), opened **"Tops in your favorite colors"**, and got: **a Fleur du Mal THONG, a garter belt,
+a Balenciaga HANDBAG, a $2,490 Balmain top, a wool sweater, and two cards from the same store.**
+▶ **Her words, and they are the design brief: *"I wanted those items only to show up as a shopping
+suggestion where those particular items made sense for the shopper. Not for those 7 stores to be
+prioritized as the top picks. Only for them to be picked when it made absolute sense."***
+⚠️ **She asked whether she needs to switch to OpenAI or rethink the whole app.** ▶ **THE HONEST ANSWER,
+GIVEN WITH FILE NAMES SO SHE COULD CHECK IT: not one of the faults involved the AI.** The thong and the
+handbag were `scripts/slot_match.py`, a word match. The sweater was `data/slot-rules.json`, a taxonomy
+list. The 7 stores everywhere was one `||` in `index.html`. The prices are which Rakuten programs she is
+approved for. **No model is consulted anywhere in that path, so changing providers would have fixed
+none of it.** Say it plainly and checkably if it comes up again; never as a plea.
+
+### ⭐⭐⭐ THE ONE STRUCTURAL CAUSE, AND IT IS THE LESSON OF THE WHOLE SESSION
+**It was not three bugs. It was ONE fault with three faces: the feed path was built ALONGSIDE the AI
+path and inherits NONE of the guardrails built on the AI path.**
+1. **`_WDR_IDEA_EXCLUDE`** — her own hand-reviewed sibling map (White/Black/colour Tops exclude Print
+   tops, Tank tops, Professional blouses, Dressy tops), which **she confirmed herself in August**. It
+   was referenced in **exactly one place, `_wardrobeIdeaGen`, which builds the AI PROMPT.** The feed
+   never goes near the model, so it never saw the rule.
+2. **The style-family filter** — `pool.filter(x => x.feed || ...)`. Her 107 must match her family; the
+   78,000 feed garments skipped the check outright.
+3. **Category sanity** — the model knows a thong is not a top. The Python matcher did not.
+▶▶ **AND THE COMMENT ABOVE THAT FILTER CLAIMED A SAFEGUARD THAT DID NOT EXIST.** It said the STORE was
+the style signal for feed pieces instead. **Measured: `_storeFit`, which scores a store using CATH'S OWN
+ten dimension tables, was called in exactly ONE place in the whole app and it was not that one.**
+🚨 **A described safeguard is not a safeguard. Grep for the call site before believing a comment.**
+⚠️ **This is the SAME DISEASE as the never-wear plural bug**, whose own note in this file says *"a rule
+this important living in two implementations is exactly how it drifts."* It drifted again, in a new
+direction, five weeks later. ▶ **When a second path is added to a rule, the rule must MOVE to somewhere
+both paths call. Adding a second copy is the bug.**
+
+### ⭐ SHE ASKED WHETHER HER INTENTION IS BEING LOST IN SESSION COMPACTION. IT IS NOT — AND THAT MATTERS
+**Her Tops rule was in the archive, correctly written, and took thirty seconds to find.** The notes did
+their job. ▶ **The intention is lost in the gap between a COMMENT and a LINE OF CODE, not in the notes.**
+Answer her this way if she worries again, and answer it with the grep, not with reassurance.
+
+### ✅ WHAT WAS BUILT (3 commits, branch `claude/resume-style-star-vx3tc4`, NOT merged)
+- **`3486cf4` the matcher.** **The CATEGORY now WINS whenever a garment carries one** — the rung test
+  used to be `cat OR name`, so a bag arriving with `women>bags>top-handle bags` was still asked whether
+  its name contained "top". It did. ⚠️ **"Carries a category" deliberately means "carries one THESE
+  RULES RECOGNISE"**, not "the column is non-empty" — a breadcrumb of just `Women` would otherwise
+  silently empty a shelf. Plus **`_family_not` in `slot-rules.json`**, whole-family exclusions merged at
+  load time. ▶▶ **KEYED BY FAMILY, NEVER GLOBALLY, and this is the part to protect: every excluded word
+  is CORRECT somewhere.** `thong` is a real sandal (`sh1`) AND real underwear (`fo`); `top-handle` is a
+  real bag row (`bg2`). A global block list breaks all three.
+- **Her taxonomy call: A SWEATER IS NOT A TOP.** She keeps `ja5` Sweaters and `ja1` Cardigans, so a knit
+  on Tops duplicates a row she already has. Applied to the **whole** Tops family — a "Lace Knit Sweater"
+  was still reaching Dressy tops via the word "lace".
+- **`c3ba5ad` the two gates in `curatedPicks`.** GATE 1 honours `_WDR_IDEA_EXCLUDE` on the feed (needed
+  `slots` added to the `product-search` select and to the card). GATE 2 requires a feed garment's store
+  to clear **her own median** across all 108 stores, scored with her dimension tables.
+  ⚠️ **RELATIVE, NEVER ABSOLUTE** (a fixed cutoff means a different thing for every woman and would
+  silently empty the feed for some) · ⚠️ **NOT BEFORE THE QUIZ** (`answers` sits at neutral until she
+  moves a slider) · ⚠️ **HER 107 ARE EXEMPT — she already judged those** · ⚠️ **an unresolvable retailer
+  KEEPS its place**, because dropping a garment over our own lookup failure is the silent nothing.
+
+### 📏 THE GATE 2 MEASUREMENT — THIS IS THE NUMBER TO SHOW HER
+Fed stores passing her bar, by profile: **classic/relaxed/neutral/modest → 1 of 7 (Mytheresa only)** ·
+classic + a little dressy → 2 · middle of the road → 7 · trendy/colourful → 6 · **glam/dressy/alluring
+→ 7 of 7**.
+▶▶ **A woman who dresses the way Cath describes HERSELF (Cindy Crawford, jeans, relaxed blouses) now
+sees ONE of the seven fed stores** — the rest of her shelf returns to her 107 and the AI. **And Fleur du
+Mal passes ONLY for the glam/alluring profile**, which is exactly right for a lingerie house.
+⭐ **This also solves the affordability problem from the right end, and it is BETTER than what I proposed
+in the morning.** I suggested giving her 107 a head start in the sort; **she pushed back, correctly, that
+the spreadsheet is frozen and temporary and should not be leaned on harder.** Gate 2 means her picks win
+on MERIT — the luxury stores simply stop qualifying for a woman they do not suit. ▶ **Her framing beat
+mine. The lever `(b.feed?0:1)-(a.feed?0:1)` is still recorded at the code and is still NOT used.**
+⚠️ **Those five profiles are Claude's approximations, not her real saved answers.** Offer to run her
+actual slider positions.
+
+### ✅ GREEN, MEASURED NOT ASSUMED
+**slot_match 1,087/0** (19 new regression tests, **every case a real product name off the live feed**,
+asserting BOTH directions — a thong is not a top AND thong sandals are still sandals, a thong is still
+underwear, a top-handle bag is still a bag, "Sweatshirt" is untouched by the "sweater" exclusion) ·
+**feedshelf 49/0** · **curated 65/0**. Ingest timing unchanged (~20s for a 266,000-row night).
+**No shelf emptied:** White tops 200→177 · Black tops 200→149 · Tops/colours 200→159 · Blue jeans 200→180.
+
+### ▶▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT
+1. ⚠️⚠️ **NOTHING IS MERGED.** Her call. **And the matcher fix changes TAGGING ONLY — the thong does not
+   leave her shelf until the ingest re-runs (nightly 21:37 UTC).** The two gates take effect on merge.
+2. ▶ **Her real slider positions**, so Gate 2 can be measured on her own profile rather than a guess.
+3. ▶ **THE BLANK CARDS in her first screenshot** — AI cards carry no photo, and the carousel appears to
+   stretch every card to the tallest, so a photo-less card becomes a tall empty box next to a feed card.
+   **Diagnosed by eye from her screenshot, NOT yet confirmed in code.** Likely a regression from the
+   2026-09-06 photo change.
+4. ⚠️ **STILL TRUE AND NOT FIXED BY ANY OF THIS: the prices.** Every fed store is `$$$`/`$$$$`. Live
+   medians measured this morning: **dresses $398 · tops $260 · shoes $790 · bags $1,490**; 0 of 200
+   dresses under $100. **No filter makes Mytheresa affordable — only an affordable or mid-market
+   affiliate does.** Watch the AWIN Under Armour application and any department store.
+5. ⚠️ **THE `success: true` BUG IS STILL THERE.** `user-data.js` wraps its Supabase write in `catch(e){}`
+   and answers `{success:true}` regardless, so a woman can be told her results were saved when they were
+   not. The key being fixed stopped it being told today; it did not fix the lie.
+6. ▶ **THE TAXONOMY GAPS THAT ARE HERS TO DECIDE, none invented:** mini skirts · jumpsuits/rompers ·
+   gloves · clogs · wellingtons · bags named only "Bag". **Plus four defaults I set and should confess:**
+   a plain "Sandal" → Flat sandals · a plain "Boot" → Ankle boots · a plain "Hat" → Sun hats · a plain
+   "Skirt" → Flowy skirt. **And two rows that are honestly EMPTY:** `ac11` Matching athletic sets and
+   `sl2` Nightgowns.
+7. ▶ **Repo/context housekeeping done this session:** 559 render-harness screenshots (129 MB, 94% of the
+   repo) removed and git-ignored — they are OUTPUT, regenerated by the harnesses beside them, and the
+   38 `.woff2` files stay because they are real INPUTS. `CLAUDE.md` archived 14 finished builds
+   (~32,000 → ~23,000 tokens). **And the rule that matters most is now written down: NEVER READ
+   `index.html` WHOLE** — see the section of that name. **Nothing was deleted, only moved.**
+
 ## ▶ PREVIOUS — EARLIER THE SAME DAY (2026-09-05 LATER — 🚚 PHASE 1 IS BUILT AND PROVEN: 78,299 REAL PRODUCTS ARE READABLE FROM RAKUTEN, NIGHTLY, AND THE PIPELINE RUNS)
 
 ### ⏸ WHERE THIS SESSION PAUSED (her call: "okay this is a great discussion. I feel like you have considered it from all angles of detail.")
