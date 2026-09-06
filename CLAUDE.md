@@ -309,6 +309,73 @@ actually verify it.**
    results from all ten candidate stores.** That query failed because it is hard to ASK FOR, not because
    shops were missing. **Adding stores will never fix a wording problem.**
 
+### ✅✅✅ STEP 1 IS BUILT: THE FINDER, STANDALONE — `netlify/functions/lib/find-products.js`
+🚨 **`index.html` WAS NOT TOUCHED. No surface calls this. The live site is unchanged.** Step 1 was
+deliberately the finding half alone, so the risky part could be proven before any screen depends on it.
+▶ **THE THREE-STEP PLAN SHE APPROVED: (1) the finder, behind the scenes ← DONE · (2) wire it into chat
+· (3) her phone, then Shop your Style.**
+
+**WHAT IT IS:** takes a request (`item · colour · fabric · cut · size · width`) and returns real products
+with an honest verdict on every requirement. **`buildQueries` · `matchStore` · `isResale` · `judge` ·
+`widenOptions` · the `verify*` family.**
+⚠️⚠️ **IT IS THE FINDING HALF ONLY, AND MUST STAY THAT WAY. It never ranks for style, never applies her
+never-wear list, never decides what she sees.** `curatedPicks()` remains the ONE picker. **Adding her
+rules here would make this the third copy and is the bug this project paid for four times in one day.**
+
+**HER RULE IS STRUCTURAL, NOT INTENTIONAL — three verdicts, never two:**
+`CONFIRMED` · `REJECTED` · `UNKNOWN`, and **UNKNOWN IS NEVER A PASS.** A product is an exact match only
+when every requirement she stated is CONFIRMED.
+
+**THE FOUR TRAPS, ENCODED AND PINNED BY TESTS BUILT ON THE REAL CAPTURED PRODUCTS:**
+1. **A print is not a colour** — "Palace Tiger Pink" must never confirm blush.
+2. **Satin is a weave, silk is a fibre** — `95% polyester` REJECTS silk outright.
+3. **Faux-wrap is not a wrap** — and only Dillard's own title said so; Google's tidy title passed it.
+4. **Wide calf is not wide width, and "W 7" is a women's 7** — an explicit non-wide width now beats any
+   marketing phrase.
+
+🚨🚨 **THREE BUGS WERE FOUND DURING THE BUILD — TWO BY THE TESTS, ONE BY A LIVE RUN — AND ALL THREE ARE
+THE SAME SHAPE AS EVERY BUG THIS PROJECT HAS EVER HAD: a rule that looked applied and was not.**
+- ⚠️ **THE WIDTH CHECK HAD ITS ORDER WRONG.** The real DSW boot says *"Wide Width"* in its title and
+  *"Medium Width, Wide Calf"* in its own variant — **the shop contradicts itself on one product** — and
+  checking the marketing phrase first returned CONFIRMED. **It would have told a woman with wide feet
+  that a medium-width boot fits her.**
+- 🚨🚨 **THE WIDENING DOORS LET UNVERIFIED VALUES THROUGH, AND ONLY A LIVE RUN SHOWED IT.** A dress
+  whose colour was never checked appeared under *"keep the blush, open on the fabric"*. ▶▶ **A DOOR THAT
+  PROMISES BLUSH SHOWING AN UNCONFIRMED COLOUR IS EXACTLY THE CLAIM HER RULE FORBIDS, WEARING A HELPFUL
+  FACE.** Fixed: **everything she KEEPS must be CONFIRMED; only what she RELEASED may be unknown.**
+- ⚠️ **A RELEASED REQUIREMENT WAS BEING SILENTLY DROPPED.** She let go of "silk"; she did not ask to stop
+  being TOLD the thing is chiffon. `differs` now carries the original verdict so the card can say
+  *"tulip pink, and chiffon rather than silk"* instead of presenting a near-miss as a match.
+
+**HER WIDENING DESIGN, IMPLEMENTED AS SHE DESCRIBED IT:** one requirement released at a time · **colours
+SOFTENED to their family, never deleted** (`blush → pink`, because a woman who asked for blush does not
+want navy) · **a two-step door ONLY when no single one leads anywhere** — which the real data forced,
+because a TULIP PINK CHIFFON wrap is two steps from "blush silk wrap", and a stylist would still mention
+it while saying so.
+
+**TWO MEASURED CORRECTIONS BAKED IN:** queries are **POOLED, never replaced** (broadening changes the
+pool rather than enlarging it — the broad query lost the DVF the narrow one found) · **size and width are
+kept OUT of the search words** (putting them in scored **8/40 against 30/40** by pushing Google to resale).
+
+⭐ **THE STORE ALLOWLIST IS GENERATED, NEVER HAND-COPIED.** `scripts/build-store-domains.js` derives
+`data/store-domains.json` from the STORES table in `index.html`, `--check` fails if it is stale, and a
+test asserts they cannot drift. **`scripts/lib/stores.js` is now the ONE reader; `store-draft.js` imports
+it instead of carrying its own copy.** ▶ **This is the SEARCH_DOMAINS bug being made impossible rather
+than being remembered.**
+
+▶ **HOW TO RUN IT:** `node scratchpad/findprod.js` (offline, 51 checks) · and live, spending real
+searches: `SERPAPI_KEY=... node scratchpad/findlive.js --item dress --colour blush --fabric silk --cut
+wrap`. **`--dry` prints the plan and spends nothing.**
+✅ **LIVE PROOF, 2026-09-06:** 4 queries pooled **149 distinct products, 62 from her shops (41%** against
+5/40 for the single narrow query), 10 verified on their real offers, **0 exact matches — the honest
+answer** — and one clean door: *keep fabric + cut, soften colour → pink*, offering three real silk wrap
+dresses (DVF Abigail $259.97 · Saloni $995 · Equipment $425), **each labelled colour-unconfirmed.**
+
+⚠️ **KNOWN AND DELIBERATELY LEFT FOR STEP 2 (the copy):** a door named *"soften colour → pink"* can hold
+products whose colour is UNKNOWN rather than confirmed pink. **The per-product label already says so**,
+but **the door's own wording must not imply more than it delivers** — that is a copy decision on the
+chat screen, and it is hers.
+
 ### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT — every one of these is still open
 1. ✅✅ **HER TWELVE SLIDER POSITIONS — RECORDED 2026-09-08, THE ASK IS CLOSED.** She sent her Style
    Signature screenshot. **Read off the pixels, not estimated:** the track spans x=368..1040 on the
