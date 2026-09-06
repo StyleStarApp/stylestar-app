@@ -8262,6 +8262,72 @@ function curatedPicks(slot,p,family,count){
   const setMed=setSorted.length?setSorted[Math.floor(setSorted.length/2)]:0;
   let over=picks.filter(function(x){return bandIdx(x)>=setMed+2});
   while(over.length>1){picks.splice(picks.indexOf(over[over.length-1]),1);over=picks.filter(function(x){return bandIdx(x)>=setMed+2});}
+  // ── TWO GUARANTEES (2026-09-06, Cath's call after her first live shelf) ──
+  // Her report: "We need to adjust it so that those stores don't dominate."
+  // ▶▶ WHY THE EXISTING PRICE RULE COULD NEVER HAVE DONE THIS. Everything
+  //    above measures against the POOL'S OWN MEDIAN, and the seven fed stores
+  //    are all $$$/$$$$, so on a well-stocked row the median IS the top band
+  //    and nothing can sit two bands above it. The rail was built for her 107
+  //    (which span $ to $$$$) and a uniformly dear pool walks straight past
+  //    it. Measured 2026-09-06 across five live rows: median $298 (blouses),
+  //    $260 (casual tops), $398 (dresses), $790 (shoes), $1,490 (bags).
+  // ▶ Both are SWAPS on the finished set — never filters, never new sort
+  //   terms. The ranking above still decides everything else, the set never
+  //   shrinks, and nothing is removed from her world. They run AFTER the
+  //   stretch trim deliberately: a swap keeps the count, whereas re-running
+  //   the trim over a newly cheaper set would only delete more picks.
+  const priceOf=function(x){return typeof x.price==='number'?x.price:Infinity};
+  const prices=pool.map(priceOf).filter(function(n){return isFinite(n)}).sort(function(a,b){return a-b});
+  // ⚠️ THE CHEAPEST TENTH, NOT THE CHEAPEST QUARTER, and the difference is the
+  //    whole value of the fallback. A quartile on the live shoes row is $604
+  //    against a $790 median — so a $604 shoe already satisfied the guarantee
+  //    and a $248 one on the same row was never reached. Measured p10s are
+  //    what a woman would actually notice: shoes $248 (median $790), bags $350
+  //    (median $1,490), dresses $248 (median $398).
+  const cheapEndPct=prices.length?prices[Math.floor(prices.length*0.10)]:Infinity;
+  // "Reachable" is genuinely affordable ($ or $$) where the row HAS such a
+  // piece, and otherwise simply the cheapest quarter of whatever exists.
+  // ▶ BOTH HALVES ARE LOAD-BEARING, and the measurement is why: casual tops
+  //   carry 45 pieces under $150, so the first half really fires there; shoes
+  //   carry 2 and bags 3, so without the second half those rows would not
+  //   move at all. The quartile is what turns a $975 shoe into a $248 one —
+  //   not cheap, and honestly the best that row can do until an affordable
+  //   store is wired in. ⚠️ No sort invents inventory; see the standing note
+  //   that a MID-MARKET affiliate approval is worth more here than a luxury one.
+  const isValue=function(x){return bandIdx(x)<=1||priceOf(x)<=cheapEndPct};
+  // ⚠️ NOT a head start, and that is a measured decision rather than a
+  //    softening. Her 107 cover only 10 of the ~100 checklist rows, but run
+  //    7-17 deep on those (shoes 17, blouses 16, dresses 15). A sort term at
+  //    the front — the lever this file used to point at — would therefore
+  //    hand her ALL FOUR cards on those 10 rows every week forever, erasing
+  //    the feed from exactly the rows it stocks best, and change nothing on
+  //    the other 90. A guarantee gives her curation reliable presence and
+  //    keeps the shelf rotating. 59 of her 107 are $ or $$, so on those rows
+  //    this largely serves the affordability guarantee too.
+  const isHers=function(x){return !x.feed};
+  const swapIn=function(test,protect){
+    if(!picks.length||picks.some(test))return;
+    var repl=null;
+    for(var i=0;i<pool.length;i++){                 // pool is already rank-ordered
+      if(picks.indexOf(pool[i])<0&&test(pool[i])){repl=pool[i];break;}
+    }
+    if(!repl)return;                                 // the row simply has none
+    // Drop the DEAREST pick — the one the guarantee exists to balance — but
+    // never the last pick holding the OTHER guarantee up.
+    var out=null;
+    picks.slice().sort(function(a,b){return priceOf(b)-priceOf(a)}).some(function(x){
+      if(test(x))return false;
+      if(protect&&protect.some(function(g){return g(x)&&!g(repl)&&picks.filter(g).length===1}))return false;
+      out=x;return true;
+    });
+    if(!out)return;
+    if(repl.retailer!==out.retailer&&(perStore[repl.retailer]||0)>=2)return;  // variety still binds
+    perStore[out.retailer]=(perStore[out.retailer]||1)-1;
+    perStore[repl.retailer]=(perStore[repl.retailer]||0)+1;
+    picks[picks.indexOf(out)]=repl;
+  };
+  swapIn(isHers,[isValue]);   // hers first: 59 of the 107 are $ or $$, so this
+  swapIn(isValue,[isHers]);   // often satisfies both and costs only one swap
   if(!reason&&picks.length<count&&picks.length<pool.length)reason='preferences';
   return {picks:picks,reason:picks.length<4?(reason||'preferences'):'',slotTotal:slotTotal};
 }
