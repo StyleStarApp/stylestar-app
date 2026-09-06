@@ -117,11 +117,25 @@ imply that a specific size, width, colour, material or other requirement is conf
 actually verify it.**
 
 ### ▶ WHAT IS STILL OPEN ON THIS, AND WHAT THE NEXT SESSION SHOULD ASK HER FIRST
-1. ⭐ **HER VERDICT ON QUALITY IS THE GATE, AND IT IS NOT IN YET.** The countable half passed; the
-   stylist half is hers. **The five "blush silk wrap dress" results from her stores, for her to rule on:**
-   Nordstrom Rack $123.72 DVF Jeanne Silk Jersey Wrap · Nordstrom $598 Kobi Halperin *faux*-wrap ·
-   Quince $80 stretch **satin** (not silk) · Etsy $318 · Etsy $334. **Would she put her name on that
-   set?** ▶ **ASK THIS BEFORE BUILDING ANYTHING.** It is homework item 6, and only she can grade it.
+1. ✅✅ **HER VERDICT IS IN, 2026-09-06: "MIXED — THE DVF IS RIGHT, BUT THE REST AREN'T CLOSE ENOUGH TO
+   WHAT I WOULD WANT STYLE STAR TO RECOMMEND AS MATCHES."** Her call on the service itself: ***"promising,
+   but we need to work on the search and filtering so Style Star is much more precise about what the woman
+   actually asked for."*** ▶ **SO THE SERVICE IS NOT THE PROBLEM AND IS NOT ON TRIAL ANY MORE. PRECISION IS
+   THE WORK.**
+   🚨🚨 **AND THE FIRST ATTEMPT AT PRECISION WAS MEASURED AND IT FAILED IN THE MOST INSTRUCTIVE WAY
+   POSSIBLE. Strict title filtering — must say silk, must be a real wrap, must say blush — passes ZERO of
+   the 5 results from her stores, INCLUDING THE DVF SHE APPROVED.** The DVF is *"Jeanne Silk Jersey Wrap
+   Dress"*: **the colour is not in the title at all**, it is a variant one level down. Meanwhile the two
+   Etsy dresses DO pass wrap+blush and fail only on silk. ▶▶ **SO A STRICTER TEXT MATCH KEEPS THE WORSE
+   RESULTS AND DELETES THE BEST ONE. Precision must come from BETTER DATA (the per-product second call,
+   which carries real colour, material and variants) AND FROM JUDGEMENT — never from tighter string
+   matching on a title.**
+   ⚠️ **THE TWO FAULTS SHE SPOTTED ARE BOTH STYLIST KNOWLEDGE, NOT STRING BUGS: "FAUX-WRAP IS NOT A WRAP"
+   and "SATIN IS NOT SILK" (satin is a WEAVE, silk is a FIBRE — a stylist distinction a text filter cannot
+   make).** Any precision work has to encode those, and there will be more of them.
+   ▶ **THE FIVE SHE RULED ON, kept because they are the benchmark any precision work must beat:**
+   Nordstrom Rack $123.72 DVF Jeanne Silk Jersey Wrap (**the one she approved**) · Nordstrom $598 Kobi
+   Halperin *faux*-wrap · Quince $80 stretch **satin**, not silk · Etsy $318 · Etsy $334.
 2. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
    second-hand · verify per-offer · **route through `curatedPicks()`, never a second copy of her rules.**
 3. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
