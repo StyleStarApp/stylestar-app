@@ -7,7 +7,18 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-07 — FOUR REAL FAULTS FIXED, ALL ONE CAUSE, AND THE LIE ABOUT SAVING IS GONE)
+## ▶ NEXT SESSION — START HERE (2026-09-07 — FIVE REAL FAULTS FIXED, ALL ONE CAUSE, ✅ MERGED AND LIVE)
+
+### ✅✅ MERGED AND LIVE — `main` IS `24536ce`, MERGED 2026-09-07 ON HER INSTRUCTION ("Merge live")
+Seven commits, fast-forwarded onto `main`, Netlify auto-deploys from there. **Nothing from this session
+is waiting.** ▶ **And the feed was ALREADY re-tagged that afternoon**, so no fix here was waiting on a
+nightly ingest either.
+⚠️ **A CLONE QUIRK TO EXPECT AGAIN, it cost a confusing minute: the session's LOCAL `main` was a stale
+2026-09-04 checkout with unrelated history**, so `git checkout main && git merge` failed with *"refusing
+to merge unrelated histories."* ▶ **Nothing was wrong with the repo.** The fix is to never touch local
+`main`: verify `git merge-base --is-ancestor origin/main <branch>` and then
+`git push origin <branch>:main`. **Check `origin/main`, never local `main`.**
+
 
 ### ✅ FIRST, THE THING THAT WAS STALE AND IS NOW TRUE: EVERYTHING FROM 2026-09-06 IS MERGED AND LIVE
 The previous entry said "NOT merged". It landed. `git log origin/main..HEAD` is empty, `main` is at
@@ -111,7 +122,14 @@ both halves with a named test.** Still to do: the four rows marked ▶ in that t
    `sl2` Nightgowns.
 5. ✅ **SHOE WIDTH IS BUILT** (see fault 3 above). ⚠️ **But the FEED still carries no width data at all**,
    so fed shoes cannot be ranked for width. That is a question for a future merchant's feed, not code.
-6. ▶ **THE STORE-TAGGING HELPER, offered and not yet answered.** Her words, 2026-09-07: *"I want to be
+6. ✅ **THE STORE-TAGGING HELPER IS BUILT: `scripts/store-draft.js`** (16 checks, `scratchpad/storedraft.js`).
+   Run `node scripts/store-draft.js --list` to see every store she has tagged, then
+   `node scripts/store-draft.js "New Store" --like "A,B,C"`. ⚠️ **It DRAFTS, it never writes** — every
+   number is the median of stores SHE scored, each neighbour printed beside its own numbers so she can
+   reject the comparison. **The first real run drafted Under Armour as `$$$`, which is probably wrong for
+   a mid-market brand because all three anchors were premium — she catches that only because the working
+   is on screen.** The search URL and "best for" are deliberately left blank; no median supplies those.
+   ▶ **Originally offered here as a proposal:** Her words, 2026-09-07: *"I want to be
    able to get approved for more affiliates and be able to add them without having to go through all."*
    ▶ **MEASURED: adding a Rakuten merchant is FOUR edits and three are mechanical** — the MID→name map
    and `BUILD_MIDS` in `scripts/rakuten_feed.py`, and the search-domain list. **Only the `STORES` entry
