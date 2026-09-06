@@ -164,24 +164,45 @@ actually verify it.**
    asked for at all.** The "blush silk wrap dress" problem is a CHAT problem.
    ⚠️ **SO THE WARDROBE IDEAS CAROUSELS ARE NOT FIRST AND THAT IS DELIBERATE.** The feed still powers
    them and nothing there changes.
-3. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
+3. ✅✅ **WHEN CHAT SEARCHES — HER CALL, 2026-09-06: THE STYLIST JUDGES IT, NOT A BUTTON AND NOT A
+   KEYWORD.** Her words: ***"I want the conversation to feel natural, like she is talking to a personal
+   stylist, not operating a shopping search tool."*** ▶ **The case she named and it is the test to build
+   against: *"I have a wedding in Napa in October and nothing to wear"* MUST trigger a search — it is
+   obviously a shopping request and it contains none of the words a keyword trigger would look for.**
+   ⚠️⚠️ **AND THE LIMIT SHE DREW IN THE SAME BREATH, WHICH IS THE HARDER HALF: *"I don't want it
+   searching just because a product or shopping topic comes up in conversation. It should search when
+   finding real products is actually NEEDED TO ANSWER what she is asking."*** ▶ **So the trigger is
+   NEED, not TOPIC.** "What do you think of navy on me?" is a shopping topic and needs no products;
+   the Napa wedding names no product and needs them badly. **A topic classifier gets both wrong.**
+   ⚠️ **A BUTTON WAS OFFERED AND REJECTED, and her mum's 2026-07-26 test agrees: content beats chrome.**
+4. ✅ **COST — HER STANCE, 2026-09-06, RECORDED SO IT IS NOT RE-LITIGATED EVERY SESSION.** Told plainly
+   that judging intent searches ~3-5× more than a button, her answer: ***"The cost difference does not
+   change my answer right now. I would rather make the experience excellent first and then understand
+   and control the cost once we see how women actually use it."*** ▶ **This is her VALUE FIRST principle
+   applied to infrastructure, and it is consistent, so do not re-open it as a concern.**
+   ⚠️ **BUT IT IS STILL THE APP'S FIRST PER-USER COST** — Netlify, Supabase and the nightly feed are
+   FIXED whether 10 women or 10,000 use it; this one scales with usage. **~15¢ per shopping question.**
+   ▶ **A SPEND CAP IS NOT A COMPROMISE ON THE EXPERIENCE and should be set anyway** — caching first
+   (repeat questions cost nothing), then a hard monthly ceiling, so a surprise is impossible rather
+   than unlikely. **Her call stands; the cap is the seatbelt, not a second-guess.**
+5. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
    second-hand · verify per-offer · **route through `curatedPicks()`, never a second copy of her rules.**
-4. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
+6. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
    cheaply testable, 239 searches remain.
-5. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
+7. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
    is not applied.** It needs a ledger row and a test BEFORE it ships, not after.
-6. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
+8. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
    product file with **exact variant size + stock**, no API and no cost — real width/size truth for the
    DTC half of her list. **Nobody has counted yet.**
-7. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
+9. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
    SerpApi's motion to dismiss**, striking the DMCA claim for results with no copyrighted content, with
    no leave to refile. Google amended in August, narrowed to *licensed* content (Reddit snippets in
    Knowledge Panels). ▶ **Product listings are facts — the strongest side of a ruling that already went
    against Google.** Still live litigation. **Mitigation: keep the integration behind ONE small swappable
    piece so changing vendor is an afternoon.** ⚠️ SerpApi's legal shield does NOT cover the $25/$75 tiers.
-8. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
+10. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
    search QUALITY matters more than volume while she has no users.
-9. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
+11. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
    results: **178 (44%) already came from her 108.** ⭐ **KOHL'S ALONE IS +28 AND APPEARED IN 8 OF THE 10
    SEARCHES** — one store worth as much as the next nine candidates combined. Zara is +4 and was flagged
    as an anomaly (**H&M was on her list and Zara was not**; she confirmed it should be). ▶ **Both still
