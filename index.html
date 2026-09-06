@@ -8585,8 +8585,47 @@ function _wdrTrimNote(t){
 //    the feed reached her shelves: a feed garment showed a pair of bare quote
 //    marks with nothing between them, because '' still got wrapped in quotes.
 //    The photo has the mirror-image risk, so it is written the same way.
+/* ═══ A FEED NAME IS MERCHANT DATA, NOT A WRITTEN NAME ══════════════════════
+   🚨 Cath's Tops shelf, 2026-09-06: "Vilebrequin - Men Wool Shirt Micro Rayures
+   Tailoring - Shirt - Cool - Blue - Size M". _curatedCard rendered _esc(x.name)
+   straight from the feed while _shopCard, the AI card sitting right beside it,
+   has always run _sizeWordsOut(_nameParity(item)) first.
+   ▶▶ SAME DISEASE AS THE REST OF THE SWEEP: the two card renderers are the two
+   halves, and only one of them tidied a name. This is the other half.
+   ⚠️ CONSERVATIVE ON PURPOSE — it removes only what is provably redundant on the
+   card itself, and never rewrites her words:
+     1. the BRAND, which _curatedCard already prints on its own line just above;
+     2. a leading gender word, redundant in an app only women use;
+     3. a trailing size clause -- the feed carries ONE ROW PER SIZE, so the size
+        is an artefact of the row, and her standing rule is to never make a big
+        deal of a woman's size (_sizeWordsOut exists for exactly this on the AI
+        half; her width call, 2026-08-15).
+   ⚠️ IT MUST NEVER SHORTEN A NAME TO NOTHING: a merchant whose entire name is
+   its brand ("Gucci") keeps it. Falls back to the original below 3 characters.
+   ⚠️ AND IT MUST NOT TOUCH HER 107. Verified: "The Perfect Vintage Jean" and
+   "L'AGENCE Dani Silk Charmeuse Blouse" come through as themselves (the second
+   loses only the brand, which is printed directly above it). */
+function _feedName(name,brand){
+  var raw=String(name||'').trim();
+  if(!raw)return '';
+  var out=raw;
+  var esc=function(t){return String(t||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&')};
+  var b=String(brand||'').trim();
+  if(b)out=out.replace(new RegExp('^\\s*'+esc(b)+'\\s*(?:[-\u2013\u2014:|,]\\s*)?','i'),'');
+  out=out.replace(/^\s*(?:wo?m[ae]n(?:'?s)?|ladies|female)\b\s*(?:[-\u2013\u2014:|,]\s*)?/i,'');
+  out=out.replace(/\s*[-\u2013\u2014,|]?\s*\bsizes?\b[\s:]*[a-z0-9]{1,6}\s*$/i,'');
+  out=out.replace(/\s{2,}/g,' ').replace(/^[\s\-\u2013\u2014:,|]+/,'').replace(/[\s\-\u2013\u2014:,|]+$/,'').trim();
+  return out.length>=3?out:raw;
+}
 function _curatedCard(x){
-  const saveItem={name:x.name,store:x.retailer,search:(x.brand+' '+x.name),exact:true,url:x.url,price:'$'+x.price};
+  // Tidied for every place she READS it (the card, and her saved list). The
+  // SEARCH deliberately keeps the merchant's full original name, so a fallback
+  // search still carries every word the merchant used to describe the piece.
+  const shownName=_feedName(x.name,x.brand);
+  // `name` is what she reads; `idName` is the UNCHANGED merchant name the
+  // wishlist id is built from, so tidying the display can never orphan a piece
+  // she already hearted or break stale()'s saved-item lookup in curatedPicks.
+  const saveItem={name:shownName,idName:x.name,store:x.retailer,search:(x.brand+' '+x.name),exact:true,url:x.url,price:'$'+x.price};
   const note=_wdrTrimNote(x.note);
   // https only, on purpose: the image url is catalog data, and an href-shaped
   // field that reaches the DOM is never trusted for its scheme.
@@ -8599,7 +8638,7 @@ function _curatedCard(x){
   return '<div class="shop-card wdr-curated'+(pic?' wdr-haspic':'')+'"><div>'
     +picHtml
     +'<div class="shop-item-brand">'+_esc(x.brand)+'</div>'
-    +'<div class="shop-item-name">'+_esc(x.name)+'</div>'
+    +'<div class="shop-item-name">'+_esc(shownName)+'</div>'
     +'<div class="shop-item-store">at '+_esc(x.retailer)+' · $'+_esc(String(x.price))+'</div>'
     +(note?'<div class="wdr-cur-note">&ldquo;'+_esc(note)+'&rdquo;</div>':'')+'</div>'
     +'<div class="shop-card-act">'
@@ -8991,7 +9030,18 @@ function _wlRegister(item){
   // their store reads "Badu · Amazon" (a brand AND a retailer), which is not a
   // key, and their link is a real product URL rather than a search we build.
   if(item.pick)store=String(item.store||'');
-  var id=_wlMakeId(item.name,store);
+  // ⚠️⚠️ THE ID COMES FROM `idName` WHEN ONE IS GIVEN, AND THAT IS NOT A DETAIL.
+  // A wishlist id is a slug of the NAME, so ANY change to how a name is written
+  // silently re-keys the item -- every piece a woman has already hearted becomes
+  // unreachable, her heart shows unsaved, and she can save a second copy.
+  // 🚨 Caught 2026-09-08 by curated.js ("a saved item is exempt from staleness")
+  //    the moment _feedName() started tidying merchant names for display: the
+  //    card saved under the TIDY name while curatedPicks' stale() still looked
+  //    it up under the RAW one. The test saw one face of it; the orphaning of
+  //    every existing save was the bigger half.
+  // ▶ SO: the id is derived from the STABLE merchant name, and `name` is free to
+  //   be the pretty one she reads. Never collapse these two back together.
+  var id=_wlMakeId(item.idName||item.name,store);
   if(!id||id==='~')return '';
   var e={name:String(item.name),store:store,search:String(item.search||'')};
   if(item.pick){e.pick=true;e.url=_wlSafeUrl(item.url);e.price=String(item.price||'');}

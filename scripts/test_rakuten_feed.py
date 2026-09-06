@@ -19,9 +19,17 @@ def ok(name, cond, detail=""):
         print(f"  pass  {name}")
 
 def row(**over):
-    """A realistic 38-column row; defaults mirror the real Vilebrequin sock row."""
+    """A realistic 38-column row; defaults mirror the real Vilebrequin sock row.
+
+    ⚠️ THE NAME DELIBERATELY CARRIES NO GENDER WORD (it read "Men Sneaker Socks" until
+    2026-09-06). Every test below it varies the gender COLUMN and asserts on the result,
+    so a fixture whose NAME says Men makes those tests assert the name guard in PART 7
+    instead of the column rule they are written for -- and PART 2, the DVF trap, is the
+    single most load-bearing test in this file. A neutral name keeps the two rules
+    independently testable. Menswear names live in PART 7, spelled out.
+    """
     f = [""] * N_COLS
-    f[0]="433224067112303258"; f[1]="Vilebrequin - Men Sneaker Socks"; f[2]="4067112303258"
+    f[0]="433224067112303258"; f[1]="Vilebrequin - Sneaker Socks"; f[2]="4067112303258"
     f[3]="Apparel & Accessories"; f[4]="Clothing~~Underwear & Socks~~Underwear"
     f[5]="https://click.linksynergy.com/link?id=jZNkkinrr1k&offerid=578449.43322"
     f[6]="https://www.vilebrequin.com/dw/image/x.jpg"
@@ -103,6 +111,51 @@ ok("the ~~ taxonomy is made readable",
    d["category_secondary"] == "Clothing > Underwear & Socks > Underwear", d["category_secondary"])
 d2, _ = parse_line(row(c33="Female", c10="", c13=""), "43322")
 ok("a priceless row still parses, price just absent", d2 is not None and d2["price"] is None)
+
+print()
+print("PART 7 — THE NAME LEAK. Cath found this on her own Tops shelf 2026-09-06.")
+# "Vilebrequin - Men Wool Shirt ... - Size M" reached a shelf for women because its
+# gender COLUMN was blank/Unisex while its NAME said Men. The column rule was right
+# and stays; nothing had ever read the name.
+# ⚠️ The four "must be KEPT" cases below are the whole reason for word boundaries:
+#    "Women's" contains "men" and "Female" contains "male". An unanchored match here
+#    empties the womenswear catalog exactly as a Female-only gender rule would have
+#    emptied DVF. Do not loosen these without re-reading PART 2.
+_MENS_LEAK = [
+    ("Vilebrequin - Men Wool Shirt Micro Rayures Tailoring - Shirt - Cool - Blue - Size M",
+     "her actual card, gender column blank"),
+    ("Men's Linen Shirt", "apostrophe form"),
+    ("Mens Swim Trunk", "no apostrophe"),
+    ("Vilebrequin Homme Maillot", "French, this merchant names in it"),
+]
+for _n, _note in _MENS_LEAK:
+    _k, _w = keep_row("", "Adult", "in-stock", _n)
+    ok(f"menswear name dropped ({_note})", _k is False and _w == "menswear-name", f"got {_k}/{_w}")
+    _k2, _w2 = keep_row("Unisex", "Adult", "in-stock", _n)
+    ok(f"...and when the column says Unisex ({_note})", _k2 is False, f"got {_k2}/{_w2}")
+
+_KEEP = [
+    ("Theory Women's Slub Cotton Tiny Crewneck T-Shirt in Red", "'Women's' CONTAINS 'men'"),
+    ("Womens Ribbed Tank", "'Womens' contains 'mens'"),
+    ("Women Silk Blouse", "bare 'Women'"),
+    ("Female Fit Legging", "'Female' CONTAINS 'male'"),
+    ("Diane von Furstenberg Wrap Dress", "the DVF blank-gender store"),
+    ("Menswear-Inspired Wool Blazer", "a WOMENSWEAR descriptor"),
+    ("The Boyfriend Jean", "a WOMENSWEAR descriptor"),
+    ("Cotton Boy Shorts", "women's underwear"),
+    ("Women's Tuxedo - Menswear Cut", "her side of the name wins"),
+    ("Plain Silk Camisole", "says nothing either way"),
+]
+for _n, _note in _KEEP:
+    _k, _w = keep_row("", "Adult", "in-stock", _n)
+    ok(f"KEPT: {_note}", _k is True, f"dropped as {_w}: {_n}")
+
+# The column still decides on its own, and the name never rescues a labelled row.
+_k, _w = keep_row("Male", "Adult", "in-stock", "Women's Silk Blouse")
+ok("a row LABELLED Male is dropped whatever its name says", _k is False and _w == "menswear")
+# And a row with no name at all is unchanged by any of this.
+_k, _w = keep_row("", "Adult", "in-stock", "")
+ok("an empty name changes nothing", _k is True)
 
 print()
 print("PART 6 — the build set")

@@ -14,6 +14,8 @@ THE FORMAT: pipe-delimited, gzip, no quoting, 38 positional columns, NO COLUMN-N
    that assumes 38 fields breaks on the first and last line of every single feed.
 """
 
+import re
+
 # --- confirmed column positions (see the field map in docs/product-feeds-plan.md) ---
 C_ID, C_NAME, C_GTIN = 0, 1, 2
 C_CAT1, C_CAT2 = 3, 4
@@ -67,7 +69,14 @@ def _money(v):
     return f if f > 0 else None
 
 
-def keep_row(gender, age_group, availability):
+# Menswear markers in a product NAME, word-boundary anchored. `(?:'?s)?` catches
+# "Men", "Men's" and "Mens" in one; "Homme" is Vilebrequin's French naming.
+_MENS_NAME = re.compile(r"\b(?:men|homme|male|gentlemen)(?:'?s)?\b", re.I)
+# Her side of the same coin: a name that says women outranks one that says men.
+_WOMENS_NAME = re.compile(r"\b(?:women|femme|female|ladies|lady)(?:'?s)?\b", re.I)
+
+
+def keep_row(gender, age_group, availability, name=""):
     """
     Should this product reach a woman using Style Star?
 
@@ -83,6 +92,25 @@ def keep_row(gender, age_group, availability):
     Same shape for age: Vilebrequin's feed carries `Kids` rows (a girls' swimsuit was in
     the first three sampled). Style Star is for adult women, so Kids is dropped and blank
     is kept.
+
+    🚨 THE LEAK THAT RULE LEFT, and Cath found it on her own Tops shelf 2026-09-06:
+    "Vilebrequin - Men Wool Shirt ... - Size M", a MENSWEAR shirt, on a shelf for women.
+    ▶ The gender rule above is right and stays. But it only drops what the merchant
+      LABELLED, and this row's gender column was blank or Unisex while its own NAME said
+      Men. 341 of Vilebrequin's 529 rows were dropped correctly; this was in the 188 that
+      were not, and nothing ever read the name.
+    ⚠️ THE SAME INVERSION APPLIES HERE, for the same reason: a name that says MEN is
+      dropped; a name that says nothing is kept. Never "keep only names that say women" --
+      most womenswear names do not say "women" at all, and that whitelist would empty the
+      catalog exactly the way the Female-only gender rule would have emptied DVF.
+    ⚠️ WORD BOUNDARIES ARE LOAD-BEARING, not tidiness: "Women's" contains "men" and
+      "Female" contains "male" as plain substrings. An unanchored match deletes the entire
+      womenswear catalog. The tests pin both by name.
+    ⚠️ AND A NAME SAYING WOMEN WINS. "Women's Tuxedo - Menswear Cut" is womenswear that
+      mentions men; her side of the name is the answer.
+    ▶ DELIBERATELY NOT MATCHED: "menswear" and "boyfriend" as words -- both are ordinary
+      WOMENSWEAR style descriptors ("menswear-inspired blazer", "boyfriend jean"), and
+      "boy shorts" is women's underwear. Dropping those would cost her real pieces.
     """
     g = _clean(gender).lower()
     if g in ("male", "men", "mens", "man"):
@@ -90,6 +118,10 @@ def keep_row(gender, age_group, availability):
     a = _clean(age_group).lower()
     if a in ("kids", "kid", "child", "children", "toddler", "infant", "baby", "newborn"):
         return False, "kids"
+    # The name guard. Only consulted when the gender column did not already answer.
+    n = _clean(name)
+    if n and _MENS_NAME.search(n) and not _WOMENS_NAME.search(n):
+        return False, "menswear-name"
     av = _clean(availability).lower()
     if av and av not in ("in-stock", "in stock", "instock", "available"):
         return False, "out-of-stock"
@@ -110,7 +142,7 @@ def parse_line(line, mid):
             return None, "trailer"
         return None, "malformed"
 
-    keep, why = keep_row(f[C_GENDER], f[C_AGE], f[C_AVAILABILITY])
+    keep, why = keep_row(f[C_GENDER], f[C_AGE], f[C_AVAILABILITY], f[C_NAME])
     if not keep:
         return None, why
 

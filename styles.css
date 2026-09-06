@@ -634,6 +634,25 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 #s-wardrobe .shop-grid.hscroll,#s-trending .shop-grid.hscroll{display:flex;align-items:flex-start;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar,#s-trending .shop-grid.hscroll::-webkit-scrollbar{display:none}
 #s-wardrobe .shop-grid.hscroll .shop-card,#s-trending .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
+/* 🚨 "BLOOMINGDA / LES" (Cath, 2026-09-06). A carousel card is 128px wide with
+   1rem of padding, so the store line has 96px to live in -- and BLOOMINGDALES at
+   12px uppercase with .06em of letter-spacing measures ~107px, so it could only
+   ever break mid-word. The lever is the TEXT, not the break rule: at 11px with
+   almost no tracking a 14-character store name fits inside 96px with room over.
+   ⚠️ SCOPED TO THE CAROUSEL. The same class on the roomier grid surfaces keeps
+   its original size -- nothing there was ever too narrow. */
+#s-wardrobe .shop-grid.hscroll .shop-item-store,#s-trending .shop-grid.hscroll .shop-item-store{font-size:11px;letter-spacing:.01em}
+/* ▶ THE EMPTY BEIGE BELOW THE SHORT CARDS (her screenshots 1 and 2, same day).
+   A horizontal flex row is as tall as its TALLEST card, so a photo-carrying feed
+   card whose name ran to nine lines left ~650px of empty container under the
+   photo-less AI cards once she swiped past it. align-items:flex-start already
+   stops the cards STRETCHING (2026-09-06); this bounds what makes one card tall
+   in the first place. Most of that height was the untidied merchant name, now
+   cut by _feedName() -- this is the belt to its braces, and it applies ONLY to
+   catalog cards, whose "Shop it" opens the exact product page so the full name
+   is never the promise. ⚠️ DELIBERATELY NOT APPLIED TO AI CARDS: there the name
+   IS the search and the promise, so it must never be clipped. */
+#s-wardrobe .shop-grid.hscroll .wdr-curated .shop-item-name,#s-trending .shop-grid.hscroll .wdr-curated .shop-item-name{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden}
 /* Swipe hint + "thinking" loader + one-time nudge */
 #s-wardrobe .wdr-swipe-hint,#s-trending .wdr-swipe-hint{text-align:right;font:600 11px/1 'Jost',sans-serif;color:#9a9a9a;letter-spacing:.03em;margin:0 4px 6px}
 /* The Refine nudge under "Tops in your favorite colors" Ideas, 2026-08-12,
@@ -1139,7 +1158,12 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 /* ...and with a real limit, a long retailer name must be allowed to break or it
    would simply overflow the card it no longer fits. This is the SAFETY NET, not
    the plan: the plan is that the real names fit, below. */
-.shop-card{overflow-wrap:anywhere}
+/* ⚠️ `break-word`, NOT `anywhere` (changed 2026-09-06, her "BLOOMINGDA / LES"
+   screenshot). `anywhere` lets the browser split a word at ANY character even
+   when a smaller change would have fitted it; `break-word` breaks only a word
+   that genuinely cannot fit on a line of its own. Long product names still wrap
+   fine -- they have spaces. See .shop-item-store below for the other half. */
+.shop-card{overflow-wrap:break-word}
 /* ⚠️ MEASURED, 2026-08-22, after the even columns made every card 139px: the
    card's inner width was 105px while BLOOMINGDALES needs 116 and ANTHROPOLOGIE
    115, so the safety net above was firing on ORDINARY stores and rendering
