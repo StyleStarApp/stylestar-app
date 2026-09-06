@@ -7,7 +7,7 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-07 — THE RULE SWEEP STARTED, AND FOUND TWO MORE HALF-APPLIED RULES)
+## ▶ NEXT SESSION — START HERE (2026-09-07 — FOUR REAL FAULTS FIXED, ALL ONE CAUSE, AND THE LIE ABOUT SAVING IS GONE)
 
 ### ✅ FIRST, THE THING THAT WAS STALE AND IS NOW TRUE: EVERYTHING FROM 2026-09-06 IS MERGED AND LIVE
 The previous entry said "NOT merged". It landed. `git log origin/main..HEAD` is empty, `main` is at
@@ -48,13 +48,41 @@ must come from a DIFFERENT store" while having no idea which stores were already
 `_wardrobeIdeaGen` passed the curated cards' NAMES into the prompt so the model would not repeat an
 item, and never their STORES. **Both halves held a store-variety rule and neither knew what the other
 had picked.** Now one added sentence names the taken stores; it is additive and cannot empty a shelf.
+**3. ▶ WIDE SHOES — her instruction, 2026-09-07: *"If a woman needs a wide shoe, we need to find it for
+her."*** The catalog has carried a `widths` array on every product since 2026-08-15 and **nothing had
+ever read it**; `_sizeGuidance` used width on the AI half and the shelf ignored the column.
+⚠️⚠️ **BUILT AS A PREFERENCE, NEVER A FILTER, and that is measured rather than cautious.** Only **7 of
+her 25** hand-picked shoes carry wide and only **2** carry narrow, and **THE FEED CARRIES NO WIDTH DATA
+AT ALL**. A hard filter would take a wide-width woman's ankle boots from **8 picks to 1** and a
+narrow-width woman's sneakers from **17 to 1** — the petite fault of the same morning in a new hat. The
+suite asserts a width preference **removes nothing**, so nobody can quietly turn it into a filter later.
+▶ It ranks **above loved-colour**: a shoe that does not fit is not one she can buy.
+▶▶ **AND THE HONEST LIMIT: 25 hand-picks were never the answer for a wide foot. The SEARCH is** —
+"wide width ankle boots" across all 108 stores, which `_sizeGuidance` already builds and which now has
+a test. The shelf ranks the few we know of; the search finds the rest.
+
+**4. 🚨 A SAVE THAT FAILED WAS REPORTING SUCCESS — and it had TWO holes, not one.** `user-data.js`
+wrapped its Supabase write in `catch(e){}` **and never read `.ok`**. ▶ **`fetch` RESOLVES on a 4xx**, so
+a cleanly REJECTED write (bad key, RLS refusal, schema drift) looked exactly like a good one. The
+2026-09-06 key fix stopped it being rejected that day; **it never fixed the lie.** The front end then
+threw the result away and showed "you're all set" regardless. **A woman could save her results, come
+back weeks later, and find nothing.** Both halves now tell the truth; she keeps everything she came for,
+is told plainly, and the form stays open to retry.
+⚠️⚠️ **AND IT IMMEDIATELY CAUGHT A SECOND FAULT IN THE TEST HARNESS.** `scratchpad/e2e.js` stubbed
+Supabase writes with `new Response('', {status:204})`, **which THROWS in Node** (204 is a null-body
+status, so an empty string is still a body). That stub had been throwing on **every** write, and the old
+`catch(e){}` swallowed it and answered success — so e2e's two *"save returns 200"* checks were passing
+on **the exact lie that suite exists to catch**.
+▶▶ **THE LESSON, and it is the sweep's lesson again: a swallowed error does not just hide a production
+fault, it hides the TEST that would have found it.**
+
 ⚠️ **A MEASUREMENT CORRECTION WORTH KEEPING: the first number was 5 of 10 and it was WRONG** — measured
 with `count:6` when the real call site passes `4`. Re-measured at 2 of 10. ▶ **Measure with the
 parameters the app actually uses, not the ones the function will accept.**
 
 ### ✅ GREEN, AND EVERY NEW TEST PROVEN RED FIRST
-**sizefit 38/0** (new) · **storecap 15/0** (new) · **curated 65/0** · **feedshelf 54/0** ·
-**slot_match 1,087/0**.
+**sizefit 46/0** (new) · **storecap 15/0** (new) · **savetruth 14/0** (new) · **e2e 29/0** ·
+**curated 65/0** · **feedshelf 54/0** · **slot_match 1,087/0**.
 ▶▶ **BOTH NEW SUITES WERE PROVEN TO FAIL WITHOUT THE FIX, which is the only thing that makes a green
 suite mean anything:** reverting just the `_fitApplies` call fails **9 of 38**; reverting the store cap
 and the prompt line fails **4 of 15**, and the failure names the real offender (`to1:Anthropologie`).
@@ -75,19 +103,23 @@ both halves with a named test.** Still to do: the four rows marked ▶ in that t
    **dresses $398 · tops $260 · shoes $790 · bags $1,490**; 0 of 200 dresses under $100. **No filter
    makes Mytheresa affordable — only an affordable or mid-market affiliate does.** Watch the AWIN Under
    Armour application and any department store.
-3. ⚠️ **THE `success: true` BUG IS STILL THERE, and it is slightly worse than previously written.**
-   `netlify/functions/user-data.js:704` swallows the Supabase error in `catch(e){}` **and never checks
-   whether the write was accepted** — `fetch` resolves on a 4xx, so even a cleanly rejected write
-   reports success at line 717. **A woman can be told her results were saved when they were not.**
+3. ✅ **THE `success: true` BUG IS FIXED** (see fault 4 above). Nothing left to decide here.
 4. ▶ **THE TAXONOMY GAPS THAT ARE HERS TO DECIDE, none invented:** mini skirts · jumpsuits/rompers ·
    gloves · clogs · wellingtons · bags named only "Bag". **Plus four defaults set for her and confessed:**
    a plain "Sandal" → Flat sandals · a plain "Boot" → Ankle boots · a plain "Hat" → Sun hats · a plain
    "Skirt" → Flowy skirt. **And two rows that are honestly EMPTY:** `ac11` Matching athletic sets and
    `sl2` Nightgowns.
-5. ▶ **Shoe WIDTH is dead data on the shelf.** The CSV carries a `width` column and `_sizeGuidance` uses
-   width for shoes on the AI half; **`curatedPicks` never reads it.** Nothing is wrongly removed, so this
-   is a gap rather than a fault — but a wide-width woman's hand-picked wide shoes are not preferred for
-   her. Her call whether that is worth building.
+5. ✅ **SHOE WIDTH IS BUILT** (see fault 3 above). ⚠️ **But the FEED still carries no width data at all**,
+   so fed shoes cannot be ranked for width. That is a question for a future merchant's feed, not code.
+6. ▶ **THE STORE-TAGGING HELPER, offered and not yet answered.** Her words, 2026-09-07: *"I want to be
+   able to get approved for more affiliates and be able to add them without having to go through all."*
+   ▶ **MEASURED: adding a Rakuten merchant is FOUR edits and three are mechanical** — the MID→name map
+   and `BUILD_MIDS` in `scripts/rakuten_feed.py`, and the search-domain list. **Only the `STORES` entry
+   needs her**: price tier, archetype, sizes, her ten dimension scores, category strengths.
+   ▶ **THE PROPOSAL: draft all twelve from the stores she has ALREADY scored, show her the neighbours
+   each number came from, she corrects and confirms.** ⚠️ **This does NOT break "never invent a store's
+   tags" — the Garnet Hill lesson was about inventing SILENTLY. A draft she approves is not an
+   invention.** Two minutes instead of a form.
 
 ## 🚨🚨🚨 THE RULE LEDGER — EVERY RULE SHE HAS GIVEN, BOTH HALVES, AND THE TEST THAT GUARDS IT
 ▶▶ **THIS SECTION NEVER ARCHIVES. It is the answer to her question of 2026-09-06:** *"The confusion of
@@ -114,6 +146,8 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | Never invent a store's tags | — | Gate 2 uses her own tables | ▶ none | ✅ by design |
 | Never name her body/size back | prompts | n/a — the feed writes no prose | ▶ none | ✅ AI-only rule |
 | Never ask her age | app-wide, no age question | n/a | ▶ none | ✅ |
+| **Width is a shoe rule** | `_sizeGuidance` width line | `widthFit` via `_isShoeSlot` | **sizefit 46** | ✅ **built 2026-09-07** |
+| **Never claim a save that failed** | n/a | `user-data.js` + `doStay` | **savetruth 14** | ✅ **fixed 2026-09-07** |
 | Checklist is a possibility map | copy + framing | n/a | ▶ none | ✅ copy-only rule |
 ⚠️ **The rows marked ▶ have no test yet.** Four of them are genuinely AI-only or copy-only rules where a
 shelf-side test would assert nothing; **"store-pool eligibility" is the one worth a real test**, because
