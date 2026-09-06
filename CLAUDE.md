@@ -132,6 +132,14 @@ retired. Archiving once does not fix this; the rule does.
 - ▶ **THE RULE: when a session's notes are saved, the PREVIOUS session's entry moves to the archive
   in the same commit.** One "START HERE" entry lives here; everything older lives in the archive.
   **The file stops growing instead of needing rescuing.**
+- 🚨🚨 **THREE THINGS NEVER ARCHIVE, and each was learned by losing it on 2026-09-06:**
+  **(a) LIVE OPERATIONAL STATUS** — her affiliate approvals and rejections. **(b) A DECISION ABOUT SCOPE**
+  — what we deliberately chose NOT to build yet, and why. I archived "the feed powers Wardrobe Ideas
+  only" that evening and then re-derived it from the code hours later and presented it to her as a
+  discovery. **(c) ANY RULE SHE GAVE** — see the wiring rule below.
+  ▶ **THE TEST TO APPLY TO EVERY PARAGRAPH BEFORE MOVING IT: is this what HAPPENED, or is this what is
+  TRUE RIGHT NOW? Only the first may move.** A build is what happened. A decision still governing the
+  app is what is true.
 - 🚨🚨 **LIVE OPERATIONAL STATUS NEVER ARCHIVES — added 2026-09-06 after this rule failed in exactly this
   way.** Cath's affiliate rejections (Impact, Bloomingdale's, Shopbop) were recorded correctly and then
   archived, so a session could hold 234 mentions of them in a file it does not read and 4 in the file it
@@ -801,6 +809,19 @@ questions she wanted understood, plus one feature idea she likes. Resurface when
   `git diff origin/<branch> origin/main --stat -- index.html` (empty = safe), then force.
 - ⚠️ **GIT: two Edit items added in separate PRs WILL conflict** — every new `.dc-item` inserts at the same anchor
   (just above `<div class="dc-sign">`). Resolve by keeping BOTH, then re-verify item counts and div balance.
+
+### 🚨 WHAT THE FEED DOES AND DOES NOT POWER — HER DECISION, NOT A LIMITATION
+▶▶ **The nightly feed fills the 100 rows of the Wardrobe checklist ONLY. It is called from exactly one
+place in the app.** The stylist chat, Shop your Style and Complete the Look do NOT consult it: there the
+AI names a good piece, picks a store and opens that store's SEARCH page — no photo, no stock check.
+✅ **THIS IS DELIBERATE AND IT IS CATH'S OWN CALL:** test the 6 new product feeds on the wardrobe list
+first, with her eye on a real phone, before letting them reach the other shopping surfaces.
+⚠️ **SO "more affiliate approvals" DOES NOT by itself improve chat or Shop your Style.** Those surfaces
+have to be wired to the feed as a separate piece of work, and that work is hers to green-light.
+🚨 **RESTORED 2026-09-06 AFTER I ARCHIVED IT AND THEN RE-DISCOVERED IT FROM THE CODE, and told her she
+probably did not know it — her own decision, handed back to her as news.** It was in this file at the
+start of that session; I moved it to the archive a few hours before. ▶ **A DECISION ABOUT SCOPE — what
+we chose NOT to do yet, and why — is an open thread, not a finished build. It never archives.**
 
 ### 💰💰 AFFILIATE STATUS — LIVE, AND IT NEVER GOES TO THE ARCHIVE (restored 2026-09-06)
 🚨 **WHY THIS SECTION EXISTS: on 2026-09-06 Cath said she had been rejected by Bloomingdale's, Nordstrom and
