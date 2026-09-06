@@ -78,15 +78,33 @@ def load_rules(path=RULES_PATH):
     """
     with open(path, "r", encoding="utf-8") as fh:
         raw = json.load(fh)
+    # ---- WHOLE-FAMILY EXCLUSIONS. See the _readme inside _family_not: a rule's
+    # own 'not' only ever separated clothing from clothing, so nothing said "a
+    # top is not a handbag" until a thong reached Cath's Tops shelf. Merged in
+    # here, once, rather than repeated across 100 rules.
+    famcfg = raw.get("_family_not") or {}
+    apply_map = famcfg.get("_apply") or {}
+
+    def _family_terms(slot):
+        fam = "".join(c for c in slot if c.isalpha())
+        terms = []
+        for group in apply_map.get(fam, ()):
+            terms.extend(famcfg.get(group, ()))
+        return terms
+
     out = {}
     for slot, r in raw.items():
         if slot.startswith("_"):
             continue
         rule = {"n": r.get("n", slot)}
         for key in ("cat", "name", "not", "color", "pattern"):
-            if r.get(key):
+            terms = list(r.get(key) or ())
+            if key == "not":
+                terms += _family_terms(slot)
+            if terms:
                 # Padded, so a plain `in` test is a word-boundary test.
-                rule[key] = tuple(norm(t) for t in r[key])
+                # dict.fromkeys de-duplicates while keeping order.
+                rule[key] = tuple(dict.fromkeys(norm(t) for t in terms))
         out[slot] = rule
     return out
 
@@ -109,22 +127,53 @@ def cat_path(rec):
 
 
 def match(rec, rules):
-    """-> the list of checklist row ids this garment belongs on (often empty)."""
+    """-> the list of checklist row ids this garment belongs on (often empty).
+
+    🚨🚨 THE CATEGORY WINS WHENEVER THE GARMENT CARRIES ONE (2026-09-06, after
+    Cath found a THONG and a GARTER BELT on "Tops in your favorite colors").
+
+    This used to be an OR: a category hit **or** a name hit, either would do.
+    That let the name rung fire for garments whose category had ALREADY said
+    exactly what they were, and the name rung matches a MODIFIER as happily as
+    a head noun:
+
+        "Balenciaga Le City Small leather top-handle bag"  -> the word 'top'
+        "Fleur du Mal Top Stitch Thong"                    -> the word 'top'
+        "Super Star Sneaker - Denim Blue"                  -> the word 'denim'
+
+    So a bag that arrived carrying `women>bags>top-handle bags` still landed on
+    Black Tops. ▶ **A garment that has told us what it is must not then be
+    asked whether its name contains a word.** The name rung is a FALLBACK for
+    the stores that send no category at all (Marissa Collections has none;
+    Fleur du Mal leaves category_secondary blank), and it now behaves like one.
+
+    ⚠️ "Carries a category" deliberately means "carries a category THESE RULES
+    RECOGNISE", not "the column is non-empty". A store whose breadcrumb is just
+    'Women' or 'Sale' tells us nothing, and treating that as authoritative
+    would silently empty a shelf -- the exact SILENT NOTHING failure this
+    pipeline keeps warning about. If the category matches no rule anywhere, the
+    garment falls through to its name as before.
+    """
     hay_cat = norm(cat_path(rec))
     hay_name = norm(rec.get("name") or "")
     hay_all = hay_cat + hay_name
     color_hay = norm((rec.get("color") or "") + " " + (rec.get("name") or ""))
     pattern = norm(rec.get("pattern") or "")
 
+    # ---- ONE pass to pick the rung, so this stays the same order of work as
+    # the old loop (this runs against ~266,000 rows a night; see load_rules).
+    candidates = [s for s, r in rules.items() if _has(hay_cat, r.get("cat", ()))]
+    if not candidates:
+        candidates = [s for s, r in rules.items() if _has(hay_name, r.get("name", ()))]
+
     out = []
-    for slot, r in rules.items():
-        # ---- the ladder: a category hit, or failing that the garment's name ---
-        if not (_has(hay_cat, r.get("cat", ())) or _has(hay_name, r.get("name", ()))):
-            continue
+    for slot in candidates:
+        r = rules[slot]
         # ---- her boundaries. Checked against BOTH, because a merchant can put
         # the disqualifying word in either place: Mytheresa says
         # 'women>clothing>swimwear', Marissa Collections only ever says 'Bikini
-        # Top' in the name.
+        # Top' in the name. This now also carries the _family_not terms merged
+        # in by load_rules -- see slot-rules.json.
         if _has(hay_all, r.get("not", ())):
             continue
         # ---- colour: loose on purpose. 663 distinct values, 15% blank,

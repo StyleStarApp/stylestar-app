@@ -179,6 +179,85 @@ ok("pattern gates only a handful of rows", len(patterned) <= 6, f"gates {pattern
 everything = match(g("Silk Dress", "women>clothing>dresses", "Blue"), rules)
 ok("a dress lands on a sane number of rows", len(everything) <= 6, f"{everything}")
 
+
+# ------------------------------------------------- 2026-09-06 REGRESSION SET --
+# 🚨 Cath opened "Tops in your favorite colors" on her own phone and found a
+# THONG, a GARTER BELT and a Balenciaga HANDBAG on it. Every case below is a
+# real product name from the live feed that was really on a Tops shelf.
+#
+# ⚠️ WHY THESE TESTS EXIST AT ALL, and it is the point: the rule that should
+# have stopped this (_WDR_IDEA_EXCLUDE) was agreed with her, written down, and
+# then only ever wired into the AI path -- so the feed never saw it. A rule
+# nobody can run is a rule that drifts. These run in the ingest workflow before
+# anything touches the catalog.
+
+def tops_of(name, cat="", color=""):
+    return [x for x in match(g(name, cat, color), rules) if x.startswith("to")]
+
+# --- the head-noun trap: 'top' is a MODIFIER in all of these -----------------
+ok("a 'Top Stitch Thong' is not a top",
+   not tops_of("Fleur du Mal Top Stitch Thong Rose Pink", "", "rose pink"))
+ok("a 'Top Stitch Garter Belt' is not a top",
+   not tops_of("Fleur du Mal Top Stitch Garter Belt Black", "", "black"))
+ok("a 'top-handle bag' is not a top",
+   not tops_of("Balenciaga Le City Small leather top-handle bag",
+               "women>bags>top-handle bags", "black"))
+ok("a tote bag is not a top",
+   not tops_of("Brunello Cucinelli Large leather tote bag",
+               "women>bags>tote bags", "white"))
+ok("platform sneakers are not a top",
+   not tops_of("Hogan H696 suede and leather platform sneakers",
+               "women>shoes>sneakers", "white"))
+
+# --- 'denim' is a MODIFIER on a shoe --------------------------------------- 
+ok("denim-coloured pumps are not jeans",
+   "bo1" not in match(g("Nodaleto Bulla Sofia denim platform pumps",
+                        "women>shoes>pumps", "blue"), rules))
+ok("a 'Denim Blue' sneaker is not jeans",
+   "bo1" not in match(g("Super Star Sneaker - Denim Blue", "", "denim blue"), rules))
+ok("a 'Micro Thong Denim Blue' is not jeans",
+   "bo1" not in match(g("Fleur du Mal Le Stretch Micro Thong Denim Blue", "", "blue"), rules))
+
+# --- Cath's taxonomy call: a SWEATER IS NOT A TOP. She keeps ja5 Sweaters ----
+#     and ja1 Cardigans as their own rows, so a knit on Tops is a duplicate.
+ok("a wool sweater is not a top",
+   not tops_of("Dries Van Noten Wool sweater", "women>clothing>knitwear", "brown"))
+ok("a lace KNIT SWEATER is not a dressy top either (the whole family, not 3 rows)",
+   not tops_of("Fleur du Mal Juliet Lace Knit Sweater Black", "", "black"))
+ok("a sweater still lands on Sweaters",
+   "ja5" in match(g("Magda Butrym Wool sweater",
+                    "women>clothing>knitwear>sweaters", "black"), rules))
+
+# --- ⚠️ AND THE OTHER DIRECTION. Every excluded word is CORRECT somewhere, so
+#     a global block list would break these. This half is why _family_not is
+#     keyed by family.
+ok("'thong sandals' are still flat sandals",
+   "sh1" in match(g("A. Emery Clara leather thong sandals",
+                    "women>shoes>sandals", "tan"), rules))
+ok("a thong is still underwear",
+   any(x.startswith("fo") for x in match(g("Fleur du Mal Top Stitch Thong Black", "", "black"), rules)))
+ok("a top-handle bag is still a bag",
+   any(x.startswith("bg") for x in match(g("Balenciaga Le City Small leather top-handle bag",
+                                           "women>bags>top-handle bags", "black"), rules)))
+ok("'Sweatshirt' is not caught by the 'sweater' exclusion",
+   "to8" in match(g("Cashmere Sweatshirt Grey", "women>clothing>sweatshirts", "grey"), rules))
+
+# --- the shelves must not go empty. A silent nothing is the worst failure ----
+for _slot, _name, _cat, _col in (
+    ("to1", "Vince Cotton-blend T-shirt", "women>clothing>tops", "white"),
+    ("to2", "Silk Shirt in Black", "women>clothing>tops", "black"),
+    ("to3", "Balmain Belted silk satin top", "women>clothing>tops", "green"),
+):
+    ok(f"{_slot} still matches an ordinary top",
+       _slot in match(g(_name, _cat, _col), rules), _name)
+
+# --- the category is authoritative when the garment carries one -------------
+# The whole design in one assertion: a name stuffed with the word 'top', on a
+# garment whose category says 'bags'. The category must win outright.
+_ambiguous = match(g("Top Stitch Top Handle Something", "women>bags>tote bags", "black"), rules)
+ok("a recognised category wins outright over the name rung",
+   _ambiguous == ["bg1"], f"got {_ambiguous}")
+
 print(f"{n - len(fails)} passed, {len(fails)} failed")
 for f in fails:
     print("  FAIL " + f)
