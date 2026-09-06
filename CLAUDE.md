@@ -221,24 +221,48 @@ actually verify it.**
    not" LEDGER ROW.** Option A — falling back silently — was rejected precisely because an invented pick
    *looks identical to a real find*. **Not a lie, but indistinguishable from the truth, which she judged
    the same thing.**
-7. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
+7. ✅✅ **HOW THE WAIT FEELS — HER CALL, 2026-09-06, AND SHE COMBINED TWO OPTIONS INTO A BETTER ONE.**
+   A real search takes **~5-8 seconds** against chat's current ~1. Offered "wait for one answer" (A),
+   "warm reply first, cards follow" (B) or "show progress" (C), **she asked for B AND C together** — her
+   reasoning: ***"when there is a long time to wait she could think broken and click out, if she gets a
+   reassurance the search is on, that is much better than just looking at the screen, I also like the
+   conversational approach of B."*** ▶ **She is right and they do not conflict: B removes the feeling of
+   being IGNORED, C removes the fear that it is BROKEN. Different moments, different problems.**
+   **THE SHAPE:** warm stylist sentence IMMEDIATELY → a quiet status line underneath while it works →
+   the cards appear below.
+   ⭐ **THE REFINEMENT AGREED: THE STATUS LINE IS IN HER VOICE, NOT THE MACHINE'S.** Not *"Checking
+   sizes…"* (a loading message) but ***"Looking through your shops…"*** then ***"Checking what's actually
+   in stock in your size…"*** ▶▶ **Because that sentence tells a woman something NO COMPETITOR CAN SAY.
+   She is not watching a spinner, she is watching a stylist do what a stylist would do. THE WAIT BECOMES
+   THE PROOF** — which is Sally Hogshead's differentiation note landing somewhere nobody expected. **Most
+   apps hide the work because there is none.**
+   ⚠️ **THREE THINGS THAT TURN THIS INTO A LOADING SCREEN IF GOT WRONG:**
+   **(a) The line must REPLACE ITSELF, never stack** — three messages piling up is a progress bar in a
+   dress. **(b) NOTHING MAY JUMP.** Her audience runs to 80 and a screen that shifts under a reader is
+   genuinely disorienting: **cards appear BELOW what she is already reading, never pushing it around.**
+   **(c) If the answer comes back fast the line must NOT APPEAR AT ALL** rather than flash for half a
+   second.
+   ▶ **And when nothing is found, the status line resolves straight into her own sentence from item 6**
+   — *"I couldn't find an exact match today…"* — **so the honest answer arrives in the same place the
+   good news would have.**
+8. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
    second-hand · verify per-offer · **route through `curatedPicks()`, never a second copy of her rules.**
-8. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
+9. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
    cheaply testable, 239 searches remain.
-9. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
+10. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
    is not applied.** It needs a ledger row and a test BEFORE it ships, not after.
-10. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
+11. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
    product file with **exact variant size + stock**, no API and no cost — real width/size truth for the
    DTC half of her list. **Nobody has counted yet.**
-11. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
+12. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
    SerpApi's motion to dismiss**, striking the DMCA claim for results with no copyrighted content, with
    no leave to refile. Google amended in August, narrowed to *licensed* content (Reddit snippets in
    Knowledge Panels). ▶ **Product listings are facts — the strongest side of a ruling that already went
    against Google.** Still live litigation. **Mitigation: keep the integration behind ONE small swappable
    piece so changing vendor is an afternoon.** ⚠️ SerpApi's legal shield does NOT cover the $25/$75 tiers.
-12. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
+13. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
    search QUALITY matters more than volume while she has no users.
-13. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
+14. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
    results: **178 (44%) already came from her 108.** ⭐ **KOHL'S ALONE IS +28 AND APPEARED IN 8 OF THE 10
    SEARCHES** — one store worth as much as the next nine candidates combined. Zara is +4 and was flagged
    as an anomaly (**H&M was on her list and Zara was not**; she confirmed it should be). ▶ **Both still
