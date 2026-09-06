@@ -1171,6 +1171,17 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 .shop-item-brand{font:700 11px/1.2 'Jost',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4a463e;margin-bottom:2px}
 .wdr-curated .shop-item-store{text-transform:none;letter-spacing:.02em;font-weight:500;color:#5f5647}
 .wdr-cur-note{font:400 13px/1.45 'Lora',Georgia,serif;color:#4a463e;text-align:left;margin:0 0 10px}
+/* ── The feed garment's photograph (2026-09-06). Full-bleed to the card's own
+   edges: the wardrobe card is only 128px wide, so 1rem of padding on each side
+   would leave a 96px stamp, and a 96px stamp of a dress is not a product
+   photograph. The negative margin cancels the card's padding instead, which
+   also means hiding a broken image restores the ordinary card with no other
+   rule needing to know. 3:4 is the shape a garment is shot in; object-fit
+   crops rather than distorts, because a stretched dress is worse than a
+   cropped one. The ground colour shows while the image is still arriving, so
+   the card never flashes white-on-white. */
+.wdr-cur-photo{display:block;width:calc(100% + 2rem);margin:-1rem -1rem 10px;aspect-ratio:3/4;object-fit:cover;background:#f1efe9}
+.shop-card.wdr-haspic{overflow:hidden}
 /* (.wdr-cardops / .wdr-linkflag retired 2026-08-15 with the "Not for me" and
    "Link broken?" controls -- see the note above _wdrTrimNote for why.) */
 /* "+ See more ideas": the squared gold-outline button language (the wishing

@@ -8318,13 +8318,35 @@ function _wdrTrimNote(t){
   var m=t.slice(0,150).match(/^[\s\S]*[.!?]/);
   return m?m[0].trim():(t.slice(0,140).replace(/\s+\S*$/,'')+'…');
 }
+// ▶ THE TWO CATALOGS FILL DIFFERENT HALVES OF THIS CARD, and that is why
+// both halves are conditional. Her 107 hand-picks carry a NOTE and no photo
+// (she wrote the notes; nobody photographed the products). The ~78,000 feed
+// garments carry a PHOTO and no note (the retailer supplies the image; nobody
+// has written 78,000 notes and nobody ever will). Measured 2026-09-06: 107/107
+// of hers have a note and 0 have an image; 200/200 of a live feed slot have an
+// image and 0 have a note.
+// ⚠️ So NEITHER may be rendered unconditionally. Rendering the note
+//    unconditionally is exactly the bug Cath saw on her phone the first night
+//    the feed reached her shelves: a feed garment showed a pair of bare quote
+//    marks with nothing between them, because '' still got wrapped in quotes.
+//    The photo has the mirror-image risk, so it is written the same way.
 function _curatedCard(x){
   const saveItem={name:x.name,store:x.retailer,search:(x.brand+' '+x.name),exact:true,url:x.url,price:'$'+x.price};
-  return '<div class="shop-card wdr-curated"><div>'
+  const note=_wdrTrimNote(x.note);
+  // https only, on purpose: the image url is catalog data, and an href-shaped
+  // field that reaches the DOM is never trusted for its scheme.
+  const pic=(typeof x.image==='string'&&/^https:\/\//.test(x.image))?x.image:'';
+  // alt is deliberately EMPTY: the brand and the full product name sit
+  // directly beneath, so a described image would read the piece out twice.
+  // onerror restores the ordinary no-photo card exactly — the photo's own
+  // negative margin is what pulls it flush, so hiding it needs nothing else.
+  const picHtml=pic?'<img class="wdr-cur-photo" src="'+_esc(pic)+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\'">':'';
+  return '<div class="shop-card wdr-curated'+(pic?' wdr-haspic':'')+'"><div>'
+    +picHtml
     +'<div class="shop-item-brand">'+_esc(x.brand)+'</div>'
     +'<div class="shop-item-name">'+_esc(x.name)+'</div>'
     +'<div class="shop-item-store">at '+_esc(x.retailer)+' · $'+_esc(String(x.price))+'</div>'
-    +'<div class="wdr-cur-note">&ldquo;'+_esc(_wdrTrimNote(x.note))+'&rdquo;</div></div>'
+    +(note?'<div class="wdr-cur-note">&ldquo;'+_esc(note)+'&rdquo;</div>':'')+'</div>'
     +'<div class="shop-card-act">'
     +'<a href="'+_esc(_affUrl(x.url))+'" target="_blank" rel="sponsored noopener" class="shop-link">Shop it</a>'
     +_wlSaveBtn(saveItem)
