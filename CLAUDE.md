@@ -131,8 +131,12 @@ property under test is a trap; when a new rule turns old tests red, read them be
    for twice before because nobody wrote it down. **Re-ask only if she says she has retaken the quiz.**
 2. ⚠️ **STILL TRUE AND FIXED BY NO CODE: the prices.** Every fed store is `$$$`/`$$$$`. Live medians:
    **dresses $398 · tops $260 · shoes $790 · bags $1,490**; 0 of 200 dresses under $100. **No filter
-   makes Mytheresa affordable — only an affordable or mid-market affiliate does.** Watch the AWIN Under
-   Armour application and any department store.
+   makes Mytheresa affordable — only an affordable or mid-market affiliate does.**
+   🚨 **AND NOT UNDER ARMOUR — HER CORRECTION, 2026-09-08, MEASURED AND UPHELD.** *"That is only sporty
+   workout clothes."* It reaches ~13 of her 100 rows and none of the 75 that hurt. **All three pending
+   AWIN applications are activewear, jewellery and eveningwear, so none of them moves this.** The fix is
+   a mid-market GENERALIST or a department store — which is what declined her, for traffic. **The answer
+   is users.**
 3. ▶ **THE TAXONOMY GAPS THAT ARE HERS TO DECIDE, none invented:** mini skirts · jumpsuits/rompers ·
    gloves · clogs · wellingtons · bags named only "Bag". **Plus four defaults set for her and confessed:**
    a plain "Sandal" → Flat sandals · a plain "Boot" → Ankle boots · a plain "Hat" → Sun hats · a plain
@@ -548,8 +552,9 @@ whole thing out and check on every item every week."*
   catalog rows again.**
 - ▶▶ **THE TRIGGER THAT RETIRES THE SPREADSHEET: an AFFORDABLE or MID-MARKET store getting wired in.**
   The moment the feed carries real inventory a woman on a budget can buy, the 107 stop being
-  load-bearing and can be dropped without a word. **Watch: the pending AWIN Under Armour application,
-  and any department store.** ⚠️ **A mid-market approval is therefore worth MORE to this app than
+  load-bearing and can be dropped without a word. ⚠️ **NOT Under Armour — see the affiliate section: it
+  covers ~13 activewear-ish rows of 100 and none of the apparel that matters (her correction,
+  2026-09-08). Watch for a MID-MARKET GENERALIST or a department store instead.** ⚠️ **A mid-market approval is therefore worth MORE to this app than
   another luxury one** — say so when the affiliate order comes up.
 - ⚠️ **Until that day, if a link in the 107 dies, it dies quietly.** That is an accepted cost of
   freezing, not an oversight. The Monday catalog-link Routine still reports them; nobody has to act.
@@ -985,8 +990,26 @@ the strongest argument this file has for her own stated growth edge — *more so
 **▶ THE ORDER TO APPLY, unchanged and still right:**
 1. **AWIN** — ⚠️ **3 applications PENDING: Jackie Mack Designs · TERI JON · Under Armour US.**
    ⚠️ Small **REFUNDABLE** deposit to apply (their spam filter, refunded against the first commission) —
-   **verify the amount on the day.** ▶ **Under Armour is the nearest thing to a mid-market approval on the
-   board, which is why this file keeps naming it.**
+   **verify the amount on the day.**
+   🚨🚨 **CORRECTED 2026-09-08, BY CATH, AND THE OLD CLAIM HERE WAS WRONG.** This file used to say
+   *"Under Armour is the nearest thing to a mid-market approval on the board, which is why this file
+   keeps naming it"* — which quietly turned into "Under Armour would fix the prices." **Her words:
+   *"That is only sporty workout clothes. It won't change much at all."*** ▶▶ **MEASURED against her own
+   100 checklist rows, and she is right: Under Armour could serve about 13 of them** — the 11 activewear
+   rows (`ac1` legging · `ac2` jogger · `ac3` training short · `ac4` sports bra · `ac5`-`ac7` training
+   tops · `ac8` track jacket · `ac11` athletic set · `ac12` skort · `ac13` socks), plus `sh10` running
+   shoe and `bg6` gym bag. **It touches NONE of the 75 rows where the luxury skew actually hurts:** 8
+   tops · 8 dresses · 10 bottoms · 10 jackets/coats · 15 other shoes · 12 other bags · 12 jewellery and
+   accessories. **It is performance kit, not clothes a woman gets dressed in.**
+   ⚠️ **AND NEITHER DO THE OTHER TWO PENDING ONES: Jackie Mack Designs is jewellery, TERI JON is
+   occasion/eveningwear.** So **none of the three pending AWIN applications changes the price problem.**
+   ▶ **WHAT ACTUALLY FIXES IT IS A MID-MARKET GENERALIST** — a department store, or a broad brand
+   carrying tops, dresses, bottoms, jackets, shoes AND bags across price bands. **That is exactly what
+   Bloomingdale's and Nordstrom were, and both declined her for TRAFFIC.**
+   ⚠️ **SO THE ANSWER IS STILL USERS, NOT AN APPLICATION** — which is the uncomfortable one, and the
+   honest one. Say it plainly instead of naming a brand that sounds like progress.
+   ▶ **THE LESSON FOR THIS FILE: "the only mid-market thing pending" is NOT the same claim as "the thing
+   that fixes affordability", and it silently became one.** She caught it; the numbers agreed with her.
 2. **CJ** — free, no clock, "costs nothing but an evening". Not done yet.
 3. **NORDSTROM CREATORS** (`nordstromcreators.com`, Impact's creator product) — **door 2 for Nordstrom**,
    when her follower count is not the weakest thing she brings.
