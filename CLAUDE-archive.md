@@ -16599,3 +16599,499 @@ woman of her sizing in that moment"). Her sizing should guide WHICH store is cho
 Never merged, so nothing shipped. If it is ever revisited, the testing showed the model writes real reasons
 happily; the objection was product, not technical.
 
+---
+
+## 📦 Moved from `CLAUDE.md` on 2026-09-06 (context-weight pass)
+
+`CLAUDE.md` had grown back to ~32,000 tokens, which is 16% of a session's context window spent
+before Cath types a word. These sections are FINISHED BUILDS. Every standing rule and every open
+thread they contained was left behind in `CLAUDE.md` as a short stub; what moved here is the
+blow-by-blow. **Nothing was deleted.**
+
+
+### 📦 The Supabase-401 diagnosis as it stood, 2026-09-05 (kept for the method)
+
+#### The diagnosis as it stood, 2026-09-05 (kept for the method)
+**The catalog is perfect and the shelves are still empty, and the cause is NOT in anything built this
+session.** ▶ **PROVEN, not inferred: `product-search` asks Supabase and gets back HTTP 401.** That is an
+AUTHENTICATION refusal, which happens before any table, policy or row is considered — so it is not the
+grants, not the RLS, not the schema, and not the slot matching.
+- ✅ **EVERYTHING ELSE IS MEASURED HEALTHY.** The nightly ingest wrote **78,261 garments** and
+  **69,988 of them (89%) carry a checklist slot**. The EXACT shelf query the app sends, byte for byte,
+  returns real rows when it runs with the ingest's own key — dr1, to3, dr3, sh9 and bg1 all answered
+  with real garments, real prices and real photos. **Both sides report the same project fingerprint
+  `c156fa1e`, so they are talking to the same database.**
+- ▶▶ **SO THE ONE THING FOR HER: copy the current API key out of Supabase into Netlify.**
+  **Supabase → Project Settings → API Keys** → copy the **publishable / `anon` key** →
+  **Netlify → Site configuration → Environment variables** → update **`SUPABASE_KEY`** → **redeploy**.
+  ⚠️ **The `anon`/publishable one, NEVER the service role key** — that is the whole 2026-09-05 security
+  decision, and it is why the catalog carries a read-only rule for the ordinary key instead.
+- 🚨🚨 **AND THE PART THAT MATTERS MORE THAN THE SHELVES, FLAGGED HONESTLY AS REASONED NOT PROVEN:
+  `user-data.js` READS THE SAME `SUPABASE_KEY`**, with byte-identical headers and the same URL. A 401 is
+  table-agnostic, so **saving results and restoring them by email are very probably failing too.**
+  ⚠️ **AND THE SAVE PATH RETURNS `success: true` REGARDLESS** — its Supabase write sits inside a
+  `catch (e) {}` — so a woman would be told her results were saved when they were not, and would then
+  get a welcome email whose restore link finds no row. ▶ **This was NOT proven, deliberately: the only
+  decisive test writes a junk row into her real `users` table and sends a real welcome email.** ▶ **The
+  same one key fixes both if it is the cause. Check a real save right after updating it.**
+- ⚠️ **A SEPARATE BUG WORTH FIXING WHEN SHE HAS APPETITE, not fixed tonight because it changes the save
+  path on a live app: that silent `success: true`.** An honest failure is better than a false promise,
+  and this is the exact "silent nothing" family this file already keeps warning about.
+- ⭐⭐ **THE INSTRUMENT THAT FOUND IT, AND THE REASON IT EXISTS: every failure inside `product-search`
+  answers with an EMPTY POOL on purpose**, so a broken catalog falls back to the AI path rather than
+  showing a woman an error. **The cost is that "no credentials", "the database refused this" and "that
+  row genuinely has nothing" look identical from outside.** Two things now tell them apart, and both are
+  permanent:
+  1. **`POST {"slot":"dr1","diag":true}` to `/.netlify/functions/product-search`** adds a `why` field
+     (`no-credentials` · `upstream` + the numeric status · `threw` · `ok`). 🔒 **It never returns a key,
+     a URL or any database text.**
+  2. **Actions → Catalog health** (`catalog-health.yml`, read-only, manual) asks Supabase directly how
+     many garments exist, how many are tagged, and runs the real shelf query. **Run it first whenever a
+     shelf looks thin.**
+  ▶ **Without these two, tonight's answer was unreachable — the app cannot tell you why it is empty, by
+  design.**
+
+
+### 📦 The LLC-name saga, 2026-07-16 to 2026-07-31 (rejected, renamed, approved)
+
+### ▶ LEGAL UPDATE (2026-07-16): Florida REJECTED "Style Star, LLC" — new LLC name chosen, TMs to WAIT
+- **What happened:** Almira (Indie Law) emailed — the state of Florida **refused "Style Star, LLC"** because it's too similar to an existing registered business, **STYLESTAR USA, INC.** (a live online clothing retailer, stylestar.us — confirmed via web search). **This does NOT affect the trademarks** — the LLC legal name and the brand/TM name do not need to match; the brand stays "Style Star," and the trademark applications are **fully drafted and cleared**, just waiting on the LLC.
+- **Decision 1 — new LLC name.** Cath (with Claude's help) chose to send Almira **three ranked names**, first-available-wins: **1) Style Star by Catherine, LLC · 2) Style Star by Catherine Ellspermann, LLC · 3) Catherine Ellspermann Style, LLC.** #1 and #2 keep "Style Star" (Cath's clear preference — ties to the "real stylist behind it" north star) but MAY get refused again since "Style Star" is the exact colliding term; #2's full surname is likelier to clear; #3 is the guaranteed-clears backup. Cath asked Almira to confirm whether #1/#2 clear given the STYLESTAR USA conflict. (The binding check is Florida's Sunbiz entity database — Almira's job — not Google.)
+- **Decision 2 — trademark timing: WAIT (do it cleanly).** Almira offered to file the TMs under Cath's name as an individual NOW (locks an earlier USPTO priority date, then assign to the LLC later), OR wait and file everything under the LLC once approved. **Cath chose to WAIT** — file the TMs under the LLC once the name is sorted. Rationale (Claude endorsed): the TM already cleared so there's no blocking rush; waiting avoids an extra assignment step + cost; the delay is short (~pick name → FL approval). Matches her original "file in the LLC's name to avoid a transfer" plan. (Trigger to reconsider filing-now: only if the LLC name process drags out over many weeks.)
+- ✅ **Cath SENT the reply to Almira** (Claude drafted it): the 3 ranked names, the confirm-clearance ask, the "wait and file under the LLC" preference, and a light timing question (how long for LLC approval → then TM filing). **▶ AWAITING Almira's reply** — which name cleared + the timeline. When it comes back: log the confirmed LLC name + expected timeline here.
+- **Emotional note (for continuity):** Cath felt genuinely disappointed reading the rejection (this is her passion/gift — setbacks land). Reframed warmly: it's a rubber-stamp technicality, the brand is untouched, and a similar name existing is quiet proof it's a real ownable brand. She rebounded to a confident shortlist + clean plan. Keep honoring the emotional thread when legal bumps happen.
+- **▶ MONEY-PATH STATUS now:** legal chain is **LLC name refused → 3 ranked names sent → awaiting Almira** (which clears + timeline) → LLC approves (~days) → **EIN issued** (included in TM Max) → [Cath] open business bank account → [Cath] apply to affiliates (Amazon first) → [Claude] wire affiliate links + product images + FTC disclosure (the revenue switch; Mall/Edit earn $0 until then). None of this blocks app work.
+
+### ▶ LEGAL UPDATE (2026-07-16, later — Almira replied: LLC name chosen, filing timeline set)
+- **Almira replied.** Moving forward with Cath's **first choice: "Style Star by Catherine, LLC"** (keeps "Style Star" in the name — her clear preference). The STYLESTAR USA similarity is **not expected to affect the trademark applications**, but final LLC-name approval is up to the **state** (won't be certain until their review completes). Cath's **wait-and-file-under-the-LLC** timeline is confirmed: LLC approved first, then TMs filed under the LLC.
+- **▶ TIMELINE: state response expected on or before JULY 24.** If the LLC name clears with no issues, Almira expects to **file the trademark applications on or before July 24** as well. She'll notify Cath the moment the state responds and send the TM applications for Cath's **final action steps**.
+- **Nothing for Cath to do right now** — waiting on the state via Almira. **▶ NEXT to watch (~July 24):** confirmation the "Style Star by Catherine, LLC" name cleared + the TM apps arriving for Cath's final sign-off. When it lands, log the confirmed LLC + TM-filing status here, then the chain advances to **EIN issued → business bank account → affiliate applications**.
+
+### ▶ LEGAL UPDATE (2026-07-27 — state STILL silent; Indie Law has chased them; TMs drafted and ready)
+- Cath nudged Almira on **July 24**; the **Indie Client Care Team replied July 27**: Florida has **not yet responded**
+  on "Style Star by Catherine, LLC," and **Indie Law has already sent the state a follow-up** to check status. They will
+  be in touch **the moment approval lands** so they can immediately file the trademarks under the new LLC. Cath's
+  **trademark applications are already drafted and ready** for next steps.
+- **Read on it:** the only thing that slipped is the STATE's own processing time (Almira's "on or before July 24" was
+  her estimate of their turnaround, not a broken commitment). Normal delay, not a red flag. **Nothing for Cath to do.**
+- **▶ DECISION UNCHANGED: still WAIT** and file the TMs under the LLC (per 2026-07-16). **Revisit trigger:** if the
+  state stays silent for **several more weeks**, reconsider filing the TMs under Cath's name now to lock the earlier
+  USPTO priority date, then assign to the LLC later (Almira already offered this). Not there yet as of 07-27.
+- **Money path is unchanged and still gated here:** state approves the LLC name → TMs filed → **EIN** issued (included
+  in TM Max) → [Cath] business bank account → [Cath] affiliate applications → **[Claude] wire affiliate links + product
+  images + FTC disclosure** (the revenue switch). None of this blocks app work.
+
+### ▶ LEGAL UPDATE (2026-07-31 — 🎉 THE LLC IS CONFIRMED ACTIVE — Cath verified it on Sunbiz herself)
+✅ **CONFIRMED, same morning: Cath searched search.sunbiz.org on her phone and saw it with her own eyes:
+"STYLE STAR BY CATHERINE, LLC — Document Number L26000395689 — Status: Active."** Her first-choice name
+cleared after all (the STYLESTAR USA, INC collision that sank "Style Star, LLC" shows as a separate active
+entity on the same results page — both coexist fine). **Almira's official confirmation is still the next
+event to watch for** — she said she'd file the trademarks the moment approval landed, and they're drafted
+and ready. The money path is now genuinely unblocked: TMs → EIN (via Indie Law package) → [Cath] business
+bank account → [Cath] affiliate applications → [Claude] the revenue switch. Screenshot in the 2026-07-31
+chat. *(The section below records how the news first arrived, and the scam-wave warnings that came with it.)*
+- **What happened:** Cath's HUSBAND received an SMS from an unknown 833 number: *"Style Star By Catherine, Llc is
+  now registered! Getting an EIN is one of the first steps, apply here: www.einservices.org"*. **The text itself is
+  a scam** (EINs are FREE from the IRS; that site is a pay-for-free-thing / data-harvesting operation) — but the
+  robot can only know the LLC name by scraping **Florida's public Sunbiz records**, which strongly implies **the
+  state has approved "Style Star by Catherine, LLC"** and the scrapers simply beat the official channels. Almira
+  has NOT yet confirmed as of the morning of 07-31. **Status: LIKELY APPROVED, awaiting Almira's confirmation.**
+- **Told to Cath:** don't click, don't reply STOP (confirms a live number), just delete/report junk. **Expect a
+  WAVE of these** — fake "Certificate of Status" letters, "annual report filing" services, "labor law poster"
+  invoices, by text AND paper mail, all scraped from the same public filing. **Standing rule she now knows: any
+  LLC-related ask for money that isn't from Almira, the State of Florida directly, or the IRS is junk.** Her EIN
+  comes through the Indie Law TM Max package; she never pays a third party for it.
+- **Why the husband's phone (she asked):** Sunbiz publishes names + ADDRESSES, not phones; data brokers map the
+  filing's address to household phone numbers and his is the top contact for the address. Nothing was hacked or
+  leaked — public-record plumbing only. ▶ **Optional ask for Almira sometime:** what address went on the filing;
+  a registered-agent address can keep the home address out of future public records.
+- ▶ **Cath can self-verify in 30s:** search.sunbiz.org → Search by Entity Name → "Style Star By Catherine" →
+  status "Active" = approved. (Sunbiz is Cloudflare-walled from the sandbox; her browser is the instrument.)
+- ▶ **WHEN ALMIRA CONFIRMS, the chain finally advances:** TMs filed under the LLC → EIN → business bank account →
+  affiliate applications — and remember the Amazon sequencing trap (180-day/3-sales clock starts at APPROVAL;
+  networks first, Amazon only when there's real traffic).
+
+
+### 📦 Wardrobe polish + Cath's mom's user test, 2026-07-26 (PRs #604-#606, all shipped)
+
+**2026-07-26 (cont. — Wardrobe polish + ▶ REAL USER TESTING from Cath's mom: two new entry points to What's Trending — ALL SHIPPED LIVE, PRs #604–#606)**
+Branch this session: `claude/style-star-9oayy3`. Short, high-value session; everything merged → live.
+- ✅ **The how-to paragraph steps back after first use** (#604, the long-parked "remind me later" item). Full
+  paragraph on early visits; once she's hearted **3+** items it collapses to one quiet line ("Tap the ♡ to add ·
+  tap **Ideas** to shop"), reclaiming **~100px** (125px → 24px) on every later visit. Both texts live in the
+  markup (`.hw-full` / `.hw-brief`), toggled by a `.brief` class on `#wdrHowto`.
+  **KEY DESIGN CALL:** the state is decided **ONCE on page open** (`_wdrSyncHowto()` from `openWardrobe`), NOT on
+  every heart tap — otherwise the whole list jumps under her thumb the moment she taps her third heart. So it only
+  steps back on her NEXT visit, which is what "after first use" should mean.
+- ✅ **"New" pill on What's Trending** (#604) — the other parked micro-feature. Mirrors the Style Star Edit pill
+  exactly: `wbTrendSig()` (= `trendItems.length`) / `wbTrendHasNew()` / `markTrendSeen()` against a
+  **`ss_trending_seen`** stamp. Shown on the **Trending tab** AND the **Welcome Back "Your Wardrobe" row**; clears
+  the moment she opens the Trending tab (`wardrobeTab('trend')` → `markTrendSeen`). **To light it up for returning
+  users, Cath just adds an item to `trendItems` — no flag to flip.**
+- ✅ **Reset restores the full how-to** (#604) — a real bug **Cath caught by reasoning about it, not from a
+  screenshot**: `wardrobeReset()` cleared the hearts and re-rendered but never re-evaluated the how-to, so after a
+  reset the one-liner stayed until she left the page and came back. Now `wardrobeReset` calls `_wdrSyncHowto()`.
+  Nice distinction worth remembering: bringing it back on **reset** is safe (the page already re-renders + scrolls,
+  so a change is expected), whereas doing it on a **heart tap** would jolt the list mid-scroll.
+- ✅ **Fewer item names wrap on narrow phones, with ZERO wording changes** (#604). Measured with the **real Jost
+  font embedded**: at **375px and wider NOTHING wraps at all**; the four long names only wrap at **360px and
+  below** — which is where anyone using **Display Zoom** lands (likely Cath herself, and common in an 18-80+
+  audience). Reclaiming row gap + padding at `@media(max-width:374px)` took 360px from **4 wraps → 1** (only "Tops
+  in your favorite colors" remains; **"The perfect leather jacket" now fits**). Deliberately did NOT shrink the
+  font — readability beats an even list for this audience. Wider phones provably untouched (the rule can't apply
+  above 374px). At 320px it's 15 → 11 (very narrow is a losing battle; fine).
+
+### ▶ REAL USER TESTING (2026-07-26): Cath's MOM used the app — the best feedback yet
+- **She LOVED it and could not stop clicking the shopping links** — even after Cath told her they aren't wired up
+  yet. Strong validation of the shopping-first instinct and the Mall/Edit/Ideas flows.
+- **BUT she never discovered What's Trending from the tab at the top.** She only found it via the **teaser strip
+  at the bottom**. The white tab next to the black "My List" tab did not read as something she could tap.
+- **DIAGNOSIS (worth keeping):** the unselected tab was `background:transparent; color:#8a8474` (light grey) —
+  and in almost every interface convention **grey text = disabled**. So the pair read as "one button + one
+  greyed-out label," not "a switch with two sides." The selected state was so heavy it made the unselected one
+  look unavailable. Amplified for a less app-fluent user.
+- **BIGGER INSIGHT: content is more discoverable than chrome.** She found it at the bottom because that's where
+  the actual *trends* were (wide-leg jeans, ballet flats) — she didn't need a control, she saw clothes she wanted.
+  Validates the teaser strip strongly.
+- ✅ **FIX 1 — What's Trending added as a second Build-hub button** (#605, Cath's call; also fixed that Build was
+  the only hub with ONE button while Shop has 3 and Style has 4, so it read empty). Added to **all three** Build
+  hubs (Welcome Back, Style Portrait, Outfit results): trending-up line icon, sub "What's in right now, picked by
+  Catherine", inline gold **New** pill (`.tr-new`). Calls **`openWardrobe('trend')`** → lands straight on the
+  Trending tab, so a user who never notices the toggle still gets there in one tap (and it clears the pill).
+  Welcome Back needed a **9th `.wb-item` + an `ICON[8]` entry** and `[0,3,6,1,2,5,4,7,8]` in the `setIcon` pass so
+  its tile converts to the cream chip + charcoal line icon. `refreshTrendBadge()` drives the three inline pills and
+  is called from `show()` so they stay honest everywhere.
+- ✅ **FIX 2 — the unselected tab now looks tappable** (#606). Cath picked "D+E combined, wording 2" from a
+  rendered comparison: **cream fill `#F5EFE2` + darker text `#3a352c` + gold border + an arrow**, plus a quiet
+  **"Tap either list"** line under the tabs (`.wdr-tabhint`). Two things surfaced only once it was on the real page
+  (the mockups only ever showed My List active):
+  - **The arrow must flip direction.** A single `::after` arrow rendered **"MY LIST →"** in the other state —
+    pointing right toward Trending while actually taking you LEFT. Now the left tab gets a leading `←`
+    (`[data-tab="list"]:not(.on)::before`) and the right tab a trailing `→`, so each arrow points at the tab it
+    opens. **LESSON: always render BOTH states of a toggle before shipping.**
+  - **The New pill overhung the stitched frame** by ~9px (sitting on the dashes). Moved `right:-6px` → `right:3px`;
+    measured −0.1px at 360px and −0.2px at 390px (just inside the stitch).
+- **NET: three routes to What's Trending now** — the Build hub button, the bottom teaser strip, and the tab itself.
+- ▶ **PARKED (Cath's call, revisit later): a small strip of trending ITEMS near the top of My List.** The strongest
+  version of the discovery fix (she'd see wide-leg jeans, not a tab) — but it competes with the list, and we've
+  already added two entry points. Hold.
+- ⚠️ **TOOLING LESSONS (all cost real time this session):**
+  1. **Mockup CSS MUST be id-scoped.** The first 5-option tab comparison rendered all five variants IDENTICALLY
+     because per-variant `<style>` blocks used `.v .tab` selectors, which match every block on the page. Cath
+     couldn't tell the options apart and said so. Fix: `#vA .tab`, `#vB .tab`… and **audit computed styles
+     (`console.table`) to PROVE the variants differ before sending the image.**
+  2. **One labelled image beats N separate crops.** Five small cropped strips on a phone were unreadable; a single
+     tall image with each option labelled + described in-image was immediately clear.
+  3. **`pkill -f "<pattern>"` kills its own shell** when the pattern appears in the running command line (exit 143)
+     — it killed a heredoc mid-write and the local http server twice. Don't pkill on a self-matching pattern.
+  4. **Multi-paragraph commit messages: write to a file and `git commit -F <file>`** — unescaped quotes/apostrophes
+     in `-m` broke the shell and the commit silently didn't land (caught by checking `git log` before pushing).
+  5. **`ss_wardrobe` seeds MUST include `pretap0:true`** or `_normalizeWardrobe()`'s migration wipes `items` and
+     everything renders as an empty wishlist.
+  6. After each squash-merge the branch diverges; `git checkout -B <branch> origin/main` then **force-with-lease**
+     — but **verify first** with `git diff origin/<branch> origin/main --stat -- index.html` (empty = the remote
+     branch is already-merged content, safe to force).
+  7. The recurring stop-hook **"Unverified commit (noreply@github.com)"** fired 3× on `62db332`/`2f02946` —
+     both are **GitHub's own squash-merge commits on published `main`**, authored under Cath's account.
+     **Confirmed harmless; do NOT amend** (would rewrite published history and fork `main`).
+
+
+### 📦 How store matching was built: her tags, then four dimension tables, 2026-07-27
+
+### ▶ ALL 102 STORES NOW CARRY CATH'S OWN TAGS (finished 2026-07-27, three batches)
+Cath reviewed the entire store table store by store and sent her tags in three batches (26, then 33,
+then the final 43). **Every single store's price tier, style archetype, sizes carried and "best for"
+is now HERS, not Claude's guess.** This is real stylist knowledge and the most valuable thing in the
+table. **▶ If a new store is ever added, get her tags for it — do not invent them, and do not "tidy"
+hers.**
+- **Her vocabulary, kept verbatim:** price runs `$` to `$$$$` (ranges like `$$-$$$$` where a store
+  spans tiers). Archetypes are her own words (Classic Sophisticate, Elevated Natural, Quiet Luxury,
+  Coastal Chic, Glamorous Luxe, Modern Glam, Athletic Luxe, Playful Chic, Edgy Chic, Bohemian Chic,
+  Professional Power, Trendsetter, Comfort Chic, Preppy Classic, Universal…). These are NOT the 28
+  quiz archetype names, and that is fine — they are a stylist's shorthand for what a store is for.
+- **"Standard" in her notes means no special ranges**, which is an empty `s:[]` here.
+- **New size word this batch: `narrow`** (shoe widths). Zappos and Naturalizer carry wide AND narrow;
+  DSW is wide only. Extended-size ranges are noted in the `c` description rather than the size list,
+  since the app never asks a woman for that.
+- **Four renames she asked for:** `Tiffany` → **Tiffany & Co.**, `Alo` → **Alo Yoga**, `Izod` →
+  **IZOD**, `Net-a-Porter` → **NET-A-PORTER**. ⚠️ **A rename is a crash risk**, and this one nearly
+  was: `_STORE_ALIAS` values must be REAL keys in `STORES`, or `resolveStore` returns a key with no
+  entry and `STORES[key].u` throws, taking the whole page down. Aliases were updated, and
+  `getStoreUrl` now guards with `key&&STORES[key]` as belt-and-braces. **Rule: rename a store → update
+  its aliases → verify the OLD spelling still resolves** (the AI has years of habit calling it the old
+  name).
+- **Her corrections to my guesses this batch:** Target +petite, Levi's +petite, Johnny Was +petite,
+  Naturalizer +narrow, Zappos +narrow, DSW wide only, plus every legacy `mid`/`luxe`/`budget` tier
+  finally replaced with her `$` notation.
+- **▶ THE BUSINESS FIELDS STAY OUT OF THE APP.** She proposed an 18-field "Retailer Intelligence
+  Database" including Affiliate status, Commission rate and AI Priority. Agreed with her that those
+  three belong in **a spreadsheet she owns** — they change HER decisions (which programs to apply to,
+  which partnerships to chase), not the AI's picks. Putting commission rates in the app would quietly
+  bias suggestions toward what pays best, which is exactly the opposite of the brand. The app only
+  ever knows what helps a woman shop: price, style, sizes, strengths.
+- **Cost consequence, worth knowing:** the fully tagged list is ~2,800 words on EVERY shopping call,
+  taking a shop from ~0.4¢ to ~1.1¢. Tiny in absolute terms, but it is the concrete argument for the
+  **retailer-scoring step** — score her Style Portrait against the `a` tags, send only the ~15 best
+  matched stores, and the call gets both cheaper AND sharper. That is the strategic prize, deliberately
+  deferred until her knowledge was in the table. It is in now.
+- Verified with 99 automated checks across four suites (`verify.js` 48, `width.js` 15, `b2.js` 14,
+  `b3.js` 22) driving the real functions in a browser: table shape, alias integrity, old spellings
+  still resolving, unknown store falling to Google Shopping rather than throwing, her specific
+  corrections, no overflow, no JS errors.
+
+### ▶ RETAILER MATCHING IS BUILT (2026-07-27) — Cath's Fitted / Alluring / Polish scores
+Cath sent a table scoring all 102 stores 1-10 on three dimensions she defined herself:
+**Fitted** (how tailored/body-skimming), **Alluring** (how glamorous, feminine, sensual or
+fashion-forward), **Polish** (how refined, elevated, put-together). All 102 resolved cleanly to
+store keys, no gaps. Stored as `d:[fitted,alluring,polish]` **on each `STORES` entry** — one source
+of truth, deliberately NOT a parallel table (a parallel table drifts out of sync on a rename,
+exactly the bug class the alias fix just hit).
+- **▶ THE KEY INSIGHT, and it is load-bearing: two of her dimensions are TASTE, one is QUALITY.**
+  Fitted and Alluring have a different right answer for every woman, so they are what we MATCH on.
+  **Polish is not taste, it is refinement, and nobody wants less of it.** Proved from her own data:
+  among stores that sit in the SAME stylistic place (fitted ≤4, alluring ≤3) polish runs from
+  **Jenni Kayne 10 down to Old Navy 4**; polish correlates 0.67 with price tier and only **0.16**
+  with alluring; average polish rises monotonically by tier (5.4 → 7.4 → 8.5 → 9.6). So a woman who
+  dresses casually wants the most refined CASUAL store, not the least refined one. **Polish RANKS
+  (tie-break), it never matches.** Getting this backwards would have sent relaxed dressers to Old
+  Navy and Target.
+- **How her quiz maps in** (`_herDims()`): Fitted ← slider 9 (Relaxed↔Fitted). Alluring ← the mean
+  of slider 2 (Natural↔Glam) and slider 11 (Modest↔Alluring), because her own definition of
+  alluring is glamorous AND sensual. Sliders are 1-11, her scale is 1-10, hence the ×0.9.
+- **`_rankedStores()`** sorts all 102 by `|fitted gap| + |alluring gap|`, ties broken by higher
+  polish, keeps the best 46, then **adds back coverage**. Result: prompt drops **8,965 → ~4,260
+  chars (52% smaller)**, so a shop goes back to roughly 0.6¢. The list is passed to the AI **in
+  match order** with an instruction to favour the top and go further down only for a specialist.
+- **▶ TWO COVERAGE GUARANTEES, both non-negotiable — this is where the danger is.** Trimming a
+  store list can silently make a whole kind of shopping impossible. (1) `_COVER` forces at least one
+  store for each of shoes / bags / jewelry / eyewear / swim / activewear / denim / dresses /
+  workwear / foundations / outerwear. (2) every price tier keeps **at least 3** stores, so a woman on
+  a budget never quietly ends up with one option while everyone else gets thirty. `_tierOf` reads the
+  **cheapest** end of a range (Nordstrom `$$-$$$$` counts as `$$`) because the question is "could she
+  buy anything here at all".
+- **Before the quiz, no ranking at all.** `answers` sits at the neutral default until she moves a
+  slider, so ranking a non-quiz-taker would sort against an invented profile. `_rankedStores()`
+  returns the full list when `!quizTaken`, and the "ordered by fit" line is omitted.
+- ⚠️ **Two real bugs caught by simulation, not by eye:** the tier top-up used an `add()` helper whose
+  own test passed for stores already in the list, so it never fired (glam/edgy women were left with
+  ONE budget store); and `_tierOf` originally read the *top* of a price range, which counted Amazon
+  as `$$$` and understated how much a budget shopper could reach.
+- Verified with `dims/rank.js`, 13 checks run against **all 28 archetypes**: zero coverage gaps and
+  ≥3 stores per tier for every single one, shortlists 46-50 of 102, no duplicates, two opposite women
+  share **no** top-6 store, and a very relaxed woman's top ten still averages high polish.
+### ▶ TWO MORE AXES, SCORED AS INDEPENDENT PAIRS (2026-07-27, same evening)
+Cath immediately asked "should we do a chart for classic/edgy too?" and then sent **Classic, Trendy,
+Casual, Dressy** — as **four independent 1-10 columns, not two sliders.** That framing is hers and it
+is better than what was asked for. `d` is now 7 numbers:
+`[fitted, alluring, polish, classic, trendy, casual, dressy]`.
+- **▶ WHY INDEPENDENT PAIRS BEAT A SINGLE AXIS, and this generalises.** Nordstrom is **8 classic AND
+  7 trendy** because it genuinely serves both; Talbots is 10/1. Collapsed to one slider, a store that
+  serves EVERYBODY looks identical to one that serves NOBODY (both land mid-scale). Kept as a pair,
+  the score becomes "how well does this store serve HER side", which is how a stylist actually thinks:
+  a 70%-classic woman wants whoever is *strongest* at classic, not whoever sits nearest a midpoint.
+- **So the two kinds of dimension are used differently** (`_storeFit`): fitted/alluring are a
+  **distance penalty** (subtracted), classic/trendy + casual/dressy are a **weighted preference
+  score** (added), and polish rides along at ×0.15 — enough to separate two close matches toward the
+  more refined, far too small to drag every woman into luxury. Her lean comes from slider 1
+  (Classic↔Trendy) and slider 5 (Casual↔Dressy), each mapped to a 0-1 weight.
+- **▶ THE IMPROVEMENT IS DRAMATIC AND MEASURED, not asserted.** Timeless Classic went from
+  *Athleta, Banana Republic Factory, Levi's…* to **J.Crew, Vince, Levi's, J.McLaughlin, Ann Taylor,
+  Theory** — the athletic store is gone from the top entirely. Vibrant Athlete went from
+  *J.McLaughlin, Madewell, Boden…* to **Madewell, Vuori, Levi's, Lacoste** with Athleta in the top 8.
+  Classic and trendy women now share ≤2 stores in their top 8.
+- ⚠️ **A REAL RISK THE NEW AXES CREATED, caught in simulation:** the dressier a woman's taste, the
+  more her best-matched stores skew expensive, because dressy correlates with price in the tags. The
+  glam profile's top ten became almost all $$$$. Fixed two ways: (1) deleted the prompt line "match
+  the store to her **including her budget range**" — the app never asks her budget, so that line
+  promised something it could not do; (2) replaced it with an explicit instruction to **spread the
+  prices** and always include something genuinely affordable. Verified: even the TOP 15 spans at least
+  two price tiers for every one of the 28 archetypes.
+- Verified by `dims/rank2.js`, 14 checks across all 28 archetypes. Prompt still 52% smaller.
+
+### ▶ REVERSED THE SAME EVENING: SORT, DO NOT TRIM (2026-07-27)
+Cath's priority, in her words: *"the last thing I want is for her to not get shown something she
+would actually want."* That settles a trade-off I had made the other way, so the shortlist is gone —
+**the AI now gets ALL 102 stores, ordered best-fit first.** Reasoning, in case it is ever revisited:
+- **Sorting does 100% of the quality work**, because the prompt tells the AI to favour the top of the
+  list. Trimming only ever saved money.
+- **The money is under half a cent per shop** (~2,420 tokens vs ~1,150, so ~0.73¢ vs ~0.35¢). At
+  1,000 women shopping five times each that is roughly **$19 a year**. Against her stated priority
+  that is not a trade worth making.
+- **Measurement said the trim was riskier than it looked:** for one archetype the best store in a
+  whole category sat at **rank 72**, so a plain top-46 really would have lost it. The coverage rules
+  patched that — and **two genuine bugs turned up in the patching apparatus** (the tier top-up never
+  fired; `_tierOf` read the wrong end of a price range). **The safest code is the code not written.**
+  `_COVER` and the KEEP logic are deleted; `_tierOf` stays because the tests use it.
+- Verified by `dims/rank3.js` (13 checks): all 28 archetypes see all 102 stores, every category and
+  price tier reachable for every archetype, ordering still discriminates hard (glam and easygoing
+  share no top-6 store), and every archetype has 3+ affordable stores inside its top 20 so nobody is
+  shown only luxury.
+- ▶ **If cost ever genuinely matters** (it will not until there are thousands of users), the honest
+  lever is not trimming the store list but caching or shortening elsewhere. Re-read this entry first.
+
+### ▶ THE DIMENSION SET IS NOW COMPLETE — 4 PAIRS + 2 SINGLES (2026-07-27)
+Cath sent the last two tables the same evening. **`d` is now 10 numbers per store:**
+`[relaxed, alluring, polish, classic, trendy, casual, dressy, fitted, neutral, colorful]`
+⚠️ **The order reads oddly on purpose:** `relaxed` replaced an earlier single `fitted` score in slot 0
+and its partner was appended at the end. **Always go through the `_DIM_*` constants, never a bare
+index.**
+- **FOUR PAIRS, all weighted preference scores** (more of her own side is simply better):
+  relaxed/fitted ← slider 9 · classic/trendy ← slider 1 · casual/dressy ← slider 5 ·
+  neutral/colorful ← slider 7.
+- **TWO SINGLES:** `alluring` is a distance PENALTY (weighted ×2.5 so one axis still counts against
+  four pairs) — deliberately NOT paired, because Cath's definition is how the aesthetic *feels*, i.e.
+  brand character, not a range a store spans. `polish` rides at ×0.15 as a refinement tie-break.
+- **▶ STOP HERE. Do NOT score the remaining sliders.** Every axis added dilutes the others, so a bad
+  mismatch on one gets averaged away, and the 12 quiz sliders are not independent (Casual↔Dressy and
+  Comfort↔Style largely say the same thing). Scoring all twelve would make matching *worse*.
+- **▶ OPEN QUESTION FOR CATH — BREADTH vs FIT, flagged not fixed.** A store strong on BOTH sides of
+  every pair scores near the max whatever her lean is, so department stores now rise for almost
+  everyone: **Nordstrom tops 20 of the 28 archetypes' top-5**, and department stores take 34% of all
+  top-5 slots (36 distinct stores fill the 140 slots, so diversity is still decent). This is arguably
+  correct — Nordstrom genuinely suits most women, and Cath's 10-neutral/9-colorful scoring for it is
+  accurate breadth. But a stylist's value is partly sending someone somewhere specific. **Deliberately
+  left alone: this is a stylist judgment, not an engineering one, and over-tuning a proxy without her
+  eye is the trap.** `dims/rank3.js` now tracks the number so a regression is visible. If she wants
+  specialists to lead, the one-line lever is to subtract a small "breadth" term (the store's mean
+  across a pair) from each pair's score.
+
+
+### 📦 The legal-page URLs, the disclosure audit, and the navigation audit, 2026-07-29/30
+
+### ▶ THE LEGAL PAGES HAVE REAL URLs NOW (2026-07-29) — required for every affiliate application
+Cath came back from a Cowork conversation with the thing nobody had noticed: **affiliate approval needs a URL for
+the privacy policy, and Style Star did not have one.** The policy existed and was good — it already had an
+**Affiliate links** section, which is exactly what the networks look for — but as a single-page app every "page"
+is a hidden div, and `show()` called `history.pushState(state,null,'')`, that empty string meaning *leave the
+address bar alone*. So there was literally nothing to paste into an application form.
+- ✅ **BUILT: four real addresses** — `/privacy`, `/terms`, `/story`, `/faq`. `netlify.toml` **rewrites** them
+  (status **200**, not 301) to `/index.html`, so the address bar keeps the pretty path, and a small router in
+  `index.html` opens the matching screen. **The policy text is not duplicated anywhere** — one source of truth,
+  and a reviewer sees the real designed page rather than a bare fallback copy.
+- **How the router works, so it can be extended safely:** `_ROUTES` maps screen id → path, `_pathForScreen()`
+  is what `show()` now passes to `pushState` (**every routeless screen reports `/`**, so the URL never gets
+  stranded on `/story` after she navigates away), and `_screenForPath()` does the reverse for a cold landing.
+  To add a page later: one entry in `_ROUTES`, one `[[redirects]]` block, one line in `_openRoute()`.
+- **▶ DESIGN CALL worth keeping: the boot path runs `fallbackInitialScreen()` FIRST, then opens the deep-linked
+  page on top.** That is what makes Back correct — her saved data is already in memory, so the page's own
+  `privacyPrevScreen` records the real screen underneath and Back lands her on **Welcome Back if she has
+  results**, the welcome screen if she doesn't. Verified both ways. It also skips the entrance curtain, since a
+  2.25s star animation over a legal page someone came to *read* is wrong.
+- ⚠️ **NEVER CHANGE THESE PATHS once a URL has been submitted to an affiliate network.** Written into
+  `netlify.toml` and the code comment too.
+- ✅ **WORDING FIX SHIPPED: the policy over-promised.** It said *"We never sell or share your personal
+  information with third parties"* — but her email goes to MailerLite and her results are stored in Supabase.
+  That is completely normal, and the absolute wording was the problem, not the practice. Now: *"We never sell
+  your personal information, and we never share it with anyone who wants to market to you. We do share it with
+  the trusted service providers who help us run Style Star…"* Accurate, and still in her voice. Date bumped to
+  July 29, 2026.
+- ⚠️ **THE SECOND WORDING FIX WAS DELIBERATELY NOT SHIPPED, and this was the right call.** Amazon requires the
+  exact sentence *"As an Amazon Associate I earn from qualifying purchases."* **Cath is not an Amazon Associate
+  yet and has no Amazon links**, so putting that sentence on a legal page today would be a false statement on
+  the one page that must be true. Her existing generic disclosure (*"Style Star may earn a small commission from
+  some links, at no extra cost to you"*) is present on the Edit and the Mall and is what a reviewer needs to see
+  at application time. **Moved to money-path step 7, items 6 and 7** — including Amazon's 180-day / 3-sales trap.
+- **Verified by `scratchpad/routes.js`, 56 checks, all passing.** A local server applies the rewrite rules read
+  **from the real `netlify.toml`** (so a typo there fails the test), and a real Chromium drives the real app:
+  each path opens and *visibly renders* the right screen, the address bar holds the path, the policy text is in
+  the **raw served HTML** (so a reviewer's bot that runs no JS still finds it), Back works from both a new and a
+  returning visitor, in-app navigation writes and clears the URL, browser Back still walks screen history,
+  `_screenForPath` survives trailing slashes / capitals / `null` / lookalike paths, the four ordinary screens
+  still open, the `?r=` email restore link still degrades gracefully, and there are zero JS errors.
+- ▶ **STILL TO DO on the policy, low priority, flagged not fixed:** it does not name its sub-processors
+  (Supabase, MailerLite, Anthropic) and has no California/CCPA section. Neither blocks affiliate approval and
+  hers is already above average for an app this size. Worth asking Almira when the trademarks are done.
+
+### ▶ EVERY SHOPPING SURFACE NOW CARRIES AN AFFILIATE DISCLOSURE (2026-07-29)
+Both an FTC requirement and an approval signal: a reviewer checks that the disclosure sits **near the links**,
+not only in the privacy policy.
+- ⚠️ **THE FIRST AUDIT WAS WRONG, because it grepped for the wrong class names.** Searching `dc-disclosure` and
+  `shop-disclosure` found only the Edit and the Mall, and produced the claim that the four AI shopping surfaces
+  had nothing. **There was a third class, `shopdisc`**, already doing the job on the photo results screen. The
+  true gap was four different surfaces than the ones first named. **Lesson: audit by finding every place that
+  RENDERS a link (`_shopCard` call sites + the chat linkifier), then check each one — never by grepping for the
+  class name you happen to remember.**
+- **▶ THE SIX PLACES the wording now lives** (this is the edit list for Amazon's sentence at approval time):
+  1. `.shopdisc` under **Complete the Look** (`#pShopList`, photo results) — already existed
+  2. `.shopdisc` under **Shop your style** on the photo results (`#shopContentPhoto`) — already existed
+  3. `.shopdisc` under **Shop your style** on the Style Portrait (`#shopContent`) — added
+  4. `.shop-disclosure` on the **Shop your style / wishlist screen** (`s-shopstyle`) — added
+  5. `.wdr-disclosure` **once at the top of Your Wardrobe**, below the tabs (was per-carousel; see below)
+  6. `.chat-disclosure` in the **stylist chat** (the linkifier turns store names in her answers into links,
+     so this screen needs one too) — added
+  The Edit and the Mall keep their own longer *"nothing here is chosen by AI"* version. **Leave those alone.**
+- **One wording everywhere:** *"Some links may earn us a commission."* A test asserts all six copies are
+  byte-identical, so she never sees two different promises about the same thing.
+- ⚠️ **SHORTENED THE SAME DAY, and the measurement is the interesting part.** Cath saw it live and said the
+  two-line version felt *"a little cringe... I don't like reminding our user so much about the commissions"*,
+  and asked whether it could fit on one line without going too small. **Shrinking could never have worked:**
+  measured with the real DM Sans embedded, the old wording was **380px wide** while the tightest container (the
+  Wardrobe Ideas carousel) is only **240–266px**. Even at 11px it was 334px. **The font was never the lever;
+  the words were.** ▶ **Generalises: before offering to shrink something to fit, measure whether shrinking can
+  possibly close the gap.**
+- **▶ THE CLAUSE THAT WAS DOING THE DAMAGE: "at no extra cost to you."** 25 of the old 67 characters, and it is
+  **not legally required** — it is convention. It was also the apologetic part, the sentence protesting slightly
+  too much. Cutting it fixed the wrap AND the tone at once; nothing about compliance was traded away. The
+  fuller, warmer version still lives in the **Privacy Policy, the FAQ, the Terms, the Edit and the Mall**, where
+  there is room for it. **Those five keep their own longer wording — do not "unify" them with this one.**
+- **Cath chose the plainest of three measured candidates** (she was shown all three rendered in the real
+  carousel at her own phone width). Her pick reads most like a quiet footnote precisely because it explains
+  least. Verified one line on **all six surfaces at both 390px and 360px** (`scratchpad/fitcheck.js`) — 360px
+  matters because that is where Display Zoom users land, and one candidate passed at 390 and failed at 360.
+- ✅ **THEN THE FREQUENCY WAS FIXED TOO (same day), because the repetition was the real problem.** Measured
+  first: opening five Wardrobe items leaves **five carousels open at once and five identical notices on one
+  ~7,300px page**. Cath asked for a judgement, worried only about affiliate approval. The answer given, and it
+  is worth reusing: **reviewers check that a disclosure exists and is findable, not how many times it appears.**
+  The norm across approved affiliate sites is one per page. Rejections come from having NONE, thin link-farm
+  content, no privacy policy, or no traffic. And the FTC "repeat it" guidance is about **coverage** (someone
+  landing mid-page on a long page), not about tagging every block of links.
+- **▶ THE DECIDING ARGUMENT, and it generalises: every other screen already showed it once.** Wardrobe repeating
+  was never a compliance decision, it was an accident of the carousel rendering per item. So the change brought
+  the odd screen into line rather than carving out an exception. Now **one line at the top of Your Wardrobe**,
+  and the carousels carry none.
+- ⚠️ **TWO PLACEMENT TRAPS, both real, both hit:**
+  1. **Directly under the "Your Wardrobe" title it read like a TAGLINE for the page** — as if the wardrobe's
+     subtitle were a commission notice. Moved **below the tabs**, next to "Tap either list", where it reads as
+     plain page chrome. Rendered and eyeballed before shipping; the measurement alone would not have caught it.
+  2. **It must NOT go inside `.wdr-howto`.** That block collapses to one line once she has hearted 3+ items, so
+     a disclosure living inside it would silently vanish for exactly the returning users who shop most. It is
+     its own always-present element, and a test asserts it sits **outside both panes and before them**, so one
+     copy covers My List and What's Trending alike.
+- **Tests now assert the fix directly:** open five carousels, confirm five really do open, and confirm **exactly
+  one** notice is visible and that the carousels carry none.
+- ▶ **Trivially reversible** if a network ever asks for more: append a `.shop-disclosure` div to the html
+  `_wardrobeIdeaGen()` builds, right after the `.wdr-swipe-hint`. (The old `AFFIL_NOTE` constant was deleted
+  once every copy became plain markup — all six are now findable by grepping `may earn us a commission`.)
+- ⚠️ **A DISCLOSURE THAT CANNOT BE READ IS NOT A DISCLOSURE.** The chat line was first styled `#9a9a9a` at
+  10.5px, one notch quieter than the privacy line above it — which **measured 2.5:1 contrast and failed.** That
+  instinct (a legal notice should be the quietest thing on screen) is exactly backwards, and it matters double
+  for an 18-to-80 audience where readability is a stated priority. Now `#6e6e6e` at 11px, **4.6:1**, matching
+  `.shop-disclosure` everywhere else. **The test measures real contrast against the real painted background on
+  every surface** — a colour that looks fine on a light card can vanish on the dark results screen.
+- Verified by `scratchpad/disclose.js`, **40 checks**: each of the six is present, says it plainly, occupies real
+  space on screen, and clears 3:1 against whatever is actually behind it (the AI calls are stubbed, so this is a
+  render + contrast test, not an API test). Plus the Edit/Mall disclosures intact, no overflow, no JS errors.
+- ✅ **Also fixed: the Mall said "Net-a-Porter"** while the rest of the app had been renamed **NET-A-PORTER**.
+  `mallStores` is a display list, not keyed off `STORES`, so it had drifted. Tested that all three spellings
+  still resolve through `resolveStore` and that the URL still builds — **a rename is a crash risk**, per the
+  alias lesson from 2026-07-27.
+
+### ▶ NAVIGATION AUDIT (2026-07-29) — ✅ BUILT 2026-07-30 (see 0-NEWEST at top; kept for the reasoning)
+She asked for "a home page button that maybe has a drop down menu for all our pages," noting the footers differ
+and some pages need Back buttons to escape. **She was right, and it measures worse than she described.**
+- **EIGHT different footer link sets:** Welcome / Welcome Back / global `.quiz-footer` all say *Shop · My Story ·
+  FAQ*; Chat says *Edit · Quiz · FAQ*; the Mall says *Edit · My Story · FAQ*; FAQ says *My Story · Privacy ·
+  Terms*; Privacy says *My Story · Terms · FAQ*; Terms says *My Story · Privacy · FAQ*.
+- **There is no Home button anywhere in the app**, and the logo `<img>`s are not clickable.
+- **12+ screens exit only via the small grey `← Back`** at the top right.
+- **▶ RECOMMENDED, NOT a dropdown — and the reason is her own user testing.** The lesson from her mom was that a
+  *visible* tab did not read as tappable. A dropdown hides navigation behind a tap **and** a mental model, which
+  is the same failure mode one level deeper, and this is an 18-to-80 audience where readability is a stated
+  priority. Instead: **(1) make the logo go home on every page** (already sitting top-left on the framed pages;
+  the most universal convention on the web and it adds no new chrome), **(2) standardise to ONE footer** so the
+  links never move, **(3) "Home" means her HUB** — Welcome Back if she has saved data, Welcome if she is new.
+  ▶ **That third piece already exists in code**: the `popstate` handler has exactly that branch. Reuse it.
+- **NOT BUILT YET — Cath should see the footer options rendered before anything is committed.** ⚠️ And when that
+  comparison is made, remember the two rendering lessons: **id-scope the mockup CSS** (`#vA .foot`, not `.v
+  .foot`) and prove the variants differ with `console.table` first, and **one tall labelled image beats N crops**.
+
