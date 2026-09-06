@@ -185,24 +185,37 @@ actually verify it.**
    ▶ **A SPEND CAP IS NOT A COMPROMISE ON THE EXPERIENCE and should be set anyway** — caching first
    (repeat questions cost nothing), then a hard monthly ceiling, so a surprise is impossible rather
    than unlikely. **Her call stands; the cap is the seatbelt, not a second-guess.**
-5. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
+5. ✅✅ **THE AFFILIATE TIE-BREAK — ASKED AND ANSWERED, 2026-09-06: "A". THE RULE HOLDS COMPLETELY, WITH
+   NO EXCEPTION.** ▶▶ **The app NEVER knows which shops pay her. Fit and price decide, full stop — even
+   when two options are exactly equally good and one earns and the other does not.**
+   ⚠️ **THIS WAS FLAGGED IN THIS FILE SINCE 2026-07-29 AS "a decision she will face; it should be a
+   deliberate one, not a drift." IT ARRIVED WITH THE CHAT DECISION AND SHE MADE IT DELIBERATELY. It is
+   CLOSED. Do not re-open it, and do not propose a "tie-break only" softening later — that WAS the
+   option offered and she declined it.**
+   ▶ **The argument that decided it, and it generalises to any future rule of this kind: a tie-break's
+   failure mode is SILENT. No test can prove a tie was genuine, so only intent keeps it honest — and
+   this file holds three separate examples of a rule quietly drifting when nothing was watching it.
+   Option A is the only version that cannot rot.**
+   💰 **THE PRICE SHE KNOWINGLY PAID: she will earn less than she could, on purchases that were going to
+   happen anyway.** She was told that plainly before choosing.
+6. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
    second-hand · verify per-offer · **route through `curatedPicks()`, never a second copy of her rules.**
-6. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
+7. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
    cheaply testable, 239 searches remain.
-7. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
+8. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
    is not applied.** It needs a ledger row and a test BEFORE it ships, not after.
-8. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
+9. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
    product file with **exact variant size + stock**, no API and no cost — real width/size truth for the
    DTC half of her list. **Nobody has counted yet.**
-9. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
+10. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
    SerpApi's motion to dismiss**, striking the DMCA claim for results with no copyrighted content, with
    no leave to refile. Google amended in August, narrowed to *licensed* content (Reddit snippets in
    Knowledge Panels). ▶ **Product listings are facts — the strongest side of a ruling that already went
    against Google.** Still live litigation. **Mitigation: keep the integration behind ONE small swappable
    piece so changing vendor is an afternoon.** ⚠️ SerpApi's legal shield does NOT cover the $25/$75 tiers.
-10. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
+11. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
    search QUALITY matters more than volume while she has no users.
-11. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
+12. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
    results: **178 (44%) already came from her 108.** ⭐ **KOHL'S ALONE IS +28 AND APPEARED IN 8 OF THE 10
    SEARCHES** — one store worth as much as the next nine candidates combined. Zara is +4 and was flagged
    as an anomaly (**H&M was on her list and Zara was not**; she confirmed it should be). ▶ **Both still
