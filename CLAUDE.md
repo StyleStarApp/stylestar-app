@@ -150,24 +150,38 @@ actually verify it.**
    ▶ **THE FIVE SHE RULED ON, kept because they are the benchmark any precision work must beat:**
    Nordstrom Rack $123.72 DVF Jeanne Silk Jersey Wrap (**the one she approved**) · Nordstrom $598 Kobi
    Halperin *faux*-wrap · Quince $80 stretch **satin**, not silk · Etsy $318 · Etsy $334.
-2. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
+2. ✅✅ **THE SURFACE IS DECIDED — HER CALL, 2026-09-06: THE STYLIST CHAT FIRST, SHOP YOUR STYLE SECOND.**
+   ▶ **This is the green light the 2026-09-05 scope decision was waiting for, and it is a REVERSAL of
+   "wardrobe list first" — made deliberately, with her reason.** Her words: ***"That feels like the most
+   important place to test this because that is where a woman can tell Style Star exactly what she is
+   looking for in her own words. I want to know whether Style Star can take a real request, understand
+   what matters, find real products, and then use my styling logic and her personal preferences to give
+   her genuinely good recommendations."*** On Shop your Style: ***"I think that will make an enormous
+   difference."***
+   ⚠️ **WHY CHAT AND NOT THE SAFER SURFACES, and the reasoning is sound: HER OWN SENTENCE ONLY EXISTS IN
+   CHAT.** Shop your Style and the Wardrobe rows build a request from her profile or a checklist row, so
+   neither ever receives a sentence — **and therefore neither would exercise the precision work she just
+   asked for at all.** The "blush silk wrap dress" problem is a CHAT problem.
+   ⚠️ **SO THE WARDROBE IDEAS CAROUSELS ARE NOT FIRST AND THAT IS DELIBERATE.** The feed still powers
+   them and nothing there changes.
+3. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
    second-hand · verify per-offer · **route through `curatedPicks()`, never a second copy of her rules.**
-3. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
+4. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
    cheaply testable, 239 searches remain.
-4. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
+5. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
    is not applied.** It needs a ledger row and a test BEFORE it ships, not after.
-5. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
+6. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
    product file with **exact variant size + stock**, no API and no cost — real width/size truth for the
    DTC half of her list. **Nobody has counted yet.**
-6. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
+7. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
    SerpApi's motion to dismiss**, striking the DMCA claim for results with no copyrighted content, with
    no leave to refile. Google amended in August, narrowed to *licensed* content (Reddit snippets in
    Knowledge Panels). ▶ **Product listings are facts — the strongest side of a ruling that already went
    against Google.** Still live litigation. **Mitigation: keep the integration behind ONE small swappable
    piece so changing vendor is an afternoon.** ⚠️ SerpApi's legal shield does NOT cover the $25/$75 tiers.
-7. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
+8. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
    search QUALITY matters more than volume while she has no users.
-8. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
+9. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
    results: **178 (44%) already came from her 108.** ⭐ **KOHL'S ALONE IS +28 AND APPEARED IN 8 OF THE 10
    SEARCHES** — one store worth as much as the next nine candidates combined. Zara is +4 and was flagged
    as an anomaly (**H&M was on her list and Zara was not**; she confirmed it should be). ▶ **Both still
