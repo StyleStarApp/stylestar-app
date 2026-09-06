@@ -4694,9 +4694,57 @@ function _storeListForPrompt(occ,detailTop){
     return k+' ['+s.t+(s.a?'; '+s.a:'')+(s.s.length?'; carries '+s.s.join('/'):'')+col+deep+'; '+s.c+']';
   }).join('\n');
 }
-// Size ranges are a per-CATEGORY thing, never a global filter. A petite woman
-// still wears regular-length dresses, activewear, bags and jewelry, so she must
-// never end up with fewer options than anyone else because of her size.
+/* ═══ SIZE RANGE APPLIES PER CATEGORY, NEVER GLOBALLY ═══════════════════════
+   Cath, 2026-07-27: "short clients still wear regular-length dresses, athletic
+   wear, bags and accessories, so let's make sure our special sizing ladies
+   don't get fewer pickings because of that."
+   ▶▶ NOBODY GETS A SMALLER WORLD BECAUSE OF HER BODY.
+
+   🚨 THIS TABLE EXISTS BECAUSE THE RULE WAS IN TWO PLACES AND ONLY ONE OF THEM
+   WORKED. It was written out in full in the prompt below -- and the comment
+   that used to sit here said the same -- while curatedPicks filtered EVERY row
+   alike, with no category test at all. Measured 2026-09-06 against her real
+   catalog, not estimated: a woman who shops Petite and not Regular lost 100%
+   of the hand-picked bags (0 of 8), shoes (0 of 25) and accessories (0 of 8),
+   plus every fed bag and necklace, because a handbag carries no petite flag
+   and never will.
+   ⚠️ AND SAVED USERS WERE ENROLLED WITHOUT CHOOSING IT: _fitSizes() migrates
+   the old pants-length answer "shorter/cropped lengths" to ['Petite'] with no
+   'Regular' beside it.
+   ⚠️ A DESCRIBED SAFEGUARD IS NOT A SAFEGUARD -- the third time that sentence
+   has been earned. Grep for the call site before believing a comment.
+
+   ▶▶ SO THE RULE LIVES HERE, ONCE, AND BOTH PICKERS READ IT: _fitApplies() for
+   the shelf, and the prompt sentence below BUILT FROM THIS SAME TABLE so the
+   two cannot drift apart. A third picker must CALL this, never copy it.
+   ⚠️ SHOES ARE DELIBERATELY ABSENT: petite/tall/plus never apply to shoes.
+   WIDTH does, and width is handled on its own line below.
+   ⭐ Sleepwear, Foundations and athletic socks are exempt by Cath's own call,
+   2026-09-06, asked directly and answered "err toward showing more". */
+const _FIT_FAMILIES={
+  to:'tops',
+  bo:'pants, jeans, trousers and skirts',
+  dr:'dresses',
+  ja:'coats, jackets and blazers',
+  ac:'activewear and swim'
+};
+// Families where a size range means nothing, in the words the model needs.
+const _NOFIT_WORDS='bags, jewelry, sunglasses, hats, scarves, belts, sleepwear and lingerie';
+// One slot inside a fit-dependent family that is not itself fit-dependent.
+// ⚠️ Keyed by FULL SLOT ID, never by a word: 'ac13' is Athletic socks.
+const _FIT_SLOT_EXEMPT={ac13:1};
+// ⚠️ The id prefix is the family key, and that is checked rather than assumed:
+// 'to8' (Sweatshirts) lives under Activewear, not Tops -- both fit-dependent,
+// so the prefix is safe here. Re-measure if a slot ever moves category.
+function _fitApplies(slot){
+  const m=String(slot||'').match(/^([a-z]+)/);
+  if(!m||!_FIT_FAMILIES[m[1]])return false;
+  return !_FIT_SLOT_EXEMPT[slot];
+}
+function _fitWords(){
+  const v=[];for(const k in _FIT_FAMILIES)v.push(_FIT_FAMILIES[k]);
+  return v.join(', ').replace(/, ([^,]*)$/,' and $1');
+}
 function _sizeGuidance(){
   const f=_fitSizes().filter(function(x){return x!=='Regular'});
   const w=((prefs.sizes&&prefs.sizes.width)||[]).filter(function(x){return x!=='Medium'});
@@ -4708,8 +4756,8 @@ function _sizeGuidance(){
   if(!f.length&&!w.length)return '';
   let s='\nSIZE RULE, follow exactly:\n'+
     '- The ONLY size words you may use are the ones named below. Never invent one, and never write "regular", "standard" or "misses".\n'+
-    '- Use them ONLY where fit genuinely depends on it: pants, jeans, trousers, skirts, dresses, coats, jackets, blazers, tops, activewear and swim.\n'+
-    '- NEVER add a size word, and never narrow the store choice, for bags, jewelry, sunglasses, hats, scarves or belts. Those suit everyone.\n'+
+    '- Use them ONLY where fit genuinely depends on it: '+_fitWords()+'.\n'+
+    '- NEVER add a size word, and never narrow the store choice, for '+_NOFIT_WORDS+'. Those suit everyone.\n'+
     '- Shoes are their own case. Petite, tall and plus never apply to shoes. Width does.\n';
   if(f.length){
     s+='- She usually shops '+f.join(' and ').toLowerCase()+'. For fit-dependent items only, lead the search term with that word (for example "'+f[0].toLowerCase()+' wide leg trousers") and prefer a store that carries it.\n';
@@ -8209,8 +8257,12 @@ function curatedPicks(slot,p,family,count){
   // Size: her fit ranges (multi-select). 'Regular' keeps everything (every
   // catalog product carries a regular run); Petite/Tall/Plus require the
   // product's own flag when they are the ONLY ranges she shops.
+  // ⚠️ PER CATEGORY, NEVER GLOBALLY — _fitApplies() is the SAME table the AI
+  // prompt is built from (see _FIT_FAMILIES). A bag, a shoe, an earring and a
+  // pair of pyjamas are never filtered by her size range. Her rule, and the
+  // fault this call fixes is measured at that table.
   const fit=(p.sizes&&p.sizes.fit)||[];
-  if(fit.length)pool=pool.filter(function(x){
+  if(fit.length&&_fitApplies(slot))pool=pool.filter(function(x){
     return fit.indexOf('Regular')>=0||(fit.indexOf('Petite')>=0&&x.petite)||(fit.indexOf('Tall')>=0&&x.tall)||(fit.indexOf('Plus')>=0&&x.plus);
   });
   mark('size');
