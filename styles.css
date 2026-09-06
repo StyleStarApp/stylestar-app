@@ -624,7 +624,14 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    30px box and the caption would overflow it invisibly. */
 #s-wardrobe .wdr-star.on,#s-trending .wdr-star.on{flex-direction:column;height:auto;gap:1px}
 #s-wardrobe .wdr-added,#s-trending .wdr-added{font:700 8px/1 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#8a7f66;display:block}
-#s-wardrobe .shop-grid.hscroll,#s-trending .shop-grid.hscroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+/* align-items:flex-start added 2026-09-06. A flex row stretches every child
+   to the tallest by default, and since the feed's cards carry a PHOTO while
+   the AI's carry none, every AI card was being stretched to a photo's height
+   with justify-content:space-between pushing its button to the bottom -- a
+   card that was almost entirely empty white. Cath saw it on her own phone.
+   Letting each card take its natural height makes the row slightly ragged,
+   which is normal in a horizontal carousel and far better than a blank. */
+#s-wardrobe .shop-grid.hscroll,#s-trending .shop-grid.hscroll{display:flex;align-items:flex-start;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #s-wardrobe .shop-grid.hscroll::-webkit-scrollbar,#s-trending .shop-grid.hscroll::-webkit-scrollbar{display:none}
 #s-wardrobe .shop-grid.hscroll .shop-card,#s-trending .shop-grid.hscroll .shop-card{flex:0 0 128px;min-height:auto;border-radius:0}
 /* Swipe hint + "thinking" loader + one-time nudge */

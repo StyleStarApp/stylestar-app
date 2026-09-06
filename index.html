@@ -7967,9 +7967,22 @@ function wardrobeSeeIdeas(id,boxId){
 // because she is the taxonomy authority and a wrong exclusion would silently
 // hide real results. Extend only after talking a category through with her.
 var _WDR_IDEA_EXCLUDE={
-  to1:['to4','to7','to5','to6'], // White tops: not Print/Tank/Blouse/Dressy
-  to2:['to4','to7','to5','to6'], // Black tops: same four
-  to3:['to4','to7','to5','to6'], // Tops in your favorite colors: same four
+  // 🚨 ja5 Sweaters and ja1 Cardigans ADDED 2026-09-06, and the reason is the
+  // lesson of the whole day. Cath's call -- "a sweater is not a top" -- was
+  // applied to the FEED (data/slot-rules.json) and not here, so the AI half
+  // carried on naming sweaters for these three rows: Fine Knit Sweater in Red,
+  // V-Neck Sweater Light Blue, Scoop Neck Sweater Green, all on "Tops in your
+  // favourite colours" on her own phone. ⚠️ AND THE HALF-FIX MADE IT WORSE:
+  // the feed ceiling shipped the same day hands MORE slots to the AI, so a
+  // rule missing from the AI side became more visible, not less.
+  // ▶▶ THE STANDING LESSON: A RULE APPLIED TO ONE HALF IS NOT APPLIED. These
+  // two lists -- this map and slot-rules.json -- must be changed TOGETHER.
+  // ⚠️ Note these are CROSS-CATEGORY ids: Sweaters and Cardigans live under
+  // Jackets & Layers, which is exactly why they were missed when the map only
+  // ever listed sibling rows inside Tops.
+  to1:['to4','to7','to5','to6','ja5','ja1'], // White tops
+  to2:['to4','to7','to5','to6','ja5','ja1'], // Black tops
+  to3:['to4','to7','to5','to6','ja5','ja1'], // Tops in your favorite colors
   // Work-appropriate dresses: her catch, "strapless gowns or too short" --
   // Cocktail dresses and Formal gowns are the strapless-gown bleed; Sundresses
   // the too-short/too-casual bleed. Daytime casual dresses deliberately NOT
