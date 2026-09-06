@@ -78,7 +78,21 @@ sliders.** She works in screenshots already. **Then write the twelve numbers int
 
 ### ✅ GREEN, AND THE MENSWEAR FIX WAS PROVEN RED FIRST
 **rakuten_feed 52/0** (was 36; +16 new, and the probe showed blank/Unisex/unisex all `keep=True` before
-the fix) · **slot_match 1,087/0** · **rakuten_ingest ALL PASS**.
+the fix) · **slot_match 1,087/0** · **rakuten_ingest ALL PASS** · **curated 65/0** · **feedshelf 54/0** ·
+**sizefit 46/0** · **storecap 15/0** · **savetruth 19/0** · **e2e 29/0** · **feedname 14/0** (new).
+🚨🚨 **AND THE FIX FOR FAULT 2 BROKE SOMETHING REAL, WHICH IS THE MOST USEFUL THING THAT HAPPENED TODAY.**
+`curated` went **65/0 → 64/1** on *"a saved item is exempt from staleness"*. ▶▶ **A WISHLIST ID IS A SLUG
+OF THE NAME**, so tidying the DISPLAYED name silently re-keyed every saved piece: `curatedPicks`' own
+`stale()` looks a piece up under the RAW name while the card had begun saving under the tidy one.
+⚠️⚠️ **THE TEST SAW THE SMALL FACE OF IT. THE BIG ONE HAD NO TEST AT ALL: every piece a woman had already
+hearted would have become unreachable — heart reading unsaved, saveable a second time, her list quietly
+losing items.** ▶ **Fixed by decoupling: `_wlRegister` takes an optional `idName` (the untouched
+merchant name) for the ID while `name` stays free to be the pretty one she reads. NEVER collapse those
+two back together.** `scratchpad/feedname.js` pins it, including an assertion that the id WOULD have
+moved without `idName` — the bug itself, kept red on purpose.
+▶ **THE LESSON, and it is this session's lesson one level down: I changed the name in ONE place and not
+the other. Exactly the fault I was there to fix.** When a value is used as both a DISPLAY and a KEY,
+changing how it is written is a migration, not a cosmetic edit.
 ⚠️⚠️ **THE GUARD IMMEDIATELY CAUGHT THE TEST SUITE'S OWN FIXTURE: `row()`'s default name was
 `"Vilebrequin - Men Sneaker Socks"`**, so six existing tests began failing the moment names were read.
 **Nothing was wrong with them** — they vary the gender COLUMN and assert on the result, and a fixture
