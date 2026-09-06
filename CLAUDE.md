@@ -139,6 +139,19 @@ actually verify it.**
    piece so changing vendor is an afternoon.** ⚠️ SerpApi's legal shield does NOT cover the $25/$75 tiers.
 7. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
    search QUALITY matters more than volume while she has no users.
+8. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
+   results: **178 (44%) already came from her 108.** ⭐ **KOHL'S ALONE IS +28 AND APPEARED IN 8 OF THE 10
+   SEARCHES** — one store worth as much as the next nine candidates combined. Zara is +4 and was flagged
+   as an anomaly (**H&M was on her list and Zara was not**; she confirmed it should be). ▶ **Both still
+   need HER TAGS before they go in — price tier, archetype, sizes, strengths and the 10 dimension
+   scores. `scripts/store-draft.js` drafts from neighbours she already scored; she corrects. NEVER
+   invent them.** ⚠️ **NOT ADDED and deliberately: Fashion Nova · boohoo · Ardene — FAST FASHION, her
+   standing exclusion. Walmart was left out as a quality call and is still hers to make.**
+   🚨 **THE SHAPE OF THE GAIN IS A POWER LAW, so do NOT bulk-add: 98 of the 123 missing sources appeared
+   exactly ONCE in 400 results.** Ten adds would take coverage 44% → 60%; the long tail is worthless.
+   ⚠️⚠️ **AND EXPANSION FIXES VOLUME, NOT JUDGEMENT: her "blush silk wrap dress" search gained ZERO
+   results from all ten candidate stores.** That query failed because it is hard to ASK FOR, not because
+   shops were missing. **Adding stores will never fix a wording problem.**
 
 ### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT — every one of these is still open
 1. ✅✅ **HER TWELVE SLIDER POSITIONS — RECORDED 2026-09-08, THE ASK IS CLOSED.** She sent her Style
