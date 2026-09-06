@@ -101,6 +101,29 @@ PART 2, the DVF trap, which is the most load-bearing test in that file.** The fi
 gender-NEUTRAL so the two rules stay independently testable. ▶ **A shared fixture that quietly carries a
 property under test is a trap; when a new rule turns old tests red, read them before "fixing" them.**
 
+### ✅✅ THE INGEST WAS RUN THE SAME DAY (run #11, 2026-09-06 18:31 UTC, GREEN in 2m56s)
+▶ **Merging could never have removed the shirt** — it was already sitting in Supabase from an earlier
+run. **A re-tag removes it, not a merge.** Same distinction as the thong and the handbag on 2026-09-06;
+it keeps catching people out, so it stays written down.
+**Vilebrequin, the store the fault was in:**
+```
+529 lines -> 179 kept       (was 188)
+    dropped  301  menswear        <- the gender COLUMN, the old rule, still doing most of the work
+    dropped   38  kids
+    dropped    9  menswear-name   <- THE NEW RULE
+  swept 9 garments the feed no longer carries   <- her shirt is one of these, now DELETED
+```
+⭐ **AND THE SAMPLE ROW IT PRINTS IS NOW A WOMAN'S:** *"Vilebrequin - Women Long Sleeves Linen Shirt
+Solid - Shirt $295 White / XS"*.
+**Across all seven stores the name rule dropped 49 rows of 328,266 lines — 0.015%.** Vilebrequin 9 ·
+Marissa Collections 5 · Mytheresa 35 · FARM Rio, Olivela and Fleur du Mal 0.
+🚨🚨 **THE CHECK THAT MATTERED MOST, AND IT HELD: DIANE VON FURSTENBERG WENT 2,833 → 2,831, DROPPING
+ONLY THE HEADER AND THE TRAILER. Zero menswear-name drops.** DVF leaves the gender column blank on every
+row and is the store a careless womenswear rule deletes entirely. ▶ **A tiny, surgical drop is the
+success signal here; a big one would have meant the word boundaries were eating womenswear.** Total
+pieces **78,142**, in line with the ~78,171 before. **If a future change to this rule ever moves that
+total by thousands, it is wrong — check DVF first.**
+
 ### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT — every one of these is still open
 1. ✅✅ **HER TWELVE SLIDER POSITIONS — RECORDED 2026-09-08, THE ASK IS CLOSED.** She sent her Style
    Signature screenshot. **Read off the pixels, not estimated:** the track spans x=368..1040 on the
