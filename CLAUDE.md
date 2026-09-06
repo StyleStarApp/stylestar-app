@@ -810,6 +810,36 @@ questions she wanted understood, plus one feature idea she likes. Resurface when
 - ⚠️ **GIT: two Edit items added in separate PRs WILL conflict** — every new `.dc-item` inserts at the same anchor
   (just above `<div class="dc-sign">`). Resolve by keeping BOTH, then re-verify item counts and div balance.
 
+### ⭐⭐⭐ NEXT SESSION, AGREED WITH CATH 2026-09-06: WRITE HER BRIEF DOWN ONCE, AND TEST BOTH HALVES
+▶▶ **THE JOB: go through every rule she has ever given, check that BOTH halves of the app obey each one,
+write the list somewhere it can never be archived, and put a test on each.** Her words for why:
+*"The confusion of one half of the app following some rules and the other half not — I do not understand
+how this happened because the overall intent and goal of this whole app is very clear. It needs to match
+her style with excellent searches and it needs to be user friendly."*
+
+**⚠️ SHE ASKED WHETHER SHE NEEDS A NEW PROJECT FILE. THE ANSWER IS NO, and say so plainly if it comes up
+again:** starting over would throw away her 107 picks, her store tags, her ten dimension tables and the
+whole history, and would fix nothing — the file was never the problem.
+
+**▶ THE DIAGNOSIS, in the words that finally landed with her: the app has TWO STYLISTS picking clothes.**
+The AI, which has had her brief for months. And the nightly feed, added 2026-09-02, **which was never
+handed the brief at all.** Nothing in this app says "when a new picker arrives, give it every rule", so
+each rule had to be copied across by hand — and the ones that were missed looked exactly like working
+rules until she saw them on her phone. **Four separate faults in one day, all the same shape:**
+never-wear (two drifting copies) · her Tops sibling map (AI only) · the style filter (feed exempt) ·
+her sweater call (feed only, and my half-fix made it MORE visible because the ceiling gave the AI more
+cards). **Her intent was never unclear. It was in one head and not the other.**
+
+**▶ THE RULES TO SWEEP, none invented — every one is hers and is written in this file or the archive:**
+never-wear list · colour no's · size ranges per category · sweaters not on Tops · the sibling-row map
+(`_WDR_IDEA_EXCLUDE`) · max two per retailer / all-different in a compare carousel · price spread ·
+luxury routed through her retailers, never direct to the brand · store-pool eligibility (no subscription
+boxes, no rentals, no fast fashion) · never invent a store's tags · never name her body or size back to
+her · never ask her age · the checklist is a possibility map, never a requirement.
+**▶ THE TWO HALVES to check each against:** the AI path (`_shopRules`, `_wardrobeIdeaGen`, `sendChat`
+prompts) and the feed path (`curatedPicks`, `slot_match.py`, `data/slot-rules.json`).
+⚠️ **A rule applied to one half is NOT applied. That is the sentence to keep.**
+
 ### 🚨 WHAT THE FEED DOES AND DOES NOT POWER — HER DECISION, NOT A LIMITATION
 ▶▶ **The nightly feed fills the 100 rows of the Wardrobe checklist ONLY. It is called from exactly one
 place in the app.** The stylist chat, Shop your Style and Complete the Look do NOT consult it: there the
