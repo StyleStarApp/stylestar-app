@@ -478,6 +478,24 @@ because that listing carried no colour data at all. Same family as the tiger-pri
 is UNKNOWN, and unknown is honest — but a door named "other shades of pink" holding an unknown colour is
 the copy problem above wearing a different hat.**
 
+### ⚠️⚠️ A KNOWN PRE-EXISTING FAILURE IN `curated.js` — DO NOT PANIC, AND DO NOT DISMISS IT EITHER
+🚨 **`curated` reports 64/1 on the check *"never ruffles" removes the ruffled item*, and it is NOT a
+regression.** ▶ **PROVEN by running the SAME suite in a git worktree at `097585b` — this morning's `main`,
+before a single line of today's work — and getting the IDENTICAL failure.** It also passed 65/0 twice
+earlier the same day, so it is **time- or state-dependent, not code-dependent.**
+✅✅ **AND HER NEVER-WEAR RULE ITSELF IS FINE. Measured three ways on today's code:**
+`filterNeverWear` on the exact item goes **1 → 0** with `neverWear:['ruffles']` · `curatedPicks` with the
+test's own four-item fixture returns x1 **without** the preference and **not** with it · both halves of
+the assertion pass in isolation. **The rule works. The TEST is what is fragile.**
+▶ **THE LIKELY CAUSE, not yet proven: `curated.js` runs many checks in one page, and earlier ones mark
+pieces "seen this week". By the time this check runs the rotation/staleness state has moved**, so whether
+the fixture surfaces at all depends on what ran before it and when.
+🚨🚨 **WHY THIS IS WORTH FIXING PROPERLY AND SOON, RATHER THAN LOOSENING: this test guards the
+never-wear list, which exists because of a box of shift dresses. A test that cries wolf on THAT rule is
+worse than no test, because the next session learns to wave it through.** ▶ **The fix is to give it an
+isolated context/state, NOT to relax the assertion.** ⚠️ **Until then: if this one check fails, verify
+against `097585b` before believing it; if ANY OTHER check in `curated` fails, treat it as real.**
+
 ### ▶ STEP 3 IS HERS: LOOK AT IT ON HER PHONE
 1. ⚠️ **SHE MUST ADD `SERPAPI_KEY` TO NETLIFY** or nothing appears. Nothing breaks either.
 2. ▶ **THE FIRST THING TO JUDGE IS THE COPY, and it is the one thing deliberately left open:** a door
