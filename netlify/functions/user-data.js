@@ -677,31 +677,51 @@ export default async (req) => {
       }
 
       // Save to Supabase (isolated — a DB hiccup must NOT block the MailerLite signup)
+      //
+      // 🚨🚨 THIS BLOCK USED TO SWALLOW EVERYTHING AND STILL ANSWER success:true,
+      // so a woman could be told her results were saved when they were not, come
+      // back weeks later and find nothing. TWO separate holes, and the second is
+      // the one that hid for months:
+      //   (1) catch (e) {}  — a thrown network error vanished silently;
+      //   (2) fetch RESOLVES on a 4xx/5xx. Nothing read `.ok`, so a cleanly
+      //       REJECTED write (bad key, RLS refusal, schema drift) looked exactly
+      //       like a successful one. The 2026-09-06 key fix stopped it being
+      //       rejected that day; it never fixed the lie.
+      // ▶ The outcome is recorded and reported honestly below. The MailerLite
+      // signup still runs either way — that is what "isolated" was always meant
+      // to mean, and it is why this does not simply return early.
+      let saved = true, saveDetail = '';
       try {
-        if (existingRow) {
-          await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
-            method: 'PATCH',
-            headers: {
-              'apikey': SUPABASE_KEY,
-              'Authorization': 'Bearer ' + SUPABASE_KEY,
-              'Content-Type': 'application/json',
-              'Prefer': 'return=minimal'
-            },
-            body: JSON.stringify({ data: JSON.stringify(saveData) })
-          });
-        } else {
-          await fetch(baseUrl, {
-            method: 'POST',
-            headers: {
-              'apikey': SUPABASE_KEY,
-              'Authorization': 'Bearer ' + SUPABASE_KEY,
-              'Content-Type': 'application/json',
-              'Prefer': 'return=minimal'
-            },
-            body: JSON.stringify({ email: key, data: JSON.stringify(saveData) })
-          });
-        }
-      } catch (e) {}
+        const w = existingRow
+          ? await fetch(baseUrl + '?email=eq.' + encodeURIComponent(key), {
+              method: 'PATCH',
+              headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_KEY,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+              },
+              body: JSON.stringify({ data: JSON.stringify(saveData) })
+            })
+          : await fetch(baseUrl, {
+              method: 'POST',
+              headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_KEY,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+              },
+              body: JSON.stringify({ email: key, data: JSON.stringify(saveData) })
+            });
+        saved = !!(w && w.ok);
+        // ⚠️ The status is worth keeping (it is how a 401 key problem is told
+        // apart from a 500 outage) but the BODY is not logged: it can echo the
+        // row, and that is her data.
+        if (!saved) saveDetail = 'supabase ' + (w && w.status);
+      } catch (e) {
+        saved = false;
+        saveDetail = 'network';
+      }
 
       // Also add the signup to the MailerLite email list (never block the save if it fails)
       // Use "there" when no real name was given (the quiz uses "You" as a placeholder),
@@ -711,10 +731,22 @@ export default async (req) => {
       const restoreToken = makeToken(key);
       try { await addToMailerLite(key, mlName, restoreToken); } catch (e) {}
 
+      // ▶ AN HONEST ANSWER. Her results are still safe in this phone's own
+      // storage, and her email did reach MailerLite, so this is "not saved to
+      // your account", never "lost" — the front end says exactly that.
+      // The token still rides back so the device can simply try again: it is
+      // derived from the address, so it is the same token a successful save
+      // would have returned.
+      if (!saved) {
+        return new Response(JSON.stringify({
+          success: false, saved: false, token: restoreToken, email: key,
+          message: 'We could not save to your account just now.', detail: saveDetail
+        }), { status: 502, headers });
+      }
       // Hand the token back so this device can prove ownership on later saves.
       // The address rides back so a device that only ever had a token can
       // record which account it belongs to (see _applyRestoredRecord).
-      return new Response(JSON.stringify({ success: true, token: restoreToken, email: key }), { status: 200, headers });
+      return new Response(JSON.stringify({ success: true, saved: true, token: restoreToken, email: key }), { status: 200, headers });
     }
 
     if (req.method === 'GET') {

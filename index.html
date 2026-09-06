@@ -5289,12 +5289,35 @@ async function doStay(emailVal,nameVal,formId,successId,sectionId){
     await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});
   }catch(e){}
   // Save user data to server
+  // 🚨 THE RESULT USED TO BE THROWN AWAY. Whatever came back — a 502, a network
+  // failure, anything — she was shown "you're all set". Paired with the server
+  // answering success:true regardless (see user-data.js), a woman could be told
+  // her results were saved, come back weeks later, and find nothing.
+  // ▶ Her email still reaches MailerLite and Netlify Forms above, and her
+  // results are still in this phone's own storage, so a failure here is "not
+  // saved to your account", never "lost" — which is exactly what she is told.
+  var _saved=true;
   try{
     const portrait=document.getElementById('rp')?document.getElementById('rp').textContent:'';
     const data={userName,answers,topArchNames,portrait,prefs};
-    await saveUserRecord(emailVal,data);
-    try{localStorage.setItem('ss_email',emailVal)}catch(e){}
-  }catch(e){}
+    const _r=await saveUserRecord(emailVal,data);
+    _saved=!(_r&&_r.ok===false);
+    if(_saved){try{localStorage.setItem('ss_email',emailVal)}catch(e){}}
+  }catch(e){_saved=false;}
+  if(!_saved){
+    // ⚠️ NON-BLOCKING AND NEVER ALARMING, per the house rule: she keeps
+    // everything she came for, the form stays open so one tap retries, and
+    // emailDone is deliberately NOT set so she is not locked out of trying.
+    var _f=document.getElementById(formId);
+    if(_f){
+      var _m=_f.querySelector('.stay-err');
+      if(!_m){_m=document.createElement('div');_m.className='stay-err';
+        _m.style.cssText='margin-top:10px;font-size:13px;line-height:1.45;color:#8a5a00;background:#fff8e6;border:1px solid #f0dCA8;border-radius:8px;padding:10px 12px;text-align:left';
+        _f.appendChild(_m);}
+      _m.textContent='We could not save to your account just then. Your results are safe on this device, and you are on the list. Please tap Save again in a moment.';
+    }
+    return;
+  }
   emailDone=true;
   try{localStorage.setItem('ss_emailDone','true')}catch(e){}
   document.getElementById(formId).style.display='none';

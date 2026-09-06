@@ -39,8 +39,15 @@ globalThis.fetch = async (url, opts = {}) => {
         email && DB.has(email) ? [{ email, data: JSON.stringify(DB.get(email)) }] : []
       ), { status: 200 });
     }
-    if (method === 'PATCH') { DB.set(email, JSON.parse(JSON.parse(opts.body).data)); return new Response('', { status: 204 }); }
-    if (method === 'POST') { const b = JSON.parse(opts.body); DB.set(b.email, JSON.parse(b.data)); return new Response('', { status: 204 }); }
+    // ⚠️⚠️ `new Response('', {status:204})` THROWS in Node — 204 is a null-body
+    // status, so an empty STRING is still a body and the constructor rejects it.
+    // This stub had been throwing on every single write, and user-data.js's old
+    // `catch (e) {}` swallowed it and answered success:true regardless — so the
+    // two "save returns 200" checks below were passing on the very lie that
+    // suite exists to catch. Surfaced 2026-09-07 the moment the handler started
+    // reporting write failures honestly. Body must be null.
+    if (method === 'PATCH') { DB.set(email, JSON.parse(JSON.parse(opts.body).data)); return new Response(null, { status: 204 }); }
+    if (method === 'POST') { const b = JSON.parse(opts.body); DB.set(b.email, JSON.parse(b.data)); return new Response(null, { status: 204 }); }
   }
   return realFetch(url, opts);
 };
