@@ -131,6 +131,65 @@ function ok(name, cond, extra) {
     (await picks('bg1', ['Petite'])) === (await picks('bg1', ['Regular'])) &&
     (await picks('bg1', ['Plus'])) === (await picks('bg1', ['Regular'])));
 
+  // ── Part D — WIDTH. "If a woman needs a wide shoe, we need to find it for
+  // her" (Cath, 2026-09-07). Both halves: the shelf RANKS what it knows of,
+  // the search FINDS the rest across all 108 stores.
+  console.log('Part D — width, both halves');
+
+  const setW = async (w) => pg.evaluate(x => {
+    prefs.sizes = prefs.sizes || {}; prefs.sizes.width = x; prefs.sizes.fit = [];
+  }, w);
+
+  // The shelf half: a wide-width woman sees wide-carrying shoes FIRST.
+  await setW(['Wide']);
+  ok('wide-carrying shoes lead the row for a wide-width woman', await pg.evaluate(() => {
+    const r = curatedPicks('sh9', prefs, 'Balanced', 6);
+    if (r.picks.length < 2) return 'too-few';
+    const w = r.picks.map(p => (p.widths || []).map(v => v.toLowerCase()).indexOf('wide') >= 0);
+    // every wide one must come before every non-wide one
+    return w.indexOf(false) === -1 || w.lastIndexOf(true) < w.indexOf(false);
+  }) === true);
+
+  // ⚠️⚠️ AND IT MUST NEVER THIN THE ROW. This is the assertion that stops the
+  // petite fault being repeated: preferring is allowed, removing is not.
+  const wideCount = await pg.evaluate(() => curatedPicks('sh9', prefs, 'Balanced', 6).picks.length);
+  await setW([]);
+  const anyCount = await pg.evaluate(() => curatedPicks('sh9', prefs, 'Balanced', 6).picks.length);
+  ok('a width preference REMOVES NOTHING (prefer, never filter)', wideCount === anyCount,
+    'wide=' + wideCount + ' none=' + anyCount);
+  await setW(['Narrow']);
+  ok('and the same holds for narrow, where she has only 2 picks in the whole catalog',
+    await pg.evaluate(() => curatedPicks('sh9', prefs, 'Balanced', 6).picks.length) === anyCount);
+
+  // Width is a SHOE rule and only a shoe rule.
+  await setW(['Wide']);
+  ok('width is shoes only — _isShoeSlot', await pg.evaluate(() =>
+    _isShoeSlot('sh9') === true && _isShoeSlot('to1') === false && _isShoeSlot('bg1') === false) === true);
+  ok('a non-shoe row is byte-identical with and without a width preference',
+    await pg.evaluate(() => {
+      const a = curatedPicks('to5', prefs, 'Balanced', 6).picks.map(p => p.id).join(',');
+      const keep = prefs.sizes.width; prefs.sizes.width = [];
+      const b = curatedPicks('to5', prefs, 'Balanced', 6).picks.map(p => p.id).join(',');
+      prefs.sizes.width = keep; return a === b;
+    }) === true);
+  ok('"Medium" is not a preference and changes nothing', await pg.evaluate(() => {
+    prefs.sizes.width = ['Medium'];
+    const a = curatedPicks('sh9', prefs, 'Balanced', 6).picks.map(p => p.id).join(',');
+    prefs.sizes.width = [];
+    const b = curatedPicks('sh9', prefs, 'Balanced', 6).picks.map(p => p.id).join(',');
+    return a === b;
+  }) === true);
+
+  // The search half — the one that actually finds her a wide shoe.
+  ok('the prompt tells the model to lead SHOE searches with her width',
+    await pg.evaluate(() => {
+      prefs.sizes.width = ['Wide']; prefs.sizes.fit = [];
+      const g = _sizeGuidance();
+      return /wide/i.test(g) && /FOR SHOES ONLY/i.test(g) && /Never apply width to anything but shoes/i.test(g);
+    }) === true);
+  ok('a woman with no width given gets no width sentence at all',
+    await pg.evaluate(() => { prefs.sizes.width = []; prefs.sizes.fit = []; return _sizeGuidance(); }) === '');
+
   ok('zero JS errors throughout', errs.length === 0, errs.slice(0, 3).join(' | '));
 
   console.log(`\n${pass} passed, ${failn} failed`);

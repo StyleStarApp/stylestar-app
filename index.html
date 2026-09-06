@@ -4736,6 +4736,11 @@ const _FIT_SLOT_EXEMPT={ac13:1};
 // ⚠️ The id prefix is the family key, and that is checked rather than assumed:
 // 'to8' (Sweatshirts) lives under Activewear, not Tops -- both fit-dependent,
 // so the prefix is safe here. Re-measure if a slot ever moves category.
+// ▶ WIDTH IS A SHOE RULE AND ONLY A SHOE RULE — her words: "Shoes are their own
+// case. Petite, tall and plus never apply to shoes. Width does." It lives here
+// beside the fit table because it is the same rule of hers, read by both halves.
+const _SHOE_FAMILY='sh';
+function _isShoeSlot(slot){const m=String(slot||'').match(/^([a-z]+)/);return !!m&&m[1]===_SHOE_FAMILY}
 function _fitApplies(slot){
   const m=String(slot||'').match(/^([a-z]+)/);
   if(!m||!_FIT_FAMILIES[m[1]])return false;
@@ -8371,6 +8376,33 @@ function curatedPicks(slot,p,family,count,mode){
   // deliberately ignores anything shown THIS week, or the set would churn
   // under her mid-decision (the addendum's day-scale penalty contradicted its
   // own stability principle; weeks reconcile the two).
+  /* ▶▶ WIDTH — "IF A WOMAN NEEDS A WIDE SHOE, WE NEED TO FIND IT FOR HER"
+     (Cath, 2026-09-07). The catalog has carried a `widths` array on every
+     product since 2026-08-15 and NOTHING HAS EVER READ IT. _sizeGuidance uses
+     width on the AI half; this is the shelf half of the same rule.
+
+     ⚠️⚠️ A PREFERENCE, NEVER A FILTER, and the measurement is the whole reason:
+     only 7 of her 25 hand-picked shoes carry wide, only 2 carry narrow, and the
+     FEED CARRIES NO WIDTH DATA AT ALL. A hard filter would take a wide-width
+     woman's ankle boots from 8 picks to 1 and a narrow-width woman's sneakers
+     from 17 to 1 — which is the petite fault of this same morning in a new hat.
+     So a width match sorts FIRST and nothing is ever removed.
+     ⚠️ SHOES ONLY (_isShoeSlot), and inert unless she has given a width other
+     than Medium — so it changes nothing for almost everyone.
+     ▶ IT RANKS ABOVE loved-colour ON PURPOSE: a shoe that does not fit is not a
+     shoe she can buy, and colour is a preference where width is a requirement.
+     ▶ AND THE HONEST LIMIT, worth keeping: 25 hand-picks were never going to be
+     the answer. The SEARCH is — "wide width ankle boots" across all 108 stores,
+     which _sizeGuidance already builds. This ranks the few we know of; that
+     finds the rest. */
+  const herW=((p.sizes&&p.sizes.width)||[]).filter(function(x){return x&&x!=='Medium'})
+    .map(function(x){return String(x).toLowerCase()});
+  const wantWidth=herW.length>0&&_isShoeSlot(slot);
+  const widthFit=function(x){
+    if(!wantWidth)return 0;
+    const w=(x.widths||[]).map(function(v){return String(v).toLowerCase()});
+    return w.length&&herW.some(function(h){return w.indexOf(h)>=0})?1:0;
+  };
   const love=(p.colorsLove||[]).map(function(c){return c.toLowerCase()});
   const loved=function(x){return x.colors.some(function(c){return love.some(function(l){
     const base=l.split(' ').pop();return c.toLowerCase().indexOf(base)>=0})})?1:0};
@@ -8382,7 +8414,7 @@ function curatedPicks(slot,p,family,count,mode){
   };
   const rot=function(x){return _wdrHash(seed+'|'+x.slot+'|'+week+'|'+x.id)};
   pool=pool.slice().sort(function(a,b){
-    return (loved(b)-loved(a))||(stale(a)-stale(b))||(rot(a)-rot(b))||(a.id<b.id?-1:1);
+    return (widthFit(b)-widthFit(a))||(loved(b)-loved(a))||(stale(a)-stale(b))||(rot(a)-rot(b))||(a.id<b.id?-1:1);
   });
   // Price spread: most of the set stays around the band this shelf actually
   // sells in (the pool's median band — there is deliberately NO budget
