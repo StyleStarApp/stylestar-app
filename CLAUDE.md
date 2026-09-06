@@ -496,6 +496,32 @@ worse than no test, because the next session learns to wave it through.** ▶ **
 isolated context/state, NOT to relax the assertion.** ⚠️ **Until then: if this one check fails, verify
 against `097585b` before believing it; if ANY OTHER check in `curated` fails, treat it as real.**
 
+### ✅✅ CLOSED — HOW A NEAR MISS IS SHOWN, AND HER OWN WORDING FOR IT (2026-09-06)
+⭐⭐ **HER SENTENCE, VERBATIM, AND IT BEAT ALL FIVE DRAFTED FOR HER:**
+***"I couldn't find exactly what you asked for. This is the closest I could come up with."***
+▶ **WHY IT IS BETTER, and it generalises: IT STATES THE TRUTH AND STOPS.** The built version tried to
+say what went wrong AND explain the trade-off in one breath and came out as *"keep the fabric, and look
+at other shades of pink and look at another style?"* — two "look at"s, **assembled rather than spoken.**
+⚠️ **DO NOT PARAPHRASE IT INTO SOMETHING BLANDER AND DO NOT RE-ADD A QUESTION TO IT.** The detail
+belongs on the CARDS, where every requirement already carries its own tick or its own honest note.
+
+🚨 **AND THE SHAPE IS DECIDED TOO — SHOW THE CLOSEST, DO NOT ASK FIRST. HER CALL, and it is a
+deliberate REFINEMENT of her own earlier "the woman chooses which requirement to release", not a
+retreat from it.** Her words: *"simplify with the closest thing and just let her know. Simplest answer."*
+▶▶ **THE ARGUMENT THAT MADE IT RIGHT RATHER THAN MERELY SIMPLER: SHOWING DOES NOT TAKE HER CHOICE AWAY;
+ASKING WOULD HAVE DELAYED IT.** Her original worry was that the app must never decide WHICH OF HER WORDS
+MATTERED LEAST. Showing every near miss, each labelled with what it keeps and what it gives up, decides
+nothing — it puts every option in front of her at once. **Asking would have been MORE app-driven: it
+makes her commit to a trade-off before she has seen a single dress.**
+▶ **Three more things landed on that side:** her mum's 2026-07-26 lesson (**content is more discoverable
+than chrome** — a question is chrome, the dresses are content) · **asking costs a SECOND search**, ~15¢
+and another 5-8s, to reach pieces already found and paid for · and a simple line is harder to word badly,
+which is exactly what went wrong with the first attempt.
+⚠️⚠️ **THE ONE THING THAT MUST HOLD, AND IT IS WHAT PRESERVES HER RULE: THE GROUP LABELS.** *"Right
+colour"* over one set, *"Right fabric and style"* over another. **If those are ever dropped or blurred it
+really does become the app choosing for her.** ▶ They appear only when there is more than one group —
+with a single set there is nothing to choose between and a label would be noise.
+
 ### ▶ STEP 3 IS HERS: LOOK AT IT ON HER PHONE
 1. ⚠️ **SHE MUST ADD `SERPAPI_KEY` TO NETLIFY** or nothing appears. Nothing breaks either.
 2. ▶ **THE FIRST THING TO JUDGE IS THE COPY, and it is the one thing deliberately left open:** a door
