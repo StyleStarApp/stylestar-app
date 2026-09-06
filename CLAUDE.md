@@ -7,223 +7,113 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-06 — 🎉 THE SHELVES ARE LIVE AND SHOWING REAL GARMENTS WITH REAL PHOTOGRAPHS)
+## ▶ NEXT SESSION — START HERE (2026-09-06 evening — SHE TESTED IT AS HERSELF AND IT FAILED HER. FIXED, NOT YET MERGED)
 
-### ⏸ WHERE THIS SESSION PAUSED
-✅ **MERGED TO MAIN 2026-09-05 on her word** (`62e9d0b..e2986ac`, seven commits, clean fast-forward,
-one Netlify build). ⚠️ **Nothing a woman can see changes until the ingest fills `slots`** — an empty
-feed behaves exactly as the app did before this existed, and `feedshelf.js` asserts that.
-▶▶ **THE HEADLINE: the nightly catalog now reaches Wardrobe Ideas, and it goes through
-`curatedPicks()` — the SAME picker as her 107 hand-picks — so her never-wear list, colour no's, size
-ranges, price spread, max-two-per-retailer and the Sunday rotation apply to a feed garment by the
-identical code that applies them to hers. Two sources, ONE picker.**
-▶ **Wardrobe Ideas ONLY, deliberately.** Her eye on a real phone before this reaches Shop your Style,
-Complete the Look or the stylist chat.
+### 🚨🚨⭐⭐ HER VERDICT, AND SHE WAS RIGHT ON EVERY POINT
+She switched back to her real Style Star profile (not the luxury shopper she had used to force feed
+pieces up), opened **"Tops in your favorite colors"**, and got: **a Fleur du Mal THONG, a garter belt,
+a Balenciaga HANDBAG, a $2,490 Balmain top, a wool sweater, and two cards from the same store.**
+▶ **Her words, and they are the design brief: *"I wanted those items only to show up as a shopping
+suggestion where those particular items made sense for the shopper. Not for those 7 stores to be
+prioritized as the top picks. Only for them to be picked when it made absolute sense."***
+⚠️ **She asked whether she needs to switch to OpenAI or rethink the whole app.** ▶ **THE HONEST ANSWER,
+GIVEN WITH FILE NAMES SO SHE COULD CHECK IT: not one of the faults involved the AI.** The thong and the
+handbag were `scripts/slot_match.py`, a word match. The sweater was `data/slot-rules.json`, a taxonomy
+list. The 7 stores everywhere was one `||` in `index.html`. The prices are which Rakuten programs she is
+approved for. **No model is consulted anywhere in that path, so changing providers would have fixed
+none of it.** Say it plainly and checkably if it comes up again; never as a plea.
 
-### 🚨🚨⭐⭐ THE FIND OF THE SESSION: HER NEVER-WEAR LIST HAD A PLURAL BUG, AND IT WAS LIVE EVERYWHERE
-Her words, and they are why this matters more than anything else built today: *"the never-wear list is
-very important to me. very very important. When someone says no shift dresses, that means absolutely no
-shift dresses."*
-- ▶ **THE BUG: `hay.includes(t) || (t.endsWith('s') && hay.includes(t.slice(0,-1)))` strips ONE trailing
-  letter.** So `"shift dresses"` became `"shift dresse"` — **which matches nothing** — and a product
-  called **"Shift Dress" sailed straight onto her shelf.** Anything she typed as a plural ending in
-  `-sses`, `-ies`, `-ches`, `-shes` was equally broken.
-- ⚠️⚠️ **IT WAS NOT A FEED BUG. The identical line was in BOTH `filterNeverWear()` (every AI shopping
-  surface) and `curatedPicks()` (her own 107 hand-picks), so it was live on every surface in the app and
-  had been for as long as those lists existed.** Found only because the new feed suite seeded a garment
-  named "Shift Dress Blouse 1" against `neverWear:['shift dresses']` and watched it survive.
-- ✅ **FIXED as ONE shared `_nwHit()`/`_nwForms()`, used by both paths.** A rule this important living in
-  two implementations is exactly how it drifts, and this bug is what that looks like.
-- ⚠️ **SUBSTRING, NOT WORD-BOUNDARY, AND KEPT DELIBERATELY:** "boots" also matches "bootcut", which is
-  over-eager. ▶ **On a never-wear list over-matching drops a garment she might have liked; under-matching
-  shows her a garment she said no to. Only one of those is a broken promise.** Written at the code so a
-  future session does not "tighten" it.
+### ⭐⭐⭐ THE ONE STRUCTURAL CAUSE, AND IT IS THE LESSON OF THE WHOLE SESSION
+**It was not three bugs. It was ONE fault with three faces: the feed path was built ALONGSIDE the AI
+path and inherits NONE of the guardrails built on the AI path.**
+1. **`_WDR_IDEA_EXCLUDE`** — her own hand-reviewed sibling map (White/Black/colour Tops exclude Print
+   tops, Tank tops, Professional blouses, Dressy tops), which **she confirmed herself in August**. It
+   was referenced in **exactly one place, `_wardrobeIdeaGen`, which builds the AI PROMPT.** The feed
+   never goes near the model, so it never saw the rule.
+2. **The style-family filter** — `pool.filter(x => x.feed || ...)`. Her 107 must match her family; the
+   78,000 feed garments skipped the check outright.
+3. **Category sanity** — the model knows a thong is not a top. The Python matcher did not.
+▶▶ **AND THE COMMENT ABOVE THAT FILTER CLAIMED A SAFEGUARD THAT DID NOT EXIST.** It said the STORE was
+the style signal for feed pieces instead. **Measured: `_storeFit`, which scores a store using CATH'S OWN
+ten dimension tables, was called in exactly ONE place in the whole app and it was not that one.**
+🚨 **A described safeguard is not a safeguard. Grep for the call site before believing a comment.**
+⚠️ **This is the SAME DISEASE as the never-wear plural bug**, whose own note in this file says *"a rule
+this important living in two implementations is exactly how it drifts."* It drifted again, in a new
+direction, five weeks later. ▶ **When a second path is added to a rule, the rule must MOVE to somewhere
+both paths call. Adding a second copy is the bug.**
 
-### 🔒⭐⭐ THE SECURITY CALL, AND IT REPLACED A DESK ASK I WAS ABOUT TO MAKE
-I was about to ask her to copy the **`service_role` key into Netlify** so the shelves could read the
-catalog. ▶ **That key bypasses every rule in the database INCLUDING on `users`, so it can read every
-woman's name, email, sizes, portrait and wishlist.** A master key in a second platform so a function can
-look up product names is the wrong trade.
-- ✅ **INSTEAD: the two catalog tables carry a READ-ONLY rule for the ordinary key Netlify already
-  holds**, and `product-search.js` **prefers** that key — so if the service key is ever added to Netlify
-  for another reason this function will not quietly start using it (pinned by a test, both directions).
-  **Writing is still refused, so the ingest still needs the service key and still keeps it in a GitHub
-  Secret and nowhere else.** `product_syncs` deliberately gets no policy.
-- 🚨⭐⭐ **PROVEN ON A REAL POSTGRES 16, AND IT CAUGHT TWO THINGS THAT WOULD EACH HAVE SHIPPED AS A
-  SILENTLY EMPTY SHELF:** (1) **a policy alone is not enough — SQL privileges are checked BEFORE
-  policies**, so a permissive policy with no `GRANT` still returns *permission denied*; (2) **granting
-  the two tables is not enough either — `product_cards` is a separate object and needs its OWN grant**,
-  even though `security_invoker` means the caller also needs the tables. **Both lines are required.**
-  ▶ **And because a failure is deliberately an EMPTY POOL rather than an error, either would have looked
-  exactly like "the feed has nothing for this row" — a silent nothing, the worst failure this pipeline
-  can have.** So the SQL grants explicitly rather than trusting Supabase's defaults.
-- **Measured as `anon`, eight ways:** reads the view · runs the real slot lookup · sees the gathered
-  sizes · insert, update and delete all refused · `product_syncs` refused.
+### ⭐ SHE ASKED WHETHER HER INTENTION IS BEING LOST IN SESSION COMPACTION. IT IS NOT — AND THAT MATTERS
+**Her Tops rule was in the archive, correctly written, and took thirty seconds to find.** The notes did
+their job. ▶ **The intention is lost in the gap between a COMMENT and a LINE OF CODE, not in the notes.**
+Answer her this way if she worries again, and answer it with the grep, not with reassurance.
 
-### ⚠️ FLAGGED AND DELIBERATELY NOT DECIDED: HER 107 HAND-PICKS GET NO HEAD START
-The sort's last tie-break is **by id, not array order**, so a hand-pick competes with a feed garment on
-loved colour, staleness and the weekly rotation and nothing else. ▶ **With ~107 of hers against tens of
-thousands of feed pieces, HERS WILL APPEAR RARELY on a well-stocked row.** That is a curation question
-for her the first time she sees a real shelf, not one to settle in code — **and the lever is one term at
-the FRONT of the sort (`(b.feed?0:1)-(a.feed?0:1)`), recorded at the code.** ⚠️ It is a real consequence
-for something she spent real time building; raise it when she reports back.
+### ✅ WHAT WAS BUILT (3 commits, branch `claude/resume-style-star-vx3tc4`, NOT merged)
+- **`3486cf4` the matcher.** **The CATEGORY now WINS whenever a garment carries one** — the rung test
+  used to be `cat OR name`, so a bag arriving with `women>bags>top-handle bags` was still asked whether
+  its name contained "top". It did. ⚠️ **"Carries a category" deliberately means "carries one THESE
+  RULES RECOGNISE"**, not "the column is non-empty" — a breadcrumb of just `Women` would otherwise
+  silently empty a shelf. Plus **`_family_not` in `slot-rules.json`**, whole-family exclusions merged at
+  load time. ▶▶ **KEYED BY FAMILY, NEVER GLOBALLY, and this is the part to protect: every excluded word
+  is CORRECT somewhere.** `thong` is a real sandal (`sh1`) AND real underwear (`fo`); `top-handle` is a
+  real bag row (`bg2`). A global block list breaks all three.
+- **Her taxonomy call: A SWEATER IS NOT A TOP.** She keeps `ja5` Sweaters and `ja1` Cardigans, so a knit
+  on Tops duplicates a row she already has. Applied to the **whole** Tops family — a "Lace Knit Sweater"
+  was still reaching Dressy tops via the word "lace".
+- **`c3ba5ad` the two gates in `curatedPicks`.** GATE 1 honours `_WDR_IDEA_EXCLUDE` on the feed (needed
+  `slots` added to the `product-search` select and to the card). GATE 2 requires a feed garment's store
+  to clear **her own median** across all 108 stores, scored with her dimension tables.
+  ⚠️ **RELATIVE, NEVER ABSOLUTE** (a fixed cutoff means a different thing for every woman and would
+  silently empty the feed for some) · ⚠️ **NOT BEFORE THE QUIZ** (`answers` sits at neutral until she
+  moves a slider) · ⚠️ **HER 107 ARE EXEMPT — she already judged those** · ⚠️ **an unresolvable retailer
+  KEEPS its place**, because dropping a garment over our own lookup failure is the silent nothing.
 
-### ⚠️ A FEED GARMENT IS EXEMPT FROM THE STYLE-FAMILY FILTER, and that is a decision
-Her hand-picks carry a family **she** judged. **Nobody has judged 78,000 feed pieces, and inventing that
-judgment is exactly what the standing store-tag rule forbids** (never invent a store's tags, ask her —
-the Garnet Hill lesson). For these the **STORE is the style signal**, and her own ten dimension scores
-already rank the stores.
+### 📏 THE GATE 2 MEASUREMENT — THIS IS THE NUMBER TO SHOW HER
+Fed stores passing her bar, by profile: **classic/relaxed/neutral/modest → 1 of 7 (Mytheresa only)** ·
+classic + a little dressy → 2 · middle of the road → 7 · trendy/colourful → 6 · **glam/dressy/alluring
+→ 7 of 7**.
+▶▶ **A woman who dresses the way Cath describes HERSELF (Cindy Crawford, jeans, relaxed blouses) now
+sees ONE of the seven fed stores** — the rest of her shelf returns to her 107 and the AI. **And Fleur du
+Mal passes ONLY for the glam/alluring profile**, which is exactly right for a lingerie house.
+⭐ **This also solves the affordability problem from the right end, and it is BETTER than what I proposed
+in the morning.** I suggested giving her 107 a head start in the sort; **she pushed back, correctly, that
+the spreadsheet is frozen and temporary and should not be leaned on harder.** Gate 2 means her picks win
+on MERIT — the luxury stores simply stop qualifying for a woman they do not suit. ▶ **Her framing beat
+mine. The lever `(b.feed?0:1)-(a.feed?0:1)` is still recorded at the code and is still NOT used.**
+⚠️ **Those five profiles are Claude's approximations, not her real saved answers.** Offer to run her
+actual slider positions.
 
-### ✅ ALSO FIXED, EACH IN ITS OWN COMMIT SO IT COULD NOT HIDE IN THE FEATURE DIFF
-- **`scratchpad/curated.js` routed `**/.netlify/**` with ONE counter**, which now catches `product-search`
-  as well as `style-ai` — so "AI called exactly once" saw 2, and the feed request was fulfilled with an AI
-  response body. **Routed separately, the way `feedshelf.js` does. 65/0.**
-- **`searchtune` had been RED since August on a stale restated count** ("39 keyword-scoped + 6
-  param-scoped"). **Measured first: it is 39 and 7 — the 7th is ETSY**, whose `instant_download=false`
-  filter rides the same `gp` field (added 2026-08-28) and whose count was never bumped with it. ⚠️ **A
-  permanently-red suite is how the 2026-08-22 false green happened, and this one already cost a
-  diagnostic detour today.** 71/2 → 71/1, the remaining one being the documented heart-tip font check.
+### ✅ GREEN, MEASURED NOT ASSUMED
+**slot_match 1,087/0** (19 new regression tests, **every case a real product name off the live feed**,
+asserting BOTH directions — a thong is not a top AND thong sandals are still sandals, a thong is still
+underwear, a top-handle bag is still a bag, "Sweatshirt" is untouched by the "sweater" exclusion) ·
+**feedshelf 49/0** · **curated 65/0**. Ingest timing unchanged (~20s for a 266,000-row night).
+**No shelf emptied:** White tops 200→177 · Black tops 200→149 · Tops/colours 200→159 · Blue jeans 200→180.
 
-### ⚠️ THREE HARNESS TRAPS, ALL DOCUMENTED FAMILIES, ALL HIT AGAIN
-1. **`e2e` and `followups` printed "no total" and I nearly treated them as not-run.** They print
-   **`✓ N passed`**, not `N passed, M failed`. ▶ **A suite's total is only missing if you know its
-   format — grep for the FORMAT, not one phrasing.** Both were green (29 and 39). `searchtune` prints a
-   third format again (`71 checks, 2 failures`).
-2. **A foreground loop and a background sweep both ran `honest.js` and wrote the same output file** —
-   interleaved output, one crashed on `EADDRINUSE 8996`, and the file contained both a stack trace and a
-   clean 44/0. ▶ **One suite, one output path, never two runners.** Clean alone: 44/0.
-3. **A `/proc` scan to kill the port-holder killed its own shell** (exit 129) because my own command line
-   contained the pattern. ▶ **The `pkill -f` self-match trap, generalised: skip `$$` and match the
-   `node…` command, not the script path.**
-
-### ✅ GREEN AT PAUSE
-**feedshelf 49 (new) · curated 65 · wdrmylist 65 · honest 44 · sizeveto 43 · followups 39 · fabric 27 ·
-nameparity 25 · e2e 29 · askvary 14 — all 0 failed.** `searchtune` 71/1, the documented pre-existing
-heart-tip font check.
-
-### 🚨⭐ THE FIRST THING SHE SAW ON A LIVE SHELF: NO PHOTOGRAPHS, AND A PAIR OF EMPTY QUOTE MARKS
-Her report, minutes after the key landed: *"They did come up but with no photos."* **Both faults were in
-one function, `_curatedCard()`, and both are the SAME cause — it was written for her 107 hand-picks and
-a feed garment is their mirror image.**
-- ▶▶ **THE SHAPE OF THE TWO CATALOGS, measured not assumed, and this is the fact to keep: her 107 have a
-  NOTE and no photo (she wrote the notes; nobody photographed the products). The ~78,000 feed garments
-  have a PHOTO and no note (the retailer supplies the image; nobody has written 78,000 notes and nobody
-  ever will). 107/107 hers have a note and 0 an image; 200/200 of a live feed slot have an image and 0 a
-  note.** ⚠️ **So NEITHER half of that card may ever be rendered unconditionally.**
-- ✅ **FIXED: the photo renders when there is one; the note renders when there is one.** The photo is
-  full-bleed — the card is only 128px wide, so keeping the 1rem padding would leave a 96px stamp, and a
-  96px stamp of a dress is not a product photograph. A negative margin cancels the padding instead,
-  3:4 (`object-fit:cover`, because a stretched dress is worse than a cropped one), `loading="lazy"`.
-- ⚠️ **A BROKEN PHOTO MUST NEVER BECOME A TORN ICON.** 78,000 urls will contain dead ones. `onerror`
-  hides the image, and because the photo's own negative margin is what pulls it flush, hiding it
-  restores the ordinary card exactly — no other rule has to know.
-- 🔒 **The image url is CATALOG DATA, so it does not get to choose its own scheme: https:// only.** An
-  href-shaped field reaching the DOM is never trusted. (Production is https anyway, so an http image
-  would be blocked as mixed content regardless — the guard costs nothing and closes the rest.)
-- **Verified by `scratchpad/feedphoto.js`, 24 checks, all green**, driving the real app in Chromium: the
-  photo really DECODES and occupies real pixels, sits flush inside the card's own hairline, is 3:4, no
-  empty quotes, her hand-picks unchanged on the same shelf, a 404 leaves a whole card, a non-https url
-  renders no `<img>` at all, zero JS errors. Plus feedshelf 49/0 and curated 65/0 unchanged.
-
-#### ⚠️⚠️ FOUR TESTING TRAPS IN ONE HOUR, and the first two are the ones that matter
-1. 🚨⭐⭐ **A HAND-TYPED PNG WITH BAD CRCs made every photo check read as a code failure.** Chromium
-   fetched it (200), refused to decode it, fired `onerror` — so the card looked broken and the code was
-   fine the whole time. ▶ **When the instrument is "an image that really loads", VERIFY THE INSTRUMENT
-   FIRST.** Generate the PNG, never type one.
-2. 🚨⭐ **`.wdr-curated` IS BOTH CATALOGS.** The test only stubbed `product-search`, so the app really
-   fetched her 107 from `products.json` and a shelf legitimately mixed both — filtering on the shared
-   class swept her real notes into the feed assertions. ▶ **Assert on each source BY NAME, never on the
-   class they share.** (That the shelf blends is the design, not a bug; it also means a 4-item feed
-   rarely takes all four slots, so `>= 4` is the wrong expectation.)
-3. **An https-only guard CANNOT be exercised over http.** A plain http test server would have silently
-   measured the `onerror` branch and reported a false green. The harness serves over HTTPS with a
-   throwaway self-signed cert (`ignoreHTTPSErrors`) so it matches production. **And the image itself is
-   fulfilled by Playwright, not by that server — serving it locally reset the connection under four
-   concurrent requests (ERR_CONNECTION_RESET on three of four).**
-4. ⚠️ **THE "ONE SUITE, TWO RUNNERS" TRAP AGAIN, hit within an hour of reading the warning about it.**
-   A backgrounded run still held port 8951 when the next one started → `EADDRINUSE`. The `/proc` sweep
-   that clears it must skip `$$` and match the `node …` command, exactly as this file already says.
-- ⚠️ **Retail CDN images (cdn.shopify.com, img.mytheresa.com) load fine via `curl` from here but NOT in
-  the sandbox's Chromium.** To see a real shelf, curl the photos down and serve them locally over the
-  test HTTPS server. Both hosts serve 200 with correct content-type and no hotlink protection.
-
-### ✅✅ RESOLVED 2026-09-06 — SHE UPDATED THE KEY AND THE SHELVES CAME ALIVE THE SAME MINUTE
-**Cath copied the publishable/`anon` key from Supabase into Netlify's `SUPABASE_KEY` and redeployed.**
-Measured immediately after, on the live site: `dr1`, `to3`, `sh9` and `bg1` each returned **200 real
-garments** with `"why":"ok"` — the 401 is gone. **She then saved her results on her phone and the welcome
-email arrived**, which also settles the flagged-but-unproven half: `user-data.js` reads the same key, so
-saving results really had been failing silently too, and the one key fixed both.
-- ⚠️ **HER OWN SCREEN CARRIED THE CONFIRMATION: the variable read "updated 3 months ago."** A stale key,
-  exactly as diagnosed. ▶ **Worth checking that timestamp FIRST next time a Supabase call 401s.**
-- ⚠️ **THE `success: true` BUG IS STILL THERE AND IS STILL WORTH FIXING.** `user-data.js` wraps its
-  Supabase write in `catch (e) {}` and answers `{success:true}` regardless, so for as long as the key was
-  stale a woman was told her results were saved when they were not. **The key being fixed does not fix
-  the lie; it only stops it being told today.** An honest failure beats a false promise.
-- ⭐ **WHAT ACTUALLY FOUND IT, and both instruments are permanent and were built for exactly this:** the
-  `diag:true` flag on `product-search` (`no-credentials` · `upstream`+status · `threw` · `ok`) and the
-  read-only **Actions → Catalog health** workflow. Every failure in that function is an EMPTY POOL by
-  design, so from outside "no key", "the database refused this" and "that row has nothing" look
-  identical. **Without those two the answer was unreachable. Run them first when a shelf looks thin.**
-- 📎 **The original diagnosis is kept below, unedited, because the EVIDENCE CHAIN is the reusable part.**
-
-> 📁 **The full 2026-09-05 evidence chain — how a 401 was proven to be an authentication
-> refusal rather than a schema, policy or matching fault — is in `CLAUDE-archive.md`.**
-> It is worth re-reading as a METHOD the next time a shelf looks thin. The two instruments
-> it produced are named above and are permanent.
-### ✅ THE ONE THING FOR HER IS DONE (2026-09-05)
-She ran `db/products.sql` in the Supabase SQL Editor herself and confirmed both checks:
-`select count(*) from product_cards;` → **78,278** (the catalog is readable by the ordinary key) and
-`select count(*) from products where slots <> '{}';` → **0** (nothing tagged yet, correct until the
-ingest runs). **Nothing was added to Netlify, by design.**
-- 🚨⭐⭐ **TWO REAL BUGS IN THAT SQL, FOUND BY HER RUNNING IT AND FIXED PROPERLY — and neither could
-  have been seen on a fresh database.** (1) **`create table if not exists` is SKIPPED ENTIRELY on an
-  existing table**, so the `slots` column was never added and the GIN index 108 lines further up died
-  with `42703: column "slots" does not exist`. (2) **`create or replace view` CANNOT reorder or rename
-  columns**, and `product_cards` selects `p.*`, so adding a column to `products` changed the view's
-  column order → `42P16: cannot change name of view column "sizes" to "slots"`.
-  ▶ **Fixed with an EARLY MIGRATIONS block (`alter table … add column if not exists`) placed BEFORE the
-  indexes, and `drop view if exists` before the create.** Both reproduced on a real Postgres 16 standing
-  in for her database, and all three paths re-verified clean: fresh · fresh re-run · her exact state.
-  ⚠️ **This is the third time a migration has had to be proven on real Postgres rather than reasoned
-  about. Keep doing it.**
-- ⚠️ **A WORDING TRAP OF MINE, worth avoiding: I wrote "run `db/products.sql`" and she pasted the
-  FILENAME into the SQL editor** (`42601: syntax error at or near "db"`). ▶ **Give her the raw GitHub
-  URL and ⌘A / ⌘C / ⌘V, never a file path.**
-
-### ▶ THEN, IN ORDER
-1. ✅ **Merged to main.** The ingest's slot matcher is on the default branch now, so the nightly run
-   (21:37 UTC) will fill `slots` on its own.
-2. ✅ **The ingest has run.** 78,261 garments, 69,988 tagged to a checklist row.
-3. ✅ **`SUPABASE_KEY` updated in Netlify (2026-09-06) and the shelves came alive.** Saving results and
-   the welcome email were quietly broken by the same key, and are working again too.
-4. ✅ **She has seen a real shelf on her real phone** and it produced the photo bug above, now fixed.
-   ▶▶ **STILL OPEN AND IT IS THE IMPORTANT ONE: her verdict on whether the shelf FEELS LIKE HER.** She
-   deliberately answered the quiz as a luxury shopper to force feed pieces up, so she has not yet judged
-   it as herself. ⚠️ Private browsing, `stylestar.app/?notrack`.
-4b. ⚠️⚠️ **RAISE THE AFFORDABILITY QUESTION WITH HER, unprompted, the moment she reports back.** Every
-   fed store is `$$$`/`$$$$`, and a live "Professional blouses" shelf came back Joseph $295, Rick Owens
-   $1,020, Magda Butrym $1,290, Asceno $350. **That runs straight against her founding value — "literally
-   any woman, 18 to 80+, no age or income bracket."** Two existing entries below bear directly on it and
-   should be read together: the spreadsheet-freeze decision (her 107 are the app's ONLY affordable
-   real-product inventory, and a mid-market approval is therefore worth MORE than another luxury one)
-   and the flag that **her hand-picks get no head start in the sort**, so on a well-stocked row the
-   affordable half will rarely appear. ▶ **The lever is one term at the FRONT of the sort,
-   `(b.feed?0:1)-(a.feed?0:1)`, and it is a curation call that is HERS, not one to settle in code.**
-5. ✅ **Vilebrequin is back in `STORES`** (2026-09-05, her word: *"Yes go ahead and include it"*), with
-   its own hostname added to `SEARCH_DOMAINS` per the standing rule. ⚠️ **Its `deep` flag was
-   DELIBERATELY NOT restored** — the feed only powers Wardrobe Ideas, so the stylist chat and Shop your
-   Style still hit Vilebrequin's own search, which is what returned the false negative on cover-up
-   dresses that got it removed on 2026-08-21. **Restore `deep` only when the feed powers those surfaces
-   too.** `w:1` is required (a men's-swim house whose search defaults to men's).
-5. ▶ **THE TAXONOMY GAPS THAT ARE HERS TO DECIDE, none invented:** mini skirts · jumpsuits/rompers ·
+### ▶▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT
+1. ⚠️⚠️ **NOTHING IS MERGED.** Her call. **And the matcher fix changes TAGGING ONLY — the thong does not
+   leave her shelf until the ingest re-runs (nightly 21:37 UTC).** The two gates take effect on merge.
+2. ▶ **Her real slider positions**, so Gate 2 can be measured on her own profile rather than a guess.
+3. ▶ **THE BLANK CARDS in her first screenshot** — AI cards carry no photo, and the carousel appears to
+   stretch every card to the tallest, so a photo-less card becomes a tall empty box next to a feed card.
+   **Diagnosed by eye from her screenshot, NOT yet confirmed in code.** Likely a regression from the
+   2026-09-06 photo change.
+4. ⚠️ **STILL TRUE AND NOT FIXED BY ANY OF THIS: the prices.** Every fed store is `$$$`/`$$$$`. Live
+   medians measured this morning: **dresses $398 · tops $260 · shoes $790 · bags $1,490**; 0 of 200
+   dresses under $100. **No filter makes Mytheresa affordable — only an affordable or mid-market
+   affiliate does.** Watch the AWIN Under Armour application and any department store.
+5. ⚠️ **THE `success: true` BUG IS STILL THERE.** `user-data.js` wraps its Supabase write in `catch(e){}`
+   and answers `{success:true}` regardless, so a woman can be told her results were saved when they were
+   not. The key being fixed stopped it being told today; it did not fix the lie.
+6. ▶ **THE TAXONOMY GAPS THAT ARE HERS TO DECIDE, none invented:** mini skirts · jumpsuits/rompers ·
    gloves · clogs · wellingtons · bags named only "Bag". **Plus four defaults I set and should confess:**
    a plain "Sandal" → Flat sandals · a plain "Boot" → Ankle boots · a plain "Hat" → Sun hats · a plain
    "Skirt" → Flowy skirt. **And two rows that are honestly EMPTY:** `ac11` Matching athletic sets and
    `sl2` Nightgowns.
-
----
-
----
+7. ▶ **Repo/context housekeeping done this session:** 559 render-harness screenshots (129 MB, 94% of the
+   repo) removed and git-ignored — they are OUTPUT, regenerated by the harnesses beside them, and the
+   38 `.woff2` files stay because they are real INPUTS. `CLAUDE.md` archived 14 finished builds
+   (~32,000 → ~23,000 tokens). **And the rule that matters most is now written down: NEVER READ
+   `index.html` WHOLE** — see the section of that name. **Nothing was deleted, only moved.**
 
 ## 📁 Where the history went
 The session-by-session build history lives in **`CLAUDE-archive.md`** — **moved in two waves,
