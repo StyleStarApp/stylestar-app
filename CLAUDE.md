@@ -7,122 +7,138 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-08 — A MEN'S SHIRT ON HER TOPS SHELF, AND WHY "WE FIXED THAT" WAS TRUE AND USELESS)
+## ▶ NEXT SESSION — START HERE (2026-09-06 — WE MEASURED A WAY TO SHOP ALL 108 STORES WITHOUT A SINGLE NEW APPROVAL)
 
-### 🚨🚨 WHAT SHE FOUND, IN ONE SCREENSHOT
-Three phone screenshots of **"Tops in your favorite colors"**, swiped left to right. Card 5 was
-**"Vilebrequin - Men Wool Shirt Micro Rayures Tailoring - Shirt - Cool - Blue - Size M", $405** — a
-MENSWEAR shirt, on a shelf for women. ▶ Her question was the important one: ***"Why is this men's thing
-coming up now? We fixed that a long time ago."***
+### ⭐⭐⭐ THE ONE-LINE SUMMARY, AND IT IS THE FIRST LEVER FOUND THAT IS NOT BLOCKED ON TRAFFIC
+▶▶ **A REAL TEST WAS RUN AGAINST A LIVE SHOPPING-SEARCH SERVICE, 11 SEARCHES, AND IT RETURNS REAL,
+BUYABLE, AFFORDABLE PRODUCTS FROM HER OWN 108 STORES — INCLUDING THE 101 SHE IS NOT AN AFFILIATE FOR.**
+🚨 **NOTHING WAS BUILT. NO APP CODE WAS CHANGED. This entry is a measurement, not a feature.**
+▶ **Her framing, and it should govern the build:** ***"The service finds. Style Star chooses."*** The
+service is a $25/mo commodity anyone can buy; her twelve dimensions, her never-wear list and 20 years of
+judgement are the part no competitor can. **Finding is bought. Choosing is hers.**
 
-### ⭐⭐⭐ SHE WAS RIGHT, AND THE ANSWER IS THE WHOLE LESSON AGAIN
-**She DID fix it. On a different path, a month before this path existed.**
-- **2026-08-08** she found men's suit pants in her Banana Republic results (archive line ~14977, item 4
-  of her six screenshots: *"department bleed"*). Fixed with **women's-department scoping in
-  `getStoreUrl()`** — the `w:` prepend and the `gp:` param. ▶ **That fix scopes a SEARCH LINK. It is on
-  the AI half.**
-- **2026-09-02** the feed arrived with its **own, separate** gender handling: `keep_row()` in
-  `scripts/rakuten_feed.py`, which reads the merchant's gender COLUMN. It works — it dropped **37,910
-  menswear rows**, and the archive records that number proudly.
-- ▶▶ **AND NOBODY EVER MEASURED THE LEAK.** `keep_row` drops what the merchant LABELLED. It never read
-  the product NAME. Vilebrequin's feed is 301 Male / 156 Female / 70 Unisex; 341 of its 529 rows were
-  dropped correctly and **this shirt was among the 188 that were not**, its gender column blank or
-  Unisex while its own name said *Men*.
-🚨🚨 **THE REAL FINDING, AND IT PREDICTED THIS FAULT: the RULE LEDGER had 15 rows and "womenswear only"
-was not one of them.** The most obvious rule in an app for women had **no ledger row and no test**, so
-when the second picker arrived nothing was watching that rule at all. ▶ **The ledger row and its test
-exist now.** When a rule feels too obvious to write down, that is exactly the one that drifts.
+### 🚨 WHY THIS CAME UP — HER QUESTION, AND IT WAS THE RIGHT ONE
+She asked how Style Star could answer ***"Find me a women's red leather boot, size 6, wide width"*** with
+REAL products and DIRECT product links, instead of the AI inventing a plausible name and opening a store
+SEARCH page. **Measured against the existing app, the answer was: it cannot, and for a structural reason.**
+- ⚠️ **`netlify/functions/product-search.js` ACCEPTS ONLY A SLOT ID** (`/^[a-z]{2}[0-9]{1,2}$/`). The only
+  question the catalog can be asked is *"give me the pool for Ankle boots"*. **There is no free-text door
+  at all**, and colour/material/size cannot be filtered even though they are stored.
+- ⚠️ **AND THE FEED IS WIRED INTO EXACTLY ONE PLACE** — the Wardrobe Ideas carousels. Chat, Shop your
+  Style and Complete the Look never call it. **That is HER deliberate scope call and it still stands.**
+- ✅ **WHAT THE FEED CAN ALREADY VERIFY:** boot (`slots`, tagged at ingest) · size 6 (`product_sizes`,
+  265,774 real sizes) · red (`color`, 663 values, 15% blank, case-inconsistent, FARM Rio's column is a
+  PRINT NAME) · leather (`material`, free text, 25,209 spellings — good as a substring).
+- ❌ **WIDTH DOES NOT EXIST ANYWHERE IN THE PIPELINE.** Grepped end to end: the only "wide" in the whole
+  feed system is **wide-leg pants**, a trouser cut. Rakuten's 38 columns never carried it.
+- ▶ **`description` IS PARSED AND THEN THROWN AWAY** — `db/products.sql` says so on purpose and predicted
+  this exact moment: *"ADD IT BACK the day the stylist chat queries this catalog."* One `alter table`.
 
-### ⚠️⚠️ HER SECOND QUESTION, AND IT IS A PROCESS FAULT, NOT A CODE ONE
-***"In the opener you asked me about my slider positions which I already gave you and you replied. What
-is getting lost in the cracks here?"*** ▶ **She is right, and it was measured: her actual slider numbers
-are in NEITHER file.** The twelve archetype TEMPLATES are in the archive (`SculptedChic[6,5,5,...]`,
-~line 1545) — those are the personas, not her. `CLAUDE.md` still carried *"Her real slider positions…
-not her saved answers"* as an open ask.
-▶▶ **SO: she gave them, that session used them, that session ended, and nobody wrote them down.** The
-open-thread line stayed open and the next session asked her again.
-🚨 **THE SENTENCE TO KEEP, and it is the twin of the ledger lesson above: `CLAUDE.md` only knows what a
-session REMEMBERS to write into it. A fix applied to one half gets logged as "fixed". A fact she gives
-in chat gets used and then evaporates.** ▶ **WHEN SHE GIVES A FACT, WRITE IT INTO THIS FILE IN THAT
-SESSION'S COMMIT.** Not at the end, not next time. Both faults of this session are the same shape:
-*the answer lived somewhere that does not get read next time.*
-▶ **STILL OUTSTANDING: her twelve slider positions.** The lowest-effort way to get them, and the one to
-ask for: **`ss_data` in localStorage holds `{userName, answers, topArchNames, …}`** — but reading that
-on an iPhone is awkward, so **ask her to reopen the quiz (it restores from `ss_quiz`) and screenshot the
-sliders.** She works in screenshots already. **Then write the twelve numbers into this file immediately.**
+### ✅ THE MEASUREMENT THAT CHANGED THE STRATEGY — HER OWN STORE TABLE IS ALREADY MID-MARKET
+▶▶ **Of her 108 `STORES` entries, 57 START AT `$$` OR BELOW. Only 15 are `$$$$` throughout.**
+🚨 **HER FEED IS 7 STORES AND EVERY ONE IS `$$$`/`$$$$`.** ▶ **So the affordability problem was NEVER her
+taste or her curation. She already picked a broad, affordable set of shops — the feed just reaches the
+dearest seventh of them, because those are the ones that approved her.** A search across all 108 fixes
+the price problem **with no new affiliate approval at all.**
+⭐ **AND SHE ALREADY TAGGED WHICH STORES CARRY WIDE WIDTHS, back in July — 8 of them:** Nordstrom ·
+Macy's · Nordstrom Rack · Amazon · Naturalizer · Lane Bryant · Zappos · DSW. **She answered the width
+question months ago; the app just never used her answer to FIND anything.**
 
-### ✅ THE FOUR FIXES, ALL FROM ONE SCREENSHOT SET
-1. **MENSWEAR BY NAME** — `keep_row()` now reads the NAME as well as the column.
-   ⚠️⚠️ **THE INVERSION IS PRESERVED AND IS LOAD-BEARING: DROP a name that says MEN, never KEEP only
-   names that say WOMEN.** Most womenswear names say neither, so a whitelist would empty the catalog
-   exactly as a Female-only gender rule would have emptied DVF.
-   ⚠️⚠️ **WORD BOUNDARIES ARE NOT TIDINESS: "Women's" CONTAINS "men" and "Female" CONTAINS "male".** An
-   unanchored match deletes her whole womenswear catalog. **Ten "must be KEPT" cases pin this.**
-   ▶ **Deliberately NOT matched: "menswear-inspired", "boyfriend", "boy shorts"** — all ordinary
-   WOMENSWEAR words. A name that says WOMEN outranks one that says men.
-2. **THE FEED'S NAMES REACHED THE CARD RAW** — `_curatedCard` rendered `_esc(x.name)` straight from the
-   merchant while `_shopCard`, the AI card sitting beside it, has always run
-   `_sizeWordsOut(_nameParity(item))` first. **The two card renderers are the two halves, and only one
-   tidied a name.** New `_feedName(name,brand)` removes only what is provably redundant: the brand
-   (already printed directly above), a leading gender word, and a trailing size clause (**the feed
-   carries ONE ROW PER SIZE, so the size is an artefact of the row**). ⚠️ Never shortens below 3 chars;
-   verified not to touch her 107.
-3. **"BLOOMINGDA / LES"** — a carousel card is 128px wide with 1rem padding, so the store line has
-   **96px**, and BLOOMINGDALES at 12px uppercase with .06em tracking measures **~107px**. ▶ **The lever
-   was the TEXT, not the break rule.** 11px at .01em fits 14 characters inside 96px. `.shop-card` also
-   moved `overflow-wrap:anywhere` → `break-word`, so a word only breaks when it truly cannot fit.
-4. **~650px OF EMPTY BEIGE** under the short cards. A horizontal flex row is as tall as its TALLEST
-   card; `align-items:flex-start` stops cards STRETCHING but does not bound what makes one card tall.
-   Most of that height was the untidied merchant name (fix 2). A 4-line clamp is the belt to its braces,
-   **on catalog cards ONLY — an AI card's name IS its search and its promise, so it is never clipped.**
+### ✅ THE LIVE TEST — SerpApi (Google Shopping), free tier, 11 of 250 searches used
+🔒 **Account is `catherine@stylestar.app`, FREE plan, no card, `plan_searches_left` 239.** The key lived
+only in the session scratchpad, was never committed, and **she should regenerate it on serpapi.com.**
+▶ **Raw JSON and the scorer are in the session scratchpad only — NOT committed.** Re-runnable from this
+entry alone.
 
-### ✅ GREEN, AND THE MENSWEAR FIX WAS PROVEN RED FIRST
-**rakuten_feed 52/0** (was 36; +16 new, and the probe showed blank/Unisex/unisex all `keep=True` before
-the fix) · **slot_match 1,087/0** · **rakuten_ingest ALL PASS** · **curated 65/0** · **feedshelf 54/0** ·
-**sizefit 46/0** · **storecap 15/0** · **savetruth 19/0** · **e2e 29/0** · **feedname 14/0** (new).
-🚨🚨 **AND THE FIX FOR FAULT 2 BROKE SOMETHING REAL, WHICH IS THE MOST USEFUL THING THAT HAPPENED TODAY.**
-`curated` went **65/0 → 64/1** on *"a saved item is exempt from staleness"*. ▶▶ **A WISHLIST ID IS A SLUG
-OF THE NAME**, so tidying the DISPLAYED name silently re-keyed every saved piece: `curatedPicks`' own
-`stale()` looks a piece up under the RAW name while the card had begun saving under the tidy one.
-⚠️⚠️ **THE TEST SAW THE SMALL FACE OF IT. THE BIG ONE HAD NO TEST AT ALL: every piece a woman had already
-hearted would have become unreachable — heart reading unsaved, saveable a second time, her list quietly
-losing items.** ▶ **Fixed by decoupling: `_wlRegister` takes an optional `idName` (the untouched
-merchant name) for the ID while `name` stays free to be the pretty one she reads. NEVER collapse those
-two back together.** `scratchpad/feedname.js` pins it, including an assertion that the id WOULD have
-moved without `idName` — the bug itself, kept red on purpose.
-▶ **THE LESSON, and it is this session's lesson one level down: I changed the name in ONE place and not
-the other. Exactly the fault I was there to fix.** When a value is used as both a DISPLAY and a KEY,
-changing how it is written is a migration, not a cosmetic edit.
-⚠️⚠️ **THE GUARD IMMEDIATELY CAUGHT THE TEST SUITE'S OWN FIXTURE: `row()`'s default name was
-`"Vilebrequin - Men Sneaker Socks"`**, so six existing tests began failing the moment names were read.
-**Nothing was wrong with them** — they vary the gender COLUMN and assert on the result, and a fixture
-whose NAME says Men makes them assert the new rule instead of the one they were written for, **including
-PART 2, the DVF trap, which is the most load-bearing test in that file.** The fixture is now
-gender-NEUTRAL so the two rules stay independently testable. ▶ **A shared fixture that quietly carries a
-property under test is a trap; when a new rule turns old tests red, read them before "fixing" them.**
+| search | from HER 108 | resale junk | price range |
+|---|---|---|---|
+| Women's blazer | **30/40** ⭐ | 1 | $11–$198 |
+| Petite black trousers | **30/40** ⭐ | 0 | $17–$135 |
+| Jumpsuit | 27/40 | 0 | $15–$198 |
+| Black leather tote | 23/40 | 0 | $80–$595 |
+| Black ankle boots | 20/40 | 1 | $20–$1,295 |
+| White sneakers size 8 | 16/40 | 3 | $10–$168 |
+| White shirt under $50 | 15/40 | 8 | $4–$50 |
+| **Red leather boot, size 6, wide** | **8/40** ⚠️ | 12 | $23–$665 |
+| **Blush silk wrap dress** | **5/40** ⚠️ | 15 | $15–$695 |
+| Emerald silk opera gloves | 4/40 | 9 | $3–$260 |
 
-### ✅✅ THE INGEST WAS RUN THE SAME DAY (run #11, 2026-09-06 18:31 UTC, GREEN in 2m56s)
-▶ **Merging could never have removed the shirt** — it was already sitting in Supabase from an earlier
-run. **A re-tag removes it, not a merge.** Same distinction as the thong and the handbag on 2026-09-06;
-it keeps catching people out, so it stays written down.
-**Vilebrequin, the store the fault was in:**
+🚨🚨 **THE FINDING THAT MUST SHAPE THE BUILD, AND IT IS THE OPPOSITE OF THE OBVIOUS DESIGN: THE MORE
+SPECIFIC THE SEARCH, THE WORSE THE STORE MATCH.** Her own red-boot sentence was the second-worst of the
+ten. Piling colour + material + size + width into one query pushes Google toward **eBay and Poshmark**,
+because that is where oddly-specific one-off items live. ▶▶ **SO: SEARCH BROAD, NARROW AFTERWARDS.**
+"Red leather boots" then check sizes — never the whole sentence as one query. **Only a test could have
+found this; every instinct says pass the full sentence through.**
+⭐ **AFFORDABILITY, PROVEN WITH REAL ROWS** (white shirt under $50, her stores only): Old Navy **$13.99** ·
+Target **$17.50** · Target $19.60 · Old Navy $20.99 · Macy's $23.70 · Express $30.00 · Lands' End $30.36 ·
+Quince $39.90 · Macy's $49.99. **Against a feed whose dress median is $398.**
+✅ **THE MENSWEAR GUARD HELD ON THE NEW SOURCE: 0 of 40 menswear-named titles on "women's blazer."** One
+query only, so it is a green light, not a proof. **A third picker still needs the rule and the test.**
+✅ **PETITE CAME BACK REAL:** LOFT · Ann Taylor · Talbots · Gap — her actual petite retailers, unprompted.
+
+### ✅ DIRECT PRODUCT LINKS WORK, BUT COST A SECOND CALL
+⚠️ **The search results carry NO retailer link** — only a Google redirect. A **second call per product**
+returns the real offers, and those are excellent:
 ```
-529 lines -> 179 kept       (was 188)
-    dropped  301  menswear        <- the gender COLUMN, the old rule, still doing most of the work
-    dropped   38  kids
-    dropped    9  menswear-name   <- THE NEW RULE
-  swept 9 garments the feed no longer carries   <- her shirt is one of these, now DELETED
+DSW · $251.99 · "In stock online" · 60-day returns
+dsw.com/product/naturalizer-deesha-boot/567667?...&size=6&width=...
 ```
-⭐ **AND THE SAMPLE ROW IT PRINTS IS NOW A WOMAN'S:** *"Vilebrequin - Women Long Sleeves Linen Shirt
-Solid - Shirt $295 White / XS"*.
-**Across all seven stores the name rule dropped 49 rows of 328,266 lines — 0.015%.** Vilebrequin 9 ·
-Marissa Collections 5 · Mytheresa 35 · FARM Rio, Olivela and Fleur du Mal 0.
-🚨🚨 **THE CHECK THAT MATTERED MOST, AND IT HELD: DIANE VON FURSTENBERG WENT 2,833 → 2,831, DROPPING
-ONLY THE HEADER AND THE TRAILER. Zero menswear-name drops.** DVF leaves the gender column blank on every
-row and is the store a careless womenswear rule deletes entirely. ▶ **A tiny, surgical drop is the
-success signal here; a big one would have meant the word boundaries were eating womenswear.** Total
-pieces **78,142**, in line with the ~78,171 before. **If a future change to this rule ever moves that
-total by thousands, it is wrong — check DVF first.**
+▶ **Real page, size preselected, LIVE STOCK STATUS.** ⚠️ **COST MODEL: ~1 search + ~4 product look-ups
+per woman's question ≈ 5 searches ≈ 15¢ at the $25/1,000 plan.** The free 250 is ~40 questions.
+
+### 🚨🚨 TWO TRAPS FOUND, AND BOTH ARE THE "WOMEN'S CONTAINS MEN" SHAPE AGAIN
+1. ⚠️⚠️ **"WIDE" MEANS TWO DIFFERENT THINGS IN SHOES, AND ONE PRODUCT CARRIED BOTH.** DSW's own title
+   read *"Naturalizer **Wide Width** Deesha Boot … Size 6"* while its own link said
+   `width=Medium Width, **Wide Calf**`. **Wide calf is the shaft; wide width is the foot. Different
+   fits, and the shop's data disagreed with itself.** ▶ **A naive `contains("wide")` tells a woman with
+   wide feet that a medium-width boot fits her.** This is exactly the promise her whole app exists to
+   never make.
+2. ⚠️ **"W" USUALLY MEANS WOMEN'S, NOT WIDE.** Three results read *"Size W 7"* — a women's 7.
+▶▶ **NEITHER IS AN ARGUMENT AGAINST THE PLAN. Both are arguments FOR her rule:** say confirmed only when
+it is genuinely confirmed, and never infer a fit from a word that has two meanings.
+⚠️ **ALSO: the search asked for LEATHER and the best match was SUEDE**, and asked for RED and got
+"Mahogany". **Verification has to read the offer, not trust the query.**
+
+### ▶▶ THE AGREED EXPERIENCE, IN HER WORDS AND APPROVED BY HER THIS SESSION
+1. The AI reads her sentence into a checklist (item · colour · material · size · width). **It invents nothing.**
+2. **The service FINDS** real products. ← the only new piece
+3. **Her 108-store allowlist throws away everything else** — and it already excludes fast fashion,
+   rentals and subscription boxes, because those were never in the table.
+4. **Each product is CHECKED against the checklist — comparing facts, never guessing.** No tick without
+   evidence.
+5. **`curatedPicks()` runs — the SAME picker**, never a copy. Never-wear, colour no's, price spread,
+   max-two-per-retailer.
+6. **Her sliders and her store dimensions order the results.**
+🚨🚨 **AND THE ANSWER SHE GAVE TO THE HARD QUESTION — what if red, leather and size 6 verify but WIDTH
+CANNOT?** Not hide it (she sees nothing), **not show it silently (THAT IS THE SHIFT-DRESS BOX)** — but
+**show it, labelled honestly, confirmed ones first.** Her stylist voice: *"These three I can confirm in
+your width. These two are worth a call to check."* ▶ **HER RULE, GIVEN THIS SESSION, VERBATIM: never
+imply that a specific size, width, colour, material or other requirement is confirmed unless we can
+actually verify it.**
+
+### ▶ WHAT IS STILL OPEN ON THIS, AND WHAT THE NEXT SESSION SHOULD ASK HER FIRST
+1. ⭐ **HER VERDICT ON QUALITY IS THE GATE, AND IT IS NOT IN YET.** The countable half passed; the
+   stylist half is hers. **The five "blush silk wrap dress" results from her stores, for her to rule on:**
+   Nordstrom Rack $123.72 DVF Jeanne Silk Jersey Wrap · Nordstrom $598 Kobi Halperin *faux*-wrap ·
+   Quince $80 stretch **satin** (not silk) · Etsy $318 · Etsy $334. **Would she put her name on that
+   set?** ▶ **ASK THIS BEFORE BUILDING ANYTHING.** It is homework item 6, and only she can grade it.
+2. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
+   second-hand · verify per-offer · **route through `curatedPicks()`, never a second copy of her rules.**
+3. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER:** the fault is the AI's SEARCH WORDS, not the service. Also
+   cheaply testable, 239 searches remain.
+4. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
+   is not applied.** It needs a ledger row and a test BEFORE it ships, not after.
+5. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
+   product file with **exact variant size + stock**, no API and no cost — real width/size truth for the
+   DTC half of her list. **Nobody has counted yet.**
+6. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
+   SerpApi's motion to dismiss**, striking the DMCA claim for results with no copyrighted content, with
+   no leave to refile. Google amended in August, narrowed to *licensed* content (Reddit snippets in
+   Knowledge Panels). ▶ **Product listings are facts — the strongest side of a ruling that already went
+   against Google.** Still live litigation. **Mitigation: keep the integration behind ONE small swappable
+   piece so changing vendor is an afternoon.** ⚠️ SerpApi's legal shield does NOT cover the $25/$75 tiers.
+7. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
+   search QUALITY matters more than volume while she has no users.
 
 ### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT — every one of these is still open
 1. ✅✅ **HER TWELVE SLIDER POSITIONS — RECORDED 2026-09-08, THE ASK IS CLOSED.** She sent her Style
@@ -222,6 +238,16 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **Width is a shoe rule** | `_sizeGuidance` width line | `widthFit` via `_isShoeSlot` | **sizefit 46** | ✅ **built 2026-09-07** |
 | **Never claim a save that failed** | n/a | `user-data.js` + `doStay` | **savetruth 14** | ✅ **fixed 2026-09-07** |
 | Checklist is a possibility map | copy + framing | n/a | ▶ none | ✅ copy-only rule |
+| **Never claim a requirement is verified when it is not** | n/a — no surface asks yet | n/a — no surface asks yet | ▶ **none yet** | ▶▶ **HER RULE, GIVEN 2026-09-06. NOTHING IMPLEMENTS IT YET — written down BEFORE the build on purpose.** |
+⚠️⚠️ **THE LAST ROW IS DELIBERATELY AHEAD OF THE CODE, AND THAT IS THE POINT.** Her words, 2026-09-06:
+*"we should never imply that a specific size, width, colour, material or other requirement is confirmed
+unless we can actually verify it."* **She gave it while NOTHING was built** — so for once a rule exists
+before the picker it governs, instead of being reverse-engineered after she finds the fault on her phone.
+▶ **The two `n/a`s here are honest TODAY and expire the moment a product search ships.** By this table's
+own standing warning, an `n/a` is a CLAIM: **re-read this row before merging any product-search work.**
+🚨 **This is the direct answer to the 2026-09-08 lesson — "a rule too obvious to write down is the one
+that drifts." Womenswear-only had no row and a men's shirt reached her Tops shelf. This one has a row on
+day zero.**
 ⚠️ **THE "never name her body/size back" ROW SAID `n/a — the feed writes no prose` AND THAT QUIETLY
 STOPPED BEING TRUE.** The feed writes no prose but it does write a NAME, and hers carried
 **"- Size M"** on a card. ▶ **An `n/a` in this table is a CLAIM, not a shrug — re-read every one when a

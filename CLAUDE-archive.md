@@ -11,6 +11,125 @@ The standing rules, current decisions, store system and open threads all live in
 
 ---
 
+## SESSION 2026-09-06 (logged as 09-08 in the original heading) — A MEN'S SHIRT ON HER TOPS SHELF, AND WHY "WE FIXED THAT" WAS TRUE AND USELESS)
+
+### 🚨🚨 WHAT SHE FOUND, IN ONE SCREENSHOT
+Three phone screenshots of **"Tops in your favorite colors"**, swiped left to right. Card 5 was
+**"Vilebrequin - Men Wool Shirt Micro Rayures Tailoring - Shirt - Cool - Blue - Size M", $405** — a
+MENSWEAR shirt, on a shelf for women. ▶ Her question was the important one: ***"Why is this men's thing
+coming up now? We fixed that a long time ago."***
+
+### ⭐⭐⭐ SHE WAS RIGHT, AND THE ANSWER IS THE WHOLE LESSON AGAIN
+**She DID fix it. On a different path, a month before this path existed.**
+- **2026-08-08** she found men's suit pants in her Banana Republic results (archive line ~14977, item 4
+  of her six screenshots: *"department bleed"*). Fixed with **women's-department scoping in
+  `getStoreUrl()`** — the `w:` prepend and the `gp:` param. ▶ **That fix scopes a SEARCH LINK. It is on
+  the AI half.**
+- **2026-09-02** the feed arrived with its **own, separate** gender handling: `keep_row()` in
+  `scripts/rakuten_feed.py`, which reads the merchant's gender COLUMN. It works — it dropped **37,910
+  menswear rows**, and the archive records that number proudly.
+- ▶▶ **AND NOBODY EVER MEASURED THE LEAK.** `keep_row` drops what the merchant LABELLED. It never read
+  the product NAME. Vilebrequin's feed is 301 Male / 156 Female / 70 Unisex; 341 of its 529 rows were
+  dropped correctly and **this shirt was among the 188 that were not**, its gender column blank or
+  Unisex while its own name said *Men*.
+🚨🚨 **THE REAL FINDING, AND IT PREDICTED THIS FAULT: the RULE LEDGER had 15 rows and "womenswear only"
+was not one of them.** The most obvious rule in an app for women had **no ledger row and no test**, so
+when the second picker arrived nothing was watching that rule at all. ▶ **The ledger row and its test
+exist now.** When a rule feels too obvious to write down, that is exactly the one that drifts.
+
+### ⚠️⚠️ HER SECOND QUESTION, AND IT IS A PROCESS FAULT, NOT A CODE ONE
+***"In the opener you asked me about my slider positions which I already gave you and you replied. What
+is getting lost in the cracks here?"*** ▶ **She is right, and it was measured: her actual slider numbers
+are in NEITHER file.** The twelve archetype TEMPLATES are in the archive (`SculptedChic[6,5,5,...]`,
+~line 1545) — those are the personas, not her. `CLAUDE.md` still carried *"Her real slider positions…
+not her saved answers"* as an open ask.
+▶▶ **SO: she gave them, that session used them, that session ended, and nobody wrote them down.** The
+open-thread line stayed open and the next session asked her again.
+🚨 **THE SENTENCE TO KEEP, and it is the twin of the ledger lesson above: `CLAUDE.md` only knows what a
+session REMEMBERS to write into it. A fix applied to one half gets logged as "fixed". A fact she gives
+in chat gets used and then evaporates.** ▶ **WHEN SHE GIVES A FACT, WRITE IT INTO THIS FILE IN THAT
+SESSION'S COMMIT.** Not at the end, not next time. Both faults of this session are the same shape:
+*the answer lived somewhere that does not get read next time.*
+▶ **STILL OUTSTANDING: her twelve slider positions.** The lowest-effort way to get them, and the one to
+ask for: **`ss_data` in localStorage holds `{userName, answers, topArchNames, …}`** — but reading that
+on an iPhone is awkward, so **ask her to reopen the quiz (it restores from `ss_quiz`) and screenshot the
+sliders.** She works in screenshots already. **Then write the twelve numbers into this file immediately.**
+
+### ✅ THE FOUR FIXES, ALL FROM ONE SCREENSHOT SET
+1. **MENSWEAR BY NAME** — `keep_row()` now reads the NAME as well as the column.
+   ⚠️⚠️ **THE INVERSION IS PRESERVED AND IS LOAD-BEARING: DROP a name that says MEN, never KEEP only
+   names that say WOMEN.** Most womenswear names say neither, so a whitelist would empty the catalog
+   exactly as a Female-only gender rule would have emptied DVF.
+   ⚠️⚠️ **WORD BOUNDARIES ARE NOT TIDINESS: "Women's" CONTAINS "men" and "Female" CONTAINS "male".** An
+   unanchored match deletes her whole womenswear catalog. **Ten "must be KEPT" cases pin this.**
+   ▶ **Deliberately NOT matched: "menswear-inspired", "boyfriend", "boy shorts"** — all ordinary
+   WOMENSWEAR words. A name that says WOMEN outranks one that says men.
+2. **THE FEED'S NAMES REACHED THE CARD RAW** — `_curatedCard` rendered `_esc(x.name)` straight from the
+   merchant while `_shopCard`, the AI card sitting beside it, has always run
+   `_sizeWordsOut(_nameParity(item))` first. **The two card renderers are the two halves, and only one
+   tidied a name.** New `_feedName(name,brand)` removes only what is provably redundant: the brand
+   (already printed directly above), a leading gender word, and a trailing size clause (**the feed
+   carries ONE ROW PER SIZE, so the size is an artefact of the row**). ⚠️ Never shortens below 3 chars;
+   verified not to touch her 107.
+3. **"BLOOMINGDA / LES"** — a carousel card is 128px wide with 1rem padding, so the store line has
+   **96px**, and BLOOMINGDALES at 12px uppercase with .06em tracking measures **~107px**. ▶ **The lever
+   was the TEXT, not the break rule.** 11px at .01em fits 14 characters inside 96px. `.shop-card` also
+   moved `overflow-wrap:anywhere` → `break-word`, so a word only breaks when it truly cannot fit.
+4. **~650px OF EMPTY BEIGE** under the short cards. A horizontal flex row is as tall as its TALLEST
+   card; `align-items:flex-start` stops cards STRETCHING but does not bound what makes one card tall.
+   Most of that height was the untidied merchant name (fix 2). A 4-line clamp is the belt to its braces,
+   **on catalog cards ONLY — an AI card's name IS its search and its promise, so it is never clipped.**
+
+### ✅ GREEN, AND THE MENSWEAR FIX WAS PROVEN RED FIRST
+**rakuten_feed 52/0** (was 36; +16 new, and the probe showed blank/Unisex/unisex all `keep=True` before
+the fix) · **slot_match 1,087/0** · **rakuten_ingest ALL PASS** · **curated 65/0** · **feedshelf 54/0** ·
+**sizefit 46/0** · **storecap 15/0** · **savetruth 19/0** · **e2e 29/0** · **feedname 14/0** (new).
+🚨🚨 **AND THE FIX FOR FAULT 2 BROKE SOMETHING REAL, WHICH IS THE MOST USEFUL THING THAT HAPPENED TODAY.**
+`curated` went **65/0 → 64/1** on *"a saved item is exempt from staleness"*. ▶▶ **A WISHLIST ID IS A SLUG
+OF THE NAME**, so tidying the DISPLAYED name silently re-keyed every saved piece: `curatedPicks`' own
+`stale()` looks a piece up under the RAW name while the card had begun saving under the tidy one.
+⚠️⚠️ **THE TEST SAW THE SMALL FACE OF IT. THE BIG ONE HAD NO TEST AT ALL: every piece a woman had already
+hearted would have become unreachable — heart reading unsaved, saveable a second time, her list quietly
+losing items.** ▶ **Fixed by decoupling: `_wlRegister` takes an optional `idName` (the untouched
+merchant name) for the ID while `name` stays free to be the pretty one she reads. NEVER collapse those
+two back together.** `scratchpad/feedname.js` pins it, including an assertion that the id WOULD have
+moved without `idName` — the bug itself, kept red on purpose.
+▶ **THE LESSON, and it is this session's lesson one level down: I changed the name in ONE place and not
+the other. Exactly the fault I was there to fix.** When a value is used as both a DISPLAY and a KEY,
+changing how it is written is a migration, not a cosmetic edit.
+⚠️⚠️ **THE GUARD IMMEDIATELY CAUGHT THE TEST SUITE'S OWN FIXTURE: `row()`'s default name was
+`"Vilebrequin - Men Sneaker Socks"`**, so six existing tests began failing the moment names were read.
+**Nothing was wrong with them** — they vary the gender COLUMN and assert on the result, and a fixture
+whose NAME says Men makes them assert the new rule instead of the one they were written for, **including
+PART 2, the DVF trap, which is the most load-bearing test in that file.** The fixture is now
+gender-NEUTRAL so the two rules stay independently testable. ▶ **A shared fixture that quietly carries a
+property under test is a trap; when a new rule turns old tests red, read them before "fixing" them.**
+
+### ✅✅ THE INGEST WAS RUN THE SAME DAY (run #11, 2026-09-06 18:31 UTC, GREEN in 2m56s)
+▶ **Merging could never have removed the shirt** — it was already sitting in Supabase from an earlier
+run. **A re-tag removes it, not a merge.** Same distinction as the thong and the handbag on 2026-09-06;
+it keeps catching people out, so it stays written down.
+**Vilebrequin, the store the fault was in:**
+```
+529 lines -> 179 kept       (was 188)
+    dropped  301  menswear        <- the gender COLUMN, the old rule, still doing most of the work
+    dropped   38  kids
+    dropped    9  menswear-name   <- THE NEW RULE
+  swept 9 garments the feed no longer carries   <- her shirt is one of these, now DELETED
+```
+⭐ **AND THE SAMPLE ROW IT PRINTS IS NOW A WOMAN'S:** *"Vilebrequin - Women Long Sleeves Linen Shirt
+Solid - Shirt $295 White / XS"*.
+**Across all seven stores the name rule dropped 49 rows of 328,266 lines — 0.015%.** Vilebrequin 9 ·
+Marissa Collections 5 · Mytheresa 35 · FARM Rio, Olivela and Fleur du Mal 0.
+🚨🚨 **THE CHECK THAT MATTERED MOST, AND IT HELD: DIANE VON FURSTENBERG WENT 2,833 → 2,831, DROPPING
+ONLY THE HEADER AND THE TRAILER. Zero menswear-name drops.** DVF leaves the gender column blank on every
+row and is the store a careless womenswear rule deletes entirely. ▶ **A tiny, surgical drop is the
+success signal here; a big one would have meant the word boundaries were eating womenswear.** Total
+pieces **78,142**, in line with the ~78,171 before. **If a future change to this rule ever moves that
+total by thousands, it is wrong — check DVF first.**
+
+---
+
 ## Project log
 
 **2026-06-03 (first Claude Code session)**
