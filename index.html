@@ -8308,14 +8308,49 @@ function curatedPicks(slot,p,family,count){
   const bandIdx=function(x){return _WDR_BANDS.indexOf(x.band)};
   const sorted=pool.map(bandIdx).sort(function(a,b){return a-b});
   const med=sorted.length?sorted[Math.floor(sorted.length/2)]:0;
-  const picks=[];const perStore={};let stretch=0;
-  pool.forEach(function(x){
+  // ═══ THE FEED CEILING — "feed as a garnish" (Cath's call, 2026-09-06) ═══
+  // 🚨 WHY THIS EXISTS, and it is NOT a second attempt at giving her 107 a head
+  // start (she overruled that, correctly, because the spreadsheet is frozen and
+  // must not be leaned on harder). This caps how much of a row the FEED may
+  // take. It guarantees nothing about whose items win the remaining slots --
+  // those go to her picks or, far more often, to the AI.
+  //
+  // ▶▶ THE MEASUREMENT THAT FORCED IT: the price-spread rule above anchors to
+  // the POOL's median band, and it never broke -- ITS ANCHOR MOVED. When the
+  // pool was her 107 hand-picks ($17-$510) the median was $$/$$$ and the rule
+  // produced a real spread. With ~78,000 luxury feed garments in the pool the
+  // median is $$$ or $$$$ on EVERY row (measured: tops $$$, dresses $$$, bags
+  // $$$$, sandals $$$$), so "most of the set sits around the median" now means
+  // "most of the set is luxury", and "one stretch piece two bands above $$$$"
+  // is inert because nothing is above $$$$. The affordability guard had
+  // quietly stopped guarding.
+  // ▶ THE AI TIER IS THE AFFORDABLE SOURCE and it needs no affiliate approval
+  // to SEARCH: it reaches all 108 stores, Zara and Talbots and Target included.
+  // It simply never got a turn while the feed filled every slot. Cath had
+  // already been REJECTED by Bloomingdale's, Nordstrom and Shopbop when this
+  // was decided, so waiting for a mid-market feed was not an option.
+  // ⚠️ TUNE HERE, one line. She chose a third. Raising it re-skews the shelf
+  // toward luxury; the whole reasoning is above, so read it before changing.
+  const picks=[];const perStore={};const deferred=[];
+  let stretch=0,feedTaken=0;
+  const feedCap=Math.max(1,Math.floor(count/3));
+  const take=function(x,capOff){
     if(picks.length>=count)return;
+    // Held back rather than dropped, so the top-up below can still reach it.
+    if(x.feed&&!capOff&&feedTaken>=feedCap){deferred.push(x);return;}
     if(bandIdx(x)>=med+2){if(stretch>=1)return;stretch++;}
     if((perStore[x.retailer]||0)>=2)return;
     perStore[x.retailer]=(perStore[x.retailer]||0)+1;
+    if(x.feed)feedTaken++;
     picks.push(x);
-  });
+  };
+  pool.forEach(function(x){take(x,false)});
+  // ⚠️⚠️ THE CEILING IS A PREFERENCE, NEVER A STARVE. If there were not enough
+  // non-feed candidates to fill the row, the held-back feed garments come back
+  // in. A capped shelf must never be THINNER than an uncapped one would have
+  // been -- a thin shelf is the silent nothing this file keeps warning about,
+  // and it would be a bug introduced in the name of a curation preference.
+  if(picks.length<count)deferred.forEach(function(x){take(x,true)});
   // Belt and braces on the brief's own test: measured against the SET's
   // median (not the pool's), never more than one pick sits 2+ bands above.
   const setSorted=picks.map(bandIdx).sort(function(a,b){return a-b});
