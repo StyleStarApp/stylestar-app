@@ -7,15 +7,28 @@ by email.
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-06 — WE MEASURED A WAY TO SHOP ALL 108 STORES WITHOUT A SINGLE NEW APPROVAL)
+## ▶ NEXT SESSION — START HERE (2026-09-06 — THE STYLIST CHAT NOW FINDS REAL PRODUCTS, AND IT IS LIVE)
 
-### ⭐⭐⭐ THE ONE-LINE SUMMARY, AND IT IS THE FIRST LEVER FOUND THAT IS NOT BLOCKED ON TRAFFIC
-▶▶ **A REAL TEST WAS RUN AGAINST A LIVE SHOPPING-SEARCH SERVICE, 11 SEARCHES, AND IT RETURNS REAL,
-BUYABLE, AFFORDABLE PRODUCTS FROM HER OWN 108 STORES — INCLUDING THE 101 SHE IS NOT AN AFFILIATE FOR.**
-🚨 **NOTHING WAS BUILT. NO APP CODE WAS CHANGED. This entry is a measurement, not a feature.**
-▶ **Her framing, and it should govern the build:** ***"The service finds. Style Star chooses."*** The
-service is a $25/mo commodity anyone can buy; her twelve dimensions, her never-wear list and 20 years of
-judgement are the part no competitor can. **Finding is bought. Choosing is hers.**
+### ⭐⭐⭐ THE ONE-LINE SUMMARY
+▶▶ **THIS MORNING STYLE STAR INVENTED A PLAUSIBLE DRESS AND SENT A WOMAN TO A SEARCH PAGE. TONIGHT IT
+FINDS A REAL ONE, IN STOCK, AT A PRICE SHE CAN PAY, AND TELLS HER HONESTLY WHEN IT CANNOT.**
+✅ **BUILT, TESTED, MERGED TO `main` AND LIVE ON stylestar.app.** It searches her own **108 stores**,
+**including the 101 she is NOT an affiliate for** — ▶▶ **so it needed NO affiliate approval at all,
+which is the wall she has been stuck behind since August.**
+▶ **Her framing, and it governed every line of the build:** ***"The service finds. Style Star chooses."***
+The service is a $25/mo commodity anyone can buy; her twelve dimensions, her never-wear list and 20 years
+of judgement are the part no competitor can. **Finding is bought. Choosing is hers.**
+🚨 **THE HONEST NEXT STEP HAS NOT CHANGED AND SHE SHOULD HEAR IT PLAINLY: what the app needs now is
+USERS, not more building.** It is simply a considerably better app to put in front of them.
+
+**⚡ THE SESSION IN NUMBERS:** 9 decisions made and written down · 2 rounds of live testing (~75 of 250
+free searches) · **7 real bugs caught before a woman saw them** · 115 new tests · four things shipped
+(the finder · the chat integration · the waiting star · her own copy).
+
+**▶▶ THE THREE THINGS WAITING ON HER, IN ORDER:**
+1. **Hand `docs/store-scoring-brief.md` to ChatGPT** — written, committed, sent to her, **NOT yet done.**
+2. **Re-run her three chat messages** against the current build (the Napa one especially).
+3. **Then Shop your Style**, which she called *"an enormous difference."*
 
 ### 🚨 WHY THIS CAME UP — HER QUESTION, AND IT WAS THE RIGHT ONE
 She asked how Style Star could answer ***"Find me a women's red leather boot, size 6, wide width"*** with
@@ -522,15 +535,74 @@ colour"* over one set, *"Right fabric and style"* over another. **If those are e
 really does become the app choosing for her.** ▶ They appear only when there is more than one group —
 with a single set there is nothing to choose between and a label would be noise.
 
-### ▶ STEP 3 IS HERS: LOOK AT IT ON HER PHONE
-1. ⚠️ **SHE MUST ADD `SERPAPI_KEY` TO NETLIFY** or nothing appears. Nothing breaks either.
-2. ▶ **THE FIRST THING TO JUDGE IS THE COPY, and it is the one thing deliberately left open:** a door
-   reading *"keep the fabric and cut, and look at other shades of pink"* can hold products whose colour
-   is **UNKNOWN** rather than confirmed pink. **The card says so; the DOOR'S OWN WORDING may still
-   promise more than it delivers.** Her call, and it needs her ear, not more code.
-3. ▶ **THEN: does the stylist search when she should, and stay quiet when she should not?** The trigger
-   is a judgment and only real conversations show whether it lands.
-4. ▶ **THEN SHOP YOUR STYLE**, which she called *"an enormous difference."*
+### ✅ THE WAITING STAR — HER REQUEST, AND IT IS A REUSE NOT A NEW LOADER (2026-09-06)
+Her words: ***"we have the spinning star on shop my style that lets her know it is thinking and coming
+soon. We need a way for her to know it is taking a little more time either a spinning pink star or three
+dots that move or something that shows the stylist is actively shopping and nothing is broken."***
+▶ **BUILT AS A REUSE: byte-identical star path and colours to the `.wdr-load-star` already on Wardrobe
+and Trending, and the same `spin 1.7s linear infinite reverse` as `.shop-star-main`.** ⚠️ **A woman meets
+ONE waiting signal across the app, never three that nearly match. Drawing a fourth spinner would be the
+same mistake as a second copy of a rule.** `_starSpin()` is the one definition.
+⭐ **IT GOES ON BOTH WAITS, because she was right about where the time actually goes:** the stylist
+WRITING her answer is the long one (**~16-20s**, and it had only text — that was the real complaint);
+the product search runs **alongside** it at ~5-8s.
+⚠️ **THREE CARES TAKEN, each one a way it could have become a loading screen:** the words replace
+themselves and never stack · the mid-stream swap to *"Checking stores…"* targets the **span**, because a
+bare `textContent` there would delete the star along with the words (a test pins that exact line) · and
+**`prefers-reduced-motion` keeps the star but stops it turning** — the reassurance is the star being
+there, and motion is not the only way to give it.
+
+### 🚨🚨🚨 START HERE NEXT SESSION — THE STORE LIST, AND SHE HAS NOT HANDED IT OVER YET
+▶▶ **THE FILE IS WRITTEN AND COMMITTED: `docs/store-scoring-brief.md`.** It was sent to her on
+2026-09-06 and **she had not yet given it to ChatGPT when the session ended.** ⚠️ **SO THE FIRST
+QUESTION NEXT SESSION IS SIMPLY: "did you get a chance to run the store brief through ChatGPT?"** —
+not a re-explanation, not a redesign. **The work is waiting on one handoff, nothing else.**
+
+**⭐ HER GOAL, HER WORDS, 2026-09-06: 200 STORES.** ***"I can do 200. I don't want to limit to 15. I want
+the searches to be amazing and able to find users what they want."*** ▶ **So plan for ~200, up from 108.
+Do NOT re-propose a small batch — she was offered fifteen and explicitly rejected the ceiling.**
+▶ **HER METHOD, and it is a good one:** ***"I can get chat to help me with that because chat is good at
+searching store inventory fast."*** **She drafts with ChatGPT, Claude checks the rows against her
+existing 108, she corrects. That does NOT break "never invent a store's tags" — a draft she approves is
+not an invention (the Garnet Hill lesson was about inventing SILENTLY).**
+
+**WHAT `docs/store-scoring-brief.md` CONTAINS, so it never has to be rebuilt:** the business-model
+exclusions FIRST (boxes, rentals, fast fashion, **and resale/marketplaces**) · the five fields a store
+needs · the ten scores in exact order with **the pairs explained as pairs** · the polish-ranks-never-
+matches rule · her own 30-label archetype vocabulary · **the measured range and mean of every dimension
+across her 108** so a drafter calibrates instead of guessing · **all 108 stores with her real scores as
+anchors** · and the live affiliate status marked business-planning-only.
+⚠️ **THE FAILURE IT EXISTS TO PREVENT: her ~200-store wishlist from 2026-07-27 was referenced in this
+file for six weeks and was NEVER SAVED ANYWHERE.** It lived in a chat and is gone. **This one is in the
+repo.**
+⚠️ **WHAT TO WATCH IN WHATEVER COMES BACK: a flat table.** ChatGPT will want to score everything a 7,
+and a table where nothing varies cannot rank anything. **Her own 108 use the full 1-10 range on every
+dimension except polish** (4-10, because she already excluded the stores that would score lower).
+▶ **MEASURED PRIORITIES ALREADY APPROVED BY HER: Kohl's (+28, in 8 of 10 test searches) and Zara.**
+Both still need scores. **Walmart is still hers to rule on.**
+
+### ▶ AND THE OTHER THING WORTH CHECKING BEFORE SHE SPENDS AN EVENING
+⚠️ **UNVERIFIED, AND IT COULD CHANGE THE SIZE OF THE JOB ENORMOUSLY: does a store need her FULL ten
+scores just to have its products allowed through?** ▶ **Two different jobs may be separable —
+(A) LETTING A SHOP'S PRODUCTS PASS THE ALLOWLIST, which the finder may do on a name and a domain alone,
+and (B) LETTING THE STYLIST RECOMMEND THE SHOP BY NAME, which genuinely needs the ten scores because it
+feeds `_storeFit`.** **If A holds, she could approve 200 shops in one sitting as a yes/no list and do
+the deep tagging only for the ones she wants named out loud.** 🚨 **NOT PROMISED TO HER — she was told
+plainly it is unverified. CHECK HOW AN UNTAGGED STORE BEHAVES IN `_storeFit` AND GATE 2 BEFORE OFFERING
+IT AS A PLAN.**
+
+### ▶ STEP 3 — WHAT SHE ALREADY DID, AND WHAT IS LEFT
+1. ✅ **`SERPAPI_KEY` IS SET IN NETLIFY.** She added it and redeployed herself.
+2. ✅ **SHE TESTED ALL THREE CASES ON HER PHONE AND FOUND FOUR FAULTS** — see the section above. Three
+   were fixed the same evening; the fourth was the copy, and **she wrote the replacement herself.**
+3. ✅ **EVERYTHING IS MERGED TO `main` AND LIVE.** The finder, the chat integration, the three fixes,
+   the star and her wording.
+4. ▶ **STILL TO DO: re-run her three messages against the CURRENT build.** The Napa one is the one to
+   watch — it returned nothing before the fix and returns real dresses ($39.97-$160) in testing now.
+5. ▶ **THEN SHOP YOUR STYLE**, which she called ***"an enormous difference."*** Not started.
+🔒 **SerpApi: ~75 of 250 free searches used on 2026-09-06. Her key is live and she may regenerate it at
+any time — if she does, `SERPAPI_KEY` in Netlify must be updated too or the chat quietly loses its
+product cards (no error, just advice).**
 
 ### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT — every one of these is still open
 1. ✅✅ **HER TWELVE SLIDER POSITIONS — RECORDED 2026-09-08, THE ASK IS CLOSED.** She sent her Style
