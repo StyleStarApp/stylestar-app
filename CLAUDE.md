@@ -101,6 +101,70 @@ already rank the stores.
 nameparity 25 · e2e 29 · askvary 14 — all 0 failed.** `searchtune` 71/1, the documented pre-existing
 heart-tip font check.
 
+### 💰⭐⭐ THE LUXURY PROBLEM, HER SECOND CALL ON A LIVE SHELF (2026-09-06)
+Her words: *"We need to adjust it so that those stores don't dominate."* Her own suggestion was to show
+them only when a woman's style matches — **steered off it, and the reason generalises: THE APP NEVER ASKS
+HER BUDGET, so there is no price preference to match on; and style matching is what CAUSES the skew**
+(polish correlates 0.67 with price in her own tags, dressy likewise). Matching harder pushes the wrong way.
+- ▶▶ **THE FEED HALF — THE OLD PRICE RULE WAS TOOTHLESS AND HAD ALWAYS BEEN.** `curatedPicks` measures
+  against **the pool's own median**, and all seven fed stores are `$$$`/`$$$$` — so on a well-stocked row
+  the median IS the top band and nothing can sit two bands above it. Built for her 107 (which span `$` to
+  `$$$$`); a uniformly dear pool walks straight past it. **Live medians: blouses $298 · casual tops $260 ·
+  dresses $398 · shoes $790 · bags $1,490.**
+- ✅ **TWO GUARANTEES, as SWAPS on the finished set** — never filters, never new sort terms, so the ranking
+  still decides everything else and the set never shrinks. **(1) one reachable piece:** genuinely
+  affordable (`$`/`$$`) where the row has one, else **the cheapest TENTH** of what exists. **(2) one of her
+  own hand-picks**, where the row has one.
+  - ⚠️ **A TENTH, NOT A QUARTER, and the first draft got this wrong:** a quartile on the live shoes row is
+    **$604** against a $790 median, so a $604 shoe satisfied the guarantee while a **$248** shoe on the
+    same row went unseen. p10s are what a woman notices: shoes $248, bags $350, dresses $248.
+  - ⚠️ **BOTH HALVES ARE LOAD-BEARING:** casual tops carry 45 pieces under $150 so the `$`/`$$` half fires
+    there; **shoes carry 2 and bags 3**, so without the quartile half those rows would not move at all.
+- 🚨⭐ **HER 107 GET A GUARANTEE, NOT A HEAD START — and the measurement REVERSED the lever this file used
+  to point at.** They cover **only 10 of the ~100 rows but run 7-17 deep on those** (shoes 17, blouses 16,
+  dresses 15). So `(b.feed?0:1)-(a.feed?0:1)` at the front of the sort would hand her **all four cards on
+  exactly the rows the feed stocks best, every week, forever**, and change nothing on the other 90.
+  ▶ **A guarantee gives her curation reliable presence and keeps the shelf rotating. 59 of her 107 are
+  `$`/`$$`, so on those rows it largely serves the affordability guarantee too.**
+- ▶▶ **THE AI HALF, AND THE FINDING THAT MATTERS MOST: A PROMPT COULD NOT DO IT, AND THE PROOF IS
+  MEASURED.** `_shopRules` tells the model two things at once — *"favour the TOP of this list"* and
+  *"include something genuinely affordable"*. **For a dressy woman those CONFLICT**, because her top 10
+  came back Bergdorf, Saks, NET-A-PORTER, Neiman Marcus, Alice + Olivia, Veronica Beard, Gucci,
+  Reformation, Marissa Collections, Revolve — **ZERO reachable in the top 10, 2 in the top 20.** The model
+  obeys the first. A relaxed woman's top 10 holds **6** reachable, which is exactly why she was never the
+  problem. ⚠️ **THE LIST WAS THE BUG, NOT THE SENTENCE.**
+  - ⚠️⚠️ **A COUNTABLE FLOOR IN THE PROMPT WAS TRIED FIRST AND FAILED, and this is the reusable lesson:**
+    *"at least a third, never fewer than two"* measured **2 of 6 on one live run and 1 of 6 on the next.**
+    Noise. **One live sample cannot tell you a prompt change worked — take three.** The wording is kept
+    (it states the intent and does no harm) but it is NOT the lever.
+  - ✅ **`_reachableAtTop` guarantees 3 reachable inside the top 12.** It does **not** touch the matching:
+    the promoted stores are the **best-matched affordable ones she already had**, moved up her own ranking.
+    Nothing is cut (sort-do-not-trim holds) and a woman whose taste really is luxury still leads with
+    Bergdorf and Saks. **Live after: dressy 1, 2, 3 across three runs — roughly 1 → 2 of 6.**
+    ⚠️ **Honestly a NUDGE, not a guarantee, unlike the shelf.** The dials are `_REACH_N`/`_REACH_WITHIN`.
+- 🚨 **A LIVE BUG FOUND ON THE WAY, not a tuning choice: the stylist chat still said "match the store to
+  her using what you know of her BUDGET."** The app never asks it. This file records that exact sentence
+  being deleted from `_shopRules` for promising what the app cannot do — **a second copy survived in the
+  chat's own prompt and nobody noticed.** ▶ **Told to use knowledge it does not have, a model does not
+  leave it blank, it INVENTS one** — the identical failure to the old "regular" size-word bug. Also: the
+  chat is the ONE shopping surface that does not share `_shopRules`, and said only *"Mix price points"* —
+  the weakest wording in the app, on the surface where she is actually buying. Both fixed.
+  ⚠️ **STANDING CHECK: when a shared rule is fixed, grep for a SECOND COPY in the chat's own prompt.**
+- ⚠️ **THE HONEST LIMIT, and it is the argument for a mid-market affiliate: NO SORT INVENTS INVENTORY.**
+  Shoes and bags stay dear until an affordable store is wired in. The tests assert this rather than
+  pretending otherwise.
+- ⚠️ **FOR HER EYE, NOT DECIDED: a dressy woman's best-matched AFFORDABLE stores are Express (rank 12),
+  Zara (19), Torrid (21), Eloquii (22)** — so the promotion legitimately lifts **Torrid**, a plus-size
+  house, for a woman who never said she shops plus. **That is HER OWN ranking, not an invention** (Torrid
+  is tagged "Casual Trendy"), and store curation is hers by standing rule. Raise it when she has appetite.
+- **Verified by `scratchpad/pricefloor.js`, 22 checks**, incl. ⭐ *the cheapest piece on a row is STILL
+  refused when she said no to it* — a swap reaches back into the pool, so it is exactly the change that
+  could smuggle a vetoed garment onto her shelf. Plus `scratchpad/pricetier-live.mjs`, the live instrument.
+  **Green: feedshelf 49 · curated 65 · wdrmylist 65 · feedphoto 24 · sizeveto 43 · occasion 191 ·
+  storedepth 19 · nameparity 25 · fabric 27 — all 0 failed.**
+- ⚠️ **`scratchpad/fitcap.js` is a REPORTING script, not a suite** (0 ✓, 0 ✗ — it prints was/now). Do not
+  read its silence as a pass or a fail.
+
 ### 🚨⭐ THE FIRST THING SHE SAW ON A LIVE SHELF: NO PHOTOGRAPHS, AND A PAIR OF EMPTY QUOTE MARKS
 Her report, minutes after the key landed: *"They did come up but with no photos."* **Both faults were in
 one function, `_curatedCard()`, and both are the SAME cause — it was written for her 107 hand-picks and
@@ -236,15 +300,12 @@ ingest runs). **Nothing was added to Netlify, by design.**
    ▶▶ **STILL OPEN AND IT IS THE IMPORTANT ONE: her verdict on whether the shelf FEELS LIKE HER.** She
    deliberately answered the quiz as a luxury shopper to force feed pieces up, so she has not yet judged
    it as herself. ⚠️ Private browsing, `stylestar.app/?notrack`.
-4b. ⚠️⚠️ **RAISE THE AFFORDABILITY QUESTION WITH HER, unprompted, the moment she reports back.** Every
-   fed store is `$$$`/`$$$$`, and a live "Professional blouses" shelf came back Joseph $295, Rick Owens
-   $1,020, Magda Butrym $1,290, Asceno $350. **That runs straight against her founding value — "literally
-   any woman, 18 to 80+, no age or income bracket."** Two existing entries below bear directly on it and
-   should be read together: the spreadsheet-freeze decision (her 107 are the app's ONLY affordable
-   real-product inventory, and a mid-market approval is therefore worth MORE than another luxury one)
-   and the flag that **her hand-picks get no head start in the sort**, so on a well-stocked row the
-   affordable half will rarely appear. ▶ **The lever is one term at the FRONT of the sort,
-   `(b.feed?0:1)-(a.feed?0:1)`, and it is a curation call that is HERS, not one to settle in code.**
+4b. ✅ **THE AFFORDABILITY PROBLEM IS BUILT AND MERGED** — see the luxury entry above for what changed and
+   what is still only a nudge. ▶▶ **WHAT IS STILL OPEN AND IS HERS: (a) does the shelf now feel right on
+   her own phone, and (b) should the AI be pushed harder than ~2 of 6 for a dressy woman** (`_REACH_N` /
+   `_REACH_WITHIN`), knowing that forcing more starts styling a woman against her own quiz answers.
+   ⚠️ Also flagged for her eye: the promotion legitimately lifts **Torrid**, a plus-size house, for a
+   dressy woman who never said she shops plus — her own ranking, her call.
 5. ✅ **Vilebrequin is back in `STORES`** (2026-09-05, her word: *"Yes go ahead and include it"*), with
    its own hostname added to `SEARCH_DOMAINS` per the standing rule. ⚠️ **Its `deep` flag was
    DELIBERATELY NOT restored** — the feed only powers Wardrobe Ideas, so the stylist chat and Shop your
