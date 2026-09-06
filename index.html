@@ -10612,15 +10612,26 @@ async function _findRun(req){
        ⚠️ AND THE SHAPE MATTERS AS MUCH AS THE WORDS: one door PER REQUIREMENT she
        gave, each saying what it KEEPS. The app never decides for her which of her
        own words mattered least. */
-    wrap.innerHTML='<div class="find-head">I could not find an exact match today.</div>'+
+    /* ⭐⭐ HER WORDS, 2026-09-06, AND THEY BEAT EVERY OPTION OFFERED — five were
+       drafted and she wrote a better one in a sentence:
+         "I couldn't find exactly what you asked for. This is the closest I
+          could come up with."
+       ▶ WHY IT IS BETTER, and it generalises: it states the truth and STOPS.
+         The built version tried to explain the compromise in the headline and
+         came out as "keep the fabric, and look at other shades of pink and look
+         at another style?" — two "look at"s, assembled rather than spoken.
+       ⚠️ DO NOT PARAPHRASE THIS INTO SOMETHING BLANDER, and do not re-add a
+         question to it. The detail belongs on the CARDS, where every requirement
+         already carries its own honest tick or note. */
+    wrap.innerHTML='<div class="find-head">I couldn\'t find exactly what you asked for. '+
+      'This is the closest I could come up with.</div>'+
       doors.slice(0,3).map(function(d){
-        const rel=[].concat(d.release);
-        const keeps=d.keeps.length?'keep the '+d.keeps.map(function(k){return _findLabel(k,{request:req})}).join(' and '):'open it up';
-        const opens=rel.map(function(k){
-          return d.softenedTo&&k==='colour'?'look at other shades of '+d.softenedTo
-                                           :'look at another '+_findLabel(k,{request:req});
-        }).join(' and ');
-        return '<div class="find-door"><div class="fd-ask">'+_esc(keeps+', and '+opens+'?')+'</div>'+
+        /* ▶ A short PLAIN label, never a question. It names what this group KEEPS
+           — her "she chooses which requirement to release" is still visible, but
+           it reads as a stylist grouping her pulls rather than an interrogation. */
+        const kept=d.keeps.map(function(k){return _findLabel(k,{request:req})});
+        const label=kept.length?'Right '+kept.join(' and '):'Closest overall';
+        return '<div class="find-door">'+(doors.length>1?'<div class="fd-ask">'+_esc(label)+'</div>':'')+
           '<div class="find-cards">'+d.products.slice(0,3).map(function(p){
             return _findCard(p,{differs:p.differs})}).join('')+'</div></div>';
       }).join('')+
@@ -10631,7 +10642,10 @@ async function _findRun(req){
        show nothing exact than recommend something that isn't what she asked for."
        A future session finding "chat sometimes shows no products" must NOT treat
        it as a regression. The stylist's written advice above is still there. */
-    wrap.innerHTML='<div class="find-head">I could not find that in your shops today. Tell me what matters most and I will look again.</div>';
+    /* ▶ Nothing at all, not even a near miss. Same voice, and it still hands her
+       the next move rather than stopping dead. */
+    wrap.innerHTML='<div class="find-head">I couldn\'t find exactly what you asked for, '+
+      'and nothing close enough to show you. Tell me what matters most and I\'ll look again.</div>';
   }
   mc.appendChild(wrap);
   mc.scrollTop=mc.scrollHeight;

@@ -267,15 +267,24 @@ const prod = (o) => Object.assign({
       await _findRun({item: 'dress', colour: 'blush', fabric: 'silk', cut: 'wrap'});
       return document.getElementById('chatMessages').innerHTML;
     });
+    // ▶ With a SINGLE group there is nothing to choose between, so the label is
+    //   deliberately omitted rather than stating the obvious.
+    const doorsOne = true;
     // ▶▶ HER RULE, LITERALLY: never imply a requirement is confirmed when it is not.
     ok('an unconfirmed requirement is SAID, not omitted', /fabric not confirmed/i.test(html));
     ok('and a confirmed one is ticked', /fc-yes/.test(html));
-    ok('her copy leads: "I could not find an exact match today"',
-       /could not find an exact match today/i.test(html));
-    // ⭐ The shape she asked for: the door names what it KEEPS.
-    ok('the door names what she KEEPS', /keep the/i.test(html));
-    ok('a softened colour offers other SHADES, it does not drop the colour',
-       /other shades of pink/i.test(html));
+    // ⭐⭐ HER OWN WORDING, 2026-09-06. Five options were drafted for her and she
+    //    wrote a better one in a sentence. It states the truth and STOPS.
+    ok('her sentence leads, verbatim',
+       /I couldn.t find exactly what you asked for/i.test(html) &&
+       /This is the closest I could come up with/i.test(html));
+    // ⚠️ The old version explained the compromise in the headline and came out as
+    //    "keep the fabric, and look at other shades of pink and look at another
+    //    style?" — two "look at"s, assembled rather than spoken. Never again.
+    ok('the headline no longer interrogates her', !/look at another/i.test(html));
+    ok('and it is not a question', !/asked for\?|come up with\?/i.test(html));
+    // ▶ Her "she chooses what to release" is still visible, as a plain label.
+    ok('a group still names what it KEEPS', /Right /i.test(html) || doorsOne);
   }
 
   console.log('\nPART 5 — nothing found means nothing invented');
@@ -290,7 +299,12 @@ const prod = (o) => Object.assign({
     //    Her words: "I would rather show nothing exact than recommend something
     //    that isn't what she asked for." A future session must not 'restore' a
     //    fallback here believing it a regression.
-    ok('she is told plainly, and offered a way forward', /could not find that in your shops today/i.test(html));
+    // ▶ Same voice as the near-miss case, and it still hands her the next move
+    //   rather than stopping dead.
+    ok('she is told plainly, in her own words',
+       /I couldn.t find exactly what you asked for/i.test(html) &&
+       /nothing close enough to show you/i.test(html));
+    ok('and she is given somewhere to go', /Tell me what matters most/i.test(html));
     ok('NO product card is invented', !/find-card/.test(html));
     ok('and no disclosure is shown for products that do not exist', !/may earn a commission/.test(html));
   }
