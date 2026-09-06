@@ -376,10 +376,13 @@ products whose colour is UNKNOWN rather than confirmed pink. **The per-product l
 but **the door's own wording must not imply more than it delivers** — that is a copy decision on the
 chat screen, and it is hers.
 
-### ✅✅✅ STEP 2 IS BUILT: THE STYLIST CHAT CAN FIND REAL PRODUCTS
-⚠️ **THIS IS THE FIRST STEP THAT CHANGED `index.html`.** It is on the branch, **not merged**, and it
-does nothing at all in production until **`SERPAPI_KEY` is set in Netlify** (see the Backend section).
-**Without the key the chat behaves exactly as it does today** — advice, no cards, no error.
+### ✅✅✅ STEP 2 IS BUILT AND **MERGED TO `main` — IT IS LIVE ON stylestar.app** (2026-09-06)
+✅ **`SERPAPI_KEY` IS SET IN NETLIFY — Cath added it herself and redeployed, confirmed by her deploy log
+("Site is live ✨").** ⚠️ **The Post-processing badge sits on "In progress" for a while AFTER the site is
+already live — read the LAST LOG LINE, not the badge.** She hit exactly that and thought it had stalled.
+✅ **MERGED `claude/resume-stylestar-claude-g2nvk4` → `main` at `b60eaf6`**, a clean fast-forward
+(`git merge-base --is-ancestor origin/main HEAD` verified first, then `git push origin <branch>:main` —
+**the clone quirk means local `main` is never touched**).
 
 **HOW IT WORKS, and the one clever bit is the ordering:** the stylist emits ONE marker as the FIRST
 thing in her reply — `<<FIND item=dress; colour=blush; fabric=silk; cut=wrap>>` — then writes her answer
