@@ -8210,6 +8210,66 @@ function curatedPicks(slot,p,family,count){
   //    signal, and her own ten dimension scores already rank the stores.
   if(family&&family!=='Balanced')pool=pool.filter(function(x){return x.feed||x.families.indexOf(family)>=0});
   mark('style');
+  // ═══ STAGE 2b — THE TWO GATES A FEED GARMENT USED TO WALK STRAIGHT PAST ═══
+  // 🚨 2026-09-06. Cath answered her own quiz as herself, opened "Tops in your
+  // favorite colors", and got a thong, a handbag and two $2,490 designer tops.
+  // Her words: "I wanted those items only to show up where those particular
+  // items made sense for the shopper. Not for those 7 stores to be prioritized
+  // as the top picks."
+  //
+  // ▶▶ THEY WERE NEVER PRIORITISED. They were EXEMPTED, and then they won on
+  // volume -- ~78,000 feed garments against her 107 hand-picks is 700:1, so
+  // skipping one filter is all it takes to own every row. The line above still
+  // exempts them from the family filter and that stays deliberate (nobody has
+  // judged 78,000 pieces for style family, and inventing that judgment is what
+  // the standing store-tag rule forbids). But "exempt from HER judgment" was
+  // never meant to mean "exempt from ALL judgment", and it did.
+  //
+  // ⚠️ The comment above claimed the STORE was the style signal instead. It was
+  // not: _storeFit, which scores a store against a woman using CATH'S OWN ten
+  // dimension tables, was called in exactly one place in this app and it was
+  // not this one. The safeguard was described and never wired up. Both gates
+  // below are that wiring.
+
+  // GATE 1 — her sibling-row map, the one she confirmed herself and which had
+  // only ever reached the AI prompt (_WDR_IDEA_EXCLUDE, used at _wardrobeIdeaGen
+  // and nowhere else). A garment tagged to BOTH this row and a row this row
+  // excludes belongs on the other one. Needs `slots` from product-search.
+  var _excl=_WDR_IDEA_EXCLUDE[slot]||[];
+  if(_excl.length)pool=pool.filter(function(x){
+    if(!x.feed||!x.slots||!x.slots.length)return true;
+    return !x.slots.some(function(sl){return _excl.indexOf(sl)>=0});
+  });
+  mark('sibling');
+
+  // GATE 2 — a feed garment must come from a store that genuinely suits her.
+  // The bar is HER OWN median: score all 102 stores with her dimension tables
+  // and keep feed garments whose store lands in her better half. Nothing is
+  // invented here -- every number is one she wrote.
+  // ⚠️ RELATIVE, NEVER ABSOLUTE. A fixed cutoff would mean a different thing
+  // for every woman, and for some it would silently empty the feed.
+  // ⚠️ AND NOT BEFORE THE QUIZ. `answers` sits at its neutral default until she
+  // moves a slider, so ranking a non-quiz-taker sorts against an invented
+  // profile -- the same reason _rankedStores returns everything when !quizTaken.
+  // Her 107 hand-picks are NEVER subject to this: she already judged those.
+  if(quizTaken&&pool.some(function(x){return x.feed})){
+    try{
+      var _her=_herDims(),_fits=[];
+      for(var _k in STORES){if(STORES[_k]&&STORES[_k].d)_fits.push(_storeFit(_k,_her))}
+      _fits.sort(function(a,b){return a-b});
+      var _bar=_fits.length?_fits[Math.floor(_fits.length/2)]:-Infinity;
+      pool=pool.filter(function(x){
+        if(!x.feed)return true;
+        var _sk=resolveStore(x.retailer);
+        // A store we cannot resolve keeps its place: dropping a garment because
+        // of OUR lookup failure is the silent nothing this file keeps warning
+        // about, and the retailer name is feed data we do not control.
+        if(!_sk||!STORES[_sk]||!STORES[_sk].d)return true;
+        return _storeFit(_sk,_her)>=_bar;
+      });
+    }catch(e){}
+  }
+  mark('storefit');
   // (The freshness addendum's one HARD exclusion, an explicit "Not for me",
   // came out with that control on 2026-08-15 -- see the note above
   // _wdrTrimNote. The weekly rotation is what renews the pool now, and a

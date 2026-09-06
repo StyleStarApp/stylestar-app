@@ -114,6 +114,9 @@ function shape(row, slot) {
   return {
     id: row.piece_key,
     slot,
+    // Every row this garment was tagged to, so the page can apply Cath's
+    // sibling-exclusion map. Always an array.
+    slots: Array.isArray(row.slots) ? row.slots : [],
     feed: true,
     active: true,
     brand: row.brand || row.store,
@@ -218,7 +221,15 @@ export default async (req) => {
   // one query fills a carousel. `slots=cs.{to1}` is the GIN-indexed containment
   // lookup the nightly ingest exists to make possible.
   const params = new URLSearchParams();
-  params.set('select', 'piece_key,store,brand,name,url,image_url,price,list_price,on_sale,color,material,pattern,sizes');
+  // ⭐ `slots` is selected even though the caller asked for ONE slot, because the
+  // page needs to know the garment's OTHER rows too. Cath's hand-reviewed
+  // _WDR_IDEA_EXCLUDE map says which sibling checklist rows must stay out of a
+  // row's Ideas (White/Black/colour Tops exclude Print tops, Tank tops,
+  // Professional blouses and Dressy tops). That map was only ever wired into
+  // the AI prompt, so the feed ignored it -- which is how a bustier reached
+  // "Tops in your favorite colors". curatedPicks can only honour it if the
+  // card carries every row it was tagged to.
+  params.set('select', 'piece_key,store,brand,name,url,image_url,price,list_price,on_sale,color,material,pattern,sizes,slots');
   params.set('slots', `cs.{${slot}}`);
   params.set('in_stock', 'is.true');
   params.set('price', 'not.is.null');
