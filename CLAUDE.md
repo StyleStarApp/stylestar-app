@@ -132,6 +132,13 @@ retired. Archiving once does not fix this; the rule does.
 - ▶ **THE RULE: when a session's notes are saved, the PREVIOUS session's entry moves to the archive
   in the same commit.** One "START HERE" entry lives here; everything older lives in the archive.
   **The file stops growing instead of needing rescuing.**
+- 🚨🚨 **LIVE OPERATIONAL STATUS NEVER ARCHIVES — added 2026-09-06 after this rule failed in exactly this
+  way.** Cath's affiliate rejections (Impact, Bloomingdale's, Shopbop) were recorded correctly and then
+  archived, so a session could hold 234 mentions of them in a file it does not read and 4 in the file it
+  does — none naming a rejection. She had to tell me herself, and asked, rightly, whether her history was
+  being lost. ▶ **A FINISHED BUILD is history. AN APPLICATION'S OUTCOME IS NOT — it is the current state of
+  her business.** Before archiving anything, ask of every paragraph: *is this what happened, or is this
+  what is true right now?* **Only the first may move.**
 - ▶ **WHAT STAYS HERE, always, and it is never archived:** the standing rules (store-pool
   eligibility, the brand framing rule, the size-range rule, luxury routing, the disclosure list, the
   naming/voice rule, the catalog-vs-feed decision below), the founder truths and Cath's origin story,
@@ -795,6 +802,52 @@ questions she wanted understood, plus one feature idea she likes. Resurface when
 - ⚠️ **GIT: two Edit items added in separate PRs WILL conflict** — every new `.dc-item` inserts at the same anchor
   (just above `<div class="dc-sign">`). Resolve by keeping BOTH, then re-verify item counts and div balance.
 
+### 💰💰 AFFILIATE STATUS — LIVE, AND IT NEVER GOES TO THE ARCHIVE (restored 2026-09-06)
+🚨 **WHY THIS SECTION EXISTS: on 2026-09-06 Cath said she had been rejected by Bloomingdale's, Nordstrom and
+Shopbop, and I did not know. Measured immediately: the archive held 234 mentions of her affiliate networks;
+`CLAUDE.md` held 4, and NOT ONE named a rejection.** The history was recorded properly and then archived —
+but the archive is not loaded at session start, so from inside a session it may as well not exist.
+▶▶ **THIS IS LIVE OPERATIONAL STATUS, WHICH IS AN OPEN THREAD, WHICH BY THIS FILE'S OWN RULE IS NEVER
+ARCHIVED. Keep it here and keep it current.** Her words: *"all of that is important to overall strategy."*
+
+**✅ RAKUTEN — publisher APPROVED, SID 4740535.** This is the whole live feed today, 7 stores:
+**Mytheresa · FARM Rio (MID 44912) · Diane von Furstenberg (53590) · Vilebrequin (43322) · Olivela ·
+Marissa Collections · Fleur du Mal.** ⚠️ **Every one is `$$$`/`$$$$` — that is the affordability problem
+at its source, and no amount of code fixes it.**
+
+**❌ THE REJECTIONS, AND THE ONE THING THEY ALL HAVE IN COMMON:**
+| Who | When | Level | Reason |
+|---|---|---|---|
+| **Impact** | 2026-08-20 | **NETWORK** | **Traffic** (confirmed by their support 08-21; they invite reapplication) |
+| **Bloomingdale's** | 2026-08-21 | one advertiser | **Traffic**, by elimination |
+| **Shopbop** | — | one advertiser | one advertiser, reapplyable, predicted |
+▶▶ **ALL THREE WERE TRAFFIC. NOT the app, NOT the policy pages, NOT the build.** For Bloomingdale's, three
+of the four possible reasons were **ruled out by measurement the same hour**: the site returns 200 to any
+user agent, apex and www 301 correctly, `/privacy` `/terms` `/faq` all 200, and — the one that actually
+mattered for a single-page app — **the page renders fully readable WITH JAVASCRIPT OFF** (`scratchpad/nojs.mjs`
+re-runs it; `scratchpad/reviewer-jsoff.png` is the proof).
+⚠️ **DO NOT WEIGH THE IMPACT DECLINE LIKE THE OTHER TWO. It is NETWORK level and it gates NORDSTROM (6 of her
+22 Edit items) AND PRODUCT PHOTOS.** The other two are single advertisers and cost her nothing to reapply.
+▶ **Contacting a declining advertiser now is LOW VALUE — if the reason is traffic there is nothing to say
+yet. Reapply from a stronger position; it costs nothing.**
+⭐⭐ **THE STRATEGIC CONSEQUENCE, and it is the honest answer whenever she asks what unlocks the app: the
+thing standing between Style Star and a mid-market feed is USERS, not code and not craft.** That is also
+the strongest argument this file has for her own stated growth edge — *more solo polish < 10 real users*.
+**Say it plainly when the affordability question comes round again; it is the same answer.**
+
+**▶ THE ORDER TO APPLY, unchanged and still right:**
+1. **AWIN** — ⚠️ **3 applications PENDING: Jackie Mack Designs · TERI JON · Under Armour US.**
+   ⚠️ Small **REFUNDABLE** deposit to apply (their spam filter, refunded against the first commission) —
+   **verify the amount on the day.** ▶ **Under Armour is the nearest thing to a mid-market approval on the
+   board, which is why this file keeps naming it.**
+2. **CJ** — free, no clock, "costs nothing but an evening". Not done yet.
+3. **NORDSTROM CREATORS** (`nordstromcreators.com`, Impact's creator product) — **door 2 for Nordstrom**,
+   when her follower count is not the weakest thing she brings.
+4. **AMAZON LAST.** 🚨 **3 qualifying sales within 180 days of APPROVAL, and the clock starts at APPROVAL,
+   not at launch.** Applying while the app has no users burns the window for nothing.
+🚨 **STANDING CORRECTION — SHAREASALE NO LONGER EXISTS.** Awin bought it and closed it at the end of 2025.
+**The live list is: Rakuten Advertising · Awin · Impact · CJ.** Any older entry naming ShareASale is stale.
+
 ### ▶ REMINDER FOR WHEN AFFILIATE APPROVALS LAND (Cath asked 2026-07-27 to be reminded — surface at money-path step 7)
 Cath's own words: *"when it comes time for us to get approved for affiliate links please remind me to think about
 adding more swim stores to the mall and also figure out how to make the most of our links and provide broad ranges etc."*
@@ -824,7 +877,8 @@ So, at that moment, walk her through:
    requires **3 qualifying sales within 180 days** or it closes the account. The clock starts at APPROVAL, not
    at launch. So applying to Amazon the day the business bank account opens, while the app still has no users,
    burns the window for nothing. **Apply to the networks without that rule first** (most of the 102 stores run
-   through ShareASale / Rakuten / Impact / CJ / Awin), and save Amazon until there is real traffic. Re-check the
+   through Rakuten / Awin / Impact / CJ — ⚠️ **NOT ShareASale, which Awin closed at the end of 2025**),
+   and save Amazon until there is real traffic. Re-check the
    current terms at application time; program rules change.
 
 ### ▶ BRAND FRAMING RULE: how to talk about "10 categories, 100 items" (agreed 2026-07-27)
