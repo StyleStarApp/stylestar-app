@@ -109,6 +109,20 @@ it is genuinely confirmed, and never infer a fit from a word that has two meanin
 5. **`curatedPicks()` runs — the SAME picker**, never a copy. Never-wear, colour no's, price spread,
    max-two-per-retailer.
 6. **Her sliders and her store dimensions order the results.**
+🚨🚨 **HER RULE FOR A THIN RESULT SET — HER DECISION, 2026-09-06, AND SHE IMPROVED ON EVERY OPTION
+OFFERED.** Precision will often leave very FEW matches; honestly narrowing her own blush-dress test left
+**one**. Asked whether to show the one, pad the screen with near-misses, or show the one and offer to
+widen, **she chose to show the one and offer** — her words: ***"If there is only one true match, I would
+rather confidently show her the one true match than fill the screen with things that aren't what she
+asked for. Then I would offer to widen the search."***
+▶▶ **AND THE PART SHE ADDED, WHICH IS BETTER THAN ANYTHING PROPOSED AND IS THE ACTUAL DESIGN: THE WOMAN
+CHOOSES *WHICH REQUIREMENT* TO RELEASE, ONE AT A TIME.** Her words: ***"maybe she wants to keep silk but
+is open to another shade of pink, or maybe blush matters most and she is open to satin. That feels much
+more like how I would work with a client."***
+⚠️ **SO "WIDEN" IS NOT ONE BUTTON. Each requirement she asked for is separately releasable** — keep
+silk / open on colour · keep blush / open on fabric — **and the app never decides for her which of her
+own words mattered least.** That is the dressing-room behaviour, and it is the opposite of a search
+engine quietly dropping terms until something comes back.
 🚨🚨 **AND THE ANSWER SHE GAVE TO THE HARD QUESTION — what if red, leather and size 6 verify but WIDTH
 CANNOT?** Not hide it (she sees nothing), **not show it silently (THAT IS THE SHIFT-DRESS BOX)** — but
 **show it, labelled honestly, confirmed ones first.** Her stylist voice: *"These three I can confirm in
