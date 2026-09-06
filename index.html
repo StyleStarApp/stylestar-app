@@ -4659,9 +4659,57 @@ function _rankedStores(occ){
   // request only. Every other dimension stays hers, which is what keeps a
   // quiet woman away from Revolve even when she asks for a gown. See _OCCASIONS.
   if(typeof occ==='number')her.dressy=occ;
-  return keys.map(function(k){return {k:k,fit:_storeFit(k,her)}})
+  const ranked=keys.map(function(k){return {k:k,fit:_storeFit(k,her)}})
     .sort(function(a,b){return b.fit-a.fit})
     .map(function(x){return x.k});
+  return _reachableAtTop(ranked);
+}
+// ── A REACHABLE STORE IS ALWAYS WITHIN REACH OF THE TOP (2026-09-06) ──────
+// ▶▶ THE MEASUREMENT THAT FORCED THIS, and it is why no wording could have
+//    worked. _shopRules tells the model two things at once: "favour the TOP of
+//    this list" and "include something genuinely affordable". For a DRESSY
+//    woman those instructions are in direct conflict, because her top 10 came
+//    back Bergdorf, Saks, NET-A-PORTER, Neiman Marcus, Alice + Olivia,
+//    Veronica Beard, Gucci, Reformation, Marissa Collections, Revolve —
+//    ZERO reachable in the top 10 and 2 in the top 20. The model resolves the
+//    conflict by obeying the first, every time. A RELAXED woman's top 10 has
+//    6 reachable, which is exactly why she was never the problem.
+// ⚠️ Proven the hard way first: a countable floor was written into the prompt
+//    ("at least a third… never fewer than two") and measured live twice. It
+//    gave 2 of 6 on one run and 1 of 6 on the next — noise, not a fix. THE
+//    LIST WAS THE BUG, not the sentence. Re-measure with
+//    scratchpad/pricetier-live.mjs before touching either.
+// ▶ This does NOT change the matching, and that distinction is the whole
+//   safety of it: the stores promoted are the best-matched AFFORDABLE ones she
+//   already had, moved up from further down her own ranking. Nothing is cut
+//   (the standing 2026-07-27 sort-do-not-trim decision holds), no store she
+//   would love is displaced from the list, and a woman whose taste genuinely
+//   is luxury still leads with Bergdorf and Saks — she simply also sees, near
+//   the top, the reachable stores that suit her.
+// ⚠️ The cheap END of a range decides, the same reading _tierOf uses: the
+//    question is "could she buy anything here at all", so Gap $-$$ counts.
+const _REACH_N=3, _REACH_WITHIN=12;
+function _reachableAtTop(ranked){
+  const cheapEnd=function(t){const m=String(t||'').split('-')[0].match(/\$+/);return m?m[0]:''};
+  const reachable=function(k){const t=cheapEnd(STORES[k]&&STORES[k].t);return t==='$'||t==='$$'};
+  const head=ranked.slice(0,_REACH_WITHIN);
+  let need=_REACH_N-head.filter(reachable).length;
+  if(need<=0)return ranked;
+  const out=ranked.slice();
+  for(let i=_REACH_WITHIN;i<out.length&&need>0;i++){
+    if(!reachable(out[i]))continue;
+    // Displace the DEAREST store in the head, never the best-matched one, and
+    // never so far that the head loses its own character: the displaced store
+    // moves to just after the window rather than out of her list.
+    let worst=-1;
+    for(let j=0;j<_REACH_WITHIN;j++){if(!reachable(out[j])&&(worst<0||_tierOf(out[j])>=_tierOf(out[worst])))worst=j;}
+    if(worst<0)break;
+    const promote=out.splice(i,1)[0];
+    const demoted=out.splice(worst,1,promote)[0];
+    out.splice(_REACH_WITHIN,0,demoted);
+    need--;
+  }
+  return out;
 }
 /* ⚠️⚠️ detailTop EXISTS FOR THE CHAT AND FOR A MEASURED REASON. The chat's system
    prompt is the biggest in the app, and style-ai.js REFUSES any message over
@@ -4946,7 +4994,17 @@ function _shopRules(mode,occ,slot,detailTop){
     // not do. Worse, the dressier a woman's taste the more her best-matched
     // stores skew expensive, because dressy correlates with price in the tags.
     // Spreading the price points is both honest and what a good stylist does.
-    '- SPREAD THE PRICES across your picks. Always include something genuinely affordable alongside anything special. Never send her a set where every option is expensive.\n'+
+    // ▶ COUNTABLE ON PURPOSE, 2026-09-06. The old wording asked for a spread
+    // and got the letter of it and none of the spirit: measured live against
+    // the deployed function, a DRESSY woman's six came back Alice + Olivia,
+    // Neiman Marcus, Saks, Bergdorf Goodman, Revolve and one affordable store
+    // tacked on the end -- 1 of 6 reachable, and 1 of 4 in Wardrobe Ideas. The
+    // same run for a RELAXED woman was 5 of 6, so the rule was never broken in
+    // general; it was satisfiable with a single token pick, and exactly the
+    // woman whose taste correlates with price is the one it failed.
+    // ⚠️ A number the model can check itself is the difference. Re-measure with
+    //    scratchpad/pricetier-live.mjs if this wording is ever touched.
+    '- SPREAD THE PRICES across your picks, and COUNT IT: at least a third of them, and never fewer than two in a set of four or more, must come from a store whose price tag in the list above starts with $ or $$. Always include something genuinely affordable alongside anything special. Never send her a set where every option is expensive.\n'+
     // ▶ THE POINT OF THE WHOLE APP IS AT STAKE HERE (Cath, 2026-07-27). She
     // rightly loves department stores for wardrobe building: better odds on
     // size, colour and stock. But if every suggestion lands at Nordstrom she
@@ -10295,8 +10353,8 @@ SHOPPING:
 - FIT BEATS DEPTH, ALWAYS. A big catalog full of clothes in the wrong spirit is not a good result: Revolve is deep, but it is for a woman who likes her clothes fitted, alluring, trendy and edgy, and it is the wrong door for a relaxed, preppy or natural dresser no matter how much it stocks. The same in reverse: J.Jill and Chico's are the wrong door for a glam, alluring, trendy woman no matter how much linen they carry. Pick a store that genuinely suits HER first, and never reach past the ones that do to one that does not, even when she has asked for something that store is famous for.
 - LUXURY AND DESIGNER, this is how the rule above applies to designer names: say the designer freely, that is real expertise, but the STORE after "from" must still be one of the shops listed above, because that is what she taps to buy. Neiman Marcus, Saks, Bergdorf Goodman, NET-A-PORTER, Nordstrom and Bloomingdales all carry the major houses. Write "the Celine Shopping Tote from Neiman Marcus" or "a Saint Laurent shoulder bag from Saks", never "from Celine" or "from Louis Vuitton". A designer is a brand, not a shop.
 - Keep the item name before "from" short and searchable (2 to 4 plain words like "navy linen blazer"), because that phrase becomes the shopping search.
-- Match the store to her using what you know of her budget and size range. Only mention a size range for things where fit depends on it, never for bags, jewelry or accessories.`+_neverStoreRule().replace(/^ /,'\n- ')+`
-- Mix price points
+- Match the store to her using her size range. Only mention a size range for things where fit depends on it, never for bags, jewelry or accessories.`+_neverStoreRule().replace(/^ /,'\n- ')+`
+- SPREAD THE PRICES, and COUNT IT: whenever you name three or more pieces, at least a third of them must be from a store whose price tag in the list above starts with $ or $$. Always put something genuinely affordable beside anything special, and never give her an answer where every option is expensive.
 - When you name several pieces in ONE answer, group them at the same store where you can. She is buying, and one order means one checkout, one shipping charge and one return. A big department store is usually the easiest place to do that.
 - But do not default to the SAME store every time you answer. If every reply you ever give sends her to one shop, she will start going there directly instead of asking you. Vary which store you lean on from answer to answer.
 - Never compromise the best pick to group or to vary. The right item always wins.
