@@ -4659,9 +4659,21 @@ function _rankedStores(occ){
   // request only. Every other dimension stays hers, which is what keeps a
   // quiet woman away from Revolve even when she asks for a gown. See _OCCASIONS.
   if(typeof occ==='number')her.dressy=occ;
-  return keys.map(function(k){return {k:k,fit:_storeFit(k,her)}})
+  // ⚠️ A STORE CATH HAS NOT SCORED YET STILL BELONGS IN THE LIST.
+  // _storeFit reads all ten of her dimensions off `d`, so a store added without
+  // them threw here and took every shopping prompt down with it -- the same
+  // crash family as a rename breaking _STORE_ALIAS. Measured 2026-09-07.
+  // ▶ It is NOT given an invented score and it is NOT dropped. Ranking it would
+  //   mean making her numbers up; dropping it would break SORT, DO NOT TRIM and
+  //   hide a shop she approved. It sits at the end, still nameable, because
+  //   "we cannot place her" is the honest position and the end is where the
+  //   list already keeps the stores it does not describe.
+  const scored=[],unscored=[];
+  keys.forEach(function(k){(STORES[k]&&STORES[k].d?scored:unscored).push(k)});
+  return scored.map(function(k){return {k:k,fit:_storeFit(k,her)}})
     .sort(function(a,b){return b.fit-a.fit})
-    .map(function(x){return x.k});
+    .map(function(x){return x.k})
+    .concat(unscored);
 }
 /* ⚠️⚠️ detailTop EXISTS FOR THE CHAT AND FOR A MEASURED REASON. The chat's system
    prompt is the biggest in the app, and style-ai.js REFUSES any message over
@@ -4680,6 +4692,11 @@ function _storeListForPrompt(occ,detailTop){
   return _rankedStores(occ).map(function(k,i){
     if(detailTop&&i>=detailTop)return k;
     const s=STORES[k];
+    // Same rule as the ranking above: a store without her tags is NAMED and
+    // nothing more. Every word of this line is her data, so there is nothing
+    // honest to write for a store she has not tagged yet -- and guessing one
+    // would be exactly the invention the store-tag rule forbids.
+    if(!s||!s.d||!s.t||!s.c||!s.s)return k;
     // Cath's colour scores have to be IN the line or "check the tags before you
     // send her somewhere for butter yellow" is an instruction about data the AI
     // cannot see. Only the informative ends are named; the middle says nothing,

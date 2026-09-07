@@ -581,15 +581,38 @@ dimension except polish** (4-10, because she already excluded the stores that wo
 ▶ **MEASURED PRIORITIES ALREADY APPROVED BY HER: Kohl's (+28, in 8 of 10 test searches) and Zara.**
 Both still need scores. **Walmart is still hers to rule on.**
 
-### ▶ AND THE OTHER THING WORTH CHECKING BEFORE SHE SPENDS AN EVENING
-⚠️ **UNVERIFIED, AND IT COULD CHANGE THE SIZE OF THE JOB ENORMOUSLY: does a store need her FULL ten
-scores just to have its products allowed through?** ▶ **Two different jobs may be separable —
-(A) LETTING A SHOP'S PRODUCTS PASS THE ALLOWLIST, which the finder may do on a name and a domain alone,
-and (B) LETTING THE STYLIST RECOMMEND THE SHOP BY NAME, which genuinely needs the ten scores because it
-feeds `_storeFit`.** **If A holds, she could approve 200 shops in one sitting as a yes/no list and do
-the deep tagging only for the ones she wants named out loud.** 🚨 **NOT PROMISED TO HER — she was told
-plainly it is unverified. CHECK HOW AN UNTAGGED STORE BEHAVES IN `_storeFit` AND GATE 2 BEFORE OFFERING
-IT AS A PLAN.**
+### ✅✅✅ ANSWERED AND BUILT, 2026-09-07: THE TWO JOBS **ARE** SEPARABLE — HER 200 STORES CAN BE A YES/NO LIST
+▶▶ **THE QUESTION THIS FILE CARRIED AS UNVERIFIED — does a store need her FULL ten scores just to have
+its products allowed through? — WAS MEASURED, NOT REASONED ABOUT, and the answer is NO.** It was checked
+before being offered to her as a plan, exactly as the old entry demanded. **`scratchpad/untagged.js`, 18
+checks**, runs the REAL functions out of `index.html`.
+| The path | An untagged store |
+|---|---|
+| **(A) the finder's allowlist** | ✅ **passes on a NAME + SEARCH URL alone** — `find-products.js` never reads her ten scores at all |
+| **Gate 2, the feed shelf** | ✅ **passes** — it already guarded itself and keeps the garment |
+| **(B) the chat's store ranking** | 🚨 **CRASHED** — and that is now fixed |
+🚨🚨 **THE CHECK FOUND A LIVE LATENT CRASH, AND IT IS THE SAME SHAPE AS EVERY BUG IN THIS FILE.**
+`_rankedStores` mapped EVERY key through `_storeFit`, which reads all ten dimensions off `d` with no
+guard. **One untagged store in the `STORES` table and every shopping prompt threw** — `_shopRules`,
+the chat, Shop your Style, the lot, with no `try` anywhere above it. ▶ **This file already warned about
+exactly this family for a RENAME (*"`STORES[key].u` throws, taking the whole page down"*); it was the
+same hole one field over, and nothing was watching it.**
+⭐ **THE FIX IS NOT AN INVENTED SCORE AND NOT A DROP, because both would break a rule of hers.** An
+unscored store **keeps its place at the END of the list and is listed by NAME ONLY.** Ranking it would
+mean making her numbers up (**never invent a store's tags**); dropping it would break **SORT, DO NOT
+TRIM** and quietly hide a shop she had approved. **"We cannot honestly place this one" is the truthful
+position, and the end of the list is already where the stores that go undescribed live.**
+✅ **PROVEN NON-DISRUPTIVE: her 108 tagged stores rank in a BYTE-IDENTICAL order and the prompt store
+list is byte-identical**, asserted against `git show HEAD:index.html` inside the suite itself.
+▶▶ **WHAT THIS MEANS FOR HER EVENING, AND IT IS NOW SAFE TO OFFER: she can approve ~200 shops as a
+plain YES/NO list — a name and a search URL each — and the finder will search all of them.** The deep
+ten-score tagging becomes **OPTIONAL, and only for the shops she wants the stylist to NAME OUT LOUD**,
+because that is the half that feeds `_storeFit`.
+⚠️ **THE ONE THING THAT IS STILL TRUE AND SHE SHOULD HEAR: an untagged store is findable but NOT
+recommendable.** It can never be ranked toward a woman it suits, and the chat will not describe it. **So
+the ten scores are not busywork — they are what makes a shop RECOMMENDED rather than merely reachable.**
+▶ **Her measured priorities are unchanged: Kohl's (+28, in 8 of 10 test searches) and Zara** — and both
+could go in as yes/no rows today and be scored later, in that order.
 
 ### ▶ STEP 3 — WHAT SHE ALREADY DID, AND WHAT IS LEFT
 1. ✅ **`SERPAPI_KEY` IS SET IN NETLIFY.** She added it and redeployed herself.
@@ -695,7 +718,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | Price spread | prompt line (`index.html:5015`) | band logic + feed ceiling | curated | ✅ both |
 | Luxury via her retailers | `sendChat` prompt | n/a — feed links ARE her affiliates | ▶ none | ✅ verified by reading |
 | Store-pool eligibility | `STORES` table only | **all 7 feed stores resolve, all have her dimensions** | ▶ none | ✅ measured 2026-09-07 |
-| Never invent a store's tags | — | Gate 2 uses her own tables | ▶ none | ✅ by design |
+| **Never invent a store's tags** | **an unscored store is NAMED, never described** | Gate 2 uses her own tables | **untagged 18** | ✅ **both, tested 2026-09-07** |
 | Never name her body/size back | prompts, `_sizeWordsOut` | **`_feedName()` strips a trailing size clause** | **feedname** | ✅ **both, 2026-09-08** |
 | Never ask her age | app-wide, no age question | n/a | ▶ none | ✅ |
 | **Womenswear only** | store list + prompts; `getStoreUrl` women's scoping (`w`/`gp`) | `keep_row()` gender column **+ NAME** | **rakuten_feed 52** | ✅ **fixed 2026-09-08** |
