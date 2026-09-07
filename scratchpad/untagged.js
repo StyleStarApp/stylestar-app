@@ -67,23 +67,33 @@ function build(src, stores) {
 }
 
 const src = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-const before = execFileSync('git', ['show', 'HEAD:index.html'], {cwd: ROOT, maxBuffer: 1 << 30}).toString();
+// ⚠️ PINNED TO A SHA, NOT TO HEAD. This suite compares against the app as it
+// stood BEFORE the untagged-store guard, to prove two things at once: that the
+// crash was real, and that fixing it moved nothing for her 108 tagged stores.
+// Written against "HEAD" it passed exactly once -- on the commit that introduced
+// the fix -- and started failing on the very next commit, claiming the bug had
+// never existed. A baseline that moves is not a baseline.
+// 3d1aad4 is the last commit before the guard (parent of 995a4dd).
+const BASE = '3d1aad4';
+let before = null;
+try { before = execFileSync('git', ['show', BASE + ':index.html'], {cwd: ROOT, maxBuffer: 1 << 30}).toString(); }
+catch (e) { console.log('  ⚠ baseline ' + BASE + ' not in this clone — the before/after checks are SKIPPED'); }
 const stores = loadStores();
 const names = Object.keys(stores);
 
 console.log('\nPART 1 — nothing about her 108 tagged stores changes');
 const now = build(src, JSON.parse(JSON.stringify(stores)));
-const was = build(before, JSON.parse(JSON.stringify(stores)));
+const was = before ? build(before, JSON.parse(JSON.stringify(stores))) : null;
 ok('all ' + names.length + ' stores still carry her ten scores',
    names.every(k => Array.isArray(stores[k].d) && stores[k].d.length === 10));
 const rankNow = vm.runInContext('_rankedStores(null)', now);
-const rankWas = vm.runInContext('_rankedStores(null)', was);
-ok('the ranking is byte-identical to before the fix',
-   JSON.stringify(rankNow) === JSON.stringify(rankWas));
 const promptNow = vm.runInContext('_storeListForPrompt(null,45)', now);
-const promptWas = vm.runInContext('_storeListForPrompt(null,45)', was);
-ok('the prompt store list is byte-identical to before the fix',
-   promptNow === promptWas);
+if (was) {
+  ok('the ranking is byte-identical to before the fix',
+     JSON.stringify(rankNow) === JSON.stringify(vm.runInContext('_rankedStores(null)', was)));
+  ok('the prompt store list is byte-identical to before the fix',
+     promptNow === vm.runInContext('_storeListForPrompt(null,45)', was));
+}
 ok('an occasion still re-orders the list',
    JSON.stringify(vm.runInContext('_rankedStores(0.95)', now)) !== JSON.stringify(rankNow));
 
@@ -93,10 +103,12 @@ console.log('\nPART 2 — the crash the fix exists to stop');
 const UNTAGGED = {u: 'https://www.kohls.com/search.jsp?search=', t: '$-$$', s: ['petite', 'plus', 'tall']};
 const withNew = JSON.parse(JSON.stringify(stores));
 withNew['Kohls'] = UNTAGGED;
-let threwBefore = false;
-try { vm.runInContext('_rankedStores(null)', build(before, JSON.parse(JSON.stringify(withNew)))); }
-catch (e) { threwBefore = true; }
-ok('BEFORE the fix an untagged store threw (this is the bug)', threwBefore);
+if (before) {
+  let threwBefore = false;
+  try { vm.runInContext('_rankedStores(null)', build(before, JSON.parse(JSON.stringify(withNew)))); }
+  catch (e) { threwBefore = true; }
+  ok('BEFORE the fix an untagged store threw (this is the bug)', threwBefore);
+}
 
 const nowNew = build(src, withNew);
 let ranked = null, threwNow = null;

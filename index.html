@@ -11286,6 +11286,12 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
    px:'https://www.dvf.com/cdn/shop/files/D885ATWGRNSLJY_A1_0003.jpg?v=1745423517&width=800'},
   {n:'Veronica Beard Crosbie Jean',store:'Marissa Collections',url:'https://marissacollections.com/products/veronica-beard-crosbie-jean',price:'$248',
    note:'A high-rise, slim but wide-leg jean with stretch. The all-purpose jean style right now.',
+   // ⚠️ pxFit, her catch 2026-09-07 -- the hems were cut off mid-flare. See
+   // _wkStarPxTag for why this needs object-FIT and not object-POSITION: the
+   // jean fills its 800x1200 flat-lay edge to edge, so no crop of a 3:4 frame
+   // can show all of it. Matches the Edit's own contain override on this same
+   // photo (2026-08-25) so the two screens agree. Scheduled Sep 20.
+   pxFit:'contain',
    px:'https://cdn.shopify.com/s/files/1/0333/8892/0967/files/2608_J26FA0156_MEMORY_LANE_FLAT.png?v=1786608188&width=800'},
   {n:'Serpui Abigail Handbag — Red',store:'Marissa Collections',url:'https://marissacollections.com/products/serpui-abigail-handbag-red',price:'$414',
    note:'Wicker and leather, but it\'s really all about the bamboo handles! A unique take on the bag trend.',
@@ -11540,7 +11546,26 @@ function _wkStarPxTag(S,cls){
   // trimming the sandals; "center 60%" centers it on her, sandals fully in
   // frame with a small margin either side. ⚠️ VALIDATED AGAINST A SIX-WAY
   // RENDER (scratchpad has the comparison), not guessed.
-  var posAttr=S.pxPos?' style="object-position:'+_esc(S.pxPos)+'"':'';
+  // ⚠️ pxFit, OPTIONAL and PER ITEM: her catch 2026-09-07 on the Crosbie Jean,
+  // and it is a SECOND KIND of crop fault that object-position cannot touch.
+  // pxPos above only chooses WHICH END of a too-tall photo to keep. This
+  // flat-lay is 800x1200 (0.667), NARROWER than the card's 3:4 frame, and the
+  // jean fills it almost edge to edge -- so `cover` must trim something no
+  // matter where it is anchored, and every position merely picks which end of
+  // the jean to lose. Rendered both ways before shipping: cover cuts the hems
+  // mid-flare; contain shows the whole leg, and the flat-lay's own cream ground
+  // is near-identical to .wks-px's #F5EFE2, so it reads as a full-length shot
+  // rather than a letterboxed compromise.
+  // ▶ THE EDIT ALREADY FIXED THIS EXACT PHOTO THIS EXACT WAY (object-fit:contain
+  //   on its .dc-item-px, her catch 2026-08-25). This is the Star card catching
+  //   up, so one photo cannot render two different ways on two screens -- the
+  //   same reason the Serpui bag was fixed in both places on the same day.
+  // ⚠️ WHITELISTED, never passed through: a style attribute assembled from data
+  //   deserves a closed set, and there are only ever two sane values here.
+  var sty='';
+  if(S.pxFit==='contain'||S.pxFit==='cover')sty+='object-fit:'+S.pxFit+';';
+  if(S.pxPos)sty+='object-position:'+_esc(S.pxPos)+';';
+  var posAttr=sty?' style="'+sty+'"':'';
   return '<img class="'+cls+'" src="'+_esc(src)+'" alt="'+_esc(S.n)+'"'+posAttr+' '
     +'loading="eager" decoding="async" onerror="this.remove()">';
 }
