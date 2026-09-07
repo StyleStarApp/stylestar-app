@@ -17674,3 +17674,299 @@ ingest runs). **Nothing was added to Netlify, by design.**
 ---
 
 ---
+
+
+---
+
+# ▶ ARCHIVED 2026-09-07 — the 2026-09-06 session entry (the product finder build)
+# Moved here per the archiving rule when the 2026-09-07 notes were saved. NOTHING IS DELETED.
+# ⚠️ What STAYED in CLAUDE.md, deliberately, because it is what is TRUE RIGHT NOW rather than what
+#    happened: her store table being mid-market; THE AGREED EXPERIENCE and her 15 open decisions;
+#    the known curated.js failure; her own near-miss wording; the store-list handoff. A distilled
+#    "THE PRODUCT FINDER — WHAT IS BUILT AND WHAT IT KNOWS" also stayed, carrying the four traps,
+#    the four measured corrections and the three-verdict rule, so no RULE lives only in here.
+
+## ▶ NEXT SESSION — START HERE (2026-09-06 — THE STYLIST CHAT NOW FINDS REAL PRODUCTS, AND IT IS LIVE)
+
+### ⭐⭐⭐ THE ONE-LINE SUMMARY
+▶▶ **THIS MORNING STYLE STAR INVENTED A PLAUSIBLE DRESS AND SENT A WOMAN TO A SEARCH PAGE. TONIGHT IT
+FINDS A REAL ONE, IN STOCK, AT A PRICE SHE CAN PAY, AND TELLS HER HONESTLY WHEN IT CANNOT.**
+✅ **BUILT, TESTED, MERGED TO `main` AND LIVE ON stylestar.app.** It searches her own **108 stores**,
+**including the 101 she is NOT an affiliate for** — ▶▶ **so it needed NO affiliate approval at all,
+which is the wall she has been stuck behind since August.**
+▶ **Her framing, and it governed every line of the build:** ***"The service finds. Style Star chooses."***
+The service is a $25/mo commodity anyone can buy; her twelve dimensions, her never-wear list and 20 years
+of judgement are the part no competitor can. **Finding is bought. Choosing is hers.**
+🚨 **THE HONEST NEXT STEP HAS NOT CHANGED AND SHE SHOULD HEAR IT PLAINLY: what the app needs now is
+USERS, not more building.** It is simply a considerably better app to put in front of them.
+
+**⚡ THE SESSION IN NUMBERS:** 9 decisions made and written down · 2 rounds of live testing (~75 of 250
+free searches) · **7 real bugs caught before a woman saw them** · 115 new tests · four things shipped
+(the finder · the chat integration · the waiting star · her own copy).
+
+**▶▶ THE THREE THINGS WAITING ON HER, IN ORDER:**
+1. **Hand `docs/store-scoring-brief.md` to ChatGPT** — written, committed, sent to her, **NOT yet done.**
+2. **Re-run her three chat messages** against the current build (the Napa one especially).
+3. **Then Shop your Style**, which she called *"an enormous difference."*
+
+### 🚨 WHY THIS CAME UP — HER QUESTION, AND IT WAS THE RIGHT ONE
+She asked how Style Star could answer ***"Find me a women's red leather boot, size 6, wide width"*** with
+REAL products and DIRECT product links, instead of the AI inventing a plausible name and opening a store
+SEARCH page. **Measured against the existing app, the answer was: it cannot, and for a structural reason.**
+- ⚠️ **`netlify/functions/product-search.js` ACCEPTS ONLY A SLOT ID** (`/^[a-z]{2}[0-9]{1,2}$/`). The only
+  question the catalog can be asked is *"give me the pool for Ankle boots"*. **There is no free-text door
+  at all**, and colour/material/size cannot be filtered even though they are stored.
+- ⚠️ **AND THE FEED IS WIRED INTO EXACTLY ONE PLACE** — the Wardrobe Ideas carousels. Chat, Shop your
+  Style and Complete the Look never call it. **That is HER deliberate scope call and it still stands.**
+- ✅ **WHAT THE FEED CAN ALREADY VERIFY:** boot (`slots`, tagged at ingest) · size 6 (`product_sizes`,
+  265,774 real sizes) · red (`color`, 663 values, 15% blank, case-inconsistent, FARM Rio's column is a
+  PRINT NAME) · leather (`material`, free text, 25,209 spellings — good as a substring).
+- ❌ **WIDTH DOES NOT EXIST ANYWHERE IN THE PIPELINE.** Grepped end to end: the only "wide" in the whole
+  feed system is **wide-leg pants**, a trouser cut. Rakuten's 38 columns never carried it.
+- ▶ **`description` IS PARSED AND THEN THROWN AWAY** — `db/products.sql` says so on purpose and predicted
+  this exact moment: *"ADD IT BACK the day the stylist chat queries this catalog."* One `alter table`.
+
+
+### ✅ THE LIVE TEST — SerpApi (Google Shopping), free tier, 11 of 250 searches used
+🔒 **Account is `catherine@stylestar.app`, FREE plan, no card, `plan_searches_left` 239.** The key lived
+only in the session scratchpad, was never committed, and **she should regenerate it on serpapi.com.**
+▶ **Raw JSON and the scorer are in the session scratchpad only — NOT committed.** Re-runnable from this
+entry alone.
+
+| search | from HER 108 | resale junk | price range |
+|---|---|---|---|
+| Women's blazer | **30/40** ⭐ | 1 | $11–$198 |
+| Petite black trousers | **30/40** ⭐ | 0 | $17–$135 |
+| Jumpsuit | 27/40 | 0 | $15–$198 |
+| Black leather tote | 23/40 | 0 | $80–$595 |
+| Black ankle boots | 20/40 | 1 | $20–$1,295 |
+| White sneakers size 8 | 16/40 | 3 | $10–$168 |
+| White shirt under $50 | 15/40 | 8 | $4–$50 |
+| **Red leather boot, size 6, wide** | **8/40** ⚠️ | 12 | $23–$665 |
+| **Blush silk wrap dress** | **5/40** ⚠️ | 15 | $15–$695 |
+| Emerald silk opera gloves | 4/40 | 9 | $3–$260 |
+
+🚨🚨 **THE FINDING THAT MUST SHAPE THE BUILD, AND IT IS THE OPPOSITE OF THE OBVIOUS DESIGN: THE MORE
+SPECIFIC THE SEARCH, THE WORSE THE STORE MATCH.** Her own red-boot sentence was the second-worst of the
+ten. Piling colour + material + size + width into one query pushes Google toward **eBay and Poshmark**,
+because that is where oddly-specific one-off items live. ▶▶ **SO: SEARCH BROAD, NARROW AFTERWARDS.**
+"Red leather boots" then check sizes — never the whole sentence as one query. **Only a test could have
+found this; every instinct says pass the full sentence through.**
+⭐ **AFFORDABILITY, PROVEN WITH REAL ROWS** (white shirt under $50, her stores only): Old Navy **$13.99** ·
+Target **$17.50** · Target $19.60 · Old Navy $20.99 · Macy's $23.70 · Express $30.00 · Lands' End $30.36 ·
+Quince $39.90 · Macy's $49.99. **Against a feed whose dress median is $398.**
+✅ **THE MENSWEAR GUARD HELD ON THE NEW SOURCE: 0 of 40 menswear-named titles on "women's blazer."** One
+query only, so it is a green light, not a proof. **A third picker still needs the rule and the test.**
+✅ **PETITE CAME BACK REAL:** LOFT · Ann Taylor · Talbots · Gap — her actual petite retailers, unprompted.
+
+### ✅ DIRECT PRODUCT LINKS WORK, BUT COST A SECOND CALL
+⚠️ **The search results carry NO retailer link** — only a Google redirect. A **second call per product**
+returns the real offers, and those are excellent:
+```
+DSW · $251.99 · "In stock online" · 60-day returns
+dsw.com/product/naturalizer-deesha-boot/567667?...&size=6&width=...
+```
+▶ **Real page, size preselected, LIVE STOCK STATUS.** ⚠️ **COST MODEL: ~1 search + ~4 product look-ups
+per woman's question ≈ 5 searches ≈ 15¢ at the $25/1,000 plan.** The free 250 is ~40 questions.
+
+### 🚨🚨 TWO TRAPS FOUND, AND BOTH ARE THE "WOMEN'S CONTAINS MEN" SHAPE AGAIN
+1. ⚠️⚠️ **"WIDE" MEANS TWO DIFFERENT THINGS IN SHOES, AND ONE PRODUCT CARRIED BOTH.** DSW's own title
+   read *"Naturalizer **Wide Width** Deesha Boot … Size 6"* while its own link said
+   `width=Medium Width, **Wide Calf**`. **Wide calf is the shaft; wide width is the foot. Different
+   fits, and the shop's data disagreed with itself.** ▶ **A naive `contains("wide")` tells a woman with
+   wide feet that a medium-width boot fits her.** This is exactly the promise her whole app exists to
+   never make.
+2. ⚠️ **"W" USUALLY MEANS WOMEN'S, NOT WIDE.** Three results read *"Size W 7"* — a women's 7.
+▶▶ **NEITHER IS AN ARGUMENT AGAINST THE PLAN. Both are arguments FOR her rule:** say confirmed only when
+it is genuinely confirmed, and never infer a fit from a word that has two meanings.
+⚠️ **ALSO: the search asked for LEATHER and the best match was SUEDE**, and asked for RED and got
+"Mahogany". **Verification has to read the offer, not trust the query.**
+
+
+### ✅✅✅ STEP 1 IS BUILT: THE FINDER, STANDALONE — `netlify/functions/lib/find-products.js`
+🚨 **`index.html` WAS NOT TOUCHED. No surface calls this. The live site is unchanged.** Step 1 was
+deliberately the finding half alone, so the risky part could be proven before any screen depends on it.
+▶ **THE THREE-STEP PLAN SHE APPROVED: (1) the finder, behind the scenes ← DONE · (2) wire it into chat
+· (3) her phone, then Shop your Style.**
+
+**WHAT IT IS:** takes a request (`item · colour · fabric · cut · size · width`) and returns real products
+with an honest verdict on every requirement. **`buildQueries` · `matchStore` · `isResale` · `judge` ·
+`widenOptions` · the `verify*` family.**
+⚠️⚠️ **IT IS THE FINDING HALF ONLY, AND MUST STAY THAT WAY. It never ranks for style, never applies her
+never-wear list, never decides what she sees.** `curatedPicks()` remains the ONE picker. **Adding her
+rules here would make this the third copy and is the bug this project paid for four times in one day.**
+
+**HER RULE IS STRUCTURAL, NOT INTENTIONAL — three verdicts, never two:**
+`CONFIRMED` · `REJECTED` · `UNKNOWN`, and **UNKNOWN IS NEVER A PASS.** A product is an exact match only
+when every requirement she stated is CONFIRMED.
+
+**THE FOUR TRAPS, ENCODED AND PINNED BY TESTS BUILT ON THE REAL CAPTURED PRODUCTS:**
+1. **A print is not a colour** — "Palace Tiger Pink" must never confirm blush.
+2. **Satin is a weave, silk is a fibre** — `95% polyester` REJECTS silk outright.
+3. **Faux-wrap is not a wrap** — and only Dillard's own title said so; Google's tidy title passed it.
+4. **Wide calf is not wide width, and "W 7" is a women's 7** — an explicit non-wide width now beats any
+   marketing phrase.
+
+🚨🚨 **THREE BUGS WERE FOUND DURING THE BUILD — TWO BY THE TESTS, ONE BY A LIVE RUN — AND ALL THREE ARE
+THE SAME SHAPE AS EVERY BUG THIS PROJECT HAS EVER HAD: a rule that looked applied and was not.**
+- ⚠️ **THE WIDTH CHECK HAD ITS ORDER WRONG.** The real DSW boot says *"Wide Width"* in its title and
+  *"Medium Width, Wide Calf"* in its own variant — **the shop contradicts itself on one product** — and
+  checking the marketing phrase first returned CONFIRMED. **It would have told a woman with wide feet
+  that a medium-width boot fits her.**
+- 🚨🚨 **THE WIDENING DOORS LET UNVERIFIED VALUES THROUGH, AND ONLY A LIVE RUN SHOWED IT.** A dress
+  whose colour was never checked appeared under *"keep the blush, open on the fabric"*. ▶▶ **A DOOR THAT
+  PROMISES BLUSH SHOWING AN UNCONFIRMED COLOUR IS EXACTLY THE CLAIM HER RULE FORBIDS, WEARING A HELPFUL
+  FACE.** Fixed: **everything she KEEPS must be CONFIRMED; only what she RELEASED may be unknown.**
+- ⚠️ **A RELEASED REQUIREMENT WAS BEING SILENTLY DROPPED.** She let go of "silk"; she did not ask to stop
+  being TOLD the thing is chiffon. `differs` now carries the original verdict so the card can say
+  *"tulip pink, and chiffon rather than silk"* instead of presenting a near-miss as a match.
+
+**HER WIDENING DESIGN, IMPLEMENTED AS SHE DESCRIBED IT:** one requirement released at a time · **colours
+SOFTENED to their family, never deleted** (`blush → pink`, because a woman who asked for blush does not
+want navy) · **a two-step door ONLY when no single one leads anywhere** — which the real data forced,
+because a TULIP PINK CHIFFON wrap is two steps from "blush silk wrap", and a stylist would still mention
+it while saying so.
+
+**TWO MEASURED CORRECTIONS BAKED IN:** queries are **POOLED, never replaced** (broadening changes the
+pool rather than enlarging it — the broad query lost the DVF the narrow one found) · **size and width are
+kept OUT of the search words** (putting them in scored **8/40 against 30/40** by pushing Google to resale).
+
+⭐ **THE STORE ALLOWLIST IS GENERATED, NEVER HAND-COPIED.** `scripts/build-store-domains.js` derives
+`data/store-domains.json` from the STORES table in `index.html`, `--check` fails if it is stale, and a
+test asserts they cannot drift. **`scripts/lib/stores.js` is now the ONE reader; `store-draft.js` imports
+it instead of carrying its own copy.** ▶ **This is the SEARCH_DOMAINS bug being made impossible rather
+than being remembered.**
+
+▶ **HOW TO RUN IT:** `node scratchpad/findprod.js` (offline, 51 checks) · and live, spending real
+searches: `SERPAPI_KEY=... node scratchpad/findlive.js --item dress --colour blush --fabric silk --cut
+wrap`. **`--dry` prints the plan and spends nothing.**
+✅ **LIVE PROOF, 2026-09-06:** 4 queries pooled **149 distinct products, 62 from her shops (41%** against
+5/40 for the single narrow query), 10 verified on their real offers, **0 exact matches — the honest
+answer** — and one clean door: *keep fabric + cut, soften colour → pink*, offering three real silk wrap
+dresses (DVF Abigail $259.97 · Saloni $995 · Equipment $425), **each labelled colour-unconfirmed.**
+
+⚠️ **KNOWN AND DELIBERATELY LEFT FOR STEP 2 (the copy):** a door named *"soften colour → pink"* can hold
+products whose colour is UNKNOWN rather than confirmed pink. **The per-product label already says so**,
+but **the door's own wording must not imply more than it delivers** — that is a copy decision on the
+chat screen, and it is hers.
+
+### ✅✅✅ STEP 2 IS BUILT AND **MERGED TO `main` — IT IS LIVE ON stylestar.app** (2026-09-06)
+✅ **`SERPAPI_KEY` IS SET IN NETLIFY — Cath added it herself and redeployed, confirmed by her deploy log
+("Site is live ✨").** ⚠️ **The Post-processing badge sits on "In progress" for a while AFTER the site is
+already live — read the LAST LOG LINE, not the badge.** She hit exactly that and thought it had stalled.
+✅ **MERGED `claude/resume-stylestar-claude-g2nvk4` → `main` at `b60eaf6`**, a clean fast-forward
+(`git merge-base --is-ancestor origin/main HEAD` verified first, then `git push origin <branch>:main` —
+**the clone quirk means local `main` is never touched**).
+
+**HOW IT WORKS, and the one clever bit is the ordering:** the stylist emits ONE marker as the FIRST
+thing in her reply — `<<FIND item=dress; colour=blush; fabric=silk; cut=wrap>>` — then writes her answer
+normally. ▶▶ **THE MARKER IS FIRST ON PURPOSE: the reply streams for ~16-20s and a search takes ~5-8s,
+so firing on the marker runs them TOGETHER and the wait is the LONGER of the two, never the sum.** Move
+it to the end and every shopping answer gains eight seconds.
+⚠️ **SHE NEVER SEES IT** — stripped from the live stream (including the half-arrived `<<FIND item=dr`),
+from the shown reply, and from what is saved to `ss_chat`, so a restored visit cannot read it back as
+stylist prose.
+
+**HER SEVEN DECISIONS, EACH NOW A LINE OF CODE AND A TEST:**
+| Her decision | Where it lives |
+|---|---|
+| Search on **NEED, not topic** | the prompt block `FINDING REAL PRODUCTS FOR HER`, with her Napa sentence named as a MUST and "a shopping topic" named as a must-not |
+| Warm reply first, then a quiet line | marker fires early; `_findStatus` waits **700ms** so a fast answer shows NO line |
+| The line in **her voice** | *"Looking through your shops…"* → *"Checking what's actually in stock…"* |
+| Show the one true match | `exact` first, `doors` only when there are none |
+| **She** chooses what to release | one door per requirement, each naming what it KEEPS |
+| Nothing found → say so | **no invented fallback**, ever |
+| Commission never ranks | `product-find.js` has no commission data to rank by |
+
+🚨🚨 **A REAL BUG WAS CAUGHT BY THE TESTS AND IT IS THE SAME SHAPE AS EVERY OTHER ONE: `_SEARCH_VETO`
+CONTAINS "wrap".** `filterNeverWear(items, askedFor)` was being handed only the NOUN (`"dress"`), so the
+app believed she had never asked for a wrap and **silently deleted every wrap dress from her own answer
+to "blush silk WRAP dress."** ▶ **Fixed by passing her WHOLE request** (`item + colour + fabric + cut`).
+⭐ **HER PRINCIPLE IS WHY IT MATTERS, verbatim 2026-08-25:** *"any time a client specifically asks for
+something she wants, even if I don't love it, I will find it for her to try on."* **Her words have to
+reach the filter intact.** ⚠️ **AND THE VETO IS RIGHT WHEN SHE DID NOT ASK** — a wrap appearing unasked
+is still removed, and `chatfind` PART 3 vs PART 3b pin both directions.
+
+⭐ **HER RULES RUN ON THE PAGE, THROUGH THE SAME `filterNeverWear()` EVERY OTHER SHOPPING SURFACE USES.**
+`product-find.js` deliberately holds NO copy of her brief. **It finds; the page chooses.** ▶ **This is
+the third picker and it was given the rule ledger BEFORE it shipped, not after she found a fault on her
+phone — which is the whole lesson of 2026-09-06 finally applied in the right order.**
+
+⚠️ **THE GENERATED STORE LIST IS A JS MODULE, NOT JSON** (`netlify/functions/lib/store-domains.js`), and
+that is deliberate: **JSON import syntax changed twice across Node versions (`assert` → `with`) and a
+serverless runtime on the wrong one fails at DEPLOY time, which no test here would catch.** A plain
+module import works everywhere. `node scripts/build-store-domains.js --check` fails if it is stale.
+
+▶ **THE FILES:** `netlify/functions/product-find.js` (server, holds the key) · `netlify/functions/lib/
+find-products.js` (the finder) · `netlify/functions/lib/store-domains.js` (generated) ·
+`scripts/build-store-domains.js` · `scripts/lib/stores.js` (the ONE STORES reader) ·
+`scratchpad/findprod.js` **51** · `scratchpad/chatfind.js` **39** · `scratchpad/findlive.js` (live bench).
+
+### 🚨🚨🚨 STEP 3 HAPPENED THE SAME EVENING — SHE TESTED IT ON HER PHONE AND FOUND THREE FAULTS
+✅ **ALL THREE OF HER TEST CASES RAN LIVE ON stylestar.app, 2026-09-06 ~17:40.**
+| Her message | Result |
+|---|---|
+| *"I have a wedding in Napa in October and nothing to wear"* | ✅ **SEARCHED** (no product word in it) · ❌ **found nothing** |
+| *"Find me a blush silk wrap dress"* | ✅ honest "no exact match" + doors · ⚠️ clumsy wording, one mislabelled card |
+| *"What do you think of navy on me?"* | ✅✅ **STAYED QUIET** |
+⭐⭐ **THE HARDEST HALF OF HER TRIGGER RULE WORKS. "What do you think of navy on me?" is a shopping
+TOPIC — the reply even names a navy midi dress and a navy blazer — and it did NOT search.** NEED, not
+TOPIC, in the wild. **And the Napa sentence, which names no product at all, DID search.** Both directions.
+⭐ **The reply quality is hers:** *"warm during the day and cool in the evening, so a fitted midi in a
+rich jewel tone"* — it used her sliders (fitted, colourful) without ever naming a slider.
+
+**🚨 FAULT 1 — HER FLAGSHIP CASE RETURNED NOTHING, AND THE CAUSE IS THE STITCH FIX LESSON AGAIN.**
+The stylist answered *"a rich jewel tone or a warm metallic is exactly right for you"* — good styling —
+**and then put JEWEL TONE and METALLIC into the search as if SHE had required them.** She said neither
+word. The app looked for a dress confirmed jewel-toned AND confirmed metallic, found none, and told her
+so convincingly. **An offline test of the same request had found 16 dresses, $25-$498.**
+⚠️⚠️ **THE PROMPT ALREADY SAID "NEVER invent a requirement she did not give". THE MODEL BROKE IT**,
+because it had just recommended those things itself one sentence earlier.
+▶▶ **SO IT IS NOW A CODE RULE, NOT A PROMPT RULE — `_findKeepHerWords()`. THAT IS EXACTLY THE STITCH FIX
+LESSON: a rule stated in a prompt is what failed her; a rule checked in code before it can reach a card
+is the fix.** COLOUR, FABRIC and CUT must appear in HER OWN SENTENCE or they are dropped — those three
+NARROW a search and so those three can silently empty it. ▶ **ITEM may still be inferred** (a stylist may
+read *"nothing to wear"* as a dress) **and SIZE/WIDTH come from her saved prefs, not the sentence.**
+
+**🚨 FAULT 2 — AND MY OWN FIX FOR FAULT 1 EXPOSED IT, WHICH IS WHY IT MATTERS MOST.**
+`buildQueries` EXCLUDED any query equal to the bare `women's <item>`. On a request carrying **ONLY an
+item** — which is precisely what the new guard leaves behind — all four candidates collapse to that one
+string and it **built ZERO QUERIES, searched for nothing, and reported "I could not find that in your
+shops."** ▶▶ **THE MOST CONVINCING WAY POSSIBLE TO BE WRONG: a confident honest-sounding no, with no
+search behind it.** ⚠️ **THE INVARIANT NOW PINNED: a request with an item ALWAYS produces at least one
+query.** ✅ **Re-run live afterwards, her Napa request returns real dresses from $39.97 to $160.**
+
+**⚠️ FAULT 3 — IT CALLED A WRAP DRESS "A DIFFERENT CUT".** The Phase Eight Julissa **Wrap Dress** came
+back labelled *"different cut"* on an answer to *"blush silk WRAP dress"*. ▶ **Releasing a requirement
+means we stop REQUIRING it. It never means we stop noticing a piece has it anyway.** The card now ticks
+it. **The app was understating itself and saying something untrue in the same breath.**
+
+**▶ FAULT 4 IS HERS TO WORD, AND IT IS THE COPY LEFT OPEN ON PURPOSE.** The two-step door reads
+*"keep the fabric, and look at other shades of pink and look at another style?"* — two "look at"s, and
+it assembles rather than speaks. ⭐ **HER OWN LINE IS STILL THE BEST VERSION ANYONE HAS WRITTEN:**
+*"Would you like me to keep the blush and look at satin, or keep the silk and look at other shades of
+pink?"* **Hers offers a CHOICE BETWEEN TWO DOORS; the built one reads as one door with a list bolted on.**
+▶ **ASK HER HOW SHE WOULD WORD IT WHEN TWO THINGS HAVE TO GIVE AT ONCE.** Not a code question.
+⚠️ **ALSO SEEN: a DVF print slipped through labelled "colour not confirmed" rather than rejected**,
+because that listing carried no colour data at all. Same family as the tiger-print lesson: **absent data
+is UNKNOWN, and unknown is honest — but a door named "other shades of pink" holding an unknown colour is
+the copy problem above wearing a different hat.**
+
+
+### ✅ THE WAITING STAR — HER REQUEST, AND IT IS A REUSE NOT A NEW LOADER (2026-09-06)
+Her words: ***"we have the spinning star on shop my style that lets her know it is thinking and coming
+soon. We need a way for her to know it is taking a little more time either a spinning pink star or three
+dots that move or something that shows the stylist is actively shopping and nothing is broken."***
+▶ **BUILT AS A REUSE: byte-identical star path and colours to the `.wdr-load-star` already on Wardrobe
+and Trending, and the same `spin 1.7s linear infinite reverse` as `.shop-star-main`.** ⚠️ **A woman meets
+ONE waiting signal across the app, never three that nearly match. Drawing a fourth spinner would be the
+same mistake as a second copy of a rule.** `_starSpin()` is the one definition.
+⭐ **IT GOES ON BOTH WAITS, because she was right about where the time actually goes:** the stylist
+WRITING her answer is the long one (**~16-20s**, and it had only text — that was the real complaint);
+the product search runs **alongside** it at ~5-8s.
+⚠️ **THREE CARES TAKEN, each one a way it could have become a loading screen:** the words replace
+themselves and never stack · the mid-stream swap to *"Checking stores…"* targets the **span**, because a
+bare `textContent` there would delete the star along with the words (a test pins that exact line) · and
+**`prefers-reduced-motion` keeps the star but stops it turning** — the reassurance is the star being
+there, and motion is not the only way to give it.
+
