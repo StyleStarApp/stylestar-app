@@ -1400,7 +1400,14 @@
     </div>
 
     <div class="dc-item">
-      <img class="dc-item-px" src="https://cdn.shopify.com/s/files/1/0333/8892/0967/files/12866-ABIGAIL-WK-_ALL-RED.jpg?v=1740967145&amp;width=800" alt="Serpui Abigail Handbag in red, wicker and leather with bamboo handles" loading="lazy" decoding="async" onerror="this.remove()">
+      <!-- object-position matches the Star of the Week card's pxPos for this
+           exact photo -- her catch, 2026-09-07: the bag sitting too low and cut
+           off at the bottom. Same source image, same 3:4 crop math, same fix.
+           ⚠️ FIXED IN BOTH PLACES ON PURPOSE. This photo renders on the Star
+           card AND here in the Edit off the same 800x1200 file, and .wks-px and
+           .dc-item-px share the same crop, so a fix in one and not the other is
+           the same photo cut off on one screen and right on the next. -->
+      <img class="dc-item-px" style="object-position:center bottom" src="https://cdn.shopify.com/s/files/1/0333/8892/0967/files/12866-ABIGAIL-WK-_ALL-RED.jpg?v=1740967145&amp;width=800" alt="Serpui Abigail Handbag in red, wicker and leather with bamboo handles" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">&#11088;</span>
       <div class="dc-item-name">Serpui Abigail Handbag &mdash; Red</div>
       <div class="dc-item-meta"><span class="dc-store">Marissa Collections</span><span class="dc-price">$414</span></div>
@@ -11282,6 +11289,18 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
    px:'https://cdn.shopify.com/s/files/1/0333/8892/0967/files/2608_J26FA0156_MEMORY_LANE_FLAT.png?v=1786608188&width=800'},
   {n:'Serpui Abigail Handbag — Red',store:'Marissa Collections',url:'https://marissacollections.com/products/serpui-abigail-handbag-red',price:'$414',
    note:'Wicker and leather, but it\'s really all about the bamboo handles! A unique take on the bag trend.',
+   // ⚠️ pxPos, her catch 2026-09-07: "the bag is sitting too low and looks cut
+   // off at the bottom." Measured against the real 800x1200 source (Pillow,
+   // same strong-content threshold as the FARM Rio dress): the bag spans 19.2%
+   // to 97.2% of the frame, so there is 19.2% of EMPTY HEADROOM above it and
+   // almost nothing below. The 3:4 box only ever shows 88.9% of the source, and
+   // "top center" (the class default) spends that whole window on the empty top
+   // -- cutting 10.6% off the bottom of the bag. "center bottom" shows the
+   // window's other end: the whole bag, 9.2% breathing room above it and 3.2%
+   // below. ⚠️ VALIDATED AGAINST A FIVE-WAY RENDER, not guessed -- "center 75%"
+   // is the first crop that stops cutting and it leaves the bag FLUSH to the
+   // frame edge, which still reads as cut off.
+   pxPos:'center bottom',
    px:'https://cdn.shopify.com/s/files/1/0333/8892/0967/files/12866-ABIGAIL-WK-_ALL-RED.jpg?v=1740967145&width=800'},
   {n:'PRETTYGARDEN Flowy Maxi Dress — White',store:'Amazon',url:'https://www.amazon.com/dp/B0DWL5VV8Z',price:'$46.99',
    note:'Wear it with or without a belt, day or night. A great affordable dress.'},
