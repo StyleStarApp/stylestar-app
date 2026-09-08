@@ -271,7 +271,14 @@ export default async (req) => {
     const pages = await pooled(queries, q =>
       get('https://serpapi.com/search.json?' + new URLSearchParams({
         engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY,
-      })).catch(() => null), 2);
+      })).catch(() => null), MAX_QUERIES);
+    /* ⚠️ WIDTH RAISED FROM 2 TO ALL-AT-ONCE, 2026-09-08, AND THE REASON CHANGED.
+       The narrow pool was a guess at a free-plan concurrency limit, made when
+       fresh searches started pinning at their ceiling. She has since moved to a
+       PAID plan, so the queries run together again: with a width of 2 a
+       four-query request paid for TWO rounds of the slowest search, which
+       measured 12.8s on its own. The look-ups keep their smaller pool — there
+       are more of them and they matter less individually. */
     const pool = new Map();
     for (const d of pages) {
       if (!d) continue;                       // one dead query must not kill the rest
@@ -361,7 +368,14 @@ export default async (req) => {
                     'x-api-key': process.env.ANTHROPIC_API_KEY,
                     'anthropic-version': '2023-06-01'},
           body: JSON.stringify({
-            model: 'claude-sonnet-4-6', max_tokens: 1500,
+            /* ⚠️ A FAST MODEL HERE ON PURPOSE, AND THE VALIDATOR IS WHY IT IS SAFE.
+               This is a narrow, well-scoped reading task — does this product's own
+               text show what she asked for — and parseJudgement throws away any
+               "confirmed" whose quote is not genuinely in that product's text. So
+               the honesty does not rest on the model's care; it rests on the check.
+               ▶ Measured before the change: the reading step cost ~6s of an 18-24s
+                 answer, on a screen where the design assumed 5-8s in total. */
+            model: 'claude-haiku-4-5-20251001', max_tokens: 1500,
             messages: [{role: 'user', content: buildJudgePrompt(sub, verified)}],
           }),
           signal: AbortSignal.timeout(12000),
