@@ -144,8 +144,27 @@ that makes any future number mean something.**
 - ▶ **FOUR DEFAULTS SET FOR HER AND CONFESSED — confirm or change:** a plain "Sandal" → Flat sandals ·
   "Boot" → Ankle boots · "Hat" → Sun hats · "Skirt" → Flowy skirt.
 - ▶ **TWO ROWS THAT ARE HONESTLY EMPTY:** `ac11` Matching athletic sets · `sl2` Nightgowns.
-- ▶ **KOHL'S AND ZARA** — approved by her, **still need her tags** before they go in. Kohl's alone was
-  +28 results and appeared in 8 of 10 test searches.
+- ✅ **KOHL'S IS IN, 2026-09-08** — added as a yes/no row (name + search url, `w:1`), because
+  `untagged.js` proved a store needs nothing more than that to be FOUND. Her ten scores are what make a
+  shop RECOMMENDABLE, not findable, and they can come whenever. **+28 results, in 8 of 10 test searches
+  — the biggest single coverage win available.**
+  🚨🚨 **AND ZARA WAS ALREADY IN, FULLY SCORED BY HER — THIS LINE USED TO SAY OTHERWISE AND IT NEARLY
+  COST HER THE SCORES.** Acting on the stale note, a second bare `'Zara'` key was written into `STORES`;
+  being LATER in the object literal it would have **silently overwritten** her `$$` / Trendsetter /
+  ten-number entry with nothing. **No error, no warning — the app would simply have forgotten what she
+  told it.** ▶ Caught only because a store count came out one short, which is luck, not a check.
+  ✅ **`storepool` now asserts there are no duplicate keys**, counted in the SOURCE TEXT — a duplicate is
+  already gone by the time the table is parsed, so it cannot be seen any other way. **Proven against a
+  planted duplicate.**
+  ⚠️ **THE LESSON IS ABOUT THIS FILE, NOT THE CODE: A STALE NOTE SENT SOMEONE TO ADD A STORE THAT WAS
+  ALREADY THERE.** Same family as the `n/a` that goes stale in the ledger. **When a line here says
+  something still needs doing, check the code before doing it.**
+  ⚠️ **KOHL'S SEARCH URL IS NOT VERIFIED.** kohls.com returns 403 to every automated request, real term
+  and gibberish alike — which by this file's own standing lesson means nothing is wrong, only that it
+  cannot be checked from here. ▶ **ASK HER TO PASTE A REAL KOHL'S SEARCH URL** from her address bar
+  (type the term, press Enter, send the url) — the method that fixed J.Crew, Sézane and Madewell.
+  **The finder does not depend on it either way: it matches products by DOMAIN, so Kohl's products are
+  found regardless. The url only matters for the AI's own "find this at Kohl's" links.**
 - ▶ **WALMART — still hers to rule on.** Left out as a quality call, not a rule.
 - ▶ **BREADTH vs FIT** — Nordstrom tops 20 of 28 archetypes because it is strong on both sides of every
   pair. **Deliberately left alone: a stylist judgment, not an engineering one.**

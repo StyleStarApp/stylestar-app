@@ -643,6 +643,11 @@ export default {
   "tier": "$$$$",
   "sizes": []
  },
+ "Kohl's": {
+  "host": "kohls.com",
+  "tier": "",
+  "sizes": []
+ },
  "COUTR": {
   "host": "coutr.com",
   "tier": "$$$$",

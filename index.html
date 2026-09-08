@@ -4071,6 +4071,42 @@ const STORES={
      the neighbours, store-draft.js took their median, and she corrected
      relaxed 5 -> 4 herself. Sizes XXS-XXL with no petite, tall or plus, which
      is s:[] -- that field tags only the specialty ranges. */
+  /* ▶▶ KOHL'S, added 2026-09-08. She approved it on 2026-09-06 and it has been
+     waiting ever since — not on her decision, but on her TEN SCORES.
+     🚨🚨 ZARA WAS *NOT* ADDED HERE, AND THE NEAR-MISS IS WORTH THE INK. This file
+     said Zara "still needs her tags before it goes in". IT WAS ALREADY IN, at the
+     top of this table, FULLY SCORED BY HER ($$, Trendsetter/Modern Chic, all ten
+     numbers). A second bare 'Zara' key was written here and, being LATER in the
+     object literal, would have SILENTLY OVERWRITTEN her scores with nothing.
+     Caught only because the store count came out one short of expected.
+     ▶ A DUPLICATE KEY IN THIS TABLE IS SILENT DATA LOSS. `storepool` now asserts
+       there are none. And a stale note in CLAUDE.md ("still needs her tags")
+       is what sent someone looking to add a store that was already there.
+     ⚠️ THAT WAIT WAS UNNECESSARY AND THE FILE NOW KNOWS IT. `scratchpad/untagged.js`
+     proved on 2026-09-07 that the finder needs only a NAME and a SEARCH URL: it
+     never reads her ten dimensions at all. The scores are what let the stylist
+     RECOMMEND a shop by name; they are not needed for her to FIND things there.
+     ▶ So these two go in as yes/no rows and start appearing in results today.
+       An unscored store keeps its place at the END of the ranked list and is
+       listed by NAME ONLY — never described, never given invented numbers.
+     ⭐ KOHL'S IS THE BIGGEST SINGLE COVERAGE WIN AVAILABLE TO HER: measured
+       2026-09-06 at +28 results, appearing in 8 of the 10 test searches.
+     ⚠️ w:1 ON BOTH, AND NOT OPTIONAL. Both carry full menswear and kidswear
+       floors; without it her Tops shelf gets a men's crew neck, which is the
+       exact fault she caught at Banana Republic on 2026-08-08.
+     ✅ ZARA'S URL IS VERIFIED: /us/en/search?searchTerm=white%20shirt returns real
+       results (200, 841 product references).
+     🚨 KOHL'S URL IS **NOT** VERIFIED AND MUST NOT BE TREATED AS IF IT WERE.
+       kohls.com answers 403 to every automated request, real term and gibberish
+       alike — which by this file's own standing lesson means nothing is wrong,
+       only that it cannot be checked from here. The pattern below is the widely
+       used one, NOT a confirmed one. ▶ ASK HER TO PASTE A REAL KOHL'S SEARCH URL
+       from her own address bar (type the term, press Enter, send the URL), the
+       same method that fixed J.Crew, Sézane and Madewell.
+       ⚠️ THE FINDER DOES NOT DEPEND ON IT EITHER WAY — it matches products by
+       DOMAIN (kohls.com), so Kohl's products are found regardless. The search url
+       only matters for the AI's own "find this at Kohl's" links. */
+  'Kohl\'s':{u:'https://www.kohls.com/search.jsp?search=',w:1},
   'COUTR':{u:'https://www.coutr.com/search?q=',t:'$$$$',w:1,a:'Luxury Fashion, Universal',s:[],d:[4,6,10,8,8,3,10,8,9,9],c:'designer swimwear, jewelry, bags, sunglasses and shoes, high quality designer pieces'},
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},

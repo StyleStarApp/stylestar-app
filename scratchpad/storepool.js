@@ -77,6 +77,39 @@ for (const b of built) {
 ok('COUTR is among them (her 8th, approved 2026-09-08)',
    built.some(b => b.name === 'COUTR'));
 
+// 🚨🚨 DUPLICATE KEYS ARE SILENT DATA LOSS, AND THIS WAS A NEAR MISS ON 2026-09-08.
+// CLAUDE.md said Zara "still needs her tags before it goes in". It was ALREADY in,
+// fully scored by her. A second bare 'Zara' key was written further down the table
+// and, being later in the object literal, would have overwritten her ten numbers
+// with nothing — no error, no warning, the app simply forgets what she told it.
+// ▶ IT CANNOT BE CAUGHT BY READING THE PARSED OBJECT, because the duplicate is
+//   already gone by then. It has to be counted in the SOURCE TEXT.
+// ⚠️ Caught last time only because a store count came out one short. That is luck,
+//   not a check.
+{
+  // ⚠️ Scoped to the STORES literal ONLY. index.html holds other tables with the
+  //    same `  'key':{` shape, and counting those made this check nonsense.
+  const from = html.indexOf('const STORES={');
+  const block = html.slice(from, html.indexOf('\n};', from));
+  // ⚠️ Keys are unescaped: the source writes Kohl\\'s, the parsed table holds Kohl's.
+  const keys = [...block.matchAll(/^  '((?:[^'\\\\]|\\\\.)*)':\{/gm)]
+    .map(m => m[1].replace(/\\\\(.)/g, '$1'));
+  const seen = new Set(), dupes = new Set();
+  for (const k of keys) { if (seen.has(k)) dupes.add(k); seen.add(k); }
+  ok('no store is declared twice in the table', dupes.size === 0,
+     [...dupes].join(', ') || '');
+  // ⚠️ DELIBERATELY NOT A COUNT. A first attempt asserted that the number of keys
+  //    the regex finds equals the number the parser reads, and it failed at 104
+  //    vs 110 — because the regex misses entries this table formats differently,
+  //    not because anything was wrong. THAT IS A TEST ARGUING WITH ITS OWN REGEX,
+  //    which is the "count of her stores is not an invariant" lesson wearing a
+  //    different hat. The duplicate check above is what actually catches the bug;
+  //    this one only asserts that whatever the regex DID find is really there.
+  const orphans = keys.filter(k => !Object.prototype.hasOwnProperty.call(STORES, k));
+  ok('every key found in the source is readable in the parsed table',
+     orphans.length === 0, orphans.join(', '));
+}
+
 console.log('\nPART 2 — a merchant she is PAID for must be recommendable, not just findable');
 for (const b of built) {
   const e = STORES[b.name];
