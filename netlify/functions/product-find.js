@@ -37,6 +37,44 @@ function isAllowed(req) {
 const RATE_MAX = 8, RATE_WINDOW_MS = 60 * 1000;
 const MAX_QUERIES = 4;        // pooled, never one broad replacing one narrow
 const MAX_VERIFY = 6;         // second calls, the expensive half
+
+/* 🚨🚨🚨 THE NUMBER THAT REFRAMES THE WHOLE COST QUESTION, worked out 2026-09-08:
+   ONE SHOPPING QUESTION IS NOT ONE SEARCH. It is up to MAX_QUERIES searches plus
+   up to MAX_VERIFY product look-ups, and SerpApi counts every call as a search.
+   ▶▶ So up to TEN per question — and a "250 searches a month" free plan is really
+      about 25 to 60 shopping questions a month, in total, across all users.
+   ⚠️ On 2026-09-08 the account stood at 216/250 with 34 left, i.e. THREE TO EIGHT
+      more questions. Most of that was a single afternoon of testing against the
+      live endpoint, which is a mistake not to repeat: build against the captured
+      fixtures in scratchpad/findprod.js, not against her allowance.
+
+   ▶ THE RESERVE FLOOR BELOW IS THE SEATBELT SHE ASKED FOR (her words, 2026-09-06:
+     "a cap is the seatbelt, not a second-guess"). It asks SERPAPI ITSELF how many
+     searches are left, which is free — the account endpoint is not a search — and
+     exact, and needs nothing set up. Below the floor the finder stops searching
+     and says so honestly, rather than quietly returning nothing, which is the
+     failure mode this whole app is built against. */
+const RESERVE = Number(process.env.SERPAPI_RESERVE || 20);
+let acct = {at: 0, left: null};
+async function searchesLeft(KEY) {
+  if (Date.now() - acct.at < 10 * 60 * 1000) return acct.left;
+  let left = null;
+  try {
+    const r = await fetch('https://serpapi.com/account.json?api_key=' + KEY,
+      {signal: AbortSignal.timeout(4000)});
+    if (r.ok) {
+      const d = await r.json();
+      const n = Number(d.total_searches_left ?? d.plan_searches_left);
+      if (Number.isFinite(n)) left = n;
+    }
+  } catch { /* fail OPEN, briefly — see below */ }
+  // ⚠️ FAIL OPEN, AND DELIBERATELY. If the account check itself fails we do NOT
+  //    block shopping: refusing to search because a diagnostic call broke would
+  //    take the feature down to protect a budget, which is the wrong trade. The
+  //    10-minute memo means a broken check is retried soon rather than sticking.
+  acct = {at: Date.now(), left};
+  return left;
+}
 const rateHits = new Map();
 const clientIp = (req) => req.headers.get('x-nf-client-connection-ip') ||
   (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown';
@@ -169,6 +207,14 @@ export default async (req) => {
     // ⏱ TIMED, because the first speed fix did not land where it was expected and
     //   guessing twice is worse than measuring once. Returned on the response so
     //   a slow search can be diagnosed from outside without redeploying.
+    // ▶ THE FLOOR, CHECKED BEFORE A SINGLE SEARCH IS SPENT. Honest on the way
+    //   out: `why: 'budget'` is NOT the same as "I looked and found nothing", and
+    //   the page must never render it as though it were.
+    const left = await searchesLeft(KEY);
+    if (left !== null && left <= RESERVE) {
+      return json({exact: [], doors: [], request, why: 'budget', searchesLeft: left}, headers);
+    }
+
     const t0 = Date.now();
     const queries = buildQueries(request).slice(0, MAX_QUERIES);
     const pages = await pooled(queries, q =>
@@ -264,7 +310,9 @@ export default async (req) => {
       // ⏱ ms spent in each half. Cheap, and it is what turned 'the finder is
       //   slow' into 'the SEARCH is slow and the look-ups are fine', which are
       //   completely different repairs.
-      ms: {search: tSearch, lookup: tLook, candidates: mine.length}};
+      ms: {search: tSearch, lookup: tLook, candidates: mine.length},
+      // Free to know and worth knowing: how close the month is to its ceiling.
+      searchesLeft: left};
     cacheSet(cacheKey, payload);
     return json(payload, headers);
   } catch (e) {

@@ -10642,14 +10642,51 @@ async function _findRun(req){
   const mc=document.getElementById('chatMessages');
   if(!mc)return;
   const status=_findStatus(mc);
-  let data=null;
+  let data=null,failed=false;
   try{
     const r=await fetch('/.netlify/functions/product-find',{method:'POST',
       headers:{'Content-Type':'application/json'},body:JSON.stringify(req)});
-    if(r.ok)data=await r.json();
-  }catch(e){}
+    if(r.ok)data=await r.json(); else failed=true;
+  }catch(e){failed=true;}
   status.done();
+
+  /* 🚨🚨 A SEARCH THAT DID NOT COME BACK MUST NEVER READ AS "I LOOKED AND FOUND
+     NOTHING." Added 2026-09-08 after Cath's phone testing, and it is the same
+     rule as her 2026-09-06 decision one step further out: she chose to be told
+     plainly when nothing was found rather than be shown an invented product,
+     BECAUSE a fabricated pick looks identical to a real find. A failed search
+     shown as silence has exactly that shape — indistinguishable from a stylist
+     who looked properly and came back empty.
+     ▶ WHAT SHE ACTUALLY SAW: the search timed out (up to 4 searches and 6
+       look-ups ran one after another, so a straggler cost 12s and past ~30s a
+       504), the page rendered nothing at all, and the PREVIOUS answer's cards
+       were still sitting above — so it read as "you just showed me the exact
+       same thing when I asked for something different". It had shown her
+       nothing. The old cards were simply still there.
+     ⚠️ THE COPY BELOW IS CLAUDE'S AND SHOULD BE REPLACED WITH HERS. Every other
+       sentence on this surface is in her voice and beat the drafted version;
+       these two are placeholders that state the truth plainly until she writes
+       the real ones. */
+  if(failed){
+    const w=document.createElement('div');
+    w.className='find-block find-note';
+    w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
+      'so I haven\'t looked through your shops yet. Ask me again and I\'ll try.</div>';
+    mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
+    return;
+  }
   if(!data)return;                       /* silent: the advice above still stands */
+  /* ▶ THE MONTH'S SEARCH CEILING (her "seatbelt", 2026-09-06). Also NOT an empty
+     result: the shops were never looked at. Said plainly, without making a woman
+     read the word "quota". */
+  if(data.why==='budget'){
+    const w=document.createElement('div');
+    w.className='find-block find-note';
+    w.innerHTML='<div class="find-head">I can\'t go through the shops for you right '+
+      'now, so take what I said above as styling advice rather than a shopping list.</div>';
+    mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
+    return;
+  }
 
   /* ⭐ HER RULES RUN HERE, THROUGH THE SAME filterNeverWear() EVERY OTHER SHOPPING
      SURFACE USES. Never a second copy. "When someone says no shift dresses, that
