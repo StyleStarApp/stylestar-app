@@ -4096,17 +4096,20 @@ const STORES={
        exact fault she caught at Banana Republic on 2026-08-08.
      ✅ ZARA'S URL IS VERIFIED: /us/en/search?searchTerm=white%20shirt returns real
        results (200, 841 product references).
-     🚨 KOHL'S URL IS **NOT** VERIFIED AND MUST NOT BE TREATED AS IF IT WERE.
-       kohls.com answers 403 to every automated request, real term and gibberish
-       alike — which by this file's own standing lesson means nothing is wrong,
-       only that it cannot be checked from here. The pattern below is the widely
-       used one, NOT a confirmed one. ▶ ASK HER TO PASTE A REAL KOHL'S SEARCH URL
-       from her own address bar (type the term, press Enter, send the URL), the
-       same method that fixed J.Crew, Sézane and Madewell.
-       ⚠️ THE FINDER DOES NOT DEPEND ON IT EITHER WAY — it matches products by
-       DOMAIN (kohls.com), so Kohl's products are found regardless. The search url
-       only matters for the AI's own "find this at Kohl's" links. */
-  'Kohl\'s':{u:'https://www.kohls.com/search.jsp?search=',w:1},
+     ✅ KOHL'S URL IS VERIFIED — SHE PASTED A REAL ONE, 2026-09-08. kohls.com
+       answers 403 to every automated request, real term and gibberish alike, so
+       it could never be checked from here; her address bar settled it, the same
+       method that fixed J.Crew, Sézane and Madewell. Her live link was:
+         .../search.jsp?submit-search=web-regular&search=white+dress&kls_sbp=5399…
+       ⚠️ `kls_sbp` IS A SESSION/TRACKING TOKEN AND IS STRIPPED, per the standing
+       rule that outbound links carry no tracking parameters: they go stale, they
+       make links fragile, and once affiliate links are live an extra tracking
+       param can interfere with commission attribution.
+       ▶ `submit-search=web-regular` IS KEPT deliberately. It is the search form's
+       own submit value and it may be load-bearing; it costs nothing to include
+       and this file's lesson is to read the WHOLE url she pasted, not just the
+       parameter that looks interesting. */
+  'Kohl\'s':{u:'https://www.kohls.com/search.jsp?submit-search=web-regular&search=',w:1},
   'COUTR':{u:'https://www.coutr.com/search?q=',t:'$$$$',w:1,a:'Luxury Fashion, Universal',s:[],d:[4,6,10,8,8,3,10,8,9,9],c:'designer swimwear, jewelry, bags, sunglasses and shoes, high quality designer pieces'},
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},

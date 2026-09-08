@@ -159,12 +159,15 @@ that makes any future number mean something.**
   ⚠️ **THE LESSON IS ABOUT THIS FILE, NOT THE CODE: A STALE NOTE SENT SOMEONE TO ADD A STORE THAT WAS
   ALREADY THERE.** Same family as the `n/a` that goes stale in the ledger. **When a line here says
   something still needs doing, check the code before doing it.**
-  ⚠️ **KOHL'S SEARCH URL IS NOT VERIFIED.** kohls.com returns 403 to every automated request, real term
-  and gibberish alike — which by this file's own standing lesson means nothing is wrong, only that it
-  cannot be checked from here. ▶ **ASK HER TO PASTE A REAL KOHL'S SEARCH URL** from her address bar
-  (type the term, press Enter, send the url) — the method that fixed J.Crew, Sézane and Madewell.
-  **The finder does not depend on it either way: it matches products by DOMAIN, so Kohl's products are
-  found regardless. The url only matters for the AI's own "find this at Kohl's" links.**
+  ✅ **KOHL'S SEARCH URL IS VERIFIED — SHE PASTED A REAL ONE THE SAME DAY.** kohls.com 403s every
+  automated request, real term and gibberish alike, so it could never be checked from here; her address
+  bar settled it, the same method that fixed J.Crew, Sézane and Madewell.
+  ▶ **Her live link:** `…/search.jsp?submit-search=web-regular&search=white+dress&kls_sbp=5399…`
+  ⚠️ **`kls_sbp` STRIPPED** — a session/tracking token, and outbound links carry none: they go stale,
+  they make links fragile, and once affiliate links are live an extra tracking param can interfere with
+  commission attribution. ▶ **`submit-search=web-regular` KEPT** — it is the form's own submit value and
+  may be load-bearing; it costs nothing, and the lesson here is to read the WHOLE url she pasted rather
+  than only the parameter that looks interesting.
 - ▶ **WALMART — still hers to rule on.** Left out as a quality call, not a rule.
 - ▶ **BREADTH vs FIT** — Nordstrom tops 20 of 28 archetypes because it is strong on both sides of every
   pair. **Deliberately left alone: a stylist judgment, not an engineering one.**
