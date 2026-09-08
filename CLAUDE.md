@@ -237,10 +237,21 @@ then bump the number with a line naming the template. Never derive it away.**
    *can* bottom-crop to enlarge them — **but only by leaving 3:4**, and the glasses span **3%–97% of the
    WIDTH**, so every non-3:4 source either **clips both arms** under `cover` or **letterboxes with
    visible cream bands** under `contain`. ▶ **Four versions were rendered at the true card size and
-   LOOKED AT before shipping** (the FARM Rio lesson: measure to find candidates, look to decide).
-   **The uncropped photo shipped: nothing clipped, nothing that reads as a rendering fault.**
-   ▶ **A WIDE, SHORT OBJECT IN A TALL FRAME IS A NEW SHAPE OF THIS PROBLEM** — sunglasses, belts and
-   clutches will all hit it. `pxPos` and `pxFit` do not help; only a different photograph does.
+   LOOKED AT** (the FARM Rio lesson: measure to find candidates, look to decide) — **and every one of
+   them was a compromise: either the glasses stayed tiny in an empty card, or the frame clipped, or
+   cream letterbox bands appeared.**
+   ⭐⭐ **THEN SHE SOLVED IT, AND HER ANSWER WAS BETTER THAN ALL FOUR.** Her words: ***"Is it possible to
+   stack the 2 photos into one? So we can see the front of the glasses and the side with the logo and
+   fill up the space on the card too?"*** ▶▶ **SHIPPED AS `px2`** — the front view on top, the angled one
+   below showing the gold YSL monogram her note is about. **It fills the card completely, shows the piece
+   twice, and clips nothing.** ▶ **A WIDE, SHORT OBJECT IN A TALL FRAME IS A NEW SHAPE OF THIS PROBLEM —
+   belts, clutches and cuffs will all hit it, and `px2` is now the mechanism for them.** See the rule
+   ledger's photo row for the full note; the short version is that both halves stay **hotlinked** behind
+   the same `_affMid` gate, and **ONE css rule names both surfaces**.
+   💡 **AND THE LESSON ABOUT WHO SOLVES THESE: four crops were measured, rendered and ruled on, and the
+   answer was not among them because every one of them accepted the premise that a card shows ONE photo.
+   She did not.** That is the second time in two days her eye beat the measurement (the first was Under
+   Armour). ▶ **Show her the renders and the trade-offs; do not just pick the least-bad one.**
    ⚠️ **$363 IS NOT A MARKDOWN, CHECKED ON THE PAGE:** the JSON-LD offer says 363 and there is no higher
    "was" price. Their `compareAtPrice` reads **358 — LOWER than the price**, which is backwards from how
    compare-at is normally used, so it is their data quirk, not a sale. **Listing 363 is accurate and is
