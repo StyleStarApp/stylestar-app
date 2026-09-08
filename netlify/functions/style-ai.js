@@ -74,9 +74,12 @@ function dailyCapUsd() {
   return (isFinite(v) && v > 0) ? v : DAILY_CAP_DEFAULT_USD;
 }
 // claude-sonnet pricing: ~$3/M input tokens, ~$15/M output, $10/1000 searches.
-function estimateCostUsd(nonImageChars, imageChars, maxTokens, isSearch) {
+function estimateCostUsd(nonImageChars, imageChars, maxTokens) {
   const inputTokens = nonImageChars / 4 + imageChars / 1500;
-  return inputTokens * 3 / 1e6 + maxTokens * 15 / 1e6 + (isSearch ? SEARCH_MAX_USES * 0.01 : 0);
+  // ⚠️ The per-search surcharge went with the web search tool (2026-09-09).
+  // A chat turn is now plain tokens, so a shopping answer costs LESS than it
+  // did, not more, and the daily circuit breaker goes further.
+  return inputTokens * 3 / 1e6 + maxTokens * 15 / 1e6;
 }
 function overDailyBudget(costUsd) {
   const day = new Date().toISOString().slice(0, 10);
@@ -91,10 +94,10 @@ function overDailyBudget(costUsd) {
 // HERE, server-side, and any client-sent search_domains is ignored entirely
 // (until 2026-07-31 the client sent the list, which let a forged request search
 // ANY domain on Cath's key). The server is the authority on everything: the
-// tool config, max_uses, and the domains. A forged request can therefore spend
-// at most SEARCH_MAX_USES searches per call, only inside Cath's own stores,
-// inside the same origin + rate-limit + daily-budget gates as every call.
-const SEARCH_MAX_USES = 3;
+// tool config, max_uses, and the domains.
+// ▶ 2026-09-09: SEARCH_MAX_USES retired with the web search tool itself. A chat
+//   turn can no longer spend a search of any kind, so a forged request now costs
+//   only tokens, inside the same origin + rate-limit + daily-budget gates.
 
 // ⚠️ KEEP IN SYNC WITH `STORES` IN index.html. One hostname per store (the
 // hostname of each store's `u` search URL, minus a leading "www."). When Cath
@@ -247,7 +250,7 @@ export default async (req) => {
 
     // The daily circuit breaker. 429 keeps it in the "come back later" family;
     // the page shows its normal friendly retry message.
-    if (overDailyBudget(estimateCostUsd(nonImageChars, sized.imageChars, maxTokens, isSearch))) {
+    if (overDailyBudget(estimateCostUsd(nonImageChars, sized.imageChars, maxTokens))) {
       console.error('style-ai: daily spend cap reached (' + dailyCapUsd() + ' USD), refusing until tomorrow (UTC)');
       return new Response(JSON.stringify({ error: 'Daily budget reached, please try again tomorrow' }), { status: 429, headers });
     }
@@ -301,66 +304,57 @@ export default async (req) => {
       body: JSON.stringify(payload)
     });
 
-    // Note: client-sent search_domains (the pre-2026-07-31 protocol) is ignored;
-    // the allowlist is SEARCH_DOMAINS above, minus stores already known blocked.
-    const searchable = isSearch ? SEARCH_DOMAINS.filter(d => !BLOCKED_DOMAINS.has(d)) : [];
-    if (isSearch && searchable.length) {
-      // ⚠️ The BASIC search variant, deliberately. The newer _20260209 variant
-      // runs code-execution rounds to filter results, and a live run spent 60+
-      // seconds in that machinery without ever writing a word, hitting the
-      // platform's ~60s stream cut. Basic search goes query → results → answer.
-      payload.tools = [{
-        type: 'web_search_20250305',
-        name: 'web_search',
-        max_uses: SEARCH_MAX_USES,
-        allowed_domains: searchable
-      }];
-      // Streaming does two jobs: a searching answer can run well past the
-      // platform's synchronous function time limit, and the page can show
-      // "checking your stores" the moment a search actually starts.
+    // ═══ THE STREAMING CHAT TURN ═════════════════════════════════════════
+    // 🚨🚨 THE STYLIST'S OWN WEB SEARCH WAS REMOVED HERE, 2026-09-09, AND ONE
+    // REMOVAL FIXED FOUR SEPARATE FAULTS CATH FOUND ON HER PHONE.
+    // What it used to do: attach a web_search tool with max_uses 3, restricted
+    // to SEARCH_DOMAINS, so the stylist could look products up herself and type
+    // their names, prices and links straight into her prose.
+    // ▶▶ WHY IT HAD TO GO, and both halves were MEASURED, not reasoned about:
+    //   (a) IT INVENTED PRODUCTS. Asked "Did you find anything??" it said "the
+    //       search didn't come back with direct links I can share" and then
+    //       wrote four dresses and four prices from memory — DVF ~$398,
+    //       Anthropologie ~$168, FARM Rio ~$248, Reformation ~$278 — plus jeans
+    //       "in size 26" at three shops. Nothing found, no price real. The
+    //       prompt forbade this IN CAPITALS and the model did it anyway, which
+    //       is the Stitch Fix box happening inside the app built to prevent it.
+    //   (b) IT BROKE THE CHAT. A search writes NOTHING to the stream while it
+    //       runs, so up to three of them ran in silence, the page's 30s stall
+    //       guard fired, and the answer fell through to the retry path — which
+    //       is how the raw <<FIND>> marker reached her screen and why she saw
+    //       NO PRODUCT CARDS AT ALL. The finder was healthy throughout: run
+    //       directly, her two real requests returned Old Navy $9.99 / H&M $7.49
+    //       and Old Navy $19.99 / Belk $59.97.
+    // ▶ PRODUCTS NOW COME FROM EXACTLY ONE PLACE: the <<FIND>> marker and
+    //   product-find.js, which opens the shop's own page and verifies against
+    //   it. One picker, not two. "The service finds. Style Star chooses."
+    // ⚠️ STREAMING IS KEPT AND MUST STAY. It is what lets the page fire the
+    //   finder the instant the marker arrives, so the search runs WHILE the
+    //   reply is being written. Without it the wait becomes the sum, not the
+    //   longer, of the two — about eight seconds worse on every answer.
+    // ⚠️ SEARCH_DOMAINS is deliberately KEPT even though nothing arms a tool
+    //   with it now. It is DERIVED from the same generated file the finder
+    //   uses, so it cannot go stale, and searchtune still asserts that
+    //   derivation. Do not hand-maintain it and do not re-add a search tool.
+    if (isSearch) {
       payload.stream = true;
-
-      // ⚠️ A store can block Anthropic's crawler (Gucci does, found LIVE on
-      // 2026-07-30), and ONE blocked domain in allowed_domains fails the WHOLE
-      // request with "The following domains are not accessible to our user
-      // agent: [...]". Which stores block is their choice and can change any
-      // day, so it cannot be a hardcoded list: parse the error, prune the
-      // blocked domains, memo them so the next turn skips the failed round
-      // trip, and retry. Search simply doesn't see inside those stores; every
-      // other store keeps working.
-      for (let attempt = 0; ; attempt++) {
-        const anthropicRes = await callAnthropic();
-        if (anthropicRes.ok && anthropicRes.body) {
-          return new Response(anthropicRes.body, {
-            status: 200,
-            headers: { ...headers, 'Content-Type': 'text/event-stream' }
-          });
-        }
-        // An API error is plain JSON. Either prune-and-retry, or hand it back
-        // as JSON so the page's non-stream path shows its friendly error.
-        // Logged either way so search failures show up in the Netlify function
-        // logs instead of dissolving into the page's generic error bubble.
-        const err = await anthropicRes.json().catch((e) => {
-          console.error('style-ai search: unparseable error body from API (status ' + anthropicRes.status + ')', e && e.message);
-          return {};
+      const streamRes = await callAnthropic();
+      if (streamRes.ok && streamRes.body) {
+        return new Response(streamRes.body, {
+          status: 200,
+          headers: { ...headers, 'Content-Type': 'text/event-stream' }
         });
-        const msg = (err && err.error && err.error.message) || '';
-        const listMatch = msg.match(/not accessible[^\[]*\[([^\]]*)\]/);
-        if (!listMatch || attempt >= 2) {
-          console.error('style-ai search: upstream error, returning to page as JSON (status ' + anthropicRes.status + ')', msg || '(no message)');
-          return new Response(JSON.stringify(err), { status: 200, headers });
-        }
-        const blocked = listMatch[1].split(',')
-          .map(s => s.trim().replace(/^["']|["']$/g, '').toLowerCase());
-        blocked.forEach(d => { if (d) BLOCKED_DOMAINS.add(d); });
-        const pruned = payload.tools[0].allowed_domains.filter(d => !blocked.includes(d));
-        // No progress (nothing recognised, or nothing left) → give up honestly.
-        if (!pruned.length || pruned.length === payload.tools[0].allowed_domains.length) {
-          console.error('style-ai search: blocked-domain prune made no progress, returning error', msg);
-          return new Response(JSON.stringify(err), { status: 200, headers });
-        }
-        payload.tools[0].allowed_domains = pruned;
       }
+      // An API error is plain JSON. Hand it back as JSON so the page's
+      // non-stream path shows its friendly error, and log it so a chat failure
+      // shows up in the Netlify logs instead of dissolving into a bubble.
+      const err = await streamRes.json().catch((e) => {
+        console.error('style-ai chat: unparseable error body (status ' + streamRes.status + ')', e && e.message);
+        return {};
+      });
+      console.error('style-ai chat: upstream error, returning to page as JSON (status ' + streamRes.status + ')',
+        (err && err.error && err.error.message) || '(no message)');
+      return new Response(JSON.stringify(err), { status: 200, headers });
     }
 
     const anthropicRes = await callAnthropic();

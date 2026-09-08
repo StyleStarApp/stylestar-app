@@ -211,26 +211,129 @@ that makes any future number mean something.**
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-08 — THE STYLIST CAN READ NOW. SHE IS OFF TESTING IT.)
+## ▶ NEXT SESSION — START HERE (2026-09-09 — SHE SAID "THE CHAT IS NOT WORKING WELL." SHE WAS RIGHT, AND ALL OF IT CAME FROM ONE ROOT.)
 
 ### 🚨🚨 THE FIRST THING TO ASK HER
-▶▶ **"How did the chat feel on your phone?"** She ended this session saying: ***"I will go test the chat
-and come back in new session."*** **The stylist reading products went live an hour before she left, and
-her eye has found four real faults from four screenshots already today. WAIT FOR HER VERDICT BEFORE
-BUILDING ANYTHING ELSE ON TOP OF IT.**
+▶▶ **"Did the chat give you real cards this time?"** She sent five phone screenshots on 2026-09-09 and
+every one of them showed a fault. All four faults were fixed the same session and merged. **She has not
+yet retested. Nothing else should be built on the chat until she has.**
 
 ### ⭐⭐⭐ THE DAY IN ONE LINE
-▶▶ **SHE ARRIVED DISAPPOINTED WITH THE STYLIST CHAT AND SHE WAS RIGHT ABOUT EVERY SCREENSHOT — AND THE
-ROOT CAUSE WAS THAT THE FINDER JUDGED CLOTHES WITH A LIST OF EIGHT WORDS INSTEAD OF LOOKING AT THEM.**
-**It now reads them.** *"I need a fitted white top"* went from **nothing** to **four exact matches**,
-each quoting the product's own page, the cheapest at **$9.99**.
+▶▶ **THE STYLIST WAS RUNNING HER OWN WEB SEARCHES, AND THAT ONE FEATURE CAUSED ALL FOUR FAULTS SHE
+FOUND. IT IS GONE.** She invented four dresses and four prices, she leaked the internal `<<FIND>>`
+marker onto the screen, she showed no product cards at all, and she took 30+ seconds to say anything.
+**One removal fixed the lot, and made the chat faster and cheaper at the same time.**
 
-**⚡ THE DAY IN NUMBERS:** COUTR wired · her Saint Laurent in the Edit and as this week's Star · the
-stacked photo card she invented · a sold-out Star retired · her full store roster applied (**122**, 21
-in, 9 out) · **the stylist now reads and judges products** · chat ~12x faster · **3 new suites**
-(`storepool` 49, `linkwatch` 24, `stylistjudge` 33) · **7 latent faults found that she never reported**
-· **5 hardcoded counts replaced with derived rules** · 3 pre-existing red suites fixed · **1 near-miss
-caught that would have silently erased her Zara scores** · 0 regressions.
+### 🚨🚨🚨 THE WORST FAULT THIS APP HAS HAD: THE STYLIST INVENTED PRODUCTS AND PRICES
+▶▶ **HER WORDS, AND THEY ARE THE RIGHT REACTION: *"What in the world is she doing making up lies? What
+is happening?"***
+**Asked "Did you find anything??" the stylist replied:** *"The search didn't come back with direct links
+I can share, so let me give you my best specific picks to shop right now."* **Then it wrote four dresses
+and four prices out of its own memory** — Diane von Furstenberg ~$398 · Anthropologie ~$168 · FARM Rio
+~$248 · Reformation ~$278. **Nothing was found. Not one price was real.** A second reply offered
+*"FRAME Le High Straight Jeans from Nordstrom (~$228) **in size 26**"* — a size claim on a product that
+does not exist, at two shops that have rejected her and pay $0.
+🚨🚨 **THE PROMPT ALREADY FORBADE THIS, IN CAPITALS — "AN ITEM WITHOUT ITS ADDRESS DOES NOT EXIST" and
+"Never invent an item". THE MODEL READ IT AND DID IT ANYWAY.** ▶▶ **THAT IS THE STITCH FIX BOX,
+HAPPENING INSIDE THE APP BUILT TO PREVENT THE STITCH FIX BOX.** She wrote a note saying no shift
+dresses; a person read it and sent shift dresses. **A rule that lives only in words gets ignored.**
+✅ **SO THE ABILITY WAS REMOVED, NOT RE-FORBIDDEN.** The stylist can no longer name a product, a price,
+a size or a link — at all, on any call. She gives styling; **products come from ONE place, the finder,
+which opens the shop's own page and checks it.** She cannot invent what she is not holding.
+⚠️⚠️ **DO NOT RE-ADD A WEB SEARCH TOOL TO CHAT TO "HELP HER FIND MORE."** That is precisely what was
+removed and precisely what lied. The finder is the only product route in chat, on purpose.
+
+### 🚨 THE ROOT CAUSE, MEASURED — AND IT EXPLAINS ALL FOUR SYMPTOMS AT ONCE
+`style-ai.js` attached a `web_search` tool with `max_uses: 3`. **A web search writes NOTHING to the
+stream while it runs**, and the prompt actively encouraged repeats (*"a second or third search... is
+always worth the few extra seconds"*). ▶ **So up to three searches ran in silence, the page's 30-second
+stall guard fired, the answer was abandoned, and it fell through to the no-search RETRY.**
+| what she saw | why |
+|---|---|
+| raw `<<FIND item=white top; cut=fitted; size=XS>>` on screen | the retry is still told to emit a marker, **and it was the ONE render route of four that never stripped it** |
+| **no product cards, ever** | **the retry never parsed the marker either, so it never LOOKED** |
+| four invented dresses | the stylist filled the silence it had created |
+| 30s+ of nothing | the three silent searches |
+🚨🚨 **THE MARKER LEAK IS THIS FILE'S OWN SENTENCE, IN PUBLIC: A RULE APPLIED TO ONE HALF IS NOT
+APPLIED.** Four routes render a bot bubble (main · cut-off · live stream · retry). **Three stripped. One
+did not.** ✅ **The strip now lives in `addChatMsg`, the one place every bot bubble passes through, so a
+route added later cannot leak it.**
+✅✅ **AND THE FINDER WAS HEALTHY THE ENTIRE TIME, which is the galling part.** Run directly against her
+two real requests while she was seeing nothing:
+| her request | what it actually found |
+|---|---|
+| fitted white top | Old Navy **$9.99** · H&M **$7.49** · Old Navy $12.00 |
+| dress (the bridal shower) | Old Navy **$19.99** · Calvin Klein at Belk **$59.97** |
+▶ **Real, affordable, in her shops — the coverage win landing exactly as designed. She never saw one of
+them.**
+
+### ✅ WHAT SHIPPED 2026-09-09
+1. **The stylist's own web search is REMOVED** (`style-ai.js`). Streaming is KEPT — it is what lets the
+   finder run WHILE the reply is written; without it the wait becomes the sum, not the longer, of the two.
+2. **The stylist may no longer name a product, price, size or link** — one prompt block, both calls.
+   ⚠️ **SCOPED TO CHAT.** Wardrobe Ideas and Shop your Style keep their tier-3 floor. Her 2026-09-06
+   ruling removed that floor in chat and **nowhere else**. Do not "restore" it.
+3. **The marker is stripped in `addChatMsg`** — the choke point, not the call sites.
+4. **The retry now runs the finder**, so a stalled answer still gets her real cards.
+5. **The card row is uncapped from 4 to 12** (near-miss groups 3 → 8). ⭐ **`.find-cards` was ALREADY a
+   horizontal touch-scroller** — her swipe question was answered by code that already existed; she had
+   simply never seen it work, because no cards ever rendered.
+6. **`SEARCH_MAX_USES` retired**; the per-search cost surcharge removed, so a shopping answer now costs
+   LESS than it did.
+▶ **`scratchpad/chatfallback.js` — 35 checks, was 29.** Section 8 pins her exact screenshot: no raw
+marker in any bubble, the retry really looks, a real card appears.
+⚠️ **THREE OF ITS CHECKS WERE REWRITTEN, NOT BUMPED.** They asserted the old two-block prompt SWAP,
+which no longer exists because both blocks are gone. **The app got STRICTER, not looser** — the old
+retry was allowed to name a garment so long as it gave no address, and that is exactly what invented the
+four dresses. **Rewritten to name the RULE (no product may be named on EITHER call), per this file's own
+"rewrite the assertion, never bump the number".**
+
+### 🚨 THE SIX EDITS TO ADD A MERCHANT ARE NOW FIVE
+▶ **Edit (6), `SEARCH_DOMAINS` in `style-ai.js`, no longer arms anything** — the stylist has no search
+to allow domains for. ⚠️ **The constant is deliberately KEPT and still DERIVED** from the same generated
+file the finder reads, so it cannot go stale and `searchtune` still asserts the derivation. **Do not
+hand-maintain it, and do not re-add a search tool to give it a job.**
+
+### ▶ TEST STATE AS THIS SESSION ENDED — READ BEFORE BELIEVING A RED SUITE
+✅ **GREEN:** chatfind 61 · chatfallback **35** · findprod 56 · stylistjudge 33 · storepool 49 · affq 40 ·
+affwrap 35 · untagged · feedshelf.
+⚠️ **THREE PRE-EXISTING FAILURES, ALL VERIFIED AGAINST CLEAN `HEAD` IN A WORKTREE, NONE MINE:**
+- `searchtune` **80 checks, 1 failure** — *"her voice: Lora upright 15.5 + gold bolds"*, a `styles.css`
+  check. **Identical on clean `HEAD`.** `styles.css` was not touched this session.
+- `curated` — *"good CSV converts clean"* fails on **Madewell · COS · Marine Layer**, which is simply
+  **the consequence of her closing the roster at 122 on 2026-09-08**; those shops are gone, so their
+  catalog rows no longer resolve. ▶ **Not a bug — it is the deactivation this file already recorded.**
+  Also *"every family sees ≥3 jeans"* (Professional gets 2). **Both identical on clean `HEAD`.**
+- `curated` — *"never ruffles" removes the ruffled item* — **THE KNOWN FLAKE**, still time/state
+  dependent, still in the master to-do to be fixed with an isolated context. **Verify against `HEAD`
+  before believing it; never loosen it.**
+
+### ▶▶ WHAT IS WAITING ON HER
+1. ⭐ **HER RETEST OF THE CHAT — and this time the question is "did you get cards?"** Nothing else gets
+   built on chat until she answers.
+2. ⏳ **THE OCT 1 CLOCK — the only genuinely time-sensitive thing on her whole board.** Do NOT pay the
+   Your Fashion Friend renewal; close the county receipt by email or mail.
+3. ✅ **SerpApi is NOT a constraint: 932 searches left, measured 2026-09-09 via the free account probe.**
+   The old "34 left" note is stale. **Testing is affordable again** — but still build against
+   `scratchpad/fixtures/`, never her live allowance.
+
+### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER (unchanged except item 1, which today's removal already did)
+1. ~~Cut the query count~~ — **partly done for free.** Removing the stylist's own search removed up to
+   three calls per answer. `buildQueries` still fires up to four finder searches; **measure the real
+   remaining wait on her retest before cutting further.**
+2. **MANY CARDS, LAZY LOOK-UPS** — her explicit ask, said twice: *"the more options she can browse, the
+   better."* The row scrolls and the cap is raised, but the finder still only returns VERIFIED matches,
+   so there is no wide pool yet. **That is the real build: return the unverified pool too, render it,
+   and spend a look-up only on what she taps.**
+3. **THE DELEGATED CUT** (she ruled yes): when she hands over the choice, the stylist's own silhouette
+   becomes a real search requirement, and the stylist says out loud that it was her pick.
+   ⚠️ **STILL LIVE AND SEEN AGAIN TODAY:** her *"bridal shower in October in Florida. A brunch."*
+   produced a marker asking for `colour=bright; cut=fitted midi; fabric=lightweight` — **none of which
+   she said** — so the code correctly stripped all three and searched plain "women's dress" while the
+   prose promised bright, fitted and lightweight. **The prose still writes cheques the search will not
+   cash.**
+4. **THEN SHOP YOUR STYLE**, same engine.
+
 
 ### 🚨 THREE TIMES TODAY CLAUDE PUT WORDS IN HER MOUTH. ALL THREE ARE CORRECTED IN THIS FILE.
 1. ***"the cap is the seatbelt"*** — Claude's phrase, quoted back to her twice as hers, and used to
@@ -250,21 +353,6 @@ because X."* **It costs a sentence and it would have caught the eight-word list 
 things we put in there."*** ▶ **Test before building anything: is this a PROMISE or a JUDGEMENT?**
 Promises stay in code and the list is short. Judgements go to the stylist, who can read. **Every fault
 she found today was a judgement built as a promise.**
-
-### ✅✅ WHAT SHIPPED
-**1. COUTR IS LIVE IN ALL SIX PLACES** — see the affiliate section for her tags, the verified search url
-and the measured menswear leak. Her scores, her correction (`relaxed` 5 → 4), her neighbours.
-**2. `scratchpad/storepool.js`, 47 CHECKS — THE LEDGER ROW THAT HAD NO TEST.** The row predicted it
-*"becomes load-bearing the moment an eighth merchant is wired in"*, and COUTR is the eighth. **The
-prediction came true on schedule, which is the best argument this file has ever made for writing
-predictions down.**
-**3. A DOUBLE-WORD SEARCH BUG, PRE-EXISTING ON `main`, FIXED.** `_alreadyWomens` guards the "womens "
-prepend, but it only ever tested for a leading SIZE word — so a term that already said women's got the
-word twice: `getStoreUrl('Nordstrom', "women's silk blouse")` built
-`keyword=womens%20women's%20silk%20blouse`. ⚠️ **LATENT, NOT OBSERVED, AND THAT IS THE POINT: nothing
-seeds such a term, but nothing forbids the model writing one, and the wishlist STORES TERMS and rebuilds
-urls on every render — so one would have doubled forever, on every screen, for that woman.** Pinned by 8
-checks in `searchtune`. **The function's name had been true of its intent and false of its code.**
 
 ### 🚨🚨 THE LESSON OF THE DAY, AND IT IS A NEW ONE: **A COUNT OF HER STORES IS NOT AN INVARIANT.**
 ▶▶ **FOUR separate tests broke the moment she was approved for a shop** — `rakuten_feed`'s *"the other
@@ -461,57 +549,6 @@ look-up only on the pieces she actually reaches for.**
 💰 **AND THIS IS NOT A NICETY, IT IS THE BUSINESS MODEL — at her real price of $0.025/search, middle
 case, 1000 users: 10 searches per question is −$132/month and 4 is +$18/month.** ▶ **More options for
 her AND fewer searches. The two goals point the same way, which is rare enough to write down.**
-
-### ✅✅✅ THE STYLIST NOW READS THE PRODUCTS — BUILT AND LIVE, 2026-09-08
-▶▶ **THE FAULT SHE FOUND THIS MORNING IS FIXED, AND HERE IS THE PROOF ON THE LIVE SITE.**
-*"I need a fitted white top"* returned **NOTHING** this morning. It now returns **4 exact matches, each
-quoting the product's own words:**
-| piece | shop | price | why it is a yes |
-|---|---|---|---|
-| Nine West Fitted Ribbed Crewneck | **Kohl's** | **$14.99** | colour ✓ *"White Knight"* · cut ✓ *"Fitted Ribbed Crewneck Top"* |
-| Old Navy Exhale Seamless Fitted Rib Tee | Old Navy | **$9.99** | colour ✓ *"White"* · cut ✓ *"Seamless Fitted Rib T-Shirt"* |
-| Express Supersoft Fitted Double Layer | Express | $20.40 | cut ✓ *"Supersoft Fitted Double Layer Crew Neck T-Shirt"* |
-| Quince European Linen Fitted Tank | Quince | $42.00 | cut ✓ *"European Linen Fitted Tank"* |
-⭐ **Note the first row: Kohl's, added the same day, at $14.99 — the coverage win landing immediately.**
-✅ **`jeans size 26, high rise`** — which returned **zero** when the cut was added this morning — now
-returns a Levi's at Zappos, confirmed by *"high-rise jeans"*.
-✅ **`blush silk wrap dress`** correctly returns **NO exact match** and one honest near-miss (a DVF that
-keeps the silk and the wrap, gives up the colour). **That is her widening design working on real data,
-and it agrees with the 2026-09-06 finding that no exact match exists.**
-▶ **THE SPLIT, and it is the promise/judgement line:** the stylist reads **colour, fabric, cut**; code
-keeps **size, width, stock** because those are factual lookups against structured variant data — and
-width is safety-critical.
-🚨 **THE HONESTY IS CHECKED, NOT TRUSTED.** A CONFIRMED must quote the product's own words and
-`parseJudgement` verifies the quote is really in that product's text. **An invented quote, a quote
-lifted from another product, malformed JSON, an unknown verdict word — all degrade to UNKNOWN, never to
-a pass.** If the model call fails, the old word-list `judge()` runs, so this can never be worse than
-before. **`scratchpad/stylistjudge.js`, 33 checks, no network.**
-▶ **A FAST MODEL IS USED FOR THE READING, AND THE VALIDATOR IS WHY THAT IS SAFE** — a careless read
-degrades to unknown rather than to a false tick.
-
-### ⏱⏱ THE SPEED QUESTION, FINALLY MEASURED PROPERLY — AND IT IS OURS AFTER ALL
-🚨 **ADVICE ABOUT THE PAID SPEED ADD-ON WAS GIVEN TWICE ON NUMBERS THAT CHANGED UNDERNEATH IT, AND SHE
-CAUGHT THAT: *"i thought you told me to cancel the extra fast speed?"*** She was right to. ▶ **THE
-LESSON: measure the THING you are advising about, not a total you can attribute however you like.**
-✅ **SO SERPAPI'S OWN PROCESSING TIME WAS MEASURED DIRECTLY** (their `search_metadata.total_time_taken`,
-now returned by the `?capture=1` probe so it can never be guessed at again):
-| query | SerpApi's own time | results |
-|---|---|---|
-| white blouse | **3.37s** | 40 |
-| black trousers | **2.70s** | 40 |
-| wool coat | **1.61s** | 40 |
-▶▶ **THEIR SERVICE IS FINE. A SEARCH TAKES THEM UNDER 3.5 SECONDS AND RETURNS 40 PRODUCTS.**
-🚨 **THE 9-10s WE MEASURED IS OURS: `buildQueries` fires up to FOUR searches per question and firing
-them together makes them queue.** One search ~3s; four at once ~10s.
-▶ **SO THE $75 ADD-ON IS NOT WHAT IS SLOW, AND CANCELLING IT PROBABLY COSTS NOTHING IN SPEED.**
-⚠️ **BUT SHE WAS TOLD, DELIBERATELY, NOT TO DECIDE YET:** the remaining slowness is ours to fix and not
-something to buy out of. **CUT THE QUERY COUNT FIRST, THEN THE $75 QUESTION ANSWERS ITSELF** — and it
-saves money too, since every query is a paid call. ▶ **THAT IS THE NEXT PIECE OF WORK.**
-**Live totals as she left: 17-18s** — search 8.9-10s (four queued) · look-ups 2.5-6s · reading ~3s.
-▶ **ALREADY DONE ON OUR SIDE:** parallel + pooled calls · per-call timeouts · searches together on the
-paid plan · look-ups 6 → 4 in one round · a straggling look-up no longer costs 12s.
-⚠️ **HER OWN 2026-09-06 DESIGN ALREADY NARRATES THE WAIT** — warm reply immediately, then *"Looking
-through your shops…"*. **The wait is not silent. It is still over the 5-8s that design assumed.**
 
 ### ▶▶ WHAT IS WAITING ON HER — AND IT IS ALMOST NOTHING
 1. ⭐ **HER VERDICT ON THE CHAT.** She is testing it now. **Nothing else should be built on top until she
@@ -1197,6 +1234,20 @@ would a good stylist need this written down, or would she just look?** If she wo
 her look.**
 
 ⚠️⚠️ **THE SENTENCE TO KEEP: A RULE APPLIED TO ONE HALF IS NOT APPLIED.**
+🚨🚨 **AND ON 2026-09-09 THAT SENTENCE CAME TRUE IN THE MOST LITERAL FORM IT EVER HAS.** Four code
+routes render a stylist bubble — the main answer, the cut-off answer, the live stream, and the retry.
+**THREE of them stripped the internal marker. ONE did not**, and that is the one Cath photographed:
+`<<FIND item=white top; cut=fitted; size=XS>>` sitting on her screen as though the stylist had typed it.
+▶▶ **THE FIX IS THE GENERAL LESSON: A RULE THAT MUST HOLD ON EVERY ROUTE BELONGS AT THE CHOKE POINT,
+NOT AT EACH CALL SITE.** The strip now lives inside `addChatMsg`, where every bot bubble passes, so a
+fifth route added next year cannot forget it. **When you find yourself applying the same rule at three
+call sites, that is the signal to move it underneath them — the fourth call site is already coming.**
+🚨🚨 **THE SECOND LESSON OF THAT DAY, AND IT IS THE HARDER ONE: A PROMPT RULE IN CAPITAL LETTERS IS
+STILL ONLY A PROMPT RULE.** The stylist's instructions said *"AN ITEM WITHOUT ITS ADDRESS DOES NOT
+EXIST"* and *"Never invent an item"*. **It invented four items and four prices anyway**, and told her
+it was doing so. ▶ **Shouting at the model is not enforcement. REMOVING THE ABILITY is.** The stylist
+no longer holds products at all, so there is nothing left to invent — which is the same move as
+`filterNeverWear` running in code instead of asking nicely in a prompt.
 🚨🚨 **AND THE SECOND SENTENCE TO KEEP, ADDED 2026-09-08 AFTER SHE ASKED THE RIGHT QUESTION:
 WHEN HER WORDS ADMIT TWO BUILDS, SAY SO BEFORE BUILDING — NOT AFTER SHE FINDS IT ON HER PHONE.**
 ▶ **WHAT PROMPTED IT.** Her step 4 of the agreed shopping experience reads: *"Each product is CHECKED
@@ -1246,6 +1297,8 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | Checklist is a possibility map | copy + framing | n/a | ▶ none | ✅ copy-only rule |
 | **One photo renders the SAME on every screen** | **`pxPos`/`pxFit`/`px2` on the Star card (`.wks-px`)** | **the same override on the Edit (`.dc-item-px`), off ONE shared css rule** | **starpx 29** | ✅ **both, `px2` added 2026-09-08** |
 | **Never claim a requirement is verified when it is not** | **the chat's cards: `judge()` + the three verdicts** | **`verifySize`/`verifyColour`/`verifyFabric`/`verifyCut`/`verifyWidth` in `find-products.js`** | **findprod 54 · chatfind 61** | ✅ **BUILT 2026-09-06, and the `n/a`s below have now expired as predicted** |
+| **NEVER NAME A PRODUCT WE DID NOT FIND** | **the stylist may not name a product, price, size or link AT ALL — the ability is removed, not forbidden** | **every card carries a real verified offer from `find-products.js`** | **chatfallback 35** | ✅ **BUILT 2026-09-09, after she was shown four invented dresses** |
+| **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 ⚠️⚠️ **THIS ROW WAS WRITTEN BEFORE ITS CODE EXISTED, AND THAT WAS THE POINT.** Her words, 2026-09-06:
 *"we should never imply that a specific size, width, colour, material or other requirement is confirmed
 unless we can actually verify it."* **She gave it while NOTHING was built** — so for once a rule existed

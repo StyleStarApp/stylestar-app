@@ -18025,3 +18025,79 @@ MUST NOT RENDER TWO DIFFERENT WAYS ON TWO SCREENS.** Each of these photos appear
 is exactly *"a rule applied to one half is not applied"*, arriving through a photo instead of a picker.
 **Both were fixed in both places, and `starpx` asserts the Edit copies too.**
 
+---
+
+## 📦 ARCHIVED 2026-09-09 — the 2026-09-08 session's build narrative
+▶ Moved here under this project's archiving rule (one START HERE entry lives in `CLAUDE.md`; the
+previous session's entry moves in the same commit). **Nothing is deleted.** Her DECISIONS from that
+day stayed in `CLAUDE.md` — the browse ruling, the delegated-cut ruling, the store roster, the
+sold-out Star, the affiliate status. Only *what happened* moved.
+⚠️ **READ THE SPEED SECTION BELOW WITH ITS CORRECTION:** it concluded the remaining slowness was
+`buildQueries` firing four searches. On 2026-09-09 the real culprit was found to be the STYLIST'S
+OWN web search running up to three times in silence — now removed. See `CLAUDE.md`.
+
+### ✅✅ WHAT SHIPPED
+**1. COUTR IS LIVE IN ALL SIX PLACES** — see the affiliate section for her tags, the verified search url
+and the measured menswear leak. Her scores, her correction (`relaxed` 5 → 4), her neighbours.
+**2. `scratchpad/storepool.js`, 47 CHECKS — THE LEDGER ROW THAT HAD NO TEST.** The row predicted it
+*"becomes load-bearing the moment an eighth merchant is wired in"*, and COUTR is the eighth. **The
+prediction came true on schedule, which is the best argument this file has ever made for writing
+predictions down.**
+**3. A DOUBLE-WORD SEARCH BUG, PRE-EXISTING ON `main`, FIXED.** `_alreadyWomens` guards the "womens "
+prepend, but it only ever tested for a leading SIZE word — so a term that already said women's got the
+word twice: `getStoreUrl('Nordstrom', "women's silk blouse")` built
+`keyword=womens%20women's%20silk%20blouse`. ⚠️ **LATENT, NOT OBSERVED, AND THAT IS THE POINT: nothing
+seeds such a term, but nothing forbids the model writing one, and the wishlist STORES TERMS and rebuilds
+urls on every render — so one would have doubled forever, on every screen, for that woman.** Pinned by 8
+checks in `searchtune`. **The function's name had been true of its intent and false of its code.**
+
+### ✅✅✅ THE STYLIST NOW READS THE PRODUCTS — BUILT AND LIVE, 2026-09-08
+▶▶ **THE FAULT SHE FOUND THIS MORNING IS FIXED, AND HERE IS THE PROOF ON THE LIVE SITE.**
+*"I need a fitted white top"* returned **NOTHING** this morning. It now returns **4 exact matches, each
+quoting the product's own words:**
+| piece | shop | price | why it is a yes |
+|---|---|---|---|
+| Nine West Fitted Ribbed Crewneck | **Kohl's** | **$14.99** | colour ✓ *"White Knight"* · cut ✓ *"Fitted Ribbed Crewneck Top"* |
+| Old Navy Exhale Seamless Fitted Rib Tee | Old Navy | **$9.99** | colour ✓ *"White"* · cut ✓ *"Seamless Fitted Rib T-Shirt"* |
+| Express Supersoft Fitted Double Layer | Express | $20.40 | cut ✓ *"Supersoft Fitted Double Layer Crew Neck T-Shirt"* |
+| Quince European Linen Fitted Tank | Quince | $42.00 | cut ✓ *"European Linen Fitted Tank"* |
+⭐ **Note the first row: Kohl's, added the same day, at $14.99 — the coverage win landing immediately.**
+✅ **`jeans size 26, high rise`** — which returned **zero** when the cut was added this morning — now
+returns a Levi's at Zappos, confirmed by *"high-rise jeans"*.
+✅ **`blush silk wrap dress`** correctly returns **NO exact match** and one honest near-miss (a DVF that
+keeps the silk and the wrap, gives up the colour). **That is her widening design working on real data,
+and it agrees with the 2026-09-06 finding that no exact match exists.**
+▶ **THE SPLIT, and it is the promise/judgement line:** the stylist reads **colour, fabric, cut**; code
+keeps **size, width, stock** because those are factual lookups against structured variant data — and
+width is safety-critical.
+🚨 **THE HONESTY IS CHECKED, NOT TRUSTED.** A CONFIRMED must quote the product's own words and
+`parseJudgement` verifies the quote is really in that product's text. **An invented quote, a quote
+lifted from another product, malformed JSON, an unknown verdict word — all degrade to UNKNOWN, never to
+a pass.** If the model call fails, the old word-list `judge()` runs, so this can never be worse than
+before. **`scratchpad/stylistjudge.js`, 33 checks, no network.**
+▶ **A FAST MODEL IS USED FOR THE READING, AND THE VALIDATOR IS WHY THAT IS SAFE** — a careless read
+degrades to unknown rather than to a false tick.
+
+### ⏱⏱ THE SPEED QUESTION, FINALLY MEASURED PROPERLY — AND IT IS OURS AFTER ALL
+🚨 **ADVICE ABOUT THE PAID SPEED ADD-ON WAS GIVEN TWICE ON NUMBERS THAT CHANGED UNDERNEATH IT, AND SHE
+CAUGHT THAT: *"i thought you told me to cancel the extra fast speed?"*** She was right to. ▶ **THE
+LESSON: measure the THING you are advising about, not a total you can attribute however you like.**
+✅ **SO SERPAPI'S OWN PROCESSING TIME WAS MEASURED DIRECTLY** (their `search_metadata.total_time_taken`,
+now returned by the `?capture=1` probe so it can never be guessed at again):
+| query | SerpApi's own time | results |
+|---|---|---|
+| white blouse | **3.37s** | 40 |
+| black trousers | **2.70s** | 40 |
+| wool coat | **1.61s** | 40 |
+▶▶ **THEIR SERVICE IS FINE. A SEARCH TAKES THEM UNDER 3.5 SECONDS AND RETURNS 40 PRODUCTS.**
+🚨 **THE 9-10s WE MEASURED IS OURS: `buildQueries` fires up to FOUR searches per question and firing
+them together makes them queue.** One search ~3s; four at once ~10s.
+▶ **SO THE $75 ADD-ON IS NOT WHAT IS SLOW, AND CANCELLING IT PROBABLY COSTS NOTHING IN SPEED.**
+⚠️ **BUT SHE WAS TOLD, DELIBERATELY, NOT TO DECIDE YET:** the remaining slowness is ours to fix and not
+something to buy out of. **CUT THE QUERY COUNT FIRST, THEN THE $75 QUESTION ANSWERS ITSELF** — and it
+saves money too, since every query is a paid call. ▶ **THAT IS THE NEXT PIECE OF WORK.**
+**Live totals as she left: 17-18s** — search 8.9-10s (four queued) · look-ups 2.5-6s · reading ~3s.
+▶ **ALREADY DONE ON OUR SIDE:** parallel + pooled calls · per-call timeouts · searches together on the
+paid plan · look-ups 6 → 4 in one round · a straggling look-up no longer costs 12s.
+⚠️ **HER OWN 2026-09-06 DESIGN ALREADY NARRATES THE WAIT** — warm reply immediately, then *"Looking
+through your shops…"*. **The wait is not silent. It is still over the 5-8s that design assumed.**

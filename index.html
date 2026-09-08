@@ -10339,6 +10339,16 @@ function _chatShrinkThumb(src,entry){
   }catch(e){done('')}
 }
 function addChatMsg(text,type,photoThumb){
+  /* ⚠⚠ THE MARKER IS STRIPPED HERE, AT THE ONE PLACE EVERY BOT MESSAGE
+     PASSES THROUGH — not at each call site. Cath's phone, 2026-09-09: she saw
+     "<<FIND item=white top; cut=fitted; size=XS>>" on screen twice.
+     ▶ THE CAUSE WAS THIS FILE'S OWN LESSON, EXACTLY: four routes render a bot
+       reply (main, cut-off, live stream, no-search retry) and THREE of them
+       stripped. The retry did not. A rule applied to one half is not applied.
+     ▶▶ SO IT IS ENFORCED AT THE CHOKE POINT INSTEAD. A new route added later
+       cannot leak the marker, because every route ends up here. Stripping is
+       idempotent, so the callers that already strip stay correct. */
+  if(type==='bot')text=_findStrip(text);
   const div=document.createElement('div');
   div.className='chat-msg '+type;
   // ALL message text is escaped before linkStores builds its links — on this
@@ -10469,28 +10479,43 @@ async function _readChatStream(r,typing,liveEl,state){
   return text;
 }
 
-// The searching rules above are written for a call that really carries the web
-// search tool. On the no-search RETRY (see sendChat) they are actively harmful:
-// "AN ITEM WITHOUT ITS ADDRESS DOES NOT EXIST" would leave the stylist either
-// naming nothing at all, or inventing a product address she never saw. So the
-// block is SWAPPED for the app's own pre-search behaviour, never just dropped.
-// Keep both branches in one function so they can never drift apart.
-function _chatSearchBlock(on){
-  if(on===false)return `SEARCHING REAL INVENTORY:
-- You cannot look up live inventory in this reply. Never put a product page address in brackets, and never say or imply that you checked a store.
-- Recommend by name and store instead, formatted as "item from StoreName", with the item name kept to 2 to 4 plain searchable words. Style Star turns that into her shopping link.
-- Never mention searching, tools, the internet, or any trouble finding things. You are simply a stylist giving her your recommendation.`;
-  return `SEARCHING REAL INVENTORY:
-- You can search the web, and every search is restricted to Style Star's own approved stores. Use it when she wants to find or buy a specific piece, wants something like a photo she shared, or asks what is available right now.
-- Do not search for general style advice, occasion guidance, or anything you can answer well from expertise. Most questions need no search.
-- One well chosen search is usually enough. Search, read the results, then answer. She is waiting, so never keep searching for a perfect result when a genuinely good one is already in front of you.
-- BUT if a search comes up dry, do not give up after one try: rephrase and search again with different words. Try a broader shape or category word, drop the least important detail, or lead with the material instead of the shape. A second or third search that finds her the piece is always worth the few extra seconds.
-- When you do search, recommend ONLY items you actually saw in the results. Use the real product name and the real price from the result, and the store it came from, still formatted as "item from StoreName (~$price)" with the store named exactly as it appears in the store list above.
-- CRITICAL, THE LINK: after each searched item's price, put the item's exact product page address from the search result in square brackets, like this: the Nova Baguette Bag from Nordstrom (~$79) [https://www.nordstrom.com/s/nova-baguette/8467773]. Copy the address exactly as the result gave it, never build or shorten one yourself.
-- AN ITEM WITHOUT ITS ADDRESS DOES NOT EXIST: if you cannot give an item's exact product page address from the results, do not mention that item at all. No "for a more elevated version" extras without their own address. Every single item you name must carry its bracketed address.
-- COLOR HONESTY: only say an item comes in the color she wants if the result actually said so. Name the color the result showed. If the result did not confirm her color, either skip the item or say plainly which color you confirmed.
-- Hold a high bar for what counts as a match: shape, material and color should genuinely match what she asked for or showed you. ONE excellent match she can buy beats three loose ones. If nothing truly matches, say so plainly and offer your styling direction instead. Never invent an item, never pad with weak matches.
-- Never mention searching, tools, or the internet. You are a stylist who checked, not a search engine.`;
+/* 🚨🚨 THE STYLIST NO LONGER LOOKS ANYTHING UP, AND SHE NEVER NAMES A PRODUCT.
+   Cath's phone, 2026-09-09, and it is the single worst fault this app has had.
+   Asked "Did you find anything??" the stylist answered "the search didn't come
+   back with direct links I can share, so let me give you my best specific
+   picks" and then wrote FOUR DRESSES AND FOUR PRICES OUT OF HER OWN MEMORY —
+   DVF ~$398, Anthropologie ~$168, FARM Rio ~$248, Reformation ~$278. Another
+   reply offered jeans "in size 26" at three shops. None of it was found. None
+   of the prices were real. Nothing had been checked.
+   ▶▶ THE PROMPT ALREADY FORBADE EXACTLY THIS, IN CAPITALS: "AN ITEM WITHOUT ITS
+     ADDRESS DOES NOT EXIST" and "Never invent an item". The model read it and
+     did it anyway — which is THE STITCH FIX BOX, in the app built to prevent
+     the Stitch Fix box. Cath wrote a note saying no shift dresses; a person read
+     it and sent shift dresses. A rule that lives only in words gets ignored.
+   ▶ SO THE ABILITY IS REMOVED RATHER THAN RE-FORBIDDEN. She cannot invent a
+     product she is not holding. Products come from ONE place, the finder, which
+     opens the shop's own page and checks it.
+   ⚠️⚠️ AND THE SECOND HALF, MEASURED NOT GUESSED: her own web search was ALSO
+     what broke the chat. Up to SEARCH_MAX_USES=3 searches ran per reply and NONE
+     of them writes a word to the screen, so the page sat silent past its 30s
+     stall guard, aborted, and fell through to the retry — which is how the raw
+     <<FIND>> marker reached her screen and why NO CARDS EVER APPEARED. The
+     finder was healthy the whole time: her two real requests returned Old Navy
+     $9.99 / H&M $7.49 and Old Navy $19.99 / Belk $59.97 when run directly.
+   ▶ ONE CHANGE FIXES FOUR FAULTS: the invented products, the stall, the leaked
+     marker and the missing cards. It is also faster and cheaper — a whole
+     search per answer removed.
+   🚨 SCOPED TO CHAT ON PURPOSE. Wardrobe Ideas and Shop your Style keep their
+     tier-3 "name a piece, open a store search" floor. Cath's 2026-09-06 ruling
+     removed that floor IN CHAT and nowhere else. Do not "restore" it here. */
+function _chatProductsBlock(){
+  return `NAMING PRODUCTS — THE ONE RULE THAT MUST NEVER BEND:
+- You cannot look anything up and you never see live stock. Never say or imply that you searched, checked, browsed or found anything.
+- NEVER name a specific product for sale. Never give a price. Never give a size. Never give a link. Not one, not ever, not even approximately and not even hedged with a "~".
+- Real products are found separately and appear as CARDS underneath your reply — real photo, real price, real link, each one checked against the shop's own page. That is where every product she sees comes from.
+- Your half is the styling, and it is the half she came for: what shape suits her and why, what to look for, how to wear it, what to avoid. Talk about silhouette, fabric, colour, neckline, proportion, occasion.
+- Naming a SHOP is fine where it genuinely helps her. Naming a GARMENT FOR SALE is not.
+- If the cards below you come back empty, your written advice is the whole answer, and that is an honest answer. Do not fill the gap with a product. An invented pick looks exactly like a real find, and she may buy it.`;
 }
 
 // One fast retry with the search tool OFF, used only when the searching call
@@ -10499,16 +10524,14 @@ function _chatSearchBlock(on){
 // rebuilt with the no-search rules so the stylist cannot offer an address she
 // never saw. Returns '' on any failure, so the caller still has its apology.
 async function _chatNoSearchReply(messages){
+  /* ⚠️ NO PROMPT SWAP ANY MORE. It existed to turn the stylist's own searching
+     off for the retry; she no longer searches at all, so both calls carry the
+     identical rules and there is nothing to swap. A swap between two identical
+     blocks would silently APPEND a duplicate, which is worse than nothing.
+     ▶ THE MARKER INSTRUCTION IS DELIBERATELY KEPT: the retry may still ask for
+       products, and its caller now runs the finder on that marker — which the
+       old code never did, so a retry always came back with no cards. */
   const msgs=messages.slice();
-  // Swap the searching rules for the no-search ones. If the block ever stops
-  // matching (someone edits the prompt), the swap would quietly do nothing and
-  // the stylist would still be told every item MUST carry a product address,
-  // with no results to take one from, which is how invented links get made. So
-  // a failed swap is caught here and the no-search rules are appended instead.
-  const sys=String(msgs[0].content);
-  let swapped=sys.split(_chatSearchBlock(true)).join(_chatSearchBlock(false));
-  if(swapped===sys)swapped=sys+'\n\n'+_chatSearchBlock(false);
-  msgs[0]={role:'user',content:swapped};
   const c=(window.AbortController)?new AbortController():null;
   const t=c?setTimeout(function(){try{c.abort()}catch(e){}},25000):null;
   try{
@@ -10781,7 +10804,16 @@ async function _findRun(req){
     wrap.innerHTML='<div class="find-head">'+(exact.length===1
         ?'Here is the one I can stand behind.'
         :'Found '+exact.length+' that match what you asked for.')+'</div>'+
-      '<div class="find-cards">'+exact.slice(0,4).map(function(p){return _findCard(p)}).join('')+'</div>'+
+      /* ⭐ HER ASK, 2026-09-08 AND AGAIN 2026-09-09: "the more options she can
+         browse, the better... if she can scroll through a lot of visuals, that
+         makes it more fun." The row is a horizontal touch-scroller already
+         (.find-cards), so the only thing capping it was this number. Raised
+         from 4 so nothing found is thrown away before she can swipe to it.
+         ⚠️ This does NOT loosen her honesty rule: every card here is still a
+         verified exact match. It changes how many she SEES, not what the app
+         CLAIMS about them. The wide pool of unverified near-misses is the
+         separate "many cards, lazy look-ups" build. */
+      '<div class="find-cards">'+exact.slice(0,12).map(function(p){return _findCard(p)}).join('')+'</div>'+
       '<div class="find-disc">Some links may earn a commission.</div>';
   }else if(doors.length){
     /* ▶▶ HER COPY, VERBATIM (2026-09-06): "I couldn't find an exact match today.
@@ -10810,7 +10842,7 @@ async function _findRun(req){
         const kept=d.keeps.map(function(k){return _findLabel(k,{request:req})});
         const label=kept.length?'Right '+kept.join(' and '):'Closest overall';
         return '<div class="find-door">'+(doors.length>1?'<div class="fd-ask">'+_esc(label)+'</div>':'')+
-          '<div class="find-cards">'+d.products.slice(0,3).map(function(p){
+          '<div class="find-cards">'+d.products.slice(0,8).map(function(p){
             return _findCard(p,{differs:p.differs})}).join('')+'</div></div>';
       }).join('')+
       '<div class="find-disc">Some links may earn a commission.</div>';
@@ -11008,7 +11040,7 @@ SHOPPING:
 - Keep responses short and actionable. Lead with the items, not the explanation.
 - When she asks "what should I wear" or "what should I buy," get straight to the specific items. No preamble.
 
-${_chatSearchBlock(true)}
+${_chatProductsBlock()}
 
 FINDING REAL PRODUCTS FOR HER:
 - You can send me out to find REAL products that are actually for sale right now, in her shops, with real prices and a direct link to the item. To do it, put ONE marker as the very FIRST thing in your reply, then write your answer as normal:
@@ -11189,7 +11221,18 @@ RULES:
       let fb='';
       try{fb=await _chatNoSearchReply(messages);}catch(e2){}
       t2.remove();
-      if(fb&&fb.trim())addChatMsg(fb,'bot');
+      if(fb&&fb.trim()){
+        /* 🚨 THE RETRY MUST BE ABLE TO FIND HER PRODUCTS TOO. Until 2026-09-09
+           this path parsed no marker and ran no search, so whenever the main
+           answer stalled she got advice and NO CARDS — and the raw marker on
+           screen, because this was also the one render route that never
+           stripped it. Both halves are fixed: the strip now happens inside
+           addChatMsg for every route, and the finder runs from here as well.
+           ⚠️ Same `findFired` latch, so a marker already acted on never fires
+           twice, and her own sentence is still the authority on requirements. */
+        if(!st.findFired){const _mk2=_findParse(fb);if(_mk2){st.findFired=true;_findKeepHerWords(_mk2,msg);_findRun(_mk2);}}
+        addChatMsg(fb,'bot');
+      }
       else addChatMsg("I'm having a moment. Could you try asking that again? ✨",'bot');
     }
   }finally{

@@ -10,10 +10,22 @@ import {chromium} from '/opt/node22/lib/node_modules/playwright/index.mjs';
 import http from 'http';import fs from 'fs';
 
 const HTML=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-let mode='healthy', calls=[];
+let mode='healthy', calls=[], findCalls=[];
 const sse=o=>'event: '+o.type+'\ndata: '+JSON.stringify(o)+'\n\n';
 
 const srv=http.createServer((q,res)=>{
+  /* The finder, stubbed. Added 2026-09-09 so the retry path can be proven to
+     actually LOOK for her products, which is the half that was missing. */
+  if(q.url.indexOf('product-find')>=0){
+    let fr='';q.on('data',c=>fr+=c);
+    return q.on('end',()=>{
+      findCalls.push(JSON.parse(fr||'{}'));
+      res.writeHead(200,{'Content-Type':'application/json'});
+      res.end(JSON.stringify({exact:[{id:'1',title:"Old Navy Women's Fitted Rib T-Shirt",
+        store:'Old Navy',price:'$9.99',priceValue:9.99,url:'https://oldnavy.gap.com/x',
+        image:'https://example.com/i.jpg',confirmed:[],unknown:[]}],doors:[]}));
+    });
+  }
   if(q.url.indexOf('style-ai')<0){
     res.writeHead(200,{'Content-Type':'text/html'});return res.end(HTML);
   }
@@ -26,12 +38,19 @@ const srv=http.createServer((q,res)=>{
     if(!isSearch){ // the no-search retry
       if(mode==='bothfail'){res.writeHead(500);return res.end('{}');}
       res.writeHead(200,{'Content-Type':'application/json'});
-      return res.end(JSON.stringify({content:[{type:'text',text:'For a formal wedding, go with a floor length gown from Nordstrom.'}]}));
+      /* ⚠️ THE RETRY REALLY DOES EMIT A MARKER — it is told to, and the
+         instruction is not removed for this call. Cath saw the raw marker on
+         her phone twice on 2026-09-09 because this was the ONE render route
+         that never stripped it. */
+      const txt=(mode==='markerretry')
+        ?'<<FIND item=gown; cut=floor length>> On it, looking for something long and formal for you.'
+        :'For a formal wedding, go with a floor length gown from Nordstrom.';
+      return res.end(JSON.stringify({content:[{type:'text',text:txt}]}));
     }
     if(mode==='notok'){res.writeHead(500);return res.end('{}');}
     res.writeHead(200,{'Content-Type':'text/event-stream','Cache-Control':'no-cache'});
     res.write(sse({type:'message_start',message:{id:'m',content:[]}}));
-    if(mode==='deadsilence'||mode==='bothfail'){ // searches, writes nothing, connection dies
+    if(mode==='deadsilence'||mode==='bothfail'||mode==='markerretry'){ // writes nothing, dies
       res.write(sse({type:'content_block_start',index:0,content_block:{type:'server_tool_use',id:'s',name:'web_search'}}));
       setTimeout(()=>res.destroy(),400); return;
     }
@@ -104,9 +123,24 @@ console.log('\n2. KATHY: searches, writes nothing, dies -> real answer not an ap
  ok('Send re-enabled',(await sendDead(pg))===false);
  ok('no JS errors',errs.length===0,errs.join('|'));
  const sys=calls.length===2?String(calls[1].messages[0].content):'';
- ok('retry prompt drops the address rule',sys.indexOf('AN ITEM WITHOUT ITS ADDRESS')<0);
- ok('retry prompt forbids inventing one',sys.indexOf('cannot look up live inventory')>=0);
- ok('search prompt still intact on call 1',String(calls[0].messages[0].content).indexOf('AN ITEM WITHOUT ITS ADDRESS')>=0);
+ /* 🚨 THESE THREE WERE REWRITTEN 2026-09-09, AND THE REASON IS THIS FILE'S OWN
+    RULE: when a test breaks, ask whether the app got WORSE or merely CHANGED.
+    They used to assert the two-block prompt SWAP — that call 1 carried the
+    searching rules ("AN ITEM WITHOUT ITS ADDRESS") and the retry swapped them
+    for the no-search ones ("cannot look up live inventory"). That swap is gone
+    because BOTH blocks are gone: the stylist can no longer name a product on
+    either call, so there is nothing to swap between.
+    ▶▶ THE APP GOT STRICTER, NOT LOOSER — the old retry was allowed to name a
+      garment as long as it gave no address, and that is exactly what invented
+      the four dresses on Cath's phone. So the assertion is rewritten to name
+      the RULE (no product may be named on either call) instead of the
+      mechanism, which is the stronger check the old pair was reaching for. */
+ const sys0=String(calls[0].messages[0].content);
+ ok('retry may not name a product',sys.indexOf('NEVER name a specific product for sale')>=0);
+ ok('nor may the FIRST call — a rule applied to one half is not applied',
+    sys0.indexOf('NEVER name a specific product for sale')>=0);
+ ok('the old address rule is gone from BOTH calls',
+    sys.indexOf('AN ITEM WITHOUT ITS ADDRESS')<0&&sys0.indexOf('AN ITEM WITHOUT ITS ADDRESS')<0);
  await ctx.close();}
 
 console.log('\n3. first call 500 -> same fallback');
@@ -148,17 +182,52 @@ console.log('\n6. genuinely truncated, stream never closes -> still told honestl
  ok('no retry fired',calls.length===1,'calls='+calls.length);
  await ctx.close();}
 
-console.log('\n7. the prompt swap cannot silently fail');
+console.log('\n7. the retry cannot smuggle in a second set of product rules');
 {mode='healthy';calls=[];
  const ctx=await b.newContext();const pg=await ctx.newPage();
  await pg.goto('http://localhost:8992/',{waitUntil:'domcontentloaded'});
  await pg.waitForTimeout(2000);
- // A system prompt that does NOT contain the searching block at all: the swap
- // has nothing to match, so the no-search rules must be appended instead.
- await pg.evaluate(()=>_chatNoSearchReply([{role:'user',content:'You are a stylist. No searching block here.'},{role:'user',content:'hi'}]));
+ /* ▶ WHAT THIS CHECKED BEFORE, AND WHY IT CHANGED: it proved that if the
+    prompt swap ever stopped matching, the no-search rules got APPENDED rather
+    than silently doing nothing. There is no swap any more — one block, both
+    calls — so the failure mode it guarded cannot occur.
+    ⚠️ THE NEW RISK IN ITS PLACE IS THE MIRROR IMAGE, and it is worth a check:
+    a future session re-adding an append would DUPLICATE the rules, which is
+    how a prompt starts contradicting itself. So: the retry must pass the
+    system prompt through byte-for-byte, and must never introduce a rule that
+    lets a product be named. */
+ const SENT='You are a stylist. No searching block here.';
+ await pg.evaluate((t)=>_chatNoSearchReply([{role:'user',content:t},{role:'user',content:'hi'}]),SENT);
  const sys=calls.length?String(calls[calls.length-1].messages[0].content):'';
- ok('no-search rules appended anyway',sys.indexOf('cannot look up live inventory')>=0,sys.slice(0,120));
- ok('address rule still absent',sys.indexOf('AN ITEM WITHOUT ITS ADDRESS')<0);
+ ok('the retry does not rewrite her system prompt',sys===SENT,sys.slice(0,120));
+ ok('and never introduces a product-naming rule',sys.indexOf('AN ITEM WITHOUT ITS ADDRESS')<0);
+ await ctx.close();}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   8. THE FAULT CATH FOUND ON HER PHONE, 2026-09-09, PINNED SO IT CANNOT RETURN.
+   Her screenshot showed, as a stylist bubble, the literal text:
+     "<<FIND item=white top; cut=fitted; size=XS>> On it, looking for something
+      polished and fitted in white right now."
+   ▶▶ TWO INDEPENDENT BUGS THAT ONLY BITE TOGETHER, which is why it survived:
+     (a) the retry is still told to emit a marker (the instruction lives outside
+         the block the retry used to swap), and
+     (b) the retry's reply was the one route of four that never stripped it.
+   ▶ AND A THIRD SYMPTOM FROM THE SAME PLACE: the retry never parsed the marker
+     either, so it never LOOKED — which is why she saw no cards at all, and why
+     the stylist then filled the silence by inventing four dresses.
+   ⚠️ THE STRIP NOW LIVES IN addChatMsg, the one place every bot bubble passes
+     through, so a render route added later cannot leak it either. */
+console.log('\n8. the retry: marker never shown, and it actually looks');
+{const {pg,ctx,errs}=await run('markerretry');
+ await pg.waitForTimeout(3000);
+ const t=await bubbles(pg);
+ ok('no raw marker in ANY bubble',!t.some(x=>x.includes('<<FIND')),JSON.stringify(t));
+ ok('her stylist sentence survives intact',t.some(x=>x.includes('looking for something long and formal')),JSON.stringify(t));
+ ok('the retry actually ran the finder',findCalls.length===1,'findCalls='+findCalls.length);
+ ok('and searched for what she asked for',findCalls.length===1&&findCalls[0].item==='gown',JSON.stringify(findCalls[0]||{}));
+ ok('so she gets a real card, not an invented pick',
+    (await pg.locator('.find-cards .find-card, .find-cards > *').count())>0);
+ ok('no JS errors',errs.length===0,errs.join('|'));
  await ctx.close();}
 
 console.log(`\n${pass} passed, ${fail} failed`);
