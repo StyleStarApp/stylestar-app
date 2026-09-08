@@ -169,8 +169,17 @@ export default async (req) => {
         engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY1,
       }), {signal: AbortSignal.timeout(20000)});
       const d = await r.json();
+      /* ⏱ SerpApi reports its OWN processing time in search_metadata. That is the
+         number that settles whether a slow answer is theirs or ours — and it was
+         needed because advice about the paid speed add-on had already been given
+         twice on measurements that changed underneath it. Measure, then advise. */
       return json({q, count: (d.shopping_results || []).length,
-                   results: (d.shopping_results || []).slice(0, 12)}, headers);
+                   timing: {
+                     serpapi_total: (d.search_metadata || {}).total_time_taken,
+                     google_url_ok: !!(d.search_metadata || {}).google_shopping_url,
+                     status: (d.search_metadata || {}).status,
+                   },
+                   results: (d.shopping_results || []).slice(0, 3)}, headers);
     } catch (e) { return json({error: String(e).slice(0, 120)}, headers, 502); }
   }
 
