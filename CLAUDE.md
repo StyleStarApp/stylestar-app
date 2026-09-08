@@ -211,20 +211,45 @@ that makes any future number mean something.**
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-08 — HER 8TH APPROVAL WIRED, AND THE WIRING WAS TWO STEPS LONGER THAN THIS FILE SAID)
+## ▶ NEXT SESSION — START HERE (2026-09-08 — THE STYLIST CAN READ NOW. SHE IS OFF TESTING IT.)
 
-### ⭐⭐⭐ THE ONE-LINE SUMMARY
-▶▶ **RAKUTEN APPROVED COUTR AND SHE ASKED FOR IT TO GO IN — AND PUTTING IT IN PROVED THAT THIS FILE'S OWN
-INSTRUCTIONS FOR ADDING A MERCHANT WERE INCOMPLETE. It said FOUR edits. It is SIX, and the two it missed
-are the two that fail SILENTLY:** the product finder's generated allowlist and the stylist's
-`SEARCH_DOMAINS`. **A shop in her table that quietly cannot be searched, with nothing on screen looking
-any different.** Both were caught by DERIVED tests and by nothing else.
+### 🚨🚨 THE FIRST THING TO ASK HER
+▶▶ **"How did the chat feel on your phone?"** She ended this session saying: ***"I will go test the chat
+and come back in new session."*** **The stylist reading products went live an hour before she left, and
+her eye has found four real faults from four screenshots already today. WAIT FOR HER VERDICT BEFORE
+BUILDING ANYTHING ELSE ON TOP OF IT.**
 
-**⚡ THE SESSION IN NUMBERS:** COUTR wired end to end · her Edit item + Star of the Week built from it ·
-**1 new suite (`storepool`, 47 checks)** · **3 latent faults found that she never reported** — two
-missing allowlist entries and a double-word search bug live on `main` across all 41 keyword-scoped
-stores · **4 hardcoded counts replaced with derived rules** · **2 pre-existing red suites fixed**
-(`affwrap`, `affq`) · 2 stale comments corrected · 0 regressions.
+### ⭐⭐⭐ THE DAY IN ONE LINE
+▶▶ **SHE ARRIVED DISAPPOINTED WITH THE STYLIST CHAT AND SHE WAS RIGHT ABOUT EVERY SCREENSHOT — AND THE
+ROOT CAUSE WAS THAT THE FINDER JUDGED CLOTHES WITH A LIST OF EIGHT WORDS INSTEAD OF LOOKING AT THEM.**
+**It now reads them.** *"I need a fitted white top"* went from **nothing** to **four exact matches**,
+each quoting the product's own page, the cheapest at **$9.99**.
+
+**⚡ THE DAY IN NUMBERS:** COUTR wired · her Saint Laurent in the Edit and as this week's Star · the
+stacked photo card she invented · a sold-out Star retired · her full store roster applied (**122**, 21
+in, 9 out) · **the stylist now reads and judges products** · chat ~12x faster · **3 new suites**
+(`storepool` 49, `linkwatch` 24, `stylistjudge` 33) · **7 latent faults found that she never reported**
+· **5 hardcoded counts replaced with derived rules** · 3 pre-existing red suites fixed · **1 near-miss
+caught that would have silently erased her Zara scores** · 0 regressions.
+
+### 🚨 THREE TIMES TODAY CLAUDE PUT WORDS IN HER MOUTH. ALL THREE ARE CORRECTED IN THIS FILE.
+1. ***"the cap is the seatbelt"*** — Claude's phrase, quoted back to her twice as hers, and used to
+   justify a spend cap she never asked for. **Her actual position is close to the opposite.**
+2. ***"the shrug"*** — coined shorthand, used as if shared vocabulary. She asked what it meant.
+3. **THE WORST: "THE AGREED EXPERIENCE, IN HER WORDS"** — six numbered steps that are **Claude's summary
+   of a flow Claude proposed**, and were quoted back to her that same day as evidence *she* had been
+   clear. **Not one of the six carries this file's marker for her words.** ▶ **A file she cannot trust
+   as a record of her own voice is worse than no file.** An audit found 45 other places quote her
+   correctly; that one heading was the only offender, and it is fixed.
+▶▶ **THE RULE THAT CAME OUT OF IT, now beside "a rule applied to one half is not applied": WHEN HER
+WORDS ADMIT TWO BUILDS, SAY SO BEFORE BUILDING.** *"Your words could mean A or B; I am building B
+because X."* **It costs a sentence and it would have caught the eight-word list in September.**
+
+### 🚨🚨 AND THE STANDING DIRECTION SHE GAVE, WHICH OUTRANKS THE INSTINCT TO ADD MACHINERY
+***"I want the AI to be using intelligence and I would like to reduce the amount of rules and breakable
+things we put in there."*** ▶ **Test before building anything: is this a PROMISE or a JUDGEMENT?**
+Promises stay in code and the list is short. Judgements go to the stylist, who can read. **Every fault
+she found today was a judgement built as a promise.**
 
 ### ✅✅ WHAT SHIPPED
 **1. COUTR IS LIVE IN ALL SIX PLACES** — see the affiliate section for her tags, the verified search url
@@ -464,20 +489,50 @@ before. **`scratchpad/stylistjudge.js`, 33 checks, no network.**
 ▶ **A FAST MODEL IS USED FOR THE READING, AND THE VALIDATOR IS WHY THAT IS SAFE** — a careless read
 degrades to unknown rather than to a false tick.
 
-### ⏱ WHAT IS STILL SLOW, AND IT IS NOT OURS ANY MORE
-**Measured live after every fix: total 17-18s** — `search 8.9-10s` · `look-ups 2.5-6s` · reading ~3s.
-▶▶ **THE SEARCH IS NOW THE WALL, AND IT IS SERPAPI'S OWN LATENCY.** Earlier the same day their searches
-answered in **33-134ms**; they are now consistently pinning the 10s ceiling. **Nothing in our code
-accounts for that.**
-🚨 **SO SHE SHOULD CHECK WHETHER THE $75 "EXTRA FAST SPEED" ADD-ON IS ACTUALLY APPLIED** — at ~10s a
-search it is not delivering, and at $0.10 a search it is the difference between the app paying for
-itself and not (middle case, 1000 users: **+$18/month at $0.025, −$282 at $0.10**).
-▶ **WHAT IS ALREADY DONE ON OUR SIDE:** parallel + pooled calls · per-call timeouts · searches all at
-once on the paid plan · look-ups 6 → 4 in one round (her browse design: showing is nearly free, only
-checking costs).
-⚠️ **AND HER OWN 2026-09-06 DESIGN ALREADY COVERS THE WAIT** — warm reply immediately, then *"Looking
-through your shops…"* while it works. **The wait is narrated, not silent.** Still, 17s is over the 5-8s
-that design assumed; **the next speed win is upstream, not in this repo.**
+### ⏱⏱ THE SPEED QUESTION, FINALLY MEASURED PROPERLY — AND IT IS OURS AFTER ALL
+🚨 **ADVICE ABOUT THE PAID SPEED ADD-ON WAS GIVEN TWICE ON NUMBERS THAT CHANGED UNDERNEATH IT, AND SHE
+CAUGHT THAT: *"i thought you told me to cancel the extra fast speed?"*** She was right to. ▶ **THE
+LESSON: measure the THING you are advising about, not a total you can attribute however you like.**
+✅ **SO SERPAPI'S OWN PROCESSING TIME WAS MEASURED DIRECTLY** (their `search_metadata.total_time_taken`,
+now returned by the `?capture=1` probe so it can never be guessed at again):
+| query | SerpApi's own time | results |
+|---|---|---|
+| white blouse | **3.37s** | 40 |
+| black trousers | **2.70s** | 40 |
+| wool coat | **1.61s** | 40 |
+▶▶ **THEIR SERVICE IS FINE. A SEARCH TAKES THEM UNDER 3.5 SECONDS AND RETURNS 40 PRODUCTS.**
+🚨 **THE 9-10s WE MEASURED IS OURS: `buildQueries` fires up to FOUR searches per question and firing
+them together makes them queue.** One search ~3s; four at once ~10s.
+▶ **SO THE $75 ADD-ON IS NOT WHAT IS SLOW, AND CANCELLING IT PROBABLY COSTS NOTHING IN SPEED.**
+⚠️ **BUT SHE WAS TOLD, DELIBERATELY, NOT TO DECIDE YET:** the remaining slowness is ours to fix and not
+something to buy out of. **CUT THE QUERY COUNT FIRST, THEN THE $75 QUESTION ANSWERS ITSELF** — and it
+saves money too, since every query is a paid call. ▶ **THAT IS THE NEXT PIECE OF WORK.**
+**Live totals as she left: 17-18s** — search 8.9-10s (four queued) · look-ups 2.5-6s · reading ~3s.
+▶ **ALREADY DONE ON OUR SIDE:** parallel + pooled calls · per-call timeouts · searches together on the
+paid plan · look-ups 6 → 4 in one round · a straggling look-up no longer costs 12s.
+⚠️ **HER OWN 2026-09-06 DESIGN ALREADY NARRATES THE WAIT** — warm reply immediately, then *"Looking
+through your shops…"*. **The wait is not silent. It is still over the 5-8s that design assumed.**
+
+### ▶▶ WHAT IS WAITING ON HER — AND IT IS ALMOST NOTHING
+1. ⭐ **HER VERDICT ON THE CHAT.** She is testing it now. **Nothing else should be built on top until she
+   reports back.**
+2. ⏳ **THE OCT 1 CLOCK — the only thing on her whole board with a real deadline.** Do NOT pay the Your
+   Fashion Friend renewal.
+3. ▶ **THE $75 SPEED ADD-ON: DECIDE NOTHING YET.** See above. Cut the query count first.
+4. ✅ **NOT the store list — she closed it at 122 and does not want more until an affiliate approval.**
+5. ✅ **NOT store descriptions or scores — measured: the model already knows her shops.**
+
+### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER
+1. **CUT THE QUERY COUNT** (speed + money, and it settles the $75 question).
+2. **MANY CARDS, LAZY LOOK-UPS** — her explicit ask: *"the more options she can browse, the better."*
+   One search already carries ~40 products with title, store, price and photo; only the look-up costs,
+   and it is the only source of a buyable link, so an un-looked-up card must resolve its link ON TAP.
+3. **THE DELEGATED CUT** (ruled yes): when she asks *"what's in style now"* the stylist's own silhouette
+   becomes a real search requirement, and the stylist says out loud that it was her pick.
+4. **THEN SHOP YOUR STYLE**, same engine. **THEN the Wardrobe shelves — and that is what finally retires
+   the 107-item spreadsheet**, which she has been asking about and which only survives because those
+   shelves still read it.
+
 
 ### 🛠️🛠️ THE CHAT REBUILD — THE PLAN, AGREED WITH HER 2026-09-08. START HERE NEXT SESSION.
 ▶▶ **EVERY DECISION IS MADE. NOTHING BELOW NEEDS ASKING AGAIN — BUILD IT.**
