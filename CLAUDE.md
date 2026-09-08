@@ -315,6 +315,85 @@ link-rot script detects "sold out" perfectly well and is pointed at the FROZEN c
 or the Star queue. ▶▶ **A curated surface she updates is exactly the one that goes stale, and it was the
 only one unmonitored.** **She is not the stock checker; a script should be.**
 
+### 🚨🚨🚨 THE STYLIST CHAT IS NOT LANDING — HER TESTING, 2026-09-08, AND FOUR SEPARATE FAULTS
+▶▶ **HER WORDS: *"I did some testing on stylist chat and very disappointed."*** She sent four phone
+screenshots. **She was right about every one of them, and they were four DIFFERENT faults, not one.**
+
+**1. 🚨 THE ROOT CAUSE — THE FINDER ONLY KNOWS DRESS WORDS. STILL OPEN; THIS IS THE REBUILD.**
+`CUT` in `find-products.js` has **EIGHT entries**: wrap · a-line · shift · midi · maxi · mini · ankle ·
+knee-high. **Every one comes from the single "blush silk wrap dress" case it was built against.** It
+knows nothing about denim, tops or trousers. Measured against the real titles:
+| she asks for | the product's own title says | verdict |
+|---|---|---|
+| high rise | "Ultra **High Rise** 90s **Straight** Jean" | ❌ unknown |
+| straight leg | "Ultra High Rise 90s **Straight** Jean" | ❌ unknown |
+| fitted | "The **Fitted** Cotton Poplin Shirt" | ❌ unknown |
+| wrap | "Jeanne Silk **Wrap** Dress" | ✅ confirmed |
+▶▶ **AND BECAUSE UNKNOWN IS NEVER A PASS — her rule, and the right one — ANY REQUEST NAMING A CUT IT
+DOES NOT KNOW CAN NEVER PRODUCE AN EXACT MATCH.** `jeans size 26` returns 3 matches; add `straight leg`
+and it returns **ZERO**, while one of the three is literally a *90s Straight Jean*.
+⚠️ **DO NOT FIX THIS BY ADDING FIFTY MORE WORDS.** Her three tests would pass and the fifty-first would
+fail the same silent way. **A list can only know what someone typed into it.**
+⭐ **HER OWN DIAGNOSIS WAS RIGHT AND IS THE DESIGN: *"I feel like our app already knows what we are
+trying to deliver."*** It does — measured: "relaxed" appears **39** times in the app's own taxonomy,
+"fitted" **31**, "cropped" **21**, "skinny" **11**. ▶ **The app knows. The finder was never given it.**
+▶▶ **THE FRAME THAT MADE IT CLICK FOR HER, AND IT IS WORTH KEEPING: THE APP HAS TWO KINDS OF RULE.**
+**GUARANTEES** (never a shift dress · never claim a size we cannot verify · max two per shop) **must be
+code**, because a promise that depends on an AI's mood is not a promise — that is the Stitch Fix lesson
+and it does not move. **JUDGEMENTS** (*is this jean high-rise? is this top fitted?*) **need reading.**
+🚨 **I BUILT A JUDGEMENT AS IF IT WERE A GUARANTEE — a word list where eyes belonged.** That is the whole
+glitch. ▶ **THE AGREED FIX: let the stylist READ the products** (the same AI already writing her
+replies) **and require it to quote the product's own words as proof.** Code keeps the guarantees.
+
+**2. ✅ FIXED — SPEED. AND IT WAS NOT WHAT ANYONE GUESSED.** Instrumented rather than guessed a third
+time: **the SEARCH took 33–134ms; the LOOK-UPS came back at 12,001 / 12,002 / 12,002 / 12,016ms** —
+pinned to the millisecond on a shared 12s ceiling. ▶▶ **NOTHING WAS SLOW EXCEPT THE WAITING.** 2–5 of 6
+look-ups answer fast, one never answers, and `Promise.all` waits for the slowest. **Every request paid
+12 seconds for one straggler**, and past ~30s it was a 504. ✅ Calls are now **parallel with a small
+concurrency pool** (searches 2 wide, look-ups 3 wide) and look-ups get **6s** while the search keeps a
+long ceiling — losing a search loses everything; losing one look-up of six is invisible.
+⚠️ **AND A SUSPICION, NOT A FINDING: after parallelising, FRESH searches began pinning at their ceiling
+too (10,002 / 10,008 / 10,009ms), which sequential calls never did.** Most likely a **concurrent-request
+limit** on her plan — a queued call looks exactly like a slow one. **Unverified; it needs her dashboard.**
+
+**3. ✅ FIXED — A FAILED SEARCH READ AS "I LOOKED AND FOUND NOTHING."** The page returned early and
+rendered nothing so the advice would stand, **and the PREVIOUS answer's cards were still above it** —
+which is exactly what she reported as *"you just showed me the exact same thing when I asked for
+something different."* **It had shown her nothing. The old cards were simply still there.**
+▶ **This is her 2026-09-06 rule one step further out:** she rejected a silent fallback because an
+invented pick *looks identical to a real find*. **A failed search shown as silence has that same shape.**
+⚠️ **The two new sentences are CLAUDE'S and are marked in the code as placeholders for HERS.**
+
+**4. ⏳ HER RULING NEEDED — THE STYLIST WRITES A CHEQUE THE SEARCH DOES NOT CASH.** It said *"straight
+leg mid rise is the most current silhouette… let me pull some real options"* and then searched only
+`jeans + size 26`, because **colour/fabric/cut are searched ONLY if they came from her mouth**
+(`_findKeepHerWords`) — the rule that exists because the model once recommended a jewel tone and then
+searched for one as though she had asked. **The rule is right. The prose is not bound by it.**
+▶ **THE QUESTION FOR HER: when a woman asks *"find me jeans that are in style NOW"*, she is DELEGATING
+the cut. Should the stylist's own recommended silhouette then become a real search requirement?** It is
+a genuine exception to "never invent a requirement she did not give", and it is hers to rule on.
+
+### 💰🚨 SERPAPI — LIVE OPERATIONAL STATUS, AND THE MATHS THAT REFRAMES IT (2026-09-08)
+🚨🚨 **HER DASHBOARD, 2026-09-08: 216 OF 250 USED. 34 LEFT.** Her file said ~75 on 2026-09-06 — **so
+~141 went in one afternoon, and almost all of it was Claude testing against the LIVE endpoint.**
+▶▶ **THE NUMBER THAT CHANGES THE PICTURE: ONE SHOPPING QUESTION IS NOT ONE SEARCH.** It is up to
+**4 searches + 6 product look-ups = TEN calls**, and SerpApi counts every call. **So 250/month is really
+about 25–60 shopping questions a month, across all users.** The 34 left are **three to eight questions**.
+▶ **THE STANDING RULE THIS PRODUCED: BUILD AGAINST CAPTURED FIXTURES, NEVER HER LIVE ALLOWANCE.**
+`scratchpad/findprod.js` already works this way — real product data captured once, tested forever, no
+network. **That is how the rebuild gets built.**
+✅ **THE SEATBELT IS NOW BUILT** (her word, 2026-09-06): the finder asks SerpApi itself how many searches
+remain **before spending one** — the account endpoint is free, exact, and needs no setup — and stops with
+`why:'budget'` below `SERPAPI_RESERVE` (default **20**, settable in Netlify). ⚠️ **It fails OPEN on
+purpose:** refusing to shop because a diagnostic call broke would take the feature down to protect a
+budget. ▶ **With 34 left and a floor of 20 she has ~14 for her own phone testing** — lower
+`SERPAPI_RESERVE` if she wants more.
+▶ **HER QUESTION, ANSWERED: SHOULD SHE BUY MORE? NOT YET.** Those searches were spent by testing, not by
+users, and there are no users. **The honest trigger for paying is women using the app.** ⚠️ **If she ever
+does buy, two things first:** check the **reset date**, and re-read this file's own note that
+**SerpApi's legal shield does NOT cover the $25/$75 tiers** — confirm that with them before paying. The
+alternative to price against is **SearchApi** (same $25, ~10× the searches).
+
 ### ⚠️ TWO THINGS I GOT WRONG ON 2026-09-07, KEPT BECAUSE THE PATTERN REPEATS
 1. ⚠️⚠️ **AN AUTOMATED CHECK ACCUSED HER FARM RIO FIX OF BEING BROKEN, AND IT WAS WRONG.** A script
    measuring "where does the garment end" reported the dress cut off by 4.9%. **Rendering all 10 Star
