@@ -373,6 +373,35 @@ searched for one as though she had asked. **The rule is right. The prose is not 
 the cut. Should the stylist's own recommended silhouette then become a real search requirement?** It is
 a genuine exception to "never invent a requirement she did not give", and it is hers to rule on.
 
+### ⭐⭐⭐ HER DECISION, 2026-09-08: SHOW HER LOTS TO SCROLL THROUGH — BROWSING IS THE POINT
+▶▶ **HER WORDS, VERBATIM:** ***"yes yes yes the more options she can browse, the better, even if
+they're not all perfect matches, even if they are close, if she can scroll through a lot of visuals,
+that makes it more fun."***
+🚨 **THIS IS A REAL CHANGE OF SHAPE AND IT MUST NOT BE READ AS LOOSENING HER HONESTY RULE.** It does
+not contradict *"never imply a requirement is confirmed unless we can verify it"* — **it changes how
+MANY pieces she sees, not what the app CLAIMS about them.** Show many; label honestly; claim nothing
+that was not checked.
+⚠️ **AND IT IS A DELIBERATE SOFTENING OF THE 2026-09-06 "SHOW THE ONE TRUE MATCH" INSTINCT, BY HER.**
+That decision was made when the choice was *one verified dress* versus *a screen padded with things she
+did not ask for*. **She has now seen that the real alternative is a browsable wall of close pieces with
+photos, and she prefers it.** ▶ **Both of her sentences still hold: the confirmed ones lead and say so;
+the rest are there to browse and promise nothing.**
+✅✅ **AND IT IS AFFORDABLE, WHICH IS WHY IT CHANGES THE BUILD — MEASURED 2026-09-08.** One search for
+*"women's white fitted top"* returned **40 products**, and per product, with **NO look-up spent**:
+| what a card needs | available from the one search |
+|---|---|
+| title · store · price · photo | ✅ **12 of 12** |
+| **a direct, buyable, affiliate-wrappable store link** | ❌ **0 of 12** — every link points at `google.com/search` |
+▶▶ **SO SHOWING IS CHEAP AND TAPPING IS NOT.** The per-product look-up is not only how a requirement is
+verified — **it is the only way to get a link that reaches the shop and can earn.**
+⭐ **THE DESIGN THAT FALLS OUT OF THAT, AND IT IS BETTER THAN WHAT EXISTS: RENDER MANY, LOOK UP LAZILY.**
+Today the app spends **6 look-ups every time, whether she taps anything or not.** Instead: render a wide
+scrollable row from the one search, verify the top few so the confirmed set exists, and **spend a
+look-up only on the pieces she actually reaches for.**
+💰 **AND THIS IS NOT A NICETY, IT IS THE BUSINESS MODEL — at her real price of $0.025/search, middle
+case, 1000 users: 10 searches per question is −$132/month and 4 is +$18/month.** ▶ **More options for
+her AND fewer searches. The two goals point the same way, which is rare enough to write down.**
+
 ### 💰🚨 SERPAPI — LIVE OPERATIONAL STATUS, AND THE MATHS THAT REFRAMES IT (2026-09-08)
 🚨🚨 **HER DASHBOARD, 2026-09-08: 216 OF 250 USED. 34 LEFT.** Her file said ~75 on 2026-09-06 — **so
 ~141 went in one afternoon, and almost all of it was Claude testing against the LIVE endpoint.**
