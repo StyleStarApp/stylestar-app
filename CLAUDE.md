@@ -88,6 +88,18 @@ that makes any future number mean something.**
   (boxes, rentals, fast fashion) are absent by name; that every store has an https search url; and that
   every feed merchant known to sell menswear is scoped to women. **A knowingly untabled merchant now
   needs a named reason in `KNOWN_UNTABLED`, so an exception is a decision on the record, not a gap.**
+- 🚨🚨 **POINT THE LINK-ROT WATCHDOG AT HER CURATION — A REAL GAP, FOUND 2026-09-08 BECAUSE SHE FOUND
+  A SOLD-OUT STAR OF THE WEEK HERSELF.** `scripts/check-product-urls.js` already detects *"sold out / out
+  of stock"* properly — **but it only reads `products.json`, the 107-item catalog she FROZE and no longer
+  maintains.** ▶▶ **It has never looked at the Style Star Edit or the `WEEK_STARS` queue**, which are two
+  of the exact three places this file says her curation now lives, and the two that are always on screen.
+  **So the watchdog is pointed at the list that does not change and blind to the ones that do.**
+  ▶ **The fix is small and the detection logic already exists:** also read the `.dc-item` hrefs out of
+  `index.html` and the `url`s out of `WEEK_STARS`, and run it on the same schedule.
+  ⚠️ **It is worth MORE than the catalog check now:** a dead link among 107 unphotographed rows dies
+  quietly by design (an accepted cost of freezing), but a sold-out **Star of the Week is the single piece
+  the app puts in front of every woman that week** — and a sold-out **Edit** pick is one of only ~31 she
+  has personally vouched for. **The stakes are inverted from where the watching is.**
 - ▶ **DRAFT THE TWELVE RAKUTEN MERCHANT ENTRIES** with `scripts/store-draft.js`, show her the
   neighbours, she corrects. Her standing ask: *"I want to be able to get approved for more affiliates and
   be able to add them without having to go through all."*
@@ -260,6 +272,25 @@ then bump the number with a line naming the template. Never derive it away.**
    gold YSL monogram on the arm — which is the detail her note is actually about.
 3. **Hand `docs/store-scoring-brief.md` to ChatGPT** — the ~200-store list, still her desk job.
 4. **Re-run her three chat messages**, then **Shop your Style**.
+
+### 🚨 AND SHE CAUGHT A SOLD-OUT STAR OF THE WEEK, LIVE, WHICH NOTHING WAS WATCHING
+▶▶ **Her words, 2026-09-08: *"The red bag we have on as Star of the week is sold out. So let's delete it
+and add this in its place now. All others stay same order."*** ✅ **VERIFIED BEFORE ACTING rather than
+taken on trust** — marissacollections.com returns `schema.org/OutOfStock`, `"available":false` and
+"Sold out". **She was right.**
+▶ **DONE EXACTLY AS SHE ASKED: the Serpui Abigail Handbag was SWAPPED IN PLACE for the Saint Laurent**,
+so the pool stays 9 and **every other piece keeps the exact week it already had** (Vilebrequin 13 Sept,
+Crosbie 20 Sept, Fleur du Mal 27 Sept, bracelet 4 Oct). **The sunglasses are the LIVE Star now.**
+▶ **Its Edit pick was pulled too, her call when told** — the same bag was one of her Edit items, so that
+link was dead as well. **Edit: 32 → 31.**
+⚠️ **Its `WEEK_STARS` entry is deliberately KEPT and marked SOLD OUT.** It is inert (the photo order is a
+whitelist, not a sort hint), and it carries the `pxPos` crop her 2026-09-07 catch produced, which
+`starpx` still pins as its worked example. **Deleting an entry that already renders nowhere would only
+throw the lesson away.** ▶ **Do not put that name back in `WEEK_STAR_PHOTO_ORDER` without checking stock.**
+🚨🚨 **THE REAL FINDING IS THAT NOTHING WAS WATCHING — see the watchdog item in the master to-do.** The
+link-rot script detects "sold out" perfectly well and is pointed at the FROZEN catalog, not at the Edit
+or the Star queue. ▶▶ **A curated surface she updates is exactly the one that goes stale, and it was the
+only one unmonitored.** **She is not the stock checker; a script should be.**
 
 ### ⚠️ TWO THINGS I GOT WRONG ON 2026-09-07, KEPT BECAUSE THE PATTERN REPEATS
 1. ⚠️⚠️ **AN AUTOMATED CHECK ACCUSED HER FARM RIO FIX OF BEING BROKEN, AND IT WAS WRONG.** A script

@@ -86,8 +86,16 @@ const jeanTag = tag(jean);
 ok('the rendered <img> asks for it', /object-fit:contain/.test(jeanTag), jeanTag);
 
 console.log('\nPART 3 — the same photo must not differ between screens');
+// ⚠️ THE BAG WAS THE FIRST EXAMPLE HERE AND WAS REMOVED 2026-09-08: it SOLD OUT
+// while it was the live Star, so its Edit pick was pulled (her call) and its name
+// left WEEK_STAR_PHOTO_ORDER. There is no Edit copy left to cross-check, so this
+// loop would assert against a piece the app no longer shows.
+// ▶ THE RULE IS NOT WEAKER FOR IT. The jean still pins pxFit across both surfaces
+//   here, and PART 7 below pins the whole stacked pair across both — including
+//   that ONE css rule names both classes, which is stronger than either.
+// ⚠️ Its WEEK_STARS entry is deliberately still there and PART 1 still tests its
+//   crop; it is inert, not deleted, so the lesson survives the piece.
 for (const [label, re, want] of [
-  ['the bag', /12866-ABIGAIL-WK/, 'object-position:center bottom'],
   ['the jean', /2608_J26FA0156_MEMORY_LANE_FLAT/, 'object-fit:contain'],
 ]) {
   const line = src.split('\n').find(l => l.includes('dc-item-px') && re.test(l));

@@ -1400,22 +1400,6 @@
     </div>
 
     <div class="dc-item">
-      <!-- object-position matches the Star of the Week card's pxPos for this
-           exact photo -- her catch, 2026-09-07: the bag sitting too low and cut
-           off at the bottom. Same source image, same 3:4 crop math, same fix.
-           ⚠️ FIXED IN BOTH PLACES ON PURPOSE. This photo renders on the Star
-           card AND here in the Edit off the same 800x1200 file, and .wks-px and
-           .dc-item-px share the same crop, so a fix in one and not the other is
-           the same photo cut off on one screen and right on the next. -->
-      <img class="dc-item-px" style="object-position:center bottom" src="https://cdn.shopify.com/s/files/1/0333/8892/0967/files/12866-ABIGAIL-WK-_ALL-RED.jpg?v=1740967145&amp;width=800" alt="Serpui Abigail Handbag in red, wicker and leather with bamboo handles" loading="lazy" decoding="async" onerror="this.remove()">
-      <span class="dc-item-star">&#11088;</span>
-      <div class="dc-item-name">Serpui Abigail Handbag &mdash; Red</div>
-      <div class="dc-item-meta"><span class="dc-store">Marissa Collections</span><span class="dc-price">$414</span></div>
-      <div class="dc-item-note">This chic bag is wicker and leather, but it's really all about the bamboo handles! A unique take on the textured bag trend.</div>
-      <a class="dc-item-btn" href="https://marissacollections.com/products/serpui-abigail-handbag-red" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
-    </div>
-
-    <div class="dc-item">
       <img class="dc-item-px" src="https://fleurdumal.com/cdn/shop/files/sculpt_sports_bra_black.jpg?v=1775576790&amp;width=800" alt="Fleur du Mal Sculpt Molded Sports Bra" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">Fleur du Mal Sculpt Molded Sports Bra</div>
@@ -11356,6 +11340,18 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
    // photo (2026-08-25) so the two screens agree. Scheduled Sep 20.
    pxFit:'contain',
    px:'https://cdn.shopify.com/s/files/1/0333/8892/0967/files/2608_J26FA0156_MEMORY_LANE_FLAT.png?v=1786608188&width=800'},
+  // 🚨🚨 SOLD OUT AND RETIRED FROM ROTATION, 2026-09-08 — HER CATCH, while this
+  //   was the LIVE Star of the Week. Verified before acting rather than taken on
+  //   trust: marissacollections.com returns schema.org/OutOfStock,
+  //   "available":false and "Sold out". Its Edit pick was pulled the same hour
+  //   (her call), and its name is gone from WEEK_STAR_PHOTO_ORDER, which is the
+  //   whitelist — so this entry is INERT and renders nowhere.
+  // ▶ IT IS KEPT ON PURPOSE, NOT OVERLOOKED: it carries the pxPos crop her
+  //   2026-09-07 catch produced, and starpx pins that crop as its worked
+  //   example of 'keep the bottom, not the empty top'. Deleting an entry that
+  //   already renders nowhere would only throw the lesson away.
+  // ⚠️ DO NOT PUT THIS NAME BACK IN WEEK_STAR_PHOTO_ORDER unless the bag is
+  //   actually back in stock. Check the page first.
   {n:'Serpui Abigail Handbag — Red',store:'Marissa Collections',url:'https://marissacollections.com/products/serpui-abigail-handbag-red',price:'$414',
    note:'Wicker and leather, but it\'s really all about the bamboo handles! A unique take on the bag trend.',
    // ⚠️ pxPos, her catch 2026-09-07: "the bag is sitting too low and looks cut
@@ -11540,23 +11536,23 @@ var WEEK_STAR_PHOTO_ORDER=[
   'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 18, pushed back a week
   'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',      // Aug 26 (this week), unchanged
   'Gucci GG Canvas Mini Shoulder Bag',                     // Aug 30 (next week) -- her jump-the-line pick
-  'Serpui Abigail Handbag — Red',                                  // Sep 6, was Aug 30
+  // ⚠️⚠️ THE SERPUI ABIGAIL HANDBAG WAS HERE AND IS SOLD OUT — her catch,
+  //   2026-09-08, while it was the LIVE Star of the Week. Verified before acting
+  //   rather than taken on trust: marissacollections.com returns
+  //   schema.org/OutOfStock, "available":false and "Sold out" on the page.
+  //   Her instruction: "delete it and add this in its place now. All others stay
+  //   same order." ▶ SWAPPED IN PLACE, so the pool stays 9 and EVERY other
+  //   piece keeps the exact week it already had.
+  // ▶ The WEEK_STARS entry itself is deliberately LEFT IN PLACE below. It is
+  //   inert once its name is gone from here (this list is the whitelist, not a
+  //   sort hint), it carries the pxPos crop note her bag fix produced, and
+  //   starpx pins that crop as a worked example. Deleting the entry would throw
+  //   away the lesson to remove something already invisible.
+  'Saint Laurent SL M136 Sunglasses',                             // Sep 6 — LIVE NOW, replacing the sold-out bag
   'Vilebrequin Long Mesh Cover-Up Dress — Off White',              // Sep 13, was Sep 6 -- still a week ahead of her Sep 20 cutoff
   'Veronica Beard Crosbie Jean',                                   // Sep 20, was Sep 13
   'Fleur du Mal Sculpt Molded Sports Bra',                         // Sep 27, was Sep 20
-  'Isabella Celini Stackable Love Bracelet',                       // Oct 4, unchanged
-  // Saint Laurent sunglasses, added 2026-09-08 the morning COUTR approved her.
-  // ▶ APPENDED, NOT INSERTED, AND DELIBERATELY: an append is the option this
-  //   file already calls safe, because every piece already scheduled between
-  //   now and Oct 4 keeps the exact week it has. An INSERT would have pushed
-  //   Vilebrequin past the 20 Sept cutoff she set for it.
-  // ⚠️ VERIFIED AGAINST THE REAL ROTATION CODE, not arithmetic on paper --
-  //   growing the pool 9 -> 10 changes the modulo, so the two entries that wrap
-  //   around (the pendant and the DVF) do each move back one week. Nothing
-  //   between today and Oct 4 moves at all, which is what 'safe' meant here.
-  // ▶ It also breaks up the run: bracelet (jewelry) then sunglasses, not two
-  //   of the same category back to back -- her 2026-08-26 ordering note.
-  'Saint Laurent SL M136 Sunglasses'                              // Oct 11 -- see above
+  'Isabella Celini Stackable Love Bracelet'                        // Oct 4, unchanged
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can
