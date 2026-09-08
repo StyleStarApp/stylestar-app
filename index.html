@@ -1690,7 +1690,14 @@
     </div>
 
     <div class="dc-item">
-      <img class="dc-item-px" src="https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229376.jpg?width=800" alt="Saint Laurent SL M136 oval sunglasses in black with gold YSL monogram" loading="lazy" decoding="async" onerror="this.remove()">
+      <!-- ⚠️ STACKED PAIR — must match the Star card exactly. A rule applied to one
+           half is not applied, and this is the photo version of it: the same piece
+           renders on the Star card (.wks-px) and here (.dc-item-px), so a stack on
+           one and a single on the other is the cut-off bag all over again. -->
+      <div class="dc-item-px is-stack">
+        <img src="https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229377.jpg?width=800" alt="Saint Laurent SL M136 oval sunglasses in black" loading="lazy" decoding="async" onerror="this.remove()">
+        <img src="https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229376.jpg?width=800" alt="Side view showing the gold YSL monogram on the arm" loading="lazy" decoding="async" onerror="this.remove()">
+      </div>
       <span class="dc-item-star">&#11088;</span>
       <div class="dc-item-name">Saint Laurent SL M136 Sunglasses</div>
       <div class="dc-item-meta"><span class="dc-store">COUTR</span><span class="dc-price">$363</span></div>
@@ -11476,7 +11483,13 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
   //   it shows the gold YSL monogram on the arm, which is what her note is about.
   {n:'Saint Laurent SL M136 Sunglasses',store:'COUTR',url:'https://www.coutr.com/products/saint-laurent-sl-m136-sunglasses',price:'$363',
    note:'This style is mysterious and cute at the same time. YSL chic and fabulous!',
-   px:'https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229376.jpg?width=800'}
+   // ▶ STACKED, HER IDEA 2026-09-08 — see the px2 note at _wkStarPxTag. `px` is the
+   //   FRONT view (the hero, top half); `px2` is the ANGLED view (bottom half),
+   //   which is the one showing the gold YSL monogram her note is about. Rendered
+   //   both orders at the true card size and looked at before choosing.
+   px:'https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229377.jpg?width=800',
+   px2:'https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229376.jpg?width=800',
+   px2Alt:'Side view showing the gold YSL monogram on the arm'}
 ];
 /* PHOTOS-ONLY ROTATION, her call 2026-08-26: seeing the Athleta linen pant
    (no photo) live, she said "I want the star of this week to still be the
@@ -11665,6 +11678,43 @@ function _wkStarPxTag(S,cls){
   if(S.pxFit==='contain'||S.pxFit==='cover')sty+='object-fit:'+S.pxFit+';';
   if(S.pxPos)sty+='object-position:'+_esc(S.pxPos)+';';
   var posAttr=sty?' style="'+sty+'"':'';
+  // ⚠️ px2, OPTIONAL and PER ITEM: a SECOND view of the same piece, stacked above
+  // the first. Her idea, 2026-09-08, on the Saint Laurent sunglasses -- "stack the
+  // 2 photos into one so we can see the front and the side with the logo and fill
+  // up the space on the card too."
+  // ▶▶ IT SOLVES A SHAPE THAT pxPos AND pxFit CANNOT TOUCH, and that is why it is a
+  //   third mechanism rather than a fourth value on an existing one. pxPos picks
+  //   which END of a too-tall photo to keep; pxFit chooses whether to letterbox.
+  //   Both assume the garment FILLS its photo. A WIDE, SHORT OBJECT does not: the
+  //   sunglasses sit at 66%-96% of a 3:4 frame and span 3%-97% of its WIDTH, so
+  //   nothing is cut off (the source is exactly 3:4, cover crops nothing) and yet
+  //   two thirds of the card is empty. Cropping cannot rescue it either -- any
+  //   crop that enlarges them must leave 3:4, and at any other ratio the frame
+  //   clips both arms under cover or shows cream bands under contain. MEASURED,
+  //   and four versions were rendered at the true card size and looked at.
+  //   ▶ Belts, clutches and cuffs will all hit this. This is the mechanism for them.
+  // 🚨 LICENSING IS UNCHANGED, AND THAT IS THE WHOLE POINT OF DOING IT THIS WAY.
+  //   Both halves are the RETAILER'S OWN photos, hotlinked, behind the same
+  //   _affMid gate as `px` -- see the licensing note above. ⚠️ DO NOT "simplify"
+  //   this by compositing the two into one file and serving it from /stars/:
+  //   that is re-publishing their photography from our server, and `ownPx` is
+  //   reserved for HER OWN pictures, where there is nobody to ask.
+  // ⚠️ The CROP IS DONE IN CSS, not with CDN parameters, so this works for any
+  //   retailer rather than only Shopify ones. Each half is a 3:2 box showing the
+  //   bottom half of a 3:4 source -- which is exactly where a bottom-weighted
+  //   product shot puts its subject, and the only reason to stack in the first
+  //   place. pxPos / pxPos2 override the top and bottom halves respectively.
+  if(S.px2&&_affMid(S.url)&&_wlSafeUrl(S.px2)){
+    var h=function(u,pos,alt,eager){
+      var st=pos?' style="object-position:'+_esc(pos)+';"':'';
+      return '<img src="'+_esc(u)+'" alt="'+_esc(alt)+'"'+st
+        +' loading="'+(eager?'eager':'lazy')+'" decoding="async" onerror="this.remove()">';
+    };
+    return '<div class="'+cls+' is-stack">'
+      + h(src, S.pxPos, S.n, true)
+      + h(S.px2, S.pxPos2, S.px2Alt||'', false)
+      + '</div>';
+  }
   return '<img class="'+cls+'" src="'+_esc(src)+'" alt="'+_esc(S.n)+'"'+posAttr+' '
     +'loading="eager" decoding="async" onerror="this.remove()">';
 }

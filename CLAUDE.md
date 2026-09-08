@@ -768,7 +768,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **Width is a shoe rule** | `_sizeGuidance` width line | `widthFit` via `_isShoeSlot` | **sizefit 46** | ✅ **built 2026-09-07** |
 | **Never claim a save that failed** | n/a | `user-data.js` + `doStay` | **savetruth 14** | ✅ **fixed 2026-09-07** |
 | Checklist is a possibility map | copy + framing | n/a | ▶ none | ✅ copy-only rule |
-| **One photo renders the SAME on every screen** | **`pxPos`/`pxFit` on the Star card (`.wks-px`)** | **the same inline override on the Edit (`.dc-item-px`)** | **starpx 13** | ✅ **both, 2026-09-07** |
+| **One photo renders the SAME on every screen** | **`pxPos`/`pxFit`/`px2` on the Star card (`.wks-px`)** | **the same override on the Edit (`.dc-item-px`), off ONE shared css rule** | **starpx 29** | ✅ **both, `px2` added 2026-09-08** |
 | **Never claim a requirement is verified when it is not** | **the chat's cards: `judge()` + the three verdicts** | **`verifySize`/`verifyColour`/`verifyFabric`/`verifyCut`/`verifyWidth` in `find-products.js`** | **findprod 54 · chatfind 61** | ✅ **BUILT 2026-09-06, and the `n/a`s below have now expired as predicted** |
 ⚠️⚠️ **THIS ROW WAS WRITTEN BEFORE ITS CODE EXISTED, AND THAT WAS THE POINT.** Her words, 2026-09-06:
 *"we should never imply that a specific size, width, colour, material or other requirement is confirmed
@@ -795,6 +795,26 @@ correctly on 2026-08-25 and the Star card had never been told.**
 ⚠️ **SO THE ROW IS NOT ABOUT CROPPING. It is about any per-item presentation override**, and the next one
 added must be applied to every surface that renders that item, not just the one she happened to be
 looking at when she noticed.
+✅✅ **AND THE NEXT ONE ARRIVED ON 2026-09-08 AND OBEYED THAT SENTENCE ON DAY ZERO: `px2`, A STACKED
+PAIR — HER IDEA.** Her words on the Saint Laurent sunglasses: *"Is it possible to stack the 2 photos
+into one? So we can see the front of the glasses and the side with the logo and fill up the space on the
+card too?"* ▶ **It renders two views of one piece, one above the other, filling a card that a single
+wide-short photo leaves two-thirds empty.**
+▶▶ **IT IS A THIRD MECHANISM RATHER THAN A FOURTH VALUE ON AN EXISTING ONE, AND THE REASON GENERALISES:
+`pxPos` picks which END of a too-tall photo to keep, `pxFit` chooses whether to letterbox — and BOTH
+ASSUME THE GARMENT FILLS ITS PHOTO.** A wide, short object does not. The sunglasses sit at 66%–96% of a
+3:4 frame and span 3%–97% of its WIDTH, so nothing is cut off and yet the card is mostly empty, and no
+crop can fix it (any crop that enlarges them must leave 3:4, and at any other ratio the frame clips both
+arms under `cover` or shows cream bands under `contain`). **Measured, then four versions rendered at the
+true card size and looked at.** ▶ **Belts, clutches and cuffs will all hit this. `px2` is for them.**
+🚨 **THE CSS IS ONE RULE NAMING BOTH CLASSES — `.wks-px.is-stack,.dc-item-px.is-stack` — DELIBERATELY,
+and `starpx` asserts exactly that.** Giving the stack a rule per surface is precisely how the Serpui bag
+ended up right on one screen and cut off on the next. **One rule, both classes, always.**
+🚨🚨 **AND THE LICENSING DID NOT MOVE, WHICH IS WHY IT IS BUILT THIS WAY.** Both halves are the
+RETAILER'S OWN photos, **hotlinked**, behind the same `_affMid` gate as `px` — asserted by a test that an
+unapproved store renders no stack at all. ⚠️ **DO NOT "simplify" it by compositing the two into one file
+served from `/stars/`: that is re-publishing their photography from our own server, and `ownPx` is
+reserved for HER OWN pictures of pieces she owns, where there is nobody to ask.**
 
 ⚠️ **THE "never name her body/size back" ROW SAID `n/a — the feed writes no prose` AND THAT QUIETLY
 STOPPED BEING TRUE.** The feed writes no prose but it does write a NAME, and hers carried

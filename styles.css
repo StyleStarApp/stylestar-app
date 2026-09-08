@@ -1754,6 +1754,21 @@ body.menu-open .menu-panel{display:block}
   object-position:top center;margin:6px auto 4px;border:1px solid #E4D3A8;border-radius:2px;background:#F5EFE2}
 .dc-item-px{display:block;width:100%;margin:0 0 14px;aspect-ratio:3/4;object-fit:cover;
   object-position:top center;background:#F5EFE2;border:1px solid #EFE7D2;border-radius:2px}
+/* ▶ STACKED PAIR (2026-09-08, her idea): two views of ONE piece, one above the
+   other, filling a card that a single wide-short photo leaves two-thirds empty.
+   Built by _wkStarPxTag when an entry carries px2 — read the note there first.
+   ⚠️ DELIBERATELY ONE RULE COVERING BOTH SURFACES. .wks-px is the Star card and
+   .dc-item-px is the Edit, and they already share the 3:4 geometry above; giving
+   the stack its own rule per surface is exactly how the Serpui bag ended up right
+   on one screen and cut off on the other. One rule, both classes, always.
+   The element is a DIV here rather than an IMG, so the object-fit/object-position
+   on the rules above are inert on it — the halves carry their own below.
+   Each half is a 3:2 box over a 3:4 source, which shows the bottom HALF of that
+   source under cover. That is where a bottom-weighted product shot keeps its
+   subject, and it is the only reason to stack in the first place. */
+.wks-px.is-stack,.dc-item-px.is-stack{display:flex;flex-direction:column;overflow:hidden;gap:0}
+.wks-px.is-stack>img,.dc-item-px.is-stack>img{display:block;width:100%;height:50%;
+  flex:0 0 50%;min-height:0;object-fit:cover;object-position:center bottom}
 .dc-item-name{font-family:'DM Serif Display',Georgia,serif;font-size:20px;font-weight:400;color:#1a1a1a;line-height:1.28;margin:0 0 9px;padding-right:32px}
 .dc-item-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 9px;margin-bottom:13px}
 .dc-store{font:700 11px/1.3 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a8172}

@@ -96,7 +96,12 @@ for (const [label, re, want] of [
 }
 
 console.log('\nPART 4 — an unstyled item is left exactly as it was');
-const plain = stars.find(x => (x.px || x.ownPx) && !x.pxPos && !x.pxFit);
+// ⚠️ px2 EXCLUDED HERE ON PURPOSE (2026-09-08): a stacked entry renders a DIV, not
+// a bare <img>, so it is not what "an unstyled item is left exactly as it was" is
+// about. Without this the check would silently start testing the wrong thing the
+// moment a stacked piece happened to sort first — a quiet change of meaning, which
+// is the failure mode this suite exists to catch in the app.
+const plain = stars.find(x => (x.px || x.ownPx) && !x.pxPos && !x.pxFit && !x.px2);
 ok('there is still such an item to check', !!plain);
 ok('it renders with NO style attribute at all', !/style=/.test(tag(plain)), tag(plain));
 
@@ -114,6 +119,60 @@ ok('"cover" is allowed', /object-fit:cover/.test(tag(Object.assign({}, bag, {pxF
 }
 ok('both together render together',
    /object-fit:contain;object-position:center bottom/.test(tag(Object.assign({}, bag, {pxFit: 'contain'}))));
+
+console.log('\nPART 6 — the stacked pair (her idea, 2026-09-08)');
+// A wide, short object leaves a 3:4 card two-thirds empty, and neither pxPos nor
+// pxFit can touch that: pxPos picks which END of a too-tall photo to keep, pxFit
+// chooses whether to letterbox, and both assume the piece FILLS its photo.
+const glasses = find(/Saint Laurent SL M136/);
+ok('the entry carries a second view', !!(glasses && glasses.px2), glasses && glasses.px2);
+const gTag = tag(glasses);
+ok('it renders as a stack, not a lone image', /^<div class="wks-px is-stack">/.test(gTag), gTag.slice(0, 90));
+ok('both views are in it', (gTag.match(/<img /g) || []).length === 2);
+ok('the FRONT view is on top and the angled one below',
+   gTag.indexOf('1229377') < gTag.indexOf('1229376'), gTag.slice(0, 200));
+ok('the second view has its own alt, not a duplicate of the first',
+   /alt="Side view showing the gold YSL monogram on the arm"/.test(gTag));
+// 🚨 THE LICENSING GATE MUST COVER BOTH HALVES. px is gated on _affMid because an
+// approval is what licenses a retailer's photograph; a px2 that slipped past that
+// would be an unlicensed image on the same card.
+ok('px2 is gated on the affiliate approval exactly as px is',
+   !/is-stack/.test(tag(Object.assign({}, glasses, {url: 'https://www.nordstrom.com/s/1'}))),
+   tag(Object.assign({}, glasses, {url: 'https://www.nordstrom.com/s/1'})).slice(0, 80));
+ok('a javascript: second view is refused', !/is-stack/.test(
+   tag(Object.assign({}, glasses, {px2: 'javascript:alert(1)'}))));
+ok('an entry with NO px2 still renders a plain <img>', /^<img /.test(tag(bag)));
+// pxPos / pxPos2 steer the two halves independently.
+{
+  const t = tag(Object.assign({}, glasses, {pxPos: 'center top', pxPos2: 'center 40%'}));
+  ok('pxPos steers the TOP half', /1229377[^>]*object-position:center top/.test(t) ||
+     /object-position:center top[^>]*1229377/.test(t), t.slice(0, 220));
+  ok('pxPos2 steers the BOTTOM half', /object-position:center 40%/.test(t));
+}
+{
+  const t = tag(Object.assign({}, glasses, {px2Alt: 'a "quoted" view'}));
+  const m = /alt="([^"]*)"/g; let last; while (true) { const r = m.exec(t); if (!r) break; last = r[1]; }
+  ok('a quote in the second alt is escaped', last.indexOf('&quot;') >= 0 && last.indexOf('"') < 0, last);
+}
+
+console.log('\nPART 7 — and the Edit shows the SAME pair (a rule applied to one half is not applied)');
+{
+  // The Star card and the Edit render the same piece off two classes that share one
+  // 3:4 geometry. A stack on one and a single photo on the other is the Serpui bag
+  // cut off on one screen and right on the next, in a new costume.
+  const block = src.slice(src.indexOf('Saint Laurent SL M136 Sunglasses</div>') - 2200,
+                          src.indexOf('Saint Laurent SL M136 Sunglasses</div>'));
+  ok('the Edit copy is a stack too', /class="dc-item-px is-stack"/.test(block));
+  ok('...with both the same two photos', /1229377/.test(block) && /1229376/.test(block));
+  ok('...in the same order, front first', block.indexOf('1229377') < block.indexOf('1229376'));
+  const css = fs.readFileSync(path.join(ROOT, 'styles.css'), 'utf8');
+  ok('ONE css rule covers both surfaces, never one each',
+     /\.wks-px\.is-stack,\.dc-item-px\.is-stack/.test(css) &&
+     /\.wks-px\.is-stack>img,\.dc-item-px\.is-stack>img/.test(css));
+  ok('each half is a half-height cover box anchored to the bottom',
+     /\.is-stack>img[^}]*height:50%/.test(css) &&
+     /\.is-stack>img[^}]*object-position:center bottom/.test(css));
+}
 
 console.log('\n' + (failn ? '✗ ' + failn + ' FAILED, ' : '✓ ') + pass + ' checks passed');
 process.exit(failn ? 1 : 0);
