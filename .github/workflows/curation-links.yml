@@ -1,0 +1,52 @@
+# Are her live links still alive? — the curation watchdog.
+#
+# 🚨 WHY THIS EXISTS, AND IT IS WORTH READING ONCE. On 2026-09-08 Cath found the
+# Star of the Week SOLD OUT while it was live on screen — the Serpui Abigail
+# Handbag, the single piece the app puts in front of every woman that week.
+# Nothing caught it but her.
+# ▶ The link-rot script had detected "sold out" correctly for weeks. It was just
+#   pointed at products.json — the 107-item catalog she FROZE on 2026-09-05 and
+#   no longer maintains — and had never once read the Style Star Edit or the
+#   WEEK_STARS queue, which are two of the exact three places her curation lives
+#   and the two that are always on screen.
+# ⚠️ THE STAKES WERE INVERTED FROM WHERE THE WATCHING WAS, and this workflow is
+#   the correction: she should not be the stock checker.
+#
+# ⭐ SATURDAY ON PURPOSE. The Star of the Week rotates on a SUNDAY boundary
+# (whole local days since the anchor Sunday, see _renderWeekStar). Running the
+# day before means a dead piece is caught while it is still NEXT week's Star, so
+# she has a day to swap it — rather than after a woman has already seen it.
+#
+# ⚠️ The job FAILS when something is dead on the Star or the Edit, which is what
+# makes GitHub email her. A death in the frozen catalog deliberately does NOT
+# fail it: she stopped maintaining that list on purpose and a quiet death there
+# is an accepted cost of freezing, not a task.
+#
+# ⚠️ GITHUB DISABLES A SCHEDULED WORKFLOW AFTER 60 DAYS WITH NO COMMITS and
+# emails the owner. If the reports ever stop after a long break, look here first.
+name: Curation link watchdog
+
+on:
+  # 14:00 UTC Saturday — 10am New York, 7am Los Angeles.
+  schedule:
+    - cron: '0 14 * * 6'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # The parsers and the stock judgement, with no network at all. If this
+      # fails, the report itself cannot be trusted, so it runs first.
+      - name: Check the watchdog's own logic
+        run: node scratchpad/linkwatch.js
+      - name: Are her live links still alive?
+        run: node scripts/check-product-urls.js

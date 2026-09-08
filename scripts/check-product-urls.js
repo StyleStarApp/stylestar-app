@@ -23,8 +23,27 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// 🚨🚨 EXTENDED 2026-09-08, AND THE REASON IS THE WHOLE POINT: Cath found the
+// STAR OF THE WEEK sold out -- on screen, the one piece the app shows every woman
+// that week -- and nothing here caught it, because this script only ever read
+// products.json. That is the catalog she FROZE and no longer maintains. It had
+// never looked at the Style Star Edit or the WEEK_STARS queue: two of the exact
+// three places her curation lives, and the two always on screen.
+// ▶ THE WATCHDOG WAS POINTED AT THE LIST THAT DOES NOT CHANGE AND BLIND TO THE
+//   ONES THAT DO. It now reads all three, and reports the Star first.
+// Run:  node scripts/check-product-urls.js            (everything)
+//       node scripts/check-product-urls.js --only star (just this week's piece)
+import {collectAll, collectStars, collectEdit, collectCatalog, stockVerdict, SURFACE}
+  from './lib/curation-links.js';
+
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const {products} = JSON.parse(fs.readFileSync(path.join(ROOT, 'products.json'), 'utf8'));
+const onlyArg = (process.argv.find(a => a.startsWith('--only')) || '').split(/[= ]/)[1]
+             || (process.argv[process.argv.indexOf('--only') + 1] || '');
+const only = ['star', 'edit', 'catalog'].includes(onlyArg) ? onlyArg : null;
+const items = only === 'star' ? collectStars()
+            : only === 'edit' ? collectEdit()
+            : only === 'catalog' ? collectCatalog(ROOT)
+            : collectAll(ROOT);
 
 const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1';
 const OOS = /\b(sold out|out of stock|no longer available|waitlist(ed)?|discontinued|item is unavailable|currently unavailable)\b/i;
@@ -68,6 +87,21 @@ async function check(p) {
     // stores print it per size variant on perfectly healthy products. Only a
     // human eye can tell a sold-out size row from a dead product, so this
     // lands in NEEDS HER EYE, not BROKEN.
+    // 🚨 A STRUCTURED, PRODUCT-LEVEL CLAIM BY THE RETAILER IS ALLOWED TO SAY
+    // SOLD OUT ON ITS OWN. Prose still is not -- measured 2026-09-08 on two real
+    // pages, and the HEALTHY one said "sold out" twice. See stockVerdict.
+    const stock = stockVerdict(body);
+    if (stock.state === 'out') return {p, bucket: 'SOLD', why: stock.why, ms};
+    if (stock.state === 'mixed') return {p, bucket: 'EYE', why: stock.why, ms};
+    // ⚠️⚠️ AN AUTHORITATIVE *POSITIVE* MUST OUTRANK THE PROSE, AND GETTING THIS
+    // ORDER WRONG WAS CAUGHT ON THE FIRST REAL RUN. The Saint Laurent page — the
+    // live Star, confirmed in stock — was being demoted to NEEDS HER EYE by the
+    // prose regex, on a page whose own schema.org data says InStock. That is the
+    // exact noise the 2026-09-08 measurement found (the healthy page says "sold
+    // out" twice, on size rows and recommended products).
+    // ▶ A report that flags healthy pieces is a report she stops reading, which
+    //   is how the sold-out Star survived on screen in the first place.
+    if (stock.state === 'in') return {p, bucket: 'OK', why: stock.why, ms};
     if (OOS.test(body)) return {p, bucket: 'EYE', why: 'page mentions "sold out / unavailable" — may be one size variant, worth a look', ms};
     if (nameVisible)
       return {p, bucket: 'OK', why: `product name visible (${hits}/${nameWords.length} words)`, ms};
@@ -78,21 +112,53 @@ async function check(p) {
   }
 }
 
-const active = products.filter(p => p.active);
-console.log(`Checking ${active.length} active product links...\n`);
+console.log(`Checking ${items.length} live links`
+  + (only ? ` on the ${SURFACE[only].label}` : ' across the Star of the Week, the Edit and the frozen catalog')
+  + `...\n`);
+
 const results = [];
 // small batches — polite, and parallel enough to finish fast
-for (let i = 0; i < active.length; i += 5) {
-  results.push(...await Promise.all(active.slice(i, i + 5).map(check)));
+for (let i = 0; i < items.length; i += 5) {
+  results.push(...await Promise.all(items.slice(i, i + 5).map(check)));
 }
 
-const buckets = {OK: [], EYE: [], BROKEN: []};
-results.forEach(r => buckets[r.bucket].push(r));
-const line = r => `  ${r.p.id}  ${r.p.brand} — ${r.p.name}  (${r.p.retailer})\n        ${r.why}`;
-console.log(`LOOKS OK — ${buckets.OK.length}`);
-buckets.OK.forEach(r => console.log(line(r)));
-console.log(`\nNEEDS HER EYE — ${buckets.EYE.length} (bot-walled or client-rendered; only a phone browser can judge these)`);
-buckets.EYE.forEach(r => console.log(line(r)));
-console.log(`\nBROKEN — ${buckets.BROKEN.length}${buckets.BROKEN.length ? '  ⚠ fix these in the spreadsheet, then re-run the converter' : ''}`);
-buckets.BROKEN.forEach(r => console.log(line(r)));
-process.exit(buckets.BROKEN.length ? 1 : 0);
+const line = r => `  ${(r.p.id || '').padEnd(9)} ${r.p.name}${r.p.retailer ? '  (' + r.p.retailer + ')' : ''}\n              ${r.why}`;
+
+// ▶ REPORTED BY SURFACE, STAR FIRST. The old report was one flat list of 107
+//   catalog rows, which is precisely how a dead Star would have been lost in it
+//   even once it was being checked. Where a thing appears decides how loud it is.
+let exitBad = 0;
+for (const key of ['star', 'edit', 'catalog']) {
+  const mine = results.filter(r => r.p.source === key);
+  if (!mine.length) continue;
+  const S = SURFACE[key];
+  console.log(`\n${'═'.repeat(72)}\n${S.label}  — ${S.note}\n${'═'.repeat(72)}`);
+  for (const [bucket, title] of [
+    ['SOLD',   '🚨 SOLD OUT — the retailer says so in its own structured data'],
+    ['BROKEN', '🚨 BROKEN'],
+    ['EYE',    'NEEDS HER EYE — bot-walled, client-rendered, or variant-level'],
+    ['OK',     'LOOKS OK'],
+  ]) {
+    const rows = mine.filter(r => r.bucket === bucket);
+    if (!rows.length) continue;
+    console.log(`\n${title} — ${rows.length}`);
+    rows.sort((a, b) => (a.p.due ?? 99) - (b.p.due ?? 99)).forEach(r => console.log(line(r)));
+  }
+  // A dead Star or Edit pick is a real problem; the frozen catalog is a note.
+  if (key !== 'catalog') exitBad += mine.filter(r => r.bucket === 'SOLD' || r.bucket === 'BROKEN').length;
+}
+
+// ⚠️ THE ONE LINE SHE SHOULD READ FIRST.
+const live = results.find(r => r.p.source === 'star' && r.p.due === 0);
+if (live) {
+  const verdict = live.bucket === 'OK' ? '✅ looks fine'
+    : live.bucket === 'SOLD' ? '🚨 SOLD OUT — swap it today'
+    : live.bucket === 'BROKEN' ? '🚨 BROKEN — swap it today'
+    : '⚠️ needs her eye';
+  console.log(`\n${'─'.repeat(72)}\nTHIS WEEK'S STAR: ${live.p.name} — ${verdict}\n${'─'.repeat(72)}`);
+}
+
+console.log(exitBad
+  ? `\n⚠️  ${exitBad} problem(s) on a surface she maintains. Those are the ones to act on.`
+  : '\n✅ Nothing dead on the Star or the Edit.');
+process.exit(exitBad ? 1 : 0);

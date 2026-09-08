@@ -88,18 +88,41 @@ that makes any future number mean something.**
   (boxes, rentals, fast fashion) are absent by name; that every store has an https search url; and that
   every feed merchant known to sell menswear is scoped to women. **A knowingly untabled merchant now
   needs a named reason in `KNOWN_UNTABLED`, so an exception is a decision on the record, not a gap.**
-- 🚨🚨 **POINT THE LINK-ROT WATCHDOG AT HER CURATION — A REAL GAP, FOUND 2026-09-08 BECAUSE SHE FOUND
-  A SOLD-OUT STAR OF THE WEEK HERSELF.** `scripts/check-product-urls.js` already detects *"sold out / out
-  of stock"* properly — **but it only reads `products.json`, the 107-item catalog she FROZE and no longer
-  maintains.** ▶▶ **It has never looked at the Style Star Edit or the `WEEK_STARS` queue**, which are two
-  of the exact three places this file says her curation now lives, and the two that are always on screen.
-  **So the watchdog is pointed at the list that does not change and blind to the ones that do.**
-  ▶ **The fix is small and the detection logic already exists:** also read the `.dc-item` hrefs out of
-  `index.html` and the `url`s out of `WEEK_STARS`, and run it on the same schedule.
-  ⚠️ **It is worth MORE than the catalog check now:** a dead link among 107 unphotographed rows dies
-  quietly by design (an accepted cost of freezing), but a sold-out **Star of the Week is the single piece
-  the app puts in front of every woman that week** — and a sold-out **Edit** pick is one of only ~31 she
-  has personally vouched for. **The stakes are inverted from where the watching is.**
+- ✅✅ **DONE 2026-09-08 — THE WATCHDOG NOW WATCHES THE SURFACES SHE MAINTAINS.** She asked for it the
+  moment it was offered: *"yes let's do the watchdog next. great idea, thank you for suggesting it."*
+  ▶ **`scripts/check-product-urls.js` now reads all THREE surfaces**, via `scripts/lib/curation-links.js`
+  (parsers kept separate so they can be tested with no network): the **Star of the Week queue**, the
+  **Style Star Edit**, and the frozen catalog. **`scratchpad/linkwatch.js`, 24 checks.**
+  ⏰ **IT RUNS ITSELF — `.github/workflows/curation-links.yml`, SATURDAYS 14:00 UTC.** ⭐ **Saturday is
+  measured, not picked: the Star rotates on a SUNDAY boundary, so a dead piece is caught while it is
+  still NEXT week's Star** — she gets a day to swap it, instead of finding out after a woman has seen it.
+  **The job FAILS on a death in the Star or the Edit (which is what makes GitHub email her) and
+  deliberately does NOT fail on the frozen catalog**, because she stopped maintaining that list on
+  purpose and a quiet death there is an accepted cost, not a task.
+  🚨🚨 **AND THE MEASUREMENT THAT SHAPED THE JUDGEMENT, BECAUSE IT CORRECTED AN ASSUMPTION.** The
+  sold-out Serpui and the in-stock Saint Laurent were compared as real pages:
+  | page | JSON-LD OutOfStock / InStock | prose "sold out" |
+  |---|---|---|
+  | Serpui (dead) | **1 / 0** | 4 |
+  | Saint Laurent (**healthy**) | 0 / 1 | **2** |
+  ▶▶ **THE HEALTHY PAGE SAYS "SOLD OUT" TWICE** — stores print it on size rows and on recommended
+  products. **So prose is noise, and the original script's rule of sending prose to NEEDS HER EYE and
+  never to BROKEN was right and is kept.** ▶ **Only `schema.org` availability — a product-level,
+  machine-readable claim by the retailer — may condemn a piece on its own.** Both signals present means
+  variants differ, which is her eye, not ours.
+  ⚠️⚠️ **AND ONE MORE THING THE FIRST REAL RUN CAUGHT: AN AUTHORITATIVE *POSITIVE* MUST OUTRANK THE
+  PROSE.** The live Saint Laurent Star was being demoted to NEEDS HER EYE on a page whose own data says
+  `InStock`. ▶ **A report that flags healthy pieces is a report she stops reading — which is how a
+  sold-out Star survived on screen in the first place.**
+  ✅ **PROVEN AGAINST THE REAL PAGES: the Serpui reads OUT, the Saint Laurent reads IN.** It would have
+  caught what she caught.
+  ⚠️ **THE HONEST LIMIT, SAY IT PLAINLY: it can only judge what a retailer lets a script read.** On the
+  first full run **9 of 31 Edit pieces and 3 of 9 Stars were readable**; the rest are bot-walled (403,
+  or a 200 challenge) or render client-side. **That is the NEEDS HER EYE bucket working as designed, not
+  a fault** — but it means the watchdog is a safety net under her eye, never a replacement for it.
+  ▶ **FOUND ON THE FIRST RUN, both in the FROZEN catalog so neither is a task:** `p100` Universal
+  Standard Dune Linen Blend Shirtdress is **sold out**, `p016` AllSaints Frances Long Sleeve Fitted
+  Shirt is a **404**. **Nothing dead on the Star or the Edit.**
 - ▶ **DRAFT THE TWELVE RAKUTEN MERCHANT ENTRIES** with `scripts/store-draft.js`, show her the
   neighbours, she corrects. Her standing ask: *"I want to be able to get approved for more affiliates and
   be able to add them without having to go through all."*
