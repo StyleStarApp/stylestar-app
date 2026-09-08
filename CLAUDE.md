@@ -543,7 +543,26 @@ the price problem **with no new affiliate approval at all.**
 Macy's · Nordstrom Rack · Amazon · Naturalizer · Lane Bryant · Zappos · DSW. **She answered the width
 question months ago; the app just never used her answer to FIND anything.**
 
-### ▶▶ THE AGREED EXPERIENCE, IN HER WORDS AND APPROVED BY HER THIS SESSION
+### ▶▶ THE AGREED EXPERIENCE — **CLAUDE'S SUMMARY OF A FLOW SHE APPROVED. NOT HER WORDS.**
+🚨🚨 **THIS HEADING USED TO READ "IN HER WORDS" AND THAT WAS FALSE. Corrected 2026-09-08 when she read
+step 4 and said: *"this is not my voice. I did not say this."* She was right.** ▶ **Not one of the six
+steps below carries this file's own marker for her words (`***…***`), while everything genuinely hers in
+this same section does** — *"These three I can confirm in your width"*, and the rule labelled VERBATIM
+further down. **The six steps are a summary Claude wrote of a flow Claude proposed and she approved.**
+⚠️⚠️ **AND THE DAMAGE WAS REAL, NOT COSMETIC. On 2026-09-08 this section was quoted back to her as
+evidence that SHE had been clear** — *"here are your words"* — **when it was Claude quoting Claude.** ▶ A
+file she cannot trust as a record of her own voice is worse than no file: **it is the one place she
+should be able to check what she actually said.**
+▶▶ **SO BE EXACT ABOUT WHO SAID WHAT HERE. WHAT IS HERS FROM THAT SESSION (all quoted and marked
+below): the thin-result-set decision · the per-requirement widening · the width answer · and the rule
+"never imply that a specific size, width, colour, material or other requirement is confirmed unless we
+can actually verify it." WHAT IS CLAUDE'S: these six steps, and every mechanism inside them.**
+🚨 **NOTE WHAT THAT MEANS FOR THE 8-WORD `CUT` LIST: her rule says never CLAIM a requirement is verified
+unless it can be. IT SAYS NOTHING ABOUT HOW TO VERIFY.** ▶ **The mechanism was always Claude's choice —
+so getting it wrong was Claude's error alone, and flagging the fork was Claude's job alone.** The
+earlier account ("her step 4 was clear and it was misread") was itself wrong: **step 4 was never hers.**
+▶ **APPROVAL IS REAL AND STILL STANDS — she agreed to this flow. It is the AUTHORSHIP that was
+misstated.** Keep the steps; keep the approval; never call them her words again.
 1. The AI reads her sentence into a checklist (item · colour · material · size · width). **It invents nothing.**
 2. **The service FINDS** real products. ← the only new piece
 3. **Her 108-store allowlist throws away everything else** — and it already excludes fast fashion,
