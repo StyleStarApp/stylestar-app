@@ -1027,10 +1027,26 @@ her? is it worth showing? **These go to the stylist, who can read.**
 ⚠️ **EVERY FAULT SHE FOUND ON 2026-09-08 WAS A JUDGEMENT BUILT AS A PROMISE.** The 8-word `CUT` list is
 the clearest: a question needing eyes, answered by a lookup table.
 ▶ **AND THE SAME TEST RETIRES WORK SHE WAS ABOUT TO DO.** Her ~200 new stores were going to need ten
-hand-scored numbers each. **They do not.** A shop needs a NAME + SEARCH URL to be findable, and ONE
-SENTENCE (price tier · what it is good for · sizes) to be talked about well. ▶▶ **A sentence is
-something a stylist can reason with; `[5,7,7,3,10,6,7,9,7,8]` is not.** **The ten numbers stay only
-because the Wardrobe shelves still use them — keep the existing ones, do not ask her for new ones.**
+hand-scored numbers each. **They do not.** ▶▶ **A shop needs a NAME to be findable. THAT IS ALL SHE
+OWES.**
+🚨🚨 **SHE PUSHED ONE STEP FURTHER AND SHE WAS RIGHT AGAIN — MEASURED 2026-09-08, NOT ASSUMED.** Told she
+should supply one describing sentence per shop, she asked: ***"why do I need to provide that? I would
+think the AI would know all of these answers already."*** **It does.** Asked cold, with an instruction
+to say NOT SURE rather than guess:
+| shop | the stylist, with nothing supplied |
+|---|---|
+| Kohl's | *budget-friendly · everyday basics and activewear · carries plus and petite* ✅ |
+| Tuckernuck | *mid-to-higher · classic preppy American style · limited plus, some petite* ✅ |
+| Baby Gold | *mid-range · delicate minimalist gold jewelry* ✅ |
+| Sexy Little Robe | **NOT SURE** |
+| Jackie Mack Designs | **NOT SURE** |
+▶▶ **SO THE ONLY THING THAT IS GENUINELY HERS IS *WHICH* SHOPS — the curation and the quality bar.**
+What a shop IS, the model already knows; and where it does not, **it says so rather than inventing**,
+which is the same honesty the whole app is built on. **The gaps come back as a short list of tiny
+independent labels, and only those need her.**
+⚠️ **DO NOT ASK HER FOR PRICE TIERS, ARCHETYPES, SIZE TAGS OR SCORES ON NEW STORES. ASK FOR NAMES.**
+▶ **Her existing 108 tags STAY — they are real stylist knowledge, they are hers, and the Wardrobe
+shelves still read the numbers. Keep them; just never ask for more.**
 🚨 **SO WHEN A FUTURE SESSION WANTS TO ADD A TABLE, A LIST, A SCORE OR A KEYWORD RULE, THE QUESTION IS:
 would a good stylist need this written down, or would she just look?** If she would just look, **let
 her look.**
