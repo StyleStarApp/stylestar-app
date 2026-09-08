@@ -160,7 +160,16 @@ ok("an empty name changes nothing", _k is True)
 print()
 print("PART 6 — the build set")
 ok("Etsy is NOT in the first build (5GB outlier)", "54027" not in BUILD_MIDS)
-ok("the other seven are", len(BUILD_MIDS) == 7 and all(m in MID_TO_STORE for m in BUILD_MIDS))
+# ⚠️ THIS USED TO ASSERT `len(BUILD_MIDS) == 7`, WHICH MEANT EVERY NEW APPROVAL
+# BROKE A GREEN SUITE AND TAUGHT WHOEVER SAW IT TO BUMP A NUMBER. The real rule
+# is not "there are seven" -- it is "we ingest every merchant we know except the
+# 5GB outlier". That is self-maintaining AND stronger: it now catches a merchant
+# silently DROPPED from the build, which the count check never could.
+ok("every known merchant except Etsy is built",
+   set(BUILD_MIDS) == set(MID_TO_STORE) - {"54027"})
+ok("no duplicates in the build set", len(BUILD_MIDS) == len(set(BUILD_MIDS)))
+ok("COUTR is in the build (approved 2026-09-08, her 8th)", "54152" in BUILD_MIDS)
+ok("COUTR maps to its exact STORES key", MID_TO_STORE.get("54152") == "COUTR")
 
 print()
 print(f"{P[0]-len(F)} passed, {len(F)} failed")

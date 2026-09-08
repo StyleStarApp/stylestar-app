@@ -4047,6 +4047,31 @@ const STORES={
      exactly, not guessed; `u` is the safe fallback `getStoreUrl` never
      actually reaches once `tpl` exists. */
   'Mytheresa':{u:'https://www.mytheresa.com/us/en/women/',tpl:'https://www.mytheresa.com/us/en/women/search/{q}?source=search&term={q}',t:'$$$$',a:'Luxury Fashion, Universal',s:[],d:[9,5,10,9,9,2,10,9,9,9],c:'designer fashion across every style, bags, shoes and jewelry, very polished, very pricey'},
+  /* COUTR, added 2026-09-08 the morning Rakuten approved her (mid 54152).
+     ▶ IT IS A MARKETPLACE, AND IT WAS CHECKED RATHER THAN ASSUMED. Her scoring
+     brief excludes resale and marketplaces, so this one had to clear that bar
+     before it could go in: COUTR's own page says "Every item on COUTR is brand
+     new and 100% authentic, sourced directly from trusted vendors" -- new stock
+     from designer boutiques, the Farfetch model, not resale. A woman can buy and
+     KEEP a specific item, which is the actual rule. Her three standing
+     exclusions are boxes, rentals and fast fashion; it is none of them.
+     ✅ THE SEARCH URL IS GENUINELY VERIFIED FROM HERE, WHICH IS RARE. It is a
+     Shopify site: /search?q=silk%20blouse returns 35 products and a gibberish
+     term returns ZERO. That control is exactly what Olivela and Mytheresa both
+     FAIL (they answer nonsense with the same page as a real search), which is
+     why those two are still marked unverified. This one needed no address bar.
+     ⚠️ w:1 IS LOAD-BEARING AND IT WAS MEASURED, NOT GUESSED. COUTR sells
+     menswear, kidswear and fragrance alongside women's. A plain search for
+     "sweater" returned 36 products of which 10 were men's (Balenciaga men's
+     cardigan, Boss crewneck for men, Drumohr men's cashmere...); "womens
+     sweater" returned 36 with ZERO men's. Same fault she caught live in her
+     Banana Republic results on 2026-08-08, same fix, and the feed half is
+     guarded separately by keep_row()'s gender column + name check.
+     ▶ HER TAGS, HERS: she named Mytheresa, Olivela and Marissa Collections as
+     the neighbours, store-draft.js took their median, and she corrected
+     relaxed 5 -> 4 herself. Sizes XXS-XXL with no petite, tall or plus, which
+     is s:[] -- that field tags only the specialty ranges. */
+  'COUTR':{u:'https://www.coutr.com/search?q=',t:'$$$$',w:1,a:'Luxury Fashion, Universal',s:[],d:[4,6,10,8,8,3,10,8,9,9],c:'designer swimwear, jewelry, bags, sunglasses and shoes, high quality designer pieces'},
   'Sachin & Babi':{u:'https://www.sachinandbabi.com/search?q=',t:'$$$$',a:'Glamorous Luxe, Classic Sophisticate',s:['plus'],d:[6,5,10,8,5,1,10,8,9,8],c:'evening gowns, mother of the bride, wedding guest, occasion',deep:'evening and occasion dresses'},
   'Alice + Olivia':{u:'https://www.aliceandolivia.com/search?q=',t:'$$$-$$$$',a:'Glamorous Luxe, Modern Glam',s:[],d:[2,9,9,6,10,3,10,10,5,10],c:'statement dresses, occasionwear'},
   // Diane von Furstenberg, added 2026-08-21 after Rakuten approved her.
@@ -4134,8 +4159,25 @@ var _CF_PATH_COLORS={pink:'Pink',black:'Black',white:'White',red:'Red',blue:'Blu
 // ⚠️ Deliberately NARROW: it only stands down for the size words _sizeGuidance
 // is allowed to emit. Every other search keeps its scoping exactly as before,
 // so the 2026-08-08 men's-suit-pants bug that w: exists to fix stays fixed.
+// ⚠️⚠️ THIS FUNCTION'S NAME WAS TRUE OF ITS INTENT AND FALSE OF ITS CODE UNTIL
+// 2026-09-08, and the gap was a silent bug across all 41 keyword-scoped stores.
+// It is the guard on `if(s.w&&!_alreadyWomens(raw))raw='womens '+raw`, so it has
+// to answer "would prepending 'womens' here be wrong?" — and there are TWO ways
+// it can be wrong, not one:
+//   (a) the term already starts with a SIZE word. "womens petite trousers"
+//       searches worse than "petite trousers". This half was always here.
+//   (b) THE TERM ALREADY SAYS WOMEN'S. This half was MISSING, so
+//       getStoreUrl('Nordstrom', "women's silk blouse") built
+//       keyword=womens%20women's%20silk%20blouse — the word twice.
+// ▶ LATENT, NOT OBSERVED, WHICH IS THE POINT: nothing in the app seeds a term
+//   beginning with "women", but nothing forbids the model from writing one
+//   either, and the wishlist STORES TERMS and rebuilds urls on every render — so
+//   one such term would have doubled forever, on every screen, for that woman.
+//   Same family as the _rankedStores crash: a hole nothing was watching.
+// ⚠️ It does NOT change any correct path. A term without a leading women/size
+//   word is prefixed exactly as before; only the already-doubled case moves.
 function _alreadyWomens(term){
-  return /^\s*(?:plus[\s-]?size|plus|petite|tall|(?:extra[\s-]?)?(?:wide|narrow|medium)[\s-]?width)\b/i.test(String(term||''));
+  return /^\s*(?:wom[ae]n'?s?(?:wear)?|ladies|plus[\s-]?size|plus|petite|tall|(?:extra[\s-]?)?(?:wide|narrow|medium)[\s-]?width)\b/i.test(String(term||''));
 }
 // ── RAKUTEN AFFILIATE WRAPPING (2026-08-21) ────────────────────────────────
 // Her first two advertiser approvals: FARM Rio (mid 44912) and Diane von
@@ -4158,6 +4200,11 @@ function _alreadyWomens(term){
 // happens by design when an Edit href is rewritten and then saved.
 var _AFF_ID='jZNkkinrr1k';
 var _AFF_MID={'farmrio.com':'44912','dvf.com':'53590','vilebrequin.com':'43322',
+  // COUTR approved 2026-09-08 (mid 54152). Unlike Olivela below, this one is
+  // live on day one: it has a STORES entry with a VERIFIED search url, so its
+  // links wrap immediately, and the photo gate in _wkStarPxTag (px is honoured
+  // only when _affMid(url) resolves) opens for it the moment this line exists.
+  'coutr.com':'54152',
   // Olivela approved 2026-08-24 (mid 50334). ⚠️ INERT UNTIL A LINK EXISTS:
   // olivela.com appears nowhere in STORES, the Edit or the Star queue yet, so
   // nothing is wrapped today. It is recorded here so the moment she adds one

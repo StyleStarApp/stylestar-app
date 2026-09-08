@@ -80,8 +80,14 @@ that makes any future number mean something.**
   isolated context, NEVER by loosening the assertion:** it guards the never-wear list, which exists
   because of a box of shift dresses, and a test that cries wolf on THAT rule teaches the next session to
   wave it through.
-- ▶ **A REAL TEST FOR "store-pool eligibility"** — the one ▶-marked ledger row worth it. **It becomes
-  load-bearing the moment an eighth merchant is wired in.**
+- ✅✅ **DONE 2026-09-08 — "STORE-POOL ELIGIBILITY" NOW HAS A REAL TEST: `scratchpad/storepool.js`, 47
+  checks.** ▶▶ **AND THE PREDICTION THIS LINE CARRIED CAME TRUE ON SCHEDULE.** It said the row *"becomes
+  load-bearing the moment an eighth merchant is wired in"* — **COUTR was approved that morning and is
+  the eighth.** The suite asserts every ingested merchant resolves to a real `STORES` key, carries her
+  ten dimensions in range, has a price tier and archetype; that her three business-model exclusions
+  (boxes, rentals, fast fashion) are absent by name; that every store has an https search url; and that
+  every feed merchant known to sell menswear is scoped to women. **A knowingly untabled merchant now
+  needs a named reason in `KNOWN_UNTABLED`, so an exception is a decision on the record, not a gap.**
 - ▶ **DRAFT THE TWELVE RAKUTEN MERCHANT ENTRIES** with `scripts/store-draft.js`, show her the
   neighbours, she corrects. Her standing ask: *"I want to be able to get approved for more affiliates and
   be able to add them without having to go through all."*
@@ -148,51 +154,68 @@ that makes any future number mean something.**
 
 ---
 
-## ▶ NEXT SESSION — START HERE (2026-09-07 — A LATENT CRASH CLOSED, AND HER TWO PHOTOS FIXED)
+## ▶ NEXT SESSION — START HERE (2026-09-08 — HER 8TH APPROVAL WIRED, AND THE WIRING WAS TWO STEPS LONGER THAN THIS FILE SAID)
 
 ### ⭐⭐⭐ THE ONE-LINE SUMMARY
-▶▶ **THE 200-STORE JOB GOT SMALLER, BECAUSE THE QUESTION THIS FILE CARRIED AS *UNVERIFIED* WAS FINALLY
-MEASURED — AND MEASURING IT TURNED UP A CRASH THAT WOULD HAVE TAKEN THE WHOLE APP DOWN THE FIRST TIME
-SHE ADDED A STORE.** ✅ **All three changes are MERGED TO `main` AND LIVE on stylestar.app**, verified by
-fetching the live page and finding the markers, not by assuming the deploy worked.
-▶ **And she caught a photo fault on her phone, as she does, and it turned out to be TWO faults.**
+▶▶ **RAKUTEN APPROVED COUTR AND SHE ASKED FOR IT TO GO IN — AND PUTTING IT IN PROVED THAT THIS FILE'S OWN
+INSTRUCTIONS FOR ADDING A MERCHANT WERE INCOMPLETE. It said FOUR edits. It is SIX, and the two it missed
+are the two that fail SILENTLY:** the product finder's generated allowlist and the stylist's
+`SEARCH_DOMAINS`. **A shop in her table that quietly cannot be searched, with nothing on screen looking
+any different.** Both were caught by DERIVED tests and by nothing else.
 
-**⚡ THE SESSION IN NUMBERS:** 3 commits · 31 new checks (untagged 18 · starpx 13) · **2 real bugs found
-that she had not reported** (the store crash, and a fragile test I wrote myself) · 10 Star photos
-rendered and eyeballed · 1 false alarm caught before it reached her.
+**⚡ THE SESSION IN NUMBERS:** COUTR wired end to end · **1 new suite (`storepool`, 47 checks)** ·
+**3 latent faults found that she never reported** — two missing allowlist entries and a double-word
+search bug live on `main` across all 41 keyword-scoped stores · **4 hardcoded counts replaced with
+derived rules** · 1 pre-existing red test fixed · 0 regressions.
 
-**▶▶ THE THREE THINGS WAITING ON HER, UNCHANGED AND STILL IN THIS ORDER:**
-1. **Hand `docs/store-scoring-brief.md` to ChatGPT** — ⚠️ **STILL NOT DONE.** Her words, 2026-09-07:
-   *"I want to give that very careful attention. I have not yet looked at the stores or given anything
-   to chat. I need to be back at my desk to do that."* ▶ **So ASK, do not re-explain, and do not
-   redesign the brief.** It is a desk job and she knows it is there.
-2. **Re-run her three chat messages** against the current build (the Napa one especially).
-3. **Then Shop your Style**, which she called *"an enormous difference."*
+### ✅✅ WHAT SHIPPED
+**1. COUTR IS LIVE IN ALL SIX PLACES** — see the affiliate section for her tags, the verified search url
+and the measured menswear leak. Her scores, her correction (`relaxed` 5 → 4), her neighbours.
+**2. `scratchpad/storepool.js`, 47 CHECKS — THE LEDGER ROW THAT HAD NO TEST.** The row predicted it
+*"becomes load-bearing the moment an eighth merchant is wired in"*, and COUTR is the eighth. **The
+prediction came true on schedule, which is the best argument this file has ever made for writing
+predictions down.**
+**3. A DOUBLE-WORD SEARCH BUG, PRE-EXISTING ON `main`, FIXED.** `_alreadyWomens` guards the "womens "
+prepend, but it only ever tested for a leading SIZE word — so a term that already said women's got the
+word twice: `getStoreUrl('Nordstrom', "women's silk blouse")` built
+`keyword=womens%20women's%20silk%20blouse`. ⚠️ **LATENT, NOT OBSERVED, AND THAT IS THE POINT: nothing
+seeds such a term, but nothing forbids the model writing one, and the wishlist STORES TERMS and rebuilds
+urls on every render — so one would have doubled forever, on every screen, for that woman.** Pinned by 8
+checks in `searchtune`. **The function's name had been true of its intent and false of its code.**
 
-### ✅✅ WHAT SHIPPED, 2026-09-07
-**1. A STORE CAN NOW BE ADDED WITHOUT HER TEN SCORES.** See the measured answer below — it is the
-section that starts *"ANSWERED AND BUILT"*. `scratchpad/untagged.js`, 18 checks.
-**2. HER STAR OF THE WEEK BAG IS NO LONGER CUT OFF.** Her words: *"the bag is sitting too low and looks
-cut off at the bottom."* ⚠️ **AND SHE WAS RIGHT FOR A REASON THAT MEASURES:** the photo is 800x1200 with
-**19.2% of empty headroom above the bag and almost nothing below it**, the card frame is 3:4 and can only
-show **88.9% of the height**, and the shared default `object-position:top center` spent that whole window
-on the emptiness — **cutting 10.6% off the bottom of the bag.** Fixed with a per-item `pxPos:'center
-bottom'`.
-**3. THE CROSBIE JEAN IS A SECOND KIND OF FAULT AND NEEDED A NEW MECHANISM.** ▶▶ **`pxPos` only chooses
-WHICH END of a too-tall photo to keep. The jean's flat-lay is NARROWER than the frame and the jean fills
-it edge to edge, so `cover` must trim something wherever it is anchored** — every position merely picks
-which end of the jean to lose. **Only `object-fit:contain` shows all of it**, which is what the Edit had
-already been doing since 2026-08-25. So `_wkStarPxTag` gained an optional **`pxFit`**, whitelisted to
-`contain`/`cover`. **The jean was scheduled for Sep 20, so this landed before she would have seen it.**
+### 🚨🚨 THE LESSON OF THE DAY, AND IT IS A NEW ONE: **A COUNT OF HER STORES IS NOT AN INVARIANT.**
+▶▶ **FOUR separate tests broke the moment she was approved for a shop** — `rakuten_feed`'s *"the other
+seven are"*, `searchtune`'s *"40 keyword-scoped + 7 param-scoped"*, `findprod`'s *"108 stores come out of
+index.html"*, and `affwrap`'s Vilebrequin example. **None of them found a bug. All of them failed because
+something good happened.**
+⚠️⚠️ **A TEST THAT FAILS ON SUCCESS TEACHES THE NEXT SESSION TO BUMP A NUMBER WITHOUT READING IT** — and
+`searchtune`'s own comment already records that number being bumped three times and once sitting red for
+weeks, under the note *"a permanently-red suite is how a false green happens."* **The file diagnosed the
+disease and kept the symptom.**
+▶ **ALL FOUR ARE NOW DERIVED, and each got STRONGER in the rewrite, not weaker:**
+· *"every known merchant except Etsy is built"* — now catches a merchant silently **dropped**, which a
+count never could · *"every store known to sell menswear is scoped to women"* — now **names the store**
+that broke instead of a total · *"the generated allowlist is in sync with her table"* — **this is the
+check that caught the real bug today** · *"an advertiser with NO store entry still earns"*, proven with a
+**synthetic** domain, because every real advertiser now has a table entry and the old check had gone
+quietly inert.
+🚨 **THE GENERAL RULE TO KEEP: WHEN A TEST BREAKS, ASK WHETHER THE APP GOT WORSE OR MERELY BIGGER. If it
+merely got bigger, the assertion was measuring the wrong thing — rewrite it to name the rule, never to
+bump the number.**
 
-🚨🚨 **THE RULE BOTH PHOTO FIXES OBEY, AND IT IS THE RULE LEDGER'S OWN THESIS IN PIXELS: THE SAME PHOTO
-MUST NOT RENDER TWO DIFFERENT WAYS ON TWO SCREENS.** Each of these photos appears BOTH on the Star card
-(`.wks-px`) and in the Edit (`.dc-item-px`), and those classes share the same 3:4 top-anchored crop.
-▶ **Fixing one and not the other is the same bag cut off on one screen and right on the next** — which
-is exactly *"a rule applied to one half is not applied"*, arriving through a photo instead of a picker.
-**Both were fixed in both places, and `starpx` asserts the Edit copies too.**
+### ▶ WHAT IS WAITING ON HER, AND IT IS SHORT
+1. ⏳ **THE OCT 1 CLOCK — the only genuinely time-sensitive thing on the whole board.** Do NOT pay the
+   Your Fashion Friend renewal; close the county receipt by email or mail. See its own section.
+2. ▶ **THE COUTR EDIT ITEM / STAR OF THE WEEK — SHE ASKED FOR IT THIS SESSION AND IT IS NOT BUILT YET.**
+   She confirmed it is the **same piece** in both places. **Still needed from her: the product name, the
+   exact url, the REGULAR price (never the sale price) and her note in her own voice.** ⭐ **The photo
+   gate is already open** — `_wkStarPxTag` honours `px` only when `_affMid(url)` resolves, and
+   `coutr.com` is now in `_AFF_MID`, so a COUTR pick can carry a real photograph on day one.
+   ⚠️ **Measure the crop against the 3:4 frame before it ships** — that is what the bag and the jean cost.
+3. **Hand `docs/store-scoring-brief.md` to ChatGPT** — the ~200-store list, still her desk job.
+4. **Re-run her three chat messages**, then **Shop your Style**.
 
-### ⚠️ TWO THINGS I GOT WRONG THIS SESSION, WRITTEN DOWN BECAUSE THE PATTERN REPEATS
+### ⚠️ TWO THINGS I GOT WRONG ON 2026-09-07, KEPT BECAUSE THE PATTERN REPEATS
 1. ⚠️⚠️ **AN AUTOMATED CHECK ACCUSED HER FARM RIO FIX OF BEING BROKEN, AND IT WAS WRONG.** A script
    measuring "where does the garment end" reported the dress cut off by 4.9%. **Rendering all 10 Star
    photos and LOOKING at them disproved it: her `center 60%` is correct and the sandals are in frame.**
@@ -643,8 +666,24 @@ product cards (no error, just advice).**
    `node scripts/store-draft.js --list`, then `node scripts/store-draft.js "New Store" --like "A,B,C"`.
    ⚠️ **It DRAFTS, it never writes.** ▶ **THE STANDING PROPOSAL, her words 2026-09-07:** *"I want to be
    able to get approved for more affiliates and be able to add them without having to go through all."*
-   **Adding a Rakuten merchant is FOUR edits and three are mechanical**; only the `STORES` entry needs
-   her. **Draft all twelve from stores she already scored, show the neighbours, she corrects.**
+   🚨🚨 **CORRECTED 2026-09-08 BY DOING IT: ADDING A RAKUTEN MERCHANT IS *SIX* EDITS, NOT FOUR.** This
+   file said four for weeks and it was wrong — **and the two it missed are the two that fail SILENTLY**,
+   which is why nobody noticed. The full list, in the order they were found wiring COUTR:
+   **(1)** the `STORES` entry, `index.html` — **the only one that needs her** ·
+   **(2)** `_AFF_MID`, `index.html` — the domain → MID map, or nothing earns ·
+   **(3)** `MID_TO_STORE`, `scripts/rakuten_feed.py` ·
+   **(4)** `BUILD_MIDS`, same file, or the nightly feed never ingests it ·
+   **(5)** ⚠️ **`netlify/functions/lib/store-domains.js` — GENERATED, run `node
+   scripts/build-store-domains.js`.** This is the **product finder's** allowlist. Miss it and the finder
+   simply cannot see inside the shop she was just approved for ·
+   **(6)** ⚠️ **`SEARCH_DOMAINS` in `netlify/functions/style-ai.js`** — the **stylist's** allowlist.
+   Miss it and the chat cannot search it either.
+   ▶▶ **BOTH MISSES WERE CAUGHT BY DERIVED TESTS AND BY NOTHING ELSE** (`searchtune`'s "every store in
+   the table also reaches SEARCH_DOMAINS", and `findprod`'s generated-file sync check). **On screen
+   everything would have looked perfectly normal — a shop in her table that quietly could not be
+   searched.** That is the same shape as every bug in this file.
+   ▶ **`node scripts/build-store-domains.js --check` fails if (5) is stale. Run it.**
+   **Draft all twelve from stores she already scored, show the neighbours, she corrects.**
    ⚠️ **This does NOT break "never invent a store's tags" — the Garnet Hill lesson was about inventing
    SILENTLY. A draft she approves is not an invention.**
 6. ✅ **VILEBREQUIN STAYS — HER DECISION, 2026-09-08.** Her words: ***"I think it is fine to keep
@@ -686,11 +725,11 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **Store variety per surface** | `_shopRules` from `_STORE_CAP` | `_storeCap(mode)` | **storecap 15** | ✅ **fixed 2026-09-07** |
 | Price spread | prompt line (`index.html:5015`) | band logic + feed ceiling | curated | ✅ both |
 | Luxury via her retailers | `sendChat` prompt | n/a — feed links ARE her affiliates | ▶ none | ✅ verified by reading |
-| Store-pool eligibility | `STORES` table only | **all 7 feed stores resolve, all have her dimensions** | ▶ none | ✅ measured 2026-09-07 |
+| **Store-pool eligibility** | `STORES` table only | **all 8 feed stores resolve, all have her dimensions** | **storepool 47** | ✅ **TESTED 2026-09-08 — the prediction came true on schedule** |
 | **Never invent a store's tags** | **an unscored store is NAMED, never described** | Gate 2 uses her own tables | **untagged 18** | ✅ **both, tested 2026-09-07** |
 | Never name her body/size back | prompts, `_sizeWordsOut` | **`_feedName()` strips a trailing size clause** | **feedname** | ✅ **both, 2026-09-08** |
 | Never ask her age | app-wide, no age question | n/a | ▶ none | ✅ |
-| **Womenswear only** | store list + prompts; `getStoreUrl` women's scoping (`w`/`gp`) | `keep_row()` gender column **+ NAME** | **rakuten_feed 52** | ✅ **fixed 2026-09-08** |
+| **Womenswear only** | store list + prompts; `getStoreUrl` women's scoping (`w`/`gp`) | `keep_row()` gender column **+ NAME** | **rakuten_feed 55 · searchtune 79 · storepool 47** | ✅ **both halves tested 2026-09-08** |
 | **Width is a shoe rule** | `_sizeGuidance` width line | `widthFit` via `_isShoeSlot` | **sizefit 46** | ✅ **built 2026-09-07** |
 | **Never claim a save that failed** | n/a | `user-data.js` + `doStay` | **savetruth 14** | ✅ **fixed 2026-09-07** |
 | Checklist is a possibility map | copy + framing | n/a | ▶ none | ✅ copy-only rule |
@@ -1569,10 +1608,32 @@ that makes any future number mean something.** ⚠️ **It is also the whole arg
 works, the feed works, the finder works — and $27 is what no users looks like.** **Not a failure, a
 measurement.** ▶ **And the expenses are the tax-relevant half this year — see the accountant item.**
 
-**✅ RAKUTEN — publisher APPROVED, SID 4740535.** This is the whole live feed today, 7 stores:
+**✅ RAKUTEN — publisher APPROVED, SID 4740535.** This is the whole live feed today, **8 stores**:
 **Mytheresa · FARM Rio (MID 44912) · Diane von Furstenberg (53590) · Vilebrequin (43322) · Olivela ·
-Marissa Collections · Fleur du Mal.** ⚠️ **Every one is `$$$`/`$$$$` — that is the affordability problem
-at its source, and no amount of code fixes it.**
+Marissa Collections · Fleur du Mal · COUTR (54152).** ⚠️ **Every one is `$$$`/`$$$$` — that is the
+affordability problem at its source, and no amount of code fixes it.**
+⭐ **COUTR — APPROVED 2026-09-08, HER 8TH MERCHANT, WIRED THE SAME MORNING.** A designer marketplace
+(Balenciaga, Bottega, Burberry, Celine, Fendi, Ganni, Golden Goose, Jacquemus, Prada, Saint Laurent).
+Women's prices measured on their own pages: **$30 to $2,719, median $479.**
+▶ **THREE THINGS ABOUT IT WORTH KEEPING:**
+**(a) IT IS NOT RESALE, AND THAT WAS CHECKED RATHER THAN ASSUMED.** The word "marketplace" would have
+disqualified it under her scoring brief, so it was verified first: their own page says *"Every item on
+COUTR is brand new and 100% authentic, sourced directly from trusted vendors"* — new stock from designer
+boutiques, one checkout. It passes her real rule (browse and **BUY AND KEEP** a specific item), and it is
+none of her three exclusions. **Pinned by a test so nobody "tidies" it onto the resale list on the
+strength of the word.**
+**(b) ITS SEARCH URL IS GENUINELY VERIFIED FROM THE SANDBOX, WHICH ALMOST NEVER HAPPENS.**
+`https://www.coutr.com/search?q=` returns 35 products for *silk blouse* and **ZERO for a gibberish
+term** — the control that **Olivela and Mytheresa both FAIL**, which is why those two are still marked
+unverified. **She was not asked for her address bar on this one.**
+**(c) IT SELLS MENSWEAR, KIDSWEAR AND FRAGRANCE, so it carries `w:1`, and that was MEASURED:** a plain
+search for *sweater* returned 36 products of which **10 were men's**; *womens sweater* returned 36 with
+**ZERO**. Same fault she caught live in her Banana Republic results on 2026-08-08.
+⚠️ **AND THE HONEST HALF, SAID PLAINLY: IT DOES NOT FIX THE PRICES.** Median $479 sits right alongside
+the existing `$$$$` feed. **It is an eighth luxury store, not a mid-market one.** It earns, it unlocks
+photography for anything she picks from it, and it is a genuine addition to the luxury-routing list
+(it stocks Celine, Saint Laurent and Bottega, the exact houses that rule was written for) — **but the
+answer to affordability is still users.**
 
 **❌ THE REJECTIONS, AND THE ONE THING THEY ALL HAVE IN COMMON:**
 | Who | When | Level | Reason |

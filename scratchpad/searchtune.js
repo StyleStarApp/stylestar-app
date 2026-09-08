@@ -262,7 +262,10 @@ console.log('\n6. Housekeeping');
 const counts = await page.evaluate(() => ({
   stores: Object.keys(STORES).length,
   w: Object.values(STORES).filter(s => s.w).length,
-  gp: Object.values(STORES).filter(s => s.gp).length
+  gp: Object.values(STORES).filter(s => s.gp).length,
+  // the NAMES, so the check below can be about stores rather than about a number
+  wKeys:  Object.keys(STORES).filter(k => STORES[k].w),
+  gpKeys: Object.keys(STORES).filter(k => STORES[k].gp)
 }));
 // This restated a number that has moved four times (Kate Spade out, DVF in,
 // Vilebrequin in...). ▶ The claim actually worth guarding is the STANDING RULE:
@@ -287,7 +290,75 @@ ok('every store in the table also reaches SEARCH_DOMAINS', counts.stores === SRV
 // feed replaces the search that lied) and it carries w:1 REQUIRED, not optional:
 // they are historically a men's swim house and their search defaults to MEN'S on
 // an ambiguous term. Dropping w:1 there sends women to menswear.
-ok('40 keyword-scoped + 7 param-scoped', counts.w === 40 && counts.gp === 7, counts.w + ' / ' + counts.gp);
+// 2026-09-08: 40 -> 41 with COUTR, and at that point the number was bumped for
+// the FOURTH time in a month. ▶ SO IT IS NOT A NUMBER ANY MORE. The comment
+// above already diagnoses why this shape keeps failing: a restated total moves
+// every time she is approved for anything, and the one time nobody bumped it the
+// suite sat red for weeks — "a permanently-red suite is how a false green
+// happens". The claim actually worth guarding was never "there are forty". It is
+// that THESE PARTICULAR STORES, every one of which genuinely sells menswear, are
+// scoped to the women's department. That cannot drift with an unrelated addition,
+// and unlike the count it names the store that broke.
+const MUST_BE_SCOPED = [
+  // department stores — the original 2026-08-08 fault was men's suit pants in her
+  // Banana Republic results, and every one of these has a full menswear floor
+  'Nordstrom', "Macy's", "Dillard's", 'Belk', 'Bloomingdales', 'Saks',
+  'Neiman Marcus', 'Bergdorf Goodman', 'Nordstrom Rack', 'TJ Maxx',
+  // multi-gender brands
+  'J.Crew', 'Zara', 'Banana Republic', 'Gap', 'Old Navy', 'Abercrombie',
+  // Vilebrequin: historically a men's swim house whose search DEFAULTS to men's
+  // on an ambiguous term (2026-09-05). w:1 there is required, not optional.
+  'Vilebrequin',
+  // COUTR, approved 2026-09-08. Measured the same day: a plain search for
+  // "sweater" returned 36 products of which 10 were men's; "womens sweater"
+  // returned 36 with zero. It carries kidswear and fragrance as well.
+  'COUTR'
+];
+const unscoped = MUST_BE_SCOPED.filter(k => {
+  const inTable = counts.wKeys.concat(counts.gpKeys);
+  return !inTable.includes(k);
+});
+ok('every store known to sell menswear is scoped to women', unscoped.length === 0,
+   unscoped.join(', ') || '');
+// The totals are REPORTED, never asserted — they are the thing that kept going stale.
+console.log('  ·  scoped stores: ' + counts.w + ' by keyword, ' + counts.gp + ' by param, of ' + counts.stores);
+
+// ── THE WORD MUST NOT LAND TWICE (2026-09-08) ────────────────────────────────
+// 🚨 FOUND WHILE WIRING COUTR, PRE-EXISTING ON main, AND LATENT ACROSS ALL 41
+// KEYWORD-SCOPED STORES. `_alreadyWomens` guards the "womens " prepend, but it
+// only ever tested for a leading SIZE word — so a term that already said
+// women's got the word twice:
+//     getStoreUrl('Nordstrom', "women's silk blouse")
+//       -> keyword=womens%20women's%20silk%20blouse
+// Nothing in the app seeds such a term, which is exactly why nobody saw it; but
+// nothing forbids the model writing one, and the wishlist STORES TERMS and
+// rebuilds urls on every render, so it would have doubled forever for that woman.
+// ▶ The size half must keep working too — "womens petite trousers" searches
+//   worse than "petite trousers", which is why the guard exists at all.
+const dbl = await page.evaluate(() => ({
+  plain:   getStoreUrl('Nordstrom', 'silk blouse'),
+  womens:  getStoreUrl('Nordstrom', 'womens silk blouse'),
+  apos:    getStoreUrl('Nordstrom', "women's silk blouse"),
+  ladies:  getStoreUrl('Nordstrom', 'ladies silk blouse'),
+  petite:  getStoreUrl('Nordstrom', 'petite trousers'),
+  plus:    getStoreUrl('Nordstrom', 'plus size dress'),
+  coutr:   getStoreUrl('COUTR', 'silk blouse'),
+  coutrW:  getStoreUrl('COUTR', "women's silk blouse")
+}));
+const once = u => (decodeURIComponent(u).match(/wom[ae]n/gi) || []).length;
+ok('an unscoped term still GETS the womens keyword', once(dbl.plain) === 1, dbl.plain);
+ok('a term that already says womens does not get it twice', once(dbl.womens) === 1, dbl.womens);
+ok("…nor with an apostrophe", once(dbl.apos) === 1, dbl.apos);
+// "ladies" already scopes the search to women, so the guard leaves it ALONE
+// rather than prepending — the term stays hers, and there is no "womens" at all.
+ok("…and 'ladies' is left as she wrote it, not prefixed",
+   once(dbl.ladies) === 0 && decodeURIComponent(dbl.ladies).includes('ladies silk blouse'), dbl.ladies);
+ok('a petite term is still left alone (the original half of the guard)',
+   once(dbl.petite) === 0 && decodeURIComponent(dbl.petite).includes('petite trousers'), dbl.petite);
+ok('a plus-size term is still left alone', once(dbl.plus) === 0, dbl.plus);
+ok('COUTR gets the keyword once', once(dbl.coutr) === 1, dbl.coutr);
+ok('COUTR does not double it either', once(dbl.coutrW) === 1, dbl.coutrW);
+
 ok('zero JS errors', errs.length === 0, errs.join(' | '));
 
 await browser.close(); server.close();

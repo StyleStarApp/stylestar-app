@@ -44,13 +44,15 @@ MID_TO_STORE = {
     "36537": "Marissa Collections",
     "43172": "Mytheresa",
     "50739": "Fleur du Mal",
+    "54152": "COUTR",                 # approved 2026-09-08; her 8th merchant
     "54027": "Etsy",                  # deliberately NOT ingested yet: 5GB, see plan doc
 }
 
-# The seven the first build ingests. Etsy is excluded because its feed is 5GB -- 200x the
+# The EIGHT ingested today (seven from the first build, plus COUTR approved 2026-09-08).
+# Etsy is excluded because its feed is 5GB -- 200x the
 # next largest store, with a 1GB delta -- and it is a marketplace of millions of
 # independent-seller listings rather than a curated store. Its own problem, later.
-BUILD_MIDS = ["44912", "53590", "43322", "50334", "36537", "43172", "50739"]
+BUILD_MIDS = ["44912", "53590", "43322", "50334", "36537", "43172", "50739", "54152"]
 
 
 def _clean(v):

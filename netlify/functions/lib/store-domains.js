@@ -643,6 +643,11 @@ export default {
   "tier": "$$$$",
   "sizes": []
  },
+ "COUTR": {
+  "host": "coutr.com",
+  "tier": "$$$$",
+  "sizes": []
+ },
  "Sachin & Babi": {
   "host": "sachinandbabi.com",
   "tier": "$$$$",

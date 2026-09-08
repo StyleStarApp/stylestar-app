@@ -107,7 +107,7 @@ const SEARCH_DOMAINS = [
   'altardstate.com', 'amazon.com', 'anntaylor.com', 'anthropologie.com',
   'aritzia.com', 'athleta.gap.com', 'babygold.com', 'bananarepublic.gap.com',
   'bananarepublicfactory.gapfactory.com', 'belk.com', 'bergdorfgoodman.com', 'bloomingdales.com',
-  'chicos.com', 'coach.com', 'cos.com', 'cuyana.com',
+  'chicos.com', 'coach.com', 'cos.com', 'coutr.com', 'cuyana.com',
   'dillards.com', 'dsw.com', 'dvf.com', 'eileenfisher.com', 'eloquii.com',
   'etsy.com', 'everlane.com', 'everythingbutwater.com', 'vilebrequin.com', 'express.com', 'fahertybrand.com',
   'farmrio.com', 'fleurdumal.com', 'frankandeileen.com', 'freepeople.com', 'gap.com',

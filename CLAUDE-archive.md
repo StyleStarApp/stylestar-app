@@ -17970,3 +17970,58 @@ bare `textContent` there would delete the star along with the words (a test pins
 **`prefers-reduced-motion` keeps the star but stops it turning** — the reassurance is the star being
 there, and motion is not the only way to give it.
 
+
+
+---
+
+## ▶ ARCHIVED 2026-09-08 — the 2026-09-07 session narrative
+*Moved here under this project's archiving rule: one "START HERE" entry lives in `CLAUDE.md`, and the
+previous session's entry moves in the same commit as the new one. **Nothing was deleted.** Only what
+HAPPENED moved — the standing rules, decisions and open threads from that session (the product finder's
+design, her store-table measurement, the agreed shopping experience, the near-miss wording, the two
+method lessons) all stayed in `CLAUDE.md`, because they are still true rather than merely past.*
+
+## ▶ NEXT SESSION — START HERE (2026-09-07 — A LATENT CRASH CLOSED, AND HER TWO PHOTOS FIXED)
+
+### ⭐⭐⭐ THE ONE-LINE SUMMARY
+▶▶ **THE 200-STORE JOB GOT SMALLER, BECAUSE THE QUESTION THIS FILE CARRIED AS *UNVERIFIED* WAS FINALLY
+MEASURED — AND MEASURING IT TURNED UP A CRASH THAT WOULD HAVE TAKEN THE WHOLE APP DOWN THE FIRST TIME
+SHE ADDED A STORE.** ✅ **All three changes are MERGED TO `main` AND LIVE on stylestar.app**, verified by
+fetching the live page and finding the markers, not by assuming the deploy worked.
+▶ **And she caught a photo fault on her phone, as she does, and it turned out to be TWO faults.**
+
+**⚡ THE SESSION IN NUMBERS:** 3 commits · 31 new checks (untagged 18 · starpx 13) · **2 real bugs found
+that she had not reported** (the store crash, and a fragile test I wrote myself) · 10 Star photos
+rendered and eyeballed · 1 false alarm caught before it reached her.
+
+**▶▶ THE THREE THINGS WAITING ON HER, UNCHANGED AND STILL IN THIS ORDER:**
+1. **Hand `docs/store-scoring-brief.md` to ChatGPT** — ⚠️ **STILL NOT DONE.** Her words, 2026-09-07:
+   *"I want to give that very careful attention. I have not yet looked at the stores or given anything
+   to chat. I need to be back at my desk to do that."* ▶ **So ASK, do not re-explain, and do not
+   redesign the brief.** It is a desk job and she knows it is there.
+2. **Re-run her three chat messages** against the current build (the Napa one especially).
+3. **Then Shop your Style**, which she called *"an enormous difference."*
+
+### ✅✅ WHAT SHIPPED, 2026-09-07
+**1. A STORE CAN NOW BE ADDED WITHOUT HER TEN SCORES.** See the measured answer below — it is the
+section that starts *"ANSWERED AND BUILT"*. `scratchpad/untagged.js`, 18 checks.
+**2. HER STAR OF THE WEEK BAG IS NO LONGER CUT OFF.** Her words: *"the bag is sitting too low and looks
+cut off at the bottom."* ⚠️ **AND SHE WAS RIGHT FOR A REASON THAT MEASURES:** the photo is 800x1200 with
+**19.2% of empty headroom above the bag and almost nothing below it**, the card frame is 3:4 and can only
+show **88.9% of the height**, and the shared default `object-position:top center` spent that whole window
+on the emptiness — **cutting 10.6% off the bottom of the bag.** Fixed with a per-item `pxPos:'center
+bottom'`.
+**3. THE CROSBIE JEAN IS A SECOND KIND OF FAULT AND NEEDED A NEW MECHANISM.** ▶▶ **`pxPos` only chooses
+WHICH END of a too-tall photo to keep. The jean's flat-lay is NARROWER than the frame and the jean fills
+it edge to edge, so `cover` must trim something wherever it is anchored** — every position merely picks
+which end of the jean to lose. **Only `object-fit:contain` shows all of it**, which is what the Edit had
+already been doing since 2026-08-25. So `_wkStarPxTag` gained an optional **`pxFit`**, whitelisted to
+`contain`/`cover`. **The jean was scheduled for Sep 20, so this landed before she would have seen it.**
+
+🚨🚨 **THE RULE BOTH PHOTO FIXES OBEY, AND IT IS THE RULE LEDGER'S OWN THESIS IN PIXELS: THE SAME PHOTO
+MUST NOT RENDER TWO DIFFERENT WAYS ON TWO SCREENS.** Each of these photos appears BOTH on the Star card
+(`.wks-px`) and in the Edit (`.dc-item-px`), and those classes share the same 3:4 top-anchored crop.
+▶ **Fixing one and not the other is the same bag cut off on one screen and right on the next** — which
+is exactly *"a rule applied to one half is not applied"*, arriving through a photo instead of a picker.
+**Both were fixed in both places, and `starpx` asserts the Edit copies too.**
+

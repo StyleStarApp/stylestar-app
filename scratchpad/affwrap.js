@@ -38,7 +38,35 @@ const u = await pg.evaluate(() => ({
   junk:     _affUrl('not a url at all'),
   nul:      _affUrl(null),
   storeKeys:Object.keys(STORES),
-  offTable: _affUrl('https://www.vilebrequin.com/us/en/product/IAACG200-003')
+  offTable: _affUrl('https://www.vilebrequin.com/us/en/product/IAACG200-003'),
+  // Every approved advertiser, with (a) whether a url on its host actually wraps
+  // and (b) whether it has a STORES entry at all. DERIVED, so it cannot go stale
+  // the way naming one store did.
+  advertisers: Object.keys(_AFF_MID).map(function(d){
+    var mid=_AFF_MID[d];
+    var inTable=Object.keys(STORES).some(function(k){
+      var e=STORES[k]||{};
+      return String(e.u||'').indexOf(d)>=0 || String(e.tpl||'').indexOf(d)>=0;
+    });
+    return {d:d,mid:mid,inTable:inTable,
+            wraps:_affUrl('https://www.'+d+'/some/product').indexOf('mid='+mid+'&murl=')>=0};
+  }),
+  // A SYNTHETIC advertiser that is guaranteed absent from STORES, added and then
+  // removed so nothing downstream sees it. This proves the MECHANISM (hostname
+  // matching, independent of the store table) no matter which real stores happen
+  // to be in the table today — which is what the old Vilebrequin check could not do.
+  synthetic: (function(){
+    var d='not-a-real-store-offtable.test', mid='99999';
+    var had=Object.prototype.hasOwnProperty.call(_AFF_MID,d);
+    _AFF_MID[d]=mid;
+    var wrapped=_affUrl('https://www.'+d+'/p/1');
+    if(!had)delete _AFF_MID[d];
+    return {inTable:Object.keys(STORES).some(function(k){
+              var e=STORES[k]||{};
+              return String(e.u||'').indexOf(d)>=0||String(e.tpl||'').indexOf(d)>=0;}),
+            wrapped:wrapped,
+            restored:!Object.prototype.hasOwnProperty.call(_AFF_MID,d)};
+  })()
 }));
 ok('publisher id is hers', u.id === 'jZNkkinrr1k', u.id);
 // DERIVED, not restated: this named the two advertisers she had at the time and
@@ -54,16 +82,33 @@ ok('FARM Rio mid 44912', u.mids['farmrio.com'] === '44912');
 ok('DVF mid 53590', u.mids['dvf.com'] === '53590');
 ok('Vilebrequin mid 43322', u.mids['vilebrequin.com'] === '43322');
 ok('Olivela mid 50334', u.mids['olivela.com'] === '50334');
-// 🚨 THE ASYMMETRY IS DELIBERATE AND FRAGILE, so it is pinned here. Vilebrequin
-// is an approved advertiser that is NOT in the STORES table — her call, because
-// their search returns a false negative on a product they stock — yet its Edit
-// item and its Star of the Week entry must still EARN. That works only because
-// _affUrl matches by HOSTNAME, never by store key. ▶ A future tidy-up that
-// "aligns" _AFF_MID with STORES would silently stop her being paid on every
-// Vilebrequin tap, with nothing on screen looking any different.
-ok('an approved advertiser that is NOT in the store table still earns',
-   !u.storeKeys.includes('Vilebrequin') && /mid=43322&murl=/.test(u.offTable),
-   'inTable=' + u.storeKeys.includes('Vilebrequin') + '  url=' + u.offTable);
+// 🚨 THE ASYMMETRY IS DELIBERATE AND FRAGILE, so it is pinned here: an approved
+// advertiser EARNS whether or not it has a STORES entry, because _affUrl matches
+// by HOSTNAME and never by store key. ▶ A future tidy-up that "aligns" _AFF_MID
+// with STORES would silently stop her being paid, with nothing on screen looking
+// any different.
+// ⚠️⚠️ THIS CHECK USED TO NAME VILEBREQUIN AS THE OFF-TABLE EXAMPLE, AND IT WENT
+// RED WHEN VILEBREQUIN WAS PUT BACK IN THE TABLE (her call, 2026-09-08 — "it is
+// fine to keep Vilebrequin"). Nothing broke; the app moved and the test kept
+// describing the old one, which is the ledger's own "an n/a goes stale silently"
+// lesson arriving in a test instead of a table. ▶ SO IT IS DERIVED NOW: the rule
+// is asserted over EVERY advertiser, and it no longer cares which one happens to
+// be off-table on any given day.
+ok('every approved advertiser earns, in the store table or not',
+   u.advertisers.every(function(a){return a.wraps;}),
+   u.advertisers.filter(function(a){return !a.wraps;}).map(function(a){return a.d;}).join(',') || 'all wrap');
+// ⚠️ AND THE MECHANISM IS PROVEN SYNTHETICALLY, not by whichever real store is
+// off-table this week. As of 2026-09-08 EVERY approved advertiser has a STORES
+// entry (Vilebrequin came back, COUTR went in, Etsy was already there), so a
+// check that waited for a real off-table store would now be silently inert —
+// passing forever while guarding nothing. This one cannot go quiet.
+ok('an advertiser with NO store entry still earns (mechanism, synthetic)',
+   !u.synthetic.inTable && /mid=99999&murl=/.test(u.synthetic.wrapped),
+   'inTable=' + u.synthetic.inTable + '  url=' + u.synthetic.wrapped);
+ok('the synthetic probe left _AFF_MID exactly as it found it', u.synthetic.restored);
+// Informational, not a pass/fail: how many advertisers sit outside the table.
+console.log('  ·  advertisers off the store table: ' +
+  (u.advertisers.filter(function(a){return !a.inTable;}).map(function(a){return a.d;}).join(', ') || 'none'));
 ok('a DVF url is wrapped', /click\.linksynergy\.com\/deeplink\?id=jZNkkinrr1k&mid=53590&murl=/.test(u.dvf), u.dvf);
 ok('a FARM Rio url is wrapped', /mid=44912&murl=/.test(u.farm), u.farm);
 ok('the destination survives, encoded', decodeURIComponent(u.dvf.split('murl=')[1]) === 'https://www.dvf.com/search?q=wrap%20dress');

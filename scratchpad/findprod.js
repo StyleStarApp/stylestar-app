@@ -195,7 +195,25 @@ H('PART 8 — queries: several pooled, and size/width kept OUT of the words');
 H('PART 9 — the store allowlist, and resale');
 {
   const stores = buildDomains();
-  ok('108 stores come out of index.html', Object.keys(stores).length === 108, String(Object.keys(stores).length));
+  // ⚠️ THIS WAS `=== 108` AND IT WENT RED THE MOMENT SHE WAS APPROVED FOR A NEW
+  // STORE (COUTR, 2026-09-08). That is the THIRD hardcoded store total to break
+  // on one approval — searchtune's "40 keyword-scoped" and rakuten_feed's
+  // "the other seven" were the other two. ▶ A COUNT OF HER STORES IS NOT AN
+  // INVARIANT; being approved for shops is the whole point of the project, so a
+  // test that fails on success teaches the next session to bump a number without
+  // reading it. THE REAL RULE is that the finder's GENERATED allowlist is in
+  // sync with her table — a stale store-domains.js means the finder silently
+  // cannot see inside a shop she was just approved for, with nothing on screen
+  // looking any different. That is the bug this check should have been catching,
+  // and it nearly shipped today.
+  const generated = (await import('../netlify/functions/lib/store-domains.js')).default;
+  ok('the generated allowlist is in sync with her table',
+     Object.keys(generated).length === Object.keys(stores).length,
+     'generated ' + Object.keys(generated).length + ' vs STORES ' + Object.keys(stores).length);
+  ok('every store in her table reaches the finder',
+     Object.keys(stores).every(k => k in generated),
+     Object.keys(stores).filter(k => !(k in generated)).join(', '));
+  console.log('  ·  stores in the finder allowlist: ' + Object.keys(stores).length);
   ok('"Zappos.com" matches Zappos', matchStore('Zappos.com', stores) === 'Zappos');
   ok('"Nordstrom Rack" is its own store, not Nordstrom',
      matchStore('Nordstrom Rack', stores) === 'Nordstrom Rack');
@@ -203,6 +221,16 @@ H('PART 9 — the store allowlist, and resale');
   ok('eBay is resale', isResale('eBay - bookishbunnyfashion'));
   ok('Poshmark is resale', isResale('Poshmark'));
   ok('Etsy is treated as a marketplace, not one of her shops', isResale('Etsy'));
+  // 🚨 COUTR CALLS ITSELF "A LUXURY MARKETPLACE" AND IS DELIBERATELY NOT ON THE
+  // RESALE/MARKETPLACE LIST. Checked on the day it was added (2026-09-08) rather
+  // than assumed, because the word alone would have disqualified it: their own
+  // page says "Every item on COUTR is brand new and 100% authentic, sourced
+  // directly from trusted vendors" — new stock from designer boutiques, one
+  // checkout, one returns policy. Her actual rule is that a woman can browse and
+  // BUY AND KEEP a specific item, which it passes; the names on RESALE are
+  // second-hand sellers and price aggregators, which it is not.
+  // ▶ RECORDED SO NOBODY "TIDIES" IT ONTO THE LIST ON THE STRENGTH OF THE WORD.
+  ok('COUTR is a shop, not a marketplace to exclude', !isResale('COUTR') && !isResale('coutr.com'));
   ok('DSW is not resale', !isResale('DSW'));
 }
 
