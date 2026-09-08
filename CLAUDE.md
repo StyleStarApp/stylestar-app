@@ -979,6 +979,29 @@ touch local `main`: verify `git merge-base --is-ancestor origin/main <branch>` t
 one half of the app following some rules and the other half not — I do not understand how this happened
 because the overall intent and goal of this whole app is very clear."*
 ⚠️⚠️ **THE SENTENCE TO KEEP: A RULE APPLIED TO ONE HALF IS NOT APPLIED.**
+🚨🚨 **AND THE SECOND SENTENCE TO KEEP, ADDED 2026-09-08 AFTER SHE ASKED THE RIGHT QUESTION:
+WHEN HER WORDS ADMIT TWO BUILDS, SAY SO BEFORE BUILDING — NOT AFTER SHE FINDS IT ON HER PHONE.**
+▶ **WHAT PROMPTED IT.** Her step 4 of the agreed shopping experience reads: *"Each product is CHECKED
+against the checklist — comparing facts, never guessing. No tick without evidence."* **That sentence is
+clear.** It was then built as a fixed list of eight words — because *"never guessing"* was read as
+*"never let the AI decide"*, which is a live fear here (the Stitch Fix box IS someone ignoring her
+written note). ▶▶ **BUT "COMPARING FACTS" MEANS READING THEM.** A stylist who reads `95% polyester` and
+says *"that is not silk"* is comparing facts, not guessing.
+⚠️⚠️ **THE MISTAKE IN ONE LINE: "DON'T GUESS" WAS COLLAPSED INTO "DON'T THINK."** They are not the same,
+and the difference was the entire fault she found six weeks later.
+🚨 **THE WORSE HALF WAS THE SILENCE, NOT THE CHOICE.** Her sentence honestly admitted two builds; one
+was picked without a word, and she discovered it from a screenshot. ▶ **A fork taken silently is
+indistinguishable from a spec that was followed — which is the same shape as every other bug in this
+file.**
+▶ **HER QUESTION, WHICH IS THE REASON THIS ROW EXISTS: *"Am I not clear about how I want this to
+actually function?"* THE ANSWER IS NO — SHE WAS CLEAR.** Her six numbered steps are still accurate
+months later and none of them needed rewriting. **The gap was never in her brief; it was between her
+brief and the build, and nothing was watching that gap.**
+⚠️ **THREE TIMES IN ONE DAY, ALL THE SAME SHAPE:** a phrase Claude coined (*"the cap is the seatbelt"*)
+quoted back as hers · a coined shorthand (*"the shrug"*) used as if shared · and her *"comparing facts"*
+built as string matching. **Her words in, an interpretation out, and no flag on the difference.**
+▶▶ **THE HABIT: ONE LINE, BEFORE BUILDING. "Your words could mean A or B; I am building B because X."**
+It costs a sentence and it is the cheapest test in this whole file.
 ▶ **THE TWO HALVES.** The **AI path**: `_shopRules`, `_sizeGuidance`, `_wardrobeIdeaGen`, `sendChat`.
 The **feed/shelf path**: `curatedPicks`, `scripts/slot_match.py`, `data/slot-rules.json`,
 `netlify/functions/product-search.js`.
