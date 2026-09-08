@@ -44,7 +44,7 @@ const urls = await page.evaluate(() => ({
   zappos: getStoreUrl('Zappos', null, 'kitten heel mules'),
   lulu: getStoreUrl('Lululemon', null, 'royal blue leggings'),
   // already scoped in the URL — must NOT get the keyword too
-  madewell: getStoreUrl('Madewell', null, 'white tee'),
+  mango: getStoreUrl('Mango', null, 'white tee'),
   mango: getStoreUrl('Mango', null, 'white tee'),
   revolve: getStoreUrl('Revolve', null, 'white tee'),
   lacoste: getStoreUrl('Lacoste', null, 'white polo'),
@@ -84,7 +84,12 @@ ok('Macy\'s color term → same path form, same platform', urls.macyColorPath ==
 ok('Macy\'s non-color term falls through to plain keyword search', urls.macyNoColorPath.includes('keyword=womens%20quilted%20crossbody%20bag') && !urls.macyNoColorPath.includes('featured'), urls.macyNoColorPath);
 ok('Zappos gets it', urls.zappos.includes('term=womens%20kitten%20heel%20mules'), urls.zappos);
 ok('Lululemon gets it', urls.lulu.includes('Ntt=womens%20'), urls.lulu);
-ok('Madewell already scoped — no double', urls.madewell.includes('r_productGender=women') && !urls.madewell.includes('womens%20'), urls.madewell);
+// ⚠️ WAS MADEWELL UNTIL 2026-09-08, WHEN SHE REMOVED IT FROM HER ROSTER. The rule
+//    is unchanged — a store whose URL ALREADY scopes to women must not also get
+//    the 'womens' keyword, or the term reads 'womens' twice. Mango is the same
+//    shape (/search/women?q=) and is still hers. Revolve and Lacoste also qualify
+//    if this ever needs moving again.
+ok('Mango already scoped — no double', /\/women/.test(urls.mango) && !urls.mango.includes('womens%20'), urls.mango);
 ok('Mango already scoped — untouched', urls.mango.includes('/search/women?q=white%20tee'), urls.mango);
 ok('Revolve already scoped — untouched', urls.revolve.includes('d=Womens') && !urls.revolve.includes('womens%20'), urls.revolve);
 ok('Lacoste template already women.html — untouched', urls.lacoste.includes('/women.html') && !urls.lacoste.includes('womens%20'), urls.lacoste);
@@ -273,10 +278,24 @@ const counts = await page.evaluate(() => ({
 // stylist's search simply cannot see inside it and nothing anywhere complains.
 // Derived from both files, so it never goes stale and it catches the real bug.
 // (storedepth.js keeps a hardcoded total as the deliberate appear/vanish tripwire.)
-const SRV_LIST = (fs.readFileSync(path.join(ROOT, 'netlify/functions/style-ai.js'), 'utf8')
-  .match(/const SEARCH_DOMAINS\s*=\s*\[([\s\S]*?)\];/)[1].match(/'[^']+'/g) || []).length;
-ok('every store in the table also reaches SEARCH_DOMAINS', counts.stores === SRV_LIST,
-   'STORES ' + counts.stores + ' vs SEARCH_DOMAINS ' + SRV_LIST);
+// ✅✅ AS OF 2026-09-08 THIS CAN NO LONGER GO WRONG, AND THE CHECK CHANGED SHAPE
+// TO SAY SO. SEARCH_DOMAINS used to be a hand-typed list in style-ai.js, and it
+// went stale TWICE in one day — COUTR had to be added by hand, then her 21-in /
+// 9-out roster left it 13 short. Both times this check was the only thing that
+// noticed. ▶ It now READS THE SAME GENERATED FILE THE PRODUCT FINDER USES, so the
+// stylist's search and the finder's allowlist cannot disagree, and adding a shop
+// is one edit fewer.
+// ⚠️ SO THE ASSERTION IS NOW ABOUT THE WIRING, NOT THE COUNT: if someone ever
+//    hand-types this list again, the derivation disappears and this fails.
+const SRV_SRC = fs.readFileSync(path.join(ROOT, 'netlify/functions/style-ai.js'), 'utf8');
+ok('the stylist search list is DERIVED from her table, not hand-typed',
+   /import STORE_DOMAINS from '\.\/lib\/store-domains\.js'/.test(SRV_SRC) &&
+   /const SEARCH_DOMAINS = Object\.values\(STORE_DOMAINS\)\.map\(s => s\.host\)/.test(SRV_SRC));
+ok('...so it holds every store in her table', (() => {
+  const gen = fs.readFileSync(path.join(ROOT, 'netlify/functions/lib/store-domains.js'), 'utf8');
+  const hosts = (gen.match(/"host":\s*"[^"]+"/g) || []).length;
+  return hosts === counts.stores;
+})(), 'generated hosts vs STORES ' + counts.stores);
 // 2026-08-12: Abercrombie moved from keyword-scoped-never (it was unscoped)
 // into param-scoped, via her verified gender facet — gp count 5 → 6.
 // 2026-09-05: bumped 6 → 7, DELIBERATELY and after measuring, not silenced. The

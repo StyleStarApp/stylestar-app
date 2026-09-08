@@ -183,15 +183,6 @@ export default {
    "tall"
   ]
  },
- "Madewell": {
-  "host": "madewell.com",
-  "tier": "$$",
-  "sizes": [
-   "petite",
-   "plus",
-   "tall"
-  ]
- },
  "Everlane": {
   "host": "everlane.com",
   "tier": "$$",
@@ -281,31 +272,9 @@ export default {
    "petite"
   ]
  },
- "Garnet Hill": {
-  "host": "garnethill.com",
-  "tier": "$$",
-  "sizes": [
-   "petite",
-   "plus"
-  ]
- },
- "Soft Surroundings": {
-  "host": "softsurroundings.com",
-  "tier": "$$",
-  "sizes": [
-   "petite",
-   "plus",
-   "tall"
-  ]
- },
  "Tuckernuck": {
   "host": "tnuck.com",
   "tier": "$$$",
-  "sizes": []
- },
- "Jenni Kayne": {
-  "host": "jennikayne.com",
-  "tier": "$$$$",
   "sizes": []
  },
  "Frank & Eileen": {
@@ -315,16 +284,6 @@ export default {
  },
  "Faherty": {
   "host": "fahertybrand.com",
-  "tier": "$$$",
-  "sizes": []
- },
- "Marine Layer": {
-  "host": "marinelayer.com",
-  "tier": "$$",
-  "sizes": []
- },
- "Rails": {
-  "host": "railsclothing.com",
   "tier": "$$$",
   "sizes": []
  },
@@ -351,11 +310,6 @@ export default {
   "tier": "$$$",
   "sizes": []
  },
- "COS": {
-  "host": "cos.com",
-  "tier": "$$",
-  "sizes": []
- },
  "M.M.LaFleur": {
   "host": "mmlafleur.com",
   "tier": "$$$",
@@ -378,14 +332,6 @@ export default {
   "tier": "$$-$$$",
   "sizes": [
    "petite"
-  ]
- },
- "Johnny Was": {
-  "host": "johnnywas.com",
-  "tier": "$$$",
-  "sizes": [
-   "petite",
-   "plus"
   ]
  },
  "Altar'd State": {
@@ -690,11 +636,6 @@ export default {
   "tier": "$$$$",
   "sizes": []
  },
- "Kendra Scott": {
-  "host": "kendrascott.com",
-  "tier": "$$",
-  "sizes": []
- },
  "Sunglass Hut": {
   "host": "sunglasshut.com",
   "tier": "$$-$$$$",
@@ -708,6 +649,111 @@ export default {
  "Quay": {
   "host": "quay.com",
   "tier": "$$",
+  "sizes": []
+ },
+ "Aerie": {
+  "host": "ae.com",
+  "tier": "",
+  "sizes": []
+ },
+ "American Eagle": {
+  "host": "ae.com",
+  "tier": "",
+  "sizes": []
+ },
+ "ASOS": {
+  "host": "asos.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Ashley Stewart": {
+  "host": "ashleystewart.com",
+  "tier": "",
+  "sizes": []
+ },
+ "City Chic": {
+  "host": "citychiconline.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Club Monaco": {
+  "host": "clubmonaco.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Frances Valentine": {
+  "host": "francesvalentine.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Honeylove": {
+  "host": "honeylove.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Karen Millen": {
+  "host": "karenmillen.com",
+  "tier": "",
+  "sizes": []
+ },
+ "L*Space": {
+  "host": "lspace.com",
+  "tier": "",
+  "sizes": []
+ },
+ "L.L.Bean": {
+  "host": "llbean.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Lilly Pulitzer": {
+  "host": "lillypulitzer.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Long Tall Sally": {
+  "host": "longtallsally.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Lord & Taylor": {
+  "host": "lordandtaylor.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Mestiza New York": {
+  "host": "mestizanewyork.com",
+  "tier": "",
+  "sizes": []
+ },
+ "MZ Wallace": {
+  "host": "mzwallace.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Ramy Brook": {
+  "host": "ramybrook.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Reiss": {
+  "host": "reiss.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Rothy's": {
+  "host": "rothys.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Staud": {
+  "host": "staud.clothing",
+  "tier": "",
+  "sizes": []
+ },
+ "Teri Jon": {
+  "host": "terijon.com",
+  "tier": "",
   "sizes": []
  }
 };

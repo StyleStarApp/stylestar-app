@@ -3826,7 +3826,6 @@ const STORES={
   'H&M':{w:1,u:'https://www2.hm.com/en_us/search-results.html?q=',t:'$',a:'Trendsetter, Casual Everyday',s:['plus'],d:[7,5,5,3,9,8,4,6,6,8],deep:1,c:'affordable trends, basics'},
   'Banana Republic':{gp:'&department=136',u:'https://bananarepublic.gap.com/browse/search.do?searchText=',t:'$$',a:'Classic Sophisticate, Modern Minimalist',s:['petite','tall'],d:[4,4,9,9,4,5,9,8,10,4],c:'workwear, elevated basics, tailoring'},
   'Banana Republic Factory':{gp:'&department=136',u:'https://bananarepublicfactory.gapfactory.com/browse/search.do?searchText=',t:'$-$$',a:'Classic Sophisticate',s:['petite','tall'],d:[5,3,7,8,3,7,6,7,9,4],c:'affordable workwear, tailoring, basics'},
-  'Madewell':{u:'https://www.madewell.com/search-results/?r_productGender=women&q=',t:'$$',a:'Elevated Natural, Casual Classic',s:['petite','plus','tall'],d:[10,3,8,7,5,10,3,5,8,6],c:'denim, casual essentials, leather goods'},
   'Everlane':{w:1,u:'https://www.everlane.com/search?q=',t:'$$',a:'Modern Minimalist, Elevated Natural',s:[],d:[9,2,9,9,4,8,5,4,10,2],c:'elevated basics, denim, outerwear'},
   'Aritzia':{u:'https://www.aritzia.com/us/en/search?q=',t:'$$-$$$',a:'Modern Minimalist, Quiet Luxury',s:[],d:[5,6,9,7,8,7,7,9,9,5],c:'elevated basics, tailoring, outerwear'},
   'Uniqlo':{w:1,u:'https://www.uniqlo.com/us/en/search?q=',t:'$',a:'Modern Minimalist',s:[],d:[8,2,8,8,5,8,4,5,10,3],c:'basics, layering pieces, outerwear'},
@@ -3841,27 +3840,20 @@ const STORES={
   'Lacoste':{u:'https://www.lacoste.com/us/women.html#query=',tpl:'https://www.lacoste.com/us/women.html?products_us_en=%7B%22query%22%3A%22{q}%22%7D#query={q}',t:'$$$',a:'Classic Sport, Preppy Classic',s:[],d:[7,3,8,9,4,8,4,6,8,6],c:'polos, casual sportswear, sneakers'},
   'Gap':{gp:'&department=136',u:'https://www.gap.com/browse/search.do?searchText=',t:'$-$$',a:'Casual Classic',s:['petite','plus','tall'],d:[10,2,6,7,3,10,2,4,8,4],c:'everyday basics, denim, casualwear'},
   'White House Black Market':{u:'https://www.whitehouseblackmarket.com/store/search?searchTerm=',t:'$$',a:'Professional Power, Modern Glam',s:['petite'],d:[3,7,9,8,6,4,9,9,10,2],c:'sleek workwear, occasion'},
-  'Garnet Hill':{u:'https://www.garnethill.com/search?q=',t:'$$',a:'Elevated Natural',s:['petite','plus'],d:[9,2,8,8,2,9,3,3,9,4],c:'natural fibers, sleepwear'},
-  'Soft Surroundings':{u:'https://www.softsurroundings.com/search.php?q=',t:'$$',a:'Relaxed Feminine',s:['petite','plus','tall'],d:[10,2,6,7,1,10,2,2,8,5],c:'soft knits, travel'},
   'Tuckernuck':{u:'https://www.tnuck.com/search?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[6,5,9,9,5,5,9,7,8,8],c:'dresses, polished separates, occasion, resort'},
   // Elevated natural / quiet luxury: where a stylist sends this woman first
-  'Jenni Kayne':{u:'https://www.jennikayne.com/search?q=',t:'$$$$',a:'Elevated Natural, Quiet Luxury',s:[],d:[10,2,10,10,2,8,5,3,10,2],c:'luxury casualwear, cashmere, sweaters'},
   'Frank & Eileen':{u:'https://frankandeileen.com/search?q=',t:'$$$',a:'Elevated Natural, Coastal Chic',s:[],d:[10,2,9,9,2,10,3,2,10,2],c:'button-downs, relaxed luxury, travel'},
   'Faherty':{w:1,u:'https://fahertybrand.com/search?q=',t:'$$$',a:'Coastal Chic, Elevated Natural',s:[],d:[10,2,8,7,3,10,3,3,8,6],c:'resortwear, knitwear, beach lifestyle'},
-  'Marine Layer':{w:1,u:'https://www.marinelayer.com/search?q=',t:'$$',a:'Casual Classic, Elevated Natural',s:[],d:[10,2,7,6,4,10,2,3,8,5],c:'soft basics, casualwear, weekend style'},
-  'Rails':{w:1,u:'https://www.railsclothing.com/search?q=',t:'$$$',a:'Elevated Natural, California Casual',s:[],d:[9,3,8,6,5,9,4,4,8,5],c:'soft shirts, dresses, casual luxury'},
   'Cuyana':{u:'https://www.cuyana.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[8,2,10,10,2,6,7,4,10,1],c:'leather handbags, timeless accessories'},
   'Eileen Fisher':{u:'https://www.eileenfisher.com/search?q=',t:'$$$',a:'Elevated Natural, Modern Minimalist',s:['petite','plus'],d:[10,1,9,10,1,8,6,2,10,2],c:'sustainable luxury, linen, relaxed tailoring'},
   // Minimal / tailored
   'Theory':{w:1,u:'https://www.theory.com/search/?lang=default&q=',t:'$$$',a:'Modern Minimalist, Professional Power',s:[],d:[2,3,10,10,4,3,10,9,10,2],c:'tailoring, workwear, luxury basics'},
   'Vince':{w:1,u:'https://www.vince.com/search?q=',t:'$$$',a:'Quiet Luxury, Modern Minimalist',s:[],d:[7,2,10,10,4,6,8,7,10,2],c:'luxury basics, knitwear, outerwear'},
-  'COS':{w:1,u:'https://www.cos.com/en-us/search?q=',t:'$$',a:'Modern Minimalist',s:[],d:[9,2,9,9,7,6,7,4,10,2],c:'architectural basics, tailoring'},
   'M.M.LaFleur':{u:'https://mmlafleur.com/search?q=',t:'$$$',a:'Professional Power, Modern Minimalist',s:['plus'],d:[2,3,10,10,3,3,10,9,10,2],c:'executive workwear, tailoring'},
   // Romantic / boho
   'Sézane':{u:'https://www.sezane.com/us-en/search?s=',t:'$$$',a:'Parisian Chic, Romantic Feminine',s:[],d:[6,5,9,9,7,6,7,7,8,7],c:'knitwear, blouses, timeless french style'},
   'LoveShackFancy':{u:'https://loveshackfancy.com/search?q=',t:'$$$$',a:'Romantic Feminine, Playful Chic',s:[],d:[7,8,9,6,9,5,9,6,4,10],c:'feminine dresses, occasion, florals'},
   'Free People':{u:'https://www.freepeople.com/search?q=',t:'$$-$$$',a:'Bohemian Chic, Romantic Feminine',s:['petite'],d:[10,6,6,4,8,10,3,3,5,9],deep:1,c:'boho fashion, sweaters, dresses'},
-  'Johnny Was':{u:'https://www.johnnywas.com/search?q=',t:'$$$',a:'Bohemian Chic, Elevated Natural',s:['petite','plus'],d:[10,4,8,5,6,9,4,3,4,10],c:'embroidered tops, resortwear, relaxed luxury'},
   "Altar'd State":{u:'https://www.altardstate.com/search?q=',t:'$$',a:'Romantic Feminine, Bohemian Chic',s:[],d:[7,5,6,6,7,8,5,6,6,8],c:'dresses, casual feminine fashion'},
   'Reformation':{u:'https://www.thereformation.com/search?q=',t:'$$$',a:'Romantic Feminine, Modern Chic',s:['petite','plus'],d:[3,9,9,6,9,5,9,10,7,8],c:'dresses, sustainable fashion, occasion'},
   // Edgy
@@ -4129,11 +4121,50 @@ const STORES={
   'Tory Burch':{u:'https://www.toryburch.com/en-us/search/?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[5,5,9,9,6,6,8,6,8,8],c:'handbags, shoes, workwear, resort'},
   'Gucci':{w:1,u:'https://www.gucci.com/us/en/search?searchString=',t:'$$$$',a:'Glamorous Luxe, Luxury Fashion',s:[],d:[3,10,10,8,10,4,10,9,8,10],c:'designer handbags, shoes, belts, accessories'},
   'Tiffany & Co.':{u:'https://www.tiffany.com/search/?q=',t:'$$$$',a:'Luxury Fashion, Classic Sophisticate',s:[],d:[5,6,10,10,4,2,10,5,9,6],c:'fine jewelry, luxury gifts'},
-  'Kendra Scott':{u:'https://www.kendrascott.com/search?q=',t:'$$',a:'Playful Chic, Modern Glam',s:[],d:[5,5,7,6,7,7,6,5,5,10],c:'fashion jewelry, gifts, statement earrings'},
   // Eyewear
   'Sunglass Hut':{u:'https://www.sunglasshut.com/?q=',t:'$$-$$$$',a:'Universal',s:[],d:[5,5,8,7,8,6,7,5,7,8],deep:'eyewear',c:'designer sunglasses, eyewear'},
   'Warby Parker':{u:'https://www.warbyparker.com/search?q=',t:'$$',a:'Modern Minimalist',s:[],d:[5,2,9,9,5,8,4,5,8,6],c:'prescription glasses, sunglasses'},
-  'Quay':{u:'https://www.quay.com/search?q=',t:'$$',a:'Trendsetter, Modern Glam',s:[],d:[5,7,6,3,10,8,5,5,6,9],c:'fashion sunglasses'}
+  'Quay':{u:'https://www.quay.com/search?q=',t:'$$',a:'Trendsetter, Modern Glam',s:[],d:[5,7,6,3,10,8,5,5,6,9],c:'fashion sunglasses'},
+  /* ▶▶ HER LIST, 2026-09-08. She sent 21 shops to ADD and 9 to REMOVE, and a
+     final roster of 122. The diff was checked against the table before touching
+     anything and matched her instruction exactly: 21 in, 9 out.
+     ▶ SHE OWES NAMES AND NOTHING ELSE (the 2026-09-08 rule). Search urls were
+       found and probed here, not asked of her.
+     ✅ VERIFIED FROM HERE — real term returns results AND a gibberish term does
+       not: Ashley Stewart, Frances Valentine, Lord & Taylor, MZ Wallace, Staud,
+       Teri Jon.
+     ⚠️ NOT VERIFIABLE FROM HERE (bot-walled, or the results render client-side so
+       a real term and gibberish come back byte-identical). The pattern is the
+       most likely one for that platform, NOT a confirmed one — treat it as a
+       best guess and fix it from her address bar if a link ever lands wrong.
+     🚨 THIS DOES NOT AFFECT WHETHER HER PRODUCTS ARE FOUND. The finder matches
+       by DOMAIN, so every shop below is searchable the moment it is here. The
+       url only builds the AI's own 'find this at X' link.
+     ⚠️ AERIE AND AMERICAN EAGLE SHARE ae.com ON PURPOSE — aerie.com redirects
+       there. Aerie is a brand inside AE's site, so its products genuinely live
+       on that domain and both keys should point at it. */
+  'Aerie':{u:'https://www.ae.com/us/en/search?searchText='},   // ⚠️ url unverified
+  'American Eagle':{u:'https://www.ae.com/us/en/search?searchText=',w:1},   // ⚠️ url unverified
+  'ASOS':{u:'https://www.asos.com/us/search/?q=',w:1},   // ⚠️ url unverified
+  'Ashley Stewart':{u:'https://www.ashleystewart.com/search?q='},
+  'City Chic':{u:'https://www.citychiconline.com/search?q='},   // ⚠️ url unverified
+  'Club Monaco':{u:'https://www.clubmonaco.com/search?q=',w:1},   // ⚠️ url unverified
+  'Frances Valentine':{u:'https://francesvalentine.com/search?q='},
+  'Honeylove':{u:'https://www.honeylove.com/search?q='},   // ⚠️ url unverified
+  'Karen Millen':{u:'https://www.karenmillen.com/pages/search-results-page?q='},   // ⚠️ url unverified
+  'L*Space':{u:'https://lspace.com/search?q='},   // ⚠️ url unverified
+  'L.L.Bean':{u:'https://www.llbean.com/llb/search/?freeText=',w:1},   // ⚠️ url unverified
+  'Lilly Pulitzer':{u:'https://www.lillypulitzer.com/search?q='},   // ⚠️ url unverified
+  'Long Tall Sally':{u:'https://www.longtallsally.com/search?q='},   // ⚠️ url unverified
+  'Lord & Taylor':{u:'https://lordandtaylor.com/search?q=',w:1},
+  'Mestiza New York':{u:'https://mestizanewyork.com/search?q='},   // ⚠️ url unverified
+  'MZ Wallace':{u:'https://www.mzwallace.com/search?type=product&q='},
+  'Ramy Brook':{u:'https://www.ramybrook.com/catalogsearch/result/?q='},   // ⚠️ url unverified
+  'Reiss':{u:'https://www.reiss.com/us/search?q=',w:1},   // ⚠️ url unverified
+  'Rothy\'s':{u:'https://rothys.com/search?q=',w:1},   // ⚠️ url unverified
+  'Staud':{u:'https://staud.clothing/search?q='},
+  'Teri Jon':{u:'https://www.terijon.com/search?q='},
+
 };
 // Kept as a plain name→url map because linkStores() and older callers use it.
 const storeUrls={};Object.keys(STORES).forEach(function(k){storeUrls[k]=STORES[k].u});

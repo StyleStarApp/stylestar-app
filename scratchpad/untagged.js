@@ -81,11 +81,30 @@ catch (e) { console.log('  ⚠ baseline ' + BASE + ' not in this clone — the b
 const stores = loadStores();
 const names = Object.keys(stores);
 
-console.log('\nPART 1 — nothing about her 108 tagged stores changes');
-const now = build(src, JSON.parse(JSON.stringify(stores)));
-const was = before ? build(before, JSON.parse(JSON.stringify(stores))) : null;
-ok('all ' + names.length + ' stores still carry her ten scores',
-   names.every(k => Array.isArray(stores[k].d) && stores[k].d.length === 10));
+console.log('\nPART 1 — nothing about her SCORED stores changes');
+// 🚨🚨 REWRITTEN 2026-09-08, AND THE REASON IS THE BEST NEWS IN THIS SUITE.
+// This used to assert that EVERY store carries her ten scores, and to run the
+// pre-fix code against the whole live table. Both were fine while every shop she
+// had was scored. ▶ On 2026-09-08 she sent a roster of 122 with 21 shops added as
+// plain names — exactly the yes/no approval this fix was built to allow — and the
+// old code CRASHED on the real table, which is precisely the bug it exists to
+// stop, arriving for real instead of as a fixture.
+// ▶ SO THE COMPARISON NOW RUNS ON THE SCORED STORES ONLY. That still proves the
+//   guarantee it was written for — her scored shops rank in exactly the order they
+//   did before the guard existed — while PART 2 proves the crash using her real
+//   unscored shops rather than a synthetic one.
+const scoredOnly = {};
+for (const k of Object.keys(stores)) if (Array.isArray(stores[k].d) && stores[k].d.length === 10) scoredOnly[k] = stores[k];
+const scoredNames = Object.keys(scoredOnly);
+const unscoredNames = Object.keys(stores).filter(k => !scoredOnly[k]);
+const now = build(src, JSON.parse(JSON.stringify(scoredOnly)));
+const was = before ? build(before, JSON.parse(JSON.stringify(scoredOnly))) : null;
+ok('every SCORED store carries all ten of her numbers',
+   scoredNames.every(k => stores[k].d.length === 10), String(scoredNames.length));
+ok('and the unscored ones are her deliberate yes/no rows, not accidents',
+   unscoredNames.every(k => typeof stores[k].u === 'string' && /^https:\/\//.test(stores[k].u)),
+   unscoredNames.join(', '));
+console.log('     (' + scoredNames.length + ' scored, ' + unscoredNames.length + ' name-only)');
 const rankNow = vm.runInContext('_rankedStores(null)', now);
 const promptNow = vm.runInContext('_storeListForPrompt(null,45)', now);
 if (was) {
@@ -96,6 +115,19 @@ if (was) {
 }
 ok('an occasion still re-orders the list',
    JSON.stringify(vm.runInContext('_rankedStores(0.95)', now)) !== JSON.stringify(rankNow));
+
+// ▶▶ THE REGRESSION PROOF, NOW WITH HER REAL TABLE RATHER THAN A FIXTURE.
+if (was && unscoredNames.length) {
+  const fullOld = build(before, JSON.parse(JSON.stringify(stores)));
+  const fullNew = build(src, JSON.parse(JSON.stringify(stores)));
+  let oldThrew = false;
+  try { vm.runInContext('_rankedStores(null)', fullOld); } catch (e) { oldThrew = true; }
+  ok('her REAL table would have crashed the pre-guard code', oldThrew,
+     'it did not throw — has the baseline moved?');
+  let newOk = false;
+  try { newOk = vm.runInContext('_rankedStores(null)', fullNew).length === Object.keys(stores).length; } catch (e) {}
+  ok('...and the guarded code ranks all ' + Object.keys(stores).length + ' of them', newOk);
+}
 
 console.log('\nPART 2 — the crash the fix exists to stop');
 // Exactly what a yes/no approval produces: a name, a search URL, and her
@@ -122,8 +154,15 @@ ok('every tagged store is still in the list too',
    !!ranked && names.every(k => ranked.indexOf(k) >= 0));
 ok('it sorts to the END, because we cannot honestly place it',
    !!ranked && ranked[ranked.length - 1] === 'Kohls');
-ok('the tagged stores keep their exact order among themselves',
-   !!ranked && JSON.stringify(ranked.filter(k => k !== 'Kohls')) === JSON.stringify(rankNow));
+// ⚠️ COMPARED AGAINST THE FULL LIVE TABLE, not the scored-only one used in PART 1.
+//    PART 1 asks "did the guard disturb her scored shops" and needs a scored-only
+//    baseline; THIS asks "does adding one more untagged shop disturb anything at
+//    all", so its baseline must be the real table she actually has — which since
+//    2026-09-08 contains 21 name-only shops of her own.
+const rankFull = vm.runInContext('_rankedStores(null)',
+  build(src, JSON.parse(JSON.stringify(stores))));
+ok('every other store keeps its exact place when one more is added',
+   !!ranked && JSON.stringify(ranked.filter(k => k !== 'Kohls')) === JSON.stringify(rankFull));
 
 console.log('\nPART 4 — named, never described: no invented tags');
 let prompt = null, threwPrompt = null;

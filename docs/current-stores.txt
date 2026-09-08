@@ -1,12 +1,16 @@
 Abercrombie
+Aerie
 Alice + Olivia
 AllSaints
 Alo Yoga
 Altar'd State
 Amazon
+American Eagle
 Ann Taylor
 Anthropologie
 Aritzia
+Ashley Stewart
+ASOS
 Athleta
 Baby Gold
 Banana Republic
@@ -16,8 +20,9 @@ Bergdorf Goodman
 Bloomingdales
 Boden
 Chico's
+City Chic
+Club Monaco
 Coach
-COS
 COUTR
 Cuyana
 Diane von Furstenberg
@@ -32,37 +37,41 @@ Express
 Faherty
 FARM Rio
 Fleur du Mal
+Frances Valentine
 Frank & Eileen
 Free People
 Gap
-Garnet Hill
 Good American
 Gorjana
 Gucci
 H&M
+Honeylove
 IZOD
 J.Crew
 J.Jill
 J.McLaughlin
-Jenni Kayne
-Johnny Was
-Kendra Scott
+Karen Millen
 Kohl's
+L.L.Bean
+L*Space
 Lacoste
 Lands' End
 Lane Bryant
 Levi's
+Lilly Pulitzer
 LOFT
+Long Tall Sally
+Lord & Taylor
 LoveShackFancy
 Lululemon
 M.M.LaFleur
 Macy's
-Madewell
 Mango
-Marine Layer
 Marissa Collections
 Mejuri
+Mestiza New York
 Mytheresa
+MZ Wallace
 Naturalizer
 Neiman Marcus
 NET-A-PORTER
@@ -75,22 +84,25 @@ Petite Studio
 Quay
 Quince
 Rag & Bone
-Rails
+Ramy Brook
 Reformation
+Reiss
 Revolve
+Rothy's
 Sachin & Babi
 Saks
 Sam Edelman
 Sézane
 Shopbop
 SKIMS
-Soft Surroundings
 Soma
 Spanx
+Staud
 Summersalt
 Sunglass Hut
 Talbots
 Target
+Teri Jon
 Theory
 Tiffany & Co.
 TJ Maxx

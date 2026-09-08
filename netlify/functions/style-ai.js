@@ -1,3 +1,4 @@
+import STORE_DOMAINS from './lib/store-domains.js';
 // Hosts allowed to use this function. The request's own host is allowed too
 // when it is a *.netlify.app one, so deploy previews keep working.
 const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
@@ -102,35 +103,19 @@ const SEARCH_MAX_USES = 3;
 // still work — search just can't look there). Generated from the real table
 // 2026-07-31; 102 stores (Saks Off 5th removed 2026-08-03 — they closed their
 // online store; Fleur du Mal added 2026-08-26).
-const SEARCH_DOMAINS = [
-  'abercrombie.com', 'aliceandolivia.com', 'allsaints.com', 'aloyoga.com',
-  'altardstate.com', 'amazon.com', 'anntaylor.com', 'anthropologie.com',
-  'aritzia.com', 'athleta.gap.com', 'babygold.com', 'bananarepublic.gap.com',
-  'bananarepublicfactory.gapfactory.com', 'belk.com', 'bergdorfgoodman.com', 'bloomingdales.com',
-  'chicos.com', 'coach.com', 'cos.com', 'coutr.com', 'cuyana.com',
-  'dillards.com', 'dsw.com', 'dvf.com', 'eileenfisher.com', 'eloquii.com',
-  'etsy.com', 'everlane.com', 'everythingbutwater.com', 'vilebrequin.com', 'express.com', 'fahertybrand.com',
-  'farmrio.com', 'fleurdumal.com', 'frankandeileen.com', 'freepeople.com', 'gap.com',
-  'garnethill.com', 'goodamerican.com', 'gorjana.com', 'gucci.com',
-  'izod.com', 'jcrew.com', 'jennikayne.com', 'jjill.com',
-  'jmclaughlin.com', 'johnnywas.com', 'kendrascott.com',
-  'lacoste.com', 'landsend.com', 'lanebryant.com', 'levi.com',
-  'loft.com', 'loveshackfancy.com', 'macys.com', 'madewell.com',
-  'marinelayer.com', 'marissacollections.com', 'mejuri.com', 'mmlafleur.com', 'mytheresa.com', 'naturalizer.com',
-  'neimanmarcus.com', 'net-a-porter.com', 'nordstrom.com', 'nordstromrack.com',
-  'olivela.com',
-  'nydj.com', 'oldnavy.gap.com', 'petitestudionyc.com', 'quay.com',
-  'quince.com', 'rag-bone.com', 'railsclothing.com', 'revolve.com',
-  'sachinandbabi.com', 'saksfifthavenue.com', 'samedelman.com', 'sezane.com',
-  'shop.lululemon.com', 'shop.mango.com', 'shopbop.com', 'skims.com',
-  'softsurroundings.com', 'soma.com', 'spanx.com', 'summersalt.com',
-  'sunglasshut.com', 'talbots.com', 'target.com', 'theory.com',
-  'thereformation.com', 'tiffany.com', 'tjmaxx.tjx.com', 'tnuck.com',
-  'tommybahama.com', 'torrid.com', 'toryburch.com', 'uniqlo.com',
-  'universalstandard.com', 'us.boden.com', 'veronicabeard.com', 'vince.com',
-  'vuoriclothing.com', 'warbyparker.com', 'whitehouseblackmarket.com', 'www2.hm.com',
-  'zappos.com', 'zara.com',
-];
+/* 🚨🚨 DERIVED, NOT HAND-MAINTAINED — CHANGED 2026-09-08 AND IT RETIRES A WHOLE
+   CLASS OF BUG. This used to be a hand-typed list, and it was one of the SIX
+   edits needed to add a merchant — one of the two that fail SILENTLY, because a
+   shop missing from here is simply invisible to the stylist's search while
+   everything on screen looks perfectly normal.
+   ▶ It went stale twice in one day: COUTR had to be added by hand, and then her
+     2026-09-08 roster (21 shops in, 9 out) left it 13 short. Both times the only
+     thing that noticed was a derived test.
+   ▶▶ NOW IT READS THE SAME GENERATED FILE THE PRODUCT FINDER USES, so the
+     stylist's search and the finder's allowlist can never disagree again, and
+     adding a shop is one edit fewer. `node scripts/build-store-domains.js`
+     regenerates it from her table; `--check` fails if it is stale. */
+const SEARCH_DOMAINS = Object.values(STORE_DOMAINS).map(s => s.host).filter(Boolean);
 
 // Per-instance memo of domains the search API has reported as blocked (a store
 // can block Anthropic's crawler — Gucci does — and ONE blocked domain fails the

@@ -473,6 +473,41 @@ look-up 6s) · a failed search says so instead of rendering silence · `SERPAPI_
 came up with is fine and the stylist chat already has a good personality and words things well."*
 **They are no longer placeholders. Do not rewrite them.**
 
+### 🏬🏬 HER STORE ROSTER — 122 SHOPS, HER LIST, 2026-09-08
+▶▶ **She sent 21 shops to ADD, 9 to REMOVE, and a final roster of 122. The diff was checked against the
+table BEFORE touching anything and matched her instruction exactly, then checked again afterwards —
+empty in both directions.** `docs/current-stores.txt` holds the live list.
+**IN:** Aerie · American Eagle · ASOS · Ashley Stewart · City Chic · Club Monaco · Frances Valentine ·
+Honeylove · Karen Millen · L*Space · L.L.Bean · Lilly Pulitzer · Long Tall Sally · Lord & Taylor ·
+Mestiza New York · MZ Wallace · Ramy Brook · Reiss · Rothy's · Staud · Teri Jon
+**OUT:** COS · Garnet Hill · Jenni Kayne · Johnny Was · Kendra Scott · Madewell · Marine Layer · Rails ·
+Soft Surroundings
+⚠️ **SIX OF HER 107 CATALOG PICKS WERE DEACTIVATED, because their shop is gone:** `p001` Madewell
+Perfect Vintage Jean · `p015` COS Pintucked Blouse · `p057` Madewell Woven Tote · `p064` Madewell
+Earrings · `p089` Reebok Club C (Madewell) · `p104` Marine Layer Camila Midi. **101 active.** ▶ A pick
+from a shop she no longer approves should not be shown; this is the consequence of her decision, not a
+separate one. **Say so rather than letting them vanish quietly.**
+✅ **SEARCH URLS WERE FOUND AND PROBED HERE, NOT ASKED OF HER** (the "she owes names" rule). **Verified
+with a real term AND a gibberish control: Ashley Stewart · Frances Valentine · Lord & Taylor · MZ
+Wallace · Staud · Teri Jon.** ⚠️ **The other 15 could not be checked from here** — bot-walled, or the
+results render client-side so a real term and gibberish come back byte-identical. **They carry the most
+likely pattern for that platform and are marked `// ⚠️ url unverified` in the table.**
+🚨 **THIS DOES NOT AFFECT WHETHER HER PRODUCTS ARE FOUND — the finder matches by DOMAIN.** An unverified
+url only shapes the AI's own "find this at X" link. **Fix one opportunistically from her address bar if
+a link ever lands wrong; do not ask her for fifteen.**
+⚠️ **AERIE AND AMERICAN EAGLE SHARE `ae.com` ON PURPOSE** — aerie.com redirects there, Aerie is a brand
+inside AE's site, so its products genuinely live on that domain.
+⭐⭐ **AND THE 2026-09-07 UNTAGGED-STORE GUARD GOT ITS FIRST REAL TEST AND PASSED.** 22 of the 122 now
+carry no dimension scores. Measured in the live page: **all 122 rank, all 22 unscored sit at the END,
+`_shopRules` builds, zero page errors.** ▶ **`untagged` now proves it with her REAL table rather than a
+fixture: "her REAL table would have crashed the pre-guard code" ✓ and "the guarded code ranks all 122"
+✓.** The September fix was written for exactly this week and nobody knew it yet.
+✅✅ **`SEARCH_DOMAINS` IS NOW DERIVED, WHICH RETIRES ONE OF THE SIX EDITS FOREVER.** It was a hand-typed
+list in `style-ai.js` — one of the two that fail SILENTLY — and it went stale TWICE in one day (COUTR by
+hand, then 13 short after this roster). **It now reads the same generated file the product finder uses,
+so the stylist's search and the finder's allowlist cannot disagree.** ▶ **Adding a merchant is now FIVE
+edits, not six**, and `searchtune` asserts the derivation rather than a count.
+
 ### 💰🚨 SERPAPI — LIVE OPERATIONAL STATUS, AND THE MATHS THAT REFRAMES IT (2026-09-08)
 🚨🚨 **HER DASHBOARD, 2026-09-08: 216 OF 250 USED. 34 LEFT.** Her file said ~75 on 2026-09-06 — **so
 ~141 went in one afternoon, and almost all of it was Claude testing against the LIVE endpoint.**
