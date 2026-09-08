@@ -7,6 +7,147 @@ by email.
 
 ---
 
+## 🗂️🗂️ THE MASTER TO-DO LIST — EVERYTHING, INCLUDING THE LOOSE ENDS (built 2026-09-08 at her request)
+▶▶ **HER ASK, VERBATIM:** *"I will need to see a full list of to-do's not just these current things but
+everything including loose ends so I can get organized and momentum going."*
+⚠️ **NOTHING HERE IS INVENTED. Every item traces to a section further down this file or to a decision she
+made.** ▶ **KEEP THIS UPDATED AND NEVER ARCHIVE IT** — it is the answer to her standing ask that Claude
+*"keep PUSHING her on the to-do list and keep her ON TRACK / focused each session."*
+🚨 **AND THE ONE-LINE TRUTH TO SAY OUT LOUD EVERY TIME SHE ASKS WHAT UNLOCKS THIS: the thing standing
+between Style Star and a mid-market feed is USERS, not code and not craft.** Everything below is worth
+doing; **only the testers change the ceiling.**
+
+### ⭐ THE THREE THAT MOVE THE APP — start here
+| # | What | Who | State |
+|---|---|---|---|
+| 1 | **Hand `docs/store-scoring-brief.md` to ChatGPT** — the ~200-store list. Her words 2026-09-07: *"I want to give that very careful attention… I need to be back at my desk."* | **HER** (desk job) | ▶ waiting |
+| 2 | **Re-run her three chat messages** on the live build — Napa wedding · blush silk wrap dress · navy on me. The Napa one is the one to watch. | Claude + **her eye** | ▶ ready |
+| 3 | **Shop your Style** — wire the finder into it. She called it *"an enormous difference."* | Claude | ▶ not started |
+
+### 🏛️ BUSINESS & LEGAL
+✅ **THE WHOLE LEGAL CHAIN IS NOW DONE:** LLC · EIN · trademark filed · **business bank account, credit
+and debit cards** (confirmed by her 2026-09-08). ▶ **The 2026-06-28 sequencing decision — "legal chain
+first, THEN affiliates" — is satisfied. Nothing legal blocks the money path any more.**
+- ▶ **CLOSE THE SOLE PROPRIETORSHIP** — see its own section below for the full detail and the wording.
+  Three parts: **(a)** loose-ends check (bank/PayPal/insurance/domain/social/client agreements still in
+  the old name) · **(b)** close the Orange County business tax receipt — **BY EMAIL OR MAIL, NOT IN
+  PERSON** · **(c)** cancel the fictitious name on Sunbiz, form CR4E001 **section 4 only**, mailed.
+- ⏳ **DO NOT PAY the Your Fashion Friend renewal notice that just arrived.** The FL business tax year
+  turns over **October 1**. ▶ **This is the only genuinely time-sensitive item on this whole page.**
+- ▶ **GET A BUSINESS TAX RECEIPT FOR STYLE STAR LLC.** Call **407-246-2204** and ask three things:
+  am I inside Orlando city limits · do I need the Home Occupation Application (one-time $50) · **should
+  I apply before or after October 1** so I do not pay twice.
+- ▶ **TELL HER ACCOUNTANT ONE DATE:** the day she stopped operating as Your Fashion Friend. It splits
+  the year between a final Schedule C and everything under the LLC. **And ask about startup expenses** —
+  the LLC is running at a loss and that is the tax-relevant part this year, not the $27.
+- ⚠️ **INDIE LAW — UNRESOLVED AND WORTH CHASING.** A combined 2-ask reply was drafted for her on
+  2026-08-05 and **nobody knows whether she sent it or what came back**: (a) her middle name is
+  misspelled in the filed Articles — **"CATHERINE BAIL ELLSPERMANN"** in Articles III + IV while both
+  signature lines correctly read BAILEY · (b) the **Operating Agreement was delivered INCOMPLETE** —
+  blank effective date, `#Registered Agent Name#` placeholder still in §1.2, Exhibit A unconfirmed.
+  ▶ **Banks often want the operating agreement, and she now HAS the bank account — so ask whether they
+  accepted it as-is, which tells us how urgent the fix is.**
+- ▶ **WATCH FOR THE TRADEMARK "FINAL ACTION STEPS" EMAIL.** It will need her signature/declaration and
+  **it is REAL** — ⚠️ **distinguish it from the scam wave**, which is still live: any LLC-related ask for
+  money that is not from Almira, the State of Florida directly, or the IRS is junk.
+- ▶ **SOMEDAY, ZERO URGENCY: a registered-agent service (~$100/yr)** would keep her home address off
+  FUTURE public filings. She is her own registered agent today, which is why the scrapers found her.
+
+### 💰 THE MONEY PATH — live status
+💵 **EARNINGS TO DATE: $27 in the Rakuten dashboard. Everything else has been an expense.** (Her figure,
+2026-09-08.) ▶ **Recorded because it is live operational status, and because it is the honest baseline
+that makes any future number mean something.**
+- ▶ **AWIN — 3 applications PENDING:** Jackie Mack Designs · TERI JON · Under Armour US. ⚠️ **NONE of
+  them fixes the price problem** — activewear, jewellery and eveningwear respectively (her own
+  correction, and the measurement upheld it).
+- ▶ **CJ — free, no clock, "costs nothing but an evening." NOT DONE.** The cheapest open move on the board.
+- ▶ **NORDSTROM CREATORS** (`nordstromcreators.com`) — door 2 for Nordstrom, when her follower count is
+  not the weakest thing she brings.
+- ▶ **REAPPLY to Impact, Bloomingdale's and Shopbop** from a stronger position. All three declined for
+  **TRAFFIC**, not for the app. Costs nothing.
+- 🚨 **AMAZON LAST.** 3 qualifying sales within 180 days **of APPROVAL**. Applying with no users burns
+  the window for nothing.
+- ⚠️ **WHAT ACTUALLY FIXES THE PRICES: a mid-market GENERALIST or a department store.** Every fed store
+  is `$$$`/`$$$$` (dress median $398). **That is users, not an application.**
+
+### 🛠️ THE APP — things Claude can build
+- ▶ **Shop your Style** ← item 3 above, the big one.
+- ▶ **A SPEND CAP + CACHING for SerpApi.** ~15¢ per shopping question and it is the app's **first
+  per-user cost**. Her stance is VALUE FIRST and is not to be re-litigated — **the cap is the seatbelt,
+  not a second-guess.** Caching first (repeat questions cost nothing), then a hard monthly ceiling.
+- ▶ **FIX THE FLAKY `curated.js` CHECK PROPERLY** — *"never ruffles" removes the ruffled item* reports
+  64/1 and is **time/state dependent, NOT a regression** (proven against `097585b`). 🚨 **Fix it with an
+  isolated context, NEVER by loosening the assertion:** it guards the never-wear list, which exists
+  because of a box of shift dresses, and a test that cries wolf on THAT rule teaches the next session to
+  wave it through.
+- ▶ **A REAL TEST FOR "store-pool eligibility"** — the one ▶-marked ledger row worth it. **It becomes
+  load-bearing the moment an eighth merchant is wired in.**
+- ▶ **DRAFT THE TWELVE RAKUTEN MERCHANT ENTRIES** with `scripts/store-draft.js`, show her the
+  neighbours, she corrects. Her standing ask: *"I want to be able to get approved for more affiliates and
+  be able to add them without having to go through all."*
+- ▶ **COUNT HOW MANY OF HER 108 RUN ON SHOPIFY.** Free, unmeasured, nobody has done it. Shopify stores
+  publish a public product file with **exact variant size + stock** — real width/size truth for the DTC
+  half of her list.
+- ⭐ **THE FOUNDER STORY ON THE HOME PAGE** (`s-wel`) — **Sally Hogshead's note, and Cath wants it.** A
+  small elegant first-person founder line + *"Read my story →"*. ▶ **The one marketing item that is
+  Claude-buildable, and it is the differentiation nobody can copy.** Still not built.
+- ▶ **THE SAVED-ITEMS / FAVES LIST** (her parked question 2, and *"the strongest feature idea on the
+  board"*). Most machinery exists — `wardrobeData` already persists to localStorage AND Supabase. **The
+  gap is WHAT gets saved:** hearts save CATEGORIES, she described saving a SPECIFIC card. ▶ It connects
+  the parked "email me my wishlist", the planned Wardrobe email capture and product images — **and it is
+  the only mechanism the app has for making a woman COME BACK.**
+
+### 🤔 SMALL DECISIONS ONLY SHE CAN MAKE (quick, and they unblock code)
+- ▶ **TAXONOMY GAPS, none invented:** mini skirts · jumpsuits/rompers · gloves · clogs · wellingtons ·
+  bags named only "Bag".
+- ▶ **FOUR DEFAULTS SET FOR HER AND CONFESSED — confirm or change:** a plain "Sandal" → Flat sandals ·
+  "Boot" → Ankle boots · "Hat" → Sun hats · "Skirt" → Flowy skirt.
+- ▶ **TWO ROWS THAT ARE HONESTLY EMPTY:** `ac11` Matching athletic sets · `sl2` Nightgowns.
+- ▶ **KOHL'S AND ZARA** — approved by her, **still need her tags** before they go in. Kohl's alone was
+  +28 results and appeared in 8 of 10 test searches.
+- ▶ **WALMART — still hers to rule on.** Left out as a quality call, not a rule.
+- ▶ **BREADTH vs FIT** — Nordstrom tops 20 of 28 archetypes because it is strong on both sides of every
+  pair. **Deliberately left alone: a stylist judgment, not an engineering one.**
+
+### 📝 CONTENT — only she can do these
+- ▶ **MORE "WHAT'S TRENDING" ITEMS.** Claude drafts in her voice, **she approves/cuts/rewrites** — she is
+  the trend authority. Re-sort seasonally; every addition relights the New pill automatically.
+- ▶ **MORE STYLE STAR EDIT ITEMS.** Same pattern. ⚠️ **CLAUDE MUST NEVER PICK THE PRODUCTS** — the
+  disclosure says every piece is personally selected by the founder. **Protect that.**
+- ⭐ **HOMEWORK 6 — THE REAL QUALITY GATE, still IN PROGRESS and still the highest-value thing she can
+  do:** tap through 10-15 suggestions across Shop your style, Wardrobe Ideas and Complete the Look and
+  say **where the searches land wrong.** Claude can prove a link returns results; **only she can judge
+  whether the search term was the right one.**
+- ▶ **HOMEWORK 4 — SPOT-VERIFY THE UNVERIFIED STORES** with the address-bar trick. Outstanding: Talbots ·
+  Kendra Scott · SKIMS · Lane Bryant · Dia&Co · Sam Edelman · Lacoste · Tory Burch · Belk · Bergdorf
+  Goodman · TJ Maxx · Sunglass Hut · Warby Parker · Dillard's. **Only worth doing for stores she would
+  actually send a client to.**
+- ▶ **HOMEWORK 7 — FIRST TESTERS, her own timing.** 5-10 warm, constructive people; skip the AI-hostile;
+  include a couple who do NOT know her, to judge the product not the person. **Her soft-launch instinct
+  is legitimate and protected.**
+
+### 🔒 BLOCKED UNTIL AFFILIATE APPROVALS LAND (surface at money-path step 7)
+- ▶ **More swim stores + a proper swim section in the Mall** (her own ask).
+- ▶ **Deep PRODUCT links instead of store searches** — the whole app still uses `getStoreUrl()` search
+  links, which convert far worse.
+- ▶ **Audit every outbound link for her tag:** Mall · Edit · Complete the Look · Wardrobe Ideas · Shop
+  your style.
+- ▶ **PRODUCT IMAGES** on the Edit, Mall and Wardrobe — turns them into real lookbooks, **and it is the
+  answer to the Build hub feeling small.** She asked to be reminded of that connection at this moment.
+- ▶ **AMAZON'S REQUIRED SENTENCE, exact wording, the moment the first Amazon link goes live:**
+  *"As an Amazon Associate I earn from qualifying purchases."* **The edit list is the SIX disclosure
+  places** already catalogued below.
+- ▶ **Confirm final FTC disclosure wording/placement with Almira.**
+
+### ⚖️ LOW PRIORITY, FLAGGED NOT FIXED
+- ▶ **The privacy policy does not name its sub-processors** (Supabase, MailerLite, Anthropic) and has
+  **no California/CCPA section.** Neither blocks affiliate approval. **Worth asking Almira when the
+  trademarks are done.**
+- ⚠️ **Shopbop and Bloomingdale's are still shown as stores and both rejected her** — those taps earn
+  $0. **NOT A BUG**: commission data stays out of the app on purpose. Recorded so nobody "fixes" it.
+
+---
+
 ## ▶ NEXT SESSION — START HERE (2026-09-07 — A LATENT CRASH CLOSED, AND HER TWO PHOTOS FIXED)
 
 ### ⭐⭐⭐ THE ONE-LINE SUMMARY
@@ -780,7 +921,14 @@ because it's saved on GitHub.
 - **Legal pages (for affiliate application forms):** stylestar.app/privacy · /terms · /story · /faq
 - **Emails / user data:** Supabase (stores data) + MailerLite (sends email)
 
-### ▶ DECISION (2026-06-28): affiliate applications ON HOLD until LLC + EIN + business bank
+### ✅✅ DECISION (2026-06-28): affiliate applications ON HOLD until LLC + EIN + business bank — **THE HOLD IS LIFTED, 2026-09-08**
+🚨🚨 **THIS CONDITION IS NOW FULLY SATISFIED AND THE HOLD NO LONGER APPLIES. Confirmed by Cath
+2026-09-08: the LLC is active, the EIN is issued, the trademarks are filed, and she now has the
+BUSINESS BANK ACCOUNT INCLUDING CREDIT AND DEBIT CARDS.** ▶▶ **So "waiting on the legal chain" is NOT a
+reason to defer an affiliate application any more — and it was the reason for two months. The next
+sequence item is LIVE: apply.** ⚠️ **CJ is free and still not done; that is the cheapest open move on
+the board.** **Amazon still goes LAST, for the 180-day clock, which is a separate reason and still holds.**
+▶ *The original decision, kept because it explains why the gap existed:*
 Cath decided to **wait** on applying to affiliate programs until the **LLC, EIN, and
 business bank account** are set up — so all affiliate income flows through the business
 from day one (clean books / proper separation). This supersedes the earlier "Amazon
@@ -804,6 +952,54 @@ is in `CLAUDE-archive.md`.*
 - **Her home address is on the filing** (she is her own registered agent) — that is why the
   scrapers reached the household phones. Normal for a small LLC. A registered-agent service
   (~$100/yr) would keep it off FUTURE filings. Someday-option, zero urgency.
+### 🏛️ CLOSING THE SOLE PROPRIETORSHIP — HER DECISION 2026-09-08, AND THE FULL HOW
+⭐⭐ **HER DECISION, IN HER WORDS: *"I decided I don't want to keep the name. I am going fully into Style
+Star now."*** ▶ **So "Your Fashion Friend", the d/b/a she has operated under since 2005, is being CLOSED,
+not transferred.** She was offered the alternative — a fictitious name **can** be owned by an LLC, so it
+could have continued as a d/b/a of Style Star by Catherine, LLC, preserving twenty years of name
+recognition with her personal-shopping clients — **and she declined it deliberately.** ⚠️ **DO NOT
+RE-PROPOSE IT.** Her personal shopping now runs under the LLC.
+▶ **WHAT PROMPTED IT:** her business tax receipt arrived in the mail and reminded her. She had looked at
+the website and believed she had to go to the office in person.
+
+**🚨 THE CORRECTION THAT SAVED THE TRIP: SHE DOES NOT.** Closing a business tax receipt in Orange County
+is done **by email or by mail.** ▶ **The in-person requirement she found applies to CHANGES** — address,
+ownership, name — **not to closures.** (In-person changes are at 301 S. Rosalind Avenue.)
+
+**▶▶ AND THE FRAMING THAT TOOK THE WEIGHT OFF: THERE IS NOTHING TO "DISSOLVE."** A sole proprietorship is
+not a registered entity in Florida — it is just her, doing business. **Only three things exist and each
+closes separately: the fictitious name registration (state) · the business tax receipt (county, and city
+if inside Orlando limits) · her tax filings.** It is admin, not a legal unwinding.
+
+**THE STEPS, IN ORDER:**
+1. ⚠️ **LOOSE-ENDS CHECK FIRST** — cancelling the name does not move what is attached to it: any bank
+   account, PayPal/Venmo/Zelle/Stripe in the old name · business insurance · domain, email, social
+   handles (**cancelling the registration does NOT release the domain**) · any client mid-engagement or
+   invoice in the old name.
+2. ⏳ **CLOSE THE COUNTY BUSINESS TAX RECEIPT — TIME-SENSITIVE.** The Florida business tax year runs
+   **Oct 1 – Sep 30**, so the notice that arrived is for the year starting October 1. 🚨 **DO NOT PAY
+   IT.** Write on the notice *"NO LONGER IN BUSINESS…"* with the business name, receipt number, effective
+   date and signature, and mail to **Tax Department, P.O. Box 545100, Orlando, FL 32854** — or email the
+   **Notice of Business Closure** form to **btpc@octaxcol.com**. **Keep a photo of whatever she sends.**
+3. ▶ **CANCEL THE FICTITIOUS NAME.** Form **CR4E001**, **section 4 ONLY**, printed and mailed — **it
+   cannot be done online.** She needs the registration number, free to look up on Sunbiz by name.
+   ⚠️ **Florida's Fictitious Name Act asks for this within 30 DAYS of ceasing to use the name.**
+   ⚠️ **The cancellation FEE was NOT confirmed** — she was told plainly to check it on the form.
+4. ▶ **GET STYLE STAR'S OWN BUSINESS TAX RECEIPT.** Home-based businesses in Florida still owe local
+   business tax — **Fla. Stat. 559.955 (2021) limits what else a city may impose, but not the tax
+   itself.** If she is inside Orlando city limits the city wants **two applications together**: the
+   **Home Occupation Application** (one-time **$50**, zoning review, includes a floor-plan sketch, and a
+   notarized letter if she does not own the residence) **and** the Business Tax Receipt application, plus
+   proof of business name from Sunbiz. **Permitting: 407-246-2204.**
+   ⚠️ **An Orlando MAILING ADDRESS does not prove city limits — she must confirm.**
+5. ▶ **HER ACCOUNTANT NEEDS ONE DATE:** the day she stopped operating as the sole prop. **And the
+   startup-expense conversation** — the LLC is at a loss and that is what matters this year.
+6. ▶ **KEEP THE YOUR FASHION FRIEND RECORDS** — 7 years is the safe figure.
+
+⚠️ **CLAUDE IS NOT HER LAWYER OR HER ACCOUNTANT AND SAID SO PLAINLY.** The research above was fetched
+live from the state, county and city sources on 2026-09-08 rather than recalled. **The tax-timing
+questions are genuinely her accountant's.**
+
 ### ▶ LEGAL UPDATE (2026-08-05 — Indie Law replied: LLC DOCS DELIVERED, TM word mark → FINAL ACTION STEPS)
 Cath's follow-up email (sent this morning) got a same-day reply from the Indie Client Care Team:
 **"Nothing further is needed from you for the trademark. We're sending your word mark application over for
@@ -1366,6 +1562,12 @@ Shopbop, and I did not know. Measured immediately: the archive held 234 mentions
 but the archive is not loaded at session start, so from inside a session it may as well not exist.
 ▶▶ **THIS IS LIVE OPERATIONAL STATUS, WHICH IS AN OPEN THREAD, WHICH BY THIS FILE'S OWN RULE IS NEVER
 ARCHIVED. Keep it here and keep it current.** Her words: *"all of that is important to overall strategy."*
+
+💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
+AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
+that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
+works, the feed works, the finder works — and $27 is what no users looks like.** **Not a failure, a
+measurement.** ▶ **And the expenses are the tax-relevant half this year — see the accountant item.**
 
 **✅ RAKUTEN — publisher APPROVED, SID 4740535.** This is the whole live feed today, 7 stores:
 **Mytheresa · FARM Rio (MID 44912) · Diane von Furstenberg (53590) · Vilebrequin (43322) · Olivela ·
