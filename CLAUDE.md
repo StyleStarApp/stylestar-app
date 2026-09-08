@@ -143,11 +143,38 @@ that makes any future number mean something.**
   is a *subtle* affordance, and her mum's 2026-07-26 test is the warning (grey text read as disabled; she
   never found the tab). **Whether a stranger knows Catherine is tappable is a judgement call — offer to
   render it both ways, do not add chrome to the hero unilaterally.**
-- ▶ **THE SAVED-ITEMS / FAVES LIST** (her parked question 2, and *"the strongest feature idea on the
-  board"*). Most machinery exists — `wardrobeData` already persists to localStorage AND Supabase. **The
-  gap is WHAT gets saved:** hearts save CATEGORIES, she described saving a SPECIFIC card. ▶ It connects
-  the parked "email me my wishlist", the planned Wardrobe email capture and product images — **and it is
-  the only mechanism the app has for making a woman COME BACK.**
+- ⏸️ **THE FITTING ROOM / SAVED-ITEMS LIST — PARKED BY HER, 2026-09-09, AND SHE ASKED FOR THE THINKING
+  TO BE KEPT.** Her words: ***"Let's talk more about the wishlist fitting room thing later please save
+  all of those thoughts."*** ▶ **So this is an OPEN THREAD, not a build. Do not start it; do resurface
+  it.** Her framing: ***"like a fitting room holding area sort of but not sure how to differentiate it
+  from the wishlist."***
+  🚨🚨 **FIRST, THE STALE NOTE THAT USED TO SIT HERE, BECAUSE IT WAS WRONG AND SHE NEARLY GOT A SECOND
+  LIST BUILT ON IT.** This line said *"hearts save CATEGORIES, she described saving a SPECIFIC card"*.
+  **FALSE — checked in the code 2026-09-09.** `wishToggle()` already stores a SPECIFIC piece:
+  `{id, name, store, search, url, price}`, and `_wlSaveBtn` is already on the shop rows, the shop cards,
+  the wardrobe shelves and the Star of the Week. ▶▶ **SHE ALREADY HAS THE FITTING ROOM. IT IS CALLED THE
+  WISHLIST.**
+  ▶ **THE REAL GAP, AND IT IS SMALL AND SPECIFIC: `_findCard` HAS NO SAVE HEART.** Everything the finder
+  shows — including the 24-card browse wall built the same day — cannot be saved. **The build is: put
+  the EXISTING `_wlSaveBtn` on `_findCard`, and store `image` on the wishlist entry** (it currently keeps
+  name/store/search/url/price but no photo), so a saved piece keeps its picture.
+  ⭐ **THE RECOMMENDATION, WITH THE REASONING SO SHE CAN OVERRULE IT: DO NOT BUILD A SECOND LIST.**
+  The instinct behind "fitting room" is real but it is **not a second list, it is a second VIEW.** A
+  wishlist is *things I want someday*, in a vertical column of rows. A fitting room is *things I am
+  choosing between right now*, seen **side by side as photographs**. ▶ **The difference she is feeling is
+  COMPARISON, not category.**
+  ⚠️ **AND TWO LISTS WOULD ADD RESISTANCE, WHICH IS THE THING SHE RULED AGAINST 2026-09-08** (*"my focus
+  is on making the app as good as it can be, not adding resistance"*): every save becomes a small
+  decision — *is this a wishlist thing or a fitting-room thing?* — and most women will not make it.
+  ▶ **SO: ONE LIST, TWO WAYS TO LOOK AT IT.** The row view she has · plus a **fitting-room view**, her
+  saved pieces as a GRID OF PHOTOS big enough to judge. ⚠️ **That view only became possible on
+  2026-09-09** — before the browse wall the app had almost no product photography to show.
+  💡 **AND THE ONE THING A FITTING ROOM DOES THAT A WISHLIST NEVER DOES: IT EMPTIES.** A wishlist
+  accumulates forever and quietly becomes a graveyard she stops opening. **A gentle "still thinking about
+  these?" on older saves does the fitting-room job with no second list to maintain.**
+  ▶ **IT CONNECTS THREE THINGS ALREADY ON HER BOARD** — the parked *"email me my wishlist"*, the planned
+  Wardrobe email capture, and product images — **and it is still the only mechanism the app has for
+  making a woman COME BACK.**
 
 ### 🤔 SMALL DECISIONS ONLY SHE CAN MAKE (quick, and they unblock code)
 - ▶ **TAXONOMY GAPS, none invented:** mini skirts · jumpsuits/rompers · gloves · clogs · wellingtons ·
@@ -231,10 +258,19 @@ the served page** — not by trusting the Post-processing badge, which is the st
 completes in ~9s**, where the old build sat silent past its 30-second stall guard. **The three silent
 web searches were the whole wait.**
 
-### 🚨🚨 THE FIRST THING TO ASK HER
-▶▶ **"Did the chat give you real cards this time?"** She sent five phone screenshots on 2026-09-09 and
-every one of them showed a fault. All four faults were fixed the same session and merged. **She has not
-yet retested. Nothing else should be built on the chat until she has.**
+### ✅✅✅ HER VERDICT IS IN, 2026-09-09, AND IT IS A YES
+▶▶ **HER WORDS: *"The chat is now working with scrollable photo options!!!"***
+🚨 **SO THE CHAT IS NO LONGER ON TRIAL.** She arrived saying *"the chat is not working well"* and left
+with a working wall of photographs. **Measured on her own test phrase, *"I need a fitted white top"*:**
+| | before | after |
+|---|---|---|
+| products she can see | **3** | **27** |
+| verified, with ticks | 3 | 3 |
+| browsable cards | **0** | **24** |
+▶ **Real shops, real prices: Old Navy $12 · Kohl's $14.99 · Kohl's $28.49 · American Eagle $32.97 ·
+Kohl's $33.99 · Ann Taylor $59.15.** All from her 122, all instantly tappable, all affiliate-wrapped.
+⭐ **THE NEXT THING TO ASK HER: the fitting-room view** — she parked it herself and asked for the
+thinking to be kept. **It is written up in the master to-do; do not restart it from scratch.**
 
 ### ⭐⭐⭐ THE DAY IN ONE LINE
 ▶▶ **THE STYLIST WAS RUNNING HER OWN WEB SEARCHES, AND THAT ONE FEATURE CAUSED ALL FOUR FAULTS SHE
