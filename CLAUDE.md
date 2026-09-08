@@ -20,7 +20,7 @@ doing; **only the testers change the ceiling.**
 ### ⭐ THE THREE THAT MOVE THE APP — start here
 | # | What | Who | State |
 |---|---|---|---|
-| 1 | **Hand `docs/store-scoring-brief.md` to ChatGPT** — the ~200-store list. Her words 2026-09-07: *"I want to give that very careful attention… I need to be back at my desk."* | **HER** (desk job) | ▶ waiting |
+| 1 | ~~Hand the store brief to ChatGPT~~ ✅ **CLOSED 2026-09-08 — she sent her own roster instead. 122 shops, and she is DONE adding for now.** | — | ✅ done |
 | 2 | **Re-run her three chat messages** on the live build — Napa wedding · blush silk wrap dress · navy on me. The Napa one is the one to watch. | Claude + **her eye** | ▶ ready |
 | 3 | **Shop your Style** — wire the finder into it. She called it *"an enormous difference."* | Claude | ▶ not started |
 
@@ -474,6 +474,16 @@ came up with is fine and the stylist chat already has a good personality and wor
 **They are no longer placeholders. Do not rewrite them.**
 
 ### 🏬🏬 HER STORE ROSTER — 122 SHOPS, HER LIST, 2026-09-08
+🚨🚨 **THE LIST IS CLOSED AT 122. HER WORDS, 2026-09-08:** ***"the list i gave you is complete for now.
+I don't want to add any more. Of course if we get more affilates approved, we will add them, but for
+now I don't want to add any more stores."***
+▶▶ **SO DO NOT ASK HER FOR STORE NAMES AGAIN, and do not re-propose the ~200 goal.** The 2026-09-06
+target of 200 is **superseded by her own decision**: she reviewed the field herself and stopped at 122.
+✅ **THIS CLOSES THE ITEM THAT SAT AT THE TOP OF HER MASTER TO-DO FOR DAYS** — *"hand
+`docs/store-scoring-brief.md` to ChatGPT"*. She did the job her own way and did not need the brief.
+**The brief and `docs/store-list-prompt.md` stay in the repo for the day an affiliate approval brings a
+new shop; they are no longer waiting on her.**
+▶ **THE ONLY TRIGGER FOR ADDING A SHOP NOW IS AN AFFILIATE APPROVAL.** Her rule, her words above.
 ▶▶ **She sent 21 shops to ADD, 9 to REMOVE, and a final roster of 122. The diff was checked against the
 table BEFORE touching anything and matched her instruction exactly, then checked again afterwards —
 empty in both directions.** `docs/current-stores.txt` holds the live list.
