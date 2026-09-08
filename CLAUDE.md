@@ -369,9 +369,22 @@ leg mid rise is the most current silhouette… let me pull some real options"* a
 `jeans + size 26`, because **colour/fabric/cut are searched ONLY if they came from her mouth**
 (`_findKeepHerWords`) — the rule that exists because the model once recommended a jewel tone and then
 searched for one as though she had asked. **The rule is right. The prose is not bound by it.**
-▶ **THE QUESTION FOR HER: when a woman asks *"find me jeans that are in style NOW"*, she is DELEGATING
-the cut. Should the stylist's own recommended silhouette then become a real search requirement?** It is
-a genuine exception to "never invent a requirement she did not give", and it is hers to rule on.
+✅✅ **ANSWERED BY HER, 2026-09-08: YES.** When a woman asks *"what's in style now?"* she is
+**DELEGATING the choice**, so the stylist's own recommended silhouette **becomes a real search
+requirement**. Her words: ***"yes, that makes sense."***
+🚨 **THIS IS A NARROW EXCEPTION AND ITS EDGES MATTER — DO NOT WIDEN IT.** The rule it bends
+(`_findKeepHerWords`: colour/fabric/cut only if SHE said them) exists because the model once
+recommended a jewel tone and then searched for one **as though she had asked**. That failure is a
+requirement invented from nowhere. ▶ **THE DIFFERENCE IS DELEGATION: she asked the stylist to choose.**
+⚠️ **SO THE TEST IS NOT "did the stylist name a cut" — it is "did the woman hand over the choice".**
+*"What's in style now?"* · *"What do you recommend?"* · *"You pick"* → the stylist's cut is searchable.
+*"I want a blush silk wrap dress"* → only her words, exactly as now.
+▶ **AND THE STYLIST MUST SAY WHOSE CHOICE IT WAS**, so a woman is never quietly given a requirement she
+did not set: name it out loud ("straight leg is the most current, so that's where I looked") and it
+stays hers to overrule. **That is the honest version of choosing for her.**
+▶ **THE ALTERNATIVE WAS OFFERED AND IS NOW CLOSED:** the stylist could instead have been forbidden from
+naming a silhouette it was not going to search for. **She chose the better half — advice and results
+that agree — rather than advice made vaguer to match a narrow search.**
 
 ### ⭐⭐⭐ HER DECISION, 2026-09-08: SHOW HER LOTS TO SCROLL THROUGH — BROWSING IS THE POINT
 ▶▶ **HER WORDS, VERBATIM:** ***"yes yes yes the more options she can browse, the better, even if
@@ -401,6 +414,42 @@ look-up only on the pieces she actually reaches for.**
 💰 **AND THIS IS NOT A NICETY, IT IS THE BUSINESS MODEL — at her real price of $0.025/search, middle
 case, 1000 users: 10 searches per question is −$132/month and 4 is +$18/month.** ▶ **More options for
 her AND fewer searches. The two goals point the same way, which is rare enough to write down.**
+
+### 🛠️🛠️ THE CHAT REBUILD — THE PLAN, AGREED WITH HER 2026-09-08. START HERE NEXT SESSION.
+▶▶ **EVERY DECISION IS MADE. NOTHING BELOW NEEDS ASKING AGAIN — BUILD IT.**
+🚨 **AND BUILD IT OFFLINE. `scratchpad/fixtures/search-white-fitted-top.json` is a real captured search
+(40 products, 12 saved). `?capture=1&q=...` on `product-find` grabs more for ONE search each.** Her
+allowance is not a test harness — that lesson cost 141 searches in one afternoon.
+
+**1. THE STYLIST READS THE PRODUCTS. (the root cause, fault 1)**
+Replace the 8-word `CUT` lookup in `find-products.js` with a real reading step: hand the AI the actual
+product text and let it judge, **required to quote the product's own words as evidence**. It may say
+CONFIRMED only by pointing at where the page says so.
+⚠️ **THE THREE VERDICTS AND "UNKNOWN IS NEVER A PASS" DO NOT MOVE.** Nor does `_findKeepHerWords`, nor
+`filterNeverWear`, nor `curatedPicks`. **Guarantees stay in code; only the JUDGING becomes reading.**
+▶ **THE FRAME THAT MADE THIS CLICK FOR HER, KEEP IT:** *guarantees* (never a shift dress, never claim
+an unverified size, max two per shop) **must be code** — a promise that depends on an AI's mood is not
+a promise. *Judgements* (is this fitted? is this high-rise?) **need reading.** The bug was building a
+judgement as if it were a guarantee.
+⚠️ **DO NOT "FIX" THIS BY ADDING 50 MORE WORDS TO THE LIST.** Her three tests would pass and the 51st
+would fail the same silent way.
+
+**2. MANY CARDS, LAZY LOOK-UPS. (her ask, and the economics)**
+Render a wide scrollable row from the ONE search — title, store, price, photo are all there free —
+verify the top few, and **spend a look-up only on what she reaches for.** ⚠️ **The look-up is the only
+source of a buyable, affiliate-wrappable link (0 of 12 raw results had one), so an un-looked-up card
+must resolve its link ON TAP** before it can go anywhere.
+
+**3. THE DELEGATED CUT. (fault 4, ruled yes above)**
+When she hands over the choice, the stylist's silhouette becomes a real search requirement, and the
+stylist says out loud that it was her pick.
+
+**4. ALREADY DONE 2026-09-08, DO NOT REDO:** parallel + pooled calls · per-call timeouts (search long,
+look-up 6s) · a failed search says so instead of rendering silence · `SERPAPI_RESERVE` defaults to 0
+(warn, never block) · the Saturday budget check.
+⚠️ **HER COPY RULING: the two failure sentences are APPROVED AS WRITTEN.** Her words: *"I think what you
+came up with is fine and the stylist chat already has a good personality and words things well."*
+**They are no longer placeholders. Do not rewrite them.**
 
 ### 💰🚨 SERPAPI — LIVE OPERATIONAL STATUS, AND THE MATHS THAT REFRAMES IT (2026-09-08)
 🚨🚨 **HER DASHBOARD, 2026-09-08: 216 OF 250 USED. 34 LEFT.** Her file said ~75 on 2026-09-06 — **so
