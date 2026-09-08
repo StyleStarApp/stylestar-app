@@ -10731,9 +10731,52 @@ function _findLabel(k,p){
    ⚠️ NOTHING JUMPS. Cards are APPENDED BELOW what she is already reading, never
    inserted above it. Her audience runs to 80 and a screen that shifts under a
    reader is genuinely disorienting. */
+/* ═══ THE DEBUG VIEW ═══════════════════════════════════════════════════════
+   ⭐ CATH SAID YES, 2026-09-09, AND THE REASON IS THIS SESSION ITSELF.
+   She reported "the chat is not working well" with five phone screenshots, and
+   finding the cause took hours of reasoning backwards from photographs — four
+   separate faults, none of which the screen could name. ▶▶ EVERY NUMBER THAT
+   WOULD HAVE ANSWERED IT IN A MINUTE WAS ALREADY BEING COMPUTED and simply
+   never shown: what was searched, how many came back, how many were in her
+   shops, how many got looked up, how many survived.
+   ▶ TURN IT ON WITH `?debug=1` ON THE URL. It is read ONCE at boot and is off
+     for every ordinary woman, so there is nothing to toggle and nothing to
+     leave switched on by accident.
+   ⚠️ It renders BELOW the cards, never above — her rule that nothing may jump
+     under a reader, which matters most for an audience running to 80. The
+     setTimeout is what puts it last: the card rendering below is synchronous,
+     so a task queued here always lands after it, on EVERY return path
+     (failed · budget · no data · found) without a line at each one. */
+const _FIND_DEBUG=(function(){try{return /[?&]debug=1(&|$)/.test(location.search)}catch(e){return false}})();
+function _findDbg(mc,req,data,failed,ms){
+  const d=data||{},m=d.ms||{},row=function(k,v){
+    return '<div class="fdbg-r"><span>'+_esc(k)+'</span><b>'+_esc(String(v))+'</b></div>';
+  };
+  const asked=['item','colour','fabric','cut','size','width']
+    .filter(function(k){return req&&req[k]}).map(function(k){return k+'='+req[k]}).join('; ');
+  const el=document.createElement('div');
+  el.className='find-block fdbg';
+  el.innerHTML='<div class="fdbg-h">What the finder actually did</div>'+
+    row('searched for',asked||'(nothing)')+
+    (failed?row('result','THE CALL FAILED'):'')+
+    (d.why?row('stopped early',d.why):'')+
+    row('searches fired',m.search!=null||d.searched!=null?(d.searched==null?'?':d.searched):'?')+
+    row('products in your shops',m.candidates==null?'?':m.candidates)+
+    row('looked up in detail',d.verified==null?'?':d.verified)+
+    row('exact matches shown',(d.exact||[]).length)+
+    row('near misses shown',(d.doors||[]).reduce(function(n,x){return n+(x.products||[]).length},0))+
+    row('browse cards shown',(d.browse||[]).length)+
+    row('search time',(m.search==null?'?':m.search+'ms'))+
+    row('look-up time',(m.lookup==null?'?':m.lookup+'ms'))+
+    row('total, your side',ms+'ms')+
+    row('searches left this month',d.searchesLeft==null?'?':d.searchesLeft);
+  mc.appendChild(el); mc.scrollTop=mc.scrollHeight;
+}
+
 async function _findRun(req){
   const mc=document.getElementById('chatMessages');
   if(!mc)return;
+  const _dbgT0=Date.now();
   const status=_findStatus(mc);
   let data=null,failed=false;
   try{
@@ -10742,6 +10785,8 @@ async function _findRun(req){
     if(r.ok)data=await r.json(); else failed=true;
   }catch(e){failed=true;}
   status.done();
+  /* ONE line, every path — see _findDbg above for why it is a setTimeout. */
+  if(_FIND_DEBUG)setTimeout(function(){_findDbg(mc,req,data,failed,Date.now()-_dbgT0)},0);
 
   /* 🚨🚨 A SEARCH THAT DID NOT COME BACK MUST NEVER READ AS "I LOOKED AND FOUND
      NOTHING." Added 2026-09-08 after Cath's phone testing, and it is the same
@@ -10858,6 +10903,54 @@ async function _findRun(req){
       'and nothing close enough to show you. Tell me what matters most and I\'ll look again.</div>';
   }
   mc.appendChild(wrap);
+
+  /* ═══ THE BROWSE WALL ═════════════════════════════════════════════════════
+     ⭐⭐ HER ASK, SAID THREE TIMES, AND THE THIRD TIME AS A COMPLAINT:
+     "I thought by paying for the search service it would land on a full
+     selection of photos with tappable links that our user could slide through."
+     ▶▶ IT COULD NOT, AND THE CAP HAD A NAME: `MAX_VERIFY = 4`. Only four
+       products were ever looked up, so at most four could become cards and she
+       normally saw two or three. The other ~8 from her shops were fetched,
+       paid for, and thrown away — with their photos, prices and titles already
+       attached. THE POOL COMES BACK NOW and every one of it is rendered.
+     🚨 THIS DOES NOT LOOSEN HER HONESTY RULE, and the distinction is HERS:
+       "it changes how MANY pieces she sees, not what the app CLAIMS about
+       them." The verified set above leads and carries its ticks; these carry
+       NO ticks and claim nothing. Show many, label honestly.
+     ⚠️ THE LINK IS A STORE SEARCH FOR THIS EXACT PIECE, NOT A LOOK-UP — a
+       deliberate change from the "lazy look-up on tap" sketch, flagged to her
+       before building. A raw result's own link points at google.com/search and
+       is useless; getStoreUrl() builds that shop's own search for the exact
+       title, is instant, is _affUrl-wrapped so it still earns, and cannot be
+       popup-blocked the way a link opened after an await is on iOS.
+     ▶ ONE CARD RENDERER, NEVER A SECOND COPY — `_findCard` does these too, so
+       `_feedName` still strips a size clause from the name and any future card
+       change lands on both halves at once. That is this file's oldest lesson.
+     ⚠️ AND HER NEVER-WEAR LIST GOVERNS THIS WALL: the same keep() runs over it,
+       with her WHOLE request, exactly as it does over the verified set. */
+  const browse=keep(data.browse).filter(function(b){return b.store&&b.title});
+  if(browse.length){
+    const bw=document.createElement('div');
+    bw.className='find-block find-browse';
+    /* ⚠️ CLAUDE'S WORDING, AND IT IS A PLACEHOLDER FOR HERS. It has one job:
+       say plainly that these are NOT the checked ones, without apologising for
+       them. Her own copy has beaten every draft so far. */
+    bw.innerHTML='<div class="find-head">More from your shops to scroll through.</div>'+
+      '<div class="find-sub">I haven\'t checked every detail on these ones.</div>'+
+      '<div class="find-cards">'+browse.map(function(b){
+        return _findCard({id:b.id,title:b.title,brand:b.brand,store:b.store,
+          price:b.price,image:b.image,url:getStoreUrl(b.store,b.title)});
+      }).join('')+'</div>';
+    /* ⚠️ NO SECOND DISCLOSURE HERE, DELIBERATELY. The block above already
+       carries one, and this file's own audit records Wardrobe once showing
+       FIVE on a single 7,300px page — an accident of per-carousel rendering,
+       not a compliance decision. ONE PER PAGE IS THE NORM: a reviewer checks
+       that a disclosure exists and is findable, never how many times it
+       repeats, and Cath's note is that she dislikes reminding a woman about
+       commission over and over. ▶ If the verified block is ever absent while
+       this wall shows, THIS is where the one disclosure has to move. */
+    mc.appendChild(bw);
+  }
   mc.scrollTop=mc.scrollHeight;
 }
 

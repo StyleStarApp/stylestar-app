@@ -3642,6 +3642,24 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .fc-yes::before{content:'\2713\00a0'}
 .fc-no,.fc-diff{color:#8a5a00;background:#fbf4e7}
 .find-disc{font-size:11px;color:#6e6e6e;padding:2px 2px 0}
+/* The browse wall's second line, 2026-09-09. It says these are the UNCHECKED
+   ones and must be readable saying it — quiet, never invisible. Same #6e6e6e
+   as the disclosure, which was measured at 4.6:1 on this painted background
+   after a first attempt at 2.5:1 failed; an 18-to-80 audience is exactly who
+   loses a low-contrast line. */
+.find-sub{font-size:12.5px;line-height:1.45;color:#6e6e6e;padding:0 2px 8px;margin-top:-4px}
+/* Breathing room between the verified set and the wall, so the two read as
+   two different promises rather than one long row. */
+.find-browse{margin-top:14px}
+/* The debug panel, 2026-09-09. Deliberately plain and un-branded: it is an
+   instrument, not part of the app's world, and it only ever appears behind
+   ?debug=1. Monospace so numbers line up when she reads them back. */
+.fdbg{margin-top:14px;background:#f4f2ee;border:1px solid #ddd8cf;border-radius:10px;padding:10px 12px}
+.fdbg-h{font:600 12px/1.4 'DM Sans',system-ui,sans-serif;color:#1a1a1a;letter-spacing:.02em;
+  text-transform:uppercase;margin-bottom:6px}
+.fdbg-r{display:flex;justify-content:space-between;gap:12px;font:400 12px/1.7 ui-monospace,
+  SFMono-Regular,Menlo,monospace;color:#4a463e}
+.fdbg-r b{color:#1a1a1a;font-weight:600;text-align:right;word-break:break-word}
 
 /* ⭐ THE WAITING STAR — Cath, 2026-09-06: "something that shows the stylist is
    actively shopping and nothing is broken."

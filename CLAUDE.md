@@ -129,9 +129,20 @@ that makes any future number mean something.**
 - ▶ **COUNT HOW MANY OF HER 108 RUN ON SHOPIFY.** Free, unmeasured, nobody has done it. Shopify stores
   publish a public product file with **exact variant size + stock** — real width/size truth for the DTC
   half of her list.
-- ⭐ **THE FOUNDER STORY ON THE HOME PAGE** (`s-wel`) — **Sally Hogshead's note, and Cath wants it.** A
-  small elegant first-person founder line + *"Read my story →"*. ▶ **The one marketing item that is
-  Claude-buildable, and it is the differentiation nobody can copy.** Still not built.
+- ✅✅ **THE FOUNDER STORY ON THE HOME PAGE IS BUILT — THIS LINE SAID "STILL NOT BUILT" AND THAT WAS
+  FALSE, CAUGHT BY CATH 2026-09-09.** ▶ It is live in `s-wel`, in her own first person: *"Hi, I'm
+  **Catherine**, a personal stylist helping women feel confident in what they wear for over 20 years.
+  Style Star is an app guided by my real expertise, not a faceless algorithm. I created this with all my
+  love & intention ♥"* — and **"Catherine" IS the link to My Story** (`.hm-founder .fnm`, Dancing Script
+  with a gold underline, `onclick="showStory()"`), so the *"Read my story →"* this line kept asking for
+  is already there **as a signature rather than a button.**
+  🚨 **THE LESSON IS THIS FILE'S OWN, FOR THE THIRD TIME: A STALE NOTE WAS READ BACK TO HER AS FACT.**
+  Same family as the Zara row that nearly cost her scores. ▶ **When a line here says something still
+  needs doing, GREP THE CODE BEFORE SAYING IT OUT LOUD.**
+  ▶ **THE ONE THING GENUINELY STILL OPEN, and it is HER EYE not a measurement:** a gold-underlined name
+  is a *subtle* affordance, and her mum's 2026-07-26 test is the warning (grey text read as disabled; she
+  never found the tab). **Whether a stranger knows Catherine is tappable is a judgement call — offer to
+  render it both ways, do not add chrome to the hero unilaterally.**
 - ▶ **THE SAVED-ITEMS / FAVES LIST** (her parked question 2, and *"the strongest feature idea on the
   board"*). Most machinery exists — `wardrobeData` already persists to localStorage AND Supabase. **The
   gap is WHAT gets saved:** hearts save CATEGORIES, she described saving a SPECIFIC card. ▶ It connects
@@ -295,6 +306,50 @@ retry was allowed to name a garment so long as it gave no address, and that is e
 four dresses. **Rewritten to name the RULE (no product may be named on EITHER call), per this file's own
 "rewrite the assertion, never bump the number".**
 
+### ⭐⭐ THE BROWSE WALL AND THE DEBUG VIEW — BUILT AND LIVE 2026-09-09, BOTH AT HER ASK
+▶▶ **HER WORDS: *"i would definitely like a scrollable wall, as full as possible"*** and, on the debug
+view, ***"yes on the debug view sounds good."***
+
+**1. THE WALL.** `product-find.js` now returns a `browse` array — **the whole pool of products from her
+shops**, not just the four that fit under `MAX_VERIFY`. The page renders every one into the horizontal
+touch-scroller that already existed.
+🚨 **THE HONESTY LINE IS HERS AND IS PINNED BY TESTS: showing MORE is not claiming more.** The verified
+set leads and keeps its ticks; **a browse card carries NO ticks and claims nothing** (`no browse card
+carries a verified tick`). **And her never-wear list governs the wall** — the same `keep()` runs over it
+with her whole request, proven by planting a ruffled piece and watching it disappear.
+⚠️ **ONE CARD RENDERER, NEVER A SECOND COPY.** `_findCard` draws both halves, so `_feedName` still
+strips a size clause and any future card change lands on both at once.
+⚠️ **ONLY ONE AFFILIATE DISCLOSURE PER ANSWER, asserted** — the wall deliberately does NOT add a second.
+This file's audit records Wardrobe once showing five on one page. ▶ **If the verified block is ever
+absent while the wall shows, the one disclosure has to MOVE there.**
+
+**⚠️⚠️ THE DESIGN FORK, FLAGGED BEFORE BUILDING AND APPROVED BY HER — THIS IS THE RULE WORKING.**
+Her sketch said *spend a look-up when she taps*. **It was built differently and she was told why first**,
+then said: ***"ok let's try this it sounds good, let's see how we like it."***
+| | her sketch: look-up on tap | what shipped: store search for the exact title |
+|---|---|---|
+| lands on | the exact product page | that shop's search for that exact piece — usually the item, sometimes a short results page |
+| cost | a paid look-up **every tap** | **nothing** |
+| wait | a second or two | **instant** |
+| earns | yes | **yes — `getStoreUrl` returns `_affUrl(...)`, the same wrapper as every other link** |
+| ⚠️ **iOS** | **a link opened after an await is BLOCKED as a pop-up — some taps would silently do nothing** | cannot be blocked |
+▶ **THE VERIFIED CARDS KEEP THEIR EXACT PRODUCT LINKS. This applies to the wall only, so it is a hybrid,
+not a downgrade.** ⚠️ **AND IT IS NOT THE "generic store search dressed as a find" SHE BANNED** — the
+product is real, from her shop, with its own title, price and photograph; only the *landing* is a search
+for that exact piece. Nothing is claimed that was not read off the result.
+▶ **If she ever wants the exact landing, it is about four lines** — swap the `url` the browse card is
+built with.
+
+**2. THE DEBUG VIEW — `?debug=1` ON THE URL.** A plain panel BELOW the cards (never above: nothing may
+jump under a reader) naming **what was searched for · searches fired · products in her shops · how many
+were looked up · exact / near-miss / browse counts · search and look-up times · searches left**.
+▶▶ **WHY IT EXISTS, AND IT IS THIS SESSION ITSELF: her five screenshots took HOURS to diagnose by
+reasoning backwards from photographs, and every number that would have answered it in a minute was
+already being computed and never shown.** ⚠️ **Read ONCE at boot, so there is nothing to leave switched
+on by accident, and one `setTimeout` covers EVERY return path — failed, budget, no data, found —
+instead of a line at each one.**
+▶ **`scratchpad/chatfallback.js` — 55 checks, was 35.** Sections 9, 10 and 11.
+
 ### 🚨 THE SIX EDITS TO ADD A MERCHANT ARE NOW FIVE
 ▶ **Edit (6), `SEARCH_DOMAINS` in `style-ai.js`, no longer arms anything** — the stylist has no search
 to allow domains for. ⚠️ **The constant is deliberately KEPT and still DERIVED** from the same generated
@@ -328,7 +383,12 @@ affwrap 35 · untagged · feedshelf.
 1. ~~Cut the query count~~ — **partly done for free.** Removing the stylist's own search removed up to
    three calls per answer. `buildQueries` still fires up to four finder searches; **measure the real
    remaining wait on her retest before cutting further.**
-2. **MANY CARDS, LAZY LOOK-UPS** — her explicit ask, said three times now, and **the thing she was
+2. ✅✅ **BUILT AND LIVE 2026-09-09 — THE BROWSE WALL.** Her words on seeing the plan: *"i would
+   definitely like a scrollable wall, as full as possible."* **The cap is gone: the finder now returns
+   the WHOLE pool from her shops and every one renders as a swipeable card.** See "THE BROWSE WALL"
+   below for what shipped and the one design fork she approved. ▼ *The original entry, kept because it
+   is the measurement that named the blocker:*
+   **MANY CARDS, LAZY LOOK-UPS** — her explicit ask, said three times now, and **the thing she was
    actually complaining about on 2026-09-09**: *"I thought by paying for the search service it would
    land on a full selection of photos with tappable links that our user could slide through."*
    🚨🚨 **THE MEASUREMENT THAT NAMES THE REAL BLOCKER, TAKEN 2026-09-09: `MAX_VERIFY = 4` IN
@@ -1304,7 +1364,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 
 | Her rule | AI half | Shelf/feed half | Test | State |
 |---|---|---|---|---|
-| Never-wear list | `filterNeverWear` + prompt | `curatedPicks`, **same `_nwHit`** | curated · feedshelf | ✅ one shared implementation |
+| Never-wear list | `filterNeverWear` + prompt | `curatedPicks`, **same `_nwHit`** | curated · feedshelf · **chatfallback 55** | ✅ one shared implementation — **and it governs the 2026-09-09 browse wall too, tested** |
 | Colour no's | `neverOther` verbatim in prompt | `_wdrNoColors` | curated | ✅ both |
 | **Size range PER CATEGORY** | `_sizeGuidance`, built from `_FIT_FAMILIES` | `_fitApplies()` | **sizefit 38** | ✅ **fixed 2026-09-07** |
 | A sweater is not a top | `_WDR_IDEA_EXCLUDE` | `data/slot-rules.json` | slot_match · feedshelf | ✅ both |

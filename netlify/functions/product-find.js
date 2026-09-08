@@ -199,7 +199,7 @@ export default async (req) => {
   const KEY = process.env.SERPAPI_KEY;
   // ▶ NO KEY IS NOT AN ERROR. The chat must fall back to ordinary stylist advice,
   //   never show a woman a broken screen. `why` says which, for diagnosis only.
-  if (!KEY) return json({exact: [], doors: [], why: 'no-key'}, headers);
+  if (!KEY) return json({exact: [], doors: [], browse: [], why: 'no-key'}, headers);
 
   const cacheKey = JSON.stringify(request);
   const hit = cacheGet(cacheKey);
@@ -279,7 +279,7 @@ export default async (req) => {
     //   the page must never render it as though it were.
     const left = await searchesLeft(KEY);
     if (left !== null && left <= RESERVE) {
-      return json({exact: [], doors: [], request, why: 'budget', searchesLeft: left}, headers);
+      return json({exact: [], doors: [], browse: [], request, why: 'budget', searchesLeft: left}, headers);
     }
 
     const t0 = Date.now();
@@ -447,7 +447,49 @@ export default async (req) => {
       }),
     }));
 
-    const payload = {exact, doors, request, searched: queries.length, verified: verified.length,
+    /* ═══ THE BROWSE WALL ═══════════════════════════════════════════════════
+       ⭐⭐ CATH, 2026-09-08 AND AGAIN 2026-09-09, AND THE SECOND TIME AS A
+       COMPLAINT: "I thought by paying for the search service it would land on a
+       full selection of photos with tappable links that our user could slide
+       through." It could not, and the reason was a hard cap: MAX_VERIFY is 4,
+       so at most FOUR products were ever looked at and she saw two or three.
+       ▶▶ MEANWHILE THE POOL WAS ALREADY PAID FOR AND THROWN AWAY. One search
+         returns ~40 products, ~12 of them in her shops, and every one already
+         carries a photo, a price, a store and a title with NO look-up spent.
+       ✅ SO THE WHOLE POOL COMES BACK NOW. The verified few lead and say so;
+         these are there to browse and promise nothing — which is exactly the
+         line she drew herself: it changes how MANY she sees, not what the app
+         CLAIMS about them.
+       ⚠️⚠️ NO LOOK-UP IS SPENT ON THESE, AND THAT IS A DELIBERATE CHANGE FROM
+         THE "lazy look-up on tap" SKETCH — flagged to her before building.
+         A raw result's own link points at google.com/search and is useless, so
+         the PAGE builds the link with getStoreUrl(store, title): that store's
+         own search for this exact product name. It is instant, it is still
+         affiliate-wrappable so it still earns, and it cannot be popup-blocked
+         the way a link opened after an await is on iOS.
+       🚨 NOT A "GENERIC STORE SEARCH DRESSED UP AS A FIND", which she banned.
+         The product is REAL — her shop, its title, its price, its photograph.
+         Only the landing is a search for that exact piece rather than its
+         product id. Nothing is claimed that was not read off the result.
+       ▶ `name` and `search` are included because filterNeverWear() on the page
+         reads exactly those two, so her never-wear list governs this wall too. */
+    const shownIds = new Set([...exact.map(p => p.id),
+      ...doors.flatMap(d => d.products.map(p => p.id))]);
+    const browse = mine.map(c => {
+      const r = c.raw;
+      const title = r.title || '';
+      return {
+        id: r.product_id || title,
+        title, store: c.store,
+        brand: r.source || c.store,
+        price: r.price || (r.extracted_price != null ? '$' + r.extracted_price : ''),
+        priceValue: r.extracted_price ?? null,
+        image: r.thumbnail || r.image || '',
+        name: title, search: title,
+      };
+    }).filter(p => p.title && !shownIds.has(p.id));
+
+    const payload = {exact, doors, browse, request, searched: queries.length, verified: verified.length,
       // ⏱ ms spent in each half. Cheap, and it is what turned 'the finder is
       //   slow' into 'the SEARCH is slow and the look-ups are fine', which are
       //   completely different repairs.
@@ -459,6 +501,6 @@ export default async (req) => {
   } catch (e) {
     console.error('[product-find] ' + (e && e.message));
     // Same principle as every failure above: an empty pool, never an error.
-    return json({exact: [], doors: [], why: 'threw'}, headers);
+    return json({exact: [], doors: [], browse: [], why: 'threw'}, headers);
   }
 };

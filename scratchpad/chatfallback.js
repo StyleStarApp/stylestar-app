@@ -21,9 +21,24 @@ const srv=http.createServer((q,res)=>{
     return q.on('end',()=>{
       findCalls.push(JSON.parse(fr||'{}'));
       res.writeHead(200,{'Content-Type':'application/json'});
+      /* A verified pick PLUS the browse pool the finder now returns. One of the
+         browse titles carries "Ruffle" so the never-wear rule can be proven to
+         govern the wall and not just the verified set. */
+      const browse=[
+        {id:'b1',title:'Quince European Linen Fitted Tank',store:'Quince',price:'$42.00',
+         image:'https://example.com/b1.jpg',name:'Quince European Linen Fitted Tank',
+         search:'Quince European Linen Fitted Tank'},
+        {id:'b2',title:'Express Supersoft Double Layer Crew',store:'Express',price:'$20.40',
+         image:'https://example.com/b2.jpg',name:'Express Supersoft Double Layer Crew',
+         search:'Express Supersoft Double Layer Crew'},
+        {id:'b3',title:'Nine West Ruffle Trim Blouse',store:"Kohl's",price:'$14.99',
+         image:'https://example.com/b3.jpg',name:'Nine West Ruffle Trim Blouse',
+         search:'Nine West Ruffle Trim Blouse'}
+      ];
       res.end(JSON.stringify({exact:[{id:'1',title:"Old Navy Women's Fitted Rib T-Shirt",
         store:'Old Navy',price:'$9.99',priceValue:9.99,url:'https://oldnavy.gap.com/x',
-        image:'https://example.com/i.jpg',confirmed:[],unknown:[]}],doors:[]}));
+        image:'https://example.com/i.jpg',confirmed:[],unknown:[]}],doors:[],browse:browse,
+        searched:2,verified:4,ms:{search:120,lookup:900,candidates:12},searchesLeft:930}));
     });
   }
   if(q.url.indexOf('style-ai')<0){
@@ -56,7 +71,8 @@ const srv=http.createServer((q,res)=>{
     }
     const send=t=>res.write(sse({type:'content_block_delta',index:0,delta:{type:'text_delta',text:t}}));
     res.write(sse({type:'content_block_start',index:0,content_block:{type:'text',text:''}}));
-    if(mode==='healthy'){
+    if(mode==='healthy'||mode==='wall'){
+      if(mode==='wall')send('<<FIND item=top; cut=fitted>> ');
       send('A floor length gown is exactly right. ');send('Try Nordstrom first.');
       res.write(sse({type:'message_stop'}));return res.end();
     }
@@ -76,11 +92,20 @@ const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium'});
 let pass=0,fail=0;
 const ok=(n,c,extra='')=>{c?pass++:fail++;console.log((c?'  ok   ':'  FAIL ')+n+(c?'':'  '+extra));};
 
-async function run(m,question='I need a long formal gown for a wedding'){
+/* `opts` added 2026-09-09 for the browse-wall sections: `neverWear` swaps her
+   saved exclusions so the wall can be proven to obey them, and `debug` opens
+   the page with ?debug=1. Both go through this ONE setup rather than a
+   hand-rolled context per section, so a change to how the page boots cannot
+   leave half the suite testing a different app. */
+async function run(m,question='I need a long formal gown for a wedding',opts){
+  opts=opts||{};
   mode=m;calls=[];
   const ctx=await b.newContext();
   const pg=await ctx.newPage();
   const errs=[];pg.on('pageerror',e=>errs.push(e.message));
+  await pg.addInitScript(nw=>{
+    if(nw)window.__nwOverride=nw;
+  },opts.neverWear||null);
   await pg.addInitScript(()=>{
     localStorage.setItem('ss_data',JSON.stringify({userName:'Kathy',
       answers:[8,7,6,5,9,4,7,6,8,5,7,6],
@@ -89,8 +114,13 @@ async function run(m,question='I need a long formal gown for a wedding'){
     localStorage.setItem('ss_prefs',JSON.stringify({sizes:{tops:['XL'],bottoms:['16'],shoes:['9'],dresses:['16']},
       colorsLove:['Royal Blue'],neverWear:['Crop tops'],neverPatterns:['Leopard'],neverOther:'',
       jewelry:'Gold',dailyShoes:'Flats',bagStyle:'Tote',otherNotes:''}));
+    if(window.__nwOverride){
+      const p=JSON.parse(localStorage.getItem('ss_prefs'));
+      p.neverWear=window.__nwOverride;
+      localStorage.setItem('ss_prefs',JSON.stringify(p));
+    }
   });
-  await pg.goto('http://localhost:8992/',{waitUntil:'domcontentloaded'});
+  await pg.goto('http://localhost:8992/'+(opts.debug?'?debug=1':''),{waitUntil:'domcontentloaded'});
   await pg.waitForTimeout(2600);
   await pg.evaluate(()=>openChat());
   await pg.waitForTimeout(500);
@@ -227,6 +257,80 @@ console.log('\n8. the retry: marker never shown, and it actually looks');
  ok('and searched for what she asked for',findCalls.length===1&&findCalls[0].item==='gown',JSON.stringify(findCalls[0]||{}));
  ok('so she gets a real card, not an invented pick',
     (await pg.locator('.find-cards .find-card, .find-cards > *').count())>0);
+ ok('no JS errors',errs.length===0,errs.join('|'));
+ await ctx.close();}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   9. THE BROWSE WALL AND THE DEBUG VIEW — both built 2026-09-09 at Cath's ask.
+   ▶▶ THE WALL EXISTS BECAUSE OF A HARD CAP SHE RAN INTO: `MAX_VERIFY = 4`, so
+     at most four products were ever looked up and she saw two or three, while
+     ~8 more from her own shops came back with photo, price and title already
+     attached and were thrown away. Her words: "I thought by paying for the
+     search service it would land on a full selection of photos with tappable
+     links that our user could slide through."
+   🚨 THE HONESTY LINE IS THE ONE SHE DREW HERSELF and these checks pin it:
+     showing MORE is not claiming more. The verified card keeps its ticks; the
+     wall carries none — and her never-wear list still governs the wall, which
+     is the half a "just show everything" build would have quietly dropped. */
+console.log('\n9. the browse wall: many cards, honest, and still her rules');
+{mode='wall';calls=[];findCalls=[];
+ const {pg,ctx,errs}=await run('wall','I need a fitted white top');
+ await pg.waitForTimeout(3000);
+ const cards=await pg.locator('.find-browse .find-card').count();
+ ok('the wall renders every browse product',cards===3,'cards='+cards);
+ ok('the verified pick is still shown separately',
+    (await pg.locator('.find-block:not(.find-browse) .find-card').count())===1);
+ /* ⚠️ A BROWSE CARD MUST CLAIM NOTHING. The ticks are what the verified set
+    earns by being read against the shop's own page. */
+ ok('no browse card carries a verified tick',
+    (await pg.locator('.find-browse .fc-yes').count())===0);
+ /* ▶ The raw result's own link points at google.com/search and is useless;
+    getStoreUrl builds the shop's own search for this exact piece. */
+ const hrefs=await pg.locator('.find-browse .find-card').evaluateAll(
+   els=>els.map(e=>e.getAttribute('href')||''));
+ ok('no card links to a google search',!hrefs.some(h=>h.includes('google.com')),hrefs.join(' | '));
+ ok('every card links somewhere real',hrefs.every(h=>/^https?:\/\//.test(h)),hrefs.join(' | '));
+ ok('every card is rel=sponsored',
+    (await pg.locator('.find-browse .find-card[rel="sponsored noopener"]').count())===3);
+ /* 🚨 ONE DISCLOSURE PER ANSWER. This file's own audit records Wardrobe once
+    showing FIVE on a single page; a second one under the wall would be the
+    same accident of per-block rendering. */
+ ok('exactly ONE affiliate disclosure on the answer',
+    (await pg.locator('.find-disc').count())===1);
+ ok('no debug panel without ?debug=1',(await pg.locator('.fdbg').count())===0);
+ ok('no JS errors',errs.length===0,errs.join('|'));
+ await ctx.close();}
+
+console.log('\n10. her never-wear list governs the wall too');
+{const {pg,ctx,errs}=await run('wall','I need a fitted white top',{neverWear:['Ruffles']});
+ await pg.waitForTimeout(3000);
+ /* Her rule exists because of a box of shift dresses. A wall that showed
+    "everything found" while ignoring it would be the Stitch Fix box with
+    better photographs. */
+ const titles=await pg.locator('.find-browse .fc-name').evaluateAll(
+   els=>els.map(e=>e.textContent||''));
+ ok('the ruffled piece is gone from the wall',
+    !titles.some(t=>/ruffle/i.test(t)),JSON.stringify(titles));
+ ok('and the other two survive',titles.length===2,JSON.stringify(titles));
+ ok('no JS errors',errs.length===0,errs.join('|'));
+ await ctx.close();}
+
+console.log('\n11. the debug view answers "what did it actually do?"');
+{const {pg,ctx,errs}=await run('wall','I need a fitted white top',{debug:true});
+ await pg.waitForTimeout(3000);
+ ok('the panel appears with ?debug=1',(await pg.locator('.fdbg').count())===1);
+ const txt=await pg.locator('.fdbg').innerText().catch(()=>'');
+ /* The exact numbers it took hours to reconstruct from her screenshots. */
+ ok('it names what was searched for',/item=top/.test(txt),txt.slice(0,200));
+ ok('it reports the pool size from her shops',/products in your shops[\s\S]{0,4}12/.test(txt),txt.slice(0,400));
+ ok('it reports how many were looked up',/looked up in detail[\s\S]{0,4}4/.test(txt),txt.slice(0,400));
+ ok('it reports the browse count',/browse cards shown[\s\S]{0,4}3/.test(txt),txt.slice(0,400));
+ ok('it reports the budget left',/930/.test(txt),txt.slice(0,400));
+ /* ⚠️ BELOW the cards, never above — nothing may jump under a reader. */
+ ok('it renders BELOW the cards',await pg.evaluate(()=>{
+   const w=document.querySelector('.find-browse'),d=document.querySelector('.fdbg');
+   return !!(w&&d)&&(w.compareDocumentPosition(d)&Node.DOCUMENT_POSITION_FOLLOWING)>0;
+ }));
  ok('no JS errors',errs.length===0,errs.join('|'));
  await ctx.close();}
 
