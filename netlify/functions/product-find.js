@@ -15,6 +15,7 @@
 import {
   buildQueries, matchStore, isResale, judge, widenOptions,
 } from './lib/find-products.js';
+import {buildJudgePrompt, parseJudgement, statedKeys} from './lib/judge-products.js';
 import STORES from './lib/store-domains.js';
 
 const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
@@ -334,13 +335,73 @@ export default async (req) => {
       });
     }
 
-    // --- 4. JUDGE, THEN OFFER HER DOORS ------------------------------------
-    const shaped = verified.map(p => {
+    // --- 4. THE STYLIST READS THEM, THEN HER DOORS -------------------------
+    /* 🚨🚨 THE CHANGE OF 2026-09-08. Judging used to be an 8-word lookup table and
+       it could not tell that "The Fitted Cotton Poplin Shirt" is fitted. Cath's
+       own diagnosis: "I feel like our app already knows what we are trying to
+       deliver" — it does, and the finder was the one part never told.
+       ▶ THE SPLIT IS DELIBERATE AND IT IS THE PROMISE/JUDGEMENT LINE:
+         COLOUR, FABRIC and CUT go to the STYLIST, because they need reading.
+         SIZE, WIDTH and STOCK stay in CODE, because they are factual lookups
+         against structured variant data — and width especially is safety
+         critical (telling a woman with wide feet that a medium fits is the
+         promise this app exists never to make; verifyWidth already encodes the
+         DSW boot that contradicts itself).
+       ⚠️ AND THE FALLBACK IS THE OLD PATH, NOT AN EMPTY ONE. If the model call
+         fails, judge() runs exactly as before, so this can never be WORSE than
+         what shipped yesterday. */
+    const READ = ['colour', 'fabric', 'cut'].filter(k => request[k]);
+    let read = null;
+    if (READ.length && verified.length && process.env.ANTHROPIC_API_KEY) {
+      const sub = Object.fromEntries([['item', request.item], ...READ.map(k => [k, request[k]])]);
+      try {
+        const r = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json',
+                    'x-api-key': process.env.ANTHROPIC_API_KEY,
+                    'anthropic-version': '2023-06-01'},
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-6', max_tokens: 1500,
+            messages: [{role: 'user', content: buildJudgePrompt(sub, verified)}],
+          }),
+          signal: AbortSignal.timeout(12000),
+        });
+        if (r.ok) {
+          const d = await r.json();
+          const text = (d.content || []).map(c => c.text || '').join('');
+          read = parseJudgement(text, sub, verified);
+        }
+      } catch { read = null; }   // -> falls back to judge() below
+    }
+
+    const shaped = verified.map((p, i) => {
       const v = judge(request, p);
+      /* ▶ MERGE: the stylist's reading REPLACES the word list for the three keys
+         she read, and nothing else moves. Her verdicts have already been through
+         parseJudgement, which throws away any "confirmed" whose quote is not
+         genuinely in that product's own text — so an invented tick cannot reach
+         here. Everything it could not confirm is UNKNOWN, and unknown is never
+         a pass, exactly as before. */
+      if (read && read[i]) {
+        const ev = {};
+        for (const k of READ) {
+          v.checks[k] = read[i].checks[k].verdict;
+          if (read[i].checks[k].evidence) ev[k] = read[i].checks[k].evidence;
+        }
+        const stated = Object.entries(v.checks).filter(([k]) => k !== 'stock');
+        v.rejected = stated.filter(([, x]) => x === 'rejected').map(([k]) => k);
+        v.unknown  = stated.filter(([, x]) => x === 'unknown').map(([k]) => k);
+        v.exact = v.rejected.length === 0 && v.unknown.length === 0 && v.checks.stock !== 'rejected';
+        v.evidence = ev;
+      }
       return {
         ...p,
         // What the page needs to speak honestly about this piece.
         checks: v.checks, unconfirmed: v.unknown, exact: v.exact,
+        // ▶ The stylist's own words for each tick. This is what turns a green
+        //   check into something a woman can trust: not "silk ✓" but "silk ✓,
+        //   because the page says 100% silk".
+        evidence: v.evidence || null,
         // filterNeverWear() on the page reads these two, so give it real text.
         name: p.title, search: [p.brand, p.title].filter(Boolean).join(' '),
       };
