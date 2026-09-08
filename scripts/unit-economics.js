@@ -78,7 +78,7 @@ for (const s of [worst, middle, best]) {
 }
 if (Number.isFinite(SEARCH_PRICE)) {
   console.log(`\n  At your actual $${SEARCH_PRICE}/search:`);
-  for (const s of [worst, best]) {
+  for (const s of [worst, middle, best]) {
     for (const k of ['low', 'high']) {
       const cost = s.searches ? SEARCH_PRICE * (s.questions * SEARCHES_PER_Q[k]) : 0;
       const net = s.revenue - cost;

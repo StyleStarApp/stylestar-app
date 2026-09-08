@@ -145,6 +145,27 @@ export default async (req) => {
      Origin or Referer header, and the only thing this returns is how many
      searches are left, which is already on every normal response. It never
      searches and never touches the key beyond that one call. */
+  /* ▶ FIXTURE CAPTURE, added 2026-09-08. Runs ONE search and returns the RAW
+     shopping results, so the whole rebuild can be developed and tested offline
+     against real data instead of against her allowance — the way findprod.js
+     already works. Costs one search, once, rather than one per test run.
+     ⚠️ Behind the same origin guard as everything else, and it returns only what
+     a shopping search returns. It exists to answer a specific question: what can
+     a card honestly say WITHOUT the expensive per-product look-up? */
+  if (new URL(req.url).searchParams.get('capture') === '1' && isAllowed(req)) {
+    const KEY1 = process.env.SERPAPI_KEY;
+    const q = (new URL(req.url).searchParams.get('q') || '').slice(0, 60);
+    if (!KEY1 || !q) return json({error: 'need q'}, headers, 400);
+    try {
+      const r = await fetch('https://serpapi.com/search.json?' + new URLSearchParams({
+        engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY1,
+      }), {signal: AbortSignal.timeout(20000)});
+      const d = await r.json();
+      return json({q, count: (d.shopping_results || []).length,
+                   results: (d.shopping_results || []).slice(0, 12)}, headers);
+    } catch (e) { return json({error: String(e).slice(0, 120)}, headers, 502); }
+  }
+
   if (new URL(req.url).searchParams.get('budget') === '1') {
     const KEY0 = process.env.SERPAPI_KEY;
     if (!KEY0) return json({searchesLeft: null, why: 'no-key'}, headers);
