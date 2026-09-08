@@ -437,6 +437,48 @@ look-up only on the pieces she actually reaches for.**
 case, 1000 users: 10 searches per question is −$132/month and 4 is +$18/month.** ▶ **More options for
 her AND fewer searches. The two goals point the same way, which is rare enough to write down.**
 
+### ✅✅✅ THE STYLIST NOW READS THE PRODUCTS — BUILT AND LIVE, 2026-09-08
+▶▶ **THE FAULT SHE FOUND THIS MORNING IS FIXED, AND HERE IS THE PROOF ON THE LIVE SITE.**
+*"I need a fitted white top"* returned **NOTHING** this morning. It now returns **4 exact matches, each
+quoting the product's own words:**
+| piece | shop | price | why it is a yes |
+|---|---|---|---|
+| Nine West Fitted Ribbed Crewneck | **Kohl's** | **$14.99** | colour ✓ *"White Knight"* · cut ✓ *"Fitted Ribbed Crewneck Top"* |
+| Old Navy Exhale Seamless Fitted Rib Tee | Old Navy | **$9.99** | colour ✓ *"White"* · cut ✓ *"Seamless Fitted Rib T-Shirt"* |
+| Express Supersoft Fitted Double Layer | Express | $20.40 | cut ✓ *"Supersoft Fitted Double Layer Crew Neck T-Shirt"* |
+| Quince European Linen Fitted Tank | Quince | $42.00 | cut ✓ *"European Linen Fitted Tank"* |
+⭐ **Note the first row: Kohl's, added the same day, at $14.99 — the coverage win landing immediately.**
+✅ **`jeans size 26, high rise`** — which returned **zero** when the cut was added this morning — now
+returns a Levi's at Zappos, confirmed by *"high-rise jeans"*.
+✅ **`blush silk wrap dress`** correctly returns **NO exact match** and one honest near-miss (a DVF that
+keeps the silk and the wrap, gives up the colour). **That is her widening design working on real data,
+and it agrees with the 2026-09-06 finding that no exact match exists.**
+▶ **THE SPLIT, and it is the promise/judgement line:** the stylist reads **colour, fabric, cut**; code
+keeps **size, width, stock** because those are factual lookups against structured variant data — and
+width is safety-critical.
+🚨 **THE HONESTY IS CHECKED, NOT TRUSTED.** A CONFIRMED must quote the product's own words and
+`parseJudgement` verifies the quote is really in that product's text. **An invented quote, a quote
+lifted from another product, malformed JSON, an unknown verdict word — all degrade to UNKNOWN, never to
+a pass.** If the model call fails, the old word-list `judge()` runs, so this can never be worse than
+before. **`scratchpad/stylistjudge.js`, 33 checks, no network.**
+▶ **A FAST MODEL IS USED FOR THE READING, AND THE VALIDATOR IS WHY THAT IS SAFE** — a careless read
+degrades to unknown rather than to a false tick.
+
+### ⏱ WHAT IS STILL SLOW, AND IT IS NOT OURS ANY MORE
+**Measured live after every fix: total 17-18s** — `search 8.9-10s` · `look-ups 2.5-6s` · reading ~3s.
+▶▶ **THE SEARCH IS NOW THE WALL, AND IT IS SERPAPI'S OWN LATENCY.** Earlier the same day their searches
+answered in **33-134ms**; they are now consistently pinning the 10s ceiling. **Nothing in our code
+accounts for that.**
+🚨 **SO SHE SHOULD CHECK WHETHER THE $75 "EXTRA FAST SPEED" ADD-ON IS ACTUALLY APPLIED** — at ~10s a
+search it is not delivering, and at $0.10 a search it is the difference between the app paying for
+itself and not (middle case, 1000 users: **+$18/month at $0.025, −$282 at $0.10**).
+▶ **WHAT IS ALREADY DONE ON OUR SIDE:** parallel + pooled calls · per-call timeouts · searches all at
+once on the paid plan · look-ups 6 → 4 in one round (her browse design: showing is nearly free, only
+checking costs).
+⚠️ **AND HER OWN 2026-09-06 DESIGN ALREADY COVERS THE WAIT** — warm reply immediately, then *"Looking
+through your shops…"* while it works. **The wait is narrated, not silent.** Still, 17s is over the 5-8s
+that design assumed; **the next speed win is upstream, not in this repo.**
+
 ### 🛠️🛠️ THE CHAT REBUILD — THE PLAN, AGREED WITH HER 2026-09-08. START HERE NEXT SESSION.
 ▶▶ **EVERY DECISION IS MADE. NOTHING BELOW NEEDS ASKING AGAIN — BUILD IT.**
 🚨 **AND BUILD IT OFFLINE. `scratchpad/fixtures/search-white-fitted-top.json` is a real captured search
