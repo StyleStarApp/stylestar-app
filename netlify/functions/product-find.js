@@ -37,7 +37,14 @@ function isAllowed(req) {
 //    cost understood later — but a cap is the seatbelt, not a second-guess.
 const RATE_MAX = 8, RATE_WINDOW_MS = 60 * 1000;
 const MAX_QUERIES = 4;        // pooled, never one broad replacing one narrow
-const MAX_VERIFY = 6;         // second calls, the expensive half
+/* ⚠️ 6 -> 4, 2026-09-08, AND IT IS HER DESIGN RATHER THAN A COMPROMISE. Her call
+   the same day: "the more options she can browse, the better, even if they're
+   not all perfect matches." One search already carries ~40 products with title,
+   store, price and photo — everything a card needs to LOOK right — so SHOWING
+   more is nearly free and only CHECKING costs. ▶ So verify the few that lead,
+   and let the rest be browsed. Measured: at 6 the look-ups were the slowest part
+   of the answer (7.6-8.5s of an 18-24s total), and each one is a paid call. */
+const MAX_VERIFY = 4;         // second calls, the expensive half
 
 /* 🚨🚨🚨 THE NUMBER THAT REFRAMES THE WHOLE COST QUESTION, worked out 2026-09-08:
    ONE SHOPPING QUESTION IS NOT ONE SEARCH. It is up to MAX_QUERIES searches plus
@@ -312,7 +319,7 @@ export default async (req) => {
       c.raw.serpapi_immersive_product_api
         ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY, LOOKUP_MS)
             .then(d => ({c, d})).catch(() => null)
-        : Promise.resolve(null), 3);
+        : Promise.resolve(null), MAX_VERIFY);   // all at once: 4 calls, one round
 
     const tLook = Date.now() - t1;
     const verified = [];
