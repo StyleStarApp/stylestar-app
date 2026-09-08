@@ -110,14 +110,29 @@ export default async (req) => {
     // --- 1. POOL SEVERAL QUERIES ------------------------------------------
     // ⚠️ Measured 2026-09-06: broadening CHANGES the pool rather than enlarging
     //    it, so a broad query alone loses pieces the narrow one found.
+    // 🚨🚨 PARALLEL, NOT SEQUENTIAL — FIXED 2026-09-08 AND IT WAS THE WHOLE SPEED
+    //    PROBLEM. This ran the queries one after another, then the second calls
+    //    one after another: up to 4 + 6 = TEN round trips end to end, each with a
+    //    12s ceiling. Measured on the live site before the fix: 9.7s, 13.2s,
+    //    18.1s, and two that died at ~31s with a 504.
+    // ▶▶ AND A TIMEOUT REACHED HER AS SILENCE. The page renders nothing when the
+    //    call fails (deliberately, so the stylist's advice still stands), so a
+    //    woman saw advice with no products and the PREVIOUS search's cards still
+    //    above it — which is exactly what Cath reported as "you just showed me
+    //    the exact same thing when I asked for something different".
+    // ⚠️ ORDER IS STILL PRESERVED ON PURPOSE. The pool is filled in QUERY order,
+    //    not completion order, because the 2026-09-06 measurement showed
+    //    broadening CHANGES the pool rather than enlarging it — the narrow query
+    //    found the DVF the broad one lost. Promise.all keeps array order, so the
+    //    dedup still favours the earlier (narrower) query exactly as before.
     const queries = buildQueries(request).slice(0, MAX_QUERIES);
+    const pages = await Promise.all(queries.map(q =>
+      get('https://serpapi.com/search.json?' + new URLSearchParams({
+        engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY,
+      })).catch(() => null)));
     const pool = new Map();
-    for (const q of queries) {
-      let d; try {
-        d = await get('https://serpapi.com/search.json?' + new URLSearchParams({
-          engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY,
-        }));
-      } catch { continue; }
+    for (const d of pages) {
+      if (!d) continue;                       // one dead query must not kill the rest
       for (const x of d.shopping_results || []) {
         const id = x.product_id || x.title;
         if (id && !pool.has(id)) pool.set(id, x);
@@ -138,10 +153,21 @@ export default async (req) => {
     // --- 3. VERIFY ON THE REAL OFFER, NEVER THE TITLE ----------------------
     // 🚨 The whole reason this step exists: the DVF "Jeanne Silk Jersey Wrap
     //    Dress" reads perfectly in its title and is a TIGER PRINT in its offer.
+    // ⚠️ ALSO PARALLEL NOW, same reason. These are the EXPENSIVE half (one call per
+    //    product), so running six of them in series was most of the wall clock.
+    //    ▶ Order is preserved: Promise.all returns in input order, so the
+    //      "spend the second calls where the title already agrees most" sort above
+    //      still decides which pieces get looked at, and in what order they land.
+    const looked = await Promise.all(mine.slice(0, MAX_VERIFY).map(c =>
+      c.raw.serpapi_immersive_product_api
+        ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY)
+            .then(d => ({c, d})).catch(() => null)
+        : Promise.resolve(null)));
+
     const verified = [];
-    for (const c of mine.slice(0, MAX_VERIFY)) {
-      if (!c.raw.serpapi_immersive_product_api) continue;
-      let d; try { d = await get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY); } catch { continue; }
+    for (const got of looked) {
+      if (!got) continue;
+      const {c, d} = got;
       const p = d.product_results || {};
       const offers = (p.stores || []).filter(o => matchStore(o.name, STORES) && !isResale(o.name));
       const best = offers.sort((a, b) => (a.extracted_price ?? 1e9) - (b.extracted_price ?? 1e9))[0];
