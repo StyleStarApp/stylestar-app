@@ -1016,6 +1016,25 @@ touch local `main`: verify `git merge-base --is-ancestor origin/main <branch>` t
 ▶▶ **THIS SECTION NEVER ARCHIVES. It is the answer to her question of 2026-09-06:** *"The confusion of
 one half of the app following some rules and the other half not — I do not understand how this happened
 because the overall intent and goal of this whole app is very clear."*
+🚨🚨🚨 **HER STANDING DIRECTION, 2026-09-08, AND IT OUTRANKS THE INSTINCT TO ADD MACHINERY:**
+***"I want the AI to be using intelligence and I would like to reduce the amount of rules and breakable
+things we put in there."***
+▶▶ **THE TEST TO APPLY BEFORE BUILDING ANY NEW MECHANISM: is this a PROMISE or a JUDGEMENT?**
+**PROMISES** — never a never-wear item · never claim a size/colour/fabric that was not checked · only
+her shops · womenswear only · don't stack one store. **These are the whole list, and they stay in code**,
+because a promise that depends on a good day is not a promise. **JUDGEMENTS** — is this fitted? is this
+her? is it worth showing? **These go to the stylist, who can read.**
+⚠️ **EVERY FAULT SHE FOUND ON 2026-09-08 WAS A JUDGEMENT BUILT AS A PROMISE.** The 8-word `CUT` list is
+the clearest: a question needing eyes, answered by a lookup table.
+▶ **AND THE SAME TEST RETIRES WORK SHE WAS ABOUT TO DO.** Her ~200 new stores were going to need ten
+hand-scored numbers each. **They do not.** A shop needs a NAME + SEARCH URL to be findable, and ONE
+SENTENCE (price tier · what it is good for · sizes) to be talked about well. ▶▶ **A sentence is
+something a stylist can reason with; `[5,7,7,3,10,6,7,9,7,8]` is not.** **The ten numbers stay only
+because the Wardrobe shelves still use them — keep the existing ones, do not ask her for new ones.**
+🚨 **SO WHEN A FUTURE SESSION WANTS TO ADD A TABLE, A LIST, A SCORE OR A KEYWORD RULE, THE QUESTION IS:
+would a good stylist need this written down, or would she just look?** If she would just look, **let
+her look.**
+
 ⚠️⚠️ **THE SENTENCE TO KEEP: A RULE APPLIED TO ONE HALF IS NOT APPLIED.**
 🚨🚨 **AND THE SECOND SENTENCE TO KEEP, ADDED 2026-09-08 AFTER SHE ASKED THE RIGHT QUESTION:
 WHEN HER WORDS ADMIT TWO BUILDS, SAY SO BEFORE BUILDING — NOT AFTER SHE FINDS IT ON HER PHONE.**
