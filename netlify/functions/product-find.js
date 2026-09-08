@@ -100,11 +100,26 @@ export default async (req) => {
   const hit = cacheGet(cacheKey);
   if (hit) return json({...hit, cached: true}, headers);
 
-  const get = async (url) => {
-    const r = await fetch(url, {signal: AbortSignal.timeout(12000)});
+  // ⏱⏱ THE TIMEOUTS ARE PER-CALL AND DELIBERATELY DIFFERENT, MEASURED 2026-09-08.
+  //    Instrumenting the two halves settled an argument that guessing had lost
+  //    twice. On four live requests the SEARCH took 33ms, 93ms, 134ms and 5.9s —
+  //    while the LOOK-UPS came back at 12,001 / 12,002 / 12,002 / 12,016ms, i.e.
+  //    pinned to the millisecond on the old shared 12s ceiling.
+  // ▶▶ SO NOTHING WAS SLOW EXCEPT THE WAITING. 2 to 5 of the 6 look-ups answer
+  //    quickly; at least one never answers at all, and Promise.all waits for the
+  //    slowest, so EVERY request paid 12 seconds for one straggler.
+  // ⚠️ A shopping answer that takes 12s is a woman deciding the app is broken and
+  //    clicking out — and past ~30s it was a 504 that reached her as silence.
+  //    The design assumed 5-8s.
+  // ▶ The search keeps a long ceiling because losing it loses EVERYTHING. A
+  //   look-up is one product among six, so it gets a short one and the batch
+  //   moves on without it. Missing one card is invisible; waiting is not.
+  const get = async (url, ms = 10000) => {
+    const r = await fetch(url, {signal: AbortSignal.timeout(ms)});
     if (!r.ok) throw new Error('upstream ' + r.status);
     return r.json();
   };
+  const LOOKUP_MS = 6000;
 
   try {
     // --- 1. POOL SEVERAL QUERIES ------------------------------------------
@@ -165,7 +180,7 @@ export default async (req) => {
     const tSearch = Date.now() - t0, t1 = Date.now();
     const looked = await Promise.all(mine.slice(0, MAX_VERIFY).map(c =>
       c.raw.serpapi_immersive_product_api
-        ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY)
+        ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY, LOOKUP_MS)
             .then(d => ({c, d})).catch(() => null)
         : Promise.resolve(null)));
 
