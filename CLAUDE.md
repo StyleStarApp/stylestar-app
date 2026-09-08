@@ -213,6 +213,13 @@ that makes any future number mean something.**
 
 ## ▶ NEXT SESSION — START HERE (2026-09-09 — SHE SAID "THE CHAT IS NOT WORKING WELL." SHE WAS RIGHT, AND ALL OF IT CAME FROM ONE ROOT.)
 
+### ✅ DEPLOYED AND VERIFIED LIVE 2026-09-09
+▶ **Pushed to `main` and confirmed by FETCHING stylestar.app ~30s later and finding all five markers in
+the served page** — not by trusting the Post-processing badge, which is the standing rule here.
+⭐ **AND THE SPEED FIX IS VISIBLE IN THE LIVE FUNCTION: a real streamed reply now begins writing and
+completes in ~9s**, where the old build sat silent past its 30-second stall guard. **The three silent
+web searches were the whole wait.**
+
 ### 🚨🚨 THE FIRST THING TO ASK HER
 ▶▶ **"Did the chat give you real cards this time?"** She sent five phone screenshots on 2026-09-09 and
 every one of them showed a fault. All four faults were fixed the same session and merged. **She has not
@@ -321,10 +328,28 @@ affwrap 35 · untagged · feedshelf.
 1. ~~Cut the query count~~ — **partly done for free.** Removing the stylist's own search removed up to
    three calls per answer. `buildQueries` still fires up to four finder searches; **measure the real
    remaining wait on her retest before cutting further.**
-2. **MANY CARDS, LAZY LOOK-UPS** — her explicit ask, said twice: *"the more options she can browse, the
-   better."* The row scrolls and the cap is raised, but the finder still only returns VERIFIED matches,
-   so there is no wide pool yet. **That is the real build: return the unverified pool too, render it,
-   and spend a look-up only on what she taps.**
+2. **MANY CARDS, LAZY LOOK-UPS** — her explicit ask, said three times now, and **the thing she was
+   actually complaining about on 2026-09-09**: *"I thought by paying for the search service it would
+   land on a full selection of photos with tappable links that our user could slide through."*
+   🚨🚨 **THE MEASUREMENT THAT NAMES THE REAL BLOCKER, TAKEN 2026-09-09: `MAX_VERIFY = 4` IN
+   `product-find.js`.** The finder searches 2-4 queries, filters to her shops — and then **only ever
+   looks up the FIRST FOUR**, so only four can ever become cards, and after verification she typically
+   sees TWO OR THREE. ▶▶ **A WALL OF PHOTOS IS STRUCTURALLY IMPOSSIBLE TODAY. It is not a tuning
+   problem, it is a hard cap.**
+   ✅ **AND THE POOL IS ALREADY PAID FOR: one search returns ~40 products, ~12 in her shops, and all 12
+   ALREADY CARRY photo + price + store + title** (re-measured against `scratchpad/fixtures/`). **They
+   are fetched and then thrown away.**
+   ⚠️⚠️ **THE HONEST SELF-CRITICISM THAT BELONGS WITH THIS, BECAUSE IT IS THE REASON SHE IS
+   FRUSTRATED: she gave this decision on 2026-09-08, it was recorded, it was written into the plan as
+   item 2 — AND THE STRICTEST POSSIBLE OPPOSITE WAS BUILT AND SHIPPED INSTEAD.** Her honesty rule is
+   about what the app **CLAIMS**; it was implemented as a filter on what she **SEES**. She drew that
+   exact distinction herself — *"it changes how MANY pieces she sees, not what the app CLAIMS about
+   them."* ▶ **Same family as the eight-word `CUT` list: her words in, a stricter interpretation out,
+   and no flag on the difference.**
+   ▶ **THE BUILD: return the unverified pool too, render every one of them as a card, let the verified
+   ones lead and say so, and spend a look-up ONLY when she taps.** ⚠️ The look-up is still the only
+   source of a buyable, affiliate-wrappable link (0 of 12 raw results had one), so **an un-looked-up
+   card must resolve its link ON TAP** before it can go anywhere.
 3. **THE DELEGATED CUT** (she ruled yes): when she hands over the choice, the stylist's own silhouette
    becomes a real search requirement, and the stylist says out loud that it was her pick.
    ⚠️ **STILL LIVE AND SEEN AGAIN TODAY:** her *"bridal shower in October in Florida. A brunch."*
