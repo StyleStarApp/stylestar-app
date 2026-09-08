@@ -1689,6 +1689,15 @@
       <a class="dc-item-btn" href="https://www.nordstrom.com/s/8960533" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
+    <div class="dc-item">
+      <img class="dc-item-px" src="https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229376.jpg?width=800" alt="Saint Laurent SL M136 oval sunglasses in black with gold YSL monogram" loading="lazy" decoding="async" onerror="this.remove()">
+      <span class="dc-item-star">&#11088;</span>
+      <div class="dc-item-name">Saint Laurent SL M136 Sunglasses</div>
+      <div class="dc-item-meta"><span class="dc-store">COUTR</span><span class="dc-price">$363</span></div>
+      <div class="dc-item-note">This style is mysterious and cute at the same time. YSL chic and fabulous!</div>
+      <a class="dc-item-btn" href="https://www.coutr.com/products/saint-laurent-sl-m136-sunglasses" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
+    </div>
+
     <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-trend-link" onclick="openTrending()">Curious what's trending right now? &rarr;</div>
 
@@ -11430,13 +11439,44 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
   // (not sale) by her directly. Note is her own words verbatim -- at 91
   // characters it already sits inside the queue's own one-liner range, same
   // as the Jane Win necklace, so nothing needed condensing.
-  // ⚠️ NOT YET IN WEEK_STAR_PHOTO_ORDER -- she said this piece is right for
-  // the Star, not WHEN. Ask before adding: pin it as the immediate current
-  // Star (WEEK_STAR_PIN), or append it to the queue's end the way the Etsy
-  // bracelet was (safe -- nothing currently scheduled moves).
+  // ⚠️ THIS COMMENT WENT STALE AND WAS CORRECTED 2026-09-08. It used to say
+  // 'NOT YET IN WEEK_STAR_PHOTO_ORDER -- ask before adding', which stopped
+  // being true the very next day: she asked for this bag to jump the line and
+  // it was inserted at position 3 on 2026-08-27. A note that describes the
+  // opposite of what the code does is the same fault as a described safeguard
+  // that is not a safeguard -- so it is corrected here rather than left.
+  // ▶ THE RULE IT WAS STATING IS STILL RIGHT AND STILL APPLIES TO NEW PIECES:
+  // a photographed entry rotates ONLY when she puts its name in
+  // WEEK_STAR_PHOTO_ORDER. She says WHETHER, and she says WHEN.
   {n:'Gucci GG Canvas Mini Shoulder Bag',store:'Mytheresa',url:'https://www.mytheresa.com/us/en/women/gucci-gg-canvas-mini-shoulder-bag-beige-p01192311',price:'$1,100',
    note:'Unmistakable horsebit hardware and the Gucci red & green stripe. Perfect touch of luxury.',
-   px:'https://www.mytheresa.com/image/2310/2612/100/0b/P01192311.jpg'}
+   px:'https://www.mytheresa.com/image/2310/2612/100/0b/P01192311.jpg'},
+  // Saint Laurent sunglasses, HER pick 2026-09-08, the morning COUTR approved.
+  // ▶ THE PHOTO ONLY RENDERS BECAUSE THE APPROVAL LANDED: _wkStarPxTag honours
+  //   px: only when _affMid(url) resolves, and coutr.com went into _AFF_MID the
+  //   same morning. This is the first piece to arrive photographed on day one.
+  // ⚠️ $363 IS THE PRICE SHE PAYS AND IT IS NOT A MARKDOWN, checked on the page
+  //   rather than assumed: the JSON-LD offer says 363 and there is NO higher
+  //   'was' price. (Their compareAtPrice reads 358, i.e. LOWER than the price --
+  //   backwards from how compare-at is normally used, so it is their data quirk,
+  //   not a sale. Listing 363 is both accurate and the conservative direction:
+  //   arriving to find a piece cheaper feels lucky, dearer feels misled.)
+  // ⚠️ NO pxPos AND NO pxFit, AND THAT IS MEASURED, NOT AN OMISSION. The source
+  //   is 900x1200 -- EXACTLY 3:4, the same ratio as .wks-px/.dc-item-px -- so
+  //   cover crops nothing and object-position has nothing to choose between.
+  //   ▶ THE REAL ISSUE IS THE OPPOSITE OF THE BAG'S: nothing is cut off, but the
+  //   glasses sit at 66%-96% of the frame with white above them. Rendered at the
+  //   true card size and LOOKED AT before shipping (the FARM Rio lesson): a
+  //   Shopify bottom-crop can enlarge them, but only by leaving 3:4, and the
+  //   glasses span 3%-97% of the WIDTH -- so any non-3:4 source either clips
+  //   both arms under cover, or letterboxes with visible cream bands under
+  //   contain. Her call was the uncropped photo: nothing clipped, nothing that
+  //   reads as a rendering fault. Do not 'improve' this without rendering it.
+  // ▶ The ANGLED shot (1229376), not the straight-on one their og:image uses --
+  //   it shows the gold YSL monogram on the arm, which is what her note is about.
+  {n:'Saint Laurent SL M136 Sunglasses',store:'COUTR',url:'https://www.coutr.com/products/saint-laurent-sl-m136-sunglasses',price:'$363',
+   note:'This style is mysterious and cute at the same time. YSL chic and fabulous!',
+   px:'https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229376.jpg?width=800'}
 ];
 /* PHOTOS-ONLY ROTATION, her call 2026-08-26: seeing the Athleta linen pant
    (no photo) live, she said "I want the star of this week to still be the
@@ -11491,7 +11531,19 @@ var WEEK_STAR_PHOTO_ORDER=[
   'Vilebrequin Long Mesh Cover-Up Dress — Off White',              // Sep 13, was Sep 6 -- still a week ahead of her Sep 20 cutoff
   'Veronica Beard Crosbie Jean',                                   // Sep 20, was Sep 13
   'Fleur du Mal Sculpt Molded Sports Bra',                         // Sep 27, was Sep 20
-  'Isabella Celini Stackable Love Bracelet'                        // Oct 4, was Sep 27
+  'Isabella Celini Stackable Love Bracelet',                       // Oct 4, unchanged
+  // Saint Laurent sunglasses, added 2026-09-08 the morning COUTR approved her.
+  // ▶ APPENDED, NOT INSERTED, AND DELIBERATELY: an append is the option this
+  //   file already calls safe, because every piece already scheduled between
+  //   now and Oct 4 keeps the exact week it has. An INSERT would have pushed
+  //   Vilebrequin past the 20 Sept cutoff she set for it.
+  // ⚠️ VERIFIED AGAINST THE REAL ROTATION CODE, not arithmetic on paper --
+  //   growing the pool 9 -> 10 changes the modulo, so the two entries that wrap
+  //   around (the pendant and the DVF) do each move back one week. Nothing
+  //   between today and Oct 4 moves at all, which is what 'safe' meant here.
+  // ▶ It also breaks up the run: bracelet (jewelry) then sunglasses, not two
+  //   of the same category back to back -- her 2026-08-26 ordering note.
+  'Saint Laurent SL M136 Sunglasses'                              // Oct 11 -- see above
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can

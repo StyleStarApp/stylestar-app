@@ -64,7 +64,24 @@ const anchors = allOutbound.filter(a => !/instagram\.com/.test(a));
 // link. The census caught the 13th template exactly as designed — this suite
 // had been red since that strip shipped, which is a fair trade for an assertion
 // whose whole job is to notice a new way out of the app.
-const TEMPLATES = 13;
+// 13 → 14, FOUND 2026-09-08 AND PRE-EXISTING (this suite was already red by one
+// before that day's work; measured against `git show HEAD:index.html`, which had
+// 45 anchors against 31 Edit links = 14 templates, not 13).
+// ▶ THE 14TH IS `_renderDiscoStar()`'s "Shop it", a SECOND `.wks-shop` anchor
+//   alongside `_renderWeekStar()`'s. Both are `_affUrl`-wrapped and both carry
+//   rel="sponsored noopener" — verified before bumping, not assumed. So the
+//   census did exactly its job: it noticed a new way out of the app, and the
+//   number was simply never updated to acknowledge it.
+// ⚠️⚠️ THIS NUMBER STAYS HARDCODED ON PURPOSE, AND IT IS THE ONE EXCEPTION TO
+//   the 2026-09-08 rule that a count of her things is not an invariant. Those
+//   counts (stores, merchants, scoped stores) moved every time she was APPROVED
+//   for something, so they failed on good news. This one counts CODE PATHS OUT
+//   OF THE APP, which must never grow without a person looking — an unnoticed
+//   outbound anchor is an untagged link that earns nothing, or an untracked way
+//   for a woman to leave. ▶ SO: when this goes red, FIND the new anchor, CHECK
+//   it is sponsored + wrapped, then bump the number with a line saying which
+//   template it was. Never derive it away.
+const TEMPLATES = 14;
 const EDIT_N = (HTML.match(/<a class="dc-item-btn"/g) || []).length;
 ok('found the full set of outbound PRODUCT anchors (every Edit link + ' + TEMPLATES + ' templates)',
    anchors.length === EDIT_N + TEMPLATES, 'got ' + anchors.length + ' with ' + EDIT_N + ' Edit links');

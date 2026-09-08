@@ -163,10 +163,11 @@ are the two that fail SILENTLY:** the product finder's generated allowlist and t
 `SEARCH_DOMAINS`. **A shop in her table that quietly cannot be searched, with nothing on screen looking
 any different.** Both were caught by DERIVED tests and by nothing else.
 
-**⚡ THE SESSION IN NUMBERS:** COUTR wired end to end · **1 new suite (`storepool`, 47 checks)** ·
-**3 latent faults found that she never reported** — two missing allowlist entries and a double-word
-search bug live on `main` across all 41 keyword-scoped stores · **4 hardcoded counts replaced with
-derived rules** · 1 pre-existing red test fixed · 0 regressions.
+**⚡ THE SESSION IN NUMBERS:** COUTR wired end to end · her Edit item + Star of the Week built from it ·
+**1 new suite (`storepool`, 47 checks)** · **3 latent faults found that she never reported** — two
+missing allowlist entries and a double-word search bug live on `main` across all 41 keyword-scoped
+stores · **4 hardcoded counts replaced with derived rules** · **2 pre-existing red suites fixed**
+(`affwrap`, `affq`) · 2 stale comments corrected · 0 regressions.
 
 ### ✅✅ WHAT SHIPPED
 **1. COUTR IS LIVE IN ALL SIX PLACES** — see the affiliate section for her tags, the verified search url
@@ -202,16 +203,50 @@ quietly inert.
 🚨 **THE GENERAL RULE TO KEEP: WHEN A TEST BREAKS, ASK WHETHER THE APP GOT WORSE OR MERELY BIGGER. If it
 merely got bigger, the assertion was measuring the wrong thing — rewrite it to name the rule, never to
 bump the number.**
+⚠️⚠️ **AND THE EXCEPTION, WHICH IS WHAT KEEPS THAT RULE FROM BECOMING AN EXCUSE — `affq`'s `TEMPLATES`
+COUNT STAYS HARDCODED.** It was also found red on 2026-09-08 (**pre-existing**: `HEAD` already had 14
+outbound templates against a `TEMPLATES = 13`), and the 14th turned out to be **`_renderDiscoStar()`'s
+"Shop it"** — a second `.wks-shop` anchor beside `_renderWeekStar()`'s, both `_affUrl`-wrapped and both
+carrying `rel="sponsored noopener"`. **Verified before bumping, not assumed.**
+▶▶ **WHY THIS ONE IS DIFFERENT, AND IT IS THE WHOLE TEST OF THE RULE: the four counts that were derived
+away all moved when SHE WAS APPROVED FOR SOMETHING — they failed on good news. This one counts CODE
+PATHS OUT OF THE APP**, which must never grow without a person looking: an unnoticed outbound anchor is
+an untagged link that earns nothing, or an untracked way for a woman to leave the app. **A tripwire is
+supposed to be tripped.** ▶ **When it goes red: find the new anchor, check it is sponsored and wrapped,
+then bump the number with a line naming the template. Never derive it away.**
 
 ### ▶ WHAT IS WAITING ON HER, AND IT IS SHORT
 1. ⏳ **THE OCT 1 CLOCK — the only genuinely time-sensitive thing on the whole board.** Do NOT pay the
    Your Fashion Friend renewal; close the county receipt by email or mail. See its own section.
-2. ▶ **THE COUTR EDIT ITEM / STAR OF THE WEEK — SHE ASKED FOR IT THIS SESSION AND IT IS NOT BUILT YET.**
-   She confirmed it is the **same piece** in both places. **Still needed from her: the product name, the
-   exact url, the REGULAR price (never the sale price) and her note in her own voice.** ⭐ **The photo
-   gate is already open** — `_wkStarPxTag` honours `px` only when `_affMid(url)` resolves, and
-   `coutr.com` is now in `_AFF_MID`, so a COUTR pick can carry a real photograph on day one.
-   ⚠️ **Measure the crop against the 3:4 frame before it ships** — that is what the bag and the jean cost.
+2. ✅✅ **THE COUTR EDIT ITEM / STAR OF THE WEEK IS BUILT — HER PICK, BOTH PLACES, SAME PIECE.**
+   **Saint Laurent SL M136 Sunglasses · COUTR · $363**, her note verbatim: *"This style is mysterious
+   and cute at the same time. YSL chic and fabulous!"* ⭐ **It is the FIRST piece in this app to arrive
+   PHOTOGRAPHED ON DAY ONE**, because `_wkStarPxTag` honours `px` only when `_affMid(url)` resolves and
+   `coutr.com` went into `_AFF_MID` the same morning. **Edit item live immediately (32 items now); Star
+   of the Week APPENDED to `WEEK_STAR_PHOTO_ORDER` → 11 October.**
+   ▶ **APPENDED, NOT INSERTED, AND VERIFIED AGAINST THE REAL ROTATION CODE, not arithmetic:** every
+   piece already scheduled between now and **4 Oct keeps its exact week**, and **Vilebrequin stays
+   13 Sept, safely inside the 20 Sept cutoff she set for it.** Growing the pool 9 → 10 does move the two
+   that wrap round (the pendant and the DVF) back one week each. ▶ **If she wants it sooner, say so —
+   an insert is one line, but it pushes everything after it, Vilebrequin included.**
+   🚨 **THE PHOTO PROBLEM WAS THE OPPOSITE OF THE BAG'S, AND IT IS WORTH REMEMBERING.** The source is
+   **900x1200 — EXACTLY 3:4**, the same ratio as `.wks-px`/`.dc-item-px`, so `cover` crops **nothing**
+   and `pxPos` has nothing to choose between. **Nothing is cut off; the trouble is emptiness** — the
+   glasses sit at **66%–96% of the frame height** with white above.
+   ⚠️⚠️ **AND IT CANNOT BE FIXED BY CROPPING, WHICH WAS MEASURED RATHER THAN ASSUMED.** Shopify's CDN
+   *can* bottom-crop to enlarge them — **but only by leaving 3:4**, and the glasses span **3%–97% of the
+   WIDTH**, so every non-3:4 source either **clips both arms** under `cover` or **letterboxes with
+   visible cream bands** under `contain`. ▶ **Four versions were rendered at the true card size and
+   LOOKED AT before shipping** (the FARM Rio lesson: measure to find candidates, look to decide).
+   **The uncropped photo shipped: nothing clipped, nothing that reads as a rendering fault.**
+   ▶ **A WIDE, SHORT OBJECT IN A TALL FRAME IS A NEW SHAPE OF THIS PROBLEM** — sunglasses, belts and
+   clutches will all hit it. `pxPos` and `pxFit` do not help; only a different photograph does.
+   ⚠️ **$363 IS NOT A MARKDOWN, CHECKED ON THE PAGE:** the JSON-LD offer says 363 and there is no higher
+   "was" price. Their `compareAtPrice` reads **358 — LOWER than the price**, which is backwards from how
+   compare-at is normally used, so it is their data quirk, not a sale. **Listing 363 is accurate and is
+   also the conservative direction** (arriving to find a piece cheaper feels lucky; dearer feels misled).
+   ▶ **The ANGLED photo was chosen over the straight-on one their `og:image` uses**, because it shows the
+   gold YSL monogram on the arm — which is the detail her note is actually about.
 3. **Hand `docs/store-scoring-brief.md` to ChatGPT** — the ~200-store list, still her desk job.
 4. **Re-run her three chat messages**, then **Shop your Style**.
 
