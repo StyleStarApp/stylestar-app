@@ -125,6 +125,10 @@ export default async (req) => {
     //    broadening CHANGES the pool rather than enlarging it — the narrow query
     //    found the DVF the broad one lost. Promise.all keeps array order, so the
     //    dedup still favours the earlier (narrower) query exactly as before.
+    // ⏱ TIMED, because the first speed fix did not land where it was expected and
+    //   guessing twice is worse than measuring once. Returned on the response so
+    //   a slow search can be diagnosed from outside without redeploying.
+    const t0 = Date.now();
     const queries = buildQueries(request).slice(0, MAX_QUERIES);
     const pages = await Promise.all(queries.map(q =>
       get('https://serpapi.com/search.json?' + new URLSearchParams({
@@ -158,12 +162,14 @@ export default async (req) => {
     //    ▶ Order is preserved: Promise.all returns in input order, so the
     //      "spend the second calls where the title already agrees most" sort above
     //      still decides which pieces get looked at, and in what order they land.
+    const tSearch = Date.now() - t0, t1 = Date.now();
     const looked = await Promise.all(mine.slice(0, MAX_VERIFY).map(c =>
       c.raw.serpapi_immersive_product_api
         ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY)
             .then(d => ({c, d})).catch(() => null)
         : Promise.resolve(null)));
 
+    const tLook = Date.now() - t1;
     const verified = [];
     for (const got of looked) {
       if (!got) continue;
@@ -213,7 +219,11 @@ export default async (req) => {
       }),
     }));
 
-    const payload = {exact, doors, request, searched: queries.length, verified: verified.length};
+    const payload = {exact, doors, request, searched: queries.length, verified: verified.length,
+      // ⏱ ms spent in each half. Cheap, and it is what turned 'the finder is
+      //   slow' into 'the SEARCH is slow and the look-ups are fine', which are
+      //   completely different repairs.
+      ms: {search: tSearch, lookup: tLook, candidates: mine.length}};
     cacheSet(cacheKey, payload);
     return json(payload, headers);
   } catch (e) {
