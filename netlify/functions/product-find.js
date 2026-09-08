@@ -121,6 +121,32 @@ export default async (req) => {
   };
   const LOOKUP_MS = 6000;
 
+  /* 🚨🚨 CONCURRENCY IS CAPPED, AND THE REASON MATTERS MORE THAN THE NUMBER.
+     Making the calls parallel took a common search from 12s to well under 1s —
+     and then FRESH searches started pinning at their ceiling too (10,002 /
+     10,008 / 10,009ms), which sequential calls never did.
+     ▶ The most likely cause is the plan's own CONCURRENT-REQUEST limit: firing
+       up to 4 searches AND 6 look-ups at once means ten simultaneous calls, and
+       a queued request looks exactly like a slow one from here.
+     ⚠️ UNVERIFIED — it needs the SerpApi dashboard, which only Cath can see, so
+       it is written as a suspicion and not as a finding. Do not "confirm" it
+       from the code.
+     ▶ Either way a small pool is the right shape: it keeps almost all of the
+       parallel win (the slowest call sets the pace, not the sum) without ever
+       asking the upstream for ten things at once. */
+  async function pooled(items, fn, width = 3) {
+    const out = new Array(items.length);
+    let next = 0;
+    await Promise.all(Array.from({length: Math.min(width, items.length)}, async () => {
+      while (true) {
+        const i = next++;
+        if (i >= items.length) return;
+        out[i] = await fn(items[i], i);
+      }
+    }));
+    return out;
+  }
+
   try {
     // --- 1. POOL SEVERAL QUERIES ------------------------------------------
     // ⚠️ Measured 2026-09-06: broadening CHANGES the pool rather than enlarging
@@ -145,10 +171,10 @@ export default async (req) => {
     //   a slow search can be diagnosed from outside without redeploying.
     const t0 = Date.now();
     const queries = buildQueries(request).slice(0, MAX_QUERIES);
-    const pages = await Promise.all(queries.map(q =>
+    const pages = await pooled(queries, q =>
       get('https://serpapi.com/search.json?' + new URLSearchParams({
         engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY,
-      })).catch(() => null)));
+      })).catch(() => null), 2);
     const pool = new Map();
     for (const d of pages) {
       if (!d) continue;                       // one dead query must not kill the rest
@@ -178,11 +204,11 @@ export default async (req) => {
     //      "spend the second calls where the title already agrees most" sort above
     //      still decides which pieces get looked at, and in what order they land.
     const tSearch = Date.now() - t0, t1 = Date.now();
-    const looked = await Promise.all(mine.slice(0, MAX_VERIFY).map(c =>
+    const looked = await pooled(mine.slice(0, MAX_VERIFY), c =>
       c.raw.serpapi_immersive_product_api
         ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY, LOOKUP_MS)
             .then(d => ({c, d})).catch(() => null)
-        : Promise.resolve(null)));
+        : Promise.resolve(null), 3);
 
     const tLook = Date.now() - t1;
     const verified = [];
