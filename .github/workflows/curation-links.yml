@@ -48,5 +48,22 @@ jobs:
       # fails, the report itself cannot be trusted, so it runs first.
       - name: Check the watchdog's own logic
         run: node scratchpad/linkwatch.js
+      # ▶ Her ask, 2026-09-08: "I would like a Saturday check in on that. I don't
+      #   want it to run out." Costs nothing to ask — SerpApi's account endpoint
+      #   is not a search — and needs no new secret, because it reads the number
+      #   through her own function, which already holds the key.
+      # ⚠️ Runs BEFORE the link check and does not stop it: two independent
+      #   answers are more useful than one that hides the other.
+      - name: How many shopping searches are left?
+        id: budget
+        continue-on-error: true
+        run: node scripts/search-budget.js --warn 150
       - name: Are her live links still alive?
         run: node scripts/check-product-urls.js
+      # Fails the run (and so emails her) if the budget step warned, without
+      # having masked the link report above.
+      - name: Flag a low search budget
+        if: steps.budget.outcome == 'failure'
+        run: |
+          echo "::error::Shopping searches are running low — see the budget step above."
+          exit 1

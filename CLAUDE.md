@@ -73,8 +73,8 @@ that makes any future number mean something.**
 ### 🛠️ THE APP — things Claude can build
 - ▶ **Shop your Style** ← item 3 above, the big one.
 - ▶ **A SPEND CAP + CACHING for SerpApi.** ~15¢ per shopping question and it is the app's **first
-  per-user cost**. Her stance is VALUE FIRST and is not to be re-litigated — **the cap is the seatbelt,
-  not a second-guess.** Caching first (repeat questions cost nothing), then a hard monthly ceiling.
+  per-user cost**. Her stance is VALUE FIRST and is not to be re-litigated. Caching first (repeat
+  questions cost nothing), then a warning before the month runs out — **NOT a block.**
 - ▶ **FIX THE FLAKY `curated.js` CHECK PROPERLY** — *"never ruffles" removes the ruffled item* reports
   64/1 and is **time/state dependent, NOT a regression** (proven against `097585b`). 🚨 **Fix it with an
   isolated context, NEVER by loosening the assertion:** it guards the never-wear list, which exists
@@ -550,7 +550,20 @@ actually verify it.**
    FIXED whether 10 women or 10,000 use it; this one scales with usage. **~15¢ per shopping question.**
    ▶ **A SPEND CAP IS NOT A COMPROMISE ON THE EXPERIENCE and should be set anyway** — caching first
    (repeat questions cost nothing), then a hard monthly ceiling, so a surprise is impossible rather
-   than unlikely. **Her call stands; the cap is the seatbelt, not a second-guess.**
+   than unlikely.
+   🚨🚨 **A MISATTRIBUTION, CAUGHT BY HER ON 2026-09-08 AND CORRECTED HERE.** This line used to end
+   *"the cap is the seatbelt, not a second-guess"* and that phrase was quoted back to her twice as
+   though it were HERS. **It was never hers. It is Claude's.** Her words are the ones actually in
+   quotes above — *"I would rather make the experience excellent first and then understand and control
+   the cost once we see how women actually use it"* — which carries close to the OPPOSITE emphasis, and
+   the invented phrase was then used to justify a cap she had not asked for.
+   ▶ **HER CORRECTION, VERBATIM 2026-09-08: *"at this point my focus is on making the app as good as it
+   can be, not adding resistance."*** ⚠️ **SO: WARN, NEVER BLOCK.** A ceiling that silently degrades her
+   app IS resistance, and it is the thing she has objected to since the Stitch Fix box.
+   🚨 **THE LESSON, AND IT IS THIS FILE'S OWN: A PHRASE CLAUDE COINED, PUT NEAR HER QUOTES, BECAME HER
+   QUOTE.** Bold text next to italic quotes reads as one voice. ▶ **Only her actual words go in
+   ***triple-asterisk italics***. Anything Claude framed stays plainly framed, and is never quoted back
+   to her as her own.**
 5. ✅✅ **THE AFFILIATE TIE-BREAK — ASKED AND ANSWERED, 2026-09-06: "A". THE RULE HOLDS COMPLETELY, WITH
    NO EXCEPTION.** ▶▶ **The app NEVER knows which shops pay her. Fit and price decide, full stop — even
    when two options are exactly equally good and one earns and the other does not.**

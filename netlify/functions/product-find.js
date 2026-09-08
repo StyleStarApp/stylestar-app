@@ -54,7 +54,24 @@ const MAX_VERIFY = 6;         // second calls, the expensive half
      exact, and needs nothing set up. Below the floor the finder stops searching
      and says so honestly, rather than quietly returning nothing, which is the
      failure mode this whole app is built against. */
-const RESERVE = Number(process.env.SERPAPI_RESERVE || 20);
+/* 🚨🚨 DEFAULT ZERO — WARN, NEVER BLOCK. Corrected 2026-09-08 after she read what
+   the floor actually did and said plainly: "at this point my focus is on making
+   the app as good as it can be, not adding resistance."
+   ▶ SHE IS RIGHT, AND THE ORIGINAL 20 WAS ARGUED FROM A PHRASE SHE NEVER SAID.
+     "The cap is the seatbelt" was Claude's line, quoted back to her as hers. Her
+     real position, 2026-09-06, is the opposite emphasis: "I would rather make
+     the experience excellent first and then understand and control the cost once
+     we see how women actually use it."
+   ⚠️ AND A RESERVE IS WORSE THAN IT LOOKS: on a fixed monthly allowance it saves
+     no money at all — it only decides WHO gets the last searches. A floor of 20
+     meant a real woman got the degraded app so that testing could continue. That
+     is exactly backwards.
+   ▶ SO THE CEILING IS NOW A WARNING, NOT A GATE: the Saturday watchdog reports
+     what is left and shouts before it runs out (her ask: "I don't want it to run
+     out"). This constant stays at 0 so nothing is ever refused while searches
+     remain; it is kept, and settable, only for a future METERED plan where
+     overspending would mean a real bill rather than simply running out. */
+const RESERVE = Number(process.env.SERPAPI_RESERVE || 0);
 let acct = {at: 0, left: null};
 async function searchesLeft(KEY) {
   if (Date.now() - acct.at < 10 * 60 * 1000) return acct.left;
@@ -121,6 +138,18 @@ export default async (req) => {
     'Vary': 'Origin',
   };
   if (req.method === 'OPTIONS') return new Response(null, {status: 204, headers});
+
+  /* ▶ THE BUDGET PROBE — free, and the reason the Saturday watchdog needs no new
+     secret. SerpApi's account endpoint is NOT a search, so asking it costs
+     nothing. Deliberately outside the origin guard: a GitHub Action has no
+     Origin or Referer header, and the only thing this returns is how many
+     searches are left, which is already on every normal response. It never
+     searches and never touches the key beyond that one call. */
+  if (new URL(req.url).searchParams.get('budget') === '1') {
+    const KEY0 = process.env.SERPAPI_KEY;
+    if (!KEY0) return json({searchesLeft: null, why: 'no-key'}, headers);
+    return json({searchesLeft: await searchesLeft(KEY0)}, headers);
+  }
   if (!isAllowed(req)) return json({error: 'Not allowed'}, headers, 403);
   if (rateLimited(req)) return json({error: 'Too many requests'}, headers, 429);
   if (req.method !== 'POST') return json({error: 'Method not allowed'}, headers, 405);
