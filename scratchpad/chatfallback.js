@@ -502,7 +502,7 @@ console.log('\n13. ...and a genuinely empty result still says HER sentence');
 findMode='ok';
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   13. THE ROW SURVIVES A RELOAD — her fault report, 2026-09-09.
+   14. THE ROW SURVIVES A RELOAD — her fault report, 2026-09-09.
    ▶▶ HER WORDS: "the searched photo cards disappearing when user leaves and
      comes back to chat." She then asked the stylist where they had gone and was
      told "Let me pull them back up for you right now" — a promise NOTHING in
@@ -511,7 +511,7 @@ findMode='ok';
    ⚠️ IT RELOADS THE REAL PAGE AND RE-OPENS THE CHAT, so it exercises the actual
      restore path rather than calling the builder directly. A test that called
      _findBlockHtml itself would pass even if nothing were ever stored. */
-console.log('\n13. the cards come back after she leaves and returns');
+console.log('\n14. the cards come back after she leaves and returns');
 {mode='wall';calls=[];findCalls=[];
  const {pg,ctx,errs}=await run('wall','I need a fitted white top');
  await pg.waitForTimeout(3000);
@@ -545,6 +545,56 @@ console.log('\n13. the cards come back after she leaves and returns');
  ok('and a paying shop is still not at the bottom',await pg.evaluate(()=>{
    const m=[...document.querySelectorAll('.find-cards .fc-meta')].map(x=>x.textContent||'');
    const i=m.findIndex(t=>/FARM Rio/.test(t));return i>=0&&i<=2;}));
+ ok('no JS errors',errs.length===0,errs.join('|'));
+ await ctx.close();}
+
+/* ⚠️⚠️ 15. THE CARD PHOTO AND THE FOOTER — her screenshot, 2026-09-09.
+   ▶▶ HER WORDS: "I don't like how the photos are cut off here. Can't see top of
+     dress or head of the model." The frame was a SQUARE 150x150 with `cover`,
+     and MEASURED against 11 real captured thumbnails FIVE are portrait
+     (0.77-0.84) while six are square — so every portrait photo lost ~20% of its
+     height, half off the top: the missing head, the missing hem.
+   🚨 THESE ASSERT THE RULE, NOT THE NUMBERS. "No product photo is ever cropped"
+     is the promise; 170px is one way to keep the bands small and may be tuned.
+     `cover` is what CANNOT come back — it is the whole fault, and it is exactly
+     the kind of tidy-looking one-word change a later session would make.
+   ▶ AND THE FOOTER, her second ask the same day: "those 3 lines appear to be
+     double spaced. Can we make them much tighter." It is asserted as a CEILING
+     on the block's real height, so tightening further is free and quietly
+     re-inflating it is not. */
+console.log('\n15. her card photos are never cropped, and the footer stays tight');
+{const {pg,ctx,errs}=await run('wall','I need a fitted white top');
+ const m=await pg.evaluate(()=>{
+   const d=document.createElement('div');
+   d.innerHTML='<div class="find-cards"><a class="find-card"><img class="fc-img"></a></div>';
+   document.body.appendChild(d);
+   const im=getComputedStyle(d.querySelector('.fc-img'));
+   const card=getComputedStyle(d.querySelector('.find-card'));
+   const r={fit:im.objectFit,h:parseFloat(im.height),bg:im.backgroundColor,cardBg:card.backgroundColor};
+   d.remove();
+   const cf=document.getElementById('chatFresh');
+   const hh=s=>{const e=document.querySelector(s);return e?e.getBoundingClientRect().height:0};
+   const cs=cf?getComputedStyle(cf):null;
+   r.foot=hh('.chat-privacy')+hh('.chat-disclosure')+
+     (cf?cf.getBoundingClientRect().height+parseFloat(cs.marginTop)+parseFloat(cs.marginBottom):0);
+   const ar=getComputedStyle(document.querySelector('.chat-privacy summary'),'::after');
+   r.arrow=parseFloat(ar.fontSize);
+   r.words=parseFloat(getComputedStyle(document.querySelector('.chat-privacy')).fontSize);
+   const btn=document.querySelector('.chat-fresh');
+   r.tap=btn?btn.getBoundingClientRect().height:0;
+   return r;});
+ ok('NOTHING IS EVER CROPPED OFF A PRODUCT PHOTO',m.fit==='contain','object-fit='+m.fit);
+ ok('the frame is taller than it is wide, so a portrait photo barely bands',m.h>150,'height='+m.h);
+ /* ▶ The band only disappears if it is the SAME white as the card. A cream
+    placeholder here is what would turn `contain` into a visible letterbox. */
+ ok('and the letterbox is the same colour as the card, so it cannot be seen',
+    m.bg===m.cardBg,m.bg+' vs '+m.cardBg);
+ ok('the three footer lines stay under 56px',m.foot<56,'foot='+m.foot.toFixed(1)+'px');
+ ok('the Private-to-you arrow is bigger than the words beside it',
+    m.arrow>m.words,'arrow='+m.arrow+' words='+m.words);
+ /* ⚠️ A TAP TARGET IS THE FLOOR THAT TIGHTENING MUST NOT CROSS. Her audience
+    runs to 80; "save space" must never shrink a button below the thumb. */
+ ok('and "Start a fresh conversation" is still a real tap target',m.tap>=16,'tap='+m.tap.toFixed(1)+'px');
  ok('no JS errors',errs.length===0,errs.join('|'));
  await ctx.close();}
 

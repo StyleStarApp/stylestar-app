@@ -881,19 +881,34 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    ⚠️ Contrast is UNCHANGED at #8a8a8a. The disclosure lesson applies here too:
    a notice nobody can read is not a notice, and making it quieter to save space
    would be solving the wrong half. */
-.chat-privacy{font-size:11px;color:#8a8a8a;text-align:center;padding:4px 0;line-height:1.5}
+/* ⚠️ THE THREE FOOTER LINES ARE DELIBERATELY TIGHT — her ask, 2026-09-09:
+   "those 3 lines appear to be double spaced. Can we make them much tighter
+   together to save space and give more room to the chatting." ▶ Measured: they
+   cost ~68px of a phone screen and now cost ~51px. The line-height is 1.25 on
+   all three ON PURPOSE; do not restore 1.5 "for readability" -- the font sizes
+   and the 4.6:1 contrast are what make these legible, and they are untouched. */
+.chat-privacy{font-size:11px;color:#8a8a8a;text-align:center;padding:0;line-height:1.25}
 .chat-privacy summary{cursor:pointer;list-style:none;display:inline-block}
 .chat-privacy summary::-webkit-details-marker{display:none}
-.chat-privacy summary::after{content:' \203A';display:inline-block;transition:transform .15s}
+/* ▶ THE ARROW IS SIZED SEPARATELY FROM THE WORDS, her catch 2026-09-09:
+   "make the arrow on private to you larger (right now it is so tiny cannot see
+   it)". It inherited 11px and was invisible. 15px, bolder and darker than the
+   grey text, because it is the only thing on the line saying "this opens". */
+.chat-privacy summary::after{content:'\203A';display:inline-block;font-size:15px;font-weight:600;color:#6e6e6e;line-height:1;margin-left:5px;vertical-align:-1px;transition:transform .15s}
 .chat-privacy[open] summary::after{transform:rotate(90deg)}
-.chat-privacy[open]{padding-bottom:6px}
+.chat-privacy[open]{padding-bottom:4px}
 /* Sits directly under the privacy line -- the stylist links to stores inside her
    answers, so the disclosure belongs on this screen too. Deliberately NOT quieter
    than the line above it: this is a legal notice that has to be legible, and the
    first colour tried (#9a9a9a) measured 2.5:1 against the chat background, which
    fails. #6e6e6e matches .shop-disclosure everywhere else and measures ~5:1. */
-.chat-disclosure{font-size:11px;color:#6e6e6e;text-align:center;padding:0 0 4px}
-.chat-fresh{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:11.5px;color:#8a8a8a;text-decoration:underline;cursor:pointer;padding:2px 4px;transition:color .2s}
+.chat-disclosure{font-size:11px;color:#6e6e6e;text-align:center;padding:0;line-height:1.25}
+/* ⚠️ THE VERTICAL PADDING STOPS AT 1px AND THAT IS A FLOOR, NOT A LEFTOVER.
+   This is a BUTTON, and its padding is its tap target. At 0 it is ~14px tall,
+   which is under every thumb guideline and worst for exactly the women this
+   app is built to serve (her audience runs to 80). ▶ Tighten the MARGINS
+   around it, never this. */
+.chat-fresh{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:11.5px;line-height:1.25;color:#8a8a8a;text-decoration:underline;cursor:pointer;padding:1px 4px;transition:color .2s}
 .chat-fresh:hover{color:#EC4899}
 #chatRefineHint button{border-radius:4px!important;border:1.5px solid #1a1a1a!important;color:#1a1a1a!important}
 .btn-chat{width:100%;padding:15px;border-radius:40px;font-size:14px;font-weight:600;letter-spacing:0.06em;cursor:pointer;border:1.5px solid #1a1a1a;background:#fff;color:#1a1a1a;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;margin-top:8px;text-transform:uppercase}
@@ -3656,7 +3671,22 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
   color:#6e6e6e;margin:1px 2px 0;letter-spacing:.01em}
 .find-cards{display:flex;gap:10px;overflow-x:auto;align-items:flex-start;padding:2px 2px 6px;-webkit-overflow-scrolling:touch}
 .find-card{flex:0 0 150px;background:#fff;border:1px solid #e6e2dc;border-radius:6px;overflow:hidden;text-decoration:none;color:inherit;display:block}
-.fc-img{width:100%;height:150px;object-fit:cover;display:block;background:#f5f3ef}
+/* 🚨 NOTHING IS EVER CROPPED OFF A PRODUCT PHOTO — her catch, 2026-09-09:
+   "I don't like how the photos are cut off here. Can't see top of dress or head
+   of the model." ▶ MEASURED against 11 real captured thumbnails before changing
+   anything: SIX are exactly square (1.00) and FIVE are portrait (0.77-0.84).
+   The frame was a square 150x150 with `cover`, so every portrait photo lost
+   ~20% of its height, half off the top and half off the bottom = the missing
+   head and the missing hem.
+   ⚠️ NO SINGLE `cover` FRAME CAN FIX THAT, because the sources genuinely differ:
+   a 3:4 frame would crop 25% off the SIDES of every square one instead. So the
+   fit is `contain` -- the whole garment always, no exceptions.
+   ▶ THE HEIGHT IS CHOSEN FROM THE MEASUREMENT, NOT PICKED: 150x170 sits in the
+   middle of the observed range (0.88), so the leftover band is at most ~10px on
+   a square source and ~10px on the tallest portrait one -- and the background is
+   #fff, the SAME white as the card, so the band is invisible rather than a
+   letterbox. A cream placeholder here would have made every band show. */
+.fc-img{width:100%;height:170px;object-fit:contain;display:block;background:#fff}
 .fc-body{padding:8px 9px 9px}
 /* ⚠️ 4-line clamp, the same lesson as the feed cards: a merchant name is not
    prose and an unclamped one made 650px of empty beige under a short row. */
