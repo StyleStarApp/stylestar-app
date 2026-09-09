@@ -10,7 +10,7 @@ import {chromium} from '/opt/node22/lib/node_modules/playwright/index.mjs';
 import http from 'http';import fs from 'fs';
 
 const HTML=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-let mode='healthy', calls=[], findCalls=[];
+let mode='healthy', calls=[], findCalls=[], findMode='ok';mode='healthy';
 const sse=o=>'event: '+o.type+'\ndata: '+JSON.stringify(o)+'\n\n';
 
 const srv=http.createServer((q,res)=>{
@@ -21,6 +21,17 @@ const srv=http.createServer((q,res)=>{
     return q.on('end',()=>{
       findCalls.push(JSON.parse(fr||'{}'));
       res.writeHead(200,{'Content-Type':'application/json'});
+      /* 🚨 A SEARCH THAT TIMED OUT ANSWERS 200 WITH AN EMPTY POOL, which is why
+         it used to be indistinguishable from "her shops had nothing". The
+         server now says so. Shape taken from a real 2026-09-09 live call. */
+      if(findMode==='searchfail'){
+        return res.end(JSON.stringify({exact:[],doors:[],browse:[],why:'search-failed',
+          searched:1,verified:0,ms:{search:10001,lookup:0,candidates:0},searchesLeft:885}));
+      }
+      if(findMode==='empty'){
+        return res.end(JSON.stringify({exact:[],doors:[],browse:[],
+          searched:1,verified:2,ms:{search:900,lookup:800,candidates:2},searchesLeft:885}));
+      }
       /* A verified pick PLUS the browse pool the finder now returns. One of the
          browse titles carries "Ruffle" so the never-wear rule can be proven to
          govern the wall and not just the verified set. */
@@ -333,6 +344,46 @@ console.log('\n11. the debug view answers "what did it actually do?"');
  }));
  ok('no JS errors',errs.length===0,errs.join('|'));
  await ctx.close();}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   12/13. A SEARCH THAT NEVER CAME BACK MUST NOT READ AS "I LOOKED AND FOUND
+   NOTHING." Her rule, 2026-09-06: "I do not want it falling back to an invented
+   product or making a generic store search look like something Style Star
+   actually found" — and the same principle one step out, which she and this
+   file both already drew: a failed search shown as an empty result has exactly
+   the shape of a lie, because it is indistinguishable from the truth.
+   ▶▶ FOUND LIVE 2026-09-09 WHILE RE-VERIFYING AFTER A CONTAINER RESTART. A real
+     call came back `search: 10001ms, candidates: 0` — pinned to the millisecond
+     on the ceiling — and the page told her "nothing close enough to show you."
+     The search had never completed. Her shops were never asked.
+   ⚠️ THE PAGE COULD NOT HAVE KNOWN: get() swallows a timeout, so the server
+     answered 200 with an honest-looking empty pool. The distinction is made
+     server-side now, which is the only place it is actually known.
+   ⚠️ AND 13 IS THE HALF THAT KEEPS 12 HONEST: a genuinely empty search must
+     STILL say her words. Fixing one must not silence the other. */
+console.log('\n12. a timed-out search says so, and invents nothing');
+{findMode='searchfail';mode='wall';calls=[];findCalls=[];
+ /* ⚠️ 'wall' is the mode whose reply carries a <<FIND>> marker. 'healthy' does
+    not, so the finder never runs and nothing renders — which is exactly how the
+    first version of this check passed its negative and failed its positive. */
+ const {pg,ctx,errs}=await run('wall','I need a fitted white top');
+ await pg.waitForTimeout(3000);
+ const all=(await pg.locator('.find-block').allInnerTexts().catch(()=>[])).join(' | ');
+ ok('it says the search did not come back',all.includes("didn't come back"),all.slice(0,200));
+ ok('and NEVER claims her shops had nothing',!all.includes('nothing close enough'),all.slice(0,200));
+ ok('no cards invented to fill the gap',(await pg.locator('.find-card').count())===0);
+ ok('no JS errors',errs.length===0,errs.join('|'));
+ await ctx.close();}
+
+console.log('\n13. ...and a genuinely empty result still says HER sentence');
+{findMode='empty';mode='wall';calls=[];findCalls=[];
+ const {pg,ctx}=await run('wall','I need a fitted white top');
+ await pg.waitForTimeout(3000);
+ const all=(await pg.locator('.find-block').allInnerTexts().catch(()=>[])).join(' | ');
+ ok('a real empty search keeps her wording',all.includes('nothing close enough'),all.slice(0,200));
+ ok('and does NOT claim the search failed',!all.includes("didn't come back"),all.slice(0,200));
+ await ctx.close();}
+findMode='ok';
 
 console.log(`\n${pass} passed, ${fail} failed`);
 await b.close();srv.close();

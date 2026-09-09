@@ -10814,6 +10814,26 @@ async function _findRun(req){
     return;
   }
   if(!data)return;                       /* silent: the advice above still stands */
+  /* 🚨 THE SEARCH RAN AND NEVER CAME BACK — NOT THE SAME AS FINDING NOTHING.
+     Added 2026-09-09 after a live call came back `search: 10001ms, candidates:
+     0`, pinned to the millisecond on the ceiling, and the page told her
+     "nothing close enough to show you". The server now says `search-failed`
+     when EVERY query died, so this reads the same as a dead connection —
+     because to a woman looking at the screen it IS the same thing.
+     ⚠️ HER APPROVED WORDING, REUSED VERBATIM AND NOT REWRITTEN. Her ruling on
+     these two sentences: "I think what you came up with is fine and the stylist
+     chat already has a good personality and words things well." */
+  if(data.why==='search-failed'){
+    const w=document.createElement('div');
+    w.className='find-block find-note';
+    w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
+      'so I haven\'t looked through your shops yet. Ask me again and I\'ll try.</div>';
+    mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
+    /* ⚠️ NO _findDbg CALL HERE. It is already scheduled once for EVERY return
+       path right after status.done() — that is the whole point of putting it at
+       the choke point. Adding one per branch is how it would render twice. */
+    return;
+  }
   /* ▶ THE MONTH'S SEARCH CEILING (her "seatbelt", 2026-09-06). Also NOT an empty
      result: the shops were never looked at. Said plainly, without making a woman
      read the word "quota". */

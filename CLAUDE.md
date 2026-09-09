@@ -386,6 +386,29 @@ on by accident, and one `setTimeout` covers EVERY return path — failed, budget
 instead of a line at each one.**
 ▶ **`scratchpad/chatfallback.js` — 55 checks, was 35.** Sections 9, 10 and 11.
 
+### 🚨🚨 FOUND BY RE-VERIFYING AFTER A CONTAINER RESTART: A TIMED-OUT SEARCH WAS TELLING HER HER SHOPS HAD NOTHING
+▶▶ **A live call on 2026-09-09 came back `search: 10001ms · candidates: 0` — pinned to the millisecond
+on the 10-second ceiling — and the page told her *"I couldn't find exactly what you asked for, and
+nothing close enough to show you."*** **The search had never completed. Her 122 shops were never asked.**
+🚨 **THAT IS THE ONE THING HER RULE FORBIDS, and this file had already written the sentence:** a failed
+search shown as an empty result *"has exactly the shape of a lie, because it is indistinguishable from
+the truth."* The page-level version of this was fixed on 2026-09-08; **this was the same fault one layer
+down, where the page could not see it** — `get()` swallows a timeout with `.catch(() => null)`, so the
+server answered **200 with an honest-looking empty pool.**
+✅ **FIXED WHERE THE DIFFERENCE IS ACTUALLY KNOWN — SERVER-SIDE.** When **every** query dies,
+`product-find.js` now returns `why: 'search-failed'` and the page shows her approved sentence
+*"My search didn't come back just then…"* instead. ⚠️ **Only when EVERY query dies** — one dead query
+among several is normal and the surviving pool still stands.
+⚠️⚠️ **AND THE HALF THAT KEEPS THE FIX HONEST IS TESTED TOO: a GENUINELY empty search must still say
+HER words.** Fixing one must not silence the other. **`chatfallback` 55 → 61, sections 12 and 13.**
+▶ **THE RETRY IMMEDIATELY AFTERWARDS WORKED — 19 in her shops, 3 exact, 16 browse** — so this is
+intermittent, and it is the **same "pinned at the ceiling" signature this file already records as a
+suspected concurrent-request limit.** ⚠️ **Still unproven; it needs her dashboard.** What is now certain
+is that when it happens **she is told the truth about it.**
+⭐ **AND THE DEBUG VIEW EARNED ITSELF ON ITS FIRST REAL USE:** `search time 10001ms` beside
+`products in your shops 0` is what named this in seconds. **Before it, this looked exactly like "your
+shops have nothing."**
+
 ### 🚨 THE SIX EDITS TO ADD A MERCHANT ARE NOW FIVE
 ▶ **Edit (6), `SEARCH_DOMAINS` in `style-ai.js`, no longer arms anything** — the stylist has no search
 to allow domains for. ⚠️ **The constant is deliberately KEPT and still DERIVED** from the same generated

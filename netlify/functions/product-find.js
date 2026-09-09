@@ -295,6 +295,30 @@ export default async (req) => {
        four-query request paid for TWO rounds of the slowest search, which
        measured 12.8s on its own. The look-ups keep their smaller pool — there
        are more of them and they matter less individually. */
+    /* 🚨🚨 A SEARCH THAT NEVER CAME BACK IS NOT "I LOOKED AND FOUND NOTHING",
+       AND TELLING HER OTHERWISE IS THE ONE THING HER RULE FORBIDS.
+       ▶ FOUND 2026-09-09 BY RE-VERIFYING AFTER A CONTAINER RESTART, on a live
+         call that returned `search: 10001ms, candidates: 0` — pinned to the
+         millisecond on the 10s ceiling, the exact signature this file already
+         records as a suspected concurrent-request limit. `get()` swallows a
+         timeout with `.catch(() => null)`, so an empty pool looked identical to
+         a genuine empty result and the page said "nothing close enough to show
+         you." ▶▶ SHE HAD BEEN TOLD HER SHOPS HAD NOTHING, WHEN NOTHING HAD
+         BEEN ASKED OF THEM.
+       ⚠️ THIS IS HER 2026-09-06 RULE, ONE LAYER DEEPER THAN THE PAGE-LEVEL FIX.
+         The page already distinguishes a request that FAILED from one that
+         found nothing; it could not see this case because the server answered
+         200 with an honest-looking empty pool. The distinction has to be made
+         HERE, where the difference is actually known.
+       ▶ Only when EVERY query died — one dead query among several is normal and
+         the surviving pool still stands. */
+    if (pages.length && pages.every(d => !d)) {
+      return json({exact: [], doors: [], browse: [], request, why: 'search-failed',
+        searched: queries.length, verified: 0,
+        ms: {search: Date.now() - t0, lookup: 0, candidates: 0},
+        searchesLeft: left}, headers);
+    }
+
     const pool = new Map();
     for (const d of pages) {
       if (!d) continue;                       // one dead query must not kill the rest
