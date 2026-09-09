@@ -219,7 +219,33 @@ export default async (req) => {
   // ▶ The search keeps a long ceiling because losing it loses EVERYTHING. A
   //   look-up is one product among six, so it gets a short one and the batch
   //   moves on without it. Missing one card is invisible; waiting is not.
-  const get = async (url, ms = 10000) => {
+  /* 🚨🚨 THE SEARCH CEILING WAS 10s AND IT WAS CLIPPING REAL SEARCHES, MEASURED
+     2026-09-09 ON LIVE CALLS. Two consecutive requests came back at 10001ms and
+     10004ms — pinned to the millisecond, which is a ceiling, not a slow server.
+     ▶ THE NUMBERS THAT SIZE IT: SerpApi's OWN processing time is 1.6–3.4s
+       (their `total_time_taken`, measured 2026-09-08), and a SUCCESSFUL search
+       from here lands at 6.6–6.9s. So a 10s ceiling left barely three seconds
+       of headroom over a normal success, and clipped the whole slow tail.
+     ▶▶ THE ASYMMETRY IS THIS FILE'S OWN AND IT ARGUES FOR THE CHANGE: "losing a
+       search loses everything; losing one look-up of six is invisible." The
+       look-up rightly keeps its short 6s ceiling. The SEARCH is all-or-nothing
+       and had the same order of ceiling, which was backwards.
+     🚨🚨 AND THEN 20s WAS TRIED AND MEASURED AND IT WAS WRONG — KEPT HERE
+       BECAUSE THE MISTAKE IS THE USEFUL PART. Raising the ceiling to 20s did
+       not rescue a single search: the next failure pinned at 20001ms, exactly
+       the new ceiling. ▶▶ SO THESE REQUESTS ARE NOT SLOW, THEY ARE HUNG. A
+       hung request stays hung, and a bigger ceiling only makes a woman wait
+       twice as long for the same honest "my search didn't come back".
+     ▶ 12s IS CHOSEN FROM THE REAL SUCCESSES, not from hope: observed
+       successful searches land at 122ms (warm cache), 6.6s, 6.9s and 8.7s, so
+       12s clears the slowest one seen with headroom and then FAILS FAST, which
+       is the kinder half — she gets the honest sentence and can ask again
+       instead of watching a screen.
+     ⚠️ SUSPECTED CAUSE, STILL UNPROVEN: the hangs cluster under rapid
+       back-to-back calls, which is how they were found. A woman asking ONE
+       question may never see this. Do not "fix" it further without evidence
+       from her own use — and the debug view now shows her the number. */
+  const get = async (url, ms = 12000) => {
     const r = await fetch(url, {signal: AbortSignal.timeout(ms)});
     if (!r.ok) throw new Error('upstream ' + r.status);
     return r.json();
@@ -295,6 +321,30 @@ export default async (req) => {
        four-query request paid for TWO rounds of the slowest search, which
        measured 12.8s on its own. The look-ups keep their smaller pool — there
        are more of them and they matter less individually. */
+    /* 🚨🚨 A SEARCH THAT NEVER CAME BACK IS NOT "I LOOKED AND FOUND NOTHING",
+       AND TELLING HER OTHERWISE IS THE ONE THING HER RULE FORBIDS.
+       ▶ FOUND 2026-09-09 BY RE-VERIFYING AFTER A CONTAINER RESTART, on a live
+         call that returned `search: 10001ms, candidates: 0` — pinned to the
+         millisecond on the 10s ceiling, the exact signature this file already
+         records as a suspected concurrent-request limit. `get()` swallows a
+         timeout with `.catch(() => null)`, so an empty pool looked identical to
+         a genuine empty result and the page said "nothing close enough to show
+         you." ▶▶ SHE HAD BEEN TOLD HER SHOPS HAD NOTHING, WHEN NOTHING HAD
+         BEEN ASKED OF THEM.
+       ⚠️ THIS IS HER 2026-09-06 RULE, ONE LAYER DEEPER THAN THE PAGE-LEVEL FIX.
+         The page already distinguishes a request that FAILED from one that
+         found nothing; it could not see this case because the server answered
+         200 with an honest-looking empty pool. The distinction has to be made
+         HERE, where the difference is actually known.
+       ▶ Only when EVERY query died — one dead query among several is normal and
+         the surviving pool still stands. */
+    if (pages.length && pages.every(d => !d)) {
+      return json({exact: [], doors: [], browse: [], request, why: 'search-failed',
+        searched: queries.length, verified: 0,
+        ms: {search: Date.now() - t0, lookup: 0, candidates: 0},
+        searchesLeft: left}, headers);
+    }
+
     const pool = new Map();
     for (const d of pages) {
       if (!d) continue;                       // one dead query must not kill the rest

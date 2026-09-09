@@ -527,6 +527,42 @@ on by accident, and one `setTimeout` covers EVERY return path — failed, budget
 instead of a line at each one.**
 ▶ **`scratchpad/chatfallback.js` — 55 checks, was 35.** Sections 9, 10 and 11.
 
+### 🚨🚨 FOUND BY RE-VERIFYING AFTER A CONTAINER RESTART: A TIMED-OUT SEARCH WAS TELLING HER HER SHOPS HAD NOTHING
+▶▶ **A live call on 2026-09-09 came back `search: 10001ms · candidates: 0` — pinned to the millisecond
+on the 10-second ceiling — and the page told her *"I couldn't find exactly what you asked for, and
+nothing close enough to show you."*** **The search had never completed. Her 122 shops were never asked.**
+🚨 **THAT IS THE ONE THING HER RULE FORBIDS, and this file had already written the sentence:** a failed
+search shown as an empty result *"has exactly the shape of a lie, because it is indistinguishable from
+the truth."* The page-level version of this was fixed on 2026-09-08; **this was the same fault one layer
+down, where the page could not see it** — `get()` swallows a timeout with `.catch(() => null)`, so the
+server answered **200 with an honest-looking empty pool.**
+✅ **FIXED WHERE THE DIFFERENCE IS ACTUALLY KNOWN — SERVER-SIDE.** When **every** query dies,
+`product-find.js` now returns `why: 'search-failed'` and the page shows her approved sentence
+*"My search didn't come back just then…"* instead. ⚠️ **Only when EVERY query dies** — one dead query
+among several is normal and the surviving pool still stands.
+⚠️⚠️ **AND THE HALF THAT KEEPS THE FIX HONEST IS TESTED TOO: a GENUINELY empty search must still say
+HER words.** Fixing one must not silence the other. **`chatfallback` 55 → 61, sections 12 and 13.**
+▶ **THE RETRY IMMEDIATELY AFTERWARDS WORKED — 19 in her shops, 3 exact, 16 browse** — so this is
+intermittent, and it is the **same "pinned at the ceiling" signature this file already records as a
+suspected concurrent-request limit.** ⚠️ **Still unproven; it needs her dashboard.** What is now certain
+is that when it happens **she is told the truth about it.**
+⭐ **AND THE DEBUG VIEW EARNED ITSELF ON ITS FIRST REAL USE:** `search time 10001ms` beside
+`products in your shops 0` is what named this in seconds. **Before it, this looked exactly like "your
+shops have nothing."**
+🚨🚨 **AND A WRONG TURN WORTH KEEPING, BECAUSE THE NEXT SESSION WILL BE TEMPTED BY IT: RAISING THE
+SEARCH CEILING DOES NOT HELP.** The ceiling was 10s; it was raised to 20s on the reasoning that
+successful searches land at 6.6–8.7s and SerpApi's own processing is only 1.6–3.4s, so the headroom
+looked too thin. ▶▶ **MEASURED IMMEDIATELY AFTERWARDS: the next failure pinned at `20001ms` — exactly
+the new ceiling.** ⚠️ **SO THESE REQUESTS ARE NOT SLOW, THEY ARE HUNG.** A hung request stays hung, and
+a bigger ceiling only makes a woman wait twice as long for the same honest sentence.
+▶ **SETTLED AT 12s, chosen from the real successes and not from hope** — observed: 122ms (warm cache) ·
+6.6s · 6.9s · 8.7s. **It clears the slowest success seen, then FAILS FAST, which is the kinder half.**
+⚠️ **SUSPECTED CAUSE, STILL UNPROVEN AND DO NOT ACT ON IT WITHOUT EVIDENCE: the hangs cluster under
+rapid back-to-back calls, which is how they were found.** Three fresh live terms in a row gave
+**21 browse · 20 browse · hung** — so it is intermittent, and **a woman asking ONE question may never
+see it.** ▶ **If she reports it, the debug panel now shows the number: `search time` at exactly the
+ceiling with `products in your shops 0` is this, and nothing else.**
+
 ### 🚨 THE SIX EDITS TO ADD A MERCHANT ARE NOW FIVE
 ▶ **Edit (6), `SEARCH_DOMAINS` in `style-ai.js`, no longer arms anything** — the stylist has no search
 to allow domains for. ⚠️ **The constant is deliberately KEPT and still DERIVED** from the same generated
