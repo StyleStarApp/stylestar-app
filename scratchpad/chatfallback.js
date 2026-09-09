@@ -532,8 +532,14 @@ console.log('\n13. the cards come back after she leaves and returns');
     drift, and a rule fixed on one would go missing on the other — which is
     exactly how the <<FIND>> marker leaked. These prove the restored row obeys
     the same rules as the live one. */
- ok('the restored row still carries exactly ONE disclosure',
-    (await pg.locator('.find-disc').count())===1);
+ /* ⚠️ SAME RULE AS SECTION 9, AND IT COUNTS THE WHOLE SCREEN. Missed on the
+    first pass of her "take off that extra affiliate link wording" change, which
+    is this file's own lesson in miniature: a rule applied to one half is not
+    applied. Restoring a conversation must leave exactly one disclosure too —
+    never two, and never none. */
+ {const discs=await pg.evaluate(()=>[...document.querySelectorAll('.find-disc,.chat-disclosure')]
+    .filter(e=>/commission/i.test(e.textContent||'')).length);
+  ok('the restored conversation carries exactly ONE disclosure',discs===1,'found '+discs);}
  ok('and still says how many pieces there are',
     /^8 pieces/.test(await pg.locator('.find-hint').first().innerText()));
  ok('and a paying shop is still not at the bottom',await pg.evaluate(()=>{
