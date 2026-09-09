@@ -163,6 +163,31 @@ export function matchStore(source, stores) {
     index.set(norm(String(v.host || '').split('.')[0]), name);
   }
   if (index.has(key)) return index.get(key);
+  /* 🚨🚨 THE LEADING-TOKEN PASS, ADDED 2026-09-09, AND IT WAS FOUND BY MEASURING
+     RATHER THAN BY READING. Cath asked why her affiliate shops never appear, so
+     three real searches were probed and the sellers counted. "Zara USA" came
+     back twice and was thrown away — and ZARA IS HERS, fully scored by her. So
+     were "Saks Fifth Avenue" (7 results in one search) and both "Etsy - <shop>"
+     sellers, and ETSY IS ONE OF THE NINE MERCHANTS THAT ACTUALLY PAY HER.
+     ▶▶ THE CAUSE: the loose pass below requires `k.length > 4`, so every store
+       whose name normalises to four characters or fewer could only ever match
+       EXACTLY. That is THIRTEEN of her shops — Belk, Saks, Zara, Etsy, IZOD,
+       NYDJ, Soma, LOFT, Quay, ASOS, H&M, Gap, DSW — and Google almost never
+       writes a seller's bare name ("Zara USA", "Etsy - EvolveUA", "LOFT
+       Outlet"). They were invisible.
+     ▶ WHY THIS AND NOT A SHORTER GUARD: dropping the guard to >3 would let
+       "saks" and "etsy" match anywhere INSIDE a name, which is how "us" and
+       "gap" once matched half the table. Anchoring on LEADING TOKENS is both
+       safer and more accurate — "Saks Fifth Avenue" starts with Saks; a shop
+       that merely contains those letters does not.
+     ⚠️ LONGEST PREFIX FIRST, DELIBERATELY: "Nordstrom Rack" must resolve to her
+       Nordstrom Rack entry and never to Nordstrom. Testing the whole string
+       before its prefixes is what guarantees that. */
+  const toks = String(source || '').toLowerCase().split(/[^a-z0-9]+/i).filter(Boolean);
+  for (let n = toks.length; n >= 1; n--) {
+    const pre = norm(toks.slice(0, n).join(''));
+    if (pre && index.has(pre)) return index.get(pre);
+  }
   for (const [k, name] of index) {
     // ⚠️ length guard: without it "us" or "gap" match half the table.
     if (k.length > 4 && (k.includes(key) || key.includes(k))) return name;

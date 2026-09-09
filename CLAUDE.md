@@ -258,6 +258,47 @@ the served page** — not by trusting the Post-processing badge, which is the st
 completes in ~9s**, where the old build sat silent past its 30-second stall guard. **The three silent
 web searches were the whole wait.**
 
+### 🚨🚨🚨 THE MEASUREMENT SHE ASKED FOR FOUND A BUG NOBODY WAS LOOKING FOR (2026-09-09)
+▶▶ **HER QUESTION:** ***"I did not see anything from mytheresa or Marissa's or Olivela... Maybe those
+stores don't have a red dress in stock right now. That is possible."*** ⚠️ **THAT "MAYBE" IS EXACTLY THE
+KIND THIS FILE KEEPS PAYING FOR, so it was MEASURED: three real searches, 120 results, every seller
+counted against her table through the app's OWN `matchStore`.**
+🚨🚨 **AND IT TURNED UP SOMETHING NOBODY WAS LOOKING FOR: `matchStore` WAS SILENTLY THROWING AWAY
+THIRTEEN OF HER SHOPS.** Its loose pass requires `k.length > 4`, so any shop whose name normalises to
+four characters or fewer could only ever match a seller string **EXACTLY** — and Google almost never
+writes a bare name. **Belk · Saks · Zara · Etsy · IZOD · NYDJ · Soma · LOFT · Quay · ASOS · H&M · Gap ·
+DSW.**
+▶ **"Zara USA" was DISCARDED — and Zara is hers, fully scored by her, the store she personally confirmed
+should be added.** *"Saks Fifth Avenue"* (**7 results in one search**) discarded. Both *"Etsy - <shop>"*
+sellers discarded — ⚠️⚠️ **AND ETSY IS ONE OF THE NINE MERCHANTS THAT ACTUALLY PAY HER.**
+✅ **FIXED WITH A LEADING-TOKEN PASS, NOT A SHORTER GUARD.** Dropping the guard to `>3` would let "saks"
+match anywhere INSIDE a name, which is how "us" and "gap" once matched half the table. **Anchoring on
+leading tokens is safer AND more accurate**, and it tries the LONGEST prefix first so *"Nordstrom Rack"*
+still resolves to her Rack entry and never to Nordstrom.
+⭐ **MEASURED RECOVERY ON THE SAME THREE SEARCHES, FOR NO EXTRA SEARCH AND NO EXTRA MONEY:**
+| the search | in her shops before | after |
+|---|---|---|
+| `red midi women's dress` (what the app really ran) | 26 (65%) | **29 (73%)** |
+| `designer red midi dress` | 20 (50%) | **27 (68%)** |
+| `red silk midi dress` | 13 (33%) | **18 (45%)** — *and Etsy, an EARNER, appears at last* |
+✅ **`findprod` 56 → 60.** The new checks name the RULE, not the mechanism: a short-named shop survives a
+decorated seller string · **the longest name still beats its own prefix** · and **fast fashion still
+matches nothing**, so a looser matcher cannot quietly let her exclusions back in.
+
+**▶▶ AND THE HONEST ANSWER TO HER ACTUAL QUESTION, WHICH THE FIX DOES *NOT* CHANGE.**
+🚨 **Mytheresa, Marissa Collections and Olivela returned ZERO results across all 120.** Her guess was
+right: **for a red midi dress, Google Shopping simply does not surface them.** They are small luxury
+shops and they lose to Nordstrom, Saks and Neiman on every mainstream query.
+▶ **WHAT DID REACH LUXURY: the word "designer".** It swung the pool to Bergdorf Goodman · Neiman Marcus ·
+NET-A-PORTER · Saks · Revolve · Karen Millen — **all hers, none of them paying her.**
+⚠️⚠️ **SO THE PRICE/EARNINGS PROBLEM IS UNCHANGED AND IT IS STILL THE SAME ANSWER: her nine earning
+shops are all `$$$`/`$$$$` boutiques that a mainstream shopping index barely ranks. NO WORDING FIXES
+THAT, and no code does either.** ▶ **It is a mid-market approval, which is traffic, which is USERS.**
+⚠️ **TWO THINGS ACCEPTED KNOWINGLY IN THE FIX, SAID OUT LOUD RATHER THAN HIDDEN:** *"Saks OFF 5TH"* now
+resolves to **Saks** and *"Gap Factory"* to **Gap**. Both are outlet arms of a store she carries, the
+link goes to the parent's search, and neither is one of her excluded business models. **If she ever
+wants them separated, they need their own `STORES` rows.**
+
 ### ⭐⭐⭐ SHE TESTED IT AGAIN, 2026-09-09 (LATER), AND FOUND SIX THINGS. HER RULINGS ARE HERE.
 ▶▶ **HER FRAMING: *"Before we move on I would like to talk about the chat some more."*** She sent five
 phone screenshots and named six faults. ⚠️ **SHE WAS RIGHT ABOUT ALL SIX, AND EVERY ONE WAS CHECKED IN

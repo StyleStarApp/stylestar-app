@@ -218,6 +218,36 @@ H('PART 9 — the store allowlist, and resale');
   ok('"Nordstrom Rack" is its own store, not Nordstrom',
      matchStore('Nordstrom Rack', stores) === 'Nordstrom Rack');
   ok('an unknown seller matches nothing', matchStore('GlamoryZone', stores) === null);
+  /* 🚨🚨 THE SHORT-NAME BLIND SPOT, FOUND BY MEASURING ON 2026-09-09 AND NOT BY
+     READING. Cath asked why her affiliate shops never appear, so three real
+     searches were probed and their sellers counted against her table. "Zara USA"
+     came back and was DISCARDED — and Zara is hers, fully scored by her. So were
+     "Saks Fifth Avenue" (7 results in a single search) and both "Etsy - <shop>"
+     sellers, and ETSY IS ONE OF THE NINE MERCHANTS THAT ACTUALLY PAY HER.
+     ▶ THE CAUSE: the loose pass needs `k.length > 4`, so THIRTEEN of her shops
+       could only ever match a seller string EXACTLY — Belk, Saks, Zara, Etsy,
+       IZOD, NYDJ, Soma, LOFT, Quay, ASOS, H&M, Gap, DSW — and Google almost
+       never writes a bare name. Measured recovery on those same three searches:
+       26→29, 20→27 and 13→18 products from her shops, for NO extra search.
+     ⚠️ THESE ASSERT THE RULE, NOT THE MECHANISM: a short-named shop of hers is
+       found when the seller string is decorated, AND a longer name still wins
+       over its own prefix. If someone reimplements the matcher, these still
+       hold. */
+  ok('a four-letter shop of hers survives a decorated seller name',
+     matchStore('Zara USA', stores) === 'Zara' &&
+     matchStore('Saks Fifth Avenue', stores) === 'Saks' &&
+     matchStore('LOFT Outlet', stores) === 'LOFT');
+  ok('and Etsy, which actually earns her money, is no longer thrown away',
+     matchStore('Etsy - EvolveUA', stores) === 'Etsy');
+  /* ⚠️ THE ONE THAT MUST NOT REGRESS: a longer store name beats its own prefix,
+     or every Rack result silently becomes a Nordstrom result. */
+  ok('the longest name still wins over its prefix',
+     matchStore('Nordstrom Rack', stores) === 'Nordstrom Rack' &&
+     matchStore('Banana Republic Factory', stores) === 'Banana Republic Factory');
+  /* ⚠️ And her exclusions stay excluded — a looser matcher must not quietly let
+     fast fashion in through a prefix. */
+  ok('fast fashion still matches nothing',
+     matchStore('Fashion Nova', stores) === null && matchStore('SHEIN US', stores) === null);
   ok('eBay is resale', isResale('eBay - bookishbunnyfashion'));
   ok('Poshmark is resale', isResale('Poshmark'));
   ok('Etsy is treated as a marketplace, not one of her shops', isResale('Etsy'));
