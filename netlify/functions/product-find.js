@@ -171,9 +171,19 @@ export default async (req) => {
          than by a vocabulary guess, so it is worth measuring against "designer"
          before either is wired into the real search. Probe-only. */
       const minP = (new URL(req.url).searchParams.get('min_price') || '').replace(/\D/g, '').slice(0, 6);
+      /* ▶ sort_by=2 is "price, high to low". HER QUESTION IS WHY THIS EXISTS:
+         "tell me more about the categories of jewelry etc." A fixed price floor
+         cannot be right for both a $12 tank and a $3,000 bag, and the obvious
+         repair — a table of floors per category — is the eight-word CUT list
+         all over again: a judgement written as a lookup table, right for the
+         categories someone thought of and silently wrong for the rest.
+         ▶▶ SORTING NEEDS NO NUMBER. It calibrates itself to whatever she asked
+           for, so there is nothing to tune and nothing to go stale. */
+      const sortBy = (new URL(req.url).searchParams.get('sort_by') || '').replace(/\D/g, '').slice(0, 2);
       const r = await fetch('https://serpapi.com/search.json?' + new URLSearchParams({
         engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY1,
         ...(minP ? {min_price: minP} : {}),
+        ...(sortBy ? {sort_by: sortBy} : {}),
       }), {signal: AbortSignal.timeout(20000)});
       const d = await r.json();
       /* ⏱ SerpApi reports its OWN processing time in search_metadata. That is the
@@ -196,7 +206,7 @@ export default async (req) => {
         const k = x.source || '(none)';
         sources[k] = (sources[k] || 0) + 1;
       }
-      return json({q, min_price: minP || null, count: (d.shopping_results || []).length, sources,
+      return json({q, min_price: minP || null, sort_by: sortBy || null, count: (d.shopping_results || []).length, sources,
                    timing: {
                      serpapi_total: (d.search_metadata || {}).total_time_taken,
                      google_url_ok: !!(d.search_metadata || {}).google_shopping_url,
