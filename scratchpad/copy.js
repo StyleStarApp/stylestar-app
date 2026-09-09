@@ -125,6 +125,77 @@ const overflow = await page.evaluate(() => document.documentElement.scrollWidth 
 ok('no horizontal overflow at 360px', overflow <= 1, 'overflow ' + overflow + 'px');
 ok('zero JS errors', errors.length === 0, errors.join(' | '));
 
+/* ⚠️⚠️ THE CARD PHOTO AND THE CHAT FOOTER — her screenshot, 2026-09-09.
+   ▶▶ HER WORDS: "I don't like how the photos are cut off here. Can't see top of
+     dress or head of the model." MEASURED against 11 real captured thumbnails
+     before anything changed: SIX are square, FIVE are portrait (0.77-0.84). The
+     frame was a square 150x150 with `cover`, so every portrait photo lost ~20%
+     of its height, half off the top -- the missing head, the missing hem.
+   🚨🚨 THESE LIVE IN `copy` AND NOT IN `chatfallback`, AND THAT IS THE WHOLE
+     LESSON OF THE DAY. They were written into chatfallback first, where they
+     read object-fit:fill, height:0 and a 16px arrow -- CSS DEFAULTS, because
+     that harness serves index.html from memory and NEVER SERVES styles.css.
+     Two of the six then PASSED anyway: "the letterbox matches the card" was
+     comparing transparent to transparent. ▶ A CHECK THAT PASSES BECAUSE IT CAN
+     SEE NOTHING IS WORSE THAN NO CHECK -- it is the false green this file keeps
+     warning about, in its own test suite. `copy` serves the real files off
+     disk, so the numbers below are the real painted ones.
+   ▶ THEY ASSERT THE RULE, NOT THE NUMBERS. "No product photo is ever cropped"
+     is the promise; 170px is one way to keep the bands small and may be tuned.
+     `cover` is what must never come back -- it is the entire fault, and it is
+     exactly the tidy-looking one-word change a later session would make. */
+await page.setViewportSize({ width: 390, height: 844 });
+{
+  const m = await page.evaluate(() => {
+    const d = document.createElement('div');
+    d.innerHTML = '<div class="find-cards"><a class="find-card"><img class="fc-img"></a></div>';
+    document.body.appendChild(d);
+    const im = getComputedStyle(d.querySelector('.fc-img'));
+    const card = getComputedStyle(d.querySelector('.find-card'));
+    const r = { fit: im.objectFit, h: parseFloat(im.height),
+                bg: im.backgroundColor, cardBg: card.backgroundColor };
+    d.remove();
+    const chat = document.getElementById('s-chat');
+    const was = chat ? chat.style.display : null;
+    if (chat) chat.style.display = 'block';
+    const hh = s => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().height : 0; };
+    const cf = document.getElementById('chatFresh');
+    const cs = cf ? getComputedStyle(cf) : null;
+    r.foot = hh('.chat-privacy') + hh('.chat-disclosure') +
+      (cf ? cf.getBoundingClientRect().height + parseFloat(cs.marginTop) + parseFloat(cs.marginBottom) : 0);
+    const sum = document.querySelector('.chat-privacy summary');
+    r.arrow = sum ? parseFloat(getComputedStyle(sum, '::after').fontSize) : 0;
+    r.words = parseFloat(getComputedStyle(document.querySelector('.chat-privacy')).fontSize);
+    const btn = document.querySelector('.chat-fresh');
+    r.tap = btn ? btn.getBoundingClientRect().height : 0;
+    if (chat) chat.style.display = was;
+    return r;
+  });
+  /* ▶ THE GUARD THAT STOPS THIS SUITE LYING THE WAY THE FIRST ATTEMPT DID:
+     if styles.css did not load, every reading below is a browser default and
+     every conclusion drawn from it is worthless. Prove the sheet is applied
+     BEFORE trusting a single number off it. */
+  ok('styles.css is actually applied (else every number below is a default)',
+     m.h > 0 && m.fit !== 'fill', 'height=' + m.h + ' fit=' + m.fit);
+  ok('NOTHING IS EVER CROPPED OFF A PRODUCT PHOTO', m.fit === 'contain', 'object-fit=' + m.fit);
+  ok('the frame is taller than it is wide, so a portrait photo barely bands',
+     m.h > 150, 'height=' + m.h);
+  /* ▶ The band only disappears if it is the SAME white as the card. A cream
+     placeholder here is what would turn `contain` into a visible letterbox. */
+  ok('and the letterbox is the same colour as the card, so it cannot be seen',
+     m.bg === m.cardBg && m.bg !== 'rgba(0, 0, 0, 0)', m.bg + ' vs ' + m.cardBg);
+  /* ▶ Her second ask the same day: "those 3 lines appear to be double spaced.
+     Can we make them much tighter." Measured 60.5px before, 50px after. Asserted
+     as a CEILING, so tightening further is free and re-inflating it is not. */
+  ok('the three chat footer lines stay under 56px', m.foot < 56, 'foot=' + m.foot.toFixed(1) + 'px');
+  ok('the Private-to-you arrow is bigger than the words beside it',
+     m.arrow > m.words, 'arrow=' + m.arrow + ' words=' + m.words);
+  /* ⚠️ A TAP TARGET IS THE FLOOR THAT TIGHTENING MUST NOT CROSS. Her audience
+     runs to 80; "save space" must never shrink a button below the thumb. */
+  ok('and "Start a fresh conversation" is still a real tap target',
+     m.tap >= 16, 'tap=' + m.tap.toFixed(1) + 'px');
+}
+
 await browser.close();
 server.close();
 console.log('\n' + (fail ? '✗ ' + fail + ' FAILED, ' : '✓ ') + pass + ' passed');
