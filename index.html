@@ -10029,7 +10029,29 @@ function saveChatHistory(){
   // expires. Without this the whisper would greet her on EVERY visit forever
   // (caught by hubs.js's "graduated: no whisper ever again" assertion, which the
   // resume broke -- the old test was doing real work).
-  try{localStorage.setItem('ss_chat',JSON.stringify(chatHistory.slice(-40)));localStorage.setItem('ss_chat_t',String(Date.now()))}catch(e){}
+  /* 🚨🚨 HER WORDS FIRST, THE PICTURES SECOND — AND THIS APP HAS ALREADY BEEN
+     BITTEN BY THE OTHER ORDER. `ss_chat` once held full base64 photos, megabytes
+     each, until they were shrunk to thumbnails. The save is wrapped in a silent
+     catch, so an overflow does not lose the CARDS, it loses THE WHOLE
+     CONVERSATION, without a word.
+     ▶ Adding product rows to this record raises that risk, so the fallback is
+       explicit: if it will not fit, shed the OLDEST find payloads one at a time
+       until it does. A woman can lose a row of photographs she has already
+       swiped past. She must never lose what she and the stylist said.
+     ⚠️ THE SHEDDING IS ON A COPY. chatHistory keeps its cards in memory, so
+       nothing vanishes from the screen she is looking at. */
+  var h=chatHistory.slice(-40);
+  var stamp=function(v){localStorage.setItem('ss_chat',JSON.stringify(v));
+                        localStorage.setItem('ss_chat_t',String(Date.now()));};
+  try{stamp(h);return}catch(e){}
+  var trimmed=h.slice();
+  for(var i=0;i<trimmed.length;i++){
+    if(!trimmed[i]||!trimmed[i].find)continue;
+    var copy={};for(var k in trimmed[i])if(k!=='find')copy[k]=trimmed[i][k];
+    trimmed[i]=copy;
+    try{stamp(trimmed);return}catch(e2){}
+  }
+  try{stamp(trimmed)}catch(e3){}
 }
 function loadChatHistory(){
   try{
@@ -10104,6 +10126,28 @@ function openChat(fromLook){
           div.innerHTML=linkStores(_esc(m.role==='assistant'?m.content:(m.displayText||m.content)));
         }
         msgContainer.appendChild(div);
+        /* ⭐ THE ROW COMES BACK WITH THE CONVERSATION. Same builder as the live
+           path, never a second copy — so her never-wear list, the one
+           disclosure, the uncapped store repeats, the interleave and the tick
+           that names her own word all hold here for free.
+           ⚠️ HER RULING ON STALENESS, 2026-09-09: "If the link goes stale after
+             some time I don't think that is a big deal. Online shoppers know
+             that happens." ▶ And the ticks do not go stale at all: they read
+             "red", "silk", "wrap" — facts about the GARMENT, not the shop. A
+             red dress stays red. Stock is never ticked (the card renderer skips
+             it), so nothing here claims a piece is still available. What drifts
+             is the price and whether it is still there, which is what she said
+             a shopper already expects.
+           ⚠️ Wrapped: one malformed stored row must never cost her the whole
+             conversation. */
+        if(m.find&&m.find.data){
+          try{
+            var fw=document.createElement('div');
+            fw.className='find-block';
+            fw.innerHTML=_findBlockHtml(m.find.data,m.find.req||{});
+            msgContainer.appendChild(fw);
+          }catch(e){}
+        }
       });
       // returning to a real conversation → a soft marker between history and new replies,
       // plus forward-friendly "continue" chips
@@ -10865,90 +10909,47 @@ function _findDbg(mc,req,data,failed,ms){
   mc.appendChild(el); mc.scrollTop=mc.scrollHeight;
 }
 
-async function _findRun(req){
-  const mc=document.getElementById('chatMessages');
-  if(!mc)return;
-  const _dbgT0=Date.now();
-  const status=_findStatus(mc);
-  let data=null,failed=false;
+/* ⭐⭐ ONE RENDERER FOR THE LIVE ROW AND THE RESTORED ROW — HER FAULT REPORT,
+   2026-09-09: "the searched photo cards disappearing when user leaves and
+   comes back to chat." She asked the stylist where they went and was told
+   "Let me pull them back up for you right now", which NOTHING IN THE CODE
+   COULD DO: the cards were drawn straight into the page and never saved.
+   ▶▶ EXTRACTED INTO ONE FUNCTION ON PURPOSE, AND IT IS THIS FILE'S OLDEST
+     LESSON: a second copy is the bug. If restoring rebuilt the row with its
+     own markup, the two would drift and a rule fixed on one would be missing
+     from the other — exactly how the <<FIND>> marker leaked from the one
+     render route of four that forgot. There is one builder; both paths call it.
+   ⚠️ SO EVERY RULE BELOW HOLDS ON A RESTORED ROW TOO, FOR FREE: her never-wear
+     list, the one disclosure, the uncapped store repeats, the interleave, the
+     tick that names her own word. */
+/* ⭐ WHAT MAKES THE ROW SURVIVE A RELOAD. Her fault report, 2026-09-09: "the
+   searched photo cards disappearing when user leaves and comes back to chat."
+   ▶ THE PAYLOAD IS PARKED ON THE STYLIST'S OWN MESSAGE, so it is bounded by the
+     SAME last-40 rule the conversation already uses. No second shelf life to
+     keep in sync — her standing "reduce the amount of rules and breakable
+     things" direction, applied by reusing a bound that already exists.
+   ⚠️ IT NEVER REACHES THE MODEL: the API payload maps {role, content} by hand,
+     so an extra property on a history entry cannot leak into the prompt.
+     Checked in the code before relying on it, not assumed.
+   ⚠️ ONLY THE THREE ARRAYS THE RENDERER READS ARE KEPT. `data` also carries
+     timings, budget and the raw request; none of it draws a card, and storage
+     is the one real cost here. */
+function _findRemember(data,req){
   try{
-    const r=await fetch('/.netlify/functions/product-find',{method:'POST',
-      headers:{'Content-Type':'application/json'},body:JSON.stringify(req)});
-    if(r.ok)data=await r.json(); else failed=true;
-  }catch(e){failed=true;}
-  status.done();
-  /* ONE line, every path — see _findDbg above for why it is a setTimeout. */
-  if(_FIND_DEBUG)setTimeout(function(){_findDbg(mc,req,data,failed,Date.now()-_dbgT0)},0);
+    for(var i=chatHistory.length-1;i>=0;i--){
+      if(chatHistory[i]&&chatHistory[i].role==='assistant'){
+        chatHistory[i].find={
+          data:{exact:data.exact||[],doors:data.doors||[],browse:data.browse||[]},
+          req:req||{}
+        };
+        break;
+      }
+    }
+    saveChatHistory();
+  }catch(e){}
+}
 
-  /* 🚨🚨 A SEARCH THAT DID NOT COME BACK MUST NEVER READ AS "I LOOKED AND FOUND
-     NOTHING." Added 2026-09-08 after Cath's phone testing, and it is the same
-     rule as her 2026-09-06 decision one step further out: she chose to be told
-     plainly when nothing was found rather than be shown an invented product,
-     BECAUSE a fabricated pick looks identical to a real find. A failed search
-     shown as silence has exactly that shape — indistinguishable from a stylist
-     who looked properly and came back empty.
-     ▶ WHAT SHE ACTUALLY SAW: the search timed out (up to 4 searches and 6
-       look-ups ran one after another, so a straggler cost 12s and past ~30s a
-       504), the page rendered nothing at all, and the PREVIOUS answer's cards
-       were still sitting above — so it read as "you just showed me the exact
-       same thing when I asked for something different". It had shown her
-       nothing. The old cards were simply still there.
-     ⚠️ THE COPY BELOW IS CLAUDE'S AND SHOULD BE REPLACED WITH HERS. Every other
-       sentence on this surface is in her voice and beat the drafted version;
-       these two are placeholders that state the truth plainly until she writes
-       the real ones. */
-  if(failed){
-    const w=document.createElement('div');
-    w.className='find-block find-note';
-    w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
-      'so I haven\'t looked through your shops yet. Ask me again and I\'ll try.</div>';
-    mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
-    return;
-  }
-  if(!data)return;                       /* silent: the advice above still stands */
-  /* 🚨 THE SEARCH RAN AND NEVER CAME BACK — NOT THE SAME AS FINDING NOTHING.
-     Added 2026-09-09 after a live call came back `search: 10001ms, candidates:
-     0`, pinned to the millisecond on the ceiling, and the page told her
-     "nothing close enough to show you". The server now says `search-failed`
-     when EVERY query died, so this reads the same as a dead connection —
-     because to a woman looking at the screen it IS the same thing.
-     ⚠️ HER APPROVED WORDING, REUSED VERBATIM AND NOT REWRITTEN. Her ruling on
-     these two sentences: "I think what you came up with is fine and the stylist
-     chat already has a good personality and words things well." */
-  if(data.why==='search-failed'){
-    const w=document.createElement('div');
-    w.className='find-block find-note';
-    w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
-      'so I haven\'t looked through your shops yet. Ask me again and I\'ll try.</div>';
-    mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
-    /* ⚠️ NO _findDbg CALL HERE. It is already scheduled once for EVERY return
-       path right after status.done() — that is the whole point of putting it at
-       the choke point. Adding one per branch is how it would render twice. */
-    return;
-  }
-  /* ▶ THE MONTH'S SEARCH CEILING (her "seatbelt", 2026-09-06). Also NOT an empty
-     result: the shops were never looked at. Said plainly, without making a woman
-     read the word "quota". */
-  if(data.why==='budget'){
-    const w=document.createElement('div');
-    w.className='find-block find-note';
-    w.innerHTML='<div class="find-head">I can\'t go through the shops for you right '+
-      'now, so take what I said above as styling advice rather than a shopping list.</div>';
-    mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
-    return;
-  }
-
-  /* ⭐ HER RULES RUN HERE, THROUGH THE SAME filterNeverWear() EVERY OTHER SHOPPING
-     SURFACE USES. Never a second copy. "When someone says no shift dresses, that
-     means absolutely no shift dresses." */
-  /* ⚠️⚠️ askedFor MUST BE HER WHOLE REQUEST, NOT JUST THE NOUN — a test caught
-     this and it is exactly the half-applied-rule shape this project keeps
-     paying for. `_SEARCH_VETO` contains "wrap", so passing only "dress" made
-     the app think she had never asked for a wrap and it silently deleted every
-     wrap dress from an answer to "blush silk WRAP dress".
-     ▶ HER PRINCIPLE, VERBATIM (2026-08-25): "any time a client specifically
-       asks for something she wants, even if I don't love it, I will find it for
-       her to try on." She asked. Her words have to reach the filter intact. */
+function _findBlockHtml(data,req){
   const asked=[req.item,req.colour,req.fabric,req.cut].filter(Boolean).join(' ');
   const keep=function(list){return filterNeverWear(list||[],asked)};
   const exact=keep(data.exact);
@@ -11034,7 +11035,7 @@ async function _findRun(req){
       (count>2?'<div class="find-hint"><span>'+count+' pieces</span><span>swipe &rarr;</span></div>':'');
   };
 
-  const wrap=document.createElement('div');
+  let wrap_html="";
   wrap.className='find-block';
   if(exact.length){
     const shown=exact.slice(0,12);
@@ -11064,7 +11065,7 @@ async function _findRun(req){
          so the original wording stands and stays honest. */
       : (shown.length===1?'Here is the one I can stand behind.'
                          :'Found '+shown.length+' that match what you asked for.');
-    wrap.innerHTML='<div class="find-head">'+head+'</div>'+
+    wrap_html='<div class="find-head">'+head+'</div>'+
       /* 🚨 THE TICK USED TO READ A GENERIC "colour" ON EVERY CARD, AND THIS IS
          WHY: the server puts `request` at the TOP of the payload, never on each
          product, so `p.request` was always undefined and `_findLabel` fell
@@ -11089,7 +11090,7 @@ async function _findRun(req){
        ▶ It states the truth and STOPS. ⚠️ DO NOT PARAPHRASE IT INTO SOMETHING
          BLANDER and do not re-add a question to it. The detail belongs on the
          CARDS, where every requirement carries its own honest tick or note. */
-    wrap.innerHTML='<div class="find-head">I couldn\'t find exactly what you asked for. '+
+    wrap_html='<div class="find-head">I couldn\'t find exactly what you asked for. '+
       'This is the closest I could come up with.</div>'+
       doors.slice(0,3).map(function(d){
         /* ▶ A short PLAIN label, never a question. It names what this group KEEPS
@@ -11120,7 +11121,7 @@ async function _findRun(req){
        using it in a state it does not describe, NEVER to reword it.
        ⚠️ THIS REPLACEMENT LINE IS CLAUDE'S AND IS A PLACEHOLDER FOR HERS. Her
        own copy has beaten every draft so far; show it to her. */
-    wrap.innerHTML='<div class="find-head">Nothing came back as an exact match, '+
+    wrap_html='<div class="find-head">Nothing came back as an exact match, '+
       'but here is what your shops have right now.</div>'+
       _findRow(browseCards.join(''),browseCards.length)+DISC;
   }else{
@@ -11132,10 +11133,108 @@ async function _findRun(req){
     /* ▶ HER COPY, APPROVED AS WRITTEN 2026-09-08 — "I think what you came up with
        is fine and the stylist chat already has a good personality and words
        things well." Genuinely nothing to show. Do not rewrite. */
-    wrap.innerHTML='<div class="find-head">I couldn\'t find exactly what you asked for, '+
+    wrap_html='<div class="find-head">I couldn\'t find exactly what you asked for, '+
       'and nothing close enough to show you. Tell me what matters most and I\'ll look again.</div>';
   }
+  return wrap_html;
+}
+
+async function _findRun(req){
+  const mc=document.getElementById('chatMessages');
+  if(!mc)return;
+  const _dbgT0=Date.now();
+  const status=_findStatus(mc);
+  let data=null,failed=false;
+  try{
+    const r=await fetch('/.netlify/functions/product-find',{method:'POST',
+      headers:{'Content-Type':'application/json'},body:JSON.stringify(req)});
+    if(r.ok)data=await r.json(); else failed=true;
+  }catch(e){failed=true;}
+  status.done();
+  /* ONE line, every path — see _findDbg above for why it is a setTimeout. */
+  if(_FIND_DEBUG)setTimeout(function(){_findDbg(mc,req,data,failed,Date.now()-_dbgT0)},0);
+
+  /* 🚨🚨 A SEARCH THAT DID NOT COME BACK MUST NEVER READ AS "I LOOKED AND FOUND
+     NOTHING." Added 2026-09-08 after Cath's phone testing, and it is the same
+     rule as her 2026-09-06 decision one step further out: she chose to be told
+     plainly when nothing was found rather than be shown an invented product,
+     BECAUSE a fabricated pick looks identical to a real find. A failed search
+     shown as silence has exactly that shape — indistinguishable from a stylist
+     who looked properly and came back empty.
+     ▶ WHAT SHE ACTUALLY SAW: the search timed out (up to 4 searches and 6
+       look-ups ran one after another, so a straggler cost 12s and past ~30s a
+       504), the page rendered nothing at all, and the PREVIOUS answer's cards
+       were still sitting above — so it read as "you just showed me the exact
+       same thing when I asked for something different". It had shown her
+       nothing. The old cards were simply still there.
+     ⚠️ THE COPY BELOW IS CLAUDE'S AND SHOULD BE REPLACED WITH HERS. Every other
+       sentence on this surface is in her voice and beat the drafted version;
+       these two are placeholders that state the truth plainly until she writes
+       the real ones. */
+  if(failed){
+    const w=document.createElement('div');
+    w.className='find-block find-note';
+    w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
+      'so I haven\'t looked through your shops yet. Ask me again and I\'ll try.</div>';
+    mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
+    return;
+  }
+  if(!data)return;                       /* silent: the advice above still stands */
+  /* 🚨 THE SEARCH RAN AND NEVER CAME BACK — NOT THE SAME AS FINDING NOTHING.
+     Added 2026-09-09 after a live call came back `search: 10001ms, candidates:
+     0`, pinned to the millisecond on the ceiling, and the page told her
+     "nothing close enough to show you". The server now says `search-failed`
+     when EVERY query died, so this reads the same as a dead connection —
+     because to a woman looking at the screen it IS the same thing.
+     ⚠️ HER APPROVED WORDING, REUSED VERBATIM AND NOT REWRITTEN. Her ruling on
+     these two sentences: "I think what you came up with is fine and the stylist
+     chat already has a good personality and words things well." */
+  if(data.why==='search-failed'){
+    const w=document.createElement('div');
+    w.className='find-block find-note';
+    w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
+      'so I haven\'t looked through your shops yet. Ask me again and I\'ll try.</div>';
+    mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
+    /* ⚠️ NO _findDbg CALL HERE. It is already scheduled once for EVERY return
+       path right after status.done() — that is the whole point of putting it at
+       the choke point. Adding one per branch is how it would render twice. */
+    return;
+  }
+  /* ▶ THE MONTH'S SEARCH CEILING (her "seatbelt", 2026-09-06). Also NOT an empty
+     result: the shops were never looked at. Said plainly, without making a woman
+     read the word "quota". */
+  if(data.why==='budget'){
+    const w=document.createElement('div');
+    w.className='find-block find-note';
+    w.innerHTML='<div class="find-head">I can\'t go through the shops for you right '+
+      'now, so take what I said above as styling advice rather than a shopping list.</div>';
+    mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
+    return;
+  }
+
+  /* ⭐ HER RULES RUN HERE, THROUGH THE SAME filterNeverWear() EVERY OTHER SHOPPING
+     SURFACE USES. Never a second copy. "When someone says no shift dresses, that
+     means absolutely no shift dresses." */
+  /* ⚠️⚠️ askedFor MUST BE HER WHOLE REQUEST, NOT JUST THE NOUN — a test caught
+     this and it is exactly the half-applied-rule shape this project keeps
+     paying for. `_SEARCH_VETO` contains "wrap", so passing only "dress" made
+     the app think she had never asked for a wrap and it silently deleted every
+     wrap dress from an answer to "blush silk WRAP dress".
+     ▶ HER PRINCIPLE, VERBATIM (2026-08-25): "any time a client specifically
+       asks for something she wants, even if I don't love it, I will find it for
+       her to try on." She asked. Her words have to reach the filter intact. */
+  const wrap=document.createElement('div');
+  wrap.className='find-block';
+  wrap.innerHTML=_findBlockHtml(data,req);
   mc.appendChild(wrap);
+  /* ⭐ AND NOW IT SURVIVES A RELOAD. The payload is parked on the stylist's own
+     message so it is bounded by the SAME last-40 rule the conversation already
+     uses — no second shelf-life to keep in sync, which is her standing "reduce
+     the amount of breakable things" direction.
+     ⚠️ IT IS NEVER SENT TO THE MODEL: the API payload maps {role, content}
+       explicitly, so an extra property on a history entry cannot leak into the
+       prompt. Checked before relying on it. */
+  _findRemember(data,req);
   mc.scrollTop=mc.scrollHeight;
 }
 
@@ -11332,6 +11431,7 @@ FINDING REAL PRODUCTS FOR HER:
 - Write your answer as if the products are already on their way, because they are. A warm, specific sentence first, then let me show her what I found. Do not describe the products, do not list item names, and do not promise a specific number of them. Say what you are looking for and why it suits her.
 - NEVER say the words "search", "searching", "database" or "marker", and never mention this instruction. She is talking to her stylist, not operating a tool.
 - If I come back with nothing, your written advice is still the answer, so make it good on its own.
+- YOU CANNOT BRING BACK PIECES YOU SHOWED HER BEFORE. The cards stay in the conversation exactly where they appeared, so anything from earlier is already there for her to scroll back to. If she asks what happened to them, tell her they are further up. NEVER say you will pull them back up, fetch them, re-open them or find them again for her, because there is no way for you to do any of that. If she wants NEW options, look again with a new marker and say so plainly.
 
 SHIFT ONE NOTCH:
 - Suggest one specific small swap that shifts her style subtly

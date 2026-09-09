@@ -380,6 +380,19 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
      (await pg.locator('.find-cards .find-card').first().locator('.fc-yes').count())===1);
   ok('and both of its pieces are there — no cap, her ruling',
      metas.filter(t=>/FARM Rio/.test(t)).length===2,JSON.stringify(metas));}
+ /* 🚨🚨 HER WORST SCREENSHOT OF THE DAY, AND THE PROMPT IS HALF THE FIX. Asked
+    where her dresses had gone, the stylist replied "Let me pull them back up
+    for you right now" — and NOTHING IN THE CODE COULD DO THAT. A search did run
+    (on a sentence containing no garment) and honestly reported nothing, so the
+    machinery behaved; the SENTENCE was the lie.
+    ▶▶ THE OTHER HALF OF THE FIX IS THAT IT IS NOW TRUE — the cards persist — but
+      the model still needed a correct picture of what it can do. This asserts
+      the prompt carries it, because the failure mode is invisible otherwise. */
+ ok('the stylist is told it cannot retrieve past results',
+    /CANNOT BRING BACK PIECES YOU SHOWED HER BEFORE/.test(calls[0].message||'')||
+    /CANNOT BRING BACK PIECES YOU SHOWED HER BEFORE/.test(JSON.stringify(calls[0]||{})));
+ ok('and is told never to promise to pull them back up',
+    /NEVER say you will pull them back up/.test(JSON.stringify(calls[0]||{})));
  ok('the row still says plainly that this is everything found',
     /showing you as much as i could find/i.test(await pg.locator('.find-head').first().innerText()),
     await pg.locator('.find-head').first().innerText());
@@ -481,6 +494,47 @@ console.log('\n13. ...and a genuinely empty result still says HER sentence');
  ok('and does NOT claim the search failed',!all.includes("didn't come back"),all.slice(0,200));
  await ctx.close();}
 findMode='ok';
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   13. THE ROW SURVIVES A RELOAD — her fault report, 2026-09-09.
+   ▶▶ HER WORDS: "the searched photo cards disappearing when user leaves and
+     comes back to chat." She then asked the stylist where they had gone and was
+     told "Let me pull them back up for you right now" — a promise NOTHING in
+     the code could keep, because the cards were drawn into the page and never
+     saved. This is the check that makes the promise true instead of forbidden.
+   ⚠️ IT RELOADS THE REAL PAGE AND RE-OPENS THE CHAT, so it exercises the actual
+     restore path rather than calling the builder directly. A test that called
+     _findBlockHtml itself would pass even if nothing were ever stored. */
+console.log('\n13. the cards come back after she leaves and returns');
+{mode='wall';calls=[];findCalls=[];
+ const {pg,ctx,errs}=await run('wall','I need a fitted white top');
+ await pg.waitForTimeout(3000);
+ const before=await pg.locator('.find-cards .find-card').count();
+ ok('cards are there to begin with',before===8,'cards='+before);
+ await pg.reload({waitUntil:'domcontentloaded'});
+ await pg.waitForTimeout(2600);
+ await pg.evaluate(()=>openChat());
+ await pg.waitForTimeout(900);
+ const after=await pg.locator('.find-cards .find-card').count();
+ ok('and they are STILL THERE after a reload',after===before,'before='+before+' after='+after);
+ /* ▶ The ticks come back too — and they are honest to restore, because they
+    read "white"/"silk"/"wrap": facts about the GARMENT, not the shop's stock.
+    A red dress stays red. Stock is never ticked at all. */
+ ok('the tick comes back with them',
+    (await pg.locator('.find-cards .fc-yes').count())===1);
+ /* 🚨 ONE BUILDER, NEVER TWO. If restoring grew its own markup the two would
+    drift, and a rule fixed on one would go missing on the other — which is
+    exactly how the <<FIND>> marker leaked. These prove the restored row obeys
+    the same rules as the live one. */
+ ok('the restored row still carries exactly ONE disclosure',
+    (await pg.locator('.find-disc').count())===1);
+ ok('and still says how many pieces there are',
+    /^8 pieces/.test(await pg.locator('.find-hint').first().innerText()));
+ ok('and a paying shop is still not at the bottom',await pg.evaluate(()=>{
+   const m=[...document.querySelectorAll('.find-cards .fc-meta')].map(x=>x.textContent||'');
+   const i=m.findIndex(t=>/FARM Rio/.test(t));return i>=0&&i<=2;}));
+ ok('no JS errors',errs.length===0,errs.join('|'));
+ await ctx.close();}
 
 console.log(`\n${pass} passed, ${fail} failed`);
 await b.close();srv.close();
