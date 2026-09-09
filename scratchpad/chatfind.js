@@ -220,9 +220,28 @@ const prod = (o) => Object.assign({
     //    answer is to REUSE it, never to draw a fourth one.
     ok('the star is the SAME path the rest of the app already draws',
        src.includes('M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z'));
-    ok('and it turns the same way as .shop-star-main and .wdr-load-star',
-       /\.chat-typing-star\{[^}]*animation:spin 1\.7s linear infinite reverse/.test(css) &&
-       /\.find-load-star\{[^}]*animation:spin 1\.7s linear infinite reverse/.test(css));
+    /* ⚠️ REWRITTEN 2026-09-09, AND IT IS STRONGER, NOT LOOSER. It used to require
+       `.chat-typing-star{...}` and `.find-load-star{...}` as two SEPARATE rules,
+       so it broke the moment they were merged into one selector — even though
+       merging makes the thing it protects HARDER to break, because two stars
+       sharing one rule cannot drift apart at all.
+       ▶ THE RULE IS "every waiting star in the app turns the same way", so that
+         is what it now asserts, by SELECTOR MEMBERSHIP rather than rule shape —
+         and it checks all FOUR stars instead of two. Splitting or merging the
+         rules is free; changing the spin on any one of them fails. */
+    const _spins = cls => {
+      const re = /([^{}]+)\{([^{}]*)\}/g;
+      let m;
+      while ((m = re.exec(css))) {
+        const inSel = new RegExp('(^|,|\\s)\\.' + cls + '(\\s|,|$)').test(m[1].trim() + ' ');
+        if (inSel && /animation:\s*spin 1\.7s linear infinite reverse/.test(m[2])) return true;
+      }
+      return false;
+    };
+    const _stars = ['chat-typing-star', 'find-load-star', 'shop-star-main', 'wdr-load-star'];
+    const _still = _stars.filter(c => !_spins(c));
+    ok('every waiting star in the app turns the same way',
+       _still.length === 0, 'not spinning: ' + _still.join(', '));
     // ▶ It goes on BOTH waits: the reply (~16-20s) is the longer one, and text
     //   alone there was the actual complaint.
     ok('the stylist THINKING bubble carries it', /_chatTyping\(/.test(src));
