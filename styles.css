@@ -3689,6 +3689,33 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    and a CSS rule outranks a presentation attribute — so this is the ONE place
    the chat star's colour is decided. Do not add a second copy in the JS. */
 .chat-typing-star path,.find-load-star path{fill:#EC4899;stroke:#D4AF37;stroke-width:.9}
+
+/* ⭐ THE THINKING DOTS — her ask, 2026-09-09: "three dots moving along like
+   thinking too... to emphasize not broken just thinking when she is thinking
+   not shopping."
+   ▶▶ TWO WAITS, TWO SIGNALS, ON PURPOSE: dots = THINKING (before a word is
+     written), turning star = SHOPPING (her shops are being searched). They are
+     deliberately NOT on `.find-status`; putting them there would merge the two
+     states back into one and throw away the distinction she drew.
+   ⚠️ THEY MUST NOT MOVE ANYTHING. Fixed size, inline-flex, no layout shift as
+     they rise and fall — her audience runs to 80 and a line that jiggles under
+     a reader is the thing this app keeps refusing to do. */
+.chat-dots{display:inline-flex;align-items:flex-end;gap:4px;height:9px;margin-left:1px}
+.chat-dots i{width:5px;height:5px;border-radius:50%;background:#EC4899;display:block;
+  animation:chatdot 1.25s ease-in-out infinite}
+.chat-dots i:nth-child(2){animation-delay:.16s}
+.chat-dots i:nth-child(3){animation-delay:.32s}
+/* ▶ A travelling wave, not three dots blinking together: the offset delays are
+   what read as thinking rather than as a loading bar. */
+@keyframes chatdot{
+  0%,62%,100%{opacity:.28;transform:translateY(0)}
+  31%{opacity:1;transform:translateY(-4px)}
+}
+/* ⚠️ Same courtesy the star already gives: a woman who has asked her phone to
+   stop moving things still gets the signal, it simply holds still. */
+@media (prefers-reduced-motion:reduce){
+  .chat-dots i{animation:none;opacity:.55}
+}
 /* ⚠️ Respect a woman who has asked her phone to stop moving things. The star
    still shows, it simply stops turning — the reassurance is the star being
    there, and motion is not the only way to give it. */

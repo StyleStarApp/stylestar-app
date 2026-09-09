@@ -10585,7 +10585,23 @@ function _starSpin(cls){
 function _chatTyping(text){
   const el=document.createElement('div');
   el.className='chat-typing';
-  el.innerHTML=_starSpin('chat-typing-star')+'<span>'+_esc(text||'Styling your answer...')+'</span>';
+  /* ⭐ HER ASK, 2026-09-09: "would be good to have three dots moving along like
+     thinking too... to emphasize not broken just thinking WHEN SHE IS THINKING
+     NOT SHOPPING."
+     ▶▶ SO THIS IS A DELIBERATE SPLIT OF ONE SIGNAL INTO TWO, AND THE DISTINCTION
+       IS HERS: dots mean THINKING (this bubble, before a word has been written),
+       the turning star means SHOPPING (`_findStatus`, while her shops are being
+       searched). ⚠️ DO NOT ADD THE DOTS TO `_findStatus` — that would collapse
+       the two states back into one and lose exactly what she asked for.
+     ▶ WHY IT IS WORTH THE PIXELS: this file's own 2026-09-06 note says a woman
+       who waits without a signal "could think broken and click out." The star
+       already said "I am working"; the dots say "I am THINKING", which is the
+       one thing a stylist does that a spinner cannot show.
+     ⚠️ aria-hidden: they are decoration. The sentence beside them carries the
+       meaning, so a screen reader hears "Styling your answer" and not "dot dot
+       dot". */
+  el.innerHTML=_starSpin('chat-typing-star')+'<span>'+_esc(text||'Styling your answer...')+'</span>'+
+    '<span class="chat-dots" aria-hidden="true"><i></i><i></i><i></i></span>';
   return el;
 }
 const _FIND_RE=/<<\s*FIND\s+([^>]*)>>/i;
