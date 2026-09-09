@@ -55,7 +55,18 @@ const srv=http.createServer((q,res)=>{
          search:'Quince Washable Silk Shell Top'},
         {id:'b5',title:"Old Navy Women's Cropped Rib Tank",store:'Old Navy',price:'$12.00',
          image:'https://example.com/b5.jpg',name:"Old Navy Women's Cropped Rib Tank",
-         search:"Old Navy Women's Cropped Rib Tank"}
+         search:"Old Navy Women's Cropped Rib Tank"},
+        /* ⚠️ THE TWO FARM RIO PIECES SIT LAST ON PURPOSE. FARM Rio is one of the
+           merchants that actually pays her, and at the END of the pool is exactly
+           where her complaint lives: "I don't want them in the bottom of the
+           barrel." If the interleave is ever removed these stay at positions 6
+           and 7 and the check below fails, which is the point. */
+        {id:'b6',title:'FARM Rio Red Sleeveless Midi Dress',store:'FARM Rio',price:'$247.00',
+         image:'https://example.com/b6.jpg',name:'FARM Rio Red Sleeveless Midi Dress',
+         search:'FARM Rio Red Sleeveless Midi Dress'},
+        {id:'b7',title:'FARM Rio Linen Blend Shirt',store:'FARM Rio',price:'$180.00',
+         image:'https://example.com/b7.jpg',name:'FARM Rio Linen Blend Shirt',
+         search:'FARM Rio Linen Blend Shirt'}
       ];
       /* ⚠️ THE VERIFIED PICK NOW CARRIES A REAL `checks` OBJECT. Without one it
          rendered no ticks either, so "no browse card carries a verified tick"
@@ -312,7 +323,7 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
  ok('it is ONE row, not two',(await pg.locator('.find-cards').count())===1,
     'rows='+(await pg.locator('.find-cards').count()));
  const cards=await pg.locator('.find-cards .find-card').count();
- ok('every product from her shops reaches the row',cards===6,'cards='+cards);
+ ok('every product from her shops reaches the row',cards===8,'cards='+cards);
  /* 🚨 HER RULING, PINNED: no store cap here. Two Quince pieces and two Old Navy
     pieces are in the fixture and ALL FOUR must survive. */
  const names=await pg.locator('.find-cards .fc-meta').evaluateAll(
@@ -349,10 +360,26 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
     and being told there are six is the reason to swipe; the arrow alone is a
     symbol asking to be trusted. If the number ever goes, so does the reason. */
  ok('the row says how many pieces there are',
-    /^6 pieces/.test(await pg.locator('.find-hint').first().innerText()),
+    /^8 pieces/.test(await pg.locator('.find-hint').first().innerText()),
     await pg.locator('.find-hint').first().innerText().catch(()=>'(none)'));
  ok('and it invites the swipe',
     /swipe/i.test(await pg.locator('.find-hint').first().innerText()));
+ /* ⭐⭐ HER RULING, 2026-09-09: "I don't want them at the very top but I also
+    don't want them in the bottom of the barrel either... some level of priority
+    but not maximum."
+    ▶▶ THE LINE THAT MAKES THIS LEGITIMATE, AND IT IS WHY THESE TWO CHECKS SIT
+      TOGETHER: the CHECKED card is a recommendation and its place is earned on
+      merit alone — that is her Option A rule of 2026-09-06 and it does not bend.
+      The BROWSE cards claim nothing, so ordering them is not a claim about
+      quality. Move the unclaimed; never move the claimed. */
+ {const metas=await pg.locator('.find-cards .fc-meta').evaluateAll(e=>e.map(x=>x.textContent||''));
+  const firstPayer=metas.findIndex(t=>/FARM Rio/.test(t));
+  ok('a shop that pays her is not left at the bottom of the row',
+     firstPayer>=0&&firstPayer<=2,'FARM Rio first appears at card '+firstPayer+' of '+metas.length);
+  ok('but the CHECKED piece still leads it — merit is never displaced',
+     (await pg.locator('.find-cards .find-card').first().locator('.fc-yes').count())===1);
+  ok('and both of its pieces are there — no cap, her ruling',
+     metas.filter(t=>/FARM Rio/.test(t)).length===2,JSON.stringify(metas));}
  ok('the row still says plainly that this is everything found',
     /showing you as much as i could find/i.test(await pg.locator('.find-head').first().innerText()),
     await pg.locator('.find-head').first().innerText());
@@ -386,7 +413,7 @@ console.log('\n10. her never-wear list governs the wall too');
  /* 1 verified + 5 browse, minus the one ruffled piece. ▶ The count is DERIVED
     from the fixture rather than typed, so growing the fixture cannot make this
     fail on good news — this file's own "a count is not an invariant" rule. */
- ok('and every other piece survives',titles.length===5,JSON.stringify(titles));
+ ok('and every other piece survives',titles.length===7,JSON.stringify(titles));
  ok('no JS errors',errs.length===0,errs.join('|'));
  await ctx.close();}
 
@@ -399,7 +426,7 @@ console.log('\n11. the debug view answers "what did it actually do?"');
  ok('it names what was searched for',/item=top/.test(txt),txt.slice(0,200));
  ok('it reports the pool size from her shops',/products in your shops[\s\S]{0,4}12/.test(txt),txt.slice(0,400));
  ok('it reports how many were looked up',/looked up in detail[\s\S]{0,4}4/.test(txt),txt.slice(0,400));
- ok('it reports the browse count',/browse cards shown[\s\S]{0,4}5/.test(txt),txt.slice(0,400));
+ ok('it reports the browse count',/browse cards shown[\s\S]{0,4}7/.test(txt),txt.slice(0,400));
  ok('it reports the budget left',/930/.test(txt),txt.slice(0,400));
  /* ⚠️ BELOW the cards, never above — nothing may jump under a reader. */
  ok('it renders BELOW the cards',await pg.evaluate(()=>{

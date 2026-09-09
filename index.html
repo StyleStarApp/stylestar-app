@@ -10766,6 +10766,50 @@ function _findCard(p,opts){
    break `find-products.js` in a way no copy change should ever risk. Only the
    word a woman READS is American, which is her ask of 2026-09-09: "Let's change
    the spelling of colour to color." ▶ So: keys British, screen American. */
+/* ⭐⭐ GIVE HER PAYING SHOPS A SEAT, NEVER THE HEAD OF THE TABLE — HER RULING,
+   2026-09-09: "is there a way to make affiliated stores be in the searched mix
+   more often - I don't want them at the very top but I also don't want them in
+   the bottom of the barrel either... How can we have them have some level of
+   priority but not maximum?"
+   ▶▶ WHAT THIS IS *NOT*, AND THE DISTINCTION IS THE WHOLE JUSTIFICATION: it is
+     NOT the affiliate tie-break she banned on 2026-09-06 ("the app NEVER knows
+     which shops pay her. Fit and price decide, full stop"). That rule governs
+     RECOMMENDATIONS — the checked cards, the ones wearing a tick, where the app
+     is making a claim. THOSE ARE UNTOUCHED HERE: they lead the row and their
+     order is still pure merit.
+   ▶ THIS ONLY REORDERS THE BROWSE STRETCH, WHICH CLAIMS NOTHING. No tick, no
+     assertion, no "this is a better match" — just real pieces from her shops
+     that the app has said nothing about. Moving an unclaimed card earlier is
+     not a thumb on the scale, because there is no scale: nobody is being told
+     a Mytheresa dress fits her better.
+   🚨 THE REAL PROBLEM IT SOLVES IS POSITION, NOT PRESENCE. The row is already
+     uncapped — an affiliate piece in the pool ALWAYS renders. But in a row of
+     thirty cards, position 28 might as well not exist. That is her "bottom of
+     the barrel", and it is a different problem from being excluded.
+   ⚠️ INTERLEAVED 1:1 AND STARTING WITH THE NON-PAYING ONE, DELIBERATELY. The
+     natural best-match order still leads the stretch; her paying shops land at
+     every other card until they run out. "Affiliates first" would have been the
+     maximum priority she explicitly did not want.
+   ⚠️ AND NO CAP, per her ruling the same day: "I don't mind if more than 2
+     things from mytheresa or Farm Rio for example gets shown." Five FARM Rio
+     pieces stay five FARM Rio pieces. */
+function _findPays(b){
+  try{var e=STORES[b.store];return !!(e&&e.u&&_affMid(e.u));}catch(err){return false;}
+}
+function _findSpread(list){
+  var pays=[],rest=[];
+  list.forEach(function(b){(_findPays(b)?pays:rest).push(b)});
+  /* ▶ Nothing to spread: one side is empty, so the original order is already
+     the honest one. Returning `list` untouched keeps this a no-op rather than a
+     reshuffle that changes results for no reason. */
+  if(!pays.length||!rest.length)return list;
+  var out=[],i=0,j=0;
+  while(i<rest.length||j<pays.length){
+    if(i<rest.length)out.push(rest[i++]);
+    if(j<pays.length)out.push(pays[j++]);
+  }
+  return out;
+}
 function _findLabel(k,p){
   if(k==='colour')return p.request&&p.request.colour?p.request.colour:'color';
   if(k==='fabric')return 'fabric';
@@ -10939,7 +10983,7 @@ async function _findRun(req){
        looks up the top four, so "the checked ones" and "the best matches" are
        the same pieces in the same order. Verified lead, the rest follow in
        descending agreement. */
-  const browse=keep(data.browse).filter(function(b){return b.store&&b.title});
+  const browse=_findSpread(keep(data.browse).filter(function(b){return b.store&&b.title}));
   /* ⚠️ ONE CARD RENDERER, NEVER A SECOND COPY — `_findCard` draws both halves of
        this row, so `_feedName` still strips a trailing size clause and any
        future card change lands on every card at once. This file's oldest lesson.
