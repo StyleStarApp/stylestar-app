@@ -3688,7 +3688,13 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    presentation attributes (fill/stroke) so the markup stays valid on its own,
    and a CSS rule outranks a presentation attribute — so this is the ONE place
    the chat star's colour is decided. Do not add a second copy in the JS. */
-.chat-typing-star path,.find-load-star path{fill:#EC4899;stroke:#D4AF37;stroke-width:.9}
+/* ▶ HER PICK, 2026-09-09: four versions were rendered at true size and shown to
+   her (thin gold / silver / BOLDER GOLD / no frame) and she chose the bolder
+   gold — "C". ⚠️ The weight is the whole point of her choice: at .9 the gold
+   edge nearly melts into the pink at 30px, and she wanted a FRAME. Do not
+   quietly thin it back on the grounds that it looks heavy in a code diff; it
+   was judged by looking at it at the size it actually renders. */
+.chat-typing-star path,.find-load-star path{fill:#EC4899;stroke:#D4AF37;stroke-width:1.5}
 
 /* ⭐ THE THINKING DOTS — her ask, 2026-09-09: "three dots moving along like
    thinking too... to emphasize not broken just thinking when she is thinking
