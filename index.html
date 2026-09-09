@@ -1700,12 +1700,18 @@
     </div>
 
     <!-- ⭐ HER PICK, 2026-09-09. Mytheresa is one of the nine that pay her, so
-         this link earns and a photo is licensable — but her image server 403s
-         every automated request, exactly as lululemon does, so the photo cannot
-         be added from here. IT IS DELIBERATELY ABSENT RATHER THAN GUESSED: a
-         guessed CDN path shows a broken frame at best and somebody else's bag at
-         worst. ▶ Add `<div class="dc-item-px">` with her image address when she
-         sends it; the piece works without one, like most of the other 31.
+         this link earns and the photo is licensable.
+         🚨 THE PHOTO ADDRESS CAME FROM HER, AND FOUR GUESSES AT IT HAD FAILED
+         FIRST — every img.mytheresa.com pattern tried returned 403, which read
+         like a block and was really the wrong host. The real one is
+         www.mytheresa.com/image/... and SHE PASTED IT. That is the address-bar
+         workflow this file already records for bot-walled shops (J.Crew, Sézane,
+         Madewell, Kohl's), applied to an image rather than a search url.
+         ✅ HOTLINKING VERIFIED, NOT ASSUMED: fetched with Referer and Origin set
+         to stylestar.app and it returned 200, so it will load for a woman on her
+         phone. And the crop was LOOKED AT, not calculated — rendered at true
+         card width, where the bag sits fully in frame on the default
+         top-anchored rule, so no pxPos override is needed.
          ⚠️ EVERY TRACKING PARAMETER STRIPPED — her standing rule, and this link
          arrived with eighteen of them (utm_*, dplink, slink, feed_num, ad, cmp,
          and the rest). They go stale, they make the link fragile, and once
@@ -1716,6 +1722,7 @@
          from here the way the COUTR sunglasses were — it is her figure, read off
          her own screen. -->
     <div class="dc-item">
+      <img class="dc-item-px" src="https://www.mytheresa.com/image/1094/1238/100/9f/P01180729_b1.jpg" alt="Valentino Garavani Rockstud medium suede pouch in beige, held by its wrist strap" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">&#11088;</span>
       <div class="dc-item-name">Valentino Garavani Rockstud Medium Suede Pouch &mdash; Beige</div>
       <div class="dc-item-meta"><span class="dc-store">Mytheresa</span><span class="dc-price">$790</span></div>
