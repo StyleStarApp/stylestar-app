@@ -319,6 +319,50 @@ approved AS WRITTEN for the state it describes, **so the repair was to stop usin
 not describe, never to reword it.** The replacement line is Claude's and is marked in the code as a
 placeholder for hers.
 
+**✅ AND THE TWO WAITING SIGNALS ARE NOW TWO, HER DESIGN — SHIPPED SAME DAY.**
+🚨 **THE STAR WAS IN THE WRONG PLACE, AND SHE SAW IT INSTANTLY:** ***"The spinning star is in the wrong
+place. It is above the last thing she said so while waiting the user does not look up to see that. It
+needs to go at the end of the last thing she said."***
+▶▶ **WHY IT DRIFTED UP, AND IT IS A SIDE-EFFECT OF A GOOD DECISION: the search fires on the `<<FIND>>`
+marker, which is deliberately the FIRST thing in the reply so the search and the writing run TOGETHER.**
+So the status line is created BEFORE the stylist's bubble exists, and every bubble appended afterwards
+lands underneath it — leaving the reassurance above the sentence she is reading, **which is the one
+place she is not looking.**
+✅ **FIXED AT THE CHOKE POINT, NOT AT THE CALL SITES** — the same move that stopped the marker leaking.
+A `MutationObserver` on the message container returns the line to the end whenever anything is
+appended, **so a fifth render route added next year cannot strand it again.** ⚠️ `appendChild` on an
+element that is already a child **MOVES** it, so the line never duplicates and the star never stops
+turning mid-wait.
+⭐ **THE LOOK IS HERS AND WAS CHOSEN BY LOOKING, NOT BY ARGUING:** ***"It needs to be larger and pink
+maybe with thin gold or silver frame around it same shape as our usual spinning star but fill it in
+pink and needs to be bigger."*** ▶ **Four versions were rendered at TRUE SIZE and shown to her** — thin
+gold · silver · bolder gold · no frame — **and she picked the BOLDER GOLD ("C").** 18px → **30px**,
+pink fill `#EC4899`, gold stroke `#D4AF37` at **1.5**. ⚠️ **The weight is the point of her choice: at
+0.9 the gold edge melts into the pink at that size and she asked for a FRAME. Do not thin it back
+because 1.5 looks heavy in a diff — it was judged at the size it actually renders.**
+⭐⭐ **AND SHE ASKED FOR A SECOND SIGNAL, WHICH SPLIT ONE STATE INTO TWO:** ***"would be good to have
+three dots moving along like thinking too... to emphasize not broken just thinking WHEN SHE IS THINKING
+NOT SHOPPING."***
+▶▶ **SO: DOTS MEAN THINKING** (`_chatTyping`, before a word has been written) **AND THE TURNING STAR
+MEANS SHOPPING** (`_findStatus`, while her shops are being searched). ⚠️⚠️ **DO NOT ADD THE DOTS TO
+`_findStatus`** — that collapses the two states back into one and throws away exactly the distinction
+she drew. **She chose layout (i): star + words + dots.**
+⚠️ **Fixed height and inline-flex so NOTHING JUMPS as they rise and fall** (her audience runs to 80),
+offset delays so it reads as a travelling wave rather than a loading bar, `aria-hidden` so a screen
+reader hears the sentence and not "dot dot dot", and they **hold still under `prefers-reduced-motion`**,
+the same courtesy the star already gives.
+⚠️ **ONE CSS RULE NAMES BOTH CHAT STARS, DELIBERATELY** — they appear in the SAME wait, so if they ever
+diverge one wait starts looking like two things happening. **Same reasoning as `px2`'s one-rule-two-
+surfaces.** ▶ **THE WARDROBE/TRENDING STAR IS STILL SMALL AND GOLD ON PURPOSE.** She was asked about
+the chat star, on the chat screen; matching the rest of the app to it is **a real question and it is
+HERS.**
+✅ **`chatfind` 61 · `chatfallback` 59 (was 55).** 🚨 **AND ONE OF ITS OWN CHECKS WAS REWRITTEN, NOT
+BUMPED, WHICH IS THE RULE APPLIED TO CLAUDE'S OWN WORK:** *"and it turns the same way as
+.shop-star-main and .wdr-load-star"* required TWO SEPARATE CSS rules and broke the moment they were
+merged — **even though merging makes the thing it protects HARDER to break.** ▶ It now asserts the RULE
+by selector membership — *"every waiting star in the app turns the same way"* — **and covers all FOUR
+stars instead of two.** Splitting or merging is free; changing a spin fails and names which one.
+
 **▶ THE FOUR SHE NAMED THAT ARE STILL OPEN, none started, all verified real in the code:**
 1. ▶ **THE CARDS VANISH ON RELOAD, AND THE STYLIST LIED ABOUT IT.** Cards are `mc.appendChild`-ed into
    the page and **never written to `ss_chat`**, which saves only the text messages — so a reload loses
@@ -338,8 +382,8 @@ placeholder for hers.
    CODE FIX PROBABLY CANNOT HELP: every shop that earns is `$$$`/`$$$$` and none of them stocks a $107
    belted daytime dress. The honest answer is still a mid-market approval, which is still USERS.**
    **Do not quietly soften Option A to make this look better.**
-4. ▶ **THE SPINNING STAR** — she named it as a fault and **what is wrong with it is not yet known.**
-   She was asked and has not said. **Ask before building; do not guess.**
+4. ✅ **THE SPINNING STAR — ANSWERED BY HER AND BUILT THE SAME DAY.** See the section above. **Only
+   THREE of her six remain open**, and the vanishing cards is the one that matters most.
 
 ⭐ **THE DEBUG VIEW EARNED ITS KEEP ON DAY TWO.** Her screenshot: `1 search fired · 33 products in your
 shops · 3 looked up · 3 exact · 0 near miss · 30 browse cards · search 4799ms · look-up 6005ms · total
