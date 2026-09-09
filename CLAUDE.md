@@ -22,7 +22,7 @@ doing; **only the testers change the ceiling.**
 |---|---|---|---|
 | 1 | ~~Hand the store brief to ChatGPT~~ ✅ **CLOSED 2026-09-08 — she sent her own roster instead. 122 shops, and she is DONE adding for now.** | — | ✅ done |
 | 2 | ~~Re-run her three chat messages~~ ✅ **CLOSED 2026-09-09 — she tested the live build herself, twice, and her verdict is *"The chat is now working with scrollable photo options!!!"*** | — | ✅ done |
-| 3 | **Shop your Style** — wire the finder into it. She called it *"an enormous difference."* ⭐ **BOTH DESIGN FORKS ARE NOW ANSWERED BY HER, 2026-09-09 — see the build block below.** | Claude | ▶ **NEXT, and it is now the biggest single thing on the board** |
+| 3 | ~~Shop your Style — wire the finder into it~~ ✅ **BUILT 2026-09-09, BOTH FORKS ANSWERED BY HER FIRST.** Real products lead, her six stay below; the default view searches too. `ssfind` **44** checks. | — | ✅ done |
 | 4 | ~~A save heart on `_findCard`~~ ✅ **BUILT 2026-09-09 — every card the finder shows now carries the EXISTING `_wlSaveBtn`, and a saved piece keeps its photograph.** | — | ✅ done |
 
 ### 🏛️ BUSINESS & LEGAL
@@ -72,8 +72,10 @@ that makes any future number mean something.**
   is `$$$`/`$$$$` (dress median $398). **That is users, not an application.**
 
 ### 🛠️ THE APP — things Claude can build
-- ▶ **Shop your Style** ← item 3 above, the big one.
-- ▶ **A SPEND CAP + CACHING for SerpApi.** ~15¢ per shopping question and it is the app's **first
+- ✅✅ **Shop your Style — BUILT 2026-09-09**, both forks answered by her first. See its own block below.
+- ▶ **A SPEND CAP + CACHING for SerpApi.** ⭐ **THE CACHING HALF LANDED WITH SHOP YOUR STYLE** — a repeat
+  of the same question on that screen now costs nothing (`_FIND_CACHE`, opt-in, that screen only). ⚠️ **A
+  cap is still unbuilt, and her stance on it has not moved: WARN, NEVER BLOCK.** ~15¢ per shopping question and it is the app's **first
   per-user cost**. Her stance is VALUE FIRST and is not to be re-litigated. Caching first (repeat
   questions cost nothing), then a warning before the month runs out — **NOT a block.**
 - ▶ **FIX THE FLAKY `curated.js` CHECK PROPERLY** — *"never ruffles" removes the ruffled item* reports
@@ -269,15 +271,40 @@ sections had accumulated in one file and a session could read any of them first.
 the standing rule and it held all day.
 
 ### ▶ TEST STATE — THE ONLY CURRENT ONE (older "TEST STATE" blocks below are STALE, ignore them)
-✅ **GREEN (re-measured 2026-09-09 after the save heart):** chatfallback **98** (was 81) ·
-copy **49** (was 48) · findprod **63** · chatfind **63** · affq **40** · starpx **28** ·
-storepool 49 · untagged 21.
+✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 44 — NEW** ·
+chatfallback **98** (was 81) · copy **49** (was 48) · findprod **63** · chatfind **63** · affq **40** ·
+starpx **28** · honest · storepool 49 · untagged 21.
+⚠️ **`searchtune` 80 / 1 — the SAME pre-existing `styles.css` failure, *"her voice: Lora upright 15.5 +
+gold bolds"*, re-confirmed unchanged today.**
 ⚠️ **`searchtune` 80 checks / 1 failure — PRE-EXISTING, NOT A REGRESSION.** It is the `styles.css` check
 *"her voice: Lora upright 15.5 + gold bolds"*, and it was proven identical on the baseline `b6fb280`
 **even on a day when `styles.css` WAS edited**. ▶ **Verify against the baseline before believing it.**
-⚠️ **`curated`'s *"never ruffles"* flake is still the known flake.** Verify against `HEAD`; never loosen it.
+⚠️ **`curated` is 63 / 2 — AND BOTH FAILURES ARE PRE-EXISTING, PROVEN AGAINST A `ba99e70` WORKTREE THE
+SAME HOUR** (baseline: 62 / **3**, because the *"never ruffles"* flake also fired there). ▶ **So the
+save heart made it strictly BETTER, not worse.** ⚠️ **`curated`'s *"never ruffles"* flake is still the
+known flake.** Verify against the baseline; never loosen it.
+🚨🚨 **AND THE OTHER TWO ARE A REAL FINDING NOBODY HAD WRITTEN DOWN — NOT A FLAKE, AND NOT MINE.**
+`scripts/products-from-csv.js` **now REFUSES the frozen catalog outright** (`node
+scripts/products-from-csv.js data/style-star-products.csv` fails), because six rows still name
+**Madewell (4 rows) · COS (1) · Marine Layer (1)** and **none of those three is a `STORES` key any more**
+— she removed them in her 2026-09-08 roster. **The second failure, *"every family sees ≥3 jeans"* at
+`Professional: 2`, is the same event downstream.**
+▶▶ **WHAT IT ACTUALLY MEANS, AND IT IS NOT URGENT: `products.json` is already committed and the catalog
+is FROZEN, so the app is fine and no woman sees anything wrong. But it CANNOT BE REGENERATED** — the
+converter is now a door that will not open.
+⚠️⚠️ **THE REASON TO FIX IT ANYWAY IS THIS FILE'S OWN DISEASE: a permanently-red suite is how a false
+green happens.** Two checks that fail every single run teach the next session to wave `curated` through,
+and `curated` is the suite guarding her never-wear list. ▶ **THE FIX IS SMALL AND IT IS ALREADY WHAT
+THIS FILE CLAIMS HAPPENS: this file says those six picks were "DEACTIVATED because their shop is gone",
+so the converter should DEACTIVATE a row whose retailer has left the table, not refuse the whole file.**
+It was clearly done by hand in `products.json` and the converter never learned the rule. **Not built —
+flagged, because it is outside what she asked for today.**
 
 ### ▶▶ WHAT IS WAITING ON HER — THE WHOLE LIST, SHORTEST FIRST
+⭐⭐ **NEW AND TOP OF THE PILE AFTER THE OCT 1 CLOCK: HER EYE ON SHOP YOUR STYLE.** It now leads with
+real photographed products from her 132 shops. ▶ **Three things only she can judge: does the row land
+where she wants it · does the stylist's "so that is where I looked" line read as HER voice (it is
+CLAUDE'S copy and is marked in the code as a placeholder for hers) · does the wait feel right.**
 1. ⏳ **THE OCT 1 CLOCK. The only thing on her entire board with a real deadline.** Do NOT pay the Your
    Fashion Friend renewal; close the Orange County business tax receipt **by email or mail, not in
    person**. Full wording in the sole-proprietorship section.
@@ -288,32 +315,121 @@ storepool 49 · untagged 21.
    affiliate path is waiting on USERS, not on a decision.
 
 ### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER — THE ONLY CURRENT LIST
-1. ⭐ **SHOP YOUR STYLE — the big one, and IT IS NOW UNBLOCKED: BOTH DESIGN FORKS WERE PUT TO HER
-   BEFORE BUILDING AND SHE ANSWERED BOTH (2026-09-09).** Her words on the feature: ***"I think that will
-   make an enormous difference."*** Same finder engine as the chat, which is now proven on her own phone.
-   ▶ **HER RULING (a), WHERE THE REAL PRODUCTS GO WHEN SHE HAS TYPED AN ASK: *"Real products lead, the
-   six stay below."*** So the finder's row of real photographed pieces goes at the TOP and Catherine's
-   six named picks stay underneath as styling. ⚠️ **Not a replacement — she kept the stylist's voice on
-   the screen and simply put the buyable things first.**
-   ▶▶ **HER RULING (b), AND IT IS THE EXPENSIVE ONE, CHOSEN KNOWINGLY: *"Yes — one search from her
-   profile too."*** So the DEFAULT "show me a mix" view also searches, and every visit gets a wall of
-   real photographed pieces rather than six names. ⚠️⚠️ **SHE WAS TOLD THE COST PLAINLY FIRST: that is
-   ~2.5¢ on EVERY open of Shop your Style, including every refresh, whether or not the woman wanted
-   products — the app's biggest per-load cost.** She chose it anyway, which is her VALUE FIRST principle
-   again, exactly as on the chat's cost question. **Do not re-litigate it; do build the caching that
-   makes it cheap (a repeat profile search should cost nothing).**
-   🚨 **THE SHAPE THAT FALLS OUT, so it is not re-derived:** the Shop-your-Style prompt ALREADY calls
-   `style-ai` once, so the request for the finder should ride back on that SAME call as a `find` field
-   in its JSON — **the AI reads her sentence, which is her standing direction (intelligence, not another
-   word list), and it costs no extra AI call.** Then `_findKeepHerWords(req,_ssAsk)` still enforces that
-   colour/fabric/cut came from HER mouth, and `_findBlockHtml` renders the row — **the ONE builder, never
-   a second copy.**
-2. ✅✅ **A SAVE HEART ON `_findCard` — DONE 2026-09-09.** Every card of the row now carries the
-   EXISTING `_wlSaveBtn`, and a saved piece keeps its photograph. **`chatfallback` 81 → 98.**
-3. ⏸️ **THE FITTING-ROOM VIEW — parked by her, thinking kept.** Do not start it; do resurface it. The
-   recommendation (ONE list, TWO views, never a second list) is written up in the master to-do.
+✅✅ **THE TOP TWO ARE DONE, 2026-09-09: the save heart AND Shop your Style.** Both are written up below.
+1. ⭐ **HER EYE ON SHOP YOUR STYLE — this is the next real step and it is HERS, not a build.** The screen
+   now leads with real photographed products from her 132 shops. **Only she can say whether the row lands
+   where she wants it, whether the stylist's "so that is where I looked" line reads as her voice, and
+   whether the wait feels right.** ▶ **That line is CLAUDE'S COPY and is marked in the code as a
+   placeholder for hers — her own wording has beaten every draft so far.**
+2. ⏸️ **THE FITTING-ROOM VIEW — parked by her, thinking kept, AND ITS BLOCKER IS NOW GONE.** Saved pieces
+   carry their photograph as of today, which is the thing the view needed. **Do not start it; do
+   resurface it.** The recommendation (ONE list, TWO views, never a second list) is in the master to-do.
+3. ▶ **THE WISHLIST THUMBNAIL — small, and it is the one fork left open from the save heart.** The photo
+   is stored and nothing renders it. **Offer it; do not build it unilaterally** (only finder-saved rows
+   have an image, so the list would look ragged — half rows with photos, half without).
 4. ▶ **MORE SEARCHES PER QUESTION.** `buildQueries` fires up to 4 and her real questions often fire ONE.
    Three or four would multiply the pool for ~5-7¢. **Cheap, unstarted, and hers to say yes to.**
+5. ▶ **TEACH `products-from-csv.js` TO DEACTIVATE A ROW WHOSE SHOP IS GONE, instead of refusing the whole
+   file.** Not urgent — but it is what stops `curated` being permanently red, and a permanently-red suite
+   is how a false green happens. **See the test-state block above for the full finding.**
+
+## ✅✅✅ SHOP YOUR STYLE NOW SHOWS REAL PRODUCTS — BUILT 2026-09-09, HER ITEM 3, THE BIG ONE
+▶▶ **HER WORDS ON IT: *"I think that will make an enormous difference."*** ✅ **The finder is wired in.**
+🚨🚨 **BOTH DESIGN FORKS WERE PUT TO HER BEFORE A LINE WAS WRITTEN — this file's own rule, *"when her
+words admit two builds, SAY SO BEFORE BUILDING"*, working as designed rather than after a screenshot.**
+
+### ⭐ HER TWO RULINGS, AND THE COST SHE KNOWINGLY ACCEPTED
+▶ **(a) WHERE THE REAL PRODUCTS GO: *"Real products lead, the six stay below."*** So the finder's row
+goes FIRST and Catherine's six named picks stay underneath as styling. ⚠️ **NOT a replacement — she kept
+the stylist's voice on the screen and simply put the buyable things first.** She was offered "replace the
+six entirely" and "the six on top, products below" and took neither; **the third option repeats the
+below-the-fold mistake her mum's test found and her own one-row fix corrected.**
+▶▶ **(b) THE DEFAULT VIEW SEARCHES TOO: *"Yes — one search from her profile too."*** So a woman who
+types nothing still gets a wall of real photographed pieces rather than six names.
+⚠️⚠️ **SHE WAS TOLD THE COST PLAINLY BEFORE CHOOSING: ~2.5¢ on EVERY open of Shop your Style, including
+every refresh, whether or not she wanted products — the app's biggest per-load cost.** She chose it
+anyway. ▶ **That is her VALUE FIRST principle again, the same call she made on the chat's cost question,
+so it is CONSISTENT and is NOT to be re-litigated.** ⭐ **The honest consequence is that caching stopped
+being a someday item and shipped with it.**
+
+### 🚨 THE SHAPE, SO IT IS NEVER RE-DERIVED
+▶ **The search is asked for on the `style-ai` call `_shopStyleGen` ALREADY MAKES** — a `find` field on
+the same JSON response. **No second AI call, no second wait, no extra money.**
+▶▶ **AND IT IS THE AI READING HER SENTENCE, NOT A PARSER — her standing direction: *"I want the AI to be
+using intelligence and I would like to reduce the amount of rules and breakable things we put in
+there."*** A word list here would have been the 8-entry `CUT` table all over again: a judgement built as
+a promise, which is the exact fault she found on 2026-09-08.
+🚨 **THE GUARANTEE STAYS IN CODE REGARDLESS: `_findKeepHerWords` still deletes any colour, fabric or cut
+the model invented that is not in HER OWN sentence, before it can reach an outbound search** — the rule
+that exists because the model once recommended a jewel tone and then searched for one as though she had
+asked. **`filterNeverWear` still runs over everything that comes back.** ▶ **The model is trusted to
+READ. It is never trusted to ADD a requirement.** Both directions are asserted.
+⭐ **WHEN SHE ASKS FOR NOTHING, THE STYLIST NAMES HER OWN PICK OUT LOUD** (`findlead`) — her 2026-09-08
+delegation ruling: a woman who hands over the choice gets the stylist's silhouette as a real search
+requirement **AND is told whose choice it was, "so it stays hers to overrule."**
+⚠️ **ONE BUILDER AND ONE ROUTE, NEVER A SECOND COPY.** It renders through the SAME `_findBlockHtml` as
+the chat and reaches the network through the SAME `_findFetch`, so the honesty labels, the never-wear
+filter, the one disclosure, the save hearts and her uncapped browse row are identical on both surfaces
+**by construction**. **`ssfind` asserts there is exactly ONE fetch of `product-find` in the whole app.**
+▶ **`_findAskRule` is wired into exactly ONE prompt, asserted** — the cheapest way to "improve" this
+would be to spread it to the four browsing prompts, which would spend a search on surfaces she never
+ruled on.
+
+### 🚨🚨 THE FAULT THE NEW SUITE FOUND IN CLAUDE'S OWN WORK, AND IT IS HER RULE
+▶ A search takes 5-8s and the six styling picks paint in ~1s, so the row's space is RESERVED from the
+first paint — otherwise the whole page lurches downward under a woman already reading it. **Her rule:
+*"NOTHING MAY JUMP. Her audience runs to 80 and a screen that shifts under a reader is genuinely
+disorienting."***
+🚨 **THE FIRST RESERVATION WAS 262px AND IT WAS ESTIMATED, NOT MEASURED — 76px SHORT.** The check caught
+it. ✅ **The real row, read in the browser: head 29.8 + hint 16.1 + card row 290.9 = 337.8.**
+⚠️ **`.ss-find-wait` is 338px, and `ssfind` PRINTS the real number on every run and fails if the residual
+shift exceeds 24px.** ▶ **If the card changes, that needs a NEW VALUE, not a bigger tolerance.**
+⭐ **Proven to bite: putting 262 back turns it red, naming the real 76px shift.**
+
+### ✅ WHAT IT DOES WHEN IT CANNOT DELIVER — QUIETER THAN THE CHAT, AND DELIBERATELY
+▶ **A failed search, or one that genuinely finds nothing, REMOVES the row rather than printing an
+apology.** ⚠️⚠️ **THIS IS NOT A SOFTENING OF HER HONESTY RULE — READ THIS BEFORE "RESTORING" A SENTENCE
+HERE.** In chat, silence would be the whole answer, so it must say what happened. **Here her six styling
+picks are on the screen underneath and are perfectly good**, so the honest move is to claim nothing
+rather than headline a failure over sound advice. **Asserted in both directions: no empty bordered row is
+left behind, and nothing on screen ever says her shops had nothing.**
+
+### 🚨🚨 TWO REGRESSIONS CAUGHT BEFORE SHIPPING, AND BOTH ARE THIS FILE'S OWN SHAPES
+**1. THE CACHE LEAKED INTO THE CHAT, AND IT BROKE HER HONESTY RULE SILENTLY.** It was built for Shop
+your Style — where her ruling makes the same question get asked five times in a sitting — but it was
+made GLOBAL. ▶▶ **`chatfind` went 63 → 59 on the very next run: a second chat answer re-rendered the
+FIRST answer's products, so its ticks and its "not confirmed" labels described the WRONG DRESS.**
+🚨 **A screen that looked perfectly normal, saying verified things about a piece nobody had verified.**
+✅ **The cache is now OPT-IN and Shop your Style is its only caller**, with a check pinning that the chat
+asks for fresh stock every time. ⚠️ **Do not "simplify" it back to always-on.** ▶ **And the reasoning is
+not only the bug: the chat searches ONCE per question, so a woman asking again is asking to be looked at
+again — with real stock, not a replay.**
+**2. THE PRODUCTS ROW WOULD HAVE VANISHED WHEN SHE CAME BACK FROM A STORE.** A resume re-renders her six
+from `localStorage` **without calling the model again**, so the find request had to ride along with them
+— exactly as the honest note already does. ▶▶ **WITHOUT IT: her styling picks come back and the
+photographs she was actually shopping are gone. THAT IS PRECISELY THE FAULT SHE REPORTED ON THE CHAT**
+(*"the searched photo cards disappearing when user leaves and comes back"*), where the stylist then
+promised to *"pull them back up"* with no code that could. **Shipping the same shape on a new surface
+would have been this file's own sentence again.**
+⚠️ **AND THE HALF THAT KEEPS IT HONEST: the stored request is NOT stripped a second time.** `_ssAsk` is
+empty on a resume, so re-running `_findKeepHerWords` would delete the colour and fabric **she DID say**
+and quietly broaden her search. **Validated once, against her own sentence, at the moment she said it.**
+🚨 **AND A THIRD, SMALLER ONE, CAUGHT BY THE RESUME CHECK ITSELF: the request was being computed BELOW
+`_saveShopPicks`, so `var` hoisting stored `undefined`** — the fix silently saved nothing. **That is why
+the check exists, and it is the argument for writing the check before believing the fix.**
+
+### ▶ TEST STATE FOR IT
+✅ **`promptcap` RE-RUN AND STILL 10/0** — the code's own instruction ("re-measure after ANY addition to
+these rules"), obeyed rather than skipped. The `find` field adds ~600 chars and the worst case still
+clears style-ai's 32KB hard cap with a real margin, **and all 132 stores still survive the shrink
+ladder** (her SORT, NEVER TRIM rule).
+**`scratchpad/ssfind.js` — 44 checks, 0 failures.** It serves the real files off disk, **styles.css
+included, with a guard check proving the sheet is applied before any number is believed** (the
+2026-09-09 `copy` lesson). ▶ **THREE HARNESS TRAPS ARE WRITTEN INTO IT, because each one passed or hung
+on perfectly correct code:** setting `window._ssAsk` then calling `_openShopStyleNow` measures NOTHING
+(`_syncShopAsk`'s first line is `_ssAsk=''`) · waiting on `.shop-grid` again returns INSTANTLY because
+the previous render's grid is still there · waiting on `.thinking` RACES an instant stub. **The fix for
+all three: drive the real control, and TAG the old grid then wait for an untagged one.**
 
 ## ✅✅ THE SAVE HEART ON THE FINDER'S CARDS — BUILT 2026-09-09, HER ITEM 4
 ▶▶ **HER ASK, AS THIS FILE RECORDED IT: *"Put the EXISTING `_wlSaveBtn` on `_findCard`, and store
@@ -1251,7 +1367,12 @@ alternative to price against is **SearchApi** (same $25, ~10× the searches).
 ▶ **THE FILES:** `netlify/functions/product-find.js` (server, holds the key) · `netlify/functions/lib/
 find-products.js` (the finder) · `netlify/functions/lib/store-domains.js` (**generated**) ·
 `scripts/build-store-domains.js` · `scripts/lib/stores.js` (the ONE `STORES` reader) ·
-`scratchpad/findprod.js` **54** · `scratchpad/chatfind.js` **61** · `scratchpad/findlive.js` (live bench).
+`scratchpad/findprod.js` **63** · `scratchpad/chatfind.js` **63** · `scratchpad/ssfind.js` **44** ·
+`scratchpad/findlive.js` (live bench).
+⭐⭐ **AND IT NOW SERVES TWO SURFACES, 2026-09-09: THE STYLIST CHAT AND SHOP YOUR STYLE** — through the
+ONE `_findBlockHtml` builder and the ONE `_findFetch`, so there is exactly one `product-find` call site
+in the app. ⚠️ **`_findFetch`'s cache is OPT-IN and Shop your Style is its only caller; the chat asks
+for fresh stock every time.** Both asserted. **A second card loop is how the `<<FIND>>` marker leaked.**
 ⚠️ **THE FINDER FINDS; THE PAGE CHOOSES.** `find-products.js` holds NO copy of her brief and never ranks
 for style. **`curatedPicks()` and `filterNeverWear()` remain the ONE picker** — adding her rules to the
 finder would make it the fourth copy, which is the bug this project paid for four times in one day.
@@ -1852,6 +1973,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 | **Never say "your shops" / "your stores"** | **status lines, empty states, row headers — the phrase is absent, asserted** | n/a — the shelves write no such prose | **chatfallback 81 · copy 69** | ✅ **her rule, 2026-09-09: *"Clients want me to check all stores"*** |
 | **A product photo is never cropped** | **the chat's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 49** | ✅ **her catch 2026-09-09: *"Can't see top of dress or head of the model"*** |
+| **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 44 · chatfallback 98** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
 | **A SAVED ROW MAY CLAIM NO MORE THAN THE CARD IT WAS SAVED FROM** | **`_findCard`: a CHECKED card saves `exact` (real product page → "Shop it" + price); a BROWSE card saves store+search (→ "Find it", no price)** | **`renderWishlist` labels off that same flag, and rebuilds the search link every render** | **chatfallback 98, §15 — and both checks proven to bite** | ✅ **BUILT 2026-09-09 with the save heart. It is her 2026-09-06 rule one surface further out: a price and "Shop it" on a row that lands on a RESULTS PAGE is the "generic store search dressed as a find" she banned.** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
 THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude
@@ -2573,6 +2695,11 @@ everywhere, asserted by a test: **"Some links may earn us a commission."**
 4. `.shop-disclosure` on the **Shop your style / wishlist screen** (`s-shopstyle`)
 5. `.wdr-disclosure` **once at the top of Your Wardrobe**, below the tabs
 6. `.chat-disclosure` in the **stylist chat** (the linkifier turns store names into links)
+⚠️ **STILL SIX AFTER 2026-09-09, AND THAT IS DELIBERATE — CHECKED, NOT ASSUMED.** Shop your Style's new
+row of real products adds **NO seventh**: `_findBlockHtml`'s `DISC` is empty (her own ask, *"please
+let's take off that extra affiliate link wording too"*) and the screen already carries
+`.shop-disclosure`. **`ssfind` asserts exactly ONE on that screen, never two.** ▶ **If the row is ever
+moved to a surface with no disclosure of its own, the one disclosure has to MOVE there.**
 📁 *The audit, the width measurement, and the frequency decision are in `CLAUDE-archive.md`.* The rules:
 - ⚠️ **The Edit and the Mall keep their own longer "nothing here is chosen by AI" version.
   DO NOT "unify" them with this one.** The fuller wording also stays in the Privacy Policy, FAQ

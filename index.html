@@ -6210,6 +6210,35 @@ function _mixRule(){
     +'    RIGHT, on that same ask: all six search "black long sleeve v neck midi dress" and differ by store and price.\n'
     +'- Vary the price points and the stores across the 6 as well.\n';
 }
+/* ⭐⭐ THE ONE SEARCH THE FINDER WILL RUN, ASKED FOR ON THE CALL WE ALREADY MAKE
+   (2026-09-09, Shop your Style).
+   ▶▶ WHY IT RIDES ON THIS CALL RATHER THAN GETTING ITS OWN: `_shopStyleGen`
+     already sends one `style-ai` request, so a `find` field on the SAME response
+     costs nothing extra — no second AI call, no second wait.
+   ▶▶ AND WHY IT IS THE AI READING HER SENTENCE RATHER THAN A PARSER: her
+     standing direction, "I want the AI to be using intelligence and I would like
+     to reduce the amount of rules and breakable things we put in there." A word
+     list here would be the 8-entry `CUT` table all over again — a judgement built
+     as a promise, which is the exact fault she found on 2026-09-08.
+   🚨 THE GUARANTEE STAYS IN CODE REGARDLESS: `_findKeepHerWords` still deletes any
+     colour, fabric or cut the model invented that is not in HER OWN sentence, and
+     `filterNeverWear` still runs over everything that comes back. The model is
+     trusted to READ; it is not trusted to add requirements.
+   ⚠️ SIZE AND WIDTH ARE HERS AND COME FROM HER SAVED PREFS, exactly as in chat —
+     they are in `basis` via getPrefsForPrompt(). They are also SOFT at verify
+     time (2026-09-09), so an unpublished size cannot demote every result. */
+function _findAskRule(){
+  return '- find: ONE search for real products, as {"item":"...","colour":"","fabric":"","cut":"","size":"","width":""}. '
+    +'`item` is the garment noun on its own ("dress", "white top" is wrong, "top" is right) and is REQUIRED. '
+    +'Fill colour/fabric/cut ONLY with words she actually used'
+    +(_ssAsk?' in: "'+_ssAsk+'"':' — and she has said nothing, so leave all three EMPTY')
+    +'. Leave a field empty rather than guessing; empty is always safe. '
+    +(_ssAsk
+      ? 'Choose the item she asked for.\n'
+      : 'She has not asked for anything specific, so YOU choose the one garment worth showing her most, from her profile. '
+        +'Then say so in `findlead`, in one short warm sentence in your own voice, naming what you chose and why, '
+        +'so she knows it was your pick and can overrule it. Under 18 words.\n');
+}
 function _askedForLead(){
   return _ssAsk
     ? 'This woman is looking for: "'+_ssAsk+'". Suggest 6 specific shoppable pieces that are exactly that, chosen to suit her style.'
@@ -6417,14 +6446,31 @@ var _SHOP_PICKS_TTL=6*60*60*1000;     // 6 hours
    fortnight-old set offered as if she had just been looking at it is the app
    lying quietly. Long enough to cover any real session, short enough to stay
    honest. Shortening it is safe; lengthening it needs the wording to change. */
-function _saveShopPicks(items,note){
+function _saveShopPicks(items,note,find,lead){
   try{
     if(!items||!items.length)return;
     // ⚠️ The note rides WITH the picks. A resume re-renders the same six through
     // the same path (never a second model call), so without this an honest
     // "I couldn't find X" would silently vanish the moment she came back from a
     // store -- leaving a short shelf with nothing explaining why it is short.
-    localStorage.setItem('ss_shoppicks',JSON.stringify({m:_shopStyleMode,i:items,n:note||'',t:Date.now()}));
+    /* 🚨🚨 THE FIND REQUEST RIDES WITH THE PICKS TOO, AND FOR THE SAME REASON THE
+       NOTE DOES — 2026-09-09, caught before shipping rather than by her.
+       ▶ A resume re-renders the same six WITHOUT calling the model again, so
+         without this the row of real products would silently VANISH the moment
+         she came back from a store: her six styling picks still there, the
+         photographs she was actually shopping gone.
+       ▶▶ THAT IS EXACTLY THE FAULT SHE REPORTED ON THE CHAT — "the searched
+         photo cards disappearing when user leaves and comes back" — and the
+         stylist then promised to "pull them back up" with no code that could.
+         Shipping the same shape on a new surface would have been this file's own
+         sentence again: a rule applied to one half is not applied.
+       ⚠️ IT IS STORED ALREADY STRIPPED, so a resume must NOT run
+         `_findKeepHerWords` over it a second time: `_ssAsk` may be empty by then,
+         which would delete the colour and fabric SHE DID SAY and quietly broaden
+         her search. Validated once, against her own sentence, at the moment she
+         said it. */
+    localStorage.setItem('ss_shoppicks',JSON.stringify({m:_shopStyleMode,i:items,
+      n:note||'',f:find||null,l:lead||'',t:Date.now()}));
   }catch(e){}
 }
 function _shopPicksWaiting(){
@@ -6496,7 +6542,12 @@ function _openShopStyleNow(mode){
   _syncShopAsk();   // clears any previous ask and rotates the placeholder
   _shopStyleGen();
 }
+/* ▶ True only while rendering a RESUME, whose find request was already checked
+   against her sentence when it was first built. Reset at the top of every
+   generate so it can never leak into a fresh model answer. */
+var _ssFindPre=false;
 async function _shopStyleGen(){
+  _ssFindPre=false;
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
   // Drives the subtitle rule above: only the quiz-mode line is decorative.
@@ -6561,7 +6612,7 @@ async function _shopStyleGen(){
     prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    var _mkQuiz=function(_dt){ return 'You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF(),null,_dt)+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}'; };
+    var _mkQuiz=function(_dt){ return 'You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF(),null,_dt)+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nAND ONE MORE FIELD, ALONGSIDE the six:\n'+_findAskRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","findlead":"","find":{"item":"","colour":"","fabric":"","cut":"","size":"","width":""},"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}'; };
     // Full detail first. Only a genuinely long prompt walks down the ladder.
     var _dts=[null,60,45,30];
     for(var _di=0;_di<_dts.length;_di++){ prompt=_mkQuiz(_dts[_di]); if(prompt.length<=_PROMPT_SAFE) break; }
@@ -6576,7 +6627,9 @@ async function _shopStyleGen(){
     // drift from what she was actually looking at. ⚠️ ONE render path on purpose:
     // a second copy of the card loop would drift the moment either changed.
     if(_shopResume&&_shopResume.i&&_shopResume.i.length){
-      parsed={items:_shopResume.i,note:_shopResume.n||''};
+      parsed={items:_shopResume.i,note:_shopResume.n||'',
+              find:_shopResume.f||null,findlead:_shopResume.l||''};
+      _ssFindPre=true;           // already stripped when it was first built
       _shopResume=null;          // a resume is spent once used; a refresh re-asks
     }else{
       var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
@@ -6596,7 +6649,20 @@ async function _shopStyleGen(){
     var _keep=filterNeverWear(parsed.items,
       _shopStyleMode==='wantlist'?(_wantListNames||[]).join(' '):_ssAsk);
     _rememberPicks('ss-'+_shopStyleMode,_keep);   // the refresh must not repeat
-    _saveShopPicks(_keep,parsed.note);   // so she can come back to exactly this, see _shopResume
+    /* ⚠️ COMPUTED HERE, ABOVE _saveShopPicks, AND THAT ORDER IS LOAD-BEARING.
+       It sat below the save for one round and `var` hoisting meant the stored
+       request was `undefined` — so a resume silently lost the row it was added
+       to keep. Caught by the resume check, which is why that check exists. */
+    var _ssFind=(parsed&&parsed.find&&typeof parsed.find==='object')?parsed.find:null;
+    if(_ssFind&&_ssFind.item&&!_ssFindPre){
+      /* ⚠️ HER SENTENCE IS THE AUTHORITY, exactly as in chat. Anything the model
+         put in colour/fabric/cut that she did not say is deleted here, in CODE,
+         before it can reach an outbound search. The rule that exists because the
+         model once recommended a jewel tone and then searched for one as though
+         she had asked. */
+      _findKeepHerWords(_ssFind,_ssAsk||'');
+    }
+    _saveShopPicks(_keep,parsed.note,_ssFind,_ssFindLead(parsed));   // so she can come back to exactly this, see _shopResume
     /* 🚨 HER HONEST LINE (2026-08-24). Two ways to reach it and both are real:
        (a) the model used its escape hatch and sent a note -- see _honestyRule;
        (b) ⚠️ A PRE-EXISTING HOLE, closed in the same change: filterNeverWear runs
@@ -6625,6 +6691,31 @@ async function _shopStyleGen(){
         +(_keep.length?'':' <a class="shop-honest-go" href="#" onclick="openChat();return false">Talk it through with your stylist &rarr;</a>')
         +'</div>';
     }
+    /* ⭐⭐⭐ REAL PRODUCTS LEAD, THE SIX STAY BELOW — HER RULING, 2026-09-09, and
+       BOTH forks were put to her before a line was written (this file's own
+       "when her words admit two builds, say so BEFORE building").
+       ▶ (a) WHERE THEY GO: "Real products lead, the six stay below." So the
+         finder's row of real, photographed, buyable pieces from her 132 shops
+         goes FIRST, and Catherine's six named picks stay underneath as styling.
+         ⚠️ NOT a replacement — she kept the stylist's voice on the screen and
+         simply put the buyable things first.
+       ▶ (b) THE DEFAULT VIEW SEARCHES TOO: "Yes — one search from her profile
+         too." ⚠️⚠️ SHE WAS TOLD THE COST FIRST AND CHOSE IT ANYWAY: ~2.5¢ on
+         EVERY open of this screen, including every refresh. That is her VALUE
+         FIRST principle again, the same call she made on the chat's cost
+         question. DO NOT re-litigate it — `_findFetch`'s cache is the answer,
+         and it makes a repeat of the same question free.
+       🚨🚨 THE PLACEHOLDER IS THE REAL ROW'S HEIGHT, NOT A THIN STRIP, AND THAT
+         IS HER RULE NOT A DETAIL: "NOTHING MAY JUMP. Her audience runs to 80 and
+         a screen that shifts under a reader is genuinely disorienting." A search
+         takes 5-8s, so the six render IMMEDIATELY and the row fills in above
+         them — which would shove the whole page down if the space were not
+         reserved. `.ss-find-wait` holds a card's height from the first paint. */
+    if(_ssFind&&_ssFind.item){
+      html+='<div id="ssFindWrap" class="find-block ss-find">'
+        +(!_ssAsk&&_ssFindLead(parsed)?'<div class="ss-find-lead">'+_esc(_ssFindLead(parsed))+'</div>':'')
+        +'<div class="ss-find-wait">'+_SHOP_STAR_SVG+'</div></div>';
+    }
     html+='<div class="shop-grid">';
     _keep.forEach(function(item){
       // No icon above the name. Emoji are painted by the platform's own font and
@@ -6641,6 +6732,12 @@ async function _shopStyleGen(){
     if(gf)gf.style.display='';
     if(bk)bk.style.display='';
     if(askEl&&_shopStyleMode==='quiz')askEl.style.display='';
+    /* ▶ FIRED AFTER the six are painted, never before: the styling is on screen
+       in ~1s and the products arrive into space already reserved for them.
+       ⚠️ NOT awaited, so a slow or dead search can never hold up her advice —
+       the same reasoning as the chat's B+C decision (a warm reply immediately,
+       cards follow), which is hers. */
+    if(_ssFind&&_ssFind.item)_ssFindRun(_ssFind);
   }catch(e){
     _stopShopMsgs();if(scr)scr.classList.remove('thinking');if(lg)lg.textContent=_isWL?'shop your list':'shop your style';
     cont.innerHTML='<div class="shop-loading">Couldn\'t load options right now.</div><div style="text-align:center;margin-top:8px"><button class="btn-pink" onclick="_shopStyleGen()" style="max-width:200px">Try again</button></div>';
@@ -6648,6 +6745,47 @@ async function _shopStyleGen(){
     if(bk)bk.style.display='';
     if(askEl&&_shopStyleMode==='quiz')askEl.style.display='';
   }
+}
+/* ⭐ THE FINDER, RUN FOR SHOP YOUR STYLE (2026-09-09). It shares EVERYTHING with
+   the chat and copies nothing: the same `_findFetch` (so the same cache and the
+   same request shape) and the same `_findBlockHtml` builder (so the honesty
+   labels, the never-wear filter, the one disclosure, the save hearts and her
+   uncapped browse row are identical on both surfaces, for ever, by construction).
+   🚨 ONE BUILDER, NEVER A SECOND COPY. This file's oldest lesson, and the reason
+     the marker leak and the two-row regression happened: a rule applied to one
+     half is not applied. There is no second card loop here to drift. */
+async function _ssFindRun(req){
+  var wrap=document.getElementById('ssFindWrap');
+  if(!wrap)return;
+  var fr=await _findFetch(req,true);
+  /* ⚠️ She may have left the screen while it searched. Re-read the node rather
+     than trusting the one captured above: a refresh replaces the whole block, so
+     writing into a detached element would silently do nothing. */
+  wrap=document.getElementById('ssFindWrap');
+  if(!wrap)return;
+  /* 🚨🚨 A SEARCH THAT DID NOT COME BACK MUST NEVER READ AS "I LOOKED AND FOUND
+     NOTHING" — her rule, and the fault she hit on 2026-09-08 one surface further
+     out. ▶ Here the honest move is quieter than in chat, because her six styling
+     picks ARE on the screen underneath: the row simply removes itself rather
+     than printing an apology above advice that is perfectly good. Nothing is
+     claimed either way, which is the whole test. */
+  if(!fr.data||fr.failed||fr.data.why){wrap.remove();return;}
+  var lead=wrap.querySelector('.ss-find-lead');
+  var html=_findBlockHtml(fr.data,req);
+  /* ▶ Nothing found is not a failure and does not deserve a headline over her
+     styling. `_findBlockHtml` returns only its own honest sentence in that case;
+     an empty row would leave a bordered gap, so it goes. */
+  if(html.indexOf('find-card')<0){wrap.remove();return;}
+  wrap.innerHTML=(lead?lead.outerHTML:'')+html;
+}
+/* ▶ The stylist saying whose choice it was — her 2026-09-08 delegation ruling:
+   when a woman hands over the choice, the stylist's pick becomes a real search
+   requirement AND the stylist must NAME IT OUT LOUD, "so it stays hers to
+   overrule". This is that sentence, and it only exists when she asked for
+   nothing. ⚠️ Model output: escaped, and capped so a runaway answer cannot push
+   the row off the screen. */
+function _ssFindLead(parsed){
+  return _noDash(String((parsed&&parsed.findlead)||'').trim()).slice(0,120);
 }
 var _shopMsgT=null;
 function _startShopMsgs(){
@@ -11372,17 +11510,54 @@ function _findBlockHtml(data,req){
   return wrap_html;
 }
 
-async function _findRun(req){
-  const mc=document.getElementById('chatMessages');
-  if(!mc)return;
-  const _dbgT0=Date.now();
-  const status=_findStatus(mc);
+/* ⭐⭐ ONE ROUTE TO THE FINDER, WITH A CACHE IN FRONT OF IT (2026-09-09).
+   ▶▶ WHY THE CACHE ARRIVED WITH SHOP YOUR STYLE AND NOT BEFORE: her ruling that
+     the DEFAULT view searches too means a woman who opens Shop your Style,
+     taps Back, and opens it again has spent ~5¢ of her allowance on the same
+     question. A refresh is the same story. **A repeat costs nothing now.**
+   ⚠️ KEYED ON THE WHOLE REQUEST, so changing one word really does re-search —
+     the cache can never quietly answer a different question.
+   ⚠️⚠️ A FAILURE IS NEVER CACHED, and that is the important half. Caching
+     `why:'search-failed'` would freeze the honest "my search didn't come back"
+     sentence in place for the rest of the sitting, with no way for her to try
+     again — which would turn a momentary truth into a permanent lie.
+   ⚠️ IN MEMORY ONLY, on purpose: a page reload should be able to see fresh
+     stock. The server already caches 30 minutes on a warm instance; this only
+     stops the SAME question being asked twice in one sitting. */
+const _FIND_CACHE=new Map();
+const _FIND_CACHE_MAX=12;
+/* ⚠️⚠️ THE CACHE IS OPT-IN, AND THAT IS DELIBERATE — IT BELONGS TO SHOP YOUR
+   STYLE ONLY. It exists because HER ruling makes that screen search on every
+   open, so the same question can be asked five times in a sitting. THE CHAT HAS
+   NO SUCH PROBLEM: it searches once per question, and a woman who asks the same
+   thing twice is asking to be looked at again — with fresh stock, not a replay.
+   🚨 IT WAS GLOBAL FOR ONE ROUND AND `chatfind` WENT 63 -> 59 IMMEDIATELY: with
+   one cache across the app, a second answer silently re-rendered the FIRST
+   answer's products, so ticks and unconfirmed labels described the wrong piece.
+   ▶ A caught regression, and the reason this parameter exists. Do not "simplify"
+   it back to always-on. */
+async function _findFetch(req,useCache){
+  const key=JSON.stringify(req);
+  if(useCache&&_FIND_CACHE.has(key))return{data:_FIND_CACHE.get(key),failed:false,cached:true};
   let data=null,failed=false;
   try{
     const r=await fetch('/.netlify/functions/product-find',{method:'POST',
       headers:{'Content-Type':'application/json'},body:JSON.stringify(req)});
     if(r.ok)data=await r.json(); else failed=true;
   }catch(e){failed=true;}
+  if(useCache&&data&&!data.why){
+    if(_FIND_CACHE.size>=_FIND_CACHE_MAX)_FIND_CACHE.delete(_FIND_CACHE.keys().next().value);
+    _FIND_CACHE.set(key,data);
+  }
+  return{data:data,failed:failed,cached:false};
+}
+async function _findRun(req){
+  const mc=document.getElementById('chatMessages');
+  if(!mc)return;
+  const _dbgT0=Date.now();
+  const status=_findStatus(mc);
+  const _fr=await _findFetch(req);
+  const data=_fr.data,failed=_fr.failed;
   status.done();
   /* ONE line, every path — see _findDbg above for why it is a setTimeout. */
   if(_FIND_DEBUG)setTimeout(function(){_findDbg(mc,req,data,failed,Date.now()-_dbgT0)},0);

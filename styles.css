@@ -3692,6 +3692,27 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    nested inside a link fires both on one tap. ▶ The tap target did not shrink:
    `.fc-go` still covers the whole photo and body. */
 .fc-go{display:block;text-decoration:none;color:inherit}
+/* ⭐ THE FINDER'S ROW ON SHOP YOUR STYLE (2026-09-09, her ruling: real products
+   lead, the six stay below). It reuses `.find-block` wholesale, so every honesty
+   label, the one disclosure and the save hearts are byte-identical to the chat.
+   🚨🚨 `.ss-find-wait` HOLDS THE ROW'S REAL HEIGHT WHILE THE SEARCH RUNS, AND
+   THAT IS HER RULE: "NOTHING MAY JUMP. Her audience runs to 80 and a screen that
+   shifts under a reader is genuinely disorienting." A search takes 5-8s and the
+   six styling picks are painted in ~1s, so without a reserved space the whole
+   page would lurch downward under a woman already reading it.
+   ▶▶ 338px IS MEASURED OFF THE REAL FILLED ROW, NOT ESTIMATED — and the first
+   estimate was 262px, which was 76px short and made the six lurch downward
+   exactly as her rule forbids. The real breakdown, read in the browser:
+   head 29.8 + hint 16.1 + card row 290.9 = 337.8.
+   ⚠️ RE-MEASURE IT IF THE CARD CHANGES. `scratchpad/ssfind.js` prints the real
+   number on every run and fails if the residual shift exceeds 24px, so this
+   cannot go quietly stale — but it will need a new value, not a bigger
+   tolerance. A card whose name wraps to four lines is taller than this fixture;
+   the tolerance is what absorbs that, and it is deliberately small. */
+.ss-find{margin:0 0 14px}
+.ss-find-lead{font-size:12.5px;line-height:1.45;color:#6e6e6e;margin:0 2px 7px;letter-spacing:.01em}
+.ss-find-wait{height:338px;display:flex;align-items:center;justify-content:center}
+.ss-find-wait svg{width:26px;height:26px}
 .fc-body{padding:8px 9px 9px}
 /* ⚠️ 4-line clamp, the same lesson as the feed cards: a merchant name is not
    prose and an unclamped one made 650px of empty beige under a short row. */
