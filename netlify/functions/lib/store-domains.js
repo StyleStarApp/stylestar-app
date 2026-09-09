@@ -270,6 +270,51 @@ export default {
   "tier": "",
   "sizes": []
  },
+ "Moda Operandi": {
+  "host": "modaoperandi.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Merlette": {
+  "host": "merlette.com",
+  "tier": "",
+  "sizes": []
+ },
+ "ViX Swimwear": {
+  "host": "vixpaulahermanny.com",
+  "tier": "",
+  "sizes": []
+ },
+ "ASTR the Label": {
+  "host": "astrthelabel.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Pact": {
+  "host": "wearpact.com",
+  "tier": "",
+  "sizes": []
+ },
+ "PacSun": {
+  "host": "pacsun.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Tommy Hilfiger": {
+  "host": "usa.tommy.com",
+  "tier": "",
+  "sizes": []
+ },
+ "Aeropostale": {
+  "host": "aeropostale.com",
+  "tier": "",
+  "sizes": []
+ },
+ "FWRD": {
+  "host": "fwrd.com",
+  "tier": "",
+  "sizes": []
+ },
  "White House Black Market": {
   "host": "whitehouseblackmarket.com",
   "tier": "$$",
