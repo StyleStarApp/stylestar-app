@@ -408,6 +408,19 @@ is that when it happens **she is told the truth about it.**
 ⭐ **AND THE DEBUG VIEW EARNED ITSELF ON ITS FIRST REAL USE:** `search time 10001ms` beside
 `products in your shops 0` is what named this in seconds. **Before it, this looked exactly like "your
 shops have nothing."**
+🚨🚨 **AND A WRONG TURN WORTH KEEPING, BECAUSE THE NEXT SESSION WILL BE TEMPTED BY IT: RAISING THE
+SEARCH CEILING DOES NOT HELP.** The ceiling was 10s; it was raised to 20s on the reasoning that
+successful searches land at 6.6–8.7s and SerpApi's own processing is only 1.6–3.4s, so the headroom
+looked too thin. ▶▶ **MEASURED IMMEDIATELY AFTERWARDS: the next failure pinned at `20001ms` — exactly
+the new ceiling.** ⚠️ **SO THESE REQUESTS ARE NOT SLOW, THEY ARE HUNG.** A hung request stays hung, and
+a bigger ceiling only makes a woman wait twice as long for the same honest sentence.
+▶ **SETTLED AT 12s, chosen from the real successes and not from hope** — observed: 122ms (warm cache) ·
+6.6s · 6.9s · 8.7s. **It clears the slowest success seen, then FAILS FAST, which is the kinder half.**
+⚠️ **SUSPECTED CAUSE, STILL UNPROVEN AND DO NOT ACT ON IT WITHOUT EVIDENCE: the hangs cluster under
+rapid back-to-back calls, which is how they were found.** Three fresh live terms in a row gave
+**21 browse · 20 browse · hung** — so it is intermittent, and **a woman asking ONE question may never
+see it.** ▶ **If she reports it, the debug panel now shows the number: `search time` at exactly the
+ceiling with `products in your shops 0` is this, and nothing else.**
 
 ### 🚨 THE SIX EDITS TO ADD A MERCHANT ARE NOW FIVE
 ▶ **Edit (6), `SEARCH_DOMAINS` in `style-ai.js`, no longer arms anything** — the stylist has no search
