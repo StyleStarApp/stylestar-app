@@ -389,8 +389,14 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
    els=>els.map(e=>e.getAttribute('href')||''));
  ok('no card links to a google search',!hrefs.some(h=>h.includes('google.com')),hrefs.join(' | '));
  ok('every card links somewhere real',hrefs.every(h=>/^https?:\/\//.test(h)),hrefs.join(' | '));
+ /* ⚠️ DERIVED, NOT TYPED. This read `=== 6` and went red the moment the fixture
+    grew to prove the interleave — which is this file's own lesson exactly: a test
+    that fails because the app got BIGGER teaches the next session to bump a
+    number without reading it. Comparing against the row's own card count asserts
+    the actual rule — EVERY card is sponsored — and cannot go stale. */
  ok('every card is rel=sponsored',
-    (await pg.locator('.find-cards .find-card[rel="sponsored noopener"]').count())===6);
+    (await pg.locator('.find-cards .find-card[rel="sponsored noopener"]').count())===cards,
+    'sponsored='+(await pg.locator('.find-cards .find-card[rel="sponsored noopener"]').count())+' of '+cards);
  /* 🚨 ONE DISCLOSURE PER ANSWER. This file's own audit records Wardrobe once
     showing FIVE on a single page; a second one under the wall would be the
     same accident of per-block rendering. */
