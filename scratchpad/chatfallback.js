@@ -413,8 +413,14 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
  /* 🚨 ONE DISCLOSURE PER ANSWER. This file's own audit records Wardrobe once
     showing FIVE on a single page; a second one under the wall would be the
     same accident of per-block rendering. */
- ok('exactly ONE affiliate disclosure on the answer',
-    (await pg.locator('.find-disc').count())===1);
+ /* ⚠️ COUNTS EVERY DISCLOSURE ON THE PAGE, NOT ONE CLASS. She saw the sentence
+    TWICE on one screen (row + footer) and asked for the extra one gone, so the
+    row's copy was removed and the footer keeps the job. Counting only
+    `.find-disc` would now pass at ZERO, which is the opposite failure — a
+    reviewer checks that a disclosure EXISTS and is findable. */
+ {const discs=await pg.evaluate(()=>[...document.querySelectorAll('.find-disc,.chat-disclosure')]
+    .filter(e=>e.offsetParent!==null&&/commission/i.test(e.textContent||'')).length);
+  ok('exactly ONE affiliate disclosure on the screen, never two',discs===1,'found '+discs);}
  ok('no debug panel without ?debug=1',(await pg.locator('.fdbg').count())===0);
  ok('no JS errors',errs.length===0,errs.join('|'));
  await ctx.close();}

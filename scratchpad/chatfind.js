@@ -111,7 +111,21 @@ const prod = (o) => Object.assign({
     ok('a never-wear piece is removed even though the finder confirmed every requirement',
        !/Shift Dress/i.test(html));
     ok('and the rest of the answer still shows', /Midi Dress/i.test(html));
-    ok('the disclosure rides with the products', /Some links may earn a commission/.test(html));
+    /* 🚨 REWRITTEN 2026-09-09 AT HER ASK: "please let's take off that extra
+       affiliate link wording too." Her screenshots showed the sentence TWICE on
+       one screen — once under the cards, once in the chat footer — so the row's
+       copy was removed and the footer keeps the job for the whole conversation.
+       ▶ THE RULE IS "THE CHAT IS ALWAYS DISCLOSED", NOT "the disclosure sits
+         inside the card block", so that is what this now asserts. It looks at
+         the whole screen rather than the message list, because that is what a
+         reviewer — and a woman — actually sees.
+       ⚠️ It must never become ZERO. That would be the opposite failure to the
+         one she reported, and a worse one. */
+    const discCount = await pg.evaluate(() =>
+      [...document.querySelectorAll('.find-disc,.chat-disclosure')]
+        .filter(e => /commission/i.test(e.textContent || '')).length);
+    ok('the chat carries exactly ONE disclosure, never two and never none',
+       discCount === 1, 'found ' + discCount);
     ok('every product link is rel="sponsored noopener"',
        (html.match(/rel="sponsored noopener"/g) || []).length >= 1);
   }

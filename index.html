@@ -11029,12 +11029,22 @@ function _findBlockHtml(data,req){
      `checks`, so `_findCard` renders name, store, price and photo and stops.
      Showing MORE is not claiming more, and that distinction is hers. */
 
-  /* ⚠️ ONE DISCLOSURE PER ANSWER, ASSERTED BY chatfallback. This file's own audit
-     records Wardrobe once showing FIVE on a single 7,300px page. Now that the
-     row is single, the one disclosure sits under it on every path that renders
-     a card — including the no-exact-match path, which previously rendered
-     sponsored links with none of its own. */
-  const DISC='<div class="find-disc">Some links may earn a commission.</div>';
+  /* 🚨 REMOVED 2026-09-09 AT HER ASK: "please let's take off that extra
+     affiliate link wording too." HER SCREENSHOTS SHOWED IT TWICE ON ONE
+     SCREEN — once under the cards and once in the chat footer — which is
+     exactly the accident this file's own audit records on Wardrobe, where five
+     appeared on a single 7,300px page.
+     ▶▶ THE ROW'S OWN COPY IS THE ONE THAT GOES, AND THE FOOTER STAYS. The
+       footer `.chat-disclosure` is one of the SIX documented disclosure places
+       and it covers the whole conversation, including the store names the
+       linkifier turns into links when no cards are shown at all. Deleting that
+       one would leave some answers with no disclosure; deleting this one leaves
+       every answer with exactly one.
+     ⚠️ SO THE CHAT IS STILL DISCLOSED, ALWAYS — chatfallback asserts exactly one
+       on the page rather than one of this class, so it cannot quietly become
+       zero. And her note stands: "I don't like reminding our user so much about
+       the commissions." */
+  const DISC='';
 
   /* ⭐⭐ THE ROW HAS TO LOOK LIKE IT MOVES — HER CATCH, 2026-09-09, ON THE LIVE
      BUILD: "I like how all of this is on one row so she won't miss anything

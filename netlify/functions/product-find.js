@@ -429,6 +429,57 @@ export default async (req) => {
       }
     }
 
+    /* ═══ THE DEARER HALF OF THE MARKET ══════════════════════════════════════
+       ⭐⭐ HER COMPLAINT, 2026-09-09, AND SHE WAS RIGHT: "This search never showed
+         any of the higher end stores... why no Shopbop, no Net a Porter, no
+         Saks, no Neimans and no Mytheresa. The search does not seem wide enough."
+       ▶▶ MEASURED, NOT ASSUMED: a plain "women's white eyelet skirt" returned 40
+         results and NOT ONE was from those shops. They are all in her table and
+         all eligible — they simply lose the popularity contest for the 40 slots
+         Google allows. SerpApi's own docs say the cap is Google's ("every
+         request returns the first page of results, around 40 items"), that `num`
+         cannot raise it and `start` cannot page past it, and that "multiple
+         requests with different parameters (price ranges, filters) would be
+         required to access broader product sets". So one search CANNOT span the
+         range. Two can.
+       🚨🚨 AND THE FLOOR IS DERIVED, NEVER TYPED, WHICH IS THE WHOLE DESIGN.
+         A fixed number was measured and it fails by category exactly as she
+         guessed when she asked about jewellery: $150 is the TOP of the skirt
+         market and the MIDDLE of the handbag market. Proven — at $150 a handbag
+         search returns Coach and Quince; at $600 it returns Neiman Marcus, Saks
+         and Bergdorf.
+         ▶ A TABLE OF FLOORS PER CATEGORY WOULD BE THE EIGHT-WORD `CUT` LIST
+           AGAIN: right for the categories someone thought of, silently wrong for
+           the rest. So the floor is read off the prices this very search already
+           returned — the app works out what "dear" means for whatever she asked
+           for, from data already paid for.
+       ⚠️ THE 90TH PERCENTILE, NOT THE MAXIMUM. One freak $5,000 listing would
+         put the floor above everything real and waste the call; p90 means "dearer
+         than nine out of ten things we just found" and cannot be dragged by a
+         single outlier.
+       ⚠️ IT IS POOLED, NEVER A REPLACEMENT — her standing rule since 2026-09-06,
+         and the reason her $7 TJ Maxx skirt still comes back. This ADDS the top
+         of the market to the bottom she already had.
+       ⚠️ AND IT COSTS A SECOND ROUND-TRIP, because the floor cannot be known
+         until the first search answers. Kept on a short leash for that reason. */
+    const priced = [...pool.values()]
+      .map(x => x.extracted_price).filter(v => typeof v === 'number' && v > 0)
+      .sort((a, b) => a - b);
+    if (priced.length >= 5 && queries.length) {
+      const p90 = priced[Math.min(priced.length - 1, Math.floor(priced.length * 0.9))];
+      const floor = Math.ceil(p90);
+      const DEAR_MS = 6000;
+      const [dear] = await settledBy([
+        get('https://serpapi.com/search.json?' + new URLSearchParams({
+          engine: 'google_shopping', q: queries[0], gl: 'us', hl: 'en', num: '60',
+          min_price: String(floor), api_key: KEY,
+        })).catch(() => null)], DEAR_MS);
+      for (const x of (dear && dear.shopping_results) || []) {
+        const id = x.product_id || x.title;
+        if (id && !pool.has(id)) pool.set(id, x);
+      }
+    }
+
     // --- 2. HER SHOPS ONLY, NO RESALE --------------------------------------
     const mine = [...pool.values()]
       .map(x => ({raw: x, store: matchStore(x.source, STORES)}))
