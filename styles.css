@@ -3711,8 +3711,28 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    the tolerance is what absorbs that, and it is deliberately small. */
 .ss-find{margin:0 0 14px}
 .ss-find-lead{font-size:12.5px;line-height:1.45;color:#6e6e6e;margin:0 2px 7px;letter-spacing:.01em}
-.ss-find-wait{height:338px;display:flex;align-items:center;justify-content:center}
-.ss-find-wait svg{width:26px;height:26px}
+/* 🚨🚨 HER CATCH FROM HER PHONE, 2026-09-09: "The spinning star is way too small.
+   Needs to be bigger and indicate more that shopping/searching is happening since
+   it takes a while." ▶ SHE IS RIGHT AND THE FIRST BUILD WAS PLAINLY WRONG — a
+   small gold outline star alone in a 338px reserved space says nothing, and this
+   search really does take 5-8 seconds.
+   ✅ IT IS NOW THE SIGNAL SHE ALREADY CHOSE FOR EXACTLY THIS WAIT: the chat's
+   SHOPPING star, her pink fill and her bolder gold frame, plus her own words.
+   ⚠️ SIZE IS THE ONLY THING THAT MOVES, and that is already the established
+   pattern — the CSS above says the waiting star is "one signal wearing three
+   sizes, never three different loaders". Same path, same keyframe, same reverse
+   direction, same colours. ▶ 54px because this star stands ALONE in a large
+   empty panel rather than inline beside a message; at the chat's 30px it read as
+   a speck, which is what she photographed. **If she wants it bigger or smaller
+   still, it is this one number.** */
+.ss-find-wait{height:338px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:14px}
+.ss-find-wait .find-load-star{width:54px;height:54px;flex:0 0 54px}
+/* ⚠️ HER WORDS, from `_FIND_STEPS`, and they rotate as the search goes on so it
+   reads as a stylist working rather than a spinner stuck. Italic and quiet, the
+   same voice as the chat's status line — this is reassurance, not a headline. */
+.ss-find-wait-t{font-size:13.5px;line-height:1.4;color:#6f6f6f;font-style:italic;
+  font-family:'DM Sans',sans-serif;text-align:center;padding:0 18px}
 .fc-body{padding:8px 9px 9px}
 /* ⚠️ 4-line clamp, the same lesson as the feed cards: a merchant name is not
    prose and an unclamped one made 650px of empty beige under a short row. */

@@ -22,7 +22,7 @@ doing; **only the testers change the ceiling.**
 |---|---|---|---|
 | 1 | ~~Hand the store brief to ChatGPT~~ ✅ **CLOSED 2026-09-08 — she sent her own roster instead. 122 shops, and she is DONE adding for now.** | — | ✅ done |
 | 2 | ~~Re-run her three chat messages~~ ✅ **CLOSED 2026-09-09 — she tested the live build herself, twice, and her verdict is *"The chat is now working with scrollable photo options!!!"*** | — | ✅ done |
-| 3 | ~~Shop your Style — wire the finder into it~~ ✅ **BUILT 2026-09-09, BOTH FORKS ANSWERED BY HER FIRST.** Real products lead, her six stay below; the default view searches too. `ssfind` **44** checks. | — | ✅ done |
+| 3 | ~~Shop your Style — wire the finder into it~~ ✅ **BUILT 2026-09-09, BOTH FORKS ANSWERED BY HER FIRST.** Real products lead, her six stay below; the default view searches too. `ssfind` **48** checks. | — | ✅ done |
 | 4 | ~~A save heart on `_findCard`~~ ✅ **BUILT 2026-09-09 — every card the finder shows now carries the EXISTING `_wlSaveBtn`, and a saved piece keeps its photograph.** | — | ✅ done |
 
 ### 🏛️ BUSINESS & LEGAL
@@ -271,7 +271,7 @@ sections had accumulated in one file and a session could read any of them first.
 the standing rule and it held all day.
 
 ### ▶ TEST STATE — THE ONLY CURRENT ONE (older "TEST STATE" blocks below are STALE, ignore them)
-✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 44 — NEW** ·
+✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 48 — NEW** ·
 chatfallback **98** (was 81) · copy **49** (was 48) · findprod **63** · chatfind **63** · affq **40** ·
 starpx **28** · honest · storepool 49 · untagged 21.
 ⚠️ **`searchtune` 80 / 1 — the SAME pre-existing `styles.css` failure, *"her voice: Lora upright 15.5 +
@@ -301,37 +301,108 @@ It was clearly done by hand in `products.json` and the converter never learned t
 flagged, because it is outside what she asked for today.**
 
 ### ▶▶ WHAT IS WAITING ON HER — THE WHOLE LIST, SHORTEST FIRST
-⭐⭐ **NEW AND TOP OF THE PILE AFTER THE OCT 1 CLOCK: HER EYE ON SHOP YOUR STYLE.** It now leads with
-real photographed products from her 132 shops. ▶ **Three things only she can judge: does the row land
-where she wants it · does the stylist's "so that is where I looked" line read as HER voice (it is
-CLAUDE'S copy and is marked in the code as a placeholder for hers) · does the wait feel right.**
+✅✅ **SHE ALREADY TESTED SHOP YOUR STYLE THE SAME EVENING AND IT PASSED — *"All of that is fine"* on the
+layout, *"Yes that is fine"* on the default view and the stylist's line.** ▶ **Her two faults are written
+up below: the star is FIXED, the shoe photos are MEASURED and are hers to rule on.**
+⏸️ **THE ONE THING GENUINELY WAITING ON HER NOW IS THE WISHLIST CONVERSATION** — she asked to talk it
+through rather than pick from options. **Ask her what a fitting room means to her.**
 1. ⏳ **THE OCT 1 CLOCK. The only thing on her entire board with a real deadline.** Do NOT pay the Your
    Fashion Friend renewal; close the Orange County business tax receipt **by email or mail, not in
    person**. Full wording in the sole-proprietorship section.
-2. ⭐ **HER RETEST OF THE CARDS** — the photos are no longer cropped, and the one thing only her eye can
-   judge is whether the thin white band above and below some photos bothers her on a real screen. **She
-   was told to expect it. If it does, the answer is hers, not a measurement.**
+2. ✅✅ **CLOSED 2026-09-09 — THE WHITE BAND IS A NON-ISSUE.** Her words: ***"I have not noticed a white
+   band on anything."*** ▶ **The 150x170 `contain` frame is right and this must not be re-asked.**
 3. ▶ **Nothing else is blocked on her.** The store list is closed, the chat has her verdict, and the
    affiliate path is waiting on USERS, not on a decision.
 
 ### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER — THE ONLY CURRENT LIST
-✅✅ **THE TOP TWO ARE DONE, 2026-09-09: the save heart AND Shop your Style.** Both are written up below.
-1. ⭐ **HER EYE ON SHOP YOUR STYLE — this is the next real step and it is HERS, not a build.** The screen
-   now leads with real photographed products from her 132 shops. **Only she can say whether the row lands
-   where she wants it, whether the stylist's "so that is where I looked" line reads as her voice, and
-   whether the wait feels right.** ▶ **That line is CLAUDE'S COPY and is marked in the code as a
-   placeholder for hers — her own wording has beaten every draft so far.**
-2. ⏸️ **THE FITTING-ROOM VIEW — parked by her, thinking kept, AND ITS BLOCKER IS NOW GONE.** Saved pieces
-   carry their photograph as of today, which is the thing the view needed. **Do not start it; do
-   resurface it.** The recommendation (ONE list, TWO views, never a second list) is in the master to-do.
-3. ▶ **THE WISHLIST THUMBNAIL — small, and it is the one fork left open from the save heart.** The photo
-   is stored and nothing renders it. **Offer it; do not build it unilaterally** (only finder-saved rows
-   have an image, so the list would look ragged — half rows with photos, half without).
-4. ▶ **MORE SEARCHES PER QUESTION.** `buildQueries` fires up to 4 and her real questions often fire ONE.
+✅✅ **THE TOP TWO ARE DONE AND LIVE, 2026-09-09: the save heart AND Shop your Style** — and she has
+already tested Shop your Style on her phone and passed it. Both are written up below.
+1. ⏸️ **THE WISHLIST / FITTING-ROOM CONVERSATION — HERS, AND SHE ASKED FOR IT EXPLICITLY.** Offered four
+   build options she chose ***"Neither yet — let's talk it through more."*** ▶ **So ASK HER WHAT A
+   FITTING ROOM MEANS TO HER and design to that; do NOT re-propose the same menu.** The photograph is
+   already stored on every finder-saved piece, so nothing is lost by waiting. **The standing
+   recommendation — ONE list, TWO views, never a second list — is in the master to-do, with her own
+   words.**
+2. ▶ **THE SHOE PHOTOS — HER RULING NEEDED, AND THE MEASUREMENT IS ALREADY DONE.** 9-10% of the card is
+   the shoe; 12 real tops measure ~100%. **Three levers with real costs, written up below.** 🚨 **A
+   blanket zoom is NOT one of them — it would crop real garment off every top, which is her own rule
+   broken on the majority of cards to help a minority.**
+3. ▶ **MORE SEARCHES PER QUESTION.** `buildQueries` fires up to 4 and her real questions often fire ONE.
    Three or four would multiply the pool for ~5-7¢. **Cheap, unstarted, and hers to say yes to.**
-5. ▶ **TEACH `products-from-csv.js` TO DEACTIVATE A ROW WHOSE SHOP IS GONE, instead of refusing the whole
+4. ▶ **TEACH `products-from-csv.js` TO DEACTIVATE A ROW WHOSE SHOP IS GONE, instead of refusing the whole
    file.** Not urgent — but it is what stops `curated` being permanently red, and a permanently-red suite
    is how a false green happens. **See the test-state block above for the full finding.**
+⚠️ **AND ONE THING STILL WAITING ON HER EYE, UNPROMPTED: the stylist's own line on the no-ask view (*"so
+that is where I looked"*) IS CLAUDE'S COPY and is marked in the code as a placeholder for hers.** She
+said it is fine; **her own wording has beaten every draft so far, so offer it once more, don't force it.**
+
+## ⭐⭐ SHE TESTED SHOP YOUR STYLE THE SAME EVENING — HER VERDICT AND HER TWO FAULTS (2026-09-09)
+▶▶ **SHE OPENED IT ON HER PHONE AND SEARCHED *"Tan sandals"*. THE BUILD ITSELF PASSED:** her ruling (a)
+is confirmed working from her own screenshot — the real photographed products lead, *"48 pieces · swipe
+→"*, and her six named picks (Strappy Tan Heeled Sandals · Tan Wedge Sandals) sit underneath.
+✅ **HER ANSWERS TO THE FOUR THINGS PUT TO HER: (1) the layout — *"All of that is fine."* (2) the default
+view and the stylist's line — *"Yes that is fine."* (3) the wishlist photos — SHE WANTS TO TALK, see
+below. (4) THE WHITE BAND IS CLOSED: *"I have not noticed a white band on anything."***
+🚨 **SO THE 2026-09-09 PHOTO-BAND QUESTION IS ANSWERED AND SHOULD NOT BE RE-ASKED.** The 150x170
+`contain` frame is right, and the band nobody could rule on but her is a non-issue on a real screen.
+
+### ✅ FAULT 1, FIXED: THE WAITING STAR WAS A SPECK
+▶▶ **HER WORDS: *"The spinning star is way too small. Needs to be bigger and indicate more that
+shopping/searching is happening since it takes a while."*** ⚠️ **SHE IS RIGHT AND THE FIRST BUILD WAS
+PLAINLY WRONG** — a small gold outline star alone in a 338px reserved panel says nothing, and the search
+really does take 5-8 seconds.
+✅ **IT IS NOW THE SIGNAL SHE ALREADY CHOSE FOR EXACTLY THIS WAIT:** the chat's SHOPPING star — her pink
+fill `#EC4899`, her bolder gold frame `#D4AF37` at 1.5, the same path, the same `spin` keyframe reversed
+— **at 54px**, plus **HER OWN WORDS from `_FIND_STEPS`**, rotating on the same 3.5s beat: *"Looking
+through all the shops..."* → *"Checking what's actually in stock..."*
+⚠️ **SIZE IS THE ONLY THING THAT DIFFERS, and that is already the approved pattern** — the CSS says the
+waiting star is *"one signal wearing three sizes, never three different loaders"*. **54px because it
+stands ALONE in a large panel rather than inline beside a message; at the chat's 30px it read as a speck,
+which is what she photographed.** ▶ **If she wants it bigger or smaller still, it is ONE number.**
+⚠️⚠️ **NO THINKING DOTS HERE.** Dots mean THINKING, the turning star means SHOPPING — **her** distinction,
+and adding dots would collapse the two states she deliberately split.
+⭐ **`ssfind` 44 → 48, and the two new checks were PROVEN TO BITE:** shrinking the star back to 26px turns
+*"the waiting star is BIG, not the speck she photographed"* red naming `star=26.0px`; removing the words
+turns *"it SAYS what is happening, in her words"* red.
+
+### 🚨🚨 FAULT 2, MEASURED AND **NOT** FIXED — AND THE MEASUREMENT IS THE USEFUL PART
+▶▶ **HER WORDS: *"Some of the shoes have bad photos - can't really see the shoe."*** ⚠️ **MEASURED OFF
+HER OWN SCREENSHOT rather than guessed** — the shoe's real bounding box inside the card's photo frame:
+| the piece | fills width | fills height | **of the photo area** |
+|---|---|---|---|
+| Cole Haan Ensley slide (Zappos) | 37% | **25%** | **9%** |
+| Dolce Vita Dom sandal (Bloomingdale's) | 40% | **25%** | **10%** |
+| **12 real TOPS, measured from the captured fixture** | 81-100% | **100%** | **~100%** |
+▶▶ **SO IT IS NOT THE FRAME AND IT IS NOT `contain` — IT IS THE RETAILER'S OWN PHOTOGRAPH, AND IT IS
+CATEGORY-DEPENDENT.** Tops fill their thumbnail completely. **Shoe photos arrive with ~90% white margin
+baked in**, and `contain` faithfully reproduces that margin.
+🚨 **THE OBVIOUS FIX IS WRONG AND MUST NOT BE SHIPPED: a blanket CSS zoom.** Zooming enough to crop a
+sandal's padding would crop **real garment** off every top, which measures 100% — **that is her "nothing
+is ever cropped" rule, broken, on the majority of cards to help a minority.**
+⚠️⚠️ **AND WE CANNOT TELL THEM APART IN THE BROWSER: the thumbnails are `encrypted-tbn*.gstatic.com` and
+send no CORS headers, so a canvas that tried to measure the padding is TAINTED and can read no pixels.
+PROVEN, not assumed** — a probe was written and every read failed.
+▶ **THE LEVERS THAT ACTUALLY EXIST, none built, all hers to choose:** **(a)** bigger cards — the shoe
+goes from ~37px to ~46px tall, but fewer cards fit a swipe, **which runs against her own "as many as
+possible"** · **(b)** proxy each image through a Netlify function so the padding can be measured and
+trimmed — a real fix, real work, and it adds latency to every card · **(c)** accept it, exactly as with
+the Star of the Week sunglasses.
+💡 **AND THE HONEST PARALLEL: THIS IS THE `px2` PROBLEM AGAIN — a wide, short object photographed small
+in a tall frame.** She solved that one herself by stacking two photos. **Here there is only one photo,
+and nobody has looked at it: the finder shows hundreds of unknown photographs a minute.**
+
+### ⏸️ THE WISHLIST PHOTOS — SHE ASKED TO TALK, NOT TO BUILD (2026-09-09)
+▶ **HER WORDS: *"Ok on wishlist but let's talk about the wishlist page having photos or I think you
+mentioned thumbnails?"*** — and, offered four options, she chose ***"Neither yet — let's talk it through
+more."*** ⚠️ **SO DO NOT BUILD EITHER. The photograph is stored on every finder-saved piece already, so
+nothing is lost by waiting.**
+▶ **WHAT SHE WAS TOLD, so it is not re-explained from scratch:** only finder-saved rows carry an image
+(Edit picks, wardrobe shelves and the Star do not), **so plain thumbnails would leave her list RAGGED —
+some rows with a picture, some with a gap** — which reads as broken rather than sparse.
+⭐ **THE RECOMMENDATION STILL STANDS AND IS STILL HERS TO OVERRULE: it is not a second list, it is a
+second VIEW.** The row view she has, plus a fitting-room GRID OF PHOTOGRAPHS big enough to judge side by
+side. **The difference she is feeling is COMPARISON, not category.** ▶ **The next session should ASK HER
+what a fitting room means to her and design to that, rather than propose options again.**
 
 ## ✅✅✅ SHOP YOUR STYLE NOW SHOWS REAL PRODUCTS — BUILT 2026-09-09, HER ITEM 3, THE BIG ONE
 ▶▶ **HER WORDS ON IT: *"I think that will make an enormous difference."*** ✅ **The finder is wired in.**
@@ -423,7 +494,7 @@ the check exists, and it is the argument for writing the check before believing 
 these rules"), obeyed rather than skipped. The `find` field adds ~600 chars and the worst case still
 clears style-ai's 32KB hard cap with a real margin, **and all 132 stores still survive the shrink
 ladder** (her SORT, NEVER TRIM rule).
-**`scratchpad/ssfind.js` — 44 checks, 0 failures.** It serves the real files off disk, **styles.css
+**`scratchpad/ssfind.js` — 48 checks, 0 failures.** It serves the real files off disk, **styles.css
 included, with a guard check proving the sheet is applied before any number is believed** (the
 2026-09-09 `copy` lesson). ▶ **THREE HARNESS TRAPS ARE WRITTEN INTO IT, because each one passed or hung
 on perfectly correct code:** setting `window._ssAsk` then calling `_openShopStyleNow` measures NOTHING
@@ -1367,7 +1438,7 @@ alternative to price against is **SearchApi** (same $25, ~10× the searches).
 ▶ **THE FILES:** `netlify/functions/product-find.js` (server, holds the key) · `netlify/functions/lib/
 find-products.js` (the finder) · `netlify/functions/lib/store-domains.js` (**generated**) ·
 `scripts/build-store-domains.js` · `scripts/lib/stores.js` (the ONE `STORES` reader) ·
-`scratchpad/findprod.js` **63** · `scratchpad/chatfind.js` **63** · `scratchpad/ssfind.js` **44** ·
+`scratchpad/findprod.js` **63** · `scratchpad/chatfind.js` **63** · `scratchpad/ssfind.js` **48** ·
 `scratchpad/findlive.js` (live bench).
 ⭐⭐ **AND IT NOW SERVES TWO SURFACES, 2026-09-09: THE STYLIST CHAT AND SHOP YOUR STYLE** — through the
 ONE `_findBlockHtml` builder and the ONE `_findFetch`, so there is exactly one `product-find` call site
@@ -1972,8 +2043,8 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **NEVER NAME A PRODUCT WE DID NOT FIND** | **the stylist may not name a product, price, size or link AT ALL — the ability is removed, not forbidden** | **every card carries a real verified offer from `find-products.js`** | **chatfallback 35** | ✅ **BUILT 2026-09-09, after she was shown four invented dresses** |
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 | **Never say "your shops" / "your stores"** | **status lines, empty states, row headers — the phrase is absent, asserted** | n/a — the shelves write no such prose | **chatfallback 81 · copy 69** | ✅ **her rule, 2026-09-09: *"Clients want me to check all stores"*** |
-| **A product photo is never cropped** | **the chat's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 49** | ✅ **her catch 2026-09-09: *"Can't see top of dress or head of the model"*** |
-| **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 44 · chatfallback 98** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
+| **A product photo is never cropped** | **the chat's AND Shop your Style's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 49** | ✅ **her catch 2026-09-09, and SHE CLOSED THE BAND QUESTION THE SAME DAY: *"I have not noticed a white band on anything."*** ⚠️ **The shoe-photo complaint is NOT this rule failing — it is the retailer's own margin, measured at 9-10% fill. A zoom to fix it would break this row.** |
+| **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 48 · chatfallback 98** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
 | **A SAVED ROW MAY CLAIM NO MORE THAN THE CARD IT WAS SAVED FROM** | **`_findCard`: a CHECKED card saves `exact` (real product page → "Shop it" + price); a BROWSE card saves store+search (→ "Find it", no price)** | **`renderWishlist` labels off that same flag, and rebuilds the search link every render** | **chatfallback 98, §15 — and both checks proven to bite** | ✅ **BUILT 2026-09-09 with the save heart. It is her 2026-09-06 rule one surface further out: a price and "Shop it" on a row that lands on a RESULTS PAGE is the "generic store search dressed as a find" she banned.** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
 THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude

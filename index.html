@@ -6712,9 +6712,27 @@ async function _shopStyleGen(){
          them — which would shove the whole page down if the space were not
          reserved. `.ss-find-wait` holds a card's height from the first paint. */
     if(_ssFind&&_ssFind.item){
+      /* 🚨🚨 HER CATCH FROM HER PHONE, 2026-09-09: "The spinning star is way too
+         small. Needs to be bigger and indicate more that shopping/searching is
+         happening since it takes a while."
+         ▶ SHE IS RIGHT AND THE FIRST BUILD WAS PLAINLY WRONG: a small gold outline
+           star alone in a 338px reserved space says nothing at all, and this
+           search really does take 5-8 seconds.
+         ✅ SO IT IS NOW THE SIGNAL SHE ALREADY APPROVED FOR EXACTLY THIS WAIT —
+           the chat's SHOPPING star (`_starSpin('find-load-star')`: her pink fill,
+           her bolder gold frame, the same path, the same reverse spin) plus HER
+           OWN WORDS from `_FIND_STEPS`, which rotate as the search goes on.
+         ⚠️ THE WORDS ARE `_FIND_STEPS`, NOT A SECOND COPY — "Looking through all
+           the shops..." then "Checking what's actually in stock...". Her 2026-09-09
+           rule that the phrase "your shops" never appears is therefore obeyed here
+           for free, and can only be broken in one place.
+         ⚠️ NO THINKING DOTS HERE. Dots mean THINKING, the turning star means
+           SHOPPING — her distinction, 2026-09-09, and adding dots would collapse
+           the two states back into one. */
       html+='<div id="ssFindWrap" class="find-block ss-find">'
         +(!_ssAsk&&_ssFindLead(parsed)?'<div class="ss-find-lead">'+_esc(_ssFindLead(parsed))+'</div>':'')
-        +'<div class="ss-find-wait">'+_SHOP_STAR_SVG+'</div></div>';
+        +'<div class="ss-find-wait">'+_starSpin('find-load-star')
+        +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
     }
     html+='<div class="shop-grid">';
     _keep.forEach(function(item){
@@ -6757,7 +6775,17 @@ async function _shopStyleGen(){
 async function _ssFindRun(req){
   var wrap=document.getElementById('ssFindWrap');
   if(!wrap)return;
+  /* ▶ The words move on as the wait goes on, so it reads as a stylist working
+     rather than a spinner stuck. Same 3.5s beat as the chat's status line.
+     ⚠️ ONE interval, cleared on EVERY return path below — a timer left running
+     against a removed node is how a "harmless" leak becomes a stuck screen. */
+  var _step=0,_tick=setInterval(function(){
+    var t=document.querySelector('#ssFindWrap .ss-find-wait-t');
+    if(!t){clearInterval(_tick);return;}
+    _step++;t.textContent=_FIND_STEPS[Math.min(_step,_FIND_STEPS.length-1)];
+  },3500);
   var fr=await _findFetch(req,true);
+  clearInterval(_tick);
   /* ⚠️ She may have left the screen while it searched. Re-read the node rather
      than trusting the one captured above: a refresh replaces the whole block, so
      writing into a detached element would silently do nothing. */

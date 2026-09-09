@@ -200,6 +200,39 @@ const dressed = await pg.evaluate(() => {
 });
 ok('styles.css is actually applied (else every number below is a default)',
    dressed !== 0 && dressed !== -1, 'wait height=' + dressed);
+/* 🚨🚨 HER CATCH, 2026-09-09: "The spinning star is way too small. Needs to be
+   bigger and indicate more that shopping/searching is happening since it takes a
+   while." ▶ THESE PIN THE THREE THINGS SHE ASKED FOR — big, turning, and SAYING
+   what is happening — and they pin them as RULES, not as the exact numbers, so
+   tuning the size stays free while losing the signal does not. */
+const waiting = await pg.evaluate(() => {
+  const w = document.querySelector('.ss-find-wait');
+  const st = w && w.querySelector('.find-load-star');
+  const t = w && w.querySelector('.ss-find-wait-t');
+  if (!st) return { star: 0 };
+  const cs = getComputedStyle(st), pa = getComputedStyle(st.querySelector('path'));
+  return { star: st.getBoundingClientRect().width, anim: cs.animationName,
+           dir: cs.animationDirection, fill: pa.fill, stroke: pa.stroke,
+           words: t ? (t.textContent || '').trim() : '' };
+});
+console.log('     [measured] waiting star: ' + waiting.star.toFixed(0) + 'px, "' + waiting.words + '"');
+ok('the waiting star is BIG, not the speck she photographed',
+   waiting.star >= 44, 'star=' + waiting.star.toFixed(1) + 'px');
+/* ⚠️ IT IS THE SAME SIGNAL SHE ALREADY CHOSE, NOT A NEW LOADER — her pink fill,
+   her bolder gold frame, and the one `spin` keyframe every wait in the app uses,
+   turning the same way. Only the SIZE is allowed to differ per surface. */
+ok('...and it is HER star: pink fill, gold frame, the app\'s one spin, reversed',
+   /rgb\(236, 72, 153\)/.test(waiting.fill) && /rgb\(212, 175, 55\)/.test(waiting.stroke) &&
+   waiting.anim === 'spin' && waiting.dir === 'reverse',
+   JSON.stringify(waiting));
+/* ▶ "indicate more that shopping/searching is happening" — the words are the
+   half that does that, and they are HERS, from the one _FIND_STEPS list. */
+ok('...and it SAYS what is happening, in her words',
+   /looking through all the shops/i.test(waiting.words), waiting.words);
+/* 🚨 HER BRAND RULE, 2026-09-09: "I don't want it to ever say your stores." It is
+   obeyed here for free because the words come from the ONE list — asserted so a
+   future second copy on this surface cannot reintroduce it. */
+ok('...and never says "your shops"', !/your (shops|stores)/i.test(waiting.words), waiting.words);
 
 /* 🚨🚨 HER RULE: NOTHING MAY JUMP. The six paint in ~1s, the search takes 5-8s,
    so the row's space must be reserved from the first paint or the whole page
