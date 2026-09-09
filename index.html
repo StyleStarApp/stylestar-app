@@ -1264,7 +1264,17 @@
         <button class="chat-chip" onclick="document.getElementById('chatPhotoIn').click()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><rect x="3" y="7.5" width="18" height="12" rx="2.6"/><circle cx="12" cy="13.3" r="3.2"/></svg>Send a photo for advice</button>
       </div>
     </div>
-    <div class="chat-privacy">&#128274; Private to you. Your photos and messages go to our AI stylist to be understood in the moment. Style Star never stores them, and no one here reads them. Your chat history stays on your own device.</div>
+    <!-- ⭐ COLLAPSED 2026-09-09 AT HER ASK: "I do want to fix the privacy
+         paragraph. The chat space is very crowded."
+         ▶▶ 46 WORDS SAT ABOVE THE INPUT ON EVERY SCREEN, FOREVER. Her own
+           screenshots show it taking roughly a third of the phone under every
+           answer — plumbing standing where clothes should be.
+         ⚠️ IT IS NOT DELETED, AND THAT IS DELIBERATE: it is a promise about her
+           PHOTOS, and this app's own privacy lesson is that the wording has to
+           be literally true and findable. One tap still shows every word.
+         ▶ `<details>` rather than a scripted toggle: native, keyboard and
+           screen-reader friendly, and no JavaScript to break. -->
+    <details class="chat-privacy"><summary>&#128274; Private to you</summary>Your photos and messages go to our AI stylist to be understood in the moment. Style Star never stores them, and no one here reads them. Your chat history stays on your own device.</details>
     <div class="chat-disclosure">Some links may earn a commission.</div>
     <div id="chatFresh" style="text-align:center;margin:-2px 0 4px"><button class="chat-fresh" onclick="askClearChat()">Start a fresh conversation</button></div>
     <div class="chat-input-wrap">
@@ -10173,7 +10183,18 @@ function openChat(fromLook){
         const rz=document.createElement('div');rz.className='chat-resume';
         rz.innerHTML='<span>Picking up where you left off</span>';
         msgContainer.appendChild(rz);
-        if(!fromLook)_setReturnSuggestions();
+        /* 🚨 THE RETURN CHIPS ARE GONE, HER ASK 2026-09-09: "The chat space is
+           very crowded and maybe remove the starter chips too."
+           ▶▶ REMOVED HERE ONLY, NOT EVERYWHERE, AND THE DISTINCTION IS THE
+             POINT: a woman opening the chat for the FIRST time has no idea what
+             to ask, and the "Try asking" chips are her way in — that is her
+             mum's 2026-07-26 lesson, where a newcomer could not find a feature
+             with no visible route to it. But a woman RESUMING a conversation
+             already knows what to do, and four chips between her history and
+             her next question just push the conversation off the screen. Which
+             is exactly what her screenshot showed.
+           ⚠️ So the fresh-chat chips stay. Do not "tidy" them away as well. */
+        // (return chips deliberately not shown — see above)
       }
     }else if(!fromLook){
       _addGreeting();

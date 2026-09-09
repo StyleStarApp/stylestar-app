@@ -874,7 +874,19 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
 .chat-sug-chips{display:flex;flex-wrap:wrap;gap:6px}
 .chat-chip{padding:8px 14px;border-radius:20px;border:1.5px solid #ebebeb;background:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#666;cursor:pointer;transition:all 0.2s;white-space:nowrap}
 .chat-chip:hover{border-color:#1a1a1a;color:#1a1a1a}
-.chat-privacy{font-size:11px;color:#8a8a8a;text-align:center;padding:4px 0}
+/* ⭐ ONE LINE, NOT A PARAGRAPH — her ask 2026-09-09, "the chat space is very
+   crowded". The full promise is one tap away and every word of it is still
+   there; what changed is that it no longer occupies a third of her screen
+   under every single answer.
+   ⚠️ Contrast is UNCHANGED at #8a8a8a. The disclosure lesson applies here too:
+   a notice nobody can read is not a notice, and making it quieter to save space
+   would be solving the wrong half. */
+.chat-privacy{font-size:11px;color:#8a8a8a;text-align:center;padding:4px 0;line-height:1.5}
+.chat-privacy summary{cursor:pointer;list-style:none;display:inline-block}
+.chat-privacy summary::-webkit-details-marker{display:none}
+.chat-privacy summary::after{content:' \203A';display:inline-block;transition:transform .15s}
+.chat-privacy[open] summary::after{transform:rotate(90deg)}
+.chat-privacy[open]{padding-bottom:6px}
 /* Sits directly under the privacy line -- the stylist links to stores inside her
    answers, so the disclosure belongs on this screen too. Deliberately NOT quieter
    than the line above it: this is a legal notice that has to be legible, and the
