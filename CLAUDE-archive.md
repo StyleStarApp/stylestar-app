@@ -18101,3 +18101,99 @@ saves money too, since every query is a paid call. ▶ **THAT IS THE NEXT PIECE 
 paid plan · look-ups 6 → 4 in one round · a straggling look-up no longer costs 12s.
 ⚠️ **HER OWN 2026-09-06 DESIGN ALREADY NARRATES THE WAIT** — warm reply immediately, then *"Looking
 through your shops…"*. **The wait is not silent. It is still over the 5-8s that design assumed.**
+
+
+---
+
+## 📦 ARCHIVED 2026-09-09 — SUPERSEDED STATUS BLOCKS FROM THE 2026-09-08/09 SESSIONS
+⚠️ **NOTHING HERE IS DELETED AND NOTHING HERE IS WRONG — every one of these was TRUE ON THE DAY.** They
+were moved because the live file had accumulated **three separate "TEST STATE" blocks and three separate
+"WHAT IS WAITING ON HER" blocks**, so a new session could read any of them first and act on a list that
+had already been finished. ▶ **`CLAUDE.md` now carries ONE of each, at the very top, under "WHERE WE
+LEFT OFF".**
+🚨 **THE TEST APPLIED, which is the file's own: is this what HAPPENED, or what is TRUE RIGHT NOW?** Only
+superseded STATUS moved. **No rule she gave, no scope decision and no live operational status is in
+here** — those never archive, and that limit is why this move is small.
+
+### ▶ TEST STATE AS THIS SESSION ENDED — READ BEFORE BELIEVING A RED SUITE
+✅ **GREEN:** chatfind 61 · chatfallback **35** · findprod 56 · stylistjudge 33 · storepool 49 · affq 40 ·
+affwrap 35 · untagged · feedshelf.
+⚠️ **THREE PRE-EXISTING FAILURES, ALL VERIFIED AGAINST CLEAN `HEAD` IN A WORKTREE, NONE MINE:**
+- `searchtune` **80 checks, 1 failure** — *"her voice: Lora upright 15.5 + gold bolds"*, a `styles.css`
+  check. **Identical on clean `HEAD`.** `styles.css` was not touched this session.
+- `curated` — *"good CSV converts clean"* fails on **Madewell · COS · Marine Layer**, which is simply
+  **the consequence of her closing the roster at 122 on 2026-09-08**; those shops are gone, so their
+  catalog rows no longer resolve. ▶ **Not a bug — it is the deactivation this file already recorded.**
+  Also *"every family sees ≥3 jeans"* (Professional gets 2). **Both identical on clean `HEAD`.**
+- `curated` — *"never ruffles" removes the ruffled item* — **THE KNOWN FLAKE**, still time/state
+  dependent, still in the master to-do to be fixed with an isolated context. **Verify against `HEAD`
+  before believing it; never loosen it.**
+
+### ▶▶ WHAT IS WAITING ON HER
+1. ⭐ **HER RETEST OF THE CHAT — and this time the question is "did you get cards?"** Nothing else gets
+   built on chat until she answers.
+2. ⏳ **THE OCT 1 CLOCK — the only genuinely time-sensitive thing on her whole board.** Do NOT pay the
+   Your Fashion Friend renewal; close the county receipt by email or mail.
+3. ✅ **SerpApi is NOT a constraint: 932 searches left, measured 2026-09-09 via the free account probe.**
+   The old "34 left" note is stale. **Testing is affordable again** — but still build against
+   `scratchpad/fixtures/`, never her live allowance.
+
+### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER (unchanged except item 1, which today's removal already did)
+1. ~~Cut the query count~~ — **partly done for free.** Removing the stylist's own search removed up to
+   three calls per answer. `buildQueries` still fires up to four finder searches; **measure the real
+   remaining wait on her retest before cutting further.**
+2. ✅✅ **BUILT AND LIVE 2026-09-09 — THE BROWSE WALL.** Her words on seeing the plan: *"i would
+   definitely like a scrollable wall, as full as possible."* **The cap is gone: the finder now returns
+   the WHOLE pool from her shops and every one renders as a swipeable card.** See "THE BROWSE WALL"
+   below for what shipped and the one design fork she approved. ▼ *The original entry, kept because it
+   is the measurement that named the blocker:*
+   **MANY CARDS, LAZY LOOK-UPS** — her explicit ask, said three times now, and **the thing she was
+   actually complaining about on 2026-09-09**: *"I thought by paying for the search service it would
+   land on a full selection of photos with tappable links that our user could slide through."*
+   🚨🚨 **THE MEASUREMENT THAT NAMES THE REAL BLOCKER, TAKEN 2026-09-09: `MAX_VERIFY = 4` IN
+   `product-find.js`.** The finder searches 2-4 queries, filters to her shops — and then **only ever
+   looks up the FIRST FOUR**, so only four can ever become cards, and after verification she typically
+   sees TWO OR THREE. ▶▶ **A WALL OF PHOTOS IS STRUCTURALLY IMPOSSIBLE TODAY. It is not a tuning
+   problem, it is a hard cap.**
+   ✅ **AND THE POOL IS ALREADY PAID FOR: one search returns ~40 products, ~12 in her shops, and all 12
+   ALREADY CARRY photo + price + store + title** (re-measured against `scratchpad/fixtures/`). **They
+   are fetched and then thrown away.**
+   ⚠️⚠️ **THE HONEST SELF-CRITICISM THAT BELONGS WITH THIS, BECAUSE IT IS THE REASON SHE IS
+   FRUSTRATED: she gave this decision on 2026-09-08, it was recorded, it was written into the plan as
+   item 2 — AND THE STRICTEST POSSIBLE OPPOSITE WAS BUILT AND SHIPPED INSTEAD.** Her honesty rule is
+   about what the app **CLAIMS**; it was implemented as a filter on what she **SEES**. She drew that
+   exact distinction herself — *"it changes how MANY pieces she sees, not what the app CLAIMS about
+   them."* ▶ **Same family as the eight-word `CUT` list: her words in, a stricter interpretation out,
+   and no flag on the difference.**
+   ▶ **THE BUILD: return the unverified pool too, render every one of them as a card, let the verified
+   ones lead and say so, and spend a look-up ONLY when she taps.** ⚠️ The look-up is still the only
+   source of a buyable, affiliate-wrappable link (0 of 12 raw results had one), so **an un-looked-up
+   card must resolve its link ON TAP** before it can go anywhere.
+3. **THE DELEGATED CUT** (she ruled yes): when she hands over the choice, the stylist's own silhouette
+   becomes a real search requirement, and the stylist says out loud that it was her pick.
+   ⚠️ **STILL LIVE AND SEEN AGAIN TODAY:** her *"bridal shower in October in Florida. A brunch."*
+   produced a marker asking for `colour=bright; cut=fitted midi; fabric=lightweight` — **none of which
+   she said** — so the code correctly stripped all three and searched plain "women's dress" while the
+   prose promised bright, fitted and lightweight. **The prose still writes cheques the search will not
+   cash.**
+4. **THEN SHOP YOUR STYLE**, same engine.
+
+### ▶▶ WHAT IS WAITING ON HER — AND IT IS ALMOST NOTHING
+1. ⭐ **HER VERDICT ON THE CHAT.** She is testing it now. **Nothing else should be built on top until she
+   reports back.**
+2. ⏳ **THE OCT 1 CLOCK — the only thing on her whole board with a real deadline.** Do NOT pay the Your
+   Fashion Friend renewal.
+3. ▶ **THE $75 SPEED ADD-ON: DECIDE NOTHING YET.** See above. Cut the query count first.
+4. ✅ **NOT the store list — she closed it at 122 and does not want more until an affiliate approval.**
+5. ✅ **NOT store descriptions or scores — measured: the model already knows her shops.**
+
+### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER
+1. **CUT THE QUERY COUNT** (speed + money, and it settles the $75 question).
+2. **MANY CARDS, LAZY LOOK-UPS** — her explicit ask: *"the more options she can browse, the better."*
+   One search already carries ~40 products with title, store, price and photo; only the look-up costs,
+   and it is the only source of a buyable link, so an un-looked-up card must resolve its link ON TAP.
+3. **THE DELEGATED CUT** (ruled yes): when she asks *"what's in style now"* the stylist's own silhouette
+   becomes a real search requirement, and the stylist says out loud that it was her pick.
+4. **THEN SHOP YOUR STYLE**, same engine. **THEN the Wardrobe shelves — and that is what finally retires
+   the 107-item spreadsheet**, which she has been asking about and which only survives because those
+   shelves still read it.

@@ -22,7 +22,8 @@ doing; **only the testers change the ceiling.**
 |---|---|---|---|
 | 1 | ~~Hand the store brief to ChatGPT~~ ✅ **CLOSED 2026-09-08 — she sent her own roster instead. 122 shops, and she is DONE adding for now.** | — | ✅ done |
 | 2 | ~~Re-run her three chat messages~~ ✅ **CLOSED 2026-09-09 — she tested the live build herself, twice, and her verdict is *"The chat is now working with scrollable photo options!!!"*** | — | ✅ done |
-| 3 | **Shop your Style** — wire the finder into it. She called it *"an enormous difference."* | Claude | ▶ not started |
+| 3 | **Shop your Style** — wire the finder into it. She called it *"an enormous difference."* | Claude | ▶ **NEXT, and it is now the biggest single thing on the board** |
+| 4 | **A save heart on `_findCard`** — nothing the finder shows can be saved. Small, and it is the piece the fitting-room idea needs. | Claude | ▶ not started |
 
 ### 🏛️ BUSINESS & LEGAL
 ✅ **THE WHOLE LEGAL CHAIN IS NOW DONE:** LLC · EIN · trademark filed · **business bank account, credit
@@ -154,7 +155,8 @@ that makes any future number mean something.**
   `{id, name, store, search, url, price}`, and `_wlSaveBtn` is already on the shop rows, the shop cards,
   the wardrobe shelves and the Star of the Week. ▶▶ **SHE ALREADY HAS THE FITTING ROOM. IT IS CALLED THE
   WISHLIST.**
-  ▶ **THE REAL GAP, AND IT IS SMALL AND SPECIFIC: `_findCard` HAS NO SAVE HEART.** Everything the finder
+  ▶ **THE REAL GAP, AND IT IS SMALL AND SPECIFIC: `_findCard` HAS NO SAVE HEART.** *(now item 4 in the
+  table at the top of this file.)* Everything the finder
   shows — including the 24-card browse wall built the same day — cannot be saved. **The build is: put
   the EXISTING `_wlSaveBtn` on `_findCard`, and store `image` on the wishlist entry** (it currently keeps
   name/store/search/url/price but no photo), so a saved piece keeps its picture.
@@ -248,6 +250,46 @@ that makes any future number mean something.**
   $0. **NOT A BUG**: commission data stays out of the app on purpose. Recorded so nobody "fixes" it.
 
 ---
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-09, END OF A LONG DAY. READ THIS BLOCK FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is the day's detail, newest first, and a few
+older status blocks that were true when written and are now HISTORY — if a line further down contradicts
+this one, THIS ONE WINS.** ▶ **That is why it exists: three separate "TEST STATE" and "WAITING ON HER"
+sections had accumulated in one file and a session could read any of them first.**
+
+### ✅ EVERYTHING IS ON `main` AND VERIFIED LIVE BY FETCHING stylestar.app
+`4e7ce2d` → `c17adb3` → `89c6da6` → `631a803` → `cb433ad` → **`f74ddf3`**.
+⚠️ **VERIFIED BY FETCHING THE SERVED FILES AND FINDING THE MARKERS, never by the deploy badge.** That is
+the standing rule and it held all day.
+
+### ▶ TEST STATE — THE ONLY CURRENT ONE (older "TEST STATE" blocks below are STALE, ignore them)
+✅ **GREEN:** chatfallback **81** · copy **48** · findprod **63** · chatfind **63** · storepool 49 ·
+affq 40 · untagged 21 · starpx 28 · curated 65.
+⚠️ **`searchtune` 80 checks / 1 failure — PRE-EXISTING, NOT A REGRESSION.** It is the `styles.css` check
+*"her voice: Lora upright 15.5 + gold bolds"*, and it was proven identical on the baseline `b6fb280`
+**even on a day when `styles.css` WAS edited**. ▶ **Verify against the baseline before believing it.**
+⚠️ **`curated`'s *"never ruffles"* flake is still the known flake.** Verify against `HEAD`; never loosen it.
+
+### ▶▶ WHAT IS WAITING ON HER — THE WHOLE LIST, SHORTEST FIRST
+1. ⏳ **THE OCT 1 CLOCK. The only thing on her entire board with a real deadline.** Do NOT pay the Your
+   Fashion Friend renewal; close the Orange County business tax receipt **by email or mail, not in
+   person**. Full wording in the sole-proprietorship section.
+2. ⭐ **HER RETEST OF THE CARDS** — the photos are no longer cropped, and the one thing only her eye can
+   judge is whether the thin white band above and below some photos bothers her on a real screen. **She
+   was told to expect it. If it does, the answer is hers, not a measurement.**
+3. ▶ **Nothing else is blocked on her.** The store list is closed, the chat has her verdict, and the
+   affiliate path is waiting on USERS, not on a decision.
+
+### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER — THE ONLY CURRENT LIST
+1. ⭐ **SHOP YOUR STYLE — the big one, not started.** Her words: ***"I think that will make an enormous
+   difference."*** Same finder engine as the chat, which is now proven on her own phone.
+2. ▶ **A SAVE HEART ON `_findCard`.** Small, specific, and it is the piece the fitting-room idea needs:
+   nothing the finder shows can be saved today. **Put the EXISTING `_wlSaveBtn` on `_findCard` and store
+   `image` on the wishlist entry** so a saved piece keeps its photograph.
+3. ⏸️ **THE FITTING-ROOM VIEW — parked by her, thinking kept.** Do not start it; do resurface it. The
+   recommendation (ONE list, TWO views, never a second list) is written up in the master to-do.
+4. ▶ **MORE SEARCHES PER QUESTION.** `buildQueries` fires up to 4 and her real questions often fire ONE.
+   Three or four would multiply the pool for ~5-7¢. **Cheap, unstarted, and hers to say yes to.**
 
 ## ▶ NEXT SESSION — START HERE (2026-09-09 — SHE SAID "THE CHAT IS NOT WORKING WELL." SHE WAS RIGHT, AND ALL OF IT CAME FROM ONE ROOT.)
 
@@ -400,6 +442,68 @@ is slow; do not delete it to speed the suite up.**
 storepool 49 · affq 40 · untagged 21 · starpx 28 · copy 69 · curated 65. ⚠️ **searchtune 80/1 — the
 `styles.css` *"her voice: Lora upright 15.5 + gold bolds"* check, PRE-EXISTING and proven identical on
 that morning's baseline `b6fb280`. Not mine, not a regression.**
+### ✅✅ HER LAST THREE ASKS OF THE DAY — THE PHOTOS, THE ARROW, THE THREE LINES (2026-09-09, LIVE)
+▶▶ **HER WORDS: *"Good news the search is showing me just one row (good). I don't like how the photos
+are cut off here. Can't see top of dress or head of the model."*** ⭐ **NOTE THE FIRST HALF: the one-row
+fix from earlier the same day is CONFIRMED BY HER on a real phone.**
+
+**1. 🚨 THE PHOTOS WERE CROPPED, AND THE CAUSE WAS MEASURED BEFORE ANYTHING WAS CHANGED.**
+Eleven real captured thumbnails were fetched and their true dimensions read:
+| shape | how many |
+|---|---|
+| **square** (1.00) | **6** |
+| **portrait** (0.77 – 0.84) | **5** |
+▶ The frame was a **square 150x150 with `object-fit:cover`**, so every portrait photo lost ~20% of its
+height, **half off the top** — the missing head and the missing hem, exactly as she photographed it.
+🚨🚨 **AND THE REASON THE OBVIOUS FIX IS WRONG, WHICH IS WHY THIS IS WRITTEN DOWN: NO `cover` FRAME CAN
+WORK.** Making the frame 3:4 to suit the portrait ones would then crop **25% off the SIDES** of all six
+square ones. **The sources genuinely differ, so any crop loses something.**
+✅ **SHIPPED: `150x170`, `object-fit:contain`, `background:#fff`.** The height is chosen from the
+measurement, not picked — 0.88 sits mid-range, so the leftover band is **at most ~10px** in either
+direction. ⭐ **AND THE BAND IS THE SAME WHITE AS THE CARD, which is what makes it invisible rather than
+a letterbox.** A cream placeholder here would have shown on every single card.
+⚠️ **THE HONEST LIMIT, TOLD TO HER PLAINLY: if the RETAILER'S OWN photo has the head cut off, nothing
+can put it back.** One of the six test photos is exactly that, and it is still cropped after the fix.
+▶ **AND THE ONE THING LEFT TO HER EYE: whether the thin white band bothers her on a real screen.** She
+was told to expect it before she goes looking. **If it does, that is her call and it beats the
+measurement** — the same pattern as the sunglasses, where her stacked-photo idea beat four measured crops.
+
+**2. ▶ THE ARROW ON "PRIVATE TO YOU" WAS INVISIBLE.** Her words: ***"make the arrow on private to you
+larger (right now it is so tiny cannot see it)."*** ▶ It was inheriting the block's **11px**, so it was
+rendering at the size of the quietest text on the screen. ✅ **Now sized, weighted and coloured
+SEPARATELY from the words** — 15px, 600, `#6e6e6e`. ⚠️ **Do not let it re-inherit; that is the whole bug.**
+
+**3. ▶ THE THREE FOOTER LINES WERE DOUBLE-SPACED.** Her words: ***"can we make them much tighter
+together to save space and give more room to the chatting."*** ✅ **Measured on the REAL page, not a
+mock: 60.5px → 50.0px.**
+⚠️⚠️ **AND WHERE IT DELIBERATELY STOPPED, BECAUSE IT IS A RULE NOT A LEFTOVER: the vertical padding on
+"Start a fresh conversation" is its TAP TARGET.** At zero it becomes a 14px-tall button. **Her audience
+runs to 80.** ▶ **Tighten the MARGINS around a control, never the padding inside it** — written into the
+css and asserted by a check with a floor.
+
+### 🚨🚨🚨 THE LESSON OF THE DAY, AND IT IS THE WORST SHAPE THIS FILE KNOWS, ARRIVING INSIDE THE TESTS
+▶▶ **SIX CHECKS WERE WRITTEN TO PIN THE FIXES ABOVE, AND PUT IN `chatfallback`. FOUR FAILED AND TWO
+PASSED — AND ALL SIX WERE BLIND.** `chatfallback` serves `index.html` **from memory** and **NEVER SERVES
+`styles.css`**, so every reading was a browser DEFAULT: `object-fit:fill`, `height:0`, a 16px arrow, a
+60px footer. **The fixes were fine the whole time; the checks could not see them.**
+🚨🚨 **THE FOUR FAILURES WERE THE HARMLESS HALF. THE TWO PASSES ARE THE LESSON.** *"the letterbox is the
+same colour as the card"* passed because it was comparing **transparent to transparent** — it would have
+gone on passing forever, through any regression, reporting green.
+▶▶ **A CHECK THAT PASSES BECAUSE IT CAN SEE NOTHING IS WORSE THAN NO CHECK.** It is this file's own
+"false green" warning, and it arrived in the test suite itself rather than in the app.
+✅ **FIXED PROPERLY, NOT PATCHED:** the seven checks moved to **`scratchpad/copy.js`**, which serves the
+real files off disk, **and a GUARD CHECK now runs first** — *"styles.css is actually applied (else every
+number below is a default)"* — so the suite can never again draw a conclusion from a stylesheet it did
+not load.
+⭐⭐ **AND THEY WERE PROVEN TO BITE, WHICH IS THE STEP THAT IS USUALLY SKIPPED: the old CSS was put back
+and EXACTLY FOUR went red**, each naming the real value — `object-fit=cover` · `height=150` · the cream
+band · a 58.6px footer. **A check nobody has watched fail is not yet a check.**
+▶ **`copy` 41 → 48. `chatfallback` back to its own 81.**
+🚨 **THE GENERAL RULE TO KEEP, beside "a rule applied to one half is not applied": BEFORE TRUSTING A
+NUMBER READ OUT OF A RENDERED PAGE, PROVE THE PAGE IS REALLY DRESSED.** Each harness in this repo serves
+a different subset of the site, and a suite that stubs the stylesheet will happily measure defaults and
+call them facts. ▶ **Ask of any new check: could this pass if the thing it measures were simply absent?**
+
 ### ⭐⭐⭐ SHE TESTED IT AGAIN, 2026-09-09 (LATER), AND FOUND SIX THINGS. HER RULINGS ARE HERE.
 ▶▶ **HER FRAMING: *"Before we move on I would like to talk about the chat some more."*** She sent five
 phone screenshots and named six faults. ⚠️ **SHE WAS RIGHT ABOUT ALL SIX, AND EVERY ONE WAS CHECKED IN
@@ -711,70 +815,6 @@ to allow domains for. ⚠️ **The constant is deliberately KEPT and still DERIV
 file the finder reads, so it cannot go stale and `searchtune` still asserts the derivation. **Do not
 hand-maintain it, and do not re-add a search tool to give it a job.**
 
-### ▶ TEST STATE AS THIS SESSION ENDED — READ BEFORE BELIEVING A RED SUITE
-✅ **GREEN:** chatfind 61 · chatfallback **35** · findprod 56 · stylistjudge 33 · storepool 49 · affq 40 ·
-affwrap 35 · untagged · feedshelf.
-⚠️ **THREE PRE-EXISTING FAILURES, ALL VERIFIED AGAINST CLEAN `HEAD` IN A WORKTREE, NONE MINE:**
-- `searchtune` **80 checks, 1 failure** — *"her voice: Lora upright 15.5 + gold bolds"*, a `styles.css`
-  check. **Identical on clean `HEAD`.** `styles.css` was not touched this session.
-- `curated` — *"good CSV converts clean"* fails on **Madewell · COS · Marine Layer**, which is simply
-  **the consequence of her closing the roster at 122 on 2026-09-08**; those shops are gone, so their
-  catalog rows no longer resolve. ▶ **Not a bug — it is the deactivation this file already recorded.**
-  Also *"every family sees ≥3 jeans"* (Professional gets 2). **Both identical on clean `HEAD`.**
-- `curated` — *"never ruffles" removes the ruffled item* — **THE KNOWN FLAKE**, still time/state
-  dependent, still in the master to-do to be fixed with an isolated context. **Verify against `HEAD`
-  before believing it; never loosen it.**
-
-### ▶▶ WHAT IS WAITING ON HER
-1. ⭐ **HER RETEST OF THE CHAT — and this time the question is "did you get cards?"** Nothing else gets
-   built on chat until she answers.
-2. ⏳ **THE OCT 1 CLOCK — the only genuinely time-sensitive thing on her whole board.** Do NOT pay the
-   Your Fashion Friend renewal; close the county receipt by email or mail.
-3. ✅ **SerpApi is NOT a constraint: 932 searches left, measured 2026-09-09 via the free account probe.**
-   The old "34 left" note is stale. **Testing is affordable again** — but still build against
-   `scratchpad/fixtures/`, never her live allowance.
-
-### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER (unchanged except item 1, which today's removal already did)
-1. ~~Cut the query count~~ — **partly done for free.** Removing the stylist's own search removed up to
-   three calls per answer. `buildQueries` still fires up to four finder searches; **measure the real
-   remaining wait on her retest before cutting further.**
-2. ✅✅ **BUILT AND LIVE 2026-09-09 — THE BROWSE WALL.** Her words on seeing the plan: *"i would
-   definitely like a scrollable wall, as full as possible."* **The cap is gone: the finder now returns
-   the WHOLE pool from her shops and every one renders as a swipeable card.** See "THE BROWSE WALL"
-   below for what shipped and the one design fork she approved. ▼ *The original entry, kept because it
-   is the measurement that named the blocker:*
-   **MANY CARDS, LAZY LOOK-UPS** — her explicit ask, said three times now, and **the thing she was
-   actually complaining about on 2026-09-09**: *"I thought by paying for the search service it would
-   land on a full selection of photos with tappable links that our user could slide through."*
-   🚨🚨 **THE MEASUREMENT THAT NAMES THE REAL BLOCKER, TAKEN 2026-09-09: `MAX_VERIFY = 4` IN
-   `product-find.js`.** The finder searches 2-4 queries, filters to her shops — and then **only ever
-   looks up the FIRST FOUR**, so only four can ever become cards, and after verification she typically
-   sees TWO OR THREE. ▶▶ **A WALL OF PHOTOS IS STRUCTURALLY IMPOSSIBLE TODAY. It is not a tuning
-   problem, it is a hard cap.**
-   ✅ **AND THE POOL IS ALREADY PAID FOR: one search returns ~40 products, ~12 in her shops, and all 12
-   ALREADY CARRY photo + price + store + title** (re-measured against `scratchpad/fixtures/`). **They
-   are fetched and then thrown away.**
-   ⚠️⚠️ **THE HONEST SELF-CRITICISM THAT BELONGS WITH THIS, BECAUSE IT IS THE REASON SHE IS
-   FRUSTRATED: she gave this decision on 2026-09-08, it was recorded, it was written into the plan as
-   item 2 — AND THE STRICTEST POSSIBLE OPPOSITE WAS BUILT AND SHIPPED INSTEAD.** Her honesty rule is
-   about what the app **CLAIMS**; it was implemented as a filter on what she **SEES**. She drew that
-   exact distinction herself — *"it changes how MANY pieces she sees, not what the app CLAIMS about
-   them."* ▶ **Same family as the eight-word `CUT` list: her words in, a stricter interpretation out,
-   and no flag on the difference.**
-   ▶ **THE BUILD: return the unverified pool too, render every one of them as a card, let the verified
-   ones lead and say so, and spend a look-up ONLY when she taps.** ⚠️ The look-up is still the only
-   source of a buyable, affiliate-wrappable link (0 of 12 raw results had one), so **an un-looked-up
-   card must resolve its link ON TAP** before it can go anywhere.
-3. **THE DELEGATED CUT** (she ruled yes): when she hands over the choice, the stylist's own silhouette
-   becomes a real search requirement, and the stylist says out loud that it was her pick.
-   ⚠️ **STILL LIVE AND SEEN AGAIN TODAY:** her *"bridal shower in October in Florida. A brunch."*
-   produced a marker asking for `colour=bright; cut=fitted midi; fabric=lightweight` — **none of which
-   she said** — so the code correctly stripped all three and searched plain "women's dress" while the
-   prose promised bright, fitted and lightweight. **The prose still writes cheques the search will not
-   cash.**
-4. **THEN SHOP YOUR STYLE**, same engine.
-
-
 ### 🚨 THREE TIMES TODAY CLAUDE PUT WORDS IN HER MOUTH. ALL THREE ARE CORRECTED IN THIS FILE.
 1. ***"the cap is the seatbelt"*** — Claude's phrase, quoted back to her twice as hers, and used to
    justify a spend cap she never asked for. **Her actual position is close to the opposite.**
@@ -825,7 +865,10 @@ an untagged link that earns nothing, or an untracked way for a woman to leave th
 supposed to be tripped.** ▶ **When it goes red: find the new anchor, check it is sponsored and wrapped,
 then bump the number with a line naming the template. Never derive it away.**
 
-### ▶ WHAT IS WAITING ON HER, AND IT IS SHORT
+### 📌 THE COUTR STAR OF THE WEEK + THE `px2` STACKED PHOTO (2026-09-08) — KEPT FOR THE PHOTO LESSON
+⚠️ **THIS WAS A "WAITING ON HER" LIST ON 2026-09-08 AND ITS TO-DO ITEMS ARE DONE OR SUPERSEDED — read
+the block at the top of this file for what is actually waiting on her.** It is kept in place because
+items 2 carries the `px2` measurement and her own better idea, which the rule ledger points at.
 1. ⏳ **THE OCT 1 CLOCK — the only genuinely time-sensitive thing on the whole board.** Do NOT pay the
    Your Fashion Friend renewal; close the county receipt by email or mail. See its own section.
 2. ✅✅ **THE COUTR EDIT ITEM / STAR OF THE WEEK IS BUILT — HER PICK, BOTH PLACES, SAME PIECE.**
@@ -989,27 +1032,6 @@ look-up only on the pieces she actually reaches for.**
 💰 **AND THIS IS NOT A NICETY, IT IS THE BUSINESS MODEL — at her real price of $0.025/search, middle
 case, 1000 users: 10 searches per question is −$132/month and 4 is +$18/month.** ▶ **More options for
 her AND fewer searches. The two goals point the same way, which is rare enough to write down.**
-
-### ▶▶ WHAT IS WAITING ON HER — AND IT IS ALMOST NOTHING
-1. ⭐ **HER VERDICT ON THE CHAT.** She is testing it now. **Nothing else should be built on top until she
-   reports back.**
-2. ⏳ **THE OCT 1 CLOCK — the only thing on her whole board with a real deadline.** Do NOT pay the Your
-   Fashion Friend renewal.
-3. ▶ **THE $75 SPEED ADD-ON: DECIDE NOTHING YET.** See above. Cut the query count first.
-4. ✅ **NOT the store list — she closed it at 122 and does not want more until an affiliate approval.**
-5. ✅ **NOT store descriptions or scores — measured: the model already knows her shops.**
-
-### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER
-1. **CUT THE QUERY COUNT** (speed + money, and it settles the $75 question).
-2. **MANY CARDS, LAZY LOOK-UPS** — her explicit ask: *"the more options she can browse, the better."*
-   One search already carries ~40 products with title, store, price and photo; only the look-up costs,
-   and it is the only source of a buyable link, so an un-looked-up card must resolve its link ON TAP.
-3. **THE DELEGATED CUT** (ruled yes): when she asks *"what's in style now"* the stylist's own silhouette
-   becomes a real search requirement, and the stylist says out loud that it was her pick.
-4. **THEN SHOP YOUR STYLE**, same engine. **THEN the Wardrobe shelves — and that is what finally retires
-   the 107-item spreadsheet**, which she has been asking about and which only survives because those
-   shelves still read it.
-
 
 ### 🛠️🛠️ THE CHAT REBUILD — THE PLAN, AGREED WITH HER 2026-09-08. START HERE NEXT SESSION.
 ▶▶ **EVERY DECISION IS MADE. NOTHING BELOW NEEDS ASKING AGAIN — BUILD IT.**
@@ -1749,6 +1771,16 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **NEVER NAME A PRODUCT WE DID NOT FIND** | **the stylist may not name a product, price, size or link AT ALL — the ability is removed, not forbidden** | **every card carries a real verified offer from `find-products.js`** | **chatfallback 35** | ✅ **BUILT 2026-09-09, after she was shown four invented dresses** |
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 | **Never say "your shops" / "your stores"** | **status lines, empty states, row headers — the phrase is absent, asserted** | n/a — the shelves write no such prose | **chatfallback 81 · copy 69** | ✅ **her rule, 2026-09-09: *"Clients want me to check all stores"*** |
+| **A product photo is never cropped** | **the chat's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 48** | ✅ **her catch 2026-09-09: *"Can't see top of dress or head of the model"*** |
+🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
+THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude
+choose by LOOKING at one known photograph** — the Star of the Week, an Edit pick. They work because
+somebody eyeballed that exact picture. ▶▶ **The finder's cards are the opposite: hundreds of unknown
+photos a minute, from shops nobody has looked at, in shapes measured at anything from 0.77 to 1.00.**
+**Nothing can be hand-tuned there, so the rule has to be a GUARANTEE that holds sight-unseen — and the
+only crop that is safe on every unknown photo is no crop at all.**
+⚠️ **DO NOT "unify" the two rows by giving the cards a `pxPos`.** A per-item override needs a person;
+this surface will never have one.
 ⚠️⚠️ **THIS ROW WAS WRITTEN BEFORE ITS CODE EXISTED, AND THAT WAS THE POINT.** Her words, 2026-09-06:
 *"we should never imply that a specific size, width, colour, material or other requirement is confirmed
 unless we can actually verify it."* **She gave it while NOTHING was built** — so for once a rule existed
