@@ -230,10 +230,22 @@ export default async (req) => {
        search loses everything; losing one look-up of six is invisible." The
        look-up rightly keeps its short 6s ceiling. The SEARCH is all-or-nothing
        and had the same order of ceiling, which was backwards.
-     ⚠️ 20s, NOT MORE. The platform cuts the stream around 60s and this has to
-       leave room for the look-ups after it. And the wait is narrated — her own
-       2026-09-06 design shows "Looking through your shops…" while it works. */
-  const get = async (url, ms = 20000) => {
+     🚨🚨 AND THEN 20s WAS TRIED AND MEASURED AND IT WAS WRONG — KEPT HERE
+       BECAUSE THE MISTAKE IS THE USEFUL PART. Raising the ceiling to 20s did
+       not rescue a single search: the next failure pinned at 20001ms, exactly
+       the new ceiling. ▶▶ SO THESE REQUESTS ARE NOT SLOW, THEY ARE HUNG. A
+       hung request stays hung, and a bigger ceiling only makes a woman wait
+       twice as long for the same honest "my search didn't come back".
+     ▶ 12s IS CHOSEN FROM THE REAL SUCCESSES, not from hope: observed
+       successful searches land at 122ms (warm cache), 6.6s, 6.9s and 8.7s, so
+       12s clears the slowest one seen with headroom and then FAILS FAST, which
+       is the kinder half — she gets the honest sentence and can ask again
+       instead of watching a screen.
+     ⚠️ SUSPECTED CAUSE, STILL UNPROVEN: the hangs cluster under rapid
+       back-to-back calls, which is how they were found. A woman asking ONE
+       question may never see this. Do not "fix" it further without evidence
+       from her own use — and the debug view now shows her the number. */
+  const get = async (url, ms = 12000) => {
     const r = await fetch(url, {signal: AbortSignal.timeout(ms)});
     if (!r.ok) throw new Error('upstream ' + r.status);
     return r.json();
