@@ -163,6 +163,71 @@ export function buildQueries(req) {
   return out.length ? out : [gendered];
 }
 
+/* ═══ THE SHOP THAT IS FAMOUS FOR THIS ══════════════════════════════════════
+   ⭐⭐ HER ASK, 2026-09-09: "how can we get the affiliated stores in the mix (not
+     at the top, but in there)".
+   ▶▶ AND THE ANSWER IS NOT AN AFFILIATE RULE, WHICH IS WHY THIS IS SAFE TO
+     BUILD. Measured that day: naming a RETAILER in a search does nothing
+     ("white eyelet skirt Mytheresa" returned no Mytheresa — Google indexes
+     products, not shops), but naming a BRAND works perfectly ("printed wrap
+     dress Diane von Furstenberg" returned 12 DVF pieces). So the only shops
+     reachable this way are the ones that MAKE things.
+   ⭐ AND SHE ALREADY WROTE DOWN WHICH SHOP IS GOOD AT WHAT, IN JULY. DVF: "wrap
+     dresses, printed dresses, occasion, wedding guest". Vilebrequin: "swimwear,
+     resortwear, beach cover-ups". Fleur du Mal: "sexy lingerie, nightgowns".
+     ▶ THE SEARCH HAD NEVER LOOKED AT ANY OF IT. 100 of her 123 shops carry a
+       description and it was dead weight until now.
+   🚨🚨 SO THE RULE IS "SEARCH THE SHOP THAT IS FAMOUS FOR THIS", NOT "SEARCH THE
+     SHOPS THAT PAY HER", AND THE DIFFERENCE IS EVERYTHING. A woman asking for a
+     wrap dress should see DVF because DVF invented the wrap dress — that is a
+     stylist's answer, and it is HER OWN NOTE. It reaches four shops that happen
+     to pay her, and it reaches shops that pay her nothing on exactly the same
+     terms. ▶ HER OPTION A RULE OF 2026-09-06 IS UNTOUCHED: the app still has no
+     idea which shops pay.
+   ⚠️ RARITY IS WHAT MAKES IT HONEST. "dress" appears in dozens of her
+     descriptions and means nothing; "nightgown" appears in one and means
+     everything. So each matched word is worth 1/(how many shops use it), and
+     the threshold below is really "this shop is one of a handful known for
+     this" — never "this shop mentioned a common noun". Without that, every
+     request for a dress would fire a search at whichever shop happened to sort
+     first, which is noise dressed as expertise.
+   ⚠️ FOUR-LETTER STEMS so "swimsuit" reaches "swimwear" and "nightgown" reaches
+     "nightgowns". Crude, and right for the job: these are her plain nouns, not
+     prose. */
+const _famStem = (w) => w.slice(0, 4);
+const _famTok = (t) => [...new Set(String(t || '').toLowerCase()
+  .split(/[^a-z]+/).filter(w => w.length >= 4).map(_famStem))];
+
+export function buildFamousIndex(stores) {
+  const docs = [];
+  const df = new Map();
+  for (const [name, v] of Object.entries(stores || {})) {
+    if (!v || !v.strengths) continue;
+    const words = new Set(_famTok(v.strengths));
+    if (!words.size) continue;
+    docs.push({name, words});
+    for (const w of words) df.set(w, (df.get(w) || 0) + 1);
+  }
+  return {docs, df};
+}
+
+/* Returns the ONE shop distinctively known for what she asked for, or null.
+   ⚠️ null is the common answer and that is correct — a white eyelet skirt is
+   nothing any of her shops is famous for, so no search is spent on it. */
+export function famousFor(request, index, floor = 0.2) {
+  if (!index || !index.docs.length) return null;
+  const want = _famTok([request.item, request.colour, request.fabric, request.cut]
+    .filter(Boolean).join(' '));
+  if (!want.length) return null;
+  let best = null, bestScore = 0;
+  for (const d of index.docs) {
+    let score = 0;
+    for (const w of want) if (d.words.has(w)) score += 1 / (index.df.get(w) || 1);
+    if (score > bestScore) { bestScore = score; best = d.name; }
+  }
+  return bestScore >= floor ? best : null;
+}
+
 // ---------------------------------------------------------------------------
 // Match a shopping result's seller back to one of HER stores.
 // Names arrive dirty: "Zappos.com", "Kohl's", "Dr. Martens US".

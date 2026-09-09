@@ -14,9 +14,15 @@
 //    degrades to advice instead of showing a woman a failure.
 import {
   buildQueries, matchStore, isResale, judge, widenOptions,
+  buildFamousIndex, famousFor,
 } from './lib/find-products.js';
 import {buildJudgePrompt, parseJudgement, statedKeys} from './lib/judge-products.js';
 import STORES from './lib/store-domains.js';
+/* ⚠️ BUILT ONCE AT MODULE LOAD, NOT PER REQUEST. It is a small word index over
+   her 100 store descriptions and it never changes between requests — rebuilding
+   it on every shopping question would be pure waste on a function that already
+   has a speed problem. */
+const FAMOUS = buildFamousIndex(STORES);
 
 const ALLOWED_HOSTS = ['stylestar.app', 'www.stylestar.app'];
 const hostOf = (v) => { try { return new URL(v).host.toLowerCase(); } catch { return ''; } };
@@ -431,6 +437,30 @@ export default async (req) => {
     for (const d of pages) {
       if (!d) continue;                       // one dead query must not kill the rest
       for (const x of d.shopping_results || []) {
+        const id = x.product_id || x.title;
+        if (id && !pool.has(id)) pool.set(id, x);
+      }
+    }
+
+    /* ═══ THE SHOP THAT IS FAMOUS FOR THIS ═══════════════════════════════════
+       ⭐ HER ASK: "how can we get the affiliated stores in the mix (not at the
+         top, but in there)". ▶ Answered WITHOUT an affiliate rule — see
+         famousFor() in find-products.js for why that matters and for the
+         measurement that shaped it (naming a retailer does nothing; naming a
+         brand works).
+       ⚠️ IT USUALLY FIRES NOTHING, AND THAT IS THE DESIGN. "white eyelet skirt"
+         is not something any of her shops is distinctively known for, so no
+         search is spent. "wrap dress" is DVF's whole identity, so one is.
+       ⚠️ POOLED like everything else, so it can only ADD. */
+    const famous = famousFor(request, FAMOUS);
+    if (famous) {
+      const FAM_MS = 4000;
+      const [fam] = await settledBy([
+        get('https://serpapi.com/search.json?' + new URLSearchParams({
+          engine: 'google_shopping', q: queries[0] + ' ' + famous,
+          gl: 'us', hl: 'en', num: '60', api_key: KEY,
+        })).catch(() => null)], FAM_MS);
+      for (const x of (fam && fam.shopping_results) || []) {
         const id = x.product_id || x.title;
         if (id && !pool.has(id)) pool.set(id, x);
       }

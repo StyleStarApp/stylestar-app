@@ -11,6 +11,7 @@ import path from 'path';
 import {fileURLToPath} from 'url';
 import {
   VERDICT, buildQueries, matchStore, isResale, judge, widenOptions,
+  buildFamousIndex, famousFor,
   verifyColour, verifyFabric, verifyCut, verifySize, verifyWidth, verifyStock,
 } from '../netlify/functions/lib/find-products.js';
 import {buildDomains} from '../scripts/build-store-domains.js';
@@ -261,6 +262,33 @@ H('PART 9 — the store allowlist, and resale');
      already in the table, so the gap read as an oversight. ⚠️ This asserts the
      RULE — if a future session removes the Gap Factory row, this fails and says
      why, instead of quietly sending women to the wrong shop again. */
+  /* ═══ THE SHOP THAT IS FAMOUS FOR THIS ═════════════════════════════════════
+     ⭐ HER ASK, 2026-09-09: "how can we get the affiliated stores in the mix
+       (not at the top, but in there)". Answered WITHOUT an affiliate rule, and
+       these checks are what prove that — so nobody later mistakes it for one
+       and either "fixes" it or leans on it.
+     ▶ IT USES HER OWN JULY STORE NOTES, which the search had never read. */
+  {const idx = buildFamousIndex(stores);
+   const F = (r) => famousFor(r, idx);
+   /* Her note on DVF is literally "wrap dresses". */
+   ok('a wrap dress goes to the shop that invented it',
+      F({item:'dress', cut:'wrap'}) === 'Diane von Furstenberg');
+   ok('a nightgown goes to the lingerie shop',
+      F({item:'nightgown'}) === 'Fleur du Mal');
+   /* 🚨 THE CHECK THAT PROVES IT IS NOT A COMMISSION RULE. Ann Taylor, Lacoste
+      and Soma pay her NOTHING and win on exactly the same terms. If this ever
+      starts favouring merchants, these are the checks that go red. */
+   ok('and shops that pay her nothing win on the same terms',
+      F({item:'blazer'}) === 'Ann Taylor' && F({item:'lingerie'}) === 'Soma');
+   /* ⚠️ RARITY IS WHAT KEEPS IT HONEST — a common noun must never fire a search.
+      "dress" appears in dozens of her descriptions and names no specialist. */
+   ok('a common word fires nothing, so no search is wasted',
+      F({item:'dress'}) === null && F({item:'jeans'}) === null);
+   /* The exact request that started this: nothing of hers is known for it. */
+   ok('a white eyelet skirt costs no extra search',
+      F({item:'skirt', colour:'white', cut:'eyelet'}) === null);
+   ok('and an empty request asks for nothing', F({}) === null);}
+
   ok('an outlet resolves to itself, never to its parent',
      matchStore('Gap Factory', stores) === 'Gap Factory' &&
      matchStore('Gap Factory Store', stores) === 'Gap Factory' &&
