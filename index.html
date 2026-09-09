@@ -10736,7 +10736,15 @@ function _findStrip(text){
    ▶ "Checking what's actually in stock in your size" tells a woman something no
      competitor can say. She is not watching a spinner, she is watching a stylist
      do what a stylist would do. THE WAIT IS THE PROOF. */
-const _FIND_STEPS=['Looking through your shops...','Checking what\'s actually in stock...'];
+/* ⚠️ NEVER "your shops" — HER RULING, 2026-09-09: "I don't want it to ever say
+   'your stores'. CLIENTS WANT ME TO CHECK ALL STORES. Not just 'your stores',
+   that wording is off, so let's get rid of it everywhere."
+   ▶▶ IT IS A BRAND POINT, NOT A COPY PREFERENCE, AND IT IS THE SALLY HOGSHEAD
+     NOTE LANDING IN A SENTENCE: a stylist who has searched EVERYWHERE is worth
+     more than one who searched her own little list. "Your shops" quietly makes
+     the app sound smaller than it is — 123 shops read as a shortlist.
+   ⚠️ Applies to every surface a woman reads, not just this line. */
+const _FIND_STEPS=['Looking through all the shops...','Checking what\'s actually in stock...'];
 /* ⚠️ IF THE ANSWER COMES BACK FAST THE LINE MUST NEVER APPEAR AT ALL, rather
    than flash for half a second. Her call, and it is why this is a delay. */
 const _FIND_SHOW_AFTER=700;
@@ -10915,7 +10923,7 @@ function _findDbg(mc,req,data,failed,ms){
     (failed?row('result','THE CALL FAILED'):'')+
     (d.why?row('stopped early',d.why):'')+
     row('searches fired',m.search!=null||d.searched!=null?(d.searched==null?'?':d.searched):'?')+
-    row('products in your shops',m.candidates==null?'?':m.candidates)+
+    row('products found in the shops',m.candidates==null?'?':m.candidates)+
     row('looked up in detail',d.verified==null?'?':d.verified)+
     row('exact matches shown',(d.exact||[]).length)+
     row('near misses shown',(d.doors||[]).reduce(function(n,x){return n+(x.products||[]).length},0))+
@@ -11127,7 +11135,7 @@ function _findBlockHtml(data,req){
          labelled group would file unchecked pieces under a promise nobody made.
          ▶ ONE ROW IS THE RULE WHEN THERE IS NOTHING TO LABEL; LABELS WIN WHEN
            THERE IS. This is the one state where labels exist. */
-      (browseCards.length?'<div class="find-sub">More from your shops, not checked in detail.</div>'+
+      (browseCards.length?'<div class="find-sub">More to scroll through, not checked in detail.</div>'+
         _findRow(browseCards.join(''),browseCards.length):'')+
       DISC;
   }else if(browseCards.length){
@@ -11139,7 +11147,7 @@ function _findBlockHtml(data,req){
        ⚠️ THIS REPLACEMENT LINE IS CLAUDE'S AND IS A PLACEHOLDER FOR HERS. Her
        own copy has beaten every draft so far; show it to her. */
     wrap_html='<div class="find-head">Nothing came back as an exact match, '+
-      'but here is what your shops have right now.</div>'+
+      'but here is what I found right now.</div>'+
       _findRow(browseCards.join(''),browseCards.length)+DISC;
   }else{
     /* ⚠️ NO FALLBACK TO AN INVENTED PRODUCT. Her call, 2026-09-06, and it changes
@@ -11192,7 +11200,7 @@ async function _findRun(req){
     const w=document.createElement('div');
     w.className='find-block find-note';
     w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
-      'so I haven\'t looked through your shops yet. Ask me again and I\'ll try.</div>';
+      'so I haven\'t looked through the shops yet. Ask me again and I\'ll try.</div>';
     mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
     return;
   }
@@ -11210,7 +11218,7 @@ async function _findRun(req){
     const w=document.createElement('div');
     w.className='find-block find-note';
     w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
-      'so I haven\'t looked through your shops yet. Ask me again and I\'ll try.</div>';
+      'so I haven\'t looked through the shops yet. Ask me again and I\'ll try.</div>';
     mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
     /* ⚠️ NO _findDbg CALL HERE. It is already scheduled once for EVERY return
        path right after status.done() — that is the whole point of putting it at
@@ -11437,7 +11445,7 @@ SHOPPING:
 ${_chatProductsBlock()}
 
 FINDING REAL PRODUCTS FOR HER:
-- You can send me out to find REAL products that are actually for sale right now, in her shops, with real prices and a direct link to the item. To do it, put ONE marker as the very FIRST thing in your reply, then write your answer as normal:
+- You can send me out to find REAL products that are actually for sale right now, across all the shops, with real prices and a direct link to the item. To do it, put ONE marker as the very FIRST thing in your reply, then write your answer as normal:
   <<FIND item=dress; colour=blush; fabric=silk; cut=wrap>>
 - Put it FIRST. The search runs while you are still writing, so a marker at the end makes her wait twice as long.
 - Fields, all optional except item: item, colour, fabric, cut, size, width. Use only what SHE actually said or what you know from her saved sizes. Two to four plain words per field.

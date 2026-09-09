@@ -443,7 +443,7 @@ console.log('\n11. the debug view answers "what did it actually do?"');
  const txt=await pg.locator('.fdbg').innerText().catch(()=>'');
  /* The exact numbers it took hours to reconstruct from her screenshots. */
  ok('it names what was searched for',/item=top/.test(txt),txt.slice(0,200));
- ok('it reports the pool size from her shops',/products in your shops[\s\S]{0,4}12/.test(txt),txt.slice(0,400));
+ ok('it reports the pool size from her shops',/products found in the shops[\s\S]{0,4}12/.test(txt),txt.slice(0,400));
  ok('it reports how many were looked up',/looked up in detail[\s\S]{0,4}4/.test(txt),txt.slice(0,400));
  ok('it reports the browse count',/browse cards shown[\s\S]{0,4}7/.test(txt),txt.slice(0,400));
  ok('it reports the budget left',/930/.test(txt),txt.slice(0,400));

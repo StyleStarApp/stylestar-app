@@ -265,7 +265,11 @@ const prod = (o) => Object.assign({
       return document.getElementById('chatMessages').innerHTML;
     });
     ok('the status line really shows a star, not just text', /find-load-star/.test(html));
-    ok('with her words beside it', /Looking through your shops/.test(html));
+    /* ⚠️ "your shops" was struck from every surface on 2026-09-09 — her ruling:
+       "Clients want me to check ALL stores. Not just 'your stores', that wording
+       is off." It made 123 shops sound like a shortlist, which is the opposite
+       of the differentiation the whole app is built on. */
+    ok('with her words beside it', /Looking through all the shops/.test(html));
   }
 
   console.log('\nPART 4 — nothing is claimed that was not confirmed');
@@ -364,7 +368,7 @@ const prod = (o) => Object.assign({
     const src = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
     const css = fs.readFileSync(path.join(ROOT, 'styles.css'), 'utf8');
     ok('the status line is in HER voice, not the machine\'s',
-       /Looking through your shops/.test(src) &&
+       /Looking through all the shops/.test(src) &&
        /Checking what's actually in stock/.test(src) &&
        !/_FIND_STEPS=\['Loading/.test(src));
     // ⚠️ A fast answer must show NO line rather than flash one.
