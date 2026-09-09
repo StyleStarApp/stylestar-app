@@ -9299,6 +9299,17 @@ function _wlRegister(item){
   var e={name:String(item.name),store:store,search:String(item.search||'')};
   if(item.pick){e.pick=true;e.url=_wlSafeUrl(item.url);e.price=String(item.price||'');}
   else if(item.exact){e.exact=true;e.url=_wlSafeUrl(item.url);e.price=String(item.price||'');}
+  // ▶ THE PHOTOGRAPH (2026-09-09, her ask on the finder's cards): a piece that
+  //   arrived WITH a picture should not become a line of text the moment she
+  //   saves it. Stored on the entry, so it survives a reload and a new device.
+  // ⚠️ https ONLY, the same guard the wardrobe's catalog card uses: a field
+  //   shaped like a url that reaches the DOM is never trusted for its scheme.
+  if(typeof item.image==='string'&&/^https:\/\//.test(item.image))e.image=item.image;
+  // ▶ `kind` is analytics only and never persisted: it answers the question the
+  //   track call below was written to ask -- WHICH surface her saves come from.
+  //   A piece the finder actually found is a fourth answer, and now the biggest
+  //   source of savable cards, so it says so instead of reporting as 'catalog'.
+  if(item.kind)e.kind=String(item.kind);
   _wlReg[id]=e;
   return id;
 }
@@ -9402,6 +9413,7 @@ function wishToggle(id){
     var m=_wlReg[id];
     if(!m)return;                       // a stale button from a re-rendered surface
     var entry={id:id,name:m.name,store:m.store,search:m.search,ts:Date.now()};
+    if(m.image)entry.image=m.image;
     if(m.pick){entry.pick=true;entry.url=m.url;entry.price=m.price;}
     // exact: a catalog piece saved from the wardrobe shelf (2026-08-14, her
     // call): keeps its real product URL and price like a pick, but carries NO
@@ -9412,7 +9424,8 @@ function wishToggle(id){
     // 'kind' separates the three row types the wishlist can hold, which is the
     // interesting question here: does she save Catherine's own Edit picks, real
     // catalog products, or AI suggestions? Un-saving is deliberately not tracked.
-    track('Wishlist Save',{store:m.store||'unknown',kind:m.pick?'edit-pick':(m.exact?'catalog':'ai')});
+    track('Wishlist Save',{store:m.store||'unknown',
+      kind:m.kind||(m.pick?'edit-pick':(m.exact?'catalog':'ai'))});
   }
   saveWardrobeData();
   _wlSyncButtons();
@@ -10948,10 +10961,54 @@ function _findCard(p,opts){
                           :_esc(_findLabel(k,p))+' not confirmed')+'</span>');
   });
   const img=p.image?'<img class="fc-img" src="'+_esc(p.image)+'" alt="" loading="lazy">':'';
-  return '<a class="find-card" href="'+_esc(p.url)+'" target="_blank" rel="sponsored noopener">'+
-    img+'<div class="fc-body"><div class="fc-name">'+_esc(_feedName?_feedName(p.title,p.brand):p.title)+'</div>'+
+  const shown=_feedName?_feedName(p.title,p.brand):p.title;
+  /* ⭐ THE SAVE HEART — her ask, 2026-09-09: nothing the finder showed could be
+     saved, so a woman swiping thirty real pieces had no way to keep one.
+     ▶ IT IS THE EXISTING `_wlSaveBtn`, NOT A SECOND CONTROL. Same heart, same
+       pill, same list. The wishlist she already has IS the holding place —
+       `wishToggle` has stored a SPECIFIC piece all along — and a second list was
+       the thing she ruled against ("not adding resistance").
+     🚨🚨 A CHECKED CARD AND A BROWSE CARD ARE SAVED AS DIFFERENT KINDS, AND THAT
+       IS AN HONESTY DECISION, NOT A DETAIL. `p.checks` is already this card's
+       own discriminator ("a browse card carries NO ticks and claims nothing").
+       • CHECKED  -> `exact:true`. Its url is a real product page that was looked
+         up and read, so the wishlist keeps that url and its price and says
+         "Shop it". Every word of that is true.
+       • BROWSE   -> the ordinary kind: store + search term, rebuilt every render.
+         Its url is that shop's SEARCH for the exact title, so the wishlist says
+         "Find it" and shows no price. ▶▶ SAVING IT AS `exact` WOULD HAVE PUT A
+         PRICE AND "Shop it" ON A ROW THAT LANDS ON A RESULTS PAGE — which is
+         precisely the "generic store search dressed as a find" she banned on
+         2026-09-06. The card itself never claimed that; the saved row must not
+         either. ⭐ AND THE HONEST KIND IS THE MORE USEFUL ONE ANYWAY: a rebuilt
+         search self-repairs the day a store URL is fixed.
+     ⚠️⚠️ `idName` IS THE RAW TITLE AND `name` THE PRETTY ONE, AND THAT IS NOT A
+       DETAIL. A wishlist id is a slug of the name, so keying it on `_feedName`'s
+       output would silently re-key every existing save the day that tidier
+       changes — exactly the orphaning caught on 2026-09-08.
+     ▶ `image` IS CARRIED ON BOTH so a saved piece keeps its photograph. It is
+       also the data the parked fitting-room view needs; nothing renders it yet. */
+  const checked=!!p.checks;
+  const saveItem={name:shown,idName:p.title,store:p.store,search:p.title,
+    image:p.image||'',kind:checked?'found':'browse'};
+  if(checked){saveItem.exact=true;saveItem.url=p.url;saveItem.price=p.price||'';}
+  /* 🚨🚨 THE CARD IS A `div` WITH THE LINK INSIDE IT, NOT AN `a` AROUND EVERYTHING,
+     AND THE HEART IS ITS SIBLING. An `<a>` may not contain another control: a
+     heart nested in the product link would fire the save AND open the shop in
+     the same tap, on the one surface where a woman is tapping fastest.
+     ▶ The photo and the whole body stay ONE tap target, exactly as she approved
+       on 2026-09-09; only the heart sits outside it. Same shape as `.shop-card`
+       / `.shop-card-act` everywhere else in the app, which is the point — this
+       is the fourth surface to carry the heart, not a new kind of card. */
+  const heart=_wlSaveBtn(saveItem);
+  return '<div class="find-card">'+
+    '<a class="fc-go" href="'+_esc(p.url)+'" target="_blank" rel="sponsored noopener">'+
+    img+'<div class="fc-body"><div class="fc-name">'+_esc(shown)+'</div>'+
     '<div class="fc-meta">'+_esc(p.store)+(p.price?' &middot; '+_esc(p.price):'')+'</div>'+
-    (bits.length?'<div class="fc-checks">'+bits.join('')+'</div>':'')+'</div></a>';
+    (bits.length?'<div class="fc-checks">'+bits.join('')+'</div>':'')+'</div></a>'+
+    /* ⚠️ `_wlSaveBtn` returns '' for a piece it cannot key. Rendering the row
+       anyway would leave a bordered empty strip under the card. */
+    (heart?'<div class="fc-act">'+heart+'</div>':'')+'</div>';
 }
 /* ⚠️ THE KEY IS `colour` AND THE LABEL IS "color", DELIBERATELY. The key is the
    server's contract (`request.colour`, `checks.colour`) and renaming it would

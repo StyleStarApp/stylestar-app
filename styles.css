@@ -3687,12 +3687,28 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    #fff, the SAME white as the card, so the band is invisible rather than a
    letterbox. A cream placeholder here would have made every band show. */
 .fc-img{width:100%;height:170px;object-fit:contain;display:block;background:#fff}
+/* 🚨 THE CARD IS A `div` AND `.fc-go` IS THE LINK INSIDE IT (2026-09-09). It was
+   one `<a>` wrapping everything until the save heart arrived, and a control
+   nested inside a link fires both on one tap. ▶ The tap target did not shrink:
+   `.fc-go` still covers the whole photo and body. */
+.fc-go{display:block;text-decoration:none;color:inherit}
 .fc-body{padding:8px 9px 9px}
 /* ⚠️ 4-line clamp, the same lesson as the feed cards: a merchant name is not
    prose and an unclamped one made 650px of empty beige under a short row. */
 .fc-name{font-size:12.5px;line-height:1.35;color:#1a1a1a;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .fc-meta{font-size:11px;line-height:1.4;color:#6f6f6f;margin-top:4px;letter-spacing:.01em;overflow-wrap:break-word}
 .fc-checks{margin-top:6px;display:flex;flex-wrap:wrap;gap:3px}
+/* ⭐ THE SAVE HEART SITS UNDER THE CARD, LABELLED "SAVE" IN WORDS — the mom
+   lesson, 2026-07-26: a control she cannot read is not a control, and a bare
+   heart floated over the photograph would have been exactly that. It is also
+   where every other card in this app keeps it (`.shop-card-act`).
+   ⚠️ THE PADDING IS THE TAP TARGET, NOT DECORATION. `.wl-save`'s own 4px would
+   leave a 22px button on the surface a woman taps fastest, and her audience
+   runs to 80. Tighten the margins around it if space is ever needed, never
+   this. The hairline is the card's own border colour, so it reads as one card
+   rather than two stacked things. */
+.fc-act{display:flex;justify-content:center;border-top:1px solid #f0ede8;padding:1px 6px 2px}
+.fc-act .wl-save{padding:7px 10px}
 /* ⚠️⚠️ THE HONESTY LABELS. A confirmed tick and an unconfirmed note must be
    TOLD APART AT A GLANCE and both must be READABLE -- the disclosure lesson
    applies here too: a notice nobody can read is not a notice. Both measured

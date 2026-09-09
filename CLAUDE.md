@@ -22,8 +22,8 @@ doing; **only the testers change the ceiling.**
 |---|---|---|---|
 | 1 | ~~Hand the store brief to ChatGPT~~ ✅ **CLOSED 2026-09-08 — she sent her own roster instead. 122 shops, and she is DONE adding for now.** | — | ✅ done |
 | 2 | ~~Re-run her three chat messages~~ ✅ **CLOSED 2026-09-09 — she tested the live build herself, twice, and her verdict is *"The chat is now working with scrollable photo options!!!"*** | — | ✅ done |
-| 3 | **Shop your Style** — wire the finder into it. She called it *"an enormous difference."* | Claude | ▶ **NEXT, and it is now the biggest single thing on the board** |
-| 4 | **A save heart on `_findCard`** — nothing the finder shows can be saved. Small, and it is the piece the fitting-room idea needs. | Claude | ▶ not started |
+| 3 | **Shop your Style** — wire the finder into it. She called it *"an enormous difference."* ⭐ **BOTH DESIGN FORKS ARE NOW ANSWERED BY HER, 2026-09-09 — see the build block below.** | Claude | ▶ **NEXT, and it is now the biggest single thing on the board** |
+| 4 | ~~A save heart on `_findCard`~~ ✅ **BUILT 2026-09-09 — every card the finder shows now carries the EXISTING `_wlSaveBtn`, and a saved piece keeps its photograph.** | — | ✅ done |
 
 ### 🏛️ BUSINESS & LEGAL
 ✅ **THE WHOLE LEGAL CHAIN IS NOW DONE:** LLC · EIN · trademark filed · **business bank account, credit
@@ -155,11 +155,17 @@ that makes any future number mean something.**
   `{id, name, store, search, url, price}`, and `_wlSaveBtn` is already on the shop rows, the shop cards,
   the wardrobe shelves and the Star of the Week. ▶▶ **SHE ALREADY HAS THE FITTING ROOM. IT IS CALLED THE
   WISHLIST.**
-  ▶ **THE REAL GAP, AND IT IS SMALL AND SPECIFIC: `_findCard` HAS NO SAVE HEART.** *(now item 4 in the
-  table at the top of this file.)* Everything the finder
-  shows — including the 24-card browse wall built the same day — cannot be saved. **The build is: put
-  the EXISTING `_wlSaveBtn` on `_findCard`, and store `image` on the wishlist entry** (it currently keeps
-  name/store/search/url/price but no photo), so a saved piece keeps its picture.
+  ✅✅ **THE REAL GAP IS CLOSED — BUILT 2026-09-09.** `_findCard` carries the **EXISTING** `_wlSaveBtn`
+  now, on every card of the row, checked and browse alike, and the wishlist entry carries `image`. ▶ **So
+  the piece the fitting-room view was waiting on exists: saved pieces now have photographs.** Nothing
+  renders them yet, on purpose — that IS the parked view, and it is still hers to start.
+  🚨 **AND ONE HONESTY DECISION INSIDE IT THAT MUST NOT BE "TIDIED" AWAY:** a CHECKED card saves as
+  `exact` (real product page → the row keeps its price and says *"Shop it"*); a BROWSE card saves as the
+  ordinary kind (store + search term → the row rebuilds the search, says *"Find it"*, shows NO price).
+  **Saving both the same way would have put a price and "Shop it" on a row that lands on a results
+  page**, which is exactly the *"generic store search dressed as a find"* she banned on 2026-09-06.
+  ▶ **The card never claimed it, so the saved row may not either.** Pinned by `chatfallback` section 15,
+  and the two checks were **proven to bite** by putting the wrong version back.
   ⭐ **THE RECOMMENDATION, WITH THE REASONING SO SHE CAN OVERRULE IT: DO NOT BUILD A SECOND LIST.**
   The instinct behind "fitting room" is real but it is **not a second list, it is a second VIEW.** A
   wishlist is *things I want someday*, in a vertical column of rows. A fitting room is *things I am
@@ -263,8 +269,9 @@ sections had accumulated in one file and a session could read any of them first.
 the standing rule and it held all day.
 
 ### ▶ TEST STATE — THE ONLY CURRENT ONE (older "TEST STATE" blocks below are STALE, ignore them)
-✅ **GREEN:** chatfallback **81** · copy **48** · findprod **63** · chatfind **63** · storepool 49 ·
-affq 40 · untagged 21 · starpx 28 · curated 65.
+✅ **GREEN (re-measured 2026-09-09 after the save heart):** chatfallback **98** (was 81) ·
+copy **49** (was 48) · findprod **63** · chatfind **63** · affq **40** · starpx **28** ·
+storepool 49 · untagged 21.
 ⚠️ **`searchtune` 80 checks / 1 failure — PRE-EXISTING, NOT A REGRESSION.** It is the `styles.css` check
 *"her voice: Lora upright 15.5 + gold bolds"*, and it was proven identical on the baseline `b6fb280`
 **even on a day when `styles.css` WAS edited**. ▶ **Verify against the baseline before believing it.**
@@ -281,15 +288,98 @@ affq 40 · untagged 21 · starpx 28 · curated 65.
    affiliate path is waiting on USERS, not on a decision.
 
 ### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER — THE ONLY CURRENT LIST
-1. ⭐ **SHOP YOUR STYLE — the big one, not started.** Her words: ***"I think that will make an enormous
-   difference."*** Same finder engine as the chat, which is now proven on her own phone.
-2. ▶ **A SAVE HEART ON `_findCard`.** Small, specific, and it is the piece the fitting-room idea needs:
-   nothing the finder shows can be saved today. **Put the EXISTING `_wlSaveBtn` on `_findCard` and store
-   `image` on the wishlist entry** so a saved piece keeps its photograph.
+1. ⭐ **SHOP YOUR STYLE — the big one, and IT IS NOW UNBLOCKED: BOTH DESIGN FORKS WERE PUT TO HER
+   BEFORE BUILDING AND SHE ANSWERED BOTH (2026-09-09).** Her words on the feature: ***"I think that will
+   make an enormous difference."*** Same finder engine as the chat, which is now proven on her own phone.
+   ▶ **HER RULING (a), WHERE THE REAL PRODUCTS GO WHEN SHE HAS TYPED AN ASK: *"Real products lead, the
+   six stay below."*** So the finder's row of real photographed pieces goes at the TOP and Catherine's
+   six named picks stay underneath as styling. ⚠️ **Not a replacement — she kept the stylist's voice on
+   the screen and simply put the buyable things first.**
+   ▶▶ **HER RULING (b), AND IT IS THE EXPENSIVE ONE, CHOSEN KNOWINGLY: *"Yes — one search from her
+   profile too."*** So the DEFAULT "show me a mix" view also searches, and every visit gets a wall of
+   real photographed pieces rather than six names. ⚠️⚠️ **SHE WAS TOLD THE COST PLAINLY FIRST: that is
+   ~2.5¢ on EVERY open of Shop your Style, including every refresh, whether or not the woman wanted
+   products — the app's biggest per-load cost.** She chose it anyway, which is her VALUE FIRST principle
+   again, exactly as on the chat's cost question. **Do not re-litigate it; do build the caching that
+   makes it cheap (a repeat profile search should cost nothing).**
+   🚨 **THE SHAPE THAT FALLS OUT, so it is not re-derived:** the Shop-your-Style prompt ALREADY calls
+   `style-ai` once, so the request for the finder should ride back on that SAME call as a `find` field
+   in its JSON — **the AI reads her sentence, which is her standing direction (intelligence, not another
+   word list), and it costs no extra AI call.** Then `_findKeepHerWords(req,_ssAsk)` still enforces that
+   colour/fabric/cut came from HER mouth, and `_findBlockHtml` renders the row — **the ONE builder, never
+   a second copy.**
+2. ✅✅ **A SAVE HEART ON `_findCard` — DONE 2026-09-09.** Every card of the row now carries the
+   EXISTING `_wlSaveBtn`, and a saved piece keeps its photograph. **`chatfallback` 81 → 98.**
 3. ⏸️ **THE FITTING-ROOM VIEW — parked by her, thinking kept.** Do not start it; do resurface it. The
    recommendation (ONE list, TWO views, never a second list) is written up in the master to-do.
 4. ▶ **MORE SEARCHES PER QUESTION.** `buildQueries` fires up to 4 and her real questions often fire ONE.
    Three or four would multiply the pool for ~5-7¢. **Cheap, unstarted, and hers to say yes to.**
+
+## ✅✅ THE SAVE HEART ON THE FINDER'S CARDS — BUILT 2026-09-09, HER ITEM 4
+▶▶ **HER ASK, AS THIS FILE RECORDED IT: *"Put the EXISTING `_wlSaveBtn` on `_findCard`, and store
+`image` on the wishlist entry"*** so a saved piece keeps its photograph. ✅ **Both done.** Every card of
+the chat's product row — the checked ones and all thirty browse cards — now carries the same gold heart,
+the same word **Save**, and the same single wishlist. ⚠️ **NO SECOND LIST, which was the whole point:
+`wishToggle` has stored a SPECIFIC piece all along, so the holding place already existed.**
+
+### 🚨🚨 THE CARD HAD TO STOP BEING ONE BIG `<a>`, AND THAT IS THE PART A LATER SESSION WILL WANT TO UNDO
+`_findCard` returned a single `<a class="find-card">` wrapping the photo, the name and the ticks. ▶ **An
+`<a>` may not contain another control: a heart nested inside the product link fires the save AND opens
+the shop in the same tap** — on the surface a woman taps fastest, swiping thirty cards.
+✅ **SO: the card is a `div`, the link is `.fc-go` INSIDE it covering the whole photo and body, and the
+heart is its SIBLING in `.fc-act`.** The tap target did not shrink and nothing she approved on
+2026-09-09 moved. **It is the same shape as `.shop-card` / `.shop-card-act` everywhere else in the app,
+which is the point — this is the FOURTH surface to carry the heart, not a new kind of card.**
+⚠️ **A future session "simplifying" the card back into one anchor would reintroduce the double-fire in a
+diff that reads as tidying.** `chatfallback` now asserts *"no save heart is nested inside a product
+link"* precisely so that diff goes red.
+⚠️ **AND THE HEART SAYS THE WORD "SAVE", it is not a bare icon on the photo** — her mum's 2026-07-26
+lesson, and the same reasoning that labelled *"+ Add a note"* in words. **Its padding is overridden to
+7px (`.fc-act .wl-save`) because the shared 4px leaves a 22px button and her audience runs to 80. That
+is a TAP TARGET, not decoration; `copy` now holds a floor under it.**
+
+### 🚨🚨🚨 THE HONESTY DECISION INSIDE IT, AND IT IS THE HALF WORTH REMEMBERING
+▶▶ **A CHECKED CARD AND A BROWSE CARD ARE SAVED AS DIFFERENT KINDS.** `p.checks` is already this card's
+own discriminator (*"a browse card carries NO ticks and claims nothing"*), so it decides this too:
+| the card | how it saves | what her wishlist row then says |
+|---|---|---|
+| **checked** (looked up on the retailer's own page) | `exact:true` — keeps that product url and its price | **"Shop it"**, with the price |
+| **browse** (link is that shop's SEARCH for the exact title) | the ordinary kind — store + search term, rebuilt every render | **"Find it"**, and **no price** |
+🚨 **SAVING BOTH AS `exact` WOULD HAVE PUT A PRICE AND "Shop it" ON A ROW THAT LANDS ON A RESULTS
+PAGE** — which is precisely the *"generic store search dressed as a find"* she banned on 2026-09-06.
+▶ **The card itself never claimed that. The saved row must not either.** ⭐ **And the honest kind is the
+more useful one anyway: a rebuilt search self-repairs the day a store URL is fixed.**
+⚠️ **`idName` IS THE RAW TITLE AND `name` THE PRETTY ONE.** A wishlist id is a slug of the name, so
+keying it on `_feedName`'s output would silently re-key every existing save the day that tidier changes
+— **exactly the orphaning caught on 2026-09-08. Never collapse those two back together.**
+▶ **`kind` was added to `_wlRegister` for the analytics line only and is never persisted.** The track
+call exists to answer *which surface do her saves come from*, and *"a piece the finder actually found"*
+is a real fourth answer — now the biggest source of savable cards — so it says so instead of reporting
+as `catalog`.
+
+### ⭐⭐ THE PHOTOGRAPH IS STORED AND DELIBERATELY NOT YET SHOWN — SAY THIS TO HER
+`image` is kept on the entry (https only, the same guard the wardrobe's catalog card uses). ▶ **Nothing
+renders it: the wishlist row view is untouched.** ⚠️⚠️ **HER WORDS ADMIT TWO BUILDS AND THIS FILE'S OWN
+RULE SAYS FLAG IT: (A) store it, ready for the fitting-room view she PARKED — built; (B) also put a
+thumbnail on every wishlist row now.** **B was not built, for two reasons: the fitting-room view is
+exactly where photographs were going to be shown and she parked it herself, and only finder-saved rows
+carry an image, so the list would look ragged — half rows with photos, half without.** ▶ **Offer her B
+in one line; it is small. Do not build it unilaterally.**
+
+### ✅ AND THE CHECKS WERE PROVEN TO BITE, WHICH IS THE STEP USUALLY SKIPPED
+▶ **`chatfallback` section 15, 13 checks.** It clicks the REAL heart and opens the REAL wishlist screen
+rather than calling `wishToggle` directly, because **the id the button carries is the thing that can
+silently go wrong.**
+⭐ **Then the wrong versions were put back and the right checks went red, each naming the real value:**
+saving both kinds as `exact` → *the browse one says "Find it"* fails with `["Shop it →","Shop it →"]`;
+dropping the image → *both saved pieces keep their photograph* fails with `["",""]`.
+🚨 **AND TWO OLD ASSERTIONS WERE REWRITTEN, NOT BUMPED**, per this file's own rule. They selected the
+card BY ITS TAG (`.find-card[rel="sponsored noopener"]`) and went red the moment the card stopped being
+an anchor. **The RULE never moved — every card links out, exactly once, sponsored, somewhere real — so
+they now select `.find-cards .find-card a[href]` and survive the shape changing again.**
+▶ **`copy`'s CSS fixture was updated to the card's REAL shape too.** It was a bare `<a class="find-card">`
+stand-in; **a fixture that drifts from the markup measures a card that does not exist**, which is the
+same false-green family this suite was built to replace.
 
 ## ▶ NEXT SESSION — START HERE (2026-09-09 — SHE SAID "THE CHAT IS NOT WORKING WELL." SHE WAS RIGHT, AND ALL OF IT CAME FROM ONE ROOT.)
 
@@ -1501,7 +1591,14 @@ colour"* over one set, *"Right fabric and style"* over another. **If those are e
 really does become the app choosing for her.** ▶ They appear only when there is more than one group —
 with a single set there is nothing to choose between and a label would be noise.
 
-### 🚨🚨🚨 START HERE NEXT SESSION — THE STORE LIST, AND SHE HAS NOT HANDED IT OVER YET
+### 📌 THE STORE-LIST BRIEF (2026-09-06) — ⚠️ **HISTORY. ITS "START HERE" IS CLOSED; KEPT FOR THE BRIEF'S CONTENTS**
+🚨 **DO NOT ACT ON THE HEADING THIS BLOCK USED TO CARRY.** It said *"START HERE NEXT SESSION — THE
+STORE LIST, AND SHE HAS NOT HANDED IT OVER YET"*, and that stopped being true on 2026-09-08: **she
+sent her own roster instead of running the brief through ChatGPT, and the list is now 132 shops.**
+▶ **What is still live below: what `docs/store-scoring-brief.md` CONTAINS (so it never has to be
+rebuilt) and the warning to watch for a FLAT table in anything a model drafts.** ⚠️ **What is DEAD: the
+handoff, the ~200 target, and the "first question next session" — all superseded by her own decision
+and by the rule that a shop needs only a NAME to be findable.**
 ▶▶ **THE FILE IS WRITTEN AND COMMITTED: `docs/store-scoring-brief.md`.** It was sent to her on
 2026-09-06 and **she had not yet given it to ChatGPT when the session ended.** ⚠️ **SO THE FIRST
 QUESTION NEXT SESSION IS SIMPLY: "did you get a chance to run the store brief through ChatGPT?"** —
@@ -1562,23 +1659,6 @@ recommendable.** It can never be ranked toward a woman it suits, and the chat wi
 the ten scores are not busywork — they are what makes a shop RECOMMENDED rather than merely reachable.**
 ▶ **Her measured priorities are unchanged: Kohl's (+28, in 8 of 10 test searches) and Zara** — and both
 could go in as yes/no rows today and be scored later, in that order.
-
-### ▶ STEP 3 — WHAT SHE ALREADY DID, AND WHAT IS LEFT
-1. ✅ **`SERPAPI_KEY` IS SET IN NETLIFY.** She added it and redeployed herself.
-2. ✅ **SHE TESTED ALL THREE CASES ON HER PHONE AND FOUND FOUR FAULTS** — see the section above. Three
-   were fixed the same evening; the fourth was the copy, and **she wrote the replacement herself.**
-3. ✅ **EVERYTHING IS MERGED TO `main` AND LIVE.** The finder, the chat integration, the three fixes,
-   the star and her wording — **and, 2026-09-07, the store guard and both photo crops.** ⚠️ **The
-   2026-09-07 merge was VERIFIED LIVE by fetching stylestar.app and finding the markers in the served
-   page (~20s after the push), not by trusting the deploy badge.** ▶ **Do that every time: the
-   Post-processing badge sits on "In progress" long after the site is already live, and she has
-   already been caught by it once.**
-4. ▶ **STILL TO DO: re-run her three messages against the CURRENT build.** The Napa one is the one to
-   watch — it returned nothing before the fix and returns real dresses ($39.97-$160) in testing now.
-5. ▶ **THEN SHOP YOUR STYLE**, which she called ***"an enormous difference."*** Not started.
-🔒 **SerpApi: ~75 of 250 free searches used on 2026-09-06. Her key is live and she may regenerate it at
-any time — if she does, `SERPAPI_KEY` in Netlify must be updated too or the chat quietly loses its
-product cards (no error, just advice).**
 
 ### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT — every one of these is still open
 1. ✅✅ **HER TWELVE SLIDER POSITIONS — RECORDED 2026-09-08, THE ASK IS CLOSED.** She sent her Style
@@ -1767,11 +1847,12 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **Never claim a save that failed** | n/a | `user-data.js` + `doStay` | **savetruth 14** | ✅ **fixed 2026-09-07** |
 | Checklist is a possibility map | copy + framing | n/a | ▶ none | ✅ copy-only rule |
 | **One photo renders the SAME on every screen** | **`pxPos`/`pxFit`/`px2` on the Star card (`.wks-px`)** | **the same override on the Edit (`.dc-item-px`), off ONE shared css rule** | **starpx 29** | ✅ **both, `px2` added 2026-09-08** |
-| **Never claim a requirement is verified when it is not** | **the chat's cards: `judge()` + the three verdicts** | **`verifySize`/`verifyColour`/`verifyFabric`/`verifyCut`/`verifyWidth` in `find-products.js`** | **findprod 54 · chatfind 61** | ✅ **BUILT 2026-09-06, and the `n/a`s below have now expired as predicted** |
+| **Never claim a requirement is verified when it is not** | **the chat's cards: `judge()` + the three verdicts** | **`verifySize`/`verifyColour`/`verifyFabric`/`verifyCut`/`verifyWidth` in `find-products.js`** | **findprod 63 · chatfind 63** | ✅ **BUILT 2026-09-06, and the `n/a`s below have now expired as predicted** |
 | **NEVER NAME A PRODUCT WE DID NOT FIND** | **the stylist may not name a product, price, size or link AT ALL — the ability is removed, not forbidden** | **every card carries a real verified offer from `find-products.js`** | **chatfallback 35** | ✅ **BUILT 2026-09-09, after she was shown four invented dresses** |
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 | **Never say "your shops" / "your stores"** | **status lines, empty states, row headers — the phrase is absent, asserted** | n/a — the shelves write no such prose | **chatfallback 81 · copy 69** | ✅ **her rule, 2026-09-09: *"Clients want me to check all stores"*** |
-| **A product photo is never cropped** | **the chat's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 48** | ✅ **her catch 2026-09-09: *"Can't see top of dress or head of the model"*** |
+| **A product photo is never cropped** | **the chat's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 49** | ✅ **her catch 2026-09-09: *"Can't see top of dress or head of the model"*** |
+| **A SAVED ROW MAY CLAIM NO MORE THAN THE CARD IT WAS SAVED FROM** | **`_findCard`: a CHECKED card saves `exact` (real product page → "Shop it" + price); a BROWSE card saves store+search (→ "Find it", no price)** | **`renderWishlist` labels off that same flag, and rebuilds the search link every render** | **chatfallback 98, §15 — and both checks proven to bite** | ✅ **BUILT 2026-09-09 with the save heart. It is her 2026-09-06 rule one surface further out: a price and "Shop it" on a row that lands on a RESULTS PAGE is the "generic store search dressed as a find" she banned.** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
 THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude
 choose by LOOKING at one known photograph** — the Star of the Week, an Edit pick. They work because

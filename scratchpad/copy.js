@@ -148,12 +148,22 @@ await page.setViewportSize({ width: 390, height: 844 });
 {
   const m = await page.evaluate(() => {
     const d = document.createElement('div');
-    d.innerHTML = '<div class="find-cards"><a class="find-card"><img class="fc-img"></a></div>';
+    /* ⚠️ THE FIXTURE IS THE CARD'S REAL SHAPE, NOT A CONVENIENT STAND-IN. It was
+       a bare `<a class="find-card">` until the save heart arrived on 2026-09-09
+       and the card became a div wrapping `.fc-go`. A fixture that drifts from the
+       markup measures a card that does not exist -- the same false-green family
+       as the blind checks this whole suite was built to replace. */
+    d.innerHTML = '<div class="find-cards"><div class="find-card">'
+      + '<a class="fc-go"><img class="fc-img"><div class="fc-body"></div></a>'
+      + '<div class="fc-act"><span class="wl-save">'
+      + '<svg viewBox="0 0 24 24"></svg><span class="wl-save-t">Save</span></span></div>'
+      + '</div></div>';
     document.body.appendChild(d);
     const im = getComputedStyle(d.querySelector('.fc-img'));
     const card = getComputedStyle(d.querySelector('.find-card'));
     const r = { fit: im.objectFit, h: parseFloat(im.height),
-                bg: im.backgroundColor, cardBg: card.backgroundColor };
+                bg: im.backgroundColor, cardBg: card.backgroundColor,
+                heart: d.querySelector('.fc-act .wl-save').getBoundingClientRect().height };
     d.remove();
     const chat = document.getElementById('s-chat');
     const was = chat ? chat.style.display : null;
@@ -194,6 +204,13 @@ await page.setViewportSize({ width: 390, height: 844 });
      runs to 80; "save space" must never shrink a button below the thumb. */
   ok('and "Start a fresh conversation" is still a real tap target',
      m.tap >= 16, 'tap=' + m.tap.toFixed(1) + 'px');
+  /* ⚠️⚠️ THE SAME FLOOR ON THE SAVE HEART, AND IT NEEDS ITS OWN CHECK BECAUSE
+     `.wl-save`'s shared 4px padding leaves a 22px button. This card is the
+     surface she taps fastest, so `.fc-act .wl-save` overrides it to 7px.
+     ▶ A later session "unifying" the heart back to the shared padding would
+     shrink it in a diff that reads as tidying. This is what stops that. */
+  ok('and the save heart on a product card is a real tap target',
+     m.heart >= 26, 'heart=' + m.heart.toFixed(1) + 'px');
 }
 
 await browser.close();

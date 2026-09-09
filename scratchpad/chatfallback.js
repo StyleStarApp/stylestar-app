@@ -397,9 +397,16 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
     /showing you as much as i could find/i.test(await pg.locator('.find-head').first().innerText()),
     await pg.locator('.find-head').first().innerText());
  /* ▶ The raw result's own link points at google.com/search and is useless;
-    getStoreUrl builds the shop's own search for this exact piece. */
- const hrefs=await pg.locator('.find-cards .find-card').evaluateAll(
-   els=>els.map(e=>e.getAttribute('href')||''));
+    getStoreUrl builds the shop's own search for this exact piece.
+    ⚠️⚠️ SELECTED AS "THE ANCHOR INSIDE A CARD", NOT BY THE CARD'S OWN TAG. The
+    card WAS itself an `<a>` until the save heart arrived on 2026-09-09 and a
+    control could no longer be nested inside the product link. ▶ The rule never
+    moved — every card links out, exactly once, sponsored, somewhere real — so
+    these name the rule and survive the shape changing again. */
+ const links=pg.locator('.find-cards .find-card a[href]');
+ ok('every card has exactly one outbound link',(await links.count())===cards,
+    'links='+(await links.count())+' of '+cards+' cards');
+ const hrefs=await links.evaluateAll(els=>els.map(e=>e.getAttribute('href')||''));
  ok('no card links to a google search',!hrefs.some(h=>h.includes('google.com')),hrefs.join(' | '));
  ok('every card links somewhere real',hrefs.every(h=>/^https?:\/\//.test(h)),hrefs.join(' | '));
  /* ⚠️ DERIVED, NOT TYPED. This read `=== 6` and went red the moment the fixture
@@ -408,8 +415,28 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
     number without reading it. Comparing against the row's own card count asserts
     the actual rule — EVERY card is sponsored — and cannot go stale. */
  ok('every card is rel=sponsored',
-    (await pg.locator('.find-cards .find-card[rel="sponsored noopener"]').count())===cards,
-    'sponsored='+(await pg.locator('.find-cards .find-card[rel="sponsored noopener"]').count())+' of '+cards);
+    (await pg.locator('.find-cards .find-card a[rel="sponsored noopener"]').count())===cards,
+    'sponsored='+(await pg.locator('.find-cards .find-card a[rel="sponsored noopener"]').count())+' of '+cards);
+ /* ⭐⭐ THE SAVE HEART — her ask, 2026-09-09: nothing the finder showed could be
+    saved. ▶ THESE ASSERT THE RULE IN BOTH DIRECTIONS, which is the half usually
+    skipped: the heart is on EVERY card (a browse card is savable too — showing
+    more is not claiming more, but it is still a real piece from a real shop),
+    and it is the EXISTING `.wl-save` rather than a second control, because a
+    second list was the thing she ruled against. */
+ ok('every card carries a save heart',
+    (await pg.locator('.find-cards .find-card .wl-save').count())===cards,
+    'hearts='+(await pg.locator('.find-cards .find-card .wl-save').count())+' of '+cards);
+ ok('the heart says the word "Save", it is not a bare icon',
+    /save/i.test(await pg.locator('.find-cards .find-card .wl-save').first().innerText()),
+    await pg.locator('.find-cards .find-card .wl-save').first().innerText());
+ /* 🚨🚨 THE BUG THIS SHAPE EXISTS TO PREVENT, AND IT IS THE WHOLE REASON THE CARD
+    STOPPED BEING AN `<a>`: a heart nested inside the product link fires the save
+    AND opens the shop on one tap, on the surface she taps fastest. A future
+    session tidying the card back into a single anchor would reintroduce it in a
+    diff that looks like a simplification. */
+ ok('no save heart is nested inside a product link',
+    (await pg.locator('.find-cards .find-card a .wl-save').count())===0,
+    'nested='+(await pg.locator('.find-cards .find-card a .wl-save').count()));
  /* 🚨 ONE DISCLOSURE PER ANSWER. This file's own audit records Wardrobe once
     showing FIVE on a single page; a second one under the wall would be the
     same accident of per-block rendering. */
@@ -545,6 +572,83 @@ console.log('\n14. the cards come back after she leaves and returns');
  ok('and a paying shop is still not at the bottom',await pg.evaluate(()=>{
    const m=[...document.querySelectorAll('.find-cards .fc-meta')].map(x=>x.textContent||'');
    const i=m.findIndex(t=>/FARM Rio/.test(t));return i>=0&&i<=2;}));
+ ok('no JS errors',errs.length===0,errs.join('|'));
+ await ctx.close();}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   15. THE SAVE HEART KEEPS THE PIECE — AND KEEPS IT HONESTLY (2026-09-09).
+   ▶▶ HER ASK: nothing the finder showed could be saved. A woman could swipe
+     thirty real pieces from her own shops and had no way to keep one.
+   🚨🚨 THE HALF THAT NEEDED A TEST IS NOT "does the heart work" — it is WHAT THE
+     SAVED ROW THEN CLAIMS. A checked card was looked up on the retailer's own
+     page, so its saved row keeps that product url and its price and says
+     "Shop it". A browse card's link is that shop's SEARCH for the exact title,
+     so its row rebuilds the search and says "Find it", with no price.
+     ▶ Saving both as the same kind would have put a price and "Shop it" on a
+     row that lands on a results page: the "generic store search dressed as a
+     find" she banned on 2026-09-06. The card never claimed it; nor may the row.
+   ⚠️ IT DRIVES THE REAL CONTROLS — clicks the real heart, opens the real
+     wishlist screen — rather than calling wishToggle directly, because the id
+     the button carries is the thing that can silently go wrong. */
+console.log('\n15. the save heart keeps the piece, and keeps it honestly');
+{mode='wall';calls=[];findCalls=[];
+ const {pg,ctx,errs}=await run('wall','I need a fitted white top');
+ await pg.waitForTimeout(3000);
+ const cards=await pg.locator('.find-cards .find-card').count();
+ ok('nothing is saved before she taps',
+    (await pg.locator('.find-cards .wl-save.on').count())===0);
+ /* The FIRST card is the checked one (verified lead, browse follows) and the
+    LAST is a browse card -- the row's own documented order, so this reads the
+    two kinds without needing to know the fixture. */
+ const checked=pg.locator('.find-cards .find-card').first();
+ const browse=pg.locator('.find-cards .find-card').last();
+ ok('the first card is the checked one',
+    (await checked.locator('.fc-yes').count())===1);
+ ok('and the last is a browse card, claiming nothing',
+    (await browse.locator('.fc-yes').count())===0);
+ await checked.locator('.wl-save').click();
+ await pg.waitForTimeout(250);
+ await browse.locator('.wl-save').click();
+ await pg.waitForTimeout(250);
+ ok('two pieces are now saved and the hearts say so',
+    (await pg.locator('.find-cards .wl-save.on').count())===2,
+    'on='+(await pg.locator('.find-cards .wl-save.on').count())+' of '+cards);
+ /* ▶ THE PHOTOGRAPH IS KEPT ON BOTH. Her ask, and it is also the data the
+    parked fitting-room view needs -- nothing renders it yet, so a test is the
+    only thing standing between "stored" and "quietly dropped". */
+ const saved=await pg.evaluate(()=>(wardrobeData.wishlist||[]).map(
+   e=>({name:e.name,img:e.image||'',price:e.price||'',exact:!!e.exact,url:e.url||'',
+        search:e.search||'',store:e.store||''})));
+ ok('both saved pieces keep their photograph',
+    saved.length===2&&saved.every(e=>/^https:\/\//.test(e.img)),
+    JSON.stringify(saved.map(e=>e.img)));
+ ok('the checked piece keeps its real product url and its price',
+    saved.some(e=>e.exact&&/^https?:\/\//.test(e.url)&&e.price),
+    JSON.stringify(saved.filter(e=>e.exact)));
+ ok('the browse piece is saved as a rebuildable search, with NO price',
+    saved.some(e=>!e.exact&&e.search&&!e.price),
+    JSON.stringify(saved.filter(e=>!e.exact)));
+ /* ▶▶ AND THE ROW SHE ACTUALLY READS. This is the assertion that matters: the
+    two words under her thumb must match what the app can honestly deliver. */
+ await pg.evaluate(()=>openWishlist());
+ await pg.waitForTimeout(500);
+ const rows=await pg.locator('#wlBody .wl-row').evaluateAll(
+   els=>els.map(e=>({t:e.innerText||'',go:(e.querySelector('.wl-go')||{}).textContent||''})));
+ ok('the wishlist shows both saved pieces',rows.length===2,'rows='+rows.length);
+ ok('the checked one says "Shop it" -- it has a real product page',
+    rows.some(r=>/Shop it/.test(r.go)),JSON.stringify(rows.map(r=>r.go)));
+ ok('the browse one says "Find it" -- it lands on a search, and says so',
+    rows.some(r=>/Find it/.test(r.go)),JSON.stringify(rows.map(r=>r.go)));
+ ok('and no row wears a "Catherine’s pick" badge -- neither is her editorial choice',
+    (await pg.locator('#wlBody .wl-pick').count())===0);
+ /* 🚨 THE HEART IS A TOGGLE, NOT A ONE-WAY DOOR. Un-saving from the row it was
+    saved on is the path a woman actually takes when she changes her mind. */
+ await pg.evaluate(()=>openChat());
+ await pg.waitForTimeout(700);
+ await pg.locator('.find-cards .find-card').first().locator('.wl-save').click();
+ await pg.waitForTimeout(250);
+ ok('tapping the heart again takes it back off',
+    (await pg.evaluate(()=>(wardrobeData.wishlist||[]).length))===1);
  ok('no JS errors',errs.length===0,errs.join('|'));
  await ctx.close();}
 

@@ -18197,3 +18197,34 @@ affwrap 35 · untagged · feedshelf.
 4. **THEN SHOP YOUR STYLE**, same engine. **THEN the Wardrobe shelves — and that is what finally retires
    the 107-item spreadsheet**, which she has been asking about and which only survives because those
    shelves still read it.
+
+
+---
+
+## 📦 ARCHIVED 2026-09-09 from `CLAUDE.md` — "STEP 3 — WHAT SHE ALREADY DID, AND WHAT IS LEFT"
+▶ **Retired because every item in it is now finished or superseded, per the archiving rule's own test
+(*is this what HAPPENED, or what is TRUE RIGHT NOW?*).** Items 1-3 are done; item 4 (re-run her three
+chat messages) closed on 2026-09-09 with her verdict *"The chat is now working with scrollable photo
+options!!!"*; item 5 (Shop your Style) lives on in the current build-next list.
+⚠️ **THE TWO RULES INSIDE IT WERE CHECKED FOR DUPLICATION BEFORE MOVING, AND BOTH SURVIVE IN
+`CLAUDE.md`:** *verify a deploy by FETCHING the served page, never by the badge* (in the current
+"WHERE WE LEFT OFF" block) and *if she regenerates `SERPAPI_KEY`, Netlify must be updated or the chat
+quietly loses its product cards* (in the product-finder section). **Its SerpApi figure — "~75 of 250
+used" — was already stale and is superseded by the live SerpApi status section.**
+
+### ▶ STEP 3 — WHAT SHE ALREADY DID, AND WHAT IS LEFT
+1. ✅ **`SERPAPI_KEY` IS SET IN NETLIFY.** She added it and redeployed herself.
+2. ✅ **SHE TESTED ALL THREE CASES ON HER PHONE AND FOUND FOUR FAULTS** — see the section above. Three
+   were fixed the same evening; the fourth was the copy, and **she wrote the replacement herself.**
+3. ✅ **EVERYTHING IS MERGED TO `main` AND LIVE.** The finder, the chat integration, the three fixes,
+   the star and her wording — **and, 2026-09-07, the store guard and both photo crops.** ⚠️ **The
+   2026-09-07 merge was VERIFIED LIVE by fetching stylestar.app and finding the markers in the served
+   page (~20s after the push), not by trusting the deploy badge.** ▶ **Do that every time: the
+   Post-processing badge sits on "In progress" long after the site is already live, and she has
+   already been caught by it once.**
+4. ▶ **STILL TO DO: re-run her three messages against the CURRENT build.** The Napa one is the one to
+   watch — it returned nothing before the fix and returns real dresses ($39.97-$160) in testing now.
+5. ▶ **THEN SHOP YOUR STYLE**, which she called ***"an enormous difference."*** Not started.
+🔒 **SerpApi: ~75 of 250 free searches used on 2026-09-06. Her key is live and she may regenerate it at
+any time — if she does, `SERPAPI_KEY` in Netlify must be updated too or the chat quietly loses its
+product cards (no error, just advice).**
