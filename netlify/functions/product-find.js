@@ -165,8 +165,15 @@ export default async (req) => {
     const q = (new URL(req.url).searchParams.get('q') || '').slice(0, 60);
     if (!KEY1 || !q) return json({error: 'need q'}, headers, 400);
     try {
+      /* ▶ min_price passthrough, added 2026-09-09 to answer HER question rather
+         than guess at it: "is adding designer to the search the best possible
+         solution?" A price floor reaches the top of the market by a FACT rather
+         than by a vocabulary guess, so it is worth measuring against "designer"
+         before either is wired into the real search. Probe-only. */
+      const minP = (new URL(req.url).searchParams.get('min_price') || '').replace(/\D/g, '').slice(0, 6);
       const r = await fetch('https://serpapi.com/search.json?' + new URLSearchParams({
         engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY1,
+        ...(minP ? {min_price: minP} : {}),
       }), {signal: AbortSignal.timeout(20000)});
       const d = await r.json();
       /* ⏱ SerpApi reports its OWN processing time in search_metadata. That is the
@@ -189,7 +196,7 @@ export default async (req) => {
         const k = x.source || '(none)';
         sources[k] = (sources[k] || 0) + 1;
       }
-      return json({q, count: (d.shopping_results || []).length, sources,
+      return json({q, min_price: minP || null, count: (d.shopping_results || []).length, sources,
                    timing: {
                      serpapi_total: (d.search_metadata || {}).total_time_taken,
                      google_url_ok: !!(d.search_metadata || {}).google_shopping_url,
