@@ -3094,6 +3094,13 @@ body.card-fb{padding:0}
    is exactly what the button itself does. */
 .wl-door{display:block;font:400 15.5px/1.5 'Lora',Georgia,serif;color:#4a463e;text-align:center;max-width:300px;margin:2px auto 12px;text-wrap:balance}
 .wl-door svg{width:15px;height:15px;vertical-align:-2px;margin-right:6px;display:inline-block}
+/* ⚠️ THE CHAT'S COPY OF THE DOOR IS TIGHTER, AND ONLY THAT. Same component, same
+   words, same gold — but the chat screen is the one she asked to give "more room
+   to the chatting", so it takes less vertical space than it does on a browsing
+   page. ▶ The TAP TARGET inside it is untouched (`.wl-door-go` keeps its ~43px);
+   this trims the MARGIN around the control, never the padding inside it, which
+   is her own 2026-09-09 rule written down. */
+.chat-wl-door{margin:0 auto 6px;font-size:14.5px}
 /* The link half only. The count is a statement, not a control -- making the
    whole line tappable would put a tap target around words that do nothing.
    ⚠️ The padding is the tap target for the 18-to-80 audience, not decoration;

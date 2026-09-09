@@ -272,7 +272,7 @@ the standing rule and it held all day.
 
 ### ▶ TEST STATE — THE ONLY CURRENT ONE (older "TEST STATE" blocks below are STALE, ignore them)
 ✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 48 — NEW** ·
-chatfallback **98** (was 81) · copy **49** (was 48) · findprod **63** · chatfind **63** · affq **40** ·
+chatfallback **105** (was 81) · copy **49** (was 48) · findprod **63** · chatfind **63** · affq **40** ·
 starpx **28** · honest · storepool 49 · untagged 21.
 ⚠️ **`searchtune` 80 / 1 — the SAME pre-existing `styles.css` failure, *"her voice: Lora upright 15.5 +
 gold bolds"*, re-confirmed unchanged today.**
@@ -335,6 +335,41 @@ already tested Shop your Style on her phone and passed it. Both are written up b
 ⚠️ **AND ONE THING STILL WAITING ON HER EYE, UNPROMPTED: the stylist's own line on the no-ask view (*"so
 that is where I looked"*) IS CLAUDE'S COPY and is marked in the code as a placeholder for hers.** She
 said it is fine; **her own wording has beaten every draft so far, so offer it once more, don't force it.**
+
+## ⭐⭐ HER COPY, AND THE WAY BACK TO HER WISHLIST FROM THE CHAT (2026-09-09, LATER)
+### ⭐⭐⭐ HER LINE REPLACES CLAUDE'S ON THE PRODUCT ROW — AND IT IS THE SECOND TIME
+▶▶ **HER WORDS: *"Let's change the wording where it says Showing you as much as I could find. Let's
+change it to: Here are some options."*** ✅ **Done, and it lands on BOTH surfaces at once because they
+share one builder.**
+⭐ **WHY HERS IS BETTER, AND IT GENERALISES: CLAUDE'S LINE WAS DOING WORK IT DID NOT NEED TO.** *"As much
+as I COULD find"* quietly APOLOGISES for the row before a woman has found anything wrong with it. **Hers
+just opens the door.** ▶ **It is the same instinct as her near-miss sentence — STATE THE TRUTH AND STOP
+— and that sentence beat five drafts too.**
+⚠️ **DO NOT PARAPHRASE IT BACK INTO SOMETHING FULLER.** `chatfallback` pins it verbatim AND asserts the
+excusing wording is gone. **An exact string is the right assertion here precisely because it is HER
+wording rather than a mechanism.**
+
+### ⭐⭐ SHE FOUND A REAL GAP: NO WAY BACK TO THE WISHLIST FROM THE CHAT
+▶▶ **HER WORDS: *"On stylist chat after she saves something I like how it pops up to tell her it saved
+to wishlist successfully but after that disappears she might not know how to find her wishlist from the
+stylist chat page. What do you suggest?"*** ⭐ **Note she liked the toast — the toast is not the problem.**
+🚨 **THE ANSWER, AND THE REASONING MATTERS MORE THAN THE FIX: A TOAST IS TRANSIENT BY DESIGN.** Making
+it linger only moves the cliff further out. **What was missing is a PERMANENT way back — which every
+other saving surface in the app already had and the chat did not.**
+✅ **SO IT IS THE EXISTING `data-wldoor` COMPONENT, PUT WHERE IT WAS MISSING. NOTHING NEW WAS BUILT.**
+`_syncHeartTip()` already fills every `[data-wldoor]` in the app and already hides it at zero saves, so
+the chat can never drift from the wishlist screen's own door. ▶ **One line of markup.**
+⚠️ **THREE PLACEMENT DECISIONS, EACH DELIBERATE:**
+**(a) IT ONLY EXISTS ONCE SHE HAS SAVED SOMETHING** — a woman who has saved nothing is never shown a
+door to an empty list. **Asserted in BOTH directions, because a check that only proves it appears would
+pass just as happily on a door that never goes away.**
+**(b) ABOVE `.chat-messages`, NOT IN THE FOOTER.** ▶▶ **She had just asked to TIGHTEN those three footer
+lines (*"much tighter together to save space and give more room to the chatting"*), so a fourth line
+down there would have undone her own change.** Above the messages it also **stays put while she scrolls**
+rather than sliding away with the conversation.
+**(c) TIGHTER MARGINS ON THIS SURFACE ONLY, AND THE TAP TARGET UNTOUCHED** — her own 2026-09-09 rule:
+tighten the MARGINS around a control, never the padding inside it.
+▶ **`chatfallback` 98 → 105.**
 
 ## ⭐⭐ SHE TESTED SHOP YOUR STYLE THE SAME EVENING — HER VERDICT AND HER TWO FAULTS (2026-09-09)
 ▶▶ **SHE OPENED IT ON HER PHONE AND SEARCHED *"Tan sandals"*. THE BUILD ITSELF PASSED:** her ruling (a)
@@ -2044,7 +2079,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 | **Never say "your shops" / "your stores"** | **status lines, empty states, row headers — the phrase is absent, asserted** | n/a — the shelves write no such prose | **chatfallback 81 · copy 69** | ✅ **her rule, 2026-09-09: *"Clients want me to check all stores"*** |
 | **A product photo is never cropped** | **the chat's AND Shop your Style's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 49** | ✅ **her catch 2026-09-09, and SHE CLOSED THE BAND QUESTION THE SAME DAY: *"I have not noticed a white band on anything."*** ⚠️ **The shoe-photo complaint is NOT this rule failing — it is the retailer's own margin, measured at 9-10% fill. A zoom to fix it would break this row.** |
-| **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 48 · chatfallback 98** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
+| **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 48 · chatfallback 105** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
 | **A SAVED ROW MAY CLAIM NO MORE THAN THE CARD IT WAS SAVED FROM** | **`_findCard`: a CHECKED card saves `exact` (real product page → "Shop it" + price); a BROWSE card saves store+search (→ "Find it", no price)** | **`renderWishlist` labels off that same flag, and rebuilds the search link every render** | **chatfallback 98, §15 — and both checks proven to bite** | ✅ **BUILT 2026-09-09 with the save heart. It is her 2026-09-06 rule one surface further out: a price and "Shop it" on a row that lands on a RESULTS PAGE is the "generic store search dressed as a find" she banned.** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
 THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude

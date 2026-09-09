@@ -1255,6 +1255,24 @@
       </div>
       <button class="chat-close" onclick="chatBack()">&larr; Back</button>
     </div>
+    <!-- ⭐⭐ THE WAY BACK TO HER WISHLIST, FROM THE CHAT — her catch, 2026-09-09:
+         "after she saves something I like how it pops up to tell her it saved to
+         wishlist successfully but after that disappears she might not know how to
+         find her wishlist from the stylist chat page."
+         ▶▶ SHE IS RIGHT, AND THE TOAST IS THE WRONG PLACE TO FIX IT: a toast is
+           transient by design, and lengthening it only moves the cliff. What is
+           missing is a PERMANENT way back, which every other saving surface
+           already has.
+         ▶ SO IT IS THE SAME `data-wldoor` COMPONENT the wishlist screen and Shop
+           your Style use, not a second control — `_syncHeartTip()` fills it and
+           already hides it at zero saves, so it appears the moment her first save
+           lands and never clutters an empty chat. NOTHING NEW WAS BUILT.
+         ⚠️ ABOVE `.chat-messages`, WHICH IS THE SCROLLING PART — so it stays put
+           while she reads, instead of scrolling away with the conversation.
+         ⚠️ AND NOT IN THE FOOTER, DELIBERATELY. She had just asked to TIGHTEN
+           those three lines ("much tighter together to save space and give more
+           room to the chatting"); a fourth line down there would undo it. -->
+    <div class="wl-door chat-wl-door" data-wldoor style="display:none"></div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-suggestions" id="chatSuggestions">
       <div class="chat-sug-label">Try asking:</div>
@@ -11439,8 +11457,17 @@ function _findBlockHtml(data,req){
        ⚠️ SO THE HONESTY RULE IS NOT WEAKENED, IT MOVED TO WHERE SHE PUT IT.
          A checked card says "✓ red"; an unchecked one says nothing at all. If a
          future change ever removes the ticks, this header has to come back. */
+    /* ⭐⭐ HER COPY, VERBATIM, 2026-09-09 — AND IT REPLACES CLAUDE'S. She read
+       "Showing you as much as I could find." on her own phone and said: "Let's
+       change it to: Here are some options."
+       ▶ WHY HERS IS BETTER, and it is the same lesson as her near-miss sentence:
+         IT STATES THE TRUTH AND STOPS. The old line was doing work it did not
+         need to — quietly excusing the row ("as much as I COULD") before she had
+         found anything wrong with it. Hers simply opens the door.
+       ⚠️ DO NOT PARAPHRASE IT BACK INTO SOMETHING FULLER. Her wording has now
+         beaten a Claude draft on this row twice. */
     const head=browseCards.length
-      ? 'Showing you as much as I could find.'
+      ? 'Here are some options.'
       /* ▶ With nothing unchecked behind them there is no "first few" to name,
          so the original wording stands and stays honest. */
       : (shown.length===1?'Here is the one I can stand behind.'

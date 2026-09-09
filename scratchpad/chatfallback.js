@@ -393,9 +393,16 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
     /CANNOT BRING BACK PIECES YOU SHOWED HER BEFORE/.test(JSON.stringify(calls[0]||{})));
  ok('and is told never to promise to pull them back up',
     /NEVER say you will pull them back up/.test(JSON.stringify(calls[0]||{})));
- ok('the row still says plainly that this is everything found',
-    /showing you as much as i could find/i.test(await pg.locator('.find-head').first().innerText()),
+ /* ⭐ HER COPY, VERBATIM AND PINNED AS SUCH — she replaced Claude's "Showing you
+    as much as I could find." with "Here are some options." on 2026-09-09.
+    ⚠️ THIS IS ONE OF THE FEW PLACES AN EXACT STRING IS THE RIGHT ASSERTION: it is
+    HER wording, not a mechanism, and the failure it guards against is somebody
+    "improving" it back into a fuller sentence. */
+ ok('the row opens with HER line, verbatim',
+    /here are some options\./i.test(await pg.locator('.find-head').first().innerText()),
     await pg.locator('.find-head').first().innerText());
+ ok('...and the excusing wording she cut is gone',
+    !/as much as i could find/i.test(await pg.locator('.find-head').first().innerText()));
  /* ▶ The raw result's own link points at google.com/search and is useless;
     getStoreUrl builds the shop's own search for this exact piece.
     ⚠️⚠️ SELECTED AS "THE ANCHOR INSIDE A CARD", NOT BY THE CARD'S OWN TAG. The
@@ -437,6 +444,39 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
  ok('no save heart is nested inside a product link',
     (await pg.locator('.find-cards .find-card a .wl-save').count())===0,
     'nested='+(await pg.locator('.find-cards .find-card a .wl-save').count()));
+ /* ⭐⭐ THE WAY BACK TO HER WISHLIST — her catch, 2026-09-09: "after she saves
+    something I like how it pops up to tell her it saved to wishlist successfully
+    but after that disappears she might not know how to find her wishlist from
+    the stylist chat page."
+    ▶▶ THE TOAST IS NOT THE FIX. A toast is transient by design and lengthening it
+      only moves the cliff; what was missing is a PERMANENT way back.
+    🚨 AND THE HALF THAT MATTERS MOST IS THE ZERO STATE: a woman who has saved
+      nothing must NOT be shown a door to an empty list. These assert BOTH
+      directions, because a check that only proves it appears would pass just as
+      happily on a door that never goes away. */
+ ok('with nothing saved, the chat shows NO wishlist door',
+    (await pg.locator('#s-chat [data-wldoor]:visible').count())===0);
+ await pg.locator('.find-cards .find-card').first().locator('.wl-save').click();
+ await pg.waitForTimeout(400);
+ ok('...and the moment she saves, a permanent way back appears',
+    (await pg.locator('#s-chat [data-wldoor]:visible').count())===1);
+ {const d=(await pg.locator('#s-chat [data-wldoor]').first().innerText()).trim();
+  ok('...naming her count and the way through, in words',
+     /1 saved/.test(d) && /see your wishlist/i.test(d), d);}
+ /* ⚠️ IT IS THE SHARED COMPONENT, NOT A SECOND CONTROL — `_syncHeartTip` fills
+    every `[data-wldoor]` in the app, so the chat can never drift from the
+    wishlist screen's own door. */
+ ok('...and it is the ONE shared door, not a chat-only copy',
+    (await pg.locator('#s-chat [data-wldoor] .wl-door-go').count())===1);
+ /* ⚠️ ABOVE the scrolling part, so it does not scroll away with the conversation. */
+ ok('...sitting outside the scrolling message area, so it stays put',
+    await pg.evaluate(()=>{const d=document.querySelector('#s-chat [data-wldoor]'),
+      m=document.getElementById('chatMessages');
+      return !!(d&&m&&!m.contains(d)&&(d.compareDocumentPosition(m)&Node.DOCUMENT_POSITION_FOLLOWING));}));
+ await pg.locator('.find-cards .find-card').first().locator('.wl-save').click();
+ await pg.waitForTimeout(400);
+ ok('...and it goes away again if she empties her list',
+    (await pg.locator('#s-chat [data-wldoor]:visible').count())===0);
  /* 🚨 ONE DISCLOSURE PER ANSWER. This file's own audit records Wardrobe once
     showing FIVE on a single page; a second one under the wall would be the
     same accident of per-block rendering. */
