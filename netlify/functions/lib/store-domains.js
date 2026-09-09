@@ -10,8 +10,7 @@ export default {
    "plus",
    "tall",
    "wide"
-  ],
-  "strengths": "almost everything, dresses, shoes, denim, jewelry"
+  ]
  },
  "Macy's": {
   "host": "macys.com",
@@ -21,8 +20,7 @@ export default {
    "plus",
    "tall",
    "wide"
-  ],
-  "strengths": "everyday, dresses, shoes, handbags, jewelry"
+  ]
  },
  "Dillard's": {
   "host": "dillards.com",
@@ -30,8 +28,7 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "dresses, occasion, workwear, jewelry"
+  ]
  },
  "Belk": {
   "host": "belk.com",
@@ -39,8 +36,7 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "everyday, dresses, shoes, jewelry"
+  ]
  },
  "Bloomingdales": {
   "host": "bloomingdales.com",
@@ -48,8 +44,7 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "designer, denim, shoes, jewelry"
+  ]
  },
  "Saks": {
   "host": "saksfifthavenue.com",
@@ -57,32 +52,27 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "designer, bags, occasion, fine jewelry"
+  ]
  },
  "Neiman Marcus": {
   "host": "neimanmarcus.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "designer, evening, shoes, fine jewelry"
+  "sizes": []
  },
  "Bergdorf Goodman": {
   "host": "bergdorfgoodman.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "couture, designer, fine jewelry"
+  "sizes": []
  },
  "NET-A-PORTER": {
   "host": "net-a-porter.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "luxury designer clothing, handbags, shoes"
+  "sizes": []
  },
  "Shopbop": {
   "host": "shopbop.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "contemporary designers, denim, shoes"
+  "sizes": []
  },
  "Nordstrom Rack": {
   "host": "nordstromrack.com",
@@ -91,16 +81,14 @@ export default {
    "petite",
    "plus",
    "wide"
-  ],
-  "strengths": "designer deals, shoes, denim, jewelry"
+  ]
  },
  "TJ Maxx": {
   "host": "m.tjmaxx.tjx.com",
   "tier": "$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "value finds, handbags, shoes"
+  ]
  },
  "J.Crew": {
   "host": "jcrew.com",
@@ -108,20 +96,17 @@ export default {
   "sizes": [
    "petite",
    "tall"
-  ],
-  "strengths": "timeless classics, workwear, denim, dresses"
+  ]
  },
  "Zara": {
   "host": "zara.com",
   "tier": "$$",
-  "sizes": [],
-  "strengths": "fashion-forward trends, statement pieces"
+  "sizes": []
  },
  "Mango": {
   "host": "shop.mango.com",
   "tier": "$$",
-  "sizes": [],
-  "strengths": "workwear, elevated trends, outerwear"
+  "sizes": []
  },
  "Target": {
   "host": "target.com",
@@ -130,8 +115,7 @@ export default {
    "petite",
    "plus",
    "tall"
-  ],
-  "strengths": "affordable fashion, basics, accessories"
+  ]
  },
  "Amazon": {
   "host": "amazon.com",
@@ -141,14 +125,12 @@ export default {
    "plus",
    "tall",
    "wide"
-  ],
-  "strengths": "almost everything, basics, accessories, shoes"
+  ]
  },
  "Etsy": {
   "host": "etsy.com",
   "tier": "$-$$$$",
-  "sizes": [],
-  "strengths": "handmade goods, vintage finds, personalized jewelry and gifts, independent makers, home decor, art"
+  "sizes": []
  },
  "Anthropologie": {
   "host": "anthropologie.com",
@@ -156,22 +138,19 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "dresses, occasion, unique pieces"
+  ]
  },
  "Express": {
   "host": "express.com",
   "tier": "$$",
   "sizes": [
    "petite"
-  ],
-  "strengths": "going-out looks, workwear, denim"
+  ]
  },
  "Revolve": {
   "host": "revolve.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "occasion dresses, vacation, designer contemporary"
+  "sizes": []
  },
  "Abercrombie": {
   "host": "abercrombie.com",
@@ -179,16 +158,14 @@ export default {
   "sizes": [
    "petite",
    "tall"
-  ],
-  "strengths": "denim, dresses, everyday fashion"
+  ]
  },
  "H&M": {
   "host": "www2.hm.com",
   "tier": "$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "affordable trends, basics"
+  ]
  },
  "Banana Republic": {
   "host": "bananarepublic.gap.com",
@@ -196,8 +173,7 @@ export default {
   "sizes": [
    "petite",
    "tall"
-  ],
-  "strengths": "workwear, elevated basics, tailoring"
+  ]
  },
  "Banana Republic Factory": {
   "host": "bananarepublicfactory.gapfactory.com",
@@ -205,34 +181,29 @@ export default {
   "sizes": [
    "petite",
    "tall"
-  ],
-  "strengths": "affordable workwear, tailoring, basics"
+  ]
  },
  "Everlane": {
   "host": "everlane.com",
   "tier": "$$",
-  "sizes": [],
-  "strengths": "elevated basics, denim, outerwear"
+  "sizes": []
  },
  "Aritzia": {
   "host": "aritzia.com",
   "tier": "$$-$$$",
-  "sizes": [],
-  "strengths": "elevated basics, tailoring, outerwear"
+  "sizes": []
  },
  "Uniqlo": {
   "host": "uniqlo.com",
   "tier": "$",
-  "sizes": [],
-  "strengths": "basics, layering pieces, outerwear"
+  "sizes": []
  },
  "Quince": {
   "host": "quince.com",
   "tier": "$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "cashmere, linen, silk, luxury basics"
+  ]
  },
  "Old Navy": {
   "host": "oldnavy.gap.com",
@@ -241,8 +212,7 @@ export default {
    "petite",
    "plus",
    "tall"
-  ],
-  "strengths": "budget basics, activewear, family essentials"
+  ]
  },
  "Lands' End": {
   "host": "landsend.com",
@@ -251,8 +221,7 @@ export default {
    "petite",
    "plus",
    "tall"
-  ],
-  "strengths": "swimwear, outerwear, basics, uniforms"
+  ]
  },
  "Boden": {
   "host": "us.boden.com",
@@ -260,38 +229,32 @@ export default {
   "sizes": [
    "petite",
    "tall"
-  ],
-  "strengths": "colorful dresses, prints"
+  ]
  },
  "FARM Rio": {
   "host": "farmrio.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "colorful dresses, vacation wear, statement prints"
+  "sizes": []
  },
  "Tommy Bahama": {
   "host": "tommybahama.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "resortwear, vacation clothing, linen"
+  "sizes": []
  },
  "J.McLaughlin": {
   "host": "jmclaughlin.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "resortwear, polished casual, prints"
+  "sizes": []
  },
  "IZOD": {
   "host": "izod.com",
   "tier": "$$",
-  "sizes": [],
-  "strengths": "polos, golfwear, casual basics"
+  "sizes": []
  },
  "Lacoste": {
   "host": "lacoste.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "polos, casual sportswear, sneakers"
+  "sizes": []
  },
  "Gap": {
   "host": "gap.com",
@@ -300,46 +263,39 @@ export default {
    "petite",
    "plus",
    "tall"
-  ],
-  "strengths": "everyday basics, denim, casualwear"
+  ]
  },
  "Gap Factory": {
   "host": "gapfactory.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "White House Black Market": {
   "host": "whitehouseblackmarket.com",
   "tier": "$$",
   "sizes": [
    "petite"
-  ],
-  "strengths": "sleek workwear, occasion"
+  ]
  },
  "Tuckernuck": {
   "host": "tnuck.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "dresses, polished separates, occasion, resort"
+  "sizes": []
  },
  "Frank & Eileen": {
   "host": "frankandeileen.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "button-downs, relaxed luxury, travel"
+  "sizes": []
  },
  "Faherty": {
   "host": "fahertybrand.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "resortwear, knitwear, beach lifestyle"
+  "sizes": []
  },
  "Cuyana": {
   "host": "cuyana.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "leather handbags, timeless accessories"
+  "sizes": []
  },
  "Eileen Fisher": {
   "host": "eileenfisher.com",
@@ -347,54 +303,46 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "sustainable luxury, linen, relaxed tailoring"
+  ]
  },
  "Theory": {
   "host": "theory.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "tailoring, workwear, luxury basics"
+  "sizes": []
  },
  "Vince": {
   "host": "vince.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "luxury basics, knitwear, outerwear"
+  "sizes": []
  },
  "M.M.LaFleur": {
   "host": "mmlafleur.com",
   "tier": "$$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "executive workwear, tailoring"
+  ]
  },
  "Sézane": {
   "host": "sezane.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "knitwear, blouses, timeless french style"
+  "sizes": []
  },
  "LoveShackFancy": {
   "host": "loveshackfancy.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "feminine dresses, occasion, florals"
+  "sizes": []
  },
  "Free People": {
   "host": "freepeople.com",
   "tier": "$$-$$$",
   "sizes": [
    "petite"
-  ],
-  "strengths": "boho fashion, sweaters, dresses"
+  ]
  },
  "Altar'd State": {
   "host": "altardstate.com",
   "tier": "$$",
-  "sizes": [],
-  "strengths": "dresses, casual feminine fashion"
+  "sizes": []
  },
  "Reformation": {
   "host": "thereformation.com",
@@ -402,20 +350,17 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "dresses, sustainable fashion, occasion"
+  ]
  },
  "AllSaints": {
   "host": "allsaints.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "leather jackets, edgy contemporary fashion"
+  "sizes": []
  },
  "Rag & Bone": {
   "host": "rag-bone.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "premium denim, modern essentials"
+  "sizes": []
  },
  "Levi's": {
   "host": "levi.com",
@@ -423,8 +368,7 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "denim, casualwear, jackets"
+  ]
  },
  "NYDJ": {
   "host": "nydj.com",
@@ -432,54 +376,46 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "premium denim, flattering fit"
+  ]
  },
  "Coach": {
   "host": "coach.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "leather handbags, wallets, accessories"
+  "sizes": []
  },
  "Baby Gold": {
   "host": "babygold.com",
   "tier": "$$",
-  "sizes": [],
-  "strengths": "solid 14K fine jewelry, personalized names and charms, diamonds"
+  "sizes": []
  },
  "Gorjana": {
   "host": "gorjana.com",
   "tier": "$$",
-  "sizes": [],
-  "strengths": "everyday jewelry, layering pieces"
+  "sizes": []
  },
  "Mejuri": {
   "host": "mejuri.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "fine jewelry, everyday essentials"
+  "sizes": []
  },
  "Vuori": {
   "host": "vuoriclothing.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "premium athleisure, casual basics"
+  "sizes": []
  },
  "Summersalt": {
   "host": "summersalt.com",
   "tier": "$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "swimwear, resortwear, travel"
+  ]
  },
  "Soma": {
   "host": "soma.com",
   "tier": "$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "bras, lingerie, sleepwear"
+  ]
  },
  "Naturalizer": {
   "host": "naturalizer.com",
@@ -487,8 +423,7 @@ export default {
   "sizes": [
    "wide",
    "narrow"
-  ],
-  "strengths": "comfortable dress shoes, work shoes"
+  ]
  },
  "Ann Taylor": {
   "host": "anntaylor.com",
@@ -496,8 +431,7 @@ export default {
   "sizes": [
    "petite",
    "tall"
-  ],
-  "strengths": "workwear, dresses, blazers"
+  ]
  },
  "LOFT": {
   "host": "loft.com",
@@ -506,8 +440,7 @@ export default {
    "petite",
    "plus",
    "tall"
-  ],
-  "strengths": "relaxed workwear, denim"
+  ]
  },
  "Talbots": {
   "host": "talbots.com",
@@ -515,8 +448,7 @@ export default {
   "sizes": [
    "petite",
    "plus"
-  ],
-  "strengths": "timeless workwear, knits"
+  ]
  },
  "J.Jill": {
   "host": "jjill.com",
@@ -525,40 +457,35 @@ export default {
    "petite",
    "plus",
    "tall"
-  ],
-  "strengths": "linen, relaxed essentials"
+  ]
  },
  "Chico's": {
   "host": "chicos.com",
   "tier": "$$",
   "sizes": [
    "petite"
-  ],
-  "strengths": "travel pieces, easy separates"
+  ]
  },
  "Universal Standard": {
   "host": "universalstandard.com",
   "tier": "$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "tailoring, elevated basics"
+  ]
  },
  "Eloquii": {
   "host": "eloquii.com",
   "tier": "$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "dresses, workwear"
+  ]
  },
  "Torrid": {
   "host": "torrid.com",
   "tier": "$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "denim, everyday, lingerie"
+  ]
  },
  "Lane Bryant": {
   "host": "lanebryant.com",
@@ -566,30 +493,26 @@ export default {
   "sizes": [
    "plus",
    "wide"
-  ],
-  "strengths": "bras, denim, basics"
+  ]
  },
  "Good American": {
   "host": "goodamerican.com",
   "tier": "$$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "premium denim, curve fit"
+  ]
  },
  "Petite Studio": {
   "host": "petitestudionyc.com",
   "tier": "$$$",
   "sizes": [
    "petite"
-  ],
-  "strengths": "petite tailoring, dresses"
+  ]
  },
  "Lululemon": {
   "host": "shop.lululemon.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "premium activewear, athleisure"
+  "sizes": []
  },
  "Athleta": {
   "host": "athleta.gap.com",
@@ -598,50 +521,43 @@ export default {
    "petite",
    "plus",
    "tall"
-  ],
-  "strengths": "activewear, travel, everyday performance"
+  ]
  },
  "Alo Yoga": {
   "host": "aloyoga.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "luxury activewear, athleisure"
+  "sizes": []
  },
  "Everything But Water": {
   "host": "everythingbutwater.com",
   "tier": "$$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "designer swimwear, resort fashion"
+  ]
  },
  "Vilebrequin": {
   "host": "vilebrequin.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "swimwear, resortwear, beach cover-ups, vacation dresses"
+  "sizes": []
  },
  "Spanx": {
   "host": "spanx.com",
   "tier": "$$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "shapewear, leggings, smoothing basics"
+  ]
  },
  "SKIMS": {
   "host": "skims.com",
   "tier": "$$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "shapewear, loungewear, basics"
+  ]
  },
  "Fleur du Mal": {
   "host": "fleurdumal.com",
   "tier": "$$$-$$$$",
-  "sizes": [],
-  "strengths": "sexy lingerie, nightgowns, slips, robes, sleepwear, a small amount of activewear"
+  "sizes": []
  },
  "Zappos": {
   "host": "zappos.com",
@@ -649,239 +565,200 @@ export default {
   "sizes": [
    "wide",
    "narrow"
-  ],
-  "strengths": "shoes, sneakers, boots, comfort footwear, extended widths"
+  ]
  },
  "DSW": {
   "host": "dsw.com",
   "tier": "$$",
   "sizes": [
    "wide"
-  ],
-  "strengths": "shoes, handbags, accessories, extended widths"
+  ]
  },
  "Sam Edelman": {
   "host": "samedelman.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "fashion shoes, boots, sandals"
+  "sizes": []
  },
  "Olivela": {
   "host": "olivela.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "unique jewelry, bags, shoes, resort wear, swimwear, silk sleepwear, beautiful fabrics"
+  "sizes": []
  },
  "Marissa Collections": {
   "host": "marissacollections.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "designer dresses, fine jewelry, shoes, sunglasses, jackets and coats"
+  "sizes": []
  },
  "Mytheresa": {
   "host": "mytheresa.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "designer fashion across every style, bags, shoes and jewelry, very polished, very pricey"
+  "sizes": []
  },
  "Kohl's": {
   "host": "kohls.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "COUTR": {
   "host": "coutr.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "designer swimwear, jewelry, bags, sunglasses and shoes, high quality designer pieces"
+  "sizes": []
  },
  "Sachin & Babi": {
   "host": "sachinandbabi.com",
   "tier": "$$$$",
   "sizes": [
    "plus"
-  ],
-  "strengths": "evening gowns, mother of the bride, wedding guest, occasion"
+  ]
  },
  "Alice + Olivia": {
   "host": "aliceandolivia.com",
   "tier": "$$$-$$$$",
-  "sizes": [],
-  "strengths": "statement dresses, occasionwear"
+  "sizes": []
  },
  "Diane von Furstenberg": {
   "host": "dvf.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "wrap dresses, printed dresses, occasion, wedding guest"
+  "sizes": []
  },
  "Veronica Beard": {
   "host": "veronicabeard.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "blazers, premium denim, elevated separates"
+  "sizes": []
  },
  "Tory Burch": {
   "host": "toryburch.com",
   "tier": "$$$",
-  "sizes": [],
-  "strengths": "handbags, shoes, workwear, resort"
+  "sizes": []
  },
  "Gucci": {
   "host": "gucci.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "designer handbags, shoes, belts, accessories"
+  "sizes": []
  },
  "Tiffany & Co.": {
   "host": "tiffany.com",
   "tier": "$$$$",
-  "sizes": [],
-  "strengths": "fine jewelry, luxury gifts"
+  "sizes": []
  },
  "Sunglass Hut": {
   "host": "sunglasshut.com",
   "tier": "$$-$$$$",
-  "sizes": [],
-  "strengths": "designer sunglasses, eyewear"
+  "sizes": []
  },
  "Warby Parker": {
   "host": "warbyparker.com",
   "tier": "$$",
-  "sizes": [],
-  "strengths": "prescription glasses, sunglasses"
+  "sizes": []
  },
  "Quay": {
   "host": "quay.com",
   "tier": "$$",
-  "sizes": [],
-  "strengths": "fashion sunglasses"
+  "sizes": []
  },
  "Aerie": {
   "host": "ae.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "American Eagle": {
   "host": "ae.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "ASOS": {
   "host": "asos.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Ashley Stewart": {
   "host": "ashleystewart.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "City Chic": {
   "host": "citychiconline.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Club Monaco": {
   "host": "clubmonaco.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Frances Valentine": {
   "host": "francesvalentine.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Honeylove": {
   "host": "honeylove.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Karen Millen": {
   "host": "karenmillen.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "L*Space": {
   "host": "lspace.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "L.L.Bean": {
   "host": "llbean.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Lilly Pulitzer": {
   "host": "lillypulitzer.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Long Tall Sally": {
   "host": "longtallsally.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Lord & Taylor": {
   "host": "lordandtaylor.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Mestiza New York": {
   "host": "mestizanewyork.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "MZ Wallace": {
   "host": "mzwallace.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Ramy Brook": {
   "host": "ramybrook.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Reiss": {
   "host": "reiss.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Rothy's": {
   "host": "rothys.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Staud": {
   "host": "staud.clothing",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  },
  "Teri Jon": {
   "host": "terijon.com",
   "tier": "",
-  "sizes": [],
-  "strengths": ""
+  "sizes": []
  }
 };

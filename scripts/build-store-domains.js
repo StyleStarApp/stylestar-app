@@ -31,15 +31,6 @@ export function buildDomains() {
       // Her own size ranges, kept because the finder uses them to say which
       // shops honestly carry a width or a petite line. Never inferred.
       sizes: Array.isArray(entry.s) ? entry.s.slice() : [],
-      /* ⭐ HER OWN WORDS ABOUT WHAT EACH SHOP IS KNOWN FOR, carried through
-         2026-09-09 so the finder can use them. She wrote these in July — "wrap
-         dresses, printed dresses, occasion, wedding guest" for DVF, "swimwear,
-         resortwear, beach cover-ups" for Vilebrequin — and until now the search
-         never looked at them at all.
-         ⚠️ COPIED, NEVER INVENTED. 100 of her 123 shops have one; the other 23
-         simply never get picked for a targeted search, and nothing else about
-         them changes. */
-      strengths: entry.c || '',
     };
   }
   return out;
