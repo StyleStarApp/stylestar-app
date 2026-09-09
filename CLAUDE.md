@@ -258,6 +258,103 @@ the served page** — not by trusting the Post-processing badge, which is the st
 completes in ~9s**, where the old build sat silent past its 30-second stall guard. **The three silent
 web searches were the whole wait.**
 
+### ⭐⭐⭐ SHE TESTED IT AGAIN, 2026-09-09 (LATER), AND FOUND SIX THINGS. HER RULINGS ARE HERE.
+▶▶ **HER FRAMING: *"Before we move on I would like to talk about the chat some more."*** She sent five
+phone screenshots and named six faults. ⚠️ **SHE WAS RIGHT ABOUT ALL SIX, AND EVERY ONE WAS CHECKED IN
+THE CODE BEFORE BEING AGREED WITH** — that is this file's own rule and it mattered here, because one of
+the six turned out to be the opposite of what it looked like.
+
+**🚨🚨 THE ONE CLAUDE READ WRONG, AND SHE CORRECTED IT — READ THIS BEFORE "FIXING" DUPLICATE STORES.**
+She said *"some of the stores showing up duplicate times"*, and it was read as her `max two per
+retailer` promise being broken on a new surface. **A store cap was about to be built.** Her answer:
+▶▶ ***"I don't mind if multiple cards for one store show up. For example if I ask for a red dress and
+there are 5 of them at Bloomingdale's I want to see all 5 of them, plus 5 more from Nordstrom plus
+whatever mytheresa or Marissa or farm Rio has too. I want to show as many cards for her to swipe as
+possible. Not limited."***
+✅ **SO: NO STORE CAP ON THE CHAT'S PRODUCT ROW. Her explicit decision.** ⚠️ **The max-two rule still
+stands exactly where she set it — the Wardrobe compare carousel and the AI's own shopping lists via
+`_shopRules`. This is a deliberate, recorded EXCEPTION, not a reversal**, and it is written into the
+code comment at the row so nobody re-adds it. **A future session finding "the chat repeats a shop" must
+not treat it as a regression.**
+⚠️ **BUT SEPARATE THE TWO THINGS, BECAUSE ONLY ONE IS WANTED: the same STORE twice is her design; the
+same DRESS twice is noise.** The pool already dedupes on `product_id || title`, so a true repeat only
+slips through when Google returns one dress under two ids. **Still unconfirmed whether that is what she
+saw — ask her before building anything for it.**
+
+**⭐⭐⭐ AND THE FOUNDER PRINCIPLE UNDERNEATH IT, WHICH IS THE MOST USEFUL THING SHE SAID ALL DAY —
+VERBATIM, AND IT REFRAMES THE WHOLE FEATURE:**
+***"a stylist loves to show the client as many options as possible. This is what is great about online
+shopping. You can browse sooo many more options than live shopping or than a stylist can physically
+present to her so the big browse (even if not a perfect search) is fun, easy and clients love eye candy
+of swiping photos and seeing more."***
+▶▶ **SO "NOT A PERFECT MATCH" IS NOT A FAILURE ON THIS SURFACE — IT IS THE POINT.** This is the answer
+to every future instinct to trim, cap or tidy the row. **Breadth IS the product here.** ⚠️ It does NOT
+loosen her honesty rule: it governs how MANY she sees, never what the app CLAIMS. That distinction is
+hers and it has now survived three separate conversations.
+
+**✅ BUILT: ONE ROW, BEST FIRST — HER DESIGN, NOT CLAUDE'S.** Her words: ***"Feels like it would make
+more sense to show her one row of cards starting with the ones that match her search terms the best and
+then she can keep scrolling the rest?"*** ▶ **It replaced a two-block layout (a verified block, then a
+separately-titled browse wall below it) with ONE horizontal row.**
+⭐ **HER IDEA SOLVED TWO OF HER OWN SIX COMPLAINTS AT ONCE, which is why it beat the built version:**
+**(a)** there is no second row left to miss — her *"I had to scroll down to find it... my mom for
+example would have missed it"* · **(b)** three headers collapse into one line, which is her *"amount of
+words crowding the page"*.
+✅ **AND THE MACHINERY ALREADY AGREED WITH HER, MEASURED NOT ASSUMED:** the server sorts every product
+by how many of her own words appear in its title and THEN looks up the top four — so *"the checked
+ones"* and *"the best matches"* are the same pieces in the same order. **Her sort was already computed
+and was being thrown away by the layout.**
+🚨 **THE FORK WAS FLAGGED BEFORE BUILDING, AND SHE PICKED — THIS IS THE 2026-09-08 RULE WORKING.**
+With the second block gone, the sentence *"I haven't checked every detail on these ones"* had nowhere
+to live, so a woman scrolling one row could read the whole row as vetted. **(A)** one short line above
+the row · **(B)** no line at all. ▶ **HER ANSWER: *"Yes go with A."*** So the row is headed
+*"The first N I've checked in detail."* — six words carrying the whole honesty rule.
+⚠️ **ONE EXCEPTION TO THE SINGLE ROW, AND IT IS HERS TOO: the near-miss screen keeps its labelled
+groups** (*"Right colour"*, *"Right fabric and style"*). She called those the thing that must hold —
+blurring them *"really does become the app choosing for her"* — so an unlabelled pool is never poured
+into a labelled group. ▶ **ONE ROW IS THE RULE WHEN THERE IS NOTHING TO LABEL; LABELS WIN WHEN THERE IS.**
+🚨 **AND A CONTRADICTION WAS FOUND AND FIXED ON THE WAY: her approved sentence ends *"and nothing close
+enough to show you"* — and the browse row underneath it could be showing thirty dresses.** Her copy is
+approved AS WRITTEN for the state it describes, **so the repair was to stop using it in a state it does
+not describe, never to reword it.** The replacement line is Claude's and is marked in the code as a
+placeholder for hers.
+
+**▶ THE FOUR SHE NAMED THAT ARE STILL OPEN, none started, all verified real in the code:**
+1. ▶ **THE CARDS VANISH ON RELOAD, AND THE STYLIST LIED ABOUT IT.** Cards are `mc.appendChild`-ed into
+   the page and **never written to `ss_chat`**, which saves only the text messages — so a reload loses
+   them permanently. Asked where they went, the stylist replied ***"Let me pull them back up for you
+   right now"*** and then produced nothing. 🚨🚨 **THERE IS NO CODE THAT CAN PULL THEM BACK UP. That is
+   the invented-dresses family again — not a fake product this time, but a FAKE PROMISE ABOUT ITS OWN
+   BEHAVIOUR**, and it is the worst of the six.
+2. ▶ **WORDS CROWDING THE PAGE.** Measured: a **46-word privacy paragraph** plus the commission line
+   plus *"Start a fresh conversation"* sit under **every** answer, permanently — roughly a third of the
+   screen in all five of her screenshots. **It is plumbing sitting where clothes should be.**
+   ✅ The one-row build already cuts ~16 words of it; the footer itself is untouched.
+3. ▶ **HER AFFILIATE SHOPS NEVER APPEAR — AND IT IS A DECISION, NOT A BUG.** Verified: the nine earning
+   domains are `farmrio · dvf · vilebrequin · coutr · olivela · marissacollections · fleurdumal ·
+   mytheresa · etsy`. **Nordstrom and Bloomingdale's are NOT among them**, so both dresses on her
+   screen earned **$0**, from the two companies that rejected her. ⚠️ **This is her own Option A ruling
+   working exactly as she chose it** (the app never knows who pays; fit and price decide). ▶▶ **AND A
+   CODE FIX PROBABLY CANNOT HELP: every shop that earns is `$$$`/`$$$$` and none of them stocks a $107
+   belted daytime dress. The honest answer is still a mid-market approval, which is still USERS.**
+   **Do not quietly soften Option A to make this look better.**
+4. ▶ **THE SPINNING STAR** — she named it as a fault and **what is wrong with it is not yet known.**
+   She was asked and has not said. **Ask before building; do not guess.**
+
+⭐ **THE DEBUG VIEW EARNED ITS KEEP ON DAY TWO.** Her screenshot: `1 search fired · 33 products in your
+shops · 3 looked up · 3 exact · 0 near miss · 30 browse cards · search 4799ms · look-up 6005ms · total
+11700ms · 890 searches left`. ▶ **Every one of those numbers took hours to reconstruct from photographs
+last time.** It also answered her cost question outright.
+✅✅ **HER COST QUESTION, ASKED AND ANSWERED WITH HER OWN NUMBERS: *"I think you said that does not cost
+more to show her more because it is still one search?"* — SHE IS RIGHT.** A **search** (~2.5¢) returns
+up to 60 products already carrying title, store, price and photo; a **look-up** (~2.5¢) checks ONE
+product in detail and is what earns a tick. ▶ **Rendering a card from a search already paid for costs
+NOTHING** — her 30 browse cards cost exactly what showing 3 would have. **More cards: free. More
+searches: 2.5¢ each. A tick: 2.5¢ each.**
+▶ **SO THE REMAINING LEVER FOR "AS MANY AS POSSIBLE" IS PAID BUT CHEAP: her belted-dress question fired
+only 1 of the 4 searches `MAX_QUERIES` allows.** Three or four would multiply the pool for about 5-7¢ a
+question, with 890 left this month. **Not started — it is hers to say yes to.**
+
 ### ✅✅✅ HER VERDICT IS IN, 2026-09-09, AND IT IS A YES
 ▶▶ **HER WORDS: *"The chat is now working with scrollable photo options!!!"***
 🚨 **SO THE CHAT IS NO LONGER ON TRIAL.** She arrived saying *"the chat is not working well"* and left
@@ -1405,7 +1502,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **Size range PER CATEGORY** | `_sizeGuidance`, built from `_FIT_FAMILIES` | `_fitApplies()` | **sizefit 38** | ✅ **fixed 2026-09-07** |
 | A sweater is not a top | `_WDR_IDEA_EXCLUDE` | `data/slot-rules.json` | slot_match · feedshelf | ✅ both |
 | The sibling-row map | `_WDR_IDEA_EXCLUDE` in prompt | Gate 1 in `curatedPicks` | feedshelf | ✅ both |
-| **Store variety per surface** | `_shopRules` from `_STORE_CAP` | `_storeCap(mode)` | **storecap 15** | ✅ **fixed 2026-09-07** |
+| **Store variety per surface** | `_shopRules` from `_STORE_CAP` | `_storeCap(mode)` | **storecap 15** | ✅ **fixed 2026-09-07** — ⚠️ **and DELIBERATELY SUSPENDED on the chat's product row, her ruling 2026-09-09: *"I don't mind if multiple cards for one store show up... I want to show as many cards for her to swipe as possible. Not limited."* Not a regression.** |
 | Price spread | prompt line (`index.html:5015`) | band logic + feed ceiling | curated | ✅ both |
 | Luxury via her retailers | `sendChat` prompt | n/a — feed links ARE her affiliates | ▶ none | ✅ verified by reading |
 | **Store-pool eligibility** | `STORES` table only | **all 8 feed stores resolve, all have her dimensions** | **storepool 47** | ✅ **TESTED 2026-09-08 — the prediction came true on schedule** |

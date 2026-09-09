@@ -10843,23 +10843,81 @@ async function _findRun(req){
   const doors=(data.doors||[]).map(function(d){return{...d,products:keep(d.products)}})
                               .filter(function(d){return d.products.length});
 
+  /* ═══ ONE ROW, BEST FIRST — HER DESIGN, 2026-09-09 ═════════════════════════
+     ⭐⭐ HER WORDS, AND THEY ARE THE WHOLE REASON THIS ROW EXISTS:
+       "a stylist loves to show the client as many options as possible. This is
+        what is great about online shopping. You can browse sooo many more
+        options than live shopping or than a stylist can physically present to
+        her so the big browse (even if not a perfect search) is fun, easy and
+        clients love eye candy of swiping photos and seeing more."
+     ▶▶ SO "NOT A PERFECT MATCH" IS NOT A FAILURE ON THIS SURFACE, IT IS THE
+       POINT. Do not re-add anything that trims this row for tidiness.
+     🚨 HER RULING THE SAME DAY, WHICH SUSPENDS THE max-two-per-retailer HABIT
+       HERE AND ONLY HERE: "I don't mind if multiple cards for one store show
+       up... if I ask for a red dress and there are 5 of them at Bloomingdale's
+       I want to see all 5 of them, plus 5 more from Nordstrom." ▶ NO STORE CAP
+       ON THIS ROW. The max-two rule still stands where she set it (the Wardrobe
+       compare carousel, and the AI's own shopping lists via _shopRules) — this
+       is a deliberate, recorded exception, NOT a reversal. A future session
+       finding "the chat repeats a shop" must not treat it as a regression.
+     ▶ WHY ONE ROW AND NOT TWO BLOCKS — HER OWN DIAGNOSIS, FROM HER PHONE: the
+       second titled block sat below the fold and she had to scroll to find it
+       ("my mom for example would have missed it"). One row has nothing to miss;
+       she just keeps swiping. It also retires THREE headers in favour of one
+       line, which is her "too many words crowding the page" complaint answered
+       in the same move.
+     ⚠️ THE ORDER IS ALREADY RIGHT AND COSTS NOTHING EXTRA: the server sorts
+       every product by how many of her own words appear in its title and THEN
+       looks up the top four, so "the checked ones" and "the best matches" are
+       the same pieces in the same order. Verified lead, the rest follow in
+       descending agreement. */
+  const browse=keep(data.browse).filter(function(b){return b.store&&b.title});
+  /* ⚠️ ONE CARD RENDERER, NEVER A SECOND COPY — `_findCard` draws both halves of
+       this row, so `_feedName` still strips a trailing size clause and any
+       future card change lands on every card at once. This file's oldest lesson.
+     ⚠️ THE LINK IS A STORE SEARCH FOR THIS EXACT PIECE, NOT A LOOK-UP. A raw
+       result's own link points at google.com/search and is useless; getStoreUrl
+       builds that shop's own search for the exact title, is instant, is
+       _affUrl-wrapped so it still earns, and cannot be popup-blocked the way a
+       link opened after an await is on iOS.
+     ⚠️ HER NEVER-WEAR LIST GOVERNS THESE TOO — the same keep() ran above, with
+       her WHOLE request, exactly as it does over the verified set. */
+  const browseCards=browse.map(function(b){
+    return _findCard({id:b.id,title:b.title,brand:b.brand,store:b.store,
+      price:b.price,image:b.image,url:getStoreUrl(b.store,b.title)});
+  });
+  /* ⚠️ A BROWSE CARD CARRIES NO TICKS AND CLAIMS NOTHING — it is handed no
+     `checks`, so `_findCard` renders name, store, price and photo and stops.
+     Showing MORE is not claiming more, and that distinction is hers. */
+
+  /* ⚠️ ONE DISCLOSURE PER ANSWER, ASSERTED BY chatfallback. This file's own audit
+     records Wardrobe once showing FIVE on a single 7,300px page. Now that the
+     row is single, the one disclosure sits under it on every path that renders
+     a card — including the no-exact-match path, which previously rendered
+     sponsored links with none of its own. */
+  const DISC='<div class="find-disc">Some links may earn a commission.</div>';
+
   const wrap=document.createElement('div');
   wrap.className='find-block';
   if(exact.length){
-    wrap.innerHTML='<div class="find-head">'+(exact.length===1
-        ?'Here is the one I can stand behind.'
-        :'Found '+exact.length+' that match what you asked for.')+'</div>'+
-      /* ⭐ HER ASK, 2026-09-08 AND AGAIN 2026-09-09: "the more options she can
-         browse, the better... if she can scroll through a lot of visuals, that
-         makes it more fun." The row is a horizontal touch-scroller already
-         (.find-cards), so the only thing capping it was this number. Raised
-         from 4 so nothing found is thrown away before she can swipe to it.
-         ⚠️ This does NOT loosen her honesty rule: every card here is still a
-         verified exact match. It changes how many she SEES, not what the app
-         CLAIMS about them. The wide pool of unverified near-misses is the
-         separate "many cards, lazy look-ups" build. */
-      '<div class="find-cards">'+exact.slice(0,12).map(function(p){return _findCard(p)}).join('')+'</div>'+
-      '<div class="find-disc">Some links may earn a commission.</div>';
+    const shown=exact.slice(0,12);
+    /* ▶ HER CHOICE, 2026-09-09. Two builds were put to her before building —
+       (A) one short honest line above the row, (B) no line at all — and she
+       chose A. WHY IT MATTERS: with the second block gone, nothing else says
+       the row is part checked and part not, so a woman scrolling would
+       reasonably read the whole row as vetted. That is the precise thing the
+       tick exists to prevent, and it is her rule of 2026-09-06: never imply a
+       requirement is confirmed unless we can actually verify it. Six words. */
+    const head=browseCards.length
+      ? (shown.length===1?'The first one I\'ve checked in detail.'
+                         :'The first '+shown.length+' I\'ve checked in detail.')
+      /* ▶ With nothing unchecked behind them there is no "first few" to name,
+         so the original wording stands and stays honest. */
+      : (shown.length===1?'Here is the one I can stand behind.'
+                         :'Found '+shown.length+' that match what you asked for.');
+    wrap.innerHTML='<div class="find-head">'+head+'</div>'+
+      '<div class="find-cards">'+shown.map(function(p){return _findCard(p)}).join('')+
+      browseCards.join('')+'</div>'+DISC;
   }else if(doors.length){
     /* ▶▶ HER COPY, VERBATIM (2026-09-06): "I couldn't find an exact match today.
        Would you like me to keep the blush and look at satin, or keep the silk and
@@ -10867,17 +10925,12 @@ async function _findRun(req){
        ⚠️ AND THE SHAPE MATTERS AS MUCH AS THE WORDS: one door PER REQUIREMENT she
        gave, each saying what it KEEPS. The app never decides for her which of her
        own words mattered least. */
-    /* ⭐⭐ HER WORDS, 2026-09-06, AND THEY BEAT EVERY OPTION OFFERED — five were
-       drafted and she wrote a better one in a sentence:
+    /* ⭐⭐ HER WORDS, 2026-09-06, AND THEY BEAT EVERY OPTION OFFERED:
          "I couldn't find exactly what you asked for. This is the closest I
           could come up with."
-       ▶ WHY IT IS BETTER, and it generalises: it states the truth and STOPS.
-         The built version tried to explain the compromise in the headline and
-         came out as "keep the fabric, and look at other shades of pink and look
-         at another style?" — two "look at"s, assembled rather than spoken.
-       ⚠️ DO NOT PARAPHRASE THIS INTO SOMETHING BLANDER, and do not re-add a
-         question to it. The detail belongs on the CARDS, where every requirement
-         already carries its own honest tick or note. */
+       ▶ It states the truth and STOPS. ⚠️ DO NOT PARAPHRASE IT INTO SOMETHING
+         BLANDER and do not re-add a question to it. The detail belongs on the
+         CARDS, where every requirement carries its own honest tick or note. */
     wrap.innerHTML='<div class="find-head">I couldn\'t find exactly what you asked for. '+
       'This is the closest I could come up with.</div>'+
       doors.slice(0,3).map(function(d){
@@ -10890,67 +10943,41 @@ async function _findRun(req){
           '<div class="find-cards">'+d.products.slice(0,8).map(function(p){
             return _findCard(p,{differs:p.differs})}).join('')+'</div></div>';
       }).join('')+
-      '<div class="find-disc">Some links may earn a commission.</div>';
+      /* 🚨 THE BROWSE POOL STAYS A SEPARATE ROW **ONLY HERE**, AND THE REASON IS
+         HER OWN MUST-HOLD RULE: the group labels ("Right colour", "Right fabric
+         and style") are the thing that stops the app deciding which of her words
+         mattered least, and she said plainly that blurring them "really does
+         become the app choosing for her." Pouring an unlabelled pool into a
+         labelled group would file unchecked pieces under a promise nobody made.
+         ▶ ONE ROW IS THE RULE WHEN THERE IS NOTHING TO LABEL; LABELS WIN WHEN
+           THERE IS. This is the one state where labels exist. */
+      (browseCards.length?'<div class="find-sub">More from your shops, not checked in detail.</div>'+
+        '<div class="find-cards">'+browseCards.join('')+'</div>':'')+
+      DISC;
+  }else if(browseCards.length){
+    /* 🚨🚨 A CONTRADICTION THAT COULD REACH HER SCREEN, AND THIS IS THE FIX.
+       Her approved sentence ends "and nothing close enough to show you" — and
+       the browse row underneath it could be showing thirty dresses. Her copy is
+       approved AS WRITTEN for the state it DESCRIBES, so the repair is to stop
+       using it in a state it does not describe, NEVER to reword it.
+       ⚠️ THIS REPLACEMENT LINE IS CLAUDE'S AND IS A PLACEHOLDER FOR HERS. Her
+       own copy has beaten every draft so far; show it to her. */
+    wrap.innerHTML='<div class="find-head">Nothing came back as an exact match, '+
+      'but here is what your shops have right now.</div>'+
+      '<div class="find-cards">'+browseCards.join('')+'</div>'+DISC;
   }else{
     /* ⚠️ NO FALLBACK TO AN INVENTED PRODUCT. Her call, 2026-09-06, and it changes
        this app's documented floor ON THIS SURFACE deliberately: "I would rather
        show nothing exact than recommend something that isn't what she asked for."
        A future session finding "chat sometimes shows no products" must NOT treat
        it as a regression. The stylist's written advice above is still there. */
-    /* ▶ Nothing at all, not even a near miss. Same voice, and it still hands her
-       the next move rather than stopping dead. */
+    /* ▶ HER COPY, APPROVED AS WRITTEN 2026-09-08 — "I think what you came up with
+       is fine and the stylist chat already has a good personality and words
+       things well." Genuinely nothing to show. Do not rewrite. */
     wrap.innerHTML='<div class="find-head">I couldn\'t find exactly what you asked for, '+
       'and nothing close enough to show you. Tell me what matters most and I\'ll look again.</div>';
   }
   mc.appendChild(wrap);
-
-  /* ═══ THE BROWSE WALL ═════════════════════════════════════════════════════
-     ⭐⭐ HER ASK, SAID THREE TIMES, AND THE THIRD TIME AS A COMPLAINT:
-     "I thought by paying for the search service it would land on a full
-     selection of photos with tappable links that our user could slide through."
-     ▶▶ IT COULD NOT, AND THE CAP HAD A NAME: `MAX_VERIFY = 4`. Only four
-       products were ever looked up, so at most four could become cards and she
-       normally saw two or three. The other ~8 from her shops were fetched,
-       paid for, and thrown away — with their photos, prices and titles already
-       attached. THE POOL COMES BACK NOW and every one of it is rendered.
-     🚨 THIS DOES NOT LOOSEN HER HONESTY RULE, and the distinction is HERS:
-       "it changes how MANY pieces she sees, not what the app CLAIMS about
-       them." The verified set above leads and carries its ticks; these carry
-       NO ticks and claim nothing. Show many, label honestly.
-     ⚠️ THE LINK IS A STORE SEARCH FOR THIS EXACT PIECE, NOT A LOOK-UP — a
-       deliberate change from the "lazy look-up on tap" sketch, flagged to her
-       before building. A raw result's own link points at google.com/search and
-       is useless; getStoreUrl() builds that shop's own search for the exact
-       title, is instant, is _affUrl-wrapped so it still earns, and cannot be
-       popup-blocked the way a link opened after an await is on iOS.
-     ▶ ONE CARD RENDERER, NEVER A SECOND COPY — `_findCard` does these too, so
-       `_feedName` still strips a size clause from the name and any future card
-       change lands on both halves at once. That is this file's oldest lesson.
-     ⚠️ AND HER NEVER-WEAR LIST GOVERNS THIS WALL: the same keep() runs over it,
-       with her WHOLE request, exactly as it does over the verified set. */
-  const browse=keep(data.browse).filter(function(b){return b.store&&b.title});
-  if(browse.length){
-    const bw=document.createElement('div');
-    bw.className='find-block find-browse';
-    /* ⚠️ CLAUDE'S WORDING, AND IT IS A PLACEHOLDER FOR HERS. It has one job:
-       say plainly that these are NOT the checked ones, without apologising for
-       them. Her own copy has beaten every draft so far. */
-    bw.innerHTML='<div class="find-head">More from your shops to scroll through.</div>'+
-      '<div class="find-sub">I haven\'t checked every detail on these ones.</div>'+
-      '<div class="find-cards">'+browse.map(function(b){
-        return _findCard({id:b.id,title:b.title,brand:b.brand,store:b.store,
-          price:b.price,image:b.image,url:getStoreUrl(b.store,b.title)});
-      }).join('')+'</div>';
-    /* ⚠️ NO SECOND DISCLOSURE HERE, DELIBERATELY. The block above already
-       carries one, and this file's own audit records Wardrobe once showing
-       FIVE on a single 7,300px page — an accident of per-carousel rendering,
-       not a compliance decision. ONE PER PAGE IS THE NORM: a reviewer checks
-       that a disclosure exists and is findable, never how many times it
-       repeats, and Cath's note is that she dislikes reminding a woman about
-       commission over and over. ▶ If the verified block is ever absent while
-       this wall shows, THIS is where the one disclosure has to move. */
-    mc.appendChild(bw);
-  }
   mc.scrollTop=mc.scrollHeight;
 }
 
