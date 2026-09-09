@@ -10768,13 +10768,30 @@ function _findKeepHerWords(req,msg){
     if(!v)return;
     /* Every word of the value must be in her sentence. "wrap" passes on
        "blush silk wrap dress"; "jewel tone" fails on the Napa sentence. */
-    const ok=String(v).split(/\s+/).filter(Boolean).every(function(w){
+    /* 🚨🚨 WORD BY WORD, NOT ALL OR NOTHING — HER CATCH, 2026-09-09: "I asked for
+       a 'pink midi dress' and stylist changed that to 'beautiful pink fitted
+       midi'... it should not change the parameter of the search when I am
+       asking for a pink midi. She does not need to add fitted to it."
+       ▶▶ AND THE OLD RULE DID SOMETHING WORSE THAN LETTING "fitted" THROUGH: it
+         threw away HER OWN WORD TOO. `every()` meant one invented word failed
+         the whole field, so cut="fitted midi" was deleted entire — taking "midi"
+         with it, which she HAD said. The search then looked for a plain pink
+         dress and came back with maxis, which is exactly what her screenshot
+         shows.
+       ▶ SO: keep the words that are hers, drop the ones that are not. "fitted
+         midi" becomes "midi". The guard still does its original job — the Napa
+         "jewel tone" and "metallic" had NO word of hers in them and still go
+         entirely — it simply stops punishing her for the stylist's adjectives. */
+    const words=String(v).split(/\s+/).filter(Boolean);
+    const hers=words.filter(function(w){
       if(w.length<3)return true;                    /* short joiners, ignore */
       /* a light stem so "boots" matches "boot" and "fitted" matches "fit" */
       const stem=w.replace(/(ing|ed|es|s)$/,'');
       return hay.indexOf(' '+w+' ')>=0||hay.indexOf(stem)>=0;
     });
-    if(!ok){dropped.push(k);delete req[k];}
+    if(hers.length===words.length)return;           /* every word hers, untouched */
+    if(!hers.length){dropped.push(k);delete req[k];return;}
+    req[k]=hers.join(' ');dropped.push(k);
   });
   return dropped;
 }
@@ -11204,9 +11221,15 @@ function _findBlockHtml(data,req){
            it reads as a stylist grouping her pulls rather than an interrogation. */
         const kept=d.keeps.map(function(k){return _findLabel(k,{request:req})});
         const label=kept.length?'Right '+kept.join(' and '):'Closest overall';
-        return '<div class="find-door">'+(doors.length>1?'<div class="fd-ask">'+_esc(label)+'</div>':'')+
-          '<div class="find-cards">'+d.products.slice(0,8).map(function(p){
-            return _findCard(p,{differs:p.differs})}).join('')+'</div></div>';
+        /* ▶ With ONE group there is no label and no reason for a second row, so
+           the browse pool joins this one. With several, each keeps its label and
+           the pool follows on its own — see the note below. */
+        const solo=doors.length===1;
+        const cards=d.products.slice(0,8).map(function(p){
+          return _findCard(p,{differs:p.differs})}).join('')+(solo?browseCards.join(''):'');
+        return '<div class="find-door">'+(solo?'':'<div class="fd-ask">'+_esc(label)+'</div>')+
+          (solo?_findRow(cards,d.products.slice(0,8).length+browseCards.length)
+              :'<div class="find-cards">'+cards+'</div>')+'</div>';
       }).join('')+
       /* 🚨 THE BROWSE POOL STAYS A SEPARATE ROW **ONLY HERE**, AND THE REASON IS
          HER OWN MUST-HOLD RULE: the group labels ("Right colour", "Right fabric
@@ -11216,8 +11239,21 @@ function _findBlockHtml(data,req){
          labelled group would file unchecked pieces under a promise nobody made.
          ▶ ONE ROW IS THE RULE WHEN THERE IS NOTHING TO LABEL; LABELS WIN WHEN
            THERE IS. This is the one state where labels exist. */
-      (browseCards.length?'<div class="find-sub">More to scroll through, not checked in detail.</div>'+
-        _findRow(browseCards.join(''),browseCards.length):'')+
+      /* 🚨 ONE ROW WHENEVER THERE IS NOTHING TO LABEL — HER CATCH, 2026-09-09:
+         "Why is the chat giving me 2 different rows now? I thought we fixed that
+         by making one row."
+         ▶▶ SHE IS RIGHT, AND THE EXCEPTION I BUILT WAS TOO WIDE. The near-miss
+           block keeps its own row so her GROUP LABELS survive — "Right colour",
+           "Right fabric and style" — because she said blurring those "really
+           does become the app choosing for her". ⚠️ BUT THOSE LABELS ONLY RENDER
+           WHEN THERE IS MORE THAN ONE GROUP (`doors.length>1`). With a single
+           group there is no label, nothing to protect, and two rows for no
+           reason — which is exactly what her screenshot shows.
+         ▶ SO: one group merges with the browse pool into ONE row. Two or more
+           keep their labelled groups and the pool follows separately. */
+      (browseCards.length&&doors.length>1
+        ?'<div class="find-sub">More to scroll through, not checked in detail.</div>'+
+          _findRow(browseCards.join(''),browseCards.length):'')+
       DISC;
   }else if(browseCards.length){
     /* 🚨🚨 A CONTRADICTION THAT COULD REACH HER SCREEN, AND THIS IS THE FIX.

@@ -181,6 +181,24 @@ const prod = (o) => Object.assign({
     ok('silk survives, because she said it', hers.fabric === 'silk');
     ok('wrap survives, because she said it', hers.cut === 'wrap');
 
+    /* 🚨🚨 HER WORD SURVIVES THE STYLIST ADDING TO IT — her catch, 2026-09-09:
+       "I asked for a 'pink midi dress' and stylist changed that to 'beautiful
+       pink fitted midi'... she does not need to add fitted to it."
+       ▶▶ THE OLD RULE DID SOMETHING WORSE THAN LETTING "fitted" THROUGH: one
+         invented word failed the WHOLE field, so cut="fitted midi" was deleted
+         entire and took HER OWN "midi" with it. The search then looked for a
+         plain pink dress and returned maxis, which is what her screenshot shows.
+       ▶ Now the invented word goes and hers stays. If this ever reverts to
+         all-or-nothing, this check goes red and the comment says why. */
+    const mixed = await pg.evaluate(() => {
+      const r = _findParse('<<FIND item=dress; colour=pink; cut=fitted midi>>');
+      _findKeepHerWords(r, 'Can you find a pink midi dress for me?');
+      return r;
+    });
+    ok('the stylist\'s "fitted" is dropped but HER "midi" is kept',
+       mixed.cut === 'midi', JSON.stringify(mixed));
+    ok('and her colour is untouched', mixed.colour === 'pink');
+
     // Her SAVED preferences are not in the sentence and must not be stripped.
     const saved = await pg.evaluate(() => {
       const r = _findParse('<<FIND item=boot; size=6; width=wide>>');

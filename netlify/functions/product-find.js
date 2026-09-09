@@ -618,7 +618,34 @@ export default async (req) => {
         const stated = Object.entries(v.checks).filter(([k]) => k !== 'stock');
         v.rejected = stated.filter(([, x]) => x === 'rejected').map(([k]) => k);
         v.unknown  = stated.filter(([, x]) => x === 'unknown').map(([k]) => k);
-        v.exact = v.rejected.length === 0 && v.unknown.length === 0 && v.checks.stock !== 'rejected';
+        /* 🚨🚨 SIZE AND WIDTH NO LONGER DECIDE WHETHER SOMETHING IS AN EXACT
+           MATCH — HER CATCH, 2026-09-09: "I don't know why it says I couldn't
+           find exactly what you asked for. She DID find lots of pink midi
+           dresses. So this is off."
+           ▶▶ SHE WAS RIGHT AND THE CAUSE WAS STRUCTURAL. Size comes from her
+             SAVED PROFILE, not from her sentence — she asked for a pink midi
+             dress and never mentioned a size. A retailer's offer text almost
+             never states which sizes are in stock, so size verified as UNKNOWN
+             on nearly every product, and "unknown is never a pass" then demoted
+             EVERY pink midi dress to a near miss. Measured: the same request
+             returns 3 exact matches without a size and 1 with one.
+           ⚠️ THIS IS A NARROWING OF "UNKNOWN IS NEVER A PASS", NOT A REPEAL, AND
+             IT IS DELIBERATELY THE HALF SHE ARGUED FOR HERSELF ON 2026-09-06.
+             Asked what to do when colour and fabric verify but WIDTH cannot, she
+             refused both hiding it and showing it silently, and chose: "show it,
+             labelled honestly, confirmed ones first" — in her stylist voice,
+             "These three I can confirm in your width. These two are worth a call
+             to check." That is this behaviour.
+           ▶ NOTHING IS CLAIMED THAT WAS NOT CHECKED. An unconfirmed size still
+             prints "size not confirmed" on the card, exactly as before. What
+             changes is only whether the ANSWER is headed "here is what I found"
+             or "I couldn't find exactly what you asked for".
+           ⚠️ WHAT SHE ACTUALLY SAID STILL GATES IT ABSOLUTELY. Colour, fabric and
+             cut come from her own sentence (_findKeepHerWords guards that), and
+             an unknown or rejected one of those still means not exact. */
+        const SOFT = new Set(['size', 'width']);
+        v.exact = v.rejected.length === 0 && v.checks.stock !== 'rejected' &&
+                  v.unknown.every(k => SOFT.has(k));
         v.evidence = ev;
       }
       return {
