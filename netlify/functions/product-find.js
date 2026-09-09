@@ -384,7 +384,14 @@ export default async (req) => {
        for the slowest. SOFT_SEARCH_MS is the point at which a pool that already
        holds results is good enough — one Google Shopping search returns ~40
        products, which is plenty to fill her row. */
-    const SOFT_SEARCH_MS = 7000;
+    /* ⚠️ 7000 -> 4000, 2026-09-09, AFTER A LIVE RUN CAME BACK AT 18.2s. Measured
+       on real calls the same day, a search that is going to answer answers in
+       256ms, 2.7s or 9.5s — so a four-second line keeps every healthy search and
+       cuts only the ones that were going to be painful anyway. It matters more
+       now than it did an hour ago, because the price search below adds a SECOND
+       round trip, and 18s is uncomfortably close to where her searches were
+       failing outright this morning. */
+    const SOFT_SEARCH_MS = 4000;
     const pages = await settledBy(queries.map(q =>
       get('https://serpapi.com/search.json?' + new URLSearchParams({
         engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY,
@@ -468,7 +475,11 @@ export default async (req) => {
     if (priced.length >= 5 && queries.length) {
       const p90 = priced[Math.min(priced.length - 1, Math.floor(priced.length * 0.9))];
       const floor = Math.ceil(p90);
-      const DEAR_MS = 6000;
+      /* ⚠️ Kept on a SHORTER leash than the first round, deliberately. This
+         search is a bonus — it adds the dear end of the market to a row that is
+         already complete without it. Losing it costs her some luxury options;
+         waiting for it costs her the whole answer. */
+      const DEAR_MS = 4000;
       const [dear] = await settledBy([
         get('https://serpapi.com/search.json?' + new URLSearchParams({
           engine: 'google_shopping', q: queries[0], gl: 'us', hl: 'en', num: '60',
@@ -507,7 +518,9 @@ export default async (req) => {
        search. So a straggling look-up must never hold up a row that is ready.
        ⚠️ atLeast 1, not 0: if NONE has come back we wait out the full ceiling
          rather than silently shipping a row with no verified pieces at all. */
-    const SOFT_LOOKUP_MS = 4500;
+    /* ⚠️ 4500 -> 3500. A look-up only earns a TICK; the card, its photo, its
+       price and its shop are already in hand. Cheapest second to save. */
+    const SOFT_LOOKUP_MS = 3500;
     const looked = await settledBy(mine.slice(0, MAX_VERIFY).map(c =>
       c.raw.serpapi_immersive_product_api
         ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY, LOOKUP_MS)
