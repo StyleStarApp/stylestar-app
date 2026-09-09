@@ -3624,6 +3624,24 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 .find-door{margin:0 0 14px}
 .fd-ask{font-size:13.5px;line-height:1.5;color:#4a4a4a;padding:0 2px 6px;font-style:italic}
 /* A horizontal row, so a thin result set never looks like a failed screen. */
+/* ⭐ THE SWIPE AFFORDANCE — her ask, 2026-09-09: "it is not intuitive that she
+   can keep swiping horizontally to see more." Her pick of four rendered
+   options: a fade at the edge plus a count and an arrow.
+   ⚠️ THE GRADIENT ENDS IN THE PAGE'S OWN BACKGROUND, so when the row does not
+     overflow there is nothing under it and nothing to see. That is why it can
+     be rendered unconditionally instead of measuring overflow in JS — a
+     breakable thing avoided, per her standing "reduce the amount of rules and
+     breakable things" direction. */
+.find-scroll{position:relative}
+.find-scroll::after{content:'';position:absolute;right:0;top:0;bottom:6px;width:34px;
+  pointer-events:none;background:linear-gradient(to right,rgba(247,245,240,0),rgba(247,245,240,.96))}
+/* ▶ CONTENT, NOT CHROME (her mum's 2026-07-26 lesson): the NUMBER is the part
+   that invites her to move. Seeing two cards and being told there are fourteen
+   is a reason to swipe; an arrow on its own is a symbol asking to be trusted.
+   ⚠️ 4.6:1 on the page cream, the same floor the disclosure had to clear — a
+     hint nobody can read is not a hint. */
+.find-hint{display:flex;justify-content:space-between;font-size:11.5px;line-height:1.4;
+  color:#6e6e6e;margin:1px 2px 0;letter-spacing:.01em}
 .find-cards{display:flex;gap:10px;overflow-x:auto;align-items:flex-start;padding:2px 2px 6px;-webkit-overflow-scrolling:touch}
 .find-card{flex:0 0 150px;background:#fff;border:1px solid #e6e2dc;border-radius:6px;overflow:hidden;text-decoration:none;color:inherit;display:block}
 .fc-img{width:100%;height:150px;object-fit:cover;display:block;background:#f5f3ef}

@@ -10965,6 +10965,31 @@ async function _findRun(req){
      sponsored links with none of its own. */
   const DISC='<div class="find-disc">Some links may earn a commission.</div>';
 
+  /* ⭐⭐ THE ROW HAS TO LOOK LIKE IT MOVES — HER CATCH, 2026-09-09, ON THE LIVE
+     BUILD: "I like how all of this is on one row so she won't miss anything
+     however IT IS NOT INTUITIVE THAT SHE CAN KEEP SWIPING HORIZONTALLY to see
+     more."
+     ▶ FOUR VERSIONS WERE RENDERED AT REAL PHONE WIDTH AND SHOWN TO HER — a bare
+       peeking card, a fade at the edge, fade + a count and arrow, and smaller
+       cards — and she chose the third ("C"), minus three words: she cut "from
+       your shops", which was app-speak. A woman does not think of them as HER
+       shops. So the hint is the bare number.
+     ▶▶ WHY THE COUNT IS THE PART THAT WORKS, AND IT IS HER MUM'S 2026-07-26
+       LESSON AGAIN: CONTENT IS MORE DISCOVERABLE THAN CHROME. An arrow alone is
+       chrome and asks her to trust a symbol; "14 pieces" is a fact about what is
+       there, and knowing there are 14 when she can see 2 is itself the
+       invitation to move.
+     ⚠️ THE FADE IS SAFE TO RENDER ALWAYS: it is a gradient to the page's own
+       background, so with nothing scrolled under it there is nothing to see.
+       CSS cannot know whether a row overflows, and a JS measurement here would
+       be a breakable thing added to solve a problem the gradient already solves.
+     ⚠️ THE HINT APPEARS ONLY ABOVE TWO CARDS, because at one or two nothing is
+       hidden and a "swipe" prompt pointing at nothing is worse than silence. */
+  const _findRow=function(cardsHtml,count){
+    return '<div class="find-scroll"><div class="find-cards">'+cardsHtml+'</div></div>'+
+      (count>2?'<div class="find-hint"><span>'+count+' pieces</span><span>swipe &rarr;</span></div>':'');
+  };
+
   const wrap=document.createElement('div');
   wrap.className='find-block';
   if(exact.length){
@@ -11004,9 +11029,9 @@ async function _findRun(req){
          the app knew perfectly well the word was RED. Handing each card the
          request makes it say "✓ red" — which is the whole point she made, that
          the checkmark should carry the meaning instead of a header sentence. */
-      '<div class="find-cards">'+shown.map(function(p){
+      _findRow(shown.map(function(p){
         return _findCard(Object.assign({},p,{request:req}))}).join('')+
-      browseCards.join('')+'</div>'+DISC;
+        browseCards.join(''),shown.length+browseCards.length)+DISC;
   }else if(doors.length){
     /* ▶▶ HER COPY, VERBATIM (2026-09-06): "I couldn't find an exact match today.
        Would you like me to keep the blush and look at satin, or keep the silk and
@@ -11041,7 +11066,7 @@ async function _findRun(req){
          ▶ ONE ROW IS THE RULE WHEN THERE IS NOTHING TO LABEL; LABELS WIN WHEN
            THERE IS. This is the one state where labels exist. */
       (browseCards.length?'<div class="find-sub">More from your shops, not checked in detail.</div>'+
-        '<div class="find-cards">'+browseCards.join('')+'</div>':'')+
+        _findRow(browseCards.join(''),browseCards.length):'')+
       DISC;
   }else if(browseCards.length){
     /* 🚨🚨 A CONTRADICTION THAT COULD REACH HER SCREEN, AND THIS IS THE FIX.
@@ -11053,7 +11078,7 @@ async function _findRun(req){
        own copy has beaten every draft so far; show it to her. */
     wrap.innerHTML='<div class="find-head">Nothing came back as an exact match, '+
       'but here is what your shops have right now.</div>'+
-      '<div class="find-cards">'+browseCards.join('')+'</div>'+DISC;
+      _findRow(browseCards.join(''),browseCards.length)+DISC;
   }else{
     /* ⚠️ NO FALLBACK TO AN INVENTED PRODUCT. Her call, 2026-09-06, and it changes
        this app's documented floor ON THIS SURFACE deliberately: "I would rather

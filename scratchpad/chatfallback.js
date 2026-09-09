@@ -343,6 +343,16 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
  ok('and it is spelled the American way everywhere she reads it',
     !/colour/i.test(await pg.locator('.find-block').first().innerText()),
     await pg.locator('.find-block').first().innerText().catch(()=>''));
+ /* ⭐ HER PICK OF FOUR RENDERED OPTIONS, 2026-09-09: fade + count + arrow, with
+    "from your shops" cut because it is app-speak. ▶ THE COUNT IS THE LOAD-
+    BEARING HALF — her mum's lesson that content beats chrome. Seeing two cards
+    and being told there are six is the reason to swipe; the arrow alone is a
+    symbol asking to be trusted. If the number ever goes, so does the reason. */
+ ok('the row says how many pieces there are',
+    /^6 pieces/.test(await pg.locator('.find-hint').first().innerText()),
+    await pg.locator('.find-hint').first().innerText().catch(()=>'(none)'));
+ ok('and it invites the swipe',
+    /swipe/i.test(await pg.locator('.find-hint').first().innerText()));
  ok('the row still says plainly that this is everything found',
     /showing you as much as i could find/i.test(await pg.locator('.find-head').first().innerText()),
     await pg.locator('.find-head').first().innerText());
