@@ -237,8 +237,19 @@ H('PART 9 — the store allowlist, and resale');
      matchStore('Zara USA', stores) === 'Zara' &&
      matchStore('Saks Fifth Avenue', stores) === 'Saks' &&
      matchStore('LOFT Outlet', stores) === 'LOFT');
-  ok('and Etsy, which actually earns her money, is no longer thrown away',
-     matchStore('Etsy - EvolveUA', stores) === 'Etsy');
+  /* ⭐ HER RULING, 2026-09-09: "Let's keep Etsy in. They are great for jewelry
+     especially." Etsy had been swept onto the resale list on the strength of the
+     word "marketplace" — but most Etsy sellers MAKE new things, and etsy.com is
+     in _AFF_MID, so the app was refusing to show a shop she actively earns from.
+     ⚠️ THE OTHERS MUST STAY OUT: eBay, Poshmark and the rest really are
+     second-hand, and lyst/modesens bounce a woman to another search. */
+  ok('Etsy, which actually earns her money, is found AND kept',
+     matchStore('Etsy - EvolveUA', stores) === 'Etsy' && !isResale('Etsy - EvolveUA'));
+  ok('but genuine resale is still dropped',
+     ['eBay','Poshmark','ThredUp','The RealReal','Depop','Vestiaire Collective']
+       .every(x => isResale(x)));
+  ok('and so are the aggregators that bounce her to another search',
+     ['Lyst','ModeSens'].every(x => isResale(x)));
   /* ⚠️ THE ONE THAT MUST NOT REGRESS: a longer store name beats its own prefix,
      or every Rack result silently becomes a Nordstrom result. */
   ok('the longest name still wins over its prefix',
@@ -250,7 +261,18 @@ H('PART 9 — the store allowlist, and resale');
      matchStore('Fashion Nova', stores) === null && matchStore('SHEIN US', stores) === null);
   ok('eBay is resale', isResale('eBay - bookishbunnyfashion'));
   ok('Poshmark is resale', isResale('Poshmark'));
-  ok('Etsy is treated as a marketplace, not one of her shops', isResale('Etsy'));
+  /* 🚨🚨 THIS CHECK USED TO ASSERT THE OPPOSITE — "Etsy is treated as a
+     marketplace, not one of her shops" — AND IT WAS REVERSED BY HER ON
+     2026-09-09: "Let's keep Etsy in. They are great for jewelry especially."
+     ▶ NOT A BUG THAT WAS FIXED, A DECISION THAT WAS CHANGED, and the difference
+       matters: the old behaviour was defensible (Etsy IS a marketplace) and it
+       was the reasoning that was wrong, not the code. Etsy sellers mostly MAKE
+       new things, which passes her real rule — a woman can browse and BUY AND
+       KEEP a specific item — and etsy.com sits in _AFF_MID, so the app was
+       refusing to show a shop she is an approved affiliate of.
+     ⚠️ SO DO NOT "RESTORE" THIS. If a future session finds Etsy in the results
+       and reaches for the resale list, read this first. */
+  ok('Etsy is one of her shops now, by her ruling', !isResale('Etsy'));
   // 🚨 COUTR CALLS ITSELF "A LUXURY MARKETPLACE" AND IS DELIBERATELY NOT ON THE
   // RESALE/MARKETPLACE LIST. Checked on the day it was added (2026-09-08) rather
   // than assumed, because the word alone would have disqualified it: their own

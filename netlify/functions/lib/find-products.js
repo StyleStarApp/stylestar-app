@@ -22,7 +22,21 @@
 // item") and they were 12 of 40 results on her own red-boot search.
 // ⚠️ Etsy is here deliberately: it is a marketplace of independent sellers, and
 //    the 2026-09-05 ingest plan already excluded its feed for the same reason.
-const RESALE = /\b(ebay|poshmark|mercari|thredup|thred up|vestiaire|depop|the ?realreal|grailed|etsy|mymall|lyst|modesens)\b/i;
+/* ⚠️⚠️ ETSY IS DELIBERATELY *NOT* ON THIS LIST — HER RULING, 2026-09-09:
+   "Let's keep Etsy in. They are great for jewelry especially."
+   ▶ WHY IT WAS HERE, AND WHY THAT WAS WRONG: the list exists to drop RESALE and
+     SECOND-HAND, because her store-pool rule is that a woman must be able to
+     browse and BUY AND KEEP a specific new item. Etsy was swept in with eBay and
+     Poshmark on the strength of the word "marketplace" — but most Etsy sellers
+     MAKE new things, which is a different business entirely.
+   🚨 AND IT WAS COSTING HER MONEY IN A WAY NOBODY HAD NOTICED: etsy.com is in
+     _AFF_MID (mid 54027), so she is an APPROVED Etsy affiliate — the app was
+     refusing to show a shop she actively earns from. Found 2026-09-09 while
+     auditing which of her 122 shops could be searched at all.
+   ⚠️ THE OTHERS STAY. eBay, Poshmark, Mercari, ThredUp, Vestiaire, Depop, The
+     RealReal and Grailed are genuinely second-hand; lyst/modesens/mymall are
+     aggregators that bounce a woman to another search rather than to a product. */
+const RESALE = /\b(ebay|poshmark|mercari|thredup|thred up|vestiaire|depop|the ?realreal|grailed|mymall|lyst|modesens)\b/i;
 
 // ---------------------------------------------------------------------------
 // ⚠️⚠️ A PRINT IS NOT A COLOUR, AND THIS RULE WAS LEARNED THE HARD WAY.
