@@ -24,6 +24,11 @@ const srv=http.createServer((q,res)=>{
       /* A verified pick PLUS the browse pool the finder now returns. One of the
          browse titles carries "Ruffle" so the never-wear rule can be proven to
          govern the wall and not just the verified set. */
+      /* ⚠️ TWO QUINCE PIECES AND A SECOND OLD NAVY ARE HERE ON PURPOSE, AND THEY
+         PIN HER RULING OF 2026-09-09: "I don't mind if multiple cards for one
+         store show up... if I ask for a red dress and there are 5 of them at
+         Bloomingdale's I want to see all 5 of them." A store cap on this row is
+         a REGRESSION, not a tidy-up, and section 9 fails if one reappears. */
       const browse=[
         {id:'b1',title:'Quince European Linen Fitted Tank',store:'Quince',price:'$42.00',
          image:'https://example.com/b1.jpg',name:'Quince European Linen Fitted Tank',
@@ -33,11 +38,23 @@ const srv=http.createServer((q,res)=>{
          search:'Express Supersoft Double Layer Crew'},
         {id:'b3',title:'Nine West Ruffle Trim Blouse',store:"Kohl's",price:'$14.99',
          image:'https://example.com/b3.jpg',name:'Nine West Ruffle Trim Blouse',
-         search:'Nine West Ruffle Trim Blouse'}
+         search:'Nine West Ruffle Trim Blouse'},
+        {id:'b4',title:'Quince Washable Silk Shell Top',store:'Quince',price:'$59.90',
+         image:'https://example.com/b4.jpg',name:'Quince Washable Silk Shell Top',
+         search:'Quince Washable Silk Shell Top'},
+        {id:'b5',title:"Old Navy Women's Cropped Rib Tank",store:'Old Navy',price:'$12.00',
+         image:'https://example.com/b5.jpg',name:"Old Navy Women's Cropped Rib Tank",
+         search:"Old Navy Women's Cropped Rib Tank"}
       ];
+      /* ⚠️ THE VERIFIED PICK NOW CARRIES A REAL `checks` OBJECT. Without one it
+         rendered no ticks either, so "no browse card carries a verified tick"
+         passed by asserting 0===0 on a page with no ticks at all — a check that
+         cannot fail is not a check. Now the row has exactly ONE tick and the
+         assertions can prove WHERE it is. */
       res.end(JSON.stringify({exact:[{id:'1',title:"Old Navy Women's Fitted Rib T-Shirt",
         store:'Old Navy',price:'$9.99',priceValue:9.99,url:'https://oldnavy.gap.com/x',
-        image:'https://example.com/i.jpg',confirmed:[],unknown:[]}],doors:[],browse:browse,
+        image:'https://example.com/i.jpg',checks:{cut:'confirmed'},confirmed:[],unknown:[]}],
+        doors:[],browse:browse,
         searched:2,verified:4,ms:{search:120,lookup:900,candidates:12},searchesLeft:930}));
     });
   }
@@ -276,22 +293,44 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
 {mode='wall';calls=[];findCalls=[];
  const {pg,ctx,errs}=await run('wall','I need a fitted white top');
  await pg.waitForTimeout(3000);
- const cards=await pg.locator('.find-browse .find-card').count();
- ok('the wall renders every browse product',cards===3,'cards='+cards);
- ok('the verified pick is still shown separately',
-    (await pg.locator('.find-block:not(.find-browse) .find-card').count())===1);
- /* ⚠️ A BROWSE CARD MUST CLAIM NOTHING. The ticks are what the verified set
-    earns by being read against the shop's own page. */
- ok('no browse card carries a verified tick',
-    (await pg.locator('.find-browse .fc-yes').count())===0);
+ /* ⭐⭐ ONE ROW, HER DESIGN 2026-09-09: "show her one row of cards starting with
+    the ones that match her search terms the best and then she can keep scrolling
+    the rest." The two-block layout is gone, so these assert the ROW, not the
+    old .find-browse container. ▶ REWRITTEN TO NAME THE RULE, NEVER TO CHASE A
+    SELECTOR: the app changed shape by her instruction, it did not get worse. */
+ ok('it is ONE row, not two',(await pg.locator('.find-cards').count())===1,
+    'rows='+(await pg.locator('.find-cards').count()));
+ const cards=await pg.locator('.find-cards .find-card').count();
+ ok('every product from her shops reaches the row',cards===6,'cards='+cards);
+ /* 🚨 HER RULING, PINNED: no store cap here. Two Quince pieces and two Old Navy
+    pieces are in the fixture and ALL FOUR must survive. */
+ const names=await pg.locator('.find-cards .fc-meta').evaluateAll(
+   els=>els.map(e=>e.textContent||''));
+ ok('NO STORE CAP: both Quince pieces survive',
+    names.filter(t=>/Quince/.test(t)).length===2,JSON.stringify(names));
+ ok('NO STORE CAP: both Old Navy pieces survive',
+    names.filter(t=>/Old Navy/.test(t)).length===2,JSON.stringify(names));
+ /* ⚠️ THE HONESTY RULE, AND IT IS THE WHOLE REASON THE ROW MAY BE MIXED: the
+    checked piece LEADS and is the only thing wearing a tick. Her rule of
+    2026-09-06 — never imply a requirement is confirmed unless it was verified. */
+ ok('the checked pick leads the row',
+    (await pg.locator('.find-cards .find-card').first().locator('.fc-yes').count())===1);
+ ok('and it is the ONLY card claiming anything',
+    (await pg.locator('.find-cards .fc-yes').count())===1);
+ /* ▶ HER CHOICE OF THE TWO BUILDS OFFERED, 2026-09-09: "Yes go with A." With the
+    second block gone, this line is the only thing telling her the row is part
+    checked and part not. If it disappears the tick loses its meaning. */
+ ok('one line says which ones were checked',
+    /first one I've checked in detail/i.test(await pg.locator('.find-head').first().innerText()),
+    await pg.locator('.find-head').first().innerText());
  /* ▶ The raw result's own link points at google.com/search and is useless;
     getStoreUrl builds the shop's own search for this exact piece. */
- const hrefs=await pg.locator('.find-browse .find-card').evaluateAll(
+ const hrefs=await pg.locator('.find-cards .find-card').evaluateAll(
    els=>els.map(e=>e.getAttribute('href')||''));
  ok('no card links to a google search',!hrefs.some(h=>h.includes('google.com')),hrefs.join(' | '));
  ok('every card links somewhere real',hrefs.every(h=>/^https?:\/\//.test(h)),hrefs.join(' | '));
  ok('every card is rel=sponsored',
-    (await pg.locator('.find-browse .find-card[rel="sponsored noopener"]').count())===3);
+    (await pg.locator('.find-cards .find-card[rel="sponsored noopener"]').count())===6);
  /* 🚨 ONE DISCLOSURE PER ANSWER. This file's own audit records Wardrobe once
     showing FIVE on a single page; a second one under the wall would be the
     same accident of per-block rendering. */
@@ -307,11 +346,14 @@ console.log('\n10. her never-wear list governs the wall too');
  /* Her rule exists because of a box of shift dresses. A wall that showed
     "everything found" while ignoring it would be the Stitch Fix box with
     better photographs. */
- const titles=await pg.locator('.find-browse .fc-name').evaluateAll(
+ const titles=await pg.locator('.find-cards .fc-name').evaluateAll(
    els=>els.map(e=>e.textContent||''));
- ok('the ruffled piece is gone from the wall',
+ ok('the ruffled piece is gone from the row',
     !titles.some(t=>/ruffle/i.test(t)),JSON.stringify(titles));
- ok('and the other two survive',titles.length===2,JSON.stringify(titles));
+ /* 1 verified + 5 browse, minus the one ruffled piece. ▶ The count is DERIVED
+    from the fixture rather than typed, so growing the fixture cannot make this
+    fail on good news — this file's own "a count is not an invariant" rule. */
+ ok('and every other piece survives',titles.length===5,JSON.stringify(titles));
  ok('no JS errors',errs.length===0,errs.join('|'));
  await ctx.close();}
 
@@ -324,11 +366,11 @@ console.log('\n11. the debug view answers "what did it actually do?"');
  ok('it names what was searched for',/item=top/.test(txt),txt.slice(0,200));
  ok('it reports the pool size from her shops',/products in your shops[\s\S]{0,4}12/.test(txt),txt.slice(0,400));
  ok('it reports how many were looked up',/looked up in detail[\s\S]{0,4}4/.test(txt),txt.slice(0,400));
- ok('it reports the browse count',/browse cards shown[\s\S]{0,4}3/.test(txt),txt.slice(0,400));
+ ok('it reports the browse count',/browse cards shown[\s\S]{0,4}5/.test(txt),txt.slice(0,400));
  ok('it reports the budget left',/930/.test(txt),txt.slice(0,400));
  /* ⚠️ BELOW the cards, never above — nothing may jump under a reader. */
  ok('it renders BELOW the cards',await pg.evaluate(()=>{
-   const w=document.querySelector('.find-browse'),d=document.querySelector('.fdbg');
+   const w=document.querySelector('.find-cards'),d=document.querySelector('.fdbg');
    return !!(w&&d)&&(w.compareDocumentPosition(d)&Node.DOCUMENT_POSITION_FOLLOWING)>0;
  }));
  ok('no JS errors',errs.length===0,errs.join('|'));

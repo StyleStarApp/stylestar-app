@@ -3666,10 +3666,29 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
    ⚠️ SAME `spin` KEYFRAME AND SAME REVERSE DIRECTION as .shop-star-main and
    .wdr-load-star, so every wait in the app turns the same way. It is one signal
    wearing three sizes, never three different loaders. */
-.chat-typing{display:flex;align-items:center;gap:8px}
-.chat-typing-star{width:18px;height:18px;flex:0 0 18px;animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
-.find-status{display:flex;align-items:center;gap:8px}
-.find-load-star{width:18px;height:18px;flex:0 0 18px;animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
+.chat-typing{display:flex;align-items:center;gap:9px}
+.find-status{display:flex;align-items:center;gap:9px}
+/* ⭐⭐ HER ASK, 2026-09-09, ON SEEING IT ON HER PHONE: "It needs to be larger and
+   pink maybe with thin gold or silver frame around it same shape as our usual
+   spinning star but fill it in pink and needs to be bigger."
+   ▶ SAME PATH, SAME KEYFRAME, SAME REVERSE DIRECTION — only the size and the
+     colours move, so it is still the one waiting signal and not a new loader.
+   🚨 ONE RULE NAMING BOTH CHAT STARS, DELIBERATELY, and `starpx`'s px2 lesson is
+     why: giving each surface its own rule is exactly how the Serpui bag ended up
+     cropped right on one screen and wrong on the next. The two stars appear in
+     the SAME conversation during the SAME wait ("Styling your answer..." then
+     "Checking what's actually in stock...") — if they ever diverge, one wait
+     starts looking like two different things happening.
+   ⚠️ THE WARDROBE/TRENDING STAR (.wdr-load-star) IS DELIBERATELY LEFT GOLD AND
+     SMALL. She asked about the chat star, on the chat screen. Matching the rest
+     of the app to it is a real question and it is HERS — offer, do not assume. */
+.chat-typing-star,.find-load-star{width:30px;height:30px;flex:0 0 30px;
+  animation:spin 1.7s linear infinite reverse;transform-origin:50% 50%}
+/* ⚠️ THE COLOURS LIVE HERE, NOT IN THE SVG. `_starSpin()` still writes its
+   presentation attributes (fill/stroke) so the markup stays valid on its own,
+   and a CSS rule outranks a presentation attribute — so this is the ONE place
+   the chat star's colour is decided. Do not add a second copy in the JS. */
+.chat-typing-star path,.find-load-star path{fill:#EC4899;stroke:#D4AF37;stroke-width:.9}
 /* ⚠️ Respect a woman who has asked her phone to stop moving things. The star
    still shows, it simply stops turning — the reassurance is the star being
    there, and motion is not the only way to give it. */

@@ -10677,7 +10677,34 @@ function _findStatus(mc){
   const paint=function(){txt.textContent=_FIND_STEPS[Math.min(i,_FIND_STEPS.length-1)]};
   const t0=setTimeout(function(){shown=true;el.style.display='';paint();mc.scrollTop=mc.scrollHeight},_FIND_SHOW_AFTER);
   const t1=setInterval(function(){i++;if(shown)paint()},3500);
-  return{done:function(){clearTimeout(t0);clearInterval(t1);el.remove()}};
+  /* ⭐⭐ IT MUST SIT UNDER THE LAST THING THE STYLIST SAID. HER CATCH, 2026-09-09,
+     FROM HER PHONE: "The spinning star is in the wrong place. It is above the
+     last thing she said so while waiting the user does not look up to see that.
+     It needs to go at the end of the last thing she said."
+     ▶ WHY IT DRIFTED UP, AND IT IS A CONSEQUENCE OF A GOOD DECISION: the search
+       fires on the marker, which is deliberately the FIRST thing in the reply so
+       the search and the writing run TOGETHER. That means this line is created
+       BEFORE the stylist's bubble exists, and every bubble appended afterwards
+       lands underneath it — so the reassurance ends up above the sentence she is
+       actually reading, which is the one place she is not looking.
+     ▶▶ FIXED AT THE CHOKE POINT, NOT AT THE CALL SITES — this file's own lesson,
+       and the same move that stopped the <<FIND>> marker leaking. Four routes
+       render a bot bubble today and a fifth will exist one day; an observer on
+       the container puts this line back at the end whenever ANYTHING is
+       appended, so no future route can strand it again.
+     ⚠️ appendChild ON AN ELEMENT THAT IS ALREADY A CHILD **MOVES** IT — it does
+       not clone. So this never duplicates the line, and the star never stops
+       turning mid-wait, because the element is never recreated. The re-entry is
+       safe too: the move fires the observer again, which then finds the line
+       already last and does nothing. */
+  const keepLast=new MutationObserver(function(){
+    if(el.parentNode===mc&&mc.lastElementChild!==el){
+      mc.appendChild(el);
+      if(shown)mc.scrollTop=mc.scrollHeight;
+    }
+  });
+  keepLast.observe(mc,{childList:true});
+  return{done:function(){clearTimeout(t0);clearInterval(t1);keepLast.disconnect();el.remove()}};
 }
 
 /* One product card. ⚠️ EVERY CLAIM ON IT IS EARNED: a tick appears only where the
