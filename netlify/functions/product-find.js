@@ -281,6 +281,43 @@ export default async (req) => {
      ▶ Either way a small pool is the right shape: it keeps almost all of the
        parallel win (the slowest call sets the pace, not the sum) without ever
        asking the upstream for ten things at once. */
+  /* 🚨🚨 STOP WAITING FOR A CALL THAT IS NEVER COMING BACK. Added 2026-09-09
+     after Cath hit "My search didn't come back just then" on a live test, and
+     the numbers named the fault exactly: search 12,028ms and look-up 6,020ms —
+     BOTH pinned to the millisecond on their ceilings, which is the signature of
+     a straggler rather than of slowness. Two queries went out, one answered,
+     one never did, and the app sat waiting for the dead one until the clock ran
+     out. Total 21.6s, right at the edge of what the host allows, so it lands
+     sometimes and dies sometimes. Hers died.
+     ▶▶ AND THE GALLING PART, MEASURED ON THE SAME CALL: 29 PRODUCTS FROM HER
+       SHOPS WERE ALREADY IN HAND. A woman saw an apology because ONE call of
+       several had not returned. This file's own 2026-09-08 lesson, one level
+       up: "losing a search loses everything; losing one look-up of six is
+       invisible" — the same reasoning applies to a search once the OTHER search
+       has already answered.
+     ▶ SO: run everything in parallel as now, but settle on whatever has arrived
+       once the soft deadline passes. The hard per-call ceiling still exists
+       underneath as the floor for the case where NOTHING has arrived — better a
+       slow answer than a false "your shops have nothing".
+     ⚠️ IT SAVES NO MONEY AND IS NOT MEANT TO. SerpApi bills the call the moment
+       it is made, so an abandoned query is paid for either way. What this buys
+       is that her screen stops depending on the slowest thing in the batch. */
+  function settledBy(promises, ms, atLeast = 1) {
+    return new Promise(resolve => {
+      const out = new Array(promises.length).fill(null);
+      let left = promises.length, done = false, got = 0;
+      const finish = () => { if (!done) { done = true; resolve(out); } };
+      /* ⚠️ The soft deadline only fires if something USABLE has arrived. With
+         nothing in hand it is not a deadline, it is a way of reporting failure
+         early, and this app already has a rule about that. */
+      const timer = setTimeout(() => { if (got >= atLeast) finish(); }, ms);
+      promises.forEach((p, i) => p
+        .then(v => { out[i] = v; if (v) got++; })
+        .catch(() => {})
+        .finally(() => { if (--left === 0) { clearTimeout(timer); finish(); } }));
+    });
+  }
+
   async function pooled(items, fn, width = 3) {
     const out = new Array(items.length);
     let next = 0;
@@ -326,10 +363,15 @@ export default async (req) => {
 
     const t0 = Date.now();
     const queries = buildQueries(request).slice(0, MAX_QUERIES);
-    const pages = await pooled(queries, q =>
+    /* ▶ Fired all at once as before; the difference is that we no longer wait
+       for the slowest. SOFT_SEARCH_MS is the point at which a pool that already
+       holds results is good enough — one Google Shopping search returns ~40
+       products, which is plenty to fill her row. */
+    const SOFT_SEARCH_MS = 7000;
+    const pages = await settledBy(queries.map(q =>
       get('https://serpapi.com/search.json?' + new URLSearchParams({
         engine: 'google_shopping', q, gl: 'us', hl: 'en', num: '60', api_key: KEY,
-      })).catch(() => null), MAX_QUERIES);
+      })).catch(() => null)), SOFT_SEARCH_MS);
     /* ⚠️ WIDTH RAISED FROM 2 TO ALL-AT-ONCE, 2026-09-08, AND THE REASON CHANGED.
        The narrow pool was a guess at a free-plan concurrency limit, made when
        fresh searches started pinning at their ceiling. She has since moved to a
@@ -390,11 +432,19 @@ export default async (req) => {
     //      "spend the second calls where the title already agrees most" sort above
     //      still decides which pieces get looked at, and in what order they land.
     const tSearch = Date.now() - t0, t1 = Date.now();
-    const looked = await pooled(mine.slice(0, MAX_VERIFY), c =>
+    /* ▶ SAME TREATMENT, AND THIS HALF MATTERS LESS, WHICH IS THE POINT. This
+       file's own rule from 2026-09-08: "losing a search loses everything;
+       losing one look-up of six is invisible." A look-up only earns a TICK — the
+       card, its photo, its price and its shop are already in hand from the
+       search. So a straggling look-up must never hold up a row that is ready.
+       ⚠️ atLeast 1, not 0: if NONE has come back we wait out the full ceiling
+         rather than silently shipping a row with no verified pieces at all. */
+    const SOFT_LOOKUP_MS = 4500;
+    const looked = await settledBy(mine.slice(0, MAX_VERIFY).map(c =>
       c.raw.serpapi_immersive_product_api
         ? get(c.raw.serpapi_immersive_product_api + '&api_key=' + KEY, LOOKUP_MS)
             .then(d => ({c, d})).catch(() => null)
-        : Promise.resolve(null), MAX_VERIFY);   // all at once: 4 calls, one round
+        : Promise.resolve(null)), SOFT_LOOKUP_MS);
 
     const tLook = Date.now() - t1;
     const verified = [];
