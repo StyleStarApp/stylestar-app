@@ -255,6 +255,16 @@ H('PART 9 — the store allowlist, and resale');
   ok('the longest name still wins over its prefix',
      matchStore('Nordstrom Rack', stores) === 'Nordstrom Rack' &&
      matchStore('Banana Republic Factory', stores) === 'Banana Republic Factory');
+  /* ▶ AN OUTLET IS ITS OWN SHOP, NOT ITS PARENT. Found 2026-09-09: the matcher
+     was resolving "Gap Factory" to Gap, so an outlet piece linked to gap.com's
+     search, which does not carry it. Its sibling Banana Republic Factory was
+     already in the table, so the gap read as an oversight. ⚠️ This asserts the
+     RULE — if a future session removes the Gap Factory row, this fails and says
+     why, instead of quietly sending women to the wrong shop again. */
+  ok('an outlet resolves to itself, never to its parent',
+     matchStore('Gap Factory', stores) === 'Gap Factory' &&
+     matchStore('Gap Factory Store', stores) === 'Gap Factory' &&
+     matchStore('Gap', stores) === 'Gap');
   /* ⚠️ And her exclusions stay excluded — a looser matcher must not quietly let
      fast fashion in through a prefix. */
   ok('fast fashion still matches nothing',

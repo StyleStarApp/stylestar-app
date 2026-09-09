@@ -265,6 +265,11 @@ export default {
    "tall"
   ]
  },
+ "Gap Factory": {
+  "host": "gapfactory.com",
+  "tier": "",
+  "sizes": []
+ },
  "White House Black Market": {
   "host": "whitehouseblackmarket.com",
   "tier": "$$",

@@ -3839,6 +3839,24 @@ const STORES={
   'IZOD':{w:1,u:'https://www.izod.com/search?q=',t:'$$',a:'Casual Classic',s:[],d:[8,2,6,8,2,9,3,5,8,5],c:'polos, golfwear, casual basics'},
   'Lacoste':{u:'https://www.lacoste.com/us/women.html#query=',tpl:'https://www.lacoste.com/us/women.html?products_us_en=%7B%22query%22%3A%22{q}%22%7D#query={q}',t:'$$$',a:'Classic Sport, Preppy Classic',s:[],d:[7,3,8,9,4,8,4,6,8,6],c:'polos, casual sportswear, sneakers'},
   'Gap':{gp:'&department=136',u:'https://www.gap.com/browse/search.do?searchText=',t:'$-$$',a:'Casual Classic',s:['petite','plus','tall'],d:[10,2,6,7,3,10,2,4,8,4],c:'everyday basics, denim, casualwear'},
+  /* ⚠️ ADDED 2026-09-09 TO FIX A MIS-LINK, NOT TO GROW THE ROSTER. The store
+     matcher was resolving Google's "Gap Factory" seller to Gap, so an outlet
+     piece sent a woman to gap.com's search, which does not carry it. Its
+     SIBLING OUTLET, Banana Republic Factory, was already in this table fully
+     scored — so the absence read as an oversight rather than a decision, which
+     is why this is not the roster expansion she closed on 2026-09-08.
+     ✅ THE SEARCH URL IS GENUINELY VERIFIED FROM HERE, which almost never
+       happens: "white dress" appears in the results page and a gibberish term
+       returns none. It is also the same /browse/search.do?searchText= pattern
+       her own address-bar work confirmed across Gap, Old Navy, Athleta and
+       Banana Republic Factory, on its own domain.
+     ⚠️ NO SCORES, DELIBERATELY. "Never invent a store's tags" — so it is a
+       name-and-url row like Kohl's: FINDABLE but not RECOMMENDABLE. The
+       untagged guard keeps it at the end of any ranking and the stylist will
+       not describe it. Her ten numbers can come whenever she wants, or never.
+     ▶ `gp` is copied from its siblings because it is a URL FACT (the women's
+       department parameter), not a taste judgement. */
+  'Gap Factory':{gp:'&department=136',u:'https://www.gapfactory.com/browse/search.do?searchText='},
   'White House Black Market':{u:'https://www.whitehouseblackmarket.com/store/search?searchTerm=',t:'$$',a:'Professional Power, Modern Glam',s:['petite'],d:[3,7,9,8,6,4,9,9,10,2],c:'sleek workwear, occasion'},
   'Tuckernuck':{u:'https://www.tnuck.com/search?q=',t:'$$$',a:'Classic Sophisticate, Coastal Chic',s:[],d:[6,5,9,9,5,5,9,7,8,8],c:'dresses, polished separates, occasion, resort'},
   // Elevated natural / quiet luxury: where a stylist sends this woman first
