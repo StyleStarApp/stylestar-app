@@ -173,7 +173,23 @@ export default async (req) => {
          number that settles whether a slow answer is theirs or ours — and it was
          needed because advice about the paid speed add-on had already been given
          twice on measurements that changed underneath it. Measure, then advise. */
-      return json({q, count: (d.shopping_results || []).length,
+      /* ⭐ HER QUESTION, 2026-09-09: "I did not see anything from mytheresa or
+         Marissa's or Olivela... Maybe those stores don't have a red dress in
+         stock right now. That is possible I will try another search."
+         ▶▶ THAT IS EXACTLY THE KIND OF "maybe" THIS FILE KEEPS PAYING FOR, so
+           the probe now reports WHO SOLD every result rather than only the top
+           three. It answers, for one search and no guessing: did her shops
+           appear at all, and which ones. All nine earning shops are in the
+           allowlist and in STORES (checked), so absence here is Google's
+           ranking, not our wiring — but that has to be MEASURED, not assumed.
+         ⚠️ Sellers only, and counted. No prices, no titles, nothing that grows
+           with the result set: this is a debug path and it must stay small. */
+      const sources = {};
+      for (const x of d.shopping_results || []) {
+        const k = x.source || '(none)';
+        sources[k] = (sources[k] || 0) + 1;
+      }
+      return json({q, count: (d.shopping_results || []).length, sources,
                    timing: {
                      serpapi_total: (d.search_metadata || {}).total_time_taken,
                      google_url_ok: !!(d.search_metadata || {}).google_shopping_url,

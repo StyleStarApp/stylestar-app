@@ -64,7 +64,7 @@ const srv=http.createServer((q,res)=>{
          assertions can prove WHERE it is. */
       res.end(JSON.stringify({exact:[{id:'1',title:"Old Navy Women's Fitted Rib T-Shirt",
         store:'Old Navy',price:'$9.99',priceValue:9.99,url:'https://oldnavy.gap.com/x',
-        image:'https://example.com/i.jpg',checks:{cut:'confirmed'},confirmed:[],unknown:[]}],
+        image:'https://example.com/i.jpg',checks:{colour:'confirmed'},confirmed:[],unknown:[]}],
         doors:[],browse:browse,
         searched:2,verified:4,ms:{search:120,lookup:900,candidates:12},searchesLeft:930}));
     });
@@ -100,7 +100,7 @@ const srv=http.createServer((q,res)=>{
     const send=t=>res.write(sse({type:'content_block_delta',index:0,delta:{type:'text_delta',text:t}}));
     res.write(sse({type:'content_block_start',index:0,content_block:{type:'text',text:''}}));
     if(mode==='healthy'||mode==='wall'){
-      if(mode==='wall')send('<<FIND item=top; cut=fitted>> ');
+      if(mode==='wall')send('<<FIND item=top; colour=white; cut=fitted>> ');
       send('A floor length gown is exactly right. ');send('Try Nordstrom first.');
       res.write(sse({type:'message_stop'}));return res.end();
     }
@@ -328,11 +328,23 @@ console.log('\n9. the browse wall: many cards, honest, and still her rules');
     (await pg.locator('.find-cards .find-card').first().locator('.fc-yes').count())===1);
  ok('and it is the ONLY card claiming anything',
     (await pg.locator('.find-cards .fc-yes').count())===1);
- /* ▶ HER CHOICE OF THE TWO BUILDS OFFERED, 2026-09-09: "Yes go with A." With the
-    second block gone, this line is the only thing telling her the row is part
-    checked and part not. If it disappears the tick loses its meaning. */
- ok('one line says which ones were checked',
-    /first one I've checked in detail/i.test(await pg.locator('.find-head').first().innerText()),
+ /* 🚨 REWRITTEN LATER THE SAME DAY, BY HER, AFTER SHE SAW IT ON HER PHONE.
+    The header used to read "The first N I've checked in detail" and she cut it:
+    "I don't think we need to say that. I THINK THE CHECKMARK SHOWS SHE CHECKED
+    COLOR." ▶▶ SO THE HONESTY DID NOT WEAKEN, IT MOVED ONTO THE CARD — which is
+    her own older rule ("the detail belongs on the CARDS") coming back around.
+    ⚠️ THEREFORE THE TICK IS NOW LOad-BEARING AND THIS IS WHERE IT IS PINNED: it
+    must name HER OWN WORD, not a generic label. A card saying "✓ colour" tells a
+    woman nothing; "✓ white" is a claim she can check. If this ever regresses to
+    the generic word, the header has to come back. */
+ ok('the tick names HER word, not a generic label',
+    /white/i.test(await pg.locator('.find-cards .fc-yes').first().innerText()),
+    await pg.locator('.find-cards .fc-yes').first().innerText());
+ ok('and it is spelled the American way everywhere she reads it',
+    !/colour/i.test(await pg.locator('.find-block').first().innerText()),
+    await pg.locator('.find-block').first().innerText().catch(()=>''));
+ ok('the row still says plainly that this is everything found',
+    /showing you as much as i could find/i.test(await pg.locator('.find-head').first().innerText()),
     await pg.locator('.find-head').first().innerText());
  /* ▶ The raw result's own link points at google.com/search and is useless;
     getStoreUrl builds the shop's own search for this exact piece. */

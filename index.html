@@ -10761,8 +10761,13 @@ function _findCard(p,opts){
     '<div class="fc-meta">'+_esc(p.store)+(p.price?' &middot; '+_esc(p.price):'')+'</div>'+
     (bits.length?'<div class="fc-checks">'+bits.join('')+'</div>':'')+'</div></a>';
 }
+/* ⚠️ THE KEY IS `colour` AND THE LABEL IS "color", DELIBERATELY. The key is the
+   server's contract (`request.colour`, `checks.colour`) and renaming it would
+   break `find-products.js` in a way no copy change should ever risk. Only the
+   word a woman READS is American, which is her ask of 2026-09-09: "Let's change
+   the spelling of colour to color." ▶ So: keys British, screen American. */
 function _findLabel(k,p){
-  if(k==='colour')return p.request&&p.request.colour?p.request.colour:'colour';
+  if(k==='colour')return p.request&&p.request.colour?p.request.colour:'color';
   if(k==='fabric')return 'fabric';
   if(k==='cut')return 'style';
   if(k==='size')return 'size';
@@ -10971,15 +10976,36 @@ async function _findRun(req){
        reasonably read the whole row as vetted. That is the precise thing the
        tick exists to prevent, and it is her rule of 2026-09-06: never imply a
        requirement is confirmed unless we can actually verify it. Six words. */
+    /* ⭐ HER COPY, 2026-09-09, AND IT REPLACES A LINE SHE HAD APPROVED HOURS
+       EARLIER — because she then SAW it on her phone and had a better reason:
+       "Where it says 'The first 3 I've checked in detail' I don't think we need
+       to say that. I THINK THE CHECKMARK SHOWS SHE CHECKED COLOR."
+       ▶▶ SHE IS RIGHT, AND IT IS HER OWN OLDER RULE COMING BACK: "the detail
+         belongs on the CARDS, where every requirement already carries its own
+         tick or its own honest note." The honesty did not need a header; it was
+         already on the card. Option A was the right call when the tick said a
+         generic "colour" and meant little — now that it names her actual word,
+         the card can carry it alone.
+       ⚠️ SO THE HONESTY RULE IS NOT WEAKENED, IT MOVED TO WHERE SHE PUT IT.
+         A checked card says "✓ red"; an unchecked one says nothing at all. If a
+         future change ever removes the ticks, this header has to come back. */
     const head=browseCards.length
-      ? (shown.length===1?'The first one I\'ve checked in detail.'
-                         :'The first '+shown.length+' I\'ve checked in detail.')
+      ? 'Showing you as much as I could find.'
       /* ▶ With nothing unchecked behind them there is no "first few" to name,
          so the original wording stands and stays honest. */
       : (shown.length===1?'Here is the one I can stand behind.'
                          :'Found '+shown.length+' that match what you asked for.');
     wrap.innerHTML='<div class="find-head">'+head+'</div>'+
-      '<div class="find-cards">'+shown.map(function(p){return _findCard(p)}).join('')+
+      /* 🚨 THE TICK USED TO READ A GENERIC "colour" ON EVERY CARD, AND THIS IS
+         WHY: the server puts `request` at the TOP of the payload, never on each
+         product, so `p.request` was always undefined and `_findLabel` fell
+         through to its fallback word. ▶ Found while making her spelling change,
+         from her own screenshot: two red dresses both ticked "✓ colour" when
+         the app knew perfectly well the word was RED. Handing each card the
+         request makes it say "✓ red" — which is the whole point she made, that
+         the checkmark should carry the meaning instead of a header sentence. */
+      '<div class="find-cards">'+shown.map(function(p){
+        return _findCard(Object.assign({},p,{request:req}))}).join('')+
       browseCards.join('')+'</div>'+DISC;
   }else if(doors.length){
     /* ▶▶ HER COPY, VERBATIM (2026-09-06): "I couldn't find an exact match today.
