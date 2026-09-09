@@ -219,7 +219,21 @@ export default async (req) => {
   // ▶ The search keeps a long ceiling because losing it loses EVERYTHING. A
   //   look-up is one product among six, so it gets a short one and the batch
   //   moves on without it. Missing one card is invisible; waiting is not.
-  const get = async (url, ms = 10000) => {
+  /* 🚨🚨 THE SEARCH CEILING WAS 10s AND IT WAS CLIPPING REAL SEARCHES, MEASURED
+     2026-09-09 ON LIVE CALLS. Two consecutive requests came back at 10001ms and
+     10004ms — pinned to the millisecond, which is a ceiling, not a slow server.
+     ▶ THE NUMBERS THAT SIZE IT: SerpApi's OWN processing time is 1.6–3.4s
+       (their `total_time_taken`, measured 2026-09-08), and a SUCCESSFUL search
+       from here lands at 6.6–6.9s. So a 10s ceiling left barely three seconds
+       of headroom over a normal success, and clipped the whole slow tail.
+     ▶▶ THE ASYMMETRY IS THIS FILE'S OWN AND IT ARGUES FOR THE CHANGE: "losing a
+       search loses everything; losing one look-up of six is invisible." The
+       look-up rightly keeps its short 6s ceiling. The SEARCH is all-or-nothing
+       and had the same order of ceiling, which was backwards.
+     ⚠️ 20s, NOT MORE. The platform cuts the stream around 60s and this has to
+       leave room for the look-ups after it. And the wait is narrated — her own
+       2026-09-06 design shows "Looking through your shops…" while it works. */
+  const get = async (url, ms = 20000) => {
     const r = await fetch(url, {signal: AbortSignal.timeout(ms)});
     if (!r.ok) throw new Error('upstream ' + r.status);
     return r.json();
