@@ -1309,7 +1309,27 @@
 
     <div class="dc-disclosure">Some links may earn a commission.</div>
 
-    <div class="dc-item">
+        <!-- ⭐ PHOTOGRAPHED PIECES LEAD — HER ASK, 2026-09-09: "can you please
+         make sure the pictured edit items are at the top of the list".
+         ▶▶ SAME INSTINCT AS THE BROWSE WALL: a woman scrolls a page of
+           photographs and stops at a page of text. 14 pictured pieces were
+           scattered through 32, so the half that reads like a lookbook was
+           buried among the half that reads like a list.
+         ⚠️ ORDER WITHIN EACH GROUP IS UNTOUCHED. Her curation decides what is
+           in the Edit and in what order; this only lifts the ones carrying a
+           picture. A piece that gains a photo rises. Nothing else moves.
+         ⚠️ ADDING ONE: put a pictured piece after the last pictured item, not
+           at the very bottom.
+         🚨🚨 AND THE THING THAT WILL CATCH THE NEXT PERSON, BECAUSE IT CAUGHT ME
+           TWICE IN A ROW: "has a photo" IS NOT "has class dc-item-px". The Open
+           Heart Necklace carries a real Etsy photograph inside a hand-written
+           inline-styled wrapper — no class at all — because it needed a scaled,
+           left-anchored crop the shared rule does not do. ▶ Cath spotted the
+           mislabel immediately: "open heart necklace does have a picture."
+           ▶▶ SO COUNT `<img>`, IGNORING COMMENTS, AND NOTHING ELSE. Matching the
+           class name misses her hand-crafted ones; matching the bare string
+           "dc-item-px" wrongly catches any item whose COMMENT mentions it. -->
+<div class="dc-item">
       <img class="dc-item-px" src="https://www.dvf.com/cdn/shop/files/A001AMBERYSKTL_A1_2.jpg?v=1776264943&amp;width=800" alt="Diane von Furstenberg Flag Scarf in Myrtle Berry" loading="lazy" decoding="async" onerror="this.remove()">
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">Diane von Furstenberg Flag Scarf &mdash; Myrtle Berry</div>
@@ -1537,6 +1557,52 @@
     </div>
 
     <div class="dc-item">
+      <!-- ⚠️ STACKED PAIR — must match the Star card exactly. A rule applied to one
+           half is not applied, and this is the photo version of it: the same piece
+           renders on the Star card (.wks-px) and here (.dc-item-px), so a stack on
+           one and a single on the other is the cut-off bag all over again. -->
+      <div class="dc-item-px is-stack">
+        <img src="https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229377.jpg?width=800" alt="Saint Laurent SL M136 oval sunglasses in black" loading="lazy" decoding="async" onerror="this.remove()">
+        <img src="https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229376.jpg?width=800" alt="Side view showing the gold YSL monogram on the arm" loading="lazy" decoding="async" onerror="this.remove()">
+      </div>
+      <span class="dc-item-star">&#11088;</span>
+      <div class="dc-item-name">Saint Laurent SL M136 Sunglasses</div>
+      <div class="dc-item-meta"><span class="dc-store">COUTR</span><span class="dc-price">$363</span></div>
+      <div class="dc-item-note">This style is mysterious and cute at the same time. YSL chic and fabulous!</div>
+      <a class="dc-item-btn" href="https://www.coutr.com/products/saint-laurent-sl-m136-sunglasses" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
+    </div>
+
+    <!-- ⭐ HER PICK, 2026-09-09. Mytheresa is one of the nine that pay her, so
+         this link earns and the photo is licensable.
+         🚨 THE PHOTO ADDRESS CAME FROM HER, AND FOUR GUESSES AT IT HAD FAILED
+         FIRST — every img.mytheresa.com pattern tried returned 403, which read
+         like a block and was really the wrong host. The real one is
+         www.mytheresa.com/image/... and SHE PASTED IT. That is the address-bar
+         workflow this file already records for bot-walled shops (J.Crew, Sézane,
+         Madewell, Kohl's), applied to an image rather than a search url.
+         ✅ HOTLINKING VERIFIED, NOT ASSUMED: fetched with Referer and Origin set
+         to stylestar.app and it returned 200, so it will load for a woman on her
+         phone. And the crop was LOOKED AT, not calculated — rendered at true
+         card width, where the bag sits fully in frame on the default
+         top-anchored rule, so no pxPos override is needed.
+         ⚠️ EVERY TRACKING PARAMETER STRIPPED — her standing rule, and this link
+         arrived with eighteen of them (utm_*, dplink, slink, feed_num, ad, cmp,
+         and the rest). They go stale, they make the link fragile, and once
+         affiliate links are live an extra tracking param can interfere with
+         commission attribution. The bare product path is what remains, and it
+         was checked: it still returns 200.
+         ⚠️ PRICE IS HERS. Mytheresa is bot-walled, so $790 could not be verified
+         from here the way the COUTR sunglasses were — it is her figure, read off
+         her own screen. -->
+    <div class="dc-item">
+      <img class="dc-item-px" src="https://www.mytheresa.com/image/1094/1238/100/9f/P01180729_b1.jpg" alt="Valentino Garavani Rockstud medium suede pouch in beige, held by its wrist strap" loading="lazy" decoding="async" onerror="this.remove()">
+      <span class="dc-item-star">&#11088;</span>
+      <div class="dc-item-name">Valentino Garavani Rockstud Medium Suede Pouch &mdash; Beige</div>
+      <div class="dc-item-meta"><span class="dc-store">Mytheresa</span><span class="dc-price">$790</span></div>
+      <div class="dc-item-note">Nobody does studs better than Valentino. I appreciate the detachable wrist strap and luxurious suede.</div>
+      <a class="dc-item-btn" href="https://www.mytheresa.com/us/en/women/valentino-garavani-rockstud-medium-suede-pouch-beige-p01180729" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
+    </div>
+<div class="dc-item">
       <span class="dc-item-star">⭐</span>
       <div class="dc-item-name">Gold Stretchy Stacking Bangles</div>
       <div class="dc-item-meta"><span class="dc-store">Badu &middot; Amazon</span><span class="dc-price">$16.99</span></div>
@@ -1683,53 +1749,7 @@
       <a class="dc-item-btn" href="https://www.nordstrom.com/s/8960533" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
     </div>
 
-    <div class="dc-item">
-      <!-- ⚠️ STACKED PAIR — must match the Star card exactly. A rule applied to one
-           half is not applied, and this is the photo version of it: the same piece
-           renders on the Star card (.wks-px) and here (.dc-item-px), so a stack on
-           one and a single on the other is the cut-off bag all over again. -->
-      <div class="dc-item-px is-stack">
-        <img src="https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229377.jpg?width=800" alt="Saint Laurent SL M136 oval sunglasses in black" loading="lazy" decoding="async" onerror="this.remove()">
-        <img src="https://cdn.shopify.com/s/files/1/0710/8113/2228/files/1229376.jpg?width=800" alt="Side view showing the gold YSL monogram on the arm" loading="lazy" decoding="async" onerror="this.remove()">
-      </div>
-      <span class="dc-item-star">&#11088;</span>
-      <div class="dc-item-name">Saint Laurent SL M136 Sunglasses</div>
-      <div class="dc-item-meta"><span class="dc-store">COUTR</span><span class="dc-price">$363</span></div>
-      <div class="dc-item-note">This style is mysterious and cute at the same time. YSL chic and fabulous!</div>
-      <a class="dc-item-btn" href="https://www.coutr.com/products/saint-laurent-sl-m136-sunglasses" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
-    </div>
-
-    <!-- ⭐ HER PICK, 2026-09-09. Mytheresa is one of the nine that pay her, so
-         this link earns and the photo is licensable.
-         🚨 THE PHOTO ADDRESS CAME FROM HER, AND FOUR GUESSES AT IT HAD FAILED
-         FIRST — every img.mytheresa.com pattern tried returned 403, which read
-         like a block and was really the wrong host. The real one is
-         www.mytheresa.com/image/... and SHE PASTED IT. That is the address-bar
-         workflow this file already records for bot-walled shops (J.Crew, Sézane,
-         Madewell, Kohl's), applied to an image rather than a search url.
-         ✅ HOTLINKING VERIFIED, NOT ASSUMED: fetched with Referer and Origin set
-         to stylestar.app and it returned 200, so it will load for a woman on her
-         phone. And the crop was LOOKED AT, not calculated — rendered at true
-         card width, where the bag sits fully in frame on the default
-         top-anchored rule, so no pxPos override is needed.
-         ⚠️ EVERY TRACKING PARAMETER STRIPPED — her standing rule, and this link
-         arrived with eighteen of them (utm_*, dplink, slink, feed_num, ad, cmp,
-         and the rest). They go stale, they make the link fragile, and once
-         affiliate links are live an extra tracking param can interfere with
-         commission attribution. The bare product path is what remains, and it
-         was checked: it still returns 200.
-         ⚠️ PRICE IS HERS. Mytheresa is bot-walled, so $790 could not be verified
-         from here the way the COUTR sunglasses were — it is her figure, read off
-         her own screen. -->
-    <div class="dc-item">
-      <img class="dc-item-px" src="https://www.mytheresa.com/image/1094/1238/100/9f/P01180729_b1.jpg" alt="Valentino Garavani Rockstud medium suede pouch in beige, held by its wrist strap" loading="lazy" decoding="async" onerror="this.remove()">
-      <span class="dc-item-star">&#11088;</span>
-      <div class="dc-item-name">Valentino Garavani Rockstud Medium Suede Pouch &mdash; Beige</div>
-      <div class="dc-item-meta"><span class="dc-store">Mytheresa</span><span class="dc-price">$790</span></div>
-      <div class="dc-item-note">Nobody does studs better than Valentino. I appreciate the detachable wrist strap and luxurious suede.</div>
-      <a class="dc-item-btn" href="https://www.mytheresa.com/us/en/women/valentino-garavani-rockstud-medium-suede-pouch-beige-p01180729" target="_blank" rel="sponsored noopener"><svg class="dc-bag" viewBox="0 0 24 24" fill="none" stroke="#0FA6B6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 8.5 h12.4 l-0.8 10.6 a1.2 1.2 0 0 1 -1.2 1.1 H7.8 a1.2 1.2 0 0 1 -1.2 -1.1 Z"/><path d="M8.3 8.5 C8.3 4.2 15.7 4.2 15.7 8.5"/><path d="M12 11.9 L12.5 13.3 L14 13.35 L12.85 14.25 L13.25 15.65 L12 14.8 L10.75 15.65 L11.15 14.25 L10 13.35 L11.5 13.3 Z" fill="#0FA6B6" stroke="none"/></svg>Shop this item <span class="dc-arr">&rarr;</span></a>
-    </div>
-    <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+        <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
     <div class="dc-trend-link" onclick="openTrending()">Curious what's trending right now? &rarr;</div>
 
     <button class="btn-outline" onclick="closeDream()" style="max-width:260px;margin:1rem auto 0;display:block" id="dreamBtn">Back</button>
