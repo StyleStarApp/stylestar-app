@@ -651,6 +651,70 @@ ok('...and an UNSCORED shop sinks to the end instead of crashing the row',
    seen[seen.length - 1] === "Kohl's" && seen.length === 4, seen.join(' > '));
 FIND = null;
 
+/* ═══ 10 · HER OWN SHELF IS IN THE ROW — HER DECISION, 2026-09-10 ═════════ */
+console.log('\n10. her affiliate shops reach the row, with their own addresses');
+/* ▶▶ HER CATCH: "none from farm Rio, mytheresa Marissa's or Olivela came up in
+   the search of 60 shown." MEASURED TWICE and she is right both times — Google
+   Shopping will not surface her small luxury shops (0 of 120 on 2026-09-09, 0 of
+   33 on 2026-09-10). _findSpread can only reorder what is in the pool, so THE
+   PROBLEM IS PRESENCE, NOT POSITION. Her nightly Rakuten feed already holds
+   these shops' real products WITH PHOTOGRAPHS; the finder had never looked.
+   ⚠️ A FEED PIECE IS THE ONLY CARD IN THIS ROW THAT KNOWS ITS OWN ADDRESS, and
+     that is what lets it honestly say "Shop it" and keep its price. Everything
+     from Google lands on a shop SEARCH and must say "Find it" with no price --
+     her rule, and it is applied here rather than relaxed. */
+FIND = { exact: [], doors: [], browse: [
+  /* ⚠️ `feed: true` IS THE MARKER, and it is what the page trusts. The Nordstrom
+     fixture below deliberately carries a `url` WITHOUT it — a Google result
+     always has one and it points at google.com/search, so a build that read
+     "has a url" as "knows the product page" would send her somewhere useless.
+     ▶ THAT IS NOT HYPOTHETICAL: the first version of this did exactly that, and
+       this pair of cards is what caught it. */
+  { id: 'feed:https://www.farmrio.com/p/belted-midi', title: 'Belted Midi Dress',
+    store: 'FARM Rio', brand: 'FARM Rio', price: '$225', image: 'https://example.com/f.jpg',
+    feed: true, url: 'https://www.farmrio.com/p/belted-midi',
+    name: 'Belted Midi Dress', search: 'Belted Midi Dress' },
+  product(70, { store: 'Nordstrom', title: 'Belted Midi Dress Nordstrom' }) ] };
+REPLY = { items: six(), findlead: 'I chose a belted dress, you told me you love them.',
+          find: { item: 'dress', colour: '', fabric: '', cut: 'belted' } };
+await ask(pg, '');
+await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
+const fd = await pg.evaluate(() => {
+  const cards = [...document.querySelectorAll('#ssFindWrap .find-card')];
+  const farm = cards.find(c => (c.textContent || '').includes('FARM Rio'));
+  const nord = cards.find(c => (c.textContent || '').includes('Nordstrom'));
+  const href = c => (c && c.querySelector('a.fc-go') || {}).href || '';
+  return { n: cards.length, farmHref: href(farm), nordHref: href(nord),
+           ticks: document.querySelectorAll('#ssFindWrap .find-card .fc-yes').length };
+});
+ok('a piece from HER OWN SHELF reaches the row', /farmrio\.com\/p\/belted-midi/.test(fd.farmHref),
+   fd.farmHref.slice(0, 90));
+/* 🚨 THE ANTI-VACUOUS HALF: a Google card in the SAME row must still land on a
+   shop search, or this check would pass on a build that gave every card a
+   product link it does not have. */
+ok('...while a Google card in the same row still lands on a shop SEARCH',
+   !!fd.nordHref && !/\/s\/70\b/.test(fd.nordHref), fd.nordHref.slice(0, 90));
+ok('...and neither wears a tick, because neither was verified',
+   fd.ticks === 0, 'ticks=' + fd.ticks);
+/* ▶ HER SAVED-ROW RULE, ONE SURFACE FURTHER OUT: the piece that owns its address
+   saves as "Shop it" WITH its price; the one that does not saves as "Find it". */
+const saved = await pg.evaluate(() => {
+  const cards = [...document.querySelectorAll('#ssFindWrap .find-card')];
+  const hit = t => cards.find(c => (c.textContent || '').includes(t));
+  const tap = c => { const b = c && c.querySelector('.wl-save'); if (b) b.click(); };
+  tap(hit('FARM Rio')); tap(hit('Nordstrom'));
+  const wl = (wardrobeData && wardrobeData.wishlist) || [];
+  const f = wl.find(x => x && /FARM Rio/.test(x.store || '')),
+        n = wl.find(x => x && /Nordstrom/.test(x.store || ''));
+  return { feedExact: !!(f && f.exact), feedPrice: (f && f.price) || '',
+           googleExact: !!(n && n.exact) };
+});
+ok('a saved feed piece keeps its real address and its price',
+   saved.feedExact && /225/.test(saved.feedPrice), JSON.stringify(saved));
+ok('...and a saved Google piece still claims no more than it can',
+   !saved.googleExact, JSON.stringify(saved));
+FIND = null;
+
 ok('zero JS errors across every scenario', errs.length === 0, errs.join(' | '));
 await ctx.close();
 

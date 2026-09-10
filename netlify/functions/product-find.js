@@ -124,6 +124,88 @@ const cacheSet = (k, v) => { if (CACHE.size >= CACHE_MAX) CACHE.delete(CACHE.key
 // ⚠️ EVERY FIELD IS VALIDATED, NOT TRUSTED. The values reach an outbound URL, and
 //    they arrive from a model reading a stranger's sentence. Short, plain, capped.
 const CLEAN = /^[a-z0-9][a-z0-9 '\-/.]{0,39}$/i;
+/* ⭐⭐⭐ HER OWN SHELF IS SEARCHED TOO — HER DECISION, 2026-09-10, AND IT ANSWERS
+   THE QUESTION SHE ASKED WITH IT: "Why haven't we had that working on all of
+   these affiliate stores from the beginning!?"
+   ▶▶ THE HONEST ANSWER, kept here because it is the useful half: the nightly
+     Rakuten feed was built 2026-09-02 to fill the WARDROBE CHECKLIST ONLY, and
+     that was HER OWN SCOPE DECISION — test the feeds on one surface, on a real
+     phone, before letting them reach the others. Her file says in as many words
+     that wiring them to chat and Shop your Style is "a separate piece of work,
+     and that work is hers to green-light". ▶ THE GREEN LIGHT WAS NEVER ASKED
+     FOR, FOR EIGHT DAYS, while the finder was built beside it. Nobody joined
+     "the finder needs products" to "we already have 200 dresses a slot, with
+     photographs".
+   ▶▶ WHY IT IS THE ONLY THING THAT WORKS: her paying shops are small luxury
+     shops and GOOGLE SHOPPING WILL NOT SURFACE THEM. Measured twice — 120
+     results on 2026-09-09 and 33 on 2026-09-10, ZERO from FARM Rio, Mytheresa,
+     Marissa Collections or Olivela both times. `_findSpread` can only reorder
+     what is in the pool, so no sort can help: THE PROBLEM IS PRESENCE, NOT
+     POSITION, and this is what fixes presence.
+   💰 IT COSTS NOTHING. Supabase is already paid for and already refreshed
+     nightly. No search is spent, no new vendor, no new key.
+   🚨 EVERY WORD SHE ASKED FOR MUST APPEAR IN THE PRODUCT'S NAME. That is her
+     rule of this same morning — "I want the stylist to deliver exactly what she
+     is promising" — and it is why a FARM Rio dress cannot be slipped into a
+     search for a BELTED dress just because FARM Rio pays her. Fewer of her
+     pieces, every one of them real.
+   ⚠️ THEY JOIN `browse` AND NEVER `exact`: nothing here has been verified on the
+     retailer's own page the way a looked-up offer is, so these cards carry no
+     tick and claim nothing. Her three-verdict rule is untouched.
+   ⚠️ IT FAILS OPEN. Supabase down, slow or misconfigured leaves the row exactly
+     as it is today — Google's results — rather than taking the feature down. */
+const FEED_COLS = 'retailer,brand,name,url,image_url,price';
+async function feedBrowse(request) {
+  const URL0 = process.env.SUPABASE_URL, KEY0 = process.env.SUPABASE_KEY;
+  if (!URL0 || !KEY0) return [];
+  /* The words she actually asked for. Size and width are deliberately absent,
+     the same reasoning as the search words: they are not in retailer names. */
+  const words = [...new Set([request.item, request.cut, request.colour, request.fabric]
+    .filter(Boolean).join(' ').toLowerCase()
+    .replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/)
+    .filter(w => w.length > 2 && !/^(women|womens|the|and|for|with)$/.test(w)))];
+  if (!words.length) return [];
+  const qs = new URLSearchParams();
+  qs.set('select', FEED_COLS);
+  qs.set('in_stock', 'is.true');
+  qs.set('image_url', 'not.is.null');
+  qs.set('price', 'not.is.null');
+  qs.set('limit', '24');
+  /* ⚠️ REPEATED `name` FILTERS ARE **AND**ed BY PostgREST, which is exactly the
+     rule: every word she said, all of them, in the name. */
+  for (const w of words) qs.append('name', 'ilike.*' + w + '*');
+  try {
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), 4000);   // never delay her row
+    const r = await fetch(URL0 + '/rest/v1/product_cards?' + qs, {
+      headers: {apikey: KEY0, Authorization: 'Bearer ' + KEY0}, signal: ctl.signal});
+    clearTimeout(t);
+    if (!r.ok) { console.error('[product-find] feed ' + r.status); return []; }
+    const rows = await r.json();
+    return (Array.isArray(rows) ? rows : [])
+      .filter(x => x && x.name && x.url && x.retailer)
+      .map(x => ({
+        id: 'feed:' + x.url,
+        title: x.name,
+        store: x.retailer,
+        brand: x.brand || x.retailer,
+        price: x.price != null ? '$' + x.price : '',
+        priceValue: x.price != null ? Number(x.price) : null,
+        image: x.image_url || '',
+        /* ⭐ THE ONE REAL DIFFERENCE FROM A GOOGLE CARD, AND IT IS AN UPGRADE:
+           the feed carries the PRODUCT'S OWN url, so this lands on the piece
+           itself rather than on the shop's search for it.
+           🚨 `feed:true` IS THE MARKER THE PAGE TRUSTS, NOT THE MERE PRESENCE OF
+             `url`. A Google result HAS a url and it points at google.com/search,
+             which is useless — so "it has a url" must never be read as "it knows
+             where the product lives". Caught by a test on 2026-09-10 that was
+             written to be un-vacuous and found this instead. */
+        feed: true,
+        url: x.url,
+        name: x.name, search: x.name,
+      }));
+  } catch (e) { console.error('[product-find] feed ' + (e && e.message)); return []; }
+}
 function cleanReq(body) {
   const out = {};
   for (const k of ['item', 'colour', 'fabric', 'cut', 'size', 'width']) {
@@ -379,6 +461,11 @@ export default async (req) => {
     }
 
     const t0 = Date.now();
+    /* ⭐ FIRED HERE, BESIDE THE SEARCH AND NEVER AWAITED YET, so her own shelf
+       costs ZERO extra time: Supabase answers in well under the four seconds
+       the search is going to take anyway. Same reasoning as the chat's marker
+       going first — run the two together, wait for the longer, not the sum. */
+    const feedP = feedBrowse(request);
     const queries = buildQueries(request).slice(0, MAX_QUERIES);
     /* ▶ Fired all at once as before; the difference is that we no longer wait
        for the slowest. SOFT_SEARCH_MS is the point at which a pool that already
@@ -713,7 +800,22 @@ export default async (req) => {
       };
     }).filter(p => p.title && !shownIds.has(p.id));
 
-    const payload = {exact, doors, browse, request, searched: queries.length, verified: verified.length,
+    /* ⭐⭐ HER OWN SHOPS JOIN THE ROW. They lead the browse stretch because the
+       page then sorts the whole thing by HER store scores anyway — this order is
+       just where they enter, not a thumb on the scale.
+       ⚠️ DEDUPED ON TITLE, case-folded. A piece can legitimately reach us twice
+         (Google surfaced the Mytheresa dress AND the feed carries it), and two
+         identical cards is the "same dress twice" she called noise on
+         2026-09-09, as opposed to the same STORE twice, which she wants. */
+    const seenTitles = new Set(browse.map(b => String(b.title).toLowerCase().trim()));
+    const feed = (await feedP).filter(f => {
+      const k = String(f.title).toLowerCase().trim();
+      if (seenTitles.has(k)) return false;
+      seenTitles.add(k); return true;
+    });
+
+    const payload = {exact, doors, browse: [...feed, ...browse], feed: feed.length,
+      request, searched: queries.length, verified: verified.length,
       // ⏱ ms spent in each half. Cheap, and it is what turned 'the finder is
       //   slow' into 'the SEARCH is slow and the look-ups are fine', which are
       //   completely different repairs.

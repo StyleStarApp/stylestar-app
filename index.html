@@ -11499,9 +11499,21 @@ function _findCard(p,opts){
      ▶ `image` IS CARRIED ON BOTH so a saved piece keeps its photograph. It is
        also the data the parked fitting-room view needs; nothing renders it yet. */
   const checked=!!p.checks;
+  /* ⭐⭐ WHAT EARNS "Shop it" AND A PRICE IS A REAL ADDRESS, NOT A TICK — extended
+     2026-09-10 when her own Rakuten shelf joined the row.
+     ▶▶ HER RULE IS UNCHANGED AND THIS IS IT APPLIED, NOT RELAXED: a saved row may
+       claim no more than the card it came from. A card whose url is the SHOP'S
+       SEARCH must save as "Find it" with no price, because a woman arriving at a
+       results page was promised a piece. A card whose url is THE PRODUCT'S OWN
+       PAGE, carrying the price the feed read off it last night, may honestly say
+       "Shop it" — and a looked-up offer and a feed row are both exactly that.
+     ⚠️ `kind` STAYS HONEST AND SEPARATE: only a LOOKED-UP piece is 'found'. A feed
+       piece has a real address but no verification, so it is still 'browse' and
+       still wears no tick. Address and evidence are different claims. */
+  const owns=checked||p.exact===true;
   const saveItem={name:shown,idName:p.title,store:p.store,search:p.title,
     image:p.image||'',kind:checked?'found':'browse'};
-  if(checked){saveItem.exact=true;saveItem.url=p.url;saveItem.price=p.price||'';}
+  if(owns){saveItem.exact=true;saveItem.url=p.url;saveItem.price=p.price||'';}
   /* 🚨🚨 THE CARD IS A `div` WITH THE LINK INSIDE IT, NOT AN `a` AROUND EVERYTHING,
      AND THE HEART IS ITS SIBLING. An `<a>` may not contain another control: a
      heart nested in the product link would fire the save AND open the shop in
@@ -11753,9 +11765,22 @@ function _findBlockHtml(data,req){
        link opened after an await is on iOS.
      ⚠️ HER NEVER-WEAR LIST GOVERNS THESE TOO — the same keep() ran above, with
        her WHOLE request, exactly as it does over the verified set. */
+  /* ⭐⭐ A PIECE FROM HER OWN SHELF BRINGS ITS OWN ADDRESS — 2026-09-10. The
+       nightly Rakuten feed stores the PRODUCT'S url, so these land on the piece
+       itself rather than on a shop's search for it. ▶▶ THAT IS THE "deep PRODUCT
+       links instead of store searches" ITEM THIS FILE HAS LISTED UNDER "blocked
+       until affiliate approvals land" SINCE JULY, arriving for the nine shops
+       that actually pay her, for free and with no plumbing.
+     ⚠️ AND IT IS WHY THE SAVED-ROW RULE STILL HOLDS. Her rule is that a saved row
+       may claim no more than the card it came from: a card landing on a real
+       product page with a real price may honestly say "Shop it" and keep the
+       price; a card landing on a SEARCH may not. The feed card earns the first
+       because it genuinely has the address, which is the whole distinction. */
   const browseCards=browse.map(function(b){
     return _findCard({id:b.id,title:b.title,brand:b.brand,store:b.store,
-      price:b.price,image:b.image,url:getStoreUrl(b.store,b.title)});
+      price:b.price,image:b.image,
+      url:(b.feed&&b.url)?b.url:getStoreUrl(b.store,b.title),
+      exact:!!(b.feed&&b.url)});
   });
   /* ⚠️ A BROWSE CARD CARRIES NO TICKS AND CLAIMS NOTHING — it is handed no
      `checks`, so `_findCard` renders name, store, price and photo and stops.
