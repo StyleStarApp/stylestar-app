@@ -439,9 +439,25 @@ export default async (req) => {
       /* ⚠️ The soft deadline only fires if something USABLE has arrived. With
          nothing in hand it is not a deadline, it is a way of reporting failure
          early, and this app already has a rule about that. */
-      const timer = setTimeout(() => { if (got >= atLeast) finish(); }, ms);
+      /* 🚨🚨 THE DEADLINE USED TO FIRE EXACTLY ONCE, AND THAT IS WHY HER SEARCHES
+         TOOK TWELVE SECONDS. If nothing had arrived at the instant the timer
+         went off, the soft deadline was GONE FOREVER — a result landing at 4.1s
+         could no longer end the wait, so the whole request sat until every query
+         had settled or hit the 12s per-call ceiling.
+         ▶▶ MEASURED ON HER LIVE FUNCTION, 2026-09-10: three calls in a row at
+           12240ms, all three carrying real products. The pool was ready and the
+           wait was pure dead time.
+         ⚠️ AND SLOW IS NOT MERELY UNPLEASANT HERE, IT IS HOW A SEARCH DIES: the
+           longer a request sits, the likelier it is to hit the ceiling and come
+           back as "My search didn't come back just then" — which is the screen
+           she photographed twice.
+         ✅ THE DEADLINE IS NOW A STATE, NOT AN EVENT. Once it has passed, the
+           very next usable result ends the wait. Nothing waits for a straggler
+           that has nothing to add. */
+      let past = false;
+      const timer = setTimeout(() => { past = true; if (got >= atLeast) finish(); }, ms);
       promises.forEach((p, i) => p
-        .then(v => { out[i] = v; if (v) got++; })
+        .then(v => { out[i] = v; if (v) { got++; if (past && got >= atLeast) { clearTimeout(timer); finish(); } } })
         .catch(() => {})
         .finally(() => { if (--left === 0) { clearTimeout(timer); finish(); } }));
     });
