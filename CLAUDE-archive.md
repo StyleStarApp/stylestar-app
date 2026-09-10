@@ -18228,3 +18228,135 @@ used" — was already stale and is superseded by the live SerpApi status section
 🔒 **SerpApi: ~75 of 250 free searches used on 2026-09-06. Her key is live and she may regenerate it at
 any time — if she does, `SERPAPI_KEY` in Netlify must be updated too or the chat quietly loses its
 product cards (no error, just advice).**
+
+
+---
+
+## 📦 ARCHIVED 2026-09-09 from `CLAUDE.md` — "THE CHAT REBUILD — THE PLAN, AGREED WITH HER 2026-09-08"
+▶ **Retired because the rebuild it planned SHIPPED IN FULL on 2026-09-09** — the stylist reads the
+products, the browse wall is live, the delegated cut is built, and the chat has her verdict (*"The chat
+is now working with scrollable photo options!!!"*). **It is what HAPPENED, which is the archiving rule's
+own test for what may move.**
+⚠️⚠️ **ONE LIVE RULE WAS LIFTED OUT BEFORE MOVING IT, AND THAT IS THE STEP THAT MATTERS:** her copy
+ruling that the chat's two failure sentences are APPROVED AS WRITTEN and are no longer placeholders. **It
+now has its own row in the RULE LEDGER, which never archives.** ▶ **Check for rules like that before
+archiving anything — a decision she gave does not stop being true because the build around it finished.**
+
+### 🛠️🛠️ THE CHAT REBUILD — THE PLAN, AGREED WITH HER 2026-09-08. START HERE NEXT SESSION.
+▶▶ **EVERY DECISION IS MADE. NOTHING BELOW NEEDS ASKING AGAIN — BUILD IT.**
+🚨 **AND BUILD IT OFFLINE. `scratchpad/fixtures/search-white-fitted-top.json` is a real captured search
+(40 products, 12 saved). `?capture=1&q=...` on `product-find` grabs more for ONE search each.** Her
+allowance is not a test harness — that lesson cost 141 searches in one afternoon.
+
+**1. THE STYLIST READS THE PRODUCTS. (the root cause, fault 1)**
+Replace the 8-word `CUT` lookup in `find-products.js` with a real reading step: hand the AI the actual
+product text and let it judge, **required to quote the product's own words as evidence**. It may say
+CONFIRMED only by pointing at where the page says so.
+⚠️ **THE THREE VERDICTS AND "UNKNOWN IS NEVER A PASS" DO NOT MOVE.** Nor does `_findKeepHerWords`, nor
+`filterNeverWear`, nor `curatedPicks`. **Guarantees stay in code; only the JUDGING becomes reading.**
+▶ **THE FRAME THAT MADE THIS CLICK FOR HER, KEEP IT:** *guarantees* (never a shift dress, never claim
+an unverified size, max two per shop) **must be code** — a promise that depends on an AI's mood is not
+a promise. *Judgements* (is this fitted? is this high-rise?) **need reading.** The bug was building a
+judgement as if it were a guarantee.
+⚠️ **DO NOT "FIX" THIS BY ADDING 50 MORE WORDS TO THE LIST.** Her three tests would pass and the 51st
+would fail the same silent way.
+
+**2. MANY CARDS, LAZY LOOK-UPS. (her ask, and the economics)**
+Render a wide scrollable row from the ONE search — title, store, price, photo are all there free —
+verify the top few, and **spend a look-up only on what she reaches for.** ⚠️ **The look-up is the only
+source of a buyable, affiliate-wrappable link (0 of 12 raw results had one), so an un-looked-up card
+must resolve its link ON TAP** before it can go anywhere.
+
+**3. THE DELEGATED CUT. (fault 4, ruled yes above)**
+When she hands over the choice, the stylist's silhouette becomes a real search requirement, and the
+stylist says out loud that it was her pick.
+
+**4. ALREADY DONE 2026-09-08, DO NOT REDO:** parallel + pooled calls · per-call timeouts (search long,
+look-up 6s) · a failed search says so instead of rendering silence · `SERPAPI_RESERVE` defaults to 0
+(warn, never block) · the Saturday budget check.
+⚠️ **HER COPY RULING: the two failure sentences are APPROVED AS WRITTEN.** Her words: *"I think what you
+came up with is fine and the stylist chat already has a good personality and words things well."*
+**They are no longer placeholders. Do not rewrite them.**
+
+
+---
+
+## 📦 ARCHIVED 2026-09-09 from `CLAUDE.md` — "THE STYLIST CHAT IS NOT LANDING (2026-09-08, four faults)"
+▶ **Retired because all four faults are fixed and the chat has her verdict** — *"The chat is now working
+with scrollable photo options!!!"* **It is what HAPPENED.**
+⚠️⚠️ **TWO LIVE THINGS WERE LIFTED OUT FIRST, and that is the step that matters:** her DELEGATED-CUT
+ruling (now its own RULE LEDGER row, complete with the warnings that keep it narrow), and the
+GUARANTEE-vs-JUDGEMENT frame, which already had its own home at the top of the rule ledger.
+▶ **Kept here for the story: the measured speed finding (look-ups pinned at 12,001ms while the search
+took 33-134ms — nothing was slow except the waiting), and the 8-word `CUT` list that started it all.**
+
+### 🚨🚨🚨 THE STYLIST CHAT IS NOT LANDING — HER TESTING, 2026-09-08, AND FOUR SEPARATE FAULTS
+▶▶ **HER WORDS: *"I did some testing on stylist chat and very disappointed."*** She sent four phone
+screenshots. **She was right about every one of them, and they were four DIFFERENT faults, not one.**
+
+**1. 🚨 THE ROOT CAUSE — THE FINDER ONLY KNOWS DRESS WORDS. STILL OPEN; THIS IS THE REBUILD.**
+`CUT` in `find-products.js` has **EIGHT entries**: wrap · a-line · shift · midi · maxi · mini · ankle ·
+knee-high. **Every one comes from the single "blush silk wrap dress" case it was built against.** It
+knows nothing about denim, tops or trousers. Measured against the real titles:
+| she asks for | the product's own title says | verdict |
+|---|---|---|
+| high rise | "Ultra **High Rise** 90s **Straight** Jean" | ❌ unknown |
+| straight leg | "Ultra High Rise 90s **Straight** Jean" | ❌ unknown |
+| fitted | "The **Fitted** Cotton Poplin Shirt" | ❌ unknown |
+| wrap | "Jeanne Silk **Wrap** Dress" | ✅ confirmed |
+▶▶ **AND BECAUSE UNKNOWN IS NEVER A PASS — her rule, and the right one — ANY REQUEST NAMING A CUT IT
+DOES NOT KNOW CAN NEVER PRODUCE AN EXACT MATCH.** `jeans size 26` returns 3 matches; add `straight leg`
+and it returns **ZERO**, while one of the three is literally a *90s Straight Jean*.
+⚠️ **DO NOT FIX THIS BY ADDING FIFTY MORE WORDS.** Her three tests would pass and the fifty-first would
+fail the same silent way. **A list can only know what someone typed into it.**
+⭐ **HER OWN DIAGNOSIS WAS RIGHT AND IS THE DESIGN: *"I feel like our app already knows what we are
+trying to deliver."*** It does — measured: "relaxed" appears **39** times in the app's own taxonomy,
+"fitted" **31**, "cropped" **21**, "skinny" **11**. ▶ **The app knows. The finder was never given it.**
+▶▶ **THE FRAME THAT MADE IT CLICK FOR HER, AND IT IS WORTH KEEPING: THE APP HAS TWO KINDS OF RULE.**
+**GUARANTEES** (never a shift dress · never claim a size we cannot verify · max two per shop) **must be
+code**, because a promise that depends on an AI's mood is not a promise — that is the Stitch Fix lesson
+and it does not move. **JUDGEMENTS** (*is this jean high-rise? is this top fitted?*) **need reading.**
+🚨 **I BUILT A JUDGEMENT AS IF IT WERE A GUARANTEE — a word list where eyes belonged.** That is the whole
+glitch. ▶ **THE AGREED FIX: let the stylist READ the products** (the same AI already writing her
+replies) **and require it to quote the product's own words as proof.** Code keeps the guarantees.
+
+**2. ✅ FIXED — SPEED. AND IT WAS NOT WHAT ANYONE GUESSED.** Instrumented rather than guessed a third
+time: **the SEARCH took 33–134ms; the LOOK-UPS came back at 12,001 / 12,002 / 12,002 / 12,016ms** —
+pinned to the millisecond on a shared 12s ceiling. ▶▶ **NOTHING WAS SLOW EXCEPT THE WAITING.** 2–5 of 6
+look-ups answer fast, one never answers, and `Promise.all` waits for the slowest. **Every request paid
+12 seconds for one straggler**, and past ~30s it was a 504. ✅ Calls are now **parallel with a small
+concurrency pool** (searches 2 wide, look-ups 3 wide) and look-ups get **6s** while the search keeps a
+long ceiling — losing a search loses everything; losing one look-up of six is invisible.
+⚠️ **AND A SUSPICION, NOT A FINDING: after parallelising, FRESH searches began pinning at their ceiling
+too (10,002 / 10,008 / 10,009ms), which sequential calls never did.** Most likely a **concurrent-request
+limit** on her plan — a queued call looks exactly like a slow one. **Unverified; it needs her dashboard.**
+
+**3. ✅ FIXED — A FAILED SEARCH READ AS "I LOOKED AND FOUND NOTHING."** The page returned early and
+rendered nothing so the advice would stand, **and the PREVIOUS answer's cards were still above it** —
+which is exactly what she reported as *"you just showed me the exact same thing when I asked for
+something different."* **It had shown her nothing. The old cards were simply still there.**
+▶ **This is her 2026-09-06 rule one step further out:** she rejected a silent fallback because an
+invented pick *looks identical to a real find*. **A failed search shown as silence has that same shape.**
+⚠️ **The two new sentences are CLAUDE'S and are marked in the code as placeholders for HERS.**
+
+**4. ⏳ HER RULING NEEDED — THE STYLIST WRITES A CHEQUE THE SEARCH DOES NOT CASH.** It said *"straight
+leg mid rise is the most current silhouette… let me pull some real options"* and then searched only
+`jeans + size 26`, because **colour/fabric/cut are searched ONLY if they came from her mouth**
+(`_findKeepHerWords`) — the rule that exists because the model once recommended a jewel tone and then
+searched for one as though she had asked. **The rule is right. The prose is not bound by it.**
+✅✅ **ANSWERED BY HER, 2026-09-08: YES.** When a woman asks *"what's in style now?"* she is
+**DELEGATING the choice**, so the stylist's own recommended silhouette **becomes a real search
+requirement**. Her words: ***"yes, that makes sense."***
+🚨 **THIS IS A NARROW EXCEPTION AND ITS EDGES MATTER — DO NOT WIDEN IT.** The rule it bends
+(`_findKeepHerWords`: colour/fabric/cut only if SHE said them) exists because the model once
+recommended a jewel tone and then searched for one **as though she had asked**. That failure is a
+requirement invented from nowhere. ▶ **THE DIFFERENCE IS DELEGATION: she asked the stylist to choose.**
+⚠️ **SO THE TEST IS NOT "did the stylist name a cut" — it is "did the woman hand over the choice".**
+*"What's in style now?"* · *"What do you recommend?"* · *"You pick"* → the stylist's cut is searchable.
+*"I want a blush silk wrap dress"* → only her words, exactly as now.
+▶ **AND THE STYLIST MUST SAY WHOSE CHOICE IT WAS**, so a woman is never quietly given a requirement she
+did not set: name it out loud ("straight leg is the most current, so that's where I looked") and it
+stays hers to overrule. **That is the honest version of choosing for her.**
+▶ **THE ALTERNATIVE WAS OFFERED AND IS NOW CLOSED:** the stylist could instead have been forbidden from
+naming a silhouette it was not going to search for. **She chose the better half — advice and results
+that agree — rather than advice made vaguer to match a narrow search.**

@@ -13,17 +13,25 @@ everything including loose ends so I can get organized and momentum going."*
 ⚠️ **NOTHING HERE IS INVENTED. Every item traces to a section further down this file or to a decision she
 made.** ▶ **KEEP THIS UPDATED AND NEVER ARCHIVE IT** — it is the answer to her standing ask that Claude
 *"keep PUSHING her on the to-do list and keep her ON TRACK / focused each session."*
-🚨 **AND THE ONE-LINE TRUTH TO SAY OUT LOUD EVERY TIME SHE ASKS WHAT UNLOCKS THIS: the thing standing
-between Style Star and a mid-market feed is USERS, not code and not craft.** Everything below is worth
-doing; **only the testers change the ceiling.**
+🚨 **THE ONE-LINE TRUTH ABOUT THE AFFILIATE CEILING, AND IT IS STILL TRUE: the thing standing between
+Style Star and a mid-market feed is USERS, not code and not craft.**
+⚠️⚠️ **BUT READ THE NEXT LINE BEFORE SAYING IT TO HER, BECAUSE IT STOPPED BEING AN ACTION ON 2026-09-09:
+SHE HAS ALREADY SHARED THE APP — *"I have already asked many friends and put it out on Instagram."***
+▶▶ **SO "you need users" IS A FACT ABOUT AFFILIATES, NOT A THING SHE STILL HAS TO DO.** Claude repeated
+it several times that day as if it were her next step, and it was not: **she had already taken it.**
+▶ **THE LIVE QUESTION IS WHAT CAME BACK. ASK HER; DO NOT ADVISE HER TO FIND TESTERS.**
 
-### ⭐ THE THREE THAT MOVE THE APP — start here
+### ⭐ THE BOARD — ALL FOUR CLOSED, AND THAT IS WHY THE NEXT MOVE IS A QUESTION, NOT A BUILD
 | # | What | Who | State |
 |---|---|---|---|
 | 1 | ~~Hand the store brief to ChatGPT~~ ✅ **CLOSED 2026-09-08 — she sent her own roster instead. 122 shops, and she is DONE adding for now.** | — | ✅ done |
 | 2 | ~~Re-run her three chat messages~~ ✅ **CLOSED 2026-09-09 — she tested the live build herself, twice, and her verdict is *"The chat is now working with scrollable photo options!!!"*** | — | ✅ done |
 | 3 | ~~Shop your Style — wire the finder into it~~ ✅ **BUILT 2026-09-09, BOTH FORKS ANSWERED BY HER FIRST.** Real products lead, her six stay below; the default view searches too. `ssfind` **52** checks. | — | ✅ done |
 | 4 | ~~A save heart on `_findCard`~~ ✅ **BUILT 2026-09-09 — every card the finder shows now carries the EXISTING `_wlSaveBtn`, and a saved piece keeps its photograph.** | — | ✅ done |
+| 5 | ~~Homework 7 — first testers~~ ✅ **CLOSED 2026-09-09 BY HER: *"I have already asked many friends and put it out on Instagram."*** | — | ✅ done |
+▶▶ **EVERY ROW IS DONE. There is no approved next build.** ⭐ **The next session's job is to ASK — what her
+testers said, and what a fitting room means to her — and let her answers set the work. See "WHAT CLAUDE
+BUILDS NEXT" below, which is deliberately a list of UNAPPROVED options rather than a queue.**
 
 ### 🏛️ BUSINESS & LEGAL
 ✅ **THE WHOLE LEGAL CHAIN IS NOW DONE:** LLC · EIN · trademark filed · **business bank account, credit
@@ -233,9 +241,18 @@ that makes any future number mean something.**
   Kendra Scott · SKIMS · Lane Bryant · Dia&Co · Sam Edelman · Lacoste · Tory Burch · Belk · Bergdorf
   Goodman · TJ Maxx · Sunglass Hut · Warby Parker · Dillard's. **Only worth doing for stores she would
   actually send a client to.**
-- ▶ **HOMEWORK 7 — FIRST TESTERS, her own timing.** 5-10 warm, constructive people; skip the AI-hostile;
-  include a couple who do NOT know her, to judge the product not the person. **Her soft-launch instinct
-  is legitimate and protected.**
+- ✅✅✅ **HOMEWORK 7 IS DONE — SHE HAS SHARED IT, 2026-09-09. HER WORDS: *"I have already asked many
+  friends and put it out on Instagram."*** 🚨🚨 **THIS IS LIVE OPERATIONAL STATUS AND IT NEVER ARCHIVES.**
+  ▶▶ **SHE WENT FURTHER THAN THE 5-10 WARM TESTERS THIS FILE KEPT RECOMMENDING — INSTAGRAM IS A PUBLIC
+  POST, NOT A HAND-PICKED CIRCLE.** ⚠️ **SO THE SOFT-LAUNCH POSTURE RECORDED SINCE 2026-07-14 HAS BEEN
+  RETIRED BY HER, and the file must stop protecting a caution she has already set aside.**
+  🚨🚨 **AND STOP TELLING HER SHE NEEDS TESTERS. SHE HAS ASKED.** Claude said "the answer is users" many
+  times across 2026-09-09 — correct as an affiliate fact, and **wrong as a next action, because she had
+  already taken it.** ▶ **THE OPEN THREAD IS NO LONGER OUTREACH, IT IS WHAT COMES BACK: has anyone used
+  it, and what did they say?** **ASK HER THAT — do not re-propose finding testers.**
+  ⚠️ **WHAT IS WORTH OFFERING INSTEAD, and only if she wants it: there is NO analytics answer to "did
+  anyone use it" in this file.** `track()` exists; nobody has looked. **If she wants to know whether the
+  Instagram post produced real sessions, that is a real, small, unstarted piece of work.**
 
 ### 🔒 BLOCKED UNTIL AFFILIATE APPROVALS LAND (surface at money-path step 7)
 - ▶ **More swim stores + a proper swim section in the Mall** (her own ask).
@@ -259,16 +276,38 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-09, END OF A LONG DAY. READ THIS BLOCK FIRST.
-🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is the day's detail, newest first, and a few
-older status blocks that were true when written and are now HISTORY — if a line further down contradicts
-this one, THIS ONE WINS.** ▶ **That is why it exists: three separate "TEST STATE" and "WAITING ON HER"
-sections had accumulated in one file and a session could read any of them first.**
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-09, A LONG DAY AND EVERYTHING SHIPPED. READ THIS BLOCK FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is detail, newest first, and some older blocks
+are HISTORY — if a line further down contradicts this one, THIS ONE WINS.**
+
+### 🚨🚨🚨 THE ONE THING TO SAY TO HER FIRST, BECAUSE IT CHANGED TODAY AND IT CHANGES THE ADVICE
+▶▶ **SHE HAS SHARED THE APP. HER WORDS, 2026-09-09: *"I have already asked many friends and put it out
+on Instagram."*** ✅ **HOMEWORK 7 IS CLOSED.**
+⚠️⚠️ **SO DO NOT TELL HER SHE NEEDS TESTERS. She has asked.** Claude said *"the answer is users"* several
+times that day — **true about affiliates, WRONG as a next action, because she had already taken it.**
+▶▶ **THE OPEN QUESTION IS NOW WHAT CAME BACK: has anyone used it, and what did they say? ASK HER THAT.**
+▶ **And there is no analytics answer in this file — `track()` exists and nobody has ever looked.** If she
+wants to know whether the Instagram post produced real sessions, **that is a real, small, unstarted job**
+and it is the honest companion to the question. **Offer it; do not assume it.**
 
 ### ✅ EVERYTHING IS ON `main` AND VERIFIED LIVE BY FETCHING stylestar.app
-`4e7ce2d` → `c17adb3` → `89c6da6` → `631a803` → `cb433ad` → **`f74ddf3`**.
-⚠️ **VERIFIED BY FETCHING THE SERVED FILES AND FINDING THE MARKERS, never by the deploy badge.** That is
-the standing rule and it held all day.
+`ba99e70` → `3441cb6` → `d83563e` → `42a7add` → **`656a2bf`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILES
+AND FINDING THE MARKERS, never by the deploy badge.** Standing rule; it held all day.
+
+### ⭐ WHAT SHIPPED 2026-09-09 — ALL LIVE, ALL TESTED
+1. **A SAVE HEART ON EVERY CARD THE FINDER SHOWS** — chat and Shop your Style. The existing `_wlSaveBtn`,
+   never a second control, and **the photograph is stored on the wishlist entry** (nothing renders it yet
+   — that is the parked fitting-room view).
+2. **SHOP YOUR STYLE SHOWS REAL PRODUCTS** — her item 3, the big one. Real photographed pieces from her
+   132 shops LEAD, her six named picks stay below. **The default "show me a mix" view searches too.**
+   Both forks were put to her BEFORE building.
+3. **HER COPY ON THE ROW: *"Here are some options."*** — replacing Claude's *"Showing you as much as I
+   could find."*
+4. **A PERMANENT WAY BACK TO HER WISHLIST FROM THE CHAT** — her catch; the existing `data-wldoor`,
+   appearing only once she has saved something.
+5. **THE WAITING STAR: 66px, GOLD, with her own words rotating** — her pick, chosen by looking at four
+   sizes rendered at true size. ⚠️ **THE SMALL PINK STYLIST MARKS ON THAT SCREEN STAY PINK — her explicit
+   correction after Claude swept them.**
 
 ### ▶ TEST STATE — THE ONLY CURRENT ONE (older "TEST STATE" blocks below are STALE, ignore them)
 ✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 52 — NEW** ·
@@ -301,40 +340,46 @@ It was clearly done by hand in `products.json` and the converter never learned t
 flagged, because it is outside what she asked for today.**
 
 ### ▶▶ WHAT IS WAITING ON HER — THE WHOLE LIST, SHORTEST FIRST
-✅✅ **SHE ALREADY TESTED SHOP YOUR STYLE THE SAME EVENING AND IT PASSED — *"All of that is fine"* on the
-layout, *"Yes that is fine"* on the default view and the stylist's line.** ▶ **Her two faults are written
-up below: the star is FIXED, the shoe photos are MEASURED and are hers to rule on.**
-⏸️ **THE ONE THING GENUINELY WAITING ON HER NOW IS THE WISHLIST CONVERSATION** — she asked to talk it
-through rather than pick from options. **Ask her what a fitting room means to her.**
-1. ⏳ **THE OCT 1 CLOCK. The only thing on her entire board with a real deadline.** Do NOT pay the Your
-   Fashion Friend renewal; close the Orange County business tax receipt **by email or mail, not in
-   person**. Full wording in the sole-proprietorship section.
-2. ✅✅ **CLOSED 2026-09-09 — THE WHITE BAND IS A NON-ISSUE.** Her words: ***"I have not noticed a white
-   band on anything."*** ▶ **The 150x170 `contain` frame is right and this must not be re-asked.**
-3. ▶ **Nothing else is blocked on her.** The store list is closed, the chat has her verdict, and the
-   affiliate path is waiting on USERS, not on a decision.
+1. ⏳ **THE OCT 1 CLOCK. The only thing on her entire board with a real deadline, and it is ~3 WEEKS
+   OUT.** Do NOT pay the Your Fashion Friend renewal; close the Orange County business tax receipt **by
+   email (`btpc@octaxcol.com`) or mail, NOT in person**; call **407-246-2204** about whether to apply for
+   Style Star's own receipt before or after Oct 1 so she does not pay twice. **Full wording in the
+   sole-proprietorship section.**
+2. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** She has asked friends and posted on
+   Instagram. **Ask what they said — this is now the most valuable information the project can get, and
+   only she has it.**
+3. ⏸️ **THE WISHLIST / FITTING-ROOM CONVERSATION.** Offered four build options she chose ***"Neither yet
+   — let's talk it through more."*** ▶ **ASK HER WHAT A FITTING ROOM MEANS TO HER. Do not re-propose the
+   same menu.** The photograph is already stored on every finder-saved piece, so nothing is lost waiting.
+4. ▶ **WHAT MAKES A SHOE PHOTO GOOD.** Her correction: the problem is *"the point of view and angle of
+   shoe"*, not the size. **That is stylist knowledge and no measurement finds it** — but on the few
+   looked-up cards there IS a choice of photograph the app is not using (`thumbnails` is an array and we
+   take `[0]`). **She has to define "good" before a line is written.**
+5. ▶ **ONE PINK THING LEFT ON SHOP YOUR STYLE AND IT IS TEXT, NOT A STAR:**
+   `#s-shopstyle .ss-shop-talk span`. **Flagged to her, not changed.**
 
-### ▶ WHAT CLAUDE BUILDS NEXT, IN ORDER — THE ONLY CURRENT LIST
-✅✅ **THE TOP TWO ARE DONE AND LIVE, 2026-09-09: the save heart AND Shop your Style** — and she has
-already tested Shop your Style on her phone and passed it. Both are written up below.
-1. ⏸️ **THE WISHLIST / FITTING-ROOM CONVERSATION — HERS, AND SHE ASKED FOR IT EXPLICITLY.** Offered four
-   build options she chose ***"Neither yet — let's talk it through more."*** ▶ **So ASK HER WHAT A
-   FITTING ROOM MEANS TO HER and design to that; do NOT re-propose the same menu.** The photograph is
-   already stored on every finder-saved piece, so nothing is lost by waiting. **The standing
-   recommendation — ONE list, TWO views, never a second list — is in the master to-do, with her own
-   words.**
-2. ▶ **THE SHOE PHOTOS — HER RULING NEEDED, AND THE MEASUREMENT IS ALREADY DONE.** 9-10% of the card is
-   the shoe; 12 real tops measure ~100%. **Three levers with real costs, written up below.** 🚨 **A
-   blanket zoom is NOT one of them — it would crop real garment off every top, which is her own rule
-   broken on the majority of cards to help a minority.**
-3. ▶ **MORE SEARCHES PER QUESTION.** `buildQueries` fires up to 4 and her real questions often fire ONE.
-   Three or four would multiply the pool for ~5-7¢. **Cheap, unstarted, and hers to say yes to.**
-4. ▶ **TEACH `products-from-csv.js` TO DEACTIVATE A ROW WHOSE SHOP IS GONE, instead of refusing the whole
-   file.** Not urgent — but it is what stops `curated` being permanently red, and a permanently-red suite
-   is how a false green happens. **See the test-state block above for the full finding.**
-⚠️ **AND ONE THING STILL WAITING ON HER EYE, UNPROMPTED: the stylist's own line on the no-ask view (*"so
-that is where I looked"*) IS CLAUDE'S COPY and is marked in the code as a placeholder for hers.** She
-said it is fine; **her own wording has beaten every draft so far, so offer it once more, don't force it.**
+### ▶ WHAT CLAUDE BUILDS NEXT — NOTHING IS QUEUED, AND THAT IS THE HONEST STATE
+✅✅ **HER WHOLE BUILD LIST IS DONE AND LIVE.** The save heart, Shop your Style, her copy, the wishlist
+door and the star all shipped 2026-09-09. **There is no approved next build waiting.**
+🚨 **SO THE NEXT SESSION SHOULD NOT PICK SOMETHING AND START. IT SHOULD ASK HER TWO QUESTIONS** — what
+the people she shared it with said, and what a fitting room means to her — **and let her answer set the
+work.** ▶ **This file's own warning applies: perfectionism can become a hiding place, and more solo
+polish is worth less than what her first real users tell her.**
+▶ **THE UNSTARTED THINGS, in rough value order, none of them approved:**
+1. ▶ **DID ANYONE ACTUALLY USE IT?** `track()` exists and nobody has ever looked. **Small, unstarted, and
+   it is the direct companion to her Instagram post.** ⚠️ **Offer it; she may not want numbers.**
+2. ⏸️ **THE FITTING-ROOM VIEW** — parked by her, thinking kept, **and its blocker is gone**: saved pieces
+   carry their photograph now. **Do not start it; do resurface it.** (ONE list, TWO views, never a second
+   list — her own words are in the master to-do.)
+3. ▶ **THE SHOE PHOTO ANGLE** — blocked on her definition of "good", above.
+4. ▶ **MORE SEARCHES PER QUESTION.** `buildQueries` fires up to 4 and her real questions often fire ONE.
+   Three or four would multiply the pool for ~5-7¢. **Cheap, unstarted, hers to say yes to.**
+5. ▶ **TEACH `products-from-csv.js` TO DEACTIVATE A ROW WHOSE SHOP IS GONE** rather than refuse the whole
+   file. **Not urgent, but it is what stops `curated` being permanently red — and a permanently-red suite
+   is how a false green happens.**
+⚠️ **AND ONE THING STILL WAITING ON HER EYE, UNPROMPTED: the stylist's line on the no-ask view (*"so that
+is where I looked"*) IS CLAUDE'S COPY and is marked in the code as a placeholder for hers.** She said it
+is fine; **her own wording has beaten a Claude draft twice on that row, so offer it once more.**
 
 ## ⭐⭐ HER COPY, AND THE WAY BACK TO HER WISHLIST FROM THE CHAT (2026-09-09, LATER)
 ### ⭐⭐⭐ HER LINE REPLACES CLAUDE'S ON THE PRODUCT ROW — AND IT IS THE SECOND TIME
@@ -1305,77 +1350,6 @@ link-rot script detects "sold out" perfectly well and is pointed at the FROZEN c
 or the Star queue. ▶▶ **A curated surface she updates is exactly the one that goes stale, and it was the
 only one unmonitored.** **She is not the stock checker; a script should be.**
 
-### 🚨🚨🚨 THE STYLIST CHAT IS NOT LANDING — HER TESTING, 2026-09-08, AND FOUR SEPARATE FAULTS
-▶▶ **HER WORDS: *"I did some testing on stylist chat and very disappointed."*** She sent four phone
-screenshots. **She was right about every one of them, and they were four DIFFERENT faults, not one.**
-
-**1. 🚨 THE ROOT CAUSE — THE FINDER ONLY KNOWS DRESS WORDS. STILL OPEN; THIS IS THE REBUILD.**
-`CUT` in `find-products.js` has **EIGHT entries**: wrap · a-line · shift · midi · maxi · mini · ankle ·
-knee-high. **Every one comes from the single "blush silk wrap dress" case it was built against.** It
-knows nothing about denim, tops or trousers. Measured against the real titles:
-| she asks for | the product's own title says | verdict |
-|---|---|---|
-| high rise | "Ultra **High Rise** 90s **Straight** Jean" | ❌ unknown |
-| straight leg | "Ultra High Rise 90s **Straight** Jean" | ❌ unknown |
-| fitted | "The **Fitted** Cotton Poplin Shirt" | ❌ unknown |
-| wrap | "Jeanne Silk **Wrap** Dress" | ✅ confirmed |
-▶▶ **AND BECAUSE UNKNOWN IS NEVER A PASS — her rule, and the right one — ANY REQUEST NAMING A CUT IT
-DOES NOT KNOW CAN NEVER PRODUCE AN EXACT MATCH.** `jeans size 26` returns 3 matches; add `straight leg`
-and it returns **ZERO**, while one of the three is literally a *90s Straight Jean*.
-⚠️ **DO NOT FIX THIS BY ADDING FIFTY MORE WORDS.** Her three tests would pass and the fifty-first would
-fail the same silent way. **A list can only know what someone typed into it.**
-⭐ **HER OWN DIAGNOSIS WAS RIGHT AND IS THE DESIGN: *"I feel like our app already knows what we are
-trying to deliver."*** It does — measured: "relaxed" appears **39** times in the app's own taxonomy,
-"fitted" **31**, "cropped" **21**, "skinny" **11**. ▶ **The app knows. The finder was never given it.**
-▶▶ **THE FRAME THAT MADE IT CLICK FOR HER, AND IT IS WORTH KEEPING: THE APP HAS TWO KINDS OF RULE.**
-**GUARANTEES** (never a shift dress · never claim a size we cannot verify · max two per shop) **must be
-code**, because a promise that depends on an AI's mood is not a promise — that is the Stitch Fix lesson
-and it does not move. **JUDGEMENTS** (*is this jean high-rise? is this top fitted?*) **need reading.**
-🚨 **I BUILT A JUDGEMENT AS IF IT WERE A GUARANTEE — a word list where eyes belonged.** That is the whole
-glitch. ▶ **THE AGREED FIX: let the stylist READ the products** (the same AI already writing her
-replies) **and require it to quote the product's own words as proof.** Code keeps the guarantees.
-
-**2. ✅ FIXED — SPEED. AND IT WAS NOT WHAT ANYONE GUESSED.** Instrumented rather than guessed a third
-time: **the SEARCH took 33–134ms; the LOOK-UPS came back at 12,001 / 12,002 / 12,002 / 12,016ms** —
-pinned to the millisecond on a shared 12s ceiling. ▶▶ **NOTHING WAS SLOW EXCEPT THE WAITING.** 2–5 of 6
-look-ups answer fast, one never answers, and `Promise.all` waits for the slowest. **Every request paid
-12 seconds for one straggler**, and past ~30s it was a 504. ✅ Calls are now **parallel with a small
-concurrency pool** (searches 2 wide, look-ups 3 wide) and look-ups get **6s** while the search keeps a
-long ceiling — losing a search loses everything; losing one look-up of six is invisible.
-⚠️ **AND A SUSPICION, NOT A FINDING: after parallelising, FRESH searches began pinning at their ceiling
-too (10,002 / 10,008 / 10,009ms), which sequential calls never did.** Most likely a **concurrent-request
-limit** on her plan — a queued call looks exactly like a slow one. **Unverified; it needs her dashboard.**
-
-**3. ✅ FIXED — A FAILED SEARCH READ AS "I LOOKED AND FOUND NOTHING."** The page returned early and
-rendered nothing so the advice would stand, **and the PREVIOUS answer's cards were still above it** —
-which is exactly what she reported as *"you just showed me the exact same thing when I asked for
-something different."* **It had shown her nothing. The old cards were simply still there.**
-▶ **This is her 2026-09-06 rule one step further out:** she rejected a silent fallback because an
-invented pick *looks identical to a real find*. **A failed search shown as silence has that same shape.**
-⚠️ **The two new sentences are CLAUDE'S and are marked in the code as placeholders for HERS.**
-
-**4. ⏳ HER RULING NEEDED — THE STYLIST WRITES A CHEQUE THE SEARCH DOES NOT CASH.** It said *"straight
-leg mid rise is the most current silhouette… let me pull some real options"* and then searched only
-`jeans + size 26`, because **colour/fabric/cut are searched ONLY if they came from her mouth**
-(`_findKeepHerWords`) — the rule that exists because the model once recommended a jewel tone and then
-searched for one as though she had asked. **The rule is right. The prose is not bound by it.**
-✅✅ **ANSWERED BY HER, 2026-09-08: YES.** When a woman asks *"what's in style now?"* she is
-**DELEGATING the choice**, so the stylist's own recommended silhouette **becomes a real search
-requirement**. Her words: ***"yes, that makes sense."***
-🚨 **THIS IS A NARROW EXCEPTION AND ITS EDGES MATTER — DO NOT WIDEN IT.** The rule it bends
-(`_findKeepHerWords`: colour/fabric/cut only if SHE said them) exists because the model once
-recommended a jewel tone and then searched for one **as though she had asked**. That failure is a
-requirement invented from nowhere. ▶ **THE DIFFERENCE IS DELEGATION: she asked the stylist to choose.**
-⚠️ **SO THE TEST IS NOT "did the stylist name a cut" — it is "did the woman hand over the choice".**
-*"What's in style now?"* · *"What do you recommend?"* · *"You pick"* → the stylist's cut is searchable.
-*"I want a blush silk wrap dress"* → only her words, exactly as now.
-▶ **AND THE STYLIST MUST SAY WHOSE CHOICE IT WAS**, so a woman is never quietly given a requirement she
-did not set: name it out loud ("straight leg is the most current, so that's where I looked") and it
-stays hers to overrule. **That is the honest version of choosing for her.**
-▶ **THE ALTERNATIVE WAS OFFERED AND IS NOW CLOSED:** the stylist could instead have been forbidden from
-naming a silhouette it was not going to search for. **She chose the better half — advice and results
-that agree — rather than advice made vaguer to match a narrow search.**
-
 ### ⭐⭐⭐ HER DECISION, 2026-09-08: SHOW HER LOTS TO SCROLL THROUGH — BROWSING IS THE POINT
 ▶▶ **HER WORDS, VERBATIM:** ***"yes yes yes the more options she can browse, the better, even if
 they're not all perfect matches, even if they are close, if she can scroll through a lot of visuals,
@@ -1404,42 +1378,6 @@ look-up only on the pieces she actually reaches for.**
 💰 **AND THIS IS NOT A NICETY, IT IS THE BUSINESS MODEL — at her real price of $0.025/search, middle
 case, 1000 users: 10 searches per question is −$132/month and 4 is +$18/month.** ▶ **More options for
 her AND fewer searches. The two goals point the same way, which is rare enough to write down.**
-
-### 🛠️🛠️ THE CHAT REBUILD — THE PLAN, AGREED WITH HER 2026-09-08. START HERE NEXT SESSION.
-▶▶ **EVERY DECISION IS MADE. NOTHING BELOW NEEDS ASKING AGAIN — BUILD IT.**
-🚨 **AND BUILD IT OFFLINE. `scratchpad/fixtures/search-white-fitted-top.json` is a real captured search
-(40 products, 12 saved). `?capture=1&q=...` on `product-find` grabs more for ONE search each.** Her
-allowance is not a test harness — that lesson cost 141 searches in one afternoon.
-
-**1. THE STYLIST READS THE PRODUCTS. (the root cause, fault 1)**
-Replace the 8-word `CUT` lookup in `find-products.js` with a real reading step: hand the AI the actual
-product text and let it judge, **required to quote the product's own words as evidence**. It may say
-CONFIRMED only by pointing at where the page says so.
-⚠️ **THE THREE VERDICTS AND "UNKNOWN IS NEVER A PASS" DO NOT MOVE.** Nor does `_findKeepHerWords`, nor
-`filterNeverWear`, nor `curatedPicks`. **Guarantees stay in code; only the JUDGING becomes reading.**
-▶ **THE FRAME THAT MADE THIS CLICK FOR HER, KEEP IT:** *guarantees* (never a shift dress, never claim
-an unverified size, max two per shop) **must be code** — a promise that depends on an AI's mood is not
-a promise. *Judgements* (is this fitted? is this high-rise?) **need reading.** The bug was building a
-judgement as if it were a guarantee.
-⚠️ **DO NOT "FIX" THIS BY ADDING 50 MORE WORDS TO THE LIST.** Her three tests would pass and the 51st
-would fail the same silent way.
-
-**2. MANY CARDS, LAZY LOOK-UPS. (her ask, and the economics)**
-Render a wide scrollable row from the ONE search — title, store, price, photo are all there free —
-verify the top few, and **spend a look-up only on what she reaches for.** ⚠️ **The look-up is the only
-source of a buyable, affiliate-wrappable link (0 of 12 raw results had one), so an un-looked-up card
-must resolve its link ON TAP** before it can go anywhere.
-
-**3. THE DELEGATED CUT. (fault 4, ruled yes above)**
-When she hands over the choice, the stylist's silhouette becomes a real search requirement, and the
-stylist says out loud that it was her pick.
-
-**4. ALREADY DONE 2026-09-08, DO NOT REDO:** parallel + pooled calls · per-call timeouts (search long,
-look-up 6s) · a failed search says so instead of rendering silence · `SERPAPI_RESERVE` defaults to 0
-(warn, never block) · the Saturday budget check.
-⚠️ **HER COPY RULING: the two failure sentences are APPROVED AS WRITTEN.** Her words: *"I think what you
-came up with is fine and the stylist chat already has a good personality and words things well."*
-**They are no longer placeholders. Do not rewrite them.**
 
 ### 🏬🏬 HER STORE ROSTER — **132 SHOPS**, HER LIST (closed at 122 on 2026-09-08, REOPENED BY HER 2026-09-09)
 ✅✅ **UPDATED 2026-09-09 — SHE ADDED TEN MORE HERSELF, SO "CLOSED AT 122" IS NO LONGER TRUE.**
@@ -2135,6 +2073,8 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | Checklist is a possibility map | copy + framing | n/a | ▶ none | ✅ copy-only rule |
 | **One photo renders the SAME on every screen** | **`pxPos`/`pxFit`/`px2` on the Star card (`.wks-px`)** | **the same override on the Edit (`.dc-item-px`), off ONE shared css rule** | **starpx 29** | ✅ **both, `px2` added 2026-09-08** |
 | **Never claim a requirement is verified when it is not** | **the chat's cards: `judge()` + the three verdicts** | **`verifySize`/`verifyColour`/`verifyFabric`/`verifyCut`/`verifyWidth` in `find-products.js`** | **findprod 63 · chatfind 63** | ✅ **BUILT 2026-09-06, and the `n/a`s below have now expired as predicted** |
+| **A cut the STYLIST chose is searchable only when SHE handed over the choice** | **the stylist may name a silhouette AND search for it when a woman delegates — and must say out loud that it was her own pick, so it stays hers to overrule** | **`_findKeepHerWords` still deletes colour/fabric/cut she did not say on every other path** | **findprod 63 · chatfind 63 · ssfind 52** | ✅ **HER RULING 2026-09-08 (*"yes, that makes sense"*), LIFTED HERE 2026-09-09 when its home block was archived. 🚨 A NARROW EXCEPTION — DO NOT WIDEN IT. The test is NOT "did the stylist name a cut", it is "did the woman HAND OVER the choice": *"what's in style now?"* / *"you pick"* → searchable; *"I want a blush silk wrap dress"* → her words only. The rule it bends exists because the model once recommended a jewel tone and then searched for one as though she had asked.** |
+| **The chat's two failure sentences are APPROVED AS WRITTEN** | **the "my search didn't come back" and "nothing close enough" lines in `_findBlockHtml`** | n/a — the shelves write no such prose | **chatfallback 105 §12-13** | ✅ **HER RULING 2026-09-08, LIFTED HERE 2026-09-09 when its home block was archived: *"I think what you came up with is fine and the stylist chat already has a good personality and words things well."* ⚠️ They are NO LONGER placeholders. Do not rewrite them.** |
 | **NEVER NAME A PRODUCT WE DID NOT FIND** | **the stylist may not name a product, price, size or link AT ALL — the ability is removed, not forbidden** | **every card carries a real verified offer from `find-products.js`** | **chatfallback 35** | ✅ **BUILT 2026-09-09, after she was shown four invented dresses** |
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 | **Never say "your shops" / "your stores"** | **status lines, empty states, row headers — the phrase is absent, asserted** | n/a — the shelves write no such prose | **chatfallback 81 · copy 69** | ✅ **her rule, 2026-09-09: *"Clients want me to check all stores"*** |
@@ -2560,6 +2500,13 @@ valuable — but the app needs CLARITY around that human/expert distinction, up 
   a future **"sophistication / restraint audit"** (screen-by-screen, flag anything tipping tacky, pare back).
   Reassure her: her eye IS good — her calls (amber reads cheap, rounded-vs-square, shimmer let-down,
   readability for older users) are sophisticated instincts. Her worry is a confidence gap, not a competence gap.
+- 🚨🚨 **SUPERSEDED BY HER OWN ACTION, 2026-09-09 — READ THIS BEFORE THE PARAGRAPH BELOW.** She has now
+  SHARED IT: ***"I have already asked many friends and put it out on Instagram."*** ▶▶ **INSTAGRAM IS A
+  PUBLIC POST, not the hand-picked circle this paragraph recommends, so she went FURTHER than the advice
+  here.** ⚠️ **DO NOT "protect" a soft launch she has ended, and do not offer to help her find testers.**
+  ▶ **The paragraph is KEPT because the FEARS in it are real and still hers** — the "evil eye", the
+  AI-hostile friends, the worry that people won't understand the links aren't wired in. **Those matter
+  when her feedback starts arriving, and some of it may be unkind.** *The original, as written:*
 - **Launch / testers (Cath's emotional strategy — HONOR IT):** she is **deliberately NOT sharing widely yet.**
   She fears losing momentum, "evil eye," jealousy, negativity, and that people won't understand the affiliate
   links aren't wired in. Most of her friends don't understand AI and are somewhat anti-AI. She's confident in
@@ -3042,6 +2989,12 @@ but the archive is not loaded at session start, so from inside a session it may 
 ▶▶ **THIS IS LIVE OPERATIONAL STATUS, WHICH IS AN OPEN THREAD, WHICH BY THIS FILE'S OWN RULE IS NEVER
 ARCHIVED. Keep it here and keep it current.** Her words: *"all of that is important to overall strategy."*
 
+👥👥 **SHE HAS SHARED THE APP — 2026-09-09, HER WORDS: *"I have already asked many friends and put it out
+on Instagram."*** 🚨 **LIVE OPERATIONAL STATUS, WHICH BY THIS FILE'S OWN RULE NEVER ARCHIVES.** ▶ **It is
+the first time Style Star has been put in front of anyone but her.** ⚠️ **NOBODY HAS YET ASKED HER WHAT
+CAME BACK, and no analytics have ever been read** — `track()` exists and has never been looked at. **Both
+are open; the first is a question for her, the second is a small unstarted job.**
+
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
 that makes any future number mean something.** ⚠️ **It is also the whole argument in one line: the app
@@ -3225,7 +3178,9 @@ and found two things so far. **Only 4, 6 and 7 remain.**
    Ideas and Complete the Look, and tell Claude **where the searches land wrong**. Claude can verify a link returns
    results; only Cath can judge whether "pink midi dress" is the right search for a blush silk wrap dress. This single
    step is the difference between the fix working and half-working.
-**7. (No pressure, her own timing) THINK ABOUT FIRST TESTERS.** Once the shopping is honest, who are the 5-10 warm,
+**7. ✅ DONE 2026-09-09 — SHE SHARED IT WITH FRIENDS AND ON INSTAGRAM. See the master to-do; do not
+re-propose this.** *(The original wording, kept because the reasoning about WHO still applies if she ever
+wants a second, more targeted round.)* (No pressure, her own timing) THINK ABOUT FIRST TESTERS. Once the shopping is honest, who are the 5-10 warm,
    constructive people? Her soft-launch instinct is legitimate and protected — this is just so the list exists when
    she wants it.
 
