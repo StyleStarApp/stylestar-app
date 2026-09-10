@@ -11985,9 +11985,74 @@ const _FIND_CACHE_MAX=12;
    answer's products, so ticks and unconfirmed labels described the wrong piece.
    ▶ A caught regression, and the reason this parameter exists. Do not "simplify"
    it back to always-on. */
+/* ⭐⭐⭐ THE APP REMEMBERS WHAT IT HAS ALREADY PAID FOR — HER DECISION, 2026-09-10,
+   after she asked whether the shopping searches needed rebuilding from scratch.
+   ▶▶ THE ANSWER WAS NO, AND THIS IS WHY. TWO caches already existed and BOTH
+     LIVED IN MEMORY: `_FIND_CACHE` here dies on every reload, and the server's
+     dies whenever Netlify recycles the instance, which is constantly. So almost
+     every search she ran was a COLD 4-12 second search — INCLUDING the identical
+     one she had just run. The caches were real and almost never hit.
+   ✅ THIS ONE SURVIVES A RELOAD, closing the app, and coming back from a shop.
+   🚨🚨 AND WHY IT LIVES IN HER BROWSER RATHER THAN IN THE DATABASE, WHICH IS THE
+     PART THAT MUST NOT BE "IMPROVED" LATER WITHOUT READING THIS. The shared
+     version was written first and thrown away: remembering server-side means
+     WRITING to Supabase, and her schema deliberately gives Netlify a READ-ONLY
+     key (db/products.sql, 2026-09-05 — the writing key can also read every
+     woman's name, email, sizes and wishlist, and she refused to copy it into a
+     second platform). ▶▶ OPENING A WRITE DOOR ON A KEY THAT IS PUBLIC IN THIS
+     PAGE'S SOURCE WOULD LET ANYONE INSERT FAKE PRODUCTS WITH LINKS TO ANYWHERE,
+     AND THE APP WOULD SERVE THEM AS REAL FINDS. That is a phishing vector in a
+     shopping app, and no amount of validation makes a public write door the
+     right shape. ⚠️ A SHARED CACHE MUST GO SOMEWHERE SERVER-ONLY (Netlify Blobs)
+     — never through the publishable key.
+   ⭐ SERVE FIRST, REFRESH BEHIND: a remembered answer paints INSTANTLY even when
+     it is hours old, and the refresh runs without her waiting on it.
+   ⚠️ FAILS OPEN EVERYWHERE. Private mode, full storage, a corrupt entry: the
+     search simply runs exactly as it does today. NOTHING depends on a hit. */
+const _FIND_LS='ss_find_v1', _FIND_FRESH=6*60*60*1000, _FIND_KEEP=24*60*60*1000, _FIND_LS_MAX=12;
+function _findLSAll(){try{return JSON.parse(localStorage.getItem(_FIND_LS)||'{}')||{}}catch(e){return{}}}
+function _findLSGet(key){
+  try{
+    const all=_findLSAll(), e=all[key];
+    if(!e||!e.t||!e.d)return null;
+    const age=Date.now()-e.t;
+    if(!(age>=0)||age>_FIND_KEEP)return null;
+    return{data:e.d,age:age,stale:age>_FIND_FRESH};
+  }catch(e){return null}
+}
+function _findLSSet(key,data){
+  /* ⚠️ ONLY AN ANSWER WORTH REPEATING. A `why`, or an empty pool, is a bad day
+     rather than a result — freezing one would hand her an apology for hours. */
+  if(!data||data.why)return;
+  if(!((data.browse||[]).length+(data.exact||[]).length))return;
+  try{
+    const all=_findLSAll();
+    all[key]={t:Date.now(),d:data};
+    /* Oldest out first, so a long session cannot fill her phone's storage. */
+    const ks=Object.keys(all).sort(function(a,b){return all[a].t-all[b].t});
+    while(ks.length>_FIND_LS_MAX)delete all[ks.shift()];
+    localStorage.setItem(_FIND_LS,JSON.stringify(all));
+  }catch(e){
+    /* Quota, private mode, anything: forget the lot rather than half-write it,
+       and carry on. A cache is never worth a broken screen. */
+    try{localStorage.removeItem(_FIND_LS)}catch(e2){}
+  }
+}
 async function _findFetch(req,useCache){
   const key=JSON.stringify(req);
   if(useCache&&_FIND_CACHE.has(key))return{data:_FIND_CACHE.get(key),failed:false,cached:true};
+  if(useCache){
+    const kept=_findLSGet(key);
+    if(kept){
+      _FIND_CACHE.set(key,kept.data);
+      /* ▶ Fired and NOT awaited, so she is already looking at her pieces while
+         it runs. `_findFetch(req,false)` skips this layer, so it cannot loop. */
+      if(kept.stale)_findFetch(req,false).then(function(fr){
+        if(fr&&fr.data&&!fr.data.why)_findLSSet(key,fr.data);
+      }).catch(function(){});
+      return{data:kept.data,failed:false,cached:true,remembered:true,ageMs:kept.age};
+    }
+  }
   let data=null,failed=false;
   try{
     const r=await fetch('/.netlify/functions/product-find',{method:'POST',
@@ -11997,6 +12062,7 @@ async function _findFetch(req,useCache){
   if(useCache&&data&&!data.why){
     if(_FIND_CACHE.size>=_FIND_CACHE_MAX)_FIND_CACHE.delete(_FIND_CACHE.keys().next().value);
     _FIND_CACHE.set(key,data);
+    _findLSSet(key,data);
   }
   return{data:data,failed:failed,cached:false};
 }
