@@ -98,6 +98,17 @@
   to = "/index.html"
   status = 200
 
+# The Style Star Edit, her founder-curated list (2026-09-10, her ask: "I want
+# the Edit to be a shareable link"). It is the one page in this app that is
+# purely HER -- every piece personally selected, nothing chosen by AI -- and
+# until now it had no address, so she could not send it to anyone.
+# Same WARNING as every path above: her Edit links are affiliate links, so once
+# this URL is shared or submitted anywhere, it never moves.
+[[redirects]]
+  from = "/edit"
+  to = "/index.html"
+  status = 200
+
 [[redirects]]
   from = "/results"
   to = "/index.html"
@@ -174,6 +185,10 @@
 
 [[edge_functions]]
   path = "/wardrobe"
+  function = "page-titles"
+
+[[edge_functions]]
+  path = "/edit"
   function = "page-titles"
 
 [[edge_functions]]

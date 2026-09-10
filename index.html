@@ -2689,7 +2689,7 @@ function retakeQuiz(){
 // pretty path and the router at the bottom of this file opens the right screen.
 // The policy text is NOT duplicated anywhere -- a reviewer sees the real page.
 // WARNING: once a URL is submitted to an affiliate network, never change its path.
-var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-trending':'/trending','s-wardrobe':'/wardrobe','s-res':'/results'};
+var _ROUTES={'s-privacy':'/privacy','s-terms':'/terms','s-story':'/story','s-faq':'/faq','s-contact':'/contact','s-trending':'/trending','s-wardrobe':'/wardrobe','s-res':'/results','s-dream':'/edit'};
 // ---- Style Journal: a REGISTRY, not one hand-added route per article ------
 // Her ask (2026-08-26): after building article #1's routing by hand -- a
 // netlify.toml block, a page-titles.js entry, a _ROUTES line, an _openRoute
@@ -2797,6 +2797,11 @@ var _PAGE_META={
   's-terms':{title:'Terms of Service | Style Star',desc:'The terms and conditions for using Style Star, including your rights, our affiliate disclosures, and how the service works.'},
   's-trending':{title:"What's Trending in Women's Fashion Right Now | Style Star",desc:"What's in style right now, chosen by a personal stylist of over 20 years. See what's current and decide what's worth adding to what you already own."},
   's-wardrobe':{title:'The 100-Piece Wardrobe Checklist | Style Star',desc:'The wardrobe checklist a stylist of 20+ years uses with real clients. Tap any of the 100 pieces for real shopping ideas.'},
+  // ⚠️ MUST MATCH PAGES['/edit'] IN page-titles.js WORD FOR WORD. Her Edit is
+  // the page she actually sends to people, so a drift here means the card a
+  // friend sees differs from the tab title she sees -- the same mismatch the
+  // journal-article fix exists to remove.
+  's-dream':{title:'The Style Star Edit — Curated by Catherine | Style Star',desc:'Pieces personally selected by Catherine, a personal stylist of over 20 years. Nothing here is chosen by AI. These are pieces she wears herself and recommends to clients.'},
   's-journal-hub':{title:'Style Journal | Style Star',desc:'Style notes and articles from Catherine, personal stylist and founder of Style Star.'},
   // Each article's metaTitle/metaDesc/ogImage — matches page-titles.js's
   // ARTICLES entries exactly (that file builds its PAGES rows FROM those
@@ -2842,6 +2847,13 @@ function _openRoute(id){
   else if(id==='s-contact')showContact();
   else if(id==='s-trending')openTrending();
   else if(id==='s-wardrobe')openWardrobe('list');
+  // 🚨 showDream(), NEVER show('s-dream'). showDream() is what calls
+  // _wlDecorateEdit(), and _wlDecorateEdit() is what affiliate-wraps every
+  // Edit link at runtime (the markup holds RAW product urls on purpose, so a
+  // piece she adds by hand needs no plumbing). A bare show() here would serve
+  // a shared Edit -- the whole reason this route exists -- with links that
+  // earn her nothing, and nothing on screen would look wrong.
+  else if(id==='s-dream')showDream();
   else if(id==='s-journal-hub')openJournalHub();
   else if(_journalById(id))openJournalArticle(id);
   else if(id==='s-res'){

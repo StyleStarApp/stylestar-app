@@ -566,6 +566,27 @@ function trendSchema(html) {
     },
   };
 }
+// ── The Style Star Edit (2026-09-10, her ask: "I want the Edit to be a
+// shareable link") ────────────────────────────────────────────────────────
+//
+// This one matters more than the other routed pages, for one reason: THE
+// EDIT IS THE PAGE SHE WILL ACTUALLY SEND TO PEOPLE. Instagram, iMessage and
+// Facebook read the RAW HTML and never run JavaScript, so without this entry
+// every shared Edit link would preview as the homepage's own card -- exactly
+// the mismatch she caught on a shared journal article on 2026-08-21.
+// ⚠️ MUST STAY IN SYNC WITH _PAGE_META IN index.html BY HAND. An edge
+// function is its own bundle and cannot import from that file.
+// ⚠️ THE DESCRIPTION IS HER OWN SUBTITLE, not a written-for-SEO paraphrase.
+// The page says "Everything here is selected by me. These are pieces I wear
+// myself and recommend to clients." That IS the differentiator Sally
+// Hogshead's north star asks the app to say out loud, so the preview card
+// says it in her voice rather than a tidier version of it.
+PAGES['/edit'] = {
+  title: 'The Style Star Edit — Curated by Catherine | Style Star',
+  desc: 'Pieces personally selected by Catherine, a personal stylist of over 20 years. Nothing here is chosen by AI. These are pieces she wears herself and recommends to clients.',
+  scrId: 's-dream',
+};
+
 PAGES['/trending'] = {
   title: "What's Trending in Women's Fashion Right Now | Style Star",
   desc: "What's in style right now, chosen by a personal stylist of over 20 years. See what's current and decide what's worth adding to what you already own.",
