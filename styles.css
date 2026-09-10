@@ -1798,8 +1798,13 @@ body.menu-open .menu-panel{display:block}
    look like a result. */
 .find-note .find-head{font-family:'Lora',Georgia,serif;font-size:15px;color:#4a463e;
   line-height:1.6;margin:10px 0 4px}
-.wks-px.is-stack,.dc-item-px.is-stack{display:flex;flex-direction:column;overflow:hidden;gap:0}
-.wks-px.is-stack>img,.dc-item-px.is-stack>img{display:block;width:100%;height:50%;
+.wks-px.is-stack,.dc-item-px.is-stack,.wet-px.is-stack{display:flex;flex-direction:column;overflow:hidden;gap:0}
+/* ⚠️ .wet-px IS THE "More from the Edit" STRIP, ADDED TO THESE TWO RULES ON
+   2026-09-10 RATHER THAN GIVEN ITS OWN — her catch, "the sunglasses photo is
+   missing the other half", was the strip showing only the FIRST view of a
+   stacked pair. ONE RULE, EVERY SURFACE, ALWAYS: a rule per surface is exactly
+   how the Serpui bag ended up right on one screen and cut off on the next. */
+.wks-px.is-stack>img,.dc-item-px.is-stack>img,.wet-px.is-stack>img{display:block;width:100%;height:50%;
   flex:0 0 50%;min-height:0;object-fit:cover;object-position:center bottom}
 .dc-item-name{font-family:'DM Serif Display',Georgia,serif;font-size:20px;font-weight:400;color:#1a1a1a;line-height:1.28;margin:0 0 9px;padding-right:32px}
 .dc-item-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 9px;margin-bottom:13px}
@@ -2744,13 +2749,27 @@ body.card-fb{padding:0}
 #wbEditTeaser .wet-scroll{display:flex;overflow-x:auto;gap:10px;padding:2px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #wbEditTeaser .wet-scroll::-webkit-scrollbar{display:none}
 #wbEditTeaser .wet-card{flex:0 0 108px;background:#fff;border:1px solid #EFE7D2;text-align:left;text-decoration:none;display:block;-webkit-tap-highlight-color:transparent}
-#wbEditTeaser .wet-card img{width:108px;height:135px;object-fit:cover;display:block;background:#F5EFE2}
+/* 🚨🚨 THIS FRAME MATCHES THE EDIT CARD'S, AND THAT IS THE WHOLE POINT — HER
+   CATCH, 2026-09-10: "The jeans are cut off... it looks fine in the main page
+   but on teaser these photos need fixing."
+   ▶ IT WAS 108x135 (ratio 0.80) AND CENTRE-ANCHORED, while .dc-item-px is 3:4
+   (0.75) and anchored TOP. Measured on her Crosbie Jean, a 0.667 source:
+     the Edit    keeps 89% of its height, losing 11% off the BOTTOM only
+     the strip   kept 83%, losing 8% off the TOP *and* 8% off the bottom
+   — so the waistband AND the hem went, which is exactly what she saw.
+   ⚠️ THE LEDGER ROW THIS BELONGS TO IS "ONE PHOTO RENDERS THE SAME ON EVERY
+   SCREEN", and this strip was a THIRD surface that was never told. Same shape
+   as the Serpui bag being right on one screen and cut off on the next.
+   ▶ SO: same 3:4, same top anchor. If .dc-item-px's geometry ever changes,
+   CHANGE IT HERE TOO — or better, give them one shared rule. */
+#wbEditTeaser .wet-card>img,#wbEditTeaser .wet-card>.wet-px{width:108px;aspect-ratio:3/4;display:block;background:#F5EFE2}
+#wbEditTeaser .wet-card>img{object-fit:cover;object-position:top center}
 #wbEditTeaser .wet-t{padding:6px 7px 8px}
 #wbEditTeaser .wet-n{font:600 12px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 #wbEditTeaser .wet-p{font:400 11px/1 'Jost',sans-serif;color:#8a6a1e}
 #wbEditTeaser .wet-all{flex:0 0 92px;align-items:center;justify-content:center;text-align:center;display:flex;background:#1a1a1a;color:#EACD68;font:600 11px/1.3 'Jost',sans-serif;padding:12px 10px;cursor:pointer}
 @media(max-width:374px){
-  #wbEditTeaser .wet-card,#wbEditTeaser .wet-card img{flex-basis:98px;width:98px}
+  #wbEditTeaser .wet-card,#wbEditTeaser .wet-card>img,#wbEditTeaser .wet-card>.wet-px{flex-basis:98px;width:98px}
   #wbEditTeaser .wet-all{flex-basis:84px}
 }
 /* ⭐ THE STAR OF THE WEEK ON THE DISCOVERY PAGE — her idea, 2026-08-21:

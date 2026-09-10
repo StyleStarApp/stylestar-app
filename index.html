@@ -12936,24 +12936,50 @@ function _editPhoto(el){
   if(px)return px.tagName==='IMG'?px:px.querySelector('img');
   return el.querySelector('img');
 }
+/* ▶ HER CATCH, 2026-09-10: "the sunglasses photo is missing the other half."
+   A px2 STACKED PAIR is ONE piece shown as TWO views, and the strip was
+   rendering only the first. This returns every view the card holds, so the
+   strip can show the same thing the Edit page shows. */
+function _editPhotos(el){
+  var px=el.querySelector('.dc-item-px');
+  if(px&&px.tagName!=='IMG')return [].slice.call(px.querySelectorAll('img'));
+  var one=_editPhoto(el);return one?[one]:[];
+}
 function _renderEditTeaser(){
   var el=document.getElementById('wbEditTeaser');if(!el)return;
   var star=_weekStar();
+  /* 🚨🚨 THE DEDUPE NORMALISES BOTH SIDES THROUGH _affUrl, AND THAT IS NOT
+     TIDYING — IT IS THE BUG SHE PHOTOGRAPHED ON 2026-09-10. `it.url` is read
+     RAW off the Edit's markup, but _wlDecorateEdit() rewrites those hrefs to
+     their affiliate-wrapped click.linksynergy.com form the moment she OPENS the
+     Edit. After that a raw `star.url` could never equal a wrapped `it.url`, the
+     dedupe silently stopped matching, and the Star of the Week appeared TWICE
+     on Welcome Back — once as the big card and again in this strip.
+     ▶ It only happened after she had visited the Edit, which is why a fresh
+     load never showed it and why it survived. _affUrl never double-wraps, so
+     putting BOTH sides through it makes the comparison true either way. */
   var items=_wlEditItems().filter(function(it){
-    var img=_editPhoto(it.el);
+    var imgs=_editPhotos(it.el);
     // never repeat whatever the Star card above is already showing this week
-    return img && (!star||it.url!==star.url);
+    return imgs.length && (!star||_affUrl(it.url)!==_affUrl(star.url));
   }).map(function(it){
-    var img=_editPhoto(it.el);
-    return {name:it.name,price:it.price,url:it.url,src:img.getAttribute('src')||'',alt:img.getAttribute('alt')||it.name};
+    var imgs=_editPhotos(it.el);
+    return {name:it.name,price:it.price,url:it.url,
+            srcs:imgs.map(function(i){return i.getAttribute('src')||'';}).filter(Boolean),
+            alt:imgs[0].getAttribute('alt')||it.name};
   });
   if(!items.length){el.classList.remove('on');el.innerHTML='';return;}
   el.innerHTML='<div class="wet-hd"><div class="wet-lbl">More from the Edit</div>'
     +'<span class="wet-swipe" id="wbEditTeaserSwipe" style="display:none">Swipe for more &rarr;</span></div>'
     +'<div class="wet-scroll" id="wbEditTeaserScroll">'
     +items.map(function(it){
+      var px=it.srcs.length>1
+        ? '<span class="wet-px is-stack">'+it.srcs.slice(0,2).map(function(sc,n){
+            return '<img src="'+_esc(sc)+'" alt="'+(n?'':_esc(it.alt))+'" loading="lazy" decoding="async" onerror="this.closest(\'.wet-card\').remove()">';
+          }).join('')+'</span>'
+        : '<img src="'+_esc(it.srcs[0])+'" alt="'+_esc(it.alt)+'" loading="lazy" decoding="async" onerror="this.closest(\'.wet-card\').remove()">';
       return '<a class="wet-card" href="'+_esc(_affUrl(it.url))+'" target="_blank" rel="sponsored noopener">'
-        +'<img src="'+_esc(it.src)+'" alt="'+_esc(it.alt)+'" loading="lazy" decoding="async" onerror="this.closest(\'.wet-card\').remove()">'
+        +px
         +'<div class="wet-t"><div class="wet-n">'+_esc(it.name)+'</div><div class="wet-p">'+_esc(it.price)+'</div></div></a>';
     }).join('')
     +'<div class="wet-card wet-all" role="button" tabindex="0" onclick="showDream()" onkeydown="if(event.key===\'Enter\')showDream()">See the full Edit &rarr;</div>'

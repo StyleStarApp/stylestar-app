@@ -296,6 +296,91 @@ ok('a px2 STACK yields its front photo, never a div with no src',
      const r = reach; return r.unresolved.every(u => u.indexOf(n) < 0);
    }), JSON.stringify(reach.stacks));
 
+// 8. HER THREE CATCHES OFF ONE SCREENSHOT, 2026-09-10: "The jeans are cut off -
+//    can't see the whole Jean and the sunglasses photo is missing the other half
+//    it looks fine in the main page but on teaser these photos need fixing."
+//    ▶ HER BENCHMARK IS THE EDIT PAGE, so these derive from .dc-item-px rather
+//    than hardcoding 3/4 — if that card's geometry is ever retuned, the strip is
+//    required to follow instead of silently drifting apart from it again.
+console.log('\n8. The strip renders a photo exactly as the Edit card does');
+await pg.setViewportSize({ width: 390, height: 900 });
+await pg.evaluate(() => { show('s-wb'); });
+await pg.waitForTimeout(250);
+// ⚠️ EACH IS MEASURED ON ITS OWN VISIBLE SCREEN. A hidden screen's elements
+// report a 0x0 box, so measuring both at once yields NaN and a check that
+// cannot see what it claims to compare — this file's own "could this pass if
+// the thing it measures were absent?" test, caught while writing it.
+const geom = await pg.evaluate(() => {
+  const r = e => { const b = e.getBoundingClientRect(); return b.width / b.height; };
+  const cs = e => getComputedStyle(e);
+  showDream();
+  const edit = document.querySelector('#s-dream .dc-item img.dc-item-px');
+  const out = { editRatio: +r(edit).toFixed(3), editFit: cs(edit).objectFit, editPos: cs(edit).objectPosition };
+  show('s-wb');
+  const strip = document.querySelector('#wbEditTeaser .wet-card > img');
+  out.stripRatio = +r(strip).toFixed(3); out.stripFit = cs(strip).objectFit; out.stripPos = cs(strip).objectPosition;
+  out.bothMeasured = out.editRatio > 0 && out.stripRatio > 0;
+  return out;
+});
+ok('GATE: both frames were really measured (a hidden screen reports 0x0)', geom.bothMeasured, JSON.stringify(geom));
+ok('the strip frame has the SAME aspect ratio as the Edit card',
+   Math.abs(geom.editRatio - geom.stripRatio) < 0.005, JSON.stringify(geom));
+ok('...and the SAME object-fit', geom.editFit === geom.stripFit, JSON.stringify(geom));
+ok('...and the SAME anchor, so a tall photo loses its hem and never its waistband',
+   geom.editPos === geom.stripPos, JSON.stringify(geom));
+
+console.log('\n8b. A px2 stacked pair shows BOTH views in the strip, not just the first');
+const stack = await pg.evaluate(() => {
+  // the only stacked piece is normally the Star, which the strip rightly hides —
+  // so stand a different piece in as the Star to reach the stack path at all
+  const real = window._weekStar;
+  window._weekStar = () => ({ n: 'Gold Stretchy Stacking Bangles', url: 'https://www.amazon.com/dp/B0CWD1RYK3' });
+  _renderEditTeaser();
+  const stacksInEdit = document.querySelectorAll('#s-dream .dc-item-px.is-stack').length;
+  const el = document.querySelector('#wbEditTeaser .wet-px.is-stack');
+  const imgs = el ? [...el.querySelectorAll('img')] : [];
+  const srcs = imgs.map(i => i.getAttribute('src'));
+  const editSrcs = [...document.querySelectorAll('#s-dream .dc-item-px.is-stack img')].map(i => i.getAttribute('src'));
+  window._weekStar = real; _renderEditTeaser();
+  return { stacksInEdit, found: !!el, n: imgs.length, srcs, editSrcs,
+           sameOrder: JSON.stringify(srcs) === JSON.stringify(editSrcs.slice(0, srcs.length)) };
+});
+ok('a stacked piece renders as a stack in the strip too', stack.stacksInEdit === 0 || stack.found, JSON.stringify(stack));
+ok('...showing BOTH views, not one', stack.stacksInEdit === 0 || stack.n === 2, JSON.stringify(stack));
+// ⚠️ n===2 IS PART OF THE ASSERTION, NOT DECORATION: with no stack rendered
+// both sides are empty arrays and "same order" passes vacuously — which is the
+// exact false-green shape this repo keeps paying for. Proven: with the fix
+// reverted this check passed until n===2 was added.
+ok('...the same two photos, in the same order as the Edit card',
+   stack.stacksInEdit === 0 || (stack.n === 2 && stack.sameOrder), JSON.stringify(stack));
+
+// 8c. 🚨 THE ONE THAT SURVIVED BECAUSE A FRESH LOAD NEVER SHOWED IT. _wlEditItems
+//     reads .url RAW, but _wlDecorateEdit rewrites the Edit's hrefs to their
+//     affiliate-wrapped form the moment she OPENS the Edit -- after which a raw
+//     star.url could never equal a wrapped it.url, and the Star of the Week
+//     appeared TWICE on Welcome Back. She photographed it on 2026-09-10.
+//     ▶ ASSERTED IN BOTH ORDERS, because a check that only tested a fresh load
+//     would have passed happily through the entire bug.
+console.log('\n8c. The Star is never duplicated in the strip — including after she has opened the Edit');
+const starDedupe = await pg.evaluate(() => {
+  const star = _weekStar();
+  const inStrip = () => [...document.querySelectorAll('#wbEditTeaser .wet-n')]
+    .map(x => x.textContent.trim())
+    .some(n => star.n.startsWith(n.replace(/\.\.\.$/, '')));
+  show('s-wb'); const before = inStrip();
+  showDream();                       // exactly what she did
+  const href = [...document.querySelectorAll('#s-dream .dc-item')]
+    .filter(e => e.textContent.indexOf(star.n) >= 0)
+    .map(e => e.querySelector('.dc-item-btn').getAttribute('href'))[0];
+  show('s-wb'); const after = inStrip();
+  return { before, after, hrefWasRewritten: href !== star.url, star: star.n };
+});
+ok('the Star is out of the strip on a fresh load', !starDedupe.before, JSON.stringify(starDedupe));
+ok('GATE: opening the Edit really does rewrite its hrefs (else the check below proves nothing)',
+   starDedupe.hrefWasRewritten, JSON.stringify(starDedupe));
+ok('the Star is STILL out of the strip after she has opened the Edit',
+   !starDedupe.after, JSON.stringify(starDedupe));
+
 ok('zero JS errors', errs.length === 0, errs.join(' | '));
 await ctx.close(); await b.close(); srv.close();
 console.log(`\n${pass} passed, ${fail} failed`);
