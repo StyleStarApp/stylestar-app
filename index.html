@@ -12973,10 +12973,19 @@ function _renderEditTeaser(){
     +'<span class="wet-swipe" id="wbEditTeaserSwipe" style="display:none">Swipe for more &rarr;</span></div>'
     +'<div class="wet-scroll" id="wbEditTeaserScroll">'
     +items.map(function(it){
+      /* ⚠️⚠️ A STACK HAS TWO CHANCES TO FAIL, SO THE SECOND VIEW MUST NOT BE ABLE
+         TO DELETE THE CARD. A single card carries onerror="remove the card",
+         which is right when there is no photo at all — but on a stacked pair
+         that would throw away a perfectly good FIRST view because the second
+         one 404'd, and the piece would silently vanish from the strip.
+         ▶ So the second view removes only ITSELF and unwraps the pair back to a
+         single photo. The first view keeps the original behaviour: no photo at
+         all is still a card worth removing. */
       var px=it.srcs.length>1
-        ? '<span class="wet-px is-stack">'+it.srcs.slice(0,2).map(function(sc,n){
-            return '<img src="'+_esc(sc)+'" alt="'+(n?'':_esc(it.alt))+'" loading="lazy" decoding="async" onerror="this.closest(\'.wet-card\').remove()">';
-          }).join('')+'</span>'
+        ? '<span class="wet-px is-stack">'
+            +'<img src="'+_esc(it.srcs[0])+'" alt="'+_esc(it.alt)+'" loading="lazy" decoding="async" onerror="this.closest(\'.wet-card\').remove()">'
+            +'<img src="'+_esc(it.srcs[1])+'" alt="" loading="lazy" decoding="async" onerror="var p=this.parentElement;this.remove();if(p)p.classList.remove(\'is-stack\')">'
+          +'</span>'
         : '<img src="'+_esc(it.srcs[0])+'" alt="'+_esc(it.alt)+'" loading="lazy" decoding="async" onerror="this.closest(\'.wet-card\').remove()">';
       return '<a class="wet-card" href="'+_esc(_affUrl(it.url))+'" target="_blank" rel="sponsored noopener">'
         +px

@@ -395,6 +395,32 @@ ok('...showing BOTH views, not one', stack.stacksInEdit === 0 || stack.n === 2, 
 ok('...the same two photos, in the same order as the Edit card',
    stack.stacksInEdit === 0 || (stack.n === 2 && stack.sameOrder), JSON.stringify(stack));
 
+console.log('\n8d. A stack losing its second view must not take the whole card with it');
+const frag = await pg.evaluate(async () => {
+  const real = window._weekStar;
+  window._weekStar = () => ({ n: 'Gold Stretchy Stacking Bangles', url: 'https://www.amazon.com/dp/B0CWD1RYK3' });
+  show('s-wb'); _renderEditTeaser();
+  const card = [...document.querySelectorAll('#wbEditTeaser .wet-card')].find(c => c.querySelector('.wet-px.is-stack'));
+  if (!card) { window._weekStar = real; _renderEditTeaser(); return { noStack: true }; }
+  const name = card.querySelector('.wet-n').textContent.trim();
+  card.querySelectorAll('.wet-px img')[1].dispatchEvent(new Event('error'));
+  await new Promise(r => setTimeout(r, 60));
+  const after = [...document.querySelectorAll('#wbEditTeaser .wet-card')]
+    .find(c => (c.querySelector('.wet-n') || {}).textContent === name);
+  const px = after ? after.querySelector('.wet-px') : null;
+  const img = px ? px.querySelector('img') : null;
+  const cb = after ? after.getBoundingClientRect() : null, ib = img ? img.getBoundingClientRect() : null;
+  const out = { noStack: false, survived: !!after, imgsLeft: px ? px.querySelectorAll('img').length : 0,
+                unwrapped: !!(px && !px.classList.contains('is-stack')),
+                fits: (cb && ib) ? (ib.width <= cb.width + 1 && ib.height <= cb.height + 1) : false,
+                box: ib ? Math.round(ib.width) + 'x' + Math.round(ib.height) : null };
+  window._weekStar = real; _renderEditTeaser();
+  return out;
+});
+ok('the card SURVIVES when the second view fails', frag.noStack || frag.survived, JSON.stringify(frag));
+ok('...unwrapping to the one good photo', frag.noStack || (frag.unwrapped && frag.imgsLeft === 1), JSON.stringify(frag));
+ok('...which still fits its card instead of spilling out', frag.noStack || frag.fits, JSON.stringify(frag));
+
 // 8c. 🚨 THE ONE THAT SURVIVED BECAUSE A FRESH LOAD NEVER SHOWED IT. _wlEditItems
 //     reads .url RAW, but _wlDecorateEdit rewrites the Edit's hrefs to their
 //     affiliate-wrapped form the moment she OPENS the Edit -- after which a raw

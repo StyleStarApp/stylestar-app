@@ -2763,6 +2763,10 @@ body.card-fb{padding:0}
    ▶ SO: same 3:4, same top anchor. If .dc-item-px's geometry ever changes,
    CHANGE IT HERE TOO — or better, give them one shared rule. */
 #wbEditTeaser .wet-card>img,#wbEditTeaser .wet-card>.wet-px{width:108px;aspect-ratio:3/4;display:block;background:#F5EFE2}
+/* ⚠️ THE FALLBACK WHEN A STACK LOSES ITS SECOND VIEW: is-stack is dropped at
+   runtime, so the surviving photo needs a rule of its own or it renders at its
+   natural size and spills out of the card. Same contain as a single photo. */
+#wbEditTeaser .wet-px:not(.is-stack)>img{width:100%;height:100%;object-fit:contain;display:block}
 /* 🚨🚨 CONTAIN, NOT COVER — HER SECOND CATCH THE SAME MINUTE: "Jeans are cut
    off at the bottom." The first fix matched this frame to the Edit card's
    crop (3:4, top-anchored), which restored the WAISTBAND and still lost the
