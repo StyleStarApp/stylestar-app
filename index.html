@@ -7059,7 +7059,7 @@ async function _shopStyleGen(){
    leak and the two-row regression happened, and the resume exists to show her
    THE SAME ROW: two painters could not guarantee that even on the day they were
    written. Returns false when there was nothing honest to show. */
-function _ssFindPaint(wrap,data,req){
+function _ssFindPaint(wrap,data,req,promise){
   /* 🚨🚨 A SEARCH THAT NEVER CAME BACK MUST SAY SO — HER CATCH, 2026-09-10:
      *"The star started spinning promising to find me belted dresses then nothing
      came up. Just this screenshot. No photos."*
@@ -7097,11 +7097,21 @@ function _ssFindPaint(wrap,data,req){
   if(html.indexOf('find-card')<0){wrap.remove();return false;}
   /* ⭐ HERE, AND ONLY HERE, IS THE PROMISE SPOKEN — in the same breath as the
      cards that keep it. There is no other route to the screen. */
-  wrap.innerHTML=(_ssPromise?'<div class="ss-find-lead">'+_esc(_ssPromise)+'</div>':'')+html;
+  wrap.innerHTML=(promise?'<div class="ss-find-lead">'+_esc(promise)+'</div>':'')+html;
   return true;
 }
-async function _ssFindRun(req){
-  var wrap=document.getElementById('ssFindWrap');
+/* ⚠️ ONE RUNNER FOR EVERY SURFACE, TOLD WHERE TO WRITE — generalised 2026-09-10
+   when the Wardrobe list was wired in. `o` carries the wrap id, the promise to
+   speak (if any) and the pre-loaded row (a resume), so nothing is read from a
+   module variable that another screen might have left behind.
+   🚨 THAT IS THE POINT, NOT TIDINESS: `_ssPromise` belongs to Shop your Style,
+     and a Wardrobe row reading it would print "I chose a belted dress" over a
+     shelf of white blouses. A third copy of this function would have been the
+     other way to get there — this file's oldest lesson, both roads. */
+async function _ssFindRun(req,o){
+  o=o||{};
+  var wrapId=o.wrapId||'ssFindWrap';
+  var wrap=document.getElementById(wrapId);
   if(!wrap)return;
   /* ⭐ A RESUME PAINTS THE PIECES SHE LEFT, and does it BEFORE the waiting star
      is ever set going: her own words for what this screen promises are "the same
@@ -7110,14 +7120,17 @@ async function _ssFindRun(req){
      ⚠️ It is re-saved rather than assumed still stored: _saveShopPicks has just
        rewritten this record with the resumed six and would otherwise have
        dropped the row, so the NEXT resume would search again. */
-  var pre=_ssFindData;_ssFindData=null;
-  if(pre){ if(_ssFindPaint(wrap,pre,req))_saveShopFind(pre,_ssPicksT); return; }
+  var pre=('pre' in o)?o.pre:_ssFindData;
+  if(!('pre' in o))_ssFindData=null;
+  var promise=('promise' in o)?o.promise:_ssPromise;
+  var save=o.save!==false;
+  if(pre){ if(_ssFindPaint(wrap,pre,req,promise)&&save)_saveShopFind(pre,_ssPicksT); return; }
   /* ▶ The words move on as the wait goes on, so it reads as a stylist working
      rather than a spinner stuck. Same 3.5s beat as the chat's status line.
      ⚠️ ONE interval, cleared on EVERY return path below — a timer left running
      against a removed node is how a "harmless" leak becomes a stuck screen. */
   var _step=0,_tick=setInterval(function(){
-    var t=document.querySelector('#ssFindWrap .ss-find-wait-t');
+    var t=document.querySelector('#'+wrapId+' .ss-find-wait-t');
     if(!t){clearInterval(_tick);return;}
     _step++;t.textContent=_FIND_STEPS[Math.min(_step,_FIND_STEPS.length-1)];
   },3500);
@@ -7126,7 +7139,7 @@ async function _ssFindRun(req){
   /* ⚠️ She may have left the screen while it searched. Re-read the node rather
      than trusting the one captured above: a refresh replaces the whole block, so
      writing into a detached element would silently do nothing. */
-  wrap=document.getElementById('ssFindWrap');
+  wrap=document.getElementById(wrapId);
   if(!wrap)return;
   /* 🚨🚨 A SEARCH THAT DID NOT COME BACK MUST NEVER READ AS "I LOOKED AND FOUND
      NOTHING" — her rule, and the fault she hit on 2026-09-08 one surface further
@@ -7140,8 +7153,10 @@ async function _ssFindRun(req){
   var _d=(!fr.data||fr.failed)?{why:'search-failed'}:fr.data;
   /* ⚠️ SAVED ONLY WHEN IT REALLY PAINTED. Storing a `why` or an empty pool would
      make the next resume render nothing and never look again — a shelf that goes
-     quiet for six hours with no way back. */
-  if(_ssFindPaint(wrap,_d,req))_saveShopFind(_d,_ssPicksT);
+     quiet for six hours with no way back. ⚠️ And only Shop your Style saves at
+     all: the Wardrobe has no resume of its own and would otherwise overwrite
+     hers with a shelf of blouses. */
+  if(_ssFindPaint(wrap,_d,req,promise)&&save)_saveShopFind(_d,_ssPicksT);
 }
 /* ▶ The stylist saying whose choice it was — her 2026-09-08 delegation ruling:
    when a woman hands over the choice, the stylist's pick becomes a real search
@@ -9519,9 +9534,34 @@ async function _wardrobeIdeaGen(id,boxId){
     const _inv=_wdrQuizInvite();
     if(_inv)html+=_inv;
     else if(noColorData)html+='<div class="wdr-colorhint">We don\'t know your favorite colors yet, so this is a mix. <span onclick="openPrefs()">Add yours in Refine your Preferences</span> for picks made just for you.</div>';
+    /* ⭐⭐⭐ THE WARDROBE LIST GETS THE FINDER TOO — HER DECISION, 2026-09-10, and
+       it is the LAST of the three shopping surfaces to be joined up. Until now
+       this shelf saw ONLY her nine affiliate merchants, so a row like "white
+       blouse" was limited to whatever they happened to stock and went thin when
+       they did not. ▶▶ THAT WAS HER OWN 2026-09-02 SCOPE DECISION — test the
+       feeds on ONE surface first — and it was never brought back to her.
+       ⚠️ IT SITS BELOW HER FOUR COMPARE CARDS, NOT ABOVE THEM, AND THAT IS THE
+         OPPOSITE OF SHOP YOUR STYLE ON PURPOSE. There the six were AI-named text
+         with no photographs, so real products rightly led. HERE the shelf above
+         is already real: her curated pieces and the four-different-stores rule
+         she designed for choosing between alternatives. ▶ Breadth is added
+         underneath it, never on top of it. One line to flip if she disagrees.
+       💰 ONE SEARCH PER ROW SHE TAPS, ~2.5¢, and `_findFetch`'s cache makes a
+         second tap on the same row free for the visit. Nothing fires on load,
+         so opening the checklist still costs nothing.
+       ⚠️ `save:false` — the Wardrobe has no resume of its own, and saving here
+         would overwrite her Shop your Style row with a shelf of blouses.
+       ⚠️ `promise:''` — no stylist sentence on this surface, so nothing is
+         claimed and `_ssPromise` is never read across screens. */
+    html+='<div id="wdrFind_'+_esc(id)+'" class="find-block ss-find">'
+      +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
+      +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
     box.innerHTML=html;
     const _g=box.querySelector('.shop-grid.hscroll'),_h=box.querySelector('.wdr-swipe-hint');
     _swipeHint(_g,_h);_nudgeScroll(_g);
+    /* ▶ NOT AWAITED, exactly as on Shop your Style: her ideas are on screen in
+       about a second and the products arrive into space already reserved. */
+    _ssFindRun({item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false});
   }catch(e){
     // The AI failing must never blank a shelf that has real catalog pieces:
     // render them alone, with See more as the retry door.
