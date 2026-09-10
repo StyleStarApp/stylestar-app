@@ -37,7 +37,8 @@ it several times that day as if it were her next step, and it was not: **she had
 | 11 | ⭐ **THE FINDER HAS NEVER BEEN SHOWN HER STYLE PROFILE** — her *"I like fitted clothing and many of them were shapeless"*. She is **8 leaning fitted** on her own Style Signature and the finder gets an item and a cut, nothing else. | **HERS to green-light** | ⏳ **OPEN, NOT STARTED** |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
-| 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **NOTHING TO BUILD — `_findSpread` has done exactly this since 2026-09-09, from her own words. ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
+| 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
+| 15 | ~~Her affiliate shops never appear at all~~ ✅✅ **HER CATCH AND HER DECISION, BUILT AND LIVE 2026-09-10 — the finder now searches HER OWN NIGHTLY FEED beside Google. Google will not surface her small luxury shops (0 of 120, then 0 of 33), so this was PRESENCE, not position, and no sort could ever have fixed it.** | — | ✅ done |
 🚨🚨 **THE BOARD IS NO LONGER CLEAR — SHE TESTED THE LIVE APP ON 2026-09-10 AND FOUND THREE THINGS.
 Two are fixed and live; ROWS 11 AND 12 ARE HER OWN WORDS AND NEITHER IS STARTED.** ⚠️ **SHE ASKED FOR
 THEM ONE AT A TIME — *"Ok let's go slow here one at a time"* — so do NOT bundle them, and do not start
@@ -434,6 +435,41 @@ it all to make logical sense."*** ⚠️ **HONOUR BOTH. Short answers, one thing
    `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.
 3. ✅ **HER AFFILIATE ASK NEEDED NO BUILD** — `_findSpread` has done it since 2026-09-09, from her own
    words. ⚠️ **Her ruling was in NEITHER file, only a code comment. It is a ledger row now.**
+
+### ⭐⭐⭐ THE BIGGEST BUILD OF THE DAY, AND THE QUESTION SHE ASKED WITH IT
+▶▶ **HER CATCH: *"none from farm Rio, mytheresa Marissa's or Olivela came up in the search of 60
+shown."*** Then, when told what was possible: ***"Yes. Why haven't we had that working on all of these
+affiliate stores from the beginning!?"***
+🚨 **THE HONEST ANSWER, AND IT IS OURS NOT HERS: the nightly Rakuten feed was built 2026-09-02 to fill
+the WARDROBE CHECKLIST ONLY — HER OWN SCOPE DECISION, test the feeds on one surface first — and this
+file says in as many words that wiring them to the other screens is *"a separate piece of work, and that
+work is hers to green-light."*** ▶▶ **THE GREEN LIGHT WAS NEVER ASKED FOR, FOR EIGHT DAYS**, while the
+finder was built beside it. **Nobody joined "the finder needs products" to "we already have 200 dresses
+a slot, with photographs."**
+⚠️⚠️ **THE LESSON, AND THIS FILE ALREADY HAD THE RULE: A DECISION ABOUT SCOPE IS AN OPEN THREAD, AND AN
+OPEN THREAD MUST BE RESURFACED, NOT MERELY RECORDED.** It was recorded perfectly and never raised.
+▶ **ASK OF EVERY "hers to green-light" NOTE IN THIS FILE: when was she last actually asked?**
+✅ **WHY NO SORT COULD HAVE FIXED IT: her paying shops are small luxury shops and GOOGLE SHOPPING WILL
+NOT SURFACE THEM — measured twice, 0 of 120 on 2026-09-09 and 0 of 33 on 2026-09-10.** `_findSpread`
+can only reorder what is in the pool. ▶▶ **PRESENCE, NOT POSITION.**
+💰 **AND IT COSTS NOTHING** — Supabase is already paid for and already refreshed nightly. **No search
+spent, no new vendor, no new key, and no extra wait** (`feedBrowse` runs beside the SerpApi search and
+is awaited only at the end).
+🚨 **HER HONESTY RULE IS THE GATE: EVERY WORD SHE ASKED FOR MUST APPEAR IN THE PRODUCT'S NAME.** So a
+FARM Rio dress cannot be slipped into a search for a BELTED dress just because FARM Rio pays her.
+**Fewer of her pieces, every one of them real.** ⚠️ **Feed pieces join `browse`, NEVER `exact` — nothing
+was verified on the retailer's page, so they wear no tick.**
+⭐⭐ **AND THEY ARRIVE BETTER THAN A GOOGLE CARD, NOT MERELY EXTRA: the feed carries the PRODUCT'S OWN
+url**, so these land on the piece itself rather than a shop search, and may honestly save as *"Shop it"*
+**with the price**. ▶▶ **THAT IS THE *"deep PRODUCT links instead of store searches"* ITEM THIS FILE HAS
+LISTED UNDER "BLOCKED UNTIL AFFILIATE APPROVALS LAND" SINCE JULY** — arrived for the nine shops that pay
+her, for free, with no plumbing. ⚠️ **`kind` stays honest: only a LOOKED-UP piece is `'found'`. An
+ADDRESS and EVIDENCE are different claims.**
+🚨🚨 **A REAL BUG CAUGHT BY THE ANTI-VACUOUS HALF OF A NEW CHECK, AND IT WOULD HAVE HIT EVERY CARD.** The
+first version read *"this card has a url"* as *"this card knows the product page"* — **every Google
+result HAS a url and it points at `google.com/search`**, so every browse card would have linked
+somewhere useless. ✅ **The page trusts an explicit `feed:true` marker now, and the suite carries the
+fixture pair that found it: one card with the marker, one with a bare url.**
 
 ### 🚨🚨🚨 SERPAPI — LIVE OPERATIONAL STATUS, AND A CLAIM THAT WAS OVERSTATED AND IS CORRECTED HERE
 ▶▶ **EVERY PRODUCT SEARCH IS FAILING. Measured seven times against her live function: `search-failed`,
