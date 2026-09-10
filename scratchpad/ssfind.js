@@ -715,6 +715,48 @@ ok('...and a saved Google piece still claims no more than it can',
    !saved.googleExact, JSON.stringify(saved));
 FIND = null;
 
+/* ═══ 11 · GOOGLE DIES, HER OWN SHOPS STILL ANSWER ═══════════════════════ */
+console.log('\n11. a dead Google search no longer costs her her own shops');
+/* 🚨🚨 HER CATCH, 2026-09-10, MINUTES AFTER HER SHELF WAS WIRED IN. She searched,
+   read "My search didn't come back just then", and saw no photographs -- while
+   the function was HOLDING 24 belted dresses from FARM Rio, Mytheresa and COUTR,
+   fetched seconds earlier and thrown away by the search-failed early return.
+   ▶▶ THE FEED IS A SECOND SOURCE, NOT A GARNISH. Google dying is a reason to
+     show her fewer pieces, never a reason to show her none.
+   ⚠️ AND IT EXPLAINED HER SECOND COMPLAINT TOO -- "the whisper promised shop your
+     style would be saved and it was not". A row that never painted is never
+     stored, so the resume had nothing to bring back. ONE ROOT, TWO SYMPTOMS. */
+FIND = { exact: [], doors: [], browse: [
+  { id: 'feed:https://www.farmrio.com/p/belted', title: 'Belted Maxi Dress',
+    store: 'FARM Rio', brand: 'FARM Rio', price: '$298', image: 'https://example.com/r.jpg',
+    feed: true, url: 'https://www.farmrio.com/p/belted',
+    name: 'Belted Maxi Dress', search: 'Belted Maxi Dress' }],
+  googleFailed: true };
+REPLY = { items: six(), findlead: 'I chose a belted dress, you told me you love them.',
+          find: { item: 'dress', colour: '', fabric: '', cut: 'belted' } };
+await ask(pg, '');
+await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
+const rescue = await pg.evaluate(() => ({
+  cards: document.querySelectorAll('#ssFindWrap .find-card').length,
+  txt: (document.getElementById('shopStyleContent') || {}).innerText || '',
+  promise: !!document.querySelector('#ssFindWrap .ss-find-lead') }));
+ok('her own shops are shown even though Google returned nothing',
+   rescue.cards === 1 && /FARM Rio/.test(rescue.txt), 'cards=' + rescue.cards);
+/* 🚨 AND NO APOLOGY OVER REAL PIECES. "My search didn't come back" is for when
+   there is genuinely nothing; printing it above her own merchants' dresses would
+   be the app apologising for an answer it actually gave. */
+ok('...and she is NOT told the search came back with nothing',
+   !/didn.t come back just then/i.test(rescue.txt), rescue.txt.slice(0, 120));
+ok('...and the promise is kept, because there are cards to keep it with',
+   rescue.promise && /belted dress/i.test(rescue.txt), 'promise=' + rescue.promise);
+/* ▶ HER SECOND SYMPTOM, CLOSED BY THE SAME ROOT: a row that paints is a row that
+   is stored, so the whisper's "same pieces waiting" is true again. */
+const rstore = await pg.evaluate(() => JSON.parse(localStorage.getItem('ss_shoppicks') || '{}'));
+ok('...and the row is stored, so the resume really has something to bring back',
+   !!(rstore.d && (rstore.d.browse || []).length === 1),
+   JSON.stringify(rstore.d ? {browse: (rstore.d.browse || []).length} : null));
+FIND = null;
+
 ok('zero JS errors across every scenario', errs.length === 0, errs.join(' | '));
 await ctx.close();
 

@@ -538,7 +538,37 @@ export default async (req) => {
        ▶ Only when EVERY query died — one dead query among several is normal and
          the surviving pool still stands. */
     if (pages.length && pages.every(d => !d)) {
+      /* ⭐⭐⭐ HER SHOPS DO NOT DEPEND ON GOOGLE — HER CATCH, 2026-09-10, minutes
+         after her own shelf was wired in. She searched, saw "My search didn't
+         come back just then", and got no photographs — while THIS FUNCTION WAS
+         HOLDING 24 BELTED DRESSES FROM FARM RIO, MYTHERESA AND COUTR, fetched
+         seconds earlier and thrown away by this early return.
+         ▶▶ THE FEED IS A SECOND SOURCE, NOT A GARNISH. Google dying is a reason
+           to show her fewer pieces, never a reason to show her none: her own
+           merchants were asked, they answered, and their answer is as real as
+           anything Google could have sent.
+         ⚠️ AND IT IS THE HONEST ANSWER, NOT A SOFTENING OF ONE. `search-failed`
+           exists so a DEAD search is never dressed up as "your shops have
+           nothing". That rule is about claiming a search happened when it did
+           not — here one really did, against her own shops, and it returned
+           real belted dresses. There is nothing to apologise for and nothing to
+           pretend. ▶ IT IS STILL SAID WHEN THERE IS GENUINELY NOTHING.
+         ⚠️ `googleFailed` RIDES ALONG FOR DIAGNOSIS ONLY. The debug panel can
+           see it; a woman never does, because the row she is looking at is
+           complete and true on its own. */
+      const rescue = await feedP;
+      if (rescue.length) {
+        const payload = {exact: [], doors: [], browse: rescue, request,
+          googleFailed: true, feed: rescue.length, feedWhy: FEED_WHY, feedWords: FEED_WORDS,
+          searched: queries.length, verified: 0,
+          ms: {search: Date.now() - t0, lookup: 0, candidates: rescue.length},
+          searchesLeft: left};
+        /* ⚠️ NOT CACHED. A half-answer must never freeze in place for the cache
+           window: her next open should get the full row if Google is back. */
+        return json(payload, headers);
+      }
       return json({exact: [], doors: [], browse: [], request, why: 'search-failed',
+        feedWhy: FEED_WHY, feedWords: FEED_WORDS,
         searched: queries.length, verified: 0,
         ms: {search: Date.now() - t0, lookup: 0, candidates: 0},
         searchesLeft: left}, headers);
