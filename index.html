@@ -7040,6 +7040,32 @@ async function _shopStyleGen(){
    THE SAME ROW: two painters could not guarantee that even on the day they were
    written. Returns false when there was nothing honest to show. */
 function _ssFindPaint(wrap,data,req){
+  /* 🚨🚨 A SEARCH THAT NEVER CAME BACK MUST SAY SO — HER CATCH, 2026-09-10:
+     *"The star started spinning promising to find me belted dresses then nothing
+     came up. Just this screenshot. No photos."*
+     ▶▶ SHE HAD BEEN PROMISED. The stylist's lead is written BEFORE the search
+       finishes, so she reads "I chose a belted dress", watches the star turn, and
+       then the whole block — promise included — deletes itself. **A promise
+       followed by silence is the exact fault she has now named twice**: "I want
+       the stylist to deliver exactly what she is promising."
+     ▶ SO THE TWO OUTCOMES ARE SPLIT, AND THE SPLIT IS THE WHOLE RULE:
+       · THE SEARCH DIED → say so, in HER approved words, the same sentence the
+         chat has used since 2026-09-09. The shops were never looked at.
+       · THE SEARCH RAN AND FOUND NOTHING → still silent, still her 2026-09-09
+         design: her six styling picks are right there and are perfectly good
+         advice, so an apology over them would be noise. THAT HALF IS UNCHANGED.
+     ⚠️ THIS IS THIS FILE'S OWN SENTENCE ABOUT A FAILED SEARCH SHOWN AS AN EMPTY
+       ONE: it "has exactly the shape of a lie, because it is indistinguishable
+       from the truth". Fixed in chat on 2026-09-09; this surface never got it. */
+  if(data&&(data.why==='search-failed'||data.why==='budget')){
+    var _ld=wrap.querySelector('.ss-find-lead');
+    /* ⚠️ HER WORDING, REUSED VERBATIM, NEVER REWRITTEN. Her ruling on it: "I
+       think what you came up with is fine and the stylist chat already has a
+       good personality and words things well." ONE sentence, in one place. */
+    wrap.className='find-block find-note';
+    wrap.innerHTML=(_ld?_ld.outerHTML:'')+'<div class="find-head">'+_FIND_DEAD+'</div>';
+    return false;      /* nothing to store: a dead search is never cached */
+  }
   /* ▶ Nothing found is not a failure and does not deserve a headline over her
      styling. `_findBlockHtml` returns only its own honest sentence in that case;
      an empty row would leave a bordered gap, so it goes. */
@@ -7084,11 +7110,14 @@ async function _ssFindRun(req){
      picks ARE on the screen underneath: the row simply removes itself rather
      than printing an apology above advice that is perfectly good. Nothing is
      claimed either way, which is the whole test. */
-  if(!fr.data||fr.failed){wrap.remove();return;}
+  /* ▶ A DEAD CONNECTION AND A DEAD SEARCH ARE THE SAME THING TO A WOMAN LOOKING
+     AT THE SCREEN, so they take the same route and get the same sentence. One
+     painter decides what she sees, never two branches that can drift apart. */
+  var _d=(!fr.data||fr.failed)?{why:'search-failed'}:fr.data;
   /* ⚠️ SAVED ONLY WHEN IT REALLY PAINTED. Storing a `why` or an empty pool would
      make the next resume render nothing and never look again — a shelf that goes
      quiet for six hours with no way back. */
-  if(_ssFindPaint(wrap,fr.data,req))_saveShopFind(fr.data,_ssPicksT);
+  if(_ssFindPaint(wrap,_d,req))_saveShopFind(_d,_ssPicksT);
 }
 /* ▶ The stylist saying whose choice it was — her 2026-09-08 delegation ruling:
    when a woman hands over the choice, the stylist's pick becomes a real search
@@ -11253,6 +11282,13 @@ const _FIND_RE=/<<\s*FIND\s+([^>]*)>>/i;
      come from her saved preferences, not from the sentence she just typed).
    ▶ WHAT MUST BE HERS: COLOUR, FABRIC and CUT -- the three that NARROW a search
      and therefore the three that can silently empty it. */
+/* ⚠️ HER APPROVED SENTENCE FOR A SEARCH THAT NEVER CAME BACK, DEFINED ONCE.
+   It was written out by hand in three places and now reaches a fourth (Shop
+   your Style, 2026-09-10), which is precisely the count at which this file says
+   to move a rule underneath its call sites. Her ruling on the wording: "I think
+   what you came up with is fine and the stylist chat already has a good
+   personality and words things well." ▶ DO NOT PARAPHRASE IT. */
+const _FIND_DEAD="My search didn't come back just then, so I haven't looked through the shops yet. Ask me again and I'll try.";
 const _FIND_HER_WORDS=['colour','fabric','cut'];
 function _findHerText(msg){
   return ' '+String(msg||'').toLowerCase().replace(/[^a-z0-9]+/g,' ')+' ';
@@ -11903,8 +11939,7 @@ async function _findRun(req){
   if(failed){
     const w=document.createElement('div');
     w.className='find-block find-note';
-    w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
-      'so I haven\'t looked through the shops yet. Ask me again and I\'ll try.</div>';
+    w.innerHTML='<div class="find-head">'+_FIND_DEAD+'</div>';
     mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
     return;
   }
@@ -11921,8 +11956,7 @@ async function _findRun(req){
   if(data.why==='search-failed'){
     const w=document.createElement('div');
     w.className='find-block find-note';
-    w.innerHTML='<div class="find-head">My search didn\'t come back just then, '+
-      'so I haven\'t looked through the shops yet. Ask me again and I\'ll try.</div>';
+    w.innerHTML='<div class="find-head">'+_FIND_DEAD+'</div>';
     mc.appendChild(w); mc.scrollTop=mc.scrollHeight;
     /* ⚠️ NO _findDbg CALL HERE. It is already scheduled once for EVERY return
        path right after status.done() — that is the whole point of putting it at

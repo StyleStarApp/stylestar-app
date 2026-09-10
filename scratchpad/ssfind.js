@@ -457,20 +457,51 @@ ok('...but a DIFFERENT question really does search again', FINDCALLS.length === 
 
 /* ═══ 7 · WHEN IT CANNOT DELIVER, IT CLAIMS NOTHING ═══════════════════════ */
 console.log('\n7. a search that fails never reads as "I looked and found nothing"');
-/* 🚨 Her rule, one surface further out. Here the honest move is QUIETER than in
-   chat, because her six styling picks are on the screen underneath: the row
-   removes itself rather than printing an apology over advice that is good. */
+/* 🚨🚨 REWRITTEN 2026-09-10 AFTER SHE HIT IT LIVE: "The star started spinning
+   promising to find me belted dresses then nothing came up. Just this
+   screenshot. No photos."
+   ▶▶ THE OLD CHECK REQUIRED THE SILENCE. It asserted the row must VANISH when a
+     search died — right in September, when nothing had been promised, and wrong
+     the moment the stylist began announcing her pick BEFORE the search returned.
+     She read a promise, watched the star turn, and the promise deleted itself.
+   ▶ SO THE TWO OUTCOMES ARE NOW SEPARATE, and only one of them is silent:
+     a search that DIED says so; a search that RAN AND FOUND NOTHING stays quiet
+     because her six picks are good advice on their own. The second half is
+     asserted immediately below and is UNCHANGED. */
 REPLY = { items: six(), find: { item: 'skirt', colour: '', fabric: '', cut: '' } };
 FINDSTATUS = 500; await ask(pg, 'a skirt');
 await pg.waitForTimeout(1800);
 let f = await pg.evaluate(() => ({ wrap: !!document.getElementById('ssFindWrap'),
   six: document.querySelectorAll('#shopStyleContent .shop-card').length,
   txt: (document.getElementById('shopStyleContent') || {}).innerText || '' }));
-ok('a dead search leaves NO empty row behind', !f.wrap, 'wrap still there');
+ok('a dead search SAYS SO instead of vanishing',
+   /didn.t come back just then/i.test(f.txt), f.txt.slice(0, 160));
 ok('...and her six styling picks are untouched', f.six === 6, String(f.six));
 ok('...and nothing on screen claims her shops had nothing',
    !/nothing close enough/i.test(f.txt) && !/couldn.t find exactly/i.test(f.txt));
+/* 🚨 THE HALF THAT MATTERS MOST: A DEAD SEARCH IS NEVER STORED. Caching it would
+   freeze the apology in place for six hours and a resume would never look again. */
+const deadStore = await pg.evaluate(() => JSON.parse(localStorage.getItem('ss_shoppicks') || '{}'));
+ok('...and a dead search is never stored for the resume to replay', !deadStore.d,
+   JSON.stringify(deadStore.d || null).slice(0, 80));
 FINDSTATUS = 200;
+
+/* ▶ HER OWN CASE, END TO END: the stylist promises, the search dies, and the
+   PROMISE IS STILL ON SCREEN above the honest sentence — so she can see what was
+   looked for and that it was not her fault. */
+REPLY = { items: six(), findlead: 'I chose a belted dress, you told me you love them.',
+          find: { item: 'dress', colour: '', fabric: '', cut: 'belted' } };
+FINDSTATUS = 200; FIND = { exact: [], doors: [], browse: [], why: 'search-failed' };
+await ask(pg, '');
+await pg.waitForTimeout(1800);
+f = await pg.evaluate(() => ({
+  txt: (document.getElementById('shopStyleContent') || {}).innerText || '',
+  lead: !!document.querySelector('#ssFindWrap .ss-find-lead') }));
+ok('HER CASE: a promise that could not be kept is answered, not deleted',
+   /didn.t come back just then/i.test(f.txt), f.txt.slice(0, 160));
+ok('...and the promise she was given is still on the screen beside it',
+   f.lead && /belted dress/i.test(f.txt), 'lead=' + f.lead);
+FIND = null;
 
 REPLY = { items: six(), find: { item: 'clogs', colour: '', fabric: '', cut: '' } };
 FIND = { exact: [], doors: [], browse: [] };
