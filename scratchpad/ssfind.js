@@ -854,6 +854,65 @@ ok('...while still showing her every piece it found',
    quiet.softStillHasCards, JSON.stringify(quiet));
 FIND = null;
 
+/* ═══ 14 · THE SEARCH HOLDS WORDS A SHOP PRINTS ═════════════════════════ */
+console.log('\n14. what goes to the shops is words a shop actually prints');
+/* 🚨🚨 HER TWO FAILED SEARCHES, 2026-09-10: "I asked it for vacation dress and
+   for white jeans and neither one of those worked."
+   ▶▶ MEASURED LIVE, AND THEY FAILED FOR DIFFERENT REASONS:
+     · white jeans  — Google's half was flapping (0 results one minute, 23 the
+       next). Her own shelf carried it: 9 pieces, Marissa Collections $238.
+     · vacation dress — the word "vacation" went INTO the search, and NO garment
+       on earth is named "vacation", so it matched nothing at all.
+   ▶ AND THE SAME ROOT WAS ALREADY BREAKING THE DEFAULT VIEW. Three live replies
+     put these in `cut`: 46, 35 and 50 characters of PROSE. `cleanReq` accepts 40
+     and DROPS the rest SILENTLY, so two of three sent the shops a bare "dress"
+     under a sentence promising a wrap — her exact complaint of that morning,
+     returning in a new form hours after it was fixed.
+   ⚠️ THE PROMPT IS THE REAL FIX; THIS IS THE FLOOR UNDER IT, because a prompt
+     rule is only ever a prompt rule -- this file's own hardest lesson. */
+const shopWords = await pg.evaluate(() => {
+  const t = (cut) => (_findShopWords({item: 'dress', cut}).cut || '');
+  return {
+    long1: t('belted wrap with midi length and fitted bodice'),
+    long2: t('fitted wrap silhouette with self-tie belt at waist'),
+    mid:   t('belted midi wrap with defined waist'),
+    good:  t('belted'),
+    two:   t('belted midi'),
+  };
+});
+/* The server's own rule, copied here deliberately: if these two ever disagree a
+   value passes this check and is still dropped in the function. */
+const SERVER_CLEAN = /^[a-z0-9][a-z0-9 '\-/.]{0,39}$/i;
+ok('a sentence becomes searchable words instead of being dropped',
+   shopWords.long1 === 'belted wrap' && SERVER_CLEAN.test(shopWords.long1),
+   JSON.stringify(shopWords.long1));
+ok('...and so does the longest one the live stylist actually wrote',
+   shopWords.long2 === 'fitted wrap silhouette' && SERVER_CLEAN.test(shopWords.long2),
+   JSON.stringify(shopWords.long2));
+/* 🚨 THE DANGLING-JOINER HALF: cutting at three words alone would leave "belted
+   wrap with", which no shop prints either. A trim has to end on a real word. */
+ok('...and never ends on a dangling joiner',
+   !/\b(with|and|at|in|on|of|for|a|an|the)$/i.test(shopWords.mid), JSON.stringify(shopWords.mid));
+/* 🚨 THE ANTI-VACUOUS HALF: it must not shorten a value that was ALREADY right,
+   or "it trims" would be indistinguishable from "it destroys". */
+ok('...while a value that was already right is untouched',
+   shopWords.good === 'belted' && shopWords.two === 'belted midi', JSON.stringify(shopWords));
+/* ▶ AND EVERY ROUTE RUNS IT, not just the one that was broken.
+   ⚠️ REWRITTEN, NOT BUMPED: this first asserted a COUNT of 6 and found 5, and the
+     app was right — 5 is one definition plus the four routes that exist. A count
+     I guessed is exactly the "bump the number without reading it" this file
+     warns about. ▶ IT NAMES THE RULE NOW: THE TWO GUARDS TRAVEL TOGETHER. Every
+     place that checks her words against a model's request must also trim that
+     request to searchable words, because both faults arrive on the same reply —
+     and a count of one of them can never say that. */
+const kw = (HTML.match(/_findKeepHerWords\(/g) || []).length - 1;   // less its definition
+const sw = (HTML.match(/_findShopWords\(/g) || []).length - 1;
+ok('the her-words guard and the shop-words floor run on the SAME routes',
+   kw === sw && kw === 4, 'keepHerWords=' + kw + ' shopWords=' + sw);
+/* ▶ AND THE PROMPT SIDE, WHICH IS THE ACTUAL FIX: an occasion is never searched. */
+ok('the stylist is told an occasion is never a search word',
+   /No garment is NAMED "vacation"/.test(noAsk) && /No garment is NAMED "vacation"/.test(withAsk));
+
 ok('zero JS errors across every scenario', errs.length === 0, errs.join(' | '));
 await ctx.close();
 

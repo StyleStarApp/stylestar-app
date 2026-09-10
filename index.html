@@ -6423,12 +6423,13 @@ function _findAskRule(){
     +'`item` is the garment noun on its own ("dress", "white top" is wrong, "top" is right) and is REQUIRED. '
     +(_ssAsk
       ? 'Fill colour/fabric/cut ONLY with words she actually used in: "'+_ssAsk+'". '
-        +'Leave a field empty rather than guessing; empty is always safe. Choose the item she asked for.\n'
+        +'Leave a field empty rather than guessing; empty is always safe. Choose the item she asked for. '
+        +'\u26a0\ufe0f THESE FIELDS HOLD WORDS A SHOP PRINTS ON A PRODUCT, never a description and never a sentence. "Linen Midi Dress" and "Belted Shirt Dress" are what shops call things; "belted wrap with midi length and fitted bodice" is not, and no product on earth is named that. Two or three plain words per field, maximum. AND NEVER AN OCCASION OR A MOOD: vacation, wedding, work, brunch, date night, effortless, elevated. No garment is NAMED "vacation", so searching for it finds NOTHING AT ALL. If the only thing she named is an occasion, leave these fields empty and let your six pieces carry the styling. '+'\n'
       : 'She has not asked for anything specific, so YOU choose the one garment worth showing her most, from her profile, '
         +'and put the shape or detail that makes it right for her in `cut` (and colour or fabric only if they are genuinely the point). '
         +'THESE FIELDS ARE THE SEARCH. Whatever you put in them is exactly what she will be shown, and anything you leave out is not looked for: '
         +'a `cut` of "belted" shows her belted dresses, an empty `cut` shows her any dress at all. '
-        +'Two or three plain words a shop would actually print, never a mood ("elevated", "effortless") and never a word retailers do not use. '
+        +'\u26a0\ufe0f THESE FIELDS HOLD WORDS A SHOP PRINTS ON A PRODUCT, never a description and never a sentence. "Linen Midi Dress" and "Belted Shirt Dress" are what shops call things; "belted wrap with midi length and fitted bodice" is not, and no product on earth is named that. Two or three plain words per field, maximum. AND NEVER AN OCCASION OR A MOOD: vacation, wedding, work, brunch, date night, effortless, elevated. No garment is NAMED "vacation", so searching for it finds NOTHING AT ALL. If the only thing she named is an occasion, leave these fields empty and let your six pieces carry the styling. '
         +'Then say so in `findlead`, in one short warm sentence in your own voice, naming what you chose and why, '
         +'so she knows it was your pick and can overrule it. Under 18 words. '
         +'\u26a0\ufe0f THE SENTENCE AND THE FIELDS MUST BE THE SAME PICK. Never promise her a detail you did not put in the fields, '
@@ -6917,6 +6918,9 @@ async function _shopStyleGen(){
            loud. ⚠️ THE MOMENT SHE TYPES ANYTHING, THIS RUNS AGAIN, UNCHANGED. */
       _findKeepHerWords(_ssFind,_ssAsk);
     }
+    /* ▶ AFTER the her-words guard on both halves, so a hand-over pick is trimmed
+       to searchable words too — that is the half that was writing sentences. */
+    if(_ssFind&&_ssFind.item&&!_ssFindPre)_findShopWords(_ssFind);
     _saveShopPicks(_keep,parsed.note,_ssFind,_ssFindLead(parsed));   // so she can come back to exactly this, see _shopResume
     /* 🚨 HER HONEST LINE (2026-08-24). Two ways to reach it and both are real:
        (a) the model used its escape hatch and sent a note -- see _honestyRule;
@@ -11359,6 +11363,38 @@ const _FIND_HER_WORDS=['colour','fabric','cut'];
 function _findHerText(msg){
   return ' '+String(msg||'').toLowerCase().replace(/[^a-z0-9]+/g,' ')+' ';
 }
+/* 🚨🚨 A VALUE TOO LONG FOR THE SERVER IS SILENTLY THROWN AWAY, AND THAT IS THE
+   FAULT SHE PHOTOGRAPHED TWICE — 2026-09-10. `cleanReq` in product-find.js
+   accepts at most 40 characters and DROPS anything longer without a word, so a
+   stylist who writes "fitted wrap silhouette with self-tie belt at waist" (50)
+   sends the shops a bare "dress" while her sentence promises a wrap.
+   ▶▶ MEASURED ON THREE LIVE REPLIES: 46, 35 and 50 characters — TWO OF THREE
+     would have been dropped, which is exactly the "she says belted and I get
+     random dresses" she reported.
+   ✅ SO IT IS TRIMMED HERE, WHERE IT CAN BE DONE HONESTLY: the first three words
+     of what the stylist wrote, which is the searchable part ("fitted wrap
+     silhouette" from that sentence). ⚠️ A LONG VALUE IS ALSO A BAD SEARCH even
+     when it fits — nobody's product is named after a sentence — so this is not
+     only about the 40-character wall.
+   ⚠️ THE PROMPT ASKS FOR TWO OR THREE WORDS AND THAT IS THE REAL FIX; this is
+     the floor under it, because a prompt rule is only ever a prompt rule. */
+function _findShopWords(req){
+  ['colour','fabric','cut'].forEach(function(k){
+    if(!req[k])return;
+    var w=String(req[k]).trim().split(/\s+/).filter(Boolean);
+    if(w.length>3)w=w.slice(0,3);
+    /* ⚠️ A TRAILING JOINER IS WORSE THAN A SHORTER PHRASE. Cutting "belted wrap
+       with midi length" at three words leaves "belted wrap with", and no shop
+       prints that either — the trim has to end on a real word. */
+    while(w.length&&/^(with|and|at|in|on|of|for|a|an|the|plus)$/i.test(w[w.length-1]))w.pop();
+    var v=w.join(' ');
+    /* Still too long for the server after trimming: drop it HERE rather than let
+       the server drop it silently, so the two halves cannot disagree. */
+    req[k]=(v.length<=40)?v:'';
+    if(!req[k])delete req[k];
+  });
+  return req;
+}
 function _findKeepHerWords(req,msg){
   const hay=_findHerText(msg);
   const dropped=[];
@@ -12397,6 +12433,8 @@ FINDING REAL PRODUCTS FOR HER:
   <<FIND item=dress; colour=blush; fabric=silk; cut=wrap>>
 - Put it FIRST. The search runs while you are still writing, so a marker at the end makes her wait twice as long.
 - Fields, all optional except item: item, colour, fabric, cut, size, width. Use only what SHE actually said or what you know from her saved sizes. Two to four plain words per field.
+- ⚠️ THESE FIELDS HOLD WORDS A SHOP PRINTS ON A PRODUCT, never a description and never a sentence. "Linen Midi Dress" and "Belted Shirt Dress" are what shops call things; "belted wrap with midi length and fitted bodice" is not, and no product on earth is named that.
+- ⚠️ AND NEVER AN OCCASION OR A MOOD: vacation, wedding, work, brunch, date night, effortless, elevated. No garment is NAMED "vacation", so searching for it finds NOTHING AT ALL. If the only thing she named is an occasion, send just the garment and let your written advice carry the rest.
 - NEVER invent a requirement she did not give. If she did not say a colour, leave colour out. An invented requirement makes me reject real products she would have loved.
 - WHEN TO USE IT: only when finding real products is genuinely NEEDED to answer what she is asking. "I have a wedding in Napa in October and nothing to wear" absolutely needs it, even though she never said the word "find" or "dress". "Where can I get a white blazer" needs it.
 - WHEN NOT TO USE IT: a shopping TOPIC coming up is not the same as needing products. "What do you think of navy on me?", "Does this top work for a dinner?", "Should I keep my old boots?" and "Thank you!" all need your advice, not a search. When in doubt, answer as a stylist and leave the marker out.
@@ -12483,6 +12521,7 @@ RULES:
     st.findFired=true;
     /* ⚠️ HER SENTENCE IS THE AUTHORITY, not the stylist's own suggestion. */
     _findKeepHerWords(req,msg);
+    _findShopWords(req);
     _findRun(req);
   };
   const _ctl=(window.AbortController)?new AbortController():null;
@@ -12542,7 +12581,7 @@ RULES:
     typing.remove();liveMsg.remove();
     /* The JSON path (no stream) gets the whole reply at once, so the marker has
        not been seen yet. Same latch, so a streamed answer never fires twice. */
-    if(!st.findFired){const _mk=_findParse(reply);if(_mk){st.findFired=true;_findKeepHerWords(_mk,msg);_findRun(_mk);}}
+    if(!st.findFired){const _mk=_findParse(reply);if(_mk){st.findFired=true;_findKeepHerWords(_mk,msg);_findShopWords(_mk);_findRun(_mk);}}
     /* ⚠️ STRIPPED BEFORE IT IS SHOWN *AND* BEFORE IT IS SAVED. A marker restored
        from ss_chat on her next visit would be read back as stylist prose. */
     reply=_findStrip(reply);
@@ -12581,7 +12620,7 @@ RULES:
            addChatMsg for every route, and the finder runs from here as well.
            ⚠️ Same `findFired` latch, so a marker already acted on never fires
            twice, and her own sentence is still the authority on requirements. */
-        if(!st.findFired){const _mk2=_findParse(fb);if(_mk2){st.findFired=true;_findKeepHerWords(_mk2,msg);_findRun(_mk2);}}
+        if(!st.findFired){const _mk2=_findParse(fb);if(_mk2){st.findFired=true;_findKeepHerWords(_mk2,msg);_findShopWords(_mk2);_findRun(_mk2);}}
         addChatMsg(fb,'bot');
       }
       else addChatMsg("I'm having a moment. Could you try asking that again? ✨",'bot');
