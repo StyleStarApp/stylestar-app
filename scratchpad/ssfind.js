@@ -207,7 +207,7 @@ ok('styles.css is actually applied (else every number below is a default)',
    tuning the size stays free while losing the signal does not. */
 const waiting = await pg.evaluate(() => {
   const w = document.querySelector('.ss-find-wait');
-  const st = w && w.querySelector('.find-load-star');
+  const st = w && w.querySelector('.ss-find-star');
   const t = w && w.querySelector('.ss-find-wait-t');
   if (!st) return { star: 0 };
   const cs = getComputedStyle(st), pa = getComputedStyle(st.querySelector('path'));
@@ -218,13 +218,19 @@ const waiting = await pg.evaluate(() => {
 console.log('     [measured] waiting star: ' + waiting.star.toFixed(0) + 'px, "' + waiting.words + '"');
 ok('the waiting star is BIG, not the speck she photographed',
    waiting.star >= 44, 'star=' + waiting.star.toFixed(1) + 'px');
-/* ⚠️ IT IS THE SAME SIGNAL SHE ALREADY CHOSE, NOT A NEW LOADER — her pink fill,
-   her bolder gold frame, and the one `spin` keyframe every wait in the app uses,
-   turning the same way. Only the SIZE is allowed to differ per surface. */
-ok('...and it is HER star: pink fill, gold frame, the app\'s one spin, reversed',
-   /rgb\(236, 72, 153\)/.test(waiting.fill) && /rgb\(212, 175, 55\)/.test(waiting.stroke) &&
-   waiting.anim === 'spin' && waiting.dir === 'reverse',
+/* 🚨🚨 GOLD, NOT PINK — HER RULING, 2026-09-09: "66px but I want the gold one not
+   pink. Pink only for the chat." ▶ It answers a question the pink chat star
+   shipped with, and it is her own 2026-08-09 mark system holding: gold = hers,
+   pink = when Catherine herself is speaking. ⚠️ A future session "unifying" this
+   star with the chat's would repaint it pink; this is what stops that. */
+ok('...and it is GOLD, never the chat\'s pink',
+   /rgb\(230, 194, 78\)/.test(waiting.fill) && !/rgb\(236, 72, 153\)/.test(waiting.fill),
    JSON.stringify(waiting));
+/* ⚠️ SAME MOTION AS EVERY OTHER WAIT IN THE APP. The colour is allowed to differ
+   per surface; the turning never is. `chatfind` holds the same rule across all
+   five stars by selector membership. */
+ok('...and it turns the app\'s one spin, reversed, like every other wait',
+   waiting.anim === 'spin' && waiting.dir === 'reverse', JSON.stringify(waiting));
 /* ▶ "indicate more that shopping/searching is happening" — the words are the
    half that does that, and they are HERS, from the one _FIND_STEPS list. */
 ok('...and it SAYS what is happening, in her words',

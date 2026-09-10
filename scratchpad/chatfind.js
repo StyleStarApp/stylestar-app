@@ -270,7 +270,14 @@ const prod = (o) => Object.assign({
       }
       return false;
     };
-    const _stars = ['chat-typing-star', 'find-load-star', 'shop-star-main', 'wdr-load-star'];
+    /* ⭐ FIVE STARS NOW: Shop your Style's waiting star joined them 2026-09-09.
+       ▶ THE RULE IT IS IN THIS LIST FOR IS *MOTION*, not colour — "every waiting
+         star in the app turns the same way". Its COLOUR deliberately differs
+         (gold, her ruling: "Pink only for the chat"), and that is fine: this
+         check has never been about colour. Adding a star here is the correct
+         thing to do when a new wait appears; it is how the app keeps one signal
+         instead of five loaders. */
+    const _stars = ['chat-typing-star', 'find-load-star', 'shop-star-main', 'wdr-load-star', 'ss-find-star'];
     const _still = _stars.filter(c => !_spins(c));
     ok('every waiting star in the app turns the same way',
        _still.length === 0, 'not spinning: ' + _still.join(', '));

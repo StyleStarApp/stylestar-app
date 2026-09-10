@@ -6736,10 +6736,20 @@ async function _shopStyleGen(){
          ▶ SHE IS RIGHT AND THE FIRST BUILD WAS PLAINLY WRONG: a small gold outline
            star alone in a 338px reserved space says nothing at all, and this
            search really does take 5-8 seconds.
-         ✅ SO IT IS NOW THE SIGNAL SHE ALREADY APPROVED FOR EXACTLY THIS WAIT —
-           the chat's SHOPPING star (`_starSpin('find-load-star')`: her pink fill,
-           her bolder gold frame, the same path, the same reverse spin) plus HER
-           OWN WORDS from `_FIND_STEPS`, which rotate as the search goes on.
+         ✅ SO IT IS NOW A BIG TURNING STAR PLUS HER OWN WORDS from `_FIND_STEPS`,
+           which rotate as the search goes on.
+         🚨🚨 IT IS THE **GOLD** STAR, NOT THE PINK ONE, AND THAT IS HER RULING —
+           2026-09-09, choosing the size: "66px but I want the gold one not pink.
+           Pink only for the chat."
+         ▶▶ THAT ANSWERS A QUESTION THIS FILE HAD LEFT OPEN. The pink chat star
+           shipped with a note saying matching the rest of the app to it was "a
+           real question and it is HERS — offer, do not assume". She has now
+           answered it: PINK IS THE CHAT'S VOICE, gold is everywhere else, which
+           is her own 2026-08-09 mark system holding (gold = hers; pink = when
+           Catherine herself is speaking).
+         ⚠️ SO `_starSpin` IS CALLED WITH ITS OWN CLASS AND ITS PATH COLOURS ARE
+           LEFT ALONE — the SVG's own gold. Do NOT reach for `find-load-star`
+           here: that selector is where the pink lives.
          ⚠️ THE WORDS ARE `_FIND_STEPS`, NOT A SECOND COPY — "Looking through all
            the shops..." then "Checking what's actually in stock...". Her 2026-09-09
            rule that the phrase "your shops" never appears is therefore obeyed here
@@ -6749,7 +6759,7 @@ async function _shopStyleGen(){
            the two states back into one. */
       html+='<div id="ssFindWrap" class="find-block ss-find">'
         +(!_ssAsk&&_ssFindLead(parsed)?'<div class="ss-find-lead">'+_esc(_ssFindLead(parsed))+'</div>':'')
-        +'<div class="ss-find-wait">'+_starSpin('find-load-star')
+        +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
         +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
     }
     html+='<div class="shop-grid">';

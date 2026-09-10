@@ -22,7 +22,7 @@ doing; **only the testers change the ceiling.**
 |---|---|---|---|
 | 1 | ~~Hand the store brief to ChatGPT~~ ✅ **CLOSED 2026-09-08 — she sent her own roster instead. 122 shops, and she is DONE adding for now.** | — | ✅ done |
 | 2 | ~~Re-run her three chat messages~~ ✅ **CLOSED 2026-09-09 — she tested the live build herself, twice, and her verdict is *"The chat is now working with scrollable photo options!!!"*** | — | ✅ done |
-| 3 | ~~Shop your Style — wire the finder into it~~ ✅ **BUILT 2026-09-09, BOTH FORKS ANSWERED BY HER FIRST.** Real products lead, her six stay below; the default view searches too. `ssfind` **48** checks. | — | ✅ done |
+| 3 | ~~Shop your Style — wire the finder into it~~ ✅ **BUILT 2026-09-09, BOTH FORKS ANSWERED BY HER FIRST.** Real products lead, her six stay below; the default view searches too. `ssfind` **49** checks. | — | ✅ done |
 | 4 | ~~A save heart on `_findCard`~~ ✅ **BUILT 2026-09-09 — every card the finder shows now carries the EXISTING `_wlSaveBtn`, and a saved piece keeps its photograph.** | — | ✅ done |
 
 ### 🏛️ BUSINESS & LEGAL
@@ -271,7 +271,7 @@ sections had accumulated in one file and a session could read any of them first.
 the standing rule and it held all day.
 
 ### ▶ TEST STATE — THE ONLY CURRENT ONE (older "TEST STATE" blocks below are STALE, ignore them)
-✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 48 — NEW** ·
+✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 49 — NEW** ·
 chatfallback **105** (was 81) · copy **49** (was 48) · findprod **63** · chatfind **63** · affq **40** ·
 starpx **28** · honest · storepool 49 · untagged 21.
 ⚠️ **`searchtune` 80 / 1 — the SAME pre-existing `styles.css` failure, *"her voice: Lora upright 15.5 +
@@ -386,17 +386,34 @@ below. (4) THE WHITE BAND IS CLOSED: *"I have not noticed a white band on anythi
 shopping/searching is happening since it takes a while."*** ⚠️ **SHE IS RIGHT AND THE FIRST BUILD WAS
 PLAINLY WRONG** — a small gold outline star alone in a 338px reserved panel says nothing, and the search
 really does take 5-8 seconds.
-✅ **IT IS NOW THE SIGNAL SHE ALREADY CHOSE FOR EXACTLY THIS WAIT:** the chat's SHOPPING star — her pink
-fill `#EC4899`, her bolder gold frame `#D4AF37` at 1.5, the same path, the same `spin` keyframe reversed
-— **at 54px**, plus **HER OWN WORDS from `_FIND_STEPS`**, rotating on the same 3.5s beat: *"Looking
-through all the shops..."* → *"Checking what's actually in stock..."*
-⚠️ **SIZE IS THE ONLY THING THAT DIFFERS, and that is already the approved pattern** — the CSS says the
-waiting star is *"one signal wearing three sizes, never three different loaders"*. **54px because it
-stands ALONE in a large panel rather than inline beside a message; at the chat's 30px it read as a speck,
-which is what she photographed.** ▶ **If she wants it bigger or smaller still, it is ONE number.**
+✅ **IT IS NOW A BIG TURNING STAR PLUS HER OWN WORDS from `_FIND_STEPS`**, rotating on the same 3.5s beat:
+*"Looking through all the shops..."* → *"Checking what's actually in stock..."*
+⭐⭐ **SHE CHOSE THE SIZE BY LOOKING, NOT BY ARGUING — 30 / 42 / 54 / 66 WERE RENDERED ON THE REAL SCREEN
+MID-SEARCH, AT HER PHONE'S TRUE PIXEL DENSITY, AND SHOWN TO HER.** ▶ **HER PICK: 66px** — bigger than the
+54 Claude had built, which is the second time in two days her eye went further than the measurement.
+🚨🚨🚨 **AND SHE GAVE THE RULE THAT MATTERS MORE THAN THE SIZE, WHICH CLOSES A QUESTION THIS FILE LEFT
+OPEN: *"66px but I want the gold one not pink. Pink only for the chat."***
+▶▶ **THE PINK CHAT STAR SHIPPED WITH A NOTE SAYING EXACTLY THIS WAS HERS TO ANSWER** — *"THE
+WARDROBE/TRENDING STAR IS DELIBERATELY LEFT GOLD AND SMALL. She asked about the chat star, on the chat
+screen; matching the rest of the app to it is a real question and it is HERS — offer, do not assume."*
+**SHE HAS NOW ANSWERED IT.** ⭐ **PINK IS THE CHAT'S VOICE. GOLD IS EVERYWHERE ELSE.** That is her own
+2026-08-09 mark system holding: **gold = hers, pink = when Catherine herself is speaking.**
+⚠️⚠️ **SO THE STAR HAS ITS OWN CLASS (`.ss-find-star`) AND NO `path` COLOUR RULE AT ALL — it keeps
+`_starSpin`'s own gold. NEVER add it to the `.chat-typing-star,.find-load-star` path selector: THAT
+SELECTOR IS THE PINK.** A future session "unifying" the two would repaint it; `ssfind` asserts it is gold
+and is NOT the chat's pink.
+⭐ **AND THE EDGE WAS PUT TO HER TOO, because at 66px the app's soft grey outline stops being a hairline
+and starts to show.** Three treatments were rendered at true size — grey / none / a deeper gold hairline.
+▶ **HER PICK: *"Grey edge — leave it as the app has it."*** **So this star is the app's existing gold star
+exactly, only bigger. Nothing diverges.** ⚠️ **Claude's eye preferred "no edge" and said so; she chose
+consistency, and that is the right call and hers.**
+⚠️ **MOTION IS THE THING THAT NEVER DIFFERS.** `chatfind`'s *"every waiting star in the app turns the same
+way"* now covers **FIVE** stars by selector membership. **Colour may differ per surface; the turning may
+not.** ▶ **Adding a star to that list is the correct move when a new wait appears — it is how the app
+keeps ONE signal instead of five loaders.**
 ⚠️⚠️ **NO THINKING DOTS HERE.** Dots mean THINKING, the turning star means SHOPPING — **her** distinction,
 and adding dots would collapse the two states she deliberately split.
-⭐ **`ssfind` 44 → 48, and the two new checks were PROVEN TO BITE:** shrinking the star back to 26px turns
+⭐ **`ssfind` 44 → 49, and the new checks were PROVEN TO BITE:** shrinking the star back to 26px turns
 *"the waiting star is BIG, not the speck she photographed"* red naming `star=26.0px`; removing the words
 turns *"it SAYS what is happening, in her words"* red.
 
@@ -529,7 +546,7 @@ the check exists, and it is the argument for writing the check before believing 
 these rules"), obeyed rather than skipped. The `find` field adds ~600 chars and the worst case still
 clears style-ai's 32KB hard cap with a real margin, **and all 132 stores still survive the shrink
 ladder** (her SORT, NEVER TRIM rule).
-**`scratchpad/ssfind.js` — 48 checks, 0 failures.** It serves the real files off disk, **styles.css
+**`scratchpad/ssfind.js` — 49 checks, 0 failures.** It serves the real files off disk, **styles.css
 included, with a guard check proving the sheet is applied before any number is believed** (the
 2026-09-09 `copy` lesson). ▶ **THREE HARNESS TRAPS ARE WRITTEN INTO IT, because each one passed or hung
 on perfectly correct code:** setting `window._ssAsk` then calling `_openShopStyleNow` measures NOTHING
@@ -1473,7 +1490,7 @@ alternative to price against is **SearchApi** (same $25, ~10× the searches).
 ▶ **THE FILES:** `netlify/functions/product-find.js` (server, holds the key) · `netlify/functions/lib/
 find-products.js` (the finder) · `netlify/functions/lib/store-domains.js` (**generated**) ·
 `scripts/build-store-domains.js` · `scripts/lib/stores.js` (the ONE `STORES` reader) ·
-`scratchpad/findprod.js` **63** · `scratchpad/chatfind.js` **63** · `scratchpad/ssfind.js` **48** ·
+`scratchpad/findprod.js` **63** · `scratchpad/chatfind.js` **63** · `scratchpad/ssfind.js` **49** ·
 `scratchpad/findlive.js` (live bench).
 ⭐⭐ **AND IT NOW SERVES TWO SURFACES, 2026-09-09: THE STYLIST CHAT AND SHOP YOUR STYLE** — through the
 ONE `_findBlockHtml` builder and the ONE `_findFetch`, so there is exactly one `product-find` call site
@@ -2079,7 +2096,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 | **Never say "your shops" / "your stores"** | **status lines, empty states, row headers — the phrase is absent, asserted** | n/a — the shelves write no such prose | **chatfallback 81 · copy 69** | ✅ **her rule, 2026-09-09: *"Clients want me to check all stores"*** |
 | **A product photo is never cropped** | **the chat's AND Shop your Style's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 49** | ✅ **her catch 2026-09-09, and SHE CLOSED THE BAND QUESTION THE SAME DAY: *"I have not noticed a white band on anything."*** ⚠️ **The shoe-photo complaint is NOT this rule failing — it is the retailer's own margin, measured at 9-10% fill. A zoom to fix it would break this row.** |
-| **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 48 · chatfallback 105** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
+| **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 49 · chatfallback 105** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
 | **A SAVED ROW MAY CLAIM NO MORE THAN THE CARD IT WAS SAVED FROM** | **`_findCard`: a CHECKED card saves `exact` (real product page → "Shop it" + price); a BROWSE card saves store+search (→ "Find it", no price)** | **`renderWishlist` labels off that same flag, and rebuilds the search link every render** | **chatfallback 98, §15 — and both checks proven to bite** | ✅ **BUILT 2026-09-09 with the save heart. It is her 2026-09-06 rule one surface further out: a price and "Shop it" on a row that lands on a RESULTS PAGE is the "generic store search dressed as a find" she banned.** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
 THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude
