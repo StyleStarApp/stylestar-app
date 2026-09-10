@@ -239,6 +239,31 @@ ok('...and it SAYS what is happening, in her words',
    obeyed here for free because the words come from the ONE list — asserted so a
    future second copy on this surface cannot reintroduce it. */
 ok('...and never says "your shops"', !/your (shops|stores)/i.test(waiting.words), waiting.words);
+/* 🚨🚨 NO PINK STAR ANYWHERE ON THIS SCREEN — HER RULING, 2026-09-09, GIVEN TWICE:
+   "I don't want the pink star on shop your style. That is only for stylist chat.
+   I want the gold one."
+   ▶▶ IT OVERTURNS A WRITTEN RATIONALE, which is why it needs a check rather than
+     a comment: the markup carried a note saying the pink star meant "the stylist
+     is working", so a future session has a documented-looking reason to put pink
+     back. She was shown that reasoning and chose gold anyway.
+   ⚠️ THIS COUNTS EVERY STAR ON THE SCREEN, not just the waiting one — the two she
+     was actually looking at were the mark beside "Looking for something specific?"
+     and the little one beside "shopping your style...", neither of which was the
+     star being tuned at the time. A check scoped to one star would have missed
+     exactly what she reported. */
+{const pinks = await pg.evaluate(() => {
+   const out = [];
+   document.querySelectorAll('#s-shopstyle svg').forEach(sv => {
+     const shape = sv.querySelector('polygon,path');
+     if (!shape) return;
+     const cs = getComputedStyle(shape);
+     if (/rgb\(236, 72, 153\)/.test(cs.fill) || /rgb\(236, 72, 153\)/.test(cs.stroke))
+       out.push(sv.getAttribute('class') || '(unclassed)');
+   });
+   return out;
+ });
+ ok('NO pink star anywhere on Shop your Style — pink is the chat\'s alone',
+    pinks.length === 0, 'pink: ' + pinks.join(', '));}
 
 /* 🚨🚨 HER RULE: NOTHING MAY JUMP. The six paint in ~1s, the search takes 5-8s,
    so the row's space must be reserved from the first paint or the whole page

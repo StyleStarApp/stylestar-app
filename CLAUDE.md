@@ -22,7 +22,7 @@ doing; **only the testers change the ceiling.**
 |---|---|---|---|
 | 1 | ~~Hand the store brief to ChatGPT~~ ✅ **CLOSED 2026-09-08 — she sent her own roster instead. 122 shops, and she is DONE adding for now.** | — | ✅ done |
 | 2 | ~~Re-run her three chat messages~~ ✅ **CLOSED 2026-09-09 — she tested the live build herself, twice, and her verdict is *"The chat is now working with scrollable photo options!!!"*** | — | ✅ done |
-| 3 | ~~Shop your Style — wire the finder into it~~ ✅ **BUILT 2026-09-09, BOTH FORKS ANSWERED BY HER FIRST.** Real products lead, her six stay below; the default view searches too. `ssfind` **49** checks. | — | ✅ done |
+| 3 | ~~Shop your Style — wire the finder into it~~ ✅ **BUILT 2026-09-09, BOTH FORKS ANSWERED BY HER FIRST.** Real products lead, her six stay below; the default view searches too. `ssfind` **50** checks. | — | ✅ done |
 | 4 | ~~A save heart on `_findCard`~~ ✅ **BUILT 2026-09-09 — every card the finder shows now carries the EXISTING `_wlSaveBtn`, and a saved piece keeps its photograph.** | — | ✅ done |
 
 ### 🏛️ BUSINESS & LEGAL
@@ -271,7 +271,7 @@ sections had accumulated in one file and a session could read any of them first.
 the standing rule and it held all day.
 
 ### ▶ TEST STATE — THE ONLY CURRENT ONE (older "TEST STATE" blocks below are STALE, ignore them)
-✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 49 — NEW** ·
+✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 50 — NEW** ·
 chatfallback **105** (was 81) · copy **49** (was 48) · findprod **63** · chatfind **63** · affq **40** ·
 starpx **28** · honest · storepool 49 · untagged 21.
 ⚠️ **`searchtune` 80 / 1 — the SAME pre-existing `styles.css` failure, *"her voice: Lora upright 15.5 +
@@ -417,6 +417,45 @@ and adding dots would collapse the two states she deliberately split.
 *"the waiting star is BIG, not the speck she photographed"* red naming `star=26.0px`; removing the words
 turns *"it SAYS what is happening, in her words"* red.
 
+### 🚨🚨🚨 PINK IS THE STYLIST CHAT'S ALONE — HER RULING, AND CLAUDE FIXED THE WRONG STAR FIRST
+▶▶ **HER WORDS, GIVEN TWICE: *"No I don't want the pink star on shop your style. That is only for
+stylist chat. I want the gold one."***
+⚠️⚠️ **THE FIRST TIME SHE SAID IT, ONLY THE WAITING STAR WAS MADE GOLD — AND THAT WAS NOT THE STAR SHE
+WAS LOOKING AT.** ▶ **TWO OTHER PINK STARS SAT ON THAT SCREEN AND ARE IN BOTH HER SCREENSHOTS:** the mark
+beside ***"Looking for something specific?"*** (`.sa-star`) and the little one beside ***"shopping your
+style..."*** while it loads (`.shop-load-star`). **Both are gold now (`#E6C24E`).**
+🚨 **THE LESSON IS THIS FILE'S OWN, IN A NEW COSTUME: A RULE APPLIED TO ONE STAR IS NOT APPLIED.** The
+star being TUNED at that moment was not the star she was COMPLAINING about, and nothing checked the rest
+of the screen. ▶ **`ssfind` now scans EVERY `<svg>` on `#s-shopstyle` for pink and names the offender —
+proven to bite: putting `.sa-star` back turns it red with `pink: sa-star`.**
+⭐⭐ **AND HER RULING OVERTURNS A WRITTEN RATIONALE, WHICH IS WHY IT NEEDED A CHECK RATHER THAN A COMMENT.**
+The markup carried a note saying that star was pink ON PURPOSE — *"The mark is the stylist's PINK STAR...
+the star means the stylist is working — which is why the loading star on this same screen is pink."*
+▶ **That reasoning is RETIRED, not deleted: she was shown it and chose gold anyway.** ⚠️ **DO NOT
+"restore" pink on the grounds that the stylist is working. That argument was made, in writing, and she
+ruled against it.**
+▶ **HER RULE IS SIMPLER THAN THE ONE IT REPLACES: PINK BELONGS TO THE STYLIST CHAT AND NOWHERE ELSE.**
+It sits cleanly beside her 2026-08-09 mark system (gold = hers; the pink tilted HEART = Catherine's own
+voice). ⚠️ **ONE PINK THING REMAINS ON THAT SCREEN AND IT IS TEXT, NOT A STAR:**
+`#s-shopstyle .ss-shop-talk span`. **Flagged to her; not changed without her word.**
+
+### 🚨🚨 THE SHOE PHOTOS — HER CORRECTION, AND CLAUDE MEASURED THE WRONG THING
+▶▶ **HER CORRECTION, 2026-09-09: *"it is not the size that is the problem it is the particular photo the
+angle of the shoe is not right... those were not good shoe photos it's not about the size though. It's
+the point of view and angle of shoe."***
+🚨 **SO THE WHOLE 9%-OF-THE-CARD MEASUREMENT BELOW ANSWERED A QUESTION SHE HAD NOT ASKED.** The numbers
+are real and the "a blanket zoom would crop every top" finding still stands — **but a big picture of a
+badly-angled shoe is still a badly-angled shoe.** ▶ **THE LESSON: MEASURE WHAT SHE SAID, NOT WHAT IS
+EASIEST TO MEASURE.** Size is measurable; point of view is a stylist's judgement, and reaching for the
+measurable one turned her report into a different report.
+⭐⭐ **AND RE-READING THE CODE WITH HER ACTUAL COMPLAINT IN MIND FOUND SOMETHING: `product-find.js:549` IS
+`image: c.raw.thumbnail || (p.thumbnails || [])[0]` — `thumbnails` IS AN ARRAY, AND WE TAKE `[0]`.**
+▶▶ **SO ON A LOOKED-UP (CHECKED) CARD THERE IS GENUINELY A CHOICE OF PHOTOGRAPH WE ARE NOT USING.** On a
+BROWSE card there is only ever the one the shop sends, and nothing can be done there.
+⚠️ **PARTLY FIXABLE, THEREFORE — on the few cards per search that get a look-up.** ▶ **But "a good angle"
+is HER expertise, not a measurement: any build here needs her to say what makes a shoe photo good before
+a line is written.** **Not started.**
+
 ### 🚨🚨 FAULT 2, MEASURED AND **NOT** FIXED — AND THE MEASUREMENT IS THE USEFUL PART
 ▶▶ **HER WORDS: *"Some of the shoes have bad photos - can't really see the shoe."*** ⚠️ **MEASURED OFF
 HER OWN SCREENSHOT rather than guessed** — the shoe's real bounding box inside the card's photo frame:
@@ -546,7 +585,7 @@ the check exists, and it is the argument for writing the check before believing 
 these rules"), obeyed rather than skipped. The `find` field adds ~600 chars and the worst case still
 clears style-ai's 32KB hard cap with a real margin, **and all 132 stores still survive the shrink
 ladder** (her SORT, NEVER TRIM rule).
-**`scratchpad/ssfind.js` — 49 checks, 0 failures.** It serves the real files off disk, **styles.css
+**`scratchpad/ssfind.js` — 50 checks, 0 failures.** It serves the real files off disk, **styles.css
 included, with a guard check proving the sheet is applied before any number is believed** (the
 2026-09-09 `copy` lesson). ▶ **THREE HARNESS TRAPS ARE WRITTEN INTO IT, because each one passed or hung
 on perfectly correct code:** setting `window._ssAsk` then calling `_openShopStyleNow` measures NOTHING
@@ -1490,7 +1529,7 @@ alternative to price against is **SearchApi** (same $25, ~10× the searches).
 ▶ **THE FILES:** `netlify/functions/product-find.js` (server, holds the key) · `netlify/functions/lib/
 find-products.js` (the finder) · `netlify/functions/lib/store-domains.js` (**generated**) ·
 `scripts/build-store-domains.js` · `scripts/lib/stores.js` (the ONE `STORES` reader) ·
-`scratchpad/findprod.js` **63** · `scratchpad/chatfind.js` **63** · `scratchpad/ssfind.js` **49** ·
+`scratchpad/findprod.js` **63** · `scratchpad/chatfind.js` **63** · `scratchpad/ssfind.js` **50** ·
 `scratchpad/findlive.js` (live bench).
 ⭐⭐ **AND IT NOW SERVES TWO SURFACES, 2026-09-09: THE STYLIST CHAT AND SHOP YOUR STYLE** — through the
 ONE `_findBlockHtml` builder and the ONE `_findFetch`, so there is exactly one `product-find` call site
@@ -2096,7 +2135,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 | **Never say "your shops" / "your stores"** | **status lines, empty states, row headers — the phrase is absent, asserted** | n/a — the shelves write no such prose | **chatfallback 81 · copy 69** | ✅ **her rule, 2026-09-09: *"Clients want me to check all stores"*** |
 | **A product photo is never cropped** | **the chat's AND Shop your Style's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 49** | ✅ **her catch 2026-09-09, and SHE CLOSED THE BAND QUESTION THE SAME DAY: *"I have not noticed a white band on anything."*** ⚠️ **The shoe-photo complaint is NOT this rule failing — it is the retailer's own margin, measured at 9-10% fill. A zoom to fix it would break this row.** |
-| **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 49 · chatfallback 105** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
+| **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 50 · chatfallback 105** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
 | **A SAVED ROW MAY CLAIM NO MORE THAN THE CARD IT WAS SAVED FROM** | **`_findCard`: a CHECKED card saves `exact` (real product page → "Shop it" + price); a BROWSE card saves store+search (→ "Find it", no price)** | **`renderWishlist` labels off that same flag, and rebuilds the search link every render** | **chatfallback 98, §15 — and both checks proven to bite** | ✅ **BUILT 2026-09-09 with the save heart. It is her 2026-09-06 rule one surface further out: a price and "Shop it" on a row that lands on a RESULTS PAGE is the "generic store search dressed as a find" she banned.** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
 THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude
