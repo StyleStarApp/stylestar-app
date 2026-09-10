@@ -154,7 +154,13 @@ const CLEAN = /^[a-z0-9][a-z0-9 '\-/.]{0,39}$/i;
      tick and claim nothing. Her three-verdict rule is untouched.
    ⚠️ IT FAILS OPEN. Supabase down, slow or misconfigured leaves the row exactly
      as it is today — Google's results — rather than taking the feature down. */
-const FEED_COLS = 'retailer,brand,name,url,image_url,price';
+/* 🚨 THE COLUMN IS `store`. `retailer` is only what product-search.js RENAMES it
+   to on the way out (`retailer: row.store`), and reading its OUTPUT rather than
+   the table cost a deploy: PostgREST answered 400 for a column that does not
+   exist, and a 400 here returns an empty row that looks exactly like an honest
+   "her shops have nothing". ▶ READ THE TABLE'S SCHEMA, NEVER ANOTHER FUNCTION'S
+   RESHAPED RESPONSE — the two are different vocabularies on purpose. */
+const FEED_COLS = 'store,brand,name,url,image_url,price';
 /* ⚠️ WHY THE FEED CAME BACK EMPTY, IN ONE WORD, ON EVERY RESPONSE. It returned
    ZERO on its first live run and there was no way to tell a missing key from a
    dead query from an honest no-match without a deploy per guess. Same reasoning
@@ -203,12 +209,12 @@ async function feedBrowse(request) {
     const rows = await r.json();
     FEED_WHY = (Array.isArray(rows) && rows.length) ? 'ok' : 'no-match';
     return (Array.isArray(rows) ? rows : [])
-      .filter(x => x && x.name && x.url && x.retailer)
+      .filter(x => x && x.name && x.url && x.store)
       .map(x => ({
         id: 'feed:' + x.url,
         title: x.name,
-        store: x.retailer,
-        brand: x.brand || x.retailer,
+        store: x.store,
+        brand: x.brand || x.store,
         price: x.price != null ? '$' + x.price : '',
         priceValue: x.price != null ? Number(x.price) : null,
         image: x.image_url || '',
