@@ -35,7 +35,9 @@ it several times that day as if it were her next step, and it was not: **she had
 | 9 | ~~The whisper promised "the same pieces waiting" and a resume searched again~~ ✅ **HER CATCH, FIXED AND LIVE 2026-09-10 — and the check that was supposed to guard it had been a FALSE GREEN for a day.** | — | ✅ done |
 | 10 | ~~The stylist says "belted" and searches "dress"~~ ✅ **HER RULING, BUILT AND LIVE 2026-09-10: *"I want the stylist to deliver exactly what she is promising."*** | — | ✅ done |
 | 11 | ⭐ **THE FINDER HAS NEVER BEEN SHOWN HER STYLE PROFILE** — her *"I like fitted clothing and many of them were shapeless"*. She is **8 leaning fitted** on her own Style Signature and the finder gets an item and a cut, nothing else. | **HERS to green-light** | ⏳ **OPEN, NOT STARTED** |
-| 12 | ⭐ **THE WALL ARRIVES IN GOOGLE'S ORDER, NOT HERS** — her *"very few from the nicer stores"*. Her 132 shops carry ten dimensions SHE scored, and none of it orders this row. | **HERS to green-light** | ⏳ **OPEN, NOT STARTED** |
+| 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
+| 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
+| 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **NOTHING TO BUILD — `_findSpread` has done exactly this since 2026-09-09, from her own words. ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
 🚨🚨 **THE BOARD IS NO LONGER CLEAR — SHE TESTED THE LIVE APP ON 2026-09-10 AND FOUND THREE THINGS.
 Two are fixed and live; ROWS 11 AND 12 ARE HER OWN WORDS AND NEITHER IS STARTED.** ⚠️ **SHE ASKED FOR
 THEM ONE AT A TIME — *"Ok let's go slow here one at a time"* — so do NOT bundle them, and do not start
@@ -421,6 +423,51 @@ bundle these and do NOT start either without her.**
    limited."*** ▶ **Re-ordering the wall is consistent with both. TRIMMING it is not**, and the
    temptation to "clean up" a wall she called ugly is exactly how a ruling of hers gets quietly reversed.
    **Ask before removing a single card.**
+
+### ✅✅ THE THREE BUILDS SHE APPROVED AFTER THAT, ALL LIVE
+▶▶ **SHE ASKED FOR THEM ONE AT A TIME AND FOR FEWER WORDS: *"Ok let's go slow here one at a time"*,
+then *"You said so many words here. Can you please simplify... I do not want to complicate this. I want
+it all to make logical sense."*** ⚠️ **HONOUR BOTH. Short answers, one thing at a time.**
+1. ✅ **THE PROMISE ARRIVES WITH THE GOODS.** See the ledger row. **The single most valuable change of
+   the day, because it retires a FAMILY of faults rather than one of them.**
+2. ✅ **HER OWN STORE SCORES ORDER THE BROWSE ROW.** Measured: Google sent
+   `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.
+3. ✅ **HER AFFILIATE ASK NEEDED NO BUILD** — `_findSpread` has done it since 2026-09-09, from her own
+   words. ⚠️ **Her ruling was in NEITHER file, only a code comment. It is a ledger row now.**
+
+### 🚨🚨🚨 SERPAPI — LIVE OPERATIONAL STATUS, AND A CLAIM THAT WAS OVERSTATED AND IS CORRECTED HERE
+▶▶ **EVERY PRODUCT SEARCH IS FAILING. Measured seven times against her live function: `search-failed`,
+pinned at 12001–12021ms, which is the app's own 12-second ceiling.** ▶ **So a woman opening Shop your
+Style or asking the chat for products sees NO PHOTOGRAPHS. The app's honest sentence now says so.**
+✅ **WHAT IS CERTAIN, ALL MEASURED AGAINST HER OWN LIVE FUNCTION:**
+· **Not her budget** — `?budget=1` returns **725 searches left**.
+· **Not the belted change** — a plain `{"item":"dress"}` with no cut fails identically.
+· **Not the whole of SerpApi** — the same function's **account** call to serpapi.com answers in **0.7s**.
+· **The hung searches are NOT being billed** — 726 → **725** across seven failures, so they are dying
+  before SerpApi meters them. ▶ **That points at the network between Netlify and SerpApi, not at a slow
+  query.**
+🚨🚨 **AND THE CORRECTION, MADE THE SAME HOUR IT WAS SAID, BECAUSE IT WAS TOLD TO HER AS PROOF.** She was
+told *"serpapi.com/search times out from a different machine with no key at all"*. ▶▶ **THAT WAS TRUE
+WHEN RUN AND DID NOT HOLD UP: repeated a few minutes later, the same URL returned `401` in 0.2–0.5s,
+five times out of five.** ⚠️ **The sandbox's own egress proxy was reporting dropped connections in the
+same window, so THAT measurement was probably measuring the sandbox, not SerpApi.**
+▶ **WHAT THE 401 DOES AND DOES NOT PROVE: SerpApi's host is reachable and rejects a bad key instantly —
+but it rejects BEFORE running any Google query, so it says nothing about how a VALID key's search
+behaves.** ⚠️ **SO "SERPAPI IS DOWN" IS NOT ESTABLISHED. What is established is that HER searches fail,
+every time, and are not billed.**
+🚨 **THE LESSON, AND IT IS THIS FILE'S OWN: A MEASUREMENT FROM THIS SANDBOX IS NOT EVIDENCE ABOUT THE
+OUTSIDE WORLD UNTIL IT REPEATS.** The sandbox cannot reach retail sites at all, which is recorded here
+already; a single timeout from it proves nothing. **Her Netlify function is the only instrument that
+measures her app, and it is the one that gave every finding above.**
+⚠️⚠️ **AND THE THING NOT TO DO, BECAUSE THIS FILE ALREADY PAID FOR IT: DO NOT RAISE THE 12s CEILING.**
+The 2026-09-09 note records the ceiling being raised 10s → 20s and **the next failure pinning at exactly
+20001ms**. ▶ **A request pinned to the millisecond on the ceiling is HUNG, not slow, and a bigger ceiling
+only makes a woman wait longer for the same honest sentence.** **Settled at 12s from real successes
+(6.6s · 6.9s · 8.7s); leave it.**
+▶ **WHAT IS ACTUALLY WORTH DOING, IN ORDER: (a) ask her to check her SerpApi dashboard and their status
+page — she owns the account and this file cannot see it · (b) if it persists, this is the argument for
+the runner-up already named here, SearchApi, same $25 and ~10× the searches · (c) nothing in the app
+needs changing: it already fails fast and tells her the truth.**
 
 ### ✅ SHIPPED AND VERIFIED LIVE
 `c438982` → `e9f9957` → **`f27f81a`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILE AND FINDING THE MARKERS
@@ -1834,6 +1881,9 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **GOLD IS THE APP'S VOICE, PINK IS CATHERINE'S** | **the LARGE spinning waiting star (`.ss-find-star`, 66px) is GOLD and has NO `path` colour rule — it keeps `_starSpin`'s own gold** | **the small stylist MARKS stay PINK (`.sa-star`, `.shop-load-star`), and `.chat-typing-star,.find-load-star` IS the pink selector** | **ssfind 52, both halves** | ✅ **HER RULING 2026-09-09, LIFTED INTO THE LEDGER 2026-09-10 because it lived only in a session block and was one archive away from being lost: *"66px but I want the gold one not pink. Pink only for the chat."* and, correcting a sweep: *"I didn't want you to change those other stars. Just the one I said."* 🚨 NEVER add `.ss-find-star` to the pink path selector. Her 2026-08-09 mark system: gold = hers, pink = when Catherine herself is speaking.** |
 | **HER OWN COPY IS NEVER PARAPHRASED FULLER** | **the product row says exactly *"Here are some options."*** | n/a — the shelves write no such prose | **chatfallback 105 pins it verbatim AND asserts the excusing wording is gone** | ✅ **HER LINE 2026-09-09, replacing Claude's *"Showing you as much as I could find."* LIFTED HERE 2026-09-10. ⭐ WHY HERS IS BETTER AND IT GENERALISES: Claude's line APOLOGISED for the row before a woman had found anything wrong with it. Hers just opens the door — the same instinct as her near-miss sentence, STATE THE TRUTH AND STOP.** |
 | **A SHOE IS JUDGED ON POINT OF VIEW, NEVER ON SIZE** | **the Edit's hand-picked cards: a photo is chosen by LOOKING at the angle, and the empty space a correct angle costs is an accepted price** | n/a — the finder shows hundreds of unknown photos a minute and can hand-tune none of them | **▶ none; it is a judgement, not a promise** | ✅ **HER RULE, GIVEN 2026-09-09 AND RE-PROVEN 2026-09-10: *"it is not the size that is the problem it is the particular photo the angle of the shoe is not right... It's the point of view and angle of shoe."* 🚨🚨 IT HAS NOW BEEN BROKEN TWICE THE SAME WAY: fill percentage was measured and recommended from, and FILL IS A SIZE METRIC. On 2026-09-10 the measurement said the top-down filled 92% of the card and the three-quarter only 24%; SHE CHOSE THE THREE-QUARTER, because it shows the block heel. ▶ MEASURE TO FIND CANDIDATES, RENDER THEM ALL, AND LET HER LOOK — the renders are the only reason this was caught.** |
+| **HER PAYING SHOPS GET A SEAT, NEVER THE HEAD OF THE TABLE** | **`_findSpread` interleaves affiliate pieces 1:1 through the BROWSE stretch, starting with a non-paying card so the natural order still leads. No cap: five FARM Rio pieces stay five.** | n/a — the shelves show feed products, and the feed IS her affiliates | **ssfind** | ✅ **HER RULING 2026-09-09: *"is there a way to make affiliated stores be in the searched mix more often - I don't want them at the very top but I also don't want them in the bottom of the barrel either... How can we have them have some level of priority but not maximum?"* 🚨🚨 THIS ROW WAS ADDED 2026-09-10 AFTER SHE ASKED FOR THE SAME THING AGAIN AND IT WAS ALREADY BUILT — her ruling existed ONLY in a code comment, in NEITHER `CLAUDE.md` NOR the archive, so nobody reading her file could know. ▶ A RULING THAT LIVES ONLY IN CODE IS A RULING SHE WILL BE ASKED FOR TWICE. ⚠️ IT IS NOT HER OPTION A TIE-BREAK, and the distinction is the whole justification: Option A governs RECOMMENDATIONS, the checked cards that wear a tick and make a claim. Those lead the row and their order is pure merit, untouched. This reorders only the browse stretch, which claims nothing about anything.** |
+| **THE APP NEVER PROMISES BEFORE IT KNOWS IT CAN DELIVER** | **the stylist's `findlead` is HELD in `_ssPromise` and spoken by `_ssFindPaint` only when real cards exist. During the wait: the turning star and `_FIND_STEPS`, which claim nothing.** | n/a — the shelves make no promise ahead of their own contents | **ssfind 68, measured DURING the wait with the star still turning** | ✅ **HER DECISION 2026-09-10, AFTER THREE FAULTS IN ONE DAY TURNED OUT TO BE ONE SHAPE: *"the same pieces waiting"* → different pieces · *"I chose a belted dress"* → any dress · *"I chose a belted dress"* → nothing at all. ▶▶ EVERY ONE WAS A PROMISE MADE BEFORE THE APP KNEW IT COULD KEEP IT. ⭐ AND NOTE WHAT THE FIX IS NOT: not a rule, not a guard, not a test to maintain. The promise is unbreakable BY CONSTRUCTION because it cannot be spoken until the thing it promises is in hand — her standing direction, fewer rules and breakable things, applied to a bug. ⚠️ DO NOT MOVE THE LEAD BACK INTO THE WAITING MARKUP to "reassure her sooner"; the star already does that.** |
+| **HER OWN STORE SCORES ORDER THE BROWSE ROW** | **`_findByHerShops` sorts by `_storeFit` before `_findSpread` seats her affiliates through it; an UNSCORED shop sorts LAST and is never given an invented score** | n/a | **ssfind 68, and the check asserts the row really MOVED, not merely that it is in some order** | ✅ **HER DECISION 2026-09-10: *"I would like to see the nicer shops first."* ⚠️ SHE WAS ASKED WHICH OF TWO BUILDS SHE MEANT, because this and her 2026-09-09 *"one row starting with the ones that match her search terms the best"* point different ways. SHE CHOSE NICER SHOPS GENUINELY FIRST, and her September order survives as the TIE-BREAK (the sort is stable, so within one shop the best match still leads). ▶ DO NOT SILENTLY RESTORE THE OLD ORDER. ⚠️ ONE BUILDER, so it lands on the CHAT's row too, deliberately and with her told: "nicer shops first" is her taste, not a screen setting.** |
 | **AN EDIT NAME CARRIES NO COLOURWAY, AND MAY DISAGREE WITH THE SHOP'S OWN TITLE** | n/a — the stylist names no products at all | **the Edit's hand-written `.dc-item` names, and the rule is written into the markup beside them** | **▶ none; it is a judgement, and the markup carries the warning** | ✅ **HER TWO RULINGS, 2026-09-10, LIFTED INTO THE LEDGER WHEN THEIR SESSION BLOCK WAS ARCHIVED — a rule she gave never archives. (a) *"Let's take the dash and the word Beige off of this Edit item"*, then unprompted on the sandal *"don't call it brown, just leave the color out."* (b) Olivela's own title says *"Diamond & 14k Gold **LARGE** Bezel Pendant Necklace"* and her ruling is *"leave out the word large. They call it large, but it is not really large."* 🚨 THAT IS HER SALE-PRICE RULE ONE STEP OUT: a woman who arrives to find a piece DAINTIER than billed feels misled; one who finds it as delicate as described does not. ⚠️ A FUTURE SESSION WILL SEE THE MISMATCH WITH THE SHOP'S TITLE AND WANT TO "FIX" IT. It must not. ⚠️ The urls still say `beige`/`brown`/`large` — the shops' own product handles, never shown to a woman and not ours to change.** |
 | **A RESUME SHOWS HER THE PIECES SHE LEFT, NOT A FRESH SEARCH** | **Shop your Style: `_saveShopFind` stores the found row beside the six picks, and `_ssFindPaint` paints it before the waiting star is ever set going** | n/a — the shelves rebuild from the feed, and promise nothing about sameness | **ssfind 54, and the check answers the resume with DIFFERENT products so it can tell memory from a re-ask** | ✅ **HER CATCH, 2026-09-10: *"the whisper said... the same pieces waiting. So I clicked on it and this was not true."* 🚨 THE WHISPER IS A PROMISE, AND HALF THE SHELF WAS KEPT: the six text cards are advice, the PHOTOGRAPHS are what she came back for. ⚠️ `t` is never re-stamped by a late row, or a slow search would quietly extend the six-hour promise. 🚨🚨 AND THE CHECK GUARDING THIS PASSED ON THE BROKEN CODE FOR A WHOLE DAY, because the harness answered every search identically: A STUB THAT ALWAYS ANSWERS THE SAME THING CANNOT TELL "it remembered" FROM "it asked again".** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
