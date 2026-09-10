@@ -73,10 +73,32 @@ ok('and that prompt\'s JSON schema actually carries the find field',
 console.log('\n2. it shares the chat\'s machinery instead of copying it');
 /* 🚨 THIS FILE'S OLDEST LESSON: a rule applied to one half is not applied. The
    marker leak and the two-row regression were both second copies. */
+/* ⚠️ REWRITTEN 2026-09-10, NOT BUMPED. These two were PROXIMITY regexes — "find
+   _findBlockHtml within 1600 characters of _ssFindRun" — and they went red the
+   moment the painting moved into its own _ssFindPaint helper, even though that
+   move makes the thing they protect HARDER to break: there is now exactly one
+   painter instead of one call site that a second route could quietly bypass.
+   ▶▶ A test that fails because the app got SAFER is measuring the mechanism, not
+     the rule. It also could never have caught what it was written for: a second
+     copy of the card loop somewhere ELSE in the file sits far outside 1600
+     characters and would have passed happily. These name the rule instead. */
+const fnBody = (name) => {
+  const i = HTML.indexOf('function ' + name + '(');
+  if (i < 0) return '';
+  const j = HTML.indexOf('\nfunction ', i + 8), k = HTML.indexOf('\nasync function ', i + 8);
+  const end = Math.min(j < 0 ? HTML.length : j, k < 0 ? HTML.length : k);
+  return HTML.slice(i, end);
+};
 ok('Shop your Style renders through the SAME _findBlockHtml as the chat',
-   /_ssFindRun[\s\S]{0,1600}_findBlockHtml\(/.test(HTML));
+   /_findBlockHtml\(/.test(fnBody('_ssFindPaint')) &&
+   (HTML.match(/function _findBlockHtml\(/g) || []).length === 1,
+   'painter=' + /_findBlockHtml\(/.test(fnBody('_ssFindPaint')));
 ok('and reaches the network through the SAME _findFetch',
-   /_ssFindRun[\s\S]{0,900}_findFetch\(/.test(HTML));
+   /_findFetch\(/.test(fnBody('_ssFindRun')) &&
+   (HTML.match(/function _findFetch\(/g) || []).length === 1);
+ok('...and Shop your Style paints its row in exactly ONE place',
+   (HTML.match(/_ssFindPaint\(/g) || []).length === 3,
+   String((HTML.match(/_ssFindPaint\(/g) || []).length));
 ok('there is exactly ONE fetch of product-find in the whole app',
    (HTML.match(/functions\/product-find/g) || []).length === 1,
    String((HTML.match(/functions\/product-find/g) || []).length));
@@ -412,9 +434,24 @@ const stored = await pg.evaluate(() => JSON.parse(localStorage.getItem('ss_shopp
 ok('her words are stored with the picks, already checked against her sentence',
    stored.f && stored.f.item === 'dress' && stored.f.colour === 'white' && stored.f.fabric === 'linen',
    JSON.stringify(stored.f));
-/* ▶ The real return path: reload, then resume, exactly as a woman coming back
-   from a store does. The model is answered with NOTHING so a resume that
-   secretly re-asked would render an empty screen and be caught here. */
+/* 🚨🚨 HER CATCH, 2026-09-10, AND THE CHECK BELOW USED TO BE A FALSE GREEN.
+   Her words: "I got the whisper that said Shop your style is right where you
+   left it with the same pieces waiting. So I clicked on it and this was not
+   true. The spinning star took a long time and pieces came up."
+   ▶▶ "the products are STILL THERE" PASSED ON THE BROKEN CODE, because this
+     harness answered every search with the SAME four products. The app really
+     was searching again on every resume — a long turning star, a real bill, and
+     in life a different set of dresses — and the stub made the second search
+     look exactly like the first. THE TEST COULD NOT SEE THE BUG IT NAMED.
+   ▶ THE FIX IS TO MAKE THE SEARCH ANSWER DIFFERENTLY. Now a resume that
+     secretly re-asks paints Cara Cara pieces instead of Reformation ones and is
+     caught by name. This file's own question, asked of every new check: could
+     this pass if the thing it measures were simply absent? Not any more. */
+const WAS = await pg.$$eval('#ssFindWrap .find-card', els =>
+  els.map(e => (e.textContent || '').trim()).join(' | '));
+FIND = { exact: [], doors: [], browse: [
+  product(91, { title: 'Cara Cara Poplin Maxi 91' }),
+  product(92, { title: 'Cara Cara Poplin Maxi 92' })] };
 REPLY = { items: [], find: null };
 FINDCALLS.length = 0;
 await pg.reload(); await pg.waitForTimeout(2300);
@@ -425,13 +462,22 @@ const back = await pg.evaluate(() => ({
   cards: document.querySelectorAll('#ssFindWrap .find-card').length,
   six: document.querySelectorAll('#shopStyleContent .shop-card').length,
   hearts: document.querySelectorAll('#ssFindWrap .find-card .wl-save').length,
+  titles: [...document.querySelectorAll('#ssFindWrap .find-card')]
+            .map(e => (e.textContent || '').trim()).join(' | '),
 }));
 ok('the products are STILL THERE after she comes back', back.cards === 4, 'cards=' + back.cards);
 ok('...and her six styling picks came back with them', back.six === 6, String(back.six));
 ok('...and the save hearts came back too', back.hearts === back.cards, String(back.hearts));
-ok('a resume asked the finder with HER words, not a broadened search',
-   FINDCALLS.length === 1 && FINDCALLS[0].colour === 'white' && FINDCALLS[0].fabric === 'linen',
-   JSON.stringify(FINDCALLS));
+/* ⚠️ REWRITTEN 2026-09-10, NOT BUMPED. This asserted that a resume asked the
+   finder with her ORIGINAL words rather than a broadened search — a real rule,
+   guarding against the stored request being stripped a second time against an
+   empty _ssAsk. ▶ It is now guarded by something stronger: a resume does not ask
+   AT ALL, so there is no second strip to get wrong, and the words she typed
+   cannot be re-interpreted by anything. The two checks below say that. */
+ok('a resume spends NO search at all', FINDCALLS.length === 0, JSON.stringify(FINDCALLS));
+ok('...and shows her the SAME pieces, not whatever the shops hold now',
+   back.titles === WAS && back.titles.indexOf('Cara Cara') < 0,
+   'was[' + WAS.slice(0, 60) + '] now[' + back.titles.slice(0, 60) + ']');
 
 ok('zero JS errors across every scenario', errs.length === 0, errs.join(' | '));
 await ctx.close();

@@ -6632,9 +6632,37 @@ function _saveShopPicks(items,note,find,lead){
          which would delete the colour and fabric SHE DID SAY and quietly broaden
          her search. Validated once, against her own sentence, at the moment she
          said it. */
+    _ssPicksT=Date.now();
     localStorage.setItem('ss_shoppicks',JSON.stringify({m:_shopStyleMode,i:items,
-      n:note||'',f:find||null,l:lead||'',t:Date.now()}));
+      n:note||'',f:find||null,l:lead||'',t:_ssPicksT}));
   }catch(e){}
+}
+/* The stamp of the record THIS generate owns, so a row that comes back late can
+   tell whether it still belongs to what is on screen. See _saveShopFind. */
+var _ssPicksT=0;
+/* ⭐ THE ROW LANDS AFTER THE PICKS ARE ALREADY SAVED, so it is merged in rather
+   than passed to _saveShopPicks: the six are painted in ~1s and the products
+   arrive seconds later, which is her own B+C decision and is not being changed.
+   ⚠️ IT MERGES INTO THE RECORD IT BELONGS TO, checked by stamp. She can open a
+     second shelf while the first is still searching (a refresh, a new ask), and
+     a late row writing itself onto a newer record would put the wrong
+     photographs under the right advice — which looks exactly like a working
+     resume and is the one failure a stored row can invent.
+   ⚠️ `t` IS DELIBERATELY UNTOUCHED. It is the whisper's six-hour promise, and
+     re-stamping it here would quietly extend the promise every time a search
+     came back slowly. */
+function _saveShopFind(data,stamp){
+  try{
+    if(!data)return;
+    var v=JSON.parse(localStorage.getItem('ss_shoppicks')||'null');
+    if(!v||!v.i||!v.i.length)return;
+    if(stamp&&v.t!==stamp)return;      // a newer shelf owns the slot now
+    v.d=data;
+    localStorage.setItem('ss_shoppicks',JSON.stringify(v));
+  }catch(e){}   /* ⚠️ A QUOTA FAILURE IS NOT A FAULT. The picks record written
+                   earlier survives untouched, so the worst case is the row
+                   searching again on her next resume -- exactly today's
+                   behaviour. It must never cost her the six. */
 }
 function _shopPicksWaiting(){
   try{
@@ -6709,8 +6737,25 @@ function _openShopStyleNow(mode){
    against her sentence when it was first built. Reset at the top of every
    generate so it can never leak into a fresh model answer. */
 var _ssFindPre=false;
+/* ⭐ THE PRODUCTS SHE WAS ACTUALLY LOOKING AT, CARRIED THROUGH A RESUME — her
+   catch, 2026-09-10: "I got the whisper that said Shop your style is right where
+   you left it with the same pieces waiting. So I clicked on it and this was not
+   true."
+   ▶▶ SHE WAS RIGHT, AND ONLY HALF THE SHELF WAS EVER STORED. Her six styling
+     picks came back exactly; the ROW OF PHOTOGRAPHED PRODUCTS did not, because
+     _saveShopPicks kept the find REQUEST and never the RESULTS, and _FIND_CACHE
+     is an in-memory Map that dies with the page. Back RELOADS the app, so a
+     resume ALWAYS missed that cache and ran a fresh live search — a long turning
+     star, a bill, and a different set of dresses than the ones she left.
+   ⚠️ THAT IS THE HALF SHE COMES BACK FOR. The six text cards are advice; the
+     photographs are what she was shopping. A promise kept on the cheaper half is
+     the same shape as this file's own sentence about a rule applied to one half.
+   ▶ Same 6-hour shelf life as the picks, and the stamp is NOT refreshed when the
+     row lands: the whisper's clock measures from when SHE was here, not from
+     when the search happened to come back. */
+var _ssFindData=null;
 async function _shopStyleGen(){
-  _ssFindPre=false;
+  _ssFindPre=false;_ssFindData=null;
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
   // Drives the subtitle rule above: only the quiz-mode line is decorative.
@@ -6793,6 +6838,7 @@ async function _shopStyleGen(){
       parsed={items:_shopResume.i,note:_shopResume.n||'',
               find:_shopResume.f||null,findlead:_shopResume.l||''};
       _ssFindPre=true;           // already stripped when it was first built
+      _ssFindData=_shopResume.d||null;   // her photographs, if the row had landed
       _shopResume=null;          // a resume is spent once used; a refresh re-asks
     }else{
       var r=await fetch("/.netlify/functions/style-ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({max_tokens:maxTok,messages:[{role:"user",content:prompt}]})});
@@ -6945,9 +6991,34 @@ async function _shopStyleGen(){
    🚨 ONE BUILDER, NEVER A SECOND COPY. This file's oldest lesson, and the reason
      the marker leak and the two-row regression happened: a rule applied to one
      half is not applied. There is no second card loop here to drift. */
+/* 🚨 ONE PAINTER FOR BOTH ROUTES — a live search and a resume land here and
+   nowhere else. A second copy of these six lines is precisely how the marker
+   leak and the two-row regression happened, and the resume exists to show her
+   THE SAME ROW: two painters could not guarantee that even on the day they were
+   written. Returns false when there was nothing honest to show. */
+function _ssFindPaint(wrap,data,req){
+  /* ▶ Nothing found is not a failure and does not deserve a headline over her
+     styling. `_findBlockHtml` returns only its own honest sentence in that case;
+     an empty row would leave a bordered gap, so it goes. */
+  if(!data||data.why){wrap.remove();return false;}
+  var lead=wrap.querySelector('.ss-find-lead');
+  var html=_findBlockHtml(data,req);
+  if(html.indexOf('find-card')<0){wrap.remove();return false;}
+  wrap.innerHTML=(lead?lead.outerHTML:'')+html;
+  return true;
+}
 async function _ssFindRun(req){
   var wrap=document.getElementById('ssFindWrap');
   if(!wrap)return;
+  /* ⭐ A RESUME PAINTS THE PIECES SHE LEFT, and does it BEFORE the waiting star
+     is ever set going: her own words for what this screen promises are "the same
+     pieces waiting", so the honest resume is instant and identical, not a fresh
+     search wearing the same sentence. Costs nothing and cannot drift.
+     ⚠️ It is re-saved rather than assumed still stored: _saveShopPicks has just
+       rewritten this record with the resumed six and would otherwise have
+       dropped the row, so the NEXT resume would search again. */
+  var pre=_ssFindData;_ssFindData=null;
+  if(pre){ if(_ssFindPaint(wrap,pre,req))_saveShopFind(pre,_ssPicksT); return; }
   /* ▶ The words move on as the wait goes on, so it reads as a stylist working
      rather than a spinner stuck. Same 3.5s beat as the chat's status line.
      ⚠️ ONE interval, cleared on EVERY return path below — a timer left running
@@ -6970,14 +7041,11 @@ async function _ssFindRun(req){
      picks ARE on the screen underneath: the row simply removes itself rather
      than printing an apology above advice that is perfectly good. Nothing is
      claimed either way, which is the whole test. */
-  if(!fr.data||fr.failed||fr.data.why){wrap.remove();return;}
-  var lead=wrap.querySelector('.ss-find-lead');
-  var html=_findBlockHtml(fr.data,req);
-  /* ▶ Nothing found is not a failure and does not deserve a headline over her
-     styling. `_findBlockHtml` returns only its own honest sentence in that case;
-     an empty row would leave a bordered gap, so it goes. */
-  if(html.indexOf('find-card')<0){wrap.remove();return;}
-  wrap.innerHTML=(lead?lead.outerHTML:'')+html;
+  if(!fr.data||fr.failed){wrap.remove();return;}
+  /* ⚠️ SAVED ONLY WHEN IT REALLY PAINTED. Storing a `why` or an empty pool would
+     make the next resume render nothing and never look again — a shelf that goes
+     quiet for six hours with no way back. */
+  if(_ssFindPaint(wrap,fr.data,req))_saveShopFind(fr.data,_ssPicksT);
 }
 /* ▶ The stylist saying whose choice it was — her 2026-09-08 delegation ruling:
    when a woman hands over the choice, the stylist's pick becomes a real search
