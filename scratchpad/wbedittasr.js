@@ -302,7 +302,7 @@ ok('a px2 STACK yields its front photo, never a div with no src',
 //    ▶ HER BENCHMARK IS THE EDIT PAGE, so these derive from .dc-item-px rather
 //    than hardcoding 3/4 — if that card's geometry is ever retuned, the strip is
 //    required to follow instead of silently drifting apart from it again.
-console.log('\n8. The strip renders a photo exactly as the Edit card does');
+console.log('\n8. The strip uses the Edit card\'s frame, and crops nothing inside it');
 await pg.setViewportSize({ width: 390, height: 900 });
 await pg.evaluate(() => { show('s-wb'); });
 await pg.waitForTimeout(250);
@@ -325,9 +325,50 @@ const geom = await pg.evaluate(() => {
 ok('GATE: both frames were really measured (a hidden screen reports 0x0)', geom.bothMeasured, JSON.stringify(geom));
 ok('the strip frame has the SAME aspect ratio as the Edit card',
    Math.abs(geom.editRatio - geom.stripRatio) < 0.005, JSON.stringify(geom));
-ok('...and the SAME object-fit', geom.editFit === geom.stripFit, JSON.stringify(geom));
-ok('...and the SAME anchor, so a tall photo loses its hem and never its waistband',
-   geom.editPos === geom.stripPos, JSON.stringify(geom));
+// 🚨 THESE TWO WERE REWRITTEN, NOT BUMPED, ON 2026-09-10 — the repo's own rule
+// when a check breaks: ask whether the app got worse or merely DIFFERENT, and
+// rewrite the assertion to name the rule. They used to require the strip to
+// match the Edit card's object-fit and anchor. It did, and her Crosbie Jean was
+// STILL cut off: "Jeans are cut off at the bottom." Matching the Edit was
+// Claude's inference; her requirement is that she can see the WHOLE piece.
+// ▶ THE RULE IS NOW HER OWN LEDGER ROW, "A PRODUCT PHOTO IS NEVER CROPPED" —
+// the same rule the finder's cards follow, and the right one for a surface
+// showing many photos of many shapes that nobody has hand-tuned.
+ok('the strip CROPS NOTHING — object-fit is contain', geom.stripFit === 'contain', JSON.stringify(geom));
+// ⚠️ MEASURED AGAINST A SYNTHETIC PHOTO OF A KNOWN SHAPE, NOT THE REAL ONES.
+// The retail CDNs are unreachable from this sandbox, so every real strip photo
+// has naturalWidth 0 and a "nothing is cropped" check over them passes because
+// it can see NOTHING — the exact false-green this file keeps paying for, caught
+// here by the gate above. A 2:3 svg (TALLER than the 3:4 frame, the shape her
+// Crosbie Jean is) is deterministic and actually exercises the rule.
+const uncropped = await pg.evaluate(async () => {
+  const img = document.querySelector('#wbEditTeaser .wet-card > img');
+  const SVG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="#369"/></svg>');
+  await new Promise(res => { img.onload = res; img.onerror = res; img.src = SVG; });
+  const b = img.getBoundingClientRect();
+  const nat = img.naturalWidth / img.naturalHeight, box = b.width / b.height;
+  // ⚠️ THE PAINTED BOX IS DERIVED FROM THE ELEMENT'S REAL object-fit, NOT ASSUMED.
+  // A first version computed the contain-fit box arithmetically, which does not
+  // depend on the CSS at all -- so it went on passing with cover put back. Caught
+  // by putting the old rule back and watching which checks stayed green.
+  const fit = getComputedStyle(img).objectFit;
+  const painted = fit === 'contain'
+    ? (nat > box ? { w: b.width, h: b.width / nat } : { w: b.height * nat, h: b.height })
+    : fit === 'cover'
+      ? (nat > box ? { w: b.height * nat, h: b.height } : { w: b.width, h: b.width / nat })
+      : { w: b.width, h: b.height };
+  return { natural: img.naturalWidth + 'x' + img.naturalHeight, natRatio: +nat.toFixed(3),
+           frame: Math.round(b.width) + 'x' + Math.round(b.height), boxRatio: +box.toFixed(3),
+           objectFit: fit, painted: Math.round(painted.w) + 'x' + Math.round(painted.h),
+           loaded: img.naturalWidth > 0,
+           fitsInside: painted.w <= b.width + 0.5 && painted.h <= b.height + 0.5,
+           keepsItsShape: Math.abs((painted.w / painted.h) - nat) < 0.01 };
+});
+ok('GATE: the test photo really loaded (else nothing below is measured)',
+   uncropped.loaded, JSON.stringify(uncropped));
+ok('a photo TALLER than the frame is shown whole, not cropped',
+   uncropped.fitsInside && uncropped.keepsItsShape, JSON.stringify(uncropped));
 
 console.log('\n8b. A px2 stacked pair shows BOTH views in the strip, not just the first');
 const stack = await pg.evaluate(() => {

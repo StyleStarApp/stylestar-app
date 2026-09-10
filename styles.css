@@ -2763,7 +2763,23 @@ body.card-fb{padding:0}
    ▶ SO: same 3:4, same top anchor. If .dc-item-px's geometry ever changes,
    CHANGE IT HERE TOO — or better, give them one shared rule. */
 #wbEditTeaser .wet-card>img,#wbEditTeaser .wet-card>.wet-px{width:108px;aspect-ratio:3/4;display:block;background:#F5EFE2}
-#wbEditTeaser .wet-card>img{object-fit:cover;object-position:top center}
+/* 🚨🚨 CONTAIN, NOT COVER — HER SECOND CATCH THE SAME MINUTE: "Jeans are cut
+   off at the bottom." The first fix matched this frame to the Edit card's
+   crop (3:4, top-anchored), which restored the WAISTBAND and still lost the
+   HEM — her Crosbie Jean is a 0.667 photo in a 0.75 frame, so cover eats 11%
+   whichever end it is anchored to.
+   ▶▶ MATCHING THE EDIT WAS CLAUDE'S INFERENCE. HER REQUIREMENT WAS "can't see
+   the whole Jean" — so the strip now CROPS NOTHING, ever, on any photo.
+   ⭐ THIS IS HER OWN LEDGER ROW "A PRODUCT PHOTO IS NEVER CROPPED", the rule
+   the finder's cards already follow (contain, in a frame banded in the card's
+   own colour). It is the right rule for a surface showing many photos of many
+   shapes that nobody has hand-tuned — which is exactly what this strip is.
+   ⚠️ THE BAND IS #F5EFE2 AND THAT IS MEASURED, NOT PICKED: her Crosbie Jean is
+   a TRANSPARENT png (so the band colour IS its background), and the Olivela
+   photos are rgb(242,237,234). White would show a hard edge against both.
+   ⚠️ THE EDIT PAGE STILL CROPS — she said it "looks fine", so it was left
+   alone deliberately. If a photo is ever wrong on BOTH, fix the Edit too. */
+#wbEditTeaser .wet-card>img{object-fit:contain;object-position:center}
 #wbEditTeaser .wet-t{padding:6px 7px 8px}
 #wbEditTeaser .wet-n{font:600 12px/1.3 'Jost',sans-serif;color:#1a1a1a;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 #wbEditTeaser .wet-p{font:400 11px/1 'Jost',sans-serif;color:#8a6a1e}
