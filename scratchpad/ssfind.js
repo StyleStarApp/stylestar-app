@@ -48,11 +48,36 @@ ok('with an ask, it quotes HER sentence back as the only source of words',
    withAsk.includes('white linen dress'), withAsk.slice(0, 120));
 /* 🚨 THE GUARANTEE. The model may READ; it may never ADD a requirement. This is
    the prompt half — `_findKeepHerWords` is the code half, checked in part 4. */
-ok('with NO ask, it orders colour/fabric/cut left EMPTY rather than guessed',
-   /leave all three EMPTY/i.test(noAsk), noAsk.slice(0, 200));
-ok('either way it says empty is safer than a guess',
-   /Leave a field empty rather than guessing/.test(withAsk) &&
-   /Leave a field empty rather than guessing/.test(noAsk));
+/* 🚨🚨 REWRITTEN 2026-09-10, NOT BUMPED, AND IT NOW ASSERTS THE OPPOSITE — HER
+   RULING: "the stylist should not say I am going to show you lots of options of
+   belted dresses and then show me random dresses with no belts... I want the
+   stylist to deliver exactly what she is promising."
+   ▶▶ THIS CHECK USED TO PIN THE FAULT IN PLACE. It required the prompt to say
+     "leave all three EMPTY" whenever she had typed nothing — so the pick the
+     stylist announced in her lead could never reach the search, and the wall came
+     back full of any dress at all. The old worked example a few sections down is
+     the contradiction in miniature: a lead reading "A linen midi felt most you,
+     so that is where I looked" sitting above find:{cut:''}.
+   ▶ THE RULE IT NAMES NOW: on a full hand-over the fields ARE the search, and
+     the sentence must describe them. The her-words guard is untouched and is
+     asserted separately, below, on the half it was written for. */
+ok('with NO ask, the stylist\'s own pick IS the search, and she is told so',
+   /THESE FIELDS ARE THE SEARCH/.test(noAsk) &&
+   !/leave all three EMPTY/i.test(noAsk), noAsk.slice(0, 200));
+ok('...and the sentence she writes must be the same pick as the fields',
+   /THE SENTENCE AND THE FIELDS MUST BE THE SAME PICK/.test(noAsk));
+ok('...while a woman who TYPED something still gets the her-words rule only',
+   /ONLY with words she actually used/.test(withAsk) &&
+   !/THESE FIELDS ARE THE SEARCH/.test(withAsk));
+/* ⚠️ REWRITTEN 2026-09-10. "Either way it says empty is safer than a guess" was
+   true when both halves were the same rule, and it stopped being true when they
+   were deliberately split: on a full hand-over an empty `cut` is NOT the safe
+   option, it is the fault she photographed. The two halves now say different
+   things on purpose, and this names which. */
+ok('when SHE typed, empty is still safer than a guess',
+   /Leave a field empty rather than guessing/.test(withAsk));
+ok('and on a hand-over, colour and fabric are still only for when they are the point',
+   /only if they are genuinely the point/.test(noAsk), noAsk.slice(0, 300));
 /* ▶ HER DELEGATION RULING, 2026-09-08: when a woman hands over the choice, the
    stylist's pick becomes a real search requirement AND the stylist must name it
    out loud, "so it stays hers to overrule". */
@@ -119,6 +144,10 @@ ok('and the chat does NOT share it — it asks for fresh stock every time',
 console.log('\n3. on the real screen');
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const errs = [];
+/* ▶ The REAL query builder the server uses, imported rather than re-described,
+   so "the shops see the word belted" is measured against what actually goes out
+   and cannot drift from it. */
+const { buildQueries } = await import('../netlify/functions/lib/find-products.js');
 let REPLY = {}, FIND = null, FINDCALLS = [], FINDSTATUS = 200, DELAY = 0;
 
 const product = (i, extra) => Object.assign({
@@ -354,16 +383,43 @@ ok('and a fabric she DID say survives too',
 REPLY = { items: six(), find: { item: 'dress', colour: 'emerald', fabric: '', cut: 'fitted' } };
 await ask(pg, 'a dress for a wedding', false, true);
 await pg.waitForTimeout(1200);
+/* 🚨🚨 IT READS THE LAST CALL, NOT THE FIRST — AND THAT MATTERS AS OF 2026-09-10.
+   `ask(..., keepLog)` keeps BOTH searches: the default open (a full hand-over,
+   where the stylist's own emerald and fitted are now HERS TO CHOOSE and rightly
+   survive) and then the one her typed sentence produced. This block is about the
+   TYPED one.
+   ▶▶ IT USED TO ASSERT `FINDCALLS.length === 1` AND READ `[0]`, AND IT PASSED
+     ONLY BECAUSE BOTH CALLS WERE STRIPPED IDENTICALLY. The two halves were the
+     same rule, so it could not tell which call it was measuring — and the moment
+     they legitimately differed it failed, pointing at the delegated call while
+     naming the typed one. A check that cannot say WHICH thing it measured is one
+     legitimate change away from a false report, in either direction. */
+const typed = FINDCALLS[FINDCALLS.length - 1];
 ok('a colour she NEVER said is deleted before the search goes out',
-   FINDCALLS.length === 1 && !FINDCALLS[0].colour, JSON.stringify(FINDCALLS[0]));
-ok('and so is a cut she never said', !FINDCALLS[0].cut, JSON.stringify(FINDCALLS[0]));
+   FINDCALLS.length === 2 && !typed.colour, JSON.stringify(FINDCALLS));
+ok('and so is a cut she never said', !typed.cut, JSON.stringify(typed));
 ok('...but the garment she DID ask for is kept',
-   FINDCALLS[0].item === 'dress', JSON.stringify(FINDCALLS[0]));
+   typed.item === 'dress', JSON.stringify(typed));
+/* 🚨 THE PAIR THAT PROVES THE SPLIT IS A SPLIT AND NOT A LOOSENING: the SAME
+   model answer, on the SAME page, seconds apart — kept when she handed the
+   choice over, deleted the moment she used her own words. */
+ok('...and the SAME invented cut DID survive on the hand-over just before it',
+   FINDCALLS[0].cut === 'fitted' && FINDCALLS[0].colour === 'emerald',
+   JSON.stringify(FINDCALLS[0]));
 
 /* ═══ 5 · THE DEFAULT VIEW SEARCHES TOO — HER RULING (b) ══════════════════ */
 console.log('\n5. the default "show me a mix" searches too, and says whose choice it was');
-REPLY = { items: six(), findlead: 'A linen midi felt most you, so that is where I looked.',
-          find: { item: 'dress', colour: '', fabric: '', cut: '' } };
+/* 🚨🚨 HER OWN CASE, 2026-09-10, REBUILT FROM HER SCREENSHOT. The lead said "I
+   chose a belted dress", her six styling picks included a Printed Belted Midi
+   Dress, and NOT ONE photographed product was belted.
+   ▶▶ THE FIXTURE USED TO BE find:{cut:''} UNDER A LEAD PROMISING "a linen midi",
+     which is the contradiction she found, written into the suite as though it
+     were correct. It asserted that a search went out and that a sentence
+     appeared, and NEVER that they agreed — so it passed all the way through the
+     fault. This is the same shape as the resume's false green: a check can name
+     a behaviour and still measure nothing about it. */
+REPLY = { items: six(), findlead: 'I chose a belted dress, you told me you love them.',
+          find: { item: 'dress', colour: '', fabric: '', cut: 'belted' } };
 await ask(pg, '');
 await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
 const d = await pg.evaluate(() => {
@@ -374,7 +430,17 @@ const d = await pg.evaluate(() => {
 ok('HER RULING (b): it searched even with nothing typed', FINDCALLS.length === 1, String(FINDCALLS.length));
 ok('...and real products came back', d.cards === 4, String(d.cards));
 /* ▶ HER DELEGATION RULING: name the pick out loud so it stays hers to overrule. */
-ok('the stylist SAYS the choice was hers', /that is where I looked/i.test(d.lead || ''), String(d.lead));
+ok('the stylist SAYS the choice was hers', /belted dress/i.test(d.lead || ''), String(d.lead));
+/* 🚨 THE CHECK HER SCREENSHOT ASKED FOR: the promise and the search are ONE. */
+ok('HER RULING: the pick she was PROMISED is the pick that gets searched',
+   FINDCALLS[0].cut === 'belted', JSON.stringify(FINDCALLS[0]));
+ok('...and the words the shops actually see carry it on EVERY query',
+   buildQueries(FINDCALLS[0]).length > 0 &&
+   buildQueries(FINDCALLS[0]).every(q => /belted/.test(q)),
+   JSON.stringify(buildQueries(FINDCALLS[0])));
+/* ⚠️ THE OTHER HALF, AND IT IS WHAT KEEPS THE GUARD HONEST: a stylist pick is
+   searchable ONLY on a full hand-over. The moment she types, her sentence is the
+   authority again and an invented cut still dies in code (section 4 above). */
 
 /* ═══ 6 · THE CACHE — HER RULING (b) IS WHY IT EXISTS ═════════════════════ */
 console.log('\n6. the same question twice costs one search, not two');

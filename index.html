@@ -6390,17 +6390,49 @@ function _mixRule(){
    ⚠️ SIZE AND WIDTH ARE HERS AND COME FROM HER SAVED PREFS, exactly as in chat —
      they are in `basis` via getPrefsForPrompt(). They are also SOFT at verify
      time (2026-09-09), so an unpublished size cannot demote every result. */
+/* 🚨🚨 HER RULING, 2026-09-10, AND IT REWROTE THIS RULE: *"the stylist should not
+   say I am going to show you lots of options of belted dresses and then show me
+   random dresses with no belts... I want the stylist to deliver exactly what she
+   is promising and I don't want a dull google search of ugly dresses being shown
+   to anyone."*
+   ▶▶ WHAT SHE PHOTOGRAPHED: the lead said "I chose a belted dress", her six
+     styling picks included a Printed Belted Midi Dress, and NOT ONE of the
+     photographed products was belted. This rule was the cause. It told the
+     stylist to leave colour/fabric/cut EMPTY whenever she had typed nothing —
+     so the pick she announced could not reach the search, `buildQueries`
+     collapsed all four of its queries to a bare "women's dress", and the wall
+     came back full of any dress at all.
+   ▶ THE TWO HALVES ARE NOW SPLIT, AND THE SPLIT IS THE WHOLE RULE:
+     · SHE TYPED SOMETHING  → her sentence is the authority, exactly as before,
+       and `_findKeepHerWords` still deletes in CODE anything she did not say.
+       The jewel-tone fault is untouched. DO NOT WIDEN THIS HALF.
+     · SHE TYPED NOTHING    → she has handed the choice over completely, so the
+       stylist's own pick IS the search, and the lead must name it. That is HER
+       2026-09-08 delegation ruling, which was built for the chat and never
+       reached this half: a rule applied to one half is not applied.
+   ⚠️ WHY A PROMPT IS THE RIGHT PLACE FOR THE SECOND HALF, against this file's own
+     "a prompt rule in capital letters is still only a prompt rule": there is
+     nothing here to protect her FROM. The old guard existed because the model
+     invented requirements SHE had not asked for; on a full hand-over there is no
+     such thing. What is left is one JUDGEMENT — does the sentence describe the
+     search — written into the same JSON object in the same breath. Her standing
+     direction is to reduce rules and breakable things, and this is a judgement,
+     not a promise. */
 function _findAskRule(){
   return '- find: ONE search for real products, as {"item":"...","colour":"","fabric":"","cut":"","size":"","width":""}. '
     +'`item` is the garment noun on its own ("dress", "white top" is wrong, "top" is right) and is REQUIRED. '
-    +'Fill colour/fabric/cut ONLY with words she actually used'
-    +(_ssAsk?' in: "'+_ssAsk+'"':' — and she has said nothing, so leave all three EMPTY')
-    +'. Leave a field empty rather than guessing; empty is always safe. '
     +(_ssAsk
-      ? 'Choose the item she asked for.\n'
-      : 'She has not asked for anything specific, so YOU choose the one garment worth showing her most, from her profile. '
+      ? 'Fill colour/fabric/cut ONLY with words she actually used in: "'+_ssAsk+'". '
+        +'Leave a field empty rather than guessing; empty is always safe. Choose the item she asked for.\n'
+      : 'She has not asked for anything specific, so YOU choose the one garment worth showing her most, from her profile, '
+        +'and put the shape or detail that makes it right for her in `cut` (and colour or fabric only if they are genuinely the point). '
+        +'THESE FIELDS ARE THE SEARCH. Whatever you put in them is exactly what she will be shown, and anything you leave out is not looked for: '
+        +'a `cut` of "belted" shows her belted dresses, an empty `cut` shows her any dress at all. '
+        +'Two or three plain words a shop would actually print, never a mood ("elevated", "effortless") and never a word retailers do not use. '
         +'Then say so in `findlead`, in one short warm sentence in your own voice, naming what you chose and why, '
-        +'so she knows it was your pick and can overrule it. Under 18 words.\n');
+        +'so she knows it was your pick and can overrule it. Under 18 words. '
+        +'\u26a0\ufe0f THE SENTENCE AND THE FIELDS MUST BE THE SAME PICK. Never promise her a detail you did not put in the fields, '
+        +'because she will be shown exactly the fields and she WILL notice.\n');
 }
 function _askedForLead(){
   return _ssAsk
@@ -6863,13 +6895,24 @@ async function _shopStyleGen(){
        request was `undefined` — so a resume silently lost the row it was added
        to keep. Caught by the resume check, which is why that check exists. */
     var _ssFind=(parsed&&parsed.find&&typeof parsed.find==='object')?parsed.find:null;
-    if(_ssFind&&_ssFind.item&&!_ssFindPre){
+    if(_ssFind&&_ssFind.item&&!_ssFindPre&&_ssAsk){
       /* ⚠️ HER SENTENCE IS THE AUTHORITY, exactly as in chat. Anything the model
          put in colour/fabric/cut that she did not say is deleted here, in CODE,
          before it can reach an outbound search. The rule that exists because the
          model once recommended a jewel tone and then searched for one as though
-         she had asked. */
-      _findKeepHerWords(_ssFind,_ssAsk||'');
+         she had asked.
+         🚨🚨 SCOPED TO `_ssAsk` ON 2026-09-10, AND READ THIS BEFORE "RESTORING" IT.
+           It used to run on EVERY generate, with `_ssAsk||''` — and an empty
+           sentence means NOTHING is hers, so on the default view it deleted the
+           stylist's own pick every single time. That is what put "I chose a
+           belted dress" above a wall of unbelted dresses on her phone.
+         ▶▶ THE GUARD IS NOT WEAKENED, IT IS AIMED. It protects her WORDS from
+           being embellished, and it can only do that when there are words. With
+           no sentence there is nothing to protect and nothing to contradict:
+           she handed the choice over, and her 2026-08 ruling says the stylist's
+           pick then becomes a real search requirement that must be named out
+           loud. ⚠️ THE MOMENT SHE TYPES ANYTHING, THIS RUNS AGAIN, UNCHANGED. */
+      _findKeepHerWords(_ssFind,_ssAsk);
     }
     _saveShopPicks(_keep,parsed.note,_ssFind,_ssFindLead(parsed));   // so she can come back to exactly this, see _shopResume
     /* 🚨 HER HONEST LINE (2026-08-24). Two ways to reach it and both are real:
