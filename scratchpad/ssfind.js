@@ -609,6 +609,48 @@ ok('...and shows her the SAME pieces, not whatever the shops hold now',
    back.titles === WAS && back.titles.indexOf('Cara Cara') < 0,
    'was[' + WAS.slice(0, 60) + '] now[' + back.titles.slice(0, 60) + ']');
 
+/* ═══ 9 · NICER SHOPS FIRST — HER DECISION, 2026-09-10 ════════════════════ */
+console.log('\n9. her own store scores order the browse row');
+/* ▶▶ HER WORDS after testing the live app: "very few from the nicer stores...
+   none of them honestly I would ever wear." The row arrived in GOOGLE'S order
+   and nothing in it had ever consulted the ten dimensions she scored herself.
+   ⚠️ SHE WAS ASKED WHICH OF TWO BUILDS SHE MEANT and chose NICER SHOPS GENUINELY
+     FIRST, with her 2026-09-09 "best match first" surviving as the TIE-BREAK.
+   ⚠️ NONE OF THESE FOUR SHOPS IS AN AFFILIATE, deliberately: _findSpread is then
+     a no-op, so what is measured here is the store sort alone and not the two
+     orderings tangled together. Her paying shops keep their own seat, and that
+     is asserted where it belongs, in the affiliate checks. */
+const SHOPS = ['Old Navy', 'Nordstrom', "Kohl's", 'Talbots'];
+FIND = { exact: [], doors: [], browse: SHOPS.map((st, i) =>
+  product(50 + i, { store: st, title: 'Belted Midi ' + st })) };
+REPLY = { items: six(), findlead: 'I chose a belted dress, you told me you love them.',
+          find: { item: 'dress', colour: '', fabric: '', cut: 'belted' } };
+await ask(pg, '');
+await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
+const seen = await pg.evaluate(shops => [...document.querySelectorAll('#ssFindWrap .find-card')]
+  .map(c => shops.find(st => (c.textContent || '').includes(st)) || '?'), SHOPS);
+/* ▶ The expected order comes from HER TABLE, not from the code under test: the
+   ten numbers she wrote, through the same _storeFit the chat has always used.
+   An unscored shop has no honest place and sorts last rather than being given
+   an invented score -- her standing rule, never invent a store's tags. */
+const want = await pg.evaluate(shops => {
+  const her = _herDims();
+  return shops.map(st => ({ st, sc: (STORES[st] && STORES[st].d) ? _storeFit(st, her) : -Infinity }))
+              .sort((a, b) => b.sc - a.sc).map(x => x.st);
+}, SHOPS);
+console.log('     [measured] google sent: ' + SHOPS.join(' > '));
+console.log('     [measured] she sees   : ' + seen.join(' > '));
+ok('the browse row is ordered by HER ten store scores',
+   seen.join('|') === want.join('|'), 'got ' + seen.join(' > ') + ' want ' + want.join(' > '));
+/* 🚨 THE ANTI-VACUOUS HALF, AND THIS SUITE HAS NOW NEEDED IT FOUR TIMES: if the
+   order the server sent already happened to match her order, the check above
+   would pass with the sort deleted. This asserts the row REALLY MOVED. */
+ok('...and that is genuinely NOT the order the shops came back in',
+   seen.join('|') !== SHOPS.join('|'), 'unchanged: ' + seen.join(' > '));
+ok('...and an UNSCORED shop sinks to the end instead of crashing the row',
+   seen[seen.length - 1] === "Kohl's" && seen.length === 4, seen.join(' > '));
+FIND = null;
+
 ok('zero JS errors across every scenario', errs.length === 0, errs.join(' | '));
 await ctx.close();
 

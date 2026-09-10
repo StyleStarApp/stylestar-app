@@ -11552,6 +11552,44 @@ function _findCard(p,opts){
    ⚠️ AND NO CAP, per her ruling the same day: "I don't mind if more than 2
      things from mytheresa or Farm Rio for example gets shown." Five FARM Rio
      pieces stay five FARM Rio pieces. */
+/* ⭐⭐ NICER SHOPS FIRST — HER DECISION, 2026-09-10: "I would like to see the
+   nicer shops first", after her own test came back "very few from the nicer
+   stores... none of them honestly I would ever wear."
+   ▶▶ THE GAP IT CLOSES: the browse row arrived in GOOGLE'S relevance order and
+     nothing in it had ever consulted her. She scored all 132 shops herself on
+     ten dimensions, `_storeFit` already ranks them for the chat and for
+     `_shopRules`, and NONE of it reached this row — so Nordstrom and Old Navy
+     landed wherever a shopping index happened to put them.
+   ⚠️ SHE WAS ASKED WHICH OF TWO BUILDS SHE MEANT, BECAUSE HER WORDS TODAY AND
+     HER WORDS IN SEPTEMBER POINTED DIFFERENT WAYS — "one row starting with the
+     ones that match her search terms the best" (2026-09-09) versus "nicer shops
+     first" (today). ▶ SHE CHOSE NICER SHOPS GENUINELY FIRST. Her September order
+     survives as the TIE-BREAK: the sort is stable, so within one shop the best
+     match still leads. Do not silently restore the old order.
+   🚨 SCOPED TO THE BROWSE STRETCH, WHICH CLAIMS NOTHING. The checked cards lead
+     the row and their order is untouched merit — that is her Option A ruling
+     (2026-09-06) and this does not go near it.
+   ⚠️ AN UNSCORED SHOP SINKS, IT NEVER CRASHES. `_storeFit` reads all ten
+     dimensions off `d` with no guard, and a store with no `d` is exactly the
+     latent crash this file recorded on 2026-09-07. It is guarded here, and an
+     unscored shop sorts LAST rather than being given an invented score — her
+     standing rule, never invent a store's tags.
+   ⚠️ ONE BUILDER, SO THIS LANDS ON THE CHAT'S ROW TOO, deliberately. "Nicer
+     shops first" is not a Shop-your-Style rule, it is her taste. */
+function _findHerShopScore(b){
+  try{
+    var e=STORES[b.store];
+    if(!e||!e.d||e.d.length<10)return -Infinity;   /* unscored: last, never invented */
+    return _storeFit(b.store,_herDims());
+  }catch(err){return -Infinity;}
+}
+function _findByHerShops(list){
+  /* ⚠️ SCORE ONCE PER CARD, not inside the comparator: _herDims() rebuilds her
+     profile on every call and a sort would run it hundreds of times. */
+  var scored=list.map(function(b,i){return{b:b,s:_findHerShopScore(b),i:i}});
+  scored.sort(function(x,y){return (y.s-x.s)||(x.i-y.i)});  /* her September order breaks ties */
+  return scored.map(function(x){return x.b});
+}
 function _findPays(b){
   try{var e=STORES[b.store];return !!(e&&e.u&&_affMid(e.u));}catch(err){return false;}
 }
@@ -11699,7 +11737,12 @@ function _findBlockHtml(data,req){
        looks up the top four, so "the checked ones" and "the best matches" are
        the same pieces in the same order. Verified lead, the rest follow in
        descending agreement. */
-  const browse=_findSpread(keep(data.browse).filter(function(b){return b.store&&b.title}));
+  /* ▶ HER SHOPS ORDER IT, THEN her paying shops get their seat interleaved
+     through that order. THE SEQUENCE MATTERS: sorting after the spread would
+     undo the spread, and spreading before the sort would be spreading a list
+     that is about to be rearranged. */
+  const browse=_findSpread(_findByHerShops(
+    keep(data.browse).filter(function(b){return b.store&&b.title})));
   /* ⚠️ ONE CARD RENDERER, NEVER A SECOND COPY — `_findCard` draws both halves of
        this row, so `_feedName` still strips a trailing size clause and any
        future card change lands on every card at once. This file's oldest lesson.
