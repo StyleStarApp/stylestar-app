@@ -43,6 +43,8 @@ it several times that day as if it were her next step, and it was not: **she had
 | 19 | ⭐⭐⭐ **APPLY TO THE 41 BRANDS THAT PUBLISH CATALOGUES** — Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard and more. **CJ is FREE and still not done.** | **HERS, and worth more than anything Claude can build** | ⏳ **OPEN** |
 | 11 | ⏸️ **THE FINDER HAS NEVER BEEN SHOWN HER STYLE PROFILE** — her *"I like fitted clothing and many of them were shapeless"*. She is **8 leaning fitted** on her own Style Signature and the finder gets an item and a cut, nothing else. **PARKED BY HER 2026-09-10: *"Let's park that piece for right now."*** ▶ **Not dropped — it keeps its place on this list and she reopens it.** | Hers | ⏸️ **PARKED, NOT STARTED** |
 | 23 | 🛍️ **IMPROVE THE WISHLIST PAGE — HER ASK, 2026-09-10.** ▶ **Verified in the code the same day: `renderWishlist` exists and the saves are real** (`{id,name,store,search,url,price,image}`, and a saved piece has carried a PHOTOGRAPH since 2026-09-09), **so this is improving a real page, not building one.** ⚠️ **THE PARKED FITTING-ROOM THINKING IS THE SAME THREAD — read it before starting** (one list, two views; the grid of photographs; the thing a wishlist never does is EMPTY). **`fitting-room` appears in the code exactly ONCE, as a comment saying nothing renders it yet.** ▶ **ASK HER WHAT SHE WANTS IMPROVED before designing; do not arrive with the old menu.** | Claude, hers to steer | ⏳ **OPEN — she asked for it** |
+| 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
+| 25 | 🛒 **AN AMAZON FINDS PAGE — HER ASK, 2026-09-10, AND STRATEGICALLY IT IS THE BEST IDEA ON THIS BOARD.** ***"I want to make an Amazon finds page. Another Sharable page dedicated to Amazon finds. I want to also feature some of them on Star of the week and our normal edit."*** ▶▶ **WHY IT MATTERS MORE THAN IT LOOKS: THIS FILE HAS SAID FOR WEEKS THAT WHAT THE APP LACKS IS A MID-MARKET GENERALIST** (every fed store is `$$$`/`$$$$`, dress median $398, 0 of 200 dresses under $100). **Amazon IS that, and it is the one such programme she can join without being declined for traffic.** ⚠️ **SO HER INSTINCT ANSWERS THE AFFORDABILITY PROBLEM THIS FILE KEPT CALLING UNSOLVABLE-WITHOUT-USERS.** 🚨🚨 **BUT THE ORDER SHE PROPOSED IS BACKWARDS AND IT IS WORTH REAL MONEY TO GET RIGHT — SEE THE AMAZON BLOCK IN THE MONEY PATH.** ▶ **THE PAGE ITSELF NEEDS NO CATALOGUE AND NO API: hand-picked links, exactly like the Edit, which is also the only version that honours her own disclosure that every piece is personally selected by the founder.** | Claude to build, HERS to pick the pieces | ⏳ **OPEN — she asked for it** |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
@@ -816,6 +818,24 @@ answers = [8, 7, 6, 9, 7, 6, 7, 7, 8, 10, 7, 9]
 dressy 0.60 · fitted 0.70 · color 0.60.** ⭐ **THIS IS THE PROFILE TO MEASURE ANY STORE RANKING
 AGAINST.** ⚠️ **It is a fact she supplied, not a build that happened, and it was asked for twice before
 because nobody wrote it down. Re-ask only if she says she has retaken the quiz.**
+
+### ✅ THE EDIT'S LINKS DO EARN — VERIFIED 2026-09-10, AND A "FINDING" WAS NEARLY REPORTED THAT WAS FALSE
+🚨🚨 **THE MARKUP LOOKS LIKE IT EARNS NOTHING AND THAT IS A TRAP.** All **35** `.dc-item-btn` anchors
+carry RAW product urls (`https://www.olivela.com/products/...`), **11 of them on merchants she is
+approved for**, and `_affUrl` appears nowhere in the Edit's markup. ▶ **Read that far and the obvious
+conclusion is that her whole curated Edit is unmonetised. IT IS WRONG.**
+✅ **`_wlDecorateEdit()` REWRITES EVERY ONE AT RUNTIME** (`index.html:9963`,
+`_affUrl(_a.getAttribute('href'))`), and `showDream()` calls it every time the Edit opens. **The raw
+href is the SOURCE; the wrap happens in the browser.** ⭐ **DELIBERATE, and the comment says why: so a
+piece she adds by hand needs no plumbing.** ▶ **The wishlist stores the RAW url and re-wraps at render,
+so changing her affiliate id still reaches pieces saved months ago. `_affUrl` never double-wraps.**
+⚠️⚠️ **DO NOT "FIX" THE EDIT BY HARD-CODING AFFILIATE URLS INTO THE MARKUP.** It would strand her saved
+rows on a stale id and break the add-by-hand workflow.
+🚨 **THE LESSON, AND IT IS THIS FILE'S OWN RULE PAYING OFF IN REAL TIME: THE GREP SAID ONE THING AND THE
+CODE SAID ANOTHER.** A count of `_affUrl` inside the Edit markup returns ZERO and reads exactly like
+lost money. **Following the rule — grep the code before saying it out loud — is the only reason a false
+alarm was not handed to her as a discovery.** ▶ **A RUNTIME REWRITE IS INVISIBLE TO A GREP OF THE
+MARKUP. When markup looks unmonetised, look for a decorator before concluding anything.**
 
 ### 🚨 ADDING A MERCHANT IS **FIVE** EDITS — and two of them fail SILENTLY
 **(1)** the `STORES` entry, `index.html` — **the only one that needs her** ·
@@ -2051,8 +2071,28 @@ the strongest argument this file has for her own stated growth edge — *more so
 2. **CJ** — free, no clock, "costs nothing but an evening". Not done yet.
 3. **NORDSTROM CREATORS** (`nordstromcreators.com`, Impact's creator product) — **door 2 for Nordstrom**,
    when her follower count is not the weakest thing she brings.
-4. **AMAZON LAST.** 🚨 **3 qualifying sales within 180 days of APPROVAL, and the clock starts at APPROVAL,
-   not at launch.** Applying while the app has no users burns the window for nothing.
+4. **AMAZON — SHE ASKED TO APPLY 2026-09-10, AND THE FACTS WERE RE-CHECKED LIVE RATHER THAN RECALLED.**
+   ***"I want to go ahead and apply and start using their catalog."***
+   🚨🚨 **THE CATALOGUE CANNOT COME FIRST, AND THIS IS THE PART THAT CHANGES HER PLAN: Amazon's Product
+   Advertising API (the catalogue) IS GATED BEHIND SALES SHE HAS NOT MADE YET.** ▶ **Access needs the
+   3 qualifying sales first — the catalogue is the REWARD for selling, never the tool to sell with.**
+   ⚠️ **AND KEEPING IT IS HARDER THAN GETTING IT: reported at 10 qualifying sales in a TRAILING 30 DAYS
+   in 2026, with keys revoked after 30 days without 3.** ⚠️ **THAT 10-SALE FIGURE IS REPORTED, NOT
+   CONFIRMED BY AMAZON HERE — say so, and re-read the terms on the day she applies; programme rules
+   change and this file has been burned by a stale number before.**
+   🚨 **THE 180-DAY CLOCK IS REAL AND STARTS AT APPROVAL, NOT AT LAUNCH.** 3 qualifying sales within
+   180 days or the account closes. **Applying while the app has no measured users spends the window.**
+   ✅✅ **BUT — AND THIS IS WHY HER IDEA STILL WORKS — AN AMAZON FINDS PAGE NEEDS NEITHER.** ▶▶ **Plain
+   hand-picked Associates links work from day one with no API and no sales.** **The catalogue was never
+   what her page needed; her own curation is, and her disclosure REQUIRES that every piece be personally
+   selected by the founder anyway.** ⚠️ **So the only real question is TIMING THE CLOCK, not whether to
+   build the page.**
+   ▶▶ **WHAT DECIDES IT, AND IT IS ALREADY ON HER BOARD AS AN UNSTARTED JOB: READ HER ANALYTICS.**
+   `track()` exists and nobody has ever looked. **3 sales in 180 days is a traffic question, and this
+   project has never once measured its own traffic.** ⭐ **That makes "read the analytics" the thing
+   that answers "should I start the Amazon clock" — a small, unblocked, Claude-side job that turns a
+   guess into a decision.** ▶ **SHE WAS TOLD THE RISK ONCE, PLAINLY. IF SHE STILL WANTS TO APPLY, THAT
+   IS HER CALL AND IT GETS BUILT — do not re-litigate it a second time.**
 🚨 **STANDING CORRECTION — SHAREASALE NO LONGER EXISTS.** Awin bought it and closed it at the end of 2025.
 **The live list is: Rakuten Advertising · Awin · Impact · CJ.** Any older entry naming ShareASale is stale.
 
