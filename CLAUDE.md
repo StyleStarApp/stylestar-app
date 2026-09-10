@@ -408,10 +408,34 @@ wear a tick either, because a look-up needs the search half.**
 **so 28 searches HAVE been billed since — the account and the key are fine, and something is reaching
 Google successfully some of the time.** ⚠️ **NOT PROVEN: whether those 28 were hers, a woman's, or
 retries. Do not read it as "it works intermittently for users" without measuring again.**
-▶▶ **WHAT IS ACTUALLY WORTH DOING, IN ORDER, AND IT HAS NOT CHANGED: (a) ASK HER TO CHECK HER SERPAPI
-DASHBOARD AND THEIR STATUS PAGE — she owns the account and this file cannot see it · (b) if it
-persists, this is the argument for SearchApi, same $25 and ~10× the searches · (c) nothing in the app
-needs changing: it fails fast, tells the truth, and now falls back to her own shops.**
+✅✅✅ **THE CAUSE IS FOUND, AND IT IS NONE OF OURS. SERPAPI'S OWN STATUS PAGE, 2026-09-10:
+`Google Shopping API — MAJOR OUTAGE`, inside a same-day incident affecting ALL their APIs, whose
+stated cause is *"recent changes on Google's side, which are causing searches to fail or time out."***
+▶▶ **"FAIL OR TIME OUT" IS WORD-FOR-WORD THE SIGNATURE MEASURED HERE: hung on the ceiling, unbilled.**
+🚨🚨 **SO EVERY THEORY THIS FILE HAS CARRIED IS NOW CLOSED, AND FOUR OF THEM WERE WRONG:**
+· **NOT her budget** (697 left) · **NOT her key** (the account call answers in 0.7-1.6s) · **NOT the
+belted change** (a bare `dress` hangs identically) · **NOT the 12s/9s ceiling** (the ceiling moved and
+the failure moved with it; a 20s probe hung too) · **NOT our code, which needs no change at all.**
+🚨🚨 **AND THE NETWORK THEORY IS DISPROVEN — IT WAS IN THIS FILE AS A CONCLUSION AND IT WAS WRONG.**
+It read *"that points at the network between Netlify and SerpApi."* ▶▶ **BUT `account.json` AND
+`search.json` ARE THE SAME HOST, `serpapi.com`. One answers in 0.7s while the other hangs past 20s, so
+DNS, TLS and the Netlify→SerpApi route are all exonerated by the working call.** ⭐ **THE LESSON
+GENERALISES: when two calls share a path and only one fails, the path is not the fault. Look for what
+DIFFERS — here, the engine behind the endpoint.**
+🚨🚨🚨 **DO NOT SWITCH TO SEARCHAPI OVER THIS, AND THE ADVICE TO CONSIDER IT WAS WRONG WHEN GIVEN.**
+This file has named SearchApi as the runner-up twice, and on 2026-09-10 Cath was told to consider it
+while this outage was live. ▶▶ **THE CAUSE IS GOOGLE CHANGING SOMETHING, SO IT HITS EVERY PROVIDER
+THAT READS GOOGLE — SearchApi included. Paying a second $25 would have fixed NOTHING.** ⚠️ **Her
+pushback is what stopped it. HER WORDS: *"We already have SerpApi. What are you talking about???"* and
+she was right: the account was never the problem, and she was being sent to buy her way out of an
+outage.** ▶ **The runner-up argument still stands for PRICE and VOLUME. It does not stand for this.**
+▶▶ **WHAT TO ACTUALLY DO: NOTHING. WAIT.** It is their incident and their fix. **The app already
+behaves correctly through it** — it fails fast, says something honest, and falls back to her own feed,
+so a woman still sees real clothes. ⚠️ **DO NOT "fix" the app in response to this, and DO NOT raise the
+ceiling: there is nothing on the other end to wait for.**
+▶ **HOW TO RE-CHECK IN ONE COMMAND, no searches spent, no dashboard needed:**
+`curl -s -H "Origin: https://stylestar.app" -X POST -d '{"item":"dress"}' -H "Content-Type: application/json" https://stylestar.app/.netlify/functions/product-find`
+▶ **`googleFailed: false` and a non-zero `verified` means Google's half is back.**
 ⚠️ **ONE THING CHECKED AND CLEARED SO NOBODY CHASES IT: `priceValue` parses correctly ($625 → 625). An
 earlier reading of "62" was a truncated console print, not a bug.** ▶ **A finding that survives one
 look is not a finding.**
