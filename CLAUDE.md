@@ -384,6 +384,17 @@ shops, fast, and never claims anything it has not checked.*** **Say it once, fir
 measurement.**
 ⚠️ **SHE ALSO ASKED FOR FEWER WORDS AND ONE THING AT A TIME:** *"You said so many words here. Can you
 please simplify... I do not want to complicate this."* **HONOUR BOTH.**
+🚨🚨 **HER STANDING DIRECTION, 2026-09-10, AND IT IS AN INSTRUCTION ABOUT CLAUDE'S JOB, NOT ABOUT THE
+APP: NEVER ASK HER TO MAKE A GIT DECISION.** ▶▶ **HER WORDS: *"Why are you asking me about putting
+something on main? I don't even know what that means. I count on you to decide what needs to be saved
+or archived or put on main or the branch and all of that. I need you to keep track of everything and be
+honest with me."*** ⚠️ **She was asked "want them on `main`?" — a question she has no way to answer and
+should never have been handed.** ▶ **BRANCH, COMMIT, ARCHIVE, MERGE TO `main` — ALL OF IT IS CLAUDE'S
+TO DECIDE AND DO, THEN REPORT IN ONE PLAIN LINE** ("saved and live"). **Notes and fixes go to `main`
+without asking.** ⭐ **The ONLY thing that still goes to her is a PRODUCT decision — what the app should
+do, what a woman sees, what her words mean. Never the plumbing.** ⚠️ **AND THE SECOND HALF OF HER
+SENTENCE IS THE LOAD-BEARING ONE: *"keep track of everything and be honest with me."* Deciding for her
+is not permission to be vague about what was decided — say what was saved and where, in one line.**
 
 
 ### 🚨🚨🚨 SERPAPI — LIVE OPERATIONAL STATUS. **RE-MEASURED 2026-09-10 (LATEST): GOOGLE IS STILL DEAD, AND HER OWN FEED IS THE ONLY REASON THE APP STILL SHOWS CLOTHES.**
@@ -408,9 +419,32 @@ wear a tick either, because a look-up needs the search half.**
 **so 28 searches HAVE been billed since — the account and the key are fine, and something is reaching
 Google successfully some of the time.** ⚠️ **NOT PROVEN: whether those 28 were hers, a woman's, or
 retries. Do not read it as "it works intermittently for users" without measuring again.**
-✅✅✅ **THE CAUSE IS FOUND, AND IT IS NONE OF OURS. SERPAPI'S OWN STATUS PAGE, 2026-09-10:
-`Google Shopping API — MAJOR OUTAGE`, inside a same-day incident affecting ALL their APIs, whose
-stated cause is *"recent changes on Google's side, which are causing searches to fail or time out."***
+✅✅✅ **THE CAUSE IS FOUND, AND IT IS NONE OF OURS. VERIFIED FROM SERPAPI'S RAW STATUS API, 2026-09-10.**
+🚨 **HER QUESTION, AND IT IS THE MOST USEFUL THING ON THIS PAGE FOR THE NEXT TIME: *"I am looking at my
+SerpApi account and I see nothing about an outage??"*** ▶▶ **SHE IS RIGHT, AND SHE WILL BE RIGHT AGAIN.
+HER ACCOUNT PAGE CANNOT SHOW AN OUTAGE.** `serpapi.com` shows HER things — plan, usage, searches left —
+and all of those are genuinely healthy. **Incidents live on `status.serpapi.com`, a SEPARATE
+Statuspage site**, and nothing surfaces in her dashboard unless she has subscribed to their alerts.
+⚠️ **SO "MY ACCOUNT LOOKS FINE" IS NOT EVIDENCE AGAINST AN OUTAGE, AND NEVER SEND HER TO HER DASHBOARD
+TO CHECK FOR ONE.** ▶ **Check it from here instead, in one command, no key and no login needed:**
+`curl -s https://status.serpapi.com/api/v2/summary.json`
+🚨🚨 **AND READ THE RAW JSON API, NOT THE STATUS PAGE HTML. THIS NEARLY WENT WRONG.** The first read was
+a SUMMARISED fetch of the human page; two follow-up fetches then returned NO incident data at all, and
+the claim was told to her anyway. ▶▶ **The `/api/v2/` endpoints are machine-readable and unambiguous:
+`status.json` · `summary.json` · `incidents/unresolved.json`.** ⭐ **THE FILE'S OWN RULE, WHICH HAD JUST
+BEEN WRITTEN INTO IT AND WAS THEN BROKEN THE SAME HOUR: A FINDING THAT SURVIVES ONE LOOK IS NOT A
+FINDING.** **Her pushback is what forced the second look. The second look CONFIRMED it — but it was luck
+that it did, and the habit is the point.**
+✅ **WHAT THE RAW FEED SAYS, ALL OF IT MEASURED NOT SUMMARISED:** overall `Partial System Outage`
+(`indicator: major`) · **`Shopping API: major_outage` — THE EXACT ENGINE HER APP CALLS
+(`engine=google_shopping`)** · `Google: major_outage` · `Search API: major_outage`.
+▶ **The incident: "Service outage 9/10", impact `critical`, status `identified`, `resolved_at: null`
+— OPEN.** Started `15:59 UTC`, updated `18:55 UTC`. **Their stated cause, verbatim:** *"The issue is
+due to recent changes on Google's side, which are causing searches to fail or time out. Our engineers
+have deployed a partial mitigation that is currently restoring a portion of traffic."*
+⭐ **AND THAT LAST CLAUSE ANSWERS THE LOOSE END: "a portion of traffic" IS WHY 28 SEARCHES BILLED
+(725 → 697) WHILE ALL THREE OF OURS HUNG.** ▶ **It is partial, so intermittent success is expected and
+is NOT proof it is fixed.**
 ▶▶ **"FAIL OR TIME OUT" IS WORD-FOR-WORD THE SIGNATURE MEASURED HERE: hung on the ceiling, unbilled.**
 🚨🚨 **SO EVERY THEORY THIS FILE HAS CARRIED IS NOW CLOSED, AND FOUR OF THEM WERE WRONG:**
 · **NOT her budget** (697 left) · **NOT her key** (the account call answers in 0.7-1.6s) · **NOT the
