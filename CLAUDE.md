@@ -820,6 +820,25 @@ dressy 0.60 · fitted 0.70 · color 0.60.** ⭐ **THIS IS THE PROFILE TO MEASURE
 AGAINST.** ⚠️ **It is a fact she supplied, not a build that happened, and it was asked for twice before
 because nobody wrote it down. Re-ask only if she says she has retaken the quiz.**
 
+### 🔎 `/edit` IS SUBMITTED TO BOTH ENGINES — DONE BY HER, 2026-09-10
+✅ **GOOGLE SEARCH CONSOLE:** URL Inspection → *"URL is not on Google"* → **Request Indexing** →
+**"Indexing requested"**, green. ✅ **BING WEBMASTER TOOLS:** URL Inspection → *"Not discovered / The
+inspected URL is not known to Bing"* → **Request indexing** → **"URL submitted successfully."**
+▶ **BOTH "not found" MESSAGES WERE THE EXPECTED STATE, not a fault** — the page was hours old and
+neither engine had crawled it. **Say that plainly next time; it reads like an error and is not.**
+✅ **The live sitemap lists `/edit` at priority 0.9** (12 urls, XML re-parsed), so both engines also
+find it on their own schedule.
+⚠️ **HER QUESTION FROM 2026-09-04, ANSWERED AGAIN SO IT IS NOT ASKED A THIRD TIME: on Bing, URL
+Inspection → Request Indexing is ENOUGH.** The separate **URL Submission** bulk tool is for pushing
+several pages at once; doing both for one page is redundant, not harmful.
+▶ **THE WORKING PATTERN SHE ASKED FOR AND IT SUITED HER: ONE STEP PER MESSAGE, and each step ends by
+naming the two or three things she might see, so she can just report back which one.** ⭐ **She moved
+through four steps with no confusion and no backtracking.** **Use it for anything she does in someone
+else's dashboard.**
+⏳ **STILL UNCONFIRMED, CARRIED OVER FROM 2026-09-04: whether `/trending` ever got its GOOGLE indexing
+request.** Bing's was made 2026-09-03 23:01; the Google half was never verified. **30 seconds in the
+same tool she already has open.**
+
 ### 💰 WHICH EDIT PIECES ACTUALLY EARN — MEASURED 2026-09-10, AND THE FIRST FIGURE GIVEN TO HER WAS WRONG
 🚨 **HER QUESTION, AND IT DESERVES A NUMBER RATHER THAN A YES: *"I can share it and when anyone opens it
 and clicks on a link and purchases - we make money from that affilate link purchase?"***
