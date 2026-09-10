@@ -1130,20 +1130,22 @@
        cost is that this block owns its own hidden state while `thinking`, the way the
        Back button and the footer already do. -->
   <div id="ssAsk" style="display:none">
-    <!-- 🚨🚨 THIS STAR IS GOLD, AND IT USED TO BE PINK — HER RULING, 2026-09-09,
-         given twice: "I don't want the pink star on shop your style. That is only
-         for stylist chat. I want the gold one."
-         ▶▶ IT OVERTURNS THE NOTE THAT USED TO SIT HERE, which read: "The mark is
-           the stylist's PINK STAR... the star means the stylist is working — which
-           is why the loading star on this same screen is pink." **That reasoning
-           is retired. She was shown it and chose gold anyway.**
-         ⭐ HER RULE NOW, AND IT IS SIMPLER THAN THE ONE IT REPLACES: PINK BELONGS
-           TO THE STYLIST CHAT AND NOWHERE ELSE. Gold is the rest of the app. It
-           sits cleanly beside her 2026-08-09 mark system (gold = hers; the pink
-           tilted HEART = Catherine's own voice).
-         ⚠️ SO DO NOT "RESTORE" PINK HERE ON THE GROUNDS THAT THE STYLIST IS
-           WORKING. That argument was made, in writing, and she ruled against it. -->
-    <button type="button" class="sa-vox" onclick="_ssAskReveal()"><svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#E6C24E" stroke="#E6C24E" stroke-width="2" stroke-linejoin="round"/></svg>Looking for something specific?<svg class="sa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5 12 15.5 18 9.5"/></svg></button>
+    <!-- The mark is the stylist's PINK STAR, never Catherine's pink heart. Her own
+         mark system: the heart means SHE is speaking, the star means the stylist is
+         working — which is why the loading star on this same screen is pink.
+         🚨🚨 THIS STAR IS PINK AND IT STAYS PINK — SHE CONFIRMED IT EXPLICITLY,
+         2026-09-09, AFTER CLAUDE HAD TURNED IT GOLD AND SHE PUT IT BACK:
+         "I didn't want you to change those other stars. Just the one I said — the
+         large spinning one I want gold those others can stay pink please."
+         ▶▶ WHAT WENT WRONG, BECAUSE IT IS THIS FILE'S OWN LESSON FROM THE OTHER
+           DIRECTION: her earlier sentence — "I don't want the pink star on shop
+           your style. That is only for stylist chat" — READS screen-wide, and
+           Claude swept the whole screen. **It admitted two builds and neither was
+           flagged before building. The rule is not "when her words are unclear";
+           it is "when her words ADMIT TWO BUILDS, say so BEFORE building."**
+         ⭐ HER ACTUAL RULE, NARROW AND NOW PINNED: only the LARGE SPINNING WAITING
+           star (`.ss-find-star`) is gold. These small stylist marks stay pink. -->
+    <button type="button" class="sa-vox" onclick="_ssAskReveal()"><svg class="sa-star" viewBox="0 0 76 76" aria-hidden="true"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>Looking for something specific?<svg class="sa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5 12 15.5 18 9.5"/></svg></button>
     <!-- ⚠️ The example clears the moment she taps in, and comes back if she leaves the
          box empty. Her live test, 2026-08-21: "when I put the cursor inside the box to
          start typing I would like the Try: jeans to go away. It stays there until I
@@ -6581,7 +6583,7 @@ async function _shopStyleGen(){
   // Drives the subtitle rule above: only the quiz-mode line is decorative.
   if(scr)scr.dataset.mode=_isWL?'wantlist':(_shopStyleMode==='look'?'look':'quiz');
   var _isWL=(_shopStyleMode==='wantlist');
-  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="shop-load-star" viewBox="0 0 76 76" fill="none" style="width:18px;height:18px;margin-right:5px;vertical-align:-3px"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#E6C24E" stroke="#E6C24E" stroke-width="2" stroke-linejoin="round"/></svg>'+(_isWL?'shopping your list&hellip;':'shopping your style&hellip;');
+  var lg=document.querySelector('#s-shopstyle .ss-shop-logo');if(lg)lg.innerHTML='<svg class="shop-load-star" viewBox="0 0 76 76" fill="none" style="width:18px;height:18px;margin-right:5px;vertical-align:-3px"><polygon points="38,4 46,25 68,25 50.5,38.5 57.5,60 38,47 18.5,60 25.5,38.5 8,25 30,25" fill="#EC4899" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"/></svg>'+(_isWL?'shopping your list&hellip;':'shopping your style&hellip;');
   var talk=document.querySelector('#s-shopstyle .ss-shop-talk');if(talk)talk.classList.remove('on');
   var gf=document.querySelector('.quiz-footer');if(gf)gf.style.display='none';
   var bk=document.querySelector('#s-shopstyle .top-back-wrap');if(bk)bk.style.display='none';

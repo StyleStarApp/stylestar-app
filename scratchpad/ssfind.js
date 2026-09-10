@@ -239,31 +239,35 @@ ok('...and it SAYS what is happening, in her words',
    obeyed here for free because the words come from the ONE list — asserted so a
    future second copy on this surface cannot reintroduce it. */
 ok('...and never says "your shops"', !/your (shops|stores)/i.test(waiting.words), waiting.words);
-/* 🚨🚨 NO PINK STAR ANYWHERE ON THIS SCREEN — HER RULING, 2026-09-09, GIVEN TWICE:
-   "I don't want the pink star on shop your style. That is only for stylist chat.
-   I want the gold one."
-   ▶▶ IT OVERTURNS A WRITTEN RATIONALE, which is why it needs a check rather than
-     a comment: the markup carried a note saying the pink star meant "the stylist
-     is working", so a future session has a documented-looking reason to put pink
-     back. She was shown that reasoning and chose gold anyway.
-   ⚠️ THIS COUNTS EVERY STAR ON THE SCREEN, not just the waiting one — the two she
-     was actually looking at were the mark beside "Looking for something specific?"
-     and the little one beside "shopping your style...", neither of which was the
-     star being tuned at the time. A check scoped to one star would have missed
-     exactly what she reported. */
-{const pinks = await pg.evaluate(() => {
-   const out = [];
-   document.querySelectorAll('#s-shopstyle svg').forEach(sv => {
-     const shape = sv.querySelector('polygon,path');
-     if (!shape) return;
-     const cs = getComputedStyle(shape);
-     if (/rgb\(236, 72, 153\)/.test(cs.fill) || /rgb\(236, 72, 153\)/.test(cs.stroke))
-       out.push(sv.getAttribute('class') || '(unclassed)');
-   });
-   return out;
+/* 🚨🚨 HER RULE IS NARROW, AND THIS CHECK EXISTS BECAUSE CLAUDE WIDENED IT.
+   ▶▶ WHAT SHE SAID FIRST: "I don't want the pink star on shop your style. That is
+     only for stylist chat. I want the gold one." That READS screen-wide, and the
+     whole screen was swept gold.
+   ▶▶ WHAT SHE MEANT, IN HER OWN CORRECTION: "I didn't want you to change those
+     other stars. Just the one I said — the large spinning one I want gold those
+     others can stay pink please."
+   🚨 SO THE RULE HAS TWO HALVES AND BOTH ARE ASSERTED. The big spinning WAITING
+     star is gold; the small stylist MARKS — the one beside "Looking for something
+     specific?" and the one beside "shopping your style..." — STAY PINK, because
+     pink means the stylist is working and that is her own mark system.
+   ⚠️ A CHECK THAT ONLY PINNED "no pink here" WOULD HAVE BLESSED CLAUDE'S MISTAKE.
+     That is the point of the second half. */
+{const ask = await pg.evaluate(() => {
+   const sv = document.querySelector('#s-shopstyle .sa-star');
+   const sh = sv && sv.querySelector('polygon,path');
+   return sh ? getComputedStyle(sh).fill : '(missing)';
  });
- ok('NO pink star anywhere on Shop your Style — pink is the chat\'s alone',
-    pinks.length === 0, 'pink: ' + pinks.join(', '));}
+ ok('the "Looking for something specific?" mark STAYS PINK — she put it back herself',
+    ask === 'rgb(236, 72, 153)', ask);
+ /* ⚠️ THE LOADING STAR IS READ FROM THE SOURCE, NOT THE SCREEN, AND THAT IS NOT
+    LAZINESS: `_shopStyleGen` writes it into `.ss-shop-logo` when the generate
+    STARTS and replaces it with plain text when the generate ENDS, so by the time
+    a settled screen can be measured the element no longer exists. The colour is a
+    hardcoded literal in that one line, so the source IS the fact. */
+ {const line = (HTML.match(/shop-load-star[\s\S]{0,420}?<\/svg>/) || [''])[0];
+  ok('the loading star was actually found (or the check below proves nothing)',
+     line.length > 100, String(line.length));
+  ok('...and it STAYS PINK too', /fill="#EC4899"/.test(line), line.slice(-120));}}
 
 /* 🚨🚨 HER RULE: NOTHING MAY JUMP. The six paint in ~1s, the search takes 5-8s,
    so the row's space must be reserved from the first paint or the whole page
