@@ -18360,3 +18360,450 @@ stays hers to overrule. **That is the honest version of choosing for her.**
 ▶ **THE ALTERNATIVE WAS OFFERED AND IS NOW CLOSED:** the stylist could instead have been forbidden from
 naming a silhouette it was not going to search for. **She chose the better half — advice and results
 that agree — rather than advice made vaguer to match a narrow search.**
+
+
+---
+
+# 📦 ARCHIVED 2026-09-10 — the 2026-09-09 session's build narratives
+⚠️ **Moved here by the archiving rule: one "START HERE" entry lives in `CLAUDE.md`, everything
+older lives here. NOTHING WAS DELETED.**
+🚨 **Before this moved, every one of her quoted rulings inside it was checked against what stays
+loaded. Three were found to exist ONLY here and were lifted into the rule ledger first (the
+gold-star/pink-chat rule, her *"Here are some options."* copy, and the shoe point-of-view rule);
+two more (her *"one search from her profile too"* ruling with the ~2.5¢ cost she accepted, and her
+*"Neither yet"* on the fitting room) were lifted into the 2026-09-10 entry. That check is the
+point of the rule — the affiliate rejections were archived correctly once and still went missing.**
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-09, A LONG DAY AND EVERYTHING SHIPPED. READ THIS BLOCK FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is detail, newest first, and some older blocks
+are HISTORY — if a line further down contradicts this one, THIS ONE WINS.**
+
+### 🚨🚨🚨 THE ONE THING TO SAY TO HER FIRST, BECAUSE IT CHANGED TODAY AND IT CHANGES THE ADVICE
+▶▶ **SHE HAS SHARED THE APP. HER WORDS, 2026-09-09: *"I have already asked many friends and put it out
+on Instagram."*** ✅ **HOMEWORK 7 IS CLOSED.**
+⚠️⚠️ **SO DO NOT TELL HER SHE NEEDS TESTERS. She has asked.** Claude said *"the answer is users"* several
+times that day — **true about affiliates, WRONG as a next action, because she had already taken it.**
+▶▶ **THE OPEN QUESTION IS NOW WHAT CAME BACK: has anyone used it, and what did they say? ASK HER THAT.**
+▶ **And there is no analytics answer in this file — `track()` exists and nobody has ever looked.** If she
+wants to know whether the Instagram post produced real sessions, **that is a real, small, unstarted job**
+and it is the honest companion to the question. **Offer it; do not assume it.**
+
+### ✅ EVERYTHING IS ON `main` AND VERIFIED LIVE BY FETCHING stylestar.app
+`ba99e70` → `3441cb6` → `d83563e` → `42a7add` → **`656a2bf`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILES
+AND FINDING THE MARKERS, never by the deploy badge.** Standing rule; it held all day.
+
+### ⭐ WHAT SHIPPED 2026-09-09 — ALL LIVE, ALL TESTED
+1. **A SAVE HEART ON EVERY CARD THE FINDER SHOWS** — chat and Shop your Style. The existing `_wlSaveBtn`,
+   never a second control, and **the photograph is stored on the wishlist entry** (nothing renders it yet
+   — that is the parked fitting-room view).
+2. **SHOP YOUR STYLE SHOWS REAL PRODUCTS** — her item 3, the big one. Real photographed pieces from her
+   132 shops LEAD, her six named picks stay below. **The default "show me a mix" view searches too.**
+   Both forks were put to her BEFORE building.
+3. **HER COPY ON THE ROW: *"Here are some options."*** — replacing Claude's *"Showing you as much as I
+   could find."*
+4. **A PERMANENT WAY BACK TO HER WISHLIST FROM THE CHAT** — her catch; the existing `data-wldoor`,
+   appearing only once she has saved something.
+5. **THE WAITING STAR: 66px, GOLD, with her own words rotating** — her pick, chosen by looking at four
+   sizes rendered at true size. ⚠️ **THE SMALL PINK STYLIST MARKS ON THAT SCREEN STAY PINK — her explicit
+   correction after Claude swept them.**
+
+### ▶ TEST STATE — THE ONLY CURRENT ONE (older "TEST STATE" blocks below are STALE, ignore them)
+✅ **GREEN (re-measured 2026-09-09 after the save heart AND Shop your Style):** **`ssfind` 52 — NEW** ·
+chatfallback **105** (was 81) · copy **49** (was 48) · findprod **63** · chatfind **63** · affq **40** ·
+starpx **28** · honest · storepool 49 · untagged 21.
+⚠️ **`searchtune` 80 / 1 — the SAME pre-existing `styles.css` failure, *"her voice: Lora upright 15.5 +
+gold bolds"*, re-confirmed unchanged today.**
+⚠️ **`searchtune` 80 checks / 1 failure — PRE-EXISTING, NOT A REGRESSION.** It is the `styles.css` check
+*"her voice: Lora upright 15.5 + gold bolds"*, and it was proven identical on the baseline `b6fb280`
+**even on a day when `styles.css` WAS edited**. ▶ **Verify against the baseline before believing it.**
+⚠️ **`curated` is 63 / 2 — AND BOTH FAILURES ARE PRE-EXISTING, PROVEN AGAINST A `ba99e70` WORKTREE THE
+SAME HOUR** (baseline: 62 / **3**, because the *"never ruffles"* flake also fired there). ▶ **So the
+save heart made it strictly BETTER, not worse.** ⚠️ **`curated`'s *"never ruffles"* flake is still the
+known flake.** Verify against the baseline; never loosen it.
+🚨🚨 **AND THE OTHER TWO ARE A REAL FINDING NOBODY HAD WRITTEN DOWN — NOT A FLAKE, AND NOT MINE.**
+`scripts/products-from-csv.js` **now REFUSES the frozen catalog outright** (`node
+scripts/products-from-csv.js data/style-star-products.csv` fails), because six rows still name
+**Madewell (4 rows) · COS (1) · Marine Layer (1)** and **none of those three is a `STORES` key any more**
+— she removed them in her 2026-09-08 roster. **The second failure, *"every family sees ≥3 jeans"* at
+`Professional: 2`, is the same event downstream.**
+▶▶ **WHAT IT ACTUALLY MEANS, AND IT IS NOT URGENT: `products.json` is already committed and the catalog
+is FROZEN, so the app is fine and no woman sees anything wrong. But it CANNOT BE REGENERATED** — the
+converter is now a door that will not open.
+⚠️⚠️ **THE REASON TO FIX IT ANYWAY IS THIS FILE'S OWN DISEASE: a permanently-red suite is how a false
+green happens.** Two checks that fail every single run teach the next session to wave `curated` through,
+and `curated` is the suite guarding her never-wear list. ▶ **THE FIX IS SMALL AND IT IS ALREADY WHAT
+THIS FILE CLAIMS HAPPENS: this file says those six picks were "DEACTIVATED because their shop is gone",
+so the converter should DEACTIVATE a row whose retailer has left the table, not refuse the whole file.**
+It was clearly done by hand in `products.json` and the converter never learned the rule. **Not built —
+flagged, because it is outside what she asked for today.**
+
+### ▶▶ WHAT IS WAITING ON HER — THE WHOLE LIST, SHORTEST FIRST
+1. ⏳ **THE OCT 1 CLOCK. The only thing on her entire board with a real deadline, and it is ~3 WEEKS
+   OUT.** Do NOT pay the Your Fashion Friend renewal; close the Orange County business tax receipt **by
+   email (`btpc@octaxcol.com`) or mail, NOT in person**; call **407-246-2204** about whether to apply for
+   Style Star's own receipt before or after Oct 1 so she does not pay twice. **Full wording in the
+   sole-proprietorship section.**
+2. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** She has asked friends and posted on
+   Instagram. **Ask what they said — this is now the most valuable information the project can get, and
+   only she has it.**
+3. ⏸️ **THE WISHLIST / FITTING-ROOM CONVERSATION.** Offered four build options she chose ***"Neither yet
+   — let's talk it through more."*** ▶ **ASK HER WHAT A FITTING ROOM MEANS TO HER. Do not re-propose the
+   same menu.** The photograph is already stored on every finder-saved piece, so nothing is lost waiting.
+4. ▶ **WHAT MAKES A SHOE PHOTO GOOD.** Her correction: the problem is *"the point of view and angle of
+   shoe"*, not the size. **That is stylist knowledge and no measurement finds it** — but on the few
+   looked-up cards there IS a choice of photograph the app is not using (`thumbnails` is an array and we
+   take `[0]`). **She has to define "good" before a line is written.**
+5. ▶ **ONE PINK THING LEFT ON SHOP YOUR STYLE AND IT IS TEXT, NOT A STAR:**
+   `#s-shopstyle .ss-shop-talk span`. **Flagged to her, not changed.**
+
+### ▶ WHAT CLAUDE BUILDS NEXT — NOTHING IS QUEUED, AND THAT IS THE HONEST STATE
+✅✅ **HER WHOLE BUILD LIST IS DONE AND LIVE.** The save heart, Shop your Style, her copy, the wishlist
+door and the star all shipped 2026-09-09. **There is no approved next build waiting.**
+🚨 **SO THE NEXT SESSION SHOULD NOT PICK SOMETHING AND START. IT SHOULD ASK HER TWO QUESTIONS** — what
+the people she shared it with said, and what a fitting room means to her — **and let her answer set the
+work.** ▶ **This file's own warning applies: perfectionism can become a hiding place, and more solo
+polish is worth less than what her first real users tell her.**
+▶ **THE UNSTARTED THINGS, in rough value order, none of them approved:**
+1. ▶ **DID ANYONE ACTUALLY USE IT?** `track()` exists and nobody has ever looked. **Small, unstarted, and
+   it is the direct companion to her Instagram post.** ⚠️ **Offer it; she may not want numbers.**
+2. ⏸️ **THE FITTING-ROOM VIEW** — parked by her, thinking kept, **and its blocker is gone**: saved pieces
+   carry their photograph now. **Do not start it; do resurface it.** (ONE list, TWO views, never a second
+   list — her own words are in the master to-do.)
+3. ▶ **THE SHOE PHOTO ANGLE** — blocked on her definition of "good", above.
+4. ▶ **MORE SEARCHES PER QUESTION.** `buildQueries` fires up to 4 and her real questions often fire ONE.
+   Three or four would multiply the pool for ~5-7¢. **Cheap, unstarted, hers to say yes to.**
+5. ▶ **TEACH `products-from-csv.js` TO DEACTIVATE A ROW WHOSE SHOP IS GONE** rather than refuse the whole
+   file. **Not urgent, but it is what stops `curated` being permanently red — and a permanently-red suite
+   is how a false green happens.**
+⚠️ **AND ONE THING STILL WAITING ON HER EYE, UNPROMPTED: the stylist's line on the no-ask view (*"so that
+is where I looked"*) IS CLAUDE'S COPY and is marked in the code as a placeholder for hers.** She said it
+is fine; **her own wording has beaten a Claude draft twice on that row, so offer it once more.**
+
+
+## ⭐⭐ HER COPY, AND THE WAY BACK TO HER WISHLIST FROM THE CHAT (2026-09-09, LATER)
+### ⭐⭐⭐ HER LINE REPLACES CLAUDE'S ON THE PRODUCT ROW — AND IT IS THE SECOND TIME
+▶▶ **HER WORDS: *"Let's change the wording where it says Showing you as much as I could find. Let's
+change it to: Here are some options."*** ✅ **Done, and it lands on BOTH surfaces at once because they
+share one builder.**
+⭐ **WHY HERS IS BETTER, AND IT GENERALISES: CLAUDE'S LINE WAS DOING WORK IT DID NOT NEED TO.** *"As much
+as I COULD find"* quietly APOLOGISES for the row before a woman has found anything wrong with it. **Hers
+just opens the door.** ▶ **It is the same instinct as her near-miss sentence — STATE THE TRUTH AND STOP
+— and that sentence beat five drafts too.**
+⚠️ **DO NOT PARAPHRASE IT BACK INTO SOMETHING FULLER.** `chatfallback` pins it verbatim AND asserts the
+excusing wording is gone. **An exact string is the right assertion here precisely because it is HER
+wording rather than a mechanism.**
+
+### ⭐⭐ SHE FOUND A REAL GAP: NO WAY BACK TO THE WISHLIST FROM THE CHAT
+▶▶ **HER WORDS: *"On stylist chat after she saves something I like how it pops up to tell her it saved
+to wishlist successfully but after that disappears she might not know how to find her wishlist from the
+stylist chat page. What do you suggest?"*** ⭐ **Note she liked the toast — the toast is not the problem.**
+🚨 **THE ANSWER, AND THE REASONING MATTERS MORE THAN THE FIX: A TOAST IS TRANSIENT BY DESIGN.** Making
+it linger only moves the cliff further out. **What was missing is a PERMANENT way back — which every
+other saving surface in the app already had and the chat did not.**
+✅ **SO IT IS THE EXISTING `data-wldoor` COMPONENT, PUT WHERE IT WAS MISSING. NOTHING NEW WAS BUILT.**
+`_syncHeartTip()` already fills every `[data-wldoor]` in the app and already hides it at zero saves, so
+the chat can never drift from the wishlist screen's own door. ▶ **One line of markup.**
+⚠️ **THREE PLACEMENT DECISIONS, EACH DELIBERATE:**
+**(a) IT ONLY EXISTS ONCE SHE HAS SAVED SOMETHING** — a woman who has saved nothing is never shown a
+door to an empty list. **Asserted in BOTH directions, because a check that only proves it appears would
+pass just as happily on a door that never goes away.**
+**(b) ABOVE `.chat-messages`, NOT IN THE FOOTER.** ▶▶ **She had just asked to TIGHTEN those three footer
+lines (*"much tighter together to save space and give more room to the chatting"*), so a fourth line
+down there would have undone her own change.** Above the messages it also **stays put while she scrolls**
+rather than sliding away with the conversation.
+**(c) TIGHTER MARGINS ON THIS SURFACE ONLY, AND THE TAP TARGET UNTOUCHED** — her own 2026-09-09 rule:
+tighten the MARGINS around a control, never the padding inside it.
+▶ **`chatfallback` 98 → 105.**
+
+## ⭐⭐ SHE TESTED SHOP YOUR STYLE THE SAME EVENING — HER VERDICT AND HER TWO FAULTS (2026-09-09)
+▶▶ **SHE OPENED IT ON HER PHONE AND SEARCHED *"Tan sandals"*. THE BUILD ITSELF PASSED:** her ruling (a)
+is confirmed working from her own screenshot — the real photographed products lead, *"48 pieces · swipe
+→"*, and her six named picks (Strappy Tan Heeled Sandals · Tan Wedge Sandals) sit underneath.
+✅ **HER ANSWERS TO THE FOUR THINGS PUT TO HER: (1) the layout — *"All of that is fine."* (2) the default
+view and the stylist's line — *"Yes that is fine."* (3) the wishlist photos — SHE WANTS TO TALK, see
+below. (4) THE WHITE BAND IS CLOSED: *"I have not noticed a white band on anything."***
+🚨 **SO THE 2026-09-09 PHOTO-BAND QUESTION IS ANSWERED AND SHOULD NOT BE RE-ASKED.** The 150x170
+`contain` frame is right, and the band nobody could rule on but her is a non-issue on a real screen.
+
+### ✅ FAULT 1, FIXED: THE WAITING STAR WAS A SPECK
+▶▶ **HER WORDS: *"The spinning star is way too small. Needs to be bigger and indicate more that
+shopping/searching is happening since it takes a while."*** ⚠️ **SHE IS RIGHT AND THE FIRST BUILD WAS
+PLAINLY WRONG** — a small gold outline star alone in a 338px reserved panel says nothing, and the search
+really does take 5-8 seconds.
+✅ **IT IS NOW A BIG TURNING STAR PLUS HER OWN WORDS from `_FIND_STEPS`**, rotating on the same 3.5s beat:
+*"Looking through all the shops..."* → *"Checking what's actually in stock..."*
+⭐⭐ **SHE CHOSE THE SIZE BY LOOKING, NOT BY ARGUING — 30 / 42 / 54 / 66 WERE RENDERED ON THE REAL SCREEN
+MID-SEARCH, AT HER PHONE'S TRUE PIXEL DENSITY, AND SHOWN TO HER.** ▶ **HER PICK: 66px** — bigger than the
+54 Claude had built, which is the second time in two days her eye went further than the measurement.
+🚨🚨🚨 **AND SHE GAVE THE RULE THAT MATTERS MORE THAN THE SIZE, WHICH CLOSES A QUESTION THIS FILE LEFT
+OPEN: *"66px but I want the gold one not pink. Pink only for the chat."***
+▶▶ **THE PINK CHAT STAR SHIPPED WITH A NOTE SAYING EXACTLY THIS WAS HERS TO ANSWER** — *"THE
+WARDROBE/TRENDING STAR IS DELIBERATELY LEFT GOLD AND SMALL. She asked about the chat star, on the chat
+screen; matching the rest of the app to it is a real question and it is HERS — offer, do not assume."*
+**SHE HAS NOW ANSWERED IT.** ⭐ **PINK IS THE CHAT'S VOICE. GOLD IS EVERYWHERE ELSE.** That is her own
+2026-08-09 mark system holding: **gold = hers, pink = when Catherine herself is speaking.**
+⚠️⚠️ **SO THE STAR HAS ITS OWN CLASS (`.ss-find-star`) AND NO `path` COLOUR RULE AT ALL — it keeps
+`_starSpin`'s own gold. NEVER add it to the `.chat-typing-star,.find-load-star` path selector: THAT
+SELECTOR IS THE PINK.** A future session "unifying" the two would repaint it; `ssfind` asserts it is gold
+and is NOT the chat's pink.
+⭐ **AND THE EDGE WAS PUT TO HER TOO, because at 66px the app's soft grey outline stops being a hairline
+and starts to show.** Three treatments were rendered at true size — grey / none / a deeper gold hairline.
+▶ **HER PICK: *"Grey edge — leave it as the app has it."*** **So this star is the app's existing gold star
+exactly, only bigger. Nothing diverges.** ⚠️ **Claude's eye preferred "no edge" and said so; she chose
+consistency, and that is the right call and hers.**
+⚠️ **MOTION IS THE THING THAT NEVER DIFFERS.** `chatfind`'s *"every waiting star in the app turns the same
+way"* now covers **FIVE** stars by selector membership. **Colour may differ per surface; the turning may
+not.** ▶ **Adding a star to that list is the correct move when a new wait appears — it is how the app
+keeps ONE signal instead of five loaders.**
+⚠️⚠️ **NO THINKING DOTS HERE.** Dots mean THINKING, the turning star means SHOPPING — **her** distinction,
+and adding dots would collapse the two states she deliberately split.
+⭐ **`ssfind` 44 → 49, and the new checks were PROVEN TO BITE:** shrinking the star back to 26px turns
+*"the waiting star is BIG, not the speck she photographed"* red naming `star=26.0px`; removing the words
+turns *"it SAYS what is happening, in her words"* red.
+
+### 🚨🚨🚨 ONLY THE BIG SPINNING STAR IS GOLD — AND CLAUDE WIDENED HER RULING, THEN SHE PUT IT BACK
+▶▶ **HER RULE, IN HER OWN CORRECTION AND NOW PINNED BOTH WAYS: *"I didn't want you to change those other
+stars. Just the one I said — the large spinning one I want gold those others can stay pink please."***
+✅ **SO: the LARGE SPINNING WAITING star (`.ss-find-star`, 66px) is GOLD. The small stylist MARKS stay
+PINK** — the one beside *"Looking for something specific?"* (`.sa-star`) and the one beside *"shopping
+your style..."* (`.shop-load-star`). **Both were reverted to `#EC4899` and the original rationale stands:
+the star means the stylist is working.**
+🚨🚨 **WHAT WENT WRONG, AND IT IS THIS FILE'S OWN LESSON ARRIVING FROM THE OTHER DIRECTION.** Her earlier
+sentence — *"I don't want the pink star on shop your style. That is only for stylist chat. I want the
+gold one."* — **READS screen-wide**, and Claude swept every star on the screen, deleted a written
+rationale as "overruled", and reported it back to her as her own broader rule.
+▶▶ **IT ADMITTED TWO BUILDS AND NEITHER WAS FLAGGED BEFORE BUILDING.** ⚠️⚠️ **THE HABIT IS NOT "ask when
+her words are unclear" — hers were perfectly clear to her. IT IS: WHEN HER WORDS ADMIT TWO BUILDS, SAY SO
+BEFORE BUILDING.** *"Your words could mean this one star or every star on the screen; I am doing X
+because Y."* **One sentence. It is the cheapest test in this file and it was skipped again.**
+🚨 **AND THE SECOND FAULT WAS WORSE THAN THE FIRST: A RATIONALE SHE NEVER RULED ON WAS MARKED
+"RETIRED".** The markup's note (*"the star means the stylist is working"*) was rewritten to say she had
+been shown it and chose gold anyway. **She had not been shown it.** ▶ **NEVER record a rule as overruled
+unless she overruled THAT rule. The note is restored, intact.**
+✅ **`ssfind` NOW PINS BOTH HALVES, and the second half exists BECAUSE of this mistake: a check that only
+asserted "no pink here" would have blessed it.** ⭐ **Proven to bite: sweeping the marks gold again turns
+*"the 'Looking for something specific?' mark STAYS PINK"* red, naming `rgb(230, 194, 78)`.**
+⚠️ **THE LOADING STAR IS ASSERTED FROM THE SOURCE, not the screen** — `_shopStyleGen` writes it when a
+generate starts and replaces it with text when it ends, so a settled screen cannot show it. **The colour
+is a hardcoded literal in that one line, so the source IS the fact.**
+
+### 🚨🚨 THE SHOE PHOTOS — HER CORRECTION, AND CLAUDE MEASURED THE WRONG THING
+▶▶ **HER CORRECTION, 2026-09-09: *"it is not the size that is the problem it is the particular photo the
+angle of the shoe is not right... those were not good shoe photos it's not about the size though. It's
+the point of view and angle of shoe."***
+🚨 **SO THE WHOLE 9%-OF-THE-CARD MEASUREMENT BELOW ANSWERED A QUESTION SHE HAD NOT ASKED.** The numbers
+are real and the "a blanket zoom would crop every top" finding still stands — **but a big picture of a
+badly-angled shoe is still a badly-angled shoe.** ▶ **THE LESSON: MEASURE WHAT SHE SAID, NOT WHAT IS
+EASIEST TO MEASURE.** Size is measurable; point of view is a stylist's judgement, and reaching for the
+measurable one turned her report into a different report.
+⭐⭐ **AND RE-READING THE CODE WITH HER ACTUAL COMPLAINT IN MIND FOUND SOMETHING: `product-find.js:549` IS
+`image: c.raw.thumbnail || (p.thumbnails || [])[0]` — `thumbnails` IS AN ARRAY, AND WE TAKE `[0]`.**
+▶▶ **SO ON A LOOKED-UP (CHECKED) CARD THERE IS GENUINELY A CHOICE OF PHOTOGRAPH WE ARE NOT USING.** On a
+BROWSE card there is only ever the one the shop sends, and nothing can be done there.
+⚠️ **PARTLY FIXABLE, THEREFORE — on the few cards per search that get a look-up.** ▶ **But "a good angle"
+is HER expertise, not a measurement: any build here needs her to say what makes a shoe photo good before
+a line is written.** **Not started.**
+
+### 🚨🚨 FAULT 2, MEASURED AND **NOT** FIXED — AND THE MEASUREMENT IS THE USEFUL PART
+▶▶ **HER WORDS: *"Some of the shoes have bad photos - can't really see the shoe."*** ⚠️ **MEASURED OFF
+HER OWN SCREENSHOT rather than guessed** — the shoe's real bounding box inside the card's photo frame:
+| the piece | fills width | fills height | **of the photo area** |
+|---|---|---|---|
+| Cole Haan Ensley slide (Zappos) | 37% | **25%** | **9%** |
+| Dolce Vita Dom sandal (Bloomingdale's) | 40% | **25%** | **10%** |
+| **12 real TOPS, measured from the captured fixture** | 81-100% | **100%** | **~100%** |
+▶▶ **SO IT IS NOT THE FRAME AND IT IS NOT `contain` — IT IS THE RETAILER'S OWN PHOTOGRAPH, AND IT IS
+CATEGORY-DEPENDENT.** Tops fill their thumbnail completely. **Shoe photos arrive with ~90% white margin
+baked in**, and `contain` faithfully reproduces that margin.
+🚨 **THE OBVIOUS FIX IS WRONG AND MUST NOT BE SHIPPED: a blanket CSS zoom.** Zooming enough to crop a
+sandal's padding would crop **real garment** off every top, which measures 100% — **that is her "nothing
+is ever cropped" rule, broken, on the majority of cards to help a minority.**
+⚠️⚠️ **AND WE CANNOT TELL THEM APART IN THE BROWSER: the thumbnails are `encrypted-tbn*.gstatic.com` and
+send no CORS headers, so a canvas that tried to measure the padding is TAINTED and can read no pixels.
+PROVEN, not assumed** — a probe was written and every read failed.
+▶ **THE LEVERS THAT ACTUALLY EXIST, none built, all hers to choose:** **(a)** bigger cards — the shoe
+goes from ~37px to ~46px tall, but fewer cards fit a swipe, **which runs against her own "as many as
+possible"** · **(b)** proxy each image through a Netlify function so the padding can be measured and
+trimmed — a real fix, real work, and it adds latency to every card · **(c)** accept it, exactly as with
+the Star of the Week sunglasses.
+💡 **AND THE HONEST PARALLEL: THIS IS THE `px2` PROBLEM AGAIN — a wide, short object photographed small
+in a tall frame.** She solved that one herself by stacking two photos. **Here there is only one photo,
+and nobody has looked at it: the finder shows hundreds of unknown photographs a minute.**
+
+### ⏸️ THE WISHLIST PHOTOS — SHE ASKED TO TALK, NOT TO BUILD (2026-09-09)
+▶ **HER WORDS: *"Ok on wishlist but let's talk about the wishlist page having photos or I think you
+mentioned thumbnails?"*** — and, offered four options, she chose ***"Neither yet — let's talk it through
+more."*** ⚠️ **SO DO NOT BUILD EITHER. The photograph is stored on every finder-saved piece already, so
+nothing is lost by waiting.**
+▶ **WHAT SHE WAS TOLD, so it is not re-explained from scratch:** only finder-saved rows carry an image
+(Edit picks, wardrobe shelves and the Star do not), **so plain thumbnails would leave her list RAGGED —
+some rows with a picture, some with a gap** — which reads as broken rather than sparse.
+⭐ **THE RECOMMENDATION STILL STANDS AND IS STILL HERS TO OVERRULE: it is not a second list, it is a
+second VIEW.** The row view she has, plus a fitting-room GRID OF PHOTOGRAPHS big enough to judge side by
+side. **The difference she is feeling is COMPARISON, not category.** ▶ **The next session should ASK HER
+what a fitting room means to her and design to that, rather than propose options again.**
+
+## ✅✅✅ SHOP YOUR STYLE NOW SHOWS REAL PRODUCTS — BUILT 2026-09-09, HER ITEM 3, THE BIG ONE
+▶▶ **HER WORDS ON IT: *"I think that will make an enormous difference."*** ✅ **The finder is wired in.**
+🚨🚨 **BOTH DESIGN FORKS WERE PUT TO HER BEFORE A LINE WAS WRITTEN — this file's own rule, *"when her
+words admit two builds, SAY SO BEFORE BUILDING"*, working as designed rather than after a screenshot.**
+
+### ⭐ HER TWO RULINGS, AND THE COST SHE KNOWINGLY ACCEPTED
+▶ **(a) WHERE THE REAL PRODUCTS GO: *"Real products lead, the six stay below."*** So the finder's row
+goes FIRST and Catherine's six named picks stay underneath as styling. ⚠️ **NOT a replacement — she kept
+the stylist's voice on the screen and simply put the buyable things first.** She was offered "replace the
+six entirely" and "the six on top, products below" and took neither; **the third option repeats the
+below-the-fold mistake her mum's test found and her own one-row fix corrected.**
+▶▶ **(b) THE DEFAULT VIEW SEARCHES TOO: *"Yes — one search from her profile too."*** So a woman who
+types nothing still gets a wall of real photographed pieces rather than six names.
+⚠️⚠️ **SHE WAS TOLD THE COST PLAINLY BEFORE CHOOSING: ~2.5¢ on EVERY open of Shop your Style, including
+every refresh, whether or not she wanted products — the app's biggest per-load cost.** She chose it
+anyway. ▶ **That is her VALUE FIRST principle again, the same call she made on the chat's cost question,
+so it is CONSISTENT and is NOT to be re-litigated.** ⭐ **The honest consequence is that caching stopped
+being a someday item and shipped with it.**
+
+### 🚨 THE SHAPE, SO IT IS NEVER RE-DERIVED
+▶ **The search is asked for on the `style-ai` call `_shopStyleGen` ALREADY MAKES** — a `find` field on
+the same JSON response. **No second AI call, no second wait, no extra money.**
+▶▶ **AND IT IS THE AI READING HER SENTENCE, NOT A PARSER — her standing direction: *"I want the AI to be
+using intelligence and I would like to reduce the amount of rules and breakable things we put in
+there."*** A word list here would have been the 8-entry `CUT` table all over again: a judgement built as
+a promise, which is the exact fault she found on 2026-09-08.
+🚨 **THE GUARANTEE STAYS IN CODE REGARDLESS: `_findKeepHerWords` still deletes any colour, fabric or cut
+the model invented that is not in HER OWN sentence, before it can reach an outbound search** — the rule
+that exists because the model once recommended a jewel tone and then searched for one as though she had
+asked. **`filterNeverWear` still runs over everything that comes back.** ▶ **The model is trusted to
+READ. It is never trusted to ADD a requirement.** Both directions are asserted.
+⭐ **WHEN SHE ASKS FOR NOTHING, THE STYLIST NAMES HER OWN PICK OUT LOUD** (`findlead`) — her 2026-09-08
+delegation ruling: a woman who hands over the choice gets the stylist's silhouette as a real search
+requirement **AND is told whose choice it was, "so it stays hers to overrule."**
+⚠️ **ONE BUILDER AND ONE ROUTE, NEVER A SECOND COPY.** It renders through the SAME `_findBlockHtml` as
+the chat and reaches the network through the SAME `_findFetch`, so the honesty labels, the never-wear
+filter, the one disclosure, the save hearts and her uncapped browse row are identical on both surfaces
+**by construction**. **`ssfind` asserts there is exactly ONE fetch of `product-find` in the whole app.**
+▶ **`_findAskRule` is wired into exactly ONE prompt, asserted** — the cheapest way to "improve" this
+would be to spread it to the four browsing prompts, which would spend a search on surfaces she never
+ruled on.
+
+### 🚨🚨 THE FAULT THE NEW SUITE FOUND IN CLAUDE'S OWN WORK, AND IT IS HER RULE
+▶ A search takes 5-8s and the six styling picks paint in ~1s, so the row's space is RESERVED from the
+first paint — otherwise the whole page lurches downward under a woman already reading it. **Her rule:
+*"NOTHING MAY JUMP. Her audience runs to 80 and a screen that shifts under a reader is genuinely
+disorienting."***
+🚨 **THE FIRST RESERVATION WAS 262px AND IT WAS ESTIMATED, NOT MEASURED — 76px SHORT.** The check caught
+it. ✅ **The real row, read in the browser: head 29.8 + hint 16.1 + card row 290.9 = 337.8.**
+⚠️ **`.ss-find-wait` is 338px, and `ssfind` PRINTS the real number on every run and fails if the residual
+shift exceeds 24px.** ▶ **If the card changes, that needs a NEW VALUE, not a bigger tolerance.**
+⭐ **Proven to bite: putting 262 back turns it red, naming the real 76px shift.**
+
+### ✅ WHAT IT DOES WHEN IT CANNOT DELIVER — QUIETER THAN THE CHAT, AND DELIBERATELY
+▶ **A failed search, or one that genuinely finds nothing, REMOVES the row rather than printing an
+apology.** ⚠️⚠️ **THIS IS NOT A SOFTENING OF HER HONESTY RULE — READ THIS BEFORE "RESTORING" A SENTENCE
+HERE.** In chat, silence would be the whole answer, so it must say what happened. **Here her six styling
+picks are on the screen underneath and are perfectly good**, so the honest move is to claim nothing
+rather than headline a failure over sound advice. **Asserted in both directions: no empty bordered row is
+left behind, and nothing on screen ever says her shops had nothing.**
+
+### 🚨🚨 TWO REGRESSIONS CAUGHT BEFORE SHIPPING, AND BOTH ARE THIS FILE'S OWN SHAPES
+**1. THE CACHE LEAKED INTO THE CHAT, AND IT BROKE HER HONESTY RULE SILENTLY.** It was built for Shop
+your Style — where her ruling makes the same question get asked five times in a sitting — but it was
+made GLOBAL. ▶▶ **`chatfind` went 63 → 59 on the very next run: a second chat answer re-rendered the
+FIRST answer's products, so its ticks and its "not confirmed" labels described the WRONG DRESS.**
+🚨 **A screen that looked perfectly normal, saying verified things about a piece nobody had verified.**
+✅ **The cache is now OPT-IN and Shop your Style is its only caller**, with a check pinning that the chat
+asks for fresh stock every time. ⚠️ **Do not "simplify" it back to always-on.** ▶ **And the reasoning is
+not only the bug: the chat searches ONCE per question, so a woman asking again is asking to be looked at
+again — with real stock, not a replay.**
+**2. THE PRODUCTS ROW WOULD HAVE VANISHED WHEN SHE CAME BACK FROM A STORE.** A resume re-renders her six
+from `localStorage` **without calling the model again**, so the find request had to ride along with them
+— exactly as the honest note already does. ▶▶ **WITHOUT IT: her styling picks come back and the
+photographs she was actually shopping are gone. THAT IS PRECISELY THE FAULT SHE REPORTED ON THE CHAT**
+(*"the searched photo cards disappearing when user leaves and comes back"*), where the stylist then
+promised to *"pull them back up"* with no code that could. **Shipping the same shape on a new surface
+would have been this file's own sentence again.**
+⚠️ **AND THE HALF THAT KEEPS IT HONEST: the stored request is NOT stripped a second time.** `_ssAsk` is
+empty on a resume, so re-running `_findKeepHerWords` would delete the colour and fabric **she DID say**
+and quietly broaden her search. **Validated once, against her own sentence, at the moment she said it.**
+🚨 **AND A THIRD, SMALLER ONE, CAUGHT BY THE RESUME CHECK ITSELF: the request was being computed BELOW
+`_saveShopPicks`, so `var` hoisting stored `undefined`** — the fix silently saved nothing. **That is why
+the check exists, and it is the argument for writing the check before believing the fix.**
+
+### ▶ TEST STATE FOR IT
+✅ **`promptcap` RE-RUN AND STILL 10/0** — the code's own instruction ("re-measure after ANY addition to
+these rules"), obeyed rather than skipped. The `find` field adds ~600 chars and the worst case still
+clears style-ai's 32KB hard cap with a real margin, **and all 132 stores still survive the shrink
+ladder** (her SORT, NEVER TRIM rule).
+**`scratchpad/ssfind.js` — 52 checks, 0 failures.** It serves the real files off disk, **styles.css
+included, with a guard check proving the sheet is applied before any number is believed** (the
+2026-09-09 `copy` lesson). ▶ **THREE HARNESS TRAPS ARE WRITTEN INTO IT, because each one passed or hung
+on perfectly correct code:** setting `window._ssAsk` then calling `_openShopStyleNow` measures NOTHING
+(`_syncShopAsk`'s first line is `_ssAsk=''`) · waiting on `.shop-grid` again returns INSTANTLY because
+the previous render's grid is still there · waiting on `.thinking` RACES an instant stub. **The fix for
+all three: drive the real control, and TAG the old grid then wait for an untagged one.**
+
+## ✅✅ THE SAVE HEART ON THE FINDER'S CARDS — BUILT 2026-09-09, HER ITEM 4
+▶▶ **HER ASK, AS THIS FILE RECORDED IT: *"Put the EXISTING `_wlSaveBtn` on `_findCard`, and store
+`image` on the wishlist entry"*** so a saved piece keeps its photograph. ✅ **Both done.** Every card of
+the chat's product row — the checked ones and all thirty browse cards — now carries the same gold heart,
+the same word **Save**, and the same single wishlist. ⚠️ **NO SECOND LIST, which was the whole point:
+`wishToggle` has stored a SPECIFIC piece all along, so the holding place already existed.**
+
+### 🚨🚨 THE CARD HAD TO STOP BEING ONE BIG `<a>`, AND THAT IS THE PART A LATER SESSION WILL WANT TO UNDO
+`_findCard` returned a single `<a class="find-card">` wrapping the photo, the name and the ticks. ▶ **An
+`<a>` may not contain another control: a heart nested inside the product link fires the save AND opens
+the shop in the same tap** — on the surface a woman taps fastest, swiping thirty cards.
+✅ **SO: the card is a `div`, the link is `.fc-go` INSIDE it covering the whole photo and body, and the
+heart is its SIBLING in `.fc-act`.** The tap target did not shrink and nothing she approved on
+2026-09-09 moved. **It is the same shape as `.shop-card` / `.shop-card-act` everywhere else in the app,
+which is the point — this is the FOURTH surface to carry the heart, not a new kind of card.**
+⚠️ **A future session "simplifying" the card back into one anchor would reintroduce the double-fire in a
+diff that reads as tidying.** `chatfallback` now asserts *"no save heart is nested inside a product
+link"* precisely so that diff goes red.
+⚠️ **AND THE HEART SAYS THE WORD "SAVE", it is not a bare icon on the photo** — her mum's 2026-07-26
+lesson, and the same reasoning that labelled *"+ Add a note"* in words. **Its padding is overridden to
+7px (`.fc-act .wl-save`) because the shared 4px leaves a 22px button and her audience runs to 80. That
+is a TAP TARGET, not decoration; `copy` now holds a floor under it.**
+
+### 🚨🚨🚨 THE HONESTY DECISION INSIDE IT, AND IT IS THE HALF WORTH REMEMBERING
+▶▶ **A CHECKED CARD AND A BROWSE CARD ARE SAVED AS DIFFERENT KINDS.** `p.checks` is already this card's
+own discriminator (*"a browse card carries NO ticks and claims nothing"*), so it decides this too:
+| the card | how it saves | what her wishlist row then says |
+|---|---|---|
+| **checked** (looked up on the retailer's own page) | `exact:true` — keeps that product url and its price | **"Shop it"**, with the price |
+| **browse** (link is that shop's SEARCH for the exact title) | the ordinary kind — store + search term, rebuilt every render | **"Find it"**, and **no price** |
+🚨 **SAVING BOTH AS `exact` WOULD HAVE PUT A PRICE AND "Shop it" ON A ROW THAT LANDS ON A RESULTS
+PAGE** — which is precisely the *"generic store search dressed as a find"* she banned on 2026-09-06.
+▶ **The card itself never claimed that. The saved row must not either.** ⭐ **And the honest kind is the
+more useful one anyway: a rebuilt search self-repairs the day a store URL is fixed.**
+⚠️ **`idName` IS THE RAW TITLE AND `name` THE PRETTY ONE.** A wishlist id is a slug of the name, so
+keying it on `_feedName`'s output would silently re-key every existing save the day that tidier changes
+— **exactly the orphaning caught on 2026-09-08. Never collapse those two back together.**
+▶ **`kind` was added to `_wlRegister` for the analytics line only and is never persisted.** The track
+call exists to answer *which surface do her saves come from*, and *"a piece the finder actually found"*
+is a real fourth answer — now the biggest source of savable cards — so it says so instead of reporting
+as `catalog`.
+
+### ⭐⭐ THE PHOTOGRAPH IS STORED AND DELIBERATELY NOT YET SHOWN — SAY THIS TO HER
+`image` is kept on the entry (https only, the same guard the wardrobe's catalog card uses). ▶ **Nothing
+renders it: the wishlist row view is untouched.** ⚠️⚠️ **HER WORDS ADMIT TWO BUILDS AND THIS FILE'S OWN
+RULE SAYS FLAG IT: (A) store it, ready for the fitting-room view she PARKED — built; (B) also put a
+thumbnail on every wishlist row now.** **B was not built, for two reasons: the fitting-room view is
+exactly where photographs were going to be shown and she parked it herself, and only finder-saved rows
+carry an image, so the list would look ragged — half rows with photos, half without.** ▶ **Offer her B
+in one line; it is small. Do not build it unilaterally.**
+
+### ✅ AND THE CHECKS WERE PROVEN TO BITE, WHICH IS THE STEP USUALLY SKIPPED
+▶ **`chatfallback` section 15, 13 checks.** It clicks the REAL heart and opens the REAL wishlist screen
+rather than calling `wishToggle` directly, because **the id the button carries is the thing that can
+silently go wrong.**
+⭐ **Then the wrong versions were put back and the right checks went red, each naming the real value:**
+saving both kinds as `exact` → *the browse one says "Find it"* fails with `["Shop it →","Shop it →"]`;
+dropping the image → *both saved pieces keep their photograph* fails with `["",""]`.
+🚨 **AND TWO OLD ASSERTIONS WERE REWRITTEN, NOT BUMPED**, per this file's own rule. They selected the
+card BY ITS TAG (`.find-card[rel="sponsored noopener"]`) and went red the moment the card stopped being
+an anchor. **The RULE never moved — every card links out, exactly once, sponsored, somewhere real — so
+they now select `.find-cards .find-card a[href]` and survive the shape changing again.**
+▶ **`copy`'s CSS fixture was updated to the card's REAL shape too.** It was a bare `<a class="find-card">`
+stand-in; **a fixture that drifts from the markup measures a card that does not exist**, which is the
+same false-green family this suite was built to replace.
+
