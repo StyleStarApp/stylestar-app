@@ -6786,8 +6786,11 @@ var _ssFindPre=false;
      row lands: the whisper's clock measures from when SHE was here, not from
      when the search happened to come back. */
 var _ssFindData=null;
+/* The stylist's own sentence, held back until there are cards to say it over.
+   See the block at #ssFindWrap: it is a promise, so it waits for the goods. */
+var _ssPromise='';
 async function _shopStyleGen(){
-  _ssFindPre=false;_ssFindData=null;
+  _ssFindPre=false;_ssFindData=null;_ssPromise='';
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
   // Drives the subtitle rule above: only the quiz-mode line is decorative.
@@ -6991,8 +6994,25 @@ async function _shopStyleGen(){
          ⚠️ NO THINKING DOTS HERE. Dots mean THINKING, the turning star means
            SHOPPING — her distinction, 2026-09-09, and adding dots would collapse
            the two states back into one. */
+      /* 🚨🚨 THE PROMISE ARRIVES WITH THE GOODS — HER DECISION, 2026-09-10, AND IT
+         RETIRES A WHOLE FAMILY OF FAULTS RATHER THAN ONE OF THEM.
+         ▶▶ THREE FAULTS SHE FOUND IN ONE DAY WERE THE SAME SHAPE: "the same
+           pieces waiting" then different pieces · "I chose a belted dress" then
+           any dress · "I chose a belted dress" then nothing at all. EVERY ONE
+           WAS A PROMISE MADE BEFORE THE APP KNEW IT COULD KEEP IT.
+         ▶ The stylist writes her sentence in the same breath as her six picks,
+           long before the search returns — so showing it DURING the wait is the
+           app vouching for an outcome it has not seen.
+         ✅ SO IT IS HELD until `_ssFindPaint` really has cards. During the wait
+           she still gets the turning star and `_FIND_STEPS`, which is her own
+           2026-09-06 B+C decision and is untouched: reassurance that work is
+           happening, with nothing claimed about how it ends.
+         ⭐ NOTE WHAT THIS IS: NOT a new rule, a guard or a test to maintain. The
+           promise becomes unbreakable BY CONSTRUCTION, because it cannot be
+           spoken until the thing it promises is in hand. That is her standing
+           direction — fewer rules and breakable things — applied to a bug. */
+      _ssPromise=(!_ssAsk)?_ssFindLead(parsed):'';
       html+='<div id="ssFindWrap" class="find-block ss-find">'
-        +(!_ssAsk&&_ssFindLead(parsed)?'<div class="ss-find-lead">'+_esc(_ssFindLead(parsed))+'</div>':'')
         +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
         +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
     }
@@ -7058,22 +7078,26 @@ function _ssFindPaint(wrap,data,req){
        ONE: it "has exactly the shape of a lie, because it is indistinguishable
        from the truth". Fixed in chat on 2026-09-09; this surface never got it. */
   if(data&&(data.why==='search-failed'||data.why==='budget')){
-    var _ld=wrap.querySelector('.ss-find-lead');
     /* ⚠️ HER WORDING, REUSED VERBATIM, NEVER REWRITTEN. Her ruling on it: "I
        think what you came up with is fine and the stylist chat already has a
-       good personality and words things well." ONE sentence, in one place. */
+       good personality and words things well." ONE sentence, in one place.
+       ▶ AND NO PROMISE HERE, deliberately: since the lead is held until there
+         are cards, a woman whose search died was never told what was coming, so
+         there is nothing to apologise for and nothing to explain away. She gets
+         one plain sentence about what happened. */
     wrap.className='find-block find-note';
-    wrap.innerHTML=(_ld?_ld.outerHTML:'')+'<div class="find-head">'+_FIND_DEAD+'</div>';
+    wrap.innerHTML='<div class="find-head">'+_FIND_DEAD+'</div>';
     return false;      /* nothing to store: a dead search is never cached */
   }
   /* ▶ Nothing found is not a failure and does not deserve a headline over her
      styling. `_findBlockHtml` returns only its own honest sentence in that case;
      an empty row would leave a bordered gap, so it goes. */
   if(!data||data.why){wrap.remove();return false;}
-  var lead=wrap.querySelector('.ss-find-lead');
   var html=_findBlockHtml(data,req);
   if(html.indexOf('find-card')<0){wrap.remove();return false;}
-  wrap.innerHTML=(lead?lead.outerHTML:'')+html;
+  /* ⭐ HERE, AND ONLY HERE, IS THE PROMISE SPOKEN — in the same breath as the
+     cards that keep it. There is no other route to the screen. */
+  wrap.innerHTML=(_ssPromise?'<div class="ss-find-lead">'+_esc(_ssPromise)+'</div>':'')+html;
   return true;
 }
 async function _ssFindRun(req){

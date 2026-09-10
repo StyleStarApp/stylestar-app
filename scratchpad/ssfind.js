@@ -434,6 +434,31 @@ ok('the stylist SAYS the choice was hers', /belted dress/i.test(d.lead || ''), S
 /* 🚨 THE CHECK HER SCREENSHOT ASKED FOR: the promise and the search are ONE. */
 ok('HER RULING: the pick she was PROMISED is the pick that gets searched',
    FINDCALLS[0].cut === 'belted', JSON.stringify(FINDCALLS[0]));
+/* 🚨🚨 THE PROMISE ARRIVES WITH THE GOODS — HER DECISION, 2026-09-10. Measured
+   DURING the wait, with the stub deliberately slowed, because "before the cards"
+   is the only moment this can be got wrong. ⚠️ THIS IS THE CHECK THAT COULD MOST
+   EASILY BE VACUOUS: if the search finished before it looked, an absent promise
+   would prove nothing. So it asserts the star is STILL TURNING at the same
+   instant — the wait is real and the promise is genuinely not there yet. */
+DELAY = 2500;
+REPLY = { items: six(), findlead: 'I chose a belted dress, you told me you love them.',
+          find: { item: 'dress', colour: '', fabric: '', cut: 'belted' } };
+await ask(pg, '');
+await pg.waitForSelector('#ssFindWrap .ss-find-wait', { timeout: 20000 });
+const during = await pg.evaluate(() => ({
+  waiting: !!document.querySelector('#ssFindWrap .ss-find-wait'),
+  promise: !!document.querySelector('#ssFindWrap .ss-find-lead'),
+  txt: (document.getElementById('ssFindWrap') || {}).innerText || '' }));
+ok('DURING the wait she is told work is happening, and promised NOTHING',
+   during.waiting && !during.promise && !/belted/i.test(during.txt),
+   JSON.stringify(during));
+await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
+const afterw = await pg.evaluate(() => ({
+  promise: !!document.querySelector('#ssFindWrap .ss-find-lead'),
+  txt: (document.getElementById('ssFindWrap') || {}).innerText || '' }));
+ok('...and the promise appears in the same breath as the cards that keep it',
+   afterw.promise && /belted dress/i.test(afterw.txt), JSON.stringify(afterw).slice(0, 140));
+DELAY = 0;
 ok('...and the words the shops actually see carry it on EVERY query',
    buildQueries(FINDCALLS[0]).length > 0 &&
    buildQueries(FINDCALLS[0]).every(q => /belted/.test(q)),
@@ -499,8 +524,16 @@ f = await pg.evaluate(() => ({
   lead: !!document.querySelector('#ssFindWrap .ss-find-lead') }));
 ok('HER CASE: a promise that could not be kept is answered, not deleted',
    /didn.t come back just then/i.test(f.txt), f.txt.slice(0, 160));
-ok('...and the promise she was given is still on the screen beside it',
-   f.lead && /belted dress/i.test(f.txt), 'lead=' + f.lead);
+/* 🚨🚨 REWRITTEN THE SAME DAY IT WAS WRITTEN, AND THE REASON IS THE POINT.
+   This check used to require the stylist's promise to stay on screen BESIDE the
+   apology — the best that could be done while the promise was spoken during the
+   wait. Her decision an hour later was better and removed the need for it: THE
+   PROMISE IS NOW HELD UNTIL THERE ARE CARDS TO KEEP IT WITH.
+   ▶▶ So a woman whose search died was never told what was coming, and there is
+     nothing to apologise for. The fix is not a kinder apology, it is HAVING
+     NOTHING TO APOLOGISE FOR. */
+ok('...and she was never promised anything the search could not deliver',
+   !f.lead && !/belted dress/i.test(f.txt), 'lead=' + f.lead + ' txt=' + f.txt.slice(0, 90));
 FIND = null;
 
 REPLY = { items: six(), find: { item: 'clogs', colour: '', fabric: '', cut: '' } };
