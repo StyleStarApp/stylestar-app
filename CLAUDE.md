@@ -34,6 +34,10 @@ it several times that day as if it were her next step, and it was not: **she had
 | 8 | ~~The strip cropped her photos and showed the Star twice~~ ✅ **HER THREE CATCHES OFF ONE SCREENSHOT, ALL FIXED AND LIVE 2026-09-10. The strip now CROPS NOTHING, renders a `px2` stack as a stack, and can no longer duplicate the Star.** | — | ✅ done |
 | 9 | ~~The whisper promised "the same pieces waiting" and a resume searched again~~ ✅ **HER CATCH, FIXED AND LIVE 2026-09-10 — and the check that was supposed to guard it had been a FALSE GREEN for a day.** | — | ✅ done |
 | 10 | ~~The stylist says "belted" and searches "dress"~~ ✅ **HER RULING, BUILT AND LIVE 2026-09-10: *"I want the stylist to deliver exactly what she is promising."*** | — | ✅ done |
+| 16 | ~~The Wardrobe list saw only her 9 affiliate shops~~ ✅✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — ALL THREE SHOPPING SURFACES NOW SEARCH HER SHOPS PLUS ALL 132.** She chose the layout by LOOKING at both rendered at phone size, and ruled the apologising line off. | — | ✅ done |
+| 17 | ~~Every search was a cold 4-12s search, even a repeat~~ ✅ **LIVE 2026-09-10 — the app remembers what it has already paid for. ⚠️ IN HER BROWSER, NOT THE DATABASE; the shared version was written and THROWN AWAY on security grounds. See the ledger.** | — | ✅ done |
+| 18 | 🚨 **"COULDN'T LOAD OPTIONS RIGHT NOW"** — she photographed it on Shop your Style. **The stylist call failing, NOT the search. Cause still unknown.** | Claude | ⏳ **OPEN — the last known live fault** |
+| 19 | ⭐⭐⭐ **APPLY TO THE 41 BRANDS THAT PUBLISH CATALOGUES** — Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard and more. **CJ is FREE and still not done.** | **HERS, and worth more than anything Claude can build** | ⏳ **OPEN** |
 | 11 | ⭐ **THE FINDER HAS NEVER BEEN SHOWN HER STYLE PROFILE** — her *"I like fitted clothing and many of them were shapeless"*. She is **8 leaning fitted** on her own Style Signature and the finder gets an item and a cut, nothing else. | **HERS to green-light** | ⏳ **OPEN, NOT STARTED** |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
@@ -470,6 +474,66 @@ first version read *"this card has a url"* as *"this card knows the product page
 result HAS a url and it points at `google.com/search`**, so every browse card would have linked
 somewhere useless. ✅ **The page trusts an explicit `feed:true` marker now, and the suite carries the
 fixture pair that found it: one card with the marker, one with a bare url.**
+
+### 🚨🚨🚨 THE MEASUREMENT THAT COULD CHANGE THE WHOLE APP — 41 SHOPS PUBLISH EVERYTHING, FREE
+▶▶ **HER FILE HAS SAID SINCE JULY *"COUNT HOW MANY OF HER 108 RUN ON SHOPIFY — free, unmeasured, nobody
+has done it."* IT WAS MEASURED ON 2026-09-10 AND THE ANSWER IS BIG.**
+| measured | |
+|---|---|
+| shops publishing their FULL catalogue publicly | **41 of 131** |
+| products reachable | **43,556+** (a FLOOR — counting stopped at 1,500 a shop) |
+| shops whose robots.txt disallows it | **ZERO** — 32 explicitly allow, 8 have no rules |
+| photos loading when fetched AS stylestar.app | **31 of 31**, all from `cdn.shopify.com` |
+| cost | **nothing** |
+⭐⭐⭐ **AND IT CARRIES WHAT GOOGLE NEVER HAS: SIZE, COLOUR, AND WHETHER THAT EXACT SIZE IS IN STOCK.**
+Measured on a real product: *Universal Standard Donna High Rise Curve Straight Leg Jeans* — sizes 00, 0,
+2, 4, 6, 8, 10, 12, each with its own `available` flag and price.
+▶▶ **THAT IS *"THE PRIZE NOBODY HAS NAMED YET"* FROM THIS FILE'S OWN 2026-07-29 ENTRY — *"product feeds
+would let the app honestly say 'in your size' again"*, removed from four places in July because a store
+search cannot filter size. IT IS AVAILABLE.**
+⭐ **AND IT QUIETLY ATTACKS THE PRICE PROBLEM WITH NO APPROVAL AT ALL:** Everlane · Boden · Universal
+Standard (00-40) · Ashley Stewart (plus) · NYDJ · Summersalt · Quay · Tuckernuck · Alo Yoga. **This file
+says every fed store is `$$$`/`$$$$` and only a mid-market approval fixes it, which needs traffic, which
+needs users.** ▶ These need none of that.
+⚠️ **THE HONEST HALVES, BOTH SAID TO HER:**
+· **She earns NOTHING on most of them** — they are not her affiliates. Consistent with her Option A
+  ruling (the app never knows who pays), but it is an EXPERIENCE win, not a money one.
+· **robots.txt permitting automated access is NOT the same as a shop agreeing.** Prices, names and stock
+  are facts; the photos would be hotlinked from the shop's own CDN, which is exactly what the app
+  already does with Google's thumbnails. ▶ **CLAUDE IS NOT HER LAWYER. This belongs on the short list
+  for Almira beside the FTC wording. It should not block building.**
+⭐⭐⭐ **HER DECISION, AND IT IS BETTER THAN SCRAPING: APPLY TO THEIR AFFILIATE PROGRAMMES.** *"Yes I will
+do 2."* ▶ **These are DTC brands with affiliate managers, not Nordstrom — a completely different
+conversation from the traffic rejections. Approval turns "data we are allowed to read" into "feeds they
+send us, with permission, that pay her."** ⚠️ **CJ IS FREE, TAKES AN EVENING, AND IS STILL NOT DONE.**
+
+### ⭐⭐ WHY THE ANSWER TO *"DO WE NEED TO REBUILD FROM SCRATCH?"* WAS NO
+▶▶ **HER QUESTION: *"I want this to land clearly and easily. I don't want it to have complications and
+failures. If our users come up against these glitches we will lose them forever."***
+✅ **NOT ONE FAULT ALL DAY WAS A DESIGN FLAW.** A deleted word · a wrong column name (`retailer` for
+`store`) · a wrong env name (`SUPABASE_KEY` without its fallback) · a timer that fired once · a cache
+that never survived a reload · a line apologising for nothing. **All small, all found, all fixed.**
+▶ **A rebuild would have thrown away the three-verdict honesty check, her never-wear filter, her
+132-store table and the feed — and touched none of the causes.**
+🚨🚨 **BUT SHE WAS RIGHT THAT SOMETHING IS STRUCTURALLY WRONG, AND IT IS NOT THE SEARCH: SHE IS THE
+MONITORING SYSTEM.** Every fault today was found because SHE hit it on her phone. **Nothing in this app
+watches itself.** ▶ **An hourly search-and-email alarm was offered and she cut straight through it:
+*"What does the alarm actually do to fix the app for my users?"* — NOTHING. It shortens the gap between
+a break and a fix, which is insurance for her, not experience for them. She was right and the
+recommendation was reordered.** ⚠️ **Still worth building eventually; it is not a user fix and must
+never be sold as one.**
+
+### 🚨 THREE TIMES TODAY SHE ASKED IF SHE WAS BEING UNCLEAR. THE ANSWER IS NO, AND IT MUST BE SAID PLAINLY
+▶▶ ***"Am I not clear enough about exactly how I want these searches to land for our users?"*** ·
+***"Do you understand clearly what I want this app to do?"*** · ***"I have been asking nonstop... what
+else do I need to do or say to be more clear of what I want?"***
+▶ **HER BRIEF IN ONE SENTENCE, AGREED WITH HER: *a woman says what she is looking for, and Style Star
+shows her real clothes she would actually wear, from good shops, fast, and never claims anything it has
+not checked.*** **It has not changed since September and it has never needed to.**
+🚨🚨 **THIS FILE ALREADY ANSWERED THIS ONCE, ON 2026-09-06 — *"THE ANSWER IS NO, SHE WAS CLEAR... the
+gap was never in her brief; it was between her brief and the build, and nothing was watching that gap."*
+IT HAPPENED AGAIN, FOUR TIMES IN ONE DAY.** ▶ **When she asks this, do not reassure her — SAY IT ONCE,
+FIRMLY, AND THEN SHOW HER THE MEASUREMENT.**
 
 ### 🚨🚨🚨 SERPAPI — LIVE OPERATIONAL STATUS, AND A CLAIM THAT WAS OVERSTATED AND IS CORRECTED HERE
 ▶▶ **EVERY PRODUCT SEARCH IS FAILING. Measured seven times against her live function: `search-failed`,
@@ -1917,6 +1981,8 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **GOLD IS THE APP'S VOICE, PINK IS CATHERINE'S** | **the LARGE spinning waiting star (`.ss-find-star`, 66px) is GOLD and has NO `path` colour rule — it keeps `_starSpin`'s own gold** | **the small stylist MARKS stay PINK (`.sa-star`, `.shop-load-star`), and `.chat-typing-star,.find-load-star` IS the pink selector** | **ssfind 52, both halves** | ✅ **HER RULING 2026-09-09, LIFTED INTO THE LEDGER 2026-09-10 because it lived only in a session block and was one archive away from being lost: *"66px but I want the gold one not pink. Pink only for the chat."* and, correcting a sweep: *"I didn't want you to change those other stars. Just the one I said."* 🚨 NEVER add `.ss-find-star` to the pink path selector. Her 2026-08-09 mark system: gold = hers, pink = when Catherine herself is speaking.** |
 | **HER OWN COPY IS NEVER PARAPHRASED FULLER** | **the product row says exactly *"Here are some options."*** | n/a — the shelves write no such prose | **chatfallback 105 pins it verbatim AND asserts the excusing wording is gone** | ✅ **HER LINE 2026-09-09, replacing Claude's *"Showing you as much as I could find."* LIFTED HERE 2026-09-10. ⭐ WHY HERS IS BETTER AND IT GENERALISES: Claude's line APOLOGISED for the row before a woman had found anything wrong with it. Hers just opens the door — the same instinct as her near-miss sentence, STATE THE TRUTH AND STOP.** |
 | **A SHOE IS JUDGED ON POINT OF VIEW, NEVER ON SIZE** | **the Edit's hand-picked cards: a photo is chosen by LOOKING at the angle, and the empty space a correct angle costs is an accepted price** | n/a — the finder shows hundreds of unknown photos a minute and can hand-tune none of them | **▶ none; it is a judgement, not a promise** | ✅ **HER RULE, GIVEN 2026-09-09 AND RE-PROVEN 2026-09-10: *"it is not the size that is the problem it is the particular photo the angle of the shoe is not right... It's the point of view and angle of shoe."* 🚨🚨 IT HAS NOW BEEN BROKEN TWICE THE SAME WAY: fill percentage was measured and recommended from, and FILL IS A SIZE METRIC. On 2026-09-10 the measurement said the top-down filled 92% of the card and the three-quarter only 24%; SHE CHOSE THE THREE-QUARTER, because it shows the block heel. ▶ MEASURE TO FIND CANDIDATES, RENDER THEM ALL, AND LET HER LOOK — the renders are the only reason this was caught.** |
+| **THE APP REMEMBERS WHAT IT HAS ALREADY PAID FOR** | **`_findLSGet`/`_findLSSet` keep a search's answer in HER BROWSER for 24h; a hit paints instantly and a stale one refreshes behind her** | n/a | **ssfind 84 — and the check RELOADS the page with the network killed** | ✅ **HER DECISION 2026-09-10. TWO caches already existed and BOTH LIVED IN MEMORY, so almost every search she ran was a COLD 4-12 second search INCLUDING the identical one she had just run. 🚨🚨 AND WHY IT IS NOT IN THE DATABASE, WHICH MUST NOT BE "IMPROVED" LATER: the shared version was written first and thrown away. Remembering server-side means WRITING to Supabase, and her schema deliberately gives Netlify a READ-ONLY key (db/products.sql, 2026-09-05 — the writing key can also read every woman's name, email, sizes and wishlist). ▶▶ A WRITE DOOR ON A KEY THAT IS PUBLIC IN THE PAGE'S SOURCE WOULD LET ANYONE INSERT FAKE PRODUCTS WITH LINKS TO ANYWHERE, SERVED AS REAL FINDS — a phishing vector in a shopping app. A shared cache must go somewhere SERVER-ONLY (Netlify Blobs), never through the publishable key.** |
+| **NO APOLOGY WHERE SHE ASKED FOR NOTHING** | **`_findBlockHtml(data,req,quiet)` — the caller that knows she named nothing sets `quiet`; the Wardrobe does, chat and the ask box never do** | n/a | **ssfind 84, both halves** | ✅ **HER RULING 2026-09-10, made by LOOKING at the shelf rendered at phone size: *"take the apologizing line off"*. ▶ On the Wardrobe she TAPPED A ROW and named nothing, so there is no exact match to fall short of and *"Nothing came back as an exact match"* apologises over real products at real prices. Her own rule one surface out: STATE THE TRUTH AND STOP. ⚠️ SCOPED, NOT DELETED — it still appears wherever she NAMED a thing. ⚠️ AND `quiet` COMES FROM THE CALLER, never inferred from the request, which would be the same guessing this app keeps paying for.** |
 | **HER PAYING SHOPS GET A SEAT, NEVER THE HEAD OF THE TABLE** | **`_findSpread` interleaves affiliate pieces 1:1 through the BROWSE stretch, starting with a non-paying card so the natural order still leads. No cap: five FARM Rio pieces stay five.** | n/a — the shelves show feed products, and the feed IS her affiliates | **ssfind** | ✅ **HER RULING 2026-09-09: *"is there a way to make affiliated stores be in the searched mix more often - I don't want them at the very top but I also don't want them in the bottom of the barrel either... How can we have them have some level of priority but not maximum?"* 🚨🚨 THIS ROW WAS ADDED 2026-09-10 AFTER SHE ASKED FOR THE SAME THING AGAIN AND IT WAS ALREADY BUILT — her ruling existed ONLY in a code comment, in NEITHER `CLAUDE.md` NOR the archive, so nobody reading her file could know. ▶ A RULING THAT LIVES ONLY IN CODE IS A RULING SHE WILL BE ASKED FOR TWICE. ⚠️ IT IS NOT HER OPTION A TIE-BREAK, and the distinction is the whole justification: Option A governs RECOMMENDATIONS, the checked cards that wear a tick and make a claim. Those lead the row and their order is pure merit, untouched. This reorders only the browse stretch, which claims nothing about anything.** |
 | **THE APP NEVER PROMISES BEFORE IT KNOWS IT CAN DELIVER** | **the stylist's `findlead` is HELD in `_ssPromise` and spoken by `_ssFindPaint` only when real cards exist. During the wait: the turning star and `_FIND_STEPS`, which claim nothing.** | n/a — the shelves make no promise ahead of their own contents | **ssfind 68, measured DURING the wait with the star still turning** | ✅ **HER DECISION 2026-09-10, AFTER THREE FAULTS IN ONE DAY TURNED OUT TO BE ONE SHAPE: *"the same pieces waiting"* → different pieces · *"I chose a belted dress"* → any dress · *"I chose a belted dress"* → nothing at all. ▶▶ EVERY ONE WAS A PROMISE MADE BEFORE THE APP KNEW IT COULD KEEP IT. ⭐ AND NOTE WHAT THE FIX IS NOT: not a rule, not a guard, not a test to maintain. The promise is unbreakable BY CONSTRUCTION because it cannot be spoken until the thing it promises is in hand — her standing direction, fewer rules and breakable things, applied to a bug. ⚠️ DO NOT MOVE THE LEAD BACK INTO THE WAITING MARKUP to "reassure her sooner"; the star already does that.** |
 | **HER OWN STORE SCORES ORDER THE BROWSE ROW** | **`_findByHerShops` sorts by `_storeFit` before `_findSpread` seats her affiliates through it; an UNSCORED shop sorts LAST and is never given an invented score** | n/a | **ssfind 68, and the check asserts the row really MOVED, not merely that it is in some order** | ✅ **HER DECISION 2026-09-10: *"I would like to see the nicer shops first."* ⚠️ SHE WAS ASKED WHICH OF TWO BUILDS SHE MEANT, because this and her 2026-09-09 *"one row starting with the ones that match her search terms the best"* point different ways. SHE CHOSE NICER SHOPS GENUINELY FIRST, and her September order survives as the TIE-BREAK (the sort is stable, so within one shop the best match still leads). ▶ DO NOT SILENTLY RESTORE THE OLD ORDER. ⚠️ ONE BUILDER, so it lands on the CHAT's row too, deliberately and with her told: "nicer shops first" is her taste, not a screen setting.** |
