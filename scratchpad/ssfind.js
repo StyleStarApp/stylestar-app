@@ -221,7 +221,16 @@ const fresh_grid = pg => pg.waitForFunction(() => {
    then pass by seeing nothing, the exact false green this project keeps paying
    for. Section 6 is the one place the cache is deliberately left warm. */
 async function ask(pg, text, keepCache, keepLog) {
-  if (!keepCache) await pg.evaluate(() => { try { _FIND_CACHE.clear() } catch (e) {} });
+  /* 🚨 BOTH LAYERS, OR EVERY CHECK BELOW GOES BLIND — 2026-09-10. Searches are
+     now remembered in localStorage as well as in memory, and clearing only the
+     memory left the durable copy answering every "fresh" search instantly. The
+     first thing it broke was the check that measures what she sees DURING a
+     wait, because there was no longer a wait to measure. ▶ A RESET THAT RESETS
+     HALF THE STATE IS HOW A SUITE QUIETLY STOPS TESTING WHAT IT SAYS IT DOES. */
+  if (!keepCache) await pg.evaluate(() => {
+    try { _FIND_CACHE.clear() } catch (e) {}
+    try { localStorage.removeItem('ss_find_v1') } catch (e) {}
+  });
   FINDCALLS.length = 0;
   await stamp(pg);
   await pg.evaluate(() => { _openShopStyleNow('quiz'); });
@@ -756,6 +765,53 @@ ok('...and the row is stored, so the resume really has something to bring back',
    !!(rstore.d && (rstore.d.browse || []).length === 1),
    JSON.stringify(rstore.d ? {browse: (rstore.d.browse || []).length} : null));
 FIND = null;
+
+/* ═══ 12 · IT REMEMBERS WHAT IT ALREADY PAID FOR ══════════════════════════ */
+console.log('\n12. a search she has already run survives a reload');
+/* 🚨🚨 HER QUESTION, 2026-09-10: "do we need to rebuild the shopping searches
+   from scratch? I want this to land clearly and easily." THE ANSWER WAS NO, and
+   this is the reason: TWO caches already existed and BOTH lived in memory, so
+   almost every search she ran was a COLD 4-12 second search -- including the
+   identical one she had just run.
+   ⚠️ THE RELOAD IS THE WHOLE TEST. An in-memory cache passes any check that
+     never reloads, which is exactly how the old ones looked like they worked. */
+FIND = null;
+REPLY = { items: six(), findlead: 'I chose a belted dress, you told me you love them.',
+          find: { item: 'dress', colour: '', fabric: '', cut: 'belted' } };
+await ask(pg, '');
+await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
+const firstShown = await pg.evaluate(() =>
+  document.querySelectorAll('#ssFindWrap .find-card').length);
+const kept = await pg.evaluate(() => {
+  try { return Object.keys(JSON.parse(localStorage.getItem('ss_find_v1') || '{}')).length } catch (e) { return -1 }
+});
+ok('the answer is written down, not only held in memory', kept === 1, 'entries=' + kept);
+
+/* ▶ THE REAL RETURN PATH: a full reload, which is what Back from a shop does and
+   what wiped the old caches every single time. */
+await pg.reload(); await pg.waitForTimeout(2300);
+await pg.evaluate(() => { const c = document.querySelector('.hm-entrance'); if (c) c.remove(); });
+FINDCALLS.length = 0;
+FINDSTATUS = 500;          // 🚨 the network is DEAD now: only memory can answer
+await pg.evaluate(() => { _openShopStyleNow('quiz'); });
+await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
+const backAfter = await pg.evaluate(() => ({
+  cards: document.querySelectorAll('#ssFindWrap .find-card').length,
+  txt: (document.getElementById('shopStyleContent') || {}).innerText || '' }));
+ok('...and after a reload her pieces come back with the search DEAD',
+   backAfter.cards === firstShown && backAfter.cards > 0,
+   'cards=' + backAfter.cards + ' first=' + firstShown);
+ok('...and she is not told the search failed, because it did not need to run',
+   !/didn.t come back just then/i.test(backAfter.txt), backAfter.txt.slice(0, 110));
+FINDSTATUS = 200;
+
+/* 🚨 THE ANTI-VACUOUS HALF: a DIFFERENT question must still really search, or
+   this check would pass on a build that simply showed the last row forever. */
+FINDCALLS.length = 0;
+await ask(pg, 'a linen skirt', true);
+await pg.waitForTimeout(1500);
+ok('...while a question she has NOT asked before really does search',
+   FINDCALLS.length === 1, JSON.stringify(FINDCALLS));
 
 ok('zero JS errors across every scenario', errs.length === 0, errs.join(' | '));
 await ctx.close();
