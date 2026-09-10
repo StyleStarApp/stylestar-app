@@ -32,7 +32,14 @@ it several times that day as if it were her next step, and it was not: **she had
 | 6 | ~~Three Edit pieces + the Edit's order~~ ✅ **BUILT AND LIVE 2026-09-10 — her Simkhai tote, Simkhai sandal and Zoe Lev necklace, all Olivela and all EARNING; the Edit is 35 items and the shops that pay her now LEAD.** | — | ✅ done |
 | 7 | ~~The Edit strip could not see one of her photos~~ ✅ **HER CATCH, FIXED 2026-09-10 — and it turned up a latent bug that would have shipped a broken card when the Star rotation moved on.** | — | ✅ done |
 | 8 | ~~The strip cropped her photos and showed the Star twice~~ ✅ **HER THREE CATCHES OFF ONE SCREENSHOT, ALL FIXED AND LIVE 2026-09-10. The strip now CROPS NOTHING, renders a `px2` stack as a stack, and can no longer duplicate the Star.** | — | ✅ done |
-▶▶ **EVERY ROW IS DONE. There is no approved next build.** ⭐ **The next session's job is to ASK — what her
+| 9 | ~~The whisper promised "the same pieces waiting" and a resume searched again~~ ✅ **HER CATCH, FIXED AND LIVE 2026-09-10 — and the check that was supposed to guard it had been a FALSE GREEN for a day.** | — | ✅ done |
+| 10 | 🚨 **THE STYLIST SAYS "belted" AND SEARCHES "dress"** — proven by running the app's own function. **Her 2026-09-08 delegation ruling, never applied to this half.** | **HER — fork (A)/(B) put to her, unanswered** | ⏳ **OPEN** |
+| 11 | ⭐ ***"none of them honestly I would ever wear"*** — how much of that is the belt, and how much is the kind of dress the finder reaches for? | **HER — asked, unanswered** | ⏳ **OPEN** |
+🚨🚨 **THE BOARD IS NO LONGER CLEAR — SHE TESTED THE LIVE APP ON 2026-09-10 AND FOUND THREE THINGS.
+Rows 10 and 11 are OPEN AND BOTH ARE WAITING ON HER, not on code.** ▶ **Read the block below before
+offering her anything else; the belted fork is the most valuable question on this page.**
+▶▶ *The note that stood while rows 1-9 were all closed, kept because its advice is still right the next
+time the board empties:* **EVERY ROW IS DONE. There is no approved next build.** ⭐ **The next session's job is to ASK — what her
 testers said, and what a fitting room means to her — and let her answers set the work. See "WHAT CLAUDE
 BUILDS NEXT" below, which is deliberately a list of UNAPPROVED options rather than a queue.**
 ⭐⭐ **AND 2026-09-10 FOUND THE ANSWER TO "WHAT DO WE DO WHEN THERE IS NO APPROVED BUILD": SHE BROUGHT
@@ -290,213 +297,131 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-10, HER EDIT GREW BY THREE AND IS LIVE. READ THIS BLOCK FIRST.
-🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is detail, newest first, and some older blocks
-are HISTORY — if a line further down contradicts this one, THIS ONE WINS.**
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-10 (LATER), SHE OPENED THE APP AND THE WHISPER LIED TO HER. READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is detail, newest first, and some older
+blocks are HISTORY — if a line further down contradicts this one, THIS ONE WINS.**
 
-### ⭐ WHAT SHE DID TODAY — CONTENT, NOT CODE, AND IT IS THE HALF ONLY SHE CAN DO
-▶▶ **SHE ADDED THREE PIECES TO THE STYLE STAR EDIT, ALL FROM OLIVELA, ALL OF WHICH EARN HER A
-COMMISSION** (mid 50334). **The Edit went 32 → 35 items** and the NEW pill relit on its own.
-| her piece | price | photo |
-|---|---|---|
-| **Simkhai Devon Suede Tote** | $695 | the shop's three-quarter view |
-| **Simkhai Stella Suede Block Heel Sandal** | $445 | **her pick — the angled one** |
-| **Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace** | $825 | the shop's first photo, her instruction |
-✅ **EVERY ONE WAS VERIFIED ON THE SHOP'S OWN DATA BEFORE IT SHIPPED, NOT TAKEN ON TRUST:** each price
-matched her figure exactly, each page's `schema.org` availability was read, and each photograph was
-fetched with `Referer`/`Origin` set to stylestar.app to prove it will load on a woman's phone.
-⚠️ **ONE SIZE OF THE STELLA IS GONE AND SHE RULED ON IT: US 5 (EU 35) is `OutOfStock`, US 6-11 are
-live. HER CALL: *"Leave it in."*** ▶ Both signals present means variants differ, which is her eye, and
-she used it.
+### 🚨🚨🚨 HER THREE FINDINGS, IN HER OWN WORDS, AND ALL THREE ARE REAL
+▶▶ ***"When I opened up the app I got the whisper that said Shop your style is right where you left it
+with the same pieces waiting. So I clicked on it and this was not true. The spinning star took a long
+time and pieces came up. The stylist chose to search belted dresses for me (good choice bc I noted that
+on my refinements that I love belted dresses) but all the selections that came up were not belted
+dresses and none of them honestly I would ever wear. They were all bad choices."***
+⚠️ **EVERY ONE WAS CHECKED IN THE CODE BEFORE BEING AGREED WITH**, which is this file's own rule, and
+two of them had a cause nobody was looking for.
 
-### 🚨🚨 TWO NAMING RULINGS, AND BOTH ARE THE SAME INSTINCT — DO NOT "CORRECT" EITHER
-1. ▶ **THE COLOUR COMES OFF THE NAME.** Her words on the Valentino: *"Let's take the dash and the word
-   Beige off of this Edit item."* Then, unprompted, on the sandal: *"don't call it brown, just leave the
-   color out."* ✅ **So an Edit name carries no colourway suffix.**
-2. 🚨 **AND THE NECKLACE'S NAME DELIBERATELY DISAGREES WITH THE RETAILER'S OWN TITLE.** Olivela calls it
-   the *"Diamond & 14k Gold **LARGE** Bezel Pendant Necklace"*. **Her ruling: *"leave out the word large.
-   They call it large, but it is not really large."***
-   ▶▶ **THAT IS A STYLIST'S HONESTY CALL AND IT IS HER SALE-PRICE RULE ONE STEP OUT: a woman who arrives
-   to find a piece DAINTIER than billed feels misled; one who finds it as delicate as described does
-   not.** Only one of those is recoverable. ⚠️ **A future session will see the mismatch with the shop's
-   title and want to "fix" it. It is written into the markup that it must not.**
-   ⚠️ **The urls still say `beige`/`brown`/`large` — those are the shops' own product handles, never
-   shown to a woman and not ours to change.**
+### ✅✅ FINDING 1 — THE WHISPER'S PROMISE WAS HALF TRUE. FIXED, LIVE, AND VERIFIED ON stylestar.app
+🚨 **ONLY HALF THE SHELF WAS EVER STORED.** Her six styling picks came back exactly; **the ROW OF
+PHOTOGRAPHED PRODUCTS did not** — `_saveShopPicks` kept the find REQUEST and never the RESULTS, and
+`_FIND_CACHE` is an in-memory `Map` that dies with the page. **Back RELOADS the app**, so a resume
+ALWAYS missed that cache and ran a **fresh live search**: her long turning star, a real bill, and a
+different set of dresses than the ones she left.
+▶▶ **THAT IS THE HALF SHE COMES BACK FOR. The six text cards are advice; the photographs are what she
+was shopping.** A promise kept on the cheaper half is this file's own sentence again.
+✅ **BUILT: `_saveShopFind` stores the row beside the picks; a resume paints from it BEFORE the waiting
+star is ever set going.** Instant, free, identical. **`_ssFindPaint` is ONE painter for both routes** —
+a second copy of those six lines is exactly how the marker leak and the two-row regression happened.
+⚠️ **`t` IS DELIBERATELY NOT RE-STAMPED when a late row lands.** It is the whisper's six-hour promise,
+and re-stamping it on a slow search would quietly extend the promise every time.
+⚠️ **The row is merged into the record it belongs to BY STAMP.** She can open a second shelf while the
+first is still searching, and a late row writing itself onto a newer record would put the wrong
+photographs under the right advice — which looks exactly like a working resume.
+⚠️ **A QUOTA FAILURE IS NOT A FAULT:** the picks record survives untouched and the row simply searches
+again, which is today's behaviour. **Measured at 19.4 KB for a 48-piece row — 0.38% of a phone's
+allowance.**
 
-### ⭐⭐ HER ORDER FOR THE EDIT — THE SHOPS THAT PAY HER LEAD
-▶▶ **HER WORDS: *"I want the affiliate ones to lead and the others (without photos) at the bottom of
-list."*** ✅ **Built. The Edit is now ONE block of 17 earners followed by ONE block of 18 text cards —
-one transition down the whole list.**
-⭐ **HER ASSUMPTION WAS CHECKED BEFORE IT WAS ACTED ON, AND IT IS EXACTLY RIGHT: "earns her a commission"
-and "has a photo" are THE SAME SET, with no exceptions in either direction.** They are the same fact by
-construction — `_wkStarPxTag` only honours a photo when `_affMid(url)` resolves, **so a shop with no
-affiliate relationship has no licensable photography to show.**
-🚨 **HER THREE NEW PIECES HAD BEEN APPENDED TO THE END OF THE LIST, WHICH IS THE OBVIOUS THING TO DO AND
-WAS THE WRONG HALF.** ▶ **A comment now marks the boundary and says which side a new item belongs on.**
+### 🚨🚨🚨 AND THE CHECK THAT ALREADY NAMED HER BUG WAS A FALSE GREEN, WHICH IS THE LESSON OF THE DAY
+▶▶ **`ssfind` HAS HAD A CHECK CALLED *"the products are STILL THERE after she comes back"* SINCE
+2026-09-09, AND IT PASSED ON THE BROKEN CODE EVERY SINGLE TIME.** The harness answered every search
+with the **SAME four products**, so a second search looked byte-identical to the first. **The test named
+the fault and could not see it.**
+✅ **FIXED PROPERLY: the resume's search now answers with DIFFERENT products on purpose**, so a resume
+that secretly re-asks paints Cara Cara pieces instead of Reformation ones and is caught by name.
+⭐⭐ **PROVEN TO BITE, which is the step usually skipped: with the old code restored, FIVE go red — and
+one of them reproduces her fault in her own terms:** `was[Linen Midi Dress 1] now[Cara Cara Poplin Maxi 91]`.
+🚨 **THE RULE TO KEEP, AND IT IS THIS FILE'S OWN, NOW PROVEN THREE DAYS RUNNING: ASK OF ANY CHECK —
+COULD THIS PASS IF THE THING IT MEASURES WERE SIMPLY ABSENT?** Here the answer was yes for a whole day,
+inside a check written specifically to guard that behaviour. ▶ **A STUB THAT ALWAYS ANSWERS THE SAME
+THING CANNOT TELL "it remembered" FROM "it asked again".** When a check is about MEMORY, the source
+must change its answer, or the check is measuring nothing.
 
-### ✅✅ HER CATCH — THE NECKLACE WITH A PHOTO THAT THE STRIP COULD NOT SEE
-▶▶ **HER WORDS: *"That necklace does have a photo it should be on there?"*** ⚠️ **SHE WAS RIGHT, AND THE
-FAULT WAS NARROWER THAN FIRST REPORTED: the Etsy Open Heart Necklace's photo WAS on its Edit card and
-rendered perfectly. "More from the Edit" could not see it.**
-🚨 **AN EDIT PHOTO COMES IN THREE SHAPES AND THE OLD LOOKUP HANDLED ONE:**
-**(a)** `<img class="dc-item-px">` — the ordinary card · **(b)** `<div class="dc-item-px is-stack">` with
-two `<img>`s — a `px2` pair · **(c)** an inline-styled frame with **no class at all**, hand-tuned by eye.
-▶ **(c) was silently absent from the strip — her catch.**
-🚨🚨 **AND (b) WAS A LATENT BUG NOBODY HAD SEEN, FOUND WHILE FIXING (c): a `<div>` has no `src`, so a
-STACKED piece would have rendered a strip card with `src=""` the moment it stopped being the Star of the
-Week.** It is invisible today only because the COUTR Saint Laurent **is** this week's Star and the strip
-deliberately never repeats the Star. **The rotation would have shipped it.**
-✅ **FIXED AT THE LOOKUP, NOT AT THE MARKUP** — one `_editPhoto()` helper that asks for the real `<img>`
-in all three shapes. ▶▶ **THAT IS THIS FILE'S OWN CHOKE-POINT RULE: a rule that must hold on every route
-belongs underneath them.** Fixing the Etsy markup instead would have left (b) broken.
-▶ **Safe because a `.dc-item` contains NO other `<img>` — the shop button and the save heart are both
-inline `<svg>`. Measured: 17 items hold an `<img>` and those are exactly the 17 photographed ones.**
-📈 **MEASURED, BEFORE → AFTER: pieces resolving to a real src 15 → 17 · cards in the strip 15 → 16 ·
-cards with an empty src 0 → 0.**
+### ⚠️ TWO ASSERTIONS REWRITTEN, NOT BUMPED — AND THEY GOT STRONGER
+▶ *"renders through the SAME `_findBlockHtml`"* and *"reaches the network through the SAME `_findFetch`"*
+were **PROXIMITY REGEXES** (find X within 1600 characters of Y) and went red the moment the painting
+moved into its own helper — **a move that makes the thing they protect HARDER to break.**
+▶▶ **AND THEY COULD NEVER HAVE CAUGHT WHAT THEY WERE WRITTEN FOR: a second card loop somewhere ELSE
+in the file sits far outside 1600 characters and would have passed happily.** They name the rule now.
 
-### 🚨🚨🚨 THEN SHE OPENED WELCOME BACK AND FOUND THREE MORE THINGS IN ONE SCREENSHOT
-▶▶ **HER WORDS: *"The jeans are cut off- can't see the whole Jean and the sunglasses photo is missing
-the other half it looks fine in the main page but on teaser these photos need fixing please."***
-⚠️ **"THESE PHOTOS" IS THE *"More from the Edit"* STRIP ON WELCOME BACK (`#wbEditTeaser`), NOT THE EDIT
-PAGE.** It was a THIRD surface that had never been told the photo rule — the ledger's own *"one photo
-renders the SAME on every screen"* row, and the same shape as the Serpui bag being right on one screen
-and cut off on the next.
+### 🚨🚨 FINDING 2 — THE STYLIST SAID "BELTED" AND SEARCHED FOR "DRESS". ⚠️ **OPEN, HER CALL, NOT BUILT.**
+▶▶ **THE SPLIT IS VISIBLE IN HER OWN SCREENSHOT: the lead says *"I chose a belted dress"*, her six
+styling picks include *"Printed Belted Midi Dress"* — and NOT ONE of the photographed products is
+belted.**
+✅ **MEASURED, NOT ARGUED, by running the app's own function with her exact situation:**
+```
+she typed        : (nothing)
+stylist said     : "I chose a belted dress"
+request after    : {"item":"dress","colour":"","fabric":""}
+fields deleted   : ["cut"]
+```
+🚨 **TWO SEPARATE PLACES DO IT:** `_findAskRule()` tells the model *"she has said nothing, so leave all
+three EMPTY"*, and `_findKeepHerWords(_ssFind,_ssAsk||'')` deletes it again in code if the model
+disobeys. **So the search ran for a bare women's dress across 132 shops and returned exactly that.**
+⚠️ **`item` CANNOT CARRY IT EITHER** — the prompt requires *"the garment noun on its own"*, so the
+stylist's actual pick has nowhere in the request to live.
+▶▶ **HER 2026-09-08 DELEGATION RULING ALREADY COVERS THIS AND WAS BUILT FOR CHAT ONLY:** *a cut the
+stylist chose is searchable when SHE handed over the choice, and the stylist must name it out loud so
+it stays hers to overrule.* **Typing nothing is the fullest hand-over there is, and the lead sentence
+already names it out loud.** ▶ **This is the ledger's own sentence in a new place: A RULE APPLIED TO
+ONE HALF IS NOT APPLIED.**
+⚠️ **AND `ssfind` LINE 51 ASSERTS THE CURRENT BEHAVIOUR OUTRIGHT** (*"with NO ask, it orders
+colour/fabric/cut left EMPTY rather than guessed"*), **and its own worked example is the contradiction
+in miniature:** a lead reading *"A linen midi felt most you, so that is where I looked"* sitting above
+`find:{item:'dress',colour:'',fabric:'',cut:''}`. **If she says yes, that check must be REWRITTEN to
+name the rule, never bumped.**
+🚨 **THE FORK WAS PUT TO HER BEFORE BUILDING, WHICH IS HER OWN 2026-09-08 RULE:** **(A)** the
+stylist's pick becomes the real search when she typed nothing — the guard stays absolute the moment she
+types words of her own · **(B)** stop the stylist naming a detail the search cannot carry.
+⚠️ **SHE HAS NOT ANSWERED YET. DO NOT BUILD EITHER HALF UNTIL SHE DOES**, and do not widen
+`_findKeepHerWords` on any path where she DID type words.
+▶ **THE HONEST COST OF (A), told to her: fewer green ticks**, because `belted` becomes a stated
+requirement and UNKNOWN is never a pass. **The browse wall is unaffected and claims nothing** — it
+simply becomes belted dresses instead of any dress.
 
-**1. ⭐ THE JEAN — AND THE FIRST FIX WAS AIMED AT THE WRONG TARGET, WHICH IS THE LESSON.**
-The strip's frame was **108x135 (0.80), CENTRE-anchored**; `.dc-item-px` is **3:4 (0.75), TOP-anchored**.
-Measured on her Crosbie Jean, a **0.667** source:
-| | keeps | loses |
-|---|---|---|
-| the Edit page | 89% of height | 11% off the **bottom only** |
-| the strip (before) | 83% | **8% off the TOP and 8% off the bottom** |
-✅ **First fix: match the Edit — same 3:4, same top anchor.** The waistband came back.
-🚨🚨 **AND SHE CAME STRAIGHT BACK: *"Jeans are cut off at the bottom."* SHE WAS RIGHT AGAIN.** Matching
-the Edit still ate the hem, because `cover` loses 11% of a 0.667 photo *whichever end it is anchored to*.
-▶▶ **MATCHING THE EDIT WAS CLAUDE'S INFERENCE FROM HER *"it looks fine in the main page"*. HER
-REQUIREMENT, SAID TWICE, WAS THAT SHE CAN SEE THE WHOLE PIECE.** *"can't see the whole Jean"*, then
-*"cut off at the bottom."*
-✅✅ **SO THE STRIP NOW CROPS NOTHING, ON ANY PHOTO, EVER — `object-fit:contain` in the same 3:4 frame.**
-⭐ **THAT IS HER OWN LEDGER ROW *"A PRODUCT PHOTO IS NEVER CROPPED"*, the rule the finder's cards already
-follow.** ▶ **AND THE TWO PHOTO ROWS DIFFER ON PURPOSE — THIS SURFACE BELONGS TO THE SECOND ONE.**
-`pxPos`/`pxFit`/`px2` are per-item overrides chosen by LOOKING at ONE known photo; **this strip shows many
-photos of many shapes that nobody has hand-tuned, so the only safe crop is no crop.**
-⚠️ **THE BAND IS `#F5EFE2` AND IT IS MEASURED, NOT PICKED: her Crosbie Jean is a TRANSPARENT png, so the
-band colour IS its background, and the Olivela photos sit on `rgb(242,237,234)`. White would show a hard
-edge against both.** ⚠️ **THE EDIT PAGE STILL CROPS — she said it looks fine, so it was left alone
-deliberately rather than swept along. Offered, not taken.**
+### ⭐ FINDING 3 — ***"none of them honestly I would ever wear. They were all bad choices."***
+⚠️ **NOT ANSWERED, AND DELIBERATELY NOT ASSUMED AWAY.** Some of it is downstream of finding 2 — fix
+the search and the wall becomes belted dresses. **But that is a promise about the WORDS, not about her
+eye**, and this file has paid before for treating those as the same thing.
+▶ **SHE WAS ASKED PLAINLY: was it mainly that they were not belted, or is something wrong with the
+KIND of dress the finder reaches for even when the search is right?** ▶▶ **That is HOMEWORK 6, her real
+quality gate, arriving on its own — and only she can answer it.**
 
-**2. ⭐ THE SUNGLASSES — A `px2` STACK IS ONE PIECE SHOWN AS TWO VIEWS, and the strip rendered only the
-first.** ✅ **It now renders the stack.** ⚠️⚠️ **`.wet-px` WAS ADDED TO THE TWO *EXISTING* SHARED RULES
-RATHER THAN GIVEN ITS OWN — her `px2` rule: ONE RULE, EVERY SURFACE, ALWAYS.** `starpx`'s four assertions
-on those rules still hold.
+### ✅ SHIPPED AND VERIFIED LIVE
+`c438982` → **`e9f9957`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILE AND FINDING THE MARKERS
+(`_saveShopFind`, `_ssFindPaint`, `_ssFindData`), never by the deploy badge.** Standing rule; it held.
 
-**3. 🚨🚨 AND A FAULT SHE PHOTOGRAPHED WITHOUT NAMING: THE STAR OF THE WEEK APPEARED TWICE ON WELCOME
-BACK** — as the big card AND in the strip. ▶ **`_wlEditItems()` reads `.url` RAW, but `_wlDecorateEdit()`
-rewrites the Edit's hrefs to their affiliate-wrapped `click.linksynergy.com` form THE MOMENT SHE OPENS THE
-EDIT.** After that a raw `star.url` could never equal a wrapped `it.url`, so the dedupe silently stopped
-matching. ✅ **Both sides now go through `_affUrl`, which never double-wraps.**
-▶▶ **WHY IT SURVIVED, AND IT IS THE GENERAL LESSON: IT ONLY HAPPENED AFTER SHE HAD VISITED THE EDIT.** A
-fresh load never showed it, so every check that tested a cold page passed happily through the whole bug.
-**The regression test now asserts it in BOTH orders.**
+### ▶ TEST STATE — MEASURED TODAY (2026-09-10, later)
+✅ **`ssfind` 54 (was 52) · `chatfallback` 105 · `chatfind` 63 · `copy` 49 · `affq` 40. Zero failures.**
+Both inline script blocks parse, div balance is byte-identical to the `HEAD` baseline, no mojibake.
+⚠️ **`copy` PRINTS `✓ 49 passed`, NOT `49 passed, 0 failed`** — a grep for the second pattern shows
+NOTHING and reads exactly like a suite that never ran. **It was re-run alone to be sure.** ▶ **Do not
+read an empty line in a batch as a pass.**
+⚠️ **The suites NOT re-run are unchanged from earlier today and no claim is made about them:**
+wbedittasr 42 · starpx 28 · linkwatch 24 · findprod 63 · storepool 49 · untagged 21 · searchtune 80/1
+(the known pre-existing `styles.css` failure) · curated 63/2 (both pre-existing).
 
-### ✅ SHE RULED ON THE CONSEQUENCE, AND THE ANSWER IS "NOTHING TO BUILD"
-▶ **Fixing the dedupe took the sunglasses OUT of the strip, and she noticed: *"Glasses not showing in
-teaser."*** ⚠️ **NOT A BUG: they are THIS WEEK'S STAR, and the strip is built never to repeat the piece
-directly above it — her own August design.** ▶ **They stop being the Star on SUNDAY 13 SEPTEMBER and
-return to the strip automatically, with both stacked views.**
-⭐ **OFFERED THREE WAYS (leave it · show every piece including the Star · move the Star into the strip and
-drop the big card) AND SHE CHOSE: *"Leave it — they're back Sunday."*** **So the dedupe stands. Do not
-re-propose this.**
-🚨 **BUT CHECKING IT FOUND A REAL FRAGILITY IN THE STACK BUILT HOURS EARLIER, AND IT WOULD HAVE BITTEN ON
-SUNDAY ON THAT EXACT PIECE.** A single card carries `onerror="remove the card"`, which is right when there
-is no photo at all — **but a stack has TWO chances to fail and both images carried it, so a 404 on the
-SECOND view would have thrown away a perfectly good first view and made the piece vanish.**
-✅ **The second view now removes only ITSELF and unwraps the pair to a single photo; the first keeps the
-old behaviour. The unwrapped container needed its own css rule or the survivor spills out of the card.**
-
-### 🚨🚨🚨 TWO FALSE GREENS IN CLAUDE'S OWN CHECKS, BOTH CAUGHT THE SAME WAY
-▶▶ **BY PUTTING THE OLD RULE BACK AND WATCHING WHICH CHECKS *STAYED* GREEN.** That is the step that
-usually gets skipped, and it caught both.
-1. ⚠️ ***"not one of them is cropped"* MEASURED THE REAL PHOTOS — and every retail CDN is unreachable
-   from this sandbox, so every one had `naturalWidth` 0. It was measuring NOTHING and passing.** ✅ Now a
-   synthetic **2:3 svg**, the same shape as her jean, behind a GATE that it really loaded.
-2. ⚠️ **THE PAINTED-BOX MATHS COMPUTED THE `contain` FIT ARITHMETICALLY, so it did not depend on the CSS
-   at all and passed happily with `cover` restored.** ✅ Now derived from the element's real `object-fit`.
-▶ **Both go red on a revert, naming real numbers: a 200x300 photo painted 108x162 inside a 108x144 frame
-— 18px spilling, which is her hem.**
-⚠️ **AND A THIRD, EARLIER THE SAME DAY: *"the same two photos, in the same order"* PASSED VACUOUSLY when
-no stack rendered, because two empty arrays compare equal.** `n===2` is now part of the assertion.
-🚨 **THE RULE TO KEEP, and it is this file's own: ASK OF ANY NEW CHECK — COULD THIS PASS IF THE THING IT
-MEASURES WERE SIMPLY ABSENT?** Three said yes in one afternoon.
-⭐ **TWO OLD ASSERTIONS WERE REWRITTEN, NOT BUMPED** — they required the strip to match the Edit card's
-fit and anchor, which is now deliberately false. **They name the rule instead: *the strip crops nothing*.**
-
-### 🚨🚨🚨 THE LESSON OF THE DAY, AND IT IS A REPEAT — SHE HAD ALREADY TAUGHT IT
-▶▶ **HER RULE, GIVEN 2026-09-09: *"it is not the size that is the problem it is the particular photo the
-angle of the shoe is not right... It's the point of view and angle of shoe."***
-🚨 **IT WAS BROKEN AGAIN THE SAME WAY, ON THE SAME SUBJECT.** Three photos of her sandal were measured
-for how much of the card each FILLS — three-quarter 24%, top-down 92%, flat profile 23% — and the
-top-down was built on that basis. ▶▶ **FILL PERCENTAGE IS A SIZE METRIC. Her criterion for a shoe has
-never been size.** She chose the three-quarter, because it shows the block heel that is in the shoe's own
-name and is half of *"dress it up or down"*.
-✅ **WHAT SAVED IT: ALL THREE WERE RENDERED AT TRUE PHONE SIZE AND SENT TO HER.** The numbers alone would
-have shipped the wrong photo. ▶ **MEASURE TO FIND CANDIDATES, RENDER THEM ALL, LET HER LOOK.**
-⭐ **That is the fourth time in three days her eye has beaten a measurement** — Under Armour, the stacked
-sunglasses, the 66px star, and this. **It is now a row in the rule ledger so it cannot be archived away.**
-⚠️ **AND THE EMPTY SPACE ABOVE AND BELOW THAT SANDAL IS A KNOWN, ACCEPTED COST, written into the markup:
-do NOT swap it to the top-down to fill the card, and do not add a zoom.**
-
-### ▶ A NAMING AMBIGUITY THAT CLAUDE CREATED, WORTH NOT REPEATING
-⚠️ **The three photos were numbered 1/2/3 in a table and then re-lettered A/B/C in the render sent to
-her, and the two orders DISAGREED.** When she said *"The first photo"* it genuinely pointed two ways.
-▶ **ASKED RATHER THAN GUESSED, and she meant the angled one.** **Label a set of options ONE way and keep
-it, or describe each by what it shows rather than by a letter.**
-
-### 🚨 TWO DECISIONS OF HERS LIFTED OUT OF THE 2026-09-09 BLOCKS AS THEY WERE ARCHIVED
-⚠️ **Both were checked and would otherwise have left the loaded file — the exact failure this file
-records with her affiliate rejections. A DECISION ABOUT SCOPE, AND A COST SHE KNOWINGLY ACCEPTED, ARE
-NEVER HISTORY.**
-▶▶ **SHOP YOUR STYLE SEARCHES EVEN WHEN SHE TYPES NOTHING — HER RULING: *"Yes — one search from her
-profile too."*** So a woman who asks for nothing still gets a wall of real photographed pieces rather
-than six names.
-💰 **AND SHE WAS TOLD THE COST PLAINLY BEFORE CHOOSING: ~2.5¢ on EVERY open of Shop your Style,
-including every refresh, whether or not she wanted products — the app's biggest per-load cost. She chose
-it anyway.** ▶ **That is her VALUE FIRST principle again, the same call she made on the chat's cost
-question, so it is CONSISTENT and is NOT to be re-litigated.** ⭐ **The honest consequence is that
-caching stopped being a someday item and shipped with it (`_FIND_CACHE`, opt-in, that screen only).**
-
-### ✅ EVERYTHING IS ON `main` AND VERIFIED LIVE BY FETCHING stylestar.app
-`1e460fe` → `648987b` → `90b81b0` → `a058430` → `e213166` → `cfcc4a8` → `d46c43e` → `b7981eb` →
-`2bbaf19` → `5dff46e` → **`b2c35c4`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILE AND FINDING THE MARKERS, never by the deploy
-badge.** Standing rule; it held again. **The live order was read back off the served page: 17 earners,
-18 text cards, one clean break.**
-
-### ▶ TEST STATE — MEASURED TODAY (2026-09-10)
-✅ **`wbedittasr` 42 (was 23) · `affq` 40 · `copy` 49 · `linkwatch` 24 · `starpx` 28.** Div balance verified against
-the `HEAD` baseline at every step, both inline script blocks parse, no mojibake, and all 35 Edit anchors
-are https, unique, `target="_blank"` and `rel="sponsored noopener"`.
-⭐⭐ **AND THE NEW CHECKS WERE PROVEN TO BITE, WHICH IS THE STEP USUALLY SKIPPED:** putting the old
-`.dc-item-px` lookup back turns **FOUR of the five red**, each naming the real piece and its shape.
-⚠️ **The fifth (*"no card built with an empty src"*) stays GREEN while COUTR is the Star — it can only
-bite once the rotation moves past it. That is honest, not broken, and it is recorded so nobody reads it
-as a weak check.**
-⚠️ **The suites NOT re-run today are unchanged from 2026-09-09 and no claim is made about them:**
-chatfallback 105 · chatfind 63 · findprod 63 · ssfind 52 · copy 49 · storepool 49 · untagged 21 ·
-searchtune 80/1 (the known pre-existing `styles.css` failure) · curated 63/2 (both pre-existing).
-
-### ▶▶ WHAT IS WAITING ON HER — UNCHANGED FROM YESTERDAY EXCEPT WHERE MARKED
-1. ⏳ **THE OCT 1 CLOCK — STILL THE ONLY DEADLINE ON HER WHOLE BOARD, NOW ~3 WEEKS OUT.** Do NOT pay the
-   Your Fashion Friend renewal; close the Orange County receipt **by email (`btpc@octaxcol.com`) or
+### ▶▶ WHAT IS WAITING ON HER
+1. ⭐⭐ **THE BELTED FORK — (A) or (B) above. It is the biggest of her three findings and nothing moves
+   without her.**
+2. ⭐ **WHAT WAS WRONG WITH THE DRESSES BEYOND THE BELT.** Her eye, her homework 6, and the most
+   valuable thing she can tell this project about the finder.
+3. ⏳ **THE OCT 1 CLOCK — STILL THE ONLY DEADLINE ON HER WHOLE BOARD, NOW ~3 WEEKS OUT.** Do NOT pay
+   the Your Fashion Friend renewal; close the Orange County receipt **by email (`btpc@octaxcol.com`) or
    mail, NOT in person**; call **407-246-2204** about whether to apply for Style Star's own receipt
    before or after Oct 1 so she does not pay twice.
-2. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** Still unasked and still the most valuable
-   information this project can get. **She has friends and Instagram; nobody has asked what they said.**
-3. ⏸️ **THE FITTING-ROOM CONVERSATION.** Still parked by her, thinking kept. Offered four build options
-   she chose ***"Neither yet — let's talk it through more."*** ▶ **Ask what a fitting room MEANS to her;
-   do not re-propose the same menu.**
-4. ▶ **THE ETSY NECKLACE'S FRAME IS STILL A SECOND COPY OF THE CARD'S PHOTO RULE.** The strip now finds
-   it, so nothing is broken — but its geometry is inline rather than `.dc-item-px`, so it will not follow
-   if that class ever changes. **Flagged, not fixed; it is code health, not a fault she can see.**
+4. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** Still unasked.
+5. ⏸️ **THE FITTING-ROOM CONVERSATION.** Still parked by her, thinking kept. **Ask what a fitting room
+   MEANS to her; do not re-propose the same menu.**
+
 
 ## 📌 THE DAY THE STYLIST STOPPED INVENTING PRODUCTS (2026-09-09 — she said "the chat is not working
 well." She was right, and all of it came from one root.)
@@ -1880,6 +1805,8 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **GOLD IS THE APP'S VOICE, PINK IS CATHERINE'S** | **the LARGE spinning waiting star (`.ss-find-star`, 66px) is GOLD and has NO `path` colour rule — it keeps `_starSpin`'s own gold** | **the small stylist MARKS stay PINK (`.sa-star`, `.shop-load-star`), and `.chat-typing-star,.find-load-star` IS the pink selector** | **ssfind 52, both halves** | ✅ **HER RULING 2026-09-09, LIFTED INTO THE LEDGER 2026-09-10 because it lived only in a session block and was one archive away from being lost: *"66px but I want the gold one not pink. Pink only for the chat."* and, correcting a sweep: *"I didn't want you to change those other stars. Just the one I said."* 🚨 NEVER add `.ss-find-star` to the pink path selector. Her 2026-08-09 mark system: gold = hers, pink = when Catherine herself is speaking.** |
 | **HER OWN COPY IS NEVER PARAPHRASED FULLER** | **the product row says exactly *"Here are some options."*** | n/a — the shelves write no such prose | **chatfallback 105 pins it verbatim AND asserts the excusing wording is gone** | ✅ **HER LINE 2026-09-09, replacing Claude's *"Showing you as much as I could find."* LIFTED HERE 2026-09-10. ⭐ WHY HERS IS BETTER AND IT GENERALISES: Claude's line APOLOGISED for the row before a woman had found anything wrong with it. Hers just opens the door — the same instinct as her near-miss sentence, STATE THE TRUTH AND STOP.** |
 | **A SHOE IS JUDGED ON POINT OF VIEW, NEVER ON SIZE** | **the Edit's hand-picked cards: a photo is chosen by LOOKING at the angle, and the empty space a correct angle costs is an accepted price** | n/a — the finder shows hundreds of unknown photos a minute and can hand-tune none of them | **▶ none; it is a judgement, not a promise** | ✅ **HER RULE, GIVEN 2026-09-09 AND RE-PROVEN 2026-09-10: *"it is not the size that is the problem it is the particular photo the angle of the shoe is not right... It's the point of view and angle of shoe."* 🚨🚨 IT HAS NOW BEEN BROKEN TWICE THE SAME WAY: fill percentage was measured and recommended from, and FILL IS A SIZE METRIC. On 2026-09-10 the measurement said the top-down filled 92% of the card and the three-quarter only 24%; SHE CHOSE THE THREE-QUARTER, because it shows the block heel. ▶ MEASURE TO FIND CANDIDATES, RENDER THEM ALL, AND LET HER LOOK — the renders are the only reason this was caught.** |
+| **AN EDIT NAME CARRIES NO COLOURWAY, AND MAY DISAGREE WITH THE SHOP'S OWN TITLE** | n/a — the stylist names no products at all | **the Edit's hand-written `.dc-item` names, and the rule is written into the markup beside them** | **▶ none; it is a judgement, and the markup carries the warning** | ✅ **HER TWO RULINGS, 2026-09-10, LIFTED INTO THE LEDGER WHEN THEIR SESSION BLOCK WAS ARCHIVED — a rule she gave never archives. (a) *"Let's take the dash and the word Beige off of this Edit item"*, then unprompted on the sandal *"don't call it brown, just leave the color out."* (b) Olivela's own title says *"Diamond & 14k Gold **LARGE** Bezel Pendant Necklace"* and her ruling is *"leave out the word large. They call it large, but it is not really large."* 🚨 THAT IS HER SALE-PRICE RULE ONE STEP OUT: a woman who arrives to find a piece DAINTIER than billed feels misled; one who finds it as delicate as described does not. ⚠️ A FUTURE SESSION WILL SEE THE MISMATCH WITH THE SHOP'S TITLE AND WANT TO "FIX" IT. It must not. ⚠️ The urls still say `beige`/`brown`/`large` — the shops' own product handles, never shown to a woman and not ours to change.** |
+| **A RESUME SHOWS HER THE PIECES SHE LEFT, NOT A FRESH SEARCH** | **Shop your Style: `_saveShopFind` stores the found row beside the six picks, and `_ssFindPaint` paints it before the waiting star is ever set going** | n/a — the shelves rebuild from the feed, and promise nothing about sameness | **ssfind 54, and the check answers the resume with DIFFERENT products so it can tell memory from a re-ask** | ✅ **HER CATCH, 2026-09-10: *"the whisper said... the same pieces waiting. So I clicked on it and this was not true."* 🚨 THE WHISPER IS A PROMISE, AND HALF THE SHELF WAS KEPT: the six text cards are advice, the PHOTOGRAPHS are what she came back for. ⚠️ `t` is never re-stamped by a late row, or a slow search would quietly extend the six-hour promise. 🚨🚨 AND THE CHECK GUARDING THIS PASSED ON THE BROKEN CODE FOR A WHOLE DAY, because the harness answered every search identically: A STUB THAT ALWAYS ANSWERS THE SAME THING CANNOT TELL "it remembered" FROM "it asked again".** |
 🚨🚨 **THE "A PRODUCT PHOTO IS NEVER CROPPED" ROW IS SEPARATE FROM THE `px2` PHOTO ROW ON PURPOSE, AND
 THE DIFFERENCE IS THE USEFUL PART.** `pxPos`, `pxFit` and `px2` are **per-item overrides she or Claude
 choose by LOOKING at one known photograph** — the Star of the Week, an Edit pick. They work because
