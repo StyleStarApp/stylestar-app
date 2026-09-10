@@ -33,10 +33,13 @@ it several times that day as if it were her next step, and it was not: **she had
 | 7 | ~~The Edit strip could not see one of her photos~~ ✅ **HER CATCH, FIXED 2026-09-10 — and it turned up a latent bug that would have shipped a broken card when the Star rotation moved on.** | — | ✅ done |
 | 8 | ~~The strip cropped her photos and showed the Star twice~~ ✅ **HER THREE CATCHES OFF ONE SCREENSHOT, ALL FIXED AND LIVE 2026-09-10. The strip now CROPS NOTHING, renders a `px2` stack as a stack, and can no longer duplicate the Star.** | — | ✅ done |
 | 9 | ~~The whisper promised "the same pieces waiting" and a resume searched again~~ ✅ **HER CATCH, FIXED AND LIVE 2026-09-10 — and the check that was supposed to guard it had been a FALSE GREEN for a day.** | — | ✅ done |
-| 10 | 🚨 **THE STYLIST SAYS "belted" AND SEARCHES "dress"** — proven by running the app's own function. **Her 2026-09-08 delegation ruling, never applied to this half.** | **HER — fork (A)/(B) put to her, unanswered** | ⏳ **OPEN** |
-| 11 | ⭐ ***"none of them honestly I would ever wear"*** — how much of that is the belt, and how much is the kind of dress the finder reaches for? | **HER — asked, unanswered** | ⏳ **OPEN** |
+| 10 | ~~The stylist says "belted" and searches "dress"~~ ✅ **HER RULING, BUILT AND LIVE 2026-09-10: *"I want the stylist to deliver exactly what she is promising."*** | — | ✅ done |
+| 11 | ⭐ **THE FINDER HAS NEVER BEEN SHOWN HER STYLE PROFILE** — her *"I like fitted clothing and many of them were shapeless"*. She is **8 leaning fitted** on her own Style Signature and the finder gets an item and a cut, nothing else. | **HERS to green-light** | ⏳ **OPEN, NOT STARTED** |
+| 12 | ⭐ **THE WALL ARRIVES IN GOOGLE'S ORDER, NOT HERS** — her *"very few from the nicer stores"*. Her 132 shops carry ten dimensions SHE scored, and none of it orders this row. | **HERS to green-light** | ⏳ **OPEN, NOT STARTED** |
 🚨🚨 **THE BOARD IS NO LONGER CLEAR — SHE TESTED THE LIVE APP ON 2026-09-10 AND FOUND THREE THINGS.
-Rows 10 and 11 are OPEN AND BOTH ARE WAITING ON HER, not on code.** ▶ **Read the block below before
+Two are fixed and live; ROWS 11 AND 12 ARE HER OWN WORDS AND NEITHER IS STARTED.** ⚠️ **SHE ASKED FOR
+THEM ONE AT A TIME — *"Ok let's go slow here one at a time"* — so do NOT bundle them, and do not start
+either without her.** ▶ **Read the block below before
 offering her anything else; the belted fork is the most valuable question on this page.**
 ▶▶ *The note that stood while rows 1-9 were all closed, kept because its advice is still right the next
 time the board empties:* **EVERY ROW IS DONE. There is no approved next build.** ⭐ **The next session's job is to ASK — what her
@@ -352,55 +355,82 @@ moved into its own helper — **a move that makes the thing they protect HARDER 
 ▶▶ **AND THEY COULD NEVER HAVE CAUGHT WHAT THEY WERE WRITTEN FOR: a second card loop somewhere ELSE
 in the file sits far outside 1600 characters and would have passed happily.** They name the rule now.
 
-### 🚨🚨 FINDING 2 — THE STYLIST SAID "BELTED" AND SEARCHED FOR "DRESS". ⚠️ **OPEN, HER CALL, NOT BUILT.**
-▶▶ **THE SPLIT IS VISIBLE IN HER OWN SCREENSHOT: the lead says *"I chose a belted dress"*, her six
-styling picks include *"Printed Belted Midi Dress"* — and NOT ONE of the photographed products is
-belted.**
-✅ **MEASURED, NOT ARGUED, by running the app's own function with her exact situation:**
-```
-she typed        : (nothing)
-stylist said     : "I chose a belted dress"
-request after    : {"item":"dress","colour":"","fabric":""}
-fields deleted   : ["cut"]
-```
-🚨 **TWO SEPARATE PLACES DO IT:** `_findAskRule()` tells the model *"she has said nothing, so leave all
-three EMPTY"*, and `_findKeepHerWords(_ssFind,_ssAsk||'')` deletes it again in code if the model
-disobeys. **So the search ran for a bare women's dress across 132 shops and returned exactly that.**
-⚠️ **`item` CANNOT CARRY IT EITHER** — the prompt requires *"the garment noun on its own"*, so the
-stylist's actual pick has nowhere in the request to live.
-▶▶ **HER 2026-09-08 DELEGATION RULING ALREADY COVERS THIS AND WAS BUILT FOR CHAT ONLY:** *a cut the
-stylist chose is searchable when SHE handed over the choice, and the stylist must name it out loud so
-it stays hers to overrule.* **Typing nothing is the fullest hand-over there is, and the lead sentence
-already names it out loud.** ▶ **This is the ledger's own sentence in a new place: A RULE APPLIED TO
-ONE HALF IS NOT APPLIED.**
-⚠️ **AND `ssfind` LINE 51 ASSERTS THE CURRENT BEHAVIOUR OUTRIGHT** (*"with NO ask, it orders
-colour/fabric/cut left EMPTY rather than guessed"*), **and its own worked example is the contradiction
-in miniature:** a lead reading *"A linen midi felt most you, so that is where I looked"* sitting above
-`find:{item:'dress',colour:'',fabric:'',cut:''}`. **If she says yes, that check must be REWRITTEN to
-name the rule, never bumped.**
-🚨 **THE FORK WAS PUT TO HER BEFORE BUILDING, WHICH IS HER OWN 2026-09-08 RULE:** **(A)** the
-stylist's pick becomes the real search when she typed nothing — the guard stays absolute the moment she
-types words of her own · **(B)** stop the stylist naming a detail the search cannot carry.
-⚠️ **SHE HAS NOT ANSWERED YET. DO NOT BUILD EITHER HALF UNTIL SHE DOES**, and do not widen
-`_findKeepHerWords` on any path where she DID type words.
-▶ **THE HONEST COST OF (A), told to her: fewer green ticks**, because `belted` becomes a stated
-requirement and UNKNOWN is never a pass. **The browse wall is unaffected and claims nothing** — it
-simply becomes belted dresses instead of any dress.
+### ✅✅ FINDING 2 — THE STYLIST SAID "BELTED" AND SEARCHED FOR "DRESS". **HER RULING, BUILT AND LIVE.**
+▶▶ **HER ANSWER TO THE FORK, VERBATIM: *"the stylist should not say I am going to show you lots of
+options of belted dresses and then show me random dresses with no belts that do not look like my style
+at all... I want the stylist to deliver exactly what she is promising and I don't want a dull google
+search of ugly dresses being shown to anyone."***
+🚨 **THE CAUSE WAS ONE INSTRUCTION.** `_findAskRule` told the stylist to leave colour/fabric/cut
+**EMPTY** whenever she had typed nothing. ▶ **`buildQueries` puts `req.cut` into ALL FOUR of its
+queries**, so an empty cut collapses all four to one string and **the only words the shops ever saw
+were `["women's dress"]`** — one generic query across 132 shops. **That is her wall of random dresses,
+proven end to end against the real server-side builder.**
+✅✅ **THE TWO HALVES ARE NOW SPLIT, AND THE SPLIT IS THE WHOLE RULE:**
+· **SHE TYPED SOMETHING** → her sentence is the authority, unchanged, and `_findKeepHerWords` still
+  deletes in CODE anything she did not say. **The jewel-tone fault is untouched. DO NOT WIDEN THIS HALF.**
+· **SHE TYPED NOTHING** → she handed the choice over, so the stylist's own pick **IS** the search and
+  the lead must name it. ▶ **That is HER 2026-09-08 delegation ruling, which was built for the chat and
+  never reached this half: a rule applied to one half is not applied.**
+⚠️ **THE CODE GUARD IS NOT WEAKENED, IT IS AIMED.** It protects her WORDS from being embellished, and
+it can only do that when there are words. `_findKeepHerWords(_ssFind,_ssAsk)` — **the `||''` was the
+bug**, because an empty sentence means nothing is hers, so it deleted the stylist's own pick every time.
+⭐ **AND A CHECK NOW PROVES THE SPLIT IS A SPLIT, NOT A LOOSENING: the SAME model answer, on the SAME
+page, seconds apart — `emerald`/`fitted` KEPT on the hand-over, DELETED the moment she used her own
+words.**
+⚠️ **WHY THE HAND-OVER HALF IS A PROMPT AND NOT CODE, against this file's own "a prompt rule in capital
+letters is still only a prompt rule": there is nothing left to protect her FROM.** The old guard existed
+because the model invented requirements SHE had not asked for; on a full hand-over there is no such
+thing. **What remains is one JUDGEMENT — does the sentence describe the search — written into the same
+JSON object in the same breath.** ▶ **Her standing direction: reduce rules and breakable things. This is
+a judgement, not a promise.**
 
-### ⭐ FINDING 3 — ***"none of them honestly I would ever wear. They were all bad choices."***
-⚠️ **NOT ANSWERED, AND DELIBERATELY NOT ASSUMED AWAY.** Some of it is downstream of finding 2 — fix
-the search and the wall becomes belted dresses. **But that is a promise about the WORDS, not about her
-eye**, and this file has paid before for treating those as the same thing.
-▶ **SHE WAS ASKED PLAINLY: was it mainly that they were not belted, or is something wrong with the
-KIND of dress the finder reaches for even when the search is right?** ▶▶ **That is HOMEWORK 6, her real
-quality gate, arriving on its own — and only she can answer it.**
+### 🚨🚨🚨 TWO MORE BLIND CHECKS, FOUND WHILE BUILDING IT — THAT IS THREE IN TWO DAYS
+1. ⚠️⚠️ **THE SUITE'S OWN WORKED EXAMPLE FOR THIS SCREEN WAS HER CONTRADICTION, WRITTEN IN AS THOUGH IT
+   WERE CORRECT:** a lead reading *"A linen midi felt most you, so that is where I looked"* sitting above
+   `find:{item:'dress',cut:''}`. **It asserted that a search went out, and that a sentence appeared, and
+   NEVER ONCE that they agreed.** ✅ The fixture is now her real case — *"I chose a belted dress"* with
+   `cut:'belted'` — and two new checks assert the promise and the search are ONE, the second measuring
+   against **the real imported `buildQueries`** so it cannot drift from what actually goes out.
+2. ⚠️ **A CHECK READ `FINDCALLS[0]` WHILE CLAIMING TO TEST HER TYPED SEARCH.** `ask(..., keepLog)` keeps
+   BOTH calls, so it was measuring the delegated one — and it passed only because both halves were
+   stripped identically. **The moment they legitimately differed it failed while pointing at the wrong
+   call.** ▶▶ **A CHECK THAT CANNOT SAY *WHICH* THING IT MEASURED IS ONE LEGITIMATE CHANGE AWAY FROM A
+   FALSE REPORT, IN EITHER DIRECTION.** ✅ It reads the last call now and says so.
+🚨🚨 **THE RULE, NOW EARNED THREE TIMES IN TWO DAYS: ASK OF ANY CHECK — COULD THIS PASS IF THE
+THING IT MEASURES WERE SIMPLY ABSENT, OR IF IT WERE THE WRONG THING ENTIRELY?**
+
+### ⭐⭐ FINDING 3 — SHE ANSWERED IT HERSELF, AND IT IS TWO SEPARATE THINGS. **NEITHER IS STARTED.**
+▶▶ **HER WORDS: *"they do not look like my style at all. For example I like fitted clothing and many of
+them were shapeless and very few from the nicer stores."***
+⚠️ **SO *"none of them I would ever wear"* WAS NOT ONE COMPLAINT, IT WAS THREE, AND ONLY THE BELT IS
+FIXED.** ▶ **She asked for them ONE AT A TIME — *"Ok let's go slow here one at a time"* — so do NOT
+bundle these and do NOT start either without her.**
+1. ⭐ **THE FINDER HAS NEVER BEEN SHOWN HER STYLE PROFILE, and that is verified, not assumed.**
+   `find-products.js` receives `item · colour · fabric · cut · size · width` **and nothing else** — no
+   sliders, no dimensions, no archetype. ▶▶ **Her own Style Signature has her at FIT PREFERENCE 8,
+   LEANING FITTED (`_herDims()` → fitted 0.70), and the search has never once been told.** ⚠️ **THIS IS
+   NOT THE SAME AS ADDING "fitted" TO THE WORDS** — that is a `cut`, and on a hand-over the stylist can
+   already choose it. The open question is whether her profile should shape the SEARCH, the ORDER, or
+   neither, and it is hers.
+2. ⭐ **THE WALL ARRIVES IN GOOGLE'S RELEVANCE ORDER, NOT HERS.** Her 132 shops carry **ten dimensions
+   she scored herself**, and `_storeFit` already ranks stores for the chat and for `_shopRules` — **none
+   of it touches this row.** ▶ **So Nordstrom and Old Navy land wherever the shopping index happens to
+   put them, which is what *"very few from the nicer stores"* is describing.**
+   ⚠️⚠️ **AND THE ONE THING THAT MUST BE SAID OUT LOUD BEFORE THIS IS BUILT: HER 2026-09-09 RULING SAYS
+   *"SORT, DO NOT TRIM"* AND *"I want to show as many cards for her to swipe as possible. Not
+   limited."*** ▶ **Re-ordering the wall is consistent with both. TRIMMING it is not**, and the
+   temptation to "clean up" a wall she called ugly is exactly how a ruling of hers gets quietly reversed.
+   **Ask before removing a single card.**
 
 ### ✅ SHIPPED AND VERIFIED LIVE
-`c438982` → **`e9f9957`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILE AND FINDING THE MARKERS
-(`_saveShopFind`, `_ssFindPaint`, `_ssFindData`), never by the deploy badge.** Standing rule; it held.
+`c438982` → `e9f9957` → **`f27f81a`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILE AND FINDING THE MARKERS
+(`_saveShopFind`, `_ssFindPaint`, `_ssFindData`, then `THESE FIELDS ARE THE SEARCH`), never by the
+deploy badge.** Standing rule; it held twice.
 
 ### ▶ TEST STATE — MEASURED TODAY (2026-09-10, later)
-✅ **`ssfind` 54 (was 52) · `chatfallback` 105 · `chatfind` 63 · `copy` 49 · `affq` 40. Zero failures.**
+✅ **`ssfind` 60 (was 52) · `chatfallback` 105 · `chatfind` 63 · `findprod` 63 · `copy` 49 · `affq` 40.
+Zero failures.** ⭐ **`chatfind` 63/0 is the one that matters most for the belted change: it proves the
+CHAT's her-words guard did not move.**
 Both inline script blocks parse, div balance is byte-identical to the `HEAD` baseline, no mojibake.
 ⚠️ **`copy` PRINTS `✓ 49 passed`, NOT `49 passed, 0 failed`** — a grep for the second pattern shows
 NOTHING and reads exactly like a suite that never ran. **It was re-run alone to be sure.** ▶ **Do not
@@ -410,10 +440,9 @@ wbedittasr 42 · starpx 28 · linkwatch 24 · findprod 63 · storepool 49 · unt
 (the known pre-existing `styles.css` failure) · curated 63/2 (both pre-existing).
 
 ### ▶▶ WHAT IS WAITING ON HER
-1. ⭐⭐ **THE BELTED FORK — (A) or (B) above. It is the biggest of her three findings and nothing moves
-   without her.**
-2. ⭐ **WHAT WAS WRONG WITH THE DRESSES BEYOND THE BELT.** Her eye, her homework 6, and the most
-   valuable thing she can tell this project about the finder.
+1. ⭐⭐ **WHICH OF HER REMAINING TWO TO DO NEXT — the SHAPELESS half (her profile never reaches the
+   finder) or the NICER STORES half (the wall is in Google's order, not hers).** ▶ **She said one at a
+   time. Ask which; do not start both.**
 3. ⏳ **THE OCT 1 CLOCK — STILL THE ONLY DEADLINE ON HER WHOLE BOARD, NOW ~3 WEEKS OUT.** Do NOT pay
    the Your Fashion Friend renewal; close the Orange County receipt **by email (`btpc@octaxcol.com`) or
    mail, NOT in person**; call **407-246-2204** about whether to apply for Style Star's own receipt
@@ -1794,7 +1823,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | Checklist is a possibility map | copy + framing | n/a | ▶ none | ✅ copy-only rule |
 | **One photo renders the SAME on every screen** | **`pxPos`/`pxFit`/`px2` on the Star card (`.wks-px`)** | **the same override on the Edit (`.dc-item-px`), off ONE shared css rule** | **starpx 29** | ✅ **both, `px2` added 2026-09-08** |
 | **Never claim a requirement is verified when it is not** | **the chat's cards: `judge()` + the three verdicts** | **`verifySize`/`verifyColour`/`verifyFabric`/`verifyCut`/`verifyWidth` in `find-products.js`** | **findprod 63 · chatfind 63** | ✅ **BUILT 2026-09-06, and the `n/a`s below have now expired as predicted** |
-| **A cut the STYLIST chose is searchable only when SHE handed over the choice** | **the stylist may name a silhouette AND search for it when a woman delegates — and must say out loud that it was her own pick, so it stays hers to overrule** | **`_findKeepHerWords` still deletes colour/fabric/cut she did not say on every other path** | **findprod 63 · chatfind 63 · ssfind 52** | ✅ **HER RULING 2026-09-08 (*"yes, that makes sense"*), LIFTED HERE 2026-09-09 when its home block was archived. 🚨 A NARROW EXCEPTION — DO NOT WIDEN IT. The test is NOT "did the stylist name a cut", it is "did the woman HAND OVER the choice": *"what's in style now?"* / *"you pick"* → searchable; *"I want a blush silk wrap dress"* → her words only. The rule it bends exists because the model once recommended a jewel tone and then searched for one as though she had asked.** |
+| **A cut the STYLIST chose is searchable only when SHE handed over the choice** | **the stylist may name a silhouette AND search for it when a woman delegates — and must say out loud that it was her own pick, so it stays hers to overrule. 🚨 ON SHOP YOUR STYLE THE TEST IS MECHANICAL AND EXACT: `_ssAsk` EMPTY = a full hand-over, so `_findKeepHerWords` does not run and the stylist's `cut` reaches all four queries; `_ssAsk` NON-EMPTY = her words, and it runs unchanged** | **`_findKeepHerWords` still deletes colour/fabric/cut she did not say on every other path** | **findprod 63 · chatfind 63 · ssfind 60** | ✅ **HER RULING 2026-09-08 (*"yes, that makes sense"*), LIFTED HERE 2026-09-09 when its home block was archived. 🚨🚨 AND IT REACHED SHOP YOUR STYLE ONLY ON 2026-09-10, AFTER SHE FOUND IT MISSING ON HER PHONE — the lead said *"I chose a belted dress"* and the shops received `["women's dress"]`. HER WORDS: *"I want the stylist to deliver exactly what she is promising."* ▶ A LEDGER ROW IS NOT A GUARANTEE THAT EVERY SURFACE OBEYS IT: this row existed, was correct, named its test suites, and one of the two surfaces had never been wired to it. **When a row says "when a woman delegates", check EVERY surface where she can delegate.** 🚨 A NARROW EXCEPTION — DO NOT WIDEN IT. The test is NOT "did the stylist name a cut", it is "did the woman HAND OVER the choice": *"what's in style now?"* / *"you pick"* → searchable; *"I want a blush silk wrap dress"* → her words only. The rule it bends exists because the model once recommended a jewel tone and then searched for one as though she had asked.** |
 | **The chat's two failure sentences are APPROVED AS WRITTEN** | **the "my search didn't come back" and "nothing close enough" lines in `_findBlockHtml`** | n/a — the shelves write no such prose | **chatfallback 105 §12-13** | ✅ **HER RULING 2026-09-08, LIFTED HERE 2026-09-09 when its home block was archived: *"I think what you came up with is fine and the stylist chat already has a good personality and words things well."* ⚠️ They are NO LONGER placeholders. Do not rewrite them.** |
 | **NEVER NAME A PRODUCT WE DID NOT FIND** | **the stylist may not name a product, price, size or link AT ALL — the ability is removed, not forbidden** | **every card carries a real verified offer from `find-products.js`** | **chatfallback 35** | ✅ **BUILT 2026-09-09, after she was shown four invented dresses** |
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
