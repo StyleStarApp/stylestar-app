@@ -835,9 +835,11 @@ several pages at once; doing both for one page is redundant, not harmful.
 naming the two or three things she might see, so she can just report back which one.** ⭐ **She moved
 through four steps with no confusion and no backtracking.** **Use it for anything she does in someone
 else's dashboard.**
-⏳ **STILL UNCONFIRMED, CARRIED OVER FROM 2026-09-04: whether `/trending` ever got its GOOGLE indexing
-request.** Bing's was made 2026-09-03 23:01; the Google half was never verified. **30 seconds in the
-same tool she already has open.**
+✅✅ **AND THE 2026-09-04 OPEN ITEM IS CLOSED, BY HER, THE SAME SESSION: `/trending` READS "URL IS ON
+GOOGLE."** ▶ **So its Google indexing was fine all along and the worry was unfounded** — it sat open
+for six days for want of one lookup. ⭐ **THE LESSON IS ABOUT THE QUESTION, NOT THE PAGE: an unverified
+worry costs nothing to check and outlives every session it is not checked in.** **When a note says
+"unconfirmed" and she is already standing in the tool that confirms it, ask.**
 
 ### 💰 WHICH EDIT PIECES ACTUALLY EARN — MEASURED 2026-09-10, AND THE FIRST FIGURE GIVEN TO HER WAS WRONG
 🚨 **HER QUESTION, AND IT DESERVES A NUMBER RATHER THAN A YES: *"I can share it and when anyone opens it
