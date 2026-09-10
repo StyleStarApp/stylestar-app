@@ -7059,7 +7059,7 @@ async function _shopStyleGen(){
    leak and the two-row regression happened, and the resume exists to show her
    THE SAME ROW: two painters could not guarantee that even on the day they were
    written. Returns false when there was nothing honest to show. */
-function _ssFindPaint(wrap,data,req,promise){
+function _ssFindPaint(wrap,data,req,promise,quiet){
   /* 🚨🚨 A SEARCH THAT NEVER CAME BACK MUST SAY SO — HER CATCH, 2026-09-10:
      *"The star started spinning promising to find me belted dresses then nothing
      came up. Just this screenshot. No photos."*
@@ -7093,7 +7093,7 @@ function _ssFindPaint(wrap,data,req,promise){
      styling. `_findBlockHtml` returns only its own honest sentence in that case;
      an empty row would leave a bordered gap, so it goes. */
   if(!data||data.why){wrap.remove();return false;}
-  var html=_findBlockHtml(data,req);
+  var html=_findBlockHtml(data,req,quiet);
   if(html.indexOf('find-card')<0){wrap.remove();return false;}
   /* ⭐ HERE, AND ONLY HERE, IS THE PROMISE SPOKEN — in the same breath as the
      cards that keep it. There is no other route to the screen. */
@@ -7123,8 +7123,8 @@ async function _ssFindRun(req,o){
   var pre=('pre' in o)?o.pre:_ssFindData;
   if(!('pre' in o))_ssFindData=null;
   var promise=('promise' in o)?o.promise:_ssPromise;
-  var save=o.save!==false;
-  if(pre){ if(_ssFindPaint(wrap,pre,req,promise)&&save)_saveShopFind(pre,_ssPicksT); return; }
+  var save=o.save!==false, quiet=!!o.quiet;
+  if(pre){ if(_ssFindPaint(wrap,pre,req,promise,quiet)&&save)_saveShopFind(pre,_ssPicksT); return; }
   /* ▶ The words move on as the wait goes on, so it reads as a stylist working
      rather than a spinner stuck. Same 3.5s beat as the chat's status line.
      ⚠️ ONE interval, cleared on EVERY return path below — a timer left running
@@ -7156,7 +7156,7 @@ async function _ssFindRun(req,o){
      quiet for six hours with no way back. ⚠️ And only Shop your Style saves at
      all: the Wardrobe has no resume of its own and would otherwise overwrite
      hers with a shelf of blouses. */
-  if(_ssFindPaint(wrap,_d,req,promise)&&save)_saveShopFind(_d,_ssPicksT);
+  if(_ssFindPaint(wrap,_d,req,promise,quiet)&&save)_saveShopFind(_d,_ssPicksT);
 }
 /* ▶ The stylist saying whose choice it was — her 2026-09-08 delegation ruling:
    when a woman hands over the choice, the stylist's pick becomes a real search
@@ -9561,7 +9561,9 @@ async function _wardrobeIdeaGen(id,boxId){
     _swipeHint(_g,_h);_nudgeScroll(_g);
     /* ▶ NOT AWAITED, exactly as on Shop your Style: her ideas are on screen in
        about a second and the products arrive into space already reserved. */
-    _ssFindRun({item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false});
+    /* ⚠️ `quiet:true` — HER RULING. She tapped a checklist row and named nothing,
+       so there is no exact match to fall short of and no apology to make. */
+    _ssFindRun({item:name},{wrapId:'wdrFind_'+id,promise:'',pre:null,save:false,quiet:true});
   }catch(e){
     // The AI failing must never blank a shelf that has real catalog pieces:
     // render them alone, with See more as the retry door.
@@ -11754,7 +11756,7 @@ function _findRemember(data,req){
   }catch(e){}
 }
 
-function _findBlockHtml(data,req){
+function _findBlockHtml(data,req,quiet){
   const asked=[req.item,req.colour,req.fabric,req.cut].filter(Boolean).join(' ');
   const keep=function(list){return filterNeverWear(list||[],asked)};
   const exact=keep(data.exact);
@@ -11981,8 +11983,18 @@ function _findBlockHtml(data,req){
        using it in a state it does not describe, NEVER to reword it.
        ⚠️ THIS REPLACEMENT LINE IS CLAUDE'S AND IS A PLACEHOLDER FOR HERS. Her
        own copy has beaten every draft so far; show it to her. */
-    wrap_html='<div class="find-head">Nothing came back as an exact match, '+
-      'but here is what I found right now.</div>'+
+    /* 🚨🚨 HER RULING, 2026-09-10, AFTER SEEING IT RENDERED: "take the apologizing
+       line off". ▶▶ ON THE WARDROBE SHE TYPED NOTHING — she tapped a checklist
+       row — so there is NO exact match to fall short of, and this sentence
+       apologises for a shortfall that does not exist, over six real products
+       from real shops at real prices. That is her own rule about her near-miss
+       copy one surface further out: STATE THE TRUTH AND STOP.
+       ⚠️ IT STAYS EVERYWHERE SHE ASKED FOR SOMETHING. In chat, and in Shop your
+         Style's ask box, she named a thing and deserves to know it was not
+         matched exactly. `quiet` is set by the CALLER that knows she asked for
+         nothing, never guessed at from the request. */
+    wrap_html=(quiet?'':'<div class="find-head">Nothing came back as an exact match, '+
+      'but here is what I found right now.</div>')+
       _findRow(browseCards.join(''),browseCards.length)+DISC;
   }else{
     /* ⚠️ NO FALLBACK TO AN INVENTED PRODUCT. Her call, 2026-09-06, and it changes

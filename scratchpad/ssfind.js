@@ -813,6 +813,47 @@ await pg.waitForTimeout(1500);
 ok('...while a question she has NOT asked before really does search',
    FINDCALLS.length === 1, JSON.stringify(FINDCALLS));
 
+/* ═══ 13 · THE APOLOGY ONLY WHERE SHE ASKED FOR SOMETHING ═════════════════ */
+console.log('\n13. it apologises only where she actually asked for something');
+/* 🚨 HER RULING, 2026-09-10, after seeing the Wardrobe shelf rendered at phone
+   size: "take the apologizing line off". ▶▶ ON THE WARDROBE SHE TYPED NOTHING --
+   she tapped a checklist row -- so there is no exact match to fall short of, and
+   "Nothing came back as an exact match" apologises over six real products from
+   real shops at real prices. Her own rule: STATE THE TRUTH AND STOP.
+   ⚠️ AND THE HALF THAT KEEPS IT HONEST IS ASSERTED FIRST: it must STILL appear
+     wherever she named a thing, or this would be a quiet loosening rather than
+     a scoping. */
+FIND = { exact: [], doors: [], browse: [
+  product(80, {store: 'Nordstrom', title: 'Poplin Shirt'}),
+  product(81, {store: 'Everlane', title: 'Silky Cotton Shirt'})] };
+REPLY = { items: six(), find: { item: 'blouse', colour: 'white', fabric: '', cut: '' } };
+await ask(pg, 'a white blouse');
+await pg.waitForSelector('#ssFindWrap .find-card', { timeout: 20000 });
+const asked = await pg.evaluate(() =>
+  (document.getElementById('ssFindWrap') || {}).innerText || '');
+ok('she ASKED for a white blouse, so she is still told it was not exact',
+   /Nothing came back as an exact match/i.test(asked), asked.slice(0, 90));
+
+/* ▶ The same data, same builder, through the caller that knows she named
+   nothing. Rendered into a scratch wrap so this measures the BUILDER's rule
+   rather than the Wardrobe screen's plumbing. */
+const quiet = await pg.evaluate(() => {
+  const d = {exact: [], doors: [], browse: [
+    {id: 'q1', title: 'Poplin Shirt', store: 'Nordstrom', brand: 'Nordstrom',
+     price: '$59', image: '', name: 'Poplin Shirt', search: 'Poplin Shirt'}]};
+  const loud = _findBlockHtml(d, {item: 'blouse'}, false);
+  const soft = _findBlockHtml(d, {item: 'blouse'}, true);
+  return {loud: /Nothing came back as an exact match/i.test(loud),
+          soft: /Nothing came back as an exact match/i.test(soft),
+          softStillHasCards: soft.indexOf('find-card') >= 0};
+});
+ok('...and the SAME builder keeps quiet when the caller says she asked for nothing',
+   quiet.loud && !quiet.soft, JSON.stringify(quiet));
+/* 🚨 THE ANTI-VACUOUS HALF: quiet must remove the APOLOGY, not the products. */
+ok('...while still showing her every piece it found',
+   quiet.softStillHasCards, JSON.stringify(quiet));
+FIND = null;
+
 ok('zero JS errors across every scenario', errs.length === 0, errs.join(' | '));
 await ctx.close();
 
