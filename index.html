@@ -12914,15 +12914,37 @@ function _renderWeekStar(){
    the Edit this session) or left it plain (if she hasn't). _affUrl never
    double-wraps, so calling it here is correct and safe either way — same
    reasoning as _wlDecorateEdit's own comment on this exact point. */
+/* 🚨🚨 THE PHOTO IS FOUND BY ASKING FOR AN <img>, NEVER BY ASSUMING .dc-item-px
+   IS ONE. Her catch, 2026-09-10: "That necklace does have a photo it should be
+   on there?" It did, and the card showed it — the STRIP could not see it.
+   ▶ AN EDIT PHOTO COMES IN THREE SHAPES and this selector must survive all of
+   them, because the old '.dc-item-px' lookup handled only the first:
+     (a) <img class="dc-item-px">                — the ordinary card
+     (b) <div class="dc-item-px is-stack"><img><img>  — a px2 stacked pair
+     (c) a hand-cropped frame with INLINE styles and no class at all
+         (the Etsy Open Heart Necklace, whose crop was tuned by eye)
+   ⚠️ (c) WAS SILENTLY ABSENT FROM THE STRIP, and (b) WAS A LATENT BUG: a div
+   has no src, so a stacked piece would have rendered a card with src="" the
+   moment it stopped being the Star of the Week. Nobody would have seen it
+   until the rotation moved on.
+   ▶ Safe because a .dc-item contains NO other <img> — the shop button and the
+   save heart are both inline <svg>. Measured: 17 items hold an <img> and those
+   are exactly the 17 photographed ones. If a non-photo <img> is ever added to
+   a card, scope this to the photo frame rather than loosening it further. */
+function _editPhoto(el){
+  var px=el.querySelector('.dc-item-px');
+  if(px)return px.tagName==='IMG'?px:px.querySelector('img');
+  return el.querySelector('img');
+}
 function _renderEditTeaser(){
   var el=document.getElementById('wbEditTeaser');if(!el)return;
   var star=_weekStar();
   var items=_wlEditItems().filter(function(it){
-    var img=it.el.querySelector('.dc-item-px');
+    var img=_editPhoto(it.el);
     // never repeat whatever the Star card above is already showing this week
     return img && (!star||it.url!==star.url);
   }).map(function(it){
-    var img=it.el.querySelector('.dc-item-px');
+    var img=_editPhoto(it.el);
     return {name:it.name,price:it.price,url:it.url,src:img.getAttribute('src')||'',alt:img.getAttribute('alt')||it.name};
   });
   if(!items.length){el.classList.remove('on');el.innerHTML='';return;}

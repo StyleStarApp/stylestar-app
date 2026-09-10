@@ -237,6 +237,65 @@ for (const w of [390, 360, 320]) {
   ok(`${w}px: no sideways PAGE scroll (the strip's own horizontal scroll is intentional)`, r.scroll <= r.client + 1, JSON.stringify(r));
 }
 
+// 7. HER CATCH, 2026-09-10: "That necklace does have a photo it should be on
+//    there?" It did. The CARD showed it; the STRIP could not see it, because
+//    the lookup asked for `.dc-item-px` and that item's photo is a hand-cropped
+//    frame with inline styles and no class. A px2 STACK was the same hole one
+//    step further on: `.dc-item-px` is a <div> there, so it has no src at all,
+//    and a stacked piece would have rendered a card with src="" the moment it
+//    stopped being the Star.
+//    ▶ THESE CHECKS NAME THE RULE, NOT THE MECHANISM — "every photographed piece
+//    can reach the strip" — so they keep biting if the markup changes shape
+//    again. Deliberately NOT "the count is 16": that is the derive-don't-count
+//    lesson this repo already paid for four times in one day.
+console.log('\n7. Every photographed Edit piece can reach the strip, whatever shape its photo is');
+await pg.setViewportSize({ width: 390, height: 900 });
+await pg.evaluate(() => { show('s-wb'); });
+await pg.waitForTimeout(250);
+const reach = await pg.evaluate(() => {
+  const items = [...document.querySelectorAll('#s-dream .dc-item')];
+  const rows = items.map(e => {
+    const name = e.querySelector('.dc-item-name').textContent.trim();
+    const px = e.querySelector('.dc-item-px');
+    return {
+      name,
+      hasImg: !!e.querySelector('img'),
+      shape: !px ? 'inline-frame' : (px.tagName === 'IMG' ? 'plain' : 'stack'),
+      src: (function () { const i = _editPhoto(e); return i ? (i.getAttribute('src') || '') : ''; })()
+    };
+  });
+  const photographed = rows.filter(r => r.hasImg);
+  const star = _weekStar();
+  const strip = [...document.querySelectorAll('#wbEditTeaser .wet-card:not(.wet-all)')]
+    .map(c => (c.querySelector('.wet-n') || {}).textContent);
+  return {
+    photographed: photographed.length,
+    resolved: photographed.filter(r => r.src).length,
+    unresolved: photographed.filter(r => !r.src).map(r => r.name + ' [' + r.shape + ']'),
+    shapes: [...new Set(photographed.map(r => r.shape))].sort(),
+    inlineFrame: photographed.filter(r => r.shape === 'inline-frame').map(r => r.name),
+    stacks: photographed.filter(r => r.shape === 'stack').map(r => r.name),
+    missing: photographed.filter(r => !strip.includes(r.name) && (!star || r.name !== star.n)).map(r => r.name),
+    stripEmptySrc: [...document.querySelectorAll('#wbEditTeaser .wet-card:not(.wet-all) img')]
+      .filter(i => !i.getAttribute('src')).length,
+    starName: star ? star.n : null
+  };
+});
+ok('every photographed piece resolves to a real image src',
+   reach.photographed > 0 && reach.resolved === reach.photographed, JSON.stringify(reach.unresolved));
+ok('no card in the strip is built with an empty src', reach.stripEmptySrc === 0, String(reach.stripEmptySrc));
+ok('every photographed piece reaches the strip, except this week\'s Star',
+   reach.missing.length === 0, JSON.stringify(reach.missing) + ' star=' + reach.starName);
+// The two shapes that broke it, asserted BY SHAPE so the checks stay meaningful
+// if she swaps which particular piece is built that way.
+ok('a hand-cropped inline frame (no .dc-item-px class) is found, not skipped',
+   reach.inlineFrame.length > 0 && reach.inlineFrame.every(n => reach.missing.indexOf(n) < 0),
+   JSON.stringify(reach.inlineFrame));
+ok('a px2 STACK yields its front photo, never a div with no src',
+   reach.stacks.length > 0 && reach.stacks.every(n => {
+     const r = reach; return r.unresolved.every(u => u.indexOf(n) < 0);
+   }), JSON.stringify(reach.stacks));
+
 ok('zero JS errors', errs.length === 0, errs.join(' | '));
 await ctx.close(); await b.close(); srv.close();
 console.log(`\n${pass} passed, ${fail} failed`);
