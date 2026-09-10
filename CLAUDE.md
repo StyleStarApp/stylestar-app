@@ -31,6 +31,7 @@ it several times that day as if it were her next step, and it was not: **she had
 | 5 | ~~Homework 7 — first testers~~ ✅ **CLOSED 2026-09-09 BY HER: *"I have already asked many friends and put it out on Instagram."*** | — | ✅ done |
 | 6 | ~~Three Edit pieces + the Edit's order~~ ✅ **BUILT AND LIVE 2026-09-10 — her Simkhai tote, Simkhai sandal and Zoe Lev necklace, all Olivela and all EARNING; the Edit is 35 items and the shops that pay her now LEAD.** | — | ✅ done |
 | 7 | ~~The Edit strip could not see one of her photos~~ ✅ **HER CATCH, FIXED 2026-09-10 — and it turned up a latent bug that would have shipped a broken card when the Star rotation moved on.** | — | ✅ done |
+| 8 | ~~The strip cropped her photos and showed the Star twice~~ ✅ **HER THREE CATCHES OFF ONE SCREENSHOT, ALL FIXED AND LIVE 2026-09-10. The strip now CROPS NOTHING, renders a `px2` stack as a stack, and can no longer duplicate the Star.** | — | ✅ done |
 ▶▶ **EVERY ROW IS DONE. There is no approved next build.** ⭐ **The next session's job is to ASK — what her
 testers said, and what a fitting room means to her — and let her answers set the work. See "WHAT CLAUDE
 BUILDS NEXT" below, which is deliberately a list of UNAPPROVED options rather than a queue.**
@@ -353,6 +354,83 @@ inline `<svg>`. Measured: 17 items hold an `<img>` and those are exactly the 17 
 📈 **MEASURED, BEFORE → AFTER: pieces resolving to a real src 15 → 17 · cards in the strip 15 → 16 ·
 cards with an empty src 0 → 0.**
 
+### 🚨🚨🚨 THEN SHE OPENED WELCOME BACK AND FOUND THREE MORE THINGS IN ONE SCREENSHOT
+▶▶ **HER WORDS: *"The jeans are cut off- can't see the whole Jean and the sunglasses photo is missing
+the other half it looks fine in the main page but on teaser these photos need fixing please."***
+⚠️ **"THESE PHOTOS" IS THE *"More from the Edit"* STRIP ON WELCOME BACK (`#wbEditTeaser`), NOT THE EDIT
+PAGE.** It was a THIRD surface that had never been told the photo rule — the ledger's own *"one photo
+renders the SAME on every screen"* row, and the same shape as the Serpui bag being right on one screen
+and cut off on the next.
+
+**1. ⭐ THE JEAN — AND THE FIRST FIX WAS AIMED AT THE WRONG TARGET, WHICH IS THE LESSON.**
+The strip's frame was **108x135 (0.80), CENTRE-anchored**; `.dc-item-px` is **3:4 (0.75), TOP-anchored**.
+Measured on her Crosbie Jean, a **0.667** source:
+| | keeps | loses |
+|---|---|---|
+| the Edit page | 89% of height | 11% off the **bottom only** |
+| the strip (before) | 83% | **8% off the TOP and 8% off the bottom** |
+✅ **First fix: match the Edit — same 3:4, same top anchor.** The waistband came back.
+🚨🚨 **AND SHE CAME STRAIGHT BACK: *"Jeans are cut off at the bottom."* SHE WAS RIGHT AGAIN.** Matching
+the Edit still ate the hem, because `cover` loses 11% of a 0.667 photo *whichever end it is anchored to*.
+▶▶ **MATCHING THE EDIT WAS CLAUDE'S INFERENCE FROM HER *"it looks fine in the main page"*. HER
+REQUIREMENT, SAID TWICE, WAS THAT SHE CAN SEE THE WHOLE PIECE.** *"can't see the whole Jean"*, then
+*"cut off at the bottom."*
+✅✅ **SO THE STRIP NOW CROPS NOTHING, ON ANY PHOTO, EVER — `object-fit:contain` in the same 3:4 frame.**
+⭐ **THAT IS HER OWN LEDGER ROW *"A PRODUCT PHOTO IS NEVER CROPPED"*, the rule the finder's cards already
+follow.** ▶ **AND THE TWO PHOTO ROWS DIFFER ON PURPOSE — THIS SURFACE BELONGS TO THE SECOND ONE.**
+`pxPos`/`pxFit`/`px2` are per-item overrides chosen by LOOKING at ONE known photo; **this strip shows many
+photos of many shapes that nobody has hand-tuned, so the only safe crop is no crop.**
+⚠️ **THE BAND IS `#F5EFE2` AND IT IS MEASURED, NOT PICKED: her Crosbie Jean is a TRANSPARENT png, so the
+band colour IS its background, and the Olivela photos sit on `rgb(242,237,234)`. White would show a hard
+edge against both.** ⚠️ **THE EDIT PAGE STILL CROPS — she said it looks fine, so it was left alone
+deliberately rather than swept along. Offered, not taken.**
+
+**2. ⭐ THE SUNGLASSES — A `px2` STACK IS ONE PIECE SHOWN AS TWO VIEWS, and the strip rendered only the
+first.** ✅ **It now renders the stack.** ⚠️⚠️ **`.wet-px` WAS ADDED TO THE TWO *EXISTING* SHARED RULES
+RATHER THAN GIVEN ITS OWN — her `px2` rule: ONE RULE, EVERY SURFACE, ALWAYS.** `starpx`'s four assertions
+on those rules still hold.
+
+**3. 🚨🚨 AND A FAULT SHE PHOTOGRAPHED WITHOUT NAMING: THE STAR OF THE WEEK APPEARED TWICE ON WELCOME
+BACK** — as the big card AND in the strip. ▶ **`_wlEditItems()` reads `.url` RAW, but `_wlDecorateEdit()`
+rewrites the Edit's hrefs to their affiliate-wrapped `click.linksynergy.com` form THE MOMENT SHE OPENS THE
+EDIT.** After that a raw `star.url` could never equal a wrapped `it.url`, so the dedupe silently stopped
+matching. ✅ **Both sides now go through `_affUrl`, which never double-wraps.**
+▶▶ **WHY IT SURVIVED, AND IT IS THE GENERAL LESSON: IT ONLY HAPPENED AFTER SHE HAD VISITED THE EDIT.** A
+fresh load never showed it, so every check that tested a cold page passed happily through the whole bug.
+**The regression test now asserts it in BOTH orders.**
+
+### ✅ SHE RULED ON THE CONSEQUENCE, AND THE ANSWER IS "NOTHING TO BUILD"
+▶ **Fixing the dedupe took the sunglasses OUT of the strip, and she noticed: *"Glasses not showing in
+teaser."*** ⚠️ **NOT A BUG: they are THIS WEEK'S STAR, and the strip is built never to repeat the piece
+directly above it — her own August design.** ▶ **They stop being the Star on SUNDAY 13 SEPTEMBER and
+return to the strip automatically, with both stacked views.**
+⭐ **OFFERED THREE WAYS (leave it · show every piece including the Star · move the Star into the strip and
+drop the big card) AND SHE CHOSE: *"Leave it — they're back Sunday."*** **So the dedupe stands. Do not
+re-propose this.**
+🚨 **BUT CHECKING IT FOUND A REAL FRAGILITY IN THE STACK BUILT HOURS EARLIER, AND IT WOULD HAVE BITTEN ON
+SUNDAY ON THAT EXACT PIECE.** A single card carries `onerror="remove the card"`, which is right when there
+is no photo at all — **but a stack has TWO chances to fail and both images carried it, so a 404 on the
+SECOND view would have thrown away a perfectly good first view and made the piece vanish.**
+✅ **The second view now removes only ITSELF and unwraps the pair to a single photo; the first keeps the
+old behaviour. The unwrapped container needed its own css rule or the survivor spills out of the card.**
+
+### 🚨🚨🚨 TWO FALSE GREENS IN CLAUDE'S OWN CHECKS, BOTH CAUGHT THE SAME WAY
+▶▶ **BY PUTTING THE OLD RULE BACK AND WATCHING WHICH CHECKS *STAYED* GREEN.** That is the step that
+usually gets skipped, and it caught both.
+1. ⚠️ ***"not one of them is cropped"* MEASURED THE REAL PHOTOS — and every retail CDN is unreachable
+   from this sandbox, so every one had `naturalWidth` 0. It was measuring NOTHING and passing.** ✅ Now a
+   synthetic **2:3 svg**, the same shape as her jean, behind a GATE that it really loaded.
+2. ⚠️ **THE PAINTED-BOX MATHS COMPUTED THE `contain` FIT ARITHMETICALLY, so it did not depend on the CSS
+   at all and passed happily with `cover` restored.** ✅ Now derived from the element's real `object-fit`.
+▶ **Both go red on a revert, naming real numbers: a 200x300 photo painted 108x162 inside a 108x144 frame
+— 18px spilling, which is her hem.**
+⚠️ **AND A THIRD, EARLIER THE SAME DAY: *"the same two photos, in the same order"* PASSED VACUOUSLY when
+no stack rendered, because two empty arrays compare equal.** `n===2` is now part of the assertion.
+🚨 **THE RULE TO KEEP, and it is this file's own: ASK OF ANY NEW CHECK — COULD THIS PASS IF THE THING IT
+MEASURES WERE SIMPLY ABSENT?** Three said yes in one afternoon.
+⭐ **TWO OLD ASSERTIONS WERE REWRITTEN, NOT BUMPED** — they required the strip to match the Edit card's
+fit and anchor, which is now deliberately false. **They name the rule instead: *the strip crops nothing*.**
+
 ### 🚨🚨🚨 THE LESSON OF THE DAY, AND IT IS A REPEAT — SHE HAD ALREADY TAUGHT IT
 ▶▶ **HER RULE, GIVEN 2026-09-09: *"it is not the size that is the problem it is the particular photo the
 angle of the shoe is not right... It's the point of view and angle of shoe."***
@@ -388,13 +466,13 @@ question, so it is CONSISTENT and is NOT to be re-litigated.** ⭐ **The honest 
 caching stopped being a someday item and shipped with it (`_FIND_CACHE`, opt-in, that screen only).**
 
 ### ✅ EVERYTHING IS ON `main` AND VERIFIED LIVE BY FETCHING stylestar.app
-`1e460fe` → `648987b` → `90b81b0` → `a058430` → `e213166` → **`cfcc4a8`** (live), then **`d46c43e`**
-(the strip fix). ⚠️ **VERIFIED BY FETCHING THE SERVED FILE AND FINDING THE MARKERS, never by the deploy
+`1e460fe` → `648987b` → `90b81b0` → `a058430` → `e213166` → `cfcc4a8` → `d46c43e` → `b7981eb` →
+`2bbaf19` → `5dff46e` → **`b2c35c4`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILE AND FINDING THE MARKERS, never by the deploy
 badge.** Standing rule; it held again. **The live order was read back off the served page: 17 earners,
 18 text cards, one clean break.**
 
 ### ▶ TEST STATE — MEASURED TODAY (2026-09-10)
-✅ **`wbedittasr` 28 (was 23) · `affq` 40 · `linkwatch` 24 · `starpx` 28.** Div balance verified against
+✅ **`wbedittasr` 42 (was 23) · `affq` 40 · `copy` 49 · `linkwatch` 24 · `starpx` 28.** Div balance verified against
 the `HEAD` baseline at every step, both inline script blocks parse, no mojibake, and all 35 Edit anchors
 are https, unique, `target="_blank"` and `rel="sponsored noopener"`.
 ⭐⭐ **AND THE NEW CHECKS WERE PROVEN TO BITE, WHICH IS THE STEP USUALLY SKIPPED:** putting the old
@@ -1796,7 +1874,7 @@ that is the whole lesson of 2026-09-06 and it repeated twice more on 2026-09-07.
 | **NEVER NAME A PRODUCT WE DID NOT FIND** | **the stylist may not name a product, price, size or link AT ALL — the ability is removed, not forbidden** | **every card carries a real verified offer from `find-products.js`** | **chatfallback 35** | ✅ **BUILT 2026-09-09, after she was shown four invented dresses** |
 | **The internal `<<FIND>>` marker is never seen** | **stripped in `addChatMsg`, the ONE choke point every bot bubble passes through** | n/a — the shelves render no stylist prose | **chatfallback 35** | ✅ **fixed 2026-09-09; it had leaked from the one render route of four that forgot** |
 | **Never say "your shops" / "your stores"** | **status lines, empty states, row headers — the phrase is absent, asserted** | n/a — the shelves write no such prose | **chatfallback 81 · copy 69** | ✅ **her rule, 2026-09-09: *"Clients want me to check all stores"*** |
-| **A product photo is never cropped** | **the chat's AND Shop your Style's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 49** | ✅ **her catch 2026-09-09, and SHE CLOSED THE BAND QUESTION THE SAME DAY: *"I have not noticed a white band on anything."*** ⚠️ **The shoe-photo complaint is NOT this rule failing — it is the retailer's own margin, measured at 9-10% fill. A zoom to fix it would break this row.** |
+| **A product photo is never cropped** | **the chat's AND Shop your Style's cards: `.fc-img` is `contain` in a 150x170 frame, banded in the card's own white — AND, since 2026-09-10, the "More from the Edit" strip (`#wbEditTeaser .wet-card>img`, `contain` in a 3:4 frame banded `#F5EFE2`)** | n/a — the shelves and the Star use `pxPos`/`pxFit`/`px2`, which choose a crop for ONE known photo | **copy 49 · wbedittasr 42** | ✅ **her catch 2026-09-09, and SHE CLOSED THE BAND QUESTION THE SAME DAY: *"I have not noticed a white band on anything."*** ⚠️ **The shoe-photo complaint is NOT this rule failing — it is the retailer's own margin, measured at 9-10% fill. A zoom to fix it would break this row.** 🚨🚨 **THE STRIP JOINED THIS ROW ON 2026-09-10 AFTER SHE SAID IT TWICE: *"can't see the whole Jean"*, then *"Jeans are cut off at the bottom."* THE FIRST FIX MATCHED THE STRIP TO THE EDIT CARD'S CROP AND WAS STILL WRONG — matching the Edit was Claude's inference from her *"it looks fine in the main page"*; her requirement was seeing the WHOLE piece. ▶ WHICH SURFACE A NEW PHOTO ROW BELONGS TO IS DECIDED BY ONE QUESTION: has a PERSON looked at this exact photograph? The Star and the Edit are hand-tuned per item, so they may crop. The finder's cards and this strip show many photos of many shapes sight-unseen, so they may not.** ⚠️ **The EDIT PAGE still crops and that is deliberate — she said it looks fine and it was left alone, not swept along.** |
 | **The finder's honesty rules hold on EVERY surface that shows found products** | **chat AND Shop your Style render through the ONE `_findBlockHtml` and fetch through the ONE `_findFetch` — there is exactly one `product-find` call site in the app, asserted** | n/a — the shelves show feed products, judged by `curatedPicks` | **ssfind 52 · chatfallback 105** | ✅ **BUILT 2026-09-09 with Shop your Style. A second card loop is how the `<<FIND>>` marker leaked and how the two-row regression happened; there is none here to drift.** |
 | **A SAVED ROW MAY CLAIM NO MORE THAN THE CARD IT WAS SAVED FROM** | **`_findCard`: a CHECKED card saves `exact` (real product page → "Shop it" + price); a BROWSE card saves store+search (→ "Find it", no price)** | **`renderWishlist` labels off that same flag, and rebuilds the search link every render** | **chatfallback 98, §15 — and both checks proven to bite** | ✅ **BUILT 2026-09-09 with the save heart. It is her 2026-09-06 rule one surface further out: a price and "Shop it" on a row that lands on a RESULTS PAGE is the "generic store search dressed as a find" she banned.** |
 | **GOLD IS THE APP'S VOICE, PINK IS CATHERINE'S** | **the LARGE spinning waiting star (`.ss-find-star`, 66px) is GOLD and has NO `path` colour rule — it keeps `_starSpin`'s own gold** | **the small stylist MARKS stay PINK (`.sa-star`, `.shop-load-star`), and `.chat-typing-star,.find-load-star` IS the pink selector** | **ssfind 52, both halves** | ✅ **HER RULING 2026-09-09, LIFTED INTO THE LEDGER 2026-09-10 because it lived only in a session block and was one archive away from being lost: *"66px but I want the gold one not pink. Pink only for the chat."* and, correcting a sweep: *"I didn't want you to change those other stars. Just the one I said."* 🚨 NEVER add `.ss-find-star` to the pink path selector. Her 2026-08-09 mark system: gold = hers, pink = when Catherine herself is speaking.** |
