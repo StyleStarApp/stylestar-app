@@ -390,7 +390,24 @@ export default async (req) => {
        back-to-back calls, which is how they were found. A woman asking ONE
        question may never see this. Do not "fix" it further without evidence
        from her own use — and the debug view now shows her the number. */
-  const get = async (url, ms = 12000) => {
+  /* ⏱ 12s → 9s, HER DECISION 2026-09-10, AND CHOSEN FROM REAL SUCCESSES RATHER
+     THAN FROM HOPE. The searches that ACTUALLY ANSWER, measured and recorded in
+     her notes, land at 6.6s, 6.9s and 8.7s — so nine seconds keeps every success
+     ever observed and cuts three seconds off every hang.
+     ▶▶ AND IT IS THE OPPOSITE OF THE MISTAKE THIS FILE ALREADY RECORDS: the
+       ceiling was once raised 10s → 20s on the reasoning that the headroom
+       looked thin, and the very next failure pinned at exactly 20001ms. A
+       request pinned to the millisecond on the ceiling is HUNG, NOT SLOW, so a
+       bigger ceiling only makes a woman wait longer for the same answer.
+       LOWERING it is the only direction that helps her.
+     ⚠️ MEASURED ON HER LIVE APP THE SAME DAY: cold searches returning
+       `search: 12003ms` with `google: 0` — every query hung, and the twelve
+       seconds bought nothing at all. Her own shelf answered those in under a
+       second, which is what she saw instead of a failure.
+     ⚠️ DO NOT RAISE IT AGAIN WITHOUT MEASURING REAL SUCCESSES FIRST. If a
+       genuine success is ever observed above 9s, that is the evidence — not a
+       feeling that the search "needs more time". */
+  const get = async (url, ms = 9000) => {
     const r = await fetch(url, {signal: AbortSignal.timeout(ms)});
     if (!r.ok) throw new Error('upstream ' + r.status);
     return r.json();
