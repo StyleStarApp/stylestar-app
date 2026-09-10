@@ -83,8 +83,15 @@ ok('and on a hand-over, colour and fabric are still only for when they are the p
    out loud, "so it stays hers to overrule". */
 ok('with NO ask, the stylist must SAY the pick was hers',
    /findlead/.test(noAsk) && /overrule/i.test(noAsk), noAsk.slice(-200));
-ok('...and with an ask there is no such line, because nothing was chosen for her',
-   !/findlead/.test(withAsk));
+/* ⚠️ REWRITTEN 2026-09-10, NOT BUMPED. This asserted the typed prompt never
+   mentions `findlead` at all — true while a typed ask could never have anything
+   chosen for her, and false the moment an OCCASION had to be translated ("Try:
+   vacation dress" is one of the app's own suggestions). ▶ THE RULE IT NAMES NOW:
+   on a typed ask the stylist announces nothing EXCEPT a translation, and when
+   she does translate she must say which words she picked. */
+ok('...and with an ask she announces nothing EXCEPT a translation she made',
+   /`chose`/.test(withAsk) && /findlead/.test(withAsk) && /overrule/i.test(withAsk),
+   withAsk.slice(0, 200));
 /* 🚨 SCOPING, the same shape as honest.js: the cheapest way to "improve" this
    would be to spread it to the four browsing prompts, which would spend a
    search on surfaces she never ruled on. */
@@ -912,6 +919,61 @@ ok('the her-words guard and the shop-words floor run on the SAME routes',
 /* ▶ AND THE PROMPT SIDE, WHICH IS THE ACTUAL FIX: an occasion is never searched. */
 ok('the stylist is told an occasion is never a search word',
    /No garment is NAMED "vacation"/.test(noAsk) && /No garment is NAMED "vacation"/.test(withAsk));
+
+/* ═══ 15 · AN OCCASION IS TRANSLATED, NOT SEARCHED ══════════════════════ */
+console.log('\n15. "vacation dress" is one of OUR OWN suggestions, so it must work');
+/* 🚨🚨 HER ARGUMENT, AND IT IS WHAT SETTLED A FORK CLAUDE HAD PUT TO HER THE
+   OTHER WAY: "Vacation dress is one of the example prompts we give on the shop
+   your style so we really need to be able to find that for her if we are
+   suggesting it as a search term."
+   ▶▶ SO THIS IS NOT THE INVENTED-REQUIREMENT FAULT. The her-words guard exists
+     because the model once recommended a jewel tone and searched for one as
+     though she had asked. Here THE APP PUT THE WORDS IN HER MOUTH — it suggests
+     "Try: vacation dress" itself — and answering its own suggestion is the job.
+   ⚠️ THE GUARD IS NOT WEAKENED BY A WORD, and the check below proves it in the
+     same run: an invented colour still dies, on the same reply. */
+FIND = { exact: [], doors: [], browse: [product(90, {store: 'Boden', title: 'Linen Midi Dress'})] };
+FINDCALLS.length = 0;
+REPLY = { items: six(), findlead: 'I looked for linen midi dresses, easy for a hot week away.',
+          find: { item: 'dress', colour: '', fabric: '', cut: '', chose: 'linen midi' } };
+await ask(pg, 'vacation dress');
+await pg.waitForTimeout(1800);
+const occ = FINDCALLS[FINDCALLS.length - 1] || {};
+ok('the shops are asked for what a shop actually stocks, not "vacation"',
+   occ.cut === 'linen midi' && !/vacation/i.test(JSON.stringify(occ)), JSON.stringify(occ));
+/* 🚨 AND SHE MUST BE ABLE TO OVERRULE IT. A translation she cannot see is the
+   exact thing the guard exists to prevent -- the app narrowing her search
+   silently -- so the stylist's sentence is FORCED onto a screen where it is
+   normally quiet. */
+const occLead = await pg.evaluate(() => {
+  const l = document.querySelector('#ssFindWrap .ss-find-lead');
+  return l ? l.textContent : null;
+});
+ok('...and the stylist SAYS which words she chose, so they stay overrulable',
+   !!occLead && /linen midi/i.test(occLead), JSON.stringify(occLead));
+
+/* 🚨🚨 THE HALF THAT KEEPS IT HONEST, ON THE SAME PATH AND THE SAME REPLY: a
+   detail SHE named outranks the stylist, and an invented colour still dies. */
+FINDCALLS.length = 0;
+REPLY = { items: six(), findlead: 'I chose emerald, it suits you.',
+          find: { item: 'jeans', colour: 'emerald', fabric: '', cut: '', chose: 'wide leg cropped' } };
+await ask(pg, 'white jeans');
+await pg.waitForTimeout(1800);
+const named = FINDCALLS[FINDCALLS.length - 1] || {};
+ok('a colour she NEVER said still dies, even with a translation offered',
+   !named.colour, JSON.stringify(named));
+ok('...and `chose` is IGNORED when her own words held something searchable',
+   named.cut !== 'wide leg cropped', JSON.stringify(named));
+/* ▶ AND IT NEVER TRAVELS TO THE SERVER AS A FIELD OF ITS OWN. */
+ok('...and `chose` is never sent to the server',
+   FINDCALLS.every(c => !('chose' in c)), JSON.stringify(FINDCALLS));
+FIND = null;
+
+/* ▶ AND THE SUGGESTIONS THEMSELVES: the app may not teach her to ask for a
+   thing it cannot do. HER RULING: "Let's take the price off if we can't honor
+   it." A find request carries item/colour/fabric/cut/size/width and NO price. */
+ok('no suggested prompt promises a price filter that does not exist',
+   !/Try: [^']*under \$/.test(HTML), (HTML.match(/'Try: [^']*'/g) || []).join(' · '));
 
 ok('zero JS errors across every scenario', errs.length === 0, errs.join(' | '));
 await ctx.close();

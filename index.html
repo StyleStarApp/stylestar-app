@@ -6221,16 +6221,29 @@ function styleNudgeSkip(){try{localStorage.setItem('ss_stylenudge','1')}catch(e)
 // SHORT ask works. Every draft was a full phrase, quietly implying she had to write
 // a sentence. ⚠️ The "Try:" prefix stays, her call: the box centres its text, so a
 // bare phrase sitting in the middle of it reads as something already typed.
+/* 🚨🚨 THE PRICE EXAMPLES CAME OFF — HER RULING, 2026-09-10: "Let's take the
+   price off if we can't honor it."
+   ▶▶ WHY, AND IT IS THE WHOLE POINT: a suggested prompt is the app PUTTING WORDS
+     IN HER MOUTH, so anything suggested here must be something the search can
+     actually answer. It could not answer these two: a find request carries
+     item · colour · fabric · cut · size · width AND NOTHING ELSE — there is no
+     price field anywhere in it, so "under $100" was never filtered, merely
+     ignored. She was being taught to ask for the one thing the app cannot do.
+   ⚠️ THE PRICE CLAUSE IS GONE, THE PROMPTS ARE NOT. "tops" and "white jeans" are
+     real searches and keep her own teaching point (a SHORT ask works).
+   ▶ A PRICE FILTER IS A REAL BUILD AND IT IS ON HER BOARD. The moment it exists,
+     put these two back exactly as they were — they are good examples, and the
+     only thing wrong with them was that they were promises. */
 var _ASK_RING=[
   'Try: wedding guest dress',
-  'Try: tops under $100',
+  'Try: tops',
   'Try: vacation dress',
   'Try: jeans',
   'Try: work trousers',
   'Try: tan sandals',
   'Try: silk blouse',
   'Try: tote bag',
-  'Try: white jeans under $150'
+  'Try: white jeans'
 ];
 // Occasion above category, her call ("let's try both rows and see").
 // ▶▶ TAPPING A CHIP FILLS THE BOX, IT DOES NOT RUN A SEARCH. That is precisely
@@ -6423,6 +6436,11 @@ function _findAskRule(){
     +'`item` is the garment noun on its own ("dress", "white top" is wrong, "top" is right) and is REQUIRED. '
     +(_ssAsk
       ? 'Fill colour/fabric/cut ONLY with words she actually used in: "'+_ssAsk+'". '
+        +'\u2b50 BUT IF WHAT SHE NAMED IS AN OCCASION RATHER THAN A GARMENT DETAIL (a vacation dress, a wedding guest dress, work trousers), '
+        +'the shops have no such word and you MUST translate it: put the words a shop really prints on that kind of piece into `chose` '
+        +'(for a vacation dress: "linen midi", or "floaty maxi" \u2014 whatever YOUR eye says suits HER), and name them in `findlead` in one warm '
+        +'sentence so she can overrule you. \u26a0\ufe0f `chose` is the ONLY place your own words may go on this path, and it is used ONLY when '
+        +'her own words hold nothing searchable. Leave it EMPTY whenever she named a real garment detail herself. '
         +'Leave a field empty rather than guessing; empty is always safe. Choose the item she asked for. '
         +'\u26a0\ufe0f THESE FIELDS HOLD WORDS A SHOP PRINTS ON A PRODUCT, never a description and never a sentence. "Linen Midi Dress" and "Belted Shirt Dress" are what shops call things; "belted wrap with midi length and fitted bodice" is not, and no product on earth is named that. Two or three plain words per field, maximum. AND NEVER AN OCCASION OR A MOOD: vacation, wedding, work, brunch, date night, effortless, elevated. No garment is NAMED "vacation", so searching for it finds NOTHING AT ALL. If the only thing she named is an occasion, leave these fields empty and let your six pieces carry the styling. '+'\n'
       : 'She has not asked for anything specific, so YOU choose the one garment worth showing her most, from her profile, '
@@ -6790,8 +6808,11 @@ var _ssFindData=null;
 /* The stylist's own sentence, held back until there are cards to say it over.
    See the block at #ssFindWrap: it is a promise, so it waits for the goods. */
 var _ssPromise='';
+/* True only when the stylist translated an occasion into shop words on a TYPED
+   ask. It forces her sentence onto the screen so the choice stays overrulable. */
+var _ssTranslated=false;
 async function _shopStyleGen(){
-  _ssFindPre=false;_ssFindData=null;_ssPromise='';
+  _ssFindPre=false;_ssFindData=null;_ssPromise='';_ssTranslated=false;
   var cont=document.getElementById('shopStyleContent');
   var scr=document.getElementById('s-shopstyle');if(scr)scr.classList.add('thinking');
   // Drives the subtitle rule above: only the quiz-mode line is decorative.
@@ -6856,7 +6877,7 @@ async function _shopStyleGen(){
     prompt='You are Catherine, a personal stylist. This woman shared a photo of an outfit she already owns and loves. Suggest 6 specific shoppable pieces that MIRROR her look — more of the SAME kinds of pieces in the same spirit, so she can repeat a look she already knows is hers.\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nWHAT MIRRORING MEANS:\n- Every piece must be the same KIND of garment as something she is wearing, in the same silhouette family and the same energy: if she is wearing a floral midi dress, find more floral or printed midi dresses; a cropped cream jacket, more little cropped jackets like it.\n- Weight the mix toward her main piece: at least 3 of the 6 should echo the biggest garment in her look, the rest can echo her other pieces.\n- Vary the colors and prints within her palette so the six are sisters of her look, not six copies of one item.\n- These are SWAPS and REPEATS, never add-ons: NO bags, jewelry, belts or other accessories unless that accessory is itself the heart of her look. Completing the look is a different button; this one multiplies it.\n\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules()+'\nRULES:\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n- Name each piece plainly and beautifully, leading with the piece itself, print or silhouette + item, like "Floral Flutter-Sleeve Midi Dress" — never vague, never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n\nRespond with ONLY valid JSON:\n{"items":[{"category":"dress","name":"Item Name","search":"short search term","store":"Store Name"}]}';
   }else{
     maxTok=700;
-    var _mkQuiz=function(_dt){ return 'You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF(),null,_dt)+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nAND ONE MORE FIELD, ALONGSIDE the six:\n'+_findAskRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","findlead":"","find":{"item":"","colour":"","fabric":"","cut":"","size":"","width":""},"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}'; };
+    var _mkQuiz=function(_dt){ return 'You are Catherine, a personal stylist. '+_askedForLead()+'\n\n'+basis+'\n'+_seenPicksLine('ss-'+_shopStyleMode)+'\nFor each item provide:\n- category: one of "top","bottom","dress","jacket","shoes","bag","jewelry","activewear"\n'+_shopRules('',_askOccF(),null,_dt)+'\nRULES:\n- Match her style\n- NEVER suggest anything on her never-wear list or that she listed as a hard no. Honor her exact words. This rule is absolute.\n'+_colorPrefRule()+_askedForRule()+_mixRule()+'- Name each piece plainly and beautifully, leading with the piece itself, fabric or silhouette + item, like "Mock-Neck Knit Tank" — never vague ("a nice top"), never led by a color unless color is genuinely the point of that piece (and then the search carries the same color), never promising a detail its own search does not carry (the name is the search, written beautifully), and never an imaginary exact product the search cannot deliver\n'+_honestyRule()+'\nAND ONE MORE FIELD, ALONGSIDE the six:\n'+_findAskRule()+'\nRespond with ONLY valid JSON("note" only when you returned fewer than 6):\n{"note":"","findlead":"","find":{"item":"","colour":"","fabric":"","cut":"","size":"","width":"","chose":""},"items":[{"category":"top","name":"Item Name","search":"short search term","store":"Store Name"}]}'; };
     // Full detail first. Only a genuinely long prompt walks down the ladder.
     var _dts=[null,60,45,30];
     for(var _di=0;_di<_dts.length;_di++){ prompt=_mkQuiz(_dts[_di]); if(prompt.length<=_PROMPT_SAFE) break; }
@@ -6916,7 +6937,47 @@ async function _shopStyleGen(){
            she handed the choice over, and her 2026-08 ruling says the stylist's
            pick then becomes a real search requirement that must be named out
            loud. ⚠️ THE MOMENT SHE TYPES ANYTHING, THIS RUNS AGAIN, UNCHANGED. */
-      _findKeepHerWords(_ssFind,_ssAsk);
+      var _dropped=_findKeepHerWords(_ssFind,_ssAsk)||[];
+      /* ⭐⭐⭐ AN OCCASION IS TRANSLATED, NOT SEARCHED — HER RULING, 2026-09-10,
+         and the argument that settled it is hers: *"Vacation dress is one of the
+         example prompts we give on the shop your style so we really need to be
+         able to find that for her if we are suggesting it as a search term."*
+         ▶▶ THAT IS WHY THIS IS NOT THE INVENTED-REQUIREMENT FAULT. The guard
+           above exists because the model once recommended a jewel tone and then
+           searched for one AS THOUGH SHE HAD ASKED. Here the APP PUT THE WORDS
+           IN HER MOUTH — "Try: vacation dress" is one of its own suggestions —
+           so answering it is the job, not an invention.
+         ⚠️ IT RUNS AFTER THE GUARD, NEVER INSTEAD OF IT. Anything the model
+           slipped into colour/fabric/cut that she did not say is already deleted
+           by the line above; `chose` is a SEPARATE field, filled only when her
+           own words hold nothing searchable, so the two cannot be confused and
+           the guard is not weakened by a single word.
+         ⚠️ AND IT IS TAKEN ONLY WHEN THE GUARD LEFT NOTHING. If she named a real
+           detail ("white jeans", "silk blouse") her words stand and `chose` is
+           ignored — HER WORDS ALWAYS OUTRANK THE STYLIST'S. */
+      /* 🚨🚨 AND THE GUARD ON THE TRANSLATION ITSELF, FOUND BY THIS SUITE BEFORE
+         IT COULD SHIP: `_dropped` is what the her-words guard just DELETED as
+         invented. If it deleted anything, the stylist was making requirements up
+         on this very reply — and a stylist who has just invented a colour does
+         not then get to choose the cut. ▶ SO A TRANSLATION IS ONLY TAKEN FROM A
+         REPLY THAT INVENTED NOTHING.
+         ⚠️ WHY THE POST-GUARD STATE ALONE WAS NOT ENOUGH, which is what the
+           first version checked: the fields end up empty EITHER because she named
+           nothing OR because everything the model wrote was thrown out. Those are
+           opposite situations and they look identical afterwards. The test caught
+           it: she typed "white jeans", the model sent an invented emerald, the
+           guard killed it, and `chose` sailed in over the top of her own word. */
+      if(_ssFind&&_ssFind.chose&&!_dropped.length&&!_ssFind.cut&&!_ssFind.colour&&!_ssFind.fabric){
+        _ssFind.cut=String(_ssFind.chose);
+        /* 🚨 A TRANSLATION SHE CANNOT SEE IS THE THING THE GUARD EXISTS TO STOP.
+           She typed "vacation dress" and is about to be shown LINEN MIDI pieces;
+           unless the stylist says so, the app has quietly narrowed her search and
+           it looks exactly like a plain result. ▶ So the lead is FORCED ON here,
+           on a path where it is normally silent — that is her own delegation
+           rule: name your pick out loud so it stays hers to overrule. */
+        _ssTranslated=true;
+      }
+      if(_ssFind)delete _ssFind.chose;   /* never travels to the server as a field */
     }
     /* ▶ AFTER the her-words guard on both halves, so a hand-over pick is trimmed
        to searchable words too — that is the half that was writing sentences. */
@@ -7015,7 +7076,10 @@ async function _shopStyleGen(){
            promise becomes unbreakable BY CONSTRUCTION, because it cannot be
            spoken until the thing it promises is in hand. That is her standing
            direction — fewer rules and breakable things — applied to a bug. */
-      _ssPromise=(!_ssAsk)?_ssFindLead(parsed):'';
+      /* ⚠️ NORMALLY SILENT WHEN SHE TYPED — her words need no announcement. The
+         exception is a TRANSLATION: see `_ssTranslated`, where the app chose
+         words she never said and must say which. */
+      _ssPromise=(!_ssAsk||_ssTranslated)?_ssFindLead(parsed):'';
       html+='<div id="ssFindWrap" class="find-block ss-find">'
         +'<div class="ss-find-wait">'+_starSpin('ss-find-star')
         +'<span class="ss-find-wait-t">'+_esc(_FIND_STEPS[0])+'</span></div></div>';
