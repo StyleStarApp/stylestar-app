@@ -19287,3 +19287,1289 @@ WRONG, AND EACH TIME HER REASON WAS SIMPLER THAN THE ARGUMENT AGAINST IT.** The 
 nothing for users · showing her shops first being luxury-only · the rebuild question · and this. ▶ **When
 she pushes back on a recommendation, the honest first move is to look for what she has seen and Claude
 has not — not to explain the recommendation again.**
+
+
+---
+
+# 🗄️ ARCHIVED 2026-09-10 — THE 2026-09-06 → 2026-09-09 SESSION BLOCKS
+⚠️ **NOTHING HERE WAS DELETED.** This is the whole `## 📌 THE DAY THE STYLIST STOPPED INVENTING
+PRODUCTS` block, moved out of `CLAUDE.md` verbatim on 2026-09-10 under this project's own archiving
+rule (*"when a session's notes are saved, the PREVIOUS session's entry moves to the archive in the same
+commit"*). It was 27,500 tokens — 39% of a file that is loaded in full before Cath types a word.
+▶▶ **BEFORE IT MOVED, EVERY PARAGRAPH WAS PUT THROUGH HER OWN TEST — *is this what HAPPENED, or is
+this what is TRUE RIGHT NOW?*** Everything in the second category was rewritten compactly into
+`CLAUDE.md`'s new **STANDING REFERENCE** section: her 132-shop roster · the product finder's spec ·
+the SerpApi budget rules · the `curated.js` known failure · the clone quirk · the agreed shopping
+experience and every verbatim ruling inside it · her twelve slider positions · the five edits to add a
+merchant · her near-miss wording · her "show her lots to scroll through" decision · and every standing
+DO-NOT.
+▶ **What moved here is the BLOW-BY-BLOW: how each of those was found, measured and built.** Read it
+for how something came to be. `CLAUDE.md` holds what is still true.
+## 📌 THE DAY THE STYLIST STOPPED INVENTING PRODUCTS (2026-09-09 — she said "the chat is not working
+well." She was right, and all of it came from one root.)
+⚠️ **THIS BLOCK WAS HEADED "NEXT SESSION — START HERE" AND IS NOT ANY MORE — retitled 2026-09-10 so
+it stops claiming to be the current starting point. The block at the top of this file is.**
+▶ **Kept in place rather than archived because it carries STANDING material, not just history:**
+the product finder's spec, the SerpApi operational status, her 132-shop roster, the store-pool
+rules, the `curated.js` known failure and the clone quirk. **Read it for those.**
+
+### ✅ DEPLOYED AND VERIFIED LIVE 2026-09-09
+▶ **Pushed to `main` and confirmed by FETCHING stylestar.app ~30s later and finding all five markers in
+the served page** — not by trusting the Post-processing badge, which is the standing rule here.
+⭐ **AND THE SPEED FIX IS VISIBLE IN THE LIVE FUNCTION: a real streamed reply now begins writing and
+completes in ~9s**, where the old build sat silent past its 30-second stall guard. **The three silent
+web searches were the whole wait.**
+
+### 🚨🚨🚨 THE MEASUREMENT SHE ASKED FOR FOUND A BUG NOBODY WAS LOOKING FOR (2026-09-09)
+▶▶ **HER QUESTION:** ***"I did not see anything from mytheresa or Marissa's or Olivela... Maybe those
+stores don't have a red dress in stock right now. That is possible."*** ⚠️ **THAT "MAYBE" IS EXACTLY THE
+KIND THIS FILE KEEPS PAYING FOR, so it was MEASURED: three real searches, 120 results, every seller
+counted against her table through the app's OWN `matchStore`.**
+🚨🚨 **AND IT TURNED UP SOMETHING NOBODY WAS LOOKING FOR: `matchStore` WAS SILENTLY THROWING AWAY
+THIRTEEN OF HER SHOPS.** Its loose pass requires `k.length > 4`, so any shop whose name normalises to
+four characters or fewer could only ever match a seller string **EXACTLY** — and Google almost never
+writes a bare name. **Belk · Saks · Zara · Etsy · IZOD · NYDJ · Soma · LOFT · Quay · ASOS · H&M · Gap ·
+DSW.**
+▶ **"Zara USA" was DISCARDED — and Zara is hers, fully scored by her, the store she personally confirmed
+should be added.** *"Saks Fifth Avenue"* (**7 results in one search**) discarded. Both *"Etsy - <shop>"*
+sellers discarded — ⚠️⚠️ **AND ETSY IS ONE OF THE NINE MERCHANTS THAT ACTUALLY PAY HER.**
+✅ **FIXED WITH A LEADING-TOKEN PASS, NOT A SHORTER GUARD.** Dropping the guard to `>3` would let "saks"
+match anywhere INSIDE a name, which is how "us" and "gap" once matched half the table. **Anchoring on
+leading tokens is safer AND more accurate**, and it tries the LONGEST prefix first so *"Nordstrom Rack"*
+still resolves to her Rack entry and never to Nordstrom.
+⭐ **MEASURED RECOVERY ON THE SAME THREE SEARCHES, FOR NO EXTRA SEARCH AND NO EXTRA MONEY:**
+| the search | in her shops before | after |
+|---|---|---|
+| `red midi women's dress` (what the app really ran) | 26 (65%) | **29 (73%)** |
+| `designer red midi dress` | 20 (50%) | **27 (68%)** |
+| `red silk midi dress` | 13 (33%) | **18 (45%)** — *and Etsy, an EARNER, appears at last* |
+✅ **`findprod` 56 → 60.** The new checks name the RULE, not the mechanism: a short-named shop survives a
+decorated seller string · **the longest name still beats its own prefix** · and **fast fashion still
+matches nothing**, so a looser matcher cannot quietly let her exclusions back in.
+
+**▶▶ AND THE HONEST ANSWER TO HER ACTUAL QUESTION, WHICH THE FIX DOES *NOT* CHANGE.**
+🚨 **Mytheresa, Marissa Collections and Olivela returned ZERO results across all 120.** Her guess was
+right: **for a red midi dress, Google Shopping simply does not surface them.** They are small luxury
+shops and they lose to Nordstrom, Saks and Neiman on every mainstream query.
+▶ **WHAT DID REACH LUXURY: the word "designer".** It swung the pool to Bergdorf Goodman · Neiman Marcus ·
+NET-A-PORTER · Saks · Revolve · Karen Millen — **all hers, none of them paying her.**
+⚠️⚠️ **SO THE PRICE/EARNINGS PROBLEM IS UNCHANGED AND IT IS STILL THE SAME ANSWER: her nine earning
+shops are all `$$$`/`$$$$` boutiques that a mainstream shopping index barely ranks. NO WORDING FIXES
+THAT, and no code does either.** ▶ **It is a mid-market approval, which is traffic, which is USERS.**
+⚠️ **TWO THINGS ACCEPTED KNOWINGLY IN THE FIX, SAID OUT LOUD RATHER THAN HIDDEN:** *"Saks OFF 5TH"* now
+resolves to **Saks** and *"Gap Factory"* to **Gap**. Both are outlet arms of a store she carries, the
+link goes to the parent's search, and neither is one of her excluded business models. **If she ever
+wants them separated, they need their own `STORES` rows.**
+
+### ✅✅ SHIPPED LATE 2026-09-09 — THE THREE FAULTS IN HER LAST SCREENSHOT, THE PRICE SEARCH, AND NINE SHOPS
+▶▶ **ALL LIVE ON `main` AND VERIFIED BY FETCHING stylestar.app**, not by trusting the deploy badge.
+`4e7ce2d` → `c17adb3` → `89c6da6`.
+
+**1. 🚨 TWO ROWS AGAIN — AND SHE WAS RIGHT TO CALL IT A REGRESSION OF A FIX SHE HAD ALREADY APPROVED.**
+Her words: ***"Why is the chat giving me 2 different rows now? I thought we fixed that by making one row
+and putting them in order with the checks indicating."*** ▶ **The one-row merge had been built for the
+NO-DOORS path and never for the SINGLE-DOOR path** — when exactly one near-miss group existed it still
+rendered its own labelled row above the browse wall. ✅ **`const solo = doors.length === 1;` merges the
+single group into the one row.** ⚠️ **A LABELLED GROUP IS STILL RIGHT WHEN THERE ARE TWO OR MORE** —
+that is her *"right colour"* / *"right fabric"* rule from 2026-09-06 and it does not move. **One group is
+nothing to choose between; two are.** 🚨 **THIS IS THIS FILE'S OWN SENTENCE AGAIN — A RULE APPLIED TO ONE
+HALF IS NOT APPLIED.** One row was built on three of four render paths.
+
+**2. 🚨 THE STYLIST ADDED A WORD TO HER SEARCH — "pink midi dress" BECAME "pink fitted midi".**
+Her diagnosis was exactly right: ***"maybe she is saying that bc my quiz indicates fitted but it should
+not change the parameter of the search when I am asking for a pink midi."*** ▶ **`_findKeepHerWords` was
+ALL-OR-NOTHING: if any word of a value was hers, the WHOLE value survived**, so `cut="fitted midi"`
+passed because *midi* was hers and dragged *fitted* in with it. ✅ **NOW WORD-LEVEL: each word is kept
+only if it (or its stem) appears in her own sentence; the rest are dropped and the value is rebuilt from
+what survived.** `"fitted midi"` → `"midi"`. ⚠️ **THE RULE ITSELF IS UNCHANGED AND MUST NOT BE WIDENED** —
+colour/fabric/cut still come from her mouth only. This closed a hole in the enforcement, not the rule.
+
+**3. 🚨 "I COULDN'T FIND EXACTLY WHAT YOU ASKED FOR" ON A SCREEN FULL OF PINK MIDI DRESSES.**
+Her words: ***"She did find lots of pink midi dresses. So this is off."*** ▶▶ **THE CAUSE: her SAVED SIZE.**
+It comes from her profile, not her sentence, and most retailer offers do not publish size — so `size`
+verified `UNKNOWN` on nearly every dress and, under *unknown is never a pass*, demoted every single one
+out of exact. **The app then honestly reported having found nothing exact, about products that matched
+every word she typed.** ✅ **`size` and `width` are now SOFT: an unknown on either no longer blocks
+exactness; an unknown on anything SHE SAID still does, and a REJECTED on anything still does.**
+🚨🚨 **AND THIS IS NOT A LOOSENING OF HER HONESTY RULE — READ THIS BEFORE "RESTORING" IT.** Her rule is
+*never imply a requirement is confirmed unless we can verify it*, and the card still says exactly what
+was and was not checked. **What changed is which requirements can veto the word "exact" — and a size she
+never mentioned in this request was vetoing it.** ▶ **Her words are the test: she asked for a pink midi
+dress and got pink midi dresses.**
+
+**4. ⭐ THE PRICE SEARCH — HER ASK: A FULL RANGE, NOT JUST THE CHEAP END.** Her words: ***"even if the
+user does not even mention price I want her to be able to see a full range as many swipable items as
+possible."*** ▶ **THE MEASURED BLOCKER: Google Shopping returns ~40 results per request and IGNORES both
+`num` and `start`** (proven — no pagination exists), and those 40 skew cheap, so Mytheresa, Saks,
+Bergdorf and Net-a-Porter never appeared however wide the words were. ✅ **THE FIX: a SECOND search on
+the same words with a `min_price` floor derived from the pool already in hand — the 90th percentile of
+what came back.** **Nothing is hardcoded and no price is invented; the floor is measured from her own
+results each time.**
+⚠️ **`sort_by` WAS TESTED FIRST AND MEASURED WORSE, so it was reported and dropped rather than shipped:**
+sorting by price reached FEWER of her shops on both test categories and missed Mytheresa, Shopbop and
+Bergdorf entirely. **A price FLOOR keeps relevance and adds the dear end; a price SORT throws relevance
+away.**
+
+**5. ▶ "YOUR SHOPS" IS GONE EVERYWHERE — HER RULE, AND IT IS A BRAND RULE NOT A COPY TWEAK.**
+***"I don't want it to ever say 'your stores'. Clients want me to check all stores. Not just 'your
+stores' that wording is off so let's get rid of it everywhere please."*** ✅ Status lines are now
+*"Looking through all the shops..."* and *"Checking what's actually in stock..."*, and the tests assert
+the phrase is absent rather than asserting the old string. ⚠️ **DO NOT REINTRODUCE IT** in a new status
+line, an empty state or a debug label.
+
+**6. ▶ SMALLER THINGS SHE ASKED FOR, ALL LIVE:** `colour` → `color` in the shown labels (the code
+identifiers stay British — renaming them would touch the verifier) · the row header *"The first 3 I've
+checked in detail"* replaced by her own ***"Showing you as much as I could find."*** · a fade + count +
+arrow on the card row so swiping is discoverable (her option C, **without** the words "from your shops")
+· the second affiliate disclosure on the row removed, the footer's kept — **still exactly one per page** ·
+the return-chips removed when she comes back to an existing chat · **Etsy ruled back IN by her**
+(*"They are great for jewelry especially"*) and taken off the resale list · **Gap Factory** added, and
+**Saks OFF 5th flagged by her as closed**.
+
+**7. ⭐ NINE SHOPS SHE CHOSE, FROM MEASURED DEMAND — LIVE 2026-09-09.** She asked for the gap list
+(*"yes put that list in front of me"*) and picked nine off it: **Moda Operandi · Merlette · ViX Swimwear ·
+ASTR the Label · Pact · PacSun · Tommy Hilfiger · Aeropostale · FWRD.**
+▶ **NOT A WISHLIST — the list was built from sellers Google actually returned across 13 real searches**,
+counted against her table, so every one of the nine was already showing up and being thrown away.
+✅ **NAME + SEARCH URL ONLY, NO SCORES** — her own rule (*"a shop needs a NAME to be findable. THAT IS
+ALL SHE OWES"*); six carry `w:1` because they also sell menswear. **All nine were matched against the
+EXACT seller strings Google returned that day** (*"Merlette New York"* · *"Official ViX Swimwear"* ·
+*"p a c t"* · *"Aeropostale.com"*), which is why the matcher finds them.
+📈 **MEASURED GAIN: 243 → 273 usable products across the same 13 searches, 47% → 53%.** **132 stores in
+the generated allowlist, re-run and in sync.**
+⚠️ **THE HONEST HALF: seven of the nine have UNVERIFIED search urls** (bot-walled or client-rendered, so
+a real term and gibberish come back identical). **That affects only the shape of an outbound "find this
+at X" link — NOT whether her products are found, because the finder matches by DOMAIN.** ⚠️ **And an
+unscored shop is FINDABLE, not RECOMMENDABLE** — it sits at the end of the store ranking and the stylist
+will not describe it, which is exactly what the 2026-09-07 untagged guard was built for.
+
+**8. 🚨🚨 ONE THING WAS BUILT, SHOWN TO HER, AND REVERTED WHOLE ON HER WORD — KEEP THIS.**
+A rarity-weighted word index over her 100 store descriptions was built to route *"jewelry"* to the
+jewellery shops. **Her answer: *"I don't want this to be complicated. I feel like the AI is intelligent
+enough to already know what each store specializes in."*** ✅ **`git revert`ed entirely.** ▶▶ **THIS IS
+HER STANDING DIRECTION LANDING IN REAL TIME** — *"I want the AI to be using intelligence and I would like
+to reduce the amount of rules and breakable things we put in there"* — **and it is the second time in two
+days her instinct beat a measurement.** ⚠️ **Do not rebuild it.**
+
+**9. ⚠️ A REAL CRASH THIS SESSION, CAUGHT ONLY BY A BROWSER TEST.** Extracting `_findBlockHtml` so the
+live render and the restored conversation share ONE builder dragged a `wrap.className` line inside it
+that belonged to the caller. **`wrap is not defined` — the whole row threw and NOT ONE card rendered.**
+▶▶ **NO PARSER, NO GREP AND NO STATIC TEST SAW IT.** `scratchpad/chatfallback.js` section 13, which
+**reloads the page for real**, is the only thing that did. **That is why that section exists and why it
+is slow; do not delete it to speed the suite up.**
+
+**▶ TEST STATE AT THE END OF THIS ROUND:** chatfallback **81** · chatfind **63** · findprod **63** ·
+storepool 49 · affq 40 · untagged 21 · starpx 28 · copy 69 · curated 65. ⚠️ **searchtune 80/1 — the
+`styles.css` *"her voice: Lora upright 15.5 + gold bolds"* check, PRE-EXISTING and proven identical on
+that morning's baseline `b6fb280`. Not mine, not a regression.**
+### ✅✅ HER LAST THREE ASKS OF THE DAY — THE PHOTOS, THE ARROW, THE THREE LINES (2026-09-09, LIVE)
+▶▶ **HER WORDS: *"Good news the search is showing me just one row (good). I don't like how the photos
+are cut off here. Can't see top of dress or head of the model."*** ⭐ **NOTE THE FIRST HALF: the one-row
+fix from earlier the same day is CONFIRMED BY HER on a real phone.**
+
+**1. 🚨 THE PHOTOS WERE CROPPED, AND THE CAUSE WAS MEASURED BEFORE ANYTHING WAS CHANGED.**
+Eleven real captured thumbnails were fetched and their true dimensions read:
+| shape | how many |
+|---|---|
+| **square** (1.00) | **6** |
+| **portrait** (0.77 – 0.84) | **5** |
+▶ The frame was a **square 150x150 with `object-fit:cover`**, so every portrait photo lost ~20% of its
+height, **half off the top** — the missing head and the missing hem, exactly as she photographed it.
+🚨🚨 **AND THE REASON THE OBVIOUS FIX IS WRONG, WHICH IS WHY THIS IS WRITTEN DOWN: NO `cover` FRAME CAN
+WORK.** Making the frame 3:4 to suit the portrait ones would then crop **25% off the SIDES** of all six
+square ones. **The sources genuinely differ, so any crop loses something.**
+✅ **SHIPPED: `150x170`, `object-fit:contain`, `background:#fff`.** The height is chosen from the
+measurement, not picked — 0.88 sits mid-range, so the leftover band is **at most ~10px** in either
+direction. ⭐ **AND THE BAND IS THE SAME WHITE AS THE CARD, which is what makes it invisible rather than
+a letterbox.** A cream placeholder here would have shown on every single card.
+⚠️ **THE HONEST LIMIT, TOLD TO HER PLAINLY: if the RETAILER'S OWN photo has the head cut off, nothing
+can put it back.** One of the six test photos is exactly that, and it is still cropped after the fix.
+▶ **AND THE ONE THING LEFT TO HER EYE: whether the thin white band bothers her on a real screen.** She
+was told to expect it before she goes looking. **If it does, that is her call and it beats the
+measurement** — the same pattern as the sunglasses, where her stacked-photo idea beat four measured crops.
+
+**2. ▶ THE ARROW ON "PRIVATE TO YOU" WAS INVISIBLE.** Her words: ***"make the arrow on private to you
+larger (right now it is so tiny cannot see it)."*** ▶ It was inheriting the block's **11px**, so it was
+rendering at the size of the quietest text on the screen. ✅ **Now sized, weighted and coloured
+SEPARATELY from the words** — 15px, 600, `#6e6e6e`. ⚠️ **Do not let it re-inherit; that is the whole bug.**
+
+**3. ▶ THE THREE FOOTER LINES WERE DOUBLE-SPACED.** Her words: ***"can we make them much tighter
+together to save space and give more room to the chatting."*** ✅ **Measured on the REAL page, not a
+mock: 60.5px → 50.0px.**
+⚠️⚠️ **AND WHERE IT DELIBERATELY STOPPED, BECAUSE IT IS A RULE NOT A LEFTOVER: the vertical padding on
+"Start a fresh conversation" is its TAP TARGET.** At zero it becomes a 14px-tall button. **Her audience
+runs to 80.** ▶ **Tighten the MARGINS around a control, never the padding inside it** — written into the
+css and asserted by a check with a floor.
+
+### 🚨🚨🚨 THE LESSON OF THE DAY, AND IT IS THE WORST SHAPE THIS FILE KNOWS, ARRIVING INSIDE THE TESTS
+▶▶ **SIX CHECKS WERE WRITTEN TO PIN THE FIXES ABOVE, AND PUT IN `chatfallback`. FOUR FAILED AND TWO
+PASSED — AND ALL SIX WERE BLIND.** `chatfallback` serves `index.html` **from memory** and **NEVER SERVES
+`styles.css`**, so every reading was a browser DEFAULT: `object-fit:fill`, `height:0`, a 16px arrow, a
+60px footer. **The fixes were fine the whole time; the checks could not see them.**
+🚨🚨 **THE FOUR FAILURES WERE THE HARMLESS HALF. THE TWO PASSES ARE THE LESSON.** *"the letterbox is the
+same colour as the card"* passed because it was comparing **transparent to transparent** — it would have
+gone on passing forever, through any regression, reporting green.
+▶▶ **A CHECK THAT PASSES BECAUSE IT CAN SEE NOTHING IS WORSE THAN NO CHECK.** It is this file's own
+"false green" warning, and it arrived in the test suite itself rather than in the app.
+✅ **FIXED PROPERLY, NOT PATCHED:** the seven checks moved to **`scratchpad/copy.js`**, which serves the
+real files off disk, **and a GUARD CHECK now runs first** — *"styles.css is actually applied (else every
+number below is a default)"* — so the suite can never again draw a conclusion from a stylesheet it did
+not load.
+⭐⭐ **AND THEY WERE PROVEN TO BITE, WHICH IS THE STEP THAT IS USUALLY SKIPPED: the old CSS was put back
+and EXACTLY FOUR went red**, each naming the real value — `object-fit=cover` · `height=150` · the cream
+band · a 58.6px footer. **A check nobody has watched fail is not yet a check.**
+▶ **`copy` 41 → 48. `chatfallback` back to its own 81.**
+🚨 **THE GENERAL RULE TO KEEP, beside "a rule applied to one half is not applied": BEFORE TRUSTING A
+NUMBER READ OUT OF A RENDERED PAGE, PROVE THE PAGE IS REALLY DRESSED.** Each harness in this repo serves
+a different subset of the site, and a suite that stubs the stylesheet will happily measure defaults and
+call them facts. ▶ **Ask of any new check: could this pass if the thing it measures were simply absent?**
+
+### ⭐⭐⭐ SHE TESTED IT AGAIN, 2026-09-09 (LATER), AND FOUND SIX THINGS. HER RULINGS ARE HERE.
+▶▶ **HER FRAMING: *"Before we move on I would like to talk about the chat some more."*** She sent five
+phone screenshots and named six faults. ⚠️ **SHE WAS RIGHT ABOUT ALL SIX, AND EVERY ONE WAS CHECKED IN
+THE CODE BEFORE BEING AGREED WITH** — that is this file's own rule and it mattered here, because one of
+the six turned out to be the opposite of what it looked like.
+
+**🚨🚨 THE ONE CLAUDE READ WRONG, AND SHE CORRECTED IT — READ THIS BEFORE "FIXING" DUPLICATE STORES.**
+She said *"some of the stores showing up duplicate times"*, and it was read as her `max two per
+retailer` promise being broken on a new surface. **A store cap was about to be built.** Her answer:
+▶▶ ***"I don't mind if multiple cards for one store show up. For example if I ask for a red dress and
+there are 5 of them at Bloomingdale's I want to see all 5 of them, plus 5 more from Nordstrom plus
+whatever mytheresa or Marissa or farm Rio has too. I want to show as many cards for her to swipe as
+possible. Not limited."***
+✅ **SO: NO STORE CAP ON THE CHAT'S PRODUCT ROW. Her explicit decision.** ⚠️ **The max-two rule still
+stands exactly where she set it — the Wardrobe compare carousel and the AI's own shopping lists via
+`_shopRules`. This is a deliberate, recorded EXCEPTION, not a reversal**, and it is written into the
+code comment at the row so nobody re-adds it. **A future session finding "the chat repeats a shop" must
+not treat it as a regression.**
+⚠️ **BUT SEPARATE THE TWO THINGS, BECAUSE ONLY ONE IS WANTED: the same STORE twice is her design; the
+same DRESS twice is noise.** The pool already dedupes on `product_id || title`, so a true repeat only
+slips through when Google returns one dress under two ids. **Still unconfirmed whether that is what she
+saw — ask her before building anything for it.**
+
+**⭐⭐⭐ AND THE FOUNDER PRINCIPLE UNDERNEATH IT, WHICH IS THE MOST USEFUL THING SHE SAID ALL DAY —
+VERBATIM, AND IT REFRAMES THE WHOLE FEATURE:**
+***"a stylist loves to show the client as many options as possible. This is what is great about online
+shopping. You can browse sooo many more options than live shopping or than a stylist can physically
+present to her so the big browse (even if not a perfect search) is fun, easy and clients love eye candy
+of swiping photos and seeing more."***
+▶▶ **SO "NOT A PERFECT MATCH" IS NOT A FAILURE ON THIS SURFACE — IT IS THE POINT.** This is the answer
+to every future instinct to trim, cap or tidy the row. **Breadth IS the product here.** ⚠️ It does NOT
+loosen her honesty rule: it governs how MANY she sees, never what the app CLAIMS. That distinction is
+hers and it has now survived three separate conversations.
+
+**✅ BUILT: ONE ROW, BEST FIRST — HER DESIGN, NOT CLAUDE'S.** Her words: ***"Feels like it would make
+more sense to show her one row of cards starting with the ones that match her search terms the best and
+then she can keep scrolling the rest?"*** ▶ **It replaced a two-block layout (a verified block, then a
+separately-titled browse wall below it) with ONE horizontal row.**
+⭐ **HER IDEA SOLVED TWO OF HER OWN SIX COMPLAINTS AT ONCE, which is why it beat the built version:**
+**(a)** there is no second row left to miss — her *"I had to scroll down to find it... my mom for
+example would have missed it"* · **(b)** three headers collapse into one line, which is her *"amount of
+words crowding the page"*.
+✅ **AND THE MACHINERY ALREADY AGREED WITH HER, MEASURED NOT ASSUMED:** the server sorts every product
+by how many of her own words appear in its title and THEN looks up the top four — so *"the checked
+ones"* and *"the best matches"* are the same pieces in the same order. **Her sort was already computed
+and was being thrown away by the layout.**
+🚨 **THE FORK WAS FLAGGED BEFORE BUILDING, AND SHE PICKED — THIS IS THE 2026-09-08 RULE WORKING.**
+With the second block gone, the sentence *"I haven't checked every detail on these ones"* had nowhere
+to live, so a woman scrolling one row could read the whole row as vetted. **(A)** one short line above
+the row · **(B)** no line at all. ▶ **HER ANSWER: *"Yes go with A."*** So the row is headed
+*"The first N I've checked in detail."* — six words carrying the whole honesty rule.
+⚠️ **ONE EXCEPTION TO THE SINGLE ROW, AND IT IS HERS TOO: the near-miss screen keeps its labelled
+groups** (*"Right colour"*, *"Right fabric and style"*). She called those the thing that must hold —
+blurring them *"really does become the app choosing for her"* — so an unlabelled pool is never poured
+into a labelled group. ▶ **ONE ROW IS THE RULE WHEN THERE IS NOTHING TO LABEL; LABELS WIN WHEN THERE IS.**
+🚨 **AND A CONTRADICTION WAS FOUND AND FIXED ON THE WAY: her approved sentence ends *"and nothing close
+enough to show you"* — and the browse row underneath it could be showing thirty dresses.** Her copy is
+approved AS WRITTEN for the state it describes, **so the repair was to stop using it in a state it does
+not describe, never to reword it.** The replacement line is Claude's and is marked in the code as a
+placeholder for hers.
+
+**✅ AND THE TWO WAITING SIGNALS ARE NOW TWO, HER DESIGN — SHIPPED SAME DAY.**
+🚨 **THE STAR WAS IN THE WRONG PLACE, AND SHE SAW IT INSTANTLY:** ***"The spinning star is in the wrong
+place. It is above the last thing she said so while waiting the user does not look up to see that. It
+needs to go at the end of the last thing she said."***
+▶▶ **WHY IT DRIFTED UP, AND IT IS A SIDE-EFFECT OF A GOOD DECISION: the search fires on the `<<FIND>>`
+marker, which is deliberately the FIRST thing in the reply so the search and the writing run TOGETHER.**
+So the status line is created BEFORE the stylist's bubble exists, and every bubble appended afterwards
+lands underneath it — leaving the reassurance above the sentence she is reading, **which is the one
+place she is not looking.**
+✅ **FIXED AT THE CHOKE POINT, NOT AT THE CALL SITES** — the same move that stopped the marker leaking.
+A `MutationObserver` on the message container returns the line to the end whenever anything is
+appended, **so a fifth render route added next year cannot strand it again.** ⚠️ `appendChild` on an
+element that is already a child **MOVES** it, so the line never duplicates and the star never stops
+turning mid-wait.
+⭐ **THE LOOK IS HERS AND WAS CHOSEN BY LOOKING, NOT BY ARGUING:** ***"It needs to be larger and pink
+maybe with thin gold or silver frame around it same shape as our usual spinning star but fill it in
+pink and needs to be bigger."*** ▶ **Four versions were rendered at TRUE SIZE and shown to her** — thin
+gold · silver · bolder gold · no frame — **and she picked the BOLDER GOLD ("C").** 18px → **30px**,
+pink fill `#EC4899`, gold stroke `#D4AF37` at **1.5**. ⚠️ **The weight is the point of her choice: at
+0.9 the gold edge melts into the pink at that size and she asked for a FRAME. Do not thin it back
+because 1.5 looks heavy in a diff — it was judged at the size it actually renders.**
+⭐⭐ **AND SHE ASKED FOR A SECOND SIGNAL, WHICH SPLIT ONE STATE INTO TWO:** ***"would be good to have
+three dots moving along like thinking too... to emphasize not broken just thinking WHEN SHE IS THINKING
+NOT SHOPPING."***
+▶▶ **SO: DOTS MEAN THINKING** (`_chatTyping`, before a word has been written) **AND THE TURNING STAR
+MEANS SHOPPING** (`_findStatus`, while her shops are being searched). ⚠️⚠️ **DO NOT ADD THE DOTS TO
+`_findStatus`** — that collapses the two states back into one and throws away exactly the distinction
+she drew. **She chose layout (i): star + words + dots.**
+⚠️ **Fixed height and inline-flex so NOTHING JUMPS as they rise and fall** (her audience runs to 80),
+offset delays so it reads as a travelling wave rather than a loading bar, `aria-hidden` so a screen
+reader hears the sentence and not "dot dot dot", and they **hold still under `prefers-reduced-motion`**,
+the same courtesy the star already gives.
+⚠️ **ONE CSS RULE NAMES BOTH CHAT STARS, DELIBERATELY** — they appear in the SAME wait, so if they ever
+diverge one wait starts looking like two things happening. **Same reasoning as `px2`'s one-rule-two-
+surfaces.** ▶ **THE WARDROBE/TRENDING STAR IS STILL SMALL AND GOLD ON PURPOSE.** She was asked about
+the chat star, on the chat screen; matching the rest of the app to it is **a real question and it is
+HERS.**
+✅ **`chatfind` 61 · `chatfallback` 59 (was 55).** 🚨 **AND ONE OF ITS OWN CHECKS WAS REWRITTEN, NOT
+BUMPED, WHICH IS THE RULE APPLIED TO CLAUDE'S OWN WORK:** *"and it turns the same way as
+.shop-star-main and .wdr-load-star"* required TWO SEPARATE CSS rules and broke the moment they were
+merged — **even though merging makes the thing it protects HARDER to break.** ▶ It now asserts the RULE
+by selector membership — *"every waiting star in the app turns the same way"* — **and covers all FOUR
+stars instead of two.** Splitting or merging is free; changing a spin fails and names which one.
+
+**▶ THE FOUR SHE NAMED THAT ARE STILL OPEN, none started, all verified real in the code:**
+1. ▶ **THE CARDS VANISH ON RELOAD, AND THE STYLIST LIED ABOUT IT.** Cards are `mc.appendChild`-ed into
+   the page and **never written to `ss_chat`**, which saves only the text messages — so a reload loses
+   them permanently. Asked where they went, the stylist replied ***"Let me pull them back up for you
+   right now"*** and then produced nothing. 🚨🚨 **THERE IS NO CODE THAT CAN PULL THEM BACK UP. That is
+   the invented-dresses family again — not a fake product this time, but a FAKE PROMISE ABOUT ITS OWN
+   BEHAVIOUR**, and it is the worst of the six.
+2. ▶ **WORDS CROWDING THE PAGE.** Measured: a **46-word privacy paragraph** plus the commission line
+   plus *"Start a fresh conversation"* sit under **every** answer, permanently — roughly a third of the
+   screen in all five of her screenshots. **It is plumbing sitting where clothes should be.**
+   ✅ The one-row build already cuts ~16 words of it; the footer itself is untouched.
+3. ▶ **HER AFFILIATE SHOPS NEVER APPEAR — AND IT IS A DECISION, NOT A BUG.** Verified: the nine earning
+   domains are `farmrio · dvf · vilebrequin · coutr · olivela · marissacollections · fleurdumal ·
+   mytheresa · etsy`. **Nordstrom and Bloomingdale's are NOT among them**, so both dresses on her
+   screen earned **$0**, from the two companies that rejected her. ⚠️ **This is her own Option A ruling
+   working exactly as she chose it** (the app never knows who pays; fit and price decide). ▶▶ **AND A
+   CODE FIX PROBABLY CANNOT HELP: every shop that earns is `$$$`/`$$$$` and none of them stocks a $107
+   belted daytime dress. The honest answer is still a mid-market approval, which is still USERS.**
+   **Do not quietly soften Option A to make this look better.**
+4. ✅ **THE SPINNING STAR — ANSWERED BY HER AND BUILT THE SAME DAY.** See the section above. **Only
+   THREE of her six remain open**, and the vanishing cards is the one that matters most.
+
+⭐ **THE DEBUG VIEW EARNED ITS KEEP ON DAY TWO.** Her screenshot: `1 search fired · 33 products in your
+shops · 3 looked up · 3 exact · 0 near miss · 30 browse cards · search 4799ms · look-up 6005ms · total
+11700ms · 890 searches left`. ▶ **Every one of those numbers took hours to reconstruct from photographs
+last time.** It also answered her cost question outright.
+✅✅ **HER COST QUESTION, ASKED AND ANSWERED WITH HER OWN NUMBERS: *"I think you said that does not cost
+more to show her more because it is still one search?"* — SHE IS RIGHT.** A **search** (~2.5¢) returns
+up to 60 products already carrying title, store, price and photo; a **look-up** (~2.5¢) checks ONE
+product in detail and is what earns a tick. ▶ **Rendering a card from a search already paid for costs
+NOTHING** — her 30 browse cards cost exactly what showing 3 would have. **More cards: free. More
+searches: 2.5¢ each. A tick: 2.5¢ each.**
+▶ **SO THE REMAINING LEVER FOR "AS MANY AS POSSIBLE" IS PAID BUT CHEAP: her belted-dress question fired
+only 1 of the 4 searches `MAX_QUERIES` allows.** Three or four would multiply the pool for about 5-7¢ a
+question, with 890 left this month. **Not started — it is hers to say yes to.**
+
+### ✅✅✅ HER VERDICT IS IN, 2026-09-09, AND IT IS A YES
+▶▶ **HER WORDS: *"The chat is now working with scrollable photo options!!!"***
+🚨 **SO THE CHAT IS NO LONGER ON TRIAL.** She arrived saying *"the chat is not working well"* and left
+with a working wall of photographs. **Measured on her own test phrase, *"I need a fitted white top"*:**
+| | before | after |
+|---|---|---|
+| products she can see | **3** | **27** |
+| verified, with ticks | 3 | 3 |
+| browsable cards | **0** | **24** |
+▶ **Real shops, real prices: Old Navy $12 · Kohl's $14.99 · Kohl's $28.49 · American Eagle $32.97 ·
+Kohl's $33.99 · Ann Taylor $59.15.** All from her 122, all instantly tappable, all affiliate-wrapped.
+⭐ **THE NEXT THING TO ASK HER: the fitting-room view** — she parked it herself and asked for the
+thinking to be kept. **It is written up in the master to-do; do not restart it from scratch.**
+
+### ⭐⭐⭐ THE DAY IN ONE LINE
+▶▶ **THE STYLIST WAS RUNNING HER OWN WEB SEARCHES, AND THAT ONE FEATURE CAUSED ALL FOUR FAULTS SHE
+FOUND. IT IS GONE.** She invented four dresses and four prices, she leaked the internal `<<FIND>>`
+marker onto the screen, she showed no product cards at all, and she took 30+ seconds to say anything.
+**One removal fixed the lot, and made the chat faster and cheaper at the same time.**
+
+### 🚨🚨🚨 THE WORST FAULT THIS APP HAS HAD: THE STYLIST INVENTED PRODUCTS AND PRICES
+▶▶ **HER WORDS, AND THEY ARE THE RIGHT REACTION: *"What in the world is she doing making up lies? What
+is happening?"***
+**Asked "Did you find anything??" the stylist replied:** *"The search didn't come back with direct links
+I can share, so let me give you my best specific picks to shop right now."* **Then it wrote four dresses
+and four prices out of its own memory** — Diane von Furstenberg ~$398 · Anthropologie ~$168 · FARM Rio
+~$248 · Reformation ~$278. **Nothing was found. Not one price was real.** A second reply offered
+*"FRAME Le High Straight Jeans from Nordstrom (~$228) **in size 26**"* — a size claim on a product that
+does not exist, at two shops that have rejected her and pay $0.
+🚨🚨 **THE PROMPT ALREADY FORBADE THIS, IN CAPITALS — "AN ITEM WITHOUT ITS ADDRESS DOES NOT EXIST" and
+"Never invent an item". THE MODEL READ IT AND DID IT ANYWAY.** ▶▶ **THAT IS THE STITCH FIX BOX,
+HAPPENING INSIDE THE APP BUILT TO PREVENT THE STITCH FIX BOX.** She wrote a note saying no shift
+dresses; a person read it and sent shift dresses. **A rule that lives only in words gets ignored.**
+✅ **SO THE ABILITY WAS REMOVED, NOT RE-FORBIDDEN.** The stylist can no longer name a product, a price,
+a size or a link — at all, on any call. She gives styling; **products come from ONE place, the finder,
+which opens the shop's own page and checks it.** She cannot invent what she is not holding.
+⚠️⚠️ **DO NOT RE-ADD A WEB SEARCH TOOL TO CHAT TO "HELP HER FIND MORE."** That is precisely what was
+removed and precisely what lied. The finder is the only product route in chat, on purpose.
+
+### 🚨 THE ROOT CAUSE, MEASURED — AND IT EXPLAINS ALL FOUR SYMPTOMS AT ONCE
+`style-ai.js` attached a `web_search` tool with `max_uses: 3`. **A web search writes NOTHING to the
+stream while it runs**, and the prompt actively encouraged repeats (*"a second or third search... is
+always worth the few extra seconds"*). ▶ **So up to three searches ran in silence, the page's 30-second
+stall guard fired, the answer was abandoned, and it fell through to the no-search RETRY.**
+| what she saw | why |
+|---|---|
+| raw `<<FIND item=white top; cut=fitted; size=XS>>` on screen | the retry is still told to emit a marker, **and it was the ONE render route of four that never stripped it** |
+| **no product cards, ever** | **the retry never parsed the marker either, so it never LOOKED** |
+| four invented dresses | the stylist filled the silence it had created |
+| 30s+ of nothing | the three silent searches |
+🚨🚨 **THE MARKER LEAK IS THIS FILE'S OWN SENTENCE, IN PUBLIC: A RULE APPLIED TO ONE HALF IS NOT
+APPLIED.** Four routes render a bot bubble (main · cut-off · live stream · retry). **Three stripped. One
+did not.** ✅ **The strip now lives in `addChatMsg`, the one place every bot bubble passes through, so a
+route added later cannot leak it.**
+✅✅ **AND THE FINDER WAS HEALTHY THE ENTIRE TIME, which is the galling part.** Run directly against her
+two real requests while she was seeing nothing:
+| her request | what it actually found |
+|---|---|
+| fitted white top | Old Navy **$9.99** · H&M **$7.49** · Old Navy $12.00 |
+| dress (the bridal shower) | Old Navy **$19.99** · Calvin Klein at Belk **$59.97** |
+▶ **Real, affordable, in her shops — the coverage win landing exactly as designed. She never saw one of
+them.**
+
+### ✅ WHAT SHIPPED 2026-09-09
+1. **The stylist's own web search is REMOVED** (`style-ai.js`). Streaming is KEPT — it is what lets the
+   finder run WHILE the reply is written; without it the wait becomes the sum, not the longer, of the two.
+2. **The stylist may no longer name a product, price, size or link** — one prompt block, both calls.
+   ⚠️ **SCOPED TO CHAT.** Wardrobe Ideas and Shop your Style keep their tier-3 floor. Her 2026-09-06
+   ruling removed that floor in chat and **nowhere else**. Do not "restore" it.
+3. **The marker is stripped in `addChatMsg`** — the choke point, not the call sites.
+4. **The retry now runs the finder**, so a stalled answer still gets her real cards.
+5. **The card row is uncapped from 4 to 12** (near-miss groups 3 → 8). ⭐ **`.find-cards` was ALREADY a
+   horizontal touch-scroller** — her swipe question was answered by code that already existed; she had
+   simply never seen it work, because no cards ever rendered.
+6. **`SEARCH_MAX_USES` retired**; the per-search cost surcharge removed, so a shopping answer now costs
+   LESS than it did.
+▶ **`scratchpad/chatfallback.js` — 35 checks, was 29.** Section 8 pins her exact screenshot: no raw
+marker in any bubble, the retry really looks, a real card appears.
+⚠️ **THREE OF ITS CHECKS WERE REWRITTEN, NOT BUMPED.** They asserted the old two-block prompt SWAP,
+which no longer exists because both blocks are gone. **The app got STRICTER, not looser** — the old
+retry was allowed to name a garment so long as it gave no address, and that is exactly what invented the
+four dresses. **Rewritten to name the RULE (no product may be named on EITHER call), per this file's own
+"rewrite the assertion, never bump the number".**
+
+### ⭐⭐ THE BROWSE WALL AND THE DEBUG VIEW — BUILT AND LIVE 2026-09-09, BOTH AT HER ASK
+▶▶ **HER WORDS: *"i would definitely like a scrollable wall, as full as possible"*** and, on the debug
+view, ***"yes on the debug view sounds good."***
+
+**1. THE WALL.** `product-find.js` now returns a `browse` array — **the whole pool of products from her
+shops**, not just the four that fit under `MAX_VERIFY`. The page renders every one into the horizontal
+touch-scroller that already existed.
+🚨 **THE HONESTY LINE IS HERS AND IS PINNED BY TESTS: showing MORE is not claiming more.** The verified
+set leads and keeps its ticks; **a browse card carries NO ticks and claims nothing** (`no browse card
+carries a verified tick`). **And her never-wear list governs the wall** — the same `keep()` runs over it
+with her whole request, proven by planting a ruffled piece and watching it disappear.
+⚠️ **ONE CARD RENDERER, NEVER A SECOND COPY.** `_findCard` draws both halves, so `_feedName` still
+strips a size clause and any future card change lands on both at once.
+⚠️ **ONLY ONE AFFILIATE DISCLOSURE PER ANSWER, asserted** — the wall deliberately does NOT add a second.
+This file's audit records Wardrobe once showing five on one page. ▶ **If the verified block is ever
+absent while the wall shows, the one disclosure has to MOVE there.**
+
+**⚠️⚠️ THE DESIGN FORK, FLAGGED BEFORE BUILDING AND APPROVED BY HER — THIS IS THE RULE WORKING.**
+Her sketch said *spend a look-up when she taps*. **It was built differently and she was told why first**,
+then said: ***"ok let's try this it sounds good, let's see how we like it."***
+| | her sketch: look-up on tap | what shipped: store search for the exact title |
+|---|---|---|
+| lands on | the exact product page | that shop's search for that exact piece — usually the item, sometimes a short results page |
+| cost | a paid look-up **every tap** | **nothing** |
+| wait | a second or two | **instant** |
+| earns | yes | **yes — `getStoreUrl` returns `_affUrl(...)`, the same wrapper as every other link** |
+| ⚠️ **iOS** | **a link opened after an await is BLOCKED as a pop-up — some taps would silently do nothing** | cannot be blocked |
+▶ **THE VERIFIED CARDS KEEP THEIR EXACT PRODUCT LINKS. This applies to the wall only, so it is a hybrid,
+not a downgrade.** ⚠️ **AND IT IS NOT THE "generic store search dressed as a find" SHE BANNED** — the
+product is real, from her shop, with its own title, price and photograph; only the *landing* is a search
+for that exact piece. Nothing is claimed that was not read off the result.
+▶ **If she ever wants the exact landing, it is about four lines** — swap the `url` the browse card is
+built with.
+
+**2. THE DEBUG VIEW — `?debug=1` ON THE URL.** A plain panel BELOW the cards (never above: nothing may
+jump under a reader) naming **what was searched for · searches fired · products in her shops · how many
+were looked up · exact / near-miss / browse counts · search and look-up times · searches left**.
+▶▶ **WHY IT EXISTS, AND IT IS THIS SESSION ITSELF: her five screenshots took HOURS to diagnose by
+reasoning backwards from photographs, and every number that would have answered it in a minute was
+already being computed and never shown.** ⚠️ **Read ONCE at boot, so there is nothing to leave switched
+on by accident, and one `setTimeout` covers EVERY return path — failed, budget, no data, found —
+instead of a line at each one.**
+▶ **`scratchpad/chatfallback.js` — 55 checks, was 35.** Sections 9, 10 and 11.
+
+### 🚨🚨 FOUND BY RE-VERIFYING AFTER A CONTAINER RESTART: A TIMED-OUT SEARCH WAS TELLING HER HER SHOPS HAD NOTHING
+▶▶ **A live call on 2026-09-09 came back `search: 10001ms · candidates: 0` — pinned to the millisecond
+on the 10-second ceiling — and the page told her *"I couldn't find exactly what you asked for, and
+nothing close enough to show you."*** **The search had never completed. Her 122 shops were never asked.**
+🚨 **THAT IS THE ONE THING HER RULE FORBIDS, and this file had already written the sentence:** a failed
+search shown as an empty result *"has exactly the shape of a lie, because it is indistinguishable from
+the truth."* The page-level version of this was fixed on 2026-09-08; **this was the same fault one layer
+down, where the page could not see it** — `get()` swallows a timeout with `.catch(() => null)`, so the
+server answered **200 with an honest-looking empty pool.**
+✅ **FIXED WHERE THE DIFFERENCE IS ACTUALLY KNOWN — SERVER-SIDE.** When **every** query dies,
+`product-find.js` now returns `why: 'search-failed'` and the page shows her approved sentence
+*"My search didn't come back just then…"* instead. ⚠️ **Only when EVERY query dies** — one dead query
+among several is normal and the surviving pool still stands.
+⚠️⚠️ **AND THE HALF THAT KEEPS THE FIX HONEST IS TESTED TOO: a GENUINELY empty search must still say
+HER words.** Fixing one must not silence the other. **`chatfallback` 55 → 61, sections 12 and 13.**
+▶ **THE RETRY IMMEDIATELY AFTERWARDS WORKED — 19 in her shops, 3 exact, 16 browse** — so this is
+intermittent, and it is the **same "pinned at the ceiling" signature this file already records as a
+suspected concurrent-request limit.** ⚠️ **Still unproven; it needs her dashboard.** What is now certain
+is that when it happens **she is told the truth about it.**
+⭐ **AND THE DEBUG VIEW EARNED ITSELF ON ITS FIRST REAL USE:** `search time 10001ms` beside
+`products in your shops 0` is what named this in seconds. **Before it, this looked exactly like "your
+shops have nothing."**
+🚨🚨 **AND A WRONG TURN WORTH KEEPING, BECAUSE THE NEXT SESSION WILL BE TEMPTED BY IT: RAISING THE
+SEARCH CEILING DOES NOT HELP.** The ceiling was 10s; it was raised to 20s on the reasoning that
+successful searches land at 6.6–8.7s and SerpApi's own processing is only 1.6–3.4s, so the headroom
+looked too thin. ▶▶ **MEASURED IMMEDIATELY AFTERWARDS: the next failure pinned at `20001ms` — exactly
+the new ceiling.** ⚠️ **SO THESE REQUESTS ARE NOT SLOW, THEY ARE HUNG.** A hung request stays hung, and
+a bigger ceiling only makes a woman wait twice as long for the same honest sentence.
+▶ **SETTLED AT 12s, chosen from the real successes and not from hope** — observed: 122ms (warm cache) ·
+6.6s · 6.9s · 8.7s. **It clears the slowest success seen, then FAILS FAST, which is the kinder half.**
+⚠️ **SUSPECTED CAUSE, STILL UNPROVEN AND DO NOT ACT ON IT WITHOUT EVIDENCE: the hangs cluster under
+rapid back-to-back calls, which is how they were found.** Three fresh live terms in a row gave
+**21 browse · 20 browse · hung** — so it is intermittent, and **a woman asking ONE question may never
+see it.** ▶ **If she reports it, the debug panel now shows the number: `search time` at exactly the
+ceiling with `products in your shops 0` is this, and nothing else.**
+
+### 🚨 THE SIX EDITS TO ADD A MERCHANT ARE NOW FIVE
+▶ **Edit (6), `SEARCH_DOMAINS` in `style-ai.js`, no longer arms anything** — the stylist has no search
+to allow domains for. ⚠️ **The constant is deliberately KEPT and still DERIVED** from the same generated
+file the finder reads, so it cannot go stale and `searchtune` still asserts the derivation. **Do not
+hand-maintain it, and do not re-add a search tool to give it a job.**
+
+### 🚨 THREE TIMES TODAY CLAUDE PUT WORDS IN HER MOUTH. ALL THREE ARE CORRECTED IN THIS FILE.
+1. ***"the cap is the seatbelt"*** — Claude's phrase, quoted back to her twice as hers, and used to
+   justify a spend cap she never asked for. **Her actual position is close to the opposite.**
+2. ***"the shrug"*** — coined shorthand, used as if shared vocabulary. She asked what it meant.
+3. **THE WORST: "THE AGREED EXPERIENCE, IN HER WORDS"** — six numbered steps that are **Claude's summary
+   of a flow Claude proposed**, and were quoted back to her that same day as evidence *she* had been
+   clear. **Not one of the six carries this file's marker for her words.** ▶ **A file she cannot trust
+   as a record of her own voice is worse than no file.** An audit found 45 other places quote her
+   correctly; that one heading was the only offender, and it is fixed.
+▶▶ **THE RULE THAT CAME OUT OF IT, now beside "a rule applied to one half is not applied": WHEN HER
+WORDS ADMIT TWO BUILDS, SAY SO BEFORE BUILDING.** *"Your words could mean A or B; I am building B
+because X."* **It costs a sentence and it would have caught the eight-word list in September.**
+
+### 🚨🚨 AND THE STANDING DIRECTION SHE GAVE, WHICH OUTRANKS THE INSTINCT TO ADD MACHINERY
+***"I want the AI to be using intelligence and I would like to reduce the amount of rules and breakable
+things we put in there."*** ▶ **Test before building anything: is this a PROMISE or a JUDGEMENT?**
+Promises stay in code and the list is short. Judgements go to the stylist, who can read. **Every fault
+she found today was a judgement built as a promise.**
+
+### 🚨🚨 THE LESSON OF THE DAY, AND IT IS A NEW ONE: **A COUNT OF HER STORES IS NOT AN INVARIANT.**
+▶▶ **FOUR separate tests broke the moment she was approved for a shop** — `rakuten_feed`'s *"the other
+seven are"*, `searchtune`'s *"40 keyword-scoped + 7 param-scoped"*, `findprod`'s *"108 stores come out of
+index.html"*, and `affwrap`'s Vilebrequin example. **None of them found a bug. All of them failed because
+something good happened.**
+⚠️⚠️ **A TEST THAT FAILS ON SUCCESS TEACHES THE NEXT SESSION TO BUMP A NUMBER WITHOUT READING IT** — and
+`searchtune`'s own comment already records that number being bumped three times and once sitting red for
+weeks, under the note *"a permanently-red suite is how a false green happens."* **The file diagnosed the
+disease and kept the symptom.**
+▶ **ALL FOUR ARE NOW DERIVED, and each got STRONGER in the rewrite, not weaker:**
+· *"every known merchant except Etsy is built"* — now catches a merchant silently **dropped**, which a
+count never could · *"every store known to sell menswear is scoped to women"* — now **names the store**
+that broke instead of a total · *"the generated allowlist is in sync with her table"* — **this is the
+check that caught the real bug today** · *"an advertiser with NO store entry still earns"*, proven with a
+**synthetic** domain, because every real advertiser now has a table entry and the old check had gone
+quietly inert.
+🚨 **THE GENERAL RULE TO KEEP: WHEN A TEST BREAKS, ASK WHETHER THE APP GOT WORSE OR MERELY BIGGER. If it
+merely got bigger, the assertion was measuring the wrong thing — rewrite it to name the rule, never to
+bump the number.**
+⚠️⚠️ **AND THE EXCEPTION, WHICH IS WHAT KEEPS THAT RULE FROM BECOMING AN EXCUSE — `affq`'s `TEMPLATES`
+COUNT STAYS HARDCODED.** It was also found red on 2026-09-08 (**pre-existing**: `HEAD` already had 14
+outbound templates against a `TEMPLATES = 13`), and the 14th turned out to be **`_renderDiscoStar()`'s
+"Shop it"** — a second `.wks-shop` anchor beside `_renderWeekStar()`'s, both `_affUrl`-wrapped and both
+carrying `rel="sponsored noopener"`. **Verified before bumping, not assumed.**
+▶▶ **WHY THIS ONE IS DIFFERENT, AND IT IS THE WHOLE TEST OF THE RULE: the four counts that were derived
+away all moved when SHE WAS APPROVED FOR SOMETHING — they failed on good news. This one counts CODE
+PATHS OUT OF THE APP**, which must never grow without a person looking: an unnoticed outbound anchor is
+an untagged link that earns nothing, or an untracked way for a woman to leave the app. **A tripwire is
+supposed to be tripped.** ▶ **When it goes red: find the new anchor, check it is sponsored and wrapped,
+then bump the number with a line naming the template. Never derive it away.**
+
+### 📌 THE COUTR STAR OF THE WEEK + THE `px2` STACKED PHOTO (2026-09-08) — KEPT FOR THE PHOTO LESSON
+⚠️ **THIS WAS A "WAITING ON HER" LIST ON 2026-09-08 AND ITS TO-DO ITEMS ARE DONE OR SUPERSEDED — read
+the block at the top of this file for what is actually waiting on her.** It is kept in place because
+items 2 carries the `px2` measurement and her own better idea, which the rule ledger points at.
+1. ⏳ **THE OCT 1 CLOCK — the only genuinely time-sensitive thing on the whole board.** Do NOT pay the
+   Your Fashion Friend renewal; close the county receipt by email or mail. See its own section.
+2. ✅✅ **THE COUTR EDIT ITEM / STAR OF THE WEEK IS BUILT — HER PICK, BOTH PLACES, SAME PIECE.**
+   **Saint Laurent SL M136 Sunglasses · COUTR · $363**, her note verbatim: *"This style is mysterious
+   and cute at the same time. YSL chic and fabulous!"* ⭐ **It is the FIRST piece in this app to arrive
+   PHOTOGRAPHED ON DAY ONE**, because `_wkStarPxTag` honours `px` only when `_affMid(url)` resolves and
+   `coutr.com` went into `_AFF_MID` the same morning. **Edit item live immediately (32 items now); Star
+   of the Week APPENDED to `WEEK_STAR_PHOTO_ORDER` → 11 October.**
+   ▶ **APPENDED, NOT INSERTED, AND VERIFIED AGAINST THE REAL ROTATION CODE, not arithmetic:** every
+   piece already scheduled between now and **4 Oct keeps its exact week**, and **Vilebrequin stays
+   13 Sept, safely inside the 20 Sept cutoff she set for it.** Growing the pool 9 → 10 does move the two
+   that wrap round (the pendant and the DVF) back one week each. ▶ **If she wants it sooner, say so —
+   an insert is one line, but it pushes everything after it, Vilebrequin included.**
+   🚨 **THE PHOTO PROBLEM WAS THE OPPOSITE OF THE BAG'S, AND IT IS WORTH REMEMBERING.** The source is
+   **900x1200 — EXACTLY 3:4**, the same ratio as `.wks-px`/`.dc-item-px`, so `cover` crops **nothing**
+   and `pxPos` has nothing to choose between. **Nothing is cut off; the trouble is emptiness** — the
+   glasses sit at **66%–96% of the frame height** with white above.
+   ⚠️⚠️ **AND IT CANNOT BE FIXED BY CROPPING, WHICH WAS MEASURED RATHER THAN ASSUMED.** Shopify's CDN
+   *can* bottom-crop to enlarge them — **but only by leaving 3:4**, and the glasses span **3%–97% of the
+   WIDTH**, so every non-3:4 source either **clips both arms** under `cover` or **letterboxes with
+   visible cream bands** under `contain`. ▶ **Four versions were rendered at the true card size and
+   LOOKED AT** (the FARM Rio lesson: measure to find candidates, look to decide) — **and every one of
+   them was a compromise: either the glasses stayed tiny in an empty card, or the frame clipped, or
+   cream letterbox bands appeared.**
+   ⭐⭐ **THEN SHE SOLVED IT, AND HER ANSWER WAS BETTER THAN ALL FOUR.** Her words: ***"Is it possible to
+   stack the 2 photos into one? So we can see the front of the glasses and the side with the logo and
+   fill up the space on the card too?"*** ▶▶ **SHIPPED AS `px2`** — the front view on top, the angled one
+   below showing the gold YSL monogram her note is about. **It fills the card completely, shows the piece
+   twice, and clips nothing.** ▶ **A WIDE, SHORT OBJECT IN A TALL FRAME IS A NEW SHAPE OF THIS PROBLEM —
+   belts, clutches and cuffs will all hit it, and `px2` is now the mechanism for them.** See the rule
+   ledger's photo row for the full note; the short version is that both halves stay **hotlinked** behind
+   the same `_affMid` gate, and **ONE css rule names both surfaces**.
+   💡 **AND THE LESSON ABOUT WHO SOLVES THESE: four crops were measured, rendered and ruled on, and the
+   answer was not among them because every one of them accepted the premise that a card shows ONE photo.
+   She did not.** That is the second time in two days her eye beat the measurement (the first was Under
+   Armour). ▶ **Show her the renders and the trade-offs; do not just pick the least-bad one.**
+   ⚠️ **$363 IS NOT A MARKDOWN, CHECKED ON THE PAGE:** the JSON-LD offer says 363 and there is no higher
+   "was" price. Their `compareAtPrice` reads **358 — LOWER than the price**, which is backwards from how
+   compare-at is normally used, so it is their data quirk, not a sale. **Listing 363 is accurate and is
+   also the conservative direction** (arriving to find a piece cheaper feels lucky; dearer feels misled).
+   ▶ **The ANGLED photo was chosen over the straight-on one their `og:image` uses**, because it shows the
+   gold YSL monogram on the arm — which is the detail her note is actually about.
+3. **Hand `docs/store-scoring-brief.md` to ChatGPT** — the ~200-store list, still her desk job.
+4. **Re-run her three chat messages**, then **Shop your Style**.
+
+### 🚨 AND SHE CAUGHT A SOLD-OUT STAR OF THE WEEK, LIVE, WHICH NOTHING WAS WATCHING
+▶▶ **Her words, 2026-09-08: *"The red bag we have on as Star of the week is sold out. So let's delete it
+and add this in its place now. All others stay same order."*** ✅ **VERIFIED BEFORE ACTING rather than
+taken on trust** — marissacollections.com returns `schema.org/OutOfStock`, `"available":false` and
+"Sold out". **She was right.**
+▶ **DONE EXACTLY AS SHE ASKED: the Serpui Abigail Handbag was SWAPPED IN PLACE for the Saint Laurent**,
+so the pool stays 9 and **every other piece keeps the exact week it already had** (Vilebrequin 13 Sept,
+Crosbie 20 Sept, Fleur du Mal 27 Sept, bracelet 4 Oct). **The sunglasses are the LIVE Star now.**
+▶ **Its Edit pick was pulled too, her call when told** — the same bag was one of her Edit items, so that
+link was dead as well. **Edit: 32 → 31.**
+⚠️ **Its `WEEK_STARS` entry is deliberately KEPT and marked SOLD OUT.** It is inert (the photo order is a
+whitelist, not a sort hint), and it carries the `pxPos` crop her 2026-09-07 catch produced, which
+`starpx` still pins as its worked example. **Deleting an entry that already renders nowhere would only
+throw the lesson away.** ▶ **Do not put that name back in `WEEK_STAR_PHOTO_ORDER` without checking stock.**
+🚨🚨 **THE REAL FINDING IS THAT NOTHING WAS WATCHING — see the watchdog item in the master to-do.** The
+link-rot script detects "sold out" perfectly well and is pointed at the FROZEN catalog, not at the Edit
+or the Star queue. ▶▶ **A curated surface she updates is exactly the one that goes stale, and it was the
+only one unmonitored.** **She is not the stock checker; a script should be.**
+
+### ⭐⭐⭐ HER DECISION, 2026-09-08: SHOW HER LOTS TO SCROLL THROUGH — BROWSING IS THE POINT
+▶▶ **HER WORDS, VERBATIM:** ***"yes yes yes the more options she can browse, the better, even if
+they're not all perfect matches, even if they are close, if she can scroll through a lot of visuals,
+that makes it more fun."***
+🚨 **THIS IS A REAL CHANGE OF SHAPE AND IT MUST NOT BE READ AS LOOSENING HER HONESTY RULE.** It does
+not contradict *"never imply a requirement is confirmed unless we can verify it"* — **it changes how
+MANY pieces she sees, not what the app CLAIMS about them.** Show many; label honestly; claim nothing
+that was not checked.
+⚠️ **AND IT IS A DELIBERATE SOFTENING OF THE 2026-09-06 "SHOW THE ONE TRUE MATCH" INSTINCT, BY HER.**
+That decision was made when the choice was *one verified dress* versus *a screen padded with things she
+did not ask for*. **She has now seen that the real alternative is a browsable wall of close pieces with
+photos, and she prefers it.** ▶ **Both of her sentences still hold: the confirmed ones lead and say so;
+the rest are there to browse and promise nothing.**
+✅✅ **AND IT IS AFFORDABLE, WHICH IS WHY IT CHANGES THE BUILD — MEASURED 2026-09-08.** One search for
+*"women's white fitted top"* returned **40 products**, and per product, with **NO look-up spent**:
+| what a card needs | available from the one search |
+|---|---|
+| title · store · price · photo | ✅ **12 of 12** |
+| **a direct, buyable, affiliate-wrappable store link** | ❌ **0 of 12** — every link points at `google.com/search` |
+▶▶ **SO SHOWING IS CHEAP AND TAPPING IS NOT.** The per-product look-up is not only how a requirement is
+verified — **it is the only way to get a link that reaches the shop and can earn.**
+⭐ **THE DESIGN THAT FALLS OUT OF THAT, AND IT IS BETTER THAN WHAT EXISTS: RENDER MANY, LOOK UP LAZILY.**
+Today the app spends **6 look-ups every time, whether she taps anything or not.** Instead: render a wide
+scrollable row from the one search, verify the top few so the confirmed set exists, and **spend a
+look-up only on the pieces she actually reaches for.**
+💰 **AND THIS IS NOT A NICETY, IT IS THE BUSINESS MODEL — at her real price of $0.025/search, middle
+case, 1000 users: 10 searches per question is −$132/month and 4 is +$18/month.** ▶ **More options for
+her AND fewer searches. The two goals point the same way, which is rare enough to write down.**
+
+### 🏬🏬 HER STORE ROSTER — **132 SHOPS**, HER LIST (closed at 122 on 2026-09-08, REOPENED BY HER 2026-09-09)
+✅✅ **UPDATED 2026-09-09 — SHE ADDED TEN MORE HERSELF, SO "CLOSED AT 122" IS NO LONGER TRUE.**
+**Gap Factory** (she spotted the mis-link) plus the **nine she picked off the measured gap list**: Moda
+Operandi · Merlette · ViX Swimwear · ASTR the Label · Pact · PacSun · Tommy Hilfiger · Aeropostale ·
+FWRD. ▶ **132 in `STORES`, 32 of them unscored**, and the generated allowlist is in sync.
+⚠️ **HER RULE STILL HOLDS: DO NOT ASK HER FOR STORE NAMES.** These ten came from a list Claude BUILT
+from sellers Google was already returning and discarding — she chose from evidence, she did not do
+homework. **That is the only way to bring her more shops.**
+🚨 **AND SHE ALSO RULED ETSY BACK IN** (*"They are great for jewelry especially"*) and flagged **Saks
+OFF 5th as closed down**. ▶ *The 2026-09-08 close, kept because the rule inside it is still live:*
+🚨🚨 **THE LIST WAS CLOSED AT 122. HER WORDS, 2026-09-08:** ***"the list i gave you is complete for now.
+I don't want to add any more. Of course if we get more affilates approved, we will add them, but for
+now I don't want to add any more stores."***
+▶▶ **SO DO NOT ASK HER FOR STORE NAMES AGAIN, and do not re-propose the ~200 goal.** The 2026-09-06
+target of 200 is **superseded by her own decision**: she reviewed the field herself and stopped at 122.
+✅ **THIS CLOSES THE ITEM THAT SAT AT THE TOP OF HER MASTER TO-DO FOR DAYS** — *"hand
+`docs/store-scoring-brief.md` to ChatGPT"*. She did the job her own way and did not need the brief.
+**The brief and `docs/store-list-prompt.md` stay in the repo for the day an affiliate approval brings a
+new shop; they are no longer waiting on her.**
+▶ **THE ONLY TRIGGER FOR ADDING A SHOP NOW IS AN AFFILIATE APPROVAL.** Her rule, her words above.
+▶▶ **She sent 21 shops to ADD, 9 to REMOVE, and a final roster of 122. The diff was checked against the
+table BEFORE touching anything and matched her instruction exactly, then checked again afterwards —
+empty in both directions.** `docs/current-stores.txt` holds the live list.
+**IN:** Aerie · American Eagle · ASOS · Ashley Stewart · City Chic · Club Monaco · Frances Valentine ·
+Honeylove · Karen Millen · L*Space · L.L.Bean · Lilly Pulitzer · Long Tall Sally · Lord & Taylor ·
+Mestiza New York · MZ Wallace · Ramy Brook · Reiss · Rothy's · Staud · Teri Jon
+**OUT:** COS · Garnet Hill · Jenni Kayne · Johnny Was · Kendra Scott · Madewell · Marine Layer · Rails ·
+Soft Surroundings
+⚠️ **SIX OF HER 107 CATALOG PICKS WERE DEACTIVATED, because their shop is gone:** `p001` Madewell
+Perfect Vintage Jean · `p015` COS Pintucked Blouse · `p057` Madewell Woven Tote · `p064` Madewell
+Earrings · `p089` Reebok Club C (Madewell) · `p104` Marine Layer Camila Midi. **101 active.** ▶ A pick
+from a shop she no longer approves should not be shown; this is the consequence of her decision, not a
+separate one. **Say so rather than letting them vanish quietly.**
+✅ **SEARCH URLS WERE FOUND AND PROBED HERE, NOT ASKED OF HER** (the "she owes names" rule). **Verified
+with a real term AND a gibberish control: Ashley Stewart · Frances Valentine · Lord & Taylor · MZ
+Wallace · Staud · Teri Jon.** ⚠️ **The other 15 could not be checked from here** — bot-walled, or the
+results render client-side so a real term and gibberish come back byte-identical. **They carry the most
+likely pattern for that platform and are marked `// ⚠️ url unverified` in the table.**
+🚨 **THIS DOES NOT AFFECT WHETHER HER PRODUCTS ARE FOUND — the finder matches by DOMAIN.** An unverified
+url only shapes the AI's own "find this at X" link. **Fix one opportunistically from her address bar if
+a link ever lands wrong; do not ask her for fifteen.**
+⚠️ **AERIE AND AMERICAN EAGLE SHARE `ae.com` ON PURPOSE** — aerie.com redirects there, Aerie is a brand
+inside AE's site, so its products genuinely live on that domain.
+⭐⭐ **AND THE 2026-09-07 UNTAGGED-STORE GUARD GOT ITS FIRST REAL TEST AND PASSED.** 22 of the 122 now
+carry no dimension scores. Measured in the live page: **all 122 rank, all 22 unscored sit at the END,
+`_shopRules` builds, zero page errors.** ▶ **`untagged` now proves it with her REAL table rather than a
+fixture: "her REAL table would have crashed the pre-guard code" ✓ and "the guarded code ranks all 122"
+✓.** The September fix was written for exactly this week and nobody knew it yet.
+✅✅ **`SEARCH_DOMAINS` IS NOW DERIVED, WHICH RETIRES ONE OF THE SIX EDITS FOREVER.** It was a hand-typed
+list in `style-ai.js` — one of the two that fail SILENTLY — and it went stale TWICE in one day (COUTR by
+hand, then 13 short after this roster). **It now reads the same generated file the product finder uses,
+so the stylist's search and the finder's allowlist cannot disagree.** ▶ **Adding a merchant is now FIVE
+edits, not six**, and `searchtune` asserts the derivation rather than a count.
+
+### 💰🚨 SERPAPI — LIVE OPERATIONAL STATUS, AND THE MATHS THAT REFRAMES IT (2026-09-08)
+🚨🚨 **HER DASHBOARD, 2026-09-08: 216 OF 250 USED. 34 LEFT.** Her file said ~75 on 2026-09-06 — **so
+~141 went in one afternoon, and almost all of it was Claude testing against the LIVE endpoint.**
+▶▶ **THE NUMBER THAT CHANGES THE PICTURE: ONE SHOPPING QUESTION IS NOT ONE SEARCH.** It is up to
+**4 searches + 6 product look-ups = TEN calls**, and SerpApi counts every call. **So 250/month is really
+about 25–60 shopping questions a month, across all users.** The 34 left are **three to eight questions**.
+▶ **THE STANDING RULE THIS PRODUCED: BUILD AGAINST CAPTURED FIXTURES, NEVER HER LIVE ALLOWANCE.**
+`scratchpad/findprod.js` already works this way — real product data captured once, tested forever, no
+network. **That is how the rebuild gets built.**
+✅ **THE SEATBELT IS NOW BUILT** (her word, 2026-09-06): the finder asks SerpApi itself how many searches
+remain **before spending one** — the account endpoint is free, exact, and needs no setup — and stops with
+`why:'budget'` below `SERPAPI_RESERVE` (default **20**, settable in Netlify). ⚠️ **It fails OPEN on
+purpose:** refusing to shop because a diagnostic call broke would take the feature down to protect a
+budget. ▶ **With 34 left and a floor of 20 she has ~14 for her own phone testing** — lower
+`SERPAPI_RESERVE` if she wants more.
+▶ **HER QUESTION, ANSWERED: SHOULD SHE BUY MORE? NOT YET.** Those searches were spent by testing, not by
+users, and there are no users. **The honest trigger for paying is women using the app.** ⚠️ **If she ever
+does buy, two things first:** check the **reset date**, and re-read this file's own note that
+**SerpApi's legal shield does NOT cover the $25/$75 tiers** — confirm that with them before paying. The
+alternative to price against is **SearchApi** (same $25, ~10× the searches).
+
+### ⚠️ TWO THINGS I GOT WRONG ON 2026-09-07, KEPT BECAUSE THE PATTERN REPEATS
+1. ⚠️⚠️ **AN AUTOMATED CHECK ACCUSED HER FARM RIO FIX OF BEING BROKEN, AND IT WAS WRONG.** A script
+   measuring "where does the garment end" reported the dress cut off by 4.9%. **Rendering all 10 Star
+   photos and LOOKING at them disproved it: her `center 60%` is correct and the sandals are in frame.**
+   ▶ **The detector was measuring a full-bleed grey studio backdrop as though it were the dress.** It
+   only works on products shot on plain white. 🚨 **SO: MEASURE TO FIND CANDIDATES, LOOK TO DECIDE.
+   Reporting that number to her unchecked would have been a fault she then had to disprove herself.**
+2. ⚠️ **A TEST I WROTE THE SAME DAY WAS FRAGILE IN A WAY THAT LIES.** `untagged.js` compared against
+   `HEAD:index.html` to prove the store crash was real — so it passed **exactly once**, on the commit
+   that introduced the fix, and on the very next commit began reporting **that the bug had never
+   existed.** ▶▶ **A BASELINE THAT MOVES IS NOT A BASELINE.** Pinned to `3d1aad4`, and it skips cleanly
+   rather than failing falsely if that object is missing from a clone.
+
+### ▶ THE PRODUCT FINDER — WHAT IS BUILT AND WHAT IT KNOWS (distilled 2026-09-07; the build story is in the archive)
+▶ **THE FILES:** `netlify/functions/product-find.js` (server, holds the key) · `netlify/functions/lib/
+find-products.js` (the finder) · `netlify/functions/lib/store-domains.js` (**generated**) ·
+`scripts/build-store-domains.js` · `scripts/lib/stores.js` (the ONE `STORES` reader) ·
+`scratchpad/findprod.js` **63** · `scratchpad/chatfind.js` **63** · `scratchpad/ssfind.js` **52** ·
+`scratchpad/findlive.js` (live bench).
+⭐⭐ **AND IT NOW SERVES TWO SURFACES, 2026-09-09: THE STYLIST CHAT AND SHOP YOUR STYLE** — through the
+ONE `_findBlockHtml` builder and the ONE `_findFetch`, so there is exactly one `product-find` call site
+in the app. ⚠️ **`_findFetch`'s cache is OPT-IN and Shop your Style is its only caller; the chat asks
+for fresh stock every time.** Both asserted. **A second card loop is how the `<<FIND>>` marker leaked.**
+⚠️ **THE FINDER FINDS; THE PAGE CHOOSES.** `find-products.js` holds NO copy of her brief and never ranks
+for style. **`curatedPicks()` and `filterNeverWear()` remain the ONE picker** — adding her rules to the
+finder would make it the fourth copy, which is the bug this project paid for four times in one day.
+**HER RULE IS STRUCTURAL: three verdicts, never two** — `CONFIRMED` · `REJECTED` · `UNKNOWN`, and
+**UNKNOWN IS NEVER A PASS.** A product is an exact match only when every requirement she stated is
+CONFIRMED. **Everything she KEEPS must be CONFIRMED; only what she RELEASED may be unknown.**
+**THE FOUR TRAPS, ENCODED AND PINNED BY TESTS BUILT ON REAL CAPTURED PRODUCTS:**
+1. **A print is not a colour** — "Palace Tiger Pink" must never confirm blush.
+2. **Satin is a weave, silk is a fibre** — `95% polyester` REJECTS silk outright.
+3. **Faux-wrap is not a wrap** — and only the retailer's own title said so; Google's tidy title passed it.
+4. **Wide calf is not wide width, and "W 7" is a women's 7** — an explicit non-wide width beats any
+   marketing phrase. ⚠️ **One real DSW boot contradicted ITSELF** across its title and its variant.
+**FOUR MEASURED CORRECTIONS THAT MUST NOT BE UNDONE:**
+- **Queries are POOLED, never replaced.** Broadening CHANGES the pool rather than enlarging it — the
+  broad query lost the DVF that the narrow one found.
+- **Size and width stay OUT of the search words** (in the words scored **8/40** against **30/40**, by
+  pushing Google toward eBay and Poshmark).
+- **COLOUR, FABRIC and CUT must appear in HER OWN SENTENCE or they are dropped** (`_findKeepHerWords`).
+  Those three NARROW a search and so those three can silently empty it. **ITEM may still be inferred**
+  (a stylist may read *"nothing to wear"* as a dress); **SIZE/WIDTH come from her saved prefs.**
+  🚨 **THIS IS A CODE RULE BECAUSE THE PROMPT RULE FAILED HER.** The prompt already said "never invent a
+  requirement she did not give"; the model recommended a jewel tone, then searched for one as if she had
+  asked. **A rule checked in code before it can reach a card is the fix. That is the Stitch Fix lesson.**
+- **A REQUEST WITH AN ITEM ALWAYS PRODUCES AT LEAST ONE QUERY.** `buildQueries` once excluded the bare
+  `women's <item>` and so built ZERO queries, searched for nothing, and reported *"I could not find that
+  in your shops"* — ▶ **the most convincing way possible to be wrong: a confident, honest-sounding no
+  with no search behind it.**
+**HOW CHAT TRIGGERS IT:** the stylist emits ONE marker as the FIRST thing in her reply —
+`<<FIND item=dress; colour=blush; fabric=silk; cut=wrap>>` — then answers normally. ▶▶ **FIRST ON
+PURPOSE: the reply streams ~16-20s and a search takes ~5-8s, so firing on the marker runs them TOGETHER
+and the wait is the LONGER of the two, never the sum.** ⚠️ **She never sees it** — stripped from the live
+stream, the shown reply, and `ss_chat`.
+⚠️ **`filterNeverWear` MUST BE HANDED HER WHOLE REQUEST** (`item + colour + fabric + cut`), not just the
+noun. `_SEARCH_VETO` contains "wrap", so passing only `"dress"` made the app believe she never asked for
+a wrap and **silently delete every wrap dress from her own answer to "blush silk WRAP dress."**
+**THE WAITING STAR:** one signal across the app — byte-identical star path to `.wdr-load-star`, same
+`spin 1.7s linear infinite reverse` as `.shop-star-main`, `_starSpin()` the one definition. ⚠️ **The words
+replace themselves and never stack; the mid-stream swap targets the SPAN (a bare `textContent` would
+delete the star); `prefers-reduced-motion` keeps the star and stops it turning.**
+🔒 **SerpApi: ~75 of 250 free searches used. `SERPAPI_KEY` is set in Netlify** — if she regenerates it,
+Netlify must be updated or **the chat quietly loses its product cards (no error, just advice).**
+⚠️ **Caps: 4 searches + 6 product look-ups per request, 8 requests/minute per IP, 30-minute cache.**
+
+### ✅ THE MEASUREMENT THAT CHANGED THE STRATEGY — HER OWN STORE TABLE IS ALREADY MID-MARKET
+▶▶ **Of her 108 `STORES` entries, 57 START AT `$$` OR BELOW. Only 15 are `$$$$` throughout.**
+🚨 **HER FEED IS 7 STORES AND EVERY ONE IS `$$$`/`$$$$`.** ▶ **So the affordability problem was NEVER her
+taste or her curation. She already picked a broad, affordable set of shops — the feed just reaches the
+dearest seventh of them, because those are the ones that approved her.** A search across all 108 fixes
+the price problem **with no new affiliate approval at all.**
+⭐ **AND SHE ALREADY TAGGED WHICH STORES CARRY WIDE WIDTHS, back in July — 8 of them:** Nordstrom ·
+Macy's · Nordstrom Rack · Amazon · Naturalizer · Lane Bryant · Zappos · DSW. **She answered the width
+question months ago; the app just never used her answer to FIND anything.**
+
+### ▶▶ THE AGREED EXPERIENCE — **CLAUDE'S SUMMARY OF A FLOW SHE APPROVED. NOT HER WORDS.**
+🚨🚨 **THIS HEADING USED TO READ "IN HER WORDS" AND THAT WAS FALSE. Corrected 2026-09-08 when she read
+step 4 and said: *"this is not my voice. I did not say this."* She was right.** ▶ **Not one of the six
+steps below carries this file's own marker for her words (`***…***`), while everything genuinely hers in
+this same section does** — *"These three I can confirm in your width"*, and the rule labelled VERBATIM
+further down. **The six steps are a summary Claude wrote of a flow Claude proposed and she approved.**
+⚠️⚠️ **AND THE DAMAGE WAS REAL, NOT COSMETIC. On 2026-09-08 this section was quoted back to her as
+evidence that SHE had been clear** — *"here are your words"* — **when it was Claude quoting Claude.** ▶ A
+file she cannot trust as a record of her own voice is worse than no file: **it is the one place she
+should be able to check what she actually said.**
+▶▶ **SO BE EXACT ABOUT WHO SAID WHAT HERE. WHAT IS HERS FROM THAT SESSION (all quoted and marked
+below): the thin-result-set decision · the per-requirement widening · the width answer · and the rule
+"never imply that a specific size, width, colour, material or other requirement is confirmed unless we
+can actually verify it." WHAT IS CLAUDE'S: these six steps, and every mechanism inside them.**
+🚨 **NOTE WHAT THAT MEANS FOR THE 8-WORD `CUT` LIST: her rule says never CLAIM a requirement is verified
+unless it can be. IT SAYS NOTHING ABOUT HOW TO VERIFY.** ▶ **The mechanism was always Claude's choice —
+so getting it wrong was Claude's error alone, and flagging the fork was Claude's job alone.** The
+earlier account ("her step 4 was clear and it was misread") was itself wrong: **step 4 was never hers.**
+▶ **APPROVAL IS REAL AND STILL STANDS — she agreed to this flow. It is the AUTHORSHIP that was
+misstated.** Keep the steps; keep the approval; never call them her words again.
+1. The AI reads her sentence into a checklist (item · colour · material · size · width). **It invents nothing.**
+2. **The service FINDS** real products. ← the only new piece
+3. **Her 108-store allowlist throws away everything else** — and it already excludes fast fashion,
+   rentals and subscription boxes, because those were never in the table.
+4. **Each product is CHECKED against the checklist — comparing facts, never guessing.** No tick without
+   evidence.
+5. **`curatedPicks()` runs — the SAME picker**, never a copy. Never-wear, colour no's, price spread,
+   max-two-per-retailer.
+6. **Her sliders and her store dimensions order the results.**
+🚨🚨 **HER RULE FOR A THIN RESULT SET — HER DECISION, 2026-09-06, AND SHE IMPROVED ON EVERY OPTION
+OFFERED.** Precision will often leave very FEW matches; honestly narrowing her own blush-dress test left
+**one**. Asked whether to show the one, pad the screen with near-misses, or show the one and offer to
+widen, **she chose to show the one and offer** — her words: ***"If there is only one true match, I would
+rather confidently show her the one true match than fill the screen with things that aren't what she
+asked for. Then I would offer to widen the search."***
+▶▶ **AND THE PART SHE ADDED, WHICH IS BETTER THAN ANYTHING PROPOSED AND IS THE ACTUAL DESIGN: THE WOMAN
+CHOOSES *WHICH REQUIREMENT* TO RELEASE, ONE AT A TIME.** Her words: ***"maybe she wants to keep silk but
+is open to another shade of pink, or maybe blush matters most and she is open to satin. That feels much
+more like how I would work with a client."***
+⚠️ **SO "WIDEN" IS NOT ONE BUTTON. Each requirement she asked for is separately releasable** — keep
+silk / open on colour · keep blush / open on fabric — **and the app never decides for her which of her
+own words mattered least.** That is the dressing-room behaviour, and it is the opposite of a search
+engine quietly dropping terms until something comes back.
+🚨🚨 **AND THE ANSWER SHE GAVE TO THE HARD QUESTION — what if red, leather and size 6 verify but WIDTH
+CANNOT?** Not hide it (she sees nothing), **not show it silently (THAT IS THE SHIFT-DRESS BOX)** — but
+**show it, labelled honestly, confirmed ones first.** Her stylist voice: *"These three I can confirm in
+your width. These two are worth a call to check."* ▶ **HER RULE, GIVEN THIS SESSION, VERBATIM: never
+imply that a specific size, width, colour, material or other requirement is confirmed unless we can
+actually verify it.**
+
+### ▶ WHAT IS STILL OPEN ON THIS, AND WHAT THE NEXT SESSION SHOULD ASK HER FIRST
+1. ✅✅ **HER VERDICT IS IN, 2026-09-06: "MIXED — THE DVF IS RIGHT, BUT THE REST AREN'T CLOSE ENOUGH TO
+   WHAT I WOULD WANT STYLE STAR TO RECOMMEND AS MATCHES."** Her call on the service itself: ***"promising,
+   but we need to work on the search and filtering so Style Star is much more precise about what the woman
+   actually asked for."*** ▶ **SO THE SERVICE IS NOT THE PROBLEM AND IS NOT ON TRIAL ANY MORE. PRECISION IS
+   THE WORK.**
+   🚨🚨 **AND THE FIRST ATTEMPT AT PRECISION WAS MEASURED AND IT FAILED IN THE MOST INSTRUCTIVE WAY
+   POSSIBLE. Strict title filtering — must say silk, must be a real wrap, must say blush — passes ZERO of
+   the 5 results from her stores, INCLUDING THE DVF SHE APPROVED.** The DVF is *"Jeanne Silk Jersey Wrap
+   Dress"*: **the colour is not in the title at all**, it is a variant one level down. Meanwhile the two
+   Etsy dresses DO pass wrap+blush and fail only on silk. ▶▶ **SO A STRICTER TEXT MATCH KEEPS THE WORSE
+   RESULTS AND DELETES THE BEST ONE. Precision must come from BETTER DATA (the per-product second call,
+   which carries real colour, material and variants) AND FROM JUDGEMENT — never from tighter string
+   matching on a title.**
+   ⚠️ **THE TWO FAULTS SHE SPOTTED ARE BOTH STYLIST KNOWLEDGE, NOT STRING BUGS: "FAUX-WRAP IS NOT A WRAP"
+   and "SATIN IS NOT SILK" (satin is a WEAVE, silk is a FIBRE — a stylist distinction a text filter cannot
+   make).** Any precision work has to encode those, and there will be more of them.
+   ▶ **THE FIVE SHE RULED ON, kept because they are the benchmark any precision work must beat:**
+   Nordstrom Rack $123.72 DVF Jeanne Silk Jersey Wrap (**the one she approved**) · Nordstrom $598 Kobi
+   Halperin *faux*-wrap · Quince $80 stretch **satin**, not silk · Etsy $318 · Etsy $334.
+2. ✅✅ **THE SURFACE IS DECIDED — HER CALL, 2026-09-06: THE STYLIST CHAT FIRST, SHOP YOUR STYLE SECOND.**
+   ▶ **This is the green light the 2026-09-05 scope decision was waiting for, and it is a REVERSAL of
+   "wardrobe list first" — made deliberately, with her reason.** Her words: ***"That feels like the most
+   important place to test this because that is where a woman can tell Style Star exactly what she is
+   looking for in her own words. I want to know whether Style Star can take a real request, understand
+   what matters, find real products, and then use my styling logic and her personal preferences to give
+   her genuinely good recommendations."*** On Shop your Style: ***"I think that will make an enormous
+   difference."***
+   ⚠️ **WHY CHAT AND NOT THE SAFER SURFACES, and the reasoning is sound: HER OWN SENTENCE ONLY EXISTS IN
+   CHAT.** Shop your Style and the Wardrobe rows build a request from her profile or a checklist row, so
+   neither ever receives a sentence — **and therefore neither would exercise the precision work she just
+   asked for at all.** The "blush silk wrap dress" problem is a CHAT problem.
+   ⚠️ **SO THE WARDROBE IDEAS CAROUSELS ARE NOT FIRST AND THAT IS DELIBERATE.** The feed still powers
+   them and nothing there changes.
+3. ✅✅ **WHEN CHAT SEARCHES — HER CALL, 2026-09-06: THE STYLIST JUDGES IT, NOT A BUTTON AND NOT A
+   KEYWORD.** Her words: ***"I want the conversation to feel natural, like she is talking to a personal
+   stylist, not operating a shopping search tool."*** ▶ **The case she named and it is the test to build
+   against: *"I have a wedding in Napa in October and nothing to wear"* MUST trigger a search — it is
+   obviously a shopping request and it contains none of the words a keyword trigger would look for.**
+   ⚠️⚠️ **AND THE LIMIT SHE DREW IN THE SAME BREATH, WHICH IS THE HARDER HALF: *"I don't want it
+   searching just because a product or shopping topic comes up in conversation. It should search when
+   finding real products is actually NEEDED TO ANSWER what she is asking."*** ▶ **So the trigger is
+   NEED, not TOPIC.** "What do you think of navy on me?" is a shopping topic and needs no products;
+   the Napa wedding names no product and needs them badly. **A topic classifier gets both wrong.**
+   ⚠️ **A BUTTON WAS OFFERED AND REJECTED, and her mum's 2026-07-26 test agrees: content beats chrome.**
+4. ✅ **COST — HER STANCE, 2026-09-06, RECORDED SO IT IS NOT RE-LITIGATED EVERY SESSION.** Told plainly
+   that judging intent searches ~3-5× more than a button, her answer: ***"The cost difference does not
+   change my answer right now. I would rather make the experience excellent first and then understand
+   and control the cost once we see how women actually use it."*** ▶ **This is her VALUE FIRST principle
+   applied to infrastructure, and it is consistent, so do not re-open it as a concern.**
+   ⚠️ **BUT IT IS STILL THE APP'S FIRST PER-USER COST** — Netlify, Supabase and the nightly feed are
+   FIXED whether 10 women or 10,000 use it; this one scales with usage. **~15¢ per shopping question.**
+   ▶ **A SPEND CAP IS NOT A COMPROMISE ON THE EXPERIENCE and should be set anyway** — caching first
+   (repeat questions cost nothing), then a hard monthly ceiling, so a surprise is impossible rather
+   than unlikely.
+   🚨🚨 **A MISATTRIBUTION, CAUGHT BY HER ON 2026-09-08 AND CORRECTED HERE.** This line used to end
+   *"the cap is the seatbelt, not a second-guess"* and that phrase was quoted back to her twice as
+   though it were HERS. **It was never hers. It is Claude's.** Her words are the ones actually in
+   quotes above — *"I would rather make the experience excellent first and then understand and control
+   the cost once we see how women actually use it"* — which carries close to the OPPOSITE emphasis, and
+   the invented phrase was then used to justify a cap she had not asked for.
+   ▶ **HER CORRECTION, VERBATIM 2026-09-08: *"at this point my focus is on making the app as good as it
+   can be, not adding resistance."*** ⚠️ **SO: WARN, NEVER BLOCK.** A ceiling that silently degrades her
+   app IS resistance, and it is the thing she has objected to since the Stitch Fix box.
+   🚨 **THE LESSON, AND IT IS THIS FILE'S OWN: A PHRASE CLAUDE COINED, PUT NEAR HER QUOTES, BECAME HER
+   QUOTE.** Bold text next to italic quotes reads as one voice. ▶ **Only her actual words go in
+   ***triple-asterisk italics***. Anything Claude framed stays plainly framed, and is never quoted back
+   to her as her own.**
+5. ✅✅ **THE AFFILIATE TIE-BREAK — ASKED AND ANSWERED, 2026-09-06: "A". THE RULE HOLDS COMPLETELY, WITH
+   NO EXCEPTION.** ▶▶ **The app NEVER knows which shops pay her. Fit and price decide, full stop — even
+   when two options are exactly equally good and one earns and the other does not.**
+   ⚠️ **THIS WAS FLAGGED IN THIS FILE SINCE 2026-07-29 AS "a decision she will face; it should be a
+   deliberate one, not a drift." IT ARRIVED WITH THE CHAT DECISION AND SHE MADE IT DELIBERATELY. It is
+   CLOSED. Do not re-open it, and do not propose a "tie-break only" softening later — that WAS the
+   option offered and she declined it.**
+   ▶ **The argument that decided it, and it generalises to any future rule of this kind: a tie-break's
+   failure mode is SILENT. No test can prove a tie was genuine, so only intent keeps it honest — and
+   this file holds three separate examples of a rule quietly drifting when nothing was watching it.
+   Option A is the only version that cannot rot.**
+   💰 **THE PRICE SHE KNOWINGLY PAID: she will earn less than she could, on purchases that were going to
+   happen anyway.** She was told that plainly before choosing.
+6. ✅✅ **WHAT CHAT SAYS WHEN IT FINDS NOTHING — HER CALL, 2026-09-06: "B". TELL HER PLAINLY, THEN OFFER
+   TO WIDEN. NO FALLBACK TO AN INVENTED PRODUCT.** Her words, and the second sentence is a STANDING RULE:
+   ***"If Style Star genuinely looked and there is nothing that meets her requirements, I want it to tell
+   her that clearly and then help her widen the search. I do not want it falling back to an invented
+   product or making a generic store search look like something Style Star actually found."*** And:
+   ***"I would rather show nothing exact than recommend something that isn't what she asked for."***
+   ⭐⭐ **HER OWN COPY, VERBATIM, AND IT IS THE MODEL FOR THE REAL WORDING — DO NOT PARAPHRASE IT INTO
+   SOMETHING BLANDER:** ***"I couldn't find an exact match today. Would you like me to keep the blush and
+   look at satin, or keep the silk and look at other shades of pink?"***
+   ▶ **Note what that sentence does: it names the TWO requirements she gave and offers to release ONE of
+   them, her choice. That is the per-requirement widening from item 4 above, written out.** Her framing:
+   ***"I don't think finding nothing exact is a failure if we handle it like a good stylist would."***
+   🚨🚨 **THIS CHANGES THE APP'S DOCUMENTED FLOOR, ON THE CHAT SURFACE ONLY, AND IT IS DELIBERATE. READ
+   THIS BEFORE "RESTORING" ANYTHING.** This file has said since 2026-09-05 that tier 3 — the AI names a
+   plausible piece and opens a store SEARCH — *"is the app's floor, it has always been the floor, and it
+   is what every woman got before the feed existed."* ▶▶ **IN CHAT, THAT FLOOR IS NOW REMOVED AND
+   REPLACED WITH HONESTY.** A future session finding "chat sometimes returns no products" must NOT treat
+   it as a regression and must not re-add the fallback. **Wardrobe Ideas and Shop your Style keep their
+   existing behaviour; this decision is scoped to chat.**
+   ⚠️ **AND IT IS THE FIRST REAL APPLICATION OF HER "never claim a requirement is verified when it is
+   not" LEDGER ROW.** Option A — falling back silently — was rejected precisely because an invented pick
+   *looks identical to a real find*. **Not a lie, but indistinguishable from the truth, which she judged
+   the same thing.**
+7. ✅✅ **HOW THE WAIT FEELS — HER CALL, 2026-09-06, AND SHE COMBINED TWO OPTIONS INTO A BETTER ONE.**
+   A real search takes **~5-8 seconds** against chat's current ~1. Offered "wait for one answer" (A),
+   "warm reply first, cards follow" (B) or "show progress" (C), **she asked for B AND C together** — her
+   reasoning: ***"when there is a long time to wait she could think broken and click out, if she gets a
+   reassurance the search is on, that is much better than just looking at the screen, I also like the
+   conversational approach of B."*** ▶ **She is right and they do not conflict: B removes the feeling of
+   being IGNORED, C removes the fear that it is BROKEN. Different moments, different problems.**
+   **THE SHAPE:** warm stylist sentence IMMEDIATELY → a quiet status line underneath while it works →
+   the cards appear below.
+   ⭐ **THE REFINEMENT AGREED: THE STATUS LINE IS IN HER VOICE, NOT THE MACHINE'S.** Not *"Checking
+   sizes…"* (a loading message) but ***"Looking through your shops…"*** then ***"Checking what's actually
+   in stock in your size…"*** ▶▶ **Because that sentence tells a woman something NO COMPETITOR CAN SAY.
+   She is not watching a spinner, she is watching a stylist do what a stylist would do. THE WAIT BECOMES
+   THE PROOF** — which is Sally Hogshead's differentiation note landing somewhere nobody expected. **Most
+   apps hide the work because there is none.**
+   ⚠️ **THREE THINGS THAT TURN THIS INTO A LOADING SCREEN IF GOT WRONG:**
+   **(a) The line must REPLACE ITSELF, never stack** — three messages piling up is a progress bar in a
+   dress. **(b) NOTHING MAY JUMP.** Her audience runs to 80 and a screen that shifts under a reader is
+   genuinely disorienting: **cards appear BELOW what she is already reading, never pushing it around.**
+   **(c) If the answer comes back fast the line must NOT APPEAR AT ALL** rather than flash for half a
+   second.
+   ▶ **And when nothing is found, the status line resolves straight into her own sentence from item 6**
+   — *"I couldn't find an exact match today…"* — **so the honest answer arrives in the same place the
+   good news would have.**
+8. ✅✅✅ **THE PRECISION TEST WAS RUN, 2026-09-06, AND IT ANSWERED THE QUESTION: PRECISION IS
+   ACHIEVABLE, AND IT COMES FROM THE SECOND CALL.** 19 of 250 searches used, 231 left. Still no code.
+   ⭐ **BOTH OF HER STYLIST OBJECTIONS ARE DETECTABLE IN REAL DATA, AND ONLY ON THE SECOND CALL:**
+   the Kensie *"Blouson **Wrap** Dress"* carries `95% polyester, 5% spandex` in its description (**not
+   silk**) and Dillard's own offer title calls it a *"Self-Tie Waist **FAUX WRAP** Blouson Dress"*
+   (**not a wrap**). **Google's title says "Wrap Dress" and would have passed it.** Hobbs Ariel says
+   *"Pure silk"* in its description ✓ but its colour is **"Yellowmulti"** — correctly rejected.
+   🚨🚨🚨 **AND THE FINDING THAT MATTERS MOST, BECAUSE IT CORRECTS ME AND NOT HER: THE DVF SHE APPROVED
+   IS NOT BLUSH. IT IS A TIGER PRINT.** The second call gives the real colourway:
+   *"Jeanne Long Sleeve Silk Wrap Dress in **PALACE TIGER PINK**"* (Nordstrom Rack $123.72), and the
+   other colourways are **Chain Link Medium Black · Fuji Dusk Blue · Giant Snow Leopard Tobacco ·
+   Heritage Snow Cheetah · Twigs Green**. **Silk ✓, wrap ✓, blush ✗ — not one colourway is.**
+   ▶▶ **IT WAS PUT IN FRONT OF HER LABELLED AS THE RIGHT ANSWER, ON THE STRENGTH OF ITS TITLE, AND THE
+   TITLE FOOLED CLAUDE EXACTLY AS IT WOULD HAVE FOOLED A WOMAN USING THE APP.** That is the entire case
+   for verifying on the offer rather than the title, made accidentally and at her expense.
+   ▶▶ **SO THE HONEST ANSWER TO "blush silk wrap dress" ACROSS ALL 110 SHOPS TODAY IS ZERO EXACT
+   MATCHES — INCLUDING THE ONE SHE APPROVED.** Her rule was right and stricter than anyone was being.
+   ⭐⭐ **AND HER WIDENING DESIGN WORKS ON REAL DATA. The candidate exists: MISS CIRCLE ODELLE,
+   Nordstrom $249 — real wrap ✓, TULIP PINK ✓, crinkle CHIFFON not silk.** That is exactly *"keep the
+   blush, open on the fabric"*, in stock, in her shops. **Her design is not theoretical.**
+   ⚠️⚠️ **"SEARCH BROAD, NARROW AFTER" NEEDS A CORRECTION — IT IS NOT FREE.** The broad query
+   *"women's silk wrap dress"* returned 13 of her shops but **DID NOT RETURN THE DVF AT ALL**, which the
+   original narrow query did find. **Broadening changes the pool, it does not merely enlarge it.** ▶ The
+   real shape is **SEVERAL queries (broad AND narrow), pooled, then verified** — not one broad query
+   replacing one narrow one. Across both broad searches **not a single result was silk AND a true wrap.**
+   ✅ **THE NAPA SENTENCE WORKED IMMEDIATELY AND NEEDED NO PRECISION WORK AT ALL: 16 of 40 from her
+   shops, $25-$498** — Adrianna Papell · JS Collections · Dress the Population · Betsy & Adam · Old Navy
+   at $24.99. Real occasion brands across every budget. ▶▶ **THE VAGUE FEELING-LED REQUEST OUTPERFORMED
+   THE PRECISE ONE**, because broad asks are what a shopping index is good at. **So the hard case is the
+   NARROW request, not the conversational one — the opposite of the worry.**
+   🚨 **THE CONSEQUENCE FOR THE BUILD, AND IT RESIZES THE WORK: "NOTHING EXACT" IS A MAIN PATH, NOT AN
+   EDGE CASE.** If a request as ordinary as *blush silk wrap dress* returns zero, the widening flow will
+   run often. ▶ **It must be as beautiful and as finished as the results screen itself.**
+9. ▶ **IF SHE SAYS YES:** the shape is known — search broad · filter to her 108 · drop resale and
+   second-hand · verify per-offer · **route through `curatedPicks()`, never a second copy of her rules.**
+10. ▶ **IF THE BLUSH DRESS DISAPPOINTS HER — SUPERSEDED BY ITEM 8, WHICH RAN THE TEST:** the fault is the AI's SEARCH WORDS, not the service. Also
+   cheaply testable, 239 searches remain.
+11. ⚠️ **THIS WOULD BE A THIRD PICKER.** The 2026-09-06 lesson is absolute: **a rule applied to one half
+   is not applied.** It needs a ledger row and a test BEFORE it ships, not after.
+12. ▶ **FREE AND UNMEASURED: how many of her 108 run on Shopify.** Shopify stores publish a public
+   product file with **exact variant size + stock**, no API and no cost — real width/size truth for the
+   DTC half of her list. **Nobody has counted yet.**
+13. ⚠️ **THE LEGAL POSITION, MEASURED NOT ASSUMED:** Google sued SerpApi; **in July 2026 the court GRANTED
+   SerpApi's motion to dismiss**, striking the DMCA claim for results with no copyrighted content, with
+   no leave to refile. Google amended in August, narrowed to *licensed* content (Reddit snippets in
+   Knowledge Panels). ▶ **Product listings are facts — the strongest side of a ruling that already went
+   against Google.** Still live litigation. **Mitigation: keep the integration behind ONE small swappable
+   piece so changing vendor is an afternoon.** ⚠️ SerpApi's legal shield does NOT cover the $25/$75 tiers.
+14. ▶ **THE RUNNER-UP IF SerpApi DISAPPOINTS: SearchApi** — same $25, ~10× the searches. Test second;
+   search QUALITY matters more than volume while she has no users.
+15. ✅✅ **STORE EXPANSION — HER DECISION, 2026-09-06: ADD KOHL'S AND ZARA.** Measured from the 400 test
+   results: **178 (44%) already came from her 108.** ⭐ **KOHL'S ALONE IS +28 AND APPEARED IN 8 OF THE 10
+   SEARCHES** — one store worth as much as the next nine candidates combined. Zara is +4 and was flagged
+   as an anomaly (**H&M was on her list and Zara was not**; she confirmed it should be). ▶ **Both still
+   need HER TAGS before they go in — price tier, archetype, sizes, strengths and the 10 dimension
+   scores. `scripts/store-draft.js` drafts from neighbours she already scored; she corrects. NEVER
+   invent them.** ⚠️ **NOT ADDED and deliberately: Fashion Nova · boohoo · Ardene — FAST FASHION, her
+   standing exclusion. Walmart was left out as a quality call and is still hers to make.**
+   🚨 **THE SHAPE OF THE GAIN IS A POWER LAW, so do NOT bulk-add: 98 of the 123 missing sources appeared
+   exactly ONCE in 400 results.** Ten adds would take coverage 44% → 60%; the long tail is worthless.
+   ⚠️⚠️ **AND EXPANSION FIXES VOLUME, NOT JUDGEMENT: her "blush silk wrap dress" search gained ZERO
+   results from all ten candidate stores.** That query failed because it is hard to ASK FOR, not because
+   shops were missing. **Adding stores will never fix a wording problem.**
+
+### ⚠️⚠️ A KNOWN PRE-EXISTING FAILURE IN `curated.js` — DO NOT PANIC, AND DO NOT DISMISS IT EITHER
+🚨 **`curated` reports 64/1 on the check *"never ruffles" removes the ruffled item*, and it is NOT a
+regression.** ▶ **PROVEN by running the SAME suite in a git worktree at `097585b` — this morning's `main`,
+before a single line of today's work — and getting the IDENTICAL failure.** It also passed 65/0 twice
+earlier the same day, so it is **time- or state-dependent, not code-dependent.**
+✅✅ **AND HER NEVER-WEAR RULE ITSELF IS FINE. Measured three ways on today's code:**
+`filterNeverWear` on the exact item goes **1 → 0** with `neverWear:['ruffles']` · `curatedPicks` with the
+test's own four-item fixture returns x1 **without** the preference and **not** with it · both halves of
+the assertion pass in isolation. **The rule works. The TEST is what is fragile.**
+▶ **THE LIKELY CAUSE, not yet proven: `curated.js` runs many checks in one page, and earlier ones mark
+pieces "seen this week". By the time this check runs the rotation/staleness state has moved**, so whether
+the fixture surfaces at all depends on what ran before it and when.
+🚨🚨 **WHY THIS IS WORTH FIXING PROPERLY AND SOON, RATHER THAN LOOSENING: this test guards the
+never-wear list, which exists because of a box of shift dresses. A test that cries wolf on THAT rule is
+worse than no test, because the next session learns to wave it through.** ▶ **The fix is to give it an
+isolated context/state, NOT to relax the assertion.** ⚠️ **Until then: if this one check fails, verify
+against `097585b` before believing it; if ANY OTHER check in `curated` fails, treat it as real.**
+
+### ✅✅ CLOSED — HOW A NEAR MISS IS SHOWN, AND HER OWN WORDING FOR IT (2026-09-06)
+⭐⭐ **HER SENTENCE, VERBATIM, AND IT BEAT ALL FIVE DRAFTED FOR HER:**
+***"I couldn't find exactly what you asked for. This is the closest I could come up with."***
+▶ **WHY IT IS BETTER, and it generalises: IT STATES THE TRUTH AND STOPS.** The built version tried to
+say what went wrong AND explain the trade-off in one breath and came out as *"keep the fabric, and look
+at other shades of pink and look at another style?"* — two "look at"s, **assembled rather than spoken.**
+⚠️ **DO NOT PARAPHRASE IT INTO SOMETHING BLANDER AND DO NOT RE-ADD A QUESTION TO IT.** The detail
+belongs on the CARDS, where every requirement already carries its own tick or its own honest note.
+
+🚨 **AND THE SHAPE IS DECIDED TOO — SHOW THE CLOSEST, DO NOT ASK FIRST. HER CALL, and it is a
+deliberate REFINEMENT of her own earlier "the woman chooses which requirement to release", not a
+retreat from it.** Her words: *"simplify with the closest thing and just let her know. Simplest answer."*
+▶▶ **THE ARGUMENT THAT MADE IT RIGHT RATHER THAN MERELY SIMPLER: SHOWING DOES NOT TAKE HER CHOICE AWAY;
+ASKING WOULD HAVE DELAYED IT.** Her original worry was that the app must never decide WHICH OF HER WORDS
+MATTERED LEAST. Showing every near miss, each labelled with what it keeps and what it gives up, decides
+nothing — it puts every option in front of her at once. **Asking would have been MORE app-driven: it
+makes her commit to a trade-off before she has seen a single dress.**
+▶ **Three more things landed on that side:** her mum's 2026-07-26 lesson (**content is more discoverable
+than chrome** — a question is chrome, the dresses are content) · **asking costs a SECOND search**, ~15¢
+and another 5-8s, to reach pieces already found and paid for · and a simple line is harder to word badly,
+which is exactly what went wrong with the first attempt.
+⚠️⚠️ **THE ONE THING THAT MUST HOLD, AND IT IS WHAT PRESERVES HER RULE: THE GROUP LABELS.** *"Right
+colour"* over one set, *"Right fabric and style"* over another. **If those are ever dropped or blurred it
+really does become the app choosing for her.** ▶ They appear only when there is more than one group —
+with a single set there is nothing to choose between and a label would be noise.
+
+### 📌 THE STORE-LIST BRIEF (2026-09-06) — ⚠️ **HISTORY. ITS "START HERE" IS CLOSED; KEPT FOR THE BRIEF'S CONTENTS**
+🚨 **DO NOT ACT ON THE HEADING THIS BLOCK USED TO CARRY.** It said *"START HERE NEXT SESSION — THE
+STORE LIST, AND SHE HAS NOT HANDED IT OVER YET"*, and that stopped being true on 2026-09-08: **she
+sent her own roster instead of running the brief through ChatGPT, and the list is now 132 shops.**
+▶ **What is still live below: what `docs/store-scoring-brief.md` CONTAINS (so it never has to be
+rebuilt) and the warning to watch for a FLAT table in anything a model drafts.** ⚠️ **What is DEAD: the
+handoff, the ~200 target, and the "first question next session" — all superseded by her own decision
+and by the rule that a shop needs only a NAME to be findable.**
+▶▶ **THE FILE IS WRITTEN AND COMMITTED: `docs/store-scoring-brief.md`.** It was sent to her on
+2026-09-06 and **she had not yet given it to ChatGPT when the session ended.** ⚠️ **SO THE FIRST
+QUESTION NEXT SESSION IS SIMPLY: "did you get a chance to run the store brief through ChatGPT?"** —
+not a re-explanation, not a redesign. **The work is waiting on one handoff, nothing else.**
+
+**⭐ HER GOAL, HER WORDS, 2026-09-06: 200 STORES.** ***"I can do 200. I don't want to limit to 15. I want
+the searches to be amazing and able to find users what they want."*** ▶ **So plan for ~200, up from 108.
+Do NOT re-propose a small batch — she was offered fifteen and explicitly rejected the ceiling.**
+▶ **HER METHOD, and it is a good one:** ***"I can get chat to help me with that because chat is good at
+searching store inventory fast."*** **She drafts with ChatGPT, Claude checks the rows against her
+existing 108, she corrects. That does NOT break "never invent a store's tags" — a draft she approves is
+not an invention (the Garnet Hill lesson was about inventing SILENTLY).**
+
+**WHAT `docs/store-scoring-brief.md` CONTAINS, so it never has to be rebuilt:** the business-model
+exclusions FIRST (boxes, rentals, fast fashion, **and resale/marketplaces**) · the five fields a store
+needs · the ten scores in exact order with **the pairs explained as pairs** · the polish-ranks-never-
+matches rule · her own 30-label archetype vocabulary · **the measured range and mean of every dimension
+across her 108** so a drafter calibrates instead of guessing · **all 108 stores with her real scores as
+anchors** · and the live affiliate status marked business-planning-only.
+⚠️ **THE FAILURE IT EXISTS TO PREVENT: her ~200-store wishlist from 2026-07-27 was referenced in this
+file for six weeks and was NEVER SAVED ANYWHERE.** It lived in a chat and is gone. **This one is in the
+repo.**
+⚠️ **WHAT TO WATCH IN WHATEVER COMES BACK: a flat table.** ChatGPT will want to score everything a 7,
+and a table where nothing varies cannot rank anything. **Her own 108 use the full 1-10 range on every
+dimension except polish** (4-10, because she already excluded the stores that would score lower).
+▶ **MEASURED PRIORITIES ALREADY APPROVED BY HER: Kohl's (+28, in 8 of 10 test searches) and Zara.**
+Both still need scores. **Walmart is still hers to rule on.**
+
+### ✅✅✅ ANSWERED AND BUILT, 2026-09-07: THE TWO JOBS **ARE** SEPARABLE — HER 200 STORES CAN BE A YES/NO LIST
+▶▶ **THE QUESTION THIS FILE CARRIED AS UNVERIFIED — does a store need her FULL ten scores just to have
+its products allowed through? — WAS MEASURED, NOT REASONED ABOUT, and the answer is NO.** It was checked
+before being offered to her as a plan, exactly as the old entry demanded. **`scratchpad/untagged.js`, 18
+checks**, runs the REAL functions out of `index.html`.
+| The path | An untagged store |
+|---|---|
+| **(A) the finder's allowlist** | ✅ **passes on a NAME + SEARCH URL alone** — `find-products.js` never reads her ten scores at all |
+| **Gate 2, the feed shelf** | ✅ **passes** — it already guarded itself and keeps the garment |
+| **(B) the chat's store ranking** | 🚨 **CRASHED** — and that is now fixed |
+🚨🚨 **THE CHECK FOUND A LIVE LATENT CRASH, AND IT IS THE SAME SHAPE AS EVERY BUG IN THIS FILE.**
+`_rankedStores` mapped EVERY key through `_storeFit`, which reads all ten dimensions off `d` with no
+guard. **One untagged store in the `STORES` table and every shopping prompt threw** — `_shopRules`,
+the chat, Shop your Style, the lot, with no `try` anywhere above it. ▶ **This file already warned about
+exactly this family for a RENAME (*"`STORES[key].u` throws, taking the whole page down"*); it was the
+same hole one field over, and nothing was watching it.**
+⭐ **THE FIX IS NOT AN INVENTED SCORE AND NOT A DROP, because both would break a rule of hers.** An
+unscored store **keeps its place at the END of the list and is listed by NAME ONLY.** Ranking it would
+mean making her numbers up (**never invent a store's tags**); dropping it would break **SORT, DO NOT
+TRIM** and quietly hide a shop she had approved. **"We cannot honestly place this one" is the truthful
+position, and the end of the list is already where the stores that go undescribed live.**
+✅ **PROVEN NON-DISRUPTIVE: her 108 tagged stores rank in a BYTE-IDENTICAL order and the prompt store
+list is byte-identical**, asserted against `git show HEAD:index.html` inside the suite itself.
+▶▶ **WHAT THIS MEANS FOR HER EVENING, AND IT IS NOW SAFE TO OFFER: she can approve ~200 shops as a
+plain YES/NO list — a name and a search URL each — and the finder will search all of them.** The deep
+ten-score tagging becomes **OPTIONAL, and only for the shops she wants the stylist to NAME OUT LOUD**,
+because that is the half that feeds `_storeFit`.
+⚠️ **THE ONE THING THAT IS STILL TRUE AND SHE SHOULD HEAR: an untagged store is findable but NOT
+recommendable.** It can never be ranked toward a woman it suits, and the chat will not describe it. **So
+the ten scores are not busywork — they are what makes a shop RECOMMENDED rather than merely reachable.**
+▶ **Her measured priorities are unchanged: Kohl's (+28, in 8 of 10 test searches) and Zara** — and both
+could go in as yes/no rows today and be scored later, in that order.
+
+### ▶ WHAT SHE NEEDS TO DECIDE / WHAT HAPPENS NEXT — every one of these is still open
+1. ✅✅ **HER TWELVE SLIDER POSITIONS — RECORDED 2026-09-08, THE ASK IS CLOSED.** She sent her Style
+   Signature screenshot. **Read off the pixels, not estimated:** the track spans x=368..1040 on the
+   retina screenshot and **every one of the twelve knobs lands within 0.025 of a whole slider stop**,
+   which is what proves the scale is right rather than merely plausible.
+   ```
+   answers = [8, 7, 6, 9, 7, 6, 7, 7, 8, 10, 7, 9]
+   ```
+   | # | Slider | Her value |
+   |---|---|---|
+   | 0 | Style direction · Classic→Trendy | **8** leaning trendy |
+   | 1 | Overall vibe · Natural→Glam | **7** slightly glam |
+   | 2 | Style flavor · Preppy→Edgy | **6** a mix of both |
+   | 3 | Outfit complexity · Simple→Detailed | **9** mostly detailed |
+   | 4 | Dress level · Casual→Dressy | **7** slightly dressy |
+   | 5 | Lifestyle · Sporty→Professional | **6** a blend of both |
+   | 6 | Color preference · Neutral→Colorful | **7** slightly colorful |
+   | 7 | Pattern preference · Solids→Prints | **7** slightly print-forward |
+   | 8 | Fit preference · Relaxed→Fitted | **8** leaning fitted |
+   | 9 | Style priority · Comfort→Style | **10** very style-driven |
+   | 10 | Modesty level · Modest→Alluring | **7** slightly alluring |
+   | 11 | Presence · Understated→Statement | **9** strong presence |
+   ▶ **Her derived matching profile, through the app's own formulas** (`_herDims()`):
+   **alluring 6.40 · trendy 0.70 · dressy 0.60 · fitted 0.70 · color 0.60.**
+   ⭐ **THIS IS THE PROFILE TO MEASURE GATE 2 AND ANY STORE RANKING AGAINST FROM NOW ON.** The five
+   profiles used in the 2026-09-07 Gate 2 measurement were Claude's approximations; **these are hers.**
+   ⚠️ **NEVER ARCHIVE THIS.** It is a fact she supplied, not a build that happened — and it was asked
+   for twice before because nobody wrote it down. **Re-ask only if she says she has retaken the quiz.**
+2. ⚠️ **STILL TRUE AND FIXED BY NO CODE: the prices.** Every fed store is `$$$`/`$$$$`. Live medians:
+   **dresses $398 · tops $260 · shoes $790 · bags $1,490**; 0 of 200 dresses under $100. **No filter
+   makes Mytheresa affordable — only an affordable or mid-market affiliate does.**
+   🚨 **AND NOT UNDER ARMOUR — HER CORRECTION, 2026-09-08, MEASURED AND UPHELD.** *"That is only sporty
+   workout clothes."* It reaches ~13 of her 100 rows and none of the 75 that hurt. **All three pending
+   AWIN applications are activewear, jewellery and eveningwear, so none of them moves this.** The fix is
+   a mid-market GENERALIST or a department store — which is what declined her, for traffic. **The answer
+   is users.**
+3. ▶ **THE TAXONOMY GAPS THAT ARE HERS TO DECIDE, none invented:** mini skirts · jumpsuits/rompers ·
+   gloves · clogs · wellingtons · bags named only "Bag". **Plus four defaults set for her and confessed:**
+   a plain "Sandal" → Flat sandals · a plain "Boot" → Ankle boots · a plain "Hat" → Sun hats · a plain
+   "Skirt" → Flowy skirt. **And two rows that are honestly EMPTY:** `ac11` Matching athletic sets and
+   `sl2` Nightgowns.
+4. ⚠️ **THE FEED STILL CARRIES NO WIDTH DATA AT ALL**, so fed shoes cannot be ranked for width. Shoe
+   width is built and tested on her 107; that is a question for a future merchant's feed, not code.
+5. ▶ **THE STORE-TAGGING HELPER IS BUILT: `scripts/store-draft.js`** (16 checks, `scratchpad/storedraft.js`).
+   `node scripts/store-draft.js --list`, then `node scripts/store-draft.js "New Store" --like "A,B,C"`.
+   ⚠️ **It DRAFTS, it never writes.** ▶ **THE STANDING PROPOSAL, her words 2026-09-07:** *"I want to be
+   able to get approved for more affiliates and be able to add them without having to go through all."*
+   🚨🚨 **CORRECTED 2026-09-08 BY DOING IT: ADDING A RAKUTEN MERCHANT IS *SIX* EDITS, NOT FOUR.** This
+   file said four for weeks and it was wrong — **and the two it missed are the two that fail SILENTLY**,
+   which is why nobody noticed. The full list, in the order they were found wiring COUTR:
+   **(1)** the `STORES` entry, `index.html` — **the only one that needs her** ·
+   **(2)** `_AFF_MID`, `index.html` — the domain → MID map, or nothing earns ·
+   **(3)** `MID_TO_STORE`, `scripts/rakuten_feed.py` ·
+   **(4)** `BUILD_MIDS`, same file, or the nightly feed never ingests it ·
+   **(5)** ⚠️ **`netlify/functions/lib/store-domains.js` — GENERATED, run `node
+   scripts/build-store-domains.js`.** This is the **product finder's** allowlist. Miss it and the finder
+   simply cannot see inside the shop she was just approved for ·
+   **(6)** ⚠️ **`SEARCH_DOMAINS` in `netlify/functions/style-ai.js`** — the **stylist's** allowlist.
+   Miss it and the chat cannot search it either.
+   ▶▶ **BOTH MISSES WERE CAUGHT BY DERIVED TESTS AND BY NOTHING ELSE** (`searchtune`'s "every store in
+   the table also reaches SEARCH_DOMAINS", and `findprod`'s generated-file sync check). **On screen
+   everything would have looked perfectly normal — a shop in her table that quietly could not be
+   searched.** That is the same shape as every bug in this file.
+   ▶ **`node scripts/build-store-domains.js --check` fails if (5) is stale. Run it.**
+   **Draft all twelve from stores she already scored, show the neighbours, she corrects.**
+   ⚠️ **This does NOT break "never invent a store's tags" — the Garnet Hill lesson was about inventing
+   SILENTLY. A draft she approves is not an invention.**
+6. ✅ **VILEBREQUIN STAYS — HER DECISION, 2026-09-08.** Her words: ***"I think it is fine to keep
+   Vilebrequin. It should not come often but since they approved us I think it is fine to keep them in
+   our mix."*** ▶ **So this is settled and is NOT to be reopened as a bug.** Its feed is majority
+   menswear (301 Male / 156 Female / 70 Unisex; 529 rows in, **188 kept**), and the womenswear guard now
+   holds on both the column and the name. ⚠️ **"It should not come often" is already how the shelf
+   behaves** — the feed ceiling caps the feed at a third of any row and `_storeCap('compare')` allows
+   ONE card per store — **so nothing further is needed, and nothing should be added to suppress it.**
+7. ⚠️ **SHOPBOP AND BLOOMINGDALE'S ARE STILL BEING SHOWN AS STORES, AND BOTH REJECTED HER.** Those taps
+   earn **$0** today. ▶ **NOT A BUG — commission data stays OUT of the app on purpose** so picks are
+   never biased by what pays best (standing rule, 2026-07-27). Recorded so nobody "fixes" it, and so she
+   knows what she is looking at.
+
+### ⚠️ THE CLONE QUIRK, IT WILL HAPPEN AGAIN
+**The session's LOCAL `main` is a stale checkout with unrelated history**, so `git checkout main && git
+merge` fails with *"refusing to merge unrelated histories."* ▶ **Nothing is wrong with the repo.** Never
+touch local `main`: verify `git merge-base --is-ancestor origin/main <branch>` then
+`git push origin <branch>:main`. **Check `origin/main`, never local `main`.**
+
