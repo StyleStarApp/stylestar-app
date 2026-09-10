@@ -335,6 +335,10 @@ ON THE SERVED FILE.** In the order they matter:
 7. **AN OCCASION IS TRANSLATED, NOT SEARCHED** — "vacation dress" now works, and every one of the app's
    nine suggested prompts is something it can actually do.
 8. **THE SEARCH CEILING IS 9s**, chosen from real successes (6.6 · 6.9 · 8.7).
+🚨🚨 **READ POINTS 1-2 TOGETHER WITH THE SERPAPI BLOCK BELOW, OR THIS LIST READS AS "SEARCH WORKS" AND
+IT DOES NOT.** ▶ **Re-measured 3/3 at the end of the day: HER FEED HALF IS ALIVE AND GOOGLE'S HALF IS
+DEAD** (`googleFailed: true`, pinned on the ceiling, unbilled). **Everything above is true; what is
+delivering it is her own three luxury shops, not the 132.**
 
 ### ▶▶ WHAT IS WAITING ON HER — IN HER OWN PRIORITY ORDER
 1. ⭐⭐⭐ **APPLY TO THE AFFILIATE PROGRAMMES.** ⚠️ **CJ IS FREE AND STILL NOT DONE — it has been item 2
@@ -382,7 +386,40 @@ measurement.**
 please simplify... I do not want to complicate this."* **HONOUR BOTH.**
 
 
-### 🚨🚨🚨 SERPAPI — LIVE OPERATIONAL STATUS, AND A CLAIM THAT WAS OVERSTATED AND IS CORRECTED HERE
+### 🚨🚨🚨 SERPAPI — LIVE OPERATIONAL STATUS. **RE-MEASURED 2026-09-10 (LATEST): GOOGLE IS STILL DEAD, AND HER OWN FEED IS THE ONLY REASON THE APP STILL SHOWS CLOTHES.**
+🚨🚨 **THE CURRENT TRUTH, MEASURED THREE TIMES AGAINST HER LIVE FUNCTION AND IT REPEATED 3/3 —
+`{"item":"dress"}`, `{"item":"dress","cut":"belted"}` and `{"item":"white jeans"}`:**
+· **`googleFailed: true` on every one.** · **`ms.search` pinned at 9003 · 9004 · 9006ms**, which is the
+app's own 9-second ceiling to the millisecond. · **`searchesLeft` 697 → 697 → 697 across all three, so
+NOT ONE was billed.** ▶ **Same signature as the 12s failures: HUNG, not slow, dying before SerpApi
+meters it.** ⚠️ **The ceiling moved 12s → 9s and the failure simply moved with it. THAT IS THE PROOF
+THE CEILING IS NOT THE PROBLEM — do not touch it again.**
+✅✅ **BUT A WOMAN NO LONGER SEES AN EMPTY SCREEN, AND THIS IS THE PART THAT CHANGED: 24 real dresses
+came back on both dress searches, 9 on white jeans — ALL of them from HER OWN NIGHTLY FEED**
+(`feedWhy: ok`; COUTR 15 · Mytheresa 8 · Marissa Collections 1). ▶▶ **THE 2026-09-10 FEED FIX IS NOW
+LOAD-BEARING IN A WAY NOBODY PLANNED. It was built for PRESENCE — so her small luxury shops would
+appear at all — and it is currently carrying the entire product experience on its own.**
+⚠️⚠️ **AND THE HONEST COST OF THAT, SAY IT PLAINLY: THE FEED IS HER THREE LUXURY SHOPS.** Sample price
+on the first card: **$625**. ▶ **So while Google is down, every product Style Star can show is
+`$$$`/`$$$$` — the affordability problem at its very worst, because the half of the search that reaches
+all 132 shops is the half that is dead.** 🚨 **`exact: 0` and `verified: 0` on all three: no card can
+wear a tick either, because a look-up needs the search half.**
+▶ **`?budget=1` answers in 1.6s and reports 697 left** (was 725 when the failure was first recorded),
+**so 28 searches HAVE been billed since — the account and the key are fine, and something is reaching
+Google successfully some of the time.** ⚠️ **NOT PROVEN: whether those 28 were hers, a woman's, or
+retries. Do not read it as "it works intermittently for users" without measuring again.**
+▶▶ **WHAT IS ACTUALLY WORTH DOING, IN ORDER, AND IT HAS NOT CHANGED: (a) ASK HER TO CHECK HER SERPAPI
+DASHBOARD AND THEIR STATUS PAGE — she owns the account and this file cannot see it · (b) if it
+persists, this is the argument for SearchApi, same $25 and ~10× the searches · (c) nothing in the app
+needs changing: it fails fast, tells the truth, and now falls back to her own shops.**
+⚠️ **ONE THING CHECKED AND CLEARED SO NOBODY CHASES IT: `priceValue` parses correctly ($625 → 625). An
+earlier reading of "62" was a truncated console print, not a bug.** ▶ **A finding that survives one
+look is not a finding.**
+▶ **⚠️ A CURL TEST OF THIS FUNCTION NEEDS `-H "Origin: https://stylestar.app"` or `isAllowed` returns
+`403 {"error":"Not allowed"}`.** **That 403 is the guard working, NOT a broken function** — worth
+knowing before the next session reads it as an outage.
+
+🚨 *THE ORIGINAL 2026-09-10 ENTRY, KEPT BECAUSE ITS REASONING STILL HOLDS:*
 ▶▶ **EVERY PRODUCT SEARCH IS FAILING. Measured seven times against her live function: `search-failed`,
 pinned at 12001–12021ms, which is the app's own 12-second ceiling.** ▶ **So a woman opening Shop your
 Style or asking the chat for products sees NO PHOTOGRAPHS. The app's honest sentence now says so.**
