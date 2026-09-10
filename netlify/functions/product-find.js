@@ -155,16 +155,31 @@ const CLEAN = /^[a-z0-9][a-z0-9 '\-/.]{0,39}$/i;
    ⚠️ IT FAILS OPEN. Supabase down, slow or misconfigured leaves the row exactly
      as it is today — Google's results — rather than taking the feature down. */
 const FEED_COLS = 'retailer,brand,name,url,image_url,price';
+/* ⚠️ WHY THE FEED CAME BACK EMPTY, IN ONE WORD, ON EVERY RESPONSE. It returned
+   ZERO on its first live run and there was no way to tell a missing key from a
+   dead query from an honest no-match without a deploy per guess. Same reasoning
+   as the debug panel: the number that answers it was already known and simply
+   never said. Costs a handful of bytes. */
+let FEED_WHY = '', FEED_WORDS = '';
 async function feedBrowse(request) {
-  const URL0 = process.env.SUPABASE_URL, KEY0 = process.env.SUPABASE_KEY;
-  if (!URL0 || !KEY0) return [];
+  const URL0 = process.env.SUPABASE_URL;
+  /* 🚨 THE SAME FALLBACK product-search.js HAS USED SINCE IT WAS WRITTEN, and
+     leaving it out is what made the first live run return nothing: this site
+     may carry SUPABASE_SERVICE_KEY rather than SUPABASE_KEY, and a function
+     reading only one of the two gets undefined and fails silently.
+     ▶ Two functions reading the same table must read the same env, or one of
+       them is quietly broken on a setting nobody remembers making. */
+  const KEY0 = process.env.SUPABASE_KEY || process.env.SUPABASE_SERVICE_KEY;
+  FEED_WHY = '';
+  if (!URL0 || !KEY0) { FEED_WHY = 'no-key'; return []; }
   /* The words she actually asked for. Size and width are deliberately absent,
      the same reasoning as the search words: they are not in retailer names. */
   const words = [...new Set([request.item, request.cut, request.colour, request.fabric]
     .filter(Boolean).join(' ').toLowerCase()
     .replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/)
     .filter(w => w.length > 2 && !/^(women|womens|the|and|for|with)$/.test(w)))];
-  if (!words.length) return [];
+  if (!words.length) { FEED_WHY = 'no-words'; return []; }
+  FEED_WORDS = words.join(' ');
   const qs = new URLSearchParams();
   qs.set('select', FEED_COLS);
   qs.set('in_stock', 'is.true');
@@ -180,8 +195,13 @@ async function feedBrowse(request) {
     const r = await fetch(URL0 + '/rest/v1/product_cards?' + qs, {
       headers: {apikey: KEY0, Authorization: 'Bearer ' + KEY0}, signal: ctl.signal});
     clearTimeout(t);
-    if (!r.ok) { console.error('[product-find] feed ' + r.status); return []; }
+    if (!r.ok) {
+      FEED_WHY = 'http-' + r.status;
+      console.error('[product-find] feed ' + r.status + ' ' + (await r.text()).slice(0, 200));
+      return [];
+    }
     const rows = await r.json();
+    FEED_WHY = (Array.isArray(rows) && rows.length) ? 'ok' : 'no-match';
     return (Array.isArray(rows) ? rows : [])
       .filter(x => x && x.name && x.url && x.retailer)
       .map(x => ({
@@ -204,7 +224,11 @@ async function feedBrowse(request) {
         url: x.url,
         name: x.name, search: x.name,
       }));
-  } catch (e) { console.error('[product-find] feed ' + (e && e.message)); return []; }
+  } catch (e) {
+    FEED_WHY = 'threw';
+    console.error('[product-find] feed ' + (e && e.message));
+    return [];
+  }
 }
 function cleanReq(body) {
   const out = {};
@@ -814,7 +838,8 @@ export default async (req) => {
       seenTitles.add(k); return true;
     });
 
-    const payload = {exact, doors, browse: [...feed, ...browse], feed: feed.length,
+    const payload = {exact, doors, browse: [...feed, ...browse],
+      feed: feed.length, feedWhy: FEED_WHY, feedWords: FEED_WORDS,
       request, searched: queries.length, verified: verified.length,
       // ⏱ ms spent in each half. Cheap, and it is what turned 'the finder is
       //   slow' into 'the SEARCH is slow and the look-ups are fine', which are
