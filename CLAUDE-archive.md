@@ -20776,3 +20776,689 @@ delivering it is her own three luxury shops, not the 132.**
 4. ▶ **A SHARED remembered cache.** Today's remembering is per-browser. ⚠️ **A shared one must go
    somewhere SERVER-ONLY (Netlify Blobs) — NEVER through the publishable key. See the ledger row.**
 
+
+
+# ARCHIVED 2026-09-11 (second session) — the 2026-09-11 "WHERE WE LEFT OFF" entry, verbatim
+Moved out of `CLAUDE.md` at the start of the next session, per the file's own archiving rule: the previous session's entry moves to the archive in the same commit as the new one. Nothing below was deleted; every rule, live-status figure and open thread it held was lifted into the new compact "WHERE WE LEFT OFF" block and the permanent sections (the Master To-Do List, the Archiving Rule, the Rule Ledger) before this moved.
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-11. HER TWO SHAREABLE PAGES ARE FINISHED AND INDEXED. READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is detail, and much of it is HISTORY — if a
+line further down contradicts this one, THIS ONE WINS.**
+📁 **The 2026-09-10 entry moved to `CLAUDE-archive.md` in the same commit, VERBATIM, under "ARCHIVED
+2026-09-11". NOTHING WAS DELETED, and every rule it held was lifted out first.**
+
+### ✅ WHAT LANDED TODAY — ALL LIVE, ALL VERIFIED ON THE SERVED FILE
+🚨 **THE DAY RAN LONG AND THE SECOND HALF IS ALL HERS. Two pages and a queue are now in the shape she wants.**
+1. 🛒 **AMAZON FINDS IS 44 PIECES IN 8 CATEGORIES — `stylestar.app/finds`.** It began the day at 4.
+   **Her order, her category names, her copy.** Categories: *Sunglasses & Sunny Things · In My Kit · Bags ·
+   Easy Pieces · Shoes · Wraps & Layers · Jewelry & Other Accessories · Fitness & Active Things.*
+   ⚠️ **THE CATEGORY NAMES ARE HERS AND CLAUDE MAY NEVER INVENT ONE** — same rule as never picking her
+   products. **The column waits for her.**
+2. ✂️ **THE STYLE STAR EDIT IS 30** (from 33): she removed the **J. Reneé Soncino sandal** (found it on
+   Amazon and would rather sell it there), the **Felina bra**, and the **Good American jeans**.
+   ▶ **The Soncino is back on `/finds` at $129.95 in her new Shoes category.**
+3. ⭐ **STAR OF THE WEEK IS A 15-WEEK QUEUE RUNNING TO 13 DECEMBER** — was 9 weeks and looping in
+   November. **See its own section below; the schedule is written out there.**
+4. 📏 **THE CATEGORY HEADINGS WERE THE SMALLEST TEXT ON THE PAGE AND SHE CAUGHT IT** — 11.5px against a
+   20px product name. **Now 16px with real air around it. Her catch, a measured hierarchy inversion.**
+5. 💲 **TWO COPY RULES SHE GAVE, NOW STANDING:** *"1. No dashes in app copy unless grammatically needed.
+   2. No colors in product titles."* ▶ **And two conventions settled at her ask: A PACK GOES IN THE NAME**
+   (`Ponytail Cuff, 4 Pack`), **A BRAND GOES IN THE STORE COLUMN** (`CRZ YOGA · Amazon`, `PRETTYGARDEN ·
+   Amazon`). **Both were measured — 3 of 4 pieces already did it that way — not chosen by taste.**
+
+### ▶▶ WHAT IS WAITING ON HER — HER OWN PRIORITY ORDER
+1. ⏳ **THE OCT 1 CLOCK — THE ONLY DEADLINE ON HER WHOLE BOARD, ~3 WEEKS OUT.** Do NOT pay the Your
+   Fashion Friend renewal; close the Orange County receipt **by email (`btpc@octaxcol.com`) or mail,
+   NOT in person**; call **407-246-2204** about applying for Style Star's own receipt before or after
+   Oct 1 so she does not pay twice.
+2. ⭐⭐⭐ **APPLY TO THE AFFILIATE PROGRAMMES. CJ IS FREE AND STILL NOT DONE** — weeks on the board.
+   ▶ **41 of her shops publish their full catalogue publicly** — Everlane · Boden · Tuckernuck ·
+   Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American · Veronica Beard.
+3. 💅 **THE DVF FLAG SCARF — ONE SMALL DECISION, HERS.** She parked it 2026-08-26 (*"the scarf was last
+   week, I don't want it to come back up as Star of the Week again"*) — **a TIMING call, not a verdict on
+   the piece.** It still holds its licensed photo. ▶ **Three weeks on, ask whether it goes back in.**
+4. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** Still unasked, still the most valuable
+   information this project can get.
+5. ⭐ **MORE PIECES — she is on a roll and the machinery now makes it cheap.** Her curation is the moat.
+6. ⏸️ **THE FITTING-ROOM CONVERSATION.** Parked by her, thinking kept. **Ask what it MEANS to her.**
+
+### ▶▶ WHAT IS OPEN FOR CLAUDE
+1. 🚨 **"COULDN'T LOAD OPTIONS RIGHT NOW"** — she photographed it. **The stylist call failing, not the
+   search.** ▶ **Two of three known causes were RULED OUT 2026-09-10; the remaining suspect is the
+   32KB prompt cap, measured at 104 characters of headroom — "not a margin, a coin toss".**
+   **MEASURE IT BEFORE CLAIMING IT.**
+2. 💰 **A PRICE FILTER.** A find request carries item · colour · fabric · cut · size · width and **NO
+   price field at all**. ▶ **When it is built, put `Try: tops under $100` and `Try: white jeans under
+   $150` back verbatim.**
+3. ⭐ **HER STYLE PROFILE STILL NEVER REACHES THE FINDER** (board row 11, her *"many of them were
+   shapeless"*). **HERS to green-light, and she asked for one thing at a time.**
+4. ▶ **READ HER ANALYTICS.** `track()` exists and nobody has ever looked. ⭐ **It is the thing that
+   answers "should I start the Amazon 180-day clock" — a small, unblocked job that turns a guess into
+   a decision.**
+5. ▶ **A SHARED remembered cache.** Today's remembering is per-browser. ⚠️ **A shared one must go
+   somewhere SERVER-ONLY (Netlify Blobs) — NEVER through the publishable key. See the ledger row.**
+
+### ⭐⭐ THE PATTERN THIS DAY EARNED, AND IT IS THE MOST USEFUL THING IN THIS BLOCK
+🚨 **FOUR TIMES SHE PUSHED BACK ON A RECOMMENDATION AND WAS RIGHT, AND EACH TIME HER REASON WAS SIMPLER
+THAN THE ARGUMENT AGAINST IT:** the hourly alarm that fixes nothing for her users (*"What does the alarm
+actually do to fix the app for my users?"*) · showing her own shops first, which would have read as
+luxury-only · *"do we need to rebuild from scratch?"* · and translating an occasion, which Claude had
+refused an hour earlier until she said *"Vacation dress is one of the example prompts we give."*
+▶▶ **WHEN SHE PUSHES BACK, THE HONEST FIRST MOVE IS TO LOOK FOR WHAT SHE HAS SEEN AND CLAUDE HAS NOT —
+NOT TO EXPLAIN THE RECOMMENDATION AGAIN.**
+⚠️ **AND SHE ASKED THREE TIMES IN ONE DAY WHETHER SHE WAS BEING UNCLEAR. THE ANSWER IS NO, AND THIS FILE
+ANSWERED THE SAME QUESTION ON 2026-09-06 IN THE SAME WORDS.** ▶ **Her brief, agreed with her: *a woman
+says what she is looking for, and Style Star shows her real clothes she would actually wear, from good
+shops, fast, and never claims anything it has not checked.*** **Say it once, firmly, then show her the
+measurement.**
+⚠️ **SHE ALSO ASKED FOR FEWER WORDS AND ONE THING AT A TIME:** *"You said so many words here. Can you
+please simplify... I do not want to complicate this."* **HONOUR BOTH.**
+🚨🚨 **HER STANDING DIRECTION, 2026-09-10, AND IT IS AN INSTRUCTION ABOUT CLAUDE'S JOB, NOT ABOUT THE
+APP: NEVER ASK HER TO MAKE A GIT DECISION.** ▶▶ **HER WORDS: *"Why are you asking me about putting
+something on main? I don't even know what that means. I count on you to decide what needs to be saved
+or archived or put on main or the branch and all of that. I need you to keep track of everything and be
+honest with me."*** ⚠️ **She was asked "want them on `main`?" — a question she has no way to answer and
+should never have been handed.** ▶ **BRANCH, COMMIT, ARCHIVE, MERGE TO `main` — ALL OF IT IS CLAUDE'S
+TO DECIDE AND DO, THEN REPORT IN ONE PLAIN LINE** ("saved and live"). **Notes and fixes go to `main`
+without asking.** ⭐ **The ONLY thing that still goes to her is a PRODUCT decision — what the app should
+do, what a woman sees, what her words mean. Never the plumbing.** ⚠️ **AND THE SECOND HALF OF HER
+SENTENCE IS THE LOAD-BEARING ONE: *"keep track of everything and be honest with me."* Deciding for her
+is not permission to be vague about what was decided — say what was saved and where, in one line.**
+
+
+### 🚨🚨🚨 SERPAPI — LIVE OPERATIONAL STATUS. **RE-MEASURED 2026-09-11: STILL THEIR OUTAGE, NOW PARTIAL — 1 SEARCH IN 6 GETS THROUGH.**
+▶ **HER REPORT, 2026-09-11 MORNING, AND IT IS ACCURATE:** *"I checked on shop your style and wardrobe
+list shopping searches this morning and the only thing coming up is from our approved affiliates and
+nothing from the SerpApi searches."*
+✅ **MEASURED AGAINST HER LIVE FUNCTION, SIX SEARCHES: FIVE HUNG, ONE SUCCEEDED.**
+· The five failures pinned at **9019 · 9004 · 9025 · 9002 · 9004 ms** — the app's own 9-second ceiling
+to the millisecond. **HUNG, not slow, and NOT BILLED.**
+· The one success (`{"item":"top","colour":"white"}`) returned a **real verified Target t-shirt at
+$8.00**, `verified: 2`, colour and stock both CONFIRMED. ▶▶ **So Google's half is not dead any more —
+it is INTERMITTENT, which is exactly what SerpApi's own words predicted:** *"a partial mitigation that
+is currently restoring a portion of traffic."*
+· **Her feed carried 11–24 browse cards on EVERY one**, including all five failures (`feedWhy: ok`), so
+a woman never saw an empty screen. **The 2026-09-10 feed fix is still carrying the experience.**
+· **`searchesLeft` 697 → 694 in 24 hours.** ⚠️ **THREE searches billed in a whole day** — consistent
+with almost nothing getting through, and a reminder that the budget is nowhere near the problem.
+🚨 **THE INCIDENT IS STILL OPEN AND HAS NOT BEEN UPDATED SINCE 2026-09-10T18:55 UTC.** *"Service outage
+9/10"*, status `identified`, impact `critical`, **Shopping API among its components**; overall
+`Partial System Outage`, `Google: major_outage`, `Shopping API: major_outage`.
+▶ **SO EVERY CONCLUSION FROM 2026-09-10 STILL HOLDS: not her budget, not her key, not the ceiling, not
+our code. NOTHING TO FIX AND NOTHING TO BUY.**
+⚠️ **AND STILL DO NOT RAISE THE CEILING.** Five failures pinned to the millisecond on it is the
+signature of a request that is HUNG; a bigger ceiling only makes a woman wait longer for the same
+honest sentence.
+💰 **ONE PRODUCT DECISION THIS RAISES, AND IT IS HERS — A SINGLE RETRY ON A HUNG SEARCH.** Because a
+hung call is **never billed** (measured: `searchesLeft` did not move across five failures), retrying
+once costs **no money at all** — only TIME. ▶ **One in six becomes roughly one in three.** ⚠️ **THE
+PRICE IS A WOMAN WAITING ~18s INSTEAD OF ~9s FOR THE SAME HONEST SENTENCE WHEN BOTH ROLLS FAIL.**
+🚨 **DO NOT BUILD IT WITHOUT HER.** It trades her user's patience for a chance at photographs, which is
+exactly the class of call this file reserves for her. **And it is only worth raising while the outage
+is PARTIAL — once Google's half is healthy, a retry is pure cost.** ▶ **Re-check before offering it:
+if `googleFailed` is false, this row is spent.**
+
+🚨🚨 **FOUR THINGS LIFTED OUT OF THE 2026-09-10 NARRATIVE BEFORE IT WAS ARCHIVED, BECAUSE EACH LIVED
+NOWHERE ELSE IN THIS FILE.** *(The narrative itself is in `CLAUDE-archive.md` under "ARCHIVED
+2026-09-11"; nothing was deleted.)*
+**(a) 🚨 DO NOT SWITCH TO SEARCHAPI OVER AN OUTAGE, AND THE ADVICE TO CONSIDER IT WAS WRONG WHEN GIVEN.**
+The cause is Google changing something, **so it hits every provider that reads Google — SearchApi
+included. A second $25 would have fixed NOTHING.** ⚠️ **Her pushback is what stopped it: *"We already
+have SerpApi. What are you talking about???"*** ▶ **The runner-up argument still stands for PRICE and
+VOLUME. It does not stand for an outage.**
+**(b) 🚨 HER ACCOUNT PAGE CANNOT SHOW AN OUTAGE, AND SHE WILL BE RIGHT TO SAY SO AGAIN.** Her question:
+*"I am looking at my SerpApi account and I see nothing about an outage??"* — `serpapi.com` shows HER
+things (plan, usage, searches left) and all of those are genuinely healthy. **Incidents live on
+`status.serpapi.com`, a SEPARATE Statuspage site.** ⚠️ **NEVER send her to her dashboard to check for
+one.**
+**(c) ⚠️ READ THE RAW JSON API, NOT THE STATUS-PAGE HTML** — `status.json` · `summary.json` ·
+`incidents/unresolved.json`. **A summarised fetch of the human page once returned no incident data at
+all and the claim was told to her anyway.** ▶ `curl -s https://status.serpapi.com/api/v2/summary.json`
+**(d) ⚠️ A CURL TEST OF `product-find` NEEDS `-H "Origin: https://stylestar.app"`** or `isAllowed`
+returns `403 {"error":"Not allowed"}`. **That 403 is the guard working, NOT a broken function** — worth
+knowing before the next session reads it as an outage.
+▶ **THE RE-CHECK, ONE COMMAND, NO SEARCHES SPENT:**
+`curl -s -H "Origin: https://stylestar.app" -X POST -d '{"item":"dress"}' -H "Content-Type: application/json" https://stylestar.app/.netlify/functions/product-find`
+▶ **`googleFailed: false` and a non-zero `verified` means Google's half is back.**
+📁 *The full 2026-09-10 diagnosis — how every theory was closed, and the network theory that was wrong —
+is in `CLAUDE-archive.md`.*
+### ✅ SHIPPED AND VERIFIED LIVE
+`c438982` → `e9f9957` → **`f27f81a`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILE AND FINDING THE MARKERS
+(`_saveShopFind`, `_ssFindPaint`, `_ssFindData`, then `THESE FIELDS ARE THE SEARCH`), never by the
+deploy badge.** Standing rule; it held twice.
+
+### ▶ TEST STATE — MEASURED 2026-09-11
+✅ **RE-MEASURED AT THE END OF 2026-09-11: `findspage` **101** · `findscsv` **50** · `editshare` **30** · `affq` **42** · `linkwatch` **27** · `copy` **50** · `starpx` **28**. Zero failures.**
+⚠️⚠️ **`curated` REPORTS 3 FAILURES AND THEY ARE PRE-EXISTING — PROVEN, NOT ASSUMED.** The same suite run in a worktree at `origin/main` gives the IDENTICAL six problems: `Madewell`, `COS` and `Marine Layer` are named in the frozen catalog CSV but are no longer keys in `STORES`. ▶ **These are her six DEACTIVATED catalog picks** (`p001` `p015` `p057` `p064` `p089` `p104`) — the shops closed, she froze the catalog on purpose, and this file already records that a dead link there "dies quietly." **So the test is crying wolf over a state she chose.** ⚠️ **THIS IS A SECOND, SEPARATE PRE-EXISTING `curated` FAILURE from the known "never ruffles" flake — do not confuse them, and do not wave either through.** ▶ **Worth a small fix (teach the converter that a deactivated row may name a dead store); not urgent; nothing is broken.**
+⚠️ **THE OLD FIGURE HERE SAID `findspage` 47 AND IT WAS STALE** — the suite was already at 86 before a line was added today. ▶ **Re-measure before writing a count down; a number nobody re-runs is the same kind of stale note this file keeps getting caught by.** ⭐ **AND THE FOUR NEW GUARDS WERE PROVEN TO BITE, not merely written:** putting the tan
+tagline back and COPYING an Amazon piece instead of moving it turned `findspage` red on exactly the
+four checks meant to catch each — *"rgb(140, 90, 30) vs rgb(15, 166, 182)"* and *"the Edit is
+otherwise intact → 34"*.
+⚠️ **TWO SUITES WENT RED ON THE MOVE AND BOTH WERE THE GOOD KIND** — the app did not get worse, her
+pieces moved: `linkwatch` *"collected 33 of 35"* (its parser had started filing Finds pieces under the
+Edit) and `affq` *"2 canonical Amazon"* on a screen that now has none. ▶ **Both assertions were
+REWRITTEN TO NAME THE RULE — every curated screen's pieces are watched; every Amazon link anywhere is
+canonical — never to bump a number.** **This file's own standing lesson, applied.**
+
+⚠️ **A DUPLICATE "WHAT IS WAITING ON HER" LIST SAT HERE AND WAS REMOVED 2026-09-11 — it repeated the
+one at the top of this file in slightly different words, with its own numbering bug (1, 3, 4, 5).**
+▶▶ **TWO COPIES OF A LIST IS TWO LISTS TO KEEP CURRENT, AND ONE OF THEM ALWAYS GOES STALE.** This one
+already had: it still named the SHAPELESS and NICER-SHOPS forks as her live choice, and the nicer-shops
+half had been built and shipped on 2026-09-10. ▶ **The single list lives in "WHAT IS WAITING ON HER"
+near the top. Keep it there; do not start a second one.** *(Her still-parked profile/shapeless item is
+board row 11 and is tracked there.)*
+
+
+# ARCHIVED 2026-09-11 (second session) — the STANDING REFERENCE narrative added that day, verbatim
+This is the blow-by-blow build narrative for the Finds page colourway, the Star of the Week schedule build, the CSS cache-bust day, the sitemap `lastmod` Q&A, the Finds page's five design notes, the high/low decision, the pink-link ruling, the closing-block CSS bug, the subtitle period ruling, the Amazon bot-wall finding, the Finds price-rounding decision, the CSV batch importer, the `.dc-sign` anchor trap, Amazon's trademark rules, and the 2026-09-10 earnings measurement. It was added straight into "STANDING REFERENCE" without ever being compacted, which is why the file grew back to ~68,000 tokens. Every standing RULE inside it was rewritten into the compact replacement that now sits in its place in `CLAUDE.md`; read this for the reasoning, the measurements and how each was found.
+
+### ⭐⭐ STAR OF THE WEEK — HOW IT WORKS, AND THE ONE THING THAT WILL BITE THE NEXT SESSION
+🚨 **NONE OF THIS WAS IN THIS FILE BEFORE 2026-09-11. It lived only in code comments, so she had to ask
+what was scheduled — and the answer took reading three functions.** ▶ **A ruling that lives only in code
+is a ruling she will be asked for twice.**
+▶ **THE TWO TABLES, AND THEY ARE NOT THE SAME THING:**
+· **`WEEK_STARS` (34 entries) — the LIBRARY.** Every piece that has ever been a candidate. Being here
+does NOTHING on its own.
+· **`WEEK_STAR_PHOTO_ORDER` (15 names) — the WHITELIST, and the only thing that rotates.** A name here
+plus a photo the licensing gate accepts = it appears. **Everything else is inert.**
+🚨 **HER RULE, GIVEN 2026-09-11: *"star of the week is only for items we have photos of."*** ▶ **And a
+photo is only ours to show when `_affMid()` resolves — an AFFILIATE APPROVAL with that retailer is what
+licenses it, never the fact that the image is fetchable.** ⚠️⚠️ **SO THE STAR CAN ONLY EVER SHOW PIECES
+FROM THE NINE SHOPS THAT APPROVED HER, AND ALL NINE ARE LUXURY. That is why every Star is $45+, and no
+amount of curation changes it.** **19 of the 34 have no photo and can never rotate today.**
+🚨🚨 **THE TRAP, AND IT ALMOST SHIPPED: `WEEK_STAR_PHOTO_ORDER` IS NOT IN PLAY ORDER.** The star is
+`pool[floor(days-since-anchor / 7) mod pool.length]`, so the array is ROTATED relative to what a woman
+sees — **the entries at the TOP are the ones reached LAST, after the wrap.**
+▶▶ **CONSEQUENCE ONE: "append at the end" IS NOT SAFE, however much the list's own history says it is.**
+Appending her seven new pieces put them BEFORE the wrap and shoved the four pieces at indices 0-3 back
+by seven weeks — **her FARM Rio summer maxi would have landed on 13 December.** Caught only by computing
+the whole schedule before and after. **The seven were SPLIT instead, three at the tail and four at the
+head, so every existing date held.**
+▶▶ **CONSEQUENCE TWO: THE LENGTH IS THE MODULUS, so adding or removing ONE piece re-maps every week.**
+⚠️⚠️ **NEVER EDIT THIS LIST WITHOUT RE-RUNNING THE SCHEDULE AND CHECKING IT WEEK BY WEEK.** The anchor
+(`2026-08-09`) is load-bearing and must not be moved; reorder the list instead.
+⭐ **THE INSTRUMENT, AND USE IT RATHER THAN READING THE ARRAY:** open the app in Playwright and call its
+OWN `_weekStar(date)` for each Sunday. **Re-deriving the modulo by hand is how a date gets reported
+wrong.** *(`scratchpad/stars*.mjs` from that session are throwaway; write a fresh one, it is ten lines.)*
+▶ **THE LIVE SCHEDULE AS OF 2026-09-11 — 15 weeks, then it repeats from 20 Dec:**
+| Sun | Piece | Store | Price |
+|---|---|---|---|
+| Sep 6 | Saint Laurent SL M136 Sunglasses | COUTR | $363 |
+| Sep 13 | Vilebrequin Long Mesh Cover-Up Dress | Vilebrequin | $405 |
+| Sep 20 | Veronica Beard Crosbie Jean | Marissa Collections | $248 |
+| Sep 27 | Simkhai Stella Suede Block Heel Sandal | Olivela | $445 |
+| Oct 4 | Isabella Celini Stackable Love Bracelet | Etsy | ~$50 |
+| Oct 11 | Love Hearts Find Me Pendant Necklace | Jane Win · Olivela | $278 |
+| Oct 18 | DVF Jeanne Silk Jersey Wrap Dress | Diane von Furstenberg | $678 |
+| Oct 25 | Valentino Garavani Rockstud Medium Suede Pouch | Mytheresa | $790 |
+| Nov 1 | Gucci GG Canvas Mini Shoulder Bag | Mytheresa | $1,100 |
+| Nov 8 | Simkhai Devon Suede Tote | Olivela | $695 |
+| Nov 15 | Fleur du Mal Sculpt Molded Sports Bra | Fleur du Mal | $98 |
+| Nov 22 | Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace | Olivela | $825 |
+| Nov 29 | Valentino Garavani VLOGO Reversible Belt | Mytheresa | $570 |
+| Dec 6 | Open Heart Necklace | Etsy | ~$45 |
+| Dec 13 | Valentino Square Oversized Sunglasses | Marissa Collections | $465 |
+⚠️ **RE-MEASURE THIS TABLE RATHER THAN TRUSTING IT — it is a snapshot, and every edit to the list moves
+it.** ▶ **It is here so she can be answered in one line instead of three functions.**
+▶ **RETIRED-NOT-DELETED, AND BOTH ARE DELIBERATE:** the **sold-out Serpui bag** (2026-09-08) and the
+**FARM Rio maxi** (2026-09-11, her *"we already used that farm rio dress"* — a TIMING call about one
+dress, not a rule about FARM Rio). **Both keep their `WEEK_STARS` entries because each carries a `pxPos`
+crop that `starpx` uses as a worked example.** ⚠️ **Deleting a row that already renders nowhere only
+throws the lesson away.**
+⚠️ **AND THE STAR QUEUE IS NOT A MIRROR OF THE EDIT.** A piece she removes from the Edit stays in the
+Star library — the bangles did when they moved to `/finds`, and the Soncino and Good American did on
+2026-09-11. **Photo-gated, not Edit-gated.**
+
+### 🎨 THE FINDS PAGE IS THE EDIT IN HER OWN COLOURWAY — HER DESIGN NOTES, 2026-09-11
+▶ **She tested the live page and sent five notes. All are built.** The shared Style Star logo is
+hidden (she asked for it to match the Edit), the page wears the Edit's OWN frame through the same
+`dream-mirror` toggle rather than a copy, the LEFT heart carries `hl` so the pair tilt toward each
+other, and her wording replaced Claude's on both the subtitle and the closing line.
+🚨 **HER COLOUR, AND SHE PICKED IT BY LOOKING AT FOUR RENDERS: THE LIGHTEST TAN, `#ECBD83`** — which
+is **Amazon's own header colour, sampled off her screenshot rather than guessed**. Her clarification,
+and it corrected a reading: ***"I am talking about using the tan as the background color in the same
+placement we have the teal color on edit... I prefer the lightest shade of tan."***
+⚠️⚠️ **WHY A PALE BLEED WORKS HERE, SO NOBODY DARKENS IT: the separation between page and card comes
+from the card's BLACK 8px frame and its silver inset, never from the bleed.** That is why the Edit's
+dark teal and this pale tan both read correctly. **Do not "fix" it by making it deeper.**
+⚠️ **THE TAN IS A BACKGROUND AND MAY NEVER BE TEXT — MEASURED: 1.73:1 on white**, against the 4.5:1 an
+18-to-80 audience needs, and against this file's own contrast rule.
+🚨🚨 **AND THE ACCENT QUESTION IS CLOSED BY HER, 2026-09-11: THERE IS NO TAN ACCENT. ONLY THE BLEED
+DIFFERS.** A tan accent set was built here first — a `#8C5A1E` tagline (5.84:1), a `#C98B3C` rule under
+the heading, a tan shopping bag, a tan invitation at the foot — and **she looked at it and ruled it
+off: *"I think I want HAND SELECTED BY CATHERINE to be in the same teal color as it is written on the
+edit page."*** ▶▶ **SO EVERYTHING INSIDE THE FRAME IS THE EDIT'S, BYTE FOR BYTE**: the teal tagline,
+the gold rule, the teal bag, the teal invitation. **The four `#s-finds` overrides were DELETED, not
+recoloured, so the day she changes the Edit's teal this page follows on its own.** ⚠️ **DO NOT re-add
+a per-page accent "to tie it to the tan" — that is the version she saw and turned down.**
+⭐ **AND HER REASON IS THE SAME ONE THAT RETIRED THE THIRD PAGE: two pages that look like one
+stylist's idea, not a luxury page and a cheap page.** Her own line does the job; a second palette
+would have undone it. ▶ **The test compares the two SCREENS against each other rather than against a
+hex** (`findspage` §6), because *"the same colour as the Edit"* is the rule, not `#0FA6B6`.
+▶ **HER CLOSING LINE UNDERLINES ONLY THE INVITATION:** the sentence reads plainly and *"Click here to
+explore more →"* carries the underline. **Underlining the whole thing turns a stylist's sentence into
+a banner.** ⚠️ **The whole block stays the tap target — her audience runs to 80.**
+✅ **AND RENDERING THE PAIR CAUGHT SOMETHING SHE HAD NOT FLAGGED: the Edit's subtitle and disclosure
+styles were scoped to `#s-dream` ALONE**, so the twin page read in the default sans while the Edit
+read in bold Lora. **EIGHT rules now name BOTH screens.** ▶ **Same lesson as the `px2` stack: one
+rule, both classes, or the same design drifts apart on two screens.**
+🚨🚨 **TWO HARNESS TRAPS PAID FOR THE SAME DAY, AND BOTH GENERALISE:**
+**(a) A RENDER THAT INJECTS CSS OVER THE REAL STYLESHEET IS NOT A RENDER OF THE APP.** The comparison
+script kept `addStyleTag` overrides from the option-picking round and photographed a colour that was
+no longer in any file. **Delete the override before photographing the real thing.**
+**(b) A DEPLOY CHECK THAT GREPS A COLOUR MATCHES ITS OWN COMMENT.** `grep ECBD83` passed instantly
+against the PREVIOUS deploy, because an earlier commit's comment already named that hex. ▶ **Grep the
+RULE — `finds-velvet body{background:#ECBD83}` — never the value alone.** **Same family as `copy`
+printing `✓ 49 passed`: a check that can pass on the wrong thing is not a check.**
+
+### 🚨🚨 A CSS CHANGE CAN REACH A WOMAN'S SCREEN A DAY LATE, AND IT LOOKS EXACTLY LIKE A BROKEN BUILD
+▶ **HER CATCH, 2026-09-11: *"I don't see the tan background or the proper font on 'Every piece…'"*** —
+on the live Finds page, from her own phone.
+✅✅ **NOTHING WAS WRONG WITH THE BUILD, AND THAT IS THE WHOLE LESSON. MEASURED, NOT GUESSED:** the
+served `styles.css` was **byte-identical to the repo**, `html.finds-velvet body{background:#ECBD83}` and
+`#s-dream .dc-subtitle,#s-finds .dc-subtitle{…Lora…}` were both **present in the served file**, and the
+served `index.html` was byte-identical too. ▶▶ **What her screen showed matched the OLD base rule
+`.dc-subtitle{font-size:14px;color:#777;…}` EXACTLY** — her browser was rendering **yesterday's
+stylesheet against today's markup.**
+🚨 **THE FAILURE MODE IS WHY THIS GETS A SECTION: NOTHING ERRORS.** The page loads, every element is
+there, and it is simply wrong — indistinguishable from a deploy that never happened. **She spent a round
+on it and so did the session.**
+⚠️ **IT IS NOT A MISSING HEADER — CHECKED: Netlify already sends `cache-control: public,max-age=0,
+must-revalidate` on `styles.css`, and there is no service worker.** A browser held an in-memory copy
+anyway. ▶▶ **THE ONLY THING NO CACHE CAN ANSWER FOR IS A URL IT HAS NEVER SEEN, SO THE FIX IS THE URL.**
+✅ **BUILT: the link is `/styles.css?v=<first 10 of styles.css's own sha256>`** — `scripts/css-version.js`,
+`--check` and `--write`. ⭐ **THE STAMP IS DERIVED, NEVER TYPED**, which is the difference between this
+and a version number someone has to remember. ▶ **`index.html` itself always revalidates, so a new stamp
+reaches every returning woman on her next load with NOTHING for her to clear** — that is what makes this
+a fix for her users and not just advice to her.
+▶ **RESTAMP AFTER ANY CSS EDIT: `node scripts/css-version.js --write`.** ✅ **`copy.js` fails if the stamp
+is stale** — a stamp nobody checks is exactly the thing that goes stale. **Proven to bite: it failed on
+the unstamped file before `--write` was run.**
+⚠️ **EVERY HARNESS WAS CHECKED FOR THE QUERY STRING and all of them strip it** (`.pathname` or
+`.split('?')[0]`); `starpx` reads the file off disk. **A harness that served by exact path would have
+404'd the stylesheet and measured browser defaults** — the trap this file already records.
+⚠️ **AND A SANDBOX LIMIT WORTH KNOWING: Chromium here CANNOT reach `stylestar.app`** (`ERR_CONNECTION_RESET`
+through the egress proxy), so the live page cannot be rendered and looked at from a session. **`curl` on
+the served file is the instrument** — it is what settled this.
+
+### 🔎 DO WE RESUBMIT TO GOOGLE AND BING EVERY TIME? — HER QUESTION 2026-09-11, ANSWERED FOR GOOD
+▶ **HER WORDS: *"as we add more items to Edit and Finds and update and change the pages so we need to
+resubmit to Google and bing for indexing? Or is that a one time thing?"***
+✅ **THE ANSWER, IN TWO HALVES, AND ONLY ONE OF THEM IS EVER HERS:**
+**(a) REQUESTING INDEXING IS ONE-TIME, PER PAGE.** It means *"you don't know this page exists, come
+look."* Once a page is indexed, both engines re-crawl it on their own. **She never resubmits because she
+changed content, and she should not be asked to.** ⚠️ **The one exception worth offering: a change she
+wants picked up in days rather than weeks — she can nudge it, it costs a minute, it is never required.**
+**(b) `<lastmod>` IS THE FOREVER HALF, AND IT IS CLAUDE'S JOB.** It is **the one sitemap field crawlers
+actually use** — Google ignores `changefreq` and `priority` outright. **A stale `lastmod` is the whole
+difference between her new pieces being fetched next week and being found whenever Google wanders back.**
+🚨 **AND IT HAS GONE STALE BEFORE — found 2026-08-31, the home page and `/faq` still claiming 2026-08-24
+after a week of real edits.** ▶▶ **A DATE SOMEONE MUST REMEMBER TO BUMP IS A DATE THAT GOES STALE**, the
+same failure this repo had just fixed for the stylesheet.
+✅ **BUILT 2026-09-11: `scripts/sitemap-lastmod.js`, `--check` / `--write`.** It hashes the CONTENT of her
+three curation surfaces — `/edit`, `/finds`, `/trending` — and fails when one moved and its date did not.
+**`editshare` runs it.** ⭐ **PROVEN TO BITE: planting one new `.dc-item` failed with `/edit`, and
+`--write` then stamped `/edit` ALONE and left `/trending` on 2026-09-03.**
+⚠️ **THE TRIGGER IS A CONTENT HASH, NEVER A JUDGEMENT** — only text and links count, so restyling a page
+is not a reason to tell a crawler it changed.
+⚠️⚠️ **AND THE FIRST-RUN DECISION, WHICH MUST NOT BE "SIMPLIFIED": WITH NO BASELINE, `--write` SEEDS AND
+DOES NOT STAMP.** Everything reads as changed on a first run, so a stamping first run would have written
+today onto `/trending`, untouched since 2026-09-03. ▶ **That is a lie to a crawler, and `lastmod`'s whole
+value is that it is honest — a sitemap that cries "new!" on an unchanged page is one Google learns to
+discount.** **"No baseline" is not the same fact as "the page changed."**
+▶ **AFTER ADDING ONE OF HER PIECES: `node scripts/sitemap-lastmod.js --write`.**
+✅✅ **`/finds` IS SUBMITTED TO BOTH ENGINES — DONE BY HER, 2026-09-11, IN FOUR STEPS WITH NO
+BACKTRACKING.** **GOOGLE:** *"URL is not on Google"* → Request Indexing → ***"Indexing requested all
+good."*** **BING:** *"not known"* → Request indexing → ***"URL submitted successfully."***
+▶ **BOTH "not found" MESSAGES WERE THE EXPECTED STATE ON A DAY-OLD PAGE, and she was told so BEFORE she
+saw them** — which is why neither read as an error this time. ⭐ **That is the whole value of the
+one-step-per-message pattern: name the two or three things she might see, so she only has to report
+which one.** **Second page in a row it has worked cleanly. Use it for anything in someone else's
+dashboard.**
+⚠️ **AND HER BING QUESTION IS NOW ANSWERED FOR THE THIRD TIME — write it down rather than answering it a
+fourth: URL Inspection → Request Indexing is ENOUGH.** The separate **URL Submission** bulk tool is for
+pushing several pages at once; doing both for one page is redundant, not harmful.
+✅ **PRE-FLIGHT MEASURED BEFORE SENDING HER INTO EITHER TOOL, and it is worth repeating next time:**
+`/finds` returns **200**, the edge function serves the real `<title>` to a crawler with no JS, the robots
+meta is **`index, follow`**, `robots.txt` allows it, and it is in the live sitemap. ▶ **Do not send her
+to request indexing on a page that cannot be indexed.**
+🚨 **ONE FALSE ALARM, CAUGHT BY LOOKING TWICE: a grep for `noindex` on the served page returned 1 and
+read exactly like the page being blocked.** ▶ **It was the word inside a CODE COMMENT about the shared
+wishlist.** **The real tag says `index, follow`.** ⚠️ **A FINDING THAT SURVIVES ONE LOOK IS NOT A
+FINDING** — this file's own rule, and it stopped a fault being reported to her that did not exist.
+
+### 🎨 HER FIVE DESIGN NOTES ON THE FINDS PAGE — ALL BUILT AND LIVE 2026-09-11
+▶ **She tested the live page after the stylesheet fix landed and sent five things. All are built.**
+**(1) *"let's fix how do 💕 is all by itself"*** — the heart was orphaning onto its own line.
+🚨 **SHE ASKED WHETHER TO SHORTEN HER WORDS AND THE ANSWER WAS NO, SAID PLAINLY.** A widow is a LAYOUT
+fault, and **her sentence is hers** — rewriting her copy to fit one phone would break this file's own
+"never paraphrase her copy" rule for the sake of a line break. ▶ **Fixed in layout: `text-wrap:balance`
+plus a `.nb` weld holding the last words to the heart.** ⚠️ **BOTH, and not a hand-typed `&nbsp;`** —
+a weld tuned to ONE width looks fixed on the phone it was measured on and orphans again on the next.
+**The Edit's subtitle got the same treatment; it could orphan too.**
+**(2) *"take out the background linen on this page and just make the whole page all white"*** —
+🚨 **THE LINEN IS PAINTED BY THE SHELL (`.ss.dream-mirror`), NOT BY THE SCREEN.** `#s-dream` and
+`#s-finds` were ALREADY `#fff`, which is why "make the screen white" neither did nor could remove it.
+▶ **Overridden on the shell, scoped by the `finds-velvet` html class the page already carries; the black
+frame and silver inset are border and box-shadow, so they survive untouched.**
+⚠️ **THE EDIT KEEPS ITS LINEN AND THAT IS HER SCOPE, NOT AN OVERSIGHT** — she said *"this page"*.
+**Both halves are asserted, so a later tidy-up cannot sweep the Edit along.**
+**(3)(4) *"make both pages look the same"* at the foot, the Curious line *"larger"*, and the two links
+*"spaced out a bit more so finger doesn't bump the wrong one. Maybe you have a better suggestion?"***
+▶▶ **THE BETTER SUGGESTION, AND THE REASONING IS THE KEEPER: MORE GAP ALONE MAKES IT WORSE.** Two 20px
+strips with air between them means a thumb landing slightly off hits NOTHING and she taps again.
+**Each line now has its own TALL tap target (13px block padding, both over the 44px floor), with the gap
+as the miss-space between them.** ⚠️ **This is the file's own rule — *tighten the MARGINS around a
+control, never the padding inside it* — applied forwards: the padding IS the target, and her audience
+runs to 80.** ▶ **The Curious line went 12.5px → 14px to match the line above it, so the two read as a
+pair of choices rather than a link and an afterthought. Amazon Finds gained the trending link the Edit
+already had.**
+**(5) *"as far as this page not being reachable from inside the app, let's go ahead and put it in"*** —
+▶ **One row in the MENU's own Shop group, directly beneath Style Star Edit.** ⚠️ **It calls
+`openFinds`, NEVER `show('s-finds')` — the affiliate-wrap trap.** **Asserted, including that it sits
+next to the Edit.**
+🚨🚨 **AND THE HARNESS TRAP THIS DAY ADDED, BECAUSE IT ALMOST CAUSED A "FIX" TO A NON-BUG:
+GOOGLE FONTS DO NOT LOAD IN THIS SANDBOX.** A local render showed *"With love, Catherine"* breaking with
+the heart on its own line — it renders in a FALLBACK serif here, far wider than Dancing Script, and
+**her own screenshot shows it perfectly fine.** ▶ **So a line break seen in a local render is NOT
+evidence about her screen.** ⚠️ **Do not hand-tune wrapping to this harness — use width- and
+font-independent fixes (`balance`, a weld) and let her look.**
+⭐⭐ **AND LOOKING IS WHAT CAUGHT A REAL ONE THE NUMBERS MISSED: the first pass capped both links at
+`31ch` and split *"Click here to explore more →"* across two lines with the ARROW STRANDED** — the exact
+fault she had just reported, reintroduced one element over, with every measurement green. **MEASURE TO
+FIND CANDIDATES, LOOK TO DECIDE.**
+
+### 🛒 THE HIGH/LOW DECISION — HER IDEA, AND IT RETIRED A THIRD PAGE BEFORE IT WAS BUILT
+🚨 **HER WORRY, VERBATIM, AND IT IS A BRAND WORRY NOT A FEATURE ONE:** *"Style Star is not really a
+'discount' platform so I want to be careful that the whole app doesn't appear to be a cheap item type
+of place but as a stylist I do recommend mixing high and low items."* ▶ **She then proposed a THIRD
+page — hand-picked luxury splurges — to offset Amazon, and doubted it herself: *"That would end up
+being 3 'Edit' pages though so not sure I want to do that."***
+✅✅ **SHE WAS RIGHT TO DOUBT IT, AND THE MEASUREMENT SETTLED IT: HER EDIT IS ALREADY A HIGH/LOW MIX.**
+Measured at 35 pieces: **$12 to $1,100, median $248 — 11 under $100, 10 at $100-299, 14 at $300+.**
+▶ **RE-MEASURED 2026-09-11 AT 33, after her two Amazon pieces moved to `/finds`: $12.99 to $1,100,
+median $278 — 9 under $100, 10 at $100-299, 14 at $300+.** ⚠️ **The argument is UNCHANGED and the
+figures moved as little as that** — the Edit is still a high/low mix on its own, which is why the
+third page stayed unbuilt.
+▶▶ **SO THE SPLURGE PAGE SHE WAS IMAGINING ALREADY EXISTS. IT IS THE EDIT.** Building a second one
+would have split her best page in half and given her a third thing to maintain.
+⭐⭐ **AND THE FEAR WAS POINTED AT THE WRONG RISK, WHICH IS WORTH SAYING PLAINLY WHENEVER IT RETURNS:
+this app's measured problem is that it looks UNATTAINABLE, not cheap** — the finder's own medians are
+dresses $398, tops $260, shoes $790, and 0 of 200 dresses under $100. **Amazon does not cheapen Style
+Star; it fixes the thing that currently makes it unaffordable** — and her founding value says so:
+*literally any woman, 18 to 80+, no age or income bracket.*
+🚨🚨 **HER LINE, AND SHE CHOSE IT HERSELF — IT SITS ON BOTH PAGES, EACH POINTING AT THE OTHER:**
+***"Mixing high and low is how I dress my clients — here's the other half."*** Her verdict: *"I love
+the line... that is really good."* ▶▶ **THAT ONE SENTENCE IS WHAT MAKES TWO PAGES READ AS ONE STYLIST
+IDEA RATHER THAN AS A LUXURY PAGE AND A CHEAP PAGE.** ⚠️ **DO NOT REWORD IT BLANDER. It is hers, and
+it does the whole job her third page was meant to do — for free, with nothing extra to maintain.**
+⚠️ **AND IT AVOIDS PAIR-CURATION:** a page of splurge/save COUPLES would look beautiful and would force
+her to curate in twos, against her actual working pattern of one piece at a time.
+
+### 🩷 EACH CURATED PAGE NAMES WHERE ITS LINK GOES, AND THAT LINK IS PINK — HER RULING 2026-09-11
+▶ **HER WORDS: *"On the edit page I want it to say something like 'Click here to explore Amazon Finds'…
+and let's make that pink instead of turquoise. Keep the Curious what's trending line turquoise."*** Same
+on Finds, pointing at The Edit.
+✅ **BUILT, AND THE NAMING IS THE REAL IMPROVEMENT: *"Click here to explore more →"* said NOTHING about
+where it went.** Now the Edit says **Amazon Finds** and Finds says **The Edit**. ⚠️ **Her sentence
+*"Mixing high and low is how I dress my clients."* is UNTOUCHED — only the invitation half changed.**
+🚨 **THE COMMONEST WAY TO BREAK THIS IS A COPY-PASTE BETWEEN THE TWO PAGES**, which would leave a page
+inviting a woman to explore the page she is already standing on. ✅ **`findspage` asserts it CROSSWISE:
+each page names the OTHER, calls the other's opener, and never names itself.**
+🩷 **THE PINK IS `#EC4899` — THE APP'S OWN STYLIST-MARK PINK, ALREADY USED 10 TIMES, not a new colour
+invented for this.** ⭐ **And it says something true: her 2026-08-09 mark system is GOLD = the app's
+voice, PINK = Catherine's, and this is the link between her two personally curated pages.**
+⚠️⚠️ **THE CONTRAST NUMBER, MEASURED AND TOLD TO HER PLAINLY RATHER THAN QUIETLY FIXED: `#EC4899` is
+**3.53:1** on the card's white, under the 4.5:1 this file demands of body text. ▶▶ **BUT THE TEAL IT
+REPLACED IS WORSE — 2.94:1 — so this is an IMPROVEMENT, not a regression**, and both are BOLD and
+UNDERLINED, an affordance a plain paragraph lacks. ▶ **If maximum readability is ever wanted, `#D6337F`
+measures 4.53:1 in the same hue family** — ⚠️ **do not swap it in without asking her; she chose the
+colour by name.**
+🚨 **THE TRENDING LINE STAYS TEAL, AND BOTH HALVES ARE EQUALLY HER WORDS.** ✅ **The test asserts the two
+DIFFER, not merely that one is pink — the failure she would actually mind is a sweep that recolours
+both.**
+⭐ **AND ONE OLD CHECK WENT RED ON THIS, THE GOOD KIND:** it pinned the literal string *"click here to
+explore more"*. **The app changed, it did not break.** ▶ **Rewritten to name the RULE — her sentence
+reads plainly, only the invitation is underlined — which survives any rewording; the WORDS are asserted
+separately against the page each link must name.** **This file's own standing lesson, applied again.**
+
+### 📐 THE CLOSING BLOCK LAYS OUT THE SAME ON BOTH PAGES, AND THE BREAK IS STRUCTURAL
+▶ **HER ASK 2026-09-11: *"The spacing looks better on the edit. Can you make it match on finds?"***
+✅ **NOTHING WAS STYLED DIFFERENTLY — and that is the finding.** Both pages carry the SAME sentence and
+DIFFERENT link text (*"Amazon Finds"* vs *"The Edit"*), so `text-wrap:balance` split them at different
+points: the Edit happened to put its link on its own line and Finds left *"clients."* stranded beside it.
+🚨 **SO THE LAYOUT DEPENDED ON HOW LONG THE LINK TEXT HAPPENED TO BE — it would have drifted again the
+next time she renamed one.** ▶ **The break is STRUCTURAL now (`display:block` on the invitation), which
+costs one word and cannot come undone by a rewording.** ✅ **Asserted on BOTH pages in line-heights:
+her sentence gets one line, the invitation gets one unbroken line.**
+🚨🚨 **AND THE MISTAKE IT COST A ROUND TO FIND, BECAUSE IT IS THE KIND THAT WILL RECUR: `.dc-xlink span`
+MATCHES THE `.nb` WELD NESTED INSIDE THE INVITATION TOO.** `display:block` on that loose selector made
+the weld its own block, so *"The Edit →"* dropped to a line of its own **at any width** — and every
+height measurement came back IDENTICAL ACROSS BOTH PAGES, which is exactly what "fixed" looks like from
+a number. ▶▶ **THE SELECTOR MUST BE `.dc-xlink>span`. The weld stays inline, asserted.**
+⚠️ **AND A SECOND ONE IN THE SAME PASS: `text-wrap` INHERITS.** Setting only `display:block` left the
+invitation inheriting `balance` from its parent and evening ITS OWN lines out. **The sentence wants
+balance; the invitation wants to fill its line — different jobs, so `text-wrap:wrap` on the child is
+not redundant.**
+⭐⭐ **THE HABIT THAT ACTUALLY SOLVED IT, AFTER TWO WRONG GUESSES: MEASURE THE THING THAT CANNOT LIE.**
+A Range's client rects include the block box and reported 3 lines for a 2-line link; **height divided by
+line-height** settled it in one run. ▶ **And the width probe proved the text FIT ALL ALONG (198px in a
+274px box), which is what pointed at a forced break rather than a wrapping problem.**
+
+### ✍️ THE TWO CURATED SUBTITLES END WITH A PERIOD — HER RULING 2026-09-11, AND IT BREAKS THE HOUSE PATTERN ON PURPOSE
+▶ **HER QUESTION: *"at the top line of Edit it ends with I hope you'll love them too and the top line of
+Finds it says I hope you love these great finds as much as I do. Do we need a period at the end of those
+sentences right before the tilted heart?"***
+✅ **THE APP WAS MEASURED RATHER THAN GUESSED AT — every place a heart closes a line: 11 of them, and
+9 CARRY NO PERIOD**, including *"With love, Catherine ♥"* on three pages and her home founder line
+*"…with all my love & intention ♥"*. **The only two that keep one are the Mall subtitle and the Wardrobe
+how-to — neither is her speaking in the first person.**
+▶ **The recommendation given was NO PERIOD**, on the reasoning that a heart closing a warm line IS the
+full stop and a period first makes the sentence end twice.
+🚨🚨 **SHE WAS SHOWN THAT AND CHOSE THE PERIOD ANYWAY, SCOPED TIGHT: *"let's add the period just to these
+2 spots on Finds and Edit. Keep the rest of the app as is."*** ▶▶ **SO THE INCONSISTENCY IS THE DECISION,
+NOT A DEFECT.** ⚠️ **A future session WILL find these two lines disagreeing with the other nine and want
+to "unify" them. IT MUST NOT.** ✅ **Asserted on both pages in `findspage`, with her words in the comment.**
+⭐ **AND THE PATTERN WORTH KEEPING IS HOW THE QUESTION WAS ANSWERED: she asked a taste question and got
+a COUNT of her own app back, not an opinion.** Her reply: *"thank you for looking at all of it so
+carefully."* ▶ **Measure her own app before offering her a preference — she overrules from evidence
+happily, and she cannot overrule from an opinion.**
+⚠️ **BOTH PAGES CHANGED TOGETHER, exactly 2 characters, verified by diff** — the twin-page rule holds
+even when the change is a full stop.
+
+### 🛒 AMAZON CANNOT BE VERIFIED FROM HERE — HER PRICES ARE THE ONLY SOURCE, SAY SO EVERY TIME
+🚨 **MEASURED 2026-09-11 on her first two new Finds pieces, and it settles a question that will recur
+every time she sends a piece: BOTH Amazon product pages are BOT-WALLED.** `B0GBTQDH5Y` returns a
+**200 carrying an "automated access" wall** (3.8 KB, no product data); `B0FQC2PCXS` returns a **166 KB
+page with no title, no price and no availability string in it at all**.
+▶▶ **SO NEITHER PRICE NOR STOCK CAN BE CHECKED FOR AN AMAZON PIECE.** ⚠️ **THE WORKING PATTERN SAYS
+"Claude verifies the price and stock against the shop's own data" — ON AMAZON THAT STEP IS IMPOSSIBLE,
+and the rule that replaces it is the older one: ALWAYS SAY PLAINLY WHICH DETAILS WERE VERIFIED AND
+WHICH WERE NOT.** ▶ **Amazon now sits with lululemon and Target: the price always has to come from
+her.** **Do not quietly skip the sentence; she is entitled to know the difference.**
+⚠️ **AND THE SATURDAY WATCHDOG INHERITS THIS** — an Amazon piece will land in NEEDS HER EYE, never in
+BROKEN or SOLD OUT, which is the bucket working as designed.
+▶ **WHAT IS STILL WORTH DOING: canonicalise the URL.** Amazon links arrive carrying navigation and
+order-history crumbs. **Strip to the bare `https://www.amazon.com/dp/<ASIN>`.**
+⚠️ **TWO PARAMETERS WORTH KNOWING BY NAME:** `th=1&psc=1` **PIN A SPECIFIC VARIATION** (colour/size) —
+dropping them lands on the base product, which is right unless she pinned a colourway on purpose;
+`ref=ppx_yo2ov_…` **COMES OFF HER OWN ORDERS PAGE**, so it is pure tracking.
+
+### 💲💲 THE FINDS PRICES ROUND **UP**, NEVER TO THE NEAREST — AND THE ROUNDING MODE IS THE WHOLE POINT
+▶ **HER ASK, RELAYED THROUGH COWORK 2026-09-11:** stop showing exact prices on `/finds`; show the real
+figure rounded, with a tilde — `16.99 → ~$17`. **Cents are never shown, the price field is optional, and
+an empty one shows NO price at all (no placeholder, no "price varies").**
+🚨🚨 **THE SPEC SAID *"rounded to the nearest whole dollar"* AND THAT ONE WORD BREAKS HER OWN RULE.**
+Nearest prints **~$16 for a $16.25 piece**, and she arrives to find it **DEARER than the page said** —
+which is exactly the feeling her 2026-07-31 sale-price rule exists to prevent (*arriving to find it
+cheaper feels lucky; arriving to find it dearer feels misled, and only one is recoverable*).
+▶▶ **SO IT IS `Math.ceil`, NEVER `Math.round`.** Ceiling can only ever surprise her the good way. **All
+three examples in the spec happened to round up anyway, so "nearest" was a slip, not a decision.**
+✅ **PROVEN TO BITE: putting `Math.round` back turns `findscsv` red on exactly the two checks that
+exist for it** — *"$16.25 shows ~$17"* and *"$16.01 → ~$17"*. **A rounding mode is invisible in a diff
+and invisible on the page; it is only ever visible in a test.**
+▶ **WHY THIS PAGE AND NOT THE EDIT, AND IT IS A TRUTH DIFFERENCE RATHER THAN A STYLE ONE:** Amazon
+product pages are **bot-walled**, so an Amazon price can never be verified from here and moves daily.
+A tilde is honest about a number nobody can check. **The Edit's shops CAN be read, so the Edit keeps its
+exact prices.** ⚠️ **A future tidy-up will want to unify the two pages. IT MUST NOT — they differ here
+because the FACTS differ.**
+⭐ **AND A MEASUREMENT CORRECTED THE CHECK AS FIRST WRITTEN, WHICH IS WORTH KEEPING: THE EDIT ALREADY
+CARRIES A TILDE ON 6 OF ITS 33 PRICES** (`~$50` `~$45` `~$295` `~$90` `~$100` `~$350`). **So the tilde
+is not a new convention invented for Finds — it is one she already uses where a figure is approximate.**
+▶ The assertion was rewritten from the false *"the Edit shows exact prices"* to the true rule: **the
+Edit was not SWEPT into the Finds rule.**
+⚠️ **A TRAILING QUALIFIER IS NOT DECORATION AND MUST SURVIVE THE ROUNDING.** Her Gold Ponytail Cuff
+reads **`$9.99 for 4`** → **`~$10 for 4`**. **Four cuffs for ~$10 is a different offer from one**, so a
+rounder that assumed a bare number would quietly change what the card claims.
+▶ **THE EXACT FIGURE IS STILL STORED** on every card as `data-price`, so nothing is lost and the
+rounding stays checkable.
+
+### 📦 ADDING FINDS PIECES IN BATCHES — `data/amazon-finds.csv` IS THE SOURCE OF TRUTH
+▶ **HER DECISION 2026-09-11: *"i want to do a larger batch."*** Hand-editing markup is fine for three
+pieces and is still how the Edit works; it stops being fine at twenty.
+```
+node scripts/finds-from-csv.js data/amazon-finds.csv          # dry run, shows what would change
+node scripts/finds-from-csv.js data/amazon-finds.csv --write  # applies it
+node scripts/finds-from-csv.js --check                        # does the page still match the CSV?
+```
+▶ **COLUMNS, EXACTLY: `name,store,price,note,url,category`.** Her four live pieces are already in the
+file, **so the CSV IS the template — she adds rows, she never starts one.**
+- **`url`** takes a full Amazon link **or a bare 10-character ASIN** (she asked for both). It is
+  canonicalised to `https://www.amazon.com/dp/<ASIN>` — **`ref=ppx_yo2ov_…`, `th=1`, `psc=1` all come
+  off.** A non-Amazon link is **refused**, never rendered.
+- **`price`** is her REAL figure with cents. Optional. May carry a qualifier (`9.99 for 4`).
+- **`category`** is optional. ⚠️ **EMPTY EVERYWHERE = THE FLAT PAGE SHE HAS TODAY, no headings at all.**
+  **Her row order IS the page order, and the order a category first APPEARS is where it lands** — so she
+  rearranges the page by rearranging her spreadsheet, with nothing to configure and nobody to ask.
+- ⚠️ **HER FOUR PIECES ARE DELIBERATELY UNCATEGORISED.** Claude may not invent her taxonomy — the same
+  rule that says Claude never picks the products. **The column waits for her.**
+🚨 **THE GENERATED REGION IS MARKED (`<!-- FINDS:ITEMS:START/END -->`) AND THE SCRIPT SLICES `s-finds`
+BEFORE LOOKING FOR IT** — because every `.dc-*` anchor is ambiguous now and **the first occurrence in
+the file is always the EDIT'S**, which is how two Amazon pieces once landed on the wrong page.
+⚠️ **A HAND EDIT BETWEEN THE MARKERS IS OVERWRITTEN BY THE NEXT RUN.** The CSV is the truth.
+🚨🚨 **PIECES ARE COMPARED BY ASIN, NEVER BY NAME — AND THE GUARD WAS REWRITTEN THE FIRST TIME SHE RENAMED ANYTHING.** Dropping the colourway off seven names read as **seven removals and seven additions**, count unchanged at 16, and the only way past it was `--allow-removals` on a run that removed nothing. ▶▶ **A GUARD THAT CANNOT TELL A RENAME FROM A DELETION TEACHES THE NEXT SESSION TO PASS THE OVERRIDE BY REFLEX, AND THEN IT GUARDS NOTHING.** ✅ **A rename now prints as `~ old → new` and needs no override; `findscsv` §7b pins it.** ⭐ **The lesson generalises past this script: a name is a label she edits, the ASIN is the piece — match on the thing that cannot change.**
+✅ **REMOVALS ARE BLOCKED BY DEFAULT** — a spreadsheet sent with rows missing would otherwise silently
+delete her page. It refuses and names the pieces; `--allow-removals` is the deliberate override.
+✅ **IT PRINTS BOTH SCREEN COUNTS AFTER EVERY WRITE** — the cheap habit that catches the wrong-screen bug.
+▶ **AFTER A BATCH: `node scripts/sitemap-lastmod.js --write`.** (The suite catches a stale date anyway —
+it did on this very change.)
+🚨🚨 **NO PHOTO COLUMN, AND IT IS NOT AN OVERSIGHT — HER RULING, 2026-09-11, AND IT IS A LICENSING
+ANSWER RATHER THAN A DESIGN ONE.** ***"Amazon only licenses product images through their Product
+Advertising API, to active Associates. Hotlinking an image URL off a product page is specifically a
+violation and people have lost accounts for it. I don't get API access until after my three qualifying
+sales. So don't build it. Photos on Finds will be my own, or none."***
+▶▶ **SO AN AMAZON PRODUCT PHOTO MAY NOT APPEAR ON THIS PAGE AT ALL, AND NOT MERELY UNTIL SHE IS
+APPROVED:** the API that licenses the images is itself gated behind the 3 qualifying sales, so the
+permission arrives AFTER the selling, not before it. **The risk is her Associates account, which is the
+one asset the whole Amazon plan depends on.**
+⚠️ **A FUTURE SESSION WILL SEE A PHOTOLESS PAGE BESIDE THE EDIT'S 17 PHOTOS AND WANT TO FIX IT. IT MUST
+NOT.** The Edit's photos are hotlinked from merchants she is APPROVED for and gated by `_affMid`;
+Amazon is in no such position. **Adding an image column would not be an improvement, it would be a
+violation.**
+⭐ **AND THE ONE ROUTE THAT IS OPEN IS ALREADY BUILT: `ownPx`, which this file reserves for HER OWN
+pictures of pieces she owns, where there is nobody to ask.** ▶ **Her words land exactly on it — *"my
+own, or none."* If she ever photographs a Finds piece herself, that is the mechanism, and no new
+licensing question is opened.**
+⭐⭐ **THE PATTERN WORTH KEEPING: THE QUESTION WAS FLAGGED RATHER THAN GUESSED AT, AND HER ANSWER WAS
+FIRMER THAN EITHER OPTION ON THE TABLE.** A column added "to be helpful" would have been built on the
+assumption that approval later unlocks it. **It does not.**
+
+### 🚨 `.dc-sign` NOW EXISTS ON TWO PAGES, AND THE FIRST ONE IN THE FILE IS THE EDIT'S
+⚠️ **PAID FOR 2026-09-11: two of her Amazon pieces were inserted above `<div class="dc-sign">With love,
+Catherine` and landed on the EDIT**, because that anchor's first occurrence is `s-dream`. **The Edit
+went 33 → 35 and the Finds page gained nothing.** ▶ **Caught immediately by counting both screens, which
+is the only reason it never shipped.**
+▶▶ **THE RULE: SLICE THE SCREEN FIRST, THEN ANCHOR INSIDE IT** — `index.html.index('id="s-finds"')` to
+`index('id="s-shop"')`, and search for the anchor within that range. ⚠️ **Every `.dc-*` anchor is now
+ambiguous; this will happen again with `.dc-subtitle`, `.dc-disclosure` and `.dc-xlink`.**
+⭐ **AND THE CHEAP HABIT THAT CATCHES IT EVERY TIME: after any curated-page edit, print BOTH counts**
+(`collectEdit().length` and `collectFinds().length`) before doing anything else.
+
+### 📜 AMAZON'S TRADEMARK RULES — READ FROM THEIR OWN GUIDELINES, 2026-09-10, NOT RECALLED
+✅ **A DESCRIPTIVE PAGE HEADING SAYING "Amazon Finds" IS FINE.** Their guidelines do not restrict page
+names or headings, and it is what thousands of Associates do.
+🚨 **WHAT IS EXPLICITLY FORBIDDEN IS THEIR MARKS IN A DOMAIN OR SUBDOMAIN** (their example:
+`kindlemagazines.mydomain.info`). ▶ **A second, independent reason the path is `/finds`.**
+⚠️ **DISPLAYING AMAZON'S LOGO TRIGGERS A FURTHER REQUIREMENT** — the site must then carry *"Amazon and
+the Amazon logo are trademarks of Amazon.com, Inc. or its affiliates"* — plus rules against altering
+the mark. ▶▶ **SO THE PAGE USES THE WORD AND HER OWN GOLD STAR, NEVER THEIR LOGO.** **Asserted by a
+test.** ⚠️ **Re-read their guidelines on the day she applies; programme rules change.**
+
+### 💰 AMAZON EARNS BY A TAG, NOT BY A WRAPPER — AND `_AMZ_TAG` IS THE ONE EDIT ON APPROVAL DAY
+▶ **Amazon does not run through Rakuten, so it can NEVER appear in `_AFF_MID`:** its links carry a
+`?tag=` parameter instead of a `click.linksynergy.com` wrapper. **`_affUrl` handles both, in one
+function, Amazon first.**
+🚨 **`_AMZ_TAG` IS EMPTY TODAY AND THAT IS CORRECT, NOT UNFINISHED.** She is not an Associate yet, so an
+Amazon link stays plain and honest rather than carrying a fake tag. ▶▶ **ON APPROVAL: put her tracking
+id in that ONE constant and every Amazon link in the app starts earning at once — the Finds page, the
+Edit's TWO existing Amazon pieces, the Star, everywhere.** ⚠️ **AND ADD AMAZON'S REQUIRED SENTENCE THE
+SAME DAY, exact wording: *"As an Amazon Associate I earn from qualifying purchases."***
+⚠️ **THE FINDS PAGE IS A SEVENTH DISCLOSURE PLACE** — `.dc-disclosure`, its own, asserted as exactly
+one. **The catalogued six become seven; that is correct, not drift.**
+
+### 💰 WHICH EDIT PIECES ACTUALLY EARN — MEASURED 2026-09-10, AND THE FIRST FIGURE GIVEN TO HER WAS WRONG
+🚨 **HER QUESTION, AND IT DESERVES A NUMBER RATHER THAN A YES: *"I can share it and when anyone opens it
+and clicks on a link and purchases - we make money from that affilate link purchase?"***
+🚨 **THE COUNTS BELOW WERE MEASURED AT 35 PIECES. THE EDIT IS 33 FROM 2026-09-11** — her two Amazon
+pieces moved to `/finds`, so the honest figures today are **17 EARN, 16 DO NOT, and Amazon is no longer
+in the Edit's unearning list at all.** ▶ **The `_AMZ_TAG` argument in (b) is UNTOUCHED by the move: the
+same two pieces still light up on approval, on the Finds page instead of the Edit.** *The 2026-09-10
+measurement, kept because its method and its lesson are the point:*
+▶▶ **MEASURED ACROSS ALL 35 EDIT PIECES: 17 EARN, 18 DO NOT.**
+· **EARNING (17):** Olivela 4 · Mytheresa 3 · DVF 2 · Marissa Collections 2 · **Etsy 2** · FARM Rio 1 ·
+Vilebrequin 1 · Fleur du Mal 1 · COUTR 1.
+· **EARNING NOTHING (18):** **Nordstrom 6** · **Amazon 2** · Bloomingdale's 2 · Express · Sexy Little
+Robe · Baby Gold · Athleta · Everything But Water · Zappos · lululemon · Target.
+⚠️ **AN EARLIER ANSWER SAID "11 OF 35" AND THAT WAS WRONG** — it came from grepping only six named
+domains instead of reading `_AFF_MID`. **Corrected to her the same hour.** ▶ **Count from the TABLE,
+never from a hand-typed list of shops.**
+⭐⭐ **TWO THINGS IN THAT SECOND LIST ARE STRATEGY, NOT TRIVIA:**
+**(a) NORDSTROM IS SIX PIECES**, her single biggest unearning block, and it is gated behind **Impact**,
+which declined her for TRAFFIC. **(b) AMAZON IS ALREADY IN HER EDIT, TWICE**, earning nothing today —
+▶ **so an Associates approval would light up pieces she has ALREADY chosen, before she adds a single
+Amazon Finds row.** **Say this when the Amazon conversation resumes; it is a real, countable argument.**
+⚠️ **AND THE HONEST MECHANIC SHE ASKED ABOUT: THE MONEY IS ON THE PURCHASE, NEVER ON THE CLICK.**
+Rakuten pays commission on a qualifying SALE inside the cookie window. **A thousand clicks and no
+purchases pays nothing** — which is the same reason the $27 figure is what no users looks like.
+
+### ✅ THE EDIT'S LINKS DO EARN — VERIFIED 2026-09-10, AND A "FINDING" WAS NEARLY REPORTED THAT WAS FALSE
+🚨🚨 **THE MARKUP LOOKS LIKE IT EARNS NOTHING AND THAT IS A TRAP.** All **35** `.dc-item-btn` anchors
+carry RAW product urls (`https://www.olivela.com/products/...`), **11 of them on merchants she is
+approved for**, and `_affUrl` appears nowhere in the Edit's markup. ▶ **Read that far and the obvious
+conclusion is that her whole curated Edit is unmonetised. IT IS WRONG.**
+✅ **`_wlDecorateEdit()` REWRITES EVERY ONE AT RUNTIME** (`index.html:9963`,
+`_affUrl(_a.getAttribute('href'))`), and `showDream()` calls it every time the Edit opens. **The raw
+href is the SOURCE; the wrap happens in the browser.** ⭐ **DELIBERATE, and the comment says why: so a
+piece she adds by hand needs no plumbing.** ▶ **The wishlist stores the RAW url and re-wraps at render,
+so changing her affiliate id still reaches pieces saved months ago. `_affUrl` never double-wraps.**
+⚠️⚠️ **DO NOT "FIX" THE EDIT BY HARD-CODING AFFILIATE URLS INTO THE MARKUP.** It would strand her saved
+rows on a stale id and break the add-by-hand workflow.
+🚨 **THE LESSON, AND IT IS THIS FILE'S OWN RULE PAYING OFF IN REAL TIME: THE GREP SAID ONE THING AND THE
+CODE SAID ANOTHER.** A count of `_affUrl` inside the Edit markup returns ZERO and reads exactly like
+lost money. **Following the rule — grep the code before saying it out loud — is the only reason a false
+alarm was not handed to her as a discovery.** ▶ **A RUNTIME REWRITE IS INVISIBLE TO A GREP OF THE
+MARKUP. When markup looks unmonetised, look for a decorator before concluding anything.**
+
+
+# ARCHIVED 2026-09-11 (second session) — the /edit indexing note, verbatim (superseded by the general resubmission rule)
+### 🔎 `/edit` IS SUBMITTED TO BOTH ENGINES — DONE BY HER, 2026-09-10
+✅ **GOOGLE SEARCH CONSOLE:** URL Inspection → *"URL is not on Google"* → **Request Indexing** →
+**"Indexing requested"**, green. ✅ **BING WEBMASTER TOOLS:** URL Inspection → *"Not discovered / The
+inspected URL is not known to Bing"* → **Request indexing** → **"URL submitted successfully."**
+▶ **BOTH "not found" MESSAGES WERE THE EXPECTED STATE, not a fault** — the page was hours old and
+neither engine had crawled it. **Say that plainly next time; it reads like an error and is not.**
+✅ **The live sitemap lists `/edit` at priority 0.9** (12 urls, XML re-parsed), so both engines also
+find it on their own schedule.
+⚠️ **HER QUESTION FROM 2026-09-04, ANSWERED AGAIN SO IT IS NOT ASKED A THIRD TIME: on Bing, URL
+Inspection → Request Indexing is ENOUGH.** The separate **URL Submission** bulk tool is for pushing
+several pages at once; doing both for one page is redundant, not harmful.
+▶ **THE WORKING PATTERN SHE ASKED FOR AND IT SUITED HER: ONE STEP PER MESSAGE, and each step ends by
+naming the two or three things she might see, so she can just report back which one.** ⭐ **She moved
+through four steps with no confusion and no backtracking.** **Use it for anything she does in someone
+else's dashboard.**
+✅✅ **AND THE 2026-09-04 OPEN ITEM IS CLOSED, BY HER, THE SAME SESSION: `/trending` READS "URL IS ON
+GOOGLE."** ▶ **So its Google indexing was fine all along and the worry was unfounded** — it sat open
+for six days for want of one lookup. ⭐ **THE LESSON IS ABOUT THE QUESTION, NOT THE PAGE: an unverified
+worry costs nothing to check and outlives every session it is not checked in.** **When a note says
+"unconfirmed" and she is already standing in the tool that confirms it, ask.**
+
