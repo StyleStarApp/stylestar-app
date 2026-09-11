@@ -161,12 +161,26 @@ const suffixed = [...byAsin.values()].filter(n => {
   return i >= 0 && COLOURS.test(n.slice(i + 1).trim());
 });
 ok('no Finds name carries an appended colourway', suffixed.length === 0, suffixed.join(' | '));
-/* ⚠️ AND THE SCOPE: only the APPENDED colourway went. "Gold Ponytail Cuff" keeps
-   its gold, because that is the piece's identity rather than a colourway she picked —
-   and she said so again on the chains: "keep the gold on the purse chains". */
-ok('a colour word inside a name survives — Gold Ponytail Cuff is still gold',
-   [...byAsin.values()].some(n => /^Gold Ponytail Cuff$/.test(n)), [...byAsin.values()].join(' | '));
-ok('and on the chains, which she ruled on by name', [...byAsin.values()].some(n => /Gold Purse Chains/.test(n)));
+/* ⚠️ AND THE SCOPE: only the APPENDED colourway went. A colour word that is the
+   piece's IDENTITY stays, and she ruled on this one by name: "keep the gold on the
+   purse chains".
+   🚨 THIS CHECK USED TO CITE "Gold Ponytail Cuff" AND WENT RED ON 2026-09-11 — ON A
+   FACT, NOT A BUG. She found the cuff and the bangles also come in SILVER, so their
+   gold was never identity at all; it was a colourway, and both names lost it while
+   the notes gained "Comes in gold or silver." ▶ THE LESSON: "is this colour the
+   piece's identity?" is a question about the PRODUCT, not about the words, and only
+   she can answer it. The example moved to the one she has actually ruled on. */
+ok('a colour word that IS the piece survives — the purse chains keep their gold',
+   [...byAsin.values()].some(n => /^Interchangeable Gold Purse Chains, 5 Pack$/.test(n)),
+   [...byAsin.values()].join(' | '));
+/* ▶ AND THE OTHER HALF OF HER RULE: a name that dropped its colour must say so in the
+   note, or a woman reaches a silver piece off a page that told her nothing. */
+for (const [nm, asin] of [['Stretchy Stacking Bangles', 'B0CWD1RYK3'], ['Ponytail Cuff', 'B0FQC2PCXS']]) {
+  ok(`${nm} carries no colour in its name`, byAsin.get(asin) === nm, byAsin.get(asin));
+  const row = load(path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'data/amazon-finds.csv'))
+    .find(r => r.url.includes(asin));
+  ok(`...and its note names the range instead`, /gold or silver/i.test(row.note), row.note);
+}
 
 console.log('\n8. HER LIVE PAGE AND HER SPREADSHEET AGREE');
 const live = (idx.slice(fStart, fEnd).match(/<div class="dc-item">/g) || []).length;
