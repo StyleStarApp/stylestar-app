@@ -250,7 +250,7 @@
   ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
   ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
   scratchpad/copy.js fails if it is stale. -->
-  <link rel="stylesheet" href="/styles.css?v=9e2e3e77c8">
+  <link rel="stylesheet" href="/styles.css?v=b2eba7c175">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
@@ -538,6 +538,7 @@
   <div class="menu-row" onclick="menuGo(menuShopStyle)">Shop your Style</div>
   <div class="menu-row" onclick="menuGo(openWishlist)">Your Wishlist</div>
   <div class="menu-row" onclick="menuGo(showDream)">Style Star Edit<svg class="menu-ch" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+  <div class="menu-row" onclick="menuGo(openFinds)">Amazon Finds</div>
   <div class="menu-row" onclick="menuGo(showShop)">Style Star Mall</div>
   <div class="menu-grp">Build</div>
   <div class="menu-row" onclick="menuGo(openWardrobe)">Your Wardrobe List</div>
@@ -1349,7 +1350,7 @@
     <div class="top-back-wrap"><button class="top-back" onclick="closeDream()">&larr; Back</button></div>
     <div class="dc-logo"><svg class="dc-corner-star" viewBox="0 0 24 24"><defs><radialGradient id="editStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#editStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>Style Star Edit</div>
     <div class="dc-tagline"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>Curated by Catherine</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-    <div class="dc-subtitle">Everything here is selected by me. These are pieces I wear myself and recommend to clients. I hope you&rsquo;ll love them too <svg class="pinkheart" style="width:15px;height:15px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <div class="dc-subtitle">Everything here is selected by me. These are pieces I wear myself and recommend to clients. I hope you&rsquo;ll love <span class="nb">them too <svg class="pinkheart" style="width:15px;height:15px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span></div>
 
     <div class="dc-disclosure">Some links may earn a commission.</div>
 
@@ -1921,8 +1922,8 @@
            worry that Amazon would make Style Star look like a discount site:
            high/low is a STYLIST'S CHOICE, and saying so out loud is the whole
            difference. ⚠️ DO NOT reword it blander -- it is hers. -->
-    <div class="dc-xlink" onclick="openFinds()">Mixing high and low is how I dress my clients. <span>Click here to explore more &rarr;</span></div>
-    <div class="dc-trend-link" onclick="openTrending()">Curious what's trending right now? &rarr;</div>
+    <div class="dc-xlink" onclick="openFinds()">Mixing high and low is how I dress my clients. <span>Click here to explore <span class="nb">more &rarr;</span></span></div>
+    <div class="dc-trend-link" onclick="openTrending()">Curious what's trending <span class="nb">right now? &rarr;</span></div>
 
     <button class="btn-outline" onclick="closeDream()" style="max-width:260px;margin:1rem auto 0;display:block" id="dreamBtn">Back</button>
   </div>
@@ -1952,7 +1953,7 @@
     <div class="top-back-wrap"><button class="top-back" onclick="closeFinds()">&larr; Back</button></div>
     <div class="dc-logo"><svg class="dc-corner-star" viewBox="0 0 24 24"><defs><radialGradient id="findsStar" cx="42%" cy="34%" r="72%"><stop offset="0" stop-color="#FDF0B8"/><stop offset=".38" stop-color="#F4D877"/><stop offset=".72" stop-color="#E8B944"/><stop offset="1" stop-color="#CE9A26"/></radialGradient></defs><path fill="url(#findsStar)" stroke="#9AA0A6" stroke-width="1.1" stroke-linejoin="round" d="M12 1.6L14.47 8.6L21.89 8.79L15.99 13.3L18.11 20.41L12 16.2L5.89 20.41L8.01 13.3L2.11 8.79L9.53 8.6Z"/></svg>Amazon Finds</div>
     <div class="dc-tagline"><svg class="pinkheart hl" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg><span>Hand selected by Catherine</span><svg class="pinkheart" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-    <div class="dc-subtitle">Every piece here is chosen by me. I hope you love these great finds as much as I do <svg class="pinkheart" style="width:15px;height:15px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
+    <div class="dc-subtitle">Every piece here is chosen by me. I hope you love these great finds as much as <span class="nb">I do <svg class="pinkheart" style="width:15px;height:15px;vertical-align:-2px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></span></div>
 
     <div class="dc-disclosure">Some links may earn a commission.</div>
 
@@ -1991,7 +1992,8 @@
     </div>
 
     <div class="dc-sign">With love, Catherine<svg class="pinkheart" style="width:19px;height:19px" viewBox="0 0 24 24"><path d="M12 21.6 C10.7 18.9 8.2 17 5.9 14.7 C3.6 12.4 2 10.4 2 7.7 C2 4.8 4.2 2.7 7 2.7 C9.5 2.7 11.3 4.6 12 7.1 C12.7 4.6 14.5 2.7 17 2.7 C19.8 2.7 22 4.8 22 7.7 C22 10.4 20.4 12.4 18.1 14.7 C15.8 17 13.3 18.9 12 21.6 Z"/></svg></div>
-    <div class="dc-xlink" onclick="showDream()">Mixing high and low is how I dress my clients. <span>Click here to explore more &rarr;</span></div>
+    <div class="dc-xlink" onclick="showDream()">Mixing high and low is how I dress my clients. <span>Click here to explore <span class="nb">more &rarr;</span></span></div>
+    <div class="dc-trend-link" onclick="openTrending()">Curious what's trending <span class="nb">right now? &rarr;</span></div>
 
     <button class="btn-outline" onclick="closeFinds()" style="max-width:260px;margin:1rem auto 0;display:block" id="findsBtn">Back</button>
   </div>

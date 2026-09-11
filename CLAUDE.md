@@ -46,7 +46,7 @@ it several times that day as if it were her next step, and it was not: **she had
 | 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
 | 25 | 🛒 **AN AMAZON FINDS PAGE — HER ASK, 2026-09-10, AND STRATEGICALLY IT IS THE BEST IDEA ON THIS BOARD.** ***"I want to make an Amazon finds page. Another Sharable page dedicated to Amazon finds. I want to also feature some of them on Star of the week and our normal edit."*** ▶▶ **WHY IT MATTERS MORE THAN IT LOOKS: THIS FILE HAS SAID FOR WEEKS THAT WHAT THE APP LACKS IS A MID-MARKET GENERALIST** (every fed store is `$$$`/`$$$$`, dress median $398, 0 of 200 dresses under $100). **Amazon IS that, and it is the one such programme she can join without being declined for traffic.** ⚠️ **SO HER INSTINCT ANSWERS THE AFFORDABILITY PROBLEM THIS FILE KEPT CALLING UNSOLVABLE-WITHOUT-USERS.** 🚨🚨 **BUT THE ORDER SHE PROPOSED IS BACKWARDS AND IT IS WORTH REAL MONEY TO GET RIGHT — SEE THE AMAZON BLOCK IN THE MONEY PATH.** ▶ **THE PAGE ITSELF NEEDS NO CATALOGUE AND NO API: hand-picked links, exactly like the Edit, which is also the only version that honours her own disclosure that every piece is personally selected by the founder.** | Claude to build, HERS to pick the pieces | ⏳ **OPEN — she asked for it** |
 | 24b | ✅✅ **THE EDIT IS A SHAREABLE LINK — BUILT AND LIVE 2026-09-10: `stylestar.app/edit`.** ▶ **SIX edits, not the three the routing note promised**, because sharing needs more than a route: the `netlify.toml` rewrite (200) · an `[[edge_functions]]` registration · `PAGES['/edit']` in `page-titles.js` · `_ROUTES` · `_PAGE_META` · an `_openRoute` branch · **and the sitemap entry (priority 0.9)**. 🚨🚨 **THE TRAP IT NEARLY SHIPPED WITH, AND IT WAS MEASURED: `_openRoute` MUST CALL `showDream()`.** Planting a bare `show('s-dream')` rendered **17 links on merchants she IS approved for completely UNWRAPPED** — earning nothing, on the one page she actually sends to people, **with every card looking perfectly normal.** ▶ **`scratchpad/editshare.js`, 26 checks, built around that money check and PROVEN TO BITE.** ⚠️ **The title and description live in TWO files that cannot import from each other; §4 of the suite asserts they match word for word.** ✅ **Verified on the SERVED file, not the deploy badge.** | — | ✅ done |
-| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ▶ **STILL NOT IN THE APP'S NAV, and that is the one thing left on it: today the only way in is the Edit's own cross-link and the URL. HERS to say when it gets a nav entry, because where a woman meets it is a product decision.** ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live with her first two pieces |
+| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ✅ **IN THE APP'S NAV SINCE 2026-09-11, HER CALL: *"let's go ahead and put it in"*** — the MENU's Shop group, directly beneath Style Star Edit, calling `openFinds`. ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live with her first two pieces |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
@@ -935,6 +935,47 @@ the unstamped file before `--write` was run.**
 ⚠️ **AND A SANDBOX LIMIT WORTH KNOWING: Chromium here CANNOT reach `stylestar.app`** (`ERR_CONNECTION_RESET`
 through the egress proxy), so the live page cannot be rendered and looked at from a session. **`curl` on
 the served file is the instrument** — it is what settled this.
+
+### 🎨 HER FIVE DESIGN NOTES ON THE FINDS PAGE — ALL BUILT AND LIVE 2026-09-11
+▶ **She tested the live page after the stylesheet fix landed and sent five things. All are built.**
+**(1) *"let's fix how do 💕 is all by itself"*** — the heart was orphaning onto its own line.
+🚨 **SHE ASKED WHETHER TO SHORTEN HER WORDS AND THE ANSWER WAS NO, SAID PLAINLY.** A widow is a LAYOUT
+fault, and **her sentence is hers** — rewriting her copy to fit one phone would break this file's own
+"never paraphrase her copy" rule for the sake of a line break. ▶ **Fixed in layout: `text-wrap:balance`
+plus a `.nb` weld holding the last words to the heart.** ⚠️ **BOTH, and not a hand-typed `&nbsp;`** —
+a weld tuned to ONE width looks fixed on the phone it was measured on and orphans again on the next.
+**The Edit's subtitle got the same treatment; it could orphan too.**
+**(2) *"take out the background linen on this page and just make the whole page all white"*** —
+🚨 **THE LINEN IS PAINTED BY THE SHELL (`.ss.dream-mirror`), NOT BY THE SCREEN.** `#s-dream` and
+`#s-finds` were ALREADY `#fff`, which is why "make the screen white" neither did nor could remove it.
+▶ **Overridden on the shell, scoped by the `finds-velvet` html class the page already carries; the black
+frame and silver inset are border and box-shadow, so they survive untouched.**
+⚠️ **THE EDIT KEEPS ITS LINEN AND THAT IS HER SCOPE, NOT AN OVERSIGHT** — she said *"this page"*.
+**Both halves are asserted, so a later tidy-up cannot sweep the Edit along.**
+**(3)(4) *"make both pages look the same"* at the foot, the Curious line *"larger"*, and the two links
+*"spaced out a bit more so finger doesn't bump the wrong one. Maybe you have a better suggestion?"***
+▶▶ **THE BETTER SUGGESTION, AND THE REASONING IS THE KEEPER: MORE GAP ALONE MAKES IT WORSE.** Two 20px
+strips with air between them means a thumb landing slightly off hits NOTHING and she taps again.
+**Each line now has its own TALL tap target (13px block padding, both over the 44px floor), with the gap
+as the miss-space between them.** ⚠️ **This is the file's own rule — *tighten the MARGINS around a
+control, never the padding inside it* — applied forwards: the padding IS the target, and her audience
+runs to 80.** ▶ **The Curious line went 12.5px → 14px to match the line above it, so the two read as a
+pair of choices rather than a link and an afterthought. Amazon Finds gained the trending link the Edit
+already had.**
+**(5) *"as far as this page not being reachable from inside the app, let's go ahead and put it in"*** —
+▶ **One row in the MENU's own Shop group, directly beneath Style Star Edit.** ⚠️ **It calls
+`openFinds`, NEVER `show('s-finds')` — the affiliate-wrap trap.** **Asserted, including that it sits
+next to the Edit.**
+🚨🚨 **AND THE HARNESS TRAP THIS DAY ADDED, BECAUSE IT ALMOST CAUSED A "FIX" TO A NON-BUG:
+GOOGLE FONTS DO NOT LOAD IN THIS SANDBOX.** A local render showed *"With love, Catherine"* breaking with
+the heart on its own line — it renders in a FALLBACK serif here, far wider than Dancing Script, and
+**her own screenshot shows it perfectly fine.** ▶ **So a line break seen in a local render is NOT
+evidence about her screen.** ⚠️ **Do not hand-tune wrapping to this harness — use width- and
+font-independent fixes (`balance`, a weld) and let her look.**
+⭐⭐ **AND LOOKING IS WHAT CAUGHT A REAL ONE THE NUMBERS MISSED: the first pass capped both links at
+`31ch` and split *"Click here to explore more →"* across two lines with the ARROW STRANDED** — the exact
+fault she had just reported, reintroduced one element over, with every measurement green. **MEASURE TO
+FIND CANDIDATES, LOOK TO DECIDE.**
 
 ### 🛒 THE HIGH/LOW DECISION — HER IDEA, AND IT RETIRED A THIRD PAGE BEFORE IT WAS BUILT
 🚨 **HER WORRY, VERBATIM, AND IT IS A BRAND WORRY NOT A FEATURE ONE:** *"Style Star is not really a

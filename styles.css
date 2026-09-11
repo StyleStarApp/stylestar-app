@@ -246,6 +246,17 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    inset, never from the bleed, which is why the Edit's dark teal and this pale
    tan both read correctly. Do not "fix" this by darkening it. */
 html.finds-velvet,html.finds-velvet body{background:#ECBD83}
+/* ⚠️ HER ASK 2026-09-11: "take out the background linen on this page and just
+   make the whole page all white in the background." The linen is painted by the
+   SHELL (.ss.dream-mirror), not by the screen -- #s-dream and #s-finds are
+   already #fff, which is why setting the screen white did not and could not
+   remove it. So this overrides the shell, scoped to this page by the html class
+   the page already carries, and keeps the black frame and silver inset intact
+   (they are border and box-shadow, not background).
+   🚨 EDIT-ONLY DIFFERENCE, AND IT IS DELIBERATE: she asked for it on THIS page.
+   The Edit keeps its linen. Do not "unify" them -- the two pages are meant to
+   match at the FOOT (her own line, both directions), not in their paper. */
+html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding-box,linear-gradient(#1a1a1a,#1a1a1a) border-box}
 /* 🚨 NO ACCENT OVERRIDES ON THIS PAGE, AND THAT IS HER DECISION (2026-09-11),
    NOT AN OVERSIGHT. A tan accent set (#8C5A1E tagline, #C98B3C rule, tan bag
    icon) was built here first and she ruled it off: "I think I want HAND
@@ -261,7 +272,20 @@ html.finds-velvet,html.finds-velvet body{background:#ECBD83}
    banner; this keeps her words as words and still shows clearly where to tap.
    ⚠️ The whole block is the tap target -- her audience runs to 80 and a two-word
    link is not a target. */
-.dc-xlink{text-align:center;font-family:'Lora',Georgia,serif;font-size:14px;line-height:1.6;color:#4a463e;cursor:pointer;margin-top:14px;padding:4px 2px}
+/* 🚨🚨 HER ASK 2026-09-11, AND THE SECOND HALF IS A SAFETY ASK, NOT A TASTE ONE:
+   "those buttons need to be spaced out a bit more so finger doesn't bump the
+   wrong one. Maybe you have a better suggestion there?"
+   ▶▶ THE BETTER SUGGESTION, AND IT IS WHY THIS IS PADDING RATHER THAN MARGIN:
+   more GAP alone leaves two 20px-tall strips with empty space between them, so
+   a thumb that lands slightly off hits NOTHING and she taps again. Giving each
+   line its own tall tap target means a near-miss still opens the right page.
+   ▶ 13px of block padding puts both over the 44px minimum at this type size,
+   and 10px of margin between them is the miss-gap. Measured, not assumed:
+   scratchpad/findspage.js asserts each height and the gap between them.
+   ⚠️ THIS IS THE FILE'S OWN STANDING RULE — "tighten the MARGINS around a
+   control, never the padding inside it" — applied forwards for once: the
+   padding IS the tap target, and her audience runs to 80. */
+.dc-xlink{text-align:center;font-family:'Lora',Georgia,serif;font-size:14px;line-height:1.6;color:#4a463e;cursor:pointer;margin:16px auto 0;padding:13px 2px;text-wrap:balance}
 .dc-xlink span{font-weight:600;color:#0FA6B6;text-decoration:underline;text-underline-offset:3px}
 /* ▶ HER RETHINK (2026-08-10), and the reasoning is the keeper. The Wardrobe List
    used to flip its whole colour scheme with the tab (gold bleed + black frame,
@@ -1900,7 +1924,19 @@ body.menu-open .menu-panel{display:block}
 /* Her ask 2026-08-11: tighten the air between CURATED BY CATHERINE and this
    paragraph (16px -> 8px). It also pays for half of the 16px the header just
    moved down, so the first product only shifts 8px. */
-#s-dream .dc-subtitle,#s-finds .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#4a463e;line-height:1.65;margin:8px -0.5rem 0.9rem;font-style:normal;font-weight:600;padding:0}
+/* ⚠️ text-wrap:balance AND the .nb span are BOTH here on purpose, her catch
+   2026-09-11: "let's fix how do 💕 is all by itself".
+   ▶ SHE ASKED WHETHER TO SHORTEN THE WORDS AND THE ANSWER WAS NO. Her sentence
+   is warm and it is HERS; a widow is a LAYOUT fault, so it is fixed in layout.
+   Rewriting her copy to fit a phone would be this file's "never paraphrase her
+   copy" rule broken for a line break.
+   ▶ balance evens the lines at ANY width; .nb is the belt under it, keeping the
+   last words welded to the heart on a browser too old for balance. A hand-typed
+   &nbsp; tuned to ONE screen width would have looked fixed on the phone it was
+   measured on and orphaned again on the next one -- she found this at a text
+   size that did not match the render here, which is exactly that trap. */
+#s-dream .dc-subtitle,#s-finds .dc-subtitle{font-family:'Lora',Georgia,serif;font-size:15.5px;color:#4a463e;line-height:1.65;margin:8px -0.5rem 0.9rem;font-style:normal;font-weight:600;padding:0;text-wrap:balance}
+.dc-subtitle .nb{white-space:nowrap}
 #s-dream .dc-disclosure,#s-finds .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 /* The third of her three sign-offs, matched to the other two: the gap was a
@@ -1909,7 +1945,16 @@ body.menu-open .menu-panel{display:block}
    .story-sig and .dc-sign — the three must move together. */
 #s-dream .dc-sign .pinkheart,#s-finds .dc-sign .pinkheart{margin-left:2px;vertical-align:-7px}
 #s-dream .btn-outline,#s-finds .btn-outline{border-radius:2px;border-width:1.5px;max-width:260px;margin:1.3rem auto 0}
-#s-dream .dc-trend-link{text-align:center;font:600 12.5px/1.4 'Jost',sans-serif;color:#0FA6B6;text-decoration:underline;cursor:pointer;margin-top:12px}
+/* ▶ BOTH SCREENS SINCE 2026-09-11 — her ask that the two pages end the same way.
+   ⚠️ AND IT IS 14px NOW, NOT 12.5px, HER CALL: "The curious line needs to be
+   larger." Matching the line above it makes the two read as a pair of choices
+   rather than a link and an afterthought. */
+#s-dream .dc-trend-link,#s-finds .dc-trend-link{text-align:center;font:600 14px/1.5 'Jost',sans-serif;color:#0FA6B6;text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin:10px auto 0;padding:13px 2px;text-wrap:balance}
+/* ⚠️ AN ARROW ALONE ON A LINE IS THE SAME FAULT SHE CAUGHT IN THE SUBTITLE, and
+   a first pass at these two links CAUSED it by capping their width -- looking at
+   the render is the only reason it did not ship. The arrow is welded to the word
+   before it, so it can never strand at any width or any font. */
+.dc-xlink .nb,#s-dream .dc-trend-link .nb,#s-finds .dc-trend-link .nb{white-space:nowrap}
 .our-story-link{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#6e6e6e;cursor:pointer;text-decoration:underline;margin-top:4px;letter-spacing:0.04em}
 .our-story-link:hover{color:#666}
 .story-wrap{padding:0.5rem 0.5rem 1.5rem;text-align:center}

@@ -226,7 +226,64 @@ const leftBehind = await page.evaluate(() => ({
 ok('they really LEFT the Edit — it holds no Amazon piece', leftBehind.amazon === 0, String(leftBehind.amazon));
 ok('and the Edit is otherwise intact', leftBehind.n === 33, String(leftBehind.n));
 
-console.log('\n9. NOTHING THREW');
+console.log('\n9. HER FIVE DESIGN NOTES, 2026-09-11');
+/* 🚨 THE TAP TARGETS ARE A SAFETY ASK, NOT A TASTE ONE: "those buttons need to
+   be spaced out a bit more so finger doesn't bump the wrong one." Her audience
+   runs to 80. 44px is the platform minimum and it is asserted as a FLOOR on
+   BOTH screens, so a future type or padding tweak cannot quietly shrink it. */
+const foot = async (route, screen) => {
+  await page.goto(ORIGIN + route, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(600);
+  return page.evaluate(s => {
+    const g = e => e ? getComputedStyle(e) : null;
+    const q = x => document.querySelector('#' + s + ' ' + x);
+    const xl = q('.dc-xlink'), tl = q('.dc-trend-link');
+    return {
+      hasBoth: !!xl && !!tl,
+      xlH: xl ? xl.getBoundingClientRect().height : 0,
+      tlH: tl ? tl.getBoundingClientRect().height : 0,
+      gap: (xl && tl) ? tl.getBoundingClientRect().top - xl.getBoundingClientRect().bottom : 0,
+      tlSize: tl ? parseFloat(g(tl).fontSize) : 0,
+      xlSize: xl ? parseFloat(g(xl).fontSize) : 0,
+      /* ⚠️ An arrow or a heart alone on a line is the fault she caught. These
+         welds are font- and width-independent, which a hand-typed &nbsp; tuned
+         to one screen would not be. */
+      welds: document.querySelectorAll('#' + s + ' .dc-xlink .nb, #' + s + ' .dc-trend-link .nb').length,
+      subtitleWeld: !!q('.dc-subtitle .nb'),
+      balanced: g(q('.dc-subtitle')).textWrap || g(q('.dc-subtitle')).textWrapStyle,
+      linen: /rgba\(150, 140, 120/.test(g(document.querySelector('.ss')).backgroundImage),
+    };
+  }, screen);
+};
+for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/edit', 's-dream', 'the Edit']]) {
+  const f = await foot(route, screen);
+  ok(label + ': both closing links are there — her "make both pages look the same"', f.hasBoth);
+  ok(label + ': the explore line is a real tap target (>=44px)', f.xlH >= 44, f.xlH + 'px');
+  ok(label + ': the trending line is a real tap target (>=44px)', f.tlH >= 44, f.tlH + 'px');
+  ok(label + ': and they are held apart so a thumb cannot bump the wrong one', f.gap >= 8, f.gap + 'px');
+  ok(label + ': the trending line is no longer the smaller of the two — her ask',
+     f.tlSize >= f.xlSize, f.tlSize + ' vs ' + f.xlSize);
+  ok(label + ': the arrows are welded to their words, so none can strand', f.welds === 2, String(f.welds));
+  ok(label + ': the closing heart is welded to her last words', f.subtitleWeld);
+  ok(label + ': the subtitle balances its lines at any width', /balance/.test(f.balanced || ''), f.balanced);
+}
+/* ⚠️ HER ASK WAS SCOPED TO ONE PAGE — "take out the background linen on THIS
+   page". The Edit keeps its linen deliberately; asserting BOTH halves is what
+   stops a later tidy-up sweeping the Edit along with it. */
+ok('Amazon Finds is plain white paper now — her ask', (await foot('/finds', 's-finds')).linen === false);
+ok('...and the Edit KEEPS its linen, which she did not ask to change',
+   (await foot('/edit', 's-dream')).linen === true);
+/* ▶ Her "let's go ahead and put it in": the app's own nav, next to the Edit. */
+ok('Amazon Finds has a way in from inside the app (the menu, beside the Edit)',
+   await page.evaluate(() => {
+     const rows = [...document.querySelectorAll('.menu-panel .menu-row')];
+     const i = rows.findIndex(r => /amazon finds/i.test(r.textContent));
+     const e = rows.findIndex(r => /style star edit/i.test(r.textContent));
+     return i > 0 && e > 0 && Math.abs(i - e) === 1
+         && /openFinds/.test(rows[i].getAttribute('onclick') || '');
+   }));
+
+console.log('\n10. NOTHING THREW');
 ok('no page errors', errors.length === 0, errors[0]);
 
 console.log('\n' + (fail ? '✗ ' : '✓ ') + pass + ' passed, ' + fail + ' failed\n');
