@@ -165,9 +165,20 @@ export function region(html) {
   return { from: s0 + a + START.length, to: s0 + b };
 }
 
-const names = h => {
+/* 🚨 PIECES ARE COMPARED BY ASIN, NEVER BY NAME, AND THAT IS THE WHOLE POINT.
+   Comparing by name was the first version and it fired on her very first RENAME:
+   dropping the colourway off seven names read as SEVEN REMOVALS AND SEVEN
+   ADDITIONS, with the count unchanged at 16. ▶ A name is a label she edits; the
+   ASIN is the piece. A guard that cannot tell a rename from a deletion would
+   have trained the next session to pass --allow-removals by reflex, which is
+   exactly how a guard stops protecting her page. */
+const pieces = h => {
   const s0 = h.indexOf('id="s-finds"'), s1 = h.indexOf('id="s-shop"', s0);
-  return [...h.slice(s0, s1 < 0 ? h.length : s1).matchAll(/<div class="dc-item-name">([\s\S]*?)<\/div>/g)].map(m => m[1]);
+  const scope = h.slice(s0, s1 < 0 ? h.length : s1);
+  const out = new Map();
+  const re = /<div class="dc-item-name">([\s\S]*?)<\/div>[\s\S]{0,1200}?<a class="dc-item-btn"[^>]*href="[^"]*\/dp\/([A-Z0-9]{10})/g;
+  for (const m of scope.matchAll(re)) out.set(m[2], m[1]);
+  return out;
 };
 
 if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
@@ -185,9 +196,13 @@ if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
   const { from, to } = region(html);
   const next = html.slice(0, from) + '\n' + render(rows) + '\n    ' + html.slice(to);
 
-  const before = names(html), after = names(next);
-  const gone = before.filter(n => !after.includes(n));
-  const added = after.filter(n => !before.includes(n));
+  const before = pieces(html), after = pieces(next);
+  const gone = [...before].filter(([a]) => !after.has(a)).map(([, n]) => n);
+  const added = [...after].filter(([a]) => !before.has(a)).map(([, n]) => n);
+  // A rename is neither a removal nor an addition: same ASIN, new label. Named
+  // separately so a run that only renames does not read as a run that did nothing.
+  const renamed = [...after].filter(([a, n]) => before.has(a) && before.get(a) !== n)
+    .map(([a, n]) => [before.get(a), n]);
 
   if (check) {
     const same = next === html;
@@ -195,9 +210,10 @@ if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
     process.exit(same ? 0 : 1);
   }
 
-  console.log(`  ${before.length} pieces on the page → ${after.length} from the CSV`);
+  console.log(`  ${before.size} pieces on the page → ${after.size} from the CSV`);
   added.forEach(n => console.log('  + ' + n));
   gone.forEach(n => console.log('  - ' + n));
+  renamed.forEach(([b, a]) => console.log('  ~ ' + b + '  →  ' + a));
   const cats = [...new Set(rows.map(r => r.category).filter(Boolean))];
   console.log(cats.length ? `  categories: ${cats.join(' · ')}` : '  no categories (flat list)');
 

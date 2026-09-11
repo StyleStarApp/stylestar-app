@@ -126,6 +126,30 @@ ok('it sits entirely AFTER the Edit ends', from > idx.indexOf('id="s-finds"'));
 ok('the Edit keeps its 33 pieces, untouched by any of this',
    (idx.slice(idx.indexOf('id="s-dream"'), fStart).match(/<div class="dc-item">/g) || []).length === 33);
 
+console.log('\n7b. A RENAME IS NOT A REMOVAL — pieces are matched by ASIN, never by name');
+/* 🚨 THIS FIRED FOR REAL ON HER FIRST RENAME, 2026-09-11. Dropping the colourway
+   off seven names read as SEVEN REMOVALS AND SEVEN ADDITIONS with the count
+   unchanged at 16, and the only way past it was --allow-removals — on a run that
+   removed nothing. ▶ A guard that cannot tell a rename from a deletion teaches
+   the next session to pass the override by reflex, and then it guards nothing. */
+const idxNow = fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'index.html'), 'utf8');
+const byAsin = new Map();
+{
+  const a = idxNow.indexOf('id="s-finds"'), b = idxNow.indexOf('id="s-shop"', a);
+  const re = /<div class="dc-item-name">([\s\S]*?)<\/div>[\s\S]{0,1200}?<a class="dc-item-btn"[^>]*href="[^"]*\/dp\/([A-Z0-9]{10})/g;
+  for (const m of idxNow.slice(a, b).matchAll(re)) byAsin.set(m[2], m[1]);
+}
+ok('every live piece is found by its ASIN, not its label', byAsin.size === 16, String(byAsin.size));
+ok('an ASIN maps to exactly one name', new Set(byAsin.keys()).size === byAsin.size);
+/* ▶ HER RULING, 2026-09-11, WIDENED FROM THREE PIECES TO ALL OF THEM: "actually I
+   don't think I want to put color on any of them." */
+const suffixed = [...byAsin.values()].filter(n => n.includes('—'));
+ok('no Finds name carries a "— Colour" suffix any more', suffixed.length === 0, suffixed.join(' | '));
+/* ⚠️ AND THE SCOPE: only the APPENDED colourway went. "Gold Ponytail Cuff" keeps
+   its gold, because that is the piece's identity rather than a colourway she picked. */
+ok('a colour word inside a name survives — Gold Ponytail Cuff is still gold',
+   [...byAsin.values()].some(n => /^Gold Ponytail Cuff$/.test(n)), [...byAsin.values()].join(' | '));
+
 console.log('\n8. HER LIVE PAGE AND HER SPREADSHEET AGREE');
 const live = (idx.slice(fStart, fEnd).match(/<div class="dc-item">/g) || []).length;
 const sheet = load(path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'data/amazon-finds.csv'));
