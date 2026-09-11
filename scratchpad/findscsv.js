@@ -80,7 +80,12 @@ const grouped = render(load(csv(HEAD
   + ROW({ name: 'Dress One', url: 'B000000001', category: 'Dresses' }) + '\n'
   + ROW({ name: 'Ring One', url: 'B000000002', category: 'Jewelry' }) + '\n'
   + ROW({ name: 'Dress Two', url: 'B000000003', category: 'Dresses' }))));
-const cats = [...grouped.matchAll(/<div class="dc-cat">([^<]*)<\/div>/g)].map(m => m[1]);
+/* ⚠️ MATCH THE CLASS, NOT THE WHOLE ATTRIBUTE. This read class="dc-cat" exactly and
+   went red the moment the first heading gained an `is-first` marker — it then saw
+   only the SECOND heading onward, so "Dresses|Jewelry" came back as "Jewelry" and
+   read like grouping had broken when nothing had. An exact attribute match is a
+   string pin wearing a selector's clothes. */
+const cats = [...grouped.matchAll(/<div class="dc-cat[^"]*">([^<]*)<\/div>/g)].map(m => m[1]);
 ok('each category appears exactly once, not once per piece', cats.join('|') === 'Dresses|Jewelry', cats.join('|'));
 ok('and in the order her rows first name them', cats[0] === 'Dresses');
 ok('a piece filed later still joins its own group',

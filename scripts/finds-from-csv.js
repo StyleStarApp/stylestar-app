@@ -117,8 +117,19 @@ export function render(rows) {
   // An uncategorised group renders with NO heading, so a spreadsheet with the
   // column left empty produces exactly the flat page she has today.
   const out = [];
+  /* ⚠️ THE FIRST HEADING IS MARKED, AND CSS CANNOT DO IT ON ITS OWN. Her catch
+     2026-09-11: the gap under "Some links may earn a commission." was too big. The
+     first heading needs LESS air above it than the others — it follows the
+     disclosure, not a card, so it has nothing to separate from. `:first-of-type`
+     looks like the answer and is not: it matches the first DIV among its siblings,
+     not the first .dc-cat, so it silently selects nothing here. Measured — both
+     gaps came back identical. A marker class is the honest fix. */
+  let firstHeading = true;
   for (const g of groups) {
-    if (g.key) out.push(`    <div class="dc-cat">${esc(g.key)}</div>`);
+    if (g.key) {
+      out.push(`    <div class="dc-cat${firstHeading ? ' is-first' : ''}">${esc(g.key)}</div>`);
+      firstHeading = false;
+    }
     for (const it of g.items) out.push(renderItem(it));
   }
   return out.join('\n\n');
