@@ -3910,3 +3910,16 @@ body.ss-play .hm-entrance{animation:ssOverlayOut .55s ease 1.6s forwards}
 @media (prefers-reduced-motion:reduce){
   .chat-typing-star,.find-load-star{animation:none;opacity:.75}
 }
+
+/* The Finds page's placeholder, shown only until Catherine's first pieces land
+   (2026-09-10). Deliberately quiet and deliberately NOT an apology: her rule is
+   state the truth and stop. It is removed the moment a .dc-item is added. */
+.dc-empty-note{
+  text-align:center;
+  color:#6e6e6e;
+  font-size:14px;
+  line-height:1.6;
+  padding:2.2rem 1rem;
+  max-width:30ch;
+  margin:0 auto;
+}

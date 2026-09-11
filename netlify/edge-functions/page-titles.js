@@ -581,6 +581,20 @@ function trendSchema(html) {
 // myself and recommend to clients." That IS the differentiator Sally
 // Hogshead's north star asks the app to say out loud, so the preview card
 // says it in her voice rather than a tidier version of it.
+// ── Amazon Finds (2026-09-10, her ask) ────────────────────────────────────
+// Same reason as /edit: this is a page she will SEND to people, and Instagram,
+// iMessage and Facebook read the raw HTML without running any JavaScript.
+// ⚠️ MUST STAY IN SYNC WITH _PAGE_META IN index.html BY HAND.
+// ⚠️ THE DESCRIPTION CARRIES HER OWN SENTENCE -- "mixing high and low is how I
+// dress my clients" -- because that is the whole reason this page is not a
+// discount bin. It is a stylist's choice, and the preview card should say so
+// before anyone even taps.
+PAGES['/finds'] = {
+  title: 'Amazon Finds — Hand Selected by Catherine | Style Star',
+  desc: 'Amazon pieces hand selected by Catherine, a personal stylist of over 20 years. Mixing high and low is how she dresses her clients. Nothing here is chosen by AI.',
+  scrId: 's-finds',
+};
+
 PAGES['/edit'] = {
   title: 'The Style Star Edit — Curated by Catherine | Style Star',
   desc: 'Pieces personally selected by Catherine, a personal stylist of over 20 years. Nothing here is chosen by AI. These are pieces she wears herself and recommends to clients.',

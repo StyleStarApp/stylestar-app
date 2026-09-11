@@ -109,6 +109,16 @@
   to = "/index.html"
   status = 200
 
+# Amazon Finds (2026-09-10, her ask). ⚠️ THE PATH IS DELIBERATELY NEUTRAL WHILE
+# THE HEADING SAYS AMAZON: she may broaden the page to Target or Kohl's later,
+# and a path can never move once shared. Rename the heading, never this.
+# ▶ Amazon's own trademark guidelines forbid their marks in a DOMAIN or
+# SUBDOMAIN, which is a second reason this is /finds and not /amazon-finds.
+[[redirects]]
+  from = "/finds"
+  to = "/index.html"
+  status = 200
+
 [[redirects]]
   from = "/results"
   to = "/index.html"
@@ -189,6 +199,10 @@
 
 [[edge_functions]]
   path = "/edit"
+  function = "page-titles"
+
+[[edge_functions]]
+  path = "/finds"
   function = "page-titles"
 
 [[edge_functions]]
