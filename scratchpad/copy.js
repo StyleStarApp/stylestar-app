@@ -187,6 +187,21 @@ await page.setViewportSize({ width: 390, height: 844 });
      BEFORE trusting a single number off it. */
   ok('styles.css is actually applied (else every number below is a default)',
      m.h > 0 && m.fit !== 'fill', 'height=' + m.h + ' fit=' + m.fit);
+  /* 🚨 THE SECOND HALF OF THAT GUARD, ADDED 2026-09-11 AND PAID FOR BY CATH'S
+     OWN PHONE. The suite above proves the sheet is applied HERE; it cannot
+     prove a woman gets TODAY'S sheet. She opened the live Finds page and saw
+     no tan bleed and the wrong font on her own subtitle -- both rules provably
+     served, byte-identical to the repo, and her browser rendering yesterday's
+     stylesheet against today's markup. Nothing errored anywhere.
+     ▶ The stylesheet link now carries styles.css's OWN content hash, so a cache
+     can never answer for a changed sheet. This asserts the stamp is current,
+     because a stamp nobody checks is exactly the thing that goes stale.
+     ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write */
+  const stamp = (await import('child_process'))
+    .spawnSync(process.execPath, [path.join(ROOT, 'scripts/css-version.js'), '--check'],
+               { encoding: 'utf8' });
+  ok('the stylesheet link carries styles.css\'s current content hash',
+     stamp.status === 0, (stamp.stderr || stamp.stdout || '').trim().split('\n')[0]);
   ok('NOTHING IS EVER CROPPED OFF A PRODUCT PHOTO', m.fit === 'contain', 'object-fit=' + m.fit);
   ok('the frame is taller than it is wide, so a portrait photo barely bands',
      m.h > 150, 'height=' + m.h);

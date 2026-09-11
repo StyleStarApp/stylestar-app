@@ -906,6 +906,36 @@ against the PREVIOUS deploy, because an earlier commit's comment already named t
 RULE — `finds-velvet body{background:#ECBD83}` — never the value alone.** **Same family as `copy`
 printing `✓ 49 passed`: a check that can pass on the wrong thing is not a check.**
 
+### 🚨🚨 A CSS CHANGE CAN REACH A WOMAN'S SCREEN A DAY LATE, AND IT LOOKS EXACTLY LIKE A BROKEN BUILD
+▶ **HER CATCH, 2026-09-11: *"I don't see the tan background or the proper font on 'Every piece…'"*** —
+on the live Finds page, from her own phone.
+✅✅ **NOTHING WAS WRONG WITH THE BUILD, AND THAT IS THE WHOLE LESSON. MEASURED, NOT GUESSED:** the
+served `styles.css` was **byte-identical to the repo**, `html.finds-velvet body{background:#ECBD83}` and
+`#s-dream .dc-subtitle,#s-finds .dc-subtitle{…Lora…}` were both **present in the served file**, and the
+served `index.html` was byte-identical too. ▶▶ **What her screen showed matched the OLD base rule
+`.dc-subtitle{font-size:14px;color:#777;…}` EXACTLY** — her browser was rendering **yesterday's
+stylesheet against today's markup.**
+🚨 **THE FAILURE MODE IS WHY THIS GETS A SECTION: NOTHING ERRORS.** The page loads, every element is
+there, and it is simply wrong — indistinguishable from a deploy that never happened. **She spent a round
+on it and so did the session.**
+⚠️ **IT IS NOT A MISSING HEADER — CHECKED: Netlify already sends `cache-control: public,max-age=0,
+must-revalidate` on `styles.css`, and there is no service worker.** A browser held an in-memory copy
+anyway. ▶▶ **THE ONLY THING NO CACHE CAN ANSWER FOR IS A URL IT HAS NEVER SEEN, SO THE FIX IS THE URL.**
+✅ **BUILT: the link is `/styles.css?v=<first 10 of styles.css's own sha256>`** — `scripts/css-version.js`,
+`--check` and `--write`. ⭐ **THE STAMP IS DERIVED, NEVER TYPED**, which is the difference between this
+and a version number someone has to remember. ▶ **`index.html` itself always revalidates, so a new stamp
+reaches every returning woman on her next load with NOTHING for her to clear** — that is what makes this
+a fix for her users and not just advice to her.
+▶ **RESTAMP AFTER ANY CSS EDIT: `node scripts/css-version.js --write`.** ✅ **`copy.js` fails if the stamp
+is stale** — a stamp nobody checks is exactly the thing that goes stale. **Proven to bite: it failed on
+the unstamped file before `--write` was run.**
+⚠️ **EVERY HARNESS WAS CHECKED FOR THE QUERY STRING and all of them strip it** (`.pathname` or
+`.split('?')[0]`); `starpx` reads the file off disk. **A harness that served by exact path would have
+404'd the stylesheet and measured browser defaults** — the trap this file already records.
+⚠️ **AND A SANDBOX LIMIT WORTH KNOWING: Chromium here CANNOT reach `stylestar.app`** (`ERR_CONNECTION_RESET`
+through the egress proxy), so the live page cannot be rendered and looked at from a session. **`curl` on
+the served file is the instrument** — it is what settled this.
+
 ### 🛒 THE HIGH/LOW DECISION — HER IDEA, AND IT RETIRED A THIRD PAGE BEFORE IT WAS BUILT
 🚨 **HER WORRY, VERBATIM, AND IT IS A BRAND WORRY NOT A FEATURE ONE:** *"Style Star is not really a
 'discount' platform so I want to be careful that the whole app doesn't appear to be a cheap item type

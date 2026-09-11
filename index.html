@@ -235,8 +235,22 @@
 <!-- The app's stylesheet, moved out of this file 2026-09-01. See the header
   comment in styles.css for why, and for the two rules that matter: the three
   former <style> blocks must keep their order, and this href must stay
-  ABSOLUTE (a relative one 404s on /journal/<slug> and every nested route). -->
-  <link rel="stylesheet" href="/styles.css">
+  ABSOLUTE (a relative one 404s on /journal/<slug> and every nested route).
+  🚨🚨 THE ?v= IS styles.css's OWN CONTENT HASH AND IT IS NOT DECORATION.
+  Cath opened the live Amazon Finds page on 2026-09-11 and saw no tan bleed and
+  the wrong font on her own subtitle. Both rules were provably served and the
+  file was byte-identical to the repo — her browser was rendering YESTERDAY'S
+  stylesheet against TODAY'S markup, with no error anywhere, looking exactly
+  like a build that had not deployed.
+  ⚠️ NOT a missing header: Netlify already sends max-age=0, must-revalidate. A
+  browser held an in-memory copy regardless. The one thing no cache can serve
+  is a URL it has never seen, so the fix is the URL.
+  ▶ index.html itself always revalidates, so a new stamp reaches every
+  returning woman on her next load with nothing for her to clear.
+  ▶ RESTAMP AFTER ANY CSS EDIT:  node scripts/css-version.js --write
+  ⚠️ DO NOT hand-type or "tidy" the value — it is derived from the file, and
+  scratchpad/copy.js fails if it is stale. -->
+  <link rel="stylesheet" href="/styles.css?v=9e2e3e77c8">
 </head>
 <body>
 <!-- build: quiz glow-up (chrome frame, gold knob, gold button, gold progress) 2026-07-11 r2 -->
