@@ -301,7 +301,30 @@ html.finds-velvet .ss.dream-mirror{background:linear-gradient(#fff,#fff) padding
    ▶ If maximum readability is ever wanted here, #D6337F measures 4.53:1 and is
    the same hue family. Do not swap it in without asking her — she chose the
    colour by name. */
-.dc-xlink span{font-weight:600;color:#EC4899;text-decoration:underline;text-underline-offset:3px}
+/* 🚨 `>` IS LOad-BEARING. `.dc-xlink span` matches BOTH spans here — the
+   invitation AND the `.nb` weld nested inside it — so `display:block` on the
+   loose selector put "The Edit →" on a line of its own, every time, at any
+   width. The invitation is the DIRECT child; the weld must stay inline. */
+.dc-xlink>span{display:block;text-wrap:wrap;font-weight:600;color:#EC4899;text-decoration:underline;text-underline-offset:3px}
+/* ⚠️ `display:block` ON THE INVITATION IS THE WHOLE FIX FOR HER 2026-09-11 ASK,
+   "the spacing looks better on the edit. Can you make it match on finds?"
+   ▶ WHAT WAS ACTUALLY WRONG: nothing was styled differently. The two pages carry
+   the SAME sentence and DIFFERENT link text ("Amazon Finds" vs "The Edit"), so
+   `text-wrap:balance` split them at different points — the Edit happened to put
+   its link on its own line and Finds left "clients." stranded beside it.
+   🚨 SO THE OLD LAYOUT DEPENDED ON HOW LONG THE LINK TEXT HAPPENED TO BE, which
+   means it would have drifted again the next time she renamed one. Making the
+   break STRUCTURAL costs one word and cannot come undone by a rewording.
+   ⚠️ The underline still draws under the TEXT only, not the full block width —
+   asserted, because a full-width rule is exactly the banner she ruled against.
+   ⚠️ `text-wrap:wrap` ON THE SPAN IS NOT REDUNDANT — IT UNDOES AN INHERITED
+   `balance`. The first attempt set only `display:block` and the LINK itself
+   split into two even lines ("Click here to explore" / "The Edit →"), because
+   text-wrap inherits and a balanced block evens its own lines out.
+   ▶ The sentence WANTS balance; the invitation wants to fill its line and only
+   wrap if it genuinely must. Different jobs, so they need different values.
+   ⭐ Caught by LOOKING at the render — every height measurement was identical
+   across both pages, which is exactly what "fixed" looks like from a number. */
 /* ▶ HER RETHINK (2026-08-10), and the reasoning is the keeper. The Wardrobe List
    used to flip its whole colour scheme with the tab (gold bleed + black frame,
    then black bleed + gold frame). She called it "too much muchness" and asked to

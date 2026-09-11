@@ -260,6 +260,16 @@ const foot = async (route, screen) => {
       xlText: (xl || {}).textContent || '',
       xlGo: (xl && xl.getAttribute('onclick')) || '',
       xlColour: xl ? g(xl.querySelector('span')).color : '',
+      /* her sentence and her invitation each get ONE line of their own at phone
+         width, on BOTH pages — the layout may not depend on how long the link
+         text happens to be. Measured in line-heights, which cannot lie. */
+      xlSentenceLines: xl ? +( (xl.getBoundingClientRect().height
+          - parseFloat(g(xl).paddingTop) - parseFloat(g(xl).paddingBottom)
+          - xl.querySelector('span').getBoundingClientRect().height)
+          / parseFloat(g(xl).lineHeight) ).toFixed(2) : 0,
+      xlLinkLines: xl ? +( xl.querySelector('span').getBoundingClientRect().height
+          / parseFloat(g(xl.querySelector('span')).lineHeight) ).toFixed(2) : 0,
+      nbInline: xl ? g(xl.querySelector('.nb')).display : '',
       tlColour: tl ? g(tl).color : '',
       subtitleWeld: !!q('.dc-subtitle .nb'),
     subtitleTail: (q('.dc-subtitle .nb') || {}).textContent || '',
@@ -313,6 +323,20 @@ for (const [route, screen, label] of [['/finds', 's-finds', 'Amazon Finds'], ['/
      f.tlColour === 'rgb(15, 166, 182)', f.tlColour);
   ok(label + ': the two are not the same colour', f.xlColour !== f.tlColour,
      f.xlColour + ' vs ' + f.tlColour);
+  /* 🚨 HER ASK 2026-09-11: "the spacing looks better on the edit. Can you make it
+     match on finds?" Nothing was styled differently — the two pages carry the
+     SAME sentence and DIFFERENT link text, and `text-wrap:balance` split them at
+     different points. The break is STRUCTURAL now, so it cannot drift again the
+     next time she renames a link. ▶ Asserted on BOTH pages, because "match" is
+     a claim about the pair. */
+  ok(label + ': her sentence gets its own line', f.xlSentenceLines <= 1.2, String(f.xlSentenceLines));
+  ok(label + ': and the invitation gets its own, unbroken', f.xlLinkLines <= 1.2, String(f.xlLinkLines));
+  /* ⚠️ THE MISTAKE THIS CAUGHT, AND IT COST A ROUND: `.dc-xlink span` matches the
+     `.nb` weld nested INSIDE the invitation as well, so `display:block` on the
+     loose selector put "The Edit →" on a line of its own at any width. The
+     selector must be `>`; the weld must stay inline. */
+  ok(label + ': the arrow weld stays inline, not a block of its own',
+     f.nbInline === 'inline', f.nbInline);
 }
 /* ⚠️ HER ASK WAS SCOPED TO ONE PAGE — "take out the background linen on THIS
    page". The Edit keeps its linen deliberately; asserting BOTH halves is what

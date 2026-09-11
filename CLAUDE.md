@@ -1110,6 +1110,29 @@ explore more"*. **The app changed, it did not break.** ▶ **Rewritten to name t
 reads plainly, only the invitation is underlined — which survives any rewording; the WORDS are asserted
 separately against the page each link must name.** **This file's own standing lesson, applied again.**
 
+### 📐 THE CLOSING BLOCK LAYS OUT THE SAME ON BOTH PAGES, AND THE BREAK IS STRUCTURAL
+▶ **HER ASK 2026-09-11: *"The spacing looks better on the edit. Can you make it match on finds?"***
+✅ **NOTHING WAS STYLED DIFFERENTLY — and that is the finding.** Both pages carry the SAME sentence and
+DIFFERENT link text (*"Amazon Finds"* vs *"The Edit"*), so `text-wrap:balance` split them at different
+points: the Edit happened to put its link on its own line and Finds left *"clients."* stranded beside it.
+🚨 **SO THE LAYOUT DEPENDED ON HOW LONG THE LINK TEXT HAPPENED TO BE — it would have drifted again the
+next time she renamed one.** ▶ **The break is STRUCTURAL now (`display:block` on the invitation), which
+costs one word and cannot come undone by a rewording.** ✅ **Asserted on BOTH pages in line-heights:
+her sentence gets one line, the invitation gets one unbroken line.**
+🚨🚨 **AND THE MISTAKE IT COST A ROUND TO FIND, BECAUSE IT IS THE KIND THAT WILL RECUR: `.dc-xlink span`
+MATCHES THE `.nb` WELD NESTED INSIDE THE INVITATION TOO.** `display:block` on that loose selector made
+the weld its own block, so *"The Edit →"* dropped to a line of its own **at any width** — and every
+height measurement came back IDENTICAL ACROSS BOTH PAGES, which is exactly what "fixed" looks like from
+a number. ▶▶ **THE SELECTOR MUST BE `.dc-xlink>span`. The weld stays inline, asserted.**
+⚠️ **AND A SECOND ONE IN THE SAME PASS: `text-wrap` INHERITS.** Setting only `display:block` left the
+invitation inheriting `balance` from its parent and evening ITS OWN lines out. **The sentence wants
+balance; the invitation wants to fill its line — different jobs, so `text-wrap:wrap` on the child is
+not redundant.**
+⭐⭐ **THE HABIT THAT ACTUALLY SOLVED IT, AFTER TWO WRONG GUESSES: MEASURE THE THING THAT CANNOT LIE.**
+A Range's client rects include the block box and reported 3 lines for a 2-line link; **height divided by
+line-height** settled it in one run. ▶ **And the width probe proved the text FIT ALL ALONG (198px in a
+274px box), which is what pointed at a forced break rather than a wrapping problem.**
+
 ### ✍️ THE TWO CURATED SUBTITLES END WITH A PERIOD — HER RULING 2026-09-11, AND IT BREAKS THE HOUSE PATTERN ON PURPOSE
 ▶ **HER QUESTION: *"at the top line of Edit it ends with I hope you'll love them too and the top line of
 Finds it says I hope you love these great finds as much as I do. Do we need a period at the end of those

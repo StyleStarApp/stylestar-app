@@ -5,7 +5,7 @@
 import http from 'http'; import fs from 'fs'; import path from 'path';
 const chromium = (await import('/opt/node22/lib/node_modules/playwright/index.js')).default.chromium;
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const PORT = 8944, ORIGIN = 'http://localhost:' + PORT;
+const PORT = 8951, ORIGIN = 'http://localhost:' + PORT;
 const srv = http.createServer((q, r) => {
   let p = decodeURIComponent(new URL(q.url, ORIGIN).pathname);
   let f = path.join(ROOT, p === '/' ? '/index.html' : p);
