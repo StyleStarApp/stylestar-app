@@ -1131,10 +1131,26 @@ delete her page. It refuses and names the pieces; `--allow-removals` is the deli
 ✅ **IT PRINTS BOTH SCREEN COUNTS AFTER EVERY WRITE** — the cheap habit that catches the wrong-screen bug.
 ▶ **AFTER A BATCH: `node scripts/sitemap-lastmod.js --write`.** (The suite catches a stale date anyway —
 it did on this very change.)
-⚠️ **PHOTOS ARE DELIBERATELY NOT IN THE CSV.** The Edit's photos are hotlinked from merchants she is
-approved for and gated by `_affMid`; **Amazon is not in `_AFF_MID` and she is not an Associate yet**, so
-hotlinking Amazon product images is an unanswered licensing question, not a missing feature. **Ask her
-before building it; do not add a column on a guess.**
+🚨🚨 **NO PHOTO COLUMN, AND IT IS NOT AN OVERSIGHT — HER RULING, 2026-09-11, AND IT IS A LICENSING
+ANSWER RATHER THAN A DESIGN ONE.** ***"Amazon only licenses product images through their Product
+Advertising API, to active Associates. Hotlinking an image URL off a product page is specifically a
+violation and people have lost accounts for it. I don't get API access until after my three qualifying
+sales. So don't build it. Photos on Finds will be my own, or none."***
+▶▶ **SO AN AMAZON PRODUCT PHOTO MAY NOT APPEAR ON THIS PAGE AT ALL, AND NOT MERELY UNTIL SHE IS
+APPROVED:** the API that licenses the images is itself gated behind the 3 qualifying sales, so the
+permission arrives AFTER the selling, not before it. **The risk is her Associates account, which is the
+one asset the whole Amazon plan depends on.**
+⚠️ **A FUTURE SESSION WILL SEE A PHOTOLESS PAGE BESIDE THE EDIT'S 17 PHOTOS AND WANT TO FIX IT. IT MUST
+NOT.** The Edit's photos are hotlinked from merchants she is APPROVED for and gated by `_affMid`;
+Amazon is in no such position. **Adding an image column would not be an improvement, it would be a
+violation.**
+⭐ **AND THE ONE ROUTE THAT IS OPEN IS ALREADY BUILT: `ownPx`, which this file reserves for HER OWN
+pictures of pieces she owns, where there is nobody to ask.** ▶ **Her words land exactly on it — *"my
+own, or none."* If she ever photographs a Finds piece herself, that is the mechanism, and no new
+licensing question is opened.**
+⭐⭐ **THE PATTERN WORTH KEEPING: THE QUESTION WAS FLAGGED RATHER THAN GUESSED AT, AND HER ANSWER WAS
+FIRMER THAN EITHER OPTION ON THE TABLE.** A column added "to be helpful" would have been built on the
+assumption that approval later unlocks it. **It does not.**
 
 ### 🚨 `.dc-sign` NOW EXISTS ON TWO PAGES, AND THE FIRST ONE IN THE FILE IS THE EDIT'S
 ⚠️ **PAID FOR 2026-09-11: two of her Amazon pieces were inserted above `<div class="dc-sign">With love,
