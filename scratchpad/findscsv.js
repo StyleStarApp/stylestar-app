@@ -139,16 +139,34 @@ const byAsin = new Map();
   const re = /<div class="dc-item-name">([\s\S]*?)<\/div>[\s\S]{0,1200}?<a class="dc-item-btn"[^>]*href="[^"]*\/dp\/([A-Z0-9]{10})/g;
   for (const m of idxNow.slice(a, b).matchAll(re)) byAsin.set(m[2], m[1]);
 }
-ok('every live piece is found by its ASIN, not its label', byAsin.size === 16, String(byAsin.size));
+/* ⚠️ COUNTED FROM THE PAGE, NEVER TYPED. A hardcoded 16 here would have gone red
+   on her very next batch — on GOOD NEWS — and the rule being guarded is not "there are
+   sixteen pieces", it is that EVERY live piece is reachable by its ASIN. A piece the
+   regex cannot see is a piece the rename/removal guard silently stops protecting. */
+const finds = (idxNow.slice(idxNow.indexOf('id="s-finds"'),
+                            idxNow.indexOf('id="s-shop"', idxNow.indexOf('id="s-finds"')))
+                    .match(/<div class="dc-item">/g) || []).length;
+ok('every live piece is found by its ASIN, not its label', byAsin.size === finds,
+   `by asin ${byAsin.size} vs cards ${finds}`);
 ok('an ASIN maps to exactly one name', new Set(byAsin.keys()).size === byAsin.size);
 /* ▶ HER RULING, 2026-09-11, WIDENED FROM THREE PIECES TO ALL OF THEM: "actually I
-   don't think I want to put color on any of them." */
-const suffixed = [...byAsin.values()].filter(n => n.includes('—'));
-ok('no Finds name carries a "— Colour" suffix any more', suffixed.length === 0, suffixed.join(' | '));
+   don't think I want to put color on any of them."
+   🚨 THE ASSERTION NAMES THE RULE, NOT THE PUNCTUATION. It used to forbid the EM-DASH
+   itself, and her next batch arrived carrying "Interchangeable Gold Purse Chains — 5 Pack"
+   — a legitimate name that would have turned this red for no reason. The thing she
+   ruled off is an APPENDED COLOURWAY, so that is what is checked. */
+const COLOURS = /^(white|black|blue|red|green|pink|beige|brown|tan|navy|ivory|cream|grey|gray|gold|silver|nude|blush|khaki|olive|burgundy|taupe|multi)\b/i;
+const suffixed = [...byAsin.values()].filter(n => {
+  const i = n.indexOf('—');
+  return i >= 0 && COLOURS.test(n.slice(i + 1).trim());
+});
+ok('no Finds name carries an appended colourway', suffixed.length === 0, suffixed.join(' | '));
 /* ⚠️ AND THE SCOPE: only the APPENDED colourway went. "Gold Ponytail Cuff" keeps
-   its gold, because that is the piece's identity rather than a colourway she picked. */
+   its gold, because that is the piece's identity rather than a colourway she picked —
+   and she said so again on the chains: "keep the gold on the purse chains". */
 ok('a colour word inside a name survives — Gold Ponytail Cuff is still gold',
    [...byAsin.values()].some(n => /^Gold Ponytail Cuff$/.test(n)), [...byAsin.values()].join(' | '));
+ok('and on the chains, which she ruled on by name', [...byAsin.values()].some(n => /Gold Purse Chains/.test(n)));
 
 console.log('\n8. HER LIVE PAGE AND HER SPREADSHEET AGREE');
 const live = (idx.slice(fStart, fEnd).match(/<div class="dc-item">/g) || []).length;
