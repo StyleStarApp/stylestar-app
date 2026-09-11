@@ -232,7 +232,14 @@ const leftBehind = await page.evaluate(() => ({
             .filter(a => /(^|\.)amazon\.com\//.test(a.href)).length,
 }));
 ok('they really LEFT the Edit — it holds no Amazon piece', leftBehind.amazon === 0, String(leftBehind.amazon));
-ok('and the Edit is otherwise intact', leftBehind.n === 33, String(leftBehind.n));
+/* 🚨 THIS COUNTED 33 AND WENT RED THE DAY SHE REMOVED TWO EDIT PIECES BY HAND —
+   good news failing a check, again. The rule this line exists for is that MOVING her
+   Amazon pieces to /finds did not empty the Edit, not that the Edit is a fixed size:
+   it is hand-maintained markup and its count is hers to change whenever she likes.
+   ▶ Asserted as "still a real page", with the Amazon check above carrying the actual
+   claim. A count she edits weekly can never be a useful assertion. */
+ok('and the Edit is still a full curated page, not gutted by the move',
+   leftBehind.n >= 25, String(leftBehind.n));
 
 console.log('\n8b. THE PRICES ARE ROUNDED UP WITH A TILDE — her ask, 2026-09-11');
 /* 🚨 WHY THIS PAGE AND NOT THE EDIT, AND IT IS A TRUTH DIFFERENCE RATHER THAN A

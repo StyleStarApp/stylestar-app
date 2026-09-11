@@ -13,6 +13,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+const ROOT_DIR = path.join(path.dirname(new URL(import.meta.url).pathname), '..');
 import { renderPrice, render, load, region } from '../scripts/finds-from-csv.js';
 
 let pass = 0, fail = 0;
@@ -123,8 +124,20 @@ const fStart = idx.indexOf('id="s-finds"'), fEnd = idx.indexOf('id="s-shop"', fS
 ok('the generated region starts inside s-finds', from > fStart && from < fEnd, `${from} vs ${fStart}..${fEnd}`);
 ok('and ends inside s-finds', to > from && to < fEnd);
 ok('it sits entirely AFTER the Edit ends', from > idx.indexOf('id="s-finds"'));
-ok('the Edit keeps its 33 pieces, untouched by any of this',
-   (idx.slice(idx.indexOf('id="s-dream"'), fStart).match(/<div class="dc-item">/g) || []).length === 33);
+/* 🚨 THIS COUNTED 33 AND WENT RED THE DAY SHE REMOVED TWO EDIT PIECES — on a change
+   that had nothing to do with this script, which is the definition of a check that
+   cries wolf. ▶ THE RULE IS NOT "the Edit has 33 pieces", IT IS "the importer cannot
+   REACH the Edit": her Edit is hand-maintained markup and its count is hers to move.
+   Asserted by running the importer over a fixture and proving the Edit's count comes
+   out the other side UNCHANGED, whatever that count happens to be. */
+{
+  const editCount = h => (h.slice(h.indexOf('id="s-dream"'), h.indexOf('id="s-finds"'))
+                           .match(/<div class="dc-item">/g) || []).length;
+  const before = editCount(fs.readFileSync(path.join(ROOT_DIR, 'index.html'), 'utf8'));
+  ok('the Edit is untouched by a run of the importer — whatever its count is',
+     editCount(idx) === before, `${editCount(idx)} vs ${before}`);
+  ok('...and it still has pieces at all, so "untouched" is not vacuously true', before > 0);
+}
 
 console.log('\n7b. A RENAME IS NOT A REMOVAL — pieces are matched by ASIN, never by name');
 /* 🚨 THIS FIRED FOR REAL ON HER FIRST RENAME, 2026-09-11. Dropping the colourway
