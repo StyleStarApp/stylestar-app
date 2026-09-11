@@ -236,12 +236,21 @@ html.edit-velvet,html.edit-velvet body{background:#0E7F8C}
    to be TEXT -- measured at 1.73:1 on white, against the 4.5:1 an 18-to-80
    audience needs. ▶ So the pale tan bleeds BEHIND the card, and the accent text
    uses a deeper tone of the same family instead of the Edit's turquoise. */
-html.finds-velvet,html.finds-velvet body{background:#C98B3C}
-/* The accent that replaces #0FA6B6 on this page only. Measured 4.29:1 on the
+/* ⭐ HER PICK, 2026-09-11, chosen by LOOKING at four rendered options: the
+   LIGHTEST tan, and it is Amazon's own header colour exactly as sampled from
+   her screenshot. Her words: "I am talking about using the tan as the
+   background color in the same placement we have the teal color on edit... I
+   prefer the lightest shade of tan."
+   ⚠️ A PALE BLEED WORKS HERE ONLY BECAUSE THE CARD'S OWN FRAME IS BLACK. The
+   separation between page and card comes from that 8px border and its silver
+   inset, never from the bleed, which is why the Edit's dark teal and this pale
+   tan both read correctly. Do not "fix" this by darkening it. */
+html.finds-velvet,html.finds-velvet body{background:#ECBD83}
+/* The accent that replaces #0FA6B6 on this page only. Measured 5.84:1 on the
    card's own warm paper -- readable, and unmistakably the Amazon family. */
-#s-finds .dc-tagline{color:#A96D24}
+#s-finds .dc-tagline{color:#8C5A1E}
 #s-finds .dc-logo::after{background:#C98B3C}
-#s-finds .dc-item-btn svg{stroke:#A96D24}
+#s-finds .dc-item-btn svg{stroke:#8C5A1E}
 /* Her bottom line, 2026-09-11: the SENTENCE reads plainly and only the INVITATION
    is underlined. Underlining the whole thing turns a stylist's sentence into a
    banner; this keeps her words as words and still shows clearly where to tap.
@@ -249,7 +258,7 @@ html.finds-velvet,html.finds-velvet body{background:#C98B3C}
    link is not a target. */
 .dc-xlink{text-align:center;font-family:'Lora',Georgia,serif;font-size:14px;line-height:1.6;color:#4a463e;cursor:pointer;margin-top:14px;padding:4px 2px}
 .dc-xlink span{font-weight:600;color:#0FA6B6;text-decoration:underline;text-underline-offset:3px}
-#s-finds .dc-xlink span{color:#A96D24}
+#s-finds .dc-xlink span{color:#8C5A1E}
 /* ▶ HER RETHINK (2026-08-10), and the reasoning is the keeper. The Wardrobe List
    used to flip its whole colour scheme with the tab (gold bleed + black frame,
    then black bleed + gold frame). She called it "too much muchness" and asked to
