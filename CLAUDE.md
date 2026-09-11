@@ -46,6 +46,7 @@ it several times that day as if it were her next step, and it was not: **she had
 | 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
 | 25 | 🛒 **AN AMAZON FINDS PAGE — HER ASK, 2026-09-10, AND STRATEGICALLY IT IS THE BEST IDEA ON THIS BOARD.** ***"I want to make an Amazon finds page. Another Sharable page dedicated to Amazon finds. I want to also feature some of them on Star of the week and our normal edit."*** ▶▶ **WHY IT MATTERS MORE THAN IT LOOKS: THIS FILE HAS SAID FOR WEEKS THAT WHAT THE APP LACKS IS A MID-MARKET GENERALIST** (every fed store is `$$$`/`$$$$`, dress median $398, 0 of 200 dresses under $100). **Amazon IS that, and it is the one such programme she can join without being declined for traffic.** ⚠️ **SO HER INSTINCT ANSWERS THE AFFORDABILITY PROBLEM THIS FILE KEPT CALLING UNSOLVABLE-WITHOUT-USERS.** 🚨🚨 **BUT THE ORDER SHE PROPOSED IS BACKWARDS AND IT IS WORTH REAL MONEY TO GET RIGHT — SEE THE AMAZON BLOCK IN THE MONEY PATH.** ▶ **THE PAGE ITSELF NEEDS NO CATALOGUE AND NO API: hand-picked links, exactly like the Edit, which is also the only version that honours her own disclosure that every piece is personally selected by the founder.** | Claude to build, HERS to pick the pieces | ⏳ **OPEN — she asked for it** |
 | 24b | ✅✅ **THE EDIT IS A SHAREABLE LINK — BUILT AND LIVE 2026-09-10: `stylestar.app/edit`.** ▶ **SIX edits, not the three the routing note promised**, because sharing needs more than a route: the `netlify.toml` rewrite (200) · an `[[edge_functions]]` registration · `PAGES['/edit']` in `page-titles.js` · `_ROUTES` · `_PAGE_META` · an `_openRoute` branch · **and the sitemap entry (priority 0.9)**. 🚨🚨 **THE TRAP IT NEARLY SHIPPED WITH, AND IT WAS MEASURED: `_openRoute` MUST CALL `showDream()`.** Planting a bare `show('s-dream')` rendered **17 links on merchants she IS approved for completely UNWRAPPED** — earning nothing, on the one page she actually sends to people, **with every card looking perfectly normal.** ▶ **`scratchpad/editshare.js`, 26 checks, built around that money check and PROVEN TO BITE.** ⚠️ **The title and description live in TWO files that cannot import from each other; §4 of the suite asserts they match word for word.** ✅ **Verified on the SERVED file, not the deploy badge.** | — | ✅ done |
+| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⚠️ NOT YET LINKED FROM THE APP AND NOT IN THE SITEMAP, ON PURPOSE: IT HAS NO PIECES IN IT YET.** ▶ **Reachable by URL so she can look at it; it gets its nav entry and its sitemap row the day her first pieces land.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ built, waiting on her pieces |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
@@ -840,6 +841,51 @@ GOOGLE."** ▶ **So its Google indexing was fine all along and the worry was unf
 for six days for want of one lookup. ⭐ **THE LESSON IS ABOUT THE QUESTION, NOT THE PAGE: an unverified
 worry costs nothing to check and outlives every session it is not checked in.** **When a note says
 "unconfirmed" and she is already standing in the tool that confirms it, ask.**
+
+### 🛒 THE HIGH/LOW DECISION — HER IDEA, AND IT RETIRED A THIRD PAGE BEFORE IT WAS BUILT
+🚨 **HER WORRY, VERBATIM, AND IT IS A BRAND WORRY NOT A FEATURE ONE:** *"Style Star is not really a
+'discount' platform so I want to be careful that the whole app doesn't appear to be a cheap item type
+of place but as a stylist I do recommend mixing high and low items."* ▶ **She then proposed a THIRD
+page — hand-picked luxury splurges — to offset Amazon, and doubted it herself: *"That would end up
+being 3 'Edit' pages though so not sure I want to do that."***
+✅✅ **SHE WAS RIGHT TO DOUBT IT, AND THE MEASUREMENT SETTLED IT: HER EDIT IS ALREADY A HIGH/LOW MIX.**
+Across all 35 pieces: **$12 to $1,100, median $248 — 11 under $100, 10 at $100-299, 14 at $300+.**
+▶▶ **SO THE SPLURGE PAGE SHE WAS IMAGINING ALREADY EXISTS. IT IS THE EDIT.** Building a second one
+would have split her best page in half and given her a third thing to maintain.
+⭐⭐ **AND THE FEAR WAS POINTED AT THE WRONG RISK, WHICH IS WORTH SAYING PLAINLY WHENEVER IT RETURNS:
+this app's measured problem is that it looks UNATTAINABLE, not cheap** — the finder's own medians are
+dresses $398, tops $260, shoes $790, and 0 of 200 dresses under $100. **Amazon does not cheapen Style
+Star; it fixes the thing that currently makes it unaffordable** — and her founding value says so:
+*literally any woman, 18 to 80+, no age or income bracket.*
+🚨🚨 **HER LINE, AND SHE CHOSE IT HERSELF — IT SITS ON BOTH PAGES, EACH POINTING AT THE OTHER:**
+***"Mixing high and low is how I dress my clients — here's the other half."*** Her verdict: *"I love
+the line... that is really good."* ▶▶ **THAT ONE SENTENCE IS WHAT MAKES TWO PAGES READ AS ONE STYLIST
+IDEA RATHER THAN AS A LUXURY PAGE AND A CHEAP PAGE.** ⚠️ **DO NOT REWORD IT BLANDER. It is hers, and
+it does the whole job her third page was meant to do — for free, with nothing extra to maintain.**
+⚠️ **AND IT AVOIDS PAIR-CURATION:** a page of splurge/save COUPLES would look beautiful and would force
+her to curate in twos, against her actual working pattern of one piece at a time.
+
+### 📜 AMAZON'S TRADEMARK RULES — READ FROM THEIR OWN GUIDELINES, 2026-09-10, NOT RECALLED
+✅ **A DESCRIPTIVE PAGE HEADING SAYING "Amazon Finds" IS FINE.** Their guidelines do not restrict page
+names or headings, and it is what thousands of Associates do.
+🚨 **WHAT IS EXPLICITLY FORBIDDEN IS THEIR MARKS IN A DOMAIN OR SUBDOMAIN** (their example:
+`kindlemagazines.mydomain.info`). ▶ **A second, independent reason the path is `/finds`.**
+⚠️ **DISPLAYING AMAZON'S LOGO TRIGGERS A FURTHER REQUIREMENT** — the site must then carry *"Amazon and
+the Amazon logo are trademarks of Amazon.com, Inc. or its affiliates"* — plus rules against altering
+the mark. ▶▶ **SO THE PAGE USES THE WORD AND HER OWN GOLD STAR, NEVER THEIR LOGO.** **Asserted by a
+test.** ⚠️ **Re-read their guidelines on the day she applies; programme rules change.**
+
+### 💰 AMAZON EARNS BY A TAG, NOT BY A WRAPPER — AND `_AMZ_TAG` IS THE ONE EDIT ON APPROVAL DAY
+▶ **Amazon does not run through Rakuten, so it can NEVER appear in `_AFF_MID`:** its links carry a
+`?tag=` parameter instead of a `click.linksynergy.com` wrapper. **`_affUrl` handles both, in one
+function, Amazon first.**
+🚨 **`_AMZ_TAG` IS EMPTY TODAY AND THAT IS CORRECT, NOT UNFINISHED.** She is not an Associate yet, so an
+Amazon link stays plain and honest rather than carrying a fake tag. ▶▶ **ON APPROVAL: put her tracking
+id in that ONE constant and every Amazon link in the app starts earning at once — the Finds page, the
+Edit's TWO existing Amazon pieces, the Star, everywhere.** ⚠️ **AND ADD AMAZON'S REQUIRED SENTENCE THE
+SAME DAY, exact wording: *"As an Amazon Associate I earn from qualifying purchases."***
+⚠️ **THE FINDS PAGE IS A SEVENTH DISCLOSURE PLACE** — `.dc-disclosure`, its own, asserted as exactly
+one. **The catalogued six become seven; that is correct, not drift.**
 
 ### 💰 WHICH EDIT PIECES ACTUALLY EARN — MEASURED 2026-09-10, AND THE FIRST FIGURE GIVEN TO HER WAS WRONG
 🚨 **HER QUESTION, AND IT DESERVES A NUMBER RATHER THAN A YES: *"I can share it and when anyone opens it
