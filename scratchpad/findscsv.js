@@ -175,8 +175,13 @@ ok('a colour word that IS the piece survives — the purse chains keep their gol
    [...byAsin.values()].join(' | '));
 /* ▶ AND THE OTHER HALF OF HER RULE: a name that dropped its colour must say so in the
    note, or a woman reaches a silver piece off a page that told her nothing. */
-for (const [nm, asin] of [['Stretchy Stacking Bangles', 'B0CWD1RYK3'], ['Ponytail Cuff', 'B0FQC2PCXS']]) {
-  ok(`${nm} carries no colour in its name`, byAsin.get(asin) === nm, byAsin.get(asin));
+for (const [nm, asin] of [['the bangles', 'B0CWD1RYK3'], ['the ponytail cuff', 'B0FQC2PCXS']]) {
+  /* ⚠️ EQUALITY AGAIN. This read `=== nm`, so renaming the cuff to "Ponytail Cuff,
+     4 Pack" — a pack count, not a colour — failed the colour rule. The rule is that
+     the NAME CARRIES NO METAL, and everything else about the name is hers to edit. */
+  ok(`${nm} carries no colour in its name`,
+     !!byAsin.get(asin) && !/\b(gold|silver|rose gold)\b/i.test(byAsin.get(asin)),
+     byAsin.get(asin));
   const row = load(path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'data/amazon-finds.csv'))
     .find(r => r.url.includes(asin));
   /* 🚨 THIS PINNED THE LITERAL "gold or silver" AND WENT RED WITHIN THE HOUR, when she
