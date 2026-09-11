@@ -412,7 +412,40 @@ SENTENCE IS THE LOAD-BEARING ONE: *"keep track of everything and be honest with 
 is not permission to be vague about what was decided — say what was saved and where, in one line.**
 
 
-### 🚨🚨🚨 SERPAPI — LIVE OPERATIONAL STATUS. **RE-MEASURED 2026-09-10 (LATEST): GOOGLE IS STILL DEAD, AND HER OWN FEED IS THE ONLY REASON THE APP STILL SHOWS CLOTHES.**
+### 🚨🚨🚨 SERPAPI — LIVE OPERATIONAL STATUS. **RE-MEASURED 2026-09-11: STILL THEIR OUTAGE, NOW PARTIAL — 1 SEARCH IN 6 GETS THROUGH.**
+▶ **HER REPORT, 2026-09-11 MORNING, AND IT IS ACCURATE:** *"I checked on shop your style and wardrobe
+list shopping searches this morning and the only thing coming up is from our approved affiliates and
+nothing from the SerpApi searches."*
+✅ **MEASURED AGAINST HER LIVE FUNCTION, SIX SEARCHES: FIVE HUNG, ONE SUCCEEDED.**
+· The five failures pinned at **9019 · 9004 · 9025 · 9002 · 9004 ms** — the app's own 9-second ceiling
+to the millisecond. **HUNG, not slow, and NOT BILLED.**
+· The one success (`{"item":"top","colour":"white"}`) returned a **real verified Target t-shirt at
+$8.00**, `verified: 2`, colour and stock both CONFIRMED. ▶▶ **So Google's half is not dead any more —
+it is INTERMITTENT, which is exactly what SerpApi's own words predicted:** *"a partial mitigation that
+is currently restoring a portion of traffic."*
+· **Her feed carried 11–24 browse cards on EVERY one**, including all five failures (`feedWhy: ok`), so
+a woman never saw an empty screen. **The 2026-09-10 feed fix is still carrying the experience.**
+· **`searchesLeft` 697 → 694 in 24 hours.** ⚠️ **THREE searches billed in a whole day** — consistent
+with almost nothing getting through, and a reminder that the budget is nowhere near the problem.
+🚨 **THE INCIDENT IS STILL OPEN AND HAS NOT BEEN UPDATED SINCE 2026-09-10T18:55 UTC.** *"Service outage
+9/10"*, status `identified`, impact `critical`, **Shopping API among its components**; overall
+`Partial System Outage`, `Google: major_outage`, `Shopping API: major_outage`.
+▶ **SO EVERY CONCLUSION FROM 2026-09-10 STILL HOLDS: not her budget, not her key, not the ceiling, not
+our code. NOTHING TO FIX AND NOTHING TO BUY.**
+⚠️ **AND STILL DO NOT RAISE THE CEILING.** Five failures pinned to the millisecond on it is the
+signature of a request that is HUNG; a bigger ceiling only makes a woman wait longer for the same
+honest sentence.
+💰 **ONE PRODUCT DECISION THIS RAISES, AND IT IS HERS — A SINGLE RETRY ON A HUNG SEARCH.** Because a
+hung call is **never billed** (measured: `searchesLeft` did not move across five failures), retrying
+once costs **no money at all** — only TIME. ▶ **One in six becomes roughly one in three.** ⚠️ **THE
+PRICE IS A WOMAN WAITING ~18s INSTEAD OF ~9s FOR THE SAME HONEST SENTENCE WHEN BOTH ROLLS FAIL.**
+🚨 **DO NOT BUILD IT WITHOUT HER.** It trades her user's patience for a chance at photographs, which is
+exactly the class of call this file reserves for her. **And it is only worth raising while the outage
+is PARTIAL — once Google's half is healthy, a retry is pure cost.** ▶ **Re-check before offering it:
+if `googleFailed` is false, this row is spent.**
+
+*THE 2026-09-10 ENTRY, KEPT BECAUSE ITS DIAGNOSIS IS WHAT THIS ONE RESTS ON:*
+### 🚨 SERPAPI — **2026-09-10: GOOGLE WAS TOTALLY DEAD, AND HER OWN FEED WAS THE ONLY REASON THE APP STILL SHOWED CLOTHES.**
 🚨🚨 **THE CURRENT TRUTH, MEASURED THREE TIMES AGAINST HER LIVE FUNCTION AND IT REPEATED 3/3 —
 `{"item":"dress"}`, `{"item":"dress","cut":"belted"}` and `{"item":"white jeans"}`:**
 · **`googleFailed: true` on every one.** · **`ms.search` pinned at 9003 · 9004 · 9006ms**, which is the
