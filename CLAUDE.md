@@ -842,6 +842,37 @@ for six days for want of one lookup. ⭐ **THE LESSON IS ABOUT THE QUESTION, NOT
 worry costs nothing to check and outlives every session it is not checked in.** **When a note says
 "unconfirmed" and she is already standing in the tool that confirms it, ask.**
 
+### 🎨 THE FINDS PAGE IS THE EDIT IN HER OWN COLOURWAY — HER DESIGN NOTES, 2026-09-11
+▶ **She tested the live page and sent five notes. All are built.** The shared Style Star logo is
+hidden (she asked for it to match the Edit), the page wears the Edit's OWN frame through the same
+`dream-mirror` toggle rather than a copy, the LEFT heart carries `hl` so the pair tilt toward each
+other, and her wording replaced Claude's on both the subtitle and the closing line.
+🚨 **HER COLOUR, AND SHE PICKED IT BY LOOKING AT FOUR RENDERS: THE LIGHTEST TAN, `#ECBD83`** — which
+is **Amazon's own header colour, sampled off her screenshot rather than guessed**. Her clarification,
+and it corrected a reading: ***"I am talking about using the tan as the background color in the same
+placement we have the teal color on edit... I prefer the lightest shade of tan."***
+⚠️⚠️ **WHY A PALE BLEED WORKS HERE, SO NOBODY DARKENS IT: the separation between page and card comes
+from the card's BLACK 8px frame and its silver inset, never from the bleed.** That is why the Edit's
+dark teal and this pale tan both read correctly. **Do not "fix" it by making it deeper.**
+⚠️ **THE TAN IS A BACKGROUND AND MAY NEVER BE TEXT — MEASURED: 1.73:1 on white**, against the 4.5:1 an
+18-to-80 audience needs, and against this file's own contrast rule. ▶ **The accent that replaces the
+Edit's turquoise on this page is `#8C5A1E`, 5.84:1.**
+▶ **HER CLOSING LINE UNDERLINES ONLY THE INVITATION:** the sentence reads plainly and *"Click here to
+explore more →"* carries the underline. **Underlining the whole thing turns a stylist's sentence into
+a banner.** ⚠️ **The whole block stays the tap target — her audience runs to 80.**
+✅ **AND RENDERING THE PAIR CAUGHT SOMETHING SHE HAD NOT FLAGGED: the Edit's subtitle and disclosure
+styles were scoped to `#s-dream` ALONE**, so the twin page read in the default sans while the Edit
+read in bold Lora. **EIGHT rules now name BOTH screens.** ▶ **Same lesson as the `px2` stack: one
+rule, both classes, or the same design drifts apart on two screens.**
+🚨🚨 **TWO HARNESS TRAPS PAID FOR THE SAME DAY, AND BOTH GENERALISE:**
+**(a) A RENDER THAT INJECTS CSS OVER THE REAL STYLESHEET IS NOT A RENDER OF THE APP.** The comparison
+script kept `addStyleTag` overrides from the option-picking round and photographed a colour that was
+no longer in any file. **Delete the override before photographing the real thing.**
+**(b) A DEPLOY CHECK THAT GREPS A COLOUR MATCHES ITS OWN COMMENT.** `grep ECBD83` passed instantly
+against the PREVIOUS deploy, because an earlier commit's comment already named that hex. ▶ **Grep the
+RULE — `finds-velvet body{background:#ECBD83}` — never the value alone.** **Same family as `copy`
+printing `✓ 49 passed`: a check that can pass on the wrong thing is not a check.**
+
 ### 🛒 THE HIGH/LOW DECISION — HER IDEA, AND IT RETIRED A THIRD PAGE BEFORE IT WAS BUILT
 🚨 **HER WORRY, VERBATIM, AND IT IS A BRAND WORRY NOT A FEATURE ONE:** *"Style Star is not really a
 'discount' platform so I want to be careful that the whole app doesn't appear to be a cheap item type
