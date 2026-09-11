@@ -19,7 +19,9 @@ Style Star and a mid-market feed is USERS, not code and not craft.**
 SHE HAS ALREADY SHARED THE APP — *"I have already asked many friends and put it out on Instagram."***
 ▶▶ **SO "you need users" IS A FACT ABOUT AFFILIATES, NOT A THING SHE STILL HAS TO DO.** Claude repeated
 it several times that day as if it were her next step, and it was not: **she had already taken it.**
-▶ **THE LIVE QUESTION IS WHAT CAME BACK. ASK HER; DO NOT ADVISE HER TO FIND TESTERS.**
+✅ **CLOSED 2026-09-11 (second session): SHE AND CLAUDE HAVE ALREADY BEEN OVER WHAT CAME BACK, IN
+DETAIL, IN A PRIOR CONVERSATION.** ⚠️ **DO NOT ASK HER THIS AGAIN.** She'll surface more feedback as she
+gathers it going forward — that's an open, ongoing thing, not a one-time question waiting on an answer.
 
 ### ⭐ THE BOARD — ALL FOUR CLOSED, AND THAT IS WHY THE NEXT MOVE IS A QUESTION, NOT A BUILD
 | # | What | Who | State |
@@ -362,10 +364,13 @@ is still true.
 1. ⏳ The Oct 1 tax-receipt clock (~3 weeks out) — the only real deadline on her board.
 2. ⭐⭐⭐ Apply to the affiliate programmes. CJ is free and still not done.
 3. 💅 The DVF flag scarf — a timing call, hers: does it go back into the Star queue?
-4. ⭐ What came back from the people she shared the app with — still unasked, still the most valuable
-   information this project can get.
-5. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
-6. ⏸️ The fitting-room conversation — parked by her, thinking kept. Ask what it means to her.
+4. ⭐ More Edit/Finds pieces — she's on a roll and the machinery makes it cheap now.
+5. ⏸️ The fitting-room conversation — parked by her, thinking kept. Ask what it means to her.
+
+✅ **CLOSED, 2026-09-11 (second session): "what came back from the people she shared the app with" is
+NOT an open item.** She and Claude have already been over it in detail, in a conversation this file
+never captured. ⚠️ **DO NOT RE-ASK THIS.** She'll bring more tester feedback as she gathers it —
+ongoing, not a pending question.
 
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
 1. 🚨 "Couldn't load options right now" — she photographed it on Shop your Style; the stylist call
@@ -2024,9 +2029,13 @@ ARCHIVED. Keep it here and keep it current.** Her words: *"all of that is import
 
 👥👥 **SHE HAS SHARED THE APP — 2026-09-09, HER WORDS: *"I have already asked many friends and put it out
 on Instagram."*** 🚨 **LIVE OPERATIONAL STATUS, WHICH BY THIS FILE'S OWN RULE NEVER ARCHIVES.** ▶ **It is
-the first time Style Star has been put in front of anyone but her.** ⚠️ **NOBODY HAS YET ASKED HER WHAT
-CAME BACK, and no analytics have ever been read** — `track()` exists and has never been looked at. **Both
-are open; the first is a question for her, the second is a small unstarted job.**
+the first time Style Star has been put in front of anyone but her.**
+✅ **CLOSED, 2026-09-11 (second session): what came back has already been discussed with her, in
+detail — do not ask her again.** ⚠️ **The content of that feedback isn't written down anywhere in this
+file, because the conversation that covered it happened outside a session that saved its notes here —
+worth asking her whether it's worth capturing, so it isn't lost the way chat-only context always is.**
+More feedback is an ONGOING thing now, not a single pending question. ⚠️ **No analytics have ever been
+read** — `track()` exists and has never been looked at. **That's still a small unstarted job.**
 
 💵💵 **EARNINGS TO DATE, HER FIGURE 2026-09-08: $27 IN THE RAKUTEN DASHBOARD. EVERYTHING ELSE HAS BEEN
 AN EXPENSE.** ▶ **Recorded because it is live operational status and because it is the honest baseline
