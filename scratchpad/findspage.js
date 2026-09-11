@@ -125,12 +125,21 @@ ok('description matches word for word in both files', !!eD && eD === iD);
 
 console.log('\n5. THE TWO PAGES POINT AT EACH OTHER — HER OWN LINE');
 ok('the Finds page carries her sentence', /mixing high and low is how i dress my clients/i.test(txt));
-ok('and it links to the Edit', (await page.evaluate(() => !!document.querySelector('#s-finds .dc-trend-link[onclick*="showDream"]'))));
+ok('and it links to the Edit', (await page.evaluate(() => !!document.querySelector('#s-finds .dc-xlink[onclick*="showDream"]'))));
+ok('the sentence reads plainly and only the INVITATION is underlined — her ask',
+   (await page.evaluate(() => {
+     const el = document.querySelector('#s-finds .dc-xlink');
+     if (!el) return false;
+     const sp = el.querySelector('span');
+     return getComputedStyle(el).textDecorationLine === 'none'
+         && !!sp && getComputedStyle(sp).textDecorationLine.includes('underline')
+         && /click here to explore more/i.test(sp.innerText);
+   })));
 await page.evaluate(() => window.showDream());
 await page.waitForTimeout(350);
 const etxt = await page.evaluate(() => document.querySelector('.scr.act').innerText);
 ok('the Edit carries the same sentence', /mixing high and low is how i dress my clients/i.test(etxt));
-ok('and it links back to Finds', (await page.evaluate(() => !!document.querySelector('#s-dream .dc-trend-link[onclick*="openFinds"]'))));
+ok('and it links back to Finds', (await page.evaluate(() => !!document.querySelector('#s-dream .dc-xlink[onclick*="openFinds"]'))));
 ok('the Edit still works and still wraps its own links',
    (await page.evaluate(() => {
      const mid = Object.keys(window._AFF_MID || {});
@@ -141,7 +150,34 @@ ok('the Edit still works and still wraps its own links',
      });
    })));
 
-console.log('\n6. NOTHING THREW');
+console.log('\n6. IT WEARS THE EDIT\'S FRAME IN HER OWN COLOUR — her ask 2026-09-11');
+await page.goto(ORIGIN + '/finds', { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => typeof window.openFinds === 'function');
+await page.waitForTimeout(500);
+const look = await page.evaluate(() => {
+  const g = e => e ? getComputedStyle(e) : null;
+  const hdr = document.querySelector('.hdr');
+  const card = document.querySelector('.ss');
+  const left = document.querySelector('#s-finds .dc-tagline .pinkheart');
+  return {
+    headerHidden: !hdr || hdr.style.display === 'none',
+    frame: card ? card.classList.contains('dream-mirror') : false,
+    bleed: g(document.body).backgroundColor,
+    velvet: document.documentElement.classList.contains('finds-velvet'),
+    teal: document.documentElement.classList.contains('edit-velvet'),
+    leftHeart: left ? left.classList.contains('hl') : false,
+    leftTilt: left ? g(left).transform : '',
+    subtitleFont: g(document.querySelector('#s-finds .dc-subtitle')).fontFamily,
+  };
+});
+ok('the shared Style Star logo is hidden, same as the Edit', look.headerHidden);
+ok('it wears the Edit\'s own frame (dream-mirror), not a copy', look.frame);
+ok('the background bleeds her tan, not the Edit\'s teal', look.velvet && !look.teal, look.bleed);
+ok('the bleed is a warm tan', /^rgb\(2\d\d, 1\d\d, \d+\)$/.test(look.bleed), look.bleed);
+ok('the LEFT heart mirrors the right one — her catch', look.leftHeart, look.leftTilt);
+ok('the subtitle is the Edit\'s serif, not the default sans', /Lora/i.test(look.subtitleFont), look.subtitleFont);
+
+console.log('\n7. NOTHING THREW');
 ok('no page errors', errors.length === 0, errors[0]);
 
 console.log('\n' + (fail ? '✗ ' : '✓ ') + pass + ' passed, ' + fail + ' failed\n');
