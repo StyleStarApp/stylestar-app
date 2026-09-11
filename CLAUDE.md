@@ -962,9 +962,25 @@ today onto `/trending`, untouched since 2026-09-03. ▶ **That is a lie to a cra
 value is that it is honest — a sitemap that cries "new!" on an unchanged page is one Google learns to
 discount.** **"No baseline" is not the same fact as "the page changed."**
 ▶ **AFTER ADDING ONE OF HER PIECES: `node scripts/sitemap-lastmod.js --write`.**
-▶ **STILL OPEN AND GENUINELY HERS: `/finds` has never been submitted to either engine.** It is in the
-sitemap so both will find it eventually; **the one-time request is the four-step walkthrough she liked
-for `/edit`** — Google Search Console and Bing Webmaster Tools, **one step per message.**
+✅✅ **`/finds` IS SUBMITTED TO BOTH ENGINES — DONE BY HER, 2026-09-11, IN FOUR STEPS WITH NO
+BACKTRACKING.** **GOOGLE:** *"URL is not on Google"* → Request Indexing → ***"Indexing requested all
+good."*** **BING:** *"not known"* → Request indexing → ***"URL submitted successfully."***
+▶ **BOTH "not found" MESSAGES WERE THE EXPECTED STATE ON A DAY-OLD PAGE, and she was told so BEFORE she
+saw them** — which is why neither read as an error this time. ⭐ **That is the whole value of the
+one-step-per-message pattern: name the two or three things she might see, so she only has to report
+which one.** **Second page in a row it has worked cleanly. Use it for anything in someone else's
+dashboard.**
+⚠️ **AND HER BING QUESTION IS NOW ANSWERED FOR THE THIRD TIME — write it down rather than answering it a
+fourth: URL Inspection → Request Indexing is ENOUGH.** The separate **URL Submission** bulk tool is for
+pushing several pages at once; doing both for one page is redundant, not harmful.
+✅ **PRE-FLIGHT MEASURED BEFORE SENDING HER INTO EITHER TOOL, and it is worth repeating next time:**
+`/finds` returns **200**, the edge function serves the real `<title>` to a crawler with no JS, the robots
+meta is **`index, follow`**, `robots.txt` allows it, and it is in the live sitemap. ▶ **Do not send her
+to request indexing on a page that cannot be indexed.**
+🚨 **ONE FALSE ALARM, CAUGHT BY LOOKING TWICE: a grep for `noindex` on the served page returned 1 and
+read exactly like the page being blocked.** ▶ **It was the word inside a CODE COMMENT about the shared
+wishlist.** **The real tag says `index, follow`.** ⚠️ **A FINDING THAT SURVIVES ONE LOOK IS NOT A
+FINDING** — this file's own rule, and it stopped a fault being reported to her that did not exist.
 
 ### 🎨 HER FIVE DESIGN NOTES ON THE FINDS PAGE — ALL BUILT AND LIVE 2026-09-11
 ▶ **She tested the live page after the stylesheet fix landed and sent five things. All are built.**
