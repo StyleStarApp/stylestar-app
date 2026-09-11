@@ -46,7 +46,7 @@ it several times that day as if it were her next step, and it was not: **she had
 | 24 | 🔗 **THE EDIT AS A SHAREABLE LINK — HER ASK, 2026-09-10: *"I want the Edit to be a shareable link."*** ▶▶ **YES IT NEEDS ITS OWN URL, AND THE MACHINERY IS ALREADY BUILT AND PROVEN EIGHT TIMES.** `_ROUTES` today: `/privacy` `/terms` `/story` `/faq` `/contact` `/trending` `/wardrobe` `/results`, plus `/journal/<slug>` and the token-carrying shared wishlist. **The Edit (`s-dream`) is simply not in it.** ▶ **THE BUILD IS THE DOCUMENTED THREE EDITS:** one `_ROUTES` line · one `[[redirects]]` block in `netlify.toml` (status **200**, a rewrite not a 301) · one line in `_openRoute()`. 🚨🚨 **AND THE TRAP, FOUND BY READING THE CODE BEFORE BUILDING: `_openRoute` MUST CALL `showDream()`, NEVER A BARE `show('s-dream')`.** **`showDream()` is what calls `_wlDecorateEdit()`, and `_wlDecorateEdit()` IS WHAT AFFILIATE-WRAPS EVERY EDIT LINK AT RUNTIME** (`index.html:9963`). ▶ **A direct landing that skipped it would render her whole Edit with RAW product links that earn NOTHING — the exact "one route of four forgot" shape as the `<<FIND>>` marker leak.** ⚠️ **Assert it in a test: land on the path cold and check an `.dc-item-btn` href contains `click.linksynergy.com`.** | Claude | ⏳ **OPEN — she asked for it** |
 | 25 | 🛒 **AN AMAZON FINDS PAGE — HER ASK, 2026-09-10, AND STRATEGICALLY IT IS THE BEST IDEA ON THIS BOARD.** ***"I want to make an Amazon finds page. Another Sharable page dedicated to Amazon finds. I want to also feature some of them on Star of the week and our normal edit."*** ▶▶ **WHY IT MATTERS MORE THAN IT LOOKS: THIS FILE HAS SAID FOR WEEKS THAT WHAT THE APP LACKS IS A MID-MARKET GENERALIST** (every fed store is `$$$`/`$$$$`, dress median $398, 0 of 200 dresses under $100). **Amazon IS that, and it is the one such programme she can join without being declined for traffic.** ⚠️ **SO HER INSTINCT ANSWERS THE AFFORDABILITY PROBLEM THIS FILE KEPT CALLING UNSOLVABLE-WITHOUT-USERS.** 🚨🚨 **BUT THE ORDER SHE PROPOSED IS BACKWARDS AND IT IS WORTH REAL MONEY TO GET RIGHT — SEE THE AMAZON BLOCK IN THE MONEY PATH.** ▶ **THE PAGE ITSELF NEEDS NO CATALOGUE AND NO API: hand-picked links, exactly like the Edit, which is also the only version that honours her own disclosure that every piece is personally selected by the founder.** | Claude to build, HERS to pick the pieces | ⏳ **OPEN — she asked for it** |
 | 24b | ✅✅ **THE EDIT IS A SHAREABLE LINK — BUILT AND LIVE 2026-09-10: `stylestar.app/edit`.** ▶ **SIX edits, not the three the routing note promised**, because sharing needs more than a route: the `netlify.toml` rewrite (200) · an `[[edge_functions]]` registration · `PAGES['/edit']` in `page-titles.js` · `_ROUTES` · `_PAGE_META` · an `_openRoute` branch · **and the sitemap entry (priority 0.9)**. 🚨🚨 **THE TRAP IT NEARLY SHIPPED WITH, AND IT WAS MEASURED: `_openRoute` MUST CALL `showDream()`.** Planting a bare `show('s-dream')` rendered **17 links on merchants she IS approved for completely UNWRAPPED** — earning nothing, on the one page she actually sends to people, **with every card looking perfectly normal.** ▶ **`scratchpad/editshare.js`, 26 checks, built around that money check and PROVEN TO BITE.** ⚠️ **The title and description live in TWO files that cannot import from each other; §4 of the suite asserts they match word for word.** ✅ **Verified on the SERVED file, not the deploy badge.** | — | ✅ done |
-| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ✅ **IN THE APP'S NAV SINCE 2026-09-11, HER CALL: *"let's go ahead and put it in"*** — the MENU's Shop group, directly beneath Style Star Edit, calling `openFinds`. ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live, 4 pieces |
+| 25b | ✅✅ **AMAZON FINDS IS BUILT AND LIVE — `stylestar.app/finds`, 2026-09-10. ⭐⭐ HER FIRST PIECES LANDED 2026-09-11 AND IT IS IN THE SITEMAP NOW (priority 0.9).** Her ask: *"let's go ahead and move the Amazon pieces that are currently on the Edit over the Finds page now"* — **the Badu stacking bangles $16.99 and the PRETTYGARDEN maxi $46.99, MOVED not copied, so the Edit went 35 → 33 and holds no Amazon piece at all.** ⚠️ **THE BANGLES STAY IN `WEEK_STARS` ON PURPOSE — her own *"I want to also feature some of them on Star of the week"*. That table was NOT touched.** ✅ **IN THE APP'S NAV SINCE 2026-09-11, HER CALL: *"let's go ahead and put it in"*** — the MENU's Shop group, directly beneath Style Star Edit, calling `openFinds`. ▶ **It was kept out of the sitemap while it was empty — a crawler that meets an empty page first tends to keep believing it is empty.** 🚨 **THE NAMING DECISION, AND IT IS THE PART THAT MATTERS: THE HEADING SAYS *AMAZON FINDS* AND THE PATH SAYS `/finds`, DELIBERATELY DIFFERENT.** Her words: *"I want it to be Amazon Finds or something with Amazon in it FOR NOW. If later we get Target or kohls approved maybe could change."* ▶▶ **A HEADING IS FREE TO CHANGE; A PATH CAN NEVER MOVE ONCE SHARED (her own standing rule). Separating them is what makes her "maybe change later" actually possible.** ⚠️ **RENAME THE HEADING FREELY. NEVER RENAME THE PATH.** | — | ✅ live, 4 pieces, indexed |
 | 12 | ~~The wall arrives in Google's order, not hers~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — her ten dimensions order the browse row. Measured: Google sent `Old Navy > Nordstrom > Kohl's > Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.** | — | ✅ done |
 | 13 | ~~The app promises before it knows it can deliver~~ ✅ **HER DECISION, BUILT AND LIVE 2026-09-10 — the stylist's sentence is HELD until there are cards to keep it with. Retires a FAMILY of faults, not one.** | — | ✅ done |
 | 14 | ~~Affiliate shops should appear "somewhere in there"~~ ✅ **POSITION was already built (`_findSpread`, 2026-09-09). ⚠️ Her ruling was in NEITHER file; it is in the ledger now.** | — | ✅ done |
@@ -326,62 +326,60 @@ that makes any future number mean something.**
 
 ---
 
-## ▶▶▶ WHERE WE LEFT OFF — 2026-09-10. ALL THREE SHOPPING SURFACES ARE JOINED UP. READ THIS FIRST.
-🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is detail, newest first, and much of it is
-HISTORY — if a line further down contradicts this one, THIS ONE WINS.**
-📁 **The day's build detail — how each fault was found, what was measured, the checks that were blind —
-moved to `CLAUDE-archive.md` at her request. NOTHING WAS DELETED. Every rule she gave is in the rule
-ledger, which never archives, and it gained SEVEN rows from this one day.**
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-11. HER TWO SHAREABLE PAGES ARE FINISHED AND INDEXED. READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is detail, and much of it is HISTORY — if a
+line further down contradicts this one, THIS ONE WINS.**
+📁 **The 2026-09-10 entry moved to `CLAUDE-archive.md` in the same commit, VERBATIM, under "ARCHIVED
+2026-09-11". NOTHING WAS DELETED, and every rule it held was lifted out first.**
 
-### ✅ WHAT IS LIVE NOW, AND IT IS A LOT
-▶▶ **SHE TESTED THE LIVE APP ALL DAY AND FOUND EIGHT SEPARATE FAULTS. EVERY ONE IS FIXED AND VERIFIED
-ON THE SERVED FILE.** In the order they matter:
-1. **ALL THREE SHOPPING SURFACES NOW SEARCH HER SHOPS *PLUS* ALL 132** — the chat, Shop your Style, and
-   (last, and it was the worst off) the **Wardrobe checklist**, which until that evening saw only her
-   nine affiliate merchants.
-2. **HER OWN NIGHTLY FEED IS IN THE SEARCH.** Google will not surface her small luxury shops (0 of 120,
-   then 0 of 33), so this was PRESENCE, not position. Live proof: a belted-dress search returned **24
-   pieces from FARM Rio, Mytheresa and COUTR** where there had been zero.
-3. **THE STYLIST SEARCHES WHAT SHE PROMISES**, and cannot promise until the pieces are in hand.
-4. **HER OWN TEN STORE SCORES ORDER THE ROW.** Measured: Google sent `Old Navy > Nordstrom > Kohl's >
-   Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.
-5. **GOOGLE DYING NO LONGER COSTS HER HER OWN SHOPS**, and a search that never came back says so.
-6. **A REPEAT SEARCH IS INSTANT**, surviving a reload and a dead network.
-7. **AN OCCASION IS TRANSLATED, NOT SEARCHED** — "vacation dress" now works, and every one of the app's
-   nine suggested prompts is something it can actually do.
-8. **THE SEARCH CEILING IS 9s**, chosen from real successes (6.6 · 6.9 · 8.7).
-🚨🚨 **READ POINTS 1-2 TOGETHER WITH THE SERPAPI BLOCK BELOW, OR THIS LIST READS AS "SEARCH WORKS" AND
-IT DOES NOT.** ▶ **Re-measured 3/3 at the end of the day: HER FEED HALF IS ALIVE AND GOOGLE'S HALF IS
-DEAD** (`googleFailed: true`, pinned on the ceiling, unbilled). **Everything above is true; what is
-delivering it is her own three luxury shops, not the 132.**
+### ✅ WHAT LANDED TODAY — ALL LIVE, ALL VERIFIED ON THE SERVED FILE
+1. **AMAZON FINDS IS A REAL PAGE — `stylestar.app/finds`, 4 of her pieces, in the app's MENU, in the
+   sitemap, and SUBMITTED TO GOOGLE AND BING by her.** Her two Amazon pieces MOVED off the Edit
+   (so the Edit is **33**), plus the CRZ YOGA tank $32 and the Gold Ponytail Cuff $9.99 for 4.
+2. **THE TWO CURATED PAGES ARE A MATCHED PAIR** — same frame, same foot, each naming the other:
+   *"Click here to explore Amazon Finds"* / *"Click here to explore The Edit"*, **pink**, with the
+   turquoise trending line beneath. Finds wears her tan bleed and plain white paper; the Edit keeps
+   its linen and teal. **Her design notes, all of them, are in their own sections below.**
+3. **A CSS CHANGE CAN NO LONGER REACH A WOMAN LATE** — the stylesheet carries its own content hash.
+   **This is the fix for a whole class of "it looks like the deploy failed" faults.**
+4. **THE SITEMAP'S `<lastmod>` KEEPS ITSELF HONEST** on her three curation surfaces, so her new pieces
+   get crawled rather than waiting for Google to wander back.
+⚠️ **READ POINT 1 TOGETHER WITH THE SERPAPI SECTION BELOW, or this reads as "shopping works" and it
+does not.** ▶ **Google's half of the product search is still intermittent — 1 search in 6 — and her
+own affiliate feed is carrying the product experience on its own.**
 
-### ▶▶ WHAT IS WAITING ON HER — IN HER OWN PRIORITY ORDER
-1. ⭐⭐⭐ **APPLY TO THE AFFILIATE PROGRAMMES.** ⚠️ **CJ IS FREE AND STILL NOT DONE — it has been item 2
-   on her money path for weeks.** ▶ **And the new argument, measured 2026-09-10: 41 of her 131 shops
-   publish their FULL catalogue publicly (43,556+ products, with SIZE and PER-SIZE STOCK). Being their
-   PARTNER turns that from data we are permitted to read into feeds they send her, with permission,
-   that PAY her** — Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt
-   · Good American · Veronica Beard. **These are DTC brands with affiliate managers, not Nordstrom.**
+### ▶▶ WHAT IS WAITING ON HER — HER OWN PRIORITY ORDER
+1. ⭐⭐⭐ **APPLY TO THE AFFILIATE PROGRAMMES. CJ IS FREE AND STILL NOT DONE** — weeks on the board now.
+   ▶ **The measured argument: 41 of her 131 shops publish their FULL catalogue publicly (43,556+
+   products, with SIZE and PER-SIZE STOCK).** Being their PARTNER turns that into feeds that PAY her —
+   Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt · Good American
+   · Veronica Beard. **DTC brands with affiliate managers, not Nordstrom.**
 2. ⏳ **THE OCT 1 CLOCK — THE ONLY DEADLINE ON HER WHOLE BOARD, ~3 WEEKS OUT.** Do NOT pay the Your
-   Fashion Friend renewal; close the Orange County receipt **by email (`btpc@octaxcol.com`) or mail, NOT
-   in person**; call **407-246-2204** about applying for Style Star's own receipt before or after Oct 1.
+   Fashion Friend renewal; close the Orange County receipt **by email (`btpc@octaxcol.com`) or mail,
+   NOT in person**; call **407-246-2204** about applying for Style Star's own receipt before or after
+   Oct 1 so she does not pay twice.
 3. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** Still unasked, still the most valuable
    information this project can get.
-4. ⏸️ **THE FITTING-ROOM CONVERSATION.** Parked by her, thinking kept. **Ask what it MEANS to her.**
+4. ⭐ **MORE PIECES FOR AMAZON FINDS AND THE EDIT.** ▶ **The single highest-value thing she can do that
+   needs nobody's approval — her curation is the moat, and it is the one half Claude may never do for
+   her.** **Offer it whenever the board is clear.**
+5. ⏸️ **THE FITTING-ROOM CONVERSATION.** Parked by her, thinking kept. **Ask what it MEANS to her; do
+   not arrive with the old menu.**
 
 ### ▶▶ WHAT IS OPEN FOR CLAUDE
 1. 🚨 **"COULDN'T LOAD OPTIONS RIGHT NOW"** — she photographed it. **The stylist call failing, not the
-   search.** ▶ **TWO of its three known causes were RULED OUT on 2026-09-10 and the third is unproven:**
-   the reply budget is fine (495-503 tokens of 700, three for three) and the forgiving parse handles the
-   code fence the model really returns. ⚠️ **The remaining suspect is the 32KB prompt cap, which this
-   file already measured at 104 characters of headroom and called "not a margin, a coin toss".**
+   search.** ▶ **Two of three known causes were RULED OUT 2026-09-10; the remaining suspect is the
+   32KB prompt cap, measured at 104 characters of headroom — "not a margin, a coin toss".**
    **MEASURE IT BEFORE CLAIMING IT.**
 2. 💰 **A PRICE FILTER.** A find request carries item · colour · fabric · cut · size · width and **NO
    price field at all**. ▶ **When it is built, put `Try: tops under $100` and `Try: white jeans under
    $150` back verbatim.**
 3. ⭐ **HER STYLE PROFILE STILL NEVER REACHES THE FINDER** (board row 11, her *"many of them were
    shapeless"*). **HERS to green-light, and she asked for one thing at a time.**
-4. ▶ **A SHARED remembered cache.** Today's remembering is per-browser. ⚠️ **A shared one must go
+4. ▶ **READ HER ANALYTICS.** `track()` exists and nobody has ever looked. ⭐ **It is the thing that
+   answers "should I start the Amazon 180-day clock" — a small, unblocked job that turns a guess into
+   a decision.**
+5. ▶ **A SHARED remembered cache.** Today's remembering is per-browser. ⚠️ **A shared one must go
    somewhere SERVER-ONLY (Netlify Blobs) — NEVER through the publishable key. See the ledger row.**
 
 ### ⭐⭐ THE PATTERN THIS DAY EARNED, AND IT IS THE MOST USEFUL THING IN THIS BLOCK
@@ -444,121 +442,30 @@ exactly the class of call this file reserves for her. **And it is only worth rai
 is PARTIAL — once Google's half is healthy, a retry is pure cost.** ▶ **Re-check before offering it:
 if `googleFailed` is false, this row is spent.**
 
-*THE 2026-09-10 ENTRY, KEPT BECAUSE ITS DIAGNOSIS IS WHAT THIS ONE RESTS ON:*
-### 🚨 SERPAPI — **2026-09-10: GOOGLE WAS TOTALLY DEAD, AND HER OWN FEED WAS THE ONLY REASON THE APP STILL SHOWED CLOTHES.**
-🚨🚨 **THE CURRENT TRUTH, MEASURED THREE TIMES AGAINST HER LIVE FUNCTION AND IT REPEATED 3/3 —
-`{"item":"dress"}`, `{"item":"dress","cut":"belted"}` and `{"item":"white jeans"}`:**
-· **`googleFailed: true` on every one.** · **`ms.search` pinned at 9003 · 9004 · 9006ms**, which is the
-app's own 9-second ceiling to the millisecond. · **`searchesLeft` 697 → 697 → 697 across all three, so
-NOT ONE was billed.** ▶ **Same signature as the 12s failures: HUNG, not slow, dying before SerpApi
-meters it.** ⚠️ **The ceiling moved 12s → 9s and the failure simply moved with it. THAT IS THE PROOF
-THE CEILING IS NOT THE PROBLEM — do not touch it again.**
-✅✅ **BUT A WOMAN NO LONGER SEES AN EMPTY SCREEN, AND THIS IS THE PART THAT CHANGED: 24 real dresses
-came back on both dress searches, 9 on white jeans — ALL of them from HER OWN NIGHTLY FEED**
-(`feedWhy: ok`; COUTR 15 · Mytheresa 8 · Marissa Collections 1). ▶▶ **THE 2026-09-10 FEED FIX IS NOW
-LOAD-BEARING IN A WAY NOBODY PLANNED. It was built for PRESENCE — so her small luxury shops would
-appear at all — and it is currently carrying the entire product experience on its own.**
-⚠️⚠️ **AND THE HONEST COST OF THAT, SAY IT PLAINLY: THE FEED IS HER THREE LUXURY SHOPS.** Sample price
-on the first card: **$625**. ▶ **So while Google is down, every product Style Star can show is
-`$$$`/`$$$$` — the affordability problem at its very worst, because the half of the search that reaches
-all 132 shops is the half that is dead.** 🚨 **`exact: 0` and `verified: 0` on all three: no card can
-wear a tick either, because a look-up needs the search half.**
-▶ **`?budget=1` answers in 1.6s and reports 697 left** (was 725 when the failure was first recorded),
-**so 28 searches HAVE been billed since — the account and the key are fine, and something is reaching
-Google successfully some of the time.** ⚠️ **NOT PROVEN: whether those 28 were hers, a woman's, or
-retries. Do not read it as "it works intermittently for users" without measuring again.**
-✅✅✅ **THE CAUSE IS FOUND, AND IT IS NONE OF OURS. VERIFIED FROM SERPAPI'S RAW STATUS API, 2026-09-10.**
-🚨 **HER QUESTION, AND IT IS THE MOST USEFUL THING ON THIS PAGE FOR THE NEXT TIME: *"I am looking at my
-SerpApi account and I see nothing about an outage??"*** ▶▶ **SHE IS RIGHT, AND SHE WILL BE RIGHT AGAIN.
-HER ACCOUNT PAGE CANNOT SHOW AN OUTAGE.** `serpapi.com` shows HER things — plan, usage, searches left —
-and all of those are genuinely healthy. **Incidents live on `status.serpapi.com`, a SEPARATE
-Statuspage site**, and nothing surfaces in her dashboard unless she has subscribed to their alerts.
-⚠️ **SO "MY ACCOUNT LOOKS FINE" IS NOT EVIDENCE AGAINST AN OUTAGE, AND NEVER SEND HER TO HER DASHBOARD
-TO CHECK FOR ONE.** ▶ **Check it from here instead, in one command, no key and no login needed:**
-`curl -s https://status.serpapi.com/api/v2/summary.json`
-🚨🚨 **AND READ THE RAW JSON API, NOT THE STATUS PAGE HTML. THIS NEARLY WENT WRONG.** The first read was
-a SUMMARISED fetch of the human page; two follow-up fetches then returned NO incident data at all, and
-the claim was told to her anyway. ▶▶ **The `/api/v2/` endpoints are machine-readable and unambiguous:
-`status.json` · `summary.json` · `incidents/unresolved.json`.** ⭐ **THE FILE'S OWN RULE, WHICH HAD JUST
-BEEN WRITTEN INTO IT AND WAS THEN BROKEN THE SAME HOUR: A FINDING THAT SURVIVES ONE LOOK IS NOT A
-FINDING.** **Her pushback is what forced the second look. The second look CONFIRMED it — but it was luck
-that it did, and the habit is the point.**
-✅ **WHAT THE RAW FEED SAYS, ALL OF IT MEASURED NOT SUMMARISED:** overall `Partial System Outage`
-(`indicator: major`) · **`Shopping API: major_outage` — THE EXACT ENGINE HER APP CALLS
-(`engine=google_shopping`)** · `Google: major_outage` · `Search API: major_outage`.
-▶ **The incident: "Service outage 9/10", impact `critical`, status `identified`, `resolved_at: null`
-— OPEN.** Started `15:59 UTC`, updated `18:55 UTC`. **Their stated cause, verbatim:** *"The issue is
-due to recent changes on Google's side, which are causing searches to fail or time out. Our engineers
-have deployed a partial mitigation that is currently restoring a portion of traffic."*
-⭐ **AND THAT LAST CLAUSE ANSWERS THE LOOSE END: "a portion of traffic" IS WHY 28 SEARCHES BILLED
-(725 → 697) WHILE ALL THREE OF OURS HUNG.** ▶ **It is partial, so intermittent success is expected and
-is NOT proof it is fixed.**
-▶▶ **"FAIL OR TIME OUT" IS WORD-FOR-WORD THE SIGNATURE MEASURED HERE: hung on the ceiling, unbilled.**
-🚨🚨 **SO EVERY THEORY THIS FILE HAS CARRIED IS NOW CLOSED, AND FOUR OF THEM WERE WRONG:**
-· **NOT her budget** (697 left) · **NOT her key** (the account call answers in 0.7-1.6s) · **NOT the
-belted change** (a bare `dress` hangs identically) · **NOT the 12s/9s ceiling** (the ceiling moved and
-the failure moved with it; a 20s probe hung too) · **NOT our code, which needs no change at all.**
-🚨🚨 **AND THE NETWORK THEORY IS DISPROVEN — IT WAS IN THIS FILE AS A CONCLUSION AND IT WAS WRONG.**
-It read *"that points at the network between Netlify and SerpApi."* ▶▶ **BUT `account.json` AND
-`search.json` ARE THE SAME HOST, `serpapi.com`. One answers in 0.7s while the other hangs past 20s, so
-DNS, TLS and the Netlify→SerpApi route are all exonerated by the working call.** ⭐ **THE LESSON
-GENERALISES: when two calls share a path and only one fails, the path is not the fault. Look for what
-DIFFERS — here, the engine behind the endpoint.**
-🚨🚨🚨 **DO NOT SWITCH TO SEARCHAPI OVER THIS, AND THE ADVICE TO CONSIDER IT WAS WRONG WHEN GIVEN.**
-This file has named SearchApi as the runner-up twice, and on 2026-09-10 Cath was told to consider it
-while this outage was live. ▶▶ **THE CAUSE IS GOOGLE CHANGING SOMETHING, SO IT HITS EVERY PROVIDER
-THAT READS GOOGLE — SearchApi included. Paying a second $25 would have fixed NOTHING.** ⚠️ **Her
-pushback is what stopped it. HER WORDS: *"We already have SerpApi. What are you talking about???"* and
-she was right: the account was never the problem, and she was being sent to buy her way out of an
-outage.** ▶ **The runner-up argument still stands for PRICE and VOLUME. It does not stand for this.**
-▶▶ **WHAT TO ACTUALLY DO: NOTHING. WAIT.** It is their incident and their fix. **The app already
-behaves correctly through it** — it fails fast, says something honest, and falls back to her own feed,
-so a woman still sees real clothes. ⚠️ **DO NOT "fix" the app in response to this, and DO NOT raise the
-ceiling: there is nothing on the other end to wait for.**
-▶ **HOW TO RE-CHECK IN ONE COMMAND, no searches spent, no dashboard needed:**
+🚨🚨 **FOUR THINGS LIFTED OUT OF THE 2026-09-10 NARRATIVE BEFORE IT WAS ARCHIVED, BECAUSE EACH LIVED
+NOWHERE ELSE IN THIS FILE.** *(The narrative itself is in `CLAUDE-archive.md` under "ARCHIVED
+2026-09-11"; nothing was deleted.)*
+**(a) 🚨 DO NOT SWITCH TO SEARCHAPI OVER AN OUTAGE, AND THE ADVICE TO CONSIDER IT WAS WRONG WHEN GIVEN.**
+The cause is Google changing something, **so it hits every provider that reads Google — SearchApi
+included. A second $25 would have fixed NOTHING.** ⚠️ **Her pushback is what stopped it: *"We already
+have SerpApi. What are you talking about???"*** ▶ **The runner-up argument still stands for PRICE and
+VOLUME. It does not stand for an outage.**
+**(b) 🚨 HER ACCOUNT PAGE CANNOT SHOW AN OUTAGE, AND SHE WILL BE RIGHT TO SAY SO AGAIN.** Her question:
+*"I am looking at my SerpApi account and I see nothing about an outage??"* — `serpapi.com` shows HER
+things (plan, usage, searches left) and all of those are genuinely healthy. **Incidents live on
+`status.serpapi.com`, a SEPARATE Statuspage site.** ⚠️ **NEVER send her to her dashboard to check for
+one.**
+**(c) ⚠️ READ THE RAW JSON API, NOT THE STATUS-PAGE HTML** — `status.json` · `summary.json` ·
+`incidents/unresolved.json`. **A summarised fetch of the human page once returned no incident data at
+all and the claim was told to her anyway.** ▶ `curl -s https://status.serpapi.com/api/v2/summary.json`
+**(d) ⚠️ A CURL TEST OF `product-find` NEEDS `-H "Origin: https://stylestar.app"`** or `isAllowed`
+returns `403 {"error":"Not allowed"}`. **That 403 is the guard working, NOT a broken function** — worth
+knowing before the next session reads it as an outage.
+▶ **THE RE-CHECK, ONE COMMAND, NO SEARCHES SPENT:**
 `curl -s -H "Origin: https://stylestar.app" -X POST -d '{"item":"dress"}' -H "Content-Type: application/json" https://stylestar.app/.netlify/functions/product-find`
 ▶ **`googleFailed: false` and a non-zero `verified` means Google's half is back.**
-⚠️ **ONE THING CHECKED AND CLEARED SO NOBODY CHASES IT: `priceValue` parses correctly ($625 → 625). An
-earlier reading of "62" was a truncated console print, not a bug.** ▶ **A finding that survives one
-look is not a finding.**
-▶ **⚠️ A CURL TEST OF THIS FUNCTION NEEDS `-H "Origin: https://stylestar.app"` or `isAllowed` returns
-`403 {"error":"Not allowed"}`.** **That 403 is the guard working, NOT a broken function** — worth
-knowing before the next session reads it as an outage.
-
-🚨 *THE ORIGINAL 2026-09-10 ENTRY, KEPT BECAUSE ITS REASONING STILL HOLDS:*
-▶▶ **EVERY PRODUCT SEARCH IS FAILING. Measured seven times against her live function: `search-failed`,
-pinned at 12001–12021ms, which is the app's own 12-second ceiling.** ▶ **So a woman opening Shop your
-Style or asking the chat for products sees NO PHOTOGRAPHS. The app's honest sentence now says so.**
-✅ **WHAT IS CERTAIN, ALL MEASURED AGAINST HER OWN LIVE FUNCTION:**
-· **Not her budget** — `?budget=1` returns **725 searches left**.
-· **Not the belted change** — a plain `{"item":"dress"}` with no cut fails identically.
-· **Not the whole of SerpApi** — the same function's **account** call to serpapi.com answers in **0.7s**.
-· **The hung searches are NOT being billed** — 726 → **725** across seven failures, so they are dying
-  before SerpApi meters them. ▶ **That points at the network between Netlify and SerpApi, not at a slow
-  query.**
-🚨🚨 **AND THE CORRECTION, MADE THE SAME HOUR IT WAS SAID, BECAUSE IT WAS TOLD TO HER AS PROOF.** She was
-told *"serpapi.com/search times out from a different machine with no key at all"*. ▶▶ **THAT WAS TRUE
-WHEN RUN AND DID NOT HOLD UP: repeated a few minutes later, the same URL returned `401` in 0.2–0.5s,
-five times out of five.** ⚠️ **The sandbox's own egress proxy was reporting dropped connections in the
-same window, so THAT measurement was probably measuring the sandbox, not SerpApi.**
-▶ **WHAT THE 401 DOES AND DOES NOT PROVE: SerpApi's host is reachable and rejects a bad key instantly —
-but it rejects BEFORE running any Google query, so it says nothing about how a VALID key's search
-behaves.** ⚠️ **SO "SERPAPI IS DOWN" IS NOT ESTABLISHED. What is established is that HER searches fail,
-every time, and are not billed.**
-🚨 **THE LESSON, AND IT IS THIS FILE'S OWN: A MEASUREMENT FROM THIS SANDBOX IS NOT EVIDENCE ABOUT THE
-OUTSIDE WORLD UNTIL IT REPEATS.** The sandbox cannot reach retail sites at all, which is recorded here
-already; a single timeout from it proves nothing. **Her Netlify function is the only instrument that
-measures her app, and it is the one that gave every finding above.**
-⚠️⚠️ **AND THE THING NOT TO DO, BECAUSE THIS FILE ALREADY PAID FOR IT: DO NOT RAISE THE 12s CEILING.**
-The 2026-09-09 note records the ceiling being raised 10s → 20s and **the next failure pinning at exactly
-20001ms**. ▶ **A request pinned to the millisecond on the ceiling is HUNG, not slow, and a bigger ceiling
-only makes a woman wait longer for the same honest sentence.** **Settled at 12s from real successes
-(6.6s · 6.9s · 8.7s); leave it.**
-▶ **WHAT IS ACTUALLY WORTH DOING, IN ORDER: (a) ask her to check her SerpApi dashboard and their status
-page — she owns the account and this file cannot see it · (b) if it persists, this is the argument for
-the runner-up already named here, SearchApi, same $25 and ~10× the searches · (c) nothing in the app
-needs changing: it already fails fast and tells her the truth.**
-
+📁 *The full 2026-09-10 diagnosis — how every theory was closed, and the network theory that was wrong —
+is in `CLAUDE-archive.md`.*
 ### ✅ SHIPPED AND VERIFIED LIVE
 `c438982` → `e9f9957` → **`f27f81a`**. ⚠️ **VERIFIED BY FETCHING THE SERVED FILE AND FINDING THE MARKERS
 (`_saveShopFind`, `_ssFindPaint`, `_ssFindData`, then `THESE FIELDS ARE THE SEARCH`), never by the
@@ -575,18 +482,6 @@ pieces moved: `linkwatch` *"collected 33 of 35"* (its parser had started filing 
 Edit) and `affq` *"2 canonical Amazon"* on a screen that now has none. ▶ **Both assertions were
 REWRITTEN TO NAME THE RULE — every curated screen's pieces are watched; every Amazon link anywhere is
 canonical — never to bump a number.** **This file's own standing lesson, applied.**
-
-### ▶ TEST STATE — MEASURED 2026-09-10, later
-✅ **`ssfind` 60 (was 52) · `chatfallback` 105 · `chatfind` 63 · `findprod` 63 · `copy` 49 · `affq` 40.
-Zero failures.** ⭐ **`chatfind` 63/0 is the one that matters most for the belted change: it proves the
-CHAT's her-words guard did not move.**
-Both inline script blocks parse, div balance is byte-identical to the `HEAD` baseline, no mojibake.
-⚠️ **`copy` PRINTS `✓ 49 passed`, NOT `49 passed, 0 failed`** — a grep for the second pattern shows
-NOTHING and reads exactly like a suite that never ran. **It was re-run alone to be sure.** ▶ **Do not
-read an empty line in a batch as a pass.**
-⚠️ **The suites NOT re-run are unchanged from earlier today and no claim is made about them:**
-wbedittasr 42 · starpx 28 · linkwatch 27 · findprod 63 · storepool 49 · untagged 21 · searchtune 80/1
-(the known pre-existing `styles.css` failure) · curated 63/2 (both pre-existing).
 
 ### ▶▶ WHAT IS WAITING ON HER
 1. ⭐⭐ **WHICH OF HER REMAINING TWO TO DO NEXT — the SHAPELESS half (her profile never reaches the

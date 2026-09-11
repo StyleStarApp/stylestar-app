@@ -20573,3 +20573,206 @@ merge` fails with *"refusing to merge unrelated histories."* ▶ **Nothing is wr
 touch local `main`: verify `git merge-base --is-ancestor origin/main <branch>` then
 `git push origin <branch>:main`. **Check `origin/main`, never local `main`.**
 
+
+
+---
+
+# ARCHIVED 2026-09-11 — the 2026-09-10 SerpApi narrative and that day's test state
+▶ Moved under this file's own rule: the PREVIOUS session's entry leaves when the new one is
+written. NOTHING WAS DELETED, and every standing rule inside these blocks was LIFTED into
+`CLAUDE.md` first — the four that lived nowhere else are named in the 2026-09-11 SerpApi
+section: do not switch providers, read the RAW status API, her dashboard cannot show an
+outage, and a curl of product-find needs an Origin header.
+
+### 🚨 SERPAPI — **2026-09-10: GOOGLE WAS TOTALLY DEAD, AND HER OWN FEED WAS THE ONLY REASON THE APP STILL SHOWED CLOTHES.**
+🚨🚨 **THE CURRENT TRUTH, MEASURED THREE TIMES AGAINST HER LIVE FUNCTION AND IT REPEATED 3/3 —
+`{"item":"dress"}`, `{"item":"dress","cut":"belted"}` and `{"item":"white jeans"}`:**
+· **`googleFailed: true` on every one.** · **`ms.search` pinned at 9003 · 9004 · 9006ms**, which is the
+app's own 9-second ceiling to the millisecond. · **`searchesLeft` 697 → 697 → 697 across all three, so
+NOT ONE was billed.** ▶ **Same signature as the 12s failures: HUNG, not slow, dying before SerpApi
+meters it.** ⚠️ **The ceiling moved 12s → 9s and the failure simply moved with it. THAT IS THE PROOF
+THE CEILING IS NOT THE PROBLEM — do not touch it again.**
+✅✅ **BUT A WOMAN NO LONGER SEES AN EMPTY SCREEN, AND THIS IS THE PART THAT CHANGED: 24 real dresses
+came back on both dress searches, 9 on white jeans — ALL of them from HER OWN NIGHTLY FEED**
+(`feedWhy: ok`; COUTR 15 · Mytheresa 8 · Marissa Collections 1). ▶▶ **THE 2026-09-10 FEED FIX IS NOW
+LOAD-BEARING IN A WAY NOBODY PLANNED. It was built for PRESENCE — so her small luxury shops would
+appear at all — and it is currently carrying the entire product experience on its own.**
+⚠️⚠️ **AND THE HONEST COST OF THAT, SAY IT PLAINLY: THE FEED IS HER THREE LUXURY SHOPS.** Sample price
+on the first card: **$625**. ▶ **So while Google is down, every product Style Star can show is
+`$$$`/`$$$$` — the affordability problem at its very worst, because the half of the search that reaches
+all 132 shops is the half that is dead.** 🚨 **`exact: 0` and `verified: 0` on all three: no card can
+wear a tick either, because a look-up needs the search half.**
+▶ **`?budget=1` answers in 1.6s and reports 697 left** (was 725 when the failure was first recorded),
+**so 28 searches HAVE been billed since — the account and the key are fine, and something is reaching
+Google successfully some of the time.** ⚠️ **NOT PROVEN: whether those 28 were hers, a woman's, or
+retries. Do not read it as "it works intermittently for users" without measuring again.**
+✅✅✅ **THE CAUSE IS FOUND, AND IT IS NONE OF OURS. VERIFIED FROM SERPAPI'S RAW STATUS API, 2026-09-10.**
+🚨 **HER QUESTION, AND IT IS THE MOST USEFUL THING ON THIS PAGE FOR THE NEXT TIME: *"I am looking at my
+SerpApi account and I see nothing about an outage??"*** ▶▶ **SHE IS RIGHT, AND SHE WILL BE RIGHT AGAIN.
+HER ACCOUNT PAGE CANNOT SHOW AN OUTAGE.** `serpapi.com` shows HER things — plan, usage, searches left —
+and all of those are genuinely healthy. **Incidents live on `status.serpapi.com`, a SEPARATE
+Statuspage site**, and nothing surfaces in her dashboard unless she has subscribed to their alerts.
+⚠️ **SO "MY ACCOUNT LOOKS FINE" IS NOT EVIDENCE AGAINST AN OUTAGE, AND NEVER SEND HER TO HER DASHBOARD
+TO CHECK FOR ONE.** ▶ **Check it from here instead, in one command, no key and no login needed:**
+`curl -s https://status.serpapi.com/api/v2/summary.json`
+🚨🚨 **AND READ THE RAW JSON API, NOT THE STATUS PAGE HTML. THIS NEARLY WENT WRONG.** The first read was
+a SUMMARISED fetch of the human page; two follow-up fetches then returned NO incident data at all, and
+the claim was told to her anyway. ▶▶ **The `/api/v2/` endpoints are machine-readable and unambiguous:
+`status.json` · `summary.json` · `incidents/unresolved.json`.** ⭐ **THE FILE'S OWN RULE, WHICH HAD JUST
+BEEN WRITTEN INTO IT AND WAS THEN BROKEN THE SAME HOUR: A FINDING THAT SURVIVES ONE LOOK IS NOT A
+FINDING.** **Her pushback is what forced the second look. The second look CONFIRMED it — but it was luck
+that it did, and the habit is the point.**
+✅ **WHAT THE RAW FEED SAYS, ALL OF IT MEASURED NOT SUMMARISED:** overall `Partial System Outage`
+(`indicator: major`) · **`Shopping API: major_outage` — THE EXACT ENGINE HER APP CALLS
+(`engine=google_shopping`)** · `Google: major_outage` · `Search API: major_outage`.
+▶ **The incident: "Service outage 9/10", impact `critical`, status `identified`, `resolved_at: null`
+— OPEN.** Started `15:59 UTC`, updated `18:55 UTC`. **Their stated cause, verbatim:** *"The issue is
+due to recent changes on Google's side, which are causing searches to fail or time out. Our engineers
+have deployed a partial mitigation that is currently restoring a portion of traffic."*
+⭐ **AND THAT LAST CLAUSE ANSWERS THE LOOSE END: "a portion of traffic" IS WHY 28 SEARCHES BILLED
+(725 → 697) WHILE ALL THREE OF OURS HUNG.** ▶ **It is partial, so intermittent success is expected and
+is NOT proof it is fixed.**
+▶▶ **"FAIL OR TIME OUT" IS WORD-FOR-WORD THE SIGNATURE MEASURED HERE: hung on the ceiling, unbilled.**
+🚨🚨 **SO EVERY THEORY THIS FILE HAS CARRIED IS NOW CLOSED, AND FOUR OF THEM WERE WRONG:**
+· **NOT her budget** (697 left) · **NOT her key** (the account call answers in 0.7-1.6s) · **NOT the
+belted change** (a bare `dress` hangs identically) · **NOT the 12s/9s ceiling** (the ceiling moved and
+the failure moved with it; a 20s probe hung too) · **NOT our code, which needs no change at all.**
+🚨🚨 **AND THE NETWORK THEORY IS DISPROVEN — IT WAS IN THIS FILE AS A CONCLUSION AND IT WAS WRONG.**
+It read *"that points at the network between Netlify and SerpApi."* ▶▶ **BUT `account.json` AND
+`search.json` ARE THE SAME HOST, `serpapi.com`. One answers in 0.7s while the other hangs past 20s, so
+DNS, TLS and the Netlify→SerpApi route are all exonerated by the working call.** ⭐ **THE LESSON
+GENERALISES: when two calls share a path and only one fails, the path is not the fault. Look for what
+DIFFERS — here, the engine behind the endpoint.**
+🚨🚨🚨 **DO NOT SWITCH TO SEARCHAPI OVER THIS, AND THE ADVICE TO CONSIDER IT WAS WRONG WHEN GIVEN.**
+This file has named SearchApi as the runner-up twice, and on 2026-09-10 Cath was told to consider it
+while this outage was live. ▶▶ **THE CAUSE IS GOOGLE CHANGING SOMETHING, SO IT HITS EVERY PROVIDER
+THAT READS GOOGLE — SearchApi included. Paying a second $25 would have fixed NOTHING.** ⚠️ **Her
+pushback is what stopped it. HER WORDS: *"We already have SerpApi. What are you talking about???"* and
+she was right: the account was never the problem, and she was being sent to buy her way out of an
+outage.** ▶ **The runner-up argument still stands for PRICE and VOLUME. It does not stand for this.**
+▶▶ **WHAT TO ACTUALLY DO: NOTHING. WAIT.** It is their incident and their fix. **The app already
+behaves correctly through it** — it fails fast, says something honest, and falls back to her own feed,
+so a woman still sees real clothes. ⚠️ **DO NOT "fix" the app in response to this, and DO NOT raise the
+ceiling: there is nothing on the other end to wait for.**
+▶ **HOW TO RE-CHECK IN ONE COMMAND, no searches spent, no dashboard needed:**
+`curl -s -H "Origin: https://stylestar.app" -X POST -d '{"item":"dress"}' -H "Content-Type: application/json" https://stylestar.app/.netlify/functions/product-find`
+▶ **`googleFailed: false` and a non-zero `verified` means Google's half is back.**
+⚠️ **ONE THING CHECKED AND CLEARED SO NOBODY CHASES IT: `priceValue` parses correctly ($625 → 625). An
+earlier reading of "62" was a truncated console print, not a bug.** ▶ **A finding that survives one
+look is not a finding.**
+▶ **⚠️ A CURL TEST OF THIS FUNCTION NEEDS `-H "Origin: https://stylestar.app"` or `isAllowed` returns
+`403 {"error":"Not allowed"}`.** **That 403 is the guard working, NOT a broken function** — worth
+knowing before the next session reads it as an outage.
+
+🚨 *THE ORIGINAL 2026-09-10 ENTRY, KEPT BECAUSE ITS REASONING STILL HOLDS:*
+▶▶ **EVERY PRODUCT SEARCH IS FAILING. Measured seven times against her live function: `search-failed`,
+pinned at 12001–12021ms, which is the app's own 12-second ceiling.** ▶ **So a woman opening Shop your
+Style or asking the chat for products sees NO PHOTOGRAPHS. The app's honest sentence now says so.**
+✅ **WHAT IS CERTAIN, ALL MEASURED AGAINST HER OWN LIVE FUNCTION:**
+· **Not her budget** — `?budget=1` returns **725 searches left**.
+· **Not the belted change** — a plain `{"item":"dress"}` with no cut fails identically.
+· **Not the whole of SerpApi** — the same function's **account** call to serpapi.com answers in **0.7s**.
+· **The hung searches are NOT being billed** — 726 → **725** across seven failures, so they are dying
+  before SerpApi meters them. ▶ **That points at the network between Netlify and SerpApi, not at a slow
+  query.**
+🚨🚨 **AND THE CORRECTION, MADE THE SAME HOUR IT WAS SAID, BECAUSE IT WAS TOLD TO HER AS PROOF.** She was
+told *"serpapi.com/search times out from a different machine with no key at all"*. ▶▶ **THAT WAS TRUE
+WHEN RUN AND DID NOT HOLD UP: repeated a few minutes later, the same URL returned `401` in 0.2–0.5s,
+five times out of five.** ⚠️ **The sandbox's own egress proxy was reporting dropped connections in the
+same window, so THAT measurement was probably measuring the sandbox, not SerpApi.**
+▶ **WHAT THE 401 DOES AND DOES NOT PROVE: SerpApi's host is reachable and rejects a bad key instantly —
+but it rejects BEFORE running any Google query, so it says nothing about how a VALID key's search
+behaves.** ⚠️ **SO "SERPAPI IS DOWN" IS NOT ESTABLISHED. What is established is that HER searches fail,
+every time, and are not billed.**
+🚨 **THE LESSON, AND IT IS THIS FILE'S OWN: A MEASUREMENT FROM THIS SANDBOX IS NOT EVIDENCE ABOUT THE
+OUTSIDE WORLD UNTIL IT REPEATS.** The sandbox cannot reach retail sites at all, which is recorded here
+already; a single timeout from it proves nothing. **Her Netlify function is the only instrument that
+measures her app, and it is the one that gave every finding above.**
+⚠️⚠️ **AND THE THING NOT TO DO, BECAUSE THIS FILE ALREADY PAID FOR IT: DO NOT RAISE THE 12s CEILING.**
+The 2026-09-09 note records the ceiling being raised 10s → 20s and **the next failure pinning at exactly
+20001ms**. ▶ **A request pinned to the millisecond on the ceiling is HUNG, not slow, and a bigger ceiling
+only makes a woman wait longer for the same honest sentence.** **Settled at 12s from real successes
+(6.6s · 6.9s · 8.7s); leave it.**
+▶ **WHAT IS ACTUALLY WORTH DOING, IN ORDER: (a) ask her to check her SerpApi dashboard and their status
+page — she owns the account and this file cannot see it · (b) if it persists, this is the argument for
+the runner-up already named here, SearchApi, same $25 and ~10× the searches · (c) nothing in the app
+needs changing: it already fails fast and tells her the truth.**
+
+
+
+### ▶ TEST STATE — MEASURED 2026-09-10, later
+✅ **`ssfind` 60 (was 52) · `chatfallback` 105 · `chatfind` 63 · `findprod` 63 · `copy` 49 · `affq` 40.
+Zero failures.** ⭐ **`chatfind` 63/0 is the one that matters most for the belted change: it proves the
+CHAT's her-words guard did not move.**
+Both inline script blocks parse, div balance is byte-identical to the `HEAD` baseline, no mojibake.
+⚠️ **`copy` PRINTS `✓ 49 passed`, NOT `49 passed, 0 failed`** — a grep for the second pattern shows
+NOTHING and reads exactly like a suite that never ran. **It was re-run alone to be sure.** ▶ **Do not
+read an empty line in a batch as a pass.**
+⚠️ **The suites NOT re-run are unchanged from earlier today and no claim is made about them:**
+wbedittasr 42 · starpx 28 · linkwatch 27 · findprod 63 · storepool 49 · untagged 21 · searchtune 80/1
+(the known pre-existing `styles.css` failure) · curated 63/2 (both pre-existing).
+
+
+
+---
+
+# ARCHIVED 2026-09-11 — the 2026-09-10 "WHERE WE LEFT OFF" entry, verbatim
+
+## ▶▶▶ WHERE WE LEFT OFF — 2026-09-10. ALL THREE SHOPPING SURFACES ARE JOINED UP. READ THIS FIRST.
+🚨 **THIS BLOCK IS THE CURRENT TRUTH. Everything below it is detail, newest first, and much of it is
+HISTORY — if a line further down contradicts this one, THIS ONE WINS.**
+📁 **The day's build detail — how each fault was found, what was measured, the checks that were blind —
+moved to `CLAUDE-archive.md` at her request. NOTHING WAS DELETED. Every rule she gave is in the rule
+ledger, which never archives, and it gained SEVEN rows from this one day.**
+
+### ✅ WHAT IS LIVE NOW, AND IT IS A LOT
+▶▶ **SHE TESTED THE LIVE APP ALL DAY AND FOUND EIGHT SEPARATE FAULTS. EVERY ONE IS FIXED AND VERIFIED
+ON THE SERVED FILE.** In the order they matter:
+1. **ALL THREE SHOPPING SURFACES NOW SEARCH HER SHOPS *PLUS* ALL 132** — the chat, Shop your Style, and
+   (last, and it was the worst off) the **Wardrobe checklist**, which until that evening saw only her
+   nine affiliate merchants.
+2. **HER OWN NIGHTLY FEED IS IN THE SEARCH.** Google will not surface her small luxury shops (0 of 120,
+   then 0 of 33), so this was PRESENCE, not position. Live proof: a belted-dress search returned **24
+   pieces from FARM Rio, Mytheresa and COUTR** where there had been zero.
+3. **THE STYLIST SEARCHES WHAT SHE PROMISES**, and cannot promise until the pieces are in hand.
+4. **HER OWN TEN STORE SCORES ORDER THE ROW.** Measured: Google sent `Old Navy > Nordstrom > Kohl's >
+   Talbots`, she sees `Nordstrom > Talbots > Old Navy > Kohl's`.
+5. **GOOGLE DYING NO LONGER COSTS HER HER OWN SHOPS**, and a search that never came back says so.
+6. **A REPEAT SEARCH IS INSTANT**, surviving a reload and a dead network.
+7. **AN OCCASION IS TRANSLATED, NOT SEARCHED** — "vacation dress" now works, and every one of the app's
+   nine suggested prompts is something it can actually do.
+8. **THE SEARCH CEILING IS 9s**, chosen from real successes (6.6 · 6.9 · 8.7).
+🚨🚨 **READ POINTS 1-2 TOGETHER WITH THE SERPAPI BLOCK BELOW, OR THIS LIST READS AS "SEARCH WORKS" AND
+IT DOES NOT.** ▶ **Re-measured 3/3 at the end of the day: HER FEED HALF IS ALIVE AND GOOGLE'S HALF IS
+DEAD** (`googleFailed: true`, pinned on the ceiling, unbilled). **Everything above is true; what is
+delivering it is her own three luxury shops, not the 132.**
+
+### ▶▶ WHAT IS WAITING ON HER — IN HER OWN PRIORITY ORDER
+1. ⭐⭐⭐ **APPLY TO THE AFFILIATE PROGRAMMES.** ⚠️ **CJ IS FREE AND STILL NOT DONE — it has been item 2
+   on her money path for weeks.** ▶ **And the new argument, measured 2026-09-10: 41 of her 131 shops
+   publish their FULL catalogue publicly (43,556+ products, with SIZE and PER-SIZE STOCK). Being their
+   PARTNER turns that from data we are permitted to read into feeds they send her, with permission,
+   that PAY her** — Everlane · Boden · Tuckernuck · Universal Standard · Cuyana · Alo Yoga · Summersalt
+   · Good American · Veronica Beard. **These are DTC brands with affiliate managers, not Nordstrom.**
+2. ⏳ **THE OCT 1 CLOCK — THE ONLY DEADLINE ON HER WHOLE BOARD, ~3 WEEKS OUT.** Do NOT pay the Your
+   Fashion Friend renewal; close the Orange County receipt **by email (`btpc@octaxcol.com`) or mail, NOT
+   in person**; call **407-246-2204** about applying for Style Star's own receipt before or after Oct 1.
+3. ⭐ **WHAT CAME BACK FROM THE PEOPLE SHE SHARED IT WITH.** Still unasked, still the most valuable
+   information this project can get.
+4. ⏸️ **THE FITTING-ROOM CONVERSATION.** Parked by her, thinking kept. **Ask what it MEANS to her.**
+
+### ▶▶ WHAT IS OPEN FOR CLAUDE
+1. 🚨 **"COULDN'T LOAD OPTIONS RIGHT NOW"** — she photographed it. **The stylist call failing, not the
+   search.** ▶ **TWO of its three known causes were RULED OUT on 2026-09-10 and the third is unproven:**
+   the reply budget is fine (495-503 tokens of 700, three for three) and the forgiving parse handles the
+   code fence the model really returns. ⚠️ **The remaining suspect is the 32KB prompt cap, which this
+   file already measured at 104 characters of headroom and called "not a margin, a coin toss".**
+   **MEASURE IT BEFORE CLAIMING IT.**
+2. 💰 **A PRICE FILTER.** A find request carries item · colour · fabric · cut · size · width and **NO
+   price field at all**. ▶ **When it is built, put `Try: tops under $100` and `Try: white jeans under
+   $150` back verbatim.**
+3. ⭐ **HER STYLE PROFILE STILL NEVER REACHES THE FINDER** (board row 11, her *"many of them were
+   shapeless"*). **HERS to green-light, and she asked for one thing at a time.**
+4. ▶ **A SHARED remembered cache.** Today's remembering is per-browser. ⚠️ **A shared one must go
+   somewhere SERVER-ONLY (Netlify Blobs) — NEVER through the publishable key. See the ledger row.**
+
