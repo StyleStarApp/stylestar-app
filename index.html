@@ -13663,36 +13663,38 @@ var WEEK_STARS=[  {n:'Tommy Hilfiger Claihre Kitten Heel Slide Sandal',store:'No
 var WEEK_STAR_PHOTO_ORDER=[
   /* 🚨🚨 THIS LIST IS NOT IN PLAY ORDER AND NEVER HAS BEEN — READ BEFORE EDITING.
      The star is pool[floor(days-since-anchor / 7) mod pool.length], so the array is
-     ROTATED relative to what a woman actually sees: today sits at index 4, and
-     indices 0-3 are the pieces reached by WRAPPING at the end of the cycle.
-     ▶ THE DATE ON EACH LINE IS THE TRUTH. Keep them updated; the position is not
-     readable on its own.
-     ⚠️⚠️ SO "APPEND AT THE END" IS NOT THE SAFE MOVE IT LOOKS LIKE. Adding her seven
-     at indices 9-15 put them BEFORE the wrap, which shoved the four pieces at 0-3
-     back by seven weeks — her FARM Rio summer maxi would have landed 13 December.
-     ▶ Measured and caught before shipping, which is the only reason this list is
-     laid out the way it is: the seven are SPLIT, three at the tail (13-15) and four
-     at the head (0-3), so every date that already existed is exactly where it was.
-     ✅ VERIFIED WEEK BY WEEK against the previous schedule, not assumed. */
+     ROTATED relative to what a woman sees: today sits at index 4, and the entries
+     ABOVE it are the ones reached after the wrap, at the END of the cycle.
+     ▶ THE DATE ON EACH LINE IS THE TRUTH. The position is not readable on its own,
+     so keep the dates updated and lay out from them, never from the order alone.
+     ⚠️ CHANGING THE LENGTH RE-MAPS EVERY WEEK, because the length IS the modulus.
+     This list went 16 → 15 when she retired the FARM Rio dress, so every date was
+     recomputed from scratch and checked against what she asked for, one week at a
+     time. Never edit a line here without re-running the schedule. */
   // ── indices 0-3: reached LAST, after the wrap ──────────────────────────────
+  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace',            // Nov 22
   'Valentino Garavani VLOGO Signature Reversible Leather Belt',   // Nov 29
-  'Valentino Garavani Rockstud Medium Suede Pouch',               // Dec 6
-  'Valentino Square Oversized Sunglasses',                        // Dec 13
-  'Open Heart Necklace',                                          // Dec 20
+  'Open Heart Necklace',                                          // Dec 6  — her move, was Dec 20
+  'Valentino Square Oversized Sunglasses',                        // Dec 13 — last of the cycle
   // ── index 4 is TODAY ───────────────────────────────────────────────────────
-  'Saint Laurent SL M136 Sunglasses',                             // Sep 6 — LIVE NOW
+  'Saint Laurent SL M136 Sunglasses',                             // Sep 6  — LIVE NOW
   'Vilebrequin Long Mesh Cover-Up Dress — Off White',             // Sep 13 — her Sep 20 cutoff still clears
   'Veronica Beard Crosbie Jean',                                  // Sep 20
-  'Fleur du Mal Sculpt Molded Sports Bra',                        // Sep 27
+  'Simkhai Stella Suede Block Heel Sandal',                       // Sep 27 — her swap, was Nov 15
   'Isabella Celini Stackable Love Bracelet',                      // Oct 4
-  'Love Hearts Find Me Pendant Necklace',                         // Oct 11 — unchanged by the seven
-  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 18 — unchanged
-  'FARM Rio Pink Garden Terrace 3D One-Shoulder Maxi Dress',      // Oct 25 — unchanged
-  'Gucci GG Canvas Mini Shoulder Bag',                            // Nov 1  — unchanged
-  // ── indices 13-15: the first three of her seven ────────────────────────────
+  'Love Hearts Find Me Pendant Necklace',                         // Oct 11
+  'Diane von Furstenberg Jeanne Silk Jersey Wrap Dress',          // Oct 18
+  /* ⚠️⚠️ THE FARM RIO MAXI WAS HERE (Oct 25) AND SHE RETIRED IT, 2026-09-11:
+     "we already used that farm rio dress so it doesn't need to go back on star of
+     the week." ▶ RETIRED, NOT DELETED — its WEEK_STARS entry stays put and is now
+     inert, exactly like the sold-out Serpui bag, because it carries the pxPos
+     'center 60%' crop her 2026-09-07 catch produced and starpx leans on that entry.
+     Removing a row that already renders nowhere would only throw the lesson away.
+     ⚠️ This is a TIMING call about one dress, not a rule about FARM Rio. */
+  'Valentino Garavani Rockstud Medium Suede Pouch',               // Oct 25 — her move, was Dec 6
+  'Gucci GG Canvas Mini Shoulder Bag',                            // Nov 1
   'Simkhai Devon Suede Tote',                                     // Nov 8
-  'Simkhai Stella Suede Block Heel Sandal',                       // Nov 15
-  'Zoe Lev Diamond & 14k Gold Bezel Pendant Necklace'             // Nov 22
+  'Fleur du Mal Sculpt Molded Sports Bra'                         // Nov 15 — her swap, was Sep 27
 ];
 function _weekStarPhotoPool(){
   // WHITELIST, not a sort hint: only a name she has actually put here can
