@@ -1998,8 +1998,26 @@ body.menu-open .menu-panel{display:block}
    ⚠️ IT IS A LABEL, NOT A PRODUCT NAME: Jost uppercase like .dc-tagline, never
    the DM Serif Display that .dc-item-name wears, so a heading can never be
    misread as a piece she chose. */
-#s-dream .dc-cat,#s-finds .dc-cat{font:700 11.5px/1.3 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#4a463e;margin:1.9rem 0 1.05rem;padding-bottom:9px;position:relative;display:block;text-align:center}
-#s-dream .dc-cat::after,#s-finds .dc-cat::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:34px;height:2px;background:#E0B84C}
+/* 🚨 HER CATCH ON THE LIVE PAGE, 2026-09-11: "the font is small on those, i almost
+   missed them when I was scrolling." ▶ MEASURED, AND SHE FOUND A REAL HIERARCHY
+   INVERSION: the heading was 11.5px against a 20px product name and a 15.5px note,
+   so the SECTION LABEL WAS THE SMALLEST TEXT ON THE PAGE apart from the store line.
+   A heading smaller than everything it governs cannot do its job, and on a page a
+   woman SCROLLS it is the only thing telling her where she is.
+   ✅ 16px, darker (#2e2b25), a wider 54px rule, and more air above (3.3rem vs the
+   17px between two cards) so it reads as a divider rather than as something floating
+   between two cards. ⚠️ IT STOPS AT 16: the product names are 20px and a label that
+   reaches them starts competing with the pieces instead of organising them.
+   🚨 16 AND NOT 15, AND A TEST IS WHY. At 15 the heading was still SMALLER than her
+   15.5px note — it only LOOKED bigger because it is uppercase, bold and letterspaced.
+   ▶ Optical weight is not size, and "it looks fine to me" is exactly the judgement
+   that let an 11.5px heading ship in the first place. One more pixel makes the
+   relation true rather than merely convincing.
+   ▶ Three sizes were rendered at phone width and looked at before choosing.
+   ⚠️ ONE RULE, BOTH SCREENS — the Edit has no categories today, and the day she adds
+   them they must look identical. Same lesson as the px2 stack. */
+#s-dream .dc-cat,#s-finds .dc-cat{font:700 16px/1.3 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#2e2b25;margin:3.3rem 0 1.35rem;padding-bottom:11px;position:relative;display:block;text-align:center;text-wrap:balance}
+#s-dream .dc-cat::after,#s-finds .dc-cat::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:54px;height:2.5px;background:#E0B84C}
 #s-dream .dc-disclosure,#s-finds .dc-disclosure{font-family:'Lora',Georgia,serif;font-size:11.5px;color:#8a8172;margin:0 0 5px;line-height:1.65}
 .dc-sign{font-family:'Dancing Script',cursive;font-weight:600;font-size:30px;color:#C8A24B;line-height:1.15;margin:1.7rem 0 0}
 /* The third of her three sign-offs, matched to the other two: the gap was a

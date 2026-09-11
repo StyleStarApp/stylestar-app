@@ -420,6 +420,33 @@ for (const row of ['Shop your Style', 'Your Wishlist', 'Style Star Mall'])
   ok(`${row} carries no mark — it is the app working, not Catherine speaking`,
      marked[row] === false);
 
+/* 📏 HER CATCH, 2026-09-11: "the font is small on those, i almost missed them when I
+   was scrolling." The heading was 11.5px against a 20px product name — THE SECTION
+   LABEL WAS SMALLER THAN EVERYTHING IT GOVERNED, which is why it disappeared.
+   ▶ ASSERTED AS A RELATION, NEVER AS A PIXEL VALUE: a heading outranks the note it
+   sits above and stays under the product names, so it organises the page without
+   competing with the pieces. That survives any future restyling of either; a
+   hardcoded 15 would go stale the first time she nudged a size. */
+const type = await page.evaluate(() => {
+  const n = s => +getComputedStyle(document.querySelector('#s-finds ' + s)).fontSize.replace('px', '');
+  return { cat: n('.dc-cat'), name: n('.dc-item-name'), note: n('.dc-item-note'), store: n('.dc-store') };
+});
+ok('a category heading outranks the note beneath it', type.cat > type.note,
+   `cat ${type.cat} vs note ${type.note}`);
+ok('...and the store line it sits above', type.cat > type.store, `cat ${type.cat} vs store ${type.store}`);
+ok('...but stays under the product names, so it organises rather than competes',
+   type.cat < type.name, `cat ${type.cat} vs name ${type.name}`);
+/* ⚠️ AND THE OTHER HALF OF WHY SHE MISSED IT: it had 30px of air above against 17px
+   between two cards, so it floated between them instead of belonging to what follows. */
+const air = await page.evaluate(() => {
+  const c = document.querySelectorAll('#s-finds .dc-cat')[1];
+  const items = [...document.querySelectorAll('#s-finds .dc-item')];
+  return { above: Math.round(c.getBoundingClientRect().top - c.previousElementSibling.getBoundingClientRect().bottom),
+           between: Math.round(items[1].getBoundingClientRect().top - items[0].getBoundingClientRect().bottom) };
+});
+ok('and it is set apart — clearly more air above it than between two cards',
+   air.above >= air.between * 2, `above ${air.above} vs between ${air.between}`);
+
 console.log('\n10. NOTHING THREW');
 ok('no page errors', errors.length === 0, errors[0]);
 
